@@ -205,16 +205,18 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.speculated50 = zext i8 %i.e to i32       ; 2 uses
   %.sroa.speculated = zext i8 %i.g to i32         ; 2 uses
   %i.i = add nuw nsw i32 %.sroa.speculated, %.sroa.speculated50 ; 4 uses
-  %i.j = sub nsw i32 %.sroa.speculated50, %.sroa.speculated ; 4 uses
+  %i.j = sub nuw nsw i32 %.sroa.speculated50, %.sroa.speculated ; 4 uses
   %i.k = lshr i32 %i.i, 1
   %i.l = trunc nuw i32 %i.k to i8
   store i8 %i.l, ptr %5, align 1, !tbaa !34
-  %6 = mul nsw i32 %i.j, 255
   %.not.not = icmp samesign ult i32 %i.i, 256
   %i.m = sub nuw nsw i32 512, %i.i
   %i.n = select i1 %.not.not, i32 %i.i, i32 %i.m
-  %7 = sdiv i32 %6, %i.n
-  %i.o = trunc i32 %7 to i8
+  %6 = trunc nuw nsw i32 %i.j to i16
+  %.lhs.trunc = mul nuw i16 %6, 255
+  %.rhs.trunc = trunc nuw nsw i32 %i.n to i16
+  %7 = udiv i16 %.lhs.trunc, %.rhs.trunc
+  %i.o = trunc i16 %7 to i8
   store i8 %i.o, ptr %4, align 1, !tbaa !34
   %.not = icmp ult i8 %0, %i.d
   br i1 %.not, label %bb.e, label %bb.d
@@ -271,11 +273,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i8 0, ptr %3, align 1, !tbaa !34
-  %.pre = sub nsw i32 %.sroa.speculated29, %.sroa.speculated
+  %.pre = sub nuw nsw i32 %.sroa.speculated29, %.sroa.speculated
   br label %_Z8RGBtoHSLhhhPhS_S_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = sub nsw i32 %.sroa.speculated29, %.sroa.speculated ; 4 uses
+  %i.i = sub nuw nsw i32 %.sroa.speculated29, %.sroa.speculated ; 4 uses
   %.not.i = icmp ult i8 %0, %i.d
   br i1 %.not.i, label %bb.e, label %bb.d
 
@@ -312,10 +314,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
 
 _Z8RGBtoHSLhhhPhS_S_.exit:                        ; preds = %bb.b, %bb.h
   %.pre-phi = phi i32 [ %.pre, %bb.b ], [ %i.i, %bb.h ] ; 2 uses
-  %i.y = trunc i32 %.pre-phi to i8
+  %i.y = trunc nuw i32 %.pre-phi to i8
   store i8 %i.y, ptr %4, align 1, !tbaa !34
-  %6 = and i32 %.pre-phi, 255
-  %i.z = icmp eq i32 %6, 255
+  %i.z = icmp eq i32 %.pre-phi, 255
   br i1 %i.z, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_Z8RGBtoHSLhhhPhS_S_.exit
@@ -469,7 +470,7 @@ bb.d:                                             ; preds = %bb.c
   %i.t = tail call i8 @llvm.umin.i8(i8 %i.s, i8 %.0101.a) ; 2 uses
   %.sroa.speculated.i = zext i8 %i.t to i32
   %i.u = icmp eq i8 %i.t, %i.r
-  %.pre.i = sub nsw i32 %.sroa.speculated29.i, %.sroa.speculated.i ; 4 uses
+  %.pre.i = sub nuw nsw i32 %.sroa.speculated29.i, %.sroa.speculated.i ; 4 uses
   br i1 %i.u, label %_Z8RGBtoHSLhhhPhS_S_.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -517,7 +518,6 @@ _Z8RGBtoHSLhhhPhS_S_.exit.i:                      ; preds = %bb.d, %bb.j
   %i.am = lshr i32 %i.al, 1                       ; 2 uses
   %i.an = xor i32 %i.am, 255
   %spec.select106 = select i1 %7, i32 %i.an, i32 %i.am ; 2 uses
-  %8 = and i32 %.pre.i, 255
   %i.ao = and i32 %4, 3
   %i.ap = shl i32 %5, 2
   %i.aq = and i32 %i.ap, 12
@@ -529,7 +529,7 @@ _Z8RGBtoHSLhhhPhS_S_.exit.i:                      ; preds = %bb.d, %bb.j
   %i.aw = add nsw i32 %i.av, -128                 ; 3 uses
   %i.ax = mul nsw i32 %i.aw, 127
   %i.ay = sdiv i32 %i.ax, 128
-  %i.az = add nsw i32 %i.ay, %8
+  %i.az = add nsw i32 %i.ay, %.pre.i
   %i.ba = icmp sgt i32 %i.az, 127
   br i1 %i.ba, label %bb.k, label %bb.v
 
@@ -649,14 +649,16 @@ bb.ae:                                            ; preds = %bb.ad
   %.sroa.speculated50.i = zext i8 %i.r to i32     ; 2 uses
   %.sroa.speculated.i40 = zext i8 %i.cn to i32    ; 2 uses
   %i.cq = add nuw nsw i32 %.sroa.speculated.i40, %.sroa.speculated50.i ; 4 uses
-  %i.cr = sub nsw i32 %.sroa.speculated50.i, %.sroa.speculated.i40 ; 4 uses
+  %i.cr = sub nuw nsw i32 %.sroa.speculated50.i, %.sroa.speculated.i40 ; 4 uses
   %i.cs = lshr i32 %i.cq, 1
   %i.ct = trunc nuw i32 %i.cs to i8
-  %9 = mul nsw i32 %i.cr, 255
   %.not.not.i = icmp samesign ult i32 %i.cq, 256
   %i.cu = sub nuw nsw i32 512, %i.cq
   %i.cv = select i1 %.not.not.i, i32 %i.cq, i32 %i.cu
-  %10 = sdiv i32 %9, %i.cv
+  %8 = trunc nuw nsw i32 %i.cr to i16
+  %.lhs.trunc.i41 = mul nuw i16 %8, 255
+  %.rhs.trunc.i42 = trunc nuw nsw i32 %i.cv to i16
+  %9 = udiv i16 %.lhs.trunc.i41, %.rhs.trunc.i42
   %.not.i = icmp ult i8 %.0101.a, %i.q
   br i1 %.not.i, label %bb.ag, label %bb.af
 
@@ -688,8 +690,8 @@ _Z8RGBtoHSLhhhPhS_S_.exit:                        ; preds = %bb.af, %bb.ah, %bb.
   %i.di = phi i32 [ %i.cy, %bb.af ], [ %i.dd, %bb.ah ], [ %i.dh, %bb.ai ]
   %i.dj = sdiv i32 %i.di, 6
   %i.dk = and i32 %i.dj, 255                      ; 11 uses
-  %11 = and i32 %10, 192
-  %i.dl = icmp eq i32 %11, 0
+  %10 = and i16 %9, 192
+  %i.dl = icmp eq i16 %10, 0
   %i.dm = sext i1 %7 to i8
   %spec.select107 = xor i8 %i.ct, %i.dm           ; 3 uses
   %i.dn = add nsw i32 %i.dk, -244
@@ -1092,7 +1094,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.ef = call i8 @llvm.umin.i8(i8 %i.ee, i8 %.0101.i.a) ; 2 uses
   %.sroa.speculated.i.i = zext i8 %i.ef to i32
   %i.eg = icmp eq i8 %i.ef, %i.ed
-  %.pre.i.i = sub nsw i32 %.sroa.speculated29.i.i, %.sroa.speculated.i.i ; 4 uses
+  %.pre.i.i = sub nuw nsw i32 %.sroa.speculated29.i.i, %.sroa.speculated.i.i ; 4 uses
   br i1 %i.eg, label %_Z8RGBtoHSLhhhPhS_S_.exit.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
@@ -1138,7 +1140,6 @@ _Z8RGBtoHSLhhhPhS_S_.exit.i.i:                    ; preds = %bb.ai, %bb.ac
   %i.ew = zext i8 %.sroa.speculated.i to i32
   %i.ex = add nuw nsw i32 %i.ev, %i.ew
   %i.ey = lshr i32 %i.ex, 1                       ; 2 uses
-  %5 = and i32 %.pre.i.i, 255
   %i.ez = and i32 %i.ct, 3
   %i.fa = or disjoint i32 %i.ez, %i.cq            ; 2 uses
   %i.fb = zext nneg i32 %i.fa to i64
@@ -1148,7 +1149,7 @@ _Z8RGBtoHSLhhhPhS_S_.exit.i.i:                    ; preds = %bb.ai, %bb.ac
   %i.ff = add nsw i32 %i.fe, -128                 ; 3 uses
   %i.fg = mul nsw i32 %i.ff, 127
   %i.fh = sdiv i32 %i.fg, 128
-  %i.fi = add nsw i32 %i.fh, %5
+  %i.fi = add nsw i32 %i.fh, %.pre.i.i
   %i.fj = icmp sgt i32 %i.fi, 127
   br i1 %i.fj, label %bb.aj, label %bb.au
 

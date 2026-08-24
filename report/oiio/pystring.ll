@@ -127,7 +127,7 @@ bb.b:                                             ; preds = %_ZNSt6vectorINSt7__
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.preheader.i
-  %.14374.i = phi i64 [ %.04284.i, %.preheader.i ], [ %i.z, %bb.d ] ; 14 uses
+  %.14374.i = phi i64 [ %.04284.i, %.preheader.i ], [ %i.z, %bb.d ] ; 13 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %.14374.i
   %i.w = load i8, ptr %i.v, align 1, !tbaa !20
   %i.x = sext i8 %i.w to i32
@@ -181,10 +181,9 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i: ; preds = %bb.g
-  %9 = sub i64 %.244.lcssa.i, %.14374.i
   store ptr %i.r, ptr %4, align 8, !tbaa !26, !alias.scope !23
-  %10 = sub nuw i64 %i.al, %.14374.i
-  %spec.select.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %9, i64 %10) ; 4 uses
+  %9 = call i64 @llvm.umin.i64(i64 %.244.lcssa.i, i64 %i.al)
+  %spec.select.i.i.i.i = sub nuw i64 %9, %.14374.i ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #24, !noalias !23
   store i64 %spec.select.i.i.i.i, ptr %i.e, align 8, !tbaa !27, !noalias !23
   %i.an = icmp ugt i64 %spec.select.i.i.i.i, 15
@@ -587,7 +586,7 @@ bb.g:                                             ; preds = %.lr.ph257
   br label %.critedge2.i, !llvm.loop !46
 
 .critedge2.i:                                     ; preds = %bb.g, %..critedge2.i_crit_edge, %.critedge.i
-  %.239.i.lcssa = phi i64 [ %.239.i256, %..critedge2.i_crit_edge ], [ %.138.i.lcssa, %.critedge.i ], [ %i.ac, %bb.g ] ; 9 uses
+  %.239.i.lcssa = phi i64 [ %.239.i256, %..critedge2.i_crit_edge ], [ %.138.i.lcssa, %.critedge.i ], [ %i.ac, %bb.g ] ; 8 uses
   %i.ah = icmp ugt i64 %.138.i.lcssa, %.239.i.lcssa
   br i1 %i.ah, label %bb.h, label %.critedge4.i
 
@@ -608,12 +607,11 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i: ; preds = %bb.i
-  %9 = sub i64 %.138.i.lcssa, %.239.i.lcssa
   store ptr %i.s, ptr %4, align 8, !tbaa !26, !alias.scope !47
   %i.am = load ptr, ptr %0, align 8, !tbaa !12, !noalias !47
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %.239.i.lcssa ; 2 uses
-  %10 = sub nuw i64 %i.ak, %.239.i.lcssa
-  %spec.select.i.i.i.i = call noundef i64 @llvm.umin.i64(i64 %9, i64 %10) ; 4 uses
+  %9 = call i64 @llvm.umin.i64(i64 %.138.i.lcssa, i64 %i.ak)
+  %spec.select.i.i.i.i = sub nuw i64 %9, %.239.i.lcssa ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #24, !noalias !47
   store i64 %spec.select.i.i.i.i, ptr %i.e, align 8, !tbaa !27, !noalias !47
   %i.ao = icmp ugt i64 %spec.select.i.i.i.i, 15

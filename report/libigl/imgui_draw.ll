@@ -205,9 +205,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bm = add nuw nsw i32 %i.bj, 2
-  %i.bn = sub nsw i32 %i.be, %i.bl
-  %.neg.lhs.trunc = trunc nsw i32 %i.bn to i8
-  %.neg120 = sdiv i8 %.neg.lhs.trunc, -2
+  %i.bn = sub nuw nsw i32 %i.be, %i.bl
+  %.neg.lhs.trunc = trunc nuw nsw i32 %i.bn to i8
+  %.neg120132 = lshr i8 %.neg.lhs.trunc, 1
+  %.neg120 = sub nsw i8 0, %.neg120132
   %.neg.sext = sext i8 %.neg120 to i32
   %i.bo = add nsw i32 %i.be, %.neg.sext
   br label %bb.n
@@ -610,7 +611,7 @@ bb.h:                                             ; preds = %.lr.ph.i.us.i.i
   %i.by = icmp sgt i32 %i.bx, %i.az
   %i.bz = sub nsw i32 %i.az, %.0373.i.us.i.i
   %spec.select.i.us.i.i = select i1 %i.by, i32 %i.bz, i32 %i.bw ; 2 uses
-  %i.ca = sub nsw i32 %.0392.i.us.i.i, %i.bq
+  %i.ca = sub nuw nsw i32 %.0392.i.us.i.i, %i.bq
   %i.cb = mul nsw i32 %spec.select.i.us.i.i, %i.ca
   br label %bb.l
 
@@ -797,7 +798,7 @@ bb.x:                                             ; preds = %.lr.ph.i110.i.i
   %i.eo = icmp sgt i32 %i.en, %i.az
   %i.ep = sub nsw i32 %i.az, %.0373.i112.i.i
   %spec.select.i115.i.i = select i1 %i.eo, i32 %i.ep, i32 %i.em ; 2 uses
-  %i.eq = sub nsw i32 %.0392.i113.i.i, %i.dx
+  %i.eq = sub nuw nsw i32 %.0392.i113.i.i, %i.dx
   %i.er = mul nsw i32 %spec.select.i115.i.i, %i.eq
   br label %bb.y
 
@@ -1200,9 +1201,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  %i.aj = sub nsw i32 %0, %i.z
-  %i.ak = shl nsw i32 %i.aj, 1
-  %i.al = zext i32 %i.ak to i64
+  %i.aj = sub nuw nsw i32 %0, %i.z
+  %i.ak = shl nuw nsw i32 %i.aj, 1
+  %i.al = zext nneg i32 %i.ak to i64
   %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.al ; 2 uses
   %.val156 = load i8, ptr %i.am, align 1, !tbaa !22
   %i.an = getelementptr i8, ptr %i.am, i64 1

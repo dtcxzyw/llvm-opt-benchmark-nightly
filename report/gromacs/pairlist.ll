@@ -205,11 +205,10 @@ bb.ad:                                            ; preds = %.lr.ph509
 _ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit: ; preds = %bb.ad, %._ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit_crit_edge510, %.preheader.i
   %.0.lcssa.in.i = phi i64 [ %smax.i, %.preheader.i ], [ %indvars.iv.next8.i508, %._ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit_crit_edge510 ], [ %smax.i, %bb.ad ]
   %i.hi = sub i64 %.0.lcssa.in.i, %indvars.iv.i
-  %sext.i = shl i64 %i.hi, 32                     ; 2 uses
-  %20 = ashr exact i64 %sext.i, 32
-  %.idx = mul nsw i64 %20, 376
-  %i.hj = getelementptr inbounds i8, ptr %i.gy, i64 %.idx
-  %.not263315 = icmp eq i64 %sext.i, 0
+  %20 = and i64 %i.hi, 4294967295                 ; 2 uses
+  %.idx = mul nuw nsw i64 %20, 376
+  %i.hj = getelementptr inbounds nuw i8, ptr %i.gy, i64 %.idx
+  %.not263315 = icmp eq i64 %20, 0
   br i1 %.not263315, label %._crit_edge318, label %.lr.ph317
 
 .lr.ph317:                                        ; preds = %_ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit
@@ -511,11 +510,10 @@ bb.be:                                            ; preds = %.lr.ph514
 _ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit145: ; preds = %bb.be, %._ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit145_crit_edge516, %.preheader.i136
   %.0.lcssa.in.i141 = phi i64 [ %smax.i137, %.preheader.i136 ], [ %indvars.iv.next8.i139513, %._ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit145_crit_edge516 ], [ %smax.i137, %bb.be ]
   %i.ly = sub i64 %.0.lcssa.in.i141, %indvars.iv.i133
-  %sext.i142 = shl i64 %i.ly, 32                  ; 2 uses
-  %21 = ashr exact i64 %sext.i142, 32
-  %.idx334 = mul nsw i64 %21, 376
-  %i.lz = getelementptr inbounds i8, ptr %i.lo, i64 %.idx334
-  %.not267311 = icmp eq i64 %sext.i142, 0
+  %21 = and i64 %i.ly, 4294967295                 ; 2 uses
+  %.idx334 = mul nuw nsw i64 %21, 376
+  %i.lz = getelementptr inbounds nuw i8, ptr %i.lo, i64 %.idx334
+  %.not267311 = icmp eq i64 %21, 0
   br i1 %.not267311, label %._crit_edge314, label %.lr.ph313
 
 ._crit_edge314:                                   ; preds = %bb.bt, %_ZN3gmxL11getGridListENS_8ArrayRefIKNS_4GridEEERKNS_5RangeIiEE.exit145

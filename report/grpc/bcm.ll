@@ -205,7 +205,7 @@ begin_hunk_0_@aes_nohw_ctr32_encrypt_blocks:bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.unr-lcssa, %.epil.preheader
-  %i.mz = sub i64 %.038, %i.df                    ; 2 uses
+  %i.mz = sub nuw i64 %.038, %i.df                ; 2 uses
   %i.na = icmp eq i64 %i.mz, 0
   br i1 %i.na, label %bb.f, label %bb.e
 
@@ -608,7 +608,7 @@ begin_hunk_1_@aes_nohw_cbc_encrypt:bb.a
   %i.pi = getelementptr i8, ptr %i.a, i64 %i.ft
   %i.pj = getelementptr i8, ptr %i.pi, i64 -16
   %.sroa.0.0.copyload115 = load <2 x i64>, ptr %i.pj, align 16 ; 2 uses
-  %i.pk = sub i64 %.1, %i.fs                      ; 2 uses
+  %i.pk = sub nuw nsw i64 %.1, %i.fs              ; 2 uses
   %i.pl = icmp eq i64 %i.pk, 0
   %i.pm = getelementptr inbounds nuw i8, ptr %.143, i64 128
   %i.pn = getelementptr inbounds nuw i8, ptr %.145, i64 128
@@ -1011,7 +1011,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %.not, label %bb.b, label %_ZL14OPENSSL_memsetPvim.exit
 
 bb.b:                                             ; preds = %._crit_edge
-  %i.x = sub i64 %1, %spec.select
+  %i.x = sub nuw i64 %1, %spec.select
   tail call void @llvm.memset.p0.i64(ptr align 1 %0, i8 0, i64 %i.x, i1 false)
   br label %_ZL14OPENSSL_memsetPvim.exit
 
@@ -1233,7 +1233,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %.not.i, label %bb.d, label %bn_words_to_big_endian.exit
 
 bb.d:                                             ; preds = %._crit_edge.i
-  %i.bt = sub nsw i64 %.0.i.i, %spec.select.i
+  %i.bt = sub nuw nsw i64 %.0.i.i, %spec.select.i
   tail call void @llvm.memset.p0.i64(ptr align 1 %1, i8 0, i64 %i.bt, i1 false)
   br label %bn_words_to_big_endian.exit
 
@@ -1351,7 +1351,7 @@ _ZL14OPENSSL_memcpyPvPKvm.exit:                   ; preds = %_ZL13fits_in_bytesP
   br i1 %.not20, label %bb.c, label %_ZL14OPENSSL_memsetPvim.exit
 
 bb.c:                                             ; preds = %_ZL14OPENSSL_memcpyPvPKvm.exit
-  %i.z = sub i64 %1, %spec.select
+  %i.z = sub nuw i64 %1, %spec.select
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 %spec.select
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.aa, i8 0, i64 %i.z, i1 false)
   br label %_ZL14OPENSSL_memsetPvim.exit
@@ -1532,7 +1532,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %.not.i, label %bb.b, label %bn_words_to_big_endian.exit
 
 bb.b:                                             ; preds = %._crit_edge.i
-  %i.as = sub i64 %1, %spec.select.i
+  %i.as = sub nuw i64 %1, %spec.select.i
   tail call void @llvm.memset.p0.i64(ptr align 1 %0, i8 0, i64 %i.as, i1 false)
   br label %bn_words_to_big_endian.exit
 
@@ -1935,7 +1935,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.bq, label %._crit_edge.i, label %scalar.ph
 
 bb.n:                                             ; preds = %bb.m
-  %i.br = sub nsw i64 %.pre-phi, %i.y
+  %i.br = sub nuw nsw i64 %.pre-phi, %i.y
   %i.bs = shl nsw i64 %i.br, 3
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.y
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.u, ptr readonly align 1 %i.bt, i64 %i.bs, i1 false)
@@ -1945,7 +1945,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.ac
   %i.bv = load i64, ptr %i.bu, align 8, !tbaa !94
   %i.bw = lshr i64 %i.bv, %i.ae
-  %i.bx = sub nsw i64 %i.ac, %i.y
+  %i.bx = sub nuw nsw i64 %i.ac, %i.y
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.bx
   store i64 %i.bw, ptr %i.by, align 8, !tbaa !94
   br label %_ZL15OPENSSL_memmovePvPKvm.exit.i
@@ -2348,14 +2348,14 @@ bb.ab:                                            ; preds = %.lr.ph
   br label %bb.ac
 
 bb.ac:                                            ; preds = %.outer, %bb.ag
-  %.099 = phi i32 [ %i.gx, %bb.ag ], [ %.099.ph, %.outer ] ; 12 uses
+  %.099 = phi i32 [ %i.gx, %bb.ag ], [ %.099.ph, %.outer ] ; 11 uses
   %i.gi = icmp slt i32 %.099, 0
   br i1 %i.gi, label %BN_is_bit_set.exit.thread, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   %i.gj = load i32, ptr %i.bx, align 8, !tbaa !186
   %i.gk = sext i32 %i.gj to i64                   ; 6 uses
-  %i.gl = zext nneg i32 %.099 to i64              ; 2 uses
+  %i.gl = zext nneg i32 %.099 to i64              ; 7 uses
   %i.gm = lshr i64 %i.gl, 6                       ; 2 uses
   %.not.i.i141 = icmp ult i64 %i.gm, %i.gk
   br i1 %.not.i.i141, label %BN_is_bit_set.exit, label %BN_is_bit_set.exit.thread
@@ -2374,13 +2374,6 @@ BN_is_bit_set.exit:                               ; preds = %bb.ad
   %i.gt = icmp ne i32 %.099, 0
   %i.gu = and i1 %i.fr, %i.gt
   br i1 %i.gu, label %.lr.ph187, label %._crit_edge
-
-.lr.ph187:                                        ; preds = %.preheader169
-  %7 = zext nneg i32 %.099 to i64                 ; 5 uses
-  %8 = add nsw i64 %7, -1                         ; 2 uses
-  %9 = lshr i64 %8, 6                             ; 2 uses
-  %.not.i.i143 = icmp ult i64 %9, %i.gk
-  br i1 %.not.i.i143, label %BN_is_bit_set.exit145, label %.thread
 
 BN_is_bit_set.exit.thread:                        ; preds = %bb.ad, %bb.ac, %BN_is_bit_set.exit
   br i1 %.not124, label %bb.ae, label %bb.af
@@ -2410,9 +2403,15 @@ bb.ag:                                            ; preds = %bb.af
   %.096.lcssa = phi i32 [ 0, %.preheader169 ], [ %.lcssa306, %._crit_edge.loopexit ] ; 3 uses
   br i1 %.not124, label %.preheader, label %.critedge136
 
+.lr.ph187:                                        ; preds = %.preheader169
+  %7 = add nsw i64 %i.gl, -1                      ; 2 uses
+  %8 = lshr i64 %7, 6                             ; 2 uses
+  %.not.i.i143 = icmp ult i64 %8, %i.gk
+  br i1 %.not.i.i143, label %BN_is_bit_set.exit145, label %.thread
+
 BN_is_bit_set.exit145:                            ; preds = %.lr.ph187
-  %i.ha = and i64 %8, 63
-  %i.hb = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %9
+  %i.ha = and i64 %7, 63
+  %i.hb = getelementptr inbounds nuw [8 x i8], ptr %i.gn, i64 %8
   %i.hc = load i64, ptr %i.hb, align 8, !tbaa !94
   %i.hd = shl nuw i64 1, %i.ha
   %i.he = and i64 %i.hc, %i.hd
@@ -2430,7 +2429,7 @@ BN_is_bit_set.exit145:                            ; preds = %.lr.ph187
   br i1 %i.hj, label %bb.ah, label %._crit_edge.loopexit
 
 bb.ah:                                            ; preds = %.thread
-  %i.hk = add nsw i64 %7, -2                      ; 2 uses
+  %i.hk = add nsw i64 %i.gl, -2                   ; 2 uses
   %i.hl = lshr i64 %i.hk, 6                       ; 2 uses
   %.not.i.i143.1 = icmp ult i64 %i.hl, %i.gk
   br i1 %.not.i.i143.1, label %BN_is_bit_set.exit145.1, label %.thread.1
@@ -2459,7 +2458,7 @@ bb.ai:                                            ; preds = %BN_is_bit_set.exit1
   br i1 %i.hy, label %bb.aj, label %._crit_edge.loopexit
 
 bb.aj:                                            ; preds = %.thread.1
-  %i.hz = add nsw i64 %7, -3                      ; 2 uses
+  %i.hz = add nsw i64 %i.gl, -3                   ; 2 uses
   %i.ia = lshr i64 %i.hz, 6                       ; 2 uses
   %.not.i.i143.2 = icmp ult i64 %i.ia, %i.gk
   br i1 %.not.i.i143.2, label %BN_is_bit_set.exit145.2, label %.thread.2
@@ -2488,7 +2487,7 @@ bb.ak:                                            ; preds = %BN_is_bit_set.exit1
   br i1 %i.in, label %bb.al, label %._crit_edge.loopexit
 
 bb.al:                                            ; preds = %.thread.2
-  %i.io = add nsw i64 %7, -4                      ; 2 uses
+  %i.io = add nsw i64 %i.gl, -4                   ; 2 uses
   %i.ip = lshr i64 %i.io, 6                       ; 2 uses
   %.not.i.i143.3 = icmp ult i64 %i.ip, %i.gk
   br i1 %.not.i.i143.3, label %BN_is_bit_set.exit145.3, label %.thread.3
@@ -2517,7 +2516,7 @@ bb.am:                                            ; preds = %BN_is_bit_set.exit1
   br i1 %i.jc, label %bb.an, label %._crit_edge.loopexit
 
 bb.an:                                            ; preds = %.thread.3
-  %i.jd = add nsw i64 %7, -5                      ; 2 uses
+  %i.jd = add nsw i64 %i.gl, -5                   ; 2 uses
   %i.je = lshr i64 %i.jd, 6                       ; 2 uses
   %.not.i.i143.4 = icmp ult i64 %i.je, %i.gk
   br i1 %.not.i.i143.4, label %BN_is_bit_set.exit145.4, label %._crit_edge.loopexit
@@ -2920,7 +2919,7 @@ scalar.ph68.prol.loopexit:                        ; preds = %scalar.ph68.prol, %
   br i1 %i.cz, label %._crit_edge.i, label %scalar.ph68
 
 bb.s:                                             ; preds = %bb.r
-  %i.da = sub nsw i64 %i.be, %i.bh
+  %i.da = sub nuw nsw i64 %i.be, %i.bh
   %i.db = shl nsw i64 %i.da, 3
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.bh
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.ay, ptr readonly align 1 %i.dc, i64 %i.db, i1 false)
@@ -2930,7 +2929,7 @@ bb.s:                                             ; preds = %bb.r
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.bl
   %i.de = load i64, ptr %i.dd, align 8, !tbaa !94
   %i.df = lshr i64 %i.de, %i.bn
-  %i.dg = sub nsw i64 %i.bl, %i.bh
+  %i.dg = sub nuw nsw i64 %i.bl, %i.bh
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.dg
   store i64 %i.df, ptr %i.dh, align 8, !tbaa !94
   br label %_ZL15OPENSSL_memmovePvPKvm.exit.i
@@ -3333,7 +3332,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %.not63.peel, label %.loopexit, label %bb.q
 
 bb.q:                                             ; preds = %.peel.begin
-  %i.bc = sub i64 %1, %spec.store.select.peel     ; 2 uses
+  %i.bc = sub nuw i64 %1, %spec.store.select.peel ; 2 uses
   %i.bd = load i32, ptr %i.ba, align 8, !tbaa !711
   %i.be = add i32 %i.bd, 1
   store i32 %i.be, ptr %i.ba, align 8, !tbaa !711
@@ -3358,7 +3357,7 @@ bb.r:                                             ; preds = %.peel.next, %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.bh = getelementptr inbounds nuw i8, ptr %.05065, i64 %spec.store.select
-  %i.bi = sub i64 %.04966, %spec.store.select     ; 2 uses
+  %i.bi = sub nuw i64 %.04966, %spec.store.select ; 2 uses
   %i.bj = load i32, ptr %i.ba, align 8, !tbaa !711
   %i.bk = add i32 %i.bj, 1
   store i32 %i.bk, ptr %i.ba, align 8, !tbaa !711
@@ -3512,7 +3511,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   br i1 %i.au, label %._crit_edge, label %scalar.ph
 
 bb.e:                                             ; preds = %bb.d
-  %i.av = sub i64 %3, %i.c
+  %i.av = sub nuw i64 %3, %i.c
   %i.aw = shl i64 %i.av, 3                        ; 2 uses
   %i.ax = icmp eq i64 %i.aw, 0
   br i1 %i.ax, label %_ZL15OPENSSL_memmovePvPKvm.exit, label %bb.f
@@ -3526,7 +3525,7 @@ bb.f:                                             ; preds = %bb.e
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.g
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !94
   %i.bb = lshr i64 %i.ba, %i.i
-  %i.bc = sub i64 %i.g, %i.c
+  %i.bc = sub nuw i64 %i.g, %i.c
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.bc
   store i64 %i.bb, ptr %i.bd, align 8, !tbaa !94
   br label %_ZL15OPENSSL_memmovePvPKvm.exit
@@ -3929,7 +3928,7 @@ bb.g:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !770
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %7
-  %i.s = sub i64 %3, %7
+  %i.s = sub nuw i64 %3, %7
   %i.t = call noundef i32 %i.q(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %i.r, ptr noundef nonnull %i.a, i64 noundef %i.s, ptr noundef %4, i64 noundef %5, ptr noundef %6, i64 noundef %7, ptr noundef null, i64 noundef 0, ptr noundef %8, i64 noundef %9) #36
   %.not29 = icmp eq i32 %i.t, 0
   br i1 %.not29, label %bb.i, label %bb.h
@@ -4332,7 +4331,7 @@ bb.p:                                             ; preds = %.preheader
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.o
-  %i.al = sub nsw i32 %i.n, %i.ad                 ; 5 uses
+  %i.al = sub nuw nsw i32 %i.n, %i.ad             ; 5 uses
   %i.am = icmp sgt i32 %i.al, 0
   br i1 %i.am, label %iter.check, label %._crit_edge
 
@@ -4735,7 +4734,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZL14OPENSSL_memcpyPvPKvm.exit.i:                 ; preds = %bb.g, %bb.f
   %i.n = phi i32 [ %i.h, %bb.f ], [ %.pre.i, %bb.g ]
-  %i.o = sub i64 %4, %spec.select.i               ; 2 uses
+  %i.o = sub nuw i64 %4, %spec.select.i           ; 2 uses
   %i.p = trunc i64 %spec.select.i to i32
   %i.q = add i32 %i.n, %i.p                       ; 2 uses
   store i32 %i.q, ptr %i.g, align 8, !tbaa !809
@@ -4768,7 +4767,7 @@ bb.i:                                             ; preds = %bb.h, %bb.e
 
 bb.j:                                             ; preds = %.lr.ph.i
   %i.ab = getelementptr inbounds nuw i8, ptr %.14255.i, i64 %i.f ; 2 uses
-  %i.ac = sub i64 %.14056.i, %i.f                 ; 3 uses
+  %i.ac = sub nuw i64 %.14056.i, %i.f             ; 3 uses
   %i.ad = icmp ugt i64 %i.ac, %i.f
   br i1 %i.ad, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !812
 
@@ -5171,7 +5170,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZL14OPENSSL_memcpyPvPKvm.exit:                   ; preds = %bb.b, %bb.c
   %i.m = phi i32 [ %i.g, %bb.b ], [ %.pre, %bb.c ]
-  %i.n = sub i64 %2, %spec.select                 ; 2 uses
+  %i.n = sub nuw i64 %2, %spec.select             ; 2 uses
   %i.o = trunc i64 %spec.select to i32
   %i.p = add i32 %i.m, %i.o
   store i32 %i.p, ptr %i.f, align 8, !tbaa !809
@@ -5204,7 +5203,7 @@ bb.e:                                             ; preds = %bb.d, %bb.a
 
 bb.f:                                             ; preds = %.lr.ph
   %i.aa = getelementptr inbounds nuw i8, ptr %.14255, i64 %i.e ; 2 uses
-  %i.ab = sub i64 %.14056, %i.e                   ; 3 uses
+  %i.ab = sub nuw i64 %.14056, %i.e               ; 3 uses
   %i.ac = icmp ugt i64 %i.ab, %i.e
   br i1 %i.ac, label %.lr.ph, label %._crit_edge, !llvm.loop !812
 
@@ -5607,7 +5606,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %.not.i.i23, label %bb.h, label %BN_bn2bin_padded.exit
 
 bb.h:                                             ; preds = %._crit_edge.i.i22
-  %i.cy = sub nsw i64 %i.bh, %spec.select.i.i
+  %i.cy = sub nuw nsw i64 %i.bh, %spec.select.i.i
   tail call void @llvm.memset.p0.i64(ptr align 1 %0, i8 0, i64 %i.cy, i1 false)
   br label %BN_bn2bin_padded.exit
 
@@ -6010,7 +6009,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %.not.i.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge.i.i
-  %i.cs = sub nsw i64 %.0.i.i, %spec.select.i.i
+  %i.cs = sub nuw nsw i64 %.0.i.i, %spec.select.i.i
   call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 0, i64 %i.cs, i1 false)
   br label %bb.g
 
@@ -6413,7 +6412,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %.not.i, label %bb.d, label %bn_words_to_big_endian.exit
 
 bb.d:                                             ; preds = %._crit_edge.i
-  %i.bt = sub nsw i64 %.0.i.i, %spec.select.i
+  %i.bt = sub nuw nsw i64 %.0.i.i, %spec.select.i
   tail call void @llvm.memset.p0.i64(ptr align 1 %1, i8 0, i64 %i.bt, i1 false)
   br label %bn_words_to_big_endian.exit
 
@@ -6816,7 +6815,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   br i1 %.not.i, label %bb.d, label %bn_words_to_big_endian.exit
 
 bb.d:                                             ; preds = %._crit_edge.i
-  %i.bt = sub nsw i64 %.0.i.i, %spec.select.i
+  %i.bt = sub nuw nsw i64 %.0.i.i, %spec.select.i
   tail call void @llvm.memset.p0.i64(ptr align 1 %1, i8 0, i64 %i.bt, i1 false)
   br label %bn_words_to_big_endian.exit
 
@@ -7219,7 +7218,7 @@ bb.h:                                             ; preds = %bb.g
 _ZL14OPENSSL_memcpyPvPKvm.exit:                   ; preds = %bb.g, %bb.h
   %i.ac = phi i64 [ %i.x, %bb.g ], [ %.pre31, %bb.h ]
   %i.ad = getelementptr inbounds nuw i8, ptr %.02528, i64 %spec.select
-  %i.ae = sub i64 %.02429, %spec.select           ; 2 uses
+  %i.ae = sub nuw i64 %.02429, %spec.select       ; 2 uses
   %i.af = add i64 %i.ac, %spec.select             ; 2 uses
   store i64 %i.af, ptr %i.s, align 8, !tbaa !1245
   %.not = icmp eq i64 %i.ae, 0
@@ -7622,7 +7621,7 @@ _ZL14OPENSSL_memsetPvim.exit:                     ; preds = %bb.c
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 1, ptr %i.d, align 1, !tbaa !13
   %i.e = add i64 %1, -3
-  %i.f = sub i64 %i.e, %3
+  %i.f = sub nuw i64 %i.e, %3
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 2
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.g, i8 -1, i64 %i.f, i1 false)
   %i.h = xor i64 %3, -1
@@ -8025,7 +8024,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.j, %bb.k, %bb.n
   %.061 = phi i64 [ %i.cs, %bb.n ], [ %i.cq, %bb.k ], [ %i.d, %bb.j ] ; 17 uses
-  %i.ct = sub nsw i64 %.064, %i.d                 ; 2 uses
+  %i.ct = sub nuw nsw i64 %.064, %i.d             ; 2 uses
   %i.cu = add nsw i64 %i.ct, -2
   %i.cv = icmp ult i64 %i.cu, %.061
   br i1 %i.cv, label %bb.p, label %bb.q
@@ -8428,7 +8427,7 @@ _ZL14OPENSSL_memsetPvim.exit:                     ; preds = %bb.a
 
 bb.b:                                             ; preds = %_ZL14OPENSSL_memsetPvim.exit
   %i.d = lshr i64 %4, 1                           ; 2 uses
-  %i.e = sub i64 %4, %i.d                         ; 2 uses
+  %i.e = sub nuw i64 %4, %i.d                     ; 2 uses
   %i.f = tail call ptr @EVP_md5() #36
   %i.g = tail call fastcc noundef i32 @_ZL11tls1_P_hashPhmPK9env_md_stPKhmPKcmS4_mS4_m(ptr noundef %1, i64 noundef %2, ptr noundef %i.f, ptr noundef %3, i64 noundef %i.e, ptr noundef %5, i64 noundef %6, ptr noundef %7, i64 noundef %8, ptr noundef %9, i64 noundef %10)
   %.not = icmp eq i32 %i.g, 0
@@ -8735,7 +8734,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.m
   %i.dk = getelementptr inbounds nuw i8, ptr %.038117, i64 %spec.select
-  %i.dl = sub i64 %.040116, %spec.select          ; 2 uses
+  %i.dl = sub nuw i64 %.040116, %spec.select      ; 2 uses
   %i.dm = icmp eq i64 %i.dl, 0
   br i1 %i.dm, label %bb.q, label %bb.n
 
@@ -9138,7 +9137,7 @@ _ZL12p224_get_bitPK9EC_SCALARm.exit95:            ; preds = %_ZL12p224_get_bitPK
   %i.jr = and i64 %i.jn, %.0.i94
   %i.js = or i64 %i.jr, %i.jq                     ; 2 uses
   %i.jt = lshr i64 %i.js, 1
-  %i.ju = sub nsw i64 %i.js, %i.jt
+  %i.ju = sub nuw nsw i64 %i.js, %i.jt
   %i.jv = and i64 %i.jo, 1
   %i.jw = getelementptr inbounds nuw [96 x i8], ptr %i.a, i64 %i.ju
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %i.c, ptr noundef nonnull readonly align 16 dereferenceable(96) %i.jw, i64 96, i1 false)
@@ -9541,7 +9540,7 @@ bb.j:                                             ; preds = %bb.i
 _ZL14OPENSSL_memcpyPvPKvm.exit.i:                 ; preds = %bb.j, %bb.i
   %i.ak = phi i64 [ %i.ag, %bb.i ], [ %.pre31.i, %bb.j ]
   %i.al = getelementptr inbounds nuw i8, ptr %.02528.i, i64 %spec.select.i
-  %i.am = sub i64 %.02429.i, %spec.select.i       ; 2 uses
+  %i.am = sub nuw nsw i64 %.02429.i, %spec.select.i ; 2 uses
   %i.an = add i64 %i.ak, %spec.select.i           ; 3 uses
   store i64 %i.an, ptr %i.h, align 8, !tbaa !1245
   %.not.i = icmp eq i64 %i.am, 0
@@ -9944,7 +9943,7 @@ bb.i:                                             ; preds = %bb.h
 _ZL14OPENSSL_memcpyPvPKvm.exit.i:                 ; preds = %bb.i, %bb.h
   %i.ae = phi i64 [ %i.aa, %bb.h ], [ %.pre31.i, %bb.i ]
   %i.af = getelementptr inbounds nuw i8, ptr %.02528.i, i64 %spec.select.i
-  %i.ag = sub i64 %.02429.i, %spec.select.i       ; 2 uses
+  %i.ag = sub nuw nsw i64 %.02429.i, %spec.select.i ; 2 uses
   %i.ah = add i64 %i.ae, %spec.select.i           ; 2 uses
   store i64 %i.ah, ptr %i.i, align 8, !tbaa !1245
   %.not.i = icmp eq i64 %i.ag, 0
@@ -10347,7 +10346,7 @@ bb.h:                                             ; preds = %bb.g
 _ZL14OPENSSL_memcpyPvPKvm.exit.i:                 ; preds = %bb.h, %bb.g
   %i.ai = phi i64 [ %i.ae, %bb.g ], [ %.pre31.i, %bb.h ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.02528.i, i64 %spec.select.i
-  %i.ak = sub i64 %.02429.i, %spec.select.i       ; 2 uses
+  %i.ak = sub nuw nsw i64 %.02429.i, %spec.select.i ; 2 uses
   %i.al = add i64 %i.ai, %spec.select.i           ; 3 uses
   store i64 %i.al, ptr %i.h, align 8, !tbaa !1245
   %.not.i12 = icmp eq i64 %i.ak, 0
@@ -10496,7 +10495,7 @@ bb.s:                                             ; preds = %bb.r
 _ZL14OPENSSL_memcpyPvPKvm.exit.i.1:               ; preds = %bb.s, %bb.r
   %i.cl = phi i64 [ %i.ch, %bb.r ], [ %.pre31.i.1, %bb.s ]
   %i.cm = getelementptr inbounds nuw i8, ptr %.02528.i.1, i64 %spec.select.i.1
-  %i.cn = sub i64 %.02429.i.1, %spec.select.i.1   ; 2 uses
+  %i.cn = sub nuw nsw i64 %.02429.i.1, %spec.select.i.1 ; 2 uses
   %i.co = add i64 %i.cl, %spec.select.i.1         ; 3 uses
   store i64 %i.co, ptr %i.h, align 8, !tbaa !1245
   %.not.i12.1 = icmp eq i64 %i.cn, 0
@@ -10645,7 +10644,7 @@ bb.ad:                                            ; preds = %bb.ac
 _ZL14OPENSSL_memcpyPvPKvm.exit.i.2:               ; preds = %bb.ad, %bb.ac
   %i.eo = phi i64 [ %i.ek, %bb.ac ], [ %.pre31.i.2, %bb.ad ]
   %i.ep = getelementptr inbounds nuw i8, ptr %.02528.i.2, i64 %spec.select.i.2
-  %i.eq = sub i64 %.02429.i.2, %spec.select.i.2   ; 2 uses
+  %i.eq = sub nuw nsw i64 %.02429.i.2, %spec.select.i.2 ; 2 uses
   %i.er = add i64 %i.eo, %spec.select.i.2         ; 3 uses
   store i64 %i.er, ptr %i.h, align 8, !tbaa !1245
   %.not.i12.2 = icmp eq i64 %i.eq, 0
@@ -11048,7 +11047,7 @@ bb.j:                                             ; preds = %bb.i
 _ZL14OPENSSL_memcpyPvPKvm.exit.i:                 ; preds = %bb.j, %bb.i
   %i.ak = phi i64 [ %i.ag, %bb.i ], [ %.pre31.i, %bb.j ]
   %i.al = getelementptr inbounds nuw i8, ptr %.02528.i, i64 %spec.select.i
-  %i.am = sub i64 %.02429.i, %spec.select.i       ; 2 uses
+  %i.am = sub nuw nsw i64 %.02429.i, %spec.select.i ; 2 uses
   %i.an = add i64 %i.ak, %spec.select.i           ; 3 uses
   store i64 %i.an, ptr %i.h, align 8, !tbaa !1245
   %.not.i = icmp eq i64 %i.am, 0
@@ -11451,7 +11450,7 @@ bb.j:                                             ; preds = %bb.i
 _ZL14OPENSSL_memcpyPvPKvm.exit.i:                 ; preds = %bb.j, %bb.i
   %i.ak = phi i64 [ %i.ag, %bb.i ], [ %.pre31.i, %bb.j ]
   %i.al = getelementptr inbounds nuw i8, ptr %.02528.i, i64 %spec.select.i
-  %i.am = sub i64 %.02429.i, %spec.select.i       ; 2 uses
+  %i.am = sub nuw nsw i64 %.02429.i, %spec.select.i ; 2 uses
   %i.an = add i64 %i.ak, %spec.select.i           ; 3 uses
   store i64 %i.an, ptr %i.h, align 8, !tbaa !1245
   %.not.i12 = icmp eq i64 %i.am, 0

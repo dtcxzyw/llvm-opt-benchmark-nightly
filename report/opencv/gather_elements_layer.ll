@@ -204,8 +204,6 @@ $_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShape
 
 $_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__48 = comdat any
 
-$_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__51 = comdat any
-
 $_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__52 = comdat any
 
 $_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__55 = comdat any
@@ -266,7 +264,6 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 @__func__._ZNK2cv8MatShapeixEm = private unnamed_addr constant [11 x i8] c"operator[]\00", align 1
 @.str.18 = private unnamed_addr constant [76 x i8] c"/opt-bench/work/opencv/opencv/modules/core/include/opencv2/core/mat.inl.hpp\00", align 1
 @.str.19 = private unnamed_addr constant [66 x i8] c"size_t cv::dnn::dnn5_v20260605::total(const MatShape &, int, int)\00", align 1
-@.str.20 = private unnamed_addr constant [2 x i8] c"0\00", align 1
 @.str.21 = private unnamed_addr constant [6 x i8] c"start\00", align 1
 @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__166 = internal constant %"struct.cv::detail::CheckContext" { ptr @.str.19, ptr @.str.8, i32 166, i32 3, ptr @.str.10, ptr @.str.21, ptr @.str.22 }, align 8
 @.str.22 = private unnamed_addr constant [4 x i8] c"end\00", align 1
@@ -313,7 +310,6 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 @.str.28 = private unnamed_addr constant [64 x i8] c"GatherElements: data and indices should have the same dimension\00", align 1
 @.str.29 = private unnamed_addr constant [12 x i8] c"data.size()\00", align 1
 @.str.30 = private unnamed_addr constant [15 x i8] c"indices.size()\00", align 1
-@_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__51 = linkonce_odr hidden constant %"struct.cv::detail::CheckContext" { ptr @.str.24, ptr @.str.13, i32 51, i32 5, ptr @.str.31, ptr @.str.32, ptr @.str.20 }, comdat, align 8
 @.str.31 = private unnamed_addr constant [34 x i8] c"GatherElements: axis out of range\00", align 1
 @.str.32 = private unnamed_addr constant [16 x i8] c"normalized_axis\00", align 1
 @_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__52 = linkonce_odr hidden constant %"struct.cv::detail::CheckContext" { ptr @.str.24, ptr @.str.13, i32 52, i32 4, ptr @.str.31, ptr @.str.32, ptr @.str.33 }, comdat, align 8
@@ -716,7 +712,7 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 bb.k:                                             ; preds = %bb.i
-  %i.q = sub nsw i32 %i.c, %i.e
+  %i.q = sub nuw nsw i32 %i.c, %i.e
   br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit
 
 _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit: ; preds = %bb.k, %bb.j, %bb.h
@@ -1033,7 +1029,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 52 ; 3 uses
   %i.j = load i32, ptr %i.c, align 4, !tbaa !79   ; 2 uses
-  %narrow.i = tail call i32 @llvm.smax.i32(i32 %i.j, i32 0) ; 8 uses
+  %narrow.i = tail call i32 @llvm.smax.i32(i32 %i.j, i32 0) ; 9 uses
   %spec.select.i = zext nneg i32 %narrow.i to i64 ; 2 uses
   %i.k = load i32, ptr %i.i, align 4, !tbaa !79   ; 2 uses
   %narrow.i31 = tail call i32 @llvm.smax.i32(i32 %i.k, i32 0) ; 2 uses
@@ -1047,8 +1043,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 156
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !43   ; 7 uses
-  %i.o = sub nsw i32 0, %narrow.i                 ; 2 uses
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !43   ; 8 uses
+  %i.o = sub nsw i32 0, %narrow.i
   %.not.i = icmp slt i32 %i.n, %i.o
   %.not20.i = icmp sgt i32 %i.n, %narrow.i
   %or.cond.i = or i1 %.not.i, %.not20.i
@@ -1064,22 +1060,23 @@ bb.g:                                             ; preds = %bb.e
 
 _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.a: ; preds = %bb.g
   %i.q = icmp slt i32 %i.n, 0
-  %.p = select i1 %i.q, i32 %narrow.i, i32 %i.o
-  %9 = add i32 %.p, %i.n                          ; 3 uses
-  %10 = icmp sgt i32 %9, -1
-  br i1 %10, label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread, label %bb.h
+  br i1 %i.q, label %bb.h, label %9
+
+9:                                                ; preds = %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.a
+  %10 = sub nuw nsw i32 %i.n, %narrow.i
+  br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread
 
 bb.h:                                             ; preds = %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.a
-  tail call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %9, i32 noundef 0, ptr noundef nonnull align 8 dereferenceable(48) @_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__51) #21
-  unreachable
+  %11 = add nsw i32 %i.n, %narrow.i
+  br label %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread
 
-_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread: ; preds = %bb.g, %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.a
-  %11 = phi i32 [ %9, %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.a ], [ %i.n, %bb.g ] ; 3 uses
-  %i.r = icmp samesign ult i32 %11, %narrow.i
+_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread: ; preds = %bb.h, %bb.g, %9
+  %12 = phi i32 [ %11, %bb.h ], [ %i.n, %bb.g ], [ %10, %9 ] ; 3 uses
+  %i.r = icmp samesign ult i32 %12, %narrow.i
   br i1 %i.r, label %.preheader, label %bb.i
 
 .preheader:                                       ; preds = %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread
-  %i.s = zext nneg i32 %11 to i64
+  %i.s = zext nneg i32 %12 to i64
   %narrow.i45 = tail call i32 @llvm.smax.i32(i32 %i.j, i32 1)
   %spec.select.i46 = zext nneg i32 %narrow.i45 to i64
   %narrow.i47 = tail call i32 @llvm.smax.i32(i32 %i.k, i32 1)
@@ -1089,7 +1086,7 @@ _ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread: ; preds = %bb.g, %_Z
   br label %bb.k
 
 bb.i:                                             ; preds = %_ZN2cv3dnn14dnn5_v20260605L14normalize_axisEii.exit.thread
-  tail call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %11, i32 noundef %narrow.i, ptr noundef nonnull align 8 dereferenceable(48) @_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__52) #21
+  tail call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %12, i32 noundef %narrow.i, ptr noundef nonnull align 8 dereferenceable(48) @_ZZNK2cv3dnn23GatherElementsLayerImpl15getMemoryShapesERKSt6vectorINS_8MatShapeESaIS3_EEiRS5_S8_E14__cv_check__52) #21
   unreachable
 
 bb.j:                                             ; preds = %bb.t

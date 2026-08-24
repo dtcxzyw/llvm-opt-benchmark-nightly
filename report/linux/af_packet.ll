@@ -204,13 +204,12 @@ bb.aq:                                            ; preds = %__packet_snd_vnet_p
   %.1136.i = phi i32 [ %.0135.i, %bb.al ], [ %i.fw, %__packet_snd_vnet_parse.exit.i ]
   %.1130.i = phi i1 [ %.0129.i, %bb.al ], [ true, %__packet_snd_vnet_parse.exit.i ] ; 11 uses
   %i.fx = call i32 @llvm.smax.i32(i32 %.1136.i, i32 %i.ex) ; 15 uses
-  %7 = add nuw nsw i32 %i.fe, 20
-  %narrow.i.a = add nuw nsw i32 %7, %i.fc
-  %8 = zext nneg i32 %narrow.i.a to i64
-  %9 = sub nsw i32 %i.fx, %i.ex
-  %10 = sext i32 %9 to i64
-  %11 = add nsw i64 %10, %8
-  %i.fy = call ptr @sock_alloc_send_pskb(ptr noundef %i.d, i64 noundef range(i64 -65499, 262163) %11, i64 noundef 0, i32 noundef range(i32 0, 2) %.lobit.i, ptr noundef nonnull %i.b, i32 noundef 0) #20 ; 38 uses
+  %reass.sub = sub nsw i32 %i.fe, %i.ex
+  %narrow.i.a = add nsw i32 %reass.sub, 20
+  %narrow.i = add nsw i32 %narrow.i.a, %i.fc
+  %narrow240.i = add nsw i32 %narrow.i, %i.fx
+  %7 = zext nneg i32 %narrow240.i to i64
+  %i.fy = call ptr @sock_alloc_send_pskb(ptr noundef %i.d, i64 noundef range(i64 -65499, 262163) %7, i64 noundef 0, i32 noundef range(i32 0, 2) %.lobit.i, ptr noundef nonnull %i.b, i32 noundef 0) #20 ; 38 uses
   %i.fz = icmp eq ptr %i.fy, null
   br i1 %i.fz, label %bb.ar, label %bb.as, !prof !23
 
@@ -435,7 +434,7 @@ dev_validate_header.exit.i.i:                     ; preds = %bb.bl
 dev_validate_header.exit.thread121.i.i:           ; preds = %dev_validate_header.exit.i.i, %bb.bj, %bb.bg
   %i.jp = zext nneg i32 %i.ip to i64
   %i.jq = getelementptr i8, ptr %.1199.i, i64 %i.jp
-  %i.jr = sub nsw i32 %.0143.i, %i.ip
+  %i.jr = sub nuw nsw i32 %.0143.i, %i.ip
   br label %dev_hard_header.exit.thread.i.i
 
 dev_hard_header.exit.thread.i.i:                  ; preds = %dev_validate_header.exit.thread121.i.i, %bb.be, %dev_hard_header.exit.i.i, %bb.bd, %bb.bc
@@ -445,7 +444,7 @@ dev_hard_header.exit.thread.i.i:                  ; preds = %dev_validate_header
   %i.jt = trunc i64 %i.js to i32
   %i.ju = and i32 %i.jt, 4095                     ; 2 uses
   %i.jv = sub nuw nsw i32 4096, %i.ju
-  %i.jw = call i32 @llvm.smin.i32(i32 %.192.i.i, i32 %i.jv) ; 3 uses
+  %i.jw = call i32 @llvm.umin.i32(i32 %.192.i.i, i32 %i.jv) ; 3 uses
   %i.jx = getelementptr i8, ptr %i.fy, i64 116
   store i32 %.192.i.i, ptr %i.jx, align 4
   %i.jy = getelementptr i8, ptr %i.fy, i64 112    ; 2 uses
@@ -510,8 +509,8 @@ bb.bp:                                            ; preds = %bb.bn
 
 pgv_to_page.exit.peel.i.i:                        ; preds = %bb.bp, %bb.bo
   %.0.i116.peel.i.i = phi ptr [ %i.kz, %bb.bp ], [ %i.ky, %bb.bo ] ; 2 uses
-  %12 = sext i32 %i.jw to i64
-  %i.la = getelementptr i8, ptr %.190.i.i, i64 %12
+  %8 = zext nneg i32 %i.jw to i64
+  %i.la = getelementptr i8, ptr %.190.i.i, i64 %8
   %i.lb = getelementptr i8, ptr %.0.i116.peel.i.i, i64 8 ; 2 uses
   %i.lc = load volatile i64, ptr %i.lb, align 8   ; 2 uses
   %i.ld = and i64 %i.lc, 1
@@ -585,7 +584,7 @@ __skb_fill_netmem_desc.exit.peel.i.i:             ; preds = %bb.bs, %get_page.ex
   %i.mg = getelementptr i8, ptr %.val104.peel.i.i, i64 %i.mf
   %i.mh = getelementptr i8, ptr %i.mg, i64 2
   store i8 %i.me, ptr %i.mh, align 2
-  %i.mi = sub i32 %.192.i.i, %i.jw                ; 3 uses
+  %i.mi = sub nsw i32 %.192.i.i, %i.jw            ; 3 uses
   %.not101.peel.i.i = icmp eq i32 %i.mi, 0
   br i1 %.not101.peel.i.i, label %._crit_edge.i185.i, label %.peel.next.i.i, !prof !93
 
@@ -988,7 +987,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ae, label %__virtio_net_hdr_to_skb.exit, label %bb.j, !prof !23
 
 bb.j:                                             ; preds = %bb.i
-  %i.af = sub nsw i32 %i.aa, %i.ad
+  %i.af = sub nuw nsw i32 %i.aa, %i.ad
   %i.ag = tail call ptr @__pskb_pull_tail(ptr noundef nonnull %0, i32 noundef %i.af) #20
   %.not9.i.i = icmp eq ptr %i.ag, null
   br i1 %.not9.i.i, label %__virtio_net_hdr_to_skb.exit, label %bb.k, !prof !23
@@ -1024,7 +1023,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.at, label %__virtio_net_hdr_to_skb.exit, label %bb.o, !prof !23
 
 bb.o:                                             ; preds = %bb.n
-  %i.au = sub i32 %i.ar, %i.as
+  %i.au = sub nuw i32 %i.ar, %i.as
   %i.av = tail call ptr @__pskb_pull_tail(ptr noundef nonnull %0, i32 noundef %i.au) #20
   %.not9.i132.i = icmp eq ptr %i.av, null
   br i1 %.not9.i132.i, label %__virtio_net_hdr_to_skb.exit, label %.critedge125.i, !prof !23
@@ -1149,7 +1148,7 @@ bb.x:                                             ; preds = %._crit_edge.i
   br i1 %i.by, label %.critedge123.i, label %bb.y, !prof !23
 
 bb.y:                                             ; preds = %bb.x
-  %i.bz = sub nsw i32 %i.bu, %i.bx
+  %i.bz = sub nuw nsw i32 %i.bu, %i.bx
   %i.ca = call ptr @__pskb_pull_tail(ptr noundef nonnull %0, i32 noundef %i.bz) #20
   %.not9.i137.i = icmp ne ptr %i.ca, null
   br label %pskb_may_pull_reason.exit139.i
@@ -1192,7 +1191,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.cr, label %__virtio_net_hdr_to_skb.exit, label %bb.ab, !prof !23
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cs = sub nsw i32 %i.cn, %i.cq
+  %i.cs = sub nuw nsw i32 %i.cn, %i.cq
   %i.ct = tail call ptr @__pskb_pull_tail(ptr noundef nonnull %0, i32 noundef %i.cs) #20
   %.not9.i142.i = icmp eq ptr %i.ct, null
   br i1 %.not9.i142.i, label %__virtio_net_hdr_to_skb.exit, label %.critedge125.i, !prof !23
@@ -1595,7 +1594,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ag, label %vlan_get_protocol_and_depth.exit.thread, label %bb.j, !prof !23
 
 bb.j:                                             ; preds = %bb.i
-  %i.ah = sub nsw i32 %.sroa.6.0.extract.shift.i.i.i, %i.af
+  %i.ah = sub nuw nsw i32 %.sroa.6.0.extract.shift.i.i.i, %i.af
   %i.ai = tail call ptr @__pskb_pull_tail(ptr noundef nonnull %0, i32 noundef %i.ah) #20
   %.not9.i.i = icmp eq ptr %i.ai, null
   br i1 %.not9.i.i, label %vlan_get_protocol_and_depth.exit.thread, label %vlan_get_protocol_and_depth.exit, !prof !23

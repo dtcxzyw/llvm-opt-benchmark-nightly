@@ -176,7 +176,7 @@ bb.e:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %i.c, align 8, !tbaa !79
   %i.z = call i32 @EVP_CIPHER_get_iv_length(ptr noundef %i.y) #6
   %i.aa = add i32 %i.x, %i.z                      ; 2 uses
-  %i.ab = shl i32 %i.aa, 1                        ; 3 uses
+  %i.ab = shl i32 %i.aa, 1                        ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 872 ; 2 uses
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !75
   %i.ae = load i64, ptr %i.f, align 8, !tbaa !76
@@ -225,7 +225,7 @@ bb.g:                                             ; preds = %bb.e
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 392
-  %i.bb = zext i32 %i.ab to i64                   ; 2 uses
+  %i.bb = zext i32 %i.ab to i64                   ; 3 uses
   %umax = call i64 @llvm.umax.i64(i64 %i.bb, i64 16)
   %i.bc = add nsw i64 %umax, -2
   %i.bd = lshr i64 %i.bc, 4
@@ -330,10 +330,8 @@ bb.w:                                             ; preds = %bb.v
   br label %ssl3_generate_key_block.exit
 
 bb.x:                                             ; preds = %bb.v
-  %1 = trunc nuw nsw i64 %indvars.iv82.i to i32
-  %2 = sub i32 %i.ab, %1
-  %3 = zext i32 %2 to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.06178.i, ptr nonnull align 16 %i.b, i64 %3, i1 false)
+  %1 = sub nuw nsw i64 %i.bb, %indvars.iv82.i
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.06178.i, ptr nonnull align 16 %i.b, i64 %1, i1 false)
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.u

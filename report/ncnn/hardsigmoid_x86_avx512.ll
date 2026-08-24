@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.bb, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.bc = sub nsw i32 %i.ba, %.045.lcssa
+  %i.bc = sub nuw nsw i32 %i.ba, %.045.lcssa
   %notmask = shl nsw i32 -1, %i.bc
   %i.bd = trunc i32 %notmask to i16
   %i.be = xor i16 %i.bd, -1

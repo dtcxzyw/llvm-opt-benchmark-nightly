@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph._crit_edge
   %i.l = getelementptr inbounds nuw i8, ptr %.037.lcssa, i64 %i.e ; 3 uses
-  %i.m = sub i64 %.lcssa, %i.e
+  %i.m = sub nuw i64 %.lcssa, %i.e
   store i64 %i.m, ptr %i.l, align 8, !tbaa !12
   %i.n = getelementptr inbounds nuw i8, ptr %.037.lcssa, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !16
@@ -366,7 +366,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.lr.ph.i._crit_edge
   %i.ag = getelementptr inbounds nuw i8, ptr %.037.i.lcssa, i64 %i.g ; 3 uses
-  %i.ah = sub i64 %.lcssa66, %i.g
+  %i.ah = sub nuw i64 %.lcssa66, %i.g
   store i64 %i.ah, ptr %i.ag, align 8, !tbaa !12
   %i.ai = getelementptr inbounds nuw i8, ptr %.037.i.lcssa, i64 8
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !16

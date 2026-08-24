@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.c, label %nk_str_remove_chars.exit.sink.split
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = sub nsw i32 %i.f, %1
+  %i.g = sub nuw nsw i32 %i.f, %1
   %i.h = call ptr @nk_str_at_rune(ptr noundef nonnull %0, i32 noundef %i.g, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a)
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !98   ; 2 uses
@@ -608,9 +608,9 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %i.f, i64 10
-  %i.an = sub nsw i32 %1, %i.ad
-  %i.ao = shl nsw i32 %i.an, 1
-  %i.ap = zext i32 %i.ao to i64
+  %i.an = sub nuw nsw i32 %1, %i.ad
+  %i.ao = shl nuw nsw i32 %i.an, 1
+  %i.ap = zext nneg i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ap ; 2 uses
   %.val165 = load i8, ptr %i.aq, align 1, !tbaa !11
   %i.ar = getelementptr i8, ptr %i.aq, i64 1
@@ -1013,7 +1013,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dn = add nuw nsw i32 %i.bo, 1                ; 2 uses
   %i.do = zext nneg i32 %i.dn to i64
   %i.dp = getelementptr inbounds nuw i8, ptr %2, i64 %i.do
-  %i.dq = sub nsw i32 %3, %i.dn                   ; 2 uses
+  %i.dq = sub nuw nsw i32 %3, %i.dn               ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.de
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.df
   %i.dt = tail call fastcc i32 @stbtt__CompareUTF8toUTF16_bigendian_prefix(ptr noundef nonnull readonly %i.dp, i32 noundef %i.dq, ptr noundef readonly %i.ds, i32 noundef %i.da)
