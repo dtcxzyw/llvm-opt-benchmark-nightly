@@ -202,14 +202,14 @@ bb.bi:                                            ; preds = %bb.bc
   %i.fw = getelementptr inbounds nuw i8, ptr %i.h, i64 192 ; 6 uses
   %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !306 ; 3 uses
   %i.fy = load ptr, ptr %i.bz, align 8, !tbaa !308 ; 3 uses
-  %58 = ptrtoint ptr %i.fx to i64
-  %59 = ptrtoint ptr %i.fy to i64
-  %60 = sub i64 %58, %59
-  %61 = sdiv exact i64 %60, 24
   %.not1304.not = icmp eq ptr %i.fx, %i.fy
   br i1 %.not1304.not, label %.critedge320.thread, label %.lr.ph1310
 
 .lr.ph1310:                                       ; preds = %.loopexit1211
+  %58 = ptrtoint ptr %i.fx to i64
+  %59 = ptrtoint ptr %i.fy to i64
+  %60 = sub i64 %58, %59
+  %61 = sdiv i64 %60, 24
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %21, i64 8 ; 2 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 3 uses
@@ -217,6 +217,7 @@ bb.bi:                                            ; preds = %bb.bc
   %i.gd = getelementptr inbounds nuw i8, ptr %19, i64 16 ; 2 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 2 uses
   %i.gf = getelementptr inbounds nuw i8, ptr %28, i64 16
+  %umax1343 = call i64 @llvm.umax.i64(i64 %61, i64 1)
   br label %bb.bj
 
 bb.bj:                                            ; preds = %.lr.ph1310, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit605.jt12
@@ -619,7 +620,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit605.jt1: ; preds = %bb.iz, %bb.jb,
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit605.jt12: ; preds = %bb.ja, %bb.jc, %bb.iy
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
   %i.adx = add nuw i64 %.02091306, 1              ; 2 uses
-  %exitcond1344.not = icmp eq i64 %i.adx, %61
+  %exitcond1344.not = icmp eq i64 %i.adx, %umax1343
   br i1 %exitcond1344.not, label %.critedge320, label %bb.bj, !llvm.loop !348
 
 .body506:                                         ; preds = %bb.dx, %bb.fz, %bb.ga, %bb.gb, %bb.gp, %bb.gq, %bb.hh, %bb.it, %bb.fw, %bb.il, %bb.hl, %bb.fp, %.body.i, %bb.ii, %bb.ik, %bb.ij, %bb.ec, %bb.ds, %bb.dr

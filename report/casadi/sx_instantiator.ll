@@ -205,7 +205,7 @@ bb.a:
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j                       ; 2 uses
-  %i.l = sdiv exact i64 %i.k, 24                  ; 3 uses
+  %i.l = sdiv i64 %i.k, 24                        ; 3 uses
   store i64 %i.l, ptr %i.a, align 8, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #30
   %i.m = icmp eq ptr %i.h, %i.g
@@ -225,7 +225,11 @@ bb.b:                                             ; preds = %bb.a
   %i.t = ashr exact i64 %i.s, 3                   ; 3 uses
   store i64 %i.t, ptr %i.b, align 8, !tbaa !67
   %i.u = icmp sgt i64 %i.k, 0
-  br i1 %i.u, label %.lr.ph, label %._crit_edge
+  br i1 %i.u, label %.lr.ph.preheader, label %._crit_edge
+
+.lr.ph.preheader:                                 ; preds = %bb.b
+  %smax = tail call i64 @llvm.smax.i64(i64 %i.l, i64 1)
+  br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.ai, %.thread, %bb.b
   %i.v = phi i64 [ 1, %.thread ], [ %i.t, %bb.b ], [ %i.t, %bb.ai ]
@@ -233,8 +237,8 @@ bb.b:                                             ; preds = %bb.a
   invoke void @_ZN6casadi8Sparsity5denseExx(ptr dead_on_unwind nonnull writable sret(%"class.casadi::Sparsity") align 8 %19, i64 noundef %i.l, i64 noundef %i.v)
           to label %bb.aj unwind label %bb.ao
 
-.lr.ph:                                           ; preds = %bb.b, %bb.ai
-  %.055138 = phi i64 [ %i.eg, %bb.ai ], [ 0, %bb.b ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ai
+  %.055138 = phi i64 [ %i.eg, %bb.ai ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %i.h, i64 %.055138 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !69
@@ -637,7 +641,7 @@ bb.ah:                                            ; preds = %.sink.split, %_ZNKS
 
 bb.ai:                                            ; preds = %.lr.ph
   %i.eg = add nuw nsw i64 %.055138, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %i.eg, %i.l
+  %exitcond.not = icmp eq i64 %i.eg, %smax
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !76
 
 bb.aj:                                            ; preds = %._crit_edge
@@ -1040,8 +1044,8 @@ _ZN6casadi11ContractionINS_6SXElemEEEvRKT_S4_RS2_.exit.us.us.us: ; preds = %.noe
 
 ._crit_edge196.us.us.us:                          ; preds = %._crit_edge188.us.us.us
   %i.cg = add nuw nsw i64 %.0125198.us.us.us, 1   ; 2 uses
-  %exitcond212.not = icmp eq i64 %i.cg, %i.av
-  br i1 %exitcond212.not, label %.loopexit, label %.preheader171.us.us.us, !llvm.loop !657
+  %10 = icmp slt i64 %i.cg, %i.av
+  br i1 %10, label %.preheader171.us.us.us, label %.loopexit, !llvm.loop !657
 
 .split.us.split.us.split.us:                      ; preds = %bb.f
   %i.ch = landingpad { ptr, i32 }
@@ -1444,8 +1448,7 @@ _ZNSt6vectorIPN6casadi6SXElemESaIS2_EEC2EmRKS3_.exit: ; preds = %_ZSt6fill_nIPPN
   %i.ey = ptrtoint ptr %i.ew to i64
   %i.ez = ptrtoint ptr %i.ex to i64
   %i.fa = sub i64 %i.ey, %i.ez
-  %.fr907 = freeze i64 %i.fa
-  %i.fb = sdiv i64 %.fr907, 40                    ; 3 uses
+  %i.fb = sdiv i64 %i.fa, 40                      ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.fd = load ptr, ptr %i.fc, align 8, !tbaa !274
   %i.fe = load ptr, ptr %0, align 8, !tbaa !277   ; 8 uses
@@ -1453,10 +1456,11 @@ _ZNSt6vectorIPN6casadi6SXElemESaIS2_EEC2EmRKS3_.exit: ; preds = %_ZSt6fill_nIPPN
   %i.fg = ptrtoint ptr %i.fe to i64
   %i.fh = sub i64 %i.ff, %i.fg
   %i.fi = sdiv exact i64 %i.fh, 40                ; 5 uses
-  %i.fj = add nsw i64 %i.fb, -1
-  %i.fk = call i64 @llvm.umin.i64(i64 %i.fj, i64 %i.fi)
-  %i.fl = add nsw i64 %i.fk, 1                    ; 3 uses
-  %min.iters.check = icmp ult i64 %i.fl, 15
+  %umax = call i64 @llvm.umax.i64(i64 %i.fb, i64 1) ; 2 uses
+  %i.fj = add i64 %umax, -1
+  %i.fk = call i64 @llvm.umin.i64(i64 %i.fi, i64 %i.fj) ; 2 uses
+  %i.fl = add nuw i64 %i.fk, 1                    ; 2 uses
+  %min.iters.check = icmp ult i64 %i.fk, 14
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph666
@@ -1464,9 +1468,9 @@ scalar.ph.preheader:                              ; preds = %vector.body, %vecto
   br label %scalar.ph
 
 vector.memcheck:                                  ; preds = %.lr.ph666
-  %90 = add nsw i64 %i.fb, -1
-  %umin = call i64 @llvm.umin.i64(i64 %90, i64 %i.fi) ; 2 uses
-  %i.fm = shl nsw i64 %umin, 3
+  %90 = call i64 @llvm.usub.sat.i64(i64 %i.fb, i64 1)
+  %umin = call i64 @llvm.umin.i64(i64 %i.fi, i64 %90) ; 2 uses
+  %i.fm = shl i64 %umin, 3
   %i.fn = getelementptr i8, ptr %.sroa.0591.0, i64 %i.fm
   %scevgep = getelementptr i8, ptr %i.fn, i64 8
   %scevgep905 = getelementptr i8, ptr %i.fe, i64 16
@@ -1607,7 +1611,7 @@ bb.al:                                            ; preds = %scalar.ph
   %i.hw = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0591.0, i64 %.0172665
   store ptr %spec.select.i, ptr %i.hw, align 8, !tbaa !18
   %i.hx = add nuw i64 %.0172665, 1                ; 2 uses
-  %exitcond713.not = icmp eq i64 %i.hx, %i.fb
+  %exitcond713.not = icmp eq i64 %i.hx, %umax
   br i1 %exitcond713.not, label %._crit_edge667, label %scalar.ph, !llvm.loop !1401
 
 bb.am:                                            ; preds = %bb.ak
@@ -2009,6 +2013,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.smax.i8(i8, i8) #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #24
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

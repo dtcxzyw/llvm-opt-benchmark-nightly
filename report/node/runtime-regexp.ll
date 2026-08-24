@@ -205,7 +205,7 @@ _ZN2v88internal7Factory12NewSubStringINS0_6StringENS0_12DirectHandleEQsr3stdE16i
   %i.ea = load i64, ptr %i.dz, align 8            ; 2 uses
   %i.eb = lshr i64 %i.ea, 32
   %i.ec = trunc nuw i64 %i.eb to i32              ; 3 uses
-  %i.ed = sdiv i32 %i.ec, 2                       ; 4 uses
+  %i.ed = sdiv i32 %i.ec, 2                       ; 3 uses
   %i.ee = icmp sgt i32 %i.ec, 3
   br i1 %i.ee, label %_ZN2v88internal8NullOrIsINS0_12IrRegExpDataENS0_10RegExpDataEEEbNS0_12DirectHandleIT0_EE.exit.i, label %.thread
 
@@ -291,11 +291,12 @@ bb.z:                                             ; preds = %bb.x
   br i1 %i.ft, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.z
-  %wide.trip.count = zext nneg i32 %i.ed to i64
+  %smax = call i32 @llvm.smax.i32(i32 %i.ed, i32 1) ; 2 uses
+  %wide.trip.count = zext nneg i32 %smax to i64
   br label %.lr.ph
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %i.fu = zext nneg i32 %i.ed to i64
+  %i.fu = zext nneg i32 %smax to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.z

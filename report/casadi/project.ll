@@ -204,10 +204,11 @@ bb.a:
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %5 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit, %bb.a
@@ -258,7 +259,7 @@ _ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
   %i.x = add nuw nsw i64 %.01114, 1               ; 2 uses
-  %exitcond.not = icmp eq i64 %i.x, %i.h
+  %exitcond.not = icmp eq i64 %i.x, %5
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !76
 
 bb.e:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
@@ -310,10 +311,11 @@ bb.a:
   br i1 %i.g, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = udiv exact i64 %i.f, 24
+  %i.h = udiv i64 %i.f, 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %6 = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit, %bb.a
@@ -378,7 +380,7 @@ _ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   %i.y = add nuw nsw i64 %.01114, 1               ; 2 uses
-  %exitcond.not = icmp eq i64 %i.y, %i.h
+  %exitcond.not = icmp eq i64 %i.y, %6
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !77
 
 bb.g:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
@@ -780,6 +782,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #17

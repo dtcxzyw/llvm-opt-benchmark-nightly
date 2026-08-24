@@ -205,7 +205,7 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8, !tbaa !32
   %sext = shl i64 %.fr, 32                        ; 4 uses
   %i.f = ashr exact i64 %sext, 32                 ; 10 uses
-  %i.g = sdiv i64 %i.e, %i.f                      ; 3 uses
+  %i.g = sdiv i64 %i.e, %i.f                      ; 4 uses
   %i.h = trunc i64 %i.g to i32                    ; 3 uses
   %sext34 = mul i64 %sext, %i.g                   ; 2 uses
   %i.i = ashr exact i64 %sext34, 32               ; 3 uses
@@ -237,8 +237,9 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %i.p, label %.preheader47.us.preheader, label %.preheader47.lr.ph.split
 
 .preheader47.us.preheader:                        ; preds = %.preheader47.lr.ph
-  %i.s = and i64 %i.g, 2147483647                 ; 2 uses
+  %i.s = and i64 %i.g, 2147483647
   %i.t = and i64 %.fr, 2147483647                 ; 4 uses
+  %9 = and i64 %i.g, 2147483647
   %i.u = lshr exact i64 %sext, 29                 ; 2 uses
   %i.v = add nsw i64 %i.u, -8
   %i.w = shl nuw nsw i64 %i.t, 3
@@ -319,7 +320,7 @@ bb.e:                                             ; preds = %._crit_edge50.us
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.ay = mul i64 %indvars.iv85, %i.t
+  %i.ay = mul nuw nsw i64 %indvars.iv85, %i.t
   %i.az = load ptr, ptr %2, align 8, !tbaa !36, !noalias !44 ; 2 uses
   %i.ba = load i64, ptr %i.q, align 8, !tbaa !32, !noalias !44 ; 4 uses
   %i.bb = mul i64 %i.ba, %i.ay
@@ -438,8 +439,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEaSINS_9TransposeINS0_INS1_IdLi3ELi3ELi0ELi3ELi3EEELin1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.us: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.us, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 1 ; 2 uses
-  %exitcond89.not = icmp eq i64 %indvars.iv.next86, %i.s
-  br i1 %exitcond89.not, label %._crit_edge52, label %.preheader47.us, !llvm.loop !57
+  %10 = icmp samesign ult i64 %indvars.iv.next86, %9
+  br i1 %10, label %.preheader47.us, label %._crit_edge52, !llvm.loop !57
 
 .preheader.us:                                    ; preds = %.preheader47.us, %._crit_edge.us
   %indvars.iv80 = phi i64 [ 0, %.preheader47.us ], [ %indvars.iv.next81, %._crit_edge.us ] ; 3 uses
@@ -525,8 +526,8 @@ bb.j:                                             ; preds = %bb.j, %.preheader.i
   call void @_ZN3igl12polar_svd3x3IN5Eigen6MatrixIdLi3ELi3ELi0ELi3ELi3EEEEEvRKT_RS4_(ptr noundef nonnull align 8 dereferenceable(72) %3, ptr noundef nonnull align 8 dereferenceable(72) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %i.dg = add nuw nsw i32 %.03151.us68, 1         ; 2 uses
-  %exitcond74.not = icmp eq i32 %i.dg, %i.h
-  br i1 %exitcond74.not, label %._crit_edge52, label %.preheader47.us67, !llvm.loop !57
+  %11 = icmp slt i32 %i.dg, %i.h
+  br i1 %11, label %.preheader47.us67, label %._crit_edge52, !llvm.loop !57
 
 .preheader47:                                     ; preds = %.preheader47.lr.ph.split.split, %.preheader47
   %.03151 = phi i32 [ %i.dh, %.preheader47 ], [ 0, %.preheader47.lr.ph.split.split ]
@@ -542,8 +543,8 @@ bb.j:                                             ; preds = %bb.j, %.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %i.dh = add nuw nsw i32 %.03151, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.dh, %i.h
-  br i1 %exitcond.not, label %._crit_edge52, label %.preheader47, !llvm.loop !57
+  %12 = icmp slt i32 %i.dh, %i.h
+  br i1 %12, label %.preheader47, label %._crit_edge52, !llvm.loop !57
 
 ._crit_edge52:                                    ; preds = %.preheader47, %.preheader47.us67, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEaSINS_9TransposeINS0_INS1_IdLi3ELi3ELi0ELi3ELi3EEELin1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.us, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
@@ -569,7 +570,7 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !tbaa !32
   %sext = shl i64 %i.b, 32                        ; 2 uses
   %i.e = ashr exact i64 %sext, 32                 ; 9 uses
-  %i.f = sdiv i64 %i.d, %i.e                      ; 3 uses
+  %i.f = sdiv i64 %i.d, %i.e                      ; 4 uses
   %i.g = trunc i64 %i.f to i32
   %sext31 = mul i64 %sext, %i.f                   ; 2 uses
   %i.h = ashr exact i64 %sext31, 32               ; 3 uses
@@ -603,9 +604,10 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.v = icmp sgt i64 %i.e, 0
-  %i.w = and i64 %i.f, 2147483647                 ; 2 uses
+  %i.w = and i64 %i.f, 2147483647
   %sext57 = shl i64 %i.b, 32
   %i.x = ashr exact i64 %sext57, 32
+  %8 = and i64 %i.f, 2147483647
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -757,8 +759,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.w
-  br i1 %exitcond.not, label %._crit_edge, label %.preheader48, !llvm.loop !67
+  %9 = icmp samesign ult i64 %indvars.iv.next, %8
+  br i1 %9, label %.preheader48, label %._crit_edge, !llvm.loop !67
 }
 
 declare void @_ZN3igl9polar_svdIN5Eigen6MatrixIdLi2ELi2ELi0ELi2ELi2EEES3_S3_S3_NS2_IdLi2ELi1ELi0ELi2ELi1EEES3_EEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EERNSA_IT1_EERNSA_IT2_EERNSA_IT3_EERNSA_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1), ptr noundef nonnull align 16 dereferenceable(32), ptr noundef nonnull align 16 dereferenceable(32), ptr noundef nonnull align 16 dereferenceable(32), ptr noundef nonnull align 16 dereferenceable(16), ptr noundef nonnull align 16 dereferenceable(32)) local_unnamed_addr #2
@@ -778,7 +780,7 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !tbaa !9
   %sext = shl i64 %i.b, 32                        ; 2 uses
   %i.e = ashr exact i64 %sext, 32                 ; 9 uses
-  %i.f = sdiv i64 %i.d, %i.e                      ; 3 uses
+  %i.f = sdiv i64 %i.d, %i.e                      ; 4 uses
   %i.g = trunc i64 %i.f to i32
   %sext31 = mul i64 %sext, %i.f                   ; 2 uses
   %i.h = ashr exact i64 %sext31, 32               ; 3 uses
@@ -811,9 +813,10 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.u = icmp sgt i64 %i.e, 0
-  %i.v = and i64 %i.f, 2147483647                 ; 2 uses
+  %i.v = and i64 %i.f, 2147483647
   %sext57 = shl i64 %i.b, 32
   %i.w = ashr exact i64 %sext57, 32
+  %8 = and i64 %i.f, 2147483647
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 12
@@ -960,8 +963,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.v
-  br i1 %exitcond.not, label %._crit_edge, label %.preheader48, !llvm.loop !74
+  %9 = icmp samesign ult i64 %indvars.iv.next, %8
+  br i1 %9, label %.preheader48, label %._crit_edge, !llvm.loop !74
 }
 
 declare void @_ZN3igl9polar_svdIN5Eigen6MatrixIfLi2ELi2ELi0ELi2ELi2EEES3_S3_S3_NS2_IfLi2ELi1ELi0ELi2ELi1EEES3_EEvRKNS1_10MatrixBaseIT_EERNS1_15PlainObjectBaseIT0_EERNSA_IT1_EERNSA_IT2_EERNSA_IT3_EERNSA_IT4_EE(ptr noundef nonnull align 1 dereferenceable(1), ptr noundef nonnull align 16 dereferenceable(16), ptr noundef nonnull align 16 dereferenceable(16), ptr noundef nonnull align 16 dereferenceable(16), ptr noundef nonnull align 4 dereferenceable(8), ptr noundef nonnull align 16 dereferenceable(16)) local_unnamed_addr #2
@@ -983,7 +986,7 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8, !tbaa !9
   %sext = shl i64 %.fr, 32                        ; 4 uses
   %i.f = ashr exact i64 %sext, 32                 ; 10 uses
-  %i.g = sdiv i64 %i.e, %i.f                      ; 3 uses
+  %i.g = sdiv i64 %i.e, %i.f                      ; 4 uses
   %i.h = trunc i64 %i.g to i32                    ; 3 uses
   %sext34 = mul i64 %sext, %i.g                   ; 2 uses
   %i.i = ashr exact i64 %sext34, 32               ; 3 uses
@@ -1015,8 +1018,9 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %i.p, label %.preheader47.us.preheader, label %.preheader47.lr.ph.split
 
 .preheader47.us.preheader:                        ; preds = %.preheader47.lr.ph
-  %i.s = and i64 %i.g, 2147483647                 ; 2 uses
+  %i.s = and i64 %i.g, 2147483647
   %i.t = and i64 %.fr, 2147483647                 ; 4 uses
+  %9 = and i64 %i.g, 2147483647
   %i.u = lshr exact i64 %sext, 30                 ; 2 uses
   %i.v = add nsw i64 %i.u, -4
   %i.w = shl nuw nsw i64 %i.t, 2
@@ -1097,7 +1101,7 @@ bb.e:                                             ; preds = %._crit_edge50.us
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.ay = mul i64 %indvars.iv85, %i.t
+  %i.ay = mul nuw nsw i64 %indvars.iv85, %i.t
   %i.az = load ptr, ptr %2, align 8, !tbaa !16, !noalias !76 ; 2 uses
   %i.ba = load i64, ptr %i.q, align 8, !tbaa !9, !noalias !76 ; 4 uses
   %i.bb = mul i64 %i.ba, %i.ay
@@ -1236,8 +1240,8 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 _ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEaSINS_9TransposeINS0_INS1_IfLi3ELi3ELi0ELi3ELi3EEELin1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.us: ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i.us, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %indvars.iv.next86 = add nuw nsw i64 %indvars.iv85, 1 ; 2 uses
-  %exitcond89.not = icmp eq i64 %indvars.iv.next86, %i.s
-  br i1 %exitcond89.not, label %._crit_edge52, label %.preheader47.us, !llvm.loop !88
+  %10 = icmp samesign ult i64 %indvars.iv.next86, %9
+  br i1 %10, label %.preheader47.us, label %._crit_edge52, !llvm.loop !88
 
 .preheader.us:                                    ; preds = %.preheader47.us, %._crit_edge.us
   %indvars.iv80 = phi i64 [ 0, %.preheader47.us ], [ %indvars.iv.next81, %._crit_edge.us ] ; 3 uses
@@ -1323,8 +1327,8 @@ bb.j:                                             ; preds = %bb.j, %.preheader.i
   call void @_ZN3igl12polar_svd3x3IN5Eigen6MatrixIfLi3ELi3ELi0ELi3ELi3EEEEEvRKT_RS4_(ptr noundef nonnull align 4 dereferenceable(36) %3, ptr noundef nonnull align 4 dereferenceable(36) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %i.ea = add nuw nsw i32 %.03151.us68, 1         ; 2 uses
-  %exitcond74.not = icmp eq i32 %i.ea, %i.h
-  br i1 %exitcond74.not, label %._crit_edge52, label %.preheader47.us67, !llvm.loop !88
+  %11 = icmp slt i32 %i.ea, %i.h
+  br i1 %11, label %.preheader47.us67, label %._crit_edge52, !llvm.loop !88
 
 .preheader47:                                     ; preds = %.preheader47.lr.ph.split.split, %.preheader47
   %.03151 = phi i32 [ %i.eb, %.preheader47 ], [ 0, %.preheader47.lr.ph.split.split ]
@@ -1340,8 +1344,8 @@ bb.j:                                             ; preds = %bb.j, %.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %i.eb = add nuw nsw i32 %.03151, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.eb, %i.h
-  br i1 %exitcond.not, label %._crit_edge52, label %.preheader47, !llvm.loop !88
+  %12 = icmp slt i32 %i.eb, %i.h
+  br i1 %12, label %.preheader47, label %._crit_edge52, !llvm.loop !88
 
 ._crit_edge52:                                    ; preds = %.preheader47, %.preheader47.us67, %_ZN5Eigen5BlockINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEELin1ELin1ELb0EEaSINS_9TransposeINS0_INS1_IfLi3ELi3ELi0ELi3ELi3EEELin1ELin1ELb0EEEEEEERS3_RKNS_9DenseBaseIT_EE.exit.us, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIfLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12

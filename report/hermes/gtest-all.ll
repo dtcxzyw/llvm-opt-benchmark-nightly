@@ -205,14 +205,15 @@ _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EED2Ev.exit: ; pre
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EED2Ev.exit
   %i.bz = ptrtoint ptr %i.ag to i64
   %i.ca = ptrtoint ptr %i.ac to i64
-  %i.cb = sub i64 %i.bz, %i.ca                    ; 2 uses
-  %i.cc = sdiv exact i64 %i.cb, 24                ; 3 uses
-  %xtraiter = and i64 %i.cc, 1
-  %7 = icmp eq i64 %i.cb, 24
+  %i.cb = sub i64 %i.bz, %i.ca
+  %i.cc = sdiv i64 %i.cb, 24                      ; 2 uses
+  %umax = call i64 @llvm.umax.i64(i64 %i.cc, i64 1) ; 3 uses
+  %xtraiter = and i64 %umax, 1
+  %7 = icmp ult i64 %i.cc, 2
   br i1 %7, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.cc, -2
+  %unroll_iter = and i64 %umax, -2
   br label %bb.x
 
 .preheader133.loopexit.unr-lcssa:                 ; preds = %bb.x
@@ -221,7 +222,7 @@ _ZNSt6vectorIN7testing8internal13edit_distance8EditTypeESaIS3_EED2Ev.exit: ; pre
 
 .epil.preheader:                                  ; preds = %.preheader133.loopexit.unr-lcssa, %.lr.ph
   %.080141.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.dz, %.preheader133.loopexit.unr-lcssa ] ; 3 uses
-  %lcmp.mod233 = trunc i64 %i.cc to i1
+  %lcmp.mod233 = trunc i64 %umax to i1
   call void @llvm.assume(i1 %lcmp.mod233)
   %i.cd = uitofp i64 %.080141.epil.init to double
   %i.ce = getelementptr inbounds nuw [24 x i8], ptr %i.ac, i64 %.080141.epil.init

@@ -205,11 +205,11 @@ bb.d:                                             ; preds = %bb.a
   %i.p = srem i32 %i.k, %1
   %i.q = icmp sgt i32 %i.p, 0
   %i.r = zext i1 %i.q to i32
-  %spec.select = add nsw i32 %i.l, %i.r           ; 6 uses
+  %spec.select = add nsw i32 %i.l, %i.r           ; 7 uses
   %i.s = srem i32 %i.n, %1
   %i.t = icmp sgt i32 %i.s, 0
   %i.u = zext i1 %i.t to i32
-  %.053 = add i32 %i.o, %i.u                      ; 6 uses
+  %.053 = add nsw i32 %i.o, %i.u                  ; 6 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.w = load i32, ptr %i.v, align 8, !tbaa !46
   %.not = icmp eq i32 %i.w, %spec.select
@@ -380,7 +380,8 @@ _ZN20btAlignedObjectArrayIN25btHeightfieldTerrainShape5RangeEE6resizeEiRKS1_.exi
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph89
   %i.bz = zext nneg i32 %1 to i64                 ; 2 uses
-  %i.ca = zext nneg i32 %spec.select to i64       ; 2 uses
+  %2 = zext nneg i32 %spec.select to i64
+  %i.ca = zext nneg i32 %spec.select to i64
   %wide.trip.count96 = zext nneg i32 %.053 to i64
   br label %.lr.ph81.preheader
 
@@ -395,8 +396,8 @@ _ZN20btAlignedObjectArrayIN25btHeightfieldTerrainShape5RangeEE6resizeEiRKS1_.exi
 
 ._crit_edge87:                                    ; preds = %._crit_edge
   %indvars.iv.next94 = add nuw nsw i64 %indvars.iv93, 1 ; 2 uses
-  %exitcond97.not = icmp eq i64 %indvars.iv.next94, %wide.trip.count96
-  br i1 %exitcond97.not, label %.loopexit70, label %.lr.ph81.preheader, !llvm.loop !95
+  %3 = icmp samesign ult i64 %indvars.iv.next94, %wide.trip.count96
+  br i1 %3, label %.lr.ph81.preheader, label %.loopexit70, !llvm.loop !95
 
 .lr.ph81.split.preheader:                         ; preds = %._crit_edge, %.lr.ph81.preheader
   %indvars.iv = phi i64 [ 0, %.lr.ph81.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
@@ -418,8 +419,8 @@ _ZN20btAlignedObjectArrayIN25btHeightfieldTerrainShape5RangeEE6resizeEiRKS1_.exi
   %.sroa_idx68 = getelementptr inbounds nuw i8, ptr %i.cq, i64 4
   store float %.sroa.6.3, ptr %.sroa_idx68, align 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ca
-  br i1 %exitcond.not, label %._crit_edge87, label %.lr.ph81.split.preheader, !llvm.loop !96
+  %4 = icmp samesign ult i64 %indvars.iv.next, %2
+  br i1 %4, label %.lr.ph81.split.preheader, label %._crit_edge87, !llvm.loop !96
 
 .lr.ph81.split:                                   ; preds = %.lr.ph81.split.preheader, %..loopexit_crit_edge
   %.05079 = phi i32 [ %i.da, %..loopexit_crit_edge ], [ %i.cd, %.lr.ph81.split.preheader ] ; 4 uses

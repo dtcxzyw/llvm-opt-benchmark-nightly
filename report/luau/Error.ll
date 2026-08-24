@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %_ZStneIcSt11char_tr
   %i.r = ptrtoint ptr %i.p to i64
   %i.s = ptrtoint ptr %i.q to i64
   %i.t = sub i64 %i.r, %i.s                       ; 2 uses
-  %i.u = sdiv exact i64 %i.t, 24
+  %i.u = sdiv i64 %i.t, 24
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !138
   %i.x = load ptr, ptr %i.m, align 8, !tbaa !139  ; 2 uses
@@ -223,7 +223,7 @@ bb.d:                                             ; preds = %bb.c
   %i.af = ptrtoint ptr %i.ad to i64
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag                    ; 2 uses
-  %i.ai = sdiv exact i64 %i.ah, 24
+  %i.ai = sdiv i64 %i.ah, 24
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !140
@@ -236,19 +236,27 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader28:                                     ; preds = %bb.d
   %.not35 = icmp eq ptr %i.p, %i.q
-  br i1 %.not35, label %.preheader, label %.lr.ph
+  br i1 %.not35, label %.preheader, label %.lr.ph.preheader
+
+.lr.ph.preheader:                                 ; preds = %.preheader28
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.u, i64 1)
+  br label %.lr.ph
 
 bb.e:                                             ; preds = %.lr.ph
   %i.aq = add nuw i64 %.01830, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.aq, %i.u
+  %exitcond.not = icmp eq i64 %i.aq, %umax
   br i1 %exitcond.not, label %.preheader, label %.lr.ph, !llvm.loop !142
 
 .preheader:                                       ; preds = %bb.e, %.preheader28
   %i.ar = icmp eq ptr %i.ad, %i.ae
-  br i1 %i.ar, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %.lr.ph32
+  br i1 %i.ar, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, label %.lr.ph32.preheader
 
-.lr.ph:                                           ; preds = %.preheader28, %bb.e
-  %.01830 = phi i64 [ %i.aq, %bb.e ], [ 0, %.preheader28 ] ; 3 uses
+.lr.ph32.preheader:                               ; preds = %.preheader
+  %umax38 = tail call i64 @llvm.umax.i64(i64 %i.ai, i64 1)
+  br label %.lr.ph32
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.e
+  %.01830 = phi i64 [ %i.aq, %bb.e ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.as = getelementptr inbounds nuw [24 x i8], ptr %i.q, i64 %.01830
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !143
   %i.au = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.01830
@@ -256,15 +264,15 @@ bb.e:                                             ; preds = %.lr.ph
   %.not23 = icmp eq ptr %i.at, %i.av
   br i1 %.not23, label %bb.e, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread
 
-.lr.ph32:                                         ; preds = %.preheader, %.lr.ph32
-  %.031 = phi i64 [ %i.ba, %.lr.ph32 ], [ 0, %.preheader ] ; 3 uses
+.lr.ph32:                                         ; preds = %.lr.ph32, %.lr.ph32.preheader
+  %.031 = phi i64 [ %i.ba, %.lr.ph32 ], [ 0, %.lr.ph32.preheader ] ; 3 uses
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %.031
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !149
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %i.am, i64 %.031
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !149
   %.not24 = icmp eq ptr %i.ax, %i.az              ; 2 uses
   %i.ba = add nuw i64 %.031, 1                    ; 2 uses
-  %exitcond39.not = icmp ne i64 %i.ba, %i.ai
+  %exitcond39.not = icmp ne i64 %i.ba, %umax38
   %or.cond.not = select i1 %.not24, i1 %exitcond39.not, i1 false
   br i1 %or.cond.not, label %.lr.ph32, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, !llvm.loop !156
 
@@ -666,6 +674,9 @@ declare i64 @llvm.smin.i64(i64, i64) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #31
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #31
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

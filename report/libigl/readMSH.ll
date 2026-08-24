@@ -204,8 +204,9 @@ bb.at:                                            ; preds = %bb.as
   %i.ko = ptrtoint ptr %i.km to i64
   %i.kp = ptrtoint ptr %i.kn to i64
   %i.kq = sub i64 %i.ko, %i.kp
-  %i.kr = sdiv exact i64 %i.kq, 24
+  %i.kr = sdiv i64 %i.kq, 24
   %i.ks = load ptr, ptr %i.ib, align 8, !tbaa !54
+  %umax301 = call i64 @llvm.umax.i64(i64 %i.kr, i64 1)
   %i.kt = shl nsw i64 %i.jv, 3
   br label %.preheader
 
@@ -309,7 +310,7 @@ scalar.ph365.prol.loopexit:                       ; preds = %scalar.ph365.prol, 
 
 ._crit_edge280:                                   ; preds = %scalar.ph365.prol.loopexit, %scalar.ph365, %middle.block374, %.preheader
   %i.mb = add nuw i64 %.0106281, 1                ; 2 uses
-  %exitcond302.not = icmp eq i64 %i.mb, %i.kr
+  %exitcond302.not = icmp eq i64 %i.mb, %umax301
   br i1 %exitcond302.not, label %._crit_edge282, label %.preheader, !llvm.loop !94
 
 scalar.ph365:                                     ; preds = %scalar.ph365.prol.loopexit, %scalar.ph365
@@ -381,8 +382,9 @@ bb.au:                                            ; preds = %bb.as
   %i.nv = ptrtoint ptr %i.nt to i64
   %i.nw = ptrtoint ptr %i.nu to i64
   %i.nx = sub i64 %i.nv, %i.nw
-  %i.ny = sdiv exact i64 %i.nx, 24
+  %i.ny = sdiv i64 %i.nx, 24
   %i.nz = load ptr, ptr %i.ib, align 8, !tbaa !54
+  %umax = call i64 @llvm.umax.i64(i64 %i.ny, i64 1)
   %i.oa = shl nsw i64 %i.mz, 3
   br label %.preheader246
 
@@ -474,7 +476,7 @@ scalar.ph381.prol.loopexit:                       ; preds = %scalar.ph381.prol, 
 
 ._crit_edge275:                                   ; preds = %scalar.ph381.prol.loopexit, %scalar.ph381, %middle.block390, %.preheader246
   %i.pi = add nuw i64 %.0104276, 1                ; 2 uses
-  %exitcond299.not = icmp eq i64 %i.pi, %i.ny
+  %exitcond299.not = icmp eq i64 %i.pi, %umax
   br i1 %exitcond299.not, label %._crit_edge277, label %.preheader246, !llvm.loop !98
 
 scalar.ph381:                                     ; preds = %scalar.ph381.prol.loopexit, %scalar.ph381
@@ -877,8 +879,9 @@ bb.at:                                            ; preds = %bb.as
   %i.kv = ptrtoint ptr %i.kt to i64
   %i.kw = ptrtoint ptr %i.ku to i64
   %i.kx = sub i64 %i.kv, %i.kw
-  %i.ky = sdiv exact i64 %i.kx, 24
+  %i.ky = sdiv i64 %i.kx, 24
   %i.kz = load ptr, ptr %i.ih, align 8, !tbaa !54
+  %umax300 = call i64 @llvm.umax.i64(i64 %i.ky, i64 1)
   %i.la = shl nsw i64 %i.kb, 3
   br label %.preheader
 
@@ -969,7 +972,7 @@ scalar.ph360.prol.loopexit:                       ; preds = %scalar.ph360.prol, 
 
 ._crit_edge278:                                   ; preds = %scalar.ph360.prol.loopexit, %scalar.ph360, %middle.block369, %.preheader
   %i.mj = add nuw i64 %.0106279, 1                ; 2 uses
-  %exitcond301.not = icmp eq i64 %i.mj, %i.ky
+  %exitcond301.not = icmp eq i64 %i.mj, %umax300
   br i1 %exitcond301.not, label %._crit_edge280, label %.preheader, !llvm.loop !144
 
 scalar.ph360:                                     ; preds = %scalar.ph360.prol.loopexit, %scalar.ph360
@@ -1036,8 +1039,9 @@ bb.au:                                            ; preds = %bb.as
   %i.oa = ptrtoint ptr %i.ny to i64
   %i.ob = ptrtoint ptr %i.nz to i64
   %i.oc = sub i64 %i.oa, %i.ob
-  %i.od = sdiv exact i64 %i.oc, 24
+  %i.od = sdiv i64 %i.oc, 24
   %i.oe = load ptr, ptr %i.ih, align 8, !tbaa !54
+  %umax = call i64 @llvm.umax.i64(i64 %i.od, i64 1)
   %i.of = shl nsw i64 %i.nd, 3
   br label %.preheader244
 
@@ -1128,7 +1132,7 @@ scalar.ph374.prol.loopexit:                       ; preds = %scalar.ph374.prol, 
 
 ._crit_edge273:                                   ; preds = %scalar.ph374.prol.loopexit, %scalar.ph374, %middle.block383, %.preheader244
   %i.po = add nuw i64 %.0104274, 1                ; 2 uses
-  %exitcond298.not = icmp eq i64 %i.po, %i.od
+  %exitcond298.not = icmp eq i64 %i.po, %umax
   br i1 %exitcond298.not, label %._crit_edge275, label %.preheader244, !llvm.loop !148
 
 scalar.ph374:                                     ; preds = %scalar.ph374.prol.loopexit, %scalar.ph374

@@ -204,11 +204,12 @@ _ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_E
   %i.blk = ptrtoint ptr %.val36 to i64
   %i.bll = ptrtoint ptr %.val35 to i64
   %i.blm = sub i64 %i.blk, %i.bll
-  %i.bln = sdiv exact i64 %i.blm, 464             ; 9 uses
+  %i.bln = sdiv i64 %i.blm, 464                   ; 6 uses
   %.not260 = icmp eq ptr %.val36, %.val35
   br i1 %.not260, label %._crit_edge258, label %iter.check
 
 iter.check:                                       ; preds = %.preheader
+  %umax = call i64 @llvm.umax.i64(i64 %i.bln, i64 1) ; 4 uses
   %min.iters.check = icmp ult i64 %i.bln, 4
   br i1 %min.iters.check, label %.lr.ph257.preheader, label %vector.main.loop.iter.check
 
@@ -217,8 +218,8 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
   br i1 %min.iters.check858, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
-  %i.blo = and i64 %i.bln, 12
-  %n.vec = and i64 %i.bln, -16                    ; 4 uses
+  %i.blo = and i64 %umax, 12
+  %n.vec = and i64 %umax, -16                     ; 4 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -267,7 +268,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %bc.merge.rdx = phi i64 [ %i.blu, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec874 = and i64 %i.bln, -4                  ; 3 uses
+  %n.vec874 = and i64 %umax, -4                   ; 3 uses
   %i.blv = insertelement <4 x i64> <i64 poison, i64 0, i64 0, i64 0>, i64 %bc.merge.rdx, i64 0
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -312,7 +313,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bmd = load i64, ptr %i.bmc, align 8, !tbaa !401
   %i.bme = add i64 %i.bmd, %.014255               ; 2 uses
   %i.bmf = add nuw i64 %.0256, 1                  ; 2 uses
-  %exitcond.not = icmp eq i64 %i.bmf, %i.bln
+  %exitcond.not = icmp eq i64 %i.bmf, %umax
   br i1 %exitcond.not, label %._crit_edge258, label %.lr.ph257, !llvm.loop !835
 
 bb.nd:                                            ; preds = %._crit_edge258

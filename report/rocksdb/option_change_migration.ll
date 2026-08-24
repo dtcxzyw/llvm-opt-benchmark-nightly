@@ -202,7 +202,7 @@ bb.a:
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
-  %i.g = sdiv exact i64 %i.f, 1008                ; 6 uses
+  %i.g = sdiv i64 %i.f, 1008                      ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !12, !noalias !9
   %i.j = load ptr, ptr %5, align 8, !tbaa !16, !noalias !9 ; 2 uses
@@ -214,7 +214,11 @@ bb.a:
 
 .preheader.i:                                     ; preds = %bb.a
   %.not294.i = icmp eq ptr %i.b, %i.c
-  br i1 %.not294.i, label %.thread216, label %.lr.ph.i
+  br i1 %.not294.i, label %.thread216, label %.lr.ph.preheader.i
+
+.lr.ph.preheader.i:                               ; preds = %.preheader.i
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
+  br label %.lr.ph.i
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #18, !noalias !9
@@ -617,8 +621,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit116.i: ; preds = %
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #18, !noalias !9
   br label %common.resume
 
-.lr.ph.i:                                         ; preds = %.preheader.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i
-  %.018293.i = phi i64 [ %i.xh, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i ], [ 0, %.preheader.i ] ; 10 uses
+.lr.ph.i:                                         ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, %.lr.ph.preheader.i
+  %.018293.i = phi i64 [ %i.xh, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i ], [ 0, %.lr.ph.preheader.i ] ; 10 uses
   %i.ji = getelementptr inbounds nuw [1008 x i8], ptr %i.c, i64 %.018293.i ; 2 uses
   %i.jj = getelementptr inbounds nuw [1008 x i8], ptr %i.j, i64 %.018293.i ; 2 uses
   %i.jk = getelementptr inbounds nuw i8, ptr %i.ji, i64 8
@@ -1021,7 +1025,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274.i: ; preds = %
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %bb.bh
   %i.xh = add nuw i64 %.018293.i, 1               ; 2 uses
-  %exitcond.not.i = icmp eq i64 %i.xh, %i.g
+  %exitcond.not.i = icmp eq i64 %i.xh, %umax.i
   br i1 %exitcond.not.i, label %.thread216, label %.lr.ph.i, !llvm.loop !87
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i246.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit244.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i245.i

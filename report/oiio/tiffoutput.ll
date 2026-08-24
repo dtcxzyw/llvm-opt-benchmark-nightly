@@ -205,8 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = ptrtoint ptr %i.o to i64
   %i.r = sub i64 %i.p, %i.q
-  %i.s = sdiv exact i64 %i.r, 40
+  %i.s = sdiv i64 %i.r, 40
   %i.t = getelementptr inbounds nuw i8, ptr %11, i64 8
+  %umax = call i64 @llvm.umax.i64(i64 %i.s, i64 1)
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.f
@@ -261,7 +262,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34
   %i.ah = add nuw i64 %.074331, 1                 ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ah, %i.s
+  %exitcond.not = icmp eq i64 %i.ah, %umax
   br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !243
 
 bb.g:                                             ; preds = %.thread243
@@ -288,7 +289,7 @@ bb.j:                                             ; preds = %bb.h
   %i.am = ptrtoint ptr %i.ak to i64
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = sub i64 %i.am, %i.an
-  %i.ap = sdiv exact i64 %i.ao, 40
+  %i.ap = sdiv i64 %i.ao, 40
   %i.aq = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.ar = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.as = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 4 uses
@@ -309,6 +310,7 @@ bb.j:                                             ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 4 uses
+  %umax336 = call i64 @llvm.umax.i64(i64 %i.ap, i64 1)
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %.critedge21, %bb.j
@@ -711,7 +713,7 @@ bb.bj:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #34
   %i.hd = add nuw i64 %.071332, 1                 ; 2 uses
-  %exitcond337.not = icmp eq i64 %i.hd, %i.ap
+  %exitcond337.not = icmp eq i64 %i.hd, %umax336
   br i1 %exitcond337.not, label %._crit_edge, label %bb.k, !llvm.loop !250
 
 bb.bk:                                            ; preds = %._crit_edge

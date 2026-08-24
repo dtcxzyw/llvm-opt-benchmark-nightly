@@ -205,7 +205,8 @@ _ZNSt6vectorIP6aiBoneSaIS1_EED2Ev.exit.thread:    ; preds = %.preheader311
 .lr.ph444.preheader:                              ; preds = %.preheader311
   %i.ic = ptrtoint ptr %.0.lcssa.i.i.i.i.i to i64
   %i.id = sub i64 %i.ic, %i.hz
-  %i.ie = sdiv exact i64 %i.id, 24
+  %i.ie = sdiv i64 %i.id, 24
+  %umax = call i64 @llvm.umax.i64(i64 %i.ie, i64 1)
   br label %.lr.ph444
 
 .preheader:                                       ; preds = %_ZNSt6vectorIS_I14aiVertexWeightSaIS0_EESaIS2_EEC2EmRKS3_.exit, %bb.aw
@@ -608,7 +609,7 @@ bb.cf:                                            ; preds = %.lr.ph444, %bb.ce
   %.sroa.10.1 = phi ptr [ %.sroa.10.0441, %.lr.ph444 ], [ %.sroa.10.2, %bb.ce ] ; 3 uses
   %.sroa.16.1 = phi ptr [ %.sroa.16.0442, %.lr.ph444 ], [ %.sroa.16.4, %bb.ce ] ; 3 uses
   %i.uv = add nuw i64 %.077443, 1                 ; 2 uses
-  %exitcond528.not = icmp eq i64 %i.uv, %i.ie
+  %exitcond528.not = icmp eq i64 %i.uv, %umax
   br i1 %exitcond528.not, label %._crit_edge445, label %.lr.ph444, !llvm.loop !46
 
 bb.cg:                                            ; preds = %bb.cd
@@ -1011,8 +1012,8 @@ _ZNSt6vectorI9aiQuatKeySaIS0_EE12emplace_backIJRi13aiQuaterniontIfEEEERS0_DpOT_.
 bb.ad:                                            ; preds = %._crit_edge
   %i.dq = ptrtoint ptr %.sroa.10128.1 to i64
   %i.dr = ptrtoint ptr %.sroa.0123.2 to i64
-  %i.ds = sub i64 %i.dq, %i.dr                    ; 3 uses
-  %i.dt = sdiv exact i64 %i.ds, 24                ; 2 uses
+  %i.ds = sub i64 %i.dq, %i.dr                    ; 2 uses
+  %i.dt = sdiv i64 %i.ds, 24                      ; 3 uses
   %i.du = trunc i64 %i.dt to i32
   %i.dv = getelementptr inbounds nuw i8, ptr %1, i64 1028
   store i32 %i.du, ptr %i.dv, align 4
@@ -1041,7 +1042,9 @@ bb.af:                                            ; preds = %bb.af, %.noexc66
   br i1 %i.eg, label %.lr.ph.preheader.i, label %bb.af
 
 .lr.ph.preheader.i:                               ; preds = %bb.af
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.eb, ptr align 8 %.sroa.0123.2, i64 %i.ds, i1 false)
+  %umax.i = tail call i64 @llvm.umax.i64(i64 %i.dt, i64 1)
+  %6 = mul nuw i64 %umax.i, 24
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.eb, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0123.2, i64 %6, i1 false)
   br label %_ZN6Assimp11B3DImporter8to_arrayI11aiVectorKeyEEPT_RKSt6vectorIS3_SaIS3_EE.exit
 
 _ZN6Assimp11B3DImporter8to_arrayI11aiVectorKeyEEPT_RKSt6vectorIS3_SaIS3_EE.exit: ; preds = %.thread, %.lr.ph.preheader.i, %bb.ad
@@ -1084,8 +1087,8 @@ bb.ag:                                            ; preds = %_ZN6Assimp11B3DImpo
 bb.ah:                                            ; preds = %bb.ag
   %i.el = ptrtoint ptr %.sroa.10116.0.lcssa394 to i64
   %i.em = ptrtoint ptr %.sroa.0111.0.lcssa391 to i64
-  %i.en = sub i64 %i.el, %i.em                    ; 3 uses
-  %i.eo = sdiv exact i64 %i.en, 24                ; 2 uses
+  %i.en = sub i64 %i.el, %i.em                    ; 2 uses
+  %i.eo = sdiv i64 %i.en, 24                      ; 3 uses
   %i.ep = trunc i64 %i.eo to i32
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 1056
   store i32 %i.ep, ptr %i.eq, align 8
@@ -1114,7 +1117,9 @@ bb.aj:                                            ; preds = %bb.aj, %.noexc69
   br i1 %i.fb, label %.lr.ph.preheader.i67, label %bb.aj
 
 .lr.ph.preheader.i67:                             ; preds = %bb.aj
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ew, ptr align 8 %.sroa.0111.0.lcssa391, i64 %i.en, i1 false)
+  %umax.i68 = tail call i64 @llvm.umax.i64(i64 %i.eo, i64 1)
+  %7 = mul nuw i64 %umax.i68, 24
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ew, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0111.0.lcssa391, i64 %7, i1 false)
   br label %_ZN6Assimp11B3DImporter8to_arrayI11aiVectorKeyEEPT_RKSt6vectorIS3_SaIS3_EE.exit70
 
 _ZN6Assimp11B3DImporter8to_arrayI11aiVectorKeyEEPT_RKSt6vectorIS3_SaIS3_EE.exit70: ; preds = %.thread445, %.lr.ph.preheader.i67, %bb.ah

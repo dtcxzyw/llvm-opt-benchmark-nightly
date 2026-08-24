@@ -205,13 +205,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 10 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !62
   tail call void @UnifiedOneForthPix(ptr noundef %i.b) #16
-  %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @listXsize, i64 4), align 4, !tbaa !4 ; 3 uses
+  %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @listXsize, i64 4), align 4, !tbaa !4 ; 2 uses
   %i.d = icmp sgt i32 %i.c, 0
   br i1 %i.d, label %.lr.ph, label %.preheader167
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.e = add nuw nsw i32 %i.c, 1
-  %1 = lshr i32 %i.e, 1
+  %i.e = add nuw i32 %i.c, 1                      ; 2 uses
+  %1 = sdiv i32 %i.e, 2
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !64   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 288 ; 3 uses
@@ -220,8 +220,9 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 288 ; 3 uses
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !62   ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 288 ; 4 uses
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 5 uses
-  %min.iters.check = icmp ult i32 %i.c, 25
+  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 1)
+  %wide.trip.count = zext nneg i32 %smax to i64   ; 5 uses
+  %min.iters.check = icmp slt i32 %i.e, 26
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 scalar.ph.preheader:                              ; preds = %vector.body, %vector.memcheck, %.lr.ph
@@ -271,7 +272,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aa, label %scalar.ph.preheader, label %vector.body, !llvm.loop !253
 
 .preheader167:                                    ; preds = %scalar.ph, %bb.a
-  %i.ab = load i32, ptr @listXsize, align 16, !tbaa !4 ; 3 uses
+  %i.ab = load i32, ptr @listXsize, align 16, !tbaa !4 ; 2 uses
   %i.ac = icmp sgt i32 %i.ab, 0
   br i1 %i.ac, label %.lr.ph170, label %.preheader167..preheader_crit_edge
 
@@ -281,8 +282,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br label %.preheader
 
 .lr.ph170:                                        ; preds = %.preheader167
-  %i.ad = add nuw nsw i32 %i.ab, 1
-  %2 = lshr i32 %i.ad, 1
+  %i.ad = add nuw i32 %i.ab, 1                    ; 2 uses
+  %2 = sdiv i32 %i.ad, 2
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !64 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 24 ; 3 uses
@@ -291,8 +292,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 24 ; 3 uses
   %i.ak = load ptr, ptr %i.a, align 8, !tbaa !62  ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 24 ; 4 uses
-  %wide.trip.count181 = zext nneg i32 %2 to i64   ; 5 uses
-  %min.iters.check210 = icmp ult i32 %i.ab, 25
+  %smax180 = tail call i32 @llvm.smax.i32(i32 %2, i32 1)
+  %wide.trip.count181 = zext nneg i32 %smax180 to i64 ; 5 uses
+  %min.iters.check210 = icmp slt i32 %i.ad, 26
   br i1 %min.iters.check210, label %scalar.ph209.preheader, label %vector.memcheck198
 
 scalar.ph209.preheader:                           ; preds = %vector.body213, %vector.memcheck198, %.lr.ph170
