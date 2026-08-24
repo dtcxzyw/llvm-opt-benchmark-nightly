@@ -204,7 +204,7 @@ bb.z:                                             ; preds = %.lr.ph342, %._crit_
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !209 ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.iy, i64 16
   %i.jg = load ptr, ptr %i.jf, align 8, !tbaa !210
-  %invariant.gep331 = getelementptr i8, ptr %i.jg, i64 %.0.in.in.v.i ; 4 uses
+  %invariant.gep331 = getelementptr inbounds nuw i8, ptr %i.jg, i64 %.0.in.in.v.i ; 4 uses
   %i.jh = getelementptr inbounds nuw i8, ptr %i.iy, i64 2384
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !211 ; 4 uses
   %i.jj = load ptr, ptr %i.jc, align 8, !tbaa !211 ; 2 uses
@@ -255,13 +255,14 @@ bb.aa:                                            ; preds = %bb.ac, %.lr.ph.us
   %.2184312.us.us = phi i64 [ %.1183322.us, %.lr.ph.us ], [ %.3185.us.us, %bb.ac ] ; 2 uses
   %.5203310.us.us = phi double [ %.4202320.us, %.lr.ph.us ], [ %.7205.us.us, %bb.ac ] ; 2 uses
   %.sroa.0.0309.us.us = phi ptr [ %i.jw, %.lr.ph.us ], [ %i.ki, %bb.ac ] ; 2 uses
-  %i.jy = load i32, ptr %.sroa.0.0309.us.us, align 4, !tbaa !197
-  %i.jz = sext i32 %i.jy to i64                   ; 2 uses
+  %i.jy = load i32, ptr %.sroa.0.0309.us.us, align 4, !tbaa !197 ; 2 uses
+  %i.jz = sext i32 %i.jy to i64
   %i.ka = icmp slt i64 %indvars.iv455, %i.jz
   br i1 %i.ka, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
-  %gep.us.us = getelementptr [36 x i8], ptr %invariant.gep331, i64 %i.jz
+  %8 = zext nneg i32 %i.jy to i64
+  %gep.us.us = getelementptr inbounds nuw [36 x i8], ptr %invariant.gep331, i64 %8
   %.0.in.i246.us.us = load i16, ptr %gep.us.us, align 2, !tbaa !213
   %.0.i247.us.us = zext i16 %.0.in.i246.us.us to i32
   %i.kb = add nuw nsw i32 %i.jx, %.0.i247.us.us
@@ -327,13 +328,14 @@ bb.ad:                                            ; preds = %.lr.ph, %bb.af
   %.2184312 = phi i64 [ %.1183322, %.lr.ph ], [ %.3185, %bb.af ] ; 2 uses
   %.sroa.0.0309 = phi ptr [ %i.ku, %.lr.ph ], [ %i.lm, %bb.af ] ; 2 uses
   %i.kx = phi <2 x double> [ %i.km, %.lr.ph ], [ %i.ll, %bb.af ] ; 2 uses
-  %i.ky = load i32, ptr %.sroa.0.0309, align 4, !tbaa !197
-  %i.kz = sext i32 %i.ky to i64                   ; 2 uses
+  %i.ky = load i32, ptr %.sroa.0.0309, align 4, !tbaa !197 ; 2 uses
+  %i.kz = sext i32 %i.ky to i64
   %i.la = icmp slt i64 %indvars.iv450, %i.kz
   br i1 %i.la, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %gep = getelementptr [36 x i8], ptr %invariant.gep331, i64 %i.kz
+  %9 = zext nneg i32 %i.ky to i64
+  %gep = getelementptr inbounds nuw [36 x i8], ptr %invariant.gep331, i64 %9
   %.0.in.i246 = load i16, ptr %gep, align 2, !tbaa !213
   %.0.i247 = zext i16 %.0.in.i246 to i32
   %i.lb = add nuw nsw i32 %i.kv, %.0.i247

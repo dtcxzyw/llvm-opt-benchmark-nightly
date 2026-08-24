@@ -200,9 +200,9 @@ bb.c:                                             ; preds = %.thread
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.j
-  %indvars.iv = phi i64 [ -1, %.lr.ph ], [ %indvars.iv.next, %bb.j ]
   %2 = phi ptr [ %i.o, %.lr.ph ], [ %i.as, %bb.j ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %.03151 = phi i32 [ -1, %.lr.ph ], [ %3, %bb.j ]
+  %3 = add nsw i32 %.03151, 1                     ; 2 uses
   %i.q = load ptr, ptr %i.k, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 162
   %i.s = load i8, ptr %i.r, align 2
@@ -239,7 +239,8 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.ah = load ptr, ptr %i.k, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 72
   %i.aj = load ptr, ptr %i.ai, align 8
-  %i.ak = getelementptr inbounds [8 x i8], ptr %i.aj, i64 %indvars.iv.next ; 2 uses
+  %4 = zext nneg i32 %3 to i64
+  %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %4 ; 2 uses
   br i1 %i.ag, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

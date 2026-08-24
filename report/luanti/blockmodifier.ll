@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g, %.thread329
   %i.aq = shl nuw nsw i64 %indvars.iv493, 8
   %i.ar = add nsw i64 %indvars.iv493, -1          ; 2 uses
   %i.as = trunc nuw nsw i64 %indvars.iv493 to i32
-  %i.at = add nsw i32 %i.as, 1                    ; 2 uses
+  %i.at = add nuw nsw i32 %i.as, 1                ; 2 uses
   %i.au = trunc nsw i64 %i.ar to i32
   %.not144419 = icmp slt i32 %i.at, %i.au
   %i.av = trunc nsw i64 %i.ar to i16
@@ -219,7 +219,7 @@ bb.h:                                             ; preds = %bb.g, %.thread329
   %i.ay = add nuw nsw i64 %i.ax, %i.aq
   %i.az = add nsw i64 %indvars.iv490, -1          ; 2 uses
   %i.ba = trunc nuw nsw i64 %indvars.iv490 to i32
-  %i.bb = add nsw i32 %i.ba, 1                    ; 2 uses
+  %i.bb = add nuw nsw i32 %i.ba, 1                ; 2 uses
   %i.bc = trunc nsw i64 %i.az to i32
   %.not142425 = icmp slt i32 %i.bb, %i.bc
   %i.bd = trunc nsw i64 %i.az to i16
@@ -463,7 +463,7 @@ bb.aa:                                            ; preds = %bb.z
 .lr.ph461:                                        ; preds = %bb.aa
   %i.ed = add nsw i64 %indvars.iv, -1             ; 2 uses
   %i.ee = trunc nuw nsw i64 %indvars.iv to i32
-  %i.ef = add nsw i32 %i.ee, 1                    ; 2 uses
+  %i.ef = add nuw nsw i32 %i.ee, 1                ; 2 uses
   %i.eg = trunc nsw i64 %i.ed to i32
   %.not140432 = icmp slt i32 %i.ef, %i.eg
   %i.eh = trunc nsw i64 %i.ed to i16
@@ -866,20 +866,20 @@ _ZN10LBMManager22getLBMsIntroducedAfterEj.exit:   ; preds = %.lr.ph.i.i.i.i
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader248, %bb.bi
-  %indvars.iv393 = phi i64 [ 0, %.preheader248 ], [ %indvars.iv.next394, %bb.bi ] ; 7 uses
+  %indvars.iv393 = phi i64 [ 0, %.preheader248 ], [ %indvars.iv.next394, %bb.bi ] ; 6 uses
   %.165344 = phi i16 [ %.064348, %.preheader248 ], [ %.367204, %bb.bi ]
   %.169343 = phi ptr [ %.068347, %.preheader248 ], [ %.371203, %bb.bi ]
   %.174342 = phi ptr [ %.073346, %.preheader248 ], [ %.477202, %bb.bi ]
   %i.af = shl nuw nsw i64 %indvars.iv393, 4
   %i.ag = add nuw nsw i64 %i.af, %i.ad
-  %7 = call i64 @llvm.fshl.i64(i64 %indvars.iv393, i64 %indvars.iv393, i64 16) ; 2 uses
+  %7 = shl nuw nsw i64 %indvars.iv393, 16         ; 2 uses
   %i.ah = trunc nuw nsw i64 %indvars.iv393 to i16
-  %invariant.op = xor i64 %indvars.iv397, %7
-  %invariant.op574 = xor i64 %indvars.iv397, %7
+  %invariant.op = or i64 %indvars.iv397, %7
+  %invariant.op574 = or i64 %indvars.iv397, %7
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %_ZN12_GLOBAL__N_18LBMToRun10insertLBMsISt6vectorIP23LoadingBlockModifierDefSaIS4_EEEEvRKT_.exit
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZN12_GLOBAL__N_18LBMToRun10insertLBMsISt6vectorIP23LoadingBlockModifierDefSaIS4_EEEEvRKT_.exit ] ; 9 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %_ZN12_GLOBAL__N_18LBMToRun10insertLBMsISt6vectorIP23LoadingBlockModifierDefSaIS4_EEEEvRKT_.exit ] ; 7 uses
   %.266340 = phi i16 [ %.165344, %.preheader ], [ %.367204, %_ZN12_GLOBAL__N_18LBMToRun10insertLBMsISt6vectorIP23LoadingBlockModifierDefSaIS4_EEEEvRKT_.exit ] ; 3 uses
   %.270339 = phi ptr [ %.169343, %.preheader ], [ %.371203, %_ZN12_GLOBAL__N_18LBMToRun10insertLBMsISt6vectorIP23LoadingBlockModifierDefSaIS4_EEEEvRKT_.exit ] ; 2 uses
   %.275338 = phi ptr [ %.174342, %.preheader ], [ %.477202, %_ZN12_GLOBAL__N_18LBMToRun10insertLBMsISt6vectorIP23LoadingBlockModifierDefSaIS4_EEEEvRKT_.exit ] ; 6 uses
@@ -1282,8 +1282,8 @@ bb.aj:                                            ; preds = %.thread205, %bb.ai
   br i1 %.not.not.i, label %bb.ak, label %.thread.i.thread449
 
 .thread.i.thread449:                              ; preds = %bb.aj
-  %8 = call i64 @llvm.fshl.i64(i64 %indvars.iv, i64 %indvars.iv, i64 40)
-  %.reass.reass = xor i64 %8, %invariant.op       ; 5 uses
+  %8 = shl nuw nsw i64 %indvars.iv, 40
+  %.reass.reass = or i64 %8, %invariant.op        ; 5 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %.477210, i64 8
   %i.er = load i64, ptr %i.eq, align 8, !tbaa !356 ; 2 uses
   %i.es = urem i64 %.reass.reass, %i.er           ; 5 uses
@@ -1372,8 +1372,8 @@ bb.aq:                                            ; preds = %_ZNKSt8__detail15_H
   br i1 %.not19.i.i.i, label %bb.an, label %.critedge.i, !llvm.loop !368
 
 .critedge.i.sink.split:                           ; preds = %_ZNKSt8__detail15_Hashtable_baseIN4core8vector3dIsEES3_NS_9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_key_equals_trIS3_EEbRKT_RKNS_16_Hash_node_valueIS3_Lb1EEE.exit.thread.i, %bb.ak
-  %9 = call i64 @llvm.fshl.i64(i64 %indvars.iv, i64 %indvars.iv, i64 40)
-  %.reass498.reass = xor i64 %9, %invariant.op574 ; 2 uses
+  %9 = shl nuw nsw i64 %indvars.iv, 40
+  %.reass498.reass = or i64 %9, %invariant.op574  ; 2 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %.477210, i64 8
   %i.ge = load i64, ptr %i.gd, align 8, !tbaa !356
   %i.gf = urem i64 %.reass498.reass, %i.ge
@@ -1776,20 +1776,17 @@ declare extern_weak void @_ZTH11tracestream() #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.fshl.i64(i64, i64, i64) #22
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #23
+declare void @llvm.experimental.noalias.scope.decl(metadata) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #22
+declare i64 @llvm.umax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #22
+declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #22
+declare i32 @llvm.umax.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #24
@@ -1816,8 +1813,8 @@ attributes #18 = { mustprogress nocallback nofree nosync nounwind willreturn mem
 attributes #19 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #20 = { mustprogress nofree nounwind willreturn memory(read) "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #21 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #22 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #23 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #22 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #23 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #24 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #25 = { nounwind }
 attributes #26 = { builtin nounwind }

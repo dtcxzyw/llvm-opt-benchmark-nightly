@@ -205,15 +205,16 @@ bb.i:                                             ; preds = %._crit_edge
   br i1 %or.cond.i42, label %.lr.ph.preheader.i43, label %correctbytes.exit
 
 .lr.ph.preheader.i43:                             ; preds = %bb.i
-  %i.cm = add nsw i64 %i.n, -1
+  %i.cm = add nuw nsw i64 %i.n, 4294967295
+  %3 = and i64 %i.cm, 4294967295
   br label %.lr.ph.i44
 
 .lr.ph.i44:                                       ; preds = %.lr.ph.i44, %.lr.ph.preheader.i43
   %indvars.iv15.i = phi i64 [ 0, %.lr.ph.preheader.i43 ], [ %indvars.iv.next16.i, %.lr.ph.i44 ] ; 2 uses
-  %indvars.iv.i45 = phi i64 [ %i.cm, %.lr.ph.preheader.i43 ], [ %indvars.iv.next.i46, %.lr.ph.i44 ] ; 2 uses
+  %indvars.iv.i45 = phi i64 [ %3, %.lr.ph.preheader.i43 ], [ %indvars.iv.next.i46, %.lr.ph.i44 ] ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv15.i ; 2 uses
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !11
-  %i.cp = getelementptr inbounds i8, ptr %i.c, i64 %indvars.iv.i45 ; 2 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.i45 ; 2 uses
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !11
   %indvars.iv.next16.i = add nuw nsw i64 %indvars.iv15.i, 1 ; 2 uses
   store i8 %i.cq, ptr %i.cn, align 1, !tbaa !11
@@ -239,15 +240,16 @@ bb.j:                                             ; preds = %._crit_edge
   br i1 %or.cond.i48, label %.lr.ph.preheader.i49, label %correctbytes.exit55
 
 .lr.ph.preheader.i49:                             ; preds = %bb.j
-  %i.cw = add nsw i64 %i.n, -1
+  %i.cw = add nuw nsw i64 %i.n, 4294967295
+  %4 = and i64 %i.cw, 4294967295
   br label %.lr.ph.i50
 
 .lr.ph.i50:                                       ; preds = %.lr.ph.i50, %.lr.ph.preheader.i49
   %indvars.iv15.i51 = phi i64 [ 0, %.lr.ph.preheader.i49 ], [ %indvars.iv.next16.i53, %.lr.ph.i50 ] ; 2 uses
-  %indvars.iv.i52 = phi i64 [ %i.cw, %.lr.ph.preheader.i49 ], [ %indvars.iv.next.i54, %.lr.ph.i50 ] ; 2 uses
+  %indvars.iv.i52 = phi i64 [ %4, %.lr.ph.preheader.i49 ], [ %indvars.iv.next.i54, %.lr.ph.i50 ] ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv15.i51 ; 2 uses
   %i.cy = load i8, ptr %i.cx, align 1, !tbaa !11
-  %i.cz = getelementptr inbounds i8, ptr %i.d, i64 %indvars.iv.i52 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.d, i64 %indvars.iv.i52 ; 2 uses
   %i.da = load i8, ptr %i.cz, align 1, !tbaa !11
   %indvars.iv.next16.i53 = add nuw nsw i64 %indvars.iv15.i51, 1 ; 2 uses
   store i8 %i.da, ptr %i.cx, align 1, !tbaa !11

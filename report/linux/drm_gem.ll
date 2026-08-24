@@ -202,7 +202,7 @@ bb.a:
   br label %.split.us
 
 .split.us:                                        ; preds = %.split.us.preheader, %bb.g
-  %.038.us = phi i32 [ %i.ah, %bb.g ], [ -1, %.split.us.preheader ] ; 5 uses
+  %.038.us = phi i32 [ %i.ah, %bb.g ], [ -1, %.split.us.preheader ] ; 4 uses
   %.not.us = icmp eq i32 %.038.us, -1
   br i1 %.not.us, label %.thread.us, label %bb.b
 
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %.split.us
   br i1 %.not44.us, label %.thread.us, label %.thread48
 
 .thread.us:                                       ; preds = %bb.b, %.split.us
-  %i.r = zext i32 %.038.us to i64
+  %i.r = zext i32 %.038.us to i64                 ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %.thread.us, %bb.e
@@ -257,8 +257,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not46.us, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.us
-  %3 = sext i32 %.038.us to i64
-  %i.ac = getelementptr [8 x i8], ptr %0, i64 %3
+  %i.ac = getelementptr [8 x i8], ptr %0, i64 %i.r
   %i.ad = load ptr, ptr %i.ac, align 8
   %i.ae = getelementptr i8, ptr %i.ad, i64 248
   %i.af = load ptr, ptr %i.ae, align 8

@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   %i.ah = shl nuw nsw i64 %i.ag, 3
   %i.ai = alloca i8, i64 %i.ah, align 16          ; 9 uses
   %i.aj = zext nneg i32 %2 to i64                 ; 4 uses
-  %i.ak = getelementptr [8 x i8], ptr %i.ai, i64 %i.aj ; 15 uses
+  %i.ak = getelementptr [8 x i8], ptr %i.ai, i64 %i.aj ; 14 uses
   %wide.trip.count = zext nneg i32 %i.g to i64
   br label %.lr.ph
 
@@ -541,28 +541,26 @@ bb.o:                                             ; preds = %bb.h
   %i.hp = fmul <2 x float> %i.ho, %i.hm
   %i.hq = load <2 x float>, ptr %i.hl, align 4, !tbaa !9 ; 4 uses
   %i.hr = fadd <2 x float> %i.hp, %i.hq
-  %i.hs = shl nsw i32 %i.f, 2                     ; 2 uses
+  %i.hs = shl nsw i32 %i.f, 2
   %i.ht = zext nneg i32 %i.hs to i64
-  %i.hu = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.ht
+  %i.hu = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.ht ; 4 uses
   store <2 x float> %i.hr, ptr %i.hu, align 8
   %i.hv = load <2 x float>, ptr %i.bi, align 8, !tbaa !9
   %i.hw = insertelement <2 x float> poison, float %i.gt, i64 0
   %i.hx = shufflevector <2 x float> %i.hw, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.hy = fmul <2 x float> %i.hx, %i.hv
   %i.hz = fadd <2 x float> %i.hq, %i.hy
-  %6 = zext nneg i32 %i.hs to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %6 ; 3 uses
-  %i.ia = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.ia = getelementptr inbounds nuw i8, ptr %i.hu, i64 8
   store <2 x float> %i.hz, ptr %i.ia, align 8
   %i.ib = load <2 x float>, ptr %i.bi, align 8, !tbaa !9
   %i.ic = fmul <2 x float> %i.hx, %i.ib
   %i.id = fsub <2 x float> %i.hq, %i.ic
-  %i.ie = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.ie = getelementptr inbounds nuw i8, ptr %i.hu, i64 16
   store <2 x float> %i.id, ptr %i.ie, align 8
   %i.if = load <2 x float>, ptr %i.bi, align 8, !tbaa !9
   %i.ig = fmul <2 x float> %i.ho, %i.if
   %i.ih = fsub <2 x float> %i.hq, %i.ig
-  %i.ii = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.ii = getelementptr inbounds nuw i8, ptr %i.hu, i64 24
   store <2 x float> %i.ih, ptr %i.ii, align 8
   br label %.lr.ph625
 
@@ -965,8 +963,8 @@ bb.k:                                             ; preds = %bb.i
   %i.fi = getelementptr inbounds nuw i8, ptr %.8.val, i64 %i.fh
   %i.fj = sub nsw i32 %0, %i.ej
   %i.fk = shl nsw i32 %i.fj, 1
-  %1 = sext i32 %i.fk to i64
-  %i.fl = getelementptr inbounds i8, ptr %i.fi, i64 %1
+  %1 = zext nneg i32 %i.fk to i64
+  %i.fl = getelementptr inbounds nuw i8, ptr %i.fi, i64 %1
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 %i.a
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 %i.em
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 16

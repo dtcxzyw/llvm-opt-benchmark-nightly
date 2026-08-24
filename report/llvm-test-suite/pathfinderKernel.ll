@@ -10,15 +10,14 @@ define dso_local void @pathFinderKernel(i32 noundef %0, i32 noundef %1, ptr nofr
 bb.a:
   %i.a = ptrtoaddr ptr %3 to i64
   %i.b = ptrtoaddr ptr %4 to i64
-  %i.c = zext i32 %1 to i64                       ; 7 uses
+  %i.c = zext i32 %1 to i64                       ; 8 uses
   %i.d = add nsw i32 %0, -1
   %i.e = icmp sgt i32 %0, 1
   br i1 %i.e, label %.preheader85.lr.ph, label %._crit_edge90
 
 .preheader85.lr.ph:                               ; preds = %bb.a
   %i.f = icmp sgt i32 %1, 0
-  %5 = sext i32 %1 to i64
-  %i.g = getelementptr [4 x i8], ptr %4, i64 %5
+  %i.g = getelementptr [4 x i8], ptr %4, i64 %i.c
   %i.h = getelementptr i8, ptr %i.g, i64 -8       ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 4
   br i1 %i.f, label %.preheader85.us.preheader, label %._crit_edge90

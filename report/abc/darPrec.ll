@@ -174,14 +174,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.d = sdiv i32 %1, %2                          ; 7 uses
-  %i.e = add nsw i32 %2, -1                       ; 3 uses
+  %i.e = add nsw i32 %2, -1                       ; 4 uses
   %i.f = icmp sgt i32 %2, 0
   br i1 %i.f, label %.lr.ph48, label %.loopexit
 
 .lr.ph48:                                         ; preds = %bb.c
-  %i.g = zext nneg i32 %i.e to i64                ; 8 uses
+  %i.g = zext nneg i32 %i.e to i64                ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 %i.g ; 7 uses
   %i.i = icmp sgt i32 %i.d, 0
+  %4 = zext nneg i32 %i.e to i64                  ; 2 uses
   %wide.trip.count59 = zext nneg i32 %2 to i64    ; 2 uses
   %.pre61 = load i8, ptr %i.h, align 1, !tbaa !19 ; 2 uses
   br i1 %i.i, label %.lr.ph.us.preheader, label %.lr.ph48.split.preheader
@@ -207,7 +208,7 @@ bb.c:                                             ; preds = %bb.a
   %i.o = load i8, ptr %i.n, align 1, !tbaa !19    ; 6 uses
   store i8 %i.m, ptr %i.n, align 1, !tbaa !19
   store i8 %i.o, ptr %i.h, align 1, !tbaa !19
-  %i.p = sub nsw i64 %i.g, %indvars.iv56
+  %i.p = sub nsw i64 %4, %indvars.iv56
   %i.q = mul nsw i64 %i.p, %i.k
   %i.r = getelementptr inbounds [8 x i8], ptr %0, i64 %i.q ; 6 uses
   br i1 %i.l, label %.epil.preheader, label %.lr.ph.us.new
@@ -276,7 +277,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !19
   store i8 %i.am, ptr %i.an, align 1, !tbaa !19
   store i8 %i.ao, ptr %i.h, align 1, !tbaa !19
-  %i.ap = sub nsw i64 %i.g, %indvars.iv
+  %i.ap = sub nsw i64 %4, %indvars.iv
   %i.aq = mul nsw i64 %i.ap, %i.j
   %i.ar = getelementptr inbounds [8 x i8], ptr %0, i64 %i.aq
   tail call void @Dar_Permutations_rec(ptr noundef %i.ar, i32 noundef %i.d, i32 noundef %i.e, ptr noundef nonnull %3)

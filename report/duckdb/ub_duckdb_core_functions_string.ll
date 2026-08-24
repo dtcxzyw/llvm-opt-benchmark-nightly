@@ -205,29 +205,24 @@ bb.z:                                             ; preds = %_ZN10duckdb_fmt2v68
 
 .lr.ph:                                           ; preds = %bb.z
   %i.kw = load ptr, ptr %0, align 8, !tbaa !3343
-  %2 = zext nneg i32 %i.ku to i64
-  %3 = zext nneg i32 %i.f to i64
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph, %bb.ab
-  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.ab ] ; 3 uses
-  %i.kx = getelementptr i8, ptr %i.kw, i64 %indvars.iv
+  %.0102234 = phi i32 [ %i.ku, %.lr.ph ], [ %3, %bb.ab ] ; 3 uses
+  %2 = zext nneg i32 %.0102234 to i64
+  %i.kx = getelementptr i8, ptr %i.kw, i64 %2
   %i.ky = getelementptr i8, ptr %i.kx, i64 -1
   %i.kz = load i8, ptr %i.ky, align 1, !tbaa !66
   %i.la = icmp eq i8 %i.kz, 48
-  br i1 %i.la, label %bb.ab, label %.critedge.loopexit
+  br i1 %i.la, label %bb.ab, label %.critedge
 
 bb.ab:                                            ; preds = %bb.aa
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.lb = icmp sgt i64 %indvars.iv.next, %3
+  %3 = add nsw i32 %.0102234, -1                  ; 2 uses
+  %i.lb = icmp sgt i32 %3, %i.f
   br i1 %i.lb, label %bb.aa, label %_ZN10duckdb_fmt2v68internal8copy_strIcPKcPcTnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit176, !llvm.loop !3371
 
-.critedge.loopexit:                               ; preds = %bb.aa
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.z
-  %.0102.lcssa = phi i32 [ %i.ku, %bb.z ], [ %4, %.critedge.loopexit ] ; 2 uses
+.critedge:                                        ; preds = %bb.aa, %bb.z
+  %.0102.lcssa = phi i32 [ %i.ku, %bb.z ], [ %.0102234, %bb.aa ] ; 2 uses
   %.not126 = icmp eq i32 %.0102.lcssa, %i.f
   br i1 %.not126, label %_ZN10duckdb_fmt2v68internal8copy_strIcPKcPcTnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit176, label %iter.check475
 
@@ -630,7 +625,7 @@ _ZN10duckdb_fmt2v68internal8copy_strIcPKcPcTnNSt9enable_ifIXsr16needs_conversion
 define linkonce_odr i64 @_ZNK10duckdb_fmt2v68internal12float_writerIcE8prettifyINS1_17counting_iteratorEEET_S6_(ptr noundef nonnull align 8 dereferenceable(33) %0, i64 %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !3347 ; 19 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !3347 ; 20 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.d = load i32, ptr %i.c, align 4, !tbaa !3348 ; 5 uses
   %i.e = add i32 %i.d, %i.b                       ; 17 uses
@@ -852,35 +847,30 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.0186.10 = phi i64 [ %.sroa.05.0.lcssa.i.i146, %bb.r ], [ %i.ch, %middle.block ], [ %.sroa.05.0.lcssa.i.i144, %scalar.ph ] ; 2 uses
   %i.cl = and i32 %i.h, 536870912
   %.not = icmp eq i32 %i.cl, 0
-  %2 = sext i32 %i.b to i64                       ; 2 uses
   br i1 %.not, label %.lr.ph, label %bb.u
 
 .lr.ph:                                           ; preds = %.loopexit
   %i.cm = load ptr, ptr %0, align 8, !tbaa !3343
-  %3 = zext nneg i32 %i.e to i64
   %i.cn = add i32 %i.b, -1
   %smin = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.cn)
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph, %bb.t
-  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.t ] ; 3 uses
-  %i.co = getelementptr i8, ptr %i.cm, i64 %indvars.iv
+  %.0105237 = phi i32 [ %i.b, %.lr.ph ], [ %3, %bb.t ] ; 3 uses
+  %2 = zext nneg i32 %.0105237 to i64
+  %i.co = getelementptr i8, ptr %i.cm, i64 %2
   %i.cp = getelementptr i8, ptr %i.co, i64 -1
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !66
   %i.cr = icmp eq i8 %i.cq, 48
-  br i1 %i.cr, label %bb.t, label %.critedge.split.loop.exit
+  br i1 %i.cr, label %bb.t, label %.critedge
 
 bb.t:                                             ; preds = %bb.s
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.cs = icmp sgt i64 %indvars.iv.next, %3
+  %3 = add nsw i32 %.0105237, -1                  ; 2 uses
+  %i.cs = icmp sgt i32 %3, %i.e
   br i1 %i.cs, label %bb.s, label %.critedge, !llvm.loop !3388
 
-.critedge.split.loop.exit:                        ; preds = %bb.s
-  %4 = trunc nsw i64 %indvars.iv to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %bb.t, %.critedge.split.loop.exit
-  %.0105.lcssa.ph = phi i32 [ %4, %.critedge.split.loop.exit ], [ %smin, %bb.t ] ; 3 uses
+.critedge:                                        ; preds = %bb.s, %bb.t
+  %.0105.lcssa.ph = phi i32 [ %.0105237, %bb.s ], [ %smin, %bb.t ] ; 3 uses
   %.not122 = icmp ne i32 %.0105.lcssa.ph, %i.e
   %i.ct = zext i1 %.not122 to i64
   %spec.select223 = add i64 %.sroa.0186.10, %i.ct
@@ -894,7 +884,8 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %.loopexit
   %i.cx = zext nneg i32 %i.e to i64
-  %gepdiff = sub nsw i64 %2, %i.cx
+  %4 = zext nneg i32 %i.b to i64
+  %gepdiff = sub nsw i64 %4, %i.cx
   %i.cy = add nsw i64 %gepdiff, 1
   %.sroa.05.0.lcssa.i.i152 = add i64 %i.cy, %.sroa.0186.10 ; 2 uses
   %i.cz = load i32, ptr %i.f, align 8, !tbaa !3351 ; 2 uses

@@ -206,7 +206,7 @@ bb.ab:                                            ; preds = %bb.z
   %.neg = add i32 %3, %.neg115
   %i.cc = add i32 %.neg, %i.cb
   %i.cd = add nsw i32 %i.bf, %i.b
-  %4 = sext i32 %i.cd to i64
+  %4 = zext nneg i32 %i.cd to i64
   %i.ce = getelementptr i8, ptr %.096, i64 %4
   %i.cf = getelementptr i8, ptr %i.ce, i64 1
   br label %bb.ae

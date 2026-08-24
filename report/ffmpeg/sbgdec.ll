@@ -204,13 +204,13 @@ bb.at:                                            ; preds = %bb.at, %.lr.ph146.i
   br i1 %exitcond167.not.i, label %.preheader.i, label %bb.at, !llvm.loop !86
 
 bb.au:                                            ; preds = %generate_transition.exit.i, %.lr.ph148.i
-  %i.ij = phi i32 [ %i.et, %.lr.ph148.i ], [ %i.mx, %generate_transition.exit.i ] ; 2 uses
+  %i.ij = phi i32 [ %i.et, %.lr.ph148.i ], [ %i.mx, %generate_transition.exit.i ]
   %.4147.i = phi i32 [ -1, %.lr.ph148.i ], [ %i.in, %generate_transition.exit.i ] ; 3 uses
   %i.ik = icmp slt i32 %.4147.i, 0                ; 7 uses
   %.pre176.i = load ptr, ptr %i.er, align 8, !tbaa !71 ; 2 uses
   %i.il = zext nneg i32 %.4147.i to i64
   %i.im = getelementptr inbounds nuw [48 x i8], ptr %.pre176.i, i64 %i.il ; 11 uses
-  %i.in = add nsw i32 %.4147.i, 1                 ; 4 uses
+  %i.in = add nsw i32 %.4147.i, 1                 ; 3 uses
   br i1 %i.ik, label %.cont115, label %.cont115.thread
 
 .cont115:                                         ; preds = %bb.au
@@ -276,8 +276,6 @@ bb.av:                                            ; preds = %.cont127
 
 .loopexit.i.cont.thread:                          ; preds = %.cont123, %.cont115
   %.sroa.gep88169265 = phi ptr [ %.sroa.gep88167, %.cont115 ], [ %.sroa.gep88169267, %.cont123 ]
-  %8 = srem i32 %i.in, %i.ij
-  %9 = sext i32 %8 to i64
   %.sroa.gep94172 = getelementptr inbounds nuw i8, ptr %i.im, i64 42
   br label %.loopexit.i.cont.cont
 
@@ -285,8 +283,6 @@ bb.av:                                            ; preds = %.cont127
   %.sroa.gep88169264 = phi ptr [ %.sroa.gep88169267, %.loopexit.i.thread ], [ %.sroa.gep88, %.cont115.thread ]
   %i.jb = phi i64 [ %.pre177.i.else.val, %.loopexit.i.thread ], [ %.else.val146, %.cont115.thread ] ; 3 uses
   %i.jc = phi i32 [ %.else.val126, %.loopexit.i.thread ], [ %.else.val118, %.cont115.thread ]
-  %10 = srem i32 %i.in, %i.ij
-  %11 = zext nneg i32 %10 to i64
   %.sroa.gep91171 = getelementptr inbounds nuw i8, ptr %i.im, i64 24
   %.else.val142 = load i64, ptr %.sroa.gep91171, align 8, !tbaa !79 ; 3 uses
   %i.jd = ashr i64 %i.jb, 1
@@ -304,14 +300,15 @@ bb.av:                                            ; preds = %.cont127
 .loopexit.i.cont.cont:                            ; preds = %.loopexit.i.cont.thread, %.loopexit.i.cont.else
   %.sroa.gep88169263 = phi ptr [ %.sroa.gep88169265, %.loopexit.i.cont.thread ], [ %.sroa.gep88169264, %.loopexit.i.cont.else ] ; 2 uses
   %i.jj = phi i8 [ %.sroa.19.0.copyload, %.loopexit.i.cont.thread ], [ %.else.val, %.loopexit.i.cont.else ]
-  %.pn = phi i64 [ %9, %.loopexit.i.cont.thread ], [ %11, %.loopexit.i.cont.else ]
   %i.jk = phi i64 [ %.sroa.7.0, %.loopexit.i.cont.thread ], [ %i.jb, %.loopexit.i.cont.else ] ; 2 uses
   %i.jl = phi i32 [ %.sroa.17.0.copyload, %.loopexit.i.cont.thread ], [ %i.jc, %.loopexit.i.cont.else ]
   %i.jm = phi i64 [ %.sroa.11.0, %.loopexit.i.cont.thread ], [ %.else.val142, %.loopexit.i.cont.else ] ; 2 uses
   %i.jn = phi i64 [ %i.ig, %.loopexit.i.cont.thread ], [ %i.ji, %.loopexit.i.cont.else ] ; 2 uses
   %.sroa.gep94173176 = phi ptr [ %.sroa.gep94172, %.loopexit.i.cont.thread ], [ %.sroa.gep94, %.loopexit.i.cont.else ] ; 2 uses
   %i.jo = phi i8 [ %.sroa.18106.0.copyload, %.loopexit.i.cont.thread ], [ %.else.val114, %.loopexit.i.cont.else ]
-  %i.jp = getelementptr inbounds [48 x i8], ptr %.pre176.i, i64 %.pn ; 3 uses
+  %.pn.in = srem i32 %i.in, %i.ij
+  %.pn = zext i32 %.pn.in to i64
+  %i.jp = getelementptr inbounds nuw [48 x i8], ptr %.pre176.i, i64 %.pn ; 3 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 40
   %i.jr = load i8, ptr %i.jq, align 8, !tbaa !91
   %i.js = and i8 %i.jr, %i.jo

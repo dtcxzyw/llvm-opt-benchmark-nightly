@@ -75,7 +75,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit38: ; preds = %_
   %indvars.iv = phi i64 [ %i.aa, %.lr.ph.preheader ], [ %indvars.iv.next.pre-phi, %bb.i ] ; 4 uses
   %.03466 = phi i32 [ %.sroa.speculated, %.lr.ph.preheader ], [ %.1, %bb.i ] ; 3 uses
   %i.ad = load ptr, ptr %0, align 8, !tbaa !18
-  %i.ae = getelementptr inbounds i8, ptr %i.ad, i64 %indvars.iv
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 %indvars.iv
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !15  ; 2 uses
   switch i8 %i.af, label %bb.f [
     i8 0, label %.critedge
@@ -92,7 +92,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ah = load ptr, ptr %2, align 8, !tbaa !19
   store i8 0, ptr %i.ah, align 1, !tbaa !15
   %i.ai = add nuw nsw i64 %indvars.iv, 1          ; 2 uses
-  %i.aj = trunc nsw i64 %i.ai to i32
+  %i.aj = trunc nuw i64 %i.ai to i32
   br label %bb.i
 
 bb.f:                                             ; preds = %.lr.ph

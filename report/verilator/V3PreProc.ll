@@ -205,20 +205,18 @@ define dso_local noundef nonnull ptr @_Z19V3PreLex_scan_bytesPKci(ptr nofree nou
 bb.a:
   %i.a = add nsw i32 %1, 2
   %i.b = sext i32 %i.a to i64
-  %i.c = tail call noalias noundef ptr @malloc(i64 noundef %i.b) #41 ; 6 uses
+  %i.c = tail call noalias noundef ptr @malloc(i64 noundef %i.b) #41 ; 7 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.b, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
   %.not26 = icmp eq i32 %1, 0
-  %2 = zext i32 %1 to i64                         ; 2 uses
   br i1 %.not26, label %._crit_edge.thread, label %._crit_edge
 
 ._crit_edge.thread:                               ; preds = %.preheader
-  %3 = getelementptr i8, ptr %i.c, i64 %2         ; 2 uses
-  %i.d = getelementptr i8, ptr %3, i64 1
+  %i.d = getelementptr i8, ptr %i.c, i64 1
   store i8 0, ptr %i.d, align 1, !tbaa !29
-  store i8 0, ptr %3, align 1, !tbaa !29
+  store i8 0, ptr %i.c, align 1, !tbaa !29
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -226,9 +224,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 ._crit_edge:                                      ; preds = %.preheader
+  %2 = zext i32 %1 to i64                         ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.c, ptr align 1 %0, i64 %2, i1 false), !tbaa !29
-  %4 = sext i32 %1 to i64
-  %i.e = getelementptr i8, ptr %i.c, i64 %4       ; 2 uses
+  %i.e = getelementptr i8, ptr %i.c, i64 %2       ; 2 uses
   %i.f = getelementptr i8, ptr %i.e, i64 1
   store i8 0, ptr %i.f, align 1, !tbaa !29
   store i8 0, ptr %i.e, align 1, !tbaa !29

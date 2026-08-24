@@ -204,7 +204,7 @@ _ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit.thread: ; p
   br label %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175.thread311
 
 bb.e:                                             ; preds = %.preheader358, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175
-  %i.af = phi i8 [ %.pre, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ %i.l, %.preheader358 ] ; 13 uses
+  %i.af = phi i8 [ %.pre, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ %i.l, %.preheader358 ] ; 11 uses
   %.promoted389 = phi ptr [ %i.em, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ %.promoted385, %.preheader358 ] ; 10 uses
   %.0134 = phi i64 [ %.5139, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ 0, %.preheader358 ] ; 22 uses
   %.0128 = phi i32 [ %.7, %_ZN14arrow_vendored17double_conversionL7AdvanceIPKcEEbPT_tiRS4_.exit175 ], [ 0, %.preheader358 ] ; 23 uses
@@ -214,12 +214,7 @@ bb.e:                                             ; preds = %.preheader358, %_ZN
   %or.cond.i160 = icmp ult i32 %i.ah, 10          ; 3 uses
   %i.ai = icmp slt i8 %i.af, 64
   %i.aj = and i1 %i.ai, %or.cond.i160
-  br i1 %i.aj, label %9, label %bb.f
-
-9:                                                ; preds = %bb.e
-  %10 = sext i8 %i.af to i64
-  %11 = add nsw i64 %10, -48
-  br label %bb.o
+  br i1 %i.aj, label %bb.o, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %.not.i = icmp slt i8 %i.af, 97
@@ -227,22 +222,12 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit: ; preds = %bb.f
   %i.ak = icmp samesign ult i8 %i.af, 103
-  br i1 %i.ak, label %12, label %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.thread282
-
-12:                                               ; preds = %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit
-  %13 = zext nneg i8 %i.af to i64
-  %14 = add nsw i64 %13, -87
-  br label %bb.o
+  br i1 %i.ak, label %bb.o, label %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.thread282
 
 bb.g:                                             ; preds = %bb.f
   %i.al = add i8 %i.af, -65
   %or.cond325 = icmp ult i8 %i.al, 6
-  br i1 %or.cond325, label %15, label %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.thread282
-
-15:                                               ; preds = %bb.g
-  %16 = zext nneg i8 %i.af to i64
-  %17 = add nsw i64 %16, -55
-  br label %bb.o
+  br i1 %or.cond325, label %bb.o, label %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.thread282
 
 _ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit162.thread282: ; preds = %bb.g, %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit
   br i1 %4, label %bb.h, label %.critedge
@@ -319,13 +304,15 @@ bb.n:                                             ; preds = %.lr.ph.i
   %.not.not.i = icmp eq ptr %i.bc, %1
   br i1 %.not.not.i, label %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPKcEEbPT_S4_.exit.thread, label %.lr.ph.i, !llvm.loop !16
 
-bb.o:                                             ; preds = %15, %12, %9
-  %.0119 = phi i64 [ %14, %12 ], [ %17, %15 ], [ %11, %9 ]
+bb.o:                                             ; preds = %bb.g, %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit, %bb.e
+  %.0119 = phi i64 [ -87, %_ZN14arrow_vendored17double_conversionL24IsCharacterDigitForRadixEiic.exit ], [ -48, %bb.e ], [ -55, %bb.g ]
+  %9 = zext nneg i8 %i.af to i64
+  %10 = add nsw i64 %.0119, %9
   %i.bd = trunc nuw i8 %.0123 to i1
   %i.be = add nsw i32 %.0128, -4
   %spec.select148 = select i1 %i.bd, i32 %i.be, i32 %.0128 ; 22 uses
   %i.bf = shl nsw i64 %.0134, 4
-  %i.bg = add nsw i64 %.0119, %i.bf               ; 24 uses
+  %i.bg = add nsw i64 %10, %i.bf                  ; 24 uses
   %i.bh = ashr i64 %i.bg, %i.n
   %i.bi = trunc i64 %i.bh to i32                  ; 3 uses
   %.not = icmp eq i32 %i.bi, 0
@@ -728,7 +715,7 @@ bb.f:                                             ; preds = %.lr.ph228, %_ZN14ar
   %i.ao = phi i8 [ %i.l, %.lr.ph228 ], [ %i.di, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPcEEbPT_S3_.exit ] ; 2 uses
   %.0134227 = phi i64 [ 0, %.lr.ph228 ], [ %i.ar, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPcEEbPT_S3_.exit ]
   %.promoted235 = phi ptr [ %.promoted225, %.lr.ph228 ], [ %i.dh, %_ZN14arrow_vendored17double_conversionL17AdvanceToNonspaceIPcEEbPT_S3_.exit ] ; 4 uses
-  %8 = sext i8 %i.ao to i64
+  %8 = zext nneg i8 %i.ao to i64
   %i.ap = shl nsw i64 %.0134227, 3
   %i.aq = add i64 %i.ap, -48
   %i.ar = add i64 %i.aq, %8                       ; 7 uses

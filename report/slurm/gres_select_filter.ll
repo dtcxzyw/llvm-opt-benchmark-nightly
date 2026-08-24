@@ -202,10 +202,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3856, label %._crit_edge59, label %.lr.ph58
 
 .lr.ph58:                                         ; preds = %.preheader, %bb.t
-  %indvars.iv61 = phi i64 [ %indvars.iv.next62, %bb.t ], [ -1, %.preheader ]
+  %.157 = phi i32 [ %4, %bb.t ], [ -1, %.preheader ]
   store i32 -1, ptr %i.e, align 4
-  %indvars.iv.next62 = add nsw i64 %indvars.iv61, 1 ; 2 uses
-  %i.bb = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv.next62
+  %4 = add nsw i32 %.157, 1                       ; 2 uses
+  %5 = zext nneg i32 %4 to i64
+  %i.bb = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %5
   %i.bc = load ptr, ptr %i.bb, align 8
   %i.bd = call ptr @slurm_list_iterator_create(ptr noundef %i.bc) #7 ; 3 uses
   %i.be = call ptr @slurm_list_next(ptr noundef %i.bd) #7 ; 2 uses
@@ -608,7 +609,7 @@ bb.m:                                             ; preds = %._crit_edge.thread,
 
 bb.n:                                             ; preds = %.lr.ph258
   %i.ch = sub nsw i32 %.0178, %.3183256
-  %11 = sext i32 %i.ch to i64
+  %11 = zext nneg i32 %i.ch to i64
   %i.ci = trunc nuw nsw i64 %indvars.iv303 to i32
   %i.cj = tail call fastcc i64 @_pick_gres_topo(ptr noundef %3, i64 noundef %11, i32 noundef %0, i32 noundef %i.ci, ptr noundef null, ptr noundef null)
   %i.ck = trunc i64 %i.cj to i32

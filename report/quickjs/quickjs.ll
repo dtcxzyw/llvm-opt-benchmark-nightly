@@ -205,16 +205,14 @@ bb.cy:                                            ; preds = %bb.cp
   %i.mp = zext nneg i32 %i.he to i64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.iq, i8 0, i64 %i.mp, i1 false)
   %.not433 = icmp eq i64 %i.gp, 0
-  br i1 %.not433, label %.loopexit, label %.lr.ph420.preheader
+  br i1 %.not433, label %.loopexit, label %.lr.ph420
 
-.lr.ph420.preheader:                              ; preds = %bb.cy
-  %7 = getelementptr i8, ptr %.1.i, i64 %i.gp
-  br label %.lr.ph420
-
-.lr.ph420:                                        ; preds = %.lr.ph420.preheader, %bb.dd
-  %indvars.iv467 = phi i64 [ 0, %.lr.ph420.preheader ], [ %indvars.iv.next468, %bb.dd ] ; 3 uses
+.lr.ph420:                                        ; preds = %bb.cy, %bb.dd
+  %indvars.iv467 = phi i64 [ %indvars.iv.next468, %bb.dd ], [ 0, %bb.cy ] ; 3 uses
   %i.mq = xor i64 %indvars.iv467, -1
-  %i.mr = getelementptr i8, ptr %7, i64 %i.mq
+  %7 = add nsw i64 %i.gp, %i.mq
+  %8 = and i64 %7, 4294967295
+  %i.mr = getelementptr inbounds nuw i8, ptr %.1.i, i64 %8
   %i.ms = load i8, ptr %i.mr, align 1, !tbaa !35  ; 3 uses
   %i.mt = zext i8 %i.ms to i32                    ; 3 uses
   %i.mu = add nsw i32 %i.mt, -48                  ; 2 uses
@@ -239,8 +237,8 @@ bb.db:                                            ; preds = %bb.cz
 
 js_to_digit.exit244:                              ; preds = %.lr.ph420, %bb.da, %bb.db
   %.0.i243 = phi i32 [ %spec.select.i242, %bb.db ], [ %i.mw, %bb.da ], [ %i.mu, %.lr.ph420 ] ; 2 uses
-  %i.mz = trunc nuw nsw i64 %indvars.iv467 to i32
-  %i.na = mul nuw nsw i32 %i.gv, %i.mz            ; 2 uses
+  %i.mz = trunc i64 %indvars.iv467 to i32
+  %i.na = mul i32 %i.gv, %i.mz                    ; 2 uses
   %i.nb = and i32 %i.na, 31                       ; 3 uses
   %i.nc = lshr i32 %i.na, 5
   %i.nd = shl i32 %.0.i243, %i.nb

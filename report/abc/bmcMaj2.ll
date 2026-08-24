@@ -205,7 +205,7 @@ bb.hp:                                            ; preds = %Exa_ManObjName.exit
   %i.aut = load ptr, ptr %i.hf, align 8, !tbaa !134
   %i.auu = getelementptr i8, ptr %i.aut, i64 328
   %.val37.i = load ptr, ptr %i.auu, align 8, !tbaa !87
-  %5 = sext i32 %i.aus to i64
+  %5 = zext nneg i32 %i.aus to i64
   %i.auv = getelementptr [4 x i8], ptr %.val37.i, i64 %5 ; 3 uses
   %i.auw = getelementptr i8, ptr %i.auv, i64 4
   %i.aux = load i32, ptr %i.auw, align 4, !tbaa !8
@@ -608,15 +608,16 @@ bb.d:                                             ; preds = %._crit_edge
   %.fr = phi i32 [ %i.u, %.lr.ph.preheader.i ], [ 2, %bb.d ], [ 2, %switch.hole_check ] ; 4 uses
   %i.aa = phi i64 [ %i.z, %.lr.ph.preheader.i ], [ 8, %bb.d ], [ 8, %switch.hole_check ]
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %0, i8 0, i64 %i.aa, i1 false), !tbaa !57
-  %2 = sext i32 %.0.lcssa74 to i64
   %wide.trip.count = zext i32 %.0.lcssa74 to i64
-  %3 = getelementptr i8, ptr %.038, i64 %2
   br label %.lr.ph57
 
 .lr.ph57:                                         ; preds = %.lr.ph57.preheader, %Abc_TtReadHexDigit.exit
   %indvars.iv66 = phi i64 [ 0, %.lr.ph57.preheader ], [ %indvars.iv.next67, %Abc_TtReadHexDigit.exit ] ; 4 uses
-  %4 = xor i64 %indvars.iv66, -1
-  %i.ab = getelementptr i8, ptr %3, i64 %4
+  %2 = trunc nuw nsw i64 %indvars.iv66 to i32
+  %3 = xor i32 %2, -1
+  %4 = add nsw i32 %.0.lcssa74, %3
+  %5 = zext nneg i32 %4 to i64
+  %i.ab = getelementptr inbounds nuw i8, ptr %.038, i64 %5
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !140 ; 4 uses
   %i.ad = sext i8 %i.ac to i64                    ; 3 uses
   %i.ae = add i8 %i.ac, -48

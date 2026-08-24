@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !39
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 12 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 8 uses
   switch i8 %i.e, label %_ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit11.thread [
     i8 1, label %_ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread
     i8 2, label %_ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread17
@@ -215,25 +215,21 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread: ; preds = %bb.b
   %i.g = zext nneg i32 %1 to i64
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.g
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.g ; 2 uses
   %i.i = load i8, ptr %i.h, align 1, !tbaa !10
   %i.j = zext i8 %i.i to i32
-  %2 = zext nneg i32 %1 to i64
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 %2
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 1
   %i.l = load i8, ptr %i.k, align 1, !tbaa !10
   %i.m = zext i8 %i.l to i32
   br label %_ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit11
 
 _ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread17: ; preds = %bb.b
   %i.n = zext nneg i32 %1 to i64
-  %i.o = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.n
+  %i.o = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %i.n ; 2 uses
   %i.p = load i16, ptr %i.o, align 1, !tbaa !44
   %i.q = tail call noundef i16 @llvm.bswap.i16(i16 %i.p)
   %i.r = zext i16 %i.q to i32
-  %4 = zext nneg i32 %1 to i64
-  %5 = getelementptr inbounds nuw [2 x i8], ptr %i.f, i64 %4
-  %i.s = getelementptr inbounds nuw i8, ptr %5, i64 2
+  %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 2
   %i.t = load i16, ptr %i.s, align 1, !tbaa !44
   %i.u = tail call noundef i16 @llvm.bswap.i16(i16 %i.t)
   %i.v = zext i16 %i.u to i32
@@ -241,7 +237,7 @@ _ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread17: ; preds = %
 
 _ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread20: ; preds = %bb.b
   %i.w = zext nneg i32 %1 to i64
-  %i.x = getelementptr inbounds nuw [3 x i8], ptr %i.f, i64 %i.w ; 3 uses
+  %i.x = getelementptr inbounds nuw [3 x i8], ptr %i.f, i64 %i.w ; 6 uses
   %i.y = load i8, ptr %i.x, align 1, !tbaa !73
   %i.z = zext i8 %i.y to i32
   %i.aa = shl nuw nsw i32 %i.z, 16
@@ -254,18 +250,16 @@ _ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread20: ; preds = %
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !73
   %i.ai = zext i8 %i.ah to i32
   %i.aj = or disjoint i32 %i.af, %i.ai
-  %6 = zext nneg i32 %1 to i64
-  %7 = getelementptr inbounds nuw [3 x i8], ptr %i.f, i64 %6 ; 3 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 3
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.x, i64 3
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !73
   %i.am = zext i8 %i.al to i32
   %i.an = shl nuw nsw i32 %i.am, 16
-  %i.ao = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.x, i64 4
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !73
   %i.aq = zext i8 %i.ap to i32
   %i.ar = shl nuw nsw i32 %i.aq, 8
   %i.as = or disjoint i32 %i.ar, %i.an
-  %i.at = getelementptr inbounds nuw i8, ptr %7, i64 5
+  %i.at = getelementptr inbounds nuw i8, ptr %i.x, i64 5
   %i.au = load i8, ptr %i.at, align 1, !tbaa !73
   %i.av = zext i8 %i.au to i32
   %i.aw = or disjoint i32 %i.as, %i.av
@@ -273,12 +267,10 @@ _ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread20: ; preds = %
 
 _ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit.thread23: ; preds = %bb.b
   %i.ax = zext nneg i32 %1 to i64
-  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.ax
+  %i.ay = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.ax ; 2 uses
   %i.az = load i32, ptr %i.ay, align 1, !tbaa !8
   %i.ba = tail call noundef i32 @llvm.bswap.i32(i32 %i.az)
-  %8 = zext nneg i32 %1 to i64
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %8
-  %i.bb = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %i.bb = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
   %i.bc = load i32, ptr %i.bb, align 1, !tbaa !8
   %i.bd = tail call noundef i32 @llvm.bswap.i32(i32 %i.bc)
   br label %_ZNK2OT8CFFIndexINS_7NumTypeILb1EtLj2EEEE9offset_atEj.exit11

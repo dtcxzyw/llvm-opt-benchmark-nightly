@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !168  ; 6 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %i.n = load i32, ptr %i.m, align 8, !tbaa !169  ; 4 uses
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !169  ; 3 uses
   %i.o = icmp sgt i32 %i.n, 0
   br i1 %i.o, label %.lr.ph, label %.thread77
 
 .lr.ph:                                           ; preds = %bb.e
   %i.p = load i32, ptr %1, align 8, !tbaa !166
-  %wide.trip.count = zext nneg i32 %i.n to i64
+  %wide.trip.count = zext nneg i32 %i.n to i64    ; 2 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.l
@@ -286,8 +286,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.aj, label %.lr.ph156, label %.preheader.a
 
 .preheader.a:                                     ; preds = %.preheader83, %.preheader83.preheader
-  %3 = zext nneg i32 %i.n to i64
-  %indvars.iv.next127157 = add nsw i64 %3, -1     ; 2 uses
+  %indvars.iv.next127157 = add nsw i64 %wide.trip.count, -1 ; 2 uses
   %i.ak = icmp sgt i64 %indvars.iv.next127157, %indvars.iv
   br i1 %i.ak, label %.lr.ph159.preheader, label %.thread77
 
@@ -311,7 +310,7 @@ bb.k:                                             ; preds = %.lr.ph159
 
 .lr.ph159:                                        ; preds = %.lr.ph159.preheader, %bb.k
   %indvars.iv.next127158 = phi i64 [ %indvars.iv.next127, %bb.k ], [ %indvars.iv.next127157, %.lr.ph159.preheader ] ; 3 uses
-  %i.ar = getelementptr inbounds [40 x i8], ptr %i.l, i64 %indvars.iv.next127158
+  %i.ar = getelementptr inbounds nuw [40 x i8], ptr %i.l, i64 %indvars.iv.next127158
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 28
   %i.at = load i32, ptr %i.as, align 4, !tbaa !170
   %i.au = icmp eq i32 %i.at, %i.al

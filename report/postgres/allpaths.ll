@@ -204,9 +204,8 @@ bb.dq:                                            ; preds = %list_length.exit.i6
 bb.dr:                                            ; preds = %list_length.exit.i60
   %i.wz = getelementptr i8, ptr %i.ws, i64 16
   %.val54.i = load ptr, ptr %i.wz, align 8
-  %sext.i = shl i64 %indvars.iv.i56, 32
-  %9 = ashr exact i64 %sext.i, 29
-  %10 = getelementptr inbounds i8, ptr %.val54.i, i64 %9
+  %9 = and i64 %indvars.iv.i56, 4294967295
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %.val54.i, i64 %9
   %i.xa = load i32, ptr %10, align 8              ; 2 uses
   %i.xb = icmp slt i32 %i.xa, 1
   br i1 %i.xb, label %bb.ds, label %set_cte_pathlist.exit

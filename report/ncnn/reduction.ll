@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 64
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 44
-  %i.u = load i32, ptr %6, align 4, !tbaa !44     ; 3 uses
+  %i.u = load i32, ptr %6, align 4, !tbaa !44     ; 2 uses
   %i.v = icmp sgt i32 %i.u, 0
-  %10 = sext i32 %i.u to i64                      ; 51 uses
+  %10 = zext i32 %i.u to i64                      ; 52 uses
   br i1 %i.v, label %.noexc44.lr.ph.split.us, label %._crit_edge85
 
 .noexc44.lr.ph.split.us:                          ; preds = %.noexc44.lr.ph
@@ -215,7 +215,6 @@ bb.b:                                             ; preds = %bb.a
   %i.y = icmp sgt i32 %i.w, 0                     ; 7 uses
   %i.z = sext i32 %i.k to i64
   %i.aa = add nsw i32 %i.j, 1
-  %wide.trip.count = zext nneg i32 %i.u to i64
   %i.ab = add i32 %i.w, -1                        ; 2 uses
   %i.ac = load ptr, ptr %5, align 8, !tbaa !18
   %i.ad = load i64, ptr %i.s, align 8, !tbaa !42
@@ -618,7 +617,7 @@ _ZN4ncnnL9reductionEfPKfiii.exit.us:              ; preds = %_ZN4ncnnL9reduction
   %i.hh = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %indvars.iv
   store float %.0.i.us, ptr %i.hh, align 4, !tbaa !54
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %10
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c, !llvm.loop !184
 
 ._crit_edge.us:                                   ; preds = %_ZN4ncnnL9reductionEfPKfiii.exit.us
@@ -1021,9 +1020,9 @@ bb.b:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.q = load i64, ptr %i.p, align 8, !tbaa !42
   %factor.op.mul = mul i64 %i.q, %i.o
-  %i.r = load i32, ptr %4, align 4, !tbaa !44     ; 3 uses
+  %i.r = load i32, ptr %4, align 4, !tbaa !44     ; 2 uses
   %i.s = icmp sgt i32 %i.r, 0
-  %10 = sext i32 %i.r to i64                      ; 51 uses
+  %10 = zext i32 %i.r to i64                      ; 52 uses
   br i1 %i.s, label %.lr.ph56.split, label %._crit_edge57.split
 
 .lr.ph56.split:                                   ; preds = %.lr.ph56
@@ -1049,7 +1048,6 @@ bb.b:                                             ; preds = %bb.a
   %i.aj = ashr exact i64 %sext, 30                ; 7 uses
   %i.ak = sext i32 %i.k to i64
   %i.al = add nsw i32 %i.j, 1
-  %wide.trip.count = zext nneg i32 %i.r to i64
   %brmerge80 = select i1 %i.ah, i1 true, i1 %i.ai
   %brmerge77 = select i1 %i.ah, i1 true, i1 %i.ai
   %brmerge74 = select i1 %i.ah, i1 true, i1 %i.ai
@@ -1452,7 +1450,7 @@ _ZN4ncnn3MatD2Ev.exit:                            ; preds = %._crit_edge.us.i121
   %i.hy = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %indvars.iv
   store float %.0.i, ptr %i.hy, align 4, !tbaa !54
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %10
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !299
 
 ._crit_edge57.split:                              ; preds = %._crit_edge, %.lr.ph56, %bb.b
@@ -1509,9 +1507,9 @@ bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 64
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %5, i64 44
-  %i.u = load i32, ptr %6, align 4, !tbaa !44     ; 3 uses
+  %i.u = load i32, ptr %6, align 4, !tbaa !44     ; 2 uses
   %i.v = icmp sgt i32 %i.u, 0
-  %11 = sext i32 %i.u to i64                      ; 51 uses
+  %11 = zext i32 %i.u to i64                      ; 52 uses
   br i1 %i.v, label %.noexc45.lr.ph.split.us, label %._crit_edge86
 
 .noexc45.lr.ph.split.us:                          ; preds = %.noexc45.lr.ph
@@ -1522,7 +1520,6 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = icmp sgt i32 %i.y, 0                    ; 7 uses
   %i.ab = sext i32 %i.k to i64
   %i.ac = add nsw i32 %i.j, 1
-  %wide.trip.count = zext nneg i32 %i.u to i64
   %i.ad = add i32 %i.y, -1                        ; 2 uses
   %i.ae = load ptr, ptr %5, align 8, !tbaa !18
   %i.af = load i64, ptr %i.s, align 8, !tbaa !42
@@ -1925,7 +1922,7 @@ _ZN4ncnnL9reductionEfPKfiii.exit.us:              ; preds = %_ZN4ncnnL9reduction
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %indvars.iv
   store float %.0.i.us, ptr %i.hj, align 4, !tbaa !54
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %11
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c, !llvm.loop !313
 
 ._crit_edge.us:                                   ; preds = %_ZN4ncnnL9reductionEfPKfiii.exit.us
@@ -2328,9 +2325,9 @@ bb.b:                                             ; preds = %bb.a
   %i.ag = sext i32 %i.ab to i64
   %factor.op.mul = mul nsw i64 %i.af, %i.ag
   %factor.op.mul98 = mul i64 %factor.op.mul, %i.ae
-  %i.ah = load i32, ptr %6, align 4, !tbaa !44    ; 3 uses
+  %i.ah = load i32, ptr %6, align 4, !tbaa !44    ; 2 uses
   %i.ai = icmp sgt i32 %i.ah, 0
-  %10 = sext i32 %i.ah to i64                     ; 51 uses
+  %10 = zext i32 %i.ah to i64                     ; 52 uses
   br i1 %i.ai, label %.noexc50.lr.ph.split.split, label %._crit_edge101.split
 
 .noexc50.lr.ph.split.split:                       ; preds = %.noexc50.lr.ph.split
@@ -2340,7 +2337,6 @@ bb.b:                                             ; preds = %bb.a
   %i.am = sext i32 %i.k to i64
   %i.an = add nsw i32 %i.j, 1
   %wide.trip.count122 = zext nneg i32 %i.t to i64
-  %wide.trip.count = zext nneg i32 %i.ah to i64
   %i.ao = add i32 %i.aj, -1                       ; 2 uses
   %xtraiter = and i32 %i.aj, 3                    ; 3 uses
   %i.ap = icmp ult i32 %i.aj, 4
@@ -2743,7 +2739,7 @@ _ZN4ncnnL9reductionEfPKfiii.exit:                 ; preds = %_ZN4ncnnL9reduction
   %i.hp = getelementptr inbounds nuw [4 x i8], ptr %i.ba, i64 %indvars.iv
   store float %.0.i, ptr %i.hp, align 4, !tbaa !54
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %10
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !366
 
 ._crit_edge101.split:                             ; preds = %._ZN4ncnn3MatD2Ev.exit_crit_edge, %.noexc50.lr.ph, %.noexc50.lr.ph.split, %bb.b
@@ -2803,9 +2799,9 @@ bb.b:                                             ; preds = %bb.a
   %factor.op.mul76 = mul i64 %i.s, %i.u
   %i.v = load i32, ptr %5, align 4, !tbaa !44
   %i.w = load i32, ptr %6, align 4, !tbaa !44
-  %i.x = mul nsw i32 %i.w, %i.v                   ; 3 uses
+  %i.x = mul nsw i32 %i.w, %i.v                   ; 2 uses
   %i.y = icmp sgt i32 %i.x, 0
-  %10 = sext i32 %i.x to i64                      ; 51 uses
+  %10 = zext i32 %i.x to i64                      ; 52 uses
   br i1 %i.y, label %.noexc37.lr.ph.split, label %._crit_edge75.split
 
 .noexc37.lr.ph.split:                             ; preds = %.noexc37.lr.ph
@@ -2814,7 +2810,6 @@ bb.b:                                             ; preds = %bb.a
   %i.ab = icmp sgt i32 %i.z, 0                    ; 7 uses
   %i.ac = sext i32 %i.k to i64
   %i.ad = add nsw i32 %i.j, 1
-  %wide.trip.count = zext nneg i32 %i.x to i64
   %i.ae = add i32 %i.z, -1                        ; 2 uses
   %xtraiter = and i32 %i.z, 3                     ; 3 uses
   %i.af = icmp ult i32 %i.z, 4
@@ -3217,7 +3212,7 @@ _ZN4ncnnL9reductionEfPKfiii.exit:                 ; preds = %_ZN4ncnnL9reduction
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %indvars.iv
   store float %.0.i, ptr %i.hc, align 4, !tbaa !54
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %10
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !380
 
 ._crit_edge75.split:                              ; preds = %._crit_edge, %.noexc37.lr.ph, %bb.b

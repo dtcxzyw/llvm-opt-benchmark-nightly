@@ -205,17 +205,15 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %bb.c
-  %indvars.iv53 = phi i32 [ 0, %bb.a ], [ %indvars.iv.next54, %bb.c ] ; 2 uses
-  %indvars.iv.a = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.a, %bb.c ] ; 2 uses
+  %indvars.iv.a = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.a, %bb.c ] ; 3 uses
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.a
-  %i.p = trunc nuw nsw i32 %indvars.iv53 to i16
+  %i.p = trunc nuw nsw i64 %indvars.iv.a to i16
   br label %bb.d
 
 bb.b:                                             ; preds = %bb.c
   ret void
 
 bb.c:                                             ; preds = %bb.n
-  %indvars.iv.next54 = add nuw nsw i32 %indvars.iv53, 1
   %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
   %exitcond56.not = icmp eq i64 %indvars.iv.next.a, 16
   br i1 %exitcond56.not, label %bb.b, label %.preheader, !llvm.loop !565
@@ -225,7 +223,7 @@ bb.d:                                             ; preds = %.preheader, %bb.n
   %.idx = shl nuw nsw i64 %indvars.iv50, 7
   %gep = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 %.idx ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %gep, i64 4
-  %i.r = trunc i64 %indvars.iv50 to i16
+  %i.r = trunc nuw nsw i64 %indvars.iv50 to i16
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.l

@@ -205,7 +205,6 @@ _ZNK6embree13InstanceArray6boundsEmmmf.exit:      ; preds = %_ZNK6embree13Instan
   %i.fjz = getelementptr inbounds nuw i8, ptr %1, i64 44
   %i.fka = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.fkb = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %16 = zext nneg i32 %i.fjs to i64
   br label %bb.cr
 
 ._crit_edge:                                      ; preds = %_ZNK6embree13InstanceArray6boundsEmm.exit, %_ZNK6embree13InstanceArray6boundsEmmmf.exit
@@ -406,14 +405,13 @@ _ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel: ; preds = %_ZNK6emb
   br i1 %.not.not.peel, label %.peel.next, label %._crit_edge5076
 
 bb.cr:                                            ; preds = %.lr.ph, %_ZNK6embree13InstanceArray6boundsEmm.exit
-  %indvars.iv = phi i64 [ %16, %.lr.ph ], [ %indvars.iv.next, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 3 uses
+  %.0915066 = phi i32 [ %i.fjs, %.lr.ph ], [ %18, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 3 uses
   %.sroa.0309.05065 = phi <4 x float> [ %i.fjq, %.lr.ph ], [ %i.ghc, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 2 uses
   %.sroa.44.05064 = phi <4 x float> [ %i.fjr, %.lr.ph ], [ %i.ghe, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 2 uses
   %.sroa.0352.05063 = phi <4 x float> [ %.sroa.0352.1, %.lr.ph ], [ %i.ghb, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 2 uses
   %.sroa.44374.05062 = phi <4 x float> [ %.sroa.44374.1, %.lr.ph ], [ %i.ghd, %_ZNK6embree13InstanceArray6boundsEmm.exit ] ; 2 uses
-  %17 = trunc nsw i64 %indvars.iv to i32
-  %18 = sitofp i32 %17 to float                   ; 2 uses
-  %i.fox = fdiv float %18, %5
+  %16 = uitofp nneg i32 %.0915066 to float        ; 2 uses
+  %i.fox = fdiv float %16, %5
   %i.foy = fsub float %i.fox, %i.o
   %i.foz = fdiv float %i.foy, %i.fju              ; 2 uses
   %i.fpa = fsub float 1.000000e+00, %i.foz
@@ -427,6 +425,7 @@ bb.cr:                                            ; preds = %.lr.ph, %_ZNK6embre
   %i.fpi = fmul <4 x float> %.sroa.44.05064, %i.fpc
   %i.fpj = fmul <4 x float> %.sroa.44374.05062, %i.fpf
   %i.fpk = fadd <4 x float> %i.fpi, %i.fpj
+  %17 = zext nneg i32 %.0915066 to i64
   br i1 %.not.i131, label %_ZNK6embree13InstanceArray5validEm.exit133, label %_ZNK6embree13InstanceArray5validEm.exit133.thread
 
 _ZNK6embree13InstanceArray5validEm.exit133:       ; preds = %bb.cr
@@ -443,7 +442,7 @@ _ZNK6embree13InstanceArray5validEm.exit133.thread: ; preds = %bb.cr, %_ZNK6embre
   %i.fpr = and i32 %i.fpq, 65280
   %i.fps = icmp eq i32 %i.fpr, 256
   %i.fpt = load ptr, ptr %i.fjx, align 8, !noalias !1080
-  %i.fpu = getelementptr inbounds nuw [56 x i8], ptr %i.fpt, i64 %indvars.iv ; 17 uses
+  %i.fpu = getelementptr inbounds nuw [56 x i8], ptr %i.fpt, i64 %17 ; 17 uses
   %i.fpv = getelementptr inbounds nuw i8, ptr %i.fpu, i64 32
   %i.fpw = load i32, ptr %i.fpv, align 8, !noalias !1080 ; 2 uses
   br i1 %i.fps, label %bb.cs, label %bb.cx, !prof !21
@@ -846,7 +845,7 @@ _ZNK6embree13InstanceArray6boundsEmm.exit.sink.split.sink.split: ; preds = %_ZNK
   %i.geh = load float, ptr %i.fjz, align 4, !noalias !1080 ; 2 uses
   %i.gei = load float, ptr %i.fka, align 16, !noalias !1080
   %i.gej = fsub float %i.gei, %i.geh
-  %i.gek = fmul float %i.gej, %18
+  %i.gek = fmul float %i.gej, %16
   %i.gel = load float, ptr %i.fkb, align 8, !noalias !1080
   %i.gem = fdiv float %i.gek, %i.gel
   %i.gen = fadd float %i.geh, %i.gem              ; 2 uses
@@ -933,9 +932,8 @@ _ZNK6embree13InstanceArray6boundsEmm.exit:        ; preds = %_ZNK6embree13Instan
   %i.ghc = fadd <4 x float> %.sroa.0309.05065, %i.ggy ; 2 uses
   %i.ghd = fadd <4 x float> %.sroa.44374.05062, %i.gha ; 2 uses
   %i.ghe = fadd <4 x float> %.sroa.44.05064, %i.gha ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %i.ag, %lftr.wideiv
+  %18 = add nuw nsw i32 %.0915066, 1              ; 2 uses
+  %exitcond.not = icmp eq i32 %18, %i.ag
   br i1 %exitcond.not, label %._crit_edge, label %bb.cr, !llvm.loop !1095
 
 ._crit_edge5076:                                  ; preds = %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123, %_ZNK6embree13InstanceArray15getObjectBoundsEmm.exit123.peel, %._crit_edge

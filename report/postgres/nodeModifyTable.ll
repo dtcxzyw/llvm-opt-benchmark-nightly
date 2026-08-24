@@ -202,8 +202,8 @@ bb.a:
   %i.f = load ptr, ptr %i.b, align 8
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv
   %i.h = load ptr, ptr %i.g, align 8              ; 3 uses
-  %i.i = load i32, ptr %.64.val, align 8
-  %i.j = sext i32 %i.i to i64                     ; 2 uses
+  %i.i = load i32, ptr %.64.val, align 8          ; 2 uses
+  %i.j = sext i32 %i.i to i64
   %.not30 = icmp slt i64 %indvars.iv, %i.j
   br i1 %.not30, label %bb.b, label %.split
 
@@ -226,7 +226,8 @@ bb.a:
   unreachable
 
 bb.b:                                             ; preds = %.lr.ph28
-  %i.q = shl nsw i64 %i.j, 3
+  %1 = zext nneg i32 %i.i to i64
+  %i.q = shl nuw nsw i64 %1, 3
   %i.r = getelementptr i8, ptr %.64.val, i64 %i.q
   %i.s = getelementptr i8, ptr %i.r, i64 32
   %i.t = getelementptr inbounds nuw [100 x i8], ptr %i.s, i64 %indvars.iv ; 4 uses

@@ -202,13 +202,14 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %bb.h
   %.156132.i = phi i32 [ %.257.i, %bb.h ], [ %.055135.i, %.lr.ph.i ] ; 3 uses
   %.sroa.0104.0131.i = phi ptr [ %i.dz, %bb.h ], [ %i.bn, %.lr.ph.i ] ; 2 uses
-  %i.di = load i32, ptr %.sroa.0104.0131.i, align 4, !tbaa !51
-  %i.dj = sext i32 %i.di to i64                   ; 2 uses
+  %i.di = load i32, ptr %.sroa.0104.0131.i, align 4, !tbaa !51 ; 2 uses
+  %i.dj = sext i32 %i.di to i64
   %.not62.i = icmp sgt i64 %indvars.iv.i, %i.dj
   br i1 %.not62.i, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph.split.i
-  %i.dk = getelementptr inbounds [36 x i8], ptr %i.ah, i64 %i.dj ; 6 uses
+  %3 = zext nneg i32 %i.di to i64
+  %i.dk = getelementptr inbounds nuw [36 x i8], ptr %i.ah, i64 %3 ; 6 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 8
   %i.dm = load float, ptr %i.dl, align 4, !tbaa !41
   %i.dn = load float, ptr %i.dk, align 4, !tbaa !46

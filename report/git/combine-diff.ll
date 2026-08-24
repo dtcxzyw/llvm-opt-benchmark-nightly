@@ -204,9 +204,9 @@ bb.ap:                                            ; preds = %bb.al, %bb.ao, %fin
   br i1 %.not135159, label %._crit_edge187, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ap, %.lr.ph
-  %.0104161 = phi i32 [ %i.gy, %.lr.ph ], [ 0, %bb.ap ] ; 5 uses
+  %.0104161 = phi i32 [ %i.gy, %.lr.ph ], [ 0, %bb.ap ] ; 4 uses
   %.0109160 = phi ptr [ %i.gz, %.lr.ph ], [ %.1107, %bb.ap ]
-  %i.gy = add nuw nsw i32 %.0104161, 1            ; 6 uses
+  %i.gy = add nuw i32 %.0104161, 1                ; 6 uses
   %i.gz = load ptr, ptr %.0109160, align 8, !tbaa !235 ; 2 uses
   %.not135 = icmp eq ptr %i.gz, null
   br i1 %.not135, label %._crit_edge, label %.lr.ph, !llvm.loop !259
@@ -237,16 +237,16 @@ bb.ap:                                            ; preds = %bb.al, %bb.ao, %fin
   call void @order_objects(ptr noundef %i.hg, ptr noundef nonnull @path_path, ptr noundef nonnull %i.hd, i32 noundef %i.gy) #16
   %.not227 = icmp eq i32 %.0104161, 0
   %.pre201 = load ptr, ptr %i.hd, align 8, !tbaa !260 ; 3 uses
+  %wide.trip.count = zext i32 %.0104161 to i64    ; 3 uses
   br i1 %.not227, label %._crit_edge170, label %.lr.ph169.preheader
 
 .lr.ph169.preheader:                              ; preds = %._crit_edge166
-  %wide.trip.count = zext nneg i32 %.0104161 to i64 ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 3         ; 3 uses
-  %i.hh = icmp samesign ult i32 %.0104161, 4
+  %i.hh = icmp ult i32 %.0104161, 4
   br i1 %i.hh, label %.lr.ph169.epil.preheader, label %.lr.ph169.preheader.new
 
 .lr.ph169.preheader.new:                          ; preds = %.lr.ph169.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
+  %unroll_iter = and i64 %wide.trip.count, 4294967292
   br label %.lr.ph169
 
 .lr.ph169:                                        ; preds = %.lr.ph169, %.lr.ph169.preheader.new
@@ -285,9 +285,9 @@ bb.ap:                                            ; preds = %bb.al, %bb.ao, %fin
   br label %.lr.ph169.epil
 
 .lr.ph169.epil:                                   ; preds = %.lr.ph169.epil, %.lr.ph169.epil.preheader
-  %i.hu = phi ptr [ %.epil.init, %.lr.ph169.epil.preheader ], [ %i.hw, %.lr.ph169.epil ]
-  %indvars.iv193.epil = phi i64 [ %indvars.iv193.epil.init, %.lr.ph169.epil.preheader ], [ %indvars.iv.next194.epil, %.lr.ph169.epil ]
-  %epil.iter = phi i64 [ 0, %.lr.ph169.epil.preheader ], [ %epil.iter.next, %.lr.ph169.epil ]
+  %i.hu = phi ptr [ %i.hw, %.lr.ph169.epil ], [ %.epil.init, %.lr.ph169.epil.preheader ]
+  %indvars.iv193.epil = phi i64 [ %indvars.iv.next194.epil, %.lr.ph169.epil ], [ %indvars.iv193.epil.init, %.lr.ph169.epil.preheader ]
+  %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph169.epil ], [ 0, %.lr.ph169.epil.preheader ]
   %indvars.iv.next194.epil = add nuw nsw i64 %indvars.iv193.epil, 1 ; 2 uses
   %i.hv = getelementptr inbounds nuw [16 x i8], ptr %i.hd, i64 %indvars.iv.next194.epil
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !260 ; 2 uses
@@ -297,8 +297,7 @@ bb.ap:                                            ; preds = %bb.al, %bb.ao, %fin
   br i1 %epil.iter.cmp.not, label %._crit_edge170, label %.lr.ph169.epil, !llvm.loop !264
 
 ._crit_edge170:                                   ; preds = %._crit_edge170.loopexit.unr-lcssa, %.lr.ph169.epil, %._crit_edge166
-  %5 = zext nneg i32 %.0104161 to i64
-  %i.hx = getelementptr inbounds nuw [16 x i8], ptr %i.hd, i64 %5
+  %i.hx = getelementptr inbounds nuw [16 x i8], ptr %i.hd, i64 %wide.trip.count
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !260
   store ptr null, ptr %i.hy, align 8, !tbaa !235
   call void @free(ptr noundef nonnull %i.hd) #16

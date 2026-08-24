@@ -202,10 +202,11 @@ bb.k:                                             ; preds = %._crit_edge
   br label %bb.n
 
 bb.l:                                             ; preds = %._crit_edge
-  %i.as = trunc nsw i64 %indvars.iv.lcssa to i32
+  %i.as = trunc i64 %indvars.iv.lcssa to i32
+  %4 = and i32 %i.as, 255
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
   store i32 0, ptr %i.d, align 4
-  %i.at = call ptr @u_strFromUTF32_78(ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c, ptr noundef nonnull %1, i32 noundef %i.as, ptr noundef nonnull %i.d) #15 ; 0 uses
+  %i.at = call ptr @u_strFromUTF32_78(ptr noundef null, i32 noundef 0, ptr noundef nonnull %i.c, ptr noundef nonnull %1, i32 noundef %4, ptr noundef nonnull %i.d) #15 ; 0 uses
   %i.au = load i32, ptr %i.d, align 4             ; 2 uses
   %i.av = icmp slt i32 %i.au, 1
   %i.aw = icmp eq i32 %i.au, 15

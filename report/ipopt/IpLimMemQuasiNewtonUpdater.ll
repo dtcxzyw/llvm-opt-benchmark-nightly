@@ -204,7 +204,7 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.at = zext nneg i32 %i.f to i64
   %wide.trip.count124 = zext nneg i32 %i.v to i64
-  %invariant.gep144.sink = getelementptr [8 x i8], ptr %i.u, i64 %i.ap
+  %invariant.gep144.sink = getelementptr [8 x i8], ptr %i.u, i64 %wide.trip.count124
   br label %bb.f
 
 bb.d:                                             ; preds = %_ZNK5Ipopt14DenseGenMatrix21MakeNewDenseGenMatrixEv.exit
@@ -405,7 +405,7 @@ bb.m:                                             ; preds = %_ZN5Ipopt8SmartPtrI
 
 _ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit66:      ; preds = %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit, %bb.m
   %indvars.iv.next122 = add nuw nsw i64 %indvars.iv121, 1 ; 2 uses
-  %exitcond125.not = icmp eq i64 %indvars.iv.next122, %wide.trip.count124
+  %exitcond125.not = icmp eq i64 %indvars.iv.next122, %i.ap
   br i1 %exitcond125.not, label %.preheader, label %bb.f, !llvm.loop !477
 
 .thread:                                          ; preds = %.noexc62, %bb.j, %bb.i
@@ -554,7 +554,7 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit45:        ; preds = %bb.c
   store i8 1, ptr %i.s, align 8, !tbaa !440
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 88
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !441  ; 3 uses
-  %i.v = add i32 %i.f, -1                         ; 3 uses
+  %i.v = add i32 %i.f, -1                         ; 4 uses
   %i.w = icmp sgt i32 %i.f, 1
   br i1 %i.w, label %.preheader87.preheader, label %.preheader
 
@@ -619,11 +619,12 @@ scalar.ph.preheader:                              ; preds = %.preheader87, %midd
 
 .lr.ph:                                           ; preds = %.preheader
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 104
-  %i.as = zext nneg i32 %i.v to i64               ; 3 uses
+  %i.as = zext nneg i32 %i.v to i64               ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
   %i.au = zext nneg i32 %i.f to i64
+  %3 = zext nneg i32 %i.v to i64
   %wide.trip.count111 = zext nneg i32 %i.f to i64
-  %invariant.gep128.sink = getelementptr [8 x i8], ptr %i.u, i64 %i.as
+  %invariant.gep128.sink = getelementptr [8 x i8], ptr %i.u, i64 %3
   br label %bb.h
 
 bb.d:                                             ; preds = %_ZNK5Ipopt14DenseSymMatrix21MakeNewDenseSymMatrixEv.exit
@@ -1026,7 +1027,7 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit45:        ; preds = %bb.c
   store i8 1, ptr %i.s, align 8, !tbaa !440
   %i.t = getelementptr inbounds nuw i8, ptr %i.i, i64 88
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !441  ; 3 uses
-  %i.v = add i32 %i.f, -1                         ; 3 uses
+  %i.v = add i32 %i.f, -1                         ; 4 uses
   %i.w = icmp sgt i32 %i.f, 1
   br i1 %i.w, label %.preheader87.preheader, label %.preheader
 
@@ -1091,13 +1092,14 @@ scalar.ph.preheader:                              ; preds = %.preheader87, %midd
 
 .lr.ph:                                           ; preds = %.preheader
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 104
-  %i.as = zext nneg i32 %i.v to i64               ; 3 uses
+  %i.as = zext nneg i32 %i.v to i64               ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 104
   %i.av = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.aw = zext nneg i32 %i.f to i64
+  %4 = zext nneg i32 %i.v to i64
   %wide.trip.count111 = zext nneg i32 %i.f to i64
-  %invariant.gep128.sink = getelementptr [8 x i8], ptr %i.u, i64 %i.as
+  %invariant.gep128.sink = getelementptr [8 x i8], ptr %i.u, i64 %4
   br label %bb.h
 
 bb.d:                                             ; preds = %_ZNK5Ipopt14DenseSymMatrix21MakeNewDenseSymMatrixEv.exit

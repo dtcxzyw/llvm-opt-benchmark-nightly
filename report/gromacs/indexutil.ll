@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.1:                                         ; preds = %.critedge
   %i.cn = load ptr, ptr %i.n, align 8, !tbaa !122
   %i.co = load ptr, ptr %i.o, align 8, !tbaa !122
-  %i.cp = getelementptr inbounds [4 x i8], ptr %i.co, i64 %indvars.iv.next52.1
+  %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %indvars.iv.next52.1
   %i.cq = sext i32 %.1.lcssa to i64
   %i.cr = sub i32 %.1.lcssa, %.128.lcssa
   br label %bb.f
@@ -466,7 +466,7 @@ bb.k:                                             ; preds = %bb.i, %.critedge
 define void @_Z28gmx_ana_index_union_unsortedP15gmx_ana_index_tS0_S0_(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
-  %i.b = load i32, ptr %2, align 8, !tbaa !85     ; 7 uses
+  %i.b = load i32, ptr %2, align 8, !tbaa !85     ; 6 uses
   %i.c = add nsw i32 %i.b, -1                     ; 3 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.c, i32 0)
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 3 uses
@@ -642,20 +642,18 @@ bb.m:                                             ; preds = %.critedge.i, %bb.k
   br i1 %i.bf, label %bb.h, label %_Z19gmx_ana_index_unionP15gmx_ana_index_tS0_S0_.exit, !llvm.loop !171
 
 _Z18gmx_ana_index_copyP15gmx_ana_index_tS0_b.exit.thread: ; preds = %_Z26gmx_ana_index_check_sortedP15gmx_ana_index_t.exit
-  %3 = sext i32 %i.b to i64                       ; 3 uses
+  %3 = zext i32 %i.b to i64                       ; 4 uses
   %i.bg = tail call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.12, ptr noundef nonnull @.str.3, i32 noundef 365, i64 noundef range(i64 -2147483648, 2147483648) %3, i64 noundef 4) ; 19 uses
   %i.bh = load ptr, ptr %i.a, align 8, !tbaa !122
-  %4 = zext i32 %i.b to i64                       ; 2 uses
-  %i.bi = shl nuw nsw i64 %4, 2
+  %i.bi = shl nuw nsw i64 %3, 2                   ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.bg, ptr align 4 %i.bh, i64 %i.bi, i1 false)
-  %.idx.i = shl nsw i64 %3, 2
-  %i.bj = getelementptr inbounds i8, ptr %i.bg, i64 %.idx.i ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bi ; 2 uses
   %i.bk = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %3, i1 true)
   %i.bl = shl nuw nsw i64 %i.bk, 1
   %i.bm = xor i64 %i.bl, 126
   tail call void @_ZSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_(ptr noundef %i.bg, ptr noundef nonnull %i.bj, i64 noundef %i.bm)
   tail call void @_ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_(ptr noundef %i.bg, ptr noundef nonnull %i.bj)
-  %umax = tail call i64 @llvm.umax.i64(i64 %4, i64 2)
+  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 2)
   %i.bn = add nsw i64 %umax, -1                   ; 2 uses
   %xtraiter = and i64 %i.bn, 3                    ; 3 uses
   %i.bo = icmp ult i32 %i.b, 5

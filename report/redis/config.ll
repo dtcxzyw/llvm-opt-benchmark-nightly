@@ -204,14 +204,14 @@ sdslen.exit:                                      ; preds = %bb.j, %bb.k, %bb.l,
   %i.at = phi i32 [ %i.ec, %bb.al ], [ 0, %sdslen.exit ] ; 3 uses
   %i.au = phi ptr [ %i.ed, %bb.al ], [ null, %sdslen.exit ] ; 3 uses
   %i.av = phi i32 [ %i.ee, %bb.al ], [ 1, %sdslen.exit ] ; 3 uses
-  %indvars.iv102 = phi i64 [ %indvars.iv.next103, %bb.al ], [ -1, %sdslen.exit ]
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.al ], [ 0, %sdslen.exit ] ; 2 uses
+  %indvars.iv102 = phi i64 [ %indvars.iv.next, %bb.al ], [ 0, %sdslen.exit ] ; 2 uses
+  %.072100 = phi i32 [ %2, %bb.al ], [ -1, %sdslen.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %indvars.iv ; 2 uses
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr %i.aq, i64 %indvars.iv102 ; 2 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !19
   %i.ay = call ptr @sdstrim(ptr noundef %i.ax, ptr noundef nonnull @.str.101) #25 ; 7 uses
   store ptr null, ptr %i.aw, align 8, !tbaa !19
-  %indvars.iv.next103 = add nsw i64 %indvars.iv102, 1 ; 3 uses
+  %2 = add nsw i32 %.072100, 1                    ; 3 uses
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !65
   switch i8 %i.az, label %bb.t [
     i8 35, label %bb.p
@@ -392,7 +392,8 @@ bb.ah:                                            ; preds = %bb.ag
 
 rewriteConfigAddLineNumberToOption.exit:          ; preds = %bb.ag, %bb.ah
   %.0.i95 = phi ptr [ %i.do, %bb.ah ], [ %i.dm, %bb.ag ]
-  %i.dr = inttoptr i64 %indvars.iv.next103 to ptr
+  %3 = zext nneg i32 %2 to i64
+  %i.dr = inttoptr i64 %3 to ptr
   %i.ds = call ptr @listAddNodeTail(ptr noundef %.0.i95, ptr noundef %i.dr) #25 ; 0 uses
   call void @sdsfree(ptr noundef %i.dk) #25
   br label %bb.ak
@@ -411,7 +412,8 @@ bb.aj:                                            ; preds = %bb.ai
 
 rewriteConfigAddLineNumberToOption.exit97:        ; preds = %bb.ai, %bb.aj
   %.0.i96 = phi ptr [ %i.dw, %bb.aj ], [ %i.du, %bb.ai ]
-  %i.dz = inttoptr i64 %indvars.iv.next103 to ptr
+  %4 = zext nneg i32 %2 to i64
+  %i.dz = inttoptr i64 %4 to ptr
   %i.ea = call ptr @listAddNodeTail(ptr noundef %.0.i96, ptr noundef %i.dz) #25 ; 0 uses
   br label %bb.ak
 
@@ -425,7 +427,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.ab, %bb.
   %i.ed = phi ptr [ %i.cl, %bb.ak ], [ %i.cc, %bb.ab ], [ %i.bf, %bb.s ]
   %i.ee = phi i32 [ %i.av, %bb.ak ], [ %i.av, %bb.ab ], [ %i.bb, %bb.s ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv102, 1 ; 2 uses
   %i.ef = load i32, ptr %i.a, align 4, !tbaa !9
   %i.eg = sext i32 %i.ef to i64
   %i.eh = icmp slt i64 %indvars.iv.next, %i.eg

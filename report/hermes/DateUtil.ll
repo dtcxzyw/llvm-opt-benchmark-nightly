@@ -204,8 +204,7 @@ _ZNK6hermes2vm10StringView14const_iteratordeEv.exit145.thread.i: ; preds = %_ZNK
   br i1 %i.fx, label %.thread225.i, label %.critedge.i
 
 .thread225.i:                                     ; preds = %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit145.thread.i
-  %11 = sext i8 %i.fu to i32
-  %12 = and i32 %11, 65535
+  %11 = zext nneg i8 %i.fu to i32
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fp, i64 1
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.i
 
@@ -217,7 +216,7 @@ bb.ak:                                            ; preds = %_ZNK6hermes2vm10Str
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit.i: ; preds = %bb.ak, %.thread225.i
   %i.gb = phi ptr [ %i.fy, %.thread225.i ], [ null, %bb.ak ]
-  %.pn247.in.i = phi i32 [ %12, %.thread225.i ], [ %i.fz, %bb.ak ]
+  %.pn247.in.i = phi i32 [ %11, %.thread225.i ], [ %i.fz, %bb.ak ]
   %.pn247.i = add nsw i32 %.pn247.in.i, -48
   %.pn.i = mul nsw i32 %.pn247.i, %.028.i
   %i.gc = add nsw i32 %.pn.i, %.026.i

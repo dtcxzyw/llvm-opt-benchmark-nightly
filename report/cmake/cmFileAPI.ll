@@ -204,7 +204,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit:       ; preds = %bb.c, %bb.b, %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define dso_local noundef ptr @_ZN9cmFileAPI14ObjectKindNameENS_10ObjectKindE(i32 noundef %0) local_unnamed_addr #9 align 2 {
 bb.a:
-  %1 = sext i32 %0 to i64
+  %1 = zext nneg i32 %0 to i64
   %i.a = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %1
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !86
   ret ptr %i.b
@@ -607,7 +607,7 @@ bb.a:
   %.sroa.4.0..sroa_idx.i19.i.i = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.i = getelementptr inbounds nuw i8, ptr %4, i64 64
   %i.j = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
-  br label %10
+  br label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -622,28 +622,19 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %9, i64 8
   br label %.noexc.i
 
-10:                                               ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i: ; preds = %.lr.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.sroa.042.056 = phi ptr [ %i.b, %.lr.ph ], [ %i.x, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 2 uses
   %.sroa.06.0.copyload = load i64, ptr %.sroa.042.056, align 4 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
-  %sext.i = shl i64 %.sroa.06.0.copyload, 32
-  %11 = ashr exact i64 %sext.i, 29
-  %12 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %11
-  %13 = load ptr, ptr %12, align 8, !tbaa !86, !noalias !374 ; 3 uses
+  %10 = and i64 %.sroa.06.0.copyload, 4294967295
+  %11 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %10
+  %12 = load ptr, ptr %11, align 8, !tbaa !86, !noalias !374 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23, !noalias !377
-  %.not.i.i.i = icmp eq ptr %13, null
-  br i1 %.not.i.i.i, label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i, label %14
-
-14:                                               ; preds = %10
-  %15 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %13) #23, !noalias !377
-  br label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i
-
-_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i: ; preds = %14, %10
-  %.sroa.426.0.i.i = phi i64 [ %15, %14 ], [ 0, %10 ]
+  %13 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %12) #23, !noalias !377
   %.sroa.2.0.extract.shift.i = lshr i64 %.sroa.06.0.copyload, 32
   %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32
-  store i64 %.sroa.426.0.i.i, ptr %4, align 8, !tbaa !82, !alias.scope !380, !noalias !377
-  store ptr %13, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !tbaa !86, !alias.scope !380, !noalias !377
+  store i64 %13, ptr %4, align 8, !tbaa !82, !alias.scope !380, !noalias !377
+  store ptr %12, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !tbaa !86, !alias.scope !380, !noalias !377
   store ptr null, ptr %i.e, align 8, !tbaa !87, !alias.scope !380, !noalias !377
   store i64 2, ptr %i.f, align 8, !tbaa !82, !alias.scope !383, !noalias !377
   store ptr @.str.49, ptr %.sroa.4.0..sroa_idx.i11.i.i, align 8, !tbaa !86, !alias.scope !383, !noalias !377
@@ -696,7 +687,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %i.x = getelementptr inbounds nuw i8, ptr %.sroa.042.056, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.x, %i.d
-  br i1 %.not, label %._crit_edge, label %10
+  br i1 %.not, label %._crit_edge, label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i
 
 bb.e:                                             ; preds = %.noexc, %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i
   %i.y = landingpad { ptr, i32 }
@@ -1025,55 +1016,47 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN9cmFileAPI10ObjectNameB5cxx11ENS_6ObjectE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i64 %1) local_unnamed_addr #4 align 2 {
-  %3 = alloca [3 x %"struct.std::pair.441"], align 8 ; 12 uses
-  %4 = alloca %class.cmAlphaNum, align 8          ; 6 uses
-  %sext = shl i64 %1, 32
-  %5 = ashr exact i64 %sext, 29
-  %6 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
-  %7 = load ptr, ptr %6, align 8, !tbaa !86       ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23, !noalias !398
-  %.not.i.i = icmp eq ptr %7, null
-  br i1 %.not.i.i, label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit, label %8
-
-8:                                                ; preds = %2
-  %9 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %7) #23, !noalias !398
-  br label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit
-
-_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit: ; preds = %2, %8
-  %.sroa.426.0.i = phi i64 [ %9, %8 ], [ 0, %2 ]
+_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit:
+  %2 = alloca [3 x %"struct.std::pair.441"], align 8 ; 12 uses
+  %3 = alloca %class.cmAlphaNum, align 8          ; 6 uses
+  %4 = and i64 %1, 4294967295
+  %5 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %4
+  %6 = load ptr, ptr %5, align 8, !tbaa !86       ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #23, !noalias !398
+  %7 = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %6) #23, !noalias !398
   %.sroa.2.0.extract.shift = lshr i64 %1, 32
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
-  store i64 %.sroa.426.0.i, ptr %3, align 8, !tbaa !82, !alias.scope !401, !noalias !398
-  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %7, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !86, !alias.scope !401, !noalias !398
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store i64 %7, ptr %2, align 8, !tbaa !82, !alias.scope !401, !noalias !398
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store ptr %6, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !86, !alias.scope !401, !noalias !398
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr null, ptr %i.a, align 8, !tbaa !87, !alias.scope !401, !noalias !398
-  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i64 2, ptr %i.b, align 8, !tbaa !82, !alias.scope !404, !noalias !398
-  %.sroa.4.0..sroa_idx.i11.i = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %.sroa.4.0..sroa_idx.i11.i = getelementptr inbounds nuw i8, ptr %2, i64 32
   store ptr @.str.49, ptr %.sroa.4.0..sroa_idx.i11.i, align 8, !tbaa !86, !alias.scope !404, !noalias !398
-  %i.c = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 40
   store ptr null, ptr %i.c, align 8, !tbaa !87, !alias.scope !404, !noalias !398
-  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 48
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #23, !noalias !398
-  call void @_ZN10cmAlphaNumC1Ej(ptr noundef nonnull align 8 dereferenceable(56) %4, i32 noundef %.sroa.2.0.extract.trunc), !noalias !398
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 48
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #23, !noalias !398
+  call void @_ZN10cmAlphaNumC1Ej(ptr noundef nonnull align 8 dereferenceable(56) %3, i32 noundef %.sroa.2.0.extract.trunc), !noalias !398
   call void @llvm.experimental.noalias.scope.decl(metadata !407)
-  %i.e = load ptr, ptr %4, align 8, !tbaa !389, !noalias !410 ; 4 uses
+  %i.e = load ptr, ptr %3, align 8, !tbaa !389, !noalias !410 ; 4 uses
   %.not.i.i12.i = icmp eq ptr %i.e, null          ; 2 uses
-  %.sroa.3.0..sroa_idx.i.i13.i = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %.sroa.3.0..sroa_idx.i.i13.i = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.pn.in.i.i15.i = select i1 %.not.i.i12.i, ptr %.sroa.3.0..sroa_idx.i.i13.i, ptr %i.e
   %.pn.i.i16.i = load ptr, ptr %.pn.in.i.i15.i, align 8, !tbaa !86, !noalias !410
-  %.pn3.i.i14.sroa.sel.v.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not.i.i12.i, ptr %4, ptr %i.e
+  %.pn3.i.i14.sroa.sel.v.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not.i.i12.i, ptr %3, ptr %i.e
   %.pn3.i.i14.sroa.sel.v.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %.pn3.i.i14.sroa.sel.v.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 8
   %.pn2.i.i18.i = load i64, ptr %.pn3.i.i14.sroa.sel.v.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel, align 8, !tbaa !82, !noalias !410
   store i64 %.pn2.i.i18.i, ptr %i.d, align 8, !tbaa !82, !alias.scope !407, !noalias !398
-  %.sroa.4.0..sroa_idx.i19.i = getelementptr inbounds nuw i8, ptr %3, i64 56
+  %.sroa.4.0..sroa_idx.i19.i = getelementptr inbounds nuw i8, ptr %2, i64 56
   store ptr %.pn.i.i16.i, ptr %.sroa.4.0..sroa_idx.i19.i, align 8, !tbaa !86, !alias.scope !407, !noalias !398
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 64
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 64
   store ptr %i.e, ptr %i.f, align 8, !tbaa !87, !alias.scope !407, !noalias !398
-  call void @_Z10cmCatViewsSt16initializer_listISt4pairISt17basic_string_viewIcSt11char_traitsIcEEPNSt7__cxx1112basic_stringIcS3_SaIcEEEEE(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nonnull %3, i64 3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #23, !noalias !398
+  call void @_Z10cmCatViewsSt16initializer_listISt4pairISt17basic_string_viewIcSt11char_traitsIcEEPNSt7__cxx1112basic_stringIcS3_SaIcEEEEE(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr nonnull %2, i64 3)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23, !noalias !398
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #23, !noalias !398
   ret void
 }
 
@@ -1337,32 +1320,23 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.u = invoke noundef nonnull align 8 dereferenceable(40) ptr @_ZN4Json5ValueaSERKS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.t, ptr noundef nonnull align 8 dereferenceable(40) %i.s)
-          to label %12 unwind label %bb.p         ; 0 uses
+          to label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i unwind label %bb.p ; 0 uses
 
-12:                                               ; preds = %bb.j
+_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i: ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   %.sroa.0.0.copyload = load i64, ptr %6, align 8 ; 2 uses
-  %sext.i = shl i64 %.sroa.0.0.copyload, 32
-  %13 = ashr exact i64 %sext.i, 29
-  %14 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %13
-  %15 = load ptr, ptr %14, align 8, !tbaa !86, !noalias !415 ; 3 uses
+  %12 = and i64 %.sroa.0.0.copyload, 4294967295
+  %13 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %12
+  %14 = load ptr, ptr %13, align 8, !tbaa !86, !noalias !415 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23, !noalias !418
-  %.not.i.i.i23 = icmp eq ptr %15, null
-  br i1 %.not.i.i.i23, label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i, label %16
-
-16:                                               ; preds = %12
-  %17 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %15) #23, !noalias !418
-  br label %_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i
-
-_Z8cmStrCatIPKcRA3_S0_JRjEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEOT_OT0_DpOT1_.exit.i: ; preds = %16, %12
-  %.sroa.426.0.i.i = phi i64 [ %17, %16 ], [ 0, %12 ]
+  %15 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %14) #23, !noalias !418
   %.sroa.2.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload, 32
   %.sroa.2.0.extract.trunc.i = trunc nuw i64 %.sroa.2.0.extract.shift.i to i32
-  store i64 %.sroa.426.0.i.i, ptr %2, align 8, !tbaa !82, !alias.scope !421, !noalias !418
+  store i64 %15, ptr %2, align 8, !tbaa !82, !alias.scope !421, !noalias !418
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %15, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !tbaa !86, !alias.scope !421, !noalias !418
+  store ptr %14, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !tbaa !86, !alias.scope !421, !noalias !418
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr null, ptr %i.v, align 8, !tbaa !87, !alias.scope !421, !noalias !418
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -1744,9 +1718,8 @@ bb.a:
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
   tail call void @_Z22cmFileAPICodemodelDumpR9cmFileAPIjj(ptr dead_on_unwind writable sret(%"class.Json::Value") align 8 %0, ptr noundef nonnull align 8 dereferenceable(304) %1, i32 noundef %.sroa.2.0.extract.trunc, i32 noundef 11)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %sext = shl i64 %2, 32
-  %5 = ashr exact i64 %sext, 29
-  %6 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
+  %5 = and i64 %2, 4294967295
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
   %i.a = load ptr, ptr %6, align 8, !tbaa !86
   invoke void @_ZN4Json5ValueC1EPKc(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef %i.a)
           to label %bb.b unwind label %bb.g
@@ -1822,9 +1795,8 @@ bb.a:
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
   tail call void @_Z25cmFileAPIConfigureLogDumpR9cmFileAPIj(ptr dead_on_unwind writable sret(%"class.Json::Value") align 8 %0, ptr noundef nonnull align 8 dereferenceable(304) %1, i32 noundef %.sroa.2.0.extract.trunc)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %sext = shl i64 %2, 32
-  %5 = ashr exact i64 %sext, 29
-  %6 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
+  %5 = and i64 %2, 4294967295
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
   %i.a = load ptr, ptr %6, align 8, !tbaa !86
   invoke void @_ZN4Json5ValueC1EPKc(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef %i.a)
           to label %bb.b unwind label %bb.g
@@ -1900,9 +1872,8 @@ bb.a:
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
   tail call void @_Z18cmFileAPICacheDumpR9cmFileAPIj(ptr dead_on_unwind writable sret(%"class.Json::Value") align 8 %0, ptr noundef nonnull align 8 dereferenceable(304) %1, i32 noundef %.sroa.2.0.extract.trunc)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %sext = shl i64 %2, 32
-  %5 = ashr exact i64 %sext, 29
-  %6 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
+  %5 = and i64 %2, 4294967295
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
   %i.a = load ptr, ptr %6, align 8, !tbaa !86
   invoke void @_ZN4Json5ValueC1EPKc(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef %i.a)
           to label %bb.b unwind label %bb.g
@@ -1978,9 +1949,8 @@ bb.a:
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
   tail call void @_Z23cmFileAPICMakeFilesDumpR9cmFileAPIj(ptr dead_on_unwind writable sret(%"class.Json::Value") align 8 %0, ptr noundef nonnull align 8 dereferenceable(304) %1, i32 noundef %.sroa.2.0.extract.trunc)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %sext = shl i64 %2, 32
-  %5 = ashr exact i64 %sext, 29
-  %6 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
+  %5 = and i64 %2, 4294967295
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
   %i.a = load ptr, ptr %6, align 8, !tbaa !86
   invoke void @_ZN4Json5ValueC1EPKc(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef %i.a)
           to label %bb.b unwind label %bb.g
@@ -2056,9 +2026,8 @@ bb.a:
   %.sroa.2.0.extract.trunc = trunc nuw i64 %.sroa.2.0.extract.shift to i32
   tail call void @_Z23cmFileAPIToolchainsDumpR9cmFileAPIj(ptr dead_on_unwind writable sret(%"class.Json::Value") align 8 %0, ptr noundef nonnull align 8 dereferenceable(304) %1, i32 noundef %.sroa.2.0.extract.trunc)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %sext = shl i64 %2, 32
-  %5 = ashr exact i64 %sext, 29
-  %6 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
+  %5 = and i64 %2, 4294967295
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %5
   %i.a = load ptr, ptr %6, align 8, !tbaa !86
   invoke void @_ZN4Json5ValueC1EPKc(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef %i.a)
           to label %bb.b unwind label %bb.g
@@ -2133,9 +2102,8 @@ bb.a:
   %5 = alloca %"class.Json::Value", align 8       ; 6 uses
   tail call void @_ZN4Json5ValueC1ENS_9ValueTypeE(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef 7)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %sext = shl i64 %2, 32
-  %6 = ashr exact i64 %sext, 29
-  %7 = getelementptr inbounds nuw i8, ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %6
+  %6 = and i64 %2, 4294967295
+  %7 = getelementptr inbounds nuw [8 x i8], ptr @_ZZN9cmFileAPI14ObjectKindNameENS_10ObjectKindEE15objectKindNames, i64 %6
   %i.a = load ptr, ptr %7, align 8, !tbaa !86
   invoke void @_ZN4Json5ValueC1EPKc(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef %i.a)
           to label %bb.b unwind label %bb.g

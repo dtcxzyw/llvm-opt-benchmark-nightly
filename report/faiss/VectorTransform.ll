@@ -204,24 +204,23 @@ _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit:               ; preds = %_ZSt6fill_nIPfmfET_
   br i1 %i.kr, label %.preheader274.lr.ph, label %._crit_edge330.split
 
 .preheader274.lr.ph:                              ; preds = %_ZNSt6vectorIfSaIfEEC2EmRKS0_.exit
-  %i.ks = load i32, ptr %i.n, align 8, !tbaa !43  ; 4 uses
+  %i.ks = load i32, ptr %i.n, align 8, !tbaa !43  ; 3 uses
   %i.kt = icmp sgt i32 %i.ks, 0
-  %3 = sext i32 %i.ks to i64                      ; 2 uses
+  %3 = zext i32 %i.ks to i64                      ; 7 uses
   br i1 %i.kt, label %.preheader274.lr.ph.split, label %._crit_edge330.split
 
 .preheader274.lr.ph.split:                        ; preds = %.preheader274.lr.ph
   %i.ku = load ptr, ptr %i.y, align 8, !tbaa !32  ; 7 uses
   %i.kv = ptrtoaddr ptr %i.ku to i64
-  %wide.trip.count396 = zext nneg i32 %i.ks to i64 ; 5 uses
   %i.kw = sub i64 %.sroa.0240.0570, %i.kv
   %i.kx = shl nuw nsw i64 %3, 2
   %min.iters.check573 = icmp ult i32 %i.ks, 8
   %i.ky = sub i64 %i.x, %.sroa.0240.0570
   %diff.check = icmp ugt i64 %i.ky, -32
   %invariant.op = add i64 %i.kw, -1
-  %n.vec575 = and i64 %wide.trip.count396, 2147483640 ; 3 uses
-  %cmp.n584 = icmp eq i64 %n.vec575, %wide.trip.count396
-  %xtraiter634 = and i64 %wide.trip.count396, 3   ; 2 uses
+  %n.vec575 = and i64 %3, 2147483640              ; 3 uses
+  %cmp.n584 = icmp eq i64 %n.vec575, %3
+  %xtraiter634 = and i64 %3, 3                    ; 2 uses
   %lcmp.mod635.not = icmp eq i64 %xtraiter634, 0
   br label %.preheader274
 
@@ -283,7 +282,7 @@ scalar.ph572.prol:                                ; preds = %scalar.ph572.prehea
 
 scalar.ph572.prol.loopexit:                       ; preds = %scalar.ph572.prol, %scalar.ph572.preheader
   %indvars.iv393.unr = phi i64 [ %indvars.iv393.ph, %scalar.ph572.preheader ], [ %indvars.iv.next394.prol, %scalar.ph572.prol ]
-  %i.ls = sub nsw i64 %indvars.iv393.ph, %wide.trip.count396
+  %i.ls = sub nsw i64 %indvars.iv393.ph, %3
   %i.lt = icmp ugt i64 %i.ls, -4
   br i1 %i.lt, label %._crit_edge328, label %scalar.ph572
 
@@ -365,7 +364,7 @@ scalar.ph572:                                     ; preds = %scalar.ph572.prol.l
   %i.nb = getelementptr [4 x i8], ptr %i.lb, i64 %indvars.iv.next394.2
   store float %i.na, ptr %i.nb, align 4, !tbaa !33
   %indvars.iv.next394.3 = add nuw nsw i64 %indvars.iv393, 4 ; 2 uses
-  %exitcond397.not.3 = icmp eq i64 %indvars.iv.next394.3, %wide.trip.count396
+  %exitcond397.not.3 = icmp eq i64 %indvars.iv.next394.3, %3
   br i1 %exitcond397.not.3, label %._crit_edge328, label %scalar.ph572, !llvm.loop !106
 
 _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit174:            ; preds = %_ZSt6fill_nIPfmfET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i168, %.noexc173, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i166

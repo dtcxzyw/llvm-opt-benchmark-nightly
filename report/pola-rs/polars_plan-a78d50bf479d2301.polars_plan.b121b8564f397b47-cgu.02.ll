@@ -205,8 +205,8 @@ bb.x:                                             ; preds = %bb.v
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
   %i.bt = getelementptr inbounds nuw i8, ptr %.sroa.019.045, i64 4, !dbg !44877
   %.sroa.019.0.val = load i32, ptr %.sroa.019.045, align 4, !dbg !44880, !noundef !11
-  %5 = sext i32 %.sroa.019.0.val to i64, !dbg !44882 ; 2 uses
-  %i.bu = icmp ugt i64 %4, %5, !dbg !44884
+  %5 = zext nneg i32 %.sroa.019.0.val to i64, !dbg !44882 ; 2 uses
+  %i.bu = icmp samesign ugt i64 %4, %5, !dbg !44884
   call void @llvm.assume(i1 %i.bu), !dbg !44891
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 %5, !dbg !44892
   %i.bw = load i8, ptr %i.bv, align 1, !dbg !44893, !noundef !11
@@ -214,8 +214,8 @@ bb.x:                                             ; preds = %bb.v
   %i.by = or i1 %.sroa.011.044, %i.bx, !dbg !44896
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.019.045, i64 8, !dbg !44877
   %.sroa.019.0.val.1 = load i32, ptr %i.bt, align 4, !dbg !44880, !noundef !11
-  %6 = sext i32 %.sroa.019.0.val.1 to i64, !dbg !44882 ; 2 uses
-  %i.ca = icmp ugt i64 %4, %6, !dbg !44884
+  %6 = zext nneg i32 %.sroa.019.0.val.1 to i64, !dbg !44882 ; 2 uses
+  %i.ca = icmp samesign ugt i64 %4, %6, !dbg !44884
   call void @llvm.assume(i1 %i.ca), !dbg !44891
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 %6, !dbg !44892
   %i.cc = load i8, ptr %i.cb, align 1, !dbg !44893, !noundef !11
@@ -223,8 +223,8 @@ bb.x:                                             ; preds = %bb.v
   %i.ce = or i1 %i.by, %i.cd, !dbg !44896
   %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.019.045, i64 12, !dbg !44877
   %.sroa.019.0.val.2 = load i32, ptr %i.bz, align 4, !dbg !44880, !noundef !11
-  %7 = sext i32 %.sroa.019.0.val.2 to i64, !dbg !44882 ; 2 uses
-  %i.cg = icmp ugt i64 %4, %7, !dbg !44884
+  %7 = zext nneg i32 %.sroa.019.0.val.2 to i64, !dbg !44882 ; 2 uses
+  %i.cg = icmp samesign ugt i64 %4, %7, !dbg !44884
   call void @llvm.assume(i1 %i.cg), !dbg !44891
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 %7, !dbg !44892
   %i.ci = load i8, ptr %i.ch, align 1, !dbg !44893, !noundef !11
@@ -232,8 +232,8 @@ bb.x:                                             ; preds = %bb.v
   %i.ck = or i1 %i.ce, %i.cj, !dbg !44896
   %i.cl = getelementptr inbounds nuw i8, ptr %.sroa.019.045, i64 16, !dbg !44877 ; 2 uses
   %.sroa.019.0.val.3 = load i32, ptr %i.cf, align 4, !dbg !44880, !noundef !11
-  %8 = sext i32 %.sroa.019.0.val.3 to i64, !dbg !44882 ; 2 uses
-  %i.cm = icmp ugt i64 %4, %8, !dbg !44884
+  %8 = zext nneg i32 %.sroa.019.0.val.3 to i64, !dbg !44882 ; 2 uses
+  %i.cm = icmp samesign ugt i64 %4, %8, !dbg !44884
   call void @llvm.assume(i1 %i.cm), !dbg !44891
   %i.cn = getelementptr inbounds nuw i8, ptr %3, i64 %8, !dbg !44892
   %i.co = load i8, ptr %i.cn, align 1, !dbg !44893, !noundef !11
@@ -260,8 +260,8 @@ bb.x:                                             ; preds = %bb.v
   %epil.iter = phi i64 [ %epil.iter.next, %.lr.ph.epil ], [ 0, %.lr.ph.epil.preheader ]
   %i.cr = getelementptr inbounds nuw i8, ptr %.sroa.019.045.epil, i64 4, !dbg !44877
   %.sroa.019.0.val.epil = load i32, ptr %.sroa.019.045.epil, align 4, !dbg !44880, !noundef !11
-  %9 = sext i32 %.sroa.019.0.val.epil to i64, !dbg !44882 ; 2 uses
-  %i.cs = icmp ugt i64 %4, %9, !dbg !44884
+  %9 = zext nneg i32 %.sroa.019.0.val.epil to i64, !dbg !44882 ; 2 uses
+  %i.cs = icmp samesign ugt i64 %4, %9, !dbg !44884
   call void @llvm.assume(i1 %i.cs), !dbg !44891
   %i.ct = getelementptr inbounds nuw i8, ptr %3, i64 %9, !dbg !44892
   %i.cu = load i8, ptr %i.ct, align 1, !dbg !44893, !noundef !11

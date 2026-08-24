@@ -204,24 +204,26 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.e
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i81, 1 ; 2 uses
-  %.not.not.i = icmp slt i64 %indvars.iv.next.i, %indvars.iv.next5.i82
+  %sext.i = shl i64 %indvars.iv.next5.i82, 32
+  %1 = ashr exact i64 %sext.i, 32
+  %.not.not.i = icmp slt i64 %indvars.iv.next.i, %1
   br i1 %.not.not.i, label %.lr.ph, label %flat_limits.exit, !llvm.loop !98
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %indvars.iv.next5.i82.in = phi i64 [ %indvars.iv.next5.i82, %bb.c ], [ %i.ax, %.lr.ph.preheader ]
   %indvars.iv.i81 = phi i64 [ %indvars.iv.next.i, %bb.c ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %indvars.iv.next5.i82 = add nsw i64 %indvars.iv.next5.i82.in, -1 ; 4 uses
+  %indvars.iv.next5.i82 = add nsw i64 %indvars.iv.next5.i82.in, -1 ; 3 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %indvars.iv.i81
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !14
   %i.ba = getelementptr i8, ptr %i.az, i64 16
   %.val32.i = load ptr, ptr %i.ba, align 8, !tbaa !8
   call fastcc void @setbounds(ptr %.val32.i, ptr noundef %i.a, i32 noundef %spec.select14.i.i, i32 noundef %spec.select.i.i)
-  %i.bb = and i64 %indvars.iv.next5.i82, 4294967295
+  %i.bb = and i64 %indvars.iv.next5.i82, 4294967295 ; 2 uses
   %.not.i = icmp eq i64 %indvars.iv.i81, %i.bb
   br i1 %.not.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.bc = getelementptr inbounds [8 x i8], ptr %i.al, i64 %indvars.iv.next5.i82
+  %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.al, i64 %i.bb
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !14
   %i.be = getelementptr i8, ptr %i.bd, i64 16
   %.val31.i = load ptr, ptr %i.be, align 8, !tbaa !8

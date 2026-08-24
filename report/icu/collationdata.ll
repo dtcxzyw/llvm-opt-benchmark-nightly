@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z
 
 .lr.ph225:                                        ; preds = %.thread293
   %i.jm = add i32 %i.i, -4096                     ; 2 uses
-  %wide.trip.count262 = zext nneg i32 %2 to i64
+  %wide.trip.count262 = zext nneg i32 %2 to i64   ; 2 uses
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph225, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit173.thread
@@ -221,17 +221,13 @@ bb.ab:                                            ; preds = %.lr.ph225, %_ZNK6ic
 .preheader201:                                    ; preds = %bb.ab
   %i.jp = trunc nuw nsw i64 %indvars.iv.next260 to i32
   %i.jq = icmp sgt i32 %2, %i.jp
-  br i1 %i.jq, label %.lr.ph230, label %.thread182
+  br i1 %i.jq, label %bb.ac, label %.thread182
 
-.lr.ph230:                                        ; preds = %.preheader201
-  %6 = zext nneg i32 %2 to i64
-  br label %bb.ac
-
-bb.ac:                                            ; preds = %.lr.ph230, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread
-  %indvars.iv264 = phi i64 [ %6, %.lr.ph230 ], [ %indvars.iv.next265, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread ]
-  %.1134228 = phi i32 [ %i.ae, %.lr.ph230 ], [ %.2135, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread ] ; 6 uses
+bb.ac:                                            ; preds = %.preheader201, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread
+  %indvars.iv264 = phi i64 [ %indvars.iv.next265, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread ], [ %wide.trip.count262, %.preheader201 ]
+  %.1134228 = phi i32 [ %.2135, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread ], [ %i.ae, %.preheader201 ] ; 6 uses
   %indvars.iv.next265 = add nsw i64 %indvars.iv264, -1 ; 3 uses
-  %i.jr = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv.next265
+  %i.jr = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next265
   %i.js = load i32, ptr %i.jr, align 4, !tbaa !20 ; 6 uses
   switch i32 %i.js, label %bb.ae [
     i32 -1, label %bb.ad

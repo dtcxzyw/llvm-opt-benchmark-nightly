@@ -205,8 +205,6 @@ bb.s:                                             ; preds = %bb.r, %.thread140.i
   %i.zf = icmp sgt i32 %i.m, 15
   %.idx.i = shl i64 %i.l, 6                       ; 5 uses
   %i.zg = and i32 %i.m, -16                       ; 2 uses
-  %4 = sext i32 %.5657.lcssa.i to i64
-  %wide.trip.count.i = sext i32 %i.r to i64
   %i.zh = add i32 %i.m, -16                       ; 2 uses
   %i.zi = lshr i32 %i.zh, 4
   %i.zj = add nuw nsw i32 %i.zi, 1                ; 2 uses
@@ -368,10 +366,11 @@ bb.t:                                             ; preds = %._crit_edge335.i, %
   br i1 %i.acp, label %bb.t, label %.preheader.i, !llvm.loop !1082
 
 bb.u:                                             ; preds = %._crit_edge359.i, %.lr.ph364.i
-  %indvars.iv447.i = phi i64 [ %4, %.lr.ph364.i ], [ %indvars.iv.next448.i, %._crit_edge359.i ] ; 2 uses
-  %.23363.i.a = phi ptr [ %.22.lcssa.i, %.lr.ph364.i ], [ %i.aet, %._crit_edge359.i ] ; 2 uses
-  %.23641362.i = phi ptr [ %.22640.lcssa.i, %.lr.ph364.i ], [ %i.aeu, %._crit_edge359.i ] ; 2 uses
-  %i.acq = getelementptr inbounds [4 x i8], ptr %i.za, i64 %indvars.iv447.i ; 3 uses
+  %.23363.i = phi ptr [ %.22.lcssa.i, %.lr.ph364.i ], [ %i.aet, %._crit_edge359.i ] ; 2 uses
+  %.23363.i.a = phi ptr [ %.22640.lcssa.i, %.lr.ph364.i ], [ %i.aeu, %._crit_edge359.i ] ; 2 uses
+  %.6658361.i = phi i32 [ %.5657.lcssa.i, %.lr.ph364.i ], [ %5, %._crit_edge359.i ] ; 2 uses
+  %4 = zext nneg i32 %.6658361.i to i64
+  %i.acq = getelementptr inbounds nuw [4 x i8], ptr %i.za, i64 %4 ; 3 uses
   br i1 %i.zf, label %.lr.ph349.i.preheader, label %._crit_edge350.i
 
 .lr.ph349.i.preheader:                            ; preds = %bb.u
@@ -493,14 +492,14 @@ bb.u:                                             ; preds = %._crit_edge359.i, %
 ._crit_edge359.i:                                 ; preds = %.lr.ph358.i.prol.loopexit, %.lr.ph358.i, %._crit_edge350.i
   %.091.lcssa.i = phi float [ %i.adv, %._crit_edge350.i ], [ %.sroa.speculated.i.lcssa.unr, %.lr.ph358.i.prol.loopexit ], [ %.sroa.speculated.i.3, %.lr.ph358.i ] ; 2 uses
   %i.aeq = fdiv fast float 1.270000e+02, %.091.lcssa.i
-  store float %i.aeq, ptr %.23363.i.a, align 4, !tbaa !68
+  store float %i.aeq, ptr %.23363.i, align 4, !tbaa !68
   %i.aer = fmul fast float %.091.lcssa.i, f0x3C010204
   %i.aes = fmul fast float %i.aer, %i.zl
-  store float %i.aes, ptr %.23641362.i, align 4, !tbaa !68
-  %i.aet = getelementptr inbounds nuw i8, ptr %.23363.i.a, i64 4
-  %i.aeu = getelementptr inbounds nuw i8, ptr %.23641362.i, i64 4
-  %indvars.iv.next448.i = add nsw i64 %indvars.iv447.i, 1 ; 2 uses
-  %exitcond450.not.i = icmp eq i64 %indvars.iv.next448.i, %wide.trip.count.i
+  store float %i.aes, ptr %.23363.i.a, align 4, !tbaa !68
+  %i.aet = getelementptr inbounds nuw i8, ptr %.23363.i, i64 4
+  %i.aeu = getelementptr inbounds nuw i8, ptr %.23363.i.a, i64 4
+  %5 = add nsw i32 %.6658361.i, 1                 ; 2 uses
+  %exitcond450.not.i = icmp eq i32 %5, %i.r
   br i1 %exitcond450.not.i, label %_ZN4ncnnL41transpose_compute_A_tile_fp32_int8_scalesERKNS_3MatERS0_fS3_ii.exit, label %bb.u, !llvm.loop !1087
 
 _ZN4ncnnL41transpose_compute_A_tile_fp32_int8_scalesERKNS_3MatERS0_fS3_ii.exit: ; preds = %._crit_edge359.i, %.preheader.i

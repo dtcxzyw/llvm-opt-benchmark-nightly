@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %._crit_edge
 
 bb.i:                                             ; preds = %.lr.ph137, %bb.t
   %indvars.iv149.a = phi i64 [ %i.ac, %.lr.ph137 ], [ %indvars.iv.next150.a, %bb.t ] ; 4 uses
-  %.082136.a = phi i64 [ 4, %.lr.ph137 ], [ %.2, %bb.t ] ; 5 uses
-  %.083135 = phi i32 [ 0, %.lr.ph137 ], [ %.184, %bb.t ] ; 5 uses
-  %.287134.a = phi i32 [ %.085.lcssa164, %.lr.ph137 ], [ %.388, %bb.t ] ; 4 uses
-  %.089133 = phi i32 [ 0, %.lr.ph137 ], [ %8, %bb.t ] ; 3 uses
+  %.082136.a = phi i64 [ 0, %.lr.ph137 ], [ %indvars.iv.next150, %bb.t ] ; 4 uses
+  %.082136 = phi i64 [ 4, %.lr.ph137 ], [ %.2, %bb.t ] ; 5 uses
+  %.287134.a = phi i32 [ 0, %.lr.ph137 ], [ %.184, %bb.t ] ; 5 uses
+  %.089133 = phi i32 [ %.085.lcssa164, %.lr.ph137 ], [ %.388, %bb.t ] ; 4 uses
   %i.ae = getelementptr [8 x i8], ptr %6, i64 %indvars.iv149.a ; 3 uses
   %i.af = getelementptr [8 x i8], ptr %i.f, i64 %indvars.iv149.a
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !11
@@ -232,12 +232,11 @@ bb.k:                                             ; preds = %.lr.ph.i106
   %i.am = load i64, ptr %i.al, align 8, !tbaa !11
   store i64 %i.am, ptr %i.ae, align 8, !tbaa !11
   store i64 36, ptr %i.al, align 8, !tbaa !11
-  %i.an = add i32 %.287134.a, 1
+  %i.an = add i32 %.089133, 1
   br label %bb.t
 
 .loopexit122:                                     ; preds = %bb.j, %bb.i
-  %7 = sext i32 %.089133 to i64                   ; 2 uses
-  %i.ao = getelementptr [8 x i8], ptr %i.k, i64 %7
+  %i.ao = getelementptr [8 x i8], ptr %i.k, i64 %.082136.a
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !11 ; 2 uses
   %i.aq = icmp eq i64 %i.ap, 36
   br i1 %i.aq, label %bb.l, label %bb.s
@@ -248,12 +247,13 @@ bb.l:                                             ; preds = %.loopexit122
   br i1 %i.ar, label %bb.m, label %bb.n, !prof !72
 
 bb.m:                                             ; preds = %bb.l
-  %i.as = shl nuw i32 1, %.089133
-  %i.at = or i32 %.083135, %i.as
+  %7 = trunc nuw i64 %.082136.a to i32
+  %i.as = shl nuw i32 1, %7
+  %i.at = or i32 %.287134.a, %i.as
   br label %bb.t
 
 bb.n:                                             ; preds = %bb.l
-  %i.au = icmp eq i64 %.082136.a, 4
+  %i.au = icmp eq i64 %.082136, 4
   br i1 %i.au, label %bb.o, label %.loopexit
 
 bb.o:                                             ; preds = %bb.n
@@ -264,7 +264,7 @@ bb.p:                                             ; preds = %bb.o, %bb.r
   %indvars.iv145 = phi i64 [ 0, %bb.o ], [ %indvars.iv.next146, %bb.r ] ; 3 uses
   %i.aw = trunc nuw nsw i64 %indvars.iv145 to i32
   %i.ax = shl nuw nsw i32 1, %i.aw
-  %i.ay = and i32 %i.ax, %.083135
+  %i.ay = and i32 %i.ax, %.287134.a
   %.not100 = icmp eq i32 %i.ay, 0
   br i1 %.not100, label %bb.r, label %bb.q
 
@@ -280,8 +280,8 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   br i1 %exitcond148.not, label %.loopexit, label %bb.p, !llvm.loop !734
 
 .loopexit:                                        ; preds = %bb.r, %bb.n
-  %.1 = phi i64 [ %.082136.a, %bb.n ], [ %i.av, %bb.r ] ; 2 uses
-  %i.bc = shl nsw i64 %7, 1
+  %.1 = phi i64 [ %.082136, %bb.n ], [ %i.av, %bb.r ] ; 2 uses
+  %i.bc = shl nuw nsw i64 %.082136.a, 1
   %i.bd = or disjoint i64 %i.bc, 1
   %i.be = tail call i64 @rb_hash_aset(i64 noundef %.1, i64 noundef %i.bd, i64 noundef 20) #23 ; 0 uses
   br label %bb.t
@@ -291,12 +291,13 @@ bb.s:                                             ; preds = %.loopexit122
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.k, %bb.m, %.loopexit, %bb.s
-  %.388 = phi i32 [ %i.an, %bb.k ], [ %.287134.a, %bb.m ], [ %.287134.a, %.loopexit ], [ %.287134.a, %bb.s ] ; 2 uses
-  %.184 = phi i32 [ %.083135, %bb.k ], [ %i.at, %bb.m ], [ %.083135, %.loopexit ], [ %.083135, %bb.s ] ; 2 uses
-  %.2 = phi i64 [ %.082136.a, %bb.k ], [ %.082136.a, %bb.m ], [ %.1, %.loopexit ], [ %.082136.a, %bb.s ] ; 2 uses
+  %.388 = phi i32 [ %i.an, %bb.k ], [ %.089133, %bb.m ], [ %.089133, %.loopexit ], [ %.089133, %bb.s ] ; 2 uses
+  %.184 = phi i32 [ %.287134.a, %bb.k ], [ %i.at, %bb.m ], [ %.287134.a, %.loopexit ], [ %.287134.a, %bb.s ] ; 2 uses
+  %.2 = phi i64 [ %.082136, %bb.k ], [ %.082136, %bb.m ], [ %.1, %.loopexit ], [ %.082136, %bb.s ] ; 2 uses
   %indvars.iv.next150.a = add nuw nsw i64 %indvars.iv149.a, 1
-  %8 = add i32 %.089133, 1                        ; 2 uses
-  %exitcond152.not = icmp eq i32 %8, %i.ad
+  %indvars.iv.next150 = add nuw nsw i64 %.082136.a, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next150 to i32
+  %exitcond152.not = icmp eq i32 %i.ad, %lftr.wideiv
   br i1 %exitcond152.not, label %._crit_edge138.loopexit, label %bb.i, !llvm.loop !735
 
 ._crit_edge138.loopexit:                          ; preds = %bb.t
@@ -699,10 +700,10 @@ bb.l:                                             ; preds = %._crit_edge
 
 .lr.ph137:                                        ; preds = %bb.z, %.lr.ph137.preheader
   %indvars.iv147.a = phi i64 [ %i.ag, %.lr.ph137.preheader ], [ %indvars.iv.next148.a, %bb.z ] ; 5 uses
-  %.0105136.a = phi i64 [ 4, %.lr.ph137.preheader ], [ %.2, %bb.z ] ; 5 uses
-  %.2108135.a = phi i64 [ %.0106.lcssa159, %.lr.ph137.preheader ], [ %.3109, %bb.z ] ; 4 uses
-  %.0110134 = phi i32 [ 0, %.lr.ph137.preheader ], [ %.1111, %bb.z ] ; 5 uses
-  %.0112133 = phi i32 [ 0, %.lr.ph137.preheader ], [ %7, %bb.z ] ; 3 uses
+  %.0105136.a = phi i64 [ 0, %.lr.ph137.preheader ], [ %indvars.iv.next148, %bb.z ] ; 4 uses
+  %.2108135.a = phi i64 [ 4, %.lr.ph137.preheader ], [ %.2, %bb.z ] ; 5 uses
+  %.2108135 = phi i64 [ %.0106.lcssa159, %.lr.ph137.preheader ], [ %.3109, %bb.z ] ; 4 uses
+  %.0112133 = phi i32 [ 0, %.lr.ph137.preheader ], [ %.1111, %bb.z ] ; 5 uses
   %i.ai = getelementptr [8 x i8], ptr %i.f, i64 %indvars.iv147.a
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !11
   %i.ak = tail call i64 @rb_id2sym(i64 noundef %i.aj) #23 ; 2 uses
@@ -722,14 +723,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %i.an, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ao = add i64 %.2108135.a, -1
+  %i.ao = add i64 %.2108135, -1
   %i.ap = getelementptr [8 x i8], ptr %4, i64 %indvars.iv147.a
   store i64 %.0103, ptr %i.ap, align 8, !tbaa !11
   br label %bb.z
 
 bb.q:                                             ; preds = %bb.o
-  %6 = sext i32 %.0112133 to i64                  ; 2 uses
-  %i.aq = getelementptr [8 x i8], ptr %i.k, i64 %6
+  %i.aq = getelementptr [8 x i8], ptr %i.k, i64 %.0105136.a
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !11 ; 2 uses
   %i.as = icmp eq i64 %i.ar, 36
   %i.at = getelementptr [8 x i8], ptr %4, i64 %indvars.iv147.a ; 2 uses
@@ -741,12 +741,13 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.au, label %bb.s, label %bb.t, !prof !72
 
 bb.s:                                             ; preds = %bb.r
-  %i.av = shl nuw i32 1, %.0112133
-  %i.aw = or i32 %.0110134, %i.av
+  %6 = trunc nuw i64 %.0105136.a to i32
+  %i.av = shl nuw i32 1, %6
+  %i.aw = or i32 %.0112133, %i.av
   br label %bb.z
 
 bb.t:                                             ; preds = %bb.r
-  %i.ax = icmp eq i64 %.0105136.a, 4
+  %i.ax = icmp eq i64 %.2108135.a, 4
   br i1 %i.ax, label %bb.u, label %.loopexit
 
 bb.u:                                             ; preds = %bb.t
@@ -757,7 +758,7 @@ bb.v:                                             ; preds = %bb.u, %bb.x
   %indvars.iv143 = phi i64 [ 0, %bb.u ], [ %indvars.iv.next144, %bb.x ] ; 3 uses
   %i.az = trunc nuw nsw i64 %indvars.iv143 to i32
   %i.ba = shl nuw nsw i32 1, %i.az
-  %i.bb = and i32 %i.ba, %.0110134
+  %i.bb = and i32 %i.ba, %.0112133
   %.not122 = icmp eq i32 %i.bb, 0
   br i1 %.not122, label %bb.x, label %bb.w
 
@@ -773,8 +774,8 @@ bb.x:                                             ; preds = %bb.v, %bb.w
   br i1 %exitcond146.not, label %.loopexit, label %bb.v, !llvm.loop !790
 
 .loopexit:                                        ; preds = %bb.x, %bb.t
-  %.1 = phi i64 [ %.0105136.a, %bb.t ], [ %i.ay, %bb.x ] ; 2 uses
-  %i.bf = shl nsw i64 %6, 1
+  %.1 = phi i64 [ %.2108135.a, %bb.t ], [ %i.ay, %bb.x ] ; 2 uses
+  %i.bf = shl nuw nsw i64 %.0105136.a, 1
   %i.bg = or disjoint i64 %i.bf, 1
   %i.bh = tail call i64 @rb_hash_aset(i64 noundef %.1, i64 noundef %i.bg, i64 noundef 20) #23 ; 0 uses
   br label %bb.z
@@ -784,12 +785,13 @@ bb.y:                                             ; preds = %bb.q
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %.loopexit, %bb.s, %bb.p
-  %.1111 = phi i32 [ %i.aw, %bb.s ], [ %.0110134, %.loopexit ], [ %.0110134, %bb.y ], [ %.0110134, %bb.p ] ; 2 uses
-  %.3109 = phi i64 [ %.2108135.a, %bb.s ], [ %.2108135.a, %.loopexit ], [ %.2108135.a, %bb.y ], [ %i.ao, %bb.p ] ; 2 uses
-  %.2 = phi i64 [ %.0105136.a, %bb.s ], [ %.1, %.loopexit ], [ %.0105136.a, %bb.y ], [ %.0105136.a, %bb.p ] ; 2 uses
+  %.1111 = phi i32 [ %i.aw, %bb.s ], [ %.0112133, %.loopexit ], [ %.0112133, %bb.y ], [ %.0112133, %bb.p ] ; 2 uses
+  %.3109 = phi i64 [ %.2108135, %bb.s ], [ %.2108135, %.loopexit ], [ %.2108135, %bb.y ], [ %i.ao, %bb.p ] ; 2 uses
+  %.2 = phi i64 [ %.2108135.a, %bb.s ], [ %.1, %.loopexit ], [ %.2108135.a, %bb.y ], [ %.2108135.a, %bb.p ] ; 2 uses
   %indvars.iv.next148.a = add nuw nsw i64 %indvars.iv147.a, 1
-  %7 = add i32 %.0112133, 1                       ; 2 uses
-  %exitcond150.not = icmp eq i32 %7, %i.ah
+  %indvars.iv.next148 = add nuw nsw i64 %.0105136.a, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next148 to i32
+  %exitcond150.not = icmp eq i32 %i.ah, %lftr.wideiv
   br i1 %exitcond150.not, label %._crit_edge138.loopexit, label %.lr.ph137, !llvm.loop !791
 
 ._crit_edge138.loopexit:                          ; preds = %bb.z

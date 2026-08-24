@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %.noexc
           to label %_ZNK2cv11_InputArray6getMatEi.exit92 unwind label %bb.j
 
 _ZNK2cv11_InputArray6getMatEi.exit92:             ; preds = %bb.e, %bb.d
-  %i.i = add i32 %3, -1                           ; 2 uses
+  %i.i = add i32 %3, -1
   %.not85109 = icmp sgt i32 %3, 1
-  %8 = sext i32 %i.i to i64                       ; 2 uses
+  %8 = zext i32 %i.i to i64                       ; 4 uses
   br i1 %.not85109, label %_ZNK2cv11_InputArray6getMatEi.exit92.split.us.preheader, label %_ZNK2cv11_InputArray6getMatEi.exit92.split.preheader
 
 _ZNK2cv11_InputArray6getMatEi.exit92.split.preheader: ; preds = %_ZNK2cv11_InputArray6getMatEi.exit92
@@ -275,17 +275,16 @@ bb.g:                                             ; preds = %.lr.ph.us
 
 .critedge.us:                                     ; preds = %bb.g, %bb.f
   %indvars.iv.next119 = add nuw nsw i64 %indvars.iv118, 1 ; 2 uses
-  %exitcond122.not = icmp eq i64 %indvars.iv.next119, %wide.trip.count121
+  %exitcond122.not = icmp eq i64 %indvars.iv.next119, %8
   br i1 %exitcond122.not, label %..critedge87_crit_edge.us, label %bb.f, !llvm.loop !382
 
 .preheader.us:                                    ; preds = %_ZNK2cv11_InputArray6getMatEi.exit92.split.us.preheader
-  %i.as = getelementptr inbounds [12 x i8], ptr %i.l, i64 %8 ; 3 uses
+  %i.as = getelementptr inbounds nuw [12 x i8], ptr %i.l, i64 %8 ; 3 uses
   %i.at = load float, ptr %i.as, align 4, !tbaa !363 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 4
   %i.av = load float, ptr %i.au, align 4, !tbaa !367 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.ax = load float, ptr %i.aw, align 4, !tbaa !349 ; 2 uses
-  %wide.trip.count121 = zext nneg i32 %i.i to i64 ; 2 uses
   br label %bb.f
 
 ..critedge87_crit_edge.us:                        ; preds = %.critedge.us
@@ -297,7 +296,7 @@ bb.g:                                             ; preds = %.lr.ph.us
   br i1 %.not.us.1, label %.split.us, label %.preheader.us.1
 
 .preheader.us.1:                                  ; preds = %..critedge87_crit_edge.us
-  %i.ba = getelementptr inbounds [12 x i8], ptr %i.ay, i64 %8 ; 3 uses
+  %i.ba = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %8 ; 3 uses
   %i.bb = load float, ptr %i.ba, align 4, !tbaa !363 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
   %i.bd = load float, ptr %i.bc, align 4, !tbaa !367 ; 2 uses
@@ -352,7 +351,7 @@ bb.i:                                             ; preds = %.lr.ph.us.1
 
 .critedge.us.1:                                   ; preds = %bb.i, %bb.h
   %indvars.iv.next119.1 = add nuw nsw i64 %indvars.iv118.1, 1 ; 2 uses
-  %exitcond122.1.not = icmp eq i64 %indvars.iv.next119.1, %wide.trip.count121
+  %exitcond122.1.not = icmp eq i64 %indvars.iv.next119.1, %8
   br i1 %exitcond122.1.not, label %.critedge89, label %bb.h, !llvm.loop !382
 
 bb.j:                                             ; preds = %bb.e, %bb.d, %_ZNK2cv11_InputArray6getMatEi.exit

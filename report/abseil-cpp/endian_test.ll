@@ -204,7 +204,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   %i.ac = lshr i32 %1, 1                          ; 3 uses
   %i.ad = zext nneg i32 %1 to i64
-  %i.ae = getelementptr i8, ptr %0, i64 %i.ad     ; 4 uses
+  %i.ae = getelementptr i8, ptr %0, i64 %i.ad
   %i.af = getelementptr i8, ptr %i.ae, i64 -1     ; 2 uses
   %i.ag = load i8, ptr %0, align 1, !tbaa !52
   %i.ah = load i8, ptr %i.af, align 1, !tbaa !52
@@ -215,7 +215,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 .lr.ph.1:                                         ; preds = %.lr.ph.preheader
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  %i.aj = getelementptr i8, ptr %i.ae, i64 -2     ; 2 uses
+  %5 = zext nneg i32 %1 to i64
+  %6 = getelementptr i8, ptr %0, i64 %5
+  %i.aj = getelementptr i8, ptr %6, i64 -2        ; 2 uses
   %i.ak = load i8, ptr %i.ai, align 1, !tbaa !52
   %i.al = load i8, ptr %i.aj, align 1, !tbaa !52
   store i8 %i.al, ptr %i.ai, align 1, !tbaa !52
@@ -225,7 +227,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 .lr.ph.2:                                         ; preds = %.lr.ph.1
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
-  %i.an = getelementptr i8, ptr %i.ae, i64 -3     ; 2 uses
+  %7 = zext nneg i32 %1 to i64
+  %8 = getelementptr i8, ptr %0, i64 %7
+  %i.an = getelementptr i8, ptr %8, i64 -3        ; 2 uses
   %i.ao = load i8, ptr %i.am, align 1, !tbaa !52
   %i.ap = load i8, ptr %i.an, align 1, !tbaa !52
   store i8 %i.ap, ptr %i.am, align 1, !tbaa !52
@@ -235,7 +239,9 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 .lr.ph.3:                                         ; preds = %.lr.ph.2
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 2 uses
-  %i.ar = getelementptr i8, ptr %i.ae, i64 -4     ; 2 uses
+  %9 = zext nneg i32 %1 to i64
+  %10 = getelementptr i8, ptr %0, i64 %9
+  %i.ar = getelementptr i8, ptr %10, i64 -4       ; 2 uses
   %i.as = load i8, ptr %i.aq, align 1, !tbaa !52
   %i.at = load i8, ptr %i.ar, align 1, !tbaa !52
   store i8 %i.at, ptr %i.aq, align 1, !tbaa !52

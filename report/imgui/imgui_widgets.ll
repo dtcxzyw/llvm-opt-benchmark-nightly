@@ -205,7 +205,7 @@ bb.a:
   store <2 x float> %i.m, ptr %5, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store <2 x float> %i.o, ptr %i.p, align 8
-  %6 = sext i32 %3 to i64                         ; 6 uses
+  %6 = zext nneg i32 %3 to i64                    ; 6 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %6
   %i.r = load float, ptr %i.q, align 4, !tbaa !171 ; 4 uses
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %6
@@ -476,7 +476,7 @@ bb.e:                                             ; preds = %.thread
   %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %i.as, i64 0
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.av, i64 1
   store <2 x float> %.sroa.0.4.vec.insert.i, ptr %10, align 8
-  %13 = sext i32 %2 to i64                        ; 3 uses
+  %13 = zext nneg i32 %2 to i64                   ; 3 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %13
   %i.bb = load float, ptr %i.ba, align 4, !tbaa !171 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.c, i64 3352
@@ -522,7 +522,7 @@ bb.e:                                             ; preds = %.thread
   store <2 x float> %i.cg, ptr %8, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   store <2 x float> %i.ci, ptr %i.cj, align 8
-  %14 = sext i32 %i.bt to i64                     ; 6 uses
+  %14 = zext nneg i32 %i.bt to i64                ; 6 uses
   %i.ck = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %14
   %i.cl = load float, ptr %i.ck, align 4, !tbaa !171 ; 4 uses
   %i.cm = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %14
@@ -925,8 +925,8 @@ bb.ao:                                            ; preds = %bb.an
   br i1 %i.fr, label %bb.ap, label %bb.aw
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.ft = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #40 ; 3 uses
-  %i.fu = trunc i64 %i.ft to i32                  ; 3 uses
+  %i.ft = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #40 ; 2 uses
+  %i.fu = trunc i64 %i.ft to i32                  ; 5 uses
   store i8 0, ptr %i.fp, align 1, !tbaa !434
   %i.fv = getelementptr inbounds nuw i8, ptr %i.dg, i64 40 ; 2 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.dg, i64 48 ; 5 uses
@@ -961,41 +961,39 @@ bb.aq:                                            ; preds = %.lr.ph.i
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %bb.aq, %._crit_edge.loopexit.split.loop.exit.i, %bb.ap
-  %.046.lcssa.i = phi i32 [ 0, %bb.ap ], [ %i.gh, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.gb, %bb.aq ] ; 9 uses
+  %.046.lcssa.i = phi i32 [ 0, %bb.ap ], [ %i.gh, %._crit_edge.loopexit.split.loop.exit.i ], [ %i.gb, %bb.aq ] ; 11 uses
   %i.gi = icmp eq i32 %.046.lcssa.i, %i.ga
   %i.gj = icmp eq i32 %.046.lcssa.i, %i.fu
   %or.cond51.i = and i1 %i.gi, %i.gj
   br i1 %or.cond51.i, label %_ZL27InputTextReconcileUndoStateP19ImGuiInputTextStatePKciS2_i.exit, label %.preheader52.preheader.i
 
 .preheader52.preheader.i:                         ; preds = %._crit_edge.i
-  %23 = sext i32 %i.ga to i64
-  %24 = sext i32 %.046.lcssa.i to i64             ; 3 uses
-  %sext1633 = shl i64 %i.ft, 32
-  %25 = ashr exact i64 %sext1633, 32              ; 2 uses
   %i.gk = sub i32 %i.ga, %.046.lcssa.i            ; 2 uses
-  %indvars.iv.next64.i1855 = add nsw i64 %25, -1  ; 2 uses
-  %indvars.iv.next62.i1856 = add nsw i64 %23, -1  ; 2 uses
+  %.044.i1854 = add nsw i32 %i.fu, -1             ; 2 uses
+  %.045.i1855 = add nsw i32 %i.ga, -1             ; 2 uses
   %i.gl = icmp sgt i32 %i.ga, %.046.lcssa.i
-  %26 = icmp sgt i64 %25, %24
-  %27 = select i1 %i.gl, i1 %26, i1 false
-  br i1 %27, label %.lr.ph1860, label %.preheader52.i._crit_edge
+  %23 = icmp slt i32 %.046.lcssa.i, %i.fu
+  %24 = and i1 %i.gl, %23
+  br i1 %24, label %.lr.ph1860, label %.preheader52.i._crit_edge
 
 .preheader52.i:                                   ; preds = %.lr.ph1860
   %indvars.iv.next72.i = add i32 %indvars.iv71.i1857, -1 ; 2 uses
-  %indvars.iv.next64.i = add nsw i64 %indvars.iv.next64.i1858, -1 ; 2 uses
-  %indvars.iv.next62.i = add nsw i64 %indvars.iv.next62.i1859, -1 ; 2 uses
-  %i.gm = icmp sgt i64 %indvars.iv.next62.i1859, %24
-  %i.gn = icmp sgt i64 %indvars.iv.next64.i1858, %24
+  %.044.i = add nsw i32 %.044.i1857, -1           ; 2 uses
+  %.045.i = add nsw i32 %.045.i1858, -1           ; 2 uses
+  %i.gm = icmp sgt i32 %.045.i1858, %.046.lcssa.i
+  %i.gn = icmp sgt i32 %.044.i1857, %.046.lcssa.i
   %i.go = and i1 %i.gm, %i.gn
   br i1 %i.go, label %.lr.ph1860, label %.preheader52.i._crit_edge, !llvm.loop !438
 
 .lr.ph1860:                                       ; preds = %.preheader52.preheader.i, %.preheader52.i
-  %indvars.iv.next62.i1859 = phi i64 [ %indvars.iv.next62.i, %.preheader52.i ], [ %indvars.iv.next62.i1856, %.preheader52.preheader.i ] ; 4 uses
-  %indvars.iv.next64.i1858 = phi i64 [ %indvars.iv.next64.i, %.preheader52.i ], [ %indvars.iv.next64.i1855, %.preheader52.preheader.i ] ; 4 uses
+  %.045.i1858 = phi i32 [ %.045.i, %.preheader52.i ], [ %.045.i1855, %.preheader52.preheader.i ] ; 4 uses
+  %.044.i1857 = phi i32 [ %.044.i, %.preheader52.i ], [ %.044.i1854, %.preheader52.preheader.i ] ; 4 uses
   %indvars.iv71.i1857 = phi i32 [ %indvars.iv.next72.i, %.preheader52.i ], [ %i.gk, %.preheader52.preheader.i ] ; 2 uses
-  %i.gp = getelementptr inbounds i8, ptr %i.fx, i64 %indvars.iv.next62.i1859
+  %25 = zext nneg i32 %.045.i1858 to i64
+  %i.gp = getelementptr inbounds nuw i8, ptr %i.fx, i64 %25
   %i.gq = load i8, ptr %i.gp, align 1, !tbaa !387
-  %i.gr = getelementptr inbounds i8, ptr %2, i64 %indvars.iv.next64.i1858
+  %26 = zext nneg i32 %.044.i1857 to i64
+  %i.gr = getelementptr inbounds nuw i8, ptr %2, i64 %26
   %i.gs = load i8, ptr %i.gr, align 1, !tbaa !387
   %.not48.i = icmp eq i8 %i.gq, %i.gs
   br i1 %.not48.i, label %.preheader52.i, label %._crit_edge1861, !llvm.loop !438
@@ -1005,12 +1003,10 @@ bb.aq:                                            ; preds = %.lr.ph.i
 
 .preheader52.i._crit_edge:                        ; preds = %.preheader52.i, %._crit_edge1861, %.preheader52.preheader.i
   %indvars.iv71.i.lcssa = phi i32 [ %indvars.iv71.i1857, %._crit_edge1861 ], [ %i.gk, %.preheader52.preheader.i ], [ %indvars.iv.next72.i, %.preheader52.i ] ; 3 uses
-  %indvars.iv.next64.i.lcssa = phi i64 [ %indvars.iv.next64.i1858, %._crit_edge1861 ], [ %indvars.iv.next64.i1855, %.preheader52.preheader.i ], [ %indvars.iv.next64.i, %.preheader52.i ]
-  %indvars.iv.next62.i.lcssa = phi i64 [ %indvars.iv.next62.i1859, %._crit_edge1861 ], [ %indvars.iv.next62.i1856, %.preheader52.preheader.i ], [ %indvars.iv.next62.i, %.preheader52.i ]
-  %28 = trunc nsw i64 %indvars.iv.next62.i.lcssa to i32
-  %29 = trunc nsw i64 %indvars.iv.next64.i.lcssa to i32
-  %i.gt = sub nsw i32 %29, %.046.lcssa.i          ; 2 uses
-  %i.gu = sub nsw i32 %28, %.046.lcssa.i          ; 3 uses
+  %.044.i.lcssa = phi i32 [ %.044.i1857, %._crit_edge1861 ], [ %.044.i1854, %.preheader52.preheader.i ], [ %.044.i, %.preheader52.i ]
+  %.045.i.lcssa = phi i32 [ %.045.i1858, %._crit_edge1861 ], [ %.045.i1855, %.preheader52.preheader.i ], [ %.045.i, %.preheader52.i ]
+  %i.gt = sub nsw i32 %.044.i.lcssa, %.046.lcssa.i ; 2 uses
+  %i.gu = sub nsw i32 %.045.i.lcssa, %.046.lcssa.i ; 3 uses
   %i.gv = icmp sgt i32 %i.gt, -1
   %i.gw = icmp sgt i32 %i.gu, -1
   %or.cond.i = select i1 %i.gv, i1 true, i1 %i.gw
@@ -1413,19 +1409,16 @@ bb.b:                                             ; preds = %.lr.ph
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.b, %._crit_edge.loopexit.split.loop.exit, %bb.a
-  %.046.lcssa = phi i32 [ 0, %bb.a ], [ %i.h, %._crit_edge.loopexit.split.loop.exit ], [ %i.b, %bb.b ] ; 10 uses
+  %.046.lcssa = phi i32 [ 0, %bb.a ], [ %i.h, %._crit_edge.loopexit.split.loop.exit ], [ %i.b, %bb.b ] ; 11 uses
   %i.i = icmp eq i32 %.046.lcssa, %2
   %i.j = icmp eq i32 %.046.lcssa, %4
   %or.cond51 = and i1 %i.i, %i.j
   br i1 %or.cond51, label %.loopexit, label %.preheader52.preheader
 
 .preheader52.preheader:                           ; preds = %._crit_edge
-  %5 = sext i32 %2 to i64
-  %6 = sext i32 %.046.lcssa to i64                ; 2 uses
-  %7 = sext i32 %4 to i64
   %i.k = sub i32 %2, %.046.lcssa                  ; 2 uses
-  %indvars.iv.next6480 = add nsw i64 %7, -1       ; 2 uses
-  %indvars.iv.next6281 = add nsw i64 %5, -1       ; 2 uses
+  %.04472 = add nsw i32 %4, -1                    ; 2 uses
+  %.04573 = add nsw i32 %2, -1                    ; 2 uses
   %i.l = icmp sgt i32 %2, %.046.lcssa
   %i.m = icmp sgt i32 %4, %.046.lcssa
   %i.n = and i1 %i.l, %i.m
@@ -1433,20 +1426,22 @@ bb.b:                                             ; preds = %.lr.ph
 
 .preheader52:                                     ; preds = %.lr.ph85
   %indvars.iv.next72 = add i32 %indvars.iv7182, -1 ; 2 uses
-  %indvars.iv.next64 = add nsw i64 %indvars.iv.next6483, -1 ; 2 uses
-  %indvars.iv.next62 = add nsw i64 %indvars.iv.next6284, -1 ; 2 uses
-  %i.o = icmp sgt i64 %indvars.iv.next6284, %6
-  %i.p = icmp sgt i64 %indvars.iv.next6483, %6
+  %.044 = add nsw i32 %.04475, -1                 ; 2 uses
+  %.045 = add nsw i32 %.04576, -1                 ; 2 uses
+  %i.o = icmp sgt i32 %.04576, %.046.lcssa
+  %i.p = icmp sgt i32 %.04475, %.046.lcssa
   %i.q = and i1 %i.o, %i.p
   br i1 %i.q, label %.lr.ph85, label %.preheader52._crit_edge, !llvm.loop !438
 
 .lr.ph85:                                         ; preds = %.preheader52.preheader, %.preheader52
-  %indvars.iv.next6284 = phi i64 [ %indvars.iv.next62, %.preheader52 ], [ %indvars.iv.next6281, %.preheader52.preheader ] ; 4 uses
-  %indvars.iv.next6483 = phi i64 [ %indvars.iv.next64, %.preheader52 ], [ %indvars.iv.next6480, %.preheader52.preheader ] ; 4 uses
+  %.04576 = phi i32 [ %.045, %.preheader52 ], [ %.04573, %.preheader52.preheader ] ; 4 uses
+  %.04475 = phi i32 [ %.044, %.preheader52 ], [ %.04472, %.preheader52.preheader ] ; 4 uses
   %indvars.iv7182 = phi i32 [ %indvars.iv.next72, %.preheader52 ], [ %i.k, %.preheader52.preheader ] ; 2 uses
-  %i.r = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next6284
+  %5 = zext nneg i32 %.04576 to i64
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %5
   %i.s = load i8, ptr %i.r, align 1, !tbaa !387
-  %i.t = getelementptr inbounds i8, ptr %3, i64 %indvars.iv.next6483
+  %6 = zext nneg i32 %.04475 to i64
+  %i.t = getelementptr inbounds nuw i8, ptr %3, i64 %6
   %i.u = load i8, ptr %i.t, align 1, !tbaa !387
   %.not48 = icmp eq i8 %i.s, %i.u
   br i1 %.not48, label %.preheader52, label %._crit_edge86, !llvm.loop !438
@@ -1456,12 +1451,10 @@ bb.b:                                             ; preds = %.lr.ph
 
 .preheader52._crit_edge:                          ; preds = %.preheader52, %._crit_edge86, %.preheader52.preheader
   %indvars.iv71.lcssa = phi i32 [ %indvars.iv7182, %._crit_edge86 ], [ %i.k, %.preheader52.preheader ], [ %indvars.iv.next72, %.preheader52 ] ; 3 uses
-  %indvars.iv.next64.lcssa = phi i64 [ %indvars.iv.next6483, %._crit_edge86 ], [ %indvars.iv.next6480, %.preheader52.preheader ], [ %indvars.iv.next64, %.preheader52 ]
-  %indvars.iv.next62.lcssa = phi i64 [ %indvars.iv.next6284, %._crit_edge86 ], [ %indvars.iv.next6281, %.preheader52.preheader ], [ %indvars.iv.next62, %.preheader52 ]
-  %8 = trunc nsw i64 %indvars.iv.next62.lcssa to i32
-  %9 = trunc nsw i64 %indvars.iv.next64.lcssa to i32
-  %i.v = sub nsw i32 %9, %.046.lcssa              ; 2 uses
-  %i.w = sub nsw i32 %8, %.046.lcssa              ; 3 uses
+  %.044.lcssa = phi i32 [ %.04475, %._crit_edge86 ], [ %.04472, %.preheader52.preheader ], [ %.044, %.preheader52 ]
+  %.045.lcssa = phi i32 [ %.04576, %._crit_edge86 ], [ %.04573, %.preheader52.preheader ], [ %.045, %.preheader52 ]
+  %i.v = sub nsw i32 %.044.lcssa, %.046.lcssa     ; 2 uses
+  %i.w = sub nsw i32 %.045.lcssa, %.046.lcssa     ; 3 uses
   %i.x = icmp sgt i32 %i.v, -1
   %i.y = icmp sgt i32 %i.w, -1
   %or.cond = select i1 %i.x, i1 true, i1 %i.y
@@ -1864,7 +1857,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %.val64.us = load ptr, ptr %i.y, align 8, !tbaa !476
-  %4 = sext i32 %i.aw to i64
+  %4 = zext nneg i32 %i.aw to i64
   %i.be = getelementptr i8, ptr %.val64.us, i64 %4
   %i.bf = getelementptr i8, ptr %i.be, i64 -1
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !387
@@ -1923,7 +1916,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %.val64 = load ptr, ptr %i.y, align 8, !tbaa !476
-  %5 = sext i32 %i.cd to i64
+  %5 = zext nneg i32 %i.cd to i64
   %i.cl = getelementptr i8, ptr %.val64, i64 %5
   %i.cm = getelementptr i8, ptr %i.cl, i64 -1
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !387
@@ -2213,12 +2206,13 @@ bb.k:                                             ; preds = %bb.j
 
 ._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i: ; preds = %bb.k
   %.pre.i = sext i32 %i.l to i64
+  %.pre = zext nneg i32 %i.q to i64
   br label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit
 
 .lr.ph.i.i:                                       ; preds = %bb.k
   %i.s = getelementptr i8, ptr %0, i64 32         ; 5 uses
   %i.t = sext i32 %i.l to i64                     ; 7 uses
-  %wide.trip.count.i.i = zext nneg i32 %i.q to i64 ; 2 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.q to i64 ; 4 uses
   %xtraiter49 = and i64 %wide.trip.count.i.i, 3   ; 3 uses
   %i.u = icmp ult i32 %i.q, 4
   br i1 %i.u, label %.epil.preheader48, label %.lr.ph.i.i.new
@@ -2287,12 +2281,12 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   br i1 %epil.iter50.cmp.not, label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit, label %bb.m, !llvm.loop !917
 
 _ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit: ; preds = %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit.loopexit.unr-lcssa, %bb.m, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i
+  %.pre-phi = phi i64 [ %.pre, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i ], [ %wide.trip.count.i.i, %bb.m ], [ %wide.trip.count.i.i, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit.loopexit.unr-lcssa ]
   %.pre-phi.i = phi i64 [ %.pre.i, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i ], [ %i.t, %bb.m ], [ %i.t, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit.loopexit.unr-lcssa ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !435
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %.pre-phi.i ; 2 uses
-  %2 = sext i32 %i.q to i64
-  %i.as = getelementptr inbounds i8, ptr %i.ar, i64 %2
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 %.pre-phi
   %i.at = load i32, ptr %i.a, align 8, !tbaa !436
   %reass.sub38 = sub i32 %i.at, %i.k
   %i.au = add i32 %reass.sub38, 1
@@ -2318,12 +2312,13 @@ bb.n:                                             ; preds = %bb.j
 
 ._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26: ; preds = %bb.n
   %.pre.i27 = sext i32 %i.k to i64
+  %.pre39 = zext nneg i32 %i.bb to i64
   br label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36
 
 .lr.ph.i.i30:                                     ; preds = %bb.n
   %i.bd = getelementptr i8, ptr %0, i64 32        ; 5 uses
   %i.be = sext i32 %i.k to i64                    ; 7 uses
-  %wide.trip.count.i.i31 = zext nneg i32 %i.bb to i64 ; 2 uses
+  %wide.trip.count.i.i31 = zext nneg i32 %i.bb to i64 ; 4 uses
   %xtraiter = and i64 %wide.trip.count.i.i31, 3   ; 3 uses
   %i.bf = icmp ult i32 %i.bb, 4
   br i1 %i.bf, label %.epil.preheader, label %.lr.ph.i.i30.new
@@ -2392,12 +2387,12 @@ bb.p:                                             ; preds = %bb.p, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36, label %bb.p, !llvm.loop !918
 
 _ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36: ; preds = %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36.loopexit.unr-lcssa, %bb.p, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26
+  %.pre-phi40 = phi i64 [ %.pre39, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26 ], [ %wide.trip.count.i.i31, %bb.p ], [ %wide.trip.count.i.i31, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36.loopexit.unr-lcssa ]
   %.pre-phi.i28 = phi i64 [ %.pre.i27, %._ZN5ImStbL24stb_text_makeundo_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit_crit_edge.i26 ], [ %i.be, %bb.p ], [ %i.be, %_ZN5ImStbL19stb_textedit_deleteEP19ImGuiInputTextStatePNS_17STB_TexteditStateEii.exit36.loopexit.unr-lcssa ]
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !435
   %i.cc = getelementptr inbounds i8, ptr %i.cb, i64 %.pre-phi.i28 ; 2 uses
-  %3 = sext i32 %i.bb to i64
-  %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 %3
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 %.pre-phi40
   %i.ce = load i32, ptr %i.a, align 8, !tbaa !436
   %reass.sub = sub i32 %i.ce, %i.l
   %i.cf = add i32 %reass.sub, 1

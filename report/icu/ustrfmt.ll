@@ -103,7 +103,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !17
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %.preheader
-  %.1.lcssa = phi i32 [ %i.k, %.preheader ], [ %4, %middle.block ], [ %4, %vec.epilog.middle.block ], [ %4, %.lr.ph ] ; 5 uses
+  %.1.lcssa = phi i32 [ %i.k, %.preheader ], [ %4, %middle.block ], [ %4, %vec.epilog.middle.block ], [ %4, %.lr.ph ] ; 7 uses
   %i.z = icmp slt i32 %.1.lcssa, %1
   br i1 %i.z, label %bb.c, label %bb.d
 
@@ -119,9 +119,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge
   br i1 %.not, label %._crit_edge44, label %.lr.ph43.preheader
 
 .lr.ph43.preheader:                               ; preds = %bb.d
-  %5 = zext nneg i32 %.1.lcssa to i64
   %wide.trip.count55 = zext nneg i32 %i.ac to i64 ; 2 uses
-  %6 = getelementptr [2 x i8], ptr %0, i64 %5     ; 3 uses
   %xtraiter = and i64 %wide.trip.count55, 1
   %i.ad = icmp eq i32 %i.ac, 1
   br i1 %i.ad, label %.lr.ph43.epil.preheader, label %.lr.ph43.preheader.new
@@ -131,23 +129,29 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge
   br label %.lr.ph43
 
 .lr.ph43:                                         ; preds = %.lr.ph43, %.lr.ph43.preheader.new
-  %indvars.iv52 = phi i64 [ 0, %.lr.ph43.preheader.new ], [ %indvars.iv.next53.1, %.lr.ph43 ] ; 5 uses
+  %indvars.iv52 = phi i64 [ 0, %.lr.ph43.preheader.new ], [ %indvars.iv.next53.1, %.lr.ph43 ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph43.preheader.new ], [ %niter.next.1, %.lr.ph43 ]
-  %7 = xor i64 %indvars.iv52, -1
-  %i.ae = getelementptr [2 x i8], ptr %6, i64 %7  ; 2 uses
+  %5 = trunc nuw nsw i64 %indvars.iv52 to i32
+  %6 = xor i32 %5, -1
+  %7 = add nsw i32 %.1.lcssa, %6
+  %8 = zext nneg i32 %7 to i64
+  %i.ae = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %8 ; 2 uses
   %i.af = load i16, ptr %i.ae, align 2, !tbaa !8
   %i.ag = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv52 ; 2 uses
   %i.ah = load i16, ptr %i.ag, align 2, !tbaa !8
   store i16 %i.ah, ptr %i.ae, align 2, !tbaa !8
   store i16 %i.af, ptr %i.ag, align 2, !tbaa !8
-  %8 = xor i64 %indvars.iv52, -2
-  %9 = getelementptr [2 x i8], ptr %6, i64 %8     ; 2 uses
-  %10 = load i16, ptr %9, align 2, !tbaa !8
-  %i.ai = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv52
-  %11 = getelementptr inbounds nuw i8, ptr %i.ai, i64 2 ; 2 uses
-  %i.aj = load i16, ptr %11, align 2, !tbaa !8
-  store i16 %i.aj, ptr %9, align 2, !tbaa !8
-  store i16 %10, ptr %11, align 2, !tbaa !8
+  %indvars.iv.next53 = or disjoint i64 %indvars.iv52, 1 ; 2 uses
+  %9 = trunc nuw nsw i64 %indvars.iv.next53 to i32
+  %10 = xor i32 %9, -1
+  %11 = add nsw i32 %.1.lcssa, %10
+  %12 = zext nneg i32 %11 to i64
+  %i.ai = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %12 ; 2 uses
+  %13 = load i16, ptr %i.ai, align 2, !tbaa !8
+  %14 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv.next53 ; 2 uses
+  %i.aj = load i16, ptr %14, align 2, !tbaa !8
+  store i16 %i.aj, ptr %i.ai, align 2, !tbaa !8
+  store i16 %13, ptr %14, align 2, !tbaa !8
   %indvars.iv.next53.1 = add nuw nsw i64 %indvars.iv52, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -161,8 +165,11 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge
   %indvars.iv52.epil.init = phi i64 [ 0, %.lr.ph43.preheader ], [ %indvars.iv.next53.1, %._crit_edge44.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod65 = trunc i32 %i.ac to i1
   tail call void @llvm.assume(i1 %lcmp.mod65)
-  %12 = xor i64 %indvars.iv52.epil.init, -1
-  %i.ak = getelementptr [2 x i8], ptr %6, i64 %12 ; 2 uses
+  %15 = trunc nuw nsw i64 %indvars.iv52.epil.init to i32
+  %16 = xor i32 %15, -1
+  %17 = add nsw i32 %.1.lcssa, %16
+  %18 = zext nneg i32 %17 to i64
+  %i.ak = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %18 ; 2 uses
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !8
   %i.am = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv52.epil.init ; 2 uses
   %i.an = load i16, ptr %i.am, align 2, !tbaa !8

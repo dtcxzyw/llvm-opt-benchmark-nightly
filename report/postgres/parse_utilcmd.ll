@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %bb.h
   %i.bu = phi ptr [ %i.cn, %bb.k ], [ null, %bb.i ] ; 2 uses
   %i.bv = phi i32 [ %i.co, %bb.k ], [ %i.bs, %bb.i ] ; 2 uses
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.k ], [ 0, %bb.i ] ; 2 uses
-  %6 = sext i32 %i.bv to i64                      ; 2 uses
-  %i.bw = shl nsw i64 %6, 3
+  %6 = zext nneg i32 %i.bv to i64
+  %i.bw = shl nuw nsw i64 %6, 3
   %i.bx = getelementptr i8, ptr %i.br, i64 %i.bw
   %i.by = getelementptr i8, ptr %i.bx, i64 32
   %i.bz = getelementptr inbounds nuw [100 x i8], ptr %i.by, i64 %indvars.iv.i ; 5 uses
@@ -226,16 +226,15 @@ bb.j:                                             ; preds = %.lr.ph.i
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 36
   store i8 1, ptr %i.cl, align 4
   %i.cm = call ptr @lappend(ptr noundef %i.bu, ptr noundef %i.ck) #8
-  %.pre.i = load i32, ptr %i.br, align 8          ; 2 uses
-  %.pre25.i = sext i32 %.pre.i to i64
+  %.pre.i = load i32, ptr %i.br, align 8
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i
   %i.cn = phi ptr [ %i.bu, %.lr.ph.i ], [ %i.cm, %bb.j ] ; 2 uses
-  %.pre-phi.i = phi i64 [ %6, %.lr.ph.i ], [ %.pre25.i, %bb.j ]
-  %i.co = phi i32 [ %i.bv, %.lr.ph.i ], [ %.pre.i, %bb.j ]
+  %i.co = phi i32 [ %i.bv, %.lr.ph.i ], [ %.pre.i, %bb.j ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.cp = icmp slt i64 %indvars.iv.next.i, %.pre-phi.i
+  %7 = sext i32 %i.co to i64
+  %i.cp = icmp slt i64 %indvars.iv.next.i, %7
   br i1 %i.cp, label %.lr.ph.i, label %._crit_edge.i.loopexit, !llvm.loop !6
 
 ._crit_edge.i.loopexit:                           ; preds = %bb.k

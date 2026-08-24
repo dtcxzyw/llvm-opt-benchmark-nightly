@@ -205,7 +205,7 @@ bb.hs:                                            ; preds = %bb.hr, %bb.hq
 bb.ht:                                            ; preds = %.lr.ph863, %bb.ht
   %i.ael = phi i32 [ %i.aea, %.lr.ph863 ], [ %i.afm, %bb.ht ]
   %.182861 = phi i32 [ 0, %.lr.ph863 ], [ %i.afl, %bb.ht ]
-  %71 = sext i32 %i.ael to i64
+  %71 = zext nneg i32 %i.ael to i64
   %i.aem = call noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef nonnull @.str.239, ptr noundef nonnull @.str.205, i32 noundef 2674, i64 noundef range(i64 -2147483648, 2147483648) %71, i64 noundef 4)
   store ptr %i.aem, ptr %i.aec, align 8, !tbaa !159
   %i.aen = load i32, ptr %i.ax, align 4, !tbaa !9
@@ -608,7 +608,7 @@ bb.lw:                                            ; preds = %bb.lv
 
 bb.lx:                                            ; preds = %bb.lv
   %i.avn = load i32, ptr %i.aw, align 4, !tbaa !9 ; 3 uses
-  %i.avo = load i32, ptr %i.at, align 4, !tbaa !9 ; 10 uses
+  %i.avo = load i32, ptr %i.at, align 4, !tbaa !9 ; 9 uses
   %i.avp = load i32, ptr %i.as, align 4, !tbaa !9 ; 8 uses
   %i.avq = load i32, ptr %i.ax, align 4, !tbaa !9 ; 5 uses
   %i.avr = load ptr, ptr %i.bi, align 8, !tbaa !16 ; 3 uses
@@ -830,7 +830,7 @@ bb.mo:                                            ; preds = %bb.mm
 .lr.ph.i166.i:                                    ; preds = %bb.mo
   %i.ayx = sext i32 %.0483 to i64                 ; 4 uses
   %i.ayy = icmp sgt i32 %.0483, 0                 ; 2 uses
-  %72 = sext i32 %i.avo to i64                    ; 3 uses
+  %72 = zext nneg i32 %i.avo to i64               ; 4 uses
   br i1 %i.ayy, label %.lr.ph.split.us.i.i, label %.lr.ph.split.preheader.i.i
 
 .lr.ph.split.preheader.i.i:                       ; preds = %.lr.ph.i166.i
@@ -952,7 +952,6 @@ bb.mp:                                            ; preds = %.preheader.us.us.i.
   %i.bbe = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.bbf = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 4 uses
   %i.bbg = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %wide.trip.count.i = zext nneg i32 %i.avo to i64
   %i.bbh = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   %i.bbi = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bbj = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 5 uses
@@ -1355,7 +1354,7 @@ bb.wy:                                            ; preds = %.loopexit36.i
 
 bb.wz:                                            ; preds = %.loopexit36.i
   %indvars.iv.next.i187 = add nuw nsw i64 %indvars.iv.i177, 1 ; 2 uses
-  %exitcond.not.i188 = icmp eq i64 %indvars.iv.next.i187, %wide.trip.count.i
+  %exitcond.not.i188 = icmp eq i64 %indvars.iv.next.i187, %72
   br i1 %exitcond.not.i188, label %.loopexit49.i, label %bb.mu, !llvm.loop !277
 
 .loopexit49.i:                                    ; preds = %bb.wz, %bb.wy, %_ZL24make_gpu_id_command_lineB5cxx11PKc.exit.i

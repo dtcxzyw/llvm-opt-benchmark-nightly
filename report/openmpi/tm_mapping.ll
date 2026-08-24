@@ -204,21 +204,20 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.f, label %._crit_edge.thread, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.g = sub i32 %.0.lcssa, %3                    ; 3 uses
-  %6 = sext i32 %i.g to i64
-  %i.h = shl nsw i64 %6, 2
+  %i.g = sub i32 %.0.lcssa, %3                    ; 2 uses
+  %6 = zext i32 %i.g to i64                       ; 4 uses
+  %i.h = shl nuw nsw i64 %6, 2
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #21 ; 5 uses
   %i.j = icmp slt i32 %3, %.0.lcssa
   br i1 %i.j, label %.lr.ph40.preheader, label %._crit_edge.thread
 
 .lr.ph40.preheader:                               ; preds = %bb.c
   %i.k = sext i32 %3 to i64                       ; 3 uses
-  %wide.trip.count = zext i32 %i.g to i64         ; 3 uses
   %min.iters.check = icmp ult i32 %i.g, 8
   br i1 %min.iters.check, label %.lr.ph40.preheader58, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph40.preheader
-  %n.vec = and i64 %wide.trip.count, 4294967288   ; 4 uses
+  %n.vec = and i64 %6, 4294967288                 ; 4 uses
   %i.l = add nsw i64 %n.vec, %i.k
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %5, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -242,7 +241,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !80
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %6
   br i1 %cmp.n, label %._crit_edge.thread, label %.lr.ph40.preheader58
 
 .lr.ph40.preheader58:                             ; preds = %.lr.ph40.preheader, %middle.block
@@ -260,7 +259,7 @@ middle.block:                                     ; preds = %vector.body
   store i32 %i.u, ptr %i.v, align 4, !tbaa !17
   %indvars.iv.next44 = add nuw nsw i64 %indvars.iv43, 1 ; 2 uses
   %indvars.iv.next46 = add nsw i64 %indvars.iv45, 1
-  %exitcond50.not = icmp eq i64 %indvars.iv.next44, %wide.trip.count
+  %exitcond50.not = icmp eq i64 %indvars.iv.next44, %6
   br i1 %exitcond50.not, label %._crit_edge.thread, label %.lr.ph40, !llvm.loop !81
 
 ._crit_edge.thread:                               ; preds = %.lr.ph40, %middle.block, %bb.c, %._crit_edge, %.preheader, %bb.a

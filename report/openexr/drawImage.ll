@@ -205,35 +205,32 @@ bb.a:
   br i1 %i.v, label %.preheader1.preheader, label %._crit_edge19.split
 
 .preheader1.preheader:                            ; preds = %.preheader1.lr.ph
-  %14 = sext i32 %2 to i64                        ; 2 uses
-  %15 = sext i32 %4 to i64                        ; 2 uses
-  %wide.trip.count26 = sext i32 %5 to i64
-  %wide.trip.count = sext i32 %3 to i64
   %i.z = extractelement <2 x i32> %i.c, i64 1
   %i.aa = extractelement <2 x i32> %i.c, i64 0
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.preheader, %._crit_edge17
-  %indvars.iv23 = phi i64 [ %15, %.preheader1.preheader ], [ %indvars.iv.next24, %._crit_edge17 ] ; 3 uses
-  %16 = sub nsw i64 %indvars.iv23, %15
-  %17 = mul nsw i64 %.8.val, %16
-  %18 = getelementptr inbounds [8 x i8], ptr %.16.val, i64 %17
-  %19 = trunc nsw i64 %indvars.iv23 to i32
-  %i.ab = sitofp i32 %19 to double
+  %.07218 = phi i32 [ %18, %._crit_edge17 ], [ %4, %.preheader1.preheader ] ; 3 uses
+  %14 = sub nsw i32 %.07218, %4
+  %15 = zext nneg i32 %14 to i64
+  %16 = mul nsw i64 %.8.val, %15
+  %17 = getelementptr inbounds [8 x i8], ptr %.16.val, i64 %16
+  %i.ab = sitofp i32 %.07218 to double
   br label %bb.b
 
 ._crit_edge19.split:                              ; preds = %._crit_edge17, %.preheader1.lr.ph, %bb.a
   ret void
 
 ._crit_edge17:                                    ; preds = %_ZN12_GLOBAL__N_15scaleEfRN7Imf_3_44RgbaE.exit
-  %indvars.iv.next24 = add nsw i64 %indvars.iv23, 1 ; 2 uses
-  %exitcond27.not = icmp eq i64 %indvars.iv.next24, %wide.trip.count26
+  %18 = add nsw i32 %.07218, 1                    ; 2 uses
+  %exitcond27.not = icmp eq i32 %18, %5
   br i1 %exitcond27.not, label %._crit_edge19.split, label %.preheader1, !llvm.loop !32
 
 bb.b:                                             ; preds = %.preheader1, %_ZN12_GLOBAL__N_15scaleEfRN7Imf_3_44RgbaE.exit
-  %indvars.iv = phi i64 [ %14, %.preheader1 ], [ %indvars.iv.next, %_ZN12_GLOBAL__N_15scaleEfRN7Imf_3_44RgbaE.exit ] ; 3 uses
-  %20 = sub nsw i64 %indvars.iv, %14
-  %i.ac = getelementptr inbounds [8 x i8], ptr %18, i64 %20 ; 7 uses
+  %.07116 = phi i32 [ %2, %.preheader1 ], [ %21, %_ZN12_GLOBAL__N_15scaleEfRN7Imf_3_44RgbaE.exit ] ; 3 uses
+  %19 = sub nsw i32 %.07116, %2
+  %20 = zext nneg i32 %19 to i64
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %17, i64 %20 ; 7 uses
   store i16 0, ptr %i.ac, align 2, !tbaa !9
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 2 ; 3 uses
   store i16 0, ptr %i.ad, align 2, !tbaa !9
@@ -242,8 +239,7 @@ bb.b:                                             ; preds = %.preheader1, %_ZN12
   br i1 %i.w, label %.preheader.lr.ph, label %._crit_edge10.split
 
 .preheader.lr.ph:                                 ; preds = %bb.b
-  %21 = trunc nsw i64 %indvars.iv to i32
-  %i.af = sitofp i32 %21 to double
+  %i.af = sitofp i32 %.07116 to double
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 6
   %i.ah = load ptr, ptr @imath_half_to_float_table, align 8 ; 3 uses
   br i1 %i.x, label %.preheader, label %._crit_edge10.split
@@ -599,8 +595,8 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
 _ZN12_GLOBAL__N_15scaleEfRN7Imf_3_44RgbaE.exit:   ; preds = %bb.ah, %bb.ai, %bb.ak, %bb.al, %bb.am, %bb.ao, %bb.ap
   %.033.i.i.i18.i = phi i16 [ %i.gh, %bb.am ], [ %i.gs, %bb.ai ], [ %i.gu, %bb.ak ], [ %i.hc, %bb.al ], [ %i.gk, %bb.ah ], [ %i.hr, %bb.ap ], [ %i.hn, %bb.ao ]
   store i16 %.033.i.i.i18.i, ptr %i.fw, align 2, !tbaa !9
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %exitcond22.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %21 = add nsw i32 %.07116, 1                    ; 2 uses
+  %exitcond22.not = icmp eq i32 %21, %3
   br i1 %exitcond22.not, label %._crit_edge17, label %bb.b, !llvm.loop !33
 
 ._crit_edge:                                      ; preds = %_ZN12_GLOBAL__N_13addEfRN7Imf_3_44RgbaE.exit

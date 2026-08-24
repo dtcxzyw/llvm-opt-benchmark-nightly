@@ -204,14 +204,13 @@ bb.d:                                             ; preds = %bb.c
 
 .preheader389.lr.ph:                              ; preds = %bb.d
   %i.k = trunc i32 %i.i to i8                     ; 3 uses
-  %6 = sext i32 %3 to i64                         ; 2 uses
+  %6 = zext i32 %3 to i64                         ; 4 uses
   br i1 %i.a, label %.preheader389.preheader, label %.loopexit390
 
 .preheader389.preheader:                          ; preds = %.preheader389.lr.ph
-  %wide.trip.count583 = zext nneg i32 %3 to i64   ; 2 uses
-  %xtraiter729 = and i64 %wide.trip.count583, 1
+  %xtraiter729 = and i64 %6, 1
   %i.l = icmp eq i32 %3, 1
-  %unroll_iter733 = and i64 %wide.trip.count583, 2147483646
+  %unroll_iter733 = and i64 %6, 2147483646
   %lcmp.mod731.not = icmp eq i64 %xtraiter729, 0
   %lcmp.mod732 = trunc i32 %3 to i1
   br label %.preheader389
@@ -612,14 +611,13 @@ bb.u:                                             ; preds = %bb.t
 
 .preheader401.lr.ph:                              ; preds = %bb.u
   %i.ew = trunc i32 %i.eu to i16                  ; 3 uses
-  %7 = sext i32 %3 to i64                         ; 2 uses
+  %7 = zext i32 %3 to i64                         ; 4 uses
   br i1 %i.a, label %.preheader401.preheader, label %.loopexit390
 
 .preheader401.preheader:                          ; preds = %.preheader401.lr.ph
-  %wide.trip.count553 = zext nneg i32 %3 to i64   ; 2 uses
-  %xtraiter703 = and i64 %wide.trip.count553, 1
+  %xtraiter703 = and i64 %7, 1
   %i.ex = icmp eq i32 %3, 1
-  %unroll_iter707 = and i64 %wide.trip.count553, 2147483646
+  %unroll_iter707 = and i64 %7, 2147483646
   %lcmp.mod705.not = icmp eq i64 %xtraiter703, 0
   %lcmp.mod706 = trunc i32 %3 to i1
   br label %.preheader401
@@ -801,8 +799,7 @@ bb.ad:                                            ; preds = %.thread380, %bb.ac
   %i.hn = zext i32 %3 to i64                      ; 3 uses
   %i.ho = shl nuw nsw i64 %i.hn, 1
   %xtraiter709 = and i64 %i.hn, 3                 ; 3 uses
-  %8 = add nsw i32 %3, -1
-  %i.hp = icmp ult i32 %8, 3
+  %i.hp = icmp ult i32 %3, 4
   %unroll_iter713 = and i64 %i.hn, 2147483644
   %lcmp.mod711.not = icmp eq i64 %xtraiter709, 0
   %lcmp.mod712 = icmp ne i64 %xtraiter709, 0
@@ -1021,14 +1018,13 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.ki, label %.preheader413.lr.ph, label %.loopexit390
 
 .preheader413.lr.ph:                              ; preds = %bb.al
-  %9 = sext i32 %3 to i64                         ; 2 uses
+  %8 = zext i32 %3 to i64                         ; 4 uses
   br i1 %i.a, label %.preheader413.preheader, label %.loopexit390
 
 .preheader413.preheader:                          ; preds = %.preheader413.lr.ph
-  %wide.trip.count523 = zext nneg i32 %3 to i64   ; 2 uses
-  %xtraiter677 = and i64 %wide.trip.count523, 1
+  %xtraiter677 = and i64 %8, 1
   %i.kj = icmp eq i32 %3, 1
-  %unroll_iter681 = and i64 %wide.trip.count523, 2147483646
+  %unroll_iter681 = and i64 %8, 2147483646
   %lcmp.mod679.not = icmp eq i64 %xtraiter677, 0
   %lcmp.mod680 = trunc i32 %3 to i1
   br label %.preheader413
@@ -1064,8 +1060,8 @@ bb.am:                                            ; preds = %.epil.preheader676
 
 ._crit_edge429:                                   ; preds = %._crit_edge429.unr-lcssa, %._crit_edge429.epilog-lcssa
   %i.ks = add nuw nsw i32 %.0299432, 1            ; 2 uses
-  %i.kt = getelementptr inbounds nuw [4 x i8], ptr %.0300431, i64 %9
-  %i.ku = getelementptr inbounds nuw [4 x i8], ptr %.0301430, i64 %9
+  %i.kt = getelementptr inbounds nuw [4 x i8], ptr %.0300431, i64 %8
+  %i.ku = getelementptr inbounds nuw [4 x i8], ptr %.0301430, i64 %8
   %exitcond525.not = icmp eq i32 %i.ks, %0
   br i1 %exitcond525.not, label %.loopexit390, label %.preheader413, !llvm.loop !35
 

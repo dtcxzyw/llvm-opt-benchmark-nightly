@@ -203,15 +203,16 @@ bb.g:                                             ; preds = %.lr.ph43, %Llb_MtrS
   br i1 %i.at, label %bb.k, label %.preheader.i
 
 .preheader.i:                                     ; preds = %.lr.ph21.i
-  %i.au = load i32, ptr %i.ad, align 4, !tbaa !29
-  %i.av = sext i32 %i.au to i64                   ; 3 uses
+  %i.au = load i32, ptr %i.ad, align 4, !tbaa !29 ; 2 uses
+  %i.av = sext i32 %i.au to i64
   %i.aw = icmp slt i64 %indvars.iv46, %i.av
   br i1 %i.aw, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.ax = load ptr, ptr %i.ah, align 8, !tbaa !19 ; 5 uses
-  %i.ay = add i64 %i.am, %i.av                    ; 2 uses
-  %.reass = add i64 %i.av, %invariant.op
+  %wide.trip.count.i = zext nneg i32 %i.au to i64 ; 2 uses
+  %i.ay = add i64 %i.am, %wide.trip.count.i       ; 2 uses
+  %.reass = add i64 %wide.trip.count.i, %invariant.op
   %xtraiter = and i64 %i.ay, 3                    ; 3 uses
   %i.az = icmp ult i64 %.reass, 3
   br i1 %i.az, label %.epil.preheader, label %.lr.ph.i.new

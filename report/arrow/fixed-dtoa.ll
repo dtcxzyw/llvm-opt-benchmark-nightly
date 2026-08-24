@@ -204,8 +204,7 @@ bb.r:                                             ; preds = %.lr.ph30.i
   br i1 %i.hu, label %.lr.ph35.preheader.i, label %._crit_edge.i122
 
 .lr.ph35.preheader.i:                             ; preds = %.preheader.i
-  %sext.i = shl i64 %.020.lcssa.in.i, 32
-  %6 = ashr exact i64 %sext.i, 32                 ; 2 uses
+  %6 = and i64 %.020.lcssa.in.i, 4294967295       ; 2 uses
   br label %.lr.ph35.i
 
 ._crit_edge.i122:                                 ; preds = %.lr.ph35.i, %.preheader.i
@@ -223,12 +222,12 @@ bb.r:                                             ; preds = %.lr.ph30.i
   %i.hy = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv42.i
   %i.hz = load i8, ptr %i.hy, align 1, !tbaa !7
   %i.ia = sub nuw nsw i64 %indvars.iv42.i, %6
-  %i.ib = getelementptr inbounds i8, ptr %2, i64 %i.ia
+  %i.ib = getelementptr inbounds nuw i8, ptr %2, i64 %i.ia
   store i8 %i.hz, ptr %i.ib, align 1, !tbaa !7
   %indvars.iv.next43.i = add nuw nsw i64 %indvars.iv42.i, 1 ; 2 uses
   %i.ic = load i32, ptr %4, align 4, !tbaa !3     ; 2 uses
-  %7 = sext i32 %i.ic to i64
-  %8 = icmp slt i64 %indvars.iv.next43.i, %7
+  %7 = trunc nuw i64 %indvars.iv.next43.i to i32
+  %8 = icmp sgt i32 %i.ic, %7
   br i1 %8, label %.lr.ph35.i, label %._crit_edge.i122, !llvm.loop !13
 
 .lr.ph._ZN14arrow_vendored17double_conversionL9TrimZerosENS0_6VectorIcEEPiS3_.exit.loopexit_crit_edge: ; preds = %.lr.ph

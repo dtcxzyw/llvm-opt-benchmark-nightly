@@ -204,17 +204,17 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %.not808.peel, label %.thread, label %bb.cp
 
 .thread:                                          ; preds = %bb.co
-  %5 = add i64 %.06581293, %i.ua
   store i32 %.5676, ptr %i.ub, align 4, !tbaa !8
+  %5 = add i64 %.06581293, %i.ua
   br label %bb.cu
 
 bb.cp:                                            ; preds = %bb.co
   %i.um = trunc i64 %i.ul to i32
+  store i32 %i.um, ptr %i.ub, align 4, !tbaa !8
   %sext.peel = shl i64 %i.ul, 32
   %i.un = ashr exact i64 %sext.peel, 32
   %i.uo = sub nsw i64 %i.ua, %i.un                ; 2 uses
   %i.up = add nsw i32 %.06641292, 1               ; 2 uses
-  store i32 %i.um, ptr %i.ub, align 4, !tbaa !8
   %.not805.peel = icmp eq i64 %i.uo, 0
   br i1 %.not805.peel, label %bb.cu, label %.preheader1065.peel.next
 
@@ -224,23 +224,22 @@ bb.cq:                                            ; preds = %bb.cn
 
 .preheader1065.peel.next:                         ; preds = %bb.cp, %bb.ct
   %i.uq = phi ptr [ %i.uy, %bb.ct ], [ %i.uf, %bb.cp ]
-  %indvars.iv1539 = phi i64 [ %indvars.iv.next1540, %bb.ct ], [ 0, %bb.cp ] ; 2 uses
-  %.06041285.a = phi i32 [ %.1605, %bb.ct ], [ 10, %bb.cp ] ; 2 uses
+  %.06041285 = phi i32 [ %.1605, %bb.ct ], [ 10, %bb.cp ] ; 2 uses
+  %.06041285.a = phi i32 [ %6, %bb.ct ], [ 0, %bb.cp ] ; 2 uses
   %.06071283 = phi i64 [ %i.vg, %bb.ct ], [ %i.uo, %bb.cp ] ; 4 uses
   %.16121282 = phi ptr [ %.2613, %bb.ct ], [ %i.uc, %bb.cp ] ; 2 uses
   %.16151281 = phi ptr [ %.2616, %bb.ct ], [ %i.ub, %bb.cp ] ; 2 uses
   %.16651279 = phi i32 [ %i.vh, %bb.ct ], [ %i.up, %bb.cp ] ; 3 uses
-  %indvars.iv.next1540 = add nuw nsw i64 %indvars.iv1539, 1 ; 5 uses
-  %6 = trunc nuw nsw i64 %indvars.iv.next1540 to i32
+  %6 = add nuw nsw i32 %.06041285.a, 1            ; 4 uses
   %.urem = urem i32 %6, 10
   %i.ur = icmp eq i32 %.urem, 0
   br i1 %i.ur, label %bb.cr, label %bb.cs
 
 bb.cr:                                            ; preds = %.preheader1065.peel.next
-  %i.us = add nsw i32 %.06041285.a, 10            ; 2 uses
+  %i.us = add nsw i32 %.06041285, 10              ; 2 uses
   %i.ut = sext i32 %i.us to i64                   ; 2 uses
   %i.uu = shl nsw i64 %i.ut, 2
-  %i.uv = call ptr @realloc(ptr noundef nonnull %.16151281, i64 noundef %i.uu) #14
+  %i.uv = call ptr @realloc(ptr noundef %.16151281, i64 noundef %i.uu) #14
   %i.uw = shl nsw i64 %i.ut, 3
   %i.ux = call ptr @realloc(ptr noundef %.16121282, i64 noundef %i.uw) #14
   %.pre1577.a = load ptr, ptr %i.b, align 8, !tbaa !9
@@ -248,44 +247,44 @@ bb.cr:                                            ; preds = %.preheader1065.peel
 
 bb.cs:                                            ; preds = %.preheader1065.peel.next, %bb.cr
   %i.uy = phi ptr [ %.pre1577.a, %bb.cr ], [ %i.uq, %.preheader1065.peel.next ] ; 3 uses
-  %.2616 = phi ptr [ %i.uv, %bb.cr ], [ %.16151281, %.preheader1065.peel.next ] ; 4 uses
+  %.2616 = phi ptr [ %i.uv, %bb.cr ], [ %.16151281, %.preheader1065.peel.next ] ; 3 uses
   %.2613 = phi ptr [ %i.ux, %bb.cr ], [ %.16121282, %.preheader1065.peel.next ] ; 3 uses
-  %.1605 = phi i32 [ %i.us, %bb.cr ], [ %.06041285.a, %.preheader1065.peel.next ]
+  %.1605 = phi i32 [ %i.us, %bb.cr ], [ %.06041285, %.preheader1065.peel.next ]
   %i.uz = sext i32 %.16651279 to i64              ; 2 uses
   %i.va = getelementptr inbounds [16 x i8], ptr %i.uy, i64 %i.uz
   %i.vb = load ptr, ptr %i.va, align 8, !tbaa !63
   %i.vc = ptrtoint ptr %i.vb to i64
   %i.vd = sub i64 %i.vc, %i.uk
-  %i.ve = getelementptr inbounds nuw [8 x i8], ptr %.2613, i64 %indvars.iv.next1540
+  %7 = zext nneg i32 %6 to i64
+  %i.ve = getelementptr inbounds nuw [8 x i8], ptr %.2613, i64 %7
   store i64 %i.vd, ptr %i.ve, align 8, !tbaa !12
   %.phi.trans.insert1579 = getelementptr inbounds [16 x i8], ptr %i.uy, i64 %i.uz
   %.phi.trans.insert1580 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert1579, i64 8
   %.pre1581 = load i64, ptr %.phi.trans.insert1580, align 8, !tbaa !65 ; 3 uses
   %.not808 = icmp ult i64 %.06071283, %.pre1581
+  %8 = zext nneg i32 %6 to i64
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %.2616, i64 %8 ; 2 uses
   br i1 %.not808, label %.thread1685, label %bb.ct
 
 .thread1685:                                      ; preds = %bb.cs
   %.sink15581690 = trunc i64 %.06071283 to i32
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %.2616, i64 %indvars.iv.next1540
-  store i32 %.sink15581690, ptr %7, align 4, !tbaa !8
+  store i32 %.sink15581690, ptr %9, align 4, !tbaa !8
   br label %.loopexit1543
 
 bb.ct:                                            ; preds = %bb.cs
+  %10 = trunc i64 %.pre1581 to i32
+  store i32 %10, ptr %9, align 4, !tbaa !8
   %sext = shl i64 %.pre1581, 32
   %i.vf = ashr exact i64 %sext, 32
   %i.vg = sub i64 %.06071283, %i.vf               ; 2 uses
   %i.vh = add nsw i32 %.16651279, 1               ; 2 uses
-  %.sink1558 = trunc i64 %.pre1581 to i32
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %.2616, i64 %indvars.iv.next1540
-  store i32 %.sink1558, ptr %8, align 4, !tbaa !8
   %.not805 = icmp eq i64 %i.vg, 0
   br i1 %.not805, label %.loopexit1543, label %.preheader1065.peel.next, !llvm.loop !96
 
 .loopexit1543:                                    ; preds = %bb.ct, %.thread1685
   %.26601693 = phi i64 [ %.06071283, %.thread1685 ], [ 0, %bb.ct ]
   %.26661692 = phi i32 [ %.16651279, %.thread1685 ], [ %i.vh, %bb.ct ]
-  %9 = trunc nsw i64 %indvars.iv1539 to i32
-  %i.vi = add nsw i32 %9, 2
+  %i.vi = add nuw nsw i32 %.06041285.a, 2
   br label %bb.cu
 
 bb.cu:                                            ; preds = %.thread, %.loopexit1543, %bb.cp

@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 define { i64, ptr } @_RNvMs0_NtNtNtCs5oRRSLMQMUC_4jiff3fmt8temporal7printerNtB5_11SpanPrinter10print_span(ptr noalias noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr noalias noundef readonly align 8 captures(none) dereferenceable(64) %1, ptr noundef nonnull %2, ptr noalias noundef readonly align 8 captures(none) dereferenceable(48) %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [9 x i8], align 1                 ; 9 uses
-  %i.b = alloca [78 x i8], align 1                ; 26 uses
+  %i.b = alloca [78 x i8], align 1                ; 25 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %.val = load ptr, ptr %0, align 8               ; 18 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1132)
@@ -541,7 +541,7 @@ _RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_cha
   br label %bb.y
 
 bb.y:                                             ; preds = %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit68.i, %bb.s
-  %.sroa.9.3 = phi i16 [ %.sroa.9.2, %bb.s ], [ %i.ew, %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit68.i ] ; 6 uses
+  %.sroa.9.3 = phi i16 [ %.sroa.9.2, %bb.s ], [ %i.ew, %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit68.i ] ; 5 uses
   %i.ex = and i16 %i.k, 63
   %i.ey = icmp eq i16 %i.ex, 0
   br i1 %i.ey, label %bb.z, label %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit66.i
@@ -562,11 +562,9 @@ _RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_cha
 
 _RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit64.i: ; preds = %bb.z
   %i.fg = zext nneg i16 %.sroa.9.3 to i64
-  %i.fh = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.fg
+  %i.fh = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.fg ; 3 uses
   store i8 84, ptr %i.fh, align 1, !noalias !1175
-  %4 = zext nneg i16 %.sroa.9.3 to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 %4 ; 2 uses
-  %i.fi = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 1
   store i8 48, ptr %i.fi, align 1, !noalias !1178
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.fj = getelementptr inbounds nuw i8, ptr %.val, i64 3
@@ -579,7 +577,7 @@ bb.aa:                                            ; preds = %_RNvMs0_NtNtCs5oRRS
   unreachable
 
 _RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit60.i: ; preds = %_RNvMs0_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedBuffer16write_ascii_char.exit64.i
-  %i.fm = getelementptr inbounds nuw i8, ptr %5, i64 2
+  %i.fm = getelementptr inbounds nuw i8, ptr %i.fh, i64 2
   store i8 %i.fk, ptr %i.fm, align 1, !noalias !1181
   %i.fn = add nuw nsw i16 %.sroa.9.3, 3
   br label %_RNvMs0_NtNtNtCs5oRRSLMQMUC_4jiff3fmt8temporal7printerNtB5_11SpanPrinter15print_span_impl.exit

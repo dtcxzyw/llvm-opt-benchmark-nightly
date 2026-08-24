@@ -202,7 +202,7 @@ __skb_header_pointer.exit:                        ; preds = %bb.b
   br i1 %i.n, label %__skb_header_pointer.exit.thread, label %.preheader
 
 .preheader:                                       ; preds = %bb.d, %__skb_header_pointer.exit
-  %.0.i37 = phi ptr [ %i.m, %__skb_header_pointer.exit ], [ %i.a, %bb.d ] ; 2 uses
+  %.0.i37 = phi ptr [ %i.m, %__skb_header_pointer.exit ], [ %i.a, %bb.d ]
   %i.o = add nsw i32 %3, -1
   br label %bb.e
 
@@ -211,9 +211,9 @@ __skb_header_pointer.exit.thread:                 ; preds = %bb.d, %bb.c, %__skb
   br label %.loopexit
 
 bb.e:                                             ; preds = %.preheader, %bb.i
-  %.02231 = phi i32 [ 0, %.preheader ], [ %i.y, %bb.i ] ; 4 uses
+  %.02231 = phi i32 [ 0, %.preheader ], [ %i.y, %bb.i ] ; 3 uses
   %i.p = zext nneg i32 %.02231 to i64
-  %i.q = getelementptr i8, ptr %.0.i37, i64 %i.p
+  %i.q = getelementptr i8, ptr %.0.i37, i64 %i.p  ; 2 uses
   %i.r = load i8, ptr %i.q, align 1               ; 2 uses
   %i.s = icmp eq i8 %i.r, %0
   br i1 %i.s, label %bb.f, label %bb.g
@@ -229,9 +229,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %or.cond, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %6 = zext nneg i32 %.02231 to i64
-  %7 = getelementptr i8, ptr %.0.i37, i64 %6
-  %i.w = getelementptr i8, ptr %7, i64 1
+  %i.w = getelementptr i8, ptr %i.q, i64 1
   %i.x = load i8, ptr %i.w, align 1
   %narrow = call i8 @llvm.umax.i8(i8 %i.x, i8 1)
   %. = zext i8 %narrow to i32

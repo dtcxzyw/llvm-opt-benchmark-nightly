@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN3sat4drat4dumpEjPKNS_7literalENS_6statusE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(664) %0, i32 noundef %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly align 8 captures(none) dead_on_return %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [10000 x i8], align 16            ; 11 uses
+  %i.a = alloca [10000 x i8], align 16            ; 10 uses
   %i.b = alloca [20 x i8], align 16               ; 3 uses
   %i.c = load i32, ptr %3, align 8, !tbaa !94     ; 3 uses
   %i.d = icmp eq i32 %i.c, 1
@@ -322,14 +322,12 @@ bb.l:                                             ; preds = %.sink.split, %bb.j,
   br label %bb.m
 
 ._crit_edge45:                                    ; preds = %bb.q, %bb.l
-  %.1.lcssa = phi i32 [ %.035, %bb.l ], [ %.3, %bb.q ] ; 3 uses
+  %.1.lcssa = phi i32 [ %.035, %bb.l ], [ %.3, %bb.q ] ; 2 uses
   %i.az = zext nneg i32 %.1.lcssa to i64
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.az
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.az ; 2 uses
   store i8 48, ptr %i.ba, align 1, !tbaa !30
   %i.bb = add nuw nsw i32 %.1.lcssa, 2
-  %4 = zext nneg i32 %.1.lcssa to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 %4
-  %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.ba, i64 1
   store i8 10, ptr %i.bc, align 1, !tbaa !30
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 592
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !32

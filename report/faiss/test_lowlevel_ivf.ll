@@ -205,8 +205,8 @@ bb.cd:                                            ; preds = %bb.ed, %.lr.ph358.i
   %i.mi = phi i32 [ %i.ev, %.lr.ph358.i ], [ %i.ra, %bb.ed ]
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
   %i.mj = getelementptr inbounds nuw [4 x i8], ptr %.sroa.013.0.i, i64 %indvars.iv599.i ; 5 uses
-  %20 = sext i32 %i.mi to i64
-  %i.mk = mul nsw i64 %i.ho, %20
+  %20 = zext nneg i32 %i.mi to i64
+  %i.mk = mul nuw nsw i64 %i.ho, %20
   %i.ml = getelementptr [4 x i8], ptr %.sroa.053.0.i, i64 %i.mk
   %i.mm = getelementptr i8, ptr %i.ml, i64 -4     ; 2 uses
   %i.mn = load i32, ptr %i.mj, align 4, !tbaa !62, !noalias !109
@@ -609,8 +609,8 @@ _ZNSt6vectorIlSaIlEED2Ev.exit136.i:               ; preds = %bb.bf, %_ZNSt6vecto
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
   %i.na = load ptr, ptr %10, align 8, !tbaa !139
   %i.nb = getelementptr inbounds nuw [8 x i8], ptr %i.na, i64 %indvars.iv84.i ; 2 uses
-  %16 = sext i32 %i.mz to i64
-  %i.nc = mul nsw i64 %.04775.i, %16
+  %16 = zext nneg i32 %i.mz to i64
+  %i.nc = mul nuw nsw i64 %.04775.i, %16
   %i.nd = load ptr, ptr %7, align 8, !tbaa !139
   %i.ne = getelementptr [8 x i8], ptr %i.nd, i64 %i.nc
   %i.nf = getelementptr [8 x i8], ptr %i.ne, i64 %indvars.iv84.i ; 2 uses
@@ -1013,9 +1013,9 @@ _ZNSt6vectorIlSaIlEED2Ev.exit:                    ; preds = %_ZNSt6vectorIfSaIfE
   %indvars.iv610 = phi i64 [ %indvars.iv.next611, %bb.cf ], [ 0, %_ZN5faiss15maxheap_reorderIfEEmmPT_Pl.exit ] ; 6 uses
   %i.lr = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0246.0676690, i64 %indvars.iv610
   %i.ls = load i64, ptr %i.lr, align 8, !tbaa !63
-  %21 = sext i32 %i.lq to i64
-  %i.lt = mul nsw i64 %.063456, %21               ; 2 uses
-  %i.lu = add nsw i64 %i.lt, %indvars.iv610       ; 2 uses
+  %21 = zext nneg i32 %i.lq to i64
+  %i.lt = mul nuw nsw i64 %.063456, %21
+  %i.lu = add nuw nsw i64 %i.lt, %indvars.iv610   ; 2 uses
   %i.lv = load ptr, ptr %5, align 8, !tbaa !139
   %i.lw = getelementptr inbounds nuw [8 x i8], ptr %i.lv, i64 %i.lu
   %i.lx = load i64, ptr %i.lw, align 8, !tbaa !63
@@ -1228,10 +1228,8 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
 
 _ZN7testing15AssertionResultD2Ev.exit193:         ; preds = %bb.cc, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i191
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #19
-  %.pre614 = load i32, ptr @_ZN12_GLOBAL__N_11kE, align 4, !tbaa !62 ; 2 uses
+  %.pre614 = load i32, ptr @_ZN12_GLOBAL__N_11kE, align 4, !tbaa !62
   %.pre615 = load ptr, ptr %6, align 8, !tbaa !124
-  %.pre617 = sext i32 %.pre614 to i64
-  %.pre618 = mul nsw i64 %.063456, %.pre617
   br label %bb.ce
 
 .body:                                            ; preds = %bb.bs, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17.i, %_ZN7testing7MessageD2Ev.exit188
@@ -1240,12 +1238,13 @@ _ZN7testing15AssertionResultD2Ev.exit193:         ; preds = %bb.cc, %_ZNKSt14def
   br label %_ZN5faiss13InvertedLists11ScopedCodesD2Ev.exit148.thread
 
 bb.ce:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit193, %bb.bl
-  %.pre-phi619 = phi i64 [ %.pre618, %_ZN7testing15AssertionResultD2Ev.exit193 ], [ %i.lt, %bb.bl ]
-  %i.nu = phi i32 [ %.pre614, %_ZN7testing15AssertionResultD2Ev.exit193 ], [ %i.lq, %bb.bl ] ; 2 uses
   %22 = phi ptr [ %.pre615, %_ZN7testing15AssertionResultD2Ev.exit193 ], [ %.pre616, %bb.bl ]
+  %i.nu = phi i32 [ %.pre614, %_ZN7testing15AssertionResultD2Ev.exit193 ], [ %i.lq, %bb.bl ] ; 3 uses
   %i.nv = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0236.0, i64 %indvars.iv610
   %i.nw = load float, ptr %i.nv, align 4, !tbaa !78
-  %i.nx = getelementptr [4 x i8], ptr %22, i64 %.pre-phi619
+  %23 = sext i32 %i.nu to i64
+  %24 = mul nsw i64 %.063456, %23
+  %i.nx = getelementptr [4 x i8], ptr %22, i64 %24
   %i.ny = getelementptr [4 x i8], ptr %i.nx, i64 %indvars.iv610
   %i.nz = load float, ptr %i.ny, align 4, !tbaa !78
   %i.oa = fcmp oeq float %i.nw, %i.nz

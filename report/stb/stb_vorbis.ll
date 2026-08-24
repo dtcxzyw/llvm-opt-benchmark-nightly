@@ -205,14 +205,13 @@ bb.a:
 
 .lr.ph47:                                         ; preds = %bb.a
   %i.c = icmp sgt i32 %2, 0
-  %6 = sext i32 %2 to i64
-  %i.d = getelementptr inbounds [6 x i8], ptr @channel_position, i64 %6
+  %6 = zext i32 %2 to i64                         ; 2 uses
+  %i.d = getelementptr inbounds nuw [6 x i8], ptr @channel_position, i64 %6
   br i1 %i.c, label %.lr.ph42.us.preheader, label %.lr.ph47.split
 
 .lr.ph42.us.preheader:                            ; preds = %.lr.ph47
   %i.e = zext nneg i32 %5 to i64
   %i.f = sext i32 %4 to i64
-  %wide.trip.count66 = zext nneg i32 %2 to i64
   br label %.lr.ph42.us
 
 .lr.ph42.us:                                      ; preds = %.lr.ph42.us.preheader, %._crit_edge.us
@@ -321,7 +320,7 @@ scalar.ph94:                                      ; preds = %scalar.ph94.prehead
 
 ..loopexit_crit_edge.us.us:                       ; preds = %scalar.ph94, %middle.block105, %.lr.ph42.split.us.us
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
-  %exitcond67.not = icmp eq i64 %indvars.iv.next64, %wide.trip.count66
+  %exitcond67.not = icmp eq i64 %indvars.iv.next64, %6
   br i1 %exitcond67.not, label %.lr.ph.us.preheader, label %.lr.ph42.split.us.us, !llvm.loop !424
 
 .preheader.us.us:                                 ; preds = %.lr.ph42.split.us.us
@@ -450,14 +449,13 @@ bb.a:
 
 .lr.ph84:                                         ; preds = %bb.a
   %i.c = icmp sgt i32 %1, 0
-  %5 = sext i32 %1 to i64
-  %i.d = getelementptr inbounds [6 x i8], ptr @channel_position, i64 %5
+  %5 = zext i32 %1 to i64                         ; 2 uses
+  %i.d = getelementptr inbounds nuw [6 x i8], ptr @channel_position, i64 %5
   br i1 %i.c, label %.lr.ph78.us.preheader, label %.lr.ph84.split
 
 .lr.ph78.us.preheader:                            ; preds = %.lr.ph84
   %i.e = zext nneg i32 %4 to i64
   %i.f = sext i32 %3 to i64
-  %wide.trip.count = zext nneg i32 %1 to i64
   br label %.lr.ph78.us
 
 .lr.ph78.us:                                      ; preds = %.lr.ph78.us.preheader, %._crit_edge.us
@@ -546,7 +544,7 @@ scalar.ph138:                                     ; preds = %scalar.ph138.prehea
 
 .loopexit.us:                                     ; preds = %scalar.ph162, %scalar.ph150, %scalar.ph138, %middle.block147, %.preheader69.us, %.preheader67.us, %.preheader.us, %bb.b
   %indvars.iv.next104 = add nuw nsw i64 %indvars.iv103, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next104, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next104, %5
   br i1 %exitcond.not, label %..preheader71_crit_edge.us, label %bb.b, !llvm.loop !431
 
 .lr.ph80.us:                                      ; preds = %.lr.ph80.us.preheader176, %.lr.ph80.us
@@ -847,8 +845,8 @@ bb.a:
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @__const.convert_samples_short.channel_selector, i64 %i.f
   %i.h = sext i32 %2 to i64                       ; 3 uses
   %i.i = icmp sgt i32 %6, 0
-  %7 = sext i32 %3 to i64
-  %i.j = getelementptr inbounds [6 x i8], ptr @channel_position, i64 %7 ; 6 uses
+  %7 = zext i32 %3 to i64
+  %i.j = getelementptr inbounds nuw [6 x i8], ptr @channel_position, i64 %7 ; 6 uses
   %i.k = zext nneg i32 %6 to i64                  ; 3 uses
   %i.l = sext i32 %5 to i64                       ; 6 uses
   br i1 %i.i, label %.lr.ph55.split.us, label %.loopexit
@@ -1251,7 +1249,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not33, label %convert_channels_short_interleaved.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = load i32, ptr %i.f, align 4, !tbaa !150  ; 7 uses
+  %i.r = load i32, ptr %i.f, align 4, !tbaa !150  ; 6 uses
   %i.s = icmp ne i32 %1, %i.r
   %or.cond.i = and i1 %i.h, %i.s
   %i.t = icmp slt i32 %i.r, 7
@@ -1263,11 +1261,10 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
   %i.u = icmp sgt i32 %spec.select, 0
-  %4 = sext i32 %i.r to i64
-  %i.v = getelementptr inbounds [6 x i8], ptr @channel_position, i64 %4
+  %4 = zext i32 %i.r to i64                       ; 2 uses
+  %i.v = getelementptr inbounds nuw [6 x i8], ptr @channel_position, i64 %4
   %i.w = zext nneg i32 %spec.select to i64        ; 3 uses
   %i.x = sext i32 %i.n to i64
-  %wide.trip.count.i37 = zext nneg i32 %i.r to i64
   br i1 %i.u, label %.lr.ph.i.preheader.split.us, label %convert_channels_short_interleaved.exit
 
 .lr.ph.i.preheader.split.us:                      ; preds = %.lr.ph.i.preheader
@@ -1484,7 +1481,7 @@ scalar.ph86:                                      ; preds = %scalar.ph86.prehead
 
 .loopexit.us.i.us.us:                             ; preds = %scalar.ph110, %scalar.ph98, %scalar.ph86, %middle.block95, %.preheader.us.i.us.us, %.preheader67.us.i.us.us, %.preheader69.us.i.us.us, %bb.e
   %indvars.iv.next104.i.us.us = add nuw nsw i64 %indvars.iv103.i.us.us, 1 ; 2 uses
-  %exitcond.not.i38.us.us = icmp eq i64 %indvars.iv.next104.i.us.us, %wide.trip.count.i37
+  %exitcond.not.i38.us.us = icmp eq i64 %indvars.iv.next104.i.us.us, %4
   br i1 %exitcond.not.i38.us.us, label %..preheader71_crit_edge.us.i.us.us, label %bb.e, !llvm.loop !431
 
 ..preheader71_crit_edge.us.i.us.us:               ; preds = %.loopexit.us.i.us.us

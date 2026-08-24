@@ -205,10 +205,10 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.us.i:          ; preds = %_ZNSt6vectorIbSaIbE
   %.02040.us.i = phi i32 [ %i.cr, %_ZNSt13_Bvector_baseISaIbEED2Ev.exit.us.i ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.lr.ph.i ] ; 2 uses
   %.02139.us.i = phi i32 [ %.2.us.i, %_ZNSt13_Bvector_baseISaIbEED2Ev.exit.us.i ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.lr.ph.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #40
-  %13 = sext i32 %i.cf to i64                     ; 2 uses
-  %i.cg = add nsw i64 %13, 63                     ; 2 uses
+  %13 = zext nneg i32 %i.cf to i64
+  %i.cg = add nuw nsw i64 %13, 63                 ; 2 uses
   %i.ch = lshr i64 %i.cg, 3
-  %i.ci = and i64 %i.ch, 2305843009213693944
+  %i.ci = and i64 %i.ch, 536870904
   %i.cj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ci) #41
           to label %.noexc unwind label %.loopexit.split-lp ; 7 uses
 
@@ -221,12 +221,8 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.us.i:          ; preds = %_ZNSt6vectorIbSaIbE
   %i.cm = sdiv i32 %i.cf, 64
   %.sext.us.i = sext i32 %i.cm to i64
   %i.cn = getelementptr inbounds [8 x i8], ptr %i.cj, i64 %.sext.us.i
-  %14 = and i64 %13, -9223372036854775745
-  %15 = icmp ugt i64 %14, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i.i.us.i = select i1 %15, i64 -8, i64 0
-  %storemerge.i.i.i.i.i.i.us.i = getelementptr inbounds i8, ptr %i.cn, i64 %storemerge.idx.i.i.i.i.i.i.us.i
   %i.co = and i32 %i.cf, 63
-  store ptr %storemerge.i.i.i.i.i.i.us.i, ptr %i.cc, align 8
+  store ptr %i.cn, ptr %i.cc, align 8
   store i32 %i.co, ptr %i.cd, align 8
   %.idx.i.i.us.i = shl nuw nsw i64 %i.ck, 3       ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.cj, i8 0, i64 %.idx.i.i.us.i, i1 false)
@@ -271,10 +267,10 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.i:             ; preds = %_ZNSt6vectorIbSaIbE
   %i.dc = phi i32 [ %i.cw, %bb.u ], [ %i.ca, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.lr.ph.i ] ; 3 uses
   %.02040.i = phi i32 [ %i.cv, %bb.u ], [ 0, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.lr.ph.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #40
-  %16 = sext i32 %i.dc to i64                     ; 2 uses
-  %i.dd = add nsw i64 %16, 63                     ; 2 uses
+  %14 = zext nneg i32 %i.dc to i64
+  %i.dd = add nuw nsw i64 %14, 63                 ; 2 uses
   %i.de = lshr i64 %i.dd, 3
-  %i.df = and i64 %i.de, 2305843009213693944
+  %i.df = and i64 %i.de, 536870904
   %i.dg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.df) #41
           to label %.noexc171 unwind label %.loopexit ; 7 uses
 
@@ -287,12 +283,8 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.i:             ; preds = %_ZNSt6vectorIbSaIbE
   %i.dj = sdiv i32 %i.dc, 64
   %.sext.i = sext i32 %i.dj to i64
   %i.dk = getelementptr inbounds [8 x i8], ptr %i.dg, i64 %.sext.i
-  %17 = and i64 %16, -9223372036854775745
-  %18 = icmp ugt i64 %17, -9223372036854775808
-  %storemerge.idx.i.i.i.i.i.i.i = select i1 %18, i64 -8, i64 0
-  %storemerge.i.i.i.i.i.i.i = getelementptr inbounds i8, ptr %i.dk, i64 %storemerge.idx.i.i.i.i.i.i.i
   %i.dl = and i32 %i.dc, 63
-  store ptr %storemerge.i.i.i.i.i.i.i, ptr %i.cc, align 8
+  store ptr %i.dk, ptr %i.cc, align 8
   store i32 %i.dl, ptr %i.cd, align 8
   %.idx.i.i.i = shl nuw nsw i64 %i.dh, 3          ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.dg, i8 0, i64 %.idx.i.i.i, i1 false)

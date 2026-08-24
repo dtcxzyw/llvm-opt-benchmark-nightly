@@ -205,16 +205,17 @@ bb.bj:                                            ; preds = %bb.bg, %bb.bh, %bb.
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.bj, %._crit_edge.loopexit.split.loop.exit, %.preheader312
-  %.5.lcssa = phi i32 [ %i.lv, %.preheader312 ], [ %i.mp, %._crit_edge.loopexit.split.loop.exit ], [ %i.lx, %bb.bj ] ; 2 uses
-  %i.mq = sext i32 %.5.lcssa to i64               ; 2 uses
+  %.5.lcssa = phi i32 [ %i.lv, %.preheader312 ], [ %i.mp, %._crit_edge.loopexit.split.loop.exit ], [ %i.lx, %bb.bj ] ; 3 uses
+  %i.mq = sext i32 %.5.lcssa to i64
   %i.mr = icmp slt i64 %indvars.iv368, %i.mq
   br i1 %i.mr, label %.lr.ph333.preheader, label %._crit_edge334
 
 .lr.ph333.preheader:                              ; preds = %._crit_edge
+  %3 = zext i32 %.5.lcssa to i64
   %i.ms = add i32 %.5.lcssa, %i.jq
   %i.mt = zext i32 %i.ms to i64                   ; 2 uses
   %i.mu = mul nuw nsw i64 %i.mt, 56
-  %i.mv = sub nsw i64 %i.mq, %i.mt
+  %i.mv = sub nsw i64 %3, %i.mt
   %i.mw = mul nsw i64 %i.mv, 56                   ; 2 uses
   %scevgep = getelementptr i8, ptr %i.jn, i64 %i.mw
   %scevgep376 = getelementptr i8, ptr %scevgep375, i64 %i.mw

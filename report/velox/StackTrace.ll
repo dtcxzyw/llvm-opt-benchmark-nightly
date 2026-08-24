@@ -205,8 +205,8 @@ _ZNSt6vectorIPvSaIS0_EE5clearEv.exit:             ; preds = %bb.a, %_ZSt8_Destro
 bb.b:                                             ; preds = %_ZNSt6vectorIPvSaIS0_EE5clearEv.exit
   %.sroa.speculated15 = call i64 @llvm.umin.i64(i64 %i.e, i64 75) ; 3 uses
   %i.g = call i32 @llvm.smax.i32(i32 %1, i32 -2)
-  %.sroa.speculated = add nsw i32 %i.g, 2         ; 2 uses
-  %i.h = zext nneg i32 %.sroa.speculated to i64
+  %.sroa.speculated = add nsw i32 %i.g, 2
+  %i.h = zext nneg i32 %.sroa.speculated to i64   ; 3 uses
   %i.i = sub nsw i64 %.sroa.speculated15, %i.h    ; 4 uses
   %i.j = icmp ugt i64 %i.i, 1152921504606846975
   br i1 %i.j, label %bb.c, label %bb.d
@@ -264,8 +264,7 @@ _ZNSt12_Vector_baseIPvSaIS0_EE13_M_deallocateEPS0_m.exit.i: ; preds = %bb.f, %_Z
   br label %_ZNSt6vectorIPvSaIS0_EE7reserveEm.exit
 
 _ZNSt6vectorIPvSaIS0_EE7reserveEm.exit:           ; preds = %bb.d, %_ZNSt12_Vector_baseIPvSaIS0_EE13_M_deallocateEPS0_m.exit.i
-  %2 = zext nneg i32 %.sroa.speculated to i64     ; 2 uses
-  %i.ai = icmp samesign ugt i64 %.sroa.speculated15, %2
+  %i.ai = icmp samesign ugt i64 %.sroa.speculated15, %i.h
   br i1 %i.ai, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %_ZNSt6vectorIPvSaIS0_EE7reserveEm.exit
@@ -274,7 +273,7 @@ _ZNSt6vectorIPvSaIS0_EE7reserveEm.exit:           ; preds = %bb.d, %_ZNSt12_Vect
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt6vectorIPvSaIS0_EE9push_backEOS0_.exit
   %i.aj = phi ptr [ %.pre, %.lr.ph.preheader ], [ %i.bj, %_ZNSt6vectorIPvSaIS0_EE9push_backEOS0_.exit ] ; 3 uses
-  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIPvSaIS0_EE9push_backEOS0_.exit ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.h, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt6vectorIPvSaIS0_EE9push_backEOS0_.exit ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.al = load i64, ptr %i.ak, align 8, !tbaa !24
   %i.am = inttoptr i64 %i.al to ptr               ; 2 uses

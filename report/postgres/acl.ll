@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %._crit_edge
 
 check_circularity.exit:                           ; preds = %bb.o, %bb.c, %bb.b, %bb.a
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bc = load i32, ptr %i.bb, align 4            ; 9 uses
+  %i.bc = load i32, ptr %i.bb, align 4            ; 8 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.be = load i32, ptr %i.bd, align 4            ; 2 uses
   %.not95 = icmp eq i32 %i.be, 0
@@ -316,12 +316,11 @@ bb.v:                                             ; preds = %.loopexit.thread
   store i32 1, ptr %i.da, align 4
   store i32 %i.cm, ptr %i.cz, align 4
   %i.db = getelementptr inbounds nuw i8, ptr %i.ct, i64 24 ; 3 uses
-  %6 = sext i32 %i.bc to i64
-  %i.dc = shl nsw i64 %6, 4
+  %6 = zext nneg i32 %i.bc to i64                 ; 2 uses
+  %i.dc = shl nuw nsw i64 %6, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.db, ptr align 8 %i.bm, i64 %i.dc, i1 false)
   %i.dd = load i32, ptr %1, align 8
-  %7 = zext nneg i32 %i.bc to i64
-  %i.de = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %7 ; 3 uses
+  %i.de = getelementptr inbounds nuw [16 x i8], ptr %i.db, i64 %6 ; 3 uses
   store i32 %i.dd, ptr %i.de, align 8
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dg = load i32, ptr %i.df, align 4

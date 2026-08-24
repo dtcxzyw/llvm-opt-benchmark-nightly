@@ -112,9 +112,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e, %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %11, i64 80 ; 11 uses
-  %i.at = sdiv i32 %2, 2                          ; 2 uses
+  %i.at = sdiv i32 %2, 2                          ; 3 uses
   %i.au = sext i32 %2 to i64
-  %i.av = sext i32 %i.at to i64                   ; 2 uses
+  %i.av = sext i32 %i.at to i64
   %i.aw = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.ax = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   %i.ay = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
@@ -134,16 +134,17 @@ bb.h:                                             ; preds = %bb.av, %bb.g
   br i1 %i.bg, label %.lr.ph.i, label %.thread174
 
 .lr.ph.i:                                         ; preds = %bb.h, %bb.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.i ], [ %i.av, %bb.h ] ; 4 uses
-  %12 = sub nsw i64 %indvars.iv.i, %i.av
-  %i.bh = getelementptr inbounds [2 x i8], ptr %i.be, i64 %12
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.i ], [ %i.av, %bb.h ] ; 3 uses
+  %indvars296 = trunc i64 %indvars.iv.i to i32    ; 3 uses
+  %12 = sub nsw i32 %indvars296, %i.at
+  %13 = zext nneg i32 %12 to i64
+  %i.bh = getelementptr inbounds nuw [2 x i8], ptr %i.be, i64 %13
   %i.bi = call i32 @memcmp(ptr noundef %i.bh, ptr noundef %1, i64 noundef %i.au) #5
   %.not.i = icmp eq i32 %i.bi, 0
   br i1 %.not.i, label %.preheader.i, label %bb.i
 
 .preheader.i:                                     ; preds = %.lr.ph.i
-  %13 = trunc nsw i64 %indvars.iv.i to i32        ; 2 uses
-  %i.bj = icmp sgt i32 %i.bf, %13
+  %i.bj = icmp sgt i32 %i.bf, %indvars296
   br i1 %i.bj, label %.lr.ph54.i, label %.critedge.i
 
 bb.i:                                             ; preds = %.lr.ph.i
@@ -172,7 +173,7 @@ bb.i:                                             ; preds = %.lr.ph.i
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.loopexit.i, %.preheader.i
-  %.1.lcssa.i = phi i32 [ %13, %.preheader.i ], [ %i.bm, %.critedge.loopexit.i ] ; 3 uses
+  %.1.lcssa.i = phi i32 [ %indvars296, %.preheader.i ], [ %i.bm, %.critedge.loopexit.i ] ; 3 uses
   %i.bn = icmp slt i32 %.1.lcssa.i, %i.bf
   br i1 %i.bn, label %.lr.ph59.preheader.i, label %find_file_option.exit
 

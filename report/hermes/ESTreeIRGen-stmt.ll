@@ -202,10 +202,10 @@ bb.f:                                             ; preds = %_ZNSt8optionalIN6he
   br i1 %.not6073, label %.critedge, label %.lr.ph78
 
 .lr.ph:                                           ; preds = %bb.f, %bb.j
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.j ], [ -1, %bb.f ]
   %.sroa.050.066 = phi ptr [ %.sroa.050.0, %bb.j ], [ %.sroa.050.062, %bb.f ] ; 2 uses
+  %.04065 = phi i32 [ %5, %bb.j ], [ -1, %bb.f ]
   %.04264 = phi ptr [ %.143, %bb.j ], [ %i.m, %bb.f ]
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %5 = add nsw i32 %.04065, 1                     ; 2 uses
   %i.aq = call noundef ptr @_ZN6hermes9IRBuilder16createBasicBlockEPNS_8FunctionE(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef %i.l) #7
   %i.ar = load i32, ptr %i.o, align 8, !tbaa !249 ; 2 uses
   %i.as = load i32, ptr %i.p, align 4, !tbaa !250
@@ -247,8 +247,9 @@ bb.i:                                             ; preds = %_ZN4llvh23SmallVect
   %i.bj = icmp eq ptr %i.bh, null
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 16
   %spec.select1 = select i1 %i.bj, ptr null, ptr %i.bk
+  %6 = zext nneg i32 %5 to i64
   %i.bl = load ptr, ptr %3, align 8, !tbaa !103
-  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %indvars.iv.next
+  %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %6
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !233
   %i.bo = call noundef ptr @_ZN6hermes9IRBuilder20createCondBranchInstEPNS_5ValueEPNS_10BasicBlockES4_(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef %spec.select1, ptr noundef %i.bn, ptr noundef %i.bi) #7 ; 0 uses
   call void @_ZN6hermes9IRBuilder17setInsertionBlockEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef %i.bi) #7
@@ -262,22 +263,23 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph78:                                         ; preds = %._crit_edge, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit
-  %indvars.iv82 = phi i64 [ %indvars.iv.next83, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ -1, %._crit_edge ]
   %.sroa.045.076 = phi ptr [ %.sroa.045.0, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ %.sroa.045.072, %._crit_edge ] ; 3 uses
   %.075 = phi i1 [ false, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ true, %._crit_edge ]
-  %indvars.iv.next83 = add nsw i64 %indvars.iv82, 1 ; 3 uses
+  %.14174 = phi i32 [ %7, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ -1, %._crit_edge ]
+  %7 = add nsw i32 %.14174, 1                     ; 2 uses
+  %.pre = zext nneg i32 %7 to i64                 ; 2 uses
   br i1 %.075, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph78
   %i.bq = load ptr, ptr %3, align 8, !tbaa !103
-  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %indvars.iv.next83
+  %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bq, i64 %.pre
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !233
   %i.bt = call noundef ptr @_ZN6hermes9IRBuilder16createBranchInstEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef %i.bs) #7 ; 0 uses
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %.lr.ph78
+bb.l:                                             ; preds = %.lr.ph78, %bb.k
   %i.bu = load ptr, ptr %3, align 8, !tbaa !103
-  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %indvars.iv.next83
+  %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %.pre
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !233
   call void @_ZN6hermes9IRBuilder17setInsertionBlockEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(40) %i.i, ptr noundef %i.bw) #7
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.045.076, i64 56 ; 2 uses
@@ -680,20 +682,21 @@ bb.b:                                             ; preds = %_ZNSt8optionalIN6he
   br i1 %.not47, label %._crit_edge.thread, label %.lr.ph52
 
 .lr.ph52:                                         ; preds = %bb.b, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ -1, %bb.b ]
   %.sroa.032.051 = phi ptr [ %.sroa.032.0, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ %.sroa.032.046, %bb.b ] ; 4 uses
   %.050 = phi i1 [ false, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ true, %bb.b ]
+  %.02349 = phi i32 [ %7, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ -1, %bb.b ]
   %.02448 = phi ptr [ %.1, %_ZN6hermes5irgen11ESTreeIRGen7genBodyERN4llvh12simple_ilistINS_6ESTree4NodeEJEEE.exit ], [ %i.e, %bb.b ] ; 3 uses
   %i.aq = call noundef ptr @_ZN6hermes9IRBuilder16createBasicBlockEPNS_8FunctionE(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef %i.d) #7 ; 4 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %7 = add nsw i32 %.02349, 1                     ; 2 uses
   %i.ar = getelementptr i8, ptr %.sroa.032.051, i64 48
   %.val = load ptr, ptr %i.ar, align 8, !tbaa !257
   %.not.i = icmp eq ptr %.val, null
   br i1 %.not.i, label %.critedge69, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph52
+  %8 = zext nneg i32 %7 to i64
   %i.as = load ptr, ptr %2, align 8, !tbaa !103
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %indvars.iv.next
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %8
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !314 ; 5 uses
   %i.av = load ptr, ptr %i.ae, align 8, !tbaa !310, !noalias !316
   %i.aw = load ptr, ptr %4, align 8, !tbaa !307, !noalias !316 ; 3 uses

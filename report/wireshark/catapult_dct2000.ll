@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.ad = getelementptr i8, ptr %13, i64 %i.aa
   store i8 0, ptr %i.ad, align 1
-  %18 = sext i32 %i.x to i64
+  %18 = zext nneg i32 %i.x to i64
   %i.ae = getelementptr i8, ptr %0, i64 %18
   %i.af = load i8, ptr %i.ae, align 1             ; 3 uses
   %i.ag = icmp ne i8 %i.af, 47                    ; 2 uses
@@ -224,7 +224,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %.lr.ph
   store i8 %i.af, ptr %i.a, align 1
-  %19 = sext i32 %i.ah to i64
+  %19 = zext nneg i32 %i.ah to i64
   %i.ao = getelementptr i8, ptr %0, i64 %19
   %i.ap = load i8, ptr %i.ao, align 1             ; 3 uses
   %i.aq = icmp ne i8 %i.ap, 47                    ; 2 uses
@@ -244,7 +244,7 @@ bb.n:                                             ; preds = %.lr.ph
 bb.o:                                             ; preds = %.lr.ph.1
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 %i.ap, ptr %i.ay, align 1
-  %20 = sext i32 %i.ar to i64
+  %20 = zext nneg i32 %i.ar to i64
   %i.az = getelementptr i8, ptr %0, i64 %20
   %i.ba = load i8, ptr %i.az, align 1             ; 3 uses
   %i.bb = icmp ne i8 %i.ba, 47                    ; 2 uses
@@ -264,7 +264,7 @@ bb.o:                                             ; preds = %.lr.ph.1
 bb.p:                                             ; preds = %.lr.ph.2
   %i.bj = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 %i.ba, ptr %i.bj, align 1
-  %21 = sext i32 %i.bc to i64
+  %21 = zext nneg i32 %i.bc to i64
   %i.bk = getelementptr i8, ptr %0, i64 %21
   %i.bl = load i8, ptr %i.bk, align 1
   %i.bm = icmp ne i8 %i.bl, 47
@@ -667,7 +667,7 @@ bb.e:                                             ; preds = %bb.c
   %.val = load ptr, ptr %i.ao, align 8
   %i.aq = getelementptr i8, ptr %2, i64 280
   %.val103 = load i64, ptr %i.aq, align 8
-  %i.ar = getelementptr i8, ptr %.val, i64 %.val103 ; 10 uses
+  %i.ar = getelementptr i8, ptr %.val, i64 %.val103 ; 9 uses
   %i.as = tail call i64 @g_strlcpy(ptr noundef %i.ar, ptr noundef %10, i64 noundef 65)
   %i.at = tail call i64 @llvm.umin.i64(i64 %i.as, i64 64) ; 2 uses
   %i.au = trunc nuw nsw i64 %i.at to i32
@@ -700,16 +700,14 @@ bb.e:                                             ; preds = %bb.c
   %i.bu = tail call i64 @llvm.umin.i64(i64 %i.bt, i64 256)
   %i.bv = trunc nuw nsw i64 %i.bu to i32
   %i.bw = add nuw nsw i32 %i.bv, 1
-  %i.bx = add nuw nsw i32 %i.bw, %i.bq            ; 3 uses
+  %i.bx = add nuw nsw i32 %i.bw, %i.bq            ; 2 uses
   %i.by = trunc i32 %8 to i8
   %i.bz = zext nneg i32 %i.bx to i64
-  %i.ca = getelementptr i8, ptr %i.ar, i64 %i.bz
+  %i.ca = getelementptr i8, ptr %i.ar, i64 %i.bz  ; 2 uses
   store i8 %i.by, ptr %i.ca, align 1
   %i.cb = trunc i32 %9 to i8
   %i.cc = add nuw nsw i32 %i.bx, 2                ; 4 uses
-  %20 = zext nneg i32 %i.bx to i64
-  %21 = getelementptr i8, ptr %i.ar, i64 %20
-  %i.cd = getelementptr i8, ptr %21, i64 1
+  %i.cd = getelementptr i8, ptr %i.ca, i64 1
   store i8 %i.cb, ptr %i.cd, align 1
   %i.ce = zext nneg i32 %i.cc to i64
   %i.cf = getelementptr i8, ptr %2, i64 288       ; 4 uses

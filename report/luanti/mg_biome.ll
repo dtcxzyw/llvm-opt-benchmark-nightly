@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.o, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader
-  %indvars27 = trunc i64 %indvars.iv25 to i16
+  %indvars27 = trunc nuw nsw i64 %indvars.iv25 to i16
   %i.p = add i16 %indvars27, %i.i                 ; 2 uses
   br label %bb.b
 
@@ -228,24 +228,22 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZNK16BiomeGenOriginal18calcBiomeFromNoiseEffN4core8vector3dIsEE.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK16BiomeGenOriginal18calcBiomeFromNoiseEffN4core8vector3dIsEE.exit ] ; 3 uses
   %i.w = phi i16 [ %i.n, %.lr.ph ], [ %i.dw, %_ZNK16BiomeGenOriginal18calcBiomeFromNoiseEffN4core8vector3dIsEE.exit ]
-  %indvars24 = trunc i64 %indvars.iv to i16
-  %4 = sext i16 %i.w to i64
-  %i.x = mul nsw i64 %indvars.iv25, %4
-  %i.y = add nsw i64 %i.x, %indvars.iv
+  %4 = zext nneg i16 %i.w to i64
+  %i.x = mul nuw nsw i64 %indvars.iv25, %4
+  %i.y = add nuw nsw i64 %i.x, %indvars.iv        ; 4 uses
   %i.z = load ptr, ptr %i.e, align 8, !tbaa !106
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 80
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !110
-  %sext = shl i64 %i.y, 32
-  %5 = ashr exact i64 %sext, 32                   ; 4 uses
-  %i.ac = getelementptr inbounds [4 x i8], ptr %i.ab, i64 %5
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %i.y
   %i.ad = load float, ptr %i.ac, align 4, !tbaa !61 ; 2 uses
   %i.ae = load ptr, ptr %i.f, align 8, !tbaa !107
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 80
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !110
-  %i.ah = getelementptr inbounds [4 x i8], ptr %i.ag, i64 %5
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.ag, i64 %i.y
   %i.ai = load float, ptr %i.ah, align 4, !tbaa !61 ; 2 uses
-  %i.aj = add i16 %indvars24, %.sroa.0.0.extract.trunc ; 2 uses
-  %i.ak = getelementptr inbounds [2 x i8], ptr %1, i64 %5
+  %5 = trunc nuw nsw i64 %indvars.iv to i16
+  %i.aj = add i16 %5, %.sroa.0.0.extract.trunc    ; 2 uses
+  %i.ak = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.y
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !34 ; 5 uses
   %i.am = load ptr, ptr %i.g, align 8, !tbaa !90  ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 16
@@ -415,7 +413,7 @@ _ZNK16BiomeGenOriginal18calcBiomeFromNoiseEffN4core8vector3dIsEE.exit: ; preds =
   %i.ds = load i32, ptr %i.dr, align 8, !tbaa !152
   %i.dt = trunc i32 %i.ds to i16
   %i.du = load ptr, ptr %i.j, align 8, !tbaa !116
-  %i.dv = getelementptr inbounds [2 x i8], ptr %i.du, i64 %5
+  %i.dv = getelementptr inbounds nuw [2 x i8], ptr %i.du, i64 %i.y
   store i16 %i.dt, ptr %i.dv, align 2, !tbaa !34
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dw = load i16, ptr %i.a, align 2, !tbaa !104 ; 3 uses

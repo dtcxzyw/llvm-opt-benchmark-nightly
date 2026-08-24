@@ -205,7 +205,7 @@ bb.lj:                                            ; preds = %.backedge, %_ZNSt6v
   %.sroa.22.0.i = phi ptr [ %i.ari, %_ZNSt6vectorIN2cv7Point3_IfEESaIS2_EE6resizeEm.exit.split.i ], [ %.sroa.22.3.i, %.backedge ] ; 7 uses
   %.sroa.14.0.i = phi ptr [ %i.ari, %_ZNSt6vectorIN2cv7Point3_IfEESaIS2_EE6resizeEm.exit.split.i ], [ %.sroa.14.2.i, %.backedge ] ; 9 uses
   %.sroa.0326.0.i = phi ptr [ %i.arh, %_ZNSt6vectorIN2cv7Point3_IfEESaIS2_EE6resizeEm.exit.split.i ], [ %.sroa.0326.3.i, %.backedge ] ; 10 uses
-  %.0147.i = phi i32 [ 0, %_ZNSt6vectorIN2cv7Point3_IfEESaIS2_EE6resizeEm.exit.split.i ], [ %spec.select.i, %.backedge ] ; 16 uses
+  %.0147.i = phi i32 [ 0, %_ZNSt6vectorIN2cv7Point3_IfEESaIS2_EE6resizeEm.exit.split.i ], [ %spec.select.i, %.backedge ] ; 15 uses
   %i.asq = load i32, ptr %i.afx, align 4, !tbaa !143
   %i.asr = trunc i32 %i.asq to i1
   %i.ass = load i32, ptr %i.afw, align 8, !tbaa !146 ; 2 uses
@@ -224,7 +224,7 @@ bb.lk:                                            ; preds = %bb.lj
   br i1 %i.asy, label %bb.ll, label %bb.lp
 
 bb.ll:                                            ; preds = %bb.lk
-  %212 = sext i32 %.0147.i to i64                 ; 2 uses
+  %212 = zext nneg i32 %.0147.i to i64            ; 2 uses
   %i.asz = getelementptr inbounds nuw [8 x i8], ptr %i.arj, i64 %212
   store <2 x float> %i.asx, ptr %i.asz, align 4
   br label %bb.md
@@ -544,8 +544,8 @@ bb.mc:                                            ; preds = %bb.lx
   br label %bb.md
 
 bb.md:                                            ; preds = %bb.mc, %bb.ly, %bb.ll
-  %.pre-phi.i = phi i64 [ %i.axi, %bb.ly ], [ %i.axy, %bb.mc ], [ %212, %bb.ll ] ; 4 uses
   %.sroa.035.0.copyload.i = phi <2 x float> [ %.sroa.035.0.copyload.pre.i, %bb.ly ], [ %i.axx, %bb.mc ], [ %i.asx, %bb.ll ]
+  %.pre-phi.i = phi i64 [ %i.axi, %bb.ly ], [ %i.axy, %bb.mc ], [ %212, %bb.ll ] ; 4 uses
   %.sroa.22.1.i = phi ptr [ %.sroa.22.7.i, %bb.ly ], [ %.sroa.22.7.i, %bb.mc ], [ %.sroa.22.0.i, %bb.ll ] ; 3 uses
   %.sroa.14.1.i = phi ptr [ %.sroa.14.3.i, %bb.ly ], [ %.sroa.14.3.i, %bb.mc ], [ %.sroa.14.0.i, %bb.ll ]
   %.sroa.0326.1.i = phi ptr [ %.sroa.0326.7.i, %bb.ly ], [ %.sroa.0326.7.i, %bb.mc ], [ %.sroa.0326.0.i, %bb.ll ] ; 3 uses
@@ -843,15 +843,13 @@ bb.ng:                                            ; preds = %bb.nf
   br i1 %i.baa, label %bb.nh, label %.critedge11.i
 
 bb.nh:                                            ; preds = %bb.ng
-  %i.bab = load ptr, ptr %158, align 8, !tbaa !137 ; 3 uses
-  %213 = getelementptr inbounds nuw [12 x i8], ptr %i.bab, i64 %.pre-phi.i ; 2 uses
-  %214 = zext nneg i32 %.0147.i to i64
-  %i.bac = getelementptr [12 x i8], ptr %i.bab, i64 %214 ; 2 uses
+  %i.bab = load ptr, ptr %158, align 8, !tbaa !137 ; 2 uses
+  %i.bac = getelementptr [12 x i8], ptr %i.bab, i64 %.pre-phi.i ; 4 uses
   %i.bad = getelementptr i8, ptr %i.bac, i64 -12
-  %i.bae = load float, ptr %213, align 4, !tbaa !147
+  %i.bae = load float, ptr %i.bac, align 4, !tbaa !147
   %i.baf = load float, ptr %i.bad, align 4, !tbaa !147
   %i.bag = fsub float %i.bae, %i.baf
-  %i.bah = getelementptr inbounds nuw i8, ptr %213, i64 4
+  %i.bah = getelementptr inbounds nuw i8, ptr %i.bac, i64 4
   %i.bai = getelementptr i8, ptr %i.bac, i64 -8
   %i.baj = load <2 x float>, ptr %i.bah, align 4, !tbaa !91
   %i.bak = load <2 x float>, ptr %i.bai, align 4, !tbaa !91

@@ -205,7 +205,6 @@ bb.an:                                            ; preds = %bb.ak
   %i.em = getelementptr inbounds nuw i8, ptr %i.ef, i64 2776
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !29
   %i.eo = zext nneg i32 %i.el to i64
-  %33 = call i32 @llvm.umax.i32(i32 %.fr303, i32 %4)
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph, %bb.as
@@ -226,7 +225,7 @@ bb.ao:                                            ; preds = %.lr.ph, %bb.as
 
 bb.ap:                                            ; preds = %bb.ao
   %i.ey = icmp slt i32 %.067231, 0
-  %i.ez = trunc nsw i64 %indvars.iv to i32        ; 2 uses
+  %i.ez = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   br i1 %i.ey, label %bb.as, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
@@ -262,9 +261,9 @@ bb.as:                                            ; preds = %bb.ap, %bb.ao
   %.269.ph = phi i32 [ %i.ez, %bb.ap ], [ %.067231, %bb.ao ] ; 3 uses
   %.2.ph = phi i32 [ %i.ex, %bb.ap ], [ %.066232, %bb.ao ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %33, %lftr.wideiv
-  br i1 %exitcond.not, label %._crit_edge, label %bb.ao, !llvm.loop !2321
+  %lftr.wideiv = trunc nuw i64 %indvars.iv.next to i32
+  %.not109 = icmp sgt i32 %.fr303, %lftr.wideiv
+  br i1 %.not109, label %bb.ao, label %._crit_edge, !llvm.loop !2321
 
 ._crit_edge:                                      ; preds = %bb.as
   %i.ff = zext i32 %.fr303 to i64                 ; 2 uses
@@ -665,9 +664,6 @@ declare i32 @llvm.smax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #12
