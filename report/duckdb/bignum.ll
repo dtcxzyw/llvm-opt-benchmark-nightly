@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %.not.i = icmp eq i64 %i.k, 0
   br i1 %.not.i, label %.lr.ph51.i, label %bb.b, !llvm.loop !27
 
-.lr.ph51.i:                                       ; preds = %bb.b, %bb.c, %bb.a
+.lr.ph51.i:                                       ; preds = %bb.c, %bb.b, %bb.a
   %.035.lcssa.i = phi i64 [ 0, %bb.a ], [ 0, %bb.c ], [ %.03545.i, %bb.b ] ; 4 uses
   %.not41.i = icmp ne i64 %1, 0
   %spec.select = zext i1 %.not41.i to i64         ; 3 uses
@@ -607,7 +607,7 @@ bb.av:                                            ; preds = %.preheader
   br label %mbedtls_mpi_cmp_int.exit77.thread
 
 mbedtls_mpi_cmp_int.exit77.thread:                ; preds = %bb.j, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.aa, %bb.z, %bb.ai, %bb.ah, %bb.at, %bb.au, %bb.l, %bb.h, %mbedtls_mpi_cmp_int.exit77, %bb.av, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %mbedtls_mpi_cmp_int.exit77.thread115, %bb.g
-  %.0 = phi i32 [ %i.ai, %bb.g ], [ %i.bz, %bb.z ], [ %i.az, %mbedtls_mpi_cmp_int.exit77.thread115 ], [ %i.ba, %bb.p ], [ %i.bb, %bb.q ], [ %i.bc, %bb.r ], [ %i.bd, %bb.s ], [ %i.be, %bb.t ], [ %i.bf, %bb.u ], [ %i.bg, %bb.v ], [ -14, %bb.l ], [ %i.dq, %bb.au ], [ -14, %bb.h ], [ %i.di, %bb.ar ], [ -14, %mbedtls_mpi_cmp_int.exit77 ], [ %i.dr, %bb.av ], [ %i.dn, %bb.at ], [ %i.cq, %bb.ah ], [ %i.cr, %bb.ai ], [ %i.ca, %bb.aa ], [ %i.de, %bb.an ], [ %i.dd, %bb.am ], [ %i.dg, %bb.ap ], [ %i.df, %bb.ao ], [ %i.dh, %bb.aq ], [ -14, %bb.j ] ; 2 uses
+  %.0 = phi i32 [ %i.ai, %bb.g ], [ -14, %bb.h ], [ %i.az, %mbedtls_mpi_cmp_int.exit77.thread115 ], [ %i.ba, %bb.p ], [ %i.bb, %bb.q ], [ %i.bc, %bb.r ], [ %i.bd, %bb.s ], [ %i.be, %bb.t ], [ %i.bf, %bb.u ], [ %i.bg, %bb.v ], [ -14, %bb.l ], [ %i.bz, %bb.z ], [ %i.dq, %bb.au ], [ %i.di, %bb.ar ], [ -14, %mbedtls_mpi_cmp_int.exit77 ], [ %i.dr, %bb.av ], [ %i.dn, %bb.at ], [ %i.cq, %bb.ah ], [ %i.cr, %bb.ai ], [ %i.ca, %bb.aa ], [ %i.de, %bb.an ], [ %i.dd, %bb.am ], [ %i.dg, %bb.ap ], [ %i.df, %bb.ao ], [ %i.dh, %bb.aq ], [ -14, %bb.j ] ; 2 uses
   %i.ds = load ptr, ptr %4, align 8, !tbaa !15    ; 2 uses
   %.not.i88 = icmp eq ptr %i.ds, null
   br i1 %.not.i88, label %mbedtls_mpi_free.exit, label %bb.aw
