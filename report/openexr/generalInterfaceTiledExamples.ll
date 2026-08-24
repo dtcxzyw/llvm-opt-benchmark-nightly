@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   store i32 %i.n, ptr %3, align 4, !tbaa !35
   %i.o = sext i32 %i.n to i64                     ; 2 uses
   %i.p = load i32, ptr %2, align 4, !tbaa !35
-  %i.q = sext i32 %i.p to i64                     ; 4 uses
+  %i.q = sext i32 %i.p to i64                     ; 3 uses
   %i.r = mul nsw i64 %i.q, %i.o                   ; 2 uses
   %i.s = icmp ugt i64 %i.r, 2305843009213693951
   %i.t = shl nuw i64 %i.r, 3
@@ -218,12 +218,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.noexc
   call void @_ZdaPv(ptr noundef nonnull %i.x) #14
-  %.pre = load i32, ptr %2, align 4, !tbaa !35
-  %.pre22 = sext i32 %.pre to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.noexc
-  %.pre-phi = phi i64 [ %.pre22, %bb.d ], [ %i.q, %.noexc ]
   store i64 %i.o, ptr %1, align 8, !tbaa !36
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   store i64 %i.q, ptr %i.z, align 8, !tbaa !37
@@ -246,7 +243,9 @@ bb.e:                                             ; preds = %bb.d, %.noexc
   %i.ai = getelementptr inbounds [8 x i8], ptr %i.v, i64 %i.ah
   %i.aj = sext i32 %i.e to i64                    ; 2 uses
   %i.ak = getelementptr inbounds [8 x i8], ptr %i.ai, i64 %i.aj
-  %i.al = shl nsw i64 %.pre-phi, 3
+  %8 = load i32, ptr %2, align 4, !tbaa !35
+  %9 = sext i32 %8 to i64
+  %i.al = shl nsw i64 %9, 3
   invoke void @_ZN7Imf_3_45SliceC1ENS_9PixelTypeEPcmmiidbb(ptr noundef nonnull align 8 dereferenceable(50) %6, i32 noundef 1, ptr noundef nonnull %i.ak, i64 noundef 8, i64 noundef %i.al, i32 noundef 1, i32 noundef 1, double noundef 0.000000e+00, i1 noundef zeroext false, i1 noundef zeroext false)
           to label %bb.f unwind label %bb.ac
 

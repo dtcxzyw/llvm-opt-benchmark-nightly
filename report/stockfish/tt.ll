@@ -204,14 +204,13 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i, label %_ZN9Stockfish18TranspositionTable5clearERNS_10ThreadPoolE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %3, i64 24
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt14_Function_baseD2Ev.exit.i, %.lr.ph.i
   %.01315.i = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %_ZNSt14_Function_baseD2Ev.exit.i ] ; 3 uses
-  store i64 0, ptr %i.n, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   %i.o = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #22 ; 4 uses
   store ptr %0, ptr %i.o, align 16, !tbaa !45
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -219,10 +218,10 @@ bb.d:                                             ; preds = %_ZNSt14_Function_ba
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   store i64 %i.l, ptr %.sroa.5.0..sroa_idx.i, align 16, !tbaa !11
   store ptr %i.o, ptr %3, align 8, !tbaa !47
-  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E9_M_invokeERKSt9_Any_data", ptr %i.m, align 8, !tbaa !48
-  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %4, align 8, !tbaa !51
+  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E9_M_invokeERKSt9_Any_data", ptr %i.n, align 8, !tbaa !48
+  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %i.m, align 8, !tbaa !51
   call void @_ZN9Stockfish10ThreadPool13run_on_threadEmSt8functionIFvvEE(ptr noundef nonnull align 8 dereferenceable(64) %2, i64 noundef %.01315.i, ptr noundef nonnull align 8 %3) #19
-  %i.p = load ptr, ptr %4, align 8, !tbaa !51     ; 2 uses
+  %i.p = load ptr, ptr %i.m, align 8, !tbaa !51   ; 2 uses
   %.not.i.i = icmp eq ptr %i.p, null
   br i1 %.not.i.i, label %_ZNSt14_Function_baseD2Ev.exit.i, label %bb.e
 
@@ -274,14 +273,13 @@ bb.a:
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNSt14_Function_baseD2Ev.exit
   %.01315 = phi i64 [ 0, %.lr.ph ], [ %i.h, %_ZNSt14_Function_baseD2Ev.exit ] ; 3 uses
-  store i64 0, ptr %i.d, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   %i.e = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #22 ; 4 uses
   store ptr %0, ptr %i.e, align 16, !tbaa !45
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -289,10 +287,10 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt14_Fu
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 %i.b, ptr %.sroa.5.0..sroa_idx, align 16, !tbaa !11
   store ptr %i.e, ptr %2, align 8, !tbaa !47
-  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E9_M_invokeERKSt9_Any_data", ptr %i.c, align 8, !tbaa !48
-  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %3, align 8, !tbaa !51
+  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E9_M_invokeERKSt9_Any_data", ptr %i.d, align 8, !tbaa !48
+  store ptr @"_ZNSt17_Function_handlerIFvvEZN9Stockfish18TranspositionTable5clearERNS1_10ThreadPoolEE3$_0E10_M_managerERSt9_Any_dataRKS7_St18_Manager_operation", ptr %i.c, align 8, !tbaa !51
   call void @_ZN9Stockfish10ThreadPool13run_on_threadEmSt8functionIFvvEE(ptr noundef nonnull align 8 dereferenceable(64) %1, i64 noundef %.01315, ptr noundef nonnull align 8 %2) #19
-  %i.f = load ptr, ptr %3, align 8, !tbaa !51     ; 2 uses
+  %i.f = load ptr, ptr %i.c, align 8, !tbaa !51   ; 2 uses
   %.not.i = icmp eq ptr %i.f, null
   br i1 %.not.i, label %_ZNSt14_Function_baseD2Ev.exit, label %bb.c
 

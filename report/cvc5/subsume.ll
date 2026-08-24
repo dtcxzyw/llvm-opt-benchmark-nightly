@@ -205,10 +205,9 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not.i.i.i.i.i.i, label %_ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EEC2ERKS3_.exit.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !214
 
 _ZNSt6vectorIN7CaDiCaL10ClauseSizeESaIS1_EEC2ERKS3_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.p
-  %2 = phi i64 [ 0, %bb.p ], [ %i.cd, %.lr.ph.i.i.i.i.i.i ]
   %.sink.i = phi ptr [ null, %bb.p ], [ %i.cg, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ null, %bb.p ], [ %i.ci, %.lr.ph.i.i.i.i.i.i ] ; 2 uses
-  %i.cj = getelementptr inbounds nuw i8, ptr %.sink.i, i64 %2 ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %.sink.i, i64 %i.cd ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.sroa.0268.1, null
   br i1 %.not.i.i.i.i, label %_ZN7CaDiCaL13shrink_vectorINS_10ClauseSizeEEEvRSt6vectorIT_SaIS3_EE.exit, label %bb.s
 

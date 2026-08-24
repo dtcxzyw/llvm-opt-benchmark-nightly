@@ -202,7 +202,7 @@ bb.a:
   %i.r = shufflevector <2 x double> %i.p, <2 x double> %i.q, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.s = shufflevector <2 x double> %i.q, <2 x double> %i.p, <2 x i32> <i32 0, i32 3> ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !22   ; 6 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !22   ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8 ; 3 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !44   ; 7 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 2 uses
@@ -265,15 +265,14 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
   tail call void @_ZdlPv(ptr noundef nonnull %i.aa) #11
-  %.pre.pre = load ptr, ptr %i.t, align 8, !tbaa !22
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.e, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
-  %.pre = phi ptr [ %.pre.pre, %bb.e ], [ %i.u, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i ] ; 3 uses
   store ptr %i.al, ptr %i.u, align 8, !tbaa !23
   store ptr %i.ap, ptr %i.v, align 8, !tbaa !44
   %i.aq = getelementptr inbounds nuw [24 x i8], ptr %i.al, i64 %i.aj
   store ptr %i.aq, ptr %i.x, align 8, !tbaa !45
+  %.pre = load ptr, ptr %i.t, align 8, !tbaa !22  ; 3 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 8
   %.pre54 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !44
   %.phi.trans.insert55 = getelementptr inbounds nuw i8, ptr %.pre, i64 16

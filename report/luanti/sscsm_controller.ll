@@ -202,15 +202,14 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.r
   %i.ap = atomicrmw volatile add ptr %i.al, i32 1 acq_rel, align 4, !noalias !42 ; 0 uses
-  %.pre = load ptr, ptr %i.o, align 8, !tbaa !15
   br label %_ZNSt10unique_ptrI13ISSCSMRequestSt14default_deleteIS0_EED2Ev.exit16
 
 _ZNSt10unique_ptrI13ISSCSMRequestSt14default_deleteIS0_EED2Ev.exit16: ; preds = %bb.t, %bb.s, %.noexc13
-  %4 = phi ptr [ %.pre, %bb.t ], [ getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV25SSCSMRequestPollNextEvent, i64 16), %bb.s ], [ getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV25SSCSMRequestPollNextEvent, i64 16), %.noexc13 ]
   store i64 %i.ai, ptr %i.ah, align 8, !tbaa !23, !noalias !42
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   store <2 x ptr> %i.ak, ptr %i.aq, align 8, !tbaa !45, !noalias !42
   store ptr %i.ah, ptr %0, align 8, !tbaa !48, !alias.scope !42
+  %4 = load ptr, ptr %i.o, align 8, !tbaa !15
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.as = load ptr, ptr %i.ar, align 8
   call void %i.as(ptr noundef nonnull align 8 dereferenceable(8) %i.o) #19, !inline_history !41

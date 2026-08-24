@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %.thread, %bb.h, %bb
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 96
   store double %i.y, ptr %i.z, align 8, !tbaa !73
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ab = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46, !noundef !47 ; 2 uses
+  %i.ab = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46, !noundef !47
   %i.ac = trunc nuw i8 %i.ab to i1                ; 2 uses
   %i.ad = fcmp ule double %i.y, 0.000000e+00
   %narrow = select i1 %i.ac, i1 true, i1 %i.ad
@@ -261,7 +261,6 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 .noexc11:                                         ; preds = %.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !84
-  %.pre19 = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46
   br label %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
 
 bb.o:                                             ; preds = %bb.n
@@ -317,9 +316,9 @@ _ZNSt10unique_ptrIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultESt14de
   br label %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
 
 _ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit: ; preds = %_ZNSt10unique_ptrIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultESt14default_deleteIS3_EED2Ev.exit.i, %.noexc11
-  %4 = phi i8 [ %i.ab, %_ZNSt10unique_ptrIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultESt14default_deleteIS3_EED2Ev.exit.i ], [ %.pre19, %.noexc11 ]
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.bn = trunc nuw i8 %4 to i1
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %5 = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46, !noundef !47
+  %i.bn = trunc nuw i8 %5 to i1
   br i1 %i.bn, label %_ZN9benchmark8internal12_GLOBAL__N_112ComputeItersERKNS0_17BenchmarkInstanceERKNS0_13BenchTimeTypeE.exit, label %bb.q
 
 bb.q:                                             ; preds = %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
@@ -354,7 +353,7 @@ _ZN9benchmark8internal18GetNullLogInstanceEv.exit.i: ; preds = %bb.u, %bb.t, %bb
 
 _ZN9benchmark8internal12_GLOBAL__N_112ComputeItersERKNS0_17BenchmarkInstanceERKNS0_13BenchTimeTypeE.exit: ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i, %bb.r, %bb.q, %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
   %i.bv = phi i64 [ 1, %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit ], [ 1, %bb.q ], [ %i.bu, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i ], [ %.val, %bb.r ]
-  store i64 %i.bv, ptr %5, align 8, !tbaa !107
+  store i64 %i.bv, ptr %4, align 8, !tbaa !107
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 136
   store ptr %2, ptr %i.bw, align 8, !tbaa !108
   %i.bx = load i8, ptr @_ZN9benchmark38FLAGS_benchmark_report_aggregates_onlyE, align 1, !tbaa !45, !range !46, !noundef !47 ; 2 uses
@@ -757,7 +756,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64: ; preds = %bb.
 .thread:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.dz = landingpad { ptr, i32 }
           cleanup
-  br label %_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71
+  br label %bb.at
 
 bb.aj:                                            ; preds = %_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EE5resetEPS2_.exit
   %i.ea = landingpad { ptr, i32 }
@@ -832,8 +831,8 @@ bb.as:                                            ; preds = %bb.am, %_ZN9benchma
   call void @_ZN9benchmark8internal15BenchmarkRunner16IterationResultsD2Ev(ptr noundef nonnull align 8 dead_on_return(176) dereferenceable(176) %0) #23
   br label %bb.at
 
-bb.at:                                            ; preds = %bb.as, %_ZNSt14_Function_baseD2Ev.exit66
-  %.pn8.pn.ph = phi { ptr, i32 } [ %.pn8, %bb.as ], [ %i.ea, %_ZNSt14_Function_baseD2Ev.exit66 ] ; 2 uses
+bb.at:                                            ; preds = %bb.as, %_ZNSt14_Function_baseD2Ev.exit66, %.thread
+  %.pn8.pn = phi { ptr, i32 } [ %.pn8, %bb.as ], [ %i.ea, %_ZNSt14_Function_baseD2Ev.exit66 ], [ %i.dz, %.thread ]
   %.pr105 = load ptr, ptr %3, align 8, !tbaa !138 ; 2 uses
   %.not.i70 = icmp eq ptr %.pr105, null
   br i1 %.not.i70, label %_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71, label %bb.au
@@ -842,13 +841,12 @@ bb.au:                                            ; preds = %bb.at
   call void @_ZNKSt14default_deleteIN9benchmark8internal13ThreadManagerEEclEPS2_(ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull %.pr105)
   br label %_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71
 
-_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71: ; preds = %.thread, %bb.at, %bb.au
-  %.pn8.pn108 = phi { ptr, i32 } [ %i.dz, %.thread ], [ %.pn8.pn.ph, %bb.at ], [ %.pn8.pn.ph, %bb.au ]
+_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71: ; preds = %bb.at, %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
   br label %bb.av
 
 bb.av:                                            ; preds = %_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64
-  %.pn8.pn.pn = phi { ptr, i32 } [ %.pn8.pn108, %_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71 ], [ %i.dt, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64 ]
+  %.pn8.pn.pn = phi { ptr, i32 } [ %.pn8.pn, %_ZNSt10unique_ptrIN9benchmark8internal13ThreadManagerESt14default_deleteIS2_EED2Ev.exit71 ], [ %i.dt, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64 ]
   resume { ptr, i32 } %.pn8.pn.pn
 }
 

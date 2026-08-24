@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.m, ptr %3, align 4, !tbaa !39
   %i.n = sext i32 %i.m to i64                     ; 2 uses
   %i.o = load i32, ptr %2, align 4, !tbaa !39
-  %i.p = sext i32 %i.o to i64                     ; 4 uses
+  %i.p = sext i32 %i.o to i64                     ; 3 uses
   %i.q = mul nsw i64 %i.p, %i.n                   ; 2 uses
   %i.r = icmp ugt i64 %i.q, 2305843009213693951
   %i.s = shl nuw i64 %i.q, 3
@@ -218,12 +218,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.noexc
   call void @_ZdaPv(ptr noundef nonnull %i.w) #9
-  %.pre = load i32, ptr %2, align 4, !tbaa !39
-  %.pre14 = sext i32 %.pre to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.noexc
-  %.pre-phi = phi i64 [ %.pre14, %bb.c ], [ %i.p, %.noexc ]
   store i64 %i.n, ptr %1, align 8, !tbaa !11
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i64 %i.p, ptr %i.y, align 8, !tbaa !16
@@ -234,7 +231,9 @@ bb.d:                                             ; preds = %bb.c, %.noexc
   %i.ac = getelementptr inbounds [8 x i8], ptr %i.u, i64 %i.ab
   %i.ad = sext i32 %i.d to i64
   %i.ae = getelementptr inbounds [8 x i8], ptr %i.ac, i64 %i.ad
-  invoke void @_ZN7Imf_3_418TiledRgbaInputFile14setFrameBufferEPNS_4RgbaEmm(ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull %i.ae, i64 noundef 1, i64 noundef %.pre-phi)
+  %5 = load i32, ptr %2, align 4, !tbaa !39
+  %6 = sext i32 %5 to i64
+  invoke void @_ZN7Imf_3_418TiledRgbaInputFile14setFrameBufferEPNS_4RgbaEmm(ptr noundef nonnull align 8 dereferenceable(56) %4, ptr noundef nonnull %i.ae, i64 noundef 1, i64 noundef %6)
           to label %bb.e unwind label %bb.j
 
 bb.e:                                             ; preds = %bb.d

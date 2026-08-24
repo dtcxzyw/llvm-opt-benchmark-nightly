@@ -204,7 +204,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load i32, ptr %i.g, align 8, !tbaa !105  ; 2 uses
   %i.i = icmp sgt i32 %i.h, 1
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
   store ptr %i.j, ptr %4, align 8, !tbaa !100
   br i1 %i.i, label %.thread, label %bb.b
 
@@ -263,7 +263,6 @@ _ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN2cv13FormattedImplESaIvEL
   %i.aa = landingpad { ptr, i32 }
           cleanup
   call void @_ZdlPvm(ptr noundef nonnull %i.t, i64 noundef 384) #21, !noalias !137
-  %.pre = load ptr, ptr %4, align 8, !tbaa !55
   br label %.body
 
 _ZNSt12__shared_ptrIN2cv13FormattedImplELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %.noexc17
@@ -307,11 +306,11 @@ bb.e:                                             ; preds = %bb.d
   br label %.body
 
 .body:                                            ; preds = %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN2cv13FormattedImplESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit16.i.i.i.i.i, %bb.e
-  %5 = phi ptr [ %i.j, %bb.e ], [ %.pre, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN2cv13FormattedImplESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit16.i.i.i.i.i ] ; 2 uses
   %eh.lpad-body = phi { ptr, i32 } [ %i.al, %bb.e ], [ %i.aa, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN2cv13FormattedImplESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit16.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  %5 = load ptr, ptr %4, align 8, !tbaa !55       ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.an = icmp eq ptr %5, %i.am
   br i1 %i.an, label %.critedge16, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i21

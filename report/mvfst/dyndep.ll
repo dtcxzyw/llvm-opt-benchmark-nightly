@@ -202,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   %i.cm = sub i64 %i.ck, %i.cl
   %i.cn = getelementptr inbounds i8, ptr %i.cj, i64 %i.cm
   call void @_ZNSt6vectorIP4NodeSaIS1_EE15_M_range_insertIN9__gnu_cxx17__normal_iteratorIPKS1_S3_EEEEvNS6_IPS1_S3_EET_SC_St20forward_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %i.bx, ptr %i.cn, ptr %i.cg, ptr %i.ci)
-  %i.co = load ptr, ptr %i.ch, align 8, !tbaa !112 ; 4 uses
+  %i.co = load ptr, ptr %i.ch, align 8, !tbaa !112 ; 3 uses
   %i.cp = load ptr, ptr %i.cf, align 8, !tbaa !67 ; 3 uses
   %i.cq = ptrtoint ptr %i.co to i64
   %i.cr = ptrtoint ptr %i.cp to i64
@@ -217,7 +217,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   br i1 %.not5562, label %.loopexit, label %.lr.ph65
 
 .lr.ph65:                                         ; preds = %._crit_edge, %_ZN4Node10AddOutEdgeEP4Edge.exit
-  %.pre67 = phi ptr [ %.pre68, %_ZN4Node10AddOutEdgeEP4Edge.exit ], [ %i.co, %._crit_edge ] ; 2 uses
   %i.cy = phi ptr [ %i.dw, %_ZN4Node10AddOutEdgeEP4Edge.exit ], [ %i.co, %._crit_edge ]
   %.sroa.037.063 = phi ptr [ %i.dx, %_ZN4Node10AddOutEdgeEP4Edge.exit ], [ %i.cp, %._crit_edge ] ; 2 uses
   %i.cz = load ptr, ptr %.sroa.037.063, align 8, !tbaa !68 ; 3 uses
@@ -274,19 +273,17 @@ _ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; preds = 
 
 bb.q:                                             ; preds = %_ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
   call void @_ZdlPv(ptr noundef nonnull %i.dg) #14
-  %.pre.pre = load ptr, ptr %i.ch, align 8, !tbaa !111
   br label %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.q, %_ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  %.pre = phi ptr [ %.pre.pre, %bb.q ], [ %.pre67, %_ZNSt6vectorIP4EdgeSaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i ] ; 2 uses
   store ptr %i.dr, ptr %i.da, align 8, !tbaa !126
   store ptr %i.du, ptr %i.db, align 8, !tbaa !124
   %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %i.dp
   store ptr %i.dv, ptr %i.dd, align 8, !tbaa !125
+  %.pre = load ptr, ptr %i.ch, align 8, !tbaa !111
   br label %_ZN4Node10AddOutEdgeEP4Edge.exit
 
 _ZN4Node10AddOutEdgeEP4Edge.exit:                 ; preds = %bb.m, %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
-  %.pre68 = phi ptr [ %.pre67, %bb.m ], [ %.pre, %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ]
   %i.dw = phi ptr [ %i.cy, %bb.m ], [ %.pre, %_ZNSt6vectorIP4EdgeSaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ] ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %.sroa.037.063, i64 8 ; 2 uses
   %.not55 = icmp eq ptr %i.dx, %i.dw
