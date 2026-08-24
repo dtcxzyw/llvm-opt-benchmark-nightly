@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.co, label %read_buf.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.cp = sub i32 %i.cg, %spec.select.i
+  %i.cp = sub nuw i32 %i.cg, %spec.select.i
   store i32 %i.cp, ptr %i.cf, align 8, !tbaa !76
   %i.cq = load ptr, ptr %i.ce, align 8, !tbaa !77
   %i.cr = zext i32 %spec.select.i to i64          ; 3 uses
@@ -321,7 +321,7 @@ bb.m:                                             ; preds = %.loopexit
 
 .critedge:                                        ; preds = %.loopexit, %bb.d, %bb.m
   %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 5928 ; 3 uses
-  %i.fg = load i64, ptr %i.ff, align 8, !tbaa !40 ; 6 uses
+  %i.fg = load i64, ptr %i.ff, align 8, !tbaa !40 ; 5 uses
   %i.fh = load i64, ptr %i.c, align 8, !tbaa !57  ; 3 uses
   %i.fi = icmp ult i64 %i.fg, %i.fh
   br i1 %i.fi, label %bb.n, label %bb.r
@@ -350,15 +350,14 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.fu, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %1 = sub nuw nsw i64 %i.ft, %i.fg
-  %i.fv = sub i64 %i.fh, %i.fg
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %1, i64 %i.fv) ; 2 uses
+  %1 = tail call i64 @llvm.umin.i64(i64 %i.ft, i64 %i.fh)
+  %i.fv = sub nuw nsw i64 %1, %i.fg               ; 2 uses
   %i.fw = load ptr, ptr %i.g, align 8, !tbaa !37
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 %i.fg
-  %i.fy = and i64 %spec.select, 4294967295
+  %i.fy = and i64 %i.fv, 4294967295
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.fx, i8 0, i64 %i.fy, i1 false)
   %i.fz = load i64, ptr %i.ff, align 8, !tbaa !40
-  %i.ga = add i64 %i.fz, %spec.select
+  %i.ga = add i64 %i.fz, %i.fv
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.q, %bb.o

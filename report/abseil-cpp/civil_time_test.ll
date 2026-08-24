@@ -202,9 +202,8 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   ]
 
 _ZN4absl12lts_2026052611NextWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit: ; preds = %.preheader.i.i, %.preheader.i.i
-  %i.o = sub nsw i64 %indvars.iv.next18.i.i, %indvars.iv.i.i
-  %57 = and i64 %i.o, 4294967295
-  %i.p = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %57, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
+  %i.o = sub nuw nsw i64 %indvars.iv.next18.i.i, %indvars.iv.i.i
+  %i.p = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.o, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i = extractvalue { i64, i64 } %i.p, 1 ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i.i.i = and i64 %.fca.1.extract.i.i.i.i, 65535 ; 2 uses
   %i.q = extractvalue { i64, i64 } %i.p, 0        ; 3 uses
@@ -388,9 +387,8 @@ bb.r:                                             ; preds = %bb.r, %_ZN7testing1
   ]
 
 _ZN4absl12lts_2026052611PrevWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit: ; preds = %.preheader.i.i184, %.preheader.i.i184
-  %i.ba = sub nsw i64 %indvars.iv.next18.i.i186, %indvars.iv.i.i181
-  %58 = and i64 %i.ba, 4294967295
-  %i.bb = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %58) #20 ; 2 uses
+  %i.ba = sub nuw nsw i64 %indvars.iv.next18.i.i186, %indvars.iv.i.i181
+  %i.bb = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %i.ba) #20 ; 2 uses
   %i.bc = extractvalue { i64, i64 } %i.bb, 1      ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i4.i = and i64 %i.bc, 65535
   %i.bd = extractvalue { i64, i64 } %i.bb, 0      ; 2 uses
@@ -556,9 +554,8 @@ bb.ae:                                            ; preds = %bb.ae, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611NextWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit220: ; preds = %.preheader.i.i213, %.preheader.i.i213
-  %i.cs = sub nsw i64 %indvars.iv.next18.i.i215, %indvars.iv.i.i210
-  %59 = and i64 %i.cs, 4294967295
-  %i.ct = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %59, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
+  %i.cs = sub nuw nsw i64 %indvars.iv.next18.i.i215, %indvars.iv.i.i210
+  %i.ct = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.cs, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i217 = extractvalue { i64, i64 } %i.ct, 1 ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i.i.i218 = and i64 %.fca.1.extract.i.i.i.i217, 65535 ; 2 uses
   %i.cu = extractvalue { i64, i64 } %i.ct, 0      ; 3 uses
@@ -744,9 +741,8 @@ bb.au:                                            ; preds = %bb.au, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611PrevWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit272: ; preds = %.preheader.i.i266, %.preheader.i.i266
-  %i.eg = sub nsw i64 %indvars.iv.next18.i.i268, %indvars.iv.i.i263
-  %60 = and i64 %i.eg, 4294967295
-  %i.eh = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %60) #20 ; 2 uses
+  %i.eg = sub nuw nsw i64 %indvars.iv.next18.i.i268, %indvars.iv.i.i263
+  %i.eh = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %i.eg) #20 ; 2 uses
   %i.ei = extractvalue { i64, i64 } %i.eh, 1      ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i4.i270 = and i64 %i.ei, 65535
   %i.ej = extractvalue { i64, i64 } %i.eh, 0      ; 2 uses
@@ -912,9 +908,8 @@ bb.bh:                                            ; preds = %bb.bh, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611NextWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit307: ; preds = %.preheader.i.i300, %.preheader.i.i300
-  %i.fy = sub nsw i64 %indvars.iv.next18.i.i302, %indvars.iv.i.i297
-  %61 = and i64 %i.fy, 4294967291
-  %i.fz = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %61, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
+  %i.fy = sub nuw nsw i64 %indvars.iv.next18.i.i302, %indvars.iv.i.i297
+  %i.fz = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.fy, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i304 = extractvalue { i64, i64 } %i.fz, 1 ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i.i.i305 = and i64 %.fca.1.extract.i.i.i.i304, 65535 ; 2 uses
   %i.ga = extractvalue { i64, i64 } %i.fz, 0      ; 3 uses
@@ -1097,7 +1092,7 @@ bb.bx:                                            ; preds = %bb.bx, %_ZN7testing
 .preheader.i.i353.preheader:                      ; preds = %bb.bx, %bb.bx
   %umin = call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %indvars.iv794)
   %i.hm = add i64 %umin, %indvars.iv796
-  %i.hn = sub nsw i64 %i.hm, %indvars.iv.i.i350
+  %i.hn = sub nuw nsw i64 %i.hm, %indvars.iv.i.i350
   %i.ho = and i64 %i.hn, 4294967295
   %i.hp = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %i.ho) #20 ; 2 uses
   %i.hq = extractvalue { i64, i64 } %i.hp, 1      ; 3 uses
@@ -1265,9 +1260,8 @@ bb.ck:                                            ; preds = %bb.ck, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611NextWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit394: ; preds = %.preheader.i.i387, %.preheader.i.i387
-  %i.jg = sub nsw i64 %indvars.iv.next18.i.i389, %indvars.iv.i.i384
-  %62 = and i64 %i.jg, 4294967295
-  %i.jh = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %62, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
+  %i.jg = sub nuw nsw i64 %indvars.iv.next18.i.i389, %indvars.iv.i.i384
+  %i.jh = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.jg, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i391 = extractvalue { i64, i64 } %i.jh, 1 ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i.i.i392 = and i64 %.fca.1.extract.i.i.i.i391, 65535 ; 2 uses
   %i.ji = extractvalue { i64, i64 } %i.jh, 0      ; 3 uses
@@ -1442,9 +1436,8 @@ bb.da:                                            ; preds = %bb.da, %_ZN7testing
   ]
 
 .preheader.i.i440.preheader:                      ; preds = %bb.da, %bb.da
-  %i.ku = sub nsw i64 7, %indvars.iv.i.i437
-  %63 = and i64 %i.ku, 4294967293
-  %i.kv = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %63) #20 ; 2 uses
+  %i.ku = sub nuw nsw i64 7, %indvars.iv.i.i437
+  %i.kv = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %i.ku) #20 ; 2 uses
   %i.kw = extractvalue { i64, i64 } %i.kv, 1      ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i4.i444 = and i64 %i.kw, 65535
   %i.kx = extractvalue { i64, i64 } %i.kv, 0      ; 2 uses
@@ -1599,9 +1592,8 @@ bb.dn:                                            ; preds = %bb.dn, %_ZN7testing
   ]
 
 .preheader.i.i474.preheader:                      ; preds = %bb.dn, %bb.dn
-  %i.mm = sub nsw i64 7, %indvars.iv.i.i471
-  %64 = and i64 %i.mm, 4294967293
-  %i.mn = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %64, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
+  %i.mm = sub nuw nsw i64 7, %indvars.iv.i.i471
+  %i.mn = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.mm, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i478 = extractvalue { i64, i64 } %i.mn, 1 ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i.i.i479 = and i64 %.fca.1.extract.i.i.i.i478, 65535 ; 2 uses
   %i.mo = extractvalue { i64, i64 } %i.mn, 0      ; 3 uses
@@ -1787,9 +1779,8 @@ bb.ed:                                            ; preds = %bb.ed, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611PrevWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit533: ; preds = %.preheader.i.i527, %.preheader.i.i527
-  %i.oa = sub nsw i64 %indvars.iv.next18.i.i529, %indvars.iv.i.i524
-  %65 = and i64 %i.oa, 4294967295
-  %i.ob = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %65) #20 ; 2 uses
+  %i.oa = sub nuw nsw i64 %indvars.iv.next18.i.i529, %indvars.iv.i.i524
+  %i.ob = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %i.oa) #20 ; 2 uses
   %i.oc = extractvalue { i64, i64 } %i.ob, 1      ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i4.i531 = and i64 %i.oc, 65535
   %i.od = extractvalue { i64, i64 } %i.ob, 0      ; 2 uses
@@ -1952,7 +1943,7 @@ bb.eq:                                            ; preds = %bb.eq, %_ZN7testing
 .preheader.i.i561.preheader:                      ; preds = %bb.eq, %bb.eq
   %umin802 = call i64 @llvm.umin.i64(i64 %indvars.iv798, i64 %indvars.iv800)
   %i.ps = add i64 %umin802, %indvars.iv803
-  %i.pt = sub nsw i64 %i.ps, %indvars.iv.i.i558
+  %i.pt = sub nuw nsw i64 %i.ps, %indvars.iv.i.i558
   %i.pu = and i64 %i.pt, 4294967295
   %i.pv = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.pu, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i565 = extractvalue { i64, i64 } %i.pv, 1 ; 3 uses
@@ -2140,9 +2131,8 @@ bb.fg:                                            ; preds = %bb.fg, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611PrevWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit620: ; preds = %.preheader.i.i614, %.preheader.i.i614
-  %i.ri = sub nsw i64 %indvars.iv.next18.i.i616, %indvars.iv.i.i611
-  %66 = and i64 %i.ri, 4294967291
-  %i.rj = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %66) #20 ; 2 uses
+  %i.ri = sub nuw nsw i64 %indvars.iv.next18.i.i616, %indvars.iv.i.i611
+  %i.rj = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %i.ri) #20 ; 2 uses
   %i.rk = extractvalue { i64, i64 } %i.rj, 1      ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i4.i618 = and i64 %i.rk, 65535
   %i.rl = extractvalue { i64, i64 } %i.rj, 0      ; 2 uses
@@ -2308,9 +2298,8 @@ bb.ft:                                            ; preds = %bb.ft, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611NextWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit655: ; preds = %.preheader.i.i648, %.preheader.i.i648
-  %i.ta = sub nsw i64 %indvars.iv.next18.i.i650, %indvars.iv.i.i645
-  %67 = and i64 %i.ta, 4294967295
-  %i.tb = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %67, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
+  %i.ta = sub nuw nsw i64 %indvars.iv.next18.i.i650, %indvars.iv.i.i645
+  %i.tb = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef 1970, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.ta, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i652 = extractvalue { i64, i64 } %i.tb, 1 ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i.i.i653 = and i64 %.fca.1.extract.i.i.i.i652, 65535 ; 2 uses
   %i.tc = extractvalue { i64, i64 } %i.tb, 0      ; 3 uses
@@ -2499,9 +2488,8 @@ bb.gj:                                            ; preds = %bb.gj, %_ZN7testing
   ]
 
 _ZN4absl12lts_2026052611PrevWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit707: ; preds = %.preheader.i.i701, %.preheader.i.i701
-  %i.ur = sub nsw i64 %indvars.iv.next18.i.i703, %indvars.iv.i.i698
-  %68 = and i64 %i.ur, 4294967295
-  %i.us = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %68) #20 ; 2 uses
+  %i.ur = sub nuw nsw i64 %indvars.iv.next18.i.i703, %indvars.iv.i.i698
+  %i.us = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 1970, i64 257, i64 noundef %i.ur) #20 ; 2 uses
   %i.ut = extractvalue { i64, i64 } %i.us, 1      ; 3 uses
   %.sroa.2.8.insert.insert.i.i.i4.i705 = and i64 %i.ut, 65535
   %i.uu = extractvalue { i64, i64 } %i.us, 0      ; 2 uses
@@ -2904,11 +2892,10 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   ]
 
 _ZN4absl12lts_2026052611NextWeekdayENS0_13time_internal4cctz6detail10civil_timeINS1_7day_tagEEENS3_7weekdayE.exit: ; preds = %.preheader.i.i, %.preheader.i.i
-  %i.aa = sub nsw i64 %indvars.iv.next18.i.i, %indvars.iv.i.i
-  %9 = and i64 %i.aa, 4294967295
+  %i.aa = sub nuw nsw i64 %indvars.iv.next18.i.i, %indvars.iv.i.i
   %.sroa.3.0.in.i = shl i64 %.sroa.3.0.in.in.i, 48
   %i.ab = ashr i64 %.sroa.3.0.in.i, 56
-  %i.ac = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %i.b, i8 noundef signext %.sroa.4.8.extract.trunc.i.i, i64 noundef %i.ab, i64 noundef %9, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
+  %i.ac = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %i.b, i8 noundef signext %.sroa.4.8.extract.trunc.i.i, i64 noundef %i.ab, i64 noundef %i.aa, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #20 ; 2 uses
   %.fca.1.extract.i.i.i.i = extractvalue { i64, i64 } %i.ac, 1 ; 2 uses
   %.sroa.2.8.insert.insert.i.i.i.i.i = and i64 %.fca.1.extract.i.i.i.i, 65535 ; 2 uses
   %i.ad = extractvalue { i64, i64 } %i.ac, 0      ; 2 uses

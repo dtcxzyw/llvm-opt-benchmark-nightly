@@ -204,7 +204,7 @@ _ZN4abslL19PrepareAppendRegionEPNS_13cord_internal7CordRepEPPcPmm.exit.thread: ;
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.cr, ptr align 1 %2, i64 %.sroa.speculated62, i1 false)
   %i.cs = add i64 %.sroa.speculated62, %i.bm
   store i64 %i.cs, ptr %i.bx, align 8
-  %i.ct = sub i64 %1, %.sroa.speculated62         ; 2 uses
+  %i.ct = sub nuw i64 %1, %.sroa.speculated62     ; 2 uses
   %i.cu = icmp eq i64 %i.ct, 0
   br i1 %i.cu, label %.thread112, label %bb.ae
 
@@ -607,7 +607,7 @@ bb.u:                                             ; preds = %_ZN4absl13cord_inte
   ]
 
 bb.v:                                             ; preds = %bb.u
-  %i.bg = sub i64 %i.ay, %1
+  %i.bg = sub nuw i64 %i.ay, %1
   %i.bh = tail call noundef ptr @_ZN4absl13cord_internal12CordRepBtree7SubTreeEmm(ptr noundef nonnull align 8 dereferenceable(64) %.0.i37, i64 noundef %1, i64 noundef %i.bg) #21 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.0.i37, i64 8
   %i.bj = atomicrmw sub ptr %i.bi, i32 2 acq_rel, align 4 ; 3 uses
@@ -1010,7 +1010,7 @@ _ZNK4absl4Cord9InlineRep11inline_sizeEv.exit.i.i: ; preds = %bb.a
 _ZNK4absl4Cord4sizeEv.exit:                       ; preds = %_ZNK4absl4Cord9InlineRep7as_treeEv.exit.i.i, %_ZNK4absl4Cord9InlineRep11inline_sizeEv.exit.i.i
   %i.h = phi i64 [ %i.e, %_ZNK4absl4Cord9InlineRep7as_treeEv.exit.i.i ], [ %i.g, %_ZNK4absl4Cord9InlineRep11inline_sizeEv.exit.i.i ] ; 2 uses
   %spec.select = tail call i64 @llvm.umin.i64(i64 %2, i64 %i.h) ; 14 uses
-  %i.i = sub i64 %i.h, %spec.select
+  %i.i = sub nuw i64 %i.h, %spec.select
   %.035 = tail call i64 @llvm.umin.i64(i64 %3, i64 %i.i) ; 20 uses
   %i.j = icmp eq i64 %.035, 0
   br i1 %i.j, label %_ZN4absl4Cord9InlineRep8set_dataEPKcm.exit, label %bb.b
@@ -1138,7 +1138,7 @@ _ZN4absl4Cord13ChunkIterator17RemoveChunkPrefixEm.exit.i: ; preds = %bb.o
   store ptr %i.az, ptr %i.ax, align 8
   %i.ba = sub nuw i64 %i.av, %spec.select
   store i64 %i.ba, ptr %4, align 8
-  %i.bb = sub i64 %i.au, %spec.select             ; 2 uses
+  %i.bb = sub nuw i64 %i.au, %spec.select         ; 2 uses
   store i64 %i.bb, ptr %i.ar, align 8
   br label %_ZN4absl4Cord13ChunkIterator12AdvanceBytesEm.exit
 
@@ -1185,9 +1185,9 @@ _ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph:     ; preds = %_ZN4absl4Cord13Chun
   unreachable
 
 _ZNK4absl4Cord13ChunkIteratorptEv.exit:           ; preds = %_ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph, %_ZN4absl4Cord13ChunkIteratorppEv.exit
-  %i.bm = phi i64 [ %.pre92, %_ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph ], [ %i.cw, %_ZN4absl4Cord13ChunkIteratorppEv.exit ] ; 17 uses
+  %i.bm = phi i64 [ %.pre92, %_ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph ], [ %i.cw, %_ZN4absl4Cord13ChunkIteratorppEv.exit ] ; 16 uses
   %i.bn = phi i64 [ %i.bi, %_ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph ], [ %i.cv, %_ZN4absl4Cord13ChunkIteratorppEv.exit ] ; 3 uses
-  %.081 = phi i64 [ %.035, %_ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph ], [ %i.cj, %_ZN4absl4Cord13ChunkIteratorppEv.exit ] ; 12 uses
+  %.081 = phi i64 [ %.035, %_ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph ], [ %i.cj, %_ZN4absl4Cord13ChunkIteratorppEv.exit ] ; 11 uses
   %.03280 = phi ptr [ %i.aq, %_ZNK4absl4Cord13ChunkIteratorptEv.exit.lr.ph ], [ %i.ck, %_ZN4absl4Cord13ChunkIteratorppEv.exit ] ; 15 uses
   %i.bo = icmp ugt i64 %.081, %i.bm
   %i.bp = load ptr, ptr %i.bj, align 8            ; 14 uses
@@ -1195,17 +1195,9 @@ _ZNK4absl4Cord13ChunkIteratorptEv.exit:           ; preds = %_ZNK4absl4Cord13Chu
 
 _ZNK4absl4Cord13ChunkIteratorptEv.exit47:         ; preds = %_ZNK4absl4Cord13ChunkIteratorptEv.exit
   %i.bq = icmp ugt i64 %i.bm, 7
-  br i1 %i.bq, label %5, label %bb.t
+  br i1 %i.bq, label %bb.s, label %bb.t
 
-5:                                                ; preds = %_ZNK4absl4Cord13ChunkIteratorptEv.exit47
-  %6 = icmp ult i64 %i.bm, 16
-  br i1 %6, label %bb.s, label %7
-
-7:                                                ; preds = %5
-  call void @__assert_fail(ptr noundef nonnull @.str.69, ptr noundef nonnull @.str.68, i32 noundef 97, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl13cord_internal12SmallMemmoveILb0EEEvPcPKcm) #20
-  unreachable
-
-bb.s:                                             ; preds = %5
+bb.s:                                             ; preds = %_ZNK4absl4Cord13ChunkIteratorptEv.exit47
   %.0.copyload6.i = load i64, ptr %i.bp, align 1
   %i.br = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bm
   %i.bs = getelementptr inbounds i8, ptr %i.br, i64 -8
@@ -1251,7 +1243,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.s
-  %i.cj = sub i64 %.081, %i.bm
+  %i.cj = sub nuw nsw i64 %.081, %i.bm
   %i.ck = getelementptr inbounds nuw i8, ptr %.03280, i64 %i.bm
   %.not2.i = icmp ult i64 %i.bn, %i.bm
   br i1 %.not2.i, label %bb.y, label %bb.z
@@ -1307,17 +1299,9 @@ _ZN4absl4Cord13ChunkIteratorppEv.exit:            ; preds = %bb.ab, %bb.ad
 
 _ZNK4absl4Cord13ChunkIteratorptEv.exit58:         ; preds = %_ZNK4absl4Cord13ChunkIteratorptEv.exit
   %i.cx = icmp ugt i64 %.081, 7
-  br i1 %i.cx, label %8, label %bb.af
+  br i1 %i.cx, label %bb.ae, label %bb.af
 
-8:                                                ; preds = %_ZNK4absl4Cord13ChunkIteratorptEv.exit58
-  %9 = icmp ult i64 %.081, 16
-  br i1 %9, label %bb.ae, label %10
-
-10:                                               ; preds = %8
-  call void @__assert_fail(ptr noundef nonnull @.str.69, ptr noundef nonnull @.str.68, i32 noundef 97, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4absl13cord_internal12SmallMemmoveILb0EEEvPcPKcm) #20
-  unreachable
-
-bb.ae:                                            ; preds = %8
+bb.ae:                                            ; preds = %_ZNK4absl4Cord13ChunkIteratorptEv.exit58
   %.0.copyload6.i62 = load i64, ptr %i.bp, align 1
   %i.cy = getelementptr inbounds nuw i8, ptr %i.bp, i64 %.081
   %i.cz = getelementptr inbounds i8, ptr %i.cy, i64 -8
@@ -1720,7 +1704,7 @@ _ZN4absl4Cord13ChunkIterator17RemoveChunkPrefixEm.exit.i.i13: ; preds = %bb.k
   store ptr %i.y, ptr %.sroa.2.0..sroa_idx.i.i, align 8
   %i.z = sub nuw i64 %.sroa.0.0.copyload.i.i, %i.q
   store i64 %i.z, ptr %2, align 8
-  %i.aa = sub i64 %i.j, %i.q                      ; 2 uses
+  %i.aa = sub nuw i64 %i.j, %i.q                  ; 2 uses
   store i64 %i.aa, ptr %i.b, align 8
   br label %_ZN4absl4Cord7AdvanceEPNS0_12CharIteratorEm.exit14
 
@@ -1787,7 +1771,7 @@ _ZN4absl10StartsWithESt17basic_string_viewIcSt11char_traitsIcEES3_.exit.i.i: ; p
 
 bb.r:                                             ; preds = %_ZN4absl10StartsWithESt17basic_string_viewIcSt11char_traitsIcEES3_.exit.i.i
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i, i64 %.sroa.speculated.i
-  %i.ao = sub i64 %.sroa.018.0.i, %.sroa.speculated.i ; 2 uses
+  %i.ao = sub nuw i64 %.sroa.018.0.i, %.sroa.speculated.i ; 2 uses
   %i.ap = icmp eq i64 %i.ao, 0
   br i1 %i.ap, label %_ZN4absl4Cord7AdvanceEPNS0_12CharIteratorEm.exit, label %bb.s
 
@@ -1808,7 +1792,7 @@ _ZN4absl4Cord13ChunkIterator17RemoveChunkPrefixEm.exit.i.i.i: ; preds = %bb.u
   store ptr %i.ar, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8
   %i.as = sub nuw i64 %i.ak, %.sroa.speculated.i  ; 2 uses
   store i64 %i.as, ptr %5, align 8
-  %i.at = sub i64 %i.aj, %.sroa.speculated.i      ; 2 uses
+  %i.at = sub nuw i64 %i.aj, %.sroa.speculated.i  ; 2 uses
   store i64 %i.at, ptr %i.f, align 8
   br label %_ZN4absl4Cord7AdvanceEPNS0_12CharIteratorEm.exit.i
 
@@ -2211,7 +2195,7 @@ _ZN4absl4Cord13ChunkIterator17RemoveChunkPrefixEm.exit.i.i: ; preds = %bb.ag
   store ptr %i.da, ptr %i.ci, align 8
   %i.db = sub nuw i64 %i.cx, %.sroa.0.0.copyload.i.i
   store i64 %i.db, ptr %8, align 8
-  %i.dc = sub i64 %i.cw, %.sroa.0.0.copyload.i.i
+  %i.dc = sub nuw i64 %i.cw, %.sroa.0.0.copyload.i.i
   store i64 %i.dc, ptr %i.cf, align 8
   br label %_ZN4absl4Cord7AdvanceEPNS0_12CharIteratorEm.exit
 
@@ -2258,7 +2242,7 @@ _ZN4absl4Cord13ChunkIterator17RemoveChunkPrefixEm.exit.i.i56: ; preds = %bb.al
   store ptr %i.dm, ptr %.sroa.4.0..sroa_idx.i.i.i45, align 8
   %i.dn = sub nuw i64 %i.dj, %.sroa.0.0.copyload.i.i
   store i64 %i.dn, ptr %9, align 8
-  %i.do = sub i64 %i.di, %.sroa.0.0.copyload.i.i
+  %i.do = sub nuw i64 %i.di, %.sroa.0.0.copyload.i.i
   store i64 %i.do, ptr %i.cc, align 8
   br label %_ZN4absl4Cord7AdvanceEPNS0_12CharIteratorEm.exit57
 
@@ -2508,7 +2492,7 @@ _ZN4absl4Cord13ChunkIterator17RemoveChunkPrefixEm.exit.i.i: ; preds = %bb.h
   store ptr %i.n, ptr %.sroa.2.0..sroa_idx.i.i, align 8
   %i.o = sub nuw i64 %.sroa.0.0.copyload.i.i, %.sroa.0.0.copyload.i.i9
   store i64 %i.o, ptr %0, align 8
-  %i.p = sub i64 %i.i, %.sroa.0.0.copyload.i.i9
+  %i.p = sub nuw i64 %i.i, %.sroa.0.0.copyload.i.i9
   store i64 %i.p, ptr %i.c, align 8
   br label %_ZN4absl4Cord7AdvanceEPNS0_12CharIteratorEm.exit
 
@@ -2553,7 +2537,7 @@ _ZN4absl4Cord13ChunkIterator17RemoveChunkPrefixEm.exit.i.i24: ; preds = %bb.l
   store ptr %i.z, ptr %.sroa.2.0..sroa_idx.i.i10, align 8
   %i.aa = sub nuw i64 %i.w, %.sroa.speculated
   store i64 %i.aa, ptr %1, align 8
-  %i.ab = sub i64 %i.v, %.sroa.speculated         ; 2 uses
+  %i.ab = sub nuw i64 %i.v, %.sroa.speculated     ; 2 uses
   store i64 %i.ab, ptr %i.a, align 8
   br label %_ZN4absl4Cord7AdvanceEPNS0_12CharIteratorEm.exit25
 
@@ -2956,7 +2940,7 @@ bb.ab:                                            ; preds = %_ZStplRKSt15_Deque_
   %i.fs = load ptr, ptr %i.fr, align 8            ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.fu = load ptr, ptr %i.ft, align 8            ; 3 uses
-  %i.fv = sub nsw i64 %4, %i.ab                   ; 2 uses
+  %i.fv = sub nuw nsw i64 %4, %i.ab               ; 2 uses
   %i.fw = ptrtoint ptr %i.fo to i64
   %i.fx = ptrtoint ptr %i.fq to i64
   %i.fy = sub i64 %i.fw, %i.fx
@@ -2970,7 +2954,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.gc, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.gd = getelementptr inbounds [16 x i8], ptr %i.fo, i64 %i.fv
+  %i.gd = getelementptr inbounds nuw [16 x i8], ptr %i.fo, i64 %i.fv
   br label %_ZSt9__advanceISt15_Deque_iteratorIN4absl12crc_internal12CrcCordState9PrefixCrcERKS4_PS5_ElEvRT_T0_St26random_access_iterator_tag.exit
 
 bb.ae:                                            ; preds = %bb.ac
@@ -2992,10 +2976,10 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br label %_ZSt9__advanceISt15_Deque_iteratorIN4absl12crc_internal12CrcCordState9PrefixCrcERKS4_PS5_ElEvRT_T0_St26random_access_iterator_tag.exit
 
 _ZSt9__advanceISt15_Deque_iteratorIN4absl12crc_internal12CrcCordState9PrefixCrcERKS4_PS5_ElEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.ad, %bb.ag
-  %.sroa.0248.0 = phi ptr [ %i.gd, %bb.ad ], [ %i.gm, %bb.ag ] ; 3 uses
-  %.sroa.9252.2 = phi ptr [ %i.fq, %bb.ad ], [ %i.gi, %bb.ag ]
-  %.sroa.16255.2 = phi ptr [ %i.fs, %bb.ad ], [ %i.gj, %bb.ag ]
-  %.sroa.23258.2 = phi ptr [ %i.fu, %bb.ad ], [ %i.gh, %bb.ag ]
+  %.sroa.0248.0 = phi ptr [ %i.gm, %bb.ag ], [ %i.gd, %bb.ad ] ; 3 uses
+  %.sroa.9252.2 = phi ptr [ %i.gi, %bb.ag ], [ %i.fq, %bb.ad ]
+  %.sroa.16255.2 = phi ptr [ %i.gj, %bb.ag ], [ %i.fs, %bb.ad ]
+  %.sroa.23258.2 = phi ptr [ %i.gh, %bb.ag ], [ %i.fu, %bb.ad ]
   %i.gn = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.go = icmp eq ptr %i.gn, %storemerge.i.i
   br i1 %i.go, label %_ZSt22__uninitialized_move_aISt15_Deque_iteratorIN4absl12crc_internal12CrcCordState9PrefixCrcERS4_PS4_ES7_SaIS4_EET0_T_SA_S9_RT1_.exit.i, label %.lr.ph.i.i.i.i.i.i.preheader
@@ -3398,7 +3382,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.13.0, i64 %3
-  %i.n = sub i64 %.sroa.0.0, %3
+  %i.n = sub nuw i64 %.sroa.0.0, %3
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %3
   %i.p = sub nuw i64 %1, %3
   %i.q = sub i64 %4, %3
@@ -3498,9 +3482,9 @@ bb.u:                                             ; preds = %bb.s
 _ZN4absl12_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES5_Pm.exit: ; preds = %bb.u
   %i.ak = sub nuw i64 %.0, %.sroa.speculated.i    ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.13.2.ph, i64 %.sroa.speculated.i
-  %i.am = sub i64 %.sroa.0.2.ph, %.sroa.speculated.i
+  %i.am = sub nuw i64 %.sroa.0.2.ph, %.sroa.speculated.i
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.9.0, i64 %.sroa.speculated.i
-  %i.ao = sub i64 %.sroa.030.0, %.sroa.speculated.i
+  %i.ao = sub nuw i64 %.sroa.030.0, %.sroa.speculated.i
   %.not53 = icmp eq i64 %i.ak, 0
   br i1 %.not53, label %_ZN4absl12_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES5_Pm.exit.thread, label %bb.k, !llvm.loop !403
 
@@ -3903,7 +3887,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.1365.0, i64 %2
-  %i.x = sub i64 %.sroa.059.0, %2
+  %i.x = sub nuw i64 %.sroa.059.0, %2
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.13.0, i64 %2
   %i.z = sub nuw i64 %.sroa.0.0, %2
   %i.aa = sub i64 %3, %2
@@ -4063,9 +4047,9 @@ bb.af:                                            ; preds = %_ZNK4absl4Cord13Chu
 _ZN4absl12_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES5_Pm.exit: ; preds = %bb.af
   %i.bi = sub nuw i64 %.0, %.sroa.speculated.i    ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.1365.2.ph, i64 %.sroa.speculated.i
-  %i.bk = sub i64 %.sroa.059.2.ph, %.sroa.speculated.i
+  %i.bk = sub nuw i64 %.sroa.059.2.ph, %.sroa.speculated.i
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.13.2.ph, i64 %.sroa.speculated.i
-  %i.bm = sub i64 %.sroa.0.3.ph, %.sroa.speculated.i
+  %i.bm = sub nuw i64 %.sroa.0.3.ph, %.sroa.speculated.i
   %.not94 = icmp eq i64 %i.bi, 0
   br i1 %.not94, label %_ZN4absl12_GLOBAL__N_113CompareChunksEPSt17basic_string_viewIcSt11char_traitsIcEES5_Pm.exit.thread, label %bb.p, !llvm.loop !411
 

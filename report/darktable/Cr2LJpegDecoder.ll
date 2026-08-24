@@ -205,15 +205,13 @@ _ZNSt15__new_allocatorIN8rawspeed15Cr2DecompressorINS0_20PrefixCodeLUTDecoderINS
   call void @llvm.assume(i1 %i.ht)
   %i.hu = icmp sgt i32 %i.hs, -1
   call void @llvm.assume(i1 %i.hu)
-  %8 = sub i32 %i.hs, %i.hq                       ; 2 uses
-  %9 = zext i32 %i.hq to i64
+  %8 = zext i32 %i.hq to i64
+  %9 = sub nuw i32 %i.hs, %i.hq
   %i.hv = load ptr, ptr %i.ho, align 8, !tbaa !192
-  %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 %9
-  %10 = icmp sgt i32 %8, -1
-  call void @llvm.assume(i1 %10)
+  %i.hw = getelementptr inbounds nuw i8, ptr %i.hv, i64 %8
   store ptr %i.hw, ptr %7, align 8
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i32 %8, ptr %.sroa.22.0..sroa_idx, align 8
+  store i32 %9, ptr %.sroa.22.0..sroa_idx, align 8
   invoke void @_ZN8rawspeed15Cr2DecompressorINS_20PrefixCodeLUTDecoderINS_15BaselineCodeTagENS_23PrefixCodeLookupDecoderIS2_EEEEEC1ENS_8RawImageESt5tupleIJiiiEENS_8iPoint2DENS_14Cr2SliceWidthsESt6vectorINS6_18PerComponentRecipeESaISD_EENS_10Array1DRefIKhEE(ptr noundef nonnull align 8 dereferenceable(96) %3, ptr noundef nonnull align 8 %4, ptr noundef nonnull align 4 dead_on_return %5, i64 %i.gw, i64 %.sroa.07.0.copyload, i32 %.sroa.28.0.copyload, ptr noundef nonnull align 8 %6, ptr noundef nonnull byval(%"class.rawspeed::Array1DRef.82") align 8 %7)
           to label %bb.av unwind label %bb.br
 

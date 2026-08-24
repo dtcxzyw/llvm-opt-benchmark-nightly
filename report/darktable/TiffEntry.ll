@@ -202,23 +202,21 @@ _ZNK8rawspeed10ByteStream10peekBufferEj.exit:     ; preds = %bb.a
   tail call void @llvm.assume(i1 %i.h)
   %i.i = icmp sgt i32 %i.e, -1
   tail call void @llvm.assume(i1 %i.i)
-  %i.j = sub i32 %i.e, %i.g                       ; 2 uses
-  %i.k = zext i32 %i.g to i64
-  %i.l = zext nneg i32 %i.j to i64                ; 3 uses
+  %i.j = sub nuw i32 %i.e, %i.g
+  %i.k = zext nneg i32 %i.j to i64                ; 3 uses
+  %i.l = zext i32 %i.g to i64
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !24
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.k ; 7 uses
-  %2 = icmp sgt i32 %i.j, -1
-  tail call void @llvm.assume(i1 %2)
-  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.l ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l ; 7 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.k ; 2 uses
   %i.q = ptrtoint ptr %i.p to i64
   %i.r = ptrtoint ptr %i.o to i64                 ; 2 uses
-  %i.s = lshr i64 %i.l, 2                         ; 2 uses
+  %i.s = lshr i64 %i.k, 2                         ; 2 uses
   %.not = icmp eq i64 %i.s, 0
   br i1 %.not, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNK8rawspeed10ByteStream10peekBufferEj.exit
-  %i.t = and i64 %i.l, 2147483644
+  %i.t = and i64 %i.k, 2147483644
   %scevgep.i.i.i = getelementptr i8, ptr %i.o, i64 %i.t ; 2 uses
   br label %bb.c
 

@@ -199,7 +199,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.s, label %pskb_may_pull_reason.exit, label %bb.f, !prof !10
 
 bb.f:                                             ; preds = %bb.e
-  %i.t = sub nsw i32 %i.r, %.pre-phi
+  %i.t = sub nuw nsw i32 %i.r, %.pre-phi
   %i.u = tail call ptr @__pskb_pull_tail(ptr noundef %0, i32 noundef %i.t) #9
   %.not9.i21 = icmp eq ptr %i.u, null
   br i1 %.not9.i21, label %pskb_may_pull_reason.exit, label %._crit_edge41, !prof !10
@@ -596,7 +596,7 @@ bb.af:                                            ; preds = %.lr.ph.us
   %.167.us = phi ptr [ %i.et, %ip6_tlvopt_unknown.exit.us ], [ %.066172.us, %.preheader.us ], [ %.066172.us, %bb.af ]
   %.161.us = phi i32 [ %i.ap, %ip6_tlvopt_unknown.exit.us ], [ %.060176.us, %.preheader.us ], [ %.060176.us, %bb.af ]
   %.1.us = phi i32 [ 0, %ip6_tlvopt_unknown.exit.us ], [ %i.eu, %.preheader.us ], [ %i.eu, %bb.af ]
-  %i.fb = sub nsw i32 %.069171.us, %i.am
+  %i.fb = sub nuw nsw i32 %.069171.us, %i.am
   br label %bb.ai
 
 bb.ag:                                            ; preds = %.split.us
@@ -611,14 +611,14 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah, %.loopexit.us
   %.val12.i.us274 = phi ptr [ %.val12.i.us275, %.loopexit.us ], [ %.val7.i.us, %bb.ah ]
   %.val.i97.us271 = phi i16 [ %.val.i97.us272, %.loopexit.us ], [ %.val.i99.us, %bb.ah ]
-  %.170.us = phi i32 [ %i.fb, %.loopexit.us ], [ %i.fe, %bb.ah ] ; 3 uses
+  %.170.us = phi i32 [ %i.fb, %.loopexit.us ], [ %i.fe, %bb.ah ] ; 2 uses
   %.268.us = phi ptr [ %.167.us, %.loopexit.us ], [ %.066172.us, %bb.ah ]
   %.pn.us = phi i32 [ %i.am, %.loopexit.us ], [ 1, %bb.ah ]
   %.262.us = phi i32 [ %.161.us, %.loopexit.us ], [ %.060176.us, %bb.ah ]
   %.2.us = phi i32 [ %.1.us, %.loopexit.us ], [ %i.fd, %bb.ah ]
   %.165.us = add i32 %.pn.us, %.064173.us
   %i.ff = icmp sgt i32 %.170.us, 0
-  br i1 %i.ff, label %.split.us, label %.split193.us
+  br i1 %i.ff, label %.split.us, label %.thread
 
 .preheader.us:                                    ; preds = %bb.ae
   %.not221 = icmp eq i8 %i.ak, 0
@@ -701,12 +701,12 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar, !llvm.loop !14
 
 bb.ar:                                            ; preds = %bb.aq, %.loopexit.us212
-  %.170.us205 = phi i32 [ %i.gh, %.loopexit.us212 ], [ %i.gf, %bb.aq ] ; 3 uses
+  %.170.us205 = phi i32 [ %i.gh, %.loopexit.us212 ], [ %i.gf, %bb.aq ] ; 2 uses
   %.pn.us207 = phi i32 [ %i.fs, %.loopexit.us212 ], [ 1, %bb.aq ]
   %.2.us209 = phi i32 [ %i.fw, %.loopexit.us212 ], [ %i.ge, %bb.aq ]
   %.165.us210 = add i32 %.pn.us207, %.064173.us197
   %i.gg = icmp sgt i32 %.170.us205, 0
-  br i1 %i.gg, label %.split.split.us, label %.split193.us
+  br i1 %i.gg, label %.split.split.us, label %.thread
 
 .preheader.us211:                                 ; preds = %bb.an
   %.not220 = icmp eq i8 %i.fq, 0
@@ -717,7 +717,7 @@ bb.ar:                                            ; preds = %bb.aq, %.loopexit.u
   br label %.lr.ph.us213
 
 .loopexit.us212:                                  ; preds = %bb.ao, %.preheader.us211
-  %i.gh = sub nsw i32 %.069171.us199, %i.fs
+  %i.gh = sub nuw nsw i32 %.069171.us199, %i.fs
   br label %bb.ar
 
 .split.split:                                     ; preds = %.split.split.preheader, %bb.bc
@@ -862,29 +862,24 @@ bb.bb:                                            ; preds = %bb.ba
 .loopexit:                                        ; preds = %bb.ay, %bb.ba, %.preheader
   %.161 = phi i32 [ %i.hf, %bb.ba ], [ %.060176, %.preheader ], [ %.060176, %bb.ay ]
   %.1 = phi i32 [ 0, %bb.ba ], [ %i.gy, %.preheader ], [ %i.gy, %bb.ay ]
-  %i.hr = sub nsw i32 %.069171, %i.gv
+  %i.hr = sub nuw nsw i32 %.069171, %i.gv
   br label %bb.bc
 
 bb.bc:                                            ; preds = %.loopexit, %bb.at
-  %.170 = phi i32 [ %i.hr, %.loopexit ], [ %i.go, %bb.at ] ; 3 uses
+  %.170 = phi i32 [ %i.hr, %.loopexit ], [ %i.go, %bb.at ] ; 2 uses
   %.pn = phi i32 [ %i.gv, %.loopexit ], [ 1, %bb.at ]
   %.262 = phi i32 [ %.161, %.loopexit ], [ %.060176, %bb.at ]
   %.2 = phi i32 [ %.1, %.loopexit ], [ %i.gn, %bb.at ]
   %.165 = add i32 %.pn, %.064173
   %i.hs = icmp sgt i32 %.170, 0
-  br i1 %i.hs, label %.split.split, label %.split193.us
+  br i1 %i.hs, label %.split.split, label %.thread
 
-.split193.us:                                     ; preds = %bb.bc, %bb.ar, %bb.ai
-  %.us-phi194 = phi i32 [ %.170.us, %bb.ai ], [ %.170.us205, %bb.ar ], [ %.170, %bb.bc ]
-  %3 = icmp eq i32 %.us-phi194, 0
-  br i1 %3, label %.thread, label %.thread119
-
-.thread119:                                       ; preds = %bb.ax, %bb.av, %bb.au, %bb.as, %bb.az, %.lr.ph, %bb.aj, %bb.ak, %bb.an, %bb.ap, %.lr.ph.us213, %bb.ag, %bb.ae, %bb.f, %bb.d, %bb.c, %.lr.ph.us, %bb.am, %.split193.us
+.thread119:                                       ; preds = %bb.ax, %bb.av, %bb.au, %bb.as, %bb.az, %.lr.ph, %bb.aj, %bb.ak, %bb.an, %bb.ap, %.lr.ph.us213, %bb.ag, %bb.ae, %bb.f, %bb.d, %bb.c, %.lr.ph.us, %bb.am
   tail call void @sk_skb_reason_drop(ptr noundef null, ptr noundef %1, i32 noundef 15) #9
   br label %.thread
 
-.thread:                                          ; preds = %.loopexit128, %.loopexit127, %.loopexit130, %.loopexit129, %.split184.us, %.split181.us, %.split179.us, %ipv6_hop_ioam.exit, %ipv6_hop_ra.exit, %ipv6_hop_calipso.exit, %.split193.us, %.thread119
-  %.274 = phi i1 [ true, %.split193.us ], [ false, %.thread119 ], [ false, %ipv6_hop_calipso.exit ], [ false, %ipv6_hop_ra.exit ], [ false, %ipv6_hop_ioam.exit ], [ false, %.split179.us ], [ false, %.split181.us ], [ false, %.split184.us ], [ false, %.loopexit129 ], [ false, %.loopexit130 ], [ false, %.loopexit127 ], [ false, %.loopexit128 ]
+.thread:                                          ; preds = %bb.bc, %bb.ar, %bb.ai, %.loopexit128, %.loopexit127, %.loopexit130, %.loopexit129, %.split184.us, %.split181.us, %.split179.us, %ipv6_hop_ioam.exit, %ipv6_hop_ra.exit, %ipv6_hop_calipso.exit, %.thread119
+  %.274 = phi i1 [ false, %.loopexit128 ], [ false, %.thread119 ], [ false, %ipv6_hop_calipso.exit ], [ false, %ipv6_hop_ra.exit ], [ false, %ipv6_hop_ioam.exit ], [ false, %.split179.us ], [ false, %.split181.us ], [ false, %.split184.us ], [ false, %.loopexit129 ], [ false, %.loopexit130 ], [ false, %.loopexit127 ], [ true, %bb.ai ], [ true, %bb.ar ], [ true, %bb.bc ]
   ret i1 %.274
 }
 
@@ -1287,7 +1282,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.z, label %pskb_may_pull_reason.exit, label %bb.e, !prof !10
 
 bb.e:                                             ; preds = %bb.d
-  %i.aa = sub i32 %i.v, %i.y
+  %i.aa = sub nuw i32 %i.v, %i.y
   %i.ab = tail call ptr @__pskb_pull_tail(ptr noundef %0, i32 noundef %i.aa) #9
   %.not9.i = icmp eq ptr %i.ab, null
   br i1 %.not9.i, label %pskb_may_pull_reason.exit, label %._crit_edge, !prof !10
@@ -1328,7 +1323,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.am, label %pskb_may_pull_reason.exit, label %bb.h, !prof !10
 
 bb.h:                                             ; preds = %bb.g
-  %i.an = sub i32 %i.al, %.pre-phi102
+  %i.an = sub nuw i32 %i.al, %.pre-phi102
   %i.ao = tail call ptr @__pskb_pull_tail(ptr noundef %0, i32 noundef %i.an) #9
   %.not9.i62 = icmp eq ptr %i.ao, null
   br i1 %.not9.i62, label %pskb_may_pull_reason.exit, label %._crit_edge95, !prof !10
@@ -1731,7 +1726,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.w, label %pskb_may_pull_reason.exit, label %bb.c, !prof !10
 
 bb.c:                                             ; preds = %bb.b
-  %i.x = sub i32 %i.s, %i.v
+  %i.x = sub nuw i32 %i.s, %i.v
   %i.y = tail call ptr @__pskb_pull_tail(ptr noundef %0, i32 noundef %i.x) #9
   %.not9.i = icmp eq ptr %i.y, null
   br i1 %.not9.i, label %pskb_may_pull_reason.exit, label %._crit_edge, !prof !10
@@ -1772,7 +1767,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aj, label %pskb_may_pull_reason.exit, label %bb.f, !prof !10
 
 bb.f:                                             ; preds = %bb.e
-  %i.ak = sub i32 %i.ai, %.pre-phi76
+  %i.ak = sub nuw i32 %i.ai, %.pre-phi76
   %i.al = tail call ptr @__pskb_pull_tail(ptr noundef %0, i32 noundef %i.ak) #9
   %.not9.i38 = icmp eq ptr %i.al, null
   br i1 %.not9.i38, label %pskb_may_pull_reason.exit, label %._crit_edge66, !prof !10

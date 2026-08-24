@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1                       ; 2 uses
   %i.g = load i64, ptr %0, align 8, !alias.scope !84, !noalias !93, !noundef !4 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !84, !noalias !93, !noundef !4 ; 2 uses
@@ -225,8 +225,7 @@ bb.d:                                             ; preds = %bb.c
   %i.w = tail call noundef i64 @llvm.fshl.i64(i64 %i.s, i64 %i.s, i64 45) ; 3 uses
   store i64 %i.w, ptr %i.h, align 8, !alias.scope !84, !noalias !93
   %i.x = lshr i64 %i.l, 32
-  %4 = and i64 %i.f, 4294967295                   ; 2 uses
-  %i.y = mul nuw i64 %i.x, %4                     ; 2 uses
+  %i.y = mul nuw i64 %i.x, %i.f                   ; 2 uses
   %i.z = lshr i64 %i.y, 32                        ; 2 uses
   %i.aa = trunc i64 %i.y to i32                   ; 2 uses
   %i.ab = sub i32 %i.c, %i.d
@@ -249,7 +248,7 @@ bb.e:                                             ; preds = %bb.d
   %i.am = tail call noundef i64 @llvm.fshl.i64(i64 %i.ai, i64 %i.ai, i64 45)
   store i64 %i.am, ptr %i.h, align 8, !alias.scope !96, !noalias !93
   %i.an = lshr i64 %i.af, 32
-  %i.ao = mul nuw i64 %i.an, %4
+  %i.ao = mul nuw i64 %i.an, %i.f
   %i.ap = lshr i64 %i.ao, 32
   %i.aq = trunc nuw i64 %i.ap to i32
   %i.ar = xor i32 %i.aa, -1

@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit.thread
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a, %bb.b
-  %.0710.i.i = phi i64 [ %i.d, %bb.b ], [ %1, %bb.a ] ; 11 uses
+  %.0710.i.i = phi i64 [ %i.d, %bb.b ], [ %1, %bb.a ] ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.0.val, i64 %.0710.i.i
   %i.c = load i8, ptr %i.b, align 1, !tbaa !222
   switch i8 %i.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm.exit [
@@ -262,11 +262,10 @@ bb.c:                                             ; preds = %.critedge
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %.critedge
-  %2 = sub i64 %.0.lcssa, %.0710.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.q, ptr %0, align 8, !tbaa !220, !alias.scope !1131
-  %3 = sub nuw i64 %.8.val, %.0710.i.i
-  %spec.select.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 %3) ; 8 uses
+  %2 = tail call i64 @llvm.umin.i64(i64 %.0.lcssa, i64 %.8.val)
+  %spec.select.i.i.i = sub nuw i64 %2, %.0710.i.i ; 8 uses
   %i.r = icmp ugt i64 %spec.select.i.i.i, 15
   br i1 %i.r, label %bb.d, label %._crit_edge.i.i.i
 

@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
   %spec.select = select i1 %.not36, i64 %i.am, i64 %i.aj ; 5 uses
   %i.ao = icmp eq i64 %spec.select, %i.aj         ; 2 uses
   %i.ap = lshr i64 %spec.select, 1                ; 2 uses
-  %i.aq = sub i64 %spec.select, %i.ap
+  %i.aq = sub nuw i64 %spec.select, %i.ap
   %.sink84 = select i1 %i.ao, i64 %i.aj, i64 %i.aq
   %.sink = select i1 %i.ao, i64 0, i64 %i.ap
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 640 ; 2 uses
@@ -608,7 +608,7 @@ _ZNSt8_Rb_treeImSt4pairIKmN6duckdb6vectorImLb1ESaImEEEESt10_Select1stIS6_ESt4les
           to label %bb.gj unwind label %bb.gk
 
 bb.gj:                                            ; preds = %_ZNSt8_Rb_treeImSt4pairIKmN6duckdb6vectorImLb1ESaImEEEESt10_Select1stIS6_ESt4lessImESaIS6_EE5eraseERS1_.exit.i
-  %i.zn = sub i64 %.01791008, %i.wv               ; 2 uses
+  %i.zn = sub nuw i64 %.01791008, %i.wv           ; 2 uses
   %.not207 = icmp eq i64 %i.zn, 0
   br i1 %.not207, label %.thread764, label %.lr.ph1009
 
@@ -932,7 +932,7 @@ bb.ht:                                            ; preds = %bb.hs
   %i.adj = load i64, ptr %i.adg, align 8, !tbaa !33
   %i.adk = add i64 %i.adj, %i.adi
   store i64 %i.adk, ptr %i.adg, align 8, !tbaa !33
-  %i.adl = sub i64 %.01321041, %i.adi
+  %i.adl = sub nuw i64 %.01321041, %i.adi
   %i.adm = load i64, ptr %i.ez, align 8, !tbaa !398
   %i.adn = add i64 %i.adm, %i.adi
   store i64 %i.adn, ptr %i.ez, align 8, !tbaa !398
@@ -1335,7 +1335,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.bk = load i64, ptr %i.al, align 8, !tbaa !352
-  %i.bl = sub i64 %5, %.094346
+  %i.bl = sub nuw i64 %5, %.094346
   %i.bm = call noundef i64 @llvm.umin.i64(i64 %i.bk, i64 %i.bl) ; 3 uses
   br i1 %.not352, label %._crit_edge, label %.lr.ph
 
@@ -1738,7 +1738,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit unwind label %bb.m ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
-  %i.cn = sub i64 %.0114, %i.ax
+  %i.cn = sub nuw i64 %.0114, %i.ax
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #58
   %i.co = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 3 uses
   store ptr %i.co, ptr %10, align 8, !tbaa !178
@@ -1869,7 +1869,7 @@ bb.t:                                             ; preds = %bb.s, %_ZN6duckdb18
 bb.u:                                             ; preds = %bb.t
   %i.ea = sub i64 %.1115, %i.dx                   ; 2 uses
   %i.eb = lshr i64 %i.ea, 1                       ; 2 uses
-  %i.ec = sub i64 %i.ea, %i.eb
+  %i.ec = sub nuw i64 %i.ea, %i.eb
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #58
   %i.ed = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
   store ptr %i.ed, ptr %13, align 8, !tbaa !178
@@ -2034,7 +2034,7 @@ bb.ae:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.af:                                            ; preds = %bb.ae
   %i.fo = lshr i64 %.1115, 1                      ; 2 uses
-  %i.fp = sub i64 %.1115, %i.fo
+  %i.fp = sub nuw i64 %.1115, %i.fo
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #58
   %i.fq = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 3 uses
   store ptr %i.fq, ptr %16, align 8, !tbaa !178
@@ -2437,12 +2437,12 @@ bb.v:                                             ; preds = %bb.r
 
 bb.w:                                             ; preds = %bb.v
   %i.bq = lshr i64 %i.bo, 1                       ; 2 uses
-  %i.br = sub i64 %i.bo, %i.bq
+  %i.br = sub nuw i64 %i.bo, %i.bq
   br label %bb.ad
 
 bb.x:                                             ; preds = %bb.v
   %i.bs = lshr i64 %i.bo, 1                       ; 2 uses
-  %i.bt = sub i64 %i.bo, %i.bs
+  %i.bt = sub nuw i64 %i.bo, %i.bs
   br label %bb.ad
 
 bb.y:                                             ; preds = %bb.v
@@ -2845,7 +2845,7 @@ bb.b:                                             ; preds = %_ZN6duckdb10unique_
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r
   store ptr %i.u, ptr %i.b, align 8, !tbaa !1225
   %i.v = add i64 %i.r, %.026                      ; 2 uses
-  %i.w = sub i64 %.028, %i.r                      ; 2 uses
+  %i.w = sub nuw i64 %.028, %i.r                  ; 2 uses
   %.not34 = icmp eq i64 %i.w, 0
   br i1 %.not34, label %.thread, label %bb.c
 
@@ -3248,7 +3248,7 @@ bb.a:
   %i.c = tail call noundef i64 @llvm.umin.i64(i64 %.0810, i64 4) ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.011, ptr noundef nonnull align 4 dereferenceable(1) %i.a, i64 %i.c, i1 false)
   %i.d = getelementptr inbounds nuw i8, ptr %.011, i64 %i.c
-  %i.e = sub i64 %.0810, %i.c                     ; 2 uses
+  %i.e = sub nuw i64 %.0810, %i.c                 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1455
@@ -3651,7 +3651,7 @@ bb.g:                                             ; preds = %bb.b
   br i1 %.not, label %.lr.ph, label %..loopexit_crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph174.split
-  %i.be = sub i64 %i.ba, %.032173
+  %i.be = sub nuw i64 %i.ba, %.032173
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %bb.z
@@ -4054,7 +4054,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i88
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90
 
 bb.w:                                             ; preds = %.preheader, %bb.x
-  %.257 = phi i64 [ %i.co, %bb.x ], [ %.156, %.preheader ] ; 10 uses
+  %.257 = phi i64 [ %i.co, %bb.x ], [ %.156, %.preheader ] ; 9 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.av, i64 %.257
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !79
   switch i8 %i.ck, label %_ZN6duckdb10StringUtil16CharacterIsSpaceEc.exit91.preheader [
@@ -4141,11 +4141,10 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i97: ; preds = %bb.z
-  %12 = sub i64 %.358.lcssa, %.257
   %i.dc = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 5 uses
   store ptr %i.dc, ptr %8, align 8, !tbaa !178, !alias.scope !3391
-  %13 = sub nuw i64 %i.cm, %.257
-  %spec.select.i.i.i98 = call noundef i64 @llvm.umin.i64(i64 %12, i64 %13) ; 4 uses
+  %12 = call i64 @llvm.umin.i64(i64 %.358.lcssa, i64 %i.cm)
+  %spec.select.i.i.i98 = sub nuw i64 %12, %.257   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #58, !noalias !3391
   store i64 %spec.select.i.i.i98, ptr %i.c, align 8, !tbaa !33, !noalias !3391
   %i.dd = icmp ugt i64 %spec.select.i.i.i98, 15
@@ -4548,7 +4547,7 @@ _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_w
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %i.io = sub nsw i64 %i.cx, %i.fu
+  %i.io = sub nuw nsw i64 %i.cx, %i.fu
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i77, i8 %i.cw, i64 %i.io, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit80
 
@@ -4951,7 +4950,7 @@ _ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10dec_writerEEclIRPcEEvOT_.exit88: ; preds = %_ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78, %.lr.ph.i.i.preheader.i.i.i.i82
   %.08.lcssa.i.i.i.i.i.i84 = phi ptr [ %.0.i.i.i74, %_ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78 ], [ %scevgep.i.i.i.i83, %.lr.ph.i.i.preheader.i.i.i.i82 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  %i.kj = sub nsw i64 %i.dk, %i.gy
+  %i.kj = sub nuw nsw i64 %i.dk, %i.gy
   tail call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i.i84, i8 %i.dj, i64 %i.kj, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit90
 
@@ -5354,7 +5353,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i69, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70, label %bb.m, !llvm.loop !5172
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70: ; preds = %bb.m
-  %i.jb = sub nsw i64 %i.cw, %i.ga
+  %i.jb = sub nuw nsw i64 %i.cw, %i.ga
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.it, i8 %i.cv, i64 %i.jb, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10hex_writerEEclIPcEEvOT_.exit
 
@@ -5757,7 +5756,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5191
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIPcEEvOT_.exit
 
@@ -6160,7 +6159,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5210
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIiNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIPcEEvOT_.exit
 
@@ -6563,7 +6562,7 @@ _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_w
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %i.io = sub nsw i64 %i.cx, %i.fu
+  %i.io = sub nuw nsw i64 %i.cx, %i.fu
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i77, i8 %i.cw, i64 %i.io, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit80
 
@@ -6966,7 +6965,7 @@ _ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10dec_writerEEclIRPcEEvOT_.exit88: ; preds = %_ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78, %.lr.ph.i.i.preheader.i.i.i.i82
   %.08.lcssa.i.i.i.i.i.i84 = phi ptr [ %.0.i.i.i74, %_ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78 ], [ %scevgep.i.i.i.i83, %.lr.ph.i.i.preheader.i.i.i.i82 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  %i.kj = sub nsw i64 %i.dk, %i.gy
+  %i.kj = sub nuw nsw i64 %i.dk, %i.gy
   tail call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i.i84, i8 %i.dj, i64 %i.kj, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit90
 
@@ -7369,7 +7368,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i69, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70, label %bb.m, !llvm.loop !5172
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70: ; preds = %bb.m
-  %i.jb = sub nsw i64 %i.cw, %i.ga
+  %i.jb = sub nuw nsw i64 %i.cw, %i.ga
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.it, i8 %i.cv, i64 %i.jb, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10hex_writerEEclIPcEEvOT_.exit
 
@@ -7772,7 +7771,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5191
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIPcEEvOT_.exit
 
@@ -8175,7 +8174,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5210
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIjNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIPcEEvOT_.exit
 
@@ -8578,7 +8577,7 @@ _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_w
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %i.io = sub nsw i64 %i.cx, %i.fu
+  %i.io = sub nuw nsw i64 %i.cx, %i.fu
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i77, i8 %i.cw, i64 %i.io, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit80
 
@@ -8981,7 +8980,7 @@ _ZN10duckdb_fmt2v68internal14format_decimalImcZNS1_14format_decimalIcPcmEET0_S5_
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10dec_writerEEclIRPcEEvOT_.exit88: ; preds = %_ZN10duckdb_fmt2v68internal14format_decimalImcZNS1_14format_decimalIcPcmEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78, %.lr.ph.i.i.preheader.i.i.i.i82
   %.08.lcssa.i.i.i.i.i.i84 = phi ptr [ %.0.i.i.i74, %_ZN10duckdb_fmt2v68internal14format_decimalImcZNS1_14format_decimalIcPcmEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78 ], [ %scevgep.i.i.i.i83, %.lr.ph.i.i.preheader.i.i.i.i82 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  %i.kd = sub nsw i64 %i.di, %i.gu
+  %i.kd = sub nuw nsw i64 %i.di, %i.gu
   tail call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i.i84, i8 %i.dh, i64 %i.kd, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit90
 
@@ -9384,7 +9383,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i69, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70, label %bb.m, !llvm.loop !5443
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70: ; preds = %bb.m
-  %i.iy = sub nsw i64 %i.cv, %i.fy
+  %i.iy = sub nuw nsw i64 %i.cv, %i.fy
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ir, i8 %i.cu, i64 %i.iy, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10hex_writerEEclIPcEEvOT_.exit
 
@@ -9787,7 +9786,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5462
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIPcEEvOT_.exit
 
@@ -10190,7 +10189,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5481
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIxNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIPcEEvOT_.exit
 
@@ -10593,7 +10592,7 @@ _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_w
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %i.io = sub nsw i64 %i.cx, %i.fu
+  %i.io = sub nuw nsw i64 %i.cx, %i.fu
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i77, i8 %i.cw, i64 %i.io, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit80
 
@@ -10996,7 +10995,7 @@ _ZN10duckdb_fmt2v68internal14format_decimalImcZNS1_14format_decimalIcPcmEET0_S5_
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10dec_writerEEclIRPcEEvOT_.exit88: ; preds = %_ZN10duckdb_fmt2v68internal14format_decimalImcZNS1_14format_decimalIcPcmEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78, %.lr.ph.i.i.preheader.i.i.i.i82
   %.08.lcssa.i.i.i.i.i.i84 = phi ptr [ %.0.i.i.i74, %_ZN10duckdb_fmt2v68internal14format_decimalImcZNS1_14format_decimalIcPcmEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78 ], [ %scevgep.i.i.i.i83, %.lr.ph.i.i.preheader.i.i.i.i82 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  %i.kd = sub nsw i64 %i.di, %i.gu
+  %i.kd = sub nuw nsw i64 %i.di, %i.gu
   tail call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i.i84, i8 %i.dh, i64 %i.kd, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit90
 
@@ -11399,7 +11398,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i69, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70, label %bb.m, !llvm.loop !5443
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70: ; preds = %bb.m
-  %i.iy = sub nsw i64 %i.cv, %i.fy
+  %i.iy = sub nuw nsw i64 %i.cv, %i.fy
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ir, i8 %i.cu, i64 %i.iy, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10hex_writerEEclIPcEEvOT_.exit
 
@@ -11802,7 +11801,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5462
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIPcEEvOT_.exit
 
@@ -12205,7 +12204,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5481
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIyNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIPcEEvOT_.exit
 
@@ -12608,7 +12607,7 @@ _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_w
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %i.il = sub nsw i64 %i.cw, %i.fs
+  %i.il = sub nuw nsw i64 %i.cw, %i.fs
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i84, i8 %i.cv, i64 %i.il, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit87
 
@@ -13011,7 +13010,7 @@ _ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit.i68:          ; preds = %bb.j, %_ZN10duckdb_
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEclIRPcEEvOT_.exit77: ; preds = %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit.i68, %.lr.ph.i.i.preheader.i.i.i.i74
   %.08.lcssa.i.i.i.i.i.i76 = phi ptr [ %.0.i.i.i69, %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit.i68 ], [ %scevgep.i.i.i.i75, %.lr.ph.i.i.preheader.i.i.i.i74 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  %i.hv = sub nsw i64 %i.co, %i.fg
+  %i.hv = sub nuw nsw i64 %i.co, %i.fg
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i.i76, i8 %i.cn, i64 %i.hv, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit79
 
@@ -13414,7 +13413,7 @@ bb.m:                                             ; preds = %bb.m, %_ZNK10duckdb
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10hex_writerclIRPcEEvOT_.exit87: ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.jh = sub nsw i64 %i.cy, %i.ge
+  %i.jh = sub nuw nsw i64 %i.cy, %i.ge
   call void @llvm.memset.p0.i64(ptr align 1 %i.ix, i8 %i.cx, i64 %i.jh, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit62
 
@@ -13717,7 +13716,7 @@ _ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit43:            ; preds = %bb.f, %bb.g
   store ptr %.0.i.i42, ptr %i.b, align 8, !tbaa !32
   call void @_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
   %i.al = load ptr, ptr %i.b, align 8, !tbaa !32
-  %i.am = sub nsw i64 %i.ad, %i.ai
+  %i.am = sub nuw nsw i64 %i.ad, %i.ai
   call void @llvm.memset.p0.i64(ptr align 1 %i.al, i8 %i.ac, i64 %i.am, i1 false)
   br label %bb.h
 
@@ -14120,7 +14119,7 @@ _ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit43:            ; preds = %bb.f, %bb.g
   store ptr %.0.i.i42, ptr %i.b, align 8, !tbaa !32
   call void @_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
   %i.al = load ptr, ptr %i.b, align 8, !tbaa !32
-  %i.am = sub nsw i64 %i.ad, %i.ai
+  %i.am = sub nuw nsw i64 %i.ad, %i.ai
   call void @llvm.memset.p0.i64(ptr align 1 %i.al, i8 %i.ac, i64 %i.am, i1 false)
   br label %bb.h
 
@@ -14523,7 +14522,7 @@ _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_w
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %i.il = sub nsw i64 %i.cw, %i.fs
+  %i.il = sub nuw nsw i64 %i.cw, %i.fs
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i84, i8 %i.cv, i64 %i.il, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit87
 
@@ -14926,7 +14925,7 @@ _ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit.i68:          ; preds = %bb.j, %_ZN10duckdb_
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEclIRPcEEvOT_.exit77: ; preds = %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit.i68, %.lr.ph.i.i.preheader.i.i.i.i74
   %.08.lcssa.i.i.i.i.i.i76 = phi ptr [ %.0.i.i.i69, %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit.i68 ], [ %scevgep.i.i.i.i75, %.lr.ph.i.i.preheader.i.i.i.i74 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  %i.hv = sub nsw i64 %i.co, %i.fg
+  %i.hv = sub nuw nsw i64 %i.co, %i.fg
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i.i76, i8 %i.cn, i64 %i.hv, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit79
 
@@ -15329,7 +15328,7 @@ bb.m:                                             ; preds = %bb.m, %_ZNK10duckdb
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10hex_writerclIRPcEEvOT_.exit87: ; preds = %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.jh = sub nsw i64 %i.cy, %i.ge
+  %i.jh = sub nuw nsw i64 %i.cy, %i.ge
   call void @llvm.memset.p0.i64(ptr align 1 %i.ix, i8 %i.cx, i64 %i.jh, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit62
 
@@ -15632,7 +15631,7 @@ _ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit43:            ; preds = %bb.f, %bb.g
   store ptr %.0.i.i42, ptr %i.b, align 8, !tbaa !32
   call void @_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
   %i.al = load ptr, ptr %i.b, align 8, !tbaa !32
-  %i.am = sub nsw i64 %i.ad, %i.ai
+  %i.am = sub nuw nsw i64 %i.ad, %i.ai
   call void @llvm.memset.p0.i64(ptr align 1 %i.al, i8 %i.ac, i64 %i.am, i1 false)
   br label %bb.h
 
@@ -16035,7 +16034,7 @@ _ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit43:            ; preds = %bb.f, %bb.g
   store ptr %.0.i.i42, ptr %i.b, align 8, !tbaa !32
   call void @_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_(ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
   %i.al = load ptr, ptr %i.b, align 8, !tbaa !32
-  %i.am = sub nsw i64 %i.ad, %i.ai
+  %i.am = sub nuw nsw i64 %i.ad, %i.ai
   call void @llvm.memset.p0.i64(ptr align 1 %i.al, i8 %i.ac, i64 %i.am, i1 false)
   br label %bb.h
 
@@ -16438,7 +16437,7 @@ vec.epilog.middle.block149:                       ; preds = %vec.epilog.vector.b
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE10str_writerIcEclIRPcEEvOT_.exit56: ; preds = %.lr.ph.i.i.i51.prol.loopexit, %.lr.ph.i.i.i51, %middle.block132, %vec.epilog.middle.block149, %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit49
   %.08.lcssa.i.i.i55 = phi ptr [ %.0.i.i48, %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit49 ], [ %i.fg, %vec.epilog.middle.block149 ], [ %i.fb, %middle.block132 ], [ %.lcssa225.unr, %.lr.ph.i.i.i51.prol.loopexit ], [ %i.gm, %.lr.ph.i.i.i51 ]
-  %i.gn = sub nsw i64 %i.co, %i.ep
+  %i.gn = sub nuw nsw i64 %i.co, %i.ep
   tail call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i55, i8 %i.cn, i64 %i.gn, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE10str_writerIcEclIPcEEvOT_.exit
 
@@ -16819,7 +16818,7 @@ bb.h:                                             ; preds = %bb.g
 _ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit43.i:          ; preds = %bb.h, %bb.g
   %.0.i.i42.i = phi ptr [ %i.v, %bb.g ], [ %i.af, %bb.h ] ; 2 uses
   store i8 %1, ptr %.0.i.i42.i, align 1, !tbaa !79
-  %i.ag = sub nsw i64 %i.y, %i.ad
+  %i.ag = sub nuw nsw i64 %i.y, %i.ad
   %i.ah = getelementptr inbounds nuw i8, ptr %.0.i.i42.i, i64 1
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.ah, i8 %i.x, i64 %i.ag, i1 false)
   br label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS1_18arg_formatter_baseIS4_NS1_13error_handlerEE11char_writerEEEvRKNS0_18basic_format_specsIcEEOT_.exit
@@ -17222,7 +17221,7 @@ _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_w
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #58
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #58
-  %i.io = sub nsw i64 %i.cx, %i.fu
+  %i.io = sub nuw nsw i64 %i.cx, %i.fu
   call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i77, i8 %i.cw, i64 %i.io, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit80
 
@@ -17625,7 +17624,7 @@ _ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10dec_writerEEclIRPcEEvOT_.exit88: ; preds = %_ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78, %.lr.ph.i.i.preheader.i.i.i.i82
   %.08.lcssa.i.i.i.i.i.i84 = phi ptr [ %.0.i.i.i74, %_ZN10duckdb_fmt2v68internal14format_decimalIjcZNS1_14format_decimalIcPcjEET0_S5_T1_iEUlS4_E_EEPS5_S8_T_iS6_.exit.i.i.i.i78 ], [ %scevgep.i.i.i.i83, %.lr.ph.i.i.preheader.i.i.i.i82 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #58
-  %i.kj = sub nsw i64 %i.dk, %i.gy
+  %i.kj = sub nuw nsw i64 %i.dk, %i.gy
   tail call void @llvm.memset.p0.i64(ptr align 1 %.08.lcssa.i.i.i.i.i.i84, i8 %i.dj, i64 %i.kj, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit90
 
@@ -18028,7 +18027,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i69, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70, label %bb.m, !llvm.loop !5172
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10hex_writerEEclIRPcEEvOT_.exit70: ; preds = %bb.m
-  %i.jb = sub nsw i64 %i.cw, %i.ga
+  %i.jb = sub nuw nsw i64 %i.cw, %i.ga
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.it, i8 %i.cv, i64 %i.jb, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10hex_writerEEclIPcEEvOT_.exit
 
@@ -18431,7 +18430,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5191
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10bin_writerILi1EEEEclIPcEEvOT_.exit
 
@@ -18834,7 +18833,7 @@ bb.m:                                             ; preds = %bb.m, %_ZSt6fill_nI
   br i1 %.not.i.i7.i67, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68, label %bb.m, !llvm.loop !5210
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIRPcEEvOT_.exit68: ; preds = %bb.m
-  %i.id = sub nsw i64 %i.co, %i.fk
+  %i.id = sub nuw nsw i64 %i.co, %i.fk
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.hx, i8 %i.cn, i64 %i.id, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE17padded_int_writerINS5_10int_writerIcNS0_18basic_format_specsIcEEE10bin_writerILi3EEEEclIPcEEvOT_.exit
 
@@ -19237,7 +19236,7 @@ _ZNK10duckdb_fmt2v68internal16nonfinite_writerIcEclIRPcEEvOT_.exit50: ; preds = 
   %.011.i.i.ptr.2.i49 = getelementptr inbounds nuw i8, ptr %i.bk, i64 2
   %i.bp = load i8, ptr %.011.i.i.ptr.2.i49, align 1, !tbaa !79
   store i8 %i.bp, ptr %i.bo, align 1, !tbaa !79
-  %i.bq = sub nsw i64 %i.ak, %i.bb
+  %i.bq = sub nuw nsw i64 %i.ak, %i.bb
   %i.br = getelementptr inbounds nuw i8, ptr %.1, i64 3
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.br, i8 %i.aj, i64 %i.bq, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit52
@@ -19412,7 +19411,7 @@ bb.j:                                             ; preds = %_ZSt6fill_nIPcmcET_
 _ZN10duckdb_fmt2v68internal12float_writerIcEclIRPcEEvOT_.exit46: ; preds = %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit44, %bb.j
   %.1 = phi ptr [ %.0.i.i43, %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit44 ], [ %i.bf, %bb.j ]
   %i.bg = tail call noundef ptr @_ZNK10duckdb_fmt2v68internal12float_writerIcE8prettifyIPcEET_S6_(ptr noundef nonnull align 8 dereferenceable(33) %2, ptr noundef %.1)
-  %i.bh = sub nsw i64 %i.ah, %i.av
+  %i.bh = sub nuw nsw i64 %i.ah, %i.av
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.bg, i8 %i.ag, i64 %i.bh, i1 false)
   br label %_ZSt6fill_nIPcmcET_S1_T0_RKT1_.exit48
 
@@ -19815,7 +19814,7 @@ bb.j:                                             ; preds = %bb.j, %_ZSt6fill_nI
   br i1 %.not.i.i50, label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE14pointer_writerImEclIRPcEEvOT_.exit51, label %bb.j, !llvm.loop !5443
 
 _ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE14pointer_writerImEclIRPcEEvOT_.exit51: ; preds = %bb.j
-  %i.bp = sub nsw i64 %i.al, %i.bb
+  %i.bp = sub nuw nsw i64 %i.al, %i.bb
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bj, i8 %i.ak, i64 %i.bp, i1 false)
   br label %_ZNK10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE14pointer_writerImEclIPcEEvOT_.exit
 

@@ -8,7 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @sgefa(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !8      ; 15 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !8      ; 14 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.c = load i32, ptr %i.b, align 4, !tbaa !10
   %.not = icmp eq i32 %i.a, %i.c
@@ -22,9 +22,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %.lr.ph108.preheader, label %.loopexit96
 
 .lr.ph108.preheader:                              ; preds = %bb.b
-  %wide.trip.count127 = zext nneg i32 %i.d to i64
-  %wide.trip.count = zext nneg i32 %i.a to i64
-  %wide.trip.count122 = zext nneg i32 %i.a to i64
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 2 uses
+  %wide.trip.count122 = zext nneg i32 %i.d to i64
   %i.h = add nsw i32 %i.a, -2                     ; 5 uses
   br label %.lr.ph108
 
@@ -272,7 +271,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
 
 ._crit_edge.us.us:                                ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
   %indvars.iv.next120 = add nuw nsw i64 %indvars.iv119, 1 ; 2 uses
-  %exitcond123.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count122
+  %exitcond123.not = icmp eq i64 %indvars.iv.next120, %wide.trip.count
   br i1 %exitcond123.not, label %.loopexit, label %.lr.ph102.us.us, !llvm.loop !29
 
 .lr.ph102.us:                                     ; preds = %.lr.ph102.us.preheader, %._crit_edge.us
@@ -411,7 +410,7 @@ scalar.ph150:                                     ; preds = %scalar.ph150.prol.l
   %.185 = phi i32 [ %i.ao, %.lr.ph108..loopexit_crit_edge ], [ %.084107, %._crit_edge.us.us ], [ %.084107, %._crit_edge.us ] ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %.090105, i64 4 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond128.not = icmp eq i64 %indvars.iv.next125.pre-phi, %wide.trip.count127
+  %exitcond128.not = icmp eq i64 %indvars.iv.next125.pre-phi, %wide.trip.count122
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond128.not, label %.loopexit96, label %.lr.ph108, !llvm.loop !39
 

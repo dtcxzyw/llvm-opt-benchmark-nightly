@@ -205,15 +205,14 @@ middle.block:                                     ; preds = %vector.body
   %i.so = mul i64 %i.da, %indvars.iv557
   %i.sp = getelementptr inbounds nuw [8 x i8], ptr %i.dj, i64 %i.so
   %i.sq = sub nuw nsw i64 %indvars.iv557, %i.ki   ; 2 uses
-  %i.sr = add nuw i64 %i.sq, 1
-  %20 = and i64 %i.sr, 4294967295                 ; 2 uses
-  %i.ss = mul i64 %i.cz, %20
+  %i.sr = add nuw nsw i64 %i.sq, 1                ; 2 uses
+  %i.ss = mul i64 %i.cz, %i.sr
   %i.st = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.ss ; 2 uses
   %i.su = mul i64 %i.cz, %i.sq
   %i.sv = getelementptr inbounds nuw [8 x i8], ptr %i.dg, i64 %i.su ; 2 uses
   %invariant.gep526 = getelementptr [8 x i8], ptr %i.st, i64 %i.kh
   %invariant.gep528 = getelementptr [8 x i8], ptr %i.sv, i64 %i.kh
-  %i.sw = mul i64 %i.cy, %20
+  %i.sw = mul i64 %i.cy, %i.sr
   %i.sx = getelementptr inbounds nuw [8 x i8], ptr %i.de, i64 %i.sw
   br label %bb.ch
 
