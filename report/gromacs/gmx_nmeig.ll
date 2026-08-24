@@ -205,12 +205,16 @@ bb.dp:                                            ; preds = %bb.do
   %i.akj = fmul double %i.aki, f0x40040D931FF62705
   %i.akk = fdiv double %i.akg, %i.akj
   %i.akl = fptrunc double %i.akk to float
-  %i.akm = load i32, ptr @_ZZ9gmx_nmeigiPPcE7maxspec, align 4, !tbaa !9
+  %i.akm = load i32, ptr @_ZZ9gmx_nmeigiPPcE7maxspec, align 4, !tbaa !9 ; 2 uses
   %i.akn = icmp sgt i32 %i.akm, 0
-  br i1 %i.akn, label %.lr.ph459, label %.loopexit
+  br i1 %i.akn, label %.lr.ph459.preheader, label %.loopexit
 
-.lr.ph459:                                        ; preds = %bb.dp, %.lr.ph459
-  %indvars.iv490 = phi i64 [ %indvars.iv.next491, %.lr.ph459 ], [ 0, %bb.dp ] ; 3 uses
+.lr.ph459.preheader:                              ; preds = %bb.dp
+  %wide.trip.count493 = zext nneg i32 %i.akm to i64
+  br label %.lr.ph459
+
+.lr.ph459:                                        ; preds = %.lr.ph459.preheader, %.lr.ph459
+  %indvars.iv490 = phi i64 [ 0, %.lr.ph459.preheader ], [ %indvars.iv.next491, %.lr.ph459 ] ; 3 uses
   %i.ako = trunc nuw nsw i64 %indvars.iv490 to i32
   %i.akp = uitofp nneg i32 %i.ako to float
   %i.akq = fsub float %i.akp, %i.ajy              ; 2 uses
@@ -226,10 +230,8 @@ bb.dp:                                            ; preds = %bb.do
   %i.ala = call float @llvm.fmuladd.f32(float %i.akl, float %i.akx, float %i.akz)
   store float %i.ala, ptr %i.aky, align 4, !tbaa !67
   %indvars.iv.next491 = add nuw nsw i64 %indvars.iv490, 1 ; 2 uses
-  %27 = load i32, ptr @_ZZ9gmx_nmeigiPPcE7maxspec, align 4, !tbaa !9
-  %28 = sext i32 %27 to i64
-  %29 = icmp slt i64 %indvars.iv.next491, %28
-  br i1 %29, label %.lr.ph459, label %.loopexit, !llvm.loop !105
+  %exitcond494.not = icmp eq i64 %indvars.iv.next491, %wide.trip.count493
+  br i1 %exitcond494.not, label %.loopexit, label %.lr.ph459, !llvm.loop !105
 
 .loopexit:                                        ; preds = %.lr.ph459, %bb.dp, %bb.do
   br i1 %.not202, label %bb.du, label %bb.dq

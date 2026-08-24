@@ -205,22 +205,27 @@ define dso_local void @putlocalhom_ext(ptr nofree noundef readonly captures(none
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !19      ; 2 uses
   %.not117 = icmp eq i8 %i.a, 0
-  br i1 %.not117, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not117, label %._crit_edge, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.l
-  %i.b = phi i8 [ %i.aw, %bb.l ], [ %i.a, %bb.a ] ; 3 uses
-  %.094.neg132 = phi i32 [ %.094.neg, %bb.l ], [ 0, %bb.a ]
-  %.0131 = phi i32 [ %.2, %bb.l ], [ 0, %bb.a ]   ; 4 uses
-  %.078130 = phi i32 [ %.179, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.080129 = phi ptr [ %.282, %bb.l ], [ %2, %bb.a ] ; 5 uses
-  %.083128 = phi i32 [ %.285, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.090126 = phi i32 [ %.191, %bb.l ], [ 0, %bb.a ] ; 4 uses
-  %.092124 = phi ptr [ %i.at, %bb.l ], [ %1, %bb.a ] ; 4 uses
-  %.093123 = phi ptr [ %i.aq, %bb.l ], [ %0, %bb.a ] ; 2 uses
-  %.094122 = phi i32 [ %.296, %bb.l ], [ 0, %bb.a ] ; 7 uses
-  %.097121 = phi i32 [ %.299, %bb.l ], [ 0, %bb.a ] ; 6 uses
-  %.0100119 = phi i32 [ %.1101, %bb.l ], [ %4, %bb.a ] ; 4 uses
-  %.0102118 = phi i32 [ %spec.select116, %bb.l ], [ %3, %bb.a ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.a
+  %7 = load i32, ptr @divpairscore, align 4
+  %.not112 = icmp eq i32 %7, 0
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.l
+  %i.b = phi i8 [ %i.a, %.lr.ph ], [ %i.aw, %bb.l ] ; 3 uses
+  %.094.neg132 = phi i32 [ 0, %.lr.ph ], [ %.094.neg, %bb.l ]
+  %.0131 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.l ] ; 4 uses
+  %.078130 = phi i32 [ 0, %.lr.ph ], [ %.179, %bb.l ] ; 5 uses
+  %.080129 = phi ptr [ %2, %.lr.ph ], [ %.282, %bb.l ] ; 5 uses
+  %.083128 = phi i32 [ 0, %.lr.ph ], [ %.285, %bb.l ] ; 5 uses
+  %.090126 = phi i32 [ 0, %.lr.ph ], [ %.191, %bb.l ] ; 4 uses
+  %.092124 = phi ptr [ %1, %.lr.ph ], [ %i.at, %bb.l ] ; 4 uses
+  %.093123 = phi ptr [ %0, %.lr.ph ], [ %i.aq, %bb.l ] ; 2 uses
+  %.094122 = phi i32 [ 0, %.lr.ph ], [ %.296, %bb.l ] ; 7 uses
+  %.097121 = phi i32 [ 0, %.lr.ph ], [ %.299, %bb.l ] ; 6 uses
+  %.0100119 = phi i32 [ %4, %.lr.ph ], [ %.1101, %bb.l ] ; 4 uses
+  %.0102118 = phi i32 [ %3, %.lr.ph ], [ %spec.select116, %bb.l ] ; 3 uses
   %i.c = icmp eq i32 %.0131, 1
   br i1 %i.c, label %bb.b, label %bb.i
 
@@ -258,8 +263,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %i.g, ptr %i.p, align 4, !tbaa !22
   %i.q = getelementptr inbounds nuw i8, ptr %.181, i64 36
   store i32 %i.h, ptr %i.q, align 4, !tbaa !23
-  %7 = load i32, ptr @divpairscore, align 4, !tbaa !4
-  %.not112 = icmp eq i32 %7, 0
   br i1 %.not112, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -432,23 +435,28 @@ define dso_local void @putlocalhom2(ptr nofree noundef readonly captures(none) %
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !19      ; 2 uses
   %.not120 = icmp eq i8 %i.a, 0
-  br i1 %.not120, label %._crit_edge, label %.lr.ph.a
+  br i1 %.not120, label %._crit_edge, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.l
-  %i.b = phi i8 [ %i.ax, %bb.l ], [ %i.a, %bb.a ] ; 3 uses
-  %.097.neg135 = phi i32 [ %.097.neg, %bb.l ], [ 0, %bb.a ]
-  %.0134 = phi i32 [ %.2, %bb.l ], [ 0, %bb.a ]   ; 4 uses
-  %.080133 = phi i32 [ %.181, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.082132 = phi ptr [ %.284, %bb.l ], [ %2, %bb.a ] ; 5 uses
-  %.085131 = phi i32 [ %.287, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.089130 = phi i32 [ %.291, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.093129 = phi i32 [ %.194, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.095127 = phi ptr [ %i.au, %bb.l ], [ %1, %bb.a ] ; 4 uses
-  %.096126 = phi ptr [ %i.ar, %bb.l ], [ %0, %bb.a ] ; 2 uses
-  %.097125 = phi i32 [ %.299, %bb.l ], [ 0, %bb.a ] ; 7 uses
-  %.0100124 = phi i32 [ %.2102, %bb.l ], [ 0, %bb.a ] ; 6 uses
-  %.0103122 = phi i32 [ %.1104, %bb.l ], [ %4, %bb.a ] ; 4 uses
-  %.0105121 = phi i32 [ %spec.select119, %bb.l ], [ %3, %bb.a ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.a
+  %7 = load i32, ptr @divpairscore, align 4
+  %.not115 = icmp eq i32 %7, 0
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.l
+  %i.b = phi i8 [ %i.a, %.lr.ph ], [ %i.ax, %bb.l ] ; 3 uses
+  %.097.neg135 = phi i32 [ 0, %.lr.ph ], [ %.097.neg, %bb.l ]
+  %.0134 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.l ] ; 4 uses
+  %.080133 = phi i32 [ 0, %.lr.ph ], [ %.181, %bb.l ] ; 5 uses
+  %.082132 = phi ptr [ %2, %.lr.ph ], [ %.284, %bb.l ] ; 5 uses
+  %.085131 = phi i32 [ 0, %.lr.ph ], [ %.287, %bb.l ] ; 5 uses
+  %.089130 = phi i32 [ 0, %.lr.ph ], [ %.291, %bb.l ] ; 5 uses
+  %.093129 = phi i32 [ 0, %.lr.ph ], [ %.194, %bb.l ] ; 5 uses
+  %.095127 = phi ptr [ %1, %.lr.ph ], [ %i.au, %bb.l ] ; 4 uses
+  %.096126 = phi ptr [ %0, %.lr.ph ], [ %i.ar, %bb.l ] ; 2 uses
+  %.097125 = phi i32 [ 0, %.lr.ph ], [ %.299, %bb.l ] ; 7 uses
+  %.0100124 = phi i32 [ 0, %.lr.ph ], [ %.2102, %bb.l ] ; 6 uses
+  %.0103122 = phi i32 [ %4, %.lr.ph ], [ %.1104, %bb.l ] ; 4 uses
+  %.0105121 = phi i32 [ %3, %.lr.ph ], [ %spec.select119, %bb.l ] ; 3 uses
   %i.c = icmp eq i32 %.0134, 1
   br i1 %i.c, label %bb.b, label %bb.i
 
@@ -486,8 +494,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %i.g, ptr %i.p, align 4, !tbaa !22
   %i.q = getelementptr inbounds nuw i8, ptr %.183, i64 36
   store i32 %i.h, ptr %i.q, align 4, !tbaa !23
-  %7 = load i32, ptr @divpairscore, align 4, !tbaa !4
-  %.not115 = icmp eq i32 %7, 0
   br i1 %.not115, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -673,23 +679,28 @@ define dso_local void @putlocalhom(ptr nofree noundef readonly captures(none) %0
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !19      ; 2 uses
   %.not118 = icmp eq i8 %i.a, 0
-  br i1 %.not118, label %._crit_edge.thread, label %.lr.ph.a
+  br i1 %.not118, label %._crit_edge.thread, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.l
-  %i.b = phi i8 [ %i.ax, %bb.l ], [ %i.a, %bb.a ] ; 3 uses
-  %.095.neg133 = phi i32 [ %.095.neg, %bb.l ], [ 0, %bb.a ]
-  %.0132 = phi i32 [ %.2, %bb.l ], [ 0, %bb.a ]   ; 4 uses
-  %.078131 = phi i32 [ %.179, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.080130 = phi ptr [ %.282, %bb.l ], [ %2, %bb.a ] ; 5 uses
-  %.083129 = phi i32 [ %.285, %bb.l ], [ 0, %bb.a ] ; 5 uses
-  %.087128 = phi double [ %.289, %bb.l ], [ 0.000000e+00, %bb.a ] ; 5 uses
-  %.091127 = phi double [ %.192, %bb.l ], [ 0.000000e+00, %bb.a ] ; 5 uses
-  %.093125 = phi ptr [ %i.au, %bb.l ], [ %1, %bb.a ] ; 4 uses
-  %.094124 = phi ptr [ %i.ar, %bb.l ], [ %0, %bb.a ] ; 2 uses
-  %.095123 = phi i32 [ %.297, %bb.l ], [ 0, %bb.a ] ; 7 uses
-  %.098122 = phi i32 [ %.2100, %bb.l ], [ 0, %bb.a ] ; 6 uses
-  %.0101120 = phi i32 [ %.1102, %bb.l ], [ %4, %bb.a ] ; 4 uses
-  %.0103119 = phi i32 [ %spec.select115, %bb.l ], [ %3, %bb.a ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.a
+  %7 = load i32, ptr @divpairscore, align 4
+  %.not111 = icmp eq i32 %7, 0
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.l
+  %i.b = phi i8 [ %i.a, %.lr.ph ], [ %i.ax, %bb.l ] ; 3 uses
+  %.095.neg133 = phi i32 [ 0, %.lr.ph ], [ %.095.neg, %bb.l ]
+  %.0132 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.l ] ; 4 uses
+  %.078131 = phi i32 [ 0, %.lr.ph ], [ %.179, %bb.l ] ; 5 uses
+  %.080130 = phi ptr [ %2, %.lr.ph ], [ %.282, %bb.l ] ; 5 uses
+  %.083129 = phi i32 [ 0, %.lr.ph ], [ %.285, %bb.l ] ; 5 uses
+  %.087128 = phi double [ 0.000000e+00, %.lr.ph ], [ %.289, %bb.l ] ; 5 uses
+  %.091127 = phi double [ 0.000000e+00, %.lr.ph ], [ %.192, %bb.l ] ; 5 uses
+  %.093125 = phi ptr [ %1, %.lr.ph ], [ %i.au, %bb.l ] ; 4 uses
+  %.094124 = phi ptr [ %0, %.lr.ph ], [ %i.ar, %bb.l ] ; 2 uses
+  %.095123 = phi i32 [ 0, %.lr.ph ], [ %.297, %bb.l ] ; 7 uses
+  %.098122 = phi i32 [ 0, %.lr.ph ], [ %.2100, %bb.l ] ; 6 uses
+  %.0101120 = phi i32 [ %4, %.lr.ph ], [ %.1102, %bb.l ] ; 4 uses
+  %.0103119 = phi i32 [ %3, %.lr.ph ], [ %spec.select115, %bb.l ] ; 3 uses
   %i.c = icmp eq i32 %.0132, 1
   br i1 %i.c, label %bb.b, label %bb.i
 
@@ -727,8 +738,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %i.g, ptr %i.p, align 4, !tbaa !22
   %i.q = getelementptr inbounds nuw i8, ptr %.181, i64 36
   store i32 %i.h, ptr %i.q, align 4, !tbaa !23
-  %7 = load i32, ptr @divpairscore, align 4, !tbaa !4
-  %.not111 = icmp eq i32 %7, 0
   br i1 %.not111, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

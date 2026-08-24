@@ -203,7 +203,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr @crux_data, align 8, !tbaa !14 ; 2 uses
   %i.k = load i32, ptr @cp_num, align 4, !tbaa !4
-  %i.l = sext i32 %i.k to i64
+  %i.l = sext i32 %i.k to i64                     ; 2 uses
   %i.m = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.l
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !17   ; 2 uses
   %.not9 = icmp eq ptr %i.n, null
@@ -212,20 +212,21 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   tail call void @free(ptr noundef nonnull %i.n) #15
   %.pre = load ptr, ptr @crux_data, align 8, !tbaa !14
+  %.pre10 = load i32, ptr @cp_num, align 4, !tbaa !4
+  %.pre11 = sext i32 %.pre10 to i64
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %.pre-phi = phi i64 [ %.pre11, %bb.c ], [ %i.l, %bb.b ] ; 3 uses
   %i.o = phi ptr [ %.pre, %bb.c ], [ %i.j, %bb.b ]
   %i.p = tail call noalias ptr @malloc(i64 noundef %1) #16
-  %3 = load i32, ptr @cp_num, align 4, !tbaa !4
-  %4 = sext i32 %3 to i64                         ; 3 uses
-  %i.q = getelementptr inbounds [8 x i8], ptr %i.o, i64 %4
+  %i.q = getelementptr inbounds [8 x i8], ptr %i.o, i64 %.pre-phi
   store ptr %i.p, ptr %i.q, align 8, !tbaa !17
   %i.r = load ptr, ptr @crux_data_size, align 8, !tbaa !20
-  %i.s = getelementptr inbounds [8 x i8], ptr %i.r, i64 %4
+  %i.s = getelementptr inbounds [8 x i8], ptr %i.r, i64 %.pre-phi
   store i64 %1, ptr %i.s, align 8, !tbaa !40
   %i.t = load ptr, ptr @crux_data, align 8, !tbaa !14
-  %i.u = getelementptr inbounds [8 x i8], ptr %i.t, i64 %4
+  %i.u = getelementptr inbounds [8 x i8], ptr %i.t, i64 %.pre-phi
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !17
   %i.w = tail call noalias ptr @fmemopen(ptr noundef %i.v, i64 noundef %1, ptr noundef nonnull @.str.1) #15
   store ptr %i.w, ptr @store_fp, align 8, !tbaa !26

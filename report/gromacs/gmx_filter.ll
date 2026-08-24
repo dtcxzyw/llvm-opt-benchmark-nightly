@@ -205,6 +205,7 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.preheader: ; preds = %.loopexit363
   br i1 %i.ha, label %.lr.ph372, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268._crit_edge
 
 .lr.ph372:                                        ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.preheader
+  %9 = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !9 ; 5 uses
   %i.hb = fpext float %i.gw to double             ; 5 uses
   %smax = call i32 @llvm.smax.i32(i32 %i.gx, i32 1)
   %wide.trip.count438 = zext nneg i32 %smax to i64 ; 2 uses
@@ -214,17 +215,19 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.preheader: ; preds = %.loopexit363
 
 .lr.ph372.new:                                    ; preds = %.lr.ph372
   %unroll_iter896 = and i64 %wide.trip.count438, 2147483644
+  %invariant.op926 = sub i32 1, %9
+  %invariant.op927 = sub i32 1, %9
+  %invariant.op928 = sub i32 1, %9
+  %invariant.op929 = sub i32 1, %9
   br label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268
 
 _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268:       ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268, %.lr.ph372.new
-  %indvars.iv435 = phi i64 [ 0, %.lr.ph372.new ], [ %indvars.iv.next436.3, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268 ] ; 5 uses
+  %indvars.iv435 = phi i64 [ 0, %.lr.ph372.new ], [ %indvars.iv.next436.3, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268 ] ; 6 uses
   %.0218371 = phi float [ 0.000000e+00, %.lr.ph372.new ], [ %i.im, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268 ]
   %niter897 = phi i64 [ 0, %.lr.ph372.new ], [ %niter897.next.3, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268 ]
-  %9 = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !9
-  %indvars.iv.next436 = or disjoint i64 %indvars.iv435, 1 ; 2 uses
-  %i.hd = trunc nuw nsw i64 %indvars.iv.next436 to i32
-  %10 = sub i32 %i.hd, %9
-  %i.he = sitofp i32 %10 to double
+  %i.hd = trunc nuw nsw i64 %indvars.iv435 to i32
+  %.reass.reass.reass = add i32 %i.hd, %invariant.op926
+  %i.he = sitofp i32 %.reass.reass.reass to double
   %i.hf = fmul nnan double %i.he, f0x401921FB54442D18
   %i.hg = fdiv double %i.hf, %i.hb
   %i.hh = call double @cos(double noundef %i.hg) #13
@@ -233,45 +236,43 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268:       ; preds = %_ZL13gmx_snew_implI
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv435
   store float %i.hj, ptr %i.hk, align 4, !tbaa !53
   %i.hl = fadd float %.0218371, %i.hj
-  %11 = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !9
-  %indvars.iv.next436.1.a = or disjoint i64 %indvars.iv435, 2 ; 2 uses
+  %indvars.iv.next436.1.a = or disjoint i64 %indvars.iv435, 1 ; 2 uses
   %i.hm = trunc nuw nsw i64 %indvars.iv.next436.1.a to i32
-  %12 = sub i32 %i.hm, %11
-  %i.hn = sitofp i32 %12 to double
+  %.reass.reass.1.reass = add i32 %i.hm, %invariant.op927
+  %i.hn = sitofp i32 %.reass.reass.1.reass to double
   %i.ho = fmul nnan double %i.hn, f0x401921FB54442D18
   %i.hp = fdiv double %i.ho, %i.hb
   %i.hq = call double @cos(double noundef %i.hp) #13
   %i.hr = fadd double %i.hq, 1.000000e+00
   %i.hs = fptrunc double %i.hr to float           ; 2 uses
-  %i.ht = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv.next436
+  %i.ht = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv.next436.1.a
   store float %i.hs, ptr %i.ht, align 4, !tbaa !53
   %i.hu = fadd float %i.hl, %i.hs
-  %13 = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !9
-  %indvars.iv.next436.2.a = or disjoint i64 %indvars.iv435, 3 ; 2 uses
+  %indvars.iv.next436.2.a = or disjoint i64 %indvars.iv435, 2 ; 2 uses
   %i.hv = trunc nuw nsw i64 %indvars.iv.next436.2.a to i32
-  %14 = sub i32 %i.hv, %13
-  %i.hw = sitofp i32 %14 to double
+  %.reass.reass.2.reass = add i32 %i.hv, %invariant.op928
+  %i.hw = sitofp i32 %.reass.reass.2.reass to double
   %i.hx = fmul nnan double %i.hw, f0x401921FB54442D18
   %i.hy = fdiv double %i.hx, %i.hb
   %i.hz = call double @cos(double noundef %i.hy) #13
   %i.ia = fadd double %i.hz, 1.000000e+00
   %i.ib = fptrunc double %i.ia to float           ; 2 uses
-  %i.ic = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv.next436.1.a
+  %i.ic = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv.next436.2.a
   store float %i.ib, ptr %i.ic, align 4, !tbaa !53
   %i.id = fadd float %i.hu, %i.ib
-  %15 = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !9
-  %indvars.iv.next436.3 = add nuw nsw i64 %indvars.iv435, 4 ; 3 uses
-  %i.ie = trunc nuw nsw i64 %indvars.iv.next436.3 to i32
-  %16 = sub i32 %i.ie, %15
-  %i.if = sitofp i32 %16 to double
+  %indvars.iv.next436.2 = or disjoint i64 %indvars.iv435, 3 ; 2 uses
+  %i.ie = trunc nuw nsw i64 %indvars.iv.next436.2 to i32
+  %.reass.reass.3.reass = add i32 %i.ie, %invariant.op929
+  %i.if = sitofp i32 %.reass.reass.3.reass to double
   %i.ig = fmul nnan double %i.if, f0x401921FB54442D18
   %i.ih = fdiv double %i.ig, %i.hb
   %i.ii = call double @cos(double noundef %i.ih) #13
   %i.ij = fadd double %i.ii, 1.000000e+00
   %i.ik = fptrunc double %i.ij to float           ; 2 uses
-  %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv.next436.2.a
+  %i.il = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv.next436.2
   store float %i.ik, ptr %i.il, align 4, !tbaa !53
   %i.im = fadd float %i.id, %i.ik                 ; 2 uses
+  %indvars.iv.next436.3 = add nuw nsw i64 %indvars.iv435, 4 ; 2 uses
   %niter897.next.3 = add i64 %niter897, 4         ; 2 uses
   %niter897.ncmp.3 = icmp eq i64 %niter897.next.3, %unroll_iter896
   br i1 %niter897.ncmp.3, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil.preheader, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268, !llvm.loop !79
@@ -284,17 +285,16 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268._crit_edge: ; preds = %_ZL13gmx_snew_
 _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil.preheader: ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268, %.lr.ph372
   %indvars.iv435.epil.init = phi i64 [ 0, %.lr.ph372 ], [ %indvars.iv.next436.3, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268 ]
   %.0218371.epil.init = phi float [ 0.000000e+00, %.lr.ph372 ], [ %i.im, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268 ]
+  %invariant.op = sub i32 1, %9
   br label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil
 
 _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil:  ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil.preheader
-  %indvars.iv435.epil = phi i64 [ %indvars.iv435.epil.init, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil.preheader ], [ %indvars.iv.next436.epil, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil ] ; 2 uses
+  %indvars.iv435.epil = phi i64 [ %indvars.iv435.epil.init, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil.preheader ], [ %indvars.iv.next436.epil, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil ] ; 3 uses
   %.0218371.epil = phi float [ %.0218371.epil.init, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil.preheader ], [ %i.ix, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil ]
   %epil.iter892 = phi i64 [ 0, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil.preheader ], [ %epil.iter892.next, %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil ]
-  %17 = load i32, ptr @_ZZ10gmx_filteriPPcE2nf, align 4, !tbaa !9
-  %indvars.iv.next436.epil = add nuw nsw i64 %indvars.iv435.epil, 1 ; 2 uses
-  %i.ip = trunc nuw nsw i64 %indvars.iv.next436.epil to i32
-  %18 = sub i32 %i.ip, %17
-  %i.iq = sitofp i32 %18 to double
+  %i.ip = trunc nuw nsw i64 %indvars.iv435.epil to i32
+  %.reass.reass.epil.reass = add i32 %i.ip, %invariant.op
+  %i.iq = sitofp i32 %.reass.reass.epil.reass to double
   %i.ir = fmul nnan double %i.iq, f0x401921FB54442D18
   %i.is = fdiv double %i.ir, %i.hb
   %i.it = call double @cos(double noundef %i.is) #13
@@ -303,6 +303,7 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil:  ; preds = %_ZL13gmx_snew_implI
   %i.iw = getelementptr inbounds nuw [4 x i8], ptr %i.gz, i64 %indvars.iv435.epil
   store float %i.iv, ptr %i.iw, align 4, !tbaa !53
   %i.ix = fadd float %.0218371.epil, %i.iv        ; 2 uses
+  %indvars.iv.next436.epil = add nuw nsw i64 %indvars.iv435.epil, 1
   %epil.iter892.next = add i64 %epil.iter892, 1   ; 2 uses
   %epil.iter892.cmp.not = icmp eq i64 %epil.iter892.next, %xtraiter891
   br i1 %epil.iter892.cmp.not, label %.lr.ph375.preheader, label %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit268.epil, !llvm.loop !80

@@ -169,7 +169,7 @@ bb.h:                                             ; preds = %bb.g
   %i.z = ashr i32 %i.y, 1
   %i.aa = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
   %i.ab = mul nsw i32 %i.z, %i.aa
-  %i.ac = sext i32 %i.ab to i64
+  %i.ac = sext i32 %i.ab to i64                   ; 2 uses
   %i.ad = tail call noalias ptr @malloc(i64 noundef %i.ac) #11 ; 2 uses
   store ptr %i.ad, ptr @store_sif.u422, align 8, !tbaa !8
   %.not31.i = icmp eq ptr %i.ad, null
@@ -177,15 +177,16 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   tail call void @Error(ptr noundef nonnull @.str.6) #10
+  %.pre.i = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
+  %.pre48.i = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
+  %.pre52.i = ashr i32 %.pre.i, 1
+  %.pre53.i = mul nsw i32 %.pre52.i, %.pre48.i
+  %.pre55.i = sext i32 %.pre53.i to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %5 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
-  %6 = ashr i32 %5, 1
-  %7 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
-  %8 = mul nsw i32 %6, %7
-  %9 = sext i32 %8 to i64
-  %i.ae = tail call noalias ptr @malloc(i64 noundef %9) #11 ; 2 uses
+  %.pre-phi56.i = phi i64 [ %.pre55.i, %bb.i ], [ %i.ac, %bb.h ]
+  %i.ae = tail call noalias ptr @malloc(i64 noundef %.pre-phi56.i) #11 ; 2 uses
   store ptr %i.ae, ptr @store_sif.v422, align 8, !tbaa !8
   %.not32.i = icmp eq ptr %i.ae, null
   br i1 %.not32.i, label %bb.k, label %bb.l
@@ -418,14 +419,14 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = icmp eq i32 %i.b, 1
+  %.pre103 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4 ; 3 uses
+  %.pre105 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4 ; 3 uses
   br i1 %i.i, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
-  %6 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
-  %i.j = ashr i32 %6, 1
-  %7 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
-  %i.k = mul nsw i32 %i.j, %7
-  %i.l = sext i32 %i.k to i64
+  %i.j = ashr i32 %.pre103, 1
+  %i.k = mul nsw i32 %i.j, %.pre105
+  %i.l = sext i32 %i.k to i64                     ; 2 uses
   %i.m = tail call noalias ptr @malloc(i64 noundef %i.l) #11 ; 2 uses
   store ptr %i.m, ptr @store_ppm_tga.u422, align 8, !tbaa !8
   %.not62 = icmp eq ptr %i.m, null
@@ -433,28 +434,33 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   tail call void @Error(ptr noundef nonnull @.str.6) #10
+  %.pre = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4 ; 2 uses
+  %.pre101 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4 ; 2 uses
+  %.pre114 = ashr i32 %.pre, 1
+  %.pre115 = mul nsw i32 %.pre114, %.pre101
+  %.pre117 = sext i32 %.pre115 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %8 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
-  %9 = ashr i32 %8, 1
-  %10 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
-  %11 = mul nsw i32 %9, %10
-  %12 = sext i32 %11 to i64
-  %i.n = tail call noalias ptr @malloc(i64 noundef %12) #11 ; 2 uses
+  %.pre-phi118 = phi i64 [ %.pre117, %bb.f ], [ %i.l, %bb.e ]
+  %6 = phi i32 [ %.pre101, %bb.f ], [ %.pre105, %bb.e ]
+  %7 = phi i32 [ %.pre, %bb.f ], [ %.pre103, %bb.e ]
+  %i.n = tail call noalias ptr @malloc(i64 noundef %.pre-phi118) #11 ; 2 uses
   store ptr %i.n, ptr @store_ppm_tga.v422, align 8, !tbaa !8
   %.not63 = icmp eq ptr %i.n, null
   br i1 %.not63, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   tail call void @Error(ptr noundef nonnull @.str.6) #10
+  %.pre102 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
+  %.pre104 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.d
-  %13 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
-  %14 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
-  %i.o = mul nsw i32 %14, %13
-  %i.p = sext i32 %i.o to i64
+  %8 = phi i32 [ %6, %bb.g ], [ %.pre104, %bb.h ], [ %.pre105, %bb.d ]
+  %9 = phi i32 [ %7, %bb.g ], [ %.pre102, %bb.h ], [ %.pre103, %bb.d ]
+  %i.o = mul nsw i32 %8, %9
+  %i.p = sext i32 %i.o to i64                     ; 2 uses
   %i.q = tail call noalias ptr @malloc(i64 noundef %i.p) #11 ; 2 uses
   store ptr %i.q, ptr @store_ppm_tga.u444, align 8, !tbaa !8
   %.not64 = icmp eq ptr %i.q, null
@@ -462,14 +468,15 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.d
 
 bb.j:                                             ; preds = %bb.i
   tail call void @Error(ptr noundef nonnull @.str.6) #10
+  %.pre106 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
+  %.pre107 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
+  %.pre119 = mul nsw i32 %.pre107, %.pre106
+  %.pre121 = sext i32 %.pre119 to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %15 = load i32, ptr @Coded_Picture_Width, align 4, !tbaa !4
-  %16 = load i32, ptr @Coded_Picture_Height, align 4, !tbaa !4
-  %17 = mul nsw i32 %16, %15
-  %18 = sext i32 %17 to i64
-  %i.r = tail call noalias ptr @malloc(i64 noundef %18) #11 ; 2 uses
+  %.pre-phi122 = phi i64 [ %.pre121, %bb.j ], [ %i.p, %bb.i ]
+  %i.r = tail call noalias ptr @malloc(i64 noundef %.pre-phi122) #11 ; 2 uses
   store ptr %i.r, ptr @store_ppm_tga.v444, align 8, !tbaa !8
   %.not65 = icmp eq ptr %i.r, null
   br i1 %.not65, label %bb.l, label %thread-pre-split

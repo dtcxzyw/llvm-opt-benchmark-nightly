@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %RoundLog2.exit, %bb
   %i.w = shl i32 %i.s, %i.v
   store i32 %i.w, ptr @searcharray, align 4, !tbaa !4
   %.not22 = icmp eq i32 %i.u, 0
-  %i.x = select i1 %.not22, i32 2, i32 0
+  %i.x = select i1 %.not22, i32 2, i32 0          ; 2 uses
   store i32 %i.x, ptr @mv_rescale, align 4, !tbaa !4
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 4116
   %i.z = load i32, ptr %i.y, align 4, !tbaa !55   ; 5 uses
@@ -292,17 +292,18 @@ bb.d:                                             ; preds = %RoundLog2.exit, %bb
 
 bb.e:                                             ; preds = %bb.d
   tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #13
+  %.pre = load i32, ptr @mv_rescale, align 4, !tbaa !4
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %bb.d
+  %0 = phi i32 [ %.pre, %bb.e ], [ %i.x, %bb.d ]  ; 3 uses
   store i32 4, ptr %i.bu, align 8, !tbaa !20
   %i.bw = tail call noalias dereferenceable_or_null(64) ptr @calloc(i64 noundef 4, i64 noundef 16) #12 ; 14 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   store ptr %i.bw, ptr %i.bx, align 8, !tbaa !23
   store ptr %i.bu, ptr @sdiamond, align 8, !tbaa !59
-  %0 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 2 uses
   store i32 0, ptr %i.bw, align 4, !tbaa !4
-  %i.by = lshr i32 4, %0                          ; 2 uses
+  %i.by = lshr i32 4, %0                          ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
   store i32 %i.by, ptr %i.bz, align 4, !tbaa !4
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
@@ -313,7 +314,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 %i.by, ptr %i.cc, align 4, !tbaa !4
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bw, i64 20
   store <4 x i32> <i32 0, i32 0, i32 3, i32 0>, ptr %i.cd, align 4, !tbaa !4
-  %i.ce = ashr i32 -4, %0                         ; 2 uses
+  %i.ce = ashr i32 -4, %0                         ; 3 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bw, i64 36
   store i32 %i.ce, ptr %i.cf, align 4, !tbaa !4
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
@@ -340,33 +341,37 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph.i
   tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #13
+  %.pre59 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 3 uses
+  %.pre66 = lshr i32 4, %.pre59
+  %.pre67 = ashr i32 -4, %.pre59
   br label %.lr.ph.i26
 
 .lr.ph.i26:                                       ; preds = %bb.f, %.lr.ph.i
+  %.pre-phi68 = phi i32 [ %.pre67, %bb.f ], [ %i.ce, %.lr.ph.i ] ; 7 uses
+  %.pre-phi = phi i32 [ %.pre66, %bb.f ], [ %i.by, %.lr.ph.i ] ; 7 uses
+  %1 = phi i32 [ %.pre59, %bb.f ], [ %0, %.lr.ph.i ]
   store i32 8, ptr %i.cp, align 8, !tbaa !20
   %i.cr = tail call noalias dereferenceable_or_null(128) ptr @calloc(i64 noundef 8, i64 noundef 16) #12 ; 33 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   store ptr %i.cr, ptr %i.cs, align 8, !tbaa !23
   store ptr %i.cp, ptr @square, align 8, !tbaa !59
-  %1 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 2 uses
   store i32 0, ptr %i.cr, align 4, !tbaa !4
-  %2 = lshr i32 4, %1                             ; 6 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cr, i64 4
-  store i32 %2, ptr %i.ct, align 4, !tbaa !4
+  store i32 %.pre-phi, ptr %i.ct, align 4, !tbaa !4
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
   store i32 7, ptr %i.cu, align 4, !tbaa !60
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cr, i64 12
   store i32 3, ptr %i.cv, align 4, !tbaa !62
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
-  store i32 %2, ptr %i.cw, align 4, !tbaa !4
+  store i32 %.pre-phi, ptr %i.cw, align 4, !tbaa !4
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cr, i64 20
-  store i32 %2, ptr %i.cx, align 4, !tbaa !4
+  store i32 %.pre-phi, ptr %i.cx, align 4, !tbaa !4
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cr, i64 24
   store i32 7, ptr %i.cy, align 4, !tbaa !60
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cr, i64 28
   store i32 5, ptr %i.cz, align 4, !tbaa !62
   %i.da = getelementptr inbounds nuw i8, ptr %i.cr, i64 32
-  store i32 %2, ptr %i.da, align 4, !tbaa !4
+  store i32 %.pre-phi, ptr %i.da, align 4, !tbaa !4
   %i.db = getelementptr inbounds nuw i8, ptr %i.cr, i64 36
   store i32 0, ptr %i.db, align 4, !tbaa !4
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cr, i64 40
@@ -374,10 +379,9 @@ bb.f:                                             ; preds = %.lr.ph.i
   %i.dd = getelementptr inbounds nuw i8, ptr %i.cr, i64 44
   store i32 3, ptr %i.dd, align 4, !tbaa !62
   %i.de = getelementptr inbounds nuw i8, ptr %i.cr, i64 48
-  store i32 %2, ptr %i.de, align 4, !tbaa !4
-  %3 = ashr i32 -4, %1                            ; 6 uses
+  store i32 %.pre-phi, ptr %i.de, align 4, !tbaa !4
   %i.df = getelementptr inbounds nuw i8, ptr %i.cr, i64 52
-  store i32 %3, ptr %i.df, align 4, !tbaa !4
+  store i32 %.pre-phi68, ptr %i.df, align 4, !tbaa !4
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cr, i64 56
   store i32 1, ptr %i.dg, align 4, !tbaa !60
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cr, i64 60
@@ -385,21 +389,21 @@ bb.f:                                             ; preds = %.lr.ph.i
   %i.di = getelementptr inbounds nuw i8, ptr %i.cr, i64 64
   store i32 0, ptr %i.di, align 4, !tbaa !4
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cr, i64 68
-  store i32 %3, ptr %i.dj, align 4, !tbaa !4
+  store i32 %.pre-phi68, ptr %i.dj, align 4, !tbaa !4
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cr, i64 72
   store i32 3, ptr %i.dk, align 4, !tbaa !60
   %i.dl = getelementptr inbounds nuw i8, ptr %i.cr, i64 76
   store i32 3, ptr %i.dl, align 4, !tbaa !62
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cr, i64 80
-  store i32 %3, ptr %i.dm, align 4, !tbaa !4
+  store i32 %.pre-phi68, ptr %i.dm, align 4, !tbaa !4
   %i.dn = getelementptr inbounds nuw i8, ptr %i.cr, i64 84
-  store i32 %3, ptr %i.dn, align 4, !tbaa !4
+  store i32 %.pre-phi68, ptr %i.dn, align 4, !tbaa !4
   %i.do = getelementptr inbounds nuw i8, ptr %i.cr, i64 88
   store i32 3, ptr %i.do, align 4, !tbaa !60
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cr, i64 92
   store i32 5, ptr %i.dp, align 4, !tbaa !62
   %i.dq = getelementptr inbounds nuw i8, ptr %i.cr, i64 96
-  store i32 %3, ptr %i.dq, align 4, !tbaa !4
+  store i32 %.pre-phi68, ptr %i.dq, align 4, !tbaa !4
   %i.dr = getelementptr inbounds nuw i8, ptr %i.cr, i64 100
   store i32 0, ptr %i.dr, align 4, !tbaa !4
   %i.ds = getelementptr inbounds nuw i8, ptr %i.cr, i64 104
@@ -407,9 +411,9 @@ bb.f:                                             ; preds = %.lr.ph.i
   %i.dt = getelementptr inbounds nuw i8, ptr %i.cr, i64 108
   store i32 3, ptr %i.dt, align 4, !tbaa !62
   %i.du = getelementptr inbounds nuw i8, ptr %i.cr, i64 112
-  store i32 %3, ptr %i.du, align 4, !tbaa !4
+  store i32 %.pre-phi68, ptr %i.du, align 4, !tbaa !4
   %i.dv = getelementptr inbounds nuw i8, ptr %i.cr, i64 116
-  store i32 %2, ptr %i.dv, align 4, !tbaa !4
+  store i32 %.pre-phi, ptr %i.dv, align 4, !tbaa !4
   %i.dw = getelementptr inbounds nuw i8, ptr %i.cr, i64 120
   store i32 5, ptr %i.dw, align 4, !tbaa !60
   %i.dx = getelementptr inbounds nuw i8, ptr %i.cr, i64 124
@@ -426,27 +430,30 @@ bb.f:                                             ; preds = %.lr.ph.i
 
 bb.g:                                             ; preds = %.lr.ph.i26
   tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #13
+  %.pre60 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 3 uses
+  %.pre69 = ashr i32 -4, %.pre60
+  %.pre71 = lshr i32 4, %.pre60
   br label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %bb.g, %.lr.ph.i26
+  %.pre-phi72 = phi i32 [ %.pre71, %bb.g ], [ %.pre-phi, %.lr.ph.i26 ] ; 6 uses
+  %.pre-phi70 = phi i32 [ %.pre69, %bb.g ], [ %.pre-phi68, %.lr.ph.i26 ] ; 6 uses
+  %2 = phi i32 [ %.pre60, %bb.g ], [ %1, %.lr.ph.i26 ] ; 2 uses
   store i32 12, ptr %i.eb, align 8, !tbaa !20
   %i.ed = tail call noalias dereferenceable_or_null(192) ptr @calloc(i64 noundef 12, i64 noundef 16) #12 ; 49 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.eb, i64 8
   store ptr %i.ed, ptr %i.ee, align 8, !tbaa !23
   store ptr %i.eb, ptr @ediamond, align 8, !tbaa !59
-  %4 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 4 uses
-  %5 = ashr i32 -4, %4                            ; 6 uses
-  store i32 %5, ptr %i.ed, align 4, !tbaa !4
-  %6 = lshr i32 4, %4                             ; 6 uses
+  store i32 %.pre-phi70, ptr %i.ed, align 4, !tbaa !4
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ed, i64 4
-  store i32 %6, ptr %i.ef, align 4, !tbaa !4
+  store i32 %.pre-phi72, ptr %i.ef, align 4, !tbaa !4
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
   store i32 10, ptr %i.eg, align 4, !tbaa !60
   %i.eh = getelementptr inbounds nuw i8, ptr %i.ed, i64 12
   store i32 5, ptr %i.eh, align 4, !tbaa !62
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ed, i64 16
   store i32 0, ptr %i.ei, align 4, !tbaa !4
-  %i.ej = lshr i32 8, %4                          ; 2 uses
+  %i.ej = lshr i32 8, %2                          ; 2 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ed, i64 20
   store i32 %i.ej, ptr %i.ek, align 4, !tbaa !4
   %i.el = getelementptr inbounds nuw i8, ptr %i.ed, i64 24
@@ -456,15 +463,15 @@ bb.g:                                             ; preds = %.lr.ph.i26
   %i.en = getelementptr inbounds nuw i8, ptr %i.ed, i64 32
   store i32 0, ptr %i.en, align 4, !tbaa !4
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ed, i64 36
-  store i32 %6, ptr %i.eo, align 4, !tbaa !4
+  store i32 %.pre-phi72, ptr %i.eo, align 4, !tbaa !4
   %i.ep = getelementptr inbounds nuw i8, ptr %i.ed, i64 40
   store i32 10, ptr %i.ep, align 4, !tbaa !60
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ed, i64 44
   store i32 7, ptr %i.eq, align 4, !tbaa !62
   %i.er = getelementptr inbounds nuw i8, ptr %i.ed, i64 48
-  store i32 %6, ptr %i.er, align 4, !tbaa !4
+  store i32 %.pre-phi72, ptr %i.er, align 4, !tbaa !4
   %i.es = getelementptr inbounds nuw i8, ptr %i.ed, i64 52
-  store i32 %6, ptr %i.es, align 4, !tbaa !4
+  store i32 %.pre-phi72, ptr %i.es, align 4, !tbaa !4
   %i.et = getelementptr inbounds nuw i8, ptr %i.ed, i64 56
   store i32 1, ptr %i.et, align 4, !tbaa !60
   %i.eu = getelementptr inbounds nuw i8, ptr %i.ed, i64 60
@@ -478,7 +485,7 @@ bb.g:                                             ; preds = %.lr.ph.i26
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ed, i64 76
   store i32 8, ptr %i.ey, align 4, !tbaa !62
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ed, i64 80
-  store i32 %6, ptr %i.ez, align 4, !tbaa !4
+  store i32 %.pre-phi72, ptr %i.ez, align 4, !tbaa !4
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ed, i64 84
   store i32 0, ptr %i.fa, align 4, !tbaa !4
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ed, i64 88
@@ -486,16 +493,16 @@ bb.g:                                             ; preds = %.lr.ph.i26
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ed, i64 92
   store i32 7, ptr %i.fc, align 4, !tbaa !62
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ed, i64 96
-  store i32 %6, ptr %i.fd, align 4, !tbaa !4
+  store i32 %.pre-phi72, ptr %i.fd, align 4, !tbaa !4
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ed, i64 100
-  store i32 %5, ptr %i.fe, align 4, !tbaa !4
+  store i32 %.pre-phi70, ptr %i.fe, align 4, !tbaa !4
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ed, i64 104
   store i32 4, ptr %i.ff, align 4, !tbaa !60
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ed, i64 108
   store i32 5, ptr %i.fg, align 4, !tbaa !62
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ed, i64 112
   store i32 0, ptr %i.fh, align 4, !tbaa !4
-  %i.fi = ashr i32 -8, %4                         ; 2 uses
+  %i.fi = ashr i32 -8, %2                         ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ed, i64 116
   store i32 %i.fi, ptr %i.fj, align 4, !tbaa !4
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ed, i64 120
@@ -505,15 +512,15 @@ bb.g:                                             ; preds = %.lr.ph.i26
   %i.fm = getelementptr inbounds nuw i8, ptr %i.ed, i64 128
   store i32 0, ptr %i.fm, align 4, !tbaa !4
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ed, i64 132
-  store i32 %5, ptr %i.fn, align 4, !tbaa !4
+  store i32 %.pre-phi70, ptr %i.fn, align 4, !tbaa !4
   %i.fo = getelementptr inbounds nuw i8, ptr %i.ed, i64 136
   store i32 4, ptr %i.fo, align 4, !tbaa !60
   %i.fp = getelementptr inbounds nuw i8, ptr %i.ed, i64 140
   store i32 7, ptr %i.fp, align 4, !tbaa !62
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ed, i64 144
-  store i32 %5, ptr %i.fq, align 4, !tbaa !4
+  store i32 %.pre-phi70, ptr %i.fq, align 4, !tbaa !4
   %i.fr = getelementptr inbounds nuw i8, ptr %i.ed, i64 148
-  store i32 %5, ptr %i.fr, align 4, !tbaa !4
+  store i32 %.pre-phi70, ptr %i.fr, align 4, !tbaa !4
   %i.fs = getelementptr inbounds nuw i8, ptr %i.ed, i64 152
   store i32 7, ptr %i.fs, align 4, !tbaa !60
   %i.ft = getelementptr inbounds nuw i8, ptr %i.ed, i64 156
@@ -527,7 +534,7 @@ bb.g:                                             ; preds = %.lr.ph.i26
   %i.fx = getelementptr inbounds nuw i8, ptr %i.ed, i64 172
   store i32 8, ptr %i.fx, align 4, !tbaa !62
   %i.fy = getelementptr inbounds nuw i8, ptr %i.ed, i64 176
-  store i32 %5, ptr %i.fy, align 4, !tbaa !4
+  store i32 %.pre-phi70, ptr %i.fy, align 4, !tbaa !4
   %i.fz = getelementptr inbounds nuw i8, ptr %i.ed, i64 180
   store i32 0, ptr %i.fz, align 4, !tbaa !4
   %i.ga = getelementptr inbounds nuw i8, ptr %i.ed, i64 184
@@ -554,16 +561,16 @@ bb.h:                                             ; preds = %.lr.ph.i31
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gf, i64 8
   store ptr %i.gh, ptr %i.gi, align 8, !tbaa !23
   store ptr %i.gf, ptr @ldiamond, align 8, !tbaa !59
-  %i.gj = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 4 uses
+  %i.gj = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 5 uses
   store i32 0, ptr %i.gh, align 4, !tbaa !4
-  %i.gk = lshr i32 8, %i.gj                       ; 2 uses
+  %i.gk = lshr i32 8, %i.gj                       ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gh, i64 4
   store i32 %i.gk, ptr %i.gl, align 4, !tbaa !4
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gh, i64 8
   store i32 6, ptr %i.gm, align 4, !tbaa !60
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gh, i64 12
   store i32 5, ptr %i.gn, align 4, !tbaa !62
-  %i.go = lshr i32 4, %i.gj                       ; 4 uses
+  %i.go = lshr i32 4, %i.gj                       ; 5 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %i.gh, i64 16
   store i32 %i.go, ptr %i.gp, align 4, !tbaa !4
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gh, i64 20
@@ -582,7 +589,7 @@ bb.h:                                             ; preds = %.lr.ph.i31
   store i32 5, ptr %i.gw, align 4, !tbaa !62
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gh, i64 48
   store i32 %i.go, ptr %i.gx, align 4, !tbaa !4
-  %i.gy = ashr i32 -4, %i.gj                      ; 4 uses
+  %i.gy = ashr i32 -4, %i.gj                      ; 5 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gh, i64 52
   store i32 %i.gy, ptr %i.gz, align 4, !tbaa !4
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gh, i64 56
@@ -591,7 +598,7 @@ bb.h:                                             ; preds = %.lr.ph.i31
   store i32 3, ptr %i.hb, align 4, !tbaa !62
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gh, i64 64
   store i32 0, ptr %i.hc, align 4, !tbaa !4
-  %i.hd = ashr i32 -8, %i.gj                      ; 2 uses
+  %i.hd = ashr i32 -8, %i.gj                      ; 3 uses
   %i.he = getelementptr inbounds nuw i8, ptr %i.gh, i64 68
   store i32 %i.hd, ptr %i.he, align 4, !tbaa !4
   %i.hf = getelementptr inbounds nuw i8, ptr %i.gh, i64 72
@@ -634,35 +641,42 @@ bb.h:                                             ; preds = %.lr.ph.i31
 
 bb.i:                                             ; preds = %.lr.ph.i36
   tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #13
+  %.pre61 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 5 uses
+  %.pre73 = lshr i32 8, %.pre61
+  %.pre75 = lshr i32 4, %.pre61
+  %.pre77 = ashr i32 -4, %.pre61
+  %.pre79 = ashr i32 -8, %.pre61
   br label %.lr.ph.i41
 
 .lr.ph.i41:                                       ; preds = %bb.i, %.lr.ph.i36
+  %.pre-phi80 = phi i32 [ %.pre79, %bb.i ], [ %i.hd, %.lr.ph.i36 ] ; 2 uses
+  %.pre-phi78 = phi i32 [ %.pre77, %bb.i ], [ %i.gy, %.lr.ph.i36 ] ; 4 uses
+  %.pre-phi76 = phi i32 [ %.pre75, %bb.i ], [ %i.go, %.lr.ph.i36 ] ; 4 uses
+  %.pre-phi74 = phi i32 [ %.pre73, %bb.i ], [ %i.gk, %.lr.ph.i36 ] ; 2 uses
+  %3 = phi i32 [ %.pre61, %bb.i ], [ %i.gj, %.lr.ph.i36 ] ; 2 uses
   store i32 12, ptr %i.hw, align 8, !tbaa !20
   %i.hy = tail call noalias dereferenceable_or_null(192) ptr @calloc(i64 noundef 12, i64 noundef 16) #12 ; 46 uses
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hw, i64 8
   store ptr %i.hy, ptr %i.hz, align 8, !tbaa !23
   store ptr %i.hw, ptr @sbdiamond, align 8, !tbaa !59
   %i.ia = load ptr, ptr @sdiamond, align 8, !tbaa !59
-  %7 = load i32, ptr @mv_rescale, align 4, !tbaa !4 ; 6 uses
   store i32 0, ptr %i.hy, align 4, !tbaa !4
-  %8 = lshr i32 8, %7                             ; 2 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hy, i64 4
-  store i32 %8, ptr %i.ib, align 4, !tbaa !4
+  store i32 %.pre-phi74, ptr %i.ib, align 4, !tbaa !4
   %i.ic = getelementptr inbounds nuw i8, ptr %i.hy, i64 8
   store i32 6, ptr %i.ic, align 4, !tbaa !60
   %i.id = getelementptr inbounds nuw i8, ptr %i.hy, i64 12
   store i32 12, ptr %i.id, align 4, !tbaa !62
-  %9 = lshr i32 4, %7                             ; 4 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %i.hy, i64 16
-  store i32 %9, ptr %i.ie, align 4, !tbaa !4
+  store i32 %.pre-phi76, ptr %i.ie, align 4, !tbaa !4
   %i.if = getelementptr inbounds nuw i8, ptr %i.hy, i64 20
-  store i32 %9, ptr %i.if, align 4, !tbaa !4
+  store i32 %.pre-phi76, ptr %i.if, align 4, !tbaa !4
   %i.ig = getelementptr inbounds nuw i8, ptr %i.hy, i64 24
   store i32 0, ptr %i.ig, align 4, !tbaa !60
   %i.ih = getelementptr inbounds nuw i8, ptr %i.hy, i64 28
   store i32 12, ptr %i.ih, align 4, !tbaa !62
   %i.ii = getelementptr inbounds nuw i8, ptr %i.hy, i64 32
-  store i32 %8, ptr %i.ii, align 4, !tbaa !4
+  store i32 %.pre-phi74, ptr %i.ii, align 4, !tbaa !4
   %i.ij = getelementptr inbounds nuw i8, ptr %i.hy, i64 36
   store i32 0, ptr %i.ij, align 4, !tbaa !4
   %i.ik = getelementptr inbounds nuw i8, ptr %i.hy, i64 40
@@ -670,33 +684,31 @@ bb.i:                                             ; preds = %.lr.ph.i36
   %i.il = getelementptr inbounds nuw i8, ptr %i.hy, i64 44
   store i32 12, ptr %i.il, align 4, !tbaa !62
   %i.im = getelementptr inbounds nuw i8, ptr %i.hy, i64 48
-  store i32 %9, ptr %i.im, align 4, !tbaa !4
-  %10 = ashr i32 -4, %7                           ; 4 uses
+  store i32 %.pre-phi76, ptr %i.im, align 4, !tbaa !4
   %i.in = getelementptr inbounds nuw i8, ptr %i.hy, i64 52
-  store i32 %10, ptr %i.in, align 4, !tbaa !4
+  store i32 %.pre-phi78, ptr %i.in, align 4, !tbaa !4
   %i.io = getelementptr inbounds nuw i8, ptr %i.hy, i64 56
   store i32 2, ptr %i.io, align 4, !tbaa !60
   %i.ip = getelementptr inbounds nuw i8, ptr %i.hy, i64 60
   store i32 12, ptr %i.ip, align 4, !tbaa !62
   %i.iq = getelementptr inbounds nuw i8, ptr %i.hy, i64 64
   store i32 0, ptr %i.iq, align 4, !tbaa !4
-  %11 = ashr i32 -8, %7                           ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %i.hy, i64 68
-  store i32 %11, ptr %i.ir, align 4, !tbaa !4
+  store i32 %.pre-phi80, ptr %i.ir, align 4, !tbaa !4
   %i.is = getelementptr inbounds nuw i8, ptr %i.hy, i64 72
   store i32 2, ptr %i.is, align 4, !tbaa !60
   %i.it = getelementptr inbounds nuw i8, ptr %i.hy, i64 76
   store i32 12, ptr %i.it, align 4, !tbaa !62
   %i.iu = getelementptr inbounds nuw i8, ptr %i.hy, i64 80
-  store i32 %10, ptr %i.iu, align 4, !tbaa !4
+  store i32 %.pre-phi78, ptr %i.iu, align 4, !tbaa !4
   %i.iv = getelementptr inbounds nuw i8, ptr %i.hy, i64 84
-  store i32 %10, ptr %i.iv, align 4, !tbaa !4
+  store i32 %.pre-phi78, ptr %i.iv, align 4, !tbaa !4
   %i.iw = getelementptr inbounds nuw i8, ptr %i.hy, i64 88
   store i32 4, ptr %i.iw, align 4, !tbaa !60
   %i.ix = getelementptr inbounds nuw i8, ptr %i.hy, i64 92
   store i32 12, ptr %i.ix, align 4, !tbaa !62
   %i.iy = getelementptr inbounds nuw i8, ptr %i.hy, i64 96
-  store i32 %11, ptr %i.iy, align 4, !tbaa !4
+  store i32 %.pre-phi80, ptr %i.iy, align 4, !tbaa !4
   %i.iz = getelementptr inbounds nuw i8, ptr %i.hy, i64 100
   store i32 0, ptr %i.iz, align 4, !tbaa !4
   %i.ja = getelementptr inbounds nuw i8, ptr %i.hy, i64 104
@@ -704,16 +716,16 @@ bb.i:                                             ; preds = %.lr.ph.i36
   %i.jb = getelementptr inbounds nuw i8, ptr %i.hy, i64 108
   store i32 12, ptr %i.jb, align 4, !tbaa !62
   %i.jc = getelementptr inbounds nuw i8, ptr %i.hy, i64 112
-  store i32 %10, ptr %i.jc, align 4, !tbaa !4
+  store i32 %.pre-phi78, ptr %i.jc, align 4, !tbaa !4
   %i.jd = getelementptr inbounds nuw i8, ptr %i.hy, i64 116
-  store i32 %9, ptr %i.jd, align 4, !tbaa !4
+  store i32 %.pre-phi76, ptr %i.jd, align 4, !tbaa !4
   %i.je = getelementptr inbounds nuw i8, ptr %i.hy, i64 120
   store i32 6, ptr %i.je, align 4, !tbaa !60
   %i.jf = getelementptr inbounds nuw i8, ptr %i.hy, i64 124
   store i32 12, ptr %i.jf, align 4, !tbaa !62
   %i.jg = getelementptr inbounds nuw i8, ptr %i.hy, i64 128
   store i32 0, ptr %i.jg, align 4, !tbaa !4
-  %i.jh = lshr i32 2, %7                          ; 2 uses
+  %i.jh = lshr i32 2, %3                          ; 2 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %i.hy, i64 132
   store i32 %i.jh, ptr %i.ji, align 4, !tbaa !4
   %i.jj = getelementptr inbounds nuw i8, ptr %i.hy, i64 136
@@ -724,7 +736,7 @@ bb.i:                                             ; preds = %.lr.ph.i36
   store i32 %i.jh, ptr %i.jl, align 4, !tbaa !4
   %i.jm = getelementptr inbounds nuw i8, ptr %i.hy, i64 148
   store <4 x i32> <i32 0, i32 0, i32 12, i32 0>, ptr %i.jm, align 4, !tbaa !4
-  %i.jn = ashr i32 -2, %7                         ; 2 uses
+  %i.jn = ashr i32 -2, %3                         ; 2 uses
   %i.jo = getelementptr inbounds nuw i8, ptr %i.hy, i64 164
   store i32 %i.jn, ptr %i.jo, align 4, !tbaa !4
   %i.jp = getelementptr inbounds nuw i8, ptr %i.hy, i64 168

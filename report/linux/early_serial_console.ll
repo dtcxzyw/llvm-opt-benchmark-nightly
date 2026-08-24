@@ -21,15 +21,13 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: noredzone nounwind
 define hidden void @console_init() local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 8 uses
-  %i.b = alloca ptr, align 8                      ; 5 uses
+  %i.a = alloca [64 x i8], align 16               ; 5 uses
+  %i.b = alloca ptr, align 8                      ; 7 uses
   %i.c = alloca [32 x i8], align 16               ; 11 uses
   %i.d = alloca ptr, align 8                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #3
   %i.e = call i32 @cmdline_find_option(ptr noundef nonnull @.str, ptr noundef nonnull %i.c, i32 noundef 32) #4
   %i.f = icmp sgt i32 %i.e, 0
-  %.sink.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %.sink.sroa.gep5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br i1 %i.f, label %bb.b, label %parse_earlyprintk.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -161,15 +159,25 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.a, ptr %i.b, align 8
   %i.bq = call i32 @strncmp(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.5, i64 noundef 12) #4
   %.not.i1 = icmp eq i32 %i.bq, 0
-  br i1 %.not.i1, label %bb.m, label %bb.l
+  %0 = load ptr, ptr %i.b, align 8                ; 2 uses
+  br i1 %.not.i1, label %1, label %bb.l
+
+1:                                                ; preds = %bb.k
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  br label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.br = call i32 @strncmp(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.6, i64 noundef 8) #4
+  %i.br = call i32 @strncmp(ptr noundef %0, ptr noundef nonnull @.str.6, i64 noundef 8) #4
   %.not7.i = icmp eq i32 %i.br, 0
-  br i1 %.not7.i, label %bb.m, label %parse_console_uart8250.exit
+  br i1 %.not7.i, label %3, label %parse_console_uart8250.exit
 
-bb.m:                                             ; preds = %bb.l, %bb.k
-  %.sink.sroa.phi = phi ptr [ %.sink.sroa.gep, %bb.k ], [ %.sink.sroa.gep5, %bb.l ]
+3:                                                ; preds = %bb.l
+  %4 = load ptr, ptr %i.b, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  br label %bb.m
+
+bb.m:                                             ; preds = %3, %1
+  %.sink.sroa.phi = phi ptr [ %5, %3 ], [ %2, %1 ]
   %i.bs = call i64 @simple_strtoull(ptr noundef nonnull %.sink.sroa.phi, ptr noundef nonnull %i.b, i32 noundef 0) #4 ; 3 uses
   %.0.i = trunc i64 %i.bs to i32                  ; 2 uses
   %i.bt = load ptr, ptr %i.b, align 8             ; 3 uses

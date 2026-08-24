@@ -204,6 +204,7 @@ bb.a:
   %i.c = sitofp i32 %i.b to double
   %i.d = fdiv double %i.c, 1.000000e+03           ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 148 ; 2 uses
+  %.pre = load i32, ptr @scalefac_band, align 16, !tbaa !4
   br label %bb.b
 
 ..loopexit52_crit_edge:                           ; preds = %.lr.ph
@@ -212,23 +213,26 @@ bb.a:
 
 .loopexit52:                                      ; preds = %..loopexit52_crit_edge, %bb.b
   %exitcond62.not = icmp eq i64 %indvars.iv.next, 21
-  br i1 %exitcond62.not, label %.preheader.a, label %bb.b, !llvm.loop !36
+  br i1 %exitcond62.not, label %.preheader, label %bb.b, !llvm.loop !36
+
+.preheader:                                       ; preds = %.loopexit52
+  %.pre68 = load i32, ptr getelementptr inbounds nuw (i8, ptr @scalefac_band, i64 92), align 4, !tbaa !4
+  br label %.preheader.a
 
 bb.b:                                             ; preds = %bb.a, %.loopexit52
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %.loopexit52 ] ; 3 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr @scalefac_band, i64 %indvars.iv
-  %4 = load i32, ptr %3, align 4, !tbaa !4        ; 2 uses
+  %3 = phi i32 [ %.pre, %bb.a ], [ %i.g, %.loopexit52 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %.loopexit52 ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr @scalefac_band, i64 %indvars.iv.next
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !4    ; 2 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !4    ; 3 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   store double f0x547D42AEA2879F2E, ptr %i.h, align 8, !tbaa !19
-  %i.i = icmp slt i32 %4, %i.g
+  %i.i = icmp slt i32 %3, %i.g
   br i1 %i.i, label %.lr.ph, label %.loopexit52
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
   %.54 = phi double [ %., %.lr.ph ], [ f0x547D42AEA2879F2E, %bb.b ] ; 2 uses
-  %.053 = phi i32 [ %i.ab, %.lr.ph ], [ %4, %bb.b ] ; 2 uses
+  %.053 = phi i32 [ %i.ab, %.lr.ph ], [ %3, %bb.b ] ; 2 uses
   %i.j = sitofp i32 %.053 to double
   %i.k = fmul double %i.d, %i.j
   %i.l = fdiv double %i.k, 1.152000e+03           ; 2 uses
@@ -263,21 +267,20 @@ bb.b:                                             ; preds = %bb.a, %.loopexit52
   %exitcond67.not = icmp eq i64 %indvars.iv.next65, 12
   br i1 %exitcond67.not, label %bb.c, label %.preheader.a, !llvm.loop !39
 
-.preheader.a:                                     ; preds = %.loopexit52, %.loopexit
-  %indvars.iv64 = phi i64 [ %indvars.iv.next65, %.loopexit ], [ 0, %.loopexit52 ] ; 3 uses
-  %5 = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @scalefac_band, i64 92), i64 %indvars.iv64
-  %6 = load i32, ptr %5, align 4, !tbaa !4        ; 2 uses
+.preheader.a:                                     ; preds = %.preheader, %.loopexit
+  %4 = phi i32 [ %.pre68, %.preheader ], [ %i.ad, %.loopexit ] ; 2 uses
+  %indvars.iv64 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next65, %.loopexit ] ; 2 uses
   %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1 ; 3 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @scalefac_band, i64 92), i64 %indvars.iv.next65
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !4  ; 2 uses
+  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !4  ; 3 uses
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv64 ; 2 uses
   store double f0x547D42AEA2879F2E, ptr %i.ae, align 8, !tbaa !19
-  %i.af = icmp slt i32 %6, %i.ad
+  %i.af = icmp slt i32 %4, %i.ad
   br i1 %i.af, label %.lr.ph57, label %.loopexit
 
 .lr.ph57:                                         ; preds = %.preheader.a, %.lr.ph57
   %.4859 = phi double [ %.48, %.lr.ph57 ], [ f0x547D42AEA2879F2E, %.preheader.a ] ; 2 uses
-  %.156 = phi i32 [ %i.ay, %.lr.ph57 ], [ %6, %.preheader.a ] ; 2 uses
+  %.156 = phi i32 [ %i.ay, %.lr.ph57 ], [ %4, %.preheader.a ] ; 2 uses
   %i.ag = sitofp i32 %.156 to double
   %i.ah = fmul double %i.d, %i.ag
   %i.ai = fdiv double %i.ah, 3.840000e+02         ; 2 uses

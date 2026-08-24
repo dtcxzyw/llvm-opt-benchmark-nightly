@@ -204,7 +204,7 @@ hwloc__alloc_read_path_as_cpulist.exit.thread.sink.split: ; preds = %hwloc__allo
   br label %hwloc__alloc_read_path_as_cpulist.exit.thread
 
 hwloc__alloc_read_path_as_cpulist.exit.thread:    ; preds = %hwloc__alloc_read_path_as_cpulist.exit.thread.sink.split, %bb.b
-  %i.i = load i32, ptr @hwloc_linux_find_kernel_max_numnodes.max_numnodes, align 4, !tbaa !11
+  %i.i = load i32, ptr @hwloc_linux_find_kernel_max_numnodes.max_numnodes, align 4, !tbaa !11 ; 3 uses
   %i.j = sdiv i32 %i.i, 64
   %i.k = sext i32 %i.j to i64
   %i.l = shl nsw i64 %i.k, 3
@@ -214,23 +214,27 @@ hwloc__alloc_read_path_as_cpulist.exit.thread:    ; preds = %hwloc__alloc_read_p
 
 .lr.ph:                                           ; preds = %hwloc__alloc_read_path_as_cpulist.exit.thread, %bb.f
   %i.n = phi ptr [ %i.y, %bb.f ], [ %i.m, %hwloc__alloc_read_path_as_cpulist.exit.thread ] ; 2 uses
-  %0 = load i32, ptr @hwloc_linux_find_kernel_max_numnodes.max_numnodes, align 4, !tbaa !11
+  %0 = phi i32 [ %i.u, %bb.f ], [ %i.i, %hwloc__alloc_read_path_as_cpulist.exit.thread ]
   %i.o = sext i32 %0 to i64
   %i.p = call i64 (i64, ...) @syscall(i64 noundef 239, ptr noundef nonnull %i.a, ptr noundef nonnull %i.n, i64 noundef %i.o, ptr noundef null, i32 noundef 0) #29
   call void @free(ptr noundef nonnull %i.n) #29
   %i.q = and i64 %i.p, 4294967295
   %.not18 = icmp eq i64 %i.q, 0
-  br i1 %.not18, label %.thread.sink.split, label %bb.e
+  br i1 %.not18, label %1, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph
   %i.r = tail call ptr @__errno_location() #33
   %i.s = load i32, ptr %i.r, align 4, !tbaa !11
   %.not19 = icmp eq i32 %i.s, 22
-  br i1 %.not19, label %bb.f, label %.thread.sink.split
+  br i1 %.not19, label %bb.f, label %1
+
+1:                                                ; preds = %bb.e, %.lr.ph
+  %2 = load i32, ptr @hwloc_linux_find_kernel_max_numnodes.max_numnodes, align 4, !tbaa !11
+  br label %.thread.sink.split
 
 bb.f:                                             ; preds = %bb.e
   %i.t = load i32, ptr @hwloc_linux_find_kernel_max_numnodes.max_numnodes, align 4, !tbaa !11 ; 2 uses
-  %i.u = shl nsw i32 %i.t, 1
+  %i.u = shl nsw i32 %i.t, 1                      ; 3 uses
   store i32 %i.u, ptr @hwloc_linux_find_kernel_max_numnodes.max_numnodes, align 4, !tbaa !11
   %i.v = sdiv i32 %i.t, 32
   %i.w = sext i32 %i.v to i64
@@ -239,13 +243,13 @@ bb.f:                                             ; preds = %bb.e
   %.not17 = icmp eq ptr %i.y, null
   br i1 %.not17, label %.thread.sink.split, label %.lr.ph
 
-.thread.sink.split:                               ; preds = %.lr.ph, %bb.e, %bb.f, %hwloc__alloc_read_path_as_cpulist.exit.thread
-  %1 = load i32, ptr @hwloc_linux_find_kernel_max_numnodes.max_numnodes, align 4, !tbaa !11 ; 2 uses
-  store i32 %1, ptr @hwloc_linux_find_kernel_max_numnodes._max_numnodes, align 4, !tbaa !11
+.thread.sink.split:                               ; preds = %bb.f, %hwloc__alloc_read_path_as_cpulist.exit.thread, %1
+  %.lcssa.sink = phi i32 [ %2, %1 ], [ %i.i, %hwloc__alloc_read_path_as_cpulist.exit.thread ], [ %i.u, %bb.f ] ; 2 uses
+  store i32 %.lcssa.sink, ptr @hwloc_linux_find_kernel_max_numnodes._max_numnodes, align 4, !tbaa !11
   br label %.thread
 
 .thread:                                          ; preds = %.thread.sink.split, %bb.a
-  %.2 = phi i32 [ %i.b, %bb.a ], [ %1, %.thread.sink.split ]
+  %.2 = phi i32 [ %i.b, %bb.a ], [ %.lcssa.sink, %.thread.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   ret i32 %.2
 }

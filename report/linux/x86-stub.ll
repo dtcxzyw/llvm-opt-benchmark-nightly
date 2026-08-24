@@ -202,13 +202,14 @@ declare hidden i32 @efi_printk(ptr noundef, ...) local_unnamed_addr #2
 ; Function Attrs: noredzone noreturn nounwind optsize
 define hidden void @efi_stub_entry(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #3 {
 bb.a:
+  %3 = alloca [3 x i64], align 16                 ; 3 uses
   %i.a = alloca [3 x i64], align 16               ; 3 uses
   %i.b = alloca [3 x i64], align 16               ; 3 uses
   %i.c = alloca ptr, align 8                      ; 6 uses
-  %i.d = alloca ptr, align 8                      ; 8 uses
-  %3 = alloca %struct.exit_boot_struct, align 8   ; 6 uses
+  %i.d = alloca ptr, align 8                      ; 11 uses
+  %4 = alloca %struct.exit_boot_struct, align 8   ; 6 uses
   %i.e = alloca ptr, align 8                      ; 6 uses
-  %4 = alloca %struct.guid_t, align 4             ; 20 uses
+  %5 = alloca %struct.guid_t, align 4             ; 20 uses
   %i.f = alloca [3 x i64], align 16               ; 3 uses
   %i.g = alloca ptr, align 8                      ; 20 uses
   %i.h = alloca [3 x i64], align 16               ; 3 uses
@@ -217,21 +218,21 @@ bb.a:
   %i.k = alloca [3 x i64], align 16               ; 3 uses
   %i.l = alloca [3 x i64], align 16               ; 3 uses
   %i.m = alloca ptr, align 8                      ; 10 uses
-  %5 = alloca %struct.guid_t, align 4             ; 7 uses
+  %6 = alloca %struct.guid_t, align 4             ; 7 uses
   %i.n = alloca i64, align 8                      ; 7 uses
   %i.o = alloca [3 x i64], align 16               ; 3 uses
   %i.p = alloca ptr, align 8                      ; 10 uses
   %i.q = alloca [3 x i64], align 16               ; 3 uses
   %i.r = alloca i64, align 8                      ; 7 uses
   %i.s = alloca [2 x i32], align 8                ; 10 uses
-  %6 = alloca %struct.guid_t, align 4             ; 6 uses
+  %7 = alloca %struct.guid_t, align 4             ; 6 uses
   %i.t = alloca i64, align 8                      ; 6 uses
   %i.u = alloca [3 x i64], align 16               ; 3 uses
-  %7 = alloca %struct.guid_t, align 4             ; 4 uses
+  %8 = alloca %struct.guid_t, align 4             ; 4 uses
   %i.v = alloca ptr, align 8                      ; 4 uses
   %i.w = alloca [3 x i64], align 16               ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #5
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) @__const.efi_stub_entry.guid, i64 16, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %8, ptr noundef nonnull align 4 dereferenceable(16) @__const.efi_stub_entry.guid, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v) #5
   store ptr null, ptr %i.v, align 8
   store ptr %1, ptr @efi_system_table, align 8
@@ -248,8 +249,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not30, label %bb.d, label %bb.m
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #5
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(16) @__const.efi_allocate_bootparams.proto, i64 16, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #5
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) @__const.efi_allocate_bootparams.proto, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #5
   %i.y = load i8, ptr @efi_is64, align 1, !range !4, !noundef !5
   %i.z = trunc nuw i8 %i.y to i1
@@ -260,7 +261,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = load ptr, ptr %i.aa, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 152
   %i.ad = load ptr, ptr %i.ac, align 8
-  %i.ae = call win64cc i64 %i.ad(ptr noundef %0, ptr noundef nonnull %6, ptr noundef nonnull @image) #6, !inline_history !8
+  %i.ae = call win64cc i64 %i.ad(ptr noundef %0, ptr noundef nonnull %7, ptr noundef nonnull @image) #6, !inline_history !8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -272,7 +273,7 @@ bb.f:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 88
   %i.ak = load i32, ptr %i.aj, align 8
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @image, i64 4), align 4
-  %i.al = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ak, ptr noundef %0, ptr noundef nonnull %6, ptr noundef nonnull @image, ptr noundef nonnull %i.u) #6
+  %i.al = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ak, ptr noundef %0, ptr noundef nonnull %7, ptr noundef nonnull @image, ptr noundef nonnull %i.u) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u) #5
   %i.am = trunc i64 %i.al to i32                  ; 2 uses
   %i.an = call noundef i32 @llvm.fshl.i32(i32 %i.am, i32 %i.am, i32 1)
@@ -326,13 +327,13 @@ efi_allocate_bootparams.exit:                     ; preds = %bb.j
   %i.bi = trunc nuw i64 %i.bh to i32
   store i32 %i.bi, ptr %i.bf, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.h, %bb.k, %bb.i
   %.0.i.ph = phi i64 [ %i.as, %bb.i ], [ -9223372036854775799, %bb.k ], [ %i.aq, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
   call fastcc void @efi_exit(ptr noundef %0, i64 noundef %.0.i.ph) #7
   unreachable
 
@@ -355,7 +356,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   %i.bm = load i8, ptr @efi_is64, align 1, !range !4, !noundef !5
-  %i.bn = trunc nuw i8 %i.bm to i1                ; 11 uses
+  %i.bn = trunc nuw i8 %i.bm to i1                ; 12 uses
   br i1 %i.bn, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -364,7 +365,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bq = load ptr, ptr %i.bp, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 320
   %i.bs = load ptr, ptr %i.br, align 8
-  %i.bt = call win64cc i64 %i.bs(ptr noundef nonnull %7, ptr noundef null, ptr noundef nonnull @memattr) #6 ; 0 uses
+  %i.bt = call win64cc i64 %i.bs(ptr noundef nonnull %8, ptr noundef null, ptr noundef nonnull @memattr) #6 ; 0 uses
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.p
@@ -377,7 +378,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 172
   %i.ca = load i32, ptr %i.bz, align 4
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @memattr, i64 4), align 4
-  %i.cb = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ca, ptr noundef nonnull %7, ptr noundef null, ptr noundef nonnull @memattr, ptr noundef nonnull %i.w) #6 ; 0 uses
+  %i.cb = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ca, ptr noundef nonnull %8, ptr noundef null, ptr noundef nonnull @memattr, ptr noundef nonnull %i.w) #6 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w) #5
   br label %bb.s
 
@@ -629,8 +630,8 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.ge = call i64 @efi_setup_graphics(ptr noundef %i.gb, ptr noundef %i.gd) #6 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #5
   store ptr null, ptr %i.m, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #5
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) @__const.setup_efi_pci.pci_proto, i64 16, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #5
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(16) @__const.setup_efi_pci.pci_proto, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #5
   br i1 %i.bn, label %bb.au, label %bb.av
 
@@ -640,7 +641,7 @@ bb.au:                                            ; preds = %bb.at
   %i.gh = load ptr, ptr %i.gg, align 8
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 312
   %i.gj = load ptr, ptr %i.gi, align 8
-  %i.gk = call win64cc i64 %i.gj(i32 noundef 2, ptr noundef nonnull %5, ptr noundef null, ptr noundef nonnull %i.n, ptr noundef nonnull %i.m) #6, !inline_history !10
+  %i.gk = call win64cc i64 %i.gj(i32 noundef 2, ptr noundef nonnull %6, ptr noundef null, ptr noundef nonnull %i.n, ptr noundef nonnull %i.m) #6, !inline_history !10
   br label %bb.aw
 
 bb.av:                                            ; preds = %bb.at
@@ -656,7 +657,7 @@ bb.av:                                            ; preds = %bb.at
   store i32 0, ptr %i.gs, align 4
   %i.gt = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   store i32 0, ptr %i.gt, align 4
-  %i.gu = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.gr, i32 noundef 2, ptr noundef nonnull %5, ptr noundef null, ptr noundef nonnull %i.n, ptr noundef nonnull %i.m, ptr noundef nonnull %i.o) #6
+  %i.gu = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.gr, i32 noundef 2, ptr noundef nonnull %6, ptr noundef null, ptr noundef nonnull %i.n, ptr noundef nonnull %i.m, ptr noundef nonnull %i.o) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #5
   %i.gv = trunc i64 %i.gu to i32                  ; 2 uses
   %i.gw = call noundef i32 @llvm.fshl.i32(i32 %i.gv, i32 %i.gv, i32 1)
@@ -711,7 +712,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.hl = load ptr, ptr %i.hk, align 8
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 152
   %i.hn = load ptr, ptr %i.hm, align 8
-  %i.ho = call win64cc i64 %i.hn(ptr noundef %i.hi, ptr noundef nonnull %5, ptr noundef nonnull %i.p) #6, !inline_history !10
+  %i.ho = call win64cc i64 %i.hn(ptr noundef %i.hi, ptr noundef nonnull %6, ptr noundef nonnull %i.p) #6, !inline_history !10
   %i.hp = icmp eq i64 %i.ho, 0
   %i.hq = load ptr, ptr %i.p, align 8             ; 4 uses
   %i.hr = icmp ne ptr %i.hq, null
@@ -734,7 +735,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 88
   %i.ic = load i32, ptr %i.ib, align 8
   store i32 0, ptr %i.he, align 4
-  %i.id = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ic, ptr noundef %i.hv, ptr noundef nonnull %5, ptr noundef nonnull %i.p, ptr noundef nonnull %i.q) #6
+  %i.id = call i64 (i32, ...) @__efi64_thunk(i32 noundef %i.ic, ptr noundef %i.hv, ptr noundef nonnull %6, ptr noundef nonnull %i.p, ptr noundef nonnull %i.q) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #5
   %i.ie = and i64 %i.id, 4294967295
   %i.if = icmp eq i64 %i.ie, 0
@@ -987,7 +988,7 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo, %pre
 
 .critedge2.i:                                     ; preds = %bb.bq, %.critedge.i47, %bb.aw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #5
   %i.mx = load ptr, ptr %i.m, align 8             ; 3 uses
   %.not.i.i = icmp eq ptr %i.mx, null
   br i1 %.not.i.i, label %setup_efi_pci.exit, label %bb.br
@@ -1047,12 +1048,12 @@ efistub_fw_vendor.exit.thread.i:                  ; preds = %setup_efi_pci.exit.
   br i1 %.not1.i, label %.thread.i, label %setup_quirks.exit
 
 .thread.i:                                        ; preds = %efistub_fw_vendor.exit.thread.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
   br label %apple_set_os.exit.i
 
 bb.bs:                                            ; preds = %efistub_fw_vendor.exit.i50
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
   %i.ob = call ptr @efi_get_smbios_record(i8 noundef zeroext 1) #6 ; 2 uses
   %.not.i.i.i52 = icmp eq ptr %i.ob, null
@@ -1196,38 +1197,38 @@ bb.cd:                                            ; preds = %.preheader.i.i.i
   %i.ps = load ptr, ptr %i.pr, align 8
   %i.pt = getelementptr inbounds nuw i8, ptr %i.ps, i64 320
   %i.pu = load ptr, ptr %i.pt, align 8
-  store i8 -107, ptr %4, align 4
-  %i.pv = getelementptr inbounds nuw i8, ptr %4, i64 1
+  store i8 -107, ptr %5, align 4
+  %i.pv = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 -38, ptr %i.pv, align 1
-  %i.pw = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %i.pw = getelementptr inbounds nuw i8, ptr %5, i64 2
   store i8 -59, ptr %i.pw, align 2
-  %i.px = getelementptr inbounds nuw i8, ptr %4, i64 3
+  %i.px = getelementptr inbounds nuw i8, ptr %5, i64 3
   store i8 -59, ptr %i.px, align 1
-  %i.py = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.py = getelementptr inbounds nuw i8, ptr %5, i64 4
   store i8 92, ptr %i.py, align 4
-  %i.pz = getelementptr inbounds nuw i8, ptr %4, i64 5
+  %i.pz = getelementptr inbounds nuw i8, ptr %5, i64 5
   store i8 125, ptr %i.pz, align 1
-  %i.qa = getelementptr inbounds nuw i8, ptr %4, i64 6
+  %i.qa = getelementptr inbounds nuw i8, ptr %5, i64 6
   store i8 -26, ptr %i.qa, align 2
-  %i.qb = getelementptr inbounds nuw i8, ptr %4, i64 7
+  %i.qb = getelementptr inbounds nuw i8, ptr %5, i64 7
   store i8 69, ptr %i.qb, align 1
-  %i.qc = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.qc = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i8 -78, ptr %i.qc, align 4
-  %i.qd = getelementptr inbounds nuw i8, ptr %4, i64 9
+  %i.qd = getelementptr inbounds nuw i8, ptr %5, i64 9
   store i8 -15, ptr %i.qd, align 1
-  %i.qe = getelementptr inbounds nuw i8, ptr %4, i64 10
+  %i.qe = getelementptr inbounds nuw i8, ptr %5, i64 10
   store i8 63, ptr %i.qe, align 2
-  %i.qf = getelementptr inbounds nuw i8, ptr %4, i64 11
+  %i.qf = getelementptr inbounds nuw i8, ptr %5, i64 11
   store i8 -43, ptr %i.qf, align 1
-  %i.qg = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %i.qg = getelementptr inbounds nuw i8, ptr %5, i64 12
   store i8 43, ptr %i.qg, align 4
-  %i.qh = getelementptr inbounds nuw i8, ptr %4, i64 13
+  %i.qh = getelementptr inbounds nuw i8, ptr %5, i64 13
   store i8 -79, ptr %i.qh, align 1
-  %i.qi = getelementptr inbounds nuw i8, ptr %4, i64 14
+  %i.qi = getelementptr inbounds nuw i8, ptr %5, i64 14
   store i8 0, ptr %i.qi, align 2
-  %i.qj = getelementptr inbounds nuw i8, ptr %4, i64 15
+  %i.qj = getelementptr inbounds nuw i8, ptr %5, i64 15
   store i8 119, ptr %i.qj, align 1
-  %i.qk = call win64cc i64 %i.pu(ptr noundef nonnull %4, ptr noundef null, ptr noundef nonnull %i.e) #6, !inline_history !18
+  %i.qk = call win64cc i64 %i.pu(ptr noundef nonnull %5, ptr noundef null, ptr noundef nonnull %i.e) #6, !inline_history !18
   %.not.i.i53 = icmp eq i64 %i.qk, 0
   br i1 %.not.i.i53, label %bb.ce, label %apple_set_os.exit.i
 
@@ -1267,16 +1268,16 @@ bb.cj:                                            ; preds = %bb.ci
 
 apple_set_os.exit.i:                              ; preds = %.loopexit.i.i.i.i.i, %.lr.ph.i.i.i.i.i, %bb.cc, %bb.cj, %bb.ci, %bb.ch, %bb.cd, %get_table_record.exit.i.i.i, %bb.bx, %verify_ep_integrity.exit.i.i.i.i, %verify_ep_checksum.exit.i.i.i.i.i, %bb.bv, %bb.bu, %bb.bt, %.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   br label %setup_quirks.exit
 
 setup_quirks.exit:                                ; preds = %efistub_fw_vendor.exit.i50, %efistub_fw_vendor.exit.thread.i, %apple_set_os.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
   store ptr null, ptr %i.d, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
-  store ptr %.071, ptr %3, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
+  store ptr %.071, ptr %4, align 8
   %i.qy = getelementptr inbounds nuw i8, ptr %.071, i64 448
-  %i.qz = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.qz = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %i.qy, ptr %i.qz, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
   store ptr null, ptr %i.c, align 8
@@ -1299,20 +1300,53 @@ bb.ck:                                            ; preds = %setup_quirks.exit
   %i.ri = and i64 %i.rh, 4294967295
   %i.rj = mul nuw nsw i64 %i.ri, 20
   %i.rk = add nuw nsw i64 %i.rj, 16               ; 3 uses
-  %.pre21.i = load ptr, ptr @efi_system_table, align 8 ; 2 uses
+  %.pre21.i = load ptr, ptr %i.d, align 8         ; 3 uses
+  %.not.i14.i.i = icmp eq ptr %.pre21.i, null
+  br i1 %.not.i14.i.i, label %._crit_edge.i.i.i, label %9
+
+._crit_edge.i.i.i:                                ; preds = %._crit_edge.i.i.i.a
   br i1 %i.bn, label %._crit_edge.i.i._crit_edge22.i, label %._crit_edge.i.i._crit_edge.i
 
-._crit_edge.i.i._crit_edge22.i:                   ; preds = %._crit_edge.i.i.i.a
-  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre21.i, i64 96
+9:                                                ; preds = %._crit_edge.i.i.i.a
+  br i1 %i.bn, label %.thread.i.i.i, label %16
+
+.thread.i.i.i:                                    ; preds = %9
+  %10 = load ptr, ptr @efi_system_table, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 96
+  %12 = load ptr, ptr %11, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 72
+  %14 = load ptr, ptr %13, align 8
+  %15 = call win64cc i64 %14(ptr noundef nonnull %.pre21.i) #6, !inline_history !19 ; 0 uses
+  store ptr null, ptr %i.d, align 8
+  br label %._crit_edge.i.i._crit_edge22.i
+
+16:                                               ; preds = %9
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
+  %17 = load ptr, ptr @efi_system_table, align 8
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 60
+  %19 = load i32, ptr %18, align 4
+  %20 = zext i32 %19 to i64
+  %21 = inttoptr i64 %20 to ptr
+  %22 = getelementptr inbounds nuw i8, ptr %21, i64 48
+  %23 = load i32, ptr %22, align 8
+  %24 = call i64 (i32, ...) @__efi64_thunk(i32 noundef %23, ptr noundef nonnull %.pre21.i, ptr noundef nonnull %3) #6 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
+  store ptr null, ptr %i.d, align 8
+  br label %._crit_edge.i.i._crit_edge.i
+
+._crit_edge.i.i._crit_edge22.i:                   ; preds = %.thread.i.i.i, %._crit_edge.i.i.i
+  %25 = load ptr, ptr @efi_system_table, align 8
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %25, i64 96
   %.pre.i58.a = load ptr, ptr %.phi.trans.insert.i, align 8
   %.phi.trans.insert23.i = getelementptr inbounds nuw i8, ptr %.pre.i58.a, i64 64
   %.pre24.i = load ptr, ptr %.phi.trans.insert23.i, align 8
   %i.rl = call win64cc i64 %.pre24.i(i32 noundef 2, i64 noundef %i.rk, ptr noundef nonnull %i.d) #6, !inline_history !19
   br label %bb.cl
 
-._crit_edge.i.i._crit_edge.i:                     ; preds = %._crit_edge.i.i.i.a
+._crit_edge.i.i._crit_edge.i:                     ; preds = %16, %._crit_edge.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  %i.rm = getelementptr inbounds nuw i8, ptr %.pre21.i, i64 60
+  %26 = load ptr, ptr @efi_system_table, align 8
+  %i.rm = getelementptr inbounds nuw i8, ptr %26, i64 60
   %i.rn = load i32, ptr %i.rm, align 4
   %i.ro = zext i32 %i.rn to i64
   %i.rp = inttoptr i64 %i.ro to ptr
@@ -1379,7 +1413,7 @@ allocate_e820.exit.i:                             ; preds = %bb.cn, %bb.cm, %all
   br i1 %.not.i56, label %bb.co, label %.loopexit
 
 bb.co:                                            ; preds = %allocate_e820.exit.i
-  %i.sr = call i64 @efi_exit_boot_services(ptr noundef %0, ptr noundef nonnull %3, ptr noundef nonnull @exit_boot_func) #6 ; 2 uses
+  %i.sr = call i64 @efi_exit_boot_services(ptr noundef %0, ptr noundef nonnull %4, ptr noundef nonnull @exit_boot_func) #6 ; 2 uses
   %.not15.i = icmp eq i64 %i.sr, 0
   br i1 %.not15.i, label %bb.cp, label %.loopexit
 
@@ -1532,7 +1566,7 @@ bb.db:                                            ; preds = %bb.da
 
 .loopexit:                                        ; preds = %bb.cv, %bb.cw, %bb.co, %allocate_e820.exit.i
   %.0.i57.ph = phi i64 [ %.1.i38.i, %allocate_e820.exit.i ], [ %i.sr, %bb.co ], [ -9223372036854775803, %bb.cw ], [ -9223372036854775803, %bb.cv ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
   br label %.sink.split
 
@@ -1542,7 +1576,7 @@ bb.dc:                                            ; preds = %.critedge14.i.i.i, 
   %i.vf = trunc nuw i32 %.255.i.i to i8
   %i.vg = getelementptr inbounds nuw i8, ptr %.071, i64 488
   store i8 %i.vf, ptr %i.vg, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
   call void @efi_5level_switch() #6
   call void asm sideeffect "jmp *$0", "r,{si},~{dirflag},~{fpsr},~{flags}"(i64 %i.ve, ptr nonnull %.071) #5, !srcloc !23

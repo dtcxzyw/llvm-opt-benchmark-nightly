@@ -205,12 +205,14 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.gq, label %.lr.ph, label %._crit_edge.a
 
 .lr.ph:                                           ; preds = %.thread178
+  %tm_set_node.uniq.promoted = load i32, ptr @tm_set_node.uniq, align 4
   %i.gr = sext i32 %2 to i64
   %wide.trip.count = zext nneg i32 %i.gm to i64
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph, %bb.u
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.u ] ; 3 uses
+  %12 = phi i32 [ %tm_set_node.uniq.promoted, %.lr.ph ], [ %i.hb, %bb.u ] ; 2 uses
   %i.gs = tail call noalias ptr @calloc(i64 noundef %i.gr, i64 noundef 8) #28
   %i.gt = getelementptr inbounds nuw [80 x i8], ptr %i.gp, i64 %indvars.iv ; 9 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 8
@@ -226,9 +228,7 @@ bb.u:                                             ; preds = %.lr.ph, %bb.u
   store i32 %i.gz, ptr %i.gy, align 8, !tbaa !27
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gt, i64 32
   store double 0.000000e+00, ptr %i.ha, align 8, !tbaa !28
-  %12 = load i32, ptr @tm_set_node.uniq, align 4, !tbaa !8 ; 2 uses
-  %i.hb = add nsw i32 %12, 1
-  store i32 %i.hb, ptr @tm_set_node.uniq, align 4, !tbaa !8
+  %i.hb = add nsw i32 %12, 1                      ; 2 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %i.gt, i64 52
   store i32 %12, ptr %i.hc, align 4, !tbaa !29
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gt, i64 44
@@ -237,9 +237,13 @@ bb.u:                                             ; preds = %.lr.ph, %bb.u
   store i32 0, ptr %i.he, align 8, !tbaa !17
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge.a, label %bb.u, !llvm.loop !72
+  br i1 %exitcond.not, label %._crit_edge, label %bb.u, !llvm.loop !72
 
-._crit_edge.a:                                    ; preds = %bb.u, %.thread178
+._crit_edge:                                      ; preds = %bb.u
+  store i32 %i.hb, ptr @tm_set_node.uniq, align 4, !tbaa !8
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %.thread178
   %i.hf = tail call double @tm_time_diff() #23
   %i.hg = load i32, ptr @verbose_level, align 4, !tbaa !8
   %i.hh = icmp sgt i32 %i.hg, 4

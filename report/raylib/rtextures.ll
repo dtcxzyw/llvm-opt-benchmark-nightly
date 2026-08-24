@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 812
 inline.NumDeleted: 134
 loop-unroll.NumCompletelyUnrolled: 32
-loop-unroll.NumRuntimeUnrolled: 86
-loop-unroll.NumUnrolled: 118
+loop-unroll.NumRuntimeUnrolled: 87
+loop-unroll.NumUnrolled: 119
 begin_hunk_0_@stbi_load_gif_from_memory:bb.a
   %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %indvars.iv.i
   store i32 %i.ca, ptr %i.cb, align 4
@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef ptr @stbi__loadf_main(ptr noundef nonnull %0, ptr nofree noundef captures(none) %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(address_is_null) %3, i32 noundef %4) unnamed_addr #4 {
 bb.a:
-  %i.a = tail call fastcc ptr @stbi__load_and_postprocess_8bit(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) ; 7 uses
+  %i.a = tail call fastcc ptr @stbi__load_and_postprocess_8bit(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4) ; 9 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.i, label %bb.b
 
@@ -256,7 +256,7 @@ stbi__malloc_mad4.exit.i:                         ; preds = %stbi__mul2sizes_val
   %i.n = shl i32 %i.i, 2
   %i.o = mul i32 %i.n, %i.e
   %i.p = sext i32 %i.o to i64
-  %i.q = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %i.p) #53 ; 6 uses
+  %i.q = tail call noalias noundef ptr @malloc(i64 noundef range(i64 -8589934588, 8589934589) %i.p) #53 ; 8 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %stbi__malloc_mad4.exit.thread.i, label %bb.g
 
@@ -269,52 +269,91 @@ bb.g:                                             ; preds = %stbi__malloc_mad4.e
   %i.s = and i32 %i.e, 1
   %.not.i = icmp eq i32 %i.s, 0                   ; 2 uses
   %i.t = sext i1 %.not.i to i32
-  %.0.i = add i32 %i.e, %i.t                      ; 3 uses
-  %i.u = icmp sgt i32 %i.i, 0                     ; 2 uses
-  %5 = icmp sgt i32 %.0.i, 0
-  %or.cond.i = and i1 %i.u, %5
-  br i1 %or.cond.i, label %.preheader48.preheader.i, label %._crit_edge51.split.i
+  %.0.i = add i32 %i.e, %i.t                      ; 5 uses
+  %i.u = icmp sgt i32 %i.i, 0
+  br i1 %i.u, label %.preheader48.lr.ph.i, label %.loopexit.i
 
-.preheader48.preheader.i:                         ; preds = %bb.g
+.preheader48.lr.ph.i:                             ; preds = %bb.g
+  %5 = icmp sgt i32 %.0.i, 0
+  %6 = load float, ptr @stbi__l2h_gamma, align 4
+  %7 = fpext float %6 to double                   ; 3 uses
+  %8 = load float, ptr @stbi__l2h_scale, align 4
+  %9 = fpext float %8 to double                   ; 3 uses
+  br i1 %5, label %.preheader48.preheader.i, label %._crit_edge51.split.i
+
+.preheader48.preheader.i:                         ; preds = %.preheader48.lr.ph.i
   %i.v = sext i32 %i.e to i64
   %wide.trip.count58.i = zext nneg i32 %i.i to i64
-  %wide.trip.count.i = zext nneg i32 %.0.i to i64
+  %wide.trip.count.i = zext nneg i32 %.0.i to i64 ; 2 uses
+  %xtraiter = and i64 %wide.trip.count.i, 1
+  %10 = icmp eq i32 %.0.i, 1
+  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod21 = trunc i32 %.0.i to i1
   br label %.preheader48.i
 
 .preheader48.i:                                   ; preds = %._crit_edge.i, %.preheader48.preheader.i
   %indvars.iv55.i = phi i64 [ 0, %.preheader48.preheader.i ], [ %indvars.iv.next56.i, %._crit_edge.i ] ; 2 uses
-  %i.w = mul nsw i64 %indvars.iv55.i, %i.v
-  br label %bb.h
+  %i.w = mul nsw i64 %indvars.iv55.i, %i.v        ; 3 uses
+  br i1 %10, label %.epil.preheader, label %bb.h
 
-bb.h:                                             ; preds = %bb.h, %.preheader48.i
-  %indvars.iv.i.a = phi i64 [ 0, %.preheader48.i ], [ %indvars.iv.next.i.a, %bb.h ] ; 2 uses
-  %i.x = add nsw i64 %indvars.iv.i.a, %i.w        ; 2 uses
+bb.h:                                             ; preds = %.preheader48.i, %bb.h
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i.1, %bb.h ], [ 0, %.preheader48.i ] ; 3 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %bb.h ], [ 0, %.preheader48.i ]
+  %i.x = add nsw i64 %indvars.iv.i, %i.w          ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.a, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1
   %i.aa = uitofp i8 %i.z to float
   %i.ab = fdiv float %i.aa, 2.550000e+02
   %i.ac = fpext float %i.ab to double
-  %6 = load float, ptr @stbi__l2h_gamma, align 4
-  %7 = fpext float %6 to double
-  %8 = tail call double @pow(double noundef %i.ac, double noundef %7) #52
-  %9 = load float, ptr @stbi__l2h_scale, align 4
-  %i.ad = fpext float %9 to double
-  %i.ae = fmul double %8, %i.ad
+  %11 = tail call double @pow(double noundef %i.ac, double noundef %7) #52
+  %12 = fmul double %11, %9
+  %13 = fptrunc double %12 to float
+  %14 = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.x
+  store float %13, ptr %14, align 4
+  %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1
+  %15 = add nsw i64 %indvars.iv.next.i, %i.w      ; 2 uses
+  %16 = getelementptr inbounds i8, ptr %i.a, i64 %15
+  %17 = load i8, ptr %16, align 1
+  %18 = uitofp i8 %17 to float
+  %19 = fdiv float %18, 2.550000e+02
+  %i.ad = fpext float %19 to double
+  %20 = tail call double @pow(double noundef %i.ad, double noundef %7) #52
+  %i.ae = fmul double %20, %9
   %i.af = fptrunc double %i.ae to float
-  %i.ag = getelementptr inbounds [4 x i8], ptr %i.q, i64 %i.x
+  %i.ag = getelementptr inbounds [4 x i8], ptr %i.q, i64 %15
   store float %i.af, ptr %i.ag, align 4
-  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i.a, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.h
+  %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
+  %indvars.iv.next.i.a = add i64 %indvars.iv.i.a, 2 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i.a, %unroll_iter
+  br i1 %exitcond.not.i, label %._crit_edge.i.unr-lcssa, label %bb.h
 
-._crit_edge.i:                                    ; preds = %bb.h
+._crit_edge.i.unr-lcssa:                          ; preds = %bb.h
+  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
+
+.epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.preheader48.i
+  %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader48.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod21)
+  %21 = add nsw i64 %indvars.iv.i.epil.init, %i.w ; 2 uses
+  %22 = getelementptr inbounds i8, ptr %i.a, i64 %21
+  %23 = load i8, ptr %22, align 1
+  %24 = uitofp i8 %23 to float
+  %25 = fdiv float %24, 2.550000e+02
+  %26 = fpext float %25 to double
+  %27 = tail call double @pow(double noundef %26, double noundef %7) #52
+  %28 = fmul double %27, %9
+  %29 = fptrunc double %28 to float
+  %30 = getelementptr inbounds [4 x i8], ptr %i.q, i64 %21
+  store float %29, ptr %30, align 4
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %._crit_edge.i.unr-lcssa, %.epil.preheader
   %indvars.iv.next56.i = add nuw nsw i64 %indvars.iv55.i, 1 ; 2 uses
   %exitcond59.not.i = icmp eq i64 %indvars.iv.next56.i, %wide.trip.count58.i
   br i1 %exitcond59.not.i, label %._crit_edge51.split.i, label %.preheader48.i
 
-._crit_edge51.split.i:                            ; preds = %._crit_edge.i, %bb.g
-  %or.cond53.i = and i1 %i.u, %.not.i
-  br i1 %or.cond53.i, label %.lr.ph.preheader.i, label %.loopexit.i
+._crit_edge51.split.i:                            ; preds = %._crit_edge.i, %.preheader48.lr.ph.i
+  br i1 %.not.i, label %.lr.ph.preheader.i, label %.loopexit.i
 
 .lr.ph.preheader.i:                               ; preds = %._crit_edge51.split.i
   %i.ah = sext i32 %i.e to i64                    ; 3 uses
@@ -371,7 +410,7 @@ bb.h:                                             ; preds = %bb.h, %.preheader48
   store float %i.bd, ptr %i.be, align 4
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %.lr.ph.i.epil.preheader, %.loopexit.i.loopexit.unr-lcssa, %._crit_edge51.split.i
+.loopexit.i:                                      ; preds = %.lr.ph.i.epil.preheader, %.loopexit.i.loopexit.unr-lcssa, %._crit_edge51.split.i, %bb.g
   tail call void @free(ptr noundef nonnull %i.a) #52
   br label %stbi__ldr_to_hdr.exit
 

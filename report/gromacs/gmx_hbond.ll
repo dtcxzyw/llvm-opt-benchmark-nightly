@@ -206,7 +206,7 @@ bb.f:                                             ; preds = %bb.c
   %i.eb = load i8, ptr @_ZZ9gmx_hbondiPPcE6bMerge, align 1, !tbaa !110, !range !54, !noundef !55
   %i.ec = trunc nuw i8 %i.eb to i1                ; 2 uses
   %.not = xor i1 %i.ec, true
-  %i.ed = load i8, ptr @_ZZ9gmx_hbondiPPcE3bDA, align 1, !range !54
+  %i.ed = load i8, ptr @_ZZ9gmx_hbondiPPcE3bDA, align 1, !range !54 ; 2 uses
   %i.ee = trunc nuw i8 %i.ed to i1
   %or.cond = select i1 %.not, i1 true, i1 %i.ee
   br i1 %or.cond, label %bb.m, label %bb.g
@@ -247,7 +247,11 @@ bb.n:                                             ; preds = %bb.m
           to label %bb.o unwind label %bb.e
 
 bb.o:                                             ; preds = %bb.n
-  br i1 %i.eh, label %bb.p, label %bb.v
+  br i1 %i.eh, label %bb.p, label %._crit_edge1340
+
+._crit_edge1340:                                  ; preds = %bb.o
+  %.pre = load i8, ptr @_ZZ9gmx_hbondiPPcE3bDA, align 1, !range !54
+  br label %bb.v
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %39) #24
@@ -277,7 +281,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %39) #24
   br label %bb.vj
 
-bb.v:                                             ; preds = %bb.o, %bb.m
+bb.v:                                             ; preds = %._crit_edge1340, %bb.m
+  %87 = phi i8 [ %.pre, %._crit_edge1340 ], [ %i.ed, %bb.m ]
   %i.ek = load float, ptr @_ZZ9gmx_hbondiPPcE4acut, align 4, !tbaa !63
   %i.el = fpext float %i.ek to double
   %i.em = fmul double %i.el, f0x3F91DF46A2529D39
@@ -287,7 +292,6 @@ bb.v:                                             ; preds = %bb.o, %bb.m
   %i.ep = load i8, ptr @_ZZ9gmx_hbondiPPcE8bContact, align 1, !tbaa !110, !range !54, !noundef !55
   %i.eq = trunc nuw i8 %i.ep to i1
   %.not15 = xor i1 %i.eq, true
-  %87 = load i8, ptr @_ZZ9gmx_hbondiPPcE3bDA, align 1, !range !54
   %i.er = trunc nuw i8 %87 to i1
   %or.cond17 = select i1 %.not15, i1 true, i1 %i.er
   br i1 %or.cond17, label %bb.ac, label %bb.w
