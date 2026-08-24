@@ -204,7 +204,6 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.x
   %.0408618 = phi i32 [ 0, %.preheader546.lr.ph ], [ %.1409.lcssa, %._crit_edge589 ] ; 11 uses
   %.6617 = phi i32 [ 0, %.preheader546.lr.ph ], [ %i.if, %._crit_edge589 ] ; 9 uses
   %i.ej = sub i32 %i.eh, %.6617                   ; 8 uses
-  %8 = zext i32 %i.ej to i64                      ; 2 uses
   %i.ek = zext i32 %indvars.iv757 to i64
   %i.el = shl nuw nsw i64 %i.ek, 2
   %i.em = icmp sgt i32 %i.do, %.6617
@@ -236,6 +235,7 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.x
   br i1 %exitcond759.peel766.not, label %._crit_edge589.loopexit704, label %.lr.ph588.split.us.split.preheader966
 
 .lr.ph588.split.us.split.preheader966:            ; preds = %.lr.ph588.split.us.split.peel.next
+  %8 = zext i32 %i.ej to i64                      ; 2 uses
   %min.iters.check1007 = icmp ult i32 %i.ej, 8
   br i1 %min.iters.check1007, label %.lr.ph588.split.us.split.preheader1064, label %vector.ph1008
 

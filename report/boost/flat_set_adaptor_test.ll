@@ -205,10 +205,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not1.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPiEES4_EET0_T_S6_S5_.exit, label %.lr.ph.i28.preheader
 
 .lr.ph.i28.preheader:                             ; preds = %bb.t
-  %12 = add i64 %i.w, %.sroa.069.0307
   %i.co = shl i64 %.018.lcssa.i, 2
   %.neg368 = add i64 %i.co, 4
   %.neg369 = mul i64 %.neg368, %7
+  %12 = add i64 %i.w, %.sroa.069.0307
   %i.cp = add i64 %.neg369, %12                   ; 2 uses
   %i.cq = lshr i64 %i.cp, 2
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
@@ -611,10 +611,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not1.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPiEES4_EET0_T_S6_S5_.exit, label %.lr.ph.i28.preheader
 
 .lr.ph.i28.preheader:                             ; preds = %bb.t
-  %12 = add i64 %i.w, %.sroa.071.0305
   %i.co = shl i64 %.018.lcssa.i, 2
   %.neg366 = add i64 %i.co, 4
   %.neg367 = mul i64 %.neg366, %7
+  %12 = add i64 %i.w, %.sroa.071.0305
   %i.cp = add i64 %.neg367, %12                   ; 2 uses
   %i.cq = lshr i64 %i.cp, 2
   %i.cr = add nuw nsw i64 %i.cq, 1                ; 2 uses
@@ -1017,10 +1017,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not1.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPiEES4_EET0_T_S6_S5_.exit, label %.lr.ph.i28.preheader
 
 .lr.ph.i28.preheader:                             ; preds = %bb.t
-  %12 = add i64 %i.ab, %.sroa.071.0305
   %i.cz = shl i64 %.018.lcssa.i, 2
   %.neg375 = add i64 %i.cz, 4
   %.neg376 = mul i64 %.neg375, %7
+  %12 = add i64 %i.ab, %.sroa.071.0305
   %i.da = add i64 %.neg376, %12                   ; 2 uses
   %i.db = lshr i64 %i.da, 2
   %i.dc = add nuw nsw i64 %i.db, 1                ; 2 uses
@@ -1423,10 +1423,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not1.i, label %_ZN5boost20adl_move_swap_rangesINS_7movelib16reverse_iteratorIPiEES4_EET0_T_S6_S5_.exit, label %.lr.ph.i28.preheader
 
 .lr.ph.i28.preheader:                             ; preds = %bb.t
-  %12 = add i64 %i.ab, %.sroa.069.0307
   %i.cz = shl i64 %.018.lcssa.i, 2
   %.neg377 = add i64 %i.cz, 4
   %.neg378 = mul i64 %.neg377, %7
+  %12 = add i64 %i.ab, %.sroa.069.0307
   %i.da = add i64 %.neg378, %12                   ; 2 uses
   %i.db = lshr i64 %i.da, 2
   %i.dc = add nuw nsw i64 %i.db, 1                ; 2 uses

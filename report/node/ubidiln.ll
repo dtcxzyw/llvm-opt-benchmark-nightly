@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
   %.lcssa = phi i32 [ %i.ah, %.critedge2.us.split.loop.exit ], [ %smax, %.critedge.preheader.us ], [ %smax, %.critedge.us ]
   %.lcssa85 = trunc i64 %indvars.iv6598 to i32    ; 2 uses
   %i.ai = add i32 %.lcssa85, %i.az                ; 2 uses
-  %smax103 = tail call i64 @llvm.smax.i64(i64 %indvars.iv6598, i64 %indvars.iv)
   %3 = add i64 %indvar, %i.bb
-  %reass.sub = sub i64 %smax103, %3
+  %4 = tail call i64 @llvm.smax.i64(i64 %indvars.iv6598, i64 %indvars.iv)
+  %reass.sub = sub i64 %4, %3
   %i.aj = add i64 %reass.sub, 1                   ; 3 uses
   %min.iters.check105 = icmp ult i64 %i.aj, 8
   br i1 %min.iters.check105, label %scalar.ph104.preheader, label %vector.ph106

@@ -205,8 +205,6 @@ bb.c:                                             ; preds = %.lr.ph70, %.critedg
   %.03569 = phi ptr [ %.03159, %.lr.ph70 ], [ %i.cj, %.critedge ] ; 12 uses
   %i.s = shl i64 %indvar107, 3
   %i.t = sub i64 %i.n, %i.s                       ; 2 uses
-  %3 = lshr i64 %i.t, 3
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %i.u = ptrtoint ptr %.03569 to i64              ; 2 uses
   %i.v = sub i64 %i.u, %i.h                       ; 3 uses
   %i.w = ashr i64 %i.v, 5                         ; 2 uses
@@ -376,6 +374,8 @@ _ZSt10__count_ifIPKPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIS4
   br i1 %i.bs, label %.critedge42, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %_ZSt10__count_ifIPKPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIS4_EEENSt15iterator_traitsIT_E15difference_typeESA_SA_T0_.exit
+  %3 = lshr i64 %i.t, 3
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.t, 24
   br i1 %min.iters.check, label %.lr.ph.i44.preheader130, label %vector.ph
 
@@ -778,8 +778,6 @@ bb.c:                                             ; preds = %.lr.ph69, %.critedg
   %.03568 = phi ptr [ %.03158, %.lr.ph69 ], [ %i.cj, %.critedge ] ; 12 uses
   %i.s = shl i64 %indvar106, 3
   %i.t = sub i64 %i.n, %i.s                       ; 2 uses
-  %3 = lshr i64 %i.t, 3
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %i.u = ptrtoint ptr %.03568 to i64              ; 2 uses
   %i.v = sub i64 %i.u, %i.h                       ; 3 uses
   %i.w = ashr i64 %i.v, 5                         ; 2 uses
@@ -949,6 +947,8 @@ _ZSt10__count_ifIPPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIPKS
   br i1 %i.bs, label %.critedge42, label %.lr.ph.i44.preheader
 
 .lr.ph.i44.preheader:                             ; preds = %_ZSt10__count_ifIPPN6hermes10BasicBlockEN9__gnu_cxx5__ops17_Iter_equals_iterIPKS2_EEENSt15iterator_traitsIT_E15difference_typeESB_SB_T0_.exit
+  %3 = lshr i64 %i.t, 3
+  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %min.iters.check = icmp ult i64 %i.t, 24
   br i1 %min.iters.check, label %.lr.ph.i44.preheader129, label %vector.ph
 
