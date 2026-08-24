@@ -202,7 +202,7 @@ bb.ad:                                            ; preds = %bb.as, %bb.aa
   br i1 %or.cond46.i.i, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %._crit_edge.i.i, %bb.ad
-  %i.es = phi i64 [ %.pre83.i.i, %._crit_edge.i.i ], [ %i.eo, %bb.ad ] ; 5 uses
+  %i.es = phi i64 [ %.pre83.i.i, %._crit_edge.i.i ], [ %i.eo, %bb.ad ] ; 6 uses
   %i.et = phi i64 [ %.pre82.i.i, %._crit_edge.i.i ], [ %i.ep, %bb.ad ] ; 7 uses
   %i.eu = icmp sgt i64 %i.et, -1
   call void @llvm.assume(i1 %i.eu)
@@ -236,7 +236,7 @@ bb.ai:                                            ; preds = %bb.ae
   call void @llvm.experimental.noalias.scope.decl(metadata !105)
   %i.fc = add nuw i64 %i.es, 32
   %i.fd = shl nuw i64 %i.es, 1
-  %..i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.fc, i64 range(i64 0, -1) %i.fd) ; 4 uses
+  %..i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.fc, i64 range(i64 0, -1) %i.fd) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !108
   call fastcc void @_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11finish_growCs5lJtbkSVYU0_6uu_yes(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.e, i64 %i.es, ptr %.pre84.i.i, i64 noundef %..i.i.i.i.i, i64 noundef 1, i64 noundef 1) #15, !noalias !109
   %i.fe = load i64, ptr %i.e, align 8, !range !9, !noalias !108, !noundef !8
@@ -250,6 +250,9 @@ _RNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCs5lJtbkSVY
   %i.fh = icmp sgt i64 %..i.i.i.i.i, -1
   call void @llvm.assume(i1 %i.fh)
   store i64 %..i.i.i.i.i, ptr %i.h, align 8, !alias.scope !110, !noalias !101
+  %.pre.i.i.i = sub nuw nsw i64 %..i.i.i.i.i, %i.es
+  %2 = icmp samesign ugt i64 %.pre.i.i.i, 31
+  call void @llvm.assume(i1 %2)
   br label %bb.aj
 
 _RNvMs2_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCs5lJtbkSVYU0_6uu_yes.exit.i.i: ; preds = %bb.ai

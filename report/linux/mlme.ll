@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.e
   %i.p = and i32 %i.o, 255                        ; 2 uses
-  %i.q = getelementptr i8, ptr %0, i64 1
+  %i.q = getelementptr i8, ptr %0, i64 1          ; 3 uses
   %i.r = zext nneg i32 %i.p to i64                ; 2 uses
   %wide.trip.count = zext nneg i32 %.0.i42 to i64
   %i.s = load i8, ptr %i.m, align 1               ; 2 uses
@@ -212,6 +212,7 @@ bb.e:                                             ; preds = %bb.d
   %i.u = add nuw nsw i32 %i.p, %i.t
   %i.v = zext nneg i32 %i.u to i64
   %i.w = zext i8 %i.s to i64
+  %invariant.gep = getelementptr i8, ptr %i.q, i64 %i.w
   br label %bb.f
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.e
@@ -232,25 +233,30 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.f:                                             ; preds = %.lr.ph, %bb.i
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.i ] ; 7 uses
   %i.ad = icmp samesign ult i64 %indvars.iv, %i.r
-  br i1 %i.ad, label %bb.g, label %bb.h
+  br i1 %i.ad, label %2, label %3
 
-bb.g:                                             ; preds = %bb.f
-  %2 = add nuw i64 %indvars.iv, %i.w
-  %3 = and i64 %2, 4294967295
+2:                                                ; preds = %bb.f
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv
   br label %bb.i
 
-bb.h:                                             ; preds = %bb.f
+3:                                                ; preds = %bb.f
   %4 = icmp samesign ult i64 %indvars.iv, %i.v
-  %5 = select i1 %4, i64 %i.r, i64 0
-  %spec.select = sub nuw nsw i64 %indvars.iv, %5
+  br i1 %4, label %bb.g, label %bb.h
+
+bb.g:                                             ; preds = %3
+  %5 = sub nuw nsw i64 %indvars.iv, %i.r
+  %6 = getelementptr i8, ptr %i.q, i64 %5
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g
-  %.sink = phi i64 [ %3, %bb.g ], [ %spec.select, %bb.h ]
-  %6 = getelementptr i8, ptr %i.q, i64 %.sink
-  %i.ae = load i8, ptr %6, align 1
+bb.h:                                             ; preds = %3
+  %7 = getelementptr i8, ptr %i.q, i64 %indvars.iv
+  br label %bb.i
+
+bb.i:                                             ; preds = %2, %bb.h, %bb.g
+  %.sink.in = phi ptr [ %gep, %2 ], [ %7, %bb.h ], [ %6, %bb.g ]
+  %i.ae = load i8, ptr %.sink.in, align 1
   %i.af = getelementptr i8, ptr %i.a, i64 %indvars.iv
   store i8 %i.ae, ptr %i.af, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
