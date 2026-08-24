@@ -205,9 +205,8 @@ bb.ca:                                            ; preds = %list_length.exit.i1
 bb.cb:                                            ; preds = %list_length.exit.i167
   %i.vr = getelementptr i8, ptr %i.vk, i64 16
   %.val81.i = load ptr, ptr %i.vr, align 8
-  %sext.i = shl i64 %indvars.iv.i164, 32
-  %3 = ashr exact i64 %sext.i, 29
-  %4 = getelementptr inbounds i8, ptr %.val81.i, i64 %3
+  %3 = and i64 %indvars.iv.i164, 4294967295
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %.val81.i, i64 %3
   %i.vs = load i32, ptr %4, align 8               ; 3 uses
   %i.vt = icmp slt i32 %i.vs, 1
   br i1 %i.vt, label %bb.cc, label %bb.cd
@@ -610,26 +609,26 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 124
-  %i.o = load i16, ptr %i.n, align 4              ; 3 uses
+  %i.o = load i16, ptr %i.n, align 4              ; 2 uses
+  %3 = sext i16 %i.o to i32                       ; 2 uses
   %i.p = icmp slt i16 %i.o, 1
   br i1 %i.p, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.f
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 128
   %i.r = load ptr, ptr %i.q, align 8
-  %3 = sext i16 %i.o to i64
-  %4 = sext i16 %i.o to i64
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.h
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1
-  %exitcond.not = icmp eq i64 %indvars.iv, 0
+  %4 = add nsw i32 %.076123, 1
+  %exitcond.not = icmp eq i32 %.076123, 0
   br i1 %exitcond.not, label %._crit_edge, label %bb.h, !llvm.loop !39
 
 bb.h:                                             ; preds = %.lr.ph, %bb.g
-  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.g ] ; 3 uses
-  %5 = sub nsw i64 %indvars.iv, %4
-  %i.s = getelementptr inbounds [8 x i8], ptr %i.r, i64 %5
+  %.076123 = phi i32 [ %3, %.lr.ph ], [ %4, %bb.g ] ; 3 uses
+  %5 = sub nsw i32 %.076123, %3
+  %6 = zext nneg i32 %5 to i64
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %6
   %i.t = load ptr, ptr %i.s, align 8
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %bb.g, label %.critedge112

@@ -205,7 +205,7 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.f, i8 0, i64 24, i1 false)
-  %i.i = zext nneg i32 %0 to i64                  ; 21 uses
+  %i.i = zext nneg i32 %0 to i64                  ; 24 uses
   %i.j = shl nuw nsw i64 %i.i, 3
   %i.k = mul nuw nsw i64 %i.j, %i.i               ; 2 uses
   %i.l = tail call ptr @cli_max_malloc(i64 noundef %i.k) #13 ; 18 uses
@@ -608,7 +608,6 @@ scalar.ph29:                                      ; preds = %middle.block35, %sc
 
 .preheader1136.preheader:                         ; preds = %.preheader1137.epil, %.preheader1136.preheader.unr-lcssa
   tail call fastcc void @makebmp(ptr noundef nonnull @.str.37, ptr noundef %3, i32 noundef %0, i32 noundef %0, ptr noundef %1)
-  %4 = zext nneg i32 %0 to i64
   %wide.trip.count1596 = zext nneg i32 %i.om to i64 ; 2 uses
   %i.vg = shl nuw nsw i64 %i.i, 2
   %i.vh = shl nuw nsw i64 %i.i, 2
@@ -620,13 +619,13 @@ scalar.ph29:                                      ; preds = %middle.block35, %sc
   %indvars.iv1593 = phi i64 [ 1, %.preheader1136.preheader ], [ %indvars.iv.next1594, %._crit_edge1256 ] ; 2 uses
   %i.vj = mul i64 %i.vh, %indvar
   %scevgep = getelementptr i8, ptr %i.vi, i64 %i.vj
-  %i.vk = mul nuw nsw i64 %indvars.iv1593, %4
+  %i.vk = mul nuw nsw i64 %indvars.iv1593, %i.i
   %load_initial = load i32, ptr %scevgep, align 4
   %i.vl = and i32 %load_initial, 255
   br label %.preheader1135
 
 .preheader1133.preheader:                         ; preds = %._crit_edge1256
-  %i.vm = zext nneg i32 %0 to i64                 ; 3 uses
+  %i.vm = zext nneg i32 %0 to i64
   %wide.trip.count1610 = zext nneg i32 %i.om to i64 ; 2 uses
   %n.vec39 = and i64 %i.oo, -4                    ; 3 uses
   %i.vn = or disjoint i64 %n.vec39, 1
@@ -663,13 +662,13 @@ scalar.ph29:                                      ; preds = %middle.block35, %sc
 
 .preheader1133:                                   ; preds = %.preheader1133.preheader, %._crit_edge1263
   %indvars.iv1607 = phi i64 [ 1, %.preheader1133.preheader ], [ %i.wh, %._crit_edge1263 ] ; 3 uses
-  %i.wc = mul nuw nsw i64 %indvars.iv1607, %i.vm
+  %i.wc = mul nuw nsw i64 %indvars.iv1607, %i.i
   %i.wd = add nsw i64 %indvars.iv1607, -1
   %i.we = mul nuw nsw i64 %i.wd, %i.vm
   %i.wf = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.we ; 2 uses
   %i.wg = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.wc ; 2 uses
   %i.wh = add nuw nsw i64 %indvars.iv1607, 1      ; 3 uses
-  %i.wi = mul nuw nsw i64 %i.wh, %i.vm
+  %i.wi = mul nuw nsw i64 %i.wh, %i.i
   %i.wj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.wi ; 2 uses
   br label %vector.body40
 

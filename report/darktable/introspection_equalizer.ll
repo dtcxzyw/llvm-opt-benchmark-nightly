@@ -205,12 +205,13 @@ bb.b:                                             ; preds = %.lr.ph204, %dt_iop_
 
 .preheader373.lr.ph.i:                            ; preds = %bb.b
   %i.by = icmp sgt i32 %i.bu, 0
-  %6 = sext i32 %i.bv to i64                      ; 4 uses
+  %6 = zext i32 %i.bv to i64
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %indvars.iv243
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !35 ; 3 uses
   br i1 %i.by, label %.preheader373.lr.ph.split.us.i, label %iter.check
 
 iter.check:                                       ; preds = %.preheader373.lr.ph.i
+  %7 = sext i32 %i.bv to i64                      ; 3 uses
   %i.cb = sext i32 %i.bu to i64
   %wide.trip.count.i = zext nneg i32 %i.bw to i64 ; 6 uses
   %invariant.gep506.i = getelementptr [4 x i8], ptr %i.ca, i64 %i.cb ; 6 uses
@@ -224,7 +225,7 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.cc = and i64 %wide.trip.count.i, 28
   %n.vec = and i64 %wide.trip.count.i, 2147483616 ; 4 uses
-  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %6, i64 0
+  %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %7, i64 0
   %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer ; 4 uses
   br label %vector.body
 
@@ -262,7 +263,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ] ; 2 uses
   %n.vec314 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
-  %broadcast.splatinsert315 = insertelement <4 x i64> poison, i64 %6, i64 0
+  %broadcast.splatinsert315 = insertelement <4 x i64> poison, i64 %7, i64 0
   %broadcast.splat316 = shufflevector <4 x i64> %broadcast.splatinsert315, <4 x i64> poison, <4 x i32> zeroinitializer
   %broadcast.splatinsert317 = insertelement <4 x i64> poison, i64 %vec.epilog.resume.val, i64 0
   %broadcast.splat318 = shufflevector <4 x i64> %broadcast.splatinsert317, <4 x i64> poison, <4 x i32> zeroinitializer
@@ -289,7 +290,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.preheader373.i
 
 .preheader373.lr.ph.split.us.i:                   ; preds = %.preheader373.lr.ph.i
-  %7 = zext i32 %i.bv to i64
   %i.ck = zext nneg i32 %i.bu to i64              ; 3 uses
   %wide.trip.count424.i = zext nneg i32 %i.bw to i64
   %invariant.gep508.i = getelementptr inbounds nuw [4 x i8], ptr %i.ca, i64 %i.ck
@@ -301,12 +301,12 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %.preheader373.us.i
 
 .preheader373.us.i:                               ; preds = %._crit_edge.us.i, %.preheader373.lr.ph.split.us.i
-  %indvars.iv421.i = phi i64 [ %indvars.iv.next422.i, %._crit_edge.us.i ], [ 0, %.preheader373.lr.ph.split.us.i ] ; 4 uses
+  %indvars.iv421.i = phi i64 [ %indvars.iv.next422.i, %._crit_edge.us.i ], [ 0, %.preheader373.lr.ph.split.us.i ] ; 3 uses
   %i.cm = trunc nuw nsw i64 %indvars.iv421.i to i32
   %i.cn = shl i32 %i.cm, %i.bt
   %i.co = sext i32 %i.cn to i64
   %i.cp = mul nsw i64 %i.co, %i.k                 ; 5 uses
-  %i.cq = mul nuw nsw i64 %indvars.iv421.i, %6
+  %i.cq = mul nuw nsw i64 %indvars.iv421.i, %6    ; 2 uses
   %i.cr = getelementptr [4 x i8], ptr %i.ca, i64 %i.cq ; 5 uses
   br i1 %i.cl, label %.epil.preheader, label %.preheader373.us.i.new
 
@@ -383,8 +383,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %._crit_edge.us.i, label %bb.c, !llvm.loop !42
 
 ._crit_edge.us.i:                                 ; preds = %bb.c, %._crit_edge.us.i.unr-lcssa
-  %8 = mul nuw nsw i64 %indvars.iv421.i, %7
-  %gep509.i = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep508.i, i64 %8
+  %gep509.i = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep508.i, i64 %i.cq
   store float 0.000000e+00, ptr %gep509.i, align 4, !tbaa !36
   %indvars.iv.next422.i = add nuw nsw i64 %indvars.iv421.i, 1 ; 2 uses
   %exitcond425.not.i = icmp eq i64 %indvars.iv.next422.i, %wide.trip.count424.i
@@ -392,7 +391,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
 
 .preheader373.i:                                  ; preds = %.preheader373.i.preheader, %.preheader373.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.preheader373.i ], [ %indvars.iv.i.ph, %.preheader373.i.preheader ] ; 2 uses
-  %i.eb = mul nsw i64 %indvars.iv.i, %6
+  %i.eb = mul nsw i64 %indvars.iv.i, %7
   %gep507.i = getelementptr [4 x i8], ptr %invariant.gep506.i, i64 %i.eb
   store float 0.000000e+00, ptr %gep507.i, align 4, !tbaa !36
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses

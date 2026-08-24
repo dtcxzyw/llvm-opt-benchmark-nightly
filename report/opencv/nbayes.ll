@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 48
   %i.ae = load ptr, ptr %i.ad, align 8
   %i.af = invoke noundef i32 %i.ae(ptr noundef nonnull align 8 dereferenceable(8) %i.ab)
-          to label %bb.l unwind label %bb.ar      ; 24 uses
+          to label %bb.l unwind label %bb.ar      ; 23 uses
 
 bb.l:                                             ; preds = %bb.k
   %i.ag = load ptr, ptr %1, align 8, !tbaa !86    ; 2 uses
@@ -607,9 +607,8 @@ bb.dl:                                            ; preds = %bb.dk
   %i.mc = getelementptr inbounds nuw i8, ptr %16, i64 128
   %i.md = load i64, ptr %i.mc, align 8, !tbaa !84
   %i.me = icmp sgt i32 %i.af, 0
-  %43 = sext i32 %i.af to i64
-  %wide.trip.count471.a = zext nneg i32 %i.lk to i64
-  %wide.trip.count466 = zext i32 %i.af to i64     ; 3 uses
+  %wide.trip.count471.a = zext i32 %i.af to i64   ; 4 uses
+  %wide.trip.count466 = zext nneg i32 %i.lk to i64
   br label %bb.dm
 
 bb.dm:                                            ; preds = %.lr.ph415, %._crit_edge412
@@ -681,7 +680,7 @@ _ZN2cv3Mat2atIiEERT_i.exit:                       ; preds = %bb.ds, %bb.dr, %bb.
 .lr.ph411:                                        ; preds = %.lr.ph411.preheader, %.loopexit
   %indvars.iv458 = phi i64 [ 0, %.lr.ph411.preheader ], [ %indvars.iv.next459, %.loopexit ] ; 8 uses
   %.0161410 = phi ptr [ %i.nn, %.lr.ph411.preheader ], [ %i.oq, %.loopexit ] ; 3 uses
-  %i.no = sub nsw i64 %wide.trip.count466, %indvars.iv458 ; 3 uses
+  %i.no = sub nsw i64 %wide.trip.count471.a, %indvars.iv458 ; 3 uses
   %i.np = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %indvars.iv458
   %i.nq = load float, ptr %i.np, align 4, !tbaa !110
   %i.nr = fpext float %i.nq to double             ; 3 uses
@@ -742,7 +741,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.oo = call double @llvm.fmuladd.f64(double %i.ol, double %i.nr, double %i.on)
   store double %i.oo, ptr %i.om, align 8, !tbaa !112
   %indvars.iv.next461 = add nuw nsw i64 %indvars.iv460, 1 ; 2 uses
-  %exitcond464.not = icmp eq i64 %indvars.iv.next461, %wide.trip.count466
+  %exitcond464.not = icmp eq i64 %indvars.iv.next461, %wide.trip.count471.a
   br i1 %exitcond464.not, label %.loopexit, label %scalar.ph, !llvm.loop !116
 
 bb.dt:                                            ; preds = %bb.dk
@@ -752,13 +751,13 @@ bb.dt:                                            ; preds = %bb.dk
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
   %indvars.iv.next459 = add nuw nsw i64 %indvars.iv458, 1 ; 2 uses
-  %i.oq = getelementptr inbounds nuw [8 x i8], ptr %.0161410, i64 %43
-  %exitcond467.not = icmp eq i64 %indvars.iv.next459, %wide.trip.count466
+  %i.oq = getelementptr inbounds nuw [8 x i8], ptr %.0161410, i64 %wide.trip.count471.a
+  %exitcond467.not = icmp eq i64 %indvars.iv.next459, %wide.trip.count471.a
   br i1 %exitcond467.not, label %._crit_edge412, label %.lr.ph411, !llvm.loop !117
 
 ._crit_edge412:                                   ; preds = %.loopexit, %_ZN2cv3Mat2atIiEERT_i.exit
   %indvars.iv.next469 = add nuw nsw i64 %indvars.iv468, 1 ; 2 uses
-  %exitcond472.not = icmp eq i64 %indvars.iv.next469, %wide.trip.count471.a
+  %exitcond472.not = icmp eq i64 %indvars.iv.next469, %wide.trip.count466
   br i1 %exitcond472.not, label %._crit_edge416, label %bb.dm, !llvm.loop !118
 
 ._crit_edge416:                                   ; preds = %._crit_edge412, %bb.dl

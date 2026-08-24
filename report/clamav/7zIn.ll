@@ -205,8 +205,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.ch = sub i64 %spec.select191.i, %indvars.iv.i
-  %sext211.i = shl i64 %i.ch, 32
-  %7 = ashr exact i64 %sext211.i, 32              ; 2 uses
+  %7 = and i64 %i.ch, 4294967295                  ; 2 uses
   %i.ci = add i64 %i.cf, -32
   %i.cj = call i32 @CrcCalc(ptr noundef nonnull %i.bv, i64 noundef %7) #12
   %i.ck = load ptr, ptr %i.i, align 8, !tbaa !69

@@ -204,22 +204,21 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @null_convert(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, ptr nofree noundef readonly captures(none) %3, i32 noundef %4) #2 {
 bb.a:
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %6 = load i32, ptr %5, align 8, !tbaa !41       ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.b = load i32, ptr %i.a, align 8, !tbaa !66   ; 5 uses
   %i.c = icmp sgt i32 %4, 0
   br i1 %i.c, label %.preheader.lr.ph, label %._crit_edge36.split
 
 .preheader.lr.ph:                                 ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %6 = load i32, ptr %5, align 8, !tbaa !41       ; 2 uses
   %i.d = icmp slt i32 %6, 1
   %.not27 = icmp eq i32 %i.b, 0
-  %7 = sext i32 %6 to i64                         ; 9 uses
+  %7 = zext i32 %6 to i64                         ; 10 uses
   %brmerge = select i1 %i.d, i1 true, i1 %.not27
   br i1 %brmerge, label %._crit_edge36.split, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %wide.trip.count = zext nneg i32 %6 to i64
   %i.e = add i32 %i.b, -1
   %xtraiter = and i32 %i.b, 7                     ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
@@ -305,7 +304,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph.new, %.prol.loopexit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %7
   br i1 %exitcond.not, label %._crit_edge33, label %.lr.ph, !llvm.loop !74
 
 ._crit_edge33:                                    ; preds = %._crit_edge

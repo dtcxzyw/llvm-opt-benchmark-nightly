@@ -202,7 +202,7 @@ bb.a:
   br i1 %or.cond7.not110, label %.preheader120.preheader, label %.thread
 
 .preheader120.preheader:                          ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %4 to i64      ; 3 uses
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 4 uses
   br label %.preheader120
 
 bb.b:                                             ; preds = %bb.c
@@ -227,10 +227,6 @@ bb.d:                                             ; preds = %bb.b
   %i.f = icmp sgt i32 %4, 1
   br i1 %i.f, label %.preheader119, label %.lr.ph138.preheader
 
-.preheader117.preheader:                          ; preds = %.preheader119
-  %7 = zext nneg i32 %4 to i64
-  br label %.preheader117
-
 .preheader119:                                    ; preds = %bb.d, %.preheader119
   %indvars.iv142 = phi i64 [ %indvars.iv.next143, %.preheader119 ], [ 0, %bb.d ] ; 3 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv142
@@ -240,10 +236,10 @@ bb.d:                                             ; preds = %bb.b
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.h, ptr noundef %i.j) #4
   %indvars.iv.next143 = add nuw nsw i64 %indvars.iv142, 1 ; 2 uses
   %exitcond146.not = icmp eq i64 %indvars.iv.next143, %wide.trip.count
-  br i1 %exitcond146.not, label %.preheader117.preheader, label %.preheader119
+  br i1 %exitcond146.not, label %.preheader117, label %.preheader119
 
-.preheader117:                                    ; preds = %.preheader117.preheader, %bb.e
-  %indvars.iv150 = phi i64 [ 1, %.preheader117.preheader ], [ %indvars.iv.next151, %bb.e ] ; 3 uses
+.preheader117:                                    ; preds = %.preheader119, %bb.e
+  %indvars.iv150 = phi i64 [ %indvars.iv.next151, %bb.e ], [ 1, %.preheader119 ] ; 3 uses
   br label %bb.f
 
 .lr.ph.preheader:                                 ; preds = %bb.e
@@ -265,12 +261,12 @@ bb.e:                                             ; preds = %bb.f
   br i1 %exitcond154.not, label %.lr.ph.preheader, label %.preheader117
 
 bb.f:                                             ; preds = %.preheader117, %bb.f
-  %indvars.iv147 = phi i64 [ %7, %.preheader117 ], [ %indvars.iv.next148, %bb.f ] ; 2 uses
+  %indvars.iv147 = phi i64 [ %wide.trip.count, %.preheader117 ], [ %indvars.iv.next148, %bb.f ] ; 2 uses
   %indvars.iv.next148 = add nsw i64 %indvars.iv147, -1 ; 5 uses
   %i.r = sub nsw i64 %indvars.iv.next148, %indvars.iv150
-  %i.s = getelementptr inbounds [8 x i8], ptr %0, i64 %i.r
+  %i.s = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.r
   %i.t = load double, ptr %i.s, align 8, !tbaa !42
-  %i.u = getelementptr inbounds [8 x i8], ptr %0, i64 %indvars.iv.next148
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next148
   %i.v = load double, ptr %i.u, align 8, !tbaa !42
   %i.w = fsub double %i.t, %i.v
   %i.x = fdiv double 1.000000e+00, %i.w           ; 2 uses
@@ -278,7 +274,7 @@ bb.f:                                             ; preds = %.preheader117, %bb.
   %i.z = getelementptr i8, ptr %i.y, i64 -16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !25
   %i.ab = fneg double %i.x
-  %i.ac = getelementptr inbounds [8 x i8], ptr %3, i64 %indvars.iv.next148
+  %i.ac = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next148
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !25 ; 2 uses
   tail call void @N_VLinearSum(double noundef %i.x, ptr noundef %i.aa, double noundef %i.ab, ptr noundef %i.ad, ptr noundef %i.ad) #4
   %.not115.not = icmp sgt i64 %indvars.iv.next148, %indvars.iv150
@@ -372,7 +368,7 @@ bb.a:
   br i1 %or.cond7.not127, label %.preheader145.preheader, label %.thread
 
 .preheader145.preheader:                          ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %4 to i64      ; 5 uses
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 6 uses
   br label %.preheader145
 
 bb.b:                                             ; preds = %.preheader145
@@ -424,9 +420,6 @@ bb.c:                                             ; preds = %.lr.ph
 
 .preheader141.lr.ph:                              ; preds = %.lr.ph154
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %7 = zext nneg i32 %4 to i64
-  %8 = add nuw i32 %4, 1
-  %wide.trip.count196 = zext i32 %8 to i64
   br label %.preheader141
 
 .lr.ph154:                                        ; preds = %.lr.ph154.preheader, %.lr.ph154
@@ -442,7 +435,7 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %exitcond189.not, label %.preheader141.lr.ph, label %.lr.ph154
 
 .preheader141:                                    ; preds = %.preheader141.lr.ph, %bb.d
-  %indvars.iv193 = phi i64 [ 1, %.preheader141.lr.ph ], [ %indvars.iv.next194, %bb.d ] ; 3 uses
+  %.0117157 = phi i32 [ 1, %.preheader141.lr.ph ], [ %7, %bb.d ] ; 4 uses
   br label %bb.e
 
 .lr.ph162.preheader:                              ; preds = %bb.d
@@ -455,12 +448,12 @@ bb.c:                                             ; preds = %.lr.ph
   br label %.lr.ph162
 
 bb.d:                                             ; preds = %bb.h
-  %indvars.iv.next194 = add nuw nsw i64 %indvars.iv193, 1 ; 2 uses
-  %exitcond197.not = icmp eq i64 %indvars.iv.next194, %wide.trip.count196
+  %7 = add nuw i32 %.0117157, 1
+  %exitcond197.not = icmp eq i32 %.0117157, %4
   br i1 %exitcond197.not, label %.lr.ph162.preheader, label %.preheader141
 
 bb.e:                                             ; preds = %.preheader141, %bb.h
-  %indvars.iv190 = phi i64 [ %7, %.preheader141 ], [ %indvars.iv.next191, %bb.h ] ; 6 uses
+  %indvars.iv190 = phi i64 [ %wide.trip.count, %.preheader141 ], [ %indvars.iv.next191, %bb.h ] ; 5 uses
   %i.x = icmp eq i64 %indvars.iv190, 1
   br i1 %i.x, label %bb.f, label %bb.g
 
@@ -470,10 +463,12 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %9 = sub nsw i64 %indvars.iv190, %indvars.iv193
-  %i.z = getelementptr inbounds [8 x i8], ptr %i.a, i64 %9
+  %8 = trunc nuw i64 %indvars.iv190 to i32        ; 2 uses
+  %9 = sub nsw i32 %8, %.0117157
+  %10 = zext nneg i32 %9 to i64
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %10
   %i.aa = load double, ptr %i.z, align 8, !tbaa !42
-  %i.ab = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv190
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv190
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !42
   %i.ad = fsub double %i.aa, %i.ac
   %i.ae = fdiv double 1.000000e+00, %i.ad         ; 2 uses
@@ -486,8 +481,9 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
+  %.pre-phi219 = phi i32 [ 1, %bb.f ], [ %8, %bb.g ]
   %indvars.iv.next191 = add nsw i64 %indvars.iv190, -1
-  %.not136.not = icmp sgt i64 %indvars.iv190, %indvars.iv193
+  %.not136.not = icmp sgt i32 %.pre-phi219, %.0117157
   br i1 %.not136.not, label %bb.e, label %bb.d
 
 .lr.ph162:                                        ; preds = %.lr.ph162.preheader, %.lr.ph162

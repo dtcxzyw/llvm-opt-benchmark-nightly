@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN4ncnnL4
   %i.bp = phi i32 [ %i.bf, %.lr.ph ], [ %i.tb, %_ZN4ncnnL47conv3x3s1_winograd23_transform_output_tile_int8ERKNS_3MatERS0_iiii.exit ]
   %.044150 = phi i32 [ 0, %.lr.ph ], [ %i.ta, %_ZN4ncnnL47conv3x3s1_winograd23_transform_output_tile_int8ERKNS_3MatERS0_iiii.exit ] ; 6 uses
   %i.bq = sub nsw i32 %i.bp, %.044150
-  %.sroa.speculated116 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %i.bq) ; 19 uses
+  %.sroa.speculated116 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %i.bq) ; 18 uses
   %i.br = load i32, ptr %8, align 4, !tbaa !9     ; 2 uses
   %i.bs = icmp sgt i32 %i.br, 0
   br i1 %i.bs, label %.noexc52.preheader, label %._crit_edge
@@ -229,12 +229,12 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN4ncnnL4
 .lr.ph384.i:                                      ; preds = %._crit_edge
   %i.cb = icmp sgt i32 %.sroa.speculated116, 0
   %i.cc = shl nsw i32 %.sroa.speculated116, 2
-  %15 = sext i32 %i.cc to i64
+  %15 = zext nneg i32 %i.cc to i64
   %i.cd = shl nsw i32 %.sroa.speculated116, 3
-  %16 = sext i32 %i.cd to i64
+  %16 = zext nneg i32 %i.cd to i64
   %i.ce = mul nsw i32 %.sroa.speculated116, 12
-  %17 = sext i32 %i.ce to i64
-  %18 = sext i32 %factor.op.mul381.i to i64       ; 12 uses
+  %17 = zext nneg i32 %i.ce to i64
+  %18 = zext nneg i32 %factor.op.mul381.i to i64  ; 12 uses
   %.idx.i = shl i64 %i.by, 3                      ; 2 uses
   %.idx300.i = mul i64 %i.by, 12                  ; 2 uses
   %i.cf = mul nsw i32 %i.bv, %i.bt
@@ -467,13 +467,13 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n,
 .lr.ph395.i:                                      ; preds = %.preheader372.i
   %i.gp = icmp sgt i32 %.sroa.speculated116, 0
   %i.gq = shl nsw i32 %.sroa.speculated116, 1
-  %19 = sext i32 %i.gq to i64
+  %19 = zext nneg i32 %i.gq to i64
   %i.gr = shl nsw i32 %.sroa.speculated116, 2
-  %20 = sext i32 %i.gr to i64
+  %20 = zext nneg i32 %i.gr to i64
   %i.gs = mul nsw i32 %.sroa.speculated116, 6
-  %21 = sext i32 %i.gs to i64
+  %21 = zext nneg i32 %i.gs to i64
   %i.gt = shl nsw i32 %.sroa.speculated116, 3
-  %22 = sext i32 %i.gt to i64                     ; 12 uses
+  %22 = zext nneg i32 %i.gt to i64                ; 12 uses
   %i.gu = sext i32 %i.bt to i64
   br i1 %i.gp, label %.lr.ph395.split.us.i, label %.lr.ph395.split.preheader.i
 
@@ -704,13 +704,13 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
 
 .lr.ph413.i:                                      ; preds = %.preheader.i
   %i.my = icmp sgt i32 %.sroa.speculated116, 0
-  %23 = sext i32 %.sroa.speculated116 to i64
+  %23 = zext i32 %.sroa.speculated116 to i64      ; 2 uses
   %i.mz = shl nsw i32 %.sroa.speculated116, 1
-  %24 = sext i32 %i.mz to i64
+  %24 = zext nneg i32 %i.mz to i64
   %i.na = mul nsw i32 %.sroa.speculated116, 3
-  %25 = sext i32 %i.na to i64
+  %25 = zext nneg i32 %i.na to i64
   %i.nb = shl nsw i32 %.sroa.speculated116, 2
-  %26 = sext i32 %i.nb to i64                     ; 12 uses
+  %26 = zext nneg i32 %i.nb to i64                ; 12 uses
   %i.nc = sext i32 %i.bt to i64                   ; 2 uses
   br i1 %i.my, label %.lr.ph413.split.us.i, label %_ZN4ncnnL47conv3x3s1_winograd23_transform_output_tile_int8ERKNS_3MatERS0_iiii.exit
 
@@ -720,7 +720,6 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %i.nf = load i64, ptr %i.ar, align 8, !tbaa !36, !noalias !271 ; 2 uses
   %factor.op.mul423.i = mul i64 %i.nf, %i.ne
   %i.ng = sext i32 %.1288.lcssa.i to i64
-  %wide.trip.count466.i = zext nneg i32 %.sroa.speculated116 to i64
   br label %.lr.ph.us421.i
 
 .lr.ph.us421.i:                                   ; preds = %._crit_edge.us422.i, %.lr.ph413.split.us.i
@@ -829,7 +828,7 @@ bb.z:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 .split.us419.i:                                   ; preds = %bb.ab, %_ZN4ncnn3MatD2Ev.exit.split.us.us.1.i, %bb.z, %_ZN4ncnn3MatD2Ev.exit.split.us420.1.i
   %indvars.iv.next464.i = add nuw nsw i64 %indvars.iv463.i, 1 ; 2 uses
-  %exitcond467.not.i = icmp eq i64 %indvars.iv.next464.i, %wide.trip.count466.i
+  %exitcond467.not.i = icmp eq i64 %indvars.iv.next464.i, %23
   br i1 %exitcond467.not.i, label %._crit_edge.us422.i, label %_ZN4ncnn3MatD2Ev.exit.us.i, !llvm.loop !274
 
 bb.aa:                                            ; preds = %_ZN4ncnn3MatD2Ev.exit.split.us.us.preheader.i
@@ -1232,7 +1231,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN4ncnnL4
   %i.ei = phi i32 [ %i.dy, %.lr.ph ], [ %i.arz, %_ZN4ncnnL47conv3x3s1_winograd43_transform_output_tile_int8ERKNS_3MatERS0_iiii.exit ]
   %.044131 = phi i32 [ 0, %.lr.ph ], [ %i.ary, %_ZN4ncnnL47conv3x3s1_winograd43_transform_output_tile_int8ERKNS_3MatERS0_iiii.exit ] ; 6 uses
   %i.ej = sub nsw i32 %i.ei, %.044131
-  %.sroa.speculated117 = call i32 @llvm.smin.i32(i32 %i.eh, i32 %i.ej) ; 26 uses
+  %.sroa.speculated117 = call i32 @llvm.smin.i32(i32 %i.eh, i32 %i.ej) ; 25 uses
   %i.ek = load i32, ptr %8, align 4, !tbaa !9     ; 2 uses
   %i.el = icmp sgt i32 %i.ek, 0
   br i1 %i.el, label %.noexc52.preheader, label %._crit_edge
@@ -1256,17 +1255,17 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN4ncnnL4
 .lr.ph77.i:                                       ; preds = %._crit_edge
   %i.eu = icmp sgt i32 %.sroa.speculated117, 0
   %i.ev = shl nsw i32 %.sroa.speculated117, 2
-  %15 = sext i32 %i.ev to i64
+  %15 = zext nneg i32 %i.ev to i64
   %i.ew = shl nsw i32 %.sroa.speculated117, 3
-  %16 = sext i32 %i.ew to i64
+  %16 = zext nneg i32 %i.ew to i64
   %i.ex = mul nsw i32 %.sroa.speculated117, 12
-  %17 = sext i32 %i.ex to i64
+  %17 = zext nneg i32 %i.ex to i64
   %i.ey = shl nsw i32 %.sroa.speculated117, 4
-  %18 = sext i32 %i.ey to i64
+  %18 = zext nneg i32 %i.ey to i64
   %i.ez = mul nsw i32 %.sroa.speculated117, 20
-  %19 = sext i32 %i.ez to i64
+  %19 = zext nneg i32 %i.ez to i64
   %i.fa = mul nsw i32 %.sroa.speculated117, 24
-  %20 = sext i32 %i.fa to i64                     ; 30 uses
+  %20 = zext nneg i32 %i.fa to i64                ; 30 uses
   %.idx.i = shl i64 %i.er, 3
   %.idx705.i = mul i64 %i.er, 12
   %i.fb = mul nsw i32 %i.eo, %i.em
@@ -1669,17 +1668,17 @@ bb.u:                                             ; preds = %bb.t
 .lr.ph128.i:                                      ; preds = %.preheader53.i
   %i.oy = icmp sgt i32 %.sroa.speculated117, 0
   %i.oz = shl nsw i32 %.sroa.speculated117, 1
-  %21 = sext i32 %i.oz to i64
+  %21 = zext nneg i32 %i.oz to i64
   %i.pa = shl nsw i32 %.sroa.speculated117, 2
-  %22 = sext i32 %i.pa to i64
+  %22 = zext nneg i32 %i.pa to i64
   %i.pb = mul nsw i32 %.sroa.speculated117, 6
-  %23 = sext i32 %i.pb to i64
+  %23 = zext nneg i32 %i.pb to i64
   %i.pc = shl nsw i32 %.sroa.speculated117, 3
-  %24 = sext i32 %i.pc to i64
+  %24 = zext nneg i32 %i.pc to i64
   %i.pd = mul nsw i32 %.sroa.speculated117, 10
-  %25 = sext i32 %i.pd to i64
+  %25 = zext nneg i32 %i.pd to i64
   %i.pe = mul nsw i32 %.sroa.speculated117, 12
-  %26 = sext i32 %i.pe to i64                     ; 30 uses
+  %26 = zext nneg i32 %i.pe to i64                ; 30 uses
   %i.pf = sext i32 %i.em to i64
   br i1 %i.oy, label %.lr.ph128.split.us.i, label %.lr.ph128.split.preheader.i
 
@@ -2082,17 +2081,17 @@ bb.ae:                                            ; preds = %bb.ad
 
 .lr.ph217.i:                                      ; preds = %.preheader51.i
   %i.afc = icmp sgt i32 %.sroa.speculated117, 0
-  %27 = sext i32 %.sroa.speculated117 to i64
+  %27 = zext i32 %.sroa.speculated117 to i64      ; 2 uses
   %i.afd = shl nsw i32 %.sroa.speculated117, 1
-  %28 = sext i32 %i.afd to i64
+  %28 = zext nneg i32 %i.afd to i64
   %i.afe = mul nsw i32 %.sroa.speculated117, 3
-  %29 = sext i32 %i.afe to i64
+  %29 = zext nneg i32 %i.afe to i64
   %i.aff = shl nsw i32 %.sroa.speculated117, 2
-  %30 = sext i32 %i.aff to i64
+  %30 = zext nneg i32 %i.aff to i64
   %i.afg = mul nsw i32 %.sroa.speculated117, 5
-  %31 = sext i32 %i.afg to i64
+  %31 = zext nneg i32 %i.afg to i64
   %i.afh = mul nsw i32 %.sroa.speculated117, 6
-  %32 = sext i32 %i.afh to i64                    ; 30 uses
+  %32 = zext nneg i32 %i.afh to i64               ; 30 uses
   %i.afi = sext i32 %i.em to i64                  ; 3 uses
   br i1 %i.afc, label %.lr.ph217.split.us.i, label %_ZN4ncnnL47conv3x3s1_winograd43_transform_output_tile_int8ERKNS_3MatERS0_iiii.exit
 
@@ -2102,7 +2101,6 @@ bb.ae:                                            ; preds = %bb.ad
   %i.afl = load i64, ptr %i.ba, align 8, !tbaa !36, !noalias !408 ; 2 uses
   %factor.op.mul245.i = mul i64 %i.afl, %i.afk
   %i.afm = sext i32 %.1648.lcssa.i to i64
-  %wide.trip.count307.i = zext nneg i32 %.sroa.speculated117 to i64
   br label %.lr.ph.us219.i
 
 .lr.ph.us219.i:                                   ; preds = %._crit_edge.us220.i, %.lr.ph217.split.us.i
@@ -2499,7 +2497,7 @@ bb.bi:                                            ; preds = %bb.bh
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.bc
   %indvars.iv.next305.i = add nuw nsw i64 %indvars.iv304.i, 1 ; 2 uses
-  %exitcond308.not.i = icmp eq i64 %indvars.iv.next305.i, %wide.trip.count307.i
+  %exitcond308.not.i = icmp eq i64 %indvars.iv.next305.i, %27
   br i1 %exitcond308.not.i, label %._crit_edge.us220.i, label %.preheader.us.i, !llvm.loop !411
 
 ._crit_edge.us220.i:                              ; preds = %bb.bj

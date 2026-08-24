@@ -204,7 +204,6 @@ bb.r:                                             ; preds = %bb.n
   store i8 %i.r, ptr %i.cm, align 8, !tbaa !38
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ak, i64 25
   store i8 0, ptr %i.cn, align 1, !tbaa !46
-  %3 = zext nneg i32 %.0205.lcssa to i64
   br i1 %i.ab, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
@@ -221,13 +220,14 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %.not223271, label %.critedge232, label %.lr.ph273
 
 .lr.ph273:                                        ; preds = %bb.u, %bb.v
-  %indvars.iv308 = phi i64 [ %indvars.iv.next309, %bb.v ], [ %3, %bb.u ] ; 5 uses
-  %i.cp = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv308
+  %.2272 = phi i32 [ %4, %bb.v ], [ %.0205.lcssa, %bb.u ] ; 3 uses
+  %3 = zext nneg i32 %.2272 to i64                ; 3 uses
+  %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %3
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !37 ; 11 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 25 ; 8 uses
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !46  ; 3 uses
   %.not224 = icmp eq i8 %i.cs, 0
-  %i.ct = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv308
+  %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %3
   %i.cu = load i32, ptr %i.ct, align 4, !tbaa !34 ; 2 uses
   br i1 %.not224, label %bb.v, label %.critedge2
 
@@ -235,12 +235,12 @@ bb.v:                                             ; preds = %.lr.ph273
   %i.cv = icmp eq i32 %i.cu, 0
   %. = select i1 %i.cv, i8 -1, i8 1
   store i8 %., ptr %i.cr, align 1, !tbaa !46
-  %indvars.iv.next309 = add nsw i64 %indvars.iv308, -1 ; 2 uses
-  %i.cw = icmp eq i64 %indvars.iv.next309, 0
+  %4 = add nsw i32 %.2272, -1                     ; 2 uses
+  %i.cw = icmp eq i32 %4, 0
   br i1 %i.cw, label %.critedge232, label %.lr.ph273, !llvm.loop !49
 
 .critedge2:                                       ; preds = %.lr.ph273
-  %i.cx = getelementptr inbounds [4 x i8], ptr %i.b, i64 %indvars.iv308 ; 2 uses
+  %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %3 ; 2 uses
   switch i32 %i.cu, label %.critedge232 [
     i32 0, label %bb.w
     i32 1, label %bb.x
@@ -365,13 +365,12 @@ bb.ah:                                            ; preds = %bb.y
 
 bb.ai:                                            ; preds = %bb.ae, %bb.af, %bb.aa, %bb.ab
   %.0204 = phi ptr [ %i.dd, %bb.aa ], [ %i.dj, %bb.ab ], [ %i.dw, %bb.ae ], [ %i.eb, %bb.af ] ; 2 uses
-  %4 = shl i64 %indvars.iv308, 32
-  %sext = add i64 %4, -4294967296
-  %5 = ashr exact i64 %sext, 32                   ; 2 uses
-  %i.el = getelementptr inbounds [4 x i8], ptr %i.b, i64 %5
+  %5 = add nsw i32 %.2272, -1
+  %6 = zext nneg i32 %5 to i64                    ; 2 uses
+  %i.el = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %6
   %i.em = load i32, ptr %i.el, align 4, !tbaa !34
   %i.en = icmp eq i32 %i.em, 0
-  %i.eo = getelementptr inbounds [8 x i8], ptr %i.a, i64 %5
+  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %6
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !37 ; 2 uses
   br i1 %i.en, label %bb.aj, label %bb.ak
 

@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.loopexit17.i.1, %b
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %bb.p
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %bb.p ], [ %indvars.iv.lcssa, %.preheader.i.preheader ] ; 3 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %bb.p ], [ %indvars.iv.lcssa, %.preheader.i.preheader ] ; 4 uses
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr @afm_key_table, i64 %indvars.iv.i.a
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !28 ; 2 uses
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !40
@@ -218,9 +218,8 @@ bb.o:                                             ; preds = %.preheader.i
   br i1 %i.bs, label %afm_tokenize.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
-  %8 = and i64 %indvars.iv.next.i.a, 4294967295
-  %exitcond.not.i = icmp eq i64 %8, 74
+  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1
+  %exitcond.not.i = icmp eq i64 %indvars.iv.i.a, 73
   br i1 %exitcond.not.i, label %afm_parse_kern_data.exit, label %.preheader.i
 
 .loopexit17.i:                                    ; preds = %bb.n
@@ -237,7 +236,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %exitcond.not.1, label %afm_parse_kern_data.exit, label %bb.n, !llvm.loop !377
 
 afm_tokenize.exit:                                ; preds = %bb.o
-  %i.bx = trunc nsw i64 %indvars.iv.i.a to i32
+  %i.bx = trunc nuw nsw i64 %indvars.iv.i.a to i32
   switch i32 %i.bx, label %afm_parse_kern_data.exit [
     i32 40, label %bb.q
     i32 30, label %bb.s
@@ -625,7 +624,7 @@ bb.ak:                                            ; preds = %.loopexit17.i.i.1, 
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %bb.am
-  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i.a, %bb.am ], [ %indvars.iv.i77.lcssa, %.preheader.i.i.preheader ] ; 3 uses
+  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i.a, %bb.am ], [ %indvars.iv.i77.lcssa, %.preheader.i.i.preheader ] ; 4 uses
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr @afm_key_table, i64 %indvars.iv.i.i.a
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !28 ; 2 uses
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !40
@@ -638,9 +637,8 @@ bb.al:                                            ; preds = %.preheader.i.i
   br i1 %i.fe, label %.loopexit.loopexit.split.loop.exit25.i.i, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %indvars.iv.next.i.i.a = add nuw nsw i64 %indvars.iv.i.i.a, 1 ; 2 uses
-  %9 = and i64 %indvars.iv.next.i.i.a, 4294967295
-  %exitcond.not.i.i = icmp eq i64 %9, 74
+  %indvars.iv.next.i.i.a = add nuw nsw i64 %indvars.iv.i.i.a, 1
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.i.i.a, 73
   br i1 %exitcond.not.i.i, label %afm_tokenize.exit.i, label %.preheader.i.i
 
 .loopexit17.i.i:                                  ; preds = %bb.ak
@@ -657,7 +655,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %exitcond.not.i79.1, label %afm_tokenize.exit.i, label %bb.ak, !llvm.loop !377
 
 .loopexit.loopexit.split.loop.exit25.i.i:         ; preds = %bb.al
-  %i.fj = trunc nsw i64 %indvars.iv.i.i.a to i32
+  %i.fj = trunc nuw nsw i64 %indvars.iv.i.i.a to i32
   br label %afm_tokenize.exit.i
 
 afm_tokenize.exit.i:                              ; preds = %.loopexit17.i.i.1, %bb.am, %.preheader.i.i, %.loopexit.loopexit.split.loop.exit25.i.i
@@ -853,7 +851,7 @@ bb.au:                                            ; preds = %.loopexit17.i.i86.1
   br label %.preheader.i.i89
 
 .preheader.i.i89:                                 ; preds = %.preheader.i.i89.preheader, %bb.aw
-  %indvars.iv.i.i90 = phi i64 [ %indvars.iv.next.i.i91, %bb.aw ], [ %indvars.iv.i85.lcssa, %.preheader.i.i89.preheader ] ; 3 uses
+  %indvars.iv.i.i90 = phi i64 [ %indvars.iv.next.i.i91, %bb.aw ], [ %indvars.iv.i85.lcssa, %.preheader.i.i89.preheader ] ; 4 uses
   %i.hq = getelementptr inbounds nuw [8 x i8], ptr @afm_key_table, i64 %indvars.iv.i.i90
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !28 ; 2 uses
   %i.hs = load i8, ptr %i.hr, align 1, !tbaa !40
@@ -866,9 +864,8 @@ bb.av:                                            ; preds = %.preheader.i.i89
   br i1 %i.hu, label %afm_tokenize.exit.i93, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %indvars.iv.next.i.i91 = add nuw nsw i64 %indvars.iv.i.i90, 1 ; 2 uses
-  %10 = and i64 %indvars.iv.next.i.i91, 4294967295
-  %exitcond.not.i.i92 = icmp eq i64 %10, 74
+  %indvars.iv.next.i.i91 = add nuw nsw i64 %indvars.iv.i.i90, 1
+  %exitcond.not.i.i92 = icmp eq i64 %indvars.iv.i.i90, 73
   br i1 %exitcond.not.i.i92, label %afm_tokenize.exit.thread.i, label %.preheader.i.i89
 
 .loopexit17.i.i86:                                ; preds = %bb.au
@@ -885,7 +882,7 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %exitcond.not.i88.1, label %afm_tokenize.exit.thread.i, label %bb.au, !llvm.loop !377
 
 afm_tokenize.exit.i93:                            ; preds = %bb.av
-  %i.hz = trunc nsw i64 %indvars.iv.i.i90 to i32
+  %i.hz = trunc nuw nsw i64 %indvars.iv.i.i90 to i32
   switch i32 %i.hz, label %afm_parse_kern_data.exit.thread128 [
     i32 53, label %bb.ax
     i32 50, label %bb.br
@@ -1022,7 +1019,7 @@ bb.bj:                                            ; preds = %.loopexit17.i.i.i.1
   br label %.preheader.i.i.i
 
 .preheader.i.i.i:                                 ; preds = %.preheader.i.i.i.preheader, %bb.bl
-  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.bl ], [ %indvars.iv.i22.i.lcssa, %.preheader.i.i.i.preheader ] ; 3 uses
+  %indvars.iv.i.i.i = phi i64 [ %indvars.iv.next.i.i.i, %bb.bl ], [ %indvars.iv.i22.i.lcssa, %.preheader.i.i.i.preheader ] ; 4 uses
   %i.js = getelementptr inbounds nuw [8 x i8], ptr @afm_key_table, i64 %indvars.iv.i.i.i
   %i.jt = load ptr, ptr %i.js, align 8, !tbaa !28 ; 2 uses
   %i.ju = load i8, ptr %i.jt, align 1, !tbaa !40
@@ -1035,9 +1032,8 @@ bb.bk:                                            ; preds = %.preheader.i.i.i
   br i1 %i.jw, label %afm_tokenize.exit.i.i, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
-  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %11 = and i64 %indvars.iv.next.i.i.i, 4294967295
-  %exitcond.not.i.i.i = icmp eq i64 %11, 74
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
+  %exitcond.not.i.i.i = icmp eq i64 %indvars.iv.i.i.i, 73
   br i1 %exitcond.not.i.i.i, label %afm_tokenize.exit.thread.i.i, label %.preheader.i.i.i
 
 .loopexit17.i.i.i:                                ; preds = %bb.bj
@@ -1054,7 +1050,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %exitcond.not.i24.i.1, label %afm_tokenize.exit.thread.i.i, label %bb.bj, !llvm.loop !377
 
 afm_tokenize.exit.i.i:                            ; preds = %bb.bk
-  %i.kb = trunc nsw i64 %indvars.iv.i.i.i to i32
+  %i.kb = trunc nuw nsw i64 %indvars.iv.i.i.i to i32
   switch i32 %i.kb, label %.thread.i25.i [
     i32 56, label %bb.bm
     i32 23, label %bb.bp
@@ -1251,7 +1247,7 @@ bb.cc:                                            ; preds = %.loopexit17.i.i35.i
   br label %.preheader.i.i39.i
 
 .preheader.i.i39.i:                               ; preds = %.preheader.i.i39.i.preheader, %bb.ce
-  %indvars.iv.i.i40.i = phi i64 [ %indvars.iv.next.i.i41.i, %bb.ce ], [ %indvars.iv.i34.i.lcssa, %.preheader.i.i39.i.preheader ] ; 5 uses
+  %indvars.iv.i.i40.i = phi i64 [ %indvars.iv.next.i.i41.i, %bb.ce ], [ %indvars.iv.i34.i.lcssa, %.preheader.i.i39.i.preheader ] ; 6 uses
   %i.ml = getelementptr inbounds nuw [8 x i8], ptr @afm_key_table, i64 %indvars.iv.i.i40.i
   %i.mm = load ptr, ptr %i.ml, align 8, !tbaa !28 ; 2 uses
   %i.mn = load i8, ptr %i.mm, align 1, !tbaa !40
@@ -1264,9 +1260,8 @@ bb.cd:                                            ; preds = %.preheader.i.i39.i
   br i1 %i.mp, label %afm_tokenize.exit.i43.i, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
-  %indvars.iv.next.i.i41.i = add nuw nsw i64 %indvars.iv.i.i40.i, 1 ; 2 uses
-  %12 = and i64 %indvars.iv.next.i.i41.i, 4294967295
-  %exitcond.not.i.i42.i = icmp eq i64 %12, 74
+  %indvars.iv.next.i.i41.i = add nuw nsw i64 %indvars.iv.i.i40.i, 1
+  %exitcond.not.i.i42.i = icmp eq i64 %indvars.iv.i.i40.i, 73
   br i1 %exitcond.not.i.i42.i, label %afm_tokenize.exit.thread.i38.i.backedge, label %.preheader.i.i39.i
 
 .loopexit17.i.i35.i:                              ; preds = %bb.cc
@@ -1283,7 +1278,7 @@ bb.ce:                                            ; preds = %bb.cd
   br i1 %exitcond.not.i37.i.1, label %afm_tokenize.exit.thread.i38.i.backedge, label %bb.cc, !llvm.loop !377
 
 afm_tokenize.exit.i43.i:                          ; preds = %bb.cd
-  %i.mu = trunc nsw i64 %indvars.iv.i.i40.i to i32
+  %i.mu = trunc nuw nsw i64 %indvars.iv.i.i40.i to i32
   switch i32 %i.mu, label %afm_parse_kern_data.exit.thread128 [
     i32 34, label %bb.cf
     i32 36, label %bb.cf

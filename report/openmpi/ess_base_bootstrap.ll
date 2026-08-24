@@ -202,8 +202,8 @@ bb.ai:                                            ; preds = %bb.ah
   %.0111.i = phi ptr [ %i.bn, %.backedge.i.preheader ], [ %.0111.i.be, %.backedge.i.backedge ] ; 21 uses
   %.0108.i = phi i1 [ false, %.backedge.i.preheader ], [ %.0108.i.be, %.backedge.i.backedge ] ; 2 uses
   %.0.i = phi i1 [ false, %.backedge.i.preheader ], [ true, %.backedge.i.backedge ] ; 2 uses
-  %i.bw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0111.i) #14 ; 3 uses
-  %i.bx = trunc i64 %i.bw to i32                  ; 8 uses
+  %i.bw = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0111.i) #14 ; 2 uses
+  %i.bx = trunc i64 %i.bw to i32                  ; 10 uses
   %.not172.i = icmp slt i32 %i.bx, 0
   br i1 %.not172.i, label %.loopexit.i, label %.lr.ph.preheader.i
 
@@ -262,7 +262,7 @@ bb.am:                                            ; preds = %.loopexit.i
   br i1 %.1109.i, label %bb.an, label %bb.bp
 
 bb.an:                                            ; preds = %bb.am, %.loopexit.thread.i, %.thread145.i
-  %.0119160.i = phi i32 [ %i.cd, %.thread145.i ], [ %.0119159.i, %bb.am ], [ %i.bz, %.loopexit.thread.i ] ; 4 uses
+  %.0119160.i = phi i32 [ %i.cd, %.thread145.i ], [ %.0119159.i, %bb.am ], [ %i.bz, %.loopexit.thread.i ] ; 3 uses
   %i.ci = add nuw nsw i32 %.0119160.i, 1          ; 2 uses
   %i.cj = icmp slt i32 %i.ci, %i.bx
   br i1 %i.cj, label %.lr.ph181.preheader.i, label %._crit_edge.i
@@ -271,11 +271,9 @@ bb.an:                                            ; preds = %bb.am, %.loopexit.t
   %i.ck = zext i32 %.0119160.i to i64
   %i.cl = add nuw nsw i64 %i.ck, 1
   %i.cm = add i32 %.0119160.i, 2
-  %0 = add i32 %.0119160.i, 3
   br label %.lr.ph181.i
 
 .lr.ph181.i:                                      ; preds = %bb.ao, %.lr.ph181.preheader.i
-  %indvars.iv221.i = phi i32 [ %0, %.lr.ph181.preheader.i ], [ %indvars.iv.next222.i, %bb.ao ] ; 2 uses
   %indvars.iv215.i = phi i32 [ %i.cm, %.lr.ph181.preheader.i ], [ %indvars.iv.next216.i, %bb.ao ] ; 2 uses
   %indvars.iv212.i = phi i64 [ %i.cl, %.lr.ph181.preheader.i ], [ %indvars.iv.next213.i, %bb.ao ] ; 4 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.0111.i, i64 %indvars.iv212.i
@@ -288,7 +286,6 @@ bb.ao:                                            ; preds = %.lr.ph181.i
   %i.cq = trunc nuw i64 %indvars.iv.next213.i to i32
   %i.cr = icmp slt i32 %i.cq, %i.bx
   %indvars.iv.next216.i = add i32 %indvars.iv215.i, 1
-  %indvars.iv.next222.i = add i32 %indvars.iv221.i, 1
   br i1 %i.cr, label %.lr.ph181.i, label %._crit_edge.i, !llvm.loop !37
 
 ._crit_edge.i:                                    ; preds = %bb.an, %bb.ao
@@ -309,11 +306,9 @@ bb.ap:                                            ; preds = %.lr.ph181.i
 
 .lr.ph186.preheader.i:                            ; preds = %bb.ap
   %i.da = zext i32 %indvars.iv215.i to i64
-  %1 = sext i32 %indvars.iv221.i to i64
   br label %.lr.ph186.i
 
 .lr.ph186.i:                                      ; preds = %bb.aq, %.lr.ph186.preheader.i
-  %indvars.iv224.i = phi i64 [ %1, %.lr.ph186.preheader.i ], [ %indvars.iv.next225.i, %bb.aq ] ; 2 uses
   %indvars.iv218.i = phi i64 [ %i.da, %.lr.ph186.preheader.i ], [ %indvars.iv.next219.i, %bb.aq ] ; 4 uses
   %i.db = getelementptr inbounds nuw i8, ptr %.0111.i, i64 %indvars.iv218.i
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !22
@@ -324,7 +319,6 @@ bb.aq:                                            ; preds = %.lr.ph186.i
   %indvars.iv.next219.i = add nuw nsw i64 %indvars.iv218.i, 1 ; 2 uses
   %i.de = trunc nuw i64 %indvars.iv.next219.i to i32
   %i.df = icmp slt i32 %i.de, %i.bx
-  %indvars.iv.next225.i = add nsw i64 %indvars.iv224.i, 1
   br i1 %i.df, label %.lr.ph186.i, label %._crit_edge187.i, !llvm.loop !38
 
 ._crit_edge187.i:                                 ; preds = %bb.ap, %bb.aq
@@ -335,7 +329,7 @@ bb.ar:                                            ; preds = %.lr.ph186.i
   %i.dg = getelementptr inbounds nuw i8, ptr %.0111.i, i64 %indvars.iv218.i
   %i.dh = trunc nuw i64 %indvars.iv218.i to i32   ; 3 uses
   store i8 0, ptr %i.dg, align 1, !tbaa !22
-  %i.di = add nuw nsw i32 %i.dh, 1                ; 2 uses
+  %i.di = add nuw nsw i32 %i.dh, 1                ; 3 uses
   %i.dj = icmp slt i32 %i.di, %i.bx
   br i1 %i.dj, label %bb.as, label %bb.aw
 
@@ -344,23 +338,19 @@ bb.as:                                            ; preds = %bb.ar
   %i.dl = getelementptr inbounds nuw i8, ptr %.0111.i, i64 %i.dk ; 3 uses
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !22
   %.not133.i = icmp eq i8 %i.dm, 44
-  br i1 %.not133.i, label %bb.aw, label %.lr.ph191.preheader.i
+  br i1 %.not133.i, label %bb.aw, label %.lr.ph191.i
 
-.lr.ph191.preheader.i:                            ; preds = %bb.as
-  %sext.i = shl i64 %i.bw, 32
-  %2 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  br label %.lr.ph191.i
-
-.lr.ph191.i:                                      ; preds = %bb.at, %.lr.ph191.preheader.i
-  %indvars.iv227.i = phi i64 [ %indvars.iv224.i, %.lr.ph191.preheader.i ], [ %indvars.iv.next228.i, %bb.at ] ; 4 uses
-  %i.dn = getelementptr inbounds i8, ptr %.0111.i, i64 %indvars.iv227.i
+.lr.ph191.i:                                      ; preds = %bb.as, %bb.at
+  %.0115190.i = phi i32 [ %1, %bb.at ], [ %i.di, %bb.as ] ; 3 uses
+  %0 = zext nneg i32 %.0115190.i to i64           ; 2 uses
+  %i.dn = getelementptr inbounds nuw i8, ptr %.0111.i, i64 %0
   %i.do = load i8, ptr %i.dn, align 1, !tbaa !22
   %.not134.i = icmp eq i8 %i.do, 44
   br i1 %.not134.i, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph191.i
-  %indvars.iv.next228.i = add nsw i64 %indvars.iv227.i, 1 ; 2 uses
-  %i.dp = icmp slt i64 %indvars.iv.next228.i, %2
+  %1 = add nsw i32 %.0115190.i, 1                 ; 2 uses
+  %i.dp = icmp slt i32 %1, %i.bx
   br i1 %i.dp, label %.lr.ph191.i, label %.critedge137.i, !llvm.loop !39
 
 .critedge137.i:                                   ; preds = %bb.at
@@ -368,16 +358,15 @@ bb.at:                                            ; preds = %.lr.ph191.i
   br label %bb.av
 
 bb.au:                                            ; preds = %.lr.ph191.i
-  %i.dr = getelementptr inbounds i8, ptr %.0111.i, i64 %indvars.iv227.i ; 2 uses
+  %i.dr = getelementptr inbounds nuw i8, ptr %.0111.i, i64 %0 ; 2 uses
   store i8 0, ptr %i.dr, align 1, !tbaa !22
   %i.ds = call noalias ptr @strdup(ptr noundef nonnull %i.dl) #13
   store i8 44, ptr %i.dr, align 1, !tbaa !22
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %.critedge137.i
-  %.0115166.in.i = phi i64 [ %indvars.iv227.i, %bb.au ], [ %2, %.critedge137.i ]
+  %.0115166.i = phi i32 [ %.0115190.i, %bb.au ], [ %i.bx, %.critedge137.i ]
   %i.dt = phi ptr [ %i.ds, %bb.au ], [ %i.dq, %.critedge137.i ]
-  %.0115166.i = trunc i64 %.0115166.in.i to i32
   %i.du = add nsw i32 %.0115166.i, -1
   br label %bb.aw
 

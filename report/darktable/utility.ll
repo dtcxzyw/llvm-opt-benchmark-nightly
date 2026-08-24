@@ -202,10 +202,9 @@ bb.e:                                             ; preds = %.preheader
   br label %.preheader
 
 .critedge:                                        ; preds = %.preheader, %.preheader
-  %1 = shl i64 %indvars.iv, 32
-  %sext = add i64 %1, -4294967296
-  %2 = ashr exact i64 %sext, 32
-  %i.h = tail call noalias ptr @g_strndup(ptr noundef nonnull %i.e, i64 noundef %2) #25
+  %sext = add nuw i64 %indvars.iv, 4294967295
+  %1 = and i64 %sext, 4294967295
+  %i.h = tail call noalias ptr @g_strndup(ptr noundef nonnull %i.e, i64 noundef %1) #25
   br label %bb.f
 
 bb.f:                                             ; preds = %.critedge, %bb.d, %bb.c

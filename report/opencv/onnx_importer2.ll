@@ -205,8 +205,8 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.cp, label %_ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i, label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
 _ZNSt6vectorIiSaIiEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.n
-  %i.cq = add nsw i32 %i.co, -2                   ; 5 uses
-  %i.cr = zext nneg i32 %i.cq to i64              ; 4 uses
+  %i.cq = add nsw i32 %i.co, -2                   ; 4 uses
+  %i.cr = zext nneg i32 %i.cq to i64              ; 5 uses
   %i.cs = shl nuw nsw i64 %i.cr, 2                ; 3 uses
   %i.ct = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cs) #29
           to label %.noexc191 unwind label %bb.r  ; 8 uses
@@ -362,7 +362,6 @@ _ZN2cv10AutoBufferIlLm1EEC2Em.exit.i:             ; preds = %.noexc.i211, %.noex
   store i32 0, ptr %15, align 8, !tbaa !276, !alias.scope !606
   %i.eh = getelementptr inbounds nuw i8, ptr %15, i64 8
   store ptr %i.db, ptr %i.eh, align 8, !tbaa !15, !alias.scope !606
-  %wide.trip.count.i = zext nneg i32 %i.cq to i64
   %min.iters.check = icmp ult i32 %i.cq, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -413,7 +412,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i64 %i.et, ptr %i.eu, align 8, !tbaa !93, !noalias !606
   %i.ev = getelementptr inbounds nuw i8, ptr %.0910.i, i64 4
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.cr
   br i1 %exitcond.not.i, label %_ZN2cv3dnn14dnn5_v202606059DictValue8arrayIntIPiEES2_T_i.exit, label %scalar.ph, !llvm.loop !611
 
 _ZN2cv3dnn14dnn5_v202606059DictValue8arrayIntIPiEES2_T_i.exit: ; preds = %scalar.ph, %middle.block

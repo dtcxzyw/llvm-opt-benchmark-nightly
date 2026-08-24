@@ -202,7 +202,7 @@ extrgb_gray_convert_internal.exit:                ; preds = %..loopexit75_crit_e
 define internal void @null_convert(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 92
-  %i.b = load i32, ptr %i.a, align 4, !tbaa !48   ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !48   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = load i32, ptr %i.c, align 8, !tbaa !50   ; 9 uses
   %i.e = icmp sgt i32 %4, 0                       ; 3 uses
@@ -269,12 +269,11 @@ bb.a:
 .preheader.lr.ph:                                 ; preds = %.preheader86
   %i.z = icmp slt i32 %i.b, 1
   %.not117 = icmp eq i32 %i.d, 0
-  %5 = sext i32 %i.b to i64                       ; 5 uses
+  %5 = zext i32 %i.b to i64                       ; 6 uses
   %brmerge = select i1 %i.z, i1 true, i1 %.not117
   br i1 %brmerge, label %.loopexit, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
-  %wide.trip.count135 = zext nneg i32 %i.b to i64
   %wide.trip.count130 = zext i32 %i.d to i64      ; 2 uses
   %xtraiter248 = and i64 %wide.trip.count130, 3   ; 3 uses
   %i.aa = add i32 %i.d, -1
@@ -677,7 +676,7 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 
 ._crit_edge:                                      ; preds = %bb.b, %._crit_edge.unr-lcssa
   %indvars.iv.next133 = add nuw nsw i64 %indvars.iv132, 1 ; 2 uses
-  %exitcond136.not = icmp eq i64 %indvars.iv.next133, %wide.trip.count135
+  %exitcond136.not = icmp eq i64 %indvars.iv.next133, %5
   br i1 %exitcond136.not, label %._crit_edge109, label %.lr.ph106, !llvm.loop !113
 
 ._crit_edge109:                                   ; preds = %._crit_edge

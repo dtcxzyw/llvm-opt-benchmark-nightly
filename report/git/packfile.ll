@@ -204,22 +204,18 @@ bb.ao:                                            ; preds = %.thread.i
   br label %packed_to_object_type.exit
 
 .critedge.i:                                      ; preds = %bb.aj, %.loopexit.i100
-  %sext.i = shl i64 %indvars.iv.next.i, 32        ; 2 uses
-  %i.iv = icmp eq i64 %sext.i, 0
-  br i1 %i.iv, label %.thread.i, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.critedge.i
-  %6 = ashr exact i64 %sext.i, 32
-  br label %bb.aq
+  %6 = and i64 %indvars.iv.next.i, 4294967295     ; 2 uses
+  %i.iv = icmp eq i64 %6, 0
+  br i1 %i.iv, label %.thread.i, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.aq
   %i.iw = icmp eq i64 %indvars.iv.next144.i, 0
   br i1 %i.iw, label %.thread.i, label %bb.aq, !llvm.loop !199
 
-bb.aq:                                            ; preds = %.lr.ph, %bb.ap
-  %indvars.iv143.i325 = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next144.i, %bb.ap ]
+bb.aq:                                            ; preds = %.critedge.i, %bb.ap
+  %indvars.iv143.i325 = phi i64 [ %indvars.iv.next144.i, %bb.ap ], [ %6, %.critedge.i ]
   %indvars.iv.next144.i = add nsw i64 %indvars.iv143.i325, -1 ; 3 uses
-  %i.ix = getelementptr inbounds [8 x i8], ptr %.154.i, i64 %indvars.iv.next144.i
+  %i.ix = getelementptr inbounds nuw [8 x i8], ptr %.154.i, i64 %indvars.iv.next144.i
   %i.iy = load i64, ptr %i.ix, align 8, !tbaa !67
   %i.iz = call fastcc i32 @retry_bad_packed_offset(ptr noundef readonly %i.fb, ptr noundef %0, i64 noundef %i.iy) ; 2 uses
   %i.ja = icmp sgt i32 %i.iz, 0
@@ -622,7 +618,7 @@ bb.aj:                                            ; preds = %bb.ag, %bb.ah, %bb.
   %i.hh = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.hi = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.hj = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %13 = sext i32 %.0109276 to i64
+  %13 = zext i32 %.0109276 to i64
   br label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph, %bb.bm
@@ -639,7 +635,7 @@ bb.ak:                                            ; preds = %.lr.ph, %bb.bm
 
 .thread:                                          ; preds = %bb.ak
   %indvars.iv.next308337 = add nsw i64 %indvars.iv307, -1 ; 2 uses
-  %i.hl = getelementptr inbounds [24 x i8], ptr %.0112, i64 %indvars.iv.next308337 ; 2 uses
+  %i.hl = getelementptr inbounds nuw [24 x i8], ptr %.0112, i64 %indvars.iv.next308337 ; 2 uses
   %i.hm = load i64, ptr %i.hl, align 8, !tbaa !203
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hl, i64 8
   %i.ho = load i64, ptr %i.hn, align 8, !tbaa !205 ; 2 uses
@@ -798,7 +794,7 @@ bb.bb:                                            ; preds = %bb.ba, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #20
   %i.jm = icmp eq ptr %.pre310, null
   %indvars.iv.next308 = add nsw i64 %indvars.iv307, -1 ; 3 uses
-  %i.jn = getelementptr inbounds [24 x i8], ptr %.0112, i64 %indvars.iv.next308 ; 2 uses
+  %i.jn = getelementptr inbounds nuw [24 x i8], ptr %.0112, i64 %indvars.iv.next308 ; 2 uses
   %i.jo = load i64, ptr %i.jn, align 8, !tbaa !203 ; 2 uses
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jn, i64 8
   %i.jq = load i64, ptr %i.jp, align 8, !tbaa !205 ; 2 uses
@@ -810,7 +806,7 @@ bb.bc:                                            ; preds = %.thread, %bb.bb
   %i.js = phi i64 [ %i.hm, %.thread ], [ %i.jo, %bb.bb ]
   %indvars.iv.next308339 = phi i64 [ %indvars.iv.next308337, %.thread ], [ %indvars.iv.next308, %bb.bb ] ; 2 uses
   %.1338 = phi ptr [ null, %.thread ], [ %.0, %bb.bb ] ; 2 uses
-  %i.jt = getelementptr inbounds [24 x i8], ptr %.0112, i64 %indvars.iv.next308339
+  %i.jt = getelementptr inbounds nuw [24 x i8], ptr %.0112, i64 %indvars.iv.next308339
   %.in = getelementptr inbounds nuw i8, ptr %i.jt, i64 16
   %i.ju = load i64, ptr %.in, align 8, !tbaa !206 ; 2 uses
   %i.jv = call fastcc ptr @unpack_compressed_entry(ptr noundef %1, ptr noundef %i.b, i64 noundef %i.jr, i64 noundef %i.ju) ; 3 uses

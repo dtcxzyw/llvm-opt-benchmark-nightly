@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %.lr.ph141, %_ZL21_i
   %i.ex = load ptr, ptr %i.db, align 8, !tbaa !30
   %i.ey = load i32, ptr %i.a, align 4, !tbaa !8
   %storemerge.i.i = call i32 @llvm.usub.sat.i32(i32 %i.ey, i32 %.048139)
-  %.sroa.speculated.i.i = call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 %i.ew) ; 23 uses
+  %.sroa.speculated.i.i = call i32 @llvm.umin.i32(i32 %storemerge.i.i, i32 %i.ew) ; 24 uses
   %i.ez = zext i32 %.048139 to i64                ; 5 uses
   %i.fa = getelementptr inbounds nuw [12 x i8], ptr %i.ex, i64 %i.ez ; 8 uses
   %.sroa.3.8.insert.ext.i.i = zext i32 %.sroa.speculated.i.i to i64 ; 5 uses
@@ -225,7 +225,7 @@ bb.x:                                             ; preds = %.lr.ph141, %_ZL21_i
   %storemerge.i.i82 = call i32 @llvm.usub.sat.i32(i32 %i.fj, i32 %.048139)
   %.sroa.speculated.i.i83 = call i32 @llvm.umin.i32(i32 %storemerge.i.i82, i32 %i.ew) ; 5 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fh, i64 %i.ez ; 16 uses
-  %.sroa.3.8.insert.ext.i.i84 = zext i32 %.sroa.speculated.i.i83 to i64 ; 15 uses
+  %.sroa.3.8.insert.ext.i.i84 = zext i32 %.sroa.speculated.i.i83 to i64 ; 14 uses
   %.not.i87 = icmp eq i32 %.sroa.speculated.i.i83, %.sroa.speculated.i.i
   %.not161.i = icmp eq i32 %.sroa.speculated.i.i67, %.sroa.speculated.i.i
   %or.cond.i = select i1 %.not.i87, i1 %.not161.i, i1 false
@@ -294,8 +294,8 @@ bb.ae:                                            ; preds = %bb.ad
 .lr.ph.i.i:                                       ; preds = %bb.ae, %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.di, i8 0, i64 64, i1 false), !tbaa !47
-  %.084116.i.i = add nsw i32 %.sroa.speculated.i.i, -1 ; 4 uses
-  %i.gc = zext nneg i32 %.084116.i.i to i64       ; 2 uses
+  %.084116.i.i = add nsw i32 %.sroa.speculated.i.i, -1 ; 5 uses
+  %i.gc = zext nneg i32 %.084116.i.i to i64
   %.079.in.pre.i.i = load float, ptr %i.fa, align 4, !tbaa !49
   br label %bb.af
 
@@ -698,16 +698,15 @@ scalar.ph.preheader:                              ; preds = %.preheader.i, %midd
   br label %scalar.ph
 
 .lr.ph44.i:                                       ; preds = %bb.cq, %.lr.ph49.i
-  %indvars.iv69.i = phi i64 [ %i.gc, %.lr.ph49.i ], [ %indvars.iv.next70.i, %bb.cq ] ; 4 uses
+  %.013747.i = phi i32 [ %.084116.i.i, %.lr.ph49.i ], [ %20, %bb.cq ] ; 4 uses
   %.013846.i = phi i32 [ %i.pm, %.lr.ph49.i ], [ %.2.i, %bb.cq ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ed, i8 0, i64 64, i1 false), !tbaa !47
-  %16 = sub nsw i64 %indvars.iv69.i, %.sroa.3.8.insert.ext.i.i84 ; 2 uses
-  %17 = trunc nsw i64 %indvars.iv69.i to i32
+  %16 = sub nsw i32 %.013747.i, %.sroa.speculated.i.i ; 4 uses
   br label %bb.cl
 
 bb.cl:                                            ; preds = %bb.cl, %.lr.ph44.i
-  %.013643.i = phi i32 [ %17, %.lr.ph44.i ], [ %i.ra, %bb.cl ] ; 2 uses
+  %.013643.i = phi i32 [ %.013747.i, %.lr.ph44.i ], [ %i.ra, %bb.cl ] ; 2 uses
   %i.qq = urem i32 %.013643.i, %.sroa.speculated.i.i ; 2 uses
   %i.qr = and i32 %i.qq, 63
   %i.qs = zext nneg i32 %i.qr to i64
@@ -718,33 +717,32 @@ bb.cl:                                            ; preds = %bb.cl, %.lr.ph44.i
   %i.qx = load i64, ptr %i.qw, align 8, !tbaa !47
   %i.qy = or i64 %i.qt, %i.qx
   store i64 %i.qy, ptr %i.qw, align 8, !tbaa !47
-  %18 = sext i32 %.013643.i to i64
-  %i.qz = getelementptr inbounds [4 x i8], ptr %i.pn, i64 %18
-  %i.ra = load i32, ptr %i.qz, align 4, !tbaa !38 ; 5 uses
-  %19 = sext i32 %i.ra to i64
-  %20 = icmp slt i64 %16, %19
-  br i1 %20, label %bb.cl, label %._crit_edge.i, !llvm.loop !110
+  %17 = zext nneg i32 %.013643.i to i64
+  %i.qz = getelementptr inbounds nuw [4 x i8], ptr %i.pn, i64 %17
+  %i.ra = load i32, ptr %i.qz, align 4, !tbaa !38 ; 3 uses
+  %18 = icmp sgt i32 %i.ra, %16
+  br i1 %18, label %bb.cl, label %._crit_edge.i, !llvm.loop !110
 
 ._crit_edge.i:                                    ; preds = %bb.cl
   store i32 -1, ptr %15, align 8
-  %21 = trunc nsw i64 %16 to i32
-  %i.rb = icmp eq i32 %i.ra, %21
+  %i.rb = icmp eq i32 %i.ra, %16
   br i1 %i.rb, label %bb.cm, label %bb.cq
 
 bb.cm:                                            ; preds = %._crit_edge.i
-  %i.rc = icmp slt i32 %i.ra, 0
+  %i.rc = icmp slt i32 %16, 0
   %.pre.i91 = load ptr, ptr %i.ef, align 8, !tbaa !37 ; 2 uses
   br i1 %i.rc, label %bb.co, label %bb.cn
 
 bb.cn:                                            ; preds = %bb.cm
-  %i.rd = zext nneg i32 %i.ra to i64
+  %i.rd = zext nneg i32 %16 to i64
   %i.re = getelementptr inbounds nuw [4 x i8], ptr %.pre.i91, i64 %i.rd
   %i.rf = load i32, ptr %i.re, align 4, !tbaa !38
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cn, %bb.cm
   %i.rg = phi i32 [ %i.rf, %bb.cn ], [ 0, %bb.cm ]
-  %i.rh = getelementptr inbounds nuw [4 x i8], ptr %.pre.i91, i64 %indvars.iv69.i
+  %19 = zext nneg i32 %.013747.i to i64
+  %i.rh = getelementptr inbounds nuw [4 x i8], ptr %.pre.i91, i64 %19
   %i.ri = load i32, ptr %i.rh, align 4, !tbaa !38
   %i.rj = sub i32 %i.ri, %i.rg                    ; 2 uses
   %.not167.i = icmp ugt i32 %i.rj, %.013846.i
@@ -757,9 +755,8 @@ bb.cp:                                            ; preds = %bb.co
 bb.cq:                                            ; preds = %bb.cp, %bb.co, %._crit_edge.i
   %.2.i = phi i32 [ %.013846.i, %._crit_edge.i ], [ %i.rj, %bb.cp ], [ %.013846.i, %bb.co ]
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #8
-  %indvars.iv.next70.i = add nuw nsw i64 %indvars.iv69.i, 1 ; 2 uses
-  %lftr.wideiv.i = trunc i64 %indvars.iv.next70.i to i32
-  %exitcond72.not.i = icmp eq i32 %i.pl, %lftr.wideiv.i
+  %20 = add nsw i32 %.013747.i, 1                 ; 2 uses
+  %exitcond72.not.i = icmp eq i32 %20, %i.pl
   br i1 %exitcond72.not.i, label %.preheader.i, label %.lr.ph44.i, !llvm.loop !113
 
 _ZN11hb_vector_tIiLb0EED2Ev.exit207.i:            ; preds = %bb.cs, %middle.block257
@@ -1162,14 +1159,13 @@ _ZL9hb_memcpyPvPKvm.exit.thread:                  ; preds = %bb.h
 _ZL9hb_memcpyPvPKvm.exit:                         ; preds = %bb.h
   %i.y = sub nsw i32 0, %1
   %i.z = urem i32 %i.y, %i.b                      ; 2 uses
-  %i.aa = sub nsw i32 %i.b, %i.z                  ; 3 uses
+  %i.aa = sub nsw i32 %i.b, %i.z                  ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %3 = sext i32 %i.aa to i64                      ; 2 uses
-  %i.ac = zext i32 %i.aa to i64
+  %i.ac = zext i32 %i.aa to i64                   ; 3 uses
   %i.ad = load ptr, ptr %0, align 8, !tbaa !66
   %i.ae = zext nneg i32 %i.b to i64
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.ae
-  %i.ag = sub nsw i64 0, %3
+  %i.ag = sub nsw i64 0, %i.ac
   %i.ah = getelementptr inbounds i8, ptr %i.af, i64 %i.ag
   %i.ai = load ptr, ptr %i.ab, align 8, !tbaa !18
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ai, ptr nonnull readonly align 1 %i.ah, i64 range(i64 0, 51539607541) %i.ac, i1 false), !alias.scope !160
@@ -1179,12 +1175,12 @@ _ZL9hb_memcpyPvPKvm.exit:                         ; preds = %bb.h
 bb.i:                                             ; preds = %_ZL9hb_memcpyPvPKvm.exit.thread, %_ZL9hb_memcpyPvPKvm.exit
   %.0223041 = phi i32 [ 0, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %i.aa, %_ZL9hb_memcpyPvPKvm.exit ]
   %i.aj = phi ptr [ %i.x, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %i.ab, %_ZL9hb_memcpyPvPKvm.exit ]
-  %i.ak = phi i64 [ 0, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %3, %_ZL9hb_memcpyPvPKvm.exit ]
+  %i.ak = phi i64 [ 0, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %i.ac, %_ZL9hb_memcpyPvPKvm.exit ]
   %i.al = sub i32 %i.b, %.0223041
   %i.am = zext i32 %i.al to i64
   %i.an = load ptr, ptr %0, align 8, !tbaa !66
   %i.ao = load ptr, ptr %i.aj, align 8, !tbaa !18
-  %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 %i.ak
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ak
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ap, ptr readonly align 1 %i.an, i64 range(i64 0, 51539607541) %i.am, i1 false), !alias.scope !165
   br label %_ZL9hb_memcpyPvPKvm.exit26
 

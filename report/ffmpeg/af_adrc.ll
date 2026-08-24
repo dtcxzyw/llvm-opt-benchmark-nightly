@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %drc_channe
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 48 ; 3 uses
   %i.cy = load i32, ptr %i.cx, align 8, !tbaa !65 ; 4 uses
   %i.cz = sdiv i32 %i.cy, 2
-  %i.da = add nsw i32 %i.cz, 1                    ; 7 uses
+  %i.da = add nsw i32 %i.cz, 1                    ; 6 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.cw, i64 52
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !41 ; 5 uses
   %i.dd = load ptr, ptr %i.v, align 8, !tbaa !35
@@ -359,7 +359,7 @@ apply_window.exit.i.i:                            ; preds = %.lr.ph5.i.i.i.prol.
   br i1 %i.fy, label %.lr.ph.preheader.i.i.i, label %get_energy.exit.thread.i.i
 
 .lr.ph.preheader.i.i.i:                           ; preds = %apply_window.exit.i.i
-  %wide.trip.count.i.i.i = zext i32 %i.da to i64  ; 22 uses
+  %wide.trip.count.i.i.i = zext i32 %i.da to i64  ; 23 uses
   %min.iters.check116 = icmp ult i32 %i.da, 4
   br i1 %min.iters.check116, label %.lr.ph.i.i.i.preheader, label %vector.memcheck109
 
@@ -466,8 +466,7 @@ get_target_gain.exit.i.i:                         ; preds = %get_energy.exit.thr
   br label %apply_factors.exit.i.i
 
 get_target_gain.exit..lr.ph.i89_crit_edge.i.i:    ; preds = %get_energy.exit.i.i
-  %4 = sext i32 %i.da to i64
-  %i.hl = shl nsw i64 %4, 2
+  %i.hl = shl nuw nsw i64 %wide.trip.count.i.i.i, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %i.ch, ptr nonnull readonly align 4 %i.cb, i64 %i.hl, i1 false)
   br label %.lr.ph.i89.i.i
 

@@ -205,8 +205,8 @@ bb.y:                                             ; preds = %.lr.ph
 .loopexit:                                        ; preds = %bb.x, %bb.w, %bb.y
   %.0113136 = phi i32 [ %indvars155.le, %bb.y ], [ 0, %bb.w ], [ %indvars, %bb.x ] ; 3 uses
   %.0110134 = phi ptr [ %.0110138, %bb.y ], [ %i.cn, %bb.w ], [ %i.ct, %bb.x ]
-  %5 = sext i32 %.0113136 to i64
-  %i.cz = getelementptr inbounds [12 x i8], ptr %i.ce, i64 %5 ; 3 uses
+  %5 = zext nneg i32 %.0113136 to i64
+  %i.cz = getelementptr inbounds nuw [12 x i8], ptr %i.ce, i64 %5 ; 3 uses
   store i32 %1, ptr %i.cz, align 4
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 4
   store i32 %1, ptr %i.da, align 4
@@ -222,9 +222,8 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.z
   %i.df = add i32 %indvars155.le, 1               ; 2 uses
-  %sext168 = shl i64 %indvars.iv, 32
-  %6 = ashr exact i64 %sext168, 32
-  %i.dg = getelementptr inbounds [12 x i8], ptr %i.ce, i64 %6
+  %6 = and i64 %indvars.iv, 4294967295
+  %i.dg = getelementptr inbounds nuw [12 x i8], ptr %i.ce, i64 %6
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.dg, ptr noundef nonnull align 4 dereferenceable(12) %.0110138, i64 12, i1 false)
   %i.dh = getelementptr inbounds nuw i8, ptr %.0110138, i64 8
   %i.di = load i32, ptr %i.dh, align 4
@@ -236,9 +235,8 @@ bb.ab:                                            ; preds = %bb.z
   br i1 %i.dk, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  %sext = shl i64 %indvars.iv, 32
-  %7 = ashr exact i64 %sext, 32
-  %i.dl = getelementptr inbounds [12 x i8], ptr %i.ce, i64 %7 ; 3 uses
+  %7 = and i64 %indvars.iv, 4294967295
+  %i.dl = getelementptr inbounds nuw [12 x i8], ptr %i.ce, i64 %7 ; 3 uses
   store i32 %i.cx, ptr %i.dl, align 4
   %i.dm = add i32 %1, -1
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 4

@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 80
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !244 ; 11 uses
   %i.av = zext nneg i32 %2 to i64                 ; 7 uses
-  %i.aw = getelementptr [8 x i8], ptr %i.au, i64 %i.av ; 15 uses
+  %i.aw = getelementptr [8 x i8], ptr %i.au, i64 %i.av ; 14 uses
   %wide.trip.count = zext nneg i32 %i.h to i64
   br label %.lr.ph
 
@@ -535,29 +535,27 @@ bb.u:                                             ; preds = %bb.n
   %i.ig = fmul <2 x float> %i.hm, %i.if
   %i.ih = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.ii = fadd <2 x float> %i.ig, %i.ih
-  %i.ij = shl nsw i32 %i.g, 2                     ; 2 uses
+  %i.ij = shl nsw i32 %i.g, 2
   %i.ik = zext nneg i32 %i.ij to i64
-  %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ik
+  %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ik ; 4 uses
   store <2 x float> %i.ii, ptr %i.il, align 4
   %i.im = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
   %i.in = fmul <2 x float> %i.hs, %i.im
   %i.io = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.ip = fadd <2 x float> %i.in, %i.io
-  %6 = zext nneg i32 %i.ij to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %6 ; 3 uses
-  %i.iq = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.iq = getelementptr inbounds nuw i8, ptr %i.il, i64 8
   store <2 x float> %i.ip, ptr %i.iq, align 4
   %i.ir = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
   %i.is = fmul <2 x float> %i.hs, %i.ir
   %i.it = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.iu = fsub <2 x float> %i.it, %i.is
-  %i.iv = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.iv = getelementptr inbounds nuw i8, ptr %i.il, i64 16
   store <2 x float> %i.iu, ptr %i.iv, align 4
   %i.iw = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
   %i.ix = fmul <2 x float> %i.hm, %i.iw
   %i.iy = load <2 x float>, ptr %i.ie, align 4, !tbaa !8
   %i.iz = fsub <2 x float> %i.iy, %i.ix
-  %i.ja = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.il, i64 24
   store <2 x float> %i.iz, ptr %i.ja, align 4
   br label %.lr.ph556
 
@@ -960,22 +958,19 @@ bb.e:                                             ; preds = %bb.d
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.au = load i32, ptr %i.at, align 4, !tbaa !309
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.aw = load i32, ptr %i.av, align 8, !tbaa !312 ; 4 uses
+  %i.aw = load i32, ptr %i.av, align 8, !tbaa !312 ; 3 uses
   %i.ax = load ptr, ptr %i.as, align 8            ; 3 uses
+  %2 = zext i32 %i.aw to i64                      ; 2 uses
   %i.ay = icmp sgt i32 %i.aw, 0
-  br i1 %i.ay, label %.lr.ph55, label %_ZN22ImTriangulatorNodeSpan19find_erase_unsortedEi.exit
-
-.lr.ph55:                                         ; preds = %bb.e
-  %2 = zext nneg i32 %i.aw to i64
-  br label %bb.g
+  br i1 %i.ay, label %bb.g, label %_ZN22ImTriangulatorNodeSpan19find_erase_unsortedEi.exit
 
 bb.f:                                             ; preds = %bb.g
   %i.az = trunc nuw i64 %i.bb to i32
   %i.ba = icmp sgt i32 %i.az, 0
   br i1 %i.ba, label %bb.g, label %_ZN22ImTriangulatorNodeSpan19find_erase_unsortedEi.exit, !llvm.loop !322
 
-bb.g:                                             ; preds = %.lr.ph55, %bb.f
-  %indvars.iv.i54 = phi i64 [ %2, %.lr.ph55 ], [ %i.bb, %bb.f ]
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %indvars.iv.i54 = phi i64 [ %i.bb, %bb.f ], [ %2, %bb.e ]
   %i.bb = add nsw i64 %indvars.iv.i54, -1         ; 4 uses
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.bb
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !311
@@ -986,8 +981,7 @@ bb.g:                                             ; preds = %.lr.ph55, %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.bb
-  %3 = zext nneg i32 %i.aw to i64
-  %i.bi = getelementptr [8 x i8], ptr %i.ax, i64 %3
+  %i.bi = getelementptr [8 x i8], ptr %i.ax, i64 %2
   %i.bj = getelementptr i8, ptr %i.bi, i64 -8
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !311
   store ptr %i.bk, ptr %i.bh, align 8, !tbaa !311
@@ -1000,22 +994,19 @@ bb.i:                                             ; preds = %bb.d
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !309
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.bq = load i32, ptr %i.bp, align 8, !tbaa !312 ; 4 uses
+  %i.bq = load i32, ptr %i.bp, align 8, !tbaa !312 ; 3 uses
   %i.br = load ptr, ptr %i.bm, align 8            ; 3 uses
+  %3 = zext i32 %i.bq to i64                      ; 2 uses
   %i.bs = icmp sgt i32 %i.bq, 0
-  br i1 %i.bs, label %.lr.ph, label %_ZN22ImTriangulatorNodeSpan19find_erase_unsortedEi.exit
-
-.lr.ph:                                           ; preds = %bb.i
-  %4 = zext nneg i32 %i.bq to i64
-  br label %bb.k
+  br i1 %i.bs, label %bb.k, label %_ZN22ImTriangulatorNodeSpan19find_erase_unsortedEi.exit
 
 bb.j:                                             ; preds = %bb.k
   %i.bt = trunc nuw i64 %i.bv to i32
   %i.bu = icmp sgt i32 %i.bt, 0
   br i1 %i.bu, label %bb.k, label %_ZN22ImTriangulatorNodeSpan19find_erase_unsortedEi.exit, !llvm.loop !322
 
-bb.k:                                             ; preds = %.lr.ph, %bb.j
-  %indvars.iv.i2553 = phi i64 [ %4, %.lr.ph ], [ %i.bv, %bb.j ]
+bb.k:                                             ; preds = %bb.i, %bb.j
+  %indvars.iv.i2553 = phi i64 [ %i.bv, %bb.j ], [ %3, %bb.i ]
   %i.bv = add nsw i64 %indvars.iv.i2553, -1       ; 4 uses
   %i.bw = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %i.bv
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !311
@@ -1026,8 +1017,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %i.bv
-  %5 = zext nneg i32 %i.bq to i64
-  %i.cc = getelementptr [8 x i8], ptr %i.br, i64 %5
+  %i.cc = getelementptr [8 x i8], ptr %i.br, i64 %3
   %i.cd = getelementptr i8, ptr %i.cc, i64 -8
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !311
   store ptr %i.ce, ptr %i.cb, align 8, !tbaa !311
@@ -1430,8 +1420,8 @@ bb.j:                                             ; preds = %bb.h
   %i.fo = getelementptr inbounds nuw i8, ptr %.8.val, i64 %i.fn
   %i.fp = sub nsw i32 %0, %i.ei
   %i.fq = shl nsw i32 %i.fp, 1
-  %1 = sext i32 %i.fq to i64
-  %i.fr = getelementptr inbounds i8, ptr %i.fo, i64 %1
+  %1 = zext nneg i32 %i.fq to i64
+  %i.fr = getelementptr inbounds nuw i8, ptr %i.fo, i64 %1
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 %i.a
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 %i.es
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 16

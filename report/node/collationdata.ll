@@ -204,7 +204,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.af, label %.lr.ph224.preheader, label %.thread182
 
 .lr.ph224.preheader:                              ; preds = %.thread295
-  %wide.trip.count261 = zext nneg i32 %2 to i64
+  %wide.trip.count261 = zext nneg i32 %2 to i64   ; 2 uses
   %invariant.op = add i32 %i.i, -4096
   br label %.lr.ph224
 
@@ -225,15 +225,14 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.jp, label %.lr.ph229.preheader, label %.thread182
 
 .lr.ph229.preheader:                              ; preds = %.preheader200
-  %6 = zext nneg i32 %2 to i64
   %invariant.op304 = add i32 %i.i, -4096
   br label %.lr.ph229
 
 .lr.ph229:                                        ; preds = %.lr.ph229.preheader, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread
-  %indvars.iv263 = phi i64 [ %6, %.lr.ph229.preheader ], [ %indvars.iv.next264, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread ]
+  %indvars.iv263 = phi i64 [ %wide.trip.count261, %.lr.ph229.preheader ], [ %indvars.iv.next264, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread ]
   %.1134227 = phi i32 [ %i.ae, %.lr.ph229.preheader ], [ %.2135, %_ZNK6icu_7813CollationData14getScriptIndexEi.exit.thread ] ; 6 uses
   %indvars.iv.next264 = add nsw i64 %indvars.iv263, -1 ; 3 uses
-  %i.jq = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv.next264
+  %i.jq = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv.next264
   %i.jr = load i32, ptr %i.jq, align 4            ; 6 uses
   switch i32 %i.jr, label %bb.ac [
     i32 -1, label %bb.ab

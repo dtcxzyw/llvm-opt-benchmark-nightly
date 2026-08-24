@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bn_set_minimal_widt
   br i1 %.not112, label %bn_wexpand.exit.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.ej = sub nsw i32 %i.eg, %i.du                ; 7 uses
+  %i.ej = sub nsw i32 %i.eg, %i.du                ; 6 uses
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ao, i64 16 ; 2 uses
   %i.el = load i32, ptr %i.ek, align 8, !tbaa !182
   %i.em = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
@@ -213,7 +213,7 @@ bb.w:                                             ; preds = %bb.v
   %i.eo = xor i32 %i.en, %i.el
   %i.ep = getelementptr inbounds nuw i8, ptr %i.as, i64 16 ; 2 uses
   store i32 %i.eo, ptr %i.ep, align 8, !tbaa !182
-  %i.eq = zext nneg i32 %i.ej to i64
+  %i.eq = zext i32 %i.ej to i64                   ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.as, i64 12 ; 2 uses
   %i.es = load i32, ptr %i.er, align 4, !tbaa !197
   %.not.i130 = icmp ugt i32 %i.ej, %i.es
@@ -336,7 +336,6 @@ bn_wexpand.exit136:                               ; preds = %_ZL14OPENSSL_memcpy
   %i.gj = icmp eq i32 %i.fg, 0
   %.not43.i = icmp ult i32 %i.fg, 4
   %i.gk = load ptr, ptr %i.as, align 8, !tbaa !185
-  %5 = zext nneg i32 %i.ej to i64
   br label %bb.ar
 
 ._crit_edge:                                      ; preds = %bn_sub_words.exit.thread, %bn_wexpand.exit136
@@ -422,7 +421,7 @@ bn_set_minimal_width.exit148:                     ; preds = %bn_minimal_width.ex
   br i1 %.not115, label %bb.ax, label %bb.aw
 
 bb.ar:                                            ; preds = %.lr.ph227, %bn_sub_words.exit.thread
-  %indvars.iv = phi i64 [ %5, %.lr.ph227 ], [ %indvars.iv.next, %bn_sub_words.exit.thread ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.eq, %.lr.ph227 ], [ %indvars.iv.next, %bn_sub_words.exit.thread ] ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
   %i.hh = getelementptr inbounds nuw [8 x i8], ptr %i.fz, i64 %indvars.iv.next ; 8 uses
   %i.hi = getelementptr inbounds [8 x i8], ptr %i.hh, i64 %i.ga ; 3 uses
@@ -825,7 +824,7 @@ bb.d:                                             ; preds = %bb.a
   %i.y = tail call i32 @llvm.abs.i32(i32 %i.s, i1 true)
   %i.z = add nsw i32 %i.y, %4                     ; 3 uses
   %i.aa = sub nsw i64 0, %i.v                     ; 2 uses
-  %7 = sext i32 %i.z to i64                       ; 3 uses
+  %7 = zext i32 %i.z to i64                       ; 3 uses
   %.not.i.i = icmp eq i32 %i.z, 0
   br i1 %.not.i.i, label %_ZL21bn_abs_sub_part_wordsPmPKmS1_iiS_.exit, label %.lr.ph.i.i
 
@@ -836,7 +835,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i.i
-  %n.vec = and i64 %7, -4                         ; 3 uses
+  %n.vec = and i64 %7, 4294967292                 ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.ab, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert383 = insertelement <2 x i64> poison, i64 %i.ac, i64 0
@@ -883,7 +882,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.at = and i64 %i.ar, %i.ac
   %i.au = or disjoint i64 %i.at, %i.as
   store i64 %i.au, ptr %i.ao, align 8, !tbaa !94
-  %i.av = add nuw i64 %.09.i.i, 1                 ; 2 uses
+  %i.av = add nuw nsw i64 %.09.i.i, 1             ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.av, %7
   br i1 %exitcond.not.i.i, label %_ZL21bn_abs_sub_part_wordsPmPKmS1_iiS_.exit, label %scalar.ph, !llvm.loop !1447
 
@@ -1286,7 +1285,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %3 = sext i32 %i.f to i64
+  %3 = zext nneg i32 %i.f to i64
   %i.s = getelementptr i8, ptr @_ZN5mlkem12_GLOBAL__N_16kMasksE, i64 %3
   %i.t = getelementptr i8, ptr %i.s, i64 -1
   %i.u = load i8, ptr %i.t, align 1, !tbaa !13
@@ -1361,7 +1360,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  %4 = sext i32 %i.al to i64
+  %4 = zext nneg i32 %i.al to i64
   %i.ay = getelementptr i8, ptr @_ZN5mlkem12_GLOBAL__N_16kMasksE, i64 %4
   %i.az = getelementptr i8, ptr %i.ay, i64 -1
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !13
@@ -1441,7 +1440,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.s
-  %5 = sext i32 %i.bt to i64
+  %5 = zext nneg i32 %i.bt to i64
   %i.cg = getelementptr i8, ptr @_ZN5mlkem12_GLOBAL__N_16kMasksE, i64 %5
   %i.ch = getelementptr i8, ptr %i.cg, i64 -1
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !13
@@ -1844,7 +1843,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %3 = sext i32 %i.f to i64
+  %3 = zext nneg i32 %i.f to i64
   %i.s = getelementptr i8, ptr @_ZN5mlkem12_GLOBAL__N_16kMasksE, i64 %3
   %i.t = getelementptr i8, ptr %i.s, i64 -1
   %i.u = load i8, ptr %i.t, align 1, !tbaa !13
@@ -1919,7 +1918,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  %4 = sext i32 %i.al to i64
+  %4 = zext nneg i32 %i.al to i64
   %i.ay = getelementptr i8, ptr @_ZN5mlkem12_GLOBAL__N_16kMasksE, i64 %4
   %i.az = getelementptr i8, ptr %i.ay, i64 -1
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !13
@@ -1999,7 +1998,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.s
-  %5 = sext i32 %i.bt to i64
+  %5 = zext nneg i32 %i.bt to i64
   %i.cg = getelementptr i8, ptr @_ZN5mlkem12_GLOBAL__N_16kMasksE, i64 %5
   %i.ch = getelementptr i8, ptr %i.cg, i64 -1
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !13
@@ -2079,7 +2078,7 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.ad
 
 bb.ac:                                            ; preds = %bb.aa
-  %6 = sext i32 %i.db to i64
+  %6 = zext nneg i32 %i.db to i64
   %i.do = getelementptr i8, ptr @_ZN5mlkem12_GLOBAL__N_16kMasksE, i64 %6
   %i.dp = getelementptr i8, ptr %i.do, i64 -1
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !13

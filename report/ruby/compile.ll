@@ -205,10 +205,10 @@ RB_SYMBOL_P.exit.thread.i:                        ; preds = %RB_SYMBOL_P.exit.i,
   br i1 %i.jd, label %iseq_build_kw.exit, label %bb.bd
 
 bb.bd:                                            ; preds = %.thread.i
-  %i.je = sub i32 %i.hi, %.056.lcssa.i            ; 3 uses
+  %i.je = sub i32 %i.hi, %.056.lcssa.i            ; 2 uses
   %i.jf = icmp sgt i32 %i.je, -1
   call void @llvm.assume(i1 %i.jf)
-  %i.jg = zext nneg i32 %i.je to i64
+  %i.jg = zext nneg i32 %i.je to i64              ; 2 uses
   %i.jh = call noalias nonnull ptr @ruby_xmalloc2(i64 noundef %i.jg, i64 noundef 8) #39 ; 2 uses
   %i.ji = icmp slt i32 %.056.lcssa.i, %i.hi
   br i1 %i.ji, label %.lr.ph83.i, label %._crit_edge.i
@@ -222,7 +222,7 @@ bb.bd:                                            ; preds = %.thread.i
 
 bb.be:                                            ; preds = %rb_obj_write.exit.i, %.lr.ph83.i
   %indvars.iv86.i.a = phi i64 [ %i.jm, %.lr.ph83.i ], [ %indvars.iv.next87.i.a, %rb_obj_write.exit.i ] ; 3 uses
-  %.05582.i = phi i32 [ 0, %.lr.ph83.i ], [ %8, %rb_obj_write.exit.i ] ; 2 uses
+  %indvars.iv86.i = phi i64 [ 0, %.lr.ph83.i ], [ %indvars.iv.next87.i, %rb_obj_write.exit.i ] ; 2 uses
   %i.jn = load i64, ptr %i.gy, align 8, !tbaa !74
   %i.jo = and i64 %i.jn, 8192
   %.not.i.i61.i = icmp eq i64 %i.jo, 0
@@ -302,8 +302,7 @@ RARRAY_AREF.exit67.i:                             ; preds = %RARRAY_AREF.exit73.
   %i.kj = call i64 @rb_sym2id(i64 noundef %.054.i) #37
   %i.kk = getelementptr [8 x i8], ptr %i.id, i64 %indvars.iv86.i.a
   store i64 %i.kj, ptr %i.kk, align 8, !tbaa !36
-  %7 = sext i32 %.05582.i to i64
-  %i.kl = getelementptr [8 x i8], ptr %i.jh, i64 %7
+  %i.kl = getelementptr [8 x i8], ptr %i.jh, i64 %indvars.iv86.i
   store i64 %.053.i, ptr %i.kl, align 8, !tbaa !36
   %i.km = icmp eq i64 %.053.i, 0
   %i.kn = and i64 %.053.i, 7
@@ -317,8 +316,8 @@ bb.bp:                                            ; preds = %RARRAY_AREF.exit67.
 
 rb_obj_write.exit.i:                              ; preds = %bb.bp, %RARRAY_AREF.exit67.i
   %indvars.iv.next87.i.a = add nuw nsw i64 %indvars.iv86.i.a, 1
-  %8 = add nuw i32 %.05582.i, 1                   ; 2 uses
-  %exitcond89.not.i = icmp eq i32 %8, %i.je
+  %indvars.iv.next87.i = add nuw nsw i64 %indvars.iv86.i, 1 ; 2 uses
+  %exitcond89.not.i = icmp eq i64 %indvars.iv.next87.i, %i.jg
   br i1 %exitcond89.not.i, label %._crit_edge.i, label %bb.be, !llvm.loop !298
 
 ._crit_edge.i:                                    ; preds = %rb_obj_write.exit.i, %bb.bd

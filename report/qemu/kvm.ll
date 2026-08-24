@@ -205,7 +205,7 @@ hyperv_fill_cpuids.exit:                          ; preds = %bb.ay, %bb.az
 
 hyperv_enabled.exit.thread263:                    ; preds = %bb.h, %hyperv_fill_cpuids.exit, %hyperv_enabled.exit
   %.0189 = phi i32 [ 1073742080, %hyperv_fill_cpuids.exit ], [ 1073741824, %hyperv_enabled.exit ], [ 1073741824, %bb.h ] ; 10 uses
-  %.0186 = phi i32 [ %.2.i, %hyperv_fill_cpuids.exit ], [ 0, %hyperv_enabled.exit ], [ 0, %bb.h ] ; 7 uses
+  %.0186 = phi i32 [ %.2.i, %hyperv_fill_cpuids.exit ], [ 0, %hyperv_enabled.exit ], [ 0, %bb.h ] ; 5 uses
   %i.ic = load ptr, ptr %i.r, align 8
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 640 ; 2 uses
   %i.ie = load i32, ptr %i.id, align 8
@@ -213,9 +213,9 @@ hyperv_enabled.exit.thread263:                    ; preds = %bb.h, %hyperv_fill_
   br i1 %.not212, label %bb.bh, label %bb.ba
 
 bb.ba:                                            ; preds = %hyperv_enabled.exit.thread263
-  %i.if = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %i.if = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.ig = zext nneg i32 %.0186 to i64
-  %i.ih = getelementptr inbounds nuw [40 x i8], ptr %i.if, i64 %i.ig ; 5 uses
+  %i.ih = getelementptr inbounds nuw [40 x i8], ptr %i.if, i64 %i.ig ; 25 uses
   store i32 %.0189, ptr %i.ih, align 4
   %i.ii = or disjoint i32 %.0189, 3               ; 2 uses
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ih, i64 12 ; 2 uses
@@ -226,24 +226,22 @@ bb.ba:                                            ; preds = %hyperv_enabled.exit
   store i32 1700285773, ptr %i.il, align 4
   %i.im = getelementptr inbounds nuw i8, ptr %i.ih, i64 24
   store i32 1296914030, ptr %i.im, align 4
-  %11 = zext nneg i32 %.0186 to i64
-  %12 = getelementptr inbounds nuw [40 x i8], ptr %i.if, i64 %11 ; 20 uses
-  %i.in = getelementptr inbounds nuw i8, ptr %12, i64 40
+  %i.in = getelementptr inbounds nuw i8, ptr %i.ih, i64 40
   %i.io = or disjoint i32 %.0189, 1
   store i32 %i.io, ptr %i.in, align 4
   %i.ip = load i32, ptr %i.id, align 8
-  %i.iq = getelementptr inbounds nuw i8, ptr %12, i64 52
+  %i.iq = getelementptr inbounds nuw i8, ptr %i.ih, i64 52
   store i32 %i.ip, ptr %i.iq, align 4
-  %i.ir = getelementptr inbounds nuw i8, ptr %12, i64 56
+  %i.ir = getelementptr inbounds nuw i8, ptr %i.ih, i64 56
   store i32 0, ptr %i.ir, align 4
-  %i.is = getelementptr inbounds nuw i8, ptr %12, i64 60
+  %i.is = getelementptr inbounds nuw i8, ptr %i.ih, i64 60
   store i32 0, ptr %i.is, align 4
-  %i.it = getelementptr inbounds nuw i8, ptr %12, i64 64
+  %i.it = getelementptr inbounds nuw i8, ptr %i.ih, i64 64
   store i32 0, ptr %i.it, align 4
-  %i.iu = getelementptr inbounds nuw i8, ptr %12, i64 80
+  %i.iu = getelementptr inbounds nuw i8, ptr %i.ih, i64 80
   %i.iv = or disjoint i32 %.0189, 2
   store i32 %i.iv, ptr %i.iu, align 4
-  %i.iw = getelementptr inbounds nuw i8, ptr %12, i64 92
+  %i.iw = getelementptr inbounds nuw i8, ptr %i.ih, i64 92
   store i32 1, ptr %i.iw, align 4
   %i.ix = load ptr, ptr @kvm_state, align 8
   %i.iy = call i32 @kvm_check_extension(ptr noundef %i.ix, i32 noundef 44) #29
@@ -269,23 +267,23 @@ hyperv_enabled.exit231:                           ; preds = %bb.bc
   br i1 %i.jg, label %hyperv_enabled.exit231.thread, label %hyperv_enabled.exit231.thread266
 
 hyperv_enabled.exit231.thread:                    ; preds = %bb.bb, %bb.bc, %hyperv_enabled.exit231
-  %i.jh = getelementptr inbounds nuw i8, ptr %12, i64 96
+  %i.jh = getelementptr inbounds nuw i8, ptr %i.ih, i64 96
   store i32 1073742336, ptr %i.jh, align 4
   %i.ji = load ptr, ptr %i.r, align 8
   %i.jj = call i32 @kvm_xen_init(ptr noundef %i.ji, i32 noundef 1073742336) #29 ; 0 uses
   br label %bb.bd
 
 hyperv_enabled.exit231.thread266:                 ; preds = %bb.ba, %hyperv_enabled.exit231
-  %i.jk = getelementptr inbounds nuw i8, ptr %12, i64 96
+  %i.jk = getelementptr inbounds nuw i8, ptr %i.ih, i64 96
   store i32 1073741824, ptr %i.jk, align 4
   br label %bb.bd
 
 bb.bd:                                            ; preds = %hyperv_enabled.exit231.thread266, %hyperv_enabled.exit231.thread
-  %i.jl = getelementptr inbounds nuw i8, ptr %12, i64 100
+  %i.jl = getelementptr inbounds nuw i8, ptr %i.ih, i64 100
   store i32 0, ptr %i.jl, align 4
-  %i.jm = getelementptr inbounds nuw i8, ptr %12, i64 104
+  %i.jm = getelementptr inbounds nuw i8, ptr %i.ih, i64 104
   store i32 0, ptr %i.jm, align 4
-  %i.jn = getelementptr inbounds nuw i8, ptr %12, i64 120
+  %i.jn = getelementptr inbounds nuw i8, ptr %i.ih, i64 120
   store i32 %i.ii, ptr %i.jn, align 4
   %i.jo = load i64, ptr %i.w, align 16
   %.not.i232 = icmp eq i64 %i.jo, 0
@@ -316,20 +314,20 @@ tsc_is_stable_and_known.exit.thread269:           ; preds = %bb.bd, %tsc_is_stab
   %i.jy = lshr i32 %i.jx, 25
   %i.jz = and i32 %i.jy, 4
   %i.ka = or disjoint i32 %i.jz, %i.ju
-  %i.kb = getelementptr inbounds nuw i8, ptr %12, i64 132
+  %i.kb = getelementptr inbounds nuw i8, ptr %i.ih, i64 132
   store i32 %i.ka, ptr %i.kb, align 4
-  %i.kc = getelementptr inbounds nuw i8, ptr %12, i64 136
+  %i.kc = getelementptr inbounds nuw i8, ptr %i.ih, i64 136
   store i32 0, ptr %i.kc, align 4
   %i.kd = getelementptr inbounds nuw i8, ptr %i.f, i64 31352
   %i.ke = load i64, ptr %i.kd, align 8
   %i.kf = trunc i64 %i.ke to i32
-  %i.kg = getelementptr inbounds nuw i8, ptr %12, i64 140
+  %i.kg = getelementptr inbounds nuw i8, ptr %i.ih, i64 140
   store i32 %i.kf, ptr %i.kg, align 4
-  %i.kh = getelementptr inbounds nuw i8, ptr %12, i64 144
+  %i.kh = getelementptr inbounds nuw i8, ptr %i.ih, i64 144
   store i32 0, ptr %i.kh, align 4
   %i.ki = add nuw nsw i32 %.0186, 5
-  %i.kj = getelementptr inbounds nuw i8, ptr %12, i64 160 ; 2 uses
-  %i.kk = or disjoint i32 %.0189, 4               ; 3 uses
+  %i.kj = getelementptr inbounds nuw i8, ptr %i.ih, i64 160
+  %i.kk = or disjoint i32 %.0189, 4               ; 2 uses
   store i32 %i.kk, ptr %i.kj, align 4
   store i32 %i.kk, ptr %i.ij, align 4
   %i.kl = load ptr, ptr %i.r, align 8
@@ -339,15 +337,14 @@ tsc_is_stable_and_known.exit.thread269:           ; preds = %bb.bd, %tsc_is_stab
   br i1 %i.ko, label %._crit_edge, label %.thread272
 
 ._crit_edge:                                      ; preds = %tsc_is_stable_and_known.exit.thread269
-  store i32 %i.kk, ptr %i.kj, align 4
   %i.kp = getelementptr inbounds nuw i8, ptr %i.f, i64 33052
   %i.kq = load i8, ptr %i.kp, align 4, !range !7, !noundef !8
   %i.kr = trunc nuw i8 %i.kq to i1
-  %i.ks = getelementptr inbounds nuw i8, ptr %12, i64 172
+  %i.ks = getelementptr inbounds nuw i8, ptr %i.ih, i64 172
   %i.kt = load i32, ptr %i.ks, align 4            ; 2 uses
   %i.ku = or i32 %i.kt, 3
   %i.kv = select i1 %i.kr, i32 %i.ku, i32 %i.kt   ; 3 uses
-  %i.kw = getelementptr inbounds nuw i8, ptr %12, i64 172 ; 3 uses
+  %i.kw = getelementptr inbounds nuw i8, ptr %i.ih, i64 172 ; 3 uses
   %i.kx = or i32 %i.kv, 4
   store i32 %i.kx, ptr %i.kw, align 4
   %i.ky = load i32, ptr %i.km, align 8
@@ -359,7 +356,7 @@ bb.bf:                                            ; preds = %._crit_edge
   store i32 %i.la, ptr %i.kw, align 4
   %i.lb = getelementptr inbounds nuw i8, ptr %0, i64 688
   %i.lc = load i32, ptr %i.lb, align 16
-  %i.ld = getelementptr inbounds nuw i8, ptr %12, i64 176
+  %i.ld = getelementptr inbounds nuw i8, ptr %i.ih, i64 176
   store i32 %i.lc, ptr %i.ld, align 4
   %.pr = load i32, ptr %i.km, align 8
   %i.le = icmp ugt i32 %.pr, 262160
@@ -383,9 +380,9 @@ bb.bh:                                            ; preds = %hyperv_enabled.exit
   br i1 %i.lk, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.ll = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %i.ll = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.lm = zext nneg i32 %.0186 to i64
-  %i.ln = getelementptr inbounds nuw [40 x i8], ptr %i.ll, i64 %i.lm ; 5 uses
+  %i.ln = getelementptr inbounds nuw [40 x i8], ptr %i.ll, i64 %i.lm ; 8 uses
   store i32 %.0189, ptr %i.ln, align 4
   %i.lo = or i32 %.0189, 1073741825               ; 2 uses
   %i.lp = getelementptr inbounds nuw i8, ptr %i.ln, i64 12
@@ -397,19 +394,17 @@ bb.bi:                                            ; preds = %bb.bh
   %i.ls = getelementptr inbounds nuw i8, ptr %i.ln, i64 24
   store i32 77, ptr %i.ls, align 4
   %i.lt = add nuw nsw i32 %.0186, 2
-  %13 = zext nneg i32 %.0186 to i64
-  %14 = getelementptr inbounds nuw [40 x i8], ptr %i.ll, i64 %13 ; 3 uses
-  %i.lu = getelementptr inbounds nuw i8, ptr %14, i64 40
+  %i.lu = getelementptr inbounds nuw i8, ptr %i.ln, i64 40
   store i32 %i.lo, ptr %i.lu, align 4
   %i.lv = getelementptr inbounds nuw i8, ptr %i.f, i64 30336
   %i.lw = load i64, ptr %i.lv, align 16
   %i.lx = trunc i64 %i.lw to i32
-  %i.ly = getelementptr inbounds nuw i8, ptr %14, i64 52
+  %i.ly = getelementptr inbounds nuw i8, ptr %i.ln, i64 52
   store i32 %i.lx, ptr %i.ly, align 4
   %i.lz = getelementptr inbounds nuw i8, ptr %i.f, i64 30344
   %i.ma = load i64, ptr %i.lz, align 8
   %i.mb = trunc i64 %i.ma to i32
-  %i.mc = getelementptr inbounds nuw i8, ptr %14, i64 64
+  %i.mc = getelementptr inbounds nuw i8, ptr %i.ln, i64 64
   store i32 %i.mb, ptr %i.mc, align 4
   br label %bb.bj
 

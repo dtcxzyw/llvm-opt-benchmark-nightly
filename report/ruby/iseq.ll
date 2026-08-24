@@ -205,16 +205,15 @@ bb.t:                                             ; preds = %.lr.ph722, %bb.t
   br i1 %i.eh, label %bb.t, label %.preheader665.loopexit, !llvm.loop !395
 
 bb.u:                                             ; preds = %.lr.ph726, %bb.w
-  %indvars.iv818.a = phi i64 [ %i.dz, %.lr.ph726 ], [ %indvars.iv.next819, %bb.w ] ; 2 uses
-  %.0351724 = phi i32 [ 0, %.lr.ph726 ], [ %2, %bb.w ] ; 2 uses
+  %indvars.iv818.a = phi i64 [ 0, %.lr.ph726 ], [ %indvars.iv.next821, %bb.w ] ; 2 uses
+  %indvars.iv818 = phi i64 [ %i.dz, %.lr.ph726 ], [ %indvars.iv.next819, %bb.w ] ; 2 uses
   %i.ei = load ptr, ptr %i.dx, align 8, !tbaa !93
-  %i.ej = getelementptr [8 x i8], ptr %i.ei, i64 %indvars.iv818.a
+  %i.ej = getelementptr [8 x i8], ptr %i.ei, i64 %indvars.iv818
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !11
   %i.el = tail call i64 @rb_id2sym(i64 noundef %i.ek) #20
   %i.em = tail call i64 (i64, ...) @rb_ary_new_from_args(i64 noundef 1, i64 noundef %i.el) #20 ; 2 uses
   %i.en = load ptr, ptr %i.dy, align 8, !tbaa !98
-  %1 = sext i32 %.0351724 to i64
-  %i.eo = getelementptr [8 x i8], ptr %i.en, i64 %1
+  %i.eo = getelementptr [8 x i8], ptr %i.en, i64 %indvars.iv818.a
   %i.ep = load i64, ptr %i.eo, align 8, !tbaa !11 ; 2 uses
   %i.eq = icmp eq i64 %i.ep, 36
   br i1 %i.eq, label %bb.w, label %bb.v
@@ -225,8 +224,8 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.es = tail call i64 @rb_ary_push(i64 noundef %i.dp, i64 noundef %i.em) #20 ; 0 uses
-  %indvars.iv.next819 = add nuw nsw i64 %indvars.iv818.a, 1 ; 2 uses
-  %2 = add i32 %.0351724, 1
+  %indvars.iv.next819 = add nuw nsw i64 %indvars.iv818, 1 ; 2 uses
+  %indvars.iv.next821 = add nuw nsw i64 %indvars.iv818.a, 1
   %i.et = load i32, ptr %i.aw, align 8, !tbaa !97
   %i.eu = trunc nuw i64 %indvars.iv.next819 to i32
   %i.ev = icmp sgt i32 %i.et, %i.eu

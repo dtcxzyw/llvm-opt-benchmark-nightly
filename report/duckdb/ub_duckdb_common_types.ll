@@ -205,29 +205,24 @@ bb.dh:                                            ; preds = %_ZN10duckdb_fmt2v68
 
 .lr.ph:                                           ; preds = %bb.dh
   %i.qa = load ptr, ptr %0, align 8, !tbaa !3950
-  %2 = zext nneg i32 %i.py to i64
-  %3 = zext nneg i32 %i.e to i64
   br label %bb.di
 
 bb.di:                                            ; preds = %.lr.ph, %bb.dj
-  %indvars.iv461 = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next462, %bb.dj ] ; 3 uses
-  %i.qb = getelementptr i8, ptr %i.qa, i64 %indvars.iv461
+  %.0105450 = phi i32 [ %i.py, %.lr.ph ], [ %3, %bb.dj ] ; 3 uses
+  %2 = zext nneg i32 %.0105450 to i64
+  %i.qb = getelementptr i8, ptr %i.qa, i64 %2
   %i.qc = getelementptr i8, ptr %i.qb, i64 -1
   %i.qd = load i8, ptr %i.qc, align 1, !tbaa !153
   %i.qe = icmp eq i8 %i.qd, 48
-  br i1 %i.qe, label %bb.dj, label %.critedge.loopexit
+  br i1 %i.qe, label %bb.dj, label %.critedge
 
 bb.dj:                                            ; preds = %bb.di
-  %indvars.iv.next462 = add nsw i64 %indvars.iv461, -1 ; 2 uses
-  %i.qf = icmp sgt i64 %indvars.iv.next462, %3
+  %3 = add nsw i32 %.0105450, -1                  ; 2 uses
+  %i.qf = icmp sgt i32 %3, %i.e
   br i1 %i.qf, label %bb.di, label %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit309, !llvm.loop !3963
 
-.critedge.loopexit:                               ; preds = %bb.di
-  %4 = trunc nuw nsw i64 %indvars.iv461 to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %.critedge.loopexit, %bb.dh
-  %.0105.lcssa = phi i32 [ %i.py, %bb.dh ], [ %4, %.critedge.loopexit ] ; 2 uses
+.critedge:                                        ; preds = %bb.di, %bb.dh
+  %.0105.lcssa = phi i32 [ %i.py, %bb.dh ], [ %.0105450, %bb.di ] ; 2 uses
   %.not122 = icmp eq i32 %.0105.lcssa, %i.e
   br i1 %.not122, label %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit309, label %bb.dk
 
@@ -630,7 +625,7 @@ _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit56: ; preds =
 define linkonce_odr i64 @_ZNK10duckdb_fmt2v68internal12float_writerIcE8prettifyINS1_17counting_iteratorEEET_S6_(ptr noundef nonnull align 8 dereferenceable(33) %0, i64 %1) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !3954 ; 19 uses
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !3954 ; 20 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.d = load i32, ptr %i.c, align 4, !tbaa !3955 ; 5 uses
   %i.e = add i32 %i.d, %i.b                       ; 17 uses
@@ -852,35 +847,30 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.0186.10 = phi i64 [ %.sroa.05.0.lcssa.i.i146, %bb.r ], [ %i.ch, %middle.block ], [ %.sroa.05.0.lcssa.i.i144, %scalar.ph ] ; 2 uses
   %i.cl = and i32 %i.h, 536870912
   %.not = icmp eq i32 %i.cl, 0
-  %2 = sext i32 %i.b to i64                       ; 2 uses
   br i1 %.not, label %.lr.ph, label %bb.u
 
 .lr.ph:                                           ; preds = %.loopexit
   %i.cm = load ptr, ptr %0, align 8, !tbaa !3950
-  %3 = zext nneg i32 %i.e to i64
   %i.cn = add i32 %i.b, -1
   %smin = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.cn)
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph, %bb.t
-  %indvars.iv = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next, %bb.t ] ; 3 uses
-  %i.co = getelementptr i8, ptr %i.cm, i64 %indvars.iv
+  %.0105237 = phi i32 [ %i.b, %.lr.ph ], [ %3, %bb.t ] ; 3 uses
+  %2 = zext nneg i32 %.0105237 to i64
+  %i.co = getelementptr i8, ptr %i.cm, i64 %2
   %i.cp = getelementptr i8, ptr %i.co, i64 -1
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !153
   %i.cr = icmp eq i8 %i.cq, 48
-  br i1 %i.cr, label %bb.t, label %.critedge.split.loop.exit
+  br i1 %i.cr, label %bb.t, label %.critedge
 
 bb.t:                                             ; preds = %bb.s
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.cs = icmp sgt i64 %indvars.iv.next, %3
+  %3 = add nsw i32 %.0105237, -1                  ; 2 uses
+  %i.cs = icmp sgt i32 %3, %i.e
   br i1 %i.cs, label %bb.s, label %.critedge, !llvm.loop !3967
 
-.critedge.split.loop.exit:                        ; preds = %bb.s
-  %4 = trunc nsw i64 %indvars.iv to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %bb.t, %.critedge.split.loop.exit
-  %.0105.lcssa.ph = phi i32 [ %4, %.critedge.split.loop.exit ], [ %smin, %bb.t ] ; 3 uses
+.critedge:                                        ; preds = %bb.s, %bb.t
+  %.0105.lcssa.ph = phi i32 [ %.0105237, %bb.s ], [ %smin, %bb.t ] ; 3 uses
   %.not122 = icmp ne i32 %.0105.lcssa.ph, %i.e
   %i.ct = zext i1 %.not122 to i64
   %spec.select223 = add i64 %.sroa.0186.10, %i.ct
@@ -894,7 +884,8 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %.loopexit
   %i.cx = zext nneg i32 %i.e to i64
-  %gepdiff = sub nsw i64 %2, %i.cx
+  %4 = zext nneg i32 %i.b to i64
+  %gepdiff = sub nsw i64 %4, %i.cx
   %i.cy = add nsw i64 %gepdiff, 1
   %.sroa.05.0.lcssa.i.i152 = add i64 %i.cy, %.sroa.0186.10 ; 2 uses
   %i.cz = load i32, ptr %i.f, align 8, !tbaa !3959 ; 2 uses

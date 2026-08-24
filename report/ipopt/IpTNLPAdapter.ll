@@ -205,6 +205,7 @@ bb.ew:                                            ; preds = %bb.ev, %bb.eu
   %.0337 = phi ptr [ %i.nv, %bb.ev ], [ null, %bb.eu ] ; 4 uses
   %i.nw = load i32, ptr %i.e, align 4, !tbaa !262
   %i.nx = icmp eq i32 %i.nw, 1                    ; 3 uses
+  %spec.store.select = zext i1 %i.nx to i32
   %or.cond = icmp ult i32 %1, 3
   br i1 %or.cond, label %bb.ex, label %.loopexit715
 
@@ -607,7 +608,7 @@ bb.ha:                                            ; preds = %bb.gz, %.loopexit71
   %i.xl = shl nsw i64 %i.xj, 3
   %i.xm = select i1 %i.xk, i64 -1, i64 %i.xl
   %i.xn = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.xm) #25 ; 3 uses
-  %.sroa.speculated.i634 = call noundef i32 @llvm.smax.i32(i32 %2, i32 -1)
+  %.sroa.speculated.i634 = call noundef i32 @llvm.smax.i32(i32 %2, i32 -1) ; 2 uses
   %i.xo = load i32, ptr %i.b, align 4, !tbaa !97
   %i.xp = icmp slt i32 %.sroa.speculated.i634, %i.xo
   br i1 %i.xp, label %.lr.ph775, label %._crit_edge776
@@ -616,17 +617,13 @@ bb.ha:                                            ; preds = %bb.gz, %.loopexit71
   %i.xq = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.xr = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.xs = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %75 = zext i1 %i.nx to i64                      ; 2 uses
-  %76 = call i32 @llvm.smax.i32(i32 %2, i32 -1)
-  %smax = sext i32 %76 to i64
-  %i.xt = zext i1 %i.nx to i64
+  %i.xt = zext i1 %i.nx to i64                    ; 2 uses
   br label %bb.hb
 
 bb.hb:                                            ; preds = %.lr.ph775, %bb.je
-  %indvars.iv817 = phi i64 [ %smax, %.lr.ph775 ], [ %indvars.iv.next818, %bb.je ] ; 7 uses
-  %.6772.a = phi i32 [ %.5, %.lr.ph775 ], [ %.7.lcssa, %bb.je ] ; 2 uses
-  %77 = trunc nsw i64 %indvars.iv817 to i32       ; 4 uses
-  %i.xu = icmp eq i64 %indvars.iv817, -1          ; 3 uses
+  %.6772.a = phi i32 [ %.sroa.speculated.i634, %.lr.ph775 ], [ %78, %bb.je ] ; 10 uses
+  %.6772 = phi i32 [ %.5, %.lr.ph775 ], [ %.7.lcssa, %bb.je ] ; 2 uses
+  %i.xu = icmp eq i32 %.6772.a, -1                ; 3 uses
   br i1 %i.xu, label %bb.hc, label %bb.hd
 
 bb.hc:                                            ; preds = %bb.hb
@@ -635,7 +632,8 @@ bb.hc:                                            ; preds = %bb.hb
   br label %.loopexit710
 
 bb.hd:                                            ; preds = %bb.hb
-  %i.xw = getelementptr inbounds [8 x i8], ptr %.0320, i64 %indvars.iv817
+  %75 = zext nneg i32 %.6772.a to i64
+  %i.xw = getelementptr inbounds nuw [8 x i8], ptr %.0320, i64 %75
   store double 1.500000e+00, ptr %i.xw, align 8, !tbaa !137
   %i.xx = load i32, ptr %i.a, align 4, !tbaa !97
   call void @_ZN5Ipopt10IpBlasCopyEiPKdiPdi(i32 noundef %i.xx, ptr noundef nonnull %i.h, i32 noundef 0, ptr noundef nonnull %i.xb, i32 noundef 1)
@@ -658,7 +656,7 @@ bb.hd:                                            ; preds = %bb.hb
   %niter951 = phi i64 [ 0, %.lr.ph749.preheader.new ], [ %niter951.next.1, %bb.hg ]
   %i.yb = getelementptr inbounds nuw [4 x i8], ptr %.0345, i64 %indvars.iv797
   %i.yc = load i32, ptr %i.yb, align 4, !tbaa !97
-  %i.yd = icmp eq i32 %i.yc, %77
+  %i.yd = icmp eq i32 %i.yc, %.6772.a
   br i1 %i.yd, label %bb.he, label %.lr.ph749.1
 
 bb.he:                                            ; preds = %.lr.ph749
@@ -677,7 +675,7 @@ bb.he:                                            ; preds = %.lr.ph749
   %indvars.iv.next798 = or disjoint i64 %indvars.iv797, 1 ; 3 uses
   %i.ym = getelementptr inbounds nuw [4 x i8], ptr %.0345, i64 %indvars.iv.next798
   %i.yn = load i32, ptr %i.ym, align 4, !tbaa !97
-  %i.yo = icmp eq i32 %i.yn, %77
+  %i.yo = icmp eq i32 %i.yn, %.6772.a
   br i1 %i.yo, label %bb.hf, label %bb.hg
 
 bb.hf:                                            ; preds = %.lr.ph749.1
@@ -708,7 +706,7 @@ bb.hg:                                            ; preds = %bb.hf, %.lr.ph749.1
   call void @llvm.assume(i1 %lcmp.mod949)
   %i.yx = getelementptr inbounds nuw [4 x i8], ptr %.0345, i64 %indvars.iv797.epil.init
   %i.yy = load i32, ptr %i.yx, align 4, !tbaa !97
-  %i.yz = icmp eq i32 %i.yy, %77
+  %i.yz = icmp eq i32 %i.yy, %.6772.a
   br i1 %i.yz, label %bb.hh, label %.loopexit710
 
 bb.hh:                                            ; preds = %.lr.ph749.epil.preheader
@@ -741,8 +739,7 @@ bb.hh:                                            ; preds = %.lr.ph749.epil.preh
   br i1 %i.zr, label %.lr.ph769, label %._crit_edge770
 
 .lr.ph769:                                        ; preds = %.preheader
-  %78 = add nuw nsw i64 %indvars.iv817, %i.xt
-  %79 = trunc nsw i64 %78 to i32
+  %76 = add nuw nsw i32 %.6772.a, %spec.store.select
   br label %bb.ht
 
 bb.hi:                                            ; preds = %.loopexit710
@@ -839,14 +836,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit640: ; preds = %bb
   br label %bb.jh
 
 ._crit_edge770:                                   ; preds = %._crit_edge765, %.preheader
-  %.7.lcssa = phi i32 [ %.6772.a, %.preheader ], [ %.8.lcssa, %._crit_edge765 ] ; 2 uses
-  %i.aaj = icmp sgt i64 %indvars.iv817, -1
+  %.7.lcssa = phi i32 [ %.6772, %.preheader ], [ %.8.lcssa, %._crit_edge765 ] ; 2 uses
+  %i.aaj = icmp sgt i32 %.6772.a, -1
   br i1 %i.aaj, label %bb.jd, label %bb.je
 
 bb.ht:                                            ; preds = %.lr.ph769, %._crit_edge765
   %indvars.iv814 = phi i64 [ 0, %.lr.ph769 ], [ %indvars.iv.next815, %._crit_edge765 ] ; 6 uses
   %i.aak = phi i32 [ %i.zq, %.lr.ph769 ], [ %i.adl, %._crit_edge765 ] ; 2 uses
-  %.7767 = phi i32 [ %.6772.a, %.lr.ph769 ], [ %.8.lcssa, %._crit_edge765 ] ; 2 uses
+  %.7767 = phi i32 [ %.6772, %.lr.ph769 ], [ %.8.lcssa, %._crit_edge765 ] ; 2 uses
   %i.aal = load double, ptr %i.xq, align 8, !tbaa !265
   %i.aam = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %indvars.iv814 ; 2 uses
   %i.aan = load double, ptr %i.aam, align 8, !tbaa !137 ; 2 uses
@@ -1079,7 +1076,7 @@ bb.is:                                            ; preds = %bb.ig
   %indvars.iv802 = phi i64 [ 0, %.lr.ph752.preheader ], [ %indvars.iv.next803, %bb.iu ] ; 5 uses
   %i.acq = getelementptr inbounds nuw [4 x i8], ptr %.0345, i64 %indvars.iv802
   %i.acr = load i32, ptr %i.acq, align 4, !tbaa !97
-  %i.acs = icmp eq i32 %i.acr, %77
+  %i.acs = icmp eq i32 %i.acr, %.6772.a
   br i1 %i.acs, label %bb.it, label %bb.iu
 
 bb.it:                                            ; preds = %.lr.ph752
@@ -1115,7 +1112,7 @@ bb.iu:                                            ; preds = %.lr.ph752, %bb.it
   br label %._crit_edge765
 
 .lr.ph764:                                        ; preds = %.loopexit
-  %i.adi = add nuw nsw i64 %indvars.iv814, %75    ; 2 uses
+  %i.adi = add nuw nsw i64 %indvars.iv814, %i.xt  ; 2 uses
   %i.adj = trunc nuw nsw i64 %i.adi to i32
   %i.adk = trunc nuw nsw i64 %i.adi to i32
   br label %bb.iv
@@ -1209,7 +1206,7 @@ bb.iy:                                            ; preds = %._crit_edge758
 
 bb.iz:                                            ; preds = %bb.iy, %._crit_edge758
   %i.aev = load ptr, ptr %i.j, align 8, !tbaa !16 ; 3 uses
-  %i.aew = add nuw nsw i64 %indvars.iv811, %75
+  %i.aew = add nuw nsw i64 %indvars.iv811, %i.xt
   %i.aex = load ptr, ptr %i.aev, align 8, !tbaa !10
   %i.aey = getelementptr inbounds nuw i8, ptr %i.aex, i64 16
   %i.aez = load ptr, ptr %i.aey, align 8          ; 2 uses
@@ -1221,7 +1218,7 @@ bb.ja:                                            ; preds = %bb.iz
   br label %bb.jc
 
 bb.jb:                                            ; preds = %bb.iz
-  call void (ptr, i32, i32, ptr, ...) %i.aez(ptr noundef nonnull align 8 dereferenceable(40) %i.aev, i32 noundef 4, i32 noundef 12, ptr noundef nonnull @.str.139, i32 noundef %.0, i32 noundef %79, i32 noundef %i.adj, i32 noundef %i.afa, double noundef %.0306.lcssa, i32 noundef %.0305.lcssa, double noundef %i.adu, double noundef %i.aed)
+  call void (ptr, i32, i32, ptr, ...) %i.aez(ptr noundef nonnull align 8 dereferenceable(40) %i.aev, i32 noundef 4, i32 noundef 12, ptr noundef nonnull @.str.139, i32 noundef %.0, i32 noundef %76, i32 noundef %i.adj, i32 noundef %i.afa, double noundef %.0306.lcssa, i32 noundef %.0305.lcssa, double noundef %i.adu, double noundef %i.aed)
   br label %bb.jc
 
 bb.jc:                                            ; preds = %bb.ja, %bb.jb, %bb.iy
@@ -1232,15 +1229,15 @@ bb.jc:                                            ; preds = %bb.ja, %bb.jb, %bb.
   br i1 %i.afd, label %bb.iv, label %._crit_edge765, !llvm.loop !277
 
 bb.jd:                                            ; preds = %._crit_edge770
-  %i.afe = getelementptr inbounds nuw [8 x i8], ptr %.0320, i64 %indvars.iv817
+  %77 = zext nneg i32 %.6772.a to i64
+  %i.afe = getelementptr inbounds nuw [8 x i8], ptr %.0320, i64 %77
   store double 0.000000e+00, ptr %i.afe, align 8, !tbaa !137
   br label %bb.je
 
 bb.je:                                            ; preds = %bb.jd, %._crit_edge770
-  %indvars.iv.next818 = add nsw i64 %indvars.iv817, 1 ; 2 uses
+  %78 = add nsw i32 %.6772.a, 1                   ; 2 uses
   %i.aff = load i32, ptr %i.b, align 4, !tbaa !97
-  %80 = sext i32 %i.aff to i64
-  %i.afg = icmp slt i64 %indvars.iv.next818, %80
+  %i.afg = icmp slt i32 %78, %i.aff
   br i1 %i.afg, label %bb.hb, label %._crit_edge776, !llvm.loop !278
 
 ._crit_edge776:                                   ; preds = %bb.je, %bb.ha

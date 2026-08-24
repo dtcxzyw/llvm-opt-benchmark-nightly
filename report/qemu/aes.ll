@@ -205,11 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i32, ptr %i.c, align 4              ; 2 uses
   %i.e = shl i32 %i.d, 2                          ; 2 uses
   %i.f = icmp sgt i32 %i.e, 0
-  br i1 %i.f, label %.lr.ph.preheader, label %.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.b
-  %3 = zext nneg i32 %i.e to i64
-  br label %.lr.ph
+  br i1 %i.f, label %.lr.ph, label %.preheader
 
 .preheader.loopexit:                              ; preds = %.lr.ph
   %.pre = load i32, ptr %i.c, align 4
@@ -220,18 +216,20 @@ bb.b:                                             ; preds = %bb.a
   %i.h = icmp sgt i32 %i.g, 1
   br i1 %i.h, label %.lr.ph79, label %.loopexit
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv80 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next81, %.lr.ph ] ; 2 uses
-  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.b, %.lr.ph
+  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %.lr.ph ], [ 0, %bb.b ] ; 2 uses
+  %.076 = phi i32 [ %4, %.lr.ph ], [ %i.e, %bb.b ] ; 2 uses
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv80 ; 2 uses
-  %i.j = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %3 = zext nneg i32 %.076 to i64
+  %i.j = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %3 ; 2 uses
   %i.k = load <4 x i32>, ptr %i.i, align 4
   %i.l = load <4 x i32>, ptr %i.j, align 4
   store <4 x i32> %i.l, ptr %i.i, align 4
   store <4 x i32> %i.k, ptr %i.j, align 4
   %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, 4 ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv, -4  ; 2 uses
-  %i.m = icmp slt i64 %indvars.iv.next81, %indvars.iv.next
+  %4 = add nsw i32 %.076, -4                      ; 2 uses
+  %5 = sext i32 %4 to i64
+  %i.m = icmp slt i64 %indvars.iv.next81, %5
   br i1 %i.m, label %.lr.ph, label %.preheader.loopexit, !llvm.loop !7
 
 .lr.ph79:                                         ; preds = %.preheader, %.lr.ph79

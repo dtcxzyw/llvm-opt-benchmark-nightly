@@ -204,47 +204,38 @@ define hidden i32 @sync_pipe_gets_nonblock(i32 noundef %0, ptr nofree noundef ca
 bb.a:
   %i.a = add i32 %2, -1                           ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.a, i32 -1) ; 3 uses
-  %wide.trip.count = sext i32 %smax to i64
   %exitcond.not31 = icmp slt i32 %i.a, 0
   br i1 %exitcond.not31, label %.split.loop.exit22, label %.lr.ph
 
 bb.b:                                             ; preds = %bb.d
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i32 %3, %smax
   br i1 %exitcond.not, label %.split.loop.exit22, label %.lr.ph, !llvm.loop !21
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %indvars.iv32 = phi i64 [ %indvars.iv.next, %bb.b ], [ -1, %bb.a ]
-  %indvars.iv.next = add nsw i64 %indvars.iv32, 1 ; 6 uses
+  %.018 = phi i32 [ %3, %bb.b ], [ -1, %bb.a ]
+  %3 = add i32 %.018, 1                           ; 6 uses
   %i.b = tail call zeroext i1 @ws_pipe_data_available(i32 noundef %0)
-  br i1 %i.b, label %bb.c, label %.split.loop.exit20
+  br i1 %i.b, label %bb.c, label %.split.loop.exit22
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.c = getelementptr i8, ptr %1, i64 %indvars.iv.next ; 2 uses
+  %4 = zext nneg i32 %3 to i64
+  %i.c = getelementptr i8, ptr %1, i64 %4         ; 2 uses
   %i.d = tail call i64 @read(i32 noundef %0, ptr noundef %i.c, i64 noundef 1)
   switch i64 %i.d, label %bb.d [
-    i64 0, label %.split.loop.exit
+    i64 0, label %.split.loop.exit22
     i64 -1, label %.loopexit
   ]
 
 bb.d:                                             ; preds = %bb.c
   %i.e = load i8, ptr %i.c, align 1
   %i.f = icmp eq i8 %i.e, 10
-  br i1 %i.f, label %.split.loop.exit18, label %bb.b, !llvm.loop !21
+  br i1 %i.f, label %.split.loop.exit20, label %bb.b, !llvm.loop !21
 
-.split.loop.exit:                                 ; preds = %bb.c
-  %indvars.le26 = trunc i64 %indvars.iv.next to i32
-  br label %.split.loop.exit22
+.split.loop.exit20:                               ; preds = %bb.d
+  br label %.split.loop.exit22, !llvm.loop !21
 
-.split.loop.exit18:                               ; preds = %bb.d
-  %indvars.le24 = trunc i64 %indvars.iv.next to i32
-  br label %.split.loop.exit22
-
-.split.loop.exit20:                               ; preds = %.lr.ph
-  %indvars.le = trunc i64 %indvars.iv.next to i32
-  br label %.split.loop.exit22
-
-.split.loop.exit22:                               ; preds = %bb.b, %bb.a, %.split.loop.exit20, %.split.loop.exit18, %.split.loop.exit
-  %.1 = phi i32 [ %indvars.le, %.split.loop.exit20 ], [ %indvars.le26, %.split.loop.exit ], [ %indvars.le24, %.split.loop.exit18 ], [ %smax, %bb.a ], [ %smax, %bb.b ] ; 4 uses
+.split.loop.exit22:                               ; preds = %bb.b, %.lr.ph, %bb.c, %.split.loop.exit20, %bb.a
+  %.1 = phi i32 [ %smax, %bb.a ], [ %3, %.split.loop.exit20 ], [ %smax, %bb.b ], [ %3, %.lr.ph ], [ %3, %bb.c ] ; 4 uses
   %i.g = icmp sgt i32 %.1, -1
   br i1 %i.g, label %bb.e, label %.loopexit
 

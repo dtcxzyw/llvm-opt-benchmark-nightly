@@ -206,7 +206,7 @@ bb.dy:                                            ; preds = %bb.dx, %bb.dw, %bb.
   %i.sb = sext i32 %.0263.i to i64                ; 5 uses
   %i.sc = icmp sgt i32 %.0263.i, 0                ; 2 uses
   %i.sd = add nsw i32 %.0263.i, -1
-  %5 = sext i32 %i.sd to i64                      ; 3 uses
+  %5 = zext nneg i32 %i.sd to i64                 ; 3 uses
   %i.se = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.sf = getelementptr inbounds nuw i8, ptr %4, i64 105
   %i.sg = getelementptr inbounds nuw i8, ptr %4, i64 132
@@ -311,7 +311,7 @@ qrfPrintAligned.exit.i.us:                        ; preds = %.thread.i.i.us, %.t
   %i.ts = load i8, ptr %i.tr, align 1, !tbaa !16
   %.not303.i.us = icmp eq i8 %i.ts, 0
   %spec.select.i10.us = select i1 %.not303.i.us, i32 %.0257384.i.us, i32 1 ; 2 uses
-  %6 = icmp slt i64 %.1274383.i.us, %5
+  %6 = icmp samesign ult i64 %.1274383.i.us, %5
   br i1 %6, label %bb.eg, label %bb.ec
 
 bb.ec:                                            ; preds = %qrfPrintAligned.exit.i.us
@@ -499,7 +499,7 @@ bb.em:                                            ; preds = %bb.ek
   br label %qrfPrintAligned.exit330.i
 
 qrfPrintAligned.exit330.i:                        ; preds = %.thread.i326.i, %.thread24.i327.i, %bb.em, %bb.ej
-  %7 = icmp slt i64 %.2275389.i, %5
+  %7 = icmp samesign ult i64 %.2275389.i, %5
   br i1 %7, label %bb.en, label %bb.eo
 
 bb.en:                                            ; preds = %qrfPrintAligned.exit330.i
@@ -667,7 +667,7 @@ bb.fi:                                            ; preds = %qrfLoadAlignment.ex
   %i.yc = getelementptr inbounds nuw i8, ptr %i.yb, i64 8
   %i.yd = load i32, ptr %i.yc, align 8, !tbaa !86
   call void @sqlite3_str_appendchar(ptr noundef %i.ya, i32 noundef %i.yd, i8 noundef signext 45) #45
-  %8 = icmp slt i64 %.3276391.i, %5
+  %8 = icmp samesign ult i64 %.3276391.i, %5
   %i.ye = load ptr, ptr %i.sa, align 8, !tbaa !38 ; 4 uses
   br i1 %8, label %bb.fj, label %bb.fk
 
@@ -1070,29 +1070,24 @@ bb.f:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %bb.f
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !182
-  %3 = zext nneg i32 %i.h to i64
-  %4 = zext nneg i32 %spec.store.select to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv = phi i64 [ %3, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
-  %i.l = getelementptr i8, ptr %i.k, i64 %indvars.iv
+  %.05765 = phi i32 [ %i.h, %.lr.ph ], [ %4, %bb.h ] ; 3 uses
+  %3 = zext nneg i32 %.05765 to i64
+  %i.l = getelementptr i8, ptr %i.k, i64 %3
   %i.m = getelementptr i8, ptr %i.l, i64 -1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !16
   %i.o = icmp eq i8 %i.n, 0
-  br i1 %i.o, label %bb.h, label %.critedge.loopexit.split.loop.exit89
+  br i1 %i.o, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %bb.g
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
-  %i.p = icmp sgt i64 %indvars.iv.next, %4
+  %4 = add nsw i32 %.05765, -1                    ; 2 uses
+  %i.p = icmp sgt i32 %4, %spec.store.select
   br i1 %i.p, label %bb.g, label %.critedge, !llvm.loop !857
 
-.critedge.loopexit.split.loop.exit89:             ; preds = %bb.g
-  %5 = trunc nuw nsw i64 %indvars.iv to i32
-  br label %.critedge
-
-.critedge:                                        ; preds = %bb.h, %.critedge.loopexit.split.loop.exit89, %bb.f
-  %.057.lcssa = phi i32 [ %i.h, %bb.f ], [ %5, %.critedge.loopexit.split.loop.exit89 ], [ %spec.store.select, %bb.h ] ; 5 uses
+.critedge:                                        ; preds = %bb.g, %bb.h, %bb.f
+  %.057.lcssa = phi i32 [ %i.h, %bb.f ], [ %spec.store.select, %bb.h ], [ %.05765, %bb.g ] ; 5 uses
   %i.q = icmp sgt i32 %.057.lcssa, 0
   br i1 %i.q, label %.lr.ph69, label %.critedge2
 

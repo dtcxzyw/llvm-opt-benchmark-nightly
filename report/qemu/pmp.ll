@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %i.be = or i8 %.0.i, 24
   %spec.select.i = select i1 %or.cond.i, i8 %i.be, i8 %.0.i ; 2 uses
   store i8 %spec.select.i, ptr %i.ar, align 8
-  %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %i.y ; 2 uses
+  %i.bf = getelementptr [16 x i8], ptr %i.n, i64 %i.y ; 2 uses
   %i.bg = load i64, ptr %i.bf, align 16           ; 3 uses
   %.val.i.i = load i32, ptr %i.m, align 8
   %i.bh = lshr i32 %.val.i.i, 2
@@ -499,9 +499,9 @@ trace_pmpaddr_csr_write.exit:                     ; preds = %bb.a, %bb.b, %bb.c,
   br i1 %i.j, label %bb.e, label %bb.x
 
 bb.e:                                             ; preds = %trace_pmpaddr_csr_write.exit
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 13136 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 13136 ; 3 uses
   %i.l = zext nneg i32 %1 to i64                  ; 3 uses
-  %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %i.l ; 2 uses
+  %i.m = getelementptr [16 x i8], ptr %i.k, i64 %i.l ; 3 uses
   %i.n = load i64, ptr %i.m, align 16
   %i.o = icmp eq i64 %i.n, %2
   br i1 %i.o, label %bb.z, label %bb.f
@@ -564,9 +564,7 @@ pmp_is_readonly.exit37.thread:                    ; preds = %.critedge, %pmp_is_
   br i1 %.not.i38, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %pmp_is_readonly.exit37.thread
-  %3 = zext nneg i32 %1 to i64
-  %4 = getelementptr [16 x i8], ptr %i.k, i64 %3
-  %i.al = getelementptr i8, ptr %4, i64 -16
+  %i.al = getelementptr i8, ptr %i.m, i64 -16
   %i.am = load i64, ptr %i.al, align 16
   br label %bb.k
 

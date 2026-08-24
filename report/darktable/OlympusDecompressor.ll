@@ -204,7 +204,7 @@ _ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequen
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !121, !noalias !117
   %i.bn = getelementptr inbounds nuw i8, ptr %.val, i64 48
   %i.bo = load i32, ptr %i.bn, align 8, !tbaa !122, !noalias !117
-  %i.bp = ashr i32 %i.bo, 1                       ; 3 uses
+  %i.bp = ashr i32 %i.bo, 1                       ; 2 uses
   %i.bq = icmp sge i32 %i.bp, %i.bk
   tail call void @llvm.assume(i1 %i.bq)
   %i.br = icmp sgt i32 %i.bk, 0
@@ -218,9 +218,8 @@ _ZN8rawspeed14BitStreamerMSBCI2NS_11BitStreamerIS0_NS_39BitStreamerForwardSequen
   %i.bx = zext nneg i32 %i.bk to i64              ; 4 uses
   %.not238.i.i = icmp eq i32 %i.bk, 2
   %i.by = zext nneg i32 %i.bu to i64
-  %i.bz = zext i32 %i.bp to i64
+  %i.bz = zext i32 %i.bp to i64                   ; 2 uses
   %i.ca = zext nneg i32 %i.bm to i64              ; 2 uses
-  %4 = sext i32 %i.bp to i64
   %wide.trip.count.i = zext nneg i32 %i.aw to i64
   br label %bb.m
 
@@ -232,7 +231,7 @@ bb.m:                                             ; preds = %_ZNK8rawspeed12_GLO
   %i.cb = icmp samesign ult i64 %indvars.iv.i, 2  ; 4 uses
   %i.cc = add nsw i64 %indvars.iv.i, -2           ; 2 uses
   %i.cd = icmp samesign ult i64 %i.cc, %i.ca      ; 4 uses
-  %i.ce = mul nuw nsw i64 %i.cc, %4
+  %i.ce = mul nuw nsw i64 %i.cc, %i.bz
   %i.cf = getelementptr inbounds nuw [2 x i8], ptr %i.bv, i64 %i.ce ; 6 uses
   %i.cg = icmp samesign ult i64 %indvars.iv.i, %i.ca
   %i.ch = mul nuw nsw i64 %indvars.iv.i, %i.bz

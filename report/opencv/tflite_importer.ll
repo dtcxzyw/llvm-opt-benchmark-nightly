@@ -205,8 +205,8 @@ _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i326: ; preds = %bb.a
   %i.og = load i32, ptr %i.of, align 4, !tbaa !8
   %i.oh = zext i32 %i.og to i64
   %i.oi = getelementptr inbounds nuw i8, ptr %i.of, i64 %i.oh
-  %i.oj = load i32, ptr %i.oi, align 4, !tbaa !11 ; 8 uses
-  %i.ok = zext i32 %i.oj to i64                   ; 15 uses
+  %i.oj = load i32, ptr %i.oi, align 4, !tbaa !11 ; 7 uses
+  %i.ok = zext i32 %i.oj to i64                   ; 21 uses
   %.not.i.i.i.i339 = icmp eq i32 %i.oj, 0
   br i1 %.not.i.i.i.i339, label %_ZNSt6vectorIfSaIfEEC2EmRKS0_.exit351, label %bb.ap
 
@@ -395,16 +395,15 @@ _ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i356: ; preds = %_ZNK
   br i1 %exitcond.not, label %._crit_edge.i.i352.loopexit, label %_ZNK11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i356, !llvm.loop !398
 
 .noexc373:                                        ; preds = %._crit_edge.i.i352
-  %42 = sext i32 %i.oj to i64                     ; 6 uses
   %i.rw = getelementptr inbounds nuw i8, ptr %i.pu, i64 16 ; 2 uses
   store ptr %i.rw, ptr %i.pu, align 8, !tbaa !399, !noalias !395
   %i.rx = getelementptr inbounds nuw i8, ptr %i.pu, i64 8
   %.not.i.i.i371 = icmp ugt i32 %i.oj, 1          ; 3 uses
-  store i64 %42, ptr %i.rx, align 8, !tbaa !402, !noalias !395
+  store i64 %i.ok, ptr %i.rx, align 8, !tbaa !402, !noalias !395
   br i1 %.not.i.i.i371, label %bb.at, label %_ZN2cv10AutoBufferIdLm1EEC2Em.exit.i
 
 bb.at:                                            ; preds = %.noexc373
-  %i.ry = shl nuw nsw i64 %42, 3
+  %i.ry = shl nuw nsw i64 %i.ok, 3
   %i.rz = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ry) #30
           to label %.noexc.i372 unwind label %bb.au, !noalias !395 ; 2 uses
 
@@ -521,11 +520,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit376: ; preds = %bb
   %i.td = getelementptr inbounds nuw i8, ptr %i.tc, i64 16 ; 2 uses
   store ptr %i.td, ptr %i.tc, align 8, !tbaa !411, !noalias !408
   %i.te = getelementptr inbounds nuw i8, ptr %i.tc, i64 8
-  store i64 %42, ptr %i.te, align 8, !tbaa !413, !noalias !408
+  store i64 %i.ok, ptr %i.te, align 8, !tbaa !413, !noalias !408
   br i1 %.not.i.i.i371, label %bb.aw, label %_ZN2cv10AutoBufferIlLm1EEC2Em.exit.i
 
 bb.aw:                                            ; preds = %.noexc389
-  %i.tf = shl nuw nsw i64 %42, 3
+  %i.tf = shl nuw nsw i64 %i.ok, 3
   %i.tg = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.tf) #30
           to label %.noexc.i388 unwind label %bb.ax, !noalias !408 ; 2 uses
 
@@ -630,11 +629,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit394: ; preds = %bb
   %i.ug = getelementptr inbounds nuw i8, ptr %i.uf, i64 16 ; 2 uses
   store ptr %i.ug, ptr %i.uf, align 8, !tbaa !399, !noalias !416
   %i.uh = getelementptr inbounds nuw i8, ptr %i.uf, i64 8
-  store i64 %42, ptr %i.uh, align 8, !tbaa !402, !noalias !416
+  store i64 %i.ok, ptr %i.uh, align 8, !tbaa !402, !noalias !416
   br i1 %.not.i.i.i371, label %bb.az, label %_ZN2cv10AutoBufferIdLm1EEC2Em.exit.i400
 
 bb.az:                                            ; preds = %.noexc408
-  %i.ui = shl nuw nsw i64 %42, 3
+  %i.ui = shl nuw nsw i64 %i.ok, 3
   %i.uj = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ui) #30
           to label %.noexc.i407 unwind label %bb.ba, !noalias !416 ; 2 uses
 

@@ -205,14 +205,14 @@ bb.p:                                             ; preds = %.sink.split, %bb.k,
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal range(i32 -22, 1) i32 @validate_nan_ulw(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 4          ; 3 uses
+  %i.a = getelementptr i8, ptr %0, i64 4
   %.val = load i16, ptr %0, align 2
   %i.b = add i16 %.val, -4
   %i.c = zext i16 %i.b to i32                     ; 5 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.r, %bb.a
-  %.070 = phi i32 [ 0, %bb.a ], [ %i.ae, %bb.r ]  ; 5 uses
+  %.070 = phi i32 [ 0, %bb.a ], [ %i.ae, %bb.r ]  ; 4 uses
   %i.d = icmp ult i32 %.070, %i.c
   br i1 %i.d, label %bb.c, label %.critedge
 
@@ -242,14 +242,13 @@ bb.g:                                             ; preds = %bb.f
   br label %.critedge.sink.split
 
 bb.h:                                             ; preds = %bb.c
-  %i.m = zext nneg i32 %.070 to i64               ; 2 uses
-  %i.n = getelementptr i8, ptr %i.a, i64 %i.m
+  %i.m = zext nneg i32 %.070 to i64
+  %i.n = getelementptr i8, ptr %i.a, i64 %i.m     ; 3 uses
   %i.o = load i8, ptr %i.n, align 1               ; 2 uses
   %.not = icmp eq i8 %i.o, 23
   br i1 %.not, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %2 = getelementptr i8, ptr %i.a, i64 %i.m
   %.not84 = icmp eq ptr %1, null
   br i1 %.not84, label %.critedge, label %bb.j
 
@@ -266,15 +265,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not85, label %.critedge.sink.split, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.u = load i8, ptr %2, align 1
+  %i.u = load i8, ptr %i.n, align 1
   %i.v = zext i8 %i.u to i32
   %i.w = tail call i32 (ptr, ...) @_printk(ptr noundef nonnull @.str.49, ptr noundef nonnull @.str.40, i32 noundef %i.v, ptr noundef nonnull @.str.41) #32 ; 0 uses
   br label %.critedge.sink.split
 
 bb.m:                                             ; preds = %bb.h
-  %3 = zext nneg i32 %.070 to i64
-  %4 = getelementptr i8, ptr %i.a, i64 %3
-  %i.x = getelementptr i8, ptr %4, i64 1
+  %i.x = getelementptr i8, ptr %i.n, i64 1
   %.val88 = load i16, ptr %i.x, align 1           ; 2 uses
   %i.y = zext i16 %.val88 to i32                  ; 5 uses
   switch i16 %.val88, label %bb.n [
