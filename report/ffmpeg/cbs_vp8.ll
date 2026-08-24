@@ -204,8 +204,8 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %.thread581.i.i
-  %.not28.i332.i.i = phi i1 [ true, %.thread581.i.i ], [ false, %bb.ag ], [ true, %bb.af ]
-  %i.eh = phi ptr [ %12, %.thread581.i.i ], [ %i.eg, %bb.ag ], [ %i.eg, %bb.af ] ; 6 uses
+  %.not28.i332.i.i = phi i1 [ true, %.thread581.i.i ], [ true, %bb.af ], [ false, %bb.ag ]
+  %i.eh = phi ptr [ %12, %.thread581.i.i ], [ %i.eg, %bb.af ], [ %i.eg, %bb.ag ] ; 6 uses
   %i.ei = load i8, ptr %i.df, align 1, !tbaa !42  ; 2 uses
   %i.ej = zext i8 %i.ei to i16
   %i.ek = shl nuw nsw i16 %i.ej, 7
@@ -608,8 +608,8 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %.thread336.i.i.i
-  %i.kx = phi ptr [ %i.ir, %.thread336.i.i.i ], [ %i.kw, %bb.bq ], [ %i.kw, %bb.bp ]
-  %i.ky = phi ptr [ %i.kl, %.thread336.i.i.i ], [ %i.kv, %bb.bq ], [ %i.kv, %bb.bp ]
+  %i.kx = phi ptr [ %i.ir, %.thread336.i.i.i ], [ %i.kw, %bb.bp ], [ %i.kw, %bb.bq ]
+  %i.ky = phi ptr [ %i.kl, %.thread336.i.i.i ], [ %i.kv, %bb.bp ], [ %i.kv, %bb.bq ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #6
   store i8 0, ptr %i.h, align 1, !tbaa !50
   %i.kz = call fastcc i32 @cbs_vp8_bool_decoder_read_bool(ptr noundef nonnull %13, i8 noundef zeroext -128, ptr noundef %i.h) ; 2 uses
@@ -1012,8 +1012,8 @@ bb.ec:                                            ; preds = %bb.eb
   br label %bb.ed
 
 bb.ed:                                            ; preds = %bb.ec, %bb.eb, %.thread590.i.i
-  %.not28.i356.i.i = phi i1 [ true, %.thread590.i.i ], [ false, %bb.ec ], [ true, %bb.eb ]
-  %i.qw = phi ptr [ %i.gk, %.thread590.i.i ], [ %i.qv, %bb.ec ], [ %i.qv, %bb.eb ] ; 6 uses
+  %.not28.i356.i.i = phi i1 [ true, %.thread590.i.i ], [ true, %bb.eb ], [ false, %bb.ec ]
+  %i.qw = phi ptr [ %i.gk, %.thread590.i.i ], [ %i.qv, %bb.eb ], [ %i.qv, %bb.ec ] ; 6 uses
   %i.qx = load i8, ptr %i.df, align 1, !tbaa !42  ; 2 uses
   %i.qy = zext i8 %i.qx to i16
   %i.qz = shl nuw nsw i16 %i.qy, 7
@@ -1416,7 +1416,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false), !tbaa.struct !48
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
+bb.c:                                             ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   store i8 0, ptr %i.d, align 1, !tbaa !50
   %i.l = call fastcc i32 @cbs_vp8_bool_decoder_read_bool(ptr noundef nonnull %1, i8 noundef zeroext -128, ptr noundef %i.d) ; 2 uses
@@ -1819,7 +1819,7 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   br label %bb.am
 
-bb.s:                                             ; preds = %.thread148, %bb.o
+bb.s:                                             ; preds = %bb.o, %.thread148
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i8 0, ptr %i.a, align 1, !tbaa !50
   %i.bo = call fastcc i32 @cbs_vp8_bool_decoder_read_bool(ptr noundef nonnull %1, i8 noundef zeroext -128, ptr noundef %i.a) ; 2 uses
@@ -2023,7 +2023,7 @@ bb.b:                                             ; preds = %.preheader, %bb.x
   %i.ac = load ptr, ptr %1, align 8, !tbaa !38    ; 4 uses
   %i.ad = zext i8 %i.ab to i16
   %.promoted = load i8, ptr %i.c, align 1, !tbaa !42 ; 2 uses
-  %.promoted158 = load i8, ptr %i.d, align 2, !tbaa !43 ; 3 uses
+  %.promoted158 = load i8, ptr %i.d, align 2, !tbaa !43 ; 4 uses
   %i.ae = getelementptr i8, ptr %i.ac, i64 8      ; 2 uses
   %i.af = getelementptr i8, ptr %i.ac, i64 12
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
@@ -2034,7 +2034,7 @@ bb.b:                                             ; preds = %.preheader, %bb.x
   %i.al = trunc nuw i16 %i.ak to i8
   %i.am = add i8 %i.al, 1                         ; 4 uses
   %i.an = zext i8 %.promoted158 to i32            ; 2 uses
-  %i.ao = sub nuw nsw i32 8, %i.an                ; 2 uses
+  %i.ao = sub nuw nsw i32 8, %i.an                ; 3 uses
   %i.ap = icmp ult i8 %.promoted158, 9
   br i1 %i.ap, label %bb.d, label %bb.c
 
@@ -2073,7 +2073,9 @@ cbs_vp8_bool_decoder_fill_value.exit.i:           ; preds = %bb.e
   %i.bg = trunc nuw i32 %i.bc to i8
   %i.bh = or i8 %i.bf, %i.bg                      ; 2 uses
   store i8 %i.bh, ptr %i.e, align 8, !tbaa !41
-  store i8 8, ptr %i.d, align 2, !tbaa !43
+  %4 = trunc nuw nsw i32 %i.ao to i8
+  %5 = add nuw nsw i8 %.promoted158, %4           ; 2 uses
+  store i8 %5, ptr %i.d, align 2, !tbaa !43
   br label %.thread.i
 
 ..thread_crit_edge.i:                             ; preds = %bb.d
@@ -2081,6 +2083,7 @@ cbs_vp8_bool_decoder_fill_value.exit.i:           ; preds = %bb.e
   br label %.thread.i
 
 .thread.i:                                        ; preds = %..thread_crit_edge.i, %cbs_vp8_bool_decoder_fill_value.exit.i
+  %.lcssa161 = phi i8 [ 8, %..thread_crit_edge.i ], [ %5, %cbs_vp8_bool_decoder_fill_value.exit.i ]
   %i.bi = phi i8 [ %.pre.i, %..thread_crit_edge.i ], [ %i.bh, %cbs_vp8_bool_decoder_fill_value.exit.i ] ; 3 uses
   %.not.i77 = icmp ult i8 %i.bi, %i.am            ; 2 uses
   br i1 %.not.i77, label %bb.g, label %bb.f
@@ -2100,7 +2103,7 @@ bb.g:                                             ; preds = %.thread.i, %bb.f
   br i1 %i.bl, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.g, %.lr.ph.i
-  %i.bm = phi i8 [ %i.br, %.lr.ph.i ], [ 8, %bb.g ]
+  %i.bm = phi i8 [ %i.br, %.lr.ph.i ], [ %.lcssa161, %bb.g ]
   %i.bn = phi i8 [ %i.bp, %.lr.ph.i ], [ %.promoted.i, %bb.g ]
   %i.bo = phi i8 [ %i.bq, %.lr.ph.i ], [ %.sink.i, %bb.g ]
   %i.bp = shl i8 %i.bn, 1                         ; 2 uses
@@ -2335,7 +2338,7 @@ bb.b:                                             ; preds = %.preheader, %bb.x
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.x ] ; 4 uses
   %i.q = load ptr, ptr %1, align 8, !tbaa !38     ; 4 uses
   %.promoted = load i8, ptr %i.c, align 1, !tbaa !42 ; 2 uses
-  %.promoted122 = load i8, ptr %i.d, align 2, !tbaa !43 ; 3 uses
+  %.promoted122 = load i8, ptr %i.d, align 2, !tbaa !43 ; 4 uses
   %i.r = getelementptr i8, ptr %i.q, i64 8        ; 2 uses
   %i.s = getelementptr i8, ptr %i.q, i64 12
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 16
@@ -2346,7 +2349,7 @@ bb.b:                                             ; preds = %.preheader, %bb.x
   %i.y = trunc nuw i16 %i.x to i8
   %i.z = add i8 %i.y, 1                           ; 4 uses
   %i.aa = zext i8 %.promoted122 to i32            ; 2 uses
-  %i.ab = sub nuw nsw i32 8, %i.aa                ; 2 uses
+  %i.ab = sub nuw nsw i32 8, %i.aa                ; 3 uses
   %i.ac = icmp ult i8 %.promoted122, 9
   br i1 %i.ac, label %bb.d, label %bb.c
 
@@ -2385,7 +2388,9 @@ cbs_vp8_bool_decoder_fill_value.exit.i:           ; preds = %bb.e
   %i.at = trunc nuw i32 %i.ap to i8
   %i.au = or i8 %i.as, %i.at                      ; 2 uses
   store i8 %i.au, ptr %i.e, align 8, !tbaa !41
-  store i8 8, ptr %i.d, align 2, !tbaa !43
+  %4 = trunc nuw nsw i32 %i.ab to i8
+  %5 = add nuw nsw i8 %.promoted122, %4           ; 2 uses
+  store i8 %5, ptr %i.d, align 2, !tbaa !43
   br label %.thread.i
 
 ..thread_crit_edge.i:                             ; preds = %bb.d
@@ -2393,6 +2398,7 @@ cbs_vp8_bool_decoder_fill_value.exit.i:           ; preds = %bb.e
   br label %.thread.i
 
 .thread.i:                                        ; preds = %..thread_crit_edge.i, %cbs_vp8_bool_decoder_fill_value.exit.i
+  %.lcssa125 = phi i8 [ 8, %..thread_crit_edge.i ], [ %5, %cbs_vp8_bool_decoder_fill_value.exit.i ]
   %i.av = phi i8 [ %.pre.i, %..thread_crit_edge.i ], [ %i.au, %cbs_vp8_bool_decoder_fill_value.exit.i ] ; 3 uses
   %.not.i53 = icmp ult i8 %i.av, %i.z             ; 2 uses
   br i1 %.not.i53, label %bb.g, label %bb.f
@@ -2412,7 +2418,7 @@ bb.g:                                             ; preds = %.thread.i, %bb.f
   br i1 %i.ay, label %.lr.ph.i, label %bb.h
 
 .lr.ph.i:                                         ; preds = %bb.g, %.lr.ph.i
-  %i.az = phi i8 [ %i.be, %.lr.ph.i ], [ 8, %bb.g ]
+  %i.az = phi i8 [ %i.be, %.lr.ph.i ], [ %.lcssa125, %bb.g ]
   %i.ba = phi i8 [ %i.bc, %.lr.ph.i ], [ %.promoted.i, %bb.g ]
   %i.bb = phi i8 [ %i.bd, %.lr.ph.i ], [ %.sink.i, %bb.g ]
   %i.bc = shl i8 %i.ba, 1                         ; 2 uses
