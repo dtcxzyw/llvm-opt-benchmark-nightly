@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.e = load float, ptr %i.d, align 16, !tbaa !52
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.g = load <2 x float>, ptr %i.f, align 4, !tbaa !52 ; 2 uses
   %i.h = insertelement <2 x float> poison, float %2, i64 0
   %i.i = shufflevector <2 x float> %i.h, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -215,10 +214,8 @@ bb.b:                                             ; preds = %bb.a
   %i.m = extractelement <2 x float> %i.l, i64 1   ; 3 uses
   store float %i.m, ptr %i.d, align 16, !tbaa !52
   %i.n = fmul <2 x float> %i.i, %i.g              ; 5 uses
-  %5 = extractelement <2 x float> %i.n, i64 0
-  store float %5, ptr %i.f, align 4, !tbaa !52
-  %i.o = extractelement <2 x float> %i.n, i64 1   ; 3 uses
-  store float %i.o, ptr %4, align 8, !tbaa !52
+  %i.o = extractelement <2 x float> %i.n, i64 1   ; 2 uses
+  store <2 x float> %i.n, ptr %i.f, align 4, !tbaa !52
   %foldExtExtBinop = fmul <2 x float> %i.n, %i.n
   %i.p = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.q = tail call float @llvm.fmuladd.f32(float %i.m, float %i.m, float %i.p)

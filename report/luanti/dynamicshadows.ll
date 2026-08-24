@@ -145,28 +145,28 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.0285.0.vec.extract287 = extractelement <2 x float> %.sroa.0285.0, i64 0
   %.sroa.0285.4.vec.extract300 = extractelement <2 x float> %.sroa.0285.0, i64 1
   %i.bl = fmul nsz float %.sroa.19.0, %i.ak       ; 2 uses
-  %5 = fadd nsz float %i.bl, %i.bk                ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
-  %6 = fmul nsz float %.sroa.19.0, 3.500000e-01
-  %7 = fsub nsz float %i.ap, %i.ak                ; 2 uses
-  %8 = insertelement <2 x float> poison, float %i.ak, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
-  %10 = fmul nsz <2 x float> %.sroa.0285.0, %9    ; 2 uses
-  %11 = fmul nsz <2 x float> %.sroa.0285.0, splat (float 3.500000e-01)
-  %i.bm = insertelement <2 x float> poison, float %7, i64 0
+  %5 = trunc i48 %.sroa.0.0.copyload.i to i16
+  %6 = insertelement <2 x i16> poison, i16 %5, i64 0
+  %7 = trunc i48 %.sroa.388.0.extract.shift to i16
+  %8 = insertelement <2 x i16> %6, i16 %7, i64 1
+  %9 = sitofp <2 x i16> %8 to <2 x float>
+  %10 = fneg nsz <2 x float> %9
+  %11 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> splat (float 1.000000e+01), <2 x float> %i.be)
+  %i.bm = insertelement <2 x float> poison, float %i.ak, i64 0
   %i.bn = shufflevector <2 x float> %i.bm, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bo = fmul nsz <2 x float> %11, %i.bn         ; 2 uses
-  %12 = fmul nsz float %6, %7                     ; 2 uses
-  %13 = trunc i48 %.sroa.0.0.copyload.i to i16
-  %14 = insertelement <2 x i16> poison, i16 %13, i64 0
-  %15 = trunc i48 %.sroa.388.0.extract.shift to i16
-  %16 = insertelement <2 x i16> %14, i16 %15, i64 1
-  %17 = sitofp <2 x i16> %16 to <2 x float>
-  %18 = fneg nsz <2 x float> %17
-  %19 = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %18, <2 x float> splat (float 1.000000e+01), <2 x float> %i.be)
-  %20 = fadd nsz <2 x float> %10, %19             ; 3 uses
-  %i.bp = fadd nsz <2 x float> %i.bo, %20         ; 4 uses
-  %i.bq = fadd nsz float %12, %5                  ; 3 uses
+  %i.bo = fmul nsz <2 x float> %.sroa.0285.0, %i.bn ; 2 uses
+  %12 = fadd nsz <2 x float> %i.bo, %11           ; 4 uses
+  %13 = fadd nsz float %i.bl, %i.bk               ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
+  %14 = fmul nsz float %.sroa.19.0, 3.500000e-01
+  %15 = fsub nsz float %i.ap, %i.ak               ; 2 uses
+  %16 = fmul nsz <2 x float> %.sroa.0285.0, splat (float 3.500000e-01)
+  %17 = insertelement <2 x float> poison, float %15, i64 0
+  %18 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> zeroinitializer
+  %19 = fmul nsz <2 x float> %16, %18             ; 2 uses
+  %20 = fmul nsz float %14, %15                   ; 2 uses
+  %i.bp = fadd nsz <2 x float> %19, %12           ; 4 uses
+  %i.bq = fadd nsz float %20, %13                 ; 3 uses
   store <2 x float> %i.bp, ptr %2, align 8
   %.sroa.269.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   store float %i.bq, ptr %.sroa.269.0..sroa_idx, align 8
@@ -233,11 +233,11 @@ _ZN4core8vector3dIfE9normalizeEv.exit176:         ; preds = %bb.h, %bb.i
   %.sroa.0234.4.vec.extract = extractelement <2 x float> %.sroa.0231.0, i64 1
   %i.dp = fmul nsz float %.sroa.0234.4.vec.extract, %i.ap
   %i.dq = fmul nsz float %.sroa.8.0, %i.ap
-  %i.dr = extractelement <2 x float> %20, i64 0   ; 2 uses
+  %i.dr = extractelement <2 x float> %12, i64 0
   %i.ds = fadd nsz float %i.dr, %i.do
-  %i.dt = extractelement <2 x float> %20, i64 1   ; 2 uses
+  %i.dt = extractelement <2 x float> %12, i64 1
   %i.du = fadd nsz float %i.dt, %i.dp
-  %i.dv = fadd nsz float %5, %i.dq
+  %i.dv = fadd nsz float %13, %i.dq
   %i.dw = extractelement <2 x float> %i.bp, i64 0
   %i.dx = fsub nsz float %i.ds, %i.dw             ; 2 uses
   %i.dy = extractelement <2 x float> %i.bp, i64 1
@@ -287,15 +287,13 @@ bb.j:                                             ; preds = %_ZN4core8vector3dIf
 
 bb.k:                                             ; preds = %bb.j, %_ZN4core8vector3dIfE9normalizeEv.exit176
   %i.fe = fadd nsz float %i.bl, %.sroa.15.0
-  %i.ff = fadd nsz float %12, %i.fe
-  %21 = fadd nsz <2 x float> %10, %i.be
+  %i.ff = fadd nsz float %20, %i.fe
   %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 400
-  store float %i.dr, ptr %i.fg, align 4, !tbaa !9
-  %.sroa.8255.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 404
-  store float %i.dt, ptr %.sroa.8255.0..sroa_idx, align 4, !tbaa !9
-  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 408
-  store float %5, ptr %.sroa.13.0..sroa_idx, align 4, !tbaa !9
-  %i.fh = fadd nsz <2 x float> %i.bo, %21
+  store <2 x float> %12, ptr %i.fg, align 4, !tbaa !9
+  %.sroa.8255.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 408
+  store float %13, ptr %.sroa.8255.0..sroa_idx, align 4, !tbaa !9
+  %21 = fadd nsz <2 x float> %i.bo, %i.be
+  %i.fh = fadd nsz <2 x float> %19, %21
   %i.fi = fsub nsz <2 x float> %i.fh, %i.ek
   %i.fj = fsub nsz float %i.ff, %i.en
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 388

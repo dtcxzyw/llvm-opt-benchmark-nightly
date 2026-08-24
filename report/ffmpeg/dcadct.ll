@@ -19,204 +19,129 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) initializes((0, 128)) %0, ptr nofree noundef readonly captures(none) %1) #1 {
 .preheader74.preheader:
-  %i.a = alloca [32 x i32], align 16              ; 36 uses
-  %i.b = alloca [32 x i32], align 16              ; 61 uses
+  %i.a = alloca [32 x i32], align 16              ; 15 uses
+  %i.b = alloca [32 x i32], align 16              ; 59 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 100
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 108
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 64
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 80
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.j = load <32 x i32>, ptr %1, align 4, !tbaa !11
   %i.k = tail call <32 x i32> @llvm.abs.v32i32(<32 x i32> %i.j, i1 true)
   %i.l = tail call i32 @llvm.vector.reduce.add.v32i32(<32 x i32> %i.k)
   %i.m = icmp samesign ugt i32 %i.l, 4194304
-  %i.n = select i1 %i.m, i32 2, i32 0             ; 12 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 28
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 36
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 44
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 52
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 60
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 3 uses
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 68
-  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 76
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 80 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.a, i64 84
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 88
-  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 92
-  %22 = load i32, ptr %i.e, align 4, !tbaa !11
-  %23 = add nsw i32 %22, %i.n
-  %24 = ashr i32 %23, %i.n                        ; 3 uses
-  %25 = getelementptr inbounds nuw i8, ptr %i.a, i64 96 ; 3 uses
-  store i32 %24, ptr %25, align 16, !tbaa !11
-  %26 = load i32, ptr %i.f, align 4, !tbaa !11
-  %27 = add nsw i32 %26, %i.n
-  %28 = ashr i32 %27, %i.n                        ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 100
-  store i32 %28, ptr %i.r, align 4, !tbaa !11
-  %29 = load i32, ptr %i.g, align 4, !tbaa !11
-  %30 = add nsw i32 %29, %i.n
-  %31 = ashr i32 %30, %i.n                        ; 3 uses
-  %32 = getelementptr inbounds nuw i8, ptr %i.a, i64 104
-  store i32 %31, ptr %32, align 8, !tbaa !11
-  %33 = load i32, ptr %i.h, align 4, !tbaa !11
-  %34 = add nsw i32 %33, %i.n
-  %35 = ashr i32 %34, %i.n                        ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 108
-  store i32 %35, ptr %i.s, align 4, !tbaa !11
-  %36 = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 2 uses
-  %37 = getelementptr inbounds nuw i8, ptr %i.a, i64 116
-  %38 = getelementptr inbounds nuw i8, ptr %i.a, i64 120
-  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 124
-  %i.u = load <4 x i32>, ptr %i.i, align 4, !tbaa !11
-  %39 = insertelement <4 x i32> poison, i32 %i.n, i64 0
-  %40 = shufflevector <4 x i32> %39, <4 x i32> poison, <4 x i32> zeroinitializer ; 21 uses
-  %i.v = add nsw <4 x i32> %i.u, %40
-  %i.w = ashr <4 x i32> %i.v, %40                 ; 5 uses
-  store <4 x i32> %i.w, ptr %36, align 16, !tbaa !11
-  %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
-  %41 = load <8 x i32>, ptr %1, align 4, !tbaa !11 ; 2 uses
-  %42 = shufflevector <8 x i32> %41, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %43 = add nsw <4 x i32> %42, %40
-  %44 = ashr <4 x i32> %43, %40                   ; 7 uses
-  %45 = shufflevector <8 x i32> %41, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %i.aa = add nsw <4 x i32> %45, %40
-  %i.ab = ashr <4 x i32> %i.aa, %40               ; 7 uses
-  %46 = extractelement <4 x i32> %i.ab, i64 0
-  store i32 %46, ptr %2, align 4, !tbaa !11
-  %47 = extractelement <4 x i32> %44, i64 1
-  store i32 %47, ptr %3, align 8, !tbaa !11
-  %48 = extractelement <4 x i32> %i.ab, i64 1
-  store i32 %48, ptr %4, align 4, !tbaa !11
-  %49 = extractelement <4 x i32> %44, i64 2
-  store i32 %49, ptr %5, align 16, !tbaa !11
-  %i.ac = extractelement <4 x i32> %i.ab, i64 2
-  store i32 %i.ac, ptr %6, align 4, !tbaa !11
-  %50 = extractelement <4 x i32> %44, i64 3
-  store i32 %50, ptr %7, align 8, !tbaa !11
-  %51 = extractelement <4 x i32> %i.ab, i64 3
-  store i32 %51, ptr %8, align 4, !tbaa !11
-  %i.ad = add nsw <4 x i32> %i.ab, %44
+  %i.n = select i1 %i.m, i32 2, i32 0             ; 4 uses
+  %2 = load <4 x i32>, ptr %1, align 4, !tbaa !11
+  %3 = insertelement <4 x i32> poison, i32 %i.n, i64 0
+  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer ; 23 uses
+  %5 = add nsw <4 x i32> %2, %4
+  %6 = ashr <4 x i32> %5, %4                      ; 6 uses
+  store <4 x i32> %6, ptr %i.a, align 16, !tbaa !11
+  %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
+  %7 = load <4 x i32>, ptr %i.c, align 4, !tbaa !11
+  %8 = add nsw <4 x i32> %7, %4
+  %9 = ashr <4 x i32> %8, %4                      ; 5 uses
+  store <4 x i32> %9, ptr %i.o, align 16, !tbaa !11
+  %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
+  %10 = load <4 x i32>, ptr %i.d, align 4, !tbaa !11
+  %11 = add nsw <4 x i32> %10, %4
+  %12 = ashr <4 x i32> %11, %4                    ; 6 uses
+  store <4 x i32> %12, ptr %i.p, align 16, !tbaa !11
+  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
+  %13 = load <4 x i32>, ptr %i.e, align 4, !tbaa !11
+  %14 = add nsw <4 x i32> %13, %4
+  %15 = ashr <4 x i32> %14, %4                    ; 5 uses
+  store <4 x i32> %15, ptr %i.q, align 16, !tbaa !11
+  %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 64 ; 3 uses
+  %16 = load <4 x i32>, ptr %i.f, align 4, !tbaa !11
+  %17 = add nsw <4 x i32> %16, %4
+  %18 = ashr <4 x i32> %17, %4                    ; 6 uses
+  store <4 x i32> %18, ptr %i.r, align 16, !tbaa !11
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 80 ; 2 uses
+  %19 = load <4 x i32>, ptr %i.g, align 4, !tbaa !11
+  %20 = add nsw <4 x i32> %19, %4
+  %21 = ashr <4 x i32> %20, %4                    ; 5 uses
+  store <4 x i32> %21, ptr %i.s, align 16, !tbaa !11
+  %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 96 ; 3 uses
+  %i.u = load <4 x i32>, ptr %i.h, align 4, !tbaa !11
+  %i.v = add nsw <4 x i32> %i.u, %4
+  %i.w = ashr <4 x i32> %i.v, %4                  ; 6 uses
+  store <4 x i32> %i.w, ptr %i.t, align 16, !tbaa !11
+  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 116
+  %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 120
+  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 124
+  %23 = load <4 x i32>, ptr %i.i, align 4, !tbaa !11
+  %i.aa = add nsw <4 x i32> %23, %4
+  %i.ab = ashr <4 x i32> %i.aa, %4                ; 6 uses
+  store <4 x i32> %i.ab, ptr %i.x, align 16, !tbaa !11
+  %i.ac = extractelement <4 x i32> %6, i64 0
+  %24 = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
+  %25 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 2 uses
+  %27 = shufflevector <4 x i32> %6, <4 x i32> %9, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %28 = shufflevector <4 x i32> %6, <4 x i32> %9, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.ad = add nsw <4 x i32> %27, %28
   store <4 x i32> %i.ad, ptr %i.b, align 16, !tbaa !11
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 12 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 20 ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 28 ; 3 uses
-  %52 = load <8 x i32>, ptr %i.c, align 4, !tbaa !11 ; 2 uses
-  %i.ai = shufflevector <8 x i32> %52, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %53 = add nsw <4 x i32> %i.ai, %40
-  %54 = ashr <4 x i32> %53, %40                   ; 7 uses
-  %55 = extractelement <4 x i32> %54, i64 0
-  store i32 %55, ptr %9, align 16, !tbaa !11
-  %56 = shufflevector <8 x i32> %52, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %i.aj = add nsw <4 x i32> %56, %40
-  %57 = ashr <4 x i32> %i.aj, %40                 ; 7 uses
-  %58 = extractelement <4 x i32> %57, i64 0
-  store i32 %58, ptr %10, align 4, !tbaa !11
-  %59 = extractelement <4 x i32> %54, i64 1
-  store i32 %59, ptr %11, align 8, !tbaa !11
-  %60 = extractelement <4 x i32> %57, i64 1
-  store i32 %60, ptr %12, align 4, !tbaa !11
-  %61 = extractelement <4 x i32> %54, i64 2
-  store i32 %61, ptr %13, align 16, !tbaa !11
-  %62 = extractelement <4 x i32> %57, i64 2
-  store i32 %62, ptr %i.o, align 4, !tbaa !11
-  %63 = extractelement <4 x i32> %54, i64 3
-  store i32 %63, ptr %14, align 8, !tbaa !11
-  %64 = extractelement <4 x i32> %57, i64 3
-  store i32 %64, ptr %15, align 4, !tbaa !11
-  %i.ak = add nsw <4 x i32> %57, %54
-  store <4 x i32> %i.ak, ptr %i.ae, align 16, !tbaa !11
-  %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 9 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 4 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.b, i64 44 ; 3 uses
-  %65 = load <8 x i32>, ptr %i.d, align 4, !tbaa !11 ; 2 uses
-  %i.ap = shufflevector <8 x i32> %65, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %66 = add nsw <4 x i32> %i.ap, %40
-  %67 = ashr <4 x i32> %66, %40                   ; 6 uses
-  %68 = extractelement <4 x i32> %67, i64 0
-  store i32 %68, ptr %16, align 16, !tbaa !11
-  %69 = shufflevector <8 x i32> %65, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %i.aq = add nsw <4 x i32> %69, %40
-  %70 = ashr <4 x i32> %i.aq, %40                 ; 6 uses
-  %71 = extractelement <4 x i32> %70, i64 0
-  store i32 %71, ptr %17, align 4, !tbaa !11
-  %72 = extractelement <4 x i32> %67, i64 1
-  store i32 %72, ptr %i.p, align 8, !tbaa !11
-  %73 = extractelement <4 x i32> %70, i64 1       ; 2 uses
-  store i32 %73, ptr %18, align 4, !tbaa !11
-  %74 = extractelement <4 x i32> %67, i64 2       ; 2 uses
-  store i32 %74, ptr %19, align 16, !tbaa !11
-  %75 = extractelement <4 x i32> %70, i64 2       ; 2 uses
-  store i32 %75, ptr %20, align 4, !tbaa !11
-  %76 = extractelement <4 x i32> %67, i64 3       ; 2 uses
-  store i32 %76, ptr %21, align 8, !tbaa !11
-  %77 = extractelement <4 x i32> %70, i64 3       ; 2 uses
-  store i32 %77, ptr %i.q, align 4, !tbaa !11
-  %i.ar = add nsw <4 x i32> %70, %67
-  store <4 x i32> %i.ar, ptr %i.al, align 16, !tbaa !11
-  %78 = add nsw i32 %28, %24
-  %79 = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 7 uses
-  store i32 %78, ptr %79, align 16, !tbaa !11
-  %80 = add nsw i32 %35, %31
-  %81 = getelementptr inbounds nuw i8, ptr %i.b, i64 52 ; 3 uses
-  store i32 %80, ptr %81, align 4, !tbaa !11
-  %82 = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 5 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %i.b, i64 60 ; 4 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 9 uses
-  %83 = extractelement <4 x i32> %44, i64 0
-  store i32 %83, ptr %i.a, align 16, !tbaa !11
-  %84 = shufflevector <4 x i32> %i.w, <4 x i32> %44, <4 x i32> <i32 1, i32 3, i32 4, i32 5>
-  %85 = shufflevector <4 x i32> %i.w, <4 x i32> %i.ab, <4 x i32> <i32 0, i32 2, i32 poison, i32 4>
-  %86 = insertelement <4 x i32> %85, i32 0, i64 2
-  %87 = add nsw <4 x i32> %84, %86
-  store <4 x i32> %87, ptr %82, align 8, !tbaa !11
-  %88 = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  %89 = shufflevector <4 x i32> %i.ab, <4 x i32> %57, <4 x i32> <i32 1, i32 2, i32 3, i32 4>
-  %90 = shufflevector <4 x i32> %44, <4 x i32> %54, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
-  %i.au = add nsw <4 x i32> %89, %90
-  store <4 x i32> %i.au, ptr %88, align 8, !tbaa !11
-  %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  %91 = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  %92 = shufflevector <4 x i32> %57, <4 x i32> %70, <4 x i32> <i32 1, i32 2, i32 3, i32 4>
-  %93 = shufflevector <4 x i32> %54, <4 x i32> %67, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
-  %i.aw = add nsw <4 x i32> %92, %93
-  store <4 x i32> %i.aw, ptr %i.av, align 8, !tbaa !11
-  %94 = add nsw i32 %73, %74
-  %95 = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  store i32 %94, ptr %95, align 8, !tbaa !11
-  %96 = add nsw i32 %75, %76
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.b, i64 108
-  store i32 %96, ptr %i.ax, align 4, !tbaa !11
-  %97 = add nsw i32 %77, %24
-  %98 = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  store i32 %97, ptr %98, align 16, !tbaa !11
-  %99 = add nsw i32 %28, %31
-  %100 = getelementptr inbounds nuw i8, ptr %i.b, i64 116
-  store i32 %99, ptr %100, align 4, !tbaa !11
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 120
-  %101 = shufflevector <4 x i32> %i.w, <4 x i32> poison, <2 x i32> <i32 poison, i32 2>
-  %102 = insertelement <2 x i32> %101, i32 %35, i64 0
-  %103 = shufflevector <4 x i32> %i.w, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  %104 = add nsw <2 x i32> %102, %103
-  store <2 x i32> %104, ptr %i.ay, align 8, !tbaa !11
+  %29 = shufflevector <4 x i32> %12, <4 x i32> %15, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.ai = shufflevector <4 x i32> %12, <4 x i32> %15, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.aj = add nsw <4 x i32> %29, %i.ai
+  store <4 x i32> %i.aj, ptr %i.ae, align 16, !tbaa !11
+  %30 = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 9 uses
+  %31 = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 4 uses
+  %33 = getelementptr inbounds nuw i8, ptr %i.b, i64 44 ; 3 uses
+  %34 = shufflevector <4 x i32> %18, <4 x i32> %21, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %35 = shufflevector <4 x i32> %18, <4 x i32> %21, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.ak = add nsw <4 x i32> %34, %35
+  store <4 x i32> %i.ak, ptr %30, align 16, !tbaa !11
+  %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 7 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 52 ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 4 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.b, i64 60 ; 4 uses
+  %36 = shufflevector <4 x i32> %i.w, <4 x i32> %i.ab, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.ap = shufflevector <4 x i32> %i.w, <4 x i32> %i.ab, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.aq = add nsw <4 x i32> %36, %i.ap
+  store <4 x i32> %i.aq, ptr %i.al, align 16, !tbaa !11
+  %37 = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 10 uses
+  store i32 %i.ac, ptr %37, align 16, !tbaa !11
+  %38 = getelementptr inbounds nuw i8, ptr %i.b, i64 68
+  %39 = shufflevector <4 x i32> %6, <4 x i32> %9, <4 x i32> <i32 1, i32 4, i32 5, i32 7>
+  %40 = shufflevector <4 x i32> %6, <4 x i32> %9, <4 x i32> <i32 2, i32 3, i32 6, i32 poison>
+  %41 = shufflevector <4 x i32> %40, <4 x i32> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %i.ar = add nsw <4 x i32> %39, %41
+  store <4 x i32> %i.ar, ptr %38, align 4, !tbaa !11
+  %i.as = getelementptr inbounds nuw i8, ptr %i.b, i64 84
+  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 96
+  %42 = shufflevector <4 x i32> %12, <4 x i32> %15, <4 x i32> <i32 1, i32 4, i32 5, i32 7>
+  %43 = shufflevector <4 x i32> %12, <4 x i32> %15, <4 x i32> <i32 2, i32 3, i32 6, i32 poison>
+  %44 = shufflevector <4 x i32> %43, <4 x i32> %18, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %i.au = add nsw <4 x i32> %42, %44
+  store <4 x i32> %i.au, ptr %i.as, align 4, !tbaa !11
+  %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 100
+  %45 = shufflevector <4 x i32> %18, <4 x i32> %21, <4 x i32> <i32 1, i32 4, i32 5, i32 7>
+  %46 = shufflevector <4 x i32> %18, <4 x i32> %21, <4 x i32> <i32 2, i32 3, i32 6, i32 poison>
+  %47 = shufflevector <4 x i32> %46, <4 x i32> %i.w, <4 x i32> <i32 0, i32 1, i32 2, i32 4>
+  %i.aw = add nsw <4 x i32> %45, %47
+  store <4 x i32> %i.aw, ptr %i.av, align 4, !tbaa !11
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.b, i64 116
+  %48 = shufflevector <4 x i32> %i.w, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
+  %49 = shufflevector <4 x i32> %i.w, <4 x i32> %i.ab, <2 x i32> <i32 1, i32 4>
+  %50 = add nsw <2 x i32> %48, %49
+  store <2 x i32> %50, ptr %i.ax, align 4, !tbaa !11
+  %shift = shufflevector <4 x i32> %i.ab, <4 x i32> poison, <4 x i32> <i32 poison, i32 2, i32 poison, i32 poison>
+  %foldExtExtBinop = add nsw <4 x i32> %i.ab, %shift
+  %51 = extractelement <4 x i32> %foldExtExtBinop, i64 1
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.b, i64 124
+  store i32 %51, ptr %i.ay, align 4, !tbaa !11
   %i.az = load <4 x i32>, ptr %i.b, align 16, !tbaa !11
   %i.ba = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.az, <4 x i32> splat (i32 -8388608))
   %i.bb = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ba, <4 x i32> splat (i32 8388607))
@@ -225,21 +150,21 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.bd = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.bc, <4 x i32> splat (i32 -8388608))
   %i.be = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.bd, <4 x i32> splat (i32 8388607))
   store <4 x i32> %i.be, ptr %i.ae, align 16, !tbaa !11
-  %i.bf = load <4 x i32>, ptr %i.al, align 16, !tbaa !11
+  %i.bf = load <4 x i32>, ptr %30, align 16, !tbaa !11
   %i.bg = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.bf, <4 x i32> splat (i32 -8388608))
   %i.bh = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.bg, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.bh, ptr %i.al, align 16, !tbaa !11
-  %i.bi = load <4 x i32>, ptr %79, align 16, !tbaa !11
+  store <4 x i32> %i.bh, ptr %30, align 16, !tbaa !11
+  %i.bi = load <4 x i32>, ptr %i.al, align 16, !tbaa !11
   %i.bj = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.bi, <4 x i32> splat (i32 -8388608))
   %i.bk = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.bj, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.bk, ptr %79, align 16, !tbaa !11
+  store <4 x i32> %i.bk, ptr %i.al, align 16, !tbaa !11
   %i.bl = getelementptr inbounds nuw i8, ptr %i.b, i64 68 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 4 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.b, i64 76 ; 2 uses
-  %i.bo = load <4 x i32>, ptr %i.at, align 16, !tbaa !11
+  %i.bo = load <4 x i32>, ptr %37, align 16, !tbaa !11
   %i.bp = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.bo, <4 x i32> splat (i32 -8388608))
   %i.bq = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.bp, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.bq, ptr %i.at, align 16, !tbaa !11
+  store <4 x i32> %i.bq, ptr %37, align 16, !tbaa !11
   %i.br = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 6 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.b, i64 84 ; 3 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 4 uses
@@ -288,13 +213,13 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.de = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.dd, <4 x i32> splat (i32 -8388608))
   %i.df = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.de, <4 x i32> splat (i32 8388607))
   store <4 x i32> %i.df, ptr %i.a, align 16, !tbaa !11
-  %i.dg = load <8 x i32>, ptr %i.al, align 16, !tbaa !11 ; 2 uses
+  %i.dg = load <8 x i32>, ptr %30, align 16, !tbaa !11 ; 2 uses
   %i.dh = shufflevector <8 x i32> %i.dg, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.di = shufflevector <8 x i32> %i.dg, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.dj = add nsw <4 x i32> %i.dh, %i.di
   %i.dk = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.dj, <4 x i32> splat (i32 -8388608))
   %i.dl = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.dk, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.dl, ptr %5, align 16, !tbaa !11
+  store <4 x i32> %i.dl, ptr %i.o, align 16, !tbaa !11
   %i.dm = load <3 x i32>, ptr %i.ae, align 16, !tbaa !11
   %i.dn = load <4 x i32>, ptr %i.b, align 16, !tbaa !11
   %i.do = load <6 x i32>, ptr %i.b, align 16, !tbaa !11
@@ -305,20 +230,20 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.dt = add nsw <4 x i32> %i.dp, %i.ds
   %i.du = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.dt, <4 x i32> splat (i32 -8388608))
   %i.dv = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.du, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.dv, ptr %9, align 16, !tbaa !11
+  store <4 x i32> %i.dv, ptr %i.p, align 16, !tbaa !11
   %i.dw = load <8 x i32>, ptr %i.cn, align 4, !tbaa !11 ; 2 uses
   %i.dx = shufflevector <8 x i32> %i.dw, <8 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.dy = shufflevector <8 x i32> %i.dw, <8 x i32> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
   %i.dz = add nsw <4 x i32> %i.dx, %i.dy
   %i.ea = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.dz, <4 x i32> splat (i32 -8388608))
   %i.eb = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ea, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.eb, ptr %13, align 16, !tbaa !11
-  %i.ec = load <7 x i32>, ptr %i.at, align 16, !tbaa !11
+  store <4 x i32> %i.eb, ptr %i.q, align 16, !tbaa !11
+  %i.ec = load <7 x i32>, ptr %37, align 16, !tbaa !11
   %i.ed = shufflevector <7 x i32> %i.ec, <7 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.ee = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ed, <4 x i32> splat (i32 -8388608))
   %i.ef = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ee, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.ef, ptr %16, align 16, !tbaa !11
-  %i.eg = load <7 x i32>, ptr %91, align 16, !tbaa !11
+  store <4 x i32> %i.ef, ptr %i.r, align 16, !tbaa !11
+  %i.eg = load <7 x i32>, ptr %i.at, align 16, !tbaa !11
   %i.eh = shufflevector <7 x i32> %i.eg, <7 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.ei = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.eh, <4 x i32> splat (i32 -8388608))
   %i.ej = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ei, <4 x i32> splat (i32 8388607)) ; 3 uses
@@ -326,7 +251,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   store i32 %i.ek, ptr %i.cf, align 16, !tbaa !11
   %i.el = extractelement <4 x i32> %i.ej, i64 3
   store i32 %i.el, ptr %i.cj, align 8, !tbaa !11
-  store <4 x i32> %i.ej, ptr %19, align 16, !tbaa !11
+  store <4 x i32> %i.ej, ptr %i.s, align 16, !tbaa !11
   %i.em = load <7 x i32>, ptr %i.bl, align 4, !tbaa !11 ; 2 uses
   %i.en = shufflevector <7 x i32> %i.em, <7 x i32> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
   %i.eo = load i32, ptr %i.co, align 4, !tbaa !11
@@ -335,23 +260,23 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.er = add nsw i32 %i.cq, %i.eo
   %i.es = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.eq, <4 x i32> splat (i32 -8388608))
   %i.et = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.es, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.et, ptr %25, align 16, !tbaa !11
+  store <4 x i32> %i.et, ptr %i.t, align 16, !tbaa !11
   %i.eu = tail call i32 @llvm.smax.i32(i32 %i.er, i32 -8388608)
   %.0.i.i.i58.28 = tail call range(i32 -8388608, 8388608) i32 @llvm.smin.i32(i32 %i.eu, i32 8388607)
-  store i32 %.0.i.i.i58.28, ptr %36, align 16, !tbaa !11
+  store i32 %.0.i.i.i58.28, ptr %i.x, align 16, !tbaa !11
   %i.ev = tail call i32 @llvm.smax.i32(i32 %i.ct, i32 -8388608)
   %.0.i.i.i58.29 = tail call range(i32 -8388608, 8388608) i32 @llvm.smin.i32(i32 %i.ev, i32 8388607)
-  store i32 %.0.i.i.i58.29, ptr %37, align 4, !tbaa !11
+  store i32 %.0.i.i.i58.29, ptr %i.y, align 4, !tbaa !11
   %i.ew = tail call i32 @llvm.smax.i32(i32 %i.cw, i32 -8388608)
   %.0.i.i.i58.30 = tail call range(i32 -8388608, 8388608) i32 @llvm.smin.i32(i32 %i.ew, i32 8388607)
-  store i32 %.0.i.i.i58.30, ptr %38, align 8, !tbaa !11
+  store i32 %.0.i.i.i58.30, ptr %i.z, align 8, !tbaa !11
   %i.ex = tail call i32 @llvm.smax.i32(i32 %i.cz, i32 -8388608)
   %.0.i.i.i58.31 = tail call range(i32 -8388608, 8388608) i32 @llvm.smin.i32(i32 %i.ex, i32 8388607)
-  store i32 %.0.i.i.i58.31, ptr %i.t, align 4, !tbaa !11
+  store i32 %.0.i.i.i58.31, ptr %22, align 4, !tbaa !11
   call fastcc void @dct_a(ptr noundef %i.a, ptr noundef %i.b)
-  call fastcc void @dct_b(ptr noundef %9, ptr noundef %i.al)
-  call fastcc void @dct_b(ptr noundef %16, ptr noundef %i.at)
-  call fastcc void @dct_b(ptr noundef %25, ptr noundef %i.by)
+  call fastcc void @dct_b(ptr noundef %i.p, ptr noundef %30)
+  call fastcc void @dct_b(ptr noundef %i.r, ptr noundef %37)
+  call fastcc void @dct_b(ptr noundef %i.t, ptr noundef %i.by)
   %i.ey = load <4 x i32>, ptr %i.b, align 16, !tbaa !11
   %i.ez = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.ey, <4 x i32> splat (i32 -8388608))
   %i.fa = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.ez, <4 x i32> splat (i32 8388607))
@@ -360,20 +285,20 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.fc = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fb, <4 x i32> splat (i32 -8388608))
   %i.fd = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.fc, <4 x i32> splat (i32 8388607))
   store <4 x i32> %i.fd, ptr %i.ae, align 16, !tbaa !11
-  %i.fe = load i32, ptr %i.al, align 16, !tbaa !11
+  %i.fe = load i32, ptr %30, align 16, !tbaa !11
   %i.ff = tail call i32 @llvm.smax.i32(i32 %i.fe, i32 -8388608)
   %.0.i.i.i63.8 = tail call range(i32 -8388608, 8388608) i32 @llvm.smin.i32(i32 %i.ff, i32 8388607) ; 2 uses
-  %i.fg = load i32, ptr %i.am, align 4, !tbaa !11
+  %i.fg = load i32, ptr %31, align 4, !tbaa !11
   %i.fh = tail call i32 @llvm.smax.i32(i32 %i.fg, i32 -8388608)
   %.0.i.i.i63.9 = tail call range(i32 -8388608, 8388608) i32 @llvm.smin.i32(i32 %i.fh, i32 8388607) ; 2 uses
-  %i.fi = load <4 x i32>, ptr %i.an, align 8, !tbaa !11
+  %i.fi = load <4 x i32>, ptr %32, align 8, !tbaa !11
   %i.fj = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fi, <4 x i32> splat (i32 -8388608))
   %i.fk = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.fj, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.fk, ptr %i.an, align 8, !tbaa !11
-  %i.fl = load <4 x i32>, ptr %82, align 8, !tbaa !11
+  store <4 x i32> %i.fk, ptr %32, align 8, !tbaa !11
+  %i.fl = load <4 x i32>, ptr %i.an, align 8, !tbaa !11
   %i.fm = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fl, <4 x i32> splat (i32 -8388608))
   %i.fn = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.fm, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.fn, ptr %82, align 8, !tbaa !11
+  store <4 x i32> %i.fn, ptr %i.an, align 8, !tbaa !11
   %i.fo = load <4 x i32>, ptr %i.bm, align 8, !tbaa !11
   %i.fp = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.fo, <4 x i32> splat (i32 -8388608))
   %i.fq = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.fp, <4 x i32> splat (i32 8388607))
@@ -409,23 +334,23 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.gj = add nsw i64 %i.gi, 4194304
   %i.gk = lshr i64 %i.gj, 23
   %i.gl = trunc i64 %i.gk to i32
-  %i.gm = load i32, ptr %i.x, align 4, !tbaa !11  ; 2 uses
+  %i.gm = load i32, ptr %24, align 4, !tbaa !11   ; 2 uses
   %i.gn = add nsw i32 %.0.i.i.i63.9, %i.gm
   %i.go = sext i32 %i.gn to i64
   %i.gp = mul nsw i64 %i.go, 4240198
   %i.gq = add nsw i64 %i.gp, 4194304
   %i.gr = lshr i64 %i.gq, 23
   %i.gs = trunc i64 %i.gr to i32
-  %i.gt = load i32, ptr %i.y, align 8, !tbaa !11  ; 2 uses
-  %i.gu = load i32, ptr %i.an, align 8, !tbaa !11 ; 2 uses
+  %i.gt = load i32, ptr %25, align 8, !tbaa !11   ; 2 uses
+  %i.gu = load i32, ptr %32, align 8, !tbaa !11   ; 2 uses
   %i.gv = add nsw i32 %i.gu, %i.gt
   %i.gw = sext i32 %i.gv to i64
   %i.gx = mul nsw i64 %i.gw, 4323885
   %i.gy = add nsw i64 %i.gx, 4194304
   %i.gz = lshr i64 %i.gy, 23
   %i.ha = trunc i64 %i.gz to i32
-  %i.hb = load i32, ptr %i.z, align 4, !tbaa !11  ; 2 uses
-  %i.hc = load i32, ptr %i.ao, align 4, !tbaa !11 ; 2 uses
+  %i.hb = load i32, ptr %26, align 4, !tbaa !11   ; 2 uses
+  %i.hc = load i32, ptr %33, align 4, !tbaa !11   ; 2 uses
   %i.hd = add nsw i32 %i.hc, %i.hb
   %i.he = sext i32 %i.hd to i64
   %i.hf = mul nsw i64 %i.he, 4454708
@@ -433,7 +358,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.hh = lshr i64 %i.hg, 23
   %i.hi = trunc i64 %i.hh to i32
   %i.hj = load i32, ptr %i.ae, align 16, !tbaa !11 ; 2 uses
-  %i.hk = load i32, ptr %79, align 16, !tbaa !11  ; 2 uses
+  %i.hk = load i32, ptr %i.al, align 16, !tbaa !11 ; 2 uses
   %i.hl = add nsw i32 %i.hk, %i.hj
   %i.hm = sext i32 %i.hl to i64
   %i.hn = mul nsw i64 %i.hm, 4639772
@@ -441,7 +366,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.hp = lshr i64 %i.ho, 23
   %i.hq = trunc i64 %i.hp to i32
   %i.hr = load i32, ptr %i.af, align 4, !tbaa !11 ; 2 uses
-  %i.hs = load i32, ptr %81, align 4, !tbaa !11   ; 2 uses
+  %i.hs = load i32, ptr %i.am, align 4, !tbaa !11 ; 2 uses
   %i.ht = add nsw i32 %i.hs, %i.hr
   %i.hu = sext i32 %i.ht to i64
   %i.hv = mul nsw i64 %i.hu, 4890013
@@ -449,7 +374,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.hx = lshr i64 %i.hw, 23
   %i.hy = trunc i64 %i.hx to i32
   %i.hz = load i32, ptr %i.ag, align 8, !tbaa !11 ; 2 uses
-  %i.ia = load i32, ptr %82, align 8, !tbaa !11   ; 2 uses
+  %i.ia = load i32, ptr %i.an, align 8, !tbaa !11 ; 2 uses
   %i.ib = add nsw i32 %i.ia, %i.hz
   %i.ic = sext i32 %i.ib to i64
   %i.id = mul nsw i64 %i.ic, 5221943
@@ -457,7 +382,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.if = lshr i64 %i.ie, 23
   %i.ig = trunc i64 %i.if to i32
   %i.ih = load i32, ptr %i.ah, align 4, !tbaa !11 ; 2 uses
-  %i.ii = load i32, ptr %i.as, align 4, !tbaa !11 ; 2 uses
+  %i.ii = load i32, ptr %i.ao, align 4, !tbaa !11 ; 2 uses
   %i.ij = add nsw i32 %i.ii, %i.ih
   %i.ik = sext i32 %i.ij to i64
   %i.il = mul nsw i64 %i.ik, 5660703
@@ -560,7 +485,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.me = add nsw i64 %i.md, 4194304
   %i.mf = lshr i64 %i.me, 23
   %i.mg = trunc i64 %i.mf to i32                  ; 2 uses
-  %i.mh = load i32, ptr %i.at, align 16, !tbaa !11 ; 2 uses
+  %i.mh = load i32, ptr %37, align 16, !tbaa !11  ; 2 uses
   %i.mi = add nsw i32 %i.mh, %i.kq
   %i.mj = load i32, ptr %i.bl, align 4, !tbaa !11 ; 2 uses
   %i.mk = add nsw i32 %i.mj, %i.kw
@@ -661,21 +586,21 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.ou = add nsw i64 %i.ot, 4194304
   %i.ov = lshr i64 %i.ou, 23
   %i.ow = trunc i64 %i.ov to i32
-  store i32 %i.ow, ptr %i.x, align 4, !tbaa !11
+  store i32 %i.ow, ptr %24, align 4, !tbaa !11
   %i.ox = add nsw i32 %.0.i.i.i68.18, %.0.i.i.i68.2
   %i.oy = sext i32 %i.ox to i64
   %i.oz = mul nsw i64 %i.oy, 1056522
   %i.pa = add nsw i64 %i.oz, 4194304
   %i.pb = lshr i64 %i.pa, 23
   %i.pc = trunc i64 %i.pb to i32
-  store i32 %i.pc, ptr %i.y, align 8, !tbaa !11
+  store i32 %i.pc, ptr %25, align 8, !tbaa !11
   %i.pd = add nsw i32 %.0.i.i.i68.19, %.0.i.i.i68.3
   %i.pe = sext i32 %i.pd to i64
   %i.pf = mul nsw i64 %i.pe, 1064244
   %i.pg = add nsw i64 %i.pf, 4194304
   %i.ph = lshr i64 %i.pg, 23
   %i.pi = trunc i64 %i.ph to i32
-  store i32 %i.pi, ptr %i.z, align 4, !tbaa !11
+  store i32 %i.pi, ptr %26, align 4, !tbaa !11
   %i.pj = add nsw i32 %.0.i.i.i68.20, %.0.i.i.i68.4
   %i.pk = sext i32 %i.pj to i64
   %i.pl = mul nsw i64 %i.pk, 1074689
@@ -710,63 +635,63 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.qk = add nsw i64 %i.qj, 4194304
   %i.ql = lshr i64 %i.qk, 23
   %i.qm = trunc i64 %i.ql to i32
-  store i32 %i.qm, ptr %i.al, align 16, !tbaa !11
+  store i32 %i.qm, ptr %30, align 16, !tbaa !11
   %i.qn = add nsw i32 %.0.i.i.i68.25, %.0.i.i.i68.9
   %i.qo = sext i32 %i.qn to i64
   %i.qp = mul nsw i64 %i.qo, 1173922
   %i.qq = add nsw i64 %i.qp, 4194304
   %i.qr = lshr i64 %i.qq, 23
   %i.qs = trunc i64 %i.qr to i32
-  store i32 %i.qs, ptr %i.am, align 4, !tbaa !11
+  store i32 %i.qs, ptr %31, align 4, !tbaa !11
   %i.qt = add nsw i32 %.0.i.i.i68.26, %.0.i.i.i68.10
   %i.qu = sext i32 %i.qt to i64
   %i.qv = mul nsw i64 %i.qu, 1205139
   %i.qw = add nsw i64 %i.qv, 4194304
   %i.qx = lshr i64 %i.qw, 23
   %i.qy = trunc i64 %i.qx to i32
-  store i32 %i.qy, ptr %i.an, align 8, !tbaa !11
+  store i32 %i.qy, ptr %32, align 8, !tbaa !11
   %i.qz = add nsw i32 %.0.i.i.i68.27, %.0.i.i.i68.11
   %i.ra = sext i32 %i.qz to i64
   %i.rb = mul nsw i64 %i.ra, 1241133
   %i.rc = add nsw i64 %i.rb, 4194304
   %i.rd = lshr i64 %i.rc, 23
   %i.re = trunc i64 %i.rd to i32
-  store i32 %i.re, ptr %i.ao, align 4, !tbaa !11
+  store i32 %i.re, ptr %33, align 4, !tbaa !11
   %i.rf = add nsw i32 %.0.i.i.i68.28, %.0.i.i.i68.12
   %i.rg = sext i32 %i.rf to i64
   %i.rh = mul nsw i64 %i.rg, 1282529
   %i.ri = add nsw i64 %i.rh, 4194304
   %i.rj = lshr i64 %i.ri, 23
   %i.rk = trunc i64 %i.rj to i32
-  store i32 %i.rk, ptr %79, align 16, !tbaa !11
+  store i32 %i.rk, ptr %i.al, align 16, !tbaa !11
   %i.rl = add nsw i32 %.0.i.i.i68.29, %.0.i.i.i68.13
   %i.rm = sext i32 %i.rl to i64
   %i.rn = mul nsw i64 %i.rm, 1330095
   %i.ro = add nsw i64 %i.rn, 4194304
   %i.rp = lshr i64 %i.ro, 23
   %i.rq = trunc i64 %i.rp to i32
-  store i32 %i.rq, ptr %81, align 4, !tbaa !11
+  store i32 %i.rq, ptr %i.am, align 4, !tbaa !11
   %i.rr = add nsw i32 %.0.i.i.i68.30, %.0.i.i.i68.14
   %i.rs = sext i32 %i.rr to i64
   %i.rt = mul nsw i64 %i.rs, 1384791
   %i.ru = add nsw i64 %i.rt, 4194304
   %i.rv = lshr i64 %i.ru, 23
   %i.rw = trunc i64 %i.rv to i32
-  store i32 %i.rw, ptr %82, align 8, !tbaa !11
+  store i32 %i.rw, ptr %i.an, align 8, !tbaa !11
   %i.rx = add nsw i32 %.0.i.i.i68.31, %.0.i.i.i68.15
   %i.ry = sext i32 %i.rx to i64
   %i.rz = mul nsw i64 %i.ry, 1447815
   %i.sa = add nsw i64 %i.rz, 4194304
   %i.sb = lshr i64 %i.sa, 23
   %i.sc = trunc i64 %i.sb to i32
-  store i32 %i.sc, ptr %i.as, align 4, !tbaa !11
+  store i32 %i.sc, ptr %i.ao, align 4, !tbaa !11
   %i.sd = sub nsw i32 %.0.i.i.i68.15, %.0.i.i.i68.31
   %i.se = sext i32 %i.sd to i64
   %i.sf = mul i64 %i.se, 36028797017443280
   %i.sg = add i64 %i.sf, 4194304
   %i.sh = lshr i64 %i.sg, 23
   %i.si = trunc i64 %i.sh to i32
-  store i32 %i.si, ptr %i.at, align 16, !tbaa !11
+  store i32 %i.si, ptr %37, align 16, !tbaa !11
   %i.sj = sub nsw i32 %.0.i.i.i68.14, %.0.i.i.i68.30
   %i.sk = sext i32 %i.sj to i64
   %i.sl = mul i64 %i.sk, 36028797017358610
@@ -873,32 +798,32 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.vu = trunc i64 %i.vt to i32
   store i32 %i.vu, ptr %i.ck, align 4, !tbaa !11
   %i.vv = load <4 x i32>, ptr %i.b, align 16, !tbaa !11
-  %i.vw = shl nsw <4 x i32> %i.vv, %40
+  %i.vw = shl nsw <4 x i32> %i.vv, %4
   %i.vx = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.vw, <4 x i32> splat (i32 -8388608))
   %i.vy = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.vx, <4 x i32> splat (i32 8388607))
   store <4 x i32> %i.vy, ptr %i.b, align 16, !tbaa !11
   %i.vz = load <4 x i32>, ptr %i.ae, align 16, !tbaa !11
-  %i.wa = shl nsw <4 x i32> %i.vz, %40
+  %i.wa = shl nsw <4 x i32> %i.vz, %4
   %i.wb = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.wa, <4 x i32> splat (i32 -8388608))
   %i.wc = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.wb, <4 x i32> splat (i32 8388607))
   store <4 x i32> %i.wc, ptr %i.ae, align 16, !tbaa !11
-  %i.wd = load <4 x i32>, ptr %i.al, align 16, !tbaa !11
-  %i.we = shl nsw <4 x i32> %i.wd, %40
+  %i.wd = load <4 x i32>, ptr %30, align 16, !tbaa !11
+  %i.we = shl nsw <4 x i32> %i.wd, %4
   %i.wf = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.we, <4 x i32> splat (i32 -8388608))
   %i.wg = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.wf, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.wg, ptr %i.al, align 16, !tbaa !11
-  %i.wh = load <4 x i32>, ptr %79, align 16, !tbaa !11
-  %i.wi = shl nsw <4 x i32> %i.wh, %40
+  store <4 x i32> %i.wg, ptr %30, align 16, !tbaa !11
+  %i.wh = load <4 x i32>, ptr %i.al, align 16, !tbaa !11
+  %i.wi = shl nsw <4 x i32> %i.wh, %4
   %i.wj = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.wi, <4 x i32> splat (i32 -8388608))
   %i.wk = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.wj, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.wk, ptr %79, align 16, !tbaa !11
-  %i.wl = load <4 x i32>, ptr %i.at, align 16, !tbaa !11
-  %i.wm = shl nsw <4 x i32> %i.wl, %40
+  store <4 x i32> %i.wk, ptr %i.al, align 16, !tbaa !11
+  %i.wl = load <4 x i32>, ptr %37, align 16, !tbaa !11
+  %i.wm = shl nsw <4 x i32> %i.wl, %4
   %i.wn = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.wm, <4 x i32> splat (i32 -8388608))
   %i.wo = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.wn, <4 x i32> splat (i32 8388607))
-  store <4 x i32> %i.wo, ptr %i.at, align 16, !tbaa !11
+  store <4 x i32> %i.wo, ptr %37, align 16, !tbaa !11
   %i.wp = load <4 x i32>, ptr %i.br, align 16, !tbaa !11
-  %i.wq = shl nsw <4 x i32> %i.wp, %40
+  %i.wq = shl nsw <4 x i32> %i.wp, %4
   %i.wr = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.wq, <4 x i32> splat (i32 -8388608))
   %i.ws = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.wr, <4 x i32> splat (i32 8388607))
   store <4 x i32> %i.ws, ptr %i.br, align 16, !tbaa !11
@@ -912,7 +837,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.wy = tail call i32 @llvm.smax.i32(i32 %i.wx, i32 -8388608)
   %.0.i.i.25 = tail call range(i32 -8388608, 8388608) i32 @llvm.smin.i32(i32 %i.wy, i32 8388607) ; 2 uses
   %i.wz = load <4 x i32>, ptr %i.cf, align 16, !tbaa !11
-  %i.xa = shl nsw <4 x i32> %i.wz, %40
+  %i.xa = shl nsw <4 x i32> %i.wz, %4
   %i.xb = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %i.xa, <4 x i32> splat (i32 -8388608))
   %i.xc = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %i.xb, <4 x i32> splat (i32 8388607)) ; 3 uses
   %i.xd = shufflevector <4 x i32> %i.xc, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
@@ -971,7 +896,7 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   store <4 x i32> %i.yx, ptr %i.xm, align 4, !tbaa !11
   %i.yy = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.yz = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %i.za = load <4 x i32>, ptr %i.ao, align 4, !tbaa !11 ; 3 uses
+  %i.za = load <4 x i32>, ptr %33, align 4, !tbaa !11 ; 3 uses
   %i.zb = load <4 x i32>, ptr %i.bl, align 4, !tbaa !11 ; 3 uses
   %i.zc = shufflevector <4 x i32> %i.zb, <4 x i32> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
   %i.zd = shufflevector <4 x i32> %i.xp, <4 x i32> %i.zb, <4 x i32> <i32 1, i32 0, i32 7, i32 6>
@@ -991,9 +916,9 @@ define internal void @imdct_half_32(ptr nofree noundef writeonly captures(none) 
   %i.zp = tail call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.zo, <2 x i32> splat (i32 8388607))
   store <2 x i32> %i.zp, ptr %i.yz, align 4, !tbaa !11
   %i.zq = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %i.zr = load <4 x i32>, ptr %i.as, align 4      ; 2 uses
-  %i.zs = load i32, ptr %i.at, align 16, !tbaa !11
-  %i.zt = load i32, ptr %i.as, align 4, !tbaa !11
+  %i.zr = load <4 x i32>, ptr %i.ao, align 4      ; 2 uses
+  %i.zs = load i32, ptr %37, align 16, !tbaa !11
+  %i.zt = load i32, ptr %i.ao, align 4, !tbaa !11
   %i.zu = shufflevector <4 x i32> %i.xc, <4 x i32> %i.zr, <4 x i32> <i32 3, i32 2, i32 1, i32 4> ; 2 uses
   %i.zv = shufflevector <4 x i32> %i.xe, <4 x i32> %i.zr, <4 x i32> <i32 0, i32 1, i32 2, i32 5> ; 2 uses
   %i.zw = sub nsw <4 x i32> %i.zu, %i.zv

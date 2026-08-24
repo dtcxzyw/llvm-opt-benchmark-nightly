@@ -205,8 +205,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge37.i, %bb.a
-  %.sroa.6963.0 = phi float [ 0.000000e+00, %bb.a ], [ %13, %.critedge37.i ] ; 2 uses
-  %.sroa.6360.0 = phi float [ 1.000000e+00, %bb.a ], [ %10, %.critedge37.i ] ; 2 uses
   %.sroa.5056.0 = phi i64 [ 0, %bb.a ], [ %.sroa.5056.3, %.critedge37.i ] ; 2 uses
   %.sroa.4554.0 = phi i64 [ 0, %bb.a ], [ %i.em, %.critedge37.i ] ; 2 uses
   %.sroa.4052.0 = phi i64 [ 0, %bb.a ], [ %i.ek, %.critedge37.i ] ; 2 uses
@@ -229,7 +227,8 @@ bb.b:                                             ; preds = %.critedge37.i, %bb.
   %.sroa.0.0 = phi <4 x float> [ splat (float +inf), %bb.a ], [ %i.fg, %.critedge37.i ] ; 2 uses
   %.033.i = phi ptr [ %i.n, %bb.a ], [ %i.gk, %.critedge37.i ] ; 3 uses
   %.pn.i = phi ptr [ %i.o, %bb.a ], [ %.1.i152, %.critedge37.i ]
-  %i.r = phi <2 x float> [ <float 0.000000e+00, float 1.000000e+00>, %bb.a ], [ %i.er, %.critedge37.i ] ; 2 uses
+  %2 = phi <2 x float> [ <float 0.000000e+00, float 1.000000e+00>, %bb.a ], [ %i.er, %.critedge37.i ] ; 2 uses
+  %i.r = phi <2 x float> [ <float 1.000000e+00, float 0.000000e+00>, %bb.a ], [ %12, %.critedge37.i ] ; 2 uses
   %i.s = phi <2 x float> [ <float 0.000000e+00, float 1.000000e+00>, %bb.a ], [ %i.ge, %.critedge37.i ] ; 2 uses
   %.0.i = getelementptr inbounds i8, ptr %.pn.i, i64 -80 ; 4 uses
   %.not.i95 = icmp ugt ptr %.033.i, %.0.i
@@ -259,9 +258,8 @@ bb.c:                                             ; preds = %.lr.ph, %_ZZN6embre
   %.sroa.4052.1102 = phi i64 [ %.sroa.4052.0, %.lr.ph ], [ %i.bu, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 2 uses
   %.sroa.4554.1101 = phi i64 [ %.sroa.4554.0, %.lr.ph ], [ %i.bw, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 2 uses
   %.sroa.5056.1100 = phi i64 [ %.sroa.5056.0, %.lr.ph ], [ %.sroa.5056.2, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 3 uses
-  %.sroa.6360.197 = phi float [ %.sroa.6360.0, %.lr.ph ], [ %4, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 3 uses
-  %.sroa.6963.196 = phi float [ %.sroa.6963.0, %.lr.ph ], [ %7, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 3 uses
-  %i.ad = phi <2 x float> [ %i.r, %.lr.ph ], [ %i.cb, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 2 uses
+  %3 = phi <2 x float> [ %2, %.lr.ph ], [ %i.cb, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 2 uses
+  %i.ad = phi <2 x float> [ %i.r, %.lr.ph ], [ %8, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ] ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.134.i109, i64 32
   %i.af = load <4 x float>, ptr %i.ae, align 16, !noalias !1518 ; 3 uses
   %i.ag = fmul <4 x float> %i.af, splat (float 5.000000e-01)
@@ -287,8 +285,6 @@ bb.c:                                             ; preds = %.lr.ph, %_ZZN6embre
   br i1 %.not, label %.critedge.i.preheader, label %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit, !prof !44
 
 .critedge.i.preheader:                            ; preds = %bb.c, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit, %bb.b
-  %.sroa.6963.1.lcssa = phi float [ %.sroa.6963.0, %bb.b ], [ %7, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.sroa.6963.196, %bb.c ] ; 3 uses
-  %.sroa.6360.1.lcssa = phi float [ %.sroa.6360.0, %bb.b ], [ %4, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.sroa.6360.197, %bb.c ] ; 3 uses
   %.sroa.5056.1.lcssa = phi i64 [ %.sroa.5056.0, %bb.b ], [ %.sroa.5056.2, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.sroa.5056.1100, %bb.c ] ; 3 uses
   %.sroa.4554.1.lcssa = phi i64 [ %.sroa.4554.0, %bb.b ], [ %i.bw, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.sroa.4554.1101, %bb.c ] ; 2 uses
   %.sroa.4052.1.lcssa = phi i64 [ %.sroa.4052.0, %bb.b ], [ %i.bu, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.sroa.4052.1102, %bb.c ] ; 2 uses
@@ -299,7 +295,8 @@ bb.c:                                             ; preds = %.lr.ph, %_ZZN6embre
   %.sroa.836.1.lcssa = phi <4 x float> [ %.sroa.836.0, %bb.b ], [ %i.bn, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.sroa.836.1107, %bb.c ] ; 2 uses
   %.sroa.033.1.lcssa = phi <4 x float> [ %.sroa.033.0, %bb.b ], [ %i.bm, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.sroa.033.1108, %bb.c ] ; 2 uses
   %.134.i.lcssa = phi ptr [ %.033.i, %bb.b ], [ %i.cc, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %.134.i109, %bb.c ] ; 11 uses
-  %i.az = phi <2 x float> [ %i.r, %bb.b ], [ %i.cb, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %i.ad, %bb.c ] ; 2 uses
+  %4 = phi <2 x float> [ %2, %bb.b ], [ %i.cb, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %3, %bb.c ] ; 2 uses
+  %i.az = phi <2 x float> [ %i.r, %bb.b ], [ %8, %_ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinSplitILm32EEERKNS_5SetMBERS8_SB_ENKUlRNS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEERKS2_E_clESH_SJ_.exit ], [ %i.ad, %bb.c ] ; 4 uses
   %.not35.i138 = icmp ugt ptr %.134.i.lcssa, %.0.i
   br i1 %.not35.i138, label %_ZN6embree19serial_partitioningINS_9PrimRefMBENS_11PrimInfoMBTINS_5LBBoxINS_6Vec3faEEEEEZNS_4sse223HeuristicArrayBinningMBIS1_Lm32EE5splitERKNS7_8BinSplitILm32EEERKNS_5SetMBERSE_SH_EUlRKS1_E_ZNS9_5splitESD_SG_SH_SH_EUlRS6_SJ_E_EEmPT_mmRT0_SQ_RKT1_RKT2_.exit, label %.lr.ph153, !prof !1283
 
@@ -328,13 +325,11 @@ _ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinS
   %i.bq = tail call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %.sroa.2645.1104, <4 x float> %i.ar) ; 2 uses
   %i.br = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.3248.1103, <4 x float> %i.ar) ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.134.i109, i64 64
-  %i.bt = load <2 x float>, ptr %i.bs, align 16   ; 3 uses
-  %2 = extractelement <2 x float> %i.bt, i64 0    ; 2 uses
-  %3 = fcmp olt float %.sroa.6360.197, %2
-  %4 = select i1 %3, float %.sroa.6360.197, float %2 ; 2 uses
-  %5 = extractelement <2 x float> %i.bt, i64 1    ; 2 uses
-  %6 = fcmp olt float %.sroa.6963.196, %5
-  %7 = select i1 %6, float %5, float %.sroa.6963.196 ; 2 uses
+  %i.bt = load <2 x float>, ptr %i.bs, align 16   ; 4 uses
+  %5 = fcmp olt <2 x float> %i.ad, %i.bt
+  %6 = shufflevector <2 x float> %i.ad, <2 x float> %i.bt, <2 x i32> <i32 0, i32 3>
+  %7 = shufflevector <2 x float> %i.bt, <2 x float> %i.ad, <2 x i32> <i32 0, i32 3>
+  %8 = select <2 x i1> %5, <2 x float> %6, <2 x float> %7 ; 2 uses
   %i.bu = add i64 %.sroa.4052.1102, 1             ; 2 uses
   %i.bv = zext i32 %i.bl to i64
   %i.bw = add i64 %.sroa.4554.1101, %i.bv         ; 2 uses
@@ -342,7 +337,7 @@ _ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinS
   %i.by = icmp ult i64 %.sroa.5056.1100, %i.bx
   %i.bz = insertelement <2 x i1> poison, i1 %i.by, i64 0
   %i.ca = shufflevector <2 x i1> %i.bz, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.cb = select <2 x i1> %i.ca, <2 x float> %i.bt, <2 x float> %i.ad ; 2 uses
+  %i.cb = select <2 x i1> %i.ca, <2 x float> %i.bt, <2 x float> %3 ; 2 uses
   %.sroa.5056.2 = tail call i64 @llvm.umax.i64(i64 %.sroa.5056.1100, i64 %i.bx) ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %.134.i109, i64 80 ; 3 uses
   %.not.i = icmp ugt ptr %i.cc, %.0.i
@@ -430,13 +425,11 @@ _ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinS
   %i.eg = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> %.sroa.3248.1.lcssa, <4 x float> %i.cr)
   %i.eh = getelementptr inbounds nuw i8, ptr %.1.i152, i64 64 ; 3 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %.1.i152, i64 68
-  %i.ej = load <2 x float>, ptr %i.eh, align 4    ; 3 uses
-  %8 = extractelement <2 x float> %i.ej, i64 0    ; 2 uses
-  %9 = fcmp olt float %.sroa.6360.1.lcssa, %8
-  %10 = select i1 %9, float %.sroa.6360.1.lcssa, float %8
-  %11 = extractelement <2 x float> %i.ej, i64 1   ; 2 uses
-  %12 = fcmp olt float %.sroa.6963.1.lcssa, %11
-  %13 = select i1 %12, float %11, float %.sroa.6963.1.lcssa
+  %i.ej = load <2 x float>, ptr %i.eh, align 4    ; 4 uses
+  %9 = fcmp olt <2 x float> %i.az, %i.ej
+  %10 = shufflevector <2 x float> %i.az, <2 x float> %i.ej, <2 x i32> <i32 0, i32 3>
+  %11 = shufflevector <2 x float> %i.ej, <2 x float> %i.az, <2 x i32> <i32 0, i32 3>
+  %12 = select <2 x i1> %9, <2 x float> %10, <2 x float> %11
   %i.ek = add i64 %.sroa.4052.1.lcssa, 1
   %i.el = zext i32 %i.cz to i64
   %i.em = add i64 %.sroa.4554.1.lcssa, %i.el
@@ -444,7 +437,7 @@ _ZZN6embree4sse223HeuristicArrayBinningMBINS_9PrimRefMBELm32EE5splitERKNS0_8BinS
   %i.eo = icmp ult i64 %.sroa.5056.1.lcssa, %i.en
   %i.ep = insertelement <2 x i1> poison, i1 %i.eo, i64 0
   %i.eq = shufflevector <2 x i1> %i.ep, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.er = select <2 x i1> %i.eq, <2 x float> %i.ej, <2 x float> %i.az
+  %i.er = select <2 x i1> %i.eq, <2 x float> %i.ej, <2 x float> %4
   %.sroa.5056.3 = tail call i64 @llvm.umax.i64(i64 %.sroa.5056.1.lcssa, i64 %i.en)
   %i.es = load <4 x float>, ptr %.134.i.lcssa, align 16, !noalias !1584 ; 3 uses
   %i.et = getelementptr inbounds nuw i8, ptr %.134.i.lcssa, i64 16 ; 2 uses
@@ -532,32 +525,30 @@ _ZN6embree19serial_partitioningINS_9PrimRefMBENS_11PrimInfoMBTINS_5LBBoxINS_6Vec
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.gt, i64 %1
   store i64 %i.gs, ptr %i.gu, align 8
   %i.gv = getelementptr inbounds nuw i8, ptr %i.a, i64 3264
-  %i.gw = getelementptr inbounds nuw [144 x i8], ptr %i.gv, i64 %1 ; 13 uses
+  %i.gw = getelementptr inbounds nuw [144 x i8], ptr %i.gv, i64 %1 ; 12 uses
   store <4 x float> %.sroa.033.1.lcssa, ptr %i.gw, align 16
-  %14 = getelementptr inbounds nuw i8, ptr %i.gw, i64 16
-  store <4 x float> %.sroa.836.1.lcssa, ptr %14, align 16
-  %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 32
-  store <4 x float> %.sroa.1439.1.lcssa, ptr %i.gx, align 16
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.gw, i64 48
-  store <4 x float> %.sroa.2042.1.lcssa, ptr %i.gy, align 16
-  %i.gz = getelementptr inbounds nuw i8, ptr %i.gw, i64 64
-  store <4 x float> %.sroa.2645.1.lcssa, ptr %i.gz, align 16
-  %i.ha = getelementptr inbounds nuw i8, ptr %i.gw, i64 80
-  store <4 x float> %.sroa.3248.1.lcssa, ptr %i.ha, align 16
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.gw, i64 96
-  store i64 0, ptr %i.hb, align 16
-  %.sroa.4052.96..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gw, i64 104
-  store i64 %.sroa.4052.1.lcssa, ptr %.sroa.4052.96..sroa_idx.a, align 8
-  %.sroa.4554.96..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gw, i64 112
-  store i64 %.sroa.4554.1.lcssa, ptr %.sroa.4554.96..sroa_idx.a, align 16
-  %.sroa.5056.96..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gw, i64 120
-  store i64 %.sroa.5056.1.lcssa, ptr %.sroa.5056.96..sroa_idx.a, align 8
-  %i.hc = getelementptr inbounds nuw i8, ptr %i.gw, i64 128
-  store <2 x float> %i.az, ptr %i.hc, align 16
-  %i.hd = getelementptr inbounds nuw i8, ptr %i.gw, i64 136
-  store float %.sroa.6360.1.lcssa, ptr %i.hd, align 8
-  %i.he = getelementptr inbounds nuw i8, ptr %i.gw, i64 140
-  store float %.sroa.6963.1.lcssa, ptr %i.he, align 4
+  %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 16
+  store <4 x float> %.sroa.836.1.lcssa, ptr %i.gx, align 16
+  %i.gy = getelementptr inbounds nuw i8, ptr %i.gw, i64 32
+  store <4 x float> %.sroa.1439.1.lcssa, ptr %i.gy, align 16
+  %i.gz = getelementptr inbounds nuw i8, ptr %i.gw, i64 48
+  store <4 x float> %.sroa.2042.1.lcssa, ptr %i.gz, align 16
+  %i.ha = getelementptr inbounds nuw i8, ptr %i.gw, i64 64
+  store <4 x float> %.sroa.2645.1.lcssa, ptr %i.ha, align 16
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.gw, i64 80
+  store <4 x float> %.sroa.3248.1.lcssa, ptr %i.hb, align 16
+  %.sroa.4052.96..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gw, i64 96
+  store i64 0, ptr %.sroa.4052.96..sroa_idx.a, align 16
+  %.sroa.4554.96..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gw, i64 104
+  store i64 %.sroa.4052.1.lcssa, ptr %.sroa.4554.96..sroa_idx.a, align 8
+  %.sroa.5056.96..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gw, i64 112
+  store i64 %.sroa.4554.1.lcssa, ptr %.sroa.5056.96..sroa_idx.a, align 16
+  %i.hc = getelementptr inbounds nuw i8, ptr %i.gw, i64 120
+  store i64 %.sroa.5056.1.lcssa, ptr %i.hc, align 8
+  %i.hd = getelementptr inbounds nuw i8, ptr %i.gw, i64 128
+  store <2 x float> %4, ptr %i.hd, align 16
+  %i.he = getelementptr inbounds nuw i8, ptr %i.gw, i64 136
+  store <2 x float> %i.az, ptr %i.he, align 8
   %i.hf = getelementptr inbounds nuw i8, ptr %i.a, i64 12480
   %i.hg = getelementptr inbounds nuw [144 x i8], ptr %i.hf, i64 %1 ; 13 uses
   store <4 x float> %.sroa.0.1.lcssa, ptr %i.hg, align 16

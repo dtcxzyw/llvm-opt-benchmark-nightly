@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, argmem: read, inaccessiblemem: readwrite, target_mem: none) uwtable
 define dso_local noalias noundef ptr @initLinkCells(ptr nofree noundef readonly captures(none) %0, double noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias noundef dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #13 ; 14 uses
+  %i.a = tail call noalias noundef dereferenceable_or_null(128) ptr @malloc(i64 noundef 128) #13 ; 13 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -19,19 +19,15 @@ bb.a:
   %i.f = load <2 x double>, ptr %i.b, align 8, !tbaa !8
   store <2 x double> %i.f, ptr %i.c, align 8, !tbaa !8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   %i.i = load <2 x double>, ptr %i.d, align 8, !tbaa !8 ; 2 uses
   %i.j = insertelement <2 x double> poison, double %1, i64 0
   %i.k = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer
   %i.l = fdiv <2 x double> %i.i, %i.k
-  %i.m = fptosi <2 x double> %i.l to <2 x i32>    ; 3 uses
-  %3 = extractelement <2 x i32> %i.m, i64 0       ; 3 uses
-  store i32 %3, ptr %i.a, align 8, !tbaa !4
+  %i.m = fptosi <2 x double> %i.l to <2 x i32>    ; 4 uses
   %i.n = sitofp <2 x i32> %i.m to <2 x double>
   %i.o = fdiv <2 x double> %i.i, %i.n             ; 3 uses
-  %4 = extractelement <2 x i32> %i.m, i64 1       ; 3 uses
-  store i32 %4, ptr %i.h, align 4, !tbaa !4
+  store <2 x i32> %i.m, ptr %i.a, align 8, !tbaa !4
   store <2 x double> %i.o, ptr %i.e, align 8, !tbaa !8
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -39,7 +35,7 @@ bb.a:
   %i.s = load <2 x double>, ptr %i.q, align 8, !tbaa !8
   store <2 x double> %i.s, ptr %i.r, align 8, !tbaa !8
   %i.t = load <2 x double>, ptr %i.g, align 8, !tbaa !8
-  store <2 x double> %i.t, ptr %2, align 8, !tbaa !8
+  store <2 x double> %i.t, ptr %i.h, align 8, !tbaa !8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.v = load double, ptr %i.u, align 8, !tbaa !8 ; 2 uses
   %i.w = fdiv double %i.v, %1
@@ -56,12 +52,14 @@ bb.a:
   %i.af = shufflevector <2 x double> %i.o, <2 x double> %i.ae, <2 x i32> <i32 1, i32 2>
   %i.ag = fdiv <2 x double> splat (double 1.000000e+00), %i.af
   store <2 x double> %i.ag, ptr %i.p, align 8, !tbaa !8
-  %i.ah = mul i32 %4, %i.x                        ; 2 uses
+  %2 = extractelement <2 x i32> %i.m, i64 1       ; 2 uses
+  %i.ah = mul i32 %2, %i.x                        ; 2 uses
+  %3 = extractelement <2 x i32> %i.m, i64 0       ; 2 uses
   %i.ai = mul i32 %i.ah, %3                       ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 12
   store i32 %i.ai, ptr %i.aj, align 4, !tbaa !10
   %i.ak = add nsw i32 %3, 2
-  %i.al = add i32 %4, 2
+  %i.al = add i32 %2, 2
   %i.am = add i32 %i.al, %i.x
   %i.an = mul nsw i32 %i.am, %i.ak
   %i.ao = add nsw i32 %i.an, %i.ah

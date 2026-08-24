@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
   %.sroa.17.0 = phi float [ %.sroa.9.0.copyload, %bb.c ], [ %i.d, %bb.b ], [ %i.d, %bb.a ] ; 2 uses
   %.sroa.12.1 = phi float [ %.sroa.12.0, %bb.c ], [ %.sroa.12.0, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
-  %i.k = phi <2 x float> [ %i.h, %bb.c ], [ %i.h, %bb.b ], [ %i.a, %bb.a ] ; 3 uses
+  %i.k = phi <2 x float> [ %i.h, %bb.c ], [ %i.h, %bb.b ], [ %i.a, %bb.a ] ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 5 uses
   %i.m = load i32, ptr %i.l, align 8, !tbaa !77   ; 6 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 164 ; 2 uses
@@ -257,10 +257,10 @@ bb.h:                                             ; preds = %bb.g, %_ZNK8ImVecto
 _ZN8ImVectorI6ImVec4E9push_backERKS0_.exit:       ; preds = %._ZN8ImVectorI6ImVec4E7reserveEi.exit_crit_edge.i, %bb.h
   %i.ae = phi i32 [ %i.m, %._ZN8ImVectorI6ImVec4E7reserveEi.exit_crit_edge.i ], [ %.pre3.i, %bb.h ]
   %i.af = phi ptr [ %.pre.i, %._ZN8ImVectorI6ImVec4E7reserveEi.exit_crit_edge.i ], [ %i.x, %bb.h ]
-  %i.ag = extractelement <2 x float> %i.k, i64 1  ; 3 uses
+  %i.ag = extractelement <2 x float> %i.k, i64 1  ; 2 uses
   %i.ah = fcmp oge float %i.ag, %.sroa.17.0
   %i.ai = select i1 %i.ah, float %i.ag, float %.sroa.17.0 ; 2 uses
-  %i.aj = extractelement <2 x float> %i.k, i64 0  ; 3 uses
+  %i.aj = extractelement <2 x float> %i.k, i64 0  ; 2 uses
   %i.ak = fcmp oge float %i.aj, %.sroa.12.1
   %i.al = select i1 %i.ak, float %i.aj, float %.sroa.12.1 ; 2 uses
   %i.am = sext i32 %i.ae to i64
@@ -274,9 +274,7 @@ _ZN8ImVectorI6ImVec4E9push_backERKS0_.exit:       ; preds = %._ZN8ImVectorI6ImVe
   %i.ap = add nsw i32 %i.ao, 1
   store i32 %i.ap, ptr %i.l, align 8, !tbaa !77
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store float %i.aj, ptr %i.aq, align 8, !tbaa !8
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 100
-  store float %i.ag, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !8
+  store <2 x float> %i.k, ptr %i.aq, align 8, !tbaa !8
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 104
   store float %i.al, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 108

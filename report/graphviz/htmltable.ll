@@ -204,7 +204,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 8 uses
   %2 = alloca %struct.htmlenv_t, align 8          ; 14 uses
   %3 = alloca %struct.agxbuf, align 8             ; 47 uses
-  %4 = alloca %struct.boxf, align 16              ; 6 uses
+  %4 = alloca %struct.boxf, align 16              ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 56
@@ -607,15 +607,11 @@ getPenColor.exit:                                 ; preds = %bb.az, %bb.ay, %gv_
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hx, i64 88
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.hz = load <2 x double>, ptr %i.hy, align 8, !tbaa !28
-  %i.ia = fmul <2 x double> %i.hz, splat (double 5.000000e-01) ; 5 uses
+  %i.ia = fmul <2 x double> %i.hz, splat (double 5.000000e-01) ; 4 uses
   %i.ib = fneg <2 x double> %i.ia
   store <2 x double> %i.ib, ptr %4, align 16, !tbaa !28
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %6 = extractelement <2 x double> %i.ia, i64 0
-  store double %6, ptr %5, align 16, !tbaa !96
-  %i.ic = getelementptr inbounds nuw i8, ptr %4, i64 24
-  %7 = extractelement <2 x double> %i.ia, i64 1
-  store double %7, ptr %i.ic, align 8, !tbaa !97
+  %i.ic = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store <2 x double> %i.ia, ptr %i.ic, align 16, !tbaa !28
   call fastcc void @pos_html_tbl(ptr noundef %i.hx, ptr noundef nonnull byval(%struct.boxf) align 8 %4, i8 noundef zeroext 15)
   %i.id = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ie = fadd <2 x double> %i.ia, %i.ia
@@ -630,18 +626,14 @@ bb.bg:                                            ; preds = %bb.au
   %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !201
   %i.ij = load ptr, ptr %i.ae, align 8, !tbaa !24
   call fastcc void @size_html_txt(ptr noundef %i.ii, ptr noundef %i.ij, ptr noundef %2)
-  %i.ik = load ptr, ptr %i.ae, align 8, !tbaa !24 ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.ik, i64 24
-  %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 40 ; 2 uses
-  %i.im = getelementptr inbounds nuw i8, ptr %i.ik, i64 48
-  %i.in = load <2 x double>, ptr %i.il, align 8, !tbaa !28
-  %i.io = fmul <2 x double> %i.in, splat (double 5.000000e-01) ; 5 uses
+  %i.ik = load ptr, ptr %i.ae, align 8, !tbaa !24 ; 2 uses
+  %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 24
+  %i.im = getelementptr inbounds nuw i8, ptr %i.ik, i64 40 ; 2 uses
+  %i.in = load <2 x double>, ptr %i.im, align 8, !tbaa !28
+  %i.io = fmul <2 x double> %i.in, splat (double 5.000000e-01) ; 4 uses
   %i.ip = fneg <2 x double> %i.io
-  store <2 x double> %i.ip, ptr %8, align 8, !tbaa !28
-  %9 = extractelement <2 x double> %i.io, i64 0
-  store double %9, ptr %i.il, align 8, !tbaa !28
-  %10 = extractelement <2 x double> %i.io, i64 1
-  store double %10, ptr %i.im, align 8, !tbaa !28
+  store <2 x double> %i.ip, ptr %i.il, align 8, !tbaa !28
+  store <2 x double> %i.io, ptr %i.im, align 8, !tbaa !28
   %i.iq = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.ir = fadd <2 x double> %i.io, %i.io
   store <2 x double> %i.ir, ptr %i.iq, align 8, !tbaa !28

@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %i.is = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.it = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.iv = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 2 uses
+  %i.iv = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.iw = getelementptr inbounds nuw i8, ptr %20, i64 4 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.iy = getelementptr inbounds nuw i8, ptr %0, i64 128
@@ -559,11 +559,10 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph579
   store float %i.rd, ptr %20, align 4, !tbaa !16
   %i.re = insertelement <2 x float> poison, float %i.rc, i64 0
   %i.rf = shufflevector <2 x float> %i.re, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.rg = fmul <2 x float> %i.ql, %i.rf           ; 3 uses
-  %i.rh = extractelement <2 x float> %i.rg, i64 1 ; 4 uses
-  %i.ri = extractelement <2 x float> %i.rg, i64 0 ; 3 uses
-  store float %i.ri, ptr %i.iw, align 4, !tbaa !16
-  store float %i.rh, ptr %i.iv, align 4, !tbaa !16
+  %i.rg = fmul <2 x float> %i.ql, %i.rf           ; 4 uses
+  %i.rh = extractelement <2 x float> %i.rg, i64 1 ; 3 uses
+  %i.ri = extractelement <2 x float> %i.rg, i64 0 ; 2 uses
+  store <2 x float> %i.rg, ptr %i.iw, align 4, !tbaa !16
   %i.rj = fmul float %i.cx, %i.ri
   %i.rk = call float @llvm.fmuladd.f32(float %i.cu, float %i.rd, float %i.rj)
   %i.rl = call noundef float @llvm.fmuladd.f32(float %i.da, float %i.rh, float %i.rk)

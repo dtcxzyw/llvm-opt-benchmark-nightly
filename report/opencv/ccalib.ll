@@ -202,54 +202,51 @@ bb.a:
   %17 = alloca %"class.cv::_InputOutputArray", align 8 ; 7 uses
   %18 = alloca %"class.cv::Scalar_", align 8      ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240
-  %i.b = load double, ptr %i.a, align 8, !tbaa !88 ; 3 uses
+  %i.b = load double, ptr %i.a, align 8, !tbaa !88 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %19 = load <2 x i32>, ptr %i.c, align 8, !tbaa !69
-  %20 = sitofp <2 x i32> %19 to <2 x double>      ; 2 uses
-  %21 = extractelement <2 x double> %20, i64 1
-  %22 = fmul double %i.b, %21
-  %23 = fmul double %22, 5.000000e-01
-  %24 = fptrunc double %23 to float               ; 3 uses
-  %25 = extractelement <2 x double> %20, i64 0
-  %26 = fmul double %i.b, %25
-  %i.d = fmul double %26, 5.000000e-01
-  %i.e = fptrunc double %i.d to float             ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
-  %27 = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #25 ; 11 uses
-  store ptr %27, ptr %8, align 8, !tbaa !98
-  %28 = getelementptr inbounds nuw i8, ptr %27, i64 48 ; 2 uses
-  %29 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %30 = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
-  store ptr %28, ptr %30, align 8, !tbaa !97
-  store ptr %28, ptr %29, align 8, !tbaa !96
-  %31 = fmul double %6, %i.b
-  %32 = fptrunc double %31 to float               ; 3 uses
-  store float %24, ptr %27, align 4, !tbaa !63
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %27, i64 4
-  store float %i.e, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !63
-  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %27, i64 8
-  store float 0.000000e+00, ptr %.sroa.12.0..sroa_idx, align 4, !tbaa !63
-  %33 = fadd float %32, %24
-  %34 = fadd float %i.e, 0.000000e+00             ; 2 uses
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %33, i64 0
-  %.sroa.0.4.vec.insert.i.a = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %34, i64 1
-  %35 = getelementptr inbounds nuw i8, ptr %27, i64 12
-  store <2 x float> %.sroa.0.4.vec.insert.i.a, ptr %35, align 4
-  %.sroa.519.0..sroa_idx = getelementptr inbounds nuw i8, ptr %27, i64 20
+  %19 = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #25 ; 10 uses
+  store ptr %19, ptr %8, align 8, !tbaa !98
+  %20 = getelementptr inbounds nuw i8, ptr %19, i64 48 ; 2 uses
+  %21 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %22 = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
+  store ptr %20, ptr %22, align 8, !tbaa !97
+  store ptr %20, ptr %21, align 8, !tbaa !96
+  %i.d = fmul double %6, %i.b
+  %i.e = fptrunc double %i.d to float             ; 3 uses
+  %23 = load <2 x i32>, ptr %i.c, align 8, !tbaa !69
+  %24 = sitofp <2 x i32> %23 to <2 x double>
+  %25 = insertelement <2 x double> poison, double %i.b, i64 0
+  %26 = shufflevector <2 x double> %25, <2 x double> poison, <2 x i32> zeroinitializer
+  %27 = fmul <2 x double> %26, %24
+  %28 = fmul <2 x double> %27, splat (double 5.000000e-01)
+  %29 = fptrunc <2 x double> %28 to <2 x float>   ; 3 uses
+  %30 = shufflevector <2 x float> %29, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x float> %30, ptr %19, align 4, !tbaa !63
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 8
+  store float 0.000000e+00, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !63
+  %31 = extractelement <2 x float> %29, i64 0     ; 2 uses
+  %32 = fadd float %31, 0.000000e+00              ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %19, i64 12
+  %.sroa.519.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 20
   store float 0.000000e+00, ptr %.sroa.519.0..sroa_idx, align 4, !tbaa !63
-  %36 = fadd float %24, 0.000000e+00
-  %i.f = fadd float %32, %i.e
-  %.sroa.0.0.vec.insert.i64 = insertelement <2 x float> poison, float %36, i64 0 ; 2 uses
-  %.sroa.0.4.vec.insert.i65 = insertelement <2 x float> %.sroa.0.0.vec.insert.i64, float %i.f, i64 1
-  %i.g = getelementptr inbounds nuw i8, ptr %27, i64 24
+  %.sroa.0.4.vec.insert.i.a = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.e, i64 0
+  %34 = shufflevector <2 x float> %29, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %35 = fadd <2 x float> %.sroa.0.4.vec.insert.i.a, %34 ; 2 uses
+  %.sroa.0.4.vec.insert.i = insertelement <2 x float> %35, float %32, i64 1
+  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %33, align 4
+  %i.f = fadd float %31, %i.e
+  %36 = shufflevector <2 x float> %35, <2 x float> poison, <2 x i32> <i32 1, i32 poison> ; 2 uses
+  %.sroa.0.4.vec.insert.i65 = insertelement <2 x float> %36, float %i.f, i64 1
+  %i.g = getelementptr inbounds nuw i8, ptr %19, i64 24
   store <2 x float> %.sroa.0.4.vec.insert.i65, ptr %i.g, align 4
-  %.sroa.513.0..sroa_idx = getelementptr inbounds nuw i8, ptr %27, i64 32
+  %.sroa.513.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 32
   store float 0.000000e+00, ptr %.sroa.513.0..sroa_idx, align 4, !tbaa !63
-  %i.h = fsub float 0.000000e+00, %32
-  %.sroa.0.4.vec.insert.i69 = insertelement <2 x float> %.sroa.0.0.vec.insert.i64, float %34, i64 1
-  %i.i = getelementptr inbounds nuw i8, ptr %27, i64 36
+  %i.h = fsub float 0.000000e+00, %i.e
+  %.sroa.0.4.vec.insert.i69 = insertelement <2 x float> %36, float %32, i64 1
+  %i.i = getelementptr inbounds nuw i8, ptr %19, i64 36
   store <2 x float> %.sroa.0.4.vec.insert.i69, ptr %i.i, align 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %27, i64 44
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 44
   store float %i.h, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !63
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
@@ -442,7 +439,7 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev.exit:    ; preds = %bb.j, %bb.k
   br i1 %.not.i.i.i95, label %_ZNSt6vectorIN2cv7Point3_IfEESaIS2_EED2Ev.exit, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev.exit
-  %i.cf = load ptr, ptr %30, align 8, !tbaa !97
+  %i.cf = load ptr, ptr %22, align 8, !tbaa !97
   %i.cg = ptrtoint ptr %i.cf to i64
   %i.ch = ptrtoint ptr %i.ce to i64
   %i.ci = sub i64 %i.cg, %i.ch
@@ -523,7 +520,7 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev.exit97:  ; preds = %bb.u, %bb.v
   br i1 %.not.i.i.i98, label %_ZNSt6vectorIN2cv7Point3_IfEESaIS2_EED2Ev.exit99, label %bb.w
 
 bb.w:                                             ; preds = %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EED2Ev.exit97
-  %i.cw = load ptr, ptr %30, align 8, !tbaa !97
+  %i.cw = load ptr, ptr %22, align 8, !tbaa !97
   %i.cx = ptrtoint ptr %i.cw to i64
   %i.cy = ptrtoint ptr %i.cv to i64
   %i.cz = sub i64 %i.cx, %i.cy

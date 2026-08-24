@@ -205,27 +205,19 @@ bb.cj:                                            ; preds = %bb.ci, %bb.cf, %bb.
 
 bb.ck:                                            ; preds = %bb.ck, %.lr.ph416.new
   %indvars.iv491 = phi i64 [ 0, %.lr.ph416.new ], [ %indvars.iv.next492.1, %bb.ck ] ; 3 uses
-  %i.nz = phi <2 x double> [ %i.nt, %.lr.ph416.new ], [ %i.oj, %bb.ck ] ; 4 uses
+  %i.nz = phi <2 x double> [ %i.nt, %.lr.ph416.new ], [ %i.oj, %bb.ck ] ; 3 uses
   %niter598 = phi i64 [ 0, %.lr.ph416.new ], [ %niter598.next.1, %bb.ck ]
-  %i.oa = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %indvars.iv491 ; 2 uses
-  %36 = extractelement <2 x double> %i.nz, i64 0
-  store double %36, ptr %i.oa, align 8, !tbaa !103
-  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.oa, i64 8
-  %37 = extractelement <2 x double> %i.nz, i64 1
-  store double %37, ptr %.sroa.13.0..sroa_idx, align 8, !tbaa !103
+  %i.oa = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %indvars.iv491
+  store <2 x double> %i.nz, ptr %i.oa, align 8, !tbaa !103
   %i.ob = shufflevector <2 x double> %i.nz, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.oc = fmul <2 x double> %i.nv, %i.ob
+  %i.oc = fmul <2 x double> %i.ob, %i.nv
   %i.od = shufflevector <2 x double> %i.nz, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.oe = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.od, <2 x double> %i.nx, <2 x double> %i.oc) ; 4 uses
-  %i.of = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %indvars.iv491 ; 2 uses
-  %38 = getelementptr inbounds nuw i8, ptr %i.of, i64 16
-  %39 = extractelement <2 x double> %i.oe, i64 0
-  store double %39, ptr %38, align 8, !tbaa !103
-  %.sroa.13.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.of, i64 24
-  %40 = extractelement <2 x double> %i.oe, i64 1
-  store double %40, ptr %.sroa.13.0..sroa_idx.1, align 8, !tbaa !103
+  %i.oe = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.od, <2 x double> %i.nx, <2 x double> %i.oc) ; 3 uses
+  %i.of = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %indvars.iv491
+  %.sroa.13.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.of, i64 16
+  store <2 x double> %i.oe, ptr %.sroa.13.0..sroa_idx.1, align 8, !tbaa !103
   %i.og = shufflevector <2 x double> %i.oe, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.oh = fmul <2 x double> %i.nv, %i.og
+  %i.oh = fmul <2 x double> %i.og, %i.nv
   %i.oi = shufflevector <2 x double> %i.oe, <2 x double> poison, <2 x i32> zeroinitializer
   %i.oj = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.oi, <2 x double> %i.nx, <2 x double> %i.oh) ; 2 uses
   %indvars.iv.next492.1 = add nuw nsw i64 %indvars.iv491, 2 ; 2 uses
@@ -239,15 +231,11 @@ bb.ck:                                            ; preds = %bb.ck, %.lr.ph416.n
 
 .epil.preheader:                                  ; preds = %.preheader386.us.preheader.unr-lcssa, %.lr.ph416
   %indvars.iv491.epil.init = phi i64 [ 0, %.lr.ph416 ], [ %indvars.iv.next492.1, %.preheader386.us.preheader.unr-lcssa ]
-  %.epil.init = phi <2 x double> [ %i.nt, %.lr.ph416 ], [ %i.oj, %.preheader386.us.preheader.unr-lcssa ] ; 2 uses
+  %.epil.init = phi <2 x double> [ %i.nt, %.lr.ph416 ], [ %i.oj, %.preheader386.us.preheader.unr-lcssa ]
   %lcmp.mod596 = trunc i32 %.0155.lcssa to i1
   call void @llvm.assume(i1 %lcmp.mod596)
-  %i.ok = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %indvars.iv491.epil.init ; 2 uses
-  %41 = extractelement <2 x double> %.epil.init, i64 0
-  store double %41, ptr %i.ok, align 8, !tbaa !103
-  %.sroa.13.0..sroa_idx.epil = getelementptr inbounds nuw i8, ptr %i.ok, i64 8
-  %42 = extractelement <2 x double> %.epil.init, i64 1
-  store double %42, ptr %.sroa.13.0..sroa_idx.epil, align 8, !tbaa !103
+  %i.ok = getelementptr inbounds nuw [16 x i8], ptr %i.ax, i64 %indvars.iv491.epil.init
+  store <2 x double> %.epil.init, ptr %i.ok, align 8, !tbaa !103
   br label %.preheader386.us.preheader
 
 .preheader386.us.preheader:                       ; preds = %.preheader386.us.preheader.unr-lcssa, %.epil.preheader

@@ -204,7 +204,7 @@ bb.a:
   %5 = alloca %class.QTransform, align 8          ; 9 uses
   %6 = alloca %class.QPointF, align 8             ; 6 uses
   %7 = alloca %class.QFontMetrics, align 8        ; 7 uses
-  %8 = alloca %class.QRectF, align 16             ; 7 uses
+  %8 = alloca %class.QRectF, align 16             ; 6 uses
   br i1 %2, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -257,32 +257,19 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #51
-  %i.ag = extractvalue { i64, i64 } %i.af, 0      ; 2 uses
-  %i.ah = extractvalue { i64, i64 } %i.af, 1      ; 2 uses
+  %i.ag = extractvalue { i64, i64 } %i.af, 0
+  %i.ah = extractvalue { i64, i64 } %i.af, 1
   %i.ai = getelementptr i8, ptr %0, i64 344
-  %9 = load i32, ptr %i.ai, align 8
-  %10 = getelementptr i8, ptr %0, i64 348
-  %11 = load i32, ptr %10, align 4
   %i.aj = getelementptr i8, ptr %0, i64 352
-  %12 = load i32, ptr %i.aj, align 8
-  %13 = getelementptr i8, ptr %0, i64 356
-  %14 = load i32, ptr %13, align 4
-  %.sroa.048.0.extract.trunc = trunc i64 %i.ag to i32
-  %.neg56 = sub i32 %9, %.sroa.048.0.extract.trunc
-  %.sroa.048.4.extract.shift = lshr i64 %i.ag, 32
-  %.sroa.048.4.extract.trunc = trunc nuw i64 %.sroa.048.4.extract.shift to i32
-  %.neg = sub i32 %11, %.sroa.048.4.extract.trunc
-  %.sroa.6.8.extract.trunc = trunc i64 %i.ah to i32
-  %15 = add i32 %12, %.sroa.6.8.extract.trunc
-  %.sroa.6.12.extract.shift = lshr i64 %i.ah, 32
-  %.sroa.6.12.extract.trunc = trunc nuw i64 %.sroa.6.12.extract.shift to i32
-  %16 = add i32 %14, %.sroa.6.12.extract.trunc
-  %17 = add i32 %15, 1
-  %18 = add i32 %17, %.neg56
-  %19 = sitofp i32 %18 to double                  ; 3 uses
-  %20 = add i32 %16, 1
-  %21 = add i32 %20, %.neg
-  %22 = sitofp i32 %21 to double                  ; 3 uses
+  %9 = load <2 x i32>, ptr %i.ai, align 8
+  %10 = load <2 x i32>, ptr %i.aj, align 8
+  %11 = bitcast i64 %i.ag to <2 x i32>
+  %12 = sub <2 x i32> %9, %11
+  %13 = bitcast i64 %i.ah to <2 x i32>
+  %14 = add <2 x i32> %10, %13
+  %15 = add <2 x i32> %14, splat (i32 1)
+  %16 = add <2 x i32> %15, %12
+  %17 = sitofp <2 x i32> %16 to <2 x double>      ; 5 uses
   %i.ak = getelementptr i8, ptr %0, i64 328
   %.sroa.0.0.copyload = load i32, ptr %i.ak, align 8 ; 5 uses
   switch i32 %.sroa.0.0.copyload, label %bb.e [
@@ -296,7 +283,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.am = fmul nnan double %19, 5.000000e-01
+  %18 = extractelement <2 x double> %17, i64 0
+  %i.am = fmul nnan double %18, 5.000000e-01
   %i.an = fsub double %i.j, %i.am
   br label %bb.i
 
@@ -306,6 +294,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not18.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
+  %19 = extractelement <2 x double> %17, i64 0
   %i.ap = fsub double %i.j, %19
   br label %bb.i
 
@@ -316,7 +305,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %.not19.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ar = fmul nnan double %22, 5.000000e-01
+  %20 = extractelement <2 x double> %17, i64 1
+  %i.ar = fmul nnan double %20, 5.000000e-01
   %i.as = fsub double %i.k, %i.ar
   br label %_ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit
 
@@ -326,7 +316,8 @@ bb.k:                                             ; preds = %bb.i
   br i1 %.not20.i, label %_ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.au = fsub double %i.k, %22
+  %21 = extractelement <2 x double> %17, i64 1
+  %i.au = fsub double %i.k, %21
   br label %_ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit
 
 _ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit: ; preds = %bb.d, %bb.d, %bb.j, %bb.k, %bb.l
@@ -340,10 +331,8 @@ _ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFl
   %i.az = fptosi <2 x double> %i.ay to <2 x i32>
   %i.ba = sitofp <2 x i32> %i.az to <2 x double>
   store <2 x double> %i.ba, ptr %8, align 16
-  %23 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  store double %19, ptr %23, align 16
-  %i.bb = getelementptr inbounds nuw i8, ptr %8, i64 24
-  store double %22, ptr %i.bb, align 8
+  %i.bb = getelementptr inbounds nuw i8, ptr %8, i64 16
+  store <2 x double> %17, ptr %i.bb, align 16
   %i.bc = invoke noundef double @_ZNK15QCPAbstractItem12rectDistanceERK6QRectFRK7QPointFb(ptr noundef align 8 dereferenceable_or_null(130) %0, ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(16) %6, i1 noundef zeroext true)
           to label %bb.m unwind label %bb.o
 
@@ -746,7 +735,7 @@ bb.a:
   %5 = alloca %class.QTransform, align 8          ; 8 uses
   %6 = alloca %class.QFontMetrics, align 8        ; 7 uses
   %7 = alloca %class.QFont, align 8               ; 7 uses
-  %8 = alloca %class.QRectF, align 16             ; 7 uses
+  %8 = alloca %class.QRectF, align 16             ; 6 uses
   %9 = alloca %class.QPolygonF, align 8           ; 16 uses
   %10 = alloca %class.QPolygonF, align 8          ; 9 uses
   %11 = alloca %class.QDebug, align 8             ; 12 uses
@@ -807,8 +796,7 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #51
   %i.ac = getelementptr i8, ptr %0, i64 344
   %i.ad = getelementptr i8, ptr %0, i64 352
-  %13 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 24
+  %i.ae = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.af = load <2 x i32>, ptr %i.ac, align 8
   %i.ag = load <2 x i32>, ptr %i.ad, align 8
   %i.ah = bitcast i64 %i.aa to <2 x i32>
@@ -817,11 +805,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ak = add <2 x i32> %i.aj, splat (i32 1)
   %i.al = add <2 x i32> %i.ai, %i.ak
   %i.am = add <2 x i32> %i.al, %i.ag
-  %i.an = sitofp <2 x i32> %i.am to <2 x double>  ; 2 uses
-  %14 = extractelement <2 x double> %i.an, i64 0  ; 3 uses
-  store double %14, ptr %13, align 16
-  %15 = extractelement <2 x double> %i.an, i64 1  ; 3 uses
-  store double %15, ptr %i.ae, align 8
+  %i.an = sitofp <2 x i32> %i.am to <2 x double>  ; 5 uses
+  store <2 x double> %i.an, ptr %i.ae, align 16
   %i.ao = getelementptr i8, ptr %0, i64 328
   %.sroa.0.0.copyload = load i32, ptr %i.ao, align 8 ; 5 uses
   switch i32 %.sroa.0.0.copyload, label %bb.f [
@@ -835,7 +820,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.aq = fmul nnan double %14, 5.000000e-01
+  %13 = extractelement <2 x double> %i.an, i64 0
+  %i.aq = fmul nnan double %13, 5.000000e-01
   %i.ar = fsub double 0.000000e+00, %i.aq
   br label %bb.j
 
@@ -845,6 +831,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not18.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
+  %14 = extractelement <2 x double> %i.an, i64 0
   %i.at = fsub double 0.000000e+00, %14
   br label %bb.j
 
@@ -855,6 +842,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br i1 %.not19.i, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %15 = extractelement <2 x double> %i.an, i64 1
   %i.av = fmul nnan double %15, 5.000000e-01
   %i.aw = fsub double 0.000000e+00, %i.av
   br label %_ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit
@@ -865,7 +853,8 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not20.i, label %_ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ay = fsub double 0.000000e+00, %15
+  %16 = extractelement <2 x double> %i.an, i64 1
+  %i.ay = fsub double 0.000000e+00, %16
   br label %_ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit
 
 _ZNK11QCPItemText16getTextDrawPointERK7QPointFRK6QRectF6QFlagsIN2Qt13AlignmentFlagEE.exit: ; preds = %bb.e, %bb.e, %bb.k, %bb.l, %bb.m

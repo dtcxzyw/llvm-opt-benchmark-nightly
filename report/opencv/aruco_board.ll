@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107: ; preds = %bb
   %i.cc = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.cd = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %17, i64 12
-  %i.cf = getelementptr inbounds nuw i8, ptr %17, i64 4 ; 2 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %17, i64 4
   %i.cg = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.ci = getelementptr inbounds nuw i8, ptr %19, i64 8
@@ -239,18 +239,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107: ; preds = %bb
   %.038188 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.fz, %bb.at ]
   %i.df = getelementptr inbounds nuw [24 x i8], ptr %i.dd, i64 %i.de ; 3 uses
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !49
-  %28 = load <2 x float>, ptr %i.dg, align 4, !tbaa !53
-  %29 = fsub <2 x float> %28, %i.bo
-  %30 = fdiv <2 x float> %29, %i.bz               ; 2 uses
   %i.dh = load <2 x i32>, ptr %i.cc, align 8, !tbaa !35
   %i.di = sitofp <2 x i32> %i.dh to <2 x float>
-  %i.dj = shufflevector <2 x float> %i.di, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 4 uses
-  %foldExtExtBinop = fmul <2 x float> %30, %i.dj  ; 2 uses
-  %31 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %foldExtExtBinop211 = fmul <2 x float> %30, %i.dj ; 2 uses
-  %32 = extractelement <2 x float> %foldExtExtBinop211, i64 1
-  store float %31, ptr %17, align 16
-  store float %32, ptr %i.cf, align 4
+  %i.dj = shufflevector <2 x float> %i.di, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 3 uses
+  %28 = load <2 x float>, ptr %i.dg, align 4, !tbaa !53
+  %29 = fsub <2 x float> %28, %i.bo
+  %30 = fdiv <2 x float> %29, %i.bz
+  %31 = fmul <2 x float> %30, %i.dj               ; 3 uses
+  store <2 x float> %31, ptr %17, align 16
   %i.dk = load ptr, ptr %i.df, align 8, !tbaa !49
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 12
   %i.dm = load <2 x float>, ptr %i.dl, align 4, !tbaa !53
@@ -266,10 +262,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit107: ; preds = %bb
   %i.dv = fmul <2 x float> %i.du, %i.dj           ; 3 uses
   store <2 x float> %i.dv, ptr %i.cg, align 16
   %i.dw = shufflevector <2 x float> %i.dp, <2 x float> %i.dv, <2 x i32> <i32 0, i32 2>
-  %i.dx = shufflevector <2 x float> %foldExtExtBinop, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.dx = shufflevector <2 x float> %31, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dy = fsub <2 x float> %i.dw, %i.dx
   %i.dz = shufflevector <2 x float> %i.dp, <2 x float> %i.dv, <2 x i32> <i32 1, i32 3>
-  %i.ea = shufflevector <2 x float> %foldExtExtBinop211, <2 x float> poison, <2 x i32> <i32 1, i32 1>
+  %i.ea = shufflevector <2 x float> %31, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.eb = fsub <2 x float> %i.dz, %i.ea
   %i.ec = fpext <2 x float> %i.dy to <2 x double> ; 2 uses
   %i.ed = fpext <2 x float> %i.eb to <2 x double> ; 2 uses

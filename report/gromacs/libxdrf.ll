@@ -49,9 +49,9 @@ bb.a:
   %i.a = alloca [48 x i32], align 16              ; 5 uses
   %i.b = alloca [60 x i32], align 16              ; 4 uses
   %i.c = alloca [3 x i32], align 8                ; 14 uses
-  %i.d = alloca [3 x i32], align 4                ; 12 uses
+  %i.d = alloca [3 x i32], align 8                ; 12 uses
   %i.e = alloca i32, align 4                      ; 15 uses
-  %i.f = alloca [3 x i32], align 4                ; 12 uses
+  %i.f = alloca [3 x i32], align 8                ; 11 uses
   %i.g = alloca [3 x i32], align 4                ; 13 uses
   %i.h = alloca i32, align 4                      ; 19 uses
   %i.i = alloca [30 x i32], align 16              ; 7 uses
@@ -164,10 +164,10 @@ bb.m:                                             ; preds = %bb.l
   store i32 2147483647, ptr %i.au, align 4, !tbaa !18
   store i32 2147483647, ptr %i.c, align 8, !tbaa !18
   %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 5 uses
-  store i32 -2147483648, ptr %i.av, align 4, !tbaa !18
+  store i32 -2147483648, ptr %i.av, align 8, !tbaa !18
   %i.aw = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 4 uses
   store i32 -2147483648, ptr %i.aw, align 4, !tbaa !18
-  store i32 -2147483648, ptr %i.d, align 4, !tbaa !18
+  store i32 -2147483648, ptr %i.d, align 8, !tbaa !18
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 %.idx642.pre-phi
   %i.ay = load float, ptr %3, align 4, !tbaa !22  ; 3 uses
   br label %.lr.ph
@@ -207,7 +207,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph
   br i1 %i.bo, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  store i32 %i.bl, ptr %i.d, align 4, !tbaa !18
+  store i32 %i.bl, ptr %i.d, align 8, !tbaa !18
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
@@ -268,7 +268,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %i.cq, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  store i32 %i.cn, ptr %i.av, align 4, !tbaa !18
+  store i32 %i.cn, ptr %i.av, align 8, !tbaa !18
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
@@ -331,7 +331,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %bb.hf
 
 bb.ag:                                            ; preds = %bb.ad
-  %i.dt = load i32, ptr %i.d, align 4, !tbaa !18  ; 2 uses
+  %i.dt = load i32, ptr %i.d, align 8, !tbaa !18  ; 2 uses
   %i.du = sitofp i32 %i.dt to float
   %i.dv = load i32, ptr %i.c, align 8, !tbaa !18  ; 2 uses
   %i.dw = sitofp i32 %i.dv to float
@@ -342,7 +342,7 @@ bb.ag:                                            ; preds = %bb.ad
   br i1 %i.dy, label %bb.ah, label %._crit_edge694
 
 ._crit_edge694:                                   ; preds = %bb.ag
-  %.pre673.pre = load i32, ptr %i.av, align 4, !tbaa !18
+  %.pre673.pre = load i32, ptr %i.av, align 8, !tbaa !18
   %.pre674.pre = load i32, ptr %i.at, align 8, !tbaa !18
   br label %bb.ak
 
@@ -351,7 +351,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.ea = sitofp i32 %.pre672.pre to float
   %i.eb = fsub float %i.dz, %i.ea
   %i.ec = fcmp ult float %i.eb, f0x4EFFFFFF
-  %.pre673.pre695 = load i32, ptr %i.av, align 4, !tbaa !18 ; 4 uses
+  %.pre673.pre695 = load i32, ptr %i.av, align 8, !tbaa !18 ; 4 uses
   %.pre674.pre697 = load i32, ptr %i.at, align 8, !tbaa !18 ; 4 uses
   br i1 %i.ec, label %bb.ai, label %bb.ak
 
@@ -371,7 +371,7 @@ bb.ak:                                            ; preds = %bb.ah, %._crit_edge
   %.4 = phi i32 [ %.3, %bb.ai ], [ 0, %._crit_edge694 ], [ 0, %bb.ah ], [ 0, %bb.aj ]
   %i.ej = sub nsw i32 %i.dt, %i.dv                ; 2 uses
   %i.ek = add nsw i32 %i.ej, 1                    ; 3 uses
-  store i32 %i.ek, ptr %i.f, align 4, !tbaa !18
+  store i32 %i.ek, ptr %i.f, align 8, !tbaa !18
   %i.el = sub nsw i32 %.pre.pre, %.pre672.pre     ; 2 uses
   %i.em = add nsw i32 %i.el, 1                    ; 3 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.f, i64 4
@@ -379,7 +379,7 @@ bb.ak:                                            ; preds = %bb.ah, %._crit_edge
   %i.eo = sub nsw i32 %i.ei, %i.eh                ; 2 uses
   %i.ep = add nsw i32 %i.eo, 1                    ; 3 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store i32 %i.ep, ptr %i.eq, align 4, !tbaa !18
+  store i32 %i.ep, ptr %i.eq, align 8, !tbaa !18
   %i.er = or i32 %i.em, %i.ek
   %i.es = or i32 %i.er, %i.ep
   %i.et = icmp ugt i32 %i.es, 16777215
@@ -782,7 +782,7 @@ bb.fq:                                            ; preds = %bb.fo, %bb.fn
   br i1 %i.wa, label %bb.fw, label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fq
-  %i.wb = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
+  %i.wb = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.wc = call noundef i32 @_Z7xdr_intP3XDRPi(ptr noundef nonnull %0, ptr noundef nonnull %i.wb)
   %i.wd = icmp eq i32 %i.wc, 0
   br i1 %i.wd, label %bb.fw, label %bb.fs
@@ -799,7 +799,7 @@ bb.ft:                                            ; preds = %bb.fs
   br i1 %i.wi, label %bb.fw, label %bb.fu
 
 bb.fu:                                            ; preds = %bb.ft
-  %i.wj = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
+  %i.wj = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.wk = call noundef i32 @_Z7xdr_intP3XDRPi(ptr noundef nonnull %0, ptr noundef nonnull %i.wj)
   %i.wl = icmp eq i32 %i.wk, 0
   br i1 %i.wl, label %bb.fw, label %bb.fv
@@ -821,30 +821,27 @@ bb.fx:                                            ; preds = %bb.fw
   br label %bb.hf
 
 bb.fy:                                            ; preds = %bb.fv
-  %6 = load i32, ptr %i.d, align 4, !tbaa !18
-  %7 = load i32, ptr %i.c, align 8, !tbaa !18
-  %8 = sub nsw i32 %6, %7                         ; 2 uses
-  %9 = add nsw i32 %8, 1                          ; 3 uses
-  store i32 %9, ptr %i.f, align 4, !tbaa !18
-  %i.wr = load i32, ptr %i.wj, align 4, !tbaa !18
-  %i.ws = load i32, ptr %i.wb, align 4, !tbaa !18
+  %6 = load <2 x i32>, ptr %i.d, align 8, !tbaa !18
+  %7 = load <2 x i32>, ptr %i.c, align 8, !tbaa !18
+  %8 = sub nsw <2 x i32> %6, %7                   ; 3 uses
+  %9 = add nsw <2 x i32> %8, splat (i32 1)        ; 3 uses
+  store <2 x i32> %9, ptr %i.f, align 8, !tbaa !18
+  %i.wr = load i32, ptr %i.wm, align 8, !tbaa !18
+  %i.ws = load i32, ptr %i.we, align 8, !tbaa !18
   %i.wt = sub nsw i32 %i.wr, %i.ws                ; 2 uses
   %i.wu = add nsw i32 %i.wt, 1                    ; 3 uses
-  %i.wv = getelementptr inbounds nuw i8, ptr %i.f, i64 4
-  store i32 %i.wu, ptr %i.wv, align 4, !tbaa !18
-  %10 = load i32, ptr %i.wm, align 4, !tbaa !18
-  %11 = load i32, ptr %i.we, align 8, !tbaa !18
-  %12 = sub nsw i32 %10, %11                      ; 2 uses
-  %13 = add nsw i32 %12, 1                        ; 3 uses
-  %14 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  store i32 %13, ptr %14, align 4, !tbaa !18
-  %i.ww = or i32 %i.wu, %9
-  %i.wx = or i32 %i.ww, %13
+  %i.wv = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  store i32 %i.wu, ptr %i.wv, align 8, !tbaa !18
+  %10 = extractelement <2 x i32> %9, i64 0        ; 2 uses
+  %11 = extractelement <2 x i32> %9, i64 1        ; 2 uses
+  %i.ww = or i32 %11, %10
+  %i.wx = or i32 %i.ww, %i.wu
   %i.wy = icmp ugt i32 %i.wx, 16777215
   br i1 %i.wy, label %bb.fz, label %bb.ga
 
 bb.fz:                                            ; preds = %bb.fy
-  %i.wz = icmp sgt i32 %8, -1
+  %12 = extractelement <2 x i32> %8, i64 0
+  %i.wz = icmp sgt i32 %12, -1
   br i1 %i.wz, label %.lr.ph.i515, label %_ZL9sizeofinti.exit518
 
 .lr.ph.i515:                                      ; preds = %bb.fz, %.lr.ph.i515
@@ -852,14 +849,15 @@ bb.fz:                                            ; preds = %bb.fy
   %.067.i517 = phi i32 [ %i.xb, %.lr.ph.i515 ], [ 1, %bb.fz ]
   %i.xa = add nuw nsw i32 %.08.i516, 1            ; 2 uses
   %i.xb = shl i32 %.067.i517, 1                   ; 2 uses
-  %i.xc = icmp sge i32 %9, %i.xb
+  %i.xc = icmp sge i32 %10, %i.xb
   %i.xd = icmp samesign ult i32 %.08.i516, 31
   %i.xe = select i1 %i.xc, i1 %i.xd, i1 false
   br i1 %i.xe, label %.lr.ph.i515, label %_ZL9sizeofinti.exit518, !llvm.loop !26
 
 _ZL9sizeofinti.exit518:                           ; preds = %.lr.ph.i515, %bb.fz
   %.0.lcssa.i514 = phi i32 [ 0, %bb.fz ], [ %i.xa, %.lr.ph.i515 ] ; 2 uses
-  %i.xf = icmp sgt i32 %i.wt, -1
+  %13 = extractelement <2 x i32> %8, i64 1
+  %i.xf = icmp sgt i32 %13, -1
   br i1 %i.xf, label %.lr.ph.i521, label %_ZL9sizeofinti.exit524
 
 .lr.ph.i521:                                      ; preds = %_ZL9sizeofinti.exit518, %.lr.ph.i521
@@ -867,14 +865,14 @@ _ZL9sizeofinti.exit518:                           ; preds = %.lr.ph.i515, %bb.fz
   %.067.i523 = phi i32 [ %i.xh, %.lr.ph.i521 ], [ 1, %_ZL9sizeofinti.exit518 ]
   %i.xg = add nuw nsw i32 %.08.i522, 1            ; 2 uses
   %i.xh = shl i32 %.067.i523, 1                   ; 2 uses
-  %i.xi = icmp sge i32 %i.wu, %i.xh
+  %i.xi = icmp sge i32 %11, %i.xh
   %i.xj = icmp samesign ult i32 %.08.i522, 31
   %i.xk = select i1 %i.xi, i1 %i.xj, i1 false
   br i1 %i.xk, label %.lr.ph.i521, label %_ZL9sizeofinti.exit524, !llvm.loop !26
 
 _ZL9sizeofinti.exit524:                           ; preds = %.lr.ph.i521, %_ZL9sizeofinti.exit518
   %.0.lcssa.i520 = phi i32 [ 0, %_ZL9sizeofinti.exit518 ], [ %i.xg, %.lr.ph.i521 ] ; 2 uses
-  %i.xl = icmp sgt i32 %12, -1
+  %i.xl = icmp sgt i32 %i.wt, -1
   br i1 %i.xl, label %.lr.ph.i527, label %_ZL9sizeofinti.exit530
 
 .lr.ph.i527:                                      ; preds = %_ZL9sizeofinti.exit524, %.lr.ph.i527
@@ -882,7 +880,7 @@ _ZL9sizeofinti.exit524:                           ; preds = %.lr.ph.i521, %_ZL9s
   %.067.i529 = phi i32 [ %i.xn, %.lr.ph.i527 ], [ 1, %_ZL9sizeofinti.exit524 ]
   %i.xm = add nuw nsw i32 %.08.i528, 1            ; 2 uses
   %i.xn = shl i32 %.067.i529, 1                   ; 2 uses
-  %i.xo = icmp sge i32 %13, %i.xn
+  %i.xo = icmp sge i32 %i.wu, %i.xn
   %i.xp = icmp samesign ult i32 %.08.i528, 31
   %i.xq = select i1 %i.xo, i1 %i.xp, i1 false
   br i1 %i.xq, label %.lr.ph.i527, label %_ZL9sizeofinti.exit530, !llvm.loop !26

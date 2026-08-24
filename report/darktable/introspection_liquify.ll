@@ -205,7 +205,7 @@ bb.a:
 
 alloc_move_to.exit:                               ; preds = %.lr.ph, %bb.a
   %indvars.iv.i.i.lcssa = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.i, %.lr.ph ] ; 2 uses
-  %.lcssa = phi ptr [ %.val, %bb.a ], [ %i.az, %.lr.ph ] ; 14 uses
+  %.lcssa = phi ptr [ %.val, %bb.a ], [ %i.az, %.lr.ph ] ; 11 uses
   %i.bc = sitofp <2 x i32> %i.av to <2 x float>
   %i.bd = sitofp reassoc nsz arcp contract afn i32 %i.ao to float
   %i.be = fmul reassoc nsz arcp contract afn <2 x float> %i.ap, %i.bc ; 2 uses
@@ -225,11 +225,8 @@ alloc_move_to.exit:                               ; preds = %.lr.ph, %bb.a
   %i.bn = getelementptr inbounds nuw i8, ptr %.lcssa, i64 20
   %i.bo = getelementptr inbounds nuw i8, ptr %.lcssa, i64 52
   store i32 0, ptr %i.bo, align 4, !tbaa !93
-  %1 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 24
-  %2 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 36
-  %3 = getelementptr inbounds nuw i8, ptr %.lcssa, i64 40
-  %i.bp = getelementptr inbounds nuw i8, ptr %.lcssa, i64 28
-  %i.bq = getelementptr inbounds nuw i8, ptr %.lcssa, i64 32
+  %i.bp = getelementptr inbounds nuw i8, ptr %.lcssa, i64 36
+  %i.bq = getelementptr inbounds nuw i8, ptr %.lcssa, i64 40
   %i.br = getelementptr inbounds nuw i8, ptr %.lcssa, i64 44
   store <2 x float> <float 5.000000e-01, float 7.500000e-01>, ptr %i.br, align 4, !tbaa !13
   %i.bs = getelementptr inbounds nuw i8, ptr %.lcssa, i64 56
@@ -243,17 +240,17 @@ alloc_move_to.exit:                               ; preds = %.lr.ph, %bb.a
   %i.bz = fmul reassoc nsz arcp contract afn <2 x float> %i.by, <float 0.000000e+00, float 1.000000e+00>
   %i.ca = call reassoc nsz arcp contract afn <2 x float> @cexpf(<2 x float> noundef %i.bz) #31
   %i.cb = extractelement <2 x float> %i.be, i64 1
-  %i.cc = fdiv reassoc nsz arcp contract afn float %i.cb, %i.bd ; 5 uses
+  %i.cc = fdiv reassoc nsz arcp contract afn float %i.cb, %i.bd ; 4 uses
   %i.cd = fmul reassoc nsz arcp contract afn float %i.cc, 0.000000e+00
-  %i.ce = fadd reassoc nsz arcp contract afn float %i.cd, %i.bh ; 4 uses
-  store float %i.ce, ptr %i.bn, align 4
-  store float %i.cc, ptr %1, align 4
-  store float %i.ce, ptr %i.bp, align 4
-  store float %i.cc, ptr %i.bq, align 4
+  %i.ce = fadd reassoc nsz arcp contract afn float %i.cd, %i.bh ; 3 uses
+  %1 = insertelement <4 x float> poison, float %i.ce, i64 0
+  %2 = insertelement <4 x float> %1, float %i.cc, i64 1
+  %3 = shufflevector <4 x float> %2, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  store <4 x float> %3, ptr %i.bn, align 4
   store ptr %.lcssa, ptr %i.bt, align 8, !tbaa !218
   %i.cf = fadd reassoc nsz arcp contract afn float %i.bu, %i.ce
-  store float %i.cf, ptr %2, align 4
-  store float %i.cc, ptr %3, align 4
+  store float %i.cf, ptr %i.bp, align 4
+  store float %i.cc, ptr %i.bq, align 4
   %i.cg = insertelement <2 x float> poison, float %i.bv, i64 0
   %i.ch = shufflevector <2 x float> %i.cg, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ci = fmul reassoc nsz arcp contract afn <2 x float> %i.ca, %i.ch
@@ -656,8 +653,8 @@ bb.a:
   %i.x = fsub reassoc nsz arcp contract afn float %i.w, %i.r
   %i.y = fmul reassoc nsz arcp contract afn float %i.x, %4
   %i.z = fadd reassoc nsz arcp contract afn float %i.r, %i.y
-  %.sroa.064.0.vec.extract = extractelement <2 x float> %3, i64 0 ; 2 uses
-  %.sroa.064.4.vec.extract = extractelement <2 x float> %3, i64 1 ; 2 uses
+  %.sroa.064.0.vec.extract = extractelement <2 x float> %3, i64 0
+  %.sroa.064.4.vec.extract = extractelement <2 x float> %3, i64 1
   %i.aa = fadd reassoc nsz arcp contract afn float %i.z, %.sroa.064.0.vec.extract
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -718,9 +715,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.bl = fmul reassoc nsz arcp contract afn <2 x float> %i.bk, %i.bh
   %i.bm = fadd reassoc nsz arcp contract afn <2 x float> %i.bl, %3
   store <2 x float> %i.bm, ptr %i.bi, align 4
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store float %.sroa.064.0.vec.extract, ptr %0, align 4
-  store float %.sroa.064.4.vec.extract, ptr %5, align 4
+  store <2 x float> %3, ptr %0, align 4
   ret void
 }
 

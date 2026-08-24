@@ -204,7 +204,7 @@ declare float @llvm.fmuladd.f32(float, float, float) #3
 ; Function Attrs: inlinehint uwtable
 define linkonce_odr dso_local noundef i32 @_ZN30GIM_TRIANGLE_CALCULATION_CACHE13clip_triangleERK9btVector4PK9btVector3S5_PS3_(ptr noundef nonnull align 4 dereferenceable(1012) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %5 = alloca %class.btVector4, align 8           ; 14 uses
+  %5 = alloca %class.btVector4, align 8           ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.b = load float, ptr %i.a, align 4, !tbaa !17
@@ -224,12 +224,9 @@ bb.a:
   %i.p = fmul <2 x float> %i.o, %i.m
   %i.q = shufflevector <2 x float> %i.l, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.r = insertelement <2 x float> %i.q, float %i.g, i64 1
-  %i.s = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.j, <2 x float> %i.r, <2 x float> %i.p) ; 5 uses
-  %6 = extractelement <2 x float> %i.s, i64 0     ; 3 uses
-  store float %6, ptr %5, align 8, !tbaa !17
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 3 uses
-  %i.t = extractelement <2 x float> %i.s, i64 1   ; 3 uses
-  store float %i.t, ptr %7, align 4, !tbaa !17
+  %i.s = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.j, <2 x float> %i.r, <2 x float> %i.p) ; 7 uses
+  %i.t = extractelement <2 x float> %i.s, i64 0   ; 2 uses
+  store <2 x float> %i.s, ptr %5, align 8, !tbaa !17
   %i.u = fneg float %i.g
   %i.v = extractelement <2 x float> %i.j, i64 0
   %i.w = fmul float %i.v, %i.u
@@ -237,8 +234,9 @@ bb.a:
   %i.y = tail call float @llvm.fmuladd.f32(float %i.k, float %i.x, float %i.w) ; 6 uses
   %i.z = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 6 uses
   store float %i.y, ptr %i.z, align 8, !tbaa !17
-  %8 = fmul float %i.t, %i.t
-  %i.aa = tail call float @llvm.fmuladd.f32(float %6, float %6, float %8)
+  %foldExtExtBinop = fmul <2 x float> %i.s, %i.s
+  %6 = extractelement <2 x float> %foldExtExtBinop, i64 1
+  %i.aa = tail call float @llvm.fmuladd.f32(float %i.t, float %i.t, float %6)
   %i.ab = tail call float @llvm.fmuladd.f32(float %i.y, float %i.y, float %i.aa) ; 3 uses
   %i.ac = fcmp ugt float %i.ab, 1.000000e-07
   br i1 %i.ac, label %bb.b, label %.thread
@@ -301,19 +299,18 @@ bb.d:                                             ; preds = %.thread
   %i.br = fmul <2 x float> %i.bq, %i.bo
   %i.bs = shufflevector <2 x float> %i.bn, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.bt = insertelement <2 x float> %i.bs, float %i.bi, i64 1
-  %i.bu = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bl, <2 x float> %i.bt, <2 x float> %i.br) ; 5 uses
-  %9 = extractelement <2 x float> %i.bu, i64 0    ; 3 uses
-  store float %9, ptr %5, align 8, !tbaa !17
-  %i.bv = extractelement <2 x float> %i.bu, i64 1 ; 3 uses
-  store float %i.bv, ptr %7, align 4, !tbaa !17
+  %i.bu = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bl, <2 x float> %i.bt, <2 x float> %i.br) ; 7 uses
+  %i.bv = extractelement <2 x float> %i.bu, i64 0 ; 2 uses
+  store <2 x float> %i.bu, ptr %5, align 8, !tbaa !17
   %i.bw = fneg float %i.bi
   %i.bx = extractelement <2 x float> %i.bl, i64 0
   %i.by = fmul float %i.bx, %i.bw
   %i.bz = extractelement <2 x float> %i.bn, i64 0
   %i.ca = call float @llvm.fmuladd.f32(float %i.bm, float %i.bz, float %i.by) ; 6 uses
   store float %i.ca, ptr %i.z, align 8, !tbaa !17
-  %10 = fmul float %i.bv, %i.bv
-  %i.cb = call float @llvm.fmuladd.f32(float %9, float %9, float %10)
+  %foldExtExtBinop130 = fmul <2 x float> %i.bu, %i.bu
+  %7 = extractelement <2 x float> %foldExtExtBinop130, i64 1
+  %i.cb = call float @llvm.fmuladd.f32(float %i.bv, float %i.bv, float %7)
   %i.cc = call float @llvm.fmuladd.f32(float %i.ca, float %i.ca, float %i.cb) ; 3 uses
   %i.cd = fcmp ugt float %i.cc, 1.000000e-07
   br i1 %i.cd, label %bb.e, label %.thread115
@@ -371,19 +368,18 @@ bb.g:                                             ; preds = %.thread115
   %i.dn = fmul <2 x float> %i.dm, %i.dk
   %i.do = shufflevector <2 x float> %i.dj, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.dp = insertelement <2 x float> %i.do, float %i.de, i64 1
-  %i.dq = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dh, <2 x float> %i.dp, <2 x float> %i.dn) ; 5 uses
-  %11 = extractelement <2 x float> %i.dq, i64 0   ; 3 uses
-  store float %11, ptr %5, align 8, !tbaa !17
-  %i.dr = extractelement <2 x float> %i.dq, i64 1 ; 3 uses
-  store float %i.dr, ptr %7, align 4, !tbaa !17
+  %i.dq = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dh, <2 x float> %i.dp, <2 x float> %i.dn) ; 7 uses
+  %i.dr = extractelement <2 x float> %i.dq, i64 0 ; 2 uses
+  store <2 x float> %i.dq, ptr %5, align 8, !tbaa !17
   %i.ds = fneg float %i.de
   %i.dt = extractelement <2 x float> %i.dh, i64 0
   %i.du = fmul float %i.dt, %i.ds
   %i.dv = extractelement <2 x float> %i.dj, i64 0
   %i.dw = call float @llvm.fmuladd.f32(float %i.di, float %i.dv, float %i.du) ; 6 uses
   store float %i.dw, ptr %i.z, align 8, !tbaa !17
-  %12 = fmul float %i.dr, %i.dr
-  %i.dx = call float @llvm.fmuladd.f32(float %11, float %11, float %12)
+  %foldExtExtBinop135 = fmul <2 x float> %i.dq, %i.dq
+  %8 = extractelement <2 x float> %foldExtExtBinop135, i64 1
+  %i.dx = call float @llvm.fmuladd.f32(float %i.dr, float %i.dr, float %8)
   %i.dy = call float @llvm.fmuladd.f32(float %i.dw, float %i.dw, float %i.dx) ; 3 uses
   %i.dz = fcmp ugt float %i.dy, 1.000000e-07
   br i1 %i.dz, label %bb.h, label %.thread117

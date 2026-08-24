@@ -202,7 +202,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: uwtable
 define dso_local noundef zeroext i1 @_ZN22SphereTriangleDetector7collideERK9btVector3RS0_S3_RfS4_f(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(28) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(16) %2, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(16) %3, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %4, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(4) %5, float noundef %6) local_unnamed_addr #1 align 2 {
 bb.a:
-  %7 = alloca %class.btVector3, align 8           ; 7 uses
+  %7 = alloca %class.btVector3, align 8           ; 6 uses
   %8 = alloca %class.btVector3, align 8           ; 5 uses
   %9 = alloca %class.btVector3, align 8           ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -223,9 +223,8 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 68
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.q = load float, ptr %i.p, align 4, !tbaa !19
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 100
-  %i.r = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 100
+  %i.s = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   %i.t = load <2 x float>, ptr %i.n, align 4, !tbaa !19 ; 2 uses
   %i.u = load <2 x float>, ptr %i.o, align 4, !tbaa !19 ; 5 uses
   %i.v = fsub <2 x float> %i.t, %i.u              ; 2 uses
@@ -234,7 +233,7 @@ bb.a:
   %i.y = shufflevector <2 x float> %i.u, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.z = insertelement <2 x float> %i.y, float %i.m, i64 1 ; 2 uses
   %i.aa = fsub <2 x float> %i.x, %i.z             ; 2 uses
-  %i.ab = load <2 x float>, ptr %10, align 4, !tbaa !19 ; 2 uses
+  %i.ab = load <2 x float>, ptr %i.r, align 4, !tbaa !19 ; 2 uses
   %i.ac = shufflevector <2 x float> %i.ab, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.ad = insertelement <2 x float> %i.ac, float %i.q, i64 1
   %i.ae = fsub <2 x float> %i.ad, %i.z            ; 2 uses
@@ -250,7 +249,7 @@ bb.a:
   %i.ao = extractelement <2 x float> %i.af, i64 0
   %i.ap = tail call float @llvm.fmuladd.f32(float %i.an, float %i.ao, float %i.am) ; 4 uses
   %.sroa.3.12.vec.insert.i59 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ap, i64 0
-  store <2 x float> %.sroa.3.12.vec.insert.i59, ptr %i.r, align 8
+  store <2 x float> %.sroa.3.12.vec.insert.i59, ptr %i.s, align 8
   %foldExtExtBinop = fmul <2 x float> %i.ai, %i.ai
   %i.aq = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.ar = extractelement <2 x float> %i.ai, i64 0 ; 2 uses
@@ -260,13 +259,12 @@ bb.a:
   %i.au = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
   %i.av = insertelement <2 x float> poison, float %i.au, i64 0
   %i.aw = shufflevector <2 x float> %i.av, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ax = fmul <2 x float> %i.ai, %i.aw           ; 4 uses
-  %i.ay = extractelement <2 x float> %i.ax, i64 1 ; 3 uses
-  %i.az = extractelement <2 x float> %i.ax, i64 0 ; 3 uses
-  store float %i.az, ptr %7, align 8, !tbaa !19
-  store float %i.ay, ptr %i.s, align 4, !tbaa !19
+  %i.ax = fmul <2 x float> %i.ai, %i.aw           ; 5 uses
+  %i.ay = extractelement <2 x float> %i.ax, i64 1 ; 2 uses
+  %i.az = extractelement <2 x float> %i.ax, i64 0 ; 2 uses
+  store <2 x float> %i.ax, ptr %7, align 8, !tbaa !19
   %i.ba = fmul float %i.ap, %i.au                 ; 4 uses
-  store float %i.ba, ptr %i.r, align 8, !tbaa !19
+  store float %i.ba, ptr %i.s, align 8, !tbaa !19
   %i.bb = load <2 x float>, ptr %1, align 4, !tbaa !19 ; 4 uses
   %i.bc = extractelement <2 x float> %i.bb, i64 0
   %i.bd = fsub float %i.bc, %i.m
@@ -290,7 +288,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bq = extractelement <2 x float> %i.bo, i64 0
   store <2 x float> %i.bo, ptr %7, align 8, !tbaa !19
   %i.br = fneg float %i.ba                        ; 2 uses
-  store float %i.br, ptr %i.r, align 8, !tbaa !19
+  store float %i.br, ptr %i.s, align 8, !tbaa !19
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

@@ -205,7 +205,7 @@ bb.a:
   %i.n = alloca [4 x float], align 16             ; 4 uses
   %i.o = alloca [4 x float], align 16             ; 4 uses
   %i.p = alloca ptr, align 8                      ; 6 uses
-  %i.q = alloca [4 x float], align 16             ; 7 uses
+  %i.q = alloca [4 x float], align 16             ; 6 uses
   %i.r = alloca [4 x float], align 16             ; 4 uses
   %i.s = alloca [4 x float], align 16             ; 4 uses
   %i.t = alloca [4 x float], align 16             ; 4 uses
@@ -358,7 +358,6 @@ nlmeans_scattering.exit.i:                        ; preds = %bb.h, %bb.g, %bb.f,
   %i.dn = fmul reassoc nsz arcp contract afn float %i.dm, f0x3EAAAAAB ; 6 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.q, i64 12
   %i.dp = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %7 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   br i1 %.not.i.i, label %.preheader.i.i.i, label %bb.i
 
 .preheader.i.i.i:                                 ; preds = %nlmeans_scattering.exit.i
@@ -425,12 +424,9 @@ compute_wb_factors.exit.i.i:                      ; preds = %.preheader1.prehead
   store <4 x float> %i.fh, ptr %i.r, align 16, !tbaa !16
   %i.fi = insertelement <2 x float> poison, float %i.ev, i64 0
   %i.fj = shufflevector <2 x float> %i.fi, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.fk = fmul reassoc nsz arcp contract afn <2 x float> %i.fj, %i.ef ; 6 uses
-  %8 = extractelement <2 x float> %i.fk, i64 0
-  store float %8, ptr %i.q, align 16, !tbaa !16
-  %9 = extractelement <2 x float> %i.fk, i64 1    ; 2 uses
-  store float %9, ptr %7, align 4, !tbaa !16
-  %i.fl = fmul reassoc nsz arcp contract afn float %i.ev, %i.ee ; 3 uses
+  %i.fk = fmul reassoc nsz arcp contract afn <2 x float> %i.fj, %i.ef ; 5 uses
+  store <2 x float> %i.fk, ptr %i.q, align 16, !tbaa !16
+  %i.fl = fmul reassoc nsz arcp contract afn float %i.ev, %i.ee ; 4 uses
   %i.fm = fmul reassoc nsz arcp contract afn float %i.ev, %i.ed ; 3 uses
   store float %i.fl, ptr %i.dp, align 8, !tbaa !16
   store float %i.fm, ptr %i.do, align 4, !tbaa !16
@@ -457,21 +453,21 @@ compute_wb_factors.exit.i.i:                      ; preds = %.preheader1.prehead
   br i1 %.not.i44.i, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %compute_wb_factors.exit.i.i
-  %i.ge = fmul reassoc nsz arcp contract afn float %i.ex, %9
+  %i.ge = fmul reassoc nsz arcp contract afn float %i.ex, %i.fl
   %i.gf = extractelement <4 x float> %i.fs, i64 0
   %foldExtExtBinop257 = fdiv reassoc nsz arcp contract afn <4 x float> %i.fv, %i.fs ; 2 uses
   %foldExtExtBinop259 = fmul reassoc nsz arcp contract afn <4 x float> %foldExtExtBinop257, %foldExtExtBinop257
   %i.gg = extractelement <4 x float> %foldExtExtBinop259, i64 0
   %i.gh = fadd reassoc nsz arcp contract afn float %i.gg, 3.750000e-01 ; 2 uses
-  %i.gi = extractelement <4 x float> %i.fs, i64 1 ; 2 uses
-  %10 = fdiv reassoc nsz arcp contract afn float %i.ge, %i.gi ; 2 uses
-  %11 = fmul reassoc nsz arcp contract afn float %10, %10
-  %i.gj = fadd reassoc nsz arcp contract afn float %11, 3.750000e-01 ; 2 uses
-  %i.gk = extractelement <4 x float> %i.fs, i64 2
+  %i.gi = extractelement <4 x float> %i.fs, i64 1
   %foldExtExtBinop261 = fdiv reassoc nsz arcp contract afn <4 x float> %i.fv, %i.fs ; 2 uses
   %foldExtExtBinop263 = fmul reassoc nsz arcp contract afn <4 x float> %foldExtExtBinop261, %foldExtExtBinop261
-  %12 = extractelement <4 x float> %foldExtExtBinop263, i64 2
-  %i.gl = fadd reassoc nsz arcp contract afn float %12, 3.750000e-01 ; 2 uses
+  %7 = extractelement <4 x float> %foldExtExtBinop263, i64 1
+  %i.gj = fadd reassoc nsz arcp contract afn float %7, 3.750000e-01 ; 2 uses
+  %i.gk = extractelement <4 x float> %i.fs, i64 2 ; 2 uses
+  %8 = fdiv reassoc nsz arcp contract afn float %i.ge, %i.gk ; 2 uses
+  %9 = fmul reassoc nsz arcp contract afn float %8, %8
+  %i.gl = fadd reassoc nsz arcp contract afn float %9, 3.750000e-01 ; 2 uses
   %i.gm = sext i32 %i.gb to i64
   %i.gn = sext i32 %i.gd to i64
   %i.go = shl nsw i64 %i.gm, 2

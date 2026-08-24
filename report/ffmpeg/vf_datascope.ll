@@ -204,7 +204,7 @@ bb.a:
   %i.b = alloca [4 x i32], align 16               ; 6 uses
   %i.c = alloca [4 x i32], align 16               ; 6 uses
   %i.d = alloca [4 x float], align 16             ; 9 uses
-  %i.e = alloca [4 x double], align 16            ; 13 uses
+  %i.e = alloca [4 x double], align 16            ; 12 uses
   %i.f = alloca [4 x double], align 16            ; 8 uses
   %i.g = alloca [128 x i8], align 16              ; 10 uses
   %2 = alloca %struct.FFDrawColor, align 4        ; 5 uses
@@ -607,10 +607,9 @@ begin_hunk_1_@pixscope_filter_frame:bb.a
 
 .preheader334.preheader:                          ; preds = %.preheader334.lr.ph
   %wide.trip.count378 = zext nneg i32 %i.iu to i64
-  %.phi.trans.insert.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
+  %.phi.trans.insert.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.pre392.pre = load double, ptr %.phi.trans.insert.phi.trans.insert, align 8, !tbaa !117
   %.phi.trans.insert393.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
-  %.phi.trans.insert395.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ju = load <2 x double>, ptr %.phi.trans.insert393.phi.trans.insert, align 16, !tbaa !117
   %wide.trip.count = zext nneg i32 %i.it to i64
   %i.jv = insertelement <2 x double> poison, double %.pre404, i64 0
@@ -619,24 +618,19 @@ begin_hunk_1_@pixscope_filter_frame:bb.a
 
 .preheader334:                                    ; preds = %.preheader334.preheader, %._crit_edge351
   %indvars.iv375 = phi i64 [ 0, %.preheader334.preheader ], [ %indvars.iv.next376, %._crit_edge351 ] ; 2 uses
-  %i.jx = phi <2 x double> [ %i.ju, %.preheader334.preheader ], [ %i.lj, %._crit_edge351 ]
-  %i.jy = phi <2 x double> [ %i.jw, %.preheader334.preheader ], [ %i.la, %._crit_edge351 ]
+  %i.jx = phi <2 x double> [ %i.jw, %.preheader334.preheader ], [ %i.la, %._crit_edge351 ]
+  %i.jy = phi <2 x double> [ %i.ju, %.preheader334.preheader ], [ %i.lj, %._crit_edge351 ]
   %invariant.gep352 = getelementptr inbounds nuw [2 x i8], ptr %i.jt, i64 %indvars.iv375
   br label %.preheader333
 
 .preheader.loopexit:                              ; preds = %._crit_edge351
-  %3 = extractelement <2 x double> %i.la, i64 0   ; 2 uses
-  store double %3, ptr %i.e, align 16, !tbaa !117
-  %4 = extractelement <2 x double> %i.la, i64 1
-  store double %4, ptr %.phi.trans.insert.phi.trans.insert, align 8, !tbaa !117
-  %5 = extractelement <2 x double> %i.lj, i64 0
-  store double %5, ptr %.phi.trans.insert393.phi.trans.insert, align 16, !tbaa !117
-  %i.jz = extractelement <2 x double> %i.lj, i64 1
-  store double %i.jz, ptr %.phi.trans.insert395.phi.trans.insert, align 8, !tbaa !117
+  store <2 x double> %i.la, ptr %i.e, align 16, !tbaa !117
+  store <2 x double> %i.lj, ptr %.phi.trans.insert393.phi.trans.insert, align 16, !tbaa !117
+  %i.jz = extractelement <2 x double> %i.la, i64 0
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %._crit_edge344..preheader_crit_edge, %.preheader334.lr.ph
-  %i.ka = phi double [ %.pre403, %._crit_edge344..preheader_crit_edge ], [ %.pre404, %.preheader334.lr.ph ], [ %3, %.preheader.loopexit ]
+  %i.ka = phi double [ %.pre403, %._crit_edge344..preheader_crit_edge ], [ %.pre404, %.preheader334.lr.ph ], [ %i.jz, %.preheader.loopexit ]
   %i.kb = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.kc = load double, ptr %i.kb, align 8, !tbaa !117
   %i.kd = insertelement <2 x double> poison, double %i.ka, i64 0
@@ -659,8 +653,8 @@ begin_hunk_1_@pixscope_filter_frame:bb.a
 
 .preheader333:                                    ; preds = %.preheader334, %.preheader333
   %indvars.iv372 = phi i64 [ 0, %.preheader334 ], [ %indvars.iv.next373, %.preheader333 ] ; 2 uses
-  %i.kq = phi <2 x double> [ %i.jx, %.preheader334 ], [ %i.lj, %.preheader333 ]
-  %i.kr = phi <2 x double> [ %i.jy, %.preheader334 ], [ %i.la, %.preheader333 ]
+  %i.kq = phi <2 x double> [ %i.jx, %.preheader334 ], [ %i.la, %.preheader333 ]
+  %i.kr = phi <2 x double> [ %i.jy, %.preheader334 ], [ %i.lj, %.preheader333 ]
   %gep353 = getelementptr inbounds nuw [160 x i8], ptr %invariant.gep352, i64 %indvars.iv372 ; 4 uses
   %i.ks = load i16, ptr %gep353, align 2, !tbaa !112
   %gep348.1 = getelementptr inbounds nuw i8, ptr %gep353, i64 12800
@@ -671,7 +665,7 @@ begin_hunk_1_@pixscope_filter_frame:bb.a
   %i.kx = fsub nsz <2 x float> %i.kw, %i.ji       ; 2 uses
   %i.ky = fmul nsz <2 x float> %i.kx, %i.kx
   %i.kz = fpext <2 x float> %i.ky to <2 x double>
-  %i.la = fadd nsz <2 x double> %i.kr, %i.kz      ; 4 uses
+  %i.la = fadd nsz <2 x double> %i.kq, %i.kz      ; 4 uses
   %gep348.2 = getelementptr inbounds nuw i8, ptr %gep353, i64 25600
   %i.lb = load i16, ptr %gep348.2, align 2, !tbaa !112
   %gep348.3 = getelementptr inbounds nuw i8, ptr %gep353, i64 38400
@@ -682,7 +676,7 @@ begin_hunk_1_@pixscope_filter_frame:bb.a
   %i.lg = fsub nsz <2 x float> %i.lf, %i.jp       ; 2 uses
   %i.lh = fmul nsz <2 x float> %i.lg, %i.lg
   %i.li = fpext <2 x float> %i.lh to <2 x double>
-  %i.lj = fadd nsz <2 x double> %i.kq, %i.li      ; 4 uses
+  %i.lj = fadd nsz <2 x double> %i.kr, %i.li      ; 3 uses
   %indvars.iv.next373 = add nuw nsw i64 %indvars.iv372, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next373, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge351, label %.preheader333, !llvm.loop !120

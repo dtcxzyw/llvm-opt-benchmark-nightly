@@ -204,7 +204,6 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8
   tail call void %i.i(ptr noundef nonnull align 8 dereferenceable(392) %0)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   store double 0.000000e+00, ptr %i.l, align 8, !tbaa !353
@@ -228,19 +227,18 @@ bb.a:
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.c
-  %2 = extractelement <2 x double> %i.bs, i64 0   ; 2 uses
-  store double %2, ptr %i.j, align 8, !tbaa !354
-  %i.y = extractelement <2 x double> %i.bs, i64 1 ; 2 uses
-  store double %i.y, ptr %1, align 8, !tbaa !355
-  %i.z = extractelement <2 x double> %i.ce, i64 0
-  store double %i.z, ptr %i.k, align 8, !tbaa !356
-  %3 = extractelement <2 x double> %i.ce, i64 1
-  store double %3, ptr %i.l, align 8, !tbaa !353
-  %4 = fsub double %2, %i.y
+  store <2 x double> %i.bs, ptr %i.j, align 8, !tbaa !142
+  %i.y = extractelement <2 x double> %i.ce, i64 0
+  store double %i.y, ptr %i.k, align 8, !tbaa !354
+  %i.z = extractelement <2 x double> %i.ce, i64 1
+  store double %i.z, ptr %i.l, align 8, !tbaa !353
+  %shift = shufflevector <2 x double> %i.bs, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fsub <2 x double> %i.bs, %shift
+  %1 = extractelement <2 x double> %foldExtExtBinop, i64 0
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
-  %i.aa = phi double [ %4, %._crit_edge ], [ 0.000000e+00, %bb.a ]
+  %i.aa = phi double [ %1, %._crit_edge ], [ 0.000000e+00, %bb.a ]
   %i.ab = phi <2 x double> [ %i.ce, %._crit_edge ], [ zeroinitializer, %bb.a ] ; 2 uses
   %i.ac = fneg double %i.aa
   %i.ad = extractelement <2 x double> %i.ab, i64 0 ; 2 uses
@@ -251,7 +249,7 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   %i.ai = fsub double %i.ah, %i.af
   %i.aj = fdiv double %i.ai, %i.ad                ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store double %i.aj, ptr %i.ak, align 8, !tbaa !357
+  store double %i.aj, ptr %i.ak, align 8, !tbaa !355
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.am = load double, ptr %i.al, align 8, !tbaa !334
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 376
@@ -265,7 +263,7 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
   %i.av = fdiv double %i.at, %i.au
   %i.aw = tail call double @llvm.fmuladd.f64(double %i.as, double %i.av, double %i.ap)
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store double %i.aw, ptr %i.ax, align 8, !tbaa !358
+  store double %i.aw, ptr %i.ax, align 8, !tbaa !356
   ret void
 
 bb.c:                                             ; preds = %.lr.ph, %bb.c
@@ -290,7 +288,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.bp = shufflevector <2 x double> %i.bk, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.bq = insertelement <2 x double> %i.bp, double %i.be, i64 1 ; 2 uses
   %i.br = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.bq, <2 x double> %i.bq, <2 x double> %i.bo)
-  %i.bs = fadd <2 x double> %i.az, %i.br          ; 3 uses
+  %i.bs = fadd <2 x double> %i.az, %i.br          ; 4 uses
   %i.bt = load <2 x double>, ptr %i.bf, align 8, !tbaa !142 ; 4 uses
   %i.bu = shufflevector <2 x double> %i.bt, <2 x double> %i.bi, <2 x i32> <i32 1, i32 3>
   %i.bv = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 1>
@@ -305,21 +303,21 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %i.ce = fadd <2 x double> %i.ay, %i.cd          ; 4 uses
   %i.cf = add nuw i64 %.010, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.cf, %i.t
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !359
+  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !357
 }
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN15GeometricPathCV17GeometricPathBaseIN12colvarmodule7rvectorEdLNS_7path_szE0EE18computeDerivativesEv(ptr noundef nonnull align 8 dereferenceable(392) %0) unnamed_addr #2 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
-  %i.b = load double, ptr %i.a, align 8, !tbaa !356 ; 3 uses
+  %i.b = load double, ptr %i.a, align 8, !tbaa !354 ; 3 uses
   %i.c = fmul double %i.b, 2.000000e+00
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.e = load double, ptr %i.d, align 8, !tbaa !353 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.g = load double, ptr %i.f, align 8, !tbaa !354
+  %i.g = load double, ptr %i.f, align 8, !tbaa !358
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.i = load double, ptr %i.h, align 8, !tbaa !355
+  %i.i = load double, ptr %i.h, align 8, !tbaa !359
   %i.j = fsub double %i.g, %i.i
   %i.k = fneg double %i.j
   %i.l = fmul double %i.b, %i.k
@@ -403,7 +401,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.al = fmul double %i.ak, 2.000000e+00
   %broadcast.splatinsert70 = insertelement <2 x double> poison, double %i.al, i64 0 ; 2 uses
   %broadcast.splat71 = shufflevector <2 x double> %broadcast.splatinsert70, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.am = load double, ptr %i.a, align 8, !tbaa !356, !alias.scope !360 ; 2 uses
+  %i.am = load double, ptr %i.a, align 8, !tbaa !354, !alias.scope !360 ; 2 uses
   %i.an = fmul double %i.am, 2.000000e+00
   %broadcast.splatinsert72 = insertelement <2 x double> poison, double %i.an, i64 0 ; 2 uses
   %broadcast.splat73 = shufflevector <2 x double> %broadcast.splatinsert72, <2 x double> poison, <2 x i32> zeroinitializer
@@ -530,7 +528,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 16
   %i.ed = load double, ptr %i.ec, align 8, !tbaa !190, !noalias !365 ; 2 uses
   %i.ee = fmul double %i.ea, %i.ed
-  %i.ef = load double, ptr %i.a, align 8, !tbaa !356
+  %i.ef = load double, ptr %i.a, align 8, !tbaa !354
   %i.eg = fmul double %i.ef, 2.000000e+00         ; 2 uses
   %i.eh = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.031 ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 16
@@ -556,7 +554,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store <2 x double> %i.fb, ptr %i.ep, align 8, !tbaa !142
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
   store double %i.eo, ptr %.sroa.530.0..sroa_idx, align 8, !tbaa !142
-  %i.fc = load double, ptr %i.a, align 8, !tbaa !356
+  %i.fc = load double, ptr %i.a, align 8, !tbaa !354
   %i.fd = fmul double %i.fc, 2.000000e+00         ; 2 uses
   %i.fe = getelementptr inbounds nuw [24 x i8], ptr %i.ah, i64 %.031 ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fe, i64 16
@@ -959,12 +957,12 @@ begin_hunk_1_@llvm.fmuladd.v6f64
 !351 = distinct !{!351, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_PKS5_"}
 !352 = distinct !{!352, !184}
 !353 = !{!15, !16, i64 40}
-!354 = !{!15, !16, i64 8}
-!355 = !{!15, !16, i64 16}
-!356 = !{!15, !16, i64 24}
-!357 = !{!15, !16, i64 56}
-!358 = !{!15, !16, i64 72}
-!359 = distinct !{!359, !184}
+!354 = !{!15, !16, i64 24}
+!355 = !{!15, !16, i64 56}
+!356 = !{!15, !16, i64 72}
+!357 = distinct !{!357, !184}
+!358 = !{!15, !16, i64 8}
+!359 = !{!15, !16, i64 16}
 !360 = !{!361}
 !361 = distinct !{!361, !362}
 !362 = distinct !{!362, !"LVerDomain"}
