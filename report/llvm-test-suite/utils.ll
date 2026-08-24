@@ -202,9 +202,9 @@ bb.i:                                             ; preds = %.preheader, %.crite
   ]
 
 .critedge2:                                       ; preds = %bb.i, %bb.i, %bb.i
-  %i.ar = add nuw i64 %.03258, 1                  ; 2 uses
-  %7 = icmp ult i64 %i.ar, %i.aa
-  br i1 %7, label %bb.i, label %.critedge2..critedge_crit_edge, !llvm.loop !35
+  %i.ar = add i64 %.03258, 1                      ; 2 uses
+  %exitcond.not = icmp eq i64 %i.ar, %i.aa
+  br i1 %exitcond.not, label %.critedge2..critedge_crit_edge, label %bb.i, !llvm.loop !35
 
 .critedge2..critedge_crit_edge:                   ; preds = %.critedge2
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ab, i64 %i.aa
@@ -571,9 +571,9 @@ bb.e:                                             ; preds = %.preheader, %.crite
   ]
 
 .critedge2:                                       ; preds = %bb.e, %bb.e, %bb.e
-  %i.q = add nuw i64 %.03242, 1                   ; 2 uses
-  %5 = icmp ult i64 %i.q, %i.l
-  br i1 %5, label %bb.e, label %.critedge2..critedge_crit_edge, !llvm.loop !53
+  %i.q = add i64 %.03242, 1                       ; 2 uses
+  %exitcond.not = icmp eq i64 %i.q, %i.l
+  br i1 %exitcond.not, label %.critedge2..critedge_crit_edge, label %bb.e, !llvm.loop !53
 
 .critedge2..critedge_crit_edge:                   ; preds = %.critedge2
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.l
@@ -797,9 +797,9 @@ bb.e:                                             ; preds = %.preheader, %.crite
   ]
 
 .critedge2:                                       ; preds = %bb.e, %bb.e, %bb.e
-  %i.q = add nuw i64 %.03242, 1                   ; 2 uses
-  %5 = icmp ult i64 %i.q, %i.l
-  br i1 %5, label %bb.e, label %.critedge2..critedge_crit_edge, !llvm.loop !57
+  %i.q = add i64 %.03242, 1                       ; 2 uses
+  %exitcond.not = icmp eq i64 %i.q, %i.l
+  br i1 %exitcond.not, label %.critedge2..critedge_crit_edge, label %bb.e, !llvm.loop !57
 
 .critedge2..critedge_crit_edge:                   ; preds = %.critedge2
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.l

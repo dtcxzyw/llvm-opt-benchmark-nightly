@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %sqlite3StrNICmp.exi
   br i1 %i.dn, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %.loopexit
-  %i.do = sext i32 %.1 to i64                     ; 7 uses
+  %i.do = sext i32 %.1 to i64                     ; 6 uses
   %i.dp = getelementptr i8, ptr %i.au, i64 %i.do  ; 2 uses
   %i.dq = getelementptr i8, ptr %i.dp, i64 6
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !37
@@ -216,13 +216,12 @@ bb.p:                                             ; preds = %.loopexit
   br i1 %.not98122, label %._crit_edge, label %iter.check
 
 iter.check:                                       ; preds = %bb.p
-  %i.du = zext nneg i32 %i.ds to i64              ; 2 uses
+  %i.du = zext nneg i32 %i.ds to i64
   %sext = shl i64 %i.av, 32
   %i.dv = ashr exact i64 %sext, 32                ; 2 uses
-  %i.dw = sext i32 %i.dt to i64                   ; 5 uses
-  %5 = add nsw i64 %i.dv, 1
-  %i.dx = add nsw i64 %i.do, %i.du
-  %i.dy = sub nsw i64 %5, %i.dx                   ; 7 uses
+  %i.dw = sext i32 %i.dt to i64                   ; 6 uses
+  %i.dx = add nsw i64 %i.dv, 1
+  %i.dy = sub nsw i64 %i.dx, %i.dw                ; 7 uses
   %min.iters.check = icmp ult i64 %i.dy, 8
   br i1 %min.iters.check, label %.lr.ph124.preheader, label %vector.main.loop.iter.check
 

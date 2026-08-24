@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 9612
 inline.NumDeleted: 1756
 loop-unroll.NumCompletelyUnrolled: 57
-loop-unroll.NumRuntimeUnrolled: 158
-loop-unroll.NumUnrolled: 215
+loop-unroll.NumRuntimeUnrolled: 160
+loop-unroll.NumUnrolled: 217
 begin_hunk_0_@_ZNK6casadi21SetNonzerosSliceParamILb0EE8generateERNS_13CodeGeneratorERKSt6vectorIxSaIxEES8_RKS4_IbSaIbEERSA_:bb.a
 
 bb.aa:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit133
@@ -205,7 +205,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !785
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !785
-  %i.f = load ptr, ptr %2, align 8, !tbaa !785    ; 4 uses
+  %i.f = load ptr, ptr %2, align 8, !tbaa !785    ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !27
@@ -236,7 +236,7 @@ bb.c:                                             ; preds = %_ZNK6casadi6MXNode3
 
 _ZNK6casadi6MXNode3depEx.exit31:                  ; preds = %_ZNK6casadi6MXNode3depEx.exit
   %i.t = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6casadi2MX8sparsityEv(ptr noundef nonnull align 8 dereferenceable(8) %i.s)
-  %i.u = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %i.u = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.t) ; 3 uses
   %.not = icmp eq ptr %i.a, %i.f
   br i1 %.not, label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit, label %bb.d
 
@@ -282,7 +282,15 @@ _ZSt4copyIPKdPdET0_T_S4_S3_.exit:                 ; preds = %bb.h, %bb.g, %bb.f,
 
 .lr.ph39.split:                                   ; preds = %.lr.ph39
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ah = load i64, ptr %i.ag, align 8, !tbaa !1969
+  %i.ah = load i64, ptr %i.ag, align 8, !tbaa !1969 ; 4 uses
+  %5 = add nsw i64 %i.ae, -1                      ; 2 uses
+  %6 = udiv i64 %5, %i.ah                         ; 2 uses
+  %7 = add i64 %6, 1                              ; 2 uses
+  %8 = icmp ugt i64 %i.ah, %5
+  %unroll_iter = and i64 %7, -2
+  %9 = and i64 %6, 1
+  %lcmp.mod.not.not = icmp eq i64 %9, 0
+  %lcmp.mod52 = trunc i64 %7 to i1
   br label %.lr.ph
 
 ._crit_edge40.split:                              ; preds = %._crit_edge, %.lr.ph39, %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
@@ -291,37 +299,78 @@ _ZSt4copyIPKdPdET0_T_S4_S3_.exit:                 ; preds = %bb.h, %bb.g, %bb.f,
 .lr.ph:                                           ; preds = %.lr.ph39.split, %._crit_edge
   %.02438 = phi i64 [ 0, %.lr.ph39.split ], [ %i.al, %._crit_edge ]
   %.02537 = phi ptr [ %i.e, %.lr.ph39.split ], [ %i.ak, %._crit_edge ] ; 2 uses
-  %.02636 = phi ptr [ %i.c, %.lr.ph39.split ], [ %i.ar, %._crit_edge ]
+  %.02636 = phi ptr [ %i.c, %.lr.ph39.split ], [ %.lcssa, %._crit_edge ] ; 2 uses
   %i.ai = load double, ptr %.02537, align 8, !tbaa !560
-  %i.aj = fptosi double %i.ai to i64
-  br label %bb.i
+  %i.aj = fptosi double %i.ai to i64              ; 3 uses
+  br i1 %8, label %.epil.preheader, label %bb.i
 
-._crit_edge:                                      ; preds = %bb.k
+._crit_edge.unr-lcssa:                            ; preds = %bb.k
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge
+
+.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
+  %.035.epil.init = phi i64 [ 0, %.lr.ph ], [ %26, %._crit_edge.unr-lcssa ]
+  %.134.epil.init = phi ptr [ %.02636, %.lr.ph ], [ %i.ar, %._crit_edge.unr-lcssa ] ; 2 uses
+  tail call void @llvm.assume(i1 %lcmp.mod52)
+  %10 = add nsw i64 %.035.epil.init, %i.aj        ; 3 uses
+  %11 = icmp sgt i64 %10, -1
+  %12 = icmp slt i64 %10, %i.u
+  %or.cond.epil = and i1 %11, %12
+  br i1 %or.cond.epil, label %13, label %._crit_edge.epilog-lcssa
+
+13:                                               ; preds = %.epil.preheader
+  %14 = load double, ptr %.134.epil.init, align 8, !tbaa !560
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %10
+  store double %14, ptr %15, align 8, !tbaa !560
+  br label %._crit_edge.epilog-lcssa
+
+._crit_edge.epilog-lcssa:                         ; preds = %13, %.epil.preheader
+  %16 = getelementptr inbounds nuw i8, ptr %.134.epil.init, i64 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %._crit_edge.epilog-lcssa
+  %.lcssa = phi ptr [ %i.ar, %._crit_edge.unr-lcssa ], [ %16, %._crit_edge.epilog-lcssa ]
   %i.ak = getelementptr inbounds nuw i8, ptr %.02537, i64 8
   %i.al = add nuw nsw i64 %.02438, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.al, %i.q
   br i1 %exitcond.not, label %._crit_edge40.split, label %.lr.ph, !llvm.loop !1970
 
 bb.i:                                             ; preds = %.lr.ph, %bb.k
-  %.035 = phi i64 [ 0, %.lr.ph ], [ %i.as, %bb.k ] ; 2 uses
-  %.134 = phi ptr [ %.02636, %.lr.ph ], [ %i.ar, %bb.k ] ; 2 uses
+  %.035 = phi i64 [ %26, %bb.k ], [ 0, %.lr.ph ]  ; 2 uses
+  %.134 = phi ptr [ %i.ar, %bb.k ], [ %.02636, %.lr.ph ] ; 3 uses
+  %niter = phi i64 [ %i.as, %bb.k ], [ 0, %.lr.ph ]
   %i.am = add nsw i64 %.035, %i.aj                ; 3 uses
   %i.an = icmp sgt i64 %i.am, -1
   %i.ao = icmp slt i64 %i.am, %i.u
   %or.cond = and i1 %i.an, %i.ao
-  br i1 %or.cond, label %bb.j, label %bb.k
+  br i1 %or.cond, label %17, label %20
 
-bb.j:                                             ; preds = %bb.i
-  %i.ap = load double, ptr %.134, align 8, !tbaa !560
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.am
+17:                                               ; preds = %bb.i
+  %18 = load double, ptr %.134, align 8, !tbaa !560
+  %19 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.am
+  store double %18, ptr %19, align 8, !tbaa !560
+  br label %20
+
+20:                                               ; preds = %17, %bb.i
+  %21 = add nsw i64 %i.ah, %.035                  ; 2 uses
+  %22 = add nsw i64 %21, %i.aj                    ; 3 uses
+  %23 = icmp sgt i64 %22, -1
+  %24 = icmp slt i64 %22, %i.u
+  %or.cond.1 = and i1 %23, %24
+  br i1 %or.cond.1, label %bb.j, label %bb.k
+
+bb.j:                                             ; preds = %20
+  %25 = getelementptr inbounds nuw i8, ptr %.134, i64 8
+  %i.ap = load double, ptr %25, align 8, !tbaa !560
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %22
   store double %i.ap, ptr %i.aq, align 8, !tbaa !560
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.ar = getelementptr inbounds nuw i8, ptr %.134, i64 8 ; 2 uses
-  %i.as = add nsw i64 %i.ah, %.035                ; 2 uses
-  %5 = icmp slt i64 %i.as, %i.ae
-  br i1 %5, label %bb.i, label %._crit_edge, !llvm.loop !1971
+bb.k:                                             ; preds = %bb.j, %20
+  %i.ar = getelementptr inbounds nuw i8, ptr %.134, i64 16 ; 3 uses
+  %26 = add nsw i64 %i.ah, %21                    ; 2 uses
+  %i.as = add i64 %niter, 2                       ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %i.as, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.unr-lcssa, label %bb.i, !llvm.loop !1971
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -724,7 +773,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !785
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !785
-  %i.f = load ptr, ptr %2, align 8, !tbaa !785    ; 4 uses
+  %i.f = load ptr, ptr %2, align 8, !tbaa !785    ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !27
@@ -755,7 +804,7 @@ bb.c:                                             ; preds = %_ZNK6casadi6MXNode3
 
 _ZNK6casadi6MXNode3depEx.exit31:                  ; preds = %_ZNK6casadi6MXNode3depEx.exit
   %i.t = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK6casadi2MX8sparsityEv(ptr noundef nonnull align 8 dereferenceable(8) %i.s)
-  %i.u = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.t)
+  %i.u = tail call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.t) ; 3 uses
   %.not = icmp eq ptr %i.a, %i.f
   br i1 %.not, label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit, label %bb.d
 
@@ -801,7 +850,15 @@ _ZSt4copyIPKdPdET0_T_S4_S3_.exit:                 ; preds = %bb.h, %bb.g, %bb.f,
 
 .lr.ph39.split:                                   ; preds = %.lr.ph39
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ah = load i64, ptr %i.ag, align 8, !tbaa !2029
+  %i.ah = load i64, ptr %i.ag, align 8, !tbaa !2029 ; 4 uses
+  %5 = add nsw i64 %i.ae, -1                      ; 2 uses
+  %6 = udiv i64 %5, %i.ah                         ; 2 uses
+  %7 = add i64 %6, 1                              ; 2 uses
+  %8 = icmp ugt i64 %i.ah, %5
+  %unroll_iter = and i64 %7, -2
+  %9 = and i64 %6, 1
+  %lcmp.mod.not.not = icmp eq i64 %9, 0
+  %lcmp.mod52 = trunc i64 %7 to i1
   br label %.lr.ph
 
 ._crit_edge40.split:                              ; preds = %._crit_edge, %.lr.ph39, %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
@@ -810,39 +867,84 @@ _ZSt4copyIPKdPdET0_T_S4_S3_.exit:                 ; preds = %bb.h, %bb.g, %bb.f,
 .lr.ph:                                           ; preds = %.lr.ph39.split, %._crit_edge
   %.02438 = phi i64 [ 0, %.lr.ph39.split ], [ %i.al, %._crit_edge ]
   %.02537 = phi ptr [ %i.e, %.lr.ph39.split ], [ %i.ak, %._crit_edge ] ; 2 uses
-  %.02636 = phi ptr [ %i.c, %.lr.ph39.split ], [ %i.at, %._crit_edge ]
+  %.02636 = phi ptr [ %i.c, %.lr.ph39.split ], [ %.lcssa, %._crit_edge ] ; 2 uses
   %i.ai = load double, ptr %.02537, align 8, !tbaa !560
-  %i.aj = fptosi double %i.ai to i64
-  br label %bb.i
+  %i.aj = fptosi double %i.ai to i64              ; 3 uses
+  br i1 %8, label %.epil.preheader, label %bb.i
 
-._crit_edge:                                      ; preds = %bb.k
+._crit_edge.unr-lcssa:                            ; preds = %bb.k
+  br i1 %lcmp.mod.not.not, label %.epil.preheader, label %._crit_edge
+
+.epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
+  %.035.epil.init = phi i64 [ 0, %.lr.ph ], [ %30, %._crit_edge.unr-lcssa ]
+  %.134.epil.init = phi ptr [ %.02636, %.lr.ph ], [ %i.at, %._crit_edge.unr-lcssa ] ; 2 uses
+  tail call void @llvm.assume(i1 %lcmp.mod52)
+  %10 = add nsw i64 %.035.epil.init, %i.aj        ; 3 uses
+  %11 = icmp sgt i64 %10, -1
+  %12 = icmp slt i64 %10, %i.u
+  %or.cond.epil = and i1 %11, %12
+  br i1 %or.cond.epil, label %13, label %._crit_edge.epilog-lcssa
+
+13:                                               ; preds = %.epil.preheader
+  %14 = load double, ptr %.134.epil.init, align 8, !tbaa !560
+  %15 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %10 ; 2 uses
+  %16 = load double, ptr %15, align 8, !tbaa !560
+  %17 = fadd double %14, %16
+  store double %17, ptr %15, align 8, !tbaa !560
+  br label %._crit_edge.epilog-lcssa
+
+._crit_edge.epilog-lcssa:                         ; preds = %13, %.epil.preheader
+  %18 = getelementptr inbounds nuw i8, ptr %.134.epil.init, i64 8
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %._crit_edge.epilog-lcssa
+  %.lcssa = phi ptr [ %i.at, %._crit_edge.unr-lcssa ], [ %18, %._crit_edge.epilog-lcssa ]
   %i.ak = getelementptr inbounds nuw i8, ptr %.02537, i64 8
   %i.al = add nuw nsw i64 %.02438, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.al, %i.q
   br i1 %exitcond.not, label %._crit_edge40.split, label %.lr.ph, !llvm.loop !2030
 
 bb.i:                                             ; preds = %.lr.ph, %bb.k
-  %.035 = phi i64 [ 0, %.lr.ph ], [ %i.au, %bb.k ] ; 2 uses
-  %.134 = phi ptr [ %.02636, %.lr.ph ], [ %i.at, %bb.k ] ; 2 uses
+  %.035 = phi i64 [ %30, %bb.k ], [ 0, %.lr.ph ]  ; 2 uses
+  %.134 = phi ptr [ %i.at, %bb.k ], [ %.02636, %.lr.ph ] ; 3 uses
+  %niter = phi i64 [ %i.au, %bb.k ], [ 0, %.lr.ph ]
   %i.am = add nsw i64 %.035, %i.aj                ; 3 uses
   %i.an = icmp sgt i64 %i.am, -1
   %i.ao = icmp slt i64 %i.am, %i.u
   %or.cond = and i1 %i.an, %i.ao
-  br i1 %or.cond, label %bb.j, label %bb.k
+  br i1 %or.cond, label %19, label %24
 
-bb.j:                                             ; preds = %bb.i
-  %i.ap = load double, ptr %.134, align 8, !tbaa !560
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.am ; 2 uses
+19:                                               ; preds = %bb.i
+  %20 = load double, ptr %.134, align 8, !tbaa !560
+  %21 = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.am ; 2 uses
+  %22 = load double, ptr %21, align 8, !tbaa !560
+  %23 = fadd double %20, %22
+  store double %23, ptr %21, align 8, !tbaa !560
+  br label %24
+
+24:                                               ; preds = %19, %bb.i
+  %25 = add nsw i64 %i.ah, %.035                  ; 2 uses
+  %26 = add nsw i64 %25, %i.aj                    ; 3 uses
+  %27 = icmp sgt i64 %26, -1
+  %28 = icmp slt i64 %26, %i.u
+  %or.cond.1 = and i1 %27, %28
+  br i1 %or.cond.1, label %bb.j, label %bb.k
+
+bb.j:                                             ; preds = %24
+  %29 = getelementptr inbounds nuw i8, ptr %.134, i64 8
+  %i.ap = load double, ptr %29, align 8, !tbaa !560
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %26 ; 2 uses
   %i.ar = load double, ptr %i.aq, align 8, !tbaa !560
   %i.as = fadd double %i.ap, %i.ar
   store double %i.as, ptr %i.aq, align 8, !tbaa !560
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i
-  %i.at = getelementptr inbounds nuw i8, ptr %.134, i64 8 ; 2 uses
-  %i.au = add nsw i64 %i.ah, %.035                ; 2 uses
-  %5 = icmp slt i64 %i.au, %i.ae
-  br i1 %5, label %bb.i, label %._crit_edge, !llvm.loop !2031
+bb.k:                                             ; preds = %bb.j, %24
+  %i.at = getelementptr inbounds nuw i8, ptr %.134, i64 16 ; 3 uses
+  %30 = add nsw i64 %i.ah, %25                    ; 2 uses
+  %i.au = add i64 %niter, 2                       ; 2 uses
+  %niter.ncmp.1.not = icmp eq i64 %i.au, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %._crit_edge.unr-lcssa, label %bb.i, !llvm.loop !2031
 }
 
 ; Function Attrs: mustprogress uwtable

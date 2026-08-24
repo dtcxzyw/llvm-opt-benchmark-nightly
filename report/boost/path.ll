@@ -202,9 +202,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit: ; preds 
   br i1 %i.dg, label %bb.ad, label %.critedge2
 
 bb.ad:                                            ; preds = %.lr.ph125
-  %i.dh = add nuw i64 %.2124, 1                   ; 2 uses
-  %2 = icmp ult i64 %i.dh, %i.d
-  br i1 %2, label %.lr.ph125, label %thread-pre-split119, !llvm.loop !22
+  %i.dh = add i64 %.2124, 1                       ; 2 uses
+  %exitcond130.not = icmp eq i64 %i.dh, %i.d
+  br i1 %exitcond130.not, label %thread-pre-split119, label %.lr.ph125, !llvm.loop !22
 
 .critedge2:                                       ; preds = %.lr.ph125, %.preheader
   %.2.lcssa = phi i64 [ %i.bi, %.preheader ], [ %.2124, %.lr.ph125 ] ; 2 uses
@@ -607,9 +607,9 @@ bb.ai:                                            ; preds = %bb.an, %bb.ah
   br i1 %i.eh, label %bb.aj, label %.critedge2
 
 bb.aj:                                            ; preds = %.lr.ph152
-  %i.ei = add nuw i64 %.270151, 1                 ; 2 uses
-  %2 = icmp ult i64 %i.ei, %i.d
-  br i1 %2, label %.lr.ph152, label %.critedge2.thread, !llvm.loop !25
+  %i.ei = add i64 %.270151, 1                     ; 2 uses
+  %exitcond156.not = icmp eq i64 %i.ei, %i.d
+  br i1 %exitcond156.not, label %.critedge2.thread, label %.lr.ph152, !llvm.loop !25
 
 .critedge2:                                       ; preds = %.lr.ph152, %.preheader
   %.270.lcssa = phi i64 [ %i.bi, %.preheader ], [ %.270151, %.lr.ph152 ] ; 2 uses

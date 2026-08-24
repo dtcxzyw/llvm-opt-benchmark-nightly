@@ -53,7 +53,7 @@ bb.a:
   %i.u = load i32, ptr %i.t, align 8, !tbaa !10   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.w = load i32, ptr %i.v, align 8, !tbaa !16
-  %i.x = mul nsw i32 %i.w, %i.u                   ; 6 uses
+  %i.x = mul i32 %i.w, %i.u                       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #4
   %i.y = mul nsw i32 %i.u, %i.s
   store i32 %i.y, ptr %i.f, align 4, !tbaa !9
@@ -169,6 +169,7 @@ bb.a:
   %i.ct = mul nsw i32 %i.ch, 7
   %i.cu = sext i32 %i.ct to i64
   %i.cv = and i32 %i.bg, -16
+  %10 = add i32 %i.bg, -2
   %i.cw = add i32 %i.cf, -1                       ; 2 uses
   %i.cx = zext i32 %i.cw to i64                   ; 2 uses
   %i.cy = shl nuw nsw i64 %i.cx, 5
@@ -571,7 +572,7 @@ begin_hunk_1_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_R
   %.162615.lcssa = phi <8 x float> [ %.92608.lcssa, %.preheader2897 ], [ %.202619, %.loopexit2881 ]
   %.162592.lcssa = phi <8 x float> [ %.92585.lcssa, %.preheader2897 ], [ %.202596, %.loopexit2881 ] ; 3 uses
   %.172568.lcssa = phi <8 x float> [ %.102561.lcssa, %.preheader2897 ], [ %.212572, %.loopexit2881 ] ; 3 uses
-  %.21336.lcssa = phi i32 [ %.11335.lcssa, %.preheader2897 ], [ %i.anf, %.loopexit2881 ] ; 6 uses
+  %.21336.lcssa = phi i32 [ %.11335.lcssa, %.preheader2897 ], [ %i.anf, %.loopexit2881 ] ; 5 uses
   %.161321.lcssa = phi ptr [ %.91314.lcssa, %.preheader2897 ], [ %.201325, %.loopexit2881 ] ; 3 uses
   %i.air = or disjoint i32 %.21336.lcssa, 1
   %i.ais = icmp slt i32 %i.air, %i.bg
@@ -593,10 +594,7 @@ begin_hunk_1_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_R
 
 .lr.ph3087.split.preheader:                       ; preds = %.lr.ph3087
   %i.ajc = add i32 %.21336.lcssa, 2
-  %10 = add i32 %.21336.lcssa, 3
-  %smax = call i32 @llvm.smax.i32(i32 %i.bg, i32 %10)
-  %11 = add i32 %smax, -2
-  %i.ajd = sub i32 %11, %.21336.lcssa
+  %i.ajd = sub i32 %10, %.21336.lcssa
   %i.aje = and i32 %i.ajd, -2
   %i.ajf = add i32 %i.ajc, %i.aje
   br label %.preheader2895
@@ -999,6 +997,7 @@ bb.r:                                             ; preds = %_ZL14activation_avx
   %i.awm = load i64, ptr %i.awi, align 8, !tbaa !24, !noalias !54
   %factor.op.mul3590 = mul i64 %i.awl, %i.awm
   %i.awn = and i32 %i.avs, -16
+  %11 = add i32 %i.avs, -2
   %i.awo = sext i32 %i.avm to i64
   %wide.trip.count4146 = zext nneg i32 %i.avo to i64
   %wide.trip.count4141 = zext nneg i32 %i.avt to i64
@@ -1059,6 +1058,7 @@ bb.r:                                             ; preds = %_ZL14activation_avx
   %i.ayd = mul nsw i32 %i.axz, 3
   %i.aye = sext i32 %i.ayd to i64
   %i.ayf = and i32 %i.aws, -16
+  %12 = add i32 %i.aws, -2
   %i.ayg = add i32 %i.axx, -1                     ; 2 uses
   %i.ayh = zext i32 %i.ayg to i64                 ; 2 uses
   %i.ayi = shl nuw nsw i64 %i.ayh, 4
@@ -1461,7 +1461,7 @@ begin_hunk_3_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_R
   %.162711.lcssa = phi <4 x float> [ %.92704.lcssa, %.preheader2878 ], [ %.202715, %.loopexit2862 ]
   %.162688.lcssa = phi <4 x float> [ %.92681.lcssa, %.preheader2878 ], [ %.202692, %.loopexit2862 ] ; 3 uses
   %.172663.lcssa = phi <4 x float> [ %.102656.lcssa, %.preheader2878 ], [ %.212667, %.loopexit2862 ] ; 3 uses
-  %.21477.lcssa = phi i32 [ %.11476.lcssa, %.preheader2878 ], [ %i.ctx, %.loopexit2862 ] ; 6 uses
+  %.21477.lcssa = phi i32 [ %.11476.lcssa, %.preheader2878 ], [ %i.ctx, %.loopexit2862 ] ; 5 uses
   %.161466.lcssa = phi ptr [ %.91459.lcssa, %.preheader2878 ], [ %.201470, %.loopexit2862 ] ; 3 uses
   %i.cof = or disjoint i32 %.21477.lcssa, 1
   %i.cog = icmp slt i32 %i.cof, %i.aws
@@ -1483,10 +1483,7 @@ begin_hunk_3_@_ZN4ncnnL26convolution1d_packed_bf16sERKNS_3MatERS0_S2_S2_iiiiS2_R
 
 .lr.ph3330.split.preheader:                       ; preds = %.lr.ph3330
   %i.coq = add i32 %.21477.lcssa, 2
-  %12 = add i32 %.21477.lcssa, 3
-  %smax4075 = call i32 @llvm.smax.i32(i32 %i.aws, i32 %12)
-  %13 = add i32 %smax4075, -2
-  %i.cor = sub i32 %13, %.21477.lcssa
+  %i.cor = sub i32 %12, %.21477.lcssa
   %i.cos = and i32 %i.cor, -2
   %i.cot = add i32 %i.coq, %i.cos
   br label %.preheader2876
@@ -1889,6 +1886,7 @@ bb.ai:                                            ; preds = %_ZL14activation_sse
   %i.dde = load i64, ptr %i.dda, align 8, !tbaa !24, !noalias !78
   %factor.op.mul3768 = mul i64 %i.ddd, %i.dde
   %i.ddf = and i32 %i.n, -16
+  %13 = add i32 %i.n, -2
   %i.ddg = sext i32 %i.dci to i64
   %i.ddh = sext i32 %i.x to i64
   %wide.trip.count4191 = zext nneg i32 %i.s to i64
@@ -2291,7 +2289,7 @@ bb.aq:                                            ; preds = %.lr.ph3509, %.loope
   %.02790.lcssa = phi <4 x float> [ zeroinitializer, %._crit_edge3476 ], [ %.42794, %.loopexit2846 ] ; 4 uses
   %.02785.lcssa = phi <4 x float> [ zeroinitializer, %._crit_edge3476 ], [ %.42789, %.loopexit2846 ] ; 4 uses
   %.161381.lcssa = phi ptr [ %.91374.lcssa, %._crit_edge3476 ], [ %.201385, %.loopexit2846 ] ; 3 uses
-  %.21362.lcssa = phi i32 [ %.11361.lcssa, %._crit_edge3476 ], [ %i.dxs, %.loopexit2846 ] ; 6 uses
+  %.21362.lcssa = phi i32 [ %.11361.lcssa, %._crit_edge3476 ], [ %i.dxs, %.loopexit2846 ] ; 5 uses
   %i.dxv = shufflevector <4 x float> %i.dns, <4 x float> %i.dny, <2 x i32> <i32 3, i32 7>
   %i.dxw = shufflevector <4 x float> %i.dns, <4 x float> %i.dny, <2 x i32> <i32 1, i32 5>
   %i.dxx = fadd fast <2 x float> %i.dxv, %i.dxw
@@ -2336,10 +2334,7 @@ bb.aq:                                            ; preds = %.lr.ph3509, %.loope
 
 .lr.ph3535.split.preheader:                       ; preds = %.lr.ph3535
   %i.dze = add i32 %.21362.lcssa, 2
-  %14 = add i32 %.21362.lcssa, 3
-  %smax4125 = call i32 @llvm.smax.i32(i32 %i.avs, i32 %14)
-  %15 = add i32 %smax4125, -2
-  %i.dzf = sub i32 %15, %.21362.lcssa
+  %i.dzf = sub i32 %11, %.21362.lcssa
   %i.dzg = and i32 %i.dzf, -2
   %i.dzh = add i32 %i.dze, %i.dzg
   br label %.preheader2860
@@ -2681,8 +2676,8 @@ _ZL13activation_ssfiRKN4ncnn3MatE.exit1513:       ; preds = %._crit_edge3564, %_
 
 ._crit_edge3755:                                  ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit
   %indvars.iv.next4194 = add nsw i64 %indvars.iv4193, 1 ; 2 uses
-  %16 = icmp slt i64 %indvars.iv.next4194, %i.ddh
-  br i1 %16, label %.lr.ph3754, label %._crit_edge3765.split, !llvm.loop !99
+  %exitcond4194.not = icmp eq i64 %indvars.iv.next4194, %i.ddh
+  br i1 %exitcond4194.not, label %._crit_edge3765.split, label %.lr.ph3754, !llvm.loop !99
 
 bb.ay:                                            ; preds = %.lr.ph3754, %_ZL13activation_ssfiRKN4ncnn3MatE.exit
   %indvars.iv4188 = phi i64 [ 0, %.lr.ph3754 ], [ %indvars.iv.next4189, %_ZL13activation_ssfiRKN4ncnn3MatE.exit ] ; 6 uses
@@ -3085,7 +3080,7 @@ bb.bf:                                            ; preds = %.lr.ph3698, %.loope
 ._crit_edge3699:                                  ; preds = %.loopexit, %._crit_edge3671
   %.02641.lcssa = phi <4 x float> [ zeroinitializer, %._crit_edge3671 ], [ %.42645, %.loopexit ] ; 2 uses
   %.16.lcssa = phi ptr [ %.9.lcssa, %._crit_edge3671 ], [ %.20, %.loopexit ] ; 3 uses
-  %.21263.lcssa = phi i32 [ %.11262.lcssa, %._crit_edge3671 ], [ %i.eym, %.loopexit ] ; 6 uses
+  %.21263.lcssa = phi i32 [ %.11262.lcssa, %._crit_edge3671 ], [ %i.eym, %.loopexit ] ; 5 uses
   %i.eyp = shufflevector <4 x float> %.02641.lcssa, <4 x float> %i.eva, <4 x i32> <i32 3, i32 2, i32 7, i32 6>
   %i.eyq = shufflevector <4 x float> %.02641.lcssa, <4 x float> %i.eva, <4 x i32> <i32 1, i32 0, i32 5, i32 4>
   %i.eyr = fadd fast <4 x float> %i.eyp, %i.eyq
@@ -3112,10 +3107,7 @@ bb.bf:                                            ; preds = %.lr.ph3698, %.loope
 
 .lr.ph3720.split.preheader:                       ; preds = %.lr.ph3720
   %i.ezd = add i32 %.21263.lcssa, 2
-  %17 = add i32 %.21263.lcssa, 3
-  %smax4175 = call i32 @llvm.smax.i32(i32 %i.n, i32 %17)
-  %18 = add i32 %smax4175, -2
-  %i.eze = sub i32 %18, %.21263.lcssa
+  %i.eze = sub i32 %13, %.21263.lcssa
   %i.ezf = and i32 %i.eze, -2
   %i.ezg = add i32 %i.ezd, %i.ezf
   br label %.preheader2844
@@ -3443,6 +3435,7 @@ bb.b:                                             ; preds = %bb.a
   %i.au = icmp eq i32 %i.at, 1
   %i.av = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.af, i1 true)
   %i.aw = and i32 %i.ab, -16
+  %14 = add i32 %i.ab, -2
   br label %bb.c
 
 ._crit_edge:                                      ; preds = %.thread865, %.lr.ph1107.split
@@ -3845,7 +3838,7 @@ bb.p:                                             ; preds = %.lr.ph990, %bb.p
   %.16617.lcssa = phi <16 x float> [ %.9610.lcssa, %.preheader882 ], [ %.20621, %.loopexit ]
   %.16596.lcssa = phi <16 x float> [ %.9589.lcssa, %.preheader882 ], [ %.20600, %.loopexit ]
   %.16.lcssa = phi ptr [ %.9.lcssa, %.preheader882 ], [ %.20, %.loopexit ] ; 3 uses
-  %.2570.lcssa = phi i32 [ %.1569.lcssa, %.preheader882 ], [ %i.anh, %.loopexit ] ; 6 uses
+  %.2570.lcssa = phi i32 [ %.1569.lcssa, %.preheader882 ], [ %i.anh, %.loopexit ] ; 5 uses
   %i.ahr = or disjoint i32 %.2570.lcssa, 1
   %i.ahs = icmp slt i32 %i.ahr, %i.ab
   br i1 %i.ahs, label %.lr.ph1070, label %.preheader880
@@ -3866,10 +3859,7 @@ bb.p:                                             ; preds = %.lr.ph990, %bb.p
 
 .lr.ph1070.split.preheader:                       ; preds = %.lr.ph1070
   %i.aic = add i32 %.2570.lcssa, 2
-  %14 = add i32 %.2570.lcssa, 3
-  %smax = call i32 @llvm.smax.i32(i32 %i.ab, i32 %14)
-  %15 = add i32 %smax, -2
-  %i.aid = sub i32 %15, %.2570.lcssa
+  %i.aid = sub i32 %14, %.2570.lcssa
   %i.aie = and i32 %i.aid, -2
   %i.aif = add i32 %i.aic, %i.aie
   br label %.preheader880
@@ -4270,9 +4260,6 @@ declare i32 @llvm.ctpop.i32(i32) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.cttz.i32(i32, i1 immarg) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.minnum.f32(float, float) #5

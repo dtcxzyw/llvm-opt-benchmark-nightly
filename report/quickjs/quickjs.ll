@@ -205,8 +205,8 @@ js_dup.exit131.1:                                 ; preds = %bb.aj, %js_dup.exit
   store i64 %i.gi, ptr %.sroa.43.0..sroa_idx.1, align 8, !tbaa !72
   %i.gp = add nsw i64 %.199210, 2                 ; 2 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %.2211, i64 32
-  %5 = icmp slt i64 %i.gp, %.pre
-  br i1 %5, label %.lr.ph213, label %JS_ToInt64Clamp.exit.thread183, !llvm.loop !2155
+  %exitcond244.not.1 = icmp eq i64 %i.gp, %.pre
+  br i1 %exitcond244.not.1, label %JS_ToInt64Clamp.exit.thread183, label %.lr.ph213, !llvm.loop !2155
 
 js_get_fast_array.exit.thread:                    ; preds = %bb.y, %bb.z, %bb.x, %bb.aa
   %i.gr = icmp sgt i64 %.0156169, 0
@@ -340,10 +340,10 @@ js_dup.exit134.epil:                              ; preds = %bb.an, %.lr.ph221.e
   br i1 %i.il, label %JS_ToInt64Clamp.exit, label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph227
-  %i.im = add nsw i64 %.3101224, 1                ; 2 uses
+  %i.im = add i64 %.3101224, 1                    ; 2 uses
   %i.in = getelementptr inbounds nuw i8, ptr %.5225, i64 16
-  %6 = icmp slt i64 %i.im, %.pre
-  br i1 %6, label %.lr.ph227, label %JS_ToInt64Clamp.exit.thread183, !llvm.loop !2158
+  %exitcond247.not = icmp eq i64 %i.im, %.pre
+  br i1 %exitcond247.not, label %JS_ToInt64Clamp.exit.thread183, label %.lr.ph227, !llvm.loop !2158
 
 JS_ToInt64Clamp.exit.thread183:                   ; preds = %bb.j, %js_dup.exit.i, %js_dup.exit.i111, %bb.t, %.lr.ph213.prol.loopexit, %js_dup.exit131.1, %bb.ao, %._crit_edge, %._crit_edge222, %bb.w, %bb.a, %bb.u
   %.ph182 = phi i64 [ %i.bg, %bb.w ], [ %i.bg, %._crit_edge222 ], [ %i.bg, %bb.ao ], [ 0, %bb.a ], [ 0, %bb.u ], [ %i.bg, %._crit_edge ], [ 0, %js_dup.exit.i111 ], [ %i.bg, %.lr.ph213.prol.loopexit ], [ %i.bg, %js_dup.exit131.1 ], [ 0, %bb.t ], [ 0, %js_dup.exit.i ], [ 0, %bb.j ]

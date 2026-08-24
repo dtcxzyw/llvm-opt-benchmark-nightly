@@ -205,8 +205,7 @@ bb.y:                                             ; preds = %stbir__calculate_co
   %.1141 = phi i32 [ %.0140, %stbir__calculate_coefficients_for_gather_downsample.exit ], [ %i.cv, %bb.k ]
   %i.gl = xor i32 %i.co, -1                       ; 2 uses
   %i.gm = icmp sgt i32 %.1149, 0
-  %.pre = load ptr, ptr %0, align 8, !tbaa !35    ; 5 uses
-  %.pre209 = ptrtoaddr ptr %.pre to i64           ; 6 uses
+  %.pre = load ptr, ptr %0, align 8, !tbaa !35    ; 4 uses
   br i1 %i.gm, label %.lr.ph184, label %._crit_edge185
 
 .lr.ph184:                                        ; preds = %bb.y
@@ -214,7 +213,6 @@ bb.y:                                             ; preds = %stbir__calculate_co
   %i.go = load ptr, ptr %i.m, align 8, !tbaa !148
   %i.gp = sext i32 %i.gn to i64
   %i.gq = sext i32 %.1141 to i64
-  %3 = add i64 %.pre209, 16
   br label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph184, %._crit_edge178
@@ -248,7 +246,7 @@ bb.aa:                                            ; preds = %.lr.ph177, %stbir__
   %.0138171 = phi ptr [ %i.gw, %.lr.ph177 ], [ %i.kb, %stbir__insert_coeff.exit ] ; 8 uses
   %i.hc = add i64 %indvar, %i.gv
   %i.hd = shl i64 %i.hc, 3
-  %i.he = add i64 %i.hd, %.pre209
+  %i.he = add i64 %i.hd, -16
   %i.hf = getelementptr inbounds nuw i8, ptr %.0134175, i64 4
   %i.hg = load float, ptr %.0134175, align 4, !tbaa !54 ; 5 uses
   %i.hh = tail call float @llvm.fabs.f32(float %i.hg)
@@ -275,13 +273,9 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br i1 %i.hq, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.ad
-  %i.hr = shl nsw i64 %i.ho, 3                    ; 2 uses
-  %4 = add i64 %3, %i.hr
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.he, i64 %4)
-  %5 = add i64 %umax, -9
-  %6 = add i64 %i.hr, %.pre209
-  %i.hs = sub i64 %5, %6                          ; 2 uses
-  %i.ht = lshr i64 %i.hs, 3
+  %i.hr = shl nsw i64 %i.ho, 3
+  %i.hs = sub i64 %i.he, %i.hr                    ; 2 uses
+  %i.ht = lshr exact i64 %i.hs, 3
   %i.hu = add nuw nsw i64 %i.ht, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.hs, 24
   br i1 %min.iters.check, label %.lr.ph.preheader246, label %vector.ph
@@ -517,16 +511,11 @@ stbir__insert_coeff.exit:                         ; preds = %._crit_edge68.i, %b
   br i1 %i.kn, label %.lr.ph191.preheader, label %.loopexit
 
 .lr.ph191.preheader:                              ; preds = %._crit_edge185
-  %7 = shl nsw i64 %i.ki, 3                       ; 2 uses
-  %8 = add i64 %7, %.pre209
-  %9 = add i64 %8, 16
   %i.ko = shl nsw i64 %i.kl, 3
-  %10 = add i64 %i.ko, %.pre209
-  %11 = tail call i64 @llvm.umax.i64(i64 %9, i64 %10)
-  %12 = add i64 %11, -9
-  %i.kp = add i64 %7, %.pre209
-  %i.kq = sub i64 %12, %i.kp                      ; 2 uses
-  %i.kr = lshr i64 %i.kq, 3
+  %3 = shl nsw i64 %i.ki, 3
+  %i.kp = add nsw i64 %i.ko, -16
+  %i.kq = sub nsw i64 %i.kp, %3                   ; 2 uses
+  %i.kr = lshr exact i64 %i.kq, 3
   %i.ks = add nuw nsw i64 %i.kr, 1                ; 2 uses
   %min.iters.check224 = icmp ult i64 %i.kq, 24
   br i1 %min.iters.check224, label %.lr.ph191.preheader245, label %vector.ph225
@@ -927,9 +916,6 @@ declare i32 @llvm.umin.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v4f32(float, <4 x float>) #21

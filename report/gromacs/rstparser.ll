@@ -127,7 +127,7 @@ _ZN3gmx12_GLOBAL__N_117countLeadingSpaceERKNSt7__cxx1112basic_stringIcSt11char_t
   %i.ah = trunc i64 %.in.i to i32                 ; 6 uses
   %sext = shl i64 %.in.i, 32
   %i.ai = ashr exact i64 %sext, 32
-  %i.aj = add i64 %i.ai, %.038                    ; 7 uses
+  %i.aj = add i64 %i.ai, %.038                    ; 8 uses
   %i.ak = add i64 %i.aj, 1                        ; 3 uses
   %.not.i51 = icmp ugt i64 %i.aa, %i.ak
   br i1 %.not.i51, label %bb.h, label %.thread
@@ -238,6 +238,7 @@ bb.p:                                             ; preds = %bb.p, %bb.o
   %i.bn = trunc i64 %i.aa to i32
   %i.bo = trunc i64 %.pn.i to i32
   %i.bp = sub i32 %i.bn, %i.bo
+  %1 = sub i64 %i.aa, %i.aj
   br label %.lr.ph145
 
 .lr.ph145:                                        ; preds = %.lr.ph145.preheader, %bb.q
@@ -251,10 +252,10 @@ bb.p:                                             ; preds = %bb.p, %bb.o
   br i1 %.not43, label %.thread218.loopexit.split.loop.exit, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph145
-  %indvars.iv.next185 = add nuw nsw i64 %indvars.iv184, 1 ; 2 uses
-  %i.bv = add i64 %i.aj, %indvars.iv.next185      ; 2 uses
-  %1 = icmp ult i64 %i.bv, %i.aa
-  br i1 %1, label %.lr.ph145, label %.thread218, !llvm.loop !38
+  %indvars.iv.next185 = add nuw i64 %indvars.iv184, 1 ; 3 uses
+  %i.bv = add i64 %i.aj, %indvars.iv.next185
+  %exitcond187.not = icmp eq i64 %indvars.iv.next185, %1
+  br i1 %exitcond187.not, label %.thread218, label %.lr.ph145, !llvm.loop !38
 
 .thread218.loopexit.split.loop.exit:              ; preds = %.lr.ph145
   %i.bw = trunc nuw nsw i64 %indvars.iv184 to i32

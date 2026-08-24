@@ -205,7 +205,10 @@ FSE_initDState.exit94.i:                          ; preds = %bb.by
   %i.tg = ptrtoint ptr %i.ck to i64               ; 2 uses
   %i.th = ptrtoint ptr %i.co to i64
   %i.ti = getelementptr inbounds i8, ptr %i.cj, i64 -12
-  %i.tj = ptrtoint ptr %i.te to i64               ; 4 uses
+  %i.tj = ptrtoint ptr %i.te to i64               ; 3 uses
+  %5 = ptrtoaddr ptr %1 to i64
+  %6 = add i64 %2, %5
+  %7 = add i64 %6, -17
   br label %bb.bz
 
 bb.bz:                                            ; preds = %ZSTD_execSequence.exit.i, %.lr.ph.i
@@ -328,7 +331,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg, %.th
   br label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci, %bb.cd
-  %.162.i.i = phi i64 [ %.061.shrunk.i.i, %bb.ci ], [ %i.us, %bb.cd ] ; 14 uses
+  %.162.i.i = phi i64 [ %.061.shrunk.i.i, %bb.ci ], [ %i.us, %bb.cd ] ; 13 uses
   %.3.i.i = phi ptr [ %spec.select.i.i, %bb.ci ], [ %.sroa.81.0195.i, %bb.cd ] ; 7 uses
   %i.vf = getelementptr inbounds nuw [4 x i8], ptr %i.sb, i64 %.sroa.68.0197.i ; 3 uses
   %.sroa.0.0.copyload.i85.i.i = load i16, ptr %i.vf, align 2, !tbaa !39
@@ -435,7 +438,7 @@ ZSTD_decodeSequence.exit.i:                       ; preds = %bb.co, %bb.cj
   %i.xk = getelementptr i8, ptr %i.xj, i64 %i.xi  ; 5 uses
   %i.xl = getelementptr inbounds nuw i8, ptr %.0137188.i, i64 %.162.i.i ; 2 uses
   %i.xm = add nuw nsw i64 %i.xi, %.162.i.i        ; 2 uses
-  %i.xn = ptrtoint ptr %.057199.i to i64          ; 14 uses
+  %i.xn = ptrtoint ptr %.057199.i to i64          ; 13 uses
   %i.xo = sub i64 %i.tf, %i.xn
   %i.xp = icmp ugt i64 %i.xm, %i.xo
   br i1 %i.xp, label %ZSTD_decompressSequences.exit, label %bb.cp
@@ -630,12 +633,8 @@ bb.cy:                                            ; preds = %bb.cx
   br i1 %i.aan, label %.preheader.i.preheader, label %bb.cz
 
 .preheader.i.preheader:                           ; preds = %bb.cy
-  %5 = add i64 %.162.i.i, %i.xn
-  %6 = add i64 %5, 16
-  %7 = tail call i64 @llvm.umax.i64(i64 %i.tj, i64 %6)
-  %8 = add i64 %7, -9
   %i.aao = add i64 %.162.i.i, %i.xn
-  %i.aap = sub i64 %8, %i.aao                     ; 2 uses
+  %i.aap = sub i64 %7, %i.aao                     ; 2 uses
   %i.aaq = lshr i64 %i.aap, 3
   %i.aar = add nuw nsw i64 %i.aaq, 1              ; 2 uses
   %min.iters.check119 = icmp ult i64 %i.aap, 56

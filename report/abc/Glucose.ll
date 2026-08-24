@@ -205,7 +205,8 @@ bb.o:                                             ; preds = %bb.m, %bb.n
 .lr.ph291:                                        ; preds = %._crit_edge
   %i.ex = xor i32 %i.dk, 1                        ; 4 uses
   %i.ey = ptrtoaddr ptr %i.es to i64
-  %i.ez = add i64 %.idx, %i.ey
+  %1 = add i64 %.idx, %i.ey
+  %i.ez = add i64 %1, -9
   br label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph291, %.loopexit
@@ -213,7 +214,7 @@ bb.p:                                             ; preds = %.lr.ph291, %.loopex
   %.0111287 = phi ptr [ %i.es, %.lr.ph291 ], [ %.4115, %.loopexit ] ; 6 uses
   %.0116285 = phi ptr [ %i.es, %.lr.ph291 ], [ %.4120, %.loopexit ] ; 9 uses
   %.0116285391 = ptrtoaddr ptr %.0116285 to i64
-  %.0111287392 = ptrtoaddr ptr %.0111287 to i64   ; 3 uses
+  %.0111287392 = ptrtoaddr ptr %.0111287 to i64   ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.0111287, i64 4
   %.sroa.057.0.copyload = load i32, ptr %i.fa, align 4, !tbaa !50 ; 3 uses
   %i.fb = ashr i32 %.sroa.057.0.copyload, 1
@@ -503,10 +504,7 @@ bb.ah:                                            ; preds = %.thread232
   br i1 %i.jx, label %.lr.ph281.preheader, label %.loopexit
 
 .lr.ph281.preheader:                              ; preds = %bb.ah
-  %1 = add i64 %.0111287392, 16
-  %2 = tail call i64 @llvm.umax.i64(i64 %i.ez, i64 %1)
-  %3 = add i64 %2, -9
-  %i.jy = sub i64 %3, %.0111287392                ; 2 uses
+  %i.jy = sub i64 %i.ez, %.0111287392             ; 2 uses
   %i.jz = lshr i64 %i.jy, 3
   %i.ka = add nuw nsw i64 %i.jz, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.jy, 24
@@ -908,9 +906,6 @@ declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #12
 
 attributes #0 = { nofree nounwind }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

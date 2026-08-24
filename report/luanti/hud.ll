@@ -205,8 +205,8 @@ bb.ad:                                            ; preds = %.lr.ph279, %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #34
   %i.ef = add nsw i32 %.0277, 1                   ; 2 uses
-  %20 = icmp slt i32 %i.ef, %i.ds
-  br i1 %20, label %bb.ad, label %._crit_edge280, !llvm.loop !497
+  %exitcond286.not = icmp eq i32 %i.ef, %i.ds
+  br i1 %exitcond286.not, label %._crit_edge280, label %bb.ad, !llvm.loop !497
 
 bb.ae:                                            ; preds = %._crit_edge280
   %i.eg = getelementptr inbounds nuw i8, ptr %0, i64 104

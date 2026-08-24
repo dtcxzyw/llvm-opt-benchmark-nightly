@@ -205,8 +205,8 @@ bb.agb:                                           ; preds = %bb.aga, %.lr.ph.i
   %i.ixt = getelementptr inbounds [4 x i8], ptr @_ZL6yy_nxt, i64 %.lcssa.i
   %i.ixu = load i32, ptr %i.ixt, align 4, !tbaa !12 ; 2 uses
   %i.ixv = getelementptr inbounds nuw i8, ptr %.01625.i, i64 1 ; 2 uses
-  %23 = icmp ult ptr %i.ixv, %i.iwg
-  br i1 %23, label %.lr.ph27.i, label %_ZL21yy_get_previous_statev.exit, !llvm.loop !709
+  %exitcond.not.i = icmp eq ptr %i.ixv, %i.iwg
+  br i1 %exitcond.not.i, label %_ZL21yy_get_previous_statev.exit, label %.lr.ph27.i, !llvm.loop !709
 
 _ZL21yy_get_previous_statev.exit:                 ; preds = %._crit_edge.i, %bb.afv
   %.017.lcssa.i = phi i32 [ %i.iwk, %bb.afv ], [ %i.ixu, %._crit_edge.i ] ; 5 uses
@@ -609,8 +609,8 @@ bb.ahc:                                           ; preds = %bb.ahb, %.lr.ph.i64
   %i.jgt = getelementptr inbounds [4 x i8], ptr @_ZL6yy_nxt, i64 %.lcssa.i653
   %i.jgu = load i32, ptr %i.jgt, align 4, !tbaa !12 ; 2 uses
   %i.jgv = getelementptr inbounds nuw i8, ptr %.01625.i643, i64 1 ; 2 uses
-  %24 = icmp ult ptr %i.jgv, %i.jeg
-  br i1 %24, label %.lr.ph27.i642, label %.loopexit688.backedge, !llvm.loop !709
+  %exitcond.not.i655 = icmp eq ptr %i.jgv, %i.jeg
+  br i1 %exitcond.not.i655, label %.loopexit688.backedge, label %.lr.ph27.i642, !llvm.loop !709
 
 _ZL18yy_get_next_bufferv.exit.thread681:          ; preds = %bb.agi, %_ZL18yy_get_next_bufferv.exit.jt2
   %.pre-phi1547 = phi i64 [ %.pre1546, %_ZL18yy_get_next_bufferv.exit.jt2 ], [ %i.izb, %bb.agi ]
@@ -697,8 +697,8 @@ bb.ahi:                                           ; preds = %bb.ahh, %.lr.ph.i66
   %i.jik = getelementptr inbounds [4 x i8], ptr @_ZL6yy_nxt, i64 %.lcssa.i667
   %i.jil = load i32, ptr %i.jik, align 4, !tbaa !12 ; 2 uses
   %i.jim = getelementptr inbounds nuw i8, ptr %.01625.i657, i64 1 ; 2 uses
-  %25 = icmp ult ptr %i.jim, %i.jgz
-  br i1 %25, label %.lr.ph27.i656, label %.preheader.outer.backedge, !llvm.loop !709
+  %exitcond.not.i670 = icmp eq ptr %i.jim, %i.jgz
+  br i1 %exitcond.not.i670, label %.preheader.outer.backedge, label %.lr.ph27.i656, !llvm.loop !709
 
 _ZL21yy_get_previous_statev.exit654:              ; preds = %bb.agi, %_ZL18yy_get_next_bufferv.exit.jt1
   %.pre-phi1543 = phi i64 [ %.pre1542, %_ZL18yy_get_next_bufferv.exit.jt1 ], [ %i.izb, %bb.agi ]

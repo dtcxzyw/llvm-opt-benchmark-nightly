@@ -202,15 +202,13 @@ bb.i:                                             ; preds = %bb.i, %.epil.prehea
 
 .preheader1290.preheader:                         ; preds = %.preheader1290.lr.ph.thread, %.preheader1290.lr.ph
   %i.bcg = phi i64 [ %i.bcb, %.preheader1290.lr.ph.thread ], [ %i.bce, %.preheader1290.lr.ph ]
-  %.15.lcssa19491951 = phi i32 [ %i.bbz, %.preheader1290.lr.ph.thread ], [ %.15.lcssa, %.preheader1290.lr.ph ] ; 3 uses
+  %.15.lcssa19491951 = phi i32 [ %i.bbz, %.preheader1290.lr.ph.thread ], [ %.15.lcssa, %.preheader1290.lr.ph ] ; 2 uses
   %i.bch = getelementptr [4 x i8], ptr %7, i64 %i.bcg
   %i.bci = zext i32 %.15.lcssa19491951 to i64     ; 2 uses
   %i.bcj = shl nuw nsw i64 %i.bci, 2
   %scevgep1873 = getelementptr i8, ptr %i.bch, i64 %i.bcj
-  %9 = add i32 %.15.lcssa19491951, 16
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.f, i32 %9)
   %i.bck = xor i32 %.15.lcssa19491951, -1
-  %i.bcl = add i32 %smax, %i.bck
+  %i.bcl = add i32 %i.f, %i.bck
   %i.bcm = lshr i32 %i.bcl, 4
   %i.bcn = zext nneg i32 %i.bcm to i64
   %i.bco = shl nuw nsw i64 %i.bcn, 6
@@ -611,9 +609,6 @@ declare <4 x float> @llvm.fma.v4f32(<4 x float>, <4 x float>, <4 x float>) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #1

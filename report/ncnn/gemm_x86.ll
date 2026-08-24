@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN4ncnnL11pack_B_tileERKNS_3MatERS0_iiii:bb.a
   br label %.preheader6
 
 .preheader6:                                      ; preds = %.preheader6.loopexit, %.preheader10
-  %.1553.lcssa = phi i32 [ %.0552.lcssa, %.preheader10 ], [ %i.hq, %.preheader6.loopexit ] ; 10 uses
+  %.1553.lcssa = phi i32 [ %.0552.lcssa, %.preheader10 ], [ %i.hq, %.preheader6.loopexit ] ; 8 uses
   %.6.lcssa = phi ptr [ %.0550.lcssa, %.preheader10 ], [ %.11, %.preheader6.loopexit ] ; 5 uses
   %i.hr = or disjoint i32 %.1553.lcssa, 3
   %i.hs = icmp slt i32 %i.hr, %2
@@ -574,9 +574,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ht, label %.lr.ph141.split.split.us, label %.lr.ph141.split.split.preheader
 
 .lr.ph141.split.split.preheader:                  ; preds = %.lr.ph141.split
-  %5 = add nuw i32 %.1553.lcssa, 7
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 %5)
-  %i.nx = add i32 %smax, -4
+  %i.nx = add i32 %2, -4
   %i.ny = sub i32 %i.nx, %.1553.lcssa
   %i.nz = and i32 %i.ny, -4
   %i.oa = add i32 %.1553.lcssa, %i.nz
@@ -587,9 +585,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.hw, label %.lr.ph116.us153.us.preheader, label %.loopexit5.us151.preheader
 
 .loopexit5.us151.preheader:                       ; preds = %.lr.ph141.split.split.us
-  %6 = add nuw i32 %.1553.lcssa, 7
-  %smax262 = tail call i32 @llvm.smax.i32(i32 %2, i32 %6)
-  %i.oc = add i32 %smax262, -4
+  %i.oc = add i32 %2, -4
   %i.od = sub i32 %i.oc, %.1553.lcssa
   %i.oe = and i32 %i.od, -4
   %i.of = add i32 %.1553.lcssa, %i.oe
@@ -992,7 +988,7 @@ bb.g:                                             ; preds = %bb.f, %.thread69.i,
   br i1 %i.hy, label %bb.e, label %.preheader76.loopexit.i, !llvm.loop !650
 
 .preheader75.i:                                   ; preds = %bb.k, %.preheader76.i
-  %.2288.lcssa.i = phi i32 [ %.1287.lcssa.i, %.preheader76.i ], [ %i.nv, %bb.k ] ; 10 uses
+  %.2288.lcssa.i = phi i32 [ %.1287.lcssa.i, %.preheader76.i ], [ %i.nv, %bb.k ] ; 8 uses
   %.6275.lcssa.i = phi ptr [ %.3272.lcssa.i, %.preheader76.i ], [ %.8277.i, %bb.k ] ; 9 uses
   %.6.lcssa.i = phi ptr [ %.3.lcssa.i, %.preheader76.i ], [ %.8.i, %bb.k ] ; 9 uses
   %i.hz = or disjoint i32 %.2288.lcssa.i, 1
@@ -1008,20 +1004,16 @@ bb.g:                                             ; preds = %bb.f, %.thread69.i,
   br i1 %i.if, label %.lr.ph171.us.preheader.i, label %.lr.ph178.split.i.preheader
 
 .lr.ph178.split.i.preheader:                      ; preds = %.lr.ph178.i
-  %4 = add i32 %.2288.lcssa.i, 3
-  %5 = tail call i32 @llvm.smax.i32(i32 %i.r, i32 %4)
-  %i.ig = add i32 %5, -2
+  %i.ig = add i32 %i.r, -2
   %i.ih = sub i32 %i.ig, %.2288.lcssa.i           ; 2 uses
   %i.ii = lshr i32 %i.ih, 1
   %narrow = add nuw i32 %i.ii, 1
   %i.ij = zext i32 %narrow to i64                 ; 2 uses
-  %min.iters.check = icmp ult i32 %i.ih, 18
+  %min.iters.check = icmp ult i32 %i.ih, 14
   br i1 %min.iters.check, label %.lr.ph178.split.i.preheader162, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph178.split.i.preheader
-  %6 = add i32 %.2288.lcssa.i, 3
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.r, i32 %6)
-  %i.ik = add i32 %smax, -2
+  %i.ik = add i32 %i.r, -2
   %i.il = sub i32 %i.ik, %.2288.lcssa.i
   %i.im = lshr i32 %i.il, 1
   %i.in = zext nneg i32 %i.im to i64
@@ -1424,7 +1416,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br label %.preheader1
 
 .preheader1:                                      ; preds = %.preheader1.loopexit79, %.preheader3.us42.preheader, %.lr.ph32.split.split.preheader, %.preheader1.loopexit, %bb.a
-  %.0108.lcssa = phi i32 [ 0, %bb.a ], [ %i.ib, %.preheader1.loopexit ], [ %i.fr, %.lr.ph32.split.split.preheader ], [ %i.gc, %.preheader3.us42.preheader ], [ %i.ic, %.preheader1.loopexit79 ] ; 6 uses
+  %.0108.lcssa = phi i32 [ 0, %bb.a ], [ %i.ib, %.preheader1.loopexit ], [ %i.fr, %.lr.ph32.split.split.preheader ], [ %i.gc, %.preheader3.us42.preheader ], [ %i.ic, %.preheader1.loopexit79 ] ; 5 uses
   %.0107.lcssa = phi ptr [ %.0.val, %bb.a ], [ %.4.lcssa.us, %.preheader1.loopexit ], [ %.0.val, %.lr.ph32.split.split.preheader ], [ %.0.val, %.preheader3.us42.preheader ], [ %.lcssa134, %.preheader1.loopexit79 ] ; 3 uses
   %i.id = or disjoint i32 %.0108.lcssa, 1
   %i.ie = icmp slt i32 %i.id, %2
@@ -1438,9 +1430,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %i.ih, label %.lr.ph.us63.preheader, label %.lr.ph60.split.preheader
 
 .lr.ph60.split.preheader:                         ; preds = %.lr.ph60
-  %5 = add i32 %.0108.lcssa, 3
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 %5)
-  %i.ii = add i32 %smax, -2
+  %i.ii = add i32 %2, -2
   %i.ij = sub i32 %i.ii, %.0108.lcssa
   %i.ik = and i32 %i.ij, -2
   %i.il = add i32 %.0108.lcssa, %i.ik
@@ -1843,7 +1833,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
 
 .preheader1:                                      ; preds = %.preheader1.loopexit, %.preheader4
   %.5.lcssa = phi ptr [ %.0149.lcssa, %.preheader4 ], [ %.9, %.preheader1.loopexit ] ; 3 uses
-  %.1147.lcssa = phi i32 [ %.0146.lcssa, %.preheader4 ], [ %i.fq, %.preheader1.loopexit ] ; 6 uses
+  %.1147.lcssa = phi i32 [ %.0146.lcssa, %.preheader4 ], [ %i.fq, %.preheader1.loopexit ] ; 5 uses
   %i.fr = or disjoint i32 %.1147.lcssa, 1
   %i.fs = icmp slt i32 %i.fr, %2
   br i1 %i.fs, label %.lr.ph67, label %.preheader
@@ -1856,9 +1846,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   br i1 %i.fv, label %.lr.ph63.us.preheader, label %.lr.ph67.split.preheader
 
 .lr.ph67.split.preheader:                         ; preds = %.lr.ph67
-  %5 = add i32 %.1147.lcssa, 3
-  %smax = tail call i32 @llvm.smax.i32(i32 %2, i32 %5)
-  %i.fw = add i32 %smax, -2
+  %i.fw = add i32 %2, -2
   %i.fx = sub i32 %i.fw, %.1147.lcssa
   %i.fy = and i32 %i.fx, -2
   %i.fz = add i32 %.1147.lcssa, %i.fy
@@ -2261,6 +2249,7 @@ bb.a:
   %i.h = shl nuw nsw i64 %i.g, 4
   %i.i = and i32 %1, -8
   %i.j = shl nuw nsw i64 %i.g, 3
+  %4 = add i32 %1, -2
   %i.k = shl nuw nsw i64 %i.g, 2
   %i.l = add nsw i32 %1, -1                       ; 2 uses
   %i.m = shl nuw nsw i64 %i.g, 1
@@ -2446,7 +2435,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph277
   br i1 %i.cx, label %.lr.ph277, label %.preheader253, !llvm.loop !938
 
 .preheader252:                                    ; preds = %._crit_edge290, %.preheader253
-  %.1438.lcssa = phi i32 [ %.0437.lcssa, %.preheader253 ], [ %i.ft, %._crit_edge290 ] ; 7 uses
+  %.1438.lcssa = phi i32 [ %.0437.lcssa, %.preheader253 ], [ %i.ft, %._crit_edge290 ] ; 6 uses
   %.2411.lcssa = phi ptr [ %.0409.lcssa, %.preheader253 ], [ %.3412.lcssa, %._crit_edge290 ] ; 4 uses
   %.2405.lcssa = phi ptr [ %.1404.lcssa, %.preheader253 ], [ %i.fs, %._crit_edge290 ] ; 5 uses
   %i.cy = or disjoint i32 %.1438.lcssa, 1
@@ -2517,10 +2506,7 @@ bb.d:                                             ; preds = %.lr.ph317.split.us
   br i1 %.not515, label %.lr.ph317.split.split.us.preheader, label %.lr.ph317.split.split
 
 .lr.ph317.split.split.us.preheader:               ; preds = %.lr.ph317.split
-  %4 = add i32 %.1438.lcssa, 3
-  %smax = tail call i32 @llvm.smax.i32(i32 %1, i32 %4)
-  %5 = add i32 %smax, -2
-  %i.ec = sub i32 %5, %.1438.lcssa                ; 2 uses
+  %i.ec = sub i32 %4, %.1438.lcssa                ; 2 uses
   %i.ed = lshr i32 %i.ec, 1
   %i.ee = zext nneg i32 %i.ed to i64
   %i.ef = shl nuw nsw i64 %i.ee, 5                ; 2 uses

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2389
 inline.NumDeleted: 837
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_ZN7rocksdb14MockFileSystem13CorruptBufferERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
   store i64 %i.i, ptr %i.a, align 8, !tbaa !32, !alias.scope !473
@@ -206,7 +206,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load atomic i64, ptr %i.a seq_cst, align 8
   %i.g = sub i64 %i.e, %i.f
   %i.h = load atomic i64, ptr %i.a seq_cst, align 8
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 8 uses
   %i.j = trunc i64 %i.g to i32
   %i.k = load i32, ptr %i.i, align 8, !tbaa !274
   %i.l = zext i32 %i.k to i64
@@ -221,20 +221,48 @@ bb.b:                                             ; preds = %bb.a
   store i32 %spec.select.i.i, ptr %i.i, align 8, !tbaa !274
   %i.t = urem i32 %spec.select.i.i, %i.j
   %i.u = zext i32 %i.t to i64
-  %i.v = add i64 %i.h, %i.u                       ; 3 uses
+  %i.v = add i64 %i.h, %i.u                       ; 7 uses
   %i.w = add i64 %i.v, 512
   %i.x = load atomic i64, ptr %i.c seq_cst, align 8
-  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.x, i64 %i.w) ; 2 uses
+  %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.x, i64 %i.w) ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   tail call void @_ZN7rocksdb4port5Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(40) %i.y)
   %i.z = icmp ult i64 %i.v, %.sroa.speculated
-  br i1 %i.z, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.z, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %bb.b
-  %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 88
-  br label %bb.d
+.lr.ph:                                           ; preds = %bb.b
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
+  %2 = sub nuw i64 %.sroa.speculated, %i.v
+  %.neg = add i64 %i.v, 1
+  %xtraiter = and i64 %2, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.lr.ph.a
 
-._crit_edge:                                      ; preds = %bb.d, %bb.b
+.lr.ph.a:                                         ; preds = %.lr.ph
+  %3 = load i32, ptr %i.i, align 8, !tbaa !274
+  %4 = zext i32 %3 to i64
+  %5 = mul nuw nsw i64 %4, 16807                  ; 2 uses
+  %6 = lshr i64 %5, 31
+  %7 = and i64 %5, 2147483647
+  %8 = add nuw nsw i64 %6, %7
+  %9 = trunc nuw i64 %8 to i32                    ; 3 uses
+  %10 = icmp slt i32 %9, 0
+  %11 = add i32 %9, -2147483647
+  %spec.select.i.i9.prol = select i1 %10, i32 %11, i32 %9 ; 2 uses
+  store i32 %spec.select.i.i9.prol, ptr %i.i, align 8, !tbaa !274
+  %12 = trunc i32 %spec.select.i.i9.prol to i8
+  %13 = load ptr, ptr %1, align 8, !tbaa !29
+  %i.aa = getelementptr inbounds nuw i8, ptr %13, i64 %i.v
+  store i8 %12, ptr %i.aa, align 1, !tbaa !34
+  %14 = add nuw i64 %i.v, 1
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.lr.ph.a, %.lr.ph
+  %.015.unr = phi i64 [ %i.v, %.lr.ph ], [ %14, %.lr.ph.a ]
+  %15 = icmp eq i64 %.sroa.speculated, %.neg
+  br i1 %15, label %._crit_edge, label %bb.d
+
+._crit_edge:                                      ; preds = %.prol.loopexit, %bb.d, %bb.b
   invoke void @_ZN7rocksdb4port5Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(40) %i.y)
           to label %_ZN7rocksdb9MutexLockD2Ev.exit unwind label %bb.c
 
@@ -245,8 +273,23 @@ bb.c:                                             ; preds = %._crit_edge
   tail call void @__clang_call_terminate(ptr %i.ac) #29
   unreachable
 
-bb.d:                                             ; preds = %.lr.ph.a, %bb.d
-  %.015 = phi i64 [ %i.v, %.lr.ph.a ], [ %i.ap, %bb.d ] ; 2 uses
+bb.d:                                             ; preds = %.prol.loopexit, %bb.d
+  %.015 = phi i64 [ %i.ap, %bb.d ], [ %.015.unr, %.prol.loopexit ] ; 3 uses
+  %16 = load i32, ptr %i.i, align 8, !tbaa !274
+  %17 = zext i32 %16 to i64
+  %18 = mul nuw nsw i64 %17, 16807                ; 2 uses
+  %19 = lshr i64 %18, 31
+  %20 = and i64 %18, 2147483647
+  %21 = add nuw nsw i64 %19, %20
+  %22 = trunc nuw i64 %21 to i32                  ; 3 uses
+  %23 = icmp slt i32 %22, 0
+  %24 = add i32 %22, -2147483647
+  %spec.select.i.i9 = select i1 %23, i32 %24, i32 %22 ; 2 uses
+  store i32 %spec.select.i.i9, ptr %i.i, align 8, !tbaa !274
+  %25 = trunc i32 %spec.select.i.i9 to i8
+  %26 = load ptr, ptr %1, align 8, !tbaa !29
+  %27 = getelementptr inbounds nuw i8, ptr %26, i64 %.015
+  store i8 %25, ptr %27, align 1, !tbaa !34
   %i.ad = load i32, ptr %i.i, align 8, !tbaa !274
   %i.ae = zext i32 %i.ad to i64
   %i.af = mul nuw nsw i64 %i.ae, 16807            ; 2 uses
@@ -259,10 +302,11 @@ bb.d:                                             ; preds = %.lr.ph.a, %bb.d
   %spec.select.i.i9.a = select i1 %i.ak, i32 %i.al, i32 %i.aj ; 2 uses
   store i32 %spec.select.i.i9.a, ptr %i.i, align 8, !tbaa !274
   %i.am = trunc i32 %spec.select.i.i9.a to i8
-  %i.an = load ptr, ptr %i.aa, align 8, !tbaa !29
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 %.015
+  %i.an = load ptr, ptr %1, align 8, !tbaa !29
+  %28 = getelementptr inbounds nuw i8, ptr %i.an, i64 %.015
+  %i.ao = getelementptr inbounds nuw i8, ptr %28, i64 1
   store i8 %i.am, ptr %i.ao, align 1, !tbaa !34
-  %i.ap = add nuw i64 %.015, 1                    ; 2 uses
+  %i.ap = add nuw i64 %.015, 2                    ; 2 uses
   %i.aq = icmp ult i64 %i.ap, %.sroa.speculated
   br i1 %i.aq, label %bb.d, label %._crit_edge, !llvm.loop !482
 

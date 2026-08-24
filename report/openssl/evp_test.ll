@@ -205,7 +205,7 @@ memory_err_compare.exit:                          ; preds = %.split, %bb.j, %bb.
   %i.bd = add i64 %i.bc, 3
   %i.be = lshr i64 %i.bd, 2
   %i.bf = mul nuw i64 %i.be, 3
-  %i.bg = add nuw i64 %i.bf, 80                   ; 4 uses
+  %i.bg = add nuw i64 %i.bf, 80                   ; 3 uses
   %i.bh = call noalias ptr @CRYPTO_malloc(i64 noundef %i.bg, ptr noundef nonnull @.str.30, i32 noundef 3725) #12 ; 15 uses
   %i.bi = call i32 @test_ptr(ptr noundef nonnull @.str.30, i32 noundef 3725, ptr noundef nonnull @.str.313, ptr noundef %i.bh) #12
   %.not100 = icmp eq i32 %i.bi, 0
@@ -284,20 +284,19 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   br i1 %i.cq, label %.loopexit.sink.split, label %memory_err_compare.exit114
 
 memory_err_compare.exit114:                       ; preds = %.split140, %bb.r, %bb.o
-  %i.cr = trunc i64 %i.bg to i32
+  %i.cr = trunc i64 %i.bg to i32                  ; 2 uses
   %i.cs = icmp slt i32 %i.ce, %i.cr
   br i1 %i.cs, label %.lr.ph.preheader, label %.loopexit.sink.split
 
 .lr.ph.preheader:                                 ; preds = %memory_err_compare.exit114
   %i.ct = sext i32 %i.ce to i64
-  %sext = shl i64 %i.bg, 32
-  %1 = ashr exact i64 %sext, 32
   br label %.lr.ph
 
 bb.s:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %2 = icmp slt i64 %indvars.iv.next, %1
-  br i1 %2, label %.lr.ph, label %.loopexit.sink.split, !llvm.loop !201
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %lftr.wideiv, %i.cr
+  br i1 %exitcond.not, label %.loopexit.sink.split, label %.lr.ph, !llvm.loop !201
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.s
   %indvars.iv = phi i64 [ %i.ct, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.s ] ; 2 uses

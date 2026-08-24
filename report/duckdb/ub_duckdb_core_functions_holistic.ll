@@ -205,14 +205,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !2274
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !2274
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !2293
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !2293
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -615,14 +615,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !2607
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !2607
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !2626
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !2626
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1025,14 +1025,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !2882
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !2882
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !2901
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !2901
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1435,14 +1435,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !3155
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !3155
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !3174
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !3174
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1845,14 +1845,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !3424
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !3424
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !3443
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !3443
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -2255,14 +2255,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !3693
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !3693
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !3712
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !3712
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -2665,14 +2665,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !3978
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !3978
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !3997
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !3997
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -3075,14 +3075,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !4247
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !4247
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !4266
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !4266
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -3485,14 +3485,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !4517
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !4517
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !4536
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !4536
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -3895,14 +3895,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !8629
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !8629
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !8650
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !8650
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -4305,14 +4305,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !8928
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !8928
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !8949
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !8949
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -4715,14 +4715,14 @@ bb.r:                                             ; preds = %.lr.ph60, %bb.s
   br i1 %.not43, label %.critedge2, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.eu = add nuw i64 %.659, 1                    ; 2 uses
+  %i.eu = add i64 %.659, 1                        ; 2 uses
   %i.ev = getelementptr inbounds nuw [16 x i8], ptr %i.eg, i64 %.659
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 2 uses
   %i.ex = load i64, ptr %i.ew, align 8, !tbaa !9110
   %i.ey = add i64 %i.ex, 1
   store i64 %i.ey, ptr %i.ew, align 8, !tbaa !9110
-  %3 = icmp ult i64 %i.eu, %i.eo
-  br i1 %3, label %bb.r, label %.critedge2, !llvm.loop !9131
+  %exitcond.not = icmp eq i64 %i.eu, %i.eo
+  br i1 %exitcond.not, label %.critedge2, label %bb.r, !llvm.loop !9131
 
 .critedge2:                                       ; preds = %bb.r, %bb.s, %.critedge
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses

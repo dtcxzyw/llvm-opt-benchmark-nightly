@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond, label %.thread.loopexit.split.loop.exit, label %_ZN7CaDiCaL13score_smallerclEjj.exit.thread33
 
 _ZN7CaDiCaL13score_smallerclEjj.exit.thread33:    ; preds = %bb.e, %bb.c
-  %1 = icmp slt i64 %indvars.iv.next55, %i.ag
-  br i1 %1, label %bb.c, label %.thread
+  %exitcond58.not = icmp eq i64 %indvars.iv.next55, %i.ag
+  br i1 %exitcond58.not, label %.thread, label %bb.c
 
 bb.f:                                             ; preds = %bb.b
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 784
@@ -241,8 +241,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.bl, label %.thread.loopexit65.split.loop.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %2 = icmp slt i64 %indvars.iv.next, %i.be
-  br i1 %2, label %bb.g, label %.thread
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.be
+  br i1 %exitcond.not, label %.thread, label %bb.g
 
 .thread.loopexit.split.loop.exit:                 ; preds = %bb.e
   %i.bm = trunc nsw i64 %indvars.iv54 to i32
