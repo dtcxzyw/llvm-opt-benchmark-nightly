@@ -205,7 +205,7 @@ _ZN11btMultiBody21updateLinksDofOffsetsEv.exit:   ; preds = %_ZN11btMultiBody21u
   %i.dp = getelementptr i8, ptr %i.do, i64 184    ; 2 uses
   %.sroa.0.0.copyload3.i59 = load <2 x float>, ptr %i.dp, align 4 ; 4 uses
   %.sroa.8.0..sroa_idx.i60 = getelementptr i8, ptr %i.do, i64 192 ; 2 uses
-  %.sroa.8.0.copyload.i61 = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i60, align 4, !tbaa !11
+  %.sroa.8.0.copyload.i61 = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i60, align 4, !tbaa !11 ; 2 uses
   %.sroa.0.0.vec.extract.i62 = extractelement <2 x float> %.sroa.0.0.copyload3.i59, i64 0 ; 2 uses
   %foldExtExtBinop118 = fmul <2 x float> %.sroa.0.0.copyload3.i59, %.sroa.0.0.copyload3.i59
   %i.dq = extractelement <2 x float> %foldExtExtBinop118, i64 1
@@ -218,14 +218,15 @@ _ZN11btMultiBody21updateLinksDofOffsetsEv.exit:   ; preds = %_ZN11btMultiBody21u
   %i.dv = shufflevector <2 x float> %i.du, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dw = fmul <2 x float> %.sroa.0.0.copyload3.i59, %i.dv
   %i.dx = fmul float %.sroa.8.8.vec.extract.i64, %i.dt
+  %.sroa.8.8.vec.insert.i68 = insertelement <2 x float> %.sroa.8.0.copyload.i61, float %i.dx, i64 0
   store <2 x float> %i.dw, ptr %i.dp, align 8
-  store float %i.dx, ptr %.sroa.8.0..sroa_idx.i60, align 8, !tbaa !11
+  store <2 x float> %.sroa.8.8.vec.insert.i68, ptr %.sroa.8.0..sroa_idx.i60, align 8, !tbaa !11
   %i.dy = load ptr, ptr %i.d, align 8, !tbaa !38
   %i.dz = getelementptr inbounds [688 x i8], ptr %i.dy, i64 %i.f ; 2 uses
   %i.ea = getelementptr i8, ptr %i.dz, i64 216    ; 2 uses
   %.sroa.0.0.copyload3.i71 = load <2 x float>, ptr %i.ea, align 4 ; 4 uses
   %.sroa.8.0..sroa_idx.i72 = getelementptr i8, ptr %i.dz, i64 224 ; 2 uses
-  %.sroa.8.0.copyload.i73 = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i72, align 4, !tbaa !11
+  %.sroa.8.0.copyload.i73 = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i72, align 4, !tbaa !11 ; 2 uses
   %.sroa.0.0.vec.extract.i74 = extractelement <2 x float> %.sroa.0.0.copyload3.i71, i64 0 ; 2 uses
   %foldExtExtBinop120 = fmul <2 x float> %.sroa.0.0.copyload3.i71, %.sroa.0.0.copyload3.i71
   %i.eb = extractelement <2 x float> %foldExtExtBinop120, i64 1
@@ -238,8 +239,9 @@ _ZN11btMultiBody21updateLinksDofOffsetsEv.exit:   ; preds = %_ZN11btMultiBody21u
   %i.eg = shufflevector <2 x float> %i.ef, <2 x float> poison, <2 x i32> zeroinitializer
   %i.eh = fmul <2 x float> %.sroa.0.0.copyload3.i71, %i.eg
   %i.ei = fmul float %.sroa.8.8.vec.extract.i76, %i.ee
+  %.sroa.8.8.vec.insert.i80 = insertelement <2 x float> %.sroa.8.0.copyload.i73, float %i.ei, i64 0
   store <2 x float> %i.eh, ptr %i.ea, align 8
-  store float %i.ei, ptr %.sroa.8.0..sroa_idx.i72, align 8, !tbaa !11
+  store <2 x float> %.sroa.8.8.vec.insert.i80, ptr %.sroa.8.0..sroa_idx.i72, align 8, !tbaa !11
   ret void
 }
 
