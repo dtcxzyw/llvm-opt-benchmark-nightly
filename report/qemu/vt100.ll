@@ -205,9 +205,9 @@ bb.cz:                                            ; preds = %bb.cy
   %.047.i = phi i32 [ %i.se, %.lr.ph.i29 ], [ %i.rl, %bb.cz ] ; 2 uses
   %i.sd = load i32, ptr %i.q, align 8
   tail call fastcc void @vt100_update_xy(ptr noundef nonnull %0, i32 noundef %.047.i, i32 noundef %i.sd)
-  %i.se = add nuw i32 %.047.i, 1                  ; 2 uses
-  %3 = icmp ult i32 %i.se, %i.rh
-  br i1 %3, label %.lr.ph.i29, label %.loopexit46.i, !llvm.loop !36
+  %i.se = add i32 %.047.i, 1                      ; 2 uses
+  %exitcond.not.i = icmp eq i32 %i.se, %i.rh
+  br i1 %exitcond.not.i, label %.loopexit46.i, label %.lr.ph.i29, !llvm.loop !36
 
 .loopexit46.i:                                    ; preds = %.lr.ph.i29, %bb.cz, %bb.cy
   %i.sf = load i32, ptr %i.o, align 4             ; 3 uses

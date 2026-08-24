@@ -205,15 +205,15 @@ _ZN5faiss12MinimaxHeapTINS_4CMaxIfiEEE4pushEif.exit.i.i: ; preds = %_ZN5faiss9he
 
 bb.ai:                                            ; preds = %_ZN5faiss18VisitedTableVector3setEm.exit101.i.i
   %i.jd = add nuw i64 %.079224.i.i, 1             ; 2 uses
-  %10 = icmp ult i64 %i.jd, %.083.lcssa.i.i
-  br i1 %10, label %.lr.ph227.i.i, label %.preheader.i.i, !llvm.loop !504
+  %exitcond266.not.i.i = icmp eq i64 %i.jd, %.083.lcssa.i.i
+  br i1 %exitcond266.not.i.i, label %.preheader.i.i, label %.lr.ph227.i.i, !llvm.loop !504
 
 .thread.i:                                        ; preds = %_ZN5faiss12MinimaxHeapTINS_4CMaxIfiEEE4pushEif.exit.i.i
   %i.je = add nsw i32 %.1225.i.ph.i, 4            ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #20
   %i.jf = add nuw i64 %.079224.i.i, 1             ; 2 uses
-  %11 = icmp ult i64 %i.jf, %.083.lcssa.i.i
-  br i1 %11, label %.lr.ph227.i.outer.i, label %._crit_edge237.i.i, !llvm.loop !504
+  %exitcond266.not.i6.i = icmp eq i64 %i.jf, %.083.lcssa.i.i
+  br i1 %exitcond266.not.i6.i, label %._crit_edge237.i.i, label %.lr.ph227.i.outer.i, !llvm.loop !504
 
 .lr.ph227.i.outer.i:                              ; preds = %.thread.i, %.lr.ph227.i.outer.preheader.i
   %.1225.i.ph.i = phi i32 [ %i.je, %.thread.i ], [ %.0242.i.i, %.lr.ph227.i.outer.preheader.i ] ; 3 uses
@@ -616,15 +616,15 @@ _ZN5faiss12MinimaxHeapTINS_4CMaxIfiEEE4pushEif.exit.i.i76: ; preds = %_ZN5faiss9
 
 bb.db:                                            ; preds = %_ZNSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE16_M_insert_uniqueIRKmSF_NS1_10_AllocNodeISaINS1_10_Hash_nodeImLb0EEEEEEEESt4pairINS1_14_Node_iteratorImLb1ELb0EEEbEOT_OT0_RKT1_.exit.i.i
   %i.yx = add nuw i64 %.079267.i.i, 1             ; 2 uses
-  %12 = icmp ult i64 %i.yx, %.083.lcssa.i.i36
-  br i1 %12, label %.lr.ph270.i.i, label %.preheader.i.i37, !llvm.loop !514
+  %exitcond327.not.i.i = icmp eq i64 %i.yx, %.083.lcssa.i.i36
+  br i1 %exitcond327.not.i.i, label %.preheader.i.i37, label %.lr.ph270.i.i, !llvm.loop !514
 
 .thread.i77:                                      ; preds = %_ZN5faiss12MinimaxHeapTINS_4CMaxIfiEEE4pushEif.exit.i.i76
   %i.yy = add nsw i32 %.1268.i.ph.i, 4            ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #20
   %i.yz = add nuw i64 %.079267.i.i, 1             ; 2 uses
-  %13 = icmp ult i64 %i.yz, %.083.lcssa.i.i36
-  br i1 %13, label %.lr.ph270.i.outer.i, label %._crit_edge280.i.i, !llvm.loop !514
+  %exitcond327.not.i6.i = icmp eq i64 %i.yz, %.083.lcssa.i.i36
+  br i1 %exitcond327.not.i6.i, label %._crit_edge280.i.i, label %.lr.ph270.i.outer.i, !llvm.loop !514
 
 .lr.ph270.i.outer.i:                              ; preds = %.thread.i77, %.lr.ph270.i.outer.preheader.i
   %.1268.i.ph.i = phi i32 [ %i.yy, %.thread.i77 ], [ %.0285.i.i, %.lr.ph270.i.outer.preheader.i ] ; 3 uses
@@ -1027,8 +1027,8 @@ bb.v:                                             ; preds = %bb.s, %_ZN5faiss18V
   %.266 = phi i32 [ %i.cw, %bb.s ], [ %.165117, %_ZN5faiss18VisitedTableVector3setEm.exit78 ] ; 3 uses
   %.1 = phi i32 [ 0, %bb.s ], [ %i.ci, %_ZN5faiss18VisitedTableVector3setEm.exit78 ] ; 4 uses
   %i.cy = add nuw i64 %.048119, 1                 ; 2 uses
-  %9 = icmp ult i64 %i.cy, %.051.lcssa
-  br i1 %9, label %.lr.ph121, label %.preheader89, !llvm.loop !785
+  %exitcond141.not = icmp eq i64 %i.cy, %.051.lcssa
+  br i1 %exitcond141.not, label %.preheader89, label %.lr.ph121, !llvm.loop !785
 
 .lr.ph126:                                        ; preds = %.lr.ph126.preheader, %bb.x
   %indvars.iv = phi i64 [ 0, %.lr.ph126.preheader ], [ %indvars.iv.next, %bb.x ] ; 2 uses
@@ -1431,8 +1431,8 @@ bb.z:                                             ; preds = %bb.w, %.loopexit
   %.266 = phi i32 [ %i.do, %bb.w ], [ %.165137, %.loopexit ] ; 3 uses
   %.1 = phi i32 [ 0, %bb.w ], [ %i.cz, %.loopexit ] ; 4 uses
   %i.dq = add nuw i64 %.048139, 1                 ; 2 uses
-  %10 = icmp ult i64 %i.dq, %.051.lcssa
-  br i1 %10, label %.lr.ph141, label %.preheader97, !llvm.loop !841
+  %exitcond166.not = icmp eq i64 %i.dq, %.051.lcssa
+  br i1 %exitcond166.not, label %.preheader97, label %.lr.ph141, !llvm.loop !841
 
 .lr.ph146:                                        ; preds = %.lr.ph146.preheader, %bb.ab
   %indvars.iv = phi i64 [ 0, %.lr.ph146.preheader ], [ %indvars.iv.next, %bb.ab ] ; 2 uses
@@ -1835,15 +1835,15 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
 
 bb.ar:                                            ; preds = %_ZN5faiss18VisitedTableVector3setEm.exit78.i.i.i
   %i.gp = add nuw i64 %.048119.i.i.i, 1           ; 2 uses
-  %27 = icmp ult i64 %i.gp, %.051.lcssa.i.i.i
-  br i1 %27, label %.lr.ph121.i.i.i, label %.preheader89.i.i.i, !llvm.loop !889
+  %exitcond140.not.i.i.i = icmp eq i64 %i.gp, %.051.lcssa.i.i.i
+  br i1 %exitcond140.not.i.i.i, label %.preheader89.i.i.i, label %.lr.ph121.i.i.i, !llvm.loop !889
 
 .thread.i.i:                                      ; preds = %.preheader.3.i.i.i
   %i.gq = add nsw i32 %.165117.i.ph.i.i, 4        ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #20, !noalias !885
   %i.gr = add nuw i64 %.048119.i.i.i, 1           ; 2 uses
-  %28 = icmp ult i64 %i.gr, %.051.lcssa.i.i.i
-  br i1 %28, label %.lr.ph121.i.outer.i.i, label %._crit_edge127.i.i.i, !llvm.loop !889
+  %exitcond140.not.i4.i.i = icmp eq i64 %i.gr, %.051.lcssa.i.i.i
+  br i1 %exitcond140.not.i4.i.i, label %._crit_edge127.i.i.i, label %.lr.ph121.i.outer.i.i, !llvm.loop !889
 
 .lr.ph121.i.outer.i.i:                            ; preds = %._crit_edge.i.i.i, %.thread.i.i
   %.048119.i.ph.i.i = phi i64 [ %i.gr, %.thread.i.i ], [ %i.ex, %._crit_edge.i.i.i ]
@@ -2246,15 +2246,15 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bz
 
 bb.cc:                                            ; preds = %.loopexit.i.i76.i
   %i.mk = add nuw i64 %.048137.i.i.i, 1           ; 2 uses
-  %29 = icmp ult i64 %i.mk, %.051.lcssa.i.i74.i
-  br i1 %29, label %.lr.ph139.i.i.i, label %.preheader95.i.i.i, !llvm.loop !902
+  %exitcond163.not.i.i.i = icmp eq i64 %i.mk, %.051.lcssa.i.i74.i
+  br i1 %exitcond163.not.i.i.i, label %.preheader95.i.i.i, label %.lr.ph139.i.i.i, !llvm.loop !902
 
 .thread.i86.i:                                    ; preds = %.preheader.3.i.i85.i
   %i.ml = add nsw i32 %.165135.i.ph.i.i, 4        ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #20, !noalias !898
   %i.mm = add nuw i64 %.048137.i.i.i, 1           ; 2 uses
-  %30 = icmp ult i64 %i.mm, %.051.lcssa.i.i74.i
-  br i1 %30, label %.lr.ph139.i.outer.i.i, label %._crit_edge145.i.i.i, !llvm.loop !902
+  %exitcond163.not.i4.i.i = icmp eq i64 %i.mm, %.051.lcssa.i.i74.i
+  br i1 %exitcond163.not.i4.i.i, label %._crit_edge145.i.i.i, label %.lr.ph139.i.outer.i.i, !llvm.loop !902
 
 .lr.ph139.i.outer.i.i:                            ; preds = %._crit_edge.i.i73.i, %.thread.i86.i
   %.048137.i.ph.i.i = phi i64 [ %i.mm, %.thread.i86.i ], [ %i.ka, %._crit_edge.i.i73.i ]
@@ -2657,15 +2657,15 @@ _ZN5faiss12MinimaxHeapTINS_4CMinIfiEEE4pushEif.exit.i.i: ; preds = %_ZN5faiss9he
 
 bb.ai:                                            ; preds = %_ZN5faiss18VisitedTableVector3setEm.exit101.i.i
   %i.jb = add nuw i64 %.079224.i.i, 1             ; 2 uses
-  %9 = icmp ult i64 %i.jb, %.083.lcssa.i.i
-  br i1 %9, label %.lr.ph227.i.i, label %.preheader.i.i, !llvm.loop !930
+  %exitcond266.not.i.i = icmp eq i64 %i.jb, %.083.lcssa.i.i
+  br i1 %exitcond266.not.i.i, label %.preheader.i.i, label %.lr.ph227.i.i, !llvm.loop !930
 
 .thread.i:                                        ; preds = %_ZN5faiss12MinimaxHeapTINS_4CMinIfiEEE4pushEif.exit.i.i
   %i.jc = add nsw i32 %.1225.i.ph.i, 4            ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #20
   %i.jd = add nuw i64 %.079224.i.i, 1             ; 2 uses
-  %10 = icmp ult i64 %i.jd, %.083.lcssa.i.i
-  br i1 %10, label %.lr.ph227.i.outer.i, label %._crit_edge237.i.i, !llvm.loop !930
+  %exitcond266.not.i6.i = icmp eq i64 %i.jd, %.083.lcssa.i.i
+  br i1 %exitcond266.not.i6.i, label %._crit_edge237.i.i, label %.lr.ph227.i.outer.i, !llvm.loop !930
 
 .lr.ph227.i.outer.i:                              ; preds = %.thread.i, %.lr.ph227.i.outer.preheader.i
   %.1225.i.ph.i = phi i32 [ %i.jc, %.thread.i ], [ %.0242.i.i, %.lr.ph227.i.outer.preheader.i ] ; 3 uses
@@ -3068,15 +3068,15 @@ _ZN5faiss12MinimaxHeapTINS_4CMinIfiEEE4pushEif.exit.i.i76: ; preds = %_ZN5faiss9
 
 bb.da:                                            ; preds = %_ZNSt10_HashtableImmSaImENSt8__detail9_IdentityESt8equal_toImESt4hashImENS1_18_Mod_range_hashingENS1_20_Default_ranged_hashENS1_20_Prime_rehash_policyENS1_17_Hashtable_traitsILb0ELb1ELb1EEEE16_M_insert_uniqueIRKmSF_NS1_10_AllocNodeISaINS1_10_Hash_nodeImLb0EEEEEEEESt4pairINS1_14_Node_iteratorImLb1ELb0EEEbEOT_OT0_RKT1_.exit.i.i
   %i.yr = add nuw i64 %.079267.i.i, 1             ; 2 uses
-  %11 = icmp ult i64 %i.yr, %.083.lcssa.i.i36
-  br i1 %11, label %.lr.ph270.i.i, label %.preheader.i.i37, !llvm.loop !939
+  %exitcond327.not.i.i = icmp eq i64 %i.yr, %.083.lcssa.i.i36
+  br i1 %exitcond327.not.i.i, label %.preheader.i.i37, label %.lr.ph270.i.i, !llvm.loop !939
 
 .thread.i77:                                      ; preds = %_ZN5faiss12MinimaxHeapTINS_4CMinIfiEEE4pushEif.exit.i.i76
   %i.ys = add nsw i32 %.1268.i.ph.i, 4            ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #20
   %i.yt = add nuw i64 %.079267.i.i, 1             ; 2 uses
-  %12 = icmp ult i64 %i.yt, %.083.lcssa.i.i36
-  br i1 %12, label %.lr.ph270.i.outer.i, label %._crit_edge280.i.i, !llvm.loop !939
+  %exitcond327.not.i6.i = icmp eq i64 %i.yt, %.083.lcssa.i.i36
+  br i1 %exitcond327.not.i6.i, label %._crit_edge280.i.i, label %.lr.ph270.i.outer.i, !llvm.loop !939
 
 .lr.ph270.i.outer.i:                              ; preds = %.thread.i77, %.lr.ph270.i.outer.preheader.i
   %.1268.i.ph.i = phi i32 [ %i.ys, %.thread.i77 ], [ %.0285.i.i, %.lr.ph270.i.outer.preheader.i ] ; 3 uses
