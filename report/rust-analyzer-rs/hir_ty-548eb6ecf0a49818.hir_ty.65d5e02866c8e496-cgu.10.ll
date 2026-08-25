@@ -205,9 +205,10 @@ bb.d:                                             ; preds = %.noexc19, %bb.c
   %.sroa.0.0.i.i.i = select i1 %i.r, i1 %i.t, i1 %i.s ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !8811
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !8811
-  %..i18 = select i1 %.sroa.0.0.i.i.i, ptr %i.o, ptr %i.p
-  %i.u = load i32, ptr %..i18, align 4, !noalias !8811
-  store i32 %i.u, ptr %i.q, align 4, !noalias !8811
+  %.val34 = load i32, ptr %i.o, align 4
+  %i.u = load i32, ptr %i.p, align 4
+  %6 = select i1 %.sroa.0.0.i.i.i, i32 %.val34, i32 %i.u
+  store i32 %6, ptr %i.q, align 4, !noalias !8811
   %i.v = xor i1 %.sroa.0.0.i.i.i, true
   %i.w = zext i1 %i.v to i64
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.w ; 3 uses
@@ -250,9 +251,10 @@ bb.e:                                             ; preds = %.noexc28, %.lr.ph.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8814
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !8814
   %i.ah = xor i1 %.sroa.0.0.i.i.i25, true
-  %.sroa.05.0.i = select i1 %.sroa.0.0.i.i.i25, ptr %.sroa.0.02.i, ptr %.sroa.0.2
-  %i.ai = load i32, ptr %.sroa.05.0.i, align 4, !noalias !8814
-  store i32 %i.ai, ptr %.sroa.13.3, align 4, !noalias !8814
+  %.sroa.0.02.i.val = load i32, ptr %.sroa.0.02.i, align 4
+  %i.ai = load i32, ptr %.sroa.0.2, align 4
+  %7 = select i1 %.sroa.0.0.i.i.i25, i32 %.sroa.0.02.i.val, i32 %i.ai
+  store i32 %7, ptr %.sroa.13.3, align 4, !noalias !8814
   %i.aj = zext i1 %i.ah to i64
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.2, i64 %i.aj ; 3 uses
   %i.al = zext i1 %.sroa.0.0.i.i.i25 to i64

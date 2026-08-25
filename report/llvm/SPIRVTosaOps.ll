@@ -202,12 +202,13 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.i, %bb.j
 
 bb.k:                                             ; preds = %bb.f
   %i.ca = icmp slt i64 %i.bf, %i.bg
-  %..i = select i1 %i.ca, ptr %.sroa.665.0123, ptr %.sroa.10.0122 ; 2 uses
-  %i.cb = load i64, ptr %..i, align 8, !tbaa !19
-  %i.cc = icmp slt i64 %i.be, %i.cb
-  %..i51 = select i1 %i.cc, ptr %..i, ptr %.sroa.14.0121
-  %13 = load i64, ptr %..i51, align 8, !tbaa !19
-  %.not = icmp eq i64 %13, %i.bh
+  %.sroa.665.0123.val = load i64, ptr %.sroa.665.0123, align 8
+  %i.cb = load i64, ptr %.sroa.10.0122, align 8
+  %13 = select i1 %i.ca, i64 %.sroa.665.0123.val, i64 %i.cb ; 2 uses
+  %i.cc = icmp slt i64 %i.be, %13
+  %.sroa.14.0121.val = load i64, ptr %.sroa.14.0121, align 8
+  %14 = select i1 %i.cc, i64 %13, i64 %.sroa.14.0121.val
+  %.not = icmp eq i64 %14, %i.bh
   br i1 %.not, label %"_ZN4llvm6any_ofINS_8ArrayRefIlEEZN4mlir5spirv12TosaSelectOp6verifyEvE3$_1EEbOT_T0_.exit", label %bb.l
 
 bb.l:                                             ; preds = %bb.k

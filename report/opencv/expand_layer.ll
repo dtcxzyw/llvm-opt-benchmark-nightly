@@ -204,9 +204,10 @@ bb.i:                                             ; preds = %bb.e, %_ZN2cv3dnn14
           to label %.preheader unwind label %bb.j
 
 .preheader:                                       ; preds = %bb.i
-  %13 = select i1 %i.s, ptr %10, ptr %i.q
-  %i.u = load i32, ptr %13, align 4, !tbaa !47    ; 3 uses
-  %i.v = icmp sgt i32 %i.u, 0
+  %.val97 = load i32, ptr %10, align 4
+  %i.u = load i32, ptr %i.q, align 4
+  %13 = select i1 %i.s, i32 %.val97, i32 %i.u     ; 3 uses
+  %i.v = icmp sgt i32 %13, 0
   br i1 %i.v, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader
@@ -217,14 +218,14 @@ bb.i:                                             ; preds = %bb.e, %_ZN2cv3dnn14
   %.val84 = load i32, ptr %10, align 4
   %i.w = select i1 %i.s, i32 %.val, i32 %.val84   ; 2 uses
   %narrow.i48 = call i32 @llvm.smax.i32(i32 %i.w, i32 0)
-  %.neg = sub nsw i32 %narrow.i48, %i.u
+  %.neg = sub nsw i32 %narrow.i48, %13
   %i.x = load i32, ptr %12, align 4
   %narrow.i68 = call i32 @llvm.smax.i32(i32 %i.x, i32 1)
   %i.y = getelementptr inbounds nuw i8, ptr %12, i64 12
   %narrow.i50 = call i32 @llvm.smax.i32(i32 %i.w, i32 1)
   %.sroa.sel83 = select i1 %i.s, ptr %.sroa.gep80, ptr %.sroa.gep
   %i.z = zext nneg i32 %narrow.i68 to i64         ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.u to i64
+  %wide.trip.count = zext nneg i32 %13 to i64
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %bb.z, %.preheader

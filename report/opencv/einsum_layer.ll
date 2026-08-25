@@ -205,9 +205,10 @@ bb.z:                                             ; preds = %._crit_edge
           to label %bb.aa unwind label %bb.ad
 
 bb.aa:                                            ; preds = %bb.z
-  %. = select i1 %i.an, ptr %5, ptr %i.al
-  %i.ao = load ptr, ptr %., align 8, !tbaa !143
-  invoke void @_ZN2cv3dnn15LayerEinsumImpl9reduceSumERNS_3MatERNS_8MatShapeE(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %11, ptr noundef nonnull align 8 dereferenceable(1032) %0, ptr noundef nonnull align 8 dereferenceable(208) %i.ao, ptr noundef nonnull align 4 dereferenceable(52) %8)
+  %.val = load ptr, ptr %5, align 8
+  %i.ao = load ptr, ptr %i.al, align 8
+  %19 = select i1 %i.an, ptr %.val, ptr %i.ao
+  invoke void @_ZN2cv3dnn15LayerEinsumImpl9reduceSumERNS_3MatERNS_8MatShapeE(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %11, ptr noundef nonnull align 8 dereferenceable(1032) %0, ptr noundef nonnull align 8 dereferenceable(208) %19, ptr noundef nonnull align 4 dereferenceable(52) %8)
           to label %bb.ab unwind label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa
@@ -452,9 +453,10 @@ bb.bi:                                            ; preds = %bb.bg, %bb.bh
           to label %bb.bj unwind label %bb.bm
 
 bb.bj:                                            ; preds = %bb.bi
-  %.110 = select i1 %i.da, ptr %5, ptr %i.bn
-  %.pn109.a = load ptr, ptr %.110, align 8, !tbaa !143
-  %i.db = getelementptr inbounds nuw [208 x i8], ptr %.pn109.a, i64 %indvars.iv132.a
+  %.val128 = load ptr, ptr %5, align 8
+  %.pn109.a = load ptr, ptr %i.bn, align 8
+  %.pn109 = select i1 %i.da, ptr %.val128, ptr %.pn109.a
+  %i.db = getelementptr inbounds nuw [208 x i8], ptr %.pn109, i64 %indvars.iv132.a
   %i.dc = load ptr, ptr %i.bm, align 8, !tbaa !134
   %i.dd = getelementptr inbounds nuw [52 x i8], ptr %i.dc, i64 %indvars.iv132.a
   invoke void @_ZN2cv3dnn15LayerEinsumImpl22pairwiseOperandProcessERKNS_3MatERKNS_8MatShapeES4_S7_S7_b(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %15, ptr noundef nonnull align 8 dereferenceable(1032) %0, ptr noundef nonnull align 8 dereferenceable(208) %spec.select107, ptr noundef nonnull align 4 dereferenceable(52) %i.cx, ptr noundef nonnull align 8 dereferenceable(208) %i.db, ptr noundef nonnull align 4 dereferenceable(52) %i.dd, ptr noundef nonnull align 4 dereferenceable(52) %13, i1 noundef zeroext %spec.select)

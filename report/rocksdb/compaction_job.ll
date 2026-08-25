@@ -205,11 +205,12 @@ bb.d:                                             ; preds = %_ZNK7rocksdb15Write
   store i32 %i.am, ptr %i.an, align 8, !tbaa !380
   %i.ao = load i32, ptr %i.ah, align 8, !tbaa !378
   %i.ap = icmp eq i32 %i.ao, 0
-  %. = select i1 %i.ap, ptr %i.aa, ptr %i.x
-  %.sink.a = load ptr, ptr %., align 8, !tbaa !649 ; 2 uses
-  %i.aq = load i32, ptr %.sink.a, align 4, !tbaa !323
+  %.val = load ptr, ptr %i.aa, align 8
+  %.sink.a = load ptr, ptr %i.x, align 8
+  %.sink = select i1 %i.ap, ptr %.val, ptr %.sink.a ; 2 uses
+  %i.aq = load i32, ptr %.sink, align 4, !tbaa !323
   %i.ar = add nsw i32 %i.aq, %i.am
-  store i32 %i.ar, ptr %.sink.a, align 4, !tbaa !323
+  store i32 %i.ar, ptr %.sink, align 4, !tbaa !323
   invoke void @_ZN7rocksdb4port5Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(60) %i.w)
           to label %_ZN7rocksdb21InstrumentedMutexLockD2Ev.exit5 unwind label %bb.g
 

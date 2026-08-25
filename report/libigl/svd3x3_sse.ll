@@ -55,8 +55,9 @@ define weak_odr dso_local void @_ZN3igl10svd3x3_sseIfEEvRKN5Eigen6MatrixIT_Li12E
   %gep.3.2.1 = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.r = load float, ptr %gep.3.2.1, align 8, !tbaa !9
   %.sroa.371583.124.vec.insert = insertelement <4 x float> %.sroa.371583.120.vec.insert, float %i.r, i64 3 ; 7 uses
-  %4 = load <4 x float>, ptr %0, align 16
-  %.sroa.121573.32.vec.insert = shufflevector <4 x float> %4, <4 x float> poison, <4 x i32> <i32 2, i32 poison, i32 poison, i32 poison>
+  %gep.21520 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load float, ptr %gep.21520, align 8, !tbaa !9
+  %.sroa.121573.32.vec.insert = insertelement <4 x float> poison, float %4, i64 0
   %gep.1.21521 = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.s = load float, ptr %gep.1.21521, align 4, !tbaa !9
   %.sroa.121573.36.vec.insert = insertelement <4 x float> %.sroa.121573.32.vec.insert, float %i.s, i64 1

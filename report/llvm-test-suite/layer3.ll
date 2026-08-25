@@ -205,10 +205,11 @@ begin_hunk_0_@dct36:bb.a
   %i.lk = load double, ptr %i.aa, align 8, !tbaa !8
   %i.ll = tail call double @llvm.fmuladd.f64(double %i.lk, double %i.ce, double %i.lj)
   %i.lm = fadd double %i.bl, %i.ll
-  %5 = load <2 x double>, ptr %i.a, align 8
+  %5 = load double, ptr %i.a, align 8, !tbaa !8
   %i.ln = load double, ptr %i.at, align 8, !tbaa !8
   %i.lo = load double, ptr %i.aj, align 8, !tbaa !8
-  %i.lp = insertelement <2 x double> %5, double %i.lo, i64 1
+  %6 = insertelement <2 x double> poison, double %5, i64 0
+  %i.lp = insertelement <2 x double> %6, double %i.lo, i64 1
   %i.lq = fneg <2 x double> %i.lp
   %i.lr = insertelement <2 x double> poison, double %i.by, i64 0
   %i.ls = insertelement <2 x double> %i.lr, double %i.cb, i64 1

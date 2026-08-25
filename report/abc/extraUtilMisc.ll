@@ -205,8 +205,9 @@ define void @Extra_Transpose32(ptr nofree noundef captures(none) %0) local_unnam
   store <4 x i32> %i.dr, ptr %i.aq, align 4, !tbaa !17
   %i.ds = load <2 x i32>, ptr %i.d, align 4, !tbaa !17
   %i.dt = load <4 x i32>, ptr %i.q, align 4, !tbaa !17 ; 3 uses
-  %1 = load <4 x i32>, ptr %i.ao, align 4
-  %i.du = shufflevector <4 x i32> %i.dt, <4 x i32> %1, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %1 = load <2 x i32>, ptr %i.ao, align 4, !tbaa !17
+  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.du = shufflevector <4 x i32> %i.dt, <4 x i32> %2, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.dv = lshr <4 x i32> %i.du, splat (i32 4)
   %i.dw = shufflevector <2 x i32> %i.ds, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.dx = shufflevector <4 x i32> %i.dw, <4 x i32> %i.dt, <4 x i32> <i32 0, i32 1, i32 6, i32 7>

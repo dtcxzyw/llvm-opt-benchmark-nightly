@@ -204,7 +204,7 @@ declare ptr @__dynamic_cast(ptr, ptr, ptr, i64) local_unnamed_addr #7
 ; Function Attrs: mustprogress uwtable
 define void @_ZN3g2o14CacheSE3Offset10updateImplEv(ptr noundef nonnull align 16 dereferenceable(464) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noundef ptr @_ZN3g2o5Cache6vertexEv(ptr noundef nonnull align 8 dereferenceable(72) %0) ; 11 uses
+  %i.a = tail call noundef ptr @_ZN3g2o5Cache6vertexEv(ptr noundef nonnull align 8 dereferenceable(72) %0) ; 12 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 192 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !29   ; 12 uses
@@ -379,11 +379,14 @@ bb.a:
   store double %i.ed, ptr %.sroa.2219.0..sroa_idx, align 16
   %.sroa.2320.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 200
   store double 1.000000e+00, ptr %.sroa.2320.0..sroa_idx, align 8, !tbaa !10
-  %1 = load <2 x double>, ptr %i.b, align 8       ; 2 uses
+  %1 = load double, ptr %i.b, align 8, !tbaa !22, !noalias !56
+  %.sroa.0.0.vec.insert = insertelement <2 x double> poison, double %1, i64 0
   %i.eg = load double, ptr %i.k, align 8, !tbaa !22, !noalias !56
-  %.sroa.0.8.vec.insert = insertelement <2 x double> %1, double %i.eg, i64 1 ; 2 uses
-  %i.eh = load double, ptr %i.s, align 8, !tbaa !22, !noalias !56 ; 2 uses
-  %.sroa.9.32.vec.insert = shufflevector <2 x double> %1, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %.sroa.0.8.vec.insert = insertelement <2 x double> %.sroa.0.0.vec.insert, double %i.eg, i64 1 ; 2 uses
+  %2 = load double, ptr %i.s, align 8, !tbaa !22, !noalias !56 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 200
+  %i.eh = load double, ptr %3, align 8, !tbaa !22, !noalias !56
+  %.sroa.9.32.vec.insert = insertelement <2 x double> poison, double %i.eh, i64 0
   %i.ei = getelementptr inbounds nuw i8, ptr %i.a, i64 232
   %i.ej = load double, ptr %i.ei, align 8, !tbaa !22, !noalias !56
   %.sroa.9.40.vec.insert = insertelement <2 x double> %.sroa.9.32.vec.insert, double %i.ej, i64 1 ; 2 uses
@@ -414,12 +417,12 @@ bb.a:
   %i.fg = fmul double %i.fa, %i.ff
   %i.fh = fmul double %i.el, %i.ev
   %i.fi = fsub double %i.fg, %i.fh
-  %i.fj = fmul double %i.eh, %i.eq
+  %i.fj = fmul double %2, %i.eq
   %i.fk = fsub double %i.fi, %i.fj
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 336
   store <2 x double> %.sroa.0.8.vec.insert, ptr %i.fl, align 16
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 352
-  store double %i.eh, ptr %.sroa.6.0..sroa_idx, align 16
+  store double %2, ptr %.sroa.6.0..sroa_idx, align 16
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 360
   store double 0.000000e+00, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 368

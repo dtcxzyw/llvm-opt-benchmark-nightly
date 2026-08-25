@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hermes/original/StringRef?download=true
 inline.NumInlined: 344
 inline.NumDeleted: 125
-loop-unroll.NumRuntimeUnrolled: 8
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZNK4llvh9StringRef15compare_numericES0_:bb.a
 
 bb.b:                                             ; preds = %.lr.ph, %.split91.thread
@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader:                                       ; preds = %.lr.ph, %middle.block, %bb.b
   %.not89159 = phi i1 [ true, %bb.b ], [ false, %middle.block ], [ false, %.lr.ph ]
-  %.060157 = phi ptr [ %i.a, %bb.b ], [ %.060156, %middle.block ], [ %.060156, %.lr.ph ] ; 19 uses
+  %.060157 = phi ptr [ %i.a, %bb.b ], [ %.060156, %middle.block ], [ %.060156, %.lr.ph ] ; 17 uses
   %.sroa.0.0155 = phi ptr [ null, %bb.b ], [ %.sroa.0.0154, %middle.block ], [ %.sroa.0.0154, %.lr.ph ] ; 2 uses
   %.not6596 = icmp eq i64 %1, 0
   br i1 %.not6596, label %.thread, label %.lr.ph99
@@ -373,109 +373,90 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph95.us
   br i1 %.not118.a, label %.loopexit, label %bb.d
 
 .lr.ph99.split.split:                             ; preds = %.lr.ph99.split
-  br i1 %.not67, label %.lr.ph95.us108.preheader, label %.lr.ph95
+  br i1 %.not67, label %.lr.ph95.us108, label %.lr.ph95.us108.preheader
 
 .lr.ph95.us108.preheader:                         ; preds = %.lr.ph99.split.split
-  %6 = add i64 %1, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %6, i64 2)
   %xtraiter = and i64 %3, 1
   %i.ch = icmp eq i64 %3, 1
   %unroll_iter = and i64 %3, -2
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod177 = trunc i64 %3 to i1
-  br label %.lr.ph95.us108
+  br label %.lr.ph95
 
-.lr.ph95.us108:                                   ; preds = %.lr.ph95.us108.preheader, %._crit_edge.split.us
-  %.05897.us110 = phi i64 [ %i.cu, %._crit_edge.split.us ], [ 1, %.lr.ph95.us108.preheader ] ; 3 uses
-  %7 = trunc i64 %.05897.us110 to i32             ; 3 uses
-  store i32 %7, ptr %.060157, align 4, !tbaa !3
-  %8 = add i64 %.05897.us110, -1                  ; 2 uses
-  %9 = trunc i64 %8 to i32                        ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 %8
-  %11 = load i8, ptr %10, align 1, !tbaa !15      ; 3 uses
-  br i1 %i.ch, label %.epil.preheader.a, label %.lr.ph95.us108.new
+.lr.ph95.us108:                                   ; preds = %.lr.ph99.split.split
+  %6 = add i64 %1, 1
+  %umax = tail call i64 @llvm.umax.i64(i64 %6, i64 2)
+  %xtraiter180 = and i64 %3, 1
+  %7 = icmp eq i64 %3, 1
+  %unroll_iter185 = and i64 %3, -2
+  %lcmp.mod183.not = icmp eq i64 %xtraiter180, 0
+  %lcmp.mod184 = trunc i64 %3 to i1
+  br label %.lr.ph95.us108.new
 
-.lr.ph95.us108.new:                               ; preds = %.lr.ph95.us108, %27
-  %12 = phi i32 [ %storemerge116.1, %27 ], [ %7, %.lr.ph95.us108 ]
-  %.05494.us = phi i64 [ %28, %27 ], [ 1, %.lr.ph95.us108 ] ; 6 uses
-  %.05593.us = phi i32 [ %i.cm, %27 ], [ %9, %.lr.ph95.us108 ]
-  %niter = phi i64 [ %niter.next.1, %27 ], [ 0, %.lr.ph95.us108 ]
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05494.us ; 3 uses
-  %14 = load i32, ptr %13, align 4, !tbaa !3      ; 2 uses
-  %15 = add nsw i64 %.05494.us, -1                ; 2 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 %15
-  %i.cj = load i8, ptr %i.ci, align 1, !tbaa !15
-  %16 = icmp eq i8 %11, %i.cj
-  br i1 %16, label %bb.f, label %17
+.lr.ph95.us108.new:                               ; preds = %.lr.ph95.us108, %._crit_edge.split.us
+  %.05494.us = phi i64 [ %i.cu, %._crit_edge.split.us ], [ 1, %.lr.ph95.us108 ] ; 3 uses
+  %8 = trunc i64 %.05494.us to i32                ; 3 uses
+  store i32 %8, ptr %.060157, align 4, !tbaa !3
+  %9 = add i64 %.05494.us, -1                     ; 2 uses
+  %10 = trunc i64 %9 to i32                       ; 2 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 %9
+  %i.cj = load i8, ptr %i.ci, align 1, !tbaa !15  ; 3 uses
+  br i1 %7, label %.epil.preheader.a, label %bb.f
 
-17:                                               ; preds = %.lr.ph95.us108.new
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %15
-  %19 = icmp ult i32 %14, %12
-  %..i70.us = select i1 %19, ptr %13, ptr %18
-  %20 = load i32, ptr %..i70.us, align 4, !tbaa !3
-  %21 = add i32 %20, 1
-  br label %bb.f
-
-bb.f:                                             ; preds = %.lr.ph95.us108.new, %17
-  %storemerge116 = phi i32 [ %21, %17 ], [ %.05593.us, %.lr.ph95.us108.new ] ; 2 uses
-  store i32 %storemerge116, ptr %13, align 4, !tbaa !3
-  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05494.us
-  %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 4 ; 3 uses
+bb.f:                                             ; preds = %.lr.ph95.us108.new, %bb.f
+  %11 = phi i32 [ %storemerge119.1, %bb.f ], [ %8, %.lr.ph95.us108.new ]
+  %.05497.us = phi i64 [ %23, %bb.f ], [ 1, %.lr.ph95.us108.new ] ; 5 uses
+  %storemerge116 = phi i32 [ %i.cm, %bb.f ], [ %10, %.lr.ph95.us108.new ]
+  %niter186 = phi i64 [ %niter186.next.1, %bb.f ], [ 0, %.lr.ph95.us108.new ]
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05497.us ; 2 uses
+  %13 = load i32, ptr %12, align 4, !tbaa !3      ; 2 uses
+  %14 = getelementptr i8, ptr %2, i64 %.05497.us
+  %15 = getelementptr i8, ptr %14, i64 -1
+  %16 = load i8, ptr %15, align 1, !tbaa !15
+  %17 = icmp eq i8 %i.cj, %16
+  %18 = tail call i32 @llvm.umin.i32(i32 %13, i32 %11)
+  %19 = add i32 %18, 1
+  %storemerge119 = select i1 %17, i32 %storemerge116, i32 %19 ; 2 uses
+  store i32 %storemerge119, ptr %12, align 4, !tbaa !3
+  %i.ck = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05497.us
+  %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 4 ; 2 uses
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !3  ; 3 uses
-  %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 %.05494.us
+  %i.cn = getelementptr i8, ptr %2, i64 %.05497.us
   %i.co = load i8, ptr %i.cn, align 1, !tbaa !15
-  %i.cp = icmp eq i8 %11, %i.co
-  br i1 %i.cp, label %27, label %22
+  %20 = icmp eq i8 %i.cj, %i.co
+  %21 = tail call i32 @llvm.umin.i32(i32 %i.cm, i32 %storemerge119)
+  %22 = add i32 %21, 1
+  %storemerge119.1 = select i1 %20, i32 %13, i32 %22 ; 3 uses
+  store i32 %storemerge119.1, ptr %i.cl, align 4, !tbaa !3
+  %23 = add nuw i64 %.05497.us, 2                 ; 2 uses
+  %niter186.next.1 = add nuw i64 %niter186, 2     ; 2 uses
+  %i.cp = icmp eq i64 %niter186.next.1, %unroll_iter185
+  br i1 %i.cp, label %._crit_edge.split.us.unr-lcssa, label %bb.f, !llvm.loop !24
 
-22:                                               ; preds = %bb.f
-  %23 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05494.us
-  %24 = icmp ult i32 %i.cm, %storemerge116
-  %..i70.us.1 = select i1 %24, ptr %i.cl, ptr %23
-  %25 = load i32, ptr %..i70.us.1, align 4, !tbaa !3
-  %26 = add i32 %25, 1
-  br label %27
+._crit_edge.split.us.unr-lcssa:                   ; preds = %bb.f
+  br i1 %lcmp.mod183.not, label %._crit_edge.split.us, label %.epil.preheader.a
 
-27:                                               ; preds = %22, %bb.f
-  %storemerge116.1 = phi i32 [ %26, %22 ], [ %14, %bb.f ] ; 3 uses
-  store i32 %storemerge116.1, ptr %i.cl, align 4, !tbaa !3
-  %28 = add nuw i64 %.05494.us, 2                 ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.split.us.unr-lcssa, label %.lr.ph95.us108.new, !llvm.loop !24
-
-._crit_edge.split.us.unr-lcssa:                   ; preds = %27
-  br i1 %lcmp.mod.not, label %._crit_edge.split.us, label %.epil.preheader.a
-
-.epil.preheader.a:                                ; preds = %._crit_edge.split.us.unr-lcssa, %.lr.ph95.us108
-  %.epil.init.a = phi i32 [ %7, %.lr.ph95.us108 ], [ %storemerge116.1, %._crit_edge.split.us.unr-lcssa ]
-  %.05494.us.epil.init = phi i64 [ 1, %.lr.ph95.us108 ], [ %28, %._crit_edge.split.us.unr-lcssa ] ; 2 uses
-  %.05593.us.epil.init = phi i32 [ %9, %.lr.ph95.us108 ], [ %i.cm, %._crit_edge.split.us.unr-lcssa ]
-  tail call void @llvm.assume(i1 %lcmp.mod177)
-  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05494.us.epil.init ; 3 uses
-  %29 = add nsw i64 %.05494.us.epil.init, -1      ; 2 uses
-  %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 %29
+.epil.preheader.a:                                ; preds = %._crit_edge.split.us.unr-lcssa, %.lr.ph95.us108.new
+  %.epil.init.a = phi i32 [ %8, %.lr.ph95.us108.new ], [ %storemerge119.1, %._crit_edge.split.us.unr-lcssa ]
+  %.05494.us.epil.init = phi i64 [ 1, %.lr.ph95.us108.new ], [ %23, %._crit_edge.split.us.unr-lcssa ] ; 2 uses
+  %.05593.us.epil.init = phi i32 [ %10, %.lr.ph95.us108.new ], [ %i.cm, %._crit_edge.split.us.unr-lcssa ]
+  tail call void @llvm.assume(i1 %lcmp.mod184)
+  %i.cq = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05494.us.epil.init ; 2 uses
+  %24 = load i32, ptr %i.cq, align 4, !tbaa !3
+  %25 = getelementptr i8, ptr %2, i64 %.05494.us.epil.init
+  %i.cr = getelementptr i8, ptr %25, i64 -1
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !15
-  %i.ct = icmp eq i8 %11, %i.cs
-  br i1 %i.ct, label %._crit_edge.split.us.epilog-lcssa, label %30
-
-30:                                               ; preds = %.epil.preheader.a
-  %31 = load i32, ptr %i.cq, align 4, !tbaa !3
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %29
-  %33 = icmp ult i32 %31, %.epil.init.a
-  %..i70.us.epil = select i1 %33, ptr %i.cq, ptr %32
-  %34 = load i32, ptr %..i70.us.epil, align 4, !tbaa !3
-  %35 = add i32 %34, 1
-  br label %._crit_edge.split.us.epilog-lcssa
-
-._crit_edge.split.us.epilog-lcssa:                ; preds = %30, %.epil.preheader.a
-  %storemerge116.epil = phi i32 [ %35, %30 ], [ %.05593.us.epil.init, %.epil.preheader.a ]
-  store i32 %storemerge116.epil, ptr %i.cq, align 4, !tbaa !3
+  %i.ct = icmp eq i8 %i.cj, %i.cs
+  %26 = tail call i32 @llvm.umin.i32(i32 %24, i32 %.epil.init.a)
+  %27 = add i32 %26, 1
+  %storemerge119.epil = select i1 %i.ct, i32 %.05593.us.epil.init, i32 %27
+  store i32 %storemerge119.epil, ptr %i.cq, align 4, !tbaa !3
   br label %._crit_edge.split.us
 
-._crit_edge.split.us:                             ; preds = %._crit_edge.split.us.unr-lcssa, %._crit_edge.split.us.epilog-lcssa
-  %i.cu = add nuw i64 %.05897.us110, 1            ; 2 uses
+._crit_edge.split.us:                             ; preds = %._crit_edge.split.us.unr-lcssa, %.epil.preheader.a
+  %i.cu = add nuw i64 %.05494.us, 1               ; 2 uses
   %exitcond131 = icmp eq i64 %i.cu, %umax
-  br i1 %exitcond131, label %.thread, label %.lr.ph95.us108, !llvm.loop !23
+  br i1 %exitcond131, label %.thread, label %.lr.ph95.us108.new, !llvm.loop !23
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader176, %.lr.ph
   %i.cv = phi i64 [ %i.cy, %.lr.ph ], [ %.ph, %.lr.ph.preheader176 ]
@@ -487,61 +468,88 @@ bb.f:                                             ; preds = %.lr.ph95.us108.new,
   %.not = icmp ult i64 %3, %i.cy
   br i1 %.not, label %.preheader, label %.lr.ph, !llvm.loop !25
 
-bb.g:                                             ; preds = %._crit_edge.split.a
+bb.g:                                             ; preds = %bb.i
   %i.cz = add i64 %.05897, 1                      ; 2 uses
   %.not65 = icmp ugt i64 %i.cz, %1
   br i1 %.not65, label %.thread, label %.lr.ph95, !llvm.loop !23
 
-.lr.ph95:                                         ; preds = %.lr.ph99.split.split, %bb.g
-  %.05897 = phi i64 [ %i.cz, %bb.g ], [ 1, %.lr.ph99.split.split ] ; 3 uses
-  %i.da = trunc i64 %.05897 to i32                ; 3 uses
+.lr.ph95:                                         ; preds = %.lr.ph95.us108.preheader, %bb.g
+  %.05897 = phi i64 [ %i.cz, %bb.g ], [ 1, %.lr.ph95.us108.preheader ] ; 3 uses
+  %i.da = trunc i64 %.05897 to i32                ; 5 uses
   store i32 %i.da, ptr %.060157, align 4, !tbaa !3
   %i.db = add i64 %.05897, -1                     ; 2 uses
-  %i.dc = trunc i64 %i.db to i32
+  %i.dc = trunc i64 %i.db to i32                  ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 %i.db
-  %i.de = load i8, ptr %i.dd, align 1, !tbaa !15
-  br label %bb.h
+  %i.de = load i8, ptr %i.dd, align 1, !tbaa !15  ; 3 uses
+  br i1 %i.ch, label %bb.h, label %bb.j
 
 ._crit_edge.split.a:                              ; preds = %bb.j
-  %.not115 = icmp ugt i32 %.sroa.speculated76.a, %5
-  br i1 %.not115, label %.loopexit, label %bb.g
+  br i1 %lcmp.mod.not, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %.lr.ph95, %bb.j
-  %i.df = phi i32 [ %i.da, %.lr.ph95 ], [ %storemerge.a, %bb.j ]
-  %.05494 = phi i64 [ 1, %.lr.ph95 ], [ %i.dl, %bb.j ] ; 4 uses
-  %.05593 = phi i32 [ %i.dc, %.lr.ph95 ], [ %i.dh, %bb.j ]
-  %.08692 = phi i32 [ %i.da, %.lr.ph95 ], [ %.sroa.speculated76.a, %bb.j ]
-  %i.dg = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05494 ; 3 uses
-  %i.dh = load i32, ptr %i.dg, align 4, !tbaa !3  ; 2 uses
-  %36 = add nsw i64 %.05494, -1                   ; 2 uses
-  %i.di = getelementptr inbounds nuw i8, ptr %2, i64 %36
+bb.h:                                             ; preds = %._crit_edge.split.a, %.lr.ph95
+  %i.df = phi i32 [ %i.da, %.lr.ph95 ], [ %storemerge.1, %._crit_edge.split.a ]
+  %.05494 = phi i64 [ 1, %.lr.ph95 ], [ %48, %._crit_edge.split.a ] ; 2 uses
+  %.05593 = phi i32 [ %i.dc, %.lr.ph95 ], [ %42, %._crit_edge.split.a ]
+  %.08692 = phi i32 [ %i.da, %.lr.ph95 ], [ %.sroa.speculated76.a, %._crit_edge.split.a ]
+  tail call void @llvm.assume(i1 %lcmp.mod177)
+  %i.dg = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05494 ; 2 uses
+  %i.dh = load i32, ptr %i.dg, align 4, !tbaa !3
+  %28 = getelementptr i8, ptr %2, i64 %.05494
+  %i.di = getelementptr i8, ptr %28, i64 -1
   %i.dj = load i8, ptr %i.di, align 1, !tbaa !15
   %i.dk = icmp eq i8 %i.de, %i.dj
-  br i1 %i.dk, label %bb.j, label %bb.i
+  %29 = tail call i32 @llvm.umin.i32(i32 %i.dh, i32 %i.df)
+  %30 = add i32 %29, 1
+  %storemerge.epil = select i1 %i.dk, i32 %.05593, i32 %30 ; 2 uses
+  store i32 %storemerge.epil, ptr %i.dg, align 4, !tbaa !3
+  %.sroa.speculated76.epil = tail call i32 @llvm.umin.i32(i32 %storemerge.epil, i32 %.08692)
+  br label %bb.i
 
-bb.i:                                             ; preds = %bb.h
-  %37 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %36
-  %38 = icmp ult i32 %i.dh, %i.df
-  %..i70 = select i1 %38, ptr %i.dg, ptr %37
-  %39 = load i32, ptr %..i70, align 4, !tbaa !3
-  %40 = add i32 %39, 1
-  br label %bb.j
+bb.i:                                             ; preds = %._crit_edge.split.a, %bb.h
+  %.sroa.speculated76.lcssa = phi i32 [ %.sroa.speculated76.a, %._crit_edge.split.a ], [ %.sroa.speculated76.epil, %bb.h ]
+  %.not118 = icmp ugt i32 %.sroa.speculated76.lcssa, %5
+  br i1 %.not118, label %.loopexit, label %bb.g
 
-bb.j:                                             ; preds = %bb.h, %bb.i
-  %storemerge.a = phi i32 [ %40, %bb.i ], [ %.05593, %bb.h ] ; 3 uses
-  store i32 %storemerge.a, ptr %i.dg, align 4, !tbaa !3
-  %.sroa.speculated76.a = tail call i32 @llvm.umin.i32(i32 %storemerge.a, i32 %.08692) ; 2 uses
-  %i.dl = add nuw i64 %.05494, 1
-  %exitcond.not = icmp eq i64 %.05494, %3
-  br i1 %exitcond.not, label %._crit_edge.split.a, label %bb.h, !llvm.loop !24
+bb.j:                                             ; preds = %.lr.ph95, %bb.j
+  %31 = phi i32 [ %storemerge.1, %bb.j ], [ %i.da, %.lr.ph95 ]
+  %.05497 = phi i64 [ %48, %bb.j ], [ 1, %.lr.ph95 ] ; 5 uses
+  %.05596 = phi i32 [ %42, %bb.j ], [ %i.dc, %.lr.ph95 ]
+  %storemerge.a = phi i32 [ %.sroa.speculated76.a, %bb.j ], [ %i.da, %.lr.ph95 ]
+  %niter = phi i64 [ %i.dl, %bb.j ], [ 0, %.lr.ph95 ]
+  %32 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05497 ; 2 uses
+  %33 = load i32, ptr %32, align 4, !tbaa !3      ; 2 uses
+  %34 = getelementptr i8, ptr %2, i64 %.05497
+  %35 = getelementptr i8, ptr %34, i64 -1
+  %36 = load i8, ptr %35, align 1, !tbaa !15
+  %37 = icmp eq i8 %i.de, %36
+  %38 = tail call i32 @llvm.umin.i32(i32 %33, i32 %31)
+  %39 = add i32 %38, 1
+  %storemerge = select i1 %37, i32 %.05596, i32 %39 ; 3 uses
+  store i32 %storemerge, ptr %32, align 4, !tbaa !3
+  %.sroa.speculated76 = tail call i32 @llvm.umin.i32(i32 %storemerge, i32 %storemerge.a)
+  %40 = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %.05497
+  %41 = getelementptr inbounds nuw i8, ptr %40, i64 4 ; 2 uses
+  %42 = load i32, ptr %41, align 4, !tbaa !3      ; 3 uses
+  %43 = getelementptr i8, ptr %2, i64 %.05497
+  %44 = load i8, ptr %43, align 1, !tbaa !15
+  %45 = icmp eq i8 %i.de, %44
+  %46 = tail call i32 @llvm.umin.i32(i32 %42, i32 %storemerge)
+  %47 = add i32 %46, 1
+  %storemerge.1 = select i1 %45, i32 %33, i32 %47 ; 4 uses
+  store i32 %storemerge.1, ptr %41, align 4, !tbaa !3
+  %.sroa.speculated76.a = tail call i32 @llvm.umin.i32(i32 %storemerge.1, i32 %.sroa.speculated76) ; 3 uses
+  %48 = add nuw i64 %.05497, 2                    ; 2 uses
+  %i.dl = add nuw i64 %niter, 2                   ; 2 uses
+  %exitcond.not = icmp eq i64 %i.dl, %unroll_iter
+  br i1 %exitcond.not, label %._crit_edge.split.a, label %bb.j, !llvm.loop !24
 
 .thread:                                          ; preds = %bb.g, %._crit_edge.split.us, %bb.d, %._crit_edge.split.us.us.us, %..thread_crit_edge.split.us, %.preheader
   %i.dm = getelementptr inbounds nuw [4 x i8], ptr %.060157, i64 %3
   %i.dn = load i32, ptr %i.dm, align 4, !tbaa !3
   br label %.loopexit
 
-.loopexit:                                        ; preds = %._crit_edge.split.a, %._crit_edge.split.us.us, %.loopexit.split.us, %.thread
-  %.3 = phi i32 [ %i.dn, %.thread ], [ %i.v, %.loopexit.split.us ], [ %i.v, %._crit_edge.split.us.us ], [ %i.v, %._crit_edge.split.a ]
+.loopexit:                                        ; preds = %bb.i, %._crit_edge.split.us.us, %.loopexit.split.us, %.thread
+  %.3 = phi i32 [ %i.dn, %.thread ], [ %i.v, %.loopexit.split.us ], [ %i.v, %._crit_edge.split.us.us ], [ %i.v, %bb.i ]
   %.not.i = icmp eq ptr %.sroa.0.0155, null
   br i1 %.not.i, label %_ZNSt10unique_ptrIA_jSt14default_deleteIS0_EED2Ev.exit, label %_ZNKSt14default_deleteIA_jEclIjEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i
 

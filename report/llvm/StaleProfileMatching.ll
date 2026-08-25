@@ -204,10 +204,11 @@ bb.a:
   store i8 0, ptr %i.k, align 8, !tbaa !202
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.d
   %i.m = icmp ult i64 %i.f, %i.i
-  %..i = select i1 %i.m, ptr %i.l, ptr %i.e
-  %i.n = load i64, ptr %..i, align 8, !tbaa !24
+  %.val = load i64, ptr %i.l, align 8
+  %i.n = load i64, ptr %i.e, align 8
+  %5 = select i1 %i.m, i64 %.val, i64 %i.n
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.010.019, i64 8
-  store i64 %i.n, ptr %i.o, align 8, !tbaa !195
+  store i64 %5, ptr %i.o, align 8, !tbaa !195
   %i.p = add i64 %.020, 1
   br label %bb.b
 
@@ -305,10 +306,10 @@ _ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit21:          ; preds = %_ZNSt6vectorImSaImE
   %.020.i = phi i64 [ %.1.i, %bb.d ], [ 0, %_ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit21 ] ; 2 uses
   %.sroa.010.019.i = phi ptr [ %i.ar, %bb.d ], [ %i.af, %_ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit21 ] ; 4 uses
   %i.ah = load i64, ptr %.sroa.010.019.i, align 8, !tbaa !204 ; 2 uses
-  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.sroa.038.06370, i64 %i.ah
+  %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.sroa.038.06370, i64 %i.ah ; 2 uses
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !24 ; 2 uses
   %i.ak = icmp eq i64 %i.aj, 0
-  %i.al = getelementptr inbounds nuw [8 x i8], ptr %.sroa.032.0, i64 %i.ah
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %.sroa.032.0, i64 %i.ah ; 2 uses
   %i.am = load i64, ptr %i.al, align 8, !tbaa !24 ; 2 uses
   %i.an = icmp eq i64 %i.am, 0
   %or.cond.i = select i1 %i.ak, i1 %i.an, i1 false
@@ -317,9 +318,12 @@ _ZNSt6vectorImSaImEEC2EmRKmRKS0_.exit21:          ; preds = %_ZNSt6vectorImSaImE
 .lr.ph._crit_edge.i:                              ; preds = %.lr.ph.i
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.010.019.i, i64 16
   store i8 0, ptr %i.ao, align 8, !tbaa !202
-  %11 = call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.am)
+  %11 = icmp ult i64 %i.aj, %i.am
+  %.val.i = load i64, ptr %i.al, align 8
+  %.val24.i = load i64, ptr %i.ai, align 8
+  %12 = select i1 %11, i64 %.val.i, i64 %.val24.i
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.010.019.i, i64 8
-  store i64 %11, ptr %i.ap, align 8, !tbaa !195
+  store i64 %12, ptr %i.ap, align 8, !tbaa !195
   %i.aq = add i64 %.020.i, 1
   br label %bb.d
 

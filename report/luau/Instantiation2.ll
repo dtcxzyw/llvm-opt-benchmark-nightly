@@ -204,14 +204,15 @@ _ZN4Luau2isIJNS_11UnknownTypeEEPKNS_4TypeEEEbOT0_.exit.thread.i: ; preds = %_ZN4
 .noexc107:                                        ; preds = %_ZN4Luau2isIJNS_11UnknownTypeEEPKNS_4TypeEEEbOT0_.exit.thread.i
   %i.dz = load i8, ptr %6, align 8, !tbaa !155, !range !101, !noundef !102
   %i.ea = trunc nuw i8 %i.dz to i1
-  %..i = select i1 %i.ea, ptr %i.dk, ptr %i.dr
-  %i.eb = load ptr, ptr %..i, align 8, !tbaa !47
+  %.val249 = load ptr, ptr %i.dk, align 8
+  %i.eb = load ptr, ptr %i.dr, align 8
+  %10 = select i1 %i.ea, ptr %.val249, ptr %i.eb
   call void @_ZN4Luau15SubtypingResultD2Ev(ptr noundef nonnull align 8 dead_on_return(168) dereferenceable(168) %6) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #19
   br label %"_ZZN4Luau27resolveGenericSubstitutionsEPNS_9TypeArenaERNS_12DenseHashMapIPKNS_4TypeES5_NS_16DenseHashPointerESt8equal_toIS5_EEERNS2_IPKNS_11TypePackVarESD_S6_S7_ISD_EEENS_7NotNullINS_9SubtypingEEENSH_INS_5ScopeEEEENK3$_0clEPKNS_8FreeTypeE.exit"
 
 "_ZZN4Luau27resolveGenericSubstitutionsEPNS_9TypeArenaERNS_12DenseHashMapIPKNS_4TypeES5_NS_16DenseHashPointerESt8equal_toIS5_EEERNS2_IPKNS_11TypePackVarESD_S6_S7_ISD_EEENS_7NotNullINS_9SubtypingEEENSH_INS_5ScopeEEEENK3$_0clEPKNS_8FreeTypeE.exit": ; preds = %.noexc107, %bb.ab, %bb.aa
-  %.0.i = phi ptr [ %i.dq, %bb.aa ], [ %i.dw, %bb.ab ], [ %i.eb, %.noexc107 ]
+  %.0.i = phi ptr [ %i.dq, %bb.aa ], [ %i.dw, %bb.ab ], [ %10, %.noexc107 ]
   store ptr %.0.i, ptr %i.df, align 8, !tbaa !47
   br label %_ZN4Luau3getINS_8FreeTypeEEEPKT_PKNS_4TypeE.exit103.thread
 
@@ -447,14 +448,15 @@ _ZN4Luau2isIJNS_11UnknownTypeEEPKNS_4TypeEEEbOT0_.exit.thread.i127: ; preds = %_
 .noexc133:                                        ; preds = %_ZN4Luau2isIJNS_11UnknownTypeEEPKNS_4TypeEEEbOT0_.exit.thread.i127
   %i.gp = load i8, ptr %5, align 8, !tbaa !155, !range !101, !noundef !102
   %i.gq = trunc nuw i8 %i.gp to i1
-  %..i129 = select i1 %i.gq, ptr %i.ga, ptr %i.gh
-  %i.gr = load ptr, ptr %..i129, align 8, !tbaa !47
+  %.val = load ptr, ptr %i.ga, align 8
+  %i.gr = load ptr, ptr %i.gh, align 8
+  %11 = select i1 %i.gq, ptr %.val, ptr %i.gr
   call void @_ZN4Luau15SubtypingResultD2Ev(ptr noundef nonnull align 8 dead_on_return(168) dereferenceable(168) %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   br label %"_ZZN4Luau27resolveGenericSubstitutionsEPNS_9TypeArenaERNS_12DenseHashMapIPKNS_4TypeES5_NS_16DenseHashPointerESt8equal_toIS5_EEERNS2_IPKNS_11TypePackVarESD_S6_S7_ISD_EEENS_7NotNullINS_9SubtypingEEENSH_INS_5ScopeEEEENK3$_0clEPKNS_8FreeTypeE.exit134"
 
 "_ZZN4Luau27resolveGenericSubstitutionsEPNS_9TypeArenaERNS_12DenseHashMapIPKNS_4TypeES5_NS_16DenseHashPointerESt8equal_toIS5_EEERNS2_IPKNS_11TypePackVarESD_S6_S7_ISD_EEENS_7NotNullINS_9SubtypingEEENSH_INS_5ScopeEEEENK3$_0clEPKNS_8FreeTypeE.exit134": ; preds = %.noexc133, %bb.aw, %bb.av
-  %.0.i130 = phi ptr [ %i.gg, %bb.av ], [ %i.gm, %bb.aw ], [ %i.gr, %.noexc133 ] ; 2 uses
+  %.0.i130 = phi ptr [ %i.gg, %bb.av ], [ %i.gm, %bb.aw ], [ %11, %.noexc133 ] ; 2 uses
   %.not.i.i135 = icmp eq ptr %.sroa.15.0, %.sroa.25.0
   br i1 %.not.i.i135, label %bb.ay, label %bb.ax
 
