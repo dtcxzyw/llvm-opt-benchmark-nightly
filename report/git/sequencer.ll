@@ -204,12 +204,12 @@ bb.ds:                                            ; preds = %rebase_path_stopped
   %i.ki = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.kj = load ptr, ptr %i.ki, align 8, !tbaa !138
   %i.kk = sext i32 %i.ke to i64
-  %9 = sext i32 %i.kg to i64
   br label %bb.du
 
 bb.dt:                                            ; preds = %bb.du
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %exitcond271.not.i = icmp eq i64 %indvars.iv.next.i.i, %9
+  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next.i.i to i32
+  %exitcond271.not.i = icmp eq i32 %i.kg, %lftr.wideiv.i.i
   br i1 %exitcond271.not.i, label %peek_command.exit.thread.i, label %bb.du, !llvm.loop !187
 
 bb.du:                                            ; preds = %bb.dt, %.lr.ph.i.i63
@@ -366,12 +366,12 @@ bb.eg:                                            ; preds = %bb.ef
   %i.ml = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.mm = load ptr, ptr %i.ml, align 8, !tbaa !138
   %i.mn = sext i32 %i.mh to i64
-  %10 = sext i32 %i.mj to i64
   br label %bb.ei
 
 bb.eh:                                            ; preds = %bb.ei
   %indvars.iv.next.i158.i = add nsw i64 %indvars.iv.i157.i, 1 ; 2 uses
-  %exitcond.not.i.a = icmp eq i64 %indvars.iv.next.i158.i, %10
+  %lftr.wideiv.i159.i = trunc i64 %indvars.iv.next.i158.i to i32
+  %exitcond.not.i.a = icmp eq i32 %i.mj, %lftr.wideiv.i159.i
   br i1 %exitcond.not.i.a, label %peek_command.exit159.thread.i, label %bb.ei, !llvm.loop !187
 
 bb.ei:                                            ; preds = %bb.eh, %.lr.ph.i156.i
@@ -404,12 +404,12 @@ bb.ej:                                            ; preds = %peek_command.exit15
   %i.mw = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.mx = load ptr, ptr %i.mw, align 8, !tbaa !138
   %i.my = sext i32 %i.mh to i64
-  %11 = sext i32 %i.mj to i64
   br label %bb.el
 
 bb.ek:                                            ; preds = %bb.el
   %indvars.iv.next.i163.i = add nsw i64 %indvars.iv.i162.i, 1 ; 2 uses
-  %exitcond270.not.i = icmp eq i64 %indvars.iv.next.i163.i, %11
+  %lftr.wideiv.i166.i = trunc i64 %indvars.iv.next.i163.i to i32
+  %exitcond270.not.i = icmp eq i32 %i.mj, %lftr.wideiv.i166.i
   br i1 %exitcond270.not.i, label %.sink.split.i62, label %bb.el, !llvm.loop !187
 
 bb.el:                                            ; preds = %bb.ek, %.lr.ph.i161.i
@@ -812,12 +812,12 @@ bb.gk:                                            ; preds = %bb.gj
   %i.rk = getelementptr inbounds nuw i8, ptr %6, i64 24
   %i.rl = load ptr, ptr %i.rk, align 8, !tbaa !138
   %i.rm = sext i32 %i.rg to i64
-  %12 = sext i32 %i.ri to i64
   br label %bb.gm
 
 bb.gl:                                            ; preds = %bb.gm
   %indvars.iv.next.i75 = add nsw i64 %indvars.iv.i74, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next.i75, %12
+  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i75 to i32
+  %exitcond.not = icmp eq i32 %i.ri, %lftr.wideiv.i
   br i1 %exitcond.not, label %peek_command.exit, label %bb.gm, !llvm.loop !187
 
 bb.gm:                                            ; preds = %bb.gl, %.lr.ph.i73
@@ -1220,12 +1220,12 @@ bb.aw:                                            ; preds = %bb.av
   %i.hs = load ptr, ptr %i.bc, align 8, !tbaa !138
   %i.ht = sext i32 %i.ho to i64
   %i.hu = add nsw i64 %i.ht, 1
-  %36 = sext i32 %i.hq to i64
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.ay
   %indvars.iv.next.i77.i = add nsw i64 %indvars.iv.i76.i, 1 ; 2 uses
-  %exitcond.not.i.a = icmp eq i64 %indvars.iv.next.i77.i, %36
+  %lftr.wideiv.i.i = trunc i64 %indvars.iv.next.i77.i to i32
+  %exitcond.not.i.a = icmp eq i32 %i.hq, %lftr.wideiv.i.i
   br i1 %exitcond.not.i.a, label %peek_command.exit.loopexit.i, label %bb.ay, !llvm.loop !187
 
 bb.ay:                                            ; preds = %bb.ax, %.lr.ph.i.i
@@ -1628,12 +1628,12 @@ bb.hm:                                            ; preds = %bb.hl
   %i.abl = load ptr, ptr %i.bc, align 8, !tbaa !138
   %i.abm = sext i32 %i.abh to i64
   %i.abn = add nsw i64 %i.abm, 1
-  %37 = sext i32 %i.abj to i64
   br label %bb.ho
 
 bb.hn:                                            ; preds = %bb.ho
   %indvars.iv.next.i245 = add nsw i64 %indvars.iv.i244, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next.i245, %37
+  %lftr.wideiv.i = trunc i64 %indvars.iv.next.i245 to i32
+  %exitcond.not = icmp eq i32 %i.abj, %lftr.wideiv.i
   br i1 %exitcond.not, label %peek_command.exit.loopexit, label %bb.ho, !llvm.loop !187
 
 bb.ho:                                            ; preds = %bb.hn, %.lr.ph.i243

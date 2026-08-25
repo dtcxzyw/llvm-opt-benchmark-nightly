@@ -204,7 +204,6 @@ bb.p:                                             ; preds = %bb.n
   %i.ak = zext nneg i32 %i.w to i64
   %i.al = sext i32 %i.ag to i64
   %i.am = add nsw i64 %i.ak, %i.al
-  %12 = zext nneg i32 %narrow.i to i64
   br label %bb.t
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNK2cv8MatShapeixEm.exit38
@@ -298,9 +297,10 @@ _ZNK2cv8MatShapeixEm.exit44:                      ; preds = %bb.t
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %indvars.iv77
   %i.bi = load i32, ptr %i.bh, align 4, !tbaa !68
   call void @_ZN2cv8MatShape9push_backEi(ptr noundef nonnull align 4 dereferenceable(52) %11, i32 noundef %i.bi)
-  %indvars.iv.next78 = add nuw nsw i64 %indvars.iv77, 1 ; 2 uses
-  %13 = icmp slt i64 %indvars.iv.next78, %12
-  br i1 %13, label %bb.t, label %._crit_edge74, !llvm.loop !70
+  %indvars.iv.next78 = add nsw i64 %indvars.iv77, 1 ; 2 uses
+  %lftr.wideiv = trunc i64 %indvars.iv.next78 to i32
+  %exitcond80.not = icmp eq i32 %narrow.i, %lftr.wideiv
+  br i1 %exitcond80.not, label %._crit_edge74, label %bb.t, !llvm.loop !70
 }
 
 ; Function Attrs: mustprogress uwtable

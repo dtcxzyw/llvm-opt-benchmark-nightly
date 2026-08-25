@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %prol.iter.cmp.not, label %.lr.ph200.prol.loopexit, label %.lr.ph200.prol, !llvm.loop !361
 
 .lr.ph200.prol.loopexit:                          ; preds = %.lr.ph200.prol, %.lr.ph200.preheader
-  %.091198.unr.a = phi i64 [ %.093, %.lr.ph200.preheader ], [ %i.bd, %.lr.ph200.prol ]
-  %.194197.unr.a = phi i64 [ %.093, %.lr.ph200.preheader ], [ %spec.select.prol, %.lr.ph200.prol ]
-  %spec.select.lcssa.unr = phi i64 [ poison, %.lr.ph200.preheader ], [ %spec.select.prol, %.lr.ph200.prol ]
+  %.091198.unr.a = phi i64 [ poison, %.lr.ph200.preheader ], [ %spec.select.prol, %.lr.ph200.prol ]
+  %.194197.unr.a = phi i64 [ %.093, %.lr.ph200.preheader ], [ %i.bd, %.lr.ph200.prol ]
+  %spec.select.lcssa.unr = phi i64 [ %.093, %.lr.ph200.preheader ], [ %spec.select.prol, %.lr.ph200.prol ]
   %i.be = sub i64 %spec.select148, %i.an
   %i.bf = add i64 %i.be, %spec.select180
   %i.bg = icmp ugt i64 %i.bf, -4
@@ -341,13 +341,13 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZNSt6vecto
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.d, !llvm.loop !363
 
 .preheader184:                                    ; preds = %.lr.ph200.prol.loopexit, %.lr.ph200, %._crit_edge
-  %.194.lcssa = phi i64 [ %.093, %._crit_edge ], [ %spec.select.lcssa.unr, %.lr.ph200.prol.loopexit ], [ %spec.select.3, %.lr.ph200 ]
+  %.194.lcssa = phi i64 [ %.093, %._crit_edge ], [ %.091198.unr.a, %.lr.ph200.prol.loopexit ], [ %spec.select.3, %.lr.ph200 ]
   %i.cr = icmp ugt i64 %i.av, %.092
   br i1 %i.cr, label %.lr.ph203, label %._crit_edge204
 
 .lr.ph200:                                        ; preds = %.lr.ph200.prol.loopexit, %.lr.ph200
-  %.091198 = phi i64 [ %i.di, %.lr.ph200 ], [ %.091198.unr.a, %.lr.ph200.prol.loopexit ] ; 5 uses
-  %.194197 = phi i64 [ %spec.select.3, %.lr.ph200 ], [ %.194197.unr.a, %.lr.ph200.prol.loopexit ]
+  %.091198 = phi i64 [ %i.di, %.lr.ph200 ], [ %.194197.unr.a, %.lr.ph200.prol.loopexit ] ; 5 uses
+  %.194197 = phi i64 [ %spec.select.3, %.lr.ph200 ], [ %spec.select.lcssa.unr, %.lr.ph200.prol.loopexit ]
   %i.cs = getelementptr inbounds nuw [24 x i8], ptr %i.aj, i64 %.091198
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   %i.cu = load i8, ptr %i.ct, align 8, !tbaa !138, !range !48, !noundef !49
@@ -369,8 +369,8 @@ _ZNSt6vectorIPKN4Luau4TypeESaIS3_EE9push_backERKS3_.exit: ; preds = %_ZNSt6vecto
   %i.dh = zext nneg i8 %i.dg to i64
   %spec.select.3 = add i64 %spec.select.2, %i.dh  ; 2 uses
   %i.di = add nuw i64 %.091198, 4                 ; 2 uses
-  %10 = icmp ult i64 %i.di, %i.an
-  br i1 %10, label %.lr.ph200, label %.preheader184, !llvm.loop !364
+  %exitcond224.not.3 = icmp eq i64 %i.di, %i.an
+  br i1 %exitcond224.not.3, label %.preheader184, label %.lr.ph200, !llvm.loop !364
 
 ._crit_edge204:                                   ; preds = %.lr.ph203, %.preheader184
   %.1.lcssa = phi i64 [ %.092, %.preheader184 ], [ %spec.select146, %.lr.ph203 ] ; 2 uses

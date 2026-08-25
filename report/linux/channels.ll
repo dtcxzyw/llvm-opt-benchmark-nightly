@@ -202,9 +202,9 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.u
-  %i.bs = add nuw i32 %.05188, 1                  ; 2 uses
-  %3 = icmp ult i32 %i.bs, %i.bp
-  br i1 %3, label %bb.u, label %._crit_edge.loopexit, !llvm.loop !10
+  %i.bs = add i32 %.05188, 1                      ; 2 uses
+  %exitcond.not = icmp eq i32 %i.bs, %i.bp
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.u, !llvm.loop !10
 
 bb.u:                                             ; preds = %.lr.ph, %bb.t
   %.05188 = phi i32 [ %i.bo, %.lr.ph ], [ %i.bs, %bb.t ] ; 2 uses
@@ -229,9 +229,9 @@ bb.u:                                             ; preds = %.lr.ph, %bb.t
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.w
-  %i.cb = add nuw i32 %.15289, 1                  ; 2 uses
-  %4 = icmp ult i32 %i.cb, %i.by
-  br i1 %4, label %bb.w, label %._crit_edge92, !llvm.loop !12
+  %i.cb = add i32 %.15289, 1                      ; 2 uses
+  %exitcond94.not = icmp eq i32 %i.cb, %i.by
+  br i1 %exitcond94.not, label %._crit_edge92, label %bb.w, !llvm.loop !12
 
 bb.w:                                             ; preds = %.lr.ph91, %bb.v
   %.15289 = phi i32 [ %i.bx, %.lr.ph91 ], [ %i.cb, %bb.v ] ; 2 uses
