@@ -205,75 +205,75 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i8.prehe
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.bq, 60                      ; 9 uses
-  %1 = load i32, ptr %i.bt, align 8, !tbaa !158, !alias.scope !206
-  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %1, i64 0 ; 8 uses
+  %1 = load <4 x i32>, ptr %i.bt, align 8
+  %broadcast.splat = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
-  %interleaved.vec = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec, ptr %i.bs, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec, ptr %i.bv, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec, ptr %i.bs, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec, ptr %i.bv, align 4, !alias.scope !206, !noalias !209
   %i.bw = icmp eq i64 %n.vec, 4
   br i1 %i.bw, label %middle.block, label %vector.body.1
 
 vector.body.1:                                    ; preds = %vector.ph
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bs, i64 32
   %i.by = getelementptr inbounds nuw i8, ptr %i.bs, i64 48
-  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.1, ptr %i.bx, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec.1, ptr %i.by, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.1, ptr %i.bx, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec.1, ptr %i.by, align 4, !alias.scope !206, !noalias !209
   %i.bz = icmp eq i64 %n.vec, 8
   br i1 %i.bz, label %middle.block, label %vector.body.2
 
 vector.body.2:                                    ; preds = %vector.body.1
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bs, i64 64
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bs, i64 80
-  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.2, ptr %i.ca, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec.2, ptr %i.cb, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.2, ptr %i.ca, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec.2, ptr %i.cb, align 4, !alias.scope !206, !noalias !209
   %i.cc = icmp eq i64 %n.vec, 12
   br i1 %i.cc, label %middle.block, label %vector.body.3
 
 vector.body.3:                                    ; preds = %vector.body.2
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bs, i64 96
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bs, i64 112
-  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.3, ptr %i.cd, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec.3, ptr %i.ce, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.3, ptr %i.cd, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec.3, ptr %i.ce, align 4, !alias.scope !206, !noalias !209
   %i.cf = icmp eq i64 %n.vec, 16
   br i1 %i.cf, label %middle.block, label %vector.body.4
 
 vector.body.4:                                    ; preds = %vector.body.3
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bs, i64 128
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bs, i64 144
-  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.4, ptr %i.cg, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec.4, ptr %i.ch, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.4, ptr %i.cg, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec.4, ptr %i.ch, align 4, !alias.scope !206, !noalias !209
   %i.ci = icmp eq i64 %n.vec, 20
   br i1 %i.ci, label %middle.block, label %vector.body.5
 
 vector.body.5:                                    ; preds = %vector.body.4
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bs, i64 160
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bs, i64 176
-  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.5, ptr %i.cj, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec.5, ptr %i.ck, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.5, ptr %i.cj, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec.5, ptr %i.ck, align 4, !alias.scope !206, !noalias !209
   %i.cl = icmp eq i64 %n.vec, 24
   br i1 %i.cl, label %middle.block, label %vector.body.6
 
 vector.body.6:                                    ; preds = %vector.body.5
   %i.cm = getelementptr inbounds nuw i8, ptr %i.bs, i64 192
   %i.cn = getelementptr inbounds nuw i8, ptr %i.bs, i64 208
-  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.6, ptr %i.cm, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec.6, ptr %i.cn, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.6, ptr %i.cm, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec.6, ptr %i.cn, align 4, !alias.scope !206, !noalias !209
   %i.co = icmp eq i64 %n.vec, 28
   br i1 %i.co, label %middle.block, label %vector.body.7
 
 vector.body.7:                                    ; preds = %vector.body.6
   %i.cp = getelementptr inbounds nuw i8, ptr %i.bs, i64 224
   %i.cq = getelementptr inbounds nuw i8, ptr %i.bs, i64 240
-  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.7, ptr %i.cp, align 4, !alias.scope !209, !noalias !206
-  store <4 x i32> %interleaved.vec.7, ptr %i.cq, align 4, !alias.scope !209, !noalias !206
+  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.7, ptr %i.cp, align 4, !alias.scope !206, !noalias !209
+  store <4 x i32> %interleaved.vec.7, ptr %i.cq, align 4, !alias.scope !206, !noalias !209
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.7, %vector.body.6, %vector.body.5, %vector.body.4, %vector.body.3, %vector.body.2, %vector.body.1, %vector.ph
@@ -543,75 +543,75 @@ vector.memcheck78:                                ; preds = %.lr.ph.i.i.i23.preh
 
 vector.ph86:                                      ; preds = %vector.memcheck78
   %n.vec87 = and i64 %i.fj, 60                    ; 9 uses
-  %2 = load i32, ptr %i.fm, align 8, !tbaa !158, !alias.scope !219
-  %broadcast.splatinsert90 = insertelement <2 x i32> poison, i32 %2, i64 0 ; 8 uses
+  %2 = load <4 x i32>, ptr %i.fm, align 8
+  %broadcast.splat91 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fl, i64 16
-  %interleaved.vec92 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92, ptr %i.fl, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92, ptr %i.fo, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92, ptr %i.fl, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92, ptr %i.fo, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   %i.fp = icmp eq i64 %n.vec87, 4
   br i1 %i.fp, label %middle.block95, label %vector.body88.1
 
 vector.body88.1:                                  ; preds = %vector.ph86
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fl, i64 32
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fl, i64 48
-  %interleaved.vec92.1 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92.1, ptr %i.fq, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92.1, ptr %i.fr, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92.1 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92.1, ptr %i.fq, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92.1, ptr %i.fr, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   %i.fs = icmp eq i64 %n.vec87, 8
   br i1 %i.fs, label %middle.block95, label %vector.body88.2
 
 vector.body88.2:                                  ; preds = %vector.body88.1
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fl, i64 64
   %i.fu = getelementptr inbounds nuw i8, ptr %i.fl, i64 80
-  %interleaved.vec92.2 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92.2, ptr %i.ft, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92.2, ptr %i.fu, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92.2 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92.2, ptr %i.ft, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92.2, ptr %i.fu, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   %i.fv = icmp eq i64 %n.vec87, 12
   br i1 %i.fv, label %middle.block95, label %vector.body88.3
 
 vector.body88.3:                                  ; preds = %vector.body88.2
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fl, i64 96
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fl, i64 112
-  %interleaved.vec92.3 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92.3, ptr %i.fw, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92.3, ptr %i.fx, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92.3 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92.3, ptr %i.fw, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92.3, ptr %i.fx, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   %i.fy = icmp eq i64 %n.vec87, 16
   br i1 %i.fy, label %middle.block95, label %vector.body88.4
 
 vector.body88.4:                                  ; preds = %vector.body88.3
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fl, i64 128
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fl, i64 144
-  %interleaved.vec92.4 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92.4, ptr %i.fz, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92.4, ptr %i.ga, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92.4 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92.4, ptr %i.fz, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92.4, ptr %i.ga, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   %i.gb = icmp eq i64 %n.vec87, 20
   br i1 %i.gb, label %middle.block95, label %vector.body88.5
 
 vector.body88.5:                                  ; preds = %vector.body88.4
   %i.gc = getelementptr inbounds nuw i8, ptr %i.fl, i64 160
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fl, i64 176
-  %interleaved.vec92.5 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92.5, ptr %i.gc, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92.5, ptr %i.gd, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92.5 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92.5, ptr %i.gc, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92.5, ptr %i.gd, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   %i.ge = icmp eq i64 %n.vec87, 24
   br i1 %i.ge, label %middle.block95, label %vector.body88.6
 
 vector.body88.6:                                  ; preds = %vector.body88.5
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fl, i64 192
   %i.gg = getelementptr inbounds nuw i8, ptr %i.fl, i64 208
-  %interleaved.vec92.6 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92.6, ptr %i.gf, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92.6, ptr %i.gg, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92.6 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92.6, ptr %i.gf, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92.6, ptr %i.gg, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   %i.gh = icmp eq i64 %n.vec87, 28
   br i1 %i.gh, label %middle.block95, label %vector.body88.7
 
 vector.body88.7:                                  ; preds = %vector.body88.6
   %i.gi = getelementptr inbounds nuw i8, ptr %i.fl, i64 224
   %i.gj = getelementptr inbounds nuw i8, ptr %i.fl, i64 240
-  %interleaved.vec92.7 = shufflevector <2 x i32> %broadcast.splatinsert90, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec92.7, ptr %i.gi, align 4, !tbaa !158, !alias.scope !222, !noalias !219
-  store <4 x i32> %interleaved.vec92.7, ptr %i.gj, align 4, !tbaa !158, !alias.scope !222, !noalias !219
+  %interleaved.vec92.7 = shufflevector <2 x i32> %broadcast.splat91, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec92.7, ptr %i.gi, align 4, !tbaa !158, !alias.scope !219, !noalias !222
+  store <4 x i32> %interleaved.vec92.7, ptr %i.gj, align 4, !tbaa !158, !alias.scope !219, !noalias !222
   br label %middle.block95
 
 middle.block95:                                   ; preds = %vector.body88.7, %vector.body88.6, %vector.body88.5, %vector.body88.4, %vector.body88.3, %vector.body88.2, %vector.body88.1, %vector.ph86
@@ -764,75 +764,75 @@ vector.memcheck98:                                ; preds = %.lr.ph.i.i.i.i.preh
 
 vector.ph106:                                     ; preds = %vector.memcheck98
   %n.vec107 = and i64 %i.ib, 60                   ; 9 uses
-  %3 = load i32, ptr %i.ie, align 8, !tbaa !158, !alias.scope !230
-  %broadcast.splatinsert110 = insertelement <2 x i32> poison, i32 %3, i64 0 ; 8 uses
+  %3 = load <4 x i32>, ptr %i.ie, align 8
+  %broadcast.splat111 = shufflevector <4 x i32> %3, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %i.id, i64 16
-  %interleaved.vec112 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112, ptr %i.id, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112, ptr %i.ig, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112, ptr %i.id, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112, ptr %i.ig, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   %i.ih = icmp eq i64 %n.vec107, 4
   br i1 %i.ih, label %middle.block115, label %vector.body108.1
 
 vector.body108.1:                                 ; preds = %vector.ph106
   %i.ii = getelementptr inbounds nuw i8, ptr %i.id, i64 32
   %i.ij = getelementptr inbounds nuw i8, ptr %i.id, i64 48
-  %interleaved.vec112.1 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112.1, ptr %i.ii, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112.1, ptr %i.ij, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112.1 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112.1, ptr %i.ii, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112.1, ptr %i.ij, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   %i.ik = icmp eq i64 %n.vec107, 8
   br i1 %i.ik, label %middle.block115, label %vector.body108.2
 
 vector.body108.2:                                 ; preds = %vector.body108.1
   %i.il = getelementptr inbounds nuw i8, ptr %i.id, i64 64
   %i.im = getelementptr inbounds nuw i8, ptr %i.id, i64 80
-  %interleaved.vec112.2 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112.2, ptr %i.il, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112.2, ptr %i.im, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112.2 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112.2, ptr %i.il, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112.2, ptr %i.im, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   %i.in = icmp eq i64 %n.vec107, 12
   br i1 %i.in, label %middle.block115, label %vector.body108.3
 
 vector.body108.3:                                 ; preds = %vector.body108.2
   %i.io = getelementptr inbounds nuw i8, ptr %i.id, i64 96
   %i.ip = getelementptr inbounds nuw i8, ptr %i.id, i64 112
-  %interleaved.vec112.3 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112.3, ptr %i.io, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112.3, ptr %i.ip, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112.3 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112.3, ptr %i.io, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112.3, ptr %i.ip, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   %i.iq = icmp eq i64 %n.vec107, 16
   br i1 %i.iq, label %middle.block115, label %vector.body108.4
 
 vector.body108.4:                                 ; preds = %vector.body108.3
   %i.ir = getelementptr inbounds nuw i8, ptr %i.id, i64 128
   %i.is = getelementptr inbounds nuw i8, ptr %i.id, i64 144
-  %interleaved.vec112.4 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112.4, ptr %i.ir, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112.4, ptr %i.is, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112.4 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112.4, ptr %i.ir, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112.4, ptr %i.is, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   %i.it = icmp eq i64 %n.vec107, 20
   br i1 %i.it, label %middle.block115, label %vector.body108.5
 
 vector.body108.5:                                 ; preds = %vector.body108.4
   %i.iu = getelementptr inbounds nuw i8, ptr %i.id, i64 160
   %i.iv = getelementptr inbounds nuw i8, ptr %i.id, i64 176
-  %interleaved.vec112.5 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112.5, ptr %i.iu, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112.5, ptr %i.iv, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112.5 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112.5, ptr %i.iu, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112.5, ptr %i.iv, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   %i.iw = icmp eq i64 %n.vec107, 24
   br i1 %i.iw, label %middle.block115, label %vector.body108.6
 
 vector.body108.6:                                 ; preds = %vector.body108.5
   %i.ix = getelementptr inbounds nuw i8, ptr %i.id, i64 192
   %i.iy = getelementptr inbounds nuw i8, ptr %i.id, i64 208
-  %interleaved.vec112.6 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112.6, ptr %i.ix, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112.6, ptr %i.iy, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112.6 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112.6, ptr %i.ix, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112.6, ptr %i.iy, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   %i.iz = icmp eq i64 %n.vec107, 28
   br i1 %i.iz, label %middle.block115, label %vector.body108.7
 
 vector.body108.7:                                 ; preds = %vector.body108.6
   %i.ja = getelementptr inbounds nuw i8, ptr %i.id, i64 224
   %i.jb = getelementptr inbounds nuw i8, ptr %i.id, i64 240
-  %interleaved.vec112.7 = shufflevector <2 x i32> %broadcast.splatinsert110, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec112.7, ptr %i.ja, align 4, !tbaa !158, !alias.scope !233, !noalias !230
-  store <4 x i32> %interleaved.vec112.7, ptr %i.jb, align 4, !tbaa !158, !alias.scope !233, !noalias !230
+  %interleaved.vec112.7 = shufflevector <2 x i32> %broadcast.splat111, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec112.7, ptr %i.ja, align 4, !tbaa !158, !alias.scope !230, !noalias !233
+  store <4 x i32> %interleaved.vec112.7, ptr %i.jb, align 4, !tbaa !158, !alias.scope !230, !noalias !233
   br label %middle.block115
 
 middle.block115:                                  ; preds = %vector.body108.7, %vector.body108.6, %vector.body108.5, %vector.body108.4, %vector.body108.3, %vector.body108.2, %vector.body108.1, %vector.ph106
@@ -1235,75 +1235,75 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i3.prehe
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.as, 60                      ; 9 uses
-  %1 = load i32, ptr %i.av, align 8, !tbaa !158, !alias.scope !320
-  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %1, i64 0 ; 8 uses
+  %1 = load <4 x i32>, ptr %i.av, align 8
+  %broadcast.splat = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 16
-  %interleaved.vec = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec, ptr %i.au, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec, ptr %i.ax, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec, ptr %i.au, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec, ptr %i.ax, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   %i.ay = icmp eq i64 %n.vec, 4
   br i1 %i.ay, label %middle.block, label %vector.body.1
 
 vector.body.1:                                    ; preds = %vector.ph
   %i.az = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   %i.ba = getelementptr inbounds nuw i8, ptr %i.au, i64 48
-  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.1, ptr %i.az, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec.1, ptr %i.ba, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.1, ptr %i.az, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec.1, ptr %i.ba, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   %i.bb = icmp eq i64 %n.vec, 8
   br i1 %i.bb, label %middle.block, label %vector.body.2
 
 vector.body.2:                                    ; preds = %vector.body.1
   %i.bc = getelementptr inbounds nuw i8, ptr %i.au, i64 64
   %i.bd = getelementptr inbounds nuw i8, ptr %i.au, i64 80
-  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.2, ptr %i.bc, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec.2, ptr %i.bd, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.2, ptr %i.bc, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec.2, ptr %i.bd, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   %i.be = icmp eq i64 %n.vec, 12
   br i1 %i.be, label %middle.block, label %vector.body.3
 
 vector.body.3:                                    ; preds = %vector.body.2
   %i.bf = getelementptr inbounds nuw i8, ptr %i.au, i64 96
   %i.bg = getelementptr inbounds nuw i8, ptr %i.au, i64 112
-  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.3, ptr %i.bf, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec.3, ptr %i.bg, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.3, ptr %i.bf, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec.3, ptr %i.bg, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   %i.bh = icmp eq i64 %n.vec, 16
   br i1 %i.bh, label %middle.block, label %vector.body.4
 
 vector.body.4:                                    ; preds = %vector.body.3
   %i.bi = getelementptr inbounds nuw i8, ptr %i.au, i64 128
   %i.bj = getelementptr inbounds nuw i8, ptr %i.au, i64 144
-  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.4, ptr %i.bi, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec.4, ptr %i.bj, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.4, ptr %i.bi, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec.4, ptr %i.bj, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   %i.bk = icmp eq i64 %n.vec, 20
   br i1 %i.bk, label %middle.block, label %vector.body.5
 
 vector.body.5:                                    ; preds = %vector.body.4
   %i.bl = getelementptr inbounds nuw i8, ptr %i.au, i64 160
   %i.bm = getelementptr inbounds nuw i8, ptr %i.au, i64 176
-  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.5, ptr %i.bl, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec.5, ptr %i.bm, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.5, ptr %i.bl, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec.5, ptr %i.bm, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   %i.bn = icmp eq i64 %n.vec, 24
   br i1 %i.bn, label %middle.block, label %vector.body.6
 
 vector.body.6:                                    ; preds = %vector.body.5
   %i.bo = getelementptr inbounds nuw i8, ptr %i.au, i64 192
   %i.bp = getelementptr inbounds nuw i8, ptr %i.au, i64 208
-  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.6, ptr %i.bo, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec.6, ptr %i.bp, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.6, ptr %i.bo, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec.6, ptr %i.bp, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   %i.bq = icmp eq i64 %n.vec, 28
   br i1 %i.bq, label %middle.block, label %vector.body.7
 
 vector.body.7:                                    ; preds = %vector.body.6
   %i.br = getelementptr inbounds nuw i8, ptr %i.au, i64 224
   %i.bs = getelementptr inbounds nuw i8, ptr %i.au, i64 240
-  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.7, ptr %i.br, align 4, !tbaa !158, !alias.scope !323, !noalias !320
-  store <4 x i32> %interleaved.vec.7, ptr %i.bs, align 4, !tbaa !158, !alias.scope !323, !noalias !320
+  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.7, ptr %i.br, align 4, !tbaa !158, !alias.scope !320, !noalias !323
+  store <4 x i32> %interleaved.vec.7, ptr %i.bs, align 4, !tbaa !158, !alias.scope !320, !noalias !323
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.7, %vector.body.6, %vector.body.5, %vector.body.4, %vector.body.3, %vector.body.2, %vector.body.1, %vector.ph
@@ -1419,75 +1419,75 @@ vector.memcheck18:                                ; preds = %.lr.ph.i.i.i8.prehe
 
 vector.ph26:                                      ; preds = %vector.memcheck18
   %n.vec27 = and i64 %i.cy, 60                    ; 9 uses
-  %2 = load i32, ptr %i.db, align 8, !tbaa !158, !alias.scope !327
-  %broadcast.splatinsert30 = insertelement <2 x i32> poison, i32 %2, i64 0 ; 8 uses
+  %2 = load <4 x i32>, ptr %i.db, align 8
+  %broadcast.splat31 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.da, i64 16
-  %interleaved.vec32 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32, ptr %i.da, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32, ptr %i.dd, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32, ptr %i.da, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32, ptr %i.dd, align 4, !alias.scope !327, !noalias !330
   %i.de = icmp eq i64 %n.vec27, 4
   br i1 %i.de, label %middle.block35, label %vector.body28.1
 
 vector.body28.1:                                  ; preds = %vector.ph26
   %i.df = getelementptr inbounds nuw i8, ptr %i.da, i64 32
   %i.dg = getelementptr inbounds nuw i8, ptr %i.da, i64 48
-  %interleaved.vec32.1 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32.1, ptr %i.df, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32.1, ptr %i.dg, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32.1 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32.1, ptr %i.df, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32.1, ptr %i.dg, align 4, !alias.scope !327, !noalias !330
   %i.dh = icmp eq i64 %n.vec27, 8
   br i1 %i.dh, label %middle.block35, label %vector.body28.2
 
 vector.body28.2:                                  ; preds = %vector.body28.1
   %i.di = getelementptr inbounds nuw i8, ptr %i.da, i64 64
   %i.dj = getelementptr inbounds nuw i8, ptr %i.da, i64 80
-  %interleaved.vec32.2 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32.2, ptr %i.di, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32.2, ptr %i.dj, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32.2 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32.2, ptr %i.di, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32.2, ptr %i.dj, align 4, !alias.scope !327, !noalias !330
   %i.dk = icmp eq i64 %n.vec27, 12
   br i1 %i.dk, label %middle.block35, label %vector.body28.3
 
 vector.body28.3:                                  ; preds = %vector.body28.2
   %i.dl = getelementptr inbounds nuw i8, ptr %i.da, i64 96
   %i.dm = getelementptr inbounds nuw i8, ptr %i.da, i64 112
-  %interleaved.vec32.3 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32.3, ptr %i.dl, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32.3, ptr %i.dm, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32.3 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32.3, ptr %i.dl, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32.3, ptr %i.dm, align 4, !alias.scope !327, !noalias !330
   %i.dn = icmp eq i64 %n.vec27, 16
   br i1 %i.dn, label %middle.block35, label %vector.body28.4
 
 vector.body28.4:                                  ; preds = %vector.body28.3
   %i.do = getelementptr inbounds nuw i8, ptr %i.da, i64 128
   %i.dp = getelementptr inbounds nuw i8, ptr %i.da, i64 144
-  %interleaved.vec32.4 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32.4, ptr %i.do, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32.4, ptr %i.dp, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32.4 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32.4, ptr %i.do, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32.4, ptr %i.dp, align 4, !alias.scope !327, !noalias !330
   %i.dq = icmp eq i64 %n.vec27, 20
   br i1 %i.dq, label %middle.block35, label %vector.body28.5
 
 vector.body28.5:                                  ; preds = %vector.body28.4
   %i.dr = getelementptr inbounds nuw i8, ptr %i.da, i64 160
   %i.ds = getelementptr inbounds nuw i8, ptr %i.da, i64 176
-  %interleaved.vec32.5 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32.5, ptr %i.dr, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32.5, ptr %i.ds, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32.5 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32.5, ptr %i.dr, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32.5, ptr %i.ds, align 4, !alias.scope !327, !noalias !330
   %i.dt = icmp eq i64 %n.vec27, 24
   br i1 %i.dt, label %middle.block35, label %vector.body28.6
 
 vector.body28.6:                                  ; preds = %vector.body28.5
   %i.du = getelementptr inbounds nuw i8, ptr %i.da, i64 192
   %i.dv = getelementptr inbounds nuw i8, ptr %i.da, i64 208
-  %interleaved.vec32.6 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32.6, ptr %i.du, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32.6, ptr %i.dv, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32.6 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32.6, ptr %i.du, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32.6, ptr %i.dv, align 4, !alias.scope !327, !noalias !330
   %i.dw = icmp eq i64 %n.vec27, 28
   br i1 %i.dw, label %middle.block35, label %vector.body28.7
 
 vector.body28.7:                                  ; preds = %vector.body28.6
   %i.dx = getelementptr inbounds nuw i8, ptr %i.da, i64 224
   %i.dy = getelementptr inbounds nuw i8, ptr %i.da, i64 240
-  %interleaved.vec32.7 = shufflevector <2 x i32> %broadcast.splatinsert30, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec32.7, ptr %i.dx, align 4, !alias.scope !330, !noalias !327
-  store <4 x i32> %interleaved.vec32.7, ptr %i.dy, align 4, !alias.scope !330, !noalias !327
+  %interleaved.vec32.7 = shufflevector <2 x i32> %broadcast.splat31, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec32.7, ptr %i.dx, align 4, !alias.scope !327, !noalias !330
+  store <4 x i32> %interleaved.vec32.7, ptr %i.dy, align 4, !alias.scope !327, !noalias !330
   br label %middle.block35
 
 middle.block35:                                   ; preds = %vector.body28.7, %vector.body28.6, %vector.body28.5, %vector.body28.4, %vector.body28.3, %vector.body28.2, %vector.body28.1, %vector.ph26
@@ -1647,75 +1647,75 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.prehea
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.v, 60                       ; 9 uses
-  %1 = load i32, ptr %i.y, align 8, !tbaa !158, !alias.scope !334
-  %broadcast.splatinsert = insertelement <2 x i32> poison, i32 %1, i64 0 ; 8 uses
+  %1 = load <4 x i32>, ptr %i.y, align 8
+  %broadcast.splat = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  %interleaved.vec = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec, ptr %i.x, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec, ptr %i.aa, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec, ptr %i.x, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec, ptr %i.aa, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   %i.ab = icmp eq i64 %n.vec, 4
   br i1 %i.ab, label %middle.block, label %vector.body.1
 
 vector.body.1:                                    ; preds = %vector.ph
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 32
   %i.ad = getelementptr inbounds nuw i8, ptr %i.x, i64 48
-  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.1, ptr %i.ac, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec.1, ptr %i.ad, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.1, ptr %i.ac, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec.1, ptr %i.ad, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   %i.ae = icmp eq i64 %n.vec, 8
   br i1 %i.ae, label %middle.block, label %vector.body.2
 
 vector.body.2:                                    ; preds = %vector.body.1
   %i.af = getelementptr inbounds nuw i8, ptr %i.x, i64 64
   %i.ag = getelementptr inbounds nuw i8, ptr %i.x, i64 80
-  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.2, ptr %i.af, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec.2, ptr %i.ag, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.2, ptr %i.af, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec.2, ptr %i.ag, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   %i.ah = icmp eq i64 %n.vec, 12
   br i1 %i.ah, label %middle.block, label %vector.body.3
 
 vector.body.3:                                    ; preds = %vector.body.2
   %i.ai = getelementptr inbounds nuw i8, ptr %i.x, i64 96
   %i.aj = getelementptr inbounds nuw i8, ptr %i.x, i64 112
-  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.3, ptr %i.ai, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec.3, ptr %i.aj, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.3, ptr %i.ai, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec.3, ptr %i.aj, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   %i.ak = icmp eq i64 %n.vec, 16
   br i1 %i.ak, label %middle.block, label %vector.body.4
 
 vector.body.4:                                    ; preds = %vector.body.3
   %i.al = getelementptr inbounds nuw i8, ptr %i.x, i64 128
   %i.am = getelementptr inbounds nuw i8, ptr %i.x, i64 144
-  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.4, ptr %i.al, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec.4, ptr %i.am, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.4, ptr %i.al, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec.4, ptr %i.am, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   %i.an = icmp eq i64 %n.vec, 20
   br i1 %i.an, label %middle.block, label %vector.body.5
 
 vector.body.5:                                    ; preds = %vector.body.4
   %i.ao = getelementptr inbounds nuw i8, ptr %i.x, i64 160
   %i.ap = getelementptr inbounds nuw i8, ptr %i.x, i64 176
-  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.5, ptr %i.ao, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec.5, ptr %i.ap, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.5, ptr %i.ao, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec.5, ptr %i.ap, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   %i.aq = icmp eq i64 %n.vec, 24
   br i1 %i.aq, label %middle.block, label %vector.body.6
 
 vector.body.6:                                    ; preds = %vector.body.5
   %i.ar = getelementptr inbounds nuw i8, ptr %i.x, i64 192
   %i.as = getelementptr inbounds nuw i8, ptr %i.x, i64 208
-  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.6, ptr %i.ar, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec.6, ptr %i.as, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.6, ptr %i.ar, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec.6, ptr %i.as, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   %i.at = icmp eq i64 %n.vec, 28
   br i1 %i.at, label %middle.block, label %vector.body.7
 
 vector.body.7:                                    ; preds = %vector.body.6
   %i.au = getelementptr inbounds nuw i8, ptr %i.x, i64 224
   %i.av = getelementptr inbounds nuw i8, ptr %i.x, i64 240
-  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splatinsert, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.7, ptr %i.au, align 4, !tbaa !158, !alias.scope !337, !noalias !334
-  store <4 x i32> %interleaved.vec.7, ptr %i.av, align 4, !tbaa !158, !alias.scope !337, !noalias !334
+  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splat, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.7, ptr %i.au, align 4, !tbaa !158, !alias.scope !334, !noalias !337
+  store <4 x i32> %interleaved.vec.7, ptr %i.av, align 4, !tbaa !158, !alias.scope !334, !noalias !337
   br label %middle.block
 
 middle.block:                                     ; preds = %vector.body.7, %vector.body.6, %vector.body.5, %vector.body.4, %vector.body.3, %vector.body.2, %vector.body.1, %vector.ph
@@ -2118,75 +2118,75 @@ vector.memcheck10:                                ; preds = %.lr.ph.i.i.i.i.preh
 
 vector.ph18:                                      ; preds = %vector.memcheck10
   %n.vec19 = and i64 %i.by, 60                    ; 9 uses
-  %1 = load i32, ptr %i.cb, align 8, !tbaa !158, !alias.scope !493
-  %broadcast.splatinsert22 = insertelement <2 x i32> poison, i32 %1, i64 0 ; 8 uses
+  %1 = load <4 x i32>, ptr %i.cb, align 8
+  %broadcast.splat23 = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
-  %interleaved.vec24 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24, ptr %i.ca, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24, ptr %i.cd, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24, ptr %i.ca, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24, ptr %i.cd, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   %i.ce = icmp eq i64 %n.vec19, 4
   br i1 %i.ce, label %middle.block27, label %vector.body20.1
 
 vector.body20.1:                                  ; preds = %vector.ph18
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ca, i64 32
   %i.cg = getelementptr inbounds nuw i8, ptr %i.ca, i64 48
-  %interleaved.vec24.1 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24.1, ptr %i.cf, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24.1, ptr %i.cg, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24.1 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24.1, ptr %i.cf, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24.1, ptr %i.cg, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   %i.ch = icmp eq i64 %n.vec19, 8
   br i1 %i.ch, label %middle.block27, label %vector.body20.2
 
 vector.body20.2:                                  ; preds = %vector.body20.1
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ca, i64 64
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ca, i64 80
-  %interleaved.vec24.2 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24.2, ptr %i.ci, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24.2, ptr %i.cj, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24.2 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24.2, ptr %i.ci, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24.2, ptr %i.cj, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   %i.ck = icmp eq i64 %n.vec19, 12
   br i1 %i.ck, label %middle.block27, label %vector.body20.3
 
 vector.body20.3:                                  ; preds = %vector.body20.2
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ca, i64 96
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ca, i64 112
-  %interleaved.vec24.3 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24.3, ptr %i.cl, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24.3, ptr %i.cm, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24.3 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24.3, ptr %i.cl, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24.3, ptr %i.cm, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   %i.cn = icmp eq i64 %n.vec19, 16
   br i1 %i.cn, label %middle.block27, label %vector.body20.4
 
 vector.body20.4:                                  ; preds = %vector.body20.3
   %i.co = getelementptr inbounds nuw i8, ptr %i.ca, i64 128
   %i.cp = getelementptr inbounds nuw i8, ptr %i.ca, i64 144
-  %interleaved.vec24.4 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24.4, ptr %i.co, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24.4, ptr %i.cp, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24.4 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24.4, ptr %i.co, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24.4, ptr %i.cp, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   %i.cq = icmp eq i64 %n.vec19, 20
   br i1 %i.cq, label %middle.block27, label %vector.body20.5
 
 vector.body20.5:                                  ; preds = %vector.body20.4
   %i.cr = getelementptr inbounds nuw i8, ptr %i.ca, i64 160
   %i.cs = getelementptr inbounds nuw i8, ptr %i.ca, i64 176
-  %interleaved.vec24.5 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24.5, ptr %i.cr, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24.5, ptr %i.cs, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24.5 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24.5, ptr %i.cr, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24.5, ptr %i.cs, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   %i.ct = icmp eq i64 %n.vec19, 24
   br i1 %i.ct, label %middle.block27, label %vector.body20.6
 
 vector.body20.6:                                  ; preds = %vector.body20.5
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ca, i64 192
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ca, i64 208
-  %interleaved.vec24.6 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24.6, ptr %i.cu, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24.6, ptr %i.cv, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24.6 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24.6, ptr %i.cu, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24.6, ptr %i.cv, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   %i.cw = icmp eq i64 %n.vec19, 28
   br i1 %i.cw, label %middle.block27, label %vector.body20.7
 
 vector.body20.7:                                  ; preds = %vector.body20.6
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ca, i64 224
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ca, i64 240
-  %interleaved.vec24.7 = shufflevector <2 x i32> %broadcast.splatinsert22, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec24.7, ptr %i.cx, align 4, !tbaa !158, !alias.scope !496, !noalias !493
-  store <4 x i32> %interleaved.vec24.7, ptr %i.cy, align 4, !tbaa !158, !alias.scope !496, !noalias !493
+  %interleaved.vec24.7 = shufflevector <2 x i32> %broadcast.splat23, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec24.7, ptr %i.cx, align 4, !tbaa !158, !alias.scope !493, !noalias !496
+  store <4 x i32> %interleaved.vec24.7, ptr %i.cy, align 4, !tbaa !158, !alias.scope !493, !noalias !496
   br label %middle.block27
 
 middle.block27:                                   ; preds = %vector.body20.7, %vector.body20.6, %vector.body20.5, %vector.body20.4, %vector.body20.3, %vector.body20.2, %vector.body20.1, %vector.ph18
@@ -2589,75 +2589,75 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.i.i10.preh
 
 vector.ph37:                                      ; preds = %vector.memcheck
   %n.vec38 = and i64 %i.av, 60                    ; 9 uses
-  %1 = load i32, ptr %i.ay, align 8, !tbaa !158, !alias.scope !553
-  %broadcast.splatinsert41 = insertelement <2 x i32> poison, i32 %1, i64 0 ; 8 uses
+  %1 = load <4 x i32>, ptr %i.ay, align 8
+  %broadcast.splat42 = shufflevector <4 x i32> %1, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 16
-  %interleaved.vec = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec, ptr %i.ax, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec, ptr %i.ba, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec, ptr %i.ax, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec, ptr %i.ba, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   %i.bb = icmp eq i64 %n.vec38, 4
   br i1 %i.bb, label %middle.block45, label %vector.body39.1
 
 vector.body39.1:                                  ; preds = %vector.ph37
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
-  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.1, ptr %i.bc, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec.1, ptr %i.bd, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec.1 = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.1, ptr %i.bc, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec.1, ptr %i.bd, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   %i.be = icmp eq i64 %n.vec38, 8
   br i1 %i.be, label %middle.block45, label %vector.body39.2
 
 vector.body39.2:                                  ; preds = %vector.body39.1
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ax, i64 64
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ax, i64 80
-  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.2, ptr %i.bf, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec.2, ptr %i.bg, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec.2 = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.2, ptr %i.bf, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec.2, ptr %i.bg, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   %i.bh = icmp eq i64 %n.vec38, 12
   br i1 %i.bh, label %middle.block45, label %vector.body39.3
 
 vector.body39.3:                                  ; preds = %vector.body39.2
   %i.bi = getelementptr inbounds nuw i8, ptr %i.ax, i64 96
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ax, i64 112
-  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.3, ptr %i.bi, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec.3, ptr %i.bj, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec.3 = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.3, ptr %i.bi, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec.3, ptr %i.bj, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   %i.bk = icmp eq i64 %n.vec38, 16
   br i1 %i.bk, label %middle.block45, label %vector.body39.4
 
 vector.body39.4:                                  ; preds = %vector.body39.3
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ax, i64 128
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ax, i64 144
-  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.4, ptr %i.bl, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec.4, ptr %i.bm, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec.4 = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.4, ptr %i.bl, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec.4, ptr %i.bm, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   %i.bn = icmp eq i64 %n.vec38, 20
   br i1 %i.bn, label %middle.block45, label %vector.body39.5
 
 vector.body39.5:                                  ; preds = %vector.body39.4
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ax, i64 160
   %i.bp = getelementptr inbounds nuw i8, ptr %i.ax, i64 176
-  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.5, ptr %i.bo, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec.5, ptr %i.bp, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec.5 = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.5, ptr %i.bo, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec.5, ptr %i.bp, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   %i.bq = icmp eq i64 %n.vec38, 24
   br i1 %i.bq, label %middle.block45, label %vector.body39.6
 
 vector.body39.6:                                  ; preds = %vector.body39.5
   %i.br = getelementptr inbounds nuw i8, ptr %i.ax, i64 192
   %i.bs = getelementptr inbounds nuw i8, ptr %i.ax, i64 208
-  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.6, ptr %i.br, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec.6, ptr %i.bs, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec.6 = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.6, ptr %i.br, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec.6, ptr %i.bs, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   %i.bt = icmp eq i64 %n.vec38, 28
   br i1 %i.bt, label %middle.block45, label %vector.body39.7
 
 vector.body39.7:                                  ; preds = %vector.body39.6
   %i.bu = getelementptr inbounds nuw i8, ptr %i.ax, i64 224
   %i.bv = getelementptr inbounds nuw i8, ptr %i.ax, i64 240
-  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splatinsert41, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec.7, ptr %i.bu, align 4, !tbaa !158, !alias.scope !556, !noalias !553
-  store <4 x i32> %interleaved.vec.7, ptr %i.bv, align 4, !tbaa !158, !alias.scope !556, !noalias !553
+  %interleaved.vec.7 = shufflevector <2 x i32> %broadcast.splat42, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec.7, ptr %i.bu, align 4, !tbaa !158, !alias.scope !553, !noalias !556
+  store <4 x i32> %interleaved.vec.7, ptr %i.bv, align 4, !tbaa !158, !alias.scope !553, !noalias !556
   br label %middle.block45
 
 middle.block45:                                   ; preds = %vector.body39.7, %vector.body39.6, %vector.body39.5, %vector.body39.4, %vector.body39.3, %vector.body39.2, %vector.body39.1, %vector.ph37
@@ -2809,75 +2809,75 @@ vector.memcheck48:                                ; preds = %.lr.ph.i.i.i.i.preh
 
 vector.ph56:                                      ; preds = %vector.memcheck48
   %n.vec57 = and i64 %i.dn, 60                    ; 9 uses
-  %2 = load i32, ptr %i.dq, align 8, !tbaa !158, !alias.scope !560
-  %broadcast.splatinsert60 = insertelement <2 x i32> poison, i32 %2, i64 0 ; 8 uses
+  %2 = load <4 x i32>, ptr %i.dq, align 8
+  %broadcast.splat61 = shufflevector <4 x i32> %2, <4 x i32> poison, <2 x i32> zeroinitializer ; 8 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dp, i64 16
-  %interleaved.vec62 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62, ptr %i.dp, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62, ptr %i.ds, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62, ptr %i.dp, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62, ptr %i.ds, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   %i.dt = icmp eq i64 %n.vec57, 4
   br i1 %i.dt, label %middle.block65, label %vector.body58.1
 
 vector.body58.1:                                  ; preds = %vector.ph56
   %i.du = getelementptr inbounds nuw i8, ptr %i.dp, i64 32
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dp, i64 48
-  %interleaved.vec62.1 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62.1, ptr %i.du, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62.1, ptr %i.dv, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62.1 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62.1, ptr %i.du, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62.1, ptr %i.dv, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   %i.dw = icmp eq i64 %n.vec57, 8
   br i1 %i.dw, label %middle.block65, label %vector.body58.2
 
 vector.body58.2:                                  ; preds = %vector.body58.1
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dp, i64 64
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dp, i64 80
-  %interleaved.vec62.2 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62.2, ptr %i.dx, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62.2, ptr %i.dy, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62.2 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62.2, ptr %i.dx, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62.2, ptr %i.dy, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   %i.dz = icmp eq i64 %n.vec57, 12
   br i1 %i.dz, label %middle.block65, label %vector.body58.3
 
 vector.body58.3:                                  ; preds = %vector.body58.2
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dp, i64 96
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dp, i64 112
-  %interleaved.vec62.3 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62.3, ptr %i.ea, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62.3, ptr %i.eb, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62.3 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62.3, ptr %i.ea, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62.3, ptr %i.eb, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   %i.ec = icmp eq i64 %n.vec57, 16
   br i1 %i.ec, label %middle.block65, label %vector.body58.4
 
 vector.body58.4:                                  ; preds = %vector.body58.3
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dp, i64 128
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dp, i64 144
-  %interleaved.vec62.4 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62.4, ptr %i.ed, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62.4, ptr %i.ee, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62.4 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62.4, ptr %i.ed, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62.4, ptr %i.ee, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   %i.ef = icmp eq i64 %n.vec57, 20
   br i1 %i.ef, label %middle.block65, label %vector.body58.5
 
 vector.body58.5:                                  ; preds = %vector.body58.4
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dp, i64 160
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dp, i64 176
-  %interleaved.vec62.5 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62.5, ptr %i.eg, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62.5, ptr %i.eh, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62.5 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62.5, ptr %i.eg, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62.5, ptr %i.eh, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   %i.ei = icmp eq i64 %n.vec57, 24
   br i1 %i.ei, label %middle.block65, label %vector.body58.6
 
 vector.body58.6:                                  ; preds = %vector.body58.5
   %i.ej = getelementptr inbounds nuw i8, ptr %i.dp, i64 192
   %i.ek = getelementptr inbounds nuw i8, ptr %i.dp, i64 208
-  %interleaved.vec62.6 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62.6, ptr %i.ej, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62.6, ptr %i.ek, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62.6 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62.6, ptr %i.ej, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62.6, ptr %i.ek, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   %i.el = icmp eq i64 %n.vec57, 28
   br i1 %i.el, label %middle.block65, label %vector.body58.7
 
 vector.body58.7:                                  ; preds = %vector.body58.6
   %i.em = getelementptr inbounds nuw i8, ptr %i.dp, i64 224
   %i.en = getelementptr inbounds nuw i8, ptr %i.dp, i64 240
-  %interleaved.vec62.7 = shufflevector <2 x i32> %broadcast.splatinsert60, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 0, i32 3> ; 2 uses
-  store <4 x i32> %interleaved.vec62.7, ptr %i.em, align 4, !tbaa !158, !alias.scope !563, !noalias !560
-  store <4 x i32> %interleaved.vec62.7, ptr %i.en, align 4, !tbaa !158, !alias.scope !563, !noalias !560
+  %interleaved.vec62.7 = shufflevector <2 x i32> %broadcast.splat61, <2 x i32> zeroinitializer, <4 x i32> <i32 0, i32 2, i32 1, i32 3> ; 2 uses
+  store <4 x i32> %interleaved.vec62.7, ptr %i.em, align 4, !tbaa !158, !alias.scope !560, !noalias !563
+  store <4 x i32> %interleaved.vec62.7, ptr %i.en, align 4, !tbaa !158, !alias.scope !560, !noalias !563
   br label %middle.block65
 
 middle.block65:                                   ; preds = %vector.body58.7, %vector.body58.6, %vector.body58.5, %vector.body58.4, %vector.body58.3, %vector.body58.2, %vector.body58.1, %vector.ph56
