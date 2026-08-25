@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bytestream2_get_be3
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.da = load i32, ptr %i.cz, align 8, !tbaa !34
   %i.db = icmp eq i32 %i.da, 11
-  %i.dc = load ptr, ptr %i.a, align 8, !tbaa !9   ; 99 uses
+  %i.dc = load ptr, ptr %i.a, align 8, !tbaa !9   ; 100 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.d, i64 104
   %i.de = load i32, ptr %i.dd, align 8, !tbaa !58 ; 31 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.d, i64 108
@@ -608,7 +608,7 @@ bb.cr:                                            ; preds = %bb.m
   br label %bb.cs
 
 bb.cs:                                            ; preds = %.thread12.i, %.lr.ph201.i
-  %i.us = phi ptr [ %i.tj, %.lr.ph201.i ], [ %i.apn, %.thread12.i ] ; 38 uses
+  %i.us = phi ptr [ %i.tj, %.lr.ph201.i ], [ %i.apn, %.thread12.i ] ; 37 uses
   %i.ut = phi i64 [ %i.tn, %.lr.ph201.i ], [ %i.apq, %.thread12.i ]
   %i.uu = phi i64 [ %i.tl, %.lr.ph201.i ], [ %i.apo, %.thread12.i ] ; 16 uses
   %i.uv = phi ptr [ %i.tk, %.lr.ph201.i ], [ %i.apm, %.thread12.i ] ; 2 uses
@@ -620,7 +620,7 @@ bb.cs:                                            ; preds = %.thread12.i, %.lr.p
   br label %decode_pal8.exit
 
 bytestream2_get_byte.exit390.i:                   ; preds = %bb.cs
-  %i.ux = getelementptr inbounds nuw i8, ptr %i.uv, i64 1 ; 9 uses
+  %i.ux = getelementptr inbounds nuw i8, ptr %i.uv, i64 1 ; 8 uses
   store ptr %i.ux, ptr %i.dc, align 8, !tbaa !51
   %i.uy = load i8, ptr %i.uv, align 1, !tbaa !52
   switch i8 %i.uy, label %decode_pal8.exit [
@@ -646,9 +646,8 @@ bb.ct:                                            ; preds = %bytestream2_get_byt
   br label %.preheader90.i
 
 .preheader90.i:                                   ; preds = %._crit_edge.i93, %.preheader90.lr.ph.split.i
-  %.32.val.promoted199.i = phi ptr [ %i.ux, %.preheader90.lr.ph.split.i ], [ %5, %._crit_edge.i93 ]
-  %i.vf = phi i32 [ 12, %.preheader90.lr.ph.split.i ], [ %i.vh, %._crit_edge.i93 ]
-  %.0280197.i = phi ptr [ %i.ve, %.preheader90.lr.ph.split.i ], [ %i.vg, %._crit_edge.i93 ] ; 2 uses
+  %i.vf = phi i32 [ %i.vh, %._crit_edge.i93 ], [ 12, %.preheader90.lr.ph.split.i ]
+  %.0280197.i = phi ptr [ %i.vg, %._crit_edge.i93 ], [ %i.ve, %.preheader90.lr.ph.split.i ] ; 2 uses
   br label %bb.cu
 
 ._crit_edge.i93:                                  ; preds = %bytestream2_get_be24.exit.i
@@ -660,7 +659,7 @@ bb.ct:                                            ; preds = %bytestream2_get_byt
 bb.cu:                                            ; preds = %bytestream2_get_be24.exit.i, %.preheader90.i
   %indvars.iv247.i = phi i64 [ 0, %.preheader90.i ], [ %indvars.iv.next248.i, %bytestream2_get_be24.exit.i ] ; 2 uses
   %indvars.iv.i91 = phi i64 [ 12, %.preheader90.i ], [ %indvars.iv.next.i92, %bytestream2_get_be24.exit.i ]
-  %4 = phi ptr [ %.32.val.promoted199.i, %.preheader90.i ], [ %5, %bytestream2_get_be24.exit.i ] ; 5 uses
+  %4 = load ptr, ptr %i.dc, align 8, !tbaa !48    ; 5 uses
   %i.vi = ptrtoint ptr %4 to i64
   %i.vj = sub i64 %i.uu, %i.vi
   %i.vk = icmp slt i64 %i.vj, 3
@@ -671,7 +670,7 @@ bb.cv:                                            ; preds = %bb.cu
   br label %bytestream2_get_be24.exit.i
 
 bb.cw:                                            ; preds = %bb.cu
-  %i.vl = getelementptr inbounds nuw i8, ptr %4, i64 3 ; 2 uses
+  %i.vl = getelementptr inbounds nuw i8, ptr %4, i64 3
   store ptr %i.vl, ptr %i.dc, align 8, !tbaa !51
   %i.vm = load i8, ptr %4, align 1, !tbaa !52
   %i.vn = zext i8 %i.vm to i32
@@ -688,7 +687,6 @@ bb.cw:                                            ; preds = %bb.cu
   br label %bytestream2_get_be24.exit.i
 
 bytestream2_get_be24.exit.i:                      ; preds = %bb.cw, %bb.cv
-  %5 = phi ptr [ %i.us, %bb.cv ], [ %i.vl, %bb.cw ] ; 2 uses
   %.0.i394.i = phi i32 [ 0, %bb.cv ], [ %i.vx, %bb.cw ] ; 13 uses
   %i.vy = getelementptr inbounds nuw [4 x i8], ptr %.0280197.i, i64 %indvars.iv247.i ; 4 uses
   %i.vz = insertelement <4 x i32> poison, i32 %.0.i394.i, i64 0

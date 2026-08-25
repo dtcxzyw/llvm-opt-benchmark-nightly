@@ -205,9 +205,8 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 4 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
   %i.p = icmp eq ptr %.pre.i.i.fr, null
-  %.promoted = load i8, ptr %i.o, align 8         ; 2 uses
   br i1 %i.p, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
@@ -228,7 +227,8 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   store ptr null, ptr %i.a, align 8, !noalias !959
   store i64 %i.k, ptr %i.l, align 8, !noalias !959
   store i64 0, ptr %i.m, align 8, !noalias !959
-  store i8 %.promoted, ptr %i.n, align 8, !noalias !959
+  %3 = load i8, ptr %i.o, align 8, !range !322, !alias.scope !948, !noalias !953, !noundef !9
+  store i8 %3, ptr %i.n, align 8, !noalias !959
   %i.s = call noundef ptr @_RNvXsa_NtCs2vKOLqTMYjT_3std2fsNtB5_4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read8read_buf(ptr noalias nofree noundef nonnull align 4 dereferenceable(4) %i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.a) #26, !noalias !960 ; 2 uses
   store i64 0, ptr %i.g, align 8, !alias.scope !948, !noalias !953
   %i.t = load i64, ptr %i.m, align 8, !noalias !959, !noundef !9 ; 2 uses
@@ -255,9 +255,8 @@ _RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2v
   br i1 %i.z, label %bb.g, label %bb.h
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread48
-  %i.aa = phi i64 [ %i.bd, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread48 ], [ %.pre35, %.lr.ph.split.preheader ] ; 2 uses
-  %i.ab = phi i64 [ %..i.i, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread48 ], [ %.pre, %.lr.ph.split.preheader ] ; 2 uses
-  %3 = phi i8 [ %4, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread48 ], [ %.promoted, %.lr.ph.split.preheader ] ; 2 uses
+  %i.aa = phi i64 [ %.pre35, %.lr.ph.split.preheader ], [ %i.bd, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread48 ] ; 2 uses
+  %i.ab = phi i64 [ %.pre, %.lr.ph.split.preheader ], [ %..i.i, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread48 ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !957)
   call void @llvm.experimental.noalias.scope.decl(metadata !958)
   %.not.i.i = icmp ult i64 %i.ab, %i.aa
@@ -268,12 +267,13 @@ bb.d:                                             ; preds = %.lr.ph.split
   store ptr %.pre.i.i.fr, ptr %i.a, align 8, !noalias !959
   store i64 %i.k, ptr %i.l, align 8, !noalias !959
   store i64 0, ptr %i.m, align 8, !noalias !959
-  store i8 %3, ptr %i.n, align 8, !noalias !959
+  %4 = load i8, ptr %i.o, align 8, !range !322, !alias.scope !948, !noalias !953, !noundef !9
+  store i8 %4, ptr %i.n, align 8, !noalias !959
   %i.ac = call noundef ptr @_RNvXsa_NtCs2vKOLqTMYjT_3std2fsNtB5_4FileNtNtNtCs7tKScEop1B6_5alloc2io4read4Read8read_buf(ptr noalias nofree noundef nonnull align 4 dereferenceable(4) %i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.a) #26, !noalias !960 ; 2 uses
   store i64 0, ptr %i.g, align 8, !alias.scope !948, !noalias !953
   %i.ad = load i64, ptr %i.m, align 8, !noalias !959, !noundef !9 ; 3 uses
   store i64 %i.ad, ptr %i.h, align 8, !alias.scope !948, !noalias !953
-  %i.ae = load i8, ptr %i.n, align 8, !range !322, !noalias !959, !noundef !9 ; 2 uses
+  %i.ae = load i8, ptr %i.n, align 8, !range !322, !noalias !959, !noundef !9
   store i8 %i.ae, ptr %i.o, align 8, !alias.scope !948, !noalias !953
   %.not3.i.i = icmp eq ptr %i.ac, null
   br i1 %.not3.i.i, label %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit, label %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread
@@ -375,7 +375,6 @@ _RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.m
 
 _RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit.thread48: ; preds = %.lr.ph.split, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit
   %i.bc = phi i64 [ 0, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit ], [ %i.ab, %.lr.ph.split ] ; 2 uses
-  %4 = phi i8 [ %i.ae, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit ], [ %3, %.lr.ph.split ]
   %i.bd = phi i64 [ %i.ad, %_RNvXs5_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderNtNtCs2vKOLqTMYjT_3std2fs4FileENtNtB9_8buf_read7BufRead8fill_bufCs84qwSrTN5pO_7uu_shuf.exit ], [ %i.aa, %.lr.ph.split ] ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.pre.i.i.fr, i64 %i.bc
   %i.bf = load i8, ptr %i.be, align 1, !noundef !9

@@ -202,19 +202,14 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16
   %wide.trip.count = zext nneg i32 %i.d to i64
   br label %bb.c
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit
-  store ptr %8, ptr %i.f, align 8
-  store ptr %i.ar, ptr %i.g, align 8
-  br label %bb.b
-
-bb.b:                                             ; preds = %._crit_edge, %bb.a
-  %i.h = phi ptr [ %i.ar, %._crit_edge ], [ null, %bb.a ] ; 2 uses
-  %i.i = phi ptr [ %i.as, %._crit_edge ], [ null, %bb.a ] ; 5 uses
+bb.b:                                             ; preds = %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit, %bb.a
+  %i.h = phi ptr [ null, %bb.a ], [ %i.ar, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 2 uses
+  %i.i = phi ptr [ null, %bb.a ], [ %i.as, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 5 uses
   store ptr %i.i, ptr %3, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   invoke void @_ZN4cvc58internal4prop15SatProofManager13getClauseNodeERKNS0_7Minisat6ClauseE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %4, ptr noundef nonnull align 8 dereferenceable(1232) %0, ptr noundef nonnull align 4 dereferenceable(8) %1)
@@ -222,8 +217,8 @@ bb.b:                                             ; preds = %._crit_edge, %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 2 uses
-  %i.j = phi ptr [ null, %.lr.ph ], [ %i.ar, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 9 uses
-  %i.k = phi ptr [ null, %.lr.ph ], [ %8, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 5 uses
+  %i.j = phi ptr [ null, %.lr.ph ], [ %i.ar, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 7 uses
+  %i.k = phi ptr [ null, %.lr.ph ], [ %.0.lcssa.i.i.i.i.i.i.pn, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 3 uses
   %i.l = phi ptr [ null, %.lr.ph ], [ %i.as, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit ] ; 12 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %indvars.iv
   %.sroa.0.0.copyload.i = load i32, ptr %i.m, align 4, !tbaa !180
@@ -236,6 +231,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   store i64 %i.n, ptr %i.k, align 8, !tbaa !104
+  %8 = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
+  store ptr %8, ptr %i.f, align 8, !tbaa !219
   br label %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -246,8 +243,6 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.r, label %bb.g, label %_ZNKSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.f
-  store ptr %i.k, ptr %i.f, align 8
-  store ptr %i.j, ptr %i.g, align 8
   store ptr %i.l, ptr %3, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.96) #27
           to label %.noexc49 unwind label %.loopexit.split-lp
@@ -333,6 +328,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %middle.block, %.noexc50
   %.0.lcssa.i.i.i.i.i.i = phi ptr [ %i.y, %.noexc50 ], [ %i.ah, %middle.block ], [ %i.ap, %.lr.ph.i.i.i.i.i.i ]
+  %9 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i23.i.i.i = icmp eq ptr %i.l, null
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.h
 
@@ -341,23 +337,22 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN4cvc5
   br label %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.h, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit22.i.i.i
-  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.w
+  store ptr %9, ptr %i.f, align 8, !tbaa !219
+  %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %i.w ; 2 uses
+  store ptr %i.aq, ptr %i.g, align 8, !tbaa !174
   br label %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit
 
 _ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE9push_backEOS3_.exit: ; preds = %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, %bb.e
-  %i.ar = phi ptr [ %i.aq, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.j, %bb.e ] ; 3 uses
-  %.0.lcssa.i.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.k, %bb.e ]
+  %i.ar = phi ptr [ %i.aq, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.j, %bb.e ] ; 2 uses
+  %.0.lcssa.i.i.i.i.i.i.pn = phi ptr [ %9, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %8, %bb.e ]
   %i.as = phi ptr [ %i.y, %_ZNSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.l, %bb.e ] ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.pn, i64 8 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !351
+  br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !351
 
 .loopexit73:                                      ; preds = %bb.c, %_ZNKSt6vectorIN4cvc58internal4prop10SatLiteralESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.k, ptr %i.f, align 8
-  store ptr %i.j, ptr %i.g, align 8
   store ptr %i.l, ptr %3, align 8
   br label %bb.ap
 

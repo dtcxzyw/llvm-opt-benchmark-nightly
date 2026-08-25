@@ -186,7 +186,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i:
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %13 = alloca %"class.v8::internal::torque::IncludeGuardScope", align 8 ; 6 uses
   %14 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %15 = alloca %"class.std::unique_ptr", align 8  ; 14 uses
+  %15 = alloca %"class.std::unique_ptr", align 8  ; 12 uses
   %16 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 21 uses
   %17 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 21 uses
   %18 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 21 uses
@@ -527,8 +527,8 @@ _ZN2v88internal6torque9TypeAlias11DynamicCastEPNS1_10DeclarableE.exit.thread.i.i
   %i.cg = icmp eq ptr %i.cf, %i.ab
   br i1 %i.cg, label %._crit_edge.i.i125, label %bb.c
 
-.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
-  %.0.i3.i.i.i = phi ptr [ %i.ch, %.lr.ph.i.i.i ], [ %i.ce, %.lr.ph.i.i.i.preheader ] ; 2 uses
+.lr.ph.i.i.i:                                     ; preds = %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i, %.lr.ph.i.i.i
+  %.0.i3.i.i.i = phi ptr [ %i.ch, %.lr.ph.i.i.i ], [ %i.ce, %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i ] ; 2 uses
   call fastcc void @_ZSt10destroy_atISt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EEEvPT_(ptr noundef %.0.i3.i.i.i), !noalias !11, !inline_history !27
   %i.ch = getelementptr inbounds nuw i8, ptr %.0.i3.i.i.i, i64 8 ; 2 uses
   %.not.i.i64.i.i = icmp eq ptr %i.ch, %i.cd
@@ -578,7 +578,6 @@ bb.v:                                             ; preds = %_ZNSt10_HashtableIP
   br label %_ZN2v88internal6torque12_GLOBAL__N_121BuildInstanceTypeTreeEv.exit.i
 
 bb.w:                                             ; preds = %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i, %.lr.ph94.i.i
-  %49 = phi ptr [ null, %.lr.ph94.i.i ], [ %50, %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i ] ; 4 uses
   %.val54.i.i = phi ptr [ null, %.lr.ph94.i.i ], [ %.val54.i64.i, %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i ] ; 7 uses
   %.sroa.073.092.i.i = phi ptr [ %i.ce, %.lr.ph94.i.i ], [ %i.ei, %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20, !noalias !11
@@ -603,6 +602,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w
 .thread.i.i:                                      ; preds = %bb.y
   %i.cz = load ptr, ptr %.sroa.073.092.i.i, align 8, !noalias !11 ; 2 uses
   store ptr null, ptr %.sroa.073.092.i.i, align 8, !noalias !11
+  store ptr %i.cz, ptr %15, align 8, !alias.scope !11
   br label %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i
 
 bb.z:                                             ; preds = %bb.y
@@ -634,7 +634,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 bb.ab:                                            ; preds = %.noexc69.i.i
   %i.di = landingpad { ptr, i32 }
           cleanup
-  store ptr %49, ptr %15, align 8
   %i.dj = load ptr, ptr %5, align 8, !noalias !31 ; 2 uses
   %i.dk = icmp eq ptr %i.dj, %i.ag
   br i1 %i.dk, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i6.i.i.i.i
@@ -668,13 +667,11 @@ bb.ac:                                            ; preds = %_ZNKSt7__cxx1112bas
 bb.ad:                                            ; preds = %bb.ai, %bb.ah
   %i.dt = landingpad { ptr, i32 }
           cleanup
-  store ptr %49, ptr %15, align 8
   br label %bb.aj
 
 bb.ae:                                            ; preds = %bb.z
   %i.du = landingpad { ptr, i32 }
           cleanup
-  store ptr %49, ptr %15, align 8
   br label %.body.i.i
 
 .body.i.i:                                        ; preds = %bb.ae, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8.i.i.i.i
@@ -687,6 +684,7 @@ bb.af:                                            ; preds = %bb.ac, %_ZNKSt7__cx
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #20, !noalias !11
   %i.dv = load ptr, ptr %.sroa.073.092.i.i, align 8, !noalias !11 ; 2 uses
   store ptr null, ptr %.sroa.073.092.i.i, align 8, !noalias !11
+  store ptr %i.dv, ptr %15, align 8, !alias.scope !11
   %i.dw = getelementptr inbounds nuw i8, ptr %.val54.i.i, i64 8 ; 2 uses
   %i.dx = load ptr, ptr %i.dw, align 8, !noalias !11 ; 3 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.val54.i.i, i64 16
@@ -735,16 +733,11 @@ bb.ai:                                            ; preds = %bb.ah
           to label %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i unwind label %bb.ad, !noalias !11
 
 _ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i: ; preds = %bb.ai, %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i.i.i.i.i.i, %.thread.i.i
-  %50 = phi ptr [ %49, %bb.ai ], [ %i.dv, %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i.i.i.i.i.i ], [ %i.cz, %.thread.i.i ] ; 2 uses
   %.val54.i64.i = phi ptr [ %.val54.i.i, %bb.ai ], [ %i.dv, %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i.i.i.i.i.i ], [ %i.cz, %.thread.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20, !noalias !11
   %i.ei = getelementptr inbounds nuw i8, ptr %.sroa.073.092.i.i, i64 8 ; 2 uses
   %i.ej = icmp eq ptr %i.ei, %i.cd
-  br i1 %i.ej, label %.lr.ph.i.i.i.preheader, label %bb.w
-
-.lr.ph.i.i.i.preheader:                           ; preds = %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EEaSEOS7_.exit.i.i
-  store ptr %50, ptr %15, align 8
-  br label %.lr.ph.i.i.i
+  br i1 %i.ej, label %.lr.ph.i.i.i, label %bb.w
 
 bb.aj:                                            ; preds = %.body.i.i, %bb.ad
   %.pn.i.i = phi { ptr, i32 } [ %eh.lpad-body.i.i, %.body.i.i ], [ %i.dt, %bb.ad ]

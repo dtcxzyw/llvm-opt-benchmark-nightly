@@ -205,11 +205,9 @@ bb.ek:                                            ; preds = %bb.ej, %bb.eg
   %i.akv = getelementptr inbounds nuw i8, ptr %i.m, i64 928
   %i.akw = getelementptr inbounds nuw i8, ptr %i.m, i64 880
   %i.akx = getelementptr inbounds nuw i8, ptr %i.m, i64 944
-  %.promoted = load i32, ptr %i.t, align 8
   br label %bb.el
 
 bb.el:                                            ; preds = %._crit_edge181.i, %._crit_edge.thread.i
-  %5 = phi i32 [ %.promoted, %._crit_edge.thread.i ], [ %11, %._crit_edge181.i ] ; 3 uses
   %indvars.iv193.i = phi i64 [ 0, %._crit_edge.thread.i ], [ %indvars.iv.next194.i, %._crit_edge181.i ] ; 3 uses
   %.0105187.i = phi i32 [ 0, %._crit_edge.thread.i ], [ %.1.lcssa.i, %._crit_edge181.i ] ; 3 uses
   %.0144185.i = phi i32 [ 0, %._crit_edge.thread.i ], [ %.1145.lcssa.i, %._crit_edge181.i ] ; 3 uses
@@ -240,7 +238,6 @@ bb.el:                                            ; preds = %._crit_edge181.i, %
   br i1 %i.alj, label %.preheader152.us.i, label %._crit_edge181.i
 
 .preheader152.us.i:                               ; preds = %.preheader152.lr.ph.i, %._crit_edge175.us.i
-  %6 = phi i32 [ %9, %._crit_edge175.us.i ], [ %5, %.preheader152.lr.ph.i ]
   %.0104180.us.i = phi i32 [ %i.aou, %._crit_edge175.us.i ], [ 0, %.preheader152.lr.ph.i ] ; 2 uses
   %.1179.us.i = phi i32 [ %.4.us.i, %._crit_edge175.us.i ], [ %.0105187.i, %.preheader152.lr.ph.i ]
   %.1145178.us.i = phi i32 [ %.5.us.i, %._crit_edge175.us.i ], [ %.0144185.i, %.preheader152.lr.ph.i ]
@@ -248,7 +245,6 @@ bb.el:                                            ; preds = %._crit_edge181.i, %
   br label %.preheader.us.i
 
 bb.em:                                            ; preds = %.preheader.us.i, %.loopexit.us.i
-  %7 = phi i32 [ %10, %.preheader.us.i ], [ %9, %.loopexit.us.i ] ; 6 uses
   %.0102171.us.i = phi i32 [ 0, %.preheader.us.i ], [ %i.aop, %.loopexit.us.i ] ; 3 uses
   %.3170.us.i = phi i32 [ %.2173.us.i, %.preheader.us.i ], [ %.4.us.i, %.loopexit.us.i ] ; 3 uses
   %.3147169.us.i = phi i32 [ %.2146172.us.i, %.preheader.us.i ], [ %.5.us.i, %.loopexit.us.i ] ; 4 uses
@@ -277,12 +273,13 @@ bb.eo:                                            ; preds = %bb.en
   %i.alw = zext nneg i32 %.3147169.us.i to i64
   %i.alx = getelementptr inbounds nuw [8 x i8], ptr @block_pattern_vlc, i64 %i.alw
   %i.aly = load ptr, ptr %i.alx, align 8, !tbaa !108
-  %i.alz = lshr i32 %7, 3
+  %5 = load i32, ptr %i.t, align 8, !tbaa !50     ; 3 uses
+  %i.alz = lshr i32 %5, 3
   %i.ama = zext nneg i32 %i.alz to i64
   %i.amb = getelementptr inbounds nuw i8, ptr %i.aot, i64 %i.ama
   %i.amc = load i32, ptr %i.amb, align 1, !tbaa !51
   %i.amd = tail call i32 @llvm.bswap.i32(i32 %i.amc)
-  %i.ame = and i32 %7, 7
+  %i.ame = and i32 %5, 7
   %i.amf = shl i32 %i.amd, %i.ame
   %i.amg = lshr i32 %i.amf, 27
   %i.amh = zext nneg i32 %i.amg to i64
@@ -292,8 +289,8 @@ bb.eo:                                            ; preds = %bb.en
   %i.aml = getelementptr inbounds nuw i8, ptr %i.ami, i64 2
   %i.amm = load i16, ptr %i.aml, align 2, !tbaa !51
   %i.amn = sext i16 %i.amm to i32
-  %i.amo = add i32 %7, %i.amn
-  %i.amp = tail call i32 @llvm.umin.i32(i32 %i.aos, i32 %i.amo) ; 2 uses
+  %i.amo = add i32 %5, %i.amn
+  %i.amp = tail call i32 @llvm.umin.i32(i32 %i.aos, i32 %i.amo)
   store i32 %i.amp, ptr %i.t, align 8, !tbaa !50
   %i.amq = sext i16 %i.amj to i64
   %i.amr = getelementptr inbounds i8, ptr @vp4_block_pattern_table_selector, i64 %i.amq
@@ -306,7 +303,6 @@ bb.ep:                                            ; preds = %bb.en
   br label %bb.eq
 
 bb.eq:                                            ; preds = %bb.ep, %bb.eo, %bb.en
-  %8 = phi i32 [ %7, %bb.ep ], [ %7, %bb.en ], [ %i.amp, %bb.eo ] ; 3 uses
   %.4148.us.i = phi i32 [ %.3147169.us.i, %bb.ep ], [ %.3147169.us.i, %bb.en ], [ %i.amt, %bb.eo ] ; 3 uses
   %.0101.us.i = phi i32 [ 0, %bb.ep ], [ 15, %bb.en ], [ %i.amu, %bb.eo ] ; 4 uses
   %i.amv = shl nuw nsw i32 %i.aln, 1              ; 4 uses
@@ -399,7 +395,6 @@ bb.ez:                                            ; preds = %bb.ey
   br label %.loopexit.us.i
 
 .loopexit.us.i:                                   ; preds = %bb.ez, %bb.ey, %bb.ex, %bb.em
-  %9 = phi i32 [ %7, %bb.em ], [ %8, %bb.ez ], [ %8, %bb.ey ], [ %8, %bb.ex ] ; 4 uses
   %.5.us.i = phi i32 [ %.3147169.us.i, %bb.em ], [ %.4148.us.i, %bb.ez ], [ %.4148.us.i, %bb.ey ], [ %.4148.us.i, %bb.ex ] ; 4 uses
   %.4.us.i = phi i32 [ %.3170.us.i, %bb.em ], [ %i.als, %bb.ez ], [ %i.als, %bb.ey ], [ %i.als, %bb.ex ] ; 4 uses
   %i.aop = add nuw nsw i32 %.0102171.us.i, 1      ; 2 uses
@@ -412,7 +407,6 @@ bb.fa:                                            ; preds = %.loopexit.us.i
   br i1 %exitcond191.not.i, label %._crit_edge175.us.i, label %.preheader.us.i, !llvm.loop !111
 
 .preheader.us.i:                                  ; preds = %bb.fa, %.preheader152.us.i
-  %10 = phi i32 [ %6, %.preheader152.us.i ], [ %9, %bb.fa ]
   %.0103174.us.i = phi i32 [ 0, %.preheader152.us.i ], [ %i.aoq, %bb.fa ] ; 2 uses
   %.2173.us.i = phi i32 [ %.1179.us.i, %.preheader152.us.i ], [ %.4.us.i, %bb.fa ]
   %.2146172.us.i = phi i32 [ %.1145178.us.i, %.preheader152.us.i ], [ %.5.us.i, %bb.fa ]
@@ -427,7 +421,6 @@ bb.fa:                                            ; preds = %.loopexit.us.i
   br i1 %exitcond192.not.i, label %._crit_edge181.i, label %.preheader152.us.i, !llvm.loop !112
 
 ._crit_edge181.i:                                 ; preds = %._crit_edge175.us.i, %.preheader152.lr.ph.i, %bb.el
-  %11 = phi i32 [ %5, %bb.el ], [ %5, %.preheader152.lr.ph.i ], [ %9, %._crit_edge175.us.i ]
   %.1145.lcssa.i = phi i32 [ %.0144185.i, %bb.el ], [ %.0144185.i, %.preheader152.lr.ph.i ], [ %.5.us.i, %._crit_edge175.us.i ]
   %.1.lcssa.i = phi i32 [ %.0105187.i, %bb.el ], [ %.0105187.i, %.preheader152.lr.ph.i ], [ %.4.us.i, %._crit_edge175.us.i ]
   %indvars.iv.next194.i = add nuw nsw i64 %indvars.iv193.i, 1 ; 2 uses

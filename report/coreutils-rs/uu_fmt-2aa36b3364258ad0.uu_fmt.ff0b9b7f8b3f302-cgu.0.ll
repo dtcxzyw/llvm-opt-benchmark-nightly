@@ -204,8 +204,8 @@ _RNvMNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB2_9BufReaderINtNtB8_5bo
   %.sroa.522.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 80 ; 5 uses
   %.sroa.8.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 128 ; 2 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 4 uses
-  %.sroa.424.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 4 uses
-  %.sroa.525.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 56 ; 4 uses
+  %.sroa.424.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
+  %.sroa.525.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 56 ; 2 uses
   %.sroa.626.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 64 ; 2 uses
   %.sroa.727.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 72 ; 4 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.k, i64 88
@@ -608,8 +608,8 @@ bb.cu:                                            ; preds = %_RNvMs_NtCs7tKScEop
   br label %bb.cv
 
 bb.cv:                                            ; preds = %.loopexit.i.i.i.i.i.i, %bb.cu
-  %i.qf = phi ptr [ %i.sq, %.loopexit.i.i.i.i.i.i ], [ %.promoted574, %bb.cu ] ; 7 uses
-  %i.qg = phi i64 [ %i.sp, %.loopexit.i.i.i.i.i.i ], [ %.promoted573, %bb.cu ] ; 12 uses
+  %i.qf = phi ptr [ %i.sq, %.loopexit.i.i.i.i.i.i ], [ %.promoted574, %bb.cu ] ; 4 uses
+  %i.qg = phi i64 [ %i.sp, %.loopexit.i.i.i.i.i.i ], [ %.promoted573, %bb.cu ] ; 9 uses
   %i.qh = phi i64 [ %i.sp, %.loopexit.i.i.i.i.i.i ], [ %.promoted572, %bb.cu ] ; 4 uses
   %i.qi = phi i64 [ 0, %.loopexit.i.i.i.i.i.i ], [ %.promoted571, %bb.cu ] ; 10 uses
   %i.qj = phi i64 [ 0, %.loopexit.i.i.i.i.i.i ], [ %.sroa.021.sroa.5.0..sroa_idx.i.i.i.promoted, %bb.cu ] ; 5 uses
@@ -693,8 +693,6 @@ bb.dg:                                            ; preds = %bb.cx
   unreachable
 
 _RNvMs4_NtCs1mQHuhqOwPS_6uu_fmt9parasplitNtB5_9WordSplit12analyze_tabs.exit.i: ; preds = %bb.cz
-  store ptr %i.qf, ptr %.sroa.424.0..sroa_idx.i.i.i.i.i.i, align 8
-  store i64 %i.qg, ptr %.sroa.525.0..sroa_idx.i.i.i.i.i.i, align 8
   store ptr %.val.i200540, ptr %i.hf, align 8
   store ptr %.sink.i.ph.i.i.i.i.i.i.i.i559, ptr %i.k, align 8
   store i64 %i.qj, ptr %.sroa.021.sroa.5.0..sroa_idx.i.i.i, align 8
@@ -852,8 +850,6 @@ bb.dz:                                            ; preds = %bb.dx
   br i1 %.not.i.i.i.i.i.i.i.i.i.i, label %select.unfold.i.i.i.i.i.i.i.i, label %_RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters4skipINtB4_4SkipINtNtNtBa_5slice4iter4IterINtNtCs7tKScEop1B6_5alloc3vec3VechEEENtNtNtB8_6traits8iterator8Iterator4nextCs1mQHuhqOwPS_6uu_fmt.exit.i.i.i.i.i.i.i.i
 
 _RNvXs_NtNtNtCs6JMX4GRUq9U_4core4iter8adapters4skipINtB4_4SkipINtNtNtBa_5slice4iter4IterINtNtCs7tKScEop1B6_5alloc3vec3VechEEENtNtNtB8_6traits8iterator8Iterator4nextCs1mQHuhqOwPS_6uu_fmt.exit.i.i.i.i.i.i.i.i: ; preds = %bb.dz
-  store ptr %i.qf, ptr %.sroa.424.0..sroa_idx.i.i.i.i.i.i, align 8
-  store i64 %i.qg, ptr %.sroa.525.0..sroa_idx.i.i.i.i.i.i, align 8
   store ptr %.val.i200540, ptr %i.hf, align 8
   store i8 %i.rw, ptr %.sroa.522.0..sroa_idx.i.i.i, align 8
   store i64 0, ptr %.sroa.021.sroa.5.0..sroa_idx.i.i.i, align 8
@@ -909,16 +905,16 @@ bb.ec:                                            ; preds = %select.unfold.i.i.i
 
 .loopexit.i.i.i.i.i.i:                            ; preds = %_RNCNvMs4_NtCs1mQHuhqOwPS_6uu_fmt9parasplitNtB7_9WordSplit3new0B9_.exit.i.i.i.i.i.i.i.i.i.i.i, %bb.eb, %bb.ea
   %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.02.07.i.i.i.i.i.i.i.i.i.i.i, %bb.eb ], [ 0, %bb.ea ], [ %i.sg, %_RNCNvMs4_NtCs1mQHuhqOwPS_6uu_fmt9parasplitNtB7_9WordSplit3new0B9_.exit.i.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
-  %i.sp = sub nuw nsw i64 %i.sg, %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i ; 3 uses
-  %i.sq = getelementptr inbounds nuw i8, ptr %i.sh, i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i
+  %i.sp = sub nuw nsw i64 %i.sg, %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i ; 4 uses
+  %i.sq = getelementptr inbounds nuw i8, ptr %i.sh, i64 %.sroa.0.0.i.i.i.i.i.i.i.i.i.i.i ; 2 uses
+  store ptr %i.sq, ptr %.sroa.424.0..sroa_idx.i.i.i.i.i.i, align 8, !alias.scope !544, !noalias !545
+  store i64 %i.sp, ptr %.sroa.525.0..sroa_idx.i.i.i.i.i.i, align 8, !alias.scope !544, !noalias !545
   store i64 %i.sp, ptr %.sroa.626.0..sroa_idx.i.i.i.i.i.i, align 8, !alias.scope !544, !noalias !545
   store i64 0, ptr %.sroa.727.0..sroa_idx.i.i.i.i.i.i, align 8, !alias.scope !544, !noalias !545
   br label %bb.cv
 
 .loopexit41.i.i.i.i.i.i.loopexit:                 ; preds = %_RINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters7flatten17and_then_or_clearNtNtCs1mQHuhqOwPS_6uu_fmt9parasplit9WordSplitNtB18_8WordInfoNvYB16_NtNtNtB6_6traits8iterator8Iterator4nextEB1a_.exit.thread.i.i.i.i.i.i, %bb.dy
   %.lcssa642 = phi i64 [ %i.qj, %_RINvNtNtNtCs6JMX4GRUq9U_4core4iter8adapters7flatten17and_then_or_clearNtNtCs1mQHuhqOwPS_6uu_fmt9parasplit9WordSplitNtB18_8WordInfoNvYB16_NtNtNtB6_6traits8iterator8Iterator4nextEB1a_.exit.thread.i.i.i.i.i.i ], [ 0, %bb.dy ]
-  store ptr %i.qf, ptr %.sroa.424.0..sroa_idx.i.i.i.i.i.i, align 8
-  store i64 %i.qg, ptr %.sroa.525.0..sroa_idx.i.i.i.i.i.i, align 8
   store ptr %.val.i200540, ptr %i.hf, align 8
   store i8 %i.rw, ptr %.sroa.522.0..sroa_idx.i.i.i, align 8
   store ptr %.sink.i.ph.i.i.i.i.i.i.i.i559, ptr %i.k, align 8

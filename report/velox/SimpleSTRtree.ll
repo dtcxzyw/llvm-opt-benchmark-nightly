@@ -204,11 +204,12 @@ bb.k:                                             ; preds = %_ZNSt6vectorIPN4geo
   br label %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.k, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %i.bj
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %i.bj ; 2 uses
+  store ptr %i.bp, ptr %i.an, align 8, !tbaa !44
   br label %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit
 
 _ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit: ; preds = %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, %bb.g
-  %i.bq = phi ptr [ %i.bp, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.av, %bb.g ] ; 3 uses
+  %i.bq = phi ptr [ %i.bp, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.av, %bb.g ] ; 2 uses
   %i.br = phi ptr [ %i.bl, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.ax, %bb.g ] ; 2 uses
   %.pn64 = phi ptr [ %i.bm, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i ], [ %i.aw, %bb.g ]
   %i.bs = getelementptr inbounds nuw i8, ptr %.pn64, i64 8 ; 2 uses
@@ -217,7 +218,7 @@ _ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit:
   %i.bv = icmp ult i64 %i.bt, %i.aa
   %i.bw = icmp ult i64 %i.bu, %.fr62
   %i.bx = select i1 %i.bv, i1 %i.bw, i1 false
-  br i1 %i.bx, label %.lr.ph, label %._crit_edge, !llvm.loop !76
+  br i1 %i.bx, label %.lr.ph, label %bb.m, !llvm.loop !76
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -244,15 +245,11 @@ bb.l:                                             ; preds = %.loopexit.split-lp
   tail call void @_ZdlPv(ptr noundef nonnull %i.by) #17
   br label %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EED2Ev.exit31
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit
-  store ptr %i.bq, ptr %i.an, align 8
-  br label %bb.m
-
-bb.m:                                             ; preds = %._crit_edge, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit
-  %.promoted4980 = phi ptr [ %i.bq, %._crit_edge ], [ %.promoted49, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ]
-  %.lcssa42 = phi ptr [ %i.br, %._crit_edge ], [ %i.at, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ] ; 4 uses
-  %.lcssa = phi ptr [ %i.bs, %._crit_edge ], [ %spec.store.select, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ] ; 2 uses
-  %.1.lcssa = phi i64 [ %i.bt, %._crit_edge ], [ %.02455, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ]
+bb.m:                                             ; preds = %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit
+  %.promoted4980 = phi ptr [ %.promoted49, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ], [ %i.bq, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit ]
+  %.lcssa42 = phi ptr [ %i.at, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ], [ %i.br, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit ] ; 4 uses
+  %.lcssa = phi ptr [ %spec.store.select, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ], [ %i.bs, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit ] ; 2 uses
+  %.1.lcssa = phi i64 [ %.02455, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE5clearEv.exit ], [ %i.bt, %_ZNSt6vectorIPN4geos5index7strtree13SimpleSTRnodeESaIS4_EE9push_backERKS4_.exit ]
   store ptr %.lcssa, ptr %i.ak, align 8
   store ptr %.lcssa42, ptr %4, align 8
   invoke void @_ZN4geos5index7strtree13SimpleSTRtree31addParentNodesFromVerticalSliceERSt6vectorIPNS1_13SimpleSTRnodeESaIS5_EEiS8_(ptr noundef nonnull align 8 dereferenceable(136) %1, ptr noundef nonnull align 8 dereferenceable(24) %4, i32 noundef %3, ptr noundef nonnull align 8 dereferenceable(24) %0)

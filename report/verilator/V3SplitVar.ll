@@ -205,7 +205,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIibESt6vectorIS3_SaIS3_EEEEN12P
   %.not.i.i.i142 = icmp eq ptr %.sroa.0213.5, null
   br i1 %.not.i.i.i142, label %_ZNSt6vectorISt4pairIibESaIS1_EED2Ev.exit, label %bb.ba
 
-bb.ba:                                            ; preds = %._crit_edge330.thread, %._crit_edge330
+bb.ba:                                            ; preds = %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit, %._crit_edge330
   %i.ni = ptrtoint ptr %.sroa.50.5 to i64
   %i.nj = sub i64 %i.ni, %.pre359
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0213.5, i64 noundef %i.nj) #24
@@ -218,7 +218,7 @@ bb.bb:                                            ; preds = %.lr.ph329, %_ZNSt6v
   %i.nk = phi i64 [ 1, %.lr.ph329 ], [ %i.ov, %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit ] ; 3 uses
   %.0328 = phi i64 [ 0, %.lr.ph329 ], [ %i.nk, %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit ]
   %.031327 = phi i32 [ 0, %.lr.ph329 ], [ %.1, %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit ]
-  %i.nl = phi ptr [ %.promoted, %.lr.ph329 ], [ %i.ou, %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit ] ; 10 uses
+  %i.nl = phi ptr [ %.promoted, %.lr.ph329 ], [ %i.ou, %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit ] ; 7 uses
   %i.nm = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0213.5, i64 %i.nk
   %i.nn = load i32, ptr %i.nm, align 4, !tbaa !773 ; 2 uses
   %i.no = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0213.5, i64 %.0328 ; 2 uses
@@ -233,7 +233,6 @@ bb.bb:                                            ; preds = %.lr.ph329, %_ZNSt6v
   br i1 %i.nu, label %bb.bc, label %bb.bh, !prof !36
 
 bb.bc:                                            ; preds = %bb.bb
-  store ptr %i.nl, ptr %0, align 8
   %i.nv = invoke noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.1, i32 noundef 968)
           to label %bb.bd unwind label %bb.bg     ; 0 uses
 
@@ -287,7 +286,6 @@ bb.bk:                                            ; preds = %bb.bi
   br i1 %i.oh, label %bb.bl, label %_ZNKSt6vectorI11SplitNewVarSaIS0_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.bl:                                            ; preds = %bb.bk
-  store ptr %i.nl, ptr %0, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.557) #27
           to label %.noexc154 unwind label %.loopexit.split-lp
 
@@ -305,7 +303,7 @@ _ZNKSt6vectorI11SplitNewVarSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.b
   tail call void @llvm.assume(i1 %.not.i.i.i147)
   %i.on = shl nuw nsw i64 %i.om, 4
   %i.oo = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.on) #28
-          to label %.noexc155 unwind label %.loopexit ; 5 uses
+          to label %.noexc155 unwind label %.loopexit ; 6 uses
 
 .noexc155:                                        ; preds = %_ZNKSt6vectorI11SplitNewVarSaIS0_EE12_M_check_lenEmPKc.exit.i.i
   %i.op = getelementptr inbounds nuw i8, ptr %i.oo, i64 %i.og ; 3 uses
@@ -337,25 +335,21 @@ bb.bm:                                            ; preds = %_ZNSt6vectorI11Spli
   br label %_ZNSt6vectorI11SplitNewVarSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i
 
 _ZNSt6vectorI11SplitNewVarSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i: ; preds = %bb.bm, %_ZNSt6vectorI11SplitNewVarSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i
+  store ptr %i.oo, ptr %0, align 8, !tbaa !731
   store ptr %i.os, ptr %i.ng, align 8, !tbaa !729
   %i.ot = getelementptr inbounds nuw [16 x i8], ptr %i.oo, i64 %i.om
   store ptr %i.ot, ptr %i.nh, align 8, !tbaa !734
   br label %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit
 
 _ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit: ; preds = %bb.bj, %_ZNSt6vectorI11SplitNewVarSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i, %bb.bh
-  %i.ou = phi ptr [ %i.nl, %bb.bj ], [ %i.oo, %_ZNSt6vectorI11SplitNewVarSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ %i.nl, %bb.bh ] ; 2 uses
+  %i.ou = phi ptr [ %i.nl, %bb.bj ], [ %i.oo, %_ZNSt6vectorI11SplitNewVarSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ %i.nl, %bb.bh ]
   %i.ov = add nuw i64 %i.nk, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.ov, %.pre363
-  br i1 %exitcond.not, label %._crit_edge330.thread, label %bb.bb, !llvm.loop !911
-
-._crit_edge330.thread:                            ; preds = %_ZNSt6vectorI11SplitNewVarSaIS0_EE12emplace_backIJS0_EEERS0_DpOT_.exit
-  store ptr %i.ou, ptr %0, align 8
-  br label %bb.ba
+  br i1 %exitcond.not, label %bb.ba, label %bb.bb, !llvm.loop !911
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorI11SplitNewVarSaIS0_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.nl, ptr %0, align 8
   br label %.thread
 
 .loopexit.split-lp:                               ; preds = %bb.bl

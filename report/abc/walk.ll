@@ -205,12 +205,10 @@ pick_literal.exit.i.i.i:                          ; preds = %bb.bd, %bb.bc, %._c
   br i1 %.not1.i.i15.i.i.i, label %make_clauses.exit.i.i.i.i, label %.lr.ph.i.i16.i.i.preheader.i
 
 .lr.ph.i.i16.i.i.preheader.i:                     ; preds = %pick_literal.exit.i.i.i
-  %.promoted.i = load ptr, ptr %i.je, align 8
   %i.sh = load ptr, ptr %i.jd, align 8
   br label %.lr.ph.i.i16.i.i.i
 
 .lr.ph.i.i16.i.i.i:                               ; preds = %bb.bg, %.lr.ph.i.i16.i.i.preheader.i
-  %3 = phi ptr [ %4, %bb.bg ], [ %.promoted.i, %.lr.ph.i.i16.i.i.preheader.i ] ; 2 uses
   %.03.i.i.i.i.i = phi ptr [ %i.tb, %bb.bg ], [ %i.sd, %.lr.ph.i.i16.i.i.preheader.i ] ; 2 uses
   %.0222.i.i.i.i.i = phi i32 [ %.2.i.i.i.i.i, %bb.bg ], [ 1, %.lr.ph.i.i16.i.i.preheader.i ] ; 2 uses
   %.sroa.0.0.copyload.i.i17.i.i.i = load i32, ptr %.03.i.i.i.i.i, align 4, !tbaa !80
@@ -231,7 +229,8 @@ pick_literal.exit.i.i.i:                          ; preds = %bb.bd, %bb.bc, %._c
 bb.be:                                            ; preds = %.lr.ph.i.i16.i.i.i
   %i.sp = getelementptr inbounds nuw i8, ptr %i.sl, i64 4
   %i.sq = load i32, ptr %i.sp, align 4, !tbaa !95 ; 2 uses
-  %i.sr = getelementptr inbounds i8, ptr %3, i64 -4 ; 3 uses
+  %3 = load ptr, ptr %i.je, align 8, !tbaa !93
+  %i.sr = getelementptr inbounds i8, ptr %3, i64 -4 ; 2 uses
   store ptr %i.sr, ptr %i.je, align 8, !tbaa !93
   %i.ss = load i32, ptr %i.sr, align 4, !tbaa !90 ; 3 uses
   %i.st = load i32, ptr %i.jl, align 8, !tbaa !112
@@ -256,7 +255,6 @@ pop_unsat.exit.i.i.i.i.i:                         ; preds = %bb.bf, %bb.be
   br label %bb.bg
 
 bb.bg:                                            ; preds = %pop_unsat.exit.i.i.i.i.i, %.lr.ph.i.i16.i.i.i
-  %4 = phi ptr [ %i.sr, %pop_unsat.exit.i.i.i.i.i ], [ %3, %.lr.ph.i.i16.i.i.i ]
   %.2.i.i.i.i.i = phi i32 [ %spec.select.i.i.i.i.i, %pop_unsat.exit.i.i.i.i.i ], [ %i.si, %.lr.ph.i.i16.i.i.i ] ; 2 uses
   %i.tb = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i, i64 4 ; 2 uses
   %.not.i.i18.i.i.i = icmp eq ptr %i.tb, %i.sg

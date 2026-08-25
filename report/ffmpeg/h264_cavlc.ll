@@ -205,12 +205,10 @@ bb.ef:                                            ; preds = %bb.ee
   %.not679 = icmp eq i32 %i.aty, 0
   %i.atz = and i32 %i.ato, 32
   %.not680 = icmp eq i32 %i.atz, 0
-  %.promoted1253 = load i32, ptr %i.st, align 16, !tbaa !95
   %i.aua = trunc nuw nsw i64 %i.atf to i32
   br label %bb.eg
 
 bb.eg:                                            ; preds = %.lr.ph1252, %bb.fk
-  %2 = phi i32 [ %.promoted1253, %.lr.ph1252 ], [ %3, %bb.fk ] ; 4 uses
   %.05881250 = phi i32 [ 0, %.lr.ph1252 ], [ %i.bfn, %bb.fk ] ; 2 uses
   %i.aub = shl nuw i32 %.05881250, %i.atv
   %i.auc = add nsw i32 %i.aub, %i.aua
@@ -509,6 +507,7 @@ bb.fa:                                            ; preds = %bb.ey
 pred_motion.exit717:                              ; preds = %bb.er, %bb.eu, %bb.ew, %bb.ex, %bb.ez, %bb.fa
   %.01031 = phi i32 [ %i.azs, %bb.er ], [ %i.bag, %bb.eu ], [ %i.bal, %bb.ew ], [ %i.baq, %bb.ex ], [ %i.bay, %bb.ez ], [ %i.bbi, %bb.fa ]
   %.01030 = phi i32 [ %i.bad, %bb.er ], [ %i.baj, %bb.eu ], [ %i.bao, %bb.ew ], [ %i.bat, %bb.ex ], [ %i.bbb, %bb.ez ], [ %i.bbt, %bb.fa ]
+  %2 = load i32, ptr %i.st, align 16, !tbaa !95   ; 4 uses
   %i.bbu = lshr i32 %2, 3
   %i.bbv = zext nneg i32 %i.bbu to i64
   %i.bbw = getelementptr inbounds nuw i8, ptr %i.atw, i64 %i.bbv
@@ -587,7 +586,7 @@ bb.fd:                                            ; preds = %get_se_golomb.exit
   %i.bdu = getelementptr inbounds nuw i8, ptr @ff_golomb_vlc_len, i64 %i.bdt
   %i.bdv = load i8, ptr %i.bdu, align 1, !tbaa !15
   %i.bdw = zext i8 %i.bdv to i32
-  %i.bdx = add i32 %i.bdi, %i.bdw                 ; 2 uses
+  %i.bdx = add i32 %i.bdi, %i.bdw
   store i32 %i.bdx, ptr %i.st, align 16, !tbaa !95
   %i.bdy = getelementptr inbounds nuw i8, ptr @ff_se_golomb_vlc_code, i64 %i.bdt
   %i.bdz = load i8, ptr %i.bdy, align 1, !tbaa !15
@@ -620,7 +619,7 @@ bb.fe:                                            ; preds = %get_se_golomb.exit
   %i.beq = shl i32 %i.beo, %i.bep
   %i.ber = lshr i32 %i.beq, %i.bei                ; 2 uses
   %reass.sub1310.a = sub i32 %reass.sub.i854, %i.bei
-  %i.bes = add i32 %reass.sub1310.a, 63           ; 2 uses
+  %i.bes = add i32 %reass.sub1310.a, 63
   store i32 %i.bes, ptr %i.st, align 16, !tbaa !95
   %i.bet = and i32 %i.ber, 1                      ; 2 uses
   %i.beu = sub nsw i32 0, %i.bet
@@ -630,7 +629,6 @@ bb.fe:                                            ; preds = %get_se_golomb.exit
   br label %get_se_golomb.exit857
 
 get_se_golomb.exit857:                            ; preds = %bb.fd, %bb.fe
-  %3 = phi i32 [ %i.bdx, %bb.fd ], [ %i.bes, %bb.fe ]
   %.0.i856 = phi i32 [ %i.bea, %bb.fd ], [ %i.bex, %bb.fe ]
   %i.bey = add i32 %.0.i856, %.01030              ; 4 uses
   %.pre1483.a = trunc i32 %i.bdj to i16           ; 6 uses

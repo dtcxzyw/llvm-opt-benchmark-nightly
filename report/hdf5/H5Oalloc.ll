@@ -204,10 +204,10 @@ H5O__alloc_find_best_null.exit.thread.i:          ; preds = %bb.bw
 .lr.ph.i18.i:                                     ; preds = %.thread41.i
   %i.qy = getelementptr inbounds nuw i8, ptr %1, i64 408
   %i.qz = getelementptr inbounds nuw i8, ptr %1, i64 289 ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 40
   br label %bb.ci
 
 bb.ci:                                            ; preds = %.critedge.i.i, %.lr.ph.i18.i
-  %.1.i2171.i = phi i32 [ undef, %.lr.ph.i18.i ], [ %.1.i2172.i, %.critedge.i.i ] ; 5 uses
   %i.ra = phi i64 [ undef, %.lr.ph.i18.i ], [ %i.uc, %.critedge.i.i ] ; 5 uses
   %.186.i66.i = phi i64 [ undef, %.lr.ph.i18.i ], [ %.186.i67.i, %.critedge.i.i ] ; 5 uses
   %.087.i63.i = phi i64 [ undef, %.lr.ph.i18.i ], [ %.087.i64.i, %.critedge.i.i ] ; 5 uses
@@ -343,6 +343,7 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %or.cond46.i, label %.critedge102.i.i, label %.critedge.i.i
 
 .critedge102.i.i:                                 ; preds = %bb.cp, %bb.co, %bb.cn
+  store i32 %.1.i21.i, ptr %6, align 8, !tbaa !61
   br label %.critedge.i.i
 
 bb.cq:                                            ; preds = %.loopexit.i.i
@@ -372,7 +373,6 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs
   br label %.critedge.i.i
 
 .critedge.i.i:                                    ; preds = %bb.cu, %bb.cr, %bb.cq, %.critedge102.i.i, %bb.cp, %bb.ci
-  %.1.i2172.i = phi i32 [ %.1.i2171.i, %bb.ci ], [ %.1.i2171.i, %bb.cq ], [ %.1.i2171.i, %bb.cu ], [ %.1.i2171.i, %bb.cr ], [ %.1.i2171.i, %bb.cp ], [ %.1.i21.i, %.critedge102.i.i ] ; 2 uses
   %i.uc = phi i64 [ %i.ra, %bb.ci ], [ %i.ra, %bb.cq ], [ %i.ra, %bb.cu ], [ %i.ra, %bb.cr ], [ %i.ra, %bb.cp ], [ %i.tl, %.critedge102.i.i ] ; 2 uses
   %.186.i67.i = phi i64 [ %.186.i66.i, %bb.ci ], [ %.186.i66.i, %bb.cq ], [ %.186.i66.i, %bb.cu ], [ %.186.i66.i, %bb.cr ], [ %.186.i66.i, %bb.cp ], [ %.186.i.i, %.critedge102.i.i ] ; 2 uses
   %.087.i64.i = phi i64 [ %.087.i63.i, %bb.ci ], [ %.087.i63.i, %bb.cq ], [ %.087.i63.i, %bb.cu ], [ %.087.i63.i, %bb.cr ], [ %.087.i63.i, %bb.cp ], [ %.087.i.i, %.critedge102.i.i ] ; 2 uses
@@ -391,19 +391,17 @@ bb.cu:                                            ; preds = %bb.ct, %bb.cs
   br i1 %i.um, label %bb.ci, label %._crit_edge.i23.i, !llvm.loop !72
 
 ._crit_edge.i23.i:                                ; preds = %.critedge.i.i
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %i.un = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.uo = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.up = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.uq = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.ur = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %i.un = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.uo = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.up = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.uq = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.ur = getelementptr inbounds nuw i8, ptr %5, i64 24
   store i32 %.088116.i57.i, ptr %5, align 8
-  store i32 %i.ue, ptr %6, align 4
-  store i32 %i.ud, ptr %i.uo, align 8
-  store i64 %.087.i64.i, ptr %i.up, align 8
-  store i64 %.186.i67.i, ptr %i.uq, align 8
-  store i64 %i.uc, ptr %i.un, align 8
-  store i32 %.1.i2172.i, ptr %i.ur, align 8
+  store i32 %i.ue, ptr %i.un, align 4
+  store i32 %i.ud, ptr %i.up, align 8
+  store i64 %.087.i64.i, ptr %i.uq, align 8
+  store i64 %.186.i67.i, ptr %i.ur, align 8
+  store i64 %i.uc, ptr %i.uo, align 8
   %i.us = icmp slt i32 %i.ui, 0
   br i1 %i.us, label %._crit_edge.i23.thread.i, label %bb.cv
 

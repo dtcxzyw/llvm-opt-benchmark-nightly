@@ -204,11 +204,9 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4848 ; 2 uses
-  %.promoted = load ptr, ptr %i.d, align 16
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %2 = phi ptr [ %.promoted, %.lr.ph ], [ %3, %bb.g ] ; 3 uses
   %i.e = phi ptr [ %i.c, %.lr.ph ], [ %i.be, %bb.g ] ; 4 uses
   %i.f = phi ptr [ %i.b, %.lr.ph ], [ %i.bd, %bb.g ] ; 3 uses
   %.0517 = phi ptr [ %1, %.lr.ph ], [ %i.aq, %bb.g ] ; 5 uses
@@ -283,6 +281,7 @@ _ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE19parseBareSour
   br i1 %i.af, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %_ZN4llvh16itanium_demangle2DbIN12_GLOBAL__N_116DefaultAllocatorEE19parseBareSourceNameEv.exit
+  %2 = load ptr, ptr %i.d, align 16, !tbaa !38    ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ah = load i64, ptr %i.ag, align 8, !tbaa !57 ; 2 uses
   %i.ai = add i64 %i.ah, -4032
@@ -306,13 +305,13 @@ _ZN12_GLOBAL__N_120BumpPointerAllocator4growEv.exit.i.i.i: ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN12_GLOBAL__N_120BumpPointerAllocator4growEv.exit.i.i.i, %bb.d
-  %3 = phi ptr [ %i.ak, %_ZN12_GLOBAL__N_120BumpPointerAllocator4growEv.exit.i.i.i ], [ %2, %bb.d ] ; 3 uses
-  %4 = phi i64 [ 0, %_ZN12_GLOBAL__N_120BumpPointerAllocator4growEv.exit.i.i.i ], [ %i.ah, %bb.d ] ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.ao = add nsw i64 %4, 48
+  %3 = phi i64 [ 0, %_ZN12_GLOBAL__N_120BumpPointerAllocator4growEv.exit.i.i.i ], [ %i.ah, %bb.d ] ; 2 uses
+  %4 = phi ptr [ %i.ak, %_ZN12_GLOBAL__N_120BumpPointerAllocator4growEv.exit.i.i.i ], [ %2, %bb.d ] ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ao = add nsw i64 %3, 48
   store i64 %i.ao, ptr %i.an, align 8, !tbaa !57
-  %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.aq = getelementptr inbounds i8, ptr %i.ap, i64 %4 ; 10 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.aq = getelementptr inbounds i8, ptr %i.ap, i64 %3 ; 10 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %.0517, i64 9
   %i.as = load i8, ptr %i.ar, align 1, !tbaa !50
   %i.at = getelementptr inbounds nuw i8, ptr %.0517, i64 10

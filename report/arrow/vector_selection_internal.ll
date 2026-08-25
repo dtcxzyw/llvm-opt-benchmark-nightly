@@ -205,7 +205,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 5 uses
-  %16 = alloca %"class.arrow::Status", align 8    ; 13 uses
+  %16 = alloca %"class.arrow::Status", align 8    ; 14 uses
   %17 = alloca %class.anon.231, align 8           ; 8 uses
   %18 = alloca %class.anon.232, align 8           ; 5 uses
   %19 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -608,7 +608,7 @@ _ZN5arrow6StatusD2Ev.exit175.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
   %i.gh = add nsw i64 %.3260.i.i.i.i.i, 1         ; 2 uses
   %i.gi = add nuw nsw i64 %.0104261.i.i.i.i.i, 1  ; 2 uses
   %exitcond285.not.i.i.i.i.i = icmp eq i64 %i.gi, %i.ez
-  br i1 %exitcond285.not.i.i.i.i.i, label %.critedge144.i.loopexit1.i.i.i.i, label %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i, !llvm.loop !549
+  br i1 %exitcond285.not.i.i.i.i.i, label %.critedge144.i.i.loopexit14.i.i.i, label %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i, !llvm.loop !549
 
 bb.ag:                                            ; preds = %bb.ad
   %.not132254.i.i.i.i.i = icmp sgt i16 %.sroa.0.0.extract.trunc.i.i.i.i.i, 0 ; 2 uses
@@ -684,13 +684,14 @@ _ZN5arrow6StatusD2Ev.exit177.i.i.i.i.i:           ; preds = %.lr.ph257.i.i.i.i.i
   %i.ig = getelementptr inbounds nuw i8, ptr %i.hf, i64 24
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !547, !noalias !554, !nonnull !129, !align !283
   store i32 %i.if, ptr %i.ih, align 4, !tbaa !3, !noalias !554
+  store ptr null, ptr %16, align 8, !tbaa !115, !alias.scope !541, !noalias !518
   br label %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i
 
 _ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2Ev.exit177.i.i.i.i.i, %.lr.ph257.i.i.i.i.i
   %i.ii = add nsw i64 %.5255.i.i.i.i.i, 1         ; 2 uses
   %i.ij = add nuw nsw i64 %.0102256.i.i.i.i.i, 1  ; 2 uses
   %exitcond284.not.i.i.i.i.i = icmp eq i64 %i.ij, %i.ez
-  br i1 %exitcond284.not.i.i.i.i.i, label %.critedge144.i.i.loopexit9.i.i.i, label %.lr.ph257.i.i.i.i.i, !llvm.loop !557
+  br i1 %exitcond284.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph257.i.i.i.i.i, !llvm.loop !557
 
 .lr.ph252.i.i.i.i.i:                              ; preds = %.preheader228.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i
   %.0100251.i.i.i.i.i = phi i64 [ %i.iv, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i ], [ 0, %.preheader228.i.i.i.i.i ]
@@ -708,7 +709,8 @@ _ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
 _ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i:           ; preds = %.lr.ph252.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25, !noalias !535
   call fastcc void @_ZZN5arrow7compute8internal12_GLOBAL__N_19SelectionINS2_21ListViewSelectionImplINS_12ListViewTypeEEES5_E11VisitFilterIZNS6_14GenerateOutputINS7_13FilterAdapterEEENS_6StatusEvEUllE_ZNS9_ISA_EESB_vEUlvE_EESB_OT_OT0_ENKUllE0_clEl(ptr dead_on_unwind noalias writable align 8 %13, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %.6250.i.i.i.i.i), !noalias !535
-  %i.is = load ptr, ptr %13, align 8, !tbaa !115, !noalias !535 ; 2 uses
+  %i.is = load ptr, ptr %13, align 8, !tbaa !115, !noalias !535 ; 3 uses
+  store ptr %i.is, ptr %16, align 8, !tbaa !115, !alias.scope !541, !noalias !518
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25, !noalias !535
   %i.it = icmp eq ptr %i.is, null
   br i1 %i.it, label %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i, label %.critedge158.i.i.i.i.i
@@ -717,7 +719,7 @@ _ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
   %i.iu = add nsw i64 %.6250.i.i.i.i.i, 1         ; 2 uses
   %i.iv = add nuw nsw i64 %.0100251.i.i.i.i.i, 1  ; 2 uses
   %exitcond283.not.i.i.i.i.i = icmp eq i64 %i.iv, %i.ez
-  br i1 %exitcond283.not.i.i.i.i.i, label %.critedge144.i.i.loopexit10.i.i.i, label %.lr.ph252.i.i.i.i.i, !llvm.loop !558
+  br i1 %exitcond283.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph252.i.i.i.i.i, !llvm.loop !558
 
 bb.ah:                                            ; preds = %bb.ac
   %i.iw = sext i16 %.sroa.0.0.extract.trunc.i.i.i.i.i to i64 ; 2 uses
@@ -753,7 +755,8 @@ bb.ai:                                            ; preds = %.lr.ph247.i.i.i.i.i
 _ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i:           ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25, !noalias !535
   call fastcc void @_ZZN5arrow7compute8internal12_GLOBAL__N_19SelectionINS2_21ListViewSelectionImplINS_12ListViewTypeEEES5_E11VisitFilterIZNS6_14GenerateOutputINS7_13FilterAdapterEEENS_6StatusEvEUllE_ZNS9_ISA_EESB_vEUlvE_EESB_OT_OT0_ENKUllE0_clEl(ptr dead_on_unwind noalias writable align 8 %14, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %.7245.i.i.i.i.i), !noalias !535
-  %i.jj = load ptr, ptr %14, align 8, !tbaa !115, !noalias !535 ; 2 uses
+  %i.jj = load ptr, ptr %14, align 8, !tbaa !115, !noalias !535 ; 3 uses
+  store ptr %i.jj, ptr %16, align 8, !tbaa !115, !alias.scope !541, !noalias !518
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #25, !noalias !535
   %i.jk = icmp eq ptr %i.jj, null
   br i1 %i.jk, label %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i, label %.critedge158.i.i.i.i.i
@@ -762,7 +765,7 @@ _ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
   %i.jl = add nsw i64 %.7245.i.i.i.i.i, 1         ; 2 uses
   %i.jm = add nuw nsw i64 %.098246.i.i.i.i.i, 1   ; 2 uses
   %exitcond282.not.i.i.i.i.i = icmp eq i64 %i.jm, %i.iw
-  br i1 %exitcond282.not.i.i.i.i.i, label %.critedge144.i.i.loopexit12.i.i.i, label %.lr.ph247.i.i.i.i.i, !llvm.loop !559
+  br i1 %exitcond282.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph247.i.i.i.i.i, !llvm.loop !559
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.preheader234.i.i.i.i.i, %bb.ak
   %.096243.i.i.i.i.i = phi i64 [ %i.lh, %bb.ak ], [ 0, %.preheader234.i.i.i.i.i ]
@@ -787,7 +790,8 @@ bb.aj:                                            ; preds = %.lr.ph.i.i.i.i.i
 _ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i:           ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25, !noalias !535
   call fastcc void @_ZZN5arrow7compute8internal12_GLOBAL__N_19SelectionINS2_21ListViewSelectionImplINS_12ListViewTypeEEES5_E11VisitFilterIZNS6_14GenerateOutputINS7_13FilterAdapterEEENS_6StatusEvEUllE_ZNS9_ISA_EESB_vEUlvE_EESB_OT_OT0_ENKUllE0_clEl(ptr dead_on_unwind noalias writable align 8 %15, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %.8242.i.i.i.i.i), !noalias !535
-  %i.jz = load ptr, ptr %15, align 8, !tbaa !115, !noalias !535 ; 2 uses
+  %i.jz = load ptr, ptr %15, align 8, !tbaa !115, !noalias !535 ; 3 uses
+  store ptr %i.jz, ptr %16, align 8, !tbaa !115, !alias.scope !541, !noalias !518
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #25, !noalias !535
   %i.ka = icmp eq ptr %i.jz, null
   br i1 %i.ka, label %bb.ak, label %.critedge158.i.i.i.i.i
@@ -833,36 +837,21 @@ _ZN5arrow6StatusD2Ev.exit201.i.i.i.i.i:           ; preds = %.lr.ph.i.i.i.i.i
   %i.le = load i64, ptr %i.lb, align 8, !tbaa !284, !noalias !565
   %i.lf = add nsw i64 %i.le, 4
   store i64 %i.lf, ptr %i.lb, align 8, !tbaa !284, !noalias !565
+  store ptr null, ptr %16, align 8, !tbaa !115, !alias.scope !541, !noalias !518
   br label %bb.ak
 
 bb.ak:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit201.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i, %bb.aj
   %i.lg = add nsw i64 %.8242.i.i.i.i.i, 1         ; 2 uses
   %i.lh = add nuw nsw i64 %.096243.i.i.i.i.i, 1   ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.lh, %i.iw
-  br i1 %exitcond.not.i.i.i.i.i, label %.critedge144.i.i.loopexit14.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !568
+  br i1 %exitcond.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !568
 
-.critedge144.i.loopexit1.i.i.i.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit175.i.i.i.i.i
+.critedge144.i.i.loopexit14.i.i.i:                ; preds = %_ZN5arrow6StatusD2Ev.exit175.i.i.i.i.i
   store ptr null, ptr %16, align 8, !tbaa !115, !alias.scope !541, !noalias !518
   br label %.critedge144.i.i.i.i.i
 
-.critedge144.i.i.loopexit9.i.i.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i
-  store ptr null, ptr %16, align 8, !noalias !518
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.loopexit10.i.i.i:                ; preds = %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i
-  store ptr null, ptr %16, align 8, !noalias !518
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.loopexit12.i.i.i:                ; preds = %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i
-  store ptr null, ptr %16, align 8, !noalias !518
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.loopexit14.i.i.i:                ; preds = %bb.ak
-  store ptr null, ptr %16, align 8, !noalias !518
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.i.i.i:                           ; preds = %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i, %.critedge144.i.i.loopexit14.i.i.i, %.critedge144.i.i.loopexit12.i.i.i, %.critedge144.i.i.loopexit10.i.i.i, %.critedge144.i.i.loopexit9.i.i.i, %.critedge144.i.loopexit1.i.i.i.i, %.preheader231.i.i.i.i.i, %.preheader234.i.i.i.i.i, %.preheader226.i.i.i.i.i, %.preheader228.i.i.i.i.i, %.noexc12.i, %.preheader.i.i.i.i.i, %bb.ab
-  %.11.i.i.i.i.i = phi i64 [ %i.ev, %bb.ab ], [ %i.jl, %.critedge144.i.i.loopexit12.i.i.i ], [ %i.lg, %.critedge144.i.i.loopexit14.i.i.i ], [ %i.ii, %.critedge144.i.i.loopexit9.i.i.i ], [ %i.iu, %.critedge144.i.i.loopexit10.i.i.i ], [ %i.gh, %.critedge144.i.loopexit1.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.noexc12.i ], [ %.0107267.i.i.i.i.i, %.preheader.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader226.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader228.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader231.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader234.i.i.i.i.i ], [ %i.gd, %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i ] ; 2 uses
+.critedge144.i.i.i.i.i:                           ; preds = %bb.ak, %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i, %.critedge144.i.i.loopexit14.i.i.i, %.preheader231.i.i.i.i.i, %.preheader234.i.i.i.i.i, %.preheader226.i.i.i.i.i, %.preheader228.i.i.i.i.i, %.noexc12.i, %.preheader.i.i.i.i.i, %bb.ab
+  %.11.i.i.i.i.i = phi i64 [ %i.ev, %bb.ab ], [ %i.gd, %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i ], [ %i.ii, %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i ], [ %i.iu, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i ], [ %i.jl, %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i ], [ %i.gh, %.critedge144.i.i.loopexit14.i.i.i ], [ %.0107267.i.i.i.i.i, %.noexc12.i ], [ %.0107267.i.i.i.i.i, %.preheader.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader226.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader228.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader231.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader234.i.i.i.i.i ], [ %i.lg, %bb.ak ] ; 2 uses
   %i.li = load ptr, ptr %i.n, align 8, !tbaa !534, !noalias !535, !nonnull !129, !align !242
   %i.lj = getelementptr inbounds nuw i8, ptr %i.li, i64 8
   %i.lk = load i64, ptr %i.lj, align 8, !tbaa !135, !noalias !535
@@ -870,7 +859,7 @@ bb.ak:                                            ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.ll, label %bb.r, label %.critedge158.i.i.i.i.i, !llvm.loop !569
 
 .critedge158.i.i.i.i.i:                           ; preds = %.critedge144.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i, %.noexc9.i
-  %i.lm = phi ptr [ %i.gf, %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i ], [ %i.jz, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i ], [ %i.jj, %_ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i ], [ null, %.noexc9.i ], [ %i.is, %_ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i ], [ null, %.critedge144.i.i.i.i.i ]
+  %i.lm = phi ptr [ %i.jj, %_ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i ], [ %i.jz, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i ], [ %i.gf, %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i ], [ null, %.noexc9.i ], [ %i.is, %_ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i ], [ null, %.critedge144.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25, !noalias !535
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #25, !noalias !535
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25, !noalias !535
@@ -1022,7 +1011,7 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca i64, align 8                      ; 5 uses
-  %16 = alloca %"class.arrow::Status", align 8    ; 13 uses
+  %16 = alloca %"class.arrow::Status", align 8    ; 14 uses
   %17 = alloca %class.anon.239, align 8           ; 8 uses
   %18 = alloca %class.anon.240, align 8           ; 5 uses
   %19 = alloca %"class.arrow::Status", align 8    ; 4 uses
@@ -1425,7 +1414,7 @@ _ZN5arrow6StatusD2Ev.exit175.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
   %i.gh = add nsw i64 %.3260.i.i.i.i.i, 1         ; 2 uses
   %i.gi = add nuw nsw i64 %.0104261.i.i.i.i.i, 1  ; 2 uses
   %exitcond285.not.i.i.i.i.i = icmp eq i64 %i.gi, %i.ez
-  br i1 %exitcond285.not.i.i.i.i.i, label %.critedge144.i.loopexit1.i.i.i.i, label %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i, !llvm.loop !623
+  br i1 %exitcond285.not.i.i.i.i.i, label %.critedge144.i.i.loopexit14.i.i.i, label %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i, !llvm.loop !623
 
 bb.ag:                                            ; preds = %bb.ad
   %.not132254.i.i.i.i.i = icmp sgt i16 %.sroa.0.0.extract.trunc.i.i.i.i.i, 0 ; 2 uses
@@ -1501,13 +1490,14 @@ _ZN5arrow6StatusD2Ev.exit177.i.i.i.i.i:           ; preds = %.lr.ph257.i.i.i.i.i
   %i.ig = getelementptr inbounds nuw i8, ptr %i.hf, i64 24
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !621, !noalias !628, !nonnull !129, !align !242
   store i64 %i.if, ptr %i.ih, align 8, !tbaa !174, !noalias !628
+  store ptr null, ptr %16, align 8, !tbaa !115, !alias.scope !615, !noalias !593
   br label %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i
 
 _ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2Ev.exit177.i.i.i.i.i, %.lr.ph257.i.i.i.i.i
   %i.ii = add nsw i64 %.5255.i.i.i.i.i, 1         ; 2 uses
   %i.ij = add nuw nsw i64 %.0102256.i.i.i.i.i, 1  ; 2 uses
   %exitcond284.not.i.i.i.i.i = icmp eq i64 %i.ij, %i.ez
-  br i1 %exitcond284.not.i.i.i.i.i, label %.critedge144.i.i.loopexit9.i.i.i, label %.lr.ph257.i.i.i.i.i, !llvm.loop !631
+  br i1 %exitcond284.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph257.i.i.i.i.i, !llvm.loop !631
 
 .lr.ph252.i.i.i.i.i:                              ; preds = %.preheader228.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i
   %.0100251.i.i.i.i.i = phi i64 [ %i.iv, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i ], [ 0, %.preheader228.i.i.i.i.i ]
@@ -1525,7 +1515,8 @@ _ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
 _ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i:           ; preds = %.lr.ph252.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #25, !noalias !609
   call fastcc void @_ZZN5arrow7compute8internal12_GLOBAL__N_19SelectionINS2_21ListViewSelectionImplINS_17LargeListViewTypeEEES5_E11VisitFilterIZNS6_14GenerateOutputINS7_13FilterAdapterEEENS_6StatusEvEUllE_ZNS9_ISA_EESB_vEUlvE_EESB_OT_OT0_ENKUllE0_clEl(ptr dead_on_unwind noalias writable align 8 %13, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %.6250.i.i.i.i.i), !noalias !609
-  %i.is = load ptr, ptr %13, align 8, !tbaa !115, !noalias !609 ; 2 uses
+  %i.is = load ptr, ptr %13, align 8, !tbaa !115, !noalias !609 ; 3 uses
+  store ptr %i.is, ptr %16, align 8, !tbaa !115, !alias.scope !615, !noalias !593
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25, !noalias !609
   %i.it = icmp eq ptr %i.is, null
   br i1 %i.it, label %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i, label %.critedge158.i.i.i.i.i
@@ -1534,7 +1525,7 @@ _ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
   %i.iu = add nsw i64 %.6250.i.i.i.i.i, 1         ; 2 uses
   %i.iv = add nuw nsw i64 %.0100251.i.i.i.i.i, 1  ; 2 uses
   %exitcond283.not.i.i.i.i.i = icmp eq i64 %i.iv, %i.ez
-  br i1 %exitcond283.not.i.i.i.i.i, label %.critedge144.i.i.loopexit10.i.i.i, label %.lr.ph252.i.i.i.i.i, !llvm.loop !632
+  br i1 %exitcond283.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph252.i.i.i.i.i, !llvm.loop !632
 
 bb.ah:                                            ; preds = %bb.ac
   %i.iw = sext i16 %.sroa.0.0.extract.trunc.i.i.i.i.i to i64 ; 2 uses
@@ -1570,7 +1561,8 @@ bb.ai:                                            ; preds = %.lr.ph247.i.i.i.i.i
 _ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i:           ; preds = %bb.ai
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #25, !noalias !609
   call fastcc void @_ZZN5arrow7compute8internal12_GLOBAL__N_19SelectionINS2_21ListViewSelectionImplINS_17LargeListViewTypeEEES5_E11VisitFilterIZNS6_14GenerateOutputINS7_13FilterAdapterEEENS_6StatusEvEUllE_ZNS9_ISA_EESB_vEUlvE_EESB_OT_OT0_ENKUllE0_clEl(ptr dead_on_unwind noalias writable align 8 %14, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %.7245.i.i.i.i.i), !noalias !609
-  %i.jj = load ptr, ptr %14, align 8, !tbaa !115, !noalias !609 ; 2 uses
+  %i.jj = load ptr, ptr %14, align 8, !tbaa !115, !noalias !609 ; 3 uses
+  store ptr %i.jj, ptr %16, align 8, !tbaa !115, !alias.scope !615, !noalias !593
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #25, !noalias !609
   %i.jk = icmp eq ptr %i.jj, null
   br i1 %i.jk, label %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i, label %.critedge158.i.i.i.i.i
@@ -1579,7 +1571,7 @@ _ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i:           ; preds = %_ZN5arrow6StatusD2E
   %i.jl = add nsw i64 %.7245.i.i.i.i.i, 1         ; 2 uses
   %i.jm = add nuw nsw i64 %.098246.i.i.i.i.i, 1   ; 2 uses
   %exitcond282.not.i.i.i.i.i = icmp eq i64 %i.jm, %i.iw
-  br i1 %exitcond282.not.i.i.i.i.i, label %.critedge144.i.i.loopexit12.i.i.i, label %.lr.ph247.i.i.i.i.i, !llvm.loop !633
+  br i1 %exitcond282.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph247.i.i.i.i.i, !llvm.loop !633
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.preheader234.i.i.i.i.i, %bb.ak
   %.096243.i.i.i.i.i = phi i64 [ %i.lh, %bb.ak ], [ 0, %.preheader234.i.i.i.i.i ]
@@ -1604,7 +1596,8 @@ bb.aj:                                            ; preds = %.lr.ph.i.i.i.i.i
 _ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i:           ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #25, !noalias !609
   call fastcc void @_ZZN5arrow7compute8internal12_GLOBAL__N_19SelectionINS2_21ListViewSelectionImplINS_17LargeListViewTypeEEES5_E11VisitFilterIZNS6_14GenerateOutputINS7_13FilterAdapterEEENS_6StatusEvEUllE_ZNS9_ISA_EESB_vEUlvE_EESB_OT_OT0_ENKUllE0_clEl(ptr dead_on_unwind noalias writable align 8 %15, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 noundef %.8242.i.i.i.i.i), !noalias !609
-  %i.jz = load ptr, ptr %15, align 8, !tbaa !115, !noalias !609 ; 2 uses
+  %i.jz = load ptr, ptr %15, align 8, !tbaa !115, !noalias !609 ; 3 uses
+  store ptr %i.jz, ptr %16, align 8, !tbaa !115, !alias.scope !615, !noalias !593
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #25, !noalias !609
   %i.ka = icmp eq ptr %i.jz, null
   br i1 %i.ka, label %bb.ak, label %.critedge158.i.i.i.i.i
@@ -1650,36 +1643,21 @@ _ZN5arrow6StatusD2Ev.exit201.i.i.i.i.i:           ; preds = %.lr.ph.i.i.i.i.i
   %i.le = load i64, ptr %i.lb, align 8, !tbaa !284, !noalias !639
   %i.lf = add nsw i64 %i.le, 8
   store i64 %i.lf, ptr %i.lb, align 8, !tbaa !284, !noalias !639
+  store ptr null, ptr %16, align 8, !tbaa !115, !alias.scope !615, !noalias !593
   br label %bb.ak
 
 bb.ak:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit201.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i, %bb.aj
   %i.lg = add nsw i64 %.8242.i.i.i.i.i, 1         ; 2 uses
   %i.lh = add nuw nsw i64 %.096243.i.i.i.i.i, 1   ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.lh, %i.iw
-  br i1 %exitcond.not.i.i.i.i.i, label %.critedge144.i.i.loopexit14.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !642
+  br i1 %exitcond.not.i.i.i.i.i, label %.critedge144.i.i.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !642
 
-.critedge144.i.loopexit1.i.i.i.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit175.i.i.i.i.i
+.critedge144.i.i.loopexit14.i.i.i:                ; preds = %_ZN5arrow6StatusD2Ev.exit175.i.i.i.i.i
   store ptr null, ptr %16, align 8, !tbaa !115, !alias.scope !615, !noalias !593
   br label %.critedge144.i.i.i.i.i
 
-.critedge144.i.i.loopexit9.i.i.i:                 ; preds = %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i
-  store ptr null, ptr %16, align 8, !noalias !593
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.loopexit10.i.i.i:                ; preds = %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i
-  store ptr null, ptr %16, align 8, !noalias !593
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.loopexit12.i.i.i:                ; preds = %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i
-  store ptr null, ptr %16, align 8, !noalias !593
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.loopexit14.i.i.i:                ; preds = %bb.ak
-  store ptr null, ptr %16, align 8, !noalias !593
-  br label %.critedge144.i.i.i.i.i
-
-.critedge144.i.i.i.i.i:                           ; preds = %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i, %.critedge144.i.i.loopexit14.i.i.i, %.critedge144.i.i.loopexit12.i.i.i, %.critedge144.i.i.loopexit10.i.i.i, %.critedge144.i.i.loopexit9.i.i.i, %.critedge144.i.loopexit1.i.i.i.i, %.preheader231.i.i.i.i.i, %.preheader234.i.i.i.i.i, %.preheader226.i.i.i.i.i, %.preheader228.i.i.i.i.i, %.noexc12.i, %.preheader.i.i.i.i.i, %bb.ab
-  %.11.i.i.i.i.i = phi i64 [ %i.ev, %bb.ab ], [ %i.jl, %.critedge144.i.i.loopexit12.i.i.i ], [ %i.lg, %.critedge144.i.i.loopexit14.i.i.i ], [ %i.ii, %.critedge144.i.i.loopexit9.i.i.i ], [ %i.iu, %.critedge144.i.i.loopexit10.i.i.i ], [ %i.gh, %.critedge144.i.loopexit1.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.noexc12.i ], [ %.0107267.i.i.i.i.i, %.preheader.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader226.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader228.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader231.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader234.i.i.i.i.i ], [ %i.gd, %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i ] ; 2 uses
+.critedge144.i.i.i.i.i:                           ; preds = %bb.ak, %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i, %.critedge144.i.i.loopexit14.i.i.i, %.preheader231.i.i.i.i.i, %.preheader234.i.i.i.i.i, %.preheader226.i.i.i.i.i, %.preheader228.i.i.i.i.i, %.noexc12.i, %.preheader.i.i.i.i.i, %bb.ab
+  %.11.i.i.i.i.i = phi i64 [ %i.ev, %bb.ab ], [ %i.gd, %_ZN5arrow6StatusD2Ev.exit165.i.i.i.i.i ], [ %i.ii, %_ZN5arrow6StatusD2Ev.exit181.i.i.i.i.i ], [ %i.iu, %_ZN5arrow6StatusD2Ev.exit187.i.i.i.i.i ], [ %i.jl, %_ZN5arrow6StatusD2Ev.exit193.i.i.i.i.i ], [ %i.gh, %.critedge144.i.i.loopexit14.i.i.i ], [ %.0107267.i.i.i.i.i, %.noexc12.i ], [ %.0107267.i.i.i.i.i, %.preheader.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader226.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader228.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader231.i.i.i.i.i ], [ %.0107267.i.i.i.i.i, %.preheader234.i.i.i.i.i ], [ %i.lg, %bb.ak ] ; 2 uses
   %i.li = load ptr, ptr %i.n, align 8, !tbaa !608, !noalias !609, !nonnull !129, !align !242
   %i.lj = getelementptr inbounds nuw i8, ptr %i.li, i64 8
   %i.lk = load i64, ptr %i.lj, align 8, !tbaa !135, !noalias !609
@@ -1687,7 +1665,7 @@ bb.ak:                                            ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.ll, label %bb.r, label %.critedge158.i.i.i.i.i, !llvm.loop !643
 
 .critedge158.i.i.i.i.i:                           ; preds = %.critedge144.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i, %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i, %.noexc9.i
-  %i.lm = phi ptr [ %i.gf, %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i ], [ %i.jz, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i ], [ %i.jj, %_ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i ], [ null, %.noexc9.i ], [ %i.is, %_ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i ], [ null, %.critedge144.i.i.i.i.i ]
+  %i.lm = phi ptr [ %i.jj, %_ZN5arrow6StatusD2Ev.exit189.i.i.i.i.i ], [ %i.jz, %_ZN5arrow6StatusD2Ev.exit195.i.i.i.i.i ], [ %i.gf, %_ZN5arrow6StatusD2Ev.exit171.i.i.i.i.i ], [ null, %.noexc9.i ], [ %i.is, %_ZN5arrow6StatusD2Ev.exit183.i.i.i.i.i ], [ null, %.critedge144.i.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25, !noalias !609
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #25, !noalias !609
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25, !noalias !609

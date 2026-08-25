@@ -205,17 +205,15 @@ bb.a:
   %i.ae = ptrtoint ptr %i.ac to i64
   %i.af = sub i64 %i.ad, %i.ae                    ; 3 uses
   %i.ag = ashr exact i64 %i.af, 4                 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 5 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 6 uses
   %i.ai = icmp eq i64 %i.af, 16
   br i1 %i.ai, label %.epil.preheader, label %.lr.ph13.new
 
 .lr.ph13.new:                                     ; preds = %.lr.ph13
   %unroll_iter25 = and i64 %i.ag, -2
-  %.promoted = load i32, ptr %i.ah, align 4
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph13.new
-  %1 = phi i32 [ %.promoted, %.lr.ph13.new ], [ %3, %bb.f ] ; 2 uses
   %.111 = phi i64 [ 0, %.lr.ph13.new ], [ %i.ba, %bb.f ] ; 5 uses
   %niter26 = phi i64 [ 0, %.lr.ph13.new ], [ %niter26.next.1, %bb.f ]
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %.111
@@ -225,7 +223,8 @@ bb.b:                                             ; preds = %bb.f, %.lr.ph13.new
   br i1 %i.am, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.an = trunc i64 %.111 to i32                  ; 2 uses
+  %i.an = trunc i64 %.111 to i32
+  %1 = load i32, ptr %i.ah, align 4, !tbaa !35
   %sext = shl i64 %.111, 32
   %i.ao = ashr exact i64 %sext, 28
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ao ; 2 uses
@@ -236,7 +235,6 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %2 = phi i32 [ %1, %bb.b ], [ %i.an, %bb.c ]    ; 2 uses
   %i.ar = or disjoint i64 %.111, 1                ; 3 uses
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ac, i64 %i.ar
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 4
@@ -245,7 +243,8 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %i.av, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.aw = trunc i64 %i.ar to i32                  ; 2 uses
+  %i.aw = trunc i64 %i.ar to i32
+  %2 = load i32, ptr %i.ah, align 4, !tbaa !35
   %sext.1 = shl i64 %i.ar, 32
   %i.ax = ashr exact i64 %sext.1, 28
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ax ; 2 uses
@@ -256,7 +255,6 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %3 = phi i32 [ %i.aw, %bb.e ], [ %2, %bb.d ]
   %i.ba = add nuw i64 %.111, 2                    ; 2 uses
   %niter26.next.1 = add i64 %niter26, 2           ; 2 uses
   %niter26.ncmp.1 = icmp eq i64 %niter26.next.1, %unroll_iter25

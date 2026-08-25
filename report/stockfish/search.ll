@@ -205,10 +205,10 @@ bb.f:                                             ; preds = %._crit_edge1313, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #33
-  %i.t = getelementptr inbounds nuw i8, ptr %8, i64 64 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %8, i64 64 ; 3 uses
   store i64 0, ptr %i.t, align 8, !tbaa !315
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
-  %i.u = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 4 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 3 uses
   store i64 0, ptr %i.u, align 8, !tbaa !315
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 608 ; 15 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !213  ; 2 uses
@@ -611,7 +611,7 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx, %bb.
   call void @_ZN9Stockfish10MovePickerC1ERKNS_8PositionENS_4MoveEiPKNS_10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm2EJLm65536EEEEPKNS5_IS7_Lm5EJLm65536EEEEPKNS5_INS6_IsLi10692ELb0EEELm16EJLm64ELm8EEEEPPKNS5_INS6_IsLi30000ELb0EEELm16EJLm64EEEEPKNS_15SharedHistoriesEi(ptr noundef nonnull align 8 dereferenceable(2164) %14, ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %.sroa.0135.0.copyload, i32 noundef %.31037, ptr noundef nonnull %0, ptr noundef nonnull %i.vq, ptr noundef nonnull %i.vr, ptr noundef nonnull %i.f, ptr noundef nonnull %i.vs, i32 noundef %i.vu) #33
   %i.vv = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %14) #33 ; 2 uses
   %.not118912331255 = icmp eq i16 %i.vv, 0
-  br i1 %.not118912331255, label %.outer..loopexit_crit_edge, label %.lr.ph1234.lr.ph
+  br i1 %.not118912331255, label %.loopexit, label %.lr.ph1234.lr.ph
 
 .lr.ph1234.lr.ph:                                 ; preds = %bb.cz
   %i.vw = getelementptr inbounds nuw i8, ptr %0, i64 11421152 ; 2 uses
@@ -639,8 +639,6 @@ bb.cz:                                            ; preds = %bb.cy, %bb.cx, %bb.
   %.11031.ph1258 = phi i32 [ %.sroa.speculated824, %.lr.ph1234.lr.ph ], [ %.3, %.thread1092 ] ; 23 uses
   %.41038.ph1257 = phi i32 [ %.31037, %.lr.ph1234.lr.ph ], [ %.9, %.thread1092 ] ; 25 uses
   %.sroa.0827.0.ph1256 = phi i16 [ 0, %.lr.ph1234.lr.ph ], [ %.sroa.0827.2, %.thread1092 ] ; 12 uses
-  %15 = phi i64 [ 0, %.lr.ph1234.lr.ph ], [ %18, %.thread1092 ] ; 13 uses
-  %16 = phi i64 [ 0, %.lr.ph1234.lr.ph ], [ %17, %.thread1092 ] ; 13 uses
   br label %bb.da
 
 bb.da:                                            ; preds = %.lr.ph1234, %.backedge
@@ -1043,8 +1041,6 @@ bb.eu:                                            ; preds = %bb.et
   br i1 %.not643, label %bb.ev, label %.thread1126
 
 .thread1126:                                      ; preds = %bb.eu
-  store i64 %15, ptr %i.u, align 8
-  store i64 %16, ptr %i.t, align 8
   %i.akc = icmp slt i32 %.2505, 2
   %i.akd = zext i1 %i.akc to i32
   %i.ake = load ptr, ptr %i.a, align 8, !tbaa !762
@@ -1075,52 +1071,40 @@ bb.ex:                                            ; preds = %bb.ew
   br i1 %i.wy, label %bb.ey, label %bb.ez
 
 bb.ey:                                            ; preds = %bb.ex
-  %i.akn = add i64 %16, 1
-  %i.ako = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %16
+  %15 = load i64, ptr %i.t, align 8, !tbaa !315   ; 2 uses
+  %i.akn = add i64 %15, 1
+  store i64 %i.akn, ptr %i.t, align 8, !tbaa !315
+  %i.ako = getelementptr inbounds nuw [2 x i8], ptr %8, i64 %15
   store i16 %i.wj, ptr %i.ako, align 2, !tbaa !191
   br label %.thread1092
 
 bb.ez:                                            ; preds = %bb.ex
-  %i.akp = add i64 %15, 1
-  %i.akq = getelementptr inbounds nuw [2 x i8], ptr %9, i64 %15
+  %16 = load i64, ptr %i.u, align 8, !tbaa !315   ; 2 uses
+  %i.akp = add i64 %16, 1
+  store i64 %i.akp, ptr %i.u, align 8, !tbaa !315
+  %i.akq = getelementptr inbounds nuw [2 x i8], ptr %9, i64 %16
   store i16 %i.wj, ptr %i.akq, align 2, !tbaa !191
   br label %.thread1092
 
 .thread1092:                                      ; preds = %bb.ev, %bb.dh, %bb.do, %bb.dn, %bb.dp, %bb.dl, %bb.dk, %bb.ew, %bb.ez, %bb.ey
-  %17 = phi i64 [ %16, %bb.ev ], [ %i.akn, %bb.ey ], [ %16, %bb.ez ], [ %16, %bb.ew ], [ %16, %bb.dk ], [ %16, %bb.do ], [ %16, %bb.dl ], [ %16, %bb.dp ], [ %16, %bb.dn ], [ %16, %bb.dh ] ; 2 uses
-  %18 = phi i64 [ %15, %bb.ev ], [ %15, %bb.ey ], [ %i.akp, %bb.ez ], [ %15, %bb.ew ], [ %15, %bb.dk ], [ %15, %bb.do ], [ %15, %bb.dl ], [ %15, %bb.dp ], [ %15, %bb.dn ], [ %15, %bb.dh ] ; 2 uses
   %.sroa.0827.2 = phi i16 [ %i.wj, %bb.ev ], [ %.sroa.0827.0.ph1256, %bb.ey ], [ %.sroa.0827.0.ph1256, %bb.ez ], [ %.sroa.0827.0.ph1256, %bb.ew ], [ %.sroa.0827.0.ph1256, %bb.dk ], [ %.sroa.0827.0.ph1256, %bb.do ], [ %.sroa.0827.0.ph1256, %bb.dl ], [ %.sroa.0827.0.ph1256, %bb.dp ], [ %.sroa.0827.0.ph1256, %bb.dn ], [ %.sroa.0827.0.ph1256, %bb.dh ] ; 2 uses
   %.9 = phi i32 [ %spec.select1167, %bb.ev ], [ %.61039, %bb.ey ], [ %.61039, %bb.ez ], [ %.61039, %bb.ew ], [ %.41038.ph1257, %bb.dk ], [ %.41038.ph1257, %bb.do ], [ %.41038.ph1257, %bb.dl ], [ %.41038.ph1257, %bb.dp ], [ %.41038.ph1257, %bb.dn ], [ %.41038.ph1257, %bb.dh ] ; 2 uses
   %.3 = phi i32 [ %.3523, %bb.ev ], [ %.11031.ph1258, %bb.ey ], [ %.11031.ph1258, %bb.ez ], [ %.11031.ph1258, %bb.ew ], [ %.11031.ph1258, %bb.dk ], [ %.11031.ph1258, %bb.do ], [ %.11031.ph1258, %bb.dl ], [ %.11031.ph1258, %bb.dp ], [ %.11031.ph1258, %bb.dn ], [ %.11031.ph1258, %bb.dh ] ; 2 uses
   %.10516 = phi i32 [ %.3523, %bb.ev ], [ %.7513, %bb.ey ], [ %.7513, %bb.ez ], [ %.7513, %bb.ew ], [ %.0506.ph1260, %bb.dk ], [ %spec.select658, %bb.do ], [ %.0506.ph1260, %bb.dl ], [ %.0506.ph1260, %bb.dp ], [ %.0506.ph1260, %bb.dn ], [ %.0506.ph1260, %bb.dh ] ; 2 uses
   %i.akr = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %14) #33 ; 2 uses
   %.not11891233 = icmp eq i16 %i.akr, 0
-  br i1 %.not11891233, label %.outer..loopexit_crit_edge, label %.lr.ph1234
-
-.outer..loopexit_crit_edge:                       ; preds = %.thread1092, %bb.cz
-  %.lcssa1250 = phi i64 [ 0, %bb.cz ], [ %17, %.thread1092 ]
-  %.lcssa1244 = phi i64 [ 0, %bb.cz ], [ %18, %.thread1092 ]
-  %split = phi i16 [ 0, %bb.cz ], [ %.sroa.0827.2, %.thread1092 ]
-  %split1235 = phi i32 [ %.31037, %bb.cz ], [ %.9, %.thread1092 ]
-  %split1236 = phi i32 [ %.sroa.speculated824, %bb.cz ], [ %.3, %.thread1092 ]
-  %split1237 = phi i32 [ 0, %bb.cz ], [ %i.wp, %.thread1092 ]
-  %split1238 = phi i32 [ -32001, %bb.cz ], [ %.10516, %.thread1092 ]
-  store i64 %.lcssa1244, ptr %i.u, align 8
-  store i64 %.lcssa1250, ptr %i.t, align 8
-  br label %.loopexit
+  br i1 %.not11891233, label %.loopexit, label %.lr.ph1234
 
 ..loopexit_crit_edge:                             ; preds = %.backedge
   %i.aks = trunc nuw nsw i64 %indvars.iv to i32
-  store i64 %15, ptr %i.u, align 8
-  store i64 %16, ptr %i.t, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.outer..loopexit_crit_edge, %..loopexit_crit_edge, %.thread1126
-  %.11031.ph1225 = phi i32 [ %.11031.ph1258, %.thread1126 ], [ %.11031.ph1258, %..loopexit_crit_edge ], [ %split1236, %.outer..loopexit_crit_edge ] ; 3 uses
-  %.sroa.0827.3 = phi i16 [ %i.wj, %.thread1126 ], [ %.sroa.0827.0.ph1256, %..loopexit_crit_edge ], [ %split, %.outer..loopexit_crit_edge ] ; 8 uses
-  %.10 = phi i32 [ %.61039, %.thread1126 ], [ %.41038.ph1257, %..loopexit_crit_edge ], [ %split1235, %.outer..loopexit_crit_edge ] ; 8 uses
-  %.1534 = phi i32 [ %i.wp, %.thread1126 ], [ %i.aks, %..loopexit_crit_edge ], [ %split1237, %.outer..loopexit_crit_edge ] ; 2 uses
-  %.11517 = phi i32 [ %.3523, %.thread1126 ], [ %.0506.ph1260, %..loopexit_crit_edge ], [ %split1238, %.outer..loopexit_crit_edge ] ; 4 uses
+.loopexit:                                        ; preds = %.thread1092, %..loopexit_crit_edge, %bb.cz, %.thread1126
+  %.11031.ph1225 = phi i32 [ %.11031.ph1258, %.thread1126 ], [ %.11031.ph1258, %..loopexit_crit_edge ], [ %.sroa.speculated824, %bb.cz ], [ %.3, %.thread1092 ] ; 3 uses
+  %.sroa.0827.3 = phi i16 [ %i.wj, %.thread1126 ], [ %.sroa.0827.0.ph1256, %..loopexit_crit_edge ], [ 0, %bb.cz ], [ %.sroa.0827.2, %.thread1092 ] ; 8 uses
+  %.10 = phi i32 [ %.61039, %.thread1126 ], [ %.41038.ph1257, %..loopexit_crit_edge ], [ %.31037, %bb.cz ], [ %.9, %.thread1092 ] ; 8 uses
+  %.1534 = phi i32 [ %i.wp, %.thread1126 ], [ %i.aks, %..loopexit_crit_edge ], [ 0, %bb.cz ], [ %i.wp, %.thread1092 ] ; 2 uses
+  %.11517 = phi i32 [ %.3523, %.thread1126 ], [ %.0506.ph1260, %..loopexit_crit_edge ], [ -32001, %bb.cz ], [ %.10516, %.thread1092 ] ; 4 uses
   %.not644 = icmp slt i32 %.11517, %.sroa.speculated819
   %i.akt = add i32 %.11517, -31507
   %spec.select.i707 = icmp ult i32 %i.akt, -63013
@@ -1523,10 +1507,10 @@ bb.f:                                             ; preds = %._crit_edge1282, %b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #33
-  %i.s = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 4 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 3 uses
   store i64 0, ptr %i.s, align 8, !tbaa !315
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #33
-  %i.t = getelementptr inbounds nuw i8, ptr %10, i64 64 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %10, i64 64 ; 3 uses
   store i64 0, ptr %i.t, align 8, !tbaa !315
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 608 ; 13 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !213  ; 2 uses
@@ -1929,7 +1913,7 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf, %bb.
   call void @_ZN9Stockfish10MovePickerC1ERKNS_8PositionENS_4MoveEiPKNS_10MultiArrayINS_10StatsEntryIsLi7183ELb0EEELm2EJLm65536EEEEPKNS5_IS7_Lm5EJLm65536EEEEPKNS5_INS6_IsLi10692ELb0EEELm16EJLm64ELm8EEEEPPKNS5_INS6_IsLi30000ELb0EEELm16EJLm64EEEEPKNS_15SharedHistoriesEi(ptr noundef nonnull align 8 dereferenceable(2164) %14, ptr noundef nonnull align 8 dereferenceable(1048) %1, i16 %.sroa.0128.0.copyload, i32 noundef %.3985, ptr noundef nonnull %0, ptr noundef nonnull %i.td, ptr noundef nonnull %i.te, ptr noundef nonnull %i.f, ptr noundef nonnull %i.tf, i32 noundef %i.th) #33
   %i.ti = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %14) #33 ; 2 uses
   %.not115011951222 = icmp eq i16 %i.ti, 0
-  br i1 %.not115011951222, label %.outer..loopexit_crit_edge, label %.lr.ph1196.lr.ph
+  br i1 %.not115011951222, label %.loopexit, label %.lr.ph1196.lr.ph
 
 .lr.ph1196.lr.ph:                                 ; preds = %bb.ch
   %i.tj = getelementptr inbounds nuw i8, ptr %0, i64 11421152 ; 2 uses
@@ -1958,8 +1942,6 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cf, %bb.
   %.4986.ph1225 = phi i32 [ %.3985, %.lr.ph1196.lr.ph ], [ %.9991, %.thread1054 ] ; 24 uses
   %.sroa.0784.0.ph1224 = phi i16 [ 0, %.lr.ph1196.lr.ph ], [ %.sroa.0784.2, %.thread1054 ] ; 11 uses
   %.4999.ph1223 = phi i32 [ %.3998, %.lr.ph1196.lr.ph ], [ %.101005, %.thread1054 ] ; 15 uses
-  %15 = phi i64 [ 0, %.lr.ph1196.lr.ph ], [ %18, %.thread1054 ] ; 12 uses
-  %16 = phi i64 [ 0, %.lr.ph1196.lr.ph ], [ %17, %.thread1054 ] ; 12 uses
   br label %bb.ci
 
 bb.ci:                                            ; preds = %.lr.ph1196, %.backedge
@@ -2362,8 +2344,6 @@ _ZN9Stockfish12_GLOBAL__N_19update_pvEPNS_4MoveES1_PKS1_.exit: ; preds = %.lr.ph
   br i1 %.not546, label %bb.ef, label %.thread1089
 
 .thread1089:                                      ; preds = %_ZN9Stockfish12_GLOBAL__N_19update_pvEPNS_4MoveES1_PKS1_.exit
-  store i64 %15, ptr %i.t, align 8
-  store i64 %16, ptr %i.s, align 8
   %i.aij = getelementptr inbounds nuw i8, ptr %i.aib, i64 48 ; 2 uses
   %i.aik = load i32, ptr %i.aij, align 8, !tbaa !324
   %i.ail = add nsw i32 %i.aik, 1
@@ -2391,52 +2371,40 @@ bb.eh:                                            ; preds = %bb.eg
   br i1 %i.un, label %bb.ei, label %bb.ej
 
 bb.ei:                                            ; preds = %bb.eh
-  %i.air = add i64 %16, 1
-  %i.ais = getelementptr inbounds nuw [2 x i8], ptr %9, i64 %16
+  %15 = load i64, ptr %i.s, align 8, !tbaa !315   ; 2 uses
+  %i.air = add i64 %15, 1
+  store i64 %i.air, ptr %i.s, align 8, !tbaa !315
+  %i.ais = getelementptr inbounds nuw [2 x i8], ptr %9, i64 %15
   store i16 %i.tx, ptr %i.ais, align 2, !tbaa !191
   br label %.thread1054
 
 bb.ej:                                            ; preds = %bb.eh
-  %i.ait = add i64 %15, 1
-  %i.aiu = getelementptr inbounds nuw [2 x i8], ptr %10, i64 %15
+  %16 = load i64, ptr %i.t, align 8, !tbaa !315   ; 2 uses
+  %i.ait = add i64 %16, 1
+  store i64 %i.ait, ptr %i.t, align 8, !tbaa !315
+  %i.aiu = getelementptr inbounds nuw [2 x i8], ptr %10, i64 %16
   store i16 %i.tx, ptr %i.aiu, align 2, !tbaa !191
   br label %.thread1054
 
 .thread1054:                                      ; preds = %bb.ef, %bb.cv, %bb.cp, %bb.cw, %bb.ct, %bb.cs, %bb.eg, %bb.ej, %bb.ei
-  %17 = phi i64 [ %16, %bb.cs ], [ %i.air, %bb.ei ], [ %16, %bb.ej ], [ %16, %bb.eg ], [ %16, %bb.cv ], [ %16, %bb.ct ], [ %16, %bb.cw ], [ %16, %bb.ef ], [ %16, %bb.cp ] ; 2 uses
-  %18 = phi i64 [ %15, %bb.cs ], [ %15, %bb.ei ], [ %i.ait, %bb.ej ], [ %15, %bb.eg ], [ %15, %bb.cv ], [ %15, %bb.ct ], [ %15, %bb.cw ], [ %15, %bb.ef ], [ %15, %bb.cp ] ; 2 uses
   %.101005 = phi i32 [ %.4999.ph1223, %bb.cs ], [ %.91004, %bb.ei ], [ %.91004, %bb.ej ], [ %.91004, %bb.eg ], [ %spec.select1132, %bb.cv ], [ %.4999.ph1223, %bb.ct ], [ %.4999.ph1223, %bb.cw ], [ %.6432, %bb.ef ], [ %.4999.ph1223, %bb.cp ] ; 2 uses
   %.sroa.0784.2 = phi i16 [ %.sroa.0784.0.ph1224, %bb.cs ], [ %.sroa.0784.0.ph1224, %bb.ei ], [ %.sroa.0784.0.ph1224, %bb.ej ], [ %.sroa.0784.0.ph1224, %bb.eg ], [ %.sroa.0784.0.ph1224, %bb.cv ], [ %.sroa.0784.0.ph1224, %bb.ct ], [ %.sroa.0784.0.ph1224, %bb.cw ], [ %i.tx, %bb.ef ], [ %.sroa.0784.0.ph1224, %bb.cp ] ; 2 uses
   %.9991 = phi i32 [ %.4986.ph1225, %bb.cs ], [ %.6988, %bb.ei ], [ %.6988, %bb.ej ], [ %.6988, %bb.eg ], [ %.4986.ph1225, %bb.cv ], [ %.4986.ph1225, %bb.ct ], [ %.4986.ph1225, %bb.cw ], [ %spec.select1133, %bb.ef ], [ %.4986.ph1225, %bb.cp ] ; 2 uses
   %.7 = phi i32 [ %.5980.ph1226, %bb.cs ], [ %.5980.ph1226, %bb.ei ], [ %.5980.ph1226, %bb.ej ], [ %.5980.ph1226, %bb.eg ], [ %.5980.ph1226, %bb.cv ], [ %.5980.ph1226, %bb.ct ], [ %.5980.ph1226, %bb.cw ], [ %.6432, %bb.ef ], [ %.5980.ph1226, %bb.cp ] ; 2 uses
   %i.aiv = call i16 @_ZN9Stockfish10MovePicker9next_moveEv(ptr noundef nonnull align 8 dereferenceable(2164) %14) #33 ; 2 uses
   %.not11501195 = icmp eq i16 %i.aiv, 0
-  br i1 %.not11501195, label %.outer..loopexit_crit_edge, label %.lr.ph1196
-
-.outer..loopexit_crit_edge:                       ; preds = %.thread1054, %bb.ch
-  %.lcssa1217 = phi i64 [ 0, %bb.ch ], [ %17, %.thread1054 ]
-  %.lcssa1211 = phi i64 [ 0, %bb.ch ], [ %18, %.thread1054 ]
-  %split = phi i32 [ %.3998, %bb.ch ], [ %.101005, %.thread1054 ]
-  %split1197 = phi i16 [ 0, %bb.ch ], [ %.sroa.0784.2, %.thread1054 ]
-  %split1198 = phi i32 [ %.3985, %bb.ch ], [ %.9991, %.thread1054 ]
-  %split1199 = phi i32 [ %.4979, %bb.ch ], [ %.7, %.thread1054 ]
-  %split1200 = phi i32 [ 0, %bb.ch ], [ %i.ud, %.thread1054 ]
-  store i64 %.lcssa1211, ptr %i.t, align 8
-  store i64 %.lcssa1217, ptr %i.s, align 8
-  br label %.loopexit
+  br i1 %.not11501195, label %.loopexit, label %.lr.ph1196
 
 ..loopexit_crit_edge:                             ; preds = %.backedge
   %i.aiw = trunc nuw nsw i64 %indvars.iv to i32
-  store i64 %15, ptr %i.t, align 8
-  store i64 %16, ptr %i.s, align 8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.outer..loopexit_crit_edge, %..loopexit_crit_edge, %.thread1089
-  %.5980.ph1184 = phi i32 [ %.5980.ph1226, %.thread1089 ], [ %.5980.ph1226, %..loopexit_crit_edge ], [ %split1199, %.outer..loopexit_crit_edge ] ; 3 uses
-  %.111006 = phi i32 [ %.6432, %.thread1089 ], [ %.4999.ph1223, %..loopexit_crit_edge ], [ %split, %.outer..loopexit_crit_edge ] ; 4 uses
-  %.sroa.0784.3 = phi i16 [ %i.tx, %.thread1089 ], [ %.sroa.0784.0.ph1224, %..loopexit_crit_edge ], [ %split1197, %.outer..loopexit_crit_edge ] ; 8 uses
-  %.10992 = phi i32 [ %.6988, %.thread1089 ], [ %.4986.ph1225, %..loopexit_crit_edge ], [ %split1198, %.outer..loopexit_crit_edge ] ; 8 uses
-  %.1443 = phi i32 [ %i.ud, %.thread1089 ], [ %i.aiw, %..loopexit_crit_edge ], [ %split1200, %.outer..loopexit_crit_edge ] ; 2 uses
+.loopexit:                                        ; preds = %.thread1054, %..loopexit_crit_edge, %bb.ch, %.thread1089
+  %.5980.ph1184 = phi i32 [ %.5980.ph1226, %.thread1089 ], [ %.5980.ph1226, %..loopexit_crit_edge ], [ %.4979, %bb.ch ], [ %.7, %.thread1054 ] ; 3 uses
+  %.111006 = phi i32 [ %.6432, %.thread1089 ], [ %.4999.ph1223, %..loopexit_crit_edge ], [ %.3998, %bb.ch ], [ %.101005, %.thread1054 ] ; 4 uses
+  %.sroa.0784.3 = phi i16 [ %i.tx, %.thread1089 ], [ %.sroa.0784.0.ph1224, %..loopexit_crit_edge ], [ 0, %bb.ch ], [ %.sroa.0784.2, %.thread1054 ] ; 8 uses
+  %.10992 = phi i32 [ %.6988, %.thread1089 ], [ %.4986.ph1225, %..loopexit_crit_edge ], [ %.3985, %bb.ch ], [ %.9991, %.thread1054 ] ; 8 uses
+  %.1443 = phi i32 [ %i.ud, %.thread1089 ], [ %i.aiw, %..loopexit_crit_edge ], [ 0, %bb.ch ], [ %i.ud, %.thread1054 ] ; 2 uses
   %.not547 = icmp slt i32 %.111006, %.sroa.speculated720
   %i.aix = add i32 %.111006, -31507
   %spec.select.i608 = icmp ult i32 %i.aix, -63013

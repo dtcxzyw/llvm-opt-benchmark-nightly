@@ -205,7 +205,6 @@ bb.n:                                             ; preds = %_ZN2cv8ximgproc7Min
   br i1 %i.eg, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %.preheader
-  %.promoted = load i32, ptr %i.ak, align 4
   %i.eh = load i32, ptr %i.am, align 4, !tbaa !63
   %i.ei = icmp slt i32 %i.eh, 2
   %i.ej = load ptr, ptr %i.an, align 8, !tbaa !87
@@ -217,7 +216,6 @@ bb.n:                                             ; preds = %_ZN2cv8ximgproc7Min
 
 bb.o:                                             ; preds = %.lr.ph, %bb.w
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.w ] ; 3 uses
-  %11 = phi i32 [ %.promoted, %.lr.ph ], [ %12, %bb.w ] ; 5 uses
   %i.en = load i64, ptr %i.ao, align 8
   %i.eo = mul i64 %i.en, %i.dw
   %.sink.idx.i = select i1 %i.ei, i64 0, i64 %i.eo
@@ -245,6 +243,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.fd, label %bb.q, label %bb.w
 
 bb.q:                                             ; preds = %bb.p
+  %11 = load i32, ptr %i.ak, align 4, !tbaa !472  ; 4 uses
   %.not.i = icmp slt i32 %11, %i.ek
   br i1 %.not.i, label %bb.u, label %bb.r
 
@@ -287,7 +286,7 @@ bb.u:                                             ; preds = %bb.q
   store float %i.fk, ptr %i.fm, align 4, !tbaa !27
   %i.fn = getelementptr inbounds nuw [4 x i8], ptr %i.em, i64 %i.fl ; 2 uses
   store float %i.ez, ptr %i.fn, align 4, !tbaa !27
-  %i.fo = add nsw i32 %11, 1                      ; 2 uses
+  %i.fo = add nsw i32 %11, 1
   store i32 %i.fo, ptr %i.ak, align 4, !tbaa !472
   %i.fp = add nsw i32 %11, -1
   %i.fq = sdiv i32 %i.fp, 2                       ; 2 uses
@@ -334,7 +333,6 @@ bb.v:                                             ; preds = %bb.r
   br label %.body.thread
 
 bb.w:                                             ; preds = %_ZN2cv8ximgproc7MinHeap4PushEff.exit, %bb.p
-  %12 = phi i32 [ %i.fo, %_ZN2cv8ximgproc7MinHeap4PushEff.exit ], [ %11, %bb.p ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.o, !llvm.loop !482

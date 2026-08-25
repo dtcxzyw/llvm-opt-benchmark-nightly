@@ -204,23 +204,17 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !68   ; 2 uses
   %.not2223 = icmp eq ptr %i.c, null
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  br i1 %.not2223, label %..preheader_crit_edge, label %.lr.ph
-
-..preheader_crit_edge:                            ; preds = %bb.a
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !69
-  br label %.preheader
+  br i1 %.not2223, label %.preheader, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %.promoted = load ptr, ptr %i.d, align 8
-  %.promoted27 = load ptr, ptr %.phi.trans.insert, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   br label %bb.f
 
-.preheader:                                       ; preds = %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit, %..preheader_crit_edge
-  %2 = phi ptr [ %.pre, %..preheader_crit_edge ], [ %.sroa.015.02428, %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
-  %.not30 = icmp eq ptr %2, null
+.preheader:                                       ; preds = %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit, %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 7 uses
+  %4 = load ptr, ptr %3, align 8, !tbaa !69       ; 3 uses
+  %.not30 = icmp eq ptr %4, null
   br i1 %.not30, label %._crit_edge, label %.lr.ph31
 
 .lr.ph31:                                         ; preds = %.preheader
@@ -228,7 +222,7 @@ bb.a:
   br i1 %1, label %.lr.ph31.split, label %.lr.ph31.split.us
 
 .lr.ph31.split.us:                                ; preds = %.lr.ph31, %_ZN9GraphAcyc7workPopEv.exit.us
-  %i.f = phi ptr [ %i.o, %_ZN9GraphAcyc7workPopEv.exit.us ], [ %2, %.lr.ph31 ] ; 8 uses
+  %i.f = phi ptr [ %i.o, %_ZN9GraphAcyc7workPopEv.exit.us ], [ %4, %.lr.ph31 ] ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 108
   store i8 0, ptr %i.g, align 4, !tbaa !70
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 88 ; 3 uses
@@ -275,9 +269,7 @@ _ZN9GraphAcyc7workPopEv.exit.us:                  ; preds = %bb.e, %bb.d
   br i1 %.not.us, label %._crit_edge, label %.lr.ph31.split.us
 
 bb.f:                                             ; preds = %.lr.ph, %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit
-  %.sroa.015.02429 = phi ptr [ %.promoted27, %.lr.ph ], [ %.sroa.015.02428, %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit ] ; 3 uses
-  %.sroa.015.02426 = phi ptr [ %.promoted, %.lr.ph ], [ %.sroa.015.02425, %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit ] ; 4 uses
-  %.sroa.015.024 = phi ptr [ %i.c, %.lr.ph ], [ %i.q, %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit ] ; 11 uses
+  %.sroa.015.024 = phi ptr [ %i.c, %.lr.ph ], [ %i.q, %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit ] ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.015.024, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !12   ; 3 uses
   %.not.i = icmp eq ptr %i.q, null                ; 2 uses
@@ -292,32 +284,32 @@ bb.g:                                             ; preds = %bb.f
   store i8 1, ptr %i.s, align 4, !tbaa !70
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.015.024, i64 88
   store ptr null, ptr %i.v, align 8, !tbaa !71
+  %5 = load ptr, ptr %2, align 8, !tbaa !73       ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.015.024, i64 96
-  store ptr %.sroa.015.02426, ptr %i.w, align 8, !tbaa !72
-  %.not.i.i = icmp eq ptr %.sroa.015.02426, null
+  store ptr %5, ptr %i.w, align 8, !tbaa !72
+  %.not.i.i = icmp eq ptr %5, null
   br i1 %.not.i.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.015.02426, i64 88
+  %i.x = getelementptr inbounds nuw i8, ptr %5, i64 88
   store ptr %.sroa.015.024, ptr %i.x, align 8, !tbaa !71
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  store ptr %.sroa.015.024, ptr %i.d, align 8, !tbaa !73
-  %.not6.i.i = icmp eq ptr %.sroa.015.02429, null
+  store ptr %.sroa.015.024, ptr %2, align 8, !tbaa !73
+  %6 = load ptr, ptr %i.d, align 8, !tbaa !69
+  %.not6.i.i = icmp eq ptr %6, null
   br i1 %.not6.i.i, label %bb.j, label %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit
 
 bb.j:                                             ; preds = %bb.i
-  store ptr %.sroa.015.024, ptr %.phi.trans.insert, align 8, !tbaa !69
+  store ptr %.sroa.015.024, ptr %i.d, align 8, !tbaa !69
   br label %_ZN9GraphAcyc8workPushEP13V3GraphVertex.exit
 
 _ZN9GraphAcyc8workPushEP13V3GraphVertex.exit:     ; preds = %bb.f, %bb.i, %bb.j
-  %.sroa.015.02428 = phi ptr [ %.sroa.015.02429, %bb.f ], [ %.sroa.015.02429, %bb.i ], [ %.sroa.015.024, %bb.j ] ; 2 uses
-  %.sroa.015.02425 = phi ptr [ %.sroa.015.02426, %bb.f ], [ %.sroa.015.024, %bb.i ], [ %.sroa.015.024, %bb.j ]
   br i1 %.not.i, label %.preheader, label %bb.f
 
 .lr.ph31.split:                                   ; preds = %.lr.ph31, %bb.w
-  %i.y = phi ptr [ %i.ba, %bb.w ], [ %2, %.lr.ph31 ] ; 15 uses
+  %i.y = phi ptr [ %i.ba, %bb.w ], [ %4, %.lr.ph31 ] ; 15 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 108 ; 3 uses
   store i8 0, ptr %i.z, align 4, !tbaa !70
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 88 ; 4 uses

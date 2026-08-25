@@ -202,7 +202,7 @@ bb.a:
   %6 = alloca %"class.lean::list_ref.4", align 8  ; 6 uses
   %7 = alloca %"class.lean::level", align 8       ; 8 uses
   %8 = alloca %"class.lean::expr", align 8        ; 6 uses
-  %9 = alloca %"class.lean::list_ref.4", align 8  ; 16 uses
+  %9 = alloca %"class.lean::list_ref.4", align 8  ; 11 uses
   %10 = alloca %"class.lean::expr", align 8       ; 6 uses
   %11 = alloca %"class.lean::level", align 8      ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !226)
@@ -437,16 +437,11 @@ bb.aa:                                            ; preds = %bb.z
 
 _ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i: ; preds = %bb.aa, %bb.z, %bb.y, %_ZN4lean3incEP11lean_object.exit.i.i.i.i.i
   %.not385.i.i.i.i = icmp eq ptr %i.au, %i.aq
-  br i1 %.not385.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph.i.preheader.i.i.i
+  br i1 %.not385.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i
 
-.lr.ph.i.preheader.i.i.i:                         ; preds = %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i
-  %.promoted.i.i.i = load ptr, ptr %9, align 8, !noalias !235
-  br label %.lr.ph.i.i.i.i
-
-.lr.ph.i.i.i.i:                                   ; preds = %_ZN4lean10object_refD2Ev.exit61.i.i.i.i, %.lr.ph.i.preheader.i.i.i
-  %12 = phi ptr [ %i.cj, %_ZN4lean10object_refD2Ev.exit61.i.i.i.i ], [ %.promoted.i.i.i, %.lr.ph.i.preheader.i.i.i ] ; 3 uses
-  %i.bo = phi ptr [ %i.cj, %_ZN4lean10object_refD2Ev.exit61.i.i.i.i ], [ %i.bb, %.lr.ph.i.preheader.i.i.i ] ; 8 uses
-  %.16.i.i.i.i = phi ptr [ %i.bp, %_ZN4lean10object_refD2Ev.exit61.i.i.i.i ], [ %i.au, %.lr.ph.i.preheader.i.i.i ]
+.lr.ph.i.i.i.i:                                   ; preds = %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i, %_ZN4lean10object_refD2Ev.exit61.i.i.i.i
+  %i.bo = phi ptr [ %i.cj, %_ZN4lean10object_refD2Ev.exit61.i.i.i.i ], [ %i.bb, %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i ] ; 8 uses
+  %.16.i.i.i.i = phi ptr [ %i.bp, %_ZN4lean10object_refD2Ev.exit61.i.i.i.i ], [ %i.au, %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i ]
   %i.bp = getelementptr inbounds i8, ptr %.16.i.i.i.i, i64 -8 ; 3 uses
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !25, !noalias !246
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
@@ -535,13 +530,13 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %i.ch = landingpad { ptr, i32 }
           catch ptr null
-  store ptr %12, ptr %9, align 8, !noalias !235
   %i.ci = extractvalue { ptr, i32 } %i.ch, 0
   call void @__clang_call_terminate(ptr %i.ci) #12, !noalias !246
   unreachable
 
 _ZN4lean10object_refD2Ev.exit.i.i.i.i:            ; preds = %bb.am, %bb.al, %bb.ak, %bb.ah, %_ZN4lean3incEP11lean_object.exit.i.i.i.i.i.i
-  %i.cj = load ptr, ptr %6, align 8, !tbaa !8, !noalias !246 ; 4 uses
+  %i.cj = load ptr, ptr %6, align 8, !tbaa !8, !noalias !246 ; 2 uses
+  store ptr %i.cj, ptr %9, align 8, !tbaa !8, !alias.scope !243, !noalias !235
   store ptr inttoptr (i64 1 to ptr), ptr %6, align 8, !tbaa !8, !noalias !246
   %i.ck = load ptr, ptr %7, align 8, !tbaa !8, !noalias !246 ; 4 uses
   %i.cl = ptrtoint ptr %i.ck to i64
@@ -570,7 +565,6 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.ar
   %i.cq = landingpad { ptr, i32 }
           catch ptr null
-  store ptr %i.cj, ptr %9, align 8, !noalias !235
   %i.cr = extractvalue { ptr, i32 } %i.cq, 0
   call void @__clang_call_terminate(ptr %i.cr) #12, !noalias !246
   unreachable
@@ -579,7 +573,7 @@ _ZN4lean10object_refD2Ev.exit61.i.i.i.i:          ; preds = %bb.ar, %bb.aq, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #11, !noalias !246
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #11, !noalias !246
   %.not38.i.i.i.i = icmp eq ptr %i.bp, %i.aq
-  br i1 %.not38.i.i.i.i, label %.loopexit.i.loopexit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !262
+  br i1 %.not38.i.i.i.i, label %.loopexit.i.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !262
 
 bb.at:                                            ; preds = %bb.k
   %i.cs = landingpad { ptr, i32 }
@@ -599,13 +593,11 @@ bb.av:                                            ; preds = %bb.s
 bb.aw:                                            ; preds = %.lr.ph.i.i.i.i
   %i.cv = landingpad { ptr, i32 }
           cleanup
-  store ptr %12, ptr %9, align 8, !noalias !235
   br label %bb.ay
 
 bb.ax:                                            ; preds = %"_ZZZN4lean19instantiate_lparamsERKNS_4exprERKNS_8list_refINS_4nameEEERKNS3_INS_5levelEEEENK3$_0clES2_ENKUlRKS8_E_clESE_.exit53.i.i.i.i"
   %i.cw = landingpad { ptr, i32 }
           cleanup
-  store ptr %12, ptr %9, align 8, !noalias !235
   call void @_ZN4lean10object_refD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %7) #11, !noalias !246
   br label %bb.ay
 
@@ -621,12 +613,8 @@ bb.az:                                            ; preds = %bb.ay, %bb.av
   call void @_ZN4lean10object_refD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %5) #11, !noalias !235
   br label %bb.bf
 
-.loopexit.i.loopexit.i.i.i:                       ; preds = %_ZN4lean10object_refD2Ev.exit61.i.i.i.i
-  store ptr %i.cj, ptr %9, align 8, !noalias !235
-  br label %.loopexit.i.i.i.i
-
-.loopexit.i.i.i.i:                                ; preds = %.loopexit.i.loopexit.i.i.i, %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i, %"_ZZZN4lean19instantiate_lparamsERKNS_4exprERKNS_8list_refINS_4nameEEERKNS3_INS_5levelEEEENK3$_0clES2_ENKUlRKS8_E_clESE_.exit.i.i.i.i"
-  %.2.i.i.i.i = phi ptr [ %i.au, %"_ZZZN4lean19instantiate_lparamsERKNS_4exprERKNS_8list_refINS_4nameEEERKNS3_INS_5levelEEEENK3$_0clES2_ENKUlRKS8_E_clESE_.exit.i.i.i.i" ], [ %i.aq, %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i ], [ %i.aq, %.loopexit.i.loopexit.i.i.i ]
+.loopexit.i.i.i.i:                                ; preds = %_ZN4lean10object_refD2Ev.exit61.i.i.i.i, %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i, %"_ZZZN4lean19instantiate_lparamsERKNS_4exprERKNS_8list_refINS_4nameEEERKNS3_INS_5levelEEEENK3$_0clES2_ENKUlRKS8_E_clESE_.exit.i.i.i.i"
+  %.2.i.i.i.i = phi ptr [ %i.au, %"_ZZZN4lean19instantiate_lparamsERKNS_4exprERKNS_8list_refINS_4nameEEERKNS3_INS_5levelEEEENK3$_0clES2_ENKUlRKS8_E_clESE_.exit.i.i.i.i" ], [ %i.aq, %_ZN4lean8list_refINS_5levelEEC2ERKS1_RKS2_.exit.i.i.i.i ], [ %i.aq, %_ZN4lean10object_refD2Ev.exit61.i.i.i.i ]
   %i.cx = load ptr, ptr %5, align 8, !tbaa !8, !noalias !246 ; 4 uses
   %i.cy = ptrtoint ptr %i.cx to i64
   %i.cz = and i64 %i.cy, 1

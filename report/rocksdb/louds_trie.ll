@@ -205,13 +205,10 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 80
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 48
   %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 96
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %.promoted90 = load i32, ptr %i.t, align 8      ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.af
-  %1 = phi i32 [ %.promoted90, %.lr.ph ], [ %3, %bb.af ] ; 2 uses
-  %2 = phi i32 [ %.promoted90, %.lr.ph ], [ %4, %bb.af ] ; 3 uses
   %i.u = phi i64 [ %i.h, %.lr.ph ], [ %i.in, %bb.af ]
   %i.v = phi i64 [ %.promoted, %.lr.ph ], [ %i.ij, %bb.af ] ; 2 uses
   %i.w = phi ptr [ %.promoted89, %.lr.ph ], [ %i.ii, %bb.af ] ; 3 uses
@@ -287,6 +284,7 @@ bb.g:                                             ; preds = %_ZNK7rocksdb10trie_
   store i64 %i.ba, ptr %.0.i.i.i, align 8, !tbaa !58
   %i.bb = trunc i64 %..i to i8
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %1 = load i32, ptr %i.t, align 8, !tbaa !29
   %i.bd = add i32 %1, -1
   %i.be = zext i32 %i.bd to i64
   %i.bf = load ptr, ptr %i.bc, align 8, !tbaa !62
@@ -474,6 +472,7 @@ bb.t:                                             ; preds = %bb.s
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ez, i64 %i.eo
   %i.fb = load i8, ptr %i.fa, align 1, !tbaa !55
   %i.fc = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %2 = load i32, ptr %i.t, align 8, !tbaa !29
   %i.fd = add i32 %2, -1
   %i.fe = zext i32 %i.fd to i64
   %i.ff = load ptr, ptr %i.fc, align 8, !tbaa !62
@@ -638,17 +637,16 @@ bb.ad:                                            ; preds = %.thread
 _ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit: ; preds = %bb.ac, %bb.ad
   %i.ii = phi ptr [ %i.ih, %bb.ac ], [ %i.w, %bb.ad ] ; 2 uses
   %i.ij = phi i64 [ %i.v, %bb.ac ], [ %i.x, %bb.ad ] ; 2 uses
-  %.not = icmp eq i32 %2, 0
+  %3 = load i32, ptr %i.t, align 8, !tbaa !29     ; 2 uses
+  %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit
-  %i.ik = add i32 %2, -1                          ; 3 uses
+  %i.ik = add i32 %3, -1
   store i32 %i.ik, ptr %i.t, align 8, !tbaa !29
   br label %bb.af
 
 bb.af:                                            ; preds = %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit, %bb.ae
-  %3 = phi i32 [ %1, %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit ], [ %i.ik, %bb.ae ]
-  %4 = phi i32 [ 0, %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit ], [ %i.ik, %bb.ae ]
   %i.il = ptrtoint ptr %i.ii to i64
   %i.im = sub i64 %i.il, %i.e
   %i.in = ashr exact i64 %i.im, 3                 ; 2 uses
@@ -1051,13 +1049,10 @@ bb.a:
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.n, i64 80
   %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 304
   %i.u = getelementptr inbounds nuw i8, ptr %i.n, i64 272
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %.promoted159 = load i32, ptr %i.v, align 8     ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 8 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.av
-  %1 = phi i32 [ %.promoted159, %.lr.ph ], [ %3, %bb.av ] ; 3 uses
-  %2 = phi i32 [ %.promoted159, %.lr.ph ], [ %4, %bb.av ] ; 6 uses
   %i.w = phi i64 [ %i.h, %.lr.ph ], [ %i.lc, %bb.av ]
   %i.x = phi i64 [ %.promoted, %.lr.ph ], [ %i.ky, %bb.av ] ; 2 uses
   %i.y = phi ptr [ %.promoted158, %.lr.ph ], [ %i.kx, %bb.av ] ; 7 uses
@@ -1142,7 +1137,8 @@ bb.h:                                             ; preds = %_ZNK7rocksdb10trie_
   store i64 %i.bk, ptr %.0.i.i.i, align 8, !tbaa !58
   %i.bl = trunc i64 %.2.i to i8
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.bn = add i32 %2, -1
+  %1 = load i32, ptr %i.v, align 8, !tbaa !29
+  %i.bn = add i32 %1, -1
   %i.bo = zext i32 %i.bn to i64
   %i.bp = load ptr, ptr %i.bm, align 8, !tbaa !62
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bo
@@ -1335,11 +1331,12 @@ bb.v:                                             ; preds = %bb.t
   br label %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit
 
 _ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit: ; preds = %bb.u, %bb.v
-  %.not61 = icmp eq i32 %1, 0
+  %2 = load i32, ptr %i.v, align 8, !tbaa !29     ; 2 uses
+  %.not61 = icmp eq i32 %2, 0
   br i1 %.not61, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit
-  %i.fj = add i32 %1, -1
+  %i.fj = add i32 %2, -1
   store i32 %i.fj, ptr %i.v, align 8, !tbaa !29
   br label %bb.x
 
@@ -1371,7 +1368,8 @@ bb.z:                                             ; preds = %bb.y
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 %i.fv
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !55
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.gb = add i32 %2, -1
+  %3 = load i32, ptr %i.v, align 8, !tbaa !29
+  %i.gb = add i32 %3, -1
   %i.gc = zext i32 %i.gb to i64
   %i.gd = load ptr, ptr %i.ga, align 8, !tbaa !62
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gd, i64 %i.gc
@@ -1605,11 +1603,12 @@ bb.ap:                                            ; preds = %bb.an
   br label %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit97
 
 _ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit97: ; preds = %bb.ao, %bb.ap
-  %.not58 = icmp eq i32 %2, 0
+  %4 = load i32, ptr %i.v, align 8, !tbaa !29     ; 2 uses
+  %.not58 = icmp eq i32 %4, 0
   br i1 %.not58, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit97
-  %i.kq = add i32 %2, -1
+  %i.kq = add i32 %4, -1
   store i32 %i.kq, ptr %i.v, align 8, !tbaa !29
   br label %bb.ar
 
@@ -1639,17 +1638,16 @@ bb.at:                                            ; preds = %.thread
 _ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit98: ; preds = %bb.as, %bb.at
   %i.kx = phi ptr [ %i.kw, %bb.as ], [ %i.y, %bb.at ] ; 2 uses
   %i.ky = phi i64 [ %i.x, %bb.as ], [ %i.z, %bb.at ] ; 2 uses
-  %.not62 = icmp eq i32 %2, 0
+  %5 = load i32, ptr %i.v, align 8, !tbaa !29     ; 2 uses
+  %.not62 = icmp eq i32 %5, 0
   br i1 %.not62, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit98
-  %i.kz = add i32 %2, -1                          ; 3 uses
+  %i.kz = add i32 %5, -1
   store i32 %i.kz, ptr %i.v, align 8, !tbaa !29
   br label %bb.av
 
 bb.av:                                            ; preds = %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit98, %bb.au
-  %3 = phi i32 [ %1, %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit98 ], [ %i.kz, %bb.au ]
-  %4 = phi i32 [ 0, %_ZN7rocksdb10autovectorINS_10trie_index17LoudsTrieIterator8LevelPosELm24EE8pop_backEv.exit98 ], [ %i.kz, %bb.au ]
   %i.la = ptrtoint ptr %i.kx to i64
   %i.lb = sub i64 %i.la, %i.e
   %i.lc = ashr exact i64 %i.lb, 3                 ; 2 uses

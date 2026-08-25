@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not62 = icmp eq i64 %i.ac, 0
   br i1 %.not62, label %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i
 
@@ -221,8 +221,8 @@ _ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.ex
   br label %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE7reserveEm.exit
 
 _ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE7reserveEm.exit: ; preds = %bb.c, %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i
-  %.promoted27 = phi ptr [ null, %bb.c ], [ %i.ah, %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i ] ; 3 uses
-  %.promoted = phi ptr [ null, %bb.c ], [ %i.ai, %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i ] ; 2 uses
+  %.promoted27 = phi ptr [ null, %bb.c ], [ %i.ai, %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i ]
+  %.promoted = phi ptr [ null, %bb.c ], [ %i.ah, %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i ] ; 2 uses
   %i.aj = phi ptr [ %i.n, %bb.c ], [ %.pre46, %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i ] ; 2 uses
   %i.ak = phi ptr [ %i.x, %bb.c ], [ %.pre, %_ZNSt12_Vector_baseIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_M_allocateEm.exit.i ] ; 2 uses
   %.not30 = icmp eq ptr %i.ak, %i.aj
@@ -235,20 +235,16 @@ _ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE7reserveEm.exit: ; preds 
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE7reserveEm.exit
-  %.lcssa28 = phi ptr [ %.promoted27, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE7reserveEm.exit ], [ %i.cg, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ]
-  %.lcssa = phi ptr [ %.promoted, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE7reserveEm.exit ], [ %i.ch, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ]
-  store ptr %.lcssa, ptr %i.ae, align 8
-  store ptr %.lcssa28, ptr %0, align 8
   ret void
 
 bb.d:                                             ; preds = %.lr.ph, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit
-  %i.ao = phi ptr [ %.promoted27, %.lr.ph ], [ %i.cf, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 4 uses
+  %i.ao = phi ptr [ %.promoted, %.lr.ph ], [ %i.cf, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 4 uses
   %.034 = phi i32 [ 0, %.lr.ph ], [ %i.ci, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 3 uses
   %.sroa.020.033 = phi ptr [ %i.ak, %.lr.ph ], [ %.sroa.020.1, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 3 uses
   %.sroa.10.032 = phi ptr [ %i.am, %.lr.ph ], [ %.sroa.10.1, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 2 uses
   %.sroa.13.031 = phi ptr [ %i.al, %.lr.ph ], [ %.sroa.13.1, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 2 uses
-  %i.ap = phi ptr [ %.promoted, %.lr.ph ], [ %i.ch, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 3 uses
-  %i.aq = phi ptr [ %.promoted27, %.lr.ph ], [ %i.cg, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 6 uses
+  %i.ap = phi ptr [ %.promoted27, %.lr.ph ], [ %i.ch, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 2 uses
+  %i.aq = phi ptr [ %.promoted, %.lr.ph ], [ %i.cg, %_ZNSt15_Deque_iteratorIN6hermes6bigint12ParsedBigIntERKS2_PS3_EppEv.exit ] ; 5 uses
   %i.ar = load ptr, ptr %.sroa.020.033, align 8, !tbaa !69 ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.020.033, i64 8
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !71
@@ -327,8 +323,6 @@ bb.h:                                             ; preds = %_ZNK6hermes6bigint1
   br i1 %i.bt, label %bb.i, label %_ZNKSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.i:                                             ; preds = %bb.h
-  store ptr %i.ap, ptr %i.ae, align 8
-  store ptr %i.aq, ptr %0, align 8
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.10) #19
   unreachable
 
@@ -342,7 +336,7 @@ _ZNKSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE12_M_check_lenEmPKc.exit
   %.not.i.i.i.i = icmp ne i64 %i.by, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.bz = shl nuw nsw i64 %i.by, 3
-  %i.ca = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bz) #18 ; 4 uses
+  %i.ca = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bz) #18 ; 5 uses
   %i.cb = getelementptr inbounds i8, ptr %i.ca, i64 %i.bs ; 2 uses
   %.sroa.5.0.insert.ext13 = zext i32 %.sroa.3.0.i.i to i64
   %.sroa.5.0.insert.shift14 = shl nuw i64 %.sroa.5.0.insert.ext13, 32
@@ -366,14 +360,16 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN6herm
   br label %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.k, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i.i
+  store ptr %i.ca, ptr %0, align 8, !tbaa !125
   store ptr %i.cd, ptr %i.an, align 8, !tbaa !128
-  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %i.by
+  %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.ca, i64 %i.by ; 2 uses
+  store ptr %i.ce, ptr %i.ae, align 8, !tbaa !129
   br label %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE9push_backEOS2_.exit
 
 _ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE9push_backEOS2_.exit: ; preds = %bb.g, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i
   %i.cf = phi ptr [ %i.bp, %bb.g ], [ %i.cd, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
-  %i.cg = phi ptr [ %i.aq, %bb.g ], [ %i.ca, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
-  %i.ch = phi ptr [ %i.ap, %bb.g ], [ %i.ce, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ] ; 2 uses
+  %i.cg = phi ptr [ %i.aq, %bb.g ], [ %i.ca, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
+  %i.ch = phi ptr [ %i.ap, %bb.g ], [ %i.ce, %_ZNSt6vectorIN6hermes6bigint16BigIntTableEntryESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i ]
   %i.ci = add i32 %.sroa.3.0.i.i, %.034
   %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.020.033, i64 24 ; 2 uses
   %i.ck = icmp eq ptr %i.cj, %.sroa.10.032

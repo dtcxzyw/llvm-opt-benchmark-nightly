@@ -205,9 +205,8 @@ bb.ai:                                            ; preds = %_ZN8ObdImageD2Ev.ex
 .lr.ph.preheader:                                 ; preds = %.preheader199
   %i.et = ptrtoint ptr %i.es to i64
   %i.eu = ptrtoint ptr %i.er to i64
-  %.pre231 = load ptr, ptr %17, align 8, !tbaa !74
-  %i.ev = load ptr, ptr %17, align 8              ; 2 uses
-  %.promoted = load ptr, ptr %i.ds, align 8
+  %i.ev = load ptr, ptr %17, align 8, !tbaa !74
+  %.promoted = load ptr, ptr %17, align 8         ; 2 uses
   br label %.lr.ph
 
 bb.aj:                                            ; preds = %bb.ai
@@ -229,10 +228,9 @@ bb.ak:                                            ; preds = %_ZN8ObdImageD2Ev.ex
   br i1 %i.fb, label %.loopexit, label %.lr.ph207
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.aw
-  %25 = phi ptr [ %26, %bb.aw ], [ %.promoted, %.lr.ph.preheader ] ; 4 uses
   %i.fc = phi ptr [ %i.hp, %bb.aw ], [ %i.es, %.lr.ph.preheader ] ; 3 uses
   %i.fd = phi ptr [ %i.hq, %bb.aw ], [ %i.er, %.lr.ph.preheader ] ; 4 uses
-  %i.fe = phi ptr [ %i.hr, %bb.aw ], [ %.pre231, %.lr.ph.preheader ] ; 2 uses
+  %i.fe = phi ptr [ %i.hr, %bb.aw ], [ %i.ev, %.lr.ph.preheader ] ; 2 uses
   %i.ff = phi i64 [ %i.hu, %bb.aw ], [ %i.et, %.lr.ph.preheader ]
   %i.fg = phi i64 [ %i.ht, %bb.aw ], [ %i.eu, %.lr.ph.preheader ]
   %.093205 = phi i64 [ %i.hs, %bb.aw ], [ 0, %.lr.ph.preheader ] ; 5 uses
@@ -373,8 +371,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt6vectorI9ObdObjectSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EE.exit: ; preds = %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIP9ObdObjectSt6vectorIS2_SaIS2_EEEES7_ET0_T_S9_S8_.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   %.idx = shl nsw i64 %.093205, 3
-  %i.hf = getelementptr inbounds i8, ptr %i.ev, i64 %.idx ; 3 uses
+  %i.hf = getelementptr inbounds i8, ptr %.promoted, i64 %.idx ; 3 uses
   %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 8 ; 4 uses
+  %25 = load ptr, ptr %i.ds, align 8, !tbaa !103  ; 3 uses
   %.not.i.i140 = icmp eq ptr %i.hg, %25
   br i1 %.not.i.i140, label %bb.av, label %bb.ar
 
@@ -399,7 +398,7 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %bb.as, %_ZNSt6vectorI9ObdObjectSaIS0_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS0_S2_EE.exit
-  %i.hn = getelementptr inbounds i8, ptr %25, i64 -8 ; 2 uses
+  %i.hn = getelementptr inbounds i8, ptr %25, i64 -8
   store ptr %i.hn, ptr %i.ds, align 8, !tbaa !101
   %i.ho = add i64 %.093205, -1
   %.pre232 = load ptr, ptr %i.dr, align 8, !tbaa !87
@@ -407,10 +406,9 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
   br label %bb.aw
 
 bb.aw:                                            ; preds = %.lr.ph, %bb.av
-  %26 = phi ptr [ %i.hn, %bb.av ], [ %25, %.lr.ph ]
   %i.hp = phi ptr [ %.pre233, %bb.av ], [ %i.fc, %.lr.ph ] ; 4 uses
   %i.hq = phi ptr [ %.pre232, %bb.av ], [ %i.fd, %.lr.ph ] ; 3 uses
-  %i.hr = phi ptr [ %i.ev, %bb.av ], [ %i.fe, %.lr.ph ]
+  %i.hr = phi ptr [ %.promoted, %bb.av ], [ %i.fe, %.lr.ph ]
   %.194 = phi i64 [ %i.ho, %bb.av ], [ %.093205, %.lr.ph ]
   %i.hs = add i64 %.194, 1                        ; 2 uses
   %i.ht = ptrtoint ptr %i.hq to i64               ; 2 uses

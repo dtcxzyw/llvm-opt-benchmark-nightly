@@ -202,38 +202,32 @@ bb.g:                                             ; preds = %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !61 ; 3 uses
   %.not.i.i13 = icmp eq ptr %i.ak, null
-  br i1 %.not.i.i13, label %.thread, label %bb.h, !prof !60
+  br i1 %.not.i.i13, label %bb.n, label %bb.h, !prof !60
 
 bb.h:                                             ; preds = %bb.g
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 28
   %i.am = load i8, ptr %i.al, align 4, !tbaa !62, !range !41, !noundef !42
   %i.an = trunc nuw i8 %i.am to i1
-  br i1 %i.an, label %.thread, label %_ZNK5folly5IOBuf11isSharedOneEv.exit.i, !prof !60
+  br i1 %i.an, label %bb.n, label %_ZNK5folly5IOBuf11isSharedOneEv.exit.i, !prof !60
 
 _ZNK5folly5IOBuf11isSharedOneEv.exit.i:           ; preds = %bb.h
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.ap = load atomic i32, ptr %i.ao acquire, align 4
   %i.aq = icmp ugt i32 %i.ap, 1
-  br i1 %i.aq, label %_ZNK5folly5IOBuf11isSharedOneEv.exit.i._crit_edge, label %.lr.ph.i
-
-_ZNK5folly5IOBuf11isSharedOneEv.exit.i._crit_edge: ; preds = %_ZNK5folly5IOBuf11isSharedOneEv.exit.i
-  %.pr.pre = load ptr, ptr %5, align 8, !tbaa !33
-  br label %bb.n
+  br i1 %i.aq, label %bb.n, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNK5folly5IOBuf11isSharedOneEv.exit.i
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %i.as = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   %i.at = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  %.promoted = load ptr, ptr %5, align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %"_ZZN5folly10IOBufQueue6appendEONS_5IOBufEbbENK3$_0clIS1_EEDaPT_.exit.i", %.lr.ph.i
-  %.pre.i.i28 = phi ptr [ %.promoted, %.lr.ph.i ], [ %i.bk, %"_ZZN5folly10IOBufQueue6appendEONS_5IOBufEbbENK3$_0clIS1_EEDaPT_.exit.i" ] ; 5 uses
   %.0 = phi ptr [ %1, %.lr.ph.i ], [ %i.bk, %"_ZZN5folly10IOBufQueue6appendEONS_5IOBufEbbENK3$_0clIS1_EEDaPT_.exit.i" ] ; 7 uses
   %.022.i = phi i64 [ 4096, %.lr.ph.i ], [ %.1.i, %"_ZZN5folly10IOBufQueue6appendEONS_5IOBufEbbENK3$_0clIS1_EEDaPT_.exit.i" ] ; 3 uses
   %i.au = load i64, ptr %.0, align 8, !tbaa !39   ; 6 uses
   %.not17.i = icmp ugt i64 %i.au, %.022.i
-  br i1 %.not17.i, label %.loopexit, label %bb.j
+  br i1 %.not17.i, label %bb.n, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.av = load ptr, ptr %i.ar, align 8, !tbaa !47
@@ -246,7 +240,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bc = ptrtoint ptr %i.ba to i64
   %i.bd = sub i64 %i.bb, %i.bc
   %.not18.i = icmp ugt i64 %i.au, %i.bd
-  br i1 %.not18.i, label %.loopexit, label %bb.k
+  br i1 %.not18.i, label %bb.n, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %.not19.i = icmp eq i64 %i.au, 0
@@ -265,7 +259,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.1.i = phi i64 [ %i.bi, %bb.l ], [ %.022.i, %bb.k ]
   %i.bj = getelementptr inbounds nuw i8, ptr %.0, i64 32 ; 2 uses
-  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !74, !noalias !111 ; 6 uses
+  %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !74, !noalias !111 ; 5 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.0, i64 40 ; 2 uses
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !36, !noalias !111 ; 2 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bk, i64 40
@@ -275,29 +269,27 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   store ptr %.0, ptr %i.bl, align 8, !tbaa !36, !noalias !111
   store ptr %.0, ptr %i.bj, align 8, !tbaa !74, !noalias !111
   %i.bp = icmp eq ptr %i.bk, %.0
-  %.not.i.i.i.i.i.i = icmp eq ptr %.pre.i.i28, null
+  %6 = select i1 %i.bp, ptr null, ptr %i.bk       ; 2 uses
+  %7 = load ptr, ptr %5, align 8, !tbaa !33       ; 3 uses
+  store ptr %6, ptr %5, align 8, !tbaa !33
+  %.not.i.i.i.i.i.i = icmp eq ptr %7, null
   br i1 %.not.i.i.i.i.i.i, label %"_ZZN5folly10IOBufQueue6appendEONS_5IOBufEbbENK3$_0clIS1_EEDaPT_.exit.i", label %_ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i.i.i.i.i.i
 
 _ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i.i.i.i.i.i: ; preds = %bb.m
-  tail call void @_ZN5folly5IOBufD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %.pre.i.i28) #17
-  tail call void @_ZN5folly5IOBufdlEPv(ptr noundef nonnull %.pre.i.i28) #17
+  tail call void @_ZN5folly5IOBufD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %7) #17
+  tail call void @_ZN5folly5IOBufdlEPv(ptr noundef nonnull %7) #17
   br label %"_ZZN5folly10IOBufQueue6appendEONS_5IOBufEbbENK3$_0clIS1_EEDaPT_.exit.i"
 
 "_ZZN5folly10IOBufQueue6appendEONS_5IOBufEbbENK3$_0clIS1_EEDaPT_.exit.i": ; preds = %_ZNKSt14default_deleteIN5folly5IOBufEEclEPS1_.exit.i.i.i.i.i.i, %bb.m
-  %.not.i50 = icmp eq ptr %i.bk, null
-  %.not.i = or i1 %i.bp, %.not.i50
-  br i1 %.not.i, label %_ZNSt10unique_ptrIN5folly5IOBufESt14default_deleteIS1_EED2Ev.exit20, label %bb.i, !llvm.loop !114
+  %.not.i50 = icmp eq ptr %6, null
+  br i1 %.not.i50, label %_ZNSt10unique_ptrIN5folly5IOBufESt14default_deleteIS1_EED2Ev.exit20, label %bb.i, !llvm.loop !114
 
-.loopexit:                                        ; preds = %bb.j, %bb.i
-  store ptr %.pre.i.i28, ptr %5, align 8
-  br label %bb.n
-
-bb.n:                                             ; preds = %_ZNK5folly5IOBuf11isSharedOneEv.exit.i._crit_edge, %.loopexit
-  %.pr = phi ptr [ %.pr.pre, %_ZNK5folly5IOBuf11isSharedOneEv.exit.i._crit_edge ], [ %.pre.i.i28, %.loopexit ] ; 2 uses
+bb.n:                                             ; preds = %bb.i, %bb.j, %bb.g, %bb.h, %_ZNK5folly5IOBuf11isSharedOneEv.exit.i
+  %.pr = load ptr, ptr %5, align 8, !tbaa !33     ; 2 uses
   %.not = icmp eq ptr %.pr, null
   br i1 %.not, label %.thread, label %_ZNSt10unique_ptrIN5folly5IOBufESt14default_deleteIS1_EED2Ev.exit
 
-.thread:                                          ; preds = %bb.h, %bb.g, %bb.f, %bb.n
+.thread:                                          ; preds = %bb.f, %bb.n
   %i.bq = invoke noundef ptr @_ZN5folly5IOBufnwEm(i64 noundef 56)
           to label %bb.o unwind label %bb.p       ; 4 uses
 

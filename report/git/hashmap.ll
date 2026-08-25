@@ -204,14 +204,11 @@ bb.a:
   %i.c = load ptr, ptr %0, align 8, !tbaa !45     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   %i.e = load i32, ptr %i.d, align 4, !tbaa !21   ; 2 uses
-  %.promoted = load i32, ptr %i.b, align 8, !tbaa !48 ; 3 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %.promoted, i32 %i.e)
-  %wide.trip.count = zext i32 %umax to i64
+  %.promoted = load i32, ptr %i.b, align 8, !tbaa !48 ; 2 uses
   %exitcond.not23.not = icmp ult i32 %.promoted, %i.e
   br i1 %exitcond.not23.not, label %.lr.ph25, label %.loopexit
 
 .lr.ph25:                                         ; preds = %.lr.ph
-  %1 = zext i32 %.promoted to i64
   %i.f = load ptr, ptr %i.c, align 8, !tbaa !29
   br label %bb.c
 
@@ -226,14 +223,14 @@ bb.a:
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.c
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit.loopexit, label %bb.c
+  %.not12 = icmp ult i32 %2, %i.e
+  br i1 %.not12, label %bb.c, label %.loopexit.loopexit
 
 bb.c:                                             ; preds = %.lr.ph25, %bb.b
-  %indvars.iv24 = phi i64 [ %1, %.lr.ph25 ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv24, 1 ; 3 uses
-  %2 = trunc nuw i64 %indvars.iv.next to i32      ; 2 uses
-  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %indvars.iv24
+  %1 = phi i32 [ %2, %bb.b ], [ %.promoted, %.lr.ph25 ] ; 2 uses
+  %2 = add nuw i32 %1, 1                          ; 4 uses
+  %3 = zext i32 %1 to i64
+  %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %3
   %.0 = load ptr, ptr %i.h, align 8, !tbaa !32    ; 2 uses
   %.not = icmp eq ptr %.0, null
   br i1 %.not, label %bb.b, label %._crit_edge.loopexit

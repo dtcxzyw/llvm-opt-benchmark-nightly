@@ -205,8 +205,8 @@ _RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i.i.i.i, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i.i.i.i, %bb.b, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i.i.i.i
-  %i.an = phi ptr [ %i.u, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i.i.i.i ], [ %i.ae, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i.i.i.i ], [ %i.f, %bb.b ] ; 6 uses
-  %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.ab, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i.i.i.i ], [ %i.am, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i.i.i.i ], [ %i.q, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i.i.i.i ], [ %i.s, %bb.b ] ; 8 uses
+  %i.an = phi ptr [ %i.f, %bb.b ], [ %i.ae, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i.i.i.i ], [ %i.u, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i.i.i.i ] ; 6 uses
+  %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.s, %bb.b ], [ %i.am, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i.i.i.i ], [ %i.ab, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i.i.i.i ], [ %i.q, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i.i.i.i ] ; 8 uses
   %i.ao = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i, 1114112
   tail call void @llvm.assume(i1 %i.ao)
   %i.ap = ptrtoint ptr %i.an to i64
@@ -609,8 +609,8 @@ _RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit56.i.i.i
 
 _RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit56.i.i.i: ; preds = %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i55.i.i.i, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i54.i.i.i, %bb.t, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i52.i.i.i
-  %i.ic = phi ptr [ %i.gu, %bb.t ], [ %i.ha, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i52.i.i.i ], [ %i.ht, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i55.i.i.i ], [ %i.hj, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i54.i.i.i ] ; 7 uses
-  %spec.select.i53.i.i.i = phi i32 [ %i.hh, %bb.t ], [ %i.hf, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i52.i.i.i ], [ %i.ib, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i55.i.i.i ], [ %i.hq, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i54.i.i.i ] ; 4 uses
+  %i.ic = phi ptr [ %i.gu, %bb.t ], [ %i.ht, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i55.i.i.i ], [ %i.hj, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i54.i.i.i ], [ %i.ha, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i52.i.i.i ] ; 7 uses
+  %spec.select.i53.i.i.i = phi i32 [ %i.hh, %bb.t ], [ %i.ib, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit16.i.i55.i.i.i ], [ %i.hq, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i54.i.i.i ], [ %i.hf, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i52.i.i.i ] ; 4 uses
   switch i32 %spec.select.i53.i.i.i, label %bb.u [
     i32 125, label %_RNvYNtNtNtCshzWfHUSfYae_4core3ffi5c_str4CStrNtCs1jFIaHZAhUD_21rustc_literal_escaper8Unescape10unescape_1CslLuZgPVt6hg_3ide.exit
     i32 95, label %bb.v
@@ -860,8 +860,8 @@ bb.al:                                            ; preds = %bb.ak
   br label %.lr.ph.backedge
 
 _RNvYNtNtNtCshzWfHUSfYae_4core3ffi5c_str4CStrNtCs1jFIaHZAhUD_21rustc_literal_escaper8Unescape10unescape_1CslLuZgPVt6hg_3ide.exit: ; preds = %.outer.i.i.i, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit56.i.i.i, %bb.v, %bb.u, %.thread114, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i45.i.i.i, %bb.m, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i43.i.i.i, %bb.d, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i, %bb.h, %bb.s, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit.i.i.i, %bb.n, %bb.l, %bb.i
-  %i.lq = phi i64 [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.reass134, %bb.d ], [ %i.aq, %.thread114 ], [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit.i.i.i ], [ %.reass134, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i43.i.i.i ], [ %.reass134, %bb.m ], [ %.reass134, %bb.i ], [ %.reass134, %bb.s ], [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.reass134, %bb.n ], [ %.reass134, %bb.l ], [ %.reass134, %bb.h ], [ %.reass134, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i45.i.i.i ], [ %.reass134, %bb.u ], [ %.reass134, %bb.v ], [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit56.i.i.i ], [ %.reass134, %.outer.i.i.i ]
-  %.sroa.039.1 = phi ptr [ %.sroa.039.6, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.sroa.039.2.ph60, %bb.d ], [ %.sroa.039.2.ph, %.thread114 ], [ %.sroa.039.4, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit.i.i.i ], [ %i.dt, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i43.i.i.i ], [ %i.dp, %bb.m ], [ %.sroa.039.3, %bb.i ], [ %.sroa.039.6, %bb.s ], [ %.sroa.039.6, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.sroa.039.3, %bb.n ], [ %.sroa.039.7.a, %bb.l ], [ %.sroa.039.3, %bb.h ], [ %spec.select, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i45.i.i.i ], [ %i.ic, %bb.u ], [ %i.ic, %bb.v ], [ %i.ic, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit56.i.i.i ], [ %i.ic, %.outer.i.i.i ] ; 3 uses
+  %i.lq = phi i64 [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.reass134, %bb.d ], [ %i.aq, %.thread114 ], [ %.reass134, %bb.i ], [ %.reass134, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i43.i.i.i ], [ %.reass134, %bb.m ], [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit.i.i.i ], [ %.reass134, %bb.s ], [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.reass134, %bb.n ], [ %.reass134, %bb.l ], [ %.reass134, %bb.h ], [ %.reass134, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i45.i.i.i ], [ %.reass134, %bb.u ], [ %.reass134, %bb.v ], [ %.reass134, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit56.i.i.i ], [ %.reass134, %.outer.i.i.i ]
+  %.sroa.039.1 = phi ptr [ %.sroa.039.6, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.sroa.039.2.ph60, %bb.d ], [ %.sroa.039.2.ph, %.thread114 ], [ %.sroa.039.3, %bb.i ], [ %i.dt, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit12.i.i43.i.i.i ], [ %i.dp, %bb.m ], [ %.sroa.039.4, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit.i.i.i ], [ %.sroa.039.6, %bb.s ], [ %.sroa.039.6, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit50.i.i.i ], [ %.sroa.039.3, %bb.n ], [ %.sroa.039.7.a, %bb.l ], [ %.sroa.039.3, %bb.h ], [ %spec.select, %_RNvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCslLuZgPVt6hg_3ide.exit14.i.i45.i.i.i ], [ %i.ic, %bb.u ], [ %i.ic, %bb.v ], [ %i.ic, %_RNvXNtNtCshzWfHUSfYae_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator4next.exit56.i.i.i ], [ %i.ic, %.outer.i.i.i ] ; 3 uses
   %i.lr = ptrtoint ptr %.sroa.039.1 to i64
   %i.ls = add i64 %.neg26, %i.lr
   tail call void @_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvYNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated6tokens7CStringNtNtBZ_9token_ext8IsString19escaped_char_ranges0INtB7_5FnMutTINtNtB9_5range5RangejEINtNtBb_6result6ResultcNtCs1jFIaHZAhUD_21rustc_literal_escaper11EscapeErrorEEE8call_mutCslLuZgPVt6hg_3ide(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2, i64 noundef %i.lq, i64 noundef %i.ls, i64 408021893120)
@@ -1264,7 +1264,7 @@ define hidden void @_RNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloat
 bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [1 x i8], align 1                 ; 3 uses
-  %i.c = alloca [32 x i8], align 16               ; 9 uses
+  %i.c = alloca [32 x i8], align 16               ; 10 uses
   %i.d = alloca [32 x i8], align 16               ; 6 uses
   %i.e = alloca [48 x i8], align 16               ; 6 uses
   %i.f = alloca [32 x i8], align 16               ; 6 uses
@@ -1667,6 +1667,7 @@ bb.fc:                                            ; preds = %bb.fa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.adk = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.adl = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.c, i8 0, i64 16, i1 false), !noalias !2554
   store i8 2, ptr %i.adl, align 4, !noalias !2554
   %i.adm = getelementptr inbounds nuw i8, ptr %i.c, i64 21
   store i8 0, ptr %i.adm, align 1, !noalias !2554
@@ -1674,7 +1675,6 @@ bb.fc:                                            ; preds = %bb.fa
   br label %.outer.i173
 
 .outer.i173:                                      ; preds = %.outer.i173.backedge, %bb.fc
-  %4 = phi i128 [ 0, %bb.fc ], [ %.be, %.outer.i173.backedge ] ; 9 uses
   %i.ado = phi i128 [ 0, %bb.fc ], [ %.be856, %.outer.i173.backedge ] ; 9 uses
   %.sroa.11.0.ph.i = phi i64 [ 0, %bb.fc ], [ %.sroa.11.0.ph.i.be, %.outer.i173.backedge ] ; 6 uses
   %.sroa.0.0.ph.i = phi ptr [ %i.ade, %bb.fc ], [ %.sroa.0.0.ph.i.be, %.outer.i173.backedge ] ; 12 uses
@@ -1957,7 +1957,6 @@ bb.fq:                                            ; preds = %bb.fp
   %.us-phi199.i = phi i32 [ %.us-phi199.i.ph, %.split194.us.i.loopexit306 ], [ %.sroa.4.0.i.ph.i.i191, %bb.fp ]
   %.us-phi200.i = phi i64 [ %.sroa.11.0.ph.i, %.split194.us.i.loopexit306 ], [ %.sroa.11.0.i, %bb.fp ] ; 5 uses
   %.us-phi201.i = phi i1 [ %i.ajc, %.split194.us.i.loopexit306 ], [ true, %bb.fp ]
-  store i128 %4, ptr %i.c, align 16
   switch i32 %.us-phi199.i, label %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5HalfSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit.thread [
     i32 112, label %bb.gb
     i32 80, label %bb.gb
@@ -1982,6 +1981,7 @@ bb.fs:                                            ; preds = %.split203.us.i
   %i.ajh = zext nneg i64 %i.ajg to i128
   %i.aji = shl i128 %i.ajf, %i.ajh
   %i.ajj = or i128 %i.aji, %i.ado                 ; 2 uses
+  store i128 %i.ajj, ptr %i.c, align 16, !noalias !2554
   br label %.outer.i173.backedge
 
 bb.ft:                                            ; preds = %bb.fr
@@ -2016,7 +2016,6 @@ bb.fz:                                            ; preds = %bb.fx
   br i1 %i.ajo, label %.outer.i173.backedge, label %bb.ga, !prof !168
 
 .outer.i173.backedge:                             ; preds = %bb.fz, %bb.fy, %bb.fx, %bb.fw, %bb.fv, %bb.fu, %bb.ft, %bb.fs, %.split.us.i
-  %.be = phi i128 [ %4, %.split.us.i ], [ %i.ajj, %bb.fs ], [ %4, %bb.ft ], [ %4, %bb.fv ], [ %4, %bb.fw ], [ %4, %bb.fu ], [ %4, %bb.fx ], [ %4, %bb.fy ], [ %4, %bb.fz ]
   %.be856 = phi i128 [ %i.ado, %.split.us.i ], [ %i.ajj, %bb.fs ], [ %i.ado, %bb.ft ], [ %i.ado, %bb.fv ], [ %i.ado, %bb.fw ], [ %i.ado, %bb.fu ], [ %i.ado, %bb.fx ], [ %i.ado, %bb.fy ], [ %i.ado, %bb.fz ]
   %.sroa.11.0.ph.i.be = phi i64 [ %.us-phi190.i, %.split.us.i ], [ %.us-phi206.i, %bb.fs ], [ %.us-phi206.i, %bb.ft ], [ %.us-phi206.i, %bb.fv ], [ %.us-phi206.i, %bb.fw ], [ %.us-phi206.i, %bb.fu ], [ %.us-phi206.i, %bb.fx ], [ %.us-phi206.i, %bb.fy ], [ %.us-phi206.i, %bb.fz ]
   %.sroa.0.0.ph.i.be = phi ptr [ %.us-phi189.i, %.split.us.i ], [ %.us-phi205.i, %bb.fs ], [ %.us-phi205.i, %bb.ft ], [ %.us-phi205.i, %bb.fv ], [ %.us-phi205.i, %bb.fw ], [ %.us-phi205.i, %bb.fu ], [ %.us-phi205.i, %bb.fx ], [ %.us-phi205.i, %bb.fy ], [ %.us-phi205.i, %bb.fz ]
@@ -2419,7 +2418,7 @@ define hidden void @_RNvXs9_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloat
 bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [1 x i8], align 1                 ; 3 uses
-  %i.c = alloca [32 x i8], align 16               ; 9 uses
+  %i.c = alloca [32 x i8], align 16               ; 10 uses
   %i.d = alloca [32 x i8], align 16               ; 6 uses
   %i.e = alloca [48 x i8], align 16               ; 6 uses
   %i.f = alloca [32 x i8], align 16               ; 6 uses
@@ -2822,6 +2821,7 @@ bb.fc:                                            ; preds = %bb.fa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   %i.adk = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.adl = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.c, i8 0, i64 16, i1 false), !noalias !2823
   store i8 2, ptr %i.adl, align 4, !noalias !2823
   %i.adm = getelementptr inbounds nuw i8, ptr %i.c, i64 21
   store i8 0, ptr %i.adm, align 1, !noalias !2823
@@ -2829,7 +2829,6 @@ bb.fc:                                            ; preds = %bb.fa
   br label %.outer.i173
 
 .outer.i173:                                      ; preds = %.outer.i173.backedge, %bb.fc
-  %4 = phi i128 [ 0, %bb.fc ], [ %.be, %.outer.i173.backedge ] ; 9 uses
   %i.ado = phi i128 [ 0, %bb.fc ], [ %.be856, %.outer.i173.backedge ] ; 9 uses
   %.sroa.11.0.ph.i = phi i64 [ 0, %bb.fc ], [ %.sroa.11.0.ph.i.be, %.outer.i173.backedge ] ; 6 uses
   %.sroa.0.0.ph.i = phi ptr [ %i.ade, %bb.fc ], [ %.sroa.0.0.ph.i.be, %.outer.i173.backedge ] ; 12 uses
@@ -3112,7 +3111,6 @@ bb.fq:                                            ; preds = %bb.fp
   %.us-phi199.i = phi i32 [ %.us-phi199.i.ph, %.split194.us.i.loopexit306 ], [ %.sroa.4.0.i.ph.i.i191, %bb.fp ]
   %.us-phi200.i = phi i64 [ %.sroa.11.0.ph.i, %.split194.us.i.loopexit306 ], [ %.sroa.11.0.i, %bb.fp ] ; 5 uses
   %.us-phi201.i = phi i1 [ %i.ajc, %.split194.us.i.loopexit306 ], [ true, %bb.fp ]
-  store i128 %4, ptr %i.c, align 16
   switch i32 %.us-phi199.i, label %_RNvMsb_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeINtB5_9IeeeFloatNtB5_5QuadSE23from_hexadecimal_stringCslLuZgPVt6hg_3ide.exit.thread [
     i32 112, label %bb.gb
     i32 80, label %bb.gb
@@ -3137,6 +3135,7 @@ bb.fs:                                            ; preds = %.split203.us.i
   %i.ajh = zext nneg i64 %i.ajg to i128
   %i.aji = shl i128 %i.ajf, %i.ajh
   %i.ajj = or i128 %i.aji, %i.ado                 ; 2 uses
+  store i128 %i.ajj, ptr %i.c, align 16, !noalias !2823
   br label %.outer.i173.backedge
 
 bb.ft:                                            ; preds = %bb.fr
@@ -3171,7 +3170,6 @@ bb.fz:                                            ; preds = %bb.fx
   br i1 %i.ajo, label %.outer.i173.backedge, label %bb.ga, !prof !168
 
 .outer.i173.backedge:                             ; preds = %bb.fz, %bb.fy, %bb.fx, %bb.fw, %bb.fv, %bb.fu, %bb.ft, %bb.fs, %.split.us.i
-  %.be = phi i128 [ %4, %.split.us.i ], [ %i.ajj, %bb.fs ], [ %4, %bb.ft ], [ %4, %bb.fv ], [ %4, %bb.fw ], [ %4, %bb.fu ], [ %4, %bb.fx ], [ %4, %bb.fy ], [ %4, %bb.fz ]
   %.be856 = phi i128 [ %i.ado, %.split.us.i ], [ %i.ajj, %bb.fs ], [ %i.ado, %bb.ft ], [ %i.ado, %bb.fv ], [ %i.ado, %bb.fw ], [ %i.ado, %bb.fu ], [ %i.ado, %bb.fx ], [ %i.ado, %bb.fy ], [ %i.ado, %bb.fz ]
   %.sroa.11.0.ph.i.be = phi i64 [ %.us-phi190.i, %.split.us.i ], [ %.us-phi206.i, %bb.fs ], [ %.us-phi206.i, %bb.ft ], [ %.us-phi206.i, %bb.fv ], [ %.us-phi206.i, %bb.fw ], [ %.us-phi206.i, %bb.fu ], [ %.us-phi206.i, %bb.fx ], [ %.us-phi206.i, %bb.fy ], [ %.us-phi206.i, %bb.fz ]
   %.sroa.0.0.ph.i.be = phi ptr [ %.us-phi189.i, %.split.us.i ], [ %.us-phi205.i, %bb.fs ], [ %.us-phi205.i, %bb.ft ], [ %.us-phi205.i, %bb.fv ], [ %.us-phi205.i, %bb.fw ], [ %.us-phi205.i, %bb.fu ], [ %.us-phi205.i, %bb.fx ], [ %.us-phi205.i, %bb.fy ], [ %.us-phi205.i, %bb.fz ]

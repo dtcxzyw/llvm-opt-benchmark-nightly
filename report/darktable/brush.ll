@@ -205,13 +205,11 @@ bb.d:                                             ; preds = %bb.c
   %i.t = load float, ptr %i.s, align 4, !tbaa !102
   %.neg171 = fadd reassoc nsz arcp contract afn float %i.t, %0
   %.neg175 = fadd reassoc nsz arcp contract afn float %i.p, %1
-  %.promoted = load float, ptr %10, align 4, !tbaa !102
   %i.u = sext i32 %i.f to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.l
   %indvars.iv = phi i64 [ %i.u, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 2 uses
-  %11 = phi float [ %.promoted, %.lr.ph ], [ %i.as, %bb.l ]
   %.0147179 = phi i32 [ 1, %.lr.ph ], [ %.1148, %bb.l ] ; 4 uses
   %.idx = shl i64 %indvars.iv, 3
   %i.v = getelementptr i8, ptr %i.l, i64 %.idx
@@ -247,7 +245,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   %i.ap = fmul reassoc nsz arcp contract afn float %i.am, %i.am
   %i.aq = fmul reassoc nsz arcp contract afn float %i.ao, %i.ao
   %i.ar = fadd reassoc nsz arcp contract afn float %i.ap, %i.aq ; 3 uses
-  %i.as = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %11, float %i.ar) ; 3 uses
+  %11 = load float, ptr %10, align 4, !tbaa !102
+  %i.as = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %11, float %i.ar) ; 2 uses
   store float %i.as, ptr %10, align 4, !tbaa !102
   %i.at = fcmp reassoc nsz arcp contract afn oeq float %i.as, %i.ar
   %i.au = fcmp reassoc nsz arcp contract afn olt float %i.ar, %i.c
@@ -375,7 +374,6 @@ bb.t:                                             ; preds = %._crit_edge
 
 .lr.ph187:                                        ; preds = %._crit_edge.thread
   %i.cq = load ptr, ptr %i.b, align 8, !tbaa !114 ; 2 uses
-  %.promoted188 = load float, ptr %10, align 4, !tbaa !102
   %i.cr = sext i32 %i.f to i64
   br label %bb.u
 
@@ -383,7 +381,6 @@ bb.u:                                             ; preds = %.lr.ph187, %bb.z
   %i.cs = phi i32 [ -1, %.lr.ph187 ], [ %i.ds, %bb.z ]
   %i.ct = phi i32 [ %i.co, %.lr.ph187 ], [ %i.dt, %bb.z ]
   %indvars.iv193 = phi i64 [ %i.cr, %.lr.ph187 ], [ %indvars.iv.next194, %bb.z ] ; 2 uses
-  %12 = phi float [ %.promoted188, %.lr.ph187 ], [ %i.dn, %bb.z ]
   %.0141185 = phi i32 [ 1, %.lr.ph187 ], [ %.1, %bb.z ] ; 4 uses
   %.idx204 = shl i64 %indvars.iv193, 3
   %i.cu = getelementptr i8, ptr %i.cq, i64 %.idx204 ; 2 uses
@@ -416,7 +413,8 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   %i.dk = fmul reassoc nsz arcp contract afn float %i.di, %i.di
   %i.dl = fmul reassoc nsz arcp contract afn float %i.dj, %i.dj
   %i.dm = fadd reassoc nsz arcp contract afn float %i.dk, %i.dl ; 3 uses
-  %i.dn = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %12, float %i.dm) ; 3 uses
+  %12 = load float, ptr %10, align 4, !tbaa !102
+  %i.dn = tail call reassoc nsz arcp contract afn float @llvm.minnum.f32(float %12, float %i.dm) ; 2 uses
   store float %i.dn, ptr %10, align 4, !tbaa !102
   %i.do = fcmp reassoc nsz arcp contract afn oeq float %i.dn, %i.dm
   %i.dp = icmp sgt i32 %.1, 0

@@ -205,23 +205,20 @@ bb.f:                                             ; preds = %.lr.ph226, %bb.an
 
 .preheader189:                                    ; preds = %bb.f
   %.not152209 = icmp eq i64 %.0127225, 0
-  %.pre.a = load i32, ptr %i.bf, align 4, !tbaa !16 ; 6 uses
+  %.pre.a = load i32, ptr %i.bf, align 4, !tbaa !16 ; 11 uses
   br i1 %.not152209, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader189
-  %umax = tail call i32 @llvm.umax.i32(i32 %.pre.a, i32 5)
-  %wide.trip.count = zext i32 %umax to i64        ; 4 uses
-  %exitcond.not298 = icmp ugt i32 %.pre.a, 4
-  br i1 %exitcond.not298, label %.critedge, label %.lr.ph302
+  %6 = icmp ult i32 %.pre.a, 5
+  br i1 %6, label %.lr.ph302, label %bb.p
 
 .lr.ph302:                                        ; preds = %.lr.ph
-  %6 = zext nneg i32 %.pre.a to i64               ; 5 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.0139224, i64 1 ; 3 uses
   %i.cb = load i8, ptr %.0139224, align 1, !tbaa !26
-  %indvars.iv.next = add nuw nsw i64 %6, 1        ; 3 uses
-  %7 = trunc nuw nsw i64 %indvars.iv.next to i32  ; 3 uses
+  %7 = add nuw nsw i32 %.pre.a, 1                 ; 3 uses
   store i32 %7, ptr %i.bf, align 4, !tbaa !16
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.bg, i64 %6
+  %8 = zext nneg i32 %.pre.a to i64
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.bg, i64 %8
   store i8 %i.cb, ptr %i.cc, align 1, !tbaa !26
   %i.cd = load i64, ptr %3, align 8, !tbaa !21
   %i.ce = add i64 %i.cd, 1
@@ -231,16 +228,16 @@ bb.f:                                             ; preds = %.lr.ph226, %bb.an
   br i1 %.not152, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph302
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.critedge, label %bb.h
+  %exitcond.not = icmp eq i32 %.pre.a, 4
+  br i1 %exitcond.not, label %bb.p, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.cg = getelementptr inbounds nuw i8, ptr %.0139224, i64 2 ; 3 uses
   %i.ch = load i8, ptr %i.ca, align 1, !tbaa !26
-  %indvars.iv.next.1 = add nuw nsw i64 %6, 2      ; 3 uses
-  %8 = trunc nuw nsw i64 %indvars.iv.next.1 to i32 ; 3 uses
-  store i32 %8, ptr %i.bf, align 4, !tbaa !16
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.next
+  %9 = add nuw nsw i32 %.pre.a, 2                 ; 3 uses
+  store i32 %9, ptr %i.bf, align 4, !tbaa !16
+  %10 = zext nneg i32 %7 to i64
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.bg, i64 %10
   store i8 %i.ch, ptr %i.ci, align 1, !tbaa !26
   %i.cj = load i64, ptr %3, align 8, !tbaa !21
   %i.ck = add i64 %i.cj, 1
@@ -250,16 +247,16 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not152.1, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
-  br i1 %exitcond.not.1, label %.critedge, label %bb.j
+  %11 = icmp ult i32 %.pre.a, 3
+  br i1 %11, label %bb.j, label %bb.p
 
 bb.j:                                             ; preds = %bb.i
   %i.cm = getelementptr inbounds nuw i8, ptr %.0139224, i64 3 ; 3 uses
   %i.cn = load i8, ptr %i.cg, align 1, !tbaa !26
-  %indvars.iv.next.2 = add nuw nsw i64 %6, 3      ; 3 uses
-  %9 = trunc nuw nsw i64 %indvars.iv.next.2 to i32 ; 3 uses
-  store i32 %9, ptr %i.bf, align 4, !tbaa !16
-  %i.co = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.next.1
+  %12 = add nuw nsw i32 %.pre.a, 3                ; 3 uses
+  store i32 %12, ptr %i.bf, align 4, !tbaa !16
+  %13 = zext nneg i32 %9 to i64
+  %i.co = getelementptr inbounds nuw i8, ptr %i.bg, i64 %13
   store i8 %i.cn, ptr %i.co, align 1, !tbaa !26
   %i.cp = load i64, ptr %3, align 8, !tbaa !21
   %i.cq = add i64 %i.cp, 1
@@ -269,16 +266,16 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not152.2, label %.critedge, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %exitcond.not.2 = icmp eq i64 %indvars.iv.next.2, %wide.trip.count
-  br i1 %exitcond.not.2, label %.critedge, label %bb.l
+  %exitcond.not.2 = icmp eq i32 %.pre.a, 2
+  br i1 %exitcond.not.2, label %bb.p, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.cs = getelementptr inbounds nuw i8, ptr %.0139224, i64 4 ; 3 uses
   %i.ct = load i8, ptr %i.cm, align 1, !tbaa !26
-  %indvars.iv.next.3 = add nuw nsw i64 %6, 4      ; 3 uses
-  %10 = trunc nuw nsw i64 %indvars.iv.next.3 to i32 ; 3 uses
-  store i32 %10, ptr %i.bf, align 4, !tbaa !16
-  %i.cu = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.next.2
+  %14 = or disjoint i32 %.pre.a, 4                ; 3 uses
+  store i32 %14, ptr %i.bf, align 4, !tbaa !16
+  %15 = zext nneg i32 %12 to i64
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.bg, i64 %15
   store i8 %i.ct, ptr %i.cu, align 1, !tbaa !26
   %i.cv = load i64, ptr %3, align 8, !tbaa !21
   %i.cw = add i64 %i.cv, 1
@@ -288,36 +285,36 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not152.3, label %.critedge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %exitcond.not.3 = icmp eq i64 %indvars.iv.next.3, %wide.trip.count
-  br i1 %exitcond.not.3, label %.critedge, label %bb.n
+  %exitcond.not.3 = icmp eq i32 %.pre.a, 0
+  br i1 %exitcond.not.3, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
-  %i.cy = getelementptr inbounds nuw i8, ptr %.0139224, i64 5
+  %i.cy = getelementptr inbounds nuw i8, ptr %.0139224, i64 5 ; 2 uses
   %i.cz = load i8, ptr %i.cs, align 1, !tbaa !26
-  %indvars.iv.next.4 = add nuw nsw i32 %.pre.a, 5 ; 2 uses
-  store i32 %indvars.iv.next.4, ptr %i.bf, align 4, !tbaa !16
-  %i.da = getelementptr inbounds nuw i8, ptr %i.bg, i64 %indvars.iv.next.3
+  store i32 5, ptr %i.bf, align 4, !tbaa !16
+  %16 = zext nneg i32 %14 to i64
+  %i.da = getelementptr inbounds nuw i8, ptr %i.bg, i64 %16
   store i8 %i.cz, ptr %i.da, align 1, !tbaa !26
   %i.db = load i64, ptr %3, align 8, !tbaa !21
   %i.dc = add i64 %i.db, 1
   store i64 %i.dc, ptr %3, align 8, !tbaa !21
   %i.dd = add i64 %.0127225, -5                   ; 2 uses
   %.not152.4 = icmp eq i64 %i.dd, 0
-  %spec.select = select i1 %.not152.4, i64 0, i64 %i.dd
-  br label %.critedge
+  br i1 %.not152.4, label %.critedge, label %bb.p
 
-.critedge:                                        ; preds = %bb.n, %.lr.ph302, %bb.g, %bb.h, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %.lr.ph, %.preheader189
-  %11 = phi i32 [ %.pre.a, %.preheader189 ], [ %.pre.a, %.lr.ph ], [ %7, %bb.g ], [ %7, %.lr.ph302 ], [ %8, %bb.h ], [ %8, %bb.i ], [ %9, %bb.j ], [ %9, %bb.k ], [ %10, %bb.l ], [ %10, %bb.m ], [ %indvars.iv.next.4, %bb.n ]
-  %.1140.lcssa = phi ptr [ %.0139224, %.preheader189 ], [ %.0139224, %.lr.ph ], [ %i.ca, %bb.g ], [ %i.ca, %.lr.ph302 ], [ %i.cg, %bb.h ], [ %i.cg, %bb.i ], [ %i.cm, %bb.j ], [ %i.cm, %bb.k ], [ %i.cs, %bb.l ], [ %i.cs, %bb.m ], [ %i.cy, %bb.n ]
-  %.1128.lcssa = phi i64 [ 0, %.preheader189 ], [ %.0127225, %.lr.ph ], [ %i.cf, %bb.g ], [ 0, %.lr.ph302 ], [ 0, %bb.h ], [ %i.cl, %bb.i ], [ 0, %bb.j ], [ %i.cr, %bb.k ], [ 0, %bb.l ], [ %i.cx, %bb.m ], [ %spec.select, %bb.n ]
-  %i.de = icmp ult i32 %11, 5
+.critedge:                                        ; preds = %.lr.ph302, %bb.h, %bb.j, %bb.l, %bb.n, %.preheader189
+  %17 = phi i32 [ %.pre.a, %.preheader189 ], [ %7, %.lr.ph302 ], [ %9, %bb.h ], [ %12, %bb.j ], [ %14, %bb.l ], [ 5, %bb.n ]
+  %.1140.lcssa = phi ptr [ %.0139224, %.preheader189 ], [ %i.ca, %.lr.ph302 ], [ %i.cg, %bb.h ], [ %i.cm, %bb.j ], [ %i.cs, %bb.l ], [ %i.cy, %bb.n ]
+  %i.de = icmp ult i32 %17, 5
   br i1 %i.de, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %.critedge
   store i32 3, ptr %5, align 4, !tbaa !24
   br label %.thread182
 
-bb.p:                                             ; preds = %.critedge
+bb.p:                                             ; preds = %.lr.ph, %bb.g, %bb.i, %bb.k, %bb.m, %bb.n, %.critedge
+  %.1128.lcssa266 = phi i64 [ 0, %.critedge ], [ %.0127225, %.lr.ph ], [ %i.cf, %bb.g ], [ %i.cl, %bb.i ], [ %i.cr, %bb.k ], [ %i.cx, %bb.m ], [ %i.dd, %bb.n ]
+  %.1140.lcssa265 = phi ptr [ %.1140.lcssa, %.critedge ], [ %.0139224, %.lr.ph ], [ %i.ca, %bb.g ], [ %i.cg, %bb.i ], [ %i.cm, %bb.k ], [ %i.cs, %bb.m ], [ %i.cy, %bb.n ]
   %i.df = load i8, ptr %i.bg, align 8, !tbaa !26
   %.not153 = icmp eq i8 %i.df, 0
   br i1 %.not153, label %bb.q, label %.thread182
@@ -344,8 +341,8 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.f
-  %.2141 = phi ptr [ %.1140.lcssa, %bb.q ], [ %.0139224, %bb.f ] ; 13 uses
-  %.2129 = phi i64 [ %.1128.lcssa, %bb.q ], [ %.0127225, %bb.f ]
+  %.2141 = phi ptr [ %.1140.lcssa265, %bb.q ], [ %.0139224, %bb.f ] ; 13 uses
+  %.2129 = phi i64 [ %.1128.lcssa266, %bb.q ], [ %.0127225, %bb.f ]
   %.2129.fr = freeze i64 %.2129                   ; 10 uses
   %.2141309 = ptrtoaddr ptr %.2141 to i64
   %i.du = load i64, ptr %i.bn, align 8, !tbaa !20

@@ -205,11 +205,9 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1128 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1132 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 832 ; 2 uses
-  %.promoted = load i8, ptr %i.p, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN3sat9lookahead9found_sccENS_7literalE.exit, %bb.a
-  %2 = phi i8 [ %.promoted, %bb.a ], [ 0, %_ZN3sat9lookahead9found_sccENS_7literalE.exit ] ; 7 uses
   %.sroa.033.0 = phi i32 [ %1, %bb.a ], [ %.sroa.033.1, %_ZN3sat9lookahead9found_sccENS_7literalE.exit ] ; 14 uses
   %i.q = zext i32 %.sroa.033.0 to i64
   %i.r = getelementptr inbounds nuw [40 x i8], ptr %i.b, i64 %i.q ; 7 uses
@@ -321,7 +319,6 @@ bb.i:                                             ; preds = %.lr.ph.i
   br i1 %.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !315
 
 .loopexit.i:                                      ; preds = %bb.i, %bb.h, %bb.g
-  %3 = phi i8 [ 1, %bb.h ], [ %2, %bb.g ], [ %2, %bb.i ] ; 2 uses
   %.sroa.025.054.i = phi i32 [ %.sroa.025.058.i, %bb.h ], [ %.sroa.033.0, %bb.g ], [ %.sroa.025.1.i, %bb.i ]
   store i32 %.sroa.033.0, ptr %i.aq, align 8, !tbaa !91
   %i.bl = getelementptr inbounds nuw i8, ptr %i.r, i64 36 ; 2 uses
@@ -364,10 +361,10 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZN3sat9lookahead9found_sccENS_7literalE.exit
 
 _ZN3sat9lookahead9found_sccENS_7literalE.exit:    ; preds = %bb.l, %bb.k, %.loopexit.i, %bb.j, %bb.f, %bb.e, %bb.d
-  %4 = phi i8 [ %2, %bb.f ], [ %2, %bb.e ], [ %2, %bb.d ], [ %3, %bb.j ], [ %3, %.loopexit.i ], [ %2, %bb.k ], [ %2, %bb.l ]
   %.sroa.033.1 = phi i32 [ %.sroa.0.0.copyload.i26, %bb.f ], [ %.sroa.033.0, %bb.e ], [ %.sroa.033.0, %bb.d ], [ %.sroa.0.0.copyload.i28, %bb.j ], [ %.sroa.0.0.copyload.i28, %.loopexit.i ], [ %.sroa.0.0.copyload.i28, %bb.k ], [ %.sroa.0.0.copyload.i28, %bb.l ] ; 2 uses
   %.not44 = icmp eq i32 %.sroa.033.1, -2
-  %i.cg = trunc nuw i8 %4 to i1
+  %2 = load i8, ptr %i.p, align 8, !range !248
+  %i.cg = trunc nuw i8 %2 to i1
   %or.cond = select i1 %.not44, i1 true, i1 %i.cg
   br i1 %or.cond, label %.critedge, label %bb.b, !llvm.loop !316
 

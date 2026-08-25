@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %_ZNK5boost5beast6de
 bb.q:                                             ; preds = %bb.a
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !386, !noalias !1379 ; 4 uses
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !386, !noalias !1379 ; 3 uses
   %.not9.i = icmp eq i64 %1, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 168
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !1053
@@ -219,62 +219,29 @@ bb.q:                                             ; preds = %bb.a
 .lr.ph.i23:                                       ; preds = %bb.q
   %.not14.i24 = icmp eq ptr %.fr13.i, %i.bt
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
-  %i.bx = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 16 ; 4 uses
-  %i.by = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 32 ; 4 uses
-  %i.bz = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 8 ; 4 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 24 ; 4 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 16 ; 3 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 32 ; 3 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 8 ; 3 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 24 ; 3 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 5 uses
-  %.promoted.i = load i64, ptr %i.cb, align 8     ; 4 uses
-  %.pre17.i = load ptr, ptr %i.bw, align 8        ; 12 uses
-  br i1 %.not14.i24, label %.lr.ph.split.i.preheader, label %.lr.ph.split.us.i.preheader
+  br i1 %.not14.i24, label %bb.r, label %bb.s
 
-.lr.ph.split.us.i.preheader:                      ; preds = %.lr.ph.i23
-  %38 = load ptr, ptr %i.bx, align 8, !tbaa !386
-  %39 = getelementptr inbounds nuw i8, ptr %38, i64 8
-  %40 = load ptr, ptr %39, align 8, !tbaa !113
-  %41 = icmp eq ptr %.pre17.i, %40
-  %42 = getelementptr inbounds nuw i8, ptr %.pre17.i, i64 16
-  %.sroa.6.0.in.i.us.i.peel = select i1 %41, ptr %i.by, ptr %42
-  %.sroa.6.0.i.us.i.peel = load i64, ptr %.sroa.6.0.in.i.us.i.peel, align 8, !tbaa !15 ; 2 uses
-  %43 = load ptr, ptr %i.bz, align 8, !tbaa !386
-  %44 = icmp eq ptr %.pre17.i, %43
-  br i1 %44, label %45, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i.peel
+bb.r:                                             ; preds = %.lr.ph.i23
+  %i.cc = load ptr, ptr %i.bw, align 8
+  br label %.lr.ph.split.i
 
-45:                                               ; preds = %.lr.ph.split.us.i.preheader
-  %46 = load i64, ptr %i.ca, align 8, !tbaa !1242
-  %47 = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.6.0.i.us.i.peel, i64 %46)
-  br label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i.peel
-
-_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i.peel: ; preds = %45, %.lr.ph.split.us.i.preheader
-  %.sroa.6.1.i.us.i.peel = phi i64 [ %47, %45 ], [ %.sroa.6.0.i.us.i.peel, %.lr.ph.split.us.i.preheader ]
-  %48 = sub i64 %.sroa.6.1.i.us.i.peel, %.promoted.i ; 2 uses
-  %49 = icmp ult i64 %1, %48                      ; 2 uses
-  %50 = add i64 %1, %.promoted.i
-  %storemerge.us.i.peel = select i1 %49, i64 %50, i64 0
-  store i64 %storemerge.us.i.peel, ptr %i.cb, align 8, !tbaa !1061
-  br i1 %49, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %bb.r
-
-bb.r:                                             ; preds = %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i.peel
-  %51 = sub nuw i64 %1, %48                       ; 2 uses
-  %i.cc = load ptr, ptr %.pre17.i, align 8, !tbaa !110 ; 3 uses
-  store ptr %i.cc, ptr %i.bw, align 8, !tbaa !386
-  %.not.us.i.peel = icmp eq i64 %51, 0
-  br i1 %.not.us.i.peel, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %.lr.ph.split.us.i
-
-.lr.ph.split.i.preheader:                         ; preds = %.lr.ph.i23
-  %.not15.i.peel = icmp eq ptr %.pre17.i, %i.bv
-  br i1 %.not15.i.peel, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %bb.s
-
-bb.s:                                             ; preds = %.lr.ph.split.i.preheader
+bb.s:                                             ; preds = %.lr.ph.i23
+  %.promoted.i = load i64, ptr %i.cb, align 8, !tbaa !1061 ; 2 uses
+  %.pre.i25 = load ptr, ptr %i.bw, align 8        ; 5 uses
   %i.cd = load ptr, ptr %i.bx, align 8, !tbaa !386
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !113
-  %i.cg = icmp eq ptr %.pre17.i, %i.cf
-  %i.ch = getelementptr inbounds nuw i8, ptr %.pre17.i, i64 16
+  %i.cg = icmp eq ptr %.pre.i25, %i.cf
+  %i.ch = getelementptr inbounds nuw i8, ptr %.pre.i25, i64 16
   %.sroa.6.0.in.i.i.peel = select i1 %i.cg, ptr %i.by, ptr %i.ch
   %.sroa.6.0.i.i.peel = load i64, ptr %.sroa.6.0.in.i.i.peel, align 8, !tbaa !15 ; 2 uses
   %i.ci = load ptr, ptr %i.bz, align 8, !tbaa !386
-  %i.cj = icmp eq ptr %.pre17.i, %i.ci
+  %i.cj = icmp eq ptr %.pre.i25, %i.ci
   br i1 %i.cj, label %bb.t, label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i.peel
 
 bb.t:                                             ; preds = %bb.s
@@ -293,14 +260,14 @@ _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.e
 
 bb.u:                                             ; preds = %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i.peel
   %i.cp = sub nuw i64 %1, %i.cm                   ; 2 uses
-  %i.cq = load ptr, ptr %.pre17.i, align 8, !tbaa !110 ; 3 uses
+  %i.cq = load ptr, ptr %.pre.i25, align 8, !tbaa !110 ; 3 uses
   store ptr %i.cq, ptr %i.bw, align 8, !tbaa !386
   %.not.i26.peel = icmp eq i64 %i.cp, 0
-  br i1 %.not.i26.peel, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %.lr.ph.split.i
+  br i1 %.not.i26.peel, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %.lr.ph.split.us.i
 
-.lr.ph.split.us.i:                                ; preds = %bb.r, %bb.w
-  %i.cr = phi ptr [ %i.dd, %bb.w ], [ %i.cc, %bb.r ] ; 5 uses
-  %.0710.us.i = phi i64 [ %i.dc, %bb.w ], [ %51, %bb.r ] ; 3 uses
+.lr.ph.split.us.i:                                ; preds = %bb.u, %bb.w
+  %i.cr = phi ptr [ %i.dd, %bb.w ], [ %i.cq, %bb.u ] ; 5 uses
+  %.0710.us.i = phi i64 [ %i.dc, %bb.w ], [ %i.cp, %bb.u ] ; 3 uses
   %i.cs = load ptr, ptr %i.bx, align 8, !tbaa !386
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !113
@@ -331,9 +298,9 @@ bb.w:                                             ; preds = %_ZNK5boost5beast18b
   %.not.us.i = icmp eq i64 %i.dc, 0
   br i1 %.not.us.i, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %.lr.ph.split.us.i, !llvm.loop !1389
 
-.lr.ph.split.i:                                   ; preds = %bb.u, %bb.z
-  %i.de = phi ptr [ %i.dq, %bb.z ], [ %i.cq, %bb.u ] ; 7 uses
-  %.0710.i = phi i64 [ %i.dp, %bb.z ], [ %i.cp, %bb.u ] ; 3 uses
+.lr.ph.split.i:                                   ; preds = %bb.z, %bb.r
+  %i.de = phi ptr [ %i.dq, %bb.z ], [ %i.cc, %bb.r ] ; 7 uses
+  %.0710.i = phi i64 [ %i.dp, %bb.z ], [ %1, %bb.r ] ; 3 uses
   %.not15.i = icmp eq ptr %i.de, %i.bv
   br i1 %.not15.i, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %bb.x
 
@@ -355,25 +322,28 @@ bb.y:                                             ; preds = %bb.x
   br label %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i
 
 _ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i: ; preds = %bb.y, %bb.x
-  %.sroa.6.1.i.i = phi i64 [ %i.dn, %bb.y ], [ %.sroa.6.0.i.i, %bb.x ] ; 2 uses
-  %i.do = icmp ult i64 %.0710.i, %.sroa.6.1.i.i   ; 2 uses
-  %storemerge.i25 = select i1 %i.do, i64 %.0710.i, i64 0
+  %.sroa.6.1.i.i = phi i64 [ %i.dn, %bb.y ], [ %.sroa.6.0.i.i, %bb.x ]
+  %38 = load i64, ptr %i.cb, align 8, !tbaa !1061 ; 2 uses
+  %39 = sub i64 %.sroa.6.1.i.i, %38               ; 2 uses
+  %i.do = icmp ult i64 %.0710.i, %39              ; 2 uses
+  %40 = add i64 %38, %.0710.i
+  %storemerge.i25 = select i1 %i.do, i64 %40, i64 0
   store i64 %storemerge.i25, ptr %i.cb, align 8, !tbaa !1061
   br i1 %i.do, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %bb.z
 
 bb.z:                                             ; preds = %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i
-  %i.dp = sub nuw i64 %.0710.i, %.sroa.6.1.i.i    ; 2 uses
+  %i.dp = sub nuw i64 %.0710.i, %39               ; 2 uses
   %i.dq = load ptr, ptr %i.de, align 8, !tbaa !110 ; 3 uses
   store ptr %i.dq, ptr %i.bw, align 8, !tbaa !386
   %.not.i26 = icmp eq i64 %i.dp, 0
   br i1 %.not.i26, label %_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit, label %.lr.ph.split.i, !llvm.loop !1390
 
-_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit: ; preds = %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i, %bb.w, %.lr.ph.split.i, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i, %bb.z, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i.peel, %bb.r, %.lr.ph.split.i.preheader, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i.peel, %bb.u, %._ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit_crit_edge
-  %52 = phi ptr [ %.pre80, %._ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit_crit_edge ], [ %i.cc, %bb.r ], [ %.pre17.i, %.lr.ph.split.i.preheader ], [ %i.cq, %bb.u ], [ %.pre17.i, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i.peel ], [ %.pre17.i, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i.peel ], [ %i.dq, %bb.z ], [ %i.de, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i ], [ %i.de, %.lr.ph.split.i ], [ %i.dd, %bb.w ], [ %i.cr, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i ] ; 3 uses
+_ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit: ; preds = %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i, %bb.w, %.lr.ph.split.i, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i, %bb.z, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i.peel, %bb.u, %._ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit_crit_edge
+  %41 = phi ptr [ %.pre80, %._ZN5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE7consumeEm.exit_crit_edge ], [ %i.cq, %bb.u ], [ %.pre.i25, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i.peel ], [ %i.de, %.lr.ph.split.i ], [ %i.de, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.i ], [ %i.dq, %bb.z ], [ %i.dd, %bb.w ], [ %i.cr, %_ZNK5boost5beast18basic_multi_bufferISaIcEE8subrangeILb0EE14const_iteratordeEv.exit.us.i ] ; 3 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 32
   %i.ds = getelementptr inbounds nuw i8, ptr %.fr13.i, i64 24 ; 2 uses
   %i.dt = icmp ne ptr %.fr13.i, %i.bt             ; 2 uses
-  %i.du = icmp ne ptr %52, %i.bv
+  %i.du = icmp ne ptr %41, %i.bv
   %.not3.i.us18.i.i.i = select i1 %i.dt, i1 true, i1 %i.du
   br i1 %.not3.i.us18.i.i.i, label %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i, label %_ZNK5boost5beast6detail17buffer_bytes_implclINS0_14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEEEvEEmRKT_.exit.thread
 
@@ -391,9 +361,9 @@ _ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEE
   br label %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.i.i.i
 
 _ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.i.i.i: ; preds = %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratordeEv.exit.us.i.i.i, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i
-  %.sroa.5.0.us20.i.i.i = phi ptr [ %.sroa.5.0.us.i.i.i, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratordeEv.exit.us.i.i.i ], [ %52, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i ] ; 5 uses
+  %.sroa.5.0.us20.i.i.i = phi ptr [ %.sroa.5.0.us.i.i.i, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratordeEv.exit.us.i.i.i ], [ %41, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i ] ; 5 uses
   %.0.us19.i.i.i = phi i64 [ %i.en, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratordeEv.exit.us.i.i.i ], [ 0, %_ZNK5boost5beast14buffers_suffixINS0_18basic_multi_bufferISaIcEE8subrangeILb0EEEE14const_iteratorneERKS8_.exit.thread.us.lr.ph.i.i.i ]
-  %i.ee = icmp eq ptr %.sroa.5.0.us20.i.i.i, %52
+  %i.ee = icmp eq ptr %.sroa.5.0.us20.i.i.i, %41
   %i.ef = icmp eq ptr %.sroa.5.0.us20.i.i.i, %i.ea
   %i.eg = getelementptr inbounds nuw i8, ptr %.sroa.5.0.us20.i.i.i, i64 16
   %.sroa.6.0.in.i.i.us.i.i.i = select i1 %i.ef, ptr %i.dr, ptr %i.eg
@@ -796,7 +766,7 @@ begin_hunk_1_@llvm.usub.sat.i64
 !1387 = distinct !{!1387, !1388, !"_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_18basic_multi_bufferISaIcEE8subrangeILb0EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSC_PKNS0_14mutable_bufferEEE5valueEiE4typeENSE_IXntsr14is_convertibleISF_PKNS0_12const_bufferEEE5valueEiE4typeENSE_IXntsr14is_convertibleISB_SG_EE5valueEiE4typeENSE_IXntsr14is_convertibleISB_SL_EE5valueEiE4typeE: argument 0"}
 !1388 = distinct !{!1388, !"_ZN5boost4asio21buffer_sequence_beginINS_5beast14buffers_suffixINS2_18basic_multi_bufferISaIcEE8subrangeILb0EEEEEEEDTcldtfp_5beginEERKT_NS0_10constraintIXntsr14is_convertibleIPSC_PKNS0_14mutable_bufferEEE5valueEiE4typeENSE_IXntsr14is_convertibleISF_PKNS0_12const_bufferEEE5valueEiE4typeENSE_IXntsr14is_convertibleISB_SG_EE5valueEiE4typeENSE_IXntsr14is_convertibleISB_SL_EE5valueEiE4typeE"}
 !1389 = distinct !{!1389, !185, !401}
-!1390 = distinct !{!1390, !185, !401}
+!1390 = distinct !{!1390, !185}
 !1391 = distinct !{!1391, !185}
 !1392 = !{!1393, !1394, i64 0}
 !1393 = !{!"_ZTSN5boost5beast16buffers_cat_viewIJNS0_6detail11buffers_refINS1_IJNS_4asio12const_bufferES5_S5_NS0_4http12basic_fieldsISaIcEE6writer11field_rangeENS6_10chunk_crlfEEEEEENS6_6detail10chunk_sizeES5_SC_NS0_18basic_multi_bufferIS8_E8subrangeILb0EEESC_EE14const_iteratorE", !1394, i64 0, !1395, i64 8}

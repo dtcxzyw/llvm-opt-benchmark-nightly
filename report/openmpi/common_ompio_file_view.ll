@@ -42,7 +42,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define i32 @mca_common_ompio_set_view(ptr noundef %0, i64 noundef %1, ptr noundef %2, ptr noundef %3, ptr nofree noundef readonly captures(none) %4, ptr noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [3 x i64], align 16               ; 8 uses
+  %i.a = alloca [3 x i64], align 16               ; 7 uses
   %i.b = alloca [3 x i64], align 16               ; 6 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = alloca ptr, align 8                      ; 6 uses
@@ -445,7 +445,6 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %scalar.ph, !llvm.loop !87
 
 ._crit_edge.i:                                    ; preds = %bb.at
-  store i64 0, ptr %i.a, align 16
   %.not19.i = icmp eq i32 %i.eh, 0
   br i1 %.not19.i, label %get_contiguous_chunk_size.exit, label %._crit_edge.i.._crit_edge.thread.i_crit_edge
 

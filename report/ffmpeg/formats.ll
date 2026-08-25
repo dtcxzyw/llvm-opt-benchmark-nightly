@@ -205,14 +205,12 @@ bb.c:                                             ; preds = %.lr.ph
 ; Function Attrs: nounwind uwtable
 define noundef ptr @ff_formats_pixdesc_filter(i32 noundef %0, i32 noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = or i32 %1, %0                            ; 2 uses
-  %.promoted = load ptr, ptr %i.a, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %2 = phi ptr [ %.promoted, %bb.a ], [ %i.am, %.backedge ]
   %i.c = phi ptr [ null, %bb.a ], [ %i.am, %.backedge ]
   %.fr = freeze ptr %i.c                          ; 5 uses
   %i.d = tail call ptr @av_pix_fmt_desc_get(i32 noundef 0) #9 ; 3 uses
@@ -316,7 +314,6 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not35, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge
-  store ptr %2, ptr %i.a, align 8
   %i.ak = load i32, ptr %.fr, align 8, !tbaa !26
   %i.al = icmp eq i32 %i.ak, %.023.lcssa
   br i1 %i.al, label %.loopexit, label %bb.n
@@ -327,9 +324,10 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 bb.o:                                             ; preds = %._crit_edge
-  %i.am = tail call noalias ptr @av_mallocz(i64 noundef 32) #9 ; 7 uses
+  %i.am = tail call noalias ptr @av_mallocz(i64 noundef 32) #9 ; 5 uses
+  store ptr %i.am, ptr %i.a, align 8, !tbaa !25
   %.not36 = icmp eq ptr %i.am, null
-  br i1 %.not36, label %.loopexit.loopexit, label %bb.p
+  br i1 %.not36, label %.loopexit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   store i32 %.023.lcssa, ptr %i.am, align 8, !tbaa !26
@@ -348,15 +346,10 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.b
 
 bb.r:                                             ; preds = %bb.q
-  store ptr %i.am, ptr %i.a, align 8
   call void @av_freep(ptr noundef nonnull %i.a) #9
   br label %.loopexit
 
-.loopexit.loopexit:                               ; preds = %bb.o
-  store ptr %i.am, ptr %i.a, align 8
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.m, %bb.r
+.loopexit:                                        ; preds = %bb.o, %bb.m, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret ptr %.fr
 }

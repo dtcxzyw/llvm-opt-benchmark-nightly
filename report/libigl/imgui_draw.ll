@@ -205,7 +205,6 @@ bb.i:                                             ; preds = %bb.h
   %wide.trip.count637 = zext nneg i32 %i.g to i64 ; 2 uses
   %i.cp = insertelement <2 x float> poison, float %i.ck, i64 0
   %i.cq = shufflevector <2 x float> %i.cp, <2 x float> poison, <2 x i32> zeroinitializer
-  %.promoted704 = load ptr, ptr %i.co, align 8, !tbaa !90
   br label %.backedge
 
 .lr.ph621:                                        ; preds = %bb.l
@@ -215,7 +214,6 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.n
 
 .backedge:                                        ; preds = %.backedge.backedge, %.lr.ph615
-  %6 = phi ptr [ %.promoted704, %.lr.ph615 ], [ %7, %.backedge.backedge ] ; 13 uses
   %indvars.iv634 = phi i64 [ 0, %.lr.ph615 ], [ %indvars.iv.next635, %.backedge.backedge ] ; 2 uses
   %.0431612 = phi i32 [ %i.cm, %.lr.ph615 ], [ %i.cw, %.backedge.backedge ] ; 3 uses
   %indvars.iv.next635 = add nuw nsw i64 %indvars.iv634, 1 ; 5 uses
@@ -262,6 +260,7 @@ bb.k:                                             ; preds = %bb.j, %.backedge
   %i.dy = shufflevector <4 x float> %i.dw, <4 x float> %i.dx, <4 x i32> <i32 2, i32 3, i32 4, i32 5>
   store <4 x float> %i.dy, ptr %i.dr, align 8, !tbaa !9
   %i.dz = trunc i32 %i.cw to i16                  ; 4 uses
+  %6 = load ptr, ptr %i.co, align 8, !tbaa !90    ; 13 uses
   store i16 %i.dz, ptr %6, align 2, !tbaa !93
   %i.ea = trunc i32 %.0431612 to i16              ; 5 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %6, i64 2
@@ -291,13 +290,12 @@ bb.l:                                             ; preds = %bb.k
   %i.ep = getelementptr inbounds nuw i8, ptr %6, i64 22
   %i.eq = extractelement <4 x i16> %i.el, i64 2
   store i16 %i.eq, ptr %i.ep, align 2, !tbaa !93
-  %i.er = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
+  %i.er = getelementptr inbounds nuw i8, ptr %6, i64 24
   store ptr %i.er, ptr %i.co, align 8, !tbaa !90
   %exitcond638.not = icmp eq i64 %indvars.iv.next635, %wide.trip.count637
   br i1 %exitcond638.not, label %.lr.ph621, label %.backedge.backedge
 
 .backedge.backedge:                               ; preds = %bb.l, %.thread679
-  %7 = phi ptr [ %i.er, %bb.l ], [ %i.ew, %.thread679 ]
   br label %.backedge, !llvm.loop !98
 
 .thread679:                                       ; preds = %bb.k
@@ -309,7 +307,7 @@ bb.l:                                             ; preds = %bb.k
   store i16 %i.eu, ptr %i.ev, align 2, !tbaa !93
   store i16 %i.et, ptr %i.ed, align 2, !tbaa !93
   store i16 %i.dz, ptr %i.es, align 2, !tbaa !93
-  %i.ew = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
+  %i.ew = getelementptr inbounds nuw i8, ptr %6, i64 12
   store ptr %i.ew, ptr %i.co, align 8, !tbaa !90
   %exitcond638.not681 = icmp eq i64 %indvars.iv.next635, %wide.trip.count637
   br i1 %exitcond638.not681, label %.lr.ph619, label %.backedge.backedge
@@ -712,8 +710,8 @@ bb.h:                                             ; preds = %.lr.ph615, %._crit_
 
 bb.i:                                             ; preds = %.lr.ph, %bb.l
   %.pr764 = phi i32 [ -1, %.lr.ph ], [ %.pr763, %bb.l ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 3 uses
   %8 = phi i32 [ -1, %.lr.ph ], [ %i.cc, %bb.l ]
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.l ] ; 3 uses
   %i.bw = icmp eq i32 %8, -1
   br i1 %i.bw, label %bb.j, label %.critedge.thread
 

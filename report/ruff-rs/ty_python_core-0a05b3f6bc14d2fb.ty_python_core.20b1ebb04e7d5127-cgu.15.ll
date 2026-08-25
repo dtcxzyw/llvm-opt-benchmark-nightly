@@ -204,17 +204,11 @@ bb.bb:                                            ; preds = %bb.bl, %bb.ba
   %i.pr = load ptr, ptr %i.pl, align 8, !alias.scope !152, !noalias !155, !nonnull !4, !noundef !4
   %.promoted.i.i54.i = load ptr, ptr %i.ae, align 8, !alias.scope !152, !noalias !155
   %.promoted14.i.i.i = load ptr, ptr %i.pk, align 8, !alias.scope !147, !noalias !155
-  %.promoted.i.i = load ptr, ptr %i.pm, align 8
-  %.promoted60.i.i = load ptr, ptr %i.po, align 8
-  %.promoted61.i.i = load ptr, ptr %i.pp, align 8
   %i.ps = load ptr, ptr %i.pn, align 8, !nonnull !4
   %i.pt = load ptr, ptr %i.pq, align 8, !nonnull !4
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bk, %bb.bb
-  %3 = phi ptr [ %6, %bb.bk ], [ %.promoted61.i.i, %bb.bb ] ; 7 uses
-  %4 = phi ptr [ %7, %bb.bk ], [ %.promoted60.i.i, %bb.bb ] ; 4 uses
-  %5 = phi ptr [ %8, %bb.bk ], [ %.promoted.i.i, %bb.bb ] ; 7 uses
   %i.pu = phi ptr [ %i.qc, %bb.bk ], [ %.promoted14.i.i.i, %bb.bb ] ; 6 uses
   %i.pv = phi ptr [ %i.qd, %bb.bk ], [ %.promoted.i.i54.i, %bb.bb ] ; 7 uses
   %i.pw = icmp eq ptr %i.pv, %i.pr
@@ -226,25 +220,28 @@ bb.bd:                                            ; preds = %bb.bc
   br label %bb.bk
 
 bb.be:                                            ; preds = %bb.bc
-  %i.py = icmp eq ptr %5, %i.ps
+  %3 = load ptr, ptr %i.pm, align 8, !alias.scope !152, !noalias !155, !nonnull !4, !noundef !4 ; 3 uses
+  %i.py = icmp eq ptr %3, %i.ps
   br i1 %i.py, label %bb.bg, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
-  %i.pz = getelementptr inbounds nuw i8, ptr %5, i64 80 ; 2 uses
+  %i.pz = getelementptr inbounds nuw i8, ptr %3, i64 80
   store ptr %i.pz, ptr %i.pm, align 8, !alias.scope !152, !noalias !155
   br label %bb.bk
 
 bb.bg:                                            ; preds = %bb.be
+  %4 = load ptr, ptr %i.po, align 8, !alias.scope !152, !noalias !155, !align !7, !noundef !4 ; 2 uses
   store ptr null, ptr %i.po, align 8, !alias.scope !152, !noalias !155
   %.not.i.i.i.i = icmp eq ptr %4, null
   br i1 %.not.i.i.i.i, label %bb.bh, label %bb.bk
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.qa = icmp eq ptr %3, %i.pt
+  %5 = load ptr, ptr %i.pp, align 8, !alias.scope !152, !noalias !155, !nonnull !4, !noundef !4 ; 3 uses
+  %i.qa = icmp eq ptr %5, %i.pt
   br i1 %i.qa, label %bb.bj, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.qb = getelementptr inbounds nuw i8, ptr %3, i64 80 ; 2 uses
+  %i.qb = getelementptr inbounds nuw i8, ptr %5, i64 80
   store ptr %i.qb, ptr %i.pp, align 8, !alias.scope !152, !noalias !155
   br label %bb.bk
 
@@ -254,12 +251,9 @@ bb.bj:                                            ; preds = %bb.bh
   br i1 %.not10.i.i.i.i, label %bb.bm, label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi, %bb.bg, %bb.bf, %bb.bd
-  %6 = phi ptr [ %3, %bb.bg ], [ %3, %bb.bf ], [ %i.qb, %bb.bi ], [ %3, %bb.bj ], [ %3, %bb.bd ]
-  %7 = phi ptr [ null, %bb.bg ], [ %4, %bb.bf ], [ null, %bb.bi ], [ null, %bb.bj ], [ %4, %bb.bd ]
-  %8 = phi ptr [ %5, %bb.bg ], [ %i.pz, %bb.bf ], [ %5, %bb.bi ], [ %5, %bb.bj ], [ %5, %bb.bd ]
   %i.qc = phi ptr [ %i.pu, %bb.bg ], [ %i.pu, %bb.bf ], [ %i.pu, %bb.bi ], [ null, %bb.bj ], [ %i.pu, %bb.bd ]
   %i.qd = phi ptr [ %i.pv, %bb.bg ], [ %i.pv, %bb.bf ], [ %i.pv, %bb.bi ], [ %i.pv, %bb.bj ], [ %i.px, %bb.bd ]
-  %.sroa.7.0.i.ph.i.i.i = phi ptr [ %4, %bb.bg ], [ %5, %bb.bf ], [ %3, %bb.bi ], [ %i.pu, %bb.bj ], [ %i.pv, %bb.bd ]
+  %.sroa.7.0.i.ph.i.i.i = phi ptr [ %4, %bb.bg ], [ %3, %bb.bf ], [ %5, %bb.bi ], [ %i.pu, %bb.bj ], [ %i.pv, %bb.bd ]
   %.sroa.0.0.i.ph.i.i.i = phi i64 [ 0, %bb.bg ], [ 1, %bb.bf ], [ 1, %bb.bi ], [ 0, %bb.bj ], [ 1, %bb.bd ]
   %i.qe = call noundef align 8 ptr @_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQNvMs1L_NtCskLngH8kgpZI_15ruff_python_ast5nodesNtBV_15AnyParameterRef10annotationINtB7_5FnMutTB1y_EE8call_mutCs2O29vuvTAEJ_14ty_python_core(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.ab, i64 noundef range(i64 0, 2) %.sroa.0.0.i.ph.i.i.i, ptr noundef nonnull %.sroa.7.0.i.ph.i.i.i), !noalias !147 ; 2 uses
   %.not8.i.i.i = icmp eq ptr %i.qe, null

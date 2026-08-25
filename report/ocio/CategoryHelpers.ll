@@ -202,8 +202,8 @@ bb.gk:                                            ; preds = %_ZNSt12__shared_ptr
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.uq, i64 %i.xk ; 2 uses
   %.pre59.i.i.i.i = ptrtoint ptr %scevgep.i.i.i.i to i64
   %.pre60.i.i.i.i = sub i64 %i.wt, %.pre59.i.i.i.i
-  %i.xl = getelementptr inbounds nuw i8, ptr %37, i64 8 ; 3 uses
-  %i.xm = getelementptr inbounds nuw i8, ptr %37, i64 16 ; 7 uses
+  %i.xl = getelementptr inbounds nuw i8, ptr %37, i64 8 ; 2 uses
+  %i.xm = getelementptr inbounds nuw i8, ptr %37, i64 16 ; 5 uses
   %i.xn = getelementptr inbounds nuw i8, ptr %39, i64 8
   %i.xo = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
   %i.xp = getelementptr inbounds nuw i8, ptr %38, i64 16
@@ -454,9 +454,6 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_10ColorSpaceESa
   br label %bb.hd
 
 bb.hd:                                            ; preds = %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i, %.lr.ph.i307
-  %46 = phi ptr [ null, %.lr.ph.i307 ], [ %49, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i ] ; 5 uses
-  %47 = phi ptr [ null, %.lr.ph.i307 ], [ %50, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i ] ; 5 uses
-  %48 = phi ptr [ null, %.lr.ph.i307 ], [ %51, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i ] ; 4 uses
   %i.aad = phi ptr [ null, %.lr.ph.i307 ], [ %i.acc, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i ] ; 9 uses
   %i.aae = phi ptr [ null, %.lr.ph.i307 ], [ %i.acd, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i ] ; 5 uses
   %i.aaf = phi ptr [ null, %.lr.ph.i307 ], [ %i.ace, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i ] ; 5 uses
@@ -570,6 +567,7 @@ bb.ho:                                            ; preds = %_ZSt4findIN9__gnu_c
 bb.hp:                                            ; preds = %bb.ho
   store ptr %i.abk, ptr %i.aaf, align 8, !tbaa !122, !noalias !135
   %i.abl = getelementptr inbounds nuw i8, ptr %i.aaf, i64 8 ; 2 uses
+  store ptr %i.abl, ptr %i.xl, align 8, !tbaa !127, !alias.scope !135
   br label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i
 
 bb.hq:                                            ; preds = %bb.ho
@@ -580,9 +578,6 @@ bb.hq:                                            ; preds = %bb.ho
   br i1 %i.abp, label %bb.hr, label %_ZNKSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.hr:                                            ; preds = %bb.hq
-  store ptr %48, ptr %i.xl, align 8
-  store ptr %47, ptr %37, align 8
-  store ptr %46, ptr %i.xm, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.3) #21
           to label %.noexc.i335 unwind label %.loopexit.split-lp.i333, !noalias !135
 
@@ -623,15 +618,15 @@ bb.ht:                                            ; preds = %_ZNSt6vectorIPKN16O
   br label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.ht, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
+  store ptr %i.abw, ptr %37, align 8, !tbaa !123, !alias.scope !135
+  store ptr %i.aca, ptr %i.xl, align 8, !tbaa !127, !alias.scope !135
   %i.acb = getelementptr inbounds nuw [8 x i8], ptr %i.abw, i64 %i.abu ; 2 uses
+  store ptr %i.acb, ptr %i.xm, align 8, !tbaa !126, !alias.scope !135
   br label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i
 
 .loopexit.i326:                                   ; preds = %_ZNKSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit.i327 = landingpad { ptr, i32 }
           cleanup
-  store ptr %48, ptr %i.xl, align 8
-  store ptr %47, ptr %37, align 8
-  store ptr %46, ptr %i.xm, align 8
   br label %bb.hu
 
 .loopexit.split-lp.i333:                          ; preds = %bb.hr
@@ -645,12 +640,9 @@ bb.hu:                                            ; preds = %.loopexit.split-lp.
   br i1 %.not.i.i.i14.i329, label %.body342, label %bb.hv
 
 _ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i: ; preds = %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, %bb.hp, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i, %._crit_edge.i.i.i.i312
-  %49 = phi ptr [ %46, %._crit_edge.i.i.i.i312 ], [ %i.acb, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %46, %bb.hp ], [ %46, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ] ; 2 uses
-  %50 = phi ptr [ %47, %._crit_edge.i.i.i.i312 ], [ %i.abw, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %47, %bb.hp ], [ %47, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ] ; 5 uses
-  %51 = phi ptr [ %48, %._crit_edge.i.i.i.i312 ], [ %i.aca, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.abl, %bb.hp ], [ %48, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ] ; 3 uses
-  %i.acc = phi ptr [ %i.aad, %._crit_edge.i.i.i.i312 ], [ %i.abw, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.aad, %bb.hp ], [ %i.aad, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ]
+  %i.acc = phi ptr [ %i.aad, %._crit_edge.i.i.i.i312 ], [ %i.abw, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.aad, %bb.hp ], [ %i.aad, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ] ; 2 uses
   %i.acd = phi ptr [ %i.aae, %._crit_edge.i.i.i.i312 ], [ %i.acb, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.aae, %bb.hp ], [ %i.aae, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ]
-  %i.ace = phi ptr [ %i.aaf, %._crit_edge.i.i.i.i312 ], [ %i.aca, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.abl, %bb.hp ], [ %i.aaf, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ]
+  %i.ace = phi ptr [ %i.aaf, %._crit_edge.i.i.i.i312 ], [ %i.aca, %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.abl, %bb.hp ], [ %i.aaf, %_ZSt4findIN9__gnu_cxx17__normal_iteratorIPKPKN16OpenColorIO_v2_514NamedTransformESt6vectorIS5_SaIS5_EEEES5_ET_SC_SC_RKT0_.exit.i ] ; 2 uses
   %i.acf = getelementptr inbounds nuw i8, ptr %.sroa.06.026.i311, i64 8 ; 2 uses
   %.not.i322 = icmp eq ptr %i.acf, %.089.val138
   br i1 %.not.i322, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit, label %bb.hd
@@ -660,20 +652,16 @@ bb.hv:                                            ; preds = %bb.hu
   br label %.body342
 
 _ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit: ; preds = %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EE9push_backERKS3_.exit.i
-  store ptr %51, ptr %i.xl, align 8
-  store ptr %50, ptr %37, align 8
-  store ptr %49, ptr %i.xm, align 8
-  %52 = icmp eq ptr %.sroa.0.2, %.sroa.9.2
-  %53 = icmp eq ptr %50, %51
-  %or.cond = select i1 %52, i1 %53, i1 false
-  br i1 %or.cond, label %.thread800, label %bb.hw
+  %46 = icmp ne ptr %i.acc, %i.ace
+  %47 = icmp ne ptr %.sroa.0.2, %.sroa.9.2
+  %or.cond = select i1 %47, i1 true, i1 %46
+  br i1 %or.cond, label %bb.hw, label %.thread800
 
 _ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit.thread: ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_10ColorSpaceESaIS5_EEEET_RKS8_SA_.exit
   %i.acg = icmp eq ptr %.sroa.0.2, %.sroa.9.2
   br i1 %i.acg, label %.thread800, label %bb.hw
 
-bb.hw:                                            ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit.thread, %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit
-  %54 = phi ptr [ null, %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit.thread ], [ %50, %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit ] ; 4 uses
+bb.hw:                                            ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit, %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit.thread
   invoke fastcc void @_ZN16OpenColorIO_v2_512_GLOBAL__N_18GetInfosERSt10shared_ptrIKNS_6ConfigEERKSt6vectorIPKNS_10ColorSpaceESaIS9_EERKS6_IPKNS_14NamedTransformESaISG_EE(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr %.sroa.0.2, ptr %.sroa.9.2, ptr noundef nonnull align 8 dereferenceable(24) %37)
           to label %bb.ja unwind label %bb.hx
 
@@ -683,7 +671,6 @@ bb.hx:                                            ; preds = %bb.hw
   br label %bb.ji
 
 .thread800:                                       ; preds = %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit, %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit.thread
-  %55 = phi ptr [ %50, %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit ], [ null, %_ZN16OpenColorIO_v2_512_GLOBAL__N_112IntersectionISt6vectorIPKNS_14NamedTransformESaIS5_EEEET_RKS8_SA_.exit.thread ] ; 5 uses
   br i1 %.3, label %bb.iz, label %bb.hy
 
 bb.hy:                                            ; preds = %.thread800
@@ -887,7 +874,6 @@ bb.iw:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIKN16OpenColorIO_v2_56ConfigELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit367: ; preds = %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit362, %bb.is, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i365, %bb.iw
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #18
-  %.pre681 = load ptr, ptr %37, align 8, !tbaa !123
   br label %bb.jb
 
 bb.ix:                                            ; preds = %_ZNSt10shared_ptrIKN16OpenColorIO_v2_56ConfigEEC2ERKS3_.exit346
@@ -902,44 +888,45 @@ bb.iy:                                            ; preds = %_ZNSt10shared_ptrIK
           cleanup
   call void @_ZNSt12__shared_ptrIKN16OpenColorIO_v2_56ConfigELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %41) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #18
-  %.pre680 = load ptr, ptr %37, align 8, !tbaa !123
   br label %bb.ji
 
 bb.iz:                                            ; preds = %.thread800, %bb.hy
-  %.not.i.i.i368.jt3 = icmp eq ptr %55, null
+  %48 = load ptr, ptr %37, align 8, !tbaa !123    ; 3 uses
+  %.not.i.i.i368.jt3 = icmp eq ptr %48, null
   br i1 %.not.i.i.i368.jt3, label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit369.jt3, label %bb.jc
 
 bb.ja:                                            ; preds = %bb.hw
-  %.not.i.i.i368.jt1 = icmp eq ptr %54, null
+  %49 = load ptr, ptr %37, align 8, !tbaa !123    ; 3 uses
+  %.not.i.i.i368.jt1 = icmp eq ptr %49, null
   br i1 %.not.i.i.i368.jt1, label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit369.jt1, label %bb.jd
 
 bb.jb:                                            ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_56ConfigELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit367, %bb.hz
-  %56 = phi ptr [ %55, %bb.hz ], [ %.pre681, %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_56ConfigELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit367 ] ; 3 uses
-  %.not.i.i.i368.jt0 = icmp eq ptr %56, null
+  %50 = load ptr, ptr %37, align 8, !tbaa !123    ; 3 uses
+  %.not.i.i.i368.jt0 = icmp eq ptr %50, null
   br i1 %.not.i.i.i368.jt0, label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit369.jt0, label %bb.je
 
 bb.jc:                                            ; preds = %bb.iz
   %i.aev = load ptr, ptr %i.xm, align 8, !tbaa !126
   %i.aew = ptrtoint ptr %i.aev to i64
-  %i.aex = ptrtoint ptr %55 to i64
+  %i.aex = ptrtoint ptr %48 to i64
   %i.aey = sub i64 %i.aew, %i.aex
-  call void @_ZdlPvm(ptr noundef nonnull %55, i64 noundef %i.aey) #19
+  call void @_ZdlPvm(ptr noundef nonnull %48, i64 noundef %i.aey) #19
   br label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit369.jt3
 
 bb.jd:                                            ; preds = %bb.ja
   %i.aez = load ptr, ptr %i.xm, align 8, !tbaa !126
   %i.afa = ptrtoint ptr %i.aez to i64
-  %i.afb = ptrtoint ptr %54 to i64
+  %i.afb = ptrtoint ptr %49 to i64
   %i.afc = sub i64 %i.afa, %i.afb
-  call void @_ZdlPvm(ptr noundef nonnull %54, i64 noundef %i.afc) #19
+  call void @_ZdlPvm(ptr noundef nonnull %49, i64 noundef %i.afc) #19
   br label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit369.jt1
 
 bb.je:                                            ; preds = %bb.jb
   %i.afd = load ptr, ptr %i.xm, align 8, !tbaa !126
   %i.afe = ptrtoint ptr %i.afd to i64
-  %i.aff = ptrtoint ptr %56 to i64
+  %i.aff = ptrtoint ptr %50 to i64
   %i.afg = sub i64 %i.afe, %i.aff
-  call void @_ZdlPvm(ptr noundef nonnull %56, i64 noundef %i.afg) #19
+  call void @_ZdlPvm(ptr noundef nonnull %50, i64 noundef %i.afg) #19
   br label %_ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit369.jt0
 
 _ZNSt6vectorIPKN16OpenColorIO_v2_514NamedTransformESaIS3_EED2Ev.exit369.jt3: ; preds = %bb.jc, %bb.iz
@@ -979,17 +966,17 @@ _ZNSt6vectorIPKN16OpenColorIO_v2_510ColorSpaceESaIS3_EED2Ev.exit371.jt0.backedge
   br label %_ZNSt6vectorIPKN16OpenColorIO_v2_510ColorSpaceESaIS3_EED2Ev.exit371.jt0
 
 bb.ji:                                            ; preds = %bb.iy, %bb.ix, %bb.hx
-  %57 = phi ptr [ %.pre680, %bb.iy ], [ %55, %bb.ix ], [ %54, %bb.hx ] ; 3 uses
   %.pn = phi { ptr, i32 } [ %i.aeu, %bb.iy ], [ %i.aet, %bb.ix ], [ %i.ach, %bb.hx ] ; 2 uses
-  %.not.i.i.i372 = icmp eq ptr %57, null
+  %51 = load ptr, ptr %37, align 8, !tbaa !123    ; 3 uses
+  %.not.i.i.i372 = icmp eq ptr %51, null
   br i1 %.not.i.i.i372, label %.body342, label %bb.jj
 
 bb.jj:                                            ; preds = %bb.ji
   %i.afn = load ptr, ptr %i.xm, align 8, !tbaa !126
   %i.afo = ptrtoint ptr %i.afn to i64
-  %i.afp = ptrtoint ptr %57 to i64
+  %i.afp = ptrtoint ptr %51 to i64
   %i.afq = sub i64 %i.afo, %i.afp
-  call void @_ZdlPvm(ptr noundef nonnull %57, i64 noundef %i.afq) #19
+  call void @_ZdlPvm(ptr noundef nonnull %51, i64 noundef %i.afq) #19
   br label %.body342
 
 .body342:                                         ; preds = %bb.jj, %bb.ji, %bb.hv, %bb.hu

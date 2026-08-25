@@ -46,19 +46,14 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %i.i = and i16 %i.h, 8192
   %.not62 = icmp eq i16 %i.i, 0
   %i.j = getelementptr inbounds nuw i8, ptr %.050, i64 1
-  br i1 %.not62, label %3, label %bb.d, !llvm.loop !16
+  br i1 %.not62, label %bb.e, label %bb.d, !llvm.loop !16
 
-3:                                                ; preds = %bb.d
-  %.promoted = load ptr, ptr %i.a, align 8
-  br label %bb.e
-
-bb.e:                                             ; preds = %bb.h, %3
-  %4 = phi ptr [ %.promoted, %3 ], [ %i.x, %bb.h ]
-  %i.k = phi ptr [ %i.b, %3 ], [ %i.x, %bb.h ]    ; 4 uses
-  %i.l = phi ptr [ %i.d, %3 ], [ %.pre90.1, %bb.h ]
-  %i.m = phi i8 [ %i.e, %3 ], [ %.pre.1, %bb.h ]  ; 3 uses
-  %.044 = phi i32 [ 64, %3 ], [ %i.v, %bb.h ]
-  %.042 = phi ptr [ %.050, %3 ], [ %i.w, %bb.h ]  ; 2 uses
+bb.e:                                             ; preds = %bb.d, %bb.h
+  %i.k = phi ptr [ %i.x, %bb.h ], [ %i.b, %bb.d ] ; 4 uses
+  %i.l = phi ptr [ %.pre90.1, %bb.h ], [ %i.d, %bb.d ]
+  %i.m = phi i8 [ %.pre.1, %bb.h ], [ %i.e, %bb.d ] ; 3 uses
+  %.044 = phi i32 [ %i.v, %bb.h ], [ 64, %bb.d ]
+  %.042 = phi ptr [ %i.w, %bb.h ], [ %.050, %bb.d ] ; 2 uses
   %i.n = zext i8 %i.m to i64
   %i.o = getelementptr inbounds nuw [2 x i8], ptr %i.l, i64 %i.n
   %i.p = load i16, ptr %i.o, align 2, !tbaa !14
@@ -74,7 +69,8 @@ switch.early.test:                                ; preds = %bb.e
 
 bb.f:                                             ; preds = %bb.e, %switch.early.test, %switch.early.test
   %i.q = getelementptr inbounds nuw i8, ptr %.042, i64 1
-  %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 1 ; 5 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.k, i64 1 ; 4 uses
+  store ptr %i.r, ptr %i.a, align 8, !tbaa !8
   store i8 %i.m, ptr %i.k, align 1, !tbaa !13
   %.pre = load i8, ptr %i.q, align 1, !tbaa !13   ; 3 uses
   %.pre90 = load ptr, ptr %i.c, align 8, !tbaa !11
@@ -99,15 +95,14 @@ bb.g:                                             ; preds = %switch.early.test.1
 bb.h:                                             ; preds = %bb.g
   %i.w = getelementptr inbounds nuw i8, ptr %.042, i64 2 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 2 ; 2 uses
+  store ptr %i.x, ptr %i.a, align 8, !tbaa !8
   store i8 %.pre, ptr %i.r, align 1, !tbaa !13
   %.pre.1 = load i8, ptr %i.w, align 1, !tbaa !13
   %.pre90.1 = load ptr, ptr %i.c, align 8, !tbaa !11
   br label %bb.e, !llvm.loop !18
 
 .critedge:                                        ; preds = %bb.g, %switch.early.test.1, %switch.early.test
-  %.lcssa212 = phi ptr [ %4, %switch.early.test ], [ %i.r, %bb.g ], [ %i.r, %switch.early.test.1 ]
   %.lcssa211 = phi ptr [ %i.k, %switch.early.test ], [ %i.r, %bb.g ], [ %i.r, %switch.early.test.1 ]
-  store ptr %.lcssa212, ptr %i.a, align 8
   store i8 0, ptr %.lcssa211, align 1, !tbaa !13
   store ptr %i.b, ptr %i.a, align 8, !tbaa !8
   %i.y = load i8, ptr %i.b, align 16, !tbaa !13   ; 2 uses

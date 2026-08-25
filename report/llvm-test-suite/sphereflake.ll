@@ -204,8 +204,7 @@ _ZNK3v_t4normEv.exit.us.i:                        ; preds = %.preheader.i.i.us.i
   br label %.lr.ph.i25.us.i
 
 .lr.ph.i25.us.i:                                  ; preds = %bb.m, %_ZNK3v_t4normEv.exit.us.i
-  %.sroa.767.0.us.i = phi double [ %.sroa.767.1.us.i, %bb.m ], [ 0.000000e+00, %_ZNK3v_t4normEv.exit.us.i ] ; 4 uses
-  %.sroa.9.0.us.i.a = phi double [ %.sroa.9.1.us.i.a, %bb.m ], [ +inf, %_ZNK3v_t4normEv.exit.us.i ] ; 4 uses
+  %.sroa.9.0.us.i.a = phi double [ %.sroa.9.1.us.i.a, %bb.m ], [ 0.000000e+00, %_ZNK3v_t4normEv.exit.us.i ] ; 4 uses
   %i.cf = phi double [ %i.fp, %bb.m ], [ +inf, %_ZNK3v_t4normEv.exit.us.i ] ; 6 uses
   %.034.i.us.i = phi ptr [ %.1.i.us.i, %bb.m ], [ %i.s, %_ZNK3v_t4normEv.exit.us.i ] ; 9 uses
   %i.cg = phi <2 x double> [ %i.fq, %bb.m ], [ zeroinitializer, %_ZNK3v_t4normEv.exit.us.i ] ; 4 uses
@@ -329,7 +328,7 @@ _ZL8LLVMsqrtd.exit.i24.i.us.i:                    ; preds = %.preheader.i.i19.i.
 _ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i:   ; preds = %_ZL8LLVMsqrtd.exit.i24.i.us.i
   %i.ev = fsub double %i.dz, %.1.i.i25.i.us.i     ; 2 uses
   %i.ew = fcmp ogt double %i.ev, 0.000000e+00
-  %i.ex = select i1 %i.ew, double %i.ev, double %i.et ; 5 uses
+  %i.ex = select i1 %i.ew, double %i.ev, double %i.et ; 4 uses
   %i.ey = fcmp olt double %i.ex, %i.cf
   br i1 %i.ey, label %bb.l, label %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i
 
@@ -350,24 +349,22 @@ bb.l:                                             ; preds = %_ZNK8sphere_t9inter
   br label %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i
 
 _ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i: ; preds = %bb.l, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i, %_ZL8LLVMsqrtd.exit.i24.i.us.i, %bb.j
-  %.sroa.767.2.us.i = phi double [ %.sroa.767.0.us.i, %bb.j ], [ %.sroa.767.0.us.i, %_ZL8LLVMsqrtd.exit.i24.i.us.i ], [ %i.fl, %bb.l ], [ %.sroa.767.0.us.i, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i ]
-  %.sroa.9.2.us.i.a = phi double [ %.sroa.9.0.us.i.a, %bb.j ], [ %.sroa.9.0.us.i.a, %_ZL8LLVMsqrtd.exit.i24.i.us.i ], [ %i.ex, %bb.l ], [ %.sroa.9.0.us.i.a, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i ]
-  %i.fm = phi double [ %i.cf, %bb.j ], [ %i.cf, %_ZL8LLVMsqrtd.exit.i24.i.us.i ], [ %i.ex, %bb.l ], [ %i.cf, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i ]
-  %i.fn = phi <2 x double> [ %i.cg, %bb.j ], [ %i.cg, %_ZL8LLVMsqrtd.exit.i24.i.us.i ], [ %i.fk, %bb.l ], [ %i.cg, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i ]
+  %.sroa.9.2.us.i.a = phi double [ %i.fl, %bb.l ], [ %.sroa.9.0.us.i.a, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i ], [ %.sroa.9.0.us.i.a, %bb.j ], [ %.sroa.9.0.us.i.a, %_ZL8LLVMsqrtd.exit.i24.i.us.i ]
+  %i.fm = phi double [ %i.ex, %bb.l ], [ %i.cf, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i ], [ %i.cf, %bb.j ], [ %i.cf, %_ZL8LLVMsqrtd.exit.i24.i.us.i ]
+  %i.fn = phi <2 x double> [ %i.fk, %bb.l ], [ %i.cg, %_ZNK8sphere_t9intersectERK5ray_t.exit27.i.us.i ], [ %i.cg, %bb.j ], [ %i.cg, %_ZL8LLVMsqrtd.exit.i24.i.us.i ]
   %i.fo = getelementptr inbounds nuw i8, ptr %.034.i.us.i, i64 72
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i, %bb.i
-  %.sroa.767.1.us.i = phi double [ %.sroa.767.2.us.i, %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i ], [ %.sroa.767.0.us.i, %bb.i ] ; 3 uses
-  %.sroa.9.1.us.i.a = phi double [ %.sroa.9.2.us.i.a, %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i ], [ %.sroa.9.0.us.i.a, %bb.i ] ; 4 uses
-  %i.fp = phi double [ %i.fm, %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i ], [ %i.cf, %bb.i ]
+  %.sroa.9.1.us.i.a = phi double [ %.sroa.9.2.us.i.a, %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i ], [ %.sroa.9.0.us.i.a, %bb.i ] ; 3 uses
+  %i.fp = phi double [ %i.fm, %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i ], [ %i.cf, %bb.i ] ; 4 uses
   %.1.i.us.i = phi ptr [ %i.fo, %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i ], [ %i.dq, %bb.i ] ; 2 uses
   %i.fq = phi <2 x double> [ %i.fn, %_ZNK8sphere_t9intersectERK5ray_t.exit27.thread.i.us.i ], [ %i.cg, %bb.i ] ; 3 uses
   %i.fr = icmp ult ptr %.1.i.us.i, %i.t
   br i1 %i.fr, label %.lr.ph.i25.us.i, label %_ZN6node_t9intersectILb0EEEvRK5ray_tR5hit_t.exit.us.i, !llvm.loop !66
 
 _ZN6node_t9intersectILb0EEEvRK5ray_tR5hit_t.exit.us.i: ; preds = %bb.m
-  %i.fs = fcmp oeq double %.sroa.9.1.us.i.a, +inf
+  %i.fs = fcmp oeq double %i.fp, +inf
   br i1 %i.fs, label %_ZL9ray_tracePK6node_tRK5ray_t.exit.us.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZN6node_t9intersectILb0EEEvRK5ray_tR5hit_t.exit.us.i
@@ -375,21 +372,21 @@ bb.n:                                             ; preds = %_ZN6node_t9intersec
   %shift78 = shufflevector <2 x double> %i.ft, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop79 = fadd <2 x double> %shift78, %i.ft
   %i.fu = extractelement <2 x double> %foldExtExtBinop79, i64 0
-  %i.fv = fmul double %i.be, %.sroa.767.1.us.i
+  %i.fv = fmul double %i.be, %.sroa.9.1.us.i.a
   %i.fw = fadd double %i.fv, %i.fu                ; 2 uses
   %i.fx = fcmp ult double %i.fw, 0.000000e+00
   br i1 %i.fx, label %bb.o, label %_ZL9ray_tracePK6node_tRK5ray_t.exit.us.i
 
 bb.o:                                             ; preds = %bb.n
   %i.fy = fneg double %i.fw
-  %i.fz = insertelement <2 x double> poison, double %.sroa.9.1.us.i.a, i64 0
+  %i.fz = insertelement <2 x double> poison, double %i.fp, i64 0
   %i.ga = shufflevector <2 x double> %i.fz, <2 x double> poison, <2 x i32> zeroinitializer
   %i.gb = fmul <2 x double> %i.cd, %i.ga
-  %i.gc = fmul double %i.ce, %.sroa.9.1.us.i.a
+  %i.gc = fmul double %i.ce, %i.fp
   %i.gd = fadd <2 x double> %i.gb, zeroinitializer
   %i.ge = fadd double %i.gc, -4.500000e+00
   %i.gf = fmul <2 x double> %i.fq, splat (double f0x3D719799812DEA11)
-  %i.gg = fmul double %.sroa.767.1.us.i, f0x3D719799812DEA11
+  %i.gg = fmul double %.sroa.9.1.us.i.a, f0x3D719799812DEA11
   %i.gh = fadd <2 x double> %i.gd, %i.gf          ; 2 uses
   %i.gi = fadd double %i.gg, %i.ge                ; 2 uses
   br label %.lr.ph.i.us.i
