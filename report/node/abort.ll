@@ -13,8 +13,6 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZZN3hwy12GetAbortFuncEvE4func = internal global ptr null, align 8
 @stderr = external local_unnamed_addr global ptr, align 8
 @.str = private unnamed_addr constant [20 x i8] c"Abort at %s:%d: %s\0A\00", align 1
-@.str.2 = private unnamed_addr constant [21 x i8] c"basic_string::substr\00", align 1
-@.str.3 = private unnamed_addr constant [55 x i8] c"%s: __pos (which is %zu) > this->size() (which is %zu)\00", align 1
 @.str.5 = private unnamed_addr constant [24 x i8] c"basic_string::_M_create\00", align 1
 @.str.6 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 
@@ -121,38 +119,29 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit: ; pr
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.g
   store i8 0, ptr %i.p, align 1
   %.val = load ptr, ptr %5, align 8               ; 2 uses
-  %.val6 = load i64, ptr %i.o, align 8            ; 5 uses
+  %.val6 = load i64, ptr %i.o, align 8            ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !6)
   %.not.i = icmp eq i64 %.val6, 0
   br i1 %.not.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit, %bb.l
-  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.l ], [ %.val6, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit ] ; 4 uses
+  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.l ], [ %.val6, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit ] ; 3 uses
   %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.val, i64 %.1.i.i.i
   %i.r = load i8, ptr %i.q, align 1, !noalias !6
   switch i8 %i.r, label %bb.l [
-    i8 92, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit.i
-    i8 47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit.i
+    i8 92, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i
+    i8 47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i
   ]
 
 bb.l:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
   %.not17.i.i.i = icmp eq i64 %.1.i.i.i, 0
   br i1 %.not17.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, !llvm.loop !9
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !11)
-  %6 = icmp ugt i64 %.1.i.i.in.i, %.val6
-  br i1 %6, label %7, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i
-
-7:                                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit.i
-  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.2, i64 noundef %.1.i.i.in.i, i64 noundef %.val6) #13, !noalias !14
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i: ; preds = %bb.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit.i
-  %.012.i.i4.i = phi i64 [ %.1.i.i.in.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit.i ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit ], [ 0, %bb.l ] ; 2 uses
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i: ; preds = %bb.l, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit
+  %.012.i.i4.i = phi i64 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit ], [ 0, %bb.l ], [ %.1.i.i.in.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i ], [ %.1.i.i.in.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
-  store ptr %i.s, ptr %4, align 8, !alias.scope !14
+  store ptr %i.s, ptr %4, align 8, !alias.scope !11
   %i.t = getelementptr inbounds nuw i8, ptr %.val, i64 %.012.i.i4.i ; 2 uses
   %i.u = sub nuw i64 %.val6, %.012.i.i4.i         ; 8 uses
   %i.v = icmp ugt i64 %i.u, 15
@@ -177,8 +166,8 @@ bb.p:                                             ; preds = %bb.o
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i: ; preds = %bb.o
   %i.z = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #14 ; 2 uses
-  store ptr %i.z, ptr %4, align 8, !alias.scope !14
-  store i64 %i.u, ptr %i.s, align 8, !alias.scope !14
+  store ptr %i.z, ptr %4, align 8, !alias.scope !11
+  store i64 %i.u, ptr %i.s, align 8, !alias.scope !11
   br label %._crit_edge.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.i
@@ -199,7 +188,7 @@ bb.r:                                             ; preds = %._crit_edge.i.i.i.i
 
 _ZN3hwy12_GLOBAL__N_111GetBaseNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %._crit_edge.i.i.i.i, %bb.q, %bb.r
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %i.u, ptr %i.ac, align 8, !alias.scope !14
+  store i64 %i.u, ptr %i.ac, align 8, !alias.scope !11
   %i.ad = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.u
   store i8 0, ptr %i.ad, align 1
   %i.ae = load ptr, ptr %4, align 8
@@ -259,9 +248,6 @@ declare void @abort() local_unnamed_addr #6
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #7
 
 ; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #8
-
-; Function Attrs: noreturn
 declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #8
 
 ; Function Attrs: noreturn
@@ -314,8 +300,7 @@ attributes #16 = { builtin nounwind }
 !8 = distinct !{!8, !"_ZN3hwy12_GLOBAL__N_111GetBaseNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"}
 !9 = distinct !{!9, !10}
 !10 = !{!"llvm.loop.mustprogress"}
-!11 = !{!12}
+!11 = !{!12, !7}
 !12 = distinct !{!12, !13, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm: argument 0"}
 !13 = distinct !{!13, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm"}
-!14 = !{!12, !7}
 end_hunk_0

@@ -24,23 +24,19 @@ bb.b:                                             ; preds = %bb.a
   %i.b = add i64 %2, 1                            ; 3 uses
   %.sroa.0.0.i = tail call noundef range(i64 0, -9223372036854775808) i64 @llvm.umin.i64(i64 range(i64 0, -9223372036854775808) %1, i64 %i.b) ; 2 uses
   %.not = icmp eq i64 %.sroa.0.0.i, 0
-  br i1 %.not, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, label %.lr.ph.i
+  br i1 %.not, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, label %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i
 
-.lr.ph.i:                                         ; preds = %bb.b, %.critedge.backedge.i
+_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i: ; preds = %bb.b, %.critedge.backedge.i
   %3 = phi i64 [ %4, %.critedge.backedge.i ], [ %.sroa.0.0.i, %bb.b ]
-  %4 = add nsw i64 %3, -1                         ; 5 uses
-  %5 = icmp ult i64 %4, %1
-  br i1 %5, label %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i, label %.critedge.backedge.i
-
-_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i: ; preds = %.lr.ph.i
+  %4 = add nsw i64 %3, -1                         ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 %4
   %i.d = load i8, ptr %i.c, align 1, !alias.scope !3, !noalias !6, !noundef !8
   %i.e = icmp sgt i8 %i.d, -65
   br i1 %i.e, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, label %.critedge.backedge.i
 
-.critedge.backedge.i:                             ; preds = %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i, %.lr.ph.i
+.critedge.backedge.i:                             ; preds = %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i
   %.not25 = icmp eq i64 %4, 0
-  br i1 %.not25, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, label %.lr.ph.i
+  br i1 %.not25, label %_RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit, label %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i
 
 _RINvYINtNtNtCs4NRVxsYgnAr_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0E0INtNtB8_12control_flow11ControlFlowjEEB2l_.exit: ; preds = %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i, %.critedge.backedge.i, %bb.b
   %.sroa.0.0.i16 = phi i64 [ 0, %bb.b ], [ %4, %_RNCNvNtCsc9EtMejYXE5_6winnow5error13char_boundary0B5_.exit.i.i ], [ 0, %.critedge.backedge.i ] ; 3 uses

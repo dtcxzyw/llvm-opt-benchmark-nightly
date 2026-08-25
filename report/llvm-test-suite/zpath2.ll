@@ -203,12 +203,12 @@ bb.b:                                             ; preds = %bb.a
   br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = load ptr, ptr @esp, align 8, !tbaa !11   ; 2 uses
+  %i.g = load ptr, ptr @esp, align 8, !tbaa !11   ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.i = getelementptr inbounds i8, ptr %i.g, i64 -64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !24
   %i.j = load ptr, ptr @ostop, align 8, !tbaa !11
-  %scevgep25 = getelementptr i8, ptr %0, i64 32   ; 3 uses
+  %scevgep25 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.k = icmp ugt ptr %scevgep25, %i.j
   br i1 %i.k, label %pf_push.exit, label %bb.d
 
@@ -221,15 +221,15 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.p = load float, ptr %i.o, align 4, !tbaa !27
   store float %i.p, ptr %scevgep25, align 8, !tbaa !17
-  br label %pf_push.exit.sink.split
+  br label %pf_push.exit.sink.split, !llvm.loop !28
 
 bb.e:                                             ; preds = %bb.a
-  %i.q = load ptr, ptr @esp, align 8, !tbaa !11   ; 2 uses
+  %i.q = load ptr, ptr @esp, align 8, !tbaa !11   ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 32
   %i.s = getelementptr inbounds i8, ptr %i.q, i64 -48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, ptr noundef nonnull align 8 dereferenceable(16) %i.s, i64 16, i1 false), !tbaa.struct !24
   %i.t = load ptr, ptr @ostop, align 8, !tbaa !11
-  %scevgep = getelementptr i8, ptr %0, i64 32     ; 3 uses
+  %scevgep = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.u = icmp ugt ptr %scevgep, %i.t
   br i1 %i.u, label %pf_push.exit, label %bb.f
 
@@ -242,10 +242,10 @@ bb.f:                                             ; preds = %bb.e
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.z = load float, ptr %i.y, align 4, !tbaa !27
   store float %i.z, ptr %scevgep, align 8, !tbaa !17
-  br label %pf_push.exit.sink.split
+  br label %pf_push.exit.sink.split, !llvm.loop !28
 
 bb.g:                                             ; preds = %bb.a
-  %i.aa = load ptr, ptr @esp, align 8, !tbaa !11  ; 2 uses
+  %i.aa = load ptr, ptr @esp, align 8, !tbaa !11  ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
   %i.ac = getelementptr inbounds i8, ptr %i.aa, i64 -32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ab, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !24
@@ -307,29 +307,27 @@ bb.j:                                             ; preds = %bb.i
 pf_push.exit.sink.split:                          ; preds = %bb.d, %bb.f, %bb.j
   %.sink31 = phi i64 [ 104, %bb.j ], [ 40, %bb.f ], [ 40, %bb.d ]
   %.lcssa22.sink.i21.sink.ph = phi ptr [ %i.av, %bb.j ], [ %scevgep, %bb.f ], [ %scevgep25, %bb.d ]
+  %.ph = phi ptr [ %i.aa, %bb.j ], [ %i.q, %bb.f ], [ %i.g, %bb.d ]
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 %.sink31
   store i16 44, ptr %i.bg, align 8, !tbaa !18
   br label %pf_push.exit
 
 pf_push.exit:                                     ; preds = %pf_push.exit.sink.split, %bb.g, %bb.h, %bb.i, %bb.e, %bb.c
   %.lcssa22.sink.i21.sink = phi ptr [ %i.am, %bb.i ], [ %i.ae, %bb.h ], [ %0, %bb.c ], [ %0, %bb.e ], [ %0, %bb.g ], [ %.lcssa22.sink.i21.sink.ph, %pf_push.exit.sink.split ]
+  %2 = phi ptr [ %i.aa, %bb.i ], [ %i.aa, %bb.h ], [ %i.g, %bb.c ], [ %i.q, %bb.e ], [ %i.aa, %bb.g ], [ %.ph, %pf_push.exit.sink.split ]
   %i.bh = phi i1 [ true, %bb.i ], [ true, %bb.h ], [ true, %bb.c ], [ true, %bb.e ], [ true, %bb.g ], [ false, %pf_push.exit.sink.split ]
   %.0 = phi i32 [ -16, %bb.i ], [ -16, %bb.h ], [ -16, %bb.c ], [ -16, %bb.e ], [ -16, %bb.g ], [ 0, %pf_push.exit.sink.split ]
   store ptr %.lcssa22.sink.i21.sink, ptr @osp, align 8, !tbaa !11
-  br i1 %i.bh, label %bb.l, label %._crit_edge
+  br i1 %i.bh, label %bb.l, label %bb.k
 
-._crit_edge:                                      ; preds = %pf_push.exit
-  %.pre = load ptr, ptr @esp, align 8, !tbaa !11
-  br label %bb.k
-
-bb.k:                                             ; preds = %._crit_edge, %.thread
-  %i.bi = phi ptr [ %.pre, %._crit_edge ], [ %i.bd, %.thread ] ; 4 uses
+bb.k:                                             ; preds = %.thread, %pf_push.exit
+  %i.bi = phi ptr [ %i.bd, %.thread ], [ %2, %pf_push.exit ] ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 16
   store ptr @path_continue, ptr %i.bj, align 8, !tbaa !17
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bi, i64 24
   store i16 37, ptr %i.bk, align 8, !tbaa !18
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bi, i64 26
-  store i16 0, ptr %i.bl, align 2, !tbaa !28
+  store i16 0, ptr %i.bl, align 2, !tbaa !30
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bi, i64 32
   br label %.sink.split
 
@@ -380,7 +378,7 @@ bb.c:                                             ; preds = %bb.b
   store i16 44, ptr %i.j, align 8, !tbaa !18
   %i.k = getelementptr inbounds nuw i8, ptr %.01015, i64 8
   %.not = icmp eq i32 %i.d, 0
-  br i1 %.not, label %.loopexit.sink.split, label %bb.b, !llvm.loop !29
+  br i1 %.not, label %.loopexit.sink.split, label %bb.b, !llvm.loop !28
 
 .loopexit.sink.split:                             ; preds = %bb.c, %bb.b
   %.lcssa22.sink = phi ptr [ %.016, %bb.b ], [ %i.b, %bb.c ]
@@ -470,7 +468,7 @@ attributes #4 = { nounwind }
 !25 = !{!20, !20, i64 0}
 !26 = !{!15, !16, i64 0}
 !27 = !{!15, !16, i64 4}
-!28 = !{!19, !20, i64 10}
-!29 = distinct !{!29, !30}
-!30 = !{!"llvm.loop.mustprogress"}
+!28 = distinct !{!28, !29}
+!29 = !{!"llvm.loop.mustprogress"}
+!30 = !{!19, !20, i64 10}
 end_hunk_0

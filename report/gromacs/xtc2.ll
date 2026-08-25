@@ -205,7 +205,7 @@ bb.ah:                                            ; preds = %.lr.ph353, %bb.bu
   %i.pf = add nsw i32 %i.pb, 1                    ; 2 uses
   store i32 %i.pf, ptr %i.h, align 4, !tbaa !8
   %.not21.i.i = icmp ugt i32 %i.pb, 6
-  br i1 %.not21.i.i, label %bb.ai, label %readbits.exit.i
+  br i1 %.not21.i.i, label %bb.ai, label %readbits.exit.i, !llvm.loop !53
 
 bb.ai:                                            ; preds = %bb.ah
   %i.pg = getelementptr inbounds nuw i8, ptr %i.oz, i64 1 ; 2 uses
@@ -214,8 +214,8 @@ bb.ai:                                            ; preds = %bb.ah
   br label %readbits.exit.i
 
 readbits.exit.i:                                  ; preds = %bb.ai, %bb.ah
-  %i.ph = phi i32 [ 0, %bb.ai ], [ %i.pf, %bb.ah ] ; 3 uses
-  %i.pi = phi ptr [ %i.pg, %bb.ai ], [ %i.oz, %bb.ah ] ; 3 uses
+  %i.ph = phi i32 [ %i.pf, %bb.ah ], [ 0, %bb.ai ] ; 3 uses
+  %i.pi = phi ptr [ %i.oz, %bb.ah ], [ %i.pg, %bb.ai ] ; 3 uses
   br i1 %.not57.i.not, label %.lr.ph.i17.i, label %.lr.ph.i195
 
 .lr.ph.i17.i:                                     ; preds = %readbits.exit.i
@@ -227,7 +227,7 @@ readbits.exit.i:                                  ; preds = %bb.ai, %bb.ah
   %i.pn = add nuw nsw i32 %i.ph, 1                ; 2 uses
   store i32 %i.pn, ptr %i.h, align 4, !tbaa !8
   %.not21.i22.i = icmp samesign ugt i32 %i.ph, 6
-  br i1 %.not21.i22.i, label %bb.aj, label %readbits.exit27.i
+  br i1 %.not21.i22.i, label %bb.aj, label %readbits.exit27.i, !llvm.loop !53
 
 bb.aj:                                            ; preds = %.lr.ph.i17.i
   %i.po = getelementptr inbounds nuw i8, ptr %i.pi, i64 1 ; 2 uses
@@ -236,8 +236,8 @@ bb.aj:                                            ; preds = %.lr.ph.i17.i
   br label %readbits.exit27.i
 
 readbits.exit27.i:                                ; preds = %bb.aj, %.lr.ph.i17.i
-  %i.pp = phi i32 [ 0, %bb.aj ], [ %i.pn, %.lr.ph.i17.i ] ; 4 uses
-  %i.pq = phi ptr [ %i.po, %bb.aj ], [ %i.pi, %.lr.ph.i17.i ] ; 5 uses
+  %i.pp = phi i32 [ %i.pn, %.lr.ph.i17.i ], [ 0, %bb.aj ] ; 4 uses
+  %i.pq = phi ptr [ %i.pi, %.lr.ph.i17.i ], [ %i.po, %bb.aj ] ; 5 uses
   %i.pr = load i8, ptr %i.pq, align 1, !tbaa !52
   %i.ps = lshr i32 128, %i.pp
   %i.pt = zext i8 %i.pr to i32                    ; 3 uses
@@ -299,7 +299,7 @@ readbits.exit38.i:                                ; preds = %bb.al, %.lr.ph.i28.
   %i.qo = add nuw nsw i32 %i.qi, 1                ; 2 uses
   store i32 %i.qo, ptr %i.h, align 4, !tbaa !8
   %.not21.i44.i = icmp samesign ugt i32 %i.qi, 6
-  br i1 %.not21.i44.i, label %bb.am, label %readbits.exit49.i
+  br i1 %.not21.i44.i, label %bb.am, label %readbits.exit49.i, !llvm.loop !53
 
 bb.am:                                            ; preds = %.lr.ph.i39.i
   %i.qp = getelementptr inbounds nuw i8, ptr %i.qj, i64 1 ; 2 uses

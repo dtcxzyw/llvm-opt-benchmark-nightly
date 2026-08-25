@@ -205,7 +205,7 @@ bb.bt:                                            ; preds = %_ZNSt7__cxx1112basi
 define linkonce_odr void @_ZN7rocksdb15DBDumperCommand19GetFileNameFromPathERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 13 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !18   ; 11 uses
   %.not = icmp eq i64 %i.b, 0
   %.pre = load ptr, ptr %1, align 8, !tbaa !14    ; 4 uses
   br i1 %.not, label %._crit_edge.i.i.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
@@ -216,13 +216,13 @@ bb.a:
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a, %bb.b
-  %.1.i.i.in = phi i64 [ %.1.i.i, %bb.b ], [ %i.b, %bb.a ] ; 5 uses
+  %.1.i.i.in = phi i64 [ %.1.i.i, %bb.b ], [ %i.b, %bb.a ] ; 3 uses
   %.1.i.i = add i64 %.1.i.i.in, -1                ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.pre, i64 %.1.i.i
   %i.e = load i8, ptr %i.d, align 1, !tbaa !17
   switch i8 %i.e, label %bb.b [
-    i8 92, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit
-    i8 47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit
+    i8 92, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
+    i8 47, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
   ]
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
@@ -282,16 +282,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   store i8 0, ptr %i.p, align 1, !tbaa !17
   br label %bb.k
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1294)
-  %2 = icmp ugt i64 %.1.i.i.in, %i.b
-  br i1 %2, label %3, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i
-
-3:                                                ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.471, ptr noundef nonnull @.str.470, i64 noundef %.1.i.i.in, i64 noundef %i.b) #35, !noalias !1294
-  unreachable
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12find_last_ofEPKcm.exit
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.q, ptr %0, align 8, !tbaa !9, !alias.scope !1294
   %i.r = getelementptr inbounds nuw i8, ptr %.pre, i64 %.1.i.i.in ; 2 uses

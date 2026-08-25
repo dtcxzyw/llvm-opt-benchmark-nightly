@@ -17,8 +17,6 @@ $__clang_call_terminate = comdat any
 @.str = private unnamed_addr constant [8 x i8] c"UNKNOWN\00", align 1
 @_ZZN4absl12lts_2026052614flags_internalL16ProgramNameMutexEvE5mutex = internal global %"class.absl::lts_20260526::NoDestructor" zeroinitializer, align 8
 @_ZGVZN4absl12lts_2026052614flags_internalL16ProgramNameMutexEvE5mutex = internal global i64 0, align 8
-@.str.2 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
-@.str.3 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @.str.4 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 
 ; Function Attrs: mustprogress uwtable
@@ -166,7 +164,7 @@ _ZN4absl12lts_2026052614flags_internalL16ProgramNameMutexEv.exit: ; preds = %bb.
 bb.d:                                             ; preds = %_ZN4absl12lts_2026052614flags_internalL16ProgramNameMutexEv.exit
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19   ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !21   ; 6 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !21   ; 4 uses
   %.not.i25 = icmp eq i64 %i.h, 0
   br i1 %.not.i25, label %._crit_edge.i.i.i.i.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
@@ -178,31 +176,20 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20260
   br label %bb.h
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %bb.d, %bb.e
-  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.e ], [ %i.h, %bb.d ] ; 5 uses
+  %.1.i.i.in.i = phi i64 [ %.1.i.i.i, %bb.e ], [ %i.h, %bb.d ] ; 3 uses
   %.1.i.i.i = add i64 %.1.i.i.in.i, -1            ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 %.1.i.i.i
   %i.k = load i8, ptr %i.j, align 1, !tbaa !23
   switch i8 %i.k, label %bb.e [
-    i8 92, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit.i
-    i8 47, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit.i
+    i8 92, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i
+    i8 47, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i
   ]
 
 bb.e:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
   %.not17.i.i.i = icmp eq i64 %.1.i.i.i, 0
   br i1 %.not17.i.i.i, label %.loopexit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, !llvm.loop !24
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
-  %1 = icmp ugt i64 %.1.i.i.in.i, %i.h
-  br i1 %1, label %2, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i
-
-2:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit.i
-  invoke void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.2, i64 noundef %.1.i.i.in.i, i64 noundef %i.h) #11
-          to label %.noexc unwind label %3
-
-.noexc:                                           ; preds = %2
-  unreachable
-
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE12find_last_ofEPKcm.exit.i
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
   %i.l = sub nuw i64 %i.h, %.1.i.i.in.i
   %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 %.1.i.i.in.i
   br label %.loopexit
@@ -277,30 +264,21 @@ bb.i:                                             ; preds = %.critedge21
 _ZN4absl12lts_202605269MutexLockD2Ev.exit:        ; preds = %.critedge21
   ret void
 
-3:                                                ; preds = %2
-  %4 = landingpad { ptr, i32 }
-          cleanup
-  br label %.critedge23
-
 bb.j:                                             ; preds = %.noexc.i.i.i
   %i.ac = landingpad { ptr, i32 }
           cleanup
-  br label %.critedge23
-
-.critedge23:                                      ; preds = %bb.j, %3
-  %.pn.pn = phi { ptr, i32 } [ %4, %3 ], [ %i.ac, %bb.j ]
   invoke void @_ZN4absl12lts_202605265Mutex6unlockEv(ptr noundef nonnull align 8 dereferenceable(8) @_ZZN4absl12lts_2026052614flags_internalL16ProgramNameMutexEvE5mutex)
           to label %_ZN4absl12lts_202605269MutexLockD2Ev.exit29 unwind label %bb.k
 
-bb.k:                                             ; preds = %.critedge23
+bb.k:                                             ; preds = %bb.j
   %i.ad = landingpad { ptr, i32 }
           catch ptr null
   %i.ae = extractvalue { ptr, i32 } %i.ad, 0
   call void @__clang_call_terminate(ptr %i.ae) #10
   unreachable
 
-_ZN4absl12lts_202605269MutexLockD2Ev.exit29:      ; preds = %.critedge23
-  resume { ptr, i32 } %.pn.pn
+_ZN4absl12lts_202605269MutexLockD2Ev.exit29:      ; preds = %bb.j
+  resume { ptr, i32 } %i.ac
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -328,7 +306,7 @@ _ZN4absl12lts_2026052614flags_internalL16ProgramNameMutexEv.exit: ; preds = %bb.
   br i1 %.not, label %bb.d, label %bb.m
 
 bb.d:                                             ; preds = %_ZN4absl12lts_2026052614flags_internalL16ProgramNameMutexEv.exit
-  %i.f = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #12
+  %i.f = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #11
           to label %bb.e unwind label %bb.k       ; 8 uses
 
 bb.e:                                             ; preds = %bb.d
@@ -340,7 +318,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond.i.i.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.4) #11
+  invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.4) #12
           to label %.noexc unwind label %bb.l
 
 .noexc:                                           ; preds = %bb.f
@@ -469,9 +447,6 @@ declare void @_ZSt9terminatev() local_unnamed_addr #7
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #8
-
-; Function Attrs: noreturn
 declare void @_ZSt19__throw_logic_errorPKc(ptr noundef) local_unnamed_addr #8
 
 declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #5
@@ -489,8 +464,8 @@ attributes #7 = { cold nofree noreturn }
 attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nounwind }
 attributes #10 = { noreturn nounwind }
-attributes #11 = { noreturn }
-attributes #12 = { builtin allocsize(0) }
+attributes #11 = { builtin allocsize(0) }
+attributes #12 = { noreturn }
 attributes #13 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
