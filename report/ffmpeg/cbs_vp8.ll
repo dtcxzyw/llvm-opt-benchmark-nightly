@@ -204,8 +204,8 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af, %.thread581.i.i
-  %.not28.i332.i.i = phi i1 [ true, %.thread581.i.i ], [ false, %bb.ag ], [ true, %bb.af ]
-  %i.eh = phi ptr [ %12, %.thread581.i.i ], [ %i.eg, %bb.ag ], [ %i.eg, %bb.af ] ; 6 uses
+  %.not28.i332.i.i = phi i1 [ true, %.thread581.i.i ], [ true, %bb.af ], [ false, %bb.ag ]
+  %i.eh = phi ptr [ %12, %.thread581.i.i ], [ %i.eg, %bb.af ], [ %i.eg, %bb.ag ] ; 6 uses
   %i.ei = load i8, ptr %i.df, align 1, !tbaa !42  ; 2 uses
   %i.ej = zext i8 %i.ei to i16
   %i.ek = shl nuw nsw i16 %i.ej, 7
@@ -608,8 +608,8 @@ bb.bq:                                            ; preds = %bb.bp
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq, %bb.bp, %.thread336.i.i.i
-  %i.kx = phi ptr [ %i.ir, %.thread336.i.i.i ], [ %i.kw, %bb.bq ], [ %i.kw, %bb.bp ]
-  %i.ky = phi ptr [ %i.kl, %.thread336.i.i.i ], [ %i.kv, %bb.bq ], [ %i.kv, %bb.bp ]
+  %i.kx = phi ptr [ %i.ir, %.thread336.i.i.i ], [ %i.kw, %bb.bp ], [ %i.kw, %bb.bq ]
+  %i.ky = phi ptr [ %i.kl, %.thread336.i.i.i ], [ %i.kv, %bb.bp ], [ %i.kv, %bb.bq ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #6
   store i8 0, ptr %i.h, align 1, !tbaa !50
   %i.kz = call fastcc i32 @cbs_vp8_bool_decoder_read_bool(ptr noundef nonnull %13, i8 noundef zeroext -128, ptr noundef %i.h) ; 2 uses
@@ -1012,8 +1012,8 @@ bb.ec:                                            ; preds = %bb.eb
   br label %bb.ed
 
 bb.ed:                                            ; preds = %bb.ec, %bb.eb, %.thread590.i.i
-  %.not28.i356.i.i = phi i1 [ true, %.thread590.i.i ], [ false, %bb.ec ], [ true, %bb.eb ]
-  %i.qw = phi ptr [ %i.gk, %.thread590.i.i ], [ %i.qv, %bb.ec ], [ %i.qv, %bb.eb ] ; 6 uses
+  %.not28.i356.i.i = phi i1 [ true, %.thread590.i.i ], [ true, %bb.eb ], [ false, %bb.ec ]
+  %i.qw = phi ptr [ %i.gk, %.thread590.i.i ], [ %i.qv, %bb.eb ], [ %i.qv, %bb.ec ] ; 6 uses
   %i.qx = load i8, ptr %i.df, align 1, !tbaa !42  ; 2 uses
   %i.qy = zext i8 %i.qx to i16
   %i.qz = shl nuw nsw i16 %i.qy, 7
@@ -1416,7 +1416,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false), !tbaa.struct !48
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
+bb.c:                                             ; preds = %bb.a, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   store i8 0, ptr %i.d, align 1, !tbaa !50
   %i.l = call fastcc i32 @cbs_vp8_bool_decoder_read_bool(ptr noundef nonnull %1, i8 noundef zeroext -128, ptr noundef %i.d) ; 2 uses
@@ -1819,7 +1819,7 @@ bb.r:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   br label %bb.am
 
-bb.s:                                             ; preds = %.thread148, %bb.o
+bb.s:                                             ; preds = %bb.o, %.thread148
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i8 0, ptr %i.a, align 1, !tbaa !50
   %i.bo = call fastcc i32 @cbs_vp8_bool_decoder_read_bool(ptr noundef nonnull %1, i8 noundef zeroext -128, ptr noundef %i.a) ; 2 uses
