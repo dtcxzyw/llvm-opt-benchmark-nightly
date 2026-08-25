@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/bug?download=true
 inline.NumInlined: 20
 inline.NumDeleted: 14
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@__report_bug:bb.a
   %i.o = ptrtoint ptr %.01728.i.i to i64
   %i.p = load i32, ptr %.01728.i.i, align 4
@@ -202,28 +204,80 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %clear_once_table.exit
   %.pn16 = phi ptr [ %i.n, %clear_once_table.exit ], [ %i.a, %bb.a ] ; 3 uses
   %i.b = getelementptr i8, ptr %.pn16, i64 16
-  %i.c = load ptr, ptr %i.b, align 64             ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 64             ; 4 uses
   %i.d = getelementptr i8, ptr %.pn16, i64 -8
   %i.e = load i32, ptr %i.d, align 8
-  %i.f = zext i32 %i.e to i64
+  %i.f = zext i32 %i.e to i64                     ; 3 uses
   %i.g = getelementptr [16 x i8], ptr %i.c, i64 %i.f ; 2 uses
   %i.h = icmp ult ptr %i.c, %i.g
-  br i1 %i.h, label %.lr.ph.i, label %clear_once_table.exit
+  br i1 %i.h, label %.lr.ph.i.preheader, label %clear_once_table.exit
 
-.lr.ph.i:                                         ; preds = %.lr.ph, %.lr.ph.i
-  %.05.i = phi ptr [ %i.l, %.lr.ph.i ], [ %i.c, %.lr.ph ] ; 2 uses
-  %i.i = getelementptr i8, ptr %.05.i, i64 14     ; 2 uses
+.lr.ph.i.preheader:                               ; preds = %.lr.ph
+  %0 = add nuw nsw i64 %i.f, 1152921504606846975
+  %1 = and i64 %0, 1152921504606846975
+  %xtraiter = and i64 %i.f, 7                     ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
+  %.05.i.prol = phi ptr [ %5, %.lr.ph.i.prol ], [ %i.c, %.lr.ph.i.preheader ] ; 2 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
+  %2 = getelementptr i8, ptr %.05.i.prol, i64 14  ; 2 uses
+  %3 = load i16, ptr %2, align 2
+  %4 = and i16 %3, -5
+  store i16 %4, ptr %2, align 2
+  %5 = getelementptr i8, ptr %.05.i.prol, i64 16  ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !29
+
+.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
+  %.05.i.unr = phi ptr [ %i.c, %.lr.ph.i.preheader ], [ %5, %.lr.ph.i.prol ]
+  %6 = icmp samesign ult i64 %1, 7
+  br i1 %6, label %clear_once_table.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
+  %.05.i = phi ptr [ %i.l, %.lr.ph.i ], [ %.05.i.unr, %.lr.ph.i.prol.loopexit ] ; 9 uses
+  %7 = getelementptr i8, ptr %.05.i, i64 14       ; 2 uses
+  %8 = load i16, ptr %7, align 2
+  %9 = and i16 %8, -5
+  store i16 %9, ptr %7, align 2
+  %10 = getelementptr i8, ptr %.05.i, i64 30      ; 2 uses
+  %11 = load i16, ptr %10, align 2
+  %12 = and i16 %11, -5
+  store i16 %12, ptr %10, align 2
+  %13 = getelementptr i8, ptr %.05.i, i64 46      ; 2 uses
+  %14 = load i16, ptr %13, align 2
+  %15 = and i16 %14, -5
+  store i16 %15, ptr %13, align 2
+  %16 = getelementptr i8, ptr %.05.i, i64 62      ; 2 uses
+  %17 = load i16, ptr %16, align 2
+  %18 = and i16 %17, -5
+  store i16 %18, ptr %16, align 2
+  %19 = getelementptr i8, ptr %.05.i, i64 78      ; 2 uses
+  %20 = load i16, ptr %19, align 2
+  %21 = and i16 %20, -5
+  store i16 %21, ptr %19, align 2
+  %22 = getelementptr i8, ptr %.05.i, i64 94      ; 2 uses
+  %23 = load i16, ptr %22, align 2
+  %24 = and i16 %23, -5
+  store i16 %24, ptr %22, align 2
+  %25 = getelementptr i8, ptr %.05.i, i64 110     ; 2 uses
+  %26 = load i16, ptr %25, align 2
+  %27 = and i16 %26, -5
+  store i16 %27, ptr %25, align 2
+  %i.i = getelementptr i8, ptr %.05.i, i64 126    ; 2 uses
   %i.j = load i16, ptr %i.i, align 2
   %i.k = and i16 %i.j, -5
   store i16 %i.k, ptr %i.i, align 2
-  %i.l = getelementptr i8, ptr %.05.i, i64 16     ; 2 uses
+  %i.l = getelementptr i8, ptr %.05.i, i64 128    ; 2 uses
   %i.m = icmp ult ptr %i.l, %i.g
-  br i1 %i.m, label %.lr.ph.i, label %clear_once_table.exit, !llvm.loop !29
+  br i1 %i.m, label %.lr.ph.i, label %clear_once_table.exit, !llvm.loop !31
 
-clear_once_table.exit:                            ; preds = %.lr.ph.i, %.lr.ph
+clear_once_table.exit:                            ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %.lr.ph
   %i.n = load volatile ptr, ptr %.pn16, align 16  ; 2 uses
   %.not = icmp eq ptr %i.n, @module_bug_list
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !30
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !32
 
 ._crit_edge:                                      ; preds = %clear_once_table.exit, %bb.a
   tail call void @__rcu_read_unlock() #11
@@ -238,7 +292,7 @@ clear_once_table.exit:                            ; preds = %.lr.ph.i, %.lr.ph
   store i16 %i.r, ptr %i.p, align 2
   %i.s = getelementptr i8, ptr %.05.i13, i64 16   ; 2 uses
   %i.t = icmp ult ptr %i.s, @__stop___bug_table
-  br i1 %i.t, label %.lr.ph.i12, label %clear_once_table.exit14, !llvm.loop !29
+  br i1 %i.t, label %.lr.ph.i12, label %clear_once_table.exit14, !llvm.loop !31
 
 clear_once_table.exit14:                          ; preds = %.lr.ph.i12, %._crit_edge
   ret void
@@ -330,6 +384,8 @@ attributes #15 = { cold noredzone nounwind "no-builtin-wcslen" }
 !26 = !{i64 2156043944}
 !27 = !{!"auto-init"}
 !28 = !{i64 7241}
-!29 = distinct !{!29, !12}
-!30 = distinct !{!30, !12}
+!29 = distinct !{!29, !30}
+!30 = !{!"llvm.loop.unroll.disable"}
+!31 = distinct !{!31, !12}
+!32 = distinct !{!32, !12}
 end_hunk_0
