@@ -204,9 +204,9 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 13 uses
   %i.b = alloca ptr, align 8                      ; 10 uses
   %i.c = alloca [4 x i8], align 1                 ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !40   ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -609,9 +609,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %.th
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.a, %bb.af, %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void
 }
 
@@ -1014,11 +1014,9 @@ bb.p:                                             ; preds = %.critedge
 
 .lr.ph138.preheader:                              ; preds = %bb.p
   %i.aw = ptrtoaddr ptr %i.au to i64
-  %i.ax = ptrtoaddr ptr %i.h to i64               ; 2 uses
-  %2 = add i64 %i.ax, 4
-  %3 = tail call i64 @llvm.umax.i64(i64 %i.aw, i64 %2)
+  %i.ax = ptrtoaddr ptr %i.h to i64
   %i.ay = xor i64 %i.ax, -1
-  %i.az = add i64 %3, %i.ay                       ; 2 uses
+  %i.az = add i64 %i.ay, %i.aw                    ; 2 uses
   %i.ba = lshr i64 %i.az, 2
   %i.bb = add nuw nsw i64 %i.ba, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.az, 28
@@ -1421,9 +1419,9 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 13 uses
   %i.b = alloca ptr, align 8                      ; 10 uses
   %i.c = alloca [4 x i8], align 2                 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !40   ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
@@ -1820,9 +1818,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %.th
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.a, %bb.af, %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void
 }
 
@@ -2225,9 +2223,6 @@ bb.a:
   ret ptr %switch.select5
 }
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #9
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -2237,8 +2232,7 @@ attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nounwind }
+attributes #9 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -205,13 +205,11 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   br i1 %i.hk, label %.lr.ph357.preheader, label %.loopexit326
 
 .lr.ph357.preheader:                              ; preds = %bb.ar
-  %.3294394 = ptrtoaddr ptr %.3294 to i64         ; 2 uses
+  %.3294394 = ptrtoaddr ptr %.3294 to i64
   %i.hl = shl i64 %1, 2
-  %8 = add i64 %i.hl, %i.a
-  %i.hm = add i64 %.3294394, 4
-  %umax = tail call i64 @llvm.umax.i64(i64 %8, i64 %i.hm)
+  %i.hm = add i64 %i.hl, %i.a
   %i.hn = xor i64 %.3294394, -1
-  %i.ho = add i64 %umax, %i.hn
+  %i.ho = add i64 %i.hm, %i.hn
   %i.hp = and i64 %i.ho, -4
   %i.hq = add i64 %i.hp, 4
   tail call void @llvm.memset.p0.i64(ptr align 4 %.3294, i8 0, i64 %i.hq, i1 false), !tbaa !7

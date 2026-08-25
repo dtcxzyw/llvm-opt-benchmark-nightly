@@ -205,19 +205,17 @@ bb.a:
   %.040.lcssa = phi ptr [ %i.b, %bb.a ], [ %.141, %bb.g ] ; 5 uses
   %.037.lcssa = phi ptr [ %i.d, %bb.a ], [ %.138, %bb.g ] ; 5 uses
   %.0.lcssa = phi ptr [ %i.f, %bb.a ], [ %.1, %bb.g ] ; 5 uses
-  %.0.lcssa80 = ptrtoaddr ptr %.0.lcssa to i64    ; 3 uses
+  %.0.lcssa80 = ptrtoaddr ptr %.0.lcssa to i64    ; 2 uses
   %i.r = icmp ult ptr %.037.lcssa, %i.j
   br i1 %i.r, label %.lr.ph59.preheader, label %.preheader
 
 .lr.ph59.preheader:                               ; preds = %.preheader48
-  %.037.lcssa74 = ptrtoaddr ptr %.037.lcssa to i64 ; 3 uses
+  %.037.lcssa74 = ptrtoaddr ptr %.037.lcssa to i64 ; 2 uses
   %.040.lcssa73 = ptrtoaddr ptr %.040.lcssa to i64
   %i.s = ptrtoaddr ptr %i.d to i64
-  %4 = add i64 %.idx, %i.s
-  %i.t = add i64 %.037.lcssa74, 4
-  %5 = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.t)
+  %i.t = add i64 %.idx, %i.s
   %i.u = xor i64 %.037.lcssa74, -1
-  %i.v = add i64 %5, %i.u                         ; 2 uses
+  %i.v = add i64 %i.t, %i.u                       ; 2 uses
   %i.w = lshr i64 %i.v, 2
   %i.x = add nuw nsw i64 %i.w, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %i.v, 44
@@ -308,11 +306,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.b
 .lr.ph63.preheader:                               ; preds = %.preheader
   %.242.lcssa79 = ptrtoaddr ptr %.242.lcssa to i64
   %i.at = ptrtoaddr ptr %i.f to i64
-  %6 = add i64 %.idx65, %i.at
-  %i.au = add i64 %.0.lcssa80, 4
-  %7 = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.au)
+  %i.au = add i64 %.idx65, %i.at
   %i.av = xor i64 %.0.lcssa80, -1
-  %i.aw = add i64 %7, %i.av                       ; 2 uses
+  %i.aw = add i64 %i.au, %i.av                    ; 2 uses
   %i.ax = lshr i64 %i.aw, 2
   %i.ay = add nuw nsw i64 %i.ax, 1                ; 2 uses
   %min.iters.check83 = icmp ult i64 %i.aw, 44
@@ -519,25 +515,22 @@ bb.f:                                             ; preds = %bb.e
   %.040.lcssa.i = phi ptr [ %i.bb, %bb.f ], [ %.141.i, %bb.l ] ; 5 uses
   %.037.lcssa.i = phi ptr [ %i.ap, %bb.f ], [ %.138.i, %bb.l ] ; 5 uses
   %.0.lcssa.i = phi ptr [ %i.ay, %bb.f ], [ %.1.i, %bb.l ] ; 5 uses
-  %.0.lcssa.i96 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 3 uses
+  %.0.lcssa.i96 = ptrtoaddr ptr %.0.lcssa.i to i64 ; 2 uses
   %i.bj = icmp ult ptr %.037.lcssa.i, %i.bd
   br i1 %i.bj, label %.lr.ph59.i.preheader, label %.preheader.i
 
 .lr.ph59.i.preheader:                             ; preds = %.preheader48.i
-  %.037.lcssa.i102 = ptrtoaddr ptr %.037.lcssa.i to i64 ; 3 uses
+  %.037.lcssa.i102 = ptrtoaddr ptr %.037.lcssa.i to i64 ; 2 uses
   %.040.lcssa.i101 = ptrtoaddr ptr %.040.lcssa.i to i64
   %i.bk = ptrtoaddr ptr %.val3.i.i to i64
   %i.bl = shl nsw i64 %i.ak, 2
-  %4 = add i64 %i.bl, %i.bk
-  %i.bm = add i64 %4, %.idx.i
-  %i.bn = add i64 %i.bm, 8
-  %i.bo = add i64 %.037.lcssa.i102, 4
-  %5 = tail call i64 @llvm.umax.i64(i64 %i.bn, i64 %i.bo)
-  %6 = xor i64 %.037.lcssa.i102, -1
-  %7 = add i64 %5, %6                             ; 2 uses
-  %i.bp = lshr i64 %7, 2
+  %i.bm = add i64 %i.bl, %i.bk
+  %i.bn = add i64 %i.bm, %.idx.i
+  %i.bo = add i64 %i.bn, 7
+  %4 = sub i64 %i.bo, %.037.lcssa.i102            ; 2 uses
+  %i.bp = lshr i64 %4, 2
   %i.bq = add nuw nsw i64 %i.bp, 1                ; 2 uses
-  %min.iters.check105 = icmp ult i64 %7, 28
+  %min.iters.check105 = icmp ult i64 %4, 28
   %i.br = sub i64 %.037.lcssa.i102, %.040.lcssa.i101
   %diff.check103 = icmp ugt i64 %i.br, -32
   %or.cond = select i1 %min.iters.check105, i1 true, i1 %diff.check103
@@ -626,16 +619,13 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.g
   %.242.lcssa.i95 = ptrtoaddr ptr %.242.lcssa.i to i64
   %i.cm = ptrtoaddr ptr %.val3.i.i56 to i64
   %i.cn = shl nsw i64 %i.av, 2
-  %8 = add i64 %i.cn, %i.cm
-  %i.co = add i64 %8, %.idx65.i
-  %i.cp = add i64 %i.co, 8
-  %i.cq = add i64 %.0.lcssa.i96, 4
-  %9 = tail call i64 @llvm.umax.i64(i64 %i.cp, i64 %i.cq)
-  %10 = xor i64 %.0.lcssa.i96, -1
-  %11 = add i64 %9, %10                           ; 2 uses
-  %i.cr = lshr i64 %11, 2
+  %i.co = add i64 %i.cn, %i.cm
+  %i.cp = add i64 %i.co, %.idx65.i
+  %i.cq = add i64 %i.cp, 7
+  %5 = sub i64 %i.cq, %.0.lcssa.i96               ; 2 uses
+  %i.cr = lshr i64 %5, 2
   %i.cs = add nuw nsw i64 %i.cr, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %11, 28
+  %min.iters.check = icmp ult i64 %5, 28
   %i.ct = sub i64 %.0.lcssa.i96, %.242.lcssa.i95
   %diff.check = icmp ugt i64 %i.ct, -32
   %or.cond119 = select i1 %min.iters.check, i1 true, i1 %diff.check
@@ -1037,9 +1027,6 @@ declare i32 @llvm.smin.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #20
 
 attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

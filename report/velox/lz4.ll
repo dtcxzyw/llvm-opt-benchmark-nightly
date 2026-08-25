@@ -204,7 +204,7 @@ bb.an:                                            ; preds = %read_variable_lengt
   %.1370.i = phi ptr [ %.0369.i, %bb.an ], [ %i.bg, %bb.q ], [ %i.bg, %bb.p ] ; 8 uses
   %.1368.i = phi i64 [ %.0367.i, %bb.an ], [ %i.bd, %bb.q ], [ %i.bd, %bb.p ] ; 3 uses
   %.11.i = phi i64 [ %i.iy, %bb.an ], [ %i.bu, %bb.p ], [ %i.bz, %bb.q ] ; 4 uses
-  %.10387.i448 = ptrtoaddr ptr %.10387.i to i64   ; 10 uses
+  %.10387.i448 = ptrtoaddr ptr %.10387.i to i64   ; 9 uses
   %i.iz = icmp ult ptr %.1370.i, %1
   br i1 %i.iz, label %LZ4_wildCopy32.exit.thread, label %bb.ao, !prof !86
 
@@ -269,10 +269,7 @@ bb.at:                                            ; preds = %bb.as
 
 .preheader.preheader:                             ; preds = %bb.at
   %i.kg = add i64 %i.o, %i.e
-  %4 = add i64 %i.kg, -7
-  %5 = add i64 %.10387.i448, 16
-  %6 = tail call i64 @llvm.umax.i64(i64 %4, i64 %5)
-  %i.kh = add i64 %6, -9
+  %i.kh = add i64 %i.kg, -16
   %i.ki = sub i64 %i.kh, %.10387.i448             ; 2 uses
   %i.kj = lshr i64 %i.ki, 3
   %i.kk = add nuw nsw i64 %i.kj, 1                ; 2 uses
@@ -675,7 +672,7 @@ bb.at:                                            ; preds = %read_variable_lengt
   %.1370.i = phi ptr [ %.0369.i, %bb.at ], [ %i.bm, %bb.q ], [ %i.bm, %bb.p ] ; 10 uses
   %.1368.i = phi i64 [ %.0367.i, %bb.at ], [ %i.bj, %bb.q ], [ %i.bj, %bb.p ] ; 3 uses
   %.11.i = phi i64 [ %i.kk, %bb.at ], [ %i.ca, %bb.p ], [ %i.cf, %bb.q ] ; 8 uses
-  %.10387.i510 = ptrtoaddr ptr %.10387.i to i64   ; 13 uses
+  %.10387.i510 = ptrtoaddr ptr %.10387.i to i64   ; 12 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %.1370.i, i64 %5
   %i.km = icmp ult ptr %i.kl, %1
   %or.cond462.i = select i1 %i.j, i1 %i.km, i1 false, !prof !86
@@ -862,10 +859,7 @@ bb.bf:                                            ; preds = %bb.be
 
 .preheader119.preheader:                          ; preds = %bb.bf
   %i.nc = add i64 %i.s, %i.e
-  %6 = add i64 %i.nc, -7
-  %7 = add i64 %.10387.i510, 16
-  %8 = tail call i64 @llvm.umax.i64(i64 %6, i64 %7)
-  %i.nd = add i64 %8, -9
+  %i.nd = add i64 %i.nc, -16
   %i.ne = sub i64 %i.nd, %.10387.i510             ; 2 uses
   %i.nf = lshr i64 %i.ne, 3
   %i.ng = add nuw nsw i64 %i.nf, 1                ; 2 uses
@@ -1268,7 +1262,7 @@ bb.bb:                                            ; preds = %read_variable_lengt
   %.1370.i.i = phi ptr [ %.0369.i.i, %bb.bb ], [ %i.ci, %bb.y ], [ %i.ci, %bb.x ] ; 10 uses
   %.1368.i.i = phi i64 [ %.0367.i.i, %bb.bb ], [ %i.cf, %bb.y ], [ %i.cf, %bb.x ] ; 3 uses
   %.11.i.i = phi i64 [ %i.lh, %bb.bb ], [ %i.cw, %bb.x ], [ %i.db, %bb.y ] ; 8 uses
-  %.10387.i.i582 = ptrtoaddr ptr %.10387.i.i to i64 ; 13 uses
+  %.10387.i.i582 = ptrtoaddr ptr %.10387.i.i to i64 ; 12 uses
   %i.li = getelementptr inbounds nuw i8, ptr %.1370.i.i, i64 %i.o
   %i.lj = icmp ult ptr %i.li, %i.s
   %or.cond462.i.i = select i1 %i.ad, i1 %i.lj, i1 false, !prof !86
@@ -1458,10 +1452,7 @@ bb.bn:                                            ; preds = %bb.bm
 
 .preheader182.preheader:                          ; preds = %bb.bn
   %i.oc = add i64 %i.am, %i.y
-  %5 = add i64 %i.oc, -7
-  %6 = add i64 %.10387.i.i582, 16
-  %7 = tail call i64 @llvm.umax.i64(i64 %5, i64 %6)
-  %i.od = add i64 %7, -9
+  %i.od = add i64 %i.oc, -16
   %i.oe = sub i64 %i.od, %.10387.i.i582           ; 2 uses
   %i.of = lshr i64 %i.oe, 3
   %i.og = add nuw nsw i64 %i.of, 1                ; 2 uses
@@ -1864,7 +1855,7 @@ bb.an:                                            ; preds = %read_variable_lengt
   %.1370.i = phi ptr [ %.0369.i, %bb.an ], [ %i.bi, %bb.q ], [ %i.bi, %bb.p ] ; 8 uses
   %.1368.i = phi i64 [ %.0367.i, %bb.an ], [ %i.bf, %bb.q ], [ %i.bf, %bb.p ] ; 3 uses
   %.11.i = phi i64 [ %i.ja, %bb.an ], [ %i.bw, %bb.p ], [ %i.cb, %bb.q ] ; 4 uses
-  %.10387.i449 = ptrtoaddr ptr %.10387.i to i64   ; 10 uses
+  %.10387.i449 = ptrtoaddr ptr %.10387.i to i64   ; 9 uses
   %i.jb = icmp ult ptr %.1370.i, %i.b
   br i1 %i.jb, label %LZ4_wildCopy32.exit.thread, label %bb.ao, !prof !86
 
@@ -1929,10 +1920,7 @@ bb.at:                                            ; preds = %bb.as
 
 .preheader.preheader:                             ; preds = %bb.at
   %i.ki = add i64 %i.q, %i.g
-  %5 = add i64 %i.ki, -7
-  %6 = add i64 %.10387.i449, 16
-  %7 = tail call i64 @llvm.umax.i64(i64 %5, i64 %6)
-  %i.kj = add i64 %7, -9
+  %i.kj = add i64 %i.ki, -16
   %i.kk = sub i64 %i.kj, %.10387.i449             ; 2 uses
   %i.kl = lshr i64 %i.kk, 3
   %i.km = add nuw nsw i64 %i.kl, 1                ; 2 uses

@@ -205,7 +205,7 @@ _ZN3smt10watch_list10end_clauseEv.exit:           ; preds = %.critedge101
   br i1 %.not97141, label %._crit_edge145.thread182, label %.lr.ph144
 
 .lr.ph144:                                        ; preds = %_ZN3smt10watch_list10end_clauseEv.exit, %bb.v
-  %indvar = phi i64 [ %indvar.next, %bb.v ], [ 0, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 4 uses
+  %indvar = phi i64 [ %indvar.next, %bb.v ], [ 0, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 3 uses
   %.084143 = phi ptr [ %i.gb, %bb.v ], [ %i.ca, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 7 uses
   %.089142 = phi ptr [ %.594.ph, %bb.v ], [ %i.ca, %_ZN3smt10watch_list10end_clauseEv.exit ] ; 11 uses
   %i.cf = load ptr, ptr %.084143, align 8, !tbaa !875 ; 11 uses
@@ -309,22 +309,16 @@ bb.p:                                             ; preds = %.lr.ph140
   br i1 %i.ds, label %.preheader, label %bb.s
 
 .preheader:                                       ; preds = %._crit_edge
-  %i.dt = ptrtoaddr ptr %i.ca to i64              ; 4 uses
+  %i.dt = ptrtoaddr ptr %i.ca to i64
   %.089142208.le = ptrtoaddr ptr %.089142 to i64
   %i.du = icmp ult ptr %.084143, %i.ce
   br i1 %i.du, label %.lr.ph148.preheader, label %._crit_edge149
 
 .lr.ph148.preheader:                              ; preds = %.preheader
-  %1 = add i64 %i.dt, 8
-  %2 = shl i64 %indvar, 3
-  %3 = add i64 %2, %1
   %i.dv = zext i32 %i.cc to i64
-  %4 = add i64 %i.dt, %i.dv
-  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
-  %5 = xor i64 %i.dt, -1
   %i.dw = shl i64 %indvar, 3
-  %6 = sub i64 %5, %i.dw
-  %i.dx = add i64 %umax, %6                       ; 2 uses
+  %1 = xor i64 %i.dw, -1
+  %i.dx = add i64 %1, %i.dv                       ; 2 uses
   %i.dy = lshr i64 %i.dx, 3
   %i.dz = add nuw nsw i64 %i.dy, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dx, 216
@@ -726,9 +720,6 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #28
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #28
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

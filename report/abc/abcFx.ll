@@ -204,19 +204,17 @@ Fx_ManCompressCubes.exit437:                      ; preds = %bb.q, %Fx_ManCompre
   %.040.lcssa.i = phi ptr [ %i.de, %Fx_ManCompressCubes.exit437 ], [ %.141.i, %bb.ae ] ; 5 uses
   %.0.lcssa.i438 = phi ptr [ %.val14.i427, %Fx_ManCompressCubes.exit437 ], [ %.1.i441, %bb.ae ] ; 5 uses
   %.0.lcssa.i4381278 = ptrtoaddr ptr %.0.lcssa.i438 to i64
-  %.043.lcssa.i1279 = ptrtoaddr ptr %.043.lcssa.i to i64 ; 3 uses
+  %.043.lcssa.i1279 = ptrtoaddr ptr %.043.lcssa.i to i64 ; 2 uses
   %i.dp = icmp ult ptr %.046.lcssa.i, %i.di
   br i1 %i.dp, label %.lr.ph62.i.preheader, label %.preheader.i
 
 .lr.ph62.i.preheader:                             ; preds = %.preheader52.i
-  %.046.lcssa.i1273 = ptrtoaddr ptr %.046.lcssa.i to i64 ; 3 uses
+  %.046.lcssa.i1273 = ptrtoaddr ptr %.046.lcssa.i to i64 ; 2 uses
   %.040.lcssa.i1272 = ptrtoaddr ptr %.040.lcssa.i to i64
   %i.dq = ptrtoaddr ptr %i.de to i64
-  %3 = add i64 %.idx.i, %i.dq
-  %i.dr = add i64 %.046.lcssa.i1273, 4
-  %4 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.dr)
+  %i.dr = add i64 %.idx.i, %i.dq
   %i.ds = xor i64 %.046.lcssa.i1273, -1
-  %i.dt = add i64 %4, %i.ds                       ; 2 uses
+  %i.dt = add i64 %i.dr, %i.ds                    ; 2 uses
   %i.du = lshr i64 %i.dt, 2
   %i.dv = add nuw nsw i64 %i.du, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.dt, 44
@@ -368,11 +366,9 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %Vec
 
 .lr.ph66.i.preheader:                             ; preds = %.preheader.i
   %i.fl = ptrtoaddr ptr %.val14.i427 to i64
-  %5 = add i64 %.idx68.i, %i.fl
-  %i.fm = add i64 %.043.lcssa.i1279, 4
-  %6 = tail call i64 @llvm.umax.i64(i64 %5, i64 %i.fm)
+  %i.fm = add i64 %.idx68.i, %i.fl
   %i.fn = xor i64 %.043.lcssa.i1279, -1
-  %i.fo = add i64 %6, %i.fn                       ; 2 uses
+  %i.fo = add i64 %i.fm, %i.fn                    ; 2 uses
   %i.fp = lshr i64 %i.fo, 2
   %i.fq = add nuw nsw i64 %i.fp, 1                ; 2 uses
   %min.iters.check1282 = icmp ult i64 %i.fo, 44
@@ -775,14 +771,12 @@ bb.ik:                                            ; preds = %.lr.ph982, %bb.ix
   br i1 %i.bfk, label %.lr.ph7.i.preheader, label %Vec_IntTwoRemove.exit
 
 .lr.ph7.i.preheader:                              ; preds = %.preheader.i811
-  %.030.lcssa.i1317 = ptrtoaddr ptr %.030.lcssa.i to i64 ; 3 uses
+  %.030.lcssa.i1317 = ptrtoaddr ptr %.030.lcssa.i to i64 ; 2 uses
   %.0.lcssa.i8121316 = ptrtoaddr ptr %.0.lcssa.i812 to i64
   %i.bfl = ptrtoaddr ptr %i.bfa to i64
-  %7 = add i64 %.idx.i810, %i.bfl
-  %i.bfm = add i64 %.030.lcssa.i1317, 4
-  %8 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.bfm)
+  %i.bfm = add i64 %.idx.i810, %i.bfl
   %i.bfn = xor i64 %.030.lcssa.i1317, -1
-  %i.bfo = add i64 %8, %i.bfn                     ; 2 uses
+  %i.bfo = add i64 %i.bfm, %i.bfn                 ; 2 uses
   %i.bfp = lshr i64 %i.bfo, 2
   %i.bfq = add nuw nsw i64 %i.bfp, 1              ; 2 uses
   %min.iters.check1320 = icmp ult i64 %i.bfo, 28
@@ -915,14 +909,12 @@ bb.ir:                                            ; preds = %Vec_IntTwoRemove.ex
   br i1 %i.bhm, label %.lr.ph7.i824.preheader, label %Vec_IntTwoRemove.exit834
 
 .lr.ph7.i824.preheader:                           ; preds = %.preheader.i819
-  %.030.lcssa.i8201298 = ptrtoaddr ptr %.030.lcssa.i820 to i64 ; 3 uses
+  %.030.lcssa.i8201298 = ptrtoaddr ptr %.030.lcssa.i820 to i64 ; 2 uses
   %.0.lcssa.i8211297 = ptrtoaddr ptr %.0.lcssa.i821 to i64
   %i.bhn = ptrtoaddr ptr %i.bhc to i64
-  %9 = add i64 %.idx.i817, %i.bhn
-  %i.bho = add i64 %.030.lcssa.i8201298, 4
-  %10 = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.bho)
+  %i.bho = add i64 %.idx.i817, %i.bhn
   %i.bhp = xor i64 %.030.lcssa.i8201298, -1
-  %i.bhq = add i64 %10, %i.bhp                    ; 2 uses
+  %i.bhq = add i64 %i.bho, %i.bhp                 ; 2 uses
   %i.bhr = lshr i64 %i.bhq, 2
   %i.bhs = add nuw nsw i64 %i.bhr, 1              ; 2 uses
   %min.iters.check1301 = icmp ult i64 %i.bhq, 28
@@ -1323,9 +1315,6 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #12

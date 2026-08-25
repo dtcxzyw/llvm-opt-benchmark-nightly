@@ -204,11 +204,9 @@ bb.as:                                            ; preds = %bb.aq
 
 .lr.ph410.split.i.preheader:                      ; preds = %bb.as
   %i.gy = ptrtoaddr ptr %i.gw to i64
-  %i.gz = ptrtoaddr ptr %i.gu to i64              ; 2 uses
-  %3 = add i64 %i.gz, 4
-  %4 = tail call i64 @llvm.umax.i64(i64 %i.gy, i64 %3)
+  %i.gz = ptrtoaddr ptr %i.gu to i64
   %i.ha = xor i64 %i.gz, -1
-  %i.hb = add i64 %4, %i.ha                       ; 2 uses
+  %i.hb = add i64 %i.ha, %i.gy                    ; 2 uses
   %i.hc = lshr i64 %i.hb, 2
   %i.hd = add nuw nsw i64 %i.hc, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.hb, 28
@@ -609,9 +607,6 @@ declare i64 @llvm.bswap.i64(i64) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #24
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #23

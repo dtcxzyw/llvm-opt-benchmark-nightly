@@ -202,14 +202,12 @@ _ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i.i.i:
   br i1 %i.x, label %.lr.ph.i.preheader.i.i, label %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE6resizeEmRKS2_.exit.i.i
 
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i.i.i
-  %i.y = ptrtoaddr ptr %i.u to i64                ; 2 uses
+  %i.y = ptrtoaddr ptr %i.u to i64
   %i.z = ptrtoaddr ptr %i.v to i64
   %i.aa = shl nuw nsw i64 %i.o, 3
-  %3 = add nuw i64 %i.aa, %i.z
-  %i.ab = add i64 %i.y, 8
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.ab)
-  %4 = xor i64 %i.y, -1
-  %i.ac = add i64 %umax.i.i, %4
+  %3 = xor i64 %i.y, -1
+  %i.ab = add i64 %i.aa, %3
+  %i.ac = add i64 %i.ab, %i.z
   %i.ad = and i64 %i.ac, -8
   %i.ae = add i64 %i.ad, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.u, i8 0, i64 %i.ae, i1 false)
@@ -361,14 +359,12 @@ _ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i.i.i.
   br i1 %i.aa, label %.lr.ph.i.preheader.i.i.i, label %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE6resizeEmRKS2_.exit.i.i.i
 
 .lr.ph.i.preheader.i.i.i:                         ; preds = %_ZN2v88internal10ZoneVectorINS0_14SourcePositionEE14EnsureCapacityEm.exit.i.i.i.i
-  %i.ab = ptrtoaddr ptr %i.x to i64               ; 2 uses
+  %i.ab = ptrtoaddr ptr %i.x to i64
   %i.ac = ptrtoaddr ptr %i.y to i64
   %i.ad = shl nuw nsw i64 %i.r, 3
-  %2 = add nuw i64 %i.ad, %i.ac
-  %i.ae = add i64 %i.ab, 8
-  %umax.i.i.i = tail call i64 @llvm.umax.i64(i64 %2, i64 %i.ae)
-  %3 = xor i64 %i.ab, -1
-  %i.af = add i64 %umax.i.i.i, %3
+  %2 = xor i64 %i.ab, -1
+  %i.ae = add i64 %i.ad, %2
+  %i.af = add i64 %i.ae, %i.ac
   %i.ag = and i64 %i.af, -8
   %i.ah = add i64 %i.ag, 8
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.x, i8 0, i64 %i.ah, i1 false)

@@ -204,7 +204,8 @@ bb.j:                                             ; preds = %solver_enqueue.exit
   %i.cr = xor i32 %i.v, 1                         ; 3 uses
   %i.cs = ptrtoaddr ptr %.val147.lcssa to i64
   %i.ct = shl nuw nsw i64 %i.co, 3
-  %i.cu = add nuw i64 %i.ct, %i.cs
+  %1 = add i64 %i.ct, %i.cs
+  %i.cu = add i64 %1, -9
   br label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph211, %.loopexit
@@ -212,7 +213,7 @@ bb.k:                                             ; preds = %.lr.ph211, %.loopex
   %.1114208 = phi ptr [ %.lcssa, %.lr.ph211 ], [ %.6, %.loopexit ] ; 14 uses
   %.1121207 = phi i32 [ %.0120216, %.lr.ph211 ], [ %.5125, %.loopexit ] ; 5 uses
   %.0110209285 = ptrtoaddr ptr %.0110209 to i64
-  %.1114208286 = ptrtoaddr ptr %.1114208 to i64   ; 3 uses
+  %.1114208286 = ptrtoaddr ptr %.1114208 to i64   ; 2 uses
   %.val149 = load ptr, ptr %i.h, align 8, !tbaa !81 ; 2 uses
   %.not174 = icmp eq ptr %.val149, null
   %.phi.trans.insert237 = getelementptr inbounds nuw i8, ptr %.1114208, i64 4
@@ -423,10 +424,7 @@ bb.z:                                             ; preds = %._crit_edge199
   br i1 %i.go, label %.lr.ph204.preheader, label %.loopexit
 
 .lr.ph204.preheader:                              ; preds = %bb.z
-  %1 = add i64 %.1114208286, 16
-  %2 = tail call i64 @llvm.umax.i64(i64 %i.cu, i64 %1)
-  %3 = add i64 %2, -9
-  %i.gp = sub i64 %3, %.1114208286                ; 2 uses
+  %i.gp = sub i64 %i.cu, %.1114208286             ; 2 uses
   %i.gq = lshr i64 %i.gp, 3
   %i.gr = add nuw nsw i64 %i.gq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.gp, 24

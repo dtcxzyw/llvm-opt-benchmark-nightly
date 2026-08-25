@@ -204,19 +204,17 @@ Vec_IntAlloc.exit:                                ; preds = %bb.e, %bb.f
   %.040.lcssa.i = phi ptr [ %i.ae, %Vec_IntAlloc.exit ], [ %.141.i, %bb.s ] ; 5 uses
   %.0.lcssa.i = phi ptr [ %i.ag, %Vec_IntAlloc.exit ], [ %.1.i, %bb.s ] ; 5 uses
   %.0.lcssa.i189 = ptrtoaddr ptr %.0.lcssa.i to i64
-  %.043.lcssa.i190 = ptrtoaddr ptr %.043.lcssa.i to i64 ; 3 uses
+  %.043.lcssa.i190 = ptrtoaddr ptr %.043.lcssa.i to i64 ; 2 uses
   %i.am = icmp ult ptr %.046.lcssa.i, %i.ai
   br i1 %i.am, label %.lr.ph62.i.preheader, label %.preheader.i
 
 .lr.ph62.i.preheader:                             ; preds = %.preheader52.i
-  %.046.lcssa.i184 = ptrtoaddr ptr %.046.lcssa.i to i64 ; 3 uses
+  %.046.lcssa.i184 = ptrtoaddr ptr %.046.lcssa.i to i64 ; 2 uses
   %.040.lcssa.i183 = ptrtoaddr ptr %.040.lcssa.i to i64
   %i.an = ptrtoaddr ptr %i.ae to i64
-  %4 = add i64 %.idx.i, %i.an
-  %i.ao = add i64 %.046.lcssa.i184, 4
-  %5 = tail call i64 @llvm.umax.i64(i64 %4, i64 %i.ao)
+  %i.ao = add i64 %.idx.i, %i.an
   %i.ap = xor i64 %.046.lcssa.i184, -1
-  %i.aq = add i64 %5, %i.ap                       ; 2 uses
+  %i.aq = add i64 %i.ao, %i.ap                    ; 2 uses
   %i.ar = lshr i64 %i.aq, 2
   %i.as = add nuw nsw i64 %i.ar, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.aq, 44
@@ -365,11 +363,9 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %Vec_I
 
 .lr.ph66.i.preheader:                             ; preds = %.preheader.i
   %i.cg = ptrtoaddr ptr %i.ag to i64
-  %6 = add i64 %.idx.i, %i.cg
-  %i.ch = add i64 %.043.lcssa.i190, 4
-  %7 = tail call i64 @llvm.umax.i64(i64 %6, i64 %i.ch)
+  %i.ch = add i64 %.idx.i, %i.cg
   %i.ci = xor i64 %.043.lcssa.i190, -1
-  %i.cj = add i64 %7, %i.ci                       ; 2 uses
+  %i.cj = add i64 %i.ch, %i.ci                    ; 2 uses
   %i.ck = lshr i64 %i.cj, 2
   %i.cl = add nuw nsw i64 %i.ck, 1                ; 2 uses
   %min.iters.check193 = icmp ult i64 %i.cj, 44
@@ -771,9 +767,6 @@ declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #23
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #21
 
 attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
