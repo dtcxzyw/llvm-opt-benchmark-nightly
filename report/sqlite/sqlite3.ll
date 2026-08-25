@@ -206,12 +206,11 @@ bb.am:                                            ; preds = %.loopexit, %sqlite3
   br i1 %.not133183, label %._crit_edge187, label %iter.check
 
 iter.check:                                       ; preds = %bb.am
-  %i.ho = zext nneg i32 %i.hm to i64              ; 3 uses
-  %i.hp = zext i32 %.0112181.lcssa to i64         ; 7 uses
-  %i.hq = add nuw nsw i64 %i.ho, %i.hp            ; 5 uses
+  %i.ho = zext nneg i32 %i.hm to i64              ; 2 uses
+  %i.hp = zext i32 %.0112181.lcssa to i64         ; 6 uses
+  %i.hq = add nuw nsw i64 %i.ho, %i.hp            ; 6 uses
   %i.hr = add nuw nsw i64 %wide.trip.count, 1
-  %6 = add nuw nsw i64 %i.ho, %i.hp
-  %i.hs = sub nsw i64 %i.hr, %6                   ; 7 uses
+  %i.hs = sub nsw i64 %i.hr, %i.hq                ; 7 uses
   %min.iters.check = icmp ult i64 %i.hs, 8
   br i1 %min.iters.check, label %.lr.ph186.preheader, label %vector.main.loop.iter.check
 

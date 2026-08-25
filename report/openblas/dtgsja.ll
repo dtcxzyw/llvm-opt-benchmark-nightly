@@ -202,9 +202,9 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm, %bb.
 
 ._crit_edge583:                                   ; preds = %._crit_edge583.loopexit, %._crit_edge577
   %i.os = phi i32 [ %.pre623, %._crit_edge583.loopexit ], [ %i.ll, %._crit_edge577 ] ; 2 uses
-  %i.ot = phi i32 [ %.pre622, %._crit_edge583.loopexit ], [ %i.lk, %._crit_edge577 ] ; 4 uses
-  %i.ou = phi i32 [ %.pre621, %._crit_edge583.loopexit ], [ %i.jv, %._crit_edge577 ] ; 4 uses
-  %i.ov = add nsw i32 %i.ot, %i.ou                ; 3 uses
+  %i.ot = phi i32 [ %.pre622, %._crit_edge583.loopexit ], [ %i.lk, %._crit_edge577 ] ; 3 uses
+  %i.ou = phi i32 [ %.pre621, %._crit_edge583.loopexit ], [ %i.jv, %._crit_edge577 ] ; 3 uses
+  %i.ov = add nsw i32 %i.ot, %i.ou                ; 4 uses
   %.not524.not584 = icmp slt i32 %i.os, %i.ov
   br i1 %.not524.not584, label %iter.check672, label %._crit_edge588
 
@@ -365,10 +365,9 @@ vec.epilog.middle.block681:                       ; preds = %vec.epilog.vector.b
   %i.qt = add nsw i64 %i.qr, %i.qs
   %i.qu = shl nsw i64 %i.qt, 3                    ; 2 uses
   %scevgep = getelementptr i8, ptr %14, i64 %i.qu
-  %i.qv = xor i32 %i.ot, -1
+  %i.qv = xor i32 %i.ov, -1
   %i.qw = add i32 %i.qp, %i.qv
-  %25 = sub i32 %i.qw, %i.ou
-  %i.qx = zext i32 %25 to i64
+  %i.qx = zext i32 %i.qw to i64
   %i.qy = shl nuw nsw i64 %i.qx, 3
   %i.qz = add nuw nsw i64 %i.qy, 8                ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, i8 0, i64 %i.qz, i1 false), !tbaa !11

@@ -205,14 +205,10 @@ bb.f:                                             ; preds = %bb.a
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bc, i64 112
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !87
   %i.be = icmp slt i32 %i.aw, %2
-  br i1 %i.be, label %.lr.ph.preheader, label %.critedge
+  br i1 %i.be, label %.lr.ph, label %.critedge
 
-.lr.ph.preheader:                                 ; preds = %bb.f
-  %5 = sext i32 %2 to i64
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.h
-  %indvars.iv = phi i64 [ %i.az, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.h ] ; 5 uses
+.lr.ph:                                           ; preds = %bb.f, %bb.h
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.h ], [ %i.az, %bb.f ] ; 5 uses
   %i.bf = getelementptr inbounds [8 x i8], ptr %i.ay, i64 %indvars.iv
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !72 ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 104
@@ -234,8 +230,9 @@ _ZNK20b3ConvexHullInternal7Point32eqERKS0_.exit:  ; preds = %bb.g
 
 bb.h:                                             ; preds = %_ZNK20b3ConvexHullInternal7Point32eqERKS0_.exit
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %6 = icmp slt i64 %indvars.iv.next, %5
-  br i1 %6, label %.lr.ph, label %.critedge, !llvm.loop !88
+  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
+  %exitcond.not = icmp eq i32 %2, %lftr.wideiv
+  br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !88
 
 .critedge.loopexit.split.loop.exit:               ; preds = %.lr.ph
   %i.bq = trunc nsw i64 %indvars.iv to i32

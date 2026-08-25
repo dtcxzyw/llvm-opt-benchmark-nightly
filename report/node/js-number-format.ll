@@ -202,7 +202,7 @@ _ZNK6icu_7813UnicodeString7indexOfERKS0_.exit:    ; preds = %_ZNK6icu_7813Unicod
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = select i1 %.not.i.i.i, ptr %i.x, ptr %i.v
-  %i.z = call noundef i32 @_ZNK6icu_7813UnicodeString7indexOfEPKDsiiii(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef %i.y, i32 noundef %spec.select.i.i, i32 noundef %i.t, i32 noundef 0, i32 noundef %i.p) #22 ; 4 uses
+  %i.z = call noundef i32 @_ZNK6icu_7813UnicodeString7indexOfEPKDsiiii(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef %i.y, i32 noundef %spec.select.i.i, i32 noundef %i.t, i32 noundef 0, i32 noundef %i.p) #22 ; 3 uses
   %i.aa = icmp slt i32 %i.z, 0
   br i1 %i.aa, label %.critedge, label %bb.b
 
@@ -212,14 +212,14 @@ bb.b:                                             ; preds = %_ZNK6icu_7813Unicod
   %i.ad = ashr i16 %i.ab, 5
   %i.ae = sext i16 %i.ad to i32
   %i.af = load i32, ptr %i.f, align 4
-  %i.ag = select i1 %i.ac, i32 %i.af, i32 %i.ae   ; 3 uses
-  %i.ah = add nsw i32 %i.ag, %i.z                 ; 2 uses
+  %i.ag = select i1 %i.ac, i32 %i.af, i32 %i.ae   ; 2 uses
+  %i.ah = add nsw i32 %i.ag, %i.z                 ; 3 uses
   %i.ai = load i16, ptr %i.i, align 8             ; 3 uses
   %i.aj = icmp slt i16 %i.ai, 0
   %i.ak = ashr i16 %i.ai, 5
   %i.al = sext i16 %i.ak to i32
   %i.am = load i32, ptr %i.n, align 4
-  %i.an = select i1 %i.aj, i32 %i.am, i32 %i.al   ; 5 uses
+  %i.an = select i1 %i.aj, i32 %i.am, i32 %i.al   ; 3 uses
   %i.ao = icmp slt i32 %i.ah, %i.an
   %i.ap = icmp ult i32 %i.ah, %i.an
   %or.cond17 = and i1 %i.ao, %i.ap
@@ -235,9 +235,7 @@ _ZNK6icu_7813UnicodeStringixEi.exit.lr.ph:        ; preds = %bb.b
   %i.av = sext i32 %i.ag to i64
   %i.aw = zext nneg i32 %i.z to i64
   %i.ax = add nsw i64 %i.av, %i.aw
-  %2 = sext i32 %i.an to i64
-  %3 = add i32 %i.ag, %i.z
-  %i.ay = sub i32 %i.an, %3
+  %i.ay = sub nuw i32 %i.an, %i.ah                ; 2 uses
   br label %_ZNK6icu_7813UnicodeStringixEi.exit
 
 _ZNK6icu_7813UnicodeStringixEi.exit:              ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit.lr.ph, %bb.c
@@ -249,13 +247,10 @@ _ZNK6icu_7813UnicodeStringixEi.exit:              ; preds = %_ZNK6icu_7813Unicod
   br i1 %i.bb, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit
-  %i.bc = add nuw nsw i32 %.019, 1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %4 = icmp slt i64 %indvars.iv.next, %2
-  %5 = trunc nsw i64 %indvars.iv.next to i32
-  %6 = icmp ugt i32 %i.an, %5
-  %or.cond = and i1 %4, %6
-  br i1 %or.cond, label %_ZNK6icu_7813UnicodeStringixEi.exit, label %.critedge, !llvm.loop !8
+  %i.bc = add nuw i32 %.019, 1                    ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
+  %exitcond.not = icmp eq i32 %i.bc, %i.ay
+  br i1 %exitcond.not, label %.critedge, label %_ZNK6icu_7813UnicodeStringixEi.exit, !llvm.loop !8
 
 .critedge:                                        ; preds = %bb.c, %_ZNK6icu_7813UnicodeStringixEi.exit, %bb.b, %.sink.split.i.i.i, %bb.a, %_ZNK6icu_7813UnicodeString10pinIndicesERiS1_.exit.i.i, %_ZNK6icu_7813UnicodeString7indexOfERKS0_.exit
   %.011 = phi i32 [ 1, %_ZNK6icu_7813UnicodeString7indexOfERKS0_.exit ], [ 1, %_ZNK6icu_7813UnicodeString10pinIndicesERiS1_.exit.i.i ], [ 1, %bb.a ], [ 1, %.sink.split.i.i.i ], [ 0, %bb.b ], [ %i.ay, %bb.c ], [ %.019, %_ZNK6icu_7813UnicodeStringixEi.exit ]

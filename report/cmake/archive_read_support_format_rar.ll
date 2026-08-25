@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ah
   %.1380.ph587 = phi i32 [ %.0379, %.lr.ph.lr.ph ], [ %.5384, %.thread503 ] ; 4 uses
   %.0385.ph586 = phi i8 [ 0, %.lr.ph.lr.ph ], [ %.1386540, %.thread503 ] ; 2 uses
   %.0387.ph585 = phi i8 [ 0, %.lr.ph.lr.ph ], [ %i.mg, %.thread503 ] ; 3 uses
-  %.0399.ph584 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.3402, %.thread503 ] ; 27 uses
+  %.0399.ph584 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.3402, %.thread503 ] ; 24 uses
   br i1 %.fr, label %.lr.ph.split, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
@@ -414,10 +414,8 @@ iter.check:                                       ; preds = %.loopexit514
   %i.gn = and i8 %i.gl, 127
   %narrow = add nuw i8 %i.gn, 2                   ; 5 uses
   %i.go = zext i32 %.0399.ph584 to i64            ; 20 uses
-  %4 = add i32 %.0399.ph584, 2
-  %umax747 = tail call i32 @llvm.umax.i32(i32 %i.da, i32 %4)
   %i.gp = xor i32 %.0399.ph584, -1
-  %i.gq = add i32 %umax747, %i.gp
+  %i.gq = add i32 %i.da, %i.gp
   %i.gr = lshr i32 %i.gq, 1
   %i.gs = zext nneg i32 %i.gr to i64
   %i.gt = and i8 %i.gl, 127
@@ -429,10 +427,8 @@ iter.check:                                       ; preds = %.loopexit514
   br i1 %min.iters.check, label %.lr.ph582.preheader, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %iter.check
-  %5 = add i32 %.0399.ph584, 2
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.da, i32 %5)
   %i.gw = xor i32 %.0399.ph584, -1
-  %i.gx = add i32 %umax, %i.gw
+  %i.gx = add i32 %i.da, %i.gw
   %i.gy = lshr i32 %i.gx, 1
   %i.gz = and i8 %i.gl, 127
   %narrow768 = add nuw i8 %i.gz, 1
@@ -447,10 +443,8 @@ vector.scevcheck:                                 ; preds = %iter.check
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %scevgep = getelementptr i8, ptr %i.di, i64 %i.go
-  %6 = add i32 %.0399.ph584, 2
-  %umax741 = tail call i32 @llvm.umax.i32(i32 %i.da, i32 %6)
   %i.hg = xor i32 %.0399.ph584, -1
-  %i.hh = add i32 %umax741, %i.hg
+  %i.hh = add i32 %i.da, %i.hg
   %i.hi = lshr i32 %i.hh, 1
   %i.hj = zext nneg i32 %i.hi to i64
   %i.hk = and i8 %i.gl, 127
