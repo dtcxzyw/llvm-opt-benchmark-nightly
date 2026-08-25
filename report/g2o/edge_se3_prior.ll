@@ -204,16 +204,13 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.k, ptr noundef nonnull align 16 dereferenceable(128) %2, i64 128, i1 false), !tbaa.struct !231
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
-  %4 = load double, ptr %i.k, align 16, !tbaa !8, !noalias !232
-  %.sroa.0.0.vec.insert = insertelement <2 x double> poison, double %4, i64 0
+  %4 = load <2 x double>, ptr %i.k, align 16      ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.m = load double, ptr %i.l, align 16, !tbaa !8, !noalias !232
-  %.sroa.0.8.vec.insert = insertelement <2 x double> %.sroa.0.0.vec.insert, double %i.m, i64 1 ; 2 uses
+  %.sroa.0.8.vec.insert = insertelement <2 x double> %4, double %i.m, i64 1 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 240
-  %5 = load double, ptr %i.n, align 16, !tbaa !8, !noalias !232 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 184
-  %i.o = load double, ptr %6, align 8, !tbaa !8, !noalias !232
-  %.sroa.9.32.vec.insert = insertelement <2 x double> poison, double %i.o, i64 0
+  %i.o = load double, ptr %i.n, align 16, !tbaa !8, !noalias !232 ; 2 uses
+  %.sroa.9.32.vec.insert = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.q = load double, ptr %i.p, align 8, !tbaa !8, !noalias !232
   %.sroa.9.40.vec.insert = insertelement <2 x double> %.sroa.9.32.vec.insert, double %i.q, i64 1 ; 2 uses
@@ -249,12 +246,12 @@ bb.a:
   %i.as = fmul double %i.am, %i.ar
   %i.at = fmul double %i.s, %i.ag
   %i.au = fsub double %i.as, %i.at
-  %i.av = fmul double %5, %i.ab
+  %i.av = fmul double %i.o, %i.ab
   %i.aw = fsub double %i.au, %i.av
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 672
   store <2 x double> %.sroa.0.8.vec.insert, ptr %i.ax, align 16
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 688
-  store double %5, ptr %.sroa.6.0..sroa_idx, align 16
+  store double %i.o, ptr %.sroa.6.0..sroa_idx, align 16
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 696
   store double 0.000000e+00, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 704
