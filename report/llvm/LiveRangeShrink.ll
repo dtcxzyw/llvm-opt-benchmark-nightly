@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LiveRangeShrink?download=true
+inline.NumInlined: 751
+inline.NumDeleted: 415
 begin_hunk_0_@_ZN12_GLOBAL__N_115LiveRangeShrink20runOnMachineFunctionERN4llvm15MachineFunctionE:bb.a
   %i.uj = lshr i64 %i.uh, 5
   %i.uk = getelementptr inbounds nuw [4 x i8], ptr %i.tx, i64 %i.uj
@@ -200,10 +202,10 @@ bb.bn:                                            ; preds = %.lr.ph359
   %..i.i.i = zext i1 %i.xw to i64
   %i.xx = zext i24 %i.xv to i64
   %i.xy = add nsw i64 %i.xx, -2
-  %.sroa.05.0.idx.i.i.a = select i1 %i.xr, i64 0, i64 64
-  %.sroa.05.0.i.i = getelementptr inbounds nuw i8, ptr %i.xt, i64 %.sroa.05.0.idx.i.i.a ; 2 uses
-  %.sroa.5.0.i.i = select i1 %i.xr, i64 %..i.i.i, i64 %i.xy
-  %i.xz = getelementptr inbounds nuw [32 x i8], ptr %.sroa.05.0.i.i, i64 %.sroa.5.0.i.i ; 2 uses
+  %.sroa.05.0.idx.i.i.a = select i1 %i.xr, i64 %..i.i.i, i64 %i.xy
+  %.sroa.05.0.idx.i.i = select i1 %i.xr, i64 0, i64 64
+  %.sroa.05.0.i.i = getelementptr inbounds nuw i8, ptr %i.xt, i64 %.sroa.05.0.idx.i.i ; 2 uses
+  %i.xz = getelementptr inbounds nuw [32 x i8], ptr %.sroa.05.0.i.i, i64 %.sroa.05.0.idx.i.i.a ; 2 uses
   %i.ya = call noundef ptr @_ZSt9__find_ifIPKN4llvm14MachineOperandEN9__gnu_cxx5__ops10_Iter_predIZNKS0_12MachineInstr21hasDebugOperandForRegENS0_8RegisterEEUlRS2_E_EEET_SC_SC_T0_St26random_access_iterator_tag(ptr noundef %.sroa.05.0.i.i, ptr noundef %i.xz, i32 %i.xq)
   %.not304 = icmp eq ptr %i.xz, %i.ya
   br i1 %.not304, label %.critedge17, label %bb.bo

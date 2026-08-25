@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WrapInZeroTripCheck?download=true
+inline.NumInlined: 681
+inline.NumDeleted: 501
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 %"class.mlir::ResultRange" = type { %"class.llvm::detail::indexed_accessor_range_base.155" }
 %"class.llvm::detail::indexed_accessor_range_base.155" = type { ptr, i64 }
@@ -200,12 +204,12 @@ _ZN4mlir3scf7WhileOp8getInitsEv.exit:             ; preds = %bb.c, %bb.d
   br label %bb.e
 
 .lr.ph:                                           ; preds = %_ZN4mlir3scf7WhileOp8getInitsEv.exit, %.lr.ph
-  %.sroa.8.080 = phi ptr [ %i.bv, %.lr.ph ], [ %i.aw, %_ZN4mlir3scf7WhileOp8getInitsEv.exit ] ; 2 uses
-  %.sroa.452.079 = phi i64 [ %i.bw, %.lr.ph ], [ 0, %_ZN4mlir3scf7WhileOp8getInitsEv.exit ] ; 2 uses
-  %i.br = getelementptr inbounds nuw [32 x i8], ptr %i.bh, i64 %.sroa.452.079
+  %.sroa.452.080 = phi i64 [ %i.bw, %.lr.ph ], [ 0, %_ZN4mlir3scf7WhileOp8getInitsEv.exit ] ; 2 uses
+  %.sroa.8.079 = phi ptr [ %i.bv, %.lr.ph ], [ %i.aw, %_ZN4mlir3scf7WhileOp8getInitsEv.exit ] ; 2 uses
+  %i.br = getelementptr inbounds nuw [32 x i8], ptr %i.bh, i64 %.sroa.452.080
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 24
   %.sroa.0.0.copyload.i.i.i.i.i = load ptr, ptr %i.bs, align 8, !tbaa !51, !noalias !53
-  %.sroa.09.0.copyload = load ptr, ptr %.sroa.8.080, align 8, !tbaa !51
+  %.sroa.09.0.copyload = load ptr, ptr %.sroa.8.079, align 8, !tbaa !51
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   store ptr %.sroa.09.0.copyload, ptr %5, align 8
   %i.bt = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIN4mlir5ValueES3_NS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S3_EEEES3_S3_S5_S8_E24lookupOrInsertIntoBucketIRKS3_JEEESt4pairIPS8_bEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(72) %7, ptr noundef nonnull align 8 dereferenceable(8) %5)
@@ -213,8 +217,8 @@ _ZN4mlir3scf7WhileOp8getInitsEv.exit:             ; preds = %bb.c, %bb.d
   %i.bu = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i.i, i64 8
   store ptr %.sroa.0.0.copyload.i.i.i.i.i, ptr %i.bu, align 8, !tbaa !51
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.8.080, i64 8 ; 2 uses
-  %i.bw = add nuw nsw i64 %.sroa.452.079, 1
+  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.8.079, i64 8 ; 2 uses
+  %i.bw = add nuw nsw i64 %.sroa.452.080, 1
   %.not = icmp eq ptr %i.bv, %i.ay
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
 

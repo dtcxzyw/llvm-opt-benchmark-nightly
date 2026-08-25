@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/VectorContractToFMA?download=true
+inline.NumInlined: 508
+inline.NumDeleted: 341
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -98,7 +100,7 @@ _ZN4llvm15SmallVectorImplINS_9StringRefEE7reserveEm.exit.i.i.i.i: ; preds = %bb.
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !50   ; 6 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !51
   %.not.i.i.i = icmp eq ptr %i.q, %i.s
   br i1 %.not.i.i.i, label %bb.e, label %bb.d
@@ -112,8 +114,8 @@ bb.d:                                             ; preds = %_ZN4llvm15SmallVect
 bb.e:                                             ; preds = %_ZN4llvm15SmallVectorImplINS_9StringRefEE7reserveEm.exit.i.i.i.i
   %i.u = load ptr, ptr %i.o, align 8, !tbaa !55   ; 10 uses
   %i.v = ptrtoint ptr %i.q to i64                 ; 3 uses
-  %i.w = ptrtoint ptr %i.u to i64                 ; 3 uses
-  %i.x = sub i64 %i.v, %i.w                       ; 4 uses
+  %i.w = ptrtoint ptr %i.u to i64                 ; 4 uses
+  %i.x = sub i64 %i.v, %i.w                       ; 3 uses
   %i.y = icmp eq i64 %i.x, 9223372036854775800
   br i1 %i.y, label %bb.f, label %_ZNKSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -213,7 +215,10 @@ _ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS0_IN12_GLOBAL__N_119VectorContractToFMAES3_ISA_EEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %i.x) #16
+  %3 = load ptr, ptr %i.r, align 8, !tbaa !51
+  %4 = ptrtoint ptr %3 to i64
+  %5 = sub i64 %4, %i.w
+  call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef %5) #16
   br label %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS0_IN12_GLOBAL__N_119VectorContractToFMAES3_ISA_EEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS0_IN12_GLOBAL__N_119VectorContractToFMAES3_ISA_EEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i: ; preds = %bb.g, %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i.i

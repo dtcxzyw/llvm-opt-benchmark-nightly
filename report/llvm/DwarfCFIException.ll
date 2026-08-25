@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DwarfCFIException?download=true
+inline.NumInlined: 161
+inline.NumDeleted: 100
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -100,8 +102,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !17   ; 6 uses
   %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.f = ptrtoint ptr %i.b to i64
-  %i.g = sub i64 %i.e, %i.f                       ; 9 uses
+  %i.f = ptrtoint ptr %i.b to i64                 ; 2 uses
+  %i.g = sub i64 %i.e, %i.f                       ; 8 uses
   %i.h = ashr i64 %i.g, 5                         ; 2 uses
   %i.i = icmp sgt i64 %i.h, 0
   br i1 %i.i, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
@@ -201,7 +203,7 @@ _ZN4llvm12is_containedIRSt6vectorIPKNS_11GlobalValueESaIS4_EES4_EEbOT_RKT0_.exit
   br i1 %.not, label %_ZN4llvm12is_containedIRSt6vectorIPKNS_11GlobalValueESaIS4_EES4_EEbOT_RKT0_.exit.thread, label %_ZNSt6vectorIPKN4llvm11GlobalValueESaIS3_EE9push_backERKS3_.exit
 
 _ZN4llvm12is_containedIRSt6vectorIPKNS_11GlobalValueESaIS4_EES4_EEbOT_RKT0_.exit.thread: ; preds = %._crit_edge.i.i.i.i, %_ZN4llvm12is_containedIRSt6vectorIPKNS_11GlobalValueESaIS4_EES4_EEbOT_RKT0_.exit
-  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !15
   %.not.i = icmp eq ptr %i.d, %i.al
   br i1 %.not.i, label %bb.k, label %bb.j
@@ -246,7 +248,10 @@ _ZNSt6vectorIPKN4llvm11GlobalValueESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKN4llvm11GlobalValueESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt6vectorIPKN4llvm11GlobalValueESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef %i.g) #11
+  %2 = load ptr, ptr %i.ak, align 8, !tbaa !15
+  %3 = ptrtoint ptr %2 to i64
+  %4 = sub i64 %3, %i.f
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef %4) #11
   br label %_ZNSt6vectorIPKN4llvm11GlobalValueESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN4llvm11GlobalValueESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.n, %_ZNSt6vectorIPKN4llvm11GlobalValueESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i

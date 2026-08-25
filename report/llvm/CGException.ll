@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CGException?download=true
+inline.NumInlined: 3846
+inline.NumDeleted: 2106
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZL22emitCatchDispatchBlockRN5clang7CodeGen15CodeGenFunctionERNS0_12EHCatchScopeE:bb.a
   br label %bb.ax
 
@@ -200,8 +205,8 @@ bb.bl:                                            ; preds = %bb.bj
   br label %_ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit
 
 _ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit: ; preds = %bb.bi, %bb.bl, %bb.bk
-  %.050 = phi ptr [ %i.mv, %bb.bi ], [ %i.nb, %bb.bk ], [ %i.nf, %bb.bl ] ; 2 uses
-  %.049 = phi i1 [ true, %bb.bi ], [ true, %bb.bk ], [ false, %bb.bl ]
+  %.048 = phi i1 [ true, %bb.bi ], [ true, %bb.bk ], [ false, %bb.bl ]
+  %.0 = phi ptr [ %i.mv, %bb.bi ], [ %i.nb, %bb.bk ], [ %i.nf, %bb.bl ] ; 2 uses
   %i.ng = load ptr, ptr %i.mc, align 8, !tbaa !793
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #17
   store i16 257, ptr %i.md, align 8
@@ -222,7 +227,7 @@ _ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit: ;
   %i.no = getelementptr inbounds nuw i8, ptr %i.mi, i64 16
   %i.np = load ptr, ptr %i.no, align 8, !tbaa !767
   %i.nq = call noundef ptr @_ZN4llvm4UsernwEmNS0_28IntrusiveOperandsAllocMarkerE(i64 noundef 72, i32 3) #17 ; 3 uses
-  call void @_ZN4llvm10CondBrInstC1EPNS_5ValueEPNS_10BasicBlockES4_NS_14InsertPositionE(ptr noundef nonnull align 8 dereferenceable(72) %i.nq, ptr noundef %i.nn, ptr noundef %i.np, ptr noundef %.050, ptr null, i64 0) #17
+  call void @_ZN4llvm10CondBrInstC1EPNS_5ValueEPNS_10BasicBlockES4_NS_14InsertPositionE(ptr noundef nonnull align 8 dereferenceable(72) %i.nq, ptr noundef %i.nn, ptr noundef %i.np, ptr noundef %.0, ptr null, i64 0) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   store i16 257, ptr %i.mg, align 8
   %i.nr = load ptr, ptr %i.ln, align 8, !tbaa !743, !nonnull !387, !align !388 ; 2 uses
@@ -234,7 +239,7 @@ _ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit: ;
   call void %i.nu(ptr noundef nonnull align 8 dereferenceable(8) %i.nr, ptr noundef nonnull %i.nq, ptr noundef nonnull align 8 dereferenceable(34) %4, ptr %.sroa.0.0.copyload.i.i84, i64 %.sroa.2.0.copyload.i.i86) #17, !inline_history !936
   call void @_ZNK4llvm13IRBuilderBase20SetInstDebugLocationEPNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(88) %i.kf, ptr noundef nonnull %i.nq) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
-  br i1 %.049, label %bb.bm, label %_ZN4llvm13IRBuilderBase9restoreIPENS0_11InsertPointE.exit
+  br i1 %.048, label %bb.bm, label %_ZN4llvm13IRBuilderBase9restoreIPENS0_11InsertPointE.exit
 
 bb.bm:                                            ; preds = %_ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit
   %.not.i87 = icmp eq ptr %i.kh, null
@@ -261,7 +266,7 @@ bb.bp:                                            ; preds = %bb.bm
   br label %bb.bq
 
 _ZN4llvm13IRBuilderBase9restoreIPENS0_11InsertPointE.exit: ; preds = %_ZN4llvm14FunctionCalleeC2INS_8FunctionEMS2_KFPNS_12FunctionTypeEvEEEPT_.exit
-  call void @_ZN5clang7CodeGen15CodeGenFunction9EmitBlockEPN4llvm10BasicBlockEb(ptr noundef nonnull align 8 dereferenceable(6288) %0, ptr noundef %.050, i1 noundef zeroext false) #17
+  call void @_ZN5clang7CodeGen15CodeGenFunction9EmitBlockEPN4llvm10BasicBlockEb(ptr noundef nonnull align 8 dereferenceable(6288) %0, ptr noundef %.0, i1 noundef zeroext false) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #17
   br label %bb.bd
 

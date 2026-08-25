@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RISCVVMV0Elimination?download=true
+inline.NumInlined: 364
+inline.NumDeleted: 271
 begin_hunk_0_@_ZN4llvm30createRISCVVMV0EliminationPassEv:bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i8 0, i64 24, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 176) (i8, ptr @_ZTVN12_GLOBAL__N_120RISCVVMV0EliminationE, i64 16), ptr %i.a, align 8, !tbaa !29
@@ -200,16 +202,16 @@ bb.d:                                             ; preds = %.lr.ph146, %_ZN4llv
   br i1 %.not133139, label %.loopexit136, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d, %bb.l
-  %.sroa.7.0141 = phi i64 [ %i.cs, %bb.l ], [ 0, %bb.d ] ; 2 uses
-  %.sroa.0112.0140 = phi ptr [ %i.ct, %bb.l ], [ %i.aq, %bb.d ] ; 2 uses
-  %.val = load i16, ptr %.sroa.0112.0140, align 2, !tbaa !319
+  %.sroa.0112.0141 = phi ptr [ %i.ct, %bb.l ], [ %i.aq, %bb.d ] ; 2 uses
+  %.sroa.7.0140 = phi i64 [ %i.cs, %bb.l ], [ 0, %bb.d ] ; 2 uses
+  %.val = load i16, ptr %.sroa.0112.0141, align 2, !tbaa !319
   %i.av = icmp eq i16 %.val, 101
   br i1 %i.av, label %bb.e, label %bb.l
 
 bb.e:                                             ; preds = %.lr.ph
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0122.0145, i64 32
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !321
-  %i.ay = and i64 %.sroa.7.0141, 4294967295
+  %i.ay = and i64 %.sroa.7.0140, 4294967295
   %i.az = getelementptr inbounds nuw [32 x i8], ptr %i.ax, i64 %i.ay ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 4
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !322 ; 5 uses
@@ -328,8 +330,8 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   br label %.loopexit136
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.cs = add nuw nsw i64 %.sroa.7.0141, 1
-  %i.ct = getelementptr inbounds nuw i8, ptr %.sroa.0112.0140, i64 6 ; 2 uses
+  %i.cs = add nuw nsw i64 %.sroa.7.0140, 1
+  %i.ct = getelementptr inbounds nuw i8, ptr %.sroa.0112.0141, i64 6 ; 2 uses
   %.not133 = icmp eq ptr %i.ct, %i.au
   br i1 %.not133, label %.loopexit136, label %.lr.ph
 

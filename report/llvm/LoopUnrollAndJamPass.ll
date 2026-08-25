@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LoopUnrollAndJamPass?download=true
+inline.NumInlined: 550
+inline.NumDeleted: 404
 begin_hunk_0_@_ZN4llvm20LoopUnrollAndJamPass3runERNS_8LoopNestERNS_15AnalysisManagerINS_4LoopEJRNS_27LoopStandardAnalysisResultsEEEES6_RNS_10LPMUpdaterE:bb.a
 bb.aj:                                            ; preds = %_ZL28unrollAndJamCountPragmaValuePKN4llvm4LoopE.exit.i.i
   store i32 %i.hh, ptr %i.ba, align 4, !tbaa !134
@@ -200,9 +202,9 @@ bb.aw:                                            ; preds = %._crit_edge.i26.i
   br label %_ZL24computeUnrollAndJamCountPN4llvm4LoopES1_RKNS_19TargetTransformInfoERNS_13DominatorTreeEPNS_8LoopInfoEPNS_15AssumptionCacheERNS_15ScalarEvolutionERKNS_15SmallPtrSetImplIPKNS_5ValueEEEPNS_25OptimizationRemarkEmitterEjjRKNS_19UnrollCostEstimatorEjjRNS2_20UnrollingPreferencesERNS2_18PeelingPreferencesE.exit.i
 
 .preheader.i.i:                                   ; preds = %bb.au, %._crit_edge.i26.i
-  %.092142.i.i = phi i32 [ %.193.lcssa.i.i, %._crit_edge.i26.i ], [ 0, %bb.au ] ; 2 uses
-  %.096141.i.i = phi ptr [ %i.kc, %._crit_edge.i26.i ], [ %i.js, %bb.au ] ; 2 uses
-  %i.jz = load ptr, ptr %.096141.i.i, align 8, !tbaa !28 ; 2 uses
+  %.092142.i.i = phi ptr [ %i.kc, %._crit_edge.i26.i ], [ %i.js, %bb.au ] ; 2 uses
+  %.093141.i.i = phi i32 [ %.193.lcssa.i.i, %._crit_edge.i26.i ], [ 0, %bb.au ] ; 2 uses
+  %i.jz = load ptr, ptr %.092142.i.i, align 8, !tbaa !28 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 56
   %i.kb = getelementptr inbounds nuw i8, ptr %i.jz, i64 48 ; 2 uses
   %.sroa.0121.0136.i.i = load ptr, ptr %i.ka, align 8, !tbaa !153 ; 2 uses
@@ -210,14 +212,14 @@ bb.aw:                                            ; preds = %._crit_edge.i26.i
   br i1 %.not131137.i.i, label %._crit_edge.i26.i, label %.lr.ph140.i.i
 
 ._crit_edge.i26.i:                                ; preds = %bb.ay, %.preheader.i.i
-  %.193.lcssa.i.i = phi i32 [ %.092142.i.i, %.preheader.i.i ], [ %.395.i.i, %bb.ay ] ; 2 uses
-  %i.kc = getelementptr inbounds nuw i8, ptr %.096141.i.i, i64 8 ; 2 uses
+  %.193.lcssa.i.i = phi i32 [ %.093141.i.i, %.preheader.i.i ], [ %.395.i.i, %bb.ay ] ; 2 uses
+  %i.kc = getelementptr inbounds nuw i8, ptr %.092142.i.i, i64 8 ; 2 uses
   %.not103.i.i = icmp eq ptr %i.kc, %i.ju
   br i1 %.not103.i.i, label %bb.aw, label %.preheader.i.i
 
 .lr.ph140.i.i:                                    ; preds = %.preheader.i.i, %bb.ay
   %.sroa.0121.0139.i.i = phi ptr [ %.sroa.0121.0.i.i, %bb.ay ], [ %.sroa.0121.0136.i.i, %.preheader.i.i ] ; 3 uses
-  %.193138.i.i = phi i32 [ %.395.i.i, %bb.ay ], [ %.092142.i.i, %.preheader.i.i ] ; 2 uses
+  %.193138.i.i = phi i32 [ %.395.i.i, %bb.ay ], [ %.093141.i.i, %.preheader.i.i ] ; 2 uses
   %i.kd = getelementptr inbounds i8, ptr %.sroa.0121.0139.i.i, i64 -24
   %i.ke = load i8, ptr %i.kd, align 8, !tbaa !154
   %.not132.i.i = icmp eq i8 %i.ke, 63

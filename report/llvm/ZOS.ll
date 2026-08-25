@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ZOS?download=true
+inline.NumInlined: 849
+inline.NumDeleted: 331
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZNK5clang6driver10toolchains3ZOS19AddCXXStdlibLibArgsERKN4llvm3opt7ArgListERNS3_11SmallVectorIPKcLj16EEE:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #16
@@ -200,7 +204,7 @@ bb.a:
   %18 = alloca %"class.llvm::SmallString", align 8 ; 10 uses
   %19 = alloca %"class.llvm::Twine", align 8      ; 7 uses
   %20 = alloca %"class.llvm::Twine", align 8      ; 6 uses
-  %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
+  %21 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %22 = alloca %"class.llvm::Twine", align 8      ; 6 uses
   %i.d = tail call noundef ptr @_ZNK4llvm3opt7ArgList10getLastArgIJN5clang7options2IDEEEEPNS0_3ArgEDpT_(ptr noundef nonnull align 8 dereferenceable(176) %1, i32 noundef 3254)
   %.not101 = icmp eq ptr %i.d, null
@@ -594,7 +598,7 @@ bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #16
   call void @llvm.experimental.noalias.scope.decl(metadata !267)
-  %i.dk = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 4 uses
+  %i.dk = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 6 uses
   store ptr %i.dk, ptr %21, align 8, !tbaa !69, !alias.scope !267
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16, !noalias !267
   store i64 %i.dd, ptr %i.a, align 8, !tbaa !71, !noalias !267
@@ -622,7 +626,7 @@ bb.v:                                             ; preds = %._crit_edge.i.i.i70
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dp, ptr nonnull align 1 %i.dc, i64 %i.dd, i1 false)
   br label %_ZNK4llvm9StringRef3strB5cxx11Ev.exit72
 
-_ZNK4llvm9StringRef3strB5cxx11Ev.exit72:          ; preds = %bb.u, %bb.v
+_ZNK4llvm9StringRef3strB5cxx11Ev.exit72:          ; preds = %bb.v, %bb.u
   %i.dq = load i64, ptr %i.a, align 8, !tbaa !71, !noalias !267 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %21, i64 8
   store i64 %i.dq, ptr %i.dr, align 8, !tbaa !51, !alias.scope !267
@@ -637,12 +641,11 @@ _ZNK4llvm9StringRef3strB5cxx11Ev.exit72:          ; preds = %bb.u, %bb.v
   store ptr %21, ptr %20, align 8, !tbaa !22
   call void @_ZN5clang6driver9ToolChain16addSystemIncludeERKN4llvm3opt7ArgListERNS2_11SmallVectorIPKcLj16EEERKNS2_5TwineE(ptr noundef nonnull align 8 dereferenceable(176) %1, ptr noundef nonnull align 8 dereferenceable(144) %2, ptr noundef nonnull align 8 dereferenceable(34) %20) #16
   %i.dw = load ptr, ptr %21, align 8, !tbaa !32   ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
-  %i.dx = icmp eq ptr %i.dw, %23
+  %i.dx = icmp eq ptr %i.dw, %i.dk
   br i1 %i.dx, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i73
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i73: ; preds = %_ZNK4llvm9StringRef3strB5cxx11Ev.exit72
-  %i.dy = load i64, ptr %23, align 8, !tbaa !22
+  %i.dy = load i64, ptr %i.dk, align 8, !tbaa !22
   %i.dz = add i64 %i.dy, 1
   call void @_ZdlPvm(ptr noundef %i.dw, i64 noundef %i.dz) #17
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit75

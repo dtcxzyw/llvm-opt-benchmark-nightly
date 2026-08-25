@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaSwift?download=true
+inline.NumInlined: 1939
+inline.NumDeleted: 1133
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN5clang4Sema19checkUInt32ArgumentINS_10ParsedAttrEEEbRKT_PKNS_4ExprERjjb:_ZN4llvm5APIntD2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNK5clang8SemaBase21SemaDiagnosticBuilderlsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEvEERKS1_OT_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -200,8 +204,8 @@ _ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread106: ; preds = %
   br label %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread
 
 _ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread: ; preds = %bb.e, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread106, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit
-  %.sroa.7.0 = phi i64 [ 0, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit ], [ %i.bj, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread106 ], [ 0, %bb.e ] ; 3 uses
   %.sroa.095.0 = phi ptr [ null, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit ], [ %i.bg, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread106 ], [ null, %bb.e ] ; 3 uses
+  %.sroa.7.0 = phi i64 [ 0, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit ], [ %i.bj, %_ZNK5clang4Type5getAsINS_17FunctionProtoTypeEEEPKT_v.exit.thread106 ], [ 0, %bb.e ] ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !855
   switch i32 %i.bl, label %.critedge63 [
@@ -604,8 +608,8 @@ bb.ad:                                            ; preds = %.preheader.i
   br label %_ZNK4llvm9StringRef5splitEc.exit147.i
 
 _ZNK4llvm9StringRef5splitEc.exit147.i:            ; preds = %bb.ad, %bb.ac
-  %.sroa.0186.0.i = phi ptr [ %.sroa.0186.0.copyload.i, %bb.ac ], [ %i.ey, %bb.ad ] ; 5 uses
   %.sroa.5.0.i = phi i64 [ %.sroa.5.0.copyload.i, %bb.ac ], [ %.sroa.speculated.i.i.i143.i, %bb.ad ] ; 5 uses
+  %.sroa.0186.0.i = phi ptr [ %.sroa.0186.0.copyload.i, %bb.ac ], [ %i.ey, %bb.ad ] ; 5 uses
   %.sroa.9.0.i = phi i64 [ 0, %bb.ac ], [ %i.fb, %bb.ad ] ; 2 uses
   %.sroa.6.0.i = phi ptr [ null, %bb.ac ], [ %i.fa, %bb.ad ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TensorToSPIRV?download=true
+inline.NumInlined: 597
+inline.NumDeleted: 446
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -147,7 +152,7 @@ _ZN4llvm15SmallVectorImplINS_9StringRefEE7reserveEm.exit.i.i.i.i: ; preds = %bb.
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !73   ; 6 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !74
   %.not.i.i.i = icmp eq ptr %i.r, %i.t
   br i1 %.not.i.i.i, label %bb.e, label %bb.d
@@ -161,8 +166,8 @@ bb.d:                                             ; preds = %_ZN4llvm15SmallVect
 bb.e:                                             ; preds = %_ZN4llvm15SmallVectorImplINS_9StringRefEE7reserveEm.exit.i.i.i.i
   %i.v = load ptr, ptr %i.p, align 8, !tbaa !78   ; 10 uses
   %i.w = ptrtoint ptr %i.r to i64                 ; 3 uses
-  %i.x = ptrtoint ptr %i.v to i64                 ; 3 uses
-  %i.y = sub i64 %i.w, %i.x                       ; 4 uses
+  %i.x = ptrtoint ptr %i.v to i64                 ; 4 uses
+  %i.y = sub i64 %i.w, %i.x                       ; 3 uses
   %i.z = icmp eq i64 %i.y, 9223372036854775800
   br i1 %i.z, label %bb.f, label %_ZNKSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i.i
 
@@ -262,7 +267,10 @@ _ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5
   br i1 %.not.i23.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS0_IN12_GLOBAL__N_120TensorExtractPatternES3_ISA_EEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.v, i64 noundef %i.y) #15
+  %5 = load ptr, ptr %i.s, align 8, !tbaa !74
+  %6 = ptrtoint ptr %5 to i64
+  %7 = sub i64 %6, %i.x
+  call void @_ZdlPvm(ptr noundef nonnull %i.v, i64 noundef %7) #15
   br label %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS0_IN12_GLOBAL__N_120TensorExtractPatternES3_ISA_EEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE17_M_realloc_insertIJS0_IN12_GLOBAL__N_120TensorExtractPatternES3_ISA_EEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i.i: ; preds = %bb.g, %_ZNSt6vectorISt10unique_ptrIN4mlir14RewritePatternESt14default_deleteIS2_EESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit22.i.i.i.i

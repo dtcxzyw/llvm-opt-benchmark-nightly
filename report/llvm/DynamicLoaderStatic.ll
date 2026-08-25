@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DynamicLoaderStatic?download=true
+inline.NumInlined: 140
+inline.NumDeleted: 113
 begin_hunk_0_@_ZN19DynamicLoaderStatic28LoadAllImagesAtFileAddressesEv:bb.a
   tail call void %i.v(ptr noundef nonnull align 8 dereferenceable(16) %i.e) #14, !inline_history !26
   %i.w = load ptr, ptr %i.e, align 8, !tbaa !24
@@ -200,7 +202,7 @@ bb.w:                                             ; preds = %bb.v
 
 .lr.ph:                                           ; preds = %bb.w, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %.048 = phi i64 [ %i.de, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 0, %bb.w ] ; 2 uses
-  %.01847 = phi i1 [ %.1.a, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ true, %bb.w ]
+  %.01847 = phi i1 [ %cond, %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ true, %bb.w ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @_ZNK12lldb_private11SectionList17GetSectionAtIndexEm(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.454") align 8 %3, ptr noundef nonnull align 8 dereferenceable(24) %i.ce, i64 noundef %.048) #14
   %i.cm = load ptr, ptr %3, align 8, !tbaa !121
@@ -216,8 +218,8 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.x, %bb.y
-  %.1.a = phi i1 [ %.01847, %bb.y ], [ false, %bb.x ] ; 2 uses
-  %cond = phi i1 [ true, %bb.y ], [ false, %bb.x ]
+  %.1.a = phi i1 [ true, %bb.y ], [ false, %bb.x ]
+  %cond = phi i1 [ %.01847, %bb.y ], [ false, %bb.x ] ; 2 uses
   %i.co = load ptr, ptr %i.bm, align 8, !tbaa !115 ; 8 uses
   %.not.i.i = icmp eq ptr %i.co, null
   br i1 %.not.i.i, label %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.aa
@@ -270,11 +272,11 @@ _ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.e
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   %i.de = add nuw i64 %.048, 1                    ; 2 uses
   %i.df = icmp ult i64 %i.de, %i.cl
-  %or.cond = select i1 %cond, i1 %i.df, i1 false
+  %or.cond = select i1 %.1.a, i1 %i.df, i1 false
   br i1 %or.cond, label %.lr.ph, label %._crit_edge, !llvm.loop !125
 
 ._crit_edge:                                      ; preds = %_ZNSt12__shared_ptrIN12lldb_private7SectionELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  br i1 %.1.a, label %.critedge, label %bb.ag
+  br i1 %cond, label %.critedge, label %bb.ag
 
 .critedge:                                        ; preds = %bb.w, %bb.u, %bb.v, %._crit_edge
   %i.dg = load ptr, ptr %2, align 8, !tbaa !113

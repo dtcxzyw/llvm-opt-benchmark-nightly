@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CallLowering?download=true
+inline.NumInlined: 2502
+inline.NumDeleted: 930
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNK4llvm12CallLowering9lowerCallERNS_16MachineIRBuilderERKNS_8CallBaseENS_8ArrayRefINS_8RegisterEEENS6_IS8_EES7_St8optionalINS0_11PtrAuthInfoEES7_St8functionIFS7_vEE:bb.a
   %.sroa.4167.0..sroa_idx = getelementptr inbounds nuw i8, ptr %19, i64 12
   store i32 %i.gj, ptr %.sroa.4167.0..sroa_idx, align 4, !tbaa !252
@@ -200,8 +204,8 @@ bb.ak:                                            ; preds = %_ZNK4llvm8CallBase1
   br label %_ZNK4llvm8CallBase11getRetAlignEv.exit.thread
 
 _ZNK4llvm8CallBase11getRetAlignEv.exit.thread:    ; preds = %bb.ai, %bb.ah, %_ZN4llvm16dyn_cast_or_nullINS_8FunctionENS_5ValueEEEDaPT0_.exit.i.i109, %_ZNK4llvm8CallBase11getRetAlignEv.exit, %bb.ak, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit106
-  %.sroa.0148.1 = phi i64 [ 0, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit106 ], [ %i.io, %bb.ak ], [ 0, %_ZNK4llvm8CallBase11getRetAlignEv.exit ], [ 0, %_ZN4llvm16dyn_cast_or_nullINS_8FunctionENS_5ValueEEEDaPT0_.exit.i.i109 ], [ 0, %bb.ah ], [ 0, %bb.ai ]
   %.sroa.0149.1 = phi i32 [ 0, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit106 ], [ %i.im, %bb.ak ], [ 0, %_ZNK4llvm8CallBase11getRetAlignEv.exit ], [ 0, %_ZN4llvm16dyn_cast_or_nullINS_8FunctionENS_5ValueEEEDaPT0_.exit.i.i109 ], [ 0, %bb.ah ], [ 0, %bb.ai ] ; 2 uses
+  %.sroa.0148.1 = phi i64 [ 0, %_ZN4llvm12CallLowering7ArgInfoD2Ev.exit106 ], [ %i.io, %bb.ak ], [ 0, %_ZNK4llvm8CallBase11getRetAlignEv.exit ], [ 0, %_ZN4llvm16dyn_cast_or_nullINS_8FunctionENS_5ValueEEEDaPT0_.exit.i.i109 ], [ 0, %bb.ah ], [ 0, %bb.ai ]
   %i.ip = load i32, ptr %i.cf, align 4, !noalias !280
   %i.iq = icmp slt i32 %i.ip, 0
   br i1 %i.iq, label %_ZNK4llvm8CallBase20bundle_op_info_beginEv.exit.i.i117, label %_ZNK4llvm8CallBase20getNumOperandBundlesEv.exit.i111
@@ -604,7 +608,7 @@ bb.e:                                             ; preds = %.lr.ph
   store i32 0, ptr %i.am, align 8, !tbaa !82
   %i.an = getelementptr inbounds nuw i8, ptr %i.ai, i64 20
   store i32 4, ptr %i.an, align 4, !tbaa !83
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.al, ptr noundef nonnull align 4 dereferenceable(16) %7, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 4 dereferenceable(16) %7, i64 16, i1 false)
   store i32 1, ptr %i.am, align 8, !tbaa !82
   %i.ao = load i32, ptr %i.n, align 8, !tbaa !82
   %i.ap = add i32 %i.ao, 1
@@ -1007,7 +1011,7 @@ _ZN4llvm12CallLowering7ArgInfoC2ENS_8ArrayRefINS_8RegisterEEEPNS_4TypeEjNS2_INS_
   store i32 0, ptr %i.z, align 8, !tbaa !82
   %i.aa = getelementptr inbounds nuw i8, ptr %i.t, i64 20
   store i32 4, ptr %i.aa, align 4, !tbaa !83
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.y, ptr noundef nonnull align 4 dereferenceable(16) %i.k, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, ptr noundef nonnull align 4 dereferenceable(16) %i.k, i64 16, i1 false)
   store i32 1, ptr %i.z, align 8, !tbaa !82
   %i.ab = getelementptr inbounds nuw i8, ptr %i.t, i64 88
   %i.ac = getelementptr inbounds nuw i8, ptr %i.t, i64 104 ; 2 uses
@@ -1087,7 +1091,7 @@ _ZN4llvm12CallLowering7ArgInfoC2ENS_8ArrayRefINS_8RegisterEEEPNS_4TypeEjNS2_INS_
   store i32 0, ptr %i.bq, align 8, !tbaa !82
   %i.br = getelementptr inbounds nuw i8, ptr %i.bl, i64 20
   store i32 4, ptr %i.br, align 4, !tbaa !83
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.bp, ptr noundef nonnull align 4 dereferenceable(16) %i.bf, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bp, ptr noundef nonnull align 4 dereferenceable(16) %i.bf, i64 16, i1 false)
   store i32 1, ptr %i.bq, align 8, !tbaa !82
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bl, i64 88
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bl, i64 104 ; 2 uses
@@ -1172,7 +1176,7 @@ _ZN4llvm12CallLowering7ArgInfoC2ENS_8ArrayRefINS_8RegisterEEEPNS_4TypeEjNS2_INS_
   store i32 0, ptr %i.dl, align 8, !tbaa !82
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dg, i64 20
   store i32 4, ptr %i.dm, align 4, !tbaa !83
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.dk, ptr noundef nonnull align 4 dereferenceable(16) %i.da, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dk, ptr noundef nonnull align 4 dereferenceable(16) %i.da, i64 16, i1 false)
   store i32 1, ptr %i.dl, align 8, !tbaa !82
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dg, i64 88
   %i.do = getelementptr inbounds nuw i8, ptr %i.dg, i64 104 ; 2 uses
@@ -1575,7 +1579,7 @@ bb.a:
   store i32 0, ptr %i.k, align 8, !tbaa !82
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 20
   store i32 4, ptr %i.l, align 4, !tbaa !83
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.j, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.j, ptr noundef nonnull align 4 dereferenceable(16) %2, i64 16, i1 false)
   store i32 1, ptr %i.k, align 8, !tbaa !82
   %i.m = load ptr, ptr %0, align 8, !tbaa !81     ; 3 uses
   %i.n = load i32, ptr %i.d, align 8, !tbaa !82   ; 2 uses

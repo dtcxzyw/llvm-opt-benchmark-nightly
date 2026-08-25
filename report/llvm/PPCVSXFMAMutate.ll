@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PPCVSXFMAMutate?download=true
+inline.NumInlined: 751
+inline.NumDeleted: 499
 begin_hunk_0_@_ZN12_GLOBAL__N_115PPCVSXFMAMutate20runOnMachineFunctionERN4llvm15MachineFunctionE:bb.a
   %i.wg = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i, -8
   %i.wh = inttoptr i64 %i.wg to ptr
@@ -200,10 +202,10 @@ bb.ay:                                            ; preds = %_ZN4llvm13LiveInter
   %.sroa.5301.0402.i = phi ptr [ %i.aai, %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit.i ], [ %i.zb, %.lr.ph404.preheader.i ] ; 2 uses
   %.sroa.9.0401.i = phi i32 [ %i.aal, %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit.i ], [ %i.zc, %.lr.ph404.preheader.i ] ; 3 uses
   %i.zd = load ptr, ptr %i.s, align 8, !tbaa !314 ; 3 uses
-  %i.ze = getelementptr inbounds nuw i8, ptr %i.zd, i64 408
-  %i.zf = zext i32 %.sroa.9.0401.i to i64
+  %i.ze = getelementptr inbounds nuw i8, ptr %i.zd, i64 408 ; 2 uses
+  %i.zf = zext i32 %.sroa.9.0401.i to i64         ; 2 uses
   %i.zg = load ptr, ptr %i.ze, align 8, !tbaa !21
-  %i.zh = getelementptr inbounds nuw [8 x i8], ptr %i.zg, i64 %i.zf ; 2 uses
+  %i.zh = getelementptr inbounds nuw [8 x i8], ptr %i.zg, i64 %i.zf
   %i.zi = load ptr, ptr %i.zh, align 8, !tbaa !509 ; 2 uses
   %.not.i287.i = icmp eq ptr %i.zi, null
   br i1 %.not.i287.i, label %bb.az, label %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit.i
@@ -234,7 +236,7 @@ bb.ba:                                            ; preds = %bb.az
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.zt, i8 0, i64 32, i1 false), !noalias !511
   store ptr %i.zu, ptr %i.zv, align 8, !tbaa !514, !noalias !511
   %i.zw = getelementptr inbounds nuw i8, ptr %i.zt, i64 32
-  store ptr %i.zu, ptr %i.zw, align 8, !tbaa !515, !noalias !511
+  store ptr %i.zu, ptr %i.zw, align 16, !tbaa !515, !noalias !511
   %i.zx = getelementptr inbounds nuw i8, ptr %i.zt, i64 40
   store i64 0, ptr %i.zx, align 8, !tbaa !516, !noalias !511
   br label %_ZN4llvm9LiveRangeC2Eb.exit.i.i
@@ -243,7 +245,9 @@ _ZN4llvm9LiveRangeC2Eb.exit.i.i:                  ; preds = %bb.ba, %bb.az
   %storemerge.i.i289.i = phi ptr [ %i.zt, %bb.ba ], [ null, %bb.az ]
   %i.zy = getelementptr inbounds nuw i8, ptr %i.zj, i64 96
   store ptr %storemerge.i.i289.i, ptr %i.zy, align 8, !tbaa !517
-  store ptr %i.zj, ptr %i.zh, align 8, !tbaa !509
+  %2 = load ptr, ptr %i.ze, align 8, !tbaa !21
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.zf
+  store ptr %i.zj, ptr %3, align 8, !tbaa !509
   tail call void @_ZN4llvm13LiveIntervals19computeRegUnitRangeERNS_9LiveRangeENS_9MCRegUnitE(ptr noundef nonnull align 8 dereferenceable(424) %i.zd, ptr noundef nonnull align 8 dereferenceable(104) %i.zj, i32 noundef %.sroa.9.0401.i) #15
   %.pre.i = load ptr, ptr %i.s, align 8, !tbaa !314
   br label %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit.i

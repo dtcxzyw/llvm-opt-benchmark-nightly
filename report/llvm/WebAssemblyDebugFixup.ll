@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WebAssemblyDebugFixup?download=true
+inline.NumInlined: 374
+inline.NumDeleted: 249
 begin_hunk_0_@_ZN12_GLOBAL__N_121WebAssemblyDebugFixup20runOnMachineFunctionERN4llvm15MachineFunctionE:bb.a
 _ZNK4llvm14ilist_iteratorINS_12ilist_detail12node_optionsINS_12MachineInstrELb1ELb1EvLb0EvEELb0ELb0EE5isEndEv.exit.preheader.i.i.i.i.i.i: ; preds = %.lr.ph.i
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.01.06.i, i64 44
@@ -200,16 +202,16 @@ bb.o:                                             ; preds = %.lr.ph164
   br i1 %.not147, label %.critedge, label %.lr.ph153
 
 bb.p:                                             ; preds = %.lr.ph, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread
-  %.sroa.8.2146.a = phi ptr [ %.sroa.8.1160, %.lr.ph ], [ %.sroa.8.3, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread ] ; 5 uses
-  %.sroa.091.0145 = phi ptr [ %i.co, %.lr.ph ], [ %i.cx, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread ] ; 2 uses
-  %i.cx = getelementptr inbounds i8, ptr %.sroa.091.0145, i64 -32 ; 3 uses
+  %.sroa.8.2146.a = phi ptr [ %i.co, %.lr.ph ], [ %i.cx, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread ] ; 2 uses
+  %.sroa.091.0145 = phi ptr [ %.sroa.8.1160, %.lr.ph ], [ %.sroa.8.3, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread ] ; 5 uses
+  %i.cx = getelementptr inbounds i8, ptr %.sroa.8.2146.a, i64 -32 ; 3 uses
   %i.cy = load i32, ptr %i.cx, align 8
   %i.cz = and i32 %i.cy, 255
   %i.da = icmp eq i32 %i.cz, 0
   br i1 %i.da, label %bb.q, label %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread
 
 bb.q:                                             ; preds = %bb.p
-  %i.db = getelementptr inbounds i8, ptr %.sroa.091.0145, i64 -28
+  %i.db = getelementptr inbounds i8, ptr %.sroa.8.2146.a, i64 -28
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !174 ; 2 uses
   %i.dd = and i32 %i.dc, 2147483647               ; 2 uses
   %i.de = load i32, ptr %i.g, align 8, !tbaa !175
@@ -230,8 +232,8 @@ _ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73: ; pre
   br i1 %.not122.a, label %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread, label %bb.r
 
 bb.r:                                             ; preds = %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73
-  %i.do = getelementptr inbounds i8, ptr %.sroa.8.2146.a, i64 -16 ; 4 uses
-  %.sroa.3.0..sroa_idx = getelementptr inbounds i8, ptr %.sroa.8.2146.a, i64 -8
+  %i.do = getelementptr inbounds i8, ptr %.sroa.091.0145, i64 -16 ; 4 uses
+  %.sroa.3.0..sroa_idx = getelementptr inbounds i8, ptr %.sroa.091.0145, i64 -8
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..sroa_idx, align 8, !tbaa !187 ; 4 uses
   %.not54 = icmp eq ptr %.sroa.3.0.copyload, null
   br i1 %.not54, label %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread, label %bb.s
@@ -298,7 +300,7 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i: ; preds
   br label %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread
 
 _ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73.thread: ; preds = %bb.q, %.split, %bb.r, %_ZNK4llvm12MachineInstr12isTerminatorENS0_9QueryTypeE.exit, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73, %bb.p
-  %.sroa.8.3 = phi ptr [ %i.do, %bb.r ], [ %i.do, %_ZNK4llvm12MachineInstr12isTerminatorENS0_9QueryTypeE.exit ], [ %i.do, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ], [ %.sroa.8.2146.a, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73 ], [ %.sroa.8.2146.a, %bb.p ], [ %i.do, %.split ], [ %.sroa.8.2146.a, %bb.q ] ; 2 uses
+  %.sroa.8.3 = phi ptr [ %i.do, %bb.r ], [ %i.do, %_ZNK4llvm12MachineInstr12isTerminatorENS0_9QueryTypeE.exit ], [ %i.do, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ], [ %.sroa.091.0145, %_ZNK4llvm23WebAssemblyFunctionInfo16isVRegStackifiedENS_8RegisterE.exit73 ], [ %.sroa.091.0145, %bb.p ], [ %i.do, %.split ], [ %.sroa.091.0145, %bb.q ] ; 2 uses
   %.not120.a = icmp eq ptr %i.cx, %i.cn
   br i1 %.not120.a, label %._crit_edge, label %bb.p
 

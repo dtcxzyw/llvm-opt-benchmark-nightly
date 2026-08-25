@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Builder?download=true
+inline.NumInlined: 164
+inline.NumDeleted: 109
 begin_hunk_0_@_ZNK4mlir6tblgen7Builder9Parameter10getCppTypeEv:bb.a
 bb.c:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.g, i64 168
@@ -200,8 +202,8 @@ _ZN4llvmneENS_9StringRefES0_.exit.thread39:       ; preds = %_ZN4llvmneENS_9Stri
 bb.c:                                             ; preds = %.lr.ph, %_ZN4llvm15SmallVectorImplIN4mlir6tblgen7Builder9ParameterEE12emplace_backIJRS4_EEES7_DpOT_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN4llvm15SmallVectorImplIN4mlir6tblgen7Builder9ParameterEE12emplace_backIJRS4_EEES7_DpOT_.exit ] ; 3 uses
   %.049 = phi i1 [ false, %.lr.ph ], [ %.1, %_ZN4llvm15SmallVectorImplIN4mlir6tblgen7Builder9ParameterEE12emplace_backIJRS4_EEES7_DpOT_.exit ] ; 2 uses
-  %.sroa.2.047 = phi i64 [ undef, %.lr.ph ], [ %.sroa.2.1, %_ZN4llvm15SmallVectorImplIN4mlir6tblgen7Builder9ParameterEE12emplace_backIJRS4_EEES7_DpOT_.exit ]
-  %.sroa.029.046 = phi ptr [ undef, %.lr.ph ], [ %.sroa.029.1, %_ZN4llvm15SmallVectorImplIN4mlir6tblgen7Builder9ParameterEE12emplace_backIJRS4_EEES7_DpOT_.exit ]
+  %.sroa.029.047 = phi ptr [ undef, %.lr.ph ], [ %.sroa.029.1, %_ZN4llvm15SmallVectorImplIN4mlir6tblgen7Builder9ParameterEE12emplace_backIJRS4_EEES7_DpOT_.exit ]
+  %.sroa.2.046 = phi i64 [ undef, %.lr.ph ], [ %.sroa.2.1, %_ZN4llvm15SmallVectorImplIN4mlir6tblgen7Builder9ParameterEE12emplace_backIJRS4_EEES7_DpOT_.exit ]
   %i.al = load i32, ptr %i.af, align 8, !tbaa !97
   %i.am = zext i32 %i.al to i64
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %i.am
@@ -221,9 +223,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %.sroa.029.1 = phi ptr [ %.sroa.0.0.copyload.i, %bb.d ], [ %.sroa.029.046, %bb.c ] ; 2 uses
-  %.sroa.2.1 = phi i64 [ %.sroa.2.0.copyload.i, %bb.d ], [ %.sroa.2.047, %bb.c ] ; 2 uses
   %.sroa.330.0 = phi i8 [ 1, %bb.d ], [ 0, %bb.c ]
+  %.sroa.2.1 = phi i64 [ %.sroa.2.0.copyload.i, %bb.d ], [ %.sroa.2.046, %bb.c ] ; 2 uses
+  %.sroa.029.1 = phi ptr [ %.sroa.0.0.copyload.i, %bb.d ], [ %.sroa.029.047, %bb.c ] ; 2 uses
   store ptr %.sroa.029.1, ptr %6, align 8
   store i64 %.sroa.2.1, ptr %.sroa.435.0..sroa_idx, align 8
   store i8 %.sroa.330.0, ptr %.sroa.536.0..sroa_idx, align 8

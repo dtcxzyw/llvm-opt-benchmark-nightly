@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RegisterAliasing?download=true
+inline.NumInlined: 372
+inline.NumDeleted: 207
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm8exegesis23RegisterAliasingTracker24FillOriginAndAliasedBitsERKNS_14MCRegisterInfoERKNS_9BitVectorE:bb.a
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !30
   %i.bu = or i64 %i.bo, %i.bt
@@ -200,15 +205,16 @@ bb.a:
   br i1 %.not, label %bb.b, label %_ZNSt10unique_ptrIN4llvm8exegesis23RegisterAliasingTrackerESt14default_deleteIS2_EE5resetEPS2_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load ptr, ptr %0, align 8, !tbaa !64, !nonnull !68, !align !69 ; 2 uses
+  %i.f = load ptr, ptr %0, align 8, !tbaa !64, !nonnull !68, !align !69
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !70
   %i.i = load i32, ptr %i.a, align 4, !tbaa !61
   %i.j = zext i32 %i.i to i64
   %i.k = getelementptr inbounds nuw [64 x i8], ptr %i.h, i64 %i.j
   %i.l = call noalias noundef nonnull dereferenceable(224) ptr @_Znwm(i64 noundef 224) #14 ; 3 uses
+  %2 = load ptr, ptr %0, align 8, !tbaa !64, !nonnull !68, !align !69
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @_ZN4llvm8exegesis23RegisterAliasingTrackerC1ERKNS_14MCRegisterInfoERKNS_9BitVectorERKNS_15MCRegisterClassE(ptr noundef nonnull align 8 dereferenceable(224) %i.l, ptr noundef nonnull align 8 dereferenceable(240) %i.f, ptr noundef nonnull align 8 dereferenceable(68) %i.m, ptr noundef nonnull align 8 dereferenceable(62) %i.k) #13
+  call void @_ZN4llvm8exegesis23RegisterAliasingTrackerC1ERKNS_14MCRegisterInfoERKNS_9BitVectorERKNS_15MCRegisterClassE(ptr noundef nonnull align 8 dereferenceable(224) %i.l, ptr noundef nonnull align 8 dereferenceable(240) %2, ptr noundef nonnull align 8 dereferenceable(68) %i.m, ptr noundef nonnull align 8 dereferenceable(62) %i.k) #13
   %i.n = load ptr, ptr %i.d, align 8, !tbaa !62   ; 8 uses
   store ptr %i.l, ptr %i.d, align 8, !tbaa !62
   %.not.i.i = icmp eq ptr %i.n, null

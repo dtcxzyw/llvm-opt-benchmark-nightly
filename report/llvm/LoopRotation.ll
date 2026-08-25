@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LoopRotation?download=true
+inline.NumInlined: 523
+inline.NumDeleted: 335
 begin_hunk_0_@_ZN4llvm15SmallVectorImplINS_11AssertingVHINS_9MemoryPhiEEEEaSEOS4_:bb.a
 
 .lr.ph.i.i.i.i.i.preheader:                       ; preds = %vector.memcheck, %bb.g, %middle.block
@@ -200,9 +202,9 @@ _ZSt4moveIPN4llvm11AssertingVHINS0_9MemoryPhiEEES4_ET0_T_S6_S5_.exit39: ; preds 
   %i.by = getelementptr [8 x i8], ptr %i.bv, i64 %.026 ; 5 uses
   %i.bz = getelementptr [8 x i8], ptr %i.bw, i64 %.026 ; 5 uses
   %i.ca = shl nuw nsw i64 %.pre-phi, 3
-  %2 = add nsw i64 %i.ca, -8
-  %3 = shl nuw nsw i64 %.026, 3
-  %i.cb = sub nsw i64 %2, %3                      ; 2 uses
+  %2 = shl nuw nsw i64 %.026, 3
+  %3 = add nsw i64 %i.ca, -8
+  %i.cb = sub nsw i64 %3, %2                      ; 2 uses
   %i.cc = lshr exact i64 %i.cb, 3
   %i.cd = add nuw nsw i64 %i.cc, 1                ; 2 uses
   %min.iters.check105 = icmp ult i64 %i.cb, 72

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PlatformRemoteDarwinDevice?download=true
+inline.NumInlined: 492
+inline.NumDeleted: 296
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN12lldb_private26PlatformRemoteDarwinDevice13GetSymbolFileERKNS_8FileSpecEPKNS_4UUIDERS1_:bb.a
   store ptr %i.ac, ptr %5, align 8, !tbaa !116
   %i.ap = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -200,8 +204,8 @@ bb.ac:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit151, %bb.ac, %bb.s, %bb.i
-  %cond1.a = phi i1 [ false, %bb.ac ], [ false, %bb.i ], [ false, %bb.s ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit151 ], [ false, %.sink.split ]
-  %.0 = phi i1 [ true, %bb.ac ], [ true, %bb.i ], [ true, %bb.s ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit151 ], [ true, %.sink.split ]
+  %cond1.a = phi i1 [ true, %bb.ac ], [ true, %bb.i ], [ true, %bb.s ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit151 ], [ true, %.sink.split ]
+  %.0 = phi i1 [ false, %bb.ac ], [ false, %bb.i ], [ false, %bb.s ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit151 ], [ false, %.sink.split ]
   %i.cm = load ptr, ptr %5, align 8, !tbaa !116   ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.co = icmp eq ptr %i.cm, %i.cn
@@ -215,7 +219,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i15
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit154: ; preds = %bb.ad, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i152
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  br i1 %cond1.a, label %bb.ae, label %bb.ag
+  br i1 %.0, label %bb.ae, label %bb.ag
 
 bb.ae:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit154, %bb.d
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !8
@@ -256,7 +260,7 @@ bb.af:                                            ; preds = %_ZN12lldb_private6G
 
 bb.ag:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit154
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
-  br i1 %.0, label %bb.ai, label %bb.ah
+  br i1 %cond1.a, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   call void @_ZN12lldb_private6StatusD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %0) #18

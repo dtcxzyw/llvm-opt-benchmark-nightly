@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ReduceDIMetadata?download=true
+inline.NumInlined: 779
+inline.NumDeleted: 511
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -111,11 +115,11 @@ bb.a:
   br label %bb.h
 
 .lr.ph:                                           ; preds = %bb.a, %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE9push_backERKS2_.exit
-  %.035147 = phi ptr [ %i.al, %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE9push_backERKS2_.exit ], [ %i.j, %bb.a ] ; 2 uses
+  %.035147 = phi ptr [ %i.al, %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE9push_backERKS2_.exit ], [ %i.j, %bb.a ] ; 3 uses
   %.sroa.0105.0146 = phi ptr [ %.sroa.0105.1, %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE9push_backERKS2_.exit ], [ null, %bb.a ] ; 6 uses
   %.sroa.9.0145 = phi ptr [ %.sroa.9.1, %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE9push_backERKS2_.exit ], [ null, %bb.a ] ; 5 uses
   %.sroa.19.0144 = phi ptr [ %.sroa.19.1, %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE9push_backERKS2_.exit ], [ null, %bb.a ] ; 3 uses
-  %i.u = load ptr, ptr %.035147, align 8, !tbaa !13 ; 3 uses
+  %i.u = load ptr, ptr %.035147, align 8, !tbaa !13 ; 2 uses
   %.not49 = icmp eq ptr %i.u, null
   br i1 %.not49, label %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE9push_backERKS2_.exit, label %bb.b
 
@@ -151,7 +155,8 @@ _ZNKSt6vectorIPN4llvm6MDNodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   %i.af = shl nuw nsw i64 %i.ae, 3
   %i.ag = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.af) #14 ; 4 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 %i.y ; 2 uses
-  store ptr %i.u, ptr %i.ah, align 8, !tbaa !13
+  %6 = load ptr, ptr %.035147, align 8, !tbaa !13
+  store ptr %6, ptr %i.ah, align 8, !tbaa !13
   %i.ai = icmp sgt i64 %i.y, 0
   br i1 %i.ai, label %bb.f, label %_ZNSt6vectorIPN4llvm6MDNodeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/EmulateInstructionMIPS?download=true
+inline.NumInlined: 1259
+inline.NumDeleted: 511
 begin_hunk_0_@_ZN22EmulateInstructionMIPS14Emulate_B16_MMERN4llvm6MCInstE:bb.a
   br label %bb.c
 
@@ -200,9 +202,9 @@ bb.n:                                             ; preds = %_ZNK4llvm9StringRef
   br label %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit50.thread
 
 _ZNK4llvm9StringRef18equals_insensitiveES0_.exit50.thread: ; preds = %bb.l, %bb.k, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit48.thread, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit49.thread, %bb.j, %bb.i, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit50, %bb.n, %bb.m, %bb.f, %bb.g
-  %.042 = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit49.thread ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit48.thread ], [ 0, %bb.l ], [ 0, %bb.k ], [ 6, %bb.m ], [ 6, %bb.n ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit50 ]
+  %.242 = phi i32 [ %i.ax, %bb.f ], [ %i.bb, %bb.g ], [ %i.bf, %bb.i ], [ %i.bj, %bb.j ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit49.thread ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit48.thread ], [ %spec.select70, %bb.l ], [ %spec.select, %bb.k ], [ %.038.a, %bb.m ], [ %.139, %bb.n ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit50 ]
   %.041 = phi i1 [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.i ], [ false, %bb.j ], [ false, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit49.thread ], [ false, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit48.thread ], [ false, %bb.l ], [ false, %bb.k ], [ true, %bb.m ], [ true, %bb.n ], [ false, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit50 ]
-  %.240 = phi i32 [ %i.ax, %bb.f ], [ %i.bb, %bb.g ], [ %i.bf, %bb.i ], [ %i.bj, %bb.j ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit49.thread ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit48.thread ], [ %spec.select70, %bb.l ], [ %spec.select, %bb.k ], [ %.038.a, %bb.m ], [ %.139, %bb.n ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit50 ]
+  %.038 = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit49.thread ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit48.thread ], [ 0, %bb.l ], [ 0, %bb.k ], [ 6, %bb.m ], [ 6, %bb.n ], [ 0, %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit50 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.cf = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 13, ptr %3, align 8, !tbaa !156
@@ -211,7 +213,7 @@ _ZNK4llvm9StringRef18equals_insensitiveES0_.exit50.thread: ; preds = %bb.l, %bb.
   store i32 7, ptr %i.cf, align 4, !tbaa !160
   %i.ci = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %i.ch, ptr %i.ci, align 8, !tbaa !17
-  %i.cj = sext i32 %.240 to i64
+  %i.cj = sext i32 %.242 to i64
   %i.ck = call noundef zeroext i1 @_ZN12lldb_private18EmulateInstruction21WriteRegisterUnsignedERKNS0_7ContextEN4lldb12RegisterKindEjm(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull align 8 dereferenceable(248) %3, i32 noundef 1, i32 noundef 37, i64 noundef %i.cj) #18
   br i1 %i.ck, label %bb.o, label %bb.r
 
@@ -219,7 +221,7 @@ bb.o:                                             ; preds = %_ZNK4llvm9StringRef
   br i1 %.041, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.cl = add i64 %.042, %i.aj
+  %i.cl = add i64 %.038, %i.aj
   %i.cm = and i64 %i.cl, 4294967295
   %i.cn = call noundef zeroext i1 @_ZN12lldb_private18EmulateInstruction21WriteRegisterUnsignedERKNS0_7ContextEN4lldb12RegisterKindEjm(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull align 8 dereferenceable(248) %3, i32 noundef 1, i32 noundef 31, i64 noundef %i.cm) #18
   br i1 %i.cn, label %bb.q, label %bb.r

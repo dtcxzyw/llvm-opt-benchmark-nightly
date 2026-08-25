@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/StaticLibrary?download=true
+inline.NumInlined: 1695
+inline.NumDeleted: 1068
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNK5clang4ssaf10JSONFormat19staticLibraryToJSONERKNS0_13StaticLibraryE:bb.a
   call void @_ZN4llvm4json5ValueC2ENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr nonnull @.str.1, i64 13)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
@@ -200,9 +204,9 @@ bb.i:                                             ; preds = %_ZN4llvm4json9Objec
   br i1 %.not62, label %_ZNSt6vectorIN4llvm4json5ValueESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN4llvm4json5ValueESaIS2_EE13_M_deallocateEPS2_m.exit.i
 
 _ZNSt12_Vector_baseIN4llvm4json5ValueESaIS2_EE13_M_deallocateEPS2_m.exit.i: ; preds = %bb.i
+  %17 = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.bl = mul nuw nsw i64 %i.bi, 40
   %i.bm = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bl) #21 ; 5 uses
-  %17 = getelementptr inbounds nuw i8, ptr %12, i64 8
   store ptr %i.bm, ptr %12, align 8, !tbaa !186
   store ptr %i.bm, ptr %17, align 8, !tbaa !188
   %i.bn = getelementptr inbounds nuw [40 x i8], ptr %i.bm, i64 %i.bi ; 2 uses

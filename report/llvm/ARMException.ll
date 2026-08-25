@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ARMException?download=true
+inline.NumInlined: 156
+inline.NumDeleted: 103
 begin_hunk_0_@_ZN4llvm12ARMException11endFunctionEPKNS_15MachineFunctionE:bb.a
   %i.n = icmp eq i8 %i.m, 14
   %spec.select.i.i = select i1 %i.n, ptr %i.l, ptr null ; 7 uses
@@ -200,7 +202,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %_ZN4llvmplERKNS_5TwineES2_.exit.us
 
 _ZN4llvmplERKNS_5TwineES2_.exit.us:               ; preds = %.lr.ph, %_ZN4llvmplERKNS_5TwineES2_.exit.us
-  %.sroa.070.0 = phi i64 [ %.sroa.070.0.insert.insert, %_ZN4llvmplERKNS_5TwineES2_.exit.us ], [ undef, %.lr.ph ]
   %.156.us = phi i32 [ %i.av, %_ZN4llvmplERKNS_5TwineES2_.exit.us ], [ %.0, %.lr.ph ] ; 2 uses
   %.sroa.046.055.us = phi ptr [ %i.aq, %_ZN4llvmplERKNS_5TwineES2_.exit.us ], [ %i.am, %.lr.ph ]
   %i.aq = getelementptr inbounds i8, ptr %.sroa.046.055.us, i64 -8 ; 3 uses
@@ -211,9 +212,7 @@ _ZN4llvmplERKNS_5TwineES2_.exit.us:               ; preds = %.lr.ph, %_ZN4llvmpl
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   %i.av = add nsw i32 %.156.us, -1                ; 2 uses
   %.sroa.070.0.insert.ext = zext i32 %.156.us to i64
-  %.sroa.070.0.insert.mask = and i64 %.sroa.070.0, -4294967296
-  %.sroa.070.0.insert.insert = or disjoint i64 %.sroa.070.0.insert.mask, %.sroa.070.0.insert.ext ; 2 uses
-  %i.aw = inttoptr i64 %.sroa.070.0.insert.insert to ptr
+  %i.aw = inttoptr i64 %.sroa.070.0.insert.ext to ptr
   store ptr @.str.1, ptr %4, align 8, !alias.scope !319
   store ptr %i.aw, ptr %i.an, align 8, !alias.scope !319
   store i8 3, ptr %i.ao, align 8, !tbaa !298, !alias.scope !319
@@ -305,7 +304,6 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %.lr.ph60.split.us
 
 .lr.ph60.split.us:                                ; preds = %.lr.ph60, %.thread.us
-  %.sroa.0.0 = phi ptr [ %.sroa.0.1, %.thread.us ], [ undef, %.lr.ph60 ] ; 2 uses
   %.458.us = phi i32 [ %i.cq, %.thread.us ], [ %.3, %.lr.ph60 ]
   %.sroa.041.057.us = phi ptr [ %i.di, %.thread.us ], [ %i.ch, %.lr.ph60 ] ; 2 uses
   %i.cp = load i32, ptr %.sroa.041.057.us, align 4, !tbaa !325 ; 2 uses
@@ -318,11 +316,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 80
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !20 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
-  %7 = ptrtoint ptr %.sroa.0.0 to i64
   %.sroa.0.0.insert.ext = zext i32 %i.cq to i64
-  %.sroa.0.0.insert.mask = and i64 %7, -4294967296
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.0.insert.mask, %.sroa.0.0.insert.ext
-  %i.cu = inttoptr i64 %.sroa.0.0.insert.insert to ptr ; 2 uses
+  %i.cu = inttoptr i64 %.sroa.0.0.insert.ext to ptr
   store ptr @.str.3, ptr %6, align 8, !alias.scope !326
   store ptr %i.cu, ptr %i.cm, align 8, !alias.scope !326
   store i8 3, ptr %i.cn, align 8, !tbaa !298, !alias.scope !326
@@ -340,7 +335,6 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br label %.thread.us
 
 .thread.us:                                       ; preds = %.lr.ph60.split.us, %.thread50.us
-  %.sroa.0.1 = phi ptr [ %i.cu, %.thread50.us ], [ %.sroa.0.0, %.lr.ph60.split.us ]
   %i.dd = phi ptr [ %i.dc, %.thread50.us ], [ null, %.lr.ph60.split.us ]
   %i.de = load ptr, ptr %i.a, align 8, !tbaa !19  ; 2 uses
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !8

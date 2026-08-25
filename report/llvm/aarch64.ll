@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/aarch64?download=true
+inline.NumInlined: 1475
+inline.NumDeleted: 814
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4llvm7jitlink7aarch6415GOTTableManager23registerExistingEntriesEv:bb.a
   br i1 %i.bi, label %._crit_edge, label %.lr.ph50, !llvm.loop !33
 
@@ -200,8 +204,8 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !83, !noalias !78 ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 236
   %i.h = load i32, ptr %i.g, align 4, !tbaa !84, !noalias !78 ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 232
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !85, !noalias !78 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 232 ; 2 uses
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !85, !noalias !78
   %i.k = icmp eq i32 %i.j, 0
   %i.l = zext i32 %i.h to i64                     ; 4 uses
   %.idx151 = mul nuw nsw i64 %i.l, 24             ; 2 uses
@@ -258,6 +262,7 @@ _ZN4llvm7jitlink9LinkGraph8sectionsEv.exit:       ; preds = %bb.b, %._crit_edge.
 ._crit_edge89:                                    ; preds = %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.preheader, %bb.a, %._crit_edge89.loopexit, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit
   %.0.lcssa = phi i64 [ 0, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit ], [ %i.ac, %._crit_edge89.loopexit ], [ 0, %bb.a ], [ 0, %.lr.ph.i.i.i.i.preheader ], [ 0, %.lr.ph.i.i.i.i ] ; 2 uses
   %i.ad = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #17 ; 7 uses
+  %3 = load i32, ptr %i.i, align 8, !tbaa !85
   store ptr @.str.24, ptr %i.ad, align 8, !tbaa !90
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store i64 15, ptr %.sroa.2.0..sroa_idx.i.i, align 8, !tbaa !92
@@ -266,7 +271,7 @@ _ZN4llvm7jitlink9LinkGraph8sectionsEv.exit:       ; preds = %bb.b, %._crit_edge.
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 20
   store i32 0, ptr %i.af, align 4, !tbaa !104
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
-  store i32 %i.j, ptr %i.ag, align 8, !tbaa !105
+  store i32 %3, ptr %i.ag, align 8, !tbaa !105
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ah, i8 0, i64 48, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16

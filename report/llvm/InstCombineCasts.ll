@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InstCombineCasts?download=true
+inline.NumInlined: 6421
+inline.NumDeleted: 2885
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN4llvm16InstCombinerImpl22optimizeBitCastFromPhiERNS_8CastInstEPNS_7PHINodeE:bb.a
   %i.fj = getelementptr inbounds nuw i8, ptr %.0160335, i64 8 ; 2 uses
   %.not189 = icmp eq ptr %i.fj, %i.ds
@@ -200,10 +204,10 @@ _ZN4llvm13SmallDenseMapIPNS_7PHINodeES2_Lj4ENS_12DenseMapInfoIS2_vEENS_6detail12
   br label %.critedge209
 
 bb.ar:                                            ; preds = %.lr.ph349, %._crit_edge344
-  %.0166347 = phi ptr [ null, %.lr.ph349 ], [ %.1167.lcssa, %._crit_edge344 ] ; 2 uses
-  %.0171346 = phi ptr [ %.pre362, %.lr.ph349 ], [ %i.iv, %._crit_edge344 ] ; 2 uses
+  %.0166347 = phi ptr [ %.pre362, %.lr.ph349 ], [ %i.iv, %._crit_edge344 ] ; 2 uses
+  %.0171346 = phi ptr [ null, %.lr.ph349 ], [ %.1167.lcssa, %._crit_edge344 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #17
-  %i.in = load ptr, ptr %.0171346, align 8, !tbaa !421
+  %i.in = load ptr, ptr %.0166347, align 8, !tbaa !421
   store ptr %i.in, ptr %i.f, align 8, !tbaa !421
   %i.io = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_7PHINodeES3_Lj4ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S3_EEEES3_S3_S5_S8_E24lookupOrInsertIntoBucketIRKS3_JEEESt4pairIPS8_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.f)
   %.fca.0.extract.i232 = extractvalue { ptr, i8 } %i.io, 0
@@ -220,14 +224,14 @@ bb.ar:                                            ; preds = %.lr.ph349, %._crit_
   br label %bb.as
 
 ._crit_edge344:                                   ; preds = %_ZN4llvm19InstructionWorklist4pushEPNS_11InstructionE.exit, %bb.ar
-  %.1167.lcssa = phi ptr [ %.0166347, %bb.ar ], [ %.4170, %_ZN4llvm19InstructionWorklist4pushEPNS_11InstructionE.exit ] ; 2 uses
+  %.1167.lcssa = phi ptr [ %.0171346, %bb.ar ], [ %.4170, %_ZN4llvm19InstructionWorklist4pushEPNS_11InstructionE.exit ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #17
-  %i.iv = getelementptr inbounds nuw i8, ptr %.0171346, i64 8 ; 2 uses
+  %i.iv = getelementptr inbounds nuw i8, ptr %.0166347, i64 8 ; 2 uses
   %.not190 = icmp eq ptr %i.iv, %i.em
   br i1 %.not190, label %._crit_edge350, label %bb.ar
 
 bb.as:                                            ; preds = %.lr.ph343, %_ZN4llvm19InstructionWorklist4pushEPNS_11InstructionE.exit
-  %.1167341 = phi ptr [ %.0166347, %.lr.ph343 ], [ %.4170, %_ZN4llvm19InstructionWorklist4pushEPNS_11InstructionE.exit ] ; 5 uses
+  %.1167341 = phi ptr [ %.0171346, %.lr.ph343 ], [ %.4170, %_ZN4llvm19InstructionWorklist4pushEPNS_11InstructionE.exit ] ; 5 uses
   %.sroa.0250.0340 = phi ptr [ %i.it, %.lr.ph343 ], [ %i.ix, %_ZN4llvm19InstructionWorklist4pushEPNS_11InstructionE.exit ] ; 2 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %.sroa.0250.0340, i64 8
   %i.ix = load ptr, ptr %i.iw, align 8, !tbaa !108 ; 2 uses

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Loads?download=true
+inline.NumInlined: 1908
+inline.NumDeleted: 1239
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm33isDereferenceableAndAlignedInLoopEPKNS_4SCEVENS_5AlignES2_PNS_4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeEPNS_15AssumptionCacheEPNS_15SmallVectorImplIPKNS_13SCEVPredicateEEE:bb.a
   %.not105 = icmp eq i64 %i.u, 0
   br i1 %.not105, label %bb.f, label %bb.ah
@@ -200,8 +204,8 @@ bb.w:                                             ; preds = %_ZN4llvm5APIntD2Ev.
 
 bb.x:                                             ; preds = %.thread147, %_ZN4llvm5APIntaSEOS0_.exit
   %.pre157 = phi i32 [ %i.bo, %_ZN4llvm5APIntaSEOS0_.exit ], [ %i.da, %.thread147 ]
-  %.493 = phi ptr [ %i.ba, %_ZN4llvm5APIntaSEOS0_.exit ], [ %i.dg, %.thread147 ]
-  %.488 = phi ptr [ %i.bl, %_ZN4llvm5APIntaSEOS0_.exit ], [ %i.di, %.thread147 ] ; 2 uses
+  %.493 = phi ptr [ %i.bl, %_ZN4llvm5APIntaSEOS0_.exit ], [ %i.di, %.thread147 ] ; 2 uses
+  %.488 = phi ptr [ %i.ba, %_ZN4llvm5APIntaSEOS0_.exit ], [ %i.dg, %.thread147 ]
   %i.dj = load ptr, ptr %i.an, align 8, !tbaa !65
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !68
   %i.dl = call { ptr, i64 } @_ZNK4llvm10BasicBlock16getFirstNonPHIItEv(ptr noundef nonnull align 8 dereferenceable(80) %i.dk) #14
@@ -244,15 +248,15 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #14
   store ptr %4, ptr %15, align 8, !tbaa !103
   %i.eb = getelementptr inbounds nuw i8, ptr %15, i64 8
-  store ptr %.493, ptr %i.eb, align 8, !tbaa !105
+  store ptr %.488, ptr %i.eb, align 8, !tbaa !105
   %i.ec = getelementptr inbounds nuw i8, ptr %15, i64 16
   store ptr %9, ptr %i.ec, align 8, !tbaa !108
   %i.ed = ptrtoint ptr %15 to i64
-  %i.ee = call fastcc noundef zeroext i1 @_ZL47isDereferenceableAndAlignedPointerViaAssumptionPKN4llvm5ValueENS_5AlignERKNS_13SimplifyQueryEbNS_12function_refIFbRKNS_17RetainedKnowledgeEEEE(ptr noundef %.488, i8 %1, ptr noundef nonnull align 8 dereferenceable(59) %14, i1 noundef zeroext false, ptr nonnull @"_ZN4llvm12function_refIFbRKNS_17RetainedKnowledgeEEE11callback_fnIZNS_33isDereferenceableAndAlignedInLoopEPKNS_4SCEVENS_5AlignES9_PNS_4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeEPNS_15AssumptionCacheEPNS_15SmallVectorImplIPKNS_13SCEVPredicateEEEE3$_0EEblS3_", i64 %i.ed)
+  %i.ee = call fastcc noundef zeroext i1 @_ZL47isDereferenceableAndAlignedPointerViaAssumptionPKN4llvm5ValueENS_5AlignERKNS_13SimplifyQueryEbNS_12function_refIFbRKNS_17RetainedKnowledgeEEEE(ptr noundef %.493, i8 %1, ptr noundef nonnull align 8 dereferenceable(59) %14, i1 noundef zeroext false, ptr nonnull @"_ZN4llvm12function_refIFbRKNS_17RetainedKnowledgeEEE11callback_fnIZNS_33isDereferenceableAndAlignedInLoopEPKNS_4SCEVENS_5AlignES9_PNS_4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeEPNS_15AssumptionCacheEPNS_15SmallVectorImplIPKNS_13SCEVPredicateEEEE3$_0EEblS3_", i64 %i.ed)
   br i1 %i.ee, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.ef = call noundef zeroext i1 @_ZN4llvm34isDereferenceableAndAlignedPointerEPKNS_5ValueENS_5AlignERKNS_5APIntERKNS_13SimplifyQueryEb(ptr noundef %.488, i8 %1, ptr noundef nonnull align 8 dereferenceable(12) %12, ptr noundef nonnull align 8 dereferenceable(59) %14, i1 noundef zeroext false)
+  %i.ef = call noundef zeroext i1 @_ZN4llvm34isDereferenceableAndAlignedPointerEPKNS_5ValueENS_5AlignERKNS_5APIntERKNS_13SimplifyQueryEb(ptr noundef %.493, i8 %1, ptr noundef nonnull align 8 dereferenceable(12) %12, ptr noundef nonnull align 8 dereferenceable(59) %14, i1 noundef zeroext false)
   %.pre.pre = load i32, ptr %i.bh, align 8, !tbaa !47
   br label %bb.ab
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/X86WinEHUnwindV3?download=true
+inline.NumInlined: 314
+inline.NumDeleted: 232
 begin_hunk_0_@_ZN12_GLOBAL__N_116X86WinEHUnwindV320runOnMachineFunctionERN4llvm15MachineFunctionE:bb.a
   %i.cz = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 1, ptr %i.cz, align 8, !tbaa !273
@@ -200,8 +202,8 @@ bb.x:                                             ; preds = %.lr.ph, %bb.ab
   %.pre153 = phi i32 [ %i.fg, %.lr.ph ], [ %.pre154, %bb.ab ] ; 2 uses
   %i.fi = phi i32 [ %i.fg, %.lr.ph ], [ %i.gk, %bb.ab ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ab ] ; 2 uses
+  %.048135 = phi ptr [ null, %.lr.ph ], [ %i.fj, %bb.ab ] ; 2 uses
   %.049134 = phi i32 [ 0, %.lr.ph ], [ %.251, %bb.ab ] ; 3 uses
-  %.053132 = phi ptr [ null, %.lr.ph ], [ %i.fj, %bb.ab ] ; 2 uses
   %.2111131 = phi i1 [ %.1110, %.lr.ph ], [ %.4113, %bb.ab ] ; 2 uses
   %.val = load ptr, ptr %i.u, align 8, !tbaa !21  ; 2 uses
   %i.fj = getelementptr inbounds nuw [16 x i8], ptr %.val, i64 %indvars.iv ; 4 uses
@@ -212,7 +214,7 @@ bb.y:                                             ; preds = %bb.x
   %i.fk = icmp ugt i32 %.049134, 6
   %i.fl = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
   %i.fm = load i32, ptr %i.fl, align 8, !tbaa !283
-  %i.fn = getelementptr inbounds nuw i8, ptr %.053132, i64 8
+  %i.fn = getelementptr inbounds nuw i8, ptr %.048135, i64 8
   %i.fo = load i32, ptr %i.fn, align 8, !tbaa !283
   %i.fp = sub i32 %i.fm, %i.fo
   %i.fq = icmp ugt i32 %i.fp, 32766
@@ -220,7 +222,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %or.cond, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
-  %.053.val60 = load ptr, ptr %.053132, align 8, !tbaa !285 ; 2 uses
+  %.053.val60 = load ptr, ptr %.048135, align 8, !tbaa !285 ; 2 uses
   %i.fr = getelementptr i8, ptr %.053.val60, i64 24
   %.053.val60.val = load ptr, ptr %i.fr, align 8, !tbaa !286 ; 3 uses
   %i.fs = getelementptr i8, ptr %.053.val60, i64 72

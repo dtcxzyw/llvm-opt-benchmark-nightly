@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AMDGPUISelDAGToDAG?download=true
+inline.NumInlined: 5475
+inline.NumDeleted: 1103
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 8
 begin_hunk_0_@_ZNK4llvm18AMDGPUDAGToDAGISel15SelectWMMAVISrcENS_7SDValueERS1_:bb.a
 bb.au:                                            ; preds = %.peel.next, %bb.az
   %indvars.iv = phi i64 [ 2, %.peel.next ], [ %indvars.iv.next, %bb.az ] ; 2 uses
@@ -200,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN4llvm7APFloat7StorageC2IJRKNS_5APIntEEEERKNS_12fltSemanticsEDpOT_.exit
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %2) #24
+  tail call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %1, ptr noundef nonnull align 8 dereferenceable(12) %2) #24
   br label %_ZN4llvm7APFloat7StorageC2IJRKNS_5APIntEEEERKNS_12fltSemanticsEDpOT_.exit
 
 _ZN4llvm7APFloat7StorageC2IJRKNS_5APIntEEEERKNS_12fltSemanticsEDpOT_.exit: ; preds = %bb.b, %bb.c

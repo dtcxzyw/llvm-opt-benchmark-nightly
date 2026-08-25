@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LowerExpectIntrinsic?download=true
+inline.NumInlined: 864
+inline.NumDeleted: 587
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4llvm24LowerExpectIntrinsicPass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE:bb.a
 
 bb.cw:                                            ; preds = %bb.cv
@@ -200,8 +204,8 @@ bb.do:                                            ; preds = %"_ZZL12handlePhiDef
 _ZL15getBranchWeightjPN4llvm8CallInstEi.exit.i102.i: ; preds = %bb.do, %bb.dn
   %.sink7.i.i103.i = phi i32 [ %i.sy, %bb.dn ], [ %i.ts, %bb.do ] ; 2 uses
   %.sink.i.i104.i = phi i32 [ %i.sz, %bb.dn ], [ %i.tp, %bb.do ] ; 2 uses
-  %spec.select.i105.i = select i1 %.039.i.i, i32 %.sink.i.i104.i, i32 %.sink7.i.i103.i ; 2 uses
-  %spec.select120.i.i = select i1 %.039.i.i, i32 %.sink7.i.i103.i, i32 %.sink.i.i104.i ; 2 uses
+  %spec.select.i105.i = select i1 %.039.i.i, i32 %.sink7.i.i103.i, i32 %.sink.i.i104.i ; 2 uses
+  %spec.select120.i.i = select i1 %.039.i.i, i32 %.sink.i.i104.i, i32 %.sink7.i.i103.i ; 2 uses
   %i.tt = getelementptr inbounds i8, ptr %.1.i.i.i, i64 -64 ; 2 uses
   %i.tu = getelementptr inbounds i8, ptr %.1.i.i.i, i64 -32
   %i.tv = load ptr, ptr %i.tu, align 8, !tbaa !34 ; 2 uses
@@ -220,7 +224,7 @@ bb.dq:                                            ; preds = %bb.dp
   br i1 %i.ub, label %bb.dr, label %"_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit.i.i"
 
 bb.dr:                                            ; preds = %bb.dq, %_ZL15getBranchWeightjPN4llvm8CallInstEi.exit.i102.i
-  %i.uc = call noundef ptr @_ZN4llvm9MDBuilder19createBranchWeightsEjjb(ptr noundef nonnull align 8 dereferenceable(8) %8, i32 noundef %spec.select.i105.i, i32 noundef %spec.select120.i.i, i1 noundef zeroext true) #13
+  %i.uc = call noundef ptr @_ZN4llvm9MDBuilder19createBranchWeightsEjjb(ptr noundef nonnull align 8 dereferenceable(8) %8, i32 noundef %spec.select120.i.i, i32 noundef %spec.select.i105.i, i1 noundef zeroext true) #13
   br label %"_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit76.sink.split.i.i"
 
 "_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit.i.i": ; preds = %bb.dq
@@ -236,7 +240,7 @@ bb.dr:                                            ; preds = %bb.dq, %_ZL15getBra
   br i1 %i.uh, label %bb.ds, label %"_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit76.i.i"
 
 bb.ds:                                            ; preds = %"_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit.thread.i.i", %"_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit.i.i"
-  %i.ui = call noundef ptr @_ZN4llvm9MDBuilder19createBranchWeightsEjjb(ptr noundef nonnull align 8 dereferenceable(8) %8, i32 noundef %spec.select120.i.i, i32 noundef %spec.select.i105.i, i1 noundef zeroext true) #13
+  %i.ui = call noundef ptr @_ZN4llvm9MDBuilder19createBranchWeightsEjjb(ptr noundef nonnull align 8 dereferenceable(8) %8, i32 noundef %spec.select.i105.i, i32 noundef %spec.select120.i.i, i1 noundef zeroext true) #13
   br label %"_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit76.sink.split.i.i"
 
 "_ZZL12handlePhiDefPN4llvm8CallInstEENK3$_2clEPNS_10BasicBlockE.exit76.sink.split.i.i": ; preds = %bb.ds, %bb.dr

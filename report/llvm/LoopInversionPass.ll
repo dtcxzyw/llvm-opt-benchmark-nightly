@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LoopInversionPass?download=true
+inline.NumInlined: 349
+inline.NumDeleted: 237
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -176,15 +180,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not95, label %.critedge101, label %.lr.ph99.outer
 
 .lr.ph99.outer:                                   ; preds = %bb.c, %.critedge.thread
-  %.06297.ph = phi i1 [ true, %.critedge.thread ], [ false, %bb.c ]
-  %.06696.ph = phi ptr [ %i.bc, %.critedge.thread ], [ %i.l, %bb.c ]
+  %.06497.ph = phi ptr [ %i.bc, %.critedge.thread ], [ %i.l, %bb.c ]
+  %.06896.ph = phi i1 [ true, %.critedge.thread ], [ false, %bb.c ]
   br label %.lr.ph99
 
 ._crit_edge100:                                   ; preds = %.critedge
-  br i1 %.06297.ph, label %._crit_edge100.thread, label %.critedge101
+  br i1 %.06896.ph, label %._crit_edge100.thread, label %.critedge101
 
 .lr.ph99:                                         ; preds = %.lr.ph99.outer, %.critedge
-  %.06696 = phi ptr [ %i.az, %.critedge ], [ %.06696.ph, %.lr.ph99.outer ] ; 3 uses
+  %.06696 = phi ptr [ %i.az, %.critedge ], [ %.06497.ph, %.lr.ph99.outer ] ; 3 uses
   %i.p = load ptr, ptr %.06696, align 8, !tbaa !152 ; 10 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 48
   %i.r = load i32, ptr %i.q, align 8, !tbaa !23

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaPseudoObject?download=true
+inline.NumInlined: 2610
+inline.NumDeleted: 1385
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN12_GLOBAL__N_19Rebuilder7rebuildEPN5clang4ExprE:bb.a
   %.sroa.0.0.copyload.i137 = load i32, ptr %i.fw, align 8, !tbaa !14
   %i.fx = load i16, ptr %i.fk, align 8
@@ -200,12 +204,12 @@ _ZN4llvm15SmallVectorImplIPN5clang14TypeSourceInfoEE7reserveEm.exit: ; preds = %
   br i1 %.not188, label %bb.ac, label %bb.ab
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit
-  %.sroa.10.0194 = phi i32 [ %i.kz, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.0153.0194 = phi ptr [ %i.kx, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit ], [ %i.jn, %.lr.ph.preheader ] ; 2 uses
   %.sroa.7.0193 = phi ptr [ %i.ky, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit ], [ %i.jy, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.0153.0192 = phi ptr [ %i.kx, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit ], [ %i.jn, %.lr.ph.preheader ] ; 2 uses
-  %i.kf = load ptr, ptr %.sroa.0153.0192, align 8, !tbaa !44, !noalias !909 ; 2 uses
+  %.sroa.10.0192 = phi i32 [ %i.kz, %_ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit ], [ 0, %.lr.ph.preheader ] ; 2 uses
+  %i.kf = load ptr, ptr %.sroa.0153.0194, align 8, !tbaa !44, !noalias !909 ; 2 uses
   %i.kg = load ptr, ptr %.sroa.7.0193, align 8, !tbaa !912, !noalias !909 ; 2 uses
-  %i.kh = icmp eq i32 %.sroa.10.0194, %i.jq
+  %i.kh = icmp eq i32 %.sroa.10.0192, %i.jq
   br i1 %i.kh, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.lr.ph
@@ -254,9 +258,9 @@ bb.aa:                                            ; preds = %_ZN4llvm23SmallVect
   br label %_ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit
 
 _ZN4llvm23SmallVectorTemplateBaseIPN5clang14TypeSourceInfoELb1EE9push_backES3_.exit: ; preds = %bb.z, %bb.aa
-  %i.kx = getelementptr inbounds nuw i8, ptr %.sroa.0153.0192, i64 8 ; 2 uses
+  %i.kx = getelementptr inbounds nuw i8, ptr %.sroa.0153.0194, i64 8 ; 2 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %.sroa.7.0193, i64 8
-  %i.kz = add nuw nsw i32 %.sroa.10.0194, 1
+  %i.kz = add nuw nsw i32 %.sroa.10.0192, 1
   %.not = icmp eq ptr %i.kx, %i.js
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
 

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AffineScalarReplacement?download=true
+inline.NumInlined: 886
+inline.NumDeleted: 639
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -138,25 +142,25 @@ _ZNSt10unique_ptrIN12_GLOBAL__N_123AffineScalarReplacementESt14default_deleteIS1
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_ZZN4mlir6affine4impl27AffineScalarReplacementBaseIN12_GLOBAL__N_123AffineScalarReplacementEE13resolveTypeIDEvE2id, ptr %i.c, align 8, !tbaa !11, !noalias !8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr @.str.5, ptr %i.d, align 8, !noalias !8
+  store ptr @.str.5, ptr %i.d, align 16, !noalias !8
   %.sroa.45.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i64 9, ptr %.sroa.45.0..sroa_idx.i.i.i.i, align 8, !noalias !8
-  store i8 1, ptr %i.b, align 8, !noalias !8
+  store i8 1, ptr %i.b, align 16, !noalias !8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 192
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.e, i8 0, i64 56, i1 false), !noalias !8
-  store ptr %i.g, ptr %i.f, align 8, !tbaa !14, !noalias !8
+  store ptr %i.g, ptr %i.f, align 16, !tbaa !14, !noalias !8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 188
   store i32 4, ptr %i.h, align 4, !tbaa !16, !noalias !8
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 224
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 240
-  store ptr %i.j, ptr %i.i, align 8, !tbaa !14, !noalias !8
+  store ptr %i.j, ptr %i.i, align 16, !tbaa !14, !noalias !8
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 236
   store i32 4, ptr %i.k, align 4, !tbaa !16, !noalias !8
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 272
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.l, i8 0, i64 64, i1 false), !noalias !8
-  store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN12_GLOBAL__N_123AffineScalarReplacementE, i64 16), ptr %i.a, align 8, !tbaa !17, !noalias !8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.l, i8 0, i64 64, i1 false), !noalias !8
+  store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN12_GLOBAL__N_123AffineScalarReplacementE, i64 16), ptr %i.a, align 16, !tbaa !17, !noalias !8
   store ptr %i.a, ptr %0, align 8, !tbaa !19
   ret void
 }

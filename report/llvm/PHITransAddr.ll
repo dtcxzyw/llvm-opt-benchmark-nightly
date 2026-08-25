@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PHITransAddr?download=true
+inline.NumInlined: 843
+inline.NumDeleted: 517
 begin_hunk_0_@_ZN4llvm12PHITransAddr16translateSubExprEPNS_5ValueEPNS_10BasicBlockES4_PKNS_13DominatorTreeES2_b:bb.a
 
 bb.an:                                            ; preds = %.lr.ph, %_ZN4llvm12PHITransAddr10addAsInputEPNS_5ValueE.exit284
@@ -200,16 +202,16 @@ _ZN4llvm4User8operandsEv.exit297:                 ; preds = %bb.bf, %bb.bg
   br i1 %.not248462, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit, label %.lr.ph465
 
 .lr.ph465:                                        ; preds = %_ZN4llvm4User8operandsEv.exit297, %bb.bk
-  %.0205464 = phi i1 [ %i.hd, %bb.bk ], [ false, %_ZN4llvm4User8operandsEv.exit297 ]
-  %.0208463 = phi ptr [ %i.hl, %bb.bk ], [ %i.gy, %_ZN4llvm4User8operandsEv.exit297 ] ; 2 uses
-  %i.ha = load ptr, ptr %.0208463, align 8, !tbaa !54 ; 2 uses
+  %.0213464 = phi ptr [ %i.hl, %bb.bk ], [ %i.gy, %_ZN4llvm4User8operandsEv.exit297 ] ; 2 uses
+  %.0214463 = phi i1 [ %i.hd, %bb.bk ], [ false, %_ZN4llvm4User8operandsEv.exit297 ]
+  %i.ha = load ptr, ptr %.0213464, align 8, !tbaa !54 ; 2 uses
   %i.hb = call noundef ptr @_ZN4llvm12PHITransAddr16translateSubExprEPNS_5ValueEPNS_10BasicBlockES4_PKNS_13DominatorTreeES2_b(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef %i.ha, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, i1 noundef zeroext %6) ; 4 uses
   %.not249.not = icmp eq ptr %i.hb, null
   br i1 %.not249.not, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_5ValueELb1EE9push_backES2_.exit, label %bb.bh
 
 bb.bh:                                            ; preds = %.lr.ph465
   %i.hc = icmp ne ptr %i.hb, %i.ha
-  %i.hd = or i1 %.0205464, %i.hc                  ; 2 uses
+  %i.hd = or i1 %.0214463, %i.hc                  ; 2 uses
   %i.he = load i32, ptr %i.gn, align 8, !tbaa !34 ; 2 uses
   %i.hf = load i32, ptr %i.go, align 4, !tbaa !35
   %.not.i298 = icmp ult i32 %i.he, %i.hf
@@ -230,7 +232,7 @@ bb.bj:                                            ; preds = %bb.bh
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi
-  %i.hl = getelementptr inbounds nuw i8, ptr %.0208463, i64 32 ; 2 uses
+  %i.hl = getelementptr inbounds nuw i8, ptr %.0213464, i64 32 ; 2 uses
   %.not248 = icmp eq ptr %i.hl, %i.gz
   br i1 %.not248, label %._crit_edge, label %.lr.ph465
 

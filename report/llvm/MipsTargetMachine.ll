@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MipsTargetMachine?download=true
+inline.NumInlined: 5669
+inline.NumDeleted: 2443
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @llvm.global_ctors = appending global [1 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @_GLOBAL__sub_I_MipsTargetMachine.cpp, ptr null }]
 
@@ -200,7 +204,7 @@ _ZNSt10unique_ptrIN4llvm28TargetLoweringObjectFileCOFFESt14default_deleteIS1_EED
   store i8 1, ptr %i.x, align 2, !tbaa !255, !noalias !240
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 932
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(44) %i.y, i8 0, i64 44, i1 false), !noalias !240
-  store ptr getelementptr inbounds nuw inrange(-16, 280) (i8, ptr @_ZTVN4llvm28TargetLoweringObjectFileCOFFE, i64 16), ptr %i.v, align 8, !tbaa !8, !noalias !240
+  store ptr getelementptr inbounds nuw inrange(-16, 280) (i8, ptr @_ZTVN4llvm28TargetLoweringObjectFileCOFFE, i64 16), ptr %i.v, align 16, !tbaa !8, !noalias !240
   br label %_ZL10createTLOFRKN4llvm6TripleE.exit
 
 _ZNSt10unique_ptrIN4llvm20MipsTargetObjectFileESt14default_deleteIS1_EED2Ev.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -218,10 +222,10 @@ _ZNSt10unique_ptrIN4llvm20MipsTargetObjectFileESt14default_deleteIS1_EED2Ev.exit
   %i.af = getelementptr inbounds nuw i8, ptr %i.z, i64 1008
   store ptr %i.af, ptr %i.ae, align 8, !tbaa !20, !noalias !256
   %i.ag = getelementptr inbounds nuw i8, ptr %i.z, i64 992
-  store i32 2, ptr %i.ag, align 8, !tbaa !264, !noalias !256
+  store i32 2, ptr %i.ag, align 16, !tbaa !264, !noalias !256
   %i.ah = getelementptr inbounds nuw i8, ptr %i.z, i64 1000
   store i8 1, ptr %i.ah, align 8, !tbaa !14, !noalias !256
-  store ptr getelementptr inbounds nuw inrange(-16, 288) (i8, ptr @_ZTVN4llvm20MipsTargetObjectFileE, i64 16), ptr %i.z, align 8, !tbaa !8, !noalias !256
+  store ptr getelementptr inbounds nuw inrange(-16, 288) (i8, ptr @_ZTVN4llvm20MipsTargetObjectFileE, i64 16), ptr %i.z, align 16, !tbaa !8, !noalias !256
   br label %_ZL10createTLOFRKN4llvm6TripleE.exit
 
 _ZL10createTLOFRKN4llvm6TripleE.exit:             ; preds = %_ZNSt10unique_ptrIN4llvm28TargetLoweringObjectFileCOFFESt14default_deleteIS1_EED2Ev.exit.i, %_ZNSt10unique_ptrIN4llvm20MipsTargetObjectFileESt14default_deleteIS1_EED2Ev.exit.i

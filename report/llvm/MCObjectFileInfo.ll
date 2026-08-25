@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MCObjectFileInfo?download=true
+inline.NumInlined: 1117
+inline.NumDeleted: 180
 begin_hunk_0_@_ZNK4llvm16MCObjectFileInfo19getBBAddrMapSectionERKNS_9MCSectionE:bb.a
 
 bb.h:                                             ; preds = %bb.f
@@ -200,15 +202,15 @@ _ZNK4llvm8MCSymbol7getNameEv.exit43:              ; preds = %bb.f, %bb.g
 bb.h:                                             ; preds = %_ZNK4llvm8MCSymbol7getNameEv.exit43, %bb.e
   %.sroa.5.0 = phi i64 [ 0, %bb.e ], [ %.sroa.4.0.i40, %_ZNK4llvm8MCSymbol7getNameEv.exit43 ]
   %.sroa.0.0 = phi ptr [ @.str.194, %bb.e ], [ %.sroa.0.0.i39, %_ZNK4llvm8MCSymbol7getNameEv.exit43 ]
-  %.030 = phi i32 [ %i.ae, %bb.e ], [ %i.ao, %_ZNK4llvm8MCSymbol7getNameEv.exit43 ]
-  %.029 = phi i32 [ 0, %bb.e ], [ 5, %_ZNK4llvm8MCSymbol7getNameEv.exit43 ]
+  %.030 = phi i32 [ 0, %bb.e ], [ 5, %_ZNK4llvm8MCSymbol7getNameEv.exit43 ]
+  %.029 = phi i32 [ %i.ae, %bb.e ], [ %i.ao, %_ZNK4llvm8MCSymbol7getNameEv.exit43 ]
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ac, i64 216
   %.sroa.0.0.copyload.i44 = load ptr, ptr %i.ap, align 8, !tbaa !385
   %.sroa.2.0..sroa_idx.i45 = getelementptr inbounds nuw i8, ptr %i.ac, i64 224
   %.sroa.2.0.copyload.i46 = load i64, ptr %.sroa.2.0..sroa_idx.i45, align 8, !tbaa !386
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 252
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !426
-  %i.as = tail call noundef ptr @_ZN4llvm9MCContext14getCOFFSectionENS_9StringRefEjS1_ij(ptr noundef nonnull align 8 dereferenceable(2208) %i.b, ptr %.sroa.0.0.copyload.i44, i64 %.sroa.2.0.copyload.i46, i32 noundef %.030, ptr %.sroa.0.0, i64 %.sroa.5.0, i32 noundef %.029, i32 noundef %i.ar) #10
+  %i.as = tail call noundef ptr @_ZN4llvm9MCContext14getCOFFSectionENS_9StringRefEjS1_ij(ptr noundef nonnull align 8 dereferenceable(2208) %i.b, ptr %.sroa.0.0.copyload.i44, i64 %.sroa.2.0.copyload.i46, i32 noundef %.029, ptr %.sroa.0.0, i64 %.sroa.5.0, i32 noundef %.030, i32 noundef %i.ar) #10
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.a

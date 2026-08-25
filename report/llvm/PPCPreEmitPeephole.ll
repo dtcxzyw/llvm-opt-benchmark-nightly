@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PPCPreEmitPeephole?download=true
+inline.NumInlined: 1068
+inline.NumDeleted: 570
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN12_GLOBAL__N_118PPCPreEmitPeephole20runOnMachineFunctionERN4llvm15MachineFunctionE:bb.a
 
 bb.cs:                                            ; preds = %.lr.ph438
@@ -200,17 +204,17 @@ bb.dd:                                            ; preds = %.loopexit
   br i1 %.not193445, label %.critedge, label %.lr.ph449
 
 .lr.ph449:                                        ; preds = %bb.dd, %bb.de
-  %.2179447 = phi i1 [ %spec.select200, %bb.de ], [ false, %bb.dd ]
-  %.0183446 = phi ptr [ %i.aeq, %bb.de ], [ %i.aeh, %bb.dd ] ; 3 uses
-  %i.aem = load ptr, ptr %.0183446, align 8, !tbaa !400
+  %.0169447 = phi ptr [ %i.aeq, %bb.de ], [ %i.aeh, %bb.dd ] ; 3 uses
+  %.2180446 = phi i1 [ %spec.select200, %bb.de ], [ false, %bb.dd ]
+  %i.aem = load ptr, ptr %.0169447, align 8, !tbaa !400
   %i.aen = call noundef zeroext i1 @_ZNK4llvm17MachineBasicBlock8isLiveInENS_10MCRegisterENS_11LaneBitmaskE(ptr noundef nonnull align 8 dereferenceable(360) %i.aem, i32 %i.aas, i64 -1) #17
   br i1 %i.aen, label %_ZN4llvm23SmallVectorTemplateBaseIPNS_12MachineInstrELb1EE9push_backES2_.exit291, label %bb.de
 
 bb.de:                                            ; preds = %.lr.ph449
-  %i.aeo = load ptr, ptr %.0183446, align 8, !tbaa !400
+  %i.aeo = load ptr, ptr %.0169447, align 8, !tbaa !400
   %i.aep = call noundef zeroext i1 @_ZNK4llvm17MachineBasicBlock8isLiveInENS_10MCRegisterENS_11LaneBitmaskE(ptr noundef nonnull align 8 dereferenceable(360) %i.aeo, i32 %.0.i260, i64 -1) #17 ; 2 uses
-  %spec.select200 = select i1 %i.aep, i1 true, i1 %.2179447 ; 2 uses
-  %i.aeq = getelementptr inbounds nuw i8, ptr %.0183446, i64 8 ; 2 uses
+  %spec.select200 = select i1 %i.aep, i1 true, i1 %.2180446 ; 2 uses
+  %i.aeq = getelementptr inbounds nuw i8, ptr %.0169447, i64 8 ; 2 uses
   %.not193 = icmp eq ptr %i.aeq, %i.ael
   %or.cond469 = select i1 %i.aep, i1 true, i1 %.not193
   br i1 %or.cond469, label %._crit_edge450, label %.lr.ph449

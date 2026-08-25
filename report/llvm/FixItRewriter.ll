@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/FixItRewriter?download=true
+inline.NumInlined: 744
+inline.NumDeleted: 503
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN5clang13FixItRewriterD2Ev:bb.a
   %i.h = load ptr, ptr %i.e, align 8, !tbaa !90   ; 3 uses
   %.not.i = icmp eq ptr %i.h, null
@@ -200,7 +204,7 @@ bb.a:
   %i.d = alloca i8, align 1                       ; 7 uses
   %2 = alloca %"class.clang::DiagnosticBuilder", align 8 ; 4 uses
   %3 = alloca %"class.(anonymous namespace)::RewritesReceiver", align 8 ; 5 uses
-  %i.e = alloca i32, align 4                      ; 4 uses
+  %i.e = alloca i32, align 4                      ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %6 = alloca %"class.std::error_code", align 8   ; 7 uses
@@ -408,7 +412,7 @@ bb.q:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit
 
 bb.r:                                             ; preds = %._crit_edge.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cm, ptr nonnull align 1 %i.ch, i64 %i.ci, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cm, ptr nonnull align 8 %i.ch, i64 %i.ci, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit: ; preds = %._crit_edge.i.i.i.i, %bb.q, %bb.r
@@ -438,13 +442,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
   store i32 0, ptr %6, align 8, !tbaa !161
   %i.cy = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3_V215system_categoryEv() #22
   store ptr %i.cy, ptr %i.ag, align 8, !tbaa !164
-  %i.cz = load i32, ptr %i.e, align 4, !tbaa !132 ; 2 uses
+  %i.cz = load i32, ptr %i.e, align 4, !tbaa !132
   %.not6 = icmp eq i32 %i.cz, -1
   %i.da = call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #23 ; 8 uses
   br i1 %.not6, label %_ZNSt10unique_ptrIN4llvm14raw_fd_ostreamESt14default_deleteIS1_EE5resetEPS1_.exit11, label %_ZNSt10unique_ptrIN4llvm14raw_fd_ostreamESt14default_deleteIS1_EE5resetEPS1_.exit
 
 _ZNSt10unique_ptrIN4llvm14raw_fd_ostreamESt14default_deleteIS1_EE5resetEPS1_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  call void @_ZN4llvm14raw_fd_ostreamC1EibbNS_11raw_ostream11OStreamKindE(ptr noundef nonnull align 8 dereferenceable(96) %i.da, i32 noundef %i.cz, i1 noundef zeroext true, i1 noundef zeroext false, i32 noundef 0) #20
+  %11 = load i32, ptr %i.e, align 4, !tbaa !132
+  call void @_ZN4llvm14raw_fd_ostreamC1EibbNS_11raw_ostream11OStreamKindE(ptr noundef nonnull align 8 dereferenceable(96) %i.da, i32 noundef %11, i1 noundef zeroext true, i1 noundef zeroext false, i32 noundef 0) #20
   br label %bb.s
 
 _ZNSt10unique_ptrIN4llvm14raw_fd_ostreamESt14default_deleteIS1_EE5resetEPS1_.exit11: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -554,7 +559,7 @@ bb.aa:                                            ; preds = %._crit_edge.i.i.i.i
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit25
 
 bb.ab:                                            ; preds = %._crit_edge.i.i.i.i24
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.eh, ptr nonnull align 1 %i.ec, i64 %i.ed, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.eh, ptr nonnull align 8 %i.ec, i64 %i.ed, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit25
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IN4llvm9StringRefEvEERKT_RKS3_.exit25: ; preds = %._crit_edge.i.i.i.i24, %bb.aa, %bb.ab

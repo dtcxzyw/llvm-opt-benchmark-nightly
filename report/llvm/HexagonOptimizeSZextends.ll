@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/HexagonOptimizeSZextends?download=true
+inline.NumInlined: 356
+inline.NumDeleted: 290
 begin_hunk_0_@_ZN4llvm12FunctionPass17assignPassManagerERNS_7PMStackENS_15PassManagerTypeE
 declare void @_ZN4llvm12FunctionPass17assignPassManagerERNS_7PMStackENS_15PassManagerTypeE(ptr noundef nonnull align 8 dereferenceable(28), ptr noundef nonnull align 1, i32 noundef) unnamed_addr #3
 
@@ -200,7 +202,6 @@ _ZN4llvm8Function4argsEv.exit:                    ; preds = %_ZN4llvm8Function9a
 bb.e:                                             ; preds = %.lr.ph152, %.loopexit144
   %.072151 = phi i32 [ 0, %.lr.ph152 ], [ %i.s, %.loopexit144 ]
   %.073150 = phi ptr [ %i.g, %.lr.ph152 ], [ %i.ao, %.loopexit144 ] ; 4 uses
-  %.sroa.4.0149 = phi i64 [ undef, %.lr.ph152 ], [ %.sroa.4.3, %.loopexit144 ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   %.sroa.0.0.copyload.i = load ptr, ptr %i.n, align 8, !tbaa !79
   store ptr %.sroa.0.0.copyload.i, ptr %2, align 8
@@ -225,7 +226,6 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not134145, label %.loopexit144, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g, %bb.i
-  %.sroa.4.1147 = phi i64 [ %.sroa.4.2, %bb.i ], [ %.sroa.4.0149, %bb.g ] ; 2 uses
   %.sroa.0121.0146 = phi ptr [ %i.ad, %bb.i ], [ %i.ab, %bb.g ] ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0121.0146, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !82 ; 2 uses
@@ -246,19 +246,15 @@ bb.h:                                             ; preds = %.lr.ph
   %i.ak = load ptr, ptr %i.p, align 8, !tbaa !78
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !90
-  %.sroa.4.8.insert.mask = and i64 %.sroa.4.1147, -65536
-  %.sroa.4.8.insert.insert = or disjoint i64 %.sroa.4.8.insert.mask, 1 ; 2 uses
-  call void @_ZN4llvm11Instruction12insertBeforeENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsIS0_Lb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEE(ptr noundef nonnull align 8 dereferenceable(72) %i.ah, ptr %i.am, i64 %.sroa.4.8.insert.insert) #11
+  call void @_ZN4llvm11Instruction12insertBeforeENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsIS0_Lb0ELb0EvLb1ENS_10BasicBlockEEELb0ELb0EEE(ptr noundef nonnull align 8 dereferenceable(72) %i.ah, ptr %i.am, i64 1) #11
   %i.an = call { ptr, i64 } @_ZN4llvm11Instruction15eraseFromParentEv(ptr noundef nonnull align 8 dereferenceable(72) %i.ae) #11 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph
-  %.sroa.4.2 = phi i64 [ %.sroa.4.8.insert.insert, %bb.h ], [ %.sroa.4.1147, %.lr.ph ] ; 2 uses
   %.not134 = icmp eq ptr %i.ad, null
   br i1 %.not134, label %.loopexit144, label %.lr.ph
 
 .loopexit144:                                     ; preds = %bb.i, %bb.g, %bb.f, %bb.e
-  %.sroa.4.3 = phi i64 [ %.sroa.4.0149, %bb.e ], [ %.sroa.4.0149, %bb.f ], [ %.sroa.4.0149, %bb.g ], [ %.sroa.4.2, %bb.i ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.073150, i64 40 ; 2 uses
   %.not = icmp eq ptr %i.ao, %i.m
   br i1 %.not, label %._crit_edge, label %bb.e

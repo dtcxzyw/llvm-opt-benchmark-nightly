@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/IRDLVerifiers?download=true
+inline.NumInlined: 734
+inline.NumDeleted: 417
 begin_hunk_0_@_ZN4mlir4irdl16RegionConstraint6verifyERNS_6RegionERNS0_18ConstraintVerifierE:bb.a
   %.not.i.i71 = icmp eq ptr %i.ex, null
   br i1 %.not.i.i71, label %_ZNO4mlir18InFlightDiagnosticlsImEEOS0_OT_.exit90, label %bb.am
@@ -200,29 +202,29 @@ bb.be:                                            ; preds = %_ZN4mlir6Region12ge
   br label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph, %bb.bg
-  %.sroa.7.0163 = phi ptr [ %i.de, %.lr.ph ], [ %i.hm, %bb.bg ] ; 3 uses
-  %.sroa.099.0162 = phi ptr [ %i.gy, %.lr.ph ], [ %i.hn, %bb.bg ] ; 2 uses
-  %i.hc = load ptr, ptr %.sroa.7.0163, align 8, !tbaa !120
+  %.sroa.7.0163 = phi ptr [ %i.gy, %.lr.ph ], [ %i.hn, %bb.bg ] ; 2 uses
+  %.sroa.099.0162 = phi ptr [ %i.de, %.lr.ph ], [ %i.hm, %bb.bg ] ; 3 uses
+  %i.hc = load ptr, ptr %.sroa.099.0162, align 8, !tbaa !120
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 8
   %.0.copyload.i.i.i.i.i = load i64, ptr %i.hd, align 8
   %i.he = and i64 %.0.copyload.i.i.i.i.i, -8
   %i.hf = inttoptr i64 %i.he to ptr
   %i.hg = call ptr @_ZN4mlir8TypeAttr3getENS_4TypeE(ptr %i.hf) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #10
-  %i.hh = load ptr, ptr %.sroa.7.0163, align 8, !tbaa !120
+  %i.hh = load ptr, ptr %.sroa.099.0162, align 8, !tbaa !120
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 32
   %.sroa.0.0.copyload.i93 = load ptr, ptr %i.hi, align 8
   store ptr %.sroa.0.0.copyload.i93, ptr %19, align 8
   store ptr %i.b, ptr %i.ha, align 8
-  %i.hj = load i32, ptr %.sroa.099.0162, align 4, !tbaa !87
+  %i.hj = load i32, ptr %.sroa.7.0163, align 4, !tbaa !87
   %i.hk = call i8 @_ZN4mlir4irdl18ConstraintVerifier6verifyEN4llvm12function_refIFNS_18InFlightDiagnosticEvEEENS_9AttributeEj(ptr noundef nonnull align 8 dereferenceable(80) %2, ptr nonnull @"_ZN4llvm12function_refIFN4mlir18InFlightDiagnosticEvEE11callback_fnIZZNS1_4irdl16RegionConstraint6verifyERNS1_6RegionERNS6_18ConstraintVerifierEENK3$_0clENS1_8LocationEEUlvE_EES2_l", i64 %i.hb, ptr %i.hg, i32 noundef %i.hj)
   %i.hl = trunc nuw i8 %i.hk to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #10
   br i1 %i.hl, label %bb.bg, label %.thread152
 
 bb.bg:                                            ; preds = %bb.bf
-  %i.hm = getelementptr inbounds nuw i8, ptr %.sroa.7.0163, i64 8 ; 2 uses
-  %i.hn = getelementptr inbounds nuw i8, ptr %.sroa.099.0162, i64 4 ; 2 uses
+  %i.hm = getelementptr inbounds nuw i8, ptr %.sroa.099.0162, i64 8 ; 2 uses
+  %i.hn = getelementptr inbounds nuw i8, ptr %.sroa.7.0163, i64 4 ; 2 uses
   %i.ho = icmp ne ptr %i.hm, %i.dg
   %i.hp = icmp ne ptr %i.hn, %i.gz
   %.not3.i = select i1 %i.ho, i1 %i.hp, i1 false

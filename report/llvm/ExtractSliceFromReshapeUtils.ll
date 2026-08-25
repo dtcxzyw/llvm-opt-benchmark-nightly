@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ExtractSliceFromReshapeUtils?download=true
+inline.NumInlined: 1464
+inline.NumDeleted: 815
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4mlir6tensor15CollapseShapeOp23getReassociationIndicesEv:bb.a
   br label %_ZN4llvm9to_vectorILj2ENS_14iterator_rangeINS_15mapped_iteratorIPKN4mlir9AttributeEZNS3_6tensor15CollapseShapeOp23getReassociationIndicesEvEUlS4_E_lEEEEEENS_11SmallVectorINSt12remove_constINSt16remove_referenceIDTdecl9adl_beginclsr3stdE7declvalIRT0_EEEEE4typeEE4typeEXT_EEEOSF_.exit
 
@@ -200,13 +204,14 @@ _ZN4llvm11SmallVectorIN4mlir5RangeELj2EEC2IS2_vEENS_8ArrayRefIT_EE.exit: ; preds
   store i32 %i.ag, ptr %i.y, align 8, !tbaa !27
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   store i64 1, ptr %i.ah, align 8, !tbaa !63
-  %i.ai = load i64, ptr %7, align 8, !tbaa !63    ; 3 uses
+  %i.ai = load i64, ptr %7, align 8, !tbaa !63    ; 2 uses
   %i.aj = trunc i64 %i.ai to i1
   br i1 %i.aj, label %_ZN4llvm14SmallBitVectorC2ERKS0_.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZN4llvm11SmallVectorIN4mlir5RangeELj2EEC2IS2_vEENS_8ArrayRefIT_EE.exit
   %i.ak = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #12 ; 9 uses
-  %i.al = inttoptr i64 %i.ai to ptr               ; 4 uses
+  %10 = load i64, ptr %7, align 8, !tbaa !63
+  %i.al = inttoptr i64 %10 to ptr                 ; 4 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 16 ; 3 uses
   store ptr %i.am, ptr %i.ak, align 8, !tbaa !25
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
@@ -261,13 +266,14 @@ _ZN4llvm14SmallBitVectorC2ERKS0_.exit:            ; preds = %_ZN4llvm11SmallVect
   store i64 %storemerge.i, ptr %i.ah, align 8, !tbaa !63
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 2 uses
   store i64 1, ptr %i.bc, align 8, !tbaa !63
-  %i.bd = load i64, ptr %8, align 8, !tbaa !63    ; 3 uses
+  %i.bd = load i64, ptr %8, align 8, !tbaa !63    ; 2 uses
   %i.be = trunc i64 %i.bd to i1
   br i1 %i.be, label %_ZN4llvm14SmallBitVectorC2ERKS0_.exit40, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4llvm14SmallBitVectorC2ERKS0_.exit
   %i.bf = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #12 ; 9 uses
-  %i.bg = inttoptr i64 %i.bd to ptr               ; 4 uses
+  %11 = load i64, ptr %8, align 8, !tbaa !63
+  %i.bg = inttoptr i64 %11 to ptr                 ; 4 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 16 ; 3 uses
   store ptr %i.bh, ptr %i.bf, align 8, !tbaa !25
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 2 uses

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ParseStmt?download=true
+inline.NumInlined: 2908
+inline.NumDeleted: 1134
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN5clang6Parser16ParseIfStatementEPNS_14SourceLocationE:bb.a
   %8 = alloca %"class.clang::Sema::ConditionResult", align 8 ; 5 uses
   %9 = alloca %"class.clang::SourceLocation", align 4 ; 6 uses
@@ -200,8 +205,8 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.l, %bb.m, %_ZN5clang6Parser10ParseScopeC2EPS0_jbb.exit
-  %.sroa.0144.0.a = phi i1 [ undef, %_ZN5clang6Parser10ParseScopeC2EPS0_jbb.exit ], [ %i.bq, %bb.m ], [ undef, %bb.l ] ; 2 uses
-  %.sroa.5.0 = phi i1 [ false, %_ZN5clang6Parser10ParseScopeC2EPS0_jbb.exit ], [ %i.bp, %bb.m ], [ false, %bb.l ] ; 2 uses
+  %.sroa.0144.0.a = phi i1 [ false, %_ZN5clang6Parser10ParseScopeC2EPS0_jbb.exit ], [ %i.bp, %bb.m ], [ false, %bb.l ] ; 2 uses
+  %.sroa.5.0 = phi i1 [ undef, %_ZN5clang6Parser10ParseScopeC2EPS0_jbb.exit ], [ %i.bq, %bb.m ], [ undef, %bb.l ] ; 2 uses
   %i.br = load i16, ptr %i.g, align 8, !tbaa !100
   %i.bs = icmp eq i16 %i.br, 24                   ; 3 uses
   %or.cond.i = or i1 %or.cond218, %i.bs
@@ -274,8 +279,8 @@ _ZN12_GLOBAL__N_128MisleadingIndentationCheckerC2ERN5clang6ParserENS_23Misleadin
   %or.cond = and i1 %.052170, %i.cu               ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 7 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !342, !nonnull !102, !align !103 ; 2 uses
-  %i.cx = xor i1 %.sroa.0144.0.a, true
-  %i.cy = select i1 %.sroa.5.0, i1 %i.cx, i1 false
+  %i.cx = xor i1 %.sroa.5.0, true
+  %i.cy = select i1 %.sroa.0144.0.a, i1 %i.cx, i1 false
   %i.cz = select i1 %or.cond, i1 true, i1 %i.cy   ; 2 uses
   br i1 %i.cz, label %bb.t, label %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS1_27ExpressionEvaluationContextEPNS_4DeclENS1_33ExpressionEvaluationContextRecord14ExpressionKindEb.exit
 
@@ -431,7 +436,7 @@ _ZN12_GLOBAL__N_128MisleadingIndentationCheckerC2ERN5clang6ParserENS_23Misleadin
   %i.el = icmp ne i32 %.sroa.0150.1168, 0
   %or.cond3 = and i1 %.052170, %i.el              ; 2 uses
   %i.em = load ptr, ptr %i.cv, align 8, !tbaa !342, !nonnull !102, !align !103 ; 2 uses
-  %i.en = select i1 %.sroa.5.0, i1 %.sroa.0144.0.a, i1 false
+  %i.en = select i1 %.sroa.0144.0.a, i1 %.sroa.5.0, i1 false
   %i.eo = select i1 %or.cond3, i1 true, i1 %i.en  ; 2 uses
   br i1 %i.eo, label %bb.ak, label %_ZN5clang32EnterExpressionEvaluationContextC2ERNS_4SemaENS1_27ExpressionEvaluationContextEPNS_4DeclENS1_33ExpressionEvaluationContextRecord14ExpressionKindEb.exit82
 

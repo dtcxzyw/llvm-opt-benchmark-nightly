@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SystemZSelectionDAGInfo?download=true
+inline.NumInlined: 301
+inline.NumDeleted: 165
 begin_hunk_0_@_ZN4llvm23SystemZSelectionDAGInfoC2Ev:bb.a
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -200,8 +202,8 @@ _ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit, %bb.a, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit41
-  %.sroa.5.1 = phi i32 [ %.fca.1.extract4, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit ], [ %.fca.1.extract, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit41 ], [ 0, %bb.a ]
   %.sroa.048.1 = phi ptr [ %.fca.0.extract3, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit ], [ %.fca.0.extract, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit41 ], [ null, %bb.a ]
+  %.sroa.5.1 = phi i32 [ %.fca.1.extract4, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit ], [ %.fca.1.extract, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit41 ], [ 0, %bb.a ]
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.048.1, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.5.1, 1
   ret { ptr, i32 } %.fca.1.insert
@@ -493,9 +495,9 @@ _ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i: ; preds = %bb
   br label %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit
 
 _ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit: ; preds = %bb.k, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i
-  %.sroa.0351.0 = phi i64 [ 0, %bb.k ], [ %.0.copyload.i.i.i, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i ], [ %.0.copyload.i.i.i, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i ]
-  %.sroa.7.0 = phi i32 [ %i.bs, %bb.k ], [ %i.ch, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i ], [ %i.cl, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i ]
   %.sroa.10.0 = phi i8 [ 0, %bb.k ], [ %i.bw, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i ], [ %i.bw, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i ]
+  %.sroa.7.0 = phi i32 [ %i.bs, %bb.k ], [ %i.ch, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i ], [ %i.cl, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i ]
+  %.sroa.0351.0 = phi i64 [ 0, %bb.k ], [ %.0.copyload.i.i.i, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i ], [ %.0.copyload.i.i.i, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i ]
   store i64 %.sroa.0351.0, ptr %11, align 8
   store i64 %i.bq, ptr %i.bo, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -898,8 +900,8 @@ _ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_
   br label %.critedge
 
 .critedge:                                        ; preds = %_ZL11memsetStoreRN4llvm12SelectionDAGERKNS_5SDLocENS_7SDValueES5_mmNS_5AlignENS_18MachinePointerInfoE.exit257, %bb.q, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit286, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit237, %._crit_edge.i, %bb.p, %bb.a, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit302, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit318
-  %.sroa.13357.1 = phi i32 [ 0, %bb.a ], [ %.fca.1.extract, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit318 ], [ %.fca.1.extract13, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit302 ], [ %.fca.1.extract91, %_ZL11memsetStoreRN4llvm12SelectionDAGERKNS_5SDLocENS_7SDValueES5_mmNS_5AlignENS_18MachinePointerInfoE.exit257 ], [ %.fca.1.extract126, %._crit_edge.i ], [ %.fca.1.extract41, %bb.q ], [ %.fca.1.extract20, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit286 ], [ %.fca.1.extract34, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit237 ], [ %.fca.1.extract73, %bb.p ]
   %.sroa.0356.1 = phi ptr [ null, %bb.a ], [ %.fca.0.extract, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit318 ], [ %.fca.0.extract12, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit302 ], [ %.fca.0.extract90, %_ZL11memsetStoreRN4llvm12SelectionDAGERKNS_5SDLocENS_7SDValueES5_mmNS_5AlignENS_18MachinePointerInfoE.exit257 ], [ %.fca.0.extract125, %._crit_edge.i ], [ %.fca.0.extract40, %bb.q ], [ %.fca.0.extract19, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit286 ], [ %.fca.0.extract33, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit237 ], [ %.fca.0.extract72, %bb.p ]
+  %.sroa.13357.1 = phi i32 [ 0, %bb.a ], [ %.fca.1.extract, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit318 ], [ %.fca.1.extract13, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit302 ], [ %.fca.1.extract91, %_ZL11memsetStoreRN4llvm12SelectionDAGERKNS_5SDLocENS_7SDValueES5_mmNS_5AlignENS_18MachinePointerInfoE.exit257 ], [ %.fca.1.extract126, %._crit_edge.i ], [ %.fca.1.extract41, %bb.q ], [ %.fca.1.extract20, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit286 ], [ %.fca.1.extract34, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit237 ], [ %.fca.1.extract73, %bb.p ]
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.0356.1, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.13357.1, 1
   ret { ptr, i32 } %.fca.1.insert
@@ -1152,8 +1154,8 @@ _ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_
 
 bb.e:                                             ; preds = %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit54, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit
   %.pn = phi { ptr, i32 } [ %i.ag, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit54 ], [ %i.v, %_ZL16createMemMemNodeRN4llvm12SelectionDAGERKNS_5SDLocEjNS_7SDValueES5_S5_S5_S5_.exit ] ; 2 uses
-  %.sroa.7.0 = extractvalue { ptr, i32 } %.pn, 1
   %.sroa.062.0 = extractvalue { ptr, i32 } %.pn, 0 ; 2 uses
+  %.sroa.7.0 = extractvalue { ptr, i32 } %.pn, 1
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %15)
   call void @llvm.lifetime.start.p0(ptr nonnull %16)

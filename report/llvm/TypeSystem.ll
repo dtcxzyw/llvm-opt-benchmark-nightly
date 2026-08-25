@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TypeSystem?download=true
+inline.NumInlined: 810
+inline.NumDeleted: 440
 begin_hunk_0
 %"class.std::tuple" = type { %"struct.std::_Tuple_impl" }
 %"struct.std::_Tuple_impl" = type { %"struct.std::_Head_base.16" }
@@ -200,8 +202,8 @@ _ZNK4llvm14SmallBitVector5countEv.exit:           ; preds = %bb.a
   %i.ah = tail call range(i64 0, 64) i64 @llvm.ctpop.i64(i64 %i.ag)
   %i.ai = icmp eq i64 %i.ah, 1                    ; 2 uses
   %i.aj = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.ag, i1 true)
-  %spec.select = select i1 %i.ai, i64 %i.aj, i64 0
-  %spec.select10 = select i1 %i.ai, i64 4294967296, i64 0
+  %spec.select = select i1 %i.ai, i64 4294967296, i64 0
+  %spec.select10 = select i1 %i.ai, i64 %i.aj, i64 0
   br label %_ZNK4llvm14SmallBitVector10find_firstEv.exit
 
 _ZNK4llvm14SmallBitVector5countEv.exit.thread2:   ; preds = %.lr.ph.i.i, %middle.block
@@ -263,8 +265,8 @@ bb.f:                                             ; preds = %.peel.next.i.i.i
   br i1 %exitcond.not.i.i.i, label %_ZNK4llvm14SmallBitVector10find_firstEv.exit, label %.peel.next.i.i.i, !llvm.loop !27
 
 _ZNK4llvm14SmallBitVector10find_firstEv.exit:     ; preds = %bb.f, %_ZNK4llvm14SmallBitVector5countEv.exit, %bb.b, %_ZNK4llvm14SmallBitVector5countEv.exit.thread2, %bb.e, %bb.d, %.thread
-  %.sroa.0.0.a = phi i64 [ 0, %_ZNK4llvm14SmallBitVector5countEv.exit.thread2 ], [ %spec.select, %_ZNK4llvm14SmallBitVector5countEv.exit ], [ 0, %bb.b ], [ 4294967295, %.thread ], [ %i.bg, %bb.e ], [ 4294967295, %bb.d ], [ 4294967295, %bb.f ]
-  %.sroa.2.0 = phi i64 [ 0, %_ZNK4llvm14SmallBitVector5countEv.exit.thread2 ], [ %spec.select10, %_ZNK4llvm14SmallBitVector5countEv.exit ], [ 0, %bb.b ], [ 4294967296, %.thread ], [ 4294967296, %bb.e ], [ 4294967296, %bb.d ], [ 4294967296, %bb.f ]
+  %.sroa.0.0.a = phi i64 [ 0, %_ZNK4llvm14SmallBitVector5countEv.exit.thread2 ], [ %spec.select, %_ZNK4llvm14SmallBitVector5countEv.exit ], [ 0, %bb.b ], [ 4294967296, %.thread ], [ 4294967296, %bb.d ], [ 4294967296, %bb.e ], [ 4294967296, %bb.f ]
+  %.sroa.2.0 = phi i64 [ 0, %_ZNK4llvm14SmallBitVector5countEv.exit.thread2 ], [ %spec.select10, %_ZNK4llvm14SmallBitVector5countEv.exit ], [ 0, %bb.b ], [ 4294967295, %.thread ], [ 4294967295, %bb.d ], [ %i.bg, %bb.e ], [ 4294967295, %bb.f ]
   %.sroa.0.0.insert.insert = or i64 %.sroa.2.0, %.sroa.0.0.a
   ret i64 %.sroa.0.0.insert.insert
 }

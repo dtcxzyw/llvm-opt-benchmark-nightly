@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WasmWriter?download=true
+inline.NumInlined: 239
+inline.NumDeleted: 127
 begin_hunk_0_@_ZN4llvm7objcopy4wasm6Writer19createSectionHeaderERKNS1_7SectionERm:bb.a
 
 bb.l:                                             ; preds = %._crit_edge.i
@@ -200,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !63
-  %i.d = load ptr, ptr %0, align 8, !tbaa !64     ; 4 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !64     ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
@@ -216,7 +218,7 @@ _ZNSt12_Vector_baseIN4llvm11SmallVectorIcLj8EEESaIS2_EE11_M_allocateEm.exit.i: ;
   %i.n = shl nuw nsw i64 %1, 5
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #13 ; 4 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.d, %i.k
-  br i1 %.not9.i.i.i.i.i, label %_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exit, label %.lr.ph.i.i.i.i.i
+  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4llvm11SmallVectorIcLj8EEESaIS2_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructIN4llvm11SmallVectorIcLj8EEEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.012.i.i.i.i.i = phi ptr [ %i.aa, %_ZSt10_ConstructIN4llvm11SmallVectorIcLj8EEEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.o, %_ZNSt12_Vector_baseIN4llvm11SmallVectorIcLj8EEESaIS2_EE11_M_allocateEm.exit.i ] ; 8 uses
@@ -265,7 +267,7 @@ _ZSt10_ConstructIN4llvm11SmallVectorIcLj8EEEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i: ;
   %.not.i.i.i.i.i = icmp eq ptr %i.z, %i.k
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !65
 
-_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit: ; preds = %_ZSt10_ConstructIN4llvm11SmallVectorIcLj8EEEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i
+_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit: ; preds = %_ZSt10_ConstructIN4llvm11SmallVectorIcLj8EEEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseIN4llvm11SmallVectorIcLj8EEESaIS2_EE11_M_allocateEm.exit.i
   %.pre = load ptr, ptr %0, align 8, !tbaa !64    ; 3 uses
   %.pre8 = load ptr, ptr %i.j, align 8, !tbaa !62 ; 2 uses
   %.not4.i.i = icmp eq ptr %.pre, %.pre8
@@ -291,8 +293,8 @@ _ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exitthread-pre-split: ; preds 
   %.pr = load ptr, ptr %0, align 8, !tbaa !64
   br label %_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exit
 
-_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exit: ; preds = %_ZNSt12_Vector_baseIN4llvm11SmallVectorIcLj8EEESaIS2_EE11_M_allocateEm.exit.i, %_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exitthread-pre-split, %_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit
-  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit ], [ %i.d, %_ZNSt12_Vector_baseIN4llvm11SmallVectorIcLj8EEESaIS2_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exit: ; preds = %_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exitthread-pre-split, %_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit
+  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPN4llvm11SmallVectorIcLj8EEEEvT_S4_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorIN4llvm11SmallVectorIcLj8EEESaIS2_EE20_M_allocate_and_copyIPKS2_EEPS2_mT_S9_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %2, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4llvm11SmallVectorIcLj8EEESaIS2_EE13_M_deallocateEPS2_m.exit, label %bb.f
 

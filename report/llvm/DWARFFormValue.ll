@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DWARFFormValue?download=true
+inline.NumInlined: 231
+inline.NumDeleted: 160
 begin_hunk_0_@_ZNK12lldb_private6plugin5dwarf14DWARFFormValue23ReferencedUnitAndOffsetEv:bb.a
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !119 ; 8 uses
   %.not.i.i = icmp eq ptr %i.al, null
@@ -200,10 +202,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.45.0.a = phi ptr [ %i.f, %bb.b ], [ null, %bb.a ]
-  %.sroa.04.0 = phi ptr [ %i.e, %bb.b ], [ null, %bb.a ]
-  %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.04.0, 0
-  %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.45.0.a, 1
+  %.sroa.45.0.a = phi ptr [ %i.e, %bb.b ], [ null, %bb.a ]
+  %.sroa.04.0 = phi ptr [ %i.f, %bb.b ], [ null, %bb.a ]
+  %.fca.0.insert = insertvalue { ptr, ptr } poison, ptr %.sroa.45.0.a, 0
+  %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.sroa.04.0, 1
   ret { ptr, ptr } %.fca.1.insert
 }
 

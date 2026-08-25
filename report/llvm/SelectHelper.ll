@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SelectHelper?download=true
+inline.NumInlined: 343
+inline.NumDeleted: 184
 begin_hunk_0_@_ZNK12SelectHelper11FDIsSetReadEi:bb.a
   %.0 = phi i1 [ %i.af, %bb.d ], [ false, %_ZNK4llvm12DenseMapBaseINS_8DenseMapIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS3_EEEEiS3_S5_S8_E4findERKi.exit ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ]
   ret i1 %.0
@@ -200,10 +202,10 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIiN12SelectHelper6FDInfoENS_12DenseMapInfoIiv
 bb.c:                                             ; preds = %.lr.ph, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit
   %.sroa.4198.0261 = phi i8 [ 0, %.lr.ph ], [ %.sroa.4198.1, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
   %.sroa.4194.0259 = phi i8 [ 0, %.lr.ph ], [ %.sroa.4194.1, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
-  %.sroa.4190.0257 = phi i8 [ 0, %.lr.ph ], [ %.sroa.4190.1, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
-  %.sroa.5186.0255 = phi i1 [ false, %.lr.ph ], [ true, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
-  %.sroa.0184.0254 = phi i32 [ undef, %.lr.ph ], [ %storemerge.in.in.i109, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
   %.pn = phi i64 [ %i.x, %.lr.ph ], [ %i.bq, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ] ; 2 uses
+  %.sroa.0184.0256 = phi i32 [ undef, %.lr.ph ], [ %storemerge.in.in.i109, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
+  %.sroa.5186.0255 = phi i1 [ false, %.lr.ph ], [ true, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
+  %.sroa.4190.0253 = phi i8 [ 0, %.lr.ph ], [ %.sroa.4190.1, %_ZN4llvm16DenseMapIteratorIiN12SelectHelper6FDInfoENS_12DenseMapInfoIivEENS_6detail12DenseMapPairIiS2_EELb0EEppEv.exit ]
   %.sroa.0181.0253 = getelementptr i8, ptr %i.a, i64 %.pn ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0181.0253, i64 4 ; 3 uses
   %i.ab = load i8, ptr %i.aa, align 1
@@ -258,8 +260,8 @@ bb.f:                                             ; preds = %bb.c
   %.sroa.4194.1 = select i1 %.not, i8 %.sroa.4194.0259, i8 1 ; 2 uses
   %i.av = and i8 %i.as, 4
   %.not92 = icmp eq i8 %i.av, 0
-  %.sroa.4190.1 = select i1 %.not92, i8 %.sroa.4190.0257, i8 1 ; 2 uses
-  %.sroa.speculated.i108 = call i32 @llvm.smax.i32(i32 %.sroa.0184.0254, i32 range(i32 -2147483648, 1024) %i.ad)
+  %.sroa.4190.1 = select i1 %.not92, i8 %.sroa.4190.0253, i8 1 ; 2 uses
+  %.sroa.speculated.i108 = call i32 @llvm.smax.i32(i32 %.sroa.0184.0256, i32 range(i32 -2147483648, 1024) %i.ad)
   %storemerge.in.in.i109 = select i1 %.sroa.5186.0255, i32 %.sroa.speculated.i108, i32 %i.ad ; 2 uses
   %i.aw = add i64 %.pn, 8
   %i.ax = ashr exact i64 %i.aw, 3                 ; 3 uses

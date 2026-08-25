@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/VTEmitter?download=true
+inline.NumInlined: 606
+inline.NumDeleted: 252
 begin_hunk_0_@_ZN4llvm8TableGen7Emitter8OptClassIN12_GLOBAL__N_19VTEmitterEE3runENS_9StringRefERKNS_12RecordKeeperE:bb.a
   %i.abb = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull @.str.64, i64 noundef 25) #14
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit76.i.i
@@ -200,10 +202,10 @@ bb.c:                                             ; preds = %bb.b
 
 _ZN4llvm9StringRefC2EPKc.exit:                    ; preds = %bb.b, %bb.c
   %.sroa.0.0.i = phi i64 [ %i.a, %bb.c ], [ 0, %bb.b ] ; 22 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
-  %.val.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !41 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %.0.val, i64 16 ; 2 uses
+  %.val.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !41 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.0.val, i64 8 ; 6 uses
-  %.not5.i.i.i.i = icmp eq ptr %.val.i.i.i, null  ; 2 uses
+  %.not5.i.i.i.i = icmp eq ptr %.val.i.i.i, null
   br i1 %.not5.i.i.i.i, label %.critedge.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN4llvm9StringRefC2EPKc.exit, %_ZNKSt4lessIN4llvm9StringRefEEclERKS1_S4_.exit.thread.i.i.i.i
@@ -430,10 +432,12 @@ _ZNKSt4lessIN4llvm9StringRefEEclERKS1_S4_.exit78.thread39.i.i.i.i: ; preds = %_Z
   br label %_ZNSt8_Rb_treeIN4llvm9StringRefESt4pairIKS1_ZN12_GLOBAL__N_19VTEmitter3runERNS0_11raw_ostreamEE7VTRangeESt10_Select1stIS9_ESt4lessIS1_ESaIS9_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS9_ERS3_.exit.thread.i.i.i
 
 _ZNSt8_Rb_treeIN4llvm9StringRefESt4pairIKS1_ZN12_GLOBAL__N_19VTEmitter3runERNS0_11raw_ostreamEE7VTRangeESt10_Select1stIS9_ESt4lessIS1_ESaIS9_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS9_ERS3_.exit.sink.split.i.i.i: ; preds = %_ZNKSt4lessIN4llvm9StringRefEEclERKS1_S4_.exit78.i.i.i.i, %.thread.i.i.i77.i.i.i.i, %_ZNKSt4lessIN4llvm9StringRefEEclERKS1_S4_.exit48.i.i.i.i, %.thread.i.i.i47.i.i.i.i, %_ZNKSt4lessIN4llvm9StringRefEEclERKS1_S4_.exit.i.i.i25.i, %.thread.i.i.i.i.i.i26.i, %bb.e
-  br i1 %.not5.i.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i
+  %.01120.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !88 ; 2 uses
+  %.not21.i.i.i = icmp eq ptr %.01120.i.i.i, null
+  br i1 %.not21.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt8_Rb_treeIN4llvm9StringRefESt4pairIKS1_ZN12_GLOBAL__N_19VTEmitter3runERNS0_11raw_ostreamEE7VTRangeESt10_Select1stIS9_ESt4lessIS1_ESaIS9_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS9_ERS3_.exit.sink.split.i.i.i, %.lr.ph.i.i.i.backedge
-  %.01122.i.i.i = phi ptr [ %.01122.i.i.i.be, %.lr.ph.i.i.i.backedge ], [ %.val.i.i.i, %_ZNSt8_Rb_treeIN4llvm9StringRefESt4pairIKS1_ZN12_GLOBAL__N_19VTEmitter3runERNS0_11raw_ostreamEE7VTRangeESt10_Select1stIS9_ESt4lessIS1_ESaIS9_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS9_ERS3_.exit.sink.split.i.i.i ] ; 7 uses
+  %.01122.i.i.i = phi ptr [ %.01122.i.i.i.be, %.lr.ph.i.i.i.backedge ], [ %.01120.i.i.i, %_ZNSt8_Rb_treeIN4llvm9StringRefESt4pairIKS1_ZN12_GLOBAL__N_19VTEmitter3runERNS0_11raw_ostreamEE7VTRangeESt10_Select1stIS9_ESt4lessIS1_ESaIS9_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS9_ERS3_.exit.sink.split.i.i.i ] ; 7 uses
   %.sroa.2.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %.01122.i.i.i, i64 40
   %.sroa.2.0.copyload.i.i.i.i = load i64, ptr %.sroa.2.0..sroa_idx.i.i.i.i, align 8, !tbaa !86 ; 3 uses
   %.sroa.speculated.i.i.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.2.0.copyload.i.i.i.i, i64 %.sroa.0.0.i) ; 3 uses

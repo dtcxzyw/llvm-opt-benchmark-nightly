@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PointerFlowFormat?download=true
+inline.NumInlined: 935
+inline.NumDeleted: 574
 begin_hunk_0_@_ZN5clang4ssaf23makeSawButExpectedErrorIN4llvm4json6ObjectEJPKcEEENS2_5ErrorERKT_NS2_9StringRefEDpRKT0_:bb.a
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZN4llvm17createStringErrorIJPKcS2_EEENS_5ErrorESt10error_codeS2_DpRKT_.exit
@@ -200,18 +202,19 @@ bb.f:                                             ; preds = %.lr.ph, %_ZN4llvm4j
   %i.bj = or disjoint i32 %i.bi, %i.bh
   %i.bk = zext i32 %i.bj to i64                   ; 2 uses
   %i.bl = getelementptr inbounds nuw [64 x i8], ptr %i.ar, i64 %i.bk ; 8 uses
-  %i.bm = getelementptr inbounds nuw [64 x i8], ptr %i.az, i64 %i.bk ; 3 uses
+  %i.bm = getelementptr inbounds nuw [64 x i8], ptr %i.az, i64 %i.bk ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bl, i8 0, i64 24, i1 false)
-  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !91 ; 3 uses
+  %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !91
   %.not.i9 = icmp eq ptr %i.bn, null
   br i1 %.not.i9, label %bb.l, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.bo = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #21 ; 8 uses
+  %2 = load ptr, ptr %i.bm, align 8, !tbaa !91    ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 16 ; 3 uses
   store ptr %i.bp, ptr %i.bo, align 8, !tbaa !82
-  %i.bq = load ptr, ptr %i.bn, align 8, !tbaa !70 ; 2 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
+  %i.bq = load ptr, ptr %2, align 8, !tbaa !70    ; 2 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !83 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   store i64 %i.bs, ptr %i.a, align 8, !tbaa !115

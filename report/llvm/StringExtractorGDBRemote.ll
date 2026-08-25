@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/StringExtractorGDBRemote?download=true
+inline.NumInlined: 145
+inline.NumDeleted: 73
 begin_hunk_0_@_ZN24StringExtractorGDBRemote9GetStatusEv:bb.a
   store i8 0, ptr %i.h, align 8, !tbaa !15
   %i.j = call noundef signext i8 @_ZN15StringExtractor7GetCharEc(ptr noundef nonnull align 8 dereferenceable(48) %1, i8 noundef signext 0) #13
@@ -200,19 +202,19 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not25, label %.split.loop.exit, label %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph
-  %2 = add nuw nsw i32 %.01527, 1
-  %3 = getelementptr inbounds nuw i8, ptr %.01726, i64 1 ; 2 uses
-  %.not = icmp eq ptr %3, %i.f
+  %2 = getelementptr inbounds nuw i8, ptr %.01327, i64 1 ; 2 uses
+  %3 = add nuw nsw i32 %.01426, 1
+  %.not = icmp eq ptr %2, %i.f
   br i1 %.not, label %.split.loop.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.01527 = phi i32 [ %2, %bb.c ], [ 0, %bb.b ]   ; 2 uses
-  %.01726 = phi ptr [ %3, %bb.c ], [ %i.c, %bb.b ] ; 2 uses
-  %i.g = load i8, ptr %.01726, align 1, !tbaa !15
+  %.01327 = phi ptr [ %2, %bb.c ], [ %i.c, %bb.b ] ; 2 uses
+  %.01426 = phi i32 [ %3, %bb.c ], [ 0, %bb.b ]   ; 2 uses
+  %i.g = load i8, ptr %.01327, align 1, !tbaa !15
   %i.h = sext i8 %i.g to i32
   %i.i = tail call i32 @isxdigit(i32 noundef %i.h) #12
   %.not20 = icmp ne i32 %i.i, 0                   ; 2 uses
-  %i.j = icmp samesign ult i32 %.01527, 15        ; 2 uses
+  %i.j = icmp samesign ult i32 %.01426, 15        ; 2 uses
   %cond1 = select i1 %.not20, i1 %i.j, i1 false
   br i1 %cond1, label %bb.c, label %.split.loop.exit23
 

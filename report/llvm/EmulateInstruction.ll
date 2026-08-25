@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/EmulateInstruction?download=true
+inline.NumInlined: 713
+inline.NumDeleted: 454
 begin_hunk_0_@_ZN12lldb_private18EmulateInstruction21WriteRegisterUnsignedERKNS0_7ContextEN4lldb12RegisterKindEjm:bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 72
   store i64 256, ptr %i.o, align 8, !tbaa !94
@@ -200,18 +202,18 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.a
-  %.115 = phi i1 [ %i.i, %bb.d ], [ false, %bb.a ] ; 2 uses
-  %.1 = phi i64 [ %.0, %bb.d ], [ 0, %bb.a ]
+  %.115 = phi i64 [ %.0, %bb.d ], [ 0, %bb.a ]
+  %.1 = phi i1 [ %i.i, %bb.d ], [ false, %bb.a ]  ; 2 uses
   %.not = icmp eq ptr %5, null
   br i1 %.not, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.n = zext i1 %.115 to i8
+  %i.n = zext i1 %.1 to i8
   store i8 %i.n, ptr %5, align 1, !tbaa !105
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %spec.select = select i1 %.115, i64 %.1, i64 %4
+  %spec.select = select i1 %.1, i64 %.115, i64 %4
   ret i64 %spec.select
 }
 

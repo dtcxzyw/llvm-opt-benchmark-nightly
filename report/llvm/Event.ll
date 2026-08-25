@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Event?download=true
+inline.NumInlined: 556
+inline.NumDeleted: 333
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 %"class.llvm::StringRef" = type { ptr, i64 }
 %"class.llvm::ArrayRef" = type { ptr, i64 }
@@ -200,7 +204,8 @@ _ZNSt12__shared_ptrIN12lldb_private11Broadcaster15BroadcasterImplELN9__gnu_cxx12
   store i32 %2, ptr %i.ae, align 8, !tbaa !31
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %3, ptr %i.af, align 8, !tbaa !48
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  store ptr null, ptr %i.ag, align 8, !tbaa !17
   %i.ah = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23 ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   store i32 1, ptr %i.ai, align 8, !tbaa !24
@@ -356,7 +361,8 @@ bb.a:
   store i32 %1, ptr %i.a, align 8, !tbaa !31
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   store ptr %2, ptr %i.b, align 8, !tbaa !48
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  store ptr null, ptr %i.c, align 8, !tbaa !17
   %i.d = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #23 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i32 1, ptr %i.e, align 8, !tbaa !24

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ExprEngineCXX?download=true
+inline.NumInlined: 2904
+inline.NumDeleted: 1635
 begin_hunk_0_@_ZN5clang4ento10ExprEngine16VisitCXXThisExprEPKNS_11CXXThisExprEPNS0_12ExplodedNodeERNS0_15ExplodedNodeSetE:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
@@ -200,10 +202,10 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit83: ; preds =
 
 bb.j:                                             ; preds = %.lr.ph, %_ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit
   %.sroa.0127.0152 = phi ptr [ %i.i, %.lr.ph ], [ %.sroa.0127.3, %_ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit ] ; 16 uses
-  %.sroa.13.0151 = phi i64 [ 0, %.lr.ph ], [ %i.eg, %_ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit ] ; 2 uses
+  %.sroa.0110.0152 = phi ptr [ %i.l, %.lr.ph ], [ %i.es, %_ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit ] ; 2 uses
   %.sroa.7113.0150 = phi ptr [ %i.k, %.lr.ph ], [ %.sroa.7113.2, %_ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit ] ; 5 uses
-  %.sroa.0110.0149 = phi ptr [ %i.l, %.lr.ph ], [ %i.es, %_ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit ] ; 2 uses
-  %i.bq = trunc i64 %.sroa.13.0151 to i32         ; 2 uses
+  %.sroa.13.0149 = phi i64 [ 0, %.lr.ph ], [ %i.eg, %_ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit ] ; 2 uses
+  %i.bq = trunc i64 %.sroa.13.0149 to i32         ; 2 uses
   %i.br = call { ptr, i8 } @_ZNK5clang4ento12ProgramState9getLValueEPKNS_9FieldDeclENS0_4SValE(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.0127.0152, ptr noundef nonnull %.sroa.7113.0150, ptr %i.g, i8 4) #15 ; 2 uses
   %.fca.0.extract32 = extractvalue { ptr, i8 } %i.br, 0
   %.fca.1.extract33 = extractvalue { ptr, i8 } %i.br, 1 ; 2 uses
@@ -314,7 +316,7 @@ bb.o:                                             ; preds = %_ZN4llvm18Intrusive
   br label %.critedge
 
 bb.p:                                             ; preds = %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit89
-  %i.dn = load ptr, ptr %.sroa.0110.0149, align 8, !tbaa !465
+  %i.dn = load ptr, ptr %.sroa.0110.0152, align 8, !tbaa !465
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.0127.0152, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   call void @_ZN5clang4ento16EnvironmentEntryC1EPKNS_4ExprEPKNS_10StackFrameE(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef %i.dn, ptr noundef %i.c) #15
@@ -375,7 +377,7 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit97: ; preds =
 
 bb.t:                                             ; preds = %_ZNK5clang10ASTContext22getAsConstantArrayTypeENS_8QualTypeE.exit, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit97
   %.sroa.0127.3 = phi ptr [ %i.ef, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit97 ], [ %.sroa.0127.0152, %_ZNK5clang10ASTContext22getAsConstantArrayTypeENS_8QualTypeE.exit ] ; 2 uses
-  %i.eg = add nuw nsw i64 %.sroa.13.0151, 1
+  %i.eg = add nuw nsw i64 %.sroa.13.0149, 1
   %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.7113.0150, i64 8
   %.0.copyload.i.i.i.i.i.i.i.i = load i64, ptr %i.eh, align 8
   %i.ei = and i64 %.0.copyload.i.i.i.i.i.i.i.i, -8 ; 2 uses
@@ -402,7 +404,7 @@ bb.u:                                             ; preds = %.lr.ph.i.i.i.i
 
 _ZN4llvm6detail10zip_commonINS0_12zip_shortestIJNS0_15SafeIntIteratorIjLb0EEEN5clang11DeclContext22specific_decl_iteratorINS5_9FieldDeclEEEPKPNS5_4ExprEEEESt5tupleIJjPS8_RSC_EEJS4_S9_SD_EEppEv.exit: ; preds = %.lr.ph.i.i.i.i, %bb.u, %bb.t
   %.sroa.7113.2 = phi ptr [ %i.ej, %bb.t ], [ %i.er, %bb.u ], [ %.sroa.7113.1, %.lr.ph.i.i.i.i ] ; 2 uses
-  %i.es = getelementptr inbounds nuw i8, ptr %.sroa.0110.0149, i64 8 ; 2 uses
+  %i.es = getelementptr inbounds nuw i8, ptr %.sroa.0110.0152, i64 8 ; 2 uses
   %i.et = icmp ne ptr %.sroa.7113.2, null
   %i.eu = icmp ne ptr %i.es, %i.p
   %or.cond142 = select i1 %i.et, i1 %i.eu, i1 false

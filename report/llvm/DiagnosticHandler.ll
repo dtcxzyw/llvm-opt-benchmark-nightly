@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DiagnosticHandler?download=true
+inline.NumInlined: 286
+inline.NumDeleted: 183
 begin_hunk_0_@llvm.lifetime.end.p0
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
@@ -200,7 +202,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #17
   %i.a = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 4 uses
   store ptr %i.a, ptr %14, align 8, !tbaa !40
-  %i.b = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %14, i64 8 ; 3 uses
   store i64 0, ptr %i.b, align 8, !tbaa !43
   store i8 0, ptr %i.a, align 8, !tbaa !18
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -210,7 +212,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 120
   %.val = load ptr, ptr %i.e, align 8, !tbaa !46  ; 3 uses
-  %i.f = load i64, ptr %i.b, align 8, !tbaa !43   ; 2 uses
+  %i.f = load i64, ptr %i.b, align 8, !tbaa !43
   %i.g = icmp eq i64 %i.f, 0
   br i1 %i.g, label %_ZN4llvm2cl11opt_storageIN12_GLOBAL__N_114PassRemarksOptELb1ELb1EE8setValueINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKT_b.exit, label %bb.c
 
@@ -223,7 +225,8 @@ bb.c:                                             ; preds = %bb.b
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN4llvm5RegexESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.h, align 8, !tbaa !15, !noalias !57
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.l = load ptr, ptr %14, align 8, !tbaa !58, !noalias !57
-  call void @_ZN4llvm5RegexC1ENS_9StringRefENS0_10RegexFlagsE(ptr noundef nonnull align 8 dereferenceable(12) %i.k, ptr %i.l, i64 %i.f, i32 noundef 0) #17, !noalias !57
+  %15 = load i64, ptr %i.b, align 8, !tbaa !43, !noalias !57
+  call void @_ZN4llvm5RegexC1ENS_9StringRefENS0_10RegexFlagsE(ptr noundef nonnull align 8 dereferenceable(12) %i.k, ptr %i.l, i64 %15, i32 noundef 0) #17, !noalias !57
   store ptr %i.k, ptr %.val, align 8, !tbaa !59
   %i.m = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !8    ; 8 uses

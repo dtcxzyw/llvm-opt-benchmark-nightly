@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MsvcStlUnordered?download=true
+inline.NumInlined: 242
+inline.NumDeleted: 178
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -179,14 +181,15 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local noalias noundef ptr @_ZN12lldb_private10formatters40MsvcStlUnorderedSyntheticFrontEndCreatorEPNS_20CXXSyntheticChildrenESt10shared_ptrINS_11ValueObjectEE(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load ptr, ptr %1, align 8, !tbaa !10     ; 2 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !10
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #11 ; 5 uses
+  %2 = load ptr, ptr %1, align 8, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %i.a, ptr %i.c, align 8, !tbaa !24
+  store ptr %2, ptr %i.c, align 8, !tbaa !24
   store ptr getelementptr inbounds nuw inrange(-16, 80) (i8, ptr @_ZTVN12_GLOBAL__N_117UnorderedFrontEndE, i64 16), ptr %i.b, align 8, !tbaa !8
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
@@ -589,7 +592,7 @@ bb.h:                                             ; preds = %_ZNSt12__shared_ptr
   call void @_ZN12lldb_private11ValueObject17GetSyntheticValueEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1034) %i.x) #10
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.z = load <2 x ptr>, ptr %2, align 16, !tbaa !62
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !16  ; 8 uses
   store <2 x ptr> %i.z, ptr %i.a, align 8, !tbaa !62
   %.not.i.i.i.i1 = icmp eq ptr %i.aa, null

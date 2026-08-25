@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/BinaryData?download=true
+inline.NumInlined: 318
+inline.NumDeleted: 183
 begin_hunk_0_@_ZNK4llvm4bolt10BinaryData14getSectionNameEv
 define dso_local { ptr, i64 } @_ZNK4llvm4bolt10BinaryData14getSectionNameEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0) local_unnamed_addr #5 align 2 {
 bb.a:
@@ -200,7 +202,7 @@ bb.k:                                             ; preds = %_ZNK4llvm4bolt10Bin
   br i1 %.not.i, label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ak, ptr nonnull align 1 %i.ah, i64 %i.ai, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ak, ptr nonnull align 8 %i.ah, i64 %i.ai, i1 false)
   %i.aq = load ptr, ptr %i.c, align 8, !tbaa !90
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 %i.ai
   store ptr %i.ar, ptr %i.c, align 8, !tbaa !90
@@ -330,7 +332,7 @@ bb.v:                                             ; preds = %_ZNK4llvm8MCSymbol7
   br i1 %.not.i36, label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit38, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cx, ptr nonnull align 1 %i.cs, i64 %i.ct, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cx, ptr nonnull align 8 %i.cs, i64 %i.ct, i1 false)
   %i.dd = load ptr, ptr %i.cw, align 8, !tbaa !90
   %i.de = getelementptr inbounds nuw i8, ptr %i.dd, i64 %i.ct
   store ptr %i.de, ptr %i.cw, align 8, !tbaa !90
@@ -733,11 +735,11 @@ bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %2 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 12 uses
   %i.d = ashr exact i64 %i.c, 3                   ; 5 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !116
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !97   ; 12 uses
-  %i.i = ptrtoint ptr %i.f to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.f to i64
   %i.j = ptrtoint ptr %i.h to i64                 ; 4 uses
   %i.k = sub i64 %i.i, %i.j
   %.not = icmp ult i64 %i.k, %i.c
@@ -965,7 +967,9 @@ _ZSt34__uninitialized_move_if_noexcept_aIPPN4llvm8MCSymbolES3_SaIS2_EET0_T_S6_S5
   br i1 %.not.i47, label %_ZNSt12_Vector_baseIPN4llvm8MCSymbolESaIS2_EE13_M_deallocateEPS2_m.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPN4llvm8MCSymbolES3_SaIS2_EET0_T_S6_S5_RT1_.exit46
-  %i.ca = sub i64 %i.i, %i.az
+  %4 = load ptr, ptr %i.e, align 8, !tbaa !116
+  %5 = ptrtoint ptr %4 to i64
+  %i.ca = sub i64 %5, %i.az
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ay, i64 noundef %i.ca) #18
   br label %_ZNSt12_Vector_baseIPN4llvm8MCSymbolESaIS2_EE13_M_deallocateEPS2_m.exit
 

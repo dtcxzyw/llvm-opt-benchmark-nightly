@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LoopTermFold?download=true
+inline.NumInlined: 1286
+inline.NumDeleted: 908
 begin_hunk_0
 %"class.llvm::DenseMap.123" = type { ptr, ptr, i32, i32 }
 %"class.llvm::SmallVector.125" = type { %"class.llvm::SmallVectorImpl.126", %"struct.llvm::SmallVectorStorage.129" }
@@ -200,7 +202,7 @@ bb.a:
   %i.d = alloca ptr, align 8                      ; 5 uses
   %8 = alloca %"class.llvm::SCEVExpander", align 8 ; 8 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
-  %9 = alloca %"class.std::unique_ptr.99", align 8 ; 6 uses
+  %9 = alloca %"class.std::unique_ptr.99", align 8 ; 7 uses
   %10 = alloca %"class.llvm::SCEVExpander", align 8 ; 55 uses
   %11 = alloca %"class.llvm::IRBuilder.151", align 8 ; 19 uses
   %12 = alloca %"class.llvm::Twine", align 8      ; 6 uses
@@ -210,7 +212,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %_ZNSt10unique_ptrIN4llvm16MemorySSAUpdaterESt14default_deleteIS1_EEaSEOS4_.exit
 
 _ZNSt10unique_ptrIN4llvm16MemorySSAUpdaterESt14default_deleteIS1_EEaSEOS4_.exit: ; preds = %bb.a
-  %i.f = tail call noalias noundef nonnull dereferenceable(624) ptr @_Znwm(i64 noundef 624) #16, !noalias !42 ; 21 uses
+  %i.f = tail call noalias noundef nonnull dereferenceable(624) ptr @_Znwm(i64 noundef 624) #16, !noalias !42 ; 20 uses
   store ptr %5, ptr %i.f, align 8, !tbaa !45, !noalias !42
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 24
@@ -249,7 +251,6 @@ _ZNSt10unique_ptrIN4llvm16MemorySSAUpdaterESt14default_deleteIS1_EEaSEOS4_.exit:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt10unique_ptrIN4llvm16MemorySSAUpdaterESt14default_deleteIS1_EEaSEOS4_.exit, %bb.a
-  %13 = phi ptr [ %i.f, %_ZNSt10unique_ptrIN4llvm16MemorySSAUpdaterESt14default_deleteIS1_EEaSEOS4_.exit ], [ null, %bb.a ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8, !tbaa !80, !noalias !82
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -652,7 +653,7 @@ _ZN4llvm10CondBrInst12setConditionEPNS_5ValueE.exit: ; preds = %_ZN4llvm3Use14re
   %i.jg = call { ptr, i64 } @_ZN4llvm11Instruction15eraseFromParentEv(ptr noundef nonnull align 8 dereferenceable(72) %i.hr) #15 ; 0 uses
   %i.jh = load ptr, ptr %i.be, align 8, !tbaa !107
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !110
-  %i.jj = load ptr, ptr %9, align 8, !tbaa !79    ; 2 uses
+  %i.jj = load ptr, ptr %9, align 8, !tbaa !79
   %i.jk = call noundef zeroext i1 @_ZN4llvm14DeleteDeadPHIsEPNS_10BasicBlockEPKNS_17TargetLibraryInfoEPNS_16MemorySSAUpdaterEPNS_15SmallPtrSetImplIPNS_7PHINodeEEE(ptr noundef %i.ji, ptr noundef nonnull %4, ptr noundef %i.jj, ptr noundef null) #15 ; 0 uses
   call void @_ZN4llvm24IRBuilderDefaultInserterD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.hx) #15
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.hw) #15
@@ -662,8 +663,8 @@ _ZN4llvm10CondBrInst12setConditionEPNS_5ValueE.exit: ; preds = %_ZN4llvm3Use14re
   br label %bb.ar
 
 bb.ar:                                            ; preds = %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread21, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread14, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread, %_ZN4llvm10CondBrInst12setConditionEPNS_5ValueE.exit
-  %14 = phi ptr [ %13, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread ], [ %13, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread21 ], [ %i.jj, %_ZN4llvm10CondBrInst12setConditionEPNS_5ValueE.exit ], [ %13, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread14 ] ; 2 uses
-  %15 = phi i1 [ false, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread ], [ false, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread21 ], [ true, %_ZN4llvm10CondBrInst12setConditionEPNS_5ValueE.exit ], [ false, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread14 ]
+  %13 = phi i1 [ false, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread ], [ false, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread21 ], [ true, %_ZN4llvm10CondBrInst12setConditionEPNS_5ValueE.exit ], [ false, %_ZL21canFoldTermCondOfLoopPN4llvm4LoopERNS_15ScalarEvolutionERNS_13DominatorTreeERKNS_8LoopInfoERKNS_19TargetTransformInfoE.exit.thread14 ]
+  %14 = load ptr, ptr %9, align 8, !tbaa !79      ; 2 uses
   %.not.i43 = icmp eq ptr %14, null
   br i1 %.not.i43, label %_ZNSt10unique_ptrIN4llvm16MemorySSAUpdaterESt14default_deleteIS1_EED2Ev.exit44, label %bb.as
 
@@ -673,7 +674,7 @@ bb.as:                                            ; preds = %bb.ar
 
 _ZNSt10unique_ptrIN4llvm16MemorySSAUpdaterESt14default_deleteIS1_EED2Ev.exit44: ; preds = %bb.ar, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #15
-  ret i1 %15
+  ret i1 %13
 }
 
 declare void @_ZN4llvm28getLoopPassPreservedAnalysesEv(ptr dead_on_unwind writable sret(%"class.llvm::PreservedAnalyses") align 8) local_unnamed_addr #1

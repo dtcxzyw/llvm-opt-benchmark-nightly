@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InterpFrame?download=true
+inline.NumInlined: 784
+inline.NumDeleted: 398
 begin_hunk_0_@_ZNK5clang6interp10IntegralAPILb0EE8toAPSIntEj:bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !352)
   %i.k = icmp ult i32 %.pre, 65
@@ -200,7 +202,7 @@ bb.a:
   %.mask.i = and i64 %i.i, 8589934528
   %i.j = icmp eq i64 %.mask.i, 64
   %i.k = load i32, ptr %i.a, align 8, !tbaa !364
-  %i.l = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZN4llvm11APFloatBase15EnumToSemanticsENS0_9SemanticsE(i32 noundef %i.k) #11 ; 3 uses
+  %i.l = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZN4llvm11APFloatBase15EnumToSemanticsENS0_9SemanticsE(i32 noundef %i.k) #11 ; 4 uses
   br i1 %i.j, label %bb.b, label %bb.i
 
 bb.b:                                             ; preds = %bb.a
@@ -228,7 +230,7 @@ bb.e:                                             ; preds = %_ZN4llvm5APIntC2Ejm
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit
 
 bb.f:                                             ; preds = %_ZN4llvm5APIntC2Ejmbb.exit
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %2) #11
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %i.l, ptr noundef nonnull align 8 dereferenceable(12) %2) #11
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit: ; preds = %bb.e, %bb.f
@@ -255,7 +257,7 @@ bb.i:                                             ; preds = %bb.a
   %i.v = add nuw nsw i64 %i.u, 63
   %i.w = lshr i64 %i.v, 6
   %i.x = load i32, ptr %i.a, align 8, !tbaa !364
-  %i.y = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZN4llvm11APFloatBase15EnumToSemanticsENS0_9SemanticsE(i32 noundef %i.x) #11 ; 2 uses
+  %i.y = tail call noundef nonnull align 4 dereferenceable(29) ptr @_ZN4llvm11APFloatBase15EnumToSemanticsENS0_9SemanticsE(i32 noundef %i.x) #11 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
   %i.z = load ptr, ptr %1, align 8, !tbaa !182
   call void @_ZN4llvm5APIntC1EjNS_8ArrayRefImEE(ptr noundef nonnull align 8 dereferenceable(12) %3, i32 noundef %i.d, ptr %i.z, i64 %i.w) #11
@@ -267,7 +269,7 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit4
 
 bb.k:                                             ; preds = %bb.i
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %3) #11
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(29) %i.y, ptr noundef nonnull align 8 dereferenceable(12) %3) #11
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit4
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit4: ; preds = %bb.j, %bb.k

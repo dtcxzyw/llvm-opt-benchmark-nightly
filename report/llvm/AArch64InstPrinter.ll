@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AArch64InstPrinter?download=true
+inline.NumInlined: 1980
+inline.NumDeleted: 362
+loop-unroll.NumCompletelyUnrolled: 8
+loop-unroll.NumRuntimeUnrolled: 20
+loop-unroll.NumUnrolled: 29
 begin_hunk_0_@_ZN4llvm18AArch64InstPrinter22printMSRSystemRegisterEPKNS_6MCInstEjRKNS_15MCSubtargetInfoERNS_11raw_ostreamE:bb.a
   ]
 
@@ -200,7 +205,7 @@ _ZNK4llvm8SysAlias12haveFeaturesENS_13FeatureBitsetE.exit.thread: ; preds = %bb.
 
 _ZNK4llvm8SysAlias12haveFeaturesENS_13FeatureBitsetE.exit: ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef nonnull align 8 dereferenceable(48) %i.p, i64 48, i1 false), !tbaa.struct !159
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %7, ptr noundef nonnull align 8 dereferenceable(48) %i.p, i64 48, i1 false), !tbaa.struct !159
   %i.q = load <2 x i64>, ptr %7, align 16, !tbaa !74, !alias.scope !166
   %i.r = and <2 x i64> %i.q, %i.l
   store <2 x i64> %i.r, ptr %7, align 16, !tbaa !74, !alias.scope !166
@@ -270,7 +275,7 @@ _ZNK4llvm8SysAlias12haveFeaturesENS_13FeatureBitsetE.exit26.thread: ; preds = %b
 
 _ZNK4llvm8SysAlias12haveFeaturesENS_13FeatureBitsetE.exit26: ; preds = %bb.h
   %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(48) %i.ar, i64 48, i1 false), !tbaa.struct !159
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %6, ptr noundef nonnull align 8 dereferenceable(48) %i.ar, i64 48, i1 false), !tbaa.struct !159
   %i.as = load <2 x i64>, ptr %6, align 16, !tbaa !74, !alias.scope !169
   %i.at = and <2 x i64> %i.as, %i.an
   store <2 x i64> %i.at, ptr %6, align 16, !tbaa !74, !alias.scope !169
@@ -551,7 +556,7 @@ _ZNK4llvm8SysAlias12haveFeaturesENS_13FeatureBitsetE.exit.thread: ; preds = %bb.
 
 _ZNK4llvm8SysAlias12haveFeaturesENS_13FeatureBitsetE.exit: ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef nonnull align 8 dereferenceable(48) %i.n, i64 48, i1 false), !tbaa.struct !159
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %7, ptr noundef nonnull align 8 dereferenceable(48) %i.n, i64 48, i1 false), !tbaa.struct !159
   %i.o = load <2 x i64>, ptr %7, align 16, !tbaa !74, !alias.scope !178
   %i.p = and <2 x i64> %i.o, %i.j
   store <2 x i64> %i.p, ptr %7, align 16, !tbaa !74, !alias.scope !178
@@ -954,8 +959,8 @@ bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a,
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.c, %bb.b, %.sink.split.i
-  %.0.ph = phi i1 [ true, %.sink.split.i ], [ false, %bb.c ], [ true, %bb.b ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ] ; 2 uses
   %.sroa.5.0.ph = phi i64 [ 3, %.sink.split.i ], [ 4, %bb.c ], [ 4, %bb.b ], [ 3, %bb.a ], [ 3, %bb.a ], [ 3, %bb.a ], [ 3, %bb.a ] ; 4 uses
+  %.0.ph = phi i1 [ true, %.sink.split.i ], [ false, %bb.c ], [ true, %bb.b ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ] ; 2 uses
   %.sroa.0116.0.ph = phi ptr [ @.str.43, %.sink.split.i ], [ @.str.38, %bb.c ], [ @.str.38, %bb.b ], [ @.str.43, %bb.a ], [ @.str.43, %bb.a ], [ @.str.43, %bb.a ], [ @.str.43, %bb.a ] ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !22

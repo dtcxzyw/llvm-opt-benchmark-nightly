@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AMDGPULateCodeGenPrepare?download=true
+inline.NumInlined: 2136
+inline.NumDeleted: 1321
 begin_hunk_0_@_ZN12_GLOBAL__N_124AMDGPULateCodeGenPrepare3runEv:bb.a
   %i.bto = load ptr, ptr %i.dv, align 8, !tbaa !362, !noalias !612 ; 5 uses
   %i.btp = load ptr, ptr %i.dw, align 8, !tbaa !363, !noalias !612 ; 5 uses
@@ -200,6 +202,10 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6
   %.fca.0.extract1.i496.i = extractvalue { ptr, i64 } %i.byo, 0 ; 4 uses
   %.fca.1.extract2.i497.i = extractvalue { ptr, i64 } %i.byo, 1
   %.not.i.i498.i = icmp eq ptr %.fca.0.extract1.i496.i, null
+  %51 = trunc i64 %.fca.1.extract2.i497.i to i16
+  %52 = and i16 %51, -256
+  %53 = or disjoint i16 %52, 1
+  %.sroa.2.0.extract.trunc.i = select i1 %.not.i.i498.i, i16 1, i16 %53
   %i.byp = load ptr, ptr %.sroa.0716.0973.i, align 8, !tbaa !378 ; 6 uses
   %i.byq = load i8, ptr %i.byp, align 8, !tbaa !376 ; 2 uses
   %i.byr = icmp ult i8 %i.byq, 30
@@ -294,11 +300,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6
   store <2 x ptr> <ptr getelementptr inbounds nuw inrange(-16, 160) (i8, ptr @_ZTVN4llvm14ConstantFolderE, i64 16), ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvm24IRBuilderDefaultInserterE, i64 16)>, ptr %i.ea, align 8, !tbaa !8
   store ptr %i.cae, ptr %i.ek, align 8, !tbaa !420
   store ptr %.fca.0.extract1.i496.i, ptr %i.el, align 8
-  %51 = trunc i64 %.fca.1.extract2.i497.i to i16
-  %52 = and i16 %51, -256
-  %53 = or disjoint i16 %52, 1
-  %.sroa.45.0.extract.trunc.i.i.i504.i = select i1 %.not.i.i498.i, i16 1, i16 %53
-  store i16 %.sroa.45.0.extract.trunc.i.i.i504.i, ptr %.sroa.45.0..sroa_idx.i.i.i503.i, align 8
+  store i16 %.sroa.2.0.extract.trunc.i, ptr %.sroa.45.0..sroa_idx.i.i.i503.i, align 8
   %i.cam = getelementptr inbounds nuw i8, ptr %i.cae, i64 48
   %.not.i.i.i505.i = icmp eq ptr %.fca.0.extract1.i496.i, %i.cam
   br i1 %.not.i.i.i505.i, label %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i506.i, label %bb.id
@@ -701,7 +703,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6
   br label %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit.i
 
 _ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit.i: ; preds = %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit650.i, %bb.hz, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit.loopexit.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E22findBucketForInsertionIS4_EEPSA_RKT_SE_.exit.i564.i
-  %.1139.i = phi ptr [ %.0.i509.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit650.i ], [ %i.byp, %bb.hz ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E22findBucketForInsertionIS4_EEPSA_RKT_SE_.exit.i564.i ], [ %.pre1059.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit.loopexit.i ] ; 4 uses
+  %.1139.i = phi ptr [ %i.byp, %bb.hz ], [ %.0.i509.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit650.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E22findBucketForInsertionIS4_EEPSA_RKT_SE_.exit.i564.i ], [ %.pre1059.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPKNS_5ValueEPS2_NS_12DenseMapInfoIS4_vEENS_6detail12DenseMapPairIS4_S5_EEEES4_S5_S7_SA_E24lookupOrInsertIntoBucketIRKS4_JEEESt4pairIPSA_bEOT_DpOT0_.exit.loopexit.i ] ; 4 uses
   %i.cpn = load i32, ptr %i.blc, align 4          ; 2 uses
   %i.cpo = and i32 %i.cpn, 1073741824
   %.not.i.i.i519.i = icmp eq i32 %i.cpo, 0

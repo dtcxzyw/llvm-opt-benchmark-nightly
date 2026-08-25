@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/benchmark_runner?download=true
+inline.NumInlined: 770
+inline.NumDeleted: 435
 begin_hunk_0_@_ZN9benchmark8internal17ParseBenchMinTimeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE:bb.a
 
 bb.i:                                             ; preds = %bb.h
@@ -200,7 +202,7 @@ bb.h:                                             ; preds = %.thread, %bb.f, %bb
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 96
   store double %i.y, ptr %i.z, align 8, !tbaa !73
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ab = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46, !noundef !47 ; 2 uses
+  %i.ab = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46, !noundef !47
   %i.ac = trunc nuw i8 %i.ab to i1                ; 2 uses
   %i.ad = fcmp ule double %i.y, 0.000000e+00
   %narrow = select i1 %i.ac, i1 true, i1 %i.ad
@@ -256,7 +258,6 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !91, !noalias !88
   call void %i.bb(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr") align 8 %i.as, ptr noundef nonnull align 8 dereferenceable(32) %i.az, ptr noundef nonnull align 4 dereferenceable(4) %i.a) #20, !inline_history !93
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !84
-  %.pre12 = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46
   br label %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
 
 bb.m:                                             ; preds = %bb.l
@@ -297,9 +298,9 @@ _ZNSt10unique_ptrIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultESt14de
   br label %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
 
 _ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit: ; preds = %.thread.i, %_ZNSt10unique_ptrIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultESt14default_deleteIS3_EED2Ev.exit.i
-  %4 = phi i8 [ %.pre12, %.thread.i ], [ %i.ab, %_ZNSt10unique_ptrIN9benchmark8internal12_GLOBAL__N_119ThreadRunnerDefaultESt14default_deleteIS3_EED2Ev.exit.i ]
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.bm = trunc nuw i8 %4 to i1
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 128
+  %5 = load i8, ptr @_ZN9benchmark23FLAGS_benchmark_dry_runE, align 1, !tbaa !45, !range !46, !noundef !47
+  %i.bm = trunc nuw i8 %5 to i1
   br i1 %i.bm, label %_ZN9benchmark8internal12_GLOBAL__N_112ComputeItersERKNS0_17BenchmarkInstanceERKNS0_13BenchTimeTypeE.exit, label %bb.o
 
 bb.o:                                             ; preds = %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
@@ -334,7 +335,7 @@ _ZN9benchmark8internal18GetNullLogInstanceEv.exit.i: ; preds = %bb.s, %bb.r, %bb
 
 _ZN9benchmark8internal12_GLOBAL__N_112ComputeItersERKNS0_17BenchmarkInstanceERKNS0_13BenchTimeTypeE.exit: ; preds = %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i, %bb.p, %bb.o, %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit
   %i.bu = phi i64 [ 1, %_ZN9benchmark8internal12_GLOBAL__N_115GetThreadRunnerERKSt8functionIFSt10unique_ptrINS_16ThreadRunnerBaseESt14default_deleteIS4_EEiEEi.exit ], [ 1, %bb.o ], [ %i.bt, %_ZN9benchmark8internal18GetNullLogInstanceEv.exit.i ], [ %.val, %bb.p ]
-  store i64 %i.bu, ptr %5, align 8, !tbaa !106
+  store i64 %i.bu, ptr %4, align 8, !tbaa !106
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 136
   store ptr %2, ptr %i.bv, align 8, !tbaa !107
   %i.bw = load i8, ptr @_ZN9benchmark38FLAGS_benchmark_report_aggregates_onlyE, align 1, !tbaa !45, !range !46, !noundef !47 ; 2 uses
@@ -737,7 +738,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 16, !tbaa !233
   store ptr %i.j, ptr %i.e, align 8, !tbaa !233
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %1, i8 0, i64 24, i1 false)
   call void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN9benchmark17BenchmarkReporter3RunEEEvT_S6_(ptr noundef %i.b, ptr noundef %i.d)
   %.not.i.i.i.i.i = icmp eq ptr %i.b, null
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EEaSEOS4_.exit, label %bb.b

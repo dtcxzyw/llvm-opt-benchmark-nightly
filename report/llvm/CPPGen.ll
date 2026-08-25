@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CPPGen?download=true
+inline.NumInlined: 979
+inline.NumDeleted: 659
 begin_hunk_0_@_ZN4mlir4pdll16codegenPDLLToCPPERKNS0_3ast6ModuleENS_8ModuleOpERN4llvm11raw_ostreamE:bb.a
 _ZN4llvm11raw_ostreamlsENS_9StringRefE.exit84.i.i: ; preds = %bb.cj, %bb.ci, %bb.ch
   %i.np = phi ptr [ %.pre96.i.i, %bb.ch ], [ %i.no, %bb.cj ], [ %i.nh, %bb.ci ] ; 2 uses
@@ -200,7 +202,6 @@ _ZN4llvm11raw_ostreamlsEPKc.exit18.i:             ; preds = %bb.cr, %bb.cq
   br i1 %.not85.i, label %._crit_edge88.i, label %.lr.ph87.i
 
 bb.cs:                                            ; preds = %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorIN4mlir6detail18op_filter_iteratorINS2_3pdl9PatternOpENS2_6Region10OpIteratorEEEPFS6_RNS2_9OperationEES6_EES9_St20forward_iterator_tagS6_lPS6_S6_EppEv.exit.i, %.lr.ph.i
-  %.sroa.0.0.i = phi ptr [ undef, %.lr.ph.i ], [ %.sroa.0.2.i, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorIN4mlir6detail18op_filter_iteratorINS2_3pdl9PatternOpENS2_6Region10OpIteratorEEEPFS6_RNS2_9OperationEES6_EES9_St20forward_iterator_tagS6_lPS6_S6_EppEv.exit.i ] ; 2 uses
   %i.rr = phi ptr [ %i.pl, %.lr.ph.i ], [ %i.xu, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorIN4mlir6detail18op_filter_iteratorINS2_3pdl9PatternOpENS2_6Region10OpIteratorEEEPFS6_RNS2_9OperationEES6_EES9_St20forward_iterator_tagS6_lPS6_S6_EppEv.exit.i ]
   %.084.i = phi i32 [ 0, %.lr.ph.i ], [ %.2.i, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorIN4mlir6detail18op_filter_iteratorINS2_3pdl9PatternOpENS2_6Region10OpIteratorEEEPFS6_RNS2_9OperationEES6_EES9_St20forward_iterator_tagS6_lPS6_S6_EppEv.exit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #11
@@ -288,19 +289,15 @@ bb.cz:                                            ; preds = %bb.cs
   store ptr %i.po, ptr %21, align 8, !tbaa !74
   store i64 0, ptr %i.pp, align 8, !tbaa !78
   store i8 0, ptr %i.po, align 8, !tbaa !52
-  %25 = ptrtoint ptr %.sroa.0.0.i to i64
   br label %_ZN4llvmplERKNS_5TwineES2_.exit.i
 
 _ZN4llvmplERKNS_5TwineES2_.exit.i:                ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24.i, %bb.cz
-  %.sroa.0.1.i = phi i64 [ %25, %bb.cz ], [ %.sroa.0.0.insert.insert.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24.i ]
   %.1.i = phi i32 [ %.084.i, %bb.cz ], [ %i.sm, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit24.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #11
   %i.sm = add nsw i32 %.1.i, 1                    ; 2 uses
   %.sroa.0.0.insert.ext.i = zext i32 %.1.i to i64
-  %.sroa.0.0.insert.mask.i = and i64 %.sroa.0.1.i, -4294967296
-  %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.0.0.insert.mask.i, %.sroa.0.0.insert.ext.i ; 2 uses
-  %i.sn = inttoptr i64 %.sroa.0.0.insert.insert.i to ptr ; 2 uses
+  %i.sn = inttoptr i64 %.sroa.0.0.insert.ext.i to ptr
   store ptr %15, ptr %23, align 8, !alias.scope !110
   store ptr %i.sn, ptr %i.pq, align 8, !alias.scope !110
   store i8 4, ptr %i.pr, align 8, !tbaa !115, !alias.scope !110
@@ -510,7 +507,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit27.i: ; preds = %b
   br label %bb.do
 
 bb.do:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit27.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i
-  %.sroa.0.2.i = phi ptr [ %.sroa.0.0.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %i.sn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit27.i ]
   %.2.i = phi i32 [ %.084.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ], [ %i.sm, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit27.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #11
   %.sroa.0.0.copyload.i = load ptr, ptr %18, align 8 ; 2 uses

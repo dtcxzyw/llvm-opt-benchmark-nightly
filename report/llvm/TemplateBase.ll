@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TemplateBase?download=true
+inline.NumInlined: 1377
+inline.NumDeleted: 805
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZNK5clang19TemplateArgumentLoc14getSourceRangeEv:bb.a
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !135
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
@@ -200,11 +205,11 @@ bb.ac:                                            ; preds = %bb.a
   unreachable
 
 _ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit38: ; preds = %bb.a, %bb.u, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit63, %bb.o, %_ZNK5clang19TemplateArgumentLoc23getTemplateQualifierLocEv.exit.thread, %bb.i, %bb.j, %bb.ab, %bb.aa, %bb.z, %bb.x, %bb.w, %_ZNK5clang19TemplateArgumentLoc22getTemplateEllipsisLocEv.exit, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit, %bb.h, %bb.g, %bb.e, %bb.d, %bb.b
-  %.sroa.078.0.a = phi i32 [ %.sroa.078.0.extract.trunc, %bb.b ], [ %i.m, %bb.d ], [ %.sroa.078.0.extract.trunc79, %bb.e ], [ %i.v, %bb.g ], [ %.sroa.078.0.extract.trunc80, %bb.h ], [ %.sroa.0.0.i60, %bb.u ], [ %i.ag, %bb.j ], [ %i.au, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit ], [ 0, %bb.i ], [ %i.bt, %_ZNK5clang19TemplateArgumentLoc22getTemplateEllipsisLocEv.exit ], [ 0, %_ZNK5clang19TemplateArgumentLoc23getTemplateQualifierLocEv.exit.thread ], [ %i.cq, %bb.w ], [ %.sroa.078.0.extract.trunc82, %bb.x ], [ %i.cz, %bb.z ], [ %.sroa.078.0.extract.trunc83, %bb.aa ], [ %i.dg, %bb.ab ], [ %.sroa.0.0.copyload.i.i37, %bb.o ], [ %.sroa.0.0.i60, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit63 ], [ %i.c, %bb.a ]
-  %.sroa.20.0 = phi i32 [ %.sroa.20.0.extract.trunc, %bb.b ], [ %i.m, %bb.d ], [ %.sroa.20.0.extract.trunc85, %bb.e ], [ %i.v, %bb.g ], [ %.sroa.20.0.extract.trunc87, %bb.h ], [ %.sroa.0.0.copyload.i.i67, %bb.u ], [ %i.ah, %bb.j ], [ %.sroa.0.0.i32, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit ], [ 0, %bb.i ], [ %.sroa.0.0.i56, %_ZNK5clang19TemplateArgumentLoc22getTemplateEllipsisLocEv.exit ], [ 0, %_ZNK5clang19TemplateArgumentLoc23getTemplateQualifierLocEv.exit.thread ], [ %i.cq, %bb.w ], [ %.sroa.20.0.extract.trunc91, %bb.x ], [ %i.cz, %bb.z ], [ %.sroa.20.0.extract.trunc93, %bb.aa ], [ %i.dg, %bb.ab ], [ %.sroa.0.0.copyload.i.i37, %bb.o ], [ 0, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit63 ], [ %i.c, %bb.a ]
-  %.sroa.20.0.insert.ext = zext i32 %.sroa.20.0 to i64
+  %.sroa.078.0.a = phi i32 [ %.sroa.20.0.extract.trunc, %bb.b ], [ %i.m, %bb.d ], [ %.sroa.20.0.extract.trunc85, %bb.e ], [ %i.v, %bb.g ], [ %.sroa.20.0.extract.trunc87, %bb.h ], [ 0, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit63 ], [ %i.ah, %bb.j ], [ %.sroa.0.0.i32, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit ], [ 0, %bb.i ], [ %.sroa.0.0.i56, %_ZNK5clang19TemplateArgumentLoc22getTemplateEllipsisLocEv.exit ], [ 0, %_ZNK5clang19TemplateArgumentLoc23getTemplateQualifierLocEv.exit.thread ], [ %i.cq, %bb.w ], [ %.sroa.20.0.extract.trunc91, %bb.x ], [ %i.cz, %bb.z ], [ %.sroa.20.0.extract.trunc93, %bb.aa ], [ %i.dg, %bb.ab ], [ %.sroa.0.0.copyload.i.i37, %bb.o ], [ %.sroa.0.0.copyload.i.i67, %bb.u ], [ %i.c, %bb.a ]
+  %.sroa.20.0 = phi i32 [ %.sroa.078.0.extract.trunc, %bb.b ], [ %i.m, %bb.d ], [ %.sroa.078.0.extract.trunc79, %bb.e ], [ %i.v, %bb.g ], [ %.sroa.078.0.extract.trunc80, %bb.h ], [ %.sroa.0.0.i60, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit63 ], [ %i.ag, %bb.j ], [ %i.au, %_ZNK5clang19TemplateArgumentLoc18getTemplateNameLocEv.exit ], [ 0, %bb.i ], [ %i.bt, %_ZNK5clang19TemplateArgumentLoc22getTemplateEllipsisLocEv.exit ], [ 0, %_ZNK5clang19TemplateArgumentLoc23getTemplateQualifierLocEv.exit.thread ], [ %i.cq, %bb.w ], [ %.sroa.078.0.extract.trunc82, %bb.x ], [ %i.cz, %bb.z ], [ %.sroa.078.0.extract.trunc83, %bb.aa ], [ %i.dg, %bb.ab ], [ %.sroa.0.0.copyload.i.i37, %bb.o ], [ %.sroa.0.0.i60, %bb.u ], [ %i.c, %bb.a ]
+  %.sroa.20.0.insert.ext = zext i32 %.sroa.078.0.a to i64
   %.sroa.20.0.insert.shift = shl nuw i64 %.sroa.20.0.insert.ext, 32
-  %.sroa.078.0.insert.ext = zext i32 %.sroa.078.0.a to i64
+  %.sroa.078.0.insert.ext = zext i32 %.sroa.20.0 to i64
   %.sroa.078.0.insert.insert = or disjoint i64 %.sroa.20.0.insert.shift, %.sroa.078.0.insert.ext
   ret i64 %.sroa.078.0.insert.insert
 }

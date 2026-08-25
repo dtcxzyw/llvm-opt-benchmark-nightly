@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ObjectContainerMachOFileset?download=true
+inline.NumInlined: 545
+inline.NumDeleted: 337
 begin_hunk_0_@_ZN12lldb_private27ObjectContainerMachOFileset11ParseHeaderERNS_13DataExtractorERKNS_8FileSpecEmRSt6vectorINS0_5EntryESaIS7_EE:bb.a
   %i.d = load i32, ptr %4, align 4, !tbaa !103    ; 2 uses
   switch i32 %i.d, label %bb.d [
@@ -200,8 +202,8 @@ _ZL23MachHeaderSizeFromMagicj.exit:               ; preds = %bb.a, %bb.a, %bb.b,
 
 bb.d:                                             ; preds = %.lr.ph, %bb.n
   %i.n = phi i64 [ %.0.i, %.lr.ph ], [ %i.be, %bb.n ] ; 4 uses
-  %.09 = phi i64 [ 0, %.lr.ph ], [ %.2, %bb.n ]   ; 3 uses
-  %.0168 = phi i32 [ 0, %.lr.ph ], [ %i.bf, %bb.n ]
+  %.0169 = phi i32 [ 0, %.lr.ph ], [ %i.bf, %bb.n ]
+  %.0178 = phi i64 [ 0, %.lr.ph ], [ %.2, %bb.n ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   store i64 0, ptr %4, align 8
   %i.o = call noundef ptr @_ZNK12lldb_private13DataExtractor6GetU32EPmPvj(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %i.b, ptr noundef nonnull %4, i32 noundef 2) #18
@@ -240,14 +242,14 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread:         ; preds = %_ZN4llvmeqENS_9Stri
   br label %_ZN4llvmeqENS_9StringRefES0_.exit.thread6
 
 _ZN4llvmeqENS_9StringRefES0_.exit.thread6:        ; preds = %bb.f, %_ZN4llvmeqENS_9StringRefES0_.exit.thread, %_ZN4llvmeqENS_9StringRefES0_.exit
-  %.1 = phi i64 [ %i.ae, %_ZN4llvmeqENS_9StringRefES0_.exit.thread ], [ %.09, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ %.09, %bb.f ]
+  %.1 = phi i64 [ %i.ae, %_ZN4llvmeqENS_9StringRefES0_.exit.thread ], [ %.0178, %_ZN4llvmeqENS_9StringRefES0_.exit ], [ %.0178, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   %.pr = load i32, ptr %4, align 8, !tbaa !108
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread6, %bb.e
   %i.af = phi i32 [ %.pr, %_ZN4llvmeqENS_9StringRefES0_.exit.thread6 ], [ %i.p, %bb.e ]
-  %.2 = phi i64 [ %.1, %_ZN4llvmeqENS_9StringRefES0_.exit.thread6 ], [ %.09, %bb.e ] ; 2 uses
+  %.2 = phi i64 [ %.1, %_ZN4llvmeqENS_9StringRefES0_.exit.thread6 ], [ %.0178, %bb.e ] ; 2 uses
   %i.ag = icmp eq i32 %i.af, -2147483595
   br i1 %i.ag, label %bb.h, label %bb.n
 
@@ -333,7 +335,7 @@ bb.n:                                             ; preds = %bb.g, %bb.m
   %i.be = add i64 %i.n, %i.bd                     ; 2 uses
   store i64 %i.be, ptr %i.b, align 8, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  %i.bf = add nuw i32 %.0168, 1                   ; 2 uses
+  %i.bf = add nuw i32 %.0169, 1                   ; 2 uses
   %exitcond.not = icmp eq i32 %i.bf, %.16.val
   br i1 %exitcond.not, label %.loopexit, label %bb.d, !llvm.loop !114
 

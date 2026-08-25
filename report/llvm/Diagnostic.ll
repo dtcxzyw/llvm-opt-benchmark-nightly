@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Diagnostic?download=true
+inline.NumInlined: 599
+inline.NumDeleted: 331
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK4llvm11PagedVectorIN5clang6SrcMgr9SLocEntryELm32EEixEm:bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.au, i8 0, i64 20, i1 false)
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !153
@@ -200,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph
 
 bb.d:                                             ; preds = %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.x, ptr nonnull align 1 %i.y, i64 %i.u, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.x, ptr nonnull align 8 %i.y, i64 %i.u, i1 false)
   br label %_ZN4llvm18StringMapEntryBase15allocateWithKeyINS_15MallocAllocatorEEEPvmmNS_9StringRefERT_.exit.i
 
 _ZN4llvm18StringMapEntryBase15allocateWithKeyINS_15MallocAllocatorEEEPvmmNS_9StringRefERT_.exit.i: ; preds = %bb.d, %bb.c

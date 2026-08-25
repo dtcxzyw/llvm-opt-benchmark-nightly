@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Descriptor?download=true
+inline.NumInlined: 549
+inline.NumDeleted: 334
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN5clang6interp10DescriptorC2ERKN4llvm12PointerUnionIJPKNS_4DeclEPKNS_4ExprEEEEPKNS_4TypeENS0_8PrimTypeESt8optionalIjEmbbbb:bb.a
 
 _ZL16getCtorArrayPrimN5clang6interp8PrimTypeE.exit.thread16: ; preds = %bb.a
@@ -200,12 +204,12 @@ _ZNK5clang6interp10Descriptor11getNumElemsEv.exit: ; preds = %bb.a
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.j
-  %.048 = phi i32 [ 0, %.lr.ph ], [ %i.be, %bb.j ] ; 3 uses
-  %.04247 = phi i32 [ 0, %.lr.ph ], [ %i.bd, %bb.j ]
-  %i.r = zext i32 %.048 to i64
+  %.048 = phi i32 [ 0, %.lr.ph ], [ %i.bd, %bb.j ]
+  %.04247 = phi i32 [ 0, %.lr.ph ], [ %i.be, %bb.j ] ; 3 uses
+  %i.r = zext i32 %.04247 to i64
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.r ; 4 uses
   %i.t = load ptr, ptr %i.g, align 8, !tbaa !35   ; 3 uses
-  %i.u = add i32 %.048, 16
+  %i.u = add i32 %.04247, 16
   store i32 %i.u, ptr %i.s, align 8, !tbaa !36
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store ptr %i.t, ptr %i.v, align 8, !tbaa !39
@@ -277,8 +281,8 @@ _ZNK5clang6interp10Descriptor7isUnionEv.exit:     ; preds = %bb.i, %bb.h, %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK5clang6interp10Descriptor7isUnionEv.exit, %bb.f
-  %i.bd = add nuw i32 %.04247, 1                  ; 2 uses
-  %i.be = add i32 %i.k, %.048
+  %i.bd = add nuw i32 %.048, 1                    ; 2 uses
+  %i.be = add i32 %i.k, %.04247
   %.not = icmp eq i32 %i.bd, %i.f
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !62
 }

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AMDGPUAtomicOptimizer?download=true
+inline.NumInlined: 1633
+inline.NumDeleted: 929
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZNK12_GLOBAL__N_125AMDGPUAtomicOptimizerImpl14optimizeAtomicERN4llvm11InstructionENS1_13AtomicRMWInst5BinOpEjbb:bb.a
 bb.z:                                             ; preds = %bb.y
   store i64 0, ptr %69, align 8, !tbaa !352, !alias.scope !387
@@ -200,7 +205,7 @@ _ZN4llvm5APIntD2Ev.exit21.i:                      ; preds = %bb.ar, %bb.aq, %_ZN
 
 bb.as:                                            ; preds = %_ZNK4llvm8TypeSizecvmEv.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %73) #15
-  %i.kh = call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK4llvm4Type15getFltSemanticsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.hj) #15 ; 2 uses
+  %i.kh = call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK4llvm4Type15getFltSemanticsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.hj) #15 ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.kh, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
   br i1 %.not.i.i.i.i, label %bb.au, label %bb.at
 
@@ -209,7 +214,7 @@ bb.at:                                            ; preds = %bb.as
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i.i
 
 bb.au:                                            ; preds = %bb.as
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %73, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, i32 noundef 0) #15
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %73, ptr noundef nonnull align 4 dereferenceable(29) %i.kh, i32 noundef 0) #15
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i.i
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i.i: ; preds = %bb.au, %bb.at
@@ -233,7 +238,7 @@ _ZN4llvm7APFloat7getZeroERKNS_12fltSemanticsEb.exit.i: ; preds = %bb.aw, %bb.av
 
 bb.ax:                                            ; preds = %_ZNK4llvm8TypeSizecvmEv.exit.i, %_ZNK4llvm8TypeSizecvmEv.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %74) #15
-  %i.kk = call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK4llvm4Type15getFltSemanticsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.hj) #15 ; 2 uses
+  %i.kk = call noundef nonnull align 4 dereferenceable(29) ptr @_ZNK4llvm4Type15getFltSemanticsEv(ptr noundef nonnull align 8 dereferenceable(24) %i.hj) #15 ; 3 uses
   %.not.i.i.i5.i.i = icmp eq ptr %i.kk, @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE
   br i1 %.not.i.i.i5.i.i, label %bb.az, label %bb.ay
 
@@ -242,7 +247,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i6.i.i
 
 bb.az:                                            ; preds = %bb.ax
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %74, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, i32 noundef 0) #15
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %74, ptr noundef nonnull align 4 dereferenceable(29) %i.kk, i32 noundef 0) #15
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i6.i.i
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i6.i.i: ; preds = %bb.az, %bb.ay

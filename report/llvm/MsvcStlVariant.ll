@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MsvcStlVariant?download=true
+inline.NumInlined: 295
+inline.NumDeleted: 198
 begin_hunk_0_@_ZNK12lldb_private12CompilerTypecvbEv:bb.a
   tail call void %i.u(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #13, !inline_history !59
   %i.v = load ptr, ptr %i.b, align 8, !tbaa !8
@@ -200,22 +202,23 @@ declare ptr @_ZNK12lldb_private12CompilerType18GetDisplayTypeNameEv(ptr noundef 
 define dso_local noalias noundef ptr @_ZN12lldb_private10formatters38MsvcStlVariantSyntheticFrontEndCreatorEPNS_20CXXSyntheticChildrenESt10shared_ptrINS_11ValueObjectEE(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %"class.std::shared_ptr", align 8   ; 5 uses
-  %i.a = load ptr, ptr %1, align 8, !tbaa !10     ; 4 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !10
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %_ZN12_GLOBAL__N_115VariantFrontEndC2ERN12lldb_private11ValueObjectE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #14 ; 5 uses
+  %3 = load ptr, ptr %1, align 8, !tbaa !10       ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store ptr %i.a, ptr %i.c, align 8, !tbaa !66
+  store ptr %3, ptr %i.c, align 8, !tbaa !66
   store ptr getelementptr inbounds nuw inrange(-16, 80) (i8, ptr @_ZTVN12_GLOBAL__N_115VariantFrontEndE, i64 16), ptr %i.b, align 8, !tbaa !8
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   store i64 0, ptr %i.d, align 8, !tbaa !67
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
-  %i.e = load ptr, ptr %i.a, align 8, !tbaa !8
+  %i.e = load ptr, ptr %3, align 8, !tbaa !8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 192
   %i.g = load ptr, ptr %i.f, align 8
-  call void %i.g(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1034) %i.a, ptr nonnull @.str, i64 6, i1 noundef zeroext true) #13, !inline_history !71
+  call void %i.g(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr") align 8 %2, ptr noundef nonnull align 8 dereferenceable(1034) %3, ptr nonnull @.str, i64 6, i1 noundef zeroext true) #13, !inline_history !71
   %i.h = load ptr, ptr %2, align 8, !tbaa !10     ; 3 uses
   %.not.i.not.i.i = icmp eq ptr %i.h, null
   br i1 %.not.i.not.i.i, label %bb.d, label %bb.c

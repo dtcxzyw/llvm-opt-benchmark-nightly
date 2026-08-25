@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MLxExpansionPass?download=true
+inline.NumInlined: 558
+inline.NumDeleted: 362
 begin_hunk_0_@_ZN4llvm4Pass18getAsPMDataManagerEv
 declare noundef ptr @_ZN4llvm4Pass18getAsPMDataManagerEv(ptr noundef nonnull align 8 dereferenceable(28)) unnamed_addr #7
 
@@ -200,8 +202,8 @@ _ZN4llvm17MachineBasicBlock6rbeginEv.exit.i:      ; preds = %_ZNK4llvm14ilist_it
   br i1 %.not3749.i, label %_ZN12_GLOBAL__N_112MLxExpansion23ExpandFPMLxInstructionsERN4llvm17MachineBasicBlockE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZN4llvm17MachineBasicBlock6rbeginEv.exit.i, %bb.bf
-  %.054.i = phi i1 [ %.4.i, %bb.bf ], [ false, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit.i ] ; 10 uses
-  %.01653.i = phi i32 [ %.319.i, %bb.bf ], [ 0, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit.i ] ; 7 uses
+  %.052.i = phi i32 [ %.3.i, %bb.bf ], [ 0, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit.i ] ; 7 uses
+  %.01651.i = phi i1 [ %.4.i, %bb.bf ], [ false, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit.i ] ; 10 uses
   %.sroa.030.050.i = phi ptr [ %.sroa.0.1.i.i.i.i.i.i, %bb.bf ], [ %.sroa.0.1.i.i.i.i.i, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit.i ] ; 16 uses
   %.0.copyload.i.i.i.i.i.i.i.i.i.i22.i = load i64, ptr %.sroa.030.050.i, align 8
   %i.cw = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i.i22.i, -8
@@ -278,7 +280,7 @@ bb.k:                                             ; preds = %_ZNK4llvm12MachineI
   br i1 %i.dy, label %bb.l, label %bb.n
 
 bb.l:                                             ; preds = %bb.k
-  %i.dz = add i32 %.01653.i, 1                    ; 2 uses
+  %i.dz = add i32 %.052.i, 1                      ; 2 uses
   %i.ea = icmp eq i32 %i.dz, 2
   br i1 %i.ea, label %bb.m, label %bb.bf
 
@@ -681,7 +683,7 @@ _ZN12_GLOBAL__N_112MLxExpansion22ExpandFPMLxInstructionERN4llvm17MachineBasicBlo
   br label %bb.be
 
 bb.be:                                            ; preds = %_ZN12_GLOBAL__N_112MLxExpansion22ExpandFPMLxInstructionERN4llvm17MachineBasicBlockEPNS1_12MachineInstrEjjbb.exit.i, %_ZN12_GLOBAL__N_112MLxExpansion13FindMLxHazardEPN4llvm12MachineInstrE.exit.thread33.i
-  %.1.i = phi i1 [ true, %_ZN12_GLOBAL__N_112MLxExpansion22ExpandFPMLxInstructionERN4llvm17MachineBasicBlockEPNS1_12MachineInstrEjjbb.exit.i ], [ %.054.i, %_ZN12_GLOBAL__N_112MLxExpansion13FindMLxHazardEPN4llvm12MachineInstrE.exit.thread33.i ]
+  %.1.i = phi i1 [ true, %_ZN12_GLOBAL__N_112MLxExpansion22ExpandFPMLxInstructionERN4llvm17MachineBasicBlockEPNS1_12MachineInstrEjjbb.exit.i ], [ %.01651.i, %_ZN12_GLOBAL__N_112MLxExpansion13FindMLxHazardEPN4llvm12MachineInstrE.exit.thread33.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
@@ -689,8 +691,8 @@ bb.be:                                            ; preds = %_ZN12_GLOBAL__N_112
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %bb.m, %bb.l, %bb.j, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i
-  %.319.i = phi i32 [ %.01653.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %i.dz, %bb.l ], [ 0, %bb.be ], [ 0, %bb.j ], [ 2, %bb.m ], [ %.01653.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01653.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01653.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01653.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01653.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ]
-  %.4.i = phi i1 [ %.054.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.054.i, %bb.l ], [ %.1.i, %bb.be ], [ %.054.i, %bb.j ], [ %.054.i, %bb.m ], [ %.054.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.054.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.054.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.054.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.054.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ] ; 2 uses
+  %.4.i = phi i1 [ %.01651.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01651.i, %bb.l ], [ %.1.i, %bb.be ], [ %.01651.i, %bb.j ], [ %.01651.i, %bb.m ], [ %.01651.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01651.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01651.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01651.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.01651.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ] ; 2 uses
+  %.3.i = phi i32 [ %.052.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %i.dz, %bb.l ], [ 0, %bb.be ], [ 0, %bb.j ], [ 2, %bb.m ], [ %.052.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.052.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.052.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.052.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ], [ %.052.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEi.exit.i ]
   %.not37.i = icmp eq ptr %.sroa.0.1.i.i.i.i.i.i, %i.ck
   br i1 %.not37.i, label %_ZN12_GLOBAL__N_112MLxExpansion23ExpandFPMLxInstructionsERN4llvm17MachineBasicBlockE.exit.loopexit, label %.lr.ph.i
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MSP430BranchSelector?download=true
+inline.NumInlined: 441
+inline.NumDeleted: 289
 begin_hunk_0_@_ZN4llvm22MSP430BranchSelectPass3runERNS_15MachineFunctionERNS_15AnalysisManagerIS1_JEEE:bb.a
   %4 = alloca %"class.(anonymous namespace)::MSP430BSelImpl", align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
@@ -200,6 +202,7 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17Mac
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store ptr %i.bw, ptr %i.cc, align 8, !tbaa !163
   store ptr %i.bw, ptr %i.by, align 8, !tbaa !233
+  %6 = getelementptr inbounds nuw i8, ptr %i.bw, i64 48 ; 4 uses
   %.0.copyload.i.i.i.i.i.i.i.i.i.i89.i = load i64, ptr %.sroa.0144.0207.i, align 8
   %i.cd = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i.i89.i, 4
   %.not.i.i.i.i90.i = icmp eq i64 %i.cd, 0
@@ -232,7 +235,6 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i91.i: ; p
   br i1 %or.cond.i.i.i, label %_ZN4llvm17MachineBasicBlock6spliceENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEPS0_S3_S3_.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i91.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.bw, i64 48 ; 4 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.bw, i64 40
   call void @_ZN4llvm12ilist_traitsINS_12MachineInstrEE21transferNodesFromListERS2_NS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb1ELb1EvLb0EvEELb0ELb0EEES8_(ptr noundef nonnull align 8 dereferenceable(24) %i.cq, ptr noundef nonnull align 8 dereferenceable(24) %i.ae, ptr %i.cn, ptr nonnull %i.ab) #12
   %.0.copyload.i.i.i.i.i.i.i.i.i.i100.i = load i64, ptr %i.ab, align 8

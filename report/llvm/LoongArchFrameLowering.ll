@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LoongArchFrameLowering?download=true
+inline.NumInlined: 912
+inline.NumDeleted: 517
 begin_hunk_0_@_ZNK4llvm22LoongArchFrameLowering16inlineStackProbeERNS_15MachineFunctionERNS_17MachineBasicBlockE:bb.a
   br label %._crit_edge33
 
@@ -200,6 +202,7 @@ bb.f:                                             ; preds = %.lr.ph32, %_ZL20emi
   %i.ej = load i32, ptr %i.ei, align 4, !tbaa !277
   %i.ek = or i32 %i.ej, 1
   store i32 %i.ek, ptr %i.ei, align 4, !tbaa !277
+  %14 = getelementptr inbounds nuw i8, ptr %i.cp, i64 48 ; 4 uses
   %.0.copyload.i.i.i.i.i.i.i.i.i.i90.i = load i64, ptr %i.bb, align 8
   %i.el = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i.i90.i, 4
   %.not.i.i.i.i.i = icmp eq i64 %i.el, 0
@@ -233,7 +236,6 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i: ; pre
   br i1 %or.cond.i.i.i, label %_ZL20emitStackProbeInlineN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEENS_8DebugLocENS_8RegisterE.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i.i
-  %14 = getelementptr inbounds nuw i8, ptr %i.cp, i64 48 ; 4 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.bi, i64 40
   %i.fa = getelementptr inbounds nuw i8, ptr %i.cp, i64 40
   call void @_ZN4llvm12ilist_traitsINS_12MachineInstrEE21transferNodesFromListERS2_NS_14ilist_iteratorINS_12ilist_detail12node_optionsIS1_Lb1ELb1EvLb0EvEELb0ELb0EEES8_(ptr noundef nonnull align 8 dereferenceable(24) %i.fa, ptr noundef nonnull align 8 dereferenceable(24) %i.ez, ptr %i.ev, ptr nonnull %i.ew) #14
@@ -636,11 +638,11 @@ bb.d:                                             ; preds = %_ZNK4llvm22LoongArc
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZNK4llvm22LoongArchFrameLowering22getFirstSPAdjustAmountERKNS_15MachineFunctionE.exit
-  %.034 = phi i32 [ %i.av, %bb.d ], [ -1, %_ZNK4llvm22LoongArchFrameLowering22getFirstSPAdjustAmountERKNS_15MachineFunctionE.exit ]
-  %.0 = phi i32 [ %i.as, %bb.d ], [ 0, %_ZNK4llvm22LoongArchFrameLowering22getFirstSPAdjustAmountERKNS_15MachineFunctionE.exit ]
-  %.not37 = icmp slt i32 %2, %.0
-  %.not38 = icmp sgt i32 %2, %.034
-  %or.cond = or i1 %.not38, %.not37
+  %.034 = phi i32 [ %i.as, %bb.d ], [ 0, %_ZNK4llvm22LoongArchFrameLowering22getFirstSPAdjustAmountERKNS_15MachineFunctionE.exit ]
+  %.0 = phi i32 [ %i.av, %bb.d ], [ -1, %_ZNK4llvm22LoongArchFrameLowering22getFirstSPAdjustAmountERKNS_15MachineFunctionE.exit ]
+  %.not37 = icmp slt i32 %2, %.034
+  %.not38 = icmp sgt i32 %2, %.0
+  %or.cond = or i1 %.not37, %.not38
   br i1 %or.cond, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LiveIntervalCalc?download=true
+inline.NumInlined: 560
+inline.NumDeleted: 371
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -116,8 +118,7 @@ bb.c:                                             ; preds = %.preheader.i.i.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.m, i64 280
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ai = insertelement <2 x ptr> poison, ptr %i.d, i64 0
   %i.aj = insertelement <2 x ptr> %i.ai, ptr %i.f, i64 1
   br label %_ZN4llvm19MachineRegisterInfo20defusechain_iteratorILb1ELb1ELb1ELb1ELb0EEppEv.exit
@@ -248,15 +249,15 @@ _ZN4llvm12LiveInterval18createSubRangeFromERNS_20BumpPtrAllocatorImplINS_15Mallo
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZN4llvm12LiveInterval18createSubRangeFromERNS_20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm128ELm8EEENS_11LaneBitmaskERKNS_9LiveRangeE.exit, %bb.h, %bb.g
-  store i64 0, ptr %i.ah, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   %i.cp = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #11 ; 3 uses
   store ptr %.sroa.085.098, ptr %i.cp, align 16, !tbaa !234
   %.sroa.483.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
   store <2 x ptr> %i.aj, ptr %.sroa.483.0..sroa_idx, align 8, !tbaa !294
   store ptr %i.cp, ptr %3, align 8, !tbaa !294
-  store <2 x ptr> <ptr @"_ZNSt17_Function_handlerIFvRN4llvm12LiveInterval8SubRangeEEZNS0_16LiveIntervalCalc9calculateERS1_bE3$_0E10_M_managerERSt9_Any_dataRKS9_St18_Manager_operation", ptr @"_ZNSt17_Function_handlerIFvRN4llvm12LiveInterval8SubRangeEEZNS0_16LiveIntervalCalc9calculateERS1_bE3$_0E9_M_invokeERKSt9_Any_dataS3_">, ptr %5, align 8, !tbaa !294
+  store <2 x ptr> <ptr @"_ZNSt17_Function_handlerIFvRN4llvm12LiveInterval8SubRangeEEZNS0_16LiveIntervalCalc9calculateERS1_bE3$_0E10_M_managerERSt9_Any_dataRKS9_St18_Manager_operation", ptr @"_ZNSt17_Function_handlerIFvRN4llvm12LiveInterval8SubRangeEEZNS0_16LiveIntervalCalc9calculateERS1_bE3$_0E9_M_invokeERKSt9_Any_dataS3_">, ptr %i.ah, align 8, !tbaa !294
   call void @_ZN4llvm12LiveInterval15refineSubRangesERNS_20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm128ELm8EEENS_11LaneBitmaskESt8functionIFvRNS0_8SubRangeEEERKNS_11SlotIndexesERKNS_18TargetRegisterInfoEj(ptr noundef nonnull align 8 dereferenceable(120) %1, ptr noundef nonnull align 8 dereferenceable(80) %i.f, i64 %.sroa.015.0, ptr nofree noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(416) %i.d, ptr noundef nonnull align 8 dereferenceable(316) %i.m, i32 noundef 0) #10
-  %i.cq = load ptr, ptr %5, align 8, !tbaa !295   ; 2 uses
+  %i.cq = load ptr, ptr %i.ah, align 8, !tbaa !295 ; 2 uses
   %.not.i = icmp eq ptr %i.cq, null
   br i1 %.not.i, label %_ZNSt14_Function_baseD2Ev.exit, label %bb.m
 

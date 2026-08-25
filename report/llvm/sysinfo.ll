@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/sysinfo?download=true
+inline.NumInlined: 572
+inline.NumDeleted: 264
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN9benchmark7CPUInfoC2Ev:bb.a
   %i.tz = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0) #20 ; 2 uses
   store ptr %i.tz, ptr %3, align 8, !tbaa !35, !noalias !40
@@ -200,13 +204,13 @@ _ZN9benchmark12_GLOBAL__N_113GetCacheSizesEv.exit: ; preds = %bb.cs, %_ZNKSt7__c
   call void @llvm.lifetime.end.p0(ptr nonnull %15), !noalias !90
   %i.wg = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !106)
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.wh = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #21, !noalias !106 ; 6 uses
   store ptr %i.wh, ptr %i.wg, align 8, !tbaa !109, !alias.scope !106
   %i.wi = getelementptr inbounds nuw i8, ptr %i.wh, i64 24 ; 2 uses
   %i.wj = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %i.wi, ptr %i.wj, align 8, !tbaa !110, !alias.scope !106
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.wh, i8 0, i64 24, i1 false), !tbaa !111, !noalias !106
+  %29 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   store ptr %i.wi, ptr %29, align 8, !tbaa !112, !alias.scope !106
   %i.wk = call i32 @getloadavg(ptr noundef nonnull %i.wh, i32 noundef 3) #20, !noalias !106 ; 4 uses
   %i.wl = icmp slt i32 %i.wk, 1
@@ -609,9 +613,9 @@ bb.b:                                             ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 4 uses
   %i.g = ashr exact i64 %i.f, 3                   ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !110
-  %i.j = ptrtoint ptr %i.i to i64                 ; 2 uses
+  %i.j = ptrtoint ptr %i.i to i64
   %i.k = sub i64 %i.j, %i.d
   %i.l = ashr exact i64 %i.k, 3                   ; 2 uses
   %i.m = icmp ult i64 %i.g, 1152921504606846976
@@ -679,7 +683,9 @@ _ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit: ; preds = %_ZSt27__uninitia
   br i1 %.not.i29, label %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt6vectorIdSaIdEE11_S_relocateEPdS2_S2_RS0_.exit
-  %i.ad = sub i64 %i.j, %i.e
+  %2 = load ptr, ptr %i.h, align 8, !tbaa !110
+  %3 = ptrtoint ptr %2 to i64
+  %i.ad = sub i64 %3, %i.e
   tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.ad) #24
   br label %_ZNSt12_Vector_baseIdSaIdEE13_M_deallocateEPdm.exit
 

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/XRayArgs?download=true
+inline.NumInlined: 990
+inline.NumDeleted: 386
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN5clang6driver8XRayArgsC2ERKNS0_9ToolChainERKN4llvm3opt7ArgListE:bb.a
   %i.bv = load ptr, ptr %i.r, align 8, !tbaa !111, !noalias !189, !nonnull !107, !align !108
   call void @_ZN5clang17DiagnosticBuilderC1EPNS_17DiagnosticsEngineENS_14SourceLocationEj(ptr noundef nonnull align 8 dereferenceable(66) %9, ptr noundef nonnull align 8 dereferenceable(15256) %i.bv, i32 0, i32 noundef 57) #17
@@ -200,7 +204,7 @@ _ZN4llvmneENS_9StringRefES0_.exit.i.i.5:          ; preds = %.lr.ph.split.prehea
   %.not.i.i.5 = icmp eq i32 %i.fj, 0
   br i1 %.not.i.i.5, label %_ZN4llvm12StringSwitchIbbE5CasesESt16initializer_listINS_13StringLiteralEEb.exit.thread, label %_ZN4llvm12StringSwitchIbbE5CasesESt16initializer_listINS_13StringLiteralEEb.exit.a
 
-_ZN4llvm12StringSwitchIbbE5CasesESt16initializer_listINS_13StringLiteralEEb.exit.a: ; preds = %_ZN4llvmneENS_9StringRefES0_.exit.i.i.4, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.5, %_ZN4llvmneENS_9StringRefES0_.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.2, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.3, %.lr.ph.split.preheader.i
+_ZN4llvm12StringSwitchIbbE5CasesESt16initializer_listINS_13StringLiteralEEb.exit.a: ; preds = %.lr.ph.split.preheader.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.3, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.2, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, %_ZN4llvmneENS_9StringRefES0_.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.4, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.5
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #17
   %i.fk = load ptr, ptr %i.r, align 8, !tbaa !111, !noalias !200, !nonnull !107, !align !108
   call void @_ZN5clang17DiagnosticBuilderC1EPNS_17DiagnosticsEngineENS_14SourceLocationEj(ptr noundef nonnull align 8 dereferenceable(66) %13, ptr noundef nonnull align 8 dereferenceable(15256) %i.fk, i32 0, i32 noundef 410) #17
@@ -440,8 +444,8 @@ _ZN5clang17DiagnosticBuilderD2Ev.exit:            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #17
   br label %bb.an
 
-_ZN4llvm12StringSwitchIbbE5CasesESt16initializer_listINS_13StringLiteralEEb.exit.thread: ; preds = %_ZN4llvmneENS_9StringRefES0_.exit.i.i.3, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.4, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.2, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.5, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, %_ZN4llvmneENS_9StringRefES0_.exit.i.i
-  %i.ik = call noundef i32 @_ZN5clang19parseXRayInstrValueEN4llvm9StringRefE(ptr %.sroa.038.0.copyload, i64 %.sroa.239.0.copyload.fr) #17 ; 2 uses
+_ZN4llvm12StringSwitchIbbE5CasesESt16initializer_listINS_13StringLiteralEEb.exit.thread: ; preds = %_ZN4llvmneENS_9StringRefES0_.exit.i.i, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.1, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.2, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.3, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.4, %_ZN4llvmneENS_9StringRefES0_.exit.i.i.5
+  %i.ik = call noundef i32 @_ZN5clang19parseXRayInstrValueEN4llvm9StringRefE(ptr nonnull %.sroa.038.0.copyload, i64 %.sroa.239.0.copyload.fr) #17 ; 2 uses
   %i.il = icmp eq i32 %i.ik, 0
   %i.im = load i32, ptr %i.m, align 8, !tbaa !214 ; 2 uses
   br i1 %i.il, label %bb.am, label %bb.al
@@ -844,7 +848,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.c, ptr align 1 %i.m, i64 %i.q, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.c, ptr align 1 %i.m, i64 %i.q, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_S_copyEPcPKcm.exit.i: ; preds = %bb.f, %bb.e, %bb.d

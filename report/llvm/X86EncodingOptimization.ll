@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/X86EncodingOptimization?download=true
+inline.NumInlined: 172
+inline.NumDeleted: 64
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -120,9 +122,9 @@ bb.r:                                             ; preds = %bb.a
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.c, %bb.a, %bb.d, %bb.d, %bb.d, %bb.d, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e
+  %.132 = phi i64 [ 1, %bb.a ], [ 2, %bb.r ], [ 2, %bb.d ], [ 1, %bb.e ], [ 1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.h ], [ 1, %bb.i ], [ 1, %bb.j ], [ 1, %bb.k ], [ 1, %bb.l ], [ 1, %bb.m ], [ 1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.p ], [ 2, %bb.q ], [ 2, %bb.d ], [ 2, %bb.d ], [ 2, %bb.d ], [ 2, %bb.c ] ; 2 uses
   %.not38 = phi i1 [ false, %bb.a ], [ false, %bb.r ], [ true, %bb.d ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.o ], [ false, %bb.p ], [ false, %bb.q ], [ true, %bb.d ], [ true, %bb.d ], [ true, %bb.d ], [ true, %bb.c ]
   %.032 = phi i32 [ 13872, %bb.a ], [ 14010, %bb.r ], [ 0, %bb.d ], [ 13537, %bb.e ], [ 13500, %bb.f ], [ 13578, %bb.g ], [ 13541, %bb.h ], [ 13680, %bb.i ], [ 13676, %bb.j ], [ 13820, %bb.k ], [ 13816, %bb.l ], [ 14051, %bb.m ], [ 14014, %bb.n ], [ 14092, %bb.o ], [ 14055, %bb.p ], [ 13931, %bb.q ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.d ], [ 0, %bb.c ]
-  %.131 = phi i64 [ 1, %bb.a ], [ 2, %bb.r ], [ 2, %bb.d ], [ 1, %bb.e ], [ 1, %bb.f ], [ 1, %bb.g ], [ 1, %bb.h ], [ 1, %bb.i ], [ 1, %bb.j ], [ 1, %bb.k ], [ 1, %bb.l ], [ 1, %bb.m ], [ 1, %bb.n ], [ 1, %bb.o ], [ 1, %bb.p ], [ 2, %bb.q ], [ 2, %bb.d ], [ 2, %bb.d ], [ 2, %bb.d ], [ 2, %bb.c ] ; 2 uses
   %.128 = phi i64 [ 0, %bb.a ], [ 0, %bb.r ], [ 1, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.m ], [ 0, %bb.n ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.q ], [ 1, %bb.d ], [ 1, %bb.d ], [ 1, %bb.d ], [ 1, %bb.c ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !24
@@ -134,7 +136,7 @@ bb.r:                                             ; preds = %bb.a
 
 bb.s:                                             ; preds = %.critedge
   %i.w = load ptr, ptr %i.q, align 8, !tbaa !24
-  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %.131
+  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.w, i64 %.132
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.z = load i32, ptr %i.y, align 8, !tbaa !25
   %i.aa = tail call noundef zeroext i1 @_ZN4llvm5X86II19isX86_64ExtendedRegENS_10MCRegisterE(i32 %i.z)
@@ -150,7 +152,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.t
   %i.ab = load ptr, ptr %i.q, align 8, !tbaa !24  ; 2 uses
   %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.ab, i64 %.128 ; 2 uses
-  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.ab, i64 %.131 ; 2 uses
+  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.ab, i64 %.132 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !26
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ac, ptr noundef nonnull align 8 dereferenceable(16) %i.ad, i64 16, i1 false), !tbaa.struct !26
@@ -553,8 +555,8 @@ bb.bh:                                            ; preds = %bb.a
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.a, %bb.bh, %bb.bg, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al, %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.014 = phi i32 [ 15437, %bb.bh ], [ 15367, %bb.b ], [ 15368, %bb.c ], [ 15369, %bb.d ], [ 15370, %bb.e ], [ 15371, %bb.f ], [ 15372, %bb.g ], [ 15373, %bb.h ], [ 15374, %bb.i ], [ 15375, %bb.j ], [ 15376, %bb.k ], [ 15377, %bb.l ], [ 15382, %bb.m ], [ 15383, %bb.n ], [ 15384, %bb.o ], [ 15385, %bb.p ], [ 15386, %bb.q ], [ 15387, %bb.r ], [ 15388, %bb.s ], [ 15389, %bb.t ], [ 15390, %bb.u ], [ 15391, %bb.v ], [ 15392, %bb.w ], [ 15393, %bb.x ], [ 15394, %bb.y ], [ 15395, %bb.z ], [ 15396, %bb.aa ], [ 15397, %bb.ab ], [ 15398, %bb.ac ], [ 15399, %bb.ad ], [ 15404, %bb.ae ], [ 15405, %bb.af ], [ 15406, %bb.ag ], [ 15407, %bb.ah ], [ 15408, %bb.ai ], [ 15409, %bb.aj ], [ 15410, %bb.ak ], [ 15411, %bb.al ], [ 15412, %bb.am ], [ 15413, %bb.an ], [ 15414, %bb.ao ], [ 15415, %bb.ap ], [ 15416, %bb.aq ], [ 15417, %bb.ar ], [ 15418, %bb.as ], [ 15419, %bb.at ], [ 15420, %bb.au ], [ 15421, %bb.av ], [ 15426, %bb.aw ], [ 15427, %bb.ax ], [ 15428, %bb.ay ], [ 15429, %bb.az ], [ 15430, %bb.ba ], [ 15431, %bb.bb ], [ 15432, %bb.bc ], [ 15433, %bb.bd ], [ 15434, %bb.be ], [ 15435, %bb.bf ], [ 15436, %bb.bg ], [ 15366, %bb.a ]
-  %.013 = phi i32 [ 15353, %bb.bh ], [ 15283, %bb.b ], [ 15284, %bb.c ], [ 15285, %bb.d ], [ 15286, %bb.e ], [ 15287, %bb.f ], [ 15288, %bb.g ], [ 15289, %bb.h ], [ 15290, %bb.i ], [ 15291, %bb.j ], [ 15292, %bb.k ], [ 15293, %bb.l ], [ 15298, %bb.m ], [ 15299, %bb.n ], [ 15300, %bb.o ], [ 15301, %bb.p ], [ 15302, %bb.q ], [ 15303, %bb.r ], [ 15304, %bb.s ], [ 15305, %bb.t ], [ 15306, %bb.u ], [ 15307, %bb.v ], [ 15308, %bb.w ], [ 15309, %bb.x ], [ 15310, %bb.y ], [ 15311, %bb.z ], [ 15312, %bb.aa ], [ 15313, %bb.ab ], [ 15314, %bb.ac ], [ 15315, %bb.ad ], [ 15320, %bb.ae ], [ 15321, %bb.af ], [ 15322, %bb.ag ], [ 15323, %bb.ah ], [ 15324, %bb.ai ], [ 15325, %bb.aj ], [ 15326, %bb.ak ], [ 15327, %bb.al ], [ 15328, %bb.am ], [ 15329, %bb.an ], [ 15330, %bb.ao ], [ 15331, %bb.ap ], [ 15332, %bb.aq ], [ 15333, %bb.ar ], [ 15334, %bb.as ], [ 15335, %bb.at ], [ 15336, %bb.au ], [ 15337, %bb.av ], [ 15342, %bb.aw ], [ 15343, %bb.ax ], [ 15344, %bb.ay ], [ 15345, %bb.az ], [ 15346, %bb.ba ], [ 15347, %bb.bb ], [ 15348, %bb.bc ], [ 15349, %bb.bd ], [ 15350, %bb.be ], [ 15351, %bb.bf ], [ 15352, %bb.bg ], [ 15282, %bb.a ]
+  %.014 = phi i32 [ 15353, %bb.bh ], [ 15283, %bb.b ], [ 15284, %bb.c ], [ 15285, %bb.d ], [ 15286, %bb.e ], [ 15287, %bb.f ], [ 15288, %bb.g ], [ 15289, %bb.h ], [ 15290, %bb.i ], [ 15291, %bb.j ], [ 15292, %bb.k ], [ 15293, %bb.l ], [ 15298, %bb.m ], [ 15299, %bb.n ], [ 15300, %bb.o ], [ 15301, %bb.p ], [ 15302, %bb.q ], [ 15303, %bb.r ], [ 15304, %bb.s ], [ 15305, %bb.t ], [ 15306, %bb.u ], [ 15307, %bb.v ], [ 15308, %bb.w ], [ 15309, %bb.x ], [ 15310, %bb.y ], [ 15311, %bb.z ], [ 15312, %bb.aa ], [ 15313, %bb.ab ], [ 15314, %bb.ac ], [ 15315, %bb.ad ], [ 15320, %bb.ae ], [ 15321, %bb.af ], [ 15322, %bb.ag ], [ 15323, %bb.ah ], [ 15324, %bb.ai ], [ 15325, %bb.aj ], [ 15326, %bb.ak ], [ 15327, %bb.al ], [ 15328, %bb.am ], [ 15329, %bb.an ], [ 15330, %bb.ao ], [ 15331, %bb.ap ], [ 15332, %bb.aq ], [ 15333, %bb.ar ], [ 15334, %bb.as ], [ 15335, %bb.at ], [ 15336, %bb.au ], [ 15337, %bb.av ], [ 15342, %bb.aw ], [ 15343, %bb.ax ], [ 15344, %bb.ay ], [ 15345, %bb.az ], [ 15346, %bb.ba ], [ 15347, %bb.bb ], [ 15348, %bb.bc ], [ 15349, %bb.bd ], [ 15350, %bb.be ], [ 15351, %bb.bf ], [ 15352, %bb.bg ], [ 15282, %bb.a ]
+  %.013 = phi i32 [ 15437, %bb.bh ], [ 15367, %bb.b ], [ 15368, %bb.c ], [ 15369, %bb.d ], [ 15370, %bb.e ], [ 15371, %bb.f ], [ 15372, %bb.g ], [ 15373, %bb.h ], [ 15374, %bb.i ], [ 15375, %bb.j ], [ 15376, %bb.k ], [ 15377, %bb.l ], [ 15382, %bb.m ], [ 15383, %bb.n ], [ 15384, %bb.o ], [ 15385, %bb.p ], [ 15386, %bb.q ], [ 15387, %bb.r ], [ 15388, %bb.s ], [ 15389, %bb.t ], [ 15390, %bb.u ], [ 15391, %bb.v ], [ 15392, %bb.w ], [ 15393, %bb.x ], [ 15394, %bb.y ], [ 15395, %bb.z ], [ 15396, %bb.aa ], [ 15397, %bb.ab ], [ 15398, %bb.ac ], [ 15399, %bb.ad ], [ 15404, %bb.ae ], [ 15405, %bb.af ], [ 15406, %bb.ag ], [ 15407, %bb.ah ], [ 15408, %bb.ai ], [ 15409, %bb.aj ], [ 15410, %bb.ak ], [ 15411, %bb.al ], [ 15412, %bb.am ], [ 15413, %bb.an ], [ 15414, %bb.ao ], [ 15415, %bb.ap ], [ 15416, %bb.aq ], [ 15417, %bb.ar ], [ 15418, %bb.as ], [ 15419, %bb.at ], [ 15420, %bb.au ], [ 15421, %bb.av ], [ 15426, %bb.aw ], [ 15427, %bb.ax ], [ 15428, %bb.ay ], [ 15429, %bb.az ], [ 15430, %bb.ba ], [ 15431, %bb.bb ], [ 15432, %bb.bc ], [ 15433, %bb.bd ], [ 15434, %bb.be ], [ 15435, %bb.bf ], [ 15436, %bb.bg ], [ 15366, %bb.a ]
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !29   ; 2 uses
   %i.d = add i32 %i.c, -1
@@ -574,7 +576,7 @@ bb.bj:                                            ; preds = %bb.bi
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bi, %bb.bj
-  %.0 = phi i32 [ %.014, %bb.bj ], [ %.013, %bb.bi ]
+  %.0 = phi i32 [ %.013, %bb.bj ], [ %.014, %bb.bi ]
   store i32 %.0, ptr %0, align 8, !tbaa !8
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.l = zext i32 %i.c to i64

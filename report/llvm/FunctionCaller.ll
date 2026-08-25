@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/FunctionCaller?download=true
+inline.NumInlined: 671
+inline.NumDeleted: 441
 begin_hunk_0_@_ZNSt8weak_ptrIN12lldb_private6ModuleEEaSIS1_EENSt9enable_ifIXsr13is_assignableIRSt10__weak_ptrIS1_LN9__gnu_cxx12_Lock_policyE2EERKSt10shared_ptrIT_EEE5valueERS2_E4typeESE_:bb.a
   %.not.i.i = icmp eq ptr %i.d, null
   br i1 %.not.i.i, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_weak_add_refEv.exit.i.i, label %bb.b
@@ -200,7 +202,7 @@ bb.h:                                             ; preds = %_ZNKSt8weak_ptrIN12
 bb.i:                                             ; preds = %bb.h
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 312
   %i.u = load i64, ptr %i.t, align 8, !tbaa !152
-  %i.v = call noundef i64 @_ZN12lldb_private7Process14AllocateMemoryEmjRNS_6StatusE(ptr noundef nonnull align 8 dereferenceable(3224) %i.d, i64 noundef %i.u, i32 noundef 3, ptr noundef nonnull align 8 dereferenceable(40) %6) #19 ; 3 uses
+  %i.v = call noundef i64 @_ZN12lldb_private7Process14AllocateMemoryEmjRNS_6StatusE(ptr noundef nonnull align 8 dereferenceable(3224) %i.d, i64 noundef %i.u, i32 noundef 3, ptr noundef nonnull align 8 dereferenceable(40) %6) #19 ; 2 uses
   store i64 %i.v, ptr %2, align 8, !tbaa !14
   %i.w = icmp eq i64 %i.v, -1
   br i1 %i.w, label %_ZN4llvm12is_containedIRNSt7__cxx114listImSaImEEEmEEbOT_RKT0_.exit.thread.thread, label %bb.j
@@ -209,7 +211,8 @@ bb.j:                                             ; preds = %bb.i
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 280
   %i.y = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #21 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  store i64 %i.v, ptr %i.z, align 8, !tbaa !14
+  %9 = load i64, ptr %2, align 8, !tbaa !14
+  store i64 %9, ptr %i.z, align 8, !tbaa !14
   call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.x) #19
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !153

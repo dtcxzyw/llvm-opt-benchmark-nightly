@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WebAssemblyPreLegalizerCombiner?download=true
+inline.NumInlined: 1154
+inline.NumDeleted: 689
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN12_GLOBAL__N_131WebAssemblyPreLegalizerCombinerC2Ev:bb.a
 
 bb.l:                                             ; preds = %_ZN4llvm15SparseBitVectorILj128EE14FindLowerBoundEj.exit.i.i
@@ -200,7 +204,7 @@ _ZN4llvm2cl12list_storageINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbE
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !97 ; 4 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !30
   %.not.i = icmp eq ptr %i.as, %i.au
   br i1 %.not.i, label %bb.l, label %bb.k
@@ -214,8 +218,8 @@ bb.k:                                             ; preds = %_ZN4llvm2cl12list_s
 bb.l:                                             ; preds = %_ZN4llvm2cl12list_storageINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEbE8addValueIS7_EEvRKT_b.exit
   %i.aw = load ptr, ptr %i.aq, align 8, !tbaa !27 ; 4 uses
   %i.ax = ptrtoint ptr %i.as to i64
-  %i.ay = ptrtoint ptr %i.aw to i64
-  %i.az = sub i64 %i.ax, %i.ay                    ; 6 uses
+  %i.ay = ptrtoint ptr %i.aw to i64               ; 2 uses
+  %i.az = sub i64 %i.ax, %i.ay                    ; 5 uses
   %i.ba = icmp eq i64 %i.az, 9223372036854775804
   br i1 %i.ba, label %bb.m, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i
 
@@ -249,7 +253,10 @@ _ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i: ; preds = %bb.n, %_ZN
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.aw, i64 noundef %i.az) #23
+  %7 = load ptr, ptr %i.at, align 8, !tbaa !30
+  %8 = ptrtoint ptr %7 to i64
+  %9 = sub i64 %8, %i.ay
+  call void @_ZdlPvm(ptr noundef nonnull %i.aw, i64 noundef %9) #23
   br label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i: ; preds = %bb.o, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i

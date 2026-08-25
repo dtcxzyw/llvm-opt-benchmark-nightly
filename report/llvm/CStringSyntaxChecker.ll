@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CStringSyntaxChecker?download=true
+inline.NumInlined: 922
+inline.NumDeleted: 434
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -84,7 +86,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #16, !noalias !12 ; 5 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %i.f, i8 0, i64 40, i1 false), !noalias !12
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN12_GLOBAL__N_120CStringSyntaxCheckerE, i64 16), ptr %i.f, align 8, !tbaa !15, !noalias !12
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN12_GLOBAL__N_120CStringSyntaxCheckerE, i64 16), ptr %i.f, align 16, !tbaa !15, !noalias !12
   call void @_ZN5clang4ento14CheckerManager16_registerForBodyENS0_9CheckerFnIFvPKNS_4DeclERNS0_15AnalysisManagerERNS0_11BugReporterEEEE(ptr noundef nonnull align 8 dereferenceable(1864) %0, ptr nonnull @_ZN5clang4ento5check11ASTCodeBody10_checkBodyIN12_GLOBAL__N_120CStringSyntaxCheckerEEEvPvPKNS_4DeclERNS0_15AnalysisManagerERNS0_11BugReporterE, ptr nonnull %i.f) #15
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !10   ; 3 uses
   store ptr %i.f, ptr %i.d, align 8, !tbaa !10
@@ -487,9 +489,9 @@ bb.bo:                                            ; preds = %_ZN4llvm5APIntD2Ev.
   br i1 %.not103.i.a, label %.thread82.i, label %_ZN12_GLOBAL__N_17WalkAST25containsBadStrncatPatternEPKN5clang8CallExprE.exit.thread
 
 .thread82.i:                                      ; preds = %bb.bo, %_ZN4llvm5APIntD2Ev.exit.i
-  %.14587.i = phi ptr [ %i.ml, %bb.bo ], [ %i.kn, %_ZN4llvm5APIntD2Ev.exit.i ]
-  %.14786.i = phi i64 [ %.147.i, %bb.bo ], [ 0, %_ZN4llvm5APIntD2Ev.exit.i ]
-  %i.nc = getelementptr inbounds nuw i8, ptr %.14587.i, i64 8
+  %.14289.i = phi i64 [ %.147.i, %bb.bo ], [ 0, %_ZN4llvm5APIntD2Ev.exit.i ]
+  %.14488.i = phi ptr [ %i.ml, %bb.bo ], [ %i.kn, %_ZN4llvm5APIntD2Ev.exit.i ]
+  %i.nc = getelementptr inbounds nuw i8, ptr %.14488.i, i64 8
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.nc, align 8, !tbaa !82
   %i.nd = and i64 %.sroa.0.0.copyload.i.i, -16
   %i.ne = inttoptr i64 %i.nd to ptr
@@ -514,7 +516,7 @@ bb.bp:                                            ; preds = %.thread82.i
   %i.nr = call { i64, i64 } @_ZNK5clang10ASTContext11getTypeInfoEPKNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(23904) %i.nq, ptr noundef nonnull %i.nf) #15
   %i.ns = extractvalue { i64, i64 } %i.nr, 0
   %i.nt = lshr i64 %i.ns, 3
-  %i.nu = sub i64 %i.nt, %.14786.i
+  %i.nu = sub i64 %i.nt, %.14289.i
   %i.nv = icmp ult i64 %i.nu, %.0.i112.i
   br i1 %i.nv, label %_ZN12_GLOBAL__N_17WalkAST32containsBadStrlcpyStrlcatPatternEPKN5clang8CallExprE.exit, label %_ZN12_GLOBAL__N_17WalkAST25containsBadStrncatPatternEPKN5clang8CallExprE.exit.thread
 

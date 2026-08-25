@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/BasicValueFactory?download=true
+inline.NumInlined: 915
+inline.NumDeleted: 524
 begin_hunk_0_@_ZN5clang4ento17BasicValueFactory12accumCXXBaseEN4llvm14iterator_rangeIPKPKNS_16CXXBaseSpecifierEEERKNS0_6nonloc15PointerToMemberERKNS_8CastKindE:bb.a
   %.pre.i.i.i.i.i = ptrtoint ptr %i.db to i64
   %.pre122.i.i.i.i.i = sub i64 %i.s, %.pre.i.i.i.i.i
@@ -200,13 +202,13 @@ bb.ab:                                            ; preds = %"_ZN4llvm7none_ofIR
   br label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph, %bb.ac
-  %.sroa.036.047 = phi ptr [ %storemerge74, %.lr.ph ], [ %i.fw, %bb.ac ]
-  %.sroa.028.046 = phi ptr [ %2, %.lr.ph ], [ %i.fu, %bb.ac ]
-  %i.fu = getelementptr inbounds i8, ptr %.sroa.028.046, i64 -8 ; 3 uses
+  %.sroa.036.047 = phi ptr [ %2, %.lr.ph ], [ %i.fu, %bb.ac ]
+  %.sroa.028.046 = phi ptr [ %storemerge74, %.lr.ph ], [ %i.fw, %bb.ac ]
+  %i.fu = getelementptr inbounds i8, ptr %.sroa.036.047, i64 -8 ; 3 uses
   %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !112
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.fv, ptr %i.a, align 8, !tbaa !112
-  %i.fw = call ptr @_ZN4llvm20ImmutableListFactoryIPKN5clang16CXXBaseSpecifierEE6concatIRS4_EENS_13ImmutableListIS4_EEOT_S9_(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr %.sroa.036.047) ; 2 uses
+  %i.fw = call ptr @_ZN4llvm20ImmutableListFactoryIPKN5clang16CXXBaseSpecifierEE6concatIRS4_EENS_13ImmutableListIS4_EEOT_S9_(ptr noundef nonnull align 8 dereferenceable(24) %i.q, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr %.sroa.028.046) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not = icmp eq ptr %i.fu, %1
   br i1 %.not, label %._crit_edge, label %bb.ac
@@ -361,8 +363,8 @@ _ZN4llvm5APIntD2Ev.exit7:                         ; preds = %_ZNK4llvm6APSIntcoE
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %_ZN4llvm5APIntD2Ev.exit7, %_ZN4llvm5APIntD2Ev.exit
-  %.sroa.09.0 = phi ptr [ %i.as, %_ZN4llvm5APIntD2Ev.exit7 ], [ %i.u, %_ZN4llvm5APIntD2Ev.exit ], [ undef, %bb.a ]
   %.sroa.3.0 = phi i8 [ 1, %_ZN4llvm5APIntD2Ev.exit7 ], [ 1, %_ZN4llvm5APIntD2Ev.exit ], [ 0, %bb.a ]
+  %.sroa.09.0 = phi ptr [ %i.as, %_ZN4llvm5APIntD2Ev.exit7 ], [ %i.u, %_ZN4llvm5APIntD2Ev.exit ], [ undef, %bb.a ]
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.09.0, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.3.0, 1
   ret { ptr, i8 } %.fca.1.insert
@@ -765,8 +767,8 @@ _ZN4llvm5APIntD2Ev.exit96:                        ; preds = %_ZNK4llvm6APSInteoE
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.ai, %_ZNK4llvm6APSInt10isNegativeEv.exit57, %_ZNK4llvm6APSInt10isNegativeEv.exit57.thread, %bb.ad, %_ZNK4llvm6APSInt10isNegativeEv.exit, %_ZNK4llvm6APSInt10isNegativeEv.exit.thread, %_ZNK4llvm6APSInteqEl.exit48, %_ZNK4llvm6APSInteqEl.exit, %bb.a, %_ZN4llvm5APIntD2Ev.exit60, %_ZN4llvm5APIntD2Ev.exit55, %_ZN4llvm5APIntD2Ev.exit96, %_ZN4llvm5APIntD2Ev.exit88, %_ZN4llvm5APIntD2Ev.exit80, %_ZNK4llvm6APSIntneERKS0_.exit, %_ZNK4llvm6APSInteqERKS0_.exit, %_ZNK4llvm6APSIntgeERKS0_.exit, %_ZNK4llvm6APSIntleERKS0_.exit, %_ZNK4llvm6APSIntgtERKS0_.exit, %_ZNK4llvm6APSIntltERKS0_.exit, %_ZN4llvm5APIntD2Ev.exit54, %_ZN4llvm5APIntD2Ev.exit53, %_ZN4llvm5APIntD2Ev.exit52, %_ZN4llvm5APIntD2Ev.exit47, %_ZN4llvm5APIntD2Ev.exit
-  %.sroa.0112.0 = phi ptr [ %i.jj, %_ZN4llvm5APIntD2Ev.exit96 ], [ %i.h, %_ZN4llvm5APIntD2Ev.exit ], [ undef, %bb.a ], [ %i.ab, %_ZN4llvm5APIntD2Ev.exit47 ], [ undef, %_ZNK4llvm6APSInteqEl.exit ], [ %i.av, %_ZN4llvm5APIntD2Ev.exit52 ], [ %i.bm, %_ZN4llvm5APIntD2Ev.exit53 ], [ %i.cd, %_ZN4llvm5APIntD2Ev.exit54 ], [ undef, %_ZNK4llvm6APSInteqEl.exit48 ], [ %i.db, %_ZN4llvm5APIntD2Ev.exit55 ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit ], [ undef, %bb.ad ], [ %i.ea, %_ZN4llvm5APIntD2Ev.exit60 ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit57 ], [ %i.es, %_ZNK4llvm6APSIntltERKS0_.exit ], [ %i.ff, %_ZNK4llvm6APSIntgtERKS0_.exit ], [ %i.fs, %_ZNK4llvm6APSIntleERKS0_.exit ], [ %i.gf, %_ZNK4llvm6APSIntgeERKS0_.exit ], [ %i.gt, %_ZNK4llvm6APSInteqERKS0_.exit ], [ %i.hi, %_ZNK4llvm6APSIntneERKS0_.exit ], [ %i.hx, %_ZN4llvm5APIntD2Ev.exit80 ], [ %i.iq, %_ZN4llvm5APIntD2Ev.exit88 ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit.thread ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit57.thread ], [ undef, %bb.ai ]
   %.sroa.17.0 = phi i8 [ 1, %_ZN4llvm5APIntD2Ev.exit96 ], [ 1, %_ZN4llvm5APIntD2Ev.exit ], [ 0, %bb.a ], [ 1, %_ZN4llvm5APIntD2Ev.exit47 ], [ 0, %_ZNK4llvm6APSInteqEl.exit ], [ 1, %_ZN4llvm5APIntD2Ev.exit52 ], [ 1, %_ZN4llvm5APIntD2Ev.exit53 ], [ 1, %_ZN4llvm5APIntD2Ev.exit54 ], [ 0, %_ZNK4llvm6APSInteqEl.exit48 ], [ 1, %_ZN4llvm5APIntD2Ev.exit55 ], [ 0, %_ZNK4llvm6APSInt10isNegativeEv.exit ], [ 0, %bb.ad ], [ 1, %_ZN4llvm5APIntD2Ev.exit60 ], [ 0, %_ZNK4llvm6APSInt10isNegativeEv.exit57 ], [ 1, %_ZNK4llvm6APSIntltERKS0_.exit ], [ 1, %_ZNK4llvm6APSIntgtERKS0_.exit ], [ 1, %_ZNK4llvm6APSIntleERKS0_.exit ], [ 1, %_ZNK4llvm6APSIntgeERKS0_.exit ], [ 1, %_ZNK4llvm6APSInteqERKS0_.exit ], [ 1, %_ZNK4llvm6APSIntneERKS0_.exit ], [ 1, %_ZN4llvm5APIntD2Ev.exit80 ], [ 1, %_ZN4llvm5APIntD2Ev.exit88 ], [ 0, %_ZNK4llvm6APSInt10isNegativeEv.exit.thread ], [ 0, %_ZNK4llvm6APSInt10isNegativeEv.exit57.thread ], [ 0, %bb.ai ]
+  %.sroa.0112.0 = phi ptr [ %i.jj, %_ZN4llvm5APIntD2Ev.exit96 ], [ %i.h, %_ZN4llvm5APIntD2Ev.exit ], [ undef, %bb.a ], [ %i.ab, %_ZN4llvm5APIntD2Ev.exit47 ], [ undef, %_ZNK4llvm6APSInteqEl.exit ], [ %i.av, %_ZN4llvm5APIntD2Ev.exit52 ], [ %i.bm, %_ZN4llvm5APIntD2Ev.exit53 ], [ %i.cd, %_ZN4llvm5APIntD2Ev.exit54 ], [ undef, %_ZNK4llvm6APSInteqEl.exit48 ], [ %i.db, %_ZN4llvm5APIntD2Ev.exit55 ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit ], [ undef, %bb.ad ], [ %i.ea, %_ZN4llvm5APIntD2Ev.exit60 ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit57 ], [ %i.es, %_ZNK4llvm6APSIntltERKS0_.exit ], [ %i.ff, %_ZNK4llvm6APSIntgtERKS0_.exit ], [ %i.fs, %_ZNK4llvm6APSIntleERKS0_.exit ], [ %i.gf, %_ZNK4llvm6APSIntgeERKS0_.exit ], [ %i.gt, %_ZNK4llvm6APSInteqERKS0_.exit ], [ %i.hi, %_ZNK4llvm6APSIntneERKS0_.exit ], [ %i.hx, %_ZN4llvm5APIntD2Ev.exit80 ], [ %i.iq, %_ZN4llvm5APIntD2Ev.exit88 ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit.thread ], [ undef, %_ZNK4llvm6APSInt10isNegativeEv.exit57.thread ], [ undef, %bb.ai ]
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.0112.0, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.17.0, 1
   ret { ptr, i8 } %.fca.1.insert

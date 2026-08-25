@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/UnwindAssembly-x86?download=true
+inline.NumInlined: 295
+inline.NumDeleted: 183
 begin_hunk_0_@_ZN18UnwindAssembly_x8636GetNonCallSiteUnwindPlanFromAssemblyERN12lldb_private12AddressRangeERNS0_6ThreadERNS0_10UnwindPlanE:bb.a
 bb.m:                                             ; preds = %_ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i.i.i.i16
   %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 144
@@ -200,8 +202,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit: ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %3, align 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %.not.i.i.i = icmp eq i64 %1, 0
   br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseIhSaIhEEC2EmRKS0_.exit.thread, label %bb.c
 

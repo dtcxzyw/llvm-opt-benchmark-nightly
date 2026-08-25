@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SISpillUtils?download=true
+inline.NumInlined: 87
+inline.NumDeleted: 69
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -40,12 +42,12 @@ bb.c:                                             ; preds = %bb.b
   %..i.i = zext i1 %i.l to i64
   %i.m = zext i24 %i.k to i64
   %i.n = add nsw i64 %i.m, -2
-  %.sroa.05.0.idx.i.a = select i1 %i.g, i64 0, i64 64
-  %.sroa.05.0.i = getelementptr inbounds nuw i8, ptr %i.i, i64 %.sroa.05.0.idx.i.a ; 2 uses
-  %.sroa.5.0.i = select i1 %i.g, i64 %..i.i, i64 %i.n ; 2 uses
-  %.idx = shl nuw nsw i64 %.sroa.5.0.i, 5
+  %.sroa.05.0.idx.i.a = select i1 %i.g, i64 %..i.i, i64 %i.n ; 2 uses
+  %.sroa.05.0.idx.i = select i1 %i.g, i64 0, i64 64
+  %.sroa.05.0.i = getelementptr inbounds nuw i8, ptr %i.i, i64 %.sroa.05.0.idx.i ; 2 uses
+  %.idx = shl nuw nsw i64 %.sroa.05.0.idx.i.a, 5
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i, i64 %.idx
-  %.not23 = icmp eq i64 %.sroa.5.0.i, 0
+  %.not23 = icmp eq i64 %.sroa.05.0.idx.i.a, 0
   br i1 %.not23, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.g

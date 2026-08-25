@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PHIEliminationUtils?download=true
+inline.NumInlined: 195
+inline.NumDeleted: 150
 begin_hunk_0_@_ZN4llvm22findPHICopyInsertPointEPNS_17MachineBasicBlockES1_NS_8RegisterE:bb.a
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !209
   %i.cb = icmp eq ptr %i.ca, %0
@@ -200,8 +202,8 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit: ; preds =
   %.not71 = icmp eq ptr %.sroa.0.1.i.i.i.i46, %i.a
   br i1 %.not71, label %_ZSt9__advanceIN4llvm26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.lr.ph89, !llvm.loop !219
 
-_ZSt9__advanceIN4llvm26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit, %.split, %bb.r, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit
-  %.sroa.04.0 = phi ptr [ %i.bi, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit ], [ %i.dt, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ], [ %.sroa.053.088, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit ], [ %.sroa.053.088, %.split ], [ %i.bi, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit ], [ %.sroa.053.088, %bb.r ]
+_ZSt9__advanceIN4llvm26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit: ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit, %.split, %bb.r, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i
+  %.sroa.04.0 = phi ptr [ %i.dt, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ], [ %i.bi, %_ZN4llvm17MachineBasicBlock6rbeginEv.exit ], [ %.sroa.053.088, %.split ], [ %i.bi, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit ], [ %.sroa.053.088, %bb.r ], [ %.sroa.053.088, %_ZNK4llvm12MachineInstr6isCallENS0_9QueryTypeE.exit ]
   %i.eu = call ptr @_ZN4llvm17MachineBasicBlock17SkipPHIsAndLabelsENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEE(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr %.sroa.04.0) #5
   %i.ev = load i8, ptr %i.al, align 8, !tbaa !89, !range !68, !noundef !69
   %i.ew = trunc nuw i8 %i.ev to i1

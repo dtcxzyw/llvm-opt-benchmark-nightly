@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DisassemblerEmitter?download=true
+inline.NumInlined: 208
+inline.NumDeleted: 153
 begin_hunk_0_@_ZL16emitDisassemblerRKN4llvm12RecordKeeperERNS_11raw_ostreamE:bb.a
   %i.i = load i64, ptr %i.a, align 8, !tbaa !19, !noalias !8
   store i64 %i.i, ptr %i.e, align 8, !tbaa !18, !alias.scope !8
@@ -200,12 +202,12 @@ _ZNK4llvm13CodeGenTarget15getInstructionsEv.exit: ; preds = %_ZN4llvmeqENS_9Stri
   br i1 %i.cc, label %bb.k, label %bb.l
 
 .lr.ph:                                           ; preds = %_ZNK4llvm13CodeGenTarget15getInstructionsEv.exit, %.lr.ph
-  %.sroa.7.064 = phi i16 [ %i.ce, %.lr.ph ], [ 0, %_ZNK4llvm13CodeGenTarget15getInstructionsEv.exit ] ; 2 uses
-  %.sroa.043.063 = phi ptr [ %i.cf, %.lr.ph ], [ %i.bz, %_ZNK4llvm13CodeGenTarget15getInstructionsEv.exit ] ; 2 uses
-  %i.cd = load ptr, ptr %.sroa.043.063, align 8, !tbaa !52
-  call void @_ZN4llvm15X86Disassembler17RecognizableInstr12processInstrERNS0_18DisassemblerTablesERKNS_18CodeGenInstructionEt(ptr noundef nonnull align 8 dereferenceable(169) %7, ptr noundef nonnull align 8 dereferenceable(220) %i.cd, i16 noundef zeroext %.sroa.7.064) #9
-  %i.ce = add i16 %.sroa.7.064, 1
-  %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.043.063, i64 8 ; 2 uses
+  %.sroa.043.064 = phi ptr [ %i.cf, %.lr.ph ], [ %i.bz, %_ZNK4llvm13CodeGenTarget15getInstructionsEv.exit ] ; 2 uses
+  %.sroa.7.063 = phi i16 [ %i.ce, %.lr.ph ], [ 0, %_ZNK4llvm13CodeGenTarget15getInstructionsEv.exit ] ; 2 uses
+  %i.cd = load ptr, ptr %.sroa.043.064, align 8, !tbaa !52
+  call void @_ZN4llvm15X86Disassembler17RecognizableInstr12processInstrERNS0_18DisassemblerTablesERKNS_18CodeGenInstructionEt(ptr noundef nonnull align 8 dereferenceable(169) %7, ptr noundef nonnull align 8 dereferenceable(220) %i.cd, i16 noundef zeroext %.sroa.7.063) #9
+  %i.ce = add i16 %.sroa.7.063, 1
+  %i.cf = getelementptr inbounds nuw i8, ptr %.sroa.043.064, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.cf, %i.by
   br i1 %.not, label %._crit_edge, label %.lr.ph
 

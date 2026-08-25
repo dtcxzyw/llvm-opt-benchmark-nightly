@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DWARFEmitterImpl?download=true
+inline.NumInlined: 842
+inline.NumDeleted: 596
 begin_hunk_0
 $_ZN4llvm17createStringErrorIJEEENS_5ErrorESt4errcPKcDpRKT_ = comdat any
 
@@ -200,7 +202,7 @@ bb.h:                                             ; preds = %_ZNSt10unique_ptrIN
   br label %bb.ag
 
 bb.i:                                             ; preds = %_ZNSt10unique_ptrIN4llvm9MCAsmInfoESt14default_deleteIS1_EE5resetEPS1_.exit
-  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 336 ; 5 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 336 ; 6 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.n, i64 88 ; 2 uses
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !115
   %.not.i20 = icmp eq ptr %i.aq, null
@@ -231,7 +233,7 @@ _ZNKSt14default_deleteIN4llvm15MCSubtargetInfoEEclEPS1_.exit.i.i: ; preds = %_ZN
   br label %_ZNSt10unique_ptrIN4llvm15MCSubtargetInfoESt14default_deleteIS1_EE5resetEPS1_.exit
 
 _ZNSt10unique_ptrIN4llvm15MCSubtargetInfoESt14default_deleteIS1_EE5resetEPS1_.exit: ; preds = %_ZNK4llvm6Target21createMCSubtargetInfoERKNS_6TripleENS_9StringRefES4_.exit, %_ZNKSt14default_deleteIN4llvm15MCSubtargetInfoEEclEPS1_.exit.i.i
-  %i.ay = phi ptr [ %.0.i21, %_ZNK4llvm6Target21createMCSubtargetInfoERKNS_6TripleENS_9StringRefES4_.exit ], [ %.pr80, %_ZNKSt14default_deleteIN4llvm15MCSubtargetInfoEEclEPS1_.exit.i.i ] ; 2 uses
+  %i.ay = phi ptr [ %.0.i21, %_ZNK4llvm6Target21createMCSubtargetInfoERKNS_6TripleENS_9StringRefES4_.exit ], [ %.pr80, %_ZNKSt14default_deleteIN4llvm15MCSubtargetInfoEEclEPS1_.exit.i.i ]
   %.not88 = icmp eq ptr %i.ay, null
   br i1 %.not88, label %bb.l, label %bb.m
 
@@ -248,10 +250,11 @@ bb.m:                                             ; preds = %_ZNSt10unique_ptrIN
   %i.bb = call noalias noundef nonnull dereferenceable(2208) ptr @_Znwm(i64 noundef 2208) #18 ; 3 uses
   %i.bc = load ptr, ptr %i.ad, align 8, !tbaa !113
   %i.bd = load ptr, ptr %i.p, align 8, !tbaa !22
+  %18 = load ptr, ptr %i.ao, align 8, !tbaa !117
   store ptr %3, ptr %8, align 8, !tbaa !27
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 8
   store i64 %4, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !119
-  call void @_ZN4llvm9MCContextC1ERKNS_6TripleERKNS_9MCAsmInfoERKNS_14MCRegisterInfoERKNS_15MCSubtargetInfoEPKNS_9SourceMgrEbNS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(2208) %i.bb, ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(448) %i.bc, ptr noundef nonnull align 8 dereferenceable(240) %i.bd, ptr noundef nonnull align 8 dereferenceable(320) %i.ay, ptr noundef null, i1 noundef zeroext true, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %8) #17
+  call void @_ZN4llvm9MCContextC1ERKNS_6TripleERKNS_9MCAsmInfoERKNS_14MCRegisterInfoERKNS_15MCSubtargetInfoEPKNS_9SourceMgrEbNS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(2208) %i.bb, ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(448) %i.bc, ptr noundef nonnull align 8 dereferenceable(240) %i.bd, ptr noundef nonnull align 8 dereferenceable(320) %18, ptr noundef null, i1 noundef zeroext true, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %8) #17
   %i.be = load ptr, ptr %i.ba, align 8, !tbaa !120 ; 3 uses
   store ptr %i.bb, ptr %i.ba, align 8, !tbaa !120
   %.not.i.i23 = icmp eq ptr %i.be, null
@@ -274,12 +277,12 @@ _ZNSt10unique_ptrIN4llvm9MCContextESt14default_deleteIS1_EE5resetEPS1_.exit: ; p
 bb.n:                                             ; preds = %_ZNSt10unique_ptrIN4llvm9MCContextESt14default_deleteIS1_EE5resetEPS1_.exit
   %i.bj = call noalias noundef nonnull dereferenceable(920) ptr @_Znwm(i64 noundef 920) #18 ; 7 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(920) %i.bj, i8 0, i64 912, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvm16MCObjectFileInfoE, i64 16), ptr %i.bj, align 8, !tbaa !24
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4llvm16MCObjectFileInfoE, i64 16), ptr %i.bj, align 16, !tbaa !24
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
-  store i32 0, ptr %i.bk, align 8, !tbaa !122
+  store i32 0, ptr %i.bk, align 16, !tbaa !122
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bj, i64 24
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bj, i64 912
-  store ptr null, ptr %i.bm, align 8, !tbaa !130
+  store ptr null, ptr %i.bm, align 16, !tbaa !130
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(881) %i.bl, i8 0, i64 881, i1 false)
   call void @_ZN4llvm16MCObjectFileInfo20initMCObjectFileInfoERNS_9MCContextEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.bj, ptr noundef nonnull align 8 dereferenceable(2208) %i.bf, i1 noundef zeroext false, i1 noundef zeroext false) #17
   br label %_ZNK4llvm6Target22createMCObjectFileInfoERNS_9MCContextEbb.exit

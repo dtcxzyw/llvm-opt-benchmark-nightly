@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LegalizeTypesGeneric?download=true
+inline.NumInlined: 1281
+inline.NumDeleted: 454
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm16DAGTypeLegalizer25ExpandRes_EXTRACT_ELEMENTEPNS_6SDNodeERNS_7SDValueES4_:bb.a
   store ptr %.sroa.21.0.copyload.i.i.i, ptr %i.g, align 8
   %.not.i.i = icmp eq i16 %.sroa.0.0.copyload.i.i.i, 0
@@ -200,8 +205,8 @@ _ZN4llvm3EVT11getVectorVTERNS_11LLVMContextES0_NS_12ElementCountE.exit: ; preds 
 
 bb.h:                                             ; preds = %_ZNK4llvm3EVT20getVectorElementTypeEv.exit._crit_edge, %_ZN4llvm3EVT11getVectorVTERNS_11LLVMContextES0_NS_12ElementCountE.exit
   %.pre-phi = phi i64 [ %.pre, %_ZNK4llvm3EVT20getVectorElementTypeEv.exit._crit_edge ], [ %i.au, %_ZN4llvm3EVT11getVectorVTERNS_11LLVMContextES0_NS_12ElementCountE.exit ]
-  %.sroa.0182.0 = phi ptr [ %.sroa.0182.0.copyload, %_ZNK4llvm3EVT20getVectorElementTypeEv.exit._crit_edge ], [ %.fca.0.extract63, %_ZN4llvm3EVT11getVectorVTERNS_11LLVMContextES0_NS_12ElementCountE.exit ]
   %.sroa.7.0 = phi i32 [ %.sroa.7.0.copyload, %_ZNK4llvm3EVT20getVectorElementTypeEv.exit._crit_edge ], [ %.fca.1.extract64, %_ZN4llvm3EVT11getVectorVTERNS_11LLVMContextES0_NS_12ElementCountE.exit ]
+  %.sroa.0182.0 = phi ptr [ %.sroa.0182.0.copyload, %_ZNK4llvm3EVT20getVectorElementTypeEv.exit._crit_edge ], [ %.fca.0.extract63, %_ZN4llvm3EVT11getVectorVTERNS_11LLVMContextES0_NS_12ElementCountE.exit ]
   %i.bd = load ptr, ptr %i.af, align 8, !tbaa !44, !nonnull !42, !align !43 ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 80
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !45
@@ -604,7 +609,7 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapINS_7SDValueEjLj8ENS_12DenseMapInfoIS2_
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bb, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !139
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bv = load i32, ptr %2, align 4, !tbaa !141
-  store i32 %i.bv, ptr %i.bu, align 4, !tbaa !141
+  store i32 %i.bv, ptr %i.bu, align 8, !tbaa !141
   br label %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapINS_7SDValueEjLj8ENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E15LookupBucketForIS2_EEbRKT_RPS7_.exit
 
 _ZN4llvm12DenseMapBaseINS_13SmallDenseMapINS_7SDValueEjLj8ENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E15LookupBucketForIS2_EEbRKT_RPS7_.exit: ; preds = %.lr.ph.i, %_ZN4llvm12DenseMapBaseINS_13SmallDenseMapINS_7SDValueEjLj8ENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E22findBucketForInsertionIS2_EEPS7_RKT_SB_.exit
@@ -916,7 +921,7 @@ _ZZN4llvm12DenseMapBaseINS_13SmallDenseMapINS_7SDValueEjLj8ENS_12DenseMapInfoIS2
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ai, i64 16
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !141
-  store i32 %i.be, ptr %i.bc, align 4, !tbaa !141
+  store i32 %i.be, ptr %i.bc, align 8, !tbaa !141
   %i.bf = shl nuw i32 1, %i.aw
   %i.bg = load i32, ptr %i.ba, align 4, !tbaa !141
   %i.bh = or i32 %i.bg, %i.bf

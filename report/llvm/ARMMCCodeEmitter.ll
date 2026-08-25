@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ARMMCCodeEmitter?download=true
+inline.NumInlined: 2248
+inline.NumDeleted: 172
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNK12_GLOBAL__N_116ARMMCCodeEmitter21getBinaryCodeForInstrERKN4llvm6MCInstERNS1_15SmallVectorImplINS1_7MCFixupEEERKNS1_15MCSubtargetInfoE:bb.a
   %i.xeq = or i64 %i.f, %i.xep
   br label %bb.zv
@@ -200,10 +205,10 @@ bb.d:                                             ; preds = %bb.c
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.a, %bb.b, %bb.c, %bb.d
-  %.07.lcssa = phi i32 [ 0, %bb.a ], [ %i.e, %bb.b ], [ %.1.1, %bb.c ], [ %.1.2, %bb.d ]
-  %.0176.lcssa = phi i32 [ 3, %bb.a ], [ 2, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ]
-  %i.n = shl nuw nsw i32 1, %.0176.lcssa
-  %i.o = or i32 %.07.lcssa, %i.n
+  %.07.lcssa = phi i32 [ 3, %bb.a ], [ 2, %bb.b ], [ 1, %bb.c ], [ 0, %bb.d ]
+  %.0176.lcssa = phi i32 [ 0, %bb.a ], [ %i.e, %bb.b ], [ %.1.1, %bb.c ], [ %.1.2, %bb.d ]
+  %i.n = shl nuw nsw i32 1, %.07.lcssa
+  %i.o = or i32 %i.n, %.0176.lcssa
   ret i32 %i.o
 }
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/XCoreMCInstLower?download=true
+inline.NumInlined: 63
+inline.NumDeleted: 47
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -123,15 +125,15 @@ bb.i:                                             ; preds = %bb.a
   unreachable
 
 bb.j:                                             ; preds = %bb.h, %bb.g, %_ZN4llvm5TwineC2EPKc.exit, %bb.d, %bb.c, %bb.b
-  %.022 = phi ptr [ %i.c, %bb.b ], [ %i.h, %bb.c ], [ %i.p, %bb.d ], [ %i.aa, %_ZN4llvm5TwineC2EPKc.exit ], [ %i.ai, %bb.g ], [ %i.aq, %bb.h ]
-  %.0 = phi i32 [ %3, %bb.b ], [ %i.k, %bb.c ], [ %i.s, %bb.d ], [ %i.ad, %_ZN4llvm5TwineC2EPKc.exit ], [ %3, %bb.g ], [ %i.at, %bb.h ] ; 2 uses
+  %.022 = phi i32 [ %3, %bb.b ], [ %i.k, %bb.c ], [ %i.s, %bb.d ], [ %i.ad, %_ZN4llvm5TwineC2EPKc.exit ], [ %3, %bb.g ], [ %i.at, %bb.h ] ; 2 uses
+  %.0 = phi ptr [ %i.c, %bb.b ], [ %i.h, %bb.c ], [ %i.p, %bb.d ], [ %i.aa, %_ZN4llvm5TwineC2EPKc.exit ], [ %i.ai, %bb.g ], [ %i.aq, %bb.h ]
   %i.au = load ptr, ptr %0, align 8, !tbaa !11
-  %i.av = call noundef ptr @_ZN4llvm15MCSymbolRefExpr6createEPKNS_8MCSymbolEtRNS_9MCContextENS_5SMLocE(ptr noundef %.022, i16 noundef zeroext 0, ptr noundef nonnull align 8 dereferenceable(2208) %i.au, ptr null) #5 ; 2 uses
-  %.not = icmp eq i32 %.0, 0
+  %i.av = call noundef ptr @_ZN4llvm15MCSymbolRefExpr6createEPKNS_8MCSymbolEtRNS_9MCContextENS_5SMLocE(ptr noundef %.0, i16 noundef zeroext 0, ptr noundef nonnull align 8 dereferenceable(2208) %i.au, ptr null) #5 ; 2 uses
+  %.not = icmp eq i32 %.022, 0
   br i1 %.not, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.aw = zext i32 %.0 to i64
+  %i.aw = zext i32 %.022 to i64
   %i.ax = load ptr, ptr %0, align 8, !tbaa !11
   %i.ay = call noundef ptr @_ZN4llvm14MCConstantExpr6createElRNS_9MCContextEbj(i64 noundef %i.aw, ptr noundef nonnull align 8 dereferenceable(2208) %i.ax, i1 noundef zeroext false, i32 noundef 0) #5
   %i.az = load ptr, ptr %0, align 8, !tbaa !11

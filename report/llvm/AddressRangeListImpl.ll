@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AddressRangeListImpl?download=true
+inline.NumInlined: 92
+inline.NumDeleted: 54
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -64,7 +66,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !13
-  %i.d = load ptr, ptr %0, align 8, !tbaa !12     ; 4 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !12     ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
@@ -80,7 +82,7 @@ _ZNSt12_Vector_baseIN12lldb_private12AddressRangeESaIS1_EE11_M_allocateEm.exit.i
   %i.n = shl nuw nsw i64 %1, 5
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #13 ; 4 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.d, %i.k
-  br i1 %.not9.i.i.i.i.i, label %_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exit, label %.lr.ph.i.i.i.i.i
+  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN12lldb_private12AddressRangeESaIS1_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructIN12lldb_private12AddressRangeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.011.i.i.i.i.i = phi ptr [ %i.ab, %_ZSt10_ConstructIN12lldb_private12AddressRangeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.o, %_ZNSt12_Vector_baseIN12lldb_private12AddressRangeESaIS1_EE11_M_allocateEm.exit.i ] ; 3 uses
@@ -118,7 +120,7 @@ _ZSt10_ConstructIN12lldb_private12AddressRangeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.not.i.i.i.i.i = icmp eq ptr %i.aa, %i.k
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !22
 
-_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit: ; preds = %_ZSt10_ConstructIN12lldb_private12AddressRangeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
+_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit: ; preds = %_ZSt10_ConstructIN12lldb_private12AddressRangeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseIN12lldb_private12AddressRangeESaIS1_EE11_M_allocateEm.exit.i
   %.pre = load ptr, ptr %0, align 8, !tbaa !12    ; 3 uses
   %.pre8 = load ptr, ptr %i.j, align 8, !tbaa !8  ; 2 uses
   %.not4.i.i = icmp eq ptr %.pre, %.pre8
@@ -135,8 +137,8 @@ _ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exitthread-pre-split: ; pre
   %.pr = load ptr, ptr %0, align 8, !tbaa !12
   br label %_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exit
 
-_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exit: ; preds = %_ZNSt12_Vector_baseIN12lldb_private12AddressRangeESaIS1_EE11_M_allocateEm.exit.i, %_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exitthread-pre-split, %_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit
-  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ], [ %i.d, %_ZNSt12_Vector_baseIN12lldb_private12AddressRangeESaIS1_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exit: ; preds = %_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exitthread-pre-split, %_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit
+  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPN12lldb_private12AddressRangeEEvT_S3_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorIN12lldb_private12AddressRangeESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %2, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN12lldb_private12AddressRangeESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.g
 

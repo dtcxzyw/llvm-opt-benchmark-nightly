@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RefCntblBaseVirtualDtorChecker?download=true
+inline.NumInlined: 2123
+inline.NumDeleted: 1260
 begin_hunk_0_@_ZNK5clang13CXXRecordDecl13hasDefinitionEv:bb.a
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !125
   %.not = icmp eq ptr %i.b, null
@@ -200,7 +202,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i
   br label %_ZNK4llvm9StringRef3strB5cxx11Ev.exit
 
 bb.h:                                             ; preds = %._crit_edge.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.z, ptr nonnull align 1 %i.s, i64 %i.u, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.z, ptr nonnull align 8 %i.s, i64 %i.u, i1 false)
   br label %_ZNK4llvm9StringRef3strB5cxx11Ev.exit
 
 _ZNK4llvm9StringRef3strB5cxx11Ev.exit:            ; preds = %._crit_edge.i.i.i, %bb.g, %bb.h, %._crit_edge.i.i.i.thread
@@ -603,7 +605,7 @@ bb.h:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZN5clang11safeGetNameINS_13CXXMethodDeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit
 
 bb.i:                                             ; preds = %._crit_edge.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ak, ptr nonnull align 1 %i.ae, i64 %i.ag, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ak, ptr nonnull align 8 %i.ae, i64 %i.ag, i1 false)
   br label %_ZN5clang11safeGetNameINS_13CXXMethodDeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit
 
 _ZN5clang11safeGetNameINS_13CXXMethodDeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit: ; preds = %._crit_edge.i.i.i.thread.i, %._crit_edge.i.i.i.i, %bb.h, %bb.i
@@ -851,7 +853,7 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZN5clang11safeGetNameINS_13CXXMethodDeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit66
 
 bb.z:                                             ; preds = %._crit_edge.i.i.i.i61
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dp, ptr nonnull align 1 %i.dj, i64 %i.dl, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.dp, ptr nonnull align 8 %i.dj, i64 %i.dl, i1 false)
   br label %_ZN5clang11safeGetNameINS_13CXXMethodDeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit66
 
 _ZN5clang11safeGetNameINS_13CXXMethodDeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit66: ; preds = %._crit_edge.i.i.i.thread.i64, %._crit_edge.i.i.i.i61, %bb.y, %bb.z
@@ -1254,7 +1256,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   br label %_ZN5clang11safeGetNameINS_4DeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit
 
 bb.h:                                             ; preds = %._crit_edge.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ac, ptr nonnull align 1 %i.v, i64 %i.x, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ac, ptr nonnull align 8 %i.v, i64 %i.x, i1 false)
   br label %_ZN5clang11safeGetNameINS_4DeclEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKT_.exit
 
 bb.i:                                             ; preds = %bb.b
@@ -1569,8 +1571,8 @@ _ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit92: ; preds = %bb.p
   %i.ck = icmp eq ptr %i.cf, %i.cj
   br i1 %i.ck, label %.loopexit, label %.critedge76.jt0
 
-.critedge76.jt0:                                  ; preds = %bb.o, %bb.e, %bb.m, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit, %bb.k, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit92, %bb.n, %bb.c, %bb.a
-  %.347.jt0 = phi ptr [ %i.e, %bb.a ], [ %i.h, %bb.e ], [ %i.h, %bb.o ], [ %i.h, %bb.c ], [ %i.h, %bb.n ], [ %i.h, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit92 ], [ %i.h, %bb.k ], [ %i.h, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit ], [ %i.h, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit ], [ %i.h, %bb.m ] ; 2 uses
+.critedge76.jt0:                                  ; preds = %bb.o, %bb.c, %bb.n, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit92, %bb.k, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit, %bb.m, %bb.e, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit, %bb.a
+  %.347.jt0 = phi ptr [ %i.e, %bb.a ], [ %i.h, %bb.c ], [ %i.h, %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit ], [ %i.h, %bb.e ], [ %i.h, %bb.m ], [ %i.h, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit ], [ %i.h, %bb.o ], [ %i.h, %bb.k ], [ %i.h, %_ZN5clang18declaresSameEntityEPKNS_4DeclES2_.exit92 ], [ %i.h, %bb.n ] ; 2 uses
   %.not = icmp eq ptr %.347.jt0, null
   br i1 %.not, label %.loopexit, label %.lr.ph
 

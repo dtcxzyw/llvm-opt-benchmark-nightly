@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ModuleDebugInfoPrinter?download=true
+inline.NumInlined: 376
+inline.NumDeleted: 241
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -176,8 +178,8 @@ bb.f:                                             ; preds = %_ZN4llvm11raw_ostre
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.pn.i = phi { ptr, i64 } [ %i.ad, %bb.e ], [ %i.af, %bb.f ] ; 2 uses
-  %.sroa.526.0.i = extractvalue { ptr, i64 } %.pn.i, 1 ; 5 uses
   %.sroa.025.0.i = extractvalue { ptr, i64 } %.pn.i, 0 ; 2 uses
+  %.sroa.526.0.i = extractvalue { ptr, i64 } %.pn.i, 1 ; 5 uses
   %i.ag = icmp eq i64 %.sroa.526.0.i, 0
   %i.ah = load ptr, ptr %i.h, align 8, !tbaa !61
   %i.ai = load ptr, ptr %i.i, align 8, !tbaa !66  ; 3 uses

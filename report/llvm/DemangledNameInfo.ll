@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DemangledNameInfo?download=true
+inline.NumInlined: 107
+inline.NumDeleted: 29
 begin_hunk_0_@_ZN12lldb_private20TrackingOutputBuffer14printRightImplERKN4llvm16itanium_demangle16FunctionEncodingE:bb.a
 bb.aa:                                            ; preds = %bb.z
   call void @abort() #11
@@ -200,9 +202,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
   %i.e = phi i64 [ %.pre, %.lr.ph ], [ %i.ab, %bb.g ] ; 7 uses
-  %.015 = phi i1 [ true, %.lr.ph ], [ %.1, %bb.g ] ; 2 uses
-  %.01214 = phi i64 [ 0, %.lr.ph ], [ %i.ac, %bb.g ] ; 2 uses
-  br i1 %.015, label %_ZN4llvm16itanium_demangle12OutputBufferpLESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %bb.c
+  %.015 = phi i64 [ 0, %.lr.ph ], [ %i.ac, %bb.g ] ; 2 uses
+  %.01214 = phi i1 [ true, %.lr.ph ], [ %.1, %bb.g ] ; 2 uses
+  br i1 %.01214, label %_ZN4llvm16itanium_demangle12OutputBufferpLESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = add i64 %i.e, 2
@@ -246,7 +248,7 @@ _ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i: ; preds = %._ZN4llvm16it
 _ZN4llvm16itanium_demangle12OutputBufferpLESt17basic_string_viewIcSt11char_traitsIcEE.exit: ; preds = %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i, %bb.b
   %i.s = phi i64 [ %i.r, %_ZN4llvm16itanium_demangle12OutputBuffer4growEm.exit.i ], [ %i.e, %bb.b ] ; 2 uses
   %i.t = load ptr, ptr %0, align 8, !tbaa !97
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %.01214
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %.015
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !98
   tail call void @_ZNK4llvm16itanium_demangle4Node14printAsOperandERNS0_12OutputBufferENS1_4PrecEb(ptr noundef nonnull align 8 dereferenceable(11) %i.v, ptr noundef nonnull align 8 dereferenceable(48) %1, i8 noundef zeroext 18, i1 noundef zeroext false)
   %i.w = load i64, ptr %i.c, align 8, !tbaa !19   ; 2 uses
@@ -263,8 +265,8 @@ bb.f:                                             ; preds = %_ZN4llvm16itanium_d
 
 bb.g:                                             ; preds = %_ZN4llvm16itanium_demangle12OutputBufferpLESt17basic_string_viewIcSt11char_traitsIcEE.exit, %bb.f
   %i.ab = phi i64 [ %i.e, %bb.f ], [ %i.w, %_ZN4llvm16itanium_demangle12OutputBufferpLESt17basic_string_viewIcSt11char_traitsIcEE.exit ]
-  %.1 = phi i1 [ %.015, %bb.f ], [ false, %_ZN4llvm16itanium_demangle12OutputBufferpLESt17basic_string_viewIcSt11char_traitsIcEE.exit ]
-  %i.ac = add i64 %.01214, 1                      ; 2 uses
+  %.1 = phi i1 [ %.01214, %bb.f ], [ false, %_ZN4llvm16itanium_demangle12OutputBufferpLESt17basic_string_viewIcSt11char_traitsIcEE.exit ]
+  %i.ac = add i64 %.015, 1                        ; 2 uses
   %i.ad = load i64, ptr %i.a, align 8, !tbaa !96
   %.not = icmp eq i64 %i.ac, %i.ad
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !100

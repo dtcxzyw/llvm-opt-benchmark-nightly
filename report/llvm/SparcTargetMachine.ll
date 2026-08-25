@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SparcTargetMachine?download=true
+inline.NumInlined: 5555
+inline.NumDeleted: 2371
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @.str = private unnamed_addr constant [26 x i8] c"sparc-enable-branch-relax\00", align 1
 @.str.1 = private unnamed_addr constant [40 x i8] c"Relax out of range conditional branches\00", align 1
@@ -200,10 +204,10 @@ _ZNSt10unique_ptrIN4llvm24SparcELFTargetObjectFileESt14default_deleteIS1_EED2Ev.
   %i.w = getelementptr inbounds nuw i8, ptr %i.q, i64 1008
   store ptr %i.w, ptr %i.v, align 8, !tbaa !24, !noalias !43
   %i.x = getelementptr inbounds nuw i8, ptr %i.q, i64 992
-  store i32 2, ptr %i.x, align 8, !tbaa !64, !noalias !43
+  store i32 2, ptr %i.x, align 16, !tbaa !64, !noalias !43
   %i.y = getelementptr inbounds nuw i8, ptr %i.q, i64 1000
   store i8 1, ptr %i.y, align 8, !tbaa !19, !noalias !43
-  store ptr getelementptr inbounds nuw inrange(-16, 288) (i8, ptr @_ZTVN4llvm24SparcELFTargetObjectFileE, i64 16), ptr %i.q, align 8, !tbaa !14, !noalias !43
+  store ptr getelementptr inbounds nuw inrange(-16, 288) (i8, ptr @_ZTVN4llvm24SparcELFTargetObjectFileE, i64 16), ptr %i.q, align 16, !tbaa !14, !noalias !43
   store ptr %i.q, ptr %i.p, align 8, !tbaa !65
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1736
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 1752

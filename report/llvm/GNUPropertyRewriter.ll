@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/GNUPropertyRewriter?download=true
+inline.NumInlined: 466
+inline.NumDeleted: 291
 begin_hunk_0
 
 $_ZN4llvm4bolt16MetadataRewriter17postEmitFinalizerEv = comdat any
@@ -200,7 +202,6 @@ bb.b:                                             ; preds = %.preheader.preheade
 
 .outer:                                           ; preds = %_ZN12_GLOBAL__N_119GNUPropertyRewriter21decodeGNUPropertyNoteEN4llvm9StringRefE.exit._ZN4llvm8ExpectedIjED2Ev.exit_crit_edge, %bb.b
   %.019100.ph = phi i32 [ %.120, %_ZN12_GLOBAL__N_119GNUPropertyRewriter21decodeGNUPropertyNoteEN4llvm9StringRefE.exit._ZN4llvm8ExpectedIjED2Ev.exit_crit_edge ], [ 0, %bb.b ] ; 3 uses
-  %.sroa.049.099.ph = phi ptr [ %.sroa.049.1.a, %_ZN12_GLOBAL__N_119GNUPropertyRewriter21decodeGNUPropertyNoteEN4llvm9StringRefE.exit._ZN4llvm8ExpectedIjED2Ev.exit_crit_edge ], [ undef, %bb.b ]
   %.sroa.049.39597.ph = phi ptr [ %.sroa.049.393, %_ZN12_GLOBAL__N_119GNUPropertyRewriter21decodeGNUPropertyNoteEN4llvm9StringRefE.exit._ZN4llvm8ExpectedIjED2Ev.exit_crit_edge ], [ %.promoted, %bb.b ]
   %i.bg = load i64, ptr %.sroa.2.0..sroa_idx.i26, align 8, !tbaa !76
   %i.bh = load i64, ptr %32, align 8, !tbaa !77
@@ -229,8 +230,8 @@ bb.c:                                             ; preds = %.lr.ph
 
 ._crit_edge121:                                   ; preds = %.lr.ph, %bb.c
   %.pre-phi124 = phi i64 [ %i.bn, %bb.c ], [ %.pre, %.lr.ph ] ; 2 uses
-  %.sroa.061.0 = phi ptr [ %i.bp, %bb.c ], [ @.str.2, %.lr.ph ] ; 2 uses
   %.sroa.662.0 = phi i1 [ %i.br, %bb.c ], [ false, %.lr.ph ]
+  %.sroa.061.0 = phi ptr [ %i.bp, %bb.c ], [ @.str.2, %.lr.ph ] ; 2 uses
   %i.bs = icmp ne i64 %.pre-phi124, 0             ; 2 uses
   %.neg = sext i1 %i.bs to i64
   %i.bt = add i64 %.pre-phi124, %.neg
@@ -253,8 +254,8 @@ bb.d:                                             ; preds = %._crit_edge121
 
 ._crit_edge:                                      ; preds = %._crit_edge121, %bb.d
   %.pre-phi128 = phi i64 [ %i.bz, %bb.d ], [ %i.bw, %._crit_edge121 ] ; 2 uses
-  %.sroa.060.0 = phi ptr [ %i.cb, %bb.d ], [ @.str.2, %._crit_edge121 ]
   %.sroa.6.0 = phi i64 [ %i.cc, %bb.d ], [ 7, %._crit_edge121 ]
+  %.sroa.060.0 = phi ptr [ %i.cb, %bb.d ], [ @.str.2, %._crit_edge121 ]
   %i.cd = icmp ne i64 %.pre-phi128, 0             ; 2 uses
   %.neg78 = sext i1 %i.cd to i64
   %i.ce = add i64 %.pre-phi128, %.neg78
@@ -657,11 +658,8 @@ _ZN4llvm5ErrorD2Ev.exit44.i:                      ; preds = %bb.v, %_ZNSt7__cxx1
   br label %.critedge16.i
 
 .critedge.i43:                                    ; preds = %bb.i
-  %35 = ptrtoint ptr %.sroa.049.099.ph to i64
   %.sroa.049.0.insert.ext = zext i32 %.sroa.018.0.i to i64
-  %.sroa.049.0.insert.mask = and i64 %35, -4294967296
-  %.sroa.049.0.insert.insert = or disjoint i64 %.sroa.049.0.insert.mask, %.sroa.049.0.insert.ext
-  %i.he = inttoptr i64 %.sroa.049.0.insert.insert to ptr ; 2 uses
+  %i.he = inttoptr i64 %.sroa.049.0.insert.ext to ptr ; 2 uses
   br label %.critedge16.i
 
 .critedge16.loopexit.i:                           ; preds = %bb.s, %bb.r
@@ -669,7 +667,7 @@ _ZN4llvm5ErrorD2Ev.exit44.i:                      ; preds = %bb.v, %_ZNSt7__cxx1
   br label %.critedge16.i
 
 .critedge16.i:                                    ; preds = %.critedge16.loopexit.i, %.critedge.i43, %_ZN4llvm5ErrorD2Ev.exit44.i, %_ZN4llvm5ErrorD2Ev.exit22.i, %_ZN4llvm5ErrorD2Ev.exit18.i
-  %.sroa.049.1.a = phi ptr [ %i.he, %.critedge.i43 ], [ null, %_ZN4llvm5ErrorD2Ev.exit44.i ], [ null, %.critedge16.loopexit.i ], [ null, %_ZN4llvm5ErrorD2Ev.exit22.i ], [ null, %_ZN4llvm5ErrorD2Ev.exit18.i ] ; 4 uses
+  %.sroa.049.1.a = phi ptr [ %i.he, %.critedge.i43 ], [ null, %_ZN4llvm5ErrorD2Ev.exit44.i ], [ null, %.critedge16.loopexit.i ], [ null, %_ZN4llvm5ErrorD2Ev.exit22.i ], [ null, %_ZN4llvm5ErrorD2Ev.exit18.i ] ; 3 uses
   %.sroa.049.393 = phi ptr [ %.sroa.049.39597.ph, %.critedge.i43 ], [ %i.gq, %_ZN4llvm5ErrorD2Ev.exit44.i ], [ %i.fn, %.critedge16.loopexit.i ], [ %i.fh, %_ZN4llvm5ErrorD2Ev.exit22.i ], [ %i.ek, %_ZN4llvm5ErrorD2Ev.exit18.i ] ; 2 uses
   %.sroa.049.3 = phi ptr [ %i.he, %.critedge.i43 ], [ %i.gq, %_ZN4llvm5ErrorD2Ev.exit44.i ], [ %i.fn, %.critedge16.loopexit.i ], [ %i.fh, %_ZN4llvm5ErrorD2Ev.exit22.i ], [ %i.ek, %_ZN4llvm5ErrorD2Ev.exit18.i ]
   %i.hf = load ptr, ptr %i.ab, align 8, !tbaa !39, !noalias !106 ; 3 uses

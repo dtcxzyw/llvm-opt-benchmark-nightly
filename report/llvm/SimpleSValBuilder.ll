@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SimpleSValBuilder?download=true
+inline.NumInlined: 2054
+inline.NumDeleted: 1098
 begin_hunk_0_@_ZN12_GLOBAL__N_117SimpleSValBuilder11evalBinOpLNEN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEEENS3_18BinaryOperatorKindENS4_3LocENS4_6NonLocENS3_8QualTypeE:bb.a
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !66, !nonnull !38, !align !39
@@ -200,8 +202,8 @@ bb.au:                                            ; preds = %bb.at
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.at, %bb.au
-  %.sroa.018.0 = phi ptr [ %.fca.0.extract, %bb.au ], [ %.fca.0.extract44, %bb.at ] ; 2 uses
   %.sroa.5.0 = phi i8 [ %.fca.1.extract, %bb.au ], [ %.fca.1.extract45, %bb.at ] ; 2 uses
+  %.sroa.018.0 = phi ptr [ %.fca.0.extract, %bb.au ], [ %.fca.0.extract44, %bb.at ] ; 2 uses
   %i.fn = and i64 %6, -16
   %i.fo = inttoptr i64 %i.fn to ptr
   %i.fp = load ptr, ptr %i.fo, align 16, !tbaa !40 ; 2 uses
@@ -222,9 +224,9 @@ bb.aw:                                            ; preds = %bb.av, %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.av, %bb.as, %bb.aw, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit182
-  %.sroa.0203.0 = phi i64 [ %i.fw, %bb.aw ], [ 0, %bb.av ], [ 0, %bb.as ], [ %.sroa.0.0.copyload.i183, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit182 ] ; 3 uses
-  %.sroa.0207.0 = phi ptr [ %.sroa.018.0, %bb.aw ], [ %.sroa.018.0, %bb.av ], [ null, %bb.as ], [ %.fca.0.extract23, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit182 ]
   %.sroa.6208.0 = phi i8 [ %.sroa.5.0, %bb.aw ], [ %.sroa.5.0, %bb.av ], [ 1, %bb.as ], [ %.fca.1.extract24, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit182 ] ; 2 uses
+  %.sroa.0207.0 = phi ptr [ %.sroa.018.0, %bb.aw ], [ %.sroa.018.0, %bb.av ], [ null, %bb.as ], [ %.fca.0.extract23, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit182 ]
+  %.sroa.0203.0 = phi i64 [ %i.fw, %bb.aw ], [ 0, %bb.av ], [ 0, %bb.as ], [ %.sroa.0.0.copyload.i183, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit182 ] ; 3 uses
   %.0118 = phi ptr [ %i.ev, %bb.aw ], [ %i.ev, %bb.av ], [ null, %bb.as ], [ %i.fi, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit182 ]
   %i.fx = and i64 %.sroa.0203.0, -16
   %i.fy = inttoptr i64 %i.fx to ptr
@@ -627,9 +629,9 @@ _ZNK4llvm6APSIntmiERKS0_.exit30:                  ; preds = %bb.w, %bb.x
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZNK4llvm6APSIntmiERKS0_.exit30, %_ZNK4llvm6APSIntplERKS0_.exit
-  %.sroa.041.0 = phi i64 [ %i.co, %_ZNK4llvm6APSIntplERKS0_.exit ], [ %i.cx, %_ZNK4llvm6APSIntmiERKS0_.exit30 ]
-  %.sroa.642.0 = phi i32 [ %i.cn, %_ZNK4llvm6APSIntplERKS0_.exit ], [ %i.cw, %_ZNK4llvm6APSIntmiERKS0_.exit30 ]
   %.sroa.1144.0 = phi i8 [ %i.cq, %_ZNK4llvm6APSIntplERKS0_.exit ], [ %i.cz, %_ZNK4llvm6APSIntmiERKS0_.exit30 ]
+  %.sroa.642.0 = phi i32 [ %i.cn, %_ZNK4llvm6APSIntplERKS0_.exit ], [ %i.cw, %_ZNK4llvm6APSIntmiERKS0_.exit30 ]
+  %.sroa.041.0 = phi i64 [ %i.co, %_ZNK4llvm6APSIntplERKS0_.exit ], [ %i.cx, %_ZNK4llvm6APSIntmiERKS0_.exit30 ]
   %i.da = load i32, ptr %i.cc, align 8, !tbaa !60
   %i.db = icmp ult i32 %i.da, 65
   br i1 %i.db, label %_ZN4llvm5APIntD2Ev.exit32, label %bb.z

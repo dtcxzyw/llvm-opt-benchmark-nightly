@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DXContainerReader?download=true
+inline.NumInlined: 181
+inline.NumDeleted: 127
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -38,12 +40,12 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %i.a, i8 0, i64 80, i1 false), !noalias !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
-  store ptr %i.c, ptr %i.b, align 8, !tbaa !11, !noalias !8
+  store ptr %i.c, ptr %i.b, align 16, !tbaa !11, !noalias !8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 44 ; 2 uses
   store i32 1, ptr %i.d, align 4, !tbaa !14, !noalias !8
   %i.e = load ptr, ptr %1, align 8, !tbaa !15, !nonnull !18, !align !19 ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa.struct !20
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa.struct !20
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !25, !noalias !27
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 352
   %i.i = load ptr, ptr %i.h, align 8, !noalias !27
@@ -146,7 +148,7 @@ bb.c:                                             ; preds = %_ZN4llvm5ErrorD2Ev.
 
 bb.d:                                             ; preds = %_ZN4llvm5ErrorD2Ev.exit32
   %i.av = zext i32 %i.at to i64
-  %i.aw = load ptr, ptr %i.b, align 8, !tbaa !11
+  %i.aw = load ptr, ptr %i.b, align 16, !tbaa !11
   %i.ax = getelementptr inbounds nuw [32 x i8], ptr %i.aw, i64 %i.av
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.ax, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false)
   %i.ay = load i32, ptr %i.y, align 8, !tbaa !47
@@ -231,7 +233,7 @@ bb.h:                                             ; preds = %_ZN4llvm8ExpectedIN
 
 bb.i:                                             ; preds = %.loopexit, %_ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
-  %i.bz = load ptr, ptr %i.b, align 8, !tbaa !11  ; 2 uses
+  %i.bz = load ptr, ptr %i.b, align 16, !tbaa !11 ; 2 uses
   %i.ca = icmp eq ptr %i.bz, %i.c
   br i1 %i.ca, label %_ZNKSt14default_deleteIN4llvm7objcopy4dxbc6ObjectEEclEPS3_.exit.i, label %bb.j
 
