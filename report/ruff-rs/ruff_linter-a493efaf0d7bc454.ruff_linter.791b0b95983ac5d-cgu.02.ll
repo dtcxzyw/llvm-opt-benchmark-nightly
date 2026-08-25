@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.as, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %.not30.i = icmp samesign eq i64 %2, 0
+  %.not30.i = icmp eq i64 %2, 0                   ; 2 uses
   br i1 %.not30.i, label %_RNvXNtNtCs4NRVxsYgnAr_4core3str4iterNtB2_5CharsNtNtNtNtB6_4iter6traits8iterator8Iterator10advance_by.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -265,8 +265,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not.i, label %bb.k, label %bb.i, !prof !57
 
 bb.i:                                             ; preds = %bb.h
-  %8 = icmp eq i64 %2, 0
-  br i1 %8, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsEhZmuQNqkz_11ruff_linter.exit.thread35, label %bb.j
+  br i1 %.not30.i, label %_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsEhZmuQNqkz_11ruff_linter.exit.thread35, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #47, !noalias !10802

@@ -204,7 +204,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit.thread
   br label %_ZN4bssl12_GLOBAL__N_111StripStringB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE.exit.i
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i.i: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE17find_first_not_ofEcm.exit.i.i
-  %i.ol = sub nuw i64 %.sroa.0.0.copyload.i375, %.06.i.i.i ; 3 uses
+  %i.ol = sub nuw i64 %.sroa.0.0.copyload.i375, %.06.i.i.i ; 2 uses
   br label %bb.ee
 
 bb.ee:                                            ; preds = %bb.ef, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i.i
@@ -213,18 +213,14 @@ bb.ee:                                            ; preds = %bb.ef, %_ZNKSt17bas
   %i.om = getelementptr inbounds nuw i8, ptr %i.oj, i64 %.1.i.i.i
   %i.on = load i8, ptr %i.om, align 1, !tbaa !14, !noalias !200
   %i.oo = icmp eq i8 %i.on, 32
-  br i1 %i.oo, label %bb.ef, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.i.i
+  br i1 %i.oo, label %bb.ef, label %.loopexit.i.i
 
 bb.ef:                                            ; preds = %bb.ee
   %.not12.i.i.i = icmp eq i64 %.1.i.i.i, 0
   br i1 %.not12.i.i.i, label %.loopexit.i.i, label %bb.ee, !llvm.loop !204
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.i.i: ; preds = %bb.ee
-  %51 = call i64 @llvm.umin.i64(i64 %i.ol, i64 %.1.i.in.i.i)
-  br label %.loopexit.i.i
-
-.loopexit.i.i:                                    ; preds = %bb.ef, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.i.i
-  %.sroa.speculated.i.i.i = phi i64 [ %51, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE16find_last_not_ofEcm.exit.i.i ], [ %i.ol, %bb.ef ] ; 4 uses
+.loopexit.i.i:                                    ; preds = %bb.ef, %bb.ee
+  %.sroa.speculated.i.i.i = phi i64 [ %.1.i.in.i.i, %bb.ee ], [ %i.ol, %bb.ef ] ; 4 uses
   store ptr %i.bk, ptr %4, align 8, !tbaa !15, !alias.scope !200, !noalias !192
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !205
   store i64 %.sroa.speculated.i.i.i, ptr %i.a, align 8, !tbaa !12, !noalias !205
