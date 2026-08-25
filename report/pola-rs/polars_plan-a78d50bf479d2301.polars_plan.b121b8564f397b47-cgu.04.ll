@@ -205,8 +205,8 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketNtNtCs2mZqlW55
 bb.a:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketNtNtCs2mZqlW55729_12polars_utils5arena4NodeuE8split_atCsfcROwRM8ZtH_11polars_plan.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !26884 ; 3 uses
   %i.g = load i64, ptr %i.f, align 8, !dbg !26884, !alias.scope !26866, !noundef !13 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !26871 ; 3 uses
-  %i.i = load i64, ptr %i.h, align 8, !dbg !26871, !alias.scope !26866, !noundef !13 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !26871 ; 4 uses
+  %i.i = load i64, ptr %i.h, align 8, !dbg !26871, !alias.scope !26866, !noundef !13 ; 4 uses
   %i.j = add i64 %i.i, %i.g, !dbg !26871
   %.not = icmp ult i64 %i.j, 2, !dbg !26885
   br i1 %.not, label %bb.e, label %bb.b, !dbg !26885
@@ -257,7 +257,6 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f, !dbg !26930
 
 bb.f:                                             ; preds = %bb.h, %.lr.ph.i11.i
-  %3 = phi i64 [ %i.i, %.lr.ph.i11.i ], [ %4, %bb.h ] ; 2 uses
   %i.ad = phi i64 [ %i.g, %.lr.ph.i11.i ], [ %i.bl, %bb.h ] ; 3 uses
   %.sroa.14.015.i.i = phi i64 [ %i.i, %.lr.ph.i11.i ], [ %i.ap, %bb.h ]
   %.sroa.10.014.i.i = phi i16 [ %i.z, %.lr.ph.i11.i ], [ %i.am, %bb.h ] ; 2 uses
@@ -332,12 +331,12 @@ _RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8
   store i8 %.sroa.0.0.i.i.i12.i, ptr %i.bb, align 1, !dbg !27136, !noalias !27141
   %i.bj = getelementptr i8, ptr %i.ay, i64 16, !dbg !27142
   store i8 %.sroa.0.0.i.i.i12.i, ptr %i.bj, align 1, !dbg !27146, !noalias !27141
-  %i.bk = add i64 %3, -1, !dbg !27147             ; 2 uses
+  %3 = load i64, ptr %i.h, align 8, !dbg !27147, !alias.scope !27132, !noalias !27133, !noundef !13
+  %i.bk = add i64 %3, -1, !dbg !27147
   store i64 %i.bk, ptr %i.h, align 8, !dbg !27147, !alias.scope !27132, !noalias !27133
   br label %bb.h, !dbg !27148
 
 bb.h:                                             ; preds = %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils5arena4NodeuE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i
-  %4 = phi i64 [ %i.bk, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %3, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils5arena4NodeuE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i ]
   %i.bl = phi i64 [ %i.bi, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %i.ad, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils5arena4NodeuE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i ]
   %i.bm = icmp eq i64 %i.ap, 0, !dbg !26930
   br i1 %i.bm, label %_RNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB4_4CoreNtNtCs2mZqlW55729_12polars_utils5arena4NodeuE13erase_indicesCsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !26930
@@ -740,8 +739,8 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketNtNtCs2mZqlW55
 bb.a:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtNtCsfcROwRM8ZtH_11polars_plan5plans7expr_ir6ExprIRE8split_atB1W_.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !29344 ; 3 uses
   %i.g = load i64, ptr %i.f, align 8, !dbg !29344, !alias.scope !29326, !noundef !13 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !29331 ; 3 uses
-  %i.i = load i64, ptr %i.h, align 8, !dbg !29331, !alias.scope !29326, !noundef !13 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !29331 ; 4 uses
+  %i.i = load i64, ptr %i.h, align 8, !dbg !29331, !alias.scope !29326, !noundef !13 ; 4 uses
   %i.j = add i64 %i.i, %i.g, !dbg !29331
   %.not = icmp ult i64 %i.j, 2, !dbg !29345
   br i1 %.not, label %bb.e, label %bb.b, !dbg !29345
@@ -792,7 +791,6 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f, !dbg !29390
 
 bb.f:                                             ; preds = %bb.h, %.lr.ph.i11.i
-  %3 = phi i64 [ %i.i, %.lr.ph.i11.i ], [ %4, %bb.h ] ; 2 uses
   %i.ad = phi i64 [ %i.g, %.lr.ph.i11.i ], [ %i.bl, %bb.h ] ; 3 uses
   %.sroa.14.015.i.i = phi i64 [ %i.i, %.lr.ph.i11.i ], [ %i.ap, %bb.h ]
   %.sroa.10.014.i.i = phi i16 [ %i.z, %.lr.ph.i11.i ], [ %i.am, %bb.h ] ; 2 uses
@@ -867,12 +865,12 @@ _RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8
   store i8 %.sroa.0.0.i.i.i12.i, ptr %i.bb, align 1, !dbg !29532, !noalias !29534
   %i.bj = getelementptr i8, ptr %i.ay, i64 16, !dbg !29535
   store i8 %.sroa.0.0.i.i.i12.i, ptr %i.bj, align 1, !dbg !29538, !noalias !29534
-  %i.bk = add i64 %3, -1, !dbg !29539             ; 2 uses
+  %3 = load i64, ptr %i.h, align 8, !dbg !29539, !alias.scope !29528, !noalias !29529, !noundef !13
+  %i.bk = add i64 %3, -1, !dbg !29539
   store i64 %i.bk, ptr %i.h, align 8, !dbg !29539, !alias.scope !29528, !noalias !29529
   br label %bb.h, !dbg !29540
 
 bb.h:                                             ; preds = %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtNtCsfcROwRM8ZtH_11polars_plan5plans7expr_ir6ExprIRE13erase_indices0B1H_.exit.thread.i.i
-  %4 = phi i64 [ %i.bk, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %3, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtNtCsfcROwRM8ZtH_11polars_plan5plans7expr_ir6ExprIRE13erase_indices0B1H_.exit.thread.i.i ]
   %i.bl = phi i64 [ %i.bi, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %i.ad, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtNtCsfcROwRM8ZtH_11polars_plan5plans7expr_ir6ExprIRE13erase_indices0B1H_.exit.thread.i.i ]
   %i.bm = icmp eq i64 %i.ap, 0, !dbg !29390
   br i1 %i.bm, label %_RNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB4_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrNtNtNtCsfcROwRM8ZtH_11polars_plan5plans7expr_ir6ExprIRE13erase_indicesB1F_.exit, label %bb.f, !dbg !29390
@@ -1275,8 +1273,8 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketNtNtCs2mZqlW55
 bb.a:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStruE8split_atCsfcROwRM8ZtH_11polars_plan.exit.i
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !30837 ; 3 uses
   %i.j = load i64, ptr %i.i, align 8, !dbg !30837, !alias.scope !30795, !noundef !13 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !30826 ; 3 uses
-  %i.l = load i64, ptr %i.k, align 8, !dbg !30826, !alias.scope !30795, !noundef !13 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !30826 ; 4 uses
+  %i.l = load i64, ptr %i.k, align 8, !dbg !30826, !alias.scope !30795, !noundef !13 ; 4 uses
   %i.m = add i64 %i.l, %i.j, !dbg !30826
   %.not = icmp ult i64 %i.m, 2, !dbg !30838
   br i1 %.not, label %bb.e, label %bb.b, !dbg !30838
@@ -1331,7 +1329,6 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f, !dbg !30884
 
 bb.f:                                             ; preds = %bb.h, %.lr.ph.i.i
-  %3 = phi i64 [ %i.l, %.lr.ph.i.i ], [ %4, %bb.h ] ; 2 uses
   %i.ag = phi i64 [ %i.j, %.lr.ph.i.i ], [ %i.bo, %bb.h ] ; 3 uses
   %.sroa.14.015.i.i = phi i64 [ %i.l, %.lr.ph.i.i ], [ %i.as, %bb.h ]
   %.sroa.10.014.i.i = phi i16 [ %i.ac, %.lr.ph.i.i ], [ %i.ap, %bb.h ] ; 2 uses
@@ -1406,12 +1403,12 @@ _RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8
   store i8 %.sroa.0.0.i.i.i.i, ptr %i.be, align 1, !dbg !31026, !noalias !31028
   %i.bm = getelementptr i8, ptr %i.bb, i64 16, !dbg !31029
   store i8 %.sroa.0.0.i.i.i.i, ptr %i.bm, align 1, !dbg !31032, !noalias !31028
-  %i.bn = add i64 %3, -1, !dbg !31033             ; 2 uses
+  %3 = load i64, ptr %i.k, align 8, !dbg !31033, !alias.scope !31022, !noalias !31023, !noundef !13
+  %i.bn = add i64 %3, -1, !dbg !31033
   store i64 %i.bn, ptr %i.k, align 8, !dbg !31033, !alias.scope !31022, !noalias !31023
   br label %bb.h, !dbg !31034
 
 bb.h:                                             ; preds = %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStruE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i
-  %4 = phi i64 [ %i.bn, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %3, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStruE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i ]
   %i.bo = phi i64 [ %i.bl, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %i.ag, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStruE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i ]
   %i.bp = icmp eq i64 %i.as, 0, !dbg !30884
   br i1 %i.bp, label %_RNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB4_4CoreNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStruE13erase_indicesCsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !30884
@@ -1814,8 +1811,8 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketReINtNtBx_3set
 bb.a:                                             ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSINtCse4dvU5uQ85g_8indexmap6BucketReINtNtBx_3set8IndexSetNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateEE8split_atCsfcROwRM8ZtH_11polars_plan.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !32994 ; 3 uses
   %i.g = load i64, ptr %i.f, align 8, !dbg !32994, !alias.scope !32976, !noundef !13 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !32981 ; 3 uses
-  %i.i = load i64, ptr %i.h, align 8, !dbg !32981, !alias.scope !32976, !noundef !13 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !32981 ; 4 uses
+  %i.i = load i64, ptr %i.h, align 8, !dbg !32981, !alias.scope !32976, !noundef !13 ; 4 uses
   %i.j = add i64 %i.i, %i.g, !dbg !32981
   %.not = icmp ult i64 %i.j, 2, !dbg !32995
   br i1 %.not, label %bb.e, label %bb.b, !dbg !32995
@@ -1866,7 +1863,6 @@ bb.e:                                             ; preds = %bb.a
   br label %bb.f, !dbg !33040
 
 bb.f:                                             ; preds = %bb.h, %.lr.ph.i11.i
-  %3 = phi i64 [ %i.i, %.lr.ph.i11.i ], [ %4, %bb.h ] ; 2 uses
   %i.ad = phi i64 [ %i.g, %.lr.ph.i11.i ], [ %i.bl, %bb.h ] ; 3 uses
   %.sroa.14.015.i.i = phi i64 [ %i.i, %.lr.ph.i11.i ], [ %i.ap, %bb.h ]
   %.sroa.10.014.i.i = phi i16 [ %i.z, %.lr.ph.i11.i ], [ %i.am, %bb.h ] ; 2 uses
@@ -1941,12 +1937,12 @@ _RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8
   store i8 %.sroa.0.0.i.i.i12.i, ptr %i.bb, align 1, !dbg !33182, !noalias !33184
   %i.bj = getelementptr i8, ptr %i.ay, i64 16, !dbg !33185
   store i8 %.sroa.0.0.i.i.i12.i, ptr %i.bj, align 1, !dbg !33188, !noalias !33184
-  %i.bk = add i64 %3, -1, !dbg !33189             ; 2 uses
+  %3 = load i64, ptr %i.h, align 8, !dbg !33189, !alias.scope !33178, !noalias !33179, !noundef !13
+  %i.bk = add i64 %3, -1, !dbg !33189
   store i64 %i.bk, ptr %i.h, align 8, !dbg !33189, !alias.scope !33178, !noalias !33179
   br label %bb.h, !dbg !33190
 
 bb.h:                                             ; preds = %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreReINtNtB8_3set8IndexSetNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateEE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i
-  %4 = phi i64 [ %i.bk, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %3, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreReINtNtB8_3set8IndexSetNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateEE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i ]
   %i.bl = phi i64 [ %i.bi, %_RNvMs6_NtCs7tGzs63DEEy_9hashbrown3rawINtB5_8RawTablejE13erase_no_dropCsfcROwRM8ZtH_11polars_plan.exit.i.i ], [ %i.ad, %_RNCNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB6_4CoreReINtNtB8_3set8IndexSetNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateEE13erase_indices0CsfcROwRM8ZtH_11polars_plan.exit.thread.i.i ]
   %i.bm = icmp eq i64 %i.ap, 0, !dbg !33040
   br i1 %i.bm, label %_RNvMs_NtCse4dvU5uQ85g_8indexmap5innerINtB4_4CoreReINtNtB6_3set8IndexSetNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes5dtype8DataTypeNtNtCsk79RHlfmHDk_8foldhash7quality11RandomStateEE13erase_indicesCsfcROwRM8ZtH_11polars_plan.exit, label %bb.f, !dbg !33040

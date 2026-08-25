@@ -202,7 +202,7 @@ bb.a:
   %2 = alloca %struct.graph_line, align 8         ; 36 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
   store ptr %1, ptr %2, align 8, !tbaa !131
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 31 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 32 uses
   store i64 0, ptr %i.a, align 8, !tbaa !134
   %i.b = load ptr, ptr %0, align 8, !tbaa !82     ; 2 uses
   %.not = icmp eq ptr %i.b, null
@@ -605,7 +605,8 @@ graph_line_addch.exit.i.i74:                      ; preds = %strbuf_avail.exit.t
   %i.od = load i64, ptr %i.nb, align 8, !tbaa !33
   %i.oe = getelementptr inbounds nuw i8, ptr %i.oc, i64 %i.od
   store i8 0, ptr %i.oe, align 1, !tbaa !36
-  %i.of = add i64 %i.nd, 1                        ; 4 uses
+  %i.of = add i64 %i.nd, 1                        ; 5 uses
+  store i64 %i.of, ptr %i.a, align 8, !tbaa !134
   %i.og = load i16, ptr %i.no, align 8, !tbaa !124
   %i.oh = load i16, ptr @column_colors_max, align 2, !tbaa !16 ; 2 uses
   %i.oi = icmp ult i16 %i.og, %i.oh
@@ -729,7 +730,8 @@ graph_line_addch.exit125.i:                       ; preds = %strbuf_avail.exit.t
   %i.pz = load i64, ptr %i.nb, align 8, !tbaa !33
   %i.qa = getelementptr inbounds nuw i8, ptr %i.py, i64 %i.pz
   store i8 0, ptr %i.qa, align 1, !tbaa !36
-  %i.qb = add i64 %i.nd, 2
+  %i.qb = add i64 %i.nd, 2                        ; 2 uses
+  store i64 %i.qb, ptr %i.a, align 8, !tbaa !134
   %.pre.i = load ptr, ptr %i.mk, align 8, !tbaa !87
   br label %bb.cw
 
@@ -738,7 +740,7 @@ bb.cv:                                            ; preds = %bb.cp
   br label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv, %graph_line_addch.exit125.i, %bb.ct
-  %i.qd = phi i64 [ %i.qb, %graph_line_addch.exit125.i ], [ %i.of, %bb.ct ], [ %i.of, %bb.cv ] ; 2 uses
+  %i.qd = phi i64 [ %i.qb, %graph_line_addch.exit125.i ], [ %i.of, %bb.ct ], [ %i.of, %bb.cv ]
   %i.qe = phi ptr [ %.pre.i, %graph_line_addch.exit125.i ], [ %.val111.i, %bb.ct ], [ %.val111.i, %bb.cv ]
   %.1.i76 = phi i32 [ 2, %graph_line_addch.exit125.i ], [ 2, %bb.ct ], [ %i.qc, %bb.cv ]
   %i.qf = getelementptr inbounds nuw i8, ptr %i.qe, i64 332
@@ -783,13 +785,9 @@ next_interesting_parent.exit.i:                   ; preds = %graph_is_interestin
   %i.qp = add nuw nsw i32 %.088191.i, 1           ; 2 uses
   %i.qq = load i32, ptr %i.mo, align 8, !tbaa !88
   %.not107.not.i = icmp slt i32 %i.qp, %i.qq
-  br i1 %.not107.not.i, label %.lr.ph.i64, label %.critedge.i63.loopexit, !llvm.loop !142
+  br i1 %.not107.not.i, label %.lr.ph.i64, label %.critedge.i63, !llvm.loop !142
 
-.critedge.i63.loopexit:                           ; preds = %next_interesting_parent.exit.i
-  store i64 %i.qd, ptr %i.a, align 8
-  br label %.critedge.i63
-
-.critedge.i63:                                    ; preds = %.critedge.i63.loopexit, %bb.cg
+.critedge.i63:                                    ; preds = %next_interesting_parent.exit.i, %bb.cg
   %i.qr = load i32, ptr %i.ml, align 8, !tbaa !115
   %i.qs = icmp eq i32 %i.qr, 0
   br i1 %i.qs, label %bb.da, label %.thread.i60

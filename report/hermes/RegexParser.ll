@@ -205,15 +205,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.d
   br i1 %i.an, label %.lr.ph.i, label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit
 
 .lr.ph.i:                                         ; preds = %._crit_edge72
-  %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 16
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i, %.lr.ph.i
-  %5 = phi ptr [ null, %.lr.ph.i ], [ %8, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 2 uses
   %i.aq = phi ptr [ null, %.lr.ph.i ], [ %i.bj, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 5 uses
   %i.ar = phi ptr [ null, %.lr.ph.i ], [ %i.bk, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
-  %i.as = phi ptr [ null, %.lr.ph.i ], [ %9, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
+  %i.as = phi ptr [ null, %.lr.ph.i ], [ %.pn, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
   %.07.i = phi i64 [ %i.am, %.lr.ph.i ], [ %i.bm, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 2 uses
   %.056.i = phi ptr [ %i.aj, %.lr.ph.i ], [ %i.bl, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.as, %i.ar
@@ -222,12 +221,14 @@ bb.f:                                             ; preds = %_ZNSt20back_insert_
 bb.g:                                             ; preds = %bb.f
   %i.at = load ptr, ptr %.056.i, align 8, !tbaa !25
   store ptr %i.at, ptr %i.as, align 8, !tbaa !25
+  %5 = getelementptr inbounds nuw i8, ptr %i.as, i64 8 ; 2 uses
+  store ptr %5, ptr %i.ao, align 8, !tbaa !46
   br label %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i
 
 bb.h:                                             ; preds = %bb.f
   %i.au = ptrtoint ptr %i.ar to i64
-  %i.av = ptrtoint ptr %i.aq to i64               ; 2 uses
-  %i.aw = sub i64 %i.au, %i.av                    ; 5 uses
+  %i.av = ptrtoint ptr %i.aq to i64
+  %i.aw = sub i64 %i.au, %i.av                    ; 6 uses
   %i.ax = icmp eq i64 %i.aw, 9223372036854775800
   br i1 %i.ax, label %bb.i, label %_ZNKSt6vectorIPN6hermes5regex4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
 
@@ -245,7 +246,7 @@ _ZNKSt6vectorIPN6hermes5regex4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i: ;
   %.not.i.i.i.i.i.i = icmp ne i64 %i.bc, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i.i)
   %i.bd = shl nuw nsw i64 %i.bc, 3
-  %i.be = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bd) #17 ; 4 uses
+  %i.be = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bd) #17 ; 5 uses
   %i.bf = getelementptr inbounds i8, ptr %i.be, i64 %i.aw ; 2 uses
   %i.bg = load ptr, ptr %.056.i, align 8, !tbaa !25
   store ptr %i.bg, ptr %i.bf, align 8, !tbaa !25
@@ -257,40 +258,37 @@ bb.j:                                             ; preds = %_ZNKSt6vectorIPN6he
   br label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i: ; preds = %bb.j, %_ZNKSt6vectorIPN6hermes5regex4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 2 uses
   %.not.i17.i.i.i.i.i = icmp eq ptr %i.aq, null
   br i1 %.not.i17.i.i.i.i.i, label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i, label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i
-  %6 = ptrtoint ptr %5 to i64
-  %7 = sub i64 %6, %i.av
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aq, i64 noundef %7) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.aq, i64 noundef %i.aw) #18
   br label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i: ; preds = %bb.k, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i
+  store ptr %i.be, ptr %3, align 8, !tbaa !48
+  store ptr %6, ptr %i.ao, align 8, !tbaa !46
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %i.bc ; 2 uses
+  store ptr %i.bi, ptr %i.ap, align 8, !tbaa !51
   br label %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i
 
 _ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i: ; preds = %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i, %bb.g
-  %8 = phi ptr [ %5, %bb.g ], [ %i.bi, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ] ; 3 uses
-  %i.bj = phi ptr [ %i.aq, %bb.g ], [ %i.be, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ] ; 3 uses
-  %i.bk = phi ptr [ %i.ar, %bb.g ], [ %i.bi, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ]
-  %.pn = phi ptr [ %i.as, %bb.g ], [ %i.bf, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ]
-  %9 = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 3 uses
+  %i.bj = phi ptr [ %i.aq, %bb.g ], [ %i.be, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ] ; 2 uses
+  %i.bk = phi ptr [ %i.ar, %bb.g ], [ %i.bi, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ] ; 2 uses
+  %.pn = phi ptr [ %5, %bb.g ], [ %6, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.056.i, i64 8
   %i.bm = add nsw i64 %.07.i, -1
   %i.bn = icmp sgt i64 %.07.i, 1
   br i1 %i.bn, label %bb.f, label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit, !llvm.loop !52
 
 _ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit: ; preds = %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i
-  store ptr %9, ptr %i.ao, align 8
-  store ptr %i.bj, ptr %3, align 8
-  store ptr %8, ptr %i.ap, align 8
   %.pre = load ptr, ptr %i.x, align 8, !tbaa !22, !noalias !113
   br label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit
 
 _ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit: ; preds = %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit, %._crit_edge72
-  %i.bo = phi ptr [ %8, %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit ], [ null, %._crit_edge72 ]
-  %i.bp = phi ptr [ %9, %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit ], [ null, %._crit_edge72 ]
+  %i.bo = phi ptr [ %i.bk, %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit ], [ null, %._crit_edge72 ]
+  %i.bp = phi ptr [ %.pn, %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit ], [ null, %._crit_edge72 ]
   %i.bq = phi ptr [ %i.bj, %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit ], [ null, %._crit_edge72 ]
   %i.br = phi ptr [ %.pre, %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit ], [ %i.y, %._crit_edge72 ]
   %.not.i.i.i = icmp eq ptr %i.aj, %i.br
@@ -631,15 +629,14 @@ bb.f:                                             ; preds = %.lr.ph, %bb.e
   br i1 %i.bk, label %.lr.ph.i, label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit
 
 .lr.ph.i:                                         ; preds = %._crit_edge88
-  %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 16
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i, %.lr.ph.i
-  %5 = phi ptr [ null, %.lr.ph.i ], [ %8, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 2 uses
   %i.bn = phi ptr [ null, %.lr.ph.i ], [ %i.cg, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 5 uses
   %i.bo = phi ptr [ null, %.lr.ph.i ], [ %i.ch, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
-  %i.bp = phi ptr [ null, %.lr.ph.i ], [ %9, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
+  %i.bp = phi ptr [ null, %.lr.ph.i ], [ %.pn46, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
   %.07.i = phi i64 [ %i.bj, %.lr.ph.i ], [ %i.cj, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 2 uses
   %.056.i = phi ptr [ %i.bg, %.lr.ph.i ], [ %i.ci, %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i ] ; 3 uses
   %.not.i.i.i.i20 = icmp eq ptr %i.bp, %i.bo
@@ -648,12 +645,14 @@ bb.g:                                             ; preds = %_ZNSt20back_insert_
 bb.h:                                             ; preds = %bb.g
   %i.bq = load ptr, ptr %.056.i, align 8, !tbaa !25
   store ptr %i.bq, ptr %i.bp, align 8, !tbaa !25
+  %5 = getelementptr inbounds nuw i8, ptr %i.bp, i64 8 ; 2 uses
+  store ptr %5, ptr %i.bl, align 8, !tbaa !46
   br label %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i
 
 bb.i:                                             ; preds = %bb.g
   %i.br = ptrtoint ptr %i.bo to i64
-  %i.bs = ptrtoint ptr %i.bn to i64               ; 2 uses
-  %i.bt = sub i64 %i.br, %i.bs                    ; 5 uses
+  %i.bs = ptrtoint ptr %i.bn to i64
+  %i.bt = sub i64 %i.br, %i.bs                    ; 6 uses
   %i.bu = icmp eq i64 %i.bt, 9223372036854775800
   br i1 %i.bu, label %bb.j, label %_ZNKSt6vectorIPN6hermes5regex4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
 
@@ -671,7 +670,7 @@ _ZNKSt6vectorIPN6hermes5regex4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i: ;
   %.not.i.i.i.i.i.i = icmp ne i64 %i.bz, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i.i)
   %i.ca = shl nuw nsw i64 %i.bz, 3
-  %i.cb = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ca) #17 ; 4 uses
+  %i.cb = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ca) #17 ; 5 uses
   %i.cc = getelementptr inbounds i8, ptr %i.cb, i64 %i.bt ; 2 uses
   %i.cd = load ptr, ptr %.056.i, align 8, !tbaa !25
   store ptr %i.cd, ptr %i.cc, align 8, !tbaa !25
@@ -683,34 +682,31 @@ bb.k:                                             ; preds = %_ZNKSt6vectorIPN6he
   br label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i: ; preds = %bb.k, %_ZNKSt6vectorIPN6hermes5regex4NodeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %i.cc, i64 8 ; 2 uses
   %.not.i17.i.i.i.i.i = icmp eq ptr %i.bn, null
   br i1 %.not.i17.i.i.i.i.i, label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i
-  %6 = ptrtoint ptr %5 to i64
-  %7 = sub i64 %6, %i.bs
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bn, i64 noundef %7) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.bn, i64 noundef %i.bt) #18
   br label %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i
 
 _ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i: ; preds = %bb.l, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i.i.i
+  store ptr %i.cb, ptr %3, align 8, !tbaa !48
+  store ptr %6, ptr %i.bl, align 8, !tbaa !46
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.cb, i64 %i.bz ; 2 uses
+  store ptr %i.cf, ptr %i.bm, align 8, !tbaa !51
   br label %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i
 
 _ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i: ; preds = %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i, %bb.h
-  %8 = phi ptr [ %5, %bb.h ], [ %i.cf, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ] ; 2 uses
-  %i.cg = phi ptr [ %i.bn, %bb.h ], [ %i.cb, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ] ; 2 uses
+  %i.cg = phi ptr [ %i.bn, %bb.h ], [ %i.cb, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ]
   %i.ch = phi ptr [ %i.bo, %bb.h ], [ %i.cf, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ]
-  %.pn46 = phi ptr [ %i.bp, %bb.h ], [ %i.cc, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ]
-  %9 = getelementptr inbounds nuw i8, ptr %.pn46, i64 8 ; 2 uses
+  %.pn46 = phi ptr [ %5, %bb.h ], [ %6, %_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i ]
   %i.ci = getelementptr inbounds nuw i8, ptr %.056.i, i64 8
   %i.cj = add nsw i64 %.07.i, -1
   %i.ck = icmp sgt i64 %.07.i, 1
   br i1 %i.ck, label %bb.g, label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit, !llvm.loop !52
 
 _ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit.loopexit: ; preds = %_ZNSt20back_insert_iteratorISt6vectorIPN6hermes5regex4NodeESaIS4_EEEaSEOS4_.exit.i
-  store ptr %9, ptr %i.bl, align 8
-  store ptr %i.cg, ptr %3, align 8
-  store ptr %8, ptr %i.bm, align 8
   %.pre = load ptr, ptr %i.au, align 8, !tbaa !22, !noalias !116
   br label %_ZNSt11__copy_moveILb1ELb0ESt26random_access_iterator_tagE8__copy_mIPPN6hermes5regex4NodeESt20back_insert_iteratorISt6vectorIS6_SaIS6_EEEEET0_T_SE_SD_.exit
 

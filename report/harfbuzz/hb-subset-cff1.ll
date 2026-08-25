@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit
   %i.i = phi ptr [ %.promoted37, %.lr.ph ], [ %i.gr, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ] ; 4 uses
-  %i.j = phi i32 [ %.promoted, %.lr.ph ], [ %2, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ] ; 3 uses
+  %i.j = phi i32 [ %.promoted, %.lr.ph ], [ %2, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ]
   %i.k = phi i32 [ %.promoted31, %.lr.ph ], [ %i.gq, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ]
   %i.l = phi ptr [ %.promoted33, %.lr.ph ], [ %i.gp, %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit ] ; 3 uses
   %i.m = load ptr, ptr %0, align 8, !tbaa !811, !nonnull !122, !align !460 ; 4 uses
@@ -608,13 +608,11 @@ bb.am:                                            ; preds = %bb.al
   br label %_ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit
 
 _ZNR9hb_iter_tI13hb_map_iter_tI13hb_zip_iter_tI10hb_array_tIKN3CFF27cff1_font_dict_values_mod_tEES6_EZNS3_7FDArrayIN2OT7NumTypeILb1EtLj2EEEE9serializeIS4_S4_S7_30cff1_font_dict_op_serializer_tEEbP22hb_serialize_context_tT1_RT2_EUlRK9hb_pair_tIRS5_SL_EE_L24hb_function_sortedness_t0ELPv0EElEppEv.exit: ; preds = %bb.am, %.critedge.i.i
-  %.not.i.i.i.i.i.i1.not = icmp eq i32 %i.j, 0
-  %.idx = select i1 %.not.i.i.i.i.i.i1.not, i64 0, i64 24, !prof !70
-  %i.gp = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx
-  %2 = tail call i32 @llvm.usub.sat.i32(i32 %i.j, i32 1)
+  %2 = add i32 %i.j, -1                           ; 2 uses
+  %i.gp = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.gq = add i32 %i.k, -1                        ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %i.i, i64 24
-  %3 = icmp ugt i32 %i.j, 1
+  %3 = icmp ne i32 %2, 0
   %i.gs = icmp ne i32 %i.gq, 0
   %i.gt = select i1 %3, i1 %i.gs, i1 false
   br i1 %i.gt, label %bb.b, label %._crit_edge, !llvm.loop !820

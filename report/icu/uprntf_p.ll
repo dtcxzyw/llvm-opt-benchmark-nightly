@@ -19,7 +19,7 @@ target triple = "x86_64-pc-linux-gnu"
 define i32 @u_printf_parse_78(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(address_is_null) %3, ptr noundef %4, ptr nofree noundef captures(none) %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #0 {
 bb.a:
   %7 = alloca %union.ufmt_args, align 8           ; 14 uses
-  %8 = alloca %struct.u_printf_spec, align 4      ; 26 uses
+  %8 = alloca %struct.u_printf_spec, align 4      ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
   %.not = icmp eq ptr %3, null                    ; 2 uses
@@ -422,10 +422,10 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.
 _ZL14parseArgumentsPKDsP13__va_list_tagP10UErrorCode.exit.thread: ; preds = %._crit_edge.i, %bb.f, %._crit_edge227.i, %bb.b
   %.0 = phi ptr [ null, %bb.b ], [ %i.y, %._crit_edge227.i ], [ null, %bb.f ], [ null, %._crit_edge.i ] ; 6 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.du = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 4 uses
-  %i.dv = getelementptr inbounds nuw i8, ptr %8, i64 28 ; 4 uses
-  %i.dw = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 5 uses
-  %i.dx = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 8 uses
+  %i.du = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 5 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %8, i64 28 ; 5 uses
+  %i.dw = getelementptr inbounds nuw i8, ptr %8, i64 32 ; 6 uses
+  %i.dx = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 9 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %8, i64 12 ; 6 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %8, i64 18
   %i.ea = getelementptr inbounds nuw i8, ptr %8, i64 14
@@ -509,6 +509,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.fg = getelementptr inbounds nuw i8, ptr %.1, i64 4 ; 3 uses
   %i.fh = zext nneg i16 %i.ff to i32
   %i.fi = add nsw i32 %i.fh, -48                  ; 2 uses
+  store i32 %i.fi, ptr %i.dw, align 4, !tbaa !43
   %i.fj = load i16, ptr %i.fg, align 2, !tbaa !14 ; 3 uses
   %.off321362 = add i16 %i.fj, -48
   %switch322363 = icmp ult i16 %.off321362, 10
@@ -526,13 +527,15 @@ bb.be:                                            ; preds = %bb.bd
   %i.fq = load i16, ptr %i.fm, align 2, !tbaa !14 ; 3 uses
   %.off321 = add i16 %i.fq, -48
   %switch322 = icmp ult i16 %.off321, 10
-  br i1 %switch322, label %.critedge4, label %._crit_edge.a, !llvm.loop !47
+  br i1 %switch322, label %.critedge4, label %._crit_edge, !llvm.loop !47
 
-._crit_edge.a:                                    ; preds = %.critedge4, %bb.be
-  %i.fr = phi i16 [ %i.fj, %bb.be ], [ %i.fq, %.critedge4 ]
-  %storemerge.lcssa = phi i32 [ %i.fi, %bb.be ], [ %i.fp, %.critedge4 ]
-  %.2.lcssa = phi ptr [ %i.fg, %bb.be ], [ %i.fm, %.critedge4 ]
-  store i32 %storemerge.lcssa, ptr %i.dw, align 4, !tbaa !43
+._crit_edge:                                      ; preds = %.critedge4
+  store i32 %i.fp, ptr %i.dw, align 4, !tbaa !43
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %bb.be
+  %i.fr = phi i16 [ %i.fq, %._crit_edge ], [ %i.fj, %bb.be ]
+  %.2.lcssa = phi ptr [ %i.fm, %._crit_edge ], [ %i.fg, %bb.be ]
   %.not309 = icmp eq i16 %i.fr, 36
   br i1 %.not309, label %bb.bg, label %bb.bf
 
@@ -648,10 +651,11 @@ bb.bp:                                            ; preds = %bb.bo
   %i.gt = getelementptr inbounds nuw i8, ptr %.5, i64 4 ; 3 uses
   %i.gu = zext nneg i16 %i.gs to i32
   %i.gv = add nsw i32 %i.gu, -48                  ; 2 uses
+  store i32 %i.gv, ptr %i.du, align 4, !tbaa !39
   %i.gw = load i16, ptr %i.gt, align 2, !tbaa !14 ; 3 uses
   %.off325375 = add i16 %i.gw, -48
   %switch326376 = icmp ult i16 %.off325375, 10
-  br i1 %switch326376, label %.critedge8, label %.loopexit340.a
+  br i1 %switch326376, label %.critedge8, label %bb.bq
 
 .critedge8:                                       ; preds = %bb.bp, %.critedge8
   %i.gx = phi i16 [ %i.hd, %.critedge8 ], [ %i.gw, %bb.bp ]
@@ -667,16 +671,13 @@ bb.bp:                                            ; preds = %bb.bo
   %switch326 = icmp ult i16 %.off325, 10
   br i1 %switch326, label %.critedge8, label %.loopexit340.a, !llvm.loop !54
 
-.loopexit340.a:                                   ; preds = %.critedge8, %bb.bp
-  %storemerge311.lcssa = phi i32 [ %i.gv, %bb.bp ], [ %i.hc, %.critedge8 ]
-  %.7.lcssa = phi ptr [ %i.gt, %bb.bp ], [ %i.gz, %.critedge8 ]
-  %.lcssa348 = phi i16 [ %i.gw, %bb.bp ], [ %i.hd, %.critedge8 ]
-  store i32 %storemerge311.lcssa, ptr %i.du, align 4, !tbaa !39
+.loopexit340.a:                                   ; preds = %.critedge8
+  store i32 %i.hc, ptr %i.du, align 4, !tbaa !39
   br label %bb.bq
 
-bb.bq:                                            ; preds = %.loopexit340.a, %bb.bo
-  %9 = phi i16 [ %i.gs, %bb.bo ], [ %.lcssa348, %.loopexit340.a ]
-  %.8 = phi ptr [ %i.gr, %bb.bo ], [ %.7.lcssa, %.loopexit340.a ]
+bb.bq:                                            ; preds = %bb.bp, %.loopexit340.a, %bb.bo
+  %9 = phi i16 [ %i.gs, %bb.bo ], [ %i.hd, %.loopexit340.a ], [ %i.gw, %bb.bp ]
+  %.8 = phi ptr [ %i.gr, %bb.bo ], [ %i.gz, %.loopexit340.a ], [ %i.gt, %bb.bp ]
   %.not312 = icmp eq i16 %9, 36
   br i1 %.not312, label %bb.bs, label %bb.br
 
@@ -692,10 +693,11 @@ bb.bt:                                            ; preds = %bb.bh, %bb.bh, %bb.
   %i.hf = zext nneg i16 %i.ft to i32
   %i.hg = add nsw i32 %i.hf, -48                  ; 2 uses
   %.9367 = getelementptr inbounds nuw i8, ptr %.5, i64 2 ; 3 uses
+  store i32 %i.hg, ptr %i.dx, align 4, !tbaa !45
   %i.hh = load i16, ptr %.9367, align 2, !tbaa !14 ; 3 uses
   %.off327368 = add i16 %i.hh, -48
   %switch328369 = icmp ult i16 %.off327368, 10
-  br i1 %switch328369, label %.critedge10, label %.loopexit341.a
+  br i1 %switch328369, label %.critedge10, label %.loopexit342
 
 .critedge10:                                      ; preds = %bb.bt, %.critedge10
   %i.hi = phi i16 [ %i.hn, %.critedge10 ], [ %i.hh, %bb.bt ]
@@ -716,16 +718,13 @@ thread-pre-split:                                 ; preds = %bb.bs, %bb.br
   %.pr = load i16, ptr %.10.ph, align 2, !tbaa !14
   br label %.loopexit342
 
-.loopexit341.a:                                   ; preds = %.critedge10, %bb.bt
-  %storemerge310.lcssa = phi i32 [ %i.hg, %bb.bt ], [ %i.hm, %.critedge10 ]
-  %.9.lcssa = phi ptr [ %.9367, %bb.bt ], [ %.9, %.critedge10 ]
-  %.lcssa347 = phi i16 [ %i.hh, %bb.bt ], [ %i.hn, %.critedge10 ]
-  store i32 %storemerge310.lcssa, ptr %i.dx, align 4, !tbaa !45
+.loopexit341.a:                                   ; preds = %.critedge10
+  store i32 %i.hm, ptr %i.dx, align 4, !tbaa !45
   br label %.loopexit342
 
-.loopexit342:                                     ; preds = %bb.bh, %.loopexit341.a, %thread-pre-split
-  %10 = phi i16 [ %.pr, %thread-pre-split ], [ %.lcssa347, %.loopexit341.a ], [ %i.ft, %bb.bh ]
-  %.10 = phi ptr [ %.10.ph, %thread-pre-split ], [ %.9.lcssa, %.loopexit341.a ], [ %.5, %bb.bh ] ; 5 uses
+.loopexit342:                                     ; preds = %bb.bh, %bb.bt, %.loopexit341.a, %thread-pre-split
+  %10 = phi i16 [ %.pr, %thread-pre-split ], [ %i.hh, %bb.bt ], [ %i.hn, %.loopexit341.a ], [ %i.ft, %bb.bh ]
+  %.10 = phi ptr [ %.10.ph, %thread-pre-split ], [ %.9367, %bb.bt ], [ %.9, %.loopexit341.a ], [ %.5, %bb.bh ] ; 5 uses
   %i.ho = icmp eq i16 %10, 46
   br i1 %i.ho, label %bb.bu, label %thread-pre-split337
 
@@ -763,6 +762,7 @@ bb.bw:                                            ; preds = %bb.bv
 bb.bx:                                            ; preds = %.critedge12, %bb.bw
   %storemerge314 = phi i32 [ %i.hv, %bb.bw ], [ %i.ib, %.critedge12 ] ; 2 uses
   %.11 = phi ptr [ %i.ht, %bb.bw ], [ %i.hy, %.critedge12 ] ; 3 uses
+  store i32 %storemerge314, ptr %i.dv, align 4, !tbaa !42
   %i.hw = load i16, ptr %.11, align 2, !tbaa !14  ; 2 uses
   switch i16 %i.hw, label %bb.by [
     i16 48, label %.critedge12
@@ -779,7 +779,8 @@ bb.bx:                                            ; preds = %.critedge12, %bb.bw
   ]
 
 .critedge12:                                      ; preds = %bb.bx, %bb.bx, %bb.bx, %bb.bx, %bb.bx, %bb.bx, %bb.bx, %bb.bx, %bb.bx, %bb.bx
-  %i.hx = mul nsw i32 %storemerge314, 10
+  %i.hx = mul nsw i32 %storemerge314, 10          ; 2 uses
+  store i32 %i.hx, ptr %i.dv, align 4, !tbaa !42
   %i.hy = getelementptr inbounds nuw i8, ptr %.11, i64 2
   %i.hz = zext nneg i16 %i.hw to i32
   %i.ia = add i32 %i.hx, -48
@@ -791,7 +792,6 @@ bb.by:                                            ; preds = %bb.bx
   br label %thread-pre-split337
 
 bb.bz:                                            ; preds = %bb.bx
-  store i32 %storemerge314, ptr %i.dv, align 4, !tbaa !42
   %i.ic = getelementptr inbounds nuw i8, ptr %.11, i64 2
   br label %thread-pre-split337
 
@@ -799,10 +799,11 @@ bb.ca:                                            ; preds = %bb.bu, %bb.bu, %bb.
   %i.id = getelementptr inbounds nuw i8, ptr %.10, i64 4 ; 3 uses
   %i.ie = zext nneg i16 %i.hq to i32
   %i.if = add nsw i32 %i.ie, -48                  ; 2 uses
+  store i32 %i.if, ptr %8, align 4, !tbaa !44
   %i.ig = load i16, ptr %i.id, align 2, !tbaa !14 ; 3 uses
   %.off331382 = add i16 %i.ig, -48
   %switch332383 = icmp ult i16 %.off331382, 10
-  br i1 %switch332383, label %.critedge14, label %.loopexit.a
+  br i1 %switch332383, label %.critedge14, label %bb.cb
 
 .critedge14:                                      ; preds = %bb.ca, %.critedge14
   %i.ih = phi i16 [ %i.in, %.critedge14 ], [ %i.ig, %bb.ca ]
@@ -823,16 +824,13 @@ thread-pre-split337:                              ; preds = %.loopexit342, %bb.b
   %.pr338 = load i16, ptr %.13.ph, align 2, !tbaa !14
   br label %bb.cb
 
-.loopexit.a:                                      ; preds = %.critedge14, %bb.ca
-  %storemerge313.lcssa = phi i32 [ %i.if, %bb.ca ], [ %i.im, %.critedge14 ]
-  %.12.lcssa = phi ptr [ %i.id, %bb.ca ], [ %i.ij, %.critedge14 ]
-  %.lcssa349 = phi i16 [ %i.ig, %bb.ca ], [ %i.in, %.critedge14 ]
-  store i32 %storemerge313.lcssa, ptr %8, align 4, !tbaa !44
+.loopexit.a:                                      ; preds = %.critedge14
+  store i32 %i.im, ptr %8, align 4, !tbaa !44
   br label %bb.cb
 
-bb.cb:                                            ; preds = %.loopexit.a, %thread-pre-split337, %bb.bv, %bb.bu
-  %11 = phi i16 [ %.pr338, %thread-pre-split337 ], [ %i.hq, %bb.bu ], [ %i.hs, %bb.bv ], [ %.lcssa349, %.loopexit.a ] ; 2 uses
-  %.13 = phi ptr [ %.13.ph, %thread-pre-split337 ], [ %i.hp, %bb.bu ], [ %i.hr, %bb.bv ], [ %.12.lcssa, %.loopexit.a ] ; 3 uses
+bb.cb:                                            ; preds = %bb.ca, %.loopexit.a, %thread-pre-split337, %bb.bv, %bb.bu
+  %11 = phi i16 [ %.pr338, %thread-pre-split337 ], [ %i.hq, %bb.bu ], [ %i.hs, %bb.bv ], [ %i.in, %.loopexit.a ], [ %i.ig, %bb.ca ] ; 2 uses
+  %.13 = phi ptr [ %.13.ph, %thread-pre-split337 ], [ %i.hp, %bb.bu ], [ %i.hr, %bb.bv ], [ %i.ij, %.loopexit.a ], [ %i.id, %bb.ca ] ; 3 uses
   switch i16 %11, label %bb.ci [
     i16 104, label %bb.cc
     i16 108, label %bb.cc

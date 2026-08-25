@@ -205,15 +205,10 @@ bb.ab:                                            ; preds = %.lr.ph120.i
 bb.ac:                                            ; preds = %bb.z
   %i.do = load ptr, ptr %i.bn, align 8, !tbaa !281
   %i.dp = icmp ult ptr %i.cw, %i.cv
-  br i1 %i.dp, label %.lr.ph.i.preheader, label %.thread.i
+  br i1 %i.dp, label %.lr.ph.i, label %.thread.i
 
-.lr.ph.i.preheader:                               ; preds = %bb.ac
-  %.promoted = load i64, ptr %i.bo, align 8
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.ad
-  %5 = phi i64 [ %i.dx, %bb.ad ], [ %.promoted, %.lr.ph.i.preheader ] ; 2 uses
-  %i.dq = phi ptr [ %i.dy, %bb.ad ], [ %i.cw, %.lr.ph.i.preheader ] ; 4 uses
+.lr.ph.i:                                         ; preds = %bb.ac, %bb.ad
+  %i.dq = phi ptr [ %i.dy, %bb.ad ], [ %i.cw, %bb.ac ] ; 4 uses
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !205
   %i.ds = zext i8 %i.dr to i64
   %i.dt = getelementptr [2 x i8], ptr %.0.i.i23, i64 %i.ds
@@ -222,9 +217,10 @@ bb.ac:                                            ; preds = %bb.z
   br i1 %i.dv, label %PyUnicode_READ.exit.thread.loopexit.i, label %bb.ad
 
 bb.ad:                                            ; preds = %.lr.ph.i
+  %5 = load i64, ptr %i.bo, align 8, !tbaa !279   ; 2 uses
   %i.dw = getelementptr [2 x i8], ptr %i.do, i64 %5
   store i16 %i.du, ptr %i.dw, align 2, !tbaa !208
-  %i.dx = add i64 %5, 1                           ; 2 uses
+  %i.dx = add i64 %5, 1
   store i64 %i.dx, ptr %i.bo, align 8, !tbaa !279
   %i.dy = getelementptr i8, ptr %i.dq, i64 1      ; 2 uses
   %exitcond.not.i = icmp eq ptr %i.dy, %i.cv
@@ -627,9 +623,9 @@ bb.cg:                                            ; preds = %PyUnicode_READ_CHAR
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cu, %.lr.ph159.i
-  %.0157.i = phi i64 [ 1, %.lr.ph159.i ], [ %.1.i, %bb.cu ] ; 3 uses
-  %i.fd = phi i64 [ %.promoted156.i, %.lr.ph159.i ], [ %i.fe, %bb.cu ] ; 5 uses
-  %i.fe = add i64 %i.fd, 1                        ; 3 uses
+  %.0157.i = phi i64 [ %.promoted156.i, %.lr.ph159.i ], [ %i.fe, %bb.cu ] ; 5 uses
+  %i.fd = phi i64 [ 1, %.lr.ph159.i ], [ %.1.i, %bb.cu ] ; 3 uses
+  %i.fe = add i64 %.0157.i, 1                     ; 3 uses
   store i64 %i.fe, ptr %i.g, align 8, !tbaa !942
   %i.ff = load i32, ptr %i.fb, align 8            ; 5 uses
   %i.fg = lshr i32 %i.ff, 2
@@ -657,7 +653,7 @@ bb.ck:                                            ; preds = %bb.ci
 
 _PyUnicode_DATA.exit.i134.i:                      ; preds = %bb.ck, %bb.cj
   %.0.i.i135.i = phi ptr [ %.0.i.i.i133.i, %bb.cj ], [ %.val4.i.i136.i, %bb.ck ]
-  %i.fk = getelementptr i8, ptr %.0.i.i135.i, i64 %i.fd
+  %i.fk = getelementptr i8, ptr %.0.i.i135.i, i64 %.0157.i
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !205
   %i.fm = zext i8 %i.fl to i32
   br label %PyUnicode_READ_CHAR.exit143.i
@@ -678,7 +674,7 @@ bb.cn:                                            ; preds = %bb.cl
 
 _PyUnicode_DATA.exit17.i127.i:                    ; preds = %bb.cn, %bb.cm
   %.0.i15.i128.i = phi ptr [ %.0.i.i14.i126.i, %bb.cm ], [ %.val4.i16.i130.i, %bb.cn ]
-  %i.fo = getelementptr [2 x i8], ptr %.0.i15.i128.i, i64 %i.fd
+  %i.fo = getelementptr [2 x i8], ptr %.0.i15.i128.i, i64 %.0157.i
   %i.fp = load i16, ptr %i.fo, align 2, !tbaa !208
   %i.fq = zext i16 %i.fp to i32
   br label %PyUnicode_READ_CHAR.exit143.i
@@ -699,7 +695,7 @@ bb.cq:                                            ; preds = %bb.co
 
 _PyUnicode_DATA.exit25.i140.i:                    ; preds = %bb.cq, %bb.cp
   %.0.i23.i141.i = phi ptr [ %.0.i.i22.i139.i, %bb.cp ], [ %.val4.i24.i142.i, %bb.cq ]
-  %i.fs = getelementptr [4 x i8], ptr %.0.i23.i141.i, i64 %i.fd
+  %i.fs = getelementptr [4 x i8], ptr %.0.i23.i141.i, i64 %.0157.i
   %i.ft = load i32, ptr %i.fs, align 4, !tbaa !7
   br label %PyUnicode_READ_CHAR.exit143.i
 
@@ -712,20 +708,20 @@ PyUnicode_READ_CHAR.exit143.i:                    ; preds = %_PyUnicode_DATA.exi
 
 bb.cr:                                            ; preds = %PyUnicode_READ_CHAR.exit143.i
   store i32 1, ptr %6, align 4, !tbaa !7
-  %i.fu = add i64 %.0157.i, 1
+  %i.fu = add i64 %i.fd, 1
   br label %bb.cu
 
 bb.cs:                                            ; preds = %PyUnicode_READ_CHAR.exit143.i
-  %i.fv = add i64 %.0157.i, -1                    ; 2 uses
+  %i.fv = add i64 %i.fd, -1                       ; 2 uses
   %i.fw = icmp eq i64 %i.fv, 0
   br i1 %i.fw, label %bb.ct, label %bb.cu
 
 bb.ct:                                            ; preds = %bb.cs
-  store i64 %i.fd, ptr %i.f, align 8, !tbaa !943
+  store i64 %.0157.i, ptr %i.f, align 8, !tbaa !943
   br label %parse_field.exit
 
 bb.cu:                                            ; preds = %bb.cs, %bb.cr, %PyUnicode_READ_CHAR.exit143.i
-  %.1.i = phi i64 [ %.0157.i, %PyUnicode_READ_CHAR.exit143.i ], [ %i.fu, %bb.cr ], [ %i.fv, %bb.cs ]
+  %.1.i = phi i64 [ %i.fd, %PyUnicode_READ_CHAR.exit143.i ], [ %i.fu, %bb.cr ], [ %i.fv, %bb.cs ]
   %exitcond163.not.i = icmp eq i64 %i.fe, %i.ex
   br i1 %exitcond163.not.i, label %._crit_edge160.i, label %bb.ch, !llvm.loop !1001
 

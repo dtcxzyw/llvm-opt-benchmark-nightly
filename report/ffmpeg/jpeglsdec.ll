@@ -204,23 +204,22 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   %i.da = select i1 %i.cz, i32 -16777216, i32 0   ; 2 uses
   %i.db = load ptr, ptr %i.b, align 16, !tbaa !9  ; 3 uses
   %i.dc = ptrtoint ptr %i.db to i64
-  %.promoted = load ptr, ptr %i.a, align 8, !tbaa !14
   %i.dd = add nsw i32 %.1, 1
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %._crit_edge.us, %.lr.ph129.split.us
-  %.promoted.us131 = phi ptr [ %.promoted, %.lr.ph129.split.us ], [ %i.dq, %._crit_edge.us ]
   %.093128.us = phi i32 [ %i.cf, %.lr.ph129.split.us ], [ %i.dx, %._crit_edge.us ] ; 3 uses
   %i.de = shl i32 %.093128.us, %.0
   %i.df = and i32 %i.de, 255
   %i.dg = zext nneg i32 %i.df to i64
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cq, i64 %i.dg ; 2 uses
   store i32 %i.da, ptr %i.dh, align 4, !tbaa !62
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !13
   br label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph.us, %bytestream2_get_byte.exit.us
   %i.di = phi i32 [ %i.da, %.lr.ph.us ], [ %i.dv, %bytestream2_get_byte.exit.us ]
-  %i.dj = phi ptr [ %.promoted.us131, %.lr.ph.us ], [ %i.dq, %bytestream2_get_byte.exit.us ] ; 3 uses
+  %i.dj = phi ptr [ %.pre, %.lr.ph.us ], [ %i.dq, %bytestream2_get_byte.exit.us ] ; 3 uses
   %.092125.us = phi i32 [ 0, %.lr.ph.us ], [ %i.dw, %bytestream2_get_byte.exit.us ] ; 2 uses
   %i.dk = ptrtoint ptr %i.dj to i64
   %i.dl = sub i64 %i.dc, %i.dk
@@ -239,7 +238,7 @@ bb.ab:                                            ; preds = %bb.z
   br label %bytestream2_get_byte.exit.us
 
 bytestream2_get_byte.exit.us:                     ; preds = %bb.ab, %bb.aa
-  %i.dq = phi ptr [ %i.db, %bb.ab ], [ %i.dn, %bb.aa ] ; 2 uses
+  %i.dq = phi ptr [ %i.db, %bb.ab ], [ %i.dn, %bb.aa ]
   %.0.i112.us = phi i32 [ 0, %bb.ab ], [ %i.dp, %bb.aa ]
   %i.dr = xor i32 %.092125.us, -1
   %i.ds = add nsw i32 %.0.i113, %i.dr

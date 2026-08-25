@@ -204,11 +204,9 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %.promoted = load i8, ptr %i.h, align 8
   br label %bb.b
 
 bb.b:                                             ; preds = %__cmsg_nxthdr.exit, %.lr.ph
-  %2 = phi i8 [ %.promoted, %.lr.ph ], [ %3, %__cmsg_nxthdr.exit ] ; 8 uses
   %.024 = phi ptr [ %i.e, %.lr.ph ], [ %i.as, %__cmsg_nxthdr.exit ] ; 11 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.024, i64 8
   %i.j = load i32, ptr %i.i, align 8, !tbaa !43
@@ -242,6 +240,7 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.e, %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %.024, i64 16
+  %2 = load i8, ptr %i.h, align 8, !tbaa !7498, !range !37, !noundef !38
   %i.t = trunc nuw i8 %2 to i1
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.g, ptr noundef nonnull align 8 dereferenceable(48) %i.s, i64 48, i1 false)
   br i1 %i.t, label %.thread, label %bb.g
@@ -269,7 +268,6 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %.thread
 
 .thread:                                          ; preds = %bb.g, %bb.f, %bb.b, %bb.h, %bb.e, %bb.d, %bb.c, %bb.i, %bb.j
-  %3 = phi i8 [ %2, %bb.b ], [ %2, %bb.h ], [ %2, %bb.e ], [ %2, %bb.d ], [ %2, %bb.c ], [ %2, %bb.i ], [ %2, %bb.j ], [ 1, %bb.f ], [ 1, %bb.g ]
   %i.ac = load i64, ptr %.024, align 8, !tbaa !7421 ; 4 uses
   %i.ad = icmp ult i64 %i.ac, 16
   br i1 %i.ad, label %select.unfold._crit_edge, label %bb.k
@@ -672,10 +670,9 @@ bb.s:                                             ; preds = %bb.r
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %__cmsg_nxthdr.exit.i
   %.sroa.544.2 = phi i8 [ %.sroa.544.3, %__cmsg_nxthdr.exit.i ], [ 0, %.lr.ph.i.preheader ] ; 7 uses
-  %.sroa.847.2 = phi i1 [ %.sroa.847.3, %__cmsg_nxthdr.exit.i ], [ false, %.lr.ph.i.preheader ] ; 8 uses
+  %.sroa.847.2 = phi i1 [ %.sroa.847.3, %__cmsg_nxthdr.exit.i ], [ false, %.lr.ph.i.preheader ] ; 7 uses
   %.sroa.043.2 = phi i32 [ %.sroa.043.3, %__cmsg_nxthdr.exit.i ], [ -1, %.lr.ph.i.preheader ] ; 7 uses
   %.sroa.1249.2 = phi i8 [ %.sroa.1249.3, %__cmsg_nxthdr.exit.i ], [ 0, %.lr.ph.i.preheader ] ; 7 uses
-  %11 = phi i1 [ %12, %__cmsg_nxthdr.exit.i ], [ false, %.lr.ph.i.preheader ] ; 8 uses
   %.024.i = phi ptr [ %i.dm, %__cmsg_nxthdr.exit.i ], [ %i.ce, %.lr.ph.i.preheader ] ; 12 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.024.i, i64 8
   %i.ci = load i32, ptr %i.ch, align 8, !tbaa !43
@@ -711,8 +708,6 @@ bb.w:                                             ; preds = %bb.v, %bb.v
   %.sroa.544.8.copyload = load i8, ptr %i.cr, align 8
   %.sroa.8.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.024.i, i64 17
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.8, ptr noundef nonnull align 1 dereferenceable(47) %.sroa.8.8..sroa_idx, i64 47, i1 false)
-  %not. = xor i1 %11, true
-  %spec.select51 = select i1 %not., i1 true, i1 %.sroa.847.2
   br label %.thread.i
 
 bb.x:                                             ; preds = %.lr.ph.i
@@ -734,10 +729,9 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 .thread.i:                                        ; preds = %bb.w, %bb.z, %bb.y, %bb.x, %bb.v, %bb.u, %bb.t, %.lr.ph.i
   %.sroa.544.3 = phi i8 [ %.sroa.544.2, %.lr.ph.i ], [ %.sroa.544.2, %bb.u ], [ %.sroa.544.2, %bb.t ], [ %.sroa.544.2, %bb.v ], [ %.sroa.544.8.copyload, %bb.w ], [ %.sroa.544.2, %bb.y ], [ %.sroa.544.2, %bb.z ], [ %.sroa.544.2, %bb.x ] ; 3 uses
-  %.sroa.847.3 = phi i1 [ %.sroa.847.2, %.lr.ph.i ], [ %.sroa.847.2, %bb.u ], [ %.sroa.847.2, %bb.t ], [ %.sroa.847.2, %bb.v ], [ %spec.select51, %bb.w ], [ %.sroa.847.2, %bb.y ], [ %.sroa.847.2, %bb.z ], [ %.sroa.847.2, %bb.x ] ; 3 uses
+  %.sroa.847.3 = phi i1 [ %.sroa.847.2, %.lr.ph.i ], [ %.sroa.847.2, %bb.u ], [ %.sroa.847.2, %bb.t ], [ %.sroa.847.2, %bb.v ], [ true, %bb.w ], [ %.sroa.847.2, %bb.y ], [ %.sroa.847.2, %bb.z ], [ %.sroa.847.2, %bb.x ] ; 3 uses
   %.sroa.043.3 = phi i32 [ %.sroa.043.2, %.lr.ph.i ], [ %i.co, %bb.u ], [ %.sroa.043.2, %bb.t ], [ %.sroa.043.2, %bb.v ], [ %.sroa.043.2, %bb.w ], [ %.sroa.043.2, %bb.y ], [ %.sroa.043.2, %bb.z ], [ %.sroa.043.2, %bb.x ] ; 3 uses
   %.sroa.1249.3 = phi i8 [ %.sroa.1249.2, %.lr.ph.i ], [ %.sroa.1249.2, %bb.u ], [ %.sroa.1249.2, %bb.t ], [ %.sroa.1249.2, %bb.v ], [ %.sroa.1249.2, %bb.w ], [ %.sroa.1249.2, %bb.y ], [ %i.cz, %bb.z ], [ %.sroa.1249.2, %bb.x ] ; 3 uses
-  %12 = phi i1 [ %11, %.lr.ph.i ], [ %11, %bb.u ], [ %11, %bb.t ], [ %11, %bb.v ], [ true, %bb.w ], [ %11, %bb.y ], [ %11, %bb.z ], [ %11, %bb.x ]
   %i.da = load i64, ptr %.024.i, align 8, !tbaa !7421 ; 4 uses
   %i.db = icmp ult i64 %i.da, 16
   br i1 %i.db, label %_ZN5folly14AsyncUDPSocket7fromMsgERNS0_12ReadCallback21OnDataAvailableParamsER6msghdr.exit, label %bb.aa

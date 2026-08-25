@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %bb.c
   br label %.lr.ph84.i32.i
 
 .lr.ph84.i32.i:                                   ; preds = %.loopexit.i44.i, %.lr.ph84.i32.preheader.i
+  %5 = phi i32 [ %i.jx, %.loopexit.i44.i ], [ %.promoted.i.i, %.lr.ph84.i32.preheader.i ]
   %.16083.i.i = phi i64 [ %i.jw, %.loopexit.i44.i ], [ %.05998.i.i, %.lr.ph84.i32.preheader.i ]
   %.16482.i.i = phi ptr [ %.265.i45.i, %.loopexit.i44.i ], [ %.06395.i13.i, %.lr.ph84.i32.preheader.i ] ; 5 uses
-  %5 = phi i32 [ %i.jx, %.loopexit.i44.i ], [ %.promoted.i.i, %.lr.ph84.i32.preheader.i ]
   %.not71.i33.i = icmp eq ptr %.16482.i.i, null
   br i1 %.not71.i33.i, label %.preheader.i46.i, label %.preheader73.i35.i
 
@@ -610,10 +610,10 @@ bb.af:                                            ; preds = %bb.v
   br label %.lr.ph84.i32.i64
 
 .lr.ph84.i32.i64:                                 ; preds = %.loopexit.i44.i74, %.lr.ph84.i32.preheader.i61
-  %.16083.i.i65 = phi i64 [ %i.zf, %.loopexit.i44.i74 ], [ %.05998.i.i22, %.lr.ph84.i32.preheader.i61 ]
-  %.16482.i.i66 = phi ptr [ %.265.i45.i75, %.loopexit.i44.i74 ], [ %.06395.i13.i24, %.lr.ph84.i32.preheader.i61 ] ; 5 uses
   %6 = phi i32 [ %i.zg, %.loopexit.i44.i74 ], [ %.promoted.i.i20, %.lr.ph84.i32.preheader.i61 ]
-  %.not71.i33.i67 = icmp eq ptr %.16482.i.i66, null
+  %.16083.i.i63 = phi i64 [ %i.zf, %.loopexit.i44.i74 ], [ %.05998.i.i22, %.lr.ph84.i32.preheader.i61 ]
+  %.16482.i.i64 = phi ptr [ %.265.i45.i75, %.loopexit.i44.i74 ], [ %.06395.i13.i24, %.lr.ph84.i32.preheader.i61 ] ; 5 uses
+  %.not71.i33.i67 = icmp eq ptr %.16482.i.i64, null
   br i1 %.not71.i33.i67, label %.preheader.i46.i77, label %.preheader73.i35.i68
 
 .preheader73.i35.i68:                             ; preds = %.lr.ph84.i32.i64
@@ -637,7 +637,7 @@ bb.af:                                            ; preds = %bb.v
   %i.xl = load ptr, ptr %i.wt, align 8, !tbaa !9
   %i.xm = getelementptr inbounds nuw [4 x i8], ptr %i.xl, i64 %indvars.iv.i39.i70
   store float %i.xk, ptr %i.xm, align 4, !tbaa !336
-  %i.xn = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i66, i64 %indvars.iv.i39.i70
+  %i.xn = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i64, i64 %indvars.iv.i39.i70
   %i.xo = load float, ptr %i.xn, align 4, !tbaa !336
   %i.xp = load ptr, ptr %i.ws, align 8, !tbaa !9
   %i.xq = getelementptr inbounds nuw [4 x i8], ptr %i.xp, i64 %indvars.iv.i39.i70
@@ -649,7 +649,7 @@ bb.af:                                            ; preds = %bb.v
   %i.xu = load ptr, ptr %i.wt, align 8, !tbaa !9
   %i.xv = getelementptr inbounds nuw [4 x i8], ptr %i.xu, i64 %indvars.iv.next.i40.i71
   store float %i.xt, ptr %i.xv, align 4, !tbaa !336
-  %i.xw = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i66, i64 %indvars.iv.next.i40.i71
+  %i.xw = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i64, i64 %indvars.iv.next.i40.i71
   %i.xx = load float, ptr %i.xw, align 4, !tbaa !336
   %i.xy = load ptr, ptr %i.ws, align 8, !tbaa !9
   %i.xz = getelementptr inbounds nuw [4 x i8], ptr %i.xy, i64 %indvars.iv.next.i40.i71
@@ -671,7 +671,7 @@ bb.af:                                            ; preds = %bb.v
   %i.yd = load ptr, ptr %i.wt, align 8, !tbaa !9
   %i.ye = getelementptr inbounds nuw [4 x i8], ptr %i.yd, i64 %indvars.iv.i39.i70.epil.init
   store float %i.yc, ptr %i.ye, align 4, !tbaa !336
-  %i.yf = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i66, i64 %indvars.iv.i39.i70.epil.init
+  %i.yf = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i64, i64 %indvars.iv.i39.i70.epil.init
   %i.yg = load float, ptr %i.yf, align 4, !tbaa !336
   %i.yh = load ptr, ptr %i.ws, align 8, !tbaa !9
   %i.yi = getelementptr inbounds nuw [4 x i8], ptr %i.yh, i64 %indvars.iv.i39.i70.epil.init
@@ -679,7 +679,7 @@ bb.af:                                            ; preds = %bb.v
   br label %._crit_edge.i42.i73
 
 ._crit_edge.i42.i73:                              ; preds = %.lr.ph.i38.i69.epil.preheader, %._crit_edge.i42.i73.loopexit.unr-lcssa, %.preheader73.i35.i68
-  %i.yj = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i66, i64 %wide.trip.count.i37.i63
+  %i.yj = getelementptr inbounds nuw [4 x i8], ptr %.16482.i.i64, i64 %wide.trip.count.i37.i63
   br label %.loopexit.i44.i74
 
 .lr.ph81.i.i78:                                   ; preds = %.lr.ph81.i.i78.preheader, %.lr.ph81.i.i78
@@ -728,7 +728,7 @@ bb.af:                                            ; preds = %bb.v
 
 .loopexit.i44.i74:                                ; preds = %.lr.ph81.i.i78.epil.preheader, %.loopexit.i44.i74.loopexit.unr-lcssa, %._crit_edge.i42.i73, %.preheader.i46.i77
   %.265.i45.i75 = phi ptr [ %i.yj, %._crit_edge.i42.i73 ], [ null, %.preheader.i46.i77 ], [ null, %.loopexit.i44.i74.loopexit.unr-lcssa ], [ null, %.lr.ph81.i.i78.epil.preheader ] ; 2 uses
-  %i.zf = add nuw i64 %.16083.i.i65, 1            ; 4 uses
+  %i.zf = add nuw i64 %.16083.i.i63, 1            ; 4 uses
   %i.zg = add i32 %6, -1                          ; 3 uses
   %i.zh = icmp ne i32 %i.zg, 0                    ; 2 uses
   %i.zi = icmp ugt i64 %i.pl, %i.zf
@@ -1131,9 +1131,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph283, %.backedge
   %.promoted307 = phi i32 [ %.pre, %.lr.ph283 ], [ %.promoted308, %.backedge ] ; 2 uses
-  %.0191281 = phi i64 [ 0, %.lr.ph283 ], [ %.1192272300, %.backedge ] ; 8 uses
+  %.0191281 = phi i64 [ 0, %.lr.ph283 ], [ %.1192272, %.backedge ] ; 7 uses
   %.0194280 = phi ptr [ %2, %.lr.ph283 ], [ %.1195271, %.backedge ]
-  %.0197279 = phi i64 [ %1, %.lr.ph283 ], [ %.1198270294, %.backedge ] ; 4 uses
+  %.0197279 = phi i64 [ %1, %.lr.ph283 ], [ %.1198270, %.backedge ] ; 3 uses
   %i.aj = icmp eq i32 %.promoted307, 0
   br i1 %i.aj, label %bb.c, label %bb.j
 
@@ -1238,21 +1238,15 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ca, label %bb.j, label %.loopexit
 
 bb.j:                                             ; preds = %bb.f, %bb.i, %bb.c, %bb.b
-  %.promoted = phi i32 [ 2, %bb.f ], [ 2, %bb.i ], [ 0, %bb.c ], [ %.promoted307, %bb.b ] ; 2 uses
+  %.promoted = phi i32 [ 2, %bb.f ], [ 2, %bb.i ], [ 0, %bb.c ], [ %.promoted307, %bb.b ]
   %cond234269 = icmp eq i64 %.0197279, 0
-  br i1 %cond234269, label %.loopexit, label %.lr.ph274
+  br i1 %cond234269, label %.loopexit, label %bb.k
 
-.lr.ph274:                                        ; preds = %bb.j
-  %3 = zext i32 %.promoted to i64                 ; 2 uses
-  %4 = add i64 %.0191281, %3                      ; 3 uses
-  %5 = sub i64 %.0197279, %3                      ; 2 uses
-  br label %bb.k
-
-bb.k:                                             ; preds = %.lr.ph274, %._crit_edge
-  %.promoted309 = phi i32 [ %.promoted, %.lr.ph274 ], [ %i.cu, %._crit_edge ] ; 4 uses
-  %.1192272 = phi i64 [ %.0191281, %.lr.ph274 ], [ %i.cs, %._crit_edge ] ; 2 uses
-  %.1195271 = phi ptr [ %.0194280, %.lr.ph274 ], [ %i.cq, %._crit_edge ] ; 3 uses
-  %.1198270 = phi i64 [ %.0197279, %.lr.ph274 ], [ %i.cr, %._crit_edge ] ; 2 uses
+bb.k:                                             ; preds = %bb.j, %._crit_edge
+  %.promoted309 = phi i32 [ %i.cu, %._crit_edge ], [ %.promoted, %bb.j ] ; 4 uses
+  %.1192272 = phi i64 [ %i.cs, %._crit_edge ], [ %.0191281, %bb.j ] ; 4 uses
+  %.1195271 = phi ptr [ %i.cq, %._crit_edge ], [ %.0194280, %bb.j ] ; 3 uses
+  %.1198270 = phi i64 [ %i.cr, %._crit_edge ], [ %.0197279, %bb.j ] ; 2 uses
   %.not219 = icmp eq i32 %.promoted309, 0
   br i1 %.not219, label %bb.m, label %bb.l
 
@@ -1486,8 +1480,6 @@ bb.t:                                             ; preds = %.thread240, %bb.s
 
 .backedge:                                        ; preds = %bb.l, %bb.t, %bb.m
   %.promoted308 = phi i32 [ 0, %bb.m ], [ %storemerge, %bb.t ], [ %.promoted309, %bb.l ]
-  %.1192272300 = phi i64 [ %4, %bb.m ], [ %4, %bb.t ], [ %.1192272, %bb.l ] ; 2 uses
-  %.1198270294 = phi i64 [ %5, %bb.m ], [ %5, %bb.t ], [ %.1198270, %bb.l ]
   %i.hp = load i64, ptr %i.d, align 8, !tbaa !1698
   %i.hq = load i64, ptr %i.e, align 8, !tbaa !1697
   %i.hr = icmp ult i64 %i.hp, %i.hq
@@ -1498,7 +1490,7 @@ bb.t:                                             ; preds = %.thread240, %bb.s
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.i, %bb.f, %.backedge, %bb.j, %.loopexit.loopexit, %bb.a, %.thread247, %.thread237, %.thread
-  %.9 = phi i64 [ 0, %bb.a ], [ %4, %.thread247 ], [ %.0191281, %.thread ], [ %.0191281, %.thread237 ], [ %i.hs, %.loopexit.loopexit ], [ %.0191281, %bb.j ], [ %.0191281, %bb.f ], [ %.0191281, %bb.i ], [ %.1192272300, %.backedge ]
+  %.9 = phi i64 [ 0, %bb.a ], [ %.1192272, %.thread247 ], [ %.0191281, %.thread ], [ %.0191281, %.thread237 ], [ %i.hs, %.loopexit.loopexit ], [ %.0191281, %bb.j ], [ %.0191281, %bb.f ], [ %.0191281, %bb.i ], [ %.1192272, %.backedge ]
   ret i64 %.9
 }
 
@@ -1535,9 +1527,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph293, %.backedge
-  %.0186291 = phi i64 [ 0, %.lr.ph293 ], [ %.1187279308, %.backedge ] ; 6 uses
+  %.0186291 = phi i64 [ 0, %.lr.ph293 ], [ %.1187279, %.backedge ] ; 5 uses
   %.0189290 = phi ptr [ %2, %.lr.ph293 ], [ %.1190278, %.backedge ]
-  %.0192289 = phi i64 [ %1, %.lr.ph293 ], [ %.1193277302, %.backedge ] ; 4 uses
+  %.0192289 = phi i64 [ %1, %.lr.ph293 ], [ %.1193277, %.backedge ] ; 3 uses
   %i.y = load i32, ptr %i.j, align 8, !tbaa !2710 ; 2 uses
   %i.z = icmp eq i32 %i.y, 0
   br i1 %i.z, label %bb.c, label %bb.m
@@ -1642,21 +1634,15 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.h, %bb.c, %bb.b
-  %.promoted = phi i32 [ 1, %bb.l ], [ 1, %bb.h ], [ 0, %bb.c ], [ %i.y, %bb.b ] ; 2 uses
+  %.promoted = phi i32 [ 1, %bb.l ], [ 1, %bb.h ], [ 0, %bb.c ], [ %i.y, %bb.b ]
   %cond276 = icmp eq i64 %.0192289, 0
-  br i1 %cond276, label %.loopexit, label %.lr.ph281
+  br i1 %cond276, label %.loopexit, label %bb.n
 
-.lr.ph281:                                        ; preds = %bb.m
-  %3 = zext i32 %.promoted to i64                 ; 2 uses
-  %4 = add i64 %.0186291, %3                      ; 4 uses
-  %5 = sub i64 %.0192289, %3                      ; 3 uses
-  br label %bb.n
-
-bb.n:                                             ; preds = %.lr.ph281, %._crit_edge
-  %i.bn = phi i32 [ %.promoted, %.lr.ph281 ], [ %i.ch, %._crit_edge ] ; 3 uses
-  %.1187279 = phi i64 [ %.0186291, %.lr.ph281 ], [ %i.cf, %._crit_edge ] ; 2 uses
-  %.1190278 = phi ptr [ %.0189290, %.lr.ph281 ], [ %i.cd, %._crit_edge ] ; 3 uses
-  %.1193277 = phi i64 [ %.0192289, %.lr.ph281 ], [ %i.ce, %._crit_edge ] ; 2 uses
+bb.n:                                             ; preds = %bb.m, %._crit_edge
+  %i.bn = phi i32 [ %i.ch, %._crit_edge ], [ %.promoted, %bb.m ] ; 3 uses
+  %.1187279 = phi i64 [ %i.cf, %._crit_edge ], [ %.0186291, %bb.m ] ; 4 uses
+  %.1190278 = phi ptr [ %i.cd, %._crit_edge ], [ %.0189290, %bb.m ] ; 3 uses
+  %.1193277 = phi i64 [ %i.ce, %._crit_edge ], [ %.0192289, %bb.m ] ; 2 uses
   %.not212 = icmp eq i32 %i.bn, 0
   br i1 %.not212, label %bb.p, label %bb.o
 
@@ -1848,8 +1834,6 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.fn, label %.lr.ph288, label %.backedge, !llvm.loop !2715
 
 .backedge:                                        ; preds = %bb.o, %bb.t, %bb.q, %bb.p
-  %.1187279308 = phi i64 [ %4, %bb.t ], [ %4, %bb.p ], [ %4, %bb.q ], [ %.1187279, %bb.o ] ; 2 uses
-  %.1193277302 = phi i64 [ %5, %bb.t ], [ %5, %bb.p ], [ %5, %bb.q ], [ %.1193277, %bb.o ]
   %i.fo = load i64, ptr %i.d, align 8, !tbaa !1698
   %i.fp = load i64, ptr %i.e, align 8, !tbaa !1697
   %i.fq = icmp ult i64 %i.fo, %i.fp
@@ -1860,7 +1844,7 @@ bb.t:                                             ; preds = %bb.s
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.backedge, %bb.m, %.loopexit.loopexit, %bb.a, %.thread231, %.thread228, %.thread
-  %.7201 = phi i64 [ %.0186291, %.thread228 ], [ %4, %.thread231 ], [ %.0186291, %.thread ], [ 0, %bb.a ], [ %i.fr, %.loopexit.loopexit ], [ %.0186291, %bb.m ], [ %.1187279308, %.backedge ]
+  %.7201 = phi i64 [ %.0186291, %.thread228 ], [ %.1187279, %.thread231 ], [ %.0186291, %.thread ], [ 0, %bb.a ], [ %i.fr, %.loopexit.loopexit ], [ %.0186291, %bb.m ], [ %.1187279, %.backedge ]
   ret i64 %.7201
 }
 

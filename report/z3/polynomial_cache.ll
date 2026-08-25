@@ -205,11 +205,9 @@ bb.g:                                             ; preds = %.thread59, %_ZNK6ve
 
 .preheader.i27:                                   ; preds = %bb.g
   %i.el = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  %.promoted.i = load i32, ptr %i.el, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.thread.i, %.preheader.i27
-  %4 = phi i32 [ %i.ew, %_ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.thread.i ], [ %.promoted.i, %.preheader.i27 ]
   %.0.i28 = phi ptr [ %i.ex, %_ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.thread.i ], [ %i.eg, %.preheader.i27 ] ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %.0.i28, i64 8
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !76 ; 3 uses
@@ -230,7 +228,8 @@ _ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE6e
   br i1 %i.ev, label %_ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE8containsERKS2_.exit, label %_ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.thread.i
 
 _ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.thread.i: ; preds = %_ZNK10chashtableIPN10polynomial15psc_chain_entryENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i, %bb.i, %bb.h
-  %i.ew = add i32 %4, 1                           ; 2 uses
+  %4 = load i32, ptr %i.el, align 8, !tbaa !81
+  %i.ew = add i32 %4, 1
   store i32 %i.ew, ptr %i.el, align 8, !tbaa !81
   %i.ex = load ptr, ptr %.0.i28, align 8, !tbaa !32 ; 2 uses
   %.not.i29 = icmp eq ptr %i.ex, null

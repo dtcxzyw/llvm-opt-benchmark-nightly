@@ -205,11 +205,9 @@ _ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3d
 
 .lr.ph.preheader:                                 ; preds = %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_.exit
   %i.hh = zext nneg i32 %.01855 to i64
-  %.promoted106 = load i64, ptr %1, align 8
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE4swapERSG_.exit
-  %3 = phi i64 [ %.promoted106, %.lr.ph.preheader ], [ %i.ja, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE4swapERSG_.exit ] ; 2 uses
   %.promoted = phi i64 [ %i.hg, %.lr.ph.preheader ], [ %i.ja, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE4swapERSG_.exit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE4swapERSG_.exit ] ; 3 uses
   %i.hi = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %indvars.iv ; 8 uses
@@ -261,7 +259,6 @@ _ZN5boost9intrusive24circular_list_algorithmsINS0_16list_node_traitsIPvEEE8trans
   br label %.critedge.i.us.outer
 
 .critedge.i:                                      ; preds = %.critedge.preheader.i, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i
-  %4 = phi i64 [ %5, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %3, %.critedge.preheader.i ]
   %i.hv = phi i64 [ %i.ih, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %.promoted, %.critedge.preheader.i ] ; 2 uses
   %.pre42.i = phi ptr [ %.pre43.i, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %i.hn, %.critedge.preheader.i ] ; 2 uses
   %i.hw = phi ptr [ %i.ii, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ], [ %i.hn, %.critedge.preheader.i ] ; 6 uses
@@ -305,12 +302,11 @@ _ZN5boost9intrusive24circular_list_algorithmsINS0_16list_node_traitsIPvEEE8trans
   %i.ie = load i64, ptr %i.hi, align 8, !tbaa !19
   %i.if = add i64 %i.ie, %i.hy
   store i64 %i.if, ptr %i.hi, align 8, !tbaa !19
-  %i.ig = sub i64 %i.hv, %i.hy                    ; 3 uses
+  %i.ig = sub i64 %i.hv, %i.hy                    ; 2 uses
   store i64 %i.ig, ptr %1, align 8, !tbaa !19
   br label %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i
 
 _ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i: ; preds = %_ZN5boost9intrusive24circular_list_algorithmsINS0_16list_node_traitsIPvEEE8transferEPNS0_9list_nodeIS3_EES8_S8_.exit.i16.i, %.critedge2.i
-  %5 = phi i64 [ %i.ig, %_ZN5boost9intrusive24circular_list_algorithmsINS0_16list_node_traitsIPvEEE8transferEPNS0_9list_nodeIS3_EES8_S8_.exit.i16.i ], [ %4, %.critedge2.i ] ; 2 uses
   %i.ih = phi i64 [ %i.ig, %_ZN5boost9intrusive24circular_list_algorithmsINS0_16list_node_traitsIPvEEE8transferEPNS0_9list_nodeIS3_EES8_S8_.exit.i16.i ], [ %i.hv, %.critedge2.i ]
   %.pre43.i = phi ptr [ %.pre.i, %_ZN5boost9intrusive24circular_list_algorithmsINS0_16list_node_traitsIPvEEE8transferEPNS0_9list_nodeIS3_EES8_S8_.exit.i16.i ], [ %.pre42.i, %.critedge2.i ] ; 2 uses
   %i.ii = phi ptr [ %.pre.i, %_ZN5boost9intrusive24circular_list_algorithmsINS0_16list_node_traitsIPvEEE8transferEPNS0_9list_nodeIS3_EES8_S8_.exit.i16.i ], [ %i.hw, %.critedge2.i ] ; 3 uses
@@ -320,7 +316,6 @@ _ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3d
   br i1 %i.ik, label %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_.exit, label %.critedge.i
 
 _ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_.exit: ; preds = %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i, %bb.e
-  %6 = phi i64 [ %3, %bb.e ], [ %5, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ]
   %i.il = phi ptr [ %i.hn, %bb.e ], [ %.pre43.i, %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE6spliceENS0_13list_iteratorISF_Lb1EEERSG_SI_SI_m.exit.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.im = icmp eq ptr %i.hi, %1
@@ -385,9 +380,10 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE4swapERSG_.exit
 
 _ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE4swapERSG_.exit: ; preds = %_ZN5boost9intrusive9list_implINS0_8bhtraitsINS_9container9base_nodeI5emptyNS3_3dtl9list_hookIPvEELb0EEENS0_16list_node_traitsIS8_EELNS0_14link_mode_typeE0ENS0_7dft_tagELj1EEEmLb1EvE5mergeINS3_21value_to_node_compareISA_NS0_10value_lessIS5_EEbEEEEvRSG_T_.exit, %bb.p, %bb.q
-  %i.ja = load i64, ptr %i.hi, align 8, !tbaa !19 ; 3 uses
+  %3 = load i64, ptr %1, align 8, !tbaa !19
+  %i.ja = load i64, ptr %i.hi, align 8, !tbaa !19 ; 2 uses
   store i64 %i.ja, ptr %1, align 8, !tbaa !19
-  store i64 %6, ptr %i.hi, align 8, !tbaa !19
+  store i64 %3, ptr %i.hi, align 8, !tbaa !19
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.hh
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !379
 

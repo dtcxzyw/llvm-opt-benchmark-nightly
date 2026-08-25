@@ -76,7 +76,7 @@ bb.a:
 
 .lr.ph44.split:                                   ; preds = %.lr.ph44.split.preheader, %._crit_edge40
   %i.k = phi i64 [ %i.an, %._crit_edge40 ], [ %i.a, %.lr.ph44.split.preheader ] ; 3 uses
-  %i.l = phi ptr [ %i.ao, %._crit_edge40 ], [ %i.h, %.lr.ph44.split.preheader ] ; 5 uses
+  %i.l = phi ptr [ %i.ao, %._crit_edge40 ], [ %i.h, %.lr.ph44.split.preheader ] ; 4 uses
   %.02942 = phi i64 [ %i.aq, %._crit_edge40 ], [ 1, %.lr.ph44.split.preheader ] ; 4 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.02942
   %i.n = load i64, ptr %i.m, align 8, !tbaa !8    ; 2 uses
@@ -90,10 +90,9 @@ bb.a:
 .lr.ph39:                                         ; preds = %.lr.ph44.split, %bb.e
   %i.r = phi i64 [ %i.aj, %bb.e ], [ %i.k, %.lr.ph44.split ] ; 2 uses
   %i.s = phi i64 [ %i.ak, %bb.e ], [ %i.k, %.lr.ph44.split ] ; 2 uses
-  %i.t = phi ptr [ %i.al, %bb.e ], [ %i.l, %.lr.ph44.split ] ; 2 uses
+  %i.t = phi ptr [ %i.al, %bb.e ], [ %i.l, %.lr.ph44.split ] ; 3 uses
   %.02737 = phi i64 [ %.1, %bb.e ], [ 0, %.lr.ph44.split ] ; 4 uses
   %.02836 = phi i64 [ %i.am, %bb.e ], [ 1, %.lr.ph44.split ] ; 5 uses
-  %0 = phi ptr [ %1, %bb.e ], [ %i.l, %.lr.ph44.split ] ; 3 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.02836
   %i.v = load i64, ptr %i.u, align 8, !tbaa !8    ; 2 uses
   %i.w = icmp ult i64 %i.v, %i.n
@@ -118,7 +117,7 @@ bb.d:                                             ; preds = %bb.c
 ._crit_edge:                                      ; preds = %bb.c, %bb.d
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.02737
   store i64 %.02836, ptr %i.ae, align 8, !tbaa !8
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 2 uses
   store ptr %i.af, ptr @storageHCG, align 8, !tbaa !13
   %i.ag = load i64, ptr @storageLimitHCG, align 8, !tbaa !8
   %i.ah = add i64 %i.ag, -1
@@ -131,7 +130,6 @@ bb.e:                                             ; preds = %._crit_edge, %bb.d,
   %i.aj = phi i64 [ %i.r, %bb.b ], [ %i.r, %bb.d ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.ak = phi i64 [ %i.s, %bb.b ], [ %i.s, %bb.d ], [ %.pre, %._crit_edge ] ; 2 uses
   %i.al = phi ptr [ %i.t, %bb.b ], [ %i.t, %bb.d ], [ %i.af, %._crit_edge ] ; 2 uses
-  %1 = phi ptr [ %0, %bb.b ], [ %0, %bb.d ], [ %i.af, %._crit_edge ]
   %.1 = phi i64 [ %.02737, %bb.b ], [ %.02737, %bb.d ], [ %i.ai, %._crit_edge ] ; 2 uses
   %i.am = add i64 %.02836, 1                      ; 2 uses
   %.not32 = icmp ugt i64 %i.am, %i.ak

@@ -205,7 +205,7 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !120  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !108  ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 3 uses
   store i32 0, ptr %i.g, align 8, !tbaa !175
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 332 ; 3 uses
   store i32 0, ptr %i.h, align 4, !tbaa !176
@@ -229,6 +229,7 @@ bb.a:
   br label %.preheader60
 
 .preheader60:                                     ; preds = %..preheader60_crit_edge, %bb.a
+  %.promoted82 = phi i64 [ %indvars.iv.next, %..preheader60_crit_edge ], [ 0, %bb.a ]
   %.042.lcssa = phi ptr [ %i.ac, %..preheader60_crit_edge ], [ %i.d, %bb.a ] ; 2 uses
   %.0.lcssa = phi float [ %.1, %..preheader60_crit_edge ], [ f0x7F7FFFFF, %bb.a ] ; 2 uses
   %.lcssa = phi i32 [ %i.ae, %..preheader60_crit_edge ], [ %i.m, %bb.a ] ; 2 uses
@@ -246,7 +247,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.e
   %.04261 = phi ptr [ %i.d, %.lr.ph ], [ %i.ac, %bb.e ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.04261, i64 40
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !171  ; 4 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv
   store ptr %i.v, ptr %i.w, align 8, !tbaa !119
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 4
@@ -290,8 +291,6 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !118
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !118
-  %.promoted82 = load i32, ptr %i.g, align 8, !tbaa !175
-  %1 = sext i32 %.promoted82 to i64
   br label %bb.j
 
 bb.f:                                             ; preds = %.lr.ph69, %bb.i
@@ -329,7 +328,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %i.aw, label %bb.f, label %..preheader_crit_edge, !llvm.loop !258
 
 bb.j:                                             ; preds = %.lr.ph80, %bb.p
-  %indvars.iv99 = phi i64 [ %1, %.lr.ph80 ], [ %indvars.iv.next100, %bb.p ] ; 2 uses
+  %indvars.iv99 = phi i64 [ %.promoted82, %.lr.ph80 ], [ %indvars.iv.next100, %bb.p ] ; 2 uses
   %indvars.iv97 = phi i64 [ %.promoted84, %.lr.ph80 ], [ %indvars.iv.next98, %bb.p ] ; 2 uses
   %.479 = phi float [ %.2.lcssa, %.lr.ph80 ], [ %.6, %bb.p ] ; 3 uses
   %.14178 = phi ptr [ %.040.lcssa, %.lr.ph80 ], [ %i.bo, %bb.p ] ; 2 uses

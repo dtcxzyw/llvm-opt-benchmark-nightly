@@ -204,15 +204,11 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   %.177.i = phi i32 [ %i.p, %bb.g ], [ %.076111.i, %bb.d ]
   %.075.i = phi ptr [ %i.u, %bb.g ], [ %i.m, %bb.d ] ; 4 uses
   %.072.i = phi i64 [ %i.v, %bb.g ], [ %i.n, %bb.d ] ; 3 uses
-  %.promoted.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_clar, i64 72), align 8
-  %.promoted107.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_clar, i64 80), align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread.i, %bb.h
   %.073109.i = phi i64 [ 0, %bb.h ], [ %i.aq, %.thread.i ] ; 3 uses
   %.074108.i = phi i32 [ 0, %bb.h ], [ %.2.i, %.thread.i ] ; 4 uses
-  %2 = phi ptr [ %.promoted.i, %bb.h ], [ %8, %.thread.i ] ; 8 uses
-  %3 = phi ptr [ %.promoted107.i, %bb.h ], [ %7, %.thread.i ] ; 8 uses
   %i.w = getelementptr inbounds nuw [64 x i8], ptr @_clar_suites, i64 %.073109.i ; 4 uses
   %i.x = load ptr, ptr %i.w, align 16, !tbaa !23  ; 2 uses
   %i.y = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.x) #27 ; 4 uses
@@ -247,7 +243,7 @@ bb.m:                                             ; preds = %bb.l, %bb.j
   ]
 
 bb.n:                                             ; preds = %bb.m
-  %i.ai = tail call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 1, i64 noundef 24) #28 ; 8 uses
+  %i.ai = tail call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 1, i64 noundef 24) #28 ; 6 uses
   %i.aj = icmp eq ptr %i.ai, null
   br i1 %i.aj, label %bb.o, label %bb.p
 
@@ -259,6 +255,7 @@ bb.p:                                             ; preds = %bb.n
   store i64 %.073109.i, ptr %i.ai, align 8, !tbaa !27
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
   store ptr %.075.i, ptr %i.ak, align 8, !tbaa !29
+  %2 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_clar, i64 72), align 8, !tbaa !30
   %i.al = icmp eq ptr %2, null
   br i1 %i.al, label %bb.q, label %bb.r
 
@@ -267,39 +264,35 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %4 = phi ptr [ %i.ai, %bb.q ], [ %2, %bb.p ]
+  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_clar, i64 80), align 8, !tbaa !31 ; 2 uses
   %.not92.i = icmp eq ptr %3, null
   br i1 %.not92.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store ptr %i.ai, ptr %i.am, align 8, !tbaa !31
+  store ptr %i.ai, ptr %i.am, align 8, !tbaa !32
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
   %i.an = getelementptr inbounds nuw i8, ptr %i.w, i64 56
-  store i32 1, ptr %i.an, align 8, !tbaa !32
-  store ptr %i.ai, ptr getelementptr inbounds nuw (i8, ptr @_clar, i64 80), align 8, !tbaa !33
+  store i32 1, ptr %i.an, align 8, !tbaa !33
+  store ptr %i.ai, ptr getelementptr inbounds nuw (i8, ptr @_clar, i64 80), align 8, !tbaa !31
   br label %bb.w
 
 bb.u:                                             ; preds = %bb.m
   %i.ao = getelementptr inbounds nuw i8, ptr %i.w, i64 56
-  store i32 1, ptr %i.ao, align 8, !tbaa !32
+  store i32 1, ptr %i.ao, align 8, !tbaa !33
   br label %bb.w
 
 bb.v:                                             ; preds = %bb.m
   %i.ap = getelementptr inbounds nuw i8, ptr %i.w, i64 56
-  store i32 0, ptr %i.ap, align 8, !tbaa !32
+  store i32 0, ptr %i.ap, align 8, !tbaa !33
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t, %bb.m
-  %5 = phi ptr [ %3, %bb.v ], [ %3, %bb.u ], [ %i.ai, %bb.t ], [ %3, %bb.m ]
-  %6 = phi ptr [ %2, %bb.v ], [ %2, %bb.u ], [ %4, %bb.t ], [ %2, %bb.m ]
   br i1 %.not89.i, label %.thread.i, label %bb.x
 
 .thread.i:                                        ; preds = %bb.w, %bb.l, %bb.k, %bb.i
-  %7 = phi ptr [ %3, %bb.i ], [ %3, %bb.k ], [ %3, %bb.l ], [ %5, %bb.w ]
-  %8 = phi ptr [ %2, %bb.i ], [ %2, %bb.k ], [ %2, %bb.l ], [ %6, %bb.w ]
   %.2.i = phi i32 [ %.074108.i, %bb.i ], [ %.074108.i, %bb.k ], [ %.074108.i, %bb.l ], [ %i.ah, %bb.w ] ; 2 uses
   %i.aq = add nuw nsw i64 %.073109.i, 1           ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.aq, 27
@@ -702,7 +695,7 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !29
   tail call fastcc void @clar_run_suite(ptr noundef nonnull %i.c, ptr noundef %i.e)
   %i.f = getelementptr inbounds nuw i8, ptr %.011, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !31   ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !32   ; 2 uses
   %.not8 = icmp eq ptr %i.g, null
   br i1 %.not8, label %.loopexit, label %.preheader9, !llvm.loop !52
 
@@ -717,7 +710,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !54   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !32
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !33
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %.loopexit, label %bb.b
 
@@ -1120,7 +1113,7 @@ bb.v:                                             ; preds = %clar_summary_shutdo
 .lr.ph:                                           ; preds = %bb.v, %.lr.ph
   %.01522 = phi ptr [ %i.bz, %.lr.ph ], [ %i.bx, %bb.v ] ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.01522, i64 16
-  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !31 ; 2 uses
+  %i.bz = load ptr, ptr %i.by, align 8, !tbaa !32 ; 2 uses
   call void @free(ptr noundef nonnull %.01522) #30
   %.not16 = icmp eq ptr %i.bz, null
   br i1 %.not16, label %._crit_edge, label %.lr.ph, !llvm.loop !85
@@ -1523,9 +1516,9 @@ attributes #35 = { nounwind returns_twice }
 !28 = !{!"clar_explicit", !19, i64 0, !14, i64 8, !17, i64 16}
 !29 = !{!28, !14, i64 8}
 !30 = !{!13, !17, i64 72}
-!31 = !{!28, !17, i64 16}
-!32 = !{!24, !9, i64 56}
-!33 = !{!13, !17, i64 80}
+!31 = !{!13, !17, i64 80}
+!32 = !{!28, !17, i64 16}
+!33 = !{!24, !9, i64 56}
 !34 = distinct !{!34, !35}
 !35 = !{!"llvm.loop.mustprogress"}
 !36 = !{!13, !9, i64 48}

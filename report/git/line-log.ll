@@ -202,7 +202,7 @@ bb.ag:                                            ; preds = %range_set_append.ex
 
 .loopexit.i.i.i:                                  ; preds = %bb.ag, %range_set_append.exit37.i.i, %bb.s
   %.sroa.0.1.i.i = phi i32 [ %.sroa.0.0.i.i, %bb.s ], [ %.sroa.0.5.i.i, %range_set_append.exit37.i.i ], [ %.sroa.0.3.i.i, %bb.ag ]
-  %.sroa.8.1.i.i = phi i32 [ %.sroa.8.0.i.i, %bb.s ], [ %i.ea, %range_set_append.exit37.i.i ], [ %.sroa.8.3.i.i, %bb.ag ] ; 4 uses
+  %.sroa.8.1.i.i = phi i32 [ %.sroa.8.0.i.i, %bb.s ], [ %i.ea, %range_set_append.exit37.i.i ], [ %.sroa.8.3.i.i, %bb.ag ] ; 3 uses
   %.sroa.15.1.i.i = phi ptr [ %.sroa.15.0.i.i, %bb.s ], [ %.sroa.15.6.i.i, %range_set_append.exit37.i.i ], [ %.sroa.15.3.i.i, %bb.ag ] ; 4 uses
   %.3.i.i.i = phi i32 [ %.03964.i.i.i, %bb.s ], [ %.249.i.i.i, %range_set_append.exit37.i.i ], [ %i.di, %bb.ag ]
   %indvars.iv.next74.i.i.i = add nuw nsw i64 %indvars.iv73.i.i.i, 1 ; 2 uses
@@ -299,7 +299,7 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.al
   %i.fz = zext i32 %storemerge.i.i.i43111.i.i to i64
   %.not10.i.i40.i.i = icmp samesign ult i64 %indvars.iv14.i.i.i, %i.fz
-  %.pre.i = add nuw nsw i64 %indvars.iv14.i.i.i, 1 ; 3 uses
+  %.pre.i = add nuw nsw i64 %indvars.iv14.i.i.i, 1 ; 4 uses
   br i1 %.not10.i.i40.i.i, label %range_set_append.exit48.i.i, label %st_mult.exit.i.i.i41.i.i
 
 st_mult.exit.i.i.i41.i.i:                         ; preds = %bb.an
@@ -308,27 +308,25 @@ st_mult.exit.i.i.i41.i.i:                         ; preds = %bb.an
   %i.gc = lshr i32 %i.gb, 1
   %i.gd = zext nneg i32 %i.gc to i64
   %storemerge14.i.i.i42.i.i = call i64 @llvm.umax.i64(i64 %.pre.i, i64 %i.gd) ; 2 uses
-  %storemerge.i.i.i43.i.i = trunc i64 %storemerge14.i.i.i42.i.i to i32
+  %storemerge.i.i.i43.i.i = trunc i64 %storemerge14.i.i.i42.i.i to i32 ; 2 uses
+  store i32 %storemerge.i.i.i43.i.i, ptr %4, align 8, !tbaa !12
   %i.ge = shl nuw nsw i64 %storemerge14.i.i.i42.i.i, 4
   %i.gf = and i64 %i.ge, 68719476720
-  %i.gg = call ptr @xrealloc(ptr noundef %i.ez, i64 noundef %i.gf) #13
+  %i.gg = call ptr @xrealloc(ptr noundef %i.ez, i64 noundef %i.gf) #13 ; 2 uses
+  store ptr %i.gg, ptr %i.n, align 8, !tbaa !16
   br label %range_set_append.exit48.i.i
 
 range_set_append.exit48.i.i:                      ; preds = %st_mult.exit.i.i.i41.i.i, %bb.an
-  %i.gh = phi ptr [ %i.gg, %st_mult.exit.i.i.i41.i.i ], [ %i.ez, %bb.an ] ; 4 uses
-  %storemerge.i.i.i43110.i.i = phi i32 [ %storemerge.i.i.i43.i.i, %st_mult.exit.i.i.i41.i.i ], [ %storemerge.i.i.i43111.i.i, %bb.an ] ; 2 uses
+  %i.gh = phi ptr [ %i.gg, %st_mult.exit.i.i.i41.i.i ], [ %i.ez, %bb.an ] ; 3 uses
+  %storemerge.i.i.i43110.i.i = phi i32 [ %storemerge.i.i.i43.i.i, %st_mult.exit.i.i.i41.i.i ], [ %storemerge.i.i.i43111.i.i, %bb.an ]
   %i.gi = getelementptr inbounds nuw [16 x i8], ptr %i.gh, i64 %indvars.iv14.i.i.i ; 2 uses
   store i64 %i.fr, ptr %i.gi, align 8, !tbaa !18
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
   store i64 %i.fu, ptr %i.gj, align 8, !tbaa !21
+  %13 = trunc nuw i64 %.pre.i to i32
+  store i32 %13, ptr %i.m, align 4, !tbaa !17
   %exitcond17.not.i.i.i = icmp eq i64 %.pre.i, %wide.trip.count.i17.i.i
-  br i1 %exitcond17.not.i.i.i, label %range_set_shift_diff.exit.loopexit.i.i, label %.preheader.i18.i.i, !llvm.loop !209
-
-range_set_shift_diff.exit.loopexit.i.i:           ; preds = %range_set_append.exit48.i.i
-  store ptr %i.gh, ptr %i.n, align 8
-  store i32 %.sroa.8.1.i.i, ptr %i.m, align 4
-  store i32 %storemerge.i.i.i43110.i.i, ptr %4, align 8
-  br label %process_diff_filepair.exit
+  br i1 %exitcond17.not.i.i.i, label %process_diff_filepair.exit, label %.preheader.i18.i.i, !llvm.loop !209
 
 process_diff_filepair.exit.thread:                ; preds = %bb.f, %bb.g, %.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #13
@@ -337,9 +335,9 @@ process_diff_filepair.exit.thread:                ; preds = %bb.f, %bb.g, %.preh
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13
   br label %.thread
 
-process_diff_filepair.exit:                       ; preds = %diff_ranges_filter_touched.exit.i.i, %range_set_difference.exit.i.i, %range_set_shift_diff.exit.loopexit.i.i
-  %i.gk = phi ptr [ null, %diff_ranges_filter_touched.exit.i.i ], [ null, %range_set_difference.exit.i.i ], [ %i.gh, %range_set_shift_diff.exit.loopexit.i.i ]
-  %.sroa.15.463.i.i = phi ptr [ null, %diff_ranges_filter_touched.exit.i.i ], [ %.sroa.15.1.i.i, %range_set_difference.exit.i.i ], [ %.sroa.15.1.i.i, %range_set_shift_diff.exit.loopexit.i.i ]
+process_diff_filepair.exit:                       ; preds = %range_set_append.exit48.i.i, %diff_ranges_filter_touched.exit.i.i, %range_set_difference.exit.i.i
+  %i.gk = phi ptr [ null, %diff_ranges_filter_touched.exit.i.i ], [ null, %range_set_difference.exit.i.i ], [ %i.gh, %range_set_append.exit48.i.i ]
+  %.sroa.15.463.i.i = phi ptr [ null, %diff_ranges_filter_touched.exit.i.i ], [ %.sroa.15.1.i.i, %range_set_difference.exit.i.i ], [ %.sroa.15.1.i.i, %range_set_append.exit48.i.i ]
   call fastcc void @range_set_union(ptr noundef nonnull %9, ptr noundef nonnull %4, ptr noundef nonnull %i.bm)
   call void @free(ptr noundef %.sroa.15.463.i.i) #13
   call void @free(ptr noundef %i.gk) #13

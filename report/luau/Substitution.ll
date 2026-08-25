@@ -205,16 +205,15 @@ bb.ay:                                            ; preds = %.sink.split.i, %bb.
 
 _ZN4Luau6Tarjan8visitSCCEi.exit:                  ; preds = %.thread.i, %.lr.ph.i.backedge, %bb.av, %bb.ay, %.lr.ph.preheader.i, %.critedge.i
   %i.ja = load ptr, ptr %i.m, align 8, !tbaa !209
-  %.promoted = load ptr, ptr %i.n, align 8, !tbaa !209
   br label %bb.az
 
 bb.az:                                            ; preds = %bb.ba, %_ZN4Luau6Tarjan8visitSCCEi.exit
-  %1 = phi ptr [ %i.jc, %bb.ba ], [ %.promoted, %_ZN4Luau6Tarjan8visitSCCEi.exit ] ; 2 uses
+  %1 = load ptr, ptr %i.n, align 8, !tbaa !209    ; 2 uses
   %i.jb = icmp eq ptr %i.ja, %1
   br i1 %i.jb, label %.loopexit, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.jc = getelementptr inbounds i8, ptr %1, i64 -4 ; 3 uses
+  %i.jc = getelementptr inbounds i8, ptr %1, i64 -4 ; 2 uses
   %i.jd = load i32, ptr %i.jc, align 4, !tbaa !9  ; 2 uses
   store ptr %i.jc, ptr %i.n, align 8, !tbaa !56
   %i.je = sext i32 %i.jd to i64

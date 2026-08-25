@@ -204,7 +204,6 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %1 = load <2 x i64>, ptr %i.j, align 8
   br label %bb.b
 
 ._crit_edge55:                                    ; preds = %._crit_edge, %bb.a
@@ -222,7 +221,6 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph54, %._crit_edge
   %.02852 = phi i64 [ 0, %.lr.ph54 ], [ %i.ah, %._crit_edge ] ; 2 uses
-  %2 = phi <2 x i64> [ %1, %.lr.ph54 ], [ %5, %._crit_edge ] ; 2 uses
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.02852 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !52   ; 2 uses
   %.not3450 = icmp eq ptr %i.r, null
@@ -231,7 +229,6 @@ bb.b:                                             ; preds = %.lr.ph54, %._crit_e
 .lr.ph:                                           ; preds = %bb.b, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread
   %i.s = phi ptr [ %i.ag, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread ], [ %i.r, %bb.b ] ; 7 uses
   %.03051 = phi ptr [ %.1, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread ], [ %i.q, %bb.b ] ; 2 uses
-  %3 = phi <2 x i64> [ %4, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread ], [ %2, %bb.b ] ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 20
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 16 ; 2 uses
   %i.v = load i32, ptr %i.u, align 8, !tbaa !42   ; 2 uses
@@ -265,19 +262,18 @@ _ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit: ; preds = %bb.d
   %i.ae = load ptr, ptr %i.i, align 8, !tbaa !80
   store ptr %i.ae, ptr %i.s, align 8, !tbaa !16
   store ptr %i.s, ptr %i.i, align 8, !tbaa !80
-  %i.af = add <2 x i64> %3, <i64 -1, i64 1>       ; 2 uses
+  %1 = load <2 x i64>, ptr %i.j, align 8, !tbaa !71
+  %i.af = add <2 x i64> %1, <i64 -1, i64 1>
   store <2 x i64> %i.af, ptr %i.j, align 8, !tbaa !71
   br label %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread
 
 _ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread: ; preds = %bb.c, %.lr.ph, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit
   %.1 = phi ptr [ %.03051, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit ], [ %i.s, %.lr.ph ], [ %i.s, %bb.c ] ; 2 uses
-  %4 = phi <2 x i64> [ %i.af, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit ], [ %3, %.lr.ph ], [ %3, %bb.c ] ; 2 uses
   %i.ag = load ptr, ptr %.1, align 8, !tbaa !52   ; 2 uses
   %.not34 = icmp eq ptr %i.ag, null
   br i1 %.not34, label %._crit_edge, label %.lr.ph, !llvm.loop !81
 
 ._crit_edge:                                      ; preds = %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread, %bb.b
-  %5 = phi <2 x i64> [ %2, %bb.b ], [ %4, %_ZN7CaDiCaL7Checker16clause_satisfiedEPNS_13CheckerClauseE.exit.thread ]
   %i.ah = add nuw i64 %.02852, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ah, %i.e
   br i1 %exitcond.not, label %._crit_edge55, label %bb.b, !llvm.loop !82

@@ -204,7 +204,7 @@ _ZNSt6vectorIdSaIdEED2Ev.exit84:                  ; preds = %bb.bm, %bb.f, %bb.c
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local noundef double @_ZN4absl12lts_2026052615random_internal26gaussian_distribution_base6zignorINS0_14InsecureBitGenEEEdRT_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(16) %1) local_unnamed_addr #14 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.22.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %.sroa.22.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
   %.promoted = load i64, ptr %1, align 16, !tbaa !12
   %.sroa.22.0..sroa_idx.i.i.i.i.promoted = load i64, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !tbaa !12
   br label %bb.b
@@ -222,6 +222,8 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   %i.i = lshr i128 %i.g, 64
   %.tr.i.i.i.i.i.i = trunc nuw i128 %i.i to i64
   %.narrow.i.i.i.i.i.i = add i64 %.tr.i.i.i.i.i.i, 6364136223846793005 ; 5 uses
+  store i64 %i.h, ptr %1, align 16, !tbaa !12
+  store i64 %.narrow.i.i.i.i.i.i, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !tbaa !12
   %i.j = lshr i64 %.narrow.i.i.i.i.i.i, 58
   %i.k = xor i64 %.narrow.i.i.i.i.i.i, %i.h       ; 2 uses
   %.0.i.i.i.i.i.i.i = tail call noundef i64 @llvm.fshr.i64(i64 %i.k, i64 %i.k, i64 %i.j) ; 5 uses
@@ -242,14 +244,14 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   %i.z = and i64 %.0.i.i.i.i.i.i.i, 127           ; 2 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr @_ZN4absl12lts_2026052615random_internal26gaussian_distribution_base3zg_E, i64 %i.z
   %i.ab = load double, ptr %i.aa, align 8, !tbaa !41
-  %i.ac = fmul double %i.ab, %i.y                 ; 4 uses
+  %i.ac = fmul double %i.ab, %i.y                 ; 5 uses
   %i.ad = tail call noundef double @llvm.fabs.f64(double %i.ac)
   %i.ae = add nuw nsw i32 %i.m, 1
   %i.af = zext nneg i32 %i.ae to i64              ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr @_ZN4absl12lts_2026052615random_internal26gaussian_distribution_base3zg_E, i64 %i.af
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !41
   %i.ai = fcmp olt double %i.ad, %i.ah
-  br i1 %i.ai, label %select.unfold.loopexit, label %bb.c
+  br i1 %i.ai, label %select.unfold, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.aj = icmp eq i32 %i.m, 0
@@ -331,6 +333,8 @@ bb.d:                                             ; preds = %bb.c
   %i.cn = lshr i128 %i.cl, 64
   %.tr.i.i.i.i.i.i26 = trunc nuw i128 %i.cn to i64
   %.narrow.i.i.i.i.i.i27 = add i64 %.tr.i.i.i.i.i.i26, 6364136223846793005 ; 4 uses
+  store i64 %i.cm, ptr %1, align 16, !tbaa !12
+  store i64 %.narrow.i.i.i.i.i.i27, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !tbaa !12
   %i.co = lshr i64 %.narrow.i.i.i.i.i.i27, 58
   %i.cp = xor i64 %.narrow.i.i.i.i.i.i27, %i.cm   ; 2 uses
   %.0.i.i.i.i.i.i.i28 = tail call noundef i64 @llvm.fshr.i64(i64 %i.cp, i64 %i.cp, i64 %i.co) ; 2 uses
@@ -353,17 +357,10 @@ bb.d:                                             ; preds = %bb.c
   %i.df = fmul double %i.ac, %i.de
   %i.dg = tail call double @exp(double noundef %i.df) #19
   %i.dh = fcmp olt double %i.dd, %i.dg
-  br i1 %i.dh, label %select.unfold.loopexit, label %bb.b
+  br i1 %i.dh, label %select.unfold, label %bb.b
 
-select.unfold.loopexit:                           ; preds = %bb.b, %bb.d
-  %.narrow.i.i.i.i.i.i2744 = phi i64 [ %.narrow.i.i.i.i.i.i, %bb.b ], [ %.narrow.i.i.i.i.i.i27, %bb.d ]
-  %2 = phi i64 [ %i.h, %bb.b ], [ %i.cm, %bb.d ]
-  store i64 %2, ptr %1, align 16, !tbaa !12
-  store i64 %.narrow.i.i.i.i.i.i2744, ptr %.sroa.22.0..sroa_idx.i.i.i.i, align 8, !tbaa !12
-  br label %select.unfold
-
-select.unfold:                                    ; preds = %select.unfold.loopexit, %_ZN4absl12lts_2026052615random_internal26gaussian_distribution_base15zignor_fallbackINS0_14InsecureBitGenEEEdRT_b.exit
-  %.2.ph = phi double [ %i.cf, %_ZN4absl12lts_2026052615random_internal26gaussian_distribution_base15zignor_fallbackINS0_14InsecureBitGenEEEdRT_b.exit ], [ %i.ac, %select.unfold.loopexit ]
+select.unfold:                                    ; preds = %bb.d, %bb.b, %_ZN4absl12lts_2026052615random_internal26gaussian_distribution_base15zignor_fallbackINS0_14InsecureBitGenEEEdRT_b.exit
+  %.2.ph = phi double [ %i.cf, %_ZN4absl12lts_2026052615random_internal26gaussian_distribution_base15zignor_fallbackINS0_14InsecureBitGenEEEdRT_b.exit ], [ %i.ac, %bb.b ], [ %i.ac, %bb.d ]
   ret double %.2.ph
 }
 

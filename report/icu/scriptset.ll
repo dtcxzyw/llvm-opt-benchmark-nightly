@@ -204,11 +204,14 @@ bb.j:                                             ; preds = %bb.d
 .lr.ph:                                           ; preds = %.preheader
   %i.u = load ptr, ptr %3, align 8, !tbaa !20
   %.promoted = load i32, ptr %2, align 4, !tbaa !8
-  %wide.trip.count = zext nneg i32 %i.i to i64
   %i.v = icmp slt i32 %.promoted, 1
+  br i1 %i.v, label %.lr.ph.split.preheader, label %.loopexit
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %wide.trip.count = zext nneg i32 %i.i to i64
   br label %bb.l
 
-bb.k:                                             ; preds = %4
+bb.k:                                             ; preds = %bb.l
   %i.w = lshr i32 %i.ae, 5
   %i.x = and i32 %i.ae, 31
   %i.y = shl nuw i32 1, %i.x
@@ -221,22 +224,19 @@ bb.k:                                             ; preds = %4
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.l, !llvm.loop !26
 
-bb.l:                                             ; preds = %.lr.ph, %bb.k
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.k ] ; 2 uses
+bb.l:                                             ; preds = %bb.k, %.lr.ph.split.preheader
+  %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %bb.k ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv
-  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !27 ; 3 uses
-  br i1 %i.v, label %4, label %.loopexit
-
-4:                                                ; preds = %bb.l
+  %i.ae = load i32, ptr %i.ad, align 4, !tbaa !28 ; 3 uses
   %or.cond.i = icmp ugt i32 %i.ae, 223
   br i1 %or.cond.i, label %.loopexit.sink.split, label %bb.k
 
-.loopexit.sink.split:                             ; preds = %bb.e, %.noexc, %4, %bb.j
-  %.sink = phi i32 [ %i.j, %bb.j ], [ 1, %4 ], [ 7, %.noexc ], [ 7, %bb.e ]
+.loopexit.sink.split:                             ; preds = %bb.e, %.noexc, %bb.l, %bb.j
+  %.sink = phi i32 [ %i.j, %bb.j ], [ 1, %bb.l ], [ 7, %.noexc ], [ 7, %bb.e ]
   store i32 %.sink, ptr %2, align 4, !tbaa !8
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.l, %bb.k, %.loopexit.sink.split, %.preheader
+.loopexit:                                        ; preds = %bb.k, %.loopexit.sink.split, %.lr.ph, %.preheader
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.af = load i8, ptr %i.f, align 4, !tbaa !24
   %.not.i.i22 = icmp eq i8 %i.af, 0
@@ -639,7 +639,7 @@ _ZNK6icu_789ScriptSet10nextSetBitEi.exit89:       ; preds = %_ZNK6icu_789ScriptS
   %i.dm = icmp eq i32 %i.dl, 0
   %i.dn = icmp sgt i32 %.2.i78, 0
   %i.do = and i1 %i.dn, %i.dm
-  br i1 %i.do, label %.lr.ph, label %.loopexit, !llvm.loop !29
+  br i1 %i.do, label %.lr.ph, label %.loopexit, !llvm.loop !30
 
 .loopexit:                                        ; preds = %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74, %_ZNK6icu_789ScriptSet12countMembersEv.exit66
   %.016 = phi i32 [ %i.bq, %_ZNK6icu_789ScriptSet12countMembersEv.exit66 ], [ %i.cp, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit74 ], [ %i.dl, %_ZNK6icu_789ScriptSet10nextSetBitEi.exit89 ]
@@ -754,8 +754,9 @@ attributes #16 = { noreturn nounwind }
 !23 = !{!21, !5, i64 8}
 !24 = !{!21, !6, i64 12}
 !25 = distinct !{!25, !12}
-!26 = distinct !{!26, !12}
-!27 = !{!28, !28, i64 0}
-!28 = !{!"_ZTS11UScriptCode", !6, i64 0}
-!29 = distinct !{!29, !12}
+!26 = distinct !{!26, !12, !27}
+!27 = !{!"llvm.loop.unswitch.partial.disable"}
+!28 = !{!29, !29, i64 0}
+!29 = !{!"_ZTS11UScriptCode", !6, i64 0}
+!30 = distinct !{!30, !12}
 end_hunk_1

@@ -202,12 +202,10 @@ bb.d:                                             ; preds = %bb.ac
   %i.j = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 6 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %.promoted.i = load i8, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 1, !alias.scope !108, !noalias !115
-  %.promoted = load i64, ptr %.sroa.4.sroa.5.sroa.5.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8
-  %.sroa.4.0..sroa_idx.promoted = load i64, ptr %.sroa.4.0..sroa_idx, align 8
+  %.promoted.i = load i8, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 1, !range !55, !alias.scope !108, !noalias !115
   %.val.i.i.i.i = load ptr, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx, align 8, !nonnull !4 ; 3 uses
   %.val1.i.i.i.i = load i64, ptr %.sroa.4.sroa.5.sroa.4.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8 ; 2 uses
-  %i.m = load i64, ptr %.sroa.4.sroa.5.sroa.6.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8 ; 6 uses
+  %i.m = load i64, ptr %.sroa.4.sroa.5.sroa.6.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8 ; 5 uses
   %.not.i.i.i.i.i = icmp ugt i64 %i.m, %.val1.i.i.i.i
   %i.n = load i8, ptr %.sroa.4.sroa.5.sroa.9.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8 ; 2 uses
   %i.o = zext nneg i8 %i.n to i64                 ; 4 uses
@@ -220,8 +218,6 @@ bb.d:                                             ; preds = %bb.ac
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map12map_try_foldReNtNtCscdodAO9FK5_5alloc6string6StringQNtNtCscvBHLZPbXnS_10serde_json5value5ValueINtNtBa_6option6OptionB1C_ENCNvMs0_B1F_B1D_11pointer_mut0NCB2M_s_0E0B1H_.exit.i.i, %bb.d
-  %.pre.i2.i.i.i.i14 = phi i64 [ %.sroa.4.0..sroa_idx.promoted, %bb.d ], [ %.pre.i2.i.i.i.i13, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map12map_try_foldReNtNtCscdodAO9FK5_5alloc6string6StringQNtNtCscvBHLZPbXnS_10serde_json5value5ValueINtNtBa_6option6OptionB1C_ENCNvMs0_B1F_B1D_11pointer_mut0NCB2M_s_0E0B1H_.exit.i.i ] ; 4 uses
-  %3 = phi i64 [ %.promoted, %bb.d ], [ %5, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map12map_try_foldReNtNtCscdodAO9FK5_5alloc6string6StringQNtNtCscvBHLZPbXnS_10serde_json5value5ValueINtNtBa_6option6OptionB1C_ENCNvMs0_B1F_B1D_11pointer_mut0NCB2M_s_0E0B1H_.exit.i.i ] ; 3 uses
   %i.u = phi i8 [ %.promoted.i, %bb.d ], [ %i.ar, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map12map_try_foldReNtNtCscdodAO9FK5_5alloc6string6StringQNtNtCscvBHLZPbXnS_10serde_json5value5ValueINtNtBa_6option6OptionB1C_ENCNvMs0_B1F_B1D_11pointer_mut0NCB2M_s_0E0B1H_.exit.i.i ]
   %.sroa.01.0.i.i = phi ptr [ %0, %bb.d ], [ %.sroa.0.1.i.i13.i.i, %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map12map_try_foldReNtNtCscdodAO9FK5_5alloc6string6StringQNtNtCscvBHLZPbXnS_10serde_json5value5ValueINtNtBa_6option6OptionB1C_ENCNvMs0_B1F_B1D_11pointer_mut0NCB2M_s_0E0B1H_.exit.i.i ] ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !118)
@@ -231,7 +227,8 @@ bb.e:                                             ; preds = %_RNCINvNtNtNtCs4NRV
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.experimental.noalias.scope.decl(metadata !120)
-  %i.w = icmp ult i64 %i.m, %3
+  %.promoted.i.i.i.i.i = load i64, ptr %.sroa.4.sroa.5.sroa.5.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8, !alias.scope !123, !noalias !124 ; 2 uses
+  %i.w = icmp ult i64 %i.m, %.promoted.i.i.i.i.i
   %brmerge = select i1 %i.w, i1 true, i1 %.not.i.i.i.i.i
   br i1 %brmerge, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i, label %.lr.ph.split.i.i.i.i.i
 
@@ -241,7 +238,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.l, %.lr.ph.split.i.i.i.i.i
-  %i.x = phi i64 [ %3, %.lr.ph.split.i.i.i.i.i ], [ %i.am, %bb.l ] ; 3 uses
+  %i.x = phi i64 [ %.promoted.i.i.i.i.i, %.lr.ph.split.i.i.i.i.i ], [ %i.am, %bb.l ] ; 3 uses
   %i.y = sub nuw i64 %i.m, %i.x                   ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.x ; 2 uses
   %i.aa = icmp samesign ult i64 %i.y, 16
@@ -283,7 +280,7 @@ _RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i: ; preds = %._cri
 bb.j:                                             ; preds = %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchr.exit.i.i.i.i.i
   %i.ak = extractvalue { i64, i64 } %.merged.i.i.i.i.i.i, 1
   %i.al = add i64 %i.x, 1
-  %i.am = add i64 %i.al, %i.ak                    ; 10 uses
+  %i.am = add i64 %i.al, %i.ak                    ; 7 uses
   store i64 %i.am, ptr %.sroa.4.sroa.5.sroa.5.0..sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.sroa_idx, align 8, !alias.scope !123, !noalias !124
   %.not12.i.i.i.i.i = icmp ult i64 %i.am, %i.o
   %.not13.i.i.i.i.i = icmp ugt i64 %i.am, %.val1.i.i.i.i
@@ -306,28 +303,29 @@ bb.m:                                             ; preds = %bb.j
   br i1 %i.aq, label %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i, label %bb.l
 
 _RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i: ; preds = %bb.m
+  %3 = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !108, !noalias !115, !noundef !4 ; 2 uses
+  %4 = sub nuw i64 %i.ao, %3
   store i64 %i.am, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !108, !noalias !115
   br label %select.unfold.i.i
 
 _RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i: ; preds = %bb.l, %bb.f, %bb.k
-  %4 = phi i64 [ %3, %bb.f ], [ %i.m, %bb.k ], [ %i.am, %bb.l ]
   store i8 1, ptr %.sroa.4.sroa.7.0..sroa.4.0..sroa_idx.sroa_idx, align 1, !alias.scope !131, !noalias !115
-  %.not.i3.i.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i, %.pre.i2.i.i.i.i14
+  %.pre.i2.i.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !131, !noalias !115 ; 3 uses
+  %.not.i3.i.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i, %.pre.i2.i.i.i.i
   %or.cond.not.i.i.i.i.i = select i1 %i.t, i1 true, i1 %.not.i3.i.i.i.i
+  %5 = sub nuw i64 %.pre2.i.i.i.i.i, %.pre.i2.i.i.i.i
   br i1 %or.cond.not.i.i.i.i.i, label %select.unfold.i.i, label %_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters4skipINtB5_4SkipINtNtNtBb_3str4iter5SplitcEENtNtNtB9_6traits8iterator8Iterator8try_foldQNtNtCscvBHLZPbXnS_10serde_json5value5ValueNCINvNtB7_3map12map_try_foldReNtNtCscdodAO9FK5_5alloc6string6StringB27_INtNtBb_6option6OptionB27_ENCNvMs0_B2a_B28_11pointer_mut0NCB4q_s_0E0B3X_EB2c_.exit
 
 select.unfold.i.i:                                ; preds = %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i
-  %.pre.i2.i.i.i.i13 = phi i64 [ %i.am, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i ], [ %.pre.i2.i.i.i.i14, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i ]
-  %5 = phi i64 [ %i.am, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i ], [ %4, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i ]
   %i.ar = phi i8 [ 0, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i ], [ 1, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i ]
-  %.pn = phi i64 [ %i.ao, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i ], [ %.pre2.i.i.i.i.i, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i ]
-  %.sroa.4.1.i.i.i.i = sub nuw i64 %.pn, %.pre.i2.i.i.i.i14
-  %.sroa.0.1.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.pre.i2.i.i.i.i14
+  %.pn = phi i64 [ %4, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i ], [ %5, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i ]
+  %.pn.i.i = phi i64 [ %3, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i.i ], [ %.pre.i2.i.i.i.i, %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalcE7get_endCscvBHLZPbXnS_10serde_json.exit.i.i.i.i ]
+  %.sroa.0.1.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.pn.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !134)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !137
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !137
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !139
-  call fastcc void @_RINvMs3_NtCscdodAO9FK5_5alloc3stre7replaceReECscvBHLZPbXnS_10serde_json(ptr noalias noundef align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i.i.i.i, i64 noundef %.sroa.4.1.i.i.i.i, ptr noalias noundef nonnull readonly captures(address, read_provenance) @12, ptr noalias noundef nonnull readonly captures(address, read_provenance) @13)
+  call fastcc void @_RINvMs3_NtCscdodAO9FK5_5alloc3stre7replaceReECscvBHLZPbXnS_10serde_json(ptr noalias noundef align 8 captures(none) dereferenceable(24) %i.a, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i.i.i.i, i64 noundef %.pn, ptr noalias noundef nonnull readonly captures(address, read_provenance) @12, ptr noalias noundef nonnull readonly captures(address, read_provenance) @13)
   %i.as = load ptr, ptr %i.h, align 8, !noalias !139, !nonnull !4, !noundef !4
   %i.at = load i64, ptr %i.i, align 8, !noalias !139, !noundef !4
   invoke fastcc void @_RINvMs3_NtCscdodAO9FK5_5alloc3stre7replaceReECscvBHLZPbXnS_10serde_json(ptr noalias noundef nonnull align 8 captures(none) dereferenceable(24) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.as, i64 noundef %i.at, ptr noalias noundef nonnull readonly captures(address, read_provenance) @14, ptr noalias noundef nonnull readonly captures(address, read_provenance) @15)
@@ -445,7 +443,7 @@ _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map12map_try_foldReNtNtCscdodAO9F
 
 bb.ac:                                            ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 4 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 5 uses
   store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   store i64 %2, ptr %.sroa.4.sroa.4.0..sroa.4.0..sroa_idx.sroa_idx, align 8

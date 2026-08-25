@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not = icmp eq ptr %i.b, %i.c
   br i1 %.not, label %bb.d, label %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i
 
@@ -224,7 +224,7 @@ _ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i: ; preds = %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.noexc8
-  %.pre8.i = phi ptr [ null, %bb.c ], [ %i.m, %.noexc8 ] ; 2 uses
+  %.pre8.i = phi ptr [ null, %bb.c ], [ %i.m, %.noexc8 ]
   %.promoted13 = phi ptr [ null, %bb.c ], [ %i.k, %.noexc8 ] ; 2 uses
   %i.n = phi ptr [ %i.b, %bb.c ], [ %.pre32, %.noexc8 ] ; 2 uses
   %i.o = phi ptr [ %i.c, %bb.c ], [ %.pre, %.noexc8 ] ; 2 uses
@@ -232,14 +232,13 @@ bb.d:                                             ; preds = %bb.c, %.noexc8
   br i1 %.not6.i, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i, %.lr.ph.i
-  %2 = phi ptr [ %.pre8.i, %.lr.ph.i ], [ %5, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 6 uses
-  %i.q = phi ptr [ %.promoted13, %.lr.ph.i ], [ %i.aj, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 9 uses
-  %i.r = phi ptr [ %.pre8.i, %.lr.ph.i ], [ %i.ak, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 3 uses
-  %i.s = phi ptr [ %.promoted13, %.lr.ph.i ], [ %6, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 5 uses
+  %i.q = phi ptr [ %.promoted13, %.lr.ph.i ], [ %i.aj, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 7 uses
+  %i.r = phi ptr [ %.pre8.i, %.lr.ph.i ], [ %i.ak, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 5 uses
+  %i.s = phi ptr [ %.promoted13, %.lr.ph.i ], [ %.pn, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 3 uses
   %.sroa.03.07.i = phi ptr [ %i.o, %.lr.ph.i ], [ %i.al, %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i ] ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 4
   %i.u = load i32, ptr %i.t, align 4, !tbaa !42   ; 2 uses
@@ -248,19 +247,18 @@ bb.e:                                             ; preds = %_ZNSt20back_insert_
 
 bb.f:                                             ; preds = %bb.e
   store i32 %i.u, ptr %i.s, align 4, !tbaa !42
+  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
+  store ptr %2, ptr %i.p, align 8, !tbaa !40
   br label %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i
 
 bb.g:                                             ; preds = %bb.e
   %i.v = ptrtoint ptr %i.r to i64
-  %i.w = ptrtoint ptr %i.q to i64                 ; 2 uses
-  %i.x = sub i64 %i.v, %i.w                       ; 5 uses
+  %i.w = ptrtoint ptr %i.q to i64
+  %i.x = sub i64 %i.v, %i.w                       ; 6 uses
   %i.y = icmp eq i64 %i.x, 9223372036854775804
   br i1 %i.y, label %bb.h, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i.i
 
 bb.h:                                             ; preds = %bb.g
-  store ptr %i.s, ptr %i.p, align 8
-  store ptr %i.q, ptr %0, align 8
-  store ptr %2, ptr %i.i, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.4) #18
           to label %.noexc9 unwind label %.loopexit.split-lp
 
@@ -278,7 +276,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i.i: ; preds = %bb.g
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i.i)
   %i.ae = shl nuw nsw i64 %i.ad, 2
   %i.af = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ae) #20
-          to label %.noexc10 unwind label %.loopexit ; 4 uses
+          to label %.noexc10 unwind label %.loopexit ; 5 uses
 
 .noexc10:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i.i
   %i.ag = getelementptr inbounds i8, ptr %i.af, i64 %i.x ; 2 uses
@@ -291,46 +289,43 @@ bb.i:                                             ; preds = %.noexc10
   br label %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i.i.i
 
 _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i.i.i: ; preds = %bb.i, %.noexc10
+  %3 = getelementptr inbounds nuw i8, ptr %i.ag, i64 4 ; 2 uses
   %.not.i17.i.i.i.i.i = icmp eq ptr %i.q, null
   br i1 %.not.i17.i.i.i.i.i, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i.i.i
-  %3 = ptrtoint ptr %2 to i64
-  %4 = sub i64 %3, %i.w
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %4) #21
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.q, i64 noundef %i.x) #21
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i: ; preds = %bb.j, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i.i.i
+  store ptr %i.af, ptr %0, align 8, !tbaa !37
+  store ptr %3, ptr %i.p, align 8, !tbaa !40
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ad ; 2 uses
+  store ptr %i.ai, ptr %i.i, align 8, !tbaa !39
   br label %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i
 
 _ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i: ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i, %bb.f
-  %5 = phi ptr [ %2, %bb.f ], [ %i.ai, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
-  %i.aj = phi ptr [ %i.q, %bb.f ], [ %i.af, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
+  %i.aj = phi ptr [ %i.q, %bb.f ], [ %i.af, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i ]
   %i.ak = phi ptr [ %i.r, %bb.f ], [ %i.ai, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i ]
-  %.pn = phi ptr [ %i.s, %bb.f ], [ %i.ag, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i ]
-  %6 = getelementptr inbounds nuw i8, ptr %.pn, i64 4 ; 2 uses
+  %.pn = phi ptr [ %2, %bb.f ], [ %3, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i.i ]
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i, i64 40 ; 2 uses
   %.not.i = icmp eq ptr %i.al, %i.n
-  br i1 %.not.i, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit.loopexit, label %bb.e, !llvm.loop !280
+  br i1 %.not.i, label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit, label %bb.e, !llvm.loop !280
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.s, ptr %i.p, align 8
-  store ptr %i.q, ptr %0, align 8
-  store ptr %2, ptr %i.i, align 8
   br label %bb.k
 
 .loopexit.split-lp:                               ; preds = %bb.b, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i, %bb.h
-  %i.am = phi ptr [ null, %bb.b ], [ null, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ], [ %2, %bb.h ]
+  %i.am = phi ptr [ null, %bb.b ], [ null, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ], [ %i.r, %bb.h ]
   %i.an = phi ptr [ null, %bb.b ], [ null, %_ZNSt12_Vector_baseIiSaIiEE11_M_allocateEm.exit.i ], [ %i.q, %bb.h ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.k
 
 bb.k:                                             ; preds = %.loopexit.split-lp, %.loopexit
-  %i.ao = phi ptr [ %2, %.loopexit ], [ %i.am, %.loopexit.split-lp ]
+  %i.ao = phi ptr [ %i.r, %.loopexit ], [ %i.am, %.loopexit.split-lp ]
   %i.ap = phi ptr [ %i.q, %.loopexit ], [ %i.an, %.loopexit.split-lp ] ; 3 uses
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i = icmp eq ptr %i.ap, null
@@ -346,13 +341,7 @@ bb.l:                                             ; preds = %bb.k
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.k, %bb.l
   resume { ptr, i32 } %lpad.phi
 
-_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit.loopexit: ; preds = %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i
-  store ptr %6, ptr %i.p, align 8
-  store ptr %i.aj, ptr %0, align 8
-  store ptr %5, ptr %i.i, align 8
-  br label %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit
-
-_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit: ; preds = %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit.loopexit, %bb.d
+_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKSt5tupleIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiEESt6vectorIS9_SaIS9_EEEESt20back_insert_iteratorISC_IiSaIiEEEZN2cm6ranges5views6valuesISE_TnNSt9enable_ifIXaasr2cm21is_sequence_containerIT_EE5valuesr2cm8is_tupleILi2ENSP_10value_typeEEE5valueEiE4typeELi0EEESC_INSt13tuple_elementILm1ESQ_E4typeESaISV_EERKSP_EUlRSA_E_ET0_SP_SP_S12_T1_.exit: ; preds = %_ZNSt20back_insert_iteratorISt6vectorIiSaIiEEEaSEOi.exit.i, %bb.d
   ret void
 }
 

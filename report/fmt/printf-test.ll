@@ -205,13 +205,11 @@ bb.n:                                             ; preds = %._crit_edge, %bb.i,
   br i1 %.not11.i, label %_ZN3fmt3v126detail11parse_flagsIcEEvRNS0_12format_specsERPKT_S7_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.n
-  %.promoted.i = load i32, ptr %2, align 4
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 4
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.v, %.lr.ph.i
   %i.as = phi ptr [ %i.aq, %.lr.ph.i ], [ %i.be, %bb.v ] ; 7 uses
-  %5 = phi i32 [ %.promoted.i, %.lr.ph.i ], [ %6, %bb.v ] ; 7 uses
   %i.at = load i8, ptr %i.as, align 1, !tbaa !38
   switch i8 %i.at, label %_ZN3fmt3v126detail11parse_flagsIcEEvRNS0_12format_specsERPKT_S7_.exit [
     i8 45, label %bb.p
@@ -222,43 +220,47 @@ bb.o:                                             ; preds = %bb.v, %.lr.ph.i
   ]
 
 bb.p:                                             ; preds = %bb.o
+  %5 = load i32, ptr %2, align 4, !tbaa !17740
   %i.au = and i32 %5, -57
-  %i.av = or disjoint i32 %i.au, 8                ; 2 uses
+  %i.av = or disjoint i32 %i.au, 8
   store i32 %i.av, ptr %2, align 4, !tbaa !17740
   br label %bb.v
 
 bb.q:                                             ; preds = %bb.o
-  %i.aw = and i32 %5, -3073
-  %i.ax = or disjoint i32 %i.aw, 2048             ; 2 uses
+  %6 = load i32, ptr %2, align 4, !tbaa !17740
+  %i.aw = and i32 %6, -3073
+  %i.ax = or disjoint i32 %i.aw, 2048
   store i32 %i.ax, ptr %2, align 4, !tbaa !17740
   br label %bb.v
 
 bb.r:                                             ; preds = %bb.o
   store i8 48, ptr %i.ar, align 4, !tbaa !38
-  %i.ay = and i32 %5, -229377
-  %i.az = or disjoint i32 %i.ay, 32768            ; 2 uses
+  %7 = load i32, ptr %2, align 4, !tbaa !17740
+  %i.ay = and i32 %7, -229377
+  %i.az = or disjoint i32 %i.ay, 32768
   store i32 %i.az, ptr %2, align 4, !tbaa !17740
   %.pre.i81 = load ptr, ptr %0, align 8, !tbaa !62
   br label %bb.v
 
 bb.s:                                             ; preds = %bb.o
-  %i.ba = and i32 %5, 3072
+  %8 = load i32, ptr %2, align 4, !tbaa !17740    ; 2 uses
+  %i.ba = and i32 %8, 3072
   %.not10.i = icmp eq i32 %i.ba, 2048
   br i1 %.not10.i, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bb = or i32 %5, 3072                         ; 2 uses
+  %i.bb = or i32 %8, 3072
   store i32 %i.bb, ptr %2, align 4, !tbaa !17740
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.o
-  %i.bc = or i32 %5, 8192                         ; 2 uses
+  %9 = load i32, ptr %2, align 4, !tbaa !17740
+  %i.bc = or i32 %9, 8192
   store i32 %i.bc, ptr %2, align 4, !tbaa !17740
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p
   %i.bd = phi ptr [ %i.as, %bb.p ], [ %i.as, %bb.q ], [ %.pre.i81, %bb.r ], [ %i.as, %bb.u ], [ %i.as, %bb.t ], [ %i.as, %bb.s ]
-  %6 = phi i32 [ %i.av, %bb.p ], [ %i.ax, %bb.q ], [ %i.az, %bb.r ], [ %i.bc, %bb.u ], [ %i.bb, %bb.t ], [ %5, %bb.s ]
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 1 ; 4 uses
   store ptr %i.be, ptr %0, align 8, !tbaa !62
   %.not.i = icmp eq ptr %i.be, %1
@@ -661,13 +663,11 @@ bb.m:                                             ; preds = %._crit_edge, %bb.h,
   br i1 %.not11.i, label %_ZN3fmt3v126detail11parse_flagsIwEEvRNS0_12format_specsERPKT_S7_.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.m
-  %.promoted.i = load i32, ptr %2, align 4
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 4
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.u, %.lr.ph.i
   %i.af = phi ptr [ %i.ad, %.lr.ph.i ], [ %i.ar, %bb.u ] ; 7 uses
-  %5 = phi i32 [ %.promoted.i, %.lr.ph.i ], [ %6, %bb.u ] ; 7 uses
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !3045
   switch i32 %i.ag, label %_ZN3fmt3v126detail11parse_flagsIwEEvRNS0_12format_specsERPKT_S7_.exit [
     i32 45, label %bb.o
@@ -678,43 +678,47 @@ bb.n:                                             ; preds = %bb.u, %.lr.ph.i
   ]
 
 bb.o:                                             ; preds = %bb.n
+  %5 = load i32, ptr %2, align 4, !tbaa !17740
   %i.ah = and i32 %5, -57
-  %i.ai = or disjoint i32 %i.ah, 8                ; 2 uses
+  %i.ai = or disjoint i32 %i.ah, 8
   store i32 %i.ai, ptr %2, align 4, !tbaa !17740
   br label %bb.u
 
 bb.p:                                             ; preds = %bb.n
-  %i.aj = and i32 %5, -3073
-  %i.ak = or disjoint i32 %i.aj, 2048             ; 2 uses
+  %6 = load i32, ptr %2, align 4, !tbaa !17740
+  %i.aj = and i32 %6, -3073
+  %i.ak = or disjoint i32 %i.aj, 2048
   store i32 %i.ak, ptr %2, align 4, !tbaa !17740
   br label %bb.u
 
 bb.q:                                             ; preds = %bb.n
   store i8 48, ptr %i.ae, align 4, !tbaa !38
-  %i.al = and i32 %5, -229377
-  %i.am = or disjoint i32 %i.al, 32768            ; 2 uses
+  %7 = load i32, ptr %2, align 4, !tbaa !17740
+  %i.al = and i32 %7, -229377
+  %i.am = or disjoint i32 %i.al, 32768
   store i32 %i.am, ptr %2, align 4, !tbaa !17740
   %.pre.i80 = load ptr, ptr %0, align 8, !tbaa !18216
   br label %bb.u
 
 bb.r:                                             ; preds = %bb.n
-  %i.an = and i32 %5, 3072
+  %8 = load i32, ptr %2, align 4, !tbaa !17740    ; 2 uses
+  %i.an = and i32 %8, 3072
   %.not10.i = icmp eq i32 %i.an, 2048
   br i1 %.not10.i, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.ao = or i32 %5, 3072                         ; 2 uses
+  %i.ao = or i32 %8, 3072
   store i32 %i.ao, ptr %2, align 4, !tbaa !17740
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.n
-  %i.ap = or i32 %5, 8192                         ; 2 uses
+  %9 = load i32, ptr %2, align 4, !tbaa !17740
+  %i.ap = or i32 %9, 8192
   store i32 %i.ap, ptr %2, align 4, !tbaa !17740
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o
   %i.aq = phi ptr [ %i.af, %bb.o ], [ %i.af, %bb.p ], [ %.pre.i80, %bb.q ], [ %i.af, %bb.t ], [ %i.af, %bb.s ], [ %i.af, %bb.r ]
-  %6 = phi i32 [ %i.ai, %bb.o ], [ %i.ak, %bb.p ], [ %i.am, %bb.q ], [ %i.ap, %bb.t ], [ %i.ao, %bb.s ], [ %5, %bb.r ]
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 4 ; 4 uses
   store ptr %i.ar, ptr %0, align 8, !tbaa !18216
   %.not.i = icmp eq ptr %i.ar, %1

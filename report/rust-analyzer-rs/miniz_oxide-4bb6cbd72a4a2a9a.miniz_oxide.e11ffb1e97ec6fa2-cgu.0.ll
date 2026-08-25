@@ -205,7 +205,7 @@ _RNvMs5_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_11CallbackOut17new_outp
   store ptr %.sroa.01.0.i, ptr %i.a, align 8, !alias.scope !76, !noalias !85
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 14 uses
   store i64 85180, ptr %i.r, align 8, !alias.scope !76, !noalias !85
-  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 20 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 23 uses
   store i64 0, ptr %i.s, align 8, !alias.scope !76, !noalias !85
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 4 uses
   store i8 %.sroa.0.0.i, ptr %i.t, align 8, !alias.scope !76, !noalias !85
@@ -608,11 +608,12 @@ bb.bd:                                            ; preds = %bb.ax, %_RNvMs7_NtN
 bb.be:                                            ; preds = %bb.bd
   %i.jh = getelementptr inbounds nuw i8, ptr %0, i64 65688
   %i.ji = load i32, ptr %i.jh, align 8, !noundef !4 ; 4 uses
-  %.promoted181 = load i64, ptr %i.s, align 8     ; 7 uses
   %i.jj = load i64, ptr %i.r, align 8             ; 9 uses
   %i.jk = load ptr, ptr %i.a, align 8, !nonnull !4 ; 4 uses
-  %umax.i110 = tail call i64 @llvm.umax.i64(i64 %.promoted181, i64 %i.jj)
-  %exitcond.not.i112.not = icmp ult i64 %.promoted181, %i.jj
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !149)
+  %.promoted6.i109 = load i64, ptr %i.s, align 8, !alias.scope !149 ; 7 uses
+  %umax.i110 = tail call i64 @llvm.umax.i64(i64 %.promoted6.i109, i64 %i.jj)
+  %exitcond.not.i112.not = icmp ult i64 %.promoted6.i109, %i.jj
   br i1 %exitcond.not.i112.not, label %bb.bf, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.bh, %bb.bg, %bb.bf, %bb.be
@@ -623,10 +624,12 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %bb.be
   %i.jl = lshr i32 %i.ji, 24
   %i.jm = or i32 %i.jl, %.pre247
-  %i.jn = getelementptr inbounds nuw i8, ptr %i.jk, i64 %.promoted181
+  %i.jn = getelementptr inbounds nuw i8, ptr %i.jk, i64 %.promoted6.i109
   %i.jo = trunc i32 %i.jm to i8
   store i8 %i.jo, ptr %i.jn, align 1, !noalias !149
-  %i.jp = add nuw i64 %.promoted181, 1            ; 3 uses
+  %i.jp = add nuw i64 %.promoted6.i109, 1         ; 4 uses
+  store i64 %i.jp, ptr %i.s, align 8, !alias.scope !149
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !152)
   %umax.i110.1 = tail call i64 @llvm.umax.i64(i64 %i.jp, i64 %i.jj)
   %exitcond.not.i112.1.not = icmp ult i64 %i.jp, %i.jj
   br i1 %exitcond.not.i112.1.not, label %bb.bg, label %.loopexit
@@ -638,7 +641,9 @@ bb.bg:                                            ; preds = %bb.bf
   %i.jt = getelementptr inbounds nuw i8, ptr %i.jk, i64 %i.jp
   %i.ju = trunc i32 %i.js to i8
   store i8 %i.ju, ptr %i.jt, align 1, !noalias !152
-  %i.jv = add nuw i64 %.promoted181, 2            ; 3 uses
+  %i.jv = add nuw i64 %.promoted6.i109, 2         ; 4 uses
+  store i64 %i.jv, ptr %i.s, align 8, !alias.scope !152
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !154)
   %umax.i110.2 = tail call i64 @llvm.umax.i64(i64 %i.jv, i64 %i.jj)
   %exitcond.not.i112.2.not = icmp ult i64 %i.jv, %i.jj
   br i1 %exitcond.not.i112.2.not, label %bb.bh, label %.loopexit
@@ -650,7 +655,8 @@ bb.bh:                                            ; preds = %bb.bg
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jk, i64 %i.jv
   %i.ka = trunc i32 %i.jy to i8
   store i8 %i.ka, ptr %i.jz, align 1, !noalias !154
-  %i.kb = add nuw i64 %.promoted181, 3            ; 3 uses
+  %i.kb = add nuw i64 %.promoted6.i109, 3         ; 4 uses
+  store i64 %i.kb, ptr %i.s, align 8, !alias.scope !154
   tail call void @llvm.experimental.noalias.scope.decl(metadata !156)
   %umax.i110.3 = tail call i64 @llvm.umax.i64(i64 %i.kb, i64 %i.jj)
   %exitcond.not.i112.3.not = icmp ult i64 %i.kb, %i.jj
@@ -662,7 +668,7 @@ _RNvMs7_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_17OutputBufferOxide8put
   %i.ke = getelementptr inbounds nuw i8, ptr %i.jk, i64 %i.kb
   %i.kf = trunc i32 %i.kd to i8
   store i8 %i.kf, ptr %i.ke, align 1, !noalias !156
-  %i.kg = add nuw i64 %.promoted181, 4
+  %i.kg = add nuw i64 %.promoted6.i109, 4
   store i64 %i.kg, ptr %i.s, align 8, !alias.scope !156
   br label %bb.ah
 

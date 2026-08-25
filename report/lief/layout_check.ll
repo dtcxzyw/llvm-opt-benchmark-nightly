@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %3 = alloca %"class.std::allocator", align 1    ; 3 uses
-  %i.c = alloca ptr, align 8                      ; 6 uses
+  %i.c = alloca ptr, align 8                      ; 5 uses
   %i.d = alloca ptr, align 8                      ; 4 uses
   %i.e = alloca ptr, align 8                      ; 4 uses
   %i.f = alloca ptr, align 8                      ; 4 uses
@@ -608,22 +608,21 @@ bb.dv:                                            ; preds = %.lr.ph.i
 
 .lr.ph1013.preheader:                             ; preds = %._crit_edge.thread.i, %._crit_edge.i, %.preheader.preheader.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #24
+  store ptr @.str.45, ptr %i.c, align 8, !tbaa !130
   br label %.lr.ph1013
 
 .lr.ph1013:                                       ; preds = %.lr.ph1013.preheader, %bb.ec
   %.01011 = phi i64 [ %i.zh, %bb.ec ], [ %.6, %.lr.ph1013.preheader ]
-  %.sroa.0539.01010 = phi ptr [ %i.zl, %bb.ec ], [ %.sroa.0632.0.lcssa1286, %.lr.ph1013.preheader ] ; 8 uses
-  %.0.i53610041009 = phi ptr [ %.0.i536, %bb.ec ], [ @.str.45, %.lr.ph1013.preheader ] ; 3 uses
-  %i.yh = getelementptr inbounds nuw i8, ptr %.sroa.0539.01010, i64 8
+  %.0.i53610041009 = phi ptr [ %i.zl, %bb.ec ], [ %.sroa.0632.0.lcssa1286, %.lr.ph1013.preheader ] ; 8 uses
+  %i.yh = getelementptr inbounds nuw i8, ptr %.0.i53610041009, i64 8
   %i.yi = load i32, ptr %i.yh, align 8, !tbaa !326 ; 2 uses
   %i.yj = zext i32 %i.yi to i64                   ; 4 uses
   %i.yk = icmp ugt i64 %.01011, %i.yj
   br i1 %i.yk, label %bb.dw, label %bb.dx
 
 bb.dw:                                            ; preds = %.lr.ph1013
-  store ptr %.0.i53610041009, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #24
-  %i.yl = load i32, ptr %.sroa.0539.01010, align 8, !tbaa !323
+  %i.yl = load i32, ptr %.0.i53610041009, align 8, !tbaa !323
   %switch.tableidx = add i32 %i.yl, -1            ; 2 uses
   %i.ym = icmp ult i32 %switch.tableidx, 17
   br i1 %i.ym, label %switch.lookup, label %_ZZN4LIEF5MachO13LayoutChecker14check_linkeditEvEN7chunk_t9to_stringEZNS1_14check_linkeditEvENS2_4KINDE.exit
@@ -642,7 +641,7 @@ _ZZN4LIEF5MachO13LayoutChecker14check_linkeditEvEN7chunk_t9to_stringEZNS1_14chec
   br label %.thread740
 
 bb.dx:                                            ; preds = %.lr.ph1013
-  %i.yp = getelementptr inbounds nuw i8, ptr %.sroa.0539.01010, i64 16
+  %i.yp = getelementptr inbounds nuw i8, ptr %.0.i53610041009, i64 16
   %i.yq = load i64, ptr %i.yp, align 8, !tbaa !327 ; 2 uses
   %i.yr = icmp ult i64 %.3, %i.yj
   %i.ys = sub nuw i64 %.3, %i.yj
@@ -651,9 +650,8 @@ bb.dx:                                            ; preds = %.lr.ph1013
   br i1 %i.yu, label %bb.dy, label %bb.dz
 
 bb.dy:                                            ; preds = %bb.dx
-  store ptr %.0.i53610041009, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #24
-  %i.yv = load i32, ptr %.sroa.0539.01010, align 8, !tbaa !323
+  %i.yv = load i32, ptr %.0.i53610041009, align 8, !tbaa !323
   %switch.tableidx1610 = add i32 %i.yv, -1        ; 2 uses
   %i.yw = icmp ult i32 %switch.tableidx1610, 17
   br i1 %i.yw, label %switch.lookup1611, label %_ZZN4LIEF5MachO13LayoutChecker14check_linkeditEvEN7chunk_t9to_stringEZNS1_14check_linkeditEvENS2_4KINDE.exit533
@@ -672,7 +670,7 @@ _ZZN4LIEF5MachO13LayoutChecker14check_linkeditEvEN7chunk_t9to_stringEZNS1_14chec
   br label %.thread740
 
 bb.dz:                                            ; preds = %bb.dx
-  %i.yz = getelementptr inbounds nuw i8, ptr %.sroa.0539.01010, i64 4
+  %i.yz = getelementptr inbounds nuw i8, ptr %.0.i53610041009, i64 4
   %i.za = load i32, ptr %i.yz, align 4, !tbaa !325
   %i.zb = add i32 %i.za, -1
   %i.zc = and i32 %i.zb, %i.yi
@@ -680,9 +678,8 @@ bb.dz:                                            ; preds = %bb.dx
   br i1 %.not227, label %bb.eb, label %bb.ea
 
 bb.ea:                                            ; preds = %bb.dz
-  store ptr %.0.i53610041009, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #24
-  %i.zd = load i32, ptr %.sroa.0539.01010, align 8, !tbaa !323
+  %i.zd = load i32, ptr %.0.i53610041009, align 8, !tbaa !323
   %switch.tableidx1614 = add i32 %i.zd, -1        ; 2 uses
   %i.ze = icmp ult i32 %switch.tableidx1614, 17
   br i1 %i.ze, label %switch.lookup1615, label %_ZZN4LIEF5MachO13LayoutChecker14check_linkeditEvEN7chunk_t9to_stringEZNS1_14check_linkeditEvENS2_4KINDE.exit535
@@ -702,7 +699,7 @@ _ZZN4LIEF5MachO13LayoutChecker14check_linkeditEvEN7chunk_t9to_stringEZNS1_14chec
 
 bb.eb:                                            ; preds = %bb.dz
   %i.zh = add i64 %i.yq, %i.yj
-  %i.zi = load i32, ptr %.sroa.0539.01010, align 8, !tbaa !323
+  %i.zi = load i32, ptr %.0.i53610041009, align 8, !tbaa !323
   %switch.tableidx1618 = add i32 %i.zi, -1        ; 2 uses
   %i.zj = icmp ult i32 %switch.tableidx1618, 17
   br i1 %i.zj, label %switch.lookup1619, label %bb.ec
@@ -715,7 +712,8 @@ switch.lookup1619:                                ; preds = %bb.eb
 
 bb.ec:                                            ; preds = %bb.eb, %switch.lookup1619
   %.0.i536 = phi ptr [ %switch.load1621, %switch.lookup1619 ], [ @.str.232, %bb.eb ]
-  %i.zl = getelementptr inbounds nuw i8, ptr %.sroa.0539.01010, i64 24 ; 2 uses
+  store ptr %.0.i536, ptr %i.c, align 8, !tbaa !130
+  %i.zl = getelementptr inbounds nuw i8, ptr %.0.i53610041009, i64 24 ; 2 uses
   %.not748 = icmp eq ptr %i.zl, %.sroa.45.0.lcssa1287
   br i1 %.not748, label %.thread740, label %.lr.ph1013
 
@@ -1118,7 +1116,8 @@ bb.bn:                                            ; preds = %bb.bm
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fs, i64 60
   %i.fy = load i32, ptr %i.fx, align 4, !tbaa !392
   %i.fz = zext i32 %i.fy to i64
-  %i.ga = add i64 %i.fw, %i.fz
+  %i.ga = add i64 %i.fw, %i.fz                    ; 2 uses
+  store i64 %i.ga, ptr %i.a, align 8, !tbaa !60
   br label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bm
@@ -1129,7 +1128,7 @@ bb.bo:                                            ; preds = %bb.bm
   br label %bb.ew
 
 bb.bp:                                            ; preds = %._crit_edge432, %bb.bn
-  %.promoted = phi i64 [ %.promoted.pre, %._crit_edge432 ], [ %i.ga, %bb.bn ] ; 3 uses
+  %.promoted = phi i64 [ %.promoted.pre, %._crit_edge432 ], [ %i.ga, %bb.bn ]
   %i.gc = load ptr, ptr %i.ad, align 8, !tbaa !8, !nonnull !16, !align !17 ; 3 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gc, i64 136
   %i.ge = load ptr, ptr %i.gd, align 8, !tbaa !68, !noalias !576 ; 3 uses
@@ -1144,9 +1143,8 @@ bb.bp:                                            ; preds = %._crit_edge432, %bb
 
 .lr.ph:                                           ; preds = %bb.bp, %bb.bs
   %.sroa.4316.0428 = phi ptr [ %i.hc, %bb.bs ], [ %i.ge, %bb.bp ] ; 2 uses
-  %.sroa.8.0427 = phi i64 [ %i.hd, %bb.bs ], [ 0, %bb.bp ]
-  %i.gl = phi i64 [ %4, %bb.bs ], [ %.promoted, %bb.bp ] ; 3 uses
-  %i.gm = phi i64 [ %i.hb, %bb.bs ], [ %.promoted, %bb.bp ] ; 2 uses
+  %i.gl = phi i64 [ %i.hd, %bb.bs ], [ 0, %bb.bp ]
+  %i.gm = phi i64 [ %i.hb, %bb.bs ], [ %.promoted, %bb.bp ] ; 3 uses
   %i.gn = load ptr, ptr %.sroa.4316.0428, align 8, !tbaa !76 ; 4 uses
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 32
   %i.gp = load i64, ptr %i.go, align 8, !tbaa !78
@@ -1160,7 +1158,7 @@ bb.bq:                                            ; preds = %.lr.ph
   %i.gu = load i32, ptr %i.gt, align 8, !tbaa !582 ; 3 uses
   %.not263 = icmp eq i32 %i.gu, 0
   %i.gv = zext i32 %i.gu to i64
-  %.not264 = icmp eq i64 %i.gl, %i.gv
+  %.not264 = icmp eq i64 %i.gm, %i.gv
   %or.cond406 = select i1 %.not263, i1 true, i1 %.not264
   br i1 %or.cond406, label %bb.br, label %.thread354
 
@@ -1168,11 +1166,11 @@ bb.br:                                            ; preds = %bb.bq
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gn, i64 60
   %i.gx = load i32, ptr %i.gw, align 4, !tbaa !595
   %i.gy = zext i32 %i.gx to i64
-  %i.gz = add i64 %i.gl, %i.gy                    ; 2 uses
+  %i.gz = add i64 %i.gm, %i.gy                    ; 2 uses
+  store i64 %i.gz, ptr %i.a, align 8, !tbaa !60
   br label %bb.bs
 
 .thread354:                                       ; preds = %bb.bq
-  store i64 %i.gm, ptr %i.a, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #24
   store i32 %i.gu, ptr %i.h, align 4, !tbaa !107
   %i.ha = call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJmjEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.65, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 4 dereferenceable(4) %i.h)
@@ -1180,16 +1178,13 @@ bb.br:                                            ; preds = %bb.bq
   br label %bb.ew
 
 bb.bs:                                            ; preds = %bb.br, %.lr.ph
-  %i.hb = phi i64 [ %i.gz, %bb.br ], [ %i.gm, %.lr.ph ] ; 2 uses
-  %4 = phi i64 [ %i.gz, %bb.br ], [ %i.gl, %.lr.ph ]
+  %i.hb = phi i64 [ %i.gz, %bb.br ], [ %i.gm, %.lr.ph ]
   %i.hc = getelementptr inbounds nuw i8, ptr %.sroa.4316.0428, i64 8
-  %i.hd = add nuw nsw i64 %.sroa.8.0427, 1        ; 2 uses
+  %i.hd = add nuw nsw i64 %i.gl, 1                ; 2 uses
   %.not422 = icmp eq i64 %i.hd, %i.gk
   br i1 %.not422, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.bs, %bb.bp
-  %.lcssa424 = phi i64 [ %.promoted, %bb.bp ], [ %i.hb, %bb.bs ]
-  store i64 %.lcssa424, ptr %i.a, align 8
   %i.he = call noundef ptr @_ZNK4LIEF5MachO6Binary15function_startsEv(ptr noundef nonnull align 8 dereferenceable(552) %i.gc) #24 ; 3 uses
   %.not265 = icmp eq ptr %i.he, null
   br i1 %.not265, label %bb.bw, label %bb.bt
@@ -1592,7 +1587,7 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
   %i.d = alloca i64, align 8                      ; 4 uses
-  %i.e = alloca i64, align 8                      ; 8 uses
+  %i.e = alloca i64, align 8                      ; 7 uses
   %i.f = alloca i32, align 4                      ; 4 uses
   %i.g = alloca i32, align 4                      ; 4 uses
   %i.h = alloca i64, align 8                      ; 4 uses
@@ -1652,6 +1647,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.ak = phi i64 [ %i.aj, %bb.e ], [ 0, %bb.d ]  ; 2 uses
   store i64 %i.ak, ptr %i.d, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #24
+  store i64 0, ptr %i.e, align 8, !tbaa !60
   %i.al = getelementptr inbounds nuw i8, ptr %i.l, i64 80
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !718, !noalias !719 ; 3 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.l, i64 88
@@ -1666,7 +1662,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 .lr.ph:                                           ; preds = %bb.f, %bb.k
   %.sroa.432.067 = phi ptr [ %i.bu, %bb.k ], [ %i.am, %bb.f ] ; 4 uses
   %.sroa.8.066 = phi i64 [ %i.bv, %bb.k ], [ 0, %bb.f ]
-  %i.at = phi i64 [ %i.bt, %bb.k ], [ 0, %bb.f ]  ; 4 uses
+  %i.at = phi i64 [ %i.bt, %bb.k ], [ 0, %bb.f ]
   %i.au = getelementptr inbounds nuw i8, ptr %.sroa.432.067, i64 4
   %i.av = load i32, ptr %i.au, align 4, !tbaa !725 ; 2 uses
   %i.aw = zext i32 %i.av to i64                   ; 2 uses
@@ -1674,7 +1670,6 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %.not29, label %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO14SegmentCommandESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
-  store i64 %i.at, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #24
   store i32 %i.av, ptr %i.f, align 4, !tbaa !107
   %i.ax = call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJmjmEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.108, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.f, ptr noundef nonnull align 8 dereferenceable(8) %i.c)
@@ -1701,7 +1696,6 @@ _ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO14SegmentCommandESaIS4_EES4_N9__gnu
   br i1 %i.bm, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZN4LIEF12ref_iteratorIRKSt6vectorIPNS_5MachO14SegmentCommandESaIS4_EES4_N9__gnu_cxx17__normal_iteratorIPKS4_S6_EEEixEm.exit
-  store i64 %i.at, ptr %i.e, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ba, i64 56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #24
   store i32 %i.bb, ptr %i.g, align 4, !tbaa !107
@@ -1720,7 +1714,6 @@ bb.i:                                             ; preds = %_ZN4LIEF12ref_itera
   br i1 %.not30, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  store i64 %i.at, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #24
   store i32 %i.bq, ptr %i.i, align 4, !tbaa !107
   %i.bs = call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJmjmEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.110, ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull align 4 dereferenceable(4) %i.i, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
@@ -1728,7 +1721,8 @@ bb.j:                                             ; preds = %bb.i
   br label %.thread
 
 bb.k:                                             ; preds = %bb.i
-  %i.bt = add i64 %i.at, 1
+  %i.bt = add i64 %i.at, 1                        ; 2 uses
+  store i64 %i.bt, ptr %i.e, align 8, !tbaa !60
   %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.432.067, i64 32
   %i.bv = add nuw nsw i64 %.sroa.8.066, 1         ; 2 uses
   %.not46 = icmp eq i64 %i.bv, %i.as
@@ -1750,7 +1744,7 @@ bb.l:                                             ; preds = %bb.a, %.thread, %bb
 define hidden noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker27check_lazy_load_dylib_infosEv(ptr noundef nonnull align 8 dereferenceable(40) %0) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 7 uses
-  %i.b = alloca i64, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 7 uses
   %i.c = alloca i64, align 8                      ; 4 uses
   %1 = alloca %"class.LIEF::SpanStream", align 8  ; 12 uses
   %2 = alloca %"class.LIEF::result.316", align 4  ; 13 uses
@@ -1760,6 +1754,7 @@ bb.a:
   %i.g = alloca i32, align 4                      ; 4 uses
   %i.h = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #24
+  store i64 16384, ptr %i.b, align 8, !tbaa !60
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !8, !nonnull !16, !align !17 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !24
@@ -1779,8 +1774,6 @@ bb.a:
   br i1 %.not113159, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %bb.a
-  %.lcssa158 = phi i64 [ 16384, %bb.a ], [ %i.bu, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ]
-  store i64 %.lcssa158, ptr %i.b, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 136
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !68, !noalias !735 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 144
@@ -1850,11 +1843,12 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.br = getelementptr inbounds nuw i8, ptr %i.aq, i64 96
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !58
   %i.bt = add i64 %spec.select112, %i.bs
-  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 %i.bt)
+  %.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %i.ap, i64 %i.bt) ; 2 uses
+  store i64 %.sroa.speculated, ptr %i.b, align 8, !tbaa !60
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread86, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit40.thread87
-  %i.bu = phi i64 [ %i.ap, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ %i.ap, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread86 ], [ %.sroa.speculated, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit40.thread87 ] ; 2 uses
+  %i.bu = phi i64 [ %i.ap, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ %i.ap, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread86 ], [ %.sroa.speculated, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit40.thread87 ]
   %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.479.0161, i64 8
   %i.bw = add nuw nsw i64 %.sroa.880.0160, 1      ; 2 uses
   %.not113 = icmp eq i64 %i.bw, %i.w

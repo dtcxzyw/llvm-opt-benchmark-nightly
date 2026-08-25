@@ -204,7 +204,7 @@ Ndr_DataSize.exit:                                ; preds = %bb.ac, %bb.ad
 bb.ae:                                            ; preds = %.lr.ph168, %Ndr_DataSize.exit132
   %.val60.pre201 = phi ptr [ %.val61.pre, %.lr.ph168 ], [ %.val60.pre264, %Ndr_DataSize.exit132 ] ; 8 uses
   %.val.i131197 = phi ptr [ %.val.pre, %.lr.ph168 ], [ %.val.i131266, %Ndr_DataSize.exit132 ] ; 6 uses
-  %.promoted159 = phi ptr [ %.val.i97184, %.lr.ph168 ], [ %.promoted159195268, %Ndr_DataSize.exit132 ] ; 4 uses
+  %.promoted159 = phi ptr [ %.val.i97184, %.lr.ph168 ], [ %.promoted159195268, %Ndr_DataSize.exit132 ] ; 5 uses
   %.promoted = phi i32 [ %i.dx, %.lr.ph168 ], [ %.promoted190270, %Ndr_DataSize.exit132 ] ; 5 uses
   %.1164 = phi i32 [ 3, %.lr.ph168 ], [ %i.hl, %Ndr_DataSize.exit132 ] ; 5 uses
   %i.en = sext i32 %.1164 to i64                  ; 4 uses
@@ -309,6 +309,7 @@ Ndr_ObjReadArray.exit:                            ; preds = %bb.al, %Ndr_DataSiz
   br label %bb.ao
 
 bb.ao:                                            ; preds = %.lr.ph158, %bb.bb
+  %.promoted159196 = phi ptr [ %.promoted159, %.lr.ph158 ], [ %.promoted159197, %bb.bb ] ; 4 uses
   %.promoted191 = phi i32 [ %.promoted, %.lr.ph158 ], [ %.promoted192, %bb.bb ]
   %indvars.iv = phi i64 [ 0, %.lr.ph158 ], [ %indvars.iv.next, %bb.bb ] ; 4 uses
   %storemerge162 = phi ptr [ %.promoted159, %.lr.ph158 ], [ %storemerge161, %bb.bb ] ; 8 uses
@@ -367,12 +368,14 @@ bb.ay:                                            ; preds = %bb.aw
   br label %Vec_IntGrow.exit.sink.split.i.i118
 
 Vec_IntGrow.exit.sink.split.i.i118:               ; preds = %bb.ax, %bb.ay, %bb.as, %bb.at
-  %storemerge = phi ptr [ %i.gj, %bb.at ], [ %i.gi, %bb.as ], [ %i.gn, %bb.ax ], [ %i.go, %bb.ay ]
+  %storemerge = phi ptr [ %i.gj, %bb.at ], [ %i.gi, %bb.as ], [ %i.gn, %bb.ax ], [ %i.go, %bb.ay ] ; 3 uses
   %spec.select.sink.i.i119 = phi i32 [ %i.gd, %bb.at ], [ %i.gd, %bb.as ], [ %spec.select.i.i127, %bb.ax ], [ %spec.select.i.i127, %bb.ay ]
+  store ptr %storemerge, ptr %i.d, align 8, !tbaa !23
   store i32 %spec.select.sink.i.i119, ptr %i.a, align 8, !tbaa !22
   br label %Vec_IntGrow.exit.i.i121
 
 Vec_IntGrow.exit.i.i121:                          ; preds = %Vec_IntGrow.exit.sink.split.i.i118, %bb.av, %bb.au, %bb.aq
+  %.promoted159198 = phi ptr [ %storemerge, %Vec_IntGrow.exit.sink.split.i.i118 ], [ %.promoted159196, %bb.av ], [ %.promoted159196, %bb.au ], [ %.promoted159196, %bb.aq ]
   %storemerge160 = phi ptr [ %storemerge, %Vec_IntGrow.exit.sink.split.i.i118 ], [ %storemerge162, %bb.av ], [ %storemerge162, %bb.au ], [ %storemerge162, %bb.aq ] ; 2 uses
   %i.gp = sext i32 %i.ga to i64
   %i.gq = shl nsw i64 %i.gp, 2
@@ -386,8 +389,9 @@ Vec_IntGrow.exit.i.i121:                          ; preds = %Vec_IntGrow.exit.si
   br label %Vec_IntGetEntry.exit130
 
 Vec_IntGetEntry.exit130:                          ; preds = %bb.ao, %Vec_IntGrow.exit.i.i121
+  %.promoted159197 = phi ptr [ %.promoted159196, %bb.ao ], [ %.promoted159198, %Vec_IntGrow.exit.i.i121 ] ; 2 uses
   %.promoted192 = phi i32 [ %.promoted191, %bb.ao ], [ %i.gd, %Vec_IntGrow.exit.i.i121 ] ; 2 uses
-  %storemerge161 = phi ptr [ %storemerge162, %bb.ao ], [ %storemerge160, %Vec_IntGrow.exit.i.i121 ] ; 4 uses
+  %storemerge161 = phi ptr [ %storemerge162, %bb.ao ], [ %storemerge160, %Vec_IntGrow.exit.i.i121 ] ; 2 uses
   %i.gv = phi i32 [ %i.ga, %bb.ao ], [ %i.gd, %Vec_IntGrow.exit.i.i121 ]
   %i.gw = sext i32 %i.gc to i64
   %i.gx = getelementptr inbounds [4 x i8], ptr %storemerge161, i64 %i.gw
@@ -414,7 +418,6 @@ bb.bb:                                            ; preds = %Vec_IntGetEntry.exi
   br i1 %exitcond.not, label %..loopexit_crit_edge, label %bb.ao, !llvm.loop !68
 
 ..loopexit_crit_edge:                             ; preds = %bb.bb
-  store ptr %storemerge161, ptr %i.d, align 8
   %.val.i131.pre = load ptr, ptr %i.l, align 8, !tbaa !17 ; 2 uses
   %.phi.trans.insert199 = getelementptr inbounds i8, ptr %.val.i131.pre, i64 %i.en
   %.pre200 = load i8, ptr %.phi.trans.insert199, align 1, !tbaa !9
@@ -422,11 +425,11 @@ bb.bb:                                            ; preds = %Vec_IntGetEntry.exi
   br label %.loopexit
 
 .loopexit:                                        ; preds = %..loopexit_crit_edge, %bb.ae
-  %.val60.pre = phi ptr [ %.val60.pre201, %bb.ae ], [ %.val60.pre.pre, %..loopexit_crit_edge ] ; 2 uses
-  %i.hg = phi i8 [ %i.ep, %bb.ae ], [ %.pre200, %..loopexit_crit_edge ]
-  %.val.i131 = phi ptr [ %.val.i131197, %bb.ae ], [ %.val.i131.pre, %..loopexit_crit_edge ] ; 2 uses
-  %.promoted159195 = phi ptr [ %.promoted159, %bb.ae ], [ %storemerge161, %..loopexit_crit_edge ] ; 2 uses
-  %.promoted190 = phi i32 [ %.promoted, %bb.ae ], [ %.promoted192, %..loopexit_crit_edge ] ; 2 uses
+  %.val60.pre = phi ptr [ %.val60.pre.pre, %..loopexit_crit_edge ], [ %.val60.pre201, %bb.ae ] ; 2 uses
+  %i.hg = phi i8 [ %.pre200, %..loopexit_crit_edge ], [ %i.ep, %bb.ae ]
+  %.val.i131 = phi ptr [ %.val.i131.pre, %..loopexit_crit_edge ], [ %.val.i131197, %bb.ae ] ; 2 uses
+  %.promoted159195 = phi ptr [ %.promoted159197, %..loopexit_crit_edge ], [ %.promoted159, %bb.ae ] ; 2 uses
+  %.promoted190 = phi i32 [ %.promoted192, %..loopexit_crit_edge ], [ %.promoted, %bb.ae ] ; 2 uses
   %i.hh = icmp ugt i8 %i.hg, 3
   br i1 %i.hh, label %Ndr_DataSize.exit132, label %.loopexit.thread
 

@@ -205,22 +205,21 @@ bb.a:
   br i1 %i.h, label %_ZNK6vectorIjLb0EjE5emptyEv.exit.thread.split, label %_ZN6vectorIjLb0EjE4backEv.exit.lr.ph
 
 _ZN6vectorIjLb0EjE4backEv.exit.lr.ph:             ; preds = %.split
-  %2 = zext i32 %.promoted to i64
   %i.i = load ptr, ptr %i.b, align 8, !tbaa !80   ; 3 uses
   br label %_ZN6vectorIjLb0EjE4backEv.exit
 
 _ZNK6vectorIjLb0EjE5emptyEv.exit:                 ; preds = %_ZNK2dd11pdd_manager6is_valEj.exit.thread
-  %i.j = icmp eq i64 %3, 0
+  %i.j = icmp eq i32 %3, 0
   br i1 %i.j, label %_ZNK6vectorIjLb0EjE5emptyEv.exit.thread.split, label %_ZN6vectorIjLb0EjE4backEv.exit, !llvm.loop !587
 
 _ZN6vectorIjLb0EjE4backEv.exit:                   ; preds = %_ZN6vectorIjLb0EjE4backEv.exit.lr.ph, %_ZNK6vectorIjLb0EjE5emptyEv.exit
-  %indvars.iv36 = phi i64 [ %2, %_ZN6vectorIjLb0EjE4backEv.exit.lr.ph ], [ %3, %_ZNK6vectorIjLb0EjE5emptyEv.exit ]
-  %3 = add nsw i64 %indvars.iv36, -1              ; 4 uses
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %3
-  %5 = load i32, ptr %4, align 4, !tbaa !71
-  %indvars = trunc nuw i64 %3 to i32              ; 2 uses
-  store i32 %indvars, ptr %i.f, align 4, !tbaa !71
-  %i.k = zext i32 %5 to i64
+  %2 = phi i32 [ %3, %_ZNK6vectorIjLb0EjE5emptyEv.exit ], [ %.promoted, %_ZN6vectorIjLb0EjE4backEv.exit.lr.ph ]
+  %3 = add i32 %2, -1                             ; 5 uses
+  %4 = zext i32 %3 to i64
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %4
+  %6 = load i32, ptr %5, align 4, !tbaa !71
+  store i32 %3, ptr %i.f, align 4, !tbaa !71
+  %i.k = zext i32 %6 to i64
   %i.l = getelementptr inbounds nuw [16 x i8], ptr %i.i, i64 %i.k
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   %i.n = load i32, ptr %i.m, align 4, !tbaa !86   ; 2 uses
@@ -255,7 +254,7 @@ _ZNK2dd11pdd_manager6is_valEj.exit.thread15.preheader: ; preds = %_ZN6vectorIjLb
   br label %_ZNK2dd11pdd_manager6is_valEj.exit.thread15
 
 _ZNK2dd11pdd_manager6is_valEj.exit.thread15:      ; preds = %_ZNK2dd11pdd_manager6is_valEj.exit.thread15.preheader, %_ZN6vectorIjLb0EjE9push_backERKj.exit
-  %i.ad = phi i32 [ %i.az, %_ZN6vectorIjLb0EjE9push_backERKj.exit ], [ %indvars, %_ZNK2dd11pdd_manager6is_valEj.exit.thread15.preheader ] ; 2 uses
+  %i.ad = phi i32 [ %i.az, %_ZN6vectorIjLb0EjE9push_backERKj.exit ], [ %3, %_ZNK2dd11pdd_manager6is_valEj.exit.thread15.preheader ] ; 2 uses
   %i.ae = phi ptr [ %i.at, %_ZN6vectorIjLb0EjE9push_backERKj.exit ], [ %i.i, %_ZNK2dd11pdd_manager6is_valEj.exit.thread15.preheader ] ; 2 uses
   %i.af = phi ptr [ %i.au, %_ZN6vectorIjLb0EjE9push_backERKj.exit ], [ %i.d, %_ZNK2dd11pdd_manager6is_valEj.exit.thread15.preheader ] ; 3 uses
   %i.ag = phi i32 [ %.pre, %_ZN6vectorIjLb0EjE9push_backERKj.exit ], [ %i.r, %_ZNK2dd11pdd_manager6is_valEj.exit.thread15.preheader ]

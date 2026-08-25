@@ -204,8 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load i64, ptr %i.b, align 8, !tbaa !37   ; 3 uses
-  %.promoted = load i64, ptr %i.a, align 8, !tbaa !70 ; 3 uses
-  %umax = tail call i64 @llvm.umax.i64(i64 %.promoted, i64 %i.c)
+  %.promoted = load i64, ptr %i.a, align 8, !tbaa !70 ; 2 uses
   %exitcond.not101.not = icmp ult i64 %.promoted, %i.c
   br i1 %exitcond.not101.not, label %.lr.ph103.preheader, label %.critedge
 
@@ -264,12 +263,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.c
   %i.y = sub nuw i64 %i.l, %i.o                   ; 2 uses
   store i32 0, ptr %i.m, align 4, !tbaa !65
-  %i.z = add i64 %i.e, 1                          ; 3 uses
+  %i.z = add nuw i64 %i.e, 1                      ; 3 uses
   store i64 %i.z, ptr %i.a, align 8, !tbaa !70
-  %.not = icmp eq i64 %i.y, 0
-  %exitcond.not = icmp eq i64 %i.z, %umax
-  %or.cond = or i1 %.not, %exitcond.not
-  br i1 %or.cond, label %.critedge, label %.lr.ph103
+  %.not = icmp ne i64 %i.y, 0
+  %3 = icmp ult i64 %i.z, %i.c
+  %or.cond = select i1 %.not, i1 %3, i1 false
+  br i1 %or.cond, label %.lr.ph103, label %.critedge
 
 .critedge:                                        ; preds = %bb.h, %.lr.ph, %bb.a, %bb.d, %bb.g, %bb.b
   ret void

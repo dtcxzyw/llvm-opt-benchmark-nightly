@@ -205,7 +205,7 @@ bb.a:
   %9 = alloca %"class.std::allocator", align 1    ; 4 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %11 = alloca %"class.std::allocator", align 1   ; 4 uses
-  %12 = alloca %class.ptr_vector, align 8         ; 6 uses
+  %12 = alloca %class.ptr_vector, align 8         ; 7 uses
   %13 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %14 = alloca %"class.std::allocator", align 1   ; 4 uses
   %15 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
@@ -608,7 +608,8 @@ bb.bk:                                            ; preds = %_ZN8psort_nwIN14pb2
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #22
   %i.jg = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef 24) ; 8 uses
   store i32 2, ptr %i.jg, align 4, !tbaa !103
-  %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 8 ; 2 uses
+  %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 8 ; 3 uses
+  store ptr %i.jh, ptr %12, align 8, !tbaa !14
   %i.ji = getelementptr inbounds nuw i8, ptr %i.jg, i64 4
   store ptr %.0.i, ptr %i.jh, align 8, !tbaa !114
   store i32 1, ptr %i.ji, align 4, !tbaa !103
@@ -639,22 +640,22 @@ bb.bm:                                            ; preds = %bb.bl
 _ZN6vectorIP4exprLb0EjE13expand_vectorEv.exit125.2: ; preds = %bb.bm
   %i.jv = zext i32 %i.js to i64
   %i.jw = tail call noalias noundef ptr @_ZN6memory10reallocateEPvm(ptr noundef nonnull %i.jg, i64 noundef %i.jv) ; 3 uses
+  %20 = getelementptr inbounds nuw i8, ptr %i.jw, i64 8 ; 2 uses
+  store ptr %20, ptr %12, align 8, !tbaa !14
   store i32 %i.jq, ptr %i.jw, align 4, !tbaa !103
-  %.phi.trans.insert.i.i.i.i.2.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.jw, i64 4
-  %.pre2.i.i.i.i.2.pre = load i32, ptr %.phi.trans.insert.i.i.i.i.2.phi.trans.insert, align 4, !tbaa !103
-  %20 = getelementptr inbounds nuw i8, ptr %i.jw, i64 8
+  %.phi.trans.insert.i.i.i.i.2 = getelementptr inbounds nuw i8, ptr %i.jw, i64 4
+  %.pre2.i.i.i.i.2 = load i32, ptr %.phi.trans.insert.i.i.i.i.2, align 4, !tbaa !103
   br label %_ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit.i.i.i.2
 
 _ZN6vectorIP4exprLb0EjE9push_backERKS1_.exit.i.i.i.2: ; preds = %_ZN6vectorIP4exprLb0EjE13expand_vectorEv.exit125.2, %bb.bk
-  %i.jx = phi ptr [ %20, %_ZN6vectorIP4exprLb0EjE13expand_vectorEv.exit125.2 ], [ %i.jh, %bb.bk ] ; 4 uses
-  %i.jy = phi i32 [ %.pre2.i.i.i.i.2.pre, %_ZN6vectorIP4exprLb0EjE13expand_vectorEv.exit125.2 ], [ 2, %bb.bk ] ; 2 uses
+  %i.jx = phi ptr [ %20, %_ZN6vectorIP4exprLb0EjE13expand_vectorEv.exit125.2 ], [ %i.jh, %bb.bk ] ; 3 uses
+  %i.jy = phi i32 [ %.pre2.i.i.i.i.2, %_ZN6vectorIP4exprLb0EjE13expand_vectorEv.exit125.2 ], [ 2, %bb.bk ] ; 2 uses
   %i.jz = getelementptr inbounds i8, ptr %i.jx, i64 -4
   %i.ka = zext i32 %i.jy to i64
   %i.kb = getelementptr inbounds nuw [8 x i8], ptr %i.jx, i64 %i.ka
   store ptr %.0.i47, ptr %i.kb, align 8, !tbaa !114
   %i.kc = add i32 %i.jy, 1
   store i32 %i.kc, ptr %i.jz, align 4, !tbaa !103
-  store ptr %i.jx, ptr %12, align 8
   %i.kd = load ptr, ptr %i.b, align 8, !tbaa !248, !nonnull !99, !align !100 ; 2 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %i.kd, i64 40
   %i.kf = load ptr, ptr %i.ke, align 8, !tbaa !221, !nonnull !99, !align !100

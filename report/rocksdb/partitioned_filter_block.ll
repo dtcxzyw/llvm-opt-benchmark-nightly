@@ -204,7 +204,7 @@ declare noundef i64 @_ZNK7rocksdb23FilterBlockReaderCommonINS_27Block_kFilterPar
 declare i64 @malloc_usable_size(ptr noundef) local_unnamed_addr #11
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN7rocksdb28PartitionedFilterBlockReader17CacheDependenciesERKNS_11ReadOptionsEbPNS_18FilePrefetchBufferE(ptr dead_on_unwind noalias nofree writable sret(%"class.rocksdb::Status") align 8 captures(address) %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr noundef nonnull align 8 dereferenceable(192) %2, i1 noundef zeroext %3, ptr noundef %4) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN7rocksdb28PartitionedFilterBlockReader17CacheDependenciesERKNS_11ReadOptionsEbPNS_18FilePrefetchBufferE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.rocksdb::Status") align 8 captures(address) %0, ptr noundef nonnull align 8 dereferenceable(120) %1, ptr noundef nonnull align 8 dereferenceable(192) %2, i1 noundef zeroext %3, ptr noundef %4) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.std::unique_ptr.2", align 8 ; 4 uses
   %6 = alloca %"struct.std::_Hashtable<unsigned long, std::pair<const unsigned long, rocksdb::CachableEntry<rocksdb::ParsedFullFilterBlock>>, std::allocator<std::pair<const unsigned long, rocksdb::CachableEntry<rocksdb::ParsedFullFilterBlock>>>, std::__detail::_Select1st, std::equal_to<unsigned long>, std::hash<unsigned long>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true>>::_Scoped_node", align 8 ; 6 uses
@@ -607,7 +607,6 @@ bb.ae:                                            ; preds = %bb.p
 .loopexit176:                                     ; preds = %bb.bw, %.noexc130
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %32, ptr %i.mh, align 8
   br label %bb.cj
 
 .loopexit.split-lp:                               ; preds = %bb.au, %.noexc102, %bb.by
@@ -962,7 +961,7 @@ _ZN7rocksdb9BlockIterINS_10IndexValueEE11SeekToFirstEv.exit104.preheader: ; pred
   %i.me = getelementptr inbounds nuw i8, ptr %15, i64 5 ; 3 uses
   %i.mf = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 3 uses
   %i.mg = getelementptr inbounds nuw i8, ptr %15, i64 8 ; 4 uses
-  %i.mh = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 11 uses
+  %i.mh = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.not.i.i120 = icmp eq ptr %0, %15
   %i.mi = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.mj = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -973,13 +972,11 @@ _ZN7rocksdb9BlockIterINS_10IndexValueEE11SeekToFirstEv.exit104.preheader: ; pred
   %i.mo = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.mp = getelementptr inbounds nuw i8, ptr %29, i64 8
   %i.mq = getelementptr inbounds nuw i8, ptr %29, i64 24 ; 2 uses
-  %.promoted = load ptr, ptr %i.mh, align 8
   %.not174 = icmp eq ptr %i.lr, null
   %spec.select = select i1 %.not174, ptr %4, ptr %i.lr
   br label %_ZN7rocksdb9BlockIterINS_10IndexValueEE11SeekToFirstEv.exit104
 
 _ZN7rocksdb9BlockIterINS_10IndexValueEE11SeekToFirstEv.exit104: ; preds = %_ZN7rocksdb9BlockIterINS_10IndexValueEE11SeekToFirstEv.exit104.preheader, %.noexc130
-  %31 = phi ptr [ %.promoted, %_ZN7rocksdb9BlockIterINS_10IndexValueEE11SeekToFirstEv.exit104.preheader ], [ %32, %.noexc130 ] ; 10 uses
   %i.mr = load i32, ptr %i.av, align 4, !tbaa !263
   %i.ms = load i32, ptr %i.lv, align 8, !tbaa !409
   %i.mt = icmp ult i32 %i.ms, %i.mr
@@ -1072,6 +1069,7 @@ _ZN7rocksdb6StatusaSEOS0_.exit116.thread:         ; preds = %bb.ay, %_ZNKSt14def
   br i1 %i.nj, label %bb.bd, label %bb.az
 
 bb.az:                                            ; preds = %_ZN7rocksdb6StatusaSEOS0_.exit116.thread
+  store ptr null, ptr %i.mh, align 8, !tbaa !80
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 6, i1 false)
   br i1 %.not.i.i120, label %_ZN7rocksdb6StatusC2EOS0_.exit123thread-pre-split, label %bb.ba
 
@@ -1086,19 +1084,18 @@ bb.ba:                                            ; preds = %bb.az
   store i8 0, ptr %i.me, align 1, !tbaa !143
   %i.nm = load ptr, ptr %i.mg, align 8, !tbaa !91
   store ptr null, ptr %i.mg, align 8, !tbaa !91
+  store ptr %i.nm, ptr %i.mh, align 8, !tbaa !91
   br label %_ZN7rocksdb6StatusC2EOS0_.exit123thread-pre-split
 
 bb.bb:                                            ; preds = %bb.ax
   %i.nn = landingpad { ptr, i32 }
           cleanup
-  store ptr %31, ptr %i.mh, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #21
   br label %bb.cj
 
 bb.bc:                                            ; preds = %_ZNK7rocksdb14IndexBlockIter5valueEv.exit112
   %i.no = landingpad { ptr, i32 }
           cleanup
-  store ptr %31, ptr %i.mh, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #21
   br label %.body125
 
@@ -1173,7 +1170,6 @@ _ZNSt10_HashtableImSt4pairIKmN7rocksdb13CachableEntryINS2_21ParsedFullFilterBloc
 bb.bj:                                            ; preds = %.noexc124
   %i.ol = landingpad { ptr, i32 }
           cleanup
-  store ptr %31, ptr %i.mh, align 8
   call void @_ZNSt10_HashtableImSt4pairIKmN7rocksdb13CachableEntryINS2_21ParsedFullFilterBlockEEEESaIS6_ENSt8__detail10_Select1stESt8equal_toImESt4hashImENS8_18_Mod_range_hashingENS8_20_Default_ranged_hashENS8_20_Prime_rehash_policyENS8_17_Hashtable_traitsILb0ELb0ELb1EEEE12_Scoped_nodeD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %6) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
   br label %.body125
@@ -1218,7 +1214,6 @@ bb.bo:                                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %bb.bl
   %i.pa = landingpad { ptr, i32 }
           catch ptr null
-  store ptr %31, ptr %i.mh, align 8
   %i.pb = extractvalue { ptr, i32 } %i.pa, 0
   call void @__clang_call_terminate(ptr %i.pb) #23
   unreachable
@@ -1237,17 +1232,14 @@ _ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEE15ReleaseResourceEb.exit.
 bb.bq:                                            ; preds = %.loopexit.i.i
   %i.pg = landingpad { ptr, i32 }
           cleanup
-  store ptr %31, ptr %i.mh, align 8
   br label %.body125
 
 _ZN7rocksdb6StatusC2EOS0_.exit123thread-pre-split: ; preds = %bb.bd, %bb.ba, %bb.az, %.loopexit
-  %.ph = phi ptr [ %31, %bb.bd ], [ %i.nm, %bb.ba ], [ null, %bb.az ], [ %31, %.loopexit ]
   %.pr270 = load ptr, ptr %i.ml, align 16, !tbaa !198
   br label %_ZN7rocksdb6StatusC2EOS0_.exit123
 
 _ZN7rocksdb6StatusC2EOS0_.exit123:                ; preds = %_ZN7rocksdb6StatusC2EOS0_.exit123thread-pre-split, %_ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEE15ReleaseResourceEb.exit.i, %bb.be
   %i.ph = phi ptr [ %.pr270, %_ZN7rocksdb6StatusC2EOS0_.exit123thread-pre-split ], [ null, %_ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEE15ReleaseResourceEb.exit.i ], [ %i.nq, %bb.be ] ; 2 uses
-  %32 = phi ptr [ %.ph, %_ZN7rocksdb6StatusC2EOS0_.exit123thread-pre-split ], [ %31, %_ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEE15ReleaseResourceEb.exit.i ], [ %31, %bb.be ] ; 4 uses
   %.not.i.i128 = icmp eq ptr %i.ph, null
   br i1 %.not.i.i128, label %bb.bs, label %bb.br, !prof !160
 
@@ -1277,14 +1269,13 @@ bb.bu:                                            ; preds = %bb.bt
 bb.bv:                                            ; preds = %bb.br
   %i.pr = landingpad { ptr, i32 }
           catch ptr null
-  store ptr %32, ptr %i.mh, align 8
   %i.ps = extractvalue { ptr, i32 } %i.pr, 0
   call void @__clang_call_terminate(ptr %i.ps) #23
   unreachable
 
 _ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEED2Ev.exit: ; preds = %bb.br, %bb.bs, %bb.bt, %bb.bu
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #21
-  br i1 %i.nj, label %bb.bw, label %.loopexit175
+  br i1 %i.nj, label %bb.bw, label %bb.bz
 
 bb.bw:                                            ; preds = %_ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEED2Ev.exit
   %i.pt = load ptr, ptr %17, align 8, !tbaa !22
@@ -1304,7 +1295,6 @@ bb.bw:                                            ; preds = %_ZN7rocksdb13Cachab
   br label %bb.cj
 
 bb.bx:                                            ; preds = %_ZN7rocksdb9BlockIterINS_10IndexValueEE11SeekToFirstEv.exit104
-  store ptr %31, ptr %i.mh, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !568)
   %i.pw = getelementptr inbounds nuw i8, ptr %17, i64 544
   %i.px = load <4 x i8>, ptr %i.pw, align 8, !tbaa !83, !noalias !568
@@ -1334,11 +1324,7 @@ _ZNK7rocksdb9BlockIterINS_10IndexValueEE6statusEv.exit: ; preds = %bb.bx, %.noex
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21, !noalias !568
   br label %bb.bz
 
-.loopexit175:                                     ; preds = %_ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEED2Ev.exit
-  store ptr %32, ptr %i.mh, align 8
-  br label %bb.bz
-
-bb.bz:                                            ; preds = %.loopexit175, %_ZNK7rocksdb9BlockIterINS_10IndexValueEE6statusEv.exit
+bb.bz:                                            ; preds = %_ZN7rocksdb13CachableEntryINS_21ParsedFullFilterBlockEED2Ev.exit, %_ZNK7rocksdb9BlockIterINS_10IndexValueEE6statusEv.exit
   %.not.i134 = icmp eq ptr %i.lr, null
   br i1 %.not.i134, label %_ZNSt10unique_ptrIN7rocksdb18FilePrefetchBufferESt14default_deleteIS1_EED2Ev.exit, label %_ZNKSt14default_deleteIN7rocksdb18FilePrefetchBufferEEclEPS1_.exit.i
 

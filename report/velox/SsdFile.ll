@@ -205,9 +205,7 @@ bb.e:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 400 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 416 ; 2 uses
-  %.promoted = load i64, ptr %i.y, align 8
   %umax = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
-  %.promoted163 = load i64, ptr %i.z, align 8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -238,17 +236,15 @@ bb.f:                                             ; preds = %bb.e
           to label %bb.p unwind label %bb.u
 
 bb.g:                                             ; preds = %.lr.ph, %bb.o
-  %13 = phi i64 [ %.promoted163, %.lr.ph ], [ %i.cw, %bb.o ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 3 uses
-  %i.al = phi i64 [ %.promoted, %.lr.ph ], [ %i.cv, %bb.o ]
+  %i.al = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 3 uses
   %.056124 = phi i64 [ 0, %.lr.ph ], [ %i.cp, %bb.o ]
-  %i.am = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %indvars.iv
+  %i.am = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %i.al
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %.sroa.0.0.copyload.i = load i64, ptr %i.an, align 8, !tbaa !14 ; 2 uses
   %i.ao = trunc i64 %.sroa.0.0.copyload.i to i32
   %i.ap = and i32 %i.ao, 8388607
   %i.aq = add nuw nsw i32 %i.ap, 1                ; 3 uses
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %indvars.iv
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.al
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !268 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 112
   %i.au = load i32, ptr %i.at, align 8, !tbaa !271 ; 2 uses
@@ -388,11 +384,13 @@ bb.o:                                             ; preds = %bb.g
   %i.ct = load double, ptr %i.cs, align 8, !tbaa !188
   %i.cu = fadd double %i.ct, %i.cr
   store double %i.cu, ptr %i.cs, align 8, !tbaa !188
-  %i.cv = add i64 %i.al, 1                        ; 2 uses
+  %13 = load i64, ptr %i.y, align 8, !tbaa !297
+  %i.cv = add i64 %13, 1
   store i64 %i.cv, ptr %i.y, align 8, !tbaa !297
-  %i.cw = add i64 %13, %i.co                      ; 2 uses
+  %14 = load i64, ptr %i.z, align 8, !tbaa !298
+  %i.cw = add i64 %14, %i.co
   store i64 %i.cw, ptr %i.z, align 8, !tbaa !298
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %indvars.iv.next = add nuw i64 %i.al, 1         ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %umax
   br i1 %exitcond.not, label %._crit_edge, label %bb.g, !llvm.loop !299
 

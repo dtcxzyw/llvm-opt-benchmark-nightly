@@ -205,7 +205,7 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #9
 ; Function Attrs: mustprogress uwtable
 define void @_ZN3gmx15LegacySimulator5do_cgEv(ptr nofree noundef nonnull readonly align 8 dereferenceable(297) %0) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca double, align 8                   ; 8 uses
+  %i.a = alloca double, align 8                   ; 12 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %i.c = alloca double, align 8                   ; 8 uses
   %i.d = alloca float, align 4                    ; 5 uses
@@ -222,7 +222,7 @@ bb.a:
   %8 = alloca %"class.(anonymous namespace)::EnergyEvaluator", align 8 ; 23 uses
   %i.h = alloca [3 x [3 x float]], align 16       ; 5 uses
   %9 = alloca %"struct.gmx::PTCouplingArrays", align 8 ; 2 uses
-  %i.i = alloca double, align 8                   ; 16 uses
+  %i.i = alloca double, align 8                   ; 15 uses
   %10 = alloca %"class.gmx::ArrayRefWithPadding.430", align 8 ; 4 uses
   %i.j = alloca double, align 8                   ; 12 uses
   %i.k = alloca double, align 8                   ; 12 uses
@@ -625,6 +625,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
           to label %bb.bj unwind label %bb.bm
 
 bb.ax:                                            ; preds = %.lr.ph648, %bb.bi
+  %13 = phi double [ 0.000000e+00, %.lr.ph648 ], [ %14, %bb.bi ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph648 ], [ %indvars.iv.next, %bb.bi ] ; 4 uses
   %.0224646 = phi i32 [ 0, %.lr.ph648 ], [ %.1225, %bb.bi ]
   br i1 %i.jw, label %bb.az, label %bb.ay
@@ -639,7 +640,6 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %.1225 = phi i32 [ %.0224646, %bb.ax ], [ %i.kf, %bb.ay ] ; 2 uses
   %i.kg = zext nneg i32 %.1225 to i64
   %i.kh = getelementptr inbounds nuw [12 x i8], ptr %i.jz, i64 %i.kg ; 3 uses
-  %.promoted = load double, ptr %i.i, align 8     ; 2 uses
   %i.ki = getelementptr inbounds nuw [12 x i8], ptr %i.jq, i64 %indvars.iv ; 7 uses
   %i.kj = getelementptr inbounds nuw [12 x i8], ptr %i.jr, i64 %indvars.iv ; 4 uses
   %i.kk = load i32, ptr %i.kh, align 4, !tbaa !332
@@ -654,7 +654,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.ko = load float, ptr %i.kj, align 4, !tbaa !333
   %i.kp = fmul float %i.kn, %i.ko
   %i.kq = fpext float %i.kp to double
-  %i.kr = fsub double %.promoted, %i.kq           ; 2 uses
+  %i.kr = fsub double %13, %i.kq                  ; 2 uses
   store double %i.kr, ptr %i.i, align 8, !tbaa !326
   br label %bb.bc
 
@@ -663,7 +663,7 @@ bb.bb:                                            ; preds = %bb.az
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.ba, %bb.bb
-  %i.ks = phi double [ %i.kr, %bb.ba ], [ %.promoted, %bb.bb ] ; 2 uses
+  %i.ks = phi double [ %i.kr, %bb.ba ], [ %13, %bb.bb ] ; 2 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kh, i64 4
   %i.ku = load i32, ptr %i.kt, align 4, !tbaa !332
   %.not351.1 = icmp eq i32 %i.ku, 0
@@ -689,7 +689,7 @@ bb.be:                                            ; preds = %bb.bc
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %bb.bd
-  %i.lf = phi double [ %i.le, %bb.be ], [ %i.ks, %bb.bd ]
+  %i.lf = phi double [ %i.le, %bb.be ], [ %i.ks, %bb.bd ] ; 2 uses
   %i.lg = getelementptr inbounds nuw i8, ptr %i.kh, i64 8
   %i.lh = load i32, ptr %i.lg, align 4, !tbaa !332
   %.not351.2 = icmp eq i32 %i.lh, 0
@@ -710,11 +710,12 @@ bb.bh:                                            ; preds = %bb.bf
   %i.lo = load float, ptr %i.lj, align 4, !tbaa !333
   %i.lp = fmul float %i.ln, %i.lo
   %i.lq = fpext float %i.lp to double
-  %i.lr = fsub double %i.lf, %i.lq
+  %i.lr = fsub double %i.lf, %i.lq                ; 2 uses
   store double %i.lr, ptr %i.i, align 8, !tbaa !326
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bg
+  %14 = phi double [ %i.lr, %bb.bh ], [ %i.lf, %bb.bg ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.ax, !llvm.loop !334
@@ -1117,7 +1118,11 @@ bb.dp:                                            ; preds = %bb.do, %bb.dm
   %.pre.i = load i32, ptr %i.aap, align 4, !tbaa !332
   %.not.us.i = icmp eq i32 %.pre.i, 0
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.aap, i64 4
+  %15 = load i32, ptr %i.aaq, align 4, !tbaa !332
+  %.not.us.1.i = icmp eq i32 %15, 0
   %i.aar = getelementptr inbounds nuw i8, ptr %i.aap, i64 8
+  %16 = load i32, ptr %i.aar, align 4, !tbaa !332
+  %.not.us.2.i = icmp eq i32 %16, 0
   br label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %bb.dv, %.lr.ph.split.us.preheader.i
@@ -1133,13 +1138,12 @@ bb.dq:                                            ; preds = %.lr.ph.split.us.i
   %i.aaw = fsub float %i.aau, %i.aav
   %i.aax = fmul float %i.aau, %i.aaw
   %i.aay = fpext float %i.aax to double
-  %i.aaz = fadd double %.lcssa4142.us.i, %i.aay
+  %i.aaz = fadd double %.lcssa4142.us.i, %i.aay   ; 2 uses
+  store double %i.aaz, ptr %i.a, align 8, !tbaa !326
   br label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq, %.lr.ph.split.us.i
   %i.aba = phi double [ %.lcssa4142.us.i, %.lr.ph.split.us.i ], [ %i.aaz, %bb.dq ] ; 2 uses
-  %13 = load i32, ptr %i.aaq, align 4, !tbaa !332
-  %.not.us.1.i = icmp eq i32 %13, 0
   br i1 %.not.us.1.i, label %bb.ds, label %bb.dt
 
 bb.ds:                                            ; preds = %bb.dr
@@ -1150,13 +1154,12 @@ bb.ds:                                            ; preds = %bb.dr
   %i.abf = fsub float %i.abc, %i.abe
   %i.abg = fmul float %i.abc, %i.abf
   %i.abh = fpext float %i.abg to double
-  %i.abi = fadd double %i.aba, %i.abh
+  %i.abi = fadd double %i.aba, %i.abh             ; 2 uses
+  store double %i.abi, ptr %i.a, align 8, !tbaa !326
   br label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds, %bb.dr
   %i.abj = phi double [ %i.aba, %bb.dr ], [ %i.abi, %bb.ds ] ; 2 uses
-  %14 = load i32, ptr %i.aar, align 4, !tbaa !332
-  %.not.us.2.i = icmp eq i32 %14, 0
   br i1 %.not.us.2.i, label %bb.du, label %bb.dv
 
 bb.du:                                            ; preds = %bb.dt
@@ -1167,12 +1170,12 @@ bb.du:                                            ; preds = %bb.dt
   %i.abo = fsub float %i.abl, %i.abn
   %i.abp = fmul float %i.abl, %i.abo
   %i.abq = fpext float %i.abp to double
-  %i.abr = fadd double %i.abj, %i.abq
+  %i.abr = fadd double %i.abj, %i.abq             ; 2 uses
+  store double %i.abr, ptr %i.a, align 8, !tbaa !326
   br label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du, %bb.dt
-  %i.abs = phi double [ %i.abj, %bb.dt ], [ %i.abr, %bb.du ] ; 2 uses
-  store double %i.abs, ptr %i.a, align 8
+  %i.abs = phi double [ %i.abj, %bb.dt ], [ %i.abr, %bb.du ]
   %indvars.iv.next55.i = add nuw nsw i64 %indvars.iv54.i, 1 ; 2 uses
   %exitcond58.not.i = icmp eq i64 %indvars.iv.next55.i, %wide.trip.count57.i
   br i1 %exitcond58.not.i, label %.loopexit.i, label %.lr.ph.split.us.i, !llvm.loop !497
@@ -1196,7 +1199,8 @@ bb.dw:                                            ; preds = %.lr.ph.split.i
   %i.acc = fsub float %i.aca, %i.acb
   %i.acd = fmul float %i.aca, %i.acc
   %i.ace = fpext float %i.acd to double
-  %i.acf = fadd double %.lcssa4142.i, %i.ace
+  %i.acf = fadd double %.lcssa4142.i, %i.ace      ; 2 uses
+  store double %i.acf, ptr %i.a, align 8, !tbaa !326
   br label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw, %.lr.ph.split.i
@@ -1214,7 +1218,8 @@ bb.dy:                                            ; preds = %bb.dx
   %i.acn = fsub float %i.ack, %i.acm
   %i.aco = fmul float %i.ack, %i.acn
   %i.acp = fpext float %i.aco to double
-  %i.acq = fadd double %i.acg, %i.acp
+  %i.acq = fadd double %i.acg, %i.acp             ; 2 uses
+  store double %i.acq, ptr %i.a, align 8, !tbaa !326
   br label %bb.dz
 
 bb.dz:                                            ; preds = %bb.dy, %bb.dx
@@ -1232,12 +1237,12 @@ bb.ea:                                            ; preds = %bb.dz
   %i.acy = fsub float %i.acv, %i.acx
   %i.acz = fmul float %i.acv, %i.acy
   %i.ada = fpext float %i.acz to double
-  %i.adb = fadd double %i.acr, %i.ada
+  %i.adb = fadd double %i.acr, %i.ada             ; 2 uses
+  store double %i.adb, ptr %i.a, align 8, !tbaa !326
   br label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea, %bb.dz
-  %i.adc = phi double [ %i.acr, %bb.dz ], [ %i.adb, %bb.ea ] ; 2 uses
-  store double %i.adc, ptr %i.a, align 8
+  %i.adc = phi double [ %i.acr, %bb.dz ], [ %i.adb, %bb.ea ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count57.i
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph.split.i, !llvm.loop !497

@@ -204,17 +204,17 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not112151, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %.lr.ph154
 
 .lr.ph154:                                        ; preds = %bb.d
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 3452
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 160 ; 4 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph154, %.critedge
-  %i.ac = phi ptr [ null, %.lr.ph154 ], [ %i.hd, %.critedge ] ; 2 uses
+  %i.ac = phi ptr [ null, %.lr.ph154 ], [ %i.hd, %.critedge ] ; 3 uses
   %.promoted = phi ptr [ null, %.lr.ph154 ], [ %.promoted190, %.critedge ] ; 3 uses
   %i.ad = phi ptr [ null, %.lr.ph154 ], [ %i.he, %.critedge ] ; 3 uses
-  %.promoted146 = phi ptr [ null, %.lr.ph154 ], [ %i.hf, %.critedge ] ; 5 uses
+  %.promoted146 = phi ptr [ null, %.lr.ph154 ], [ %i.hf, %.critedge ] ; 4 uses
   %.sroa.099.0152 = phi ptr [ %i.v, %.lr.ph154 ], [ %i.hg, %.critedge ] ; 2 uses
   %i.ae = load ptr, ptr %.sroa.099.0152, align 8, !tbaa !20 ; 5 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
@@ -225,7 +225,7 @@ bb.e:                                             ; preds = %.lr.ph154, %.crited
 
 _ZNSt6vectorIiSaIiEE5clearEv.exit.i:              ; preds = %bb.e
   %.not.i.i.i = icmp eq ptr %i.ad, %.promoted146
-  %spec.store.select = select i1 %.not.i.i.i, ptr %i.ad, ptr %.promoted146 ; 4 uses
+  %spec.store.select = select i1 %.not.i.i.i, ptr %i.ad, ptr %.promoted146 ; 3 uses
   store ptr %spec.store.select, ptr %i.y, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 24 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
@@ -237,8 +237,7 @@ _ZNSt6vectorIiSaIiEE5clearEv.exit.i:              ; preds = %bb.e
   br i1 %.not1517.i, label %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNSt6vectorIiSaIiEE5clearEv.exit.i, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i
-  %4 = phi ptr [ %5, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ], [ %.promoted146, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 4 uses
-  %i.an = phi ptr [ %i.bn, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ], [ %spec.store.select, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ]
+  %i.an = phi ptr [ %i.bn, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ], [ %i.ac, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 4 uses
   %i.ao = phi ptr [ %i.bo, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ], [ %.promoted, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 4 uses
   %i.ap = phi ptr [ %i.bp, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ], [ %.promoted146, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 6 uses
   %i.aq = phi ptr [ %i.bq, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ], [ %spec.store.select, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 4 uses
@@ -258,6 +257,7 @@ bb.f:                                             ; preds = %.lr.ph.i
 bb.g:                                             ; preds = %bb.f
   store i32 %i.ar, ptr %i.aq, align 4, !tbaa !8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aq, i64 4 ; 2 uses
+  store ptr %i.aw, ptr %i.y, align 8, !tbaa !169
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i
 
 bb.h:                                             ; preds = %bb.f
@@ -285,7 +285,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.h
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.bg = shl nuw nsw i64 %i.bf, 2
   %i.bh = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bg) #13
-          to label %.noexc64 unwind label %.loopexit116 ; 5 uses
+          to label %.noexc64 unwind label %.loopexit116 ; 6 uses
 
 .noexc64:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 %i.az ; 2 uses
@@ -308,18 +308,20 @@ bb.k:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i: ; preds = %bb.k, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i
-  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.bf
+  store ptr %i.bh, ptr %3, align 8, !tbaa !171
+  store ptr %i.bl, ptr %i.y, align 8, !tbaa !169
+  %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %i.bf ; 2 uses
+  store ptr %i.bm, ptr %i.z, align 8, !tbaa !170
   br label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i
 
 _ZNSt6vectorIiSaIiEE9push_backERKi.exit.i:        ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i, %bb.g, %.lr.ph.i
-  %5 = phi ptr [ %i.bh, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %4, %bb.g ], [ %4, %.lr.ph.i ] ; 3 uses
-  %i.bn = phi ptr [ %i.bl, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.aw, %bb.g ], [ %i.an, %.lr.ph.i ] ; 3 uses
-  %i.bo = phi ptr [ %i.bm, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.ao, %bb.g ], [ %i.ao, %.lr.ph.i ] ; 3 uses
+  %i.bn = phi ptr [ %i.bh, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.an, %bb.g ], [ %i.an, %.lr.ph.i ] ; 2 uses
+  %i.bo = phi ptr [ %i.bm, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.ao, %bb.g ], [ %i.ao, %.lr.ph.i ] ; 2 uses
   %i.bp = phi ptr [ %i.bh, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.ap, %bb.g ], [ %i.ap, %.lr.ph.i ]
-  %i.bq = phi ptr [ %i.bl, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.aw, %bb.g ], [ %i.aq, %.lr.ph.i ]
+  %i.bq = phi ptr [ %i.bl, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i ], [ %i.aw, %bb.g ], [ %i.aq, %.lr.ph.i ] ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.018.i, i64 4 ; 2 uses
   %.not15.i = icmp eq ptr %i.br, %i.am
-  br i1 %.not15.i, label %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread.loopexit, label %.lr.ph.i
+  br i1 %.not15.i, label %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread, label %.lr.ph.i
 
 .loopexit116:                                     ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit118 = landingpad { ptr, i32 }
@@ -331,16 +333,10 @@ _ZNSt6vectorIiSaIiEE9push_backERKi.exit.i:        ; preds = %_ZNSt6vectorIiSaIiE
           cleanup
   br label %bb.ap
 
-_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread.loopexit: ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i
-  store ptr %i.bo, ptr %i.z, align 8
-  store ptr %i.bn, ptr %i.y, align 8
-  store ptr %5, ptr %3, align 8
-  br label %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread
-
-_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread: ; preds = %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread.loopexit, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i
-  %.pre195 = phi ptr [ %5, %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread.loopexit ], [ %i.ac, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 21 uses
-  %i.bs = phi ptr [ %i.bn, %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread.loopexit ], [ %spec.store.select, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 7 uses
-  %.promoted191 = phi ptr [ %i.bo, %_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread.loopexit ], [ %.promoted, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ] ; 4 uses
+_ZN7CaDiCaL8Internal10get_clauseEPNS_6ClauseERSt6vectorIiSaIiEE.exit.thread: ; preds = %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i
+  %.pre195 = phi ptr [ %i.ac, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ], [ %i.bn, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ] ; 21 uses
+  %i.bs = phi ptr [ %spec.store.select, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ], [ %i.bq, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ] ; 7 uses
+  %.promoted191 = phi ptr [ %.promoted, %_ZNSt6vectorIiSaIiEE5clearEv.exit.i ], [ %i.bo, %_ZNSt6vectorIiSaIiEE9push_backERKi.exit.i ] ; 4 uses
   %i.bt = ptrtoint ptr %i.bs to i64
   %i.bu = ptrtoint ptr %.pre195 to i64
   %i.bv = sub i64 %i.bt, %i.bu                    ; 3 uses
@@ -743,7 +739,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.d, %_ZNSt6vector
   br label %bb.ar
 
 bb.ap:                                            ; preds = %.loopexit, %.loopexit.split-lp, %.loopexit116, %.loopexit.split-lp117, %bb.an, %bb.ak
-  %i.hi = phi ptr [ %4, %.loopexit.split-lp117 ], [ %.pre195, %bb.ak ], [ %.pre195, %bb.an ], [ %4, %.loopexit116 ], [ %.pre195, %.loopexit ], [ %.pre195, %.loopexit.split-lp ] ; 2 uses
+  %i.hi = phi ptr [ %i.an, %.loopexit.split-lp117 ], [ %.pre195, %bb.ak ], [ %.pre195, %bb.an ], [ %i.an, %.loopexit116 ], [ %.pre195, %.loopexit ], [ %.pre195, %.loopexit.split-lp ] ; 2 uses
   %.pn.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp119, %.loopexit.split-lp117 ], [ %i.gu, %bb.ak ], [ %i.hc, %bb.an ], [ %lpad.loopexit118, %.loopexit116 ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %.not.i.i.i86 = icmp eq ptr %i.hi, null
   br i1 %.not.i.i.i86, label %_ZNSt6vectorIiSaIiEED2Ev.exit87, label %bb.aq

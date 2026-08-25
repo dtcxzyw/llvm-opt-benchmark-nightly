@@ -204,20 +204,28 @@ bb.c:                                             ; preds = %.lr.ph69, %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !11265 ; 7 uses
   %i.af = load i64, ptr %i.t, align 8, !tbaa !11269
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.af ; 3 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.af ; 4 uses
+  store ptr %i.ag, ptr %i.a, align 8, !tbaa !11708
   %.not.i = icmp eq i64 %i.x, -1
   %.pre = ptrtoint ptr %i.ae to i64               ; 2 uses
-  br i1 %.not.i, label %._crit_edge43, label %bb.d
+  br i1 %.not.i, label %._crit_edge43, label %2
 
-bb.d:                                             ; preds = %bb.c
-  %2 = add i64 %i.x, %.pre                        ; 2 uses
-  %3 = ptrtoint ptr %i.ag to i64                  ; 2 uses
-  %4 = icmp ult i64 %2, %3                        ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.x ; 2 uses
-  %.pre.i = ptrtoint ptr %5 to i64
-  %6 = select i1 %4, ptr %5, ptr %i.ag
-  %.pre-phi.i = select i1 %4, i64 %.pre.i, i64 %3
-  %i.ah = sub i64 %2, %.pre-phi.i                 ; 2 uses
+2:                                                ; preds = %bb.c
+  %3 = add i64 %i.x, %.pre                        ; 2 uses
+  %4 = ptrtoint ptr %i.ag to i64                  ; 2 uses
+  %5 = icmp ult i64 %3, %4
+  br i1 %5, label %6, label %bb.d
+
+6:                                                ; preds = %2
+  %7 = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.x ; 3 uses
+  store ptr %7, ptr %i.a, align 8, !tbaa !11708
+  %.pre.i = ptrtoint ptr %7 to i64
+  br label %bb.d
+
+bb.d:                                             ; preds = %6, %2
+  %8 = phi ptr [ %7, %6 ], [ %i.ag, %2 ]
+  %.pre-phi.i = phi i64 [ %.pre.i, %6 ], [ %4, %2 ]
+  %i.ah = sub i64 %3, %.pre-phi.i                 ; 2 uses
   store i64 %i.ah, ptr %i.h, align 8, !tbaa !11705
   br label %._crit_edge43
 
@@ -225,7 +233,6 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.ac, ptr %i.j, align 8, !tbaa !12813
   store ptr %i.t, ptr %0, align 8, !tbaa !11702
   store ptr %i.ae, ptr %i.i, align 8, !tbaa !11706
-  store ptr %i.aj, ptr %i.a, align 8, !tbaa !11708
   br label %.thread
 
 .thread:                                          ; preds = %.thread.loopexit, %.lr.ph
@@ -236,7 +243,7 @@ bb.d:                                             ; preds = %bb.c
 
 ._crit_edge43:                                    ; preds = %bb.c, %bb.d
   %i.ai = phi i64 [ %i.ah, %bb.d ], [ -1, %bb.c ] ; 2 uses
-  %i.aj = phi ptr [ %6, %bb.d ], [ %i.ag, %bb.c ] ; 5 uses
+  %i.aj = phi ptr [ %8, %bb.d ], [ %i.ag, %bb.c ] ; 3 uses
   %i.ak = sub i64 %.0123168, %i.w                 ; 3 uses
   %i.al = ptrtoint ptr %i.aj to i64               ; 2 uses
   %i.am = sub i64 %i.al, %.pre                    ; 3 uses
@@ -247,7 +254,6 @@ bb.d:                                             ; preds = %bb.c
   store i64 %i.ac, ptr %i.j, align 8, !tbaa !12813
   store ptr %i.t, ptr %0, align 8, !tbaa !11702
   store ptr %i.ae, ptr %i.i, align 8, !tbaa !11706
-  store ptr %i.aj, ptr %i.a, align 8, !tbaa !11708
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a

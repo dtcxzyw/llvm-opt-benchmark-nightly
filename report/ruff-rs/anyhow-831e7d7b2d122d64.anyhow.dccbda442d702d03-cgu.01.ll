@@ -202,25 +202,21 @@ bb.a:
   %i.b = load ptr, ptr %0, align 8, !alias.scope !35, !noalias !38, !nonnull !16, !noundef !16
   call void @_RNvMs6_NtCsiXichZnxgbf_6anyhow5errorNtB5_9ErrorImpl5chain(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.a, ptr noundef nonnull %i.b), !noalias !35
   call void @llvm.experimental.noalias.scope.decl(metadata !40)
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 3 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.a, align 8, !alias.scope !43, !noundef !16
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %.split.i.preheader, label %.split.us.i
 
 .split.i.preheader:                               ; preds = %bb.a
-  %.promoted = load ptr, ptr %i.c, align 8        ; 2 uses
+  %.promoted = load ptr, ptr %1, align 8, !alias.scope !43 ; 2 uses
   %.not5.i.i22 = icmp eq ptr %.promoted, null
-  br i1 %.not5.i.i22, label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.split.i.preheader
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.promoted8 = load ptr, ptr %1, align 8
-  br label %bb.b
+  br i1 %.not5.i.i22, label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit, label %bb.b
 
 .split.us.i:                                      ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !alias.scope !46, !nonnull !16, !noundef !16 ; 2 uses
-  %.promoted.i = load ptr, ptr %i.c, align 8, !alias.scope !46 ; 2 uses
+  %.promoted.i = load ptr, ptr %1, align 8, !alias.scope !46 ; 2 uses
   %i.h = icmp eq ptr %.promoted.i, %i.g
   br i1 %i.h, label %.split7.us.i, label %.lr.ph.i
 
@@ -233,7 +229,7 @@ bb.a:
   br i1 %i.k, label %..split7.us_crit_edge.i, label %.lr.ph.i
 
 ..split7.us_crit_edge.i:                          ; preds = %.lr.ph.i
-  store ptr %i.j, ptr %i.c, align 8, !alias.scope !46
+  store ptr %i.j, ptr %1, align 8, !alias.scope !46
   %i.l = load ptr, ptr %i.i, align 8, !noalias !46, !nonnull !16, !noundef !16
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.n = load ptr, ptr %i.m, align 8, !noalias !46, !nonnull !16, !align !34, !noundef !16
@@ -245,15 +241,17 @@ bb.a:
   call void @_RNvXse_NtNtCscdodAO9FK5_5alloc3vec9into_iterINtB5_8IntoIterRDNtNtCs4NRVxsYgnAr_4core5error5ErrorEL_ENtNtNtB11_3ops4drop4Drop4dropCsiXichZnxgbf_6anyhow(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.a)
   br label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit
 
-bb.b:                                             ; preds = %.lr.ph, %bb.b
-  %i.o = phi ptr [ %.promoted, %.lr.ph ], [ %3, %bb.b ] ; 2 uses
-  %2 = phi ptr [ %.promoted8, %.lr.ph ], [ %i.s, %bb.b ] ; 2 uses
+bb.b:                                             ; preds = %.split.i.preheader, %bb.b
+  %i.o = phi ptr [ %3, %bb.b ], [ %.promoted, %.split.i.preheader ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !49)
+  %2 = load ptr, ptr %i.c, align 8, !alias.scope !43, !nonnull !16, !noundef !16 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.q = load ptr, ptr %i.p, align 8, !invariant.load !16, !noalias !43, !nonnull !16
   %i.r = call { ptr, ptr } %i.q(ptr noundef nonnull %i.o), !noalias !40, !inline_history !51 ; 2 uses
+  %3 = extractvalue { ptr, ptr } %i.r, 0          ; 3 uses
   %i.s = extractvalue { ptr, ptr } %i.r, 1
-  %3 = extractvalue { ptr, ptr } %i.r, 0          ; 2 uses
+  store ptr %3, ptr %1, align 8, !alias.scope !43
+  store ptr %i.s, ptr %i.c, align 8, !alias.scope !43
   %.not5.i.i = icmp eq ptr %3, null
   br i1 %.not5.i.i, label %_RINvYNtCsiXichZnxgbf_6anyhow5ChainNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4foldINtNtBE_6option6OptionRDNtNtBE_5error5ErrorEL_EINvNvBw_4last4someB1S_EEB5_.exit, label %bb.b, !llvm.loop !52
 

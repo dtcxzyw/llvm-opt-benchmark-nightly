@@ -204,16 +204,15 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load i64, ptr %i.c, align 8, !tbaa !27
-  %.promoted26 = load i64, ptr %i.a, align 8, !tbaa !25
+  %.promoted26 = load i64, ptr %i.c, align 8, !tbaa !27
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %4 = phi i64 [ %.promoted26, %.lr.ph ], [ %i.q, %bb.g ] ; 3 uses
   %i.e = phi ptr [ %.promoted, %.lr.ph ], [ %i.o, %bb.g ] ; 5 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !29
   %i.g = icmp sgt i8 %i.f, -1
-  %.not14 = icmp ult i64 %4, %3                   ; 2 uses
+  %3 = load i64, ptr %i.a, align 8, !tbaa !25     ; 3 uses
+  %.not14 = icmp ult i64 %3, %.promoted26         ; 2 uses
   br i1 %i.g, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
@@ -241,9 +240,9 @@ bb.g:                                             ; preds = %bb.f, %bb.d
   %.sink = phi i32 [ %i.n, %bb.f ], [ %i.j, %bb.d ]
   %i.o = phi ptr [ %i.k, %bb.f ], [ %i.h, %bb.d ] ; 2 uses
   %i.p = load ptr, ptr %i.d, align 8, !tbaa !28
-  %i.q = add nuw i64 %4, 1                        ; 2 uses
+  %i.q = add nuw i64 %3, 1
   store i64 %i.q, ptr %i.a, align 8, !tbaa !25
-  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %4
+  %i.r = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %3
   store i32 %.sink, ptr %i.r, align 4, !tbaa !31
   %i.s = icmp ult ptr %i.o, %2
   br i1 %i.s, label %bb.b, label %._crit_edge, !llvm.loop !82

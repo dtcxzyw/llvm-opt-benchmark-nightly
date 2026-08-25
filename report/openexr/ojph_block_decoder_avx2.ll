@@ -205,7 +205,6 @@ bb.q:                                             ; preds = %bb.p
   %i.bl = getelementptr inbounds nuw i8, ptr %11, i64 24 ; 3 uses
   %i.bm = sub nsw i32 4, %i.au
   %i.bn = sext i32 %i.bm to i64
-  %.promoted1016 = load i32, ptr %i.bj, align 8
   br label %bb.ah
 
 bb.r:                                             ; preds = %.lr.ph, %bb.ag
@@ -543,7 +542,6 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af, %bb.
   br i1 %i.jg, label %bb.av, label %bb.bm
 
 bb.ah:                                            ; preds = %.lr.ph1014, %._crit_edge999
-  %.promoted10031018 = phi i32 [ %.promoted1016, %.lr.ph1014 ], [ %.promoted10031017, %._crit_edge999 ] ; 2 uses
   %.47271012 = phi i32 [ %.0723.lcssa, %.lr.ph1014 ], [ %.5728.lcssa, %._crit_edge999 ] ; 2 uses
   %.07751011 = phi i32 [ 2, %.lr.ph1014 ], [ %i.jm, %._crit_edge999 ] ; 2 uses
   %i.jh = lshr exact i32 %.07751011, 1
@@ -554,13 +552,13 @@ bb.ah:                                            ; preds = %.lr.ph1014, %._crit
   br i1 %.not1159.a, label %._crit_edge999, label %.lr.ph998
 
 .lr.ph998:                                        ; preds = %bb.ah
+  %.promoted1003 = load i32, ptr %i.bj, align 8, !tbaa !19
   %.phi.trans.insert.i867.promoted = load i64, ptr %.phi.trans.insert.i867, align 8
   %.promoted1005 = load i32, ptr %i.bk, align 4
   %.promoted1010 = load i8, ptr %i.bl, align 8
   br label %bb.ai
 
 ._crit_edge999:                                   ; preds = %bb.au, %bb.ah
-  %.promoted10031017 = phi i32 [ %.promoted10031018, %bb.ah ], [ %i.rj, %bb.au ]
   %.lcssa985991.lcssa = phi ptr [ %.promoted987, %bb.ah ], [ %.lcssa985988, %bb.au ]
   %.0776.lcssa = phi ptr [ %i.jk, %bb.ah ], [ %i.rz, %bb.au ] ; 2 uses
   %.5728.lcssa = phi i32 [ %.47271012, %bb.ah ], [ %.7730, %bb.au ]
@@ -576,7 +574,7 @@ bb.ai:                                            ; preds = %.lr.ph998, %bb.au
   %i.jo = phi i8 [ %.promoted1010, %.lr.ph998 ], [ %i.nw, %bb.au ] ; 2 uses
   %.lcssa9861009 = phi i32 [ %.promoted1005, %.lr.ph998 ], [ %.lcssa9861006, %bb.au ] ; 7 uses
   %.pre.i8681004 = phi i64 [ %.phi.trans.insert.i867.promoted, %.lr.ph998 ], [ %i.rh, %bb.au ] ; 2 uses
-  %i.jp = phi i32 [ %.promoted10031018, %.lr.ph998 ], [ %i.rj, %bb.au ] ; 4 uses
+  %i.jp = phi i32 [ %.promoted1003, %.lr.ph998 ], [ %i.rj, %bb.au ] ; 4 uses
   %.5728996 = phi i32 [ %.47271012, %.lr.ph998 ], [ %.7730, %bb.au ] ; 3 uses
   %.1732995 = phi i32 [ 0, %.lr.ph998 ], [ %i.qg, %bb.au ]
   %.0776994 = phi ptr [ %i.jk, %.lr.ph998 ], [ %i.rz, %bb.au ] ; 8 uses
@@ -886,7 +884,7 @@ bb.au:                                            ; preds = %bb.as, %bb.at, %bb.
   %i.rh = lshr i64 %i.qz, %i.rg                   ; 2 uses
   store i64 %i.rh, ptr %.phi.trans.insert.i867, align 8, !tbaa !30
   %i.ri = add nuw nsw i32 %i.ra, %i.rd
-  %i.rj = sub i32 %i.nx, %i.ri                    ; 3 uses
+  %i.rj = sub i32 %i.nx, %i.ri                    ; 2 uses
   store i32 %i.rj, ptr %i.bj, align 8, !tbaa !19
   %i.rk = lshr i32 %i.qw, 7
   %i.rl = and i32 %i.rk, 7                        ; 2 uses

@@ -205,7 +205,7 @@ _ZNSt6vectorIhSaIhEE6resizeEm.exit:               ; preds = %bb.a, %.noexc
   %i.y = zext nneg i32 %i.l to i64                ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 193784
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -389,6 +389,7 @@ _ZN21pana_cs6_page_decoder11read_page12Ev.exit.us: ; preds = %bb.f
   %i.fb = insertelement <8 x i8> %i.fa, i8 %i.et, i64 7
   %i.fc = zext <8 x i8> %i.fb to <8 x i32>
   store <8 x i32> %i.fc, ptr %i.ai, align 8, !tbaa !118
+  store i8 0, ptr %i.ab, align 8, !tbaa !168
   %i.fd = add i32 %i.ay, 16
   store i32 %i.fd, ptr %i.z, align 8, !tbaa !167
   br label %bb.g
@@ -423,6 +424,8 @@ bb.k:                                             ; preds = %bb.i
   br i1 %i.fi, label %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit.us, label %.thread.us
 
 _ZN21pana_cs6_page_decoder11nextpixel12Ev.exit.us: ; preds = %bb.k, %bb.j
+  %2 = add nuw nsw i8 %i.fe, 1                    ; 2 uses
+  store i8 %2, ptr %i.ab, align 8, !tbaa !168
   %.pn126.us = zext nneg i8 %i.fe to i64
   %.in.us = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %.pn126.us
   %i.fj = load i32, ptr %.in.us, align 4, !tbaa !118
@@ -431,7 +434,6 @@ _ZN21pana_cs6_page_decoder11nextpixel12Ev.exit.us: ; preds = %bb.k, %bb.j
   br i1 %i.fk, label %.split152.us, label %bb.l
 
 bb.l:                                             ; preds = %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit.us
-  %2 = add nuw nsw i8 %i.fe, 1
   %i.fl = icmp eq i32 %.fr.us, 3
   %spec.select124.us = select i1 %i.fl, i32 4, i32 %.fr.us
   br label %.thread.us
@@ -458,14 +460,15 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.fs, label %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split, label %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us
 
 _ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split: ; preds = %bb.o, %bb.n
-  %i.ft = add nuw nsw i8 %i.fq, 1
+  %i.ft = add nuw nsw i8 %i.fq, 1                 ; 2 uses
+  store i8 %i.ft, ptr %i.ab, align 8, !tbaa !168
   %i.fu = zext nneg i8 %i.fq to i64
   %i.fv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.fu
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !118
   br label %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us
 
 _ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us: ; preds = %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split, %bb.o, %bb.n
-  %i.fx = phi i8 [ %i.fq, %bb.o ], [ %i.fq, %bb.n ], [ %i.ft, %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split ] ; 2 uses
+  %i.fx = phi i8 [ %i.fq, %bb.o ], [ %i.fq, %bb.n ], [ %i.ft, %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split ]
   %i.fy = phi i32 [ 0, %bb.o ], [ 0, %bb.n ], [ %i.fw, %_ZN21pana_cs6_page_decoder11nextpixel12Ev.exit101.us.sink.split ] ; 5 uses
   %i.fz = and i32 %.070138.us, 1
   %i.ga = zext nneg i32 %i.fz to i64              ; 4 uses
@@ -528,7 +531,6 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s
   br i1 %exitcond.not, label %bb.x, label %bb.h, !llvm.loop !170
 
 bb.x:                                             ; preds = %bb.w
-  store i8 %i.fx, ptr %i.ab, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.gu = add nuw nsw i32 %.075140.us, 1          ; 2 uses

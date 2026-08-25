@@ -204,12 +204,10 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
 
 .preheader.i.i:                                   ; preds = %._crit_edge.i
   %i.jk = load ptr, ptr %i.n, align 8, !tbaa !44  ; 4 uses
-  %.promoted.i.i = load i32, ptr %i.p, align 4, !tbaa !116
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.bc, %.preheader.i.i
   %i.jl = phi ptr [ %i.nu, %bb.bc ], [ %i.jc, %.preheader.i.i ] ; 2 uses
-  %3 = phi i32 [ %4, %bb.bc ], [ %.promoted.i.i, %.preheader.i.i ] ; 7 uses
   %.032.i.i = phi i16 [ %i.nv, %bb.bc ], [ %.pre190.i, %.preheader.i.i ] ; 2 uses
   %.031.i.i = phi ptr [ %i.js, %bb.bc ], [ %.pre191.i, %.preheader.i.i ] ; 8 uses
   %i.jm = icmp ugt i16 %.032.i.i, 1
@@ -266,6 +264,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %.pre-phi.i.i = phi i64 [ %i.kk, %bb.av ], [ %.pre.i74.i, %bb.au ] ; 2 uses
   %.030.i.i = phi i32 [ %i.ki, %bb.av ], [ %i.jz, %bb.au ] ; 4 uses
   %.029.i.i = phi i32 [ %i.kp, %bb.av ], [ %i.kd, %bb.au ] ; 5 uses
+  %3 = load i32, ptr %i.p, align 4, !tbaa !116    ; 7 uses
   %i.kq = sext i32 %3 to i64
   %i.kr = sub nsw i64 0, %i.kq                    ; 2 uses
   %i.ks = getelementptr inbounds [8 x i8], ptr %i.jk, i64 %i.kr ; 6 uses
@@ -373,7 +372,7 @@ bb.az:                                            ; preds = %bb.ay, %.critedge.i
   %i.mf = phi ptr [ %i.lz, %bb.ay ], [ %i.jl, %.critedge.i.i.i ] ; 2 uses
   %.pre-phi77.i.i = phi i64 [ %.pre76.i.i, %bb.ay ], [ %i.kt, %.critedge.i.i.i ] ; 3 uses
   %.pre-phi75.i.i = phi i64 [ %i.md, %bb.ay ], [ %i.kr, %.critedge.i.i.i ]
-  %i.mg = phi i32 [ %i.ma, %bb.ay ], [ %3, %.critedge.i.i.i ] ; 3 uses
+  %i.mg = phi i32 [ %i.ma, %bb.ay ], [ %3, %.critedge.i.i.i ] ; 2 uses
   %i.mh = getelementptr inbounds [8 x i8], ptr %i.jk, i64 %.pre-phi75.i.i ; 6 uses
   %i.mi = sext i32 %.029.i.i to i64               ; 2 uses
   %i.mj = trunc nuw i64 %.pre-phi77.i.i to i32
@@ -465,7 +464,7 @@ bb.ba:                                            ; preds = %.lr.ph68
   br i1 %.not.i44.i.i, label %bb.bb, label %Convert_Glyph.exit.thread.thread.sink.split
 
 bb.bb:                                            ; preds = %.loopexit.i42.i.i
-  %i.np = add nsw i32 %i.mg, 1                    ; 2 uses
+  %i.np = add nsw i32 %i.mg, 1
   store i32 %i.np, ptr %i.p, align 4, !tbaa !116
   %i.nq = sext i32 %.130.ph.i43.i.i to i64
   %i.nr = xor i32 %i.mg, -1
@@ -476,7 +475,6 @@ bb.bb:                                            ; preds = %.loopexit.i42.i.i
 
 bb.bc:                                            ; preds = %bb.bb, %.critedge.i47.i.i
   %i.nu = phi ptr [ %i.no, %bb.bb ], [ %i.mf, %.critedge.i47.i.i ] ; 2 uses
-  %4 = phi i32 [ %i.np, %bb.bb ], [ %i.mg, %.critedge.i47.i.i ]
   %i.nv = add i16 %.032.i.i, -1                   ; 2 uses
   %.not39.i.i = icmp eq i16 %i.nv, 0
   br i1 %.not39.i.i, label %Convert_Glyph.exit, label %bb.ar, !llvm.loop !138

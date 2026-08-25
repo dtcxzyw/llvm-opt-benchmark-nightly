@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bb.lm, %.lr.ph608.i
   br i1 %.not255550.i, label %.preheader455.i, label %.lr.ph555.i
 
 .preheader455.i:                                  ; preds = %.cont732.i, %bb.aq
-  %.1736.i = phi ptr [ null, %bb.aq ], [ %.5737.i, %.cont732.i ] ; 2 uses
+  %.1736.i = phi ptr [ null, %bb.aq ], [ %.5737.i, %.cont732.i ] ; 3 uses
   %.3418.lcssa.i = phi ptr [ %.2417603.i, %bb.aq ], [ %.5420.i, %.cont732.i ] ; 3 uses
   %.not256560.i = icmp eq ptr %.3418.lcssa.i, null
   br i1 %.not256560.i, label %._crit_edge566.i, label %.lr.ph565.i
@@ -288,8 +288,9 @@ bb.av:                                            ; preds = %bb.au
   br i1 %.not255.i, label %.preheader455.i, label %.lr.ph555.i
 
 .lr.ph565.i:                                      ; preds = %.preheader455.i, %.cont.i
+  %.6.i = phi ptr [ %.8.i, %.cont.i ], [ %.1736.i, %.preheader455.i ] ; 3 uses
   %.3564.i = phi ptr [ %.5.i, %.cont.i ], [ null, %.preheader455.i ] ; 6 uses
-  %.2211563.i = phi ptr [ %.3212.i, %.cont.i ], [ %.3418.lcssa.i, %.preheader455.i ] ; 6 uses
+  %.2211563.i = phi ptr [ %.3212.i, %.cont.i ], [ %.3418.lcssa.i, %.preheader455.i ] ; 8 uses
   %.6421562.i = phi ptr [ %.9.i, %.cont.i ], [ %.3418.lcssa.i, %.preheader455.i ] ; 2 uses
   %.2211559561.i = phi ptr [ %.2211557.i, %.cont.i ], [ %.1736.i, %.preheader455.i ] ; 5 uses
   %i.jn = getelementptr inbounds nuw i8, ptr %.2211563.i, i64 32 ; 2 uses
@@ -350,22 +351,24 @@ bb.ba:                                            ; preds = %bb.az
   br label %.else.i
 
 .else.i:                                          ; preds = %bb.ba, %bb.ay
-  %.2211558.i = phi ptr [ %.2211563.i, %bb.ba ], [ %.2211559561.i, %bb.ay ]
-  %.4429.i = phi ptr [ %.3564.i, %bb.ba ], [ %.2211563.i, %bb.ay ] ; 2 uses
+  %.7737.i = phi ptr [ %.6.i, %bb.ay ], [ %.2211563.i, %bb.ba ]
+  %.2211558.i = phi ptr [ %.2211559561.i, %bb.ay ], [ %.2211563.i, %bb.ba ]
+  %.4429.i = phi ptr [ %.2211563.i, %bb.ay ], [ %.3564.i, %bb.ba ] ; 2 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %.4429.i, i64 56
   %.else.val.i = load ptr, ptr %i.kc, align 8, !tbaa !79
   br label %.cont.i
 
 .cont.i:                                          ; preds = %.else.i, %.thread431.i, %bb.ax, %.critedge277.i
-  %.2211557.i = phi ptr [ %.2211559561.i, %.critedge277.i ], [ %.2211559561.i, %bb.ax ], [ %.2211563.i, %.thread431.i ], [ %.2211558.i, %.else.i ] ; 2 uses
-  %.9.i = phi ptr [ %i.jw, %.critedge277.i ], [ %.6421562.i, %bb.ax ], [ %i.ka, %.thread431.i ], [ %.6421562.i, %.else.i ] ; 2 uses
-  %.3212.i = phi ptr [ %i.jw, %.critedge277.i ], [ %i.jw, %bb.ax ], [ %i.ka, %.thread431.i ], [ %.else.val.i, %.else.i ] ; 2 uses
-  %.5.i = phi ptr [ null, %.critedge277.i ], [ %.3564.i, %bb.ax ], [ null, %.thread431.i ], [ %.4429.i, %.else.i ]
+  %.8.i = phi ptr [ %.7737.i, %.else.i ], [ %.2211563.i, %.thread431.i ], [ %.6.i, %.critedge277.i ], [ %.6.i, %bb.ax ] ; 2 uses
+  %.2211557.i = phi ptr [ %.2211558.i, %.else.i ], [ %.2211563.i, %.thread431.i ], [ %.2211559561.i, %.critedge277.i ], [ %.2211559561.i, %bb.ax ]
+  %.9.i = phi ptr [ %.6421562.i, %.else.i ], [ %i.ka, %.thread431.i ], [ %i.jw, %.critedge277.i ], [ %.6421562.i, %bb.ax ] ; 2 uses
+  %.3212.i = phi ptr [ %.else.val.i, %.else.i ], [ %i.ka, %.thread431.i ], [ %i.jw, %.critedge277.i ], [ %i.jw, %bb.ax ] ; 2 uses
+  %.5.i = phi ptr [ %.4429.i, %.else.i ], [ null, %.thread431.i ], [ null, %.critedge277.i ], [ %.3564.i, %bb.ax ]
   %.not256.i = icmp eq ptr %.3212.i, null
   br i1 %.not256.i, label %._crit_edge566.i, label %.lr.ph565.i
 
 ._crit_edge566.i:                                 ; preds = %.cont.i, %.preheader455.i
-  %.2211559.lcssa.i = phi ptr [ %.1736.i, %.preheader455.i ], [ %.2211557.i, %.cont.i ] ; 14 uses
+  %.2211559.lcssa.i = phi ptr [ %.1736.i, %.preheader455.i ], [ %.8.i, %.cont.i ] ; 14 uses
   %.6421.lcssa.i = phi ptr [ null, %.preheader455.i ], [ %.9.i, %.cont.i ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
   %i.kd = load i8, ptr %.0.398604.i, align 8, !tbaa !106

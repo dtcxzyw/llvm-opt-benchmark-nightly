@@ -205,7 +205,7 @@ bb.cw:                                            ; preds = %bb.dd, %._crit_edge
   %.01053.i = phi i32 [ %.21055.i.ph, %bb.dd ], [ %i.aev, %._crit_edge1543.i.a ] ; 6 uses
   %.11032.i = phi i32 [ %.31034.i.ph, %bb.dd ], [ %.01031.i, %._crit_edge1543.i.a ] ; 12 uses
   %.21008.i = phi i32 [ %.41010.i.ph, %bb.dd ], [ %.11007.i, %._crit_edge1543.i.a ] ; 2 uses
-  %.6964.i = phi i32 [ %.8966.i, %bb.dd ], [ %.5963.i, %._crit_edge1543.i.a ]
+  %.6964.i = phi i32 [ %.promoted1684.i834, %bb.dd ], [ %.5963.i, %._crit_edge1543.i.a ]
   %.9.i = phi i32 [ %i.ahp, %bb.dd ], [ 0, %._crit_edge1543.i.a ] ; 2 uses
   %i.agi = icmp slt i32 %.9.i, %.01053.i
   br i1 %i.agi, label %.preheader635, label %bb.de
@@ -235,14 +235,13 @@ bb.cw:                                            ; preds = %bb.dd, %._crit_edge
   %.41010.i.ph = phi i32 [ %.21008.i, %bb.cw ], [ %.pre1891.i, %bb.aq ] ; 3 uses
   %.8966.i.ph = phi i32 [ 0, %bb.cw ], [ %.pre1887.i, %bb.aq ]
   %.11.i.ph = phi i32 [ %.9.i, %bb.cw ], [ %.pre.i36, %bb.aq ] ; 4 uses
-  %.phi.trans.insert1975.i.promoted = load i32, ptr %.phi.trans.insert1975.i, align 4, !tbaa !20
   br label %bb.cx
 
 bb.cx:                                            ; preds = %.preheader635, %bb.dc
-  %.promoted1684.i834 = phi i32 [ %i.agp, %bb.dc ], [ %.phi.trans.insert1975.i.promoted, %.preheader635 ] ; 3 uses
-  %.8966.i = phi i32 [ %i.ahl, %bb.dc ], [ %.8966.i.ph, %.preheader635 ] ; 4 uses
+  %.promoted1684.i834 = phi i32 [ %i.ahl, %bb.dc ], [ %.8966.i.ph, %.preheader635 ] ; 4 uses
   store i32 32, ptr %i.g, align 8, !tbaa !19
-  %i.agj = icmp sgt i32 %.promoted1684.i834, 0
+  %1 = load i32, ptr %.phi.trans.insert1975.i, align 4, !tbaa !20 ; 3 uses
+  %i.agj = icmp sgt i32 %1, 0
   br i1 %i.agj, label %.._crit_edge1687_crit_edge.i, label %.lr.ph1686.i
 
 .._crit_edge1687_crit_edge.i:                     ; preds = %bb.cx
@@ -259,8 +258,8 @@ bb.cx:                                            ; preds = %.preheader635, %bb.
 
 ._crit_edge1687.i:                                ; preds = %bb.db, %.._crit_edge1687_crit_edge.i
   %i.ago = phi i32 [ %.pre1998.i, %.._crit_edge1687_crit_edge.i ], [ %i.ahb, %bb.db ]
-  %.lcssa1435.i = phi i32 [ %.promoted1684.i834, %.._crit_edge1687_crit_edge.i ], [ %i.ahc, %bb.db ]
-  %i.agp = add nsw i32 %.lcssa1435.i, -1          ; 3 uses
+  %.lcssa1435.i = phi i32 [ %1, %.._crit_edge1687_crit_edge.i ], [ %i.ahc, %bb.db ]
+  %i.agp = add nsw i32 %.lcssa1435.i, -1          ; 2 uses
   store i32 %i.agp, ptr %.phi.trans.insert1975.i, align 4, !tbaa !20
   %i.agq = shl nuw i32 1, %i.agp
   %i.agr = and i32 %i.agq, %i.ago
@@ -269,7 +268,7 @@ bb.cx:                                            ; preds = %.preheader635, %bb.
 
 bb.cy:                                            ; preds = %bb.db, %.lr.ph1686.i
   %i.agt = phi i32 [ %.promoted1690.i, %.lr.ph1686.i ], [ %i.ahe, %bb.db ] ; 2 uses
-  %i.agu = phi i32 [ %.promoted1684.i834, %.lr.ph1686.i ], [ %i.ahc, %bb.db ] ; 2 uses
+  %i.agu = phi i32 [ %1, %.lr.ph1686.i ], [ %i.ahc, %bb.db ] ; 2 uses
   %i.agv = icmp eq i32 %i.agt, 0
   br i1 %i.agv, label %BZ2_decompress.exit, label %bb.cz
 
@@ -304,12 +303,12 @@ bb.db:                                            ; preds = %bb.da, %bb.cz
   br i1 %i.ahk, label %._crit_edge1687.i, label %bb.cy
 
 bb.dc:                                            ; preds = %._crit_edge1687.i
-  %i.ahl = add nsw i32 %.8966.i, 1                ; 3 uses
+  %i.ahl = add nsw i32 %.promoted1684.i834, 1     ; 3 uses
   %.not1370.i = icmp slt i32 %i.ahl, %.31034.i.ph
   br i1 %.not1370.i, label %bb.cx, label %BZ2_decompress.exit
 
 bb.dd:                                            ; preds = %._crit_edge1687.i
-  %i.ahm = trunc i32 %.8966.i to i8
+  %i.ahm = trunc i32 %.promoted1684.i834 to i8
   %i.ahn = sext i32 %.11.i.ph to i64
   %i.aho = getelementptr inbounds i8, ptr %i.aa, i64 %i.ahn
   store i8 %i.ahm, ptr %i.aho, align 1, !tbaa !34
@@ -712,7 +711,6 @@ bb.eg:                                            ; preds = %bb.ef, %bb.aq
   br i1 %i.bem, label %BZ2_decompress.exit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph1577.i
-  %.promoted = load i32, ptr %i.v, align 8, !tbaa !21
   %.promoted832 = load ptr, ptr %i.bei, align 8, !tbaa !76
   %.promoted833 = load i32, ptr %i.bek, align 4, !tbaa !23
   br label %.lr.ph
@@ -735,19 +733,19 @@ bb.eh:                                            ; preds = %bb.ej
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.eh
   %i.bet = phi i32 [ %i.bfe, %bb.eh ], [ %.promoted833, %.lr.ph.preheader ]
   %i.beu = phi ptr [ %i.bfc, %bb.eh ], [ %.promoted832, %.lr.ph.preheader ] ; 2 uses
-  %i.bev = phi i32 [ %i.bfa, %bb.eh ], [ %.promoted, %.lr.ph.preheader ]
-  %i.bew = phi i32 [ %i.bfb, %bb.eh ], [ %.promoted1574.i, %.lr.ph.preheader ]
-  %1 = phi i32 [ %i.bfd, %bb.eh ], [ %.promoted1581.i, %.lr.ph.preheader ]
-  %i.bex = shl i32 %i.bev, 8
+  %i.bev = phi i32 [ %i.bfb, %bb.eh ], [ %.promoted1574.i, %.lr.ph.preheader ]
+  %i.bew = phi i32 [ %i.bfd, %bb.eh ], [ %.promoted1581.i, %.lr.ph.preheader ]
+  %2 = load i32, ptr %i.v, align 8, !tbaa !21
+  %i.bex = shl i32 %2, 8
   %i.bey = load i8, ptr %i.beu, align 1, !tbaa !34
   %i.bez = zext i8 %i.bey to i32
-  %i.bfa = or disjoint i32 %i.bex, %i.bez         ; 3 uses
+  %i.bfa = or disjoint i32 %i.bex, %i.bez         ; 2 uses
   store i32 %i.bfa, ptr %i.v, align 8, !tbaa !21
-  %i.bfb = add nsw i32 %i.bew, 8                  ; 4 uses
+  %i.bfb = add nsw i32 %i.bev, 8                  ; 4 uses
   store i32 %i.bfb, ptr %.phi.trans.insert1975.i, align 4, !tbaa !20
   %i.bfc = getelementptr inbounds nuw i8, ptr %i.beu, i64 1 ; 2 uses
   store ptr %i.bfc, ptr %i.bei, align 8, !tbaa !76
-  %i.bfd = add i32 %1, -1                         ; 3 uses
+  %i.bfd = add i32 %i.bew, -1                     ; 3 uses
   store i32 %i.bfd, ptr %i.bej, align 8, !tbaa !75
   %i.bfe = add i32 %i.bet, 1                      ; 3 uses
   store i32 %i.bfe, ptr %i.bek, align 4, !tbaa !23
@@ -1047,7 +1045,6 @@ bb.fa:                                            ; preds = %bb.ez, %bb.aq
   br i1 %i.bic, label %BZ2_decompress.exit, label %.lr.ph473.preheader
 
 .lr.ph473.preheader:                              ; preds = %.lr.ph1621.i
-  %.promoted844 = load i32, ptr %i.v, align 8, !tbaa !21
   %.promoted845 = load ptr, ptr %i.bhy, align 8, !tbaa !76
   %.promoted846 = load i32, ptr %i.bia, align 4, !tbaa !23
   br label %.lr.ph473
@@ -1070,19 +1067,19 @@ bb.fb:                                            ; preds = %bb.fd
 .lr.ph473:                                        ; preds = %.lr.ph473.preheader, %bb.fb
   %i.bij = phi i32 [ %i.biu, %bb.fb ], [ %.promoted846, %.lr.ph473.preheader ]
   %i.bik = phi ptr [ %i.bis, %bb.fb ], [ %.promoted845, %.lr.ph473.preheader ] ; 2 uses
-  %i.bil = phi i32 [ %i.biq, %bb.fb ], [ %.promoted844, %.lr.ph473.preheader ]
-  %i.bim = phi i32 [ %i.bir, %bb.fb ], [ %.promoted1618.i, %.lr.ph473.preheader ]
-  %2 = phi i32 [ %i.bit, %bb.fb ], [ %.promoted1625.i, %.lr.ph473.preheader ]
-  %i.bin = shl i32 %i.bil, 8
+  %i.bil = phi i32 [ %i.bir, %bb.fb ], [ %.promoted1618.i, %.lr.ph473.preheader ]
+  %i.bim = phi i32 [ %i.bit, %bb.fb ], [ %.promoted1625.i, %.lr.ph473.preheader ]
+  %3 = load i32, ptr %i.v, align 8, !tbaa !21
+  %i.bin = shl i32 %3, 8
   %i.bio = load i8, ptr %i.bik, align 1, !tbaa !34
   %i.bip = zext i8 %i.bio to i32
-  %i.biq = or disjoint i32 %i.bin, %i.bip         ; 3 uses
+  %i.biq = or disjoint i32 %i.bin, %i.bip         ; 2 uses
   store i32 %i.biq, ptr %i.v, align 8, !tbaa !21
-  %i.bir = add nsw i32 %i.bim, 8                  ; 4 uses
+  %i.bir = add nsw i32 %i.bil, 8                  ; 4 uses
   store i32 %i.bir, ptr %.phi.trans.insert1975.i, align 4, !tbaa !20
   %i.bis = getelementptr inbounds nuw i8, ptr %i.bik, i64 1 ; 2 uses
   store ptr %i.bis, ptr %i.bhy, align 8, !tbaa !76
-  %i.bit = add i32 %2, -1                         ; 3 uses
+  %i.bit = add i32 %i.bim, -1                     ; 3 uses
   store i32 %i.bit, ptr %i.bhz, align 8, !tbaa !75
   %i.biu = add i32 %i.bij, 1                      ; 3 uses
   store i32 %i.biu, ptr %i.bia, align 4, !tbaa !23
@@ -1485,7 +1482,6 @@ bb.gd:                                            ; preds = %bb.gc, %bb.aq
   br i1 %i.bwt, label %BZ2_decompress.exit, label %.lr.ph472.preheader
 
 .lr.ph472.preheader:                              ; preds = %.lr.ph1606.i
-  %.promoted841 = load i32, ptr %i.v, align 8, !tbaa !21
   %.promoted842 = load ptr, ptr %i.bwp, align 8, !tbaa !76
   %.promoted843 = load i32, ptr %i.bwr, align 4, !tbaa !23
   br label %.lr.ph472
@@ -1508,19 +1504,19 @@ bb.ge:                                            ; preds = %bb.gg
 .lr.ph472:                                        ; preds = %.lr.ph472.preheader, %bb.ge
   %i.bxa = phi i32 [ %i.bxl, %bb.ge ], [ %.promoted843, %.lr.ph472.preheader ]
   %i.bxb = phi ptr [ %i.bxj, %bb.ge ], [ %.promoted842, %.lr.ph472.preheader ] ; 2 uses
-  %i.bxc = phi i32 [ %i.bxh, %bb.ge ], [ %.promoted841, %.lr.ph472.preheader ]
-  %i.bxd = phi i32 [ %i.bxi, %bb.ge ], [ %.promoted1603.i, %.lr.ph472.preheader ]
-  %3 = phi i32 [ %i.bxk, %bb.ge ], [ %.promoted1610.i, %.lr.ph472.preheader ]
-  %i.bxe = shl i32 %i.bxc, 8
+  %i.bxc = phi i32 [ %i.bxi, %bb.ge ], [ %.promoted1603.i, %.lr.ph472.preheader ]
+  %i.bxd = phi i32 [ %i.bxk, %bb.ge ], [ %.promoted1610.i, %.lr.ph472.preheader ]
+  %4 = load i32, ptr %i.v, align 8, !tbaa !21
+  %i.bxe = shl i32 %4, 8
   %i.bxf = load i8, ptr %i.bxb, align 1, !tbaa !34
   %i.bxg = zext i8 %i.bxf to i32
-  %i.bxh = or disjoint i32 %i.bxe, %i.bxg         ; 3 uses
+  %i.bxh = or disjoint i32 %i.bxe, %i.bxg         ; 2 uses
   store i32 %i.bxh, ptr %i.v, align 8, !tbaa !21
-  %i.bxi = add nsw i32 %i.bxd, 8                  ; 4 uses
+  %i.bxi = add nsw i32 %i.bxc, 8                  ; 4 uses
   store i32 %i.bxi, ptr %.phi.trans.insert1975.i, align 4, !tbaa !20
   %i.bxj = getelementptr inbounds nuw i8, ptr %i.bxb, i64 1 ; 2 uses
   store ptr %i.bxj, ptr %i.bwp, align 8, !tbaa !76
-  %i.bxk = add i32 %3, -1                         ; 3 uses
+  %i.bxk = add i32 %i.bxd, -1                     ; 3 uses
   store i32 %i.bxk, ptr %i.bwq, align 8, !tbaa !75
   %i.bxl = add i32 %i.bxa, 1                      ; 3 uses
   store i32 %i.bxl, ptr %i.bwr, align 4, !tbaa !23
@@ -1923,7 +1919,7 @@ BZ2_decompress.exit:                              ; preds = %bb.au, %bb.ba, %bb.
   %.211052.i = phi i32 [ %.131044.i, %indexIntoF.exit.i44 ], [ 0, %bb.ar ], [ %i.le, %bb.hi ], [ %i.pe, %bb.bf ], [ %.31034.i.ph, %bb.dc ], [ %i.rg, %._crit_edge1528.i.a ], [ %i.rg, %bb.bo ], [ %i.ada, %._crit_edge1536.i ], [ %i.nc, %bb.ba ], [ %.31034.i.ph, %bb.cy ], [ %i.uk, %bb.br ], [ %.151046.i, %.lr.ph1621.i ], [ %.01031.i, %._crit_edge1543.i.a ], [ %.81039.i, %bb.dp ], [ %.91040.i, %bb.du ], [ %.71038.i, %bb.dn ], [ %i.yh, %bb.by ], [ %.171048.i, %bb.fi ], [ %.201051.i, %bb.gl ], [ %.101041.i, %.lr.ph1577.i ], [ %.191050.i, %bb.gp ], [ %.131044.i, %bb.gr ], [ %.01031.i, %bb.cs ], [ %.101041.i, %bb.eh ], [ %.121043.i, %bb.eo ], [ %.111042.i, %bb.es ], [ %.141045.i, %bb.ev ], [ %.181049.i, %.lr.ph1606.i ], [ %.131044.i, %.loopexit.loopexit1713.i ], [ %.161047.i, %bb.fm ], [ %.131044.i, %.loopexit.loopexit1715.i ], [ %.161047.i, %bb.fe ], [ %.141045.i, %bb.ex ], [ %.131044.i, %.loopexit.loopexit1714.i ], [ %.131044.i, %bb.ft ], [ %.181049.i, %bb.ge ], [ %.151046.i, %bb.fb ], [ %.191050.i, %bb.gh ], [ %.131044.i, %bb.ga ], [ %.111042.i, %bb.ek ], [ %.41035.i, %._crit_edge1567.i ], [ %.pre1893.i, %bb.aq ], [ %i.wk, %makeMaps_d.exit.i ], [ %i.aby, %bb.cn ], [ %i.rg, %bb.bk ], [ %i.le, %._crit_edge.i ], [ 0, %bb.as ], [ %.131044.i, %bb.hh ], [ %.161047.i, %bb.fr ], [ %.161047.i, %bb.fp ], [ %.51036.i, %bb.di ], [ %i.le, %bb.au ]
   %.221028.i = phi i32 [ %.141020.i, %indexIntoF.exit.i44 ], [ 0, %bb.ar ], [ %i.ld, %bb.hi ], [ %i.pd, %bb.bf ], [ %.41010.i.ph, %bb.dc ], [ %i.rf, %._crit_edge1528.i.a ], [ %i.rf, %bb.bo ], [ %.01006.i, %._crit_edge1536.i ], [ %i.nb, %bb.ba ], [ %.41010.i.ph, %bb.cy ], [ %i.uj, %bb.br ], [ %.161022.i, %.lr.ph1621.i ], [ %.11007.i, %._crit_edge1543.i.a ], [ %.91015.i, %bb.dp ], [ %.101016.i, %bb.du ], [ %.81014.i, %bb.dn ], [ %i.yg, %bb.by ], [ %.181024.i, %bb.fi ], [ %.211027.i, %bb.gl ], [ %.111017.i, %.lr.ph1577.i ], [ %.201026.i, %bb.gp ], [ %.141020.i, %bb.gr ], [ %.11007.i, %bb.cs ], [ %.111017.i, %bb.eh ], [ %.131019.i, %bb.eo ], [ %.121018.i, %bb.es ], [ %.151021.i, %bb.ev ], [ %.191025.i, %.lr.ph1606.i ], [ %.141020.i, %.loopexit.loopexit1713.i ], [ %.171023.i, %bb.fm ], [ %.141020.i, %.loopexit.loopexit1715.i ], [ %.171023.i, %bb.fe ], [ %.151021.i, %bb.ex ], [ %.141020.i, %.loopexit.loopexit1714.i ], [ %.141020.i, %bb.ft ], [ %.191025.i, %bb.ge ], [ %.161022.i, %bb.fb ], [ %.201026.i, %bb.gh ], [ %.141020.i, %bb.ga ], [ %.121018.i, %bb.ek ], [ %.51011.i, %._crit_edge1567.i ], [ %.pre1891.i, %bb.aq ], [ %i.wj, %makeMaps_d.exit.i ], [ %.01006.i, %bb.cn ], [ %i.rf, %bb.bk ], [ %i.ld, %._crit_edge.i ], [ 0, %bb.as ], [ %.141020.i, %bb.hh ], [ %.171023.i, %bb.fr ], [ %.171023.i, %bb.fp ], [ %.61012.i, %bb.di ], [ %i.ld, %bb.au ]
   %.181005.i = phi i32 [ %.10997.i, %indexIntoF.exit.i44 ], [ 0, %bb.ar ], [ %i.lc, %bb.hi ], [ %i.pc, %bb.bf ], [ %.ph, %bb.dc ], [ %i.re, %._crit_edge1528.i.a ], [ %i.re, %bb.bo ], [ %i.abx, %._crit_edge1536.i ], [ %i.na, %bb.ba ], [ %.ph, %bb.cy ], [ %i.ui, %bb.br ], [ %.12999.i, %.lr.ph1621.i ], [ %i.adt, %._crit_edge1543.i.a ], [ %.4991.i, %bb.dp ], [ %.5992.i, %bb.du ], [ %.3990.i, %bb.dn ], [ %i.yf, %bb.by ], [ %.141001.i, %bb.fi ], [ %.171004.i, %bb.gl ], [ %.7994.i, %.lr.ph1577.i ], [ %.161003.i, %bb.gp ], [ %.10997.i, %bb.gr ], [ %i.adt, %bb.cs ], [ %.7994.i, %bb.eh ], [ %.9996.i, %bb.eo ], [ %.8995.i, %bb.es ], [ %.11998.i, %bb.ev ], [ %.151002.i, %.lr.ph1606.i ], [ %.10997.i, %.loopexit.loopexit1713.i ], [ %.131000.i, %bb.fm ], [ %.10997.i, %.loopexit.loopexit1715.i ], [ %.131000.i, %bb.fe ], [ %.11998.i, %bb.ex ], [ %.10997.i, %.loopexit.loopexit1714.i ], [ %.10997.i, %bb.ft ], [ %.151002.i, %bb.ge ], [ %.12999.i, %bb.fb ], [ %.161003.i, %bb.gh ], [ %.10997.i, %bb.ga ], [ %.8995.i, %bb.ek ], [ %.6993.lcssa.i, %._crit_edge1567.i ], [ %.pre1889.i, %bb.aq ], [ %i.wi, %makeMaps_d.exit.i ], [ %i.abx, %bb.cn ], [ %i.re, %bb.bk ], [ %i.lc, %._crit_edge.i ], [ 0, %bb.as ], [ %.10997.i, %bb.hh ], [ %.131000.i, %bb.fr ], [ %.131000.i, %bb.fp ], [ %.1988.i, %bb.di ], [ %i.lc, %bb.au ]
-  %.28986.i = phi i32 [ %i.cny, %indexIntoF.exit.i44 ], [ 0, %bb.ar ], [ %i.lb, %bb.hi ], [ %i.pb, %bb.bf ], [ %i.ahl, %bb.dc ], [ %i.rd, %._crit_edge1528.i.a ], [ %i.rd, %bb.bo ], [ %.4962.i, %._crit_edge1536.i ], [ %i.mz, %bb.ba ], [ %.8966.i, %bb.cy ], [ %i.uh, %bb.br ], [ %.20978.i, %.lr.ph1621.i ], [ %.5963.i, %._crit_edge1543.i.a ], [ %.13971.i, %bb.dp ], [ %.14972.i, %bb.du ], [ %.12970.i, %bb.dn ], [ %.2960.i, %bb.by ], [ %.22980.i, %bb.fi ], [ %.25983.i, %bb.gl ], [ %.15973.i, %.lr.ph1577.i ], [ %.24982.i, %bb.gp ], [ %.18976.i, %bb.gr ], [ %.5963.i, %bb.cs ], [ %.15973.i, %bb.eh ], [ %.17975.i, %bb.eo ], [ %.16974.i, %bb.es ], [ %.19977.i, %bb.ev ], [ %.23981.i, %.lr.ph1606.i ], [ %.18976.i, %.loopexit.loopexit1713.i ], [ %.21979.i, %bb.fm ], [ %.18976.i, %.loopexit.loopexit1715.i ], [ %.21979.i, %bb.fe ], [ %.19977.i, %bb.ex ], [ %.18976.i, %.loopexit.loopexit1714.i ], [ %.18976.i, %bb.ft ], [ %.23981.i, %bb.ge ], [ %.20978.i, %bb.fb ], [ %.24982.i, %bb.gh ], [ %.18976.i, %bb.ga ], [ %.16974.i, %bb.ek ], [ %.9967.i, %._crit_edge1567.i ], [ %.pre1887.i, %bb.aq ], [ %.0958.i, %makeMaps_d.exit.i ], [ %.4962.i, %bb.cn ], [ %i.rd, %bb.bk ], [ %i.lb, %._crit_edge.i ], [ 0, %bb.as ], [ %.18976.i, %bb.hh ], [ %.21979.i, %bb.fr ], [ %.21979.i, %bb.fp ], [ %.10968.i, %bb.di ], [ %i.lb, %bb.au ]
+  %.28986.i = phi i32 [ %i.cny, %indexIntoF.exit.i44 ], [ 0, %bb.ar ], [ %i.lb, %bb.hi ], [ %i.pb, %bb.bf ], [ %i.ahl, %bb.dc ], [ %i.rd, %._crit_edge1528.i.a ], [ %i.rd, %bb.bo ], [ %.4962.i, %._crit_edge1536.i ], [ %i.mz, %bb.ba ], [ %.promoted1684.i834, %bb.cy ], [ %i.uh, %bb.br ], [ %.20978.i, %.lr.ph1621.i ], [ %.5963.i, %._crit_edge1543.i.a ], [ %.13971.i, %bb.dp ], [ %.14972.i, %bb.du ], [ %.12970.i, %bb.dn ], [ %.2960.i, %bb.by ], [ %.22980.i, %bb.fi ], [ %.25983.i, %bb.gl ], [ %.15973.i, %.lr.ph1577.i ], [ %.24982.i, %bb.gp ], [ %.18976.i, %bb.gr ], [ %.5963.i, %bb.cs ], [ %.15973.i, %bb.eh ], [ %.17975.i, %bb.eo ], [ %.16974.i, %bb.es ], [ %.19977.i, %bb.ev ], [ %.23981.i, %.lr.ph1606.i ], [ %.18976.i, %.loopexit.loopexit1713.i ], [ %.21979.i, %bb.fm ], [ %.18976.i, %.loopexit.loopexit1715.i ], [ %.21979.i, %bb.fe ], [ %.19977.i, %bb.ex ], [ %.18976.i, %.loopexit.loopexit1714.i ], [ %.18976.i, %bb.ft ], [ %.23981.i, %bb.ge ], [ %.20978.i, %bb.fb ], [ %.24982.i, %bb.gh ], [ %.18976.i, %bb.ga ], [ %.16974.i, %bb.ek ], [ %.9967.i, %._crit_edge1567.i ], [ %.pre1887.i, %bb.aq ], [ %.0958.i, %makeMaps_d.exit.i ], [ %.4962.i, %bb.cn ], [ %i.rd, %bb.bk ], [ %i.lb, %._crit_edge.i ], [ 0, %bb.as ], [ %.18976.i, %bb.hh ], [ %.21979.i, %bb.fr ], [ %.21979.i, %bb.fp ], [ %.10968.i, %bb.di ], [ %i.lb, %bb.au ]
   %.42.i = phi i32 [ %.26984.i, %indexIntoF.exit.i44 ], [ 0, %bb.ar ], [ %i.la, %bb.hi ], [ %i.pa, %bb.bf ], [ %.11.i.ph, %bb.dc ], [ %i.rc, %._crit_edge1528.i.a ], [ %i.rc, %bb.bo ], [ %.7.i, %._crit_edge1536.i ], [ %i.my, %bb.ba ], [ %.11.i.ph, %bb.cy ], [ %.1953.i, %bb.br ], [ %.26.i, %.lr.ph1621.i ], [ %.8.i, %._crit_edge1543.i.a ], [ %.17.i, %bb.dp ], [ %.18.i, %bb.du ], [ %.16.i, %bb.dn ], [ %.5.i, %bb.by ], [ %.28.i, %bb.fi ], [ %.31.i, %bb.gl ], [ %.21.i, %.lr.ph1577.i ], [ %.30.i, %bb.gp ], [ %.24.i, %bb.gr ], [ %.8.i, %bb.cs ], [ %.21.i, %bb.eh ], [ %.23.i, %bb.eo ], [ %.22.i, %bb.es ], [ %.25.i, %bb.ev ], [ %.29.i, %.lr.ph1606.i ], [ %i.crj, %.loopexit.loopexit1713.i ], [ %.27.i, %bb.fm ], [ %i.crl, %.loopexit.loopexit1715.i ], [ %.27.i, %bb.fe ], [ %.25.i, %bb.ex ], [ %i.crk, %.loopexit.loopexit1714.i ], [ %.24.i, %bb.ft ], [ %.29.i, %bb.ge ], [ %.26.i, %bb.fb ], [ %.30.i, %bb.gh ], [ %.24.i, %bb.ga ], [ %.22.i, %bb.ek ], [ 256, %._crit_edge1567.i ], [ %.pre.i36, %bb.aq ], [ %.3.i47, %makeMaps_d.exit.i ], [ %.7.i, %bb.cn ], [ %i.rc, %bb.bk ], [ %i.la, %._crit_edge.i ], [ 0, %bb.as ], [ %.31140.i, %bb.hh ], [ %.27.i, %bb.fr ], [ %.27.i, %bb.fp ], [ %.14.i, %bb.di ], [ %i.la, %bb.au ]
   %i.crn = phi i1 [ false, %indexIntoF.exit.i44 ], [ false, %bb.ar ], [ true, %bb.hi ], [ false, %bb.bf ], [ false, %bb.dc ], [ false, %._crit_edge1528.i.a ], [ false, %bb.bo ], [ false, %._crit_edge1536.i ], [ false, %bb.ba ], [ false, %bb.cy ], [ false, %bb.br ], [ false, %.lr.ph1621.i ], [ false, %._crit_edge1543.i.a ], [ false, %bb.dp ], [ false, %bb.du ], [ false, %bb.dn ], [ false, %bb.by ], [ false, %bb.fi ], [ false, %bb.gl ], [ false, %.lr.ph1577.i ], [ false, %bb.gp ], [ false, %bb.gr ], [ false, %bb.cs ], [ false, %bb.eh ], [ false, %bb.eo ], [ false, %bb.es ], [ false, %bb.ev ], [ false, %.lr.ph1606.i ], [ false, %.loopexit.loopexit1713.i ], [ false, %bb.fm ], [ false, %.loopexit.loopexit1715.i ], [ false, %bb.fe ], [ false, %bb.ex ], [ false, %.loopexit.loopexit1714.i ], [ false, %bb.ft ], [ false, %bb.ge ], [ false, %bb.fb ], [ false, %bb.gh ], [ false, %bb.ga ], [ false, %bb.ek ], [ false, %._crit_edge1567.i ], [ false, %bb.aq ], [ false, %makeMaps_d.exit.i ], [ false, %bb.cn ], [ false, %bb.bk ], [ false, %._crit_edge.i ], [ false, %bb.as ], [ false, %bb.hh ], [ false, %bb.fr ], [ false, %bb.fp ], [ false, %bb.di ], [ false, %bb.au ]
   %.0940.i = phi i32 [ 0, %indexIntoF.exit.i44 ], [ -3, %bb.ar ], [ 4, %bb.hi ], [ 0, %bb.bf ], [ -4, %bb.dc ], [ -4, %._crit_edge1528.i.a ], [ -4, %bb.bo ], [ -4, %._crit_edge1536.i ], [ 0, %bb.ba ], [ 0, %bb.cy ], [ 0, %bb.br ], [ 0, %.lr.ph1621.i ], [ -4, %._crit_edge1543.i.a ], [ 0, %bb.dp ], [ 0, %bb.du ], [ -4, %bb.dn ], [ 0, %bb.by ], [ 0, %bb.fi ], [ 0, %bb.gl ], [ 0, %.lr.ph1577.i ], [ -4, %bb.gp ], [ -4, %bb.gr ], [ 0, %bb.cs ], [ 0, %bb.eh ], [ 0, %bb.eo ], [ -4, %bb.es ], [ -4, %bb.ev ], [ 0, %.lr.ph1606.i ], [ -4, %.loopexit.loopexit1713.i ], [ -4, %bb.fm ], [ -4, %.loopexit.loopexit1715.i ], [ -4, %bb.fe ], [ -4, %bb.ex ], [ -4, %.loopexit.loopexit1714.i ], [ -4, %bb.ft ], [ 0, %bb.ge ], [ 0, %bb.fb ], [ -4, %bb.gh ], [ -4, %bb.ga ], [ -4, %bb.ek ], [ -4, %._crit_edge1567.i ], [ -4, %bb.aq ], [ -4, %makeMaps_d.exit.i ], [ 0, %bb.cn ], [ 0, %bb.bk ], [ -4, %._crit_edge.i ], [ -3, %bb.as ], [ 0, %bb.hh ], [ -4, %bb.fr ], [ -4, %bb.fp ], [ 0, %bb.di ], [ 0, %bb.au ]

@@ -205,13 +205,11 @@ _RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer12con
   %i.t = getelementptr inbounds nuw i8, ptr %.val8.i.i, i64 72
   %i.u = icmp eq ptr %.pre.i.i.i, null
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %.promoted.i = load i8, ptr %i.s, align 8, !alias.scope !4303, !noalias !4306
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.q, %.lr.ph.i
   %i.w = phi i64 [ %i.f, %.lr.ph.i ], [ %i.at, %bb.q ] ; 3 uses
   %i.x = phi i64 [ %i.d, %.lr.ph.i ], [ %i.au, %bb.q ] ; 3 uses
-  %3 = phi i8 [ %.promoted.i, %.lr.ph.i ], [ %6, %bb.q ] ; 3 uses
   %.sroa.0.026.i = phi ptr [ %1, %.lr.ph.i ], [ %.sroa.0.118.i, %bb.q ] ; 5 uses
   %.sroa.7.025.i = phi i64 [ %2, %.lr.ph.i ], [ %.sroa.7.116.i, %bb.q ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4313)
@@ -231,14 +229,15 @@ bb.d:                                             ; preds = %bb.c
   store ptr %.pre.i.i.i, ptr %i.b, align 8, !noalias !4318
   store i64 %i.l, ptr %i.p, align 8, !noalias !4318
   store i64 0, ptr %i.q, align 8, !noalias !4318
+  %3 = load i8, ptr %i.s, align 8, !range !181, !alias.scope !4321, !noalias !4322, !noundef !4
   store i8 %3, ptr %i.r, align 8, !noalias !4318
-  %i.z = load ptr, ptr %i.t, align 8, !invariant.load !4, !noalias !4321, !nonnull !4
-  %i.aa = call noundef ptr %i.z(ptr noundef nonnull %.val.i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b) #29, !noalias !4326, !inline_history !4327 ; 2 uses
-  store i64 0, ptr %i.c, align 8, !alias.scope !4328, !noalias !4329
+  %i.z = load ptr, ptr %i.t, align 8, !invariant.load !4, !noalias !4323, !nonnull !4
+  %i.aa = call noundef ptr %i.z(ptr noundef nonnull %.val.i.i, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b) #29, !noalias !4328, !inline_history !4329 ; 2 uses
+  store i64 0, ptr %i.c, align 8, !alias.scope !4321, !noalias !4322
   %i.ab = load i64, ptr %i.q, align 8, !noalias !4318, !noundef !4 ; 3 uses
-  store i64 %i.ab, ptr %i.e, align 8, !alias.scope !4328, !noalias !4329
-  %i.ac = load i8, ptr %i.r, align 8, !range !181, !noalias !4318, !noundef !4 ; 3 uses
-  store i8 %i.ac, ptr %i.s, align 8, !alias.scope !4328, !noalias !4329
+  store i64 %i.ab, ptr %i.e, align 8, !alias.scope !4321, !noalias !4322
+  %i.ac = load i8, ptr %i.r, align 8, !range !181, !noalias !4318, !noundef !4
+  store i8 %i.ac, ptr %i.s, align 8, !alias.scope !4321, !noalias !4322
   %.not3.i.i.i = icmp eq ptr %i.aa, null
   br i1 %.not3.i.i.i, label %bb.e, label %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.thread.i.i
 
@@ -254,7 +253,6 @@ bb.e:                                             ; preds = %bb.d
 _RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.i.i: ; preds = %bb.e, %bb.c
   %i.ae = phi i64 [ %i.w, %bb.c ], [ %i.ab, %bb.e ] ; 4 uses
   %i.af = phi i64 [ %i.x, %bb.c ], [ 0, %bb.e ]   ; 4 uses
-  %4 = phi i8 [ %3, %bb.c ], [ %i.ac, %bb.e ]     ; 2 uses
   %i.ag = sub nuw i64 %i.ae, %i.af                ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %.pre.i.i.i, i64 %i.af ; 2 uses
   br i1 %i.u, label %bb.g, label %bb.h
@@ -268,7 +266,6 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.i.i, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.thread.i.i
   %i.ak = phi i64 [ %i.ab, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.thread.i.i ], [ %i.ae, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.i.i ]
   %i.al = phi i64 [ 0, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.thread.i.i ], [ %i.af, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.i.i ]
-  %5 = phi i8 [ %i.ac, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.thread.i.i ], [ %4, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.i.i ]
   %.sroa.610.013.i.i = phi i64 [ %i.ad, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.thread.i.i ], [ %i.ag, %_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx.exit.i.i ]
   %i.am = inttoptr i64 %.sroa.610.013.i.i to ptr
   %i.an = insertvalue { i64, ptr } { i64 1, ptr poison }, ptr %i.am, 1
@@ -300,7 +297,6 @@ _RNvXs5_NtNtCs7tKScEop1B6_5alloc2io5implsRShNtNtB7_4read4Read4read.exit.i.i: ; p
 _RNvXs4_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB1q_4readCsgy7pbN39oAf_6uu_ptx.exit.i: ; preds = %_RNvXs5_NtNtCs7tKScEop1B6_5alloc2io5implsRShNtNtB7_4read4Read4read.exit.i.i, %bb.g, %bb.f
   %i.at = phi i64 [ 0, %bb.f ], [ %i.ak, %bb.g ], [ %i.ae, %_RNvXs5_NtNtCs7tKScEop1B6_5alloc2io5implsRShNtNtB7_4read4Read4read.exit.i.i ]
   %i.au = phi i64 [ 0, %bb.f ], [ %i.al, %bb.g ], [ %..i.i.i, %_RNvXs5_NtNtCs7tKScEop1B6_5alloc2io5implsRShNtNtB7_4read4Read4read.exit.i.i ]
-  %6 = phi i8 [ %3, %bb.f ], [ %5, %bb.g ], [ %4, %_RNvXs5_NtNtCs7tKScEop1B6_5alloc2io5implsRShNtNtB7_4read4Read4read.exit.i.i ]
   %.merged.i.i = phi { i64, ptr } [ %i.aj, %bb.f ], [ %i.an, %bb.g ], [ %i.ar, %_RNvXs5_NtNtCs7tKScEop1B6_5alloc2io5implsRShNtNtB7_4read4Read4read.exit.i.i ] ; 2 uses
   %i.av = extractvalue { i64, ptr } %.merged.i.i, 0
   %i.aw = extractvalue { i64, ptr } %.merged.i.i, 1 ; 11 uses
@@ -703,15 +699,15 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !4318 = !{!4319, !4316, !4320, !4309, !4312, !4304, !4307}
 !4319 = distinct !{!4319, !4317, !"_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx: argument 0"}
 !4320 = distinct !{!4320, !4317, !"_RINvMNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6bufferNtB3_6Buffer8fill_bufQINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EECsgy7pbN39oAf_6uu_ptx: argument 2"}
-!4321 = !{!4322, !4324, !4319, !4316, !4320, !4309, !4312, !4304}
-!4322 = distinct !{!4322, !4323, !"_RNvXs0_NtNtCs7tKScEop1B6_5alloc2io5implsINtNtB9_5boxed3BoxDNtNtB7_4read4ReadEL_EBV_8read_bufCsgy7pbN39oAf_6uu_ptx: argument 0"}
-!4323 = distinct !{!4323, !"_RNvXs0_NtNtCs7tKScEop1B6_5alloc2io5implsINtNtB9_5boxed3BoxDNtNtB7_4read4ReadEL_EBV_8read_bufCsgy7pbN39oAf_6uu_ptx"}
-!4324 = distinct !{!4324, !4325, !"_RNvXNtNtCs7tKScEop1B6_5alloc2io5implsQINtNtB6_5boxed3BoxDNtNtB4_4read4ReadEL_EBT_8read_bufCsgy7pbN39oAf_6uu_ptx: argument 0"}
-!4325 = distinct !{!4325, !"_RNvXNtNtCs7tKScEop1B6_5alloc2io5implsQINtNtB6_5boxed3BoxDNtNtB4_4read4ReadEL_EBT_8read_bufCsgy7pbN39oAf_6uu_ptx"}
-!4326 = !{!4319, !4316, !4320, !4309, !4312, !4304}
-!4327 = distinct !{null, ptr @_RNvXs4_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB1q_4readCsgy7pbN39oAf_6uu_ptx, null, null, null}
-!4328 = !{!4316, !4309, !4304}
-!4329 = !{!4319, !4320, !4312, !4307}
+!4321 = !{!4316, !4309, !4304}
+!4322 = !{!4319, !4320, !4312, !4307}
+!4323 = !{!4324, !4326, !4319, !4316, !4320, !4309, !4312, !4304}
+!4324 = distinct !{!4324, !4325, !"_RNvXs0_NtNtCs7tKScEop1B6_5alloc2io5implsINtNtB9_5boxed3BoxDNtNtB7_4read4ReadEL_EBV_8read_bufCsgy7pbN39oAf_6uu_ptx: argument 0"}
+!4325 = distinct !{!4325, !"_RNvXs0_NtNtCs7tKScEop1B6_5alloc2io5implsINtNtB9_5boxed3BoxDNtNtB7_4read4ReadEL_EBV_8read_bufCsgy7pbN39oAf_6uu_ptx"}
+!4326 = distinct !{!4326, !4327, !"_RNvXNtNtCs7tKScEop1B6_5alloc2io5implsQINtNtB6_5boxed3BoxDNtNtB4_4read4ReadEL_EBT_8read_bufCsgy7pbN39oAf_6uu_ptx: argument 0"}
+!4327 = distinct !{!4327, !"_RNvXNtNtCs7tKScEop1B6_5alloc2io5implsQINtNtB6_5boxed3BoxDNtNtB4_4read4ReadEL_EBT_8read_bufCsgy7pbN39oAf_6uu_ptx"}
+!4328 = !{!4319, !4316, !4320, !4309, !4312, !4304}
+!4329 = distinct !{null, ptr @_RNvXs4_NtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreaderINtB5_9BufReaderINtNtBb_5boxed3BoxDNtNtB9_4read4ReadEL_EEB1q_4readCsgy7pbN39oAf_6uu_ptx, null, null, null}
 !4330 = !{!4331, !4309, !4312, !4304}
 !4331 = distinct !{!4331, !4332, !"_RNvXs0_NtNtCs7tKScEop1B6_5alloc2io5implsINtNtB9_5boxed3BoxDNtNtB7_4read4ReadEL_EBV_4readCsgy7pbN39oAf_6uu_ptx: argument 0"}
 !4332 = distinct !{!4332, !"_RNvXs0_NtNtCs7tKScEop1B6_5alloc2io5implsINtNtB9_5boxed3BoxDNtNtB7_4read4ReadEL_EBV_4readCsgy7pbN39oAf_6uu_ptx"}

@@ -205,11 +205,9 @@ bb.b:                                             ; preds = %bb.a
   %.promoted.i.i = load ptr, ptr %1, align 8, !noalias !562
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.promoted9.i.i = load i64, ptr %i.h, align 8, !noalias !562
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
-  %4 = phi i64 [ %.promoted9.i.i, %.lr.ph.i.i ], [ %5, %bb.h ] ; 3 uses
   %.08.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.h ] ; 2 uses
   %i.i = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.s, %bb.h ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.08.i.i
@@ -221,6 +219,7 @@ bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
 bb.d:                                             ; preds = %bb.c
   %i.m = load i32, ptr %i.g, align 8, !tbaa !384, !noalias !562
   %i.n = zext i32 %i.m to i64                     ; 3 uses
+  %4 = load i64, ptr %i.h, align 8, !tbaa !332, !noalias !562 ; 2 uses
   %.not.i.i.i.i.i = icmp ult i64 %4, %i.n
   br i1 %.not.i.i.i.i.i, label %bb.e, label %_ZN6duckdb29DecimalParquetValueConversionIsLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i
 
@@ -245,14 +244,13 @@ bb.g:                                             ; preds = %bb.e
   br label %common.resume
 
 _ZN6duckdb29DecimalParquetValueConversionIsLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i: ; preds = %bb.d
-  %i.q = sub nuw i64 %4, %i.n                     ; 2 uses
+  %i.q = sub nuw i64 %4, %i.n
   store i64 %i.q, ptr %i.h, align 8, !tbaa !332, !noalias !562
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.n ; 2 uses
   store ptr %i.r, ptr %1, align 8, !tbaa !331, !noalias !562
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN6duckdb29DecimalParquetValueConversionIsLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i, %bb.c
-  %5 = phi i64 [ %4, %bb.c ], [ %i.q, %_ZN6duckdb29DecimalParquetValueConversionIsLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.s = phi ptr [ %i.i, %bb.c ], [ %i.r, %_ZN6duckdb29DecimalParquetValueConversionIsLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.t = add nuw i64 %.08.i.i, 1                  ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %3
@@ -655,11 +653,9 @@ bb.b:                                             ; preds = %bb.a
   %.promoted.i.i = load ptr, ptr %1, align 8, !noalias !580
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.promoted9.i.i = load i64, ptr %i.h, align 8, !noalias !580
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
-  %4 = phi i64 [ %.promoted9.i.i, %.lr.ph.i.i ], [ %5, %bb.h ] ; 3 uses
   %.08.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.h ] ; 2 uses
   %i.i = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.s, %bb.h ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.08.i.i
@@ -671,6 +667,7 @@ bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
 bb.d:                                             ; preds = %bb.c
   %i.m = load i32, ptr %i.g, align 8, !tbaa !384, !noalias !580
   %i.n = zext i32 %i.m to i64                     ; 3 uses
+  %4 = load i64, ptr %i.h, align 8, !tbaa !332, !noalias !580 ; 2 uses
   %.not.i.i.i.i.i = icmp ult i64 %4, %i.n
   br i1 %.not.i.i.i.i.i, label %bb.e, label %_ZN6duckdb29DecimalParquetValueConversionIiLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i
 
@@ -695,14 +692,13 @@ bb.g:                                             ; preds = %bb.e
   br label %common.resume
 
 _ZN6duckdb29DecimalParquetValueConversionIiLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i: ; preds = %bb.d
-  %i.q = sub nuw i64 %4, %i.n                     ; 2 uses
+  %i.q = sub nuw i64 %4, %i.n
   store i64 %i.q, ptr %i.h, align 8, !tbaa !332, !noalias !580
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.n ; 2 uses
   store ptr %i.r, ptr %1, align 8, !tbaa !331, !noalias !580
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN6duckdb29DecimalParquetValueConversionIiLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i, %bb.c
-  %5 = phi i64 [ %4, %bb.c ], [ %i.q, %_ZN6duckdb29DecimalParquetValueConversionIiLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.s = phi ptr [ %i.i, %bb.c ], [ %i.r, %_ZN6duckdb29DecimalParquetValueConversionIiLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.t = add nuw i64 %.08.i.i, 1                  ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %3
@@ -1105,11 +1101,9 @@ bb.b:                                             ; preds = %bb.a
   %.promoted.i.i = load ptr, ptr %1, align 8, !noalias !593
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.promoted9.i.i = load i64, ptr %i.h, align 8, !noalias !593
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
-  %4 = phi i64 [ %.promoted9.i.i, %.lr.ph.i.i ], [ %5, %bb.h ] ; 3 uses
   %.08.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.h ] ; 2 uses
   %i.i = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.s, %bb.h ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.08.i.i
@@ -1121,6 +1115,7 @@ bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
 bb.d:                                             ; preds = %bb.c
   %i.m = load i32, ptr %i.g, align 8, !tbaa !384, !noalias !593
   %i.n = zext i32 %i.m to i64                     ; 3 uses
+  %4 = load i64, ptr %i.h, align 8, !tbaa !332, !noalias !593 ; 2 uses
   %.not.i.i.i.i.i = icmp ult i64 %4, %i.n
   br i1 %.not.i.i.i.i.i, label %bb.e, label %_ZN6duckdb29DecimalParquetValueConversionIlLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i
 
@@ -1145,14 +1140,13 @@ bb.g:                                             ; preds = %bb.e
   br label %common.resume
 
 _ZN6duckdb29DecimalParquetValueConversionIlLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i: ; preds = %bb.d
-  %i.q = sub nuw i64 %4, %i.n                     ; 2 uses
+  %i.q = sub nuw i64 %4, %i.n
   store i64 %i.q, ptr %i.h, align 8, !tbaa !332, !noalias !593
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.n ; 2 uses
   store ptr %i.r, ptr %1, align 8, !tbaa !331, !noalias !593
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN6duckdb29DecimalParquetValueConversionIlLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i, %bb.c
-  %5 = phi i64 [ %4, %bb.c ], [ %i.q, %_ZN6duckdb29DecimalParquetValueConversionIlLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.s = phi ptr [ %i.i, %bb.c ], [ %i.r, %_ZN6duckdb29DecimalParquetValueConversionIlLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.t = add nuw i64 %.08.i.i, 1                  ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %3
@@ -1555,11 +1549,9 @@ bb.b:                                             ; preds = %bb.a
   %.promoted.i.i = load ptr, ptr %1, align 8, !noalias !606
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.promoted9.i.i = load i64, ptr %i.h, align 8, !noalias !606
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
-  %4 = phi i64 [ %.promoted9.i.i, %.lr.ph.i.i ], [ %5, %bb.h ] ; 3 uses
   %.08.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.h ] ; 2 uses
   %i.i = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.s, %bb.h ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.08.i.i
@@ -1571,6 +1563,7 @@ bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
 bb.d:                                             ; preds = %bb.c
   %i.m = load i32, ptr %i.g, align 8, !tbaa !384, !noalias !606
   %i.n = zext i32 %i.m to i64                     ; 3 uses
+  %4 = load i64, ptr %i.h, align 8, !tbaa !332, !noalias !606 ; 2 uses
   %.not.i.i.i.i.i = icmp ult i64 %4, %i.n
   br i1 %.not.i.i.i.i.i, label %bb.e, label %_ZN6duckdb29DecimalParquetValueConversionINS_9hugeint_tELb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i
 
@@ -1595,14 +1588,13 @@ bb.g:                                             ; preds = %bb.e
   br label %common.resume
 
 _ZN6duckdb29DecimalParquetValueConversionINS_9hugeint_tELb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i: ; preds = %bb.d
-  %i.q = sub nuw i64 %4, %i.n                     ; 2 uses
+  %i.q = sub nuw i64 %4, %i.n
   store i64 %i.q, ptr %i.h, align 8, !tbaa !332, !noalias !606
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.n ; 2 uses
   store ptr %i.r, ptr %1, align 8, !tbaa !331, !noalias !606
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN6duckdb29DecimalParquetValueConversionINS_9hugeint_tELb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i, %bb.c
-  %5 = phi i64 [ %4, %bb.c ], [ %i.q, %_ZN6duckdb29DecimalParquetValueConversionINS_9hugeint_tELb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.s = phi ptr [ %i.i, %bb.c ], [ %i.r, %_ZN6duckdb29DecimalParquetValueConversionINS_9hugeint_tELb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.t = add nuw i64 %.08.i.i, 1                  ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %3
@@ -2005,11 +1997,9 @@ bb.b:                                             ; preds = %bb.a
   %.promoted.i.i = load ptr, ptr %1, align 8, !noalias !624
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %.promoted9.i.i = load i64, ptr %i.h, align 8, !noalias !624
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
-  %4 = phi i64 [ %.promoted9.i.i, %.lr.ph.i.i ], [ %5, %bb.h ] ; 3 uses
   %.08.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %i.t, %bb.h ] ; 2 uses
   %i.i = phi ptr [ %.promoted.i.i, %.lr.ph.i.i ], [ %i.s, %bb.h ] ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 %.08.i.i
@@ -2021,6 +2011,7 @@ bb.c:                                             ; preds = %bb.h, %.lr.ph.i.i
 bb.d:                                             ; preds = %bb.c
   %i.m = load i32, ptr %i.g, align 8, !tbaa !384, !noalias !624
   %i.n = zext i32 %i.m to i64                     ; 3 uses
+  %4 = load i64, ptr %i.h, align 8, !tbaa !332, !noalias !624 ; 2 uses
   %.not.i.i.i.i.i = icmp ult i64 %4, %i.n
   br i1 %.not.i.i.i.i.i, label %bb.e, label %_ZN6duckdb29DecimalParquetValueConversionIdLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i
 
@@ -2045,14 +2036,13 @@ bb.g:                                             ; preds = %bb.e
   br label %common.resume
 
 _ZN6duckdb29DecimalParquetValueConversionIdLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i: ; preds = %bb.d
-  %i.q = sub nuw i64 %4, %i.n                     ; 2 uses
+  %i.q = sub nuw i64 %4, %i.n
   store i64 %i.q, ptr %i.h, align 8, !tbaa !332, !noalias !624
   %i.r = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.n ; 2 uses
   store ptr %i.r, ptr %1, align 8, !tbaa !331, !noalias !624
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN6duckdb29DecimalParquetValueConversionIdLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i, %bb.c
-  %5 = phi i64 [ %4, %bb.c ], [ %i.q, %_ZN6duckdb29DecimalParquetValueConversionIdLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.s = phi ptr [ %i.i, %bb.c ], [ %i.r, %_ZN6duckdb29DecimalParquetValueConversionIdLb1EE9PlainSkipILb0EEEvRNS_10ByteBufferERNS_12ColumnReaderE.exit.i.i ]
   %i.t = add nuw i64 %.08.i.i, 1                  ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.t, %3

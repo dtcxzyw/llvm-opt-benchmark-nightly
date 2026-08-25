@@ -205,8 +205,8 @@ mpegts_find_stream_type.exit:                     ; preds = %switch.hole_check, 
 
 .lr.ph640:                                        ; preds = %.preheader
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  %.promoted = load ptr, ptr %4, align 8, !tbaa !9
   %12 = zext i8 %i.h to i64
+  %.pre = load ptr, ptr %4, align 8, !tbaa !9
   br label %bb.bb
 
 bb.f:                                             ; preds = %mpegts_find_stream_type.exit
@@ -609,9 +609,9 @@ bb.ba:                                            ; preds = %get8.exit512
   br label %get16.exit.thread
 
 bb.bb:                                            ; preds = %.lr.ph640, %get8.exit524.thread
-  %indvars.iv665 = phi i64 [ 0, %.lr.ph640 ], [ %indvars.iv.next666, %get8.exit524.thread ] ; 2 uses
-  %indvars.iv663.a = phi i64 [ 4, %.lr.ph640 ], [ %indvars.iv.next664, %get8.exit524.thread ]
-  %13 = phi ptr [ %.promoted, %.lr.ph640 ], [ %i.hu, %get8.exit524.thread ] ; 4 uses
+  %13 = phi ptr [ %.pre, %.lr.ph640 ], [ %i.hu, %get8.exit524.thread ] ; 4 uses
+  %indvars.iv663.a = phi i64 [ 0, %.lr.ph640 ], [ %indvars.iv.next666, %get8.exit524.thread ] ; 2 uses
+  %indvars.iv663 = phi i64 [ 4, %.lr.ph640 ], [ %indvars.iv.next664, %get8.exit524.thread ]
   %.not.i513 = icmp ult ptr %13, %i.k
   br i1 %.not.i513, label %bb.bc, label %get8.exit515
 
@@ -624,7 +624,7 @@ bb.bc:                                            ; preds = %bb.bb
 get8.exit515:                                     ; preds = %bb.bb, %bb.bc
   %i.hd = phi ptr [ %i.hb, %bb.bc ], [ %13, %bb.bb ] ; 4 uses
   %.0.i514 = phi i8 [ %i.hc, %bb.bc ], [ -73, %bb.bb ]
-  %i.he = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv665 ; 4 uses
+  %i.he = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv663.a ; 4 uses
   store i8 %.0.i514, ptr %i.he, align 4, !tbaa !12
   %.not.i516 = icmp ult ptr %i.hd, %i.k
   br i1 %.not.i516, label %bb.bd, label %get8.exit518
@@ -678,9 +678,9 @@ switch.lookup794:                                 ; preds = %get8.exit524
 
 get8.exit524.thread:                              ; preds = %get8.exit524, %switch.lookup794, %get8.exit521
   %i.hu = phi ptr [ %i.hl, %get8.exit521 ], [ %i.ho, %get8.exit524 ], [ %i.ho, %switch.lookup794 ]
-  %indvars.iv.next664 = add nuw nsw i64 %indvars.iv663.a, 4 ; 2 uses
+  %indvars.iv.next664 = add nuw nsw i64 %indvars.iv663, 4 ; 2 uses
   %.not459 = icmp samesign ugt i64 %indvars.iv.next664, %12
-  %indvars.iv.next666 = add nuw nsw i64 %indvars.iv665, 4
+  %indvars.iv.next666 = add nuw nsw i64 %indvars.iv663.a, 4
   br i1 %.not459, label %._crit_edge641, label %bb.bb, !llvm.loop !75
 
 ._crit_edge641:                                   ; preds = %get8.exit524.thread
@@ -1083,11 +1083,9 @@ bb.al:                                            ; preds = %get8.exit228
   %i.el = getelementptr inbounds nuw i8, ptr %.09.i224, i64 1560 ; 2 uses
   %i.em = getelementptr inbounds nuw i8, ptr %.09.i224, i64 1556 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.promoted270 = load i32, ptr %i.em, align 4, !tbaa !96
   br label %bb.am
 
 bb.am:                                            ; preds = %.lr.ph264, %bb.au
-  %6 = phi i32 [ %.promoted270, %.lr.ph264 ], [ %7, %bb.au ] ; 7 uses
   %i.eo = phi ptr [ %.promoted, %.lr.ph264 ], [ %i.es, %bb.au ] ; 4 uses
   %.0156263 = phi i32 [ 0, %.lr.ph264 ], [ %i.fu, %bb.au ]
   %.not.i229 = icmp ult ptr %i.eo, %4
@@ -1103,6 +1101,7 @@ bb.an:                                            ; preds = %bb.am
 get8.exit231:                                     ; preds = %bb.am, %bb.an
   %i.es = phi ptr [ %i.ep, %bb.an ], [ %i.eo, %bb.am ]
   %.0.i230 = phi i32 [ %i.er, %bb.an ], [ -1094995529, %bb.am ] ; 2 uses
+  %6 = load i32, ptr %i.em, align 4, !tbaa !96    ; 6 uses
   %.not288.a = icmp eq i32 %6, 0
   br i1 %.not288.a, label %._crit_edge, label %.lr.ph.preheader
 
@@ -1143,13 +1142,12 @@ bb.ap:                                            ; preds = %bb.ao, %.lr.ph
   br i1 %i.fa, label %.critedge189, label %bb.aq
 
 bb.aq:                                            ; preds = %._crit_edge.thread
-  %i.fb = add i32 %6, 1                           ; 2 uses
+  %i.fb = add i32 %6, 1
   store i32 %i.fb, ptr %i.em, align 4, !tbaa !96
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %._crit_edge
   %.0.lcssa351 = phi i32 [ %.0.lcssa352, %bb.aq ], [ %.0.lcssa, %._crit_edge ]
-  %7 = phi i32 [ %i.fb, %bb.aq ], [ %6, %._crit_edge ]
   %i.fc = zext nneg i32 %.0.lcssa351 to i64
   %i.fd = getelementptr inbounds nuw [1040 x i8], ptr %i.el, i64 %i.fc ; 4 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 4

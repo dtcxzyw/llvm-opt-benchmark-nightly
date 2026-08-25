@@ -205,26 +205,25 @@ bb.ak:                                            ; preds = %_RNvMNtCscgRAwXFJnX
 
 .lr.ph.i.i17:                                     ; preds = %.noexc1.i16, %.noexc2.i50
   %.sroa.074.0 = phi ptr [ %.sroa.074.9, %.noexc2.i50 ], [ %1, %.noexc1.i16 ], !dbg !3914
+  %.promoted.i60.i.i = phi ptr [ %i.qv, %.noexc2.i50 ], [ %1, %.noexc1.i16 ]
   %.sroa.020.037.i.i = phi i64 [ %i.qz, %.noexc2.i50 ], [ 0, %.noexc1.i16 ]
-  %4 = phi ptr [ %i.qv, %.noexc2.i50 ], [ %1, %.noexc1.i16 ] ; 2 uses
   br label %bb.al, !dbg !3927
 
 bb.al:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i, %.lr.ph.i.i17
   %.sroa.074.1 = phi ptr [ %.sroa.074.0, %.lr.ph.i.i17 ], [ %.sroa.074.9, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i ], !dbg !3914
-  %i.lz = phi ptr [ %4, %.lr.ph.i.i17 ], [ %i.qv, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i ]
+  %i.lz = phi ptr [ %.promoted.i60.i.i, %.lr.ph.i.i17 ], [ %i.qv, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i ] ; 6 uses
   %indvars.iv.i.i.i19 = phi i64 [ 0, %.lr.ph.i.i17 ], [ %indvars.iv.next.i.i.i46, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i ] ; 2 uses
   %.sroa.0.021.i.i.i20 = phi i64 [ 0, %.lr.ph.i.i17 ], [ %.sroa.07.0.7.i.i.i45, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i ]
-  %.promoted1819.i.i.i21 = phi ptr [ %4, %.lr.ph.i.i17 ], [ %.promoted16.7.i.i.i43, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i ] ; 6 uses
   %i.ma = shl nuw nsw i64 %indvars.iv.i.i.i19, 3, !dbg !3938 ; 8 uses
   %i.mb = shl nuw nsw i64 1, %i.ma, !dbg !3940
-  %i.mc = icmp eq ptr %.promoted1819.i.i.i21, %i.t, !dbg !3941
+  %i.mc = icmp eq ptr %i.lz, %i.t, !dbg !3941
   br i1 %i.mc, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i, label %bb.am, !dbg !3947
 
 bb.am:                                            ; preds = %bb.al
-  %i.md = getelementptr inbounds nuw i8, ptr %.promoted1819.i.i.i21, i64 16, !dbg !3948 ; 3 uses
+  %i.md = getelementptr inbounds nuw i8, ptr %i.lz, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !3950), !dbg !3953
-  %i.me = load ptr, ptr %.promoted1819.i.i.i21, align 8, !dbg !3959, !alias.scope !3950, !noalias !3962, !nonnull !14, !noundef !14 ; 2 uses
-  %i.mf = getelementptr inbounds nuw i8, ptr %.promoted1819.i.i.i21, i64 8, !dbg !3959 ; 2 uses
+  %i.me = load ptr, ptr %i.lz, align 8, !dbg !3959, !alias.scope !3950, !noalias !3962, !nonnull !14, !noundef !14 ; 2 uses
+  %i.mf = getelementptr inbounds nuw i8, ptr %i.lz, i64 8, !dbg !3959 ; 2 uses
   %i.mg = load i64, ptr %i.mf, align 8, !dbg !3959, !alias.scope !3950, !noalias !3962, !noundef !14 ; 2 uses
   %i.mh = icmp ne i64 %i.mg, 0, !dbg !3969
   call void @llvm.assume(i1 %i.mh), !dbg !3974
@@ -232,15 +231,14 @@ bb.am:                                            ; preds = %bb.al
   %i.mj = icmp ne i8 %i.mi, %sext, !dbg !3975
   %i.mk = add i64 %i.mg, -1, !dbg !3977
   %i.ml = getelementptr inbounds nuw i8, ptr %i.me, i64 1, !dbg !3986
-  store ptr %i.ml, ptr %.promoted1819.i.i.i21, align 8, !dbg !3991, !alias.scope !3950, !noalias !3962
+  store ptr %i.ml, ptr %i.lz, align 8, !dbg !3991, !alias.scope !3950, !noalias !3962
   store i64 %i.mk, ptr %i.mf, align 8, !dbg !3991, !alias.scope !3950, !noalias !3962
   %i.mm = zext i1 %i.mj to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i, !dbg !3993
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i: ; preds = %bb.am, %bb.al
   %.sroa.074.2 = phi ptr [ %.sroa.074.1, %bb.al ], [ %i.md, %bb.am ], !dbg !3994
-  %i.mn = phi ptr [ %i.lz, %bb.al ], [ %i.md, %bb.am ]
-  %.promoted16.i.i.i22 = phi ptr [ %.promoted1819.i.i.i21, %bb.al ], [ %i.md, %bb.am ] ; 6 uses
+  %i.mn = phi ptr [ %i.lz, %bb.al ], [ %i.md, %bb.am ] ; 6 uses
   %.sroa.0.0.i.i.i.i23 = phi i8 [ 2, %bb.al ], [ %i.mm, %bb.am ], !dbg !3995 ; 2 uses
   %i.mo = icmp ne i8 %.sroa.0.0.i.i.i.i23, 2, !dbg !3996
   call void @llvm.assume(i1 %i.mo), !dbg !3997
@@ -248,14 +246,14 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.mq = select i1 %i.mp, i64 %i.mb, i64 0, !dbg !3999
   %.sroa.07.0.i.i.i24 = or i64 %i.mq, %.sroa.0.021.i.i.i20, !dbg !3999
   %i.mr = shl nuw i64 2, %i.ma, !dbg !4001
-  %i.ms = icmp eq ptr %.promoted16.i.i.i22, %i.t, !dbg !3941
+  %i.ms = icmp eq ptr %i.mn, %i.t, !dbg !3941
   br i1 %i.ms, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i, label %bb.an, !dbg !3947
 
 bb.an:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i
-  %i.mt = getelementptr inbounds nuw i8, ptr %.promoted16.i.i.i22, i64 16, !dbg !3948 ; 3 uses
+  %i.mt = getelementptr inbounds nuw i8, ptr %i.mn, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4002), !dbg !3953
-  %i.mu = load ptr, ptr %.promoted16.i.i.i22, align 8, !dbg !3959, !alias.scope !4002, !noalias !4004, !nonnull !14, !noundef !14 ; 2 uses
-  %i.mv = getelementptr inbounds nuw i8, ptr %.promoted16.i.i.i22, i64 8, !dbg !3959 ; 2 uses
+  %i.mu = load ptr, ptr %i.mn, align 8, !dbg !3959, !alias.scope !4002, !noalias !4004, !nonnull !14, !noundef !14 ; 2 uses
+  %i.mv = getelementptr inbounds nuw i8, ptr %i.mn, i64 8, !dbg !3959 ; 2 uses
   %i.mw = load i64, ptr %i.mv, align 8, !dbg !3959, !alias.scope !4002, !noalias !4004, !noundef !14 ; 2 uses
   %i.mx = icmp ne i64 %i.mw, 0, !dbg !3969
   call void @llvm.assume(i1 %i.mx), !dbg !3974
@@ -263,15 +261,14 @@ bb.an:                                            ; preds = %_RNvXs0_NtNtNtCscgR
   %i.mz = icmp ne i8 %i.my, %sext, !dbg !3975
   %i.na = add i64 %i.mw, -1, !dbg !3977
   %i.nb = getelementptr inbounds nuw i8, ptr %i.mu, i64 1, !dbg !3986
-  store ptr %i.nb, ptr %.promoted16.i.i.i22, align 8, !dbg !3991, !alias.scope !4002, !noalias !4004
+  store ptr %i.nb, ptr %i.mn, align 8, !dbg !3991, !alias.scope !4002, !noalias !4004
   store i64 %i.na, ptr %i.mv, align 8, !dbg !3991, !alias.scope !4002, !noalias !4004
   %i.nc = zext i1 %i.mz to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i, !dbg !3993
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i: ; preds = %bb.an, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i
   %.sroa.074.3 = phi ptr [ %.sroa.074.2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i ], [ %i.mt, %bb.an ], !dbg !3994
-  %i.nd = phi ptr [ %i.mn, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i ], [ %i.mt, %bb.an ]
-  %.promoted16.1.i.i.i25 = phi ptr [ %.promoted16.i.i.i22, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i ], [ %i.mt, %bb.an ] ; 6 uses
+  %i.nd = phi ptr [ %i.mn, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i ], [ %i.mt, %bb.an ] ; 6 uses
   %.sroa.0.0.i.1.i.i.i26 = phi i8 [ 2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.i ], [ %i.nc, %bb.an ], !dbg !3995 ; 2 uses
   %i.ne = icmp ne i8 %.sroa.0.0.i.1.i.i.i26, 2, !dbg !3996
   call void @llvm.assume(i1 %i.ne), !dbg !3997
@@ -279,14 +276,14 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.ng = select i1 %i.nf, i64 %i.mr, i64 0, !dbg !3999
   %.sroa.07.0.1.i.i.i27 = or i64 %.sroa.07.0.i.i.i24, %i.ng, !dbg !3999
   %i.nh = shl i64 4, %i.ma, !dbg !4001
-  %i.ni = icmp eq ptr %.promoted16.1.i.i.i25, %i.t, !dbg !3941
+  %i.ni = icmp eq ptr %i.nd, %i.t, !dbg !3941
   br i1 %i.ni, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i, label %bb.ao, !dbg !3947
 
 bb.ao:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i
-  %i.nj = getelementptr inbounds nuw i8, ptr %.promoted16.1.i.i.i25, i64 16, !dbg !3948 ; 3 uses
+  %i.nj = getelementptr inbounds nuw i8, ptr %i.nd, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4007), !dbg !3953
-  %i.nk = load ptr, ptr %.promoted16.1.i.i.i25, align 8, !dbg !3959, !alias.scope !4007, !noalias !4009, !nonnull !14, !noundef !14 ; 2 uses
-  %i.nl = getelementptr inbounds nuw i8, ptr %.promoted16.1.i.i.i25, i64 8, !dbg !3959 ; 2 uses
+  %i.nk = load ptr, ptr %i.nd, align 8, !dbg !3959, !alias.scope !4007, !noalias !4009, !nonnull !14, !noundef !14 ; 2 uses
+  %i.nl = getelementptr inbounds nuw i8, ptr %i.nd, i64 8, !dbg !3959 ; 2 uses
   %i.nm = load i64, ptr %i.nl, align 8, !dbg !3959, !alias.scope !4007, !noalias !4009, !noundef !14 ; 2 uses
   %i.nn = icmp ne i64 %i.nm, 0, !dbg !3969
   call void @llvm.assume(i1 %i.nn), !dbg !3974
@@ -294,15 +291,14 @@ bb.ao:                                            ; preds = %_RNvXs0_NtNtNtCscgR
   %i.np = icmp ne i8 %i.no, %sext, !dbg !3975
   %i.nq = add i64 %i.nm, -1, !dbg !3977
   %i.nr = getelementptr inbounds nuw i8, ptr %i.nk, i64 1, !dbg !3986
-  store ptr %i.nr, ptr %.promoted16.1.i.i.i25, align 8, !dbg !3991, !alias.scope !4007, !noalias !4009
+  store ptr %i.nr, ptr %i.nd, align 8, !dbg !3991, !alias.scope !4007, !noalias !4009
   store i64 %i.nq, ptr %i.nl, align 8, !dbg !3991, !alias.scope !4007, !noalias !4009
   %i.ns = zext i1 %i.np to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i, !dbg !3993
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i: ; preds = %bb.ao, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i
   %.sroa.074.4 = phi ptr [ %.sroa.074.3, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i ], [ %i.nj, %bb.ao ], !dbg !3994
-  %i.nt = phi ptr [ %i.nd, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i ], [ %i.nj, %bb.ao ]
-  %.promoted16.2.i.i.i28 = phi ptr [ %.promoted16.1.i.i.i25, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i ], [ %i.nj, %bb.ao ] ; 6 uses
+  %i.nt = phi ptr [ %i.nd, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i ], [ %i.nj, %bb.ao ] ; 6 uses
   %.sroa.0.0.i.2.i.i.i29 = phi i8 [ 2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.1.i.i.i ], [ %i.ns, %bb.ao ], !dbg !3995 ; 2 uses
   %i.nu = icmp ne i8 %.sroa.0.0.i.2.i.i.i29, 2, !dbg !3996
   call void @llvm.assume(i1 %i.nu), !dbg !3997
@@ -310,14 +306,14 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.nw = select i1 %i.nv, i64 %i.nh, i64 0, !dbg !3999
   %.sroa.07.0.2.i.i.i30 = or i64 %.sroa.07.0.1.i.i.i27, %i.nw, !dbg !3999
   %i.nx = shl i64 8, %i.ma, !dbg !4001
-  %i.ny = icmp eq ptr %.promoted16.2.i.i.i28, %i.t, !dbg !3941
+  %i.ny = icmp eq ptr %i.nt, %i.t, !dbg !3941
   br i1 %i.ny, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i, label %bb.ap, !dbg !3947
 
 bb.ap:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i
-  %i.nz = getelementptr inbounds nuw i8, ptr %.promoted16.2.i.i.i28, i64 16, !dbg !3948 ; 3 uses
+  %i.nz = getelementptr inbounds nuw i8, ptr %i.nt, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4012), !dbg !3953
-  %i.oa = load ptr, ptr %.promoted16.2.i.i.i28, align 8, !dbg !3959, !alias.scope !4012, !noalias !4014, !nonnull !14, !noundef !14 ; 2 uses
-  %i.ob = getelementptr inbounds nuw i8, ptr %.promoted16.2.i.i.i28, i64 8, !dbg !3959 ; 2 uses
+  %i.oa = load ptr, ptr %i.nt, align 8, !dbg !3959, !alias.scope !4012, !noalias !4014, !nonnull !14, !noundef !14 ; 2 uses
+  %i.ob = getelementptr inbounds nuw i8, ptr %i.nt, i64 8, !dbg !3959 ; 2 uses
   %i.oc = load i64, ptr %i.ob, align 8, !dbg !3959, !alias.scope !4012, !noalias !4014, !noundef !14 ; 2 uses
   %i.od = icmp ne i64 %i.oc, 0, !dbg !3969
   call void @llvm.assume(i1 %i.od), !dbg !3974
@@ -325,15 +321,14 @@ bb.ap:                                            ; preds = %_RNvXs0_NtNtNtCscgR
   %i.of = icmp ne i8 %i.oe, %sext, !dbg !3975
   %i.og = add i64 %i.oc, -1, !dbg !3977
   %i.oh = getelementptr inbounds nuw i8, ptr %i.oa, i64 1, !dbg !3986
-  store ptr %i.oh, ptr %.promoted16.2.i.i.i28, align 8, !dbg !3991, !alias.scope !4012, !noalias !4014
+  store ptr %i.oh, ptr %i.nt, align 8, !dbg !3991, !alias.scope !4012, !noalias !4014
   store i64 %i.og, ptr %i.ob, align 8, !dbg !3991, !alias.scope !4012, !noalias !4014
   %i.oi = zext i1 %i.of to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i, !dbg !3993
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i: ; preds = %bb.ap, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i
   %.sroa.074.5 = phi ptr [ %.sroa.074.4, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i ], [ %i.nz, %bb.ap ], !dbg !3994
-  %i.oj = phi ptr [ %i.nt, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i ], [ %i.nz, %bb.ap ]
-  %.promoted16.3.i.i.i31 = phi ptr [ %.promoted16.2.i.i.i28, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i ], [ %i.nz, %bb.ap ] ; 6 uses
+  %i.oj = phi ptr [ %i.nt, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i ], [ %i.nz, %bb.ap ] ; 6 uses
   %.sroa.0.0.i.3.i.i.i32 = phi i8 [ 2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.2.i.i.i ], [ %i.oi, %bb.ap ], !dbg !3995 ; 2 uses
   %i.ok = icmp ne i8 %.sroa.0.0.i.3.i.i.i32, 2, !dbg !3996
   call void @llvm.assume(i1 %i.ok), !dbg !3997
@@ -341,14 +336,14 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.om = select i1 %i.ol, i64 %i.nx, i64 0, !dbg !3999
   %.sroa.07.0.3.i.i.i33 = or i64 %.sroa.07.0.2.i.i.i30, %i.om, !dbg !3999
   %i.on = shl i64 16, %i.ma, !dbg !4001
-  %i.oo = icmp eq ptr %.promoted16.3.i.i.i31, %i.t, !dbg !3941
+  %i.oo = icmp eq ptr %i.oj, %i.t, !dbg !3941
   br i1 %i.oo, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i, label %bb.aq, !dbg !3947
 
 bb.aq:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i
-  %i.op = getelementptr inbounds nuw i8, ptr %.promoted16.3.i.i.i31, i64 16, !dbg !3948 ; 3 uses
+  %i.op = getelementptr inbounds nuw i8, ptr %i.oj, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4017), !dbg !3953
-  %i.oq = load ptr, ptr %.promoted16.3.i.i.i31, align 8, !dbg !3959, !alias.scope !4017, !noalias !4019, !nonnull !14, !noundef !14 ; 2 uses
-  %i.or = getelementptr inbounds nuw i8, ptr %.promoted16.3.i.i.i31, i64 8, !dbg !3959 ; 2 uses
+  %i.oq = load ptr, ptr %i.oj, align 8, !dbg !3959, !alias.scope !4017, !noalias !4019, !nonnull !14, !noundef !14 ; 2 uses
+  %i.or = getelementptr inbounds nuw i8, ptr %i.oj, i64 8, !dbg !3959 ; 2 uses
   %i.os = load i64, ptr %i.or, align 8, !dbg !3959, !alias.scope !4017, !noalias !4019, !noundef !14 ; 2 uses
   %i.ot = icmp ne i64 %i.os, 0, !dbg !3969
   call void @llvm.assume(i1 %i.ot), !dbg !3974
@@ -356,15 +351,14 @@ bb.aq:                                            ; preds = %_RNvXs0_NtNtNtCscgR
   %i.ov = icmp ne i8 %i.ou, %sext, !dbg !3975
   %i.ow = add i64 %i.os, -1, !dbg !3977
   %i.ox = getelementptr inbounds nuw i8, ptr %i.oq, i64 1, !dbg !3986
-  store ptr %i.ox, ptr %.promoted16.3.i.i.i31, align 8, !dbg !3991, !alias.scope !4017, !noalias !4019
+  store ptr %i.ox, ptr %i.oj, align 8, !dbg !3991, !alias.scope !4017, !noalias !4019
   store i64 %i.ow, ptr %i.or, align 8, !dbg !3991, !alias.scope !4017, !noalias !4019
   %i.oy = zext i1 %i.ov to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i, !dbg !3993
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i: ; preds = %bb.aq, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i
   %.sroa.074.6 = phi ptr [ %.sroa.074.5, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i ], [ %i.op, %bb.aq ], !dbg !3994
-  %i.oz = phi ptr [ %i.oj, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i ], [ %i.op, %bb.aq ]
-  %.promoted16.4.i.i.i34 = phi ptr [ %.promoted16.3.i.i.i31, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i ], [ %i.op, %bb.aq ] ; 6 uses
+  %i.oz = phi ptr [ %i.oj, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i ], [ %i.op, %bb.aq ] ; 6 uses
   %.sroa.0.0.i.4.i.i.i35 = phi i8 [ 2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.3.i.i.i ], [ %i.oy, %bb.aq ], !dbg !3995 ; 2 uses
   %i.pa = icmp ne i8 %.sroa.0.0.i.4.i.i.i35, 2, !dbg !3996
   call void @llvm.assume(i1 %i.pa), !dbg !3997
@@ -372,14 +366,14 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.pc = select i1 %i.pb, i64 %i.on, i64 0, !dbg !3999
   %.sroa.07.0.4.i.i.i36 = or i64 %.sroa.07.0.3.i.i.i33, %i.pc, !dbg !3999
   %i.pd = shl i64 32, %i.ma, !dbg !4001
-  %i.pe = icmp eq ptr %.promoted16.4.i.i.i34, %i.t, !dbg !3941
+  %i.pe = icmp eq ptr %i.oz, %i.t, !dbg !3941
   br i1 %i.pe, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i, label %bb.ar, !dbg !3947
 
 bb.ar:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i
-  %i.pf = getelementptr inbounds nuw i8, ptr %.promoted16.4.i.i.i34, i64 16, !dbg !3948 ; 3 uses
+  %i.pf = getelementptr inbounds nuw i8, ptr %i.oz, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4022), !dbg !3953
-  %i.pg = load ptr, ptr %.promoted16.4.i.i.i34, align 8, !dbg !3959, !alias.scope !4022, !noalias !4024, !nonnull !14, !noundef !14 ; 2 uses
-  %i.ph = getelementptr inbounds nuw i8, ptr %.promoted16.4.i.i.i34, i64 8, !dbg !3959 ; 2 uses
+  %i.pg = load ptr, ptr %i.oz, align 8, !dbg !3959, !alias.scope !4022, !noalias !4024, !nonnull !14, !noundef !14 ; 2 uses
+  %i.ph = getelementptr inbounds nuw i8, ptr %i.oz, i64 8, !dbg !3959 ; 2 uses
   %i.pi = load i64, ptr %i.ph, align 8, !dbg !3959, !alias.scope !4022, !noalias !4024, !noundef !14 ; 2 uses
   %i.pj = icmp ne i64 %i.pi, 0, !dbg !3969
   call void @llvm.assume(i1 %i.pj), !dbg !3974
@@ -387,15 +381,14 @@ bb.ar:                                            ; preds = %_RNvXs0_NtNtNtCscgR
   %i.pl = icmp ne i8 %i.pk, %sext, !dbg !3975
   %i.pm = add i64 %i.pi, -1, !dbg !3977
   %i.pn = getelementptr inbounds nuw i8, ptr %i.pg, i64 1, !dbg !3986
-  store ptr %i.pn, ptr %.promoted16.4.i.i.i34, align 8, !dbg !3991, !alias.scope !4022, !noalias !4024
+  store ptr %i.pn, ptr %i.oz, align 8, !dbg !3991, !alias.scope !4022, !noalias !4024
   store i64 %i.pm, ptr %i.ph, align 8, !dbg !3991, !alias.scope !4022, !noalias !4024
   %i.po = zext i1 %i.pl to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i, !dbg !3993
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i: ; preds = %bb.ar, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i
   %.sroa.074.7 = phi ptr [ %.sroa.074.6, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i ], [ %i.pf, %bb.ar ], !dbg !3994
-  %i.pp = phi ptr [ %i.oz, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i ], [ %i.pf, %bb.ar ]
-  %.promoted16.5.i.i.i37 = phi ptr [ %.promoted16.4.i.i.i34, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i ], [ %i.pf, %bb.ar ] ; 6 uses
+  %i.pp = phi ptr [ %i.oz, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i ], [ %i.pf, %bb.ar ] ; 6 uses
   %.sroa.0.0.i.5.i.i.i38 = phi i8 [ 2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.4.i.i.i ], [ %i.po, %bb.ar ], !dbg !3995 ; 2 uses
   %i.pq = icmp ne i8 %.sroa.0.0.i.5.i.i.i38, 2, !dbg !3996
   call void @llvm.assume(i1 %i.pq), !dbg !3997
@@ -403,14 +396,14 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.ps = select i1 %i.pr, i64 %i.pd, i64 0, !dbg !3999
   %.sroa.07.0.5.i.i.i39 = or i64 %.sroa.07.0.4.i.i.i36, %i.ps, !dbg !3999
   %i.pt = shl i64 64, %i.ma, !dbg !4001
-  %i.pu = icmp eq ptr %.promoted16.5.i.i.i37, %i.t, !dbg !3941
+  %i.pu = icmp eq ptr %i.pp, %i.t, !dbg !3941
   br i1 %i.pu, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i, label %bb.as, !dbg !3947
 
 bb.as:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i
-  %i.pv = getelementptr inbounds nuw i8, ptr %.promoted16.5.i.i.i37, i64 16, !dbg !3948 ; 3 uses
+  %i.pv = getelementptr inbounds nuw i8, ptr %i.pp, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4027), !dbg !3953
-  %i.pw = load ptr, ptr %.promoted16.5.i.i.i37, align 8, !dbg !3959, !alias.scope !4027, !noalias !4029, !nonnull !14, !noundef !14 ; 2 uses
-  %i.px = getelementptr inbounds nuw i8, ptr %.promoted16.5.i.i.i37, i64 8, !dbg !3959 ; 2 uses
+  %i.pw = load ptr, ptr %i.pp, align 8, !dbg !3959, !alias.scope !4027, !noalias !4029, !nonnull !14, !noundef !14 ; 2 uses
+  %i.px = getelementptr inbounds nuw i8, ptr %i.pp, i64 8, !dbg !3959 ; 2 uses
   %i.py = load i64, ptr %i.px, align 8, !dbg !3959, !alias.scope !4027, !noalias !4029, !noundef !14 ; 2 uses
   %i.pz = icmp ne i64 %i.py, 0, !dbg !3969
   call void @llvm.assume(i1 %i.pz), !dbg !3974
@@ -418,15 +411,14 @@ bb.as:                                            ; preds = %_RNvXs0_NtNtNtCscgR
   %i.qb = icmp ne i8 %i.qa, %sext, !dbg !3975
   %i.qc = add i64 %i.py, -1, !dbg !3977
   %i.qd = getelementptr inbounds nuw i8, ptr %i.pw, i64 1, !dbg !3986
-  store ptr %i.qd, ptr %.promoted16.5.i.i.i37, align 8, !dbg !3991, !alias.scope !4027, !noalias !4029
+  store ptr %i.qd, ptr %i.pp, align 8, !dbg !3991, !alias.scope !4027, !noalias !4029
   store i64 %i.qc, ptr %i.px, align 8, !dbg !3991, !alias.scope !4027, !noalias !4029
   %i.qe = zext i1 %i.qb to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i, !dbg !3993
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i: ; preds = %bb.as, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i
   %.sroa.074.8 = phi ptr [ %.sroa.074.7, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i ], [ %i.pv, %bb.as ], !dbg !3994
-  %i.qf = phi ptr [ %i.pp, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i ], [ %i.pv, %bb.as ]
-  %.promoted16.6.i.i.i40 = phi ptr [ %.promoted16.5.i.i.i37, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i ], [ %i.pv, %bb.as ] ; 6 uses
+  %i.qf = phi ptr [ %i.pp, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i ], [ %i.pv, %bb.as ] ; 6 uses
   %.sroa.0.0.i.6.i.i.i41 = phi i8 [ 2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.5.i.i.i ], [ %i.qe, %bb.as ], !dbg !3995 ; 2 uses
   %i.qg = icmp ne i8 %.sroa.0.0.i.6.i.i.i41, 2, !dbg !3996
   call void @llvm.assume(i1 %i.qg), !dbg !3997
@@ -434,14 +426,14 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.qi = select i1 %i.qh, i64 %i.pt, i64 0, !dbg !3999
   %.sroa.07.0.6.i.i.i42 = or i64 %.sroa.07.0.5.i.i.i39, %i.qi, !dbg !3999
   %i.qj = shl i64 128, %i.ma, !dbg !4001
-  %i.qk = icmp eq ptr %.promoted16.6.i.i.i40, %i.t, !dbg !3941
+  %i.qk = icmp eq ptr %i.qf, %i.t, !dbg !3941
   br i1 %i.qk, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i, label %bb.at, !dbg !3947
 
 bb.at:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i
-  %i.ql = getelementptr inbounds nuw i8, ptr %.promoted16.6.i.i.i40, i64 16, !dbg !3948 ; 3 uses
+  %i.ql = getelementptr inbounds nuw i8, ptr %i.qf, i64 16, !dbg !3948 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4032), !dbg !3953
-  %i.qm = load ptr, ptr %.promoted16.6.i.i.i40, align 8, !dbg !3959, !alias.scope !4032, !noalias !4034, !nonnull !14, !noundef !14 ; 2 uses
-  %i.qn = getelementptr inbounds nuw i8, ptr %.promoted16.6.i.i.i40, i64 8, !dbg !3959 ; 2 uses
+  %i.qm = load ptr, ptr %i.qf, align 8, !dbg !3959, !alias.scope !4032, !noalias !4034, !nonnull !14, !noundef !14 ; 2 uses
+  %i.qn = getelementptr inbounds nuw i8, ptr %i.qf, i64 8, !dbg !3959 ; 2 uses
   %i.qo = load i64, ptr %i.qn, align 8, !dbg !3959, !alias.scope !4032, !noalias !4034, !noundef !14 ; 2 uses
   %i.qp = icmp ne i64 %i.qo, 0, !dbg !3969
   call void @llvm.assume(i1 %i.qp), !dbg !3974
@@ -449,7 +441,7 @@ bb.at:                                            ; preds = %_RNvXs0_NtNtNtCscgR
   %i.qr = icmp ne i8 %i.qq, %sext, !dbg !3975
   %i.qs = add i64 %i.qo, -1, !dbg !3977
   %i.qt = getelementptr inbounds nuw i8, ptr %i.qm, i64 1, !dbg !3986
-  store ptr %i.qt, ptr %.promoted16.6.i.i.i40, align 8, !dbg !3991, !alias.scope !4032, !noalias !4034
+  store ptr %i.qt, ptr %i.qf, align 8, !dbg !3991, !alias.scope !4032, !noalias !4034
   store i64 %i.qs, ptr %i.qn, align 8, !dbg !3991, !alias.scope !4032, !noalias !4034
   %i.qu = zext i1 %i.qr to i8, !dbg !3992
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i, !dbg !3993
@@ -457,7 +449,6 @@ bb.at:                                            ; preds = %_RNvXs0_NtNtNtCscgR
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.7.i.i.i: ; preds = %bb.at, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i
   %.sroa.074.9 = phi ptr [ %.sroa.074.8, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i ], [ %i.ql, %bb.at ], !dbg !3994 ; 3 uses
   %i.qv = phi ptr [ %i.qf, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i ], [ %i.ql, %bb.at ] ; 3 uses
-  %.promoted16.7.i.i.i43 = phi ptr [ %.promoted16.6.i.i.i40, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i ], [ %i.ql, %bb.at ]
   %.sroa.0.0.i.7.i.i.i44 = phi i8 [ 2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.6.i.i.i ], [ %i.qu, %bb.at ], !dbg !3995 ; 2 uses
   %i.qw = icmp ne i8 %.sroa.0.0.i.7.i.i.i44, 2, !dbg !3996
   call void @llvm.assume(i1 %i.qw), !dbg !3997
@@ -492,9 +483,9 @@ _RINvNtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutable19get_chunk_uncheckedINtNtNt
 
 .lr.ph48.i.i:                                     ; preds = %.preheader36.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit31.i.i55
   %.sroa.074.11 = phi ptr [ %.sroa.074.19, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit31.i.i55 ], [ %.sroa.074.10, %.preheader36.i.i ], !dbg !3914
-  %.sroa.022.047.i.i = phi i64 [ %i.zl, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit31.i.i55 ], [ 0, %.preheader36.i.i ]
-  %.promoted384546.i.i = phi ptr [ %.promoted3843.7.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit31.i.i55 ], [ %.promoted42.i.i, %.preheader36.i.i ] ; 6 uses
-  %i.rg = icmp eq ptr %.promoted384546.i.i, %i.t, !dbg !4089
+  %.promoted.i.i = phi ptr [ %.promoted3843.7.i.i, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit31.i.i55 ], [ %.promoted42.i.i, %.preheader36.i.i ] ; 6 uses
+  %.sroa.022.041.i.i = phi i64 [ %i.zl, %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_row.exit31.i.i55 ], [ 0, %.preheader36.i.i ]
+  %i.rg = icmp eq ptr %.promoted.i.i, %i.t, !dbg !4089
   br i1 %i.rg, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit34.i.i, label %bb.be, !dbg !4098
 
 bb.au:                                            ; preds = %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.6, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.5, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.4, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.3, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.2, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i.1, %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit.i.i
@@ -742,10 +733,10 @@ _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VechE8push_mutCs4PheDXcg4wa_10polars_ro
   br i1 %exitcond56.not.i.i, label %._crit_edge.i.i56, label %.lr.ph48.i.i, !dbg !3921
 
 bb.be:                                            ; preds = %.lr.ph48.i.i
-  %i.vh = getelementptr inbounds nuw i8, ptr %.promoted384546.i.i, i64 16, !dbg !4211 ; 2 uses
+  %i.vh = getelementptr inbounds nuw i8, ptr %.promoted.i.i, i64 16, !dbg !4211 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4213), !dbg !4216
-  %i.vi = load ptr, ptr %.promoted384546.i.i, align 8, !dbg !4219, !alias.scope !4213, !noalias !4221, !nonnull !14, !noundef !14 ; 2 uses
-  %i.vj = getelementptr inbounds nuw i8, ptr %.promoted384546.i.i, i64 8, !dbg !4219 ; 2 uses
+  %i.vi = load ptr, ptr %.promoted.i.i, align 8, !dbg !4219, !alias.scope !4213, !noalias !4221, !nonnull !14, !noundef !14 ; 2 uses
+  %i.vj = getelementptr inbounds nuw i8, ptr %.promoted.i.i, i64 8, !dbg !4219 ; 2 uses
   %i.vk = load i64, ptr %i.vj, align 8, !dbg !4219, !alias.scope !4213, !noalias !4221, !noundef !14 ; 2 uses
   %i.vl = icmp ne i64 %i.vk, 0, !dbg !4224
   call void @llvm.assume(i1 %i.vl), !dbg !4227
@@ -753,14 +744,14 @@ bb.be:                                            ; preds = %.lr.ph48.i.i
   %i.vn = icmp ne i8 %i.vm, %sext, !dbg !4228
   %i.vo = add i64 %i.vk, -1, !dbg !4230
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vi, i64 1, !dbg !4234
-  store ptr %i.vp, ptr %.promoted384546.i.i, align 8, !dbg !4236, !alias.scope !4213, !noalias !4221
+  store ptr %i.vp, ptr %.promoted.i.i, align 8, !dbg !4236, !alias.scope !4213, !noalias !4221
   store i64 %i.vo, ptr %i.vj, align 8, !dbg !4236, !alias.scope !4213, !noalias !4221
   %i.vq = zext i1 %i.vn to i8, !dbg !4237
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit34.i.i, !dbg !4238
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4iter7IterMutRShENCNvNtNtCs4PheDXcg4wa_10polars_row5fixed7boolean11decode_bools0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1B_.exit34.i.i: ; preds = %bb.be, %.lr.ph48.i.i
   %.sroa.074.12 = phi ptr [ %.sroa.074.11, %.lr.ph48.i.i ], [ %i.vh, %bb.be ], !dbg !3994
-  %.promoted3843.i.i = phi ptr [ %.promoted384546.i.i, %.lr.ph48.i.i ], [ %i.vh, %bb.be ] ; 6 uses
+  %.promoted3843.i.i = phi ptr [ %.promoted.i.i, %.lr.ph48.i.i ], [ %i.vh, %bb.be ] ; 6 uses
   %.sroa.0.0.i33.i.i = phi i8 [ 2, %.lr.ph48.i.i ], [ %i.vq, %bb.be ], !dbg !4239 ; 2 uses
   %i.vr = icmp ne i8 %.sroa.0.0.i33.i.i, 2, !dbg !4240
   call void @llvm.assume(i1 %i.vr), !dbg !4241
@@ -960,7 +951,7 @@ _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapINtNtNtBb_5slice4it
   %i.zj = shl nuw i8 %.sroa.0.0.i33.7.i.i, 7, !dbg !4247
   %i.zk = or disjoint i8 %i.zj, %i.yw, !dbg !4247
   %.sroa.010.0.7.i.i54 = or i8 %i.zk, %.sroa.0.0.i33.i.i, !dbg !4247
-  %i.zl = add nuw nsw i64 %.sroa.022.047.i.i, 1, !dbg !4279 ; 2 uses
+  %i.zl = add nuw nsw i64 %.sroa.022.041.i.i, 1, !dbg !4279 ; 2 uses
   %i.zm = load i64, ptr %i.ly, align 8, !dbg !4285, !alias.scope !4200, !noalias !4071, !noundef !14 ; 3 uses
   %i.zn = load i64, ptr %i.a, align 8, !dbg !4286, !range !1010, !alias.scope !4200, !noalias !4071, !noundef !14
   %i.zo = icmp eq i64 %i.zm, %i.zn, !dbg !4289

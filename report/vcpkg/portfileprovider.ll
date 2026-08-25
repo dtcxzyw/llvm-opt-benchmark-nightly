@@ -205,7 +205,7 @@ bb.a:
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not16.i = icmp eq i64 %i.d, 0
   br i1 %.not16.i, label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i, label %_ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocateEm.exit.i.i
 
@@ -220,43 +220,40 @@ _ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocat
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i: ; preds = %_ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocateEm.exit.i.i, %bb.b
-  %.promoted12 = phi ptr [ %i.j, %_ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocateEm.exit.i.i ], [ null, %bb.b ] ; 2 uses
-  %.promoted8 = phi ptr [ %i.h, %_ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocateEm.exit.i.i ], [ null, %bb.b ] ; 3 uses
+  %.promoted12 = phi ptr [ %i.j, %_ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocateEm.exit.i.i ], [ null, %bb.b ]
+  %.promoted8 = phi ptr [ %i.h, %_ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocateEm.exit.i.i ], [ null, %bb.b ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %.sroa.02.05.i = load ptr, ptr %i.k, align 8, !tbaa !145, !noalias !129 ; 2 uses
   %.not6.i = icmp eq ptr %.sroa.02.05.i, null
   br i1 %.not6.i, label %"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit", label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i, %.lr.ph.i
-  %2 = phi ptr [ %.promoted12, %.lr.ph.i ], [ %4, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
-  %3 = phi ptr [ %.promoted8, %.lr.ph.i ], [ %5, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
-  %i.m = phi ptr [ %.promoted8, %.lr.ph.i ], [ %6, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 6 uses
-  %i.n = phi ptr [ %.promoted8, %.lr.ph.i ], [ %i.ae, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 7 uses
-  %i.o = phi ptr [ %.promoted12, %.lr.ph.i ], [ %i.af, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 2 uses
+  %i.m = phi ptr [ %.promoted8, %.lr.ph.i ], [ %i.ae, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 7 uses
+  %i.n = phi ptr [ %.promoted12, %.lr.ph.i ], [ %i.af, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
+  %i.o = phi ptr [ %.promoted8, %.lr.ph.i ], [ %.pn, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
   %.sroa.02.07.i = phi ptr [ %.sroa.02.05.i, %.lr.ph.i ], [ %.sroa.02.0.i, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.sroa.02.07.i, i64 40 ; 2 uses
-  %.not.i.i = icmp eq ptr %i.m, %i.o
+  %.not.i.i = icmp eq ptr %i.o, %i.n
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store ptr %i.p, ptr %i.m, align 8, !tbaa !68, !noalias !129
+  store ptr %i.p, ptr %i.o, align 8, !tbaa !68, !noalias !129
+  %2 = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
+  store ptr %2, ptr %i.l, align 8, !tbaa !143, !alias.scope !129
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i
 
 bb.e:                                             ; preds = %bb.c
-  %i.q = ptrtoint ptr %i.m to i64
-  %i.r = ptrtoint ptr %i.n to i64
+  %i.q = ptrtoint ptr %i.n to i64
+  %i.r = ptrtoint ptr %i.m to i64
   %i.s = sub i64 %i.q, %i.r                       ; 7 uses
   %i.t = icmp eq i64 %i.s, 9223372036854775800
   br i1 %i.t, label %bb.f, label %_ZNKSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.e
-  store ptr %i.m, ptr %i.l, align 8
-  store ptr %3, ptr %0, align 8
-  store ptr %2, ptr %i.f, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.27) #25
           to label %.noexc11.i unwind label %.loopexit.split-lp.i, !noalias !129
 
@@ -283,38 +280,36 @@ _ZNKSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12_M_check_lenEmPK
   br i1 %i.ac, label %bb.g, label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 bb.g:                                             ; preds = %.noexc12.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aa, ptr align 8 %i.n, i64 %i.s, i1 false), !noalias !129
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aa, ptr align 8 %i.m, i64 %i.s, i1 false), !noalias !129
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.g, %.noexc12.i
-  %.not.i17.i.i.i = icmp eq ptr %i.n, null
+  %3 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 2 uses
+  %.not.i17.i.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.s) #26, !noalias !129
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %i.s) #26, !noalias !129
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.h, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
+  store ptr %i.aa, ptr %0, align 8, !tbaa !140, !alias.scope !129
+  store ptr %3, ptr %i.l, align 8, !tbaa !143, !alias.scope !129
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.y ; 2 uses
+  store ptr %i.ad, ptr %i.f, align 8, !tbaa !144, !alias.scope !129
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i: ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, %bb.d
-  %4 = phi ptr [ %i.ad, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %2, %bb.d ] ; 2 uses
-  %5 = phi ptr [ %i.aa, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %3, %bb.d ] ; 2 uses
-  %i.ae = phi ptr [ %i.aa, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.n, %bb.d ]
-  %i.af = phi ptr [ %i.ad, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.o, %bb.d ]
-  %.pn = phi ptr [ %i.ab, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.m, %bb.d ]
-  %6 = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 2 uses
+  %i.ae = phi ptr [ %i.aa, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.m, %bb.d ]
+  %i.af = phi ptr [ %i.ad, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.n, %bb.d ]
+  %.pn = phi ptr [ %3, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %2, %bb.d ]
   %.sroa.02.0.i = load ptr, ptr %.sroa.02.07.i, align 8, !tbaa !145, !noalias !129 ; 2 uses
   %.not.i = icmp eq ptr %.sroa.02.0.i, null
-  br i1 %.not.i, label %"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit.loopexit", label %bb.c
+  br i1 %.not.i, label %"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit", label %bb.c
 
 .loopexit.i:                                      ; preds = %_ZNKSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.m, ptr %i.l, align 8
-  store ptr %3, ptr %0, align 8
-  store ptr %2, ptr %i.f, align 8
   br label %bb.i
 
 .loopexit.split-lp.i:                             ; preds = %bb.f
@@ -324,23 +319,17 @@ _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_
 
 bb.i:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
   %.pn.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ], [ %lpad.loopexit.i, %.loopexit.i ]
-  %.not.i.i.i13.i = icmp eq ptr %i.n, null
+  %.not.i.i.i13.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i.i13.i, label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EED2Ev.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef %i.s) #26, !noalias !129
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %i.s) #26, !noalias !129
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EED2Ev.exit.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EED2Ev.exit.i: ; preds = %bb.j, %bb.i
   resume { ptr, i32 } %.pn.i
 
-"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit.loopexit": ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i
-  store ptr %6, ptr %i.l, align 8
-  store ptr %5, ptr %0, align 8
-  store ptr %4, ptr %i.f, align 8
-  br label %"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit"
-
-"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit": ; preds = %"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit.loopexit", %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
+"_ZN5vcpkg4Util4fmapIRKSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_28SourceControlFileAndLocationESt4hashIS8_ESt8equal_toIS8_ESaISt4pairIKS8_S9_EEEZNKS_19MapPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISO_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISO_EE5beginEEEE4typeESaISX_EEOSO_OST_.exit": ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
   ret void
 }
 
@@ -740,7 +729,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.c
-  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %.not18.i = icmp eq i64 %i.p, 0
   br i1 %.not18.i, label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i, label %_ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocateEm.exit.i.i
 
@@ -758,43 +747,40 @@ _ZNSt12_Vector_baseIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_M_allocat
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i: ; preds = %.noexc4, %bb.d
-  %.promoted16 = phi ptr [ %i.v, %.noexc4 ], [ null, %bb.d ] ; 2 uses
-  %.promoted12 = phi ptr [ %i.t, %.noexc4 ], [ null, %bb.d ] ; 3 uses
+  %.promoted16 = phi ptr [ %i.v, %.noexc4 ], [ null, %bb.d ]
+  %.promoted12 = phi ptr [ %i.t, %.noexc4 ], [ null, %bb.d ] ; 2 uses
   %i.w = load ptr, ptr %i.c, align 8, !tbaa !32, !noalias !183 ; 2 uses
   %.not5.i = icmp eq ptr %i.w, %i.a
   br i1 %.not5.i, label %"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit", label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
-  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i, %.lr.ph.i
-  %3 = phi ptr [ %.promoted16, %.lr.ph.i ], [ %5, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
-  %4 = phi ptr [ %.promoted12, %.lr.ph.i ], [ %6, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
-  %i.y = phi ptr [ %.promoted12, %.lr.ph.i ], [ %7, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 6 uses
-  %i.z = phi ptr [ %.promoted12, %.lr.ph.i ], [ %i.aq, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 7 uses
-  %i.aa = phi ptr [ %.promoted16, %.lr.ph.i ], [ %i.ar, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 2 uses
+  %i.y = phi ptr [ %.promoted12, %.lr.ph.i ], [ %i.aq, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 7 uses
+  %i.z = phi ptr [ %.promoted16, %.lr.ph.i ], [ %i.ar, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
+  %i.aa = phi ptr [ %.promoted12, %.lr.ph.i ], [ %.pn20, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 3 uses
   %.sroa.02.06.i = phi ptr [ %i.w, %.lr.ph.i ], [ %i.as, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i ] ; 2 uses
   %i.ab = getelementptr i8, ptr %.sroa.02.06.i, i64 64
   %.val.i = load ptr, ptr %i.ab, align 8, !tbaa !186, !noalias !183 ; 2 uses
-  %.not.i.i = icmp eq ptr %i.y, %i.aa
+  %.not.i.i = icmp eq ptr %i.aa, %i.z
   br i1 %.not.i.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  store ptr %.val.i, ptr %i.y, align 8, !tbaa !68, !noalias !183
+  store ptr %.val.i, ptr %i.aa, align 8, !tbaa !68, !noalias !183
+  %3 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
+  store ptr %3, ptr %i.x, align 8, !tbaa !143, !alias.scope !183
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i
 
 bb.g:                                             ; preds = %bb.e
-  %i.ac = ptrtoint ptr %i.y to i64
-  %i.ad = ptrtoint ptr %i.z to i64
+  %i.ac = ptrtoint ptr %i.z to i64
+  %i.ad = ptrtoint ptr %i.y to i64
   %i.ae = sub i64 %i.ac, %i.ad                    ; 7 uses
   %i.af = icmp eq i64 %i.ae, 9223372036854775800
   br i1 %i.af, label %bb.h, label %_ZNKSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.h:                                             ; preds = %bb.g
-  store ptr %i.y, ptr %i.x, align 8
-  store ptr %4, ptr %0, align 8
-  store ptr %3, ptr %i.r, align 8
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.27) #25
           to label %.noexc11.i unwind label %.loopexit.split-lp.i, !noalias !183
 
@@ -821,38 +807,36 @@ _ZNKSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12_M_check_lenEmPK
   br i1 %i.ao, label %bb.i, label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 bb.i:                                             ; preds = %.noexc12.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.am, ptr align 8 %i.z, i64 %i.ae, i1 false), !noalias !183
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.am, ptr align 8 %i.y, i64 %i.ae, i1 false), !noalias !183
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.i, %.noexc12.i
-  %.not.i17.i.i.i = icmp eq ptr %i.z, null
+  %4 = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 2 uses
+  %.not.i17.i.i.i = icmp eq ptr %i.y, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef %i.ae) #26, !noalias !183
+  call void @_ZdlPvm(ptr noundef nonnull %i.y, i64 noundef %i.ae) #26, !noalias !183
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.j, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
+  store ptr %i.am, ptr %0, align 8, !tbaa !140, !alias.scope !183
+  store ptr %4, ptr %i.x, align 8, !tbaa !143, !alias.scope !183
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.ak ; 2 uses
+  store ptr %i.ap, ptr %i.r, align 8, !tbaa !144, !alias.scope !183
   br label %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i
 
 _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i: ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, %bb.f
-  %5 = phi ptr [ %i.ap, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %3, %bb.f ] ; 2 uses
-  %6 = phi ptr [ %i.am, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %4, %bb.f ] ; 2 uses
-  %i.aq = phi ptr [ %i.am, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.z, %bb.f ]
-  %i.ar = phi ptr [ %i.ap, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.aa, %bb.f ]
-  %.pn20 = phi ptr [ %i.an, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.y, %bb.f ]
-  %7 = getelementptr inbounds nuw i8, ptr %.pn20, i64 8 ; 2 uses
+  %i.aq = phi ptr [ %i.am, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.y, %bb.f ]
+  %i.ar = phi ptr [ %i.ap, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.z, %bb.f ]
+  %.pn20 = phi ptr [ %4, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %3, %bb.f ]
   %i.as = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.02.06.i) #28, !noalias !183 ; 2 uses
   %.not.i = icmp eq ptr %i.as, %i.a
-  br i1 %.not.i, label %"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit.loopexit", label %bb.e
+  br i1 %.not.i, label %"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit", label %bb.e
 
 .loopexit.i:                                      ; preds = %_ZNKSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.y, ptr %i.x, align 8
-  store ptr %4, ptr %0, align 8
-  store ptr %3, ptr %i.r, align 8
   br label %bb.k
 
 .loopexit.split-lp.i:                             ; preds = %bb.h
@@ -862,20 +846,14 @@ _ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_
 
 bb.k:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
   %.pn.i = phi { ptr, i32 } [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ], [ %lpad.loopexit.i, %.loopexit.i ] ; 2 uses
-  %.not.i.i.i13.i = icmp eq ptr %i.z, null
+  %.not.i.i.i13.i = icmp eq ptr %i.y, null
   br i1 %.not.i.i.i13.i, label %.body, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef %i.ae) #26, !noalias !183
+  call void @_ZdlPvm(ptr noundef nonnull %i.y, i64 noundef %i.ae) #26, !noalias !183
   br label %.body
 
-"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit.loopexit": ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i
-  store ptr %7, ptr %i.x, align 8
-  store ptr %6, ptr %0, align 8
-  store ptr %5, ptr %i.r, align 8
-  br label %"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit"
-
-"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit": ; preds = %"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit.loopexit", %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
+"_ZN5vcpkg4Util4fmapIRSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKNS_28SourceControlFileAndLocationESt4lessIS8_ESaISt4pairIKS8_SB_EEEZNKS_21PathsPortFileProvider22load_all_control_filesEvE3$_0TnNSt9enable_ifIXoosr3stdE21is_lvalue_reference_vIT_Esr3stdE10is_const_vISN_EEiE4typeELi0EEESt6vectorINSt5decayIDTclclsr3stdE7declvalIRT0_EEdecldtclsr3stdE7declvalISN_EE5beginEEEE4typeESaISW_EEOSN_OSS_.exit": ; preds = %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE12emplace_backIJS3_EEERS3_DpOT_.exit.i, %_ZNSt6vectorIPKN5vcpkg28SourceControlFileAndLocationESaIS3_EE7reserveEm.exit.i
   %i.at = load ptr, ptr %i.b, align 8, !tbaa !39
   invoke void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_PKN5vcpkg28SourceControlFileAndLocationEESt10_Select1stISC_ESt4lessIS5_ESaISC_EE8_M_eraseEPSt13_Rb_tree_nodeISC_E(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef %i.at)
           to label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKN5vcpkg28SourceControlFileAndLocationESt4lessIS5_ESaISt4pairIKS5_S9_EEED2Ev.exit unwind label %bb.m

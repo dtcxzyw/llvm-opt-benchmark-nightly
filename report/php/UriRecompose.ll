@@ -202,13 +202,15 @@ bb.cy:                                            ; preds = %bb.ct, %bb.cs
   %i.jb = phi i32 [ %i.jg, %bb.cz ], [ %.promoted770, %.preheader.split.us ]
   %i.jc = trunc nuw i64 %i.ja to i32
   %i.jd = add i32 %i.jb, %i.jc                    ; 2 uses
+  store i32 %i.jd, ptr %4, align 4, !tbaa !12
   %i.je = getelementptr inbounds nuw i8, ptr %.0.us928, i64 16
   %i.jf = load ptr, ptr %i.je, align 8, !tbaa !41 ; 4 uses
   %.not613.us = icmp eq ptr %i.jf, null
-  br i1 %.not613.us, label %.thread702.loopexit, label %bb.cz
+  br i1 %.not613.us, label %.thread702, label %bb.cz
 
 bb.cz:                                            ; preds = %.lr.ph929
   %i.jg = add nsw i32 %i.jd, 1                    ; 3 uses
+  store i32 %i.jg, ptr %4, align 4, !tbaa !12
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jf, i64 8
   %i.ji = load ptr, ptr %i.jh, align 8, !tbaa !38
   %i.jj = load ptr, ptr %i.jf, align 8, !tbaa !40
@@ -218,7 +220,7 @@ bb.cz:                                            ; preds = %.lr.ph929
   %i.jn = sext i32 %i.jg to i64
   %i.jo = sub nsw i64 2147483647, %i.jn
   %i.jp = icmp ugt i64 %i.jm, %i.jo
-  br i1 %i.jp, label %.critedge.loopexit, label %.lr.ph929
+  br i1 %i.jp, label %.critedge, label %.lr.ph929
 
 .preheader.split:                                 ; preds = %.preheader.split.preheader, %bb.dd
   %.28 = phi i32 [ %i.ke, %bb.dd ], [ %.27873875, %.preheader.split.preheader ]
@@ -278,12 +280,8 @@ bb.df:                                            ; preds = %bb.de
   store i32 0, ptr %3, align 4, !tbaa !12
   br label %.critedge
 
-.thread702.loopexit:                              ; preds = %.lr.ph929
-  store i32 %i.jd, ptr %4, align 4, !tbaa !12
-  br label %.thread702
-
-.thread702:                                       ; preds = %bb.dd, %.thread702.loopexit, %bb.cy
-  %.32 = phi i32 [ %.26, %bb.cy ], [ %.26, %.thread702.loopexit ], [ %i.ke, %bb.dd ] ; 3 uses
+.thread702:                                       ; preds = %bb.dd, %.lr.ph929, %bb.cy
+  %.32 = phi i32 [ %.26, %bb.cy ], [ %.26, %.lr.ph929 ], [ %i.ke, %bb.dd ] ; 3 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.kh = load ptr, ptr %i.kg, align 8, !tbaa !43 ; 2 uses
   %.not617 = icmp eq ptr %i.kh, null
@@ -510,12 +508,8 @@ bb.dy:                                            ; preds = %.thread736
   store i32 %i.nl, ptr %3, align 4, !tbaa !12
   br label %.critedge
 
-.critedge.loopexit:                               ; preds = %bb.cz
-  store i32 %i.jg, ptr %4, align 4, !tbaa !12
-  br label %.critedge
-
-.critedge:                                        ; preds = %.preheader.split, %.critedge.loopexit, %.preheader.split.us, %.thread900, %.thread720, %bb.dw, %bb.dv, %.thread722, %bb.du, %bb.dr, %bb.dm, %.thread891, %bb.dl, %bb.dj, %bb.de, %bb.df, %bb.dc, %bb.db, %bb.cp, %bb.cn, %bb.cj, %bb.ch, %bb.co, %bb.cm, %bb.ci, %bb.cc, %bb.cd, %bb.cb, %bb.by, %bb.bu, %bb.bs, %bb.bp, %bb.bl, %bb.bj, %bb.bo, %bb.bt, %bb.br, %bb.bk, %bb.ax, %bb.aw, %bb.ba, %bb.az, %bb.be, %bb.av, %bb.au, %bb.bd, %bb.aq, %bb.an, %.preheader753.split._crit_edge, %bb.ap, %bb.w, %bb.ac, %bb.ae, %bb.z, %bb.aa, %bb.ad, %bb.af, %bb.j, %bb.l, %bb.q, %bb.n, %bb.m, %bb.r, %bb.dx, %bb.dy, %.thread736, %bb.dp, %bb.dq, %bb.dh, %bb.di, %bb.cw, %bb.cx, %bb.u, %bb.v, %bb.f, %bb.g, %bb.c, %bb.d
-  %.21 = phi i32 [ 0, %bb.dx ], [ 2, %bb.c ], [ 4, %bb.dp ], [ 4, %bb.dm ], [ 4, %bb.dh ], [ 4, %bb.de ], [ 4, %bb.w ], [ 4, %bb.aq ], [ 4, %bb.u ], [ 4, %bb.cc ], [ 4, %bb.cp ], [ 4, %bb.dv ], [ 4, %bb.ax ], [ 4, %bb.bu ], [ 4, %bb.j ], [ 4, %bb.f ], [ 2, %bb.d ], [ 4, %bb.g ], [ 4, %bb.v ], [ 4, %bb.cx ], [ 4, %bb.cw ], [ 4, %bb.di ], [ 4, %bb.dq ], [ 0, %.thread736 ], [ 0, %bb.dy ], [ 4, %bb.r ], [ 4, %bb.m ], [ 4, %bb.n ], [ 4, %bb.q ], [ 4, %bb.l ], [ 4, %bb.af ], [ 4, %bb.ad ], [ 4, %bb.aa ], [ 4, %bb.z ], [ 4, %bb.ae ], [ 4, %bb.ac ], [ 4, %bb.ap ], [ 4, %.preheader753.split._crit_edge ], [ 4, %bb.an ], [ 4, %bb.bd ], [ 4, %bb.au ], [ 4, %bb.av ], [ 4, %bb.be ], [ 4, %bb.az ], [ 4, %bb.ba ], [ 4, %bb.aw ], [ 4, %bb.bk ], [ 4, %bb.br ], [ 4, %bb.bt ], [ 4, %bb.bo ], [ 4, %bb.bj ], [ 4, %bb.bl ], [ 4, %bb.bp ], [ 4, %bb.bs ], [ 4, %bb.by ], [ 4, %bb.cb ], [ 4, %bb.cd ], [ 4, %bb.ci ], [ 4, %bb.cm ], [ 4, %bb.co ], [ 4, %bb.ch ], [ 4, %bb.cj ], [ 4, %bb.cn ], [ 0, %bb.dw ], [ 4, %bb.db ], [ 0, %.thread720 ], [ 4, %bb.dc ], [ 4, %bb.df ], [ 4, %bb.dj ], [ 4, %bb.dl ], [ 4, %.thread891 ], [ 4, %bb.dr ], [ 4, %bb.du ], [ 4, %.thread722 ], [ 4, %.preheader.split.us ], [ 0, %.thread900 ], [ 4, %.critedge.loopexit ], [ 4, %.preheader.split ]
+.critedge:                                        ; preds = %.preheader.split, %bb.cz, %.preheader.split.us, %.thread900, %.thread720, %bb.dw, %bb.dv, %.thread722, %bb.du, %bb.dr, %bb.dm, %.thread891, %bb.dl, %bb.dj, %bb.de, %bb.df, %bb.dc, %bb.db, %bb.cp, %bb.cn, %bb.cj, %bb.ch, %bb.co, %bb.cm, %bb.ci, %bb.cc, %bb.cd, %bb.cb, %bb.by, %bb.bu, %bb.bs, %bb.bp, %bb.bl, %bb.bj, %bb.bo, %bb.bt, %bb.br, %bb.bk, %bb.ax, %bb.aw, %bb.ba, %bb.az, %bb.be, %bb.av, %bb.au, %bb.bd, %bb.aq, %bb.an, %.preheader753.split._crit_edge, %bb.ap, %bb.w, %bb.ac, %bb.ae, %bb.z, %bb.aa, %bb.ad, %bb.af, %bb.j, %bb.l, %bb.q, %bb.n, %bb.m, %bb.r, %bb.dx, %bb.dy, %.thread736, %bb.dp, %bb.dq, %bb.dh, %bb.di, %bb.cw, %bb.cx, %bb.u, %bb.v, %bb.f, %bb.g, %bb.c, %bb.d
+  %.21 = phi i32 [ 0, %bb.dx ], [ 2, %bb.c ], [ 4, %bb.dp ], [ 4, %bb.dm ], [ 4, %bb.dh ], [ 4, %bb.de ], [ 4, %bb.w ], [ 4, %bb.aq ], [ 4, %bb.u ], [ 4, %bb.cc ], [ 4, %bb.cp ], [ 4, %bb.dv ], [ 4, %bb.ax ], [ 4, %bb.bu ], [ 4, %bb.j ], [ 4, %bb.f ], [ 2, %bb.d ], [ 4, %bb.g ], [ 4, %bb.v ], [ 4, %bb.cx ], [ 4, %bb.cw ], [ 4, %bb.di ], [ 4, %bb.dq ], [ 0, %.thread736 ], [ 0, %bb.dy ], [ 4, %bb.r ], [ 4, %bb.m ], [ 4, %bb.n ], [ 4, %bb.q ], [ 4, %bb.l ], [ 4, %bb.af ], [ 4, %bb.ad ], [ 4, %bb.aa ], [ 4, %bb.z ], [ 4, %bb.ae ], [ 4, %bb.ac ], [ 4, %bb.ap ], [ 4, %.preheader753.split._crit_edge ], [ 4, %bb.an ], [ 4, %bb.bd ], [ 4, %bb.au ], [ 4, %bb.av ], [ 4, %bb.be ], [ 4, %bb.az ], [ 4, %bb.ba ], [ 4, %bb.aw ], [ 4, %bb.bk ], [ 4, %bb.br ], [ 4, %bb.bt ], [ 4, %bb.bo ], [ 4, %bb.bj ], [ 4, %bb.bl ], [ 4, %bb.bp ], [ 4, %bb.bs ], [ 4, %bb.by ], [ 4, %bb.cb ], [ 4, %bb.cd ], [ 4, %bb.ci ], [ 4, %bb.cm ], [ 4, %bb.co ], [ 4, %bb.ch ], [ 4, %bb.cj ], [ 4, %bb.cn ], [ 0, %bb.dw ], [ 4, %bb.db ], [ 0, %.thread720 ], [ 4, %bb.dc ], [ 4, %bb.df ], [ 4, %bb.dj ], [ 4, %bb.dl ], [ 4, %.thread891 ], [ 4, %bb.dr ], [ 4, %bb.du ], [ 4, %.thread722 ], [ 4, %.preheader.split.us ], [ 0, %.thread900 ], [ 4, %bb.cz ], [ 4, %.preheader.split ]
   ret i32 %.21
 }
 
@@ -918,13 +912,15 @@ bb.cy:                                            ; preds = %bb.ct, %bb.cs
   %i.jp = phi i32 [ %i.ju, %bb.cz ], [ %.promoted780, %.preheader.split.us ]
   %i.jq = trunc nuw i64 %i.jo to i32
   %i.jr = add i32 %i.jp, %i.jq                    ; 2 uses
+  store i32 %i.jr, ptr %4, align 4, !tbaa !12
   %i.js = getelementptr inbounds nuw i8, ptr %.0.us938, i64 16
   %i.jt = load ptr, ptr %i.js, align 8, !tbaa !70 ; 4 uses
   %.not613.us = icmp eq ptr %i.jt, null
-  br i1 %.not613.us, label %.thread702.loopexit, label %bb.cz
+  br i1 %.not613.us, label %.thread702, label %bb.cz
 
 bb.cz:                                            ; preds = %.lr.ph939
   %i.ju = add nsw i32 %i.jr, 1                    ; 3 uses
+  store i32 %i.ju, ptr %4, align 4, !tbaa !12
   %i.jv = getelementptr inbounds nuw i8, ptr %i.jt, i64 8
   %i.jw = load ptr, ptr %i.jv, align 8, !tbaa !67
   %i.jx = load ptr, ptr %i.jt, align 8, !tbaa !69
@@ -935,7 +931,7 @@ bb.cz:                                            ; preds = %.lr.ph939
   %i.kc = sext i32 %i.ju to i64
   %i.kd = sub nsw i64 2147483647, %i.kc
   %i.ke = icmp ugt i64 %i.kb, %i.kd
-  br i1 %i.ke, label %.critedge.loopexit, label %.lr.ph939
+  br i1 %i.ke, label %.critedge, label %.lr.ph939
 
 .preheader.split:                                 ; preds = %.preheader.split.preheader, %bb.dd
   %.28 = phi i32 [ %i.ku, %bb.dd ], [ %.27883885, %.preheader.split.preheader ]
@@ -996,12 +992,8 @@ bb.df:                                            ; preds = %bb.de
   store i32 0, ptr %3, align 4, !tbaa !12
   br label %.critedge
 
-.thread702.loopexit:                              ; preds = %.lr.ph939
-  store i32 %i.jr, ptr %4, align 4, !tbaa !12
-  br label %.thread702
-
-.thread702:                                       ; preds = %bb.dd, %.thread702.loopexit, %bb.cy
-  %.32 = phi i32 [ %.26, %bb.cy ], [ %.26, %.thread702.loopexit ], [ %i.ku, %bb.dd ] ; 3 uses
+.thread702:                                       ; preds = %bb.dd, %.lr.ph939, %bb.cy
+  %.32 = phi i32 [ %.26, %bb.cy ], [ %.26, %.lr.ph939 ], [ %i.ku, %bb.dd ] ; 3 uses
   %i.kw = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
   %i.kx = load ptr, ptr %i.kw, align 8, !tbaa !72 ; 2 uses
   %.not617 = icmp eq ptr %i.kx, null
@@ -1232,12 +1224,8 @@ bb.dy:                                            ; preds = %.thread736
   store i32 %i.of, ptr %3, align 4, !tbaa !12
   br label %.critedge
 
-.critedge.loopexit:                               ; preds = %bb.cz
-  store i32 %i.ju, ptr %4, align 4, !tbaa !12
-  br label %.critedge
-
-.critedge:                                        ; preds = %.preheader.split, %.critedge.loopexit, %.preheader.split.us, %.thread910, %.thread720, %bb.dw, %bb.dv, %.thread722, %bb.du, %bb.dr, %bb.dm, %.thread901, %bb.dl, %bb.dj, %bb.de, %bb.df, %bb.dc, %bb.db, %bb.cp, %bb.cn, %bb.cj, %bb.ch, %bb.co, %bb.cm, %bb.ci, %bb.cc, %bb.cd, %bb.cb, %bb.by, %bb.bu, %bb.bs, %bb.bp, %bb.bl, %bb.bj, %bb.bo, %bb.bt, %bb.br, %bb.bk, %bb.ax, %bb.aw, %bb.ba, %bb.az, %bb.be, %bb.av, %bb.au, %bb.bd, %bb.aq, %bb.an, %.preheader763.split._crit_edge, %bb.ap, %bb.w, %bb.ac, %bb.ae, %bb.z, %bb.aa, %bb.ad, %bb.af, %bb.j, %bb.l, %bb.q, %bb.n, %bb.m, %bb.r, %bb.dx, %bb.dy, %.thread736, %bb.dp, %bb.dq, %bb.dh, %bb.di, %bb.cw, %bb.cx, %bb.u, %bb.v, %bb.f, %bb.g, %bb.c, %bb.d
-  %.21 = phi i32 [ 0, %bb.dx ], [ 2, %bb.c ], [ 4, %bb.dp ], [ 4, %bb.dm ], [ 4, %bb.dh ], [ 4, %bb.de ], [ 4, %bb.w ], [ 4, %bb.aq ], [ 4, %bb.u ], [ 4, %bb.cc ], [ 4, %bb.cp ], [ 4, %bb.dv ], [ 4, %bb.ax ], [ 4, %bb.bu ], [ 4, %bb.j ], [ 4, %bb.f ], [ 2, %bb.d ], [ 4, %bb.g ], [ 4, %bb.v ], [ 4, %bb.cx ], [ 4, %bb.cw ], [ 4, %bb.di ], [ 4, %bb.dq ], [ 0, %.thread736 ], [ 0, %bb.dy ], [ 4, %bb.r ], [ 4, %bb.m ], [ 4, %bb.n ], [ 4, %bb.q ], [ 4, %bb.l ], [ 4, %bb.af ], [ 4, %bb.ad ], [ 4, %bb.aa ], [ 4, %bb.z ], [ 4, %bb.ae ], [ 4, %bb.ac ], [ 4, %bb.ap ], [ 4, %.preheader763.split._crit_edge ], [ 4, %bb.an ], [ 4, %bb.bd ], [ 4, %bb.au ], [ 4, %bb.av ], [ 4, %bb.be ], [ 4, %bb.az ], [ 4, %bb.ba ], [ 4, %bb.aw ], [ 4, %bb.bk ], [ 4, %bb.br ], [ 4, %bb.bt ], [ 4, %bb.bo ], [ 4, %bb.bj ], [ 4, %bb.bl ], [ 4, %bb.bp ], [ 4, %bb.bs ], [ 4, %bb.by ], [ 4, %bb.cb ], [ 4, %bb.cd ], [ 4, %bb.ci ], [ 4, %bb.cm ], [ 4, %bb.co ], [ 4, %bb.ch ], [ 4, %bb.cj ], [ 4, %bb.cn ], [ 0, %bb.dw ], [ 4, %bb.db ], [ 0, %.thread720 ], [ 4, %bb.dc ], [ 4, %bb.df ], [ 4, %bb.dj ], [ 4, %bb.dl ], [ 4, %.thread901 ], [ 4, %bb.dr ], [ 4, %bb.du ], [ 4, %.thread722 ], [ 4, %.preheader.split.us ], [ 0, %.thread910 ], [ 4, %.critedge.loopexit ], [ 4, %.preheader.split ]
+.critedge:                                        ; preds = %.preheader.split, %bb.cz, %.preheader.split.us, %.thread910, %.thread720, %bb.dw, %bb.dv, %.thread722, %bb.du, %bb.dr, %bb.dm, %.thread901, %bb.dl, %bb.dj, %bb.de, %bb.df, %bb.dc, %bb.db, %bb.cp, %bb.cn, %bb.cj, %bb.ch, %bb.co, %bb.cm, %bb.ci, %bb.cc, %bb.cd, %bb.cb, %bb.by, %bb.bu, %bb.bs, %bb.bp, %bb.bl, %bb.bj, %bb.bo, %bb.bt, %bb.br, %bb.bk, %bb.ax, %bb.aw, %bb.ba, %bb.az, %bb.be, %bb.av, %bb.au, %bb.bd, %bb.aq, %bb.an, %.preheader763.split._crit_edge, %bb.ap, %bb.w, %bb.ac, %bb.ae, %bb.z, %bb.aa, %bb.ad, %bb.af, %bb.j, %bb.l, %bb.q, %bb.n, %bb.m, %bb.r, %bb.dx, %bb.dy, %.thread736, %bb.dp, %bb.dq, %bb.dh, %bb.di, %bb.cw, %bb.cx, %bb.u, %bb.v, %bb.f, %bb.g, %bb.c, %bb.d
+  %.21 = phi i32 [ 0, %bb.dx ], [ 2, %bb.c ], [ 4, %bb.dp ], [ 4, %bb.dm ], [ 4, %bb.dh ], [ 4, %bb.de ], [ 4, %bb.w ], [ 4, %bb.aq ], [ 4, %bb.u ], [ 4, %bb.cc ], [ 4, %bb.cp ], [ 4, %bb.dv ], [ 4, %bb.ax ], [ 4, %bb.bu ], [ 4, %bb.j ], [ 4, %bb.f ], [ 2, %bb.d ], [ 4, %bb.g ], [ 4, %bb.v ], [ 4, %bb.cx ], [ 4, %bb.cw ], [ 4, %bb.di ], [ 4, %bb.dq ], [ 0, %.thread736 ], [ 0, %bb.dy ], [ 4, %bb.r ], [ 4, %bb.m ], [ 4, %bb.n ], [ 4, %bb.q ], [ 4, %bb.l ], [ 4, %bb.af ], [ 4, %bb.ad ], [ 4, %bb.aa ], [ 4, %bb.z ], [ 4, %bb.ae ], [ 4, %bb.ac ], [ 4, %bb.ap ], [ 4, %.preheader763.split._crit_edge ], [ 4, %bb.an ], [ 4, %bb.bd ], [ 4, %bb.au ], [ 4, %bb.av ], [ 4, %bb.be ], [ 4, %bb.az ], [ 4, %bb.ba ], [ 4, %bb.aw ], [ 4, %bb.bk ], [ 4, %bb.br ], [ 4, %bb.bt ], [ 4, %bb.bo ], [ 4, %bb.bj ], [ 4, %bb.bl ], [ 4, %bb.bp ], [ 4, %bb.bs ], [ 4, %bb.by ], [ 4, %bb.cb ], [ 4, %bb.cd ], [ 4, %bb.ci ], [ 4, %bb.cm ], [ 4, %bb.co ], [ 4, %bb.ch ], [ 4, %bb.cj ], [ 4, %bb.cn ], [ 0, %bb.dw ], [ 4, %bb.db ], [ 0, %.thread720 ], [ 4, %bb.dc ], [ 4, %bb.df ], [ 4, %bb.dj ], [ 4, %bb.dl ], [ 4, %.thread901 ], [ 4, %bb.dr ], [ 4, %bb.du ], [ 4, %.thread722 ], [ 4, %.preheader.split.us ], [ 0, %.thread910 ], [ 4, %bb.cz ], [ 4, %.preheader.split ]
   ret i32 %.21
 }
 

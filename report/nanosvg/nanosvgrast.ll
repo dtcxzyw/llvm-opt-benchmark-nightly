@@ -205,7 +205,7 @@ scalar.ph154:                                     ; preds = %scalar.ph154.prehea
 ; Function Attrs: nofree nounwind memory(readwrite, target_mem: none) uwtable
 define internal fastcc void @nsvg__rasterizeSortedEdges(ptr nofree noundef captures(none) %0, float noundef %1, float noundef %2, float noundef %3, ptr nofree noundef nonnull readonly captures(none) %4, i8 noundef signext %5) unnamed_addr #14 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 10 uses
+  %i.a = alloca ptr, align 8                      ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr null, ptr %i.a, align 8, !tbaa !209
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 116 ; 2 uses
@@ -238,7 +238,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph166, %nsvg__scanlineSolid.exit
-  %.0.174 = phi ptr [ null, %.lr.ph166 ], [ %.0.i151.lcssa, %nsvg__scanlineSolid.exit ]
+  %.0.174 = phi ptr [ null, %.lr.ph166 ], [ %.0..0..0..0.94, %nsvg__scanlineSolid.exit ]
   %.082165 = phi i32 [ 0, %.lr.ph166 ], [ %i.sf, %nsvg__scanlineSolid.exit ] ; 5 uses
   %.088164 = phi i32 [ 0, %.lr.ph166 ], [ %.290.lcssa, %nsvg__scanlineSolid.exit ]
   %i.z = load ptr, ptr %i.e, align 8, !tbaa !129
@@ -250,7 +250,7 @@ bb.b:                                             ; preds = %.lr.ph166, %nsvg__s
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %nsvg__fillActiveEdges.exit
-  %.0. = phi ptr [ %.0.174, %bb.b ], [ %.0.i151.lcssa, %nsvg__fillActiveEdges.exit ] ; 2 uses
+  %.0. = phi ptr [ %.0.174, %bb.b ], [ %.0..0..0..0.94, %nsvg__fillActiveEdges.exit ] ; 2 uses
   %.083163 = phi i32 [ 0, %bb.b ], [ %i.io, %nsvg__fillActiveEdges.exit ] ; 2 uses
   %.189162 = phi i32 [ %.088164, %bb.b ], [ %.290.lcssa, %nsvg__fillActiveEdges.exit ] ; 3 uses
   %.0121161 = phi i32 [ 0, %bb.b ], [ %.1122, %nsvg__fillActiveEdges.exit ] ; 4 uses
@@ -342,14 +342,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %.0..0.172.pr = load ptr, ptr %i.a, align 8     ; 2 uses
   %.not107144 = icmp eq ptr %.0..0.172.pr, null
   %or.cond = select i1 %i.bg, i1 true, i1 %.not107144
-  br i1 %or.cond, label %.preheader137.loopexit, label %.lr.ph147.backedge
+  br i1 %or.cond, label %.preheader137, label %.lr.ph147.backedge
 
-.preheader137.loopexit:                           ; preds = %.critedge
-  %.0..0..promoted.pre = load ptr, ptr %i.a, align 8
-  br label %.preheader137
-
-.preheader137:                                    ; preds = %bb.c, %.preheader137.loopexit, %.preheader138
-  %.0..promoted = phi ptr [ %.0..0..promoted.pre, %.preheader137.loopexit ], [ null, %.preheader138 ], [ null, %bb.c ] ; 2 uses
+.preheader137:                                    ; preds = %.critedge, %bb.c, %.preheader138
   %i.bh = load i32, ptr %i.h, align 8, !tbaa !145 ; 3 uses
   %i.bi = icmp slt i32 %.189162, %i.bh
   br i1 %i.bi, label %.lr.ph154, label %.critedge2
@@ -362,7 +357,6 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %.lr.ph154, %bb.aa
   %indvars.iv = phi i64 [ %i.bk, %.lr.ph154 ], [ %indvars.iv.next, %bb.aa ] ; 3 uses
-  %.0.i151152 = phi ptr [ %.0..promoted, %.lr.ph154 ], [ %.0.i150, %bb.aa ] ; 7 uses
   %i.bm = getelementptr inbounds [32 x i8], ptr %i.bj, i64 %indvars.iv ; 5 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
   %i.bo = load float, ptr %i.bn, align 4, !tbaa !192 ; 3 uses
@@ -497,20 +491,26 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !155
   %i.dp = getelementptr inbounds nuw i8, ptr %.0.i, i64 12
   store i32 %i.do, ptr %i.dp, align 4, !tbaa !221
-  %i.dq = icmp eq ptr %.0.i151152, null
-  br i1 %i.dq, label %bb.aa, label %bb.x
+  %.0..0..0..0. = load ptr, ptr %i.a, align 8, !tbaa !209 ; 4 uses
+  %i.dq = icmp eq ptr %.0..0..0..0., null
+  br i1 %i.dq, label %6, label %bb.x
+
+6:                                                ; preds = %bb.w
+  store ptr %.0.i, ptr %i.a, align 8, !tbaa !209
+  br label %bb.aa
 
 bb.x:                                             ; preds = %bb.w
-  %i.dr = load i32, ptr %.0.i151152, align 8, !tbaa !214
+  %i.dr = load i32, ptr %.0..0..0..0., align 8, !tbaa !214
   %i.ds = icmp sgt i32 %i.dr, %i.dk
   br i1 %i.ds, label %bb.y, label %.preheader
 
 bb.y:                                             ; preds = %bb.x
-  store ptr %.0.i151152, ptr %i.dm, align 8, !tbaa !212
+  store ptr %.0..0..0..0., ptr %i.dm, align 8, !tbaa !212
+  store ptr %.0.i, ptr %i.a, align 8, !tbaa !209
   br label %bb.aa
 
 .preheader:                                       ; preds = %bb.x, %bb.z
-  %.0 = phi ptr [ %i.du, %bb.z ], [ %.0.i151152, %bb.x ] ; 2 uses
+  %.0 = phi ptr [ %i.du, %bb.z ], [ %.0..0..0..0., %bb.x ] ; 2 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %.0, i64 16
   %i.du = load ptr, ptr %i.dt, align 8, !tbaa !212 ; 4 uses
   %.not110 = icmp eq ptr %i.du, null
@@ -527,8 +527,7 @@ bb.z:                                             ; preds = %.preheader
   store ptr %.0.i, ptr %i.dx, align 8, !tbaa !212
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.w, %bb.y, %.critedge4, %bb.k
-  %.0.i150 = phi ptr [ %.0.i, %bb.y ], [ %.0.i151152, %.critedge4 ], [ %.0.i151152, %bb.k ], [ %.0.i, %bb.w ] ; 2 uses
+bb.aa:                                            ; preds = %bb.y, %.critedge4, %6, %bb.k
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bl
   br i1 %exitcond.not, label %.critedge2, label %bb.j, !llvm.loop !223
@@ -538,10 +537,9 @@ bb.aa:                                            ; preds = %bb.w, %bb.y, %.crit
   br label %.critedge2
 
 .critedge2:                                       ; preds = %bb.aa, %.critedge2.loopexit.split.loop.exit212, %.preheader137
-  %.0.i151.lcssa = phi ptr [ %.0..promoted, %.preheader137 ], [ %.0.i151152, %.critedge2.loopexit.split.loop.exit212 ], [ %.0.i150, %bb.aa ] ; 6 uses
   %.290.lcssa = phi i32 [ %.189162, %.preheader137 ], [ %i.dy, %.critedge2.loopexit.split.loop.exit212 ], [ %i.bh, %bb.aa ] ; 2 uses
-  store ptr %.0.i151.lcssa, ptr %i.a, align 8
-  %.not111 = icmp eq ptr %.0.i151.lcssa, null
+  %.0..0..0..0.94 = load ptr, ptr %i.a, align 8, !tbaa !209 ; 5 uses
+  %.not111 = icmp eq ptr %.0..0..0..0.94, null
   br i1 %.not111, label %nsvg__fillActiveEdges.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %.critedge2
@@ -555,7 +553,7 @@ bb.ab:                                            ; preds = %.critedge2
 .preheader.i:                                     ; preds = %bb.ab, %nsvg__fillScanline.exit.i
   %.6130 = phi i32 [ %.7131, %nsvg__fillScanline.exit.i ], [ %.0124160, %bb.ab ] ; 3 uses
   %.6 = phi i32 [ %.7, %nsvg__fillScanline.exit.i ], [ %.0121161, %bb.ab ] ; 3 uses
-  %.052.i = phi ptr [ %i.gk, %nsvg__fillScanline.exit.i ], [ %.0.i151.lcssa, %bb.ab ] ; 5 uses
+  %.052.i = phi ptr [ %i.gk, %nsvg__fillScanline.exit.i ], [ %.0..0..0..0.94, %bb.ab ] ; 5 uses
   %.03151.i = phi i32 [ %.132.i, %nsvg__fillScanline.exit.i ], [ 0, %bb.ab ] ; 2 uses
   %.03350.i = phi i32 [ %.134.i, %nsvg__fillScanline.exit.i ], [ 0, %bb.ab ] ; 10 uses
   %i.eb = icmp eq i32 %.03151.i, 0
@@ -733,7 +731,7 @@ nsvg__fillScanline.exit.i:                        ; preds = %.lr.ph.i.i, %middle
   %.3 = phi i32 [ %.5, %nsvg__fillScanline.exit47.i ], [ %.0121161, %bb.ab ] ; 2 uses
   %.235.i = phi i32 [ %.336.i, %nsvg__fillScanline.exit47.i ], [ 0, %bb.ab ] ; 9 uses
   %.2.i = phi i32 [ %.3.i, %nsvg__fillScanline.exit47.i ], [ 0, %bb.ab ]
-  %.1.i = phi ptr [ %i.in, %nsvg__fillScanline.exit47.i ], [ %.0.i151.lcssa, %bb.ab ] ; 2 uses
+  %.1.i = phi ptr [ %i.in, %nsvg__fillScanline.exit47.i ], [ %.0..0..0..0.94, %bb.ab ] ; 2 uses
   %i.gl = icmp eq i32 %.2.i, 0
   %i.gm = load i32, ptr %.1.i, align 8, !tbaa !214 ; 4 uses
   br i1 %i.gl, label %nsvg__fillScanline.exit47.i, label %bb.am

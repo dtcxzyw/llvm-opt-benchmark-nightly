@@ -205,7 +205,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %4 = alloca %class.obj_ref, align 8             ; 5 uses
   %5 = alloca %class.obj_ref, align 8             ; 5 uses
-  %6 = alloca %class.obj_ref, align 8             ; 9 uses
+  %6 = alloca %class.obj_ref, align 8             ; 8 uses
   %7 = alloca %class.subterms, align 8            ; 8 uses
   %8 = alloca %"class.subterms::iterator", align 8 ; 10 uses
   %9 = alloca %"class.subterms::iterator", align 8 ; 8 uses
@@ -395,17 +395,17 @@ _ZN6vectorIPN5smtfd13theory_pluginELb0EjE3endEv.exit.i: ; preds = %._crit_edge
 
 _ZN7obj_refI4expr11ast_managerEaSEOS2_.exit.thread.i: ; preds = %.lr.ph.split.i
   %i.bo = load ptr, ptr %5, align 8, !tbaa !56, !noalias !381 ; 3 uses
+  store ptr %i.bo, ptr %6, align 8, !tbaa !56, !alias.scope !381
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20, !noalias !381
   %.not20.i = icmp ne ptr %i.bo, null
   %i.bp = getelementptr inbounds nuw i8, ptr %.01422.i, i64 8 ; 2 uses
   %.not.i121 = icmp eq ptr %i.bp, %i.bj
   %or.cond26.i = select i1 %.not20.i, i1 true, i1 %.not.i121
-  br i1 %or.cond26.i, label %_ZN5smtfd13theory_plugin11model_valueEP4expr.exit.loopexit, label %.lr.ph.split.i
+  br i1 %or.cond26.i, label %_ZN5smtfd13theory_plugin11model_valueEP4expr.exit, label %.lr.ph.split.i
 
 .split.i:                                         ; preds = %.lr.ph.split.i
   %i.bq = landingpad { ptr, i32 }
           cleanup
-  store ptr null, ptr %6, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20, !noalias !381
   br label %.body
 
@@ -604,12 +604,8 @@ bb.t:                                             ; preds = %bb.s
   call void @__clang_call_terminate(ptr %i.ea) #21
   unreachable
 
-_ZN5smtfd13theory_plugin11model_valueEP4expr.exit.loopexit: ; preds = %_ZN7obj_refI4expr11ast_managerEaSEOS2_.exit.thread.i
-  store ptr %i.bo, ptr %6, align 8
-  br label %_ZN5smtfd13theory_plugin11model_valueEP4expr.exit
-
-_ZN5smtfd13theory_plugin11model_valueEP4expr.exit: ; preds = %_ZN5smtfd13theory_plugin11model_valueEP4expr.exit.loopexit, %._crit_edge, %_ZN6vectorIPN5smtfd13theory_pluginELb0EjE3endEv.exit.i
-  %i.eb = phi ptr [ %i.bo, %_ZN5smtfd13theory_plugin11model_valueEP4expr.exit.loopexit ], [ null, %._crit_edge ], [ null, %_ZN6vectorIPN5smtfd13theory_pluginELb0EjE3endEv.exit.i ]
+_ZN5smtfd13theory_plugin11model_valueEP4expr.exit: ; preds = %_ZN7obj_refI4expr11ast_managerEaSEOS2_.exit.thread.i, %._crit_edge, %_ZN6vectorIPN5smtfd13theory_pluginELb0EjE3endEv.exit.i
+  %i.eb = phi ptr [ null, %_ZN6vectorIPN5smtfd13theory_pluginELb0EjE3endEv.exit.i ], [ null, %._crit_edge ], [ %i.bo, %_ZN7obj_refI4expr11ast_managerEaSEOS2_.exit.thread.i ]
   invoke void @_ZN11func_interp16insert_new_entryEPKP4exprS1_(ptr noundef nonnull align 8 dereferenceable(72) %.1, ptr noundef %.sroa.7.2.lcssa, ptr noundef %i.eb)
           to label %bb.u unwind label %bb.z
 
@@ -1012,7 +1008,7 @@ bb.a:
   %7 = alloca %class.obj_ref, align 8             ; 8 uses
   %8 = alloca %class.ref_vector, align 8          ; 9 uses
   %9 = alloca %class.obj_ref, align 8             ; 11 uses
-  %10 = alloca %class.obj_ref, align 8            ; 8 uses
+  %10 = alloca %class.obj_ref, align 8            ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !190, !nonnull !40, !align !41 ; 3 uses
   store ptr null, ptr %0, align 8, !tbaa !56
@@ -1415,6 +1411,7 @@ _ZN6vectorIPN5smtfd13theory_pluginELb0EjE3endEv.exit.i: ; preds = %.lr.ph
 
 _ZN7obj_refI4expr11ast_managerEaSEOS2_.exit.thread.i: ; preds = %.lr.ph.split.i
   %i.fc = load ptr, ptr %5, align 8, !tbaa !56, !noalias !570 ; 4 uses
+  store ptr %i.fc, ptr %10, align 8, !tbaa !56, !alias.scope !570
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20, !noalias !570
   %.not20.i = icmp ne ptr %i.fc, null
   %i.fd = getelementptr inbounds nuw i8, ptr %.01422.i, i64 8 ; 2 uses
@@ -1425,12 +1422,10 @@ _ZN7obj_refI4expr11ast_managerEaSEOS2_.exit.thread.i: ; preds = %.lr.ph.split.i
 .split.i:                                         ; preds = %.lr.ph.split.i
   %i.fe = landingpad { ptr, i32 }
           cleanup
-  store ptr null, ptr %10, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20, !noalias !570
   br label %.body81
 
 _ZN5smtfd13theory_plugin11model_valueEP4expr.exit59: ; preds = %_ZN7obj_refI4expr11ast_managerEaSEOS2_.exit.thread.i
-  store ptr %i.fc, ptr %10, align 8
   %.pre = load ptr, ptr %i.g, align 8, !tbaa !21  ; 2 uses
   %i.ff = icmp eq ptr %.pre, null
   br i1 %i.ff, label %bb.ae, label %_ZN5smtfd13theory_plugin11model_valueEP4expr.exit59.thread

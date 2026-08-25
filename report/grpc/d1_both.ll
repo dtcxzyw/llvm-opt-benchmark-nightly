@@ -204,20 +204,17 @@ bb.g:                                             ; preds = %_ZN4bsslL16dtls1_up
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !145 ; 4 uses
   %i.aq = zext i8 %i.ap to i64                    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #16
-  %i.ar = getelementptr inbounds nuw i8, ptr %8, i64 256 ; 3 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %8, i64 256 ; 11 uses
+  store i8 0, ptr %i.ar, align 16, !tbaa !145
   %i.as = tail call i64 @llvm.usub.sat.i64(i64 %i.aq, i64 %i.ak) ; 13 uses
   %i.at = icmp samesign ult i64 %i.as, %i.aq
-  br i1 %i.at, label %.lr.ph.i, label %._crit_edge.thread.i
-
-._crit_edge.thread.i:                             ; preds = %bb.g
-  store i8 0, ptr %i.ar, align 16
-  br label %_ZSt4sortIPN4bssl16DTLSRecordNumberEEvT_S3_.exit.i
+  br i1 %i.at, label %.lr.ph.i, label %_ZSt4sortIPN4bssl16DTLSRecordNumberEEvT_S3_.exit.i
 
 .lr.ph.i:                                         ; preds = %bb.g
   %i.au = getelementptr inbounds nuw i8, ptr %i.al, i64 920
   %i.av = load i8, ptr %i.au, align 8, !tbaa !147 ; 4 uses
   %i.aw = zext i8 %i.av to i64                    ; 9 uses
-  %umin = call i64 @llvm.umin.i64(i64 %i.ak, i64 %i.aq) ; 9 uses
+  %umin = call i64 @llvm.umin.i64(i64 %i.ak, i64 %i.aq) ; 8 uses
   %i.ax = zext i8 %i.ap to i64
   %i.ay = zext i8 %i.av to i64
   %i.az = add nuw nsw i64 %i.ax, %i.ay
@@ -228,7 +225,7 @@ bb.g:                                             ; preds = %_ZN4bsslL16dtls1_up
   %i.be = call i64 @llvm.umin.i64(i64 %i.bc, i64 %i.bd) ; 2 uses
   %i.bf = call i64 @llvm.umin.i64(i64 %i.be, i64 32)
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %i.be, 24
+  %min.iters.check = icmp samesign ult i64 %i.be, 22
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
 
 scalar.ph.preheader:                              ; preds = %vector.ph, %vector.body.1, %vector.body.2, %vector.body.3, %vector.body.4, %vector.body.5, %vector.body.6, %vector.body.7, %vector.memcheck, %vector.scevcheck, %.lr.ph.i
@@ -282,6 +279,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.cl = getelementptr inbounds nuw i8, ptr %8, i64 16
   store <2 x i64> %wide.load, ptr %8, align 16, !tbaa !146
   store <2 x i64> %wide.load225, ptr %i.cl, align 16, !tbaa !146
+  store i8 4, ptr %i.ar, align 16, !tbaa !145
   %i.cm = icmp eq i64 %n.vec, 4
   br i1 %i.cm, label %scalar.ph.preheader, label %vector.body.1
 
@@ -297,6 +295,7 @@ vector.body.1:                                    ; preds = %vector.ph
   %i.ct = getelementptr inbounds nuw i8, ptr %8, i64 48
   store <2 x i64> %wide.load.1, ptr %i.cs, align 16, !tbaa !146
   store <2 x i64> %wide.load225.1, ptr %i.ct, align 16, !tbaa !146
+  store i8 8, ptr %i.ar, align 16, !tbaa !145
   %i.cu = icmp eq i64 %n.vec, 8
   br i1 %i.cu, label %scalar.ph.preheader, label %vector.body.2
 
@@ -312,6 +311,7 @@ vector.body.2:                                    ; preds = %vector.body.1
   %i.db = getelementptr inbounds nuw i8, ptr %8, i64 80
   store <2 x i64> %wide.load.2, ptr %i.da, align 16, !tbaa !146
   store <2 x i64> %wide.load225.2, ptr %i.db, align 16, !tbaa !146
+  store i8 12, ptr %i.ar, align 16, !tbaa !145
   %i.dc = icmp eq i64 %n.vec, 12
   br i1 %i.dc, label %scalar.ph.preheader, label %vector.body.3
 
@@ -327,6 +327,7 @@ vector.body.3:                                    ; preds = %vector.body.2
   %i.dj = getelementptr inbounds nuw i8, ptr %8, i64 112
   store <2 x i64> %wide.load.3, ptr %i.di, align 16, !tbaa !146
   store <2 x i64> %wide.load225.3, ptr %i.dj, align 16, !tbaa !146
+  store i8 16, ptr %i.ar, align 16, !tbaa !145
   %i.dk = icmp eq i64 %n.vec, 16
   br i1 %i.dk, label %scalar.ph.preheader, label %vector.body.4
 
@@ -342,6 +343,7 @@ vector.body.4:                                    ; preds = %vector.body.3
   %i.dr = getelementptr inbounds nuw i8, ptr %8, i64 144
   store <2 x i64> %wide.load.4, ptr %i.dq, align 16, !tbaa !146
   store <2 x i64> %wide.load225.4, ptr %i.dr, align 16, !tbaa !146
+  store i8 20, ptr %i.ar, align 16, !tbaa !145
   %i.ds = icmp eq i64 %n.vec, 20
   br i1 %i.ds, label %scalar.ph.preheader, label %vector.body.5
 
@@ -357,6 +359,7 @@ vector.body.5:                                    ; preds = %vector.body.4
   %i.dz = getelementptr inbounds nuw i8, ptr %8, i64 176
   store <2 x i64> %wide.load.5, ptr %i.dy, align 16, !tbaa !146
   store <2 x i64> %wide.load225.5, ptr %i.dz, align 16, !tbaa !146
+  store i8 24, ptr %i.ar, align 16, !tbaa !145
   %i.ea = icmp eq i64 %n.vec, 24
   br i1 %i.ea, label %scalar.ph.preheader, label %vector.body.6
 
@@ -372,6 +375,7 @@ vector.body.6:                                    ; preds = %vector.body.5
   %i.eh = getelementptr inbounds nuw i8, ptr %8, i64 208
   store <2 x i64> %wide.load.6, ptr %i.eg, align 16, !tbaa !146
   store <2 x i64> %wide.load225.6, ptr %i.eh, align 16, !tbaa !146
+  store i8 28, ptr %i.ar, align 16, !tbaa !145
   %i.ei = icmp eq i64 %n.vec, 28
   br i1 %i.ei, label %scalar.ph.preheader, label %vector.body.7
 
@@ -387,11 +391,10 @@ vector.body.7:                                    ; preds = %vector.body.6
   %i.ep = getelementptr inbounds nuw i8, ptr %8, i64 240
   store <2 x i64> %wide.load.7, ptr %i.eo, align 16, !tbaa !146
   store <2 x i64> %wide.load225.7, ptr %i.ep, align 16, !tbaa !146
+  store i8 32, ptr %i.ar, align 16, !tbaa !145
   br label %scalar.ph.preheader
 
 ._crit_edge.i.a:                                  ; preds = %bb.k
-  %12 = trunc nuw nsw i64 %umin to i8
-  store i8 %12, ptr %i.ar, align 16
   %.idx.i = shl nuw nsw i64 %umin, 3
   %i.eq = getelementptr inbounds nuw i8, ptr %8, i64 %.idx.i ; 2 uses
   %i.er = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %umin, i1 true)
@@ -426,12 +429,14 @@ bb.k:                                             ; preds = %bb.i
   %.sroa.0.0.copyload.i = load i64, ptr %i.ex, align 8, !tbaa !146
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %indvars.iv.i
   store i64 %.sroa.0.0.copyload.i, ptr %i.ey, align 8, !tbaa !146
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
+  %12 = trunc nuw nsw i64 %indvars.iv.next.i to i8
+  store i8 %12, ptr %i.ar, align 16, !tbaa !145
   %i.ez = add nuw nsw i64 %.04059.i, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next.i, %umin
   br i1 %exitcond.not, label %._crit_edge.i.a, label %scalar.ph, !llvm.loop !182
 
-_ZSt4sortIPN4bssl16DTLSRecordNumberEEvT_S3_.exit.i: ; preds = %._crit_edge.i.a, %._crit_edge.thread.i
+_ZSt4sortIPN4bssl16DTLSRecordNumberEEvT_S3_.exit.i: ; preds = %._crit_edge.i.a, %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #16

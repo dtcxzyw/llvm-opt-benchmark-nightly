@@ -203,7 +203,6 @@ bb.k:                                             ; preds = %bb.l
   br i1 %exitcond96.not.a, label %.lr.ph90, label %bb.l, !llvm.loop !56
 
 .lr.ph90:                                         ; preds = %bb.k
-  %.promoted88 = load i64, ptr %i.w, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 208
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !37
   br label %bb.m
@@ -217,29 +216,27 @@ bb.l:                                             ; preds = %.lr.ph87, %bb.k
   br i1 %.not63, label %PACKET_buf_init.exit.thread, label %bb.k
 
 bb.m:                                             ; preds = %.lr.ph90, %poly_decode_signed_two_to_power_12.exit
-  %.289 = phi i64 [ 0, %.lr.ph90 ], [ %i.er, %poly_decode_signed_two_to_power_12.exit ] ; 2 uses
-  %i.as = phi i64 [ %.promoted88, %.lr.ph90 ], [ %i.ax, %poly_decode_signed_two_to_power_12.exit ]
-  %i.at = getelementptr inbounds nuw [1024 x i8], ptr %i.ao, i64 %.289
-  %.promoted = load ptr, ptr %3, align 8
+  %i.as = phi i64 [ 0, %.lr.ph90 ], [ %i.er, %poly_decode_signed_two_to_power_12.exit ] ; 2 uses
+  %i.at = getelementptr inbounds nuw [1024 x i8], ptr %i.ao, i64 %i.as
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.o, %bb.m
-  %i.au = phi ptr [ %.promoted, %bb.m ], [ %i.aw, %bb.o ] ; 4 uses
-  %4 = phi i64 [ %i.as, %bb.m ], [ %i.ax, %bb.o ] ; 2 uses
-  %.01546.i = phi ptr [ %i.at, %bb.m ], [ %i.ep, %bb.o ] ; 9 uses
+  %i.au = phi ptr [ %i.at, %bb.m ], [ %i.ep, %bb.o ] ; 9 uses
   %.01745.i = phi i32 [ 0, %bb.m ], [ %i.eq, %bb.o ]
-  %i.av = icmp ult i64 %4, 13
+  %.val.i.i.i = load i64, ptr %i.w, align 8, !tbaa !53 ; 2 uses
+  %i.av = icmp ult i64 %.val.i.i.i, 13
   br i1 %i.av, label %PACKET_buf_init.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 13 ; 2 uses
+  %4 = load ptr, ptr %3, align 8, !tbaa !52       ; 4 uses
+  %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 13
   store ptr %i.aw, ptr %3, align 8, !tbaa !52
-  %i.ax = add i64 %4, -13                         ; 3 uses
+  %i.ax = add i64 %.val.i.i.i, -13
   store i64 %i.ax, ptr %i.w, align 8, !tbaa !53
-  %.0.copyload.i.i = load i64, ptr %i.au, align 1 ; 4 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.au, i64 8
+  %.0.copyload.i.i = load i64, ptr %4, align 1    ; 4 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.0.copyload.i19.i = load i32, ptr %i.ay, align 1 ; 4 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %i.au, i64 12
+  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 12
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !25
   %i.bb = zext i8 %i.ba to i32
   %i.bc = trunc i64 %.0.copyload.i.i to i32       ; 2 uses
@@ -253,8 +250,8 @@ bb.o:                                             ; preds = %bb.n
   %i.bj = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.bi) #9, !srcloc !44
   %i.bk = and i32 %i.bj, %i.bf
   %i.bl = or i32 %i.bk, %i.bh
-  %i.bm = getelementptr inbounds nuw i8, ptr %.01546.i, i64 4
-  store i32 %i.bl, ptr %.01546.i, align 4, !tbaa !23
+  %i.bm = getelementptr inbounds nuw i8, ptr %i.au, i64 4
+  store i32 %i.bl, ptr %i.au, align 4, !tbaa !23
   %i.bn = lshr i32 %i.bc, 13
   %i.bo = and i32 %i.bn, 8191                     ; 2 uses
   %i.bp = sub nuw nsw i32 8384513, %i.bo
@@ -266,7 +263,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bu = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.bt) #9, !srcloc !44
   %i.bv = and i32 %i.bu, %i.bq
   %i.bw = or i32 %i.bv, %i.bs
-  %i.bx = getelementptr inbounds nuw i8, ptr %.01546.i, i64 8
+  %i.bx = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   store i32 %i.bw, ptr %i.bm, align 4, !tbaa !23
   %i.by = lshr i64 %.0.copyload.i.i, 26
   %i.bz = trunc i64 %i.by to i32
@@ -280,7 +277,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cg = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.cf) #9, !srcloc !44
   %i.ch = and i32 %i.cg, %i.cc
   %i.ci = or i32 %i.ch, %i.ce
-  %i.cj = getelementptr inbounds nuw i8, ptr %.01546.i, i64 12
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.au, i64 12
   store i32 %i.ci, ptr %i.bx, align 4, !tbaa !23
   %i.ck = lshr i64 %.0.copyload.i.i, 39
   %i.cl = trunc nuw nsw i64 %i.ck to i32
@@ -294,7 +291,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cs = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.cr) #9, !srcloc !44
   %i.ct = and i32 %i.cs, %i.co
   %i.cu = or i32 %i.ct, %i.cq
-  %i.cv = getelementptr inbounds nuw i8, ptr %.01546.i, i64 16
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.au, i64 16
   store i32 %i.cu, ptr %i.cj, align 4, !tbaa !23
   %i.cw = lshr i64 %.0.copyload.i.i, 52
   %i.cx = shl i32 %.0.copyload.i19.i, 12
@@ -310,7 +307,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dg = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.df) #9, !srcloc !44
   %i.dh = and i32 %i.dg, %i.dc
   %i.di = or i32 %i.dh, %i.de
-  %i.dj = getelementptr inbounds nuw i8, ptr %.01546.i, i64 20
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.au, i64 20
   store i32 %i.di, ptr %i.cv, align 4, !tbaa !23
   %i.dk = lshr i32 %.0.copyload.i19.i, 1
   %i.dl = and i32 %i.dk, 8191                     ; 2 uses
@@ -323,7 +320,7 @@ bb.o:                                             ; preds = %bb.n
   %i.dr = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.dq) #9, !srcloc !44
   %i.ds = and i32 %i.dr, %i.dn
   %i.dt = or i32 %i.ds, %i.dp
-  %i.du = getelementptr inbounds nuw i8, ptr %.01546.i, i64 24
+  %i.du = getelementptr inbounds nuw i8, ptr %i.au, i64 24
   store i32 %i.dt, ptr %i.dj, align 4, !tbaa !23
   %i.dv = lshr i32 %.0.copyload.i19.i, 14
   %i.dw = and i32 %i.dv, 8191                     ; 2 uses
@@ -336,7 +333,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ec = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.eb) #9, !srcloc !44
   %i.ed = and i32 %i.ec, %i.dy
   %i.ee = or i32 %i.ed, %i.ea
-  %i.ef = getelementptr inbounds nuw i8, ptr %.01546.i, i64 28
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.au, i64 28
   store i32 %i.ee, ptr %i.du, align 4, !tbaa !23
   %i.eg = call i32 @llvm.fshl.i32(i32 %i.bb, i32 %.0.copyload.i19.i, i32 5) ; 2 uses
   %i.eh = sub nuw nsw i32 8384513, %i.eg
@@ -348,14 +345,14 @@ bb.o:                                             ; preds = %bb.n
   %i.em = call i32 asm "", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 range(i32 -1, 2) %i.el) #9, !srcloc !44
   %i.en = and i32 %i.em, %i.ei
   %i.eo = or i32 %i.en, %i.ek
-  %i.ep = getelementptr inbounds nuw i8, ptr %.01546.i, i64 32
+  %i.ep = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   store i32 %i.eo, ptr %i.ef, align 4, !tbaa !23
   %i.eq = add nuw nsw i32 %.01745.i, 1            ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.eq, 32
   br i1 %exitcond.not.i, label %poly_decode_signed_two_to_power_12.exit, label %bb.n, !llvm.loop !57
 
 poly_decode_signed_two_to_power_12.exit:          ; preds = %bb.o
-  %i.er = add nuw i64 %.289, 1                    ; 2 uses
+  %i.er = add nuw i64 %i.as, 1                    ; 2 uses
   %exitcond97.not = icmp eq i64 %i.er, %i.e
   br i1 %exitcond97.not, label %._crit_edge, label %bb.m, !llvm.loop !58
 
@@ -412,21 +409,20 @@ declare i32 @ossl_ml_dsa_key_priv_alloc(ptr noundef) local_unnamed_addr #2
 define internal range(i32 0, 2) i32 @poly_decode_signed_4(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1) unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 16         ; 2 uses
-  %.promoted = load i64, ptr %i.a, align 8, !tbaa !53
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.d
-  %2 = phi i64 [ %.promoted, %bb.a ], [ %i.e, %bb.d ] ; 2 uses
   %.039 = phi ptr [ %0, %bb.a ], [ %i.cw, %bb.d ] ; 9 uses
   %.01738 = phi i32 [ 0, %bb.a ], [ %i.cx, %bb.d ]
-  %i.b = icmp ult i64 %2, 4
+  %.val.i.i = load i64, ptr %i.a, align 8, !tbaa !53 ; 2 uses
+  %i.b = icmp ult i64 %.val.i.i, 4
   br i1 %i.b, label %PACKET_get_bytes.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %1, align 8, !tbaa !52     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store ptr %i.d, ptr %1, align 8, !tbaa !52
-  %i.e = add i64 %2, -4                           ; 2 uses
+  %i.e = add i64 %.val.i.i, -4
   store i64 %i.e, ptr %i.a, align 8, !tbaa !53
   %.0.copyload.i = load i32, ptr %i.c, align 1    ; 10 uses
   %i.f = and i32 %.0.copyload.i, -2004318072      ; 3 uses
@@ -558,21 +554,20 @@ PACKET_get_bytes.exit.thread:                     ; preds = %bb.b, %bb.d, %bb.c
 define internal range(i32 0, 2) i32 @poly_decode_signed_2(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1) unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 16         ; 2 uses
-  %.promoted = load i64, ptr %i.a, align 8, !tbaa !53
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.d
-  %2 = phi i64 [ %.promoted, %bb.a ], [ %i.e, %bb.d ] ; 2 uses
   %.041 = phi ptr [ %0, %bb.a ], [ %i.cu, %bb.d ] ; 9 uses
   %.01640 = phi i32 [ 0, %bb.a ], [ %i.cv, %bb.d ]
-  %i.b = icmp ult i64 %2, 3
+  %.val.i.i = load i64, ptr %i.a, align 8, !tbaa !53 ; 2 uses
+  %i.b = icmp ult i64 %.val.i.i, 3
   br i1 %i.b, label %PACKET_get_bytes.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %1, align 8, !tbaa !52     ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 3
   store ptr %i.d, ptr %1, align 8, !tbaa !52
-  %i.e = add i64 %2, -3                           ; 2 uses
+  %i.e = add i64 %.val.i.i, -3
   store i64 %i.e, ptr %i.a, align 8, !tbaa !53
   %.0.copyload = load i24, ptr %i.c, align 1
   %.0.insert.ext = zext i24 %.0.copyload to i32   ; 10 uses

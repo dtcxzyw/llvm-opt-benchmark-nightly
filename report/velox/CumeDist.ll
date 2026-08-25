@@ -205,9 +205,9 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
-  %.promoted = load i64, ptr %i.o, align 8, !tbaa !114
   %i.s = sext i32 %6 to i64
   %wide.trip.count = and i64 %i.d, 2147483647
+  %.pre = load i64, ptr %i.o, align 8, !tbaa !114
   %invariant.gep = getelementptr [8 x i8], ptr %i.g, i64 %i.s
   br label %bb.b
 
@@ -215,12 +215,12 @@ bb.a:
   ret void
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
-  %indvars.iv.a = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 4 uses
-  %i.t = phi i64 [ %.promoted, %.lr.ph ], [ %8, %bb.d ] ; 2 uses
-  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %indvars.iv.a
+  %indvars.iv.a = phi i64 [ %.pre, %.lr.ph ], [ %i.w, %bb.d ]
+  %i.t = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.t
   %i.v = load i32, ptr %i.u, align 4, !tbaa !42   ; 2 uses
   %i.w = sext i32 %i.v to i64                     ; 3 uses
-  %.not = icmp eq i64 %i.t, %i.w
+  %.not = icmp eq i64 %indvars.iv.a, %i.w
   br i1 %.not, label %._crit_edge20, label %bb.c
 
 ._crit_edge20:                                    ; preds = %bb.b
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   store i64 %i.w, ptr %i.o, align 8, !tbaa !114
-  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv.a
+  %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.t
   %i.y = load i32, ptr %i.x, align 4, !tbaa !42
   %reass.sub = sub i32 %i.y, %i.v
   %i.z = add i32 %reass.sub, 1
@@ -245,11 +245,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge20, %bb.c
-  %i.ah = phi double [ %i.ag, %bb.c ], [ %.pre.a, %._crit_edge20 ]
-  %8 = phi i64 [ %i.w, %bb.c ], [ %i.t, %._crit_edge20 ]
-  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %indvars.iv.a
+  %i.ah = phi double [ %.pre.a, %._crit_edge20 ], [ %i.ag, %bb.c ]
+  %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.t
   store double %i.ah, ptr %gep, align 8, !tbaa !161
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %i.t, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !162
 }

@@ -48,8 +48,7 @@ bb.a:
   %i.l = mul i8 %0, 56                            ; 3 uses
   %i.m = shl i8 %0, 3
   %i.n = sext i8 %i.m to i32                      ; 6 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 512 ; 4 uses
-  %.promoted = load i64, ptr %i.o, align 8
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 512 ; 6 uses
   %i.p = zext i32 %i.n to i64
   %i.q = zext i32 %i.n to i64
   %i.r = zext i32 %i.n to i64
@@ -61,7 +60,6 @@ bb.b:                                             ; preds = %bb.d
 bb.c:                                             ; preds = %bb.a, %bb.d
   %.not = phi i1 [ false, %bb.a ], [ true, %bb.d ]
   %.0.idx103.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.a ], [ 1, %bb.d ] ; 2 uses
-  %3 = phi i64 [ %.promoted, %bb.a ], [ %13, %bb.d ]
   %i.s = xor i8 %.0.idx103.sroa.phi.sroa.speculated, %0 ; 2 uses
   %i.t = shl i8 %i.s, 3
   %i.u = zext i8 %i.s to i64
@@ -76,14 +74,13 @@ bb.d:                                             ; preds = %.loopexit83
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.e:                                             ; preds = %bb.c, %.loopexit83
-  %indvars.iv = phi i64 [ 1, %bb.c ], [ %indvars.iv.next, %.loopexit83 ] ; 6 uses
-  %i.y = phi i64 [ %3, %bb.c ], [ %13, %.loopexit83 ] ; 4 uses
-  %i.z = add nuw nsw i64 %indvars.iv, %i.x        ; 3 uses
+  %i.y = phi i64 [ 1, %bb.c ], [ %indvars.iv.next, %.loopexit83 ] ; 6 uses
+  %i.z = add nuw nsw i64 %i.y, %i.x               ; 3 uses
   %i.aa = load i64, ptr %i.v, align 8, !tbaa !11
-  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %i.y
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !11
   %i.ad = and i64 %i.ac, %i.aa                    ; 6 uses
-  %i.ae = icmp eq i64 %indvars.iv, 1
+  %i.ae = icmp eq i64 %i.y, 1
   br i1 %i.ae, label %bb.f, label %.preheader84
 
 .preheader84:                                     ; preds = %bb.e
@@ -91,12 +88,12 @@ bb.e:                                             ; preds = %bb.c, %.loopexit83
   br i1 %.not5388, label %.loopexit83, label %.lr.ph90
 
 .lr.ph90:                                         ; preds = %.preheader84
-  %i.af = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish13PseudoAttacksE, i64 %indvars.iv
+  %i.af = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish13PseudoAttacksE, i64 %i.y
   %i.ag = xor i64 %i.z, %i.p                      ; 3 uses
   %i.ah = getelementptr inbounds nuw [128 x i8], ptr @_ZN9Stockfish4Eval4NNUE8FeaturesL10index_lut1E, i64 %i.ag
   %i.ai = getelementptr inbounds nuw [256 x i8], ptr @_ZN9Stockfish4Eval4NNUE8FeaturesL7offsetsE, i64 %i.ag
   %i.aj = getelementptr inbounds nuw [4096 x i8], ptr @_ZN9Stockfish4Eval4NNUE8FeaturesL10index_lut2E, i64 %i.ag
-  %i.ak = trunc nuw nsw i64 %indvars.iv to i8
+  %i.ak = trunc nuw nsw i64 %i.y to i8
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.e
@@ -135,7 +132,6 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %bb.j
 
 .preheader:                                       ; preds = %bb.l, %bb.i
-  %4 = phi i64 [ %i.y, %bb.i ], [ %6, %bb.l ]     ; 2 uses
   %.not5694 = icmp eq i64 %i.av, 0
   br i1 %.not5694, label %.loopexit83, label %.lr.ph96
 
@@ -150,7 +146,6 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %bb.m
 
 bb.j:                                             ; preds = %.lr.ph93, %bb.l
-  %5 = phi i64 [ %i.y, %.lr.ph93 ], [ %6, %bb.l ] ; 3 uses
   %.07992 = phi i64 [ %i.au, %.lr.ph93 ], [ %i.bn, %bb.l ] ; 3 uses
   %i.bk = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.07992, i1 true) ; 2 uses
   %i.bl = trunc nuw nsw i64 %i.bk to i32          ; 2 uses
@@ -184,19 +179,18 @@ bb.j:                                             ; preds = %.lr.ph93, %bb.l
   br i1 %i.cm, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.cn = add i64 %5, 1                           ; 2 uses
+  %3 = load i64, ptr %i.o, align 8, !tbaa !17     ; 2 uses
+  %i.cn = add i64 %3, 1
   store i64 %i.cn, ptr %i.o, align 8, !tbaa !17
-  %i.co = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
+  %i.co = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %3
   store i32 %i.cl, ptr %i.co, align 4, !tbaa !16
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %6 = phi i64 [ %i.cn, %bb.k ], [ %5, %bb.j ]    ; 2 uses
   %.not55 = icmp eq i64 %i.bn, 0
   br i1 %.not55, label %.preheader, label %bb.j, !llvm.loop !19
 
 bb.m:                                             ; preds = %.lr.ph96, %bb.o
-  %7 = phi i64 [ %4, %.lr.ph96 ], [ %8, %bb.o ]   ; 3 uses
   %.07895 = phi i64 [ %i.av, %.lr.ph96 ], [ %i.cs, %bb.o ] ; 3 uses
   %i.cp = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.07895, i1 true) ; 2 uses
   %i.cq = trunc nuw nsw i64 %i.cp to i32          ; 2 uses
@@ -230,24 +224,22 @@ bb.m:                                             ; preds = %.lr.ph96, %bb.o
   br i1 %i.dr, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.ds = add i64 %7, 1                           ; 2 uses
+  %4 = load i64, ptr %i.o, align 8, !tbaa !17     ; 2 uses
+  %i.ds = add i64 %4, 1
   store i64 %i.ds, ptr %i.o, align 8, !tbaa !17
-  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %7
+  %i.dt = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4
   store i32 %i.dq, ptr %i.dt, align 4, !tbaa !16
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %8 = phi i64 [ %i.ds, %bb.n ], [ %7, %bb.m ]    ; 2 uses
   %.not56 = icmp eq i64 %i.cs, 0
   br i1 %.not56, label %.loopexit83, label %bb.m, !llvm.loop !21
 
 .loopexit:                                        ; preds = %bb.w, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit
-  %9 = phi i64 [ %10, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit ], [ %12, %bb.w ] ; 2 uses
   %.not53 = icmp eq i64 %i.dx, 0
   br i1 %.not53, label %.loopexit83, label %bb.p, !llvm.loop !22
 
 bb.p:                                             ; preds = %.lr.ph90, %.loopexit
-  %10 = phi i64 [ %i.y, %.lr.ph90 ], [ %9, %.loopexit ] ; 2 uses
   %.08089 = phi i64 [ %i.ad, %.lr.ph90 ], [ %i.dx, %.loopexit ] ; 3 uses
   %i.du = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.08089, i1 true) ; 5 uses
   %i.dv = trunc nuw nsw i64 %i.du to i32
@@ -325,7 +317,6 @@ _ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit: ; preds = %bb.q, %bb.
   br label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph, %bb.w
-  %11 = phi i64 [ %10, %.lr.ph ], [ %12, %bb.w ]  ; 3 uses
   %.07787 = phi i64 [ %i.fi, %.lr.ph ], [ %i.fu, %bb.w ] ; 3 uses
   %i.fr = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %.07787, i1 true) ; 2 uses
   %i.fs = trunc nuw nsw i64 %i.fr to i32
@@ -352,20 +343,19 @@ bb.u:                                             ; preds = %.lr.ph, %bb.w
   br i1 %i.gm, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.gn = add i64 %11, 1                          ; 2 uses
+  %5 = load i64, ptr %i.o, align 8, !tbaa !17     ; 2 uses
+  %i.gn = add i64 %5, 1
   store i64 %i.gn, ptr %i.o, align 8, !tbaa !17
-  %i.go = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %11
+  %i.go = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %5
   store i32 %i.gl, ptr %i.go, align 4, !tbaa !16
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %12 = phi i64 [ %i.gn, %bb.v ], [ %11, %bb.u ]  ; 2 uses
   %.not54 = icmp eq i64 %i.fu, 0
   br i1 %.not54, label %.loopexit, label %bb.u, !llvm.loop !28
 
 .loopexit83:                                      ; preds = %.loopexit, %bb.o, %.preheader84, %.preheader
-  %13 = phi i64 [ %8, %bb.o ], [ %4, %.preheader ], [ %i.y, %.preheader84 ], [ %9, %.loopexit ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %i.y, 1      ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 7
   br i1 %exitcond.not, label %bb.d, label %bb.e, !llvm.loop !29
 }

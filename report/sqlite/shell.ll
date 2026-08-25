@@ -206,7 +206,7 @@ bb.cf:                                            ; preds = %bb.cf, %.epil.prehe
   %i.kc = getelementptr inbounds nuw i8, ptr %4, i64 132
   %i.kd = getelementptr inbounds nuw i8, ptr %4, i64 144
   %i.ke = getelementptr inbounds nuw i8, ptr %4, i64 110
-  %.promoted.i = load i8, ptr %i.gu, align 4      ; 2 uses
+  %.promoted.i = load i8, ptr %i.gu, align 4
   %i.kf = load ptr, ptr %i.kb, align 8
   %i.kg = load i32, ptr %i.kc, align 4
   %i.kh = sext i32 %i.kg to i64                   ; 2 uses
@@ -217,8 +217,7 @@ bb.cf:                                            ; preds = %bb.cf, %.epil.prehe
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cr, %.lr.ph379.i
-  %5 = phi i8 [ %.promoted.i, %.lr.ph379.i ], [ %8, %bb.cr ] ; 3 uses
-  %i.km = phi i8 [ %.promoted.i, %.lr.ph379.i ], [ %9, %bb.cr ] ; 4 uses
+  %i.km = phi i8 [ %.promoted.i, %.lr.ph379.i ], [ %6, %bb.cr ] ; 4 uses
   %.3280377.i = phi i64 [ 0, %.lr.ph379.i ], [ %i.lz, %bb.cr ] ; 12 uses
   %i.kn = icmp slt i64 %.3280377.i, %i.ka
   br i1 %i.kn, label %bb.ch, label %.thread.i12
@@ -282,36 +281,33 @@ bb.cp:                                            ; preds = %bb.cl
   %i.ln = getelementptr inbounds nuw i8, ptr %i.lm, i64 12
   %i.lo = load i32, ptr %i.ln, align 4, !tbaa !68 ; 2 uses
   %i.lp = icmp sgt i32 %i.lo, %i.kk
-  %or.cond310.i = select i1 %i.kl, i1 %i.lp, i1 false
-  br i1 %or.cond310.i, label %6, label %bb.cr
-
-6:                                                ; preds = %.thread.i12
+  %or.cond310.i = select i1 %i.kl, i1 %i.lp, i1 false ; 2 uses
+  %spec.select81 = select i1 %or.cond310.i, i8 1, i8 %i.km
+  %spec.select82 = select i1 %or.cond310.i, i32 %i.kk, i32 %i.lo
   br label %bb.cr
 
 .thread351.i:                                     ; preds = %bb.cp, %bb.co, %bb.cn, %bb.cm
-  %.0258354.i = phi i32 [ %i.kq, %bb.cp ], [ %i.lc, %bb.cn ], [ %i.lc, %bb.cm ], [ %i.lc, %bb.co ] ; 5 uses
+  %.0258354.i = phi i32 [ %i.kq, %bb.cp ], [ %i.lc, %bb.cn ], [ %i.lc, %bb.cm ], [ %i.lc, %bb.co ] ; 4 uses
   %i.lq = getelementptr inbounds nuw [24 x i8], ptr %i.jx, i64 %.3280377.i ; 2 uses
   %i.lr = getelementptr inbounds nuw i8, ptr %i.lq, i64 17
   store i8 1, ptr %i.lr, align 1, !tbaa !85
   %i.ls = icmp eq i8 %i.km, 0
   %i.lt = icmp eq i32 %.0258354.i, 1              ; 2 uses
-  %or.cond3.i = or i1 %i.ls, %i.lt
+  %or.cond3.i = or i1 %i.lt, %i.ls
   br i1 %or.cond3.i, label %bb.cq, label %bb.cr
 
 bb.cq:                                            ; preds = %.thread351.i
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lq, i64 12
   %i.lv = load i32, ptr %i.lu, align 4, !tbaa !68
-  %i.lw = icmp sgt i32 %i.lv, %.0258354.i
-  br i1 %i.lw, label %7, label %bb.cr
-
-7:                                                ; preds = %bb.cq
-  %spec.store.select.i = select i1 %i.lt, i32 2, i32 %.0258354.i
+  %i.lw = icmp sgt i32 %i.lv, %.0258354.i         ; 2 uses
+  %spec.select83 = select i1 %i.lw, i8 1, i8 %i.km
+  %5 = and i1 %i.lw, %i.lt
+  %spec.select84 = select i1 %5, i32 2, i32 %.0258354.i
   br label %bb.cr
 
-bb.cr:                                            ; preds = %7, %bb.cq, %.thread351.i, %6, %.thread.i12
-  %8 = phi i8 [ 1, %6 ], [ %5, %.thread351.i ], [ %5, %.thread.i12 ], [ 1, %7 ], [ %5, %bb.cq ] ; 2 uses
-  %9 = phi i8 [ 1, %6 ], [ %i.km, %.thread351.i ], [ %i.km, %.thread.i12 ], [ 1, %7 ], [ %i.km, %bb.cq ]
-  %.2.i = phi i32 [ %i.kk, %6 ], [ %.0258354.i, %.thread351.i ], [ %i.lo, %.thread.i12 ], [ %spec.store.select.i, %7 ], [ %.0258354.i, %bb.cq ]
+bb.cr:                                            ; preds = %bb.cq, %.thread.i12, %.thread351.i
+  %6 = phi i8 [ %spec.select81, %.thread.i12 ], [ %i.km, %.thread351.i ], [ %spec.select83, %bb.cq ] ; 2 uses
+  %.2.i = phi i32 [ %spec.select82, %.thread.i12 ], [ %.0258354.i, %.thread351.i ], [ %spec.select84, %bb.cq ]
   %i.lx = getelementptr inbounds nuw [24 x i8], ptr %i.jx, i64 %.3280377.i
   %i.ly = getelementptr inbounds nuw i8, ptr %i.lx, i64 8
   store i32 %.2.i, ptr %i.ly, align 8, !tbaa !86
@@ -320,7 +316,7 @@ bb.cr:                                            ; preds = %7, %bb.cq, %.thread
   br i1 %exitcond400.not.i, label %._crit_edge380.i, label %bb.cg, !llvm.loop !87
 
 ._crit_edge380.i:                                 ; preds = %bb.cr
-  store i8 %8, ptr %i.gu, align 4
+  store i8 %6, ptr %i.gu, align 4
   %i.ma = icmp eq i32 %i.ef, 1
   %i.mb = load i64, ptr %i.gn, align 8
   %i.mc = icmp sgt i64 %i.mb, 1

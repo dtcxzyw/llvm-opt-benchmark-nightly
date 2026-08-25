@@ -202,7 +202,6 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ae = load ptr, ptr %i.ad, align 8            ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %.promoted82 = load i64, ptr %i.af, align 8
   %i.ag = zext nneg i32 %narrow.i54 to i64
   %wide.trip.count87 = zext nneg i32 %i.x to i64
   br label %bb.q
@@ -319,10 +318,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53: ; preds = %bb.
           to label %bb.y unwind label %bb.z
 
 bb.q:                                             ; preds = %.lr.ph80, %.critedge
-  %indvars.iv84 = phi i64 [ 0, %.lr.ph80 ], [ %indvars.iv.next85, %.critedge ] ; 5 uses
-  %i.bi = phi i64 [ %.promoted82, %.lr.ph80 ], [ %11, %.critedge ] ; 3 uses
+  %i.bi = phi i64 [ 0, %.lr.ph80 ], [ %indvars.iv.next85, %.critedge ] ; 5 uses
   %i.bj = phi i32 [ %.promoted, %.lr.ph80 ], [ %i.ch, %.critedge ] ; 3 uses
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv84
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %i.bi
   %i.bl = load i64, ptr %i.bk, align 4            ; 3 uses
   %.sroa.071.0.extract.trunc = trunc i64 %i.bl to i32 ; 3 uses
   %.sroa.8.0.extract.shift = lshr i64 %i.bl, 32   ; 2 uses
@@ -333,7 +331,7 @@ bb.q:                                             ; preds = %.lr.ph80, %.critedg
   br i1 %.not6.i, label %bb.r, label %.critedge
 
 bb.r:                                             ; preds = %bb.q
-  %i.bo = icmp samesign ult i64 %indvars.iv84, %i.ag
+  %i.bo = icmp samesign ult i64 %i.bi, %i.ag
   br i1 %i.bo, label %bb.v, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
@@ -369,7 +367,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i57: ; preds = %b
   br label %.body
 
 bb.v:                                             ; preds = %bb.r
-  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %indvars.iv84 ; 2 uses
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.bi ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !19
   %i.bx = icmp ne i32 %.sroa.071.0.extract.trunc, 0
   %i.by = icmp ne i32 %i.bw, %.sroa.8.0.extract.trunc
@@ -379,10 +377,11 @@ bb.v:                                             ; preds = %bb.r
 bb.w:                                             ; preds = %bb.v
   %sext = shl i64 %i.bl, 32
   %i.bz = ashr exact i64 %sext, 32
-  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv84
+  %i.ca = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.bi
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !43
   %i.cc = mul i64 %i.cb, %i.bz
-  %i.cd = add i64 %i.bi, %i.cc                    ; 2 uses
+  %11 = load i64, ptr %i.af, align 8, !tbaa !40
+  %i.cd = add i64 %11, %i.cc
   store i64 %i.cd, ptr %i.af, align 8, !tbaa !40
   %i.ce = sub nsw i32 %.sroa.8.0.extract.trunc, %.sroa.071.0.extract.trunc
   store i32 %i.ce, ptr %i.bv, align 4, !tbaa !19
@@ -396,9 +395,8 @@ bb.x:                                             ; preds = %bb.s
   br label %.body
 
 .critedge:                                        ; preds = %bb.q, %bb.w, %bb.v
-  %11 = phi i64 [ %i.bi, %bb.q ], [ %i.cd, %bb.w ], [ %i.bi, %bb.v ]
   %i.ch = phi i32 [ %i.bj, %bb.q ], [ %i.cf, %bb.w ], [ %i.bj, %bb.v ] ; 2 uses
-  %indvars.iv.next85 = add nuw nsw i64 %indvars.iv84, 1 ; 2 uses
+  %indvars.iv.next85 = add nuw nsw i64 %i.bi, 1   ; 2 uses
   %exitcond88.not = icmp eq i64 %indvars.iv.next85, %wide.trip.count87
   br i1 %exitcond88.not, label %._crit_edge81, label %bb.q, !llvm.loop !57
 

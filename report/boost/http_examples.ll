@@ -205,8 +205,8 @@ _ZN5boost4asio6detail17consuming_buffersINS0_12const_bufferENS_5beast6detail11bu
 
 .lr.ph:                                           ; preds = %_ZN5boost4asio6detail17consuming_buffersINS0_12const_bufferENS_5beast6detail11buffers_refINS4_19buffers_prefix_viewIRKNS4_14buffers_suffixIS3_EEEEEENSC_14const_iteratorEEC2ERKSD_.exit
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 4 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %bb.b
 select.unfold:                                    ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
   call void @_ZN5boost4asio6detail17consuming_buffersINS0_12const_bufferENS_5beast6detail11buffers_refINS4_19buffers_prefix_viewIRKNS4_14buffers_suffixIS3_EEEEEENSC_14const_iteratorEE7prepareEm(ptr dead_on_unwind nonnull writable sret(%"struct.boost::asio::detail::prepared_buffers") align 8 %5, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 noundef 65536)
-  %i.ad = call noundef i64 @_ZN5boost5beast4test12basic_streamINS_4asio15any_io_executorEE10write_someINS3_6detail16prepared_buffersINS3_12const_bufferELm64EEEEEmRKT_RNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(264) %5, ptr noundef nonnull align 8 dereferenceable(24) %3) ; 5 uses
+  %i.ad = call noundef i64 @_ZN5boost5beast4test12basic_streamINS_4asio15any_io_executorEE10write_someINS3_6detail16prepared_buffersINS3_12const_bufferELm64EEEEEmRKT_RNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(264) %5, ptr noundef nonnull align 8 dereferenceable(24) %3) ; 3 uses
   %i.ae = load i64, ptr %i.b, align 8, !tbaa !2831
   %i.af = add i64 %i.ae, %i.ad                    ; 4 uses
   store i64 %i.af, ptr %i.b, align 8, !tbaa !2831
@@ -236,9 +236,9 @@ select.unfold:                                    ; preds = %bb.c, %bb.b
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !1024, !noalias !2837 ; 4 uses
   %i.aj = load ptr, ptr %i.ag, align 8, !tbaa !1579, !noalias !2837, !nonnull !70, !align !82 ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
-  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !1022, !noalias !2837 ; 12 uses
+  %i.al = load ptr, ptr %i.ak, align 8, !tbaa !1022, !noalias !2837 ; 11 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
-  %.sroa.5.16.copyload.i = load ptr, ptr %i.am, align 8, !tbaa !385 ; 3 uses
+  %.sroa.5.16.copyload.i = load ptr, ptr %i.am, align 8, !tbaa !385 ; 2 uses
   %.sroa.7.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %.sroa.7.16.copyload.i = load ptr, ptr %.sroa.7.16..sroa_idx.i, align 8, !tbaa !1020
   %i.an = load i64, ptr %i.w, align 8, !tbaa !2842 ; 11 uses
@@ -390,66 +390,24 @@ _ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4as
   br label %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.i
 
 _ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit30.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit.i, %.preheader10.i.i
-  %.sroa.12.2.i = phi ptr [ %scevgep34.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit.i ], [ %i.al, %.preheader10.i.i ], [ %scevgep.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit30.i ] ; 4 uses
-  %.sroa.415.2.i = phi i64 [ %.lcssa31.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit.i ], [ %i.ai, %.preheader10.i.i ], [ %.lcssa, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit30.i ] ; 2 uses
-  %i.ch = icmp ne ptr %i.aj, %.sroa.7.16.copyload.i ; 3 uses
+  %.sroa.12.2.i = phi ptr [ %scevgep34.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit.i ], [ %i.al, %.preheader10.i.i ], [ %scevgep.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit30.i ] ; 2 uses
+  %.sroa.415.2.i = phi i64 [ %.lcssa31.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit.i ], [ %i.ai, %.preheader10.i.i ], [ %.lcssa, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.loopexit30.i ]
+  %i.ch = icmp ne ptr %i.aj, %.sroa.7.16.copyload.i ; 2 uses
   %i.ci = icmp ne ptr %.sroa.12.2.i, %.sroa.5.16.copyload.i
   %.not3.i26.i = select i1 %i.ch, i1 true, i1 %i.ci
   %i.cj = icmp ne i64 %i.ad, 0
   %i.ck = and i1 %i.cj, %.not3.i26.i
-  br i1 %i.ck, label %.lr.ph.i, label %_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit
+  br i1 %i.ck, label %.peel.next, label %_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit
 
-.lr.ph.i:                                         ; preds = %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.i
-  %6 = getelementptr inbounds nuw i8, ptr %i.aj, i64 24 ; 4 uses
-  %.promoted.i = load i64, ptr %i.x, align 8, !tbaa !2847 ; 2 uses
-  %7 = icmp eq ptr %.sroa.12.2.i, %i.al           ; 2 uses
-  %.sroa.4.0..sroa_idx.i.i.i.peel = getelementptr inbounds nuw i8, ptr %.sroa.12.2.i, i64 8 ; 2 uses
-  %.sroa.4.0.copyload.i.i.i.peel = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.peel, align 8, !tbaa !16 ; 2 uses
-  br i1 %7, label %8, label %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i.peel
-
-8:                                                ; preds = %.lr.ph.i
-  %9 = load i64, ptr %6, align 8, !tbaa !1121
-  %10 = call i64 @llvm.usub.sat.i64(i64 %.sroa.4.0.copyload.i.i.i.peel, i64 %9)
-  br label %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i.peel
-
-_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i.peel: ; preds = %8, %.lr.ph.i
-  %.pn.i.i.i.peel = phi i64 [ %10, %8 ], [ %.sroa.4.0.copyload.i.i.i.peel, %.lr.ph.i ]
-  %spec.select.i.i.peel = call i64 @llvm.umin.i64(i64 %.sroa.415.2.i, i64 %.pn.i.i.i.peel)
-  %11 = call i64 @llvm.usub.sat.i64(i64 %spec.select.i.i.peel, i64 %.promoted.i) ; 2 uses
-  %12 = icmp ult i64 %i.ad, %11
-  br i1 %12, label %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.thread.i, label %13
-
-13:                                               ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i.peel
-  %14 = sub nuw i64 %i.ad, %11                    ; 2 uses
-  store i64 0, ptr %i.x, align 8, !tbaa !2847
-  %15 = add i64 %i.an, 1                          ; 2 uses
-  store i64 %15, ptr %i.w, align 8, !tbaa !2842
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.12.2.i, i64 16 ; 2 uses
-  %.sroa.4.0.copyload.i.i8.i.peel = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i.peel, align 8, !tbaa !16 ; 2 uses
-  br i1 %7, label %17, label %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i.peel
-
-17:                                               ; preds = %13
-  %18 = load i64, ptr %6, align 8, !tbaa !1121
-  %19 = call i64 @llvm.usub.sat.i64(i64 %.sroa.4.0.copyload.i.i8.i.peel, i64 %18)
-  br label %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i.peel
-
-_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i.peel: ; preds = %17, %13
-  %.pn.i.i9.i.peel = phi i64 [ %19, %17 ], [ %.sroa.4.0.copyload.i.i8.i.peel, %13 ]
-  %20 = icmp ne ptr %16, %.sroa.5.16.copyload.i
-  %.not3.i.i.peel = select i1 %i.ch, i1 true, i1 %20
-  %21 = icmp ne i64 %14, 0
-  %22 = select i1 %.not3.i.i.peel, i1 %21, i1 false
-  br i1 %22, label %.peel.next, label %_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit
-
-.peel.next:                                       ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i.peel
-  %23 = sub i64 %.sroa.415.2.i, %.pn.i.i9.i.peel
+.peel.next:                                       ; preds = %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.i
+  %6 = getelementptr inbounds nuw i8, ptr %i.aj, i64 24 ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i, %.peel.next
-  %i.cl = phi i64 [ %15, %.peel.next ], [ %i.cs, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ]
-  %.029.i = phi i64 [ %14, %.peel.next ], [ %i.cr, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ] ; 3 uses
-  %.sroa.415.028.i = phi i64 [ %23, %.peel.next ], [ %i.cw, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ] ; 2 uses
-  %.sroa.12.027.i = phi ptr [ %16, %.peel.next ], [ %i.ct, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ] ; 3 uses
+  %i.cl = phi i64 [ %i.an, %.peel.next ], [ %i.cs, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ]
+  %.029.i = phi i64 [ %i.ad, %.peel.next ], [ %i.cr, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ] ; 3 uses
+  %.sroa.415.028.i = phi i64 [ %.sroa.415.2.i, %.peel.next ], [ %i.cw, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ] ; 2 uses
+  %.sroa.12.027.i = phi ptr [ %.sroa.12.2.i, %.peel.next ], [ %i.ct, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i ] ; 3 uses
   %i.cm = icmp eq ptr %.sroa.12.027.i, %i.al      ; 2 uses
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.12.027.i, i64 8 ; 2 uses
   %.sroa.4.0.copyload.i.i.i = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !tbaa !16 ; 2 uses
@@ -462,14 +420,14 @@ bb.e:                                             ; preds = %bb.d
 
 _ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i: ; preds = %bb.e, %bb.d
   %.pn.i.i.i = phi i64 [ %i.co, %bb.e ], [ %.sroa.4.0.copyload.i.i.i, %bb.d ]
-  %spec.select.i.i.a = call i64 @llvm.umin.i64(i64 %.sroa.415.028.i, i64 %.pn.i.i.i) ; 2 uses
+  %spec.select.i.i = call i64 @llvm.umin.i64(i64 %.sroa.415.028.i, i64 %.pn.i.i.i)
+  %7 = load i64, ptr %i.x, align 8, !tbaa !2847   ; 2 uses
+  %spec.select.i.i.a = call i64 @llvm.usub.sat.i64(i64 %spec.select.i.i, i64 %7) ; 2 uses
   %i.cp = icmp ult i64 %.029.i, %spec.select.i.i.a
   br i1 %i.cp, label %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.thread.i, label %bb.f
 
-_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.thread.i: ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i.peel
-  %.lcssa21 = phi i64 [ %.promoted.i, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i.peel ], [ 0, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i ]
-  %.029.i.lcssa = phi i64 [ %i.ad, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i.peel ], [ %.029.i, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i ]
-  %i.cq = add i64 %.029.i.lcssa, %.lcssa21
+_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.thread.i: ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratordeEv.exit.i
+  %i.cq = add i64 %7, %.029.i
   store i64 %i.cq, ptr %i.x, align 8, !tbaa !2847
   br label %_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit
 
@@ -496,7 +454,7 @@ _ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_buf
   %i.cz = select i1 %.not3.i.i, i1 %i.cy, i1 false
   br i1 %i.cz, label %bb.d, label %_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit, !llvm.loop !2848
 
-_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit: ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i.peel, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.thread.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.i
+_ZN5boost4asio6detail14transfer_all_tclINS_6system10error_codeEEEmRKT_m.exit: ; preds = %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.i, %_ZNK5boost5beast19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEE14const_iteratorneERKS9_.exit.thread.i, %_ZSt9__advanceIN5boost5beast19buffers_prefix_viewIRKNS1_14buffers_suffixINS0_4asio12const_bufferEEEE14const_iteratorElEvRT_T0_St26bidirectional_iterator_tag.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #35
   %i.da = load i64, ptr %i.u, align 8, !tbaa !2829
   %.not = icmp ult i64 %i.af, %i.da
@@ -899,7 +857,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i64
 !2845 = distinct !{!2845, !64, !1030, !158, !157}
 !2846 = distinct !{!2846, !64}
 !2847 = !{!2830, !17, i64 32}
-!2848 = distinct !{!2848, !64, !1030}
+!2848 = distinct !{!2848, !64}
 !2849 = !{!2850, !2852}
 !2850 = distinct !{!2850, !2851, !"_ZNK5boost5beast6detail11buffers_refINS0_19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEEEE5beginEv: argument 0"}
 !2851 = distinct !{!2851, !"_ZNK5boost5beast6detail11buffers_refINS0_19buffers_prefix_viewIRKNS0_14buffers_suffixINS_4asio12const_bufferEEEEEE5beginEv"}

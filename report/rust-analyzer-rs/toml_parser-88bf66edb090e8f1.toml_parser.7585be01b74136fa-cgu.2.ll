@@ -202,7 +202,7 @@ bb.a:
   %i.i = alloca [88 x i8], align 8                ; 9 uses
   %i.j = alloca [88 x i8], align 8                ; 9 uses
   %i.k = alloca [88 x i8], align 8                ; 12 uses
-  %i.l = alloca [16 x i8], align 8                ; 14 uses
+  %i.l = alloca [16 x i8], align 8                ; 13 uses
   %i.m = alloca [88 x i8], align 8                ; 11 uses
   %i.n = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -301,7 +301,7 @@ bb.g:                                             ; preds = %_RNvNtNtCsa5zhLZWy8
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sink = phi i64 [ %i.ao, %bb.g ], [ %i.ag, %bb.f ] ; 9 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 10 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !99)
   %i.aq = getelementptr inbounds nuw i8, ptr %i.af, i64 %.sink
   %i.ar = icmp samesign eq i64 %.sink, 0
@@ -704,8 +704,8 @@ _RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i.preheade
   br label %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i
 
 _RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i: ; preds = %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i.preheader, %bb.bb
-  %.sroa.87.0.i209 = phi i64 [ %i.iw, %bb.bb ], [ %.sroa.87.0.i209.ph, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i.preheader ] ; 9 uses
-  %i.ih = phi ptr [ %i.ix, %bb.bb ], [ %.ph, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i.preheader ] ; 9 uses
+  %.sroa.87.0.i209 = phi i64 [ %i.iw, %bb.bb ], [ %.sroa.87.0.i209.ph, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i.preheader ] ; 8 uses
+  %i.ih = phi ptr [ %i.ix, %bb.bb ], [ %.ph, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i.preheader ] ; 8 uses
   %i.ii = getelementptr inbounds nuw i8, ptr %i.ih, i64 %.sroa.87.0.i209
   %i.ij = icmp samesign eq i64 %.sroa.87.0.i209, 0
   br i1 %i.ij, label %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit88.i, label %.lr.ph.i73.i
@@ -753,18 +753,18 @@ bb.az:                                            ; preds = %bb.ay
 _RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit88.i: ; preds = %.split.i81.i, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCINvXs6_NtCsil5KYoyU2ra_6winnow6streamRShNtB1P_6Stream10offset_forNCNvNtNtCsa5zhLZWy8nm_11toml_parser7decoder6string14mlb_escaped_nls_0E0EB2T_.exit.i, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i
   %.sroa.87.0.i = phi i64 [ %.sroa.87.0.i209, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCINvXs6_NtCsil5KYoyU2ra_6winnow6streamRShNtB1P_6Stream10offset_forNCNvNtNtCsa5zhLZWy8nm_11toml_parser7decoder6string14mlb_escaped_nls_0E0EB2T_.exit.i ], [ %i.iu, %.split.i81.i ], [ 0, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i ] ; 8 uses
   %.sroa.66.0.i = phi ptr [ %i.ih, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterhENtNtNtNtBb_4iter6traits8iterator8Iterator8positionNCINvXs6_NtCsil5KYoyU2ra_6winnow6streamRShNtB1P_6Stream10offset_forNCNvNtNtCsa5zhLZWy8nm_11toml_parser7decoder6string14mlb_escaped_nls_0E0EB2T_.exit.i ], [ %i.it, %.split.i81.i ], [ %i.ih, %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i ] ; 8 uses
+  store ptr %.sroa.66.0.i, ptr %i.l, align 8, !alias.scope !170, !captures !11
+  store i64 %.sroa.87.0.i, ptr %i.ap, align 8, !alias.scope !170
   %i.iv = call noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh11starts_withCsa5zhLZWy8nm_11toml_parser(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.66.0.i, i64 noundef %.sroa.87.0.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 1), !noalias !170
   br i1 %i.iv, label %bb.bc, label %bb.bb
 
 bb.ba:                                            ; preds = %bb.az, %.split3.i80.i
-  store ptr %i.ih, ptr %i.l, align 8
-  store i64 %.sroa.87.0.i209, ptr %i.ap, align 8
   call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ih, i64 noundef %.sroa.87.0.i209, i64 noundef 0, i64 noundef %.sroa.0.0.i78.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #9, !noalias !170
   unreachable
 
 bb.bb:                                            ; preds = %bb.bg, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit88.i
-  %i.iw = phi i64 [ %i.jg, %bb.bg ], [ %.sroa.87.0.i, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit88.i ] ; 2 uses
-  %i.ix = phi ptr [ %i.jf, %bb.bg ], [ %.sroa.66.0.i, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit88.i ] ; 3 uses
+  %i.iw = phi i64 [ %i.jg, %bb.bg ], [ %.sroa.87.0.i, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit88.i ]
+  %i.ix = phi ptr [ %i.jf, %bb.bg ], [ %.sroa.66.0.i, %_RNvMNtCshzWfHUSfYae_4core3stre16split_at_checked.exit88.i ] ; 2 uses
   %i.iy = icmp eq ptr %i.ih, %i.ix
   br i1 %i.iy, label %_RNvNtNtCsa5zhLZWy8nm_11toml_parser7decoder6string14mlb_escaped_nl.exit, label %_RNvXs7_NtCsil5KYoyU2ra_6winnow6streamReNtB5_6Stream10next_token.exit.i
 
@@ -805,19 +805,17 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.je, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.bf, %.split3.i90.i
-  %i.jf = getelementptr inbounds nuw i8, ptr %.sroa.66.0.i, i64 %.sroa.013.0.i
-  %i.jg = sub i64 %.sroa.87.0.i, %.sroa.013.0.i
+  %i.jf = getelementptr inbounds nuw i8, ptr %.sroa.66.0.i, i64 %.sroa.013.0.i ; 2 uses
+  %i.jg = sub i64 %.sroa.87.0.i, %.sroa.013.0.i   ; 2 uses
+  store ptr %i.jf, ptr %i.l, align 8, !alias.scope !170, !captures !11
+  store i64 %i.jg, ptr %i.ap, align 8, !alias.scope !170
   br label %bb.bb
 
 bb.bh:                                            ; preds = %bb.bf, %.split3.i90.i
-  store ptr %.sroa.66.0.i, ptr %i.l, align 8
-  store i64 %.sroa.87.0.i, ptr %i.ap, align 8
   call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.66.0.i, i64 noundef %.sroa.87.0.i, i64 noundef 0, i64 noundef %.sroa.013.0.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #9, !noalias !170
   unreachable
 
 _RNvNtNtCsa5zhLZWy8nm_11toml_parser7decoder6string14mlb_escaped_nl.exit: ; preds = %bb.bb
-  store ptr %i.ix, ptr %i.l, align 8
-  store i64 %i.iw, ptr %i.ap, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)

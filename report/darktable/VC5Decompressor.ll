@@ -205,10 +205,10 @@ _ZZNK8rawspeed15VC5Decompressor7Wavelet12HighPassBand6decodeEvEN7DeRLVerC2ERKNS_
 
 .lr.ph:                                           ; preds = %._crit_edge, %.preheader.preheader
   %.pre.i2379 = phi i64 [ %.pre.i2381, %._crit_edge ], [ 0, %.preheader.preheader ]
-  %.pre.i75 = phi i16 [ %.pre.i77, %._crit_edge ], [ 0, %.preheader.preheader ]
-  %i.ak = phi i32 [ %i.ei, %._crit_edge ], [ 0, %.preheader.preheader ]
-  %.promoted43 = phi i32 [ %.promoted4369, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
-  %.promoted = phi i32 [ %.promoted62, %._crit_edge ], [ 0, %.preheader.preheader ] ; 2 uses
+  %3 = phi i32 [ %.promoted4369, %._crit_edge ], [ 0, %.preheader.preheader ]
+  %i.ak = phi i32 [ %.promoted62, %._crit_edge ], [ 0, %.preheader.preheader ]
+  %.pre.i60 = phi i16 [ %.pre.i62, %._crit_edge ], [ 0, %.preheader.preheader ]
+  %.promoted = phi i32 [ %i.ei, %._crit_edge ], [ 0, %.preheader.preheader ]
   %.01247 = phi i32 [ %i.ax, %._crit_edge ], [ 0, %.preheader.preheader ] ; 3 uses
   %i.al = load i32, ptr %i.x, align 4             ; 2 uses
   %i.am = load i32, ptr %i.y, align 8
@@ -256,37 +256,35 @@ _ZZNK8rawspeed15VC5Decompressor7Wavelet12HighPassBand6decodeEvEN7DeRLVerC2ERKNS_
 
 bb.c:                                             ; preds = %.lr.ph, %..thread_crit_edge.i
   %.promoted8.i.i.i = phi i64 [ %.pre.i2379, %.lr.ph ], [ %.pre.i2381, %..thread_crit_edge.i ] ; 3 uses
-  %.pre.i = phi i16 [ %.pre.i75, %.lr.ph ], [ %.pre.i77, %..thread_crit_edge.i ]
-  %3 = phi i32 [ %i.ak, %.lr.ph ], [ %i.ei, %..thread_crit_edge.i ] ; 2 uses
-  %.promoted4371 = phi i32 [ %.promoted43, %.lr.ph ], [ %.promoted4369, %..thread_crit_edge.i ] ; 2 uses
-  %.promoted63 = phi i32 [ %.promoted, %.lr.ph ], [ %.promoted62, %..thread_crit_edge.i ]
+  %.promoted4371 = phi i32 [ %3, %.lr.ph ], [ %.promoted4369, %..thread_crit_edge.i ] ; 7 uses
+  %.promoted63 = phi i32 [ %i.ak, %.lr.ph ], [ %.promoted62, %..thread_crit_edge.i ] ; 6 uses
+  %.pre.i = phi i16 [ %.pre.i60, %.lr.ph ], [ %.pre.i62, %..thread_crit_edge.i ]
+  %i.ay = phi i32 [ %.promoted, %.lr.ph ], [ %i.ei, %..thread_crit_edge.i ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %..thread_crit_edge.i ] ; 3 uses
-  %i.ay = phi i32 [ %.promoted43, %.lr.ph ], [ %6, %..thread_crit_edge.i ] ; 7 uses
-  %4 = phi i32 [ %.promoted, %.lr.ph ], [ %7, %..thread_crit_edge.i ] ; 6 uses
-  %i.az = icmp eq i32 %3, 0
+  %i.az = icmp eq i32 %i.ay, 0
   br i1 %i.az, label %bb.d, label %..thread_crit_edge.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.ba = icmp samesign ult i32 %4, 65
+  %i.ba = icmp samesign ult i32 %.promoted63, 65
   tail call void @llvm.assume(i1 %i.ba)
-  %i.bb = icmp sgt i32 %i.ay, -1
+  %i.bb = icmp sgt i32 %.promoted4371, -1
   tail call void @llvm.assume(i1 %i.bb)
-  %.not.i5.i = icmp samesign ult i32 %4, 32
+  %.not.i5.i = icmp samesign ult i32 %.promoted63, 32
   br i1 %.not.i5.i, label %bb.e, label %_ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.i
 
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  %i.bc = add nuw nsw i32 %i.ay, 4                ; 4 uses
+  %i.bc = add nuw nsw i32 %.promoted4371, 4       ; 3 uses
   %.not.i.i.i = icmp samesign ugt i32 %i.bc, %.sroa.2.0.copyload
   br i1 %.not.i.i.i, label %bb.g, label %bb.f, !prof !6920
 
 bb.f:                                             ; preds = %bb.e
-  %i.bd = zext nneg i32 %i.ay to i64
+  %i.bd = zext nneg i32 %.promoted4371 to i64
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload, i64 %i.bd
   br label %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getInputEv.exit.i.i
 
 bb.g:                                             ; preds = %bb.e
-  %i.bf = icmp samesign ugt i32 %i.ay, %i.ac
+  %i.bf = icmp samesign ugt i32 %.promoted4371, %i.ac
   br i1 %i.bf, label %bb.h, label %bb.i, !prof !6920
 
 bb.h:                                             ; preds = %bb.g
@@ -298,7 +296,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   store i32 0, ptr %.sroa.0.i.i.i, align 4
-  %.sroa.speculated27.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %.sroa.2.0.copyload, i32 %i.ay) ; 3 uses
+  %.sroa.speculated27.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %.sroa.2.0.copyload, i32 %.promoted4371) ; 3 uses
   %i.bg = add nuw nsw i32 %.sroa.speculated27.i.i.i.i, 4
   %.sroa.speculated.i.i.i.i = tail call i32 @llvm.umin.i32(i32 %.sroa.2.0.copyload, i32 %i.bg)
   %i.bh = sub nsw i32 %.sroa.speculated.i.i.i.i, %.sroa.speculated27.i.i.i.i ; 2 uses
@@ -316,8 +314,8 @@ _ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getI
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
   %i.bm = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0..sroa.0.0..sroa.0.0..i.i.i)
   %i.bn = zext i32 %i.bm to i64
-  %i.bo = or disjoint i32 %4, 32
-  %i.bp = sub nuw nsw i32 32, %4
+  %i.bo = or disjoint i32 %.promoted63, 32
+  %i.bp = sub nuw nsw i32 32, %.promoted63
   %i.bq = zext nneg i32 %i.bp to i64
   %i.br = shl nuw i64 %i.bn, %i.bq
   %i.bs = or i64 %i.br, %.promoted8.i.i.i
@@ -326,9 +324,8 @@ _ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getI
 
 _ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit.i: ; preds = %bb.d, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getInputEv.exit.i.i
   %.promoted4370 = phi i32 [ %i.bc, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getInputEv.exit.i.i ], [ %.promoted4371, %bb.d ]
-  %5 = phi i32 [ %i.bc, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getInputEv.exit.i.i ], [ %i.ay, %bb.d ]
   %i.bt = phi i64 [ %i.bs, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getInputEv.exit.i.i ], [ %.promoted8.i.i.i, %bb.d ] ; 2 uses
-  %i.bu = phi i32 [ %i.bo, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getInputEv.exit.i.i ], [ %4, %bb.d ]
+  %i.bu = phi i32 [ %i.bo, %_ZN8rawspeed39BitStreamerForwardSequentialReplenisherINS_14BitStreamerMSBEE8getInputEv.exit.i.i ], [ %.promoted63, %bb.d ]
   %i.bv = lshr i64 %i.bt, 53                      ; 2 uses
   %i.bw = load ptr, ptr %i.ad, align 8, !tbaa !6946
   %i.bx = getelementptr inbounds nuw [4 x i8], ptr %i.bw, i64 %i.bv
@@ -462,7 +459,7 @@ bb.m:                                             ; preds = %_ZNK8rawspeed20Pref
 
 .noexc20:                                         ; preds = %bb.m, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_10VC5CodeTagENS_23PrefixCodeVectorDecoderIS1_EEE6decodeINS_14BitStreamerMSBELb0EEEiRT_.exit.i
   %.pre.i2382 = phi i64 [ %i.dt, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_10VC5CodeTagENS_23PrefixCodeVectorDecoderIS1_EEE6decodeINS_14BitStreamerMSBELb0EEEiRT_.exit.i ], [ %i.dy, %bb.m ]
-  %.promoted66 = phi i32 [ %.promoted67, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_10VC5CodeTagENS_23PrefixCodeVectorDecoderIS1_EEE6decodeINS_14BitStreamerMSBELb0EEEiRT_.exit.i ], [ %i.dx, %bb.m ] ; 2 uses
+  %.promoted66 = phi i32 [ %.promoted67, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_10VC5CodeTagENS_23PrefixCodeVectorDecoderIS1_EEE6decodeINS_14BitStreamerMSBELb0EEEiRT_.exit.i ], [ %i.dx, %bb.m ]
   %.0.i = phi i16 [ 0, %_ZNK8rawspeed20PrefixCodeLUTDecoderINS_10VC5CodeTagENS_23PrefixCodeVectorDecoderIS1_EEE6decodeINS_14BitStreamerMSBELb0EEEiRT_.exit.i ], [ %spec.select.i, %bb.m ] ; 2 uses
   %i.ea = and i32 %.0.i.i, 511                    ; 3 uses
   store i16 %.0.i, ptr %i.m, align 2, !tbaa !29
@@ -488,12 +485,10 @@ bb.n:                                             ; preds = %.noexc20
 
 ..thread_crit_edge.i:                             ; preds = %bb.c, %bb.n
   %.pre.i2381 = phi i64 [ %.pre.i2382, %bb.n ], [ %.promoted8.i.i.i, %bb.c ] ; 2 uses
-  %.pre.i77 = phi i16 [ %i.ed, %bb.n ], [ %.pre.i, %bb.c ] ; 3 uses
   %.promoted4369 = phi i32 [ %.promoted4370, %bb.n ], [ %.promoted4371, %bb.c ] ; 2 uses
   %.promoted62 = phi i32 [ %.promoted66, %bb.n ], [ %.promoted63, %bb.c ] ; 2 uses
-  %6 = phi i32 [ %5, %bb.n ], [ %i.ay, %bb.c ]
-  %7 = phi i32 [ %.promoted66, %bb.n ], [ %4, %bb.c ]
-  %i.eh = phi i32 [ %i.ea, %bb.n ], [ %3, %bb.c ]
+  %.pre.i62 = phi i16 [ %i.ed, %bb.n ], [ %.pre.i, %bb.c ] ; 3 uses
+  %i.eh = phi i32 [ %i.ea, %bb.n ], [ %i.ay, %bb.c ]
   %i.ei = add nsw i32 %i.eh, -1                   ; 4 uses
   store i32 %i.ei, ptr %i.n, align 4, !tbaa !7033
   tail call void @llvm.assume(i1 %i.ao)
@@ -501,7 +496,7 @@ bb.n:                                             ; preds = %.noexc20
   tail call void @llvm.assume(i1 %i.ej)
   tail call void @llvm.assume(i1 %i.ap)
   %i.ek = getelementptr inbounds nuw [2 x i8], ptr %i.as, i64 %indvars.iv
-  store i16 %.pre.i77, ptr %i.ek, align 2, !tbaa !29
+  store i16 %.pre.i62, ptr %i.ek, align 2, !tbaa !29
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not13 = icmp eq i64 %indvars.iv.next, %i.aj
   br i1 %.not13, label %._crit_edge, label %bb.c, !llvm.loop !7037

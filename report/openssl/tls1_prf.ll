@@ -204,7 +204,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @kdf_tls1_prf_set_ctx_params(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
-  %2 = alloca %struct.tls1prf_set_ctx_params_st, align 8 ; 14 uses
+  %2 = alloca %struct.tls1prf_set_ctx_params_st, align 8 ; 13 uses
   %3 = alloca %struct.PROV_DIGEST, align 8        ; 8 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca [6 x ptr], align 16               ; 8 uses
@@ -224,14 +224,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not4351.i, label %tls1prf_set_ctx_params_decoder.exit.thread141, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 72
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.z, %.lr.ph.i
-  %5 = phi i32 [ 0, %.lr.ph.i ], [ %6, %bb.z ]    ; 15 uses
   %i.i = phi i32 [ 0, %.lr.ph.i ], [ %i.ay, %bb.z ] ; 18 uses
   %i.j = phi ptr [ %i.e, %.lr.ph.i ], [ %i.ba, %bb.z ] ; 17 uses
   %.03952.i = phi ptr [ %1, %.lr.ph.i ], [ %i.az, %bb.z ] ; 5 uses
@@ -300,7 +298,7 @@ bb.m:                                             ; preds = %bb.c
   br i1 %i.aa, label %bb.n, label %bb.z, !prof !33
 
 bb.n:                                             ; preds = %bb.m
-  %i.ab = load ptr, ptr %4, align 8, !tbaa !34
+  %i.ab = load ptr, ptr %i.f, align 8, !tbaa !34
   %.not44.i = icmp eq ptr %i.ab, null
   br i1 %.not44.i, label %bb.p, label %bb.o, !prof !33
 
@@ -311,7 +309,7 @@ bb.o:                                             ; preds = %bb.n
   br label %tls1prf_set_ctx_params_decoder.exit.thread
 
 bb.p:                                             ; preds = %bb.n
-  store ptr %.03952.i, ptr %4, align 8, !tbaa !34
+  store ptr %.03952.i, ptr %i.f, align 8, !tbaa !34
   br label %bb.z
 
 bb.q:                                             ; preds = %bb.c
@@ -380,15 +378,14 @@ bb.x:                                             ; preds = %bb.w
   br label %tls1prf_set_ctx_params_decoder.exit.thread
 
 bb.y:                                             ; preds = %bb.w
-  %i.av = add nsw i32 %i.i, 1                     ; 2 uses
+  %i.av = add nsw i32 %i.i, 1
   %i.aw = sext i32 %i.i to i64
   %i.ax = getelementptr inbounds [8 x i8], ptr %i.g, i64 %i.aw
   store ptr %.03952.i, ptr %i.ax, align 8, !tbaa !37
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %.tail.i, %bb.v, %bb.s, %bb.r, %bb.q, %bb.p, %bb.m, %bb.l, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %6 = phi i32 [ %5, %bb.i ], [ %5, %bb.c ], [ %5, %bb.e ], [ %5, %bb.g ], [ %5, %bb.l ], [ %5, %bb.h ], [ %5, %bb.f ], [ %5, %bb.d ], [ %5, %bb.p ], [ %5, %bb.m ], [ %5, %bb.r ], [ %5, %bb.v ], [ %5, %bb.s ], [ %i.av, %bb.y ], [ %5, %.tail.i ], [ %5, %bb.q ] ; 4 uses
-  %i.ay = phi i32 [ %i.i, %bb.i ], [ %i.i, %bb.c ], [ %i.i, %bb.e ], [ %i.i, %bb.g ], [ %i.i, %bb.l ], [ %i.i, %bb.h ], [ %i.i, %bb.f ], [ %i.i, %bb.d ], [ %i.i, %bb.p ], [ %i.i, %bb.m ], [ %i.i, %bb.r ], [ %i.i, %bb.v ], [ %i.i, %bb.s ], [ %i.av, %bb.y ], [ %i.i, %.tail.i ], [ %i.i, %bb.q ]
+  %i.ay = phi i32 [ %i.i, %bb.i ], [ %i.i, %bb.c ], [ %i.i, %bb.e ], [ %i.i, %bb.g ], [ %i.i, %bb.l ], [ %i.i, %bb.h ], [ %i.i, %bb.f ], [ %i.i, %bb.d ], [ %i.i, %bb.p ], [ %i.i, %bb.m ], [ %i.i, %bb.r ], [ %i.i, %bb.v ], [ %i.i, %bb.s ], [ %i.av, %bb.y ], [ %i.i, %.tail.i ], [ %i.i, %bb.q ] ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %.03952.i, i64 40 ; 2 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !28 ; 2 uses
   %.not43.i = icmp eq ptr %i.ba, null
@@ -400,7 +397,6 @@ tls1prf_set_ctx_params_decoder.exit.thread141:    ; preds = %.preheader.i, %bb.b
   br label %bb.aj
 
 tls1prf_set_ctx_params_decoder.exit:              ; preds = %bb.z
-  store i32 %6, ptr %i.f, align 8
   %.pr = load ptr, ptr %2, align 8, !tbaa !30     ; 4 uses
   %i.bd = load ptr, ptr %0, align 8, !tbaa !8
   %i.be = tail call ptr @ossl_prov_ctx_get0_libctx(ptr noundef %i.bd) #8 ; 4 uses
@@ -473,7 +469,7 @@ bb.ai:                                            ; preds = %bb.ag
   br label %bb.aj
 
 bb.aj:                                            ; preds = %tls1prf_set_ctx_params_decoder.exit.thread141, %bb.ai, %tls1prf_set_ctx_params_decoder.exit
-  %i.bz = phi i32 [ 0, %tls1prf_set_ctx_params_decoder.exit.thread141 ], [ %6, %bb.ai ], [ %6, %tls1prf_set_ctx_params_decoder.exit ] ; 2 uses
+  %i.bz = phi i32 [ 0, %tls1prf_set_ctx_params_decoder.exit.thread141 ], [ %i.ay, %bb.ai ], [ %i.ay, %tls1prf_set_ctx_params_decoder.exit ] ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.cb = load ptr, ptr %i.ca, align 8, !tbaa !35 ; 2 uses
   %.not78 = icmp eq ptr %i.cb, null

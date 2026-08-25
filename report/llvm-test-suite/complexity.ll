@@ -204,15 +204,15 @@ bb.h:                                             ; preds = %_ZN9benchmark8inter
   %i.cn = extractelement <2 x double> %i.cm, i64 1
   %i.co = tail call double @sqrt(double noundef %i.cn) #21, !tbaa !4, !noalias !38
   %i.cp = extractelement <2 x double> %i.cm, i64 0
-  %i.cq = fdiv double %i.co, %i.cp
+  %i.cq = fdiv double %i.co, %i.cp                ; 2 uses
+  store double %.sroa.076.0, ptr %0, align 8, !tbaa !29
   %.sroa.677.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store double %i.cq, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !29
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store i32 1, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !20
   br label %bb.i
 
 _ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit:  ; preds = %bb.k
-  store double %i.fc, ptr %.sroa.677.0..sroa_idx, align 8
-  store double %.sroa.069.0109, ptr %0, align 8
-  store i32 %6, ptr %.sroa.7.0..sroa_idx, align 8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef 20) #23
   br label %bb.q
 
@@ -220,9 +220,7 @@ bb.i:                                             ; preds = %.loopexit86, %bb.k
   %i.cr = phi ptr [ %i.m, %.loopexit86 ], [ %i.ep, %bb.k ] ; 4 uses
   %i.cs = phi ptr [ %i.l, %.loopexit86 ], [ %i.eq, %bb.k ]
   %.sroa.073.0.idx117 = phi i64 [ 0, %.loopexit86 ], [ %.sroa.073.0.add, %bb.k ] ; 2 uses
-  %4 = phi double [ %i.cq, %.loopexit86 ], [ %i.fc, %bb.k ] ; 3 uses
-  %.sroa.069.0110116 = phi double [ %.sroa.076.0, %.loopexit86 ], [ %.sroa.069.0109, %bb.k ] ; 2 uses
-  %5 = phi i32 [ 1, %.loopexit86 ], [ %6, %bb.k ] ; 2 uses
+  %.sroa.069.0110116 = phi double [ %i.cq, %.loopexit86 ], [ %i.fc, %bb.k ] ; 2 uses
   %.sroa.073.0.ptr118 = getelementptr inbounds nuw i8, ptr %i.j, i64 %.sroa.073.0.idx117 ; 2 uses
   %i.ct = load i32, ptr %.sroa.073.0.ptr118, align 4, !tbaa !44
   %switch.tableidx = add i32 %i.ct, -2            ; 2 uses
@@ -322,12 +320,15 @@ _ZN9benchmark12FittingCurveENS_4BigOE.exit:       ; preds = %bb.i, %switch.looku
   %i.ew = extractelement <2 x double> %i.ev, i64 1
   %i.ex = tail call double @sqrt(double noundef %i.ew) #21, !tbaa !4, !noalias !45
   %i.ey = extractelement <2 x double> %i.ev, i64 0
-  %i.ez = fdiv double %i.ex, %i.ey                ; 2 uses
-  %i.fa = fcmp olt double %i.ez, %4
+  %i.ez = fdiv double %i.ex, %i.ey                ; 3 uses
+  %i.fa = fcmp olt double %i.ez, %.sroa.069.0110116
   br i1 %i.fa, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.loopexit
+  store double %.sroa.069.0, ptr %0, align 8, !tbaa !29
+  store double %i.ez, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !29
   %i.fb = load i32, ptr %.sroa.073.0.ptr118, align 4, !tbaa !44
+  store i32 %i.fb, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !20
   br label %bb.k
 
 _ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit: ; preds = %.lr.ph47.i32
@@ -341,17 +342,12 @@ _ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit.split-lp: ; preds = %
   br label %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47
 
 _ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47: ; preds = %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit.split-lp, %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit.split-lp ], [ %lpad.loopexit, %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit ]
-  store double %4, ptr %.sroa.677.0..sroa_idx, align 8
-  store double %.sroa.069.0110116, ptr %0, align 8
-  store i32 %5, ptr %.sroa.7.0..sroa_idx, align 8
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit ], [ %lpad.loopexit.split-lp, %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit47.loopexit.split-lp ]
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef 20) #23
   resume { ptr, i32 } %lpad.phi
 
 bb.k:                                             ; preds = %bb.j, %.loopexit
-  %6 = phi i32 [ %i.fb, %bb.j ], [ %5, %.loopexit ] ; 2 uses
-  %.sroa.069.0109 = phi double [ %.sroa.069.0, %bb.j ], [ %.sroa.069.0110116, %.loopexit ] ; 2 uses
-  %i.fc = phi double [ %i.ez, %bb.j ], [ %4, %.loopexit ] ; 2 uses
+  %i.fc = phi double [ %i.ez, %bb.j ], [ %.sroa.069.0110116, %.loopexit ]
   %.sroa.073.0.add = add nuw nsw i64 %.sroa.073.0.idx117, 4 ; 2 uses
   %.not = icmp eq i64 %.sroa.073.0.add, 20
   br i1 %.not, label %_ZNSt6vectorIN9benchmark4BigOESaIS1_EED2Ev.exit, label %bb.i
