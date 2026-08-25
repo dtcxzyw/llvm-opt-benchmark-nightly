@@ -202,7 +202,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   br label %bb.bg
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECsl6EuCK7xub1_5insta(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, i64 noundef %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %4, i64 noundef %5, i64 noundef %6) ; 11 uses
+  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_ECsl6EuCK7xub1_5insta(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, i64 noundef %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %4, i64 noundef %5, i64 noundef %6) ; 10 uses
   %i.s = add i64 %i.r, %2                         ; 8 uses
   %i.t = add i64 %i.r, %5                         ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17)
@@ -273,7 +273,7 @@ _RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtB2_12Offs
   %.sroa.0.0.i = phi i64 [ 0, %bb.e ], [ %i.w, %bb.f ], [ %.sroa.01.033.i.i.i.i, %_RNvXs1_NtNtCshFZddwsEKsN_7similar10algorithms5utilsINtB5_12OffsetLookupmEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCsl6EuCK7xub1_5insta.exit.i.i.i.i.i ], [ %i.x, %bb.j ] ; 5 uses
   %i.aw = sub nuw i64 %3, %2                      ; 4 uses
   %i.ax = icmp eq i64 %i.r, %i.aw
-  %i.ay = sub i64 %6, %5                          ; 4 uses
+  %i.ay = sub i64 %6, %5                          ; 5 uses
   %i.az = icmp eq i64 %i.aw, %i.ay
   %or.cond113 = and i1 %i.az, %i.ax
   br i1 %or.cond113, label %bb.bi, label %bb.k
@@ -676,7 +676,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   %i.hs = getelementptr inbounds nuw [40 x i8], ptr %i.hr, i64 %i.hn ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hs, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hs, i8 0, i64 24, i1 false)
-  store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %i.ay, ptr %.sroa.6.0..sroa_idx, align 8
   %i.ht = add i64 %i.hn, 1
   store i64 %i.ht, ptr %i.hm, align 8, !alias.scope !115, !noalias !118
   tail call void @_RNvXs1_NtNtCshFZddwsEKsN_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook6finishCsl6EuCK7xub1_5insta(ptr noalias noundef nonnull align 8 dereferenceable(160) %0)
@@ -760,7 +760,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   br label %bb.bg
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenINtNtNtB6_4text6inline11MultiLookupeEB13_ECsl6EuCK7xub1_5insta(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %1, i64 noundef %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %4, i64 noundef %5, i64 noundef %6) ; 12 uses
+  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenINtNtNtB6_4text6inline11MultiLookupeEB13_ECsl6EuCK7xub1_5insta(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %1, i64 noundef %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %4, i64 noundef %5, i64 noundef %6) ; 11 uses
   %i.s = add i64 %i.r, %2                         ; 8 uses
   %i.t = add i64 %i.r, %5                         ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !130)
@@ -834,7 +834,7 @@ _RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtNtNtB6_4t
   %.sroa.0.0.i = phi i64 [ 0, %bb.e ], [ %i.w, %bb.f ], [ %.sroa.01.032.i.i.i.i, %_RNvXs_NtNtCshFZddwsEKsN_7similar4text6inlineINtB4_11MultiLookupeEINtNtNtCs4NRVxsYgnAr_4core3ops5index5IndexjE5indexCsl6EuCK7xub1_5insta.exit12.i.i.i.i.i ], [ %.sroa.01.032.i.i.i.i, %_RNvXs_NtNtCs4NRVxsYgnAr_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.i.i.i.i.i ], [ %i.x, %bb.j ] ; 5 uses
   %i.at = sub nuw i64 %3, %2                      ; 4 uses
   %i.au = icmp eq i64 %i.r, %i.at
-  %i.av = sub i64 %6, %5                          ; 4 uses
+  %i.av = sub i64 %6, %5                          ; 5 uses
   %i.aw = icmp eq i64 %i.at, %i.av
   %or.cond113 = and i1 %i.aw, %i.au
   br i1 %or.cond113, label %bb.bi, label %bb.k
@@ -1237,7 +1237,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   %i.hi = getelementptr inbounds nuw [40 x i8], ptr %i.hh, i64 %i.hd ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hi, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hi, i8 0, i64 24, i1 false)
-  store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %i.av, ptr %.sroa.6.0..sroa_idx, align 8
   %i.hj = add i64 %i.hd, 1
   store i64 %i.hj, ptr %i.hc, align 8, !alias.scope !240, !noalias !243
   tail call void @_RNvXs1_NtNtCshFZddwsEKsN_7similar10algorithms7compactINtB5_7CompactINtNtNtB9_4text6inline11MultiLookupeEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook6finishCsl6EuCK7xub1_5insta(ptr noalias noundef nonnull align 8 dereferenceable(160) %0)
@@ -1321,7 +1321,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   br label %bb.bf
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenSReB13_ECsl6EuCK7xub1_5insta(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %5, i64 noundef %6, i64 noundef %7, i64 noundef %8) ; 12 uses
+  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenSReB13_ECsl6EuCK7xub1_5insta(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %5, i64 noundef %6, i64 noundef %7, i64 noundef %8) ; 11 uses
   %i.s = add i64 %i.r, %3                         ; 8 uses
   %i.t = add i64 %i.r, %7                         ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !255)
@@ -1392,7 +1392,7 @@ _RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenSReB13_ECsl6
   %.sroa.0.0.i = phi i64 [ 0, %bb.e ], [ %i.al, %_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenSReB13_ECsl6EuCK7xub1_5insta.exit.loopexit ] ; 5 uses
   %i.am = sub i64 %4, %3                          ; 4 uses
   %i.an = icmp eq i64 %i.r, %i.am
-  %i.ao = sub i64 %8, %7                          ; 4 uses
+  %i.ao = sub i64 %8, %7                          ; 5 uses
   %i.ap = icmp eq i64 %i.am, %i.ao
   %or.cond113 = and i1 %i.ap, %i.an
   br i1 %or.cond113, label %bb.bh, label %bb.k
@@ -1795,7 +1795,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   %i.gp = getelementptr inbounds nuw [40 x i8], ptr %i.go, i64 %i.gk ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gp, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gp, i8 0, i64 24, i1 false)
-  store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %i.ao, ptr %.sroa.6.0..sroa_idx, align 8
   %i.gq = add i64 %i.gk, 1
   store i64 %i.gq, ptr %i.gj, align 8, !alias.scope !362, !noalias !365
   tail call void @_RNvXs1_NtNtCshFZddwsEKsN_7similar10algorithms7compactINtB5_7CompactSReB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook6finishCsl6EuCK7xub1_5insta(ptr noalias noundef nonnull align 8 dereferenceable(176) %0)

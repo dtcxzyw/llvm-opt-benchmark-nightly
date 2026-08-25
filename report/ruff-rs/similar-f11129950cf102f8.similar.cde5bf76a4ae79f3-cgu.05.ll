@@ -60,13 +60,13 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   br label %bb.bb
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, i64 noundef %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %4, i64 noundef %5, i64 noundef %6) ; 11 uses
+  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenINtB2_12OffsetLookupmEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, i64 noundef %2, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %4, i64 noundef %5, i64 noundef %6) ; 10 uses
   %i.s = add i64 %i.r, %2                         ; 7 uses
   %i.t = add i64 %i.r, %5                         ; 7 uses
   %i.u = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenINtB2_12OffsetLookupmEB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %1, i64 noundef %i.s, i64 noundef %3, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %4, i64 noundef %i.t, i64 noundef %6) ; 5 uses
   %i.v = sub nuw i64 %3, %2                       ; 4 uses
   %i.w = icmp eq i64 %i.r, %i.v
-  %i.x = sub i64 %6, %5                           ; 4 uses
+  %i.x = sub i64 %6, %5                           ; 5 uses
   %i.y = icmp eq i64 %i.v, %i.x
   %or.cond113 = and i1 %i.y, %i.w
   br i1 %or.cond113, label %bb.bd, label %bb.f
@@ -469,7 +469,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   %i.gr = getelementptr inbounds nuw [40 x i8], ptr %i.gq, i64 %i.gm ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gr, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gr, i8 0, i64 24, i1 false)
-  store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %i.x, ptr %.sroa.6.0..sroa_idx, align 8
   %i.gs = add i64 %i.gm, 1
   store i64 %i.gs, ptr %i.gl, align 8, !alias.scope !85, !noalias !88
   tail call void @_RNvXs1_NtNtCshFZddwsEKsN_7similar10algorithms7compactINtB5_7CompactINtNtB7_5utils12OffsetLookupmEB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook6finishB9_(ptr noalias noundef nonnull align 8 dereferenceable(160) %0)
@@ -553,13 +553,13 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   br label %bb.ba
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenSReB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %5, i64 noundef %6, i64 noundef %7, i64 noundef %8) ; 12 uses
+  %i.r = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_prefix_lenSReB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %5, i64 noundef %6, i64 noundef %7, i64 noundef %8) ; 11 uses
   %i.s = add i64 %i.r, %3                         ; 7 uses
   %i.t = add i64 %i.r, %7                         ; 7 uses
   %i.u = tail call noundef i64 @_RINvNtNtCshFZddwsEKsN_7similar10algorithms5utils17common_suffix_lenSReB13_EB6_(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %1, i64 noundef %2, i64 noundef %i.s, i64 noundef %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %5, i64 noundef %6, i64 noundef %i.t, i64 noundef %8) ; 5 uses
   %i.v = sub nuw i64 %4, %3                       ; 4 uses
   %i.w = icmp eq i64 %i.r, %i.v
-  %i.x = sub i64 %8, %7                           ; 4 uses
+  %i.x = sub i64 %8, %7                           ; 5 uses
   %i.y = icmp eq i64 %i.v, %i.x
   %or.cond113 = and i1 %i.y, %i.w
   br i1 %or.cond113, label %bb.bc, label %bb.f
@@ -962,7 +962,7 @@ _RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtCshFZddwsEKsN_7similar5types6Diff
   %i.fy = getelementptr inbounds nuw [40 x i8], ptr %i.fx, i64 %i.ft ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fy, i8 0, i64 24, i1 false)
-  store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
+  store i64 %i.x, ptr %.sroa.6.0..sroa_idx, align 8
   %i.fz = add i64 %i.ft, 1
   store i64 %i.fz, ptr %i.fs, align 8, !alias.scope !178, !noalias !181
   tail call void @_RNvXs1_NtNtCshFZddwsEKsN_7similar10algorithms7compactINtB5_7CompactSReB13_INtNtB7_7replace7ReplaceNtNtB7_7capture7CaptureEENtNtB7_4hook8DiffHook6finishB9_(ptr noalias noundef nonnull align 8 dereferenceable(176) %0)

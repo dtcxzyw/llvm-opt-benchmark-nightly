@@ -204,9 +204,9 @@ bb.am:                                            ; preds = %.thread, %._crit_ed
 
 bb.an:                                            ; preds = %bb.am
   %i.fv = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.fw = load i64, ptr %i.fv, align 8, !tbaa !8  ; 4 uses
+  %i.fw = load i64, ptr %i.fv, align 8, !tbaa !8  ; 3 uses
   %i.fx = load i64, ptr %i.d, align 16, !tbaa !8  ; 2 uses
-  %i.fy = add i64 %i.fx, %i.fw
+  %i.fy = add i64 %i.fx, %i.fw                    ; 2 uses
   store i64 %i.fy, ptr %i.d, align 16, !tbaa !8
   %i.fz = load i64, ptr %i.c, align 16, !tbaa !8  ; 2 uses
   %i.ga = add i64 %i.fz, %i.fw
@@ -247,16 +247,16 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap
   %i.gt = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.gu = load i64, ptr %i.gt, align 8, !tbaa !8  ; 2 uses
-  %8 = mul i64 %i.gu, %i.gk                       ; 3 uses
-  %i.gv = mul i64 %i.gu, %i.gn
-  %i.gw = load i64, ptr %i.d, align 16, !tbaa !8
+  %i.gv = mul i64 %i.gu, %i.gn                    ; 3 uses
+  %i.gw = load i64, ptr %i.d, align 16, !tbaa !8  ; 2 uses
   %i.gx = add i64 %i.gw, %i.gv                    ; 2 uses
   store i64 %i.gx, ptr %i.d, align 16, !tbaa !8
-  %i.gy = load i64, ptr %i.c, align 16, !tbaa !8  ; 2 uses
+  %8 = mul i64 %i.gu, %i.gk
+  %i.gy = load i64, ptr %i.c, align 16, !tbaa !8
   %i.gz = add i64 %i.gy, %8                       ; 2 uses
   store i64 %i.gz, ptr %i.c, align 16, !tbaa !8
-  %i.ha = icmp eq i64 %i.gx, %8
-  %i.hb = icmp eq i64 %i.gy, 0
+  %i.ha = icmp eq i64 %i.gw, 0
+  %i.hb = icmp eq i64 %i.gz, %i.gv
   %or.cond144.i = select i1 %i.ha, i1 %i.hb, i1 false
   br i1 %or.cond144.i, label %.critedge.sink.split.i, label %.loopexit
 
@@ -291,34 +291,34 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as
   %i.hs = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.ht = load i64, ptr %i.hs, align 16, !tbaa !8 ; 2 uses
-  %9 = mul i64 %i.ht, %i.hj                       ; 4 uses
-  %i.hu = mul i64 %i.ht, %i.hm
+  %i.hu = mul i64 %i.ht, %i.hm                    ; 4 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  %i.hw = load i64, ptr %i.hv, align 8, !tbaa !8
+  %i.hw = load i64, ptr %i.hv, align 8, !tbaa !8  ; 2 uses
   %i.hx = add i64 %i.hw, %i.hu                    ; 2 uses
   store i64 %i.hx, ptr %i.hv, align 8, !tbaa !8
+  %9 = mul i64 %i.ht, %i.hj
   %i.hy = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  %i.hz = load i64, ptr %i.hy, align 8, !tbaa !8  ; 2 uses
+  %i.hz = load i64, ptr %i.hy, align 8, !tbaa !8
   %i.ia = add i64 %i.hz, %9                       ; 2 uses
   store i64 %i.ia, ptr %i.hy, align 8, !tbaa !8
-  %i.ib = icmp eq i64 %i.hx, %9
-  %i.ic = icmp eq i64 %i.hz, 0
+  %i.ib = icmp eq i64 %i.hw, 0
+  %i.ic = icmp eq i64 %i.ia, %i.hu
   %or.cond146.i = select i1 %i.ib, i1 %i.ic, i1 false
   br i1 %or.cond146.i, label %bb.au, label %.loopexit
 
 bb.au:                                            ; preds = %bb.at
   %i.id = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.ie = load i64, ptr %i.id, align 8, !tbaa !8  ; 2 uses
-  %10 = mul i64 %i.ie, %i.ia                      ; 3 uses
-  %i.if = mul i64 %i.ie, %9
-  %i.ig = load i64, ptr %i.d, align 16, !tbaa !8
+  %i.if = mul i64 %i.ie, %i.hx                    ; 3 uses
+  %i.ig = load i64, ptr %i.d, align 16, !tbaa !8  ; 2 uses
   %i.ih = add i64 %i.ig, %i.if                    ; 2 uses
   store i64 %i.ih, ptr %i.d, align 16, !tbaa !8
-  %i.ii = load i64, ptr %i.c, align 16, !tbaa !8  ; 2 uses
+  %10 = mul i64 %i.ie, %i.hu
+  %i.ii = load i64, ptr %i.c, align 16, !tbaa !8
   %i.ij = add i64 %i.ii, %10                      ; 2 uses
   store i64 %i.ij, ptr %i.c, align 16, !tbaa !8
-  %i.ik = icmp eq i64 %i.ih, %10
-  %i.il = icmp eq i64 %i.ii, 0
+  %i.ik = icmp eq i64 %i.ig, 0
+  %i.il = icmp eq i64 %i.ij, %i.if
   %or.cond147.i = select i1 %i.ik, i1 %i.il, i1 false
   br i1 %or.cond147.i, label %.critedge.sink.split.i, label %.loopexit
 
@@ -360,7 +360,7 @@ bb.av:                                            ; preds = %.lr.ph206
 .critedge.sink.split.i:                           ; preds = %bb.al, %bb.au, %bb.aq, %bb.an
   %.1171 = phi i64 [ %.1177, %bb.aq ], [ %.1172, %bb.an ], [ %.0126.lcssa, %bb.al ], [ %.1182, %bb.au ]
   %.1128168 = phi i64 [ %.1128176, %bb.aq ], [ %.1128169, %bb.an ], [ %.0127.lcssa, %bb.al ], [ %.1128181, %bb.au ]
-  %.sink163.i = phi i64 [ %i.gz, %bb.aq ], [ %i.fw, %bb.an ], [ 1, %bb.al ], [ %i.ij, %bb.au ]
+  %.sink163.i = phi i64 [ %i.gx, %bb.aq ], [ %i.fy, %bb.an ], [ 1, %bb.al ], [ %i.ih, %bb.au ]
   %i.ji = load i64, ptr %i.b, align 16, !tbaa !8
   %i.jj = mul i64 %i.ji, %.sink163.i
   br label %.loopexit192
@@ -369,7 +369,7 @@ bb.av:                                            ; preds = %.lr.ph206
   %.1170.ph = phi i64 [ %.1182, %bb.ar ], [ %.0126.lcssa, %bb.al ], [ %.1182, %bb.as ], [ %.1182, %bb.at ], [ %.1182, %bb.au ], [ %.1177, %bb.ao ], [ %.0126.lcssa, %.lr.ph.i.preheader ], [ %.1177, %bb.ap ], [ %.1177, %bb.aq ], [ %.1172, %bb.am ], [ %.1172, %bb.an ], [ %.0126.lcssa, %.lr.ph206 ], [ %.0126.lcssa, %.lr.ph.i ]
   %.1128167.ph = phi i64 [ %.1128181, %bb.ar ], [ %.0127.lcssa, %bb.al ], [ %.1128181, %bb.as ], [ %.1128181, %bb.at ], [ %.1128181, %bb.au ], [ %.1128176, %bb.ao ], [ %.0127.lcssa, %.lr.ph.i.preheader ], [ %.1128176, %bb.ap ], [ %.1128176, %bb.aq ], [ %.1128169, %bb.am ], [ %.1128169, %bb.an ], [ %.0127.lcssa, %.lr.ph206 ], [ %.0127.lcssa, %.lr.ph.i ]
   %.1164.ph = phi i32 [ 4, %bb.ar ], [ 1, %bb.al ], [ 3, %bb.as ], [ 2, %bb.at ], [ 1, %bb.au ], [ 3, %bb.ao ], [ %0, %.lr.ph.i.preheader ], [ 2, %bb.ap ], [ 1, %bb.aq ], [ 2, %bb.am ], [ 1, %bb.an ], [ %i.io, %.lr.ph.i ], [ %.0163204, %.lr.ph206 ] ; 5 uses
-  %.1162.ph = phi i64 [ 1, %bb.ar ], [ 1, %bb.al ], [ %i.hj, %bb.as ], [ %9, %bb.at ], [ %10, %bb.au ], [ 1, %bb.ao ], [ 1, %.lr.ph.i.preheader ], [ %i.gk, %bb.ap ], [ %8, %bb.aq ], [ 1, %bb.am ], [ %i.fw, %bb.an ], [ %i.iu, %.lr.ph.i ], [ %i.im, %.lr.ph206 ] ; 6 uses
+  %.1162.ph = phi i64 [ 1, %bb.ar ], [ 1, %bb.al ], [ %i.hj, %bb.as ], [ %i.hu, %bb.at ], [ %i.if, %bb.au ], [ 1, %bb.ao ], [ 1, %.lr.ph.i.preheader ], [ %i.gk, %bb.ap ], [ %i.gv, %bb.aq ], [ 1, %bb.am ], [ %i.fw, %bb.an ], [ %i.iu, %.lr.ph.i ], [ %i.im, %.lr.ph206 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.jk = zext i32 %.1164.ph to i64
   %i.jl = shl nuw nsw i64 %i.jk, 3
