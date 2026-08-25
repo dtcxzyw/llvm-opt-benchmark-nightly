@@ -205,8 +205,8 @@ bb.a:                                             ; preds = %_Z7ImClampRK6ImVec2
   %.sroa.0151.0.vec.insert169 = insertelement <2 x float> poison, float %i.r, i64 0 ; 5 uses
   %.sroa.0151.4.vec.insert193 = insertelement <2 x float> %.sroa.0151.0.vec.insert169, float %i.v, i64 1 ; 7 uses
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 4 uses
-  %.in = select i1 %.not.not, ptr @__const._ZN5ImGui27FindBestWindowPosForPopupExERK6ImVec2S2_P8ImGuiDirRK6ImRectS7_24ImGuiPopupPositionPolicy.dir_preferred_order, ptr %2
-  %6 = load i32, ptr %.in, align 4, !tbaa !1493   ; 2 uses
+  %.val266 = load i32, ptr %2, align 4
+  %6 = select i1 %.not.not, i32 3, i32 %.val266   ; 2 uses
   switch i32 %6, label %bb.f [
     i32 3, label %bb.b
     i32 1, label %bb.c
@@ -416,8 +416,8 @@ bb.z:                                             ; preds = %.critedge118, %.cri
   %i.ci = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 4 uses
   %i.cj = extractelement <2 x float> %i.f, i64 0  ; 5 uses
   %i.ck = extractelement <2 x float> %i.f, i64 1  ; 5 uses
-  %.in111 = select i1 %.not110, ptr %2, ptr @__const._ZN5ImGui27FindBestWindowPosForPopupExERK6ImVec2S2_P8ImGuiDirRK6ImRectS7_24ImGuiPopupPositionPolicy.dir_preferred_order.174
-  %7 = load i32, ptr %.in111, align 4, !tbaa !1493 ; 7 uses
+  %.val268 = load i32, ptr %2, align 4
+  %7 = select i1 %.not110, i32 %.val268, i32 1    ; 7 uses
   %i.cl = icmp eq i32 %7, 0                       ; 2 uses
   %.val = load float, ptr %4, align 4
   %.val251 = load float, ptr %i.a, align 4
@@ -509,7 +509,7 @@ bb.aj:                                            ; preds = %.critedge121
   %i.do = select i1 %.not110, float %.val252.1, float %.val253.1
   %i.dp = fsub float %.val251.1, %i.do
   %i.dq = fcmp olt float %i.dp, %i.cj
-  %or.cond.1 = and i1 %i.dq, %.not110
+  %or.cond.1 = select i1 %i.dq, i1 %.not110, i1 false
   br i1 %or.cond.1, label %.critedge121.1, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
@@ -555,7 +555,7 @@ bb.am:                                            ; preds = %.critedge121.2
   %.val253.3 = load float, ptr %3, align 4
   %i.ef = fsub float %i.ee, %.val253.3
   %i.eg = fcmp uge float %i.ef, %i.cj
-  %or.cond.3.not = or i1 %i.eg, %.not110
+  %or.cond.3.not = select i1 %i.eg, i1 true, i1 %.not110
   br i1 %or.cond.3.not, label %bb.an, label %.critedge121.3
 
 bb.an:                                            ; preds = %bb.am
@@ -566,7 +566,7 @@ bb.an:                                            ; preds = %bb.am
   %.val257.3 = load float, ptr %i.d, align 4
   %i.ei = fsub float %i.eh, %.val257.3
   %i.ej = fcmp olt float %i.ei, %i.ck
-  %or.cond119.3 = and i1 %i.ej, %.not110
+  %or.cond119.3 = select i1 %i.ej, i1 %.not110, i1 false
   br i1 %or.cond119.3, label %.critedge121.3, label %bb.ab
 
 .critedge121.3:                                   ; preds = %bb.an, %bb.am, %.critedge121.2

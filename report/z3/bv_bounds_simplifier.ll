@@ -205,8 +205,8 @@ bb.a:
 
 tailrecurse:                                      ; preds = %bb.e, %bb.a
   %i.a = phi i64 [ %.pre, %bb.a ], [ %i.k, %bb.e ] ; 9 uses
-  %.tr = phi ptr [ %0, %bb.a ], [ %.tr61, %bb.e ] ; 16 uses
-  %.tr61 = phi ptr [ %1, %bb.a ], [ %.tr, %bb.e ] ; 14 uses
+  %.tr = phi ptr [ %0, %bb.a ], [ %.tr61, %bb.e ] ; 15 uses
+  %.tr61 = phi ptr [ %1, %bb.a ], [ %.tr, %bb.e ] ; 13 uses
   %i.b = icmp eq i64 %i.a, 0
   br i1 %i.b, label %_ZNK2bv12interval_tplImNS_14iinterval_baseEE7is_fullEv.exit, label %_ZNK2bv12interval_tplImNS_14iinterval_baseEE7is_fullEv.exit.thread
 
@@ -295,17 +295,14 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.al = icmp ult i64 %i.a, %i.k
-  %..i = select i1 %i.al, ptr %.tr61, ptr %.tr
-  %3 = icmp ult i64 %i.aj, %i.ag
-  %..i41.v = select i1 %3, ptr %.tr61, ptr %.tr
-  %..i41 = getelementptr inbounds nuw i8, ptr %..i41.v, i64 8
+  %..i41.v = select i1 %i.al, ptr %.tr61, ptr %.tr
   %i.am = getelementptr inbounds nuw i8, ptr %.tr, i64 16
   %i.an = load i32, ptr %i.am, align 8, !tbaa !147
-  %i.ao = load i64, ptr %..i, align 8, !tbaa !197
-  %4 = load i64, ptr %..i41, align 8, !tbaa !197
+  %i.ao = load i64, ptr %..i41.v, align 8, !tbaa !197
+  %3 = tail call i64 @llvm.umin.i64(i64 %i.aj, i64 %i.ag)
   store i64 %i.ao, ptr %2, align 8
   %.sroa.456.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %4, ptr %.sroa.456.0..sroa_idx, align 8
+  store i64 %3, ptr %.sroa.456.0..sroa_idx, align 8
   %.sroa.557.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 %i.an, ptr %.sroa.557.0..sroa_idx, align 8
   %.sroa.658.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20
@@ -369,7 +366,6 @@ bb.s:                                             ; preds = %bb.r
   %i.bb = getelementptr inbounds nuw i8, ptr %.tr, i64 20
   %i.bc = load i8, ptr %i.bb, align 4, !tbaa !117, !range !146, !noundef !84
   %i.bd = trunc nuw i8 %i.bc to i1
-  %5 = tail call i64 @llvm.umin.i64(i64 %i.aj, i64 %i.ag)
   br i1 %i.bd, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -380,9 +376,10 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t, %bb.s
   %i.bg = phi i8 [ 0, %bb.s ], [ %i.bf, %bb.t ]
   %i.bh = load i64, ptr %..i43, align 8, !tbaa !197
+  %4 = tail call i64 @llvm.umin.i64(i64 %i.aj, i64 %i.ag)
   store i64 %i.bh, ptr %2, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %5, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %4, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 %i.ba, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20

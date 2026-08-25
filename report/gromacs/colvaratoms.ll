@@ -205,9 +205,8 @@ vector.memcheck620:                               ; preds = %._crit_edge.i
 
 vector.ph644:                                     ; preds = %vector.memcheck620
   %n.vec645 = and i64 %i.uv, -2                   ; 3 uses
-  %29 = load double, ptr %i.wi, align 8, !tbaa !541, !alias.scope !544
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %29, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
+  %29 = load <2 x double>, ptr %i.wi, align 8
+  %broadcast.splat = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> zeroinitializer
   %i.xd = load double, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !542, !alias.scope !544
   %broadcast.splatinsert649 = insertelement <2 x double> poison, double %i.xd, i64 0
   %broadcast.splat650 = shufflevector <2 x double> %broadcast.splatinsert649, <2 x double> poison, <2 x i32> zeroinitializer

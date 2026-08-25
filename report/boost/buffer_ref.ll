@@ -205,8 +205,6 @@ bb.a:
   %3 = alloca %"struct.boost::source_location", align 8 ; 7 uses
   %4 = alloca %"class.std::length_error", align 8 ; 5 uses
   %5 = alloca %"struct.boost::source_location", align 8 ; 7 uses
-  %6 = alloca i64, align 8                        ; 4 uses
-  %7 = alloca i64, align 8                        ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !26   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -214,7 +212,7 @@ bb.a:
   %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.f = ptrtoint ptr %i.b to i64
   %i.g = sub i64 %i.e, %i.f                       ; 9 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.i = load i64, ptr %i.h, align 8, !tbaa !29   ; 3 uses
   %i.j = icmp ugt i64 %i.g, %i.i
   %i.k = sub nuw i64 %i.i, %i.g
@@ -293,21 +291,11 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.q
 
 bb.k:                                             ; preds = %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  %i.ae = shl i64 %i.g, 1                         ; 3 uses
-  store i64 %i.ae, ptr %6, align 8, !tbaa !13
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  %i.af = add i64 %i.g, %1                        ; 3 uses
-  store i64 %i.af, ptr %7, align 8, !tbaa !13
-  %8 = icmp ult i64 %i.ae, %i.af
-  %..i = select i1 %8, ptr %7, ptr %6
+  %i.ae = shl i64 %i.g, 1
+  %i.af = add i64 %i.g, %1
   %i.ag = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %i.af)
-  %9 = icmp ult i64 %i.ag, %i.i
-  %..i32 = select i1 %9, ptr %..i, ptr %i.h
-  %10 = load i64, ptr %..i32, align 8, !tbaa !13  ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  %i.ah = icmp slt i64 %10, 0
+  %6 = tail call i64 @llvm.umin.i64(i64 %i.ag, i64 %i.i) ; 3 uses
+  %i.ah = icmp slt i64 %6, 0
   br i1 %i.ah, label %bb.l, label %_ZN5boost5beast17basic_flat_bufferISaIcEE5allocEm.exit
 
 bb.l:                                             ; preds = %bb.k
@@ -336,7 +324,7 @@ bb.n:                                             ; preds = %bb.l
   br label %common.resume
 
 _ZN5boost5beast17basic_flat_bufferISaIcEE5allocEm.exit: ; preds = %bb.k
-  %i.am = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #34 ; 5 uses
+  %i.am = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %6) #34 ; 5 uses
   %i.an = load ptr, ptr %0, align 8, !tbaa !30    ; 3 uses
   %.not29 = icmp eq ptr %i.an, null
   br i1 %.not29, label %bb.p, label %bb.o
@@ -359,7 +347,7 @@ bb.p:                                             ; preds = %bb.o, %_ZN5boost5be
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 %1
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.au, ptr %i.av, align 8, !tbaa !37
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.am, i64 %10
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.am, i64 %6
   store ptr %i.aw, ptr %i.q, align 8, !tbaa !31
   br label %bb.q
 

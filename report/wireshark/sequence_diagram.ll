@@ -202,17 +202,19 @@ bb.cg:                                            ; preds = %bb.cf
   %.sroa.0419.0.extract.trunc. = select i1 %i.hb, i32 %i.hn, i32 %i.ku
   %..sroa.0419.0.extract.trunc = select i1 %i.hb, i32 %i.ku, i32 %i.hn
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #23
-  %. = select i1 %i.hb, ptr %i.kq, ptr %i.ks
-  %i.kv = load i16, ptr %., align 8
-  %i.kw = zext i16 %i.kv to i32
+  %.val = load i16, ptr %i.kq, align 8
+  %i.kv = load i16, ptr %i.ks, align 8
+  %34 = select i1 %i.hb, i16 %.val, i16 %i.kv
+  %i.kw = zext i16 %34 to i32
   invoke void @_ZN7QString6numberEii(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %32, i32 noundef %i.kw, i32 noundef 10)
           to label %bb.ch unwind label %bb.do
 
 bb.ch:                                            ; preds = %bb.cg
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #23
-  %.246 = select i1 %i.hb, ptr %i.ks, ptr %i.kq
-  %i.kx = load i16, ptr %.246, align 8
-  %i.ky = zext i16 %i.kx to i32
+  %.val504 = load i16, ptr %i.ks, align 8
+  %i.kx = load i16, ptr %i.kq, align 8
+  %35 = select i1 %i.hb, i16 %.val504, i16 %i.kx
+  %i.ky = zext i16 %35 to i32
   invoke void @_ZN7QString6numberEii(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %33, i32 noundef %i.ky, i32 noundef 10)
           to label %bb.ci unwind label %bb.dp
 

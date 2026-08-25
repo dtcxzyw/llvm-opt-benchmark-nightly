@@ -204,18 +204,18 @@ bb.ab:                                            ; preds = %bb.ah
 .cont:                                            ; preds = %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPSt6threadSt6vectorIS2_SaIS2_EEEEZZN8ultrahdr5JpegR15generateGainMapEP14uhdr_raw_imageSB_PNS8_25uhdr_gainmap_metadata_extERSt10unique_ptrINS8_18uhdr_raw_image_extESt14default_deleteISF_EEbbENK3$_1clEvEUlRS2_E_ET0_T_SO_SN_.exit", %bb.ah
   %indvars.iv = phi i64 [ 0, %"_ZSt8for_eachIN9__gnu_cxx17__normal_iteratorIPSt6threadSt6vectorIS2_SaIS2_EEEEZZN8ultrahdr5JpegR15generateGainMapEP14uhdr_raw_imageSB_PNS8_25uhdr_gainmap_metadata_extERSt10unique_ptrINS8_18uhdr_raw_image_extESt14default_deleteISF_EEbbENK3$_1clEvEUlRS2_E_ET0_T_SO_SN_.exit" ], [ %indvars.iv.next, %bb.ah ] ; 4 uses
   %i.ec = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv ; 3 uses
-  %i.ed = load float, ptr %i.ec, align 4, !tbaa !236 ; 3 uses
+  %i.ed = load float, ptr %i.ec, align 4, !tbaa !236 ; 2 uses
   %i.ee = fcmp contract olt float %i.ed, -1.430000e+01
-  %11 = fcmp contract ogt float %i.ed, 1.560000e+01
-  %.mux = select i1 %i.ee, float -1.430000e+01, float %i.ed
-  %i.ef = select i1 %11, float 1.560000e+01, float %.mux ; 4 uses
+  %11 = select i1 %i.ee, float -1.430000e+01, float %i.ed ; 2 uses
+  %12 = fcmp contract ogt float %11, 1.560000e+01
+  %i.ef = select i1 %12, float 1.560000e+01, float %11 ; 4 uses
   store float %i.ef, ptr %i.ec, align 4, !tbaa !236
   %i.eg = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv ; 4 uses
-  %i.eh = load float, ptr %i.eg, align 4, !tbaa !236 ; 3 uses
+  %i.eh = load float, ptr %i.eg, align 4, !tbaa !236 ; 2 uses
   %i.ei = fcmp contract olt float %i.eh, -1.430000e+01
-  %12 = fcmp contract ogt float %i.eh, 1.560000e+01
-  %.mux230 = select i1 %i.ei, float -1.430000e+01, float %i.eh
-  %i.ej = select i1 %12, float 1.560000e+01, float %.mux230 ; 4 uses
+  %13 = select i1 %i.ei, float -1.430000e+01, float %i.eh ; 2 uses
+  %14 = fcmp contract ogt float %13, 1.560000e+01
+  %i.ej = select i1 %14, float 1.560000e+01, float %13 ; 4 uses
   store float %i.ej, ptr %i.eg, align 4, !tbaa !236
   br i1 %i.dw, label %bb.ac, label %bb.ad
 

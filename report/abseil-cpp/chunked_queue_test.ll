@@ -205,12 +205,12 @@ bb.d:                                             ; preds = %._crit_edge
   br i1 %or.cond4, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
-  %i.ab = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8 ; 2 uses
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !26 ; 5 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !26 ; 6 uses
   %i.ad = load ptr, ptr %.0.lcssa, align 8, !tbaa !22 ; 2 uses
   %.not.i.i21 = icmp eq ptr %i.ad, null           ; 2 uses
-  %.in.i.i = select i1 %.not.i.i21, ptr %.sroa.348.0..sroa_idx, ptr %i.ab
-  %3 = load ptr, ptr %.in.i.i, align 8, !tbaa !226
+  %.val = load ptr, ptr %.sroa.348.0..sroa_idx, align 8
+  %3 = select i1 %.not.i.i21, ptr %.val, ptr %i.ac
   %i.ae = ptrtoint ptr %3 to i64
   %i.af = ptrtoint ptr %i.ac to i64
   %i.ag = sub i64 %i.ae, %i.af
@@ -613,12 +613,12 @@ bb.d:                                             ; preds = %.critedge
   br i1 %or.cond4, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
-  %i.z = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8 ; 2 uses
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !26  ; 5 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !26  ; 6 uses
   %i.ab = load ptr, ptr %.0.lcssa, align 8, !tbaa !22 ; 2 uses
   %.not.i.i11 = icmp eq ptr %i.ab, null           ; 2 uses
-  %.in.i.i = select i1 %.not.i.i11, ptr %.sroa.438.0..sroa_idx, ptr %i.z
-  %3 = load ptr, ptr %.in.i.i, align 8, !tbaa !226
+  %.val = load ptr, ptr %.sroa.438.0..sroa_idx, align 8
+  %3 = select i1 %.not.i.i11, ptr %.val, ptr %i.aa
   %i.ac = ptrtoint ptr %3 to i64
   %i.ad = ptrtoint ptr %i.aa to i64
   %i.ae = sub i64 %i.ac, %i.ad
@@ -1021,12 +1021,12 @@ bb.d:                                             ; preds = %.critedge
   br i1 %or.cond4, label %bb.e, label %.thread
 
 bb.e:                                             ; preds = %bb.d
-  %i.z = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8 ; 2 uses
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !970 ; 5 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.0.lcssa, i64 8
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !970 ; 6 uses
   %i.ab = load ptr, ptr %.0.lcssa, align 8, !tbaa !974 ; 2 uses
   %.not.i.i11 = icmp eq ptr %i.ab, null           ; 2 uses
-  %.in.i.i = select i1 %.not.i.i11, ptr %.sroa.438.0..sroa_idx, ptr %i.z
-  %3 = load ptr, ptr %.in.i.i, align 8, !tbaa !1005
+  %.val = load ptr, ptr %.sroa.438.0..sroa_idx, align 8
+  %3 = select i1 %.not.i.i11, ptr %.val, ptr %i.aa
   %i.ac = ptrtoint ptr %3 to i64
   %i.ad = ptrtoint ptr %i.aa to i64
   %i.ae = sub i64 %i.ac, %i.ad

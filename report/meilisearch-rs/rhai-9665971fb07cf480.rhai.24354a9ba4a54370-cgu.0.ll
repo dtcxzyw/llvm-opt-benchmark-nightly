@@ -205,9 +205,10 @@ bb.fe:                                            ; preds = %bb.fd
 bb.ff:                                            ; preds = %bb.fd
   %i.sb = load i8, ptr %i.rr, align 8, !range !12413, !noundef !3
   %.not602 = icmp eq i8 %i.sb, 2
-  %.sroa.0478.0 = select i1 %.not602, ptr %i.rt, ptr %i.rq
-  %i.sc = load i64, ptr %.sroa.0478.0, align 8, !noundef !3
-  %i.sd = invoke fastcc noundef align 8 dereferenceable(32) ptr @"_ZN83_$LT$smallvec..SmallVec$LT$A$GT$$u20$as$u20$core..ops..index..IndexMut$LT$I$GT$$GT$9index_mut17h667a0cf67f5f0d5bE"(ptr noalias noundef align 8 dereferenceable(168) %i.lq, i64 noundef %i.sc, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2219)
+  %.val1083 = load i64, ptr %i.rt, align 8
+  %i.sc = load i64, ptr %i.rq, align 8
+  %3 = select i1 %.not602, i64 %.val1083, i64 %i.sc
+  %i.sd = invoke fastcc noundef align 8 dereferenceable(32) ptr @"_ZN83_$LT$smallvec..SmallVec$LT$A$GT$$u20$as$u20$core..ops..index..IndexMut$LT$I$GT$$GT$9index_mut17h667a0cf67f5f0d5bE"(ptr noalias noundef align 8 dereferenceable(168) %i.lq, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2219)
           to label %bb.fx unwind label %.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 bb.fg:                                            ; preds = %bb.fh, %bb.fe

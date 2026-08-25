@@ -204,15 +204,15 @@ bb.a:
   %spec.select.i.i.i.i.i11 = select i1 %i.aa, i64 %i.ab, i64 %i.z
   %i.ac = icmp slt i64 %spec.select.i.i.i.i.i11, 0 ; 2 uses
   %spec.select.i.i.i.i.i.lobit = lshr i64 %spec.select.i.i.i.i.i, 63
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %spec.select.i.i.i.i.i.lobit ; 2 uses
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %spec.select.i.i.i.i.i.lobit ; 3 uses
   %i.ae = zext i1 %i.n to i64
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ae ; 4 uses
   %i.ag = select i1 %i.ac, i64 3, i64 2
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ag ; 3 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ag ; 4 uses
   %i.ai = select i1 %i.ac, i64 2, i64 3
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ai ; 3 uses
-  %.val4 = load ptr, ptr %i.ah, align 8, !nonnull !11, !align !45, !noundef !11 ; 3 uses
-  %.val5 = load ptr, ptr %i.ad, align 8, !nonnull !11, !align !45, !noundef !11 ; 3 uses
+  %.val4 = load ptr, ptr %i.ah, align 8, !nonnull !11, !align !45, !noundef !11 ; 2 uses
+  %.val5 = load ptr, ptr %i.ad, align 8, !nonnull !11, !align !45, !noundef !11 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.val4, i64 24
   %i.al = load ptr, ptr %i.ak, align 8, !nonnull !11, !noundef !11
   %i.am = getelementptr inbounds nuw i8, ptr %.val4, i64 32
@@ -245,6 +245,7 @@ bb.a:
   %i.bi = sub i64 %i.ba, %i.be
   %spec.select.i.i.i.i.i15 = select i1 %i.bh, i64 %i.bi, i64 %i.bg
   %i.bj = icmp slt i64 %spec.select.i.i.i.i.i15, 0 ; 3 uses
+  %2 = select i1 %i.aw, ptr %i.ah, ptr %i.ad, !unpredictable !11
   %i.bk = select i1 %i.bj, ptr %i.ah, ptr %i.af, !unpredictable !11
   %i.bl = select i1 %i.aw, ptr %i.ad, ptr %i.bk, !unpredictable !11 ; 3 uses
   %i.bm = select i1 %i.aw, ptr %i.af, ptr %i.ah, !unpredictable !11
@@ -266,9 +267,8 @@ bb.a:
   %i.bz = sub i64 %i.br, %i.bv
   %spec.select.i.i.i.i.i17 = select i1 %i.by, i64 %i.bz, i64 %i.bx
   %i.ca = icmp slt i64 %spec.select.i.i.i.i.i17, 0 ; 2 uses
-  %.v = select i1 %i.aw, ptr %.val4, ptr %.val5, !unpredictable !11
-  %2 = ptrtoint ptr %.v to i64
-  store i64 %2, ptr %1, align 8
+  %3 = load i64, ptr %2, align 8
+  store i64 %3, ptr %1, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val12.a = load i64, ptr %i.bn, align 8
   %.val13.a = load i64, ptr %i.bl, align 8
@@ -328,15 +328,15 @@ bb.a:
   %spec.select.i.i.i.i.i11 = select i1 %i.aa, i64 %i.ab, i64 %i.z
   %i.ac = icmp slt i64 %spec.select.i.i.i.i.i11, 0 ; 2 uses
   %spec.select.i.i.i.i.i.lobit = lshr i64 %spec.select.i.i.i.i.i, 63
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %spec.select.i.i.i.i.i.lobit ; 2 uses
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %spec.select.i.i.i.i.i.lobit ; 3 uses
   %i.ae = zext i1 %i.n to i64
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ae ; 4 uses
   %i.ag = select i1 %i.ac, i64 3, i64 2
-  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ag ; 3 uses
+  %i.ah = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ag ; 4 uses
   %i.ai = select i1 %i.ac, i64 2, i64 3
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ai ; 3 uses
-  %.val4 = load ptr, ptr %i.ah, align 8, !nonnull !11, !align !45, !noundef !11 ; 3 uses
-  %.val5 = load ptr, ptr %i.ad, align 8, !nonnull !11, !align !45, !noundef !11 ; 3 uses
+  %.val4 = load ptr, ptr %i.ah, align 8, !nonnull !11, !align !45, !noundef !11 ; 2 uses
+  %.val5 = load ptr, ptr %i.ad, align 8, !nonnull !11, !align !45, !noundef !11 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.val4, i64 24
   %i.al = load ptr, ptr %i.ak, align 8, !nonnull !11, !noundef !11
   %i.am = getelementptr inbounds nuw i8, ptr %.val4, i64 32
@@ -369,6 +369,7 @@ bb.a:
   %i.bi = sub i64 %i.ba, %i.be
   %spec.select.i.i.i.i.i15 = select i1 %i.bh, i64 %i.bi, i64 %i.bg
   %i.bj = icmp slt i64 %spec.select.i.i.i.i.i15, 0 ; 3 uses
+  %2 = select i1 %i.aw, ptr %i.ah, ptr %i.ad, !unpredictable !11
   %i.bk = select i1 %i.bj, ptr %i.ah, ptr %i.af, !unpredictable !11
   %i.bl = select i1 %i.aw, ptr %i.ad, ptr %i.bk, !unpredictable !11 ; 3 uses
   %i.bm = select i1 %i.aw, ptr %i.af, ptr %i.ah, !unpredictable !11
@@ -390,9 +391,8 @@ bb.a:
   %i.bz = sub i64 %i.br, %i.bv
   %spec.select.i.i.i.i.i17 = select i1 %i.by, i64 %i.bz, i64 %i.bx
   %i.ca = icmp slt i64 %spec.select.i.i.i.i.i17, 0 ; 2 uses
-  %.v = select i1 %i.aw, ptr %.val4, ptr %.val5, !unpredictable !11
-  %2 = ptrtoint ptr %.v to i64
-  store i64 %2, ptr %1, align 8
+  %3 = load i64, ptr %2, align 8
+  store i64 %3, ptr %1, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val12.a = load i64, ptr %i.bn, align 8
   %.val13.a = load i64, ptr %i.bl, align 8

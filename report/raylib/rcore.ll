@@ -205,6 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 60
@@ -291,8 +292,7 @@ bb.a:
   %i.bi = load <2 x float>, ptr %i.f, align 4     ; 2 uses
   %i.bj = load float, ptr %i.i, align 4
   %i.bk = load <2 x float>, ptr %i.e, align 4     ; 2 uses
-  %1 = load <4 x float>, ptr %0, align 4
-  %2 = shufflevector <4 x float> %1, <4 x float> poison, <4 x i32> <i32 3, i32 poison, i32 poison, i32 poison>
+  %2 = load float, ptr %1, align 4
   %i.bl = shufflevector <2 x float> %i.bk, <2 x float> %i.bi, <4 x i32> <i32 1, i32 3, i32 poison, i32 poison>
   %i.bm = shufflevector <2 x float> %i.bf, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.bn = shufflevector <4 x float> %i.bl, <4 x float> %i.bm, <4 x i32> <i32 0, i32 1, i32 5, i32 poison>
@@ -330,7 +330,8 @@ bb.a:
   %i.cq = insertelement <4 x float> poison, float %.sroa.1771.0.copyload, i64 0
   %i.cr = shufflevector <4 x float> %i.cq, <4 x float> poison, <4 x i32> zeroinitializer
   %i.cs = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cp, <4 x float> %i.cr, <4 x float> %i.cn)
-  %i.ct = insertelement <4 x float> %2, float %i.bj, i64 1
+  %3 = insertelement <4 x float> poison, float %2, i64 0
+  %i.ct = insertelement <4 x float> %3, float %i.bj, i64 1
   %i.cu = insertelement <4 x float> %i.ct, float %i.bh, i64 2
   %i.cv = insertelement <4 x float> %i.cu, float %i.be, i64 3
   %i.cw = insertelement <4 x float> poison, float %.sroa.1872.0.copyload, i64 0

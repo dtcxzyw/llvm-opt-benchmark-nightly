@@ -204,28 +204,24 @@ _ZN3sls15arith_lookaheadI13checked_int64ILb1EEE10ucb_forgetEv.exit: ; preds = %b
 
 bb.e:                                             ; preds = %_ZN3sls15arith_lookaheadI13checked_int64ILb1EEE10ucb_forgetEv.exit, %bb.a
   %i.am = phi i32 [ %.pre1, %_ZN3sls15arith_lookaheadI13checked_int64ILb1EEE10ucb_forgetEv.exit ], [ %i.d, %bb.a ] ; 2 uses
-  %i.an = phi ptr [ %.pre, %_ZN3sls15arith_lookaheadI13checked_int64ILb1EEE10ucb_forgetEv.exit ], [ %i.b, %bb.a ] ; 4 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 148 ; 3 uses
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !315 ; 2 uses
+  %i.an = phi ptr [ %.pre, %_ZN3sls15arith_lookaheadI13checked_int64ILb1EEE10ucb_forgetEv.exit ], [ %i.b, %bb.a ] ; 3 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 148 ; 2 uses
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !315
   %i.aq = icmp ult i32 %i.am, %i.ap
   br i1 %i.aq, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %i.an, i64 28
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 32 ; 2 uses
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !316 ; 2 uses
   %i.at = add i32 %i.as, 1                        ; 2 uses
   store i32 %i.at, ptr %i.ar, align 4, !tbaa !316
-  %2 = icmp ult i32 %i.ap, %i.am
-  %..i = select i1 %2, ptr %1, ptr %i.ao
-  %3 = load i32, ptr %..i, align 4, !tbaa !49
   %i.au = and i32 %i.as, 1
   %.not.not = icmp eq i32 %i.au, 0
   %i.av = getelementptr inbounds nuw i8, ptr %i.an, i64 144
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !313
   %i.ax = select i1 %.not.not, i32 1, i32 %i.at
   %.pn = mul i32 %i.aw, %i.ax
-  %storemerge = add i32 %.pn, %3
+  %storemerge = add i32 %.pn, %i.am
   store i32 %storemerge, ptr %i.ao, align 4, !tbaa !315
   tail call void @_ZN3sls15arith_lookaheadI13checked_int64ILb1EEE7rescoreEv(ptr noundef nonnull align 8 dereferenceable(196) %0)
   br label %bb.g
@@ -628,28 +624,24 @@ _ZN3sls15arith_lookaheadI8rationalE10ucb_forgetEv.exit: ; preds = %bb.d, %bb.b, 
 
 bb.e:                                             ; preds = %_ZN3sls15arith_lookaheadI8rationalE10ucb_forgetEv.exit, %bb.a
   %i.am = phi i32 [ %.pre1, %_ZN3sls15arith_lookaheadI8rationalE10ucb_forgetEv.exit ], [ %i.d, %bb.a ] ; 2 uses
-  %i.an = phi ptr [ %.pre, %_ZN3sls15arith_lookaheadI8rationalE10ucb_forgetEv.exit ], [ %i.b, %bb.a ] ; 4 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 148 ; 3 uses
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !464 ; 2 uses
+  %i.an = phi ptr [ %.pre, %_ZN3sls15arith_lookaheadI8rationalE10ucb_forgetEv.exit ], [ %i.b, %bb.a ] ; 3 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 148 ; 2 uses
+  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !464
   %i.aq = icmp ult i32 %i.am, %i.ap
   br i1 %i.aq, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %i.an, i64 28
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 32 ; 2 uses
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !465 ; 2 uses
   %i.at = add i32 %i.as, 1                        ; 2 uses
   store i32 %i.at, ptr %i.ar, align 4, !tbaa !465
-  %2 = icmp ult i32 %i.ap, %i.am
-  %..i = select i1 %2, ptr %1, ptr %i.ao
-  %3 = load i32, ptr %..i, align 4, !tbaa !49
   %i.au = and i32 %i.as, 1
   %.not.not = icmp eq i32 %i.au, 0
   %i.av = getelementptr inbounds nuw i8, ptr %i.an, i64 144
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !462
   %i.ax = select i1 %.not.not, i32 1, i32 %i.at
   %.pn = mul i32 %i.aw, %i.ax
-  %storemerge = add i32 %.pn, %3
+  %storemerge = add i32 %.pn, %i.am
   store i32 %storemerge, ptr %i.ao, align 4, !tbaa !464
   tail call void @_ZN3sls15arith_lookaheadI8rationalE7rescoreEv(ptr noundef nonnull align 8 dereferenceable(220) %0)
   br label %bb.g

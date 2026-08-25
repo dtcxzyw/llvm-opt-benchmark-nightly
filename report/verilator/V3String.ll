@@ -205,18 +205,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 8 uses
   store ptr %i.f, ptr %2, align 8, !tbaa !29
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 12 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 11 uses
   store i64 0, ptr %i.g, align 8, !tbaa !28
   store i8 0, ptr %i.f, align 8, !tbaa !16
-  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 5 uses
   %i.i = load i64, ptr %i.h, align 8, !tbaa !28
   %.not177 = icmp eq i64 %i.i, 0
-  br i1 %.not177, label %.thread, label %.lr.ph
-
-.thread:                                          ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store ptr %7, ptr %0, align 8, !tbaa !29
-  br label %.sink.split
+  br i1 %.not177, label %.sink.split, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 7 uses
@@ -229,25 +224,23 @@ bb.a:
   %i.q = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   br label %bb.d
 
-._crit_edge.a:                                    ; preds = %bb.ar, %bb.av
+._crit_edge.a:                                    ; preds = %bb.av, %.thread
+  %7 = phi i64 [ %12, %.thread ], [ %i.fp, %bb.av ]
   %.pre = load i64, ptr %i.g, align 8, !tbaa !28
-  %.pre.fr = freeze i64 %.pre
-  %8 = icmp eq i64 %.pre.fr, 0                    ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store ptr %9, ptr %0, align 8, !tbaa !29
-  %spec.select = select i1 %8, ptr %1, ptr %2
-  %spec.select220 = select i1 %8, ptr %i.h, ptr %i.g
   br label %.sink.split
 
-.sink.split:                                      ; preds = %._crit_edge.a, %.thread
-  %.in = phi ptr [ %spec.select, %._crit_edge.a ], [ %1, %.thread ]
-  %10 = phi ptr [ %9, %._crit_edge.a ], [ %7, %.thread ] ; 2 uses
-  %11 = phi ptr [ %spec.select220, %._crit_edge.a ], [ %i.h, %.thread ]
-  %i.r = load ptr, ptr %.in, align 8, !tbaa !24   ; 2 uses
-  %12 = load i64, ptr %11, align 8, !tbaa !28     ; 4 uses
+.sink.split:                                      ; preds = %._crit_edge.a, %bb.a
+  %.val = phi i64 [ %7, %._crit_edge.a ], [ 0, %bb.a ]
+  %.val114 = phi i64 [ %.pre, %._crit_edge.a ], [ 0, %bb.a ] ; 2 uses
+  %8 = icmp eq i64 %.val114, 0                    ; 2 uses
+  %9 = select i1 %8, ptr %1, ptr %2
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  store ptr %10, ptr %0, align 8, !tbaa !29
+  %i.r = load ptr, ptr %9, align 8, !tbaa !24     ; 2 uses
+  %11 = select i1 %8, i64 %.val, i64 %.val114     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #33
-  store i64 %12, ptr %i.e, align 8, !tbaa !30
-  %i.s = icmp ugt i64 %12, 15
+  store i64 %11, ptr %i.e, align 8, !tbaa !30
+  %i.s = icmp ugt i64 %11, 15
   br i1 %i.s, label %.noexc.i, label %._crit_edge.i.i
 
 .noexc.i:                                         ; preds = %.sink.split
@@ -262,7 +255,7 @@ bb.a:
 
 ._crit_edge.i.i:                                  ; preds = %.noexc, %.sink.split
   %i.v = phi ptr [ %i.t, %.noexc ], [ %10, %.sink.split ] ; 2 uses
-  switch i64 %12, label %bb.c [
+  switch i64 %11, label %bb.c [
     i64 1, label %bb.b
     i64 0, label %bb.aw
   ]
@@ -273,7 +266,7 @@ bb.b:                                             ; preds = %._crit_edge.i.i
   br label %bb.aw
 
 bb.c:                                             ; preds = %._crit_edge.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.v, ptr align 1 %i.r, i64 %12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.v, ptr align 1 %i.r, i64 %11, i1 false)
   br label %bb.aw
 
 bb.d:                                             ; preds = %.lr.ph, %bb.av
@@ -676,7 +669,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit92: ; preds = %bb.
   br label %bb.ay
 
 bb.ar:                                            ; preds = %bb.aj, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit89, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit72
-  br i1 %i.aa, label %._crit_edge.a, label %bb.as
+  br i1 %i.aa, label %.thread, label %bb.as
+
+.thread:                                          ; preds = %bb.ar
+  %12 = load i64, ptr %i.h, align 8, !tbaa !28
+  br label %._crit_edge.a
 
 bb.as:                                            ; preds = %bb.ar
   %i.fj = load i64, ptr %i.g, align 8, !tbaa !28  ; 2 uses
@@ -701,7 +698,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds
 
 bb.av:                                            ; preds = %bb.as, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i
   %i.fo = add i64 %i.x, 7                         ; 2 uses
-  %i.fp = load i64, ptr %i.h, align 8, !tbaa !28
+  %i.fp = load i64, ptr %i.h, align 8, !tbaa !28  ; 2 uses
   %i.fq = icmp ult i64 %i.fo, %i.fp
   br i1 %i.fq, label %bb.d, label %._crit_edge.a, !llvm.loop !111
 

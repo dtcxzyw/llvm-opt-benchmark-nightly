@@ -205,10 +205,10 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #13
 declare i32 @llvm.umax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #13
+declare i32 @llvm.smin.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #13
+declare i32 @llvm.smax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22

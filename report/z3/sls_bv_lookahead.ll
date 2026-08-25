@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
           to label %bb.d unwind label %.loopexit.split-lp38
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 7 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 6 uses
   %i.l = load i32, ptr %i.k, align 4, !tbaa !95
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 100 ; 3 uses
   %i.n = load i32, ptr %i.m, align 4, !tbaa !96
@@ -301,7 +301,7 @@ _ZNSolsEj.exit17:                                 ; preds = %_ZStlsISt11char_tra
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit18: ; preds = %_ZNSolsEj.exit17, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit13, %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 76
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
@@ -357,7 +357,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %.noexc19, %bb.o
   %i.bl = phi i32 [ %.pre.i, %.noexc19 ], [ %i.bh, %bb.o ] ; 2 uses
-  %i.bm = load i32, ptr %i.an, align 4, !tbaa !128 ; 2 uses
+  %i.bm = load i32, ptr %i.an, align 4, !tbaa !128
   %i.bn = icmp ult i32 %i.bl, %i.bm
   br i1 %i.bn, label %_ZN3sls12bv_lookahead13check_restartEv.exit, label %bb.r
 
@@ -365,15 +365,12 @@ bb.r:                                             ; preds = %bb.q
   %i.bo = load i32, ptr %i.ao, align 8, !tbaa !129 ; 2 uses
   %i.bp = add i32 %i.bo, 1                        ; 2 uses
   store i32 %i.bp, ptr %i.ao, align 8, !tbaa !129
-  %1 = icmp ult i32 %i.bm, %i.bl
-  %..i.i = select i1 %1, ptr %i.k, ptr %i.an
-  %2 = load i32, ptr %..i.i, align 4, !tbaa !74
   %i.bq = and i32 %i.bo, 1
   %.not.not.i = icmp eq i32 %i.bq, 0
   %i.br = load i32, ptr %i.am, align 8, !tbaa !127
   %i.bs = select i1 %.not.not.i, i32 1, i32 %i.bp
-  %.pn.i = mul i32 %i.br, %i.bs
-  %storemerge.i = add i32 %.pn.i, %2
+  %.pn.i = mul i32 %i.bs, %i.br
+  %storemerge.i = add i32 %.pn.i, %i.bl
   store i32 %storemerge.i, ptr %i.an, align 4, !tbaa !128
   invoke void @_ZN3sls12bv_lookahead32reset_uninterp_in_false_literalsEv(ptr noundef nonnull align 8 dereferenceable(400) %0)
           to label %.noexc20 unwind label %.loopexit37
@@ -776,7 +773,7 @@ declare noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 deref
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN3sls12bv_lookahead13check_restartEv(ptr noundef nonnull align 8 dereferenceable(400) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !95   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !127
@@ -792,8 +789,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.g = phi i32 [ %.pre, %bb.b ], [ %i.b, %bb.a ] ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 3 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !128  ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !128
   %i.j = icmp ult i32 %i.g, %i.i
   br i1 %i.j, label %bb.e, label %bb.d
 
@@ -802,15 +799,12 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load i32, ptr %i.k, align 8, !tbaa !129  ; 2 uses
   %i.m = add i32 %i.l, 1                          ; 2 uses
   store i32 %i.m, ptr %i.k, align 8, !tbaa !129
-  %1 = icmp ult i32 %i.i, %i.g
-  %..i = select i1 %1, ptr %i.a, ptr %i.h
-  %2 = load i32, ptr %..i, align 4, !tbaa !74
   %i.n = and i32 %i.l, 1
   %.not.not = icmp eq i32 %i.n, 0
   %i.o = load i32, ptr %i.c, align 8, !tbaa !127
   %i.p = select i1 %.not.not, i32 1, i32 %i.m
   %.pn = mul i32 %i.o, %i.p
-  %storemerge = add i32 %.pn, %2
+  %storemerge = add i32 %.pn, %i.g
   store i32 %storemerge, ptr %i.h, align 4, !tbaa !128
   tail call void @_ZN3sls12bv_lookahead32reset_uninterp_in_false_literalsEv(ptr noundef nonnull align 8 dereferenceable(400) %0)
   tail call void @_ZN3sls12bv_lookahead7rescoreEv(ptr noundef nonnull align 8 dereferenceable(400) %0)

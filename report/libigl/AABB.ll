@@ -205,9 +205,10 @@ bb.s:                                             ; preds = %bb.r
 .invoke:                                          ; preds = %bb.s
   %i.fo = fsub double %i.fk, %i.fn
   %i.fp = fcmp olt double %i.fj, %i.fo
-  %. = select i1 %i.fp, ptr %0, ptr %i.d
-  %i.fq = load ptr, ptr %., align 8, !tbaa !50
-  %i.fr = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EE6insertEPS4_(ptr noundef nonnull align 8 dereferenceable(76) %i.fq, ptr noundef nonnull %1)
+  %.val = load ptr, ptr %0, align 8
+  %i.fq = load ptr, ptr %i.d, align 8
+  %4 = select i1 %i.fp, ptr %.val, ptr %i.fq
+  %i.fr = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi3EE6insertEPS4_(ptr noundef nonnull align 8 dereferenceable(76) %4, ptr noundef nonnull %1)
           to label %bb.t unwind label %bb.v
 
 bb.t:                                             ; preds = %.invoke
@@ -610,9 +611,10 @@ bb.s:                                             ; preds = %bb.r
 .invoke:                                          ; preds = %bb.s
   %i.fo = fsub double %i.fk, %i.fn
   %i.fp = fcmp olt double %i.fj, %i.fo
-  %. = select i1 %i.fp, ptr %0, ptr %i.d
-  %i.fq = load ptr, ptr %., align 8, !tbaa !95
-  %i.fr = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EE6insertEPS4_(ptr noundef nonnull align 8 dereferenceable(76) %i.fq, ptr noundef nonnull %1)
+  %.val = load ptr, ptr %0, align 8
+  %i.fq = load ptr, ptr %i.d, align 8
+  %4 = select i1 %i.fp, ptr %.val, ptr %i.fq
+  %i.fr = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEELi3EE6insertEPS4_(ptr noundef nonnull align 8 dereferenceable(76) %4, ptr noundef nonnull %1)
           to label %bb.t unwind label %bb.v
 
 bb.t:                                             ; preds = %.invoke
@@ -1015,9 +1017,10 @@ bb.s:                                             ; preds = %bb.r
 .invoke:                                          ; preds = %bb.s
   %i.fo = fsub double %i.fk, %i.fn
   %i.fp = fcmp olt double %i.fj, %i.fo
-  %. = select i1 %i.fp, ptr %0, ptr %i.d
-  %i.fq = load ptr, ptr %., align 8, !tbaa !125
-  %i.fr = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EE6insertEPS4_(ptr noundef nonnull align 8 dereferenceable(76) %i.fq, ptr noundef nonnull %1)
+  %.val = load ptr, ptr %0, align 8
+  %i.fq = load ptr, ptr %i.d, align 8
+  %4 = select i1 %i.fp, ptr %.val, ptr %i.fq
+  %i.fr = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELi3ELi1ELin1ELi3EEELi3EE6insertEPS4_(ptr noundef nonnull align 8 dereferenceable(76) %4, ptr noundef nonnull %1)
           to label %bb.t unwind label %bb.v
 
 bb.t:                                             ; preds = %.invoke
@@ -1420,9 +1423,10 @@ bb.s:                                             ; preds = %bb.r
 .invoke:                                          ; preds = %bb.s
   %i.da = fsub double %i.cw, %i.cz
   %i.db = fcmp olt double %i.cv, %i.da
-  %. = select i1 %i.db, ptr %0, ptr %i.d
-  %i.dc = load ptr, ptr %., align 8, !tbaa !161
-  %i.dd = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EE6insertEPS4_(ptr noundef nonnull align 16 dereferenceable(68) %i.dc, ptr noundef nonnull %1)
+  %.val = load ptr, ptr %0, align 16
+  %i.dc = load ptr, ptr %i.d, align 8
+  %4 = select i1 %i.db, ptr %.val, ptr %i.dc
+  %i.dd = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi2EE6insertEPS4_(ptr noundef nonnull align 16 dereferenceable(68) %4, ptr noundef nonnull %1)
           to label %bb.t unwind label %bb.v
 
 bb.t:                                             ; preds = %.invoke
@@ -1825,9 +1829,10 @@ bb.s:                                             ; preds = %bb.r
 .invoke:                                          ; preds = %bb.s
   %i.da = fsub double %i.cw, %i.cz
   %i.db = fcmp olt double %i.cv, %i.da
-  %. = select i1 %i.db, ptr %0, ptr %i.d
-  %i.dc = load ptr, ptr %., align 8, !tbaa !184
-  %i.dd = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EE6insertEPS4_(ptr noundef nonnull align 16 dereferenceable(68) %i.dc, ptr noundef nonnull %1)
+  %.val = load ptr, ptr %0, align 16
+  %i.dc = load ptr, ptr %i.d, align 8
+  %4 = select i1 %i.db, ptr %.val, ptr %i.dc
+  %i.dd = invoke noundef ptr @_ZN3igl4AABBIN5Eigen6MatrixIdLin1ELi2ELi0ELin1ELi2EEELi2EE6insertEPS4_(ptr noundef nonnull align 16 dereferenceable(68) %4, ptr noundef nonnull %1)
           to label %bb.t unwind label %bb.v
 
 bb.t:                                             ; preds = %.invoke

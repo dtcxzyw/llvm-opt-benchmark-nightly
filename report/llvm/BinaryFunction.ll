@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.loopexit, %bb.o, %
 define dso_local void @_ZNK4llvm4bolt14BinaryFunction27translateInputToOutputRangeENS0_17DebugAddressRangeE(ptr dead_on_unwind noalias writable sret(%"class.llvm::SmallVector.1263") align 8 %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1360) %1, i64 %2, i64 %3) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
-  %i.b = alloca i64, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr %i.c, ptr %0, align 8, !tbaa !21
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -363,16 +363,14 @@ bb.o:                                             ; preds = %bb.n
   %i.bu = load ptr, ptr %0, align 8, !tbaa !21
   %i.bv = zext i32 %i.bt to i64
   %i.bw = getelementptr inbounds nuw [16 x i8], ptr %i.bu, i64 %i.bv
-  %i.bx = getelementptr inbounds i8, ptr %i.bw, i64 -8 ; 3 uses
+  %i.bx = getelementptr inbounds i8, ptr %i.bw, i64 -8 ; 2 uses
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !2349
   %i.bz = icmp eq i64 %i.by, %i.bg
   br i1 %i.bz, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %4 = icmp samesign ult i64 %i.bg, %i.bs
-  %..i44 = select i1 %4, ptr %i.b, ptr %i.bx
-  %5 = load i64, ptr %..i44, align 8, !tbaa !408
-  store i64 %5, ptr %i.bx, align 8, !tbaa !2349
+  %4 = call i64 @llvm.umax.i64(i64 %i.bg, i64 %i.bs)
+  store i64 %4, ptr %i.bx, align 8, !tbaa !2349
   br label %_ZN4llvm15SmallVectorImplINS_4bolt17DebugAddressRangeEE12emplace_backIJRmRKmEEERS2_DpOT_.exit
 
 bb.q:                                             ; preds = %bb.o, %bb.n

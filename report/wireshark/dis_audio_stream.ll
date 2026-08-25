@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.w = getelementptr i8, ptr %0, i64 80
-  %i.x = load double, ptr %i.w, align 8           ; 4 uses
+  %i.x = load double, ptr %i.w, align 8           ; 3 uses
   %i.y = fcmp ogt double %i.x, 0.000000e+00
   br i1 %i.y, label %.then.cont, label %.thread150
 
@@ -226,12 +226,11 @@ bb.f:                                             ; preds = %bb.e
   %i.aj = extractelement <2 x double> %i.ai, i64 0
   %i.ak = fadd double %i.aj, %i.ab                ; 3 uses
   %i.al = extractelement <2 x double> %i.ai, i64 1
-  %i.am = fadd double %i.al, %i.ae                ; 3 uses
-  %i.an = fcmp olt double %i.am, %i.x             ; 2 uses
-  %i.ao = select i1 %i.an, double %i.am, double %i.x
-  %13 = fcmp uge double %i.ak, %i.ao
-  %.mux = select i1 %i.an, double %i.am, double %i.x
-  %i.ap = select i1 %13, double %i.ak, double %.mux
+  %i.am = fadd double %i.al, %i.ae                ; 2 uses
+  %i.an = fcmp olt double %i.am, %i.x
+  %i.ao = select i1 %i.an, double %i.am, double %i.x ; 2 uses
+  %13 = fcmp olt double %i.ak, %i.ao
+  %i.ap = select i1 %13, double %i.ao, double %i.ak
   %i.aq = fsub double %i.ap, %i.ak
   %i.ar = uitofp i32 %.pr.pre117 to double
   %i.as = fmul double %i.aq, %i.ar

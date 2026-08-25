@@ -205,8 +205,9 @@ define void @transpose32(ptr nofree noundef captures(none) %0) local_unnamed_add
   store <4 x i32> %i.db, ptr %i.ak, align 4, !tbaa !49
   %i.dc = load <2 x i32>, ptr %i.d, align 4, !tbaa !49
   %i.dd = load <4 x i32>, ptr %i.p, align 4, !tbaa !49 ; 3 uses
-  %1 = load <4 x i32>, ptr %i.aj, align 4
-  %i.de = shufflevector <4 x i32> %i.dd, <4 x i32> %1, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %1 = load <2 x i32>, ptr %i.aj, align 4, !tbaa !49
+  %2 = shufflevector <2 x i32> %1, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.de = shufflevector <4 x i32> %i.dd, <4 x i32> %2, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.df = lshr <4 x i32> %i.de, splat (i32 4)
   %i.dg = shufflevector <2 x i32> %i.dc, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.dh = shufflevector <4 x i32> %i.dg, <4 x i32> %i.dd, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
@@ -245,8 +246,9 @@ define void @transpose32(ptr nofree noundef captures(none) %0) local_unnamed_add
   store <4 x i32> %i.ek, ptr %i.an, align 4, !tbaa !49
   %i.el = load <2 x i32>, ptr %i.e, align 4, !tbaa !49
   %i.em = load <4 x i32>, ptr %i.q, align 4, !tbaa !49 ; 3 uses
-  %2 = load <4 x i32>, ptr %i.ak, align 4
-  %i.en = shufflevector <4 x i32> %i.em, <4 x i32> %2, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %3 = load <2 x i32>, ptr %i.ak, align 4, !tbaa !49
+  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.en = shufflevector <4 x i32> %i.em, <4 x i32> %4, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.eo = lshr <4 x i32> %i.en, splat (i32 4)
   %i.ep = shufflevector <2 x i32> %i.el, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.eq = shufflevector <4 x i32> %i.ep, <4 x i32> %i.em, <4 x i32> <i32 0, i32 1, i32 6, i32 7>

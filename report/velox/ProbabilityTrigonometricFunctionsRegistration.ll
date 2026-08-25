@@ -205,7 +205,6 @@ bb.a:
   %i.o = alloca x86_fp80, align 16                ; 4 uses
   %i.p = alloca x86_fp80, align 16                ; 4 uses
   %i.q = alloca x86_fp80, align 16                ; 4 uses
-  %.sroa.091 = alloca [10 x i8], align 16         ; 4 uses
   %i.r = alloca x86_fp80, align 16                ; 4 uses
   %i.s = load x86_fp80, ptr %0, align 16, !tbaa !182 ; 11 uses
   %i.t = tail call x86_fp80 @llvm.fabs.f80(x86_fp80 %i.s) ; 2 uses
@@ -426,9 +425,7 @@ _ZN5boost4math10fpclassifyIeEEiT_.exit:           ; preds = %bb.z
   %i.ch = tail call { x86_fp80, i32 } @llvm.frexp.f80.i32(x86_fp80 %i.s)
   %i.ci = extractvalue { x86_fp80, i32 } %i.ch, 1
   %i.cj = select i1 %i.cg, i32 %i.ci, i32 -16381  ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.091)
   %i.ck = tail call noundef x86_fp80 @ldexpl(x86_fp80 noundef 1.000000e+00, i32 noundef %i.cj) #41 ; 4 uses
-  store x86_fp80 %i.ck, ptr %.sroa.091, align 16, !tbaa !182
   %i.cl = fcmp ogt x86_fp80 %i.w, %i.ck
   br i1 %i.cl, label %bb.ab, label %bb.ac
 
@@ -465,7 +462,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond112, label %select.unfold110, label %_ZN5boost4math10fpclassifyIeEEiT_.exit86
 
 select.unfold110:                                 ; preds = %.select.unfold110_crit_edge, %bb.ad
-  %i.cx = phi x86_fp80 [ %.pre116, %.select.unfold110_crit_edge ], [ %.pre117, %bb.ad ] ; 3 uses
+  %i.cx = phi x86_fp80 [ %.pre116, %.select.unfold110_crit_edge ], [ %.pre117, %bb.ad ] ; 4 uses
   %i.cy = fsub x86_fp80 %i.cx, %i.cw
   %i.cz = fcmp olt x86_fp80 %i.cy, f0x00018000000000000000
   br i1 %i.cz, label %_ZN5boost4math10fpclassifyIeEEiT_.exit86, label %bb.ae
@@ -488,8 +485,7 @@ _ZN5boost4math10fpclassifyIeEEiT_.exit86:         ; preds = %bb.ad, %select.unfo
 
 bb.ae:                                            ; preds = %select.unfold110
   %i.dn = fcmp olt x86_fp80 %i.cx, %i.ck
-  %..i87 = select i1 %i.dn, ptr %1, ptr %.sroa.091
-  %7 = load x86_fp80, ptr %..i87, align 16, !tbaa !182 ; 2 uses
+  %7 = select i1 %i.dn, x86_fp80 %i.cx, x86_fp80 %i.ck ; 2 uses
   %i.do = fneg x86_fp80 %7
   %i.dp = fsub x86_fp80 %i.cw, %7                 ; 3 uses
   %i.dq = fsub x86_fp80 %i.dp, %i.cw              ; 2 uses
@@ -513,7 +509,6 @@ bb.af:                                            ; preds = %bb.ae, %_ZN5boost4m
   %i.dz = call noundef x86_fp80 @ldexpl(x86_fp80 noundef %.1, i32 noundef %.0109) #41
   %i.ea = fadd x86_fp80 %i.dy, %i.dz
   %i.eb = fadd x86_fp80 %.072, %i.ea
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.091)
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.g, %bb.af, %bb.aa, %bb.y, %bb.q, %bb.l, %bb.f, %bb.d, %bb.b

@@ -204,7 +204,6 @@ _ZN4llvm23SmallVectorTemplateBaseINS_9SlotIndexELb1EE9push_backES1_.exit: ; pred
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN12_GLOBAL__N_18JoinVals11eraseInstrsERN4llvm15SmallPtrSetImplIPNS1_12MachineInstrEEERNS1_15SmallVectorImplINS1_8RegisterEEEPNS1_12LiveIntervalE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(520) %0, ptr noundef nonnull align 8 dereferenceable(17) %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr nofree noundef readonly captures(address_is_null) %3) unnamed_addr #3 align 2 {
 bb.a:
-  %.sroa.088 = alloca i64, align 8                ; 5 uses
   %.sroa.087 = alloca i64, align 8                ; 5 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !984, !nonnull !19, !align !44
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 72
@@ -307,8 +306,6 @@ _ZN4llvm9LiveRange21FindSegmentContainingENS_9SlotIndexE.exit: ; preds = %bb.g, 
   br i1 %.not98, label %bb.z, label %bb.i
 
 bb.i:                                             ; preds = %_ZN4llvm9LiveRange21FindSegmentContainingENS_9SlotIndexE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.088)
-  store i64 0, ptr %.sroa.088, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.087)
   store i64 0, ptr %.sroa.087, align 8
   %i.bc = and i64 %.sroa.024.0.copyload, -8
@@ -324,8 +321,9 @@ bb.j:                                             ; preds = %bb.r
   br i1 %i.bi, label %bb.s, label %bb.t
 
 bb.k:                                             ; preds = %bb.i, %bb.r
+  %.sroa.088.val126 = phi i64 [ 0, %bb.i ], [ %.sroa.088.val125, %bb.r ] ; 3 uses
   %.sroa.082.0109 = phi ptr [ %i.bb, %bb.i ], [ %i.dh, %bb.r ] ; 4 uses
-  %.sroa.087.0..sroa.087.0..0.copyload.i.i.i.i60104108 = phi i64 [ 0, %bb.i ], [ %.sroa.087.0..sroa.087.0..sroa.087.0..0.copyload.i.i.i.i, %bb.r ] ; 5 uses
+  %.sroa.087.0..sroa.087.0..0.copyload.i.i.i.i60104108 = phi i64 [ 0, %bb.i ], [ %.sroa.087.0..sroa.087.0..sroa.087.0..0.copyload.i.i.i.i, %bb.r ] ; 6 uses
   %.sroa.088.0..sroa.088.0..0.copyload.i.i.i.i57106107 = phi i64 [ 0, %bb.i ], [ %.sroa.088.0..sroa.088.0..sroa.088.0..0.copyload.i.i.i.i67, %bb.r ] ; 5 uses
   %i.bj = tail call noundef ptr @_ZN4llvm9LiveRange4findENS_9SlotIndexE(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.082.0109, i64 %.sroa.024.0.copyload) #22 ; 4 uses
   %i.bk = load ptr, ptr %.sroa.082.0109, align 8, !tbaa !21
@@ -337,7 +335,7 @@ bb.k:                                             ; preds = %bb.i, %bb.r
   br i1 %i.bp, label %bb.r, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %.0.copyload.i.i.i.i.i.i = load i64, ptr %i.bj, align 8 ; 3 uses
+  %.0.copyload.i.i.i.i.i.i = load i64, ptr %i.bj, align 8 ; 4 uses
   %i.bq = and i64 %.0.copyload.i.i.i.i.i.i, -8
   %i.br = inttoptr i64 %i.bq to ptr
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 24
@@ -353,7 +351,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.cb = icmp ugt i64 %.sroa.088.0..sroa.088.0..0.copyload.i.i.i.i57106107, 7
-  br i1 %i.cb, label %bb.n, label %4
+  br i1 %i.cb, label %bb.n, label %bb.r
 
 bb.n:                                             ; preds = %bb.m
   %i.cc = and i64 %.sroa.088.0..sroa.088.0..0.copyload.i.i.i.i57106107, -8
@@ -365,13 +363,8 @@ bb.n:                                             ; preds = %bb.m
   %i.ci = and i32 %i.ch, 3
   %i.cj = or i32 %i.cf, %i.ci
   %i.ck = icmp ult i32 %i.bx, %i.cj
-  %..i = select i1 %i.ck, ptr %i.bj, ptr %.sroa.088
-  %.pre = load i64, ptr %..i, align 8, !tbaa !63
-  br label %4
-
-4:                                                ; preds = %bb.m, %bb.n
-  %5 = phi i64 [ %.pre, %bb.n ], [ %.0.copyload.i.i.i.i.i.i, %bb.m ] ; 2 uses
-  store i64 %5, ptr %.sroa.088, align 8, !tbaa !63
+  %.val = load i64, ptr %i.bj, align 8
+  %.pre = select i1 %i.ck, i64 %.val, i64 %.sroa.088.val126 ; 2 uses
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.l
@@ -407,9 +400,10 @@ bb.q:                                             ; preds = %bb.o, %bb.p
   store i64 %i.df, ptr %.sroa.087, align 8, !tbaa !63
   br label %bb.r
 
-bb.r:                                             ; preds = %4, %bb.q, %bb.k
-  %.sroa.088.0..sroa.088.0..sroa.088.0..0.copyload.i.i.i.i67 = phi i64 [ %5, %4 ], [ %.sroa.088.0..sroa.088.0..0.copyload.i.i.i.i57106107, %bb.q ], [ %.sroa.088.0..sroa.088.0..0.copyload.i.i.i.i57106107, %bb.k ] ; 5 uses
-  %.sroa.087.0..sroa.087.0..sroa.087.0..0.copyload.i.i.i.i = phi i64 [ %.sroa.087.0..sroa.087.0..0.copyload.i.i.i.i60104108, %4 ], [ %i.df, %bb.q ], [ %.sroa.087.0..sroa.087.0..0.copyload.i.i.i.i60104108, %bb.k ] ; 5 uses
+bb.r:                                             ; preds = %bb.n, %bb.m, %bb.q, %bb.k
+  %.sroa.088.val125 = phi i64 [ %.sroa.088.val126, %bb.k ], [ %.sroa.088.val126, %bb.q ], [ %.pre, %bb.n ], [ %.0.copyload.i.i.i.i.i.i, %bb.m ]
+  %.sroa.088.0..sroa.088.0..sroa.088.0..0.copyload.i.i.i.i67 = phi i64 [ %.sroa.088.0..sroa.088.0..0.copyload.i.i.i.i57106107, %bb.k ], [ %.sroa.088.0..sroa.088.0..0.copyload.i.i.i.i57106107, %bb.q ], [ %.pre, %bb.n ], [ %.0.copyload.i.i.i.i.i.i, %bb.m ] ; 5 uses
+  %.sroa.087.0..sroa.087.0..sroa.087.0..0.copyload.i.i.i.i = phi i64 [ %.sroa.087.0..sroa.087.0..0.copyload.i.i.i.i60104108, %bb.k ], [ %i.df, %bb.q ], [ %.sroa.087.0..sroa.087.0..0.copyload.i.i.i.i60104108, %bb.n ], [ %.sroa.087.0..sroa.087.0..0.copyload.i.i.i.i60104108, %bb.m ] ; 5 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %.sroa.082.0109, i64 104
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !825 ; 2 uses
   %.not99 = icmp eq ptr %i.dh, null
@@ -481,7 +475,6 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.w, %bb.x, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.087)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.088)
   br label %bb.z
 
 .critedge53:                                      ; preds = %bb.e

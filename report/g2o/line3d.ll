@@ -205,20 +205,20 @@ bb.a:
   %i.cg = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 3 uses
   %i.ch = fmul <2 x double> %i.cg, %i.bc
   %i.ci = fadd <2 x double> %i.ch, %i.cf
-  %i.cj = fmul <2 x double> %i.bq, %.sroa.5.16.vec.insert61
-  %i.ck = fmul <2 x double> %i.bt, %.sroa.15.64.vec.insert67
+  %i.cj = fmul <2 x double> %.sroa.5.16.vec.insert61, %i.bq
+  %i.ck = fmul <2 x double> %.sroa.15.64.vec.insert67, %i.bt
   %i.cl = fadd <2 x double> %i.cj, %i.ck
-  %i.cm = fmul <2 x double> %i.bw, %.sroa.25.112.vec.insert71
+  %i.cm = fmul <2 x double> %.sroa.25.112.vec.insert71, %i.bw
   %i.cn = fadd <2 x double> %i.cl, %i.cm
   %.sroa.35.0..sroa.35.0..sroa.35.160. = load <2 x double>, ptr %.sroa.35, align 16, !tbaa !8
-  %i.co = fmul <2 x double> %i.ca, %.sroa.35.0..sroa.35.0..sroa.35.160.
+  %i.co = fmul <2 x double> %.sroa.35.0..sroa.35.0..sroa.35.160., %i.ca
   %i.cp = fadd <2 x double> %i.cn, %i.co
   %.sroa.48.0..sroa.48.0..sroa.48.208. = load <2 x double>, ptr %.sroa.48, align 16, !tbaa !8
-  %i.cq = fmul <2 x double> %i.cd, %.sroa.48.0..sroa.48.0..sroa.48.208.
+  %i.cq = fmul <2 x double> %.sroa.48.0..sroa.48.0..sroa.48.208., %i.cd
   %i.cr = fadd <2 x double> %i.cp, %i.cq
   %.sroa.61.0..sroa.61.0..sroa.61.256. = load <2 x double>, ptr %.sroa.61, align 16, !tbaa !8
-  %i.cs = fmul <2 x double> %i.cg, %.sroa.61.0..sroa.61.0..sroa.61.256.
-  %i.ct = fadd <2 x double> %i.cs, %i.cr
+  %i.cs = fmul <2 x double> %.sroa.61.0..sroa.61.0..sroa.61.256., %i.cg
+  %i.ct = fadd <2 x double> %i.cr, %i.cs
   %i.cu = fmul <2 x double> %i.bq, zeroinitializer
   %i.cv = fmul <2 x double> %i.bt, zeroinitializer
   %i.cw = fadd <2 x double> %i.cu, %i.cv
@@ -235,7 +235,7 @@ bb.a:
   %.sroa.61.16..07.i.i.i.i.ptr.34.i.i.i.i.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.61, i64 16
   %.sroa.61.16..sroa.61.16..sroa.61.272. = load <2 x double>, ptr %.sroa.61.16..07.i.i.i.i.ptr.34.i.i.i.i.i.i.sroa_idx, align 16, !tbaa !8
   %i.dd = fmul <2 x double> %i.cg, %.sroa.61.16..sroa.61.16..sroa.61.272.
-  %i.de = fadd <2 x double> %i.dd, %i.dc
+  %i.de = fadd <2 x double> %i.dc, %i.dd
   store <2 x double> %i.ci, ptr %0, align 16, !tbaa !8
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x double> %i.ct, ptr %i.df, align 16, !tbaa !8

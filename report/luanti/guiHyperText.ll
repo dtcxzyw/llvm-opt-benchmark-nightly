@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   %i.cz = icmp slt i32 %i.cy, %.1153323
   br i1 %i.cz, label %._crit_edge396, label %bb.q
 
-._crit_edge396:                                   ; preds = %bb.o, %bb.p
+._crit_edge396:                                   ; preds = %bb.p, %bb.o
   %i.da = icmp slt i32 %i.cr, %.pre393
   %..i177 = select i1 %i.da, ptr %i.w, ptr %i.cq
   %i.db = load i32, ptr %..i177, align 4, !tbaa !41
