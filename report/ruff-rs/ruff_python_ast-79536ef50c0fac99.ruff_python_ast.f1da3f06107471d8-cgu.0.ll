@@ -205,12 +205,10 @@ _RNCINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6stable9quicksort9quicksortINtNtBc_
 
 .lr.ph38.i69.us.preheader:                        ; preds = %.lr.ph38.i69.preheader
   %i.hj = shl i64 %.sroa.0.0.i56, 3
-  %7 = add i64 %i.hj, %i.c
-  %i.hk = ptrtoaddr ptr %.sroa.9.1.lcssa.i60 to i64 ; 2 uses
-  %i.hl = add i64 %i.hk, 8
-  %8 = call i64 @llvm.umax.i64(i64 %7, i64 %i.hl)
+  %i.hk = ptrtoaddr ptr %.sroa.9.1.lcssa.i60 to i64
+  %i.hl = add i64 %i.hj, %i.c
   %i.hm = xor i64 %i.hk, -1
-  %i.hn = add i64 %8, %i.hm                       ; 2 uses
+  %i.hn = add i64 %i.hl, %i.hm                    ; 2 uses
   %i.ho = lshr i64 %i.hn, 3
   %i.hp = add nuw nsw i64 %i.ho, 1                ; 2 uses
   %min.iters.check373 = icmp ult i64 %i.hn, 24

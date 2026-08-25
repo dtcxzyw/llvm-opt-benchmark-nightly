@@ -204,19 +204,17 @@ Vec_IntAlloc.exit.i:                              ; preds = %bb.al, %bb.ak
   %.036.lcssa.i.i = phi ptr [ %i.hz, %Vec_IntAlloc.exit.i ], [ %.137.i.i, %bb.aq ] ; 5 uses
   %.033.lcssa.i.i = phi ptr [ %.val6.i, %Vec_IntAlloc.exit.i ], [ %.134.i.i, %bb.aq ] ; 5 uses
   %.0.lcssa.i.i = phi ptr [ %.val8.i, %Vec_IntAlloc.exit.i ], [ %.1.i.i, %bb.aq ] ; 5 uses
-  %.0.lcssa.i.i361 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 3 uses
+  %.0.lcssa.i.i361 = ptrtoaddr ptr %.0.lcssa.i.i to i64 ; 2 uses
   %i.ig = icmp ult ptr %.033.lcssa.i.i, %i.id
   br i1 %i.ig, label %.lr.ph13.i.i.preheader, label %.preheader.i.i
 
 .lr.ph13.i.i.preheader:                           ; preds = %.preheader5.i.i
-  %.033.lcssa.i.i367 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 3 uses
+  %.033.lcssa.i.i367 = ptrtoaddr ptr %.033.lcssa.i.i to i64 ; 2 uses
   %.036.lcssa.i.i366 = ptrtoaddr ptr %.036.lcssa.i.i to i64
   %i.ih = ptrtoaddr ptr %.val6.i to i64
-  %8 = add i64 %.idx.i.i, %i.ih
-  %i.ii = add i64 %.033.lcssa.i.i367, 4
-  %9 = call i64 @llvm.umax.i64(i64 %8, i64 %i.ii)
+  %i.ii = add i64 %.idx.i.i, %i.ih
   %i.ij = xor i64 %.033.lcssa.i.i367, -1
-  %i.ik = add i64 %9, %i.ij                       ; 2 uses
+  %i.ik = add i64 %i.ii, %i.ij                    ; 2 uses
   %i.il = lshr i64 %i.ik, 2
   %i.im = add nuw nsw i64 %i.il, 1                ; 2 uses
   %min.iters.check370 = icmp ult i64 %i.ik, 28
@@ -302,11 +300,9 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.
 .lr.ph17.i.i.preheader:                           ; preds = %.preheader.i.i
   %.238.lcssa.i.i360 = ptrtoaddr ptr %.238.lcssa.i.i to i64
   %i.jh = ptrtoaddr ptr %.val8.i to i64
-  %10 = add i64 %.idx8.i, %i.jh
-  %i.ji = add i64 %.0.lcssa.i.i361, 4
-  %11 = call i64 @llvm.umax.i64(i64 %10, i64 %i.ji)
+  %i.ji = add i64 %.idx8.i, %i.jh
   %i.jj = xor i64 %.0.lcssa.i.i361, -1
-  %i.jk = add i64 %11, %i.jj                      ; 2 uses
+  %i.jk = add i64 %i.ji, %i.jj                    ; 2 uses
   %i.jl = lshr i64 %i.jk, 2
   %i.jm = add nuw nsw i64 %i.jl, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.jk, 28
@@ -708,9 +704,6 @@ declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #14
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15

@@ -204,7 +204,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
   %i.e = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.f = ptrtoint ptr %i.b to i64                 ; 5 uses
+  %i.f = ptrtoint ptr %i.b to i64                 ; 4 uses
   %i.g = sub i64 %i.e, %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8              ; 2 uses
@@ -251,10 +251,8 @@ _ZN2v88internal4Zone13AllocateArrayISt4pairIjNS0_4wasm9ValueTypeEEA_S6_EEPT_m.ex
   br i1 %or.cond, label %.lr.ph.preheader, label %_ZN2v88internal10ZoneVectorISt4pairIjNS0_4wasm9ValueTypeEEE16MoveToNewStorageEPS5_S7_PKS5_.exit
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal4Zone13AllocateArrayISt4pairIjNS0_4wasm9ValueTypeEEA_S6_EEPT_m.exit
-  %2 = add i64 %i.f, 8
-  %3 = tail call i64 @llvm.umax.i64(i64 %i.e, i64 %2)
   %i.ad = xor i64 %i.f, -1
-  %i.ae = add i64 %3, %i.ad                       ; 2 uses
+  %i.ae = add i64 %i.ad, %i.e                     ; 2 uses
   %i.af = lshr i64 %i.ae, 3
   %i.ag = add nuw nsw i64 %i.af, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ae, 72

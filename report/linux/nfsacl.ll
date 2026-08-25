@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/linux/original/nfsacl?download=true
 inline.NumInlined: 35
 inline.NumDeleted: 21
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@xdr_nfsace_encode:bb.a
 bb.e:                                             ; preds = %.split
   %i.ac = getelementptr i8, ptr %i.h, i64 4
@@ -202,63 +204,154 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i, label %posix_acl_from_nfsacl.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.r = getelementptr i8, ptr %i.q, i64 24       ; 5 uses
+  %i.r = getelementptr i8, ptr %i.q, i64 24       ; 6 uses
   %i.s = getelementptr i8, ptr %i.q, i64 4        ; 3 uses
   %i.t = load i32, ptr %i.s, align 4
   %i.u = zext i32 %i.t to i64
   call void @sort(ptr noundef %i.r, i64 noundef %i.u, i64 noundef 8, ptr noundef nonnull @cmp_acl_entry, ptr noundef null) #9
   %i.v = load i32, ptr %i.s, align 4              ; 2 uses
-  %i.w = zext i32 %i.v to i64
+  %i.w = zext i32 %i.v to i64                     ; 3 uses
   %i.x = getelementptr [8 x i8], ptr %i.r, i64 %i.w ; 2 uses
   %i.y = icmp ult ptr %i.r, %i.x
-  br i1 %i.y, label %.lr.ph.i, label %posix_acl_from_nfsacl.exit
+  br i1 %i.y, label %.lr.ph.i.preheader, label %posix_acl_from_nfsacl.exit
 
-.lr.ph.i:                                         ; preds = %bb.f, %bb.i
-  %.033.i = phi ptr [ %.1.i.a, %bb.i ], [ null, %bb.f ] ; 2 uses
-  %.02532.i = phi ptr [ %.126.i.a, %bb.i ], [ null, %bb.f ] ; 2 uses
-  %.02731.i = phi ptr [ %i.aa, %bb.i ], [ %i.r, %bb.f ] ; 4 uses
+.lr.ph.i.preheader:                               ; preds = %bb.f
+  %5 = add nuw nsw i64 %i.w, 2305843009213693951
+  %6 = and i64 %5, 2305843009213693951
+  %xtraiter = and i64 %i.w, 3                     ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %10
+  %.033.i.prol = phi ptr [ %.1.i.prol, %10 ], [ null, %.lr.ph.i.preheader ] ; 2 uses
+  %.02532.i.prol = phi ptr [ %.126.i.prol, %10 ], [ null, %.lr.ph.i.preheader ] ; 2 uses
+  %.02731.i.prol = phi ptr [ %11, %10 ], [ %i.r, %.lr.ph.i.preheader ] ; 4 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %10 ], [ 0, %.lr.ph.i.preheader ]
+  %7 = load i16, ptr %.02731.i.prol, align 4
+  switch i16 %7, label %10 [
+    i16 16, label %9
+    i16 4, label %8
+  ]
+
+8:                                                ; preds = %.lr.ph.i.prol
+  br label %10
+
+9:                                                ; preds = %.lr.ph.i.prol
+  br label %10
+
+10:                                               ; preds = %9, %8, %.lr.ph.i.prol
+  %.126.i.prol = phi ptr [ %.02532.i.prol, %.lr.ph.i.prol ], [ %.02532.i.prol, %9 ], [ %.02731.i.prol, %8 ] ; 3 uses
+  %.1.i.prol = phi ptr [ %.033.i.prol, %.lr.ph.i.prol ], [ %.02731.i.prol, %9 ], [ %.033.i.prol, %8 ] ; 3 uses
+  %11 = getelementptr i8, ptr %.02731.i.prol, i64 8 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !12
+
+.lr.ph.i.prol.loopexit:                           ; preds = %10, %.lr.ph.i.preheader
+  %.033.i.unr = phi ptr [ null, %.lr.ph.i.preheader ], [ %.1.i.prol, %10 ]
+  %.02532.i.unr = phi ptr [ null, %.lr.ph.i.preheader ], [ %.126.i.prol, %10 ]
+  %.02731.i.unr = phi ptr [ %i.r, %.lr.ph.i.preheader ], [ %11, %10 ]
+  %.126.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.126.i.prol, %10 ]
+  %.1.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.1.i.prol, %10 ]
+  %12 = icmp samesign ult i64 %6, 3
+  br i1 %12, label %._crit_edge.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.i
+  %.033.i = phi ptr [ %.1.i.a, %bb.i ], [ %.033.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %.02532.i = phi ptr [ %.126.i.a, %bb.i ], [ %.02532.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %.02731.i = phi ptr [ %i.aa, %bb.i ], [ %.02731.i.unr, %.lr.ph.i.prol.loopexit ] ; 7 uses
   %i.z = load i16, ptr %.02731.i, align 4
-  switch i16 %i.z, label %bb.i [
+  switch i16 %i.z, label %.lr.ph.i.1 [
+    i16 16, label %14
+    i16 4, label %13
+  ]
+
+13:                                               ; preds = %.lr.ph.i
+  br label %.lr.ph.i.1
+
+14:                                               ; preds = %.lr.ph.i
+  br label %.lr.ph.i.1
+
+.lr.ph.i.1:                                       ; preds = %14, %13, %.lr.ph.i
+  %.126.i = phi ptr [ %.02532.i, %.lr.ph.i ], [ %.02532.i, %14 ], [ %.02731.i, %13 ] ; 2 uses
+  %.1.i = phi ptr [ %.033.i, %.lr.ph.i ], [ %.02731.i, %14 ], [ %.033.i, %13 ] ; 2 uses
+  %15 = getelementptr i8, ptr %.02731.i, i64 8    ; 3 uses
+  %16 = load i16, ptr %15, align 4
+  switch i16 %16, label %.lr.ph.i.2 [
+    i16 16, label %18
+    i16 4, label %17
+  ]
+
+17:                                               ; preds = %.lr.ph.i.1
+  br label %.lr.ph.i.2
+
+18:                                               ; preds = %.lr.ph.i.1
+  br label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %18, %17, %.lr.ph.i.1
+  %.126.i.1 = phi ptr [ %.126.i, %.lr.ph.i.1 ], [ %.126.i, %18 ], [ %15, %17 ] ; 2 uses
+  %.1.i.1 = phi ptr [ %.1.i, %.lr.ph.i.1 ], [ %15, %18 ], [ %.1.i, %17 ] ; 2 uses
+  %19 = getelementptr i8, ptr %.02731.i, i64 16   ; 3 uses
+  %20 = load i16, ptr %19, align 4
+  switch i16 %20, label %.lr.ph.i.3 [
+    i16 16, label %22
+    i16 4, label %21
+  ]
+
+21:                                               ; preds = %.lr.ph.i.2
+  br label %.lr.ph.i.3
+
+22:                                               ; preds = %.lr.ph.i.2
+  br label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %22, %21, %.lr.ph.i.2
+  %.126.i.2 = phi ptr [ %.126.i.1, %.lr.ph.i.2 ], [ %.126.i.1, %22 ], [ %19, %21 ] ; 2 uses
+  %.1.i.2 = phi ptr [ %.1.i.1, %.lr.ph.i.2 ], [ %19, %22 ], [ %.1.i.1, %21 ] ; 2 uses
+  %23 = getelementptr i8, ptr %.02731.i, i64 24   ; 3 uses
+  %24 = load i16, ptr %23, align 4
+  switch i16 %24, label %bb.i [
     i16 16, label %bb.h
     i16 4, label %bb.g
   ]
 
-bb.g:                                             ; preds = %.lr.ph.i
+bb.g:                                             ; preds = %.lr.ph.i.3
   br label %bb.i
 
-bb.h:                                             ; preds = %.lr.ph.i
+bb.h:                                             ; preds = %.lr.ph.i.3
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g, %.lr.ph.i
-  %.126.i.a = phi ptr [ %.02532.i, %.lr.ph.i ], [ %.02532.i, %bb.h ], [ %.02731.i, %bb.g ] ; 3 uses
-  %.1.i.a = phi ptr [ %.033.i, %.lr.ph.i ], [ %.02731.i, %bb.h ], [ %.033.i, %bb.g ] ; 6 uses
-  %i.aa = getelementptr i8, ptr %.02731.i, i64 8  ; 2 uses
+bb.i:                                             ; preds = %bb.h, %bb.g, %.lr.ph.i.3
+  %.126.i.a = phi ptr [ %.126.i.2, %.lr.ph.i.3 ], [ %.126.i.2, %bb.h ], [ %23, %bb.g ] ; 2 uses
+  %.1.i.a = phi ptr [ %.1.i.2, %.lr.ph.i.3 ], [ %23, %bb.h ], [ %.1.i.2, %bb.g ] ; 2 uses
+  %i.aa = getelementptr i8, ptr %.02731.i, i64 32 ; 2 uses
   %i.ab = icmp ult ptr %i.aa, %i.x
-  br i1 %i.ab, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !12
+  br i1 %i.ab, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !14
 
-._crit_edge.i:                                    ; preds = %bb.i
+._crit_edge.i:                                    ; preds = %bb.i, %.lr.ph.i.prol.loopexit
+  %.126.i.lcssa = phi ptr [ %.126.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.126.i.a, %bb.i ] ; 2 uses
+  %.1.i.lcssa = phi ptr [ %.1.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.1.i.a, %bb.i ] ; 5 uses
   %i.ac = icmp eq i32 %i.v, 4
-  %i.ad = icmp ne ptr %.126.i.a, null
+  %i.ad = icmp ne ptr %.126.i.lcssa, null
   %or.cond.i = select i1 %i.ac, i1 %i.ad, i1 false
-  %i.ae = icmp ne ptr %.1.i.a, null
+  %i.ae = icmp ne ptr %.1.i.lcssa, null
   %or.cond3.i = select i1 %or.cond.i, i1 %i.ae, i1 false
   br i1 %or.cond3.i, label %bb.j, label %posix_acl_from_nfsacl.exit
 
 bb.j:                                             ; preds = %._crit_edge.i
-  %i.af = getelementptr i8, ptr %.1.i.a, i64 2
+  %i.af = getelementptr i8, ptr %.1.i.lcssa, i64 2
   %i.ag = load i16, ptr %i.af, align 2
-  %i.ah = getelementptr i8, ptr %.126.i.a, i64 2
+  %i.ah = getelementptr i8, ptr %.126.i.lcssa, i64 2
   %i.ai = load i16, ptr %i.ah, align 2
   %i.aj = icmp eq i16 %i.ag, %i.ai
   br i1 %i.aj, label %bb.k, label %posix_acl_from_nfsacl.exit
 
 bb.k:                                             ; preds = %bb.j
-  %i.ak = getelementptr i8, ptr %.1.i.a, i64 8
-  %i.al = ptrtoint ptr %.1.i.a to i64
+  %i.ak = getelementptr i8, ptr %.1.i.lcssa, i64 8
+  %i.al = ptrtoint ptr %.1.i.lcssa to i64
   %i.am = ptrtoint ptr %i.r to i64
   %.neg.i = add i64 %i.am, 24
   %i.an = sub i64 %.neg.i, %i.al
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.1.i.a, ptr align 4 %i.ak, i64 %i.an, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.1.i.lcssa, ptr align 4 %i.ak, i64 %i.an, i1 false)
   store i32 3, ptr %i.s, align 4
   br label %posix_acl_from_nfsacl.exit
 
@@ -271,7 +364,7 @@ bb.l:                                             ; preds = %bb.d
   br i1 %.not.i, label %posix_acl_release.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ap = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %i.q, i32 -1, ptr nonnull elementtype(i32) %i.q) #8, !srcloc !14 ; 2 uses
+  %i.ap = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %i.q, i32 -1, ptr nonnull elementtype(i32) %i.q) #8, !srcloc !16 ; 2 uses
   %i.aq = icmp eq i32 %i.ap, 1
   br i1 %i.aq, label %bb.p, label %bb.n
 
@@ -284,7 +377,7 @@ bb.o:                                             ; preds = %bb.n
   br label %posix_acl_release.exit
 
 bb.p:                                             ; preds = %bb.m
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !15
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !17
   %i.as = getelementptr i8, ptr %i.q, i64 8
   call void @kvfree_call_rcu(ptr noundef %i.as, ptr noundef nonnull %i.q) #9
   br label %posix_acl_release.exit
@@ -471,63 +564,154 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i17, label %posix_acl_from_nfsacl.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.t = getelementptr i8, ptr %i.s, i64 24       ; 5 uses
+  %i.t = getelementptr i8, ptr %i.s, i64 24       ; 6 uses
   %i.u = getelementptr i8, ptr %i.s, i64 4        ; 3 uses
   %i.v = load i32, ptr %i.u, align 4
   %i.w = zext i32 %i.v to i64
   call void @sort(ptr noundef %i.t, i64 noundef %i.w, i64 noundef 8, ptr noundef nonnull @cmp_acl_entry, ptr noundef null) #9
   %i.x = load i32, ptr %i.u, align 4              ; 2 uses
-  %i.y = zext i32 %i.x to i64
+  %i.y = zext i32 %i.x to i64                     ; 3 uses
   %i.z = getelementptr [8 x i8], ptr %i.t, i64 %i.y ; 2 uses
   %i.aa = icmp ult ptr %i.t, %i.z
-  br i1 %i.aa, label %.lr.ph.i, label %posix_acl_from_nfsacl.exit
+  br i1 %i.aa, label %.lr.ph.i.preheader, label %posix_acl_from_nfsacl.exit
 
-.lr.ph.i:                                         ; preds = %bb.g, %bb.j
-  %.033.i = phi ptr [ %.1.i.a, %bb.j ], [ null, %bb.g ] ; 2 uses
-  %.02532.i = phi ptr [ %.126.i.a, %bb.j ], [ null, %bb.g ] ; 2 uses
-  %.02731.i = phi ptr [ %i.ac, %bb.j ], [ %i.t, %bb.g ] ; 4 uses
+.lr.ph.i.preheader:                               ; preds = %bb.g
+  %4 = add nuw nsw i64 %i.y, 2305843009213693951
+  %5 = and i64 %4, 2305843009213693951
+  %xtraiter = and i64 %i.y, 3                     ; 2 uses
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %9
+  %.033.i.prol = phi ptr [ %.1.i.prol, %9 ], [ null, %.lr.ph.i.preheader ] ; 2 uses
+  %.02532.i.prol = phi ptr [ %.126.i.prol, %9 ], [ null, %.lr.ph.i.preheader ] ; 2 uses
+  %.02731.i.prol = phi ptr [ %10, %9 ], [ %i.t, %.lr.ph.i.preheader ] ; 4 uses
+  %prol.iter = phi i64 [ %prol.iter.next, %9 ], [ 0, %.lr.ph.i.preheader ]
+  %6 = load i16, ptr %.02731.i.prol, align 4
+  switch i16 %6, label %9 [
+    i16 16, label %8
+    i16 4, label %7
+  ]
+
+7:                                                ; preds = %.lr.ph.i.prol
+  br label %9
+
+8:                                                ; preds = %.lr.ph.i.prol
+  br label %9
+
+9:                                                ; preds = %8, %7, %.lr.ph.i.prol
+  %.126.i.prol = phi ptr [ %.02532.i.prol, %.lr.ph.i.prol ], [ %.02532.i.prol, %8 ], [ %.02731.i.prol, %7 ] ; 3 uses
+  %.1.i.prol = phi ptr [ %.033.i.prol, %.lr.ph.i.prol ], [ %.02731.i.prol, %8 ], [ %.033.i.prol, %7 ] ; 3 uses
+  %10 = getelementptr i8, ptr %.02731.i.prol, i64 8 ; 2 uses
+  %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !18
+
+.lr.ph.i.prol.loopexit:                           ; preds = %9, %.lr.ph.i.preheader
+  %.033.i.unr = phi ptr [ null, %.lr.ph.i.preheader ], [ %.1.i.prol, %9 ]
+  %.02532.i.unr = phi ptr [ null, %.lr.ph.i.preheader ], [ %.126.i.prol, %9 ]
+  %.02731.i.unr = phi ptr [ %i.t, %.lr.ph.i.preheader ], [ %10, %9 ]
+  %.126.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.126.i.prol, %9 ]
+  %.1.i.lcssa.unr = phi ptr [ poison, %.lr.ph.i.preheader ], [ %.1.i.prol, %9 ]
+  %11 = icmp samesign ult i64 %5, 3
+  br i1 %11, label %._crit_edge.i, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %bb.j
+  %.033.i = phi ptr [ %.1.i.a, %bb.j ], [ %.033.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %.02532.i = phi ptr [ %.126.i.a, %bb.j ], [ %.02532.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %.02731.i = phi ptr [ %i.ac, %bb.j ], [ %.02731.i.unr, %.lr.ph.i.prol.loopexit ] ; 7 uses
   %i.ab = load i16, ptr %.02731.i, align 4
-  switch i16 %i.ab, label %bb.j [
+  switch i16 %i.ab, label %.lr.ph.i.1 [
+    i16 16, label %13
+    i16 4, label %12
+  ]
+
+12:                                               ; preds = %.lr.ph.i
+  br label %.lr.ph.i.1
+
+13:                                               ; preds = %.lr.ph.i
+  br label %.lr.ph.i.1
+
+.lr.ph.i.1:                                       ; preds = %13, %12, %.lr.ph.i
+  %.126.i = phi ptr [ %.02532.i, %.lr.ph.i ], [ %.02532.i, %13 ], [ %.02731.i, %12 ] ; 2 uses
+  %.1.i = phi ptr [ %.033.i, %.lr.ph.i ], [ %.02731.i, %13 ], [ %.033.i, %12 ] ; 2 uses
+  %14 = getelementptr i8, ptr %.02731.i, i64 8    ; 3 uses
+  %15 = load i16, ptr %14, align 4
+  switch i16 %15, label %.lr.ph.i.2 [
+    i16 16, label %17
+    i16 4, label %16
+  ]
+
+16:                                               ; preds = %.lr.ph.i.1
+  br label %.lr.ph.i.2
+
+17:                                               ; preds = %.lr.ph.i.1
+  br label %.lr.ph.i.2
+
+.lr.ph.i.2:                                       ; preds = %17, %16, %.lr.ph.i.1
+  %.126.i.1 = phi ptr [ %.126.i, %.lr.ph.i.1 ], [ %.126.i, %17 ], [ %14, %16 ] ; 2 uses
+  %.1.i.1 = phi ptr [ %.1.i, %.lr.ph.i.1 ], [ %14, %17 ], [ %.1.i, %16 ] ; 2 uses
+  %18 = getelementptr i8, ptr %.02731.i, i64 16   ; 3 uses
+  %19 = load i16, ptr %18, align 4
+  switch i16 %19, label %.lr.ph.i.3 [
+    i16 16, label %21
+    i16 4, label %20
+  ]
+
+20:                                               ; preds = %.lr.ph.i.2
+  br label %.lr.ph.i.3
+
+21:                                               ; preds = %.lr.ph.i.2
+  br label %.lr.ph.i.3
+
+.lr.ph.i.3:                                       ; preds = %21, %20, %.lr.ph.i.2
+  %.126.i.2 = phi ptr [ %.126.i.1, %.lr.ph.i.2 ], [ %.126.i.1, %21 ], [ %18, %20 ] ; 2 uses
+  %.1.i.2 = phi ptr [ %.1.i.1, %.lr.ph.i.2 ], [ %18, %21 ], [ %.1.i.1, %20 ] ; 2 uses
+  %22 = getelementptr i8, ptr %.02731.i, i64 24   ; 3 uses
+  %23 = load i16, ptr %22, align 4
+  switch i16 %23, label %bb.j [
     i16 16, label %bb.i
     i16 4, label %bb.h
   ]
 
-bb.h:                                             ; preds = %.lr.ph.i
+bb.h:                                             ; preds = %.lr.ph.i.3
   br label %bb.j
 
-bb.i:                                             ; preds = %.lr.ph.i
+bb.i:                                             ; preds = %.lr.ph.i.3
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.ph.i
-  %.126.i.a = phi ptr [ %.02532.i, %.lr.ph.i ], [ %.02532.i, %bb.i ], [ %.02731.i, %bb.h ] ; 3 uses
-  %.1.i.a = phi ptr [ %.033.i, %.lr.ph.i ], [ %.02731.i, %bb.i ], [ %.033.i, %bb.h ] ; 6 uses
-  %i.ac = getelementptr i8, ptr %.02731.i, i64 8  ; 2 uses
+bb.j:                                             ; preds = %bb.i, %bb.h, %.lr.ph.i.3
+  %.126.i.a = phi ptr [ %.126.i.2, %.lr.ph.i.3 ], [ %.126.i.2, %bb.i ], [ %22, %bb.h ] ; 2 uses
+  %.1.i.a = phi ptr [ %.1.i.2, %.lr.ph.i.3 ], [ %22, %bb.i ], [ %.1.i.2, %bb.h ] ; 2 uses
+  %i.ac = getelementptr i8, ptr %.02731.i, i64 32 ; 2 uses
   %i.ad = icmp ult ptr %i.ac, %i.z
-  br i1 %i.ad, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !12
+  br i1 %i.ad, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !14
 
-._crit_edge.i:                                    ; preds = %bb.j
+._crit_edge.i:                                    ; preds = %bb.j, %.lr.ph.i.prol.loopexit
+  %.126.i.lcssa = phi ptr [ %.126.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.126.i.a, %bb.j ] ; 2 uses
+  %.1.i.lcssa = phi ptr [ %.1.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.1.i.a, %bb.j ] ; 5 uses
   %i.ae = icmp eq i32 %i.x, 4
-  %i.af = icmp ne ptr %.126.i.a, null
+  %i.af = icmp ne ptr %.126.i.lcssa, null
   %or.cond.i = select i1 %i.ae, i1 %i.af, i1 false
-  %i.ag = icmp ne ptr %.1.i.a, null
+  %i.ag = icmp ne ptr %.1.i.lcssa, null
   %or.cond3.i = select i1 %or.cond.i, i1 %i.ag, i1 false
   br i1 %or.cond3.i, label %bb.k, label %posix_acl_from_nfsacl.exit
 
 bb.k:                                             ; preds = %._crit_edge.i
-  %i.ah = getelementptr i8, ptr %.1.i.a, i64 2
+  %i.ah = getelementptr i8, ptr %.1.i.lcssa, i64 2
   %i.ai = load i16, ptr %i.ah, align 2
-  %i.aj = getelementptr i8, ptr %.126.i.a, i64 2
+  %i.aj = getelementptr i8, ptr %.126.i.lcssa, i64 2
   %i.ak = load i16, ptr %i.aj, align 2
   %i.al = icmp eq i16 %i.ai, %i.ak
   br i1 %i.al, label %bb.l, label %posix_acl_from_nfsacl.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.am = getelementptr i8, ptr %.1.i.a, i64 8
-  %i.an = ptrtoint ptr %.1.i.a to i64
+  %i.am = getelementptr i8, ptr %.1.i.lcssa, i64 8
+  %i.an = ptrtoint ptr %.1.i.lcssa to i64
   %i.ao = ptrtoint ptr %i.t to i64
   %.neg.i = add i64 %i.ao, 24
   %i.ap = sub i64 %.neg.i, %i.an
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.1.i.a, ptr align 4 %i.am, i64 %i.ap, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.1.i.lcssa, ptr align 4 %i.am, i64 %i.ap, i1 false)
   store i32 3, ptr %i.u, align 4
   br label %posix_acl_from_nfsacl.exit
 
@@ -540,7 +724,7 @@ bb.m:                                             ; preds = %bb.e
   br i1 %.not.i17, label %posix_acl_release.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.ar = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %i.s, i32 -1, ptr nonnull elementtype(i32) %i.s) #8, !srcloc !14 ; 2 uses
+  %i.ar = call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(i32) %i.s, i32 -1, ptr nonnull elementtype(i32) %i.s) #8, !srcloc !16 ; 2 uses
   %i.as = icmp eq i32 %i.ar, 1
   br i1 %i.as, label %bb.q, label %bb.o
 
@@ -553,7 +737,7 @@ bb.p:                                             ; preds = %bb.o
   br label %posix_acl_release.exit
 
 bb.q:                                             ; preds = %bb.n
-  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !15
+  call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #8, !srcloc !17
   %i.au = getelementptr i8, ptr %i.s, i64 8
   call void @kvfree_call_rcu(ptr noundef %i.au, ptr noundef nonnull %i.s) #9
   br label %posix_acl_release.exit
@@ -681,7 +865,10 @@ attributes #9 = { noredzone nounwind "no-builtin-wcslen" }
 !10 = !{!"auto-init"}
 !11 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !12 = distinct !{!12, !13}
-!13 = !{!"llvm.loop.mustprogress"}
-!14 = !{i64 2148952581, i64 2148952620, i64 2148952641, i64 2148952678, i64 2148952701, i64 2148952710}
-!15 = !{i64 2151092380}
+!13 = !{!"llvm.loop.unroll.disable"}
+!14 = distinct !{!14, !15}
+!15 = !{!"llvm.loop.mustprogress"}
+!16 = !{i64 2148952581, i64 2148952620, i64 2148952641, i64 2148952678, i64 2148952701, i64 2148952710}
+!17 = !{i64 2151092380}
+!18 = distinct !{!18, !13}
 end_hunk_0

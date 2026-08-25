@@ -204,16 +204,14 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader:                                       ; preds = %.lr.ph69, %middle.block, %bb.r
   %.050.lcssa = phi ptr [ %i.k, %bb.r ], [ %i.ap, %middle.block ], [ %i.bq, %.lr.ph69 ] ; 3 uses
-  %.0.lcssa = phi i32 [ 0, %bb.r ], [ %.154, %middle.block ], [ %.154, %.lr.ph69 ] ; 5 uses
+  %.0.lcssa = phi i32 [ 0, %bb.r ], [ %.154, %middle.block ], [ %.154, %.lr.ph69 ] ; 4 uses
   %.157.lcssa = phi ptr [ %.15765, %bb.r ], [ %i.am, %middle.block ], [ %.157, %.lr.ph69 ] ; 4 uses
   %i.ax = icmp slt i32 %.0.lcssa, %.052
   br i1 %i.ax, label %.lr.ph76.preheader, label %.loopexit
 
 .lr.ph76.preheader:                               ; preds = %.preheader
-  %4 = add nuw i32 %.0.lcssa, 2
-  %5 = tail call i32 @llvm.smax.i32(i32 %.052, i32 %4)
   %i.ay = xor i32 %.0.lcssa, -1
-  %i.az = add i32 %5, %i.ay                       ; 2 uses
+  %i.az = add i32 %.052, %i.ay                    ; 2 uses
   %i.ba = lshr i32 %i.az, 1
   %narrow = add nuw i32 %i.ba, 1
   %i.bb = zext i32 %narrow to i64                 ; 2 uses

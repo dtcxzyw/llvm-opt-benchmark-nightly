@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.l
-  %.1.i82 = phi ptr [ %i.ay, %bb.l ], [ %.0.i81, %bb.q ] ; 5 uses
+  %.1.i82 = phi ptr [ %i.ay, %bb.l ], [ %.0.i81, %bb.q ] ; 4 uses
   %i.cd = getelementptr i8, ptr %.1.i82, i64 20   ; 2 uses
   store i32 0, ptr %i.cd, align 4, !tbaa !137
   %i.ce = getelementptr i8, ptr %.1.i82, i64 16
@@ -217,17 +217,8 @@ bb.r:                                             ; preds = %bb.q, %bb.l
   br i1 %i.ci, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.r
-  %.1.i82101 = ptrtoaddr ptr %.1.i82 to i64       ; 3 uses
   %i.cj = shl nsw i64 %i.cg, 2
-  %2 = add i64 %i.cj, %.1.i82101
-  %3 = add i64 %2, 24
-  %4 = add i64 %.1.i82101, 28
-  %umax = tail call i64 @llvm.umax.i64(i64 %3, i64 %4)
-  %5 = add i64 %umax, -25
-  %6 = sub i64 %5, %.1.i82101
-  %7 = and i64 %6, -4
-  %8 = add i64 %7, 4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cf, i8 0, i64 %8, i1 false), !tbaa !7
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.cf, i8 0, i64 %i.cj, i1 false), !tbaa !7
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.r
@@ -630,9 +621,6 @@ declare i32 @llvm.umax.i32(i32, i32) #2
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #2
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #2
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
@@ -644,6 +632,9 @@ declare double @llvm.fabs.f64(double) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #2
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

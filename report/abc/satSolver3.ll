@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr i8, ptr %i.z, i64 4       ; 2 uses
   %.val127 = load i32, ptr %i.ab, align 4, !tbaa !37 ; 2 uses
   %i.ac = sext i32 %.val127 to i64
-  %.idx = shl nsw i64 %i.ac, 2                    ; 2 uses
+  %.idx = shl nsw i64 %i.ac, 2                    ; 3 uses
   %i.ad = getelementptr inbounds i8, ptr %.val124, i64 %.idx ; 6 uses
   %i.ae = load i64, ptr %i.e, align 8, !tbaa !60
   %i.af = add nsw i64 %i.ae, 1
@@ -213,11 +213,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ag, label %.lr.ph.lr.ph, label %.outer._crit_edge
 
 .lr.ph.lr.ph:                                     ; preds = %bb.c
-  %.val124249 = ptrtoaddr ptr %.val124 to i64
+  %.val124249 = ptrtoaddr ptr %.val124 to i64     ; 2 uses
   %i.ah = shl nsw i32 %i.x, 1
   %i.ai = or disjoint i32 %i.ah, 1
   %i.aj = xor i32 %i.x, 1                         ; 4 uses
-  %i.ak = add i64 %.idx, %.val124249              ; 2 uses
+  %1 = add i64 %.val124249, -5
+  %2 = add i64 %1, %.idx
+  %3 = add i64 %.val124249, -5
+  %i.ak = add i64 %3, %.idx
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.lr.ph, %.thread
@@ -225,11 +228,11 @@ bb.c:                                             ; preds = %bb.b
   %.092.ph181 = phi ptr [ %.val124, %.lr.ph.lr.ph ], [ %i.ip, %.thread ] ; 2 uses
   %.1103.ph180 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.8110, %.thread ] ; 7 uses
   %.090.ph182247 = ptrtoaddr ptr %.090.ph182 to i64 ; 2 uses
-  %.092.ph181248 = ptrtoaddr ptr %.092.ph181 to i64 ; 6 uses
+  %.092.ph181248 = ptrtoaddr ptr %.092.ph181 to i64 ; 4 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.j
-  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %bb.j ] ; 5 uses
+  %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %bb.j ] ; 3 uses
   %.090157 = phi ptr [ %.090.ph182, %.lr.ph ], [ %i.cp, %bb.j ] ; 9 uses
   %.092156 = phi ptr [ %.092.ph181, %.lr.ph ], [ %i.co, %bb.j ] ; 17 uses
   %i.al = load i32, ptr %.092156, align 4, !tbaa !32 ; 8 uses
@@ -314,17 +317,12 @@ bb.i:                                             ; preds = %sat_solver3_enqueue
   br i1 %i.by, label %.lr.ph165.preheader, label %.thread
 
 .lr.ph165.preheader:                              ; preds = %bb.i
-  %1 = add i64 %.092.ph181248, 8
   %i.bz = shl i64 %indvar, 2
-  %i.ca = add i64 %i.bz, %1
-  %umax255 = tail call i64 @llvm.umax.i64(i64 %i.ca, i64 %i.ak)
-  %2 = mul i64 %indvar, -4
-  %reass.sub = sub i64 %2, %.092.ph181248
-  %3 = add i64 %reass.sub, -5
-  %4 = add i64 %umax255, %3                       ; 2 uses
-  %i.cb = lshr i64 %4, 2
+  %i.ca = add i64 %i.bz, %.092.ph181248
+  %reass.sub = sub i64 %i.ak, %i.ca               ; 2 uses
+  %i.cb = lshr i64 %reass.sub, 2
   %i.cc = add nuw nsw i64 %i.cb, 1                ; 2 uses
-  %min.iters.check257 = icmp ult i64 %4, 28
+  %min.iters.check257 = icmp ult i64 %reass.sub, 28
   %i.cd = sub i64 %.092.ph181248, %.090.ph182247
   %diff.check254 = icmp ugt i64 %i.cd, -32
   %or.cond = select i1 %min.iters.check257, i1 true, i1 %diff.check254
@@ -679,17 +677,12 @@ bb.ab:                                            ; preds = %sat_solver3_enqueue
   br i1 %i.hz, label %.lr.ph177.preheader, label %.thread
 
 .lr.ph177.preheader:                              ; preds = %bb.ab
-  %5 = add i64 %.092.ph181248, 8
   %i.ia = shl i64 %indvar, 2
-  %i.ib = add i64 %i.ia, %5
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ib, i64 %i.ak)
-  %6 = mul i64 %indvar, -4
-  %reass.sub273 = sub i64 %6, %.092.ph181248
-  %7 = add i64 %reass.sub273, -5
-  %8 = add i64 %umax, %7                          ; 2 uses
-  %i.ic = lshr i64 %8, 2
+  %i.ib = add i64 %i.ia, %.092.ph181248
+  %reass.sub273 = sub i64 %2, %i.ib               ; 2 uses
+  %i.ic = lshr i64 %reass.sub273, 2
   %i.id = add nuw nsw i64 %i.ic, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %8, 28
+  %min.iters.check = icmp ult i64 %reass.sub273, 28
   %i.ie = sub i64 %.092.ph181248, %.090.ph182247
   %diff.check = icmp ugt i64 %i.ie, -32
   %or.cond274 = select i1 %min.iters.check, i1 true, i1 %diff.check

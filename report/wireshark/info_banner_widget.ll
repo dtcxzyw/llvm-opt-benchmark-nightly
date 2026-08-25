@@ -2,7 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2736
 inline.NumDeleted: 1108
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZN17QArrayDataPointerI6QColorE13detachAndGrowEN10QArrayData14GrowthPositionExPPKS0_PS1_:bb.a
 bb.h:                                             ; preds = %_ZN9QtPrivate20q_relocate_overlap_nI6QColorxEEvPT_T0_S3_.exit.i.i
   %i.aj = load ptr, ptr %3, align 8               ; 3 uses
@@ -204,7 +205,7 @@ _ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit.thread: ; preds = %bb.b, %_
   call void @_ZN17QArrayDataPointerI6QColorE12allocateGrowERKS1_xN10QArrayData14GrowthPositionE(ptr dead_on_unwind nonnull writable sret(%struct.QArrayDataPointer.16) align 8 %4, ptr noundef align 8 dereferenceable(24) %0, i64 noundef %2, i32 noundef %1)
   %i.v = icmp sgt i64 %2, 0
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.x = load ptr, ptr %i.w, align 8              ; 3 uses
+  %i.x = load ptr, ptr %i.w, align 8              ; 7 uses
   %.not = icmp eq ptr %i.x, null
   %or.cond42 = select i1 %i.v, i1 %.not, i1 false
   br i1 %or.cond42, label %bb.d, label %bb.h
@@ -258,59 +259,107 @@ _ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31: ; preds = %bb.i
 
 _ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31.thread: ; preds = %bb.i, %_ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31
   %i.ai = getelementptr i8, ptr %0, i64 8
-  %i.aj = load ptr, ptr %i.ai, align 8            ; 3 uses
-  %.idx43 = shl i64 %spec.select, 4               ; 2 uses
+  %i.aj = load ptr, ptr %i.ai, align 8            ; 5 uses
+  %.idx43 = shl i64 %spec.select, 4               ; 3 uses
   %i.ak = getelementptr i8, ptr %i.aj, i64 %.idx43 ; 2 uses
   %i.al = icmp ne i64 %.idx43, 0
   %i.am = icmp ult ptr %i.aj, %i.ak
   %or.cond58 = select i1 %i.al, i1 %i.am, i1 false
-  br i1 %or.cond58, label %.lr.ph.i.a, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit
+  br i1 %or.cond58, label %.lr.ph.i, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit
 
-.lr.ph.i.a:                                       ; preds = %_ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31.thread
-  %i.an = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %.pre.i.a = load i64, ptr %i.an, align 16
-  br label %bb.j
+.lr.ph.i:                                         ; preds = %_ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31.thread
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
+  %.pre.i = load i64, ptr %5, align 16            ; 2 uses
+  %6 = add i64 %.idx43, -16                       ; 2 uses
+  %7 = and i64 %6, 16
+  %lcmp.mod65.not.not = icmp eq i64 %7, 0
+  br i1 %lcmp.mod65.not.not, label %.lr.ph.i.a, label %.prol.loopexit63
 
-bb.j:                                             ; preds = %bb.j, %.lr.ph.i.a
-  %i.ao = phi i64 [ %.pre.i.a, %.lr.ph.i.a ], [ %i.as, %bb.j ]
-  %.010.i = phi ptr [ %i.aj, %.lr.ph.i.a ], [ %i.aq, %bb.j ] ; 2 uses
-  %i.ap = getelementptr [16 x i8], ptr %i.x, i64 %i.ao
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %i.ap, ptr noundef align 4 dereferenceable(16) %.010.i, i64 16, i1 false)
-  %i.aq = getelementptr i8, ptr %.010.i, i64 16   ; 2 uses
-  %i.ar = load i64, ptr %i.an, align 16
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i
+  %8 = getelementptr [16 x i8], ptr %i.x, i64 %.pre.i
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %8, ptr noundef align 4 dereferenceable(16) %i.aj, i64 16, i1 false)
+  %i.an = getelementptr i8, ptr %i.aj, i64 16
+  %.pre.i.a = load i64, ptr %5, align 16
+  %9 = add i64 %.pre.i.a, 1                       ; 2 uses
+  store i64 %9, ptr %5, align 16
+  br label %.prol.loopexit63
+
+.prol.loopexit63:                                 ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.unr66 = phi i64 [ %.pre.i, %.lr.ph.i ], [ %9, %.lr.ph.i.a ]
+  %.010.i.unr = phi ptr [ %i.aj, %.lr.ph.i ], [ %i.an, %.lr.ph.i.a ]
+  %10 = icmp eq i64 %6, 0
+  br i1 %10, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit, label %bb.j
+
+bb.j:                                             ; preds = %.prol.loopexit63, %bb.j
+  %i.ao = phi i64 [ %i.as, %bb.j ], [ %.unr66, %.prol.loopexit63 ]
+  %.010.i = phi ptr [ %i.aq, %bb.j ], [ %.010.i.unr, %.prol.loopexit63 ] ; 3 uses
+  %11 = getelementptr [16 x i8], ptr %i.x, i64 %i.ao
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %11, ptr noundef align 4 dereferenceable(16) %.010.i, i64 16, i1 false)
+  %12 = getelementptr i8, ptr %.010.i, i64 16
+  %13 = load i64, ptr %5, align 16
+  %14 = add i64 %13, 1                            ; 2 uses
+  store i64 %14, ptr %5, align 16
+  %i.ap = getelementptr [16 x i8], ptr %i.x, i64 %14
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %i.ap, ptr noundef align 4 dereferenceable(16) %12, i64 16, i1 false)
+  %i.aq = getelementptr i8, ptr %.010.i, i64 32   ; 2 uses
+  %i.ar = load i64, ptr %5, align 16
   %i.as = add i64 %i.ar, 1                        ; 2 uses
-  store i64 %i.as, ptr %i.an, align 16
+  store i64 %i.as, ptr %5, align 16
   %i.at = icmp ult ptr %i.aq, %i.ak
   br i1 %i.at, label %bb.j, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit, !llvm.loop !138
 
 bb.k:                                             ; preds = %_ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31
   %i.au = getelementptr i8, ptr %0, i64 8
-  %i.av = load ptr, ptr %i.au, align 8            ; 3 uses
-  %.idx = shl i64 %spec.select, 4                 ; 2 uses
+  %i.av = load ptr, ptr %i.au, align 8            ; 5 uses
+  %.idx = shl i64 %spec.select, 4                 ; 3 uses
   %i.aw = getelementptr i8, ptr %i.av, i64 %.idx  ; 2 uses
   %i.ax = icmp ne i64 %.idx, 0
   %i.ay = icmp ult ptr %i.av, %i.aw
   %or.cond59 = select i1 %i.ax, i1 %i.ay, i1 false
-  br i1 %or.cond59, label %.lr.ph.i32.a, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit
+  br i1 %or.cond59, label %.lr.ph.i32, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit
 
-.lr.ph.i32.a:                                     ; preds = %bb.k
-  %i.az = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
-  %.pre.i33.a = load i64, ptr %i.az, align 16
-  br label %bb.l
+.lr.ph.i32:                                       ; preds = %bb.k
+  %15 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 7 uses
+  %.pre.i33 = load i64, ptr %15, align 16         ; 2 uses
+  %16 = add i64 %.idx, -16                        ; 2 uses
+  %17 = and i64 %16, 16
+  %lcmp.mod.not.not = icmp eq i64 %17, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i32.a, label %.prol.loopexit
 
-bb.l:                                             ; preds = %bb.l, %.lr.ph.i32.a
-  %i.ba = phi i64 [ %.pre.i33.a, %.lr.ph.i32.a ], [ %i.be, %bb.l ]
-  %.010.i34 = phi ptr [ %i.av, %.lr.ph.i32.a ], [ %i.bc, %bb.l ] ; 2 uses
-  %i.bb = getelementptr [16 x i8], ptr %i.x, i64 %i.ba
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %i.bb, ptr noundef align 4 dereferenceable(16) %.010.i34, i64 16, i1 false)
-  %i.bc = getelementptr i8, ptr %.010.i34, i64 16 ; 2 uses
-  %i.bd = load i64, ptr %i.az, align 16
+.lr.ph.i32.a:                                     ; preds = %.lr.ph.i32
+  %18 = getelementptr [16 x i8], ptr %i.x, i64 %.pre.i33
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %18, ptr noundef align 4 dereferenceable(16) %i.av, i64 16, i1 false)
+  %i.az = getelementptr i8, ptr %i.av, i64 16
+  %.pre.i33.a = load i64, ptr %15, align 16
+  %19 = add i64 %.pre.i33.a, 1                    ; 2 uses
+  store i64 %19, ptr %15, align 16
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.lr.ph.i32.a, %.lr.ph.i32
+  %.unr = phi i64 [ %.pre.i33, %.lr.ph.i32 ], [ %19, %.lr.ph.i32.a ]
+  %.010.i34.unr = phi ptr [ %i.av, %.lr.ph.i32 ], [ %i.az, %.lr.ph.i32.a ]
+  %20 = icmp eq i64 %16, 0
+  br i1 %20, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit, label %bb.l
+
+bb.l:                                             ; preds = %.prol.loopexit, %bb.l
+  %i.ba = phi i64 [ %i.be, %bb.l ], [ %.unr, %.prol.loopexit ]
+  %.010.i34 = phi ptr [ %i.bc, %bb.l ], [ %.010.i34.unr, %.prol.loopexit ] ; 3 uses
+  %21 = getelementptr [16 x i8], ptr %i.x, i64 %i.ba
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %21, ptr noundef align 4 dereferenceable(16) %.010.i34, i64 16, i1 false)
+  %22 = getelementptr i8, ptr %.010.i34, i64 16
+  %23 = load i64, ptr %15, align 16
+  %24 = add i64 %23, 1                            ; 2 uses
+  store i64 %24, ptr %15, align 16
+  %i.bb = getelementptr [16 x i8], ptr %i.x, i64 %24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef align 4 dereferenceable(16) %i.bb, ptr noundef align 4 dereferenceable(16) %22, i64 16, i1 false)
+  %i.bc = getelementptr i8, ptr %.010.i34, i64 32 ; 2 uses
+  %i.bd = load i64, ptr %15, align 16
   %i.be = add i64 %i.bd, 1                        ; 2 uses
-  store i64 %i.be, ptr %i.az, align 16
+  store i64 %i.be, ptr %15, align 16
   %i.bf = icmp ult ptr %i.bc, %i.aw
   br i1 %i.bf, label %bb.l, label %_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit, !llvm.loop !139
 
-_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit: ; preds = %bb.l, %bb.j, %bb.k, %_ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31.thread, %bb.h
+_ZN9QtPrivate16QGenericArrayOpsI6QColorE10copyAppendEPKS1_S4_.exit: ; preds = %.prol.loopexit, %bb.l, %.prol.loopexit63, %bb.j, %bb.k, %_ZNK17QArrayDataPointerI6QColorE11needsDetachEv.exit31.thread, %bb.h
   %i.bg = load ptr, ptr %0, align 8               ; 3 uses
   %i.bh = getelementptr i8, ptr %0, i64 8
   %i.bi = load ptr, ptr %i.bh, align 8            ; 2 uses

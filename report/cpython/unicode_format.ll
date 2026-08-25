@@ -204,9 +204,8 @@ bb.iv:                                            ; preds = %bb.iu, %bb.il, %bb.
 bb.iw:                                            ; preds = %bb.iv
   %i.xe = sub i64 %i.xc, %.3170.i.i               ; 4 uses
   %i.xf = load i32, ptr %i.ay, align 8, !tbaa !66
-  %i.xg = load ptr, ptr %i.az, align 8, !tbaa !67 ; 4 uses
-  %4 = ptrtoaddr ptr %i.xg to i64                 ; 6 uses
-  %i.xh = load i64, ptr %i.ax, align 8, !tbaa !65 ; 12 uses
+  %i.xg = load ptr, ptr %i.az, align 8, !tbaa !67 ; 3 uses
+  %i.xh = load i64, ptr %i.ax, align 8, !tbaa !65 ; 10 uses
   switch i32 %i.xf, label %bb.ja [
     i32 1, label %bb.ix
     i32 2, label %bb.iy
@@ -228,25 +227,17 @@ bb.iy:                                            ; preds = %bb.iw
   br i1 %i.xn, label %iter.check741, label %_PyUnicode_Fill.exit.i.i
 
 iter.check741:                                    ; preds = %bb.iy
-  %5 = shl i64 %i.xc, 1
-  %6 = add i64 %5, %4
-  %7 = shl i64 %i.xh, 1                           ; 3 uses
-  %8 = add i64 %6, %7
   %i.xo = shl i64 %.3170.i.i, 1
-  %9 = sub i64 %8, %i.xo
-  %10 = add i64 %4, 2
-  %11 = add i64 %10, %7
-  %umax726 = call i64 @llvm.umax.i64(i64 %9, i64 %11)
-  %i.xp = xor i64 %4, -1
-  %12 = add i64 %umax726, %i.xp
-  %13 = sub i64 %12, %7                           ; 3 uses
-  %14 = lshr i64 %13, 1
-  %i.xq = add nuw i64 %14, 1                      ; 5 uses
-  %min.iters.check728 = icmp ult i64 %13, 6
+  %i.xp = xor i64 %i.xo, -1
+  %4 = lshr i64 %i.xp, 1
+  %5 = add i64 %4, %i.xc
+  %6 = and i64 %5, 9223372036854775807            ; 3 uses
+  %i.xq = add nuw i64 %6, 1                       ; 5 uses
+  %min.iters.check728 = icmp samesign ult i64 %6, 3
   br i1 %min.iters.check728, label %.lr.ph30.i.i.i.preheader, label %vector.main.loop.iter.check729
 
 vector.main.loop.iter.check729:                   ; preds = %iter.check741
-  %min.iters.check730 = icmp ult i64 %13, 30
+  %min.iters.check730 = icmp samesign ult i64 %6, 15
   br i1 %min.iters.check730, label %vec.epilog.ph745, label %vector.ph731
 
 vector.ph731:                                     ; preds = %vector.main.loop.iter.check729
@@ -317,21 +308,13 @@ bb.iz:                                            ; preds = %bb.iw
   br i1 %i.yf, label %.lr.ph.i.i.i.preheader, label %_PyUnicode_Fill.exit.i.i
 
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.iz
-  %15 = shl i64 %i.xc, 2
-  %16 = shl i64 %i.xh, 2                          ; 3 uses
   %i.yg = shl i64 %.3170.i.i, 2
-  %17 = add i64 %15, %4
-  %18 = add i64 %17, %16
-  %19 = sub i64 %18, %i.yg
-  %20 = add i64 %16, %4
-  %21 = add i64 %20, 4
-  %22 = call i64 @llvm.umax.i64(i64 %19, i64 %21)
-  %i.yh = xor i64 %4, -1
-  %23 = add i64 %22, %i.yh
-  %24 = sub i64 %23, %16                          ; 2 uses
-  %25 = lshr i64 %24, 2
-  %i.yi = add nuw nsw i64 %25, 1                  ; 2 uses
-  %min.iters.check757 = icmp ult i64 %24, 28
+  %i.yh = xor i64 %i.yg, -1
+  %7 = lshr i64 %i.yh, 2
+  %8 = add i64 %7, %i.xc
+  %9 = and i64 %8, 4611686018427387903            ; 2 uses
+  %i.yi = add nuw nsw i64 %9, 1                   ; 2 uses
+  %min.iters.check757 = icmp samesign ult i64 %9, 7
   br i1 %min.iters.check757, label %.lr.ph.i.i.i.preheader777, label %vector.ph758
 
 vector.ph758:                                     ; preds = %.lr.ph.i.i.i.preheader
@@ -511,9 +494,8 @@ bb.js:                                            ; preds = %bb.jr, %bb.jq
 bb.jt:                                            ; preds = %bb.js
   %i.aaa = sub i64 %i.ys, %.3170.i.i              ; 4 uses
   %i.aab = load i32, ptr %i.ay, align 8, !tbaa !66
-  %i.aac = load ptr, ptr %i.az, align 8, !tbaa !67 ; 4 uses
-  %26 = ptrtoaddr ptr %i.aac to i64               ; 6 uses
-  %i.aad = load i64, ptr %i.ax, align 8, !tbaa !65 ; 12 uses
+  %i.aac = load ptr, ptr %i.az, align 8, !tbaa !67 ; 3 uses
+  %i.aad = load i64, ptr %i.ax, align 8, !tbaa !65 ; 10 uses
   switch i32 %i.aab, label %bb.jx [
     i32 1, label %bb.ju
     i32 2, label %bb.jv
@@ -533,25 +515,17 @@ bb.jv:                                            ; preds = %bb.jt
   br i1 %i.aah, label %iter.check, label %_PyUnicode_Fill.exit221.i.i
 
 iter.check:                                       ; preds = %bb.jv
-  %27 = shl i64 %i.ys, 1
-  %28 = add i64 %27, %26
-  %29 = shl i64 %i.aad, 1                         ; 3 uses
-  %30 = add i64 %28, %29
   %i.aai = shl i64 %.3170.i.i, 1
-  %31 = sub i64 %30, %i.aai
-  %32 = add i64 %26, 2
-  %33 = add i64 %32, %29
-  %umax = call i64 @llvm.umax.i64(i64 %31, i64 %33)
-  %i.aaj = xor i64 %26, -1
-  %34 = add i64 %umax, %i.aaj
-  %35 = sub i64 %34, %29                          ; 3 uses
-  %36 = lshr i64 %35, 1
-  %i.aak = add nuw i64 %36, 1                     ; 5 uses
-  %min.iters.check = icmp ult i64 %35, 6
+  %i.aaj = xor i64 %i.aai, -1
+  %10 = lshr i64 %i.aaj, 1
+  %11 = add i64 %10, %i.ys
+  %12 = and i64 %11, 9223372036854775807          ; 3 uses
+  %i.aak = add nuw i64 %12, 1                     ; 5 uses
+  %min.iters.check = icmp samesign ult i64 %12, 3
   br i1 %min.iters.check, label %.lr.ph30.i219.i.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check710 = icmp ult i64 %35, 30
+  %min.iters.check710 = icmp samesign ult i64 %12, 15
   br i1 %min.iters.check710, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
@@ -618,21 +592,13 @@ bb.jw:                                            ; preds = %bb.jt
   br i1 %i.aaz, label %.lr.ph.i217.i.i.preheader, label %_PyUnicode_Fill.exit221.i.i
 
 .lr.ph.i217.i.i.preheader:                        ; preds = %bb.jw
-  %37 = shl i64 %i.ys, 2
-  %38 = shl i64 %i.aad, 2                         ; 3 uses
   %i.aba = shl i64 %.3170.i.i, 2
-  %39 = add i64 %37, %26
-  %40 = add i64 %39, %38
-  %41 = sub i64 %40, %i.aba
-  %42 = add i64 %38, %26
-  %43 = add i64 %42, 4
-  %44 = call i64 @llvm.umax.i64(i64 %41, i64 %43)
-  %i.abb = xor i64 %26, -1
-  %45 = add i64 %44, %i.abb
-  %46 = sub i64 %45, %38                          ; 2 uses
-  %47 = lshr i64 %46, 2
-  %i.abc = add nuw nsw i64 %47, 1                 ; 2 uses
-  %min.iters.check717 = icmp ult i64 %46, 28
+  %i.abb = xor i64 %i.aba, -1
+  %13 = lshr i64 %i.abb, 2
+  %14 = add i64 %13, %i.ys
+  %15 = and i64 %14, 4611686018427387903          ; 2 uses
+  %i.abc = add nuw nsw i64 %15, 1                 ; 2 uses
+  %min.iters.check717 = icmp samesign ult i64 %15, 7
   br i1 %min.iters.check717, label %.lr.ph.i217.i.i.preheader775, label %vector.ph718
 
 vector.ph718:                                     ; preds = %.lr.ph.i217.i.i.preheader
@@ -1034,9 +1000,6 @@ declare i64 @llvm.smax.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

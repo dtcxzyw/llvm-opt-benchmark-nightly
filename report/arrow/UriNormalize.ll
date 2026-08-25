@@ -22,9 +22,9 @@ define i32 @uriNormalizeSyntaxMaskRequiredA(ptr nofree noundef readonly captures
 bb.a:
   %1 = alloca %struct.UriUriStructA, align 8      ; 4 uses
   %i.a = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 0, ptr %i.a, align 4, !tbaa !3
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %uriNormalizeSyntaxMaskRequiredExA.exit, label %bb.b
 
@@ -36,8 +36,8 @@ bb.b:                                             ; preds = %bb.a
 
 uriNormalizeSyntaxMaskRequiredExA.exit:           ; preds = %bb.a, %bb.b
   %i.d = phi i32 [ 0, %bb.a ], [ %.pre, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %i.d
 }
 
@@ -48,7 +48,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 define range(i32 0, 3) i32 @uriNormalizeSyntaxMaskRequiredExA(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.UriUriStructA, align 8      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %1, null
   %or.cond = or i1 %i.a, %i.b
@@ -61,7 +61,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi i32 [ 0, %bb.b ], [ 2, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   ret i32 %.0
 }
 
@@ -75,7 +75,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define internal fastcc range(i32 0, 4) i32 @uriNormalizeSyntaxEngineA(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(address_is_null) %2, ptr noundef %3) unnamed_addr #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 19 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 0, ptr %i.a, align 4, !tbaa !3
   %i.b = icmp eq ptr %0, null
   %.not212 = icmp eq ptr %2, null                 ; 6 uses
@@ -175,14 +175,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond31.i, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.af = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.ab) #7
+  %i.af = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.ab) #6
   %i.ag = load i8, ptr %i.x, align 1, !tbaa !17
-  %i.ah = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.ag) #7
+  %i.ah = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.ag) #6
   %i.ai = zext i8 %i.af to i32
   %i.aj = shl nuw nsw i32 %i.ai, 4
   %i.ak = zext i8 %i.ah to i32
   %i.al = add nuw nsw i32 %i.aj, %i.ak
-  %i.am = tail call i32 @uriIsUnreserved(i32 noundef %i.al) #7
+  %i.am = tail call i32 @uriIsUnreserved(i32 noundef %i.al) #6
   %.not.i = icmp eq i32 %i.am, 0
   br i1 %.not.i, label %bb.m, label %bb.n
 
@@ -550,7 +550,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.ew = load ptr, ptr %3, align 8, !tbaa !31
   %i.ex = and i64 %i.es, 2147483647               ; 3 uses
-  %i.ey = tail call ptr %i.ew(ptr noundef nonnull %3, i64 noundef %i.ex) #7, !inline_history !33 ; 6 uses
+  %i.ey = tail call ptr %i.ew(ptr noundef nonnull %3, i64 noundef %i.ex) #6, !inline_history !33 ; 6 uses
   %i.ez = icmp eq ptr %i.ey, null
   br i1 %i.ez, label %bb.y, label %.lr.ph.i224.preheader
 
@@ -953,7 +953,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   %i.kb = load ptr, ptr %3, align 8, !tbaa !31
   %i.kc = and i64 %i.jx, 2147483647               ; 3 uses
-  %i.kd = tail call ptr %i.kb(ptr noundef nonnull %3, i64 noundef %i.kc) #7, !inline_history !33 ; 7 uses
+  %i.kd = tail call ptr %i.kb(ptr noundef nonnull %3, i64 noundef %i.kc) #6, !inline_history !33 ; 7 uses
   %i.ke = icmp eq ptr %i.kd, null
   br i1 %i.ke, label %bb.ai, label %.lr.ph.i235.preheader
 
@@ -1356,14 +1356,14 @@ bb.av:                                            ; preds = %bb.au
   br i1 %or.cond31.i256, label %bb.ay, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.qh = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.qd) #7
+  %i.qh = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.qd) #6
   %i.qi = load i8, ptr %i.pz, align 1, !tbaa !17
-  %i.qj = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.qi) #7
+  %i.qj = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.qi) #6
   %i.qk = zext i8 %i.qh to i32
   %i.ql = shl nuw nsw i32 %i.qk, 4
   %i.qm = zext i8 %i.qj to i32
   %i.qn = add nuw nsw i32 %i.ql, %i.qm
-  %i.qo = tail call i32 @uriIsUnreserved(i32 noundef %i.qn) #7
+  %i.qo = tail call i32 @uriIsUnreserved(i32 noundef %i.qn) #6
   %.not.i257 = icmp eq i32 %i.qo, 0
   br i1 %.not.i257, label %bb.ax, label %bb.ay
 
@@ -1485,14 +1485,14 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %or.cond31.i265, label %.thread309, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.sc = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.ry) #7
+  %i.sc = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.ry) #6
   %i.sd = load i8, ptr %i.ru, align 1, !tbaa !17
-  %i.se = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.sd) #7
+  %i.se = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.sd) #6
   %i.sf = zext i8 %i.sc to i32
   %i.sg = shl nuw nsw i32 %i.sf, 4
   %i.sh = zext i8 %i.se to i32
   %i.si = add nuw nsw i32 %i.sg, %i.sh
-  %i.sj = tail call i32 @uriIsUnreserved(i32 noundef %i.si) #7
+  %i.sj = tail call i32 @uriIsUnreserved(i32 noundef %i.si) #6
   %.not.i266 = icmp eq i32 %i.sj, 0
   br i1 %.not.i266, label %bb.bo, label %.thread309
 
@@ -1588,7 +1588,7 @@ bb.bt:                                            ; preds = %.lr.ph328
   %i.tp = icmp ne i32 %i.to, 0
   %i.tq = select i1 %i.tn, i1 true, i1 %i.tp
   %i.tr = zext i1 %i.tq to i32
-  %i.ts = tail call i32 @uriRemoveDotSegmentsExA(ptr noundef %0, i32 noundef %i.sx, i32 noundef %i.tr, ptr noundef %3) #7
+  %i.ts = tail call i32 @uriRemoveDotSegmentsExA(ptr noundef %0, i32 noundef %i.sx, i32 noundef %i.tr, ptr noundef %3) #6
   %.not197 = icmp eq i32 %i.ts, 0
   br i1 %.not197, label %bb.bu, label %.critedge
 
@@ -1597,7 +1597,7 @@ bb.bu:                                            ; preds = %.loopexit
   br label %bb.ef
 
 .critedge:                                        ; preds = %.loopexit
-  tail call void @uriFixEmptyTrailSegmentA(ptr noundef nonnull %0, ptr noundef %3) #7
+  tail call void @uriFixEmptyTrailSegmentA(ptr noundef nonnull %0, ptr noundef %3) #6
   br label %.loopexit316
 
 .loopexit316:                                     ; preds = %.loopexit315, %.critedge
@@ -1639,14 +1639,14 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %or.cond31.i274, label %uriContainsUglyPercentEncodingA.exit276, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.ul = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.uh) #7
+  %i.ul = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.uh) #6
   %i.um = load i8, ptr %i.ud, align 1, !tbaa !17
-  %i.un = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.um) #7
+  %i.un = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.um) #6
   %i.uo = zext i8 %i.ul to i32
   %i.up = shl nuw nsw i32 %i.uo, 4
   %i.uq = zext i8 %i.un to i32
   %i.ur = add nuw nsw i32 %i.up, %i.uq
-  %i.us = tail call i32 @uriIsUnreserved(i32 noundef %i.ur) #7
+  %i.us = tail call i32 @uriIsUnreserved(i32 noundef %i.ur) #6
   %.not.i275 = icmp eq i32 %i.us, 0
   br i1 %.not.i275, label %bb.by, label %uriContainsUglyPercentEncodingA.exit276
 
@@ -1691,14 +1691,14 @@ bb.ca:                                            ; preds = %bb.bz
   br i1 %or.cond31.i283, label %uriContainsUglyPercentEncodingA.exit285, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.vm = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.vi) #7
+  %i.vm = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.vi) #6
   %i.vn = load i8, ptr %i.ve, align 1, !tbaa !17
-  %i.vo = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.vn) #7
+  %i.vo = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.vn) #6
   %i.vp = zext i8 %i.vm to i32
   %i.vq = shl nuw nsw i32 %i.vp, 4
   %i.vr = zext i8 %i.vo to i32
   %i.vs = add nuw nsw i32 %i.vq, %i.vr
-  %i.vt = tail call i32 @uriIsUnreserved(i32 noundef %i.vs) #7
+  %i.vt = tail call i32 @uriIsUnreserved(i32 noundef %i.vs) #6
   %.not.i284 = icmp eq i32 %i.vt, 0
   br i1 %.not.i284, label %bb.cc, label %uriContainsUglyPercentEncodingA.exit285
 
@@ -1836,7 +1836,7 @@ bb.cw:                                            ; preds = %bb.cv
   %sext.i.i = shl i64 %i.xg, 32
   %i.xh = ashr exact i64 %sext.i.i, 32            ; 3 uses
   %i.xi = load ptr, ptr %3, align 8, !tbaa !31
-  %i.xj = tail call ptr %i.xi(ptr noundef nonnull %3, i64 noundef %i.xh) #7, !inline_history !62 ; 4 uses
+  %i.xj = tail call ptr %i.xi(ptr noundef nonnull %3, i64 noundef %i.xh) #6, !inline_history !62 ; 4 uses
   %i.xk = icmp eq ptr %i.xj, null
   br i1 %i.xk, label %bb.ee, label %.thread.i.i
 
@@ -1875,7 +1875,7 @@ bb.da:                                            ; preds = %bb.cz
   %sext.i81.i = shl i64 %i.xy, 32
   %i.xz = ashr exact i64 %sext.i81.i, 32          ; 3 uses
   %i.ya = load ptr, ptr %3, align 8, !tbaa !31
-  %i.yb = tail call ptr %i.ya(ptr noundef nonnull %3, i64 noundef %i.xz) #7, !inline_history !62 ; 4 uses
+  %i.yb = tail call ptr %i.ya(ptr noundef nonnull %3, i64 noundef %i.xz) #6, !inline_history !62 ; 4 uses
   %i.yc = icmp eq ptr %i.yb, null
   br i1 %i.yc, label %bb.ee, label %.thread.i82.i
 
@@ -1914,7 +1914,7 @@ bb.de:                                            ; preds = %bb.dd
   %sext.i86.i = shl i64 %i.yq, 32
   %i.yr = ashr exact i64 %sext.i86.i, 32          ; 3 uses
   %i.ys = load ptr, ptr %3, align 8, !tbaa !31
-  %i.yt = tail call ptr %i.ys(ptr noundef nonnull %3, i64 noundef %i.yr) #7, !inline_history !62 ; 4 uses
+  %i.yt = tail call ptr %i.ys(ptr noundef nonnull %3, i64 noundef %i.yr) #6, !inline_history !62 ; 4 uses
   %i.yu = icmp eq ptr %i.yt, null
   br i1 %i.yu, label %bb.ee, label %.thread.i87.i
 
@@ -1953,7 +1953,7 @@ bb.di:                                            ; preds = %bb.dh
   %sext.i91.i = shl i64 %i.zi, 32
   %i.zj = ashr exact i64 %sext.i91.i, 32          ; 3 uses
   %i.zk = load ptr, ptr %3, align 8, !tbaa !31
-  %i.zl = tail call ptr %i.zk(ptr noundef nonnull %3, i64 noundef %i.zj) #7, !inline_history !62 ; 4 uses
+  %i.zl = tail call ptr %i.zk(ptr noundef nonnull %3, i64 noundef %i.zj) #6, !inline_history !62 ; 4 uses
   %i.zm = icmp eq ptr %i.zl, null
   br i1 %i.zm, label %bb.ee, label %.thread.i92.i
 
@@ -2042,7 +2042,7 @@ bb.dt:                                            ; preds = %bb.ds
   %sext.i96.i = shl i64 %i.aaq, 32
   %i.aar = ashr exact i64 %sext.i96.i, 32         ; 3 uses
   %i.aas = load ptr, ptr %3, align 8, !tbaa !31
-  %i.aat = tail call ptr %i.aas(ptr noundef nonnull %3, i64 noundef %i.aar) #7, !inline_history !62 ; 4 uses
+  %i.aat = tail call ptr %i.aas(ptr noundef nonnull %3, i64 noundef %i.aar) #6, !inline_history !62 ; 4 uses
   %i.aau = icmp eq ptr %i.aat, null
   br i1 %i.aau, label %uriMakeRangeOwnerA.exit98.i, label %.thread.i97.i
 
@@ -2083,12 +2083,12 @@ bb.dv:                                            ; preds = %bb.du
 
 bb.dw:                                            ; preds = %bb.dv
   %i.abg = load ptr, ptr %i.aay, align 8, !tbaa !63
-  tail call void %i.abg(ptr noundef nonnull %3, ptr noundef nonnull %i.abc) #7, !inline_history !64
+  tail call void %i.abg(ptr noundef nonnull %3, ptr noundef nonnull %i.abc) #6, !inline_history !64
   br label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw, %bb.dv, %bb.du
   %i.abh = load ptr, ptr %i.aay, align 8, !tbaa !63
-  tail call void %i.abh(ptr noundef nonnull %3, ptr noundef nonnull %.061121.i) #7, !inline_history !64
+  tail call void %i.abh(ptr noundef nonnull %3, ptr noundef nonnull %.061121.i) #6, !inline_history !64
   %.not75.i = icmp eq ptr %i.abb, %.062119.i
   br i1 %.not75.i, label %.preheader.i288, label %bb.du, !llvm.loop !65
 
@@ -2097,7 +2097,7 @@ bb.dy:                                            ; preds = %bb.dy, %.preheader.
   %i.abi = getelementptr inbounds nuw i8, ptr %.1123.i, i64 16
   %i.abj = load ptr, ptr %i.abi, align 8, !tbaa !53 ; 2 uses
   %i.abk = load ptr, ptr %i.aaz, align 8, !tbaa !63
-  tail call void %i.abk(ptr noundef nonnull %3, ptr noundef nonnull %.1123.i) #7, !inline_history !64
+  tail call void %i.abk(ptr noundef nonnull %3, ptr noundef nonnull %.1123.i) #6, !inline_history !64
   %.not76.i = icmp eq ptr %i.abj, null
   br i1 %.not76.i, label %bb.dz, label %bb.dy, !llvm.loop !66
 
@@ -2135,7 +2135,7 @@ bb.ed:                                            ; preds = %bb.ec
   %sext.i101.i = shl i64 %i.abv, 32
   %i.abw = ashr exact i64 %sext.i101.i, 32        ; 3 uses
   %i.abx = load ptr, ptr %3, align 8, !tbaa !31
-  %i.aby = tail call ptr %i.abx(ptr noundef nonnull %3, i64 noundef %i.abw) #7, !inline_history !62 ; 4 uses
+  %i.aby = tail call ptr %i.abx(ptr noundef nonnull %3, i64 noundef %i.abw) #6, !inline_history !62 ; 4 uses
   %i.abz = icmp eq ptr %i.aby, null
   br i1 %i.abz, label %bb.ee, label %.thread.i102.i
 
@@ -2158,7 +2158,7 @@ uriMakeOwnerA.exit:                               ; preds = %.thread.i102.i, %bb
 
 bb.ef:                                            ; preds = %.thread311, %bb.cs, %.thread310, %uriMakeOwnerA.exit, %bb.bs, %bb.bu, %bb.e, %bb.b, %bb.ee, %bb.cq, %bb.cj, %bb.be, %bb.ap, %bb.ai, %bb.y, %bb.c
   %.1160 = phi i32 [ 0, %bb.c ], [ 2, %bb.b ], [ 3, %bb.bs ], [ 3, %bb.ee ], [ 3, %bb.cq ], [ 3, %bb.cj ], [ 0, %bb.e ], [ 3, %bb.be ], [ 3, %bb.ai ], [ 3, %bb.ap ], [ 3, %bb.y ], [ 3, %bb.bu ], [ 0, %uriMakeOwnerA.exit ], [ 0, %.thread310 ], [ 0, %bb.cs ], [ 0, %.thread311 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.1160
 }
 
@@ -2176,7 +2176,7 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i32 @uriMemoryManagerIsComplete(ptr noundef nonnull %2) #7
+  %i.b = tail call i32 @uriMemoryManagerIsComplete(ptr noundef nonnull %2) #6
   %.not = icmp eq i32 %i.b, 1
   br i1 %.not, label %bb.c, label %bb.d
 
@@ -2204,9 +2204,9 @@ define i32 @uriNormalizeSyntaxMaskRequiredW(ptr nofree noundef readonly captures
 bb.a:
   %1 = alloca %struct.UriUriStructW, align 8      ; 4 uses
   %i.a = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 0, ptr %i.a, align 4, !tbaa !3
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %uriNormalizeSyntaxMaskRequiredExW.exit, label %bb.b
 
@@ -2218,8 +2218,8 @@ bb.b:                                             ; preds = %bb.a
 
 uriNormalizeSyntaxMaskRequiredExW.exit:           ; preds = %bb.a, %bb.b
   %i.d = phi i32 [ 0, %bb.a ], [ %.pre, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %i.d
 }
 
@@ -2227,7 +2227,7 @@ uriNormalizeSyntaxMaskRequiredExW.exit:           ; preds = %bb.a, %bb.b
 define range(i32 0, 3) i32 @uriNormalizeSyntaxMaskRequiredExW(ptr nofree noundef readonly captures(address_is_null) %0, ptr nofree noundef captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.UriUriStructW, align 8      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %1, null
   %or.cond = or i1 %i.a, %i.b
@@ -2240,7 +2240,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi i32 [ 0, %bb.b ], [ 2, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   ret i32 %.0
 }
 
@@ -2248,7 +2248,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal fastcc range(i32 0, 4) i32 @uriNormalizeSyntaxEngineW(ptr noundef %0, i32 noundef %1, ptr nofree noundef captures(address_is_null) %2, ptr noundef %3) unnamed_addr #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 19 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 0, ptr %i.a, align 4, !tbaa !3
   %i.b = icmp eq ptr %0, null
   %.not212 = icmp eq ptr %2, null                 ; 6 uses
@@ -2348,14 +2348,14 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond31.i, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ah = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ad) #7
+  %i.ah = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ad) #6
   %i.ai = load i32, ptr %i.z, align 4, !tbaa !3
-  %i.aj = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ai) #7
+  %i.aj = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ai) #6
   %i.ak = zext i8 %i.ah to i32
   %i.al = shl nuw nsw i32 %i.ak, 4
   %i.am = zext i8 %i.aj to i32
   %i.an = add nuw nsw i32 %i.al, %i.am
-  %i.ao = tail call i32 @uriIsUnreserved(i32 noundef %i.an) #7
+  %i.ao = tail call i32 @uriIsUnreserved(i32 noundef %i.an) #6
   %.not.i = icmp eq i32 %i.ao, 0
   br i1 %.not.i, label %bb.m, label %bb.n
 
@@ -2394,11 +2394,9 @@ bb.r:                                             ; preds = %bb.q
 
 .preheader.i220.preheader:                        ; preds = %bb.r
   %i.bb = ptrtoaddr ptr %i.az to i64
-  %i.bc = ptrtoaddr ptr %i.av to i64              ; 2 uses
-  %4 = add i64 %i.bc, 4
-  %5 = tail call i64 @llvm.umax.i64(i64 %i.bb, i64 %4)
+  %i.bc = ptrtoaddr ptr %i.av to i64
   %i.bd = xor i64 %i.bc, -1
-  %i.be = add i64 %5, %i.bd                       ; 2 uses
+  %i.be = add i64 %i.bd, %i.bb                    ; 2 uses
   %i.bf = lshr i64 %i.be, 2
   %i.bg = add nuw nsw i64 %i.bf, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.be, 28
@@ -2565,7 +2563,7 @@ bb.x:                                             ; preds = %bb.w
   %i.di = load ptr, ptr %3, align 8, !tbaa !31
   %i.dj = and i64 %i.de, 2147483647               ; 6 uses
   %i.dk = shl nuw nsw i64 %i.dj, 2
-  %i.dl = tail call ptr %i.di(ptr noundef nonnull %3, i64 noundef %i.dk) #7, !inline_history !83 ; 8 uses
+  %i.dl = tail call ptr %i.di(ptr noundef nonnull %3, i64 noundef %i.dk) #6, !inline_history !83 ; 8 uses
   %i.dm = icmp eq ptr %i.dl, null
   br i1 %i.dm, label %bb.y, label %.lr.ph.i222
 
@@ -2697,11 +2695,9 @@ bb.ab:                                            ; preds = %bb.aa
 
 .preheader.i225.preheader:                        ; preds = %bb.ab
   %i.fg = ptrtoaddr ptr %i.fe to i64
-  %i.fh = ptrtoaddr ptr %i.fa to i64              ; 2 uses
-  %6 = add i64 %i.fh, 4
-  %7 = tail call i64 @llvm.umax.i64(i64 %i.fg, i64 %6)
+  %i.fh = ptrtoaddr ptr %i.fa to i64
   %i.fi = xor i64 %i.fh, -1
-  %i.fj = add i64 %7, %i.fi                       ; 2 uses
+  %i.fj = add i64 %i.fi, %i.fg                    ; 2 uses
   %i.fk = lshr i64 %i.fj, 2
   %i.fl = add nuw nsw i64 %i.fk, 1                ; 2 uses
   %min.iters.check442 = icmp ult i64 %i.fj, 28
@@ -2868,7 +2864,7 @@ bb.ah:                                            ; preds = %bb.ag
   %i.hn = load ptr, ptr %3, align 8, !tbaa !31
   %i.ho = and i64 %i.hj, 2147483647               ; 6 uses
   %i.hp = shl nuw nsw i64 %i.ho, 2
-  %i.hq = tail call ptr %i.hn(ptr noundef nonnull %3, i64 noundef %i.hp) #7, !inline_history !83 ; 9 uses
+  %i.hq = tail call ptr %i.hn(ptr noundef nonnull %3, i64 noundef %i.hp) #6, !inline_history !83 ; 9 uses
   %i.hr = icmp eq ptr %i.hq, null
   br i1 %i.hr, label %bb.ai, label %.lr.ph.i229
 
@@ -3040,11 +3036,9 @@ bb.ar:                                            ; preds = %bb.aq, %bb.an
 
 .preheader.i240.preheader:                        ; preds = %bb.ar
   %i.kb = ptrtoaddr ptr %i.jy to i64
-  %i.kc = ptrtoaddr ptr %i.jw to i64              ; 2 uses
-  %8 = add i64 %i.kc, 4
-  %9 = tail call i64 @llvm.umax.i64(i64 %i.kb, i64 %8)
+  %i.kc = ptrtoaddr ptr %i.jw to i64
   %i.kd = xor i64 %i.kc, -1
-  %i.ke = add i64 %9, %i.kd                       ; 2 uses
+  %i.ke = add i64 %i.kd, %i.kb                    ; 2 uses
   %i.kf = lshr i64 %i.ke, 2
   %i.kg = add nuw nsw i64 %i.kf, 1                ; 2 uses
   %min.iters.check492 = icmp ult i64 %i.ke, 28
@@ -3234,14 +3228,14 @@ bb.av:                                            ; preds = %bb.au
   br i1 %or.cond31.i250, label %bb.ay, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.ms = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.mo) #7
+  %i.ms = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.mo) #6
   %i.mt = load i32, ptr %i.mk, align 4, !tbaa !3
-  %i.mu = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.mt) #7
+  %i.mu = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.mt) #6
   %i.mv = zext i8 %i.ms to i32
   %i.mw = shl nuw nsw i32 %i.mv, 4
   %i.mx = zext i8 %i.mu to i32
   %i.my = add nuw nsw i32 %i.mw, %i.mx
-  %i.mz = tail call i32 @uriIsUnreserved(i32 noundef %i.my) #7
+  %i.mz = tail call i32 @uriIsUnreserved(i32 noundef %i.my) #6
   %.not.i251 = icmp eq i32 %i.mz, 0
   br i1 %.not.i251, label %bb.ax, label %bb.ay
 
@@ -3363,14 +3357,14 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %or.cond31.i259, label %.thread303, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.on = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.oj) #7
+  %i.on = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.oj) #6
   %i.oo = load i32, ptr %i.of, align 4, !tbaa !3
-  %i.op = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.oo) #7
+  %i.op = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.oo) #6
   %i.oq = zext i8 %i.on to i32
   %i.or = shl nuw nsw i32 %i.oq, 4
   %i.os = zext i8 %i.op to i32
   %i.ot = add nuw nsw i32 %i.or, %i.os
-  %i.ou = tail call i32 @uriIsUnreserved(i32 noundef %i.ot) #7
+  %i.ou = tail call i32 @uriIsUnreserved(i32 noundef %i.ot) #6
   %.not.i260 = icmp eq i32 %i.ou, 0
   br i1 %.not.i260, label %bb.bo, label %.thread303
 
@@ -3466,7 +3460,7 @@ bb.bt:                                            ; preds = %.lr.ph322
   %i.qa = icmp ne i32 %i.pz, 0
   %i.qb = select i1 %i.py, i1 true, i1 %i.qa
   %i.qc = zext i1 %i.qb to i32
-  %i.qd = tail call i32 @uriRemoveDotSegmentsExW(ptr noundef %0, i32 noundef %i.pi, i32 noundef %i.qc, ptr noundef %3) #7
+  %i.qd = tail call i32 @uriRemoveDotSegmentsExW(ptr noundef %0, i32 noundef %i.pi, i32 noundef %i.qc, ptr noundef %3) #6
   %.not197 = icmp eq i32 %i.qd, 0
   br i1 %.not197, label %bb.bu, label %.critedge
 
@@ -3475,7 +3469,7 @@ bb.bu:                                            ; preds = %.loopexit
   br label %bb.ef
 
 .critedge:                                        ; preds = %.loopexit
-  tail call void @uriFixEmptyTrailSegmentW(ptr noundef nonnull %0, ptr noundef %3) #7
+  tail call void @uriFixEmptyTrailSegmentW(ptr noundef nonnull %0, ptr noundef %3) #6
   br label %.loopexit310
 
 .loopexit310:                                     ; preds = %.loopexit309, %.critedge
@@ -3517,14 +3511,14 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %or.cond31.i268, label %uriContainsUglyPercentEncodingW.exit270, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.qw = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.qs) #7
+  %i.qw = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.qs) #6
   %i.qx = load i32, ptr %i.qo, align 4, !tbaa !3
-  %i.qy = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.qx) #7
+  %i.qy = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.qx) #6
   %i.qz = zext i8 %i.qw to i32
   %i.ra = shl nuw nsw i32 %i.qz, 4
   %i.rb = zext i8 %i.qy to i32
   %i.rc = add nuw nsw i32 %i.ra, %i.rb
-  %i.rd = tail call i32 @uriIsUnreserved(i32 noundef %i.rc) #7
+  %i.rd = tail call i32 @uriIsUnreserved(i32 noundef %i.rc) #6
   %.not.i269 = icmp eq i32 %i.rd, 0
   br i1 %.not.i269, label %bb.by, label %uriContainsUglyPercentEncodingW.exit270
 
@@ -3569,14 +3563,14 @@ bb.ca:                                            ; preds = %bb.bz
   br i1 %or.cond31.i277, label %uriContainsUglyPercentEncodingW.exit279, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.rx = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.rt) #7
+  %i.rx = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.rt) #6
   %i.ry = load i32, ptr %i.rp, align 4, !tbaa !3
-  %i.rz = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ry) #7
+  %i.rz = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ry) #6
   %i.sa = zext i8 %i.rx to i32
   %i.sb = shl nuw nsw i32 %i.sa, 4
   %i.sc = zext i8 %i.rz to i32
   %i.sd = add nuw nsw i32 %i.sb, %i.sc
-  %i.se = tail call i32 @uriIsUnreserved(i32 noundef %i.sd) #7
+  %i.se = tail call i32 @uriIsUnreserved(i32 noundef %i.sd) #6
   %.not.i278 = icmp eq i32 %i.se, 0
   br i1 %.not.i278, label %bb.cc, label %uriContainsUglyPercentEncodingW.exit279
 
@@ -3716,7 +3710,7 @@ bb.cw:                                            ; preds = %bb.cv
   %i.tt = shl i64 %i.ts, 34
   %i.tu = load ptr, ptr %3, align 8, !tbaa !31
   %i.tv = ashr exact i64 %i.tt, 32                ; 2 uses
-  %i.tw = tail call ptr %i.tu(ptr noundef nonnull %3, i64 noundef %i.tv) #7, !inline_history !112 ; 4 uses
+  %i.tw = tail call ptr %i.tu(ptr noundef nonnull %3, i64 noundef %i.tv) #6, !inline_history !112 ; 4 uses
   %i.tx = icmp eq ptr %i.tw, null
   br i1 %i.tx, label %bb.ee, label %.thread.i.i
 
@@ -3757,7 +3751,7 @@ bb.da:                                            ; preds = %bb.cz
   %i.un = shl i64 %i.um, 34
   %i.uo = load ptr, ptr %3, align 8, !tbaa !31
   %i.up = ashr exact i64 %i.un, 32                ; 2 uses
-  %i.uq = tail call ptr %i.uo(ptr noundef nonnull %3, i64 noundef %i.up) #7, !inline_history !112 ; 4 uses
+  %i.uq = tail call ptr %i.uo(ptr noundef nonnull %3, i64 noundef %i.up) #6, !inline_history !112 ; 4 uses
   %i.ur = icmp eq ptr %i.uq, null
   br i1 %i.ur, label %bb.ee, label %.thread.i82.i
 
@@ -3798,7 +3792,7 @@ bb.de:                                            ; preds = %bb.dd
   %i.vh = shl i64 %i.vg, 34
   %i.vi = load ptr, ptr %3, align 8, !tbaa !31
   %i.vj = ashr exact i64 %i.vh, 32                ; 2 uses
-  %i.vk = tail call ptr %i.vi(ptr noundef nonnull %3, i64 noundef %i.vj) #7, !inline_history !112 ; 4 uses
+  %i.vk = tail call ptr %i.vi(ptr noundef nonnull %3, i64 noundef %i.vj) #6, !inline_history !112 ; 4 uses
   %i.vl = icmp eq ptr %i.vk, null
   br i1 %i.vl, label %bb.ee, label %.thread.i87.i
 
@@ -3839,7 +3833,7 @@ bb.di:                                            ; preds = %bb.dh
   %i.wb = shl i64 %i.wa, 34
   %i.wc = load ptr, ptr %3, align 8, !tbaa !31
   %i.wd = ashr exact i64 %i.wb, 32                ; 2 uses
-  %i.we = tail call ptr %i.wc(ptr noundef nonnull %3, i64 noundef %i.wd) #7, !inline_history !112 ; 4 uses
+  %i.we = tail call ptr %i.wc(ptr noundef nonnull %3, i64 noundef %i.wd) #6, !inline_history !112 ; 4 uses
   %i.wf = icmp eq ptr %i.we, null
   br i1 %i.wf, label %bb.ee, label %.thread.i92.i
 
@@ -3930,7 +3924,7 @@ bb.dt:                                            ; preds = %bb.ds
   %i.xl = shl i64 %i.xk, 34
   %i.xm = load ptr, ptr %3, align 8, !tbaa !31
   %i.xn = ashr exact i64 %i.xl, 32                ; 2 uses
-  %i.xo = tail call ptr %i.xm(ptr noundef nonnull %3, i64 noundef %i.xn) #7, !inline_history !112 ; 4 uses
+  %i.xo = tail call ptr %i.xm(ptr noundef nonnull %3, i64 noundef %i.xn) #6, !inline_history !112 ; 4 uses
   %i.xp = icmp eq ptr %i.xo, null
   br i1 %i.xp, label %uriMakeRangeOwnerW.exit98.i, label %.thread.i97.i
 
@@ -3971,12 +3965,12 @@ bb.dv:                                            ; preds = %bb.du
 
 bb.dw:                                            ; preds = %bb.dv
   %i.yb = load ptr, ptr %i.xt, align 8, !tbaa !63
-  tail call void %i.yb(ptr noundef nonnull %3, ptr noundef nonnull %i.xx) #7, !inline_history !113
+  tail call void %i.yb(ptr noundef nonnull %3, ptr noundef nonnull %i.xx) #6, !inline_history !113
   br label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw, %bb.dv, %bb.du
   %i.yc = load ptr, ptr %i.xt, align 8, !tbaa !63
-  tail call void %i.yc(ptr noundef nonnull %3, ptr noundef nonnull %.061121.i) #7, !inline_history !113
+  tail call void %i.yc(ptr noundef nonnull %3, ptr noundef nonnull %.061121.i) #6, !inline_history !113
   %.not75.i = icmp eq ptr %i.xw, %.062119.i
   br i1 %.not75.i, label %.preheader.i282, label %bb.du, !llvm.loop !114
 
@@ -3985,7 +3979,7 @@ bb.dy:                                            ; preds = %bb.dy, %.preheader.
   %i.yd = getelementptr inbounds nuw i8, ptr %.1123.i, i64 16
   %i.ye = load ptr, ptr %i.yd, align 8, !tbaa !103 ; 2 uses
   %i.yf = load ptr, ptr %i.xu, align 8, !tbaa !63
-  tail call void %i.yf(ptr noundef nonnull %3, ptr noundef nonnull %.1123.i) #7, !inline_history !113
+  tail call void %i.yf(ptr noundef nonnull %3, ptr noundef nonnull %.1123.i) #6, !inline_history !113
   %.not76.i = icmp eq ptr %i.ye, null
   br i1 %.not76.i, label %bb.dz, label %bb.dy, !llvm.loop !115
 
@@ -4025,7 +4019,7 @@ bb.ed:                                            ; preds = %bb.ec
   %i.ys = shl i64 %i.yr, 34
   %i.yt = load ptr, ptr %3, align 8, !tbaa !31
   %i.yu = ashr exact i64 %i.ys, 32                ; 2 uses
-  %i.yv = tail call ptr %i.yt(ptr noundef nonnull %3, i64 noundef %i.yu) #7, !inline_history !112 ; 4 uses
+  %i.yv = tail call ptr %i.yt(ptr noundef nonnull %3, i64 noundef %i.yu) #6, !inline_history !112 ; 4 uses
   %i.yw = icmp eq ptr %i.yv, null
   br i1 %i.yw, label %bb.ee, label %.thread.i102.i
 
@@ -4048,7 +4042,7 @@ uriMakeOwnerW.exit:                               ; preds = %.thread.i102.i, %bb
 
 bb.ef:                                            ; preds = %.thread305, %bb.cs, %.thread304, %uriMakeOwnerW.exit, %bb.bs, %bb.bu, %bb.e, %bb.b, %bb.ee, %bb.cq, %bb.cj, %bb.be, %bb.ap, %bb.ai, %bb.y, %bb.c
   %.1160 = phi i32 [ 0, %bb.c ], [ 2, %bb.b ], [ 3, %bb.bs ], [ 3, %bb.ee ], [ 3, %bb.cq ], [ 3, %bb.cj ], [ 0, %bb.e ], [ 3, %bb.be ], [ 3, %bb.ai ], [ 3, %bb.ap ], [ 3, %bb.y ], [ 3, %bb.bu ], [ 0, %uriMakeOwnerW.exit ], [ 0, %.thread304 ], [ 0, %bb.cs ], [ 0, %.thread305 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %.1160
 }
 
@@ -4066,7 +4060,7 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i32 @uriMemoryManagerIsComplete(ptr noundef nonnull %2) #7
+  %i.b = tail call i32 @uriMemoryManagerIsComplete(ptr noundef nonnull %2) #6
   %.not = icmp eq i32 %i.b, 1
   br i1 %.not, label %bb.c, label %bb.d
 
@@ -4098,7 +4092,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !63
   %i.d = load ptr, ptr %0, align 8, !tbaa !7
-  tail call void %i.c(ptr noundef %2, ptr noundef %i.d) #7
+  tail call void %i.c(ptr noundef %2, ptr noundef %i.d) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.c
 
@@ -4112,7 +4106,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !63
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !45
-  tail call void %i.g(ptr noundef %2, ptr noundef %i.i) #7
+  tail call void %i.g(ptr noundef %2, ptr noundef %i.i) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
   br label %bb.e
 
@@ -4131,7 +4125,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !63
-  tail call void %i.o(ptr noundef %2, ptr noundef nonnull %i.m) #7
+  tail call void %i.o(ptr noundef %2, ptr noundef nonnull %i.m) #6
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, i8 0, i64 16, i1 false)
   br label %.sink.split
@@ -4156,7 +4150,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !63
-  tail call void %i.y(ptr noundef %2, ptr noundef nonnull %i.r) #7
+  tail call void %i.y(ptr noundef %2, ptr noundef nonnull %i.r) #6
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.k, %bb.g
@@ -4191,12 +4185,12 @@ bb.n:                                             ; preds = %.lr.ph, %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.aj = load ptr, ptr %i.ac, align 8, !tbaa !63
-  tail call void %i.aj(ptr noundef %2, ptr noundef %i.ah) #7
+  tail call void %i.aj(ptr noundef %2, ptr noundef %i.ah) #6
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.ak = load ptr, ptr %i.ac, align 8, !tbaa !63
-  tail call void %i.ak(ptr noundef %2, ptr noundef nonnull %.067) #7
+  tail call void %i.ak(ptr noundef %2, ptr noundef nonnull %.067) #6
   %.not63 = icmp eq ptr %i.ae, null
   br i1 %.not63, label %._crit_edge, label %bb.n, !llvm.loop !117
 
@@ -4214,7 +4208,7 @@ bb.r:                                             ; preds = %bb.q
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !63
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !56
-  tail call void %i.an(ptr noundef %2, ptr noundef %i.ap) #7
+  tail call void %i.an(ptr noundef %2, ptr noundef %i.ap) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, i8 0, i64 16, i1 false)
   br label %bb.s
 
@@ -4228,7 +4222,7 @@ bb.t:                                             ; preds = %bb.s
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !63
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !58
-  tail call void %i.as(ptr noundef %2, ptr noundef %i.au) #7
+  tail call void %i.as(ptr noundef %2, ptr noundef %i.au) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.at, i8 0, i64 16, i1 false)
   br label %bb.u
 
@@ -4382,13 +4376,13 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.ak = sext i32 %i.ad to i64
   %i.al = getelementptr inbounds i8, ptr %0, i64 %i.ak
   %i.am = load i8, ptr %i.al, align 1, !tbaa !17
-  %i.an = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.aj) #7
-  %i.ao = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.am) #7
+  %i.an = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.aj) #6
+  %i.ao = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.am) #6
   %i.ap = zext i8 %i.an to i32                    ; 2 uses
   %i.aq = shl nuw nsw i32 %i.ap, 4
   %i.ar = zext i8 %i.ao to i32                    ; 2 uses
   %i.as = add nuw nsw i32 %i.aq, %i.ar            ; 2 uses
-  %i.at = tail call i32 @uriIsUnreserved(i32 noundef %i.as) #7
+  %i.at = tail call i32 @uriIsUnreserved(i32 noundef %i.as) #6
   %.not43.i = icmp eq i32 %i.at, 0
   %i.au = getelementptr inbounds nuw i8, ptr %.03944.i, i64 1 ; 2 uses
   br i1 %.not43.i, label %bb.g, label %bb.f
@@ -4400,9 +4394,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   store i8 37, ptr %.03944.i, align 1, !tbaa !17
-  %i.aw = tail call signext i8 @uriHexToLetterA(i32 noundef %i.ap) #7
+  %i.aw = tail call signext i8 @uriHexToLetterA(i32 noundef %i.ap) #6
   store i8 %i.aw, ptr %i.au, align 1, !tbaa !17
-  %i.ax = tail call signext i8 @uriHexToLetterA(i32 noundef %i.ar) #7
+  %i.ax = tail call signext i8 @uriHexToLetterA(i32 noundef %i.ar) #6
   %i.ay = getelementptr inbounds nuw i8, ptr %.03944.i, i64 2
   store i8 %i.ax, ptr %i.ay, align 1, !tbaa !17
   %i.az = getelementptr inbounds nuw i8, ptr %.03944.i, i64 3
@@ -4498,7 +4492,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.k = load ptr, ptr %2, align 8, !tbaa !31
   %i.l = and i64 %i.g, 2147483647
-  %i.m = tail call ptr %i.k(ptr noundef nonnull %2, i64 noundef %i.l) #7 ; 4 uses
+  %i.m = tail call ptr %i.k(ptr noundef nonnull %2, i64 noundef %i.l) #6 ; 4 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.l, label %bb.f
 
@@ -4639,13 +4633,13 @@ bb.h:                                             ; preds = %.lr.ph.i
   %i.ax = sext i32 %i.aq to i64
   %i.ay = getelementptr inbounds i8, ptr %i.o, i64 %i.ax
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !17
-  %i.ba = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.aw) #7
-  %i.bb = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.az) #7
+  %i.ba = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.aw) #6
+  %i.bb = tail call zeroext i8 @uriHexdigToIntA(i8 noundef signext %i.az) #6
   %i.bc = zext i8 %i.ba to i32                    ; 2 uses
   %i.bd = shl nuw nsw i32 %i.bc, 4
   %i.be = zext i8 %i.bb to i32                    ; 2 uses
   %i.bf = add nuw nsw i32 %i.bd, %i.be            ; 2 uses
-  %i.bg = tail call i32 @uriIsUnreserved(i32 noundef %i.bf) #7
+  %i.bg = tail call i32 @uriIsUnreserved(i32 noundef %i.bf) #6
   %.not43.i = icmp eq i32 %i.bg, 0
   %i.bh = getelementptr inbounds nuw i8, ptr %.03944.i, i64 1 ; 2 uses
   br i1 %.not43.i, label %bb.j, label %bb.i
@@ -4657,9 +4651,9 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   store i8 37, ptr %.03944.i, align 1, !tbaa !17
-  %i.bj = tail call signext i8 @uriHexToLetterA(i32 noundef %i.bc) #7
+  %i.bj = tail call signext i8 @uriHexToLetterA(i32 noundef %i.bc) #6
   store i8 %i.bj, ptr %i.bh, align 1, !tbaa !17
-  %i.bk = tail call signext i8 @uriHexToLetterA(i32 noundef %i.be) #7
+  %i.bk = tail call signext i8 @uriHexToLetterA(i32 noundef %i.be) #6
   %i.bl = getelementptr inbounds nuw i8, ptr %.03944.i, i64 2
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !17
   %i.bm = getelementptr inbounds nuw i8, ptr %.03944.i, i64 3
@@ -4766,7 +4760,7 @@ bb.d:                                             ; preds = %bb.c
   %sext = shl i64 %i.j, 32
   %i.k = ashr exact i64 %sext, 32                 ; 3 uses
   %i.l = load ptr, ptr %3, align 8, !tbaa !31
-  %i.m = tail call ptr %i.l(ptr noundef nonnull %3, i64 noundef %i.k) #7 ; 4 uses
+  %i.m = tail call ptr %i.l(ptr noundef nonnull %3, i64 noundef %i.k) #6 ; 4 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.e, label %.thread
 
@@ -4797,7 +4791,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !63
   %i.d = load ptr, ptr %0, align 8, !tbaa !68
-  tail call void %i.c(ptr noundef %2, ptr noundef %i.d) #7
+  tail call void %i.c(ptr noundef %2, ptr noundef %i.d) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.c
 
@@ -4811,7 +4805,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !63
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !95
-  tail call void %i.g(ptr noundef %2, ptr noundef %i.i) #7
+  tail call void %i.g(ptr noundef %2, ptr noundef %i.i) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, i8 0, i64 16, i1 false)
   br label %bb.e
 
@@ -4830,7 +4824,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !63
-  tail call void %i.o(ptr noundef %2, ptr noundef nonnull %i.m) #7
+  tail call void %i.o(ptr noundef %2, ptr noundef nonnull %i.m) #6
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.p, i8 0, i64 16, i1 false)
   br label %.sink.split
@@ -4855,7 +4849,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !63
-  tail call void %i.y(ptr noundef %2, ptr noundef nonnull %i.r) #7
+  tail call void %i.y(ptr noundef %2, ptr noundef nonnull %i.r) #6
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.k, %bb.g
@@ -4890,12 +4884,12 @@ bb.n:                                             ; preds = %.lr.ph, %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.aj = load ptr, ptr %i.ac, align 8, !tbaa !63
-  tail call void %i.aj(ptr noundef %2, ptr noundef %i.ah) #7
+  tail call void %i.aj(ptr noundef %2, ptr noundef %i.ah) #6
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.ak = load ptr, ptr %i.ac, align 8, !tbaa !63
-  tail call void %i.ak(ptr noundef %2, ptr noundef nonnull %.067) #7
+  tail call void %i.ak(ptr noundef %2, ptr noundef nonnull %.067) #6
   %.not63 = icmp eq ptr %i.ae, null
   br i1 %.not63, label %._crit_edge, label %bb.n, !llvm.loop !129
 
@@ -4913,7 +4907,7 @@ bb.r:                                             ; preds = %bb.q
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !63
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !106
-  tail call void %i.an(ptr noundef %2, ptr noundef %i.ap) #7
+  tail call void %i.an(ptr noundef %2, ptr noundef %i.ap) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, i8 0, i64 16, i1 false)
   br label %bb.s
 
@@ -4927,7 +4921,7 @@ bb.t:                                             ; preds = %bb.s
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !63
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !108
-  tail call void %i.as(ptr noundef %2, ptr noundef %i.au) #7
+  tail call void %i.as(ptr noundef %2, ptr noundef %i.au) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.at, i8 0, i64 16, i1 false)
   br label %bb.u
 
@@ -5053,13 +5047,13 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.ai = sext i32 %i.ac to i64
   %i.aj = getelementptr inbounds [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !3
-  %i.al = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ah) #7
-  %i.am = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ak) #7
+  %i.al = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ah) #6
+  %i.am = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ak) #6
   %i.an = zext i8 %i.al to i32                    ; 2 uses
   %i.ao = shl nuw nsw i32 %i.an, 4
   %i.ap = zext i8 %i.am to i32                    ; 2 uses
   %i.aq = add nuw nsw i32 %i.ao, %i.ap            ; 2 uses
-  %i.ar = tail call i32 @uriIsUnreserved(i32 noundef %i.aq) #7
+  %i.ar = tail call i32 @uriIsUnreserved(i32 noundef %i.aq) #6
   %.not44.i = icmp eq i32 %i.ar, 0
   br i1 %.not44.i, label %bb.g, label %bb.f
 
@@ -5069,10 +5063,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   store i32 37, ptr %.03945.i, align 4, !tbaa !3
-  %i.as = tail call i32 @uriHexToLetterW(i32 noundef %i.an) #7
+  %i.as = tail call i32 @uriHexToLetterW(i32 noundef %i.an) #6
   %i.at = getelementptr inbounds nuw i8, ptr %.03945.i, i64 4
   store i32 %i.as, ptr %i.at, align 4, !tbaa !3
-  %i.au = tail call i32 @uriHexToLetterW(i32 noundef %i.ap) #7
+  %i.au = tail call i32 @uriHexToLetterW(i32 noundef %i.ap) #6
   %i.av = getelementptr inbounds nuw i8, ptr %.03945.i, i64 8
   store i32 %i.au, ptr %i.av, align 4, !tbaa !3
   br label %bb.h
@@ -5169,7 +5163,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.l = load ptr, ptr %2, align 8, !tbaa !31
   %i.m = and i64 %i.g, 8589934588
-  %i.n = tail call ptr %i.l(ptr noundef nonnull %2, i64 noundef %i.m) #7 ; 4 uses
+  %i.n = tail call ptr %i.l(ptr noundef nonnull %2, i64 noundef %i.m) #6 ; 4 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.l, label %bb.f
 
@@ -5282,13 +5276,13 @@ bb.h:                                             ; preds = %.lr.ph.i
   %i.aw = sext i32 %i.aq to i64
   %i.ax = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.aw
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !3
-  %i.az = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.av) #7
-  %i.ba = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ay) #7
+  %i.az = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.av) #6
+  %i.ba = tail call zeroext i8 @uriHexdigToIntW(i32 noundef %i.ay) #6
   %i.bb = zext i8 %i.az to i32                    ; 2 uses
   %i.bc = shl nuw nsw i32 %i.bb, 4
   %i.bd = zext i8 %i.ba to i32                    ; 2 uses
   %i.be = add nuw nsw i32 %i.bc, %i.bd            ; 2 uses
-  %i.bf = tail call i32 @uriIsUnreserved(i32 noundef %i.be) #7
+  %i.bf = tail call i32 @uriIsUnreserved(i32 noundef %i.be) #6
   %.not44.i = icmp eq i32 %i.bf, 0
   br i1 %.not44.i, label %bb.j, label %bb.i
 
@@ -5298,10 +5292,10 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   store i32 37, ptr %.03945.i, align 4, !tbaa !3
-  %i.bg = tail call i32 @uriHexToLetterW(i32 noundef %i.bb) #7
+  %i.bg = tail call i32 @uriHexToLetterW(i32 noundef %i.bb) #6
   %i.bh = getelementptr inbounds nuw i8, ptr %.03945.i, i64 4
   store i32 %i.bg, ptr %i.bh, align 4, !tbaa !3
-  %i.bi = tail call i32 @uriHexToLetterW(i32 noundef %i.bd) #7
+  %i.bi = tail call i32 @uriHexToLetterW(i32 noundef %i.bd) #6
   %i.bj = getelementptr inbounds nuw i8, ptr %.03945.i, i64 8
   store i32 %i.bi, ptr %i.bj, align 4, !tbaa !3
   br label %bb.k
@@ -5408,7 +5402,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = shl i64 %i.k, 34
   %i.m = load ptr, ptr %3, align 8, !tbaa !31
   %i.n = ashr exact i64 %i.l, 32                  ; 2 uses
-  %i.o = tail call ptr %i.m(ptr noundef nonnull %3, i64 noundef %i.n) #7 ; 4 uses
+  %i.o = tail call ptr %i.m(ptr noundef nonnull %3, i64 noundef %i.n) #6 ; 4 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.e, label %.thread
 
@@ -5434,17 +5428,13 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #6
-
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { inlinehint nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
