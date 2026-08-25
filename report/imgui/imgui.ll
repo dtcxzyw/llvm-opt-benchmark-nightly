@@ -205,7 +205,7 @@ _Z7ImClampRK6ImVec2S1_S1_.exit:
   %i.c = load <2 x float>, ptr %0, align 4, !tbaa !8 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 4 uses
   %i.e = load <2 x float>, ptr %i.a, align 4, !tbaa !8 ; 8 uses
-  %i.f = load <2 x float>, ptr %1, align 4, !tbaa !8 ; 12 uses
+  %i.f = load <2 x float>, ptr %1, align 4, !tbaa !8 ; 13 uses
   %i.g = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 11 uses
   %i.h = fsub <2 x float> %i.e, %i.f              ; 2 uses
   %i.i = fcmp olt <2 x float> %i.c, %i.g
@@ -218,17 +218,14 @@ _Z7ImClampRK6ImVec2S1_S1_.exit:
 bb.a:                                             ; preds = %_Z7ImClampRK6ImVec2S1_S1_.exit
   %i.n = load i32, ptr %2, align 4, !tbaa !1493   ; 5 uses
   %.not.not = icmp eq i32 %i.n, -1                ; 4 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %6 = load float, ptr %i.o, align 4
-  %7 = extractelement <2 x float> %i.f, i64 0
-  %8 = fsub float %6, %7
-  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %9 = load float, ptr %i.p, align 4
-  %i.q = extractelement <2 x float> %i.f, i64 1
-  %10 = fsub float %9, %i.q                       ; 5 uses
-  %.sroa.0151.0.vec.insert169 = insertelement <2 x float> poison, float %8, i64 0 ; 5 uses
-  %.sroa.0151.4.vec.insert193 = insertelement <2 x float> %.sroa.0151.0.vec.insert169, float %10, i64 1 ; 7 uses
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %6 = load <2 x float>, ptr %i.o, align 4        ; 2 uses
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 0>
+  %8 = fsub <2 x float> %7, %i.f                  ; 7 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %4, i64 12 ; 4 uses
+  %i.q = extractelement <2 x float> %6, i64 1     ; 4 uses
+  %9 = extractelement <2 x float> %i.f, i64 0     ; 4 uses
+  %10 = extractelement <2 x float> %i.f, i64 1    ; 4 uses
   %.in = select i1 %.not.not, ptr @__const._ZN5ImGui27FindBestWindowPosForPopupExERK6ImVec2S2_P8ImGuiDirRK6ImRectS7_24ImGuiPopupPositionPolicy.dir_preferred_order, ptr %2
   %i.r = load i32, ptr %.in, align 4, !tbaa !1493 ; 2 uses
   switch i32 %i.r, label %bb.f [
@@ -239,26 +236,33 @@ bb.a:                                             ; preds = %_Z7ImClampRK6ImVec2
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.s = load <4 x float>, ptr %4, align 4, !tbaa !8
+  %i.s = load <4 x float>, ptr %4, align 4        ; 2 uses
   %i.t = shufflevector <4 x float> %i.s, <4 x float> poison, <2 x i32> <i32 0, i32 3>
+  %11 = extractelement <4 x float> %i.s, i64 2
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.u = load <4 x float>, ptr %4, align 4
+  %i.u = load <4 x float>, ptr %4, align 4        ; 3 uses
   %i.v = shufflevector <4 x float> %i.u, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.0151.0.vec.insert173 = insertelement <2 x float> %i.v, float %10, i64 1
+  %12 = extractelement <4 x float> %i.u, i64 1
+  %13 = fsub float %12, %10
+  %.sroa.0151.0.vec.insert173 = insertelement <2 x float> %i.v, float %13, i64 1
+  %14 = extractelement <4 x float> %i.u, i64 2
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
-  %i.w = load float, ptr %11, align 4, !tbaa !399
-  %.sroa.0151.4.vec.insert195 = insertelement <2 x float> %.sroa.0151.0.vec.insert169, float %i.w, i64 1
+  %15 = fsub float %i.q, %9
+  %i.w = load float, ptr %i.p, align 4, !tbaa !399
+  %.sroa.0151.0.vec.insert171 = insertelement <2 x float> poison, float %15, i64 0
+  %.sroa.0151.4.vec.insert195 = insertelement <2 x float> %.sroa.0151.0.vec.insert171, float %i.w, i64 1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a, %bb.e
-  %.sroa.0151.1 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %i.t, %bb.b ], [ %.sroa.0151.0.vec.insert173, %bb.c ], [ %.sroa.0151.4.vec.insert195, %bb.d ], [ %.sroa.0151.4.vec.insert193, %bb.e ] ; 3 uses
+  %16 = phi float [ %i.q, %bb.a ], [ %11, %bb.b ], [ %14, %bb.c ], [ %i.q, %bb.d ], [ %i.q, %bb.e ] ; 5 uses
+  %.sroa.0151.1 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %i.t, %bb.b ], [ %.sroa.0151.0.vec.insert173, %bb.c ], [ %.sroa.0151.4.vec.insert195, %bb.d ], [ %8, %bb.e ] ; 3 uses
   %i.x = fadd <2 x float> %i.f, %.sroa.0151.1
   %i.y = shufflevector <2 x float> %i.g, <2 x float> %i.x, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.z = shufflevector <2 x float> %i.e, <2 x float> %.sroa.0151.1, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -270,7 +274,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b,
 
 .critedge:                                        ; preds = %bb.y, %bb.x, %bb.r, %bb.l, %bb.f
   %.lcssa264.a = phi i32 [ %i.r, %bb.f ], [ %i.ae, %bb.l ], [ %i.as, %bb.r ], [ %i.bg, %bb.x ], [ 2, %bb.y ]
-  %.sroa.0151.1.lcssa = phi <2 x float> [ %.sroa.0151.1, %bb.f ], [ %.sroa.0151.1.1, %bb.l ], [ %.sroa.0151.1.2, %bb.r ], [ %.sroa.0151.1.3, %bb.x ], [ %.sroa.0151.4.vec.insert193, %bb.y ]
+  %.sroa.0151.1.lcssa = phi <2 x float> [ %.sroa.0151.1, %bb.f ], [ %.sroa.0151.1.1, %bb.l ], [ %.sroa.0151.1.2, %bb.r ], [ %.sroa.0151.1.3, %bb.x ], [ %8, %bb.y ]
   store i32 %.lcssa264.a, ptr %2, align 4, !tbaa !1493
   br label %bb.ar
 
@@ -293,23 +297,30 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.l
 
 bb.i:                                             ; preds = %bb.g
-  %i.ag = load float, ptr %11, align 4, !tbaa !399
-  %.sroa.0151.4.vec.insert195.1 = insertelement <2 x float> %.sroa.0151.0.vec.insert169, float %i.ag, i64 1
+  %17 = fsub float %16, %9
+  %i.ag = load float, ptr %i.p, align 4, !tbaa !399
+  %.sroa.0151.0.vec.insert171.1 = insertelement <2 x float> poison, float %17, i64 0
+  %.sroa.0151.4.vec.insert195.1 = insertelement <2 x float> %.sroa.0151.0.vec.insert171.1, float %i.ag, i64 1
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.g
-  %i.ah = load <4 x float>, ptr %4, align 4
+  %i.ah = load <4 x float>, ptr %4, align 4       ; 3 uses
   %i.ai = shufflevector <4 x float> %i.ah, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.0151.0.vec.insert173.1 = insertelement <2 x float> %i.ai, float %10, i64 1
+  %18 = extractelement <4 x float> %i.ah, i64 1
+  %19 = fsub float %18, %10
+  %.sroa.0151.0.vec.insert173.1 = insertelement <2 x float> %i.ai, float %19, i64 1
+  %20 = extractelement <4 x float> %i.ah, i64 2
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.g
-  %i.aj = load <4 x float>, ptr %4, align 4, !tbaa !8
+  %i.aj = load <4 x float>, ptr %4, align 4       ; 2 uses
   %i.ak = shufflevector <4 x float> %i.aj, <4 x float> poison, <2 x i32> <i32 0, i32 3>
+  %21 = extractelement <4 x float> %i.aj, i64 2
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %bb.h, %bb.g
-  %.sroa.0151.1.1 = phi <2 x float> [ zeroinitializer, %bb.g ], [ %i.ak, %bb.k ], [ %.sroa.0151.0.vec.insert173.1, %bb.j ], [ %.sroa.0151.4.vec.insert195.1, %bb.i ], [ %.sroa.0151.4.vec.insert193, %bb.h ] ; 3 uses
+  %22 = phi float [ %16, %bb.g ], [ %21, %bb.k ], [ %20, %bb.j ], [ %16, %bb.i ], [ %16, %bb.h ]
+  %.sroa.0151.1.1 = phi <2 x float> [ zeroinitializer, %bb.g ], [ %i.ak, %bb.k ], [ %.sroa.0151.0.vec.insert173.1, %bb.j ], [ %.sroa.0151.4.vec.insert195.1, %bb.i ], [ %8, %bb.h ] ; 3 uses
   %i.al = fadd <2 x float> %i.f, %.sroa.0151.1.1
   %i.am = shufflevector <2 x float> %i.g, <2 x float> %i.al, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.an = shufflevector <2 x float> %i.e, <2 x float> %.sroa.0151.1.1, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -320,6 +331,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i,
   br i1 %.not258.1, label %.critedge, label %_ZNK6ImRect8ContainsERKS_.exit.thread.1
 
 _ZNK6ImRect8ContainsERKS_.exit.thread.1:          ; preds = %_ZNK6ImRect8ContainsERKS_.exit.thread, %bb.l
+  %23 = phi float [ %16, %_ZNK6ImRect8ContainsERKS_.exit.thread ], [ %22, %bb.l ] ; 5 uses
   %indvars.iv.next.1 = select i1 %.not.not, i64 2, i64 1
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN5ImGui27FindBestWindowPosForPopupExERK6ImVec2S2_P8ImGuiDirRK6ImRectS7_24ImGuiPopupPositionPolicy.dir_preferred_order, i64 %indvars.iv.next.1
   %i.as = load i32, ptr %i.ar, align 4, !tbaa !1493 ; 3 uses
@@ -338,23 +350,30 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.m
-  %i.au = load float, ptr %11, align 4, !tbaa !399
-  %.sroa.0151.4.vec.insert195.2 = insertelement <2 x float> %.sroa.0151.0.vec.insert169, float %i.au, i64 1
+  %24 = fsub float %23, %9
+  %i.au = load float, ptr %i.p, align 4, !tbaa !399
+  %.sroa.0151.0.vec.insert171.2 = insertelement <2 x float> poison, float %24, i64 0
+  %.sroa.0151.4.vec.insert195.2 = insertelement <2 x float> %.sroa.0151.0.vec.insert171.2, float %i.au, i64 1
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.m
-  %i.av = load <4 x float>, ptr %4, align 4
+  %i.av = load <4 x float>, ptr %4, align 4       ; 3 uses
   %i.aw = shufflevector <4 x float> %i.av, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.0151.0.vec.insert173.2 = insertelement <2 x float> %i.aw, float %10, i64 1
+  %25 = extractelement <4 x float> %i.av, i64 1
+  %26 = fsub float %25, %10
+  %.sroa.0151.0.vec.insert173.2 = insertelement <2 x float> %i.aw, float %26, i64 1
+  %27 = extractelement <4 x float> %i.av, i64 2
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.m
-  %i.ax = load <4 x float>, ptr %4, align 4, !tbaa !8
+  %i.ax = load <4 x float>, ptr %4, align 4       ; 2 uses
   %i.ay = shufflevector <4 x float> %i.ax, <4 x float> poison, <2 x i32> <i32 0, i32 3>
+  %28 = extractelement <4 x float> %i.ax, i64 2
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
-  %.sroa.0151.1.2 = phi <2 x float> [ zeroinitializer, %bb.m ], [ %i.ay, %bb.q ], [ %.sroa.0151.0.vec.insert173.2, %bb.p ], [ %.sroa.0151.4.vec.insert195.2, %bb.o ], [ %.sroa.0151.4.vec.insert193, %bb.n ] ; 3 uses
+  %29 = phi float [ %23, %bb.m ], [ %28, %bb.q ], [ %27, %bb.p ], [ %23, %bb.o ], [ %23, %bb.n ]
+  %.sroa.0151.1.2 = phi <2 x float> [ zeroinitializer, %bb.m ], [ %i.ay, %bb.q ], [ %.sroa.0151.0.vec.insert173.2, %bb.p ], [ %.sroa.0151.4.vec.insert195.2, %bb.o ], [ %8, %bb.n ] ; 3 uses
   %i.az = fadd <2 x float> %i.f, %.sroa.0151.1.2
   %i.ba = shufflevector <2 x float> %i.g, <2 x float> %i.az, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.bb = shufflevector <2 x float> %i.e, <2 x float> %.sroa.0151.1.2, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -365,6 +384,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o,
   br i1 %.not258.2, label %.critedge, label %_ZNK6ImRect8ContainsERKS_.exit.thread.2
 
 _ZNK6ImRect8ContainsERKS_.exit.thread.2:          ; preds = %_ZNK6ImRect8ContainsERKS_.exit.thread.1, %bb.r
+  %30 = phi float [ %23, %_ZNK6ImRect8ContainsERKS_.exit.thread.1 ], [ %29, %bb.r ]
   %indvars.iv.next.2 = select i1 %.not.not, i64 3, i64 2
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr @__const._ZN5ImGui27FindBestWindowPosForPopupExERK6ImVec2S2_P8ImGuiDirRK6ImRectS7_24ImGuiPopupPositionPolicy.dir_preferred_order, i64 %indvars.iv.next.2
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !1493 ; 3 uses
@@ -383,23 +403,27 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.x
 
 bb.u:                                             ; preds = %bb.s
-  %i.bi = load float, ptr %11, align 4, !tbaa !399
-  %.sroa.0151.4.vec.insert195.3 = insertelement <2 x float> %.sroa.0151.0.vec.insert169, float %i.bi, i64 1
+  %31 = fsub float %30, %9
+  %i.bi = load float, ptr %i.p, align 4, !tbaa !399
+  %.sroa.0151.0.vec.insert171.3 = insertelement <2 x float> poison, float %31, i64 0
+  %.sroa.0151.4.vec.insert195.3 = insertelement <2 x float> %.sroa.0151.0.vec.insert171.3, float %i.bi, i64 1
   br label %bb.x
 
 bb.v:                                             ; preds = %bb.s
-  %i.bj = load <4 x float>, ptr %4, align 4
+  %i.bj = load <4 x float>, ptr %4, align 4       ; 2 uses
   %i.bk = shufflevector <4 x float> %i.bj, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
-  %.sroa.0151.0.vec.insert173.3 = insertelement <2 x float> %i.bk, float %10, i64 1
+  %32 = extractelement <4 x float> %i.bj, i64 1
+  %33 = fsub float %32, %10
+  %.sroa.0151.0.vec.insert173.3 = insertelement <2 x float> %i.bk, float %33, i64 1
   br label %bb.x
 
 bb.w:                                             ; preds = %bb.s
-  %i.bl = load <4 x float>, ptr %4, align 4, !tbaa !8
+  %i.bl = load <4 x float>, ptr %4, align 4
   %i.bm = shufflevector <4 x float> %i.bl, <4 x float> poison, <2 x i32> <i32 0, i32 3>
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.t, %bb.s
-  %.sroa.0151.1.3 = phi <2 x float> [ zeroinitializer, %bb.s ], [ %i.bm, %bb.w ], [ %.sroa.0151.0.vec.insert173.3, %bb.v ], [ %.sroa.0151.4.vec.insert195.3, %bb.u ], [ %.sroa.0151.4.vec.insert193, %bb.t ] ; 3 uses
+  %.sroa.0151.1.3 = phi <2 x float> [ zeroinitializer, %bb.s ], [ %i.bm, %bb.w ], [ %.sroa.0151.0.vec.insert173.3, %bb.v ], [ %.sroa.0151.4.vec.insert195.3, %bb.u ], [ %8, %bb.t ] ; 3 uses
   %i.bn = fadd <2 x float> %i.f, %.sroa.0151.1.3
   %i.bo = shufflevector <2 x float> %i.g, <2 x float> %i.bn, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   %i.bp = shufflevector <2 x float> %i.e, <2 x float> %.sroa.0151.1.3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
@@ -416,9 +440,9 @@ _ZNK6ImRect8ContainsERKS_.exit.thread.3:          ; preds = %bb.x, %_ZNK6ImRect8
   ]
 
 bb.y:                                             ; preds = %_ZNK6ImRect8ContainsERKS_.exit.thread.3
-  %i.bt = fadd <2 x float> %i.f, %.sroa.0151.4.vec.insert193
+  %i.bt = fadd <2 x float> %i.f, %8
   %i.bu = shufflevector <2 x float> %i.g, <2 x float> %i.bt, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  %i.bv = shufflevector <2 x float> %i.e, <2 x float> %.sroa.0151.4.vec.insert193, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.bv = shufflevector <2 x float> %i.e, <2 x float> %8, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.bw = fcmp ugt <4 x float> %i.bu, %i.bv
   %i.bx = freeze <4 x i1> %i.bw
   %i.by = bitcast <4 x i1> %i.bx to i4

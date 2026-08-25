@@ -38,7 +38,7 @@ define weak_odr void @_ZN3gmx15nbnxmKernelSimdIL12KernelLayout1ELNS_17KernelCoul
   %i.t = bitcast <16 x i1> %i.o to i16            ; 2 uses
   %i.u = bitcast <16 x i1> %i.q to i16            ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 88
-  %i.w = load <4 x float>, ptr %i.v, align 8      ; 7 uses
+  %i.w = load <4 x float>, ptr %i.v, align 8      ; 4 uses
   %i.x = shufflevector <4 x float> %i.w, <4 x float> poison, <16 x i32> zeroinitializer ; 16 uses
   %i.y = extractelement <4 x float> %i.w, i64 0
   %foldExtExtBinop = fmul <4 x float> %i.w, %i.w
@@ -47,7 +47,9 @@ define weak_odr void @_ZN3gmx15nbnxmKernelSimdIL12KernelLayout1ELNS_17KernelCoul
   %i.ab = fpext float %i.aa to double
   %i.ac = fmul double %i.ab, f0x3FF20DD750429B6D
   %i.ad = fptrunc double %i.ac to float           ; 4 uses
-  %5 = shufflevector <4 x float> %i.w, <4 x float> poison, <16 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1> ; 8 uses
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 92
+  %6 = load <4 x float>, ptr %5, align 4          ; 3 uses
+  %7 = shufflevector <4 x float> %6, <4 x float> poison, <16 x i32> zeroinitializer ; 8 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.af = load <1 x float>, ptr %i.ae, align 8
   %i.ag = shufflevector <1 x float> %i.af, <1 x float> poison, <16 x i32> zeroinitializer ; 10 uses
@@ -80,10 +82,10 @@ define weak_odr void @_ZN3gmx15nbnxmKernelSimdIL12KernelLayout1ELNS_17KernelCoul
   br i1 %.not38383964, label %._crit_edge, label %.lr.ph3966
 
 .lr.ph3966:                                       ; preds = %.preheader3848.preheader
-  %i.bf = extractelement <4 x float> %i.w, i64 3
+  %i.bf = extractelement <4 x float> %6, i64 2
   %i.bg = fneg float %i.bf                        ; 4 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %.val.val, i64 128 ; 7 uses
-  %6 = shufflevector <4 x float> %i.w, <4 x float> poison, <16 x i32> <i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3, i32 3> ; 2 uses
+  %8 = shufflevector <4 x float> %6, <4 x float> poison, <16 x i32> <i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2> ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.val.val, i64 64 ; 13 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.val.val, i64 132 ; 2 uses
   br label %bb.a
@@ -246,7 +248,7 @@ bb.c:                                             ; preds = %.loopexit3847
   %i.fx = insertelement <4 x float> poison, float %.val.i713, i64 0
   %i.fy = insertelement <4 x float> poison, float %.val2.i, i64 0
   %i.fz = shufflevector <4 x float> %i.fx, <4 x float> %i.fy, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4>
-  %i.ga = fmul <16 x float> %6, %i.fz
+  %i.ga = fmul <16 x float> %8, %i.fz
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fv, i64 8
   %.val.i714 = load float, ptr %i.gb, align 1, !tbaa !15, !noalias !74
   %i.gc = getelementptr i8, ptr %i.fv, i64 12
@@ -254,7 +256,7 @@ bb.c:                                             ; preds = %.loopexit3847
   %i.gd = insertelement <4 x float> poison, float %.val.i714, i64 0
   %i.ge = insertelement <4 x float> poison, float %.val2.i715, i64 0
   %i.gf = shufflevector <4 x float> %i.gd, <4 x float> %i.ge, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4, i32 4>
-  %i.gg = fmul <16 x float> %6, %i.gf
+  %i.gg = fmul <16 x float> %8, %i.gf
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.loopexit3847
@@ -477,9 +479,9 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.ms = fmul <16 x float> %i.x, %i.mr
   %i.mt = fmul <16 x float> %i.jr, %i.ln
   %i.mu = fmul <16 x float> %i.js, %i.lo
-  %i.mv = select <16 x i1> %i.hp, <16 x float> %5, <16 x float> zeroinitializer
+  %i.mv = select <16 x i1> %i.hp, <16 x float> %7, <16 x float> zeroinitializer
   %i.mw = fadd <16 x float> %i.mv, %i.md
-  %i.mx = select <16 x i1> %.not4065, <16 x float> zeroinitializer, <16 x float> %5
+  %i.mx = select <16 x i1> %.not4065, <16 x float> zeroinitializer, <16 x float> %7
   %i.my = fadd <16 x float> %i.mx, %i.ms
   %i.mz = fsub <16 x float> %i.jz, %i.mw
   %i.na = fmul <16 x float> %i.jr, %i.mz
@@ -717,8 +719,8 @@ bb.i:                                             ; preds = %.lr.ph3957, %bb.i
   %i.uh = fmul <16 x float> %i.x, %i.ug
   %i.ui = fmul <16 x float> %i.rk, %i.tc
   %i.uj = fmul <16 x float> %i.rl, %i.td
-  %i.uk = fadd <16 x float> %5, %i.ts
-  %i.ul = fadd <16 x float> %5, %i.uh
+  %i.uk = fadd <16 x float> %7, %i.ts
+  %i.ul = fadd <16 x float> %7, %i.uh
   %i.um = fsub <16 x float> %i.rm, %i.uk
   %i.un = fmul <16 x float> %i.rk, %i.um
   %i.uo = fsub <16 x float> %i.rn, %i.ul
@@ -994,9 +996,9 @@ _ZNK3gmx14DiagonalMaskerILi2EL12KernelLayout1EL24KernelLayoutClusterRatio1EE9mas
   %i.acr = fmul <16 x float> %i.x, %i.acq
   %i.acs = fmul <16 x float> %i.zq, %i.abm
   %i.act = fmul <16 x float> %i.zr, %i.abn
-  %i.acu = select <16 x i1> %i.xn, <16 x float> %5, <16 x float> zeroinitializer
+  %i.acu = select <16 x i1> %i.xn, <16 x float> %7, <16 x float> zeroinitializer
   %i.acv = fadd <16 x float> %i.acu, %i.acc
-  %i.acw = select <16 x i1> %i.xp, <16 x float> %5, <16 x float> zeroinitializer
+  %i.acw = select <16 x i1> %i.xp, <16 x float> %7, <16 x float> zeroinitializer
   %i.acx = fadd <16 x float> %i.acw, %i.acr
   %i.acy = fsub <16 x float> %i.zy, %i.acv
   %i.acz = fmul <16 x float> %i.zq, %i.acy
@@ -1253,8 +1255,8 @@ bb.o:                                             ; preds = %.lr.ph3919, %bb.o
   %i.akz = fmul <16 x float> %i.x, %i.aky
   %i.ala = fmul <16 x float> %i.aic, %i.aju
   %i.alb = fmul <16 x float> %i.aid, %i.ajv
-  %i.alc = fadd <16 x float> %5, %i.akk
-  %i.ald = fadd <16 x float> %5, %i.akz
+  %i.alc = fadd <16 x float> %7, %i.akk
+  %i.ald = fadd <16 x float> %7, %i.akz
   %i.ale = fsub <16 x float> %i.aie, %i.alc
   %i.alf = fmul <16 x float> %i.aic, %i.ale
   %i.alg = fsub <16 x float> %i.aif, %i.ald
