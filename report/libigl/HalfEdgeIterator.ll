@@ -107,14 +107,14 @@ bb.a:
   %i.m = getelementptr [4 x i8], ptr %i.l, i64 %i.k
   %i.n = load i32, ptr %i.m, align 4, !tbaa !33   ; 2 uses
   %i.o = icmp ne i32 %i.n, -1                     ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %2 = load ptr, ptr %1, align 8, !nonnull !25    ; 4 uses
   br i1 %i.o, label %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flipFEv.exit3, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.promoted9 = load i8, ptr %i.q, align 8, !tbaa !34
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %2 = load ptr, ptr %i.p, align 8, !nonnull !25  ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.promoted9 = load i8, ptr %1, align 8, !tbaa !34, !range !35
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flipFEv.exit
@@ -132,7 +132,7 @@ bb.b:                                             ; preds = %.preheader, %_ZN3ig
 
 bb.c:                                             ; preds = %bb.b
   %i.ab = load ptr, ptr %2, align 8, !tbaa !28
-  %i.ac = load i64, ptr %i.p, align 8, !tbaa !32
+  %i.ac = load i64, ptr %i.q, align 8, !tbaa !32
   %i.ad = mul nsw i64 %i.ac, %i.v
   %i.ae = getelementptr [4 x i8], ptr %i.ab, i64 %i.u
   %i.af = getelementptr [4 x i8], ptr %i.ae, i64 %i.ad
@@ -152,16 +152,17 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flip
   %i.am = add nsw i32 %..i, %i.aj
   %i.an = srem i32 %i.am, 3                       ; 4 uses
   store i32 %i.an, ptr %i.e, align 4, !tbaa !27
-  %i.ao = xor i8 %i.ai, 1
+  %i.ao = xor i8 %i.ai, 1                         ; 2 uses
   %i.ap = sext i32 %i.an to i64
   %i.aq = mul nsw i64 %i.j, %i.ap
   %i.ar = getelementptr [4 x i8], ptr %i.h, i64 %.pre-phi
   %i.as = getelementptr [4 x i8], ptr %i.ar, i64 %i.aq
   %i.at = load i32, ptr %i.as, align 4, !tbaa !33
   %i.au = icmp eq i32 %i.at, -1
-  br i1 %i.au, label %bb.d, label %bb.b, !llvm.loop !35
+  br i1 %i.au, label %bb.d, label %bb.b, !llvm.loop !36
 
 bb.d:                                             ; preds = %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flipFEv.exit
+  store i8 %i.ao, ptr %1, align 8, !tbaa !34
   %.not.not5 = icmp eq i8 %i.ai, 0
   %..i2 = select i1 %.not.not5, i32 1, i32 2
   %i.av = add nsw i32 %i.an, %..i2
@@ -169,12 +170,14 @@ bb.d:                                             ; preds = %_ZN3igl16HalfEdgeIt
   %i.aw = srem i8 %.lhs.trunc, 3
   %.sext = sext i8 %i.aw to i32
   store i32 %.sext, ptr %i.e, align 4, !tbaa !27
-  store i8 %i.ai, ptr %i.q, align 8, !tbaa !34
+  store i8 %i.ai, ptr %1, align 8, !tbaa !34
   br label %bb.e
 
 _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flipFEv.exit3: ; preds = %bb.a
-  %i.ax = load ptr, ptr %2, align 8, !tbaa !28
-  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !38, !nonnull !25 ; 2 uses
+  %i.ax = load ptr, ptr %4, align 8, !tbaa !28
+  %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !32
   %i.ba = mul nsw i64 %i.az, %i.g
   %i.bb = getelementptr [4 x i8], ptr %i.ax, i64 %i.d
@@ -182,7 +185,7 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flip
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !33
   store i32 %i.n, ptr %0, align 8, !tbaa !26
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.bf = load i8, ptr %i.be, align 8, !tbaa !34, !range !37, !noundef !25 ; 2 uses
+  %i.bf = load i8, ptr %i.be, align 8, !tbaa !34, !range !35, !noundef !25 ; 2 uses
   %.not.not = icmp eq i8 %i.bf, 0
   %..i4 = select i1 %.not.not, i32 1, i32 2
   %i.bg = add nsw i32 %i.bd, %..i4
@@ -249,7 +252,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.n, ptr %0, align 8, !tbaa !26
   store i32 %i.x, ptr %i.e, align 4, !tbaa !27
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.z = load i8, ptr %i.y, align 8, !tbaa !34, !range !37, !noundef !25
+  %i.z = load i8, ptr %i.y, align 8, !tbaa !34, !range !35, !noundef !25
   %i.aa = xor i8 %i.z, 1
   store i8 %i.aa, ptr %i.y, align 8, !tbaa !34
   br label %bb.c
@@ -262,7 +265,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define weak_odr dso_local void @_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flipEEv(ptr noundef nonnull align 8 dereferenceable(40) %0) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !37, !noundef !25 ; 2 uses
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !35, !noundef !25 ; 2 uses
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !27
@@ -324,14 +327,14 @@ bb.a:
   %i.m = getelementptr [4 x i8], ptr %i.l, i64 %i.k
   %i.n = load i32, ptr %i.m, align 4, !tbaa !33   ; 2 uses
   %i.o = icmp ne i32 %i.n, -1                     ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %2 = load ptr, ptr %1, align 8, !nonnull !25    ; 4 uses
   br i1 %i.o, label %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipFEv.exit3, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.promoted9 = load i8, ptr %i.q, align 8, !tbaa !15
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %2 = load ptr, ptr %i.p, align 8, !nonnull !25  ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.promoted9 = load i8, ptr %1, align 8, !tbaa !15, !range !35
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipFEv.exit
@@ -349,7 +352,7 @@ bb.b:                                             ; preds = %.preheader, %_ZN3ig
 
 bb.c:                                             ; preds = %bb.b
   %i.ab = load ptr, ptr %2, align 8, !tbaa !40
-  %i.ac = load i64, ptr %i.p, align 8, !tbaa !42
+  %i.ac = load i64, ptr %i.q, align 8, !tbaa !42
   %i.ad = mul nsw i64 %i.ac, %i.v
   %i.ae = getelementptr [4 x i8], ptr %i.ab, i64 %i.u
   %i.af = getelementptr [4 x i8], ptr %i.ae, i64 %i.ad
@@ -369,7 +372,7 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipFE
   %i.am = add nsw i32 %..i, %i.aj
   %i.an = srem i32 %i.am, 3                       ; 4 uses
   store i32 %i.an, ptr %i.e, align 4, !tbaa !14
-  %i.ao = xor i8 %i.ai, 1
+  %i.ao = xor i8 %i.ai, 1                         ; 2 uses
   %i.ap = sext i32 %i.an to i64
   %i.aq = mul nsw i64 %i.j, %i.ap
   %i.ar = getelementptr [4 x i8], ptr %i.h, i64 %.pre-phi
@@ -379,6 +382,7 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipFE
   br i1 %i.au, label %bb.d, label %bb.b, !llvm.loop !43
 
 bb.d:                                             ; preds = %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipFEv.exit
+  store i8 %i.ao, ptr %1, align 8, !tbaa !15
   %.not.not5 = icmp eq i8 %i.ai, 0
   %..i2 = select i1 %.not.not5, i32 1, i32 2
   %i.av = add nsw i32 %i.an, %..i2
@@ -386,12 +390,14 @@ bb.d:                                             ; preds = %_ZN3igl16HalfEdgeIt
   %i.aw = srem i8 %.lhs.trunc, 3
   %.sext = sext i8 %i.aw to i32
   store i32 %.sext, ptr %i.e, align 4, !tbaa !14
-  store i8 %i.ai, ptr %i.q, align 8, !tbaa !15
+  store i8 %i.ai, ptr %1, align 8, !tbaa !15
   br label %bb.e
 
 _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipFEv.exit3: ; preds = %bb.a
-  %i.ax = load ptr, ptr %2, align 8, !tbaa !40
-  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !44, !nonnull !25 ; 2 uses
+  %i.ax = load ptr, ptr %4, align 8, !tbaa !40
+  %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !42
   %i.ba = mul nsw i64 %i.az, %i.g
   %i.bb = getelementptr [4 x i8], ptr %i.ax, i64 %i.d
@@ -399,7 +405,7 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipFE
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !33
   store i32 %i.n, ptr %0, align 8, !tbaa !9
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.bf = load i8, ptr %i.be, align 8, !tbaa !15, !range !37, !noundef !25 ; 2 uses
+  %i.bf = load i8, ptr %i.be, align 8, !tbaa !15, !range !35, !noundef !25 ; 2 uses
   %.not.not = icmp eq i8 %i.bf, 0
   %..i4 = select i1 %.not.not, i32 1, i32 2
   %i.bg = add nsw i32 %i.bd, %..i4
@@ -466,7 +472,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 %i.n, ptr %0, align 8, !tbaa !9
   store i32 %i.x, ptr %i.e, align 4, !tbaa !14
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.z = load i8, ptr %i.y, align 8, !tbaa !15, !range !37, !noundef !25
+  %i.z = load i8, ptr %i.y, align 8, !tbaa !15, !range !35, !noundef !25
   %i.aa = xor i8 %i.z, 1
   store i8 %i.aa, ptr %i.y, align 8, !tbaa !15
   br label %bb.c
@@ -479,7 +485,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define weak_odr dso_local void @_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEES3_S3_E5flipEEv(ptr noundef nonnull align 8 dereferenceable(40) %0) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !15, !range !37, !noundef !25 ; 2 uses
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !15, !range !35, !noundef !25 ; 2 uses
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !14
@@ -496,7 +502,7 @@ bb.a:
 define weak_odr dso_local noundef i32 @_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E2ViEv(ptr noundef nonnull align 8 dereferenceable(40) %0) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !37, !noundef !25
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !35, !noundef !25
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !45, !nonnull !25 ; 2 uses
@@ -553,7 +559,7 @@ bb.a:
 define weak_odr dso_local void @_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELin1ELi0ELin1ELin1EEES3_S3_E5flipVEv(ptr noundef nonnull align 8 dereferenceable(40) %0) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !37, !noundef !25
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !34, !range !35, !noundef !25
   %i.c = xor i8 %i.b, 1
   store i8 %i.c, ptr %i.a, align 8, !tbaa !34
   ret void
@@ -577,9 +583,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.j = load i8, ptr %i.i, align 8, !tbaa !34, !range !37, !noundef !25
+  %i.j = load i8, ptr %i.i, align 8, !tbaa !34, !range !35, !noundef !25
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.l = load i8, ptr %i.k, align 8, !tbaa !34, !range !37, !noundef !25
+  %i.l = load i8, ptr %i.k, align 8, !tbaa !34, !range !35, !noundef !25
   %i.m = icmp eq i8 %i.j, %i.l
   br i1 %i.m, label %bb.d, label %_ZNK5Eigen10MatrixBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEEeqIS2_EEbRKNS0_IT_EE.exit
 
@@ -748,14 +754,14 @@ bb.a:
   %i.m = getelementptr [4 x i8], ptr %i.l, i64 %i.k
   %i.n = load i32, ptr %i.m, align 4, !tbaa !33   ; 2 uses
   %i.o = icmp ne i32 %i.n, -1                     ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %2 = load ptr, ptr %1, align 8, !nonnull !25    ; 4 uses
   br i1 %i.o, label %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin1ELi0ELin1ELin1EEES4_E5flipFEv.exit3, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
-  %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.promoted9 = load i8, ptr %i.q, align 8, !tbaa !21
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %2 = load ptr, ptr %i.p, align 8, !nonnull !25  ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.promoted9 = load i8, ptr %1, align 8, !tbaa !21, !range !35
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin1ELi0ELin1ELin1EEES4_E5flipFEv.exit
@@ -773,7 +779,7 @@ bb.b:                                             ; preds = %.preheader, %_ZN3ig
 
 bb.c:                                             ; preds = %bb.b
   %i.ab = load ptr, ptr %2, align 8, !tbaa !28
-  %i.ac = load i64, ptr %i.p, align 8, !tbaa !32
+  %i.ac = load i64, ptr %i.q, align 8, !tbaa !32
   %i.ad = mul nsw i64 %i.ac, %i.v
   %i.ae = getelementptr [4 x i8], ptr %i.ab, i64 %i.u
   %i.af = getelementptr [4 x i8], ptr %i.ae, i64 %i.ad
@@ -793,7 +799,7 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin
   %i.am = add nsw i32 %..i, %i.aj
   %i.an = srem i32 %i.am, 3                       ; 4 uses
   store i32 %i.an, ptr %i.e, align 4, !tbaa !20
-  %i.ao = xor i8 %i.ai, 1
+  %i.ao = xor i8 %i.ai, 1                         ; 2 uses
   %i.ap = sext i32 %i.an to i64
   %i.aq = mul nsw i64 %i.j, %i.ap
   %i.ar = getelementptr [4 x i8], ptr %i.h, i64 %.pre-phi
@@ -803,6 +809,7 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin
   br i1 %i.au, label %bb.d, label %bb.b, !llvm.loop !50
 
 bb.d:                                             ; preds = %_ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin1ELi0ELin1ELin1EEES4_E5flipFEv.exit
+  store i8 %i.ao, ptr %1, align 8, !tbaa !21
   %.not.not5 = icmp eq i8 %i.ai, 0
   %..i2 = select i1 %.not.not5, i32 1, i32 2
   %i.av = add nsw i32 %i.an, %..i2
@@ -810,12 +817,14 @@ bb.d:                                             ; preds = %_ZN3igl16HalfEdgeIt
   %i.aw = srem i8 %.lhs.trunc, 3
   %.sext = sext i8 %i.aw to i32
   store i32 %.sext, ptr %i.e, align 4, !tbaa !20
-  store i8 %i.ai, ptr %i.q, align 8, !tbaa !21
+  store i8 %i.ai, ptr %1, align 8, !tbaa !21
   br label %bb.e
 
 _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin1ELi0ELin1ELin1EEES4_E5flipFEv.exit3: ; preds = %bb.a
-  %i.ax = load ptr, ptr %2, align 8, !tbaa !28
-  %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !51, !nonnull !25 ; 2 uses
+  %i.ax = load ptr, ptr %4, align 8, !tbaa !28
+  %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !32
   %i.ba = mul nsw i64 %i.az, %i.g
   %i.bb = getelementptr [4 x i8], ptr %i.ax, i64 %i.d
@@ -823,7 +832,7 @@ _ZN3igl16HalfEdgeIteratorIN5Eigen6MatrixIiLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELin
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !33
   store i32 %i.n, ptr %0, align 8, !tbaa !17
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.bf = load i8, ptr %i.be, align 8, !tbaa !21, !range !37, !noundef !25 ; 2 uses
+  %i.bf = load i8, ptr %i.be, align 8, !tbaa !21, !range !35, !noundef !25 ; 2 uses
   %.not.not = icmp eq i8 %i.bf, 0
   %..i4 = select i1 %.not.not, i32 1, i32 2
   %i.bg = add nsw i32 %i.bd, %..i4
@@ -880,20 +889,21 @@ attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping
 !32 = !{!29, !31, i64 8}
 !33 = !{!6, !6, i64 0}
 !34 = !{!24, !11, i64 8}
-!35 = distinct !{!35, !36}
-!36 = !{!"llvm.loop.mustprogress"}
-!37 = !{i8 0, i8 2}
+!35 = !{i8 0, i8 2}
+!36 = distinct !{!36, !37}
+!37 = !{!"llvm.loop.mustprogress"}
 !38 = !{!24, !19, i64 32}
 !39 = !{!10, !12, i64 24}
 !40 = !{!41, !30, i64 0}
 !41 = !{!"_ZTSN5Eigen12DenseStorageIiLin1ELin1ELi3ELi0EEE", !30, i64 0, !31, i64 8}
 !42 = !{!41, !31, i64 8}
-!43 = distinct !{!43, !36}
+!43 = distinct !{!43, !37}
 !44 = !{!10, !12, i64 32}
 !45 = !{!24, !19, i64 16}
 !46 = !{!29, !31, i64 16}
-!47 = distinct !{!47, !36}
-!48 = distinct !{!48, !36}
+!47 = distinct !{!47, !37}
+!48 = distinct !{!48, !37}
 !49 = !{!18, !19, i64 24}
-!50 = distinct !{!50, !36}
+!50 = distinct !{!50, !37}
+!51 = !{!18, !19, i64 32}
 end_hunk_0

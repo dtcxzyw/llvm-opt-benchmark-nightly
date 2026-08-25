@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %.lr.ph119, %.loopex
 
 bb.d:                                             ; preds = %.lr.ph116, %._crit_edge108
   %.promoted101 = phi i64 [ %.promoted101137, %.lr.ph116 ], [ %.lcssa102, %._crit_edge108 ] ; 2 uses
-  %.promoted = phi i64 [ %.promoted134, %.lr.ph116 ], [ %.lcssa100, %._crit_edge108 ] ; 2 uses
+  %.promoted = phi i64 [ %.promoted134, %.lr.ph116 ], [ %.lcssa100, %._crit_edge108 ] ; 3 uses
   %indvars.iv131 = phi i64 [ %i.u, %.lr.ph116 ], [ %indvars.iv.next132, %._crit_edge108 ] ; 4 uses
   %i.v = load i32, ptr %4, align 4, !tbaa !83, !llvm.access.group !138
   %i.w = sext i32 %i.v to i64
@@ -239,19 +239,18 @@ bb.d:                                             ; preds = %.lr.ph116, %._crit_
   br label %bb.e
 
 ._crit_edge108.loopexit:                          ; preds = %._crit_edge.thread
-  %i.aw = add i64 %.promoted, 1
+  %i.aw = add i64 %.promoted101, 1
   %i.ax = add nsw i32 %i.ai, -1
   %i.ay = zext nneg i32 %i.ax to i64
-  %i.az = add i64 %i.aw, %i.ay
+  %i.az = add i64 %i.aw, %i.ay                    ; 2 uses
+  store i64 %i.az, ptr %i.e, align 8, !tbaa !101
   br label %._crit_edge108
 
 ._crit_edge108:                                   ; preds = %._crit_edge108.loopexit, %bb.d
-  %.lcssa102 = phi i64 [ %.promoted101, %bb.d ], [ %i.eb, %._crit_edge108.loopexit ] ; 3 uses
-  %.lcssa100 = phi i64 [ %.promoted, %bb.d ], [ %i.az, %._crit_edge108.loopexit ] ; 3 uses
-  %.086.lcssa = phi float [ %i.ab, %bb.d ], [ %.288, %._crit_edge108.loopexit ]
-  %.083.lcssa = phi i32 [ %i.ad, %bb.d ], [ %.285, %._crit_edge108.loopexit ]
-  store i64 %.lcssa100, ptr %i.e, align 8
-  store i64 %.lcssa102, ptr %i.f, align 8
+  %.lcssa102 = phi i64 [ %i.az, %._crit_edge108.loopexit ], [ %.promoted101, %bb.d ] ; 2 uses
+  %.lcssa100 = phi i64 [ %.promoted100135, %._crit_edge108.loopexit ], [ %.promoted, %bb.d ] ; 2 uses
+  %.086.lcssa = phi float [ %.288, %._crit_edge108.loopexit ], [ %i.ab, %bb.d ]
+  %.083.lcssa = phi i32 [ %.285, %._crit_edge108.loopexit ], [ %i.ad, %bb.d ]
   store float %.086.lcssa, ptr %i.aa, align 4, !tbaa !60, !llvm.access.group !138
   store i32 %.083.lcssa, ptr %i.ac, align 4, !tbaa !83, !llvm.access.group !138
   %indvars.iv.next132 = add nsw i64 %indvars.iv131, 1
@@ -261,10 +260,11 @@ bb.d:                                             ; preds = %.lr.ph116, %._crit_
   br i1 %.not91.not, label %bb.d, label %.loopexit, !llvm.loop !139
 
 bb.e:                                             ; preds = %.lr.ph107, %._crit_edge.thread
+  %.promoted100134 = phi i64 [ %.promoted, %.lr.ph107 ], [ %.promoted100135, %._crit_edge.thread ] ; 3 uses
   %indvars.iv126 = phi i64 [ 0, %.lr.ph107 ], [ %indvars.iv.next127, %._crit_edge.thread ] ; 3 uses
   %.083104 = phi i32 [ %i.ad, %.lr.ph107 ], [ %.285, %._crit_edge.thread ] ; 3 uses
   %.086103 = phi float [ %i.ab, %.lr.ph107 ], [ %.288, %._crit_edge.thread ] ; 6 uses
-  %i.bc = phi i64 [ %.promoted101, %.lr.ph107 ], [ %i.eb, %._crit_edge.thread ] ; 4 uses
+  %i.bc = phi i64 [ %.promoted, %.lr.ph107 ], [ %i.eb, %._crit_edge.thread ] ; 4 uses
   %i.bd = add nsw i64 %indvars.iv126, %i.av       ; 3 uses
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.al, i64 %i.bd
   %i.bf = load float, ptr %i.be, align 4, !tbaa !60, !llvm.access.group !138
@@ -279,7 +279,8 @@ bb.e:                                             ; preds = %.lr.ph107, %._crit_
   br i1 %i.bm, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.bn = add nsw i64 %i.bc, 1
+  %i.bn = add nsw i64 %i.bc, 1                    ; 3 uses
+  store i64 %i.bn, ptr %i.f, align 8, !tbaa !101, !llvm.access.group !138
   br label %._crit_edge.thread
 
 bb.g:                                             ; preds = %bb.e
@@ -427,7 +428,8 @@ bb.j:                                             ; preds = %._crit_edge
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %_ZN5faiss6detail8block_l2ILNS_9SIMDLevelE0EEEfPKfS4_i.exit, %._crit_edge, %bb.j, %bb.f
-  %i.eb = phi i64 [ %i.bn, %bb.f ], [ %i.bc, %bb.j ], [ %i.bc, %._crit_edge ], [ %i.bc, %_ZN5faiss6detail8block_l2ILNS_9SIMDLevelE0EEEfPKfS4_i.exit ] ; 2 uses
+  %.promoted100135 = phi i64 [ %i.bn, %bb.f ], [ %.promoted100134, %bb.j ], [ %.promoted100134, %._crit_edge ], [ %.promoted100134, %_ZN5faiss6detail8block_l2ILNS_9SIMDLevelE0EEEfPKfS4_i.exit ] ; 2 uses
+  %i.eb = phi i64 [ %i.bn, %bb.f ], [ %i.bc, %bb.j ], [ %i.bc, %._crit_edge ], [ %i.bc, %_ZN5faiss6detail8block_l2ILNS_9SIMDLevelE0EEEfPKfS4_i.exit ]
   %.288 = phi float [ %.086103, %bb.f ], [ %i.dz, %bb.j ], [ %.086103, %._crit_edge ], [ %.086103, %_ZN5faiss6detail8block_l2ILNS_9SIMDLevelE0EEEfPKfS4_i.exit ] ; 2 uses
   %.285 = phi i32 [ %.083104, %bb.f ], [ %i.ea, %bb.j ], [ %.083104, %._crit_edge ], [ %.083104, %_ZN5faiss6detail8block_l2ILNS_9SIMDLevelE0EEEfPKfS4_i.exit ] ; 2 uses
   %indvars.iv.next127 = add nuw nsw i64 %indvars.iv126, 1 ; 2 uses

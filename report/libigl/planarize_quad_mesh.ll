@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader, %bb.s
-  %.049 = phi i64 [ %.251, %bb.s ], [ 2, %.preheader ] ; 21 uses
+  %.049 = phi i64 [ %.251, %bb.s ], [ 2, %.preheader ] ; 22 uses
   %.046 = phi i64 [ %.248, %bb.s ], [ 0, %.preheader ] ; 2 uses
   %.044 = phi i64 [ %.2, %bb.s ], [ 0, %.preheader ] ; 4 uses
   %i.ax = icmp sgt i64 %.049, 0
@@ -216,8 +216,8 @@ bb.f:                                             ; preds = %.lr.ph
   br i1 %i.ay, label %.lr.ph, label %_ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE21findSmallSubdiagEntryElRKd.exit
 
 .lr.ph:                                           ; preds = %bb.e, %bb.f
-  %.014.i83 = phi i64 [ %i.az, %bb.f ], [ %.049, %bb.e ] ; 5 uses
-  %i.az = add nsw i64 %.014.i83, -1               ; 3 uses
+  %.014.i83 = phi i64 [ %i.az, %bb.f ], [ %.049, %bb.e ] ; 6 uses
+  %i.az = add nsw i64 %.014.i83, -1               ; 4 uses
   %i.ba = getelementptr [8 x i8], ptr %0, i64 %i.az
   %.idx.i.i = mul i64 %i.az, 24                   ; 2 uses
   %i.bb = getelementptr i8, ptr %i.ba, i64 %.idx.i.i
@@ -239,7 +239,8 @@ bb.f:                                             ; preds = %.lr.ph
   br i1 %i.bo, label %bb.f, label %_ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE21findSmallSubdiagEntryElRKd.exit
 
 _ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE21findSmallSubdiagEntryElRKd.exit: ; preds = %.lr.ph, %bb.f, %bb.e
-  %.014.lcssa.i = phi i64 [ 0, %bb.e ], [ %.014.i83, %.lr.ph ], [ 0, %bb.f ] ; 6 uses
+  %.014.i.lcssa = phi i64 [ %.049, %bb.e ], [ %.014.i83, %.lr.ph ], [ %i.az, %bb.f ]
+  %.014.lcssa.i = phi i64 [ 0, %bb.e ], [ %.014.i83, %.lr.ph ], [ 0, %bb.f ] ; 5 uses
   %i.bp = icmp eq i64 %.014.lcssa.i, %.049
   br i1 %i.bp, label %bb.g, label %bb.j
 
@@ -487,6 +488,7 @@ bb.p:                                             ; preds = %_ZN5Eigen9RealSchur
 
 .lr.ph.i61.preheader:                             ; preds = %bb.p
   %i.fm = fneg double %.sroa.11.0
+  %smax = call i64 @llvm.smax.i64(i64 %.014.i.lcssa, i64 0)
   br label %.lr.ph.i61
 
 .lr.ph.i61:                                       ; preds = %.lr.ph.i61.preheader, %bb.q
@@ -542,7 +544,7 @@ bb.q:                                             ; preds = %.lr.ph.i61
   br i1 %i.hc, label %_ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE17initFrancisQRStepEllRKNS1_IdLi3ELi1ELi0ELi3ELi1EEERlRS4_.exit.loopexit, label %.lr.ph.i61
 
 _ZN5Eigen9RealSchurINS_6MatrixIdLi3ELi3ELi0ELi3ELi3EEEE17initFrancisQRStepEllRKNS1_IdLi3ELi1ELi0ELi3ELi1EEERlRS4_.exit.loopexit: ; preds = %bb.q, %.lr.ph.i61
-  %storemerge.lcssa.i.ph = phi i64 [ %storemerge56.i, %bb.q ], [ %.014.lcssa.i, %.lr.ph.i61 ]
+  %storemerge.lcssa.i.ph = phi i64 [ %storemerge56.i, %bb.q ], [ %smax, %.lr.ph.i61 ]
   store double %i.ga, ptr %4, align 8, !tbaa !43
   store double %i.gf, ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i, align 8, !tbaa !43
   store double %i.gi, ptr %.07.i.i.i.i.ptr.2.i.i.i.i.i.i, align 8, !tbaa !43

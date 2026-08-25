@@ -205,7 +205,7 @@ declare noundef ptr @_ZN7rocksdb3Env7DefaultEv() local_unnamed_addr #1
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK7rocksdb23BlockCacheTraceAnalyzer20ComputeReuseDistanceEPNS_15BlockAccessInfoE(ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(1049088) %0, ptr noundef %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 4 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.c = load i64, ptr %i.b, align 8, !tbaa !627
   %i.d = icmp eq i64 %i.c, 0
@@ -213,6 +213,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
+  store i64 0, ptr %i.a, align 8, !tbaa !143
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 272
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 296 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !121  ; 3 uses
@@ -240,11 +241,14 @@ _ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15Block
   %i.r = add i64 %i.q, %i.p                       ; 2 uses
   %i.s = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.010.013.us) #33 ; 2 uses
   %i.t = icmp eq ptr %i.s, %i.h
-  br i1 %i.t, label %._crit_edge.a, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit.us
+  br i1 %i.t, label %._crit_edge, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit.us
 
-._crit_edge.a:                                    ; preds = %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit.us, %bb.b
-  %.lcssa = phi i64 [ 0, %bb.b ], [ %i.r, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit.us ], [ %i.be, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit ]
-  store i64 %.lcssa, ptr %i.a, align 8
+._crit_edge:                                      ; preds = %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit.us
+  %.us-phi = phi i64 [ %i.r, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit.us ], [ %i.be, %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15BlockAccessInfoESt4lessIS5_ESaISt4pairIKS5_S8_EEE4findERSC_.exit ]
+  store i64 %.us-phi, ptr %i.a, align 8, !tbaa !143
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %._crit_edge, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 320
   %i.v = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3mapImmSt4lessImESaISt4pairIKmmEEEixERS3_(ptr noundef nonnull align 8 dereferenceable(48) %i.u, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !143
@@ -354,7 +358,7 @@ _ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN7rocksdb15Block
   %i.be = add i64 %i.ae, %i.bd                    ; 2 uses
   %i.bf = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef %.sroa.010.013) #33 ; 2 uses
   %i.bg = icmp eq ptr %i.bf, %i.h
-  br i1 %i.bg, label %._crit_edge.a, label %.lr.ph.i.i.i
+  br i1 %i.bg, label %._crit_edge, label %.lr.ph.i.i.i
 
 bb.f:                                             ; preds = %bb.a, %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE5clearEv.exit
   ret void
@@ -757,6 +761,7 @@ bb.a:
   br i1 %i.i, label %.lr.ph.split.us.i.i.i, label %.lr.ph.split.i.i.i
 
 .lr.ph.split.us.i.i.i:                            ; preds = %.lr.ph.i.i.i, %bb.c
+  %14 = phi i64 [ %15, %bb.c ], [ 0, %.lr.ph.i.i.i ]
   %.sroa.034.037.us.i.i.i = phi ptr [ %i.q, %bb.c ], [ %i.d, %.lr.ph.i.i.i ] ; 3 uses
   %i.j = phi i64 [ %i.p, %bb.c ], [ 0, %.lr.ph.i.i.i ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.sroa.034.037.us.i.i.i, i64 32
@@ -768,17 +773,18 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph.split.us.i.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.034.037.us.i.i.i, i64 40
   %i.n = load i64, ptr %i.m, align 8, !tbaa !731
-  %i.o = add i64 %i.n, %i.j
+  %i.o = add i64 %i.n, %i.j                       ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph.split.us.i.i.i
-  %i.p = phi i64 [ %i.o, %bb.b ], [ %i.j, %.lr.ph.split.us.i.i.i ] ; 2 uses
+  %15 = phi i64 [ %i.o, %bb.b ], [ %14, %.lr.ph.split.us.i.i.i ] ; 2 uses
+  %i.p = phi i64 [ %i.o, %bb.b ], [ %i.j, %.lr.ph.split.us.i.i.i ]
   %i.q = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.034.037.us.i.i.i) #33 ; 2 uses
   %i.r = icmp eq ptr %i.q, %i.e
   br i1 %i.r, label %._crit_edge.i.i.i, label %.lr.ph.split.us.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.split.i.i.i, %bb.c
-  %.lcssa.i.i.i = phi i64 [ %i.p, %bb.c ], [ %i.w, %.lr.ph.split.i.i.i ] ; 4 uses
+  %.lcssa.i.i.i = phi i64 [ %15, %bb.c ], [ %i.w, %.lr.ph.split.i.i.i ] ; 4 uses
   store i64 %.lcssa.i.i.i, ptr %i.b, align 8
   %i.s = icmp eq i64 %.lcssa.i.i.i, 0
   br i1 %i.s, label %"_ZSt10__invoke_rIvRZNK7rocksdb23BlockCacheTraceAnalyzer21PrintAccessCountStatsEbjjE3$_0JRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEmjNS0_9TraceTypeESB_mRKNS0_15BlockAccessInfoEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESH_E4typeEOSI_DpOSJ_.exit", label %bb.d

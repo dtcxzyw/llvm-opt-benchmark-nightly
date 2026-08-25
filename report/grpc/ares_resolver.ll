@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %bb.bi, %_ZSt3getIN4
   store <2 x ptr> %i.gd, ptr %i.gb, align 16, !tbaa !26
   store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr %i.fl, align 16, !tbaa !126
   store ptr null, ptr %i.fn, align 8, !tbaa !129
-  %i.ge = getelementptr inbounds nuw i8, ptr %21, i64 32 ; 7 uses
+  %i.ge = getelementptr inbounds nuw i8, ptr %21, i64 32 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !220)
   %i.gf = load ptr, ptr %i.fs, align 8, !tbaa !202, !noalias !220
   %i.gg = load ptr, ptr %i.fq, align 8, !tbaa !157, !noalias !220
@@ -252,7 +252,7 @@ bb.bl:                                            ; preds = %.noexc147
 
 _ZNSt12_Vector_baseIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE11_M_allocateEm.exit.i.i: ; preds = %bb.bl
   %i.gx = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gt) #32
-          to label %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i unwind label %bb.bm, !noalias !220 ; 5 uses
+          to label %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i unwind label %bb.bm, !noalias !220 ; 6 uses
 
 _ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i: ; preds = %_ZNSt12_Vector_baseIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE11_M_allocateEm.exit.i.i
   %i.gy = getelementptr inbounds nuw i8, ptr %21, i64 40 ; 3 uses
@@ -304,15 +304,16 @@ _ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESa
   br i1 %i.hw, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !227
 
 ._crit_edge41.i:                                  ; preds = %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit.i, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i, %bb.bl
-  %i.hx = phi ptr [ null, %bb.bl ], [ %i.gz, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i ], [ %i.iy, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit.i ]
+  %24 = phi ptr [ null, %bb.bl ], [ %i.gz, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i ], [ %i.iy, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit.i ]
+  %i.hx = phi ptr [ null, %bb.bl ], [ %i.gx, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i ], [ %i.ix, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit.i ]
   invoke void @gpr_free(ptr noundef %i.gm)
           to label %_ZN17grpc_event_engine12experimental12_GLOBAL__N_113SortAddressesERKSt6vectorINS0_11EventEngine15ResolvedAddressESaIS4_EE.exit unwind label %bb.bm, !noalias !220
 
 bb.bm:                                            ; preds = %._crit_edge41.i, %_ZNSt12_Vector_baseIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE11_M_allocateEm.exit.i.i, %bb.bk
+  %25 = phi ptr [ %24, %._crit_edge41.i ], [ null, %_ZNSt12_Vector_baseIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE11_M_allocateEm.exit.i.i ], [ null, %bb.bk ]
   %i.hy = phi ptr [ %i.hx, %._crit_edge41.i ], [ null, %_ZNSt12_Vector_baseIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE11_M_allocateEm.exit.i.i ], [ null, %bb.bk ]
   %i.hz = landingpad { ptr, i32 }
           cleanup
-  %.pre48.i = load ptr, ptr %i.ge, align 16, !tbaa !157, !alias.scope !220
   br label %bb.bq
 
 .lr.ph40.i:                                       ; preds = %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE7reserveEm.exit.i, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit.i
@@ -385,7 +386,7 @@ _ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESa
   br label %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit.i
 
 _ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE12emplace_backIJRS3_EEES7_DpOT_.exit.i: ; preds = %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, %bb.bn
-  %i.ix = phi ptr [ %i.ir, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.ia, %bb.bn ]
+  %i.ix = phi ptr [ %i.ir, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.ia, %bb.bn ] ; 2 uses
   %i.iy = phi ptr [ %i.iw, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.ib, %bb.bn ] ; 2 uses
   %i.iz = phi ptr [ %i.iv, %_ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESaIS3_EE17_M_realloc_insertIJRS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %i.ig, %bb.bn ]
   %i.ja = add nuw i64 %.039.i, 1                  ; 2 uses
@@ -409,8 +410,8 @@ _ZNSt6vectorIN17grpc_event_engine12experimental11EventEngine15ResolvedAddressESa
   br label %bb.bq
 
 bb.bq:                                            ; preds = %.loopexit.split-lp.i, %.loopexit.i, %bb.bm
-  %i.ji = phi ptr [ %i.hy, %bb.bm ], [ %i.ib, %.loopexit.i ], [ %i.ib, %.loopexit.split-lp.i ]
-  %i.jj = phi ptr [ %.pre48.i, %bb.bm ], [ %i.ia, %.loopexit.i ], [ %i.ia, %.loopexit.split-lp.i ] ; 3 uses
+  %i.ji = phi ptr [ %25, %bb.bm ], [ %i.ib, %.loopexit.i ], [ %i.ib, %.loopexit.split-lp.i ]
+  %i.jj = phi ptr [ %i.hy, %bb.bm ], [ %i.ia, %.loopexit.i ], [ %i.ia, %.loopexit.split-lp.i ] ; 3 uses
   %.pn.i = phi { ptr, i32 } [ %i.hz, %bb.bm ], [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ] ; 2 uses
   %.not.i.i.i36.i = icmp eq ptr %i.jj, null
   br i1 %.not.i.i.i36.i, label %.body, label %bb.br

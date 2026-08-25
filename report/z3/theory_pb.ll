@@ -205,7 +205,7 @@ bb.a:
   %10 = alloca %class.svector.202, align 8        ; 10 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %12 = alloca %"class.std::allocator.303", align 1 ; 4 uses
-  %13 = alloca %class.svector.202, align 8        ; 6 uses
+  %13 = alloca %class.svector.202, align 8        ; 7 uses
   %14 = alloca %class.svector.202, align 8        ; 10 uses
   %i.a = icmp eq i32 %2, 1
   br i1 %i.a, label %bb.bk, label %.preheader
@@ -366,6 +366,8 @@ bb.l:                                             ; preds = %_ZN8psort_nwIN3smt9
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #26
   %i.aj = tail call noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef 16) ; 8 uses
   store i32 2, ptr %i.aj, align 4, !tbaa !12
+  %15 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8 ; 2 uses
+  store ptr %15, ptr %13, align 8, !tbaa !681
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
   store i32 1, ptr %i.ak, align 4, !tbaa !12
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 4
@@ -395,22 +397,22 @@ bb.n:                                             ; preds = %bb.m
 _ZN6vectorIN3sat7literalELb0EjE13expand_vectorEv.exit82.2: ; preds = %bb.n
   %i.ax = zext i32 %i.au to i64
   %i.ay = tail call noalias noundef ptr @_ZN6memory10reallocateEPvm(ptr noundef nonnull %i.aj, i64 noundef %i.ax) ; 3 uses
+  %16 = getelementptr inbounds nuw i8, ptr %i.ay, i64 8 ; 2 uses
+  store ptr %16, ptr %13, align 8, !tbaa !681
   store i32 %i.as, ptr %i.ay, align 4, !tbaa !12
   %.phi.trans.insert.i.i.i.i.2.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
   %.pre2.i.i.i.i.2.pre = load i32, ptr %.phi.trans.insert.i.i.i.i.2.phi.trans.insert, align 4, !tbaa !12
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZN6vectorIN3sat7literalELb0EjE13expand_vectorEv.exit82.2, %bb.l
-  %.pn223 = phi ptr [ %i.ay, %_ZN6vectorIN3sat7literalELb0EjE13expand_vectorEv.exit82.2 ], [ %i.aj, %bb.l ] ; 4 uses
+  %.pn223 = phi ptr [ %16, %_ZN6vectorIN3sat7literalELb0EjE13expand_vectorEv.exit82.2 ], [ %15, %bb.l ] ; 5 uses
   %i.az = phi i32 [ %.pre2.i.i.i.i.2.pre, %_ZN6vectorIN3sat7literalELb0EjE13expand_vectorEv.exit82.2 ], [ 2, %bb.l ] ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %.pn223, i64 8 ; 3 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.pn223, i64 4
+  %i.ba = getelementptr inbounds i8, ptr %.pn223, i64 -4
   %i.bb = zext i32 %i.az to i64
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %15, i64 %i.bb
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %.pn223, i64 %i.bb
   store i32 %.sroa.06.0.i42, ptr %i.bc, align 4, !tbaa !12
   %i.bd = add i32 %i.az, 1
   store i32 %i.bd, ptr %i.ba, align 4, !tbaa !12
-  store ptr %15, ptr %13, align 8
   %i.be = load ptr, ptr %i.d, align 8, !tbaa !1053, !nonnull !115, !align !116 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #26
   store ptr null, ptr %10, align 8, !tbaa !681
@@ -498,10 +500,10 @@ bb.u:                                             ; preds = %bb.o
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bf, i64 8 ; 3 uses
   store ptr %i.cb, ptr %10, align 8, !tbaa !681
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bf, i64 4
-  %i.cd = load i32, ptr %15, align 4, !tbaa !12
+  %i.cd = load i32, ptr %.pn223, align 4, !tbaa !12
   store i32 %i.cd, ptr %i.cb, align 4, !tbaa !12
   store i32 1, ptr %i.cc, align 4, !tbaa !12
-  %i.ce = getelementptr inbounds nuw i8, ptr %.pn223, i64 12
+  %i.ce = getelementptr inbounds nuw i8, ptr %.pn223, i64 4
   %i.cf = load i32, ptr %i.bf, align 4, !tbaa !12
   %i.cg = icmp eq i32 %i.cf, 1
   br i1 %i.cg, label %bb.v, label %bb.y
@@ -545,7 +547,7 @@ bb.y:                                             ; preds = %bb.u, %.noexc69.1
   store i32 %i.cx, ptr %i.cw, align 4, !tbaa !12
   %i.cy = add i32 %i.ct, 1                        ; 3 uses
   store i32 %i.cy, ptr %i.cu, align 4, !tbaa !12
-  %i.cz = getelementptr inbounds nuw i8, ptr %.pn223, i64 16
+  %i.cz = getelementptr inbounds nuw i8, ptr %.pn223, i64 8
   %i.da = getelementptr inbounds i8, ptr %i.cs, i64 -8
   %i.db = load i32, ptr %i.da, align 4, !tbaa !12
   %i.dc = icmp eq i32 %i.cy, %i.db

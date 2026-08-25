@@ -55,7 +55,7 @@ bb.a:
   %i.b = alloca [6 x i32], align 16               ; 5 uses
   %i.c = alloca [6 x i32], align 16               ; 7 uses
   %8 = alloca %struct.Emap_Lib_t_, align 8        ; 41 uses
-  %9 = alloca %struct.Emap_Tuples_t_, align 8     ; 41 uses
+  %9 = alloca %struct.Emap_Tuples_t_, align 8     ; 40 uses
   %i.d = alloca float, align 4                    ; 27 uses
   %i.e = alloca float, align 4                    ; 8 uses
   %i.f = alloca double, align 8                   ; 13 uses
@@ -458,6 +458,7 @@ bb.bs:                                            ; preds = %._crit_edge280.1.i,
   br label %.lr.ph322.split.i
 
 .loopexit265.i:                                   ; preds = %.loopexit.i, %.lr.ph322.split.i
+  %.pre.i.i5561038 = phi ptr [ %.pre.i.i5561037, %.lr.ph322.split.i ], [ %.pre.i.i5561040, %.loopexit.i ]
   %i.sx = phi i32 [ %i.ta, %.lr.ph322.split.i ], [ %i.adv, %.loopexit.i ]
   %i.sy = phi i32 [ %i.tb, %.lr.ph322.split.i ], [ %i.adv, %.loopexit.i ]
   %.1181.lcssa.i = phi i32 [ %.0180320.i, %.lr.ph322.split.i ], [ %.8.i, %.loopexit.i ] ; 2 uses
@@ -466,6 +467,7 @@ bb.bs:                                            ; preds = %._crit_edge280.1.i,
   br i1 %i.sz, label %.lr.ph322.split.i, label %._crit_edge323.i, !llvm.loop !96
 
 .lr.ph322.split.i:                                ; preds = %.loopexit265.i, %.lr.ph322.split.preheader.i
+  %.pre.i.i5561037 = phi ptr [ null, %.lr.ph322.split.preheader.i ], [ %.pre.i.i5561038, %.loopexit265.i ] ; 2 uses
   %i.ta = phi i32 [ %i.pf, %.lr.ph322.split.preheader.i ], [ %i.sx, %.loopexit265.i ] ; 2 uses
   %i.tb = phi i32 [ %i.pf, %.lr.ph322.split.preheader.i ], [ %i.sy, %.loopexit265.i ] ; 2 uses
   %indvars.iv365.i = phi i64 [ %i.sv, %.lr.ph322.split.preheader.i ], [ %indvars.iv.next366.i, %.loopexit265.i ] ; 3 uses
@@ -489,6 +491,7 @@ bb.bs:                                            ; preds = %._crit_edge280.1.i,
   br label %bb.bt
 
 bb.bt:                                            ; preds = %.loopexit.i, %.lr.ph317.i
+  %.pre.i.i5561039 = phi ptr [ %.pre.i.i5561037, %.lr.ph317.i ], [ %.pre.i.i5561040, %.loopexit.i ] ; 2 uses
   %i.tp = phi i32 [ %i.ta, %.lr.ph317.i ], [ %i.adv, %.loopexit.i ]
   %indvars.iv362.i = phi i64 [ 0, %.lr.ph317.i ], [ %indvars.iv.next363.i, %.loopexit.i ] ; 3 uses
   %.1181315.i = phi i32 [ %.0180320.i, %.lr.ph317.i ], [ %.8.i, %.loopexit.i ] ; 2 uses
@@ -506,6 +509,7 @@ bb.bt:                                            ; preds = %.loopexit.i, %.lr.p
   br label %bb.bu
 
 bb.bu:                                            ; preds = %.critedge2.i, %.preheader264.i
+  %.pre.i.i5561041 = phi ptr [ %.pre.i.i5561039, %.preheader264.i ], [ %.pre.i.i5561042, %.critedge2.i ] ; 4 uses
   %.not212.i = phi i1 [ true, %.preheader264.i ], [ false, %.critedge2.i ] ; 3 uses
   %.0177312.i = phi i32 [ 0, %.preheader264.i ], [ 1, %.critedge2.i ]
   %.2311.i = phi i32 [ %.1181315.i, %.preheader264.i ], [ %.7.i, %.critedge2.i ] ; 4 uses
@@ -642,13 +646,12 @@ Emap_PackEntryFindFirst.exit.i:                   ; preds = %bb.ce, %bb.cd
 
 .lr.ph303.preheader.i:                            ; preds = %Emap_PackEntryFindFirst.exit.i
   %i.vj = zext nneg i32 %.025.i.i to i64
-  %.promoted = load ptr, ptr %9, align 8
   %i.vk = load ptr, ptr %i.pl, align 8
   %i.vl = load ptr, ptr %i.pn, align 8
   br label %.lr.ph303.i
 
 .lr.ph303.i:                                      ; preds = %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i, %.lr.ph303.preheader.i
-  %i.vm = phi ptr [ %.promoted, %.lr.ph303.preheader.i ], [ %i.ads, %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i ] ; 12 uses
+  %i.vm = phi ptr [ %.pre.i.i5561041, %.lr.ph303.preheader.i ], [ %i.ads, %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i ] ; 15 uses
   %indvars.iv359.i = phi i64 [ %i.vj, %.lr.ph303.preheader.i ], [ %indvars.iv.next360.i, %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i ] ; 2 uses
   %.3301.i = phi i32 [ %.2311.i, %.lr.ph303.preheader.i ], [ %.5.ph.i, %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i ] ; 16 uses
   %i.vn = getelementptr inbounds nuw [48 x i8], ptr %i.pw, i64 %indvars.iv359.i ; 6 uses
@@ -1051,7 +1054,7 @@ Emap_TuplesAdd.exit.i:                            ; preds = %bb.dq, %bb.dm
   br label %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i
 
 Emap_ObjPairHasDirectDanglingRelation.exit.thread.i: ; preds = %Emap_TuplesAdd.exit.i, %bb.dl, %bb.dj, %Emap_ObjPairHasTfiRelation.exit.i, %Abc_NtkIncrementTravId.exit.i.i, %Emap_ObjPairHasMffcDanglingRelation.exit.i, %bb.cv, %bb.cq, %bb.cl, %._crit_edge299.thread.i
-  %i.ads = phi ptr [ %i.vm, %Abc_NtkIncrementTravId.exit.i.i ], [ %i.vm, %bb.cv ], [ %i.vm, %bb.cq ], [ %i.vm, %bb.dl ], [ %i.vm, %Emap_ObjPairHasTfiRelation.exit.i ], [ %i.vm, %Emap_ObjPairHasMffcDanglingRelation.exit.i ], [ %i.acy, %Emap_TuplesAdd.exit.i ], [ %i.vm, %._crit_edge299.thread.i ], [ %i.vm, %bb.cl ], [ %i.vm, %bb.dj ]
+  %i.ads = phi ptr [ %i.vm, %Abc_NtkIncrementTravId.exit.i.i ], [ %i.vm, %bb.cv ], [ %i.vm, %bb.cq ], [ %i.vm, %bb.dl ], [ %i.vm, %Emap_ObjPairHasTfiRelation.exit.i ], [ %i.vm, %Emap_ObjPairHasMffcDanglingRelation.exit.i ], [ %i.acy, %Emap_TuplesAdd.exit.i ], [ %i.vm, %._crit_edge299.thread.i ], [ %i.vm, %bb.cl ], [ %i.vm, %bb.dj ] ; 2 uses
   %.5.ph.i = phi i32 [ %.3301.i, %Abc_NtkIncrementTravId.exit.i.i ], [ %.3301.i, %bb.cv ], [ %.3301.i, %bb.cq ], [ %.3301.i, %bb.dl ], [ %.3301.i, %Emap_ObjPairHasTfiRelation.exit.i ], [ %.3301.i, %Emap_ObjPairHasMffcDanglingRelation.exit.i ], [ %.4.i, %Emap_TuplesAdd.exit.i ], [ %.3301.i, %._crit_edge299.thread.i ], [ %.3301.i, %bb.cl ], [ %.3301.i, %bb.dj ] ; 2 uses
   %indvars.iv.next360.i = add nuw nsw i64 %indvars.iv359.i, 1 ; 2 uses
   %i.adt = trunc nuw i64 %indvars.iv.next360.i to i32
@@ -1059,6 +1062,7 @@ Emap_ObjPairHasDirectDanglingRelation.exit.thread.i: ; preds = %Emap_TuplesAdd.e
   br i1 %i.adu, label %.lr.ph303.i, label %.critedge2.i, !llvm.loop !123
 
 .critedge2.i:                                     ; preds = %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i, %._crit_edge299.i, %bb.cg, %.lr.ph303.i, %Emap_PackEntryFindFirst.exit.i, %Emap_PackEntryFindFirst.exit.thread.i, %bb.bu
+  %.pre.i.i5561042 = phi ptr [ %.pre.i.i5561041, %Emap_PackEntryFindFirst.exit.i ], [ %.pre.i.i5561041, %bb.bu ], [ %.pre.i.i5561041, %Emap_PackEntryFindFirst.exit.thread.i ], [ %i.vm, %bb.cg ], [ %i.ads, %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i ], [ %i.vm, %.lr.ph303.i ], [ %i.vm, %._crit_edge299.i ] ; 2 uses
   %.7.i = phi i32 [ %.2311.i, %Emap_PackEntryFindFirst.exit.i ], [ %.2311.i, %bb.bu ], [ %.2311.i, %Emap_PackEntryFindFirst.exit.thread.i ], [ %.3301.i, %bb.cg ], [ %.5.ph.i, %Emap_ObjPairHasDirectDanglingRelation.exit.thread.i ], [ %.3301.i, %.lr.ph303.i ], [ %.3301.i, %._crit_edge299.i ] ; 2 uses
   br i1 %.not212.i, label %bb.bu, label %.loopexit.loopexit.i, !llvm.loop !124
 
@@ -1067,6 +1071,7 @@ Emap_ObjPairHasDirectDanglingRelation.exit.thread.i: ; preds = %Emap_TuplesAdd.e
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %bb.bt
+  %.pre.i.i5561040 = phi ptr [ %.pre.i.i5561039, %bb.bt ], [ %.pre.i.i5561042, %.loopexit.loopexit.i ] ; 2 uses
   %i.adv = phi i32 [ %i.tp, %bb.bt ], [ %.pre373.i, %.loopexit.loopexit.i ] ; 4 uses
   %.8.i = phi i32 [ %.1181315.i, %bb.bt ], [ %.7.i, %.loopexit.loopexit.i ] ; 2 uses
   %indvars.iv.next363.i = add nuw nsw i64 %indvars.iv362.i, 1 ; 2 uses

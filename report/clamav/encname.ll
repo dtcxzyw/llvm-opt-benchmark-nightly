@@ -38,7 +38,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %invariant.umin = tail call i64 @llvm.umin.i64(i64 %6, i64 %2) ; 8 uses
   %.promoted = load i32, ptr %i.h, align 4, !tbaa !12
-  %.promoted111 = load i8, ptr %0, align 8, !tbaa !8
   %scevgep129 = getelementptr i8, ptr %5, i64 4
   %scevgep132.a = getelementptr i8, ptr %1, i64 1
   %scevgep138.a = getelementptr i8, ptr %5, i64 4
@@ -48,12 +47,16 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph108, %.critedge2
-  %7 = phi i8 [ %.promoted111, %.lr.ph108 ], [ %i.dq, %.critedge2 ]
-  %i.i = phi i32 [ %.promoted, %.lr.ph108 ], [ %10, %.critedge2 ] ; 2 uses
+  %i.i = phi i32 [ %.promoted, %.lr.ph108 ], [ %8, %.critedge2 ] ; 2 uses
   %.074107 = phi i64 [ 0, %.lr.ph108 ], [ %.5, %.critedge2 ] ; 35 uses
   %.177106 = phi i64 [ %.076, %.lr.ph108 ], [ %.581, %.critedge2 ] ; 3 uses
   %i.j = icmp eq i32 %i.i, 0
-  br i1 %i.j, label %bb.e, label %bb.f
+  br i1 %i.j, label %bb.e, label %._crit_edge115
+
+._crit_edge115:                                   ; preds = %bb.d
+  %.pre116 = load i8, ptr %0, align 8, !tbaa !8
+  %7 = add i32 %i.i, -2
+  br label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.k = add nuw i64 %.177106, 1
@@ -63,11 +66,11 @@ bb.e:                                             ; preds = %bb.d
   store i32 8, ptr %i.h, align 4, !tbaa !12
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %8 = phi i8 [ %i.m, %bb.e ], [ %7, %bb.d ]      ; 2 uses
-  %9 = phi i32 [ 8, %bb.e ], [ %i.i, %bb.d ]
-  %.278 = phi i64 [ %i.k, %bb.e ], [ %.177106, %bb.d ] ; 17 uses
-  %i.n = lshr i8 %8, 6
+bb.f:                                             ; preds = %._crit_edge115, %bb.e
+  %8 = phi i32 [ 6, %bb.e ], [ %7, %._crit_edge115 ] ; 2 uses
+  %9 = phi i8 [ %i.m, %bb.e ], [ %.pre116, %._crit_edge115 ] ; 2 uses
+  %.278 = phi i64 [ %i.k, %bb.e ], [ %.177106, %._crit_edge115 ] ; 17 uses
+  %i.n = lshr i8 %9, 6
   switch i8 %i.n, label %default.unreachable120 [
     i8 0, label %bb.g
     i8 1, label %bb.i
@@ -324,10 +327,9 @@ default.unreachable120:                           ; preds = %bb.f
 .critedge2:                                       ; preds = %.lr.ph, %.lr.ph104, %middle.block158, %middle.block, %bb.p, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g, %bb.l, %bb.j, %bb.h
   %.581 = phi i64 [ %.278, %bb.g ], [ %i.o, %bb.h ], [ %.278, %bb.i ], [ %i.u, %bb.j ], [ %.278, %bb.k ], [ %i.am, %bb.l ], [ %.278, %bb.m ], [ %i.an, %bb.o ], [ %i.an, %bb.q ], [ %i.ar, %bb.p ], [ %i.an, %middle.block ], [ %i.ar, %middle.block158 ], [ %i.an, %.lr.ph104 ], [ %i.ar, %.lr.ph ] ; 2 uses
   %.5 = phi i64 [ %.074107, %bb.g ], [ %i.s, %bb.h ], [ %.074107, %bb.i ], [ %i.z, %bb.j ], [ %.074107, %bb.k ], [ %i.ak, %bb.l ], [ %.074107, %bb.m ], [ %.074107, %bb.o ], [ %.074107, %bb.q ], [ %.074107, %bb.p ], [ %i.cz, %middle.block ], [ %i.bn, %middle.block158 ], [ %i.dn, %.lr.ph104 ], [ %i.cg, %.lr.ph ] ; 3 uses
-  %i.dq = shl i8 %8, 2                            ; 2 uses
+  %i.dq = shl i8 %9, 2
   store i8 %i.dq, ptr %0, align 8, !tbaa !8
-  %10 = add i32 %9, -2                            ; 2 uses
-  store i32 %10, ptr %i.h, align 4, !tbaa !12
+  store i32 %8, ptr %i.h, align 4, !tbaa !12
   %i.dr = icmp ult i64 %.581, %4
   %i.ds = icmp ult i64 %.5, %6                    ; 2 uses
   %i.dt = select i1 %i.dr, i1 %i.ds, i1 false

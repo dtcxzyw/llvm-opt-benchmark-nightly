@@ -204,14 +204,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 10 uses
   %.promoted = load i8, ptr %i.a, align 16, !alias.scope !16585
   %.promoted33 = load i128, ptr %1, align 16
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 19 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 24 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 7 uses
   %i.d = load ptr, ptr %i.c, align 16, !nonnull !3, !align !65 ; 6 uses
-  %.promoted34 = load i64, ptr %i.b, align 8
   br label %tailrecurse
 
 tailrecurse:                                      ; preds = %bb.p, %bb.a
-  %2 = phi i64 [ %.promoted34, %bb.a ], [ %3, %bb.p ] ; 2 uses
   %i.e = phi i128 [ %.promoted33, %bb.a ], [ %i.y, %bb.p ] ; 3 uses
   %storemerge.i.i332 = phi i8 [ %.promoted, %bb.a ], [ %storemerge.i.i3, %bb.p ] ; 3 uses
   %.tr = phi ptr [ %0, %bb.a ], [ %i.dg, %bb.p ]  ; 18 uses
@@ -232,6 +230,7 @@ bb.b:                                             ; preds = %tailrecurse
 bb.c:                                             ; preds = %tailrecurse
   %i.m = trunc i128 %i.e to i64
   %i.n = lshr i128 %i.e, 64
+  %2 = load i64, ptr %i.b, align 8, !alias.scope !16585, !noundef !3
   %i.o = xor i64 %2, %i.m
   %i.p = load i64, ptr %i.d, align 8, !noalias !16585, !noundef !3
   %i.q = zext i64 %i.o to i128
@@ -240,14 +239,13 @@ bb.c:                                             ; preds = %tailrecurse
   %i.t = mul nuw i128 %i.s, %i.q                  ; 2 uses
   %i.u = lshr i128 %i.t, 64
   %i.v = xor i128 %i.u, %i.t
-  %i.w = trunc i128 %i.v to i64                   ; 2 uses
+  %i.w = trunc i128 %i.v to i64
   store i64 %i.w, ptr %i.b, align 8, !alias.scope !16585
   %i.x = zext nneg i32 %i.f to i128
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit4
 
 _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit4: ; preds = %bb.b, %bb.c
   %i.y = phi i128 [ %i.x, %bb.c ], [ %i.k, %bb.b ] ; 17 uses
-  %3 = phi i64 [ %i.w, %bb.c ], [ %2, %bb.b ]     ; 6 uses
   %storemerge.i.i3 = phi i8 [ 64, %bb.c ], [ %i.l, %bb.b ] ; 7 uses
   store i128 %i.y, ptr %1, align 16, !alias.scope !16585
   store i8 %storemerge.i.i3, ptr %i.a, align 16, !alias.scope !16585
@@ -284,6 +282,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.ai = trunc i128 %i.y to i64
   %i.aj = lshr i128 %i.y, 64
+  %3 = load i64, ptr %i.b, align 8, !alias.scope !16598, !noundef !3
   %i.ak = xor i64 %3, %i.ai
   %i.al = load i64, ptr %i.d, align 8, !noalias !16598, !noundef !3
   %i.am = zext i64 %i.ak to i128
@@ -325,7 +324,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.be = trunc i128 %i.y to i64
   %i.bf = lshr i128 %i.y, 64
-  %i.bg = xor i64 %3, %i.be
+  %4 = load i64, ptr %i.b, align 8, !alias.scope !16605, !noundef !3
+  %i.bg = xor i64 %4, %i.be
   %i.bh = load i64, ptr %i.d, align 8, !noalias !16605, !noundef !3
   %i.bi = zext i64 %i.bg to i128
   %i.bj = zext i64 %i.bh to i128
@@ -366,7 +366,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.bz = trunc i128 %i.y to i64
   %i.ca = lshr i128 %i.y, 64
-  %i.cb = xor i64 %3, %i.bz
+  %5 = load i64, ptr %i.b, align 8, !alias.scope !16615, !noundef !3
+  %i.cb = xor i64 %5, %i.bz
   %i.cc = load i64, ptr %i.d, align 8, !noalias !16615, !noundef !3
   %i.cd = zext i64 %i.cb to i128
   %i.ce = zext i64 %i.cc to i128
@@ -407,7 +408,8 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.ct = trunc i128 %i.y to i64
   %i.cu = lshr i128 %i.y, 64
-  %i.cv = xor i64 %3, %i.ct
+  %6 = load i64, ptr %i.b, align 8, !alias.scope !16625, !noundef !3
+  %i.cv = xor i64 %6, %i.ct
   %i.cw = load i64, ptr %i.d, align 8, !noalias !16625, !noundef !3
   %i.cx = zext i64 %i.cv to i128
   %i.cy = zext i64 %i.cw to i128
@@ -453,7 +455,8 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.dp = trunc i128 %i.y to i64
   %i.dq = lshr i128 %i.y, 64
-  %i.dr = xor i64 %3, %i.dp
+  %7 = load i64, ptr %i.b, align 8, !alias.scope !16635, !noundef !3
+  %i.dr = xor i64 %7, %i.dp
   %i.ds = load i64, ptr %i.d, align 8, !noalias !16635, !noundef !3
   %i.dt = zext i64 %i.dr to i128
   %i.du = zext i64 %i.ds to i128

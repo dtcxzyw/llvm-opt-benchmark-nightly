@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i, %.lr.ph.i
-  %i.x = phi ptr [ %i.u, %.lr.ph.i ], [ %5, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 5 uses
+  %i.x = phi ptr [ %i.u, %.lr.ph.i ], [ %.pn, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 4 uses
   %.010.i = phi i32 [ 0, %.lr.ph.i ], [ %i.as, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ]
   %i.y = phi ptr [ %i.v, %.lr.ph.i ], [ %i.ar, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 3 uses
   %i.z = phi ptr [ %i.u, %.lr.ph.i ], [ %i.aq, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 5 uses
@@ -216,6 +216,8 @@ bb.b:                                             ; preds = %_ZNSt6vectorIiSaIiE
 
 bb.c:                                             ; preds = %bb.b
   store i32 %i.ab, ptr %i.x, align 4, !tbaa !46, !noalias !189
+  %5 = getelementptr inbounds nuw i8, ptr %i.x, i64 4 ; 2 uses
+  store ptr %5, ptr %i.s, align 8, !tbaa !76, !alias.scope !189
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i
 
 bb.d:                                             ; preds = %bb.b
@@ -226,7 +228,6 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.af, label %bb.e, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i
 
 bb.e:                                             ; preds = %bb.d
-  store ptr %i.x, ptr %i.s, align 8
   store ptr %i.y, ptr %i.q, align 8, !alias.scope !189
   store ptr %i.z, ptr %0, align 8, !alias.scope !189
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #15, !noalias !189
@@ -253,21 +254,21 @@ bb.f:                                             ; preds = %_ZNKSt6vectorIiSaIi
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i: ; preds = %bb.f, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %i.an, i64 4 ; 2 uses
   tail call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef %i.ae) #16, !noalias !189
+  store ptr %6, ptr %i.s, align 8, !tbaa !76, !alias.scope !189
   %i.ap = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %i.ak
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i
 
 _ZNSt6vectorIiSaIiEE9push_backEOi.exit.i:         ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i, %bb.c
-  %.pn = phi ptr [ %i.x, %bb.c ], [ %i.an, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i ]
+  %.pn = phi ptr [ %5, %bb.c ], [ %6, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i ]
   %i.aq = phi ptr [ %i.z, %bb.c ], [ %i.am, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i ] ; 4 uses
   %i.ar = phi ptr [ %i.y, %bb.c ], [ %i.ap, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i ] ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.pn, i64 4 ; 2 uses
   %i.as = add nuw i32 %.010.i, 1                  ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.as, %i.o
   br i1 %exitcond.not.i, label %_ZN5eSLIM19RelationSynthesiser20getNewVariableVectorEj.exit, label %bb.b, !llvm.loop !125
 
 _ZN5eSLIM19RelationSynthesiser20getNewVariableVectorEj.exit: ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i
-  store ptr %5, ptr %i.s, align 8
   %.pre = load ptr, ptr %i.l, align 8, !tbaa !47
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 4
   %.pre125.a = load i32, ptr %.phi.trans.insert, align 4, !tbaa !126

@@ -204,35 +204,42 @@ declare void @_ZN6duckdb14MetadataReaderD1Ev(ptr noundef nonnull align 8 derefer
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb18FixedSizeAllocator13VerifyBuffersEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(240) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 5 uses
+  %i.a = alloca i64, align 8                      ; 6 uses
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %2 = alloca %"class.std::allocator.37", align 1 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
+  store i64 0, ptr %i.a, align 8, !tbaa !73
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.sroa.06.012 = load ptr, ptr %i.b, align 8, !tbaa !66 ; 2 uses
   %.not13 = icmp eq ptr %.sroa.06.012, null
   br i1 %.not13, label %._crit_edge.thread, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.sroa.06.014 = phi ptr [ %.sroa.06.0, %.lr.ph ], [ %.sroa.06.012, %bb.a ] ; 2 uses
-  %i.c = phi i64 [ %spec.select, %.lr.ph ], [ 0, %bb.a ]
+.lr.ph:                                           ; preds = %bb.a, %._crit_edge.a
+  %.sroa.06.014 = phi ptr [ %.sroa.06.0, %._crit_edge.a ], [ %.sroa.06.012, %bb.a ] ; 2 uses
+  %i.c = phi i64 [ %5, %._crit_edge.a ], [ 0, %bb.a ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sroa.06.014, i64 16
   %i.e = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_15FixedSizeBufferESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load i64, ptr %i.f, align 8, !tbaa !123
-  %3 = icmp eq i64 %i.g, 0
-  %4 = zext i1 %3 to i64
-  %spec.select = add i64 %i.c, %4                 ; 3 uses
+  %.not.a = icmp eq i64 %i.g, 0
+  br i1 %.not.a, label %3, label %._crit_edge.a
+
+3:                                                ; preds = %.lr.ph
+  %4 = add i64 %i.c, 1                            ; 2 uses
+  store i64 %4, ptr %i.a, align 8, !tbaa !73
+  br label %._crit_edge.a
+
+._crit_edge.a:                                    ; preds = %3, %.lr.ph
+  %5 = phi i64 [ %4, %3 ], [ %i.c, %.lr.ph ]      ; 2 uses
   %.sroa.06.0 = load ptr, ptr %.sroa.06.014, align 8, !tbaa !66 ; 2 uses
-  %.not.a = icmp eq ptr %.sroa.06.0, null
-  br i1 %.not.a, label %._crit_edge.a, label %.lr.ph, !llvm.loop !255
+  %.not = icmp eq ptr %.sroa.06.0, null
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !255
 
-._crit_edge.a:                                    ; preds = %.lr.ph
-  store i64 %spec.select, ptr %i.a, align 8
-  %5 = icmp ugt i64 %spec.select, 1
-  br i1 %5, label %bb.b, label %._crit_edge.thread
+._crit_edge:                                      ; preds = %._crit_edge.a
+  %6 = icmp ugt i64 %5, 1
+  br i1 %6, label %bb.b, label %._crit_edge.thread
 
-bb.b:                                             ; preds = %._crit_edge.a
+bb.b:                                             ; preds = %._crit_edge
   %i.h = tail call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
@@ -284,7 +291,7 @@ bb.g:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   resume { ptr, i32 } %.pn10
 
-._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge.a
+._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   ret void
 

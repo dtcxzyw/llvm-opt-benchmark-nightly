@@ -205,7 +205,7 @@ $_ZN14hb_free_pool_tIN22hb_serialize_context_t8object_tELj32EE7chunk_t6threadEv 
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef ptr @hb_subset_serialize_or_fail(i32 noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.hb_vector_t, align 8        ; 16 uses
+  %3 = alloca %struct.hb_vector_t, align 8        ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   %i.a = add i32 %2, 1                            ; 2 uses
@@ -216,7 +216,7 @@ bb.a:
   %.043.i = phi i32 [ %i.d, %.preheader.i ], [ 0, %bb.a ] ; 2 uses
   %i.b = lshr i32 %.043.i, 1
   %i.c = add i32 %.043.i, 8
-  %i.d = add i32 %i.c, %i.b                       ; 5 uses
+  %i.d = add i32 %i.c, %i.b                       ; 6 uses
   %i.e = icmp ugt i32 %i.a, %i.d
   br i1 %i.e, label %.preheader.i, label %.thread.i, !llvm.loop !9
 
@@ -239,6 +239,7 @@ _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit: ; preds = 
   br label %.critedge.i7
 
 bb.b:                                             ; preds = %.thread.i, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i
+  store i32 -1, ptr %3, align 8, !tbaa !18
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 4
   br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57
 
@@ -246,7 +247,11 @@ _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 3 uses
   %i.n = tail call ptr @hb_realloc(ptr noundef null, i64 noundef 64) #15 ; 3 uses
   %.not22.i21 = icmp eq ptr %i.n, null
-  br i1 %.not22.i21, label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57, label %..critedge_crit_edge.i, !prof !12
+  br i1 %.not22.i21, label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread60, label %..critedge_crit_edge.i, !prof !12
+
+_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread60: ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i20
+  store i32 -1, ptr %3, align 8, !tbaa !18
+  br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57
 
 ..critedge_crit_edge.i:                           ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i20
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -255,14 +260,15 @@ _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12
   %.pre.i = load i32, ptr %i.m, align 4, !tbaa !19
   br label %.critedge.i7
 
-_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57: ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i20, %bb.b
-  %i.p = phi ptr [ %i.l, %bb.b ], [ %i.m, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i20 ]
+_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57: ; preds = %bb.b, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread60
+  %i.p = phi ptr [ %i.m, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread60 ], [ %i.l, %bb.b ]
   %i.q = load i64, ptr @_hb_NullPool, align 16
   store i64 %i.q, ptr @_hb_CrapPool, align 16
   br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJDnEEEPS2_DpOT_.exit
 
 .critedge.i7:                                     ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit, %..critedge_crit_edge.i
-  %i.r = phi ptr [ %i.n, %..critedge_crit_edge.i ], [ %i.i, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit ]
+  %4 = phi i32 [ 8, %..critedge_crit_edge.i ], [ %i.d, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit ]
+  %i.r = phi ptr [ %i.n, %..critedge_crit_edge.i ], [ %i.i, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit ] ; 2 uses
   %i.s = phi ptr [ %i.m, %..critedge_crit_edge.i ], [ %i.k, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit ] ; 2 uses
   %i.t = phi i32 [ %.pre.i, %..critedge_crit_edge.i ], [ 0, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit ] ; 2 uses
   %i.u = add i32 %i.t, 1
@@ -270,29 +276,22 @@ _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57:
   %i.v = zext i32 %i.t to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.v
   store ptr null, ptr %i.w, align 8, !tbaa !20
-  %.promoted.pre = load i32, ptr %3, align 8
   br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJDnEEEPS2_DpOT_.exit
 
 _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJDnEEEPS2_DpOT_.exit: ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57, %.critedge.i7
-  %.promoted = phi i32 [ -1, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57 ], [ %.promoted.pre, %.critedge.i7 ] ; 2 uses
+  %5 = phi ptr [ null, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57 ], [ %i.r, %.critedge.i7 ] ; 2 uses
+  %.promoted = phi i32 [ -1, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57 ], [ %4, %.critedge.i7 ] ; 2 uses
   %i.x = phi ptr [ %i.p, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit33.thread57 ], [ %i.s, %.critedge.i7 ] ; 5 uses
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.c, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJDnEEEPS2_DpOT_.exit
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.z = load i64, ptr @_hb_NullPool, align 16
-  %.promoted79 = load ptr, ptr %i.y, align 8
   %wide.trip.count = zext i32 %2 to i64
   br label %bb.e
 
-._crit_edge:                                      ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit
-  store ptr %i.be, ptr %i.y, align 8
-  br label %bb.c
-
-bb.c:                                             ; preds = %._crit_edge, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJDnEEEPS2_DpOT_.exit
-  %.sink.i46.ph76.lcssa = phi i32 [ %.sink.i46.ph73, %._crit_edge ], [ %.promoted, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJDnEEEPS2_DpOT_.exit ]
-  store i32 %.sink.i46.ph76.lcssa, ptr %3, align 8
+bb.c:                                             ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJDnEEEPS2_DpOT_.exit
   %i.aa = call noundef ptr @_Z20hb_resolve_overflowsI11hb_vector_tIPK28hb_subset_serialize_object_tLb0EEEP9hb_blob_tRKT_jjb(ptr noundef nonnull align 8 dereferenceable(16) %3, i32 noundef %0, i32 noundef 20, i1 noundef zeroext true)
   %i.ab = load i32, ptr %3, align 8, !tbaa !18
   %i.ac = add i32 %i.ab, -1
@@ -311,9 +310,11 @@ _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EED2Ev.exit: ; preds = %bb.c
   ret ptr %i.aa
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit
+  %6 = phi ptr [ %5, %.lr.ph ], [ %13, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit ] ; 4 uses
+  %7 = phi i32 [ %.promoted, %.lr.ph ], [ %14, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit ] ; 7 uses
+  %i.af = phi ptr [ %5, %.lr.ph ], [ %i.be, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit ] ; 4 uses
+  %.sink.i46.ph7677 = phi i32 [ %.promoted, %.lr.ph ], [ %.sink.i46.ph73, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit ] ; 9 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit ] ; 2 uses
-  %i.af = phi ptr [ %.promoted79, %.lr.ph ], [ %i.be, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit ] ; 7 uses
-  %.sink.i46.ph7677 = phi i32 [ %.promoted, %.lr.ph ], [ %.sink.i46.ph73, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit ] ; 11 uses
   %i.ag = getelementptr inbounds nuw [48 x i8], ptr %1, i64 %indvars.iv
   %i.ah = load i32, ptr %i.x, align 4, !tbaa !19  ; 3 uses
   %.not.i8 = icmp slt i32 %i.ah, %.sink.i46.ph7677
@@ -358,13 +359,13 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.as = load i32, ptr %i.x, align 4, !tbaa !19  ; 2 uses
   %.not.i.i.i.i52 = icmp eq i32 %i.as, 0
-  br i1 %.not.i.i.i.i52, label %..critedge_crit_edge.i10, label %bb.l, !prof !11
+  br i1 %.not.i.i.i.i52, label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54, label %bb.l, !prof !11
 
 bb.l:                                             ; preds = %bb.k
   %i.at = zext i32 %i.as to i64
   %i.au = shl nuw nsw i64 %i.at, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ar, ptr nonnull readonly align 1 %i.af, i64 %i.au, i1 false), !alias.scope !22
-  br label %..critedge_crit_edge.i10
+  br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54
 
 _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i41: ; preds = %bb.i, %bb.h
   %i.av = phi ptr [ null, %bb.i ], [ %i.af, %bb.h ]
@@ -372,30 +373,41 @@ _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12
   %i.ax = zext i32 %i.aw to i64
   %i.ay = tail call ptr @hb_realloc(ptr noundef %i.av, i64 noundef %i.ax) #15 ; 2 uses
   %.not22.i42 = icmp eq ptr %i.ay, null
-  br i1 %.not22.i42, label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48, label %..critedge_crit_edge.i10, !prof !12
+  br i1 %.not22.i42, label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48, label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54, !prof !12
 
 _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48: ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i41, %bb.j
-  %.not23.i49 = icmp samesign ugt i32 %i.am, %.sink.i46.ph7677
+  %.not23.i49 = icmp ugt i32 %i.am, %7
   br i1 %.not23.i49, label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread67, label %..critedge_crit_edge.i10, !prof !26
 
 _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread67: ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48, %.thread.i38
-  %.sink.i46.ph = xor i32 %.sink.i46.ph7677, -1
+  %.sink.i46.ph.in = phi i32 [ %.sink.i46.ph7677, %.thread.i38 ], [ %7, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48 ]
+  %.sink.i46.ph = xor i32 %.sink.i46.ph.in, -1    ; 3 uses
+  store i32 %.sink.i46.ph, ptr %3, align 8, !tbaa !18
   br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64
 
-..critedge_crit_edge.i10:                         ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i41, %bb.l, %bb.k, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48, %bb.g
-  %4 = phi ptr [ %i.af, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48 ], [ %i.af, %bb.g ], [ %i.ay, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i41 ], [ %i.ar, %bb.l ], [ %i.ar, %bb.k ]
-  %.sink.i46.ph72 = phi i32 [ %.sink.i46.ph7677, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48 ], [ %.sink.i46.ph7677, %bb.g ], [ %i.am, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i41 ], [ %i.am, %bb.l ], [ %i.am, %bb.k ]
+_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54: ; preds = %bb.k, %bb.l, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i41
+  %.1.i.i42.i44 = phi ptr [ %i.ay, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.i41 ], [ %i.ar, %bb.l ], [ %i.ar, %bb.k ] ; 2 uses
+  store ptr %.1.i.i42.i44, ptr %i.y, align 8, !tbaa !13
+  store i32 %i.am, ptr %3, align 8, !tbaa !18
+  br label %..critedge_crit_edge.i10
+
+..critedge_crit_edge.i10:                         ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48, %bb.g, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54
+  %8 = phi ptr [ %6, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48 ], [ %6, %bb.g ], [ %.1.i.i42.i44, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54 ]
+  %9 = phi i32 [ %7, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48 ], [ %7, %bb.g ], [ %i.am, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54 ]
+  %10 = phi i32 [ %7, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE14realloc_vectorIS2_TnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPS2_j11hb_priorityILj0EE.exit.thread53.i48 ], [ %.sink.i46.ph7677, %bb.g ], [ %i.am, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54 ]
   %.pre.i11 = load i32, ptr %i.x, align 4, !tbaa !19
   br label %.critedge.i12
 
 _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64: ; preds = %bb.f, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread67
+  %11 = phi i32 [ %7, %bb.f ], [ %.sink.i46.ph, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread67 ]
   %.sink.i46.ph74 = phi i32 [ %.sink.i46.ph7677, %bb.f ], [ %.sink.i46.ph, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread67 ]
   store i64 %i.z, ptr @_hb_CrapPool, align 16
   br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit
 
 .critedge.i12:                                    ; preds = %..critedge_crit_edge.i10, %bb.e
-  %i.az = phi ptr [ %4, %..critedge_crit_edge.i10 ], [ %i.af, %bb.e ] ; 2 uses
-  %.sink.i46.ph75 = phi i32 [ %.sink.i46.ph72, %..critedge_crit_edge.i10 ], [ %.sink.i46.ph7677, %bb.e ]
+  %i.az = phi ptr [ %8, %..critedge_crit_edge.i10 ], [ %6, %bb.e ] ; 3 uses
+  %12 = phi i32 [ %9, %..critedge_crit_edge.i10 ], [ %7, %bb.e ]
+  %.sink.i46.ph75 = phi i32 [ %10, %..critedge_crit_edge.i10 ], [ %.sink.i46.ph7677, %bb.e ]
   %i.ba = phi i32 [ %.pre.i11, %..critedge_crit_edge.i10 ], [ %i.ah, %bb.e ] ; 2 uses
   %i.bb = add i32 %i.ba, 1
   store i32 %i.bb, ptr %i.x, align 4, !tbaa !19
@@ -405,11 +417,13 @@ _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64:
   br label %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit
 
 _ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE4pushIJPS0_EEEPS2_DpOT_.exit: ; preds = %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64, %.critedge.i12
-  %i.be = phi ptr [ %i.af, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64 ], [ %i.az, %.critedge.i12 ] ; 2 uses
-  %.sink.i46.ph73 = phi i32 [ %.sink.i46.ph74, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64 ], [ %.sink.i46.ph75, %.critedge.i12 ] ; 2 uses
+  %13 = phi ptr [ %6, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64 ], [ %i.az, %.critedge.i12 ]
+  %14 = phi i32 [ %11, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64 ], [ %12, %.critedge.i12 ]
+  %i.be = phi ptr [ %i.af, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64 ], [ %i.az, %.critedge.i12 ]
+  %.sink.i46.ph73 = phi i32 [ %.sink.i46.ph74, %_ZN11hb_vector_tIPK28hb_subset_serialize_object_tLb0EE5allocEjb.exit54.thread64 ], [ %.sink.i46.ph75, %.critedge.i12 ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !27
+  br i1 %exitcond.not, label %bb.c, label %bb.e, !llvm.loop !27
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)

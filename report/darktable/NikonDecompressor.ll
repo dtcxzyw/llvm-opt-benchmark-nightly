@@ -205,18 +205,18 @@ _ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i:        ; preds = %bb.q
 
 .lr.ph102:                                        ; preds = %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i, %bb.q, %bb.p, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge
   %.pre.a = phi ptr [ %.pre131.pre, %._ZNSt6vectorItSaItEE6resizeEm.exit_crit_edge ], [ %i.j, %bb.p ], [ %i.j, %bb.q ], [ %i.j, %_ZSt8_DestroyIPttEvT_S1_RSaIT0_E.exit.i.i ] ; 2 uses
-  %i.hj = load i32, ptr %i.aj, align 8, !tbaa !31 ; 2 uses
+  %i.hj = load i32, ptr %i.aj, align 8, !tbaa !31 ; 3 uses
   %i.hk = zext i32 %i.hj to i64
   %i.hl = icmp sgt i32 %i.hj, -1
-  %.promoted = load i32, ptr %i.af, align 8, !tbaa !25
-  %i.hm = zext i32 %.promoted to i64
-  %wide.trip.count = zext nneg i16 %spec.select.i.i.i.i.i.i to i64
+  %i.hm = zext nneg i16 %spec.select.i.i.i.i.i.i to i64
+  %.pre = load i32, ptr %i.af, align 8, !tbaa !25
   br label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph102, %bb.t
+  %6 = phi i32 [ %.pre, %.lr.ph102 ], [ %8, %bb.t ] ; 2 uses
   %indvars.iv116 = phi i64 [ 0, %.lr.ph102 ], [ %indvars.iv.next117, %bb.t ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.hm, %.lr.ph102 ], [ %i.hn, %bb.t ] ; 2 uses
-  %i.hn = add nuw nsw i64 %indvars.iv, 2          ; 3 uses
+  %7 = zext i32 %6 to i64                         ; 2 uses
+  %i.hn = add nuw nsw i64 %7, 2
   %.not.i.i.i.i.i.i89 = icmp samesign ugt i64 %i.hn, %i.hk
   br i1 %.not.i.i.i.i.i.i89, label %bb.s, label %bb.t
 
@@ -232,16 +232,18 @@ bb.t:                                             ; preds = %bb.r
   %i.hp = icmp eq i16 %i.ho, -8531
   %i.hq = load ptr, ptr %1, align 8, !tbaa !34
   tail call void @llvm.assume(i1 %i.hl)
-  %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 %indvars.iv
+  %8 = add nuw nsw i32 %6, 2                      ; 3 uses
+  %9 = icmp samesign ule i32 %8, %i.hj
+  tail call void @llvm.assume(i1 %9)
+  %i.hr = getelementptr inbounds nuw i8, ptr %i.hq, i64 %7
   %.0.copyload.i.i.i.i.i.i90 = load i16, ptr %i.hr, align 1 ; 2 uses
   %i.hs = tail call i16 @llvm.bswap.i16(i16 %.0.copyload.i.i.i.i.i.i90)
   %spec.select.i.i.i.i.i.i91 = select i1 %i.hp, i16 %.0.copyload.i.i.i.i.i.i90, i16 %i.hs
-  %6 = trunc nuw i64 %i.hn to i32
-  store i32 %6, ptr %i.af, align 8, !tbaa !25
+  store i32 %8, ptr %i.af, align 8, !tbaa !25
   %i.ht = getelementptr inbounds nuw [2 x i8], ptr %.pre.a, i64 %indvars.iv116
   store i16 %spec.select.i.i.i.i.i.i91, ptr %i.ht, align 2, !tbaa !16
   %indvars.iv.next117 = add nuw nsw i64 %indvars.iv116, 1 ; 2 uses
-  %exitcond121.not = icmp eq i64 %indvars.iv.next117, %wide.trip.count
+  %exitcond121.not = icmp eq i64 %indvars.iv.next117, %i.hm
   br i1 %exitcond121.not, label %.loopexit, label %bb.r, !llvm.loop !57
 
 bb.u:                                             ; preds = %bb.s
@@ -644,11 +646,13 @@ bb.ai:                                            ; preds = %_ZN8rawspeed15RawIm
 
 bb.aj:                                            ; preds = %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i, %bb.ah
   %.promoted1824 = phi i32 [ %.promoted1825, %bb.ah ], [ %.promoted1821, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ]
-  %i.mf = phi i32 [ %.promoted1825, %bb.ah ], [ %i.qp, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 5 uses
+  %i.mf = phi i32 [ %.promoted1825, %bb.ah ], [ %i.qp, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 6 uses
   %i.mg = phi i32 [ %.promoted20, %bb.ah ], [ %i.qq, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 5 uses
   %indvars.iv.i = phi i64 [ 0, %bb.ah ], [ %indvars.iv.next.i, %_ZN8rawspeed15RawImageDataU1613setWithLookUpEtPSt4bytePj.exit.i ] ; 4 uses
   %i.mh = icmp samesign ult i32 %i.mg, 65
   call void @llvm.assume(i1 %i.mh)
+  %11 = icmp sgt i32 %i.mf, -1
+  call void @llvm.assume(i1 %11)
   %.not.i.i.i7 = icmp samesign ult i32 %i.mg, 32
   br i1 %.not.i.i.i7, label %bb.ak, label %._ZN8rawspeed11BitStreamerINS_14BitStreamerMSBENS_39BitStreamerForwardSequentialReplenisherIS1_EEE4fillEi.exit_crit_edge.i.i
 

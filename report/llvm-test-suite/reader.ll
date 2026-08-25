@@ -202,10 +202,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
-  %.03856 = phi ptr [ %.03852, %.lr.ph ], [ %.038, %bb.h ] ; 9 uses
-  %.03455 = phi i16 [ 255, %.lr.ph ], [ %.2, %bb.h ] ; 3 uses
-  %.03654.a = phi i16 [ 1, %.lr.ph ], [ %.137, %bb.h ] ; 4 uses
   %0 = phi i32 [ 255, %.lr.ph ], [ %i.ad, %bb.h ] ; 3 uses
+  %.03856 = phi ptr [ %.03852, %.lr.ph ], [ %.038, %bb.h ] ; 9 uses
+  %.03654.a = phi i16 [ 255, %.lr.ph ], [ %.2, %bb.h ] ; 3 uses
+  %.03654 = phi i16 [ 1, %.lr.ph ], [ %.137, %bb.h ] ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %.03856, i64 40
   %i.q = load i8, ptr %i.p, align 8, !tbaa !15
   %i.r = icmp eq i8 %i.q, 2
@@ -226,13 +226,13 @@ bb.d:                                             ; preds = %bb.b
   br i1 %or.cond95, label %bb.e, label %._crit_edge74
 
 bb.e:                                             ; preds = %bb.d
-  %i.v = add i16 %.03455, 1                       ; 3 uses
+  %i.v = add i16 %.03654.a, 1                     ; 3 uses
   store i16 %i.v, ptr %.phi.trans.insert, align 2, !tbaa !40
   br label %._crit_edge74
 
 ._crit_edge74:                                    ; preds = %bb.d, %bb.e
   %i.w = phi i16 [ %.pre, %bb.d ], [ %i.v, %bb.e ]
-  %.1 = phi i16 [ %.03455, %bb.d ], [ %i.v, %bb.e ]
+  %.1 = phi i16 [ %.03654.a, %bb.d ], [ %i.v, %bb.e ]
   %i.x = sext i16 %i.w to i32                     ; 3 uses
   %i.y = icmp slt i32 %0, %i.x
   br i1 %i.y, label %bb.f, label %bb.g
@@ -243,16 +243,16 @@ bb.f:                                             ; preds = %._crit_edge74
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge74
   %i.z = phi i32 [ %i.x, %bb.f ], [ %0, %._crit_edge74 ]
-  %i.aa = add i16 %.03654.a, 1
+  %i.aa = add i16 %.03654, 1
   %i.ab = getelementptr inbounds nuw i8, ptr %.03856, i64 32
-  store i16 %.03654.a, ptr %i.ab, align 8, !tbaa !30
+  store i16 %.03654, ptr %i.ab, align 8, !tbaa !30
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.c
-  %i.ac = phi i16 [ %i.u, %bb.c ], [ %.03654.a, %bb.g ]
-  %i.ad = phi i32 [ %0, %bb.c ], [ %i.z, %bb.g ]
-  %.137 = phi i16 [ %.03654.a, %bb.c ], [ %i.aa, %bb.g ]
-  %.2 = phi i16 [ %.03455, %bb.c ], [ %.1, %bb.g ]
+  %i.ac = phi i16 [ %i.u, %bb.c ], [ %.03654, %bb.g ]
+  %i.ad = phi i32 [ %0, %bb.c ], [ %i.z, %bb.g ]  ; 2 uses
+  %.137 = phi i16 [ %.03654, %bb.c ], [ %i.aa, %bb.g ]
+  %.2 = phi i16 [ %.03654.a, %bb.c ], [ %.1, %bb.g ]
   %i.ae = getelementptr inbounds nuw i8, ptr %.03856, i64 16
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !31
   %i.ag = getelementptr inbounds nuw i8, ptr %.03856, i64 32
@@ -272,17 +272,20 @@ bb.h:                                             ; preds = %bb.g, %bb.c
   %i.ar = getelementptr inbounds nuw i8, ptr %.03856, i64 8
   %.038 = load ptr, ptr %i.ar, align 8, !tbaa !8  ; 2 uses
   %.not = icmp eq ptr %.038, null
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !43
+  br i1 %.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !43
 
-._crit_edge:                                      ; preds = %bb.h, %bb.a
+._crit_edge.loopexit:                             ; preds = %bb.h
+  %1 = shl nuw nsw i32 %i.ad, 1
+  %2 = add nuw nsw i32 %1, 2
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
+  %3 = phi i32 [ %2, %._crit_edge.loopexit ], [ 512, %bb.a ]
   %i.as = load i32, ptr @translations, align 4, !tbaa !4
   %.not42 = icmp eq i32 %i.as, 0
   br i1 %.not42, label %.loopexit51, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge
-  %1 = load i32, ptr @max_user_token_number, align 4, !tbaa !4
-  %2 = shl i32 %1, 1
-  %3 = add i32 %2, 2
   %i.at = tail call ptr (i32, ...) @mallocate(i32 noundef %3) #12 ; 4 uses
   store ptr %i.at, ptr @token_translations, align 8, !tbaa !11
   %i.au = load i32, ptr @max_user_token_number, align 4, !tbaa !4 ; 4 uses
