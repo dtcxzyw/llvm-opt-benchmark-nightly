@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/BreakpointResolverScripted?download=true
+inline.NumInlined: 708
+inline.NumDeleted: 396
 begin_hunk_0_@_ZN12lldb_private26BreakpointResolverScripted28CreateImplementationIfNeededESt10shared_ptrINS_10BreakpointEE:bb.a
   %.0.i.i.i.i8 = phi i32 [ %i.aw, %bb.w ], [ %i.bg, %bb.x ]
   %i.bh = icmp eq i32 %.0.i.i.i.i8, 1
@@ -200,7 +202,7 @@ bb.p:                                             ; preds = %bb.o
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.ar = load <2 x ptr>, ptr %4, align 16, !tbaa !46
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.as = load ptr, ptr %i.aq, align 8, !tbaa !48 ; 8 uses
   store <2 x ptr> %i.ar, ptr %i.b, align 8, !tbaa !46
   %.not.i.i.i.i5 = icmp eq ptr %i.as, null
@@ -603,7 +605,7 @@ bb.h:                                             ; preds = %bb.f
 _ZNSt10shared_ptrIN12lldb_private6ModuleEEC2ERKS2_.exit.i: ; preds = %bb.h, %bb.g, %_ZNSt10shared_ptrIN12lldb_private6TargetEEC2ERKS2_.exit.i
   %i.u = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.u, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.u, ptr noundef nonnull align 8 dereferenceable(24) %i.v, i64 24, i1 false)
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 64
@@ -692,7 +694,7 @@ bb.q:                                             ; preds = %bb.o
 _ZN12lldb_private13SymbolContextC2ERKS0_.exit:    ; preds = %_ZN12lldb_private16NonNullSharedPtrINS_11SupportFileEEC2ERKS2_.exit.i.i, %bb.p, %bb.q
   %i.bg = getelementptr inbounds nuw i8, ptr %4, i64 128
   %i.bh = getelementptr inbounds nuw i8, ptr %2, i64 128
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.bg, ptr noundef nonnull align 8 dereferenceable(7) %i.bh, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(7) %i.bg, ptr noundef nonnull align 8 dereferenceable(7) %i.bh, i64 7, i1 false)
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 136
   %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 136
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bi, ptr noundef nonnull align 8 dereferenceable(16) %i.bj, i64 16, i1 false)

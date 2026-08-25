@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/HexagonMachineFunctionInfo?download=true
+inline.NumInlined: 375
+inline.NumDeleted: 185
 begin_hunk_0_@_ZN4llvm4yaml12ScalarTraitsINS0_11StringValueEvE5inputENS_9StringRefEPvRS2_:bb.a
 
 bb.k:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit23.thread25.i, %.thread.i
@@ -200,9 +202,9 @@ _ZN4llvm4yaml6isBoolENS_9StringRefE.exit.thread52: ; preds = %_ZN4llvm4yaml6isNu
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %select.unfold
-  %.568 = phi i32 [ %.6.ph60, %select.unfold ], [ %spec.select29, %.lr.ph.preheader ] ; 8 uses
-  %.02567 = phi ptr [ %i.by, %select.unfold ], [ %0, %.lr.ph.preheader ] ; 2 uses
-  %i.br = load i8, ptr %.02567, align 1, !tbaa !161 ; 4 uses
+  %.01868 = phi ptr [ %i.by, %select.unfold ], [ %0, %.lr.ph.preheader ] ; 2 uses
+  %.567 = phi i32 [ %.6.ph60, %select.unfold ], [ %spec.select29, %.lr.ph.preheader ] ; 8 uses
+  %i.br = load i8, ptr %.01868, align 1, !tbaa !161 ; 4 uses
   %i.bs = and i8 %i.br, -33
   %i.bt = add i8 %i.bs, -65
   %i.bu = icmp ult i8 %i.bt, 26
@@ -230,8 +232,8 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond, label %select.unfold, label %.thread56
 
 select.unfold:                                    ; preds = %bb.e, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %bb.d, %.lr.ph
-  %.6.ph60 = phi i32 [ %.568, %bb.d ], [ %.568, %bb.d ], [ %.568, %bb.d ], [ %.568, %bb.d ], [ %.568, %.lr.ph ], [ %.568, %bb.d ], [ %.568, %bb.d ], [ %.568, %bb.d ], [ 1, %bb.e ] ; 2 uses
-  %i.by = getelementptr inbounds nuw i8, ptr %.02567, i64 1 ; 2 uses
+  %.6.ph60 = phi i32 [ %.567, %bb.d ], [ %.567, %bb.d ], [ %.567, %bb.d ], [ %.567, %bb.d ], [ %.567, %.lr.ph ], [ %.567, %bb.d ], [ %.567, %bb.d ], [ %.567, %bb.d ], [ 1, %bb.e ] ; 2 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %.01868, i64 1 ; 2 uses
   %.not27 = icmp eq ptr %i.by, %i.bp
   br i1 %.not27, label %.thread56, label %.lr.ph
 

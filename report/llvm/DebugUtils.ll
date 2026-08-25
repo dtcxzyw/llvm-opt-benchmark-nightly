@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DebugUtils?download=true
+inline.NumInlined: 859
+inline.NumDeleted: 496
 begin_hunk_0_@_ZN4llvm3orclsERNS_11raw_ostreamERKSt6vectorISt4pairIPNS0_8JITDylibENS0_19JITDylibLookupFlagsEESaIS8_EE:bb.a
   store ptr %i.dh, ptr %i.cw, align 8, !tbaa !8
   br label %_ZN4llvm3orclsERNS_11raw_ostreamERKNS0_19JITDylibLookupFlagsE.exit30
@@ -200,7 +202,7 @@ bb.k:                                             ; preds = %_ZN4llvm11raw_ostre
   br i1 %.not.i, label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aw, ptr nonnull align 1 %i.ay, i64 %i.az, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aw, ptr nonnull align 8 %i.ay, i64 %i.az, i1 false)
   %i.bi = load ptr, ptr %i.bc, align 8, !tbaa !8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.az ; 2 uses
   store ptr %i.bj, ptr %i.bc, align 8, !tbaa !8
@@ -603,7 +605,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.n, i64 24, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.n, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 16, i1 false), !tbaa.struct !133
-  %i.o = load i32, ptr %i.m, align 4, !tbaa !29
+  %i.o = load i32, ptr %i.m, align 8, !tbaa !29
   %i.p = getelementptr inbounds i8, ptr %.07.i.i, i64 -8
   store i32 %i.o, ptr %i.p, align 8, !tbaa !134
   %i.q = ptrtoint ptr %i.n to i64
@@ -701,9 +703,9 @@ bb.g:                                             ; preds = %_ZN9__gnu_cxx5__ops
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.ai = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 16 ; 2 uses
   %i.aj = getelementptr inbounds i8, ptr %.013.pn.i.i, i64 -8 ; 2 uses
-  %i.ak = load i32, ptr %i.ai, align 4, !tbaa !29
+  %i.ak = load i32, ptr %i.ai, align 8, !tbaa !29
   %i.al = load i32, ptr %i.aj, align 4, !tbaa !29
-  store i32 %i.al, ptr %i.ai, align 4, !tbaa !29
+  store i32 %i.al, ptr %i.ai, align 8, !tbaa !29
   store i32 %i.ak, ptr %i.aj, align 4, !tbaa !29
   %i.am = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 24
   br label %bb.e, !llvm.loop !182
@@ -767,7 +769,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEclIPSt4pairINS2_9String
   %i.o = getelementptr inbounds [24 x i8], ptr %0, i64 %.039 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.o, ptr noundef nonnull align 8 dereferenceable(20) %i.n, i64 16, i1 false), !tbaa.struct !133
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %i.q = load i32, ptr %i.p, align 4, !tbaa !29
+  %i.q = load i32, ptr %i.p, align 8, !tbaa !29
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   store i32 %i.q, ptr %i.r, align 8, !tbaa !134
   %i.s = icmp slt i64 %spec.select38, %i.b
@@ -792,7 +794,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ab = getelementptr inbounds [24 x i8], ptr %0, i64 %.0.lcssa ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.ab, ptr noundef nonnull align 8 dereferenceable(20) %i.aa, i64 16, i1 false), !tbaa.struct !133
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !29
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !29
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   store i32 %i.ad, ptr %i.ae, align 8, !tbaa !134
   br label %bb.d
@@ -1108,7 +1110,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEclIPSt4pairINS2_9String
   %i.n = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -24 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.n, ptr noundef nonnull align 8 dereferenceable(20) %i.m, i64 16, i1 false), !tbaa.struct !133
   %i.o = getelementptr inbounds i8, ptr %.078.i.i.i.i.i, i64 -8
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !29
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !29
   %i.q = getelementptr inbounds i8, ptr %.069.i.i.i.i.i, i64 -8
   store i32 %i.p, ptr %i.q, align 8, !tbaa !134
   %i.r = add nsw i64 %.010.i.i.i.i.i, -1

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RISCVExpandAtomicPseudoInsts?download=true
+inline.NumInlined: 850
+inline.NumDeleted: 260
 begin_hunk_0_@_ZN12_GLOBAL__N_123RISCVExpandAtomicPseudo20expandAtomicMinMaxOpERN4llvm17MachineBasicBlockENS1_26MachineInstrBundleIteratorINS1_12MachineInstrELb0EEENS1_13AtomicRMWInst5BinOpEbiRS6_:bb.a
   %..i143.neg.i = select i1 %i.ol, i64 -15774, i64 -15777
   br label %_ZN12_GLOBAL__N_131doMaskedAtomicMinMaxOpExpansionEPKN4llvm14RISCVInstrInfoERNS0_12MachineInstrENS0_8DebugLocEPNS0_17MachineBasicBlockES8_S8_S8_S8_NS0_13AtomicRMWInst5BinOpEiPKNS0_14RISCVSubtargetE.exit
@@ -200,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.x = load i32, ptr %i.w, align 4, !tbaa !228
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.0265.0 = phi i32 [ %i.x, %bb.b ], [ 0, %bb.a ] ; 3 uses
   %i.y = phi i64 [ 6, %bb.b ], [ 5, %bb.a ]
   %.0.copyload.i.i.i.i.i.i.i.i.i.i = load i64, ptr %2, align 8
@@ -397,8 +399,8 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i49.i: ; p
 
 _ZN4llvm28skipDebugInstructionsForwardINS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEEET_S4_S4_b.exit57.i: ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i49.i, %.lr.ph.i40.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i32.i, %_ZN4llvm28skipDebugInstructionsForwardINS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEEET_S4_S4_b.exit.i
   %i.cp = phi i32 [ 0, %_ZN4llvm28skipDebugInstructionsForwardINS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEEET_S4_S4_b.exit.i ], [ 1, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i32.i ], [ 1, %.lr.ph.i40.i ], [ 1, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i49.i ] ; 2 uses
-  %.sroa.0112.0.i = phi i32 [ %i.n, %_ZN4llvm28skipDebugInstructionsForwardINS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEEET_S4_S4_b.exit.i ], [ %i.bq, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i32.i ], [ %i.bq, %.lr.ph.i40.i ], [ %i.bq, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i49.i ] ; 3 uses
   %.sroa.0118.0.i = phi ptr [ %.sroa.03.0.lcssa.i.i, %_ZN4llvm28skipDebugInstructionsForwardINS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEEET_S4_S4_b.exit.i ], [ %i.cb, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i32.i ], [ %i.co, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i49.i ], [ %.sroa.03.08.i41.i, %.lr.ph.i40.i ] ; 9 uses
+  %.sroa.0112.0.i = phi i32 [ %i.n, %_ZN4llvm28skipDebugInstructionsForwardINS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEEET_S4_S4_b.exit.i ], [ %i.bq, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i32.i ], [ %i.bq, %.lr.ph.i40.i ], [ %i.bq, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i49.i ] ; 3 uses
   %i.cq = icmp eq ptr %.sroa.0118.0.i, %i.an
   br i1 %i.cq, label %_ZN12_GLOBAL__N_127tryToFoldBNEOnCmpXchgResultERN4llvm17MachineBasicBlockENS0_26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEENS0_8RegisterES6_S6_RPS1_.exit, label %bb.h
 

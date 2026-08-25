@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CommentParser?download=true
+inline.NumInlined: 951
+inline.NumDeleted: 432
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 4
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN5clang8comments6Parser18parseVerbatimBlockEv:bb.a
 
 bb.r:                                             ; preds = %bb.q
@@ -200,9 +205,9 @@ bb.e:                                             ; preds = %_ZN5clang8comments6
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.sroa.6.0 = phi i64 [ %i.o, %bb.d ], [ 0, %bb.e ]
-  %.sroa.014.0 = phi ptr [ %i.m, %bb.d ], [ @.str, %bb.e ]
   %.sroa.015.0 = phi i32 [ %.sroa.0.0.copyload.i, %bb.d ], [ %.sroa.0.0.i, %bb.e ]
+  %.sroa.014.0 = phi ptr [ %i.m, %bb.d ], [ @.str, %bb.e ]
+  %.sroa.6.0 = phi i64 [ %i.o, %bb.d ], [ 0, %bb.e ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !27, !nonnull !37, !align !38
   %i.s = tail call noundef ptr @_ZN5clang8comments4Sema17actOnVerbatimLineENS_14SourceLocationEjS2_N4llvm9StringRefE(ptr noundef nonnull align 8 dereferenceable(168) %i.r, i32 %.sroa.016.0.copyload, i32 noundef %.sroa.517.0.copyload, i32 %.sroa.015.0, ptr %.sroa.014.0, i64 %.sroa.6.0) #11

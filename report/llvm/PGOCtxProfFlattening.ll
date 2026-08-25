@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PGOCtxProfFlattening?download=true
+inline.NumInlined: 775
+inline.NumDeleted: 557
 begin_hunk_0_@_ZN4llvm24PGOCtxProfFlatteningPass3runERNS_6ModuleERNS_15AnalysisManagerIS1_JEEE:bb.a
   %i.fv = getelementptr inbounds [16 x i8], ptr %i.ft, i64 %i.fu
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.fv, ptr noundef nonnull align 8 dereferenceable(1) %.val.pre.i.i, i64 %i.fq, i1 false)
@@ -200,8 +202,8 @@ bb.am:                                            ; preds = %_ZNSt12_Vector_base
   br label %_ZNSt6vectorIjSaIjEED2Ev.exit
 
 _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.am, %bb.al, %.thread.i.i.i
-  %.sroa.7.0.a = phi ptr [ %i.ia, %.thread.i.i.i ], [ %i.ic, %bb.am ], [ %i.ic, %bb.al ] ; 2 uses
-  %.sroa.060.0 = phi ptr [ null, %.thread.i.i.i ], [ %i.ib, %bb.am ], [ %i.ib, %bb.al ]
+  %.sroa.7.0.a = phi ptr [ null, %.thread.i.i.i ], [ %i.ib, %bb.am ], [ %i.ib, %bb.al ]
+  %.sroa.060.0 = phi ptr [ %i.ia, %.thread.i.i.i ], [ %i.ic, %bb.am ], [ %i.ic, %bb.al ] ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   store i32 0, ptr %i.ie, align 8, !tbaa !108
   %i.if = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
@@ -213,11 +215,11 @@ _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.am, %bb.al, %.th
   %i.ii = getelementptr inbounds nuw i8, ptr %9, i64 40
   store i64 0, ptr %i.ii, align 8, !tbaa !116
   %i.ij = getelementptr inbounds nuw i8, ptr %9, i64 48 ; 2 uses
-  store ptr %.sroa.060.0, ptr %i.ij, align 8, !tbaa !117
+  store ptr %.sroa.7.0.a, ptr %i.ij, align 8, !tbaa !117
   %i.ik = getelementptr inbounds nuw i8, ptr %9, i64 56
-  store ptr %.sroa.7.0.a, ptr %i.ik, align 8, !tbaa !119
+  store ptr %.sroa.060.0, ptr %i.ik, align 8, !tbaa !119
   %i.il = getelementptr inbounds nuw i8, ptr %9, i64 64 ; 2 uses
-  store ptr %.sroa.7.0.a, ptr %i.il, align 8, !tbaa !120
+  store ptr %.sroa.060.0, ptr %i.il, align 8, !tbaa !120
   %i.im = getelementptr inbounds nuw i8, ptr %9, i64 72 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.im, i8 0, i64 64, i1 false)
   %i.in = getelementptr inbounds nuw i8, ptr %8, i64 24

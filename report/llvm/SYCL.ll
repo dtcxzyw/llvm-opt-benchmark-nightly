@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SYCL?download=true
+inline.NumInlined: 565
+inline.NumDeleted: 269
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNK4llvm3opt7ArgList10getLastArgIJNS0_12OptSpecifierEEEEPNS0_3ArgEDpT_:bb.a
   %.sroa.0.1 = phi ptr [ %i.af, %.thread25.i.i ], [ %i.ac, %.lr.ph.split ] ; 3 uses
   %i.ad = load ptr, ptr %.sroa.0.1, align 8, !tbaa !186 ; 2 uses
@@ -200,9 +204,9 @@ bb.e:                                             ; preds = %bb.s
   br i1 %brmerge42, label %bb.u, label %bb.t
 
 bb.f:                                             ; preds = %bb.d, %bb.s
-  %.03779 = phi i1 [ false, %bb.d ], [ %.2, %bb.s ] ; 2 uses
-  %.039.idx78 = phi i64 [ 0, %bb.d ], [ %.039.add, %bb.s ] ; 2 uses
-  %.039.ptr = getelementptr inbounds nuw i8, ptr @_ZZL18getUnsupportedOptsvE15UnsupportedOpts, i64 %.039.idx78
+  %.037.idx79 = phi i64 [ 0, %bb.d ], [ %.039.add, %bb.s ] ; 2 uses
+  %.03878 = phi i1 [ false, %bb.d ], [ %.2, %bb.s ] ; 2 uses
+  %.039.ptr = getelementptr inbounds nuw i8, ptr @_ZZL18getUnsupportedOptsvE15UnsupportedOpts, i64 %.037.idx79
   %i.ae = load i32, ptr %.039.ptr, align 4, !tbaa !130
   %i.af = call noundef zeroext i1 @_ZNK4llvm3opt6Option7matchesENS0_12OptSpecifierE(ptr noundef nonnull align 8 dereferenceable(16) %4, i32 %i.ae) #14
   br i1 %i.af, label %bb.g, label %bb.s
@@ -338,8 +342,8 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.f, %bb.r, %bb.q
-  %.2 = phi i1 [ %.03779, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.03779, %bb.f ], [ true, %bb.r ], [ true, %bb.q ] ; 2 uses
-  %.039.add = add nuw nsw i64 %.039.idx78, 4      ; 2 uses
+  %.2 = phi i1 [ %.03878, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.03878, %bb.f ], [ true, %bb.r ], [ true, %bb.q ] ; 2 uses
+  %.039.add = add nuw nsw i64 %.037.idx79, 4      ; 2 uses
   %.not41 = icmp eq i64 %.039.add, 80
   br i1 %.not41, label %bb.e, label %bb.f
 

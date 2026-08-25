@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/X86FastPreTileConfig?download=true
+inline.NumInlined: 1405
+inline.NumDeleted: 719
 begin_hunk_0_@_ZN4llvm24X86FastPreTileConfigPass3runERNS_15MachineFunctionERNS_15AnalysisManagerIS1_JEEE:bb.a
   store i32 -1, ptr %i.a, align 8, !tbaa !31
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 2 uses
@@ -200,9 +202,9 @@ _ZN4llvm23SmallVectorTemplateBaseIiLb1EE28reserveForParamAndGetAddressERim.exit.
   %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %i.ae, 2
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 %.idx.i.i.i.i.i.i.i
   %i.ak = shl nuw nsw i64 %i.w, 2
-  %44 = add nsw i64 %i.ak, -4
-  %45 = shl nuw nsw i64 %i.ab, 2
-  %i.al = sub nsw i64 %44, %45                    ; 2 uses
+  %44 = shl nuw nsw i64 %i.ab, 2
+  %45 = add nsw i64 %i.ak, -4
+  %i.al = sub nsw i64 %45, %44                    ; 2 uses
   %i.am = lshr exact i64 %i.al, 2
   %i.an = add nuw nsw i64 %i.am, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.al, 28
@@ -605,7 +607,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_12MachineInstrEN12_GLOBAL__N_124X86FastP
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %2, ptr %i.cd, align 8, !tbaa !272
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cd, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.cq, i8 0, i64 12, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.cq, i8 0, i64 12, i1 false)
   br label %_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_12MachineInstrEN12_GLOBAL__N_124X86FastPreTileConfigImpl7PHIInfoENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_EixEOS3_.exit
 
 _ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_12MachineInstrEN12_GLOBAL__N_124X86FastPreTileConfigImpl7PHIInfoENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_EixEOS3_.exit: ; preds = %.lr.ph.i.i.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_12MachineInstrEN12_GLOBAL__N_124X86FastPreTileConfigImpl7PHIInfoENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S6_EEEES3_S6_S8_SB_E22findBucketForInsertionIS3_EEPSB_RKT_SF_.exit.i.i
@@ -1008,7 +1010,7 @@ _ZZN4llvm12DenseMapBaseINS_8DenseMapIPNS_12MachineInstrEN12_GLOBAL__N_124X86Fast
   store ptr %i.p, ptr %i.am, align 8, !tbaa !272
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.an, ptr noundef nonnull align 4 dereferenceable(12) %i.ao, i64 12, i1 false), !tbaa.struct !667
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.an, ptr noundef nonnull align 8 dereferenceable(12) %i.ao, i64 12, i1 false), !tbaa.struct !667
   %i.ap = shl nuw i32 1, %.lcssa.i
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %.val9, i64 %.lcssa11.i ; 2 uses
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !234
@@ -1292,7 +1294,7 @@ bb.b:                                             ; preds = %.lr.ph
   store ptr %i.v, ptr %i.ah, align 8, !tbaa !272
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ai, ptr noundef nonnull align 4 dereferenceable(12) %i.aj, i64 12, i1 false), !tbaa.struct !667
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ai, ptr noundef nonnull align 8 dereferenceable(12) %i.aj, i64 12, i1 false), !tbaa.struct !667
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b

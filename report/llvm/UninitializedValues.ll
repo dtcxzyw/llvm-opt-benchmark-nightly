@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/UninitializedValues?download=true
+inline.NumInlined: 2320
+inline.NumDeleted: 1316
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN4llvm12DenseMapBaseINS_8DenseMapIPKN5clang7VarDeclEjNS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_jEEEES5_jS7_SA_E8moveFromERSB_:bb.a
   %i.m = add nuw nsw i64 %i.l, 31
   %i.n = lshr i64 %i.m, 5                         ; 2 uses
@@ -200,9 +205,9 @@ _ZN4llvm23SmallVectorTemplateBaseImLb1EE28reserveForParamAndGetAddressERmm.exit.
   %.idx.i.i.i.i.i.i.i = shl nuw nsw i64 %i.ag, 3
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %.idx.i.i.i.i.i.i.i
   %i.ao = shl nuw nsw i64 %i.ac, 3
-  %3 = add nsw i64 %i.ao, -8
-  %4 = shl nuw nsw i64 %.pre-phi.i, 3
-  %i.ap = sub nsw i64 %3, %4                      ; 2 uses
+  %3 = shl nuw nsw i64 %.pre-phi.i, 3
+  %4 = add nsw i64 %i.ao, -8
+  %i.ap = sub nsw i64 %4, %3                      ; 2 uses
   %i.aq = lshr exact i64 %i.ap, 3
   %i.ar = add nuw nsw i64 %i.aq, 1                ; 2 uses
   %min.iters.check = icmp ult i64 %i.ap, 24
@@ -605,7 +610,7 @@ define linkonce_odr hidden noundef nonnull align 8 dereferenceable(8) ptr @_ZN4l
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !15     ; 5 uses
   %i.b = trunc i64 %i.a to i1
-  %i.c = load i64, ptr %1, align 8, !tbaa !15     ; 6 uses
+  %i.c = load i64, ptr %1, align 8, !tbaa !15     ; 5 uses
   %i.d = trunc i64 %i.c to i1                     ; 2 uses
   br i1 %i.b, label %bb.b, label %bb.f
 
@@ -618,7 +623,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.e = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #21 ; 9 uses
-  %i.f = inttoptr i64 %i.c to ptr                 ; 4 uses
+  %2 = load i64, ptr %1, align 8, !tbaa !15
+  %i.f = inttoptr i64 %2 to ptr                   ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 3 uses
   store ptr %i.g, ptr %i.e, align 8, !tbaa !11
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses

@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CommentLexer?download=true
+inline.NumInlined: 1036
+inline.NumDeleted: 327
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZNK5clang8comments5Token4dumpERKNS0_5LexerERKNS_13SourceManagerE:bb.a
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
@@ -200,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sroa.49.0 = phi i64 [ %i.j, %bb.b ], [ 0, %bb.a ]
   %.sroa.08.0 = phi ptr [ %i.g, %bb.b ], [ null, %bb.a ]
+  %.sroa.49.0 = phi i64 [ %i.j, %bb.b ], [ 0, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.08.0, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.49.0, 1

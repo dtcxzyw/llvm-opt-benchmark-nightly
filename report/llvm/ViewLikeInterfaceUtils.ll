@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ViewLikeInterfaceUtils?download=true
+inline.NumInlined: 326
+inline.NumDeleted: 205
 begin_hunk_0_@_ZN4mlir6affine27mergeOffsetsSizesAndStridesERNS_9OpBuilderENS_8LocationENS_30OffsetSizeAndStrideOpInterfaceES4_RKN4llvm14SmallBitVectorERNS5_11SmallVectorINS_12OpFoldResultELj6EEESC_SC_:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #6
   %i.al = load ptr, ptr %14, align 8, !tbaa !12   ; 2 uses
@@ -200,9 +202,9 @@ _ZN4llvm11SmallVectorIN4mlir12OpFoldResultELj6EED2Ev.exit: ; preds = %._crit_edg
   ret void
 
 bb.j:                                             ; preds = %.lr.ph68, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit
-  %.sroa.10.067 = phi ptr [ %2, %.lr.ph68 ], [ %i.bv, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit ] ; 2 uses
+  %.sroa.10.067 = phi ptr [ %4, %.lr.ph68 ], [ %i.bx, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit ] ; 2 uses
   %.sroa.638.066 = phi ptr [ %.pre71, %.lr.ph68 ], [ %i.bw, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit ] ; 2 uses
-  %.sroa.036.065 = phi ptr [ %4, %.lr.ph68 ], [ %i.bx, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit ] ; 2 uses
+  %.sroa.036.065 = phi ptr [ %2, %.lr.ph68 ], [ %i.bv, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #6
   store ptr null, ptr %10, align 8, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #6
@@ -217,11 +219,11 @@ bb.j:                                             ; preds = %.lr.ph68, %_ZN4llvm
   %i.bh = call ptr @_ZNK4mlir10AffineExprplES0_(ptr noundef nonnull align 8 dereferenceable(8) %10, ptr %i.bg) #6
   %i.bi = call ptr @_ZN4mlir9AffineMap3getEjjNS_10AffineExprE(i32 noundef 0, i32 noundef 3, ptr %i.bh) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #6
-  %i.bj = load i64, ptr %.sroa.10.067, align 8
+  %i.bj = load i64, ptr %.sroa.036.065, align 8
   store i64 %i.bj, ptr %12, align 8
   %i.bk = load i64, ptr %.sroa.638.066, align 8
   store i64 %i.bk, ptr %i.u, align 8
-  %i.bl = load i64, ptr %.sroa.036.065, align 8
+  %i.bl = load i64, ptr %.sroa.10.067, align 8
   store i64 %i.bl, ptr %i.v, align 8
   %i.bm = call i64 @_ZN4mlir6affine29makeComposedFoldedAffineApplyERNS_9OpBuilderENS_8LocationENS_9AffineMapEN4llvm8ArrayRefINS_12OpFoldResultEEEb(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr %1, ptr %i.bi, ptr nonnull %12, i64 3, i1 noundef zeroext false) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #6
@@ -248,9 +250,9 @@ bb.l:                                             ; preds = %bb.j
 _ZN4llvm23SmallVectorTemplateBaseIN4mlir5ValueELb1EE9push_backES2_.exit: ; preds = %bb.k, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #6
-  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.10.067, i64 8 ; 2 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.036.065, i64 8 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.638.066, i64 8
-  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.036.065, i64 8
+  %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.10.067, i64 8
   %.not58 = icmp eq ptr %i.bv, %i.t
   br i1 %.not58, label %._crit_edge69.loopexit, label %bb.j
 }

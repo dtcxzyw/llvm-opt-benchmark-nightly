@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MemoryOps?download=true
+inline.NumInlined: 1658
+inline.NumDeleted: 729
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4mlir11OpAsmParser15resolveOperandsIRN4llvm11SmallVectorINS0_17UnresolvedOperandELj2EEENS2_8ArrayRefINS_4TypeEEEvEENS2_11ParseResultEOT_OT0_NS2_5SMLocERNS2_15SmallVectorImplINS_5ValueEEE:bb.a
   %i.o = load ptr, ptr %10, align 8, !tbaa !20
   %.not.i.i = icmp eq ptr %i.o, null
@@ -200,19 +204,19 @@ bb.w:                                             ; preds = %bb.a
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge
-  %.sroa.7.056 = phi ptr [ %i.bu, %.critedge ], [ %i.bm, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.031.055 = phi ptr [ %i.bv, %.critedge ], [ %i.bo, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.03.0.copyload = load ptr, ptr %.sroa.031.055, align 8, !tbaa !70
+  %.sroa.7.056 = phi ptr [ %i.bv, %.critedge ], [ %i.bo, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.031.055 = phi ptr [ %i.bu, %.critedge ], [ %i.bm, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.03.0.copyload = load ptr, ptr %.sroa.7.056, align 8, !tbaa !70
   %i.bp = load ptr, ptr %0, align 8, !tbaa !68
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 760
   %i.br = load ptr, ptr %i.bq, align 8
-  %i.bs = tail call i8 %i.br(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.7.056, ptr %.sroa.03.0.copyload, ptr noundef nonnull align 8 dereferenceable(16) %4) #9
+  %i.bs = tail call i8 %i.br(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.031.055, ptr %.sroa.03.0.copyload, ptr noundef nonnull align 8 dereferenceable(16) %4) #9
   %i.bt = trunc nuw i8 %i.bs to i1
   br i1 %i.bt, label %.critedge, label %.critedge16
 
 .critedge:                                        ; preds = %.lr.ph
-  %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.7.056, i64 32 ; 2 uses
-  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.031.055, i64 8
+  %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.031.055, i64 32 ; 2 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %.sroa.7.056, i64 8
   %.not53 = icmp eq ptr %i.bu, %i.bn
   br i1 %.not53, label %.critedge16, label %.lr.ph
 

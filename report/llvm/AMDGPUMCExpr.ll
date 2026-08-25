@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AMDGPUMCExpr?download=true
+inline.NumInlined: 836
+inline.NumDeleted: 381
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZL13tryFoldHelperPKN4llvm6MCExprERNS_8DenseMapIS2_NS_9KnownBitsENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S4_EEEERNS_9MCContextE:bb.a
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
@@ -200,9 +204,9 @@ bb.aj:                                            ; preds = %bb.k
   br label %.critedge
 
 .lr.ph:                                           ; preds = %bb.aj, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_6MCExprELb1EE9push_backES3_.exit
-  %.072101 = phi i1 [ %i.fh, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_6MCExprELb1EE9push_backES3_.exit ], [ false, %bb.aj ]
-  %.073100 = phi ptr [ %i.fi, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_6MCExprELb1EE9push_backES3_.exit ], [ %.sroa.0.0.copyload.i92, %bb.aj ] ; 2 uses
-  %i.ex = load ptr, ptr %.073100, align 8, !tbaa !42 ; 2 uses
+  %.072101 = phi ptr [ %i.fi, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_6MCExprELb1EE9push_backES3_.exit ], [ %.sroa.0.0.copyload.i92, %bb.aj ] ; 2 uses
+  %.073100 = phi i1 [ %i.fh, %_ZN4llvm23SmallVectorTemplateBaseIPKNS_6MCExprELb1EE9push_backES3_.exit ], [ false, %bb.aj ]
+  %i.ex = load ptr, ptr %.072101, align 8, !tbaa !42 ; 2 uses
   %i.ey = call fastcc noundef ptr @_ZL13tryFoldHelperPKN4llvm6MCExprERNS_8DenseMapIS2_NS_9KnownBitsENS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_S4_EEEERNS_9MCContextE(ptr noundef %i.ex, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(2208) %2) ; 3 uses
   %i.ez = load i32, ptr %i.et, align 8, !tbaa !307 ; 2 uses
   %i.fa = load i32, ptr %i.eu, align 4, !tbaa !308
@@ -225,8 +229,8 @@ bb.al:                                            ; preds = %.lr.ph
 
 _ZN4llvm23SmallVectorTemplateBaseIPKNS_6MCExprELb1EE9push_backES3_.exit: ; preds = %bb.ak, %bb.al
   %i.fg = icmp ne ptr %i.ex, %i.ey
-  %i.fh = or i1 %.072101, %i.fg                   ; 2 uses
-  %i.fi = getelementptr inbounds nuw i8, ptr %.073100, i64 8 ; 2 uses
+  %i.fh = or i1 %.073100, %i.fg                   ; 2 uses
+  %i.fi = getelementptr inbounds nuw i8, ptr %.072101, i64 8 ; 2 uses
   %.not76 = icmp eq ptr %i.fi, %i.ew
   br i1 %.not76, label %._crit_edge, label %.lr.ph
 

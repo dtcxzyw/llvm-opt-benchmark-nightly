@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PDBSymbolExe?download=true
+inline.NumInlined: 158
+inline.NumDeleted: 133
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -88,7 +90,7 @@ _ZNK4llvm3pdb9PDBSymbol12findOneChildINS0_20PDBSymbolTypePointerEEESt10unique_pt
   %.not = icmp eq ptr %.sroa.0.0, null
   br i1 %.not, label %.thread, label %_ZNKSt14default_deleteIN4llvm3pdb20PDBSymbolTypePointerEEclEPS2_.exit.i
 
-.thread:                                          ; preds = %_ZNK4llvm3pdb9PDBSymbol12findOneChildINS0_20PDBSymbolTypePointerEEESt10unique_ptrIT_St14default_deleteIS5_EEv.exit, %bb.a
+.thread:                                          ; preds = %bb.a, %_ZNK4llvm3pdb9PDBSymbol12findOneChildINS0_20PDBSymbolTypePointerEEESt10unique_ptrIT_St14default_deleteIS5_EEv.exit
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !15   ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !8
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 736

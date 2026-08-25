@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CommandHistory?download=true
+inline.NumInlined: 244
+inline.NumDeleted: 124
 begin_hunk_0_@_ZNK12lldb_private14CommandHistory7GetSizeEv:bb.a
 
 bb.b:                                             ; preds = %bb.a
@@ -200,8 +202,8 @@ bb.c:                                             ; preds = %_ZNSt10lock_guardIS
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit, %bb.c
-  %.sroa.02.0 = phi ptr [ %i.l, %bb.c ], [ @.str, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit ]
   %.sroa.3.0 = phi i64 [ %i.n, %bb.c ], [ 0, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit ]
+  %.sroa.02.0 = phi ptr [ %i.l, %bb.c ], [ @.str, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit ]
   %i.o = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %0) #11 ; 0 uses
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.02.0, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.3.0, 1
@@ -239,8 +241,8 @@ bb.c:                                             ; preds = %_ZNSt10lock_guardIS
   br label %_ZNK12lldb_private14CommandHistory16GetStringAtIndexEm.exit
 
 _ZNK12lldb_private14CommandHistory16GetStringAtIndexEm.exit: ; preds = %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit.i, %bb.c
-  %.sroa.02.0.i = phi ptr [ %i.l, %bb.c ], [ @.str, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit.i ]
   %.sroa.3.0.i = phi i64 [ %i.n, %bb.c ], [ 0, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit.i ]
+  %.sroa.02.0.i = phi ptr [ %i.l, %bb.c ], [ @.str, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit.i ]
   %i.o = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(64) %0) #11 ; 0 uses
   %.fca.0.insert.i = insertvalue { ptr, i64 } poison, ptr %.sroa.02.0.i, 0
   %.fca.1.insert.i = insertvalue { ptr, i64 } %.fca.0.insert.i, i64 %.sroa.3.0.i, 1
@@ -274,8 +276,8 @@ bb.c:                                             ; preds = %_ZNSt10lock_guardIS
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit, %bb.c
-  %.sroa.01.0 = phi ptr [ %i.h, %bb.c ], [ @.str, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit ]
   %.sroa.3.0 = phi i64 [ %i.j, %bb.c ], [ 0, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit ]
+  %.sroa.01.0 = phi ptr [ %i.h, %bb.c ], [ @.str, %_ZNSt10lock_guardISt15recursive_mutexEC2ERS0_.exit ]
   %i.k = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %0) #11 ; 0 uses
   %.fca.0.insert = insertvalue { ptr, i64 } poison, ptr %.sroa.01.0, 0
   %.fca.1.insert = insertvalue { ptr, i64 } %.fca.0.insert, i64 %.sroa.3.0, 1

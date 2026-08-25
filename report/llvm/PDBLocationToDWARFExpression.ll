@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PDBLocationToDWARFExpression?download=true
+inline.NumInlined: 222
+inline.NumDeleted: 176
 begin_hunk_0_@_Z35ConvertPDBLocationToDWARFExpressionSt10shared_ptrIN12lldb_private6ModuleEERKN4llvm3pdb13PDBSymbolDataERKNS0_11RangeVectorImmLj0EEERb:bb.a
   %i.bl = icmp eq i16 %i.bk, 30006
   br i1 %i.bl, label %bb.r, label %bb.w
@@ -200,15 +202,15 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 .thread99:                                        ; preds = %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit.thread, %_ZNSt10unique_ptrIN4llvm3pdb13IPDBFrameDataESt14default_deleteIS2_EED2Ev.exit.thread93, %bb.x
-  %.154104 = phi i32 [ 4, %bb.x ], [ 2, %_ZNSt10unique_ptrIN4llvm3pdb13IPDBFrameDataESt14default_deleteIS2_EED2Ev.exit.thread93 ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit.thread ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit ]
-  %.057102 = phi i32 [ %i.em, %bb.x ], [ 2, %_ZNSt10unique_ptrIN4llvm3pdb13IPDBFrameDataESt14default_deleteIS2_EED2Ev.exit.thread93 ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit.thread ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit ]
-  %i.es = trunc nuw nsw i32 %.057102 to i8
+  %.154104 = phi i32 [ %i.em, %bb.x ], [ 2, %_ZNSt10unique_ptrIN4llvm3pdb13IPDBFrameDataESt14default_deleteIS2_EED2Ev.exit.thread93 ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit.thread ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit ]
+  %.057102 = phi i32 [ 4, %bb.x ], [ 2, %_ZNSt10unique_ptrIN4llvm3pdb13IPDBFrameDataESt14default_deleteIS2_EED2Ev.exit.thread93 ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit.thread ], [ 2, %_ZL25GetCorrespondingFrameDataRKN4llvm3pdb11IPDBSessionERKN12lldb_private11RangeVectorImmLj0EEE.exit ]
+  %i.es = trunc nuw nsw i32 %.154104 to i8
   %i.et = add nuw i8 %i.es, 112
   %i.eu = call noundef i64 @_ZN12lldb_private6Stream7PutHex8Eh(ptr noundef nonnull align 8 dereferenceable(88) %7, i8 noundef zeroext %i.et) #9 ; 0 uses
   br label %bb.z
 
 bb.z:                                             ; preds = %.thread99, %bb.y
-  %.154103 = phi i32 [ %.154104, %.thread99 ], [ 4, %bb.y ]
+  %.154103 = phi i32 [ %.057102, %.thread99 ], [ 4, %bb.y ]
   %i.ev = load ptr, ptr %i.l, align 8, !tbaa !23  ; 2 uses
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !16
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 704

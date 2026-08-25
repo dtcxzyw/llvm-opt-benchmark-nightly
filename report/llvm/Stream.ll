@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Stream?download=true
+inline.NumInlined: 417
+inline.NumDeleted: 178
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0
 @.str.78 = private unnamed_addr constant [7 x i8] c"faint}\00", align 1
 @.str.79 = private unnamed_addr constant [5 x i8] c"\1B[2m\00", align 1
@@ -200,15 +204,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.i, %bb.b
-  %.024.i = phi i32 [ 0, %bb.b ], [ %i.k, %_ZN4llvm11raw_ostreamlsEc.exit.i ]
-  %.0.i = phi i64 [ %1, %bb.b ], [ %i.i, %_ZN4llvm11raw_ostreamlsEc.exit.i ] ; 2 uses
-  %i.g = trunc i64 %.0.i to i8
+  %.024.i = phi i64 [ %1, %bb.b ], [ %i.i, %_ZN4llvm11raw_ostreamlsEc.exit.i ] ; 2 uses
+  %.023.i = phi i32 [ 0, %bb.b ], [ %i.k, %_ZN4llvm11raw_ostreamlsEc.exit.i ]
+  %i.g = trunc i64 %.024.i to i8
   %i.h = and i8 %i.g, 127                         ; 2 uses
-  %i.i = ashr i64 %.0.i, 7                        ; 2 uses
+  %i.i = ashr i64 %.024.i, 7                      ; 2 uses
   %.not.i = icmp samesign ugt i8 %i.h, 63
   %i.j = sext i1 %.not.i to i64
   %.not30.i.not = icmp eq i64 %i.i, %i.j          ; 2 uses
-  %i.k = add i32 %.024.i, 1                       ; 2 uses
+  %i.k = add i32 %.023.i, 1                       ; 2 uses
   %masksel.i = select i1 %.not30.i.not, i8 0, i8 -128
   %.023.i.a = or disjoint i8 %masksel.i, %i.h     ; 2 uses
   %i.l = load ptr, ptr %i.e, align 8, !tbaa !37   ; 3 uses

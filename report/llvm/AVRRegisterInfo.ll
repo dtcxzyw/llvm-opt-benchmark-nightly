@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AVRRegisterInfo?download=true
+inline.NumInlined: 445
+inline.NumDeleted: 256
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNK4llvm15AVRRegisterInfo19eliminateFrameIndexENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEijPNS_12RegScavengerE:bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #17
   %i.cj = getelementptr inbounds nuw i8, ptr %14, i64 8
@@ -200,9 +204,9 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %.093 = phi i32 [ %i.fg, %bb.r ], [ %i.fb, %bb.q ]
+  %.093.neg = phi i64 [ -421, %bb.r ], [ -428, %bb.q ]
   %.092.neg = phi i64 [ -421, %bb.r ], [ -506, %bb.q ]
-  %.091.neg = phi i64 [ -421, %bb.r ], [ -428, %bb.q ]
+  %.091 = phi i32 [ %i.fg, %bb.r ], [ %i.fb, %bb.q ]
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #17
   store ptr %.sroa.071.0.copyload, ptr %21, align 8, !tbaa !295
   %i.fh = getelementptr inbounds nuw i8, ptr %21, i64 8
@@ -228,7 +232,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.fr = getelementptr inbounds nuw i8, ptr %22, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fr, i8 0, i64 24, i1 false)
   %i.fs = load ptr, ptr %i.fi, align 8, !tbaa !387
-  %i.ft = getelementptr inbounds [32 x i8], ptr %i.fs, i64 %.091.neg
+  %i.ft = getelementptr inbounds [32 x i8], ptr %i.fs, i64 %.093.neg
   %i.fu = call { ptr, ptr } @_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(360) %i.c, ptr nonnull %1, ptr noundef nonnull align 8 dereferenceable(32) %22, ptr noundef nonnull align 8 dereferenceable(32) %i.ft, i32 60) ; 2 uses
   %i.fv = extractvalue { ptr, ptr } %i.fu, 0      ; 2 uses
   %i.fw = extractvalue { ptr, ptr } %i.fu, 1      ; 3 uses
@@ -242,7 +246,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   store i32 67108864, ptr %10, align 8, !alias.scope !413
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.fw, ptr noundef nonnull align 8 dereferenceable(1065) %i.fv, ptr noundef nonnull align 8 dereferenceable(32) %10) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
-  %i.ga = sext i32 %.093 to i64
+  %i.ga = sext i32 %.091 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #17
   store i32 1, ptr %9, align 8, !alias.scope !416
   %i.gb = getelementptr inbounds nuw i8, ptr %9, i64 8

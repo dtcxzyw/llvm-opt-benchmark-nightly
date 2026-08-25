@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/NativeRegisterContextDBReg_arm64?download=true
+inline.NumInlined: 126
+inline.NumDeleted: 83
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -181,11 +183,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.thread, %bb.b
-  %.122 = phi i64 [ %i.m, %.thread ], [ %i.c, %bb.b ]
-  %.2 = phi i64 [ %.0, %.thread ], [ %i.a, %bb.b ]
-  store i64 %.2, ptr %0, align 8, !tbaa !17
+  %.122 = phi i64 [ %.0, %.thread ], [ %i.a, %bb.b ]
+  %.2 = phi i64 [ %i.m, %.thread ], [ %i.c, %bb.b ]
+  store i64 %.122, ptr %0, align 8, !tbaa !17
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.122, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !17
+  store i64 %.2, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !17
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.a, %bb.d

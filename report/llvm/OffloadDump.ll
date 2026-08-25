@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/OffloadDump?download=true
+inline.NumInlined: 598
+inline.NumDeleted: 340
 begin_hunk_0_@_ZN4llvm26dumpOffloadBundleFatBinaryERKNS_6object10ObjectFileENS_9StringRefE:bb.a
   br i1 %.not.i.i, label %_ZN4llvm23SmallVectorTemplateBaseINS_6object19OffloadBundleFatBinELb0EE13destroy_rangeEPS2_S4_.exit.loopexit.i, label %.lr.ph.i.i, !llvm.loop !125
 
@@ -200,7 +202,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   %.pre.i42 = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !42
   br label %bb.r
 
-bb.r:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %bb.q
+bb.r:                                             ; preds = %bb.q, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   %i.di = phi i64 [ %i.de, %bb.q ], [ %.pre.i42, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
   %i.dj = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   store i64 %i.di, ptr %i.af, align 8, !tbaa !42, !alias.scope !132
@@ -263,7 +265,7 @@ bb.u:                                             ; preds = %._crit_edge.i.i.i9.
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.du, ptr nonnull align 1 %.1.lcssa.i8.i, i64 %i.dq, i1 false)
   br label %_ZN4llvm6itostrB5cxx11El.exit
 
-_ZN4llvm6itostrB5cxx11El.exit:                    ; preds = %._crit_edge.i.i.i9.i, %bb.t, %bb.u
+_ZN4llvm6itostrB5cxx11El.exit:                    ; preds = %bb.u, %bb.t, %._crit_edge.i.i.i9.i
   %i.dw = load i64, ptr %i.a, align 8, !tbaa !53, !noalias !141 ; 2 uses
   store i64 %i.dw, ptr %i.aj, align 8, !tbaa !42, !alias.scope !141
   %i.dx = load ptr, ptr %16, align 8, !tbaa !40, !alias.scope !141
@@ -271,12 +273,12 @@ _ZN4llvm6itostrB5cxx11El.exit:                    ; preds = %._crit_edge.i.i.i9.
   store i8 0, ptr %i.dy, align 1, !tbaa !18
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12, !noalias !141
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12, !noalias !141
+  call void @llvm.experimental.noalias.scope.decl(metadata !143)
   %.pre110 = load i64, ptr %i.af, align 8, !tbaa !42, !noalias !143 ; 4 uses
   %.pre111 = load i64, ptr %i.aj, align 8, !tbaa !42, !noalias !143 ; 4 uses
-  %.pre112 = load ptr, ptr %14, align 8, !tbaa !40, !noalias !143 ; 2 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !143)
   %28 = add i64 %.pre111, %.pre110                ; 2 uses
-  %i.dz = icmp eq ptr %.pre112, %i.ae
+  %29 = load ptr, ptr %14, align 8, !tbaa !40, !noalias !143 ; 2 uses
+  %i.dz = icmp eq ptr %29, %i.ae
   br i1 %i.dz, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %_ZN4llvm6itostrB5cxx11El.exit
@@ -313,7 +315,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i: ; pr
   br i1 %.not.i46, label %bb.x, label %.critedge.i
 
 .critedge.i:                                      ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit14.i
-  %i.ej = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %16, i64 noundef 0, i64 noundef 0, ptr noundef %.pre112, i64 noundef %.pre110) #12, !noalias !143 ; 5 uses
+  %i.ej = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %16, i64 noundef 0, i64 noundef 0, ptr noundef %29, i64 noundef %.pre110) #12, !noalias !143 ; 5 uses
   store ptr %i.al, ptr %13, align 8, !tbaa !38, !alias.scope !143
   %i.ek = load ptr, ptr %i.ej, align 8, !tbaa !40 ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 16 ; 5 uses

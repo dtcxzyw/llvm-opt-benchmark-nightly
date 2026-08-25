@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SPIRVLegalizeImplicitBinding?download=true
+inline.NumInlined: 966
+inline.NumDeleted: 640
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl11runOnModuleERN4llvm6ModuleE:bb.a
   %i.dt = icmp ult i32 %i.ds, 65
   %i.du = load ptr, ptr %i.dq, align 8
@@ -200,9 +204,9 @@ _ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl30verifyUniqueOrderIdPerResou
 
 bb.v:                                             ; preds = %bb.bk, %.lr.ph.i5
   %.043.i = phi i32 [ -1, %.lr.ph.i5 ], [ %i.iz, %bb.bk ]
-  %.02242.i = phi i32 [ -1, %.lr.ph.i5 ], [ %.021.i, %bb.bk ]
-  %.02341.i = phi ptr [ %i.ha, %.lr.ph.i5 ], [ %i.wb, %bb.bk ] ; 2 uses
-  %i.il = load ptr, ptr %.02341.i, align 8, !tbaa !64 ; 29 uses
+  %.02242.i = phi ptr [ %i.ha, %.lr.ph.i5 ], [ %i.wb, %bb.bk ] ; 2 uses
+  %.02341.i = phi i32 [ -1, %.lr.ph.i5 ], [ %.021.i, %bb.bk ]
+  %i.il = load ptr, ptr %.02242.i, align 8, !tbaa !64 ; 29 uses
   %i.im = call noundef i32 @_ZNK4llvm8CallBase14getIntrinsicIDEv(ptr noundef nonnull align 8 dereferenceable(88) %i.il) #15
   %i.in = icmp eq i32 %i.im, 13286
   %i.io = getelementptr inbounds nuw i8, ptr %i.il, i64 4 ; 10 uses
@@ -554,7 +558,7 @@ _ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl31getAndReserveFirstUnusedBin
   br label %bb.ao
 
 bb.ao:                                            ; preds = %_ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl31getAndReserveFirstUnusedBindingEj.exit.i, %bb.v
-  %.021.i = phi i32 [ %.0.i.i, %_ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl31getAndReserveFirstUnusedBindingEj.exit.i ], [ %.02242.i, %bb.v ] ; 3 uses
+  %.021.i = phi i32 [ %.0.i.i, %_ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl31getAndReserveFirstUnusedBindingEj.exit.i ], [ %.02341.i, %bb.v ] ; 3 uses
   %i.oq = call noundef i32 @_ZNK4llvm8CallBase14getIntrinsicIDEv(ptr noundef nonnull align 8 dereferenceable(88) %i.il) #15
   %i.or = icmp eq i32 %i.oq, 13286
   %i.os = getelementptr inbounds nuw i8, ptr %i.il, i64 8 ; 4 uses
@@ -957,7 +961,7 @@ _ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl24replaceCounterHandleCallERN
   br label %bb.bk
 
 bb.bk:                                            ; preds = %_ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl24replaceCounterHandleCallERN4llvm6ModuleEPNS1_8CallInstEj.exit.i, %_ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl25replaceResourceHandleCallERN4llvm6ModuleEPNS1_8CallInstEj.exit.i
-  %i.wb = getelementptr inbounds nuw i8, ptr %.02341.i, i64 8 ; 2 uses
+  %i.wb = getelementptr inbounds nuw i8, ptr %.02242.i, i64 8 ; 2 uses
   %.not.i16 = icmp eq ptr %i.wb, %i.gz
   br i1 %.not.i16, label %_ZN12_GLOBAL__N_132SPIRVLegalizeImplicitBindingImpl27replaceImplicitBindingCallsERN4llvm6ModuleE.exit, label %bb.v
 

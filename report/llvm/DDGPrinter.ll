@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DDGPrinter?download=true
+inline.NumInlined: 828
+inline.NumDeleted: 393
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4llvm14DOTGraphTraitsIPKNS_19DataDependenceGraphEE18getSimpleNodeLabelB5cxx11EPKNS_7DDGNodeES3_:bb.a
   %i.by = load i64, ptr %i.a, align 8, !tbaa !111 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -200,9 +204,9 @@ bb.n:                                             ; preds = %._crit_edge
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit32
 
 bb.o:                                             ; preds = %.lr.ph, %_ZN4llvm11raw_ostreamlsEPKc.exit35
-  %.01749 = phi i32 [ 0, %.lr.ph ], [ %i.cg, %_ZN4llvm11raw_ostreamlsEPKc.exit35 ]
-  %.01848 = phi ptr [ %i.bi, %.lr.ph ], [ %i.co, %_ZN4llvm11raw_ostreamlsEPKc.exit35 ] ; 2 uses
-  %i.by = load ptr, ptr %.01848, align 8, !tbaa !112
+  %.049 = phi ptr [ %i.bi, %.lr.ph ], [ %i.co, %_ZN4llvm11raw_ostreamlsEPKc.exit35 ] ; 2 uses
+  %.01748 = phi i32 [ 0, %.lr.ph ], [ %i.cg, %_ZN4llvm11raw_ostreamlsEPKc.exit35 ]
+  %i.by = load ptr, ptr %.049, align 8, !tbaa !112
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   call void @_ZN4llvm14DOTGraphTraitsIPKNS_19DataDependenceGraphEE19getVerboseNodeLabelB5cxx11EPKNS_7DDGNodeES3_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %5, ptr noundef %i.by, ptr noundef %2)
   %i.bz = load ptr, ptr %5, align 8, !tbaa !23
@@ -220,7 +224,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.o, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  %i.cg = add nuw i32 %.01749, 1                  ; 2 uses
+  %i.cg = add nuw i32 %.01748, 1                  ; 2 uses
   %i.ch = load i32, ptr %i.bj, align 8, !tbaa !105
   %.not19 = icmp eq i32 %i.ch, %i.cg
   br i1 %.not19, label %_ZN4llvm11raw_ostreamlsEPKc.exit35, label %bb.p
@@ -243,7 +247,7 @@ bb.r:                                             ; preds = %bb.p
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit35
 
 _ZN4llvm11raw_ostreamlsEPKc.exit35:               ; preds = %bb.r, %bb.q, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.co = getelementptr inbounds nuw i8, ptr %.01848, i64 8 ; 2 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %.049, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.co, %i.bm
   br i1 %.not, label %._crit_edge, label %bb.o
 

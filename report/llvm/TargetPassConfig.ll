@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TargetPassConfig?download=true
+inline.NumInlined: 2325
+inline.NumDeleted: 1073
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN4llvm16TargetPassConfig16getStartStopInfoERNS_28PassInstrumentationCallbacksE:bb.a
   %.sroa.5.0.copyload.i62 = load i64, ptr %i.bl, align 8, !tbaa !35, !noalias !247
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !247
@@ -200,7 +205,8 @@ bb.a:
   store <4 x i8> <i8 1, i8 0, i8 0, i8 1>, ptr %i.f, align 8, !tbaa !168
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 112
   store ptr %1, ptr %i.g, align 8, !tbaa !313
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
+  store ptr null, ptr %i.h, align 8, !tbaa !42
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 128
   store <4 x i8> <i8 0, i8 0, i8 1, i8 0>, ptr %i.i, align 8, !tbaa !168
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses

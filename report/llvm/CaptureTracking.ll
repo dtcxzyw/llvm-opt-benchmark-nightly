@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/CaptureTracking?download=true
+inline.NumInlined: 512
+inline.NumDeleted: 373
 begin_hunk_0_@_ZN4llvm23DetermineUseCaptureKindERKNS_3UseEPKNS_5ValueE:bb.a
 
 bb.g:                                             ; preds = %bb.f
@@ -200,8 +202,8 @@ bb.ab:                                            ; preds = %bb.b
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.u, %bb.t, %bb.q, %bb.o, %bb.k, %bb.aa, %bb.r, %bb.s, %bb.p, %bb.b, %bb.d, %bb.c, %bb.a, %.critedge, %bb.j, %bb.ab, %bb.v, %_ZNK4llvm11Instruction11getMetadataEj.exit
-  %.sroa.038.0 = phi i8 [ 3, %.critedge ], [ 15, %bb.ab ], [ 15, %bb.a ], [ 0, %bb.c ], [ %i.av, %bb.j ], [ 0, %bb.d ], [ 1, %bb.aa ], [ 0, %bb.v ], [ %i.be, %_ZNK4llvm11Instruction11getMetadataEj.exit ], [ 0, %bb.b ], [ %spec.select43, %bb.k ], [ 15, %bb.s ], [ 15, %bb.p ], [ %spec.select44, %bb.o ], [ %spec.select47, %bb.u ], [ 15, %bb.r ], [ %spec.select45, %bb.q ], [ %spec.select46, %bb.t ]
   %.sroa.24.0 = phi i16 [ 0, %.critedge ], [ 0, %bb.ab ], [ 0, %bb.a ], [ 3840, %bb.c ], [ %.sroa.4.0.extract.shift, %bb.j ], [ 0, %bb.d ], [ 0, %bb.aa ], [ 3840, %bb.v ], [ 0, %_ZNK4llvm11Instruction11getMetadataEj.exit ], [ 0, %bb.b ], [ 0, %bb.k ], [ 0, %bb.s ], [ 0, %bb.p ], [ 0, %bb.o ], [ %i.bz, %bb.u ], [ 0, %bb.r ], [ 0, %bb.q ], [ 0, %bb.t ]
+  %.sroa.038.0 = phi i8 [ 3, %.critedge ], [ 15, %bb.ab ], [ 15, %bb.a ], [ 0, %bb.c ], [ %i.av, %bb.j ], [ 0, %bb.d ], [ 1, %bb.aa ], [ 0, %bb.v ], [ %i.be, %_ZNK4llvm11Instruction11getMetadataEj.exit ], [ 0, %bb.b ], [ %spec.select43, %bb.k ], [ 15, %bb.s ], [ 15, %bb.p ], [ %spec.select44, %bb.o ], [ %spec.select47, %bb.u ], [ 15, %bb.r ], [ %spec.select45, %bb.q ], [ %spec.select46, %bb.t ]
   %.sroa.038.0.insert.ext = zext i8 %.sroa.038.0 to i16
   %.sroa.038.0.insert.insert = or disjoint i16 %.sroa.24.0, %.sroa.038.0.insert.ext
   ret i16 %.sroa.038.0.insert.insert

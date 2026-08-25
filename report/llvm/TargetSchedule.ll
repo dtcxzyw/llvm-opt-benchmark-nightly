@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TargetSchedule?download=true
+inline.NumInlined: 221
+inline.NumDeleted: 140
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 @_ZTVN4llvm2cl3optIbLb0ENS0_6parserIbEEEE = external unnamed_addr constant { [13 x ptr] }, align 8
 @_ZTVN4llvm2cl6OptionE = external unnamed_addr constant { [13 x ptr] }, align 8
@@ -200,9 +204,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
   %spec.select3337.i.i = phi i32 [ %spec.select33.i.i, %.lr.ph.i.i ], [ %spec.select3334.i.i, %bb.g ] ; 4 uses
-  %.02736.i.i = phi i32 [ %spec.select3337.i.i, %.lr.ph.i.i ], [ %i.av, %bb.g ]
-  %.02835.i.i = phi i32 [ %i.bc, %.lr.ph.i.i ], [ %i.ax, %bb.g ]
-  %spec.select.i.i.a = tail call i32 @llvm.umax.i32(i32 %.02736.i.i, i32 %.02835.i.i)
+  %.02736.i.i = phi i32 [ %i.bc, %.lr.ph.i.i ], [ %i.ax, %bb.g ]
+  %.02835.i.i = phi i32 [ %spec.select3337.i.i, %.lr.ph.i.i ], [ %i.av, %bb.g ]
+  %spec.select.i.i.a = tail call i32 @llvm.umax.i32(i32 %.02835.i.i, i32 %.02736.i.i)
   %i.ba = sub i32 %spec.select.i.i.a, %spec.select3337.i.i ; 2 uses
   %i.bb = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.ba, i1 true)
   %i.bc = lshr exact i32 %i.ba, %i.bb             ; 3 uses

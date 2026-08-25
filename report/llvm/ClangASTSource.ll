@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ClangASTSource?download=true
+inline.NumInlined: 3654
+inline.NumDeleted: 2184
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN12lldb_private14ClangASTSource30FindExternalVisibleDeclsByNameEPKN5clang11DeclContextENS1_15DeclarationNameES4_:bb.a
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call i64 @_ZN5clang17ExternalASTSource32SetNoExternalVisibleDeclsForNameEPKNS_11DeclContextENS_15DeclarationNameE(ptr noundef %1, i64 %2) #22 ; 0 uses
@@ -200,14 +204,14 @@ _ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPSt13
   %i.bx = icmp eq ptr %.19.i.i.i, %i.bt
   br i1 %i.bx, label %.lr.ph.i.i.i37.preheader, label %_ZNSt3setIPKcSt4lessIS1_ESaIS1_EE4findERKS1_.exit
 
+.lr.ph.i.i.i37.preheader:                         ; preds = %_ZNSt3setIPKcSt4lessIS1_ESaIS1_EE4findERKS1_.exit, %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i
+  br label %.lr.ph.i.i.i37
+
 _ZNSt3setIPKcSt4lessIS1_ESaIS1_EE4findERKS1_.exit: ; preds = %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i
   %i.by = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !654
   %i.ca = icmp ult ptr %i.bp, %i.bz
   br i1 %i.ca, label %.lr.ph.i.i.i37.preheader, label %bb.q
-
-.lr.ph.i.i.i37.preheader:                         ; preds = %_ZNSt8_Rb_treeIPKcS1_St9_IdentityIS1_ESt4lessIS1_ESaIS1_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS1_EPSt18_Rb_tree_node_baseRKS1_.exit.i.i, %_ZNSt3setIPKcSt4lessIS1_ESaIS1_EE4findERKS1_.exit
-  br label %.lr.ph.i.i.i37
 
 bb.q:                                             ; preds = %_ZNSt3setIPKcSt4lessIS1_ESaIS1_EE4findERKS1_.exit
   %.sroa.05.0.copyload = load i64, ptr %4, align 8, !tbaa !631
@@ -611,7 +615,7 @@ _ZNSt3setIPKN5clang4DeclESt4lessIS3_ESaIS3_EE4findERKS3_.exit: ; preds = %_ZNSt8
   %i.ax = icmp ult ptr %i.am, %i.aw
   br i1 %i.ax, label %.lr.ph.i.i.i18.preheader, label %bb.l
 
-.lr.ph.i.i.i18.preheader:                         ; preds = %_ZNSt8_Rb_treeIPKN5clang4DeclES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS3_EPSt18_Rb_tree_node_baseRKS3_.exit.i.i, %_ZNSt3setIPKN5clang4DeclESt4lessIS3_ESaIS3_EE4findERKS3_.exit
+.lr.ph.i.i.i18.preheader:                         ; preds = %_ZNSt3setIPKN5clang4DeclESt4lessIS3_ESaIS3_EE4findERKS3_.exit, %_ZNSt8_Rb_treeIPKN5clang4DeclES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS3_EPSt18_Rb_tree_node_baseRKS3_.exit.i.i
   br label %.lr.ph.i.i.i18
 
 .lr.ph.i.i.i18:                                   ; preds = %.lr.ph.i.i.i18.preheader, %.lr.ph.i.i.i18
@@ -1014,7 +1018,7 @@ _ZNSt3setIPKN5clang4DeclESt4lessIS3_ESaIS3_EE4findERKS3_.exit: ; preds = %_ZNSt8
   %i.r = icmp ult ptr %i.g, %i.q
   br i1 %i.r, label %.lr.ph.i.i.i85.preheader, label %bb.ag
 
-.lr.ph.i.i.i85.preheader:                         ; preds = %_ZNSt8_Rb_treeIPKN5clang4DeclES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS3_EPSt18_Rb_tree_node_baseRKS3_.exit.i.i, %_ZNSt3setIPKN5clang4DeclESt4lessIS3_ESaIS3_EE4findERKS3_.exit
+.lr.ph.i.i.i85.preheader:                         ; preds = %_ZNSt3setIPKN5clang4DeclESt4lessIS3_ESaIS3_EE4findERKS3_.exit, %_ZNSt8_Rb_treeIPKN5clang4DeclES3_St9_IdentityIS3_ESt4lessIS3_ESaIS3_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS3_EPSt18_Rb_tree_node_baseRKS3_.exit.i.i
   br label %.lr.ph.i.i.i85
 
 .lr.ph.i.i.i85:                                   ; preds = %.lr.ph.i.i.i85.preheader, %.lr.ph.i.i.i85

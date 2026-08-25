@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DebugFrameDataSubsection?download=true
+inline.NumInlined: 498
+inline.NumDeleted: 294
 begin_hunk_0_@_ZN4llvm18BinaryStreamReader9readArrayINS_8codeview9FrameDataEEENS_5ErrorERNS_16FixedStreamArrayIT_EEj:bb.a
 
 bb.w:                                             ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i21
@@ -200,7 +202,7 @@ bb.d:                                             ; preds = %bb.b
 _ZN4llvm15BinaryStreamRefC2ERKS0_.exit:           ; preds = %bb.a, %bb.c, %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.k, i64 32, i1 false)
   call void @_ZN4llvm18BinaryStreamReaderC1ENS_15BinaryStreamRefE(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr nofree noundef nonnull align 8 dereferenceable(48) %4) #16
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !56   ; 8 uses
   %.not.i.i.i = icmp eq ptr %i.l, null
@@ -603,7 +605,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !74   ; 3 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !110
   %.not.i = icmp eq ptr %i.c, %i.e
   br i1 %.not.i, label %bb.c, label %bb.b
@@ -618,8 +620,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !77   ; 4 uses
   %i.i = ptrtoint ptr %i.c to i64
-  %i.j = ptrtoint ptr %i.h to i64
-  %i.k = sub i64 %i.i, %i.j                       ; 6 uses
+  %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 5 uses
   %i.l = icmp eq i64 %i.k, 9223372036854775776
   br i1 %i.l, label %bb.d, label %_ZNKSt6vectorIN4llvm8codeview9FrameDataESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
@@ -653,7 +655,10 @@ _ZNSt6vectorIN4llvm8codeview9FrameDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIN4llvm8codeview9FrameDataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN4llvm8codeview9FrameDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %i.k) #19
+  %2 = load ptr, ptr %i.d, align 8, !tbaa !110
+  %3 = ptrtoint ptr %2 to i64
+  %4 = sub i64 %3, %i.j
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %4) #19
   br label %_ZNSt6vectorIN4llvm8codeview9FrameDataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN4llvm8codeview9FrameDataESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.f, %_ZNSt6vectorIN4llvm8codeview9FrameDataESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit16.i.i

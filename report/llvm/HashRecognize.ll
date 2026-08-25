@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/HashRecognize?download=true
+inline.NumInlined: 1543
+inline.NumDeleted: 1035
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN14RecurrenceInfo13digRecurrenceEPN4llvm11InstructionENS1_9BinaryOpsE:_ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit
 
 bb.ac:                                            ; preds = %.thread
@@ -200,7 +204,7 @@ _ZNK4llvm4User10getOperandEj.exit10.i.i.1:        ; preds = %bb.l, %bb.k
   %i.cq = icmp ugt i8 %i.cp, 29
   br i1 %i.cq, label %bb.e, label %.loopexit
 
-.loopexit:                                        ; preds = %bb.h, %bb.e, %bb.g, %bb.i, %_ZNK4llvm4User10getOperandEj.exit.thread.i.i.1, %_ZNK4llvm4User10getOperandEj.exit.i.i.1, %_ZNK4llvm4User10getOperandEj.exit8.i.i.1, %_ZNK4llvm4User10getOperandEj.exit10.i.i.1, %_ZNK4llvm4User10getOperandEj.exit8.i.i.1.thread, %bb.a
+.loopexit:                                        ; preds = %bb.g, %bb.h, %bb.e, %bb.i, %_ZNK4llvm4User10getOperandEj.exit.thread.i.i.1, %_ZNK4llvm4User10getOperandEj.exit.i.i.1, %_ZNK4llvm4User10getOperandEj.exit8.i.i.1, %_ZNK4llvm4User10getOperandEj.exit10.i.i.1, %_ZNK4llvm4User10getOperandEj.exit8.i.i.1.thread, %bb.a
   %.4 = phi i1 [ false, %bb.a ], [ false, %bb.i ], [ false, %_ZNK4llvm4User10getOperandEj.exit8.i.i.1.thread ], [ false, %_ZNK4llvm4User10getOperandEj.exit10.i.i.1 ], [ false, %_ZNK4llvm4User10getOperandEj.exit8.i.i.1 ], [ false, %_ZNK4llvm4User10getOperandEj.exit.i.i.1 ], [ false, %_ZNK4llvm4User10getOperandEj.exit.thread.i.i.1 ], [ false, %bb.g ], [ true, %bb.h ], [ false, %bb.e ]
   ret i1 %.4
 }

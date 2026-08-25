@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/UnixAPIChecker?download=true
+inline.NumInlined: 1381
+inline.NumDeleted: 849
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_ZN5clang4ento28registerUnixAPIMisuseCheckerERNS0_14CheckerManagerE:bb.a
   store i8 1, ptr %i.bp, align 8, !tbaa !203, !noalias !190
   %i.bq = getelementptr inbounds nuw i8, ptr %i.s, i64 72 ; 4 uses
@@ -200,7 +205,7 @@ bb.o:                                             ; preds = %_ZN5clang4ento7BugT
   %i.eh = getelementptr inbounds nuw i8, ptr %i.s, i64 384
   %i.ei = getelementptr inbounds nuw i8, ptr %i.s, i64 400 ; 2 uses
   store ptr %i.ei, ptr %i.eh, align 8, !tbaa !205, !noalias !190
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.ei, ptr noundef nonnull align 1 dereferenceable(12) @.str.3, i64 12, i1 false), !noalias !190
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ei, ptr noundef nonnull align 1 dereferenceable(12) @.str.3, i64 12, i1 false), !noalias !190
   %i.ej = getelementptr inbounds nuw i8, ptr %i.s, i64 392
   store i64 12, ptr %i.ej, align 8, !tbaa !209, !noalias !190
   %i.ek = getelementptr inbounds nuw i8, ptr %i.s, i64 412
@@ -339,7 +344,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = call noalias noundef nonnull dereferenceable(144) ptr @_Znwm(i64 noundef 144) #21, !noalias !625 ; 7 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.f, i8 0, i64 144, i1 false), !noalias !625
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN12_GLOBAL__N_125UnixAPIPortabilityCheckerE, i64 16), ptr %i.f, align 8, !tbaa !197, !noalias !625
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN12_GLOBAL__N_125UnixAPIPortabilityCheckerE, i64 16), ptr %i.f, align 16, !tbaa !197, !noalias !625
   %i.g = load ptr, ptr @_ZN5clang4ento10categories7UnixAPIE, align 8, !tbaa !199, !noalias !625 ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.i.i.i, label %_ZSt11make_uniqueIN12_GLOBAL__N_125UnixAPIPortabilityCheckerEJEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit.i.i, label %bb.c
@@ -742,7 +747,7 @@ bb.s:                                             ; preds = %_ZNK5clang9NamedDec
   br i1 %.not.i30, label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cg, ptr nonnull align 1 %i.ca, i64 %i.cc, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cg, ptr nonnull align 8 %i.ca, i64 %i.cc, i1 false)
   %i.cm = load ptr, ptr %i.cf, align 8, !tbaa !924
   %i.cn = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.cc
   store ptr %i.cn, ptr %i.cf, align 8, !tbaa !924

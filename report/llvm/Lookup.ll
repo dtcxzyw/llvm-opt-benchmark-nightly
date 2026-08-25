@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Lookup?download=true
+inline.NumInlined: 511
+inline.NumDeleted: 301
 begin_hunk_0
 %"union.llvm::Twine::Child" = type { %struct.anon }
 %struct.anon = type { ptr, i64 }
@@ -200,13 +202,13 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %.sroa.034.0 = phi ptr [ %.sroa.034.0.copyload, %bb.p ], [ %i.bh, %bb.o ] ; 3 uses
   %.sroa.5.0 = phi i64 [ %.sroa.5.0.copyload, %bb.p ], [ %i.bi, %bb.o ] ; 5 uses
+  %.sroa.034.0 = phi ptr [ %.sroa.034.0.copyload, %bb.p ], [ %i.bh, %bb.o ] ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store ptr %i.bj, ptr %0, align 8, !tbaa !25
   %i.bk = icmp eq ptr %.sroa.034.0, null
   %i.bl = icmp ne i64 %.sroa.5.0, 0
-  %or.cond.i.i.i = and i1 %i.bk, %i.bl
+  %or.cond.i.i.i = and i1 %i.bl, %i.bk
   br i1 %or.cond.i.i.i, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q

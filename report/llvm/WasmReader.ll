@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WasmReader?download=true
+inline.NumInlined: 149
+inline.NumDeleted: 119
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -41,7 +43,7 @@ bb.a:
   %i.k = zext i1 %i.i to i8
   store i8 %i.k, ptr %i.j, align 8, !tbaa !25
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 3 uses
-  %i.m = load ptr, ptr %1, align 8, !tbaa !11, !nonnull !15, !align !16 ; 6 uses
+  %i.m = load ptr, ptr %1, align 8, !tbaa !11, !nonnull !15, !align !16 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 80
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !40
@@ -59,6 +61,7 @@ _ZNSt12_Vector_baseIN4llvm7objcopy4wasm7SectionESaIS3_EE13_M_deallocateEPS3_m.ex
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.y = mul nuw nsw i64 %i.v, 40
   %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #9 ; 4 uses
+  %.pre.pre = load ptr, ptr %1, align 8, !tbaa !11
   store ptr %i.z, ptr %i.l, align 8, !tbaa !44
   store ptr %i.z, ptr %i.x, align 8, !tbaa !45
   %i.aa = getelementptr inbounds nuw [40 x i8], ptr %i.z, i64 %i.v
@@ -67,16 +70,17 @@ _ZNSt12_Vector_baseIN4llvm7objcopy4wasm7SectionESaIS3_EE13_M_deallocateEPS3_m.ex
 
 _ZNSt6vectorIN4llvm7objcopy4wasm7SectionESaIS3_EE7reserveEm.exit: ; preds = %bb.a, %_ZNSt12_Vector_baseIN4llvm7objcopy4wasm7SectionESaIS3_EE13_M_deallocateEPS3_m.exit.i
   %i.ab = phi ptr [ null, %bb.a ], [ %i.z, %_ZNSt12_Vector_baseIN4llvm7objcopy4wasm7SectionESaIS3_EE13_M_deallocateEPS3_m.exit.i ]
-  %i.ac = load ptr, ptr %i.m, align 8, !tbaa !23, !noalias !47
+  %3 = phi ptr [ %i.m, %bb.a ], [ %.pre.pre, %_ZNSt12_Vector_baseIN4llvm7objcopy4wasm7SectionESaIS3_EE13_M_deallocateEPS3_m.exit.i ] ; 4 uses
+  %i.ac = load ptr, ptr %3, align 8, !tbaa !23, !noalias !47
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 352
   %i.ae = load ptr, ptr %i.ad, align 8, !noalias !47
-  %i.af = tail call { i64, ptr } %i.ae(ptr noundef nonnull align 8 dereferenceable(48) %i.m) #10, !noalias !47, !inline_history !50 ; 2 uses
+  %i.af = tail call { i64, ptr } %i.ae(ptr noundef nonnull align 8 dereferenceable(48) %3) #10, !noalias !47, !inline_history !50 ; 2 uses
   %i.ag = extractvalue { i64, ptr } %i.af, 0      ; 2 uses
   %i.ah = extractvalue { i64, ptr } %i.af, 1      ; 2 uses
-  %i.ai = load ptr, ptr %i.m, align 8, !tbaa !23, !noalias !47
+  %i.ai = load ptr, ptr %3, align 8, !tbaa !23, !noalias !47
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 360
   %i.ak = load ptr, ptr %i.aj, align 8, !noalias !47
-  %i.al = tail call { i64, ptr } %i.ak(ptr noundef nonnull align 8 dereferenceable(48) %i.m) #10, !noalias !47, !inline_history !50 ; 2 uses
+  %i.al = tail call { i64, ptr } %i.ak(ptr noundef nonnull align 8 dereferenceable(48) %3) #10, !noalias !47, !inline_history !50 ; 2 uses
   %i.am = extractvalue { i64, ptr } %i.al, 0      ; 2 uses
   %i.an = extractvalue { i64, ptr } %i.al, 1      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10

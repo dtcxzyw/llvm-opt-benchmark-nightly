@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MSVCRTCFrameRecognizer?download=true
+inline.NumInlined: 277
+inline.NumDeleted: 181
 begin_hunk_0_@_ZN12lldb_private22MSVCRTCFrameRecognizer14RecognizeFrameESt10shared_ptrINS_10StackFrameEE:bb.a
   switch i32 %.3, label %.loopexit [
     i32 4, label %bb.an
@@ -200,7 +202,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb
 define linkonce_odr hidden void @_ZNSt10shared_ptrIN12lldb_private20RecognizedStackFrameEEC2INS0_22MSVCRTCRecognizedFrameEvEEPT_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) unnamed_addr #0 comdat align 2 {
 bb.a:
   store ptr %1, ptr %0, align 8, !tbaa !87
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr null, ptr %i.a, align 8, !tbaa !34
   %i.b = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 1, ptr %i.c, align 8, !tbaa !16

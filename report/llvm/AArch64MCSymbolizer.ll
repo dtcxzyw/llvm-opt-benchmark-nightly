@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AArch64MCSymbolizer?download=true
+inline.NumInlined: 252
+inline.NumDeleted: 185
 begin_hunk_0
 
 $_ZNK4llvm4bolt13BinaryContext14getSymbolValueERKNS_8MCSymbolE = comdat any
@@ -200,14 +202,14 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.k, %bb.l
-  %.060 = phi ptr [ %i.bz, %bb.l ], [ %i.bt, %bb.k ]
-  %.0 = phi i64 [ %i.ca, %bb.l ], [ %i.bw, %bb.k ] ; 2 uses
-  %i.cb = tail call noundef ptr @_ZN4llvm15MCSymbolRefExpr6createEPKNS_8MCSymbolEtRNS_9MCContextENS_5SMLocE(ptr noundef %.060, i16 noundef zeroext 0, ptr noundef nonnull align 8 dereferenceable(2208) %i.f, ptr null) #11 ; 2 uses
-  %.not.i34 = icmp eq i64 %.0, 0
+  %.061 = phi i64 [ %i.ca, %bb.l ], [ %i.bw, %bb.k ] ; 2 uses
+  %.0 = phi ptr [ %i.bz, %bb.l ], [ %i.bt, %bb.k ]
+  %i.cb = tail call noundef ptr @_ZN4llvm15MCSymbolRefExpr6createEPKNS_8MCSymbolEtRNS_9MCContextENS_5SMLocE(ptr noundef %.0, i16 noundef zeroext 0, ptr noundef nonnull align 8 dereferenceable(2208) %i.f, ptr null) #11 ; 2 uses
+  %.not.i34 = icmp eq i64 %.061, 0
   br i1 %.not.i34, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.cc = tail call noundef ptr @_ZN4llvm14MCConstantExpr6createElRNS_9MCContextEbj(i64 noundef %.0, ptr noundef nonnull align 8 dereferenceable(2208) %i.f, i1 noundef zeroext false, i32 noundef 0) #11
+  %i.cc = tail call noundef ptr @_ZN4llvm14MCConstantExpr6createElRNS_9MCContextEbj(i64 noundef %.061, ptr noundef nonnull align 8 dereferenceable(2208) %i.f, i1 noundef zeroext false, i32 noundef 0) #11
   %i.cd = tail call noundef ptr @_ZN4llvm12MCBinaryExpr6createENS0_6OpcodeEPKNS_6MCExprES4_RNS_9MCContextENS_5SMLocE(i32 noundef 0, ptr noundef %i.cb, ptr noundef %i.cc, ptr noundef nonnull align 8 dereferenceable(2208) %i.f, ptr null) #11
   br label %bb.o
 

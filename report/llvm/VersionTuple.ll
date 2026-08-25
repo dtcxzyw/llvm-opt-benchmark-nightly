@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/VersionTuple?download=true
+inline.NumInlined: 108
+inline.NumDeleted: 57
 begin_hunk_0_@_ZN4llvm12VersionTuple8tryParseENS_9StringRefE:bb.a
   %i.as = add i8 %i.ar, -58
   %or.cond5.i883 = icmp ult i8 %i.as, -10
@@ -200,18 +202,18 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.k, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.c, %bb.d
+  %2 = phi ptr [ %i.o, %bb.d ], [ %i.f, %bb.c ]   ; 2 uses
   %storemerge29 = phi i32 [ %i.s, %bb.d ], [ %i.j, %bb.c ]
-  %2 = phi i64 [ %i.p, %bb.d ], [ %i.g, %bb.c ]
-  %3 = phi ptr [ %i.o, %bb.d ], [ %i.f, %bb.c ]   ; 2 uses
-  %i.l = load i8, ptr %3, align 1, !tbaa !15      ; 2 uses
+  %3 = phi i64 [ %i.p, %bb.d ], [ %i.g, %bb.c ]
+  %i.l = load i8, ptr %2, align 1, !tbaa !15      ; 2 uses
   %i.m = add i8 %i.l, -58
   %or.cond5 = icmp ult i8 %i.m, -10
   br i1 %or.cond5, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
   %i.n = zext nneg i8 %i.l to i32
-  %i.o = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
-  %i.p = add i64 %2, -1                           ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 2 uses
+  %i.p = add i64 %3, -1                           ; 3 uses
   store ptr %i.o, ptr %0, align 8, !tbaa !32
   store i64 %i.p, ptr %i.a, align 8, !tbaa !33
   %i.q = mul i32 %storemerge29, 10

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Win64EH?download=true
+inline.NumInlined: 608
+inline.NumDeleted: 324
 begin_hunk_0_@_ZN4llvm7Win64EH18decodeUnwindInfoV3ENS_8ArrayRefIhEE:bb.a
 bb.d:                                             ; preds = %bb.c
   %i.as = icmp eq i8 %i.aa, 0
@@ -200,8 +202,8 @@ bb.j:                                             ; preds = %_ZN4llvm5ErrorD2Ev.
 
 bb.k:                                             ; preds = %.lr.ph185, %_ZN4llvm7Win64EH15DecodedEpilogV3D2Ev.exit.jt7
   %.3183 = phi i32 [ %.1.lcssa, %.lr.ph185 ], [ %.10.jt7, %_ZN4llvm7Win64EH15DecodedEpilogV3D2Ev.exit.jt7 ] ; 8 uses
-  %.069182 = phi i32 [ 0, %.lr.ph185 ], [ %i.eg, %_ZN4llvm7Win64EH15DecodedEpilogV3D2Ev.exit.jt7 ]
-  %.072181 = phi i32 [ -1, %.lr.ph185 ], [ %.476.jt7, %_ZN4llvm7Win64EH15DecodedEpilogV3D2Ev.exit.jt7 ] ; 4 uses
+  %.069182 = phi i32 [ -1, %.lr.ph185 ], [ %.476.jt7, %_ZN4llvm7Win64EH15DecodedEpilogV3D2Ev.exit.jt7 ] ; 4 uses
+  %.072181 = phi i32 [ 0, %.lr.ph185 ], [ %i.eg, %_ZN4llvm7Win64EH15DecodedEpilogV3D2Ev.exit.jt7 ]
   %storemerge85180 = phi i32 [ 0, %.lr.ph185 ], [ %i.jv, %_ZN4llvm7Win64EH15DecodedEpilogV3D2Ev.exit.jt7 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #15
   store ptr %i.co, ptr %i.cn, align 8, !tbaa !127
@@ -253,18 +255,18 @@ bb.m:                                             ; preds = %bb.l
   %.0.copyload.i.i.i.i.i.i99 = load i16, ptr %i.ec, align 1
   %i.ed = icmp eq i32 %storemerge85180, 0
   %i.ee = sext i16 %.0.copyload.i.i.i.i.i.i99 to i32
-  %i.ef = select i1 %i.ed, i32 0, i32 %.069182
+  %i.ef = select i1 %i.ed, i32 0, i32 %.072181
   %i.eg = add nsw i32 %i.ef, %i.ee                ; 2 uses
   store i32 %i.eg, ptr %i.ct, align 8, !tbaa !178
   %i.eh = icmp eq i8 %i.du, 0
   br i1 %i.eh, label %bb.n, label %bb.u
 
 bb.n:                                             ; preds = %bb.m
-  %i.ei = icmp sgt i32 %.072181, -1
+  %i.ei = icmp sgt i32 %.069182, -1
   br i1 %i.ei, label %bb.o, label %bb.r
 
 bb.o:                                             ; preds = %bb.n
-  %i.ej = zext nneg i32 %.072181 to i64
+  %i.ej = zext nneg i32 %.069182 to i64
   %i.ek = load ptr, ptr %i.m, align 8, !tbaa !131
   %i.el = getelementptr inbounds nuw [56 x i8], ptr %i.ek, i64 %i.ej ; 4 uses
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 2
@@ -664,14 +666,14 @@ _ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveFor
 .thread.jt7.sink.split:                           ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i
   %.016.i.i.i118.sink = phi ptr [ %.016.i.i.i, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %.016.i.i.i118, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ]
   %.sink = phi ptr [ %i.fl, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %i.jg, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ]
-  %.476.jt7.ph = phi i32 [ %.072181, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %i.ir, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ]
+  %.476.jt7.ph = phi i32 [ %.069182, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %i.ir, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ]
   %.10.jt7.ph = phi i32 [ %i.dv, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %.5.lcssa, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ]
   %i.jm = getelementptr inbounds nuw i8, ptr %.016.i.i.i118.sink, i64 16
   %i.jn = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN4llvm15SmallVectorImplItEaSEOS1_(ptr noundef nonnull align 8 dereferenceable(40) %.sink, ptr noundef nonnull align 8 dereferenceable(40) %i.jm) ; 0 uses
   br label %.thread.jt7
 
 .thread.jt7:                                      ; preds = %.thread.jt7.sink.split, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i
-  %.476.jt7 = phi i32 [ %i.ir, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ], [ %.072181, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %.476.jt7.ph, %.thread.jt7.sink.split ]
+  %.476.jt7 = phi i32 [ %i.ir, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ], [ %.069182, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %.476.jt7.ph, %.thread.jt7.sink.split ]
   %.10.jt7 = phi i32 [ %.5.lcssa, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i117 ], [ %i.dv, %_ZN4llvm23SmallVectorTemplateBaseINS_7Win64EH15DecodedEpilogV3ELb0EE28reserveForParamAndGetAddressERS2_m.exit.i ], [ %.10.jt7.ph, %.thread.jt7.sink.split ] ; 2 uses
   %i.jo = load i32, ptr %i.o, align 8, !tbaa !133
   %i.jp = add i32 %i.jo, 1

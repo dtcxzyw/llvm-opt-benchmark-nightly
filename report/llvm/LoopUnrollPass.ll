@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LoopUnrollPass?download=true
+inline.NumInlined: 3625
+inline.NumDeleted: 2020
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZL15tryToUnrollLoopPN4llvm4LoopERNS_13DominatorTreeEPNS_8LoopInfoERNS_15ScalarEvolutionERKNS_19TargetTransformInfoERNS_15AssumptionCacheERNS_25OptimizationRemarkEmitterEPNS_18BlockFrequencyInfoEPNS_18ProfileSummaryInfoEbibbbSt8optionalIjESK_SJ_IbESL_SL_SL_SL_SK_PNS_21GenericUniformityInfoINS_17GenericSSAContextINS_8FunctionEEEEEPNS_9AAResultsE:bb.a
   %i.cc = add i64 %i.cb, 1
   call void @_ZdlPvm(ptr noundef %i.by, i64 noundef %i.cc) #20
@@ -200,16 +204,16 @@ bb.af:                                            ; preds = %bb.ac
 
 .lr.ph:                                           ; preds = %bb.af, %.lr.ph
   %.0140207 = phi i32 [ %.1141, %.lr.ph ], [ 0, %bb.af ] ; 2 uses
-  %.0142206 = phi i32 [ %.1143, %.lr.ph ], [ 1, %bb.af ]
-  %.0146205 = phi ptr [ %i.ep, %.lr.ph ], [ %i.eh, %bb.af ] ; 2 uses
-  %i.el = load ptr, ptr %.0146205, align 8, !tbaa !53
+  %.0145206 = phi ptr [ %i.ep, %.lr.ph ], [ %i.eh, %bb.af ] ; 2 uses
+  %.0146205 = phi i32 [ %.1143, %.lr.ph ], [ 1, %bb.af ]
+  %i.el = load ptr, ptr %.0145206, align 8, !tbaa !53
   %i.em = call noundef i32 @_ZN4llvm15ScalarEvolution25getSmallConstantTripCountEPKNS_4LoopEPKNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(1152) %3, ptr noundef nonnull %0, ptr noundef %i.el) #19 ; 3 uses
   %i.en = add i32 %.0140207, -1
   %i.eo = add i32 %i.em, -1
   %.not229 = icmp ult i32 %i.eo, %i.en            ; 2 uses
-  %.1143 = select i1 %.not229, i32 %i.em, i32 %.0142206 ; 4 uses
+  %.1143 = select i1 %.not229, i32 %i.em, i32 %.0146205 ; 4 uses
   %.1141 = select i1 %.not229, i32 %i.em, i32 %.0140207 ; 4 uses
-  %i.ep = getelementptr inbounds nuw i8, ptr %.0146205, i64 8 ; 2 uses
+  %i.ep = getelementptr inbounds nuw i8, ptr %.0145206, i64 8 ; 2 uses
   %.not169 = icmp eq ptr %i.ep, %i.ek
   br i1 %.not169, label %._crit_edge, label %.lr.ph
 

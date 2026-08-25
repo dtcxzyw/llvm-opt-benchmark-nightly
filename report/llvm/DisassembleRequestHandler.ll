@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DisassembleRequestHandler?download=true
+inline.NumInlined: 1236
+inline.NumDeleted: 720
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZNK8lldb_dap25DisassembleRequestHandler3RunERKNS_8protocol20DisassembleArgumentsE:bb.a
   call void @_ZN4lldb9SBAddressD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %37) #16, !noalias !67
   call void @_ZN4lldb9SBAddressD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %36) #16, !noalias !67
@@ -200,17 +205,17 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.ht, label %bb.cv, label %bb.cz
 
 bb.ac:                                            ; preds = %.lr.ph, %_ZN8lldb_dap8protocol23DisassembledInstructionD2Ev.exit48
-  %.0135 = phi i64 [ %i.el, %.lr.ph ], [ %spec.select, %_ZN8lldb_dap8protocol23DisassembledInstructionD2Ev.exit48 ]
-  %.026134 = phi i64 [ 0, %.lr.ph ], [ %i.rp, %_ZN8lldb_dap8protocol23DisassembledInstructionD2Ev.exit48 ] ; 3 uses
+  %.0135 = phi i64 [ 0, %.lr.ph ], [ %i.rp, %_ZN8lldb_dap8protocol23DisassembledInstructionD2Ev.exit48 ] ; 3 uses
+  %.026134 = phi i64 [ %i.el, %.lr.ph ], [ %spec.select, %_ZN8lldb_dap8protocol23DisassembledInstructionD2Ev.exit48 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #16
-  %i.hu = trunc i64 %.026134 to i32
+  %i.hu = trunc i64 %.0135 to i32
   call void @_ZN4lldb17SBInstructionList21GetInstructionAtIndexEj(ptr dead_on_unwind nonnull writable sret(%"class.lldb::SBInstruction") align 8 %48, ptr noundef nonnull align 8 dereferenceable(16) %45, i32 noundef %i.hu) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #16
   call void @_ZN4lldb13SBInstruction10GetAddressEv(ptr dead_on_unwind nonnull writable sret(%"class.lldb::SBAddress") align 8 %49, ptr noundef nonnull align 8 dereferenceable(16) %48) #16
   %i.hv = call noundef zeroext i1 @_ZN4lldbeqERKNS_9SBAddressES2_(ptr noundef nonnull align 8 dereferenceable(8) %49, ptr noundef nonnull align 8 dereferenceable(8) %41) #16
   call void @_ZN4lldb9SBAddressD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %49) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #16
-  %spec.select = select i1 %i.hv, i64 %.026134, i64 %.0135 ; 2 uses
+  %spec.select = select i1 %i.hv, i64 %.0135, i64 %.026134 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #16
   %i.hw = load ptr, ptr %i.cl, align 8, !tbaa !62, !nonnull !52, !align !65 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !71)
@@ -613,7 +618,7 @@ _ZN8lldb_dap8protocol23DisassembledInstructionD2Ev.exit48: ; preds = %bb.cu, %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %50) #16
   call void @_ZN4lldb13SBInstructionD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %48) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %48) #16
-  %i.rp = add nuw i64 %.026134, 1                 ; 2 uses
+  %i.rp = add nuw i64 %.0135, 1                   ; 2 uses
   %i.rq = call noundef i64 @_ZN4lldb17SBInstructionList7GetSizeEv(ptr noundef nonnull align 8 dereferenceable(16) %45) #16
   %i.rr = icmp ult i64 %i.rp, %i.rq
   br i1 %i.rr, label %bb.ac, label %._crit_edge, !llvm.loop !129
@@ -935,6 +940,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNSt6vectorIN8lldb_dap8protocol23DisassembledInstructionESaIS2_EE17_S_check_init_lenEmRKS3_.exit: ; preds = %bb.a
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %.not.i.i.i = icmp eq i64 %1, 0
   br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseIN8lldb_dap8protocol23DisassembledInstructionESaIS2_EEC2EmRKS3_.exit.thread, label %_ZNSt12_Vector_baseIN8lldb_dap8protocol23DisassembledInstructionESaIS2_EEC2EmRKS3_.exit
 

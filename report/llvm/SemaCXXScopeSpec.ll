@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaCXXScopeSpec?download=true
+inline.NumInlined: 2181
+inline.NumDeleted: 1318
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN5clang4Sema24ActOnSuperScopeSpecifierENS_14SourceLocationES1_RNS_12CXXScopeSpecE:bb.a
   store ptr %i.cs, ptr %4, align 8, !tbaa !1195
   %i.ct = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIN5clang16CanonicalDeclPtrIKNS2_12FunctionDeclEEESt6vectorISt4pairINS2_14SourceLocationENS2_17PartialDiagnosticEESaISB_EENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_SD_EEEES6_SD_SF_SI_E24lookupOrInsertIntoBucketIS6_JEEES8_IPSI_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.cl, ptr noundef nonnull align 8 dereferenceable(8) %4)
@@ -200,7 +204,7 @@ bb.a:
 
 .outer:                                           ; preds = %_ZN5clang12LookupResultD2Ev.exit, %.preheader
   %.sroa.017.0.ph = phi i64 [ 0, %_ZN5clang12LookupResultD2Ev.exit ], [ %2, %.preheader ]
-  %.0.ph = phi ptr [ %.2, %_ZN5clang12LookupResultD2Ev.exit ], [ undef, %.preheader ]
+  %.0.ph = phi ptr [ %.212, %_ZN5clang12LookupResultD2Ev.exit ], [ undef, %.preheader ]
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZNK5clang19NestedNameSpecifier7getKindEv.exit, %.outer
@@ -276,8 +280,8 @@ _ZNK5clang12LookupResult12getFoundDeclEv.exit:    ; preds = %bb.e, %bb.f
 
 bb.g:                                             ; preds = %bb.d, %_ZNK5clang12LookupResult12getFoundDeclEv.exit
   %.pre29 = phi i32 [ %.pre29.pre, %_ZNK5clang12LookupResult12getFoundDeclEv.exit ], [ %i.ab, %bb.d ] ; 3 uses
-  %.111 = phi i1 [ %i.ak, %_ZNK5clang12LookupResult12getFoundDeclEv.exit ], [ true, %bb.d ]
-  %.2 = phi ptr [ %..0, %_ZNK5clang12LookupResult12getFoundDeclEv.exit ], [ null, %bb.d ] ; 2 uses
+  %.212 = phi ptr [ %..0, %_ZNK5clang12LookupResult12getFoundDeclEv.exit ], [ null, %bb.d ] ; 2 uses
+  %.1 = phi i1 [ %i.ak, %_ZNK5clang12LookupResult12getFoundDeclEv.exit ], [ true, %bb.d ]
   %i.al = load i8, ptr %i.m, align 1, !tbaa !1265, !range !1165, !noundef !710
   %i.am = trunc nuw i8 %i.al to i1
   br i1 %i.am, label %bb.h, label %_ZN5clang12LookupResult14diagnoseAccessEv.exit.i
@@ -337,10 +341,10 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN5clang12LookupResultD2Ev.exit:                 ; preds = %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
-  br i1 %.111, label %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread, label %.outer
+  br i1 %.1, label %_ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread, label %.outer
 
 _ZNK5clang19NestedNameSpecifier7getKindEv.exit.thread: ; preds = %bb.c, %_ZN5clang12LookupResultD2Ev.exit, %bb.b, %bb.a
-  %.5 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ %.2, %_ZN5clang12LookupResultD2Ev.exit ], [ null, %bb.c ]
+  %.5 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ %.212, %_ZN5clang12LookupResultD2Ev.exit ], [ null, %bb.c ]
   ret ptr %.5
 }
 

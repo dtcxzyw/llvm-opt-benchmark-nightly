@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SectionLoadList?download=true
+inline.NumInlined: 1066
+inline.NumDeleted: 581
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_ZN12lldb_private15SectionLoadListC2ERKS0_:bb.a
   store ptr null, ptr %i.b, align 8, !tbaa !29
   store ptr %i.a, ptr %i.c, align 8, !tbaa !8
@@ -200,8 +204,7 @@ bb.e:                                             ; preds = %bb.d
 _ZNSt11unique_lockISt15recursive_mutexE4lockEv.exit: ; preds = %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store i8 1, ptr %i.h, align 8, !tbaa !40
-  %3 = and i32 %.0, 1
-  %i.i = xor i32 %3, 1                            ; 2 uses
+  %i.i = xor i32 %.0, 1                           ; 2 uses
   %i.j = zext nneg i32 %i.i to i64
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.j ; 2 uses
   %i.l = load ptr, ptr %i.k, align 16, !tbaa !36  ; 2 uses
@@ -230,8 +233,7 @@ _ZNSt11unique_lockISt15recursive_mutexE8try_lockEv.exit: ; preds = %bb.f
   br i1 %.not.i.i29, label %bb.j, label %.preheader32
 
 .preheader32:                                     ; preds = %_ZNSt11unique_lockISt15recursive_mutexE8try_lockEv.exit
-  %4 = and i32 %.0, 1
-  %i.r = zext nneg i32 %4 to i64
+  %i.r = zext nneg i32 %.0 to i64
   %i.s = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %i.r ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8 ; 2 uses
   %.promoted = load i8, ptr %i.t, align 8, !tbaa !40

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/IndexAttrs?download=true
+inline.NumInlined: 751
+inline.NumDeleted: 471
 begin_hunk_0_@_ZNK4mlir5index21IndexCmpPredicateAttr5printERNS_10AsmPrinterE:bb.a
 
 bb.c:                                             ; preds = %bb.a
@@ -200,9 +202,9 @@ bb.f:                                             ; preds = %"_ZN4mlir9AsmParser
   br label %_ZL24generatedAttributeParserRN4mlir9AsmParserEPN4llvm9StringRefENS_4TypeERNS_9AttributeE.exit
 
 _ZL24generatedAttributeParserRN4mlir9AsmParserEPN4llvm9StringRefENS_4TypeERNS_9AttributeE.exit: ; preds = %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.thread.i", %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.i", %bb.f
-  %.sroa.5.0 = phi i64 [ 0, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.thread.i" ], [ %.sroa.2.0.copyload.i.i, %bb.f ], [ 0, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.i" ]
-  %.sroa.020.0 = phi ptr [ null, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.thread.i" ], [ %.sroa.01.0.copyload.i.i, %bb.f ], [ null, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.i" ]
   %.sroa.021.2 = phi ptr [ %.sroa.021.1, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.thread.i" ], [ null, %bb.f ], [ null, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.i" ]
+  %.sroa.020.0 = phi ptr [ null, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.thread.i" ], [ %.sroa.01.0.copyload.i.i, %bb.f ], [ null, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.i" ]
+  %.sroa.5.0 = phi i64 [ 0, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.thread.i" ], [ %.sroa.2.0.copyload.i.i, %bb.f ], [ 0, %"_ZN4mlir9AsmParser13KeywordSwitchINS_19OptionalParseResultEE4CaseIZL24generatedAttributeParserRS0_PN4llvm9StringRefENS_4TypeERNS_9AttributeEE3$_0vEERS3_NS6_13StringLiteralEOT_.exit.i" ]
   %i.aq = load i16, ptr %i.k, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #13
   %i.ar = and i16 %i.aq, 256

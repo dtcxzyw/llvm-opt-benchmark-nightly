@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SSAUpdaterBulk?download=true
+inline.NumInlined: 1919
+inline.NumDeleted: 1016
+loop-unroll.NumRuntimeUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZNK4llvm9GraphDiffIPNS_10BasicBlockELb0EE11getChildrenILb0EEENS_11SmallVectorIS2_Lj8EEES2_:bb.a
   %i.f = extractvalue { ptr, ptr } %i.d, 1        ; 3 uses
   %i.g = ptrtoint ptr %i.f to i64
@@ -200,9 +204,9 @@ bb.f:                                             ; preds = %._crit_edge, %bb.e
   br label %bb.r
 
 bb.g:                                             ; preds = %.lr.ph, %_ZN4llvm5eraseINS_11SmallVectorIPNS_10BasicBlockELj8EEES3_EEvRT_T0_.exit
-  %.01234 = phi ptr [ %i.cq, %.lr.ph ], [ %i.et, %_ZN4llvm5eraseINS_11SmallVectorIPNS_10BasicBlockELj8EEES3_EEvRT_T0_.exit ] ; 2 uses
   %3 = phi i32 [ %i.az, %.lr.ph ], [ %i.es, %_ZN4llvm5eraseINS_11SmallVectorIPNS_10BasicBlockELj8EEES3_EEvRT_T0_.exit ] ; 3 uses
-  %i.dg = load ptr, ptr %.01234, align 8, !tbaa !33 ; 8 uses
+  %.01235 = phi ptr [ %i.cq, %.lr.ph ], [ %i.et, %_ZN4llvm5eraseINS_11SmallVectorIPNS_10BasicBlockELj8EEES3_EEvRT_T0_.exit ] ; 2 uses
+  %i.dg = load ptr, ptr %.01235, align 8, !tbaa !33 ; 8 uses
   %i.dh = zext i32 %3 to i64                      ; 2 uses
   %.idx6.i = shl nuw nsw i64 %i.dh, 3             ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.pre, i64 %.idx6.i ; 5 uses
@@ -328,7 +332,7 @@ _ZN4llvm5eraseINS_11SmallVectorIPNS_10BasicBlockELj8EEES3_EEvRT_T0_.exit: ; pred
   %i.eq = sub i64 %i.ep, %i.cv
   %i.er = lshr exact i64 %i.eq, 3
   %i.es = trunc i64 %i.er to i32                  ; 3 uses
-  %i.et = getelementptr inbounds nuw i8, ptr %.01234, i64 8 ; 2 uses
+  %i.et = getelementptr inbounds nuw i8, ptr %.01235, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.et, %i.cu
   br i1 %.not, label %._crit_edge, label %bb.g
 

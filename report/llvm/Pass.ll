@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Pass?download=true
+inline.NumInlined: 528
+inline.NumDeleted: 387
 begin_hunk_0_@_ZN4mlir12ExternalPassD2Ev:bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 2 uses
   %i.u = icmp eq ptr %i.s, %i.t
@@ -200,6 +202,7 @@ define linkonce_odr hidden void @_ZNK4mlir12ExternalPass9clonePassEv(ptr dead_on
 _ZNSt10unique_ptrIN4mlir12ExternalPassESt14default_deleteIS1_EED2Ev.exit:
   %2 = alloca %"class.llvm::StringRef", align 8   ; 5 uses
   %3 = alloca %"class.llvm::ArrayRef", align 8    ; 5 uses
+  %4 = alloca %"class.std::optional.62", align 8  ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 464
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 488
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !123
@@ -210,7 +213,9 @@ _ZNSt10unique_ptrIN4mlir12ExternalPassESt14default_deleteIS1_EED2Ev.exit:
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 344
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 376
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 408
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 440
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
@@ -238,10 +243,11 @@ _ZNSt10unique_ptrIN4mlir12ExternalPassESt14default_deleteIS1_EED2Ev.exit:
   %i.ad = sub i64 %i.ab, %i.ac
   %i.ae = ashr exact i64 %i.ad, 3
   store i64 %i.ae, ptr %i.y, align 8, !tbaa !48, !noalias !124
-  tail call void @_ZN4mlir12ExternalPassC2ENS_6TypeIDEN4llvm9StringRefES3_S3_St8optionalIS3_ENS2_8ArrayRefI17MlirDialectHandleEE25MlirExternalPassCallbacksPv(ptr noundef nonnull align 8 dereferenceable(512) %i.m, ptr %.sroa.0.0.copyload.i, ptr %i.n, i64 %i.p, ptr %i.q, i64 %i.s, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %2, ptr noundef nonnull byval(%"class.std::optional.62") align 8 %i.k, ptr noundef nonnull byval(%"class.llvm::ArrayRef") align 8 %3, ptr noundef nonnull byval(%struct.MlirExternalPassCallbacks) align 8 %i.a, ptr noundef %i.f)
+  tail call void @_ZN4mlir12ExternalPassC2ENS_6TypeIDEN4llvm9StringRefES3_S3_St8optionalIS3_ENS2_8ArrayRefI17MlirDialectHandleEE25MlirExternalPassCallbacksPv(ptr noundef nonnull align 8 dereferenceable(512) %i.m, ptr %.sroa.0.0.copyload.i, ptr %i.n, i64 %i.p, ptr %i.q, i64 %i.s, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %2, ptr noundef nonnull byval(%"class.std::optional.62") align 8 %4, ptr noundef nonnull byval(%"class.llvm::ArrayRef") align 8 %3, ptr noundef nonnull byval(%struct.MlirExternalPassCallbacks) align 8 %i.a, ptr noundef %i.f), !noalias !124, !inline_history !127
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   store ptr %i.m, ptr %0, align 8, !tbaa !128
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   ret void
 }
 

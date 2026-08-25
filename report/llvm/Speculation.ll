@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Speculation?download=true
+inline.NumInlined: 2256
+inline.NumDeleted: 1277
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN4llvm12DenseMapBaseINS_8DenseMapINS_3orc15SymbolStringPtrENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS4_12DenseSetPairIS3_EEEES3_S5_S7_S9_E4growEj:bb.a
   %i.an = load i32, ptr %i.am, align 4, !tbaa !19 ; 2 uses
   %.not11.i2.i.i = icmp eq i32 %i.an, 0
@@ -200,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !238
-  %i.d = load ptr, ptr %0, align 8, !tbaa !233    ; 4 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !233    ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
@@ -216,7 +221,7 @@ _ZNSt12_Vector_baseISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsE
   %i.n = shl nuw nsw i64 %1, 4
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #16 ; 4 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.d, %i.k
-  br i1 %.not9.i.i.i.i.i, label %_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exit, label %.lr.ph.i.i.i.i.i
+  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.011.i.i.i.i.i = phi ptr [ %i.y, %_ZSt10_ConstructISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.o, %_ZNSt12_Vector_baseISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE11_M_allocateEm.exit.i ] ; 3 uses
@@ -243,7 +248,7 @@ _ZSt10_ConstructISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEJR
   %.not.i.i.i.i.i = icmp eq ptr %i.x, %i.k
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !305
 
-_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit: ; preds = %_ZSt10_ConstructISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i
+_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit: ; preds = %_ZSt10_ConstructISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE11_M_allocateEm.exit.i
   %.pre = load ptr, ptr %0, align 8, !tbaa !233   ; 3 uses
   %.pre8 = load ptr, ptr %i.j, align 8, !tbaa !236 ; 2 uses
   %.not4.i.i = icmp eq ptr %.pre, %.pre8
@@ -271,8 +276,8 @@ _ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_
   %.pr = load ptr, ptr %0, align 8, !tbaa !233
   br label %_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exit
 
-_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exit: ; preds = %_ZNSt12_Vector_baseISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE11_M_allocateEm.exit.i, %_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exitthread-pre-split, %_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit
-  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit ], [ %i.d, %_ZNSt12_Vector_baseISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exit: ; preds = %_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exitthread-pre-split, %_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit
+  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPSt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEEEvT_S7_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE20_M_allocate_and_copyIPKS5_EEPS5_mT_SC_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %2, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseISt4pairIN4llvm3orc15SymbolStringPtrENS2_17SymbolLookupFlagsEESaIS5_EE13_M_deallocateEPS5_m.exit, label %bb.f
 

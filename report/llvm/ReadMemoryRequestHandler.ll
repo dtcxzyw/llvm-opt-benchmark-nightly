@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ReadMemoryRequestHandler?download=true
+inline.NumInlined: 652
+inline.NumDeleted: 435
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -177,7 +179,7 @@ bb.d:                                             ; preds = %_ZNKSt6vectorISt4by
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.r, i8 0, i64 %i.p, i1 false)
   br label %_ZNSt6vectorISt4byteSaIS0_EE6resizeEm.exit
 
-_ZNSt6vectorISt4byteSaIS0_EE6resizeEm.exit:       ; preds = %_ZNKSt6vectorISt4byteSaIS0_EE12_M_check_lenEmPKc.exit.i.i, %bb.d
+_ZNSt6vectorISt4byteSaIS0_EE6resizeEm.exit:       ; preds = %bb.d, %_ZNKSt6vectorISt4byteSaIS0_EE12_M_check_lenEmPKc.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @_ZN4lldb7SBErrorC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %3) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -238,9 +240,9 @@ bb.h:                                             ; preds = %_ZNSt6vectorISt4byt
   br label %_ZN8lldb_dap8protocol22ReadMemoryResponseBodyD2Ev.exit
 
 _ZN8lldb_dap8protocol22ReadMemoryResponseBodyD2Ev.exit: ; preds = %bb.h, %_ZSt27__uninitialized_default_n_aIPSt4bytemS0_ET_S2_T0_RSaIT1_E.exit26.i.i21
-  %.sroa.7.1 = phi ptr [ %i.af, %_ZSt27__uninitialized_default_n_aIPSt4bytemS0_ET_S2_T0_RSaIT1_E.exit26.i.i21 ], [ %i.o, %bb.h ]
-  %.sroa.16.1 = phi ptr [ %i.ak, %_ZSt27__uninitialized_default_n_aIPSt4bytemS0_ET_S2_T0_RSaIT1_E.exit26.i.i21 ], [ %spec.select, %bb.h ]
-  %.sroa.26.1 = phi ptr [ %i.al, %_ZSt27__uninitialized_default_n_aIPSt4bytemS0_ET_S2_T0_RSaIT1_E.exit26.i.i21 ], [ %i.am, %bb.h ]
+  %.sroa.7.1 = phi ptr [ %i.o, %bb.h ], [ %i.af, %_ZSt27__uninitialized_default_n_aIPSt4bytemS0_ET_S2_T0_RSaIT1_E.exit26.i.i21 ]
+  %.sroa.16.1 = phi ptr [ %spec.select, %bb.h ], [ %i.ak, %_ZSt27__uninitialized_default_n_aIPSt4bytemS0_ET_S2_T0_RSaIT1_E.exit26.i.i21 ]
+  %.sroa.26.1 = phi ptr [ %i.am, %bb.h ], [ %i.al, %_ZSt27__uninitialized_default_n_aIPSt4bytemS0_ET_S2_T0_RSaIT1_E.exit26.i.i21 ]
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.aq = load i8, ptr %i.ap, align 8
   %i.ar = and i8 %i.aq, -2

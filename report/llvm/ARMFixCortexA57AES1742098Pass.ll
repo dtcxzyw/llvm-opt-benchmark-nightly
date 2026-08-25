@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ARMFixCortexA57AES1742098Pass?download=true
+inline.NumInlined: 356
+inline.NumDeleted: 246
 begin_hunk_0_@_ZN12_GLOBAL__N_125ARMFixCortexA57AES174209820runOnMachineFunctionERN4llvm15MachineFunctionE:bb.a
 _ZN4llvm9adl_beginIRNS_11SmallPtrSetIPNS_12MachineInstrELj1EEEEEDTclsr10adl_detailE10begin_implclsr3stdE7forwardIT_Efp_EEEOS6_.exit.i.i: ; preds = %bb.i, %.lr.ph.i.i.i.i.i.i.i.i.i, %bb.h
   %.sroa.0.1.i.i.i.i.i.i = phi ptr [ %i.bl, %bb.h ], [ %.sroa.0.0.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i ], [ %i.bp, %bb.i ] ; 2 uses
@@ -200,8 +202,8 @@ bb.t:                                             ; preds = %_ZN4llvm26MachineIn
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i
-  %.sroa.07.0.i.a = phi ptr [ %i.du, %bb.t ], [ %.sroa.069.091.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ] ; 2 uses
-  %.sroa.17.0.i = phi ptr [ %i.dp, %bb.t ], [ %.sroa.066.086.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ] ; 2 uses
+  %.sroa.07.0.i.a = phi ptr [ %i.dp, %bb.t ], [ %.sroa.066.086.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ] ; 2 uses
+  %.sroa.17.0.i = phi ptr [ %i.du, %bb.t ], [ %.sroa.069.091.i, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i ] ; 2 uses
   %i.dv = load i32, ptr %i.ac, align 8, !tbaa !277 ; 3 uses
   %i.dw = load i32, ptr %i.ad, align 4, !tbaa !278
   %.not.i62.i = icmp ult i32 %i.dv, %i.dw
@@ -209,8 +211,8 @@ bb.u:                                             ; preds = %bb.t, %_ZN4llvm26Ma
 
 _ZN4llvm23SmallVectorTemplateBaseIN12_GLOBAL__N_125ARMFixCortexA57AES174209816AESFixupLocationELb1EE18growAndEmplaceBackIJRS3_EEES6_DpOT_.exit95.i: ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
-  store ptr %.sroa.07.0.i.a, ptr %8, align 8, !tbaa !306
-  store ptr %.sroa.17.0.i, ptr %.sroa.17.0..sroa_idx37.i, align 8, !tbaa !307
+  store ptr %.sroa.17.0.i, ptr %8, align 8, !tbaa !306
+  store ptr %.sroa.07.0.i.a, ptr %.sroa.17.0..sroa_idx37.i, align 8, !tbaa !307
   store ptr %.04082.i, ptr %.sroa.20.0..sroa_idx59.i, align 8, !tbaa !309
   call fastcc void @_ZN4llvm23SmallVectorTemplateBaseIN12_GLOBAL__N_125ARMFixCortexA57AES174209816AESFixupLocationELb1EE15growAndPushBackERKS3_(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull readonly align 8 dereferenceable(24) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
@@ -220,9 +222,9 @@ bb.v:                                             ; preds = %bb.u
   %i.dx = zext i32 %i.dv to i64
   %.val.i64.i = load ptr, ptr %13, align 8, !tbaa !276
   %i.dy = getelementptr inbounds nuw [24 x i8], ptr %.val.i64.i, i64 %i.dx ; 3 uses
-  store ptr %.sroa.07.0.i.a, ptr %i.dy, align 8, !tbaa !306
+  store ptr %.sroa.17.0.i, ptr %i.dy, align 8, !tbaa !306
   %.sroa.17.0..sroa_idx23.i = getelementptr inbounds nuw i8, ptr %i.dy, i64 8
-  store ptr %.sroa.17.0.i, ptr %.sroa.17.0..sroa_idx23.i, align 8, !tbaa !307
+  store ptr %.sroa.07.0.i.a, ptr %.sroa.17.0..sroa_idx23.i, align 8, !tbaa !307
   %.sroa.20.0..sroa_idx45.i = getelementptr inbounds nuw i8, ptr %i.dy, i64 16
   store ptr %.04082.i, ptr %.sroa.20.0..sroa_idx45.i, align 8, !tbaa !309
   %i.dz = add nuw i32 %i.dv, 1

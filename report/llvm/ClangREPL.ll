@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ClangREPL?download=true
+inline.NumInlined: 248
+inline.NumDeleted: 167
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -101,7 +103,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN12lldb_private9ClangREPL10InitializeEv() local_unnamed_addr #0 align 2 {
 bb.a:
-  %0 = alloca %"struct.lldb_private::LanguageSet", align 8 ; 15 uses
+  %0 = alloca %"struct.lldb_private::LanguageSet", align 8 ; 16 uses
   %1 = alloca %"struct.lldb_private::LanguageSet", align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #14
   call void @_ZN12lldb_private11LanguageSetC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) #14
@@ -115,13 +117,14 @@ bb.a:
   call void @_ZN12lldb_private11LanguageSet6InsertEN4lldb12LanguageTypeE(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef 33) #14
   call void @_ZN12lldb_private11LanguageSet6InsertEN4lldb12LanguageTypeE(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef 16) #14
   call void @_ZN12lldb_private11LanguageSet6InsertEN4lldb12LanguageTypeE(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef 17) #14
-  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
+  %i.a = load i64, ptr %0, align 8, !tbaa !8      ; 2 uses
   %i.b = trunc i64 %i.a to i1
   br i1 %i.b, label %_ZN12lldb_private11LanguageSetC2ERKS0_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #15 ; 9 uses
-  %i.d = inttoptr i64 %i.a to ptr                 ; 4 uses
+  %2 = load i64, ptr %0, align 8, !tbaa !8
+  %i.d = inttoptr i64 %2 to ptr                   ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !11
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses

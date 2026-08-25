@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RISCVGatherScatterLowering?download=true
+inline.NumInlined: 1653
+inline.NumDeleted: 895
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN12_GLOBAL__N_126RISCVGatherScatterLowering13runOnFunctionERN4llvm8FunctionE:bb.a
   tail call void @llvm.assume(i1 %.not11.i.i.i43)
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !51
@@ -200,9 +204,9 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_13IntrinsicInstELb1EE9push_backES2_.exit: 
   br label %bb.ae
 
 bb.m:                                             ; preds = %.lr.ph84, %_ZN12_GLOBAL__N_126RISCVGatherScatterLowering25tryCreateStridedLoadStoreEPN4llvm13IntrinsicInstE.exit
-  %.03382 = phi i1 [ false, %.lr.ph84 ], [ %.2.i, %_ZN12_GLOBAL__N_126RISCVGatherScatterLowering25tryCreateStridedLoadStoreEPN4llvm13IntrinsicInstE.exit ] ; 4 uses
-  %.03481 = phi ptr [ %.pre, %.lr.ph84 ], [ %i.kn, %_ZN12_GLOBAL__N_126RISCVGatherScatterLowering25tryCreateStridedLoadStoreEPN4llvm13IntrinsicInstE.exit ] ; 2 uses
-  %i.eh = load ptr, ptr %.03481, align 8, !tbaa !244 ; 27 uses
+  %.03282 = phi ptr [ %.pre, %.lr.ph84 ], [ %i.kn, %_ZN12_GLOBAL__N_126RISCVGatherScatterLowering25tryCreateStridedLoadStoreEPN4llvm13IntrinsicInstE.exit ] ; 2 uses
+  %.03481 = phi i1 [ false, %.lr.ph84 ], [ %.2.i, %_ZN12_GLOBAL__N_126RISCVGatherScatterLowering25tryCreateStridedLoadStoreEPN4llvm13IntrinsicInstE.exit ] ; 4 uses
+  %i.eh = load ptr, ptr %.03282, align 8, !tbaa !244 ; 27 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
@@ -544,18 +548,18 @@ _ZNSt14_Function_baseD2Ev.exit.i:                 ; preds = %bb.ad, %bb.ac, %bb.
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %i.ci) #17
   call void @_ZN4llvm15IRBuilderFolderD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(88) %i.bw) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
-  %i.km = or i1 %.03382, %.not84.i
+  %i.km = or i1 %.03481, %.not84.i
   br label %_ZN12_GLOBAL__N_126RISCVGatherScatterLowering25tryCreateStridedLoadStoreEPN4llvm13IntrinsicInstE.exit
 
 _ZN12_GLOBAL__N_126RISCVGatherScatterLowering25tryCreateStridedLoadStoreEPN4llvm13IntrinsicInstE.exit: ; preds = %bb.s, %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i, %bb.t, %_ZNSt14_Function_baseD2Ev.exit.i
-  %.2.i = phi i1 [ %.03382, %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i ], [ %.03382, %bb.s ], [ %i.km, %_ZNSt14_Function_baseD2Ev.exit.i ], [ %.03382, %bb.t ] ; 2 uses
+  %.2.i = phi i1 [ %.03481, %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i ], [ %.03481, %bb.s ], [ %i.km, %_ZNSt14_Function_baseD2Ev.exit.i ], [ %.03481, %bb.t ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %11)
   call void @llvm.lifetime.end.p0(ptr nonnull %13)
-  %i.kn = getelementptr inbounds nuw i8, ptr %.03481, i64 8 ; 2 uses
+  %i.kn = getelementptr inbounds nuw i8, ptr %.03282, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.kn, %i.bo
   br i1 %.not, label %.preheader, label %bb.m
 

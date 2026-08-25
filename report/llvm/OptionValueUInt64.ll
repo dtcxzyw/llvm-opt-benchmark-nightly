@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/OptionValueUInt64?download=true
+inline.NumInlined: 214
+inline.NumDeleted: 162
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -108,13 +110,13 @@ $_ZZNSt19_Sp_make_shared_tag5_S_tiEvE5__tag = comdat any
 define dso_local void @_ZN12lldb_private17OptionValueUInt646CreateEN4llvm9StringRefERNS_6StatusE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.std::shared_ptr") align 8 captures(none) initializes((0, 16)) %0, ptr %1, i64 %2, ptr noundef nonnull align 8 dereferenceable(40) %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %"class.lldb_private::Status", align 8 ; 5 uses
-  %i.a = tail call noalias noundef nonnull dereferenceable(136) ptr @_Znwm(i64 noundef 136) #12 ; 7 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(136) ptr @_Znwm(i64 noundef 136) #12 ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %i.a, i8 0, i64 112, i1 false)
-  store ptr getelementptr inbounds nuw inrange(-16, 144) (i8, ptr @_ZTVN12lldb_private17OptionValueUInt64E, i64 16), ptr %i.a, align 8, !tbaa !8
+  store ptr getelementptr inbounds nuw inrange(-16, 144) (i8, ptr @_ZTVN12lldb_private17OptionValueUInt64E, i64 16), ptr %i.a, align 16, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
-  store i64 -1, ptr %i.c, align 8, !tbaa !10
+  store i64 -1, ptr %i.c, align 16, !tbaa !10
   store ptr %i.a, ptr %0, align 8, !tbaa !26
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 10 uses
@@ -127,7 +129,10 @@ bb.a:
   store ptr %i.a, ptr %i.h, align 8, !tbaa !32
   store ptr %i.e, ptr %i.d, align 8, !tbaa !35
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
-  call void @_ZN12lldb_private17OptionValueUInt6418SetValueFromStringEN4llvm9StringRefENS_19VarSetOperationTypeE(ptr dead_on_unwind nonnull writable sret(%"class.lldb_private::Status") align 8 %4, ptr noundef nonnull align 8 dereferenceable(104) %i.a, ptr %1, i64 %2, i32 noundef 6) #13
+  %5 = load ptr, ptr %i.a, align 16, !tbaa !8
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %7 = load ptr, ptr %6, align 8
+  call void %7(ptr dead_on_unwind nonnull writable sret(%"class.lldb_private::Status") align 8 %4, ptr noundef nonnull align 8 dereferenceable(104) %i.a, ptr %1, i64 %2, i32 noundef 6) #13
   %i.i = call noundef nonnull align 8 dereferenceable(40) ptr @_ZN12lldb_private6StatusaSEOS0_(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(40) %4) #13 ; 0 uses
   call void @_ZN12lldb_private6StatusD1Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %4) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/KnownFPClass?download=true
+inline.NumInlined: 647
+inline.NumDeleted: 143
 begin_hunk_0_@_ZN4llvm12KnownFPClass12canonicalizeERKS0_NS_12DenormalModeE:_ZN4llvm12KnownFPClass8knownNotENS_11FPClassTestE.exit
   %spec.select.i = icmp ult i8 %i.v, 2
   %i.w = add i8 %.sroa.038.0.extract.trunc, -1
@@ -200,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit
 
 bb.g:                                             ; preds = %bb.e
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %i.ad) #10
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 4 dereferenceable(29) %0, ptr noundef nonnull align 8 dereferenceable(12) %i.ad) #10
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit: ; preds = %bb.f, %bb.g
@@ -268,7 +270,7 @@ bb.j:                                             ; preds = %_ZN4llvmcoENS_5APIn
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit15
 
 bb.k:                                             ; preds = %_ZN4llvmcoENS_5APIntE.exit
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, ptr noundef nonnull align 8 dereferenceable(12) %4) #10
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsERKNS_5APIntE(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 4 dereferenceable(29) %0, ptr noundef nonnull align 8 dereferenceable(12) %4) #10
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit15
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsERKNS_5APIntE.exit15: ; preds = %bb.j, %bb.k
@@ -343,7 +345,7 @@ bb.r:                                             ; preds = %_ZN4llvm12KnownFPCl
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i
 
 bb.s:                                             ; preds = %_ZN4llvm12KnownFPClass8knownNotENS_11FPClassTestE.exit
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, i32 noundef 0) #10
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %8, ptr noundef nonnull align 4 dereferenceable(29) %0, i32 noundef 0) #10
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i: ; preds = %bb.s, %bb.r
@@ -494,7 +496,7 @@ bb.ai:                                            ; preds = %_ZN4llvm12KnownFPCl
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i26
 
 bb.aj:                                            ; preds = %_ZN4llvm12KnownFPClass8knownNotENS_11FPClassTestE.exit24
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, i32 noundef 0) #10
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef nonnull align 4 dereferenceable(29) %0, i32 noundef 0) #10
   br label %_ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i26
 
 _ZN4llvm7APFloatC2ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE.exit.i26: ; preds = %bb.aj, %bb.ai
@@ -897,7 +899,7 @@ define dso_local range(i64 0, 2199023255552) i64 @_ZN4llvm12KnownFPClass4fmulERK
 bb.a:
   %3 = alloca %"struct.llvm::KnownFPClass", align 4 ; 4 uses
   %4 = alloca %"class.llvm::APFloat", align 8     ; 7 uses
-  %i.a = load ptr, ptr %1, align 8, !tbaa !16     ; 3 uses
+  %i.a = load ptr, ptr %1, align 8, !tbaa !16     ; 4 uses
   %i.b = tail call noundef i32 @_ZN4llvm11APFloatBase18semanticsPrecisionERKNS_12fltSemanticsE(ptr noundef nonnull align 4 dereferenceable(29) %i.a) #10
   %i.c = add i32 %i.b, -1
   %i.d = load ptr, ptr %1, align 8, !tbaa !16
@@ -995,7 +997,7 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZN4llvm7APFloat6getOneERKNS_12fltSemanticsEb.exit
 
 bb.p:                                             ; preds = %bb.n
-  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsEm(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 4 dereferenceable(29) @_ZN4llvm11APFloatBase18semPPCDoubleDoubleE, i64 noundef 1) #10
+  call void @_ZN4llvm6detail13DoubleAPFloatC1ERKNS_12fltSemanticsEm(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 4 dereferenceable(29) %i.a, i64 noundef 1) #10
   br label %_ZN4llvm7APFloat6getOneERKNS_12fltSemanticsEb.exit
 
 _ZN4llvm7APFloat6getOneERKNS_12fltSemanticsEb.exit: ; preds = %bb.o, %bb.p

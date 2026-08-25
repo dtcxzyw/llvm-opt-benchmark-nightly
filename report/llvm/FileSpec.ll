@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/FileSpec?download=true
+inline.NumInlined: 567
+inline.NumDeleted: 210
 begin_hunk_0_@_ZNK12lldb_private8FileSpec10IsAbsoluteEv:bb.a
   %i.g = load ptr, ptr %1, align 8, !tbaa !15     ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !tbaa !20
@@ -200,8 +202,8 @@ _ZNK4llvm9StringRef18equals_insensitiveES0_.exit: ; preds = %bb.e
 
 bb.f:                                             ; preds = %_ZNK4llvm9StringRef18equals_insensitiveES0_.exit
   %i.w = icmp eq i64 %i.f, 0                      ; 2 uses
-  %spec.select = select i1 %i.w, ptr @.str.8, ptr %i.e ; 2 uses
-  %spec.select36 = select i1 %i.w, i64 7, i64 %i.f ; 4 uses
+  %spec.select = select i1 %i.w, i64 7, i64 %i.f  ; 4 uses
+  %spec.select36 = select i1 %i.w, ptr @.str.8, ptr %i.e ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !49
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
@@ -209,17 +211,17 @@ bb.f:                                             ; preds = %_ZNK4llvm9StringRef
   %i.ab = ptrtoint ptr %i.y to i64
   %i.ac = ptrtoint ptr %i.aa to i64
   %i.ad = sub i64 %i.ab, %i.ac
-  %i.ae = icmp ugt i64 %spec.select36, %i.ad
+  %i.ae = icmp ugt i64 %spec.select, %i.ad
   br i1 %i.ae, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.af = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef %spec.select, i64 noundef %spec.select36) #21 ; 0 uses
+  %i.af = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef %spec.select36, i64 noundef %spec.select) #21 ; 0 uses
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit
 
 bb.h:                                             ; preds = %bb.f
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aa, ptr noundef nonnull align 1 dereferenceable(1) %spec.select, i64 %spec.select36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aa, ptr noundef nonnull align 1 dereferenceable(1) %spec.select36, i64 %spec.select, i1 false)
   %i.ag = load ptr, ptr %i.z, align 8, !tbaa !44
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %spec.select36
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 %spec.select
   store ptr %i.ah, ptr %i.z, align 8, !tbaa !44
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit
 

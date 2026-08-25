@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/HexagonMCInstrInfo?download=true
+inline.NumInlined: 647
+inline.NumDeleted: 286
 begin_hunk_0_@_ZN4llvm18HexagonMCInstrInfo10padEndloopERNS_6MCInstERNS_9MCContextE:bb.a
   br label %_ZN4llvm6MCInstD2Ev.exit
 
@@ -200,9 +202,9 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread
   %.01522 = phi ptr [ %.01518, %.lr.ph ], [ %.015, %_ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread ] ; 2 uses
-  %.021 = phi i32 [ 0, %.lr.ph ], [ %.2, %_ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread ] ; 2 uses
-  %.pn20 = phi ptr [ %i.b, %.lr.ph ], [ %.01522, %_ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread ]
-  %.sroa.3.0..015.sroa_idx = getelementptr inbounds nuw i8, ptr %.pn20, i64 24
+  %.pn21 = phi ptr [ %i.b, %.lr.ph ], [ %.01522, %_ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread ]
+  %.01520 = phi i32 [ 0, %.lr.ph ], [ %.2, %_ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread ] ; 2 uses
+  %.sroa.3.0..015.sroa_idx = getelementptr inbounds nuw i8, ptr %.pn21, i64 24
   %.sroa.3.0.copyload = load ptr, ptr %.sroa.3.0..015.sroa_idx, align 8, !tbaa !22
   %i.l = load i32, ptr %.sroa.3.0.copyload, align 8, !tbaa !26 ; 4 uses
   %i.m = icmp eq i32 %i.l, 1144
@@ -222,11 +224,11 @@ bb.c:                                             ; preds = %bb.b
   %i.v = and i64 %i.u, 127
   %i.w = icmp eq i64 %i.v, 32
   %.1.v = select i1 %i.w, i32 2, i32 1
-  %.1 = add i32 %.1.v, %.021
+  %.1 = add i32 %.1.v, %.01520
   br label %_ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread
 
 _ZN4llvm18HexagonMCInstrInfo12requiresSlotERKNS_15MCSubtargetInfoERKNS_6MCInstE.exit.thread: ; preds = %bb.b, %bb.c
-  %.2 = phi i32 [ %.1, %bb.c ], [ %.021, %bb.b ]  ; 2 uses
+  %.2 = phi i32 [ %.1, %bb.c ], [ %.01520, %bb.b ] ; 2 uses
   %.015 = getelementptr inbounds nuw i8, ptr %.01522, i64 16 ; 2 uses
   %.not = icmp eq ptr %.015, %i.f
   br i1 %.not, label %._crit_edge, label %bb.b

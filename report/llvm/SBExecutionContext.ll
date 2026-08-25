@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SBExecutionContext?download=true
+inline.NumInlined: 178
+inline.NumDeleted: 96
 begin_hunk_0_@_ZN12lldb_private15instrumentation12InstrumenterD1Ev
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN4lldb18SBExecutionContextC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(16) initializes((0, 16)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #0 align 2 {
@@ -200,7 +202,8 @@ bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #13 ; 3 uses
   tail call void @_ZN12lldb_private19ExecutionContextRefC1Ev(ptr noundef nonnull align 8 dereferenceable(168) %i.a) #11
   store ptr %i.a, ptr %0, align 8, !tbaa !44
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr null, ptr %i.b, align 8, !tbaa !31
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #13 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 1, ptr %i.d, align 8, !tbaa !47
@@ -349,7 +352,8 @@ bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #13 ; 3 uses
   tail call void @_ZN12lldb_private19ExecutionContextRefC1Ev(ptr noundef nonnull align 8 dereferenceable(168) %i.a) #11
   store ptr %i.a, ptr %0, align 8, !tbaa !44
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr null, ptr %i.b, align 8, !tbaa !31
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #13 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 1, ptr %i.d, align 8, !tbaa !47
@@ -492,7 +496,8 @@ bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #13 ; 3 uses
   tail call void @_ZN12lldb_private19ExecutionContextRefC1Ev(ptr noundef nonnull align 8 dereferenceable(168) %i.a) #11
   store ptr %i.a, ptr %0, align 8, !tbaa !44
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr null, ptr %i.b, align 8, !tbaa !31
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #13 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 1, ptr %i.d, align 8, !tbaa !47
@@ -584,7 +589,8 @@ bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(168) ptr @_Znwm(i64 noundef 168) #13 ; 3 uses
   tail call void @_ZN12lldb_private19ExecutionContextRefC1Ev(ptr noundef nonnull align 8 dereferenceable(168) %i.a) #11
   store ptr %i.a, ptr %0, align 8, !tbaa !44
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr null, ptr %i.b, align 8, !tbaa !31
   %i.c = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #13 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 1, ptr %i.d, align 8, !tbaa !47

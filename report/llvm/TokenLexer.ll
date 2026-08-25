@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TokenLexer?download=true
+inline.NumInlined: 1027
+inline.NumDeleted: 481
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN5clang10TokenLexer23ExpandFunctionArgumentsEv:bb.a
   %i.it = or i16 %i.is, 2
   store i16 %i.it, ptr %i.ir, align 2, !tbaa !28
@@ -200,7 +204,7 @@ _ZN4llvm10drop_beginIRNS_11SmallVectorIN5clang5TokenELj128EEEEEDaOT_m.exit: ; pr
   %i.lx = mul nuw nsw i64 %i.ln, 24
   %i.ly = mul nsw i64 %i.ks, -24
   %i.lz = add nsw i64 %i.lx, -24
-  %i.ma = add nsw i64 %i.lz, %i.ly                ; 2 uses
+  %i.ma = add nsw i64 %i.ly, %i.lz                ; 2 uses
   %i.mb = udiv i64 %i.ma, 24
   %i.mc = add nuw nsw i64 %i.mb, 1                ; 2 uses
   %min.iters.check329 = icmp ult i64 %i.ma, 168

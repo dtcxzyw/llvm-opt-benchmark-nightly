@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/OpenCLOptions?download=true
+inline.NumInlined: 560
+inline.NumDeleted: 168
+loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN5clang13OpenCLOptionsC2Ev:bb.a
   %i.aui = getelementptr inbounds nuw i8, ptr %i.atz, i64 8
   store i8 0, ptr %i.aui, align 8, !tbaa !34
@@ -200,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i.i, label %_ZN4llvm14StringMapEntryIN5clang13OpenCLOptions16OpenCLOptionInfoEE6createINS_15MallocAllocatorEJEEEPS4_NS_9StringRefERT_DpOT0_.exit.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ae, ptr nonnull align 1 %i.n, i64 %i.o, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ae, ptr nonnull align 8 %i.n, i64 %i.o, i1 false)
   br label %_ZN4llvm14StringMapEntryIN5clang13OpenCLOptions16OpenCLOptionInfoEE6createINS_15MallocAllocatorEJEEEPS4_NS_9StringRefERT_DpOT0_.exit.i.i.i
 
 _ZN4llvm14StringMapEntryIN5clang13OpenCLOptions16OpenCLOptionInfoEE6createINS_15MallocAllocatorEJEEEPS4_NS_9StringRefERT_DpOT0_.exit.i.i.i: ; preds = %bb.g, %bb.f
@@ -250,7 +254,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i.i.i.i.i.i, label %_ZN4llvm14StringMapEntryIN5clang13OpenCLOptions16OpenCLOptionInfoEE6createINS_15MallocAllocatorEJEEEPS4_NS_9StringRefERT_DpOT0_.exit.i.i.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bb, ptr nonnull align 1 %i.n, i64 %i.o, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bb, ptr nonnull align 8 %i.n, i64 %i.o, i1 false)
   br label %_ZN4llvm14StringMapEntryIN5clang13OpenCLOptions16OpenCLOptionInfoEE6createINS_15MallocAllocatorEJEEEPS4_NS_9StringRefERT_DpOT0_.exit.i.i.i.i
 
 _ZN4llvm14StringMapEntryIN5clang13OpenCLOptions16OpenCLOptionInfoEE6createINS_15MallocAllocatorEJEEEPS4_NS_9StringRefERT_DpOT0_.exit.i.i.i.i: ; preds = %bb.j, %bb.i
@@ -414,7 +418,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ab, ptr nonnull align 1 %i.ac, i64 %i.x, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ab, ptr nonnull align 8 %i.ac, i64 %i.x, i1 false)
   br label %_ZN4llvm14StringMapEntryIbE6createINS_15MallocAllocatorEJRbEEEPS1_NS_9StringRefERT_DpOT0_.exit.i
 
 _ZN4llvm14StringMapEntryIbE6createINS_15MallocAllocatorEJRbEEEPS1_NS_9StringRefERT_DpOT0_.exit.i: ; preds = %bb.d, %bb.c
@@ -727,7 +731,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ab, ptr nonnull align 1 %i.ac, i64 %i.x, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ab, ptr nonnull align 8 %i.ac, i64 %i.x, i1 false)
   br label %_ZN4llvm14StringMapEntryIbE6createINS_15MallocAllocatorEJRbEEEPS1_NS_9StringRefERT_DpOT0_.exit.i
 
 _ZN4llvm14StringMapEntryIbE6createINS_15MallocAllocatorEJRbEEEPS1_NS_9StringRefERT_DpOT0_.exit.i: ; preds = %bb.d, %bb.c

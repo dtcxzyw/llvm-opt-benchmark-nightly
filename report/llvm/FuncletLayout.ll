@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/FuncletLayout?download=true
+inline.NumInlined: 187
+inline.NumDeleted: 124
 begin_hunk_0_@_ZL31initializeFuncletLayoutPassOnceRN4llvm12PassRegistryE
 define internal void @_ZL31initializeFuncletLayoutPassOnceRN4llvm12PassRegistryE(ptr noundef nonnull align 8 dereferenceable(160) %0) #0 {
 bb.a:
@@ -200,15 +202,15 @@ _ZSt9__advanceIN4llvm14ilist_iteratorINS0_12ilist_detail12node_optionsINS0_17Mac
   br i1 %.not25, label %.critedge2, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader, %bb.b
-  %.sroa.015.027 = phi ptr [ %i.k, %bb.b ], [ %i.d, %.preheader ] ; 2 uses
-  %.sroa.011.026 = phi ptr [ %i.m, %bb.b ], [ %i.d, %.preheader ]
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.011.026, i64 8
+  %.sroa.015.027 = phi ptr [ %i.m, %bb.b ], [ %i.d, %.preheader ]
+  %.sroa.011.026 = phi ptr [ %i.k, %bb.b ], [ %i.d, %.preheader ] ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.015.027, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !40   ; 2 uses
   %.not19 = icmp eq ptr %i.i, %0
   br i1 %.not19, label %.critedge2, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.015.027, i64 8
+  %i.j = getelementptr inbounds nuw i8, ptr %.sroa.011.026, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !40   ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !40   ; 2 uses
@@ -216,7 +218,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not, label %.critedge2, label %.lr.ph, !llvm.loop !41
 
 .critedge2:                                       ; preds = %.lr.ph, %bb.b, %.preheader
-  %.sroa.015.0.lcssa = phi ptr [ %i.d, %.preheader ], [ %i.k, %bb.b ], [ %.sroa.015.027, %.lr.ph ] ; 4 uses
+  %.sroa.015.0.lcssa = phi ptr [ %i.d, %.preheader ], [ %i.k, %bb.b ], [ %.sroa.011.026, %.lr.ph ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   store ptr %2, ptr %2, align 8, !tbaa !37
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses

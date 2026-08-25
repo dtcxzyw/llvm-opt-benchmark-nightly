@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WebAssemblyRuntimeLibcallSignatures?download=true
+inline.NumInlined: 523
+inline.NumDeleted: 118
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm11WebAssembly19getLibcallSignatureERKNS_20WebAssemblySubtargetENS_9StringRefERNS_15SmallVectorImplINS_4wasm7ValTypeEEES9_:bb.a
 
 bb.b:                                             ; preds = %bb.a
@@ -200,6 +204,7 @@ declare noundef zeroext i1 @_ZNK4llvm6Triple11isArch64BitEv(ptr noundef nonnull 
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @_ZN12_GLOBAL__N_128RuntimeLibcallSignatureTableC2Ev() unnamed_addr #0 align 2 {
 vector.ph:
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN12_GLOBAL__N_127getRuntimeLibcallSignaturesEvE24RuntimeLibcallSignatures, i8 0, i64 24, i1 false)
   %i.a = tail call noalias noundef nonnull dereferenceable(6652) ptr @_Znwm(i64 noundef 6652) #12 ; 75 uses
   store ptr %i.a, ptr @_ZZN12_GLOBAL__N_127getRuntimeLibcallSignaturesEvE24RuntimeLibcallSignatures, align 8, !tbaa !9
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 6652 ; 2 uses

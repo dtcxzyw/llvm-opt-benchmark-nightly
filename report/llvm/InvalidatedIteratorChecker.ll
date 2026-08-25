@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InvalidatedIteratorChecker?download=true
+inline.NumInlined: 619
+inline.NumDeleted: 465
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -76,14 +78,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = call noalias noundef nonnull dereferenceable(144) ptr @_Znwm(i64 noundef 144) #14, !noalias !12 ; 20 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.h, i8 0, i64 144, i1 false), !noalias !12
-  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN12_GLOBAL__N_126InvalidatedIteratorCheckerE, i64 16), ptr %i.h, align 8, !tbaa !15, !noalias !12
+  store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN12_GLOBAL__N_126InvalidatedIteratorCheckerE, i64 16), ptr %i.h, align 16, !tbaa !15, !noalias !12
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5clang4ento7BugTypeE, i64 16), ptr %i.i, align 8, !tbaa !15, !noalias !12
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 48
-  store ptr %i.j, ptr %i.k, align 8, !tbaa !17, !noalias !12
+  store ptr %i.j, ptr %i.k, align 16, !tbaa !17, !noalias !12
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 64
-  store i8 1, ptr %i.l, align 8, !tbaa !20, !noalias !12
+  store i8 1, ptr %i.l, align 16, !tbaa !20, !noalias !12
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 72 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 88 ; 2 uses
   store ptr %i.n, ptr %i.m, align 8, !tbaa !22, !noalias !12
@@ -95,7 +97,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.p, ptr %i.n, align 8, !tbaa !29, !noalias !12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.o, ptr noundef nonnull align 1 dereferenceable(20) @.str, i64 20, i1 false), !noalias !12
   %i.q = getelementptr inbounds nuw i8, ptr %i.h, i64 80
-  store i64 %i.p, ptr %i.q, align 8, !tbaa !30, !noalias !12
+  store i64 %i.p, ptr %i.q, align 16, !tbaa !30, !noalias !12
   %i.r = load ptr, ptr %i.m, align 8, !tbaa !27, !noalias !12
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.p
   store i8 0, ptr %i.s, align 1, !tbaa !29, !noalias !12
@@ -111,7 +113,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.w, ptr %i.u, align 8, !tbaa !29, !noalias !12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(18) %i.v, ptr noundef nonnull align 1 dereferenceable(18) @.str.1, i64 18, i1 false), !noalias !12
   %i.x = getelementptr inbounds nuw i8, ptr %i.h, i64 112
-  store i64 %i.w, ptr %i.x, align 8, !tbaa !30, !noalias !12
+  store i64 %i.w, ptr %i.x, align 16, !tbaa !30, !noalias !12
   %i.y = load ptr, ptr %i.t, align 8, !tbaa !27, !noalias !12
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.w
   store i8 0, ptr %i.z, align 1, !tbaa !29, !noalias !12

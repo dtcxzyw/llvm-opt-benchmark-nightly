@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/EmulateInstructionLoongArch?download=true
+inline.NumInlined: 269
+inline.NumDeleted: 125
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN12lldb_private27EmulateInstructionLoongArch11TestExecuteEj:bb.a
   %i.j = phi ptr [ %i.h, %bb.c ], [ %i.i, %bb.d ]
   %i.k = tail call noundef zeroext i1 %i.j(ptr noundef nonnull align 8 dereferenceable(188) %i.c, i32 noundef %1) #13
@@ -200,18 +204,18 @@ switch.lookup:                                    ; preds = %bb.a
   br label %bb.b
 
 bb.b:                                             ; preds = %switch.lookup, %bb.a
-  %.08 = phi i32 [ %3, %bb.a ], [ %switch.ext, %switch.lookup ] ; 2 uses
-  %.0 = phi i32 [ %2, %bb.a ], [ 4, %switch.lookup ]
+  %.08 = phi i32 [ %2, %bb.a ], [ 4, %switch.lookup ]
+  %.0 = phi i32 [ %3, %bb.a ], [ %switch.ext, %switch.lookup ] ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = tail call noundef ptr @_ZN29RegisterInfoPOSIX_loongarch6418GetRegisterInfoPtrERKN12lldb_private8ArchSpecE(ptr noundef nonnull align 8 dereferenceable(96) %i.c) #13
   %i.e = tail call noundef i32 @_ZN29RegisterInfoPOSIX_loongarch6420GetRegisterInfoCountERKN12lldb_private8ArchSpecE(ptr noundef nonnull align 8 dereferenceable(96) %i.c) #13
-  %i.f = icmp uge i32 %.08, %i.e
-  %i.g = icmp ne i32 %.0, 4
+  %i.f = icmp uge i32 %.0, %i.e
+  %i.g = icmp ne i32 %.08, 4
   %or.cond = or i1 %i.g, %i.f
   br i1 %or.cond, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.h = zext i32 %.08 to i64
+  %i.h = zext i32 %.0 to i64
   %i.i = getelementptr inbounds nuw [80 x i8], ptr %i.d, i64 %i.h
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(80) %i.i, i64 80, i1 false), !tbaa.struct !54
   br label %bb.d

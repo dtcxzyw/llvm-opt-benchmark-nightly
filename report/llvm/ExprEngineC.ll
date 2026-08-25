@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ExprEngineC?download=true
+inline.NumInlined: 1954
+inline.NumDeleted: 942
 begin_hunk_0_@"_ZZN5clang4ento10ExprEngine19VisitBinaryOperatorEPKNS_14BinaryOperatorEPNS0_12ExplodedNodeERNS0_15ExplodedNodeSetEENK3$_0clERNS0_4SValESA_NS_8QualTypeE":bb.a
   %i.bb = phi ptr [ %i.az, %bb.e ], [ null, %._ZNK5clang4ento10ExprEngine16getCFGElementRefEv.exit_crit_edge ]
   %i.bc = getelementptr inbounds nuw i8, ptr %.0.val, i64 592
@@ -200,8 +202,8 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit: ; preds = %
   %i.bl = phi ptr [ %i.bj, %bb.g ], [ %i.bc, %bb.f ]
   %.1109116 = phi ptr [ %.1109117, %bb.g ], [ %i.ay, %bb.f ]
   %.pn = phi { ptr, i8 } [ %i.bk, %bb.g ], [ %i.bi, %bb.f ] ; 2 uses
-  %.sroa.690.0 = extractvalue { ptr, i8 } %.pn, 1
   %.sroa.089.0 = extractvalue { ptr, i8 } %.pn, 0
+  %.sroa.690.0 = extractvalue { ptr, i8 } %.pn, 1
   call void @_ZNK5clang4ento12ProgramState7bindLocENS0_3LocENS0_4SValEPKNS_10StackFrameEb(ptr dead_on_unwind nonnull writable sret(%"class.llvm::IntrusiveRefCntPtr") align 8 %10, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.097.0122, ptr %i.au, i8 4, ptr %.sroa.089.0, i8 %.sroa.690.0, ptr noundef %i.bl, i1 noundef zeroext true) #14
   %i.bm = load ptr, ptr %10, align 8, !tbaa !198
   store ptr %.sroa.097.0122, ptr %10, align 8, !tbaa !198
@@ -604,8 +606,8 @@ bb.bd:                                            ; preds = %bb.bc
   %i.lt = trunc nuw i8 %i.ls to i1                ; 2 uses
   %.sroa.0697.0.copyload = load ptr, ptr %74, align 8
   %.sroa.5699.0.copyload = load i8, ptr %.sroa.5699.0..sroa_idx, align 8
-  %.sroa.0697.0 = select i1 %i.lt, ptr %.sroa.0697.0.copyload, ptr null
   %.sroa.5699.0 = select i1 %i.lt, i8 %.sroa.5699.0.copyload, i8 1 ; 2 uses
+  %.sroa.0697.0 = select i1 %i.lt, ptr %.sroa.0697.0.copyload, ptr null
   store ptr %.sroa.0697.0, ptr %73, align 8, !tbaa !221
   store i8 %.sroa.5699.0, ptr %.sroa.286.0..sroa_idx, align 8, !tbaa !235
   call void @llvm.lifetime.end.p0(ptr nonnull %74) #14
@@ -1008,8 +1010,8 @@ bb.t:                                             ; preds = %_ZN5clang4ento10Exp
   br label %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit110
 
 _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit110: ; preds = %bb.t, %_ZN5clang4ento10ExprEngine9evalBinOpEN4llvm18IntrusiveRefCntPtrIKNS0_12ProgramStateEEENS_18BinaryOperatorKindENS0_4SValES8_NS_8QualTypeE.exit, %bb.o, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit
-  %.sroa.0135.1 = phi ptr [ %i.cq, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit ], [ %.fca.0.extract18, %bb.o ], [ %.fca.0.extract, %_ZN5clang4ento10ExprEngine9evalBinOpEN4llvm18IntrusiveRefCntPtrIKNS0_12ProgramStateEEENS_18BinaryOperatorKindENS0_4SValES8_NS_8QualTypeE.exit ], [ %.fca.0.extract, %bb.t ]
   %.sroa.7.1 = phi i8 [ %.sroa.3.0.i, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit ], [ 0, %bb.o ], [ %.fca.1.extract, %_ZN5clang4ento10ExprEngine9evalBinOpEN4llvm18IntrusiveRefCntPtrIKNS0_12ProgramStateEEENS_18BinaryOperatorKindENS0_4SValES8_NS_8QualTypeE.exit ], [ %.fca.1.extract, %bb.t ]
+  %.sroa.0135.1 = phi ptr [ %i.cq, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit ], [ %.fca.0.extract18, %bb.o ], [ %.fca.0.extract, %_ZN5clang4ento10ExprEngine9evalBinOpEN4llvm18IntrusiveRefCntPtrIKNS0_12ProgramStateEEENS_18BinaryOperatorKindENS0_4SValES8_NS_8QualTypeE.exit ], [ %.fca.0.extract, %bb.t ]
   %.sroa.3.0.copyload.i112 = load i64, ptr %.sroa.5151.0..sroa_idx184, align 8, !tbaa !8
   %i.dr = and i64 %.sroa.3.0.copyload.i112, -8
   %i.ds = inttoptr i64 %i.dr to ptr
@@ -1286,8 +1288,8 @@ _ZNK5clang4ento10ExprEngine16getCFGElementRefEv.exit: ; preds = %_ZNK5clang10CFG
 
 bb.m:                                             ; preds = %_ZNK5clang10CFGElement5getAsINS_7CFGStmtEEESt8optionalIT_Ev.exit.thread113.thread, %_ZNK5clang4ento10ExprEngine16getCFGElementRefEv.exit
   %.pn = phi { ptr, i8 } [ %i.bu, %_ZNK5clang10CFGElement5getAsINS_7CFGStmtEEESt8optionalIT_Ev.exit.thread113.thread ], [ %i.cn, %_ZNK5clang4ento10ExprEngine16getCFGElementRefEv.exit ] ; 2 uses
-  %.sroa.685.3 = extractvalue { ptr, i8 } %.pn, 1
   %.sroa.084.3 = extractvalue { ptr, i8 } %.pn, 0
+  %.sroa.685.3 = extractvalue { ptr, i8 } %.pn, 1
   call void @_ZNK5clang4ento12ProgramState8BindExprEPKNS_4ExprEPKNS_10StackFrameENS0_4SValEb(ptr dead_on_unwind nonnull writable sret(%"class.llvm::IntrusiveRefCntPtr") align 8 %11, ptr noundef nonnull align 8 dereferenceable(48) %i.k, ptr noundef %1, ptr noundef %i.l, ptr %.sroa.084.3, i8 %.sroa.685.3, i1 noundef zeroext true) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
@@ -1690,8 +1692,8 @@ _ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit: ; preds = %bb.r, %b
   br label %bb.u
 
 bb.u:                                             ; preds = %_ZNK5clang4Type27isIntegralOrEnumerationTypeEv.exit, %.split, %.split275, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit, %bb.q
-  %.sroa.0237.0 = phi ptr [ %i.dc, %bb.q ], [ %i.ex, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit ], [ null, %.split275 ], [ null, %.split ], [ null, %_ZNK5clang4Type27isIntegralOrEnumerationTypeEv.exit ] ; 2 uses
   %.sroa.7.0 = phi i8 [ 6, %bb.q ], [ %.sroa.3.0.i, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit ], [ 1, %.split275 ], [ 1, %.split ], [ 1, %_ZNK5clang4Type27isIntegralOrEnumerationTypeEv.exit ] ; 2 uses
+  %.sroa.0237.0 = phi ptr [ %i.dc, %bb.q ], [ %i.ex, %_ZN5clang4ento11SValBuilder10makeIntValEmNS_8QualTypeE.exit ], [ null, %.split275 ], [ null, %.split ], [ null, %_ZNK5clang4Type27isIntegralOrEnumerationTypeEv.exit ] ; 2 uses
   %.sroa.0.0.copyload.i187 = load i64, ptr %i.ad, align 8, !tbaa !8 ; 3 uses
   %i.ey = and i64 %.sroa.0.0.copyload.i187, -16
   %i.ez = inttoptr i64 %i.ey to ptr               ; 2 uses
@@ -1968,8 +1970,8 @@ _ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit220: ; preds 
   br label %_ZN5clang4ento3Loc9isLocTypeENS_8QualTypeE.exit.thread279
 
 _ZN5clang4ento3Loc9isLocTypeENS_8QualTypeE.exit.thread279: ; preds = %bb.ac, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit211.thread, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198.thread, %_ZN5clang4ento3Loc9isLocTypeENS_8QualTypeE.exit, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit220, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198
-  %.sroa.0236.1 = phi ptr [ %.fca.0.extract40, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit211.thread ], [ %.fca.0.extract40, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit220 ], [ %.fca.0.extract40, %_ZN5clang4ento3Loc9isLocTypeENS_8QualTypeE.exit ], [ %.fca.0.extract48, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198 ], [ %i.fu, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198.thread ], [ %.fca.0.extract40, %bb.ac ] ; 2 uses
   %.sroa.8.1 = phi i8 [ %.fca.1.extract41, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit211.thread ], [ %.fca.1.extract41, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit220 ], [ %.fca.1.extract41, %_ZN5clang4ento3Loc9isLocTypeENS_8QualTypeE.exit ], [ %.fca.1.extract49, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198 ], [ 6, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198.thread ], [ %.fca.1.extract41, %bb.ac ] ; 2 uses
+  %.sroa.0236.1 = phi ptr [ %.fca.0.extract40, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit211.thread ], [ %.fca.0.extract40, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit220 ], [ %.fca.0.extract40, %_ZN5clang4ento3Loc9isLocTypeENS_8QualTypeE.exit ], [ %.fca.0.extract48, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198 ], [ %i.fu, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198.thread ], [ %.fca.0.extract40, %bb.ac ] ; 2 uses
   %.sroa.0256.1 = phi ptr [ %i.br, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit211.thread ], [ %i.ia, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit220 ], [ %i.br, %_ZN5clang4ento3Loc9isLocTypeENS_8QualTypeE.exit ], [ %i.br, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198 ], [ %i.br, %_ZN4llvm18IntrusiveRefCntPtrIKN5clang4ento12ProgramStateEED2Ev.exit198.thread ], [ %i.br, %bb.ac ] ; 4 uses
   %i.ib = load i24, ptr %1, align 8
   %i.ic = and i24 %i.ib, 1536

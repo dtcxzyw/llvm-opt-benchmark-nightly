@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SVEShuffleOpts?download=true
+inline.NumInlined: 1241
+inline.NumDeleted: 769
 begin_hunk_0_@_ZL11processLoopRN4llvm4LoopERKNS_16AArch64SubtargetENS_10DataLayoutE:bb.a
   br label %_ZN4llvm5APIntD2Ev.exit.i.i
 
@@ -200,8 +202,8 @@ bb.ax:                                            ; preds = %bb.ck
 
 bb.ay:                                            ; preds = %bb.ck, %_ZN4llvm5APInt10getAllOnesEj.exit.i
   %.sroa.0116.0.ptr151.i = phi ptr [ %.ptr137.i, %_ZN4llvm5APInt10getAllOnesEj.exit.i ], [ %.sroa.0116.0.ptr.i, %bb.ck ] ; 4 uses
-  %.sroa.7.0150.i = phi i64 [ 0, %_ZN4llvm5APInt10getAllOnesEj.exit.i ], [ %i.sh, %bb.ck ] ; 2 uses
-  %.sroa.0116.0.idx149.i = phi i64 [ 8, %_ZN4llvm5APInt10getAllOnesEj.exit.i ], [ %.sroa.0116.0.add.i, %bb.ck ]
+  %.sroa.7.0150.i = phi i64 [ 8, %_ZN4llvm5APInt10getAllOnesEj.exit.i ], [ %.sroa.0116.0.add.i, %bb.ck ]
+  %.sroa.0116.0.idx149.i = phi i64 [ 0, %_ZN4llvm5APInt10getAllOnesEj.exit.i ], [ %i.sh, %bb.ck ] ; 2 uses
   %i.md = load ptr, ptr %.sroa.0116.0.ptr151.i, align 8, !tbaa !317
   %.not.i33 = icmp eq ptr %i.md, null
   br i1 %.not.i33, label %bb.ck, label %bb.az
@@ -243,7 +245,7 @@ bb.ba:                                            ; preds = %_ZN4llvm5APIntC2ERK
   br label %_ZNK4llvm5APIntlsEj.exit.i
 
 _ZNK4llvm5APIntlsEj.exit.i:                       ; preds = %bb.ba, %_ZN4llvm5APInt15clearUnusedBitsEv.exit.i.i.i.i
-  %i.mq = call noundef nonnull align 8 dereferenceable(12) ptr @_ZN4llvm5APIntpLEm(ptr noundef nonnull align 8 dereferenceable(12) %9, i64 noundef %.sroa.7.0150.i) #16 ; 0 uses
+  %i.mq = call noundef nonnull align 8 dereferenceable(12) ptr @_ZN4llvm5APIntpLEm(ptr noundef nonnull align 8 dereferenceable(12) %9, i64 noundef %.sroa.0116.0.idx149.i) #16 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #16
   %i.mr = load ptr, ptr %.sroa.0116.0.ptr151.i, align 8, !tbaa !317 ; 4 uses
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mr, i64 8
@@ -646,8 +648,8 @@ _ZN4llvm5APIntD2Ev.exit.i:                        ; preds = %bb.cj, %bb.ci, %bb.
   br label %bb.ck
 
 bb.ck:                                            ; preds = %_ZN4llvm5APIntD2Ev.exit.i, %bb.ay
-  %i.sh = add nuw nsw i64 %.sroa.7.0150.i, 1
-  %.sroa.0116.0.add.i = add nuw nsw i64 %.sroa.0116.0.idx149.i, 8 ; 3 uses
+  %i.sh = add nuw nsw i64 %.sroa.0116.0.idx149.i, 1
+  %.sroa.0116.0.add.i = add nuw nsw i64 %.sroa.7.0150.i, 8 ; 3 uses
   %.sroa.0116.0.ptr.i = getelementptr inbounds nuw i8, ptr %.sroa.0124.0155.i, i64 %.sroa.0116.0.add.i
   %.not136.i = icmp eq i64 %.sroa.0116.0.add.i, 40
   br i1 %.not136.i, label %bb.ax, label %bb.ay

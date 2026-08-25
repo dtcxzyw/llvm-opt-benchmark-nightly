@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/HexagonMCCompound?download=true
+inline.NumInlined: 240
+inline.NumDeleted: 71
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -134,9 +136,9 @@ _ZN4llvm6MCInstC2ERKS0_.exit28:                   ; preds = %.sink.split.i.i.i, 
 
 .lr.ph156.i:                                      ; preds = %.thread64.i, %.lr.ph156.preheader.i
   %.042154.i = phi ptr [ %.042.i, %.thread64.i ], [ %.042150.i, %.lr.ph156.preheader.i ] ; 2 uses
-  %.037153.i = phi i1 [ %i.af, %.thread64.i ], [ false, %.lr.ph156.preheader.i ]
-  %.pn53152.i = phi ptr [ %.042154.i, %.thread64.i ], [ %i.ac, %.lr.ph156.preheader.i ] ; 2 uses
-  %i.ad = getelementptr inbounds nuw i8, ptr %.pn53152.i, i64 24
+  %.pn53153.i = phi ptr [ %.042154.i, %.thread64.i ], [ %i.ac, %.lr.ph156.preheader.i ] ; 2 uses
+  %.041152.i = phi i1 [ %i.af, %.thread64.i ], [ false, %.lr.ph156.preheader.i ]
+  %i.ad = getelementptr inbounds nuw i8, ptr %.pn53153.i, i64 24
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !13 ; 12 uses
   %i.af = call noundef zeroext i1 @_ZN4llvm18HexagonMCInstrInfo8isImmextERKNS_6MCInstE(ptr noundef nonnull align 8 dereferenceable(128) %i.ae) #5 ; 2 uses
   br i1 %i.af, label %.lr.ph156..thread64_crit_edge.i, label %bb.d
@@ -176,7 +178,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ao = call fastcc noundef i32 @_ZL25getCompoundCandidateGroupRKN4llvm6MCInstEb(ptr noundef nonnull align 8 dereferenceable(128) %i.al, i1 noundef zeroext %.040139.i)
-  %i.ap = call fastcc noundef i32 @_ZL25getCompoundCandidateGroupRKN4llvm6MCInstEb(ptr noundef nonnull align 8 dereferenceable(128) %i.ae, i1 noundef zeroext %.037153.i) ; 2 uses
+  %i.ap = call fastcc noundef i32 @_ZL25getCompoundCandidateGroupRKN4llvm6MCInstEb(ptr noundef nonnull align 8 dereferenceable(128) %i.ae, i1 noundef zeroext %.041152.i) ; 2 uses
   %i.aq = icmp eq i32 %i.ao, 1                    ; 2 uses
   %i.ar = icmp eq i32 %i.ap, 3
   %or.cond.i.i = and i1 %i.aq, %i.ar
@@ -579,7 +581,7 @@ _ZL15getCompoundInsnRN4llvm9MCContextERKNS_6MCInstES4_.exit.i: ; preds = %bb.j
 
 bb.ds:                                            ; preds = %bb.dr, %bb.dq, %bb.dh, %bb.dg, %bb.cv, %bb.cu, %bb.cb, %bb.ca, %bb.bh, %bb.bg, %bb.av, %bb.au, %bb.aj, %bb.ai, %bb.x, %bb.w, %bb.q, %bb.p
   %.0.i54.ph.i = phi ptr [ %i.ns, %bb.dr ], [ %i.ns, %bb.dq ], [ %i.me, %bb.dg ], [ %i.kq, %bb.cu ], [ %i.is, %bb.ca ], [ %i.gw, %bb.bg ], [ %i.fj, %bb.au ], [ %i.dw, %bb.ai ], [ %i.ck, %bb.w ], [ %i.bf, %bb.p ], [ %i.kq, %bb.cv ], [ %i.is, %bb.cb ], [ %i.gw, %bb.bh ], [ %i.fj, %bb.av ], [ %i.dw, %bb.aj ], [ %i.ck, %bb.x ], [ %i.bf, %bb.q ], [ %i.me, %bb.dh ]
-  %i.om = getelementptr inbounds nuw i8, ptr %.pn53152.i, i64 24
+  %i.om = getelementptr inbounds nuw i8, ptr %.pn53153.i, i64 24
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   store ptr %.0.i54.ph.i, ptr %i.om, align 8, !tbaa !13
   %i.on = getelementptr inbounds nuw i8, ptr %.pn140.i, i64 32 ; 3 uses

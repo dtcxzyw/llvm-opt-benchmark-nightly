@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaX86?download=true
+inline.NumInlined: 1208
+inline.NumDeleted: 679
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN5clang7SemaX8625CheckBuiltinRoundingOrSAEEjPNS_8CallExprE:bb.a
     i32 2102, label %bb.e
     i32 2103, label %bb.e
@@ -200,8 +204,8 @@ bb.i:                                             ; preds = %bb.a, %bb.a, %bb.a,
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.013 = phi i32 [ 1, %bb.a ], [ 2, %bb.b ], [ 3, %bb.c ], [ 4, %bb.d ], [ 5, %bb.e ], [ 1, %bb.f ], [ 2, %bb.g ], [ 3, %bb.h ], [ 4, %bb.i ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ] ; 2 uses
-  %.012 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ true, %bb.f ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.i ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ]
+  %.013 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ true, %bb.f ], [ true, %bb.g ], [ true, %bb.h ], [ true, %bb.i ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ], [ false, %bb.a ]
+  %.012 = phi i32 [ 1, %bb.a ], [ 2, %bb.b ], [ 3, %bb.c ], [ 4, %bb.d ], [ 5, %bb.e ], [ 1, %bb.f ], [ 2, %bb.g ], [ 3, %bb.h ], [ 4, %bb.i ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ], [ 1, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
   %i.a = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 3 uses
   store i32 1, ptr %i.a, align 8, !tbaa !8
@@ -214,7 +218,7 @@ bb.j:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.f = and i32 %i.e, 1
   %i.g = zext nneg i32 %i.f to i64
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %i.g
-  %i.i = zext nneg i32 %.013 to i64
+  %i.i = zext nneg i32 %.012 to i64
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !14   ; 2 uses
   %i.l = load i24, ptr %i.k, align 8
@@ -224,7 +228,7 @@ bb.j:                                             ; preds = %bb.a, %bb.a, %bb.a,
 
 bb.k:                                             ; preds = %bb.j
   %i.n = load ptr, ptr %0, align 8, !tbaa !17, !nonnull !20, !align !21
-  %i.o = call noundef zeroext i1 @_ZN5clang4Sema18BuiltinConstantArgEPNS_8CallExprEjRN4llvm6APSIntE(ptr noundef nonnull align 8 dereferenceable(18640) %i.n, ptr noundef nonnull %2, i32 noundef %.013, ptr noundef nonnull align 8 dereferenceable(13) %5) #18
+  %i.o = call noundef zeroext i1 @_ZN5clang4Sema18BuiltinConstantArgEPNS_8CallExprEjRN4llvm6APSIntE(ptr noundef nonnull align 8 dereferenceable(18640) %i.n, ptr noundef nonnull %2, i32 noundef %.012, ptr noundef nonnull align 8 dereferenceable(13) %5) #18
   br i1 %i.o, label %bb.u, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -280,7 +284,7 @@ _ZNK4llvm6APSInteqEl.exit14:                      ; preds = %bb.o, %bb.p, %bb.q
   br i1 %i.ae, label %bb.u, label %bb.r
 
 bb.r:                                             ; preds = %_ZNK4llvm6APSInteqEl.exit14
-  br i1 %.012, label %.critedge, label %bb.s
+  br i1 %.013, label %.critedge, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.af = call noundef zeroext i1 @_ZNK4llvm6APSInteqEl(ptr noundef nonnull align 8 dereferenceable(13) %5, i64 noundef 12)

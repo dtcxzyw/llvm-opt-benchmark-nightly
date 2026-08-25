@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InterferenceCache?download=true
+inline.NumInlined: 591
+inline.NumDeleted: 320
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm17InterferenceCache5Entry5validEPNS_17LiveIntervalUnionEPKNS_18TargetRegisterInfoE:bb.a
 
 .thread:                                          ; preds = %bb.b, %_ZN4llvm17MCRegUnitIteratorppEv.exit, %bb.a
@@ -200,7 +204,7 @@ bb.f:                                             ; preds = %.lr.ph, %_ZN4llvm13
   %.sroa.511.020 = phi ptr [ %i.az, %.lr.ph ], [ %i.ds, %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit ] ; 2 uses
   %.sroa.010.019 = phi i32 [ %i.ba, %.lr.ph ], [ %i.dv, %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  %i.bl = zext i32 %.sroa.010.019 to i64          ; 2 uses
+  %i.bl = zext i32 %.sroa.010.019 to i64          ; 3 uses
   %i.bm = getelementptr inbounds nuw [216 x i8], ptr %2, i64 %i.bl ; 2 uses
   store ptr %i.bc, ptr %i.bb, align 8, !tbaa !69
   store i32 0, ptr %i.bd, align 8, !tbaa !59
@@ -279,9 +283,9 @@ bb.j:                                             ; preds = %_ZN4llvm23SmallVect
 _ZN4llvm17InterferenceCache5Entry11RegUnitInfoD2Ev.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseINS_17InterferenceCache5Entry11RegUnitInfoELb0EE9push_backEOS3_.exit, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   %i.cs = load ptr, ptr %i.bj, align 8, !tbaa !57 ; 2 uses
-  %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 408
+  %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 408 ; 2 uses
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !69
-  %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %i.bl ; 2 uses
+  %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.cu, i64 %i.bl
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !115 ; 2 uses
   %.not.i = icmp eq ptr %i.cw, null
   br i1 %.not.i, label %bb.k, label %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit
@@ -312,7 +316,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.dh, i8 0, i64 32, i1 false), !noalias !124
   store ptr %i.di, ptr %i.dj, align 8, !tbaa !127, !noalias !124
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dh, i64 32
-  store ptr %i.di, ptr %i.dk, align 8, !tbaa !132, !noalias !124
+  store ptr %i.di, ptr %i.dk, align 16, !tbaa !132, !noalias !124
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dh, i64 40
   store i64 0, ptr %i.dl, align 8, !tbaa !133, !noalias !124
   br label %_ZN4llvm9LiveRangeC2Eb.exit.i
@@ -321,7 +325,9 @@ _ZN4llvm9LiveRangeC2Eb.exit.i:                    ; preds = %bb.l, %bb.k
   %storemerge.i.i = phi ptr [ %i.dh, %bb.l ], [ null, %bb.k ]
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cx, i64 96
   store ptr %storemerge.i.i, ptr %i.dm, align 8, !tbaa !134
-  store ptr %i.cx, ptr %i.cv, align 8, !tbaa !115
+  %6 = load ptr, ptr %i.ct, align 8, !tbaa !69
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.bl
+  store ptr %i.cx, ptr %7, align 8, !tbaa !115
   call void @_ZN4llvm13LiveIntervals19computeRegUnitRangeERNS_9LiveRangeENS_9MCRegUnitE(ptr noundef nonnull align 8 dereferenceable(424) %i.cs, ptr noundef nonnull align 8 dereferenceable(104) %i.cx, i32 noundef %.sroa.010.019) #12
   br label %_ZN4llvm13LiveIntervals10getRegUnitENS_9MCRegUnitE.exit
 

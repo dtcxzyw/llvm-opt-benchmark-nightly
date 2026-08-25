@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DWARFRecordSectionSplitter?download=true
+inline.NumInlined: 1044
+inline.NumDeleted: 586
 begin_hunk_0_@_ZN4llvm7jitlink9LinkGraph10splitBlockIRSt6vectorIjSaIjEEEES3_IPNS0_5BlockESaIS8_EERS7_OT_PSt8optionalINS_11SmallVectorIPNS0_6SymbolELj8EEEE
 define linkonce_odr hidden void @_ZN4llvm7jitlink9LinkGraph10splitBlockIRSt6vectorIjSaIjEEEES3_IPNS0_5BlockESaIS8_EERS7_OT_PSt8optionalINS_11SmallVectorIPNS0_6SymbolELj8EEEE(ptr dead_on_unwind noalias writable sret(%"class.std::vector.55") align 8 %0, ptr noundef nonnull align 8 dereferenceable(312) %1, ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef %4) local_unnamed_addr #2 comdat align 2 {
 _ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit:
@@ -200,9 +202,9 @@ bb.j:                                             ; preds = %._crit_edge
 bb.k:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52
   %.sroa.075.1111 = phi ptr [ %i.c, %.lr.ph ], [ %.sroa.075.5, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52 ] ; 4 uses
   %.sroa.16.1110 = phi ptr [ %i.d, %.lr.ph ], [ %.sroa.16.4, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52 ] ; 4 uses
-  %.sroa.32.1109 = phi ptr [ %i.d, %.lr.ph ], [ %.sroa.32.5, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52 ] ; 2 uses
-  %.sroa.058.0108 = phi ptr [ %i.e, %.lr.ph ], [ %i.du, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52 ] ; 2 uses
-  %i.cf = load i32, ptr %.sroa.058.0108, align 4, !tbaa !30
+  %.sroa.32.1109 = phi ptr [ %i.e, %.lr.ph ], [ %i.du, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52 ] ; 2 uses
+  %.sroa.058.0108 = phi ptr [ %i.d, %.lr.ph ], [ %.sroa.32.5, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52 ] ; 2 uses
+  %i.cf = load i32, ptr %.sroa.32.1109, align 4, !tbaa !30
   %i.cg = load ptr, ptr %i.m, align 8, !tbaa !203 ; 2 uses
   %.sroa.0.0.copyload.i43 = load i64, ptr %2, align 8, !tbaa !11
   %i.ch = zext i32 %i.cf to i64                   ; 2 uses
@@ -249,7 +251,7 @@ _ZN4llvm7jitlink9LinkGraph18createContentBlockERNS0_7SectionENS_8ArrayRefIcEENS_
   store ptr %.0.i.i.i.i.i.i44, ptr %i.a, align 8, !tbaa !53
   %i.df = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_7jitlink5BlockENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS4_vEENS5_12DenseSetPairIS4_EEEES4_S6_S8_SA_E24lookupOrInsertIntoBucketIS4_JEEESt4pairIPSA_bEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(24) %i.de, ptr noundef nonnull align 8 dereferenceable(8) %i.a), !noalias !223 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
-  %.not.i.i45 = icmp eq ptr %.sroa.16.1110, %.sroa.32.1109
+  %.not.i.i45 = icmp eq ptr %.sroa.16.1110, %.sroa.058.0108
   br i1 %.not.i.i45, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_ZN4llvm7jitlink9LinkGraph18createContentBlockERNS0_7SectionENS_8ArrayRefIcEENS_3orc12ExecutorAddrEmm.exit
@@ -293,11 +295,11 @@ _ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_c
   br label %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52
 
 _ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE9push_backEOS3_.exit52: ; preds = %bb.n, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i51
-  %.sroa.32.5 = phi ptr [ %i.dt, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i51 ], [ %.sroa.32.1109, %bb.n ] ; 2 uses
+  %.sroa.32.5 = phi ptr [ %i.dt, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i51 ], [ %.sroa.058.0108, %bb.n ] ; 2 uses
   %.pn = phi ptr [ %i.dr, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i51 ], [ %.sroa.16.1110, %bb.n ]
   %.sroa.075.5 = phi ptr [ %i.dq, %_ZNSt6vectorIPN4llvm7jitlink5BlockESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i51 ], [ %.sroa.075.1111, %bb.n ] ; 2 uses
   %.sroa.16.4 = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 2 uses
-  %i.du = getelementptr inbounds nuw i8, ptr %.sroa.058.0108, i64 4 ; 2 uses
+  %i.du = getelementptr inbounds nuw i8, ptr %.sroa.32.1109, i64 4 ; 2 uses
   %.not = icmp eq ptr %i.du, %i.g
   br i1 %.not, label %._crit_edge, label %bb.k
 

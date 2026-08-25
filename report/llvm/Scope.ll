@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Scope?download=true
+inline.NumInlined: 170
+inline.NumDeleted: 106
 begin_hunk_0_@_ZN5clang5Scope9applyNRVOEv:bb.a
   %.not.i = icmp ne i32 %i.x, 0
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 360
@@ -200,11 +202,11 @@ bb.e:                                             ; preds = %_ZN4llvm11raw_ostre
   br i1 %.not, label %_ZN4llvm11raw_ostreamlsEc.exit, label %bb.n
 
 bb.f:                                             ; preds = %_ZN4llvm11raw_ostreamlsEPKc.exit, %_ZN4llvm11raw_ostreamlsEPKc.exit47
-  %.0133 = phi i32 [ %i.b, %_ZN4llvm11raw_ostreamlsEPKc.exit ], [ %.1, %_ZN4llvm11raw_ostreamlsEPKc.exit47 ] ; 3 uses
-  %.030.idx132 = phi i64 [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit ], [ %.030.add, %_ZN4llvm11raw_ostreamlsEPKc.exit47 ] ; 2 uses
-  %.030.ptr134 = getelementptr inbounds nuw i8, ptr %2, i64 %.030.idx132 ; 2 uses
+  %.0.idx133 = phi i64 [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit ], [ %.030.add, %_ZN4llvm11raw_ostreamlsEPKc.exit47 ] ; 2 uses
+  %.030132 = phi i32 [ %i.b, %_ZN4llvm11raw_ostreamlsEPKc.exit ], [ %.1, %_ZN4llvm11raw_ostreamlsEPKc.exit47 ] ; 3 uses
+  %.030.ptr134 = getelementptr inbounds nuw i8, ptr %2, i64 %.0.idx133 ; 2 uses
   %.sroa.0.0.copyload = load i32, ptr %.030.ptr134, align 16 ; 2 uses
-  %i.cc = and i32 %.sroa.0.0.copyload, %.0133
+  %i.cc = and i32 %.sroa.0.0.copyload, %.030132
   %.not39 = icmp eq i32 %i.cc, 0
   br i1 %.not39, label %_ZN4llvm11raw_ostreamlsEPKc.exit47, label %bb.g
 
@@ -241,7 +243,7 @@ bb.j:                                             ; preds = %bb.i
 
 _ZN4llvm11raw_ostreamlsEPKc.exit43:               ; preds = %bb.g, %bb.h, %bb.i, %bb.j
   %i.cn = xor i32 %.sroa.0.0.copyload, -1
-  %i.co = and i32 %.0133, %i.cn                   ; 3 uses
+  %i.co = and i32 %.030132, %i.cn                 ; 3 uses
   %.not40 = icmp eq i32 %i.co, 0
   br i1 %.not40, label %_ZN4llvm11raw_ostreamlsEPKc.exit47, label %bb.k
 
@@ -266,8 +268,8 @@ bb.m:                                             ; preds = %bb.k
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit47
 
 _ZN4llvm11raw_ostreamlsEPKc.exit47:               ; preds = %bb.m, %bb.l, %_ZN4llvm11raw_ostreamlsEPKc.exit43, %bb.f
-  %.1 = phi i32 [ %.0133, %bb.f ], [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit43 ], [ %i.co, %bb.l ], [ %i.co, %bb.m ]
-  %.030.add = add nuw nsw i64 %.030.idx132, 16    ; 2 uses
+  %.1 = phi i32 [ %.030132, %bb.f ], [ 0, %_ZN4llvm11raw_ostreamlsEPKc.exit43 ], [ %i.co, %bb.l ], [ %i.co, %bb.m ]
+  %.030.add = add nuw nsw i64 %.0.idx133, 16      ; 2 uses
   %.not35 = icmp eq i64 %.030.add, 528
   br i1 %.not35, label %bb.e, label %bb.f
 

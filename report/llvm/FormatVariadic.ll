@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/FormatVariadic?download=true
+inline.NumInlined: 214
+inline.NumDeleted: 112
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -72,7 +74,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %_ZN4llvm15SmallVectorImplINS_15ReplacementItemEE12emplace_backIJRS1_EEES4_DpOT_.exit
   %.017 = phi i32 [ 0, %.lr.ph ], [ %.2, %_ZN4llvm15SmallVectorImplINS_15ReplacementItemEE12emplace_backIJRS1_EEES4_DpOT_.exit ] ; 4 uses
   %.sroa.0.016 = phi ptr [ %1, %.lr.ph ], [ %.sroa.487.0, %_ZN4llvm15SmallVectorImplINS_15ReplacementItemEE12emplace_backIJRS1_EEES4_DpOT_.exit ] ; 15 uses
-  %.sroa.3.015 = phi i64 [ %2, %.lr.ph ], [ %.sroa.54.0, %_ZN4llvm15SmallVectorImplINS_15ReplacementItemEE12emplace_backIJRS1_EEES4_DpOT_.exit ] ; 21 uses
+  %.sroa.3.015 = phi i64 [ %2, %.lr.ph ], [ %.sroa.54.0, %_ZN4llvm15SmallVectorImplINS_15ReplacementItemEE12emplace_backIJRS1_EEES4_DpOT_.exit ] ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #8
   store i8 0, ptr %i.g, align 8, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.38)
@@ -113,7 +115,6 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i: ; preds = %bb.b
 
 bb.c:                                             ; preds = %.lr.ph.i.i.ithread-pre-split.i
   %i.y = sub i64 %.sroa.3.015, %i.v
-  %11 = call i64 @llvm.umin.i64(i64 %.sroa.3.015, i64 %i.y)
   br label %_ZNK4llvm9StringRef10take_whileENS_12function_refIFbcEEE.exit.i
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.lr.ph.i.i.ithread-pre-split.i
@@ -125,7 +126,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i.ithread-
   br label %_ZNK4llvm9StringRef10take_whileENS_12function_refIFbcEEE.exit.i, !llvm.loop !20
 
 _ZNK4llvm9StringRef10take_whileENS_12function_refIFbcEEE.exit.i: ; preds = %.lr.ph.i.i.i.i.preheader.preheader, %.lr.ph.i.i.i.i.preheader._ZNK4llvm9StringRef10take_whileENS_12function_refIFbcEEE.exit.i.loopexit_crit_edge, %bb.c
-  %.sroa.speculated.i.i.i = phi i64 [ %11, %bb.c ], [ %.sroa.3.015, %.lr.ph.i.i.i.i.preheader._ZNK4llvm9StringRef10take_whileENS_12function_refIFbcEEE.exit.i.loopexit_crit_edge ], [ %.sroa.3.015, %.lr.ph.i.i.i.i.preheader.preheader ] ; 3 uses
+  %.sroa.speculated.i.i.i = phi i64 [ %i.y, %bb.c ], [ %.sroa.3.015, %.lr.ph.i.i.i.i.preheader._ZNK4llvm9StringRef10take_whileENS_12function_refIFbcEEE.exit.i.loopexit_crit_edge ], [ %.sroa.3.015, %.lr.ph.i.i.i.i.preheader.preheader ] ; 3 uses
   %i.ab = icmp ugt i64 %.sroa.speculated.i.i.i, 1
   br i1 %i.ab, label %bb.d, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i28.i
 
@@ -379,13 +380,13 @@ bb.r:                                             ; preds = %_ZN4llvm9StringRef1
   br label %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i
 
 _ZL20parseReplacementItemN4llvm9StringRefE.exit.i: ; preds = %bb.r, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i, %bb.p
+  %.sroa.11.0.i = phi i8 [ 1, %bb.r ], [ 0, %bb.p ], [ 0, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
+  %.sroa.9.0.i = phi i8 [ %.0.i.i, %bb.r ], [ undef, %bb.p ], [ undef, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
   %.sroa.8.0.i = phi i32 [ %.043.i.i, %bb.r ], [ undef, %bb.p ], [ undef, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
   %.sroa.7.0.i = phi i32 [ %.040.i.i, %bb.r ], [ undef, %bb.p ], [ undef, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
   %.sroa.6.0.i = phi i32 [ %.047.i.i, %bb.r ], [ undef, %bb.p ], [ undef, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
   %.sroa.5.0.i = phi i64 [ %.sroa.2.0.copyload.i.i, %bb.r ], [ undef, %bb.p ], [ undef, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
   %.sroa.455.0.i = phi ptr [ %.sroa.0.0.copyload.i.i, %bb.r ], [ undef, %bb.p ], [ undef, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
-  %.sroa.9.0.i = phi i8 [ %.0.i.i, %bb.r ], [ undef, %bb.p ], [ undef, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
-  %.sroa.11.0.i = phi i8 [ 1, %bb.r ], [ 0, %bb.p ], [ 0, %_ZN4llvm9StringRef13consume_frontES0_.exit18.thread.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #8, !noalias !22
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %8), !noalias !16
@@ -393,13 +394,13 @@ _ZL20parseReplacementItemN4llvm9StringRefE.exit.i: ; preds = %bb.r, %_ZN4llvm9St
   br label %_ZL26splitLiteralAndReplacementN4llvm9StringRefE.exit
 
 _ZL26splitLiteralAndReplacementN4llvm9StringRefE.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i, %bb.d, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i, %bb.f, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i
+  %.sroa.43.0 = phi i8 [ 1, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ 1, %bb.d ], [ %.sroa.11.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ 1, %bb.f ], [ 1, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ] ; 2 uses
   %.sroa.33.0 = phi i8 [ 0, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ 0, %bb.d ], [ %.sroa.9.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ 0, %bb.f ], [ 0, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ]
   %.sroa.28.0 = phi i32 [ 2, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ 2, %bb.d ], [ %.sroa.8.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ 2, %bb.f ], [ 2, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ]
   %.sroa.23.0 = phi i32 [ 0, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ 0, %bb.d ], [ %.sroa.7.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ 0, %bb.f ], [ 0, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ]
   %.sroa.18.0 = phi i32 [ 0, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ 0, %bb.d ], [ %.sroa.6.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ 0, %bb.f ], [ 0, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ] ; 2 uses
   %.sroa.13.0 = phi i64 [ 64, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ %..i.i, %bb.d ], [ %.sroa.5.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ %.sroa.speculated.i37.i, %bb.f ], [ %.1.i.i.i.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ]
   %.sroa.83.0 = phi ptr [ @.str, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ %.sroa.0.016, %bb.d ], [ %.sroa.455.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ %.sroa.0.016, %bb.f ], [ %.sroa.0.016, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ]
-  %.sroa.43.0 = phi i8 [ 1, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ 1, %bb.d ], [ %.sroa.11.0.i, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ 1, %bb.f ], [ 1, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ] ; 2 uses
   %i.db = phi i1 [ false, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ false, %bb.d ], [ true, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ false, %bb.f ], [ false, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ]
   %.sroa.02.0 = phi i32 [ 1, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ 1, %bb.d ], [ 0, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ 1, %bb.f ], [ 1, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ]
   %.sroa.54.0 = phi i64 [ 0, %_ZNK4llvm9StringRef13find_first_ofEcm.exit30.thread.i ], [ %i.af, %bb.d ], [ %i.ay, %_ZL20parseReplacementItemN4llvm9StringRefE.exit.i ], [ %i.as, %bb.f ], [ %i.u, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i ] ; 2 uses

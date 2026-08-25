@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LoopExtractor?download=true
+inline.NumInlined: 602
+inline.NumDeleted: 444
 begin_hunk_0_@_ZN12_GLOBAL__N_123LoopExtractorLegacyPass11runOnModuleERN4llvm6ModuleE:bb.a
   %i.e = load i32, ptr %i.d, align 4, !tbaa !31
   %i.f = ptrtoint ptr %2 to i64
@@ -200,22 +202,22 @@ _ZN4llvm15SmallVectorImplIPNS_4LoopEE6assignIN9__gnu_cxx17__normal_iteratorIPKS2
   br i1 %.not22, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4llvm15SmallVectorImplIPNS_4LoopEE6assignIN9__gnu_cxx17__normal_iteratorIPKS2_St6vectorIS2_SaIS2_EEEEvEEvT_SD_.exit, %bb.g
-  %.024 = phi i1 [ %.1.ph, %bb.g ], [ false, %_ZN4llvm15SmallVectorImplIPNS_4LoopEE6assignIN9__gnu_cxx17__normal_iteratorIPKS2_St6vectorIS2_SaIS2_EEEEvEEvT_SD_.exit ] ; 2 uses
-  %.01723 = phi ptr [ %i.z, %bb.g ], [ %i.o, %_ZN4llvm15SmallVectorImplIPNS_4LoopEE6assignIN9__gnu_cxx17__normal_iteratorIPKS2_St6vectorIS2_SaIS2_EEEEvEEvT_SD_.exit ] ; 2 uses
-  %i.u = load ptr, ptr %.01723, align 8, !tbaa !69 ; 2 uses
+  %.01624 = phi ptr [ %i.z, %bb.g ], [ %i.o, %_ZN4llvm15SmallVectorImplIPNS_4LoopEE6assignIN9__gnu_cxx17__normal_iteratorIPKS2_St6vectorIS2_SaIS2_EEEEvEEvT_SD_.exit ] ; 2 uses
+  %.01723 = phi i1 [ %.1.ph, %bb.g ], [ false, %_ZN4llvm15SmallVectorImplIPNS_4LoopEE6assignIN9__gnu_cxx17__normal_iteratorIPKS2_St6vectorIS2_SaIS2_EEEEvEEvT_SD_.exit ] ; 2 uses
+  %i.u = load ptr, ptr %.01624, align 8, !tbaa !69 ; 2 uses
   %i.v = call noundef zeroext i1 @_ZNK4llvm4Loop18isLoopSimplifyFormEv(ptr noundef nonnull align 8 dereferenceable(144) %i.u) #13
   br i1 %i.v, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %.lr.ph
   %i.w = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_113LoopExtractor11extractLoopEPN4llvm4LoopERNS1_8LoopInfoERNS1_13DominatorTreeE(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull %i.u, ptr noundef nonnull align 8 dereferenceable(184) %3, ptr noundef nonnull align 8 dereferenceable(204) %4)
-  %i.x = or i1 %.024, %i.w                        ; 2 uses
+  %i.x = or i1 %.01723, %i.w                      ; 2 uses
   %i.y = load i32, ptr %0, align 8, !tbaa !40
   %.not18 = icmp eq i32 %i.y, 0
   br i1 %.not18, label %._crit_edge.loopexit, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.f
-  %.1.ph = phi i1 [ %i.x, %bb.f ], [ %.024, %.lr.ph ] ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %.01723, i64 8 ; 2 uses
+  %.1.ph = phi i1 [ %i.x, %bb.f ], [ %.01723, %.lr.ph ] ; 2 uses
+  %i.z = getelementptr inbounds nuw i8, ptr %.01624, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.z, %i.t
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SBDeclaration?download=true
+inline.NumInlined: 223
+inline.NumDeleted: 110
 begin_hunk_0
 target triple = "x86_64-pc-linux-gnu"
 
@@ -200,7 +202,7 @@ _ZNSt10unique_ptrIN12lldb_private11DeclarationESt14default_deleteIS1_EED2Ev.exit
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local void @_ZN4lldb13SBDeclarationC2EPKN12lldb_private11DeclarationE(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr nofree noundef readonly captures(address_is_null) %1) unnamed_addr #0 align 2 {
+define dso_local void @_ZN4lldb13SBDeclarationC2EPKN12lldb_private11DeclarationE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0, ptr nofree noundef readonly captures(address_is_null) %1) unnamed_addr #0 align 2 {
 bb.a:
   store ptr null, ptr %0, align 8, !tbaa !8
   %.not = icmp eq ptr %1, null
@@ -209,10 +211,16 @@ bb.a:
 _ZNSt10unique_ptrIN12lldb_private11DeclarationESt14default_deleteIS1_EED2Ev.exit.a: ; preds = %bb.a
   %i.a = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #11, !noalias !55 ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !46, !noalias !55
+  %2 = load ptr, ptr %0, align 8, !tbaa !39       ; 2 uses
   store ptr %i.a, ptr %0, align 8, !tbaa !39
+  %.not.i.i.i.i = icmp eq ptr %2, null
+  br i1 %.not.i.i.i.i, label %bb.b, label %_ZNKSt14default_deleteIN12lldb_private11DeclarationEEclEPS1_.exit.i.i.i.i
+
+_ZNKSt14default_deleteIN12lldb_private11DeclarationEEclEPS1_.exit.i.i.i.i: ; preds = %_ZNSt10unique_ptrIN12lldb_private11DeclarationESt14default_deleteIS1_EED2Ev.exit.a
+  tail call void @_ZdlPvm(ptr noundef nonnull %2, i64 noundef 32) #10
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNSt10unique_ptrIN12lldb_private11DeclarationESt14default_deleteIS1_EED2Ev.exit.a, %bb.a
+bb.b:                                             ; preds = %_ZNSt10unique_ptrIN12lldb_private11DeclarationESt14default_deleteIS1_EED2Ev.exit.a, %_ZNKSt14default_deleteIN12lldb_private11DeclarationEEclEPS1_.exit.i.i.i.i, %bb.a
   ret void
 }
 

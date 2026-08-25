@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RISCVCodeGenPrepare?download=true
+inline.NumInlined: 1449
+inline.NumDeleted: 986
 begin_hunk_0_@_ZN12_GLOBAL__N_119RISCVCodeGenPrepare18expandMulReductionERN4llvm13IntrinsicInstE:bb.a
   %i.hf = icmp ugt i32 %i.gb, %i.dq
   br i1 %i.hf, label %bb.o, label %._crit_edge, !llvm.loop !358
@@ -200,8 +202,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not.i.not.i.i.i.i.i.i, label %.critedge, label %_ZN4llvm12PatternMatch5matchINS_11InstructionENS_19PatternMatchHelpers16match_combine_orIJNS3_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS3_10match_bindINS_5ValueEEEEESB_NS7_INS8_INS_7PHINodeEEEEESB_EEENS0_12OneOps_matchISF_Lj69EEEEEEEEbPT_RKT0_.exit
 
 _ZN4llvm12PatternMatch5matchINS_11InstructionENS_19PatternMatchHelpers16match_combine_orIJNS3_17match_combine_andIJNS0_17IntrinsicID_matchENS0_14Argument_matchINS3_10match_bindINS_5ValueEEEEESB_NS7_INS8_INS_7PHINodeEEEEESB_EEENS0_12OneOps_matchISF_Lj69EEEEEEEEbPT_RKT0_.exit: ; preds = %bb.r, %bb.i
-  %.057 = phi ptr [ %i.ac, %bb.i ], [ %i.bk, %bb.r ]
-  %.056 = phi ptr [ %i.aa, %bb.i ], [ %i.bi, %bb.r ]
+  %.057 = phi ptr [ %i.aa, %bb.i ], [ %i.bi, %bb.r ]
+  %.056 = phi ptr [ %i.ac, %bb.i ], [ %i.bk, %bb.r ]
   %.055 = phi ptr [ %i.ae, %bb.i ], [ %i.bm, %bb.r ] ; 9 uses
   %storemerge = phi ptr [ %i.ai, %bb.i ], [ %i.bq, %bb.r ]
   %i.br = getelementptr inbounds nuw i8, ptr %.055, i64 16
@@ -372,12 +374,12 @@ bb.z:                                             ; preds = %.thread.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
   %i.et = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i16 257, ptr %i.et, align 8
-  %i.eu = call noundef ptr @_ZN4llvm13IRBuilderBase10CreateZExtEPNS_5ValueEPNS_4TypeERKNS_5TwineEb(ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull %.057, ptr noundef %i.dj, ptr noundef nonnull align 8 dereferenceable(34) %4, i1 noundef zeroext false)
+  %i.eu = call noundef ptr @_ZN4llvm13IRBuilderBase10CreateZExtEPNS_5ValueEPNS_4TypeERKNS_5TwineEb(ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull %.056, ptr noundef %i.dj, ptr noundef nonnull align 8 dereferenceable(34) %4, i1 noundef zeroext false)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
   store ptr %i.dj, ptr %i.a, align 8, !tbaa !319
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
-  store ptr %.056, ptr %i.b, align 8, !tbaa !267
+  store ptr %.057, ptr %i.b, align 8, !tbaa !267
   %i.ev = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %i.eu, ptr %i.ev, align 8, !tbaa !267
   %i.ew = getelementptr inbounds nuw i8, ptr %i.b, i64 16

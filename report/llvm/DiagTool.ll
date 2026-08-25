@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/DiagTool?download=true
+inline.NumInlined: 348
+inline.NumDeleted: 175
 begin_hunk_0_@_ZN8diagtool9DiagTools7getToolEN4llvm9StringRefE:bb.a
   %i.h = zext i32 %i.g to i64
   br label %_ZN4llvm9StringMapIPN8diagtool8DiagToolENS_15MallocAllocatorEE4findENS_9StringRefE.exit
@@ -200,11 +202,11 @@ bb.f:                                             ; preds = %bb.c
   %.067 = phi i32 [ %spec.select, %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit ], [ 0, %.lr.ph.preheader ]
   %.sroa.047.066 = phi ptr [ %.sroa.047.1, %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit ], [ null, %.lr.ph.preheader ] ; 6 uses
   %.sroa.8.065 = phi ptr [ %.sroa.8.1, %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit ], [ null, %.lr.ph.preheader ] ; 7 uses
-  %.sroa.14.064.a = phi ptr [ %.sroa.14.1, %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit ], [ null, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.043.063 = phi ptr [ %.sroa.043.1, %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit ], [ %.sroa.0.0.i, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.14.064.a = phi ptr [ %.sroa.043.1, %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit ], [ %.sroa.0.0.i, %.lr.ph.preheader ] ; 2 uses
+  %.sroa.043.063 = phi ptr [ %.sroa.14.1, %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit ], [ null, %.lr.ph.preheader ] ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
   %i.ag = load i64, ptr %i.ae, align 8, !tbaa !31 ; 2 uses
-  %.not.i.i = icmp eq ptr %.sroa.8.065, %.sroa.14.064.a
+  %.not.i.i = icmp eq ptr %.sroa.8.065, %.sroa.043.063
   br i1 %.not.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
@@ -262,19 +264,19 @@ bb.j:                                             ; preds = %_ZNSt6vectorIN4llvm
 
 _ZNSt6vectorIN4llvm9StringRefESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.j, %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
   %i.av = getelementptr inbounds nuw [16 x i8], ptr %i.ar, i64 %i.ap
-  %.pre81 = load ptr, ptr %.sroa.043.063, align 8, !tbaa !29
+  %.pre81 = load ptr, ptr %.sroa.14.064.a, align 8, !tbaa !29
   br label %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE9push_backEOS1_.exit
 
 _ZNSt6vectorIN4llvm9StringRefESaIS1_EE9push_backEOS1_.exit: ; preds = %bb.g, %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
   %i.aw = phi ptr [ %.pre81, %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %i.ae, %bb.g ]
-  %.sroa.14.1 = phi ptr [ %i.av, %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.14.064.a, %bb.g ] ; 2 uses
+  %.sroa.14.1 = phi ptr [ %i.av, %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.043.063, %bb.g ] ; 2 uses
   %.0.lcssa.i.i.i.i.i.i.pn = phi ptr [ %.0.lcssa.i.i.i.i.i.i, %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.8.065, %bb.g ] ; 3 uses
   %.sroa.047.1 = phi ptr [ %i.ar, %_ZNSt6vectorIN4llvm9StringRefESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i ], [ %.sroa.047.066, %bb.g ] ; 11 uses
   %.sroa.8.1 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.pn, i64 16 ; 6 uses
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !31
   %i.ay = trunc i64 %i.ax to i32
   %spec.select = tail call i32 @llvm.umax.i32(i32 %.067, i32 %i.ay) ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.043.063, i64 8 ; 3 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %.sroa.14.064.a, i64 8 ; 3 uses
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !29 ; 2 uses
   %i.bb = icmp eq ptr %i.ba, null
   br i1 %i.bb, label %.lr.ph.i.i, label %_ZN4llvm17StringMapIterBaseIPN8diagtool8DiagToolELb0EEppEv.exit

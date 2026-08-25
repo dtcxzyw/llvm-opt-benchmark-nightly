@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TextEncoding?download=true
+inline.NumInlined: 96
+inline.NumDeleted: 76
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -72,7 +74,7 @@ _ZN4llvmeqENS_9StringRefES0_.exit.thread25:       ; preds = %_ZN4llvm9StringRefC
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   call void @_ZN4llvm21TextEncodingConverter6createENS_9StringRefES1_(ptr dead_on_unwind nonnull writable sret(%"class.llvm::ErrorOr") align 8 %2, ptr nonnull @.str, i64 5, ptr %i.s, i64 %.sroa.0.0.i34) #9
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  %i.u = load i8, ptr %i.t, align 8               ; 3 uses
+  %i.u = load i8, ptr %i.t, align 8               ; 2 uses
   %i.v = trunc i8 %i.u to i1
   br i1 %i.v, label %_ZNK4llvm7ErrorOrINS_21TextEncodingConverterEE8getErrorEv.exit, label %bb.c
 
@@ -101,12 +103,11 @@ _ZNKSt14default_deleteIN4llvm7details29TextEncodingConverterImplBaseEEclEPS2_.ex
 
 _ZNKSt14default_deleteIN4llvm21TextEncodingConverterEEclEPS1_.exit.i.i.i.i: ; preds = %_ZNKSt14default_deleteIN4llvm7details29TextEncodingConverterImplBaseEEclEPS2_.exit.i.i.i.i.i.i.i, %bb.d
   call void @_ZdlPvm(ptr noundef nonnull %i.z, i64 noundef 8) #12
-  %.pre.pre = load i8, ptr %i.t, align 8
   br label %_ZNSt10unique_ptrIN4llvm21TextEncodingConverterESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4llvm21TextEncodingConverterESt14default_deleteIS1_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN4llvm21TextEncodingConverterEEclEPS1_.exit.i.i.i.i, %bb.c
-  %.pre = phi i8 [ %.pre.pre, %_ZNKSt14default_deleteIN4llvm21TextEncodingConverterEEclEPS1_.exit.i.i.i.i ], [ %i.u, %bb.c ]
   %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt3_V215system_categoryEv() #10
+  %.pre = load i8, ptr %i.t, align 8
   br label %bb.e
 
 _ZNK4llvm7ErrorOrINS_21TextEncodingConverterEE8getErrorEv.exit: ; preds = %_ZN4llvmeqENS_9StringRefES0_.exit.thread25

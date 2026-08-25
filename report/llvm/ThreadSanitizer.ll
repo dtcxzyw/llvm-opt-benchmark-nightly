@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ThreadSanitizer?download=true
+inline.NumInlined: 2058
+inline.NumDeleted: 1131
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN4llvm19ThreadSanitizerPass3runERNS_8FunctionERNS_15AnalysisManagerIS1_JEEE:bb.a
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !76
@@ -200,11 +204,11 @@ bb.au:                                            ; preds = %bb.as
 bb.av:                                            ; preds = %bb.au, %bb.at, %bb.ar, %bb.ap, %bb.ao, %bb.am
   %.sink.i.i = phi ptr [ %i.gz, %bb.ar ], [ %i.hb, %bb.au ], [ %i.ha, %bb.at ], [ %i.gv, %bb.am ], [ %i.gx, %bb.ap ], [ %i.gw, %bb.ao ] ; 2 uses
   %.sroa.10.0..sroa_idx90.i.i = getelementptr inbounds nuw i8, ptr %.sink.i.i, i64 8
-  %.sroa.080.0.i.i.a = load ptr, ptr %.sink.i.i, align 8, !tbaa !96
-  %.sroa.10.0.i.i = load ptr, ptr %.sroa.10.0..sroa_idx90.i.i, align 8, !tbaa !75
+  %.sroa.080.0.i.i.a = load ptr, ptr %.sroa.10.0..sroa_idx90.i.i, align 8, !tbaa !75
+  %.sroa.10.0.i.i = load ptr, ptr %.sink.i.i, align 8, !tbaa !96
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #20
   store i16 257, ptr %i.ds, align 8
-  %i.hc = call noundef ptr @_ZN4llvm13IRBuilderBase10CreateCallEPNS_12FunctionTypeEPNS_5ValueENS_8ArrayRefIS4_EERKNS_5TwineEPNS_6MDNodeE(ptr noundef nonnull align 8 dereferenceable(88) %31, ptr noundef %.sroa.080.0.i.i.a, ptr noundef %.sroa.10.0.i.i, ptr nonnull %i.j, i64 1, ptr noundef nonnull align 8 dereferenceable(34) %36, ptr noundef null) ; 0 uses
+  %i.hc = call noundef ptr @_ZN4llvm13IRBuilderBase10CreateCallEPNS_12FunctionTypeEPNS_5ValueENS_8ArrayRefIS4_EERKNS_5TwineEPNS_6MDNodeE(ptr noundef nonnull align 8 dereferenceable(88) %31, ptr noundef %.sroa.10.0.i.i, ptr noundef %.sroa.080.0.i.i.a, ptr nonnull %i.j, i64 1, ptr noundef nonnull align 8 dereferenceable(34) %36, ptr noundef null) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #20
   br label %_ZN12_GLOBAL__N_115ThreadSanitizer21instrumentLoadOrStoreERKNS0_15InstructionInfoERKN4llvm10DataLayoutE.exit.i
 

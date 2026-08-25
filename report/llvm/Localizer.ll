@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Localizer?download=true
+inline.NumInlined: 761
+inline.NumDeleted: 497
 begin_hunk_0_@_ZN4llvm12DenseMapBaseINS_8DenseMapIPNS_12MachineInstrENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS4_12DenseSetPairIS3_EEEES3_S5_S7_S9_E8moveFromERSA_:bb.a
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.lcssa15.i
   %i.at = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.lcssa13.i
@@ -200,7 +202,7 @@ _ZZN4llvm12DenseMapBaseINS_8DenseMapISt4pairIPNS_17MachineBasicBlockENS_8Registe
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bd = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !230
-  store i32 %i.be, ptr %i.bc, align 4, !tbaa !230
+  store i32 %i.be, ptr %i.bc, align 8, !tbaa !230
   %i.bf = shl nuw i32 1, %.lcssa.i
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.lcssa11.i ; 2 uses
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !230

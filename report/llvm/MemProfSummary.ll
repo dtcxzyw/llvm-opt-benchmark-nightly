@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MemProfSummary?download=true
+inline.NumInlined: 88
+inline.NumDeleted: 61
 begin_hunk_0_@_ZNK4llvm7memprof14MemProfSummary16printSummaryYamlERNS_11raw_ostreamE:bb.a
 _ZN4llvm11raw_ostreamlsEPKc.exit47:               ; preds = %bb.z, %bb.aa
   %.0.i.i46 = phi ptr [ %i.dv, %bb.z ], [ %1, %bb.aa ]
@@ -200,7 +202,7 @@ define dso_local void @_ZN4llvm7memprof14MemProfSummary11deserializeERPKh(ptr de
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !30     ; 4 uses
   %.0.copyload.i.i.i = load i32, ptr %i.a, align 1
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   store ptr %i.b, ptr %1, align 8, !tbaa !30
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 20
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 36
@@ -221,7 +223,8 @@ bb.a:
   store ptr %i.h, ptr %0, align 8, !tbaa !35, !alias.scope !31
   %i.m = zext i32 %.0.copyload.i.i.i to i64
   %i.n = shl nuw nsw i64 %i.m, 3
-  %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.n
+  %2 = load ptr, ptr %1, align 8, !tbaa !30
+  %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %i.n
   store ptr %i.o, ptr %1, align 8, !tbaa !30
   ret void
 }

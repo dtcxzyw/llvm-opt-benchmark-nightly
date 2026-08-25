@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/RISCVExpandPseudoInsts?download=true
+inline.NumInlined: 952
+inline.NumDeleted: 368
 begin_hunk_0_@_ZN12_GLOBAL__N_117RISCVExpandPseudo20runOnMachineFunctionERN4llvm15MachineFunctionE:bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #13
   %i.hv = call ptr @_ZN4llvm12MachineInstr15eraseFromParentEv(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.050.064.i) #13 ; 0 uses
@@ -200,8 +202,8 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit53.i.i, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit41.i.i
-  %.sroa.683.0.i.i.a = phi ptr [ %i.kd, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit41.i.i ], [ %i.ld, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit53.i.i ]
-  %.sroa.082.0.i.i = phi ptr [ %i.kc, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit41.i.i ], [ %i.lc, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit53.i.i ]
+  %.sroa.683.0.i.i.a = phi ptr [ %i.kc, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit41.i.i ], [ %i.lc, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit53.i.i ]
+  %.sroa.082.0.i.i = phi ptr [ %i.kd, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit41.i.i ], [ %i.ld, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescE.exit53.i.i ]
   %i.ma = load ptr, ptr %i.ev, align 8, !tbaa !204 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #13
   store ptr %i.ec, ptr %13, align 8, !tbaa !263
@@ -257,7 +259,7 @@ _ZNK4llvm12MachineInstr11memoperandsEv.exit.i37.i: ; preds = %bb.g
   %i.mr = load ptr, ptr %14, align 8, !tbaa !263
   %i.ms = load i32, ptr %i.eg, align 8, !tbaa !264
   %i.mt = zext i32 %i.ms to i64
-  call void @_ZN4llvm12MachineInstr10setMemRefsERNS_15MachineFunctionENS_8ArrayRefIPNS_17MachineMemOperandEEE(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.683.0.i.i.a, ptr noundef nonnull align 8 dereferenceable(1065) %.sroa.082.0.i.i, ptr %i.mr, i64 %i.mt) #13
+  call void @_ZN4llvm12MachineInstr10setMemRefsERNS_15MachineFunctionENS_8ArrayRefIPNS_17MachineMemOperandEEE(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.082.0.i.i, ptr noundef nonnull align 8 dereferenceable(1065) %.sroa.683.0.i.i.a, ptr %i.mr, i64 %i.mt) #13
   %i.mu = call ptr @_ZN4llvm12MachineInstr15eraseFromParentEv(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.050.064.i) #13 ; 0 uses
   %i.mv = load ptr, ptr %14, align 8, !tbaa !263  ; 2 uses
   %i.mw = icmp eq ptr %i.mv, %i.ef

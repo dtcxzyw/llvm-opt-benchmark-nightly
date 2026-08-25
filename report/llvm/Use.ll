@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Use?download=true
+inline.NumInlined: 178
+inline.NumDeleted: 141
 begin_hunk_0
 $_ZTVN4llvm9sandboxir6UseSetE = comdat any
 
@@ -200,13 +202,15 @@ bb.a:
   br i1 %i.f, label %bb.b, label %_ZN4llvm9sandboxir7Tracker17emplaceIfTrackingINS0_7UseSwapEJNS0_3UseES4_EEEbDpT0_.exit
 
 bb.b:                                             ; preds = %bb.a
+  %.sroa.05.0.copyload6 = load <3 x ptr>, ptr %1, align 8
+  %.sroa.0.0.copyload4 = load <3 x ptr>, ptr %0, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   %i.g = tail call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #8, !noalias !70, !inline_history !73 ; 5 uses
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN4llvm9sandboxir7UseSwapE, i64 16), ptr %i.g, align 8, !tbaa !49, !noalias !70
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
+  store <3 x ptr> %.sroa.0.0.copyload4, ptr %i.h, align 8, !noalias !70
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
+  store <3 x ptr> %.sroa.05.0.copyload6, ptr %i.i, align 8, !noalias !70
   store ptr %i.g, ptr %2, align 8, !tbaa !59
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !62   ; 2 uses

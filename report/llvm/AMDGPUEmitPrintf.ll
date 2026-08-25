@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AMDGPUEmitPrintf?download=true
+inline.NumInlined: 1118
+inline.NumDeleted: 632
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 %"class.llvm::StringRef" = type { ptr, i64 }
 %"class.llvm::DataExtractor::Cursor" = type { i64, %"class.llvm::Error" }
@@ -200,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.lr.ph.i: ; preds = %bb.b, %.outer.i
   %i.s = phi i64 [ %i.bf, %.outer.i ], [ %.sroa.255.0.copyload, %bb.b ] ; 2 uses
   %i.t = phi ptr [ %i.bg, %.outer.i ], [ %.sroa.054.0.copyload, %bb.b ] ; 3 uses
-  %.013.ph26.i = phi i64 [ %i.ah, %.outer.i ], [ 0, %bb.b ]
-  %.014.ph25.i = phi i32 [ %i.bh, %.outer.i ], [ 1, %bb.b ]
+  %.013.ph26.i = phi i32 [ %i.bh, %.outer.i ], [ 1, %bb.b ]
+  %.014.ph25.i = phi i64 [ %i.ah, %.outer.i ], [ 0, %bb.b ]
   %i.u = ptrtoint ptr %i.t to i64
   br label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.i: ; preds = %bb.d, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.lr.ph.i
-  %.01324.i = phi i64 [ %.013.ph26.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.lr.ph.i ], [ %i.ae, %bb.d ] ; 2 uses
+  %.01324.i = phi i64 [ %.014.ph25.i, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i.lr.ph.i ], [ %i.ae, %bb.d ] ; 2 uses
   %i.v = sub nuw i64 %i.s, %.01324.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 %.01324.i
   %i.x = call ptr @memchr(ptr noundef %i.w, i32 noundef 37, i64 noundef %i.v) #14 ; 2 uses
@@ -300,7 +304,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZNK4llvm9StringRef5countEc.exit.i:               ; preds = %.lr.ph.i.i, %middle.block, %bb.f
   %.06.lcssa.i.i = phi i32 [ 0, %bb.f ], [ %i.av, %middle.block ], [ %spec.select.i.i, %.lr.ph.i.i ]
-  %i.bb = add i32 %.06.lcssa.i.i, %.014.ph25.i    ; 2 uses
+  %i.bb = add i32 %.06.lcssa.i.i, %.013.ph26.i    ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ag
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !21
   %i.be = icmp eq i8 %i.bd, 115

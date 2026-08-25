@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WebAssemblyAsmPrinter?download=true
+inline.NumInlined: 1923
+inline.NumDeleted: 1034
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm21WebAssemblyAsmPrinter9emitDeclsERKNS_6ModuleE:bb.a
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !349
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 288
@@ -200,8 +204,8 @@ bb.ad:                                            ; preds = %bb.aa
 
 bb.ae:                                            ; preds = %bb.ad, %_ZNK4llvm8MCSymbol7getNameEv.exit
   %.pn = phi { ptr, i64 } [ %.fca.1.insert.i, %_ZNK4llvm8MCSymbol7getNameEv.exit ], [ %i.fz, %bb.ad ] ; 2 uses
-  %.sroa.6.0 = extractvalue { ptr, i64 } %.pn, 1  ; 2 uses
   %.sroa.014.0 = extractvalue { ptr, i64 } %.pn, 0 ; 2 uses
+  %.sroa.6.0 = extractvalue { ptr, i64 } %.pn, 1  ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #21
   %i.ga = load ptr, ptr %i.t, align 8, !tbaa !223, !nonnull !207, !align !224
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -604,7 +608,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !566
   %i.ae = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  store i32 0, ptr %i.ae, align 4, !tbaa !182
+  store i32 0, ptr %i.ae, align 8, !tbaa !182
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %_ZN4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E22findBucketForInsertionIS2_EEPS7_RKT_SB_.exit
@@ -839,7 +843,7 @@ _ZZN4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !182
-  store i32 %i.ai, ptr %i.ag, align 4, !tbaa !182
+  store i32 %i.ai, ptr %i.ag, align 8, !tbaa !182
   %i.aj = shl nuw i32 1, %i.aa
   %i.ak = load i32, ptr %i.ae, align 4, !tbaa !182
   %i.al = or i32 %i.ak, %i.aj

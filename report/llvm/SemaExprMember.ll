@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SemaExprMember?download=true
+inline.NumInlined: 3337
+inline.NumDeleted: 1882
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 
 $_ZN4llvm23SmallVectorTemplateBaseIN5clang4sema17FunctionScopeInfo9WeakUseTyELb1EE15growAndPushBackES4_ = comdat any
@@ -200,15 +204,15 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.048.shrunk.i = phi i1 [ false, %bb.c ], [ %i.c, %bb.b ], [ %i.c, %bb.a ] ; 2 uses
-  %.043.i = phi i1 [ %i.j, %bb.c ], [ false, %bb.b ], [ false, %bb.a ] ; 2 uses
+  %.048.shrunk.i = phi i1 [ %i.j, %bb.c ], [ false, %bb.b ], [ false, %bb.a ] ; 2 uses
+  %.043.i = phi i1 [ false, %bb.c ], [ %i.c, %bb.b ], [ %i.c, %bb.a ] ; 2 uses
   %i.k = load i32, ptr %3, align 8, !tbaa !703
   %i.l = icmp eq i32 %i.k, 4
   br i1 %i.l, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.m = select i1 %.048.shrunk.i, i32 8, i32 5
-  br i1 %.043.i, label %_ZL28ClassifyImplicitMemberAccessRN5clang4SemaERKNS_12LookupResultE.exit.thread, label %_ZL28ClassifyImplicitMemberAccessRN5clang4SemaERKNS_12LookupResultE.exit
+  %i.m = select i1 %.043.i, i32 8, i32 5
+  br i1 %.048.shrunk.i, label %_ZL28ClassifyImplicitMemberAccessRN5clang4SemaERKNS_12LookupResultE.exit.thread, label %_ZL28ClassifyImplicitMemberAccessRN5clang4SemaERKNS_12LookupResultE.exit
 
 bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
@@ -234,7 +238,7 @@ bb.f:                                             ; preds = %bb.d
   %.pre123.i = load i32, ptr %i.p, align 4, !tbaa !721
   %.pre123.fr.i = freeze i32 %.pre123.i
   %i.x = icmp eq i32 %.pre123.fr.i, 0             ; 2 uses
-  %brmerge.i = or i1 %.043.i, %i.x
+  %brmerge.i = or i1 %.048.shrunk.i, %i.x
   %..i = select i1 %i.x, i32 0, i32 7
   br i1 %brmerge.i, label %.critedge.i, label %bb.m
 
@@ -377,7 +381,7 @@ bb.p:                                             ; preds = %bb.m
 bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m
   %.not60.i.a = phi i32 [ 10, %bb.m ], [ 6, %bb.p ], [ %spec.select.i, %bb.o ], [ 10, %bb.n ] ; 2 uses
   %.not63.i = phi i32 [ 11, %bb.m ], [ 6, %bb.p ], [ %spec.select65.i, %bb.o ], [ 11, %bb.n ]
-  br i1 %.048.shrunk.i, label %bb.r, label %bb.s
+  br i1 %.043.i, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %..not60.i = select i1 %.154.i, i32 2, i32 %.not60.i.a

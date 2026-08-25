@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/FlattenCFGPass?download=true
+inline.NumInlined: 232
+inline.NumDeleted: 173
 begin_hunk_0_@_ZL21iterativelyFlattenCFGRN4llvm8FunctionEPNS_9AAResultsE:bb.a
   %.not.i.i.i.i.i = icmp eq ptr %i.am, null
   br i1 %.not.i.i.i.i.i, label %_ZSt8_DestroyIN4llvm6WeakVHEEvPT_.exit.i.i.i, label %bb.i
@@ -200,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !65
-  %i.d = load ptr, ptr %0, align 8, !tbaa !68     ; 4 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !68     ; 3 uses
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f
@@ -216,7 +218,7 @@ _ZNSt12_Vector_baseIN4llvm6WeakVHESaIS1_EE11_M_allocateEm.exit.i: ; preds = %bb.
   %i.n = mul nuw nsw i64 %1, 24
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #14 ; 4 uses
   %.not9.i.i.i.i.i = icmp eq ptr %i.d, %i.k
-  br i1 %.not9.i.i.i.i.i, label %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exit, label %.lr.ph.i.i.i.i.i
+  br i1 %.not9.i.i.i.i.i, label %_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNSt12_Vector_baseIN4llvm6WeakVHESaIS1_EE11_M_allocateEm.exit.i, %_ZSt10_ConstructIN4llvm6WeakVHEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %.011.i.i.i.i.i = phi ptr [ %i.w, %_ZSt10_ConstructIN4llvm6WeakVHEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i ], [ %i.o, %_ZNSt12_Vector_baseIN4llvm6WeakVHESaIS1_EE11_M_allocateEm.exit.i ] ; 5 uses
@@ -244,7 +246,7 @@ _ZSt10_ConstructIN4llvm6WeakVHEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i: ; preds = %bb.
   %.not.i.i.i.i.i = icmp eq ptr %i.v, %i.k
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit, label %.lr.ph.i.i.i.i.i, !llvm.loop !81
 
-_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit: ; preds = %_ZSt10_ConstructIN4llvm6WeakVHEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
+_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit: ; preds = %_ZSt10_ConstructIN4llvm6WeakVHEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i, %_ZNSt12_Vector_baseIN4llvm6WeakVHESaIS1_EE11_M_allocateEm.exit.i
   %.pre = load ptr, ptr %0, align 8, !tbaa !68    ; 3 uses
   %.pre8 = load ptr, ptr %i.j, align 8, !tbaa !63 ; 2 uses
   %.not4.i.i = icmp eq ptr %.pre, %.pre8
@@ -270,8 +272,8 @@ _ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split: ; preds = %_ZSt8_Dest
   %.pr = load ptr, ptr %0, align 8, !tbaa !68
   br label %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exit
 
-_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exit:        ; preds = %_ZNSt12_Vector_baseIN4llvm6WeakVHESaIS1_EE11_M_allocateEm.exit.i, %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split, %_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit
-  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ], [ %i.d, %_ZNSt12_Vector_baseIN4llvm6WeakVHESaIS1_EE11_M_allocateEm.exit.i ] ; 3 uses
+_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exit:        ; preds = %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split, %_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit
+  %2 = phi ptr [ %.pr, %_ZSt8_DestroyIPN4llvm6WeakVHEEvT_S3_.exitthread-pre-split ], [ %.pre, %_ZNSt6vectorIN4llvm6WeakVHESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_.exit ] ; 3 uses
   %.not.i = icmp eq ptr %2, null
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN4llvm6WeakVHESaIS1_EE13_M_deallocateEPS1_m.exit, label %bb.f
 

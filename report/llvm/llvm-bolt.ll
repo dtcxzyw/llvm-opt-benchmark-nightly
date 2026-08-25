@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/llvm-bolt?download=true
+inline.NumInlined: 766
+inline.NumDeleted: 434
 begin_hunk_0_@_Z8boltModeiPPc:bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 0, ptr %i.i, align 8
@@ -200,7 +202,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.an = call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4outsEv() #19
   %i.ao = call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4errsEv() #19
-  %i.ap = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL7LogFileB5cxx11E, i64 128), align 8, !tbaa !57 ; 2 uses
+  %i.ap = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL7LogFileB5cxx11E, i64 128), align 8, !tbaa !57
   %i.aq = icmp eq i64 %i.ap, 0
   br i1 %i.aq, label %bb.i, label %_ZNSt10unique_ptrIN4llvm14raw_fd_ostreamESt14default_deleteIS1_EED2Ev.exit
 
@@ -212,7 +214,8 @@ _ZNSt10unique_ptrIN4llvm14raw_fd_ostreamESt14default_deleteIS1_EED2Ev.exit: ; pr
   store ptr %i.as, ptr %i.ar, align 8, !tbaa !76
   %i.at = call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #23, !noalias !77 ; 4 uses
   %i.au = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL7LogFileB5cxx11E, i64 120), align 8, !tbaa !14, !noalias !77
-  call void @_ZN4llvm14raw_fd_ostreamC1ENS_9StringRefERSt10error_codeNS_3sys2fs9OpenFlagsE(ptr noundef nonnull align 8 dereferenceable(96) %i.at, ptr %i.au, i64 %i.ap, ptr noundef nonnull align 8 dereferenceable(16) %5, i32 noundef 0) #19, !noalias !77
+  %37 = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN4optsL7LogFileB5cxx11E, i64 128), align 8, !tbaa !57, !noalias !77
+  call void @_ZN4llvm14raw_fd_ostreamC1ENS_9StringRefERSt10error_codeNS_3sys2fs9OpenFlagsE(ptr noundef nonnull align 8 dereferenceable(96) %i.at, ptr %i.au, i64 %37, ptr noundef nonnull align 8 dereferenceable(16) %5, i32 noundef 0) #19, !noalias !77
   %i.av = load i32, ptr %5, align 8, !tbaa !73
   %.not302 = icmp eq i32 %i.av, 0
   br i1 %.not302, label %bb.h, label %bb.g

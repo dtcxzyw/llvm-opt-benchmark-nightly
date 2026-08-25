@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/AArch64TargetStreamer?download=true
+inline.NumInlined: 578
+inline.NumDeleted: 336
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@_ZN4llvm21AArch64TargetStreamer17emitConstantPoolsEv:bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !41, !nonnull !19, !align !44
@@ -200,8 +205,9 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call noalias noundef nonnull dereferenceable(199728) ptr @_Znwm(i64 noundef 199728) #15 ; 9 uses
+  %i.c = tail call noalias noundef nonnull dereferenceable(199728) ptr @_Znwm(i64 noundef 199728) #15 ; 10 uses
   tail call void @_ZN4llvm16MCTargetStreamerC2ERNS_10MCStreamerE(ptr noundef nonnull align 8 dereferenceable(199728) %i.c, ptr noundef nonnull align 8 dereferenceable(304) %0) #14
+  store ptr getelementptr inbounds nuw inrange(-16, 464) (i8, ptr @_ZTVN4llvm21AArch64TargetStreamerE, i64 16), ptr %i.c, align 8, !tbaa !8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store ptr %i.e, ptr %i.d, align 8, !tbaa !21
@@ -226,8 +232,9 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.o = tail call noalias noundef nonnull dereferenceable(199720) ptr @_Znwm(i64 noundef 199720) #15 ; 8 uses
+  %i.o = tail call noalias noundef nonnull dereferenceable(199720) ptr @_Znwm(i64 noundef 199720) #15 ; 9 uses
   tail call void @_ZN4llvm16MCTargetStreamerC2ERNS_10MCStreamerE(ptr noundef nonnull align 8 dereferenceable(199720) %i.o, ptr noundef nonnull align 8 dereferenceable(304) %0) #14
+  store ptr getelementptr inbounds nuw inrange(-16, 464) (i8, ptr @_ZTVN4llvm21AArch64TargetStreamerE, i64 16), ptr %i.o, align 8, !tbaa !8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   store ptr %i.q, ptr %i.p, align 8, !tbaa !21

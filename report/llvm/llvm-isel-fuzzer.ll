@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/llvm-isel-fuzzer?download=true
+inline.NumInlined: 815
+inline.NumDeleted: 540
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZNSt10unique_ptrIN4llvm9IRMutatorESt14default_deleteIS1_EED2Ev:bb.a
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -200,15 +204,15 @@ _ZNSt14_Function_baseD2Ev.exit.6:                 ; preds = %bb.h, %_ZNSt14_Func
   %i.bx = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.by = load ptr, ptr %i.bx, align 16, !tbaa !40
   store ptr %i.by, ptr %i.bw, align 8, !tbaa !40
+  %3 = ptrtoint ptr %i.bt to i64
+  %4 = getelementptr inbounds nuw i8, ptr %i.ab, i64 224 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %i.bz = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #22 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN4llvm21InstDeleterIRStrategyE, i64 16), ptr %i.bz, align 8, !tbaa !8
   %i.ca = call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #22 ; 4 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store ptr %i.bz, ptr %i.cb, align 8, !tbaa !42
-  %3 = ptrtoint ptr %i.bt to i64
   store i64 %3, ptr %i.ca, align 8, !tbaa !42, !alias.scope !44, !noalias !47
-  %4 = getelementptr inbounds nuw i8, ptr %i.ab, i64 224 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ca, i64 16 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !49)
   %i.cd = call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #22, !noalias !49 ; 7 uses

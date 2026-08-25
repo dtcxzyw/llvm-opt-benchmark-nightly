@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/LegalizeForExport?download=true
+inline.NumInlined: 743
+inline.NumDeleted: 543
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -106,17 +108,17 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 192
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.d, i8 0, i64 56, i1 false), !noalias !11
-  store ptr %i.f, ptr %i.e, align 8, !tbaa !17, !noalias !11
+  store ptr %i.f, ptr %i.e, align 16, !tbaa !17, !noalias !11
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 188
   store i32 4, ptr %i.g, align 4, !tbaa !19, !noalias !11
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 224
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 240
-  store ptr %i.i, ptr %i.h, align 8, !tbaa !17, !noalias !11
+  store ptr %i.i, ptr %i.h, align 16, !tbaa !17, !noalias !11
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 236
   store i32 4, ptr %i.j, align 4, !tbaa !19, !noalias !11
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 272
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.k, i8 0, i64 64, i1 false), !noalias !11
-  store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN12_GLOBAL__N_121LegalizeForExportPassE, i64 16), ptr %i.a, align 8, !tbaa !20, !noalias !11
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.k, i8 0, i64 64, i1 false), !noalias !11
+  store ptr getelementptr inbounds nuw inrange(-16, 104) (i8, ptr @_ZTVN12_GLOBAL__N_121LegalizeForExportPassE, i64 16), ptr %i.a, align 16, !tbaa !20, !noalias !11
   store ptr %i.a, ptr %0, align 8, !tbaa !22, !alias.scope !8
   ret void
 }

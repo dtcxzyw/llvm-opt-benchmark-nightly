@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/ContiguousBlobAccumulator?download=true
+inline.NumInlined: 74
+inline.NumDeleted: 52
 begin_hunk_0_@_ZN4llvm4yaml25ContiguousBlobAccumulator10checkLimitEm:bb.a
   %.not7 = icmp eq ptr %i.i, null
   br i1 %.not7, label %bb.b, label %.thread
@@ -200,15 +202,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZN4llvm11raw_ostreamlsEc.exit.i, %bb.b
-  %.024.i = phi i32 [ 0, %bb.b ], [ %i.i, %_ZN4llvm11raw_ostreamlsEc.exit.i ]
-  %.0.i = phi i64 [ %1, %bb.b ], [ %i.g, %_ZN4llvm11raw_ostreamlsEc.exit.i ] ; 2 uses
-  %i.e = trunc i64 %.0.i to i8
+  %.024.i = phi i64 [ %1, %bb.b ], [ %i.g, %_ZN4llvm11raw_ostreamlsEc.exit.i ] ; 2 uses
+  %.023.i = phi i32 [ 0, %bb.b ], [ %i.i, %_ZN4llvm11raw_ostreamlsEc.exit.i ]
+  %i.e = trunc i64 %.024.i to i8
   %i.f = and i8 %i.e, 127                         ; 2 uses
-  %i.g = ashr i64 %.0.i, 7                        ; 2 uses
+  %i.g = ashr i64 %.024.i, 7                      ; 2 uses
   %.not.i = icmp samesign ugt i8 %i.f, 63
   %i.h = sext i1 %.not.i to i64
   %.not30.i.not = icmp eq i64 %i.g, %i.h          ; 2 uses
-  %i.i = add i32 %.024.i, 1                       ; 2 uses
+  %i.i = add i32 %.023.i, 1                       ; 2 uses
   %masksel.i = select i1 %.not30.i.not, i8 0, i8 -128
   %.023.i.a = or disjoint i8 %masksel.i, %i.f     ; 2 uses
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !32   ; 3 uses

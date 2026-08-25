@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SBScriptObject?download=true
+inline.NumInlined: 166
+inline.NumDeleted: 97
 begin_hunk_0_@_ZNK4lldb14SBScriptObject7IsValidEv:bb.a
   %i.l = add i64 %i.k, 1
   call void @_ZdlPvm(ptr noundef %i.i, i64 noundef %i.l) #12
@@ -200,12 +202,19 @@ _ZNSt10unique_ptrIN12lldb_private12ScriptObjectESt14default_deleteIS1_EED2Ev.exi
   store ptr null, ptr %i.b, align 8, !tbaa !15, !noalias !77
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i32 0, ptr %i.c, align 8, !tbaa !17, !noalias !77
+  %1 = load ptr, ptr %0, align 8, !tbaa !18       ; 2 uses
   store ptr %i.b, ptr %0, align 8, !tbaa !18
+  %.not.i.i.i.i = icmp eq ptr %1, null
+  br i1 %.not.i.i.i.i, label %bb.b, label %_ZNKSt14default_deleteIN12lldb_private12ScriptObjectEEclEPS1_.exit.i.i.i.i
+
+_ZNKSt14default_deleteIN12lldb_private12ScriptObjectEEclEPS1_.exit.i.i.i.i: ; preds = %_ZNSt10unique_ptrIN12lldb_private12ScriptObjectESt14default_deleteIS1_EED2Ev.exit.a
+  tail call void @_ZdlPvm(ptr noundef nonnull %1, i64 noundef 16) #12
+  %.pre = load ptr, ptr %0, align 8, !tbaa !18
   br label %bb.b
 
-bb.b:                                             ; preds = %_ZNSt10unique_ptrIN12lldb_private12ScriptObjectESt14default_deleteIS1_EED2Ev.exit.a, %bb.a
-  %1 = phi ptr [ %i.b, %_ZNSt10unique_ptrIN12lldb_private12ScriptObjectESt14default_deleteIS1_EED2Ev.exit.a ], [ %i.a, %bb.a ]
-  ret ptr %1
+bb.b:                                             ; preds = %_ZNSt10unique_ptrIN12lldb_private12ScriptObjectESt14default_deleteIS1_EED2Ev.exit.a, %_ZNKSt14default_deleteIN12lldb_private12ScriptObjectEEclEPS1_.exit.i.i.i.i, %bb.a
+  %2 = phi ptr [ %i.b, %_ZNSt10unique_ptrIN12lldb_private12ScriptObjectESt14default_deleteIS1_EED2Ev.exit.a ], [ %.pre, %_ZNKSt14default_deleteIN12lldb_private12ScriptObjectEEclEPS1_.exit.i.i.i.i ], [ %i.a, %bb.a ]
+  ret ptr %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/WebAssembly?download=true
+inline.NumInlined: 1292
+inline.NumDeleted: 505
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZNK5clang6driver10toolchains11WebAssembly21addClangTargetOptionsERKN4llvm3opt7ArgListERNS3_11SmallVectorIPKcLj16EEENS_9BoundArchENS0_6Action11OffloadKindE:bb.a
   %i.jv = getelementptr inbounds nuw i8, ptr %.sroa.024.0.i, i64 8 ; 2 uses
   %.not.i.i.i111 = icmp eq ptr %i.jv, %i.js
@@ -200,8 +204,8 @@ bb.ax:                                            ; preds = %.thread291
   br label %_ZNK4llvm9StringRef5splitEc.exit
 
 _ZNK4llvm9StringRef5splitEc.exit:                 ; preds = %.thread291, %bb.ax
-  %.sroa.8.0 = phi i64 [ %i.mr, %bb.ax ], [ 0, %.thread291 ]
   %.sroa.5177.0 = phi ptr [ %i.mq, %bb.ax ], [ null, %.thread291 ]
+  %.sroa.8.0 = phi i64 [ %i.mr, %bb.ax ], [ 0, %.thread291 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store ptr %.sroa.5177.0, ptr %17, align 8, !tbaa !30
   store i64 %.sroa.8.0, ptr %.sroa.8.16..sroa_idx, align 8, !tbaa !33

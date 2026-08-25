@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PatternMatch?download=true
+inline.NumInlined: 1294
+inline.NumDeleted: 890
 begin_hunk_0_@_ZN4mlir12RewriterBase14eraseOpResultsEPNS_9OperationERKN4llvm9BitVectorE:bb.a
   %.sroa.0.0.copyload.i = load ptr, ptr %i.as, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -200,8 +202,8 @@ _ZN4llvm11SmallVectorIN4mlir5ValueELj6EEC2EmRKS2_.exit: ; preds = %._crit_edge11
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN4mlir9Operation10getRegionsEv.exit, %bb.i
-  %.sroa.7.0114 = phi i64 [ 0, %_ZN4mlir9Operation10getRegionsEv.exit ], [ %i.ey, %bb.i ] ; 2 uses
-  %.sroa.071.0113 = phi ptr [ %i.dm, %_ZN4mlir9Operation10getRegionsEv.exit ], [ %i.ez, %bb.i ] ; 2 uses
+  %.sroa.071.0114 = phi ptr [ %i.dm, %_ZN4mlir9Operation10getRegionsEv.exit ], [ %i.ez, %bb.i ] ; 2 uses
+  %.sroa.7.0113 = phi i64 [ 0, %_ZN4mlir9Operation10getRegionsEv.exit ], [ %i.ey, %bb.i ] ; 2 uses
   %i.eh = load i32, ptr %i.dq, align 4            ; 3 uses
   %i.ei = and i32 %i.eh, 8388607
   %i.ej = icmp ne i32 %i.ei, 0
@@ -217,13 +219,13 @@ bb.i:                                             ; preds = %_ZN4mlir9Operation1
   %i.er = load i32, ptr %i.ds, align 8, !tbaa !143
   %i.es = zext i32 %i.er to i64
   %i.et = getelementptr inbounds nuw [32 x i8], ptr %i.eq, i64 %i.es
-  %i.eu = and i64 %.sroa.7.0114, 4294967295
+  %i.eu = and i64 %.sroa.7.0113, 4294967295
   %i.ev = getelementptr inbounds nuw [32 x i8], ptr %i.et, i64 %i.eu ; 2 uses
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !106
-  call void @_ZN4mlir12RewriterBase18inlineRegionBeforeERNS_6RegionES2_N4llvm14ilist_iteratorINS3_12ilist_detail12node_optionsINS_5BlockELb0ELb0EvLb0EvEELb0ELb0EEE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.071.0113, ptr noundef nonnull align 8 dereferenceable(28) %i.ev, ptr %i.ex)
-  %i.ey = add i64 %.sroa.7.0114, 1
-  %i.ez = getelementptr inbounds nuw i8, ptr %.sroa.071.0113, i64 32 ; 2 uses
+  call void @_ZN4mlir12RewriterBase18inlineRegionBeforeERNS_6RegionES2_N4llvm14ilist_iteratorINS3_12ilist_detail12node_optionsINS_5BlockELb0ELb0EvLb0EvEELb0ELb0EEE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(28) %.sroa.071.0114, ptr noundef nonnull align 8 dereferenceable(28) %i.ev, ptr %i.ex)
+  %i.ey = add i64 %.sroa.7.0113, 1
+  %i.ez = getelementptr inbounds nuw i8, ptr %.sroa.071.0114, i64 32 ; 2 uses
   %.not101 = icmp eq ptr %i.ez, %i.dp
   br i1 %.not101, label %._crit_edge116, label %bb.i
 

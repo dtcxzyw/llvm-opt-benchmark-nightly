@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Perf?download=true
+inline.NumInlined: 851
+inline.NumDeleted: 511
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZN12lldb_private13process_linux9PerfEvent25MmapMetadataAndDataBufferEmb:bb.a
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -200,7 +204,7 @@ _ZN4llvm5ErrorD2Ev.exit20:                        ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 1024
   %i.p = load i64, ptr %i.o, align 8, !tbaa !184  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.q = icmp slt i64 %i.n, 0
   br i1 %i.q, label %bb.b, label %bb.c
 
@@ -515,7 +519,7 @@ _ZN4llvm5ErrorD2Ev.exit10:                        ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 1056
   %i.o = load i64, ptr %i.n, align 8, !tbaa !217
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.p = icmp slt i64 %i.m, 0
   br i1 %i.p, label %bb.b, label %bb.c
 
@@ -918,11 +922,11 @@ bb.b:                                             ; preds = %bb.a
   %i.a = ptrtoint ptr %3 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %2 to i64
   %i.c = sub i64 %i.a, %i.b                       ; 16 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !188
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !187  ; 8 uses
-  %i.h = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.h = ptrtoint ptr %i.e to i64
   %i.i = ptrtoint ptr %i.g to i64                 ; 4 uses
   %i.j = sub i64 %i.h, %i.i
   %.not46 = icmp ult i64 %i.j, %i.c
@@ -1143,7 +1147,9 @@ _ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit50: ; pr
   br i1 %.not.i51, label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit, label %bb.ai
 
 bb.ai:                                            ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit50
-  %i.bv = sub i64 %i.h, %i.aw
+  %4 = load ptr, ptr %i.d, align 8, !tbaa !188
+  %5 = ptrtoint ptr %4 to i64
+  %i.bv = sub i64 %5, %i.aw
   tail call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef %i.bv) #17
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit
 

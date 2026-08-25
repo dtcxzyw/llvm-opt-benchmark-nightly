@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InterpStack?download=true
+inline.NumInlined: 634
+inline.NumDeleted: 315
 begin_hunk_0_@_ZN5clang6interplsERN4llvm11raw_ostreamERKNS0_7PointerE:bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(17) %i.bq, ptr noundef nonnull align 1 dereferenceable(17) @.str.5, i64 17, i1 false)
   %i.bw = load ptr, ptr %i.a, align 8, !tbaa !60
@@ -200,8 +202,8 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br label %_ZNK5clang6interp7PtrView6expandEv.exit.i
 
 _ZNK5clang6interp7PtrView6expandEv.exit.i:        ; preds = %bb.aa, %bb.x, %bb.w, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i
-  %.sroa.6.0.i = phi i32 [ %i.du, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i ], [ %i.du, %bb.w ], [ %spec.select.i, %bb.aa ], [ %i.du, %bb.x ]
   %.sroa.13.0.i = phi i64 [ %i.eo, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i ], [ %i.dv, %bb.w ], [ %i.dv, %bb.aa ], [ %i.dv, %bb.x ]
+  %.sroa.6.0.i = phi i32 [ %i.du, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i ], [ %i.du, %bb.w ], [ %spec.select.i, %bb.aa ], [ %i.du, %bb.x ]
   call void @_ZN5clang6interp7PointerC2EPNS0_5BlockEjm(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef %i.dt, i32 noundef %.sroa.6.0.i, i64 noundef %.sroa.13.0.i) #13
   br label %_ZNK5clang6interp7Pointer6expandEv.exit
 
@@ -403,9 +405,9 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   br label %_ZNK5clang6interp7PtrView6expandEv.exit.i66
 
 _ZNK5clang6interp7PtrView6expandEv.exit.i66:      ; preds = %bb.au, %bb.ar, %bb.aq, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i71
-  %.sroa.6.0.i67 = phi i32 [ %i.gx, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i71 ], [ %i.gx, %bb.aq ], [ %spec.select.i69, %bb.au ], [ %i.gx, %bb.ar ]
-  %.sroa.13.0.i68 = phi i64 [ %i.hr, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i71 ], [ %i.gy, %bb.aq ], [ %i.gy, %bb.au ], [ %i.gy, %bb.ar ]
-  call void @_ZN5clang6interp7PointerC2EPNS0_5BlockEjm(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.gw, i32 noundef %.sroa.6.0.i67, i64 noundef %.sroa.13.0.i68) #13
+  %.sroa.13.0.i67 = phi i64 [ %i.hr, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i71 ], [ %i.gy, %bb.aq ], [ %i.gy, %bb.au ], [ %i.gy, %bb.ar ]
+  %.sroa.6.0.i68 = phi i32 [ %i.gx, %_ZNK5clang6interp7PtrView7getSizeEv.exit.i.i71 ], [ %i.gx, %bb.aq ], [ %spec.select.i69, %bb.au ], [ %i.gx, %bb.ar ]
+  call void @_ZN5clang6interp7PointerC2EPNS0_5BlockEjm(ptr noundef nonnull align 8 dereferenceable(48) %7, ptr noundef %i.gw, i32 noundef %.sroa.6.0.i68, i64 noundef %.sroa.13.0.i67) #13
   br label %_ZNK5clang6interp7Pointer6expandEv.exit75
 
 _ZNK5clang6interp7Pointer6expandEv.exit75:        ; preds = %bb.am, %_ZNK5clang6interp7PtrView6expandEv.exit.i66

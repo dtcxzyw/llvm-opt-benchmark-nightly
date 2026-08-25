@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/SPIRVMCInstLower?download=true
+inline.NumInlined: 543
+inline.NumDeleted: 317
 begin_hunk_0_@_ZNK4llvm16SPIRVMCInstLower5lowerEPKNS_12MachineInstrERNS_6MCInstEPNS_5SPIRV18ModuleAnalysisInfoE:bb.a
 bb.k:                                             ; preds = %.lr.ph.i.i.i
   %i.be = add nuw i32 %.01117.i.i.i, 1
@@ -200,8 +202,8 @@ bb.u:                                             ; preds = %bb.f
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.s, %bb.t, %bb.u, %bb.r, %_ZN4llvm5SPIRV18ModuleAnalysisInfo22getOrCreateMBBRegisterERKNS_17MachineBasicBlockE.exit, %bb.l
-  %.sroa.068.0 = phi i8 [ 1, %bb.l ], [ 1, %_ZN4llvm5SPIRV18ModuleAnalysisInfo22getOrCreateMBBRegisterERKNS_17MachineBasicBlockE.exit ], [ 1, %bb.r ], [ 1, %bb.t ], [ 4, %bb.u ], [ 2, %bb.s ] ; 2 uses
   %.sroa.1069.0 = phi i64 [ %.sroa.3.8.insert.ext.i, %bb.l ], [ %.sroa.3.8.insert.ext.i56, %_ZN4llvm5SPIRV18ModuleAnalysisInfo22getOrCreateMBBRegisterERKNS_17MachineBasicBlockE.exit ], [ %.sroa.3.8.insert.ext.i58, %bb.r ], [ %.sroa.3.8.insert.ext.i60, %bb.t ], [ %i.dp, %bb.u ], [ %i.dh, %bb.s ] ; 2 uses
+  %.sroa.068.0 = phi i8 [ 1, %bb.l ], [ 1, %_ZN4llvm5SPIRV18ModuleAnalysisInfo22getOrCreateMBBRegisterERKNS_17MachineBasicBlockE.exit ], [ 1, %bb.r ], [ 1, %bb.t ], [ 4, %bb.u ], [ 2, %bb.s ] ; 2 uses
   %i.dq = load i32, ptr %i.y, align 8, !tbaa !203 ; 2 uses
   %i.dr = load i32, ptr %i.z, align 4, !tbaa !204
   %.not.i.i = icmp ult i32 %i.dq, %i.dr
@@ -422,7 +424,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapISt4pairIPKNS_15MachineFunctionEiENS_10MCRegi
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
-  store i32 0, ptr %i.bu, align 4, !tbaa !233
+  store i32 0, ptr %i.bu, align 8, !tbaa !233
   br label %_ZN4llvm12DenseMapBaseINS_8DenseMapISt4pairIPKNS_15MachineFunctionEiENS_10MCRegisterENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S7_EEEES6_S7_S9_SC_E15LookupBucketForIS6_EEbRKT_RPSC_.exit
 
 _ZN4llvm12DenseMapBaseINS_8DenseMapISt4pairIPKNS_15MachineFunctionEiENS_10MCRegisterENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S7_EEEES6_S7_S9_SC_E15LookupBucketForIS6_EEbRKT_RPSC_.exit: ; preds = %.lr.ph.i, %_ZN4llvm12DenseMapBaseINS_8DenseMapISt4pairIPKNS_15MachineFunctionEiENS_10MCRegisterENS_12DenseMapInfoIS6_vEENS_6detail12DenseMapPairIS6_S7_EEEES6_S7_S9_SC_E22findBucketForInsertionIS6_EEPSC_RKT_SG_.exit
@@ -655,7 +657,7 @@ _ZZN4llvm12DenseMapBaseINS_8DenseMapISt4pairIPKNS_15MachineFunctionEiENS_10MCReg
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bd = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.be = load i32, ptr %i.bd, align 8, !tbaa !56
-  store i32 %i.be, ptr %i.bc, align 4, !tbaa !56
+  store i32 %i.be, ptr %i.bc, align 8, !tbaa !56
   %i.bf = shl nuw i32 1, %.lcssa.i
   %i.bg = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %.lcssa11.i ; 2 uses
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !56

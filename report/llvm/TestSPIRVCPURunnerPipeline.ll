@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/TestSPIRVCPURunnerPipeline?download=true
+inline.NumInlined: 158
+inline.NumDeleted: 110
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -197,7 +199,7 @@ bb.a:
   %8 = alloca %"class.std::function.35", align 8  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
-  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, i8 0, i64 32, i1 false)
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !13   ; 2 uses
   %.not.i.i.not.i = icmp eq ptr %i.b, null
@@ -207,23 +209,22 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.d = call noundef zeroext i1 %i.b(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %5, i32 noundef 2) #7, !inline_history !25 ; 0 uses
   %i.e = load <2 x ptr>, ptr %i.a, align 8, !tbaa !8
-  %9 = load ptr, ptr %i.a, align 8, !tbaa !13
   store <2 x ptr> %i.e, ptr %i.c, align 8, !tbaa !8
   br label %_ZNSt8functionIFvRN4mlir13OpPassManagerEEEC2ERKS4_.exit
 
 _ZNSt8functionIFvRN4mlir13OpPassManagerEEEC2ERKS4_.exit: ; preds = %bb.a, %bb.b
-  %10 = phi ptr [ null, %bb.a ], [ %9, %bb.b ]    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 0, ptr %i.f, align 8
   %i.g = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8 ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.g, i8 0, i64 32, i1 false)
-  %.not.i.i.not.i.i.i.i.i = icmp eq ptr %10, null
+  %9 = load ptr, ptr %i.h, align 8, !tbaa !13     ; 2 uses
+  %.not.i.i.not.i.i.i.i.i = icmp eq ptr %9, null
   br i1 %.not.i.i.not.i.i.i.i.i, label %_ZNSt8functionIFN4llvm13LogicalResultERN4mlir13OpPassManagerENS0_9StringRefENS0_12function_refIFS1_RKNS0_5TwineEEEEEEC2IZNS2_24PassPipelineRegistrationINS2_20EmptyPipelineOptionsEEC1ES5_S5_RKS_IFvS4_EEEUlS4_S5_SB_E_vEEOT_.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt8functionIFvRN4mlir13OpPassManagerEEEC2ERKS4_.exit
   %i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.j = call noundef zeroext i1 %10(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %7, i32 noundef 2) #7, !inline_history !26 ; 0 uses
+  %i.j = call noundef zeroext i1 %9(ptr noundef nonnull align 8 dereferenceable(32) %i.g, ptr noundef nonnull align 8 dereferenceable(32) %7, i32 noundef 2) #7, !inline_history !26 ; 0 uses
   %i.k = load <2 x ptr>, ptr %i.h, align 8, !tbaa !8
   store <2 x ptr> %i.k, ptr %i.i, align 8, !tbaa !8
   br label %_ZNSt8functionIFN4llvm13LogicalResultERN4mlir13OpPassManagerENS0_9StringRefENS0_12function_refIFS1_RKNS0_5TwineEEEEEEC2IZNS2_24PassPipelineRegistrationINS2_20EmptyPipelineOptionsEEC1ES5_S5_RKS_IFvS4_EEEUlS4_S5_SB_E_vEEOT_.exit

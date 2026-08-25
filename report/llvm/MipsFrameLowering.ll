@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/MipsFrameLowering?download=true
+inline.NumInlined: 108
+inline.NumDeleted: 85
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZNK4llvm17MipsFrameLowering9hasFPImplERKNS_15MachineFunctionE:bb.a
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = tail call noundef ptr %i.g(ptr noundef nonnull align 8 dereferenceable(536) %i.d) #8 ; 4 uses
@@ -200,8 +204,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %.lr.ph33, %bb.h
   %i.az = phi i16 [ %i.ac, %.lr.ph33 ], [ %i.cb, %bb.h ]
-  %.231 = phi i64 [ %.0.lcssa, %.lr.ph33 ], [ %i.bz, %bb.h ]
-  %.02230 = phi ptr [ %i.ab, %.lr.ph33 ], [ %i.ca, %bb.h ]
+  %.031 = phi ptr [ %i.ab, %.lr.ph33 ], [ %i.ca, %bb.h ]
+  %.230 = phi i64 [ %.0.lcssa, %.lr.ph33 ], [ %i.bz, %bb.h ]
   %i.ba = zext i16 %i.az to i32
   %i.bb = load ptr, ptr %i.h, align 8, !tbaa !231
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 32
@@ -221,14 +225,14 @@ bb.h:                                             ; preds = %.lr.ph33, %bb.h
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !291
   %i.br = lshr i32 %i.bq, 3
   %i.bs = zext nneg i32 %i.br to i64              ; 3 uses
-  %i.bt = add nsw i64 %.231, %i.bs                ; 2 uses
+  %i.bt = add nsw i64 %.230, %i.bs                ; 2 uses
   %i.bu = icmp ne i64 %i.bt, 0
   %i.bv = zext i1 %i.bu to i64                    ; 2 uses
   %i.bw = sub i64 %i.bt, %i.bv
   %i.bx = udiv i64 %i.bw, %i.bs
   %i.by = add i64 %i.bx, %i.bv
   %i.bz = mul i64 %i.by, %i.bs                    ; 2 uses
-  %i.ca = getelementptr inbounds nuw i8, ptr %.02230, i64 2 ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %.031, i64 2 ; 2 uses
   %i.cb = load i16, ptr %i.ca, align 2, !tbaa !262 ; 2 uses
   %.not25 = icmp eq i16 %i.cb, 0
   br i1 %.not25, label %._crit_edge34, label %bb.h, !llvm.loop !293

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/PropertySet?download=true
+inline.NumInlined: 1328
+inline.NumDeleted: 796
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN4llvm12function_refIFvRNS_11raw_ostreamENS_9StringRefEEE11callback_fnINS_7support6detail13FormatFunctorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvlS2_S3_:bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.h = load i64, ptr %i.g, align 8, !tbaa !47
@@ -200,7 +204,7 @@ bb.a:
   %6 = alloca %"class.std::tuple.75", align 8     ; 14 uses
   %7 = alloca %"class.llvm::support::detail::FormatFunctor", align 8 ; 5 uses
   %8 = alloca %"class.llvm::support::detail::FormatFunctor", align 8 ; 5 uses
-  %9 = alloca %"class.llvm::support::detail::FormatFunctor", align 8 ; 6 uses
+  %9 = alloca %"class.llvm::support::detail::FormatFunctor", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   %i.a = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
@@ -269,7 +273,8 @@ _ZN4llvm7support6detail13FormatFunctorINSt7__cxx1112basic_stringIcSt11char_trait
   store i64 0, ptr %i.y, align 8, !tbaa !47
   store i8 0, ptr %i.p, align 8, !tbaa !60
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #16
-  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 6 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 7 uses
+  store ptr %i.aa, ptr %9, align 8, !tbaa !113
   %i.ab = load ptr, ptr %5, align 8, !tbaa !44    ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
   %i.ad = icmp eq ptr %i.ab, %i.ac
@@ -279,7 +284,7 @@ _ZN4llvm7support6detail13FormatFunctorINSt7__cxx1112basic_stringIcSt11char_trait
   %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !47 ; 4 uses
   %i.ag = icmp ult i64 %i.af, 16
-  tail call void @llvm.assume(i1 %i.ag)
+  call void @llvm.assume(i1 %i.ag)
   %i.ah = add nuw nsw i64 %i.af, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.aa, ptr noundef nonnull align 8 dereferenceable(1) %i.ac, i64 %i.ah, i1 false)
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -302,7 +307,7 @@ _ZN4llvm7support6detail13FormatFunctorINSt7__cxx1112basic_stringIcSt11char_trait
   store ptr %i.ac, ptr %5, align 8, !tbaa !44
   store i64 0, ptr %i.al, align 8, !tbaa !47
   store i8 0, ptr %i.ac, align 8, !tbaa !60
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !292)
+  call void @llvm.experimental.noalias.scope.decl(metadata !292)
   %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
   store ptr %i.ao, ptr %6, align 8, !tbaa !113, !alias.scope !292
   %i.ap = icmp eq ptr %i.ab, %i.aa

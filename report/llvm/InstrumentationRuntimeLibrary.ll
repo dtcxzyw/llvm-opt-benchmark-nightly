@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/InstrumentationRuntimeLibrary?download=true
+inline.NumInlined: 724
+inline.NumDeleted: 425
 begin_hunk_0_@_ZN4llvm4bolt29InstrumentationRuntimeLibrary4linkERNS0_13BinaryContextENS_9StringRefERNS0_10BOLTLinkerESt8functionIFvS7_IFvRKNS0_13BinarySectionEmEEEE:bb.a
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.ac, ptr %i.ad, align 8, !tbaa !575
@@ -200,11 +202,12 @@ bb.a:
   store ptr @.str.35, ptr %4, align 8, !tbaa !19
   store i8 3, ptr %i.d, align 8, !tbaa !322
   %i.f = load ptr, ptr %3, align 8, !tbaa !14
-  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !391  ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !391  ; 2 uses
   %i.i = call noalias noundef nonnull ptr @_Znam(i64 noundef %i.h) #22 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.i, ptr align 1 %i.f, i64 %i.h, i1 false)
-  %i.j = call noundef nonnull align 8 dereferenceable(391) ptr @_ZN4llvm4bolt13BinaryContext23registerOrUpdateSectionERKNS_5TwineEjjPhmj(ptr noundef nonnull align 8 dereferenceable(2268) %1, ptr noundef nonnull align 8 dereferenceable(34) %4, i32 noundef 7, i32 noundef 0, ptr noundef nonnull %i.i, i64 noundef %i.h, i32 noundef 1) #19 ; 0 uses
+  %5 = load i64, ptr %i.g, align 8, !tbaa !391
+  %i.j = call noundef nonnull align 8 dereferenceable(391) ptr @_ZN4llvm4bolt13BinaryContext23registerOrUpdateSectionERKNS_5TwineEjjPhmj(ptr noundef nonnull align 8 dereferenceable(2268) %1, ptr noundef nonnull align 8 dereferenceable(34) %4, i32 noundef 7, i32 noundef 0, ptr noundef nonnull %i.i, i64 noundef %5, i32 noundef 1) #19 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   %i.k = load ptr, ptr %3, align 8, !tbaa !14     ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses

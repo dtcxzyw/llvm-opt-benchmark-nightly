@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/NVPTXLowerAggrCopies?download=true
+inline.NumInlined: 691
+inline.NumDeleted: 523
 begin_hunk_0_@_ZN12_GLOBAL__N_120NVPTXLowerAggrCopies13runOnFunctionERN4llvm8FunctionE:bb.a
   %i.cx = load ptr, ptr %3, align 8, !tbaa !31
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %i.cw
@@ -200,8 +202,8 @@ bb.aa:                                            ; preds = %_ZNK4llvm9StoreInst
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %_ZNK4llvm9StoreInst22getPointerAddressSpaceEv.exit
-  %.0123 = phi ptr [ %i.go, %bb.aa ], [ %i.el, %_ZNK4llvm9StoreInst22getPointerAddressSpaceEv.exit ]
-  %.0122 = phi ptr [ %i.gn, %bb.aa ], [ %i.ej, %_ZNK4llvm9StoreInst22getPointerAddressSpaceEv.exit ]
+  %.0123 = phi ptr [ %i.gn, %bb.aa ], [ %i.ej, %_ZNK4llvm9StoreInst22getPointerAddressSpaceEv.exit ]
+  %.0122 = phi ptr [ %i.go, %bb.aa ], [ %i.el, %_ZNK4llvm9StoreInst22getPointerAddressSpaceEv.exit ]
   %i.gp = getelementptr inbounds nuw i8, ptr %i.eh, i64 2
   %i.gq = load i16, ptr %i.gp, align 2, !tbaa !187 ; 2 uses
   %i.gr = lshr i16 %i.gq, 1
@@ -217,7 +219,7 @@ bb.ab:                                            ; preds = %bb.aa, %_ZNK4llvm9S
   %.sroa.0177.0.insert.insert = or disjoint i16 %.sroa.0177.0.insert.ext, 256
   %.sroa.0.0.insert.insert = or disjoint i16 %.sroa.0.0.insert.ext, 256
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %10, i8 0, i64 40, i1 false)
-  %i.gx = call noundef ptr @_ZN4llvm13IRBuilderBase21CreateMemTransferInstEjPNS_5ValueENS_10MaybeAlignES2_S3_S2_bRKNS_9AAMDNodesE(ptr noundef nonnull align 8 dereferenceable(88) %7, i32 noundef 258, ptr noundef %.0123, i16 %.sroa.0177.0.insert.insert, ptr noundef %.0122, i16 %.sroa.0.0.insert.insert, ptr noundef %i.eu, i1 noundef zeroext %spec.select, ptr noundef nonnull align 8 dereferenceable(40) %10) #14 ; 2 uses
+  %i.gx = call noundef ptr @_ZN4llvm13IRBuilderBase21CreateMemTransferInstEjPNS_5ValueENS_10MaybeAlignES2_S3_S2_bRKNS_9AAMDNodesE(ptr noundef nonnull align 8 dereferenceable(88) %7, i32 noundef 258, ptr noundef %.0122, i16 %.sroa.0177.0.insert.insert, ptr noundef %.0123, i16 %.sroa.0.0.insert.insert, ptr noundef %i.eu, i1 noundef zeroext %spec.select, ptr noundef nonnull align 8 dereferenceable(40) %10) #14 ; 2 uses
   %i.gy = load i32, ptr %i.e, align 8, !tbaa !33  ; 2 uses
   %i.gz = load i32, ptr %i.f, align 4, !tbaa !36
   %.not.i172 = icmp ult i32 %i.gy, %i.gz

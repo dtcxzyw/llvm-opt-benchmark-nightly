@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/NestedNameSpecifier?download=true
+inline.NumInlined: 564
+inline.NumDeleted: 351
 begin_hunk_0_@_ZNK5clang19NestedNameSpecifier16isFullyQualifiedEv:bb.a
   %i.o = inttoptr i64 %i.n to ptr                 ; 3 uses
   %i.p = icmp eq i32 %i.e, 3
@@ -200,7 +202,7 @@ bb.g:                                             ; preds = %_ZNK5clang9NamedDec
   br i1 %.not.i17, label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aj, ptr nonnull align 1 %i.ad, i64 %i.af, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aj, ptr nonnull align 8 %i.ad, i64 %i.af, i1 false)
   %i.ap = load ptr, ptr %i.ai, align 8, !tbaa !50
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.af
   store ptr %i.aq, ptr %i.ai, align 8, !tbaa !50
@@ -235,7 +237,7 @@ bb.k:                                             ; preds = %_ZNK5clang9NamedDec
   br i1 %.not.i25, label %_ZN4llvm11raw_ostreamlsENS_9StringRefE.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr nonnull align 1 %i.au, i64 %i.aw, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ba, ptr nonnull align 8 %i.au, i64 %i.aw, i1 false)
   %i.bg = load ptr, ptr %i.az, align 8, !tbaa !50
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.aw
   store ptr %i.bh, ptr %i.az, align 8, !tbaa !50
