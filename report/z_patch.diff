@@ -1,0 +1,187 @@
+diff --git a/llvm/docs/LangRef.md b/llvm/docs/LangRef.md
+index ac758261c80e1..4e814f2189f52 100644
+--- a/llvm/docs/LangRef.md
++++ b/llvm/docs/LangRef.md
+@@ -3764,8 +3764,8 @@ can also be created by means not recognized by LLVM, e.g., by directly calling
+ `mmap`. Those allocated objects are allowed to grow to the right (i.e.,
+ keeping the same base address, but increasing their size) while maintaining the
+ validity of existing pointers, as long as they always satisfy the properties
+-described above. Currently, allocated objects are not permitted to grow to the
+-left or to shrink, nor can they have holes.
++described above. Allocated objects are not permitted to grow to the left or to
++shrink, nor can they have holes.
+ 
+ (objectlifetime)=
+ 
+diff --git a/llvm/include/llvm/Analysis/Loads.h b/llvm/include/llvm/Analysis/Loads.h
+index 22ce31d61ddb8..d7bb3346b6f1a 100644
+--- a/llvm/include/llvm/Analysis/Loads.h
++++ b/llvm/include/llvm/Analysis/Loads.h
+@@ -77,7 +77,8 @@ LLVM_ABI bool isDereferenceablePointer(const Value *V, const APInt &Size,
+ /// the address is already accessed.
+ LLVM_ABI bool isSafeToLoadUnconditionally(Value *V, Align Alignment,
+                                           const APInt &Size,
+-                                          const SimplifyQuery &SQ);
++                                          const SimplifyQuery &SQ,
++                                          bool IgnoreFree = false);
+ 
+ /// Return true if we can prove that the given load (which is assumed to be
+ /// within the specified loop) would access only dereferenceable memory, and
+@@ -115,7 +116,8 @@ isReadOnlyLoop(Loop *L, ScalarEvolution *SE, DominatorTree *DT,
+ /// quick local scan of the basic block containing SQ.CxtI, to determine if
+ /// the address is already accessed.
+ LLVM_ABI bool isSafeToLoadUnconditionally(Value *V, Type *Ty, Align Alignment,
+-                                          const SimplifyQuery &SQ);
++                                          const SimplifyQuery &SQ,
++                                          bool IgnoreFree = false);
+ 
+ /// Return true if speculation of the given load must be suppressed to avoid
+ /// ordering or interfering with an active sanitizer.  If not suppressed,
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index de9022c540d42..5d8c74442195e 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -455,8 +455,9 @@ bool llvm::mustSuppressSpeculation(const LoadInst &LI) {
+ 
+ bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment,
+                                        const APInt &Size,
+-                                       const SimplifyQuery &SQ) {
+-  if (isDereferenceableAndAlignedPointer(V, Alignment, Size, SQ)) {
++                                       const SimplifyQuery &SQ,
++                                       bool IgnoreFree) {
++  if (isDereferenceableAndAlignedPointer(V, Alignment, Size, SQ, IgnoreFree)) {
+     // With sanitizers `Dereferenceable` is not always enough for unconditional
+     // load.
+     if (!SQ.CxtI || !suppressSpeculativeLoadForSanitizers(*SQ.CxtI))
+@@ -528,13 +529,14 @@ bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment,
+ }
+ 
+ bool llvm::isSafeToLoadUnconditionally(Value *V, Type *Ty, Align Alignment,
+-                                       const SimplifyQuery &SQ) {
++                                       const SimplifyQuery &SQ,
++                                       bool IgnoreFree) {
+   TypeSize TySize = SQ.DL.getTypeStoreSize(Ty);
+   if (TySize.isScalable())
+     return false;
+   APInt Size(SQ.DL.getIndexTypeSizeInBits(V->getType()),
+              TySize.getFixedValue());
+-  return isSafeToLoadUnconditionally(V, Alignment, Size, SQ);
++  return isSafeToLoadUnconditionally(V, Alignment, Size, SQ, IgnoreFree);
+ }
+ 
+ /// DefMaxInstsToScan - the default number of maximum instructions
+diff --git a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+index 36dea655dfc13..d9e78d16ae3f4 100644
+--- a/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
++++ b/llvm/lib/Transforms/Vectorize/VectorCombine.cpp
+@@ -281,8 +281,11 @@ bool VectorCombine::vectorizeLoadInsert(Instruction &I) {
+   auto *MinVecTy = VectorType::get(ScalarTy, MinVecNumElts, false);
+   unsigned OffsetEltIndex = 0;
+   Align Alignment = Load->getAlign();
++  // Ignore frees because the existing load proves that the object has not been
++  // freed. Allocations cannot shrink, so this is sufficient.
+   if (!isSafeToLoadUnconditionally(SrcPtr, MinVecTy, Align(1),
+-                                   SQ.getWithInstruction(Load))) {
++                                   SQ.getWithInstruction(Load),
++                                   /*IgnoreFree=*/true)) {
+     // It is not safe to load directly from the pointer, but we can still peek
+     // through gep offsets and check if it safe to load from a base address with
+     // updated alignment. If it is, we can shuffle the element(s) into place
+@@ -309,7 +312,8 @@ bool VectorCombine::vectorizeLoadInsert(Instruction &I) {
+     OffsetEltIndex = OffsetEltIndexAP.getZExtValue();
+ 
+     if (!isSafeToLoadUnconditionally(SrcPtr, MinVecTy, Align(1),
+-                                     SQ.getWithInstruction(Load)))
++                                     SQ.getWithInstruction(Load),
++                                     /*IgnoreFree=*/true))
+       return false;
+ 
+     // Update alignment with offset value. Note that the offset could be negated
+@@ -394,8 +398,11 @@ bool VectorCombine::widenSubvectorLoad(Instruction &I) {
+   Value *SrcPtr = Load->getPointerOperand()->stripPointerCasts();
+   assert(isa<PointerType>(SrcPtr->getType()) && "Expected a pointer type");
+   Align Alignment = Load->getAlign();
++  // Ignore frees because the existing load proves that the object has not been
++  // freed. Allocations cannot shrink, so this is sufficient.
+   if (!isSafeToLoadUnconditionally(SrcPtr, Ty, Align(1),
+-                                   SQ.getWithInstruction(Load)))
++                                   SQ.getWithInstruction(Load),
++                                   /*IgnoreFree=*/true))
+     return false;
+ 
+   Alignment = std::max(SrcPtr->getPointerAlignment(*DL), Alignment);
+diff --git a/llvm/test/Transforms/VectorCombine/X86/load-inseltpoison.ll b/llvm/test/Transforms/VectorCombine/X86/load-inseltpoison.ll
+index 28f561e712663..37ee9b8be29d6 100644
+--- a/llvm/test/Transforms/VectorCombine/X86/load-inseltpoison.ll
++++ b/llvm/test/Transforms/VectorCombine/X86/load-inseltpoison.ll
+@@ -4,6 +4,8 @@
+ 
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ 
++declare void @may_free()
++
+ define float @matching_fp_scalar(ptr align 16 dereferenceable(16) %p) {
+ ; CHECK-LABEL: @matching_fp_scalar(
+ ; CHECK-NEXT:    [[R:%.*]] = load float, ptr [[P:%.*]], align 16
+@@ -167,6 +169,19 @@ define <4 x float> @load_f32_insert_v4f32(ptr align 16 dereferenceable(16) %p) {
+   ret <4 x float> %r
+ }
+ 
++define <4 x float> @load_f32_insert_v4f32_may_free(ptr align 16 dereferenceable(16) %p) {
++; CHECK-LABEL: @load_f32_insert_v4f32_may_free(
++; CHECK-NEXT:    call void @may_free()
++; CHECK-NEXT:    [[TMP1:%.*]] = load <4 x float>, ptr [[P:%.*]], align 16
++; CHECK-NEXT:    [[R:%.*]] = shufflevector <4 x float> [[TMP1]], <4 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; CHECK-NEXT:    ret <4 x float> [[R]]
++;
++  call void @may_free()
++  %s = load float, ptr %p, align 4
++  %r = insertelement <4 x float> poison, float %s, i32 0
++  ret <4 x float> %r
++}
++
+ define <4 x float> @casted_load_f32_insert_v4f32(ptr align 4 dereferenceable(16) %p) {
+ ; CHECK-LABEL: @casted_load_f32_insert_v4f32(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load <4 x float>, ptr [[P:%.*]], align 4
+@@ -276,6 +291,20 @@ define <8 x i16> @gep01_load_i16_insert_v8i16_deref(ptr align 16 dereferenceable
+   ret <8 x i16> %r
+ }
+ 
++define <8 x i16> @gep01_load_i16_insert_v8i16_deref_may_free(ptr align 16 dereferenceable(17) %p) {
++; CHECK-LABEL: @gep01_load_i16_insert_v8i16_deref_may_free(
++; CHECK-NEXT:    call void @may_free()
++; CHECK-NEXT:    [[TMP1:%.*]] = load <8 x i16>, ptr [[P:%.*]], align 16
++; CHECK-NEXT:    [[R:%.*]] = shufflevector <8 x i16> [[TMP1]], <8 x i16> poison, <8 x i32> <i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
++; CHECK-NEXT:    ret <8 x i16> [[R]]
++;
++  call void @may_free()
++  %gep = getelementptr inbounds <8 x i16>, ptr %p, i64 0, i64 1
++  %s = load i16, ptr %gep, align 2
++  %r = insertelement <8 x i16> poison, i16 %s, i64 0
++  ret <8 x i16> %r
++}
++
+ ; Verify that alignment of the new load is not over-specified.
+ 
+ define <8 x i16> @gep01_load_i16_insert_v8i16_deref_minalign(ptr align 2 dereferenceable(16) %p) {
+@@ -577,6 +606,20 @@ define <4 x float> @load_v2f32_extract_insert_v4f32(ptr align 16 dereferenceable
+   ret <4 x float> %r
+ }
+ 
++define <4 x float> @load_v2f32_extract_insert_v4f32_may_free(ptr align 16 dereferenceable(16) %p) {
++; CHECK-LABEL: @load_v2f32_extract_insert_v4f32_may_free(
++; CHECK-NEXT:    call void @may_free()
++; CHECK-NEXT:    [[TMP1:%.*]] = load <4 x float>, ptr [[P:%.*]], align 16
++; CHECK-NEXT:    [[R:%.*]] = shufflevector <4 x float> [[TMP1]], <4 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
++; CHECK-NEXT:    ret <4 x float> [[R]]
++;
++  call void @may_free()
++  %l = load <2 x float>, ptr %p, align 4
++  %s = extractelement <2 x float> %l, i32 0
++  %r = insertelement <4 x float> poison, float %s, i32 0
++  ret <4 x float> %r
++}
++
+ define <4 x float> @load_v8f32_extract_insert_v4f32(ptr align 16 dereferenceable(16) %p) {
+ ; CHECK-LABEL: @load_v8f32_extract_insert_v4f32(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load <4 x float>, ptr [[P:%.*]], align 16
