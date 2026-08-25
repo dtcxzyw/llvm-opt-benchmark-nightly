@@ -205,7 +205,6 @@ $_ZN5boost9container4test26propagation_test_allocatorIcLb0ELb0ELb0ELb0ELb0EE10un
 @_ZTISt9exception = external constant ptr
 @_ZTVN5boost9container12length_errorE = linkonce_odr dso_local constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTIN5boost9container12length_errorE, ptr @_ZNSt9exceptionD2Ev, ptr @_ZN5boost9container12length_errorD0Ev, ptr @_ZNK5boost9container9exception4whatEv] }, comdat, align 8
 @.str.11 = private unnamed_addr constant [35 x i8] c"unknown boost::container exception\00", align 1
-@_ZN5boost7movelib15detail_adaptiveL34AdaptiveSortInsertionSortThresholdE = internal unnamed_addr constant i64 16, align 8
 @.str.13 = private unnamed_addr constant [44 x i8] c"Error in construct<MyBoostSet>(MyBoostSet2)\00", align 1
 @.str.14 = private unnamed_addr constant [54 x i8] c"Error in construct<MyBoostMultiSet>(MyBoostMultiSet2)\00", align 1
 @.str.15 = private unnamed_addr constant [44 x i8] c"Error in construct<MyBoostSet>(MyBoostSet3)\00", align 1
@@ -608,10 +607,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %._crit_edge, %.preheader
   %.lcssa = phi i64 [ %i.bo, %._crit_edge ], [ %storemerge83, %.preheader ]
-  %7 = icmp ult i64 %.lcssa, 16
-  %8 = select i1 %7, ptr %2, ptr @_ZN5boost7movelib15detail_adaptiveL34AdaptiveSortInsertionSortThresholdE
-  %9 = load i64, ptr %8, align 8, !tbaa !85
-  store i64 %9, ptr %4, align 8, !tbaa !85
+  %7 = tail call i64 @llvm.umin.i64(i64 %.lcssa, i64 16)
+  store i64 %7, ptr %4, align 8, !tbaa !85
   store i64 0, ptr %3, align 8, !tbaa !85
   %i.bq = load i64, ptr %2, align 8, !tbaa !85
   store i64 %i.bq, ptr %5, align 8, !tbaa !85
@@ -1014,10 +1011,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %._crit_edge, %.preheader
   %.lcssa = phi i64 [ %i.bo, %._crit_edge ], [ %storemerge83, %.preheader ]
-  %7 = icmp ult i64 %.lcssa, 16
-  %8 = select i1 %7, ptr %2, ptr @_ZN5boost7movelib15detail_adaptiveL34AdaptiveSortInsertionSortThresholdE
-  %9 = load i64, ptr %8, align 8, !tbaa !85
-  store i64 %9, ptr %4, align 8, !tbaa !85
+  %7 = tail call i64 @llvm.umin.i64(i64 %.lcssa, i64 16)
+  store i64 %7, ptr %4, align 8, !tbaa !85
   store i64 0, ptr %3, align 8, !tbaa !85
   %i.bq = load i64, ptr %2, align 8, !tbaa !85
   store i64 %i.bq, ptr %5, align 8, !tbaa !85
@@ -1420,10 +1415,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %._crit_edge, %.preheader
   %.lcssa = phi i64 [ %i.bo, %._crit_edge ], [ %storemerge83, %.preheader ]
-  %7 = icmp ult i64 %.lcssa, 16
-  %8 = select i1 %7, ptr %2, ptr @_ZN5boost7movelib15detail_adaptiveL34AdaptiveSortInsertionSortThresholdE
-  %9 = load i64, ptr %8, align 8, !tbaa !85
-  store i64 %9, ptr %4, align 8, !tbaa !85
+  %7 = tail call i64 @llvm.umin.i64(i64 %.lcssa, i64 16)
+  store i64 %7, ptr %4, align 8, !tbaa !85
   store i64 0, ptr %3, align 8, !tbaa !85
   %i.bq = load i64, ptr %2, align 8, !tbaa !85
   store i64 %i.bq, ptr %5, align 8, !tbaa !85
@@ -1826,10 +1819,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %._crit_edge, %.preheader
   %.lcssa = phi i64 [ %i.bo, %._crit_edge ], [ %storemerge83, %.preheader ]
-  %7 = icmp ult i64 %.lcssa, 16
-  %8 = select i1 %7, ptr %2, ptr @_ZN5boost7movelib15detail_adaptiveL34AdaptiveSortInsertionSortThresholdE
-  %9 = load i64, ptr %8, align 8, !tbaa !85
-  store i64 %9, ptr %4, align 8, !tbaa !85
+  %7 = tail call i64 @llvm.umin.i64(i64 %.lcssa, i64 16)
+  store i64 %7, ptr %4, align 8, !tbaa !85
   store i64 0, ptr %3, align 8, !tbaa !85
   %i.bq = load i64, ptr %2, align 8, !tbaa !85
   store i64 %i.bq, ptr %5, align 8, !tbaa !85
@@ -2232,10 +2223,8 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %._crit_edge, %.preheader
   %.lcssa = phi i64 [ %i.bo, %._crit_edge ], [ %storemerge83, %.preheader ]
-  %7 = icmp ult i64 %.lcssa, 16
-  %8 = select i1 %7, ptr %2, ptr @_ZN5boost7movelib15detail_adaptiveL34AdaptiveSortInsertionSortThresholdE
-  %9 = load i64, ptr %8, align 8, !tbaa !85
-  store i64 %9, ptr %4, align 8, !tbaa !85
+  %7 = tail call i64 @llvm.umin.i64(i64 %.lcssa, i64 16)
+  store i64 %7, ptr %4, align 8, !tbaa !85
   store i64 0, ptr %3, align 8, !tbaa !85
   %i.bq = load i64, ptr %2, align 8, !tbaa !85
   store i64 %i.bq, ptr %5, align 8, !tbaa !85

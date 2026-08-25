@@ -205,10 +205,10 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load i64, ptr %i.e, align 8, !alias.scope !25241, !noalias !25244
   %.sink9.i = select i1 %i.c, i64 %i.f, i64 %i.b  ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.h = load i64, ptr %i.g, align 8, !alias.scope !25246, !noalias !25251, !noundef !15 ; 2 uses
   %i.i = icmp ugt i64 %i.h, 1
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.sink8.i.i = select i1 %i.i, ptr %i.j, ptr %i.g ; 2 uses
   %.sink8.i.promoted.i = load i64, ptr %.sink8.i.i, align 8, !alias.scope !25253
   %i.k = icmp ult i64 %.sink9.i, %.sink8.i.promoted.i
@@ -221,9 +221,9 @@ bb.a:
 
 _RNvMsd_Csheqz6YZvxwl_8smallvecINtB5_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej1_E8truncateBM_.exit: ; preds = %bb.a, %.lr.ph.preheader.i
   %i.l = phi i64 [ %i.h, %bb.a ], [ %.pre, %.lr.ph.preheader.i ] ; 2 uses
-  %i.m = icmp ugt i64 %i.l, 1                     ; 3 uses
+  %i.m = icmp ugt i64 %i.l, 1                     ; 2 uses
   %i.n = load i64, ptr %i.j, align 8, !alias.scope !25254, !noalias !25257
-  %.sink9.i5 = select i1 %i.m, i64 %i.n, i64 %i.l ; 3 uses
+  %.sink9.i5 = select i1 %i.m, i64 %i.n, i64 %i.l ; 4 uses
   %.not.i = icmp ugt i64 %.sink9.i5, %.sink9.i
   br i1 %.not.i, label %bb.b, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCsoTR8nlGN3X_18ty_python_semantic5types4Type8split_atBy_.exit, !prof !16
 
@@ -235,10 +235,8 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSNtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typ
   %i.o = load ptr, ptr %0, align 8, !alias.scope !25254, !noalias !25257, !nonnull !15
   %.sink10.i1 = select i1 %i.c, ptr %i.d, ptr %1  ; 3 uses
   %i.p = getelementptr inbounds nuw [16 x i8], ptr %.sink10.i1, i64 %.sink9.i5
-  %.sink9.i7 = select i1 %i.m, ptr %i.o, ptr %0
-  %.sink8.i = select i1 %i.m, ptr %i.j, ptr %i.g
-  %2 = load i64, ptr %.sink8.i, align 8, !noundef !15
-  tail call void @_RNvXs4_NtCs4NRVxsYgnAr_4core5sliceSNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeINtB5_13CloneFromSpecBx_E15spec_clone_fromBB_(ptr noalias noundef nonnull align 4 %.sink9.i7, i64 noundef %2, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) %.sink10.i1, i64 noundef %.sink9.i5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @365)
+  %.sink8.i = select i1 %i.m, ptr %i.o, ptr %0
+  tail call void @_RNvXs4_NtCs4NRVxsYgnAr_4core5sliceSNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeINtB5_13CloneFromSpecBx_E15spec_clone_fromBB_(ptr noalias noundef nonnull align 4 %.sink8.i, i64 noundef %.sink9.i5, ptr noalias noundef nonnull readonly align 4 captures(address, read_provenance) %.sink10.i1, i64 noundef %.sink9.i5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @365)
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %.sink10.i1, i64 %.sink9.i
   tail call void @_RINvXst_Csheqz6YZvxwl_8smallvecINtB6_8SmallVecANtNtCsoTR8nlGN3X_18ty_python_semantic5types4Typej1_EINtNtNtNtCs4NRVxsYgnAr_4core4iter6traits7collect6ExtendBJ_E6extendINtNtNtB1G_8adapters6cloned6ClonedINtNtNtB1I_5slice4iter4IterBJ_EEEBN_(ptr noalias noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull %i.p, ptr noundef nonnull %i.q)
   ret void

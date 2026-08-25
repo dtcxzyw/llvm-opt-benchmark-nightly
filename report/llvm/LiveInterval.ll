@@ -204,14 +204,14 @@ _ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29:   ; preds = %_ZSt9__advanceIPN4l
   br i1 %i.bd, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29, %bb.i
-  %.0.copyload.i.i.i.i.i.i.i = phi i64 [ %.sroa.0.0.copyload, %bb.i ], [ %.sroa.04.0.copyload, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 2 uses
-  %.053 = phi ptr [ %.154, %bb.i ], [ %.010.lcssa.i.i.i.i, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 4 uses
+  %.0.copyload.i.i.i.i.i.i.i = phi i64 [ %.sroa.0.0.copyload, %bb.i ], [ %.sroa.04.0.copyload, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 3 uses
+  %.053 = phi ptr [ %.154, %bb.i ], [ %.010.lcssa.i.i.i.i, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 3 uses
   %.051 = phi ptr [ %.152, %bb.i ], [ %i.ac, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 2 uses
-  %.049 = phi ptr [ %i.cz, %bb.i ], [ %.111.i.i.i.i26, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 5 uses
+  %.049 = phi ptr [ %i.cz, %bb.i ], [ %.111.i.i.i.i26, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 4 uses
   %.0 = phi ptr [ %.1, %bb.i ], [ %i.bc, %_ZNK4llvm9LiveRange4findENS_9SlotIndexE.exit29 ] ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.053, i64 8 ; 2 uses
   %.sroa.03.0.copyload = load i64, ptr %i.be, align 8, !tbaa !31 ; 2 uses
-  %.0.copyload.i.i.i.i.i.i = load i64, ptr %.049, align 8 ; 2 uses
+  %.0.copyload.i.i.i.i.i.i = load i64, ptr %.049, align 8 ; 3 uses
   %i.bf = and i64 %.0.copyload.i.i.i.i.i.i, -8
   %i.bg = inttoptr i64 %i.bf to ptr
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
@@ -241,8 +241,7 @@ bb.c:                                             ; preds = %.preheader
   %i.cc = and i32 %i.cb, 3
   %i.cd = or i32 %i.cc, %i.bz
   %i.ce = icmp ult i32 %i.cd, %i.bm
-  %..i = select i1 %i.ce, ptr %.049, ptr %.053
-  %4 = load i64, ptr %..i, align 8, !tbaa !31     ; 2 uses
+  %4 = select i1 %i.ce, i64 %.0.copyload.i.i.i.i.i.i, i64 %.0.copyload.i.i.i.i.i.i.i ; 2 uses
   %i.cf = and i64 %4, 6
   %i.cg = icmp eq i64 %i.cf, 0
   br i1 %i.cg, label %.loopexit, label %bb.d

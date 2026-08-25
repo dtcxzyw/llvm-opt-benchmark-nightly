@@ -205,8 +205,8 @@ bb.cg:                                            ; preds = %bb.ce, %bb.cf
   %.val49109.i398 = phi i1 [ true, %bb.cf ], [ false, %bb.ce ]
   %i.uk = phi float [ %i.uj, %bb.cf ], [ %i.ue, %bb.ce ]
   %i.ul = fcmp oeq float %.in, 0.000000e+00
-  %i.um = select i1 %i.ul, float f0x5D5E0B6B, float %i.uk ; 7 uses
-  %i.un = getelementptr inbounds nuw i8, ptr %57, i64 36 ; 4 uses
+  %i.um = select i1 %i.ul, float f0x5D5E0B6B, float %i.uk ; 8 uses
+  %i.un = getelementptr inbounds nuw i8, ptr %57, i64 36 ; 3 uses
   store float %i.um, ptr %i.un, align 4, !tbaa !657, !alias.scope !566
   store float 0.000000e+00, ptr %i.lb, align 8, !tbaa !658, !alias.scope !566
   %i.uo = getelementptr inbounds nuw i8, ptr %57, i64 40 ; 3 uses
@@ -307,8 +307,7 @@ bb.cn:                                            ; preds = %bb.cm
   br label %bb.cx
 
 bb.co:                                            ; preds = %bb.cm
-  %.val186 = load float, ptr %i.un, align 4
-  %i.wb = select i1 %i.vz, float %.0.i62.i, float %.val186
+  %i.wb = select i1 %i.vz, float %.0.i62.i, float %i.um
   store float %i.wb, ptr %i.un, align 4, !tbaa !657, !alias.scope !566
   br label %bb.cx
 

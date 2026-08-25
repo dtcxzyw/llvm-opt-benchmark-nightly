@@ -204,9 +204,9 @@ bb.ik:                                            ; preds = %.noexc373
   %i.acd = getelementptr inbounds nuw i8, ptr %.sroa.0431.0501, i64 32 ; 2 uses
   %i.ace = load i32, ptr %i.acd, align 8, !tbaa !32
   %i.acf = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #40
-          to label %_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378 unwind label %bb.it ; 3 uses
+          to label %bb.il unwind label %bb.it     ; 3 uses
 
-_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378: ; preds = %bb.ik
+bb.il:                                            ; preds = %bb.ik
   %42 = icmp slt i32 %i.ace, 70
   %43 = getelementptr inbounds nuw i8, ptr %i.acf, i64 16
   %44 = load <2 x ptr>, ptr %41, align 16, !tbaa !87
@@ -214,15 +214,9 @@ _ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3C
   store <2 x ptr> %44, ptr %43, align 8, !tbaa !87
   store ptr null, ptr %41, align 16, !tbaa !468
   %45 = getelementptr inbounds nuw i8, ptr %i.acf, i64 32
-  br i1 %42, label %_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378.then, label %bb.il
-
-_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378.then: ; preds = %_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378
-  %.then.val = load i32, ptr %i.acd, align 8, !tbaa !32
-  br label %bb.il
-
-bb.il:                                            ; preds = %_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378.then, %_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378
-  %46 = phi i32 [ %.then.val, %_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378.then ], [ 70, %_ZNSt7__cxx114listISt4pairIN7dropbox6oxygen2nnISt10shared_ptrIN5osgeo4proj3crs3CRSEEEEiESaISC_EE12emplace_backIJNS4_IS5_INS8_8BoundCRSEEEERKiEEERSC_DpOT_.exit378 ]
-  store i32 %46, ptr %45, align 8, !tbaa !893
+  %.sroa.speculate.load.true = load i32, ptr %i.acd, align 8, !tbaa !32
+  %.sroa.speculated = select i1 %42, i32 %.sroa.speculate.load.true, i32 70
+  store i32 %.sroa.speculated, ptr %45, align 8, !tbaa !893
   call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.acf, ptr noundef nonnull align 8 dereferenceable(24) %7) #39
   %i.acg = load i64, ptr %i.d, align 8, !tbaa !890
   %i.ach = add i64 %i.acg, 1

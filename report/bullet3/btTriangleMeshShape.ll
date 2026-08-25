@@ -204,13 +204,13 @@ bb.a:
 define internal void @_ZZNK19btTriangleMeshShape19processAllTrianglesEP18btTriangleCallbackRK9btVector3S4_EN16FilteredCallback28internalProcessTriangleIndexEPS2_ii(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = load float, ptr %1, align 4, !tbaa !20   ; 4 uses
   %i.e = load float, ptr %i.b, align 4, !tbaa !20 ; 4 uses
   %i.f = fcmp olt float %i.d, %i.e
   %i.g = select i1 %i.f, float %i.d, float %i.e   ; 2 uses
-  %i.h = load float, ptr %i.c, align 4, !tbaa !20 ; 3 uses
+  %i.h = load float, ptr %i.c, align 4, !tbaa !20 ; 4 uses
   %i.i = fcmp olt float %i.g, %i.h
   %i.j = select i1 %i.i, float %i.g, float %i.h
   %i.k = load float, ptr %i.a, align 8, !tbaa !20
@@ -219,25 +219,23 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.n = fcmp ogt float %i.d, %i.e                ; 2 uses
-  %4 = select i1 %i.n, ptr %1, ptr %i.b
-  %i.o = select i1 %i.n, float %i.d, float %i.e
+  %i.n = fcmp ogt float %i.d, %i.e
+  %i.o = select i1 %i.n, float %i.d, float %i.e   ; 2 uses
   %i.p = fcmp ogt float %i.o, %i.h
-  %5 = select i1 %i.p, ptr %4, ptr %i.c
-  %6 = load float, ptr %5, align 4, !tbaa !20
+  %4 = select i1 %i.p, float %i.o, float %i.h
   %i.q = load float, ptr %i.m, align 8, !tbaa !20
-  %i.r = fcmp olt float %6, %i.q
+  %i.r = fcmp olt float %4, %i.q
   br i1 %i.r, label %_Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.u = load float, ptr %i.s, align 4, !tbaa !20 ; 4 uses
   %i.v = load float, ptr %i.t, align 4, !tbaa !20 ; 4 uses
   %i.w = fcmp olt float %i.u, %i.v
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.y = select i1 %i.w, float %i.u, float %i.v   ; 2 uses
-  %i.z = load float, ptr %i.x, align 4, !tbaa !20 ; 3 uses
+  %i.z = load float, ptr %i.x, align 4, !tbaa !20 ; 4 uses
   %i.aa = fcmp olt float %i.y, %i.z
   %i.ab = select i1 %i.aa, float %i.y, float %i.z
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -246,26 +244,24 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ae, label %_Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.af = fcmp ogt float %i.u, %i.v               ; 2 uses
-  %7 = select i1 %i.af, ptr %i.s, ptr %i.t
-  %i.ag = select i1 %i.af, float %i.u, float %i.v
+  %i.af = fcmp ogt float %i.u, %i.v
+  %i.ag = select i1 %i.af, float %i.u, float %i.v ; 2 uses
   %i.ah = fcmp ogt float %i.ag, %i.z
-  %8 = select i1 %i.ah, ptr %7, ptr %i.x
-  %9 = load float, ptr %8, align 4, !tbaa !20
+  %5 = select i1 %i.ah, float %i.ag, float %i.z
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aj = load float, ptr %i.ai, align 8, !tbaa !20
-  %i.ak = fcmp olt float %9, %i.aj
+  %i.ak = fcmp olt float %5, %i.aj
   br i1 %i.ak, label %_Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.an = load float, ptr %i.al, align 4, !tbaa !20 ; 4 uses
   %i.ao = load float, ptr %i.am, align 4, !tbaa !20 ; 4 uses
   %i.ap = fcmp olt float %i.an, %i.ao
-  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 36 ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.ar = select i1 %i.ap, float %i.an, float %i.ao ; 2 uses
-  %i.as = load float, ptr %i.aq, align 4, !tbaa !20 ; 3 uses
+  %i.as = load float, ptr %i.aq, align 4, !tbaa !20 ; 4 uses
   %i.at = fcmp olt float %i.ar, %i.as
   %i.au = select i1 %i.at, float %i.ar, float %i.as
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -274,15 +270,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ax, label %_Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit.thread, label %_Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit
 
 _Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit: ; preds = %bb.e
-  %i.ay = fcmp ogt float %i.an, %i.ao             ; 2 uses
-  %10 = select i1 %i.ay, ptr %i.al, ptr %i.am
-  %i.az = select i1 %i.ay, float %i.an, float %i.ao
+  %i.ay = fcmp ogt float %i.an, %i.ao
+  %i.az = select i1 %i.ay, float %i.an, float %i.ao ; 2 uses
   %i.ba = fcmp ogt float %i.az, %i.as
-  %11 = select i1 %i.ba, ptr %10, ptr %i.aq
-  %12 = load float, ptr %11, align 4, !tbaa !20
+  %6 = select i1 %i.ba, float %i.az, float %i.as
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.bc = load float, ptr %i.bb, align 4, !tbaa !20
-  %i.bd = fcmp uge float %12, %i.bc
+  %i.bd = fcmp uge float %6, %i.bc
   br i1 %i.bd, label %bb.f, label %_Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit.thread
 
 bb.f:                                             ; preds = %_Z24TestTriangleAgainstAabb2PK9btVector3RS0_S2_.exit

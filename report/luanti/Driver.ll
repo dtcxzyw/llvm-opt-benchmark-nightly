@@ -205,7 +205,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1022
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 992
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1023
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 976 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 976
   %i.i = zext i8 %i.b to i64
   br label %bb.b
 
@@ -459,16 +459,14 @@ bb.ab:                                            ; preds = %bb.aa
 
 ._crit_edge127:                                   ; preds = %bb.aa, %bb.ab
   %i.cr = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 128), align 8, !tbaa !470
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.x, i64 12 ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.x, i64 12
   %i.ct = icmp ugt i8 %i.co, 1
   br i1 %i.ct, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %._crit_edge127
   %i.cu = load i8, ptr %i.h, align 8, !tbaa !126
-  %3 = icmp ult i8 %i.cu, %i.co
-  %4 = select i1 %3, ptr %i.h, ptr %i.cs
-  %5 = load i8, ptr %4, align 4, !tbaa !126
-  %i.cv = zext i8 %5 to i32
+  %3 = tail call i8 @llvm.umin.i8(i8 %i.cu, i8 %i.co)
+  %i.cv = zext i8 %3 to i32
   br label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge127, %bb.ac
@@ -871,9 +869,9 @@ bb.n:                                             ; preds = %bb.i, %.noexc26
   store i32 %i.bi, ptr %i.h, align 8, !tbaa !446
   %i.bj = load i64, ptr %2, align 4               ; 4 uses
   store i64 %i.bj, ptr %i.f, align 8
-  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   store i64 %i.bj, ptr %i.bk, align 8
-  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.bm = trunc i64 %i.bj to i32                  ; 4 uses
   %i.bn = lshr i64 %i.bj, 32
   %i.bo = trunc nuw i64 %i.bn to i32              ; 3 uses
@@ -882,13 +880,11 @@ bb.n:                                             ; preds = %bb.i, %.noexc26
   br i1 %i.bq, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %7 = icmp ult i32 %i.bm, %i.bo
-  %8 = select i1 %7, ptr %i.bl, ptr %i.bk
-  %9 = load i32, ptr %8, align 4, !tbaa !192
+  %7 = tail call i32 @llvm.umax.i32(i32 %i.bm, i32 %i.bo)
   %i.br = load ptr, ptr %i.m, align 8, !tbaa !450 ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 984
   %i.bt = load i32, ptr %i.bs, align 8, !tbaa !23
-  %i.bu = icmp ugt i32 %9, %i.bt
+  %i.bu = icmp ugt i32 %7, %i.bt
   br i1 %i.bu, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -1291,8 +1287,6 @@ bb.t:                                             ; preds = %bb.s, %bb.c
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN5video23COpenGLCoreRenderTargetINS_18COpenGL3DriverBaseENS_18COpenGLCoreTextureIS1_EEE6updateEv(ptr noundef nonnull align 8 dereferenceable(152) %0) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca i32, align 4                        ; 4 uses
-  %2 = alloca i32, align 4                        ; 4 uses
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 122 ; 2 uses
@@ -1684,7 +1678,6 @@ bb.an:                                            ; preds = %bb.am
   br i1 %.not44, label %bb.au, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !545
@@ -1693,37 +1686,35 @@ bb.ao:                                            ; preds = %bb.an
   %i.em = ptrtoint ptr %i.ek to i64
   %i.en = sub i64 %i.el, %i.em
   %i.eo = lshr exact i64 %i.en, 3
-  %i.ep = trunc i64 %i.eo to i32                  ; 4 uses
-  store i32 %i.ep, ptr %i.a, align 4, !tbaa !192
+  %i.ep = trunc i64 %i.eo to i32                  ; 2 uses
   switch i32 %i.ep, label %bb.aq [
     i32 0, label %bb.ap
     i32 1, label %bb.ar
   ]
 
 bb.ap:                                            ; preds = %bb.ao
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  store i32 0, ptr %2, align 4, !tbaa !192
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  store i32 0, ptr %i.b, align 4, !tbaa !192
   %i.eq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 888), align 8, !tbaa !568
-  call void %i.eq(i32 noundef 1, ptr noundef nonnull %2), !inline_history !569
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void %i.eq(i32 noundef 1, ptr noundef nonnull %i.b), !inline_history !569
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.at
 
 bb.aq:                                            ; preds = %bb.ao
-  %i.er = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
+  %i.er = getelementptr inbounds nuw i8, ptr %0, i64 140
   %i.es = load i32, ptr %i.er, align 4, !tbaa !352 ; 2 uses
   %i.et = icmp eq i32 %i.es, 0
   br i1 %i.et, label %bb.ar, label %bb.as
 
 bb.ar:                                            ; preds = %bb.ao, %bb.aq
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  store i32 36064, ptr %1, align 4, !tbaa !192
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
+  store i32 36064, ptr %i.a, align 4, !tbaa !192
   %i.eu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 888), align 8, !tbaa !568
-  call void %i.eu(i32 noundef 1, ptr noundef nonnull %1), !inline_history !569
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  call void %i.eu(i32 noundef 1, ptr noundef nonnull %i.a), !inline_history !569
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.at
 
 bb.as:                                            ; preds = %bb.aq
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.ev = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ex = load ptr, ptr %i.ew, align 8, !tbaa !358 ; 2 uses
@@ -1732,26 +1723,19 @@ bb.as:                                            ; preds = %bb.aq
   %i.fa = ptrtoint ptr %i.ey to i64
   %i.fb = sub i64 %i.ez, %i.fa
   %i.fc = lshr exact i64 %i.fb, 2
-  %i.fd = trunc i64 %i.fc to i32                  ; 3 uses
-  store i32 %i.fd, ptr %i.b, align 4, !tbaa !192
-  %3 = icmp ult i32 %i.ep, %i.fd
-  %4 = select i1 %3, ptr %i.a, ptr %i.b
+  %i.fd = trunc i64 %i.fc to i32
   %i.fe = tail call i32 @llvm.umin.i32(i32 %i.ep, i32 %i.fd)
-  %5 = icmp ult i32 %i.es, %i.fe
-  %6 = select i1 %5, ptr %i.er, ptr %4
-  %7 = load i32, ptr %6, align 4, !tbaa !192
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
+  %1 = tail call i32 @llvm.umin.i32(i32 %i.es, i32 %i.fe)
   %i.ff = icmp eq ptr %i.ey, %i.ex
   %spec.select.i = select i1 %i.ff, ptr null, ptr %i.ey
   %i.fg = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 888), align 8, !tbaa !568
-  tail call void %i.fg(i32 noundef %7, ptr noundef %spec.select.i), !inline_history !570
+  tail call void %i.fg(i32 noundef %1, ptr noundef %spec.select.i), !inline_history !570
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.ar, %bb.as, %bb.ap
   %i.fh = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !348
   %i.fj = call noundef zeroext i1 @_ZN5video18COpenGL3DriverBase11testGLErrorEPKci(ptr noundef nonnull align 8 dereferenceable(2528) %i.fi, ptr noundef nonnull @.str.102, i32 noundef 288) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.a, %bb.am, %bb.an, %bb.at
@@ -2154,6 +2138,9 @@ declare i32 @llvm.smax.i32(i32, i32) #29
 declare void @llvm.experimental.noalias.scope.decl(metadata) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.umin.i8(i8, i8) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -2164,9 +2151,6 @@ declare i8 @llvm.umax.i8(i8, i8) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #29
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #29
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #32

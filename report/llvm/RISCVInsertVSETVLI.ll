@@ -202,8 +202,8 @@ _ZN4llvm5RISCV11VSETVLIInfo6setAVLERKS1_.exit:    ; preds = %bb.u, %bb.u, %bb.v,
   br label %bb.x
 
 bb.x:                                             ; preds = %_ZN4llvm5RISCV11VSETVLIInfo6setAVLERKS1_.exit, %bb.t
-  %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 19 ; 3 uses
-  %i.cq = load i8, ptr %i.cp, align 1             ; 4 uses
+  %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 19 ; 2 uses
+  %i.cq = load i8, ptr %i.cp, align 1             ; 5 uses
   %i.cr = and i8 %i.cq, 4
   %.not70 = icmp eq i8 %i.cr, 0
   br i1 %.not70, label %bb.ab, label %bb.y
@@ -272,33 +272,32 @@ bb.ab:                                            ; preds = %bb.x
   %i.dh = getelementptr inbounds nuw i8, ptr %3, i64 5
   %i.di = load i8, ptr %i.dh, align 1, !tbaa !725, !range !18, !noundef !19
   %i.dj = trunc nuw i8 %i.di to i1
-  %.sroa.gep53 = getelementptr inbounds nuw i8, ptr %6, i64 19 ; 2 uses
-  %.sroa.sel55 = select i1 %i.dj, ptr %.sroa.gep53, ptr %i.cp
-  %i.dk = load i8, ptr %.sroa.sel55, align 1
-  %7 = trunc i8 %i.dk to i1
-  %8 = load i8, ptr %.sroa.gep53, align 1         ; 5 uses
+  %.sroa.gep53 = getelementptr inbounds nuw i8, ptr %6, i64 19
+  %i.dk = load i8, ptr %.sroa.gep53, align 1      ; 6 uses
+  %7 = select i1 %i.dj, i8 %i.dk, i8 %i.cq
+  %8 = trunc i8 %7 to i1
   %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 6
   %i.dm = load i8, ptr %i.dl, align 2, !tbaa !726, !range !18, !noundef !19
   %i.dn = trunc nuw i8 %i.dm to i1
-  %i.do = select i1 %i.dn, i8 %8, i8 %i.cq
+  %i.do = select i1 %i.dn, i8 %i.dk, i8 %i.cq
   %i.dp = and i8 %i.do, 2
   %i.dq = icmp ne i8 %i.dp, 0
-  %i.dr = and i8 %8, 2
+  %i.dr = and i8 %i.dk, 2
   %i.ds = icmp ne i8 %i.dr, 0
   %i.dt = select i1 %i.dq, i1 true, i1 %i.ds
   %i.du = getelementptr inbounds nuw i8, ptr %3, i64 9
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !557, !range !18, !noundef !19
   %i.dw = trunc nuw i8 %i.dv to i1
-  %i.dx = select i1 %i.dw, i8 %8, i8 %i.cq
+  %i.dx = select i1 %i.dw, i8 %i.dk, i8 %i.cq
   %i.dy = and i8 %i.dx, 8
   %i.dz = icmp ne i8 %i.dy, 0
   %i.ea = icmp ult i8 %i.dd, 32
   %i.eb = and i1 %i.ea, %i.dz
   %i.ec = load i8, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !558, !range !18, !noundef !19
   %i.ed = trunc nuw i8 %i.ec to i1
-  %i.ee = and i8 %8, 112
-  %i.ef = and i8 %8, 1
-  %i.eg = select i1 %7, i8 1, i8 %i.ef
+  %i.ee = and i8 %i.dk, 112
+  %i.ef = and i8 %i.dk, 1
+  %i.eg = select i1 %8, i8 1, i8 %i.ef
   store i8 %i.dg, ptr %.sroa.gep51, align 1, !tbaa !363
   store i8 %i.dd, ptr %.sroa.gep49, align 2, !tbaa !364
   %i.eh = and i8 %i.cq, -128
@@ -307,8 +306,8 @@ bb.ab:                                            ; preds = %bb.x
   %i.ek = select i1 %i.ed, i8 %i.ee, i8 0
   %i.el = or disjoint i8 %i.eg, %i.eh
   %i.em = or disjoint i8 %i.el, %i.ei
-  %i.en = or disjoint i8 %i.em, %i.ej
-  %i.eo = or disjoint i8 %i.en, %i.ek
+  %i.en = or disjoint i8 %i.em, %i.ek
+  %i.eo = or disjoint i8 %i.en, %i.ej
   store i8 %i.eo, ptr %i.cp, align 1
   br label %bb.ac
 

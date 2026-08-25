@@ -202,26 +202,22 @@ bb.ay:                                            ; preds = %bb.aw
 
 bb.az:                                            ; preds = %bb.ay, %bb.ax
   %i.zb = phi i32 [ %.pre.i, %bb.ay ], [ %i.vv, %bb.ax ] ; 3 uses
-  %i.zc = getelementptr inbounds nuw i8, ptr %.sroa.0311.1.i, i64 8 ; 3 uses
+  %i.zc = getelementptr inbounds nuw i8, ptr %.sroa.0311.1.i, i64 8
   %i.zd = icmp eq i32 %i.zb, -1
   br i1 %i.zd, label %_ZNK12_GLOBAL__N_113HexagonGenMux14isCondTransferEj.exit.i, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.ze = getelementptr inbounds nuw i8, ptr %.sroa.0311.1.i, i64 12 ; 4 uses
+  %i.ze = getelementptr inbounds nuw i8, ptr %.sroa.0311.1.i, i64 12 ; 2 uses
   %i.zf = load i32, ptr %i.ze, align 4, !tbaa !345 ; 3 uses
   %i.zg = icmp eq i32 %i.zf, -1
   br i1 %i.zg, label %_ZNK12_GLOBAL__N_113HexagonGenMux14isCondTransferEj.exit.i, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %16 = icmp ult i32 %i.zf, %i.zb
-  %..i.i = select i1 %16, ptr %i.ze, ptr %i.zc
-  %17 = load i32, ptr %..i.i, align 4, !tbaa !210 ; 5 uses
-  %18 = icmp ult i32 %i.zb, %i.zf
-  %..i186.i = select i1 %18, ptr %i.ze, ptr %i.zc
-  %19 = load i32, ptr %..i186.i, align 4, !tbaa !210 ; 7 uses
+  %16 = call i32 @llvm.umin.i32(i32 %i.zf, i32 %i.zb) ; 5 uses
+  %17 = call i32 @llvm.umax.i32(i32 %i.zb, i32 %i.zf) ; 7 uses
   %i.zh = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL11MinPredDist, i64 120), align 8, !tbaa !346
-  %spec.select333.i = call i32 @llvm.usub.sat.i32(i32 %19, i32 %i.zh) ; 2 uses
-  %i.zi = icmp ult i32 %spec.select333.i, %19
+  %spec.select333.i = call i32 @llvm.usub.sat.i32(i32 %17, i32 %i.zh) ; 2 uses
+  %i.zi = icmp ult i32 %spec.select333.i, %17
   br i1 %i.zi, label %.lr.ph.i, label %.critedge349.loopexit.i
 
 .lr.ph.i:                                         ; preds = %bb.bb
@@ -240,7 +236,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %.split, %_ZN4llvm9BitVectorD2Ev.exit.i187.i.thread, %_ZN12_GLOBAL__N_113HexagonGenMux10DefUseInfoD2Ev.exit.i
   %i.zu = add nuw i32 %storemerge365.i, 1         ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.zu, %19
+  %exitcond.not.i = icmp eq i32 %i.zu, %17
   br i1 %exitcond.not.i, label %.critedge349.loopexit.i, label %bb.bd, !llvm.loop !359
 
 bb.bd:                                            ; preds = %bb.bc, %.lr.ph.i
@@ -406,11 +402,11 @@ _ZN12_GLOBAL__N_113HexagonGenMux10DefUseInfoD2Ev.exit.i: ; preds = %_ZN4llvm9Bit
 
 .critedge349.loopexit.i:                          ; preds = %bb.bc, %bb.bb
   %i.abu = load ptr, ptr %i.cv, align 8, !tbaa !191 ; 4 uses
-  %.not341.i = icmp eq i32 %17, 0
+  %.not341.i = icmp eq i32 %16, 0
   br i1 %.not341.i, label %_ZSt9__advanceIN4llvm26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i, label %.preheader.i.preheader.i
 
 .preheader.i.preheader.i:                         ; preds = %.critedge349.loopexit.i
-  %i.abv = zext i32 %17 to i64
+  %i.abv = zext i32 %16 to i64
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i192.i, %.preheader.i.preheader.i
@@ -448,11 +444,11 @@ _ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i192.i: ; 
 
 _ZSt9__advanceIN4llvm26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i: ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i192.i, %.critedge349.loopexit.i
   %.sroa.0290.0.i = phi ptr [ %i.abu, %.critedge349.loopexit.i ], [ %i.aci, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i192.i ] ; 3 uses
-  %.not342.i = icmp eq i32 %19, 0
+  %.not342.i = icmp eq i32 %17, 0
   br i1 %.not342.i, label %_ZSt9__advanceIN4llvm26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit231.i, label %.preheader.i218.preheader.i
 
 .preheader.i218.preheader.i:                      ; preds = %_ZSt9__advanceIN4llvm26MachineInstrBundleIteratorINS0_12MachineInstrELb0EEElEvRT_T0_St26bidirectional_iterator_tag.exit.i
-  %i.acj = zext i32 %19 to i64
+  %i.acj = zext i32 %17 to i64
   br label %.preheader.i218.i
 
 .preheader.i218.i:                                ; preds = %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb0EEppEv.exit.i223.i, %.preheader.i218.preheader.i
@@ -543,13 +539,13 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.aeh = load i32, ptr %i.au, align 4           ; 2 uses
   %i.aei = icmp eq i32 %i.aeh, 0
   %i.aej = add i32 %i.aeh, -1                     ; 2 uses
-  %storemerge152.i312 = add i32 %17, 1            ; 2 uses
-  %i.aek = icmp ult i32 %storemerge152.i312, %19
+  %storemerge152.i312 = add nuw i32 %16, 1        ; 2 uses
+  %i.aek = icmp ult i32 %storemerge152.i312, %17
   br i1 %i.aek, label %.lr.ph317, label %._crit_edge
 
 bb.bn:                                            ; preds = %_ZN12_GLOBAL__N_113HexagonGenMux10DefUseInfoD2Ev.exit233.i
-  %storemerge152.i = add i32 %storemerge152.i316, 1 ; 2 uses
-  %i.ael = icmp ult i32 %storemerge152.i, %19
+  %storemerge152.i = add nuw i32 %storemerge152.i316, 1 ; 2 uses
+  %i.ael = icmp ult i32 %storemerge152.i, %17
   br i1 %i.ael, label %.lr.ph317, label %._crit_edge, !llvm.loop !362
 
 .lr.ph317:                                        ; preds = %bb.bm, %bb.bn
@@ -787,10 +783,10 @@ bb.cc:                                            ; preds = %._crit_edge
 
 bb.cd:                                            ; preds = %bb.cc
   %i.ahf = load i32, ptr %i.zc, align 4, !tbaa !344
-  %i.ahg = icmp eq i32 %17, %i.ahf
+  %i.ahg = icmp eq i32 %16, %i.ahf
   %i.ahh = select i1 %i.ahg, ptr %i.acz, ptr %i.adc
   %i.ahi = load i32, ptr %i.ze, align 4, !tbaa !345
-  %i.ahj = icmp eq i32 %17, %i.ahi
+  %i.ahj = icmp eq i32 %16, %i.ahi
   %i.ahk = select i1 %i.ahj, ptr %i.acz, ptr %i.adc
   %i.ahl = select i1 %i.ahe, ptr %.sroa.0289.0.i, ptr %.sroa.0290.0.i
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #20
@@ -1192,6 +1188,9 @@ declare void @llvm.assume(i1 noundef) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #18
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

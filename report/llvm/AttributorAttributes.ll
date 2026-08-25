@@ -205,7 +205,7 @@ bb.br:                                            ; preds = %._crit_edge.i, %.lr
 
 .lr.ph.i:                                         ; preds = %_ZN4llvm2AA7RangeTyaNERKS1_.exit.i, %.lr.ph.preheader.i
   %.pre68.i = phi i64 [ %.pre6870.i, %_ZN4llvm2AA7RangeTyaNERKS1_.exit.i ], [ %.pre68.pre.i, %.lr.ph.preheader.i ] ; 3 uses
-  %.02154.i = phi ptr [ %i.sp, %_ZN4llvm2AA7RangeTyaNERKS1_.exit.i ], [ %i.rp, %.lr.ph.preheader.i ] ; 9 uses
+  %.02154.i = phi ptr [ %i.sp, %_ZN4llvm2AA7RangeTyaNERKS1_.exit.i ], [ %i.rp, %.lr.ph.preheader.i ] ; 7 uses
   %i.ru = load i64, ptr %.02154.i, align 8, !tbaa !81 ; 2 uses
   %i.rv = icmp eq i64 %i.ru, -2147483648
   br i1 %i.rv, label %_ZN4llvm2AA7RangeTyaNERKS1_.exit.i, label %bb.bs
@@ -257,28 +257,24 @@ bb.by:                                            ; preds = %thread-pre-split.th
 
 bb.bz:                                            ; preds = %thread-pre-split.thread.i.i
   %i.sf = load i64, ptr %.02154.i, align 8, !tbaa !35
-  %27 = icmp slt i64 %i.sf, %.pre6869.i
-  %..i11.i.i = select i1 %27, ptr %.02154.i, ptr %8
-  %28 = load i64, ptr %..i11.i.i, align 8, !tbaa !35 ; 4 uses
-  store i64 %28, ptr %8, align 8, !tbaa !81
-  %i.sg = add nsw i64 %28, %i.rx
+  %27 = call i64 @llvm.smin.i64(i64 %i.sf, i64 %.pre6869.i) ; 4 uses
+  store i64 %27, ptr %8, align 8, !tbaa !81
+  %i.sg = add nsw i64 %27, %i.rx
   %i.sh = load i64, ptr %.02154.i, align 8, !tbaa !81
   %i.si = add nsw i64 %i.sh, %i.sa
   %.sroa.speculated.i.i = call i64 @llvm.smax.i64(i64 %i.sg, i64 %i.si)
-  %i.sj = sub nsw i64 %.sroa.speculated.i.i, %28
+  %i.sj = sub nsw i64 %.sroa.speculated.i.i, %27
   store i64 %i.sj, ptr %i.kq, align 8, !tbaa !92
   br label %_ZN4llvm2AA7RangeTyaNERKS1_.exit.i
 
 .critedge.i.i:                                    ; preds = %thread-pre-split.i.i
   %i.sk = load i64, ptr %.02154.i, align 8, !tbaa !35
-  %29 = icmp slt i64 %i.sk, %.pre6869.i
-  %..i11.c.i.i = select i1 %29, ptr %.02154.i, ptr %8
-  %30 = load i64, ptr %..i11.c.i.i, align 8, !tbaa !35 ; 2 uses
-  store i64 %30, ptr %8, align 8, !tbaa !81
+  %28 = call i64 @llvm.smin.i64(i64 %i.sk, i64 %.pre6869.i) ; 2 uses
+  store i64 %28, ptr %8, align 8, !tbaa !81
   br label %_ZN4llvm2AA7RangeTyaNERKS1_.exit.i
 
 _ZN4llvm2AA7RangeTyaNERKS1_.exit.i:               ; preds = %.critedge.i.i, %bb.bz, %bb.by, %thread-pre-split.i.i, %bb.bt, %.lr.ph.i
-  %.pre6870.i = phi i64 [ %.pre68.i, %.lr.ph.i ], [ %.pre.i, %bb.bt ], [ 2147483647, %thread-pre-split.i.i ], [ 2147483647, %bb.by ], [ %28, %bb.bz ], [ %30, %.critedge.i.i ] ; 2 uses
+  %.pre6870.i = phi i64 [ %.pre68.i, %.lr.ph.i ], [ %.pre.i, %bb.bt ], [ 2147483647, %thread-pre-split.i.i ], [ 2147483647, %bb.by ], [ %27, %bb.bz ], [ %28, %.critedge.i.i ] ; 2 uses
   %i.sl = icmp eq i64 %.pre6870.i, 2147483647
   %i.sm = load i64, ptr %i.kq, align 8
   %i.sn = icmp eq i64 %i.sm, 2147483647
