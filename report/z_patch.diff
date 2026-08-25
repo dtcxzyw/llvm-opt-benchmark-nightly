@@ -1,0 +1,110 @@
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index de9022c540d42..250b8d0798565 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -475,55 +475,67 @@ bool llvm::isSafeToLoadUnconditionally(Value *V, Align Alignment,
+   // from/to.  If so, the previous load or store would have already trapped,
+   // so there is no harm doing an extra load (also, CSE will later eliminate
+   // the load entirely).
+-  auto BBI = SQ.CxtI->getIterator(), E = SQ.CxtI->getParent()->begin();
+-
+   // We can at least always strip pointer casts even though we can't use the
+   // base here.
+   V = V->stripPointerCasts();
+ 
+-  while (BBI != E) {
+-    --BBI;
++  unsigned NumChecked = 0;
++  auto CheckPreviousAccess = [&](const auto &Range) -> std::optional<bool> {
++    for (const Instruction &I : reverse(Range)) {
++      if (++NumChecked > 32)
++        return false;
+ 
+-    // If we see a free or a call which may write to memory (i.e. which might do
+-    // a free) the pointer could be marked invalid.
+-    if (isa<CallInst>(BBI) && BBI->mayWriteToMemory() &&
+-        !isa<LifetimeIntrinsic>(BBI))
+-      return false;
++      // If we see a free or a call which may write to memory (i.e. which might do
++      // a free) the pointer could be marked invalid.
++      if (isa<CallInst>(I) && I.mayWriteToMemory() &&
++          !isa<LifetimeIntrinsic>(I))
++        return false;
+ 
+-    const Value *AccessedPtr;
+-    Type *AccessedTy;
+-    Align AccessedAlign;
+-    if (const auto *LI = dyn_cast<LoadInst>(BBI)) {
+-      // Ignore volatile loads. The execution of a volatile load cannot
+-      // be used to prove an address is backed by regular memory; it can,
+-      // for example, point to an MMIO register.
+-      if (LI->isVolatile())
++      const Value *AccessedPtr;
++      Type *AccessedTy;
++      Align AccessedAlign;
++      if (const auto *LI = dyn_cast<LoadInst>(&I)) {
++        // Ignore volatile loads. The execution of a volatile load cannot
++        // be used to prove an address is backed by regular memory; it can,
++        // for example, point to an MMIO register.
++        if (LI->isVolatile())
++          continue;
++        AccessedPtr = LI->getPointerOperand();
++        AccessedTy = LI->getType();
++        AccessedAlign = LI->getAlign();
++      } else if (const auto *SI = dyn_cast<StoreInst>(&I)) {
++        // Ignore volatile stores (see comment for loads).
++        if (SI->isVolatile())
++          continue;
++        AccessedPtr = SI->getPointerOperand();
++        AccessedTy = SI->getValueOperand()->getType();
++        AccessedAlign = SI->getAlign();
++      } else
+         continue;
+-      AccessedPtr = LI->getPointerOperand();
+-      AccessedTy = LI->getType();
+-      AccessedAlign = LI->getAlign();
+-    } else if (const auto *SI = dyn_cast<StoreInst>(BBI)) {
+-      // Ignore volatile stores (see comment for loads).
+-      if (SI->isVolatile())
++
++      if (AccessedAlign < Alignment)
+         continue;
+-      AccessedPtr = SI->getPointerOperand();
+-      AccessedTy = SI->getValueOperand()->getType();
+-      AccessedAlign = SI->getAlign();
+-    } else
+-      continue;
+ 
+-    if (AccessedAlign < Alignment)
+-      continue;
++      // Handle trivial cases.
++      if (AccessedPtr == V &&
++          TypeSize::isKnownLE(LoadSize, SQ.DL.getTypeStoreSize(AccessedTy)))
++        return true;
+ 
+-    // Handle trivial cases.
+-    if (AccessedPtr == V &&
+-        TypeSize::isKnownLE(LoadSize, SQ.DL.getTypeStoreSize(AccessedTy)))
+-      return true;
++      if (AreEquivalentAddressValues(AccessedPtr->stripPointerCasts(), V) &&
++          TypeSize::isKnownLE(LoadSize, SQ.DL.getTypeStoreSize(AccessedTy)))
++        return true;
++    }
++    return std::nullopt;
++  };
++
++  const BasicBlock* BB = SQ.CxtI->getParent();
++  if (std::optional<bool> Res = CheckPreviousAccess(make_range(BB->begin(), SQ.CxtI->getIterator())))
++    return *Res;
++
++  while ((BB = BB->getSinglePredecessor()))
++    if (std::optional<bool> Res = CheckPreviousAccess(*BB))
++      return *Res;
+ 
+-    if (AreEquivalentAddressValues(AccessedPtr->stripPointerCasts(), V) &&
+-        TypeSize::isKnownLE(LoadSize, SQ.DL.getTypeStoreSize(AccessedTy)))
+-      return true;
+-  }
+   return false;
+ }
+ 
