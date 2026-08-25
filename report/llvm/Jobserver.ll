@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm/original/Jobserver?download=true
+inline.NumInlined: 457
+inline.NumDeleted: 261
 begin_hunk_0_@"_ZZNSt9once_flag18_Prepare_executionC1IZSt9call_onceIZN4llvm15JobserverClient11getInstanceEvE3$_0JEEvRS_OT_DpOT0_EUlvE_EERS7_ENUlvE_8__invokeEv":bb.a
   store ptr %i.hp, ptr %i.ho, align 8, !tbaa !54, !alias.scope !48
   %i.hq = load ptr, ptr %i.x, align 8, !tbaa !22, !noalias !48 ; 2 uses
@@ -200,7 +202,7 @@ _ZN12_GLOBAL__N_115JobserverConfigC2ERKS0_.exit.i.i.i.i.i: ; preds = %bb.bh, %bb
   %i.kj = getelementptr inbounds nuw i8, ptr %13, i64 40
   %i.kk = load i64, ptr %i.kj, align 8            ; 3 uses
   store i64 %i.kk, ptr %i.ki, align 8
-  %i.kl = load i32, ptr %16, align 8, !tbaa !51   ; 2 uses
+  %i.kl = load i32, ptr %16, align 8, !tbaa !51
   %i.km = trunc i64 %i.kk to i32                  ; 2 uses
   %i.kn = lshr i64 %i.kk, 32                      ; 2 uses
   %i.ko = trunc nuw i64 %i.kn to i32
@@ -246,11 +248,7 @@ bb.bm:                                            ; preds = %bb.bl
 _ZN12_GLOBAL__N_111areFdsValidEii.exit.i.i.i.i.i: ; preds = %bb.bm
   %i.le = call i32 (i32, i32, ...) @fcntl(i32 noundef %i.ko, i32 noundef 1) #20
   %.not15.i.i.i.i.i = icmp eq i32 %i.le, -1
-  br i1 %.not15.i.i.i.i.i, label %_ZN12_GLOBAL__N_111areFdsValidEii.exit.thread.i.i.i.i.i, label %_ZN12_GLOBAL__N_111areFdsValidEii.exit._crit_edge.i.i.i.i.i
-
-_ZN12_GLOBAL__N_111areFdsValidEii.exit._crit_edge.i.i.i.i.i: ; preds = %_ZN12_GLOBAL__N_111areFdsValidEii.exit.i.i.i.i.i
-  %.pre17.i.i.i.i.i = load i32, ptr %16, align 8, !tbaa !51, !noalias !102
-  br label %bb.bp
+  br i1 %.not15.i.i.i.i.i, label %_ZN12_GLOBAL__N_111areFdsValidEii.exit.thread.i.i.i.i.i, label %bb.bp
 
 _ZN12_GLOBAL__N_111areFdsValidEii.exit.thread.i.i.i.i.i: ; preds = %_ZN12_GLOBAL__N_111areFdsValidEii.exit.i.i.i.i.i, %bb.bm, %bb.bl
   %i.lf = call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4errsEv() #20 ; 3 uses
@@ -275,8 +273,7 @@ bb.bo:                                            ; preds = %_ZN12_GLOBAL__N_111
   store ptr %i.lq, ptr %i.li, align 8, !tbaa !47
   br label %_ZN4llvm11raw_ostreamlsEPKc.exit17.i.i.i.i.i
 
-bb.bp:                                            ; preds = %_ZN12_GLOBAL__N_111areFdsValidEii.exit._crit_edge.i.i.i.i.i, %_ZN12_GLOBAL__N_115JobserverConfigC2ERKS0_.exit.i.i.i.i.i
-  %17 = phi i32 [ %.pre17.i.i.i.i.i, %_ZN12_GLOBAL__N_111areFdsValidEii.exit._crit_edge.i.i.i.i.i ], [ %i.kl, %_ZN12_GLOBAL__N_115JobserverConfigC2ERKS0_.exit.i.i.i.i.i ]
+bb.bp:                                            ; preds = %_ZN12_GLOBAL__N_111areFdsValidEii.exit.i.i.i.i.i, %_ZN12_GLOBAL__N_115JobserverConfigC2ERKS0_.exit.i.i.i.i.i
   %i.lr = call noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #24, !noalias !102 ; 18 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2), !noalias !102
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN4llvm19JobserverClientImplE, i64 16), ptr %i.lr, align 8, !tbaa !8, !noalias !102
@@ -296,6 +293,7 @@ bb.bp:                                            ; preds = %_ZN12_GLOBAL__N_111
   %i.lz = getelementptr inbounds nuw i8, ptr %i.lr, i64 32
   store i64 0, ptr %i.lz, align 8, !tbaa !55, !noalias !102
   store i8 0, ptr %i.ly, align 8, !tbaa !23, !noalias !102
+  %17 = load i32, ptr %16, align 8, !tbaa !51, !noalias !102
   switch i32 %17, label %_ZSt11make_uniqueIN4llvm19JobserverClientImplEJRN12_GLOBAL__N_115JobserverConfigEEENSt8__detail9_MakeUniqIT_E15__single_objectEDpOT0_.exit.i.i.i.i.i [
     i32 2, label %bb.bq
     i32 1, label %bb.ca
