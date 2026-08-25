@@ -204,11 +204,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.f = load i64, ptr %i.e, align 4
   %i.g = trunc i64 %i.f to i32                    ; 2 uses
-  %i.h = lshr i32 %i.g, 24                        ; 9 uses
+  %i.h = lshr i32 %i.g, 24                        ; 10 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 36
   %i.j = load i64, ptr %i.i, align 4
   %i.k = trunc i64 %i.j to i32
-  %i.l = lshr i32 %i.k, 24                        ; 8 uses
+  %i.l = lshr i32 %i.k, 24                        ; 7 uses
   %i.m = lshr i32 %i.g, 16                        ; 2 uses
   %i.n = and i32 %i.m, 255                        ; 6 uses
   %i.o = icmp eq i32 %i.h, %i.n
@@ -269,7 +269,7 @@ bb.c:                                             ; preds = %bb.b
   %i.aq = or i32 %i.ap, %i.an
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 32
   store i32 %i.aq, ptr %i.ar, align 8, !tbaa !29
-  %i.as = sub nsw i32 32, %i.l
+  %i.as = sub nsw i32 32, %i.h
   %i.at = lshr i32 -1, %i.as
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 568
   store i32 %i.at, ptr %i.au, align 8, !tbaa !34

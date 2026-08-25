@@ -204,7 +204,7 @@ Acb_ObjWhatFanin.exit:                            ; preds = %bb.b, %bb.a, %.crit
   %i.aj = shl nuw i32 1, %2
   %i.ak = zext nneg i32 %i.aj to i64              ; 4 uses
   %i.al = shl i64 %i.ai, %i.ak
-  %i.am = or i64 %i.al, %i.ai                     ; 6 uses
+  %i.am = or i64 %i.al, %i.ai                     ; 8 uses
   %i.an = getelementptr inbounds [8 x i8], ptr @s_Truths6, i64 %i.af
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !12 ; 2 uses
   %i.ap = and i64 %i.ao, %i.z                     ; 2 uses
@@ -212,7 +212,7 @@ Acb_ObjWhatFanin.exit:                            ; preds = %bb.b, %bb.a, %.crit
   %i.ar = or i64 %i.aq, %i.ap                     ; 6 uses
   %i.as = and i64 %i.ae, %i.ah                    ; 2 uses
   %i.at = shl i64 %i.as, %i.ak
-  %i.au = or i64 %i.at, %i.as                     ; 6 uses
+  %i.au = or i64 %i.at, %i.as                     ; 4 uses
   %i.av = and i64 %i.ae, %i.ao                    ; 2 uses
   %i.aw = lshr i64 %i.av, %i.ak
   %i.ax = or i64 %i.aw, %i.av                     ; 4 uses
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %Acb_ObjWhatFanin.ex
 
 bb.e:                                             ; preds = %bb.d
   %i.bg = xor i64 %i.ab, -1
-  %i.bh = and i64 %i.au, %i.bg
+  %i.bh = and i64 %i.am, %i.bg
   %i.bi = and i64 %i.ar, %i.ab
   %i.bj = or i64 %i.bh, %i.bi
   br label %Abc_TtCheckDsdAnd.exit
@@ -248,7 +248,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.bl = xor i64 %i.ab, -1
-  %i.bm = and i64 %i.ar, %i.bl
+  %i.bm = and i64 %i.am, %i.bl
   %i.bn = and i64 %i.au, %i.ab
   %i.bo = or i64 %i.bn, %i.bm
   br label %Abc_TtCheckDsdAnd.exit
@@ -259,7 +259,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.bp = xor i64 %i.ab, -1
-  %i.bq = and i64 %i.au, %i.bp
+  %i.bq = and i64 %i.ar, %i.bp
   %i.br = and i64 %i.am, %i.ab
   %i.bs = or i64 %i.bq, %i.br
   br label %Abc_TtCheckDsdAnd.exit
