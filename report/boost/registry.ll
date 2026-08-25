@@ -205,14 +205,13 @@ _ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5
 
 _ZN5boost9unordered6detail20grouped_bucket_arrayINS1_6bucketINS1_4nodeINS_9typeindex15ctti_type_indexEPvEES7_EESaIS6_ENS1_15prime_fmod_sizeIvEEE16bucket_count_forEm.exit.i.i: ; preds = %_ZNK5boost9unordered6detail5tableINS1_3setISaINS_9typeindex15ctti_type_indexEES5_NS_4hashIS5_EESt8equal_toIS5_EEEE14find_node_implIS5_EEPNS1_4nodeIS5_PvEERKT_NS1_23grouped_bucket_iteratorINS1_6bucketISG_SF_EEEE.exit.thread
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %4 = load float, ptr %i.dq, align 8, !tbaa !19
+  %4 = load <4 x float>, ptr %i.dq, align 8
   %i.dr = uitofp i64 %i.dm to float
   %i.ds = uitofp i64 %i.dl to float
-  %5 = insertelement <2 x float> poison, float %i.dr, i64 0
-  %i.dt = insertelement <2 x float> %5, float %i.ds, i64 1
-  %i.du = insertelement <2 x float> poison, float %4, i64 0
-  %i.dv = shufflevector <2 x float> %i.du, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.dw = fdiv <2 x float> %i.dt, %i.dv           ; 2 uses
+  %i.dt = insertelement <2 x float> poison, float %i.dr, i64 0
+  %i.du = insertelement <2 x float> %i.dt, float %i.ds, i64 1
+  %i.dv = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.dw = fdiv <2 x float> %i.du, %i.dv           ; 2 uses
   %i.dx = extractelement <2 x float> %i.dw, i64 0
   %i.dy = tail call noundef float @llvm.ceil.f32(float %i.dx) ; 2 uses
   %i.dz = fcmp ult float %i.dy, f0x5F800000

@@ -206,8 +206,8 @@ bb.c:                                             ; preds = %.lr.ph, %.preheader
   %i.bq = getelementptr inbounds i8, ptr %i.bm, i64 %.idx.i.i.i.i.i.i.i.i.i.i
   %i.br = load double, ptr %i.bq, align 8, !tbaa !81 ; 2 uses
   store double %i.br, ptr %i.ak, align 8, !tbaa !81
-  %14 = load double, ptr %i.aa, align 8, !tbaa !81, !noalias !188
-  %15 = load double, ptr %i.g, align 8, !tbaa !81, !noalias !188
+  %14 = load <2 x double>, ptr %i.aa, align 8
+  %15 = load <2 x double>, ptr %i.g, align 8
   %i.bs = load <2 x double>, ptr %i.al, align 8, !tbaa !81, !noalias !188 ; 2 uses
   %i.bt = insertelement <2 x double> poison, double %i.bg, i64 0
   %i.bu = insertelement <2 x double> %i.bt, double %i.bi, i64 1
@@ -220,13 +220,11 @@ bb.c:                                             ; preds = %.lr.ph, %.preheader
   %i.cb = extractelement <2 x double> %i.bx, i64 1
   %i.cc = call noundef double @llvm.round.f64(double %i.cb)
   %i.cd = fptosi double %i.cc to i32              ; 5 uses
-  %16 = insertelement <2 x double> poison, double %i.be, i64 0
-  %i.ce = insertelement <2 x double> %16, double %i.bn, i64 1
-  %i.cf = insertelement <2 x double> poison, double %14, i64 0
-  %i.cg = shufflevector <2 x double> %i.cf, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ch = fsub <2 x double> %i.ce, %i.cg
-  %17 = insertelement <2 x double> poison, double %15, i64 0
-  %i.ci = shufflevector <2 x double> %17, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ce = insertelement <2 x double> poison, double %i.be, i64 0
+  %i.cf = insertelement <2 x double> %i.ce, double %i.bn, i64 1
+  %i.cg = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.ch = fsub <2 x double> %i.cf, %i.cg
+  %i.ci = shufflevector <2 x double> %15, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cj = fdiv <2 x double> %i.ch, %i.ci
   %i.ck = call <2 x double> @llvm.round.v2f64(<2 x double> %i.cj)
   %i.cl = fptosi <2 x double> %i.ck to <2 x i32>  ; 2 uses
@@ -629,7 +627,6 @@ bb.a:
   %9 = alloca %"class.std::tuple", align 4        ; 6 uses
   %10 = alloca %"class.Eigen::Matrix", align 16   ; 27 uses
   %11 = alloca %"class.Eigen::Matrix", align 16   ; 6 uses
-  %.sroa.0610 = alloca [4 x double], align 16     ; 8 uses
   %12 = alloca %"class.Eigen::Matrix.393", align 16 ; 20 uses
   %13 = alloca %"class.Eigen::Matrix.170", align 4 ; 10 uses
   %i.a = load double, ptr %6, align 8, !tbaa !81  ; 4 uses
@@ -1005,7 +1002,6 @@ bb.y:                                             ; preds = %.thread683
   %i.gt = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !378, !noalias !375
   call void %i.gu(ptr dead_on_unwind nonnull writable sret(%"class.Eigen::Matrix") align 8 %11, ptr noundef nonnull align 8 dereferenceable(32) %i.gs, ptr noundef nonnull align 8 dereferenceable(24) %10), !inline_history !379
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0610)
   %i.gv = load <2 x double>, ptr %11, align 16, !tbaa !88, !noalias !380 ; 7 uses
   %i.gw = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.gx = load double, ptr %i.gw, align 16, !tbaa !81, !noalias !380 ; 2 uses
@@ -1019,27 +1015,22 @@ bb.y:                                             ; preds = %.thread683
   %i.hd = fmul double %i.gx, %i.hc
   %i.he = fadd double %i.hd, %i.ha
   %i.hf = fneg double %i.he
-  store <2 x double> %i.gv, ptr %.sroa.0610, align 16
-  %.sroa.0610.16..sroa_idx786 = getelementptr inbounds nuw i8, ptr %.sroa.0610, i64 16
-  store double %i.gx, ptr %.sroa.0610.16..sroa_idx786, align 16
-  %.sroa.0610.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0610, i64 24
-  store double %i.hf, ptr %.sroa.0610.24..sroa_idx, align 8, !tbaa !88
+  %.sroa.0610.sroa.5.16.vec.insert = insertelement <2 x double> poison, double %i.gx, i64 0 ; 2 uses
+  %.sroa.0610.sroa.5.24.vec.insert = insertelement <2 x double> %.sroa.0610.sroa.5.16.vec.insert, double %i.hf, i64 1 ; 5 uses
   %i.hg = shufflevector <2 x double> %i.gv, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.hh = fmul <2 x double> %i.gv, %i.hg
-  %.sroa.0610.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0610, i64 16
-  %.sroa.0610.16..sroa.0610.16..sroa.0610.16. = load <2 x double>, ptr %.sroa.0610.16..sroa_idx, align 16 ; 5 uses
-  %i.hi = fmul <2 x double> %.sroa.0610.16..sroa.0610.16..sroa.0610.16., %i.hg
-  %.sroa.0610.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0610, i64 8
-  %.sroa.0610.8..sroa.0610.8..sroa.0610.8. = load <2 x double>, ptr %.sroa.0610.8..sroa_idx, align 8 ; 2 uses
-  %i.hj = shufflevector <2 x double> %.sroa.0610.8..sroa.0610.8..sroa.0610.8., <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.hi = fmul <2 x double> %.sroa.0610.sroa.5.24.vec.insert, %i.hg
+  %.sroa.0610.sroa.0.8.vec.extract = extractelement <2 x double> %i.gv, i64 1
+  %14 = bitcast double %.sroa.0610.sroa.0.8.vec.extract to <1 x double>
+  %i.hj = shufflevector <1 x double> %14, <1 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.hk = fmul <2 x double> %i.gv, %i.hj
-  %i.hl = fmul <2 x double> %.sroa.0610.16..sroa.0610.16..sroa.0610.16., %i.hj
-  %14 = shufflevector <2 x double> %.sroa.0610.8..sroa.0610.8..sroa.0610.8., <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.hm = fmul <2 x double> %i.gv, %14
-  %i.hn = fmul <2 x double> %.sroa.0610.16..sroa.0610.16..sroa.0610.16., %14
-  %i.ho = shufflevector <2 x double> %.sroa.0610.16..sroa.0610.16..sroa.0610.16., <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
+  %i.hl = fmul <2 x double> %.sroa.0610.sroa.5.24.vec.insert, %i.hj
+  %15 = shufflevector <2 x double> %.sroa.0610.sroa.5.16.vec.insert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.hm = fmul <2 x double> %i.gv, %15
+  %i.hn = fmul <2 x double> %.sroa.0610.sroa.5.24.vec.insert, %15
+  %i.ho = shufflevector <2 x double> %.sroa.0610.sroa.5.24.vec.insert, <2 x double> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
   %i.hp = fmul <2 x double> %i.gv, %i.ho
-  %i.hq = fmul <2 x double> %.sroa.0610.16..sroa.0610.16..sroa.0610.16., %i.ho
+  %i.hq = fmul <2 x double> %.sroa.0610.sroa.5.24.vec.insert, %i.ho
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
   %i.hr = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
@@ -1442,7 +1433,6 @@ bb.by:                                            ; preds = %bb.bx, %bb.bu
   store i64 %i.aag, ptr %i.is, align 8, !tbaa !109
   %i.aah = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.io) #23 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0610)
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #23
   br label %bb.cb
@@ -1450,7 +1440,6 @@ bb.by:                                            ; preds = %bb.bx, %bb.bu
 bb.bz:                                            ; preds = %bb.bt, %bb.bq
   %.pn129 = phi { ptr, i32 } [ %lpad.phi, %bb.bq ], [ %i.st, %bb.bt ]
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0610)
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23
   br label %bb.ca
 

@@ -202,37 +202,36 @@ vector.memcheck:                                  ; preds = %.lr.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
-  %6 = load float, ptr %i.ke, align 4, !tbaa !38, !alias.scope !45
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %6, i64 0
-  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
+  %6 = load <4 x float>, ptr %i.ke, align 4
+  %broadcast.splat = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 7 uses
   %i.lo = getelementptr inbounds nuw [4 x i8], ptr %i.kd, i64 %index
-  %wide.load = load <4 x float>, ptr %i.lo, align 4, !tbaa !48, !alias.scope !49
+  %wide.load = load <4 x float>, ptr %i.lo, align 4, !tbaa !45, !alias.scope !46
   %i.lp = fadd fast <4 x float> %broadcast.splat, %wide.load ; 2 uses
   %i.lq = call fast <4 x float> @llvm.sqrt.v4f32(<4 x float> %i.lp)
   %i.lr = fcmp fast oeq <4 x float> %i.lp, zeroinitializer
   %i.ls = select nsz <4 x i1> %i.lr, <4 x float> splat (float f0x38D1B717), <4 x float> %i.lq ; 2 uses
   %i.lt = getelementptr inbounds nuw [4 x i8], ptr %i.kf, i64 %index
-  %wide.load192 = load <4 x float>, ptr %i.lt, align 4, !tbaa !48, !alias.scope !51
+  %wide.load192 = load <4 x float>, ptr %i.lt, align 4, !tbaa !45, !alias.scope !49
   %i.lu = getelementptr inbounds nuw [4 x i8], ptr %i.kg, i64 %index ; 2 uses
-  %wide.load193 = load <4 x float>, ptr %i.lu, align 4, !tbaa !48, !alias.scope !53
+  %wide.load193 = load <4 x float>, ptr %i.lu, align 4, !tbaa !45, !alias.scope !51
   %i.lv = getelementptr inbounds nuw [4 x i8], ptr %i.kh, i64 %index
-  %wide.load194 = load <4 x float>, ptr %i.lv, align 4, !tbaa !48, !alias.scope !55
+  %wide.load194 = load <4 x float>, ptr %i.lv, align 4, !tbaa !45, !alias.scope !53
   %i.lw = fmul fast <4 x float> %wide.load194, %wide.load193
   %i.lx = fdiv fast <4 x float> %i.lw, %i.ls
   %i.ly = fsub fast <4 x float> %wide.load192, %i.lx
   %i.lz = getelementptr inbounds nuw [4 x i8], ptr %i.ki, i64 %index
-  store <4 x float> %i.ly, ptr %i.lz, align 4, !tbaa !48, !alias.scope !57, !noalias !59
-  %wide.load195 = load <4 x float>, ptr %i.lu, align 4, !tbaa !48, !alias.scope !53
+  store <4 x float> %i.ly, ptr %i.lz, align 4, !tbaa !45, !alias.scope !55, !noalias !57
+  %wide.load195 = load <4 x float>, ptr %i.lu, align 4, !tbaa !45, !alias.scope !51
   %i.ma = fdiv fast <4 x float> %wide.load195, %i.ls
   %i.mb = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %index
-  store <4 x float> %i.ma, ptr %i.mb, align 4, !tbaa !48, !alias.scope !61, !noalias !62
+  store <4 x float> %i.ma, ptr %i.mb, align 4, !tbaa !45, !alias.scope !60, !noalias !61
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.mc = icmp eq i64 %index.next, %n.vec
-  br i1 %i.mc, label %middle.block, label %vector.body, !llvm.loop !63
+  br i1 %i.mc, label %middle.block, label %vector.body, !llvm.loop !62
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -245,30 +244,30 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 7 uses
   %i.md = getelementptr inbounds nuw [4 x i8], ptr %i.kd, i64 %indvars.iv
-  %i.me = load float, ptr %i.md, align 4, !tbaa !48
+  %i.me = load float, ptr %i.md, align 4, !tbaa !45
   %i.mf = load float, ptr %i.ke, align 4, !tbaa !38
   %i.mg = fadd fast float %i.mf, %i.me            ; 2 uses
   %i.mh = call fast float @llvm.sqrt.f32(float %i.mg)
   %i.mi = fcmp fast oeq float %i.mg, 0.000000e+00
   %.0 = select nsz i1 %i.mi, float f0x38D1B717, float %i.mh ; 2 uses
   %i.mj = getelementptr inbounds nuw [4 x i8], ptr %i.kf, i64 %indvars.iv
-  %i.mk = load float, ptr %i.mj, align 4, !tbaa !48
+  %i.mk = load float, ptr %i.mj, align 4, !tbaa !45
   %i.ml = getelementptr inbounds nuw [4 x i8], ptr %i.kg, i64 %indvars.iv ; 2 uses
-  %i.mm = load float, ptr %i.ml, align 4, !tbaa !48
+  %i.mm = load float, ptr %i.ml, align 4, !tbaa !45
   %i.mn = getelementptr inbounds nuw [4 x i8], ptr %i.kh, i64 %indvars.iv
-  %i.mo = load float, ptr %i.mn, align 4, !tbaa !48
+  %i.mo = load float, ptr %i.mn, align 4, !tbaa !45
   %i.mp = fmul fast float %i.mo, %i.mm
   %i.mq = fdiv fast float %i.mp, %.0
   %i.mr = fsub fast float %i.mk, %i.mq
   %i.ms = getelementptr inbounds nuw [4 x i8], ptr %i.ki, i64 %indvars.iv
-  store float %i.mr, ptr %i.ms, align 4, !tbaa !48
-  %i.mt = load float, ptr %i.ml, align 4, !tbaa !48
+  store float %i.mr, ptr %i.ms, align 4, !tbaa !45
+  %i.mt = load float, ptr %i.ml, align 4, !tbaa !45
   %i.mu = fdiv fast float %i.mt, %.0
   %i.mv = getelementptr inbounds nuw [4 x i8], ptr %i.js, i64 %indvars.iv
-  store float %i.mu, ptr %i.mv, align 4, !tbaa !48
+  store float %i.mu, ptr %i.mv, align 4, !tbaa !45
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %_ZNK4ncnn3Mat5emptyEv.exit102.thread, label %scalar.ph, !llvm.loop !67
+  br i1 %exitcond.not, label %_ZNK4ncnn3Mat5emptyEv.exit102.thread, label %scalar.ph, !llvm.loop !66
 
 _ZNK4ncnn3Mat5emptyEv.exit102.thread:             ; preds = %scalar.ph, %middle.block, %.preheader, %bb.cl, %bb.ck, %_ZN4ncnn3MatD2Ev.exit25, %_ZN4ncnn3MatD2Ev.exit27, %_ZN4ncnn3MatD2Ev.exit29, %_ZN4ncnn3MatD2Ev.exit31, %_ZNK4ncnn3Mat5emptyEv.exit, %_ZNK4ncnn3Mat5emptyEv.exit98, %_ZNK4ncnn3Mat5emptyEv.exit99, %_ZNK4ncnn3Mat5emptyEv.exit100, %_ZNK4ncnn3Mat5emptyEv.exit101, %_ZNK4ncnn3Mat5emptyEv.exit102
   %.022 = phi i32 [ -100, %_ZNK4ncnn3Mat5emptyEv.exit ], [ -100, %_ZNK4ncnn3Mat5emptyEv.exit102 ], [ -100, %_ZNK4ncnn3Mat5emptyEv.exit101 ], [ -100, %_ZNK4ncnn3Mat5emptyEv.exit100 ], [ -100, %_ZNK4ncnn3Mat5emptyEv.exit99 ], [ -100, %_ZNK4ncnn3Mat5emptyEv.exit98 ], [ -100, %bb.cl ], [ -100, %bb.ck ], [ -100, %_ZN4ncnn3MatD2Ev.exit31 ], [ -100, %_ZN4ncnn3MatD2Ev.exit29 ], [ -100, %_ZN4ncnn3MatD2Ev.exit27 ], [ -100, %_ZN4ncnn3MatD2Ev.exit25 ], [ 0, %.preheader ], [ 0, %middle.block ], [ 0, %scalar.ph ]
@@ -300,7 +299,7 @@ bb.a:
   %i.f = alloca i32, align 4                      ; 4 uses
   %i.g = tail call i32 @__kmpc_global_thread_num(ptr nonnull @2) ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !68   ; 2 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !67   ; 2 uses
   switch i32 %i.i, label %bb.d [
     i32 1, label %bb.b
     i32 2, label %bb.c
@@ -309,13 +308,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !69
+  %i.k = load i32, ptr %i.j, align 4, !tbaa !68
   store i32 %i.k, ptr %i.a, align 4, !tbaa !43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   %i.l = load ptr, ptr %1, align 8, !tbaa !18
-  store ptr %i.l, ptr %i.b, align 8, !tbaa !70
+  store ptr %i.l, ptr %i.b, align 8, !tbaa !69
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !72
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !71
   tail call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %i.g, i32 %i.n)
   call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 3, ptr nonnull @_ZNK4ncnn9BatchNorm15forward_inplaceERNS_3MatERKNS_6OptionE.omp_outlined, ptr nonnull %i.a, ptr nonnull %i.b, ptr nonnull %0)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
@@ -325,14 +324,14 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !69
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !68
   store i32 %i.p, ptr %i.c, align 4, !tbaa !43
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !74
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !73
   store i32 %i.r, ptr %i.d, align 4, !tbaa !43
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !72
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !71
   tail call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %i.g, i32 %i.t)
   call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 4, ptr nonnull @_ZNK4ncnn9BatchNorm15forward_inplaceERNS_3MatERKNS_6OptionE.omp_outlined.1, ptr nonnull %i.d, ptr nonnull %1, ptr nonnull %0, ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
@@ -346,11 +345,11 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !69
+  %i.w = load i32, ptr %i.v, align 4, !tbaa !68
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %i.y = load i32, ptr %i.x, align 8, !tbaa !74
+  %i.y = load i32, ptr %i.x, align 8, !tbaa !73
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 52
-  %i.aa = load i32, ptr %i.z, align 4, !tbaa !75
+  %i.aa = load i32, ptr %i.z, align 4, !tbaa !74
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #11
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !44
@@ -360,7 +359,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ae = mul nsw i32 %i.ad, %i.aa
   store i32 %i.ae, ptr %i.f, align 4, !tbaa !43
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.ag = load i32, ptr %i.af, align 4, !tbaa !72
+  %i.ag = load i32, ptr %i.af, align 4, !tbaa !71
   tail call void @__kmpc_push_num_threads(ptr nonnull @2, i32 %i.g, i32 %i.ag)
   call void (ptr, i32, ptr, ...) @__kmpc_fork_call(ptr nonnull @2, i32 4, ptr nonnull @_ZNK4ncnn9BatchNorm15forward_inplaceERNS_3MatERKNS_6OptionE.omp_outlined.2, ptr nonnull %i.e, ptr nonnull %1, ptr nonnull %0, ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11
@@ -403,9 +402,9 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.j, i8 0, i64 28, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.k, i8 0, i64 36, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.l, i8 0, i64 28, i1 false)
-  store i8 1, ptr %i.n, align 8, !tbaa !76
+  store i8 1, ptr %i.n, align 8, !tbaa !75
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 1, ptr %i.o, align 1, !tbaa !77
+  store i8 1, ptr %i.o, align 1, !tbaa !76
   ret void
 }
 
@@ -480,7 +479,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 576
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !18   ; 6 uses
-  %i.n = load ptr, ptr %3, align 8, !tbaa !70     ; 6 uses
+  %i.n = load ptr, ptr %3, align 8, !tbaa !69     ; 6 uses
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 504
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !18   ; 6 uses
   %i.q = sext i32 %i.k to i64                     ; 6 uses
@@ -523,25 +522,25 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.ac = add i64 %index, %i.q                    ; 3 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ac ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %wide.load = load <4 x float>, ptr %i.ad, align 4, !tbaa !48, !alias.scope !78
-  %wide.load29 = load <4 x float>, ptr %i.ae, align 4, !tbaa !48, !alias.scope !78
+  %wide.load = load <4 x float>, ptr %i.ad, align 4, !tbaa !45, !alias.scope !77
+  %wide.load29 = load <4 x float>, ptr %i.ae, align 4, !tbaa !45, !alias.scope !77
   %i.af = getelementptr inbounds [4 x i8], ptr %i.n, i64 %i.ac ; 3 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16 ; 2 uses
-  %wide.load30 = load <4 x float>, ptr %i.af, align 4, !tbaa !48, !alias.scope !81, !noalias !83
-  %wide.load31 = load <4 x float>, ptr %i.ag, align 4, !tbaa !48, !alias.scope !81, !noalias !83
+  %wide.load30 = load <4 x float>, ptr %i.af, align 4, !tbaa !45, !alias.scope !80, !noalias !82
+  %wide.load31 = load <4 x float>, ptr %i.ag, align 4, !tbaa !45, !alias.scope !80, !noalias !82
   %i.ah = fmul fast <4 x float> %wide.load30, %wide.load
   %i.ai = fmul fast <4 x float> %wide.load31, %wide.load29
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %i.ac ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 16
-  %wide.load32 = load <4 x float>, ptr %i.aj, align 4, !tbaa !48, !alias.scope !85
-  %wide.load33 = load <4 x float>, ptr %i.ak, align 4, !tbaa !48, !alias.scope !85
+  %wide.load32 = load <4 x float>, ptr %i.aj, align 4, !tbaa !45, !alias.scope !84
+  %wide.load33 = load <4 x float>, ptr %i.ak, align 4, !tbaa !45, !alias.scope !84
   %i.al = fadd fast <4 x float> %wide.load32, %i.ah
   %i.am = fadd fast <4 x float> %wide.load33, %i.ai
-  store <4 x float> %i.al, ptr %i.af, align 4, !tbaa !48, !alias.scope !81, !noalias !83
-  store <4 x float> %i.am, ptr %i.ag, align 4, !tbaa !48, !alias.scope !81, !noalias !83
+  store <4 x float> %i.al, ptr %i.af, align 4, !tbaa !45, !alias.scope !80, !noalias !82
+  store <4 x float> %i.am, ptr %i.ag, align 4, !tbaa !45, !alias.scope !80, !noalias !82
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.an = icmp eq i64 %index.next, %n.vec
-  br i1 %i.an, label %middle.block, label %vector.body, !llvm.loop !86
+  br i1 %i.an, label %middle.block, label %vector.body, !llvm.loop !85
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.u, %n.vec
@@ -557,14 +556,14 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv.ph
-  %i.as = load float, ptr %i.ar, align 4, !tbaa !48
+  %i.as = load float, ptr %i.ar, align 4, !tbaa !45
   %i.at = getelementptr inbounds [4 x i8], ptr %i.n, i64 %indvars.iv.ph ; 2 uses
-  %i.au = load float, ptr %i.at, align 4, !tbaa !48
+  %i.au = load float, ptr %i.at, align 4, !tbaa !45
   %i.av = fmul fast float %i.au, %i.as
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv.ph
-  %i.ax = load float, ptr %i.aw, align 4, !tbaa !48
+  %i.ax = load float, ptr %i.aw, align 4, !tbaa !45
   %i.ay = fadd fast float %i.ax, %i.av
-  store float %i.ay, ptr %i.at, align 4, !tbaa !48
+  store float %i.ay, ptr %i.at, align 4, !tbaa !45
   %indvars.iv.next.prol = add nsw i64 %indvars.iv.ph, 1
   br label %scalar.ph.prol.loopexit
 
@@ -576,28 +575,28 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %scalar.ph ], [ %indvars.iv.unr, %scalar.ph.prol.loopexit ] ; 5 uses
   %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv
-  %i.bb = load float, ptr %i.ba, align 4, !tbaa !48
+  %i.bb = load float, ptr %i.ba, align 4, !tbaa !45
   %i.bc = getelementptr inbounds [4 x i8], ptr %i.n, i64 %indvars.iv ; 2 uses
-  %i.bd = load float, ptr %i.bc, align 4, !tbaa !48
+  %i.bd = load float, ptr %i.bc, align 4, !tbaa !45
   %i.be = fmul fast float %i.bd, %i.bb
   %i.bf = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv
-  %i.bg = load float, ptr %i.bf, align 4, !tbaa !48
+  %i.bg = load float, ptr %i.bf, align 4, !tbaa !45
   %i.bh = fadd fast float %i.bg, %i.be
-  store float %i.bh, ptr %i.bc, align 4, !tbaa !48
+  store float %i.bh, ptr %i.bc, align 4, !tbaa !45
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 3 uses
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %indvars.iv.next
-  %i.bj = load float, ptr %i.bi, align 4, !tbaa !48
+  %i.bj = load float, ptr %i.bi, align 4, !tbaa !45
   %i.bk = getelementptr inbounds [4 x i8], ptr %i.n, i64 %indvars.iv.next ; 2 uses
-  %i.bl = load float, ptr %i.bk, align 4, !tbaa !48
+  %i.bl = load float, ptr %i.bk, align 4, !tbaa !45
   %i.bm = fmul fast float %i.bl, %i.bj
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %indvars.iv.next
-  %i.bo = load float, ptr %i.bn, align 4, !tbaa !48
+  %i.bo = load float, ptr %i.bn, align 4, !tbaa !45
   %i.bp = fadd fast float %i.bo, %i.bm
-  store float %i.bp, ptr %i.bk, align 4, !tbaa !48
+  store float %i.bp, ptr %i.bk, align 4, !tbaa !45
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2 ; 2 uses
   %lftr.wideiv.1 = trunc i64 %indvars.iv.next.1 to i32
   %exitcond.not.1 = icmp eq i32 %i.r, %lftr.wideiv.1
-  br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !87
+  br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !86
 
 ._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
@@ -624,7 +623,7 @@ declare i32 @__kmpc_global_thread_num(ptr) local_unnamed_addr #11
 declare void @__kmpc_push_num_threads(ptr, i32, i32) local_unnamed_addr #11
 
 ; Function Attrs: nounwind
-declare !callback !88 void @__kmpc_fork_call(ptr, i32, ptr, ...) local_unnamed_addr #11
+declare !callback !87 void @__kmpc_fork_call(ptr, i32, ptr, ...) local_unnamed_addr #11
 
 ; Function Attrs: alwaysinline norecurse nounwind uwtable
 define internal void @_ZNK4ncnn9BatchNorm15forward_inplaceERNS_3MatERKNS_6OptionE.omp_outlined.1(ptr noalias nofree noundef readonly captures(none) %0, ptr noalias nofree readnone captures(none) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %2, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(72) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(4) %5) #10 personality ptr @__gxx_personality_v0 {
@@ -659,7 +658,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph30:                                         ; preds = %bb.b
   %i.l = load ptr, ptr %3, align 8, !tbaa !18
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 44
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !69
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !68
   %i.o = sext i32 %i.n to i64
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.q = load i64, ptr %i.p, align 8, !tbaa !41
@@ -686,9 +685,9 @@ bb.b:                                             ; preds = %bb.a
   %.reass = mul i64 %factor.op.mul, %indvars.iv33
   %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 %.reass ; 2 uses
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv33
-  %i.ab = load float, ptr %i.aa, align 4, !tbaa !48 ; 2 uses
+  %i.ab = load float, ptr %i.aa, align 4, !tbaa !45 ; 2 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv33
-  %i.ad = load float, ptr %i.ac, align 4, !tbaa !48 ; 2 uses
+  %i.ad = load float, ptr %i.ac, align 4, !tbaa !45 ; 2 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
@@ -702,17 +701,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %index ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
-  %wide.load = load <4 x float>, ptr %i.ae, align 4, !tbaa !48
-  %wide.load42 = load <4 x float>, ptr %i.af, align 4, !tbaa !48
+  %wide.load = load <4 x float>, ptr %i.ae, align 4, !tbaa !45
+  %wide.load42 = load <4 x float>, ptr %i.af, align 4, !tbaa !45
   %i.ag = fmul fast <4 x float> %wide.load, %broadcast.splat41
   %i.ah = fmul fast <4 x float> %wide.load42, %broadcast.splat41
   %i.ai = fadd fast <4 x float> %i.ag, %broadcast.splat
   %i.aj = fadd fast <4 x float> %i.ah, %broadcast.splat
-  store <4 x float> %i.ai, ptr %i.ae, align 4, !tbaa !48
-  store <4 x float> %i.aj, ptr %i.af, align 4, !tbaa !48
+  store <4 x float> %i.ai, ptr %i.ae, align 4, !tbaa !45
+  store <4 x float> %i.aj, ptr %i.af, align 4, !tbaa !45
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.ak = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !90
+  br i1 %i.ak, label %middle.block, label %vector.body, !llvm.loop !89
 
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
@@ -730,13 +729,13 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.z, i64 %indvars.iv ; 2 uses
-  %i.am = load float, ptr %i.al, align 4, !tbaa !48
+  %i.am = load float, ptr %i.al, align 4, !tbaa !45
   %i.an = fmul fast float %i.am, %i.ad
   %i.ao = fadd fast float %i.an, %i.ab
-  store float %i.ao, ptr %i.al, align 4, !tbaa !48
+  store float %i.ao, ptr %i.al, align 4, !tbaa !45
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !91
+  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !90
 
 ._crit_edge31.split:                              ; preds = %._crit_edge, %.lr.ph30, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
@@ -781,11 +780,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not34, label %._crit_edge36.split, label %.noexc27.lr.ph
 
 .noexc27.lr.ph:                                   ; preds = %bb.b
-  %i.l = load ptr, ptr %3, align 8, !tbaa !18, !noalias !92
+  %i.l = load ptr, ptr %3, align 8, !tbaa !18, !noalias !91
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 64
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !20, !noalias !92
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !20, !noalias !91
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.p = load i64, ptr %i.o, align 8, !tbaa !41, !noalias !92
+  %i.p = load i64, ptr %i.o, align 8, !tbaa !41, !noalias !91
   %factor.op.mul = mul i64 %i.n, %i.p
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 504
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !18
@@ -809,9 +808,9 @@ bb.b:                                             ; preds = %bb.a
   %.reass = mul i64 %factor.op.mul, %indvars.iv38
   %i.y = getelementptr inbounds nuw i8, ptr %i.l, i64 %.reass ; 2 uses
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %i.r, i64 %indvars.iv38
-  %i.aa = load float, ptr %i.z, align 4, !tbaa !48 ; 2 uses
+  %i.aa = load float, ptr %i.z, align 4, !tbaa !45 ; 2 uses
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv38
-  %i.ac = load float, ptr %i.ab, align 4, !tbaa !48 ; 2 uses
+  %i.ac = load float, ptr %i.ab, align 4, !tbaa !45 ; 2 uses
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.noexc27
@@ -825,17 +824,17 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %index ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
-  %wide.load = load <4 x float>, ptr %i.ad, align 4, !tbaa !48
-  %wide.load47 = load <4 x float>, ptr %i.ae, align 4, !tbaa !48
+  %wide.load = load <4 x float>, ptr %i.ad, align 4, !tbaa !45
+  %wide.load47 = load <4 x float>, ptr %i.ae, align 4, !tbaa !45
   %i.af = fmul fast <4 x float> %wide.load, %broadcast.splat46
   %i.ag = fmul fast <4 x float> %wide.load47, %broadcast.splat46
   %i.ah = fadd fast <4 x float> %i.af, %broadcast.splat
   %i.ai = fadd fast <4 x float> %i.ag, %broadcast.splat
-  store <4 x float> %i.ah, ptr %i.ad, align 4, !tbaa !48
-  store <4 x float> %i.ai, ptr %i.ae, align 4, !tbaa !48
+  store <4 x float> %i.ah, ptr %i.ad, align 4, !tbaa !45
+  store <4 x float> %i.ai, ptr %i.ae, align 4, !tbaa !45
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
-  br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !95
+  br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !94
 
 middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
@@ -853,13 +852,13 @@ scalar.ph.preheader:                              ; preds = %.noexc27, %middle.b
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %scalar.ph ], [ %indvars.iv.ph, %scalar.ph.preheader ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.y, i64 %indvars.iv ; 2 uses
-  %i.al = load float, ptr %i.ak, align 4, !tbaa !48
+  %i.al = load float, ptr %i.ak, align 4, !tbaa !45
   %i.am = fmul fast float %i.al, %i.ac
   %i.an = fadd fast float %i.am, %i.aa
-  store float %i.an, ptr %i.ak, align 4, !tbaa !48
+  store float %i.an, ptr %i.ak, align 4, !tbaa !45
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !96
+  br i1 %exitcond.not, label %._crit_edge, label %scalar.ph, !llvm.loop !95
 
 ._crit_edge36.split:                              ; preds = %._crit_edge, %.noexc27.lr.ph, %bb.b
   call void @__kmpc_for_static_fini(ptr nonnull @1, i32 %i.h)
@@ -951,56 +950,55 @@ attributes #15 = { builtin nounwind }
 !42 = !{!12, !6, i64 24}
 !43 = !{!6, !6, i64 0}
 !44 = !{!12, !6, i64 56}
-!45 = !{!46}
-!46 = distinct !{!46, !47}
-!47 = distinct !{!47, !"LVerDomain"}
-!48 = !{!37, !37, i64 0}
+!45 = !{!37, !37, i64 0}
+!46 = !{!47}
+!47 = distinct !{!47, !48}
+!48 = distinct !{!48, !"LVerDomain"}
 !49 = !{!50}
-!50 = distinct !{!50, !47}
+!50 = distinct !{!50, !48}
 !51 = !{!52}
-!52 = distinct !{!52, !47}
+!52 = distinct !{!52, !48}
 !53 = !{!54}
-!54 = distinct !{!54, !47}
+!54 = distinct !{!54, !48}
 !55 = !{!56}
-!56 = distinct !{!56, !47}
-!57 = !{!58}
-!58 = distinct !{!58, !47}
-!59 = !{!60, !50, !46, !52, !54, !56}
-!60 = distinct !{!60, !47}
-!61 = !{!60}
-!62 = !{!50, !46, !52, !54, !56}
-!63 = distinct !{!63, !64, !65, !66}
-!64 = !{!"llvm.loop.mustprogress"}
-!65 = !{!"llvm.loop.isvectorized", i32 1}
-!66 = !{!"llvm.loop.unroll.runtime.disable"}
-!67 = distinct !{!67, !64, !65}
-!68 = !{!12, !6, i64 40}
-!69 = !{!12, !6, i64 44}
-!70 = !{!71, !71, i64 0}
-!71 = !{!"p1 float", !13, i64 0}
-!72 = !{!73, !6, i64 4}
-!73 = !{!"_ZTSN4ncnn6OptionE", !24, i64 0, !24, i64 1, !24, i64 2, !24, i64 3, !6, i64 4, !16, i64 8, !16, i64 16, !6, i64 24, !24, i64 28, !24, i64 29, !24, i64 30, !24, i64 31, !24, i64 32, !24, i64 33, !24, i64 34, !24, i64 35, !24, i64 36, !24, i64 37, !24, i64 38, !24, i64 39, !6, i64 40, !24, i64 44, !24, i64 45, !24, i64 46, !24, i64 47, !7, i64 48, !24, i64 49, !24, i64 50, !24, i64 51, !24, i64 52, !24, i64 53, !24, i64 54, !24, i64 55, !24, i64 56, !24, i64 57, !24, i64 58, !24, i64 59, !24, i64 60, !24, i64 61, !24, i64 62, !24, i64 63}
-!74 = !{!12, !6, i64 48}
-!75 = !{!12, !6, i64 52}
-!76 = !{!23, !24, i64 8}
-!77 = !{!23, !24, i64 9}
-!78 = !{!79}
-!79 = distinct !{!79, !80}
-!80 = distinct !{!80, !"LVerDomain"}
-!81 = !{!82}
-!82 = distinct !{!82, !80}
-!83 = !{!79, !84}
-!84 = distinct !{!84, !80}
-!85 = !{!84}
-!86 = distinct !{!86, !65, !66}
-!87 = distinct !{!87, !65}
-!88 = !{!89}
-!89 = !{i64 2, i64 -1, i64 -1, i1 true}
-!90 = distinct !{!90, !64, !65, !66}
-!91 = distinct !{!91, !64, !66, !65}
-!92 = !{!93}
-!93 = distinct !{!93, !94, !"_ZN4ncnn3Mat7channelEi: argument 0"}
-!94 = distinct !{!94, !"_ZN4ncnn3Mat7channelEi"}
-!95 = distinct !{!95, !64, !65, !66}
-!96 = distinct !{!96, !64, !66, !65}
+!56 = distinct !{!56, !48}
+!57 = !{!58, !47, !59, !50, !52, !54}
+!58 = distinct !{!58, !48}
+!59 = distinct !{!59, !48}
+!60 = !{!58}
+!61 = !{!47, !59, !50, !52, !54}
+!62 = distinct !{!62, !63, !64, !65}
+!63 = !{!"llvm.loop.mustprogress"}
+!64 = !{!"llvm.loop.isvectorized", i32 1}
+!65 = !{!"llvm.loop.unroll.runtime.disable"}
+!66 = distinct !{!66, !63, !64}
+!67 = !{!12, !6, i64 40}
+!68 = !{!12, !6, i64 44}
+!69 = !{!70, !70, i64 0}
+!70 = !{!"p1 float", !13, i64 0}
+!71 = !{!72, !6, i64 4}
+!72 = !{!"_ZTSN4ncnn6OptionE", !24, i64 0, !24, i64 1, !24, i64 2, !24, i64 3, !6, i64 4, !16, i64 8, !16, i64 16, !6, i64 24, !24, i64 28, !24, i64 29, !24, i64 30, !24, i64 31, !24, i64 32, !24, i64 33, !24, i64 34, !24, i64 35, !24, i64 36, !24, i64 37, !24, i64 38, !24, i64 39, !6, i64 40, !24, i64 44, !24, i64 45, !24, i64 46, !24, i64 47, !7, i64 48, !24, i64 49, !24, i64 50, !24, i64 51, !24, i64 52, !24, i64 53, !24, i64 54, !24, i64 55, !24, i64 56, !24, i64 57, !24, i64 58, !24, i64 59, !24, i64 60, !24, i64 61, !24, i64 62, !24, i64 63}
+!73 = !{!12, !6, i64 48}
+!74 = !{!12, !6, i64 52}
+!75 = !{!23, !24, i64 8}
+!76 = !{!23, !24, i64 9}
+!77 = !{!78}
+!78 = distinct !{!78, !79}
+!79 = distinct !{!79, !"LVerDomain"}
+!80 = !{!81}
+!81 = distinct !{!81, !79}
+!82 = !{!78, !83}
+!83 = distinct !{!83, !79}
+!84 = !{!83}
+!85 = distinct !{!85, !64, !65}
+!86 = distinct !{!86, !64}
+!87 = !{!88}
+!88 = !{i64 2, i64 -1, i64 -1, i1 true}
+!89 = distinct !{!89, !63, !64, !65}
+!90 = distinct !{!90, !63, !65, !64}
+!91 = !{!92}
+!92 = distinct !{!92, !93, !"_ZN4ncnn3Mat7channelEi: argument 0"}
+!93 = distinct !{!93, !"_ZN4ncnn3Mat7channelEi"}
+!94 = distinct !{!94, !63, !64, !65}
+!95 = distinct !{!95, !63, !65, !64}
 end_hunk_0

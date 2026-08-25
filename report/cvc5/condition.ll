@@ -204,9 +204,8 @@ bb.df:                                            ; preds = %bb.de
   %i.za = add i64 %i.yz, %.sroa.0191.011402111
   store i64 %i.za, ptr %i.mg, align 8, !tbaa !238
   %i.zb = load i64, ptr %i.mh, align 8, !tbaa !239
-  %2 = load i64, ptr %i.mi, align 8, !tbaa !240
-  %3 = insertelement <2 x i64> poison, i64 %2, i64 0
-  %i.zc = insertelement <2 x i64> %3, i64 %i.zb, i64 1
+  %2 = load <2 x i64>, ptr %i.mi, align 8
+  %i.zc = insertelement <2 x i64> %2, i64 %i.zb, i64 1
   %i.zd = add <2 x i64> %i.zc, %i.pt              ; 2 uses
   %i.ze = extractelement <2 x i64> %i.zd, i64 1
   store i64 %i.ze, ptr %i.mh, align 8, !tbaa !239

@@ -205,13 +205,11 @@ bb.aw:                                            ; preds = %.loopexit
 
 bb.ax:                                            ; preds = %bb.aw
   %i.ts = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %15 = load double, ptr %i.ts, align 8, !tbaa !221
+  %15 = load <2 x double>, ptr %i.ts, align 8     ; 2 uses
   %i.tt = getelementptr inbounds nuw i8, ptr %4, i64 80
-  %16 = load double, ptr %i.tt, align 8, !tbaa !222
-  %17 = insertelement <2 x double> poison, double %15, i64 0 ; 2 uses
-  %18 = insertelement <2 x double> poison, double %16, i64 0
-  %i.tu = fadd <2 x double> %17, %18
-  %i.tv = fdiv <2 x double> %17, %i.tu            ; 2 uses
+  %16 = load <2 x double>, ptr %i.tt, align 8
+  %i.tu = fadd <2 x double> %15, %16
+  %i.tv = fdiv <2 x double> %15, %i.tu            ; 2 uses
   %i.tw = extractelement <2 x double> %i.tv, i64 0
   %i.tx = call double @log(double noundef %i.tw) #33
   %i.ty = extractelement <2 x double> %i.tv, i64 0

@@ -205,7 +205,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 15 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
-  %57 = load float, ptr %i.g, align 4, !tbaa !8
+  %57 = load <4 x float>, ptr %i.g, align 4
+  %58 = shufflevector <4 x float> %57, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 24 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 15 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 6 uses
@@ -225,7 +226,6 @@ bb.a:
   %i.x = fmul <2 x float> %i.w, zeroinitializer
   %i.y = shufflevector <2 x float> %i.u, <2 x float> %i.v, <2 x i32> <i32 0, i32 2>
   %i.z = fadd <2 x float> %i.y, %i.x
-  %58 = insertelement <2 x float> poison, float %57, i64 0
   %i.aa = insertelement <2 x float> %58, float %i.k, i64 1
   %i.ab = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aa, <2 x float> zeroinitializer, <2 x float> %i.z)
   %i.ac = load <2 x float>, ptr %4, align 8, !tbaa !8
@@ -250,7 +250,8 @@ bb.a:
   %i.an = load ptr, ptr %i.am, align 8
   %i.ao = call noundef ptr %i.an(ptr noundef nonnull align 8 dereferenceable(129) %0) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
-  %59 = load float, ptr %i.g, align 4, !tbaa !8
+  %59 = load <4 x float>, ptr %i.g, align 4
+  %60 = shufflevector <4 x float> %59, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.ap = load float, ptr %i.j, align 4, !tbaa !8
   %i.aq = load float, ptr %i.l, align 4, !tbaa !8
   %i.ar = load float, ptr %i.n, align 4, !tbaa !8
@@ -262,7 +263,6 @@ bb.a:
   %i.ax = shufflevector <2 x float> %i.av, <2 x float> %i.aw, <2 x i32> <i32 0, i32 2>
   %i.ay = shufflevector <2 x float> %i.av, <2 x float> %i.aw, <2 x i32> <i32 1, i32 3>
   %i.az = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ax, <2 x float> zeroinitializer, <2 x float> %i.ay)
-  %60 = insertelement <2 x float> poison, float %59, i64 0
   %i.ba = insertelement <2 x float> %60, float %i.ap, i64 1
   %i.bb = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ba, <2 x float> zeroinitializer, <2 x float> %i.az)
   %i.bc = load <2 x float>, ptr %4, align 8, !tbaa !8
@@ -286,7 +286,8 @@ bb.a:
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = call noundef ptr %i.bm(ptr noundef nonnull align 8 dereferenceable(129) %0) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20
-  %61 = load float, ptr %i.g, align 4, !tbaa !8
+  %61 = load <4 x float>, ptr %i.g, align 4
+  %62 = shufflevector <4 x float> %61, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.bo = load float, ptr %i.j, align 4, !tbaa !8
   %i.bp = load float, ptr %i.l, align 4, !tbaa !8
   %i.bq = load float, ptr %i.n, align 4, !tbaa !8
@@ -300,7 +301,6 @@ bb.a:
   %i.by = fmul <2 x float> %i.bx, zeroinitializer
   %i.bz = shufflevector <2 x float> %i.bv, <2 x float> %i.bw, <2 x i32> <i32 0, i32 2>
   %i.ca = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bz, <2 x float> zeroinitializer, <2 x float> %i.by)
-  %62 = insertelement <2 x float> poison, float %61, i64 0
   %i.cb = insertelement <2 x float> %62, float %i.bo, i64 1
   %i.cc = fadd <2 x float> %i.cb, %i.ca
   %i.cd = load <2 x float>, ptr %4, align 8, !tbaa !8
@@ -617,7 +617,8 @@ bb.g:                                             ; preds = %bb.a
   %i.kj = getelementptr inbounds nuw i8, ptr %15, i64 48
   %i.kk = load float, ptr %13, align 16, !tbaa !8 ; 2 uses
   %i.kl = load float, ptr %i.ka, align 4, !tbaa !8 ; 2 uses
-  %63 = load float, ptr %i.g, align 4, !tbaa !8
+  %63 = load <4 x float>, ptr %i.g, align 4
+  %64 = shufflevector <4 x float> %63, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.km = load float, ptr %i.kb, align 8, !tbaa !8 ; 2 uses
   %i.kn = load float, ptr %i.j, align 4, !tbaa !8
   %i.ko = load <2 x float>, ptr %1, align 4, !tbaa !8 ; 2 uses
@@ -630,7 +631,6 @@ bb.g:                                             ; preds = %bb.a
   %i.kv = insertelement <2 x float> poison, float %i.kk, i64 0
   %i.kw = shufflevector <2 x float> %i.kv, <2 x float> poison, <2 x i32> zeroinitializer
   %i.kx = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ku, <2 x float> %i.kw, <2 x float> %i.kt)
-  %64 = insertelement <2 x float> poison, float %63, i64 0
   %i.ky = insertelement <2 x float> %64, float %i.kn, i64 1
   %i.kz = insertelement <2 x float> poison, float %i.km, i64 0
   %i.la = shufflevector <2 x float> %i.kz, <2 x float> poison, <2 x i32> zeroinitializer
@@ -661,7 +661,8 @@ bb.g:                                             ; preds = %bb.a
   %i.lp = getelementptr inbounds nuw i8, ptr %16, i64 48
   %i.lq = load float, ptr %14, align 8, !tbaa !8  ; 2 uses
   %i.lr = load float, ptr %i.ke, align 4, !tbaa !8 ; 2 uses
-  %65 = load float, ptr %i.g, align 4, !tbaa !8
+  %65 = load <4 x float>, ptr %i.g, align 4
+  %66 = shufflevector <4 x float> %65, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.ls = load float, ptr %i.kf, align 8, !tbaa !8 ; 2 uses
   %i.lt = load float, ptr %i.j, align 4, !tbaa !8
   %i.lu = load <2 x float>, ptr %1, align 4, !tbaa !8 ; 2 uses
@@ -674,7 +675,6 @@ bb.g:                                             ; preds = %bb.a
   %i.mb = insertelement <2 x float> poison, float %i.lq, i64 0
   %i.mc = shufflevector <2 x float> %i.mb, <2 x float> poison, <2 x i32> zeroinitializer
   %i.md = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ma, <2 x float> %i.mc, <2 x float> %i.lz)
-  %66 = insertelement <2 x float> poison, float %65, i64 0
   %i.me = insertelement <2 x float> %66, float %i.lt, i64 1
   %i.mf = insertelement <2 x float> poison, float %i.ls, i64 0
   %i.mg = shufflevector <2 x float> %i.mf, <2 x float> poison, <2 x i32> zeroinitializer
@@ -917,9 +917,9 @@ bb.g:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #20
   %i.tl = load <4 x float>, ptr %13, align 16     ; 2 uses
   %i.tm = shufflevector <4 x float> %i.tl, <4 x float> poison, <2 x i32> <i32 2, i32 poison>
-  %67 = load float, ptr %i.l, align 4, !tbaa !8
-  %68 = load float, ptr %i.n, align 4, !tbaa !8
-  %69 = load float, ptr %i.r, align 4, !tbaa !8
+  %67 = load <4 x float>, ptr %i.l, align 4
+  %68 = load <4 x float>, ptr %i.n, align 4
+  %69 = load <4 x float>, ptr %i.r, align 4
   %i.tn = load <2 x float>, ptr %1, align 4, !tbaa !8 ; 2 uses
   %i.to = load <2 x float>, ptr %i.h, align 4, !tbaa !8 ; 2 uses
   %i.tp = shufflevector <2 x float> %i.tn, <2 x float> %i.to, <2 x i32> <i32 1, i32 3>
@@ -940,16 +940,13 @@ bb.g:                                             ; preds = %bb.a
   %i.ud = shufflevector <2 x float> %i.ua, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ue = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.tq, <2 x float> %i.ud, <2 x float> %i.uc)
   %i.uf = load <2 x float>, ptr %14, align 8, !tbaa !8 ; 4 uses
-  %70 = insertelement <2 x float> poison, float %68, i64 0
-  %i.ug = shufflevector <2 x float> %70, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ug = shufflevector <4 x float> %68, <4 x float> poison, <2 x i32> zeroinitializer
   %i.uh = shufflevector <2 x float> %i.ua, <2 x float> %i.uf, <2 x i32> <i32 1, i32 3>
   %i.ui = fmul <2 x float> %i.ug, %i.uh
-  %71 = insertelement <2 x float> poison, float %67, i64 0
-  %i.uj = shufflevector <2 x float> %71, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.uj = shufflevector <4 x float> %67, <4 x float> poison, <2 x i32> zeroinitializer
   %i.uk = shufflevector <2 x float> %i.ua, <2 x float> %i.uf, <2 x i32> <i32 0, i32 2>
   %i.ul = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.uj, <2 x float> %i.uk, <2 x float> %i.ui)
-  %72 = insertelement <2 x float> poison, float %69, i64 0
-  %i.um = shufflevector <2 x float> %72, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.um = shufflevector <4 x float> %69, <4 x float> poison, <2 x i32> zeroinitializer
   %i.un = insertelement <2 x float> %i.tm, float %i.tt, i64 1
   %i.uo = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.um, <2 x float> %i.un, <2 x float> %i.ul)
   %i.up = insertelement <2 x float> poison, float %.sroa.19744.0.copyload, i64 0
@@ -1352,9 +1349,9 @@ bb.ab:                                            ; preds = %.lr.ph824, %bb.ab
   %i.arz = shufflevector <2 x float> %i.arw, <2 x float> %i.arx, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.asa = shufflevector <4 x float> %i.aru, <4 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.asb = load <2 x float>, ptr %i.a, align 4, !tbaa !8 ; 2 uses
-  %73 = load float, ptr %i.l, align 4, !tbaa !8
-  %74 = load float, ptr %i.n, align 4, !tbaa !8
-  %75 = load float, ptr %i.r, align 4, !tbaa !8
+  %70 = load <4 x float>, ptr %i.l, align 4
+  %71 = load <4 x float>, ptr %i.n, align 4
+  %72 = load <4 x float>, ptr %i.r, align 4
   %i.asc = load float, ptr %i.arn, align 4, !tbaa !8
   call void @llvm.lifetime.start.p0(ptr nonnull %56) #20
   %i.asd = load float, ptr %i.arp, align 8, !tbaa !8 ; 2 uses
@@ -1370,16 +1367,13 @@ bb.ab:                                            ; preds = %.lr.ph824, %bb.ab
   %i.asn = shufflevector <2 x float> %i.ask, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aso = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.arz, <2 x float> %i.asn, <2 x float> %i.asm)
   %i.asp = load <2 x float>, ptr %54, align 8, !tbaa !8 ; 4 uses
-  %76 = insertelement <2 x float> poison, float %74, i64 0
-  %i.asq = shufflevector <2 x float> %76, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.asq = shufflevector <4 x float> %71, <4 x float> poison, <2 x i32> zeroinitializer
   %i.asr = shufflevector <2 x float> %i.ask, <2 x float> %i.asp, <2 x i32> <i32 1, i32 3>
   %i.ass = fmul <2 x float> %i.asq, %i.asr
-  %77 = insertelement <2 x float> poison, float %73, i64 0
-  %i.ast = shufflevector <2 x float> %77, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ast = shufflevector <4 x float> %70, <4 x float> poison, <2 x i32> zeroinitializer
   %i.asu = shufflevector <2 x float> %i.ask, <2 x float> %i.asp, <2 x i32> <i32 0, i32 2>
   %i.asv = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ast, <2 x float> %i.asu, <2 x float> %i.ass)
-  %78 = insertelement <2 x float> poison, float %75, i64 0
-  %i.asw = shufflevector <2 x float> %78, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.asw = shufflevector <4 x float> %72, <4 x float> poison, <2 x i32> zeroinitializer
   %i.asx = insertelement <2 x float> %i.arv, float %i.asd, i64 1
   %i.asy = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.asw, <2 x float> %i.asx, <2 x float> %i.asv)
   %i.asz = insertelement <2 x float> poison, float %i.asc, i64 0
@@ -1782,7 +1776,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.h = load float, ptr %i.g, align 4, !tbaa !8  ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 36
-  %28 = load float, ptr %i.i, align 4, !tbaa !8
+  %28 = load <4 x float>, ptr %i.i, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.k = load float, ptr %i.j, align 4, !tbaa !8  ; 2 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !19
@@ -1799,7 +1793,8 @@ bb.a:
   %i.w = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.t, <2 x float> %i.v, <2 x float> %i.s)
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.y = load <2 x float>, ptr %i.b, align 4, !tbaa !8 ; 2 uses
-  %29 = load float, ptr %i.c, align 4, !tbaa !8
+  %29 = load <4 x float>, ptr %i.c, align 4
+  %30 = shufflevector <4 x float> %29, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.z = load <2 x float>, ptr %i.e, align 4, !tbaa !8 ; 2 uses
   %i.aa = load float, ptr %i.f, align 4, !tbaa !8
   %i.ab = shufflevector <2 x float> %i.y, <2 x float> %i.z, <2 x i32> <i32 1, i32 3> ; 2 uses
@@ -1826,7 +1821,6 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.au = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.t, <2 x float> zeroinitializer, <2 x float> %i.s)
-  %30 = insertelement <2 x float> poison, float %29, i64 0
   %i.av = insertelement <2 x float> %30, float %i.aa, i64 1
   %i.aw = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.av, <2 x float> %i.v, <2 x float> %i.au) ; 2 uses
   %i.ax = fadd <2 x float> %i.o, %i.aw            ; 4 uses
@@ -1836,8 +1830,7 @@ bb.a:
   %i.bb = getelementptr inbounds nuw i8, ptr %16, i64 8
   %i.bc = fsub <2 x float> %i.o, %i.aw            ; 4 uses
   %i.bd = insertelement <2 x float> <float poison, float 0.000000e+00>, float %1, i64 0
-  %31 = insertelement <2 x float> poison, float %28, i64 0
-  %i.be = shufflevector <2 x float> %31, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.be = shufflevector <4 x float> %28, <4 x float> poison, <2 x i32> zeroinitializer
   %i.bf = fmul <2 x float> %i.bd, %i.be           ; 2 uses
   %i.bg = extractelement <2 x float> %i.bf, i64 1
   %i.bh = tail call float @llvm.fmuladd.f32(float %i.h, float %1, float %i.bg)
@@ -2147,7 +2140,8 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
-  %10 = load float, ptr %i.b, align 4, !tbaa !8
+  %10 = load <4 x float>, ptr %i.b, align 4
+  %11 = shufflevector <4 x float> %10, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.aj = load float, ptr %i.f, align 4, !tbaa !8
   %i.ak = load float, ptr %i.h, align 4, !tbaa !8
   %i.al = load float, ptr %i.j, align 4, !tbaa !8
@@ -2161,7 +2155,6 @@ bb.a:
   %i.at = fmul <2 x float> %i.w, %i.as
   %i.au = shufflevector <2 x float> %i.aq, <2 x float> %i.ar, <2 x i32> <i32 0, i32 2>
   %i.av = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.au, <2 x float> zeroinitializer, <2 x float> %i.at)
-  %11 = insertelement <2 x float> poison, float %10, i64 0
   %i.aw = insertelement <2 x float> %11, float %i.aj, i64 1
   %i.ax = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aw, <2 x float> zeroinitializer, <2 x float> %i.av)
   %i.ay = load <2 x float>, ptr %3, align 8, !tbaa !8
@@ -2181,7 +2174,8 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
-  %12 = load float, ptr %i.b, align 4, !tbaa !8
+  %12 = load <4 x float>, ptr %i.b, align 4
+  %13 = shufflevector <4 x float> %12, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.bg = load float, ptr %i.f, align 4, !tbaa !8
   %i.bh = load float, ptr %i.h, align 4, !tbaa !8
   %i.bi = load float, ptr %i.j, align 4, !tbaa !8
@@ -2195,7 +2189,6 @@ bb.a:
   %i.bq = fmul <2 x float> %i.bp, zeroinitializer
   %i.br = shufflevector <2 x float> %i.bn, <2 x float> %i.bo, <2 x i32> <i32 0, i32 2>
   %i.bs = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.br, <2 x float> zeroinitializer, <2 x float> %i.bq)
-  %13 = insertelement <2 x float> poison, float %12, i64 0
   %i.bt = insertelement <2 x float> %13, float %i.bg, i64 1
   %i.bu = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bt, <2 x float> %i.w, <2 x float> %i.bs)
   %i.bv = load <2 x float>, ptr %3, align 8, !tbaa !8
@@ -2598,7 +2591,8 @@ bb.a:
   %i.cz = load float, ptr %2, align 4, !tbaa !8   ; 2 uses
   %i.da = load float, ptr %i.cd, align 4, !tbaa !8 ; 2 uses
   %i.db = load float, ptr %i.b, align 4, !tbaa !8 ; 3 uses
-  %29 = load float, ptr %i.g, align 4, !tbaa !8
+  %29 = load <4 x float>, ptr %i.g, align 4
+  %30 = shufflevector <4 x float> %29, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.dc = load float, ptr %i.m, align 4, !tbaa !8
   %i.dd = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 2 uses
   %i.de = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
@@ -2610,7 +2604,6 @@ bb.a:
   %i.dk = insertelement <2 x float> poison, float %i.cz, i64 0
   %i.dl = shufflevector <2 x float> %i.dk, <2 x float> poison, <2 x i32> zeroinitializer
   %i.dm = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dj, <2 x float> %i.dl, <2 x float> %i.di)
-  %30 = insertelement <2 x float> poison, float %29, i64 0
   %i.dn = insertelement <2 x float> %30, float %i.dc, i64 1 ; 2 uses
   %i.do = insertelement <2 x float> poison, float %i.db, i64 0
   %i.dp = shufflevector <2 x float> %i.do, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -2710,7 +2703,8 @@ bb.a:
   %i.gj = load float, ptr %1, align 4, !tbaa !8   ; 2 uses
   %i.gk = load float, ptr %i.a, align 4, !tbaa !8 ; 2 uses
   %i.gl = load float, ptr %i.b, align 4, !tbaa !8 ; 2 uses
-  %31 = load float, ptr %i.g, align 4, !tbaa !8
+  %31 = load <4 x float>, ptr %i.g, align 4
+  %32 = shufflevector <4 x float> %31, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.gm = load float, ptr %i.m, align 4, !tbaa !8
   %i.gn = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 2 uses
   %i.go = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
@@ -2722,7 +2716,6 @@ bb.a:
   %i.gu = insertelement <2 x float> poison, float %i.gj, i64 0
   %i.gv = shufflevector <2 x float> %i.gu, <2 x float> poison, <2 x i32> zeroinitializer
   %i.gw = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gt, <2 x float> %i.gv, <2 x float> %i.gs) ; 2 uses
-  %32 = insertelement <2 x float> poison, float %31, i64 0
   %i.gx = insertelement <2 x float> %32, float %i.gm, i64 1 ; 2 uses
   %i.gy = insertelement <2 x float> poison, float %i.gl, i64 0
   %i.gz = shufflevector <2 x float> %i.gy, <2 x float> poison, <2 x i32> zeroinitializer
@@ -2764,7 +2757,8 @@ bb.a:
   %i.hy = load float, ptr %2, align 4, !tbaa !8   ; 2 uses
   %i.hz = load float, ptr %i.a, align 4, !tbaa !8 ; 2 uses
   %i.ia = load float, ptr %i.b, align 4, !tbaa !8 ; 2 uses
-  %33 = load float, ptr %i.g, align 4, !tbaa !8
+  %33 = load <4 x float>, ptr %i.g, align 4
+  %34 = shufflevector <4 x float> %33, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.ib = load float, ptr %i.m, align 4, !tbaa !8
   %i.ic = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 2 uses
   %i.id = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
@@ -2776,7 +2770,6 @@ bb.a:
   %i.ij = insertelement <2 x float> poison, float %i.hy, i64 0
   %i.ik = shufflevector <2 x float> %i.ij, <2 x float> poison, <2 x i32> zeroinitializer
   %i.il = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ii, <2 x float> %i.ik, <2 x float> %i.ih) ; 2 uses
-  %34 = insertelement <2 x float> poison, float %33, i64 0
   %i.im = insertelement <2 x float> %34, float %i.ib, i64 1 ; 2 uses
   %i.in = insertelement <2 x float> poison, float %i.ia, i64 0
   %i.io = shufflevector <2 x float> %i.in, <2 x float> poison, <2 x i32> zeroinitializer
@@ -2817,7 +2810,8 @@ bb.a:
   %i.jm = load float, ptr %2, align 4, !tbaa !8   ; 2 uses
   %i.jn = load float, ptr %i.cd, align 4, !tbaa !8 ; 2 uses
   %i.jo = load float, ptr %i.b, align 4, !tbaa !8 ; 2 uses
-  %35 = load float, ptr %i.g, align 4, !tbaa !8
+  %35 = load <4 x float>, ptr %i.g, align 4
+  %36 = shufflevector <4 x float> %35, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.jp = load float, ptr %i.m, align 4, !tbaa !8
   %i.jq = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 2 uses
   %i.jr = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
@@ -2829,7 +2823,6 @@ bb.a:
   %i.jx = insertelement <2 x float> poison, float %i.jm, i64 0
   %i.jy = shufflevector <2 x float> %i.jx, <2 x float> poison, <2 x i32> zeroinitializer
   %i.jz = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.jw, <2 x float> %i.jy, <2 x float> %i.jv) ; 2 uses
-  %36 = insertelement <2 x float> poison, float %35, i64 0
   %i.ka = insertelement <2 x float> %36, float %i.jp, i64 1 ; 2 uses
   %i.kb = insertelement <2 x float> poison, float %i.jo, i64 0
   %i.kc = shufflevector <2 x float> %i.kb, <2 x float> poison, <2 x i32> zeroinitializer
@@ -2870,7 +2863,8 @@ bb.a:
   %i.la = load float, ptr %1, align 4, !tbaa !8   ; 2 uses
   %i.lb = load float, ptr %i.cd, align 4, !tbaa !8 ; 2 uses
   %i.lc = load float, ptr %i.b, align 4, !tbaa !8 ; 2 uses
-  %37 = load float, ptr %i.g, align 4, !tbaa !8
+  %37 = load <4 x float>, ptr %i.g, align 4
+  %38 = shufflevector <4 x float> %37, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.ld = load float, ptr %i.m, align 4, !tbaa !8
   %i.le = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 2 uses
   %i.lf = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
@@ -2882,7 +2876,6 @@ bb.a:
   %i.ll = insertelement <2 x float> poison, float %i.la, i64 0
   %i.lm = shufflevector <2 x float> %i.ll, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ln = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.lk, <2 x float> %i.lm, <2 x float> %i.lj) ; 2 uses
-  %38 = insertelement <2 x float> poison, float %37, i64 0
   %i.lo = insertelement <2 x float> %38, float %i.ld, i64 1 ; 2 uses
   %i.lp = insertelement <2 x float> poison, float %i.lc, i64 0
   %i.lq = shufflevector <2 x float> %i.lp, <2 x float> poison, <2 x i32> zeroinitializer
@@ -2923,7 +2916,8 @@ bb.a:
   %i.mo = load float, ptr %1, align 4, !tbaa !8   ; 2 uses
   %i.mp = load float, ptr %i.a, align 4, !tbaa !8 ; 2 uses
   %i.mq = load float, ptr %i.hm, align 4, !tbaa !8 ; 3 uses
-  %39 = load float, ptr %i.g, align 4, !tbaa !8
+  %39 = load <4 x float>, ptr %i.g, align 4
+  %40 = shufflevector <4 x float> %39, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.mr = load float, ptr %i.m, align 4, !tbaa !8
   %i.ms = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 2 uses
   %i.mt = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
@@ -2935,7 +2929,6 @@ bb.a:
   %i.mz = insertelement <2 x float> poison, float %i.mo, i64 0
   %i.na = shufflevector <2 x float> %i.mz, <2 x float> poison, <2 x i32> zeroinitializer
   %i.nb = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.my, <2 x float> %i.na, <2 x float> %i.mx)
-  %40 = insertelement <2 x float> poison, float %39, i64 0
   %i.nc = insertelement <2 x float> %40, float %i.mr, i64 1 ; 2 uses
   %i.nd = insertelement <2 x float> poison, float %i.mq, i64 0
   %i.ne = shufflevector <2 x float> %i.nd, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -3035,7 +3028,8 @@ bb.a:
   %i.py = load float, ptr %2, align 4, !tbaa !8   ; 2 uses
   %i.pz = load float, ptr %i.cd, align 4, !tbaa !8 ; 2 uses
   %i.qa = load float, ptr %i.hm, align 4, !tbaa !8 ; 3 uses
-  %41 = load float, ptr %i.g, align 4, !tbaa !8
+  %41 = load <4 x float>, ptr %i.g, align 4
+  %42 = shufflevector <4 x float> %41, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.qb = load float, ptr %i.m, align 4, !tbaa !8
   %i.qc = load <2 x float>, ptr %3, align 4, !tbaa !8 ; 2 uses
   %i.qd = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
@@ -3047,7 +3041,6 @@ bb.a:
   %i.qj = insertelement <2 x float> poison, float %i.py, i64 0
   %i.qk = shufflevector <2 x float> %i.qj, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ql = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.qi, <2 x float> %i.qk, <2 x float> %i.qh)
-  %42 = insertelement <2 x float> poison, float %41, i64 0
   %i.qm = insertelement <2 x float> %42, float %i.qb, i64 1 ; 2 uses
   %i.qn = insertelement <2 x float> poison, float %i.qa, i64 0
   %i.qo = shufflevector <2 x float> %i.qn, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
@@ -3450,7 +3443,8 @@ bb.a:
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.an = load float, ptr %i.am, align 4, !tbaa !8
   %i.ao = load <2 x float>, ptr %i.c, align 4, !tbaa !8 ; 2 uses
-  %7 = load float, ptr %i.f, align 8, !tbaa !8
+  %7 = load <4 x float>, ptr %i.f, align 8
+  %8 = shufflevector <4 x float> %7, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.ap = load <2 x float>, ptr %i.k, align 4, !tbaa !8 ; 2 uses
   %i.aq = load float, ptr %i.l, align 8, !tbaa !8
   %i.ar = shufflevector <2 x float> %i.ao, <2 x float> %i.ap, <2 x i32> <i32 1, i32 3> ; 2 uses
@@ -3464,7 +3458,6 @@ bb.a:
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.az = load float, ptr %i.ay, align 4, !tbaa !8 ; 2 uses
-  %8 = insertelement <2 x float> poison, float %7, i64 0
   %i.ba = insertelement <2 x float> %8, float %i.aq, i64 1
   %i.bb = insertelement <2 x float> poison, float %i.az, i64 0
   %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> zeroinitializer

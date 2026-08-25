@@ -205,13 +205,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %13 = load i32, ptr %i.o, align 8
+  %13 = load <1 x i32>, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = shl nuw i32 1, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.s = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = shufflevector <1 x i32> %13, <1 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.s, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.t = sext i32 %i.r to i64
@@ -614,13 +613,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %13 = load i32, ptr %i.o, align 8
+  %13 = load <1 x i32>, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = shl nuw i32 1, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.s = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = shufflevector <1 x i32> %13, <1 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.s, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.t = sext i32 %i.r to i64
@@ -1023,13 +1021,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %13 = load i32, ptr %i.o, align 8
+  %13 = load <1 x i32>, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = shl nuw i32 1, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.s = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = shufflevector <1 x i32> %13, <1 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.s, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.t = sext i32 %i.r to i64
@@ -1432,13 +1429,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %13 = load i32, ptr %i.o, align 8
+  %13 = load <1 x i32>, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = shl nuw i32 1, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.s = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = shufflevector <1 x i32> %13, <1 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.s, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.t = sext i32 %i.r to i64
@@ -1841,13 +1837,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %13 = load i32, ptr %i.o, align 8
+  %13 = load <1 x i32>, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = shl nuw i32 1, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.s = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = shufflevector <1 x i32> %13, <1 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.s, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.t = sext i32 %i.r to i64
@@ -2250,13 +2245,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %13 = load i32, ptr %i.o, align 8
+  %13 = load <1 x i32>, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = shl nuw i32 1, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.s = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = shufflevector <1 x i32> %13, <1 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.s, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.t = sext i32 %i.r to i64
@@ -2659,13 +2653,12 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 72
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %13 = load i32, ptr %i.o, align 8
+  %13 = load <1 x i32>, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load i32, ptr %i.p, align 4
   %i.r = shl nuw i32 1, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #21
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %i.s = shufflevector <4 x i32> %14, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.s = shufflevector <1 x i32> %13, <1 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.s, ptr %7, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #21
   %i.t = sext i32 %i.r to i64

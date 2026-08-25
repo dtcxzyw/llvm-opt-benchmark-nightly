@@ -204,9 +204,8 @@ _ZNK4ncnn3Mat5emptyEv.exit135:                    ; preds = %bb.v
 
 bb.w:                                             ; preds = %_ZNK4ncnn3Mat5emptyEv.exit135
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 228
-  %6 = load float, ptr %i.cz, align 4, !tbaa !38
-  %7 = insertelement <4 x float> poison, float %6, i64 0
-  %i.da = shufflevector <4 x float> %7, <4 x float> poison, <4 x i32> zeroinitializer
+  %6 = load <1 x float>, ptr %i.cz, align 4
+  %i.da = shufflevector <1 x float> %6, <1 x float> poison, <4 x i32> zeroinitializer
   %i.db = load <2 x i32>, ptr %i.bx, align 8, !tbaa !58
   %i.dc = sdiv <2 x i32> %i.db, splat (i32 4)     ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %2, i64 44
@@ -265,9 +264,8 @@ _ZNK4ncnn3Mat5emptyEv.exit134:                    ; preds = %bb.z
 
 bb.aa:                                            ; preds = %_ZNK4ncnn3Mat5emptyEv.exit134
   %i.en = getelementptr inbounds nuw i8, ptr %0, i64 228
-  %8 = load float, ptr %i.en, align 4, !tbaa !38
-  %9 = insertelement <4 x float> poison, float %8, i64 0
-  %i.eo = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> zeroinitializer
+  %7 = load <1 x float>, ptr %i.en, align 4
+  %i.eo = shufflevector <1 x float> %7, <1 x float> poison, <4 x i32> zeroinitializer
   %i.ep = load <2 x i32>, ptr %i.h, align 8, !tbaa !58
   %i.eq = sdiv <2 x i32> %i.ep, splat (i32 4)     ; 2 uses
   %i.er = load i32, ptr %i.dg, align 8, !tbaa !50

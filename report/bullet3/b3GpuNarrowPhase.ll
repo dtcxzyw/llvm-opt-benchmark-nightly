@@ -205,12 +205,11 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   %i.f = call noundef nonnull align 16 dereferenceable(32) ptr @_ZN20b3AlignedObjectArrayI9b3GpuFaceE6expandERKS0_(ptr noundef nonnull align 8 dereferenceable(25) %i.c, ptr noundef nonnull align 16 dereferenceable(32) %3) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  %4 = load <2 x float>, ptr %1, align 16, !tbaa !130
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load float, ptr %5, align 8, !tbaa !130
-  %.sroa.3.12.vec.insert6.i = insertelement <2 x float> poison, float %6, i64 0
+  %4 = load <3 x float>, ptr %1, align 16         ; 2 uses
+  %.sroa.3.12.vec.insert6.i = shufflevector <3 x float> %4, <3 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %.sroa.0.4.vec.insert.i = shufflevector <3 x float> %4, <3 x float> poison, <2 x i32> <i32 0, i32 1>
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> %.sroa.3.12.vec.insert6.i, float %2, i64 1
-  store <2 x float> %4, ptr %i.f, align 16
+  store <2 x float> %.sroa.0.4.vec.insert.i, ptr %i.f, align 16
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !130
   ret i32 %i.e
@@ -384,12 +383,11 @@ bb.b:                                             ; preds = %_ZN16b3GpuNarrowPha
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   %i.w = call noundef nonnull align 16 dereferenceable(32) ptr @_ZN20b3AlignedObjectArrayI9b3GpuFaceE6expandERKS0_(ptr noundef nonnull align 8 dereferenceable(25) %i.t, ptr noundef nonnull align 16 dereferenceable(32) %3) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  %6 = load <2 x float>, ptr %1, align 16, !tbaa !130
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %8 = load float, ptr %7, align 8, !tbaa !130
-  %.sroa.3.12.vec.insert6.i.i = insertelement <2 x float> poison, float %8, i64 0
+  %6 = load <3 x float>, ptr %1, align 16         ; 2 uses
+  %.sroa.3.12.vec.insert6.i.i = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 2, i32 poison>
+  %.sroa.0.4.vec.insert.i.i = shufflevector <3 x float> %6, <3 x float> poison, <2 x i32> <i32 0, i32 1>
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> %.sroa.3.12.vec.insert6.i.i, float %2, i64 1
-  store <2 x float> %6, ptr %i.w, align 16
+  store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.w, align 16
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !130
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 12

@@ -204,11 +204,10 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.bn, ptr %i.ag, align 8, !tbaa !123
   store ptr %i.bn, ptr %i.af, align 8, !tbaa !122
   %i.bo = uitofp nneg i32 %.038120 to float
-  %4 = load float, ptr %i.a, align 4, !tbaa !197
-  %5 = insertelement <2 x float> %i.at, float %i.bo, i64 0
-  %i.bp = insertelement <2 x float> poison, float %4, i64 0
-  %i.bq = shufflevector <2 x float> %i.bp, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.br = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %5, <2 x float> %i.bq, <2 x float> %i.an) ; 4 uses
+  %4 = load <4 x float>, ptr %i.a, align 4
+  %i.bp = insertelement <2 x float> %i.at, float %i.bo, i64 0
+  %i.bq = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> zeroinitializer
+  %i.br = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bp, <2 x float> %i.bq, <2 x float> %i.an) ; 4 uses
   store <2 x float> %i.br, ptr %i.bm, align 4, !tbaa !53
   %.sroa.592.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   store float 0.000000e+00, ptr %.sroa.592.0..sroa_idx, align 4, !tbaa !53

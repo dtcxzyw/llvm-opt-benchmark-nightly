@@ -205,11 +205,10 @@ _ZNK11OpenImageIO4v3_17ustringcvNS0_17basic_string_viewIcSt11char_traitsIcEEEEv.
   %i.agb = call noundef i64 @_ZN11OpenImageIO4v3_110Filesystem9file_sizeENS0_17basic_string_viewIcSt11char_traitsIcEEE(ptr noundef nonnull dead_on_return %41) #5 ; 2 uses
   store i64 %i.agb, ptr %i.kp, align 8, !tbaa !521
   %i.agc = getelementptr inbounds nuw i8, ptr %2, i64 128 ; 2 uses
-  %43 = load i64, ptr %i.ko, align 8, !tbaa !491
-  %i.agd = load <2 x i64>, ptr %i.agc, align 8, !tbaa !67
-  %44 = insertelement <2 x i64> poison, i64 %43, i64 0
-  %i.age = insertelement <2 x i64> %44, i64 %i.agb, i64 1
-  %i.agf = add <2 x i64> %i.age, %i.agd
+  %i.agd = load <2 x i64>, ptr %i.ko, align 8
+  %43 = load <2 x i64>, ptr %i.agc, align 8, !tbaa !67
+  %i.age = insertelement <2 x i64> %i.agd, i64 %i.agb, i64 1
+  %i.agf = add <2 x i64> %i.age, %43
   %i.agg = sub <2 x i64> %i.agf, %i.kq
   store <2 x i64> %i.agg, ptr %i.agc, align 8, !tbaa !67
   invoke void @_ZN11OpenImageIO4v3_114ImageCacheFile14init_from_specEv(ptr noundef nonnull align 8 dereferenceable(400) %1)

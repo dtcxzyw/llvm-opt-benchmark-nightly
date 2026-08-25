@@ -204,11 +204,10 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicy
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
-  %4 = load i64, ptr %i.k, align 8, !tbaa !141
-  %i.an = load <2 x i64>, ptr %i.am, align 8, !tbaa !72
-  %5 = insertelement <2 x i64> poison, i64 %4, i64 0
-  %i.ao = shufflevector <2 x i64> %5, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.ap = add <2 x i64> %i.an, %i.ao
+  %i.an = load <2 x i64>, ptr %i.k, align 8
+  %4 = load <2 x i64>, ptr %i.am, align 8, !tbaa !72
+  %i.ao = shufflevector <2 x i64> %i.an, <2 x i64> poison, <2 x i32> zeroinitializer
+  %i.ap = add <2 x i64> %4, %i.ao
   store <2 x i64> %i.ap, ptr %i.am, align 8, !tbaa !72
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.016.022, i64 32 ; 2 uses
   %.not19 = icmp eq ptr %i.aq, %i.t

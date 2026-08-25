@@ -204,15 +204,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.af, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %4 = load float, ptr %i.x, align 8, !tbaa !10
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %4, i64 0
+  %.sroa.0.0.vec.insert.i = load <2 x float>, ptr %i.x, align 8
   %i.ag = load float, ptr %i.y, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.ag, i64 1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %5 = load float, ptr %i.u, align 8, !tbaa !10
-  %.sroa.0.0.vec.insert.i18 = insertelement <2 x float> poison, float %5, i64 0
+  %.sroa.0.0.vec.insert.i18 = load <2 x float>, ptr %i.u, align 8
   %i.ah = load float, ptr %i.v, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i19 = insertelement <2 x float> %.sroa.0.0.vec.insert.i18, float %i.ah, i64 1
   br label %bb.f
@@ -244,8 +242,8 @@ bb.h:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %.
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 %.66
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 %.67
-  %6 = load float, ptr %i.ap, align 4, !tbaa !10
-  %.sroa.0.0.vec.insert.i.1 = insertelement <2 x float> poison, float %6, i64 0
+  %4 = load <1 x float>, ptr %i.ap, align 4
+  %.sroa.0.0.vec.insert.i.1 = shufflevector <1 x float> %4, <1 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.as = load float, ptr %i.aq, align 4, !tbaa !10
   %.sroa.0.4.vec.insert.i.1 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.1, float %i.as, i64 1
   %i.at = load float, ptr %i.ar, align 4, !tbaa !10
@@ -273,8 +271,8 @@ bb.j:                                             ; preds = %bb.i
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 %.68
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 %.69
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 %.70
-  %7 = load float, ptr %i.bc, align 8, !tbaa !10
-  %.sroa.0.0.vec.insert.i.2 = insertelement <2 x float> poison, float %7, i64 0
+  %5 = load <1 x float>, ptr %i.bc, align 8
+  %.sroa.0.0.vec.insert.i.2 = shufflevector <1 x float> %5, <1 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.bf = load float, ptr %i.bd, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i.2 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.2, float %i.bf, i64 1
   %i.bg = load float, ptr %i.be, align 8, !tbaa !10
@@ -677,8 +675,7 @@ bb.b:                                             ; preds = %bb.a
   %i.al = load float, ptr %i.x, align 8, !tbaa !10
   store float %i.al, ptr %i.b, align 4, !tbaa !37
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #19
-  %10 = load float, ptr %i.w, align 8, !tbaa !10
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> poison, float %10, i64 0
+  %.sroa.0.0.vec.insert.i = load <2 x float>, ptr %i.w, align 8
   %i.am = load float, ptr %i.v, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.am, i64 1
   %i.an = load float, ptr %i.u, align 8, !tbaa !10
@@ -735,8 +732,7 @@ _ZN25btTranslationalLimitMotor14needApplyForceEi.exit._crit_edge: ; preds = %_ZN
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 1044
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 1060
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 1076
-  %11 = load float, ptr %i.bl, align 4, !tbaa !10
-  %.sroa.0.0.vec.insert.i.1 = insertelement <2 x float> poison, float %11, i64 0
+  %.sroa.0.0.vec.insert.i.1 = load <2 x float>, ptr %i.bl, align 4
   %i.bo = load float, ptr %i.bm, align 4, !tbaa !10
   %.sroa.0.4.vec.insert.i.1 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.1, float %i.bo, i64 1
   %i.bp = load float, ptr %i.bn, align 4, !tbaa !10
@@ -794,8 +790,7 @@ _ZN25btTranslationalLimitMotor14needApplyForceEi.exit.1._crit_edge: ; preds = %_
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 1048
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 1064
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 1080
-  %12 = load float, ptr %i.co, align 8, !tbaa !10
-  %.sroa.0.0.vec.insert.i.2 = insertelement <2 x float> poison, float %12, i64 0
+  %.sroa.0.0.vec.insert.i.2 = load <2 x float>, ptr %i.co, align 8
   %i.cr = load float, ptr %i.cp, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i.2 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.2, float %i.cr, i64 1
   %i.cs = load float, ptr %i.cq, align 8, !tbaa !10
@@ -1198,15 +1193,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.z, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %8 = load <4 x float>, ptr %i.e, align 8
-  %.sroa.0.0.vec.insert.i = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %.sroa.0.0.vec.insert.i = load <2 x float>, ptr %i.e, align 8
   %i.aa = load float, ptr %i.n, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i, float %i.aa, i64 1
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %9 = load <4 x float>, ptr %i.g, align 8
-  %.sroa.0.0.vec.insert.i24 = shufflevector <4 x float> %9, <4 x float> poison, <2 x i32> <i32 0, i32 poison>
+  %.sroa.0.0.vec.insert.i24 = load <2 x float>, ptr %i.g, align 8
   %i.ab = load float, ptr %i.l, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i25 = insertelement <2 x float> %.sroa.0.0.vec.insert.i24, float %i.ab, i64 1
   br label %bb.f
@@ -1243,8 +1236,8 @@ bb.h:                                             ; preds = %bb.g
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %.
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 %.58
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 %.59
-  %10 = load float, ptr %i.ap, align 4, !tbaa !10
-  %.sroa.0.0.vec.insert.i.1 = insertelement <2 x float> poison, float %10, i64 0
+  %8 = load <1 x float>, ptr %i.ap, align 4
+  %.sroa.0.0.vec.insert.i.1 = shufflevector <1 x float> %8, <1 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.as = load float, ptr %i.aq, align 4, !tbaa !10
   %.sroa.0.4.vec.insert.i.1 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.1, float %i.as, i64 1
   %i.at = load float, ptr %i.ar, align 4, !tbaa !10
@@ -1277,8 +1270,8 @@ bb.j:                                             ; preds = %bb.i
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 %.60
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 %.61
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 %.62
-  %11 = load float, ptr %i.bi, align 8, !tbaa !10
-  %.sroa.0.0.vec.insert.i.2 = insertelement <2 x float> poison, float %11, i64 0
+  %9 = load <1 x float>, ptr %i.bi, align 8
+  %.sroa.0.0.vec.insert.i.2 = shufflevector <1 x float> %9, <1 x float> poison, <2 x i32> <i32 0, i32 poison>
   %i.bl = load float, ptr %i.bj, align 8, !tbaa !10
   %.sroa.0.4.vec.insert.i.2 = insertelement <2 x float> %.sroa.0.0.vec.insert.i.2, float %i.bl, i64 1
   %i.bm = load float, ptr %i.bk, align 8, !tbaa !10

@@ -205,12 +205,12 @@ _ZNK8QPointerI7QCPAxisEcvPS0_Ev.exit.thread:      ; preds = %bb.b, %bb.c, %_ZNK8
 bb.f:                                             ; preds = %_ZNK8QPointerI7QCPAxisEcvPS0_Ev.exit.thread
   %i.bu = getelementptr inbounds nuw i8, ptr %2, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
-  %9 = load double, ptr %2, align 8
+  %9 = load <2 x double>, ptr %2, align 8
+  %10 = shufflevector <2 x double> %9, <2 x double> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.bv = load double, ptr %i.bu, align 8
   %i.bw = load double, ptr %i.bf, align 8
   %i.bx = fmul double %i.bw, 5.000000e-01
   %i.by = fadd double %i.bv, %i.bx
-  %10 = insertelement <4 x double> poison, double %9, i64 0
   %i.bz = insertelement <4 x double> %10, double %i.by, i64 1
   %i.ca = shufflevector <4 x double> %i.bz, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.cb = fadd <4 x double> %i.ca, <double 2.000000e+00, double -4.000000e+00, double 2.000000e+00, double 4.000000e+00>

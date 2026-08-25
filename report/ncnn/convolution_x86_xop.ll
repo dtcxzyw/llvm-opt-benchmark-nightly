@@ -205,7 +205,7 @@ _ZN4ncnn3Mat7channelEi.exit34:                    ; preds = %bb.d, %.noexc33
   store i32 %i.ck, ptr %i.ao, align 8, !tbaa !16
   store ptr %i.cl, ptr %i.ap, align 8, !tbaa !225
   store i32 2, ptr %i.aq, align 8, !tbaa !227
-  %13 = load <2 x i32>, ptr %i.ag, align 4, !tbaa !9, !noalias !252
+  %13 = load <4 x i32>, ptr %i.ag, align 4
   %i.cp = load i32, ptr %i.ah, align 8, !tbaa !19, !noalias !252
   %i.cq = load i32, ptr %i.ag, align 4, !tbaa !10, !noalias !252
   %i.cr = sext i32 %i.cq to i64
@@ -215,8 +215,7 @@ _ZN4ncnn3Mat7channelEi.exit34:                    ; preds = %bb.d, %.noexc33
   %i.cv = mul i64 %i.cu, %i.co
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.cv
   store ptr %i.cw, ptr %12, align 8, !tbaa !32
-  %14 = shufflevector <2 x i32> %13, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.cx = shufflevector <4 x i32> %14, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.cx = shufflevector <4 x i32> %13, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i32> %i.cx, ptr %i.ar, align 4, !tbaa !9
   store i64 %i.ct, ptr %i.as, align 8, !tbaa !18, !alias.scope !255
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -619,7 +618,7 @@ bb.ab:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   store i32 %i.ru, ptr %i.v, align 8, !tbaa !16
   store ptr %i.rv, ptr %i.w, align 8, !tbaa !225
   store i32 2, ptr %i.x, align 8, !tbaa !227
-  %15 = load <2 x i32>, ptr %i.n, align 4, !tbaa !9, !noalias !276
+  %15 = load <4 x i32>, ptr %i.n, align 4
   %i.ry = load i32, ptr %i.o, align 8, !tbaa !19, !noalias !276
   %i.rz = load i32, ptr %i.n, align 4, !tbaa !10, !noalias !276
   %i.sa = sext i32 %i.rz to i64
@@ -629,8 +628,7 @@ bb.ab:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.se = mul i64 %i.sd, %i.rx
   %i.sf = getelementptr inbounds nuw i8, ptr %i.rt, i64 %i.se
   store ptr %i.sf, ptr %13, align 8, !tbaa !32
-  %16 = shufflevector <2 x i32> %15, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.sg = shufflevector <4 x i32> %16, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.sg = shufflevector <4 x i32> %15, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i32> %i.sg, ptr %i.y, align 4, !tbaa !9
   store i64 %i.sc, ptr %i.z, align 8, !tbaa !18, !alias.scope !279
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #4
@@ -650,7 +648,7 @@ bb.ab:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   store i32 %i.sq, ptr %i.ai, align 8, !tbaa !16
   store ptr %i.sr, ptr %i.aj, align 8, !tbaa !225
   store i32 2, ptr %i.ak, align 8, !tbaa !227
-  %17 = load <2 x i32>, ptr %i.aa, align 4, !tbaa !9, !noalias !282
+  %16 = load <4 x i32>, ptr %i.aa, align 4
   %i.ss = load i32, ptr %i.ab, align 8, !tbaa !19, !noalias !282
   %i.st = load i32, ptr %i.aa, align 4, !tbaa !10, !noalias !282
   %i.su = sext i32 %i.st to i64
@@ -660,8 +658,7 @@ bb.ab:                                            ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.sy = mul i64 %i.sx, %i.rx
   %i.sz = getelementptr inbounds nuw i8, ptr %i.sp, i64 %i.sy
   store ptr %i.sz, ptr %14, align 8, !tbaa !32
-  %18 = shufflevector <2 x i32> %17, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ta = shufflevector <4 x i32> %18, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.ta = shufflevector <4 x i32> %16, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i32> %i.ta, ptr %i.al, align 4, !tbaa !9
   store i64 %i.sw, ptr %i.am, align 8, !tbaa !18, !alias.scope !285
   %i.tb = add nsw i32 %i.ri, %.0149
@@ -1064,7 +1061,7 @@ _ZN4ncnn3Mat7channelEi.exit34:                    ; preds = %bb.d, %.noexc33
   store i32 %i.ck, ptr %i.ao, align 8, !tbaa !16
   store ptr %i.cl, ptr %i.ap, align 8, !tbaa !225
   store i32 2, ptr %i.aq, align 8, !tbaa !227
-  %13 = load <2 x i32>, ptr %i.ag, align 4, !tbaa !9, !noalias !387
+  %13 = load <4 x i32>, ptr %i.ag, align 4
   %i.cp = load i32, ptr %i.ah, align 8, !tbaa !19, !noalias !387
   %i.cq = load i32, ptr %i.ag, align 4, !tbaa !10, !noalias !387
   %i.cr = sext i32 %i.cq to i64
@@ -1074,8 +1071,7 @@ _ZN4ncnn3Mat7channelEi.exit34:                    ; preds = %bb.d, %.noexc33
   %i.cv = mul i64 %i.cu, %i.co
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.cv
   store ptr %i.cw, ptr %12, align 8, !tbaa !32
-  %14 = shufflevector <2 x i32> %13, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.cx = shufflevector <4 x i32> %14, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.cx = shufflevector <4 x i32> %13, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i32> %i.cx, ptr %i.ar, align 4, !tbaa !9
   store i64 %i.ct, ptr %i.as, align 8, !tbaa !18, !alias.scope !390
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1478,7 +1474,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.
   store i32 %i.aqy, ptr %i.x, align 8, !tbaa !16
   store ptr %i.aqz, ptr %i.y, align 8, !tbaa !225
   store i32 2, ptr %i.z, align 8, !tbaa !227
-  %15 = load <2 x i32>, ptr %i.p, align 4, !tbaa !9, !noalias !413
+  %15 = load <4 x i32>, ptr %i.p, align 4
   %i.arc = load i32, ptr %i.q, align 8, !tbaa !19, !noalias !413
   %i.ard = load i32, ptr %i.p, align 4, !tbaa !10, !noalias !413
   %i.are = sext i32 %i.ard to i64
@@ -1488,8 +1484,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.
   %i.ari = mul i64 %i.arh, %i.arb
   %i.arj = getelementptr inbounds nuw i8, ptr %i.aqx, i64 %i.ari
   store ptr %i.arj, ptr %13, align 8, !tbaa !32
-  %16 = shufflevector <2 x i32> %15, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ark = shufflevector <4 x i32> %16, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.ark = shufflevector <4 x i32> %15, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i32> %i.ark, ptr %i.aa, align 4, !tbaa !9
   store i64 %i.arg, ptr %i.ab, align 8, !tbaa !18, !alias.scope !416
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #4
@@ -1509,7 +1504,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.
   store i32 %i.aru, ptr %i.ak, align 8, !tbaa !16
   store ptr %i.arv, ptr %i.al, align 8, !tbaa !225
   store i32 2, ptr %i.am, align 8, !tbaa !227
-  %17 = load <2 x i32>, ptr %i.ac, align 4, !tbaa !9, !noalias !419
+  %16 = load <4 x i32>, ptr %i.ac, align 4
   %i.arw = load i32, ptr %i.ad, align 8, !tbaa !19, !noalias !419
   %i.arx = load i32, ptr %i.ac, align 4, !tbaa !10, !noalias !419
   %i.ary = sext i32 %i.arx to i64
@@ -1519,8 +1514,7 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.
   %i.asc = mul i64 %i.asb, %i.arb
   %i.asd = getelementptr inbounds nuw i8, ptr %i.art, i64 %i.asc
   store ptr %i.asd, ptr %14, align 8, !tbaa !32
-  %18 = shufflevector <2 x i32> %17, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.ase = shufflevector <4 x i32> %18, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %i.ase = shufflevector <4 x i32> %16, <4 x i32> <i32 poison, i32 poison, i32 1, i32 1>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i32> %i.ase, ptr %i.an, align 4, !tbaa !9
   store i64 %i.asa, ptr %i.ao, align 8, !tbaa !18, !alias.scope !422
   %i.asf = add nsw i32 %i.aqm, %.0130

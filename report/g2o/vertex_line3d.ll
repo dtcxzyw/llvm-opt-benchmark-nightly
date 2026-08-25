@@ -205,7 +205,7 @@ define linkonce_odr void @_ZN3g2o6Line3D5oplusERKN5Eigen6MatrixIdLi4ELi1ELi0ELi4
 _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %.sroa.4.i.i.i.i = alloca [4 x double], align 16 ; 7 uses
   %.sroa.18.sroa.0 = alloca [3 x double], align 16 ; 6 uses
-  %.sroa.12 = alloca [4 x double], align 16       ; 9 uses
+  %.sroa.12.sroa.0 = alloca [7 x double], align 16 ; 15 uses
   %.sroa.4 = alloca [4 x double], align 16        ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.18.sroa.0)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !80)
@@ -279,7 +279,7 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   store <2 x double> %i.bb, ptr %.sroa.18.sroa.0, align 16, !tbaa !13, !alias.scope !80
   %i.bc = fmul double %i.d, %i.ax                 ; 2 uses
   %i.bd = fmul double %i.r, %i.ak                 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12.sroa.0)
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bf = load double, ptr %i.be, align 8, !tbaa !13 ; 3 uses
   %i.bg = tail call double @cos(double noundef %i.bf) #19
@@ -320,42 +320,49 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %i.cd = fmul double %.sroa.849.16.vec.extract, 2.000000e+00 ; 4 uses
   %.sroa.849.24.vec.extract = extractelement <2 x double> %.sroa.849.0, i64 1 ; 3 uses
   %i.ce = fmul double %.sroa.849.24.vec.extract, %i.cb
-  %i.cf = fmul double %.sroa.849.24.vec.extract, %i.cc
+  %i.cf = fmul double %.sroa.849.24.vec.extract, %i.cc ; 2 uses
   %i.cg = fmul double %.sroa.849.24.vec.extract, %i.cd ; 2 uses
   %i.ch = fmul double %.sroa.045.0.vec.extract, %i.cb
   %i.ci = fmul double %.sroa.045.0.vec.extract, %i.cc ; 2 uses
-  %i.cj = fmul double %.sroa.045.0.vec.extract, %i.cd
+  %i.cj = fmul double %.sroa.045.0.vec.extract, %i.cd ; 2 uses
   %i.ck = fmul double %.sroa.045.8.vec.extract, %i.cc
   %i.cl = fmul double %.sroa.045.8.vec.extract, %i.cd
   %i.cm = fmul double %.sroa.849.16.vec.extract, %i.cd ; 2 uses
   %i.cn = fadd double %i.ck, %i.cm
   %i.co = fsub double 1.000000e+00, %i.cn
   %i.cp = fsub double %i.ci, %i.cg
+  %2 = fadd double %i.cj, %i.cf
   %i.cq = fadd double %i.ci, %i.cg
   %i.cr = fadd double %i.ch, %i.cm
-  %i.cs = fsub double 1.000000e+00, %i.cr         ; 2 uses
+  %i.cs = fsub double 1.000000e+00, %i.cr
   %i.ct = fsub double %i.cj, %i.cf
-  %i.cu = fadd double %i.cl, %i.ce                ; 2 uses
-  store double %i.co, ptr %.sroa.12, align 16
-  %.sroa.12.8..sroa_idx142 = getelementptr inbounds nuw i8, ptr %.sroa.12, i64 8
-  store double %i.cq, ptr %.sroa.12.8..sroa_idx142, align 8
-  %.sroa.12.16..sroa_idx143 = getelementptr inbounds nuw i8, ptr %.sroa.12, i64 16
-  store double %i.ct, ptr %.sroa.12.16..sroa_idx143, align 16
-  %.sroa.12.24..sroa_idx144 = getelementptr inbounds nuw i8, ptr %.sroa.12, i64 24
-  store double %i.cp, ptr %.sroa.12.24..sroa_idx144, align 8
+  %i.cu = fadd double %i.cl, %i.ce
+  store double %i.co, ptr %.sroa.12.sroa.0, align 16
+  %.sroa.12.sroa.0.8..sroa_idx167 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 8
+  store double %i.cq, ptr %.sroa.12.sroa.0.8..sroa_idx167, align 8
+  %.sroa.12.sroa.0.16..sroa_idx169 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 16
+  store double %i.ct, ptr %.sroa.12.sroa.0.16..sroa_idx169, align 16
+  %.sroa.12.sroa.0.24..sroa_idx171 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 24
+  store double %i.cp, ptr %.sroa.12.sroa.0.24..sroa_idx171, align 8
+  %.sroa.12.8..sroa_idx142 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 32
+  store double %i.cs, ptr %.sroa.12.8..sroa_idx142, align 16
+  %.sroa.12.16..sroa_idx143 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 40
+  store double %i.cu, ptr %.sroa.12.16..sroa_idx143, align 8
+  %.sroa.12.24..sroa_idx144 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 48
+  store double %2, ptr %.sroa.12.24..sroa_idx144, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i.i)
-  %.sroa.12.0..sroa.12.0..sroa.12.32. = load <2 x double>, ptr %.sroa.12, align 16 ; 2 uses
+  %.sroa.12.0..sroa.12.0..sroa.12.32. = load <2 x double>, ptr %.sroa.12.sroa.0, align 16 ; 2 uses
   %i.cv = shufflevector <2 x double> %.sroa.12.0..sroa.12.0..sroa.12.32., <2 x double> poison, <2 x i32> zeroinitializer
   %i.cw = fmul <2 x double> %i.aw, %i.cv
   %.sroa.18.sroa.0.8..sroa_idx145 = getelementptr inbounds nuw i8, ptr %.sroa.18.sroa.0, i64 8
   %.sroa.18.sroa.0.8..sroa.18.sroa.0.8..sroa.18.8..sroa.18.56. = load <2 x double>, ptr %.sroa.18.sroa.0.8..sroa_idx145, align 8, !tbaa !37 ; 2 uses
-  %.sroa.12.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.12, i64 8
+  %.sroa.12.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 8
   %.sroa.12.8..sroa.12.8..sroa.12.40. = load <2 x double>, ptr %.sroa.12.8..sroa_idx, align 8 ; 2 uses
   %i.cx = shufflevector <2 x double> %.sroa.12.8..sroa.12.8..sroa.12.40., <2 x double> poison, <2 x i32> zeroinitializer
   %i.cy = fmul <2 x double> %.sroa.18.sroa.0.8..sroa.18.sroa.0.8..sroa.18.8..sroa.18.56., %i.cx
   %i.cz = fadd <2 x double> %i.cw, %i.cy
-  %.sroa.12.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.12, i64 16
-  %.sroa.12.16..sroa.12.16..sroa.12.48. = load <2 x double>, ptr %.sroa.12.16..sroa_idx, align 16 ; 4 uses
+  %.sroa.12.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 16
+  %.sroa.12.16..sroa.12.16..sroa.12.48. = load <2 x double>, ptr %.sroa.12.16..sroa_idx, align 16 ; 2 uses
   %i.da = shufflevector <2 x double> %.sroa.12.16..sroa.12.16..sroa.12.48., <2 x double> poison, <2 x i32> zeroinitializer
   %i.db = fmul <2 x double> %.sroa.31.88.vec.insert, %i.da
   %i.dc = fadd <2 x double> %i.cz, %i.db
@@ -369,22 +376,28 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %i.dj = fadd double %i.dg, %i.di
   %i.dk = fadd double %i.de, %i.dj
   store double %i.dk, ptr %.sroa.4.i.i.i.i, align 16, !tbaa !13
-  %2 = extractelement <2 x double> %.sroa.12.16..sroa.12.16..sroa.12.48., i64 1
-  %3 = shufflevector <2 x double> %.sroa.12.16..sroa.12.16..sroa.12.48., <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %.sroa.12.sroa.0.24..sroa_idx170 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 24
+  %.sroa.12.sroa.0.24..sroa.12.sroa.0.24..sroa.12.24..sroa.12.56. = load <2 x double>, ptr %.sroa.12.sroa.0.24..sroa_idx170, align 8 ; 2 uses
+  %3 = shufflevector <2 x double> %.sroa.12.sroa.0.24..sroa.12.sroa.0.24..sroa.12.24..sroa.12.56., <2 x double> poison, <2 x i32> zeroinitializer
   %i.dl = fmul <2 x double> %i.aw, %3
-  %4 = insertelement <2 x double> poison, double %i.cs, i64 0
-  %i.dm = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %.sroa.12.sroa.0.32..sroa_idx172 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 32
+  %.sroa.12.sroa.0.32..sroa.12.sroa.0.32..sroa.12.32..sroa.12.64. = load <2 x double>, ptr %.sroa.12.sroa.0.32..sroa_idx172, align 16 ; 2 uses
+  %i.dm = shufflevector <2 x double> %.sroa.12.sroa.0.32..sroa.12.sroa.0.32..sroa.12.32..sroa.12.64., <2 x double> poison, <2 x i32> zeroinitializer
   %i.dn = fmul <2 x double> %.sroa.18.sroa.0.8..sroa.18.sroa.0.8..sroa.18.8..sroa.18.56., %i.dm
   %i.do = fadd <2 x double> %i.dl, %i.dn
-  %5 = insertelement <2 x double> poison, double %i.cu, i64 0
-  %i.dp = shufflevector <2 x double> %5, <2 x double> poison, <2 x i32> zeroinitializer
+  %.sroa.12.sroa.0.40..sroa_idx174 = getelementptr inbounds nuw i8, ptr %.sroa.12.sroa.0, i64 40
+  %.sroa.12.sroa.0.40..sroa.12.sroa.0.40..sroa.12.40..sroa.12.72. = load <2 x double>, ptr %.sroa.12.sroa.0.40..sroa_idx174, align 8 ; 2 uses
+  %i.dp = shufflevector <2 x double> %.sroa.12.sroa.0.40..sroa.12.sroa.0.40..sroa.12.40..sroa.12.72., <2 x double> poison, <2 x i32> zeroinitializer
   %i.dq = fmul <2 x double> %.sroa.31.88.vec.insert, %i.dp
-  %i.dr = fadd <2 x double> %i.dq, %i.do
+  %i.dr = fadd <2 x double> %i.do, %i.dq
   %.sroa.4.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i.i, i64 8
   store <2 x double> %i.dr, ptr %.sroa.4.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx, align 8, !tbaa !37
-  %i.ds = fmul double %.sroa.18.sroa.0.0..sroa.18.sroa.0.0..sroa.18.0..sroa.18.48.99, %2
-  %i.dt = fmul double %i.cs, %i.bc
-  %i.du = fmul double %i.cu, %i.bd
+  %4 = extractelement <2 x double> %.sroa.12.sroa.0.24..sroa.12.sroa.0.24..sroa.12.24..sroa.12.56., i64 0
+  %i.ds = fmul double %.sroa.18.sroa.0.0..sroa.18.sroa.0.0..sroa.18.0..sroa.18.48.99, %4
+  %5 = extractelement <2 x double> %.sroa.12.sroa.0.32..sroa.12.sroa.0.32..sroa.12.32..sroa.12.64., i64 0
+  %i.dt = fmul double %i.bc, %5
+  %6 = extractelement <2 x double> %.sroa.12.sroa.0.40..sroa.12.sroa.0.40..sroa.12.40..sroa.12.72., i64 0
+  %i.du = fmul double %i.bd, %6
   %i.dv = fadd double %i.dt, %i.du
   %i.dw = fadd double %i.ds, %i.dv
   %.sroa.4.i.i.i.i.24.i.i.i.i.24.i.i.i.i.24.i.i.i.24.i.i.i.24.i.i.24.i.i.24.i.24.i.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.4.i.i.i.i, i64 24
@@ -457,7 +470,7 @@ _ZN5Eigen14QuaternionBaseINS_10QuaternionIdLi0EEEE9normalizeEv.exit:
   %i.fi = load <2 x double>, ptr %i.fh, align 16, !tbaa !37
   %i.fj = fmul <2 x double> %i.fi, %i.fd
   store <2 x double> %i.fj, ptr %i.fh, align 16, !tbaa !37
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.18.sroa.0)
   ret void
 }

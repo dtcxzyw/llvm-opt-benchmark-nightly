@@ -205,11 +205,10 @@ bb.a:
   store i32 %.sroa.speculated34, ptr %i.n, align 4, !tbaa !2061
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 5888
-  %2 = load <2 x i32>, ptr %i.p, align 64, !tbaa !628
+  %2 = load <4 x i32>, ptr %i.p, align 64
   %i.q = insertelement <4 x i32> poison, i32 %i.e, i64 0
   %i.r = insertelement <4 x i32> %i.q, i32 %i.l, i64 1
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.s = shufflevector <4 x i32> %i.r, <4 x i32> %3, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.s = shufflevector <4 x i32> %i.r, <4 x i32> %2, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   store <4 x i32> %i.s, ptr %i.o, align 4, !tbaa !628
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 5032
   %i.u = tail call noundef zeroext i1 @_ZNK7rocksdb15WriteController9IsStoppedEv(ptr noundef nonnull align 8 dereferenceable(56) %i.t)

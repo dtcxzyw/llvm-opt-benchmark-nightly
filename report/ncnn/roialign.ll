@@ -121,17 +121,16 @@ bb.b:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.al = load ptr, ptr %i.u, align 8, !tbaa !44  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 216
-  %4 = load float, ptr %i.am, align 8, !tbaa !30
+  %4 = load <4 x float>, ptr %i.am, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.al, i64 4
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   %i.ap = load float, ptr %i.al, align 4, !tbaa !46
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
   %i.aq = load float, ptr %i.an, align 4, !tbaa !46
-  %5 = insertelement <2 x float> poison, float %i.ap, i64 0
-  %i.ar = insertelement <2 x float> %5, float %i.aq, i64 1
-  %i.as = insertelement <2 x float> poison, float %4, i64 0
-  %i.at = shufflevector <2 x float> %i.as, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %i.au = fmul fast <2 x float> %i.ar, %i.at      ; 5 uses
+  %i.ar = insertelement <2 x float> poison, float %i.ap, i64 0
+  %i.as = insertelement <2 x float> %i.ar, float %i.aq, i64 1
+  %i.at = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.au = fmul fast <2 x float> %i.as, %i.at      ; 5 uses
   %i.av = extractelement <2 x float> %i.au, i64 0
   store float %i.av, ptr %i.d, align 4, !tbaa !46
   %i.aw = extractelement <2 x float> %i.au, i64 1

@@ -205,10 +205,10 @@ bb.am:                                            ; preds = %_ZN11OpenImageIO4v3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #39
   %i.vq = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.vr = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.vs = load <2 x i32>, ptr %0, align 8, !tbaa !3 ; 2 uses
+  %93 = load <4 x i32>, ptr %0, align 8
+  %i.vs = load <2 x i32>, ptr %0, align 8, !tbaa !3
   store <2 x i32> %i.vs, ptr %i.c, align 16, !tbaa !3
   %i.vt = load <4 x i32>, ptr %i.vr, align 8, !tbaa !3 ; 2 uses
-  %93 = shufflevector <2 x i32> %i.vs, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.vu = shufflevector <4 x i32> %93, <4 x i32> %i.vt, <4 x i32> <i32 poison, i32 0, i32 1, i32 4>
   %i.vv = insertelement <4 x i32> %i.vu, i32 0, i64 0
   %i.vw = add <4 x i32> %i.vv, <i32 0, i32 -1, i32 -1, i32 -1>
@@ -354,13 +354,13 @@ _ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit455.thread: ; preds =
 
 bb.ao:                                            ; preds = %_ZN11OpenImageIO4v3_1eqERKNS0_8TypeDescENS1_8BASETYPEE.exit455.thread, %_ZN11OpenImageIO4v3_1eqENS0_17basic_string_viewIcSt11char_traitsIcEEES4_.exit452
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #39
-  %i.yb = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.yb = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.yc = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.yd = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.ye = load <2 x i32>, ptr %i.yb, align 8, !tbaa !3 ; 2 uses
+  %94 = load <4 x i32>, ptr %i.yb, align 8
+  %i.ye = load <2 x i32>, ptr %i.yb, align 8, !tbaa !3
   store <2 x i32> %i.ye, ptr %i.e, align 16, !tbaa !3
   %i.yf = load <4 x i32>, ptr %i.yd, align 8, !tbaa !3 ; 2 uses
-  %94 = shufflevector <2 x i32> %i.ye, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.yg = shufflevector <4 x i32> %94, <4 x i32> %i.yf, <4 x i32> <i32 poison, i32 0, i32 1, i32 4>
   %i.yh = insertelement <4 x i32> %i.yg, i32 0, i64 0
   %i.yi = add <4 x i32> %i.yh, <i32 0, i32 -1, i32 -1, i32 -1>

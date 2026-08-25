@@ -205,7 +205,7 @@ bb.eu:                                            ; preds = %bb.et
   %i.aja = uitofp nneg i32 %.sroa.0832.0 to double
   %i.ajb = uitofp nneg i32 %.sroa.8.0 to double
   %i.ajc = getelementptr inbounds nuw i8, ptr %i.jl, i64 108
-  %32 = load float, ptr %i.hi, align 8, !tbaa !141
+  %32 = load <4 x float>, ptr %i.hi, align 8
   %i.ajd = load <2 x float>, ptr %i.aiz, align 4, !tbaa !54
   %i.aje = fpext <2 x float> %i.ajd to <2 x double>
   %i.ajf = fadd nsz <2 x double> %i.aje, splat (double -1.000000e+00)
@@ -216,8 +216,7 @@ bb.eu:                                            ; preds = %bb.et
   %i.ajk = fptosi <2 x double> %i.ajj to <2 x i32>
   %i.ajl = add nsw <2 x i32> %i.ajk, %i.jy
   %i.ajm = load <2 x float>, ptr %i.ajc, align 4, !tbaa !54
-  %33 = insertelement <2 x float> poison, float %32, i64 0
-  %i.ajn = shufflevector <2 x float> %33, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.ajn = shufflevector <4 x float> %32, <4 x float> poison, <2 x i32> zeroinitializer
   %i.ajo = fmul nsz <2 x float> %i.ajn, %i.ajm
   %i.ajp = fptosi <2 x float> %i.ajo to <2 x i32>
   %i.ajq = add nsw <2 x i32> %i.ajl, %i.ajp       ; 2 uses
@@ -620,9 +619,8 @@ bb.c:                                             ; preds = %.noexc
   store i32 %i.ap, ptr %i.aq, align 4, !tbaa !473
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %17 = load i32, ptr %i.ar, align 4, !tbaa !86
-  %18 = insertelement <4 x i32> poison, i32 %17, i64 0
-  %i.as = shufflevector <4 x i32> %18, <4 x i32> poison, <4 x i32> zeroinitializer
+  %17 = load <4 x i32>, ptr %i.ar, align 4
+  %i.as = shufflevector <4 x i32> %17, <4 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.as, ptr %6, align 16, !tbaa !86
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !78
@@ -801,9 +799,8 @@ bb.i:                                             ; preds = %._crit_edge.i.i43
   store i32 %i.dr, ptr %i.ds, align 4, !tbaa !473
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   %i.dt = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %19 = load i32, ptr %i.dt, align 4, !tbaa !86
-  %20 = insertelement <4 x i32> poison, i32 %19, i64 0
-  %i.du = shufflevector <4 x i32> %20, <4 x i32> poison, <4 x i32> zeroinitializer
+  %18 = load <4 x i32>, ptr %i.dt, align 4
+  %i.du = shufflevector <4 x i32> %18, <4 x i32> poison, <4 x i32> zeroinitializer
   store <4 x i32> %i.du, ptr %3, align 16, !tbaa !86
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !78

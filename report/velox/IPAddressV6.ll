@@ -205,11 +205,10 @@ bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 10
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 13
-  %6 = load <2 x i8>, ptr %i.n, align 4, !tbaa !20, !noalias !68
+  %6 = load <4 x i8>, ptr %i.n, align 4
   %i.q = load i8, ptr %i.o, align 2, !tbaa !20, !noalias !68
   %i.r = load i8, ptr %i.p, align 1, !tbaa !20, !noalias !68
-  %7 = shufflevector <2 x i8> %6, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.s = insertelement <4 x i8> %7, i8 %i.q, i64 2
+  %i.s = insertelement <4 x i8> %6, i8 %i.q, i64 2
   %i.t = insertelement <4 x i8> %i.s, i8 %i.r, i64 3
   %i.u = xor <4 x i8> %i.t, <i8 2, i8 0, i8 0, i8 0>
   store <4 x i8> %i.u, ptr %3, align 4, !tbaa !20, !noalias !68

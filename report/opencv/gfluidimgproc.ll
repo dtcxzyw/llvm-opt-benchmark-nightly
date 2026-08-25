@@ -205,14 +205,13 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.fn, 2147483644              ; 3 uses
   %broadcast.splatinsert = insertelement <4 x double> poison, double %i.ey, i64 0
   %broadcast.splat = shufflevector <4 x double> %broadcast.splatinsert, <4 x double> poison, <4 x i32> zeroinitializer
-  %16 = load i32, ptr %.sroa.6.0..sroa_idx.i, align 4, !tbaa !221, !alias.scope !224
-  %broadcast.splatinsert168 = insertelement <4 x i32> poison, i32 %16, i64 0
-  %broadcast.splat169 = shufflevector <4 x i32> %broadcast.splatinsert168, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %16 = load <4 x i32>, ptr %.sroa.6.0..sroa_idx.i, align 4
+  %broadcast.splat169 = shufflevector <4 x i32> %16, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ft = uitofp nneg <4 x i32> %vec.ind to <4 x double>
   %i.fu = fadd <4 x double> %i.ft, splat (double 5.000000e-01)
   %i.fv = call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.fu, <4 x double> %broadcast.splat, <4 x double> splat (double -5.000000e-01))
@@ -233,9 +232,9 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.gk = getelementptr inbounds nuw [4 x i8], ptr %i.fi, i64 %index
   store <4 x float> %i.gj, ptr %i.gk, align 4, !tbaa !215
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.fk, i64 %index
-  store <4 x i32> %i.gb, ptr %i.gl, align 4, !tbaa !49, !alias.scope !227, !noalias !224
+  store <4 x i32> %i.gb, ptr %i.gl, align 4, !tbaa !49, !alias.scope !224, !noalias !227
   %i.gm = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %index
-  store <4 x i32> %i.gi, ptr %i.gm, align 4, !tbaa !49, !alias.scope !229, !noalias !224
+  store <4 x i32> %i.gi, ptr %i.gm, align 4, !tbaa !49, !alias.scope !229, !noalias !227
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 4)
   %i.gn = icmp eq i64 %index.next, %n.vec
