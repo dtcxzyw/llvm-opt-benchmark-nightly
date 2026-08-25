@@ -204,7 +204,8 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #21
 ; Function Attrs: mustprogress nofree noinline norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define internal fastcc noundef zeroext i1 @_ZN13duckdb_yyjsonL16is_truncated_endEPhS0_S0_jj(ptr nofree noundef readnone captures(address) %0, ptr noundef %1, ptr noundef %2, i32 noundef range(i32 2, 12) %3, i32 noundef %4) unnamed_addr #22 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64
+  %5 = ptrtoaddr ptr %1 to i64                    ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64                  ; 3 uses
   %.not = icmp ult ptr %1, %2
   br i1 %.not, label %bb.b, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121
 
@@ -260,17 +261,24 @@ _ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread: ; preds = %_ZN13
 bb.d:                                             ; preds = %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread
   %i.q = load i8, ptr %1, align 1, !tbaa !81
   %i.r = icmp eq i8 %i.q, 45
-  %spec.select.idx = zext i1 %i.r to i64
+  %spec.select.idx = zext i1 %i.r to i64          ; 3 uses
   %spec.select = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select.idx ; 7 uses
   %i.s = getelementptr inbounds nuw i8, ptr %spec.select, i64 8
   %.not.i112 = icmp ugt ptr %i.s, %2
   %.not25.i113 = icmp ugt ptr %2, %spec.select    ; 2 uses
   %or.cond.i114 = and i1 %.not25.i113, %.not.i112
-  br i1 %or.cond.i114, label %.preheader164, label %.loopexit
+  br i1 %or.cond.i114, label %.preheader164.preheader, label %.loopexit
 
-.preheader164:                                    ; preds = %bb.d, %bb.e
-  %.019.i117167 = phi ptr [ %i.z, %bb.e ], [ @.str.75, %bb.d ] ; 2 uses
-  %.020.i116166 = phi ptr [ %i.y, %bb.e ], [ %spec.select, %bb.d ] ; 2 uses
+.preheader164.preheader:                          ; preds = %bb.d
+  %6 = add i64 %5, %spec.select.idx
+  %7 = xor i64 %6, -1
+  %8 = getelementptr i8, ptr @.str.75, i64 %7
+  %scevgep = getelementptr i8, ptr %8, i64 %i.a
+  br label %.preheader164
+
+.preheader164:                                    ; preds = %.preheader164.preheader, %bb.e
+  %.019.i117167 = phi ptr [ %i.z, %bb.e ], [ @.str.75, %.preheader164.preheader ] ; 3 uses
+  %.020.i116166 = phi ptr [ %i.y, %bb.e ], [ %spec.select, %.preheader164.preheader ] ; 2 uses
   %i.t = load i8, ptr %.020.i116166, align 1, !tbaa !81 ; 2 uses
   %i.u = load i8, ptr %.019.i117167, align 1, !tbaa !81 ; 2 uses
   %.not26.i118 = icmp eq i8 %i.t, %i.u
@@ -282,20 +290,27 @@ bb.d:                                             ; preds = %_ZN13duckdb_yyjsonL
   br i1 %or.cond30.i120, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.preheader164
-  %i.y = getelementptr inbounds nuw i8, ptr %.020.i116166, i64 1 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %.020.i116166, i64 1
   %i.z = getelementptr inbounds nuw i8, ptr %.019.i117167, i64 1
-  %5 = icmp ult ptr %i.y, %2
-  br i1 %5, label %.preheader164, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, !llvm.loop !371
+  %exitcond.not = icmp eq ptr %.019.i117167, %scevgep
+  br i1 %exitcond.not, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, label %.preheader164, !llvm.loop !371
 
 .loopexit:                                        ; preds = %.preheader164, %bb.d
   %i.aa = getelementptr inbounds nuw i8, ptr %spec.select, i64 3
   %.not.i102 = icmp ugt ptr %i.aa, %2
   %or.cond.i104 = and i1 %.not25.i113, %.not.i102
-  br i1 %or.cond.i104, label %.preheader162, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread
+  br i1 %or.cond.i104, label %.preheader162.preheader, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread
 
-.preheader162:                                    ; preds = %.loopexit, %bb.f
-  %.019.i107169 = phi ptr [ %i.ah, %bb.f ], [ @.str.76, %.loopexit ] ; 2 uses
-  %.020.i106168 = phi ptr [ %i.ag, %bb.f ], [ %spec.select, %.loopexit ] ; 2 uses
+.preheader162.preheader:                          ; preds = %.loopexit
+  %9 = add i64 %5, %spec.select.idx
+  %10 = xor i64 %9, -1
+  %11 = getelementptr i8, ptr @.str.76, i64 %10
+  %scevgep179 = getelementptr i8, ptr %11, i64 %i.a
+  br label %.preheader162
+
+.preheader162:                                    ; preds = %.preheader162.preheader, %bb.f
+  %.019.i107169 = phi ptr [ %i.ah, %bb.f ], [ @.str.76, %.preheader162.preheader ] ; 3 uses
+  %.020.i106168 = phi ptr [ %i.ag, %bb.f ], [ %spec.select, %.preheader162.preheader ] ; 2 uses
   %i.ab = load i8, ptr %.020.i106168, align 1, !tbaa !81 ; 2 uses
   %i.ac = load i8, ptr %.019.i107169, align 1, !tbaa !81 ; 2 uses
   %.not26.i108 = icmp eq i8 %i.ab, %i.ac
@@ -307,10 +322,10 @@ bb.e:                                             ; preds = %.preheader164
   br i1 %or.cond30.i110, label %bb.f, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread
 
 bb.f:                                             ; preds = %.preheader162
-  %i.ag = getelementptr inbounds nuw i8, ptr %.020.i106168, i64 1 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.020.i106168, i64 1
   %i.ah = getelementptr inbounds nuw i8, ptr %.019.i107169, i64 1
-  %6 = icmp ult ptr %i.ag, %2
-  br i1 %6, label %.preheader162, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, !llvm.loop !371
+  %exitcond180.not = icmp eq ptr %.019.i107169, %scevgep179
+  br i1 %exitcond180.not, label %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit121, label %.preheader162, !llvm.loop !371
 
 _ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit111.thread: ; preds = %.preheader162, %.loopexit, %bb.b, %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread
   %.174 = phi ptr [ %1, %bb.b ], [ %1, %_ZN13duckdb_yyjsonL16is_truncated_strEPhS0_PKcb.exit126.thread ], [ %spec.select, %.loopexit ], [ %spec.select, %.preheader162 ] ; 10 uses

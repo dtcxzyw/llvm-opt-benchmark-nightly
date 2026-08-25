@@ -1,6 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/dfgscanner?download=true
 inline.NumInlined: 24
 inline.NumDeleted: 7
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -174,11 +176,11 @@ bb.o:                                             ; preds = %bb.n, %.loopexit82
   %i.ac = load i32, ptr @yy_start, align 4
   br label %.loopexit83
 
-.loopexit83:                                      ; preds = %.loopexit83.backedge, %bb.o
-  %i.ad = phi i32 [ %i.aa, %bb.o ], [ %.be626, %.loopexit83.backedge ]
-  %.032 = phi i32 [ %i.ac, %bb.o ], [ %.032.be, %.loopexit83.backedge ]
-  %.028 = phi ptr [ %.pre130, %bb.o ], [ %.028.be, %.loopexit83.backedge ]
-  %.026 = phi ptr [ %.pre130, %bb.o ], [ %.026.be, %.loopexit83.backedge ]
+.loopexit83:                                      ; preds = %.loopexit86.backedge, %bb.o
+  %i.ad = phi i32 [ %i.aa, %bb.o ], [ %.be629, %.loopexit86.backedge ]
+  %.032 = phi i32 [ %i.ac, %bb.o ], [ %.032.be, %.loopexit86.backedge ]
+  %.028 = phi ptr [ %.pre130, %bb.o ], [ %.028.be, %.loopexit86.backedge ]
+  %.026 = phi ptr [ %.pre130, %bb.o ], [ %.026.be, %.loopexit86.backedge ]
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.p, %.loopexit83
@@ -581,43 +583,97 @@ bb.ci:                                            ; preds = %bb.ch
   %i.dq = trunc i64 %i.dp to i32
   %i.dr = add nsw i32 %i.dq, -1                   ; 2 uses
   %i.ds = load ptr, ptr @dfg_text, align 8        ; 2 uses
-  %i.dt = sext i32 %i.dr to i64
+  %i.dt = sext i32 %i.dr to i64                   ; 3 uses
   %i.du = getelementptr inbounds i8, ptr %i.ds, i64 %i.dt ; 4 uses
   store ptr %i.du, ptr @yy_c_buf_p, align 8
-  %i.dv = load i32, ptr @yy_start, align 4        ; 2 uses
+  %i.dv = load i32, ptr @yy_start, align 4        ; 3 uses
   %i.dw = load i32, ptr @yy_more_len, align 4     ; 4 uses
-  %i.dx = sext i32 %i.dw to i64
-  %i.dy = getelementptr inbounds i8, ptr %i.ds, i64 %i.dx ; 3 uses
+  %i.dx = sext i32 %i.dw to i64                   ; 3 uses
+  %i.dy = getelementptr inbounds i8, ptr %i.ds, i64 %i.dx ; 5 uses
   %i.dz = icmp slt i32 %i.dw, %i.dr
-  br i1 %i.dz, label %.lr.ph.i51, label %yy_get_previous_state.exit
+  br i1 %i.dz, label %.lr.ph.i51.preheader, label %yy_get_previous_state.exit
 
-.lr.ph.i51:                                       ; preds = %bb.ci, %bb.ck
-  %.07.i52 = phi ptr [ %i.el, %bb.ck ], [ %i.dy, %bb.ci ] ; 2 uses
-  %.056.i = phi i32 [ %i.ek, %bb.ck ], [ %i.dv, %bb.ci ]
+.lr.ph.i51.preheader:                             ; preds = %bb.ci
+  %0 = sub nsw i64 %i.dt, %i.dx
+  %xtraiter = and i64 %0, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.lr.ph.i51.prol.loopexit, label %.lr.ph.i51.prol
+
+.lr.ph.i51.prol:                                  ; preds = %.lr.ph.i51.preheader
+  %1 = sext i32 %i.dv to i64
+  %2 = getelementptr inbounds [82 x i8], ptr @yy_nxt, i64 %1
+  %3 = load i8, ptr %i.dy, align 1                ; 2 uses
+  %.not.i53.prol = icmp eq i8 %3, 0
+  br i1 %.not.i53.prol, label %.lr.ph.i51.prol.loopexit.unr-lcssa, label %4
+
+4:                                                ; preds = %.lr.ph.i51.prol
+  %5 = zext i8 %3 to i64
+  %6 = getelementptr inbounds nuw [4 x i8], ptr @yy_ec, i64 %5
+  %7 = load i32, ptr %6, align 4
+  %8 = sext i32 %7 to i64
+  br label %.lr.ph.i51.prol.loopexit.unr-lcssa
+
+.lr.ph.i51.prol.loopexit.unr-lcssa:               ; preds = %4, %.lr.ph.i51.prol
+  %9 = phi i64 [ %8, %4 ], [ 1, %.lr.ph.i51.prol ]
+  %10 = getelementptr inbounds [2 x i8], ptr %2, i64 %9
+  %11 = load i16, ptr %10, align 2
+  %12 = sext i16 %11 to i32                       ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %i.dy, i64 1
+  br label %.lr.ph.i51.prol.loopexit
+
+.lr.ph.i51.prol.loopexit:                         ; preds = %.lr.ph.i51.prol.loopexit.unr-lcssa, %.lr.ph.i51.preheader
+  %.lcssa787.unr = phi i32 [ poison, %.lr.ph.i51.preheader ], [ %12, %.lr.ph.i51.prol.loopexit.unr-lcssa ]
+  %.07.i52.unr = phi ptr [ %i.dy, %.lr.ph.i51.preheader ], [ %13, %.lr.ph.i51.prol.loopexit.unr-lcssa ]
+  %.056.i.unr = phi i32 [ %i.dv, %.lr.ph.i51.preheader ], [ %12, %.lr.ph.i51.prol.loopexit.unr-lcssa ]
+  %14 = add nsw i64 %i.dt, -1
+  %15 = icmp eq i64 %14, %i.dx
+  br i1 %15, label %yy_get_previous_state.exit, label %.lr.ph.i51
+
+.lr.ph.i51:                                       ; preds = %.lr.ph.i51.prol.loopexit, %bb.ck
+  %.07.i52 = phi ptr [ %i.el, %bb.ck ], [ %.07.i52.unr, %.lr.ph.i51.prol.loopexit ] ; 3 uses
+  %.056.i = phi i32 [ %i.ek, %bb.ck ], [ %.056.i.unr, %.lr.ph.i51.prol.loopexit ]
   %i.ea = sext i32 %.056.i to i64
   %i.eb = getelementptr inbounds [82 x i8], ptr @yy_nxt, i64 %i.ea
   %i.ec = load i8, ptr %.07.i52, align 1          ; 2 uses
   %.not.i53 = icmp eq i8 %i.ec, 0
-  br i1 %.not.i53, label %bb.ck, label %bb.cj
+  br i1 %.not.i53, label %.lr.ph.i51.1, label %16
 
-bb.cj:                                            ; preds = %.lr.ph.i51
-  %i.ed = zext i8 %i.ec to i64
+16:                                               ; preds = %.lr.ph.i51
+  %17 = zext i8 %i.ec to i64
+  %18 = getelementptr inbounds nuw [4 x i8], ptr @yy_ec, i64 %17
+  %19 = load i32, ptr %18, align 4
+  %20 = sext i32 %19 to i64
+  br label %.lr.ph.i51.1
+
+.lr.ph.i51.1:                                     ; preds = %16, %.lr.ph.i51
+  %21 = phi i64 [ %20, %16 ], [ 1, %.lr.ph.i51 ]
+  %22 = getelementptr inbounds [2 x i8], ptr %i.eb, i64 %21
+  %23 = load i16, ptr %22, align 2
+  %24 = getelementptr inbounds nuw i8, ptr %.07.i52, i64 1
+  %25 = sext i16 %23 to i64
+  %26 = getelementptr inbounds [82 x i8], ptr @yy_nxt, i64 %25
+  %27 = load i8, ptr %24, align 1                 ; 2 uses
+  %.not.i53.1 = icmp eq i8 %27, 0
+  br i1 %.not.i53.1, label %bb.ck, label %bb.cj
+
+bb.cj:                                            ; preds = %.lr.ph.i51.1
+  %i.ed = zext i8 %27 to i64
   %i.ee = getelementptr inbounds nuw [4 x i8], ptr @yy_ec, i64 %i.ed
   %i.ef = load i32, ptr %i.ee, align 4
   %i.eg = sext i32 %i.ef to i64
   br label %bb.ck
 
-bb.ck:                                            ; preds = %bb.cj, %.lr.ph.i51
-  %i.eh = phi i64 [ %i.eg, %bb.cj ], [ 1, %.lr.ph.i51 ]
-  %i.ei = getelementptr inbounds [2 x i8], ptr %i.eb, i64 %i.eh
+bb.ck:                                            ; preds = %bb.cj, %.lr.ph.i51.1
+  %i.eh = phi i64 [ %i.eg, %bb.cj ], [ 1, %.lr.ph.i51.1 ]
+  %i.ei = getelementptr inbounds [2 x i8], ptr %26, i64 %i.eh
   %i.ej = load i16, ptr %i.ei, align 2
   %i.ek = sext i16 %i.ej to i32                   ; 2 uses
-  %i.el = getelementptr inbounds nuw i8, ptr %.07.i52, i64 1 ; 2 uses
-  %0 = icmp ult ptr %i.el, %i.du
-  br i1 %0, label %.lr.ph.i51, label %yy_get_previous_state.exit, !llvm.loop !7
+  %i.el = getelementptr inbounds nuw i8, ptr %.07.i52, i64 2 ; 2 uses
+  %exitcond.not.i.1 = icmp eq ptr %i.el, %i.du
+  br i1 %exitcond.not.i.1, label %yy_get_previous_state.exit, label %.lr.ph.i51, !llvm.loop !7
 
-yy_get_previous_state.exit:                       ; preds = %bb.ck, %bb.ci
-  %.05.lcssa.i = phi i32 [ %i.dv, %bb.ci ], [ %i.ek, %bb.ck ] ; 2 uses
+yy_get_previous_state.exit:                       ; preds = %.lr.ph.i51.prol.loopexit, %bb.ck, %bb.ci
+  %.05.lcssa.i = phi i32 [ %i.dv, %bb.ci ], [ %.lcssa787.unr, %.lr.ph.i51.prol.loopexit ], [ %i.ek, %bb.ck ] ; 2 uses
   %i.em = sext i32 %.05.lcssa.i to i64
   %i.en = getelementptr inbounds [82 x i8], ptr @yy_nxt, i64 %i.em
   %i.eo = getelementptr inbounds nuw i8, ptr %i.en, i64 2
@@ -629,7 +685,7 @@ bb.cl:                                            ; preds = %yy_get_previous_sta
   %i.eq = zext nneg i16 %i.ep to i32
   %i.er = getelementptr inbounds nuw i8, ptr %i.du, i64 1 ; 2 uses
   store ptr %i.er, ptr @yy_c_buf_p, align 8
-  br label %.loopexit83.backedge
+  br label %.loopexit86.backedge
 
 bb.cm:                                            ; preds = %bb.ch
   %i.es = load ptr, ptr @dfg_text, align 8        ; 8 uses
@@ -993,7 +1049,7 @@ yy_get_next_buffer.exit:                          ; preds = %bb.db
   br label %bb.dc
 
 bb.dc:                                            ; preds = %.loopexit179, %.thread65.i, %thread-pre-split.thread89.i
-  %.in.in = phi i64 [ %i.hk, %thread-pre-split.thread89.i ], [ %i.if, %.thread65.i ], [ %i.jn, %.loopexit179 ]
+  %.in.in = phi i64 [ %i.hk, %thread-pre-split.thread89.i ], [ %i.if, %.thread65.i ], [ %i.jn, %.loopexit179 ] ; 3 uses
   %.ph = phi ptr [ %i.hl, %thread-pre-split.thread89.i ], [ %i.ig, %.thread65.i ], [ %i.il, %.loopexit179 ]
   %.ph74 = phi i32 [ %i.hp, %thread-pre-split.thread89.i ], [ %i.ib, %.thread65.i ], [ %.0.lcssa.i55, %.loopexit179 ]
   %.in = trunc i64 %.in.in to i32
@@ -1012,46 +1068,102 @@ bb.dc:                                            ; preds = %.loopexit179, %.thr
   %i.jx = load ptr, ptr %i.jq, align 8            ; 3 uses
   store ptr %i.jx, ptr @dfg_text, align 8
   %i.jy = sext i32 %i.jo to i64
-  %i.jz = getelementptr inbounds i8, ptr %i.jx, i64 %i.jy ; 4 uses
+  %i.jz = getelementptr inbounds i8, ptr %i.jx, i64 %i.jy ; 5 uses
   store ptr %i.jz, ptr @yy_c_buf_p, align 8
-  %i.ka = load i32, ptr @yy_start, align 4        ; 2 uses
-  %i.kb = load i32, ptr @yy_more_len, align 4     ; 4 uses
-  %i.kc = sext i32 %i.kb to i64
-  %i.kd = getelementptr inbounds i8, ptr %i.jx, i64 %i.kc ; 3 uses
+  %i.ka = load i32, ptr @yy_start, align 4        ; 3 uses
+  %i.kb = load i32, ptr @yy_more_len, align 4     ; 5 uses
+  %i.kc = sext i32 %i.kb to i64                   ; 3 uses
+  %i.kd = getelementptr inbounds i8, ptr %i.jx, i64 %i.kc ; 6 uses
   %i.ke = icmp slt i32 %i.kb, %i.jo
-  br i1 %i.ke, label %.lr.ph.i59, label %.loopexit83.backedge
+  br i1 %i.ke, label %.lr.ph.i60.preheader, label %.loopexit86.backedge
 
-.loopexit83.backedge:                             ; preds = %bb.de, %bb.dc, %bb.cl
-  %.be626 = phi i32 [ %i.kb, %bb.dc ], [ %i.dw, %bb.cl ], [ %i.kb, %bb.de ]
-  %.032.be = phi i32 [ %i.ka, %bb.dc ], [ %i.eq, %bb.cl ], [ %i.kp, %bb.de ]
-  %.028.be = phi ptr [ %i.jz, %bb.dc ], [ %i.er, %bb.cl ], [ %i.jz, %bb.de ]
-  %.026.be = phi ptr [ %i.kd, %bb.dc ], [ %i.dy, %bb.cl ], [ %i.kd, %bb.de ]
+.loopexit86.backedge:                             ; preds = %.lr.ph.i60.prol.loopexit, %bb.de, %bb.dc, %bb.cl
+  %.be629 = phi i32 [ %i.kb, %bb.dc ], [ %i.dw, %bb.cl ], [ %i.kb, %bb.de ], [ %i.kb, %.lr.ph.i60.prol.loopexit ]
+  %.032.be = phi i32 [ %i.ka, %bb.dc ], [ %i.eq, %bb.cl ], [ %.lcssa871.unr, %.lr.ph.i60.prol.loopexit ], [ %i.kp, %bb.de ]
+  %.028.be = phi ptr [ %i.jz, %bb.dc ], [ %i.er, %bb.cl ], [ %i.jz, %bb.de ], [ %i.jz, %.lr.ph.i60.prol.loopexit ]
+  %.026.be = phi ptr [ %i.kd, %bb.dc ], [ %i.dy, %bb.cl ], [ %i.kd, %bb.de ], [ %i.kd, %.lr.ph.i60.prol.loopexit ]
   br label %.loopexit83
 
-.lr.ph.i59:                                       ; preds = %bb.dc, %bb.de
-  %.07.i60 = phi ptr [ %i.kq, %bb.de ], [ %i.kd, %bb.dc ] ; 2 uses
-  %.056.i61 = phi i32 [ %i.kp, %bb.de ], [ %i.ka, %bb.dc ]
+.lr.ph.i60.preheader:                             ; preds = %bb.dc
+  %sext = shl i64 %.in.in, 32
+  %28 = ashr exact i64 %sext, 32
+  %29 = add nsw i64 %28, -2
+  %30 = sub i64 %i.kc, %.in.in
+  %31 = and i64 %30, 1
+  %lcmp.mod873.not.not = icmp eq i64 %31, 0
+  br i1 %lcmp.mod873.not.not, label %.lr.ph.i60.prol, label %.lr.ph.i60.prol.loopexit
+
+.lr.ph.i60.prol:                                  ; preds = %.lr.ph.i60.preheader
+  %32 = sext i32 %i.ka to i64
+  %33 = getelementptr inbounds [82 x i8], ptr @yy_nxt, i64 %32
+  %34 = load i8, ptr %i.kd, align 1               ; 2 uses
+  %.not.i63.prol = icmp eq i8 %34, 0
+  br i1 %.not.i63.prol, label %.loopexit83.backedge, label %35
+
+35:                                               ; preds = %.lr.ph.i60.prol
+  %36 = zext i8 %34 to i64
+  %37 = getelementptr inbounds nuw [4 x i8], ptr @yy_ec, i64 %36
+  %38 = load i32, ptr %37, align 4
+  %39 = sext i32 %38 to i64
+  br label %.loopexit83.backedge
+
+.loopexit83.backedge:                             ; preds = %35, %.lr.ph.i60.prol
+  %40 = phi i64 [ %39, %35 ], [ 1, %.lr.ph.i60.prol ]
+  %41 = getelementptr inbounds [2 x i8], ptr %33, i64 %40
+  %42 = load i16, ptr %41, align 2
+  %43 = sext i16 %42 to i32                       ; 2 uses
+  %44 = getelementptr inbounds nuw i8, ptr %i.kd, i64 1
+  br label %.lr.ph.i60.prol.loopexit
+
+.lr.ph.i60.prol.loopexit:                         ; preds = %.loopexit83.backedge, %.lr.ph.i60.preheader
+  %.lcssa871.unr = phi i32 [ poison, %.lr.ph.i60.preheader ], [ %43, %.loopexit83.backedge ]
+  %.07.i61.unr = phi ptr [ %i.kd, %.lr.ph.i60.preheader ], [ %44, %.loopexit83.backedge ]
+  %.056.i62.unr = phi i32 [ %i.ka, %.lr.ph.i60.preheader ], [ %43, %.loopexit83.backedge ]
+  %45 = icmp eq i64 %29, %i.kc
+  br i1 %45, label %.loopexit86.backedge, label %.lr.ph.i59
+
+.lr.ph.i59:                                       ; preds = %.lr.ph.i60.prol.loopexit, %bb.de
+  %.07.i60 = phi ptr [ %i.kq, %bb.de ], [ %.07.i61.unr, %.lr.ph.i60.prol.loopexit ] ; 3 uses
+  %.056.i61 = phi i32 [ %i.kp, %bb.de ], [ %.056.i62.unr, %.lr.ph.i60.prol.loopexit ]
   %i.kf = sext i32 %.056.i61 to i64
   %i.kg = getelementptr inbounds [82 x i8], ptr @yy_nxt, i64 %i.kf
   %i.kh = load i8, ptr %.07.i60, align 1          ; 2 uses
   %.not.i62 = icmp eq i8 %i.kh, 0
-  br i1 %.not.i62, label %bb.de, label %bb.dd
+  br i1 %.not.i62, label %.lr.ph.i60.1, label %46
 
-bb.dd:                                            ; preds = %.lr.ph.i59
-  %i.ki = zext i8 %i.kh to i64
+46:                                               ; preds = %.lr.ph.i59
+  %47 = zext i8 %i.kh to i64
+  %48 = getelementptr inbounds nuw [4 x i8], ptr @yy_ec, i64 %47
+  %49 = load i32, ptr %48, align 4
+  %50 = sext i32 %49 to i64
+  br label %.lr.ph.i60.1
+
+.lr.ph.i60.1:                                     ; preds = %46, %.lr.ph.i59
+  %51 = phi i64 [ %50, %46 ], [ 1, %.lr.ph.i59 ]
+  %52 = getelementptr inbounds [2 x i8], ptr %i.kg, i64 %51
+  %53 = load i16, ptr %52, align 2
+  %54 = getelementptr inbounds nuw i8, ptr %.07.i60, i64 1
+  %55 = sext i16 %53 to i64
+  %56 = getelementptr inbounds [82 x i8], ptr @yy_nxt, i64 %55
+  %57 = load i8, ptr %54, align 1                 ; 2 uses
+  %.not.i63.1 = icmp eq i8 %57, 0
+  br i1 %.not.i63.1, label %bb.de, label %bb.dd
+
+bb.dd:                                            ; preds = %.lr.ph.i60.1
+  %i.ki = zext i8 %57 to i64
   %i.kj = getelementptr inbounds nuw [4 x i8], ptr @yy_ec, i64 %i.ki
   %i.kk = load i32, ptr %i.kj, align 4
   %i.kl = sext i32 %i.kk to i64
   br label %bb.de
 
-bb.de:                                            ; preds = %bb.dd, %.lr.ph.i59
-  %i.km = phi i64 [ %i.kl, %bb.dd ], [ 1, %.lr.ph.i59 ]
-  %i.kn = getelementptr inbounds [2 x i8], ptr %i.kg, i64 %i.km
+bb.de:                                            ; preds = %bb.dd, %.lr.ph.i60.1
+  %i.km = phi i64 [ %i.kl, %bb.dd ], [ 1, %.lr.ph.i60.1 ]
+  %i.kn = getelementptr inbounds [2 x i8], ptr %56, i64 %i.km
   %i.ko = load i16, ptr %i.kn, align 2
   %i.kp = sext i16 %i.ko to i32                   ; 2 uses
-  %i.kq = getelementptr inbounds nuw i8, ptr %.07.i60, i64 1 ; 2 uses
-  %1 = icmp ult ptr %i.kq, %i.jz
-  br i1 %1, label %.lr.ph.i59, label %.loopexit83.backedge, !llvm.loop !7
+  %i.kq = getelementptr inbounds nuw i8, ptr %.07.i60, i64 2 ; 2 uses
+  %exitcond.not.i64.1 = icmp eq ptr %i.kq, %i.jz
+  br i1 %exitcond.not.i64.1, label %.loopexit86.backedge, label %.lr.ph.i59, !llvm.loop !7
 
 yy_get_next_buffer.exit.thread72:                 ; preds = %bb.cp, %yy_get_next_buffer.exit
   %.pre-phi151 = phi i64 [ %.pre150, %yy_get_next_buffer.exit ], [ %i.fb, %bb.cp ]
@@ -1095,8 +1207,8 @@ bb.dg:                                            ; preds = %bb.df, %.lr.ph.i66
   %i.lh = load i16, ptr %i.lg, align 2
   %i.li = sext i16 %i.lh to i32                   ; 2 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %.07.i67, i64 1 ; 2 uses
-  %2 = icmp ult ptr %i.lj, %i.ku
-  br i1 %2, label %.lr.ph.i66, label %.loopexit84.backedge, !llvm.loop !7
+  %exitcond.not.i72 = icmp eq ptr %i.lj, %i.ku
+  br i1 %exitcond.not.i72, label %.loopexit84.backedge, label %.lr.ph.i66, !llvm.loop !7
 
 yy_get_previous_state.exit63.jt8:                 ; preds = %yy_get_next_buffer.exit.thread77, %bb.cp
   %.pre-phi = phi i64 [ %i.fb, %bb.cp ], [ %.pre147, %yy_get_next_buffer.exit.thread77 ]
