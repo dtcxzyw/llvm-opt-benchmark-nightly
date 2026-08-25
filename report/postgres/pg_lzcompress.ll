@@ -202,8 +202,8 @@ bb.r:                                             ; preds = %.lr.ph15.i
   %i.cn = add nuw nsw i32 %.06314.i, 1
   %i.co = getelementptr inbounds nuw i8, ptr %.06612.i, i64 1 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.06413.i, i64 1
-  %4 = icmp ult ptr %i.co, %i.c
-  br i1 %4, label %.lr.ph15.i, label %.critedge.i, !llvm.loop !4
+  %exitcond37.not.i = icmp eq ptr %i.co, %i.c
+  br i1 %exitcond37.not.i, label %.critedge.i, label %.lr.ph15.i, !llvm.loop !4
 
 .lr.ph.i:                                         ; preds = %.lr.ph, %bb.s
   %.19.i = phi i32 [ %i.cu, %bb.s ], [ 0, %.lr.ph ] ; 3 uses

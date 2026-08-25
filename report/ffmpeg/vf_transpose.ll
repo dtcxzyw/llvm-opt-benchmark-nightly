@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %i.an = sext i32 %i.am to i64                   ; 2 uses
   %i.ao = mul nsw i64 %i.an, %i.o
   %i.ap = sdiv i64 %i.ao, %i.p                    ; 3 uses
-  %i.aq = trunc i64 %i.ap to i32                  ; 8 uses
+  %i.aq = trunc i64 %i.ap to i32                  ; 7 uses
   %i.ar = mul nsw i64 %i.an, %i.r
   %i.as = sdiv i64 %i.ar, %i.p                    ; 3 uses
-  %i.at = trunc i64 %i.as to i32                  ; 2 uses
+  %i.at = trunc i64 %i.as to i32                  ; 3 uses
   %i.au = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %indvars.iv160 ; 3 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %indvars.iv160
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !58 ; 3 uses
@@ -239,7 +239,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   %.pn.in = mul nsw i32 %.pn136, %i.aw
   %.pn = sext i32 %.pn.in to i64
   %.0130 = getelementptr inbounds i8, ptr %i.ay, i64 %.pn ; 3 uses
-  %i.bn = add nsw i32 %i.at, -7                   ; 4 uses
+  %i.bn = add nsw i32 %i.at, -7                   ; 3 uses
   %i.bo = icmp sgt i32 %i.bn, %i.aq
   br i1 %i.bo, label %.preheader.lr.ph, label %._crit_edge139
 
@@ -310,11 +310,9 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   br i1 %i.cv, label %.preheader.us141.preheader, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
-  %i.cw = add nsw i32 %i.aq, 8
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.bn, i32 %i.cw)
-  %4 = xor i32 %i.aq, -1
-  %5 = add i32 %smax, %4
-  %i.cx = and i32 %5, -8
+  %i.cw = add i32 %i.at, -8
+  %4 = sub i32 %i.cw, %i.aq
+  %i.cx = and i32 %4, -8
   %i.cy = add i32 %i.cx, 8
   %i.cz = add i32 %i.cy, %i.aq
   br label %._crit_edge139
@@ -715,9 +713,6 @@ declare ptr @av_default_item_name(ptr noundef) #2
 declare i32 @ff_add_format(ptr noundef, i64 noundef) local_unnamed_addr #2
 
 declare i32 @ff_set_common_formats2(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #9

@@ -204,8 +204,8 @@ bb.a:
   br i1 %.not, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = zext nneg i32 %i.c to i64                ; 9 uses
-  %i.f = add i64 %1, %i.e                         ; 6 uses
+  %i.e = zext nneg i32 %i.c to i64                ; 8 uses
+  %i.f = add i64 %1, %i.e                         ; 7 uses
   %i.g = icmp ugt i64 %i.f, %4
   br i1 %i.g, label %bb.c, label %bb.d
 
@@ -221,9 +221,8 @@ bb.d:                                             ; preds = %bb.b
 .preheader132.preheader:                          ; preds = %bb.d
   %i.j = shl i64 %i.f, 2
   %scevgep = getelementptr i8, ptr %3, i64 %i.j
-  %5 = add i64 %1, %i.e
-  %i.k = sub i64 %4, %5
-  %i.l = shl nuw i64 %i.k, 2
+  %i.k = sub nuw i64 %4, %i.f
+  %i.l = shl i64 %i.k, 2
   tail call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.l, i1 false), !tbaa !8
   br label %.loopexit133
 

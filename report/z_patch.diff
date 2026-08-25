@@ -1,0 +1,379 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 1f458d14782ba..3343fbbc53726 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -13440,6 +13440,9 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+ 
+   bool PositiveStride = isKnownPositive(Stride);
+ 
++  // Whether the IV may reach the maximum value before the exit is taken.
++  bool IVMayOverflow = true;
++
+   // Avoid negative or zero stride values.
+   if (!PositiveStride) {
+     // We can compute the correct backedge taken count for loops with unknown
+@@ -13509,10 +13512,11 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+         Stride = getUMaxExpr(Stride, getOne(Stride->getType()));
+       }
+     }
+-  } else if (!NoWrap) {
++  } else {
+     // Avoid proven overflow cases: this will ensure that the backedge taken
+     // count will not generate any unsigned overflow.
+-    if (canIVOverflowOnLT(RHS, Stride, IsSigned))
++    IVMayOverflow = canIVOverflowOnLT(RHS, Stride, IsSigned);
++    if (IVMayOverflow && !NoWrap)
+       return getCouldNotCompute();
+   }
+ 
+@@ -13609,7 +13613,7 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+     assert(isAvailableAtLoopEntry(OrigStart, L) && "Must be!");
+     assert(isAvailableAtLoopEntry(OrigRHS, L) && "Must be!");
+     // Can we prove (max(RHS,Start) > Start - Stride?
+-    if (isLoopEntryGuardedByCond(L, Cond, OrigStartMinusStride, OrigStart) &&
++    if ((isLoopEntryGuardedByCond(L, Cond, OrigStartMinusStride, OrigStart) || !IVMayOverflow) &&
+         isLoopEntryGuardedByCond(L, Cond, OrigStartMinusStride, OrigRHS)) {
+       // In this case, we can use a refined formula for computing backedge
+       // taken count.  The general formula remains:
+@@ -13693,8 +13697,12 @@ ScalarEvolution::howManyLessThans(const SCEV *LHS, const SCEV *RHS,
+       //
+       // Using this information, try to prove whether the addition in
+       // "(Start - End) + (Stride - 1)" has unsigned overflow.
++      //
++      // If the IV cannot overflow, RHS is at least Stride - 1 below the maximum
++      // value, so the distance End - Start is at most UMAX - (Stride - 1) and
++      // the (Stride - 1) addition below cannot overflow.
+       const SCEV *One = getOne(Stride->getType());
+-      bool MayAddOverflow = [&] {
++      bool MayAddOverflow = IVMayOverflow && [&] {
+         if (isKnownToBeAPowerOfTwo(Stride)) {
+           // Suppose Stride is a power of two, and Start/End are unsigned
+           // integers.  Let UMAX be the largest representable unsigned
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/runtime-checks-may-wrap.ll b/llvm/test/Analysis/LoopAccessAnalysis/runtime-checks-may-wrap.ll
+index 510799c3daefa..da1aaedd3ca38 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/runtime-checks-may-wrap.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/runtime-checks-may-wrap.ll
+@@ -19,7 +19,7 @@ define void @geps_may_wrap(ptr %a, ptr %b, i64 %N) {
+ ; CHECK-NEXT:          (Low: %b High: (4 + %b))
+ ; CHECK-NEXT:            Member: %b
+ ; CHECK-NEXT:        Group GRP1:
+-; CHECK-NEXT:          (Low: %a High: (16 + (12 * (trunc i128 ((zext i64 %N to i128) /u 3) to i16)) + %a))
++; CHECK-NEXT:          (Low: %a High: (4 + (12 * (trunc i128 ((3 + (zext i64 %N to i128))<nuw><nsw> /u 3) to i16)) + %a))
+ ; CHECK-NEXT:            Member: {%a,+,12}<%loop>
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:      Non vectorizable stores to invariant address were not found in loop.
+diff --git a/llvm/test/Analysis/ScalarEvolution/2008-11-18-Stride2.ll b/llvm/test/Analysis/ScalarEvolution/2008-11-18-Stride2.ll
+index 11953110417b5..ca539e5f3c626 100644
+--- a/llvm/test/Analysis/ScalarEvolution/2008-11-18-Stride2.ll
++++ b/llvm/test/Analysis/ScalarEvolution/2008-11-18-Stride2.ll
+@@ -8,9 +8,9 @@ define i32 @f(i32 %x) nounwind readnone {
+ ;
+ ; CHECK-LABEL: 'f'
+ ; CHECK-NEXT:  Determining loop execution counts for: @f
+-; CHECK-NEXT:  Loop %bb: backedge-taken count is (((-3 + (-1 * (1 umin (-3 + (-1 * %x) + (1000 umax (3 + %x)))))<nuw><nsw> + (-1 * %x) + (1000 umax (3 + %x))) /u 3) + (1 umin (-3 + (-1 * %x) + (1000 umax (3 + %x)))))
++; CHECK-NEXT:  Loop %bb: backedge-taken count is ((999 + (-1 * %x)) /u 3)
+ ; CHECK-NEXT:  Loop %bb: constant max backedge-taken count is i32 334
+-; CHECK-NEXT:  Loop %bb: symbolic max backedge-taken count is (((-3 + (-1 * (1 umin (-3 + (-1 * %x) + (1000 umax (3 + %x)))))<nuw><nsw> + (-1 * %x) + (1000 umax (3 + %x))) /u 3) + (1 umin (-3 + (-1 * %x) + (1000 umax (3 + %x)))))
++; CHECK-NEXT:  Loop %bb: symbolic max backedge-taken count is ((999 + (-1 * %x)) /u 3)
+ ; CHECK-NEXT:  Loop %bb: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll b/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll
+index a13da89b4d6e9..9852456350c77 100644
+--- a/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll
++++ b/llvm/test/Analysis/ScalarEvolution/different-loops-recs.ll
+@@ -109,63 +109,63 @@ define void @test_01(i32 %a, i32 %b) {
+ ; CHECK-LABEL: 'test_01'
+ ; CHECK-NEXT:  Classifying expressions for: @test_01
+ ; CHECK-NEXT:    %phi1 = phi i32 [ %a, %entry ], [ %phi1.inc, %loop1 ]
+-; CHECK-NEXT:    --> {%a,+,1}<nw><%loop1> U: full-set S: full-set Exits: (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))) + %a) LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {%a,+,1}<nw><%loop1> U: full-set S: full-set Exits: (((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + %a) LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %phi2 = phi i32 [ %b, %entry ], [ %phi2.inc, %loop1 ]
+-; CHECK-NEXT:    --> {%b,+,2}<nw><%loop1> U: full-set S: full-set Exits: ((2 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))<nuw><nsw> + %b) LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {%b,+,2}<nw><%loop1> U: full-set S: full-set Exits: ((2 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw><nsw> + %b) LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %phi3 = phi i32 [ 6, %entry ], [ %phi3.inc, %loop1 ]
+-; CHECK-NEXT:    --> {6,+,3}<nuw><nsw><%loop1> U: [6,508) S: [6,508) Exits: (6 + (3 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))<nuw>)<nuw> LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {6,+,3}<nuw><nsw><%loop1> U: [6,508) S: [6,508) Exits: (6 + (3 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw><nsw>)<nuw> LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %phi1.inc = add i32 %phi1, 1
+-; CHECK-NEXT:    --> {(1 + %a),+,1}<nw><%loop1> U: full-set S: full-set Exits: (1 + ((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))) + %a) LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {(1 + %a),+,1}<nw><%loop1> U: full-set S: full-set Exits: (1 + ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + %a) LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %phi2.inc = add i32 %phi2, 2
+-; CHECK-NEXT:    --> {(2 + %b),+,2}<nw><%loop1> U: full-set S: full-set Exits: (2 + (2 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))<nuw><nsw> + %b) LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {(2 + %b),+,2}<nw><%loop1> U: full-set S: full-set Exits: (2 + (2 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw><nsw> + %b) LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %phi3.inc = add i32 %phi3, 3
+-; CHECK-NEXT:    --> {9,+,3}<nuw><nsw><%loop1> U: [9,511) S: [9,511) Exits: (9 + (3 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))<nuw>)<nuw> LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {9,+,3}<nuw><nsw><%loop1> U: [9,511) S: [9,511) Exits: (9 + (3 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw><nsw>)<nuw> LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %sum1 = add i32 %phi1, %phi2
+-; CHECK-NEXT:    --> {(%a + %b),+,3}<%loop1> U: full-set S: full-set Exits: ((3 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))<nuw> + %a + %b) LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {(%a + %b),+,3}<%loop1> U: full-set S: full-set Exits: ((3 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw><nsw> + %a + %b) LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %sum2 = add i32 %sum1, %phi3
+-; CHECK-NEXT:    --> {(6 + %a + %b),+,6}<%loop1> U: full-set S: full-set Exits: (6 + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + %a + %b) LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {(6 + %a + %b),+,6}<%loop1> U: full-set S: full-set Exits: (6 + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw> + %a + %b) LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %is1 = add i32 %sum2, %a
+-; CHECK-NEXT:    --> {(6 + (2 * %a) + %b),+,6}<%loop1> U: full-set S: full-set Exits: (6 + (2 * %a) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + %b) LoopDispositions: { %loop1: Computable }
++; CHECK-NEXT:    --> {(6 + (2 * %a) + %b),+,6}<%loop1> U: full-set S: full-set Exits: (6 + (2 * %a) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw> + %b) LoopDispositions: { %loop1: Computable }
+ ; CHECK-NEXT:    %phi4 = phi i32 [ 63, %loop1 ], [ %phi4.inc, %loop2 ]
+-; CHECK-NEXT:    --> {63,+,1}<nuw><nsw><%loop2> U: [63,231) S: [63,231) Exits: (63 + ((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))) LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {63,+,1}<nuw><nsw><%loop2> U: [63,231) S: [63,231) Exits: (63 + ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw> LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %phi5 = phi i32 [ 53, %loop1 ], [ %phi5.inc, %loop2 ]
+-; CHECK-NEXT:    --> {53,+,2}<nuw><nsw><%loop2> U: [53,388) S: [53,388) Exits: (53 + (2 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))<nuw><nsw>)<nuw><nsw> LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {53,+,2}<nuw><nsw><%loop2> U: [53,388) S: [53,388) Exits: (53 + (2 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw>)<nuw><nsw> LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %phi6 = phi i32 [ 43, %loop1 ], [ %phi6.inc, %loop2 ]
+-; CHECK-NEXT:    --> {43,+,3}<nuw><nsw><%loop2> U: [43,545) S: [43,545) Exits: (43 + (3 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))<nuw>)<nuw> LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {43,+,3}<nuw><nsw><%loop2> U: [43,545) S: [43,545) Exits: (43 + (3 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw>)<nuw> LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %phi4.inc = add i32 %phi4, 1
+-; CHECK-NEXT:    --> {64,+,1}<nuw><nsw><%loop2> U: [64,232) S: [64,232) Exits: (64 + ((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))) LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {64,+,1}<nuw><nsw><%loop2> U: [64,232) S: [64,232) Exits: (64 + ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw> LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %phi5.inc = add i32 %phi5, 2
+-; CHECK-NEXT:    --> {55,+,2}<nuw><nsw><%loop2> U: [55,390) S: [55,390) Exits: (55 + (2 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))<nuw><nsw>)<nuw><nsw> LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {55,+,2}<nuw><nsw><%loop2> U: [55,390) S: [55,390) Exits: (55 + (2 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw>)<nuw><nsw> LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %phi6.inc = add i32 %phi6, 3
+-; CHECK-NEXT:    --> {46,+,3}<nuw><nsw><%loop2> U: [46,548) S: [46,548) Exits: (46 + (3 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))<nuw>)<nuw> LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {46,+,3}<nuw><nsw><%loop2> U: [46,548) S: [46,548) Exits: (46 + (3 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw>)<nuw> LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %sum3 = add i32 %phi4, %phi5
+-; CHECK-NEXT:    --> {116,+,3}<%loop2> U: [116,618) S: [116,618) Exits: (116 + (3 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))<nuw>)<nuw> LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {116,+,3}<%loop2> U: [116,618) S: [116,618) Exits: (116 + (3 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw>)<nuw> LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %sum4 = add i32 %sum3, %phi6
+-; CHECK-NEXT:    --> {159,+,6}<%loop2> U: [159,1162) S: [159,1162) Exits: (159 + (6 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))) LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {159,+,6}<%loop2> U: [159,1162) S: [159,1162) Exits: (159 + (6 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw>) LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %is2 = add i32 %sum4, %b
+-; CHECK-NEXT:    --> {(159 + %b),+,6}<nw><%loop2> U: full-set S: full-set Exits: (159 + (6 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))) + %b) LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {(159 + %b),+,6}<nw><%loop2> U: full-set S: full-set Exits: (159 + (6 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw> + %b) LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %ec2 = add i32 %is1, %is2
+-; CHECK-NEXT:    --> {{\{\{}}(165 + (2 * %a) + (2 * %b)),+,6}<%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> {(165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))),+,6}<nw><%loop2> U: full-set S: full-set Exits: (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (6 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))) LoopDispositions: { %loop2: Computable }
++; CHECK-NEXT:    --> {{\{\{}}(165 + (2 * %a) + (2 * %b)),+,6}<%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> {(165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>),+,6}<nw><%loop2> U: full-set S: full-set Exits: (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw> + (6 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw>) LoopDispositions: { %loop2: Computable }
+ ; CHECK-NEXT:    %s1 = add i32 %phi1, %is1
+-; CHECK-NEXT:    --> {(6 + (3 * %a) + %b),+,7}<%loop1> U: full-set S: full-set --> (6 + (3 * %a) + (7 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + %b) U: full-set S: full-set
++; CHECK-NEXT:    --> {(6 + (3 * %a) + %b),+,7}<%loop1> U: full-set S: full-set --> (6 + (3 * %a) + (7 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + %b) U: full-set S: full-set
+ ; CHECK-NEXT:    %s2 = add i32 %is2, %phi4
+-; CHECK-NEXT:    --> {(222 + %b),+,7}<%loop2> U: full-set S: full-set --> (222 + (7 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))) + %b) U: full-set S: full-set
++; CHECK-NEXT:    --> {(222 + %b),+,7}<%loop2> U: full-set S: full-set --> (222 + (7 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6)) + %b) U: full-set S: full-set
+ ; CHECK-NEXT:    %s3 = add i32 %is1, %phi5
+-; CHECK-NEXT:    --> {{\{\{}}(59 + (2 * %a) + %b),+,6}<%loop1>,+,2}<nw><%loop2> U: full-set S: full-set --> (59 + (2 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))<nuw><nsw> + (2 * %a) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + %b) U: full-set S: full-set
++; CHECK-NEXT:    --> {{\{\{}}(59 + (2 * %a) + %b),+,6}<%loop1>,+,2}<nw><%loop2> U: full-set S: full-set --> (59 + (2 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw><nsw> + (2 * %a) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw> + %b) U: full-set S: full-set
+ ; CHECK-NEXT:    %s4 = add i32 %phi2, %is2
+-; CHECK-NEXT:    --> {{\{\{}}(159 + (2 * %b)),+,2}<nw><%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> (159 + (2 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))<nuw><nsw> + (2 * %b) + (6 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))) U: full-set S: full-set
++; CHECK-NEXT:    --> {{\{\{}}(159 + (2 * %b)),+,2}<nw><%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> (159 + (2 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw><nsw> + (2 * %b) + (6 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw>) U: full-set S: full-set
+ ; CHECK-NEXT:    %s5 = add i32 %is1, %is2
+-; CHECK-NEXT:    --> {{\{\{}}(165 + (2 * %a) + (2 * %b)),+,6}<%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (6 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))) U: full-set S: full-set
++; CHECK-NEXT:    --> {{\{\{}}(165 + (2 * %a) + (2 * %b)),+,6}<%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw> + (6 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw>) U: full-set S: full-set
+ ; CHECK-NEXT:    %s6 = add i32 %is2, %is1
+-; CHECK-NEXT:    --> {{\{\{}}(165 + (2 * %a) + (2 * %b)),+,6}<%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (6 * (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))))))) U: full-set S: full-set
++; CHECK-NEXT:    --> {{\{\{}}(165 + (2 * %a) + (2 * %b)),+,6}<%loop1>,+,6}<nw><%loop2> U: full-set S: full-set --> (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw> + (6 * ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6))<nuw>) U: full-set S: full-set
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_01
+-; CHECK-NEXT:  Loop %loop2: backedge-taken count is (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))
++; CHECK-NEXT:  Loop %loop2: backedge-taken count is ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6)
+ ; CHECK-NEXT:  Loop %loop2: constant max backedge-taken count is i32 167
+-; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is (((-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (-1 * (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))<nuw><nsw> + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))))))))) /u 6) + (1 umin (-165 + (-6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))))))))
++; CHECK-NEXT:  Loop %loop2: symbolic max backedge-taken count is ((-160 + (-6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)) + (-2 * %a) + (-2 * %b) + (1000 umax (165 + (2 * %a) + (2 * %b) + (6 * ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6))<nuw>))) /u 6)
+ ; CHECK-NEXT:  Loop %loop2: Trip multiple is 1
+-; CHECK-NEXT:  Loop %loop1: backedge-taken count is (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))
++; CHECK-NEXT:  Loop %loop1: backedge-taken count is ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)
+ ; CHECK-NEXT:  Loop %loop1: constant max backedge-taken count is i32 167
+-; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is (((-6 + (-2 * %a) + (-1 * (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))<nuw><nsw> + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6) + (1 umin (-6 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b)))))
++; CHECK-NEXT:  Loop %loop1: symbolic max backedge-taken count is ((-1 + (-2 * %a) + (-1 * %b) + (1000 umax (6 + (2 * %a) + %b))) /u 6)
+ ; CHECK-NEXT:  Loop %loop1: Trip multiple is 1
+ ;
+ 
+diff --git a/llvm/test/Analysis/ScalarEvolution/no-wrap-unknown-becount.ll b/llvm/test/Analysis/ScalarEvolution/no-wrap-unknown-becount.ll
+index 0aa13c5b06ca2..4c2a6d9b5d4a0 100644
+--- a/llvm/test/Analysis/ScalarEvolution/no-wrap-unknown-becount.ll
++++ b/llvm/test/Analysis/ScalarEvolution/no-wrap-unknown-becount.ll
+@@ -116,11 +116,11 @@ define void @s_3(i32 %start, ptr %cond) {
+ ; CHECK-NEXT:    --> %c U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @s_3
+ ; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
+-; CHECK-NEXT:    exit count for loop: ((((-1 * (1 umin ((-1 * %start) + (10000 smax %start))))<nuw><nsw> + (-1 * %start) + (10000 smax %start)) /u 3) + (1 umin ((-1 * %start) + (10000 smax %start))))
++; CHECK-NEXT:    exit count for loop: ((2 + (-1 * %start) + (10000 smax %start)) /u 3)
+ ; CHECK-NEXT:    exit count for be: ***COULDNOTCOMPUTE***
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 715831216
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * %start) + (10000 smax %start))))<nuw><nsw> + (-1 * %start) + (10000 smax %start)) /u 3) + (1 umin ((-1 * %start) + (10000 smax %start))))
+-; CHECK-NEXT:    symbolic max exit count for loop: ((((-1 * (1 umin ((-1 * %start) + (10000 smax %start))))<nuw><nsw> + (-1 * %start) + (10000 smax %start)) /u 3) + (1 umin ((-1 * %start) + (10000 smax %start))))
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((2 + (-1 * %start) + (10000 smax %start)) /u 3)
++; CHECK-NEXT:    symbolic max exit count for loop: ((2 + (-1 * %start) + (10000 smax %start)) /u 3)
+ ; CHECK-NEXT:    symbolic max exit count for be: ***COULDNOTCOMPUTE***
+ ;
+ entry:
+@@ -288,11 +288,11 @@ define void @u_3(i32 %start, ptr %cond) {
+ ; CHECK-NEXT:    --> %c U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:  Determining loop execution counts for: @u_3
+ ; CHECK-NEXT:  Loop %loop: <multiple exits> Unpredictable backedge-taken count.
+-; CHECK-NEXT:    exit count for loop: ((((-1 * (1 umin ((-1 * %start) + (10000 umax %start))))<nuw><nsw> + (-1 * %start) + (10000 umax %start)) /u 3) + (1 umin ((-1 * %start) + (10000 umax %start))))
++; CHECK-NEXT:    exit count for loop: ((2 + (-1 * %start) + (10000 umax %start)) /u 3)
+ ; CHECK-NEXT:    exit count for be: ***COULDNOTCOMPUTE***
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 3334
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((((-1 * (1 umin ((-1 * %start) + (10000 umax %start))))<nuw><nsw> + (-1 * %start) + (10000 umax %start)) /u 3) + (1 umin ((-1 * %start) + (10000 umax %start))))
+-; CHECK-NEXT:    symbolic max exit count for loop: ((((-1 * (1 umin ((-1 * %start) + (10000 umax %start))))<nuw><nsw> + (-1 * %start) + (10000 umax %start)) /u 3) + (1 umin ((-1 * %start) + (10000 umax %start))))
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is ((2 + (-1 * %start) + (10000 umax %start)) /u 3)
++; CHECK-NEXT:    symbolic max exit count for loop: ((2 + (-1 * %start) + (10000 umax %start)) /u 3)
+ ; CHECK-NEXT:    symbolic max exit count for be: ***COULDNOTCOMPUTE***
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/LoopVectorize/RISCV/blocks-with-dead-instructions.ll b/llvm/test/Transforms/LoopVectorize/RISCV/blocks-with-dead-instructions.ll
+index 7ee772d8f1b7c..333f20a0d8d06 100644
+--- a/llvm/test/Transforms/LoopVectorize/RISCV/blocks-with-dead-instructions.ll
++++ b/llvm/test/Transforms/LoopVectorize/RISCV/blocks-with-dead-instructions.ll
+@@ -454,19 +454,15 @@ define void @dead_load_in_block(ptr %dst, ptr %src, i8 %N, i64 %x) #0 {
+ ; CHECK-SAME: ptr [[DST:%.*]], ptr [[SRC:%.*]], i8 [[N:%.*]], i64 [[X:%.*]]) #[[ATTR0]] {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    [[N_EXT:%.*]] = zext i8 [[N]] to i64
+-; CHECK-NEXT:    [[UMIN7:%.*]] = call i64 @llvm.umin.i64(i64 [[N_EXT]], i64 1)
+-; CHECK-NEXT:    [[TMP0:%.*]] = sub i64 [[N_EXT]], [[UMIN7]]
++; CHECK-NEXT:    [[TMP0:%.*]] = add nuw nsw i64 [[N_EXT]], 2
+ ; CHECK-NEXT:    [[TMP1:%.*]] = udiv i64 [[TMP0]], 3
+-; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[UMIN7]], [[TMP1]]
+-; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[TMP2]], 1
++; CHECK-NEXT:    [[TMP2:%.*]] = add nuw nsw i64 [[TMP1]], 1
+ ; CHECK-NEXT:    br label %[[VECTOR_MEMCHECK:.*]]
+ ; CHECK:       [[VECTOR_MEMCHECK]]:
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i64 @llvm.umin.i64(i64 [[N_EXT]], i64 1)
+-; CHECK-NEXT:    [[TMP7:%.*]] = sub i64 [[N_EXT]], [[UMIN]]
++; CHECK-NEXT:    [[TMP7:%.*]] = add nuw nsw i64 [[N_EXT]], 2
+ ; CHECK-NEXT:    [[TMP8:%.*]] = udiv i64 [[TMP7]], 3
+-; CHECK-NEXT:    [[TMP9:%.*]] = add i64 [[UMIN]], [[TMP8]]
+-; CHECK-NEXT:    [[TMP10:%.*]] = mul i64 [[TMP9]], 12
+-; CHECK-NEXT:    [[TMP11:%.*]] = add i64 [[TMP10]], 4
++; CHECK-NEXT:    [[TMP5:%.*]] = mul nuw nsw i64 [[TMP8]], 12
++; CHECK-NEXT:    [[TMP11:%.*]] = add nuw nsw i64 [[TMP5]], 4
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[DST]], i64 [[TMP11]]
+ ; CHECK-NEXT:    [[TMP12:%.*]] = shl i64 [[X]], 2
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SRC]], i64 [[TMP12]]
+@@ -485,7 +481,7 @@ define void @dead_load_in_block(ptr %dst, ptr %src, i8 %N, i64 %x) #0 {
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
+-; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP3]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP2]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP18:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 4, i1 true)
+ ; CHECK-NEXT:    [[TMP14:%.*]] = mul i64 [[INDEX]], 12
+ ; CHECK-NEXT:    [[TMP15:%.*]] = getelementptr i8, ptr [[DST]], i64 [[TMP14]]
+diff --git a/llvm/test/Transforms/LoopVectorize/RISCV/dead-ops-cost.ll b/llvm/test/Transforms/LoopVectorize/RISCV/dead-ops-cost.ll
+index 648bd292a1e2c..23d9b5c5b7c52 100644
+--- a/llvm/test/Transforms/LoopVectorize/RISCV/dead-ops-cost.ll
++++ b/llvm/test/Transforms/LoopVectorize/RISCV/dead-ops-cost.ll
+@@ -11,13 +11,10 @@ define void @dead_load(ptr %p, i16 %start) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+ ; CHECK-NEXT:    [[START_EXT:%.*]] = sext i16 [[START]] to i64
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i64 @llvm.smax.i64(i64 [[START_EXT]], i64 111)
+-; CHECK-NEXT:    [[TMP0:%.*]] = sub i64 [[SMAX]], [[START_EXT]]
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i64 @llvm.umin.i64(i64 [[TMP0]], i64 1)
+-; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 [[SMAX]], [[UMIN]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[SMAX]], 2
+ ; CHECK-NEXT:    [[TMP2:%.*]] = sub i64 [[TMP1]], [[START_EXT]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = udiv i64 [[TMP2]], 3
+-; CHECK-NEXT:    [[TMP4:%.*]] = add i64 [[UMIN]], [[TMP3]]
+-; CHECK-NEXT:    [[TMP5:%.*]] = add i64 [[TMP4]], 1
++; CHECK-NEXT:    [[TMP4:%.*]] = add nuw nsw i64 [[TMP3]], 1
+ ; CHECK-NEXT:    br label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+ ; CHECK-NEXT:    [[TMP8:%.*]] = shl nsw i64 [[START_EXT]], 1
+@@ -25,7 +22,7 @@ define void @dead_load(ptr %p, i16 %start) {
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
+-; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP5]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP4]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP16:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+ ; CHECK-NEXT:    [[TMP11:%.*]] = mul i64 [[INDEX]], 6
+ ; CHECK-NEXT:    [[TMP12:%.*]] = getelementptr i8, ptr [[TMP9]], i64 [[TMP11]]
+diff --git a/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll b/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll
+index 90320cb70fd34..3a796fe80af11 100644
+--- a/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll
++++ b/llvm/test/Transforms/LoopVectorize/RISCV/induction-costs.ll
+@@ -13,31 +13,25 @@ define void @skip_free_iv_truncate(i16 %x, ptr %A) #0 {
+ ; CHECK-NEXT:    [[X_I64:%.*]] = sext i16 [[X]] to i64
+ ; CHECK-NEXT:    [[INVARIANT_GEP:%.*]] = getelementptr i8, ptr [[A]], i64 -8
+ ; CHECK-NEXT:    [[SMAX20:%.*]] = call i64 @llvm.smax.i64(i64 [[X_I64]], i64 99)
+-; CHECK-NEXT:    [[TMP0:%.*]] = sub i64 [[SMAX20]], [[X_I64]]
+-; CHECK-NEXT:    [[UMIN21:%.*]] = call i64 @llvm.umin.i64(i64 [[TMP0]], i64 1)
+-; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 [[SMAX20]], [[UMIN21]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[SMAX20]], 2
+ ; CHECK-NEXT:    [[TMP2:%.*]] = sub i64 [[TMP1]], [[X_I64]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = udiv i64 [[TMP2]], 3
+-; CHECK-NEXT:    [[TMP4:%.*]] = add i64 [[UMIN21]], [[TMP3]]
+-; CHECK-NEXT:    [[TMP5:%.*]] = add i64 [[TMP4]], 1
++; CHECK-NEXT:    [[TMP4:%.*]] = add nuw nsw i64 [[TMP3]], 1
+ ; CHECK-NEXT:    br label %[[VECTOR_MEMCHECK:.*]]
+ ; CHECK:       [[VECTOR_MEMCHECK]]:
+ ; CHECK-NEXT:    [[TMP31:%.*]] = shl nsw i64 [[X_I64]], 1
+ ; CHECK-NEXT:    [[SCEVGEP9:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP31]]
+ ; CHECK-NEXT:    [[SMAX10:%.*]] = call i64 @llvm.smax.i64(i64 [[X_I64]], i64 99)
+-; CHECK-NEXT:    [[TMP32:%.*]] = sub i64 [[SMAX10]], [[X_I64]]
+-; CHECK-NEXT:    [[UMIN11:%.*]] = call i64 @llvm.umin.i64(i64 [[TMP32]], i64 1)
+-; CHECK-NEXT:    [[TMP33:%.*]] = sub i64 [[SMAX10]], [[UMIN11]]
++; CHECK-NEXT:    [[TMP33:%.*]] = add i64 [[SMAX10]], 2
+ ; CHECK-NEXT:    [[TMP34:%.*]] = sub i64 [[TMP33]], [[X_I64]]
+ ; CHECK-NEXT:    [[TMP35:%.*]] = udiv i64 [[TMP34]], 3
+-; CHECK-NEXT:    [[TMP36:%.*]] = add i64 [[UMIN11]], [[TMP35]]
+-; CHECK-NEXT:    [[TMP37:%.*]] = mul i64 [[TMP36]], 6
++; CHECK-NEXT:    [[TMP37:%.*]] = mul i64 [[TMP35]], 6
+ ; CHECK-NEXT:    [[TMP38:%.*]] = add i64 [[TMP37]], [[TMP31]]
+ ; CHECK-NEXT:    [[TMP39:%.*]] = add i64 [[TMP38]], 2
+ ; CHECK-NEXT:    [[SCEVGEP12:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP39]]
+ ; CHECK-NEXT:    [[TMP40:%.*]] = shl nsw i64 [[X_I64]], 3
+ ; CHECK-NEXT:    [[SCEVGEP13:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP40]]
+-; CHECK-NEXT:    [[TMP41:%.*]] = mul i64 [[TMP36]], 24
++; CHECK-NEXT:    [[TMP41:%.*]] = mul i64 [[TMP35]], 24
+ ; CHECK-NEXT:    [[TMP42:%.*]] = add i64 [[TMP41]], [[TMP40]]
+ ; CHECK-NEXT:    [[TMP43:%.*]] = add i64 [[TMP42]], 8
+ ; CHECK-NEXT:    [[SCEVGEP14:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP43]]
+@@ -58,7 +52,7 @@ define void @skip_free_iv_truncate(i16 %x, ptr %A) #0 {
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
+-; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP5]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ [[TMP4]], %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP27:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+ ; CHECK-NEXT:    [[TMP22:%.*]] = mul i64 [[INDEX]], 6
+ ; CHECK-NEXT:    [[TMP23:%.*]] = getelementptr i8, ptr [[SCEVGEP10]], i64 [[TMP22]]
+diff --git a/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll b/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
+index 9014cc606ad78..abc2f3b8f274a 100644
+--- a/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
+@@ -80,13 +80,9 @@ define void @pr49900(i32 %x, ptr %ptr) {
+ ; CHECK-NEXT:    [[IV_1:%.*]] = phi i32 [ 0, %[[LOOP_1_PH]] ], [ [[IV_3_NEXT_LCSSA:%.*]], %[[LOOP_1_LATCH:.*]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[IV_1]], 12
+ ; CHECK-NEXT:    [[SMAX2:%.*]] = call i32 @llvm.smax.i32(i32 [[TMP0]], i32 65537)
+-; CHECK-NEXT:    [[TMP3:%.*]] = add i32 [[SMAX2]], -12
+-; CHECK-NEXT:    [[TMP2:%.*]] = sub i32 [[TMP3]], [[IV_1]]
+-; CHECK-NEXT:    [[UMIN3:%.*]] = call i32 @llvm.umin.i32(i32 [[TMP2]], i32 1)
+-; CHECK-NEXT:    [[TMP4:%.*]] = sub i32 [[TMP2]], [[UMIN3]]
++; CHECK-NEXT:    [[TMP4:%.*]] = sub i32 [[SMAX2]], [[IV_1]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = udiv i32 [[TMP4]], 13
+-; CHECK-NEXT:    [[TMP12:%.*]] = add i32 [[UMIN3]], [[TMP5]]
+-; CHECK-NEXT:    [[TMP6:%.*]] = add i32 [[TMP12]], 1
++; CHECK-NEXT:    [[TMP6:%.*]] = add nuw nsw i32 [[TMP5]], 1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK5:%.*]] = icmp ult i32 [[TMP6]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK5]], label %[[SCALAR_PH4:.*]], label %[[VECTOR_PH6:.*]]
+ ; CHECK:       [[VECTOR_PH6]]:
+@@ -118,25 +114,17 @@ define void @pr49900(i32 %x, ptr %ptr) {
+ ; CHECK-NEXT:    [[IV_2_NEXT_LCSSA:%.*]] = phi i32 [ [[IV_2_NEXT]], %[[LOOP_2]] ], [ [[TMP8]], %[[MIDDLE_BLOCK12]] ]
+ ; CHECK-NEXT:    [[TMP11:%.*]] = add i32 [[IV_1]], 12
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[TMP11]], i32 65537)
+-; CHECK-NEXT:    [[TMP19:%.*]] = add i32 [[SMAX]], -12
+-; CHECK-NEXT:    [[TMP13:%.*]] = sub i32 [[TMP19]], [[IV_1]]
+-; CHECK-NEXT:    [[UMIN:%.*]] = call i32 @llvm.umin.i32(i32 [[TMP13]], i32 1)
+-; CHECK-NEXT:    [[TMP14:%.*]] = sub i32 [[TMP13]], [[UMIN]]
++; CHECK-NEXT:    [[TMP14:%.*]] = sub i32 [[SMAX]], [[IV_1]]
+ ; CHECK-NEXT:    [[TMP15:%.*]] = udiv i32 [[TMP14]], 13
+-; CHECK-NEXT:    [[TMP16:%.*]] = add i32 [[UMIN]], [[TMP15]]
+-; CHECK-NEXT:    [[TMP17:%.*]] = mul i32 [[TMP16]], 13
++; CHECK-NEXT:    [[TMP17:%.*]] = mul nuw i32 [[TMP15]], 13
+ ; CHECK-NEXT:    [[TMP30:%.*]] = add i32 [[IV_1]], [[TMP17]]
+ ; CHECK-NEXT:    [[TMP18:%.*]] = add i32 [[TMP30]], 26
+ ; CHECK-NEXT:    [[UMAX:%.*]] = call i32 @llvm.umax.i32(i32 [[TMP18]], i32 65536)
+-; CHECK-NEXT:    [[TMP34:%.*]] = add i32 [[UMAX]], -26
+-; CHECK-NEXT:    [[TMP20:%.*]] = sub i32 [[TMP34]], [[IV_1]]
+-; CHECK-NEXT:    [[TMP33:%.*]] = sub i32 [[TMP20]], [[TMP17]]
+-; CHECK-NEXT:    [[UMIN1:%.*]] = call i32 @llvm.umin.i32(i32 [[TMP33]], i32 1)
+-; CHECK-NEXT:    [[TMP23:%.*]] = sub i32 [[TMP20]], [[UMIN1]]
++; CHECK-NEXT:    [[TMP19:%.*]] = add i32 [[UMAX]], -14
++; CHECK-NEXT:    [[TMP23:%.*]] = sub i32 [[TMP19]], [[IV_1]]
+ ; CHECK-NEXT:    [[TMP32:%.*]] = sub i32 [[TMP23]], [[TMP17]]
+ ; CHECK-NEXT:    [[TMP25:%.*]] = udiv i32 [[TMP32]], 13
+-; CHECK-NEXT:    [[TMP35:%.*]] = add i32 [[UMIN1]], [[TMP25]]
+-; CHECK-NEXT:    [[TMP26:%.*]] = add i32 [[TMP35]], 1
++; CHECK-NEXT:    [[TMP26:%.*]] = add nuw nsw i32 [[TMP25]], 1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i32 [[TMP26]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:

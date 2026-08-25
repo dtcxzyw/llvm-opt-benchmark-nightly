@@ -205,8 +205,8 @@ bb.dq:                                            ; preds = %bb.dp, %bb.do, %bb.
   %i.afc = load ptr, ptr %1, align 8, !tbaa !18
   %i.afd = sext i32 %i.aet to i64                 ; 3 uses
   %i.afe = sext i32 %i.aef to i64
-  %i.aff = sext i32 %5 to i64
-  %i.afg = sext i32 %i.aeu to i64
+  %i.aff = sext i32 %i.aeu to i64
+  %i.afg = sext i32 %5 to i64
   %wide.trip.count752 = zext nneg i32 %i.aeh to i64
   %invariant.op821 = add nsw i64 %i.afd, -1
   %invariant.op822 = add nsw i64 %i.afd, -2
@@ -215,7 +215,7 @@ bb.dq:                                            ; preds = %bb.dp, %bb.do, %bb.
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us690, %.lr.ph686.split.us
   %indvars.iv754 = phi i64 [ %indvars.iv.next755, %._crit_edge.us690 ], [ %i.afe, %.lr.ph686.split.us ] ; 3 uses
-  %i.afh = add nsw i64 %indvars.iv754, %i.afg
+  %i.afh = add nsw i64 %indvars.iv754, %i.aff
   %.reass692 = mul i64 %factor.op.mul691, %i.afh
   %i.afi = getelementptr inbounds nuw i8, ptr %i.aey, i64 %.reass692
   %i.afj = trunc nsw i64 %indvars.iv754 to i32
@@ -457,8 +457,8 @@ bb.es:                                            ; preds = %bb.er, %bb.eq, %bb.
 
 ._crit_edge.us690:                                ; preds = %bb.es
   %indvars.iv.next755 = add nsw i64 %indvars.iv754, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next755, %i.aff
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge687, !llvm.loop !865
+  %exitcond758.not = icmp eq i64 %indvars.iv.next755, %i.afg
+  br i1 %exitcond758.not, label %._crit_edge687, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !865
 
 ._crit_edge687:                                   ; preds = %._crit_edge.us690, %.lr.ph686, %._crit_edge666
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
@@ -861,8 +861,8 @@ begin_hunk_1_@_ZN4ncnnL41conv3x3s1_winograd43_transform_input_tileERKNS_3MatERS0
   %i.bxp = load ptr, ptr %1, align 8, !tbaa !18
   %i.bxq = sext i32 %i.bxg to i64                 ; 5 uses
   %i.bxr = sext i32 %i.bwo to i64
-  %i.bxs = sext i32 %5 to i64
-  %i.bxt = sext i32 %i.bxh to i64
+  %i.bxs = sext i32 %i.bxh to i64
+  %i.bxt = sext i32 %5 to i64
   %wide.trip.count1111 = zext nneg i32 %i.bwq to i64
   %invariant.op1206 = add nsw i64 %i.bxq, -1
   %invariant.op1207 = add nsw i64 %i.bxq, -2
@@ -873,7 +873,7 @@ begin_hunk_1_@_ZN4ncnnL41conv3x3s1_winograd43_transform_input_tileERKNS_3MatERS0
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us1049, %.lr.ph1045.split.us
   %indvars.iv1113 = phi i64 [ %indvars.iv.next1114, %._crit_edge.us1049 ], [ %i.bxr, %.lr.ph1045.split.us ] ; 3 uses
-  %i.bxu = add nsw i64 %indvars.iv1113, %i.bxt
+  %i.bxu = add nsw i64 %indvars.iv1113, %i.bxs
   %.reass1051 = mul i64 %factor.op.mul1050, %i.bxu
   %i.bxv = getelementptr inbounds nuw i8, ptr %i.bxl, i64 %.reass1051
   %i.bxw = trunc nsw i64 %indvars.iv1113 to i32
@@ -1276,8 +1276,8 @@ begin_hunk_2_@_ZN4ncnnL41conv3x3s1_winograd43_transform_input_tileERKNS_3MatERS0
 
 ._crit_edge.us1049:                               ; preds = %bb.li
   %indvars.iv.next1114 = add nsw i64 %indvars.iv1113, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next1114, %i.bxs
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge1046, !llvm.loop !1046
+  %exitcond1117.not = icmp eq i64 %indvars.iv.next1114, %i.bxt
+  br i1 %exitcond1117.not, label %._crit_edge1046, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !1046
 
 ._crit_edge1046:                                  ; preds = %._crit_edge.us1049, %.lr.ph1045, %._crit_edge1023
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #12
@@ -1680,15 +1680,15 @@ bb.oz:                                            ; preds = %bb.oy
   %i.csy = load ptr, ptr %1, align 8, !tbaa !18
   %i.csz = sext i32 %i.csp to i64
   %i.cta = sext i32 %i.crm to i64
-  %i.ctb = sext i32 %5 to i64
-  %i.ctc = sext i32 %i.csq to i64
+  %i.ctb = sext i32 %i.csq to i64
+  %i.ctc = sext i32 %5 to i64
   %wide.trip.count1537 = zext nneg i32 %i.cro to i64
   br label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us1472, %.lr.ph1468.split.us
   %indvars.iv1539 = phi i64 [ %indvars.iv.next1540, %._crit_edge.us1472 ], [ %i.cta, %.lr.ph1468.split.us ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #12
-  %i.ctd = add nsw i64 %indvars.iv1539, %i.ctc
+  %i.ctd = add nsw i64 %indvars.iv1539, %i.ctb
   %.reass1474 = mul i64 %factor.op.mul1473, %i.ctd
   %i.cte = getelementptr inbounds nuw i8, ptr %i.csu, i64 %.reass1474
   %i.ctf = trunc nsw i64 %indvars.iv1539 to i32
@@ -1964,8 +1964,8 @@ bb.ps:                                            ; preds = %bb.pr
 ._crit_edge.us1472:                               ; preds = %bb.ps
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #12
   %indvars.iv.next1540 = add nsw i64 %indvars.iv1539, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next1540, %i.ctb
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge1469, !llvm.loop !1130
+  %exitcond1543.not = icmp eq i64 %indvars.iv.next1540, %i.ctc
+  br i1 %exitcond1543.not, label %._crit_edge1469, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !1130
 
 ._crit_edge1469:                                  ; preds = %._crit_edge.us1472, %.lr.ph1468, %._crit_edge1444
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
@@ -2368,7 +2368,7 @@ bb.e:                                             ; preds = %bb.c
   store i32 %i.ab, ptr %i.e, align 4, !tbaa !67
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !68
-  %i.ae = mul nsw i32 %i.ad, %i.ab                ; 6 uses
+  %i.ae = mul i32 %i.ad, %i.ab                    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #12
   %i.af = mul nsw i32 %4, %3                      ; 4 uses
   store i32 %i.af, ptr %i.f, align 4, !tbaa !67
@@ -2771,8 +2771,8 @@ vec.epilog.scalar.ph11528:                        ; preds = %vec.epilog.scalar.p
 
 ._crit_edge9649:                                  ; preds = %._crit_edge9639, %.preheader7774
   %indvars.iv.next10633 = add nsw i64 %indvars.iv10632, 1 ; 2 uses
-  %10 = icmp slt i64 %indvars.iv.next10633, %i.doj
-  br i1 %10, label %_ZN4ncnn3MatD2Ev.exit3577, label %._crit_edge9651, !llvm.loop !2009
+  %exitcond10636.not = icmp eq i64 %indvars.iv.next10633, %i.doj
+  br i1 %exitcond10636.not, label %._crit_edge9651, label %_ZN4ncnn3MatD2Ev.exit3577, !llvm.loop !2009
 
 bb.ay:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit, %bb.d, %bb.b
   ret void
@@ -3175,8 +3175,8 @@ bb.em:                                            ; preds = %bb.el
   %i.aly = load ptr, ptr %1, align 8, !tbaa !18
   %i.alz = sext i32 %i.alp to i64                 ; 5 uses
   %i.ama = sext i32 %i.akx to i64
-  %i.amb = sext i32 %5 to i64
-  %i.amc = sext i32 %i.alq to i64
+  %i.amb = sext i32 %i.alq to i64
+  %i.amc = sext i32 %5 to i64
   %wide.trip.count726 = zext nneg i32 %i.akz to i64
   %invariant.op778 = add nsw i64 %i.alz, -1
   %invariant.op779 = add nsw i64 %i.alz, -2
@@ -3187,7 +3187,7 @@ bb.em:                                            ; preds = %bb.el
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us683, %.lr.ph679.split.us
   %indvars.iv728 = phi i64 [ %indvars.iv.next729, %._crit_edge.us683 ], [ %i.ama, %.lr.ph679.split.us ] ; 3 uses
-  %i.amd = add nsw i64 %indvars.iv728, %i.amc
+  %i.amd = add nsw i64 %indvars.iv728, %i.amb
   %.reass685 = mul i64 %factor.op.mul684, %i.amd
   %i.ame = getelementptr inbounds nuw i8, ptr %i.alu, i64 %.reass685
   %i.amf = trunc nsw i64 %indvars.iv728 to i32
@@ -3590,8 +3590,8 @@ begin_hunk_7_@_ZN4ncnnL46conv3x3s1_winograd43_transform_input_tile_int8ERKNS_3Ma
 
 ._crit_edge.us683:                                ; preds = %bb.ha
   %indvars.iv.next729 = add nsw i64 %indvars.iv728, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next729, %i.amb
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge680, !llvm.loop !2026
+  %exitcond732.not = icmp eq i64 %indvars.iv.next729, %i.amc
+  br i1 %exitcond732.not, label %._crit_edge680, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !2026
 
 ._crit_edge680:                                   ; preds = %._crit_edge.us683, %.lr.ph679, %._crit_edge657
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
@@ -3994,8 +3994,8 @@ bb.cg:                                            ; preds = %bb.cf, %bb.by
   %i.xe = load ptr, ptr %1, align 8, !tbaa !18
   %i.xf = sext i32 %i.wv to i64                   ; 3 uses
   %i.xg = sext i32 %i.wh to i64
-  %i.xh = sext i32 %5 to i64
-  %i.xi = sext i32 %i.ww to i64
+  %i.xh = sext i32 %i.ww to i64
+  %i.xi = sext i32 %5 to i64
   %wide.trip.count483 = zext nneg i32 %i.wj to i64
   %invariant.op530 = add nsw i64 %i.xf, -1
   %invariant.op531 = add nsw i64 %i.xf, -2
@@ -4004,7 +4004,7 @@ bb.cg:                                            ; preds = %bb.cf, %bb.by
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us440, %.lr.ph436.split.us
   %indvars.iv485 = phi i64 [ %indvars.iv.next486, %._crit_edge.us440 ], [ %i.xg, %.lr.ph436.split.us ] ; 3 uses
-  %i.xj = add nsw i64 %indvars.iv485, %i.xi
+  %i.xj = add nsw i64 %indvars.iv485, %i.xh
   %.reass442 = mul i64 %factor.op.mul441, %i.xj
   %i.xk = getelementptr inbounds nuw i8, ptr %i.xa, i64 %.reass442
   %i.xl = trunc nsw i64 %indvars.iv485 to i32
@@ -4278,8 +4278,8 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg, %bb.
 
 ._crit_edge.us440:                                ; preds = %bb.di
   %indvars.iv.next486 = add nsw i64 %indvars.iv485, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next486, %i.xh
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge437, !llvm.loop !2226
+  %exitcond489.not = icmp eq i64 %indvars.iv.next486, %i.xi
+  br i1 %exitcond489.not, label %._crit_edge437, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !2226
 
 ._crit_edge437:                                   ; preds = %._crit_edge.us440, %.lr.ph436, %._crit_edge416
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
@@ -4682,7 +4682,7 @@ bb.c:                                             ; preds = %bb.a
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !66 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !68
-  %i.ae = mul nsw i32 %i.ad, %i.ab                ; 6 uses
+  %i.ae = mul i32 %i.ad, %i.ab                    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !20
@@ -5085,8 +5085,8 @@ _ZN4ncnn3MatD2Ev.exit1959:                        ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 ._crit_edge4899:                                  ; preds = %._crit_edge4889
   %indvars.iv.next5510 = add nsw i64 %indvars.iv5509, 1 ; 2 uses
-  %13 = icmp slt i64 %indvars.iv.next5510, %i.drx
-  br i1 %13, label %_ZN4ncnn3MatD2Ev.exit1959, label %._crit_edge4901.split, !llvm.loop !2737
+  %exitcond5513.not = icmp eq i64 %indvars.iv.next5510, %i.drx
+  br i1 %exitcond5513.not, label %._crit_edge4901.split, label %_ZN4ncnn3MatD2Ev.exit1959, !llvm.loop !2737
 
 ._crit_edge4889:                                  ; preds = %_ZL13activation_ssfiRKN4ncnn3MatE.exit
   %i.gad = add nuw nsw i32 %.015574898, 1         ; 2 uses
@@ -5489,8 +5489,8 @@ bb.ds:                                            ; preds = %bb.dr, %bb.dq, %bb.
   %i.ayn = load ptr, ptr %1, align 8, !tbaa !18
   %i.ayo = sext i32 %i.aye to i64                 ; 3 uses
   %i.ayp = sext i32 %i.axq to i64
-  %i.ayq = sext i32 %5 to i64
-  %i.ayr = sext i32 %i.ayf to i64
+  %i.ayq = sext i32 %i.ayf to i64
+  %i.ayr = sext i32 %5 to i64
   %wide.trip.count788 = zext nneg i32 %i.axs to i64
   %invariant.op857 = add nsw i64 %i.ayo, -1
   %invariant.op858 = add nsw i64 %i.ayo, -2
@@ -5499,7 +5499,7 @@ bb.ds:                                            ; preds = %bb.dr, %bb.dq, %bb.
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us726, %.lr.ph722.split.us
   %indvars.iv790 = phi i64 [ %indvars.iv.next791, %._crit_edge.us726 ], [ %i.ayp, %.lr.ph722.split.us ] ; 3 uses
-  %i.ays = add nsw i64 %indvars.iv790, %i.ayr
+  %i.ays = add nsw i64 %indvars.iv790, %i.ayq
   %.reass728 = mul i64 %factor.op.mul727, %i.ays
   %i.ayt = getelementptr inbounds nuw i8, ptr %i.ayj, i64 %.reass728
   %i.ayu = trunc nsw i64 %indvars.iv790 to i32
@@ -5789,8 +5789,8 @@ bb.eu:                                            ; preds = %bb.et, %bb.es, %bb.
 
 ._crit_edge.us726:                                ; preds = %bb.eu
   %indvars.iv.next791 = add nsw i64 %indvars.iv790, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next791, %i.ayq
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge723, !llvm.loop !2794
+  %exitcond794.not = icmp eq i64 %indvars.iv.next791, %i.ayr
+  br i1 %exitcond794.not, label %._crit_edge723, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !2794
 
 ._crit_edge723:                                   ; preds = %._crit_edge.us726, %.lr.ph722, %._crit_edge702
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
@@ -6193,8 +6193,8 @@ begin_hunk_12_@_ZN4ncnnL47conv3x3s1_winograd43_transform_input_tile_bf16sERKNS_3
   %i.dyt = load ptr, ptr %1, align 8, !tbaa !18
   %i.dyu = sext i32 %i.dyk to i64                 ; 5 uses
   %i.dyv = sext i32 %i.dxs to i64
-  %i.dyw = sext i32 %5 to i64
-  %i.dyx = sext i32 %i.dyl to i64
+  %i.dyw = sext i32 %i.dyl to i64
+  %i.dyx = sext i32 %5 to i64
   %wide.trip.count1157 = zext nneg i32 %i.dxu to i64
   %invariant.op1256 = add nsw i64 %i.dyu, -1
   %invariant.op1257 = add nsw i64 %i.dyu, -2
@@ -6205,7 +6205,7 @@ begin_hunk_12_@_ZN4ncnnL47conv3x3s1_winograd43_transform_input_tile_bf16sERKNS_3
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us1095, %.lr.ph1091.split.us
   %indvars.iv1159 = phi i64 [ %indvars.iv.next1160, %._crit_edge.us1095 ], [ %i.dyv, %.lr.ph1091.split.us ] ; 3 uses
-  %i.dyy = add nsw i64 %indvars.iv1159, %i.dyx
+  %i.dyy = add nsw i64 %indvars.iv1159, %i.dyw
   %.reass1097 = mul i64 %factor.op.mul1096, %i.dyy
   %i.dyz = getelementptr inbounds nuw i8, ptr %i.dyp, i64 %.reass1097
   %i.dza = trunc nsw i64 %indvars.iv1159 to i32
@@ -6608,8 +6608,8 @@ begin_hunk_13_@_ZN4ncnnL47conv3x3s1_winograd43_transform_input_tile_bf16sERKNS_3
 
 ._crit_edge.us1095:                               ; preds = %bb.nq
   %indvars.iv.next1160 = add nsw i64 %indvars.iv1159, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next1160, %i.dyw
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge1092, !llvm.loop !2873
+  %exitcond1163.not = icmp eq i64 %indvars.iv.next1160, %i.dyx
+  br i1 %exitcond1163.not, label %._crit_edge1092, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !2873
 
 ._crit_edge1092:                                  ; preds = %._crit_edge.us1095, %.lr.ph1091, %._crit_edge1069
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #12
@@ -7012,15 +7012,15 @@ bb.pb:                                            ; preds = %bb.pa
   %i.fii = load ptr, ptr %1, align 8, !tbaa !18
   %i.fij = sext i32 %i.fhz to i64
   %i.fik = sext i32 %i.fgw to i64
-  %i.fil = sext i32 %5 to i64
-  %i.fim = sext i32 %i.fia to i64
+  %i.fil = sext i32 %i.fia to i64
+  %i.fim = sext i32 %5 to i64
   %wide.trip.count1605 = zext nneg i32 %i.fgy to i64
   br label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us1540, %.lr.ph1536.split.us
   %indvars.iv1607 = phi i64 [ %indvars.iv.next1608, %._crit_edge.us1540 ], [ %i.fik, %.lr.ph1536.split.us ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #12
-  %i.fin = add nsw i64 %indvars.iv1607, %i.fim
+  %i.fin = add nsw i64 %indvars.iv1607, %i.fil
   %.reass1542 = mul i64 %factor.op.mul1541, %i.fin
   %i.fio = getelementptr inbounds nuw i8, ptr %i.fie, i64 %.reass1542
   %i.fip = trunc nsw i64 %indvars.iv1607 to i32
@@ -7320,8 +7320,8 @@ bb.pu:                                            ; preds = %bb.pt
 ._crit_edge.us1540:                               ; preds = %bb.pu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #12
   %indvars.iv.next1608 = add nsw i64 %indvars.iv1607, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next1608, %i.fil
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge1537, !llvm.loop !2959
+  %exitcond1611.not = icmp eq i64 %indvars.iv.next1608, %i.fim
+  br i1 %exitcond1611.not, label %._crit_edge1537, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !2959
 
 ._crit_edge1537:                                  ; preds = %._crit_edge.us1540, %.lr.ph1536, %._crit_edge1512
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12

@@ -205,7 +205,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.i = load i64, ptr %i.h, align 8, !tbaa !232
-  %i.j = lshr i64 %i.i, 6                         ; 2 uses
+  %i.j = lshr i64 %i.i, 6                         ; 3 uses
   %i.k = icmp ult i64 %i.f, %i.j
   br i1 %i.k, label %.lr.ph, label %.critedge
 
@@ -219,15 +219,20 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 48
   %i.o = load atomic i64, ptr %i.n monotonic, align 8
   %.not = icmp eq i64 %i.o, 0
-  br i1 %.not, label %.critedge, label %bb.c
+  br i1 %.not, label %.critedge.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = add nuw nsw i64 %.0912, 1                ; 3 uses
-  %1 = icmp ult i64 %i.p, %i.j
-  br i1 %1, label %bb.b, label %.critedge, !llvm.loop !233
+  %i.p = add i64 %.0912, 1                        ; 2 uses
+  %exitcond.not = icmp eq i64 %i.p, %i.j
+  br i1 %exitcond.not, label %.critedge.loopexit, label %bb.b, !llvm.loop !233
 
-.critedge:                                        ; preds = %bb.b, %bb.c, %bb.a
-  %.09.lcssa = phi i64 [ %i.f, %bb.a ], [ %i.p, %bb.c ], [ %.0912, %bb.b ]
+.critedge.loopexit:                               ; preds = %bb.c, %bb.b
+  %.09.lcssa.ph = phi i64 [ %.0912, %bb.b ], [ %i.j, %bb.c ]
+  %1 = tail call i64 @llvm.umax.i64(i64 %.09.lcssa.ph, i64 1)
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %bb.a
+  %.09.lcssa = phi i64 [ %i.f, %bb.a ], [ %1, %.critedge.loopexit ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 136
   br label %bb.e
 

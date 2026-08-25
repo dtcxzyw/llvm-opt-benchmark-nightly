@@ -204,8 +204,8 @@ bb.ao:                                            ; preds = %bb.c
 
 bb.ap:                                            ; preds = %.lr.ph.preheader.i72
   %i.db = getelementptr inbounds nuw i8, ptr %spec.select.i69, i64 1 ; 2 uses
-  %4 = icmp ult ptr %i.db, %1
-  br i1 %4, label %.lr.ph.i74, label %._crit_edge.i
+  %exitcond.peel.not.i = icmp eq ptr %i.db, %1
+  br i1 %exitcond.peel.not.i, label %._crit_edge.i, label %.lr.ph.i74
 
 .lr.ph.i74:                                       ; preds = %bb.ap, %bb.aq
   %.13857.i = phi ptr [ %i.de, %bb.aq ], [ %i.db, %bb.ap ] ; 3 uses
@@ -216,8 +216,8 @@ bb.ap:                                            ; preds = %.lr.ph.preheader.i7
 
 bb.aq:                                            ; preds = %.lr.ph.i74
   %i.de = getelementptr inbounds nuw i8, ptr %.13857.i, i64 1 ; 2 uses
-  %5 = icmp ult ptr %i.de, %1
-  br i1 %5, label %.lr.ph.i74, label %._crit_edge.i, !llvm.loop !36
+  %exitcond.not.i74 = icmp eq ptr %i.de, %1
+  br i1 %exitcond.not.i74, label %._crit_edge.i, label %.lr.ph.i74, !llvm.loop !36
 
 ._crit_edge.i:                                    ; preds = %bb.aq, %.lr.ph.i74, %bb.ap, %.lr.ph.preheader.i72, %bb.ao
   %.138.lcssa.i = phi ptr [ %spec.select.i69, %bb.ao ], [ %spec.select.i69, %.lr.ph.preheader.i72 ], [ %scevgep.i73, %bb.ap ], [ %.13857.i, %.lr.ph.i74 ], [ %scevgep.i73, %bb.aq ] ; 6 uses
@@ -244,8 +244,8 @@ bb.ar:                                            ; preds = %._crit_edge.i
 
 bb.as:                                            ; preds = %.lr.ph66.preheader.i
   %i.dm = getelementptr inbounds nuw i8, ptr %spec.select50.i, i64 1 ; 2 uses
-  %6 = icmp ult ptr %i.dm, %1
-  br i1 %6, label %.lr.ph66.i, label %._crit_edge67.i
+  %exitcond85.peel.not.i = icmp eq ptr %i.dm, %1
+  br i1 %exitcond85.peel.not.i, label %._crit_edge67.i, label %.lr.ph66.i
 
 .lr.ph66.i:                                       ; preds = %bb.as, %bb.at
   %.34063.i = phi ptr [ %i.dp, %bb.at ], [ %i.dm, %bb.as ] ; 3 uses
@@ -256,8 +256,8 @@ bb.as:                                            ; preds = %.lr.ph66.preheader.
 
 bb.at:                                            ; preds = %.lr.ph66.i
   %i.dp = getelementptr inbounds nuw i8, ptr %.34063.i, i64 1 ; 2 uses
-  %7 = icmp ult ptr %i.dp, %1
-  br i1 %7, label %.lr.ph66.i, label %._crit_edge67.i, !llvm.loop !38
+  %exitcond85.not.i = icmp eq ptr %i.dp, %1
+  br i1 %exitcond85.not.i, label %._crit_edge67.i, label %.lr.ph66.i, !llvm.loop !38
 
 ._crit_edge67.i:                                  ; preds = %bb.at, %.lr.ph66.i, %bb.as, %.lr.ph66.preheader.i, %bb.ar
   %.340.lcssa.i = phi ptr [ %spec.select50.i, %bb.ar ], [ %spec.select50.i, %.lr.ph66.preheader.i ], [ %scevgep84.i, %bb.as ], [ %.34063.i, %.lr.ph66.i ], [ %scevgep84.i, %bb.at ] ; 6 uses

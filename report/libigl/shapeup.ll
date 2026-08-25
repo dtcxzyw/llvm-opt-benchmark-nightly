@@ -205,8 +205,8 @@ bb.a:
   %i.cm = call double @llvm.fmuladd.f64(double %7, double %i.cl, double %i.ck)
   store double %i.cm, ptr %i.cj, align 8, !tbaa !35
   %i.cn = add nsw i64 %.0230825.us.us, 1          ; 2 uses
-  %13 = icmp slt i64 %i.cn, %4
-  br i1 %13, label %.lr.ph817.us.us, label %._crit_edge827.split.us.us, !llvm.loop !566
+  %exitcond891.not = icmp eq i64 %i.cn, %4
+  br i1 %exitcond891.not, label %._crit_edge827.split.us.us, label %.lr.ph817.us.us, !llvm.loop !566
 
 ._crit_edge827.split.us.us:                       ; preds = %._crit_edge818.us.us
   %i.co = add nuw nsw i64 %.0231828.us, 4         ; 2 uses
@@ -609,8 +609,8 @@ bb.f:                                             ; preds = %bb.f, %.preheader.p
   %i.xk = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.xj)
   store double %i.xk, ptr %gep847.prol, align 8, !tbaa !35
   %i.xl = add nsw i64 %.0226843.prol, 1           ; 2 uses
-  %14 = icmp slt i64 %i.xl, %4
-  br i1 %14, label %bb.f, label %._crit_edge845.split.prol, !llvm.loop !625
+  %exitcond892.not.prol = icmp eq i64 %i.xl, %4
+  br i1 %exitcond892.not.prol, label %._crit_edge845.split.prol, label %bb.f, !llvm.loop !625
 
 ._crit_edge845.split.prol:                        ; preds = %bb.f
   %i.xm = or disjoint i64 %i.d, 1
@@ -711,8 +711,8 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   %i.zc = call double @llvm.fmuladd.f64(double %7, double %.lcssa, double %i.zb)
   store double %i.zc, ptr %gep847.us.us, align 8, !tbaa !35
   %i.zd = add nsw i64 %.0226843.us.us, 1          ; 2 uses
-  %15 = icmp slt i64 %i.zd, %4
-  br i1 %15, label %.lr.ph836.us.us, label %._crit_edge845.split.us.us, !llvm.loop !625
+  %exitcond895.not = icmp eq i64 %i.zd, %4
+  br i1 %exitcond895.not, label %._crit_edge845.split.us.us, label %.lr.ph836.us.us, !llvm.loop !625
 
 ._crit_edge845.split.us.us:                       ; preds = %._crit_edge837.us.us
   %i.ze = add nsw i64 %.0227848.us, 1             ; 2 uses
@@ -747,8 +747,8 @@ bb.h:                                             ; preds = %.preheader699, %bb.
   %i.zu = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.zt)
   store double %i.zu, ptr %i.zs, align 8, !tbaa !35
   %i.zv = add nsw i64 %.0230825, 1                ; 2 uses
-  %16 = icmp slt i64 %i.zv, %4
-  br i1 %16, label %bb.h, label %._crit_edge827.split, !llvm.loop !566
+  %exitcond889.not = icmp eq i64 %i.zv, %4
+  br i1 %exitcond889.not, label %._crit_edge827.split, label %bb.h, !llvm.loop !566
 
 .preheader:                                       ; preds = %.preheader.prol.loopexit, %._crit_edge845.split.1
   %.0227848 = phi i64 [ %i.aad, %._crit_edge845.split.1 ], [ %.0227848.unr, %.preheader.prol.loopexit ] ; 3 uses
@@ -772,8 +772,8 @@ bb.i:                                             ; preds = %bb.i, %._crit_edge8
   %i.aab = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.aaa)
   store double %i.aab, ptr %gep847.1, align 8, !tbaa !35
   %i.aac = add nsw i64 %.0226843.1, 1             ; 2 uses
-  %17 = icmp slt i64 %i.aac, %4
-  br i1 %17, label %bb.i, label %._crit_edge845.split.1, !llvm.loop !625
+  %exitcond892.not.1 = icmp eq i64 %i.aac, %4
+  br i1 %exitcond892.not.1, label %._crit_edge845.split.1, label %bb.i, !llvm.loop !625
 
 ._crit_edge845.split.1:                           ; preds = %bb.i
   %i.aad = add nsw i64 %.0227848, 2               ; 2 uses
@@ -790,8 +790,8 @@ bb.j:                                             ; preds = %.preheader, %bb.j
   %i.aag = call double @llvm.fmuladd.f64(double %7, double 0.000000e+00, double %i.aaf)
   store double %i.aag, ptr %gep847, align 8, !tbaa !35
   %i.aah = add nsw i64 %.0226843, 1               ; 2 uses
-  %18 = icmp slt i64 %i.aah, %4
-  br i1 %18, label %bb.j, label %._crit_edge845.split, !llvm.loop !625
+  %exitcond892.not = icmp eq i64 %i.aah, %4
+  br i1 %exitcond892.not, label %._crit_edge845.split, label %bb.j, !llvm.loop !625
 
 .loopexit:                                        ; preds = %.preheader.prol.loopexit, %._crit_edge845.split.1, %._crit_edge845.split.us.us, %.preheader698, %._crit_edge809
   ret void

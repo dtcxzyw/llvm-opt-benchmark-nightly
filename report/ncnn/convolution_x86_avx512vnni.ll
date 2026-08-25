@@ -64,7 +64,7 @@ bb.a:
   store i32 %i.z, ptr %i.e, align 4, !tbaa !9
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !17
-  %i.ac = mul nsw i32 %i.ab, %i.z                 ; 6 uses
+  %i.ac = mul i32 %i.ab, %i.z                     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #4
   %i.ad = mul nsw i32 %4, %3                      ; 4 uses
   store i32 %i.ad, ptr %i.f, align 4, !tbaa !9
@@ -467,8 +467,8 @@ vec.epilog.scalar.ph11452:                        ; preds = %vec.epilog.scalar.p
 
 ._crit_edge9577:                                  ; preds = %._crit_edge9567, %.preheader7702
   %indvars.iv.next10561 = add nsw i64 %indvars.iv10560, 1 ; 2 uses
-  %10 = icmp slt i64 %indvars.iv.next10561, %i.dol
-  br i1 %10, label %.noexc, label %._crit_edge9579, !llvm.loop !357
+  %exitcond10564.not = icmp eq i64 %indvars.iv.next10561, %i.dol
+  br i1 %exitcond10564.not, label %._crit_edge9579, label %.noexc, !llvm.loop !357
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -871,8 +871,8 @@ bb.cg:                                            ; preds = %bb.cf, %bb.by
   %i.xe = load ptr, ptr %1, align 8, !tbaa !32
   %i.xf = sext i32 %i.wv to i64                   ; 3 uses
   %i.xg = sext i32 %i.wh to i64
-  %i.xh = sext i32 %5 to i64
-  %i.xi = sext i32 %i.ww to i64
+  %i.xh = sext i32 %i.ww to i64
+  %i.xi = sext i32 %5 to i64
   %wide.trip.count483 = zext nneg i32 %i.wj to i64
   %invariant.op530 = add nsw i64 %i.xf, -1
   %invariant.op531 = add nsw i64 %i.xf, -2
@@ -881,7 +881,7 @@ bb.cg:                                            ; preds = %bb.cf, %bb.by
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us440, %.lr.ph436.split.us
   %indvars.iv485 = phi i64 [ %indvars.iv.next486, %._crit_edge.us440 ], [ %i.xg, %.lr.ph436.split.us ] ; 3 uses
-  %i.xj = add nsw i64 %indvars.iv485, %i.xi
+  %i.xj = add nsw i64 %indvars.iv485, %i.xh
   %.reass442 = mul i64 %factor.op.mul441, %i.xj
   %i.xk = getelementptr inbounds nuw i8, ptr %i.xa, i64 %.reass442
   %i.xl = trunc nsw i64 %indvars.iv485 to i32
@@ -1155,8 +1155,8 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg, %bb.
 
 ._crit_edge.us440:                                ; preds = %bb.di
   %indvars.iv.next486 = add nsw i64 %indvars.iv485, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next486, %i.xh
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge437, !llvm.loop !567
+  %exitcond489.not = icmp eq i64 %indvars.iv.next486, %i.xi
+  br i1 %exitcond489.not, label %._crit_edge437, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !567
 
 ._crit_edge437:                                   ; preds = %._crit_edge.us440, %.lr.ph436, %._crit_edge416
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #4
@@ -1559,8 +1559,8 @@ bb.em:                                            ; preds = %bb.el
   %i.aly = load ptr, ptr %1, align 8, !tbaa !32
   %i.alz = sext i32 %i.alp to i64                 ; 5 uses
   %i.ama = sext i32 %i.akx to i64
-  %i.amb = sext i32 %5 to i64
-  %i.amc = sext i32 %i.alq to i64
+  %i.amb = sext i32 %i.alq to i64
+  %i.amc = sext i32 %5 to i64
   %wide.trip.count726 = zext nneg i32 %i.akz to i64
   %invariant.op778 = add nsw i64 %i.alz, -1
   %invariant.op779 = add nsw i64 %i.alz, -2
@@ -1571,7 +1571,7 @@ bb.em:                                            ; preds = %bb.el
 
 _ZN4ncnn3MatD2Ev.exit.lr.ph.us:                   ; preds = %._crit_edge.us683, %.lr.ph679.split.us
   %indvars.iv728 = phi i64 [ %indvars.iv.next729, %._crit_edge.us683 ], [ %i.ama, %.lr.ph679.split.us ] ; 3 uses
-  %i.amd = add nsw i64 %indvars.iv728, %i.amc
+  %i.amd = add nsw i64 %indvars.iv728, %i.amb
   %.reass685 = mul i64 %factor.op.mul684, %i.amd
   %i.ame = getelementptr inbounds nuw i8, ptr %i.alu, i64 %.reass685
   %i.amf = trunc nsw i64 %indvars.iv728 to i32
@@ -1974,8 +1974,8 @@ begin_hunk_4_@_ZN4ncnnL46conv3x3s1_winograd43_transform_input_tile_int8ERKNS_3Ma
 
 ._crit_edge.us683:                                ; preds = %bb.ha
   %indvars.iv.next729 = add nsw i64 %indvars.iv728, 1 ; 2 uses
-  %7 = icmp slt i64 %indvars.iv.next729, %i.amb
-  br i1 %7, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, label %._crit_edge680, !llvm.loop !780
+  %exitcond732.not = icmp eq i64 %indvars.iv.next729, %i.amc
+  br i1 %exitcond732.not, label %._crit_edge680, label %_ZN4ncnn3MatD2Ev.exit.lr.ph.us, !llvm.loop !780
 
 ._crit_edge680:                                   ; preds = %._crit_edge.us683, %.lr.ph679, %._crit_edge657
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #4
