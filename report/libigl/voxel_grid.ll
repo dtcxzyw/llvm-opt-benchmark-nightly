@@ -205,11 +205,11 @@ define weak_odr dso_local void @_ZN3igl10voxel_gridIN5Eigen6MatrixIdLin1ELi3ELi1
   store <2 x double> <double f0x7FEFFFFFFFFFFFFF, double f0xFFEFFFFFFFFFFFFF>, ptr %.07.i.i.i.i.ptr.2.i.i.i.i.i.i.i.i.i.i, align 16, !tbaa !9
   %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i = getelementptr inbounds nuw i8, ptr %6, i64 32
   store <2 x double> splat (double f0xFFEFFFFFFFFFFFFF), ptr %.07.i.i.i.i.ptr.1.i.i.i.i.i.i.i.i1.i.i, align 16, !tbaa !9
+  %.sroa.718.24.vec.insert.i.i.i.i.i.i = insertelement <2 x double> poison, double %1, i64 0
   %.pre = load ptr, ptr %0, align 8, !tbaa !47    ; 10 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.pre88 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !49 ; 11 uses
-  %7 = insertelement <2 x double> poison, double %1, i64 0
-  %i.a = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.a = shufflevector <2 x double> %.sroa.718.24.vec.insert.i.i.i.i.i.i, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.b = icmp eq i64 %.pre88, 0                   ; 2 uses
   %i.c = add i64 %.pre88, -1                      ; 7 uses
   %i.d = and i64 %i.c, -4                         ; 2 uses
@@ -612,9 +612,8 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   %i.gy = shufflevector <1 x double> %i.ca, <1 x double> poison, <2 x i32> zeroinitializer
   %i.gz = fdiv <2 x double> %i.gx, %i.gy
   %i.ha = getelementptr inbounds nuw i8, ptr %i.bq, i64 80
-  %1 = load double, ptr %i.ha, align 8, !tbaa !9
-  %2 = insertelement <2 x double> poison, double %1, i64 0
-  %i.hb = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer
+  %1 = load <1 x double>, ptr %i.ha, align 8
+  %i.hb = shufflevector <1 x double> %1, <1 x double> poison, <2 x i32> zeroinitializer
   %i.hc = fdiv <2 x double> %.025.i.i.i.i.i, %i.hb
   %i.hd = fsub <2 x double> %i.gz, %i.hc
   store <2 x double> %i.hd, ptr %i.gw, align 16, !tbaa !26
@@ -738,9 +737,8 @@ _ZN5Eigen8internal31generic_dense_assignment_kernelINS0_9evaluatorINS_6MatrixIdL
   %i.jv = shufflevector <1 x double> %i.hs, <1 x double> poison, <2 x i32> zeroinitializer
   %i.jw = fdiv <2 x double> %i.ju, %i.jv
   %i.jx = getelementptr inbounds nuw i8, ptr %i.hi, i64 80
-  %3 = load double, ptr %i.jx, align 8, !tbaa !9
-  %4 = insertelement <2 x double> poison, double %3, i64 0
-  %i.jy = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %2 = load <1 x double>, ptr %i.jx, align 8
+  %i.jy = shufflevector <1 x double> %2, <1 x double> poison, <2 x i32> zeroinitializer
   %i.jz = fdiv <2 x double> %.025.i.i.i.i.i.1, %i.jy
   %i.ka = fsub <2 x double> %i.jw, %i.jz
   store <2 x double> %i.ka, ptr %i.jt, align 16, !tbaa !26

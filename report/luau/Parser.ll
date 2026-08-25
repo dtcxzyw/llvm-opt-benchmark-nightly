@@ -205,10 +205,9 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ZN4Luau6Parser14parseIndexNameEPKcRKNS_8PositionE.exit
 
 bb.ab:                                            ; preds = %bb.z, %bb.y
-  %.sroa.0.0.copyload.i64 = load i64, ptr %i.k, align 4, !noalias !1035
+  %28 = load <2 x i64>, ptr %i.k, align 4
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.cq = load i64, ptr %i.cp, align 8, !tbaa !45, !noalias !1035
-  %28 = insertelement <2 x i64> poison, i64 %.sroa.0.0.copyload.i64, i64 0
   %i.cr = shufflevector <2 x i64> %28, <2 x i64> poison, <2 x i32> zeroinitializer
   br label %_ZN4Luau6Parser14parseIndexNameEPKcRKNS_8PositionE.exit
 

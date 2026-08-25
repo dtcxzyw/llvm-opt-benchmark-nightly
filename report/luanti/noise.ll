@@ -204,24 +204,22 @@ vector.memcheck173:                               ; preds = %.lr.ph48
 
 vector.ph181:                                     ; preds = %vector.memcheck173
   %n.vec182 = and i64 %i.f, 4294967288            ; 3 uses
-  %4 = load float, ptr %i.gx, align 4, !tbaa !145, !alias.scope !146
-  %broadcast.splatinsert187 = insertelement <4 x float> poison, float %4, i64 0
-  %broadcast.splat188 = shufflevector <4 x float> %broadcast.splatinsert187, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %5 = load float, ptr %0, align 8, !tbaa !102, !alias.scope !146
-  %broadcast.splatinsert189 = insertelement <4 x float> poison, float %5, i64 0
-  %broadcast.splat190 = shufflevector <4 x float> %broadcast.splatinsert189, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %4 = load <4 x float>, ptr %i.gx, align 4
+  %broadcast.splat188 = shufflevector <4 x float> %4, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %5 = load <4 x float>, ptr %0, align 8
+  %broadcast.splat190 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body183
 
 vector.body183:                                   ; preds = %vector.body183, %vector.ph181
   %index184 = phi i64 [ 0, %vector.ph181 ], [ %index.next191, %vector.body183 ] ; 2 uses
   %i.gz = getelementptr inbounds nuw [4 x i8], ptr %i.gw, i64 %index184 ; 3 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 16 ; 2 uses
-  %wide.load185 = load <4 x float>, ptr %i.gz, align 4, !tbaa !29, !alias.scope !149, !noalias !146
-  %wide.load186 = load <4 x float>, ptr %i.ha, align 4, !tbaa !29, !alias.scope !149, !noalias !146
+  %wide.load185 = load <4 x float>, ptr %i.gz, align 4, !tbaa !29, !alias.scope !146, !noalias !149
+  %wide.load186 = load <4 x float>, ptr %i.ha, align 4, !tbaa !29, !alias.scope !146, !noalias !149
   %i.hb = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load185, <4 x float> %broadcast.splat188, <4 x float> %broadcast.splat190)
   %i.hc = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load186, <4 x float> %broadcast.splat188, <4 x float> %broadcast.splat190)
-  store <4 x float> %i.hb, ptr %i.gz, align 4, !tbaa !29, !alias.scope !149, !noalias !146
-  store <4 x float> %i.hc, ptr %i.ha, align 4, !tbaa !29, !alias.scope !149, !noalias !146
+  store <4 x float> %i.hb, ptr %i.gz, align 4, !tbaa !29, !alias.scope !146, !noalias !149
+  store <4 x float> %i.hc, ptr %i.ha, align 4, !tbaa !29, !alias.scope !146, !noalias !149
   %index.next191 = add nuw i64 %index184, 8       ; 2 uses
   %i.hd = icmp eq i64 %index.next191, %n.vec182
   br i1 %i.hd, label %middle.block192, label %vector.body183, !llvm.loop !151
@@ -624,24 +622,22 @@ vector.memcheck177:                               ; preds = %.lr.ph52
 
 vector.ph185:                                     ; preds = %vector.memcheck177
   %n.vec186 = and i64 %i.i, 4294967288            ; 3 uses
-  %5 = load float, ptr %i.hh, align 4, !tbaa !145, !alias.scope !237
-  %broadcast.splatinsert191 = insertelement <4 x float> poison, float %5, i64 0
-  %broadcast.splat192 = shufflevector <4 x float> %broadcast.splatinsert191, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
-  %6 = load float, ptr %0, align 8, !tbaa !102, !alias.scope !237
-  %broadcast.splatinsert193 = insertelement <4 x float> poison, float %6, i64 0
-  %broadcast.splat194 = shufflevector <4 x float> %broadcast.splatinsert193, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %5 = load <4 x float>, ptr %i.hh, align 4
+  %broadcast.splat192 = shufflevector <4 x float> %5, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
+  %6 = load <4 x float>, ptr %0, align 8
+  %broadcast.splat194 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body187
 
 vector.body187:                                   ; preds = %vector.body187, %vector.ph185
   %index188 = phi i64 [ 0, %vector.ph185 ], [ %index.next195, %vector.body187 ] ; 2 uses
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %index188 ; 3 uses
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 16 ; 2 uses
-  %wide.load189 = load <4 x float>, ptr %i.hj, align 4, !tbaa !29, !alias.scope !240, !noalias !237
-  %wide.load190 = load <4 x float>, ptr %i.hk, align 4, !tbaa !29, !alias.scope !240, !noalias !237
+  %wide.load189 = load <4 x float>, ptr %i.hj, align 4, !tbaa !29, !alias.scope !237, !noalias !240
+  %wide.load190 = load <4 x float>, ptr %i.hk, align 4, !tbaa !29, !alias.scope !237, !noalias !240
   %i.hl = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load189, <4 x float> %broadcast.splat192, <4 x float> %broadcast.splat194)
   %i.hm = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %wide.load190, <4 x float> %broadcast.splat192, <4 x float> %broadcast.splat194)
-  store <4 x float> %i.hl, ptr %i.hj, align 4, !tbaa !29, !alias.scope !240, !noalias !237
-  store <4 x float> %i.hm, ptr %i.hk, align 4, !tbaa !29, !alias.scope !240, !noalias !237
+  store <4 x float> %i.hl, ptr %i.hj, align 4, !tbaa !29, !alias.scope !237, !noalias !240
+  store <4 x float> %i.hm, ptr %i.hk, align 4, !tbaa !29, !alias.scope !237, !noalias !240
   %index.next195 = add nuw i64 %index188, 8       ; 2 uses
   %i.hn = icmp eq i64 %index.next195, %n.vec186
   br i1 %i.hn, label %middle.block196, label %vector.body187, !llvm.loop !242

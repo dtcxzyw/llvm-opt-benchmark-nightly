@@ -204,9 +204,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
   store i32 %i.x, ptr %i.v, align 8, !tbaa !1613
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 204
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 204
-  %1 = load <2 x i8>, ptr %i.z, align 4, !tbaa !562
-  %2 = shufflevector <2 x i8> %1, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.aa = shufflevector <4 x i8> %2, <4 x i8> <i8 poison, i8 poison, i8 0, i8 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %1 = load <4 x i8>, ptr %i.z, align 4
+  %i.aa = shufflevector <4 x i8> %1, <4 x i8> <i8 poison, i8 poison, i8 0, i8 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i8> %i.aa, ptr %i.y, align 4, !tbaa !562
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 208
   store ptr null, ptr %i.ab, align 8, !tbaa !398
@@ -349,9 +348,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
   store i32 %i.x, ptr %i.v, align 8, !tbaa !1613
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 204
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 204
-  %1 = load <2 x i8>, ptr %i.z, align 4, !tbaa !562
-  %2 = shufflevector <2 x i8> %1, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.aa = shufflevector <4 x i8> %2, <4 x i8> <i8 poison, i8 poison, i8 0, i8 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
+  %1 = load <4 x i8>, ptr %i.z, align 4
+  %i.aa = shufflevector <4 x i8> %1, <4 x i8> <i8 poison, i8 poison, i8 0, i8 0>, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
   store <4 x i8> %i.aa, ptr %i.y, align 4, !tbaa !562
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 208
   store ptr null, ptr %i.ab, align 8, !tbaa !398

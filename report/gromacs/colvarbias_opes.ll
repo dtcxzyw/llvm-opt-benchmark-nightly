@@ -204,17 +204,16 @@ vector.memcheck:                                  ; preds = %.lr.ph37
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.cq, -2                      ; 3 uses
-  %4 = load double, ptr %i.ch, align 8, !tbaa !205, !alias.scope !612
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %4, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer
+  %4 = load <2 x double>, ptr %i.ch, align 8
+  %broadcast.splat = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.cs = getelementptr inbounds nuw [8 x i8], ptr %i.cr, i64 %index ; 2 uses
-  %wide.load = load <2 x double>, ptr %i.cs, align 8, !tbaa !76, !alias.scope !615, !noalias !612
+  %wide.load = load <2 x double>, ptr %i.cs, align 8, !tbaa !76, !alias.scope !612, !noalias !615
   %i.ct = fdiv <2 x double> %wide.load, %broadcast.splat
-  store <2 x double> %i.ct, ptr %i.cs, align 8, !tbaa !76, !alias.scope !615, !noalias !612
+  store <2 x double> %i.ct, ptr %i.cs, align 8, !tbaa !76, !alias.scope !612, !noalias !615
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.cu = icmp eq i64 %index.next, %n.vec
   br i1 %i.cu, label %middle.block, label %vector.body, !llvm.loop !617
@@ -617,21 +616,20 @@ vector.memcheck:                                  ; preds = %.lr.ph1670
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ady, -4                     ; 3 uses
-  %89 = load double, ptr %i.adz, align 8, !tbaa !161, !alias.scope !696
-  %broadcast.splatinsert = insertelement <2 x double> poison, double %89, i64 0
-  %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %89 = load <2 x double>, ptr %i.adz, align 8
+  %broadcast.splat = shufflevector <2 x double> %89, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.aec = getelementptr inbounds nuw [8 x i8], ptr %i.aeb, i64 %index ; 3 uses
   %i.aed = getelementptr inbounds nuw i8, ptr %i.aec, i64 16 ; 2 uses
-  %wide.load = load <2 x double>, ptr %i.aec, align 8, !tbaa !76, !alias.scope !699, !noalias !696
-  %wide.load2464 = load <2 x double>, ptr %i.aed, align 8, !tbaa !76, !alias.scope !699, !noalias !696
+  %wide.load = load <2 x double>, ptr %i.aec, align 8, !tbaa !76, !alias.scope !696, !noalias !699
+  %wide.load2464 = load <2 x double>, ptr %i.aed, align 8, !tbaa !76, !alias.scope !696, !noalias !699
   %i.aee = fmul <2 x double> %broadcast.splat, %wide.load
   %i.aef = fmul <2 x double> %broadcast.splat, %wide.load2464
-  store <2 x double> %i.aee, ptr %i.aec, align 8, !tbaa !76, !alias.scope !699, !noalias !696
-  store <2 x double> %i.aef, ptr %i.aed, align 8, !tbaa !76, !alias.scope !699, !noalias !696
+  store <2 x double> %i.aee, ptr %i.aec, align 8, !tbaa !76, !alias.scope !696, !noalias !699
+  store <2 x double> %i.aef, ptr %i.aed, align 8, !tbaa !76, !alias.scope !696, !noalias !699
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aeg = icmp eq i64 %index.next, %n.vec
   br i1 %i.aeg, label %middle.block, label %vector.body, !llvm.loop !701

@@ -205,11 +205,10 @@ bb.cx:                                            ; preds = %bb.cw
   %i.qe = getelementptr inbounds nuw i8, ptr %0, i64 153104
   %i.qf = load i32, ptr %i.qe, align 8, !tbaa !2270
   %i.qg = getelementptr inbounds nuw i8, ptr %0, i64 153108
-  %2 = load <2 x i32>, ptr %i.qg, align 4, !tbaa !2270
+  %2 = load <4 x i32>, ptr %i.qg, align 4
   %i.qh = insertelement <4 x i32> poison, i32 %i.qb, i64 0
   %i.qi = insertelement <4 x i32> %i.qh, i32 %i.qf, i64 1
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.qj = shufflevector <4 x i32> %i.qi, <4 x i32> %3, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.qj = shufflevector <4 x i32> %i.qi, <4 x i32> %2, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.qk = lshr <4 x i32> %i.qj, splat (i32 2)
   store <4 x i32> %i.qk, ptr %i.qa, align 4, !tbaa !2270
   br label %.thread593.thread
@@ -612,11 +611,10 @@ bb.fl:                                            ; preds = %bb.fk
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   %i.aeh = getelementptr inbounds nuw i8, ptr %0, i64 170668
-  %4 = load i32, ptr %i.aeh, align 4, !tbaa !2286
+  %3 = load <4 x i32>, ptr %i.aeh, align 4
   %i.aei = getelementptr inbounds nuw i8, ptr %0, i64 154252
   %i.aej = load <4 x i32>, ptr %i.aei, align 4, !tbaa !2270
-  %5 = insertelement <4 x i32> poison, i32 %4, i64 0
-  %i.aek = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> zeroinitializer
+  %i.aek = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.ael = add <4 x i32> %i.aej, %i.aek
   store <4 x i32> %i.ael, ptr %i.b, align 16, !tbaa !2270
   %wide.trip.count811 = zext nneg i32 %i.aef to i64 ; 3 uses
@@ -680,7 +678,7 @@ vector.body975:                                   ; preds = %vector.body975, %.l
   %index.next981 = add nuw i64 %index976, 4       ; 2 uses
   %vec.ind.next982 = add nuw <4 x i64> %vec.ind977, splat (i64 4)
   %i.afh = icmp eq i64 %index.next981, %n.vec969
-  br i1 %i.afh, label %._crit_edge743, label %vector.body975, !llvm.loop !2287
+  br i1 %i.afh, label %._crit_edge743, label %vector.body975, !llvm.loop !2286
 
 .lr.ph737.1:                                      ; preds = %.lr.ph731
   %i.afi = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -902,7 +900,7 @@ bb.gk:                                            ; preds = %bb.gj
 
 bb.gl:                                            ; preds = %bb.gk
   %i.aia = getelementptr inbounds nuw i8, ptr %0, i64 1344
-  %i.aib = load i64, ptr %i.aia, align 8, !tbaa !2290
+  %i.aib = load i64, ptr %i.aia, align 8, !tbaa !2289
   %i.aic = icmp eq i64 %i.aib, 294
   br i1 %i.aic, label %bb.gm, label %bb.gn
 
@@ -954,10 +952,10 @@ bb.gs:                                            ; preds = %bb.gr
   %i.aiw = load <4 x i16>, ptr %i.aiv, align 4, !tbaa !2256
   %i.aix = add <4 x i16> %i.aiw, <i16 -4, i16 -4, i16 2, i16 2>
   store <4 x i16> %i.aix, ptr %i.aiv, align 4, !tbaa !2256
-  store i32 1, ptr %i.ad, align 8, !tbaa !2291
+  store i32 1, ptr %i.ad, align 8, !tbaa !2290
   %i.aiy = getelementptr inbounds nuw i8, ptr %0, i64 768432
   %i.aiz = load <2 x i64>, ptr %i.kx, align 8, !tbaa !2231
-  store <2 x i64> %i.aiz, ptr %i.aiy, align 8, !tbaa !2292
+  store <2 x i64> %i.aiz, ptr %i.aiy, align 8, !tbaa !2291
   store i64 ptrtoint (ptr @_ZN6LibRaw21pentax_4shot_load_rawEv to i64), ptr %i.kx, align 8, !tbaa !2231
   store i64 0, ptr %.elt409, align 8, !tbaa !2231
   br label %.thread626
@@ -1076,11 +1074,10 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg
   %i.akp = getelementptr inbounds nuw i8, ptr %0, i64 136676
   %i.akq = load i32, ptr %i.akp, align 4, !tbaa !2270
   %i.akr = getelementptr inbounds nuw i8, ptr %0, i64 136680
-  %6 = load <2 x i32>, ptr %i.akr, align 8, !tbaa !2270
+  %4 = load <4 x i32>, ptr %i.akr, align 8
   %i.aks = insertelement <4 x i32> poison, i32 %.pre884, i64 0
   %i.akt = insertelement <4 x i32> %i.aks, i32 %i.akq, i64 1
-  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.aku = shufflevector <4 x i32> %i.akt, <4 x i32> %7, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.aku = shufflevector <4 x i32> %i.akt, <4 x i32> %4, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.akv = lshr <4 x i32> %i.aku, splat (i32 2)
   store <4 x i32> %i.akv, ptr %i.ako, align 8, !tbaa !2270
   %i.akw = getelementptr inbounds nuw i8, ptr %0, i64 136688 ; 2 uses
@@ -1105,7 +1102,7 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg
   %i.ali = mul i32 %i.alh, %i.alg
   %i.alj = zext i32 %i.ali to i64
   %i.alk = icmp samesign ult i64 %indvars.iv.next828, %i.alj
-  br i1 %i.alk, label %.lr.ph746, label %.thread630, !llvm.loop !2293
+  br i1 %i.alk, label %.lr.ph746, label %.thread630, !llvm.loop !2292
 
 .loopexit695:                                     ; preds = %.thread626
   %i.all = icmp eq i64 %.unpack500, ptrtoint (ptr @_ZN6LibRaw18nikon_yuv_load_rawEv to i64)
@@ -1121,7 +1118,7 @@ vector.ph984:                                     ; preds = %.loopexit695
   store i32 0, ptr %i.alp, align 8, !tbaa !2226
   %i.alq = getelementptr inbounds nuw i8, ptr %0, i64 381832
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16420) %i.alo, i8 0, i64 16420, i1 false)
-  store i32 3, ptr %i.alq, align 8, !tbaa !2294
+  store i32 3, ptr %i.alq, align 8, !tbaa !2293
   %i.alr = getelementptr inbounds nuw i8, ptr %0, i64 540
   store i32 3, ptr %i.alr, align 4, !tbaa !2227
   br label %vector.body985
@@ -1150,7 +1147,7 @@ vector.body985:                                   ; preds = %vector.body985, %ve
   %index.next988 = add nuw i64 %index986, 16      ; 2 uses
   %vec.ind.next989 = add <16 x i32> %vec.ind987, splat (i32 16)
   %i.amj = icmp eq i64 %index.next988, 3072
-  br i1 %i.amj, label %scalar.ph, label %vector.body985, !llvm.loop !2295
+  br i1 %i.amj, label %scalar.ph, label %vector.body985, !llvm.loop !2294
 
 scalar.ph:                                        ; preds = %vector.body985
   %i.amk = getelementptr inbounds nuw i8, ptr %0, i64 11744
@@ -1227,7 +1224,7 @@ bb.hk:                                            ; preds = %bb.hj
   %i.anw = mul i32 %i.anv, %i.anu
   %i.anx = zext i32 %i.anw to i64
   %i.any = icmp samesign ult i64 %indvars.iv.next847, %i.anx
-  br i1 %i.any, label %.lr.ph752, label %.loopexit691, !llvm.loop !2296
+  br i1 %i.any, label %.lr.ph752, label %.loopexit691, !llvm.loop !2295
 
 .loopexit691:                                     ; preds = %.lr.ph752, %.preheader690, %.thread630, %bb.hk, %bb.hj
   %i.anz = icmp eq i64 %.unpack513, ptrtoint (ptr @_ZN6LibRaw15nikon_load_srawEv to i64)
@@ -1236,7 +1233,7 @@ bb.hk:                                            ; preds = %bb.hj
 
 bb.hl:                                            ; preds = %.loopexit691
   %i.aob = getelementptr inbounds nuw i8, ptr %0, i64 192600
-  store i32 9, ptr %i.aob, align 8, !tbaa !2297
+  store i32 9, ptr %i.aob, align 8, !tbaa !2296
   br label %bb.hv
 
 bb.hm:                                            ; preds = %.loopexit691
@@ -1259,18 +1256,18 @@ bb.ho:                                            ; preds = %bb.hn
 
 .thread634:                                       ; preds = %bb.ho
   %i.aoh = getelementptr inbounds nuw i8, ptr %0, i64 192600
-  store i32 3, ptr %i.aoh, align 8, !tbaa !2297
+  store i32 3, ptr %i.aoh, align 8, !tbaa !2296
   br label %bb.ia
 
 bb.hp:                                            ; preds = %bb.hm
   %i.aoi = getelementptr inbounds nuw i8, ptr %0, i64 2196
-  %i.aoj = load i32, ptr %i.aoi, align 4, !tbaa !2298
+  %i.aoj = load i32, ptr %i.aoi, align 4, !tbaa !2297
   %i.aok = icmp eq i32 %i.aoj, 1
   br i1 %i.aok, label %.thread633, label %.thread632
 
 .thread633:                                       ; preds = %bb.hp
   %i.aol = getelementptr inbounds nuw i8, ptr %0, i64 192600
-  store i32 5, ptr %i.aol, align 8, !tbaa !2297
+  store i32 5, ptr %i.aol, align 8, !tbaa !2296
   br label %bb.hw
 
 .thread632:                                       ; preds = %bb.hm, %bb.hn, %bb.ho, %bb.hp
@@ -1278,14 +1275,14 @@ bb.hp:                                            ; preds = %bb.hm
 
 bb.hq:                                            ; preds = %.thread632
   %i.aom = getelementptr inbounds nuw i8, ptr %0, i64 4129
-  %i.aon = load i8, ptr %i.aom, align 1, !tbaa !2299
+  %i.aon = load i8, ptr %i.aom, align 1, !tbaa !2298
   %i.aoo = and i8 %i.aon, 1
   %.not521 = icmp eq i8 %i.aoo, 0
   br i1 %.not521, label %bb.hs, label %bb.hr
 
 bb.hr:                                            ; preds = %bb.hq
   %i.aop = getelementptr inbounds nuw i8, ptr %0, i64 192600
-  store i32 17, ptr %i.aop, align 8, !tbaa !2297
+  store i32 17, ptr %i.aop, align 8, !tbaa !2296
   br label %bb.hv
 
 bb.hs:                                            ; preds = %bb.hq, %.thread632
@@ -1296,11 +1293,11 @@ bb.hs:                                            ; preds = %bb.hq, %.thread632
   br i1 %or.cond663, label %bb.ht, label %bb.hu
 
 bb.ht:                                            ; preds = %bb.hs
-  store i32 33, ptr %i.aos, align 8, !tbaa !2297
+  store i32 33, ptr %i.aos, align 8, !tbaa !2296
   br label %bb.hv
 
 bb.hu:                                            ; preds = %bb.hs
-  store i32 0, ptr %i.aos, align 8, !tbaa !2297
+  store i32 0, ptr %i.aos, align 8, !tbaa !2296
   br label %bb.hv
 
 bb.hv:                                            ; preds = %bb.hr, %bb.hu, %bb.ht, %bb.hl
@@ -1339,7 +1336,7 @@ bb.ia:                                            ; preds = %.thread634, %bb.hz,
 
 bb.ib:                                            ; preds = %bb.ia
   %i.aph = getelementptr inbounds nuw i8, ptr %0, i64 1344
-  %i.api = load i64, ptr %i.aph, align 8, !tbaa !2290
+  %i.api = load i64, ptr %i.aph, align 8, !tbaa !2289
   %i.apj = icmp eq i64 %i.api, 77012
   br i1 %i.apj, label %vector.body993, label %.loopexit
 
@@ -1499,7 +1496,7 @@ bb.ik:                                            ; preds = %bb.ij
 bb.il:                                            ; preds = %bb.ik, %bb.ij
   %indvars.iv.next854.3 = add nuw nsw i64 %indvars.iv853, 4 ; 2 uses
   %exitcond856.not.3 = icmp eq i64 %indvars.iv.next854.3, 64
-  br i1 %exitcond856.not.3, label %.preheader687, label %bb.id, !llvm.loop !2300
+  br i1 %exitcond856.not.3, label %.preheader687, label %bb.id, !llvm.loop !2299
 
 .loopexit:                                        ; preds = %.preheader687, %bb.ib, %bb.ia
   %i.asn = icmp eq i64 %.unpack513, ptrtoint (ptr @_ZN6LibRaw18panasonic_load_rawEv to i64)
@@ -1562,13 +1559,13 @@ bb.iq:                                            ; preds = %bb.ip
 
 bb.ir:                                            ; preds = %.preheader, %bb.io, %bb.in, %bb.im, %.loopexit
   %i.atn = getelementptr inbounds nuw i8, ptr %0, i64 153872 ; 4 uses
-  %i.ato = load i32, ptr %i.atn, align 8, !tbaa !2301 ; 2 uses
+  %i.ato = load i32, ptr %i.atn, align 8, !tbaa !2300 ; 2 uses
   %.not535 = icmp eq i32 %i.ato, 0
   br i1 %.not535, label %bb.jg, label %bb.is
 
 bb.is:                                            ; preds = %bb.ir
   %i.atp = getelementptr inbounds nuw i8, ptr %0, i64 153864 ; 4 uses
-  %i.atq = load ptr, ptr %i.atp, align 8, !tbaa !2302 ; 2 uses
+  %i.atq = load ptr, ptr %i.atp, align 8, !tbaa !2301 ; 2 uses
   %.not536 = icmp eq ptr %i.atq, null
   br i1 %.not536, label %bb.iv, label %bb.it
 
@@ -1577,7 +1574,7 @@ bb.it:                                            ; preds = %bb.is
           to label %._crit_edge887 unwind label %bb.iu
 
 ._crit_edge887:                                   ; preds = %bb.it
-  %.pre888 = load i32, ptr %i.atn, align 8, !tbaa !2301
+  %.pre888 = load i32, ptr %i.atn, align 8, !tbaa !2300
   br label %bb.iv
 
 bb.iu:                                            ; preds = %bb.it
@@ -1600,13 +1597,13 @@ bb.iv:                                            ; preds = %._crit_edge887, %bb
 bb.iw:                                            ; preds = %bb.iv
   %i.aty = zext i32 %i.ats to i64
   %i.atz = getelementptr inbounds nuw i8, ptr %0, i64 381624 ; 3 uses
-  %i.aua = load i64, ptr %i.atz, align 8, !tbaa !2303
+  %i.aua = load i64, ptr %i.atz, align 8, !tbaa !2302
   %i.aub = sub nsw i64 %i.atx, %i.aua
   %i.auc = icmp sgt i64 %i.aub, %i.aty
   br i1 %i.auc, label %bb.ix, label %bb.iy
 
 bb.ix:                                            ; preds = %bb.iw
-  %i.aud = load i32, ptr %i.atn, align 8, !tbaa !2301
+  %i.aud = load i32, ptr %i.atn, align 8, !tbaa !2300
   %i.aue = zext i32 %i.aud to i64
   br label %bb.ja
 
@@ -1619,7 +1616,7 @@ bb.iy:                                            ; preds = %bb.iw
           to label %bb.iz unwind label %bb.je, !call_target !2203
 
 bb.iz:                                            ; preds = %bb.iy
-  %i.auk = load i64, ptr %i.atz, align 8, !tbaa !2303
+  %i.auk = load i64, ptr %i.atz, align 8, !tbaa !2302
   %i.aul = sub nsw i64 %i.auj, %i.auk
   br label %bb.ja
 
@@ -1634,25 +1631,25 @@ bb.jb:                                            ; preds = %bb.ja
           to label %bb.jc unwind label %bb.je
 
 bb.jc:                                            ; preds = %bb.jb
-  store ptr %i.auo, ptr %i.atp, align 8, !tbaa !2302
+  store ptr %i.auo, ptr %i.atp, align 8, !tbaa !2301
   %i.aup = trunc nuw nsw i64 %i.aum to i32
-  store i32 %i.aup, ptr %i.atn, align 8, !tbaa !2301
+  store i32 %i.aup, ptr %i.atn, align 8, !tbaa !2300
   %i.auq = load ptr, ptr %i.z, align 8, !tbaa !2215 ; 2 uses
-  %i.aur = load i64, ptr %i.atz, align 8, !tbaa !2303
+  %i.aur = load i64, ptr %i.atz, align 8, !tbaa !2302
   %i.aus = load ptr, ptr %i.auq, align 8, !tbaa !11
   %i.aut = getelementptr inbounds nuw i8, ptr %i.aus, i64 32
   %i.auu = load ptr, ptr %i.aut, align 8
   %i.auv = invoke noundef i32 %i.auu(ptr noundef nonnull align 8 dereferenceable(8) %i.auq, i64 noundef %i.aur, i32 noundef 0)
-          to label %bb.jd unwind label %bb.je, !call_target !2304 ; 0 uses
+          to label %bb.jd unwind label %bb.je, !call_target !2303 ; 0 uses
 
 bb.jd:                                            ; preds = %bb.jc
   %i.auw = load ptr, ptr %i.z, align 8, !tbaa !2215 ; 2 uses
-  %i.aux = load ptr, ptr %i.atp, align 8, !tbaa !2302
+  %i.aux = load ptr, ptr %i.atp, align 8, !tbaa !2301
   %i.auy = load ptr, ptr %i.auw, align 8, !tbaa !11
   %i.auz = getelementptr inbounds nuw i8, ptr %i.auy, i64 24
   %i.ava = load ptr, ptr %i.auz, align 8
   %i.avb = invoke noundef i32 %i.ava(ptr noundef nonnull align 8 dereferenceable(8) %i.auw, ptr noundef %i.aux, i64 noundef %i.aum, i64 noundef 1)
-          to label %bb.jg unwind label %bb.je, !call_target !2307 ; 0 uses
+          to label %bb.jg unwind label %bb.je, !call_target !2306 ; 0 uses
 
 bb.je:                                            ; preds = %bb.jd, %bb.jc, %bb.jb, %bb.iy, %bb.iv
   %i.avc = landingpad { ptr, i32 }
@@ -1663,7 +1660,7 @@ bb.je:                                            ; preds = %bb.jd, %bb.jc, %bb.
   br label %bb.jh
 
 bb.jf:                                            ; preds = %bb.ja
-  store ptr null, ptr %i.atp, align 8, !tbaa !2302
+  store ptr null, ptr %i.atp, align 8, !tbaa !2301
   br label %bb.jg
 
 bb.jg:                                            ; preds = %bb.jf, %bb.jd, %bb.ir
@@ -1696,7 +1693,7 @@ bb.jk:                                            ; preds = %bb.jh
 
 bb.jl:                                            ; preds = %bb.jk
   %i.avk = tail call ptr @__cxa_begin_catch(ptr %.1317) #18
-  %i.avl = load i32, ptr %i.avk, align 4, !tbaa !2310
+  %i.avl = load i32, ptr %i.avk, align 4, !tbaa !2309
   switch i32 %i.avl, label %bb.jy [
     i32 11, label %bb.jq
     i32 1, label %bb.js
@@ -1789,9 +1786,9 @@ bb.ka:                                            ; preds = %bb.g, %bb.jg
 
 bb.kb:                                            ; preds = %bb.ka
   %i.avw = getelementptr inbounds nuw i8, ptr %0, i64 768400
-  store i64 ptrtoint (ptr @_ZN6LibRaw14write_ppm_tiffEv to i64), ptr %i.avw, align 8, !tbaa !2312
+  store i64 ptrtoint (ptr @_ZN6LibRaw14write_ppm_tiffEv to i64), ptr %i.avw, align 8, !tbaa !2311
   %.repack539 = getelementptr inbounds nuw i8, ptr %0, i64 768408
-  store i64 0, ptr %.repack539, align 8, !tbaa !2312
+  store i64 0, ptr %.repack539, align 8, !tbaa !2311
   %i.avx = getelementptr inbounds nuw i8, ptr %0, i64 768416
   %.unpack540 = load i64, ptr %i.avx, align 8, !tbaa !2231
   %.elt541 = getelementptr inbounds nuw i8, ptr %0, i64 768424
@@ -1818,41 +1815,41 @@ bb.kd:                                            ; preds = %bb.kc, %bb.kb
 .thread637:                                       ; preds = %bb.kd
   %i.awh = getelementptr inbounds nuw i8, ptr %0, i64 381656
   %i.awi = getelementptr inbounds nuw i8, ptr %0, i64 381668
-  store i16 0, ptr %i.awi, align 4, !tbaa !2313
+  store i16 0, ptr %i.awi, align 4, !tbaa !2312
   br label %bb.kk
 
 bb.ke:                                            ; preds = %bb.kd
   %i.awj = getelementptr inbounds nuw i8, ptr %0, i64 5376
-  %i.awk = load i32, ptr %i.awj, align 8, !tbaa !2314
+  %i.awk = load i32, ptr %i.awj, align 8, !tbaa !2313
   %.not544 = icmp eq i32 %i.awk, 0
   br i1 %.not544, label %bb.kf, label %.thread636
 
 bb.kf:                                            ; preds = %bb.ke
   %i.awl = getelementptr inbounds nuw i8, ptr %0, i64 5372
-  %i.awm = load float, ptr %i.awl, align 4, !tbaa !2315
+  %i.awm = load float, ptr %i.awl, align 4, !tbaa !2314
   %i.awn = fcmp reassoc nsz arcp contract afn une float %i.awm, 0.000000e+00
   br i1 %i.awn, label %.thread636, label %bb.kg
 
 bb.kg:                                            ; preds = %bb.kf
   %i.awo = getelementptr inbounds nuw i8, ptr %0, i64 5272
-  %i.awp = load double, ptr %i.awo, align 8, !tbaa !2316
+  %i.awp = load double, ptr %i.awo, align 8, !tbaa !2315
   %i.awq = fcmp reassoc nsz arcp contract afn une double %i.awp, 1.000000e+00
   br i1 %i.awq, label %.thread636, label %bb.kh
 
 .thread636:                                       ; preds = %bb.ke, %bb.kg, %bb.kf
   %i.awr = getelementptr inbounds nuw i8, ptr %0, i64 381656
   %i.aws = getelementptr inbounds nuw i8, ptr %0, i64 381668
-  store i16 1, ptr %i.aws, align 4, !tbaa !2313
+  store i16 1, ptr %i.aws, align 4, !tbaa !2312
   br label %bb.ki
 
 bb.kh:                                            ; preds = %bb.kg
   %i.awt = getelementptr inbounds nuw i8, ptr %0, i64 5288
-  %i.awu = load double, ptr %i.awt, align 8, !tbaa !2316
+  %i.awu = load double, ptr %i.awt, align 8, !tbaa !2315
   %i.awv = fcmp reassoc nsz arcp contract afn une double %i.awu, 1.000000e+00 ; 2 uses
   %i.aww = zext i1 %i.awv to i16
   %i.awx = getelementptr inbounds nuw i8, ptr %0, i64 381656 ; 2 uses
   %i.awy = getelementptr inbounds nuw i8, ptr %0, i64 381668
-  store i16 %i.aww, ptr %i.awy, align 4, !tbaa !2313
+  store i16 %i.aww, ptr %i.awy, align 4, !tbaa !2312
   br i1 %i.awv, label %bb.ki, label %bb.kk
 
 bb.ki:                                            ; preds = %.thread636, %bb.kh
@@ -2255,35 +2252,34 @@ begin_hunk_2_@llvm.assume
 !2283 = !{!24, !29, i64 2016}
 !2284 = !{!24, !8, i64 32}
 !2285 = !{!2265, !29, i64 6}
-!2286 = !{!24, !8, i64 170668}
-!2287 = distinct !{!2287, !2259, !2288, !2289}
-!2288 = !{!"llvm.loop.isvectorized", i32 1}
-!2289 = !{!"llvm.loop.unroll.runtime.disable"}
-!2290 = !{!24, !38, i64 1344}
-!2291 = !{!24, !8, i64 381656}
-!2292 = !{!24, !9, i64 768432}
-!2293 = distinct !{!2293, !2259}
-!2294 = !{!24, !8, i64 381832}
-!2295 = distinct !{!2295, !2259, !2288, !2289}
-!2296 = distinct !{!2296, !2259}
-!2297 = !{!24, !8, i64 192600}
-!2298 = !{!24, !8, i64 2196}
-!2299 = !{!24, !9, i64 4129}
-!2300 = distinct !{!2300, !2259}
-!2301 = !{!24, !8, i64 153872}
-!2302 = !{!24, !27, i64 153864}
-!2303 = !{!24, !38, i64 381624}
-!2304 = !DISubprogram(name: "seek", linkageName: "_ZN26LibRaw_abstract_datastream4seekExi", scope: !15, file: !14, line: 102, type: !2305, scopeLine: 102, containingType: !15, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!2305 = !DISubroutineType(types: !2306)
-!2306 = !{!18, !19, !1015, !18}
-!2307 = !DISubprogram(name: "read", linkageName: "_ZN26LibRaw_abstract_datastream4readEPvmm", scope: !15, file: !14, line: 101, type: !2308, scopeLine: 101, containingType: !15, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!2308 = !DISubroutineType(types: !2309)
-!2309 = !{!18, !19, !871, !1111, !1111}
-!2310 = !{!2311, !2311, i64 0}
-!2311 = !{!"_ZTS17LibRaw_exceptions", !9, i64 0}
-!2312 = !{!24, !9, i64 768400}
-!2313 = !{!24, !29, i64 381668}
-!2314 = !{!24, !8, i64 5376}
-!2315 = !{!24, !34, i64 5372}
-!2316 = !{!30, !30, i64 0}
+!2286 = distinct !{!2286, !2259, !2287, !2288}
+!2287 = !{!"llvm.loop.isvectorized", i32 1}
+!2288 = !{!"llvm.loop.unroll.runtime.disable"}
+!2289 = !{!24, !38, i64 1344}
+!2290 = !{!24, !8, i64 381656}
+!2291 = !{!24, !9, i64 768432}
+!2292 = distinct !{!2292, !2259}
+!2293 = !{!24, !8, i64 381832}
+!2294 = distinct !{!2294, !2259, !2287, !2288}
+!2295 = distinct !{!2295, !2259}
+!2296 = !{!24, !8, i64 192600}
+!2297 = !{!24, !8, i64 2196}
+!2298 = !{!24, !9, i64 4129}
+!2299 = distinct !{!2299, !2259}
+!2300 = !{!24, !8, i64 153872}
+!2301 = !{!24, !27, i64 153864}
+!2302 = !{!24, !38, i64 381624}
+!2303 = !DISubprogram(name: "seek", linkageName: "_ZN26LibRaw_abstract_datastream4seekExi", scope: !15, file: !14, line: 102, type: !2304, scopeLine: 102, containingType: !15, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!2304 = !DISubroutineType(types: !2305)
+!2305 = !{!18, !19, !1015, !18}
+!2306 = !DISubprogram(name: "read", linkageName: "_ZN26LibRaw_abstract_datastream4readEPvmm", scope: !15, file: !14, line: 101, type: !2307, scopeLine: 101, containingType: !15, virtualIndex: 3, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!2307 = !DISubroutineType(types: !2308)
+!2308 = !{!18, !19, !871, !1111, !1111}
+!2309 = !{!2310, !2310, i64 0}
+!2310 = !{!"_ZTS17LibRaw_exceptions", !9, i64 0}
+!2311 = !{!24, !9, i64 768400}
+!2312 = !{!24, !29, i64 381668}
+!2313 = !{!24, !8, i64 5376}
+!2314 = !{!24, !34, i64 5372}
+!2315 = !{!30, !30, i64 0}
 end_hunk_2

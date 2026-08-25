@@ -204,15 +204,13 @@ bb.cd:                                            ; preds = %_ZN8ImGuizmoL15IsIn
   %i.bue = fmul <2 x float> %i.bud, %i.bte
   %i.buf = fadd <2 x float> %i.btd, %i.bue        ; 3 uses
   store <2 x float> %i.buf, ptr %48, align 8
-  %.val191.i = load float, ptr %i.bmd, align 8, !tbaa !67
-  %.val192.i = load float, ptr %i.bme, align 4, !tbaa !68
+  %65 = load <4 x float>, ptr %i.bmd, align 8
+  %66 = load <4 x float>, ptr %i.bme, align 4
   %i.bug = shufflevector <2 x float> %i.buf, <2 x float> %i.btc, <2 x i32> <i32 0, i32 2>
-  %65 = insertelement <2 x float> poison, float %.val191.i, i64 0
-  %i.buh = shufflevector <2 x float> %65, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.buh = shufflevector <4 x float> %65, <4 x float> poison, <2 x i32> zeroinitializer
   %i.bui = fsub <2 x float> %i.bug, %i.buh        ; 2 uses
   %i.buj = shufflevector <2 x float> %i.buf, <2 x float> %i.btc, <2 x i32> <i32 1, i32 3>
-  %66 = insertelement <2 x float> poison, float %.val192.i, i64 0
-  %i.buk = shufflevector <2 x float> %66, <2 x float> poison, <2 x i32> zeroinitializer
+  %i.buk = shufflevector <4 x float> %66, <4 x float> poison, <2 x i32> zeroinitializer
   %i.bul = fsub <2 x float> %i.buj, %i.buk        ; 2 uses
   %i.bum = fmul <2 x float> %i.bul, %i.bul
   %i.bun = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bui, <2 x float> %i.bui, <2 x float> %i.bum)
@@ -246,7 +244,7 @@ bb.ce:                                            ; preds = %bb.ce, %.lr.ph.i
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #19
   %i.bva = add nuw nsw i32 %.0170689.i, 1         ; 2 uses
   %exitcond699.not.i = icmp eq i32 %i.bva, %i.bsu
-  br i1 %exitcond699.not.i, label %._crit_edge.loopexit.i, label %bb.ce, !llvm.loop !69
+  br i1 %exitcond699.not.i, label %._crit_edge.loopexit.i, label %bb.ce, !llvm.loop !67
 
 bb.cf:                                            ; preds = %._crit_edge.i
   %i.bvb = call fastcc noundef i32 @_ZN8ImGuizmoL11GetMoveTypeEPNS_5vec_tE(ptr noundef nonnull %49)
@@ -456,7 +454,7 @@ _ZN8ImGuizmoL15IsInContextRectE6ImVec2.exit.thread.i: ; preds = %_ZN8ImGuizmoL11
   %i.bzl = phi float [ %i.bzk, %_ZN8ImGuizmoL11CanActivateEv.exit262.i ], [ %i.bqb, %bb.cc ], [ %i.bqb, %_ZN8ImGuizmoL15IsInContextRectE6ImVec2.exit.i ], [ %i.bqb, %_ZN8ImGuizmoL15IsInContextRectE6ImVec2.exit229.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %45) #19
   %exitcond703.not.i = icmp eq i64 %indvars.iv.next701.i, 4
-  br i1 %exitcond703.not.i, label %bb.cb, label %bb.cc, !llvm.loop !70
+  br i1 %exitcond703.not.i, label %bb.cb, label %bb.cc, !llvm.loop !68
 
 bb.cr:                                            ; preds = %bb.cb
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #19
@@ -859,7 +857,7 @@ bb.dm:                                            ; preds = %bb.dl, %bb.cb
 
 .backedge.backedge:                               ; preds = %.thread753.i, %bb.dn
   %indvars.iv707.i.be = phi i64 [ %indvars.iv.next708.old.i, %.thread753.i ], [ %indvars.iv.next708.i, %bb.dn ]
-  br label %.backedge, !llvm.loop !71
+  br label %.backedge, !llvm.loop !69
 
 bb.dn:                                            ; preds = %bb.dm
   %.pre723.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN8ImGuizmoL8gContextE, i64 892), align 4, !tbaa !57, !range !35 ; 2 uses
@@ -1124,8 +1122,8 @@ bb.ea:                                            ; preds = %bb.eb
   %i.cwn = fadd float %i.cwm, %i.cwj
   %i.cwo = extractelement <2 x float> %i.cvd, i64 1
   %i.cwp = fadd float %i.cwo, %i.cwl
-  %.val44.i = load float, ptr %36, align 16, !tbaa !67
-  %.val45.i = load float, ptr %i.csm, align 4, !tbaa !68
+  %.val44.i = load float, ptr %36, align 16, !tbaa !70
+  %.val45.i = load float, ptr %i.csm, align 4, !tbaa !71
   %i.cwq = fsub float %i.cwn, %.val44.i           ; 2 uses
   %i.cwr = fsub float %i.cwp, %.val45.i           ; 2 uses
   %i.cws = fmul float %i.cwr, %i.cwr
@@ -1528,11 +1526,11 @@ attributes #19 = { nounwind }
 !64 = !{!19, !6, i64 880}
 !65 = !{!6, !6, i64 0}
 !66 = distinct !{!66, !51}
-!67 = !{!24, !10, i64 0}
-!68 = !{!24, !10, i64 4}
+!67 = distinct !{!67, !51}
+!68 = distinct !{!68, !51}
 !69 = distinct !{!69, !51}
-!70 = distinct !{!70, !51}
-!71 = distinct !{!71, !51}
+!70 = !{!24, !10, i64 0}
+!71 = !{!24, !10, i64 4}
 !72 = distinct !{!72, !51}
 !73 = distinct !{!73, !51}
 !74 = !{!39, !39, i64 0}

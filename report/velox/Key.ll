@@ -111,10 +111,9 @@ bb.a:
   %i.ai = add nsw i32 %i.ah, 1                    ; 2 uses
   store i32 %i.ai, ptr %i.p, align 8, !tbaa !14
   %ldexp.i5 = tail call double @ldexp(double 1.000000e+00, i32 %i.ai)
-  %2 = load double, ptr %1, align 8, !tbaa !18
+  %2 = load <2 x double>, ptr %1, align 8
   %i.aj = load double, ptr %i.i, align 8, !tbaa !17
-  %3 = insertelement <2 x double> poison, double %2, i64 0
-  %i.ak = insertelement <2 x double> %3, double %i.aj, i64 1
+  %i.ak = insertelement <2 x double> %2, double %i.aj, i64 1
   %i.al = insertelement <2 x double> poison, double %ldexp.i5, i64 0
   %i.am = shufflevector <2 x double> %i.al, <2 x double> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.an = fdiv <2 x double> %i.ak, %i.am
@@ -161,13 +160,12 @@ define noalias noundef nonnull ptr @_ZNK4geos5index8quadtree3Key9getCentreEv(ptr
 bb.a:
   %i.a = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %1 = load double, ptr %i.b, align 8, !tbaa !18
+  %1 = load <2 x double>, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.e = load double, ptr %i.d, align 8, !tbaa !21
   %i.f = load <2 x double>, ptr %i.c, align 8, !tbaa !16
-  %2 = insertelement <2 x double> poison, double %1, i64 0
-  %i.g = insertelement <2 x double> %2, double %i.e, i64 1
+  %i.g = insertelement <2 x double> %1, double %i.e, i64 1
   %i.h = fadd <2 x double> %i.f, %i.g
   %i.i = fmul <2 x double> %i.h, splat (double 5.000000e-01)
   store <2 x double> %i.i, ptr %i.a, align 8, !tbaa !16

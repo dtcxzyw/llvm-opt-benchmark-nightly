@@ -205,8 +205,7 @@ bb.a:
   %i.a = icmp sgt i32 %1, 0                       ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !70   ; 4 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4
   %wide.trip.count.i = zext nneg i32 %1 to i64    ; 3 uses
   %i.e = load <2 x float>, ptr %i.d, align 4      ; 7 uses
   %i.f = extractelement <2 x float> %i.e, i64 1   ; 2 uses
@@ -269,15 +268,10 @@ bb.b:                                             ; preds = %bb.a, %.thread208
   br i1 %i.a, label %.lr.ph.i, label %_Z14maxdirfilteredI9btVector3EiPKT_iRS2_R20btAlignedObjectArrayIiE.exit
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %5 = load float, ptr %2, align 4
-  %6 = load float, ptr %i.d, align 4
-  %7 = load float, ptr %4, align 4
-  %8 = insertelement <2 x float> poison, float %7, i64 0
-  %9 = shufflevector <2 x float> %8, <2 x float> poison, <2 x i32> zeroinitializer
-  %10 = insertelement <2 x float> poison, float %5, i64 0
-  %i.bf = shufflevector <2 x float> %10, <2 x float> poison, <2 x i32> zeroinitializer
-  %11 = insertelement <2 x float> poison, float %6, i64 0
-  %12 = shufflevector <2 x float> %11, <2 x float> poison, <2 x i32> zeroinitializer
+  %4 = load <4 x float>, ptr %2, align 4          ; 3 uses
+  %5 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 2, i32 2>
+  %i.bf = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> zeroinitializer
+  %6 = shufflevector <4 x float> %4, <4 x float> poison, <2 x i32> <i32 1, i32 1>
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %.lr.ph.i
@@ -303,12 +297,12 @@ bb.e:                                             ; preds = %bb.d
   %i.bq = load <2 x float>, ptr %i.bj, align 4, !tbaa !8 ; 2 uses
   %i.br = load <2 x float>, ptr %i.bn, align 4, !tbaa !8 ; 2 uses
   %i.bs = shufflevector <2 x float> %i.bq, <2 x float> %i.br, <2 x i32> <i32 1, i32 3>
-  %i.bt = fmul <2 x float> %12, %i.bs
+  %i.bt = fmul <2 x float> %6, %i.bs
   %i.bu = shufflevector <2 x float> %i.bq, <2 x float> %i.br, <2 x i32> <i32 0, i32 2>
   %i.bv = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bu, <2 x float> %i.bf, <2 x float> %i.bt)
   %i.bw = insertelement <2 x float> poison, float %i.bl, i64 0
   %i.bx = insertelement <2 x float> %i.bw, float %i.bp, i64 1
-  %i.by = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bx, <2 x float> %9, <2 x float> %i.bv) ; 2 uses
+  %i.by = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bx, <2 x float> %5, <2 x float> %i.bv) ; 2 uses
   %i.bz = extractelement <2 x float> %i.by, i64 0
   %i.ca = extractelement <2 x float> %i.by, i64 1
   %i.cb = fcmp ogt float %i.bz, %i.ca

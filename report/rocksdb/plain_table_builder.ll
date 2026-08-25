@@ -204,13 +204,12 @@ bb.ao:                                            ; preds = %_ZN7rocksdb8IOStatu
   %i.go = load i64, ptr %i.gn, align 8, !tbaa !333
   %i.gp = add i64 %i.go, 1
   store i64 %i.gp, ptr %i.gn, align 8, !tbaa !333
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %15 = load i64, ptr %14, align 8, !tbaa !14
+  %14 = load <2 x i64>, ptr %1, align 8
+  %15 = shufflevector <2 x i64> %14, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
   %i.gq = getelementptr inbounds nuw i8, ptr %0, i64 2520 ; 2 uses
   %i.gr = load i64, ptr %i.eq, align 8, !tbaa !14
   %i.gs = load <2 x i64>, ptr %i.gq, align 8, !tbaa !298
-  %16 = insertelement <2 x i64> poison, i64 %15, i64 0
-  %i.gt = insertelement <2 x i64> %16, i64 %i.gr, i64 1
+  %i.gt = insertelement <2 x i64> %15, i64 %i.gr, i64 1
   %i.gu = add <2 x i64> %i.gs, %i.gt
   store <2 x i64> %i.gu, ptr %i.gq, align 8, !tbaa !298
   %i.gv = load i8, ptr %i.o, align 8, !tbaa !322

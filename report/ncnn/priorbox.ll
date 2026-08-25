@@ -204,16 +204,12 @@ vector.ph91:                                      ; preds = %vector.memcheck
   %i.gy = trunc i64 %n.vec92 to i32
   %i.gz = shl nuw nsw i64 %n.vec92, 4
   %i.ha = getelementptr i8, ptr %i.gl, i64 %i.gz
-  %4 = load float, ptr %i.gm, align 8, !tbaa !27, !alias.scope !72
-  %broadcast.splatinsert = insertelement <2 x float> poison, float %4, i64 0
-  %5 = load float, ptr %i.gn, align 4, !tbaa !27, !alias.scope !72
-  %broadcast.splatinsert96 = insertelement <2 x float> poison, float %5, i64 0
-  %6 = load float, ptr %i.go, align 8, !tbaa !27, !alias.scope !72
-  %broadcast.splatinsert98 = insertelement <2 x float> poison, float %6, i64 0
-  %7 = load float, ptr %i.gp, align 4, !tbaa !27, !alias.scope !72
-  %broadcast.splatinsert100 = insertelement <2 x float> poison, float %7, i64 0
-  %8 = shufflevector <2 x float> %broadcast.splatinsert, <2 x float> %broadcast.splatinsert96, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
-  %9 = shufflevector <2 x float> %broadcast.splatinsert98, <2 x float> %broadcast.splatinsert100, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
+  %4 = load <4 x float>, ptr %i.gm, align 8
+  %5 = load <4 x float>, ptr %i.gn, align 4
+  %6 = load <4 x float>, ptr %i.go, align 8
+  %7 = load <4 x float>, ptr %i.gp, align 4
+  %8 = shufflevector <4 x float> %4, <4 x float> %5, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
+  %9 = shufflevector <4 x float> %6, <4 x float> %7, <4 x i32> <i32 0, i32 0, i32 4, i32 4>
   %interleaved.vec = shufflevector <4 x float> %8, <4 x float> %9, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 1, i32 3, i32 5, i32 7> ; 2 uses
   br label %vector.body93
 
@@ -223,8 +219,8 @@ vector.body93:                                    ; preds = %vector.body93, %vec
   %next.gep = getelementptr i8, ptr %i.gl, i64 %i.hb
   %i.hc = getelementptr i8, ptr %i.gl, i64 %i.hb
   %next.gep95 = getelementptr i8, ptr %i.hc, i64 32
-  store <8 x float> %interleaved.vec, ptr %next.gep, align 4, !tbaa !27, !alias.scope !75, !noalias !72
-  store <8 x float> %interleaved.vec, ptr %next.gep95, align 4, !tbaa !27, !alias.scope !75, !noalias !72
+  store <8 x float> %interleaved.vec, ptr %next.gep, align 4, !tbaa !27, !alias.scope !72, !noalias !75
+  store <8 x float> %interleaved.vec, ptr %next.gep95, align 4, !tbaa !27, !alias.scope !72, !noalias !75
   %index.next103 = add nuw i64 %index94, 4        ; 2 uses
   %i.hd = icmp eq i64 %index.next103, %n.vec92
   br i1 %i.hd, label %middle.block104, label %vector.body93, !llvm.loop !77

@@ -204,7 +204,7 @@ bb.a:
   br i1 %.not.i.i.i.i.i.i.i.i.i.4, label %_ZNSt6vectorIN2v88internal12EmbeddedData17LayoutDescriptionESaIS3_EEC2EmRKS4_.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i, !llvm.loop !29
 
 _ZNSt6vectorIN2v88internal12EmbeddedData17LayoutDescriptionESaIS3_EEC2EmRKS4_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i
-  %i.f = tail call noalias noundef nonnull dereferenceable(17128) ptr @_Znwm(i64 noundef 17128) #15 ; 9 uses
+  %i.f = tail call noalias noundef nonnull dereferenceable(17128) ptr @_Znwm(i64 noundef 17128) #15 ; 10 uses
   store i64 0, ptr %i.f, align 4
   br label %vector.body
 
@@ -213,25 +213,23 @@ vector.body:                                      ; preds = %vector.body.3, %_ZN
   %i.g = shl nuw nsw i64 %index, 3
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.g ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %9 = load i64, ptr %i.f, align 4                ; 4 uses
-  %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %9, i64 0
-  %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %9 = load <2 x i64>, ptr %i.f, align 4
+  %broadcast.splat = shufflevector <2 x i64> %9, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   store <2 x i64> %broadcast.splat, ptr %i.i, align 4
   store <2 x i64> %broadcast.splat, ptr %i.j, align 4
   %index.next = shl i64 %index, 3
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 %index.next ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 40
-  %broadcast.splatinsert.1 = insertelement <2 x i64> poison, i64 %9, i64 0
-  %broadcast.splat.1 = shufflevector <2 x i64> %broadcast.splatinsert.1, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %10 = load <2 x i64>, ptr %i.f, align 4         ; 3 uses
+  %broadcast.splat.1 = shufflevector <2 x i64> %10, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 56
   store <2 x i64> %broadcast.splat.1, ptr %i.l, align 4
   store <2 x i64> %broadcast.splat.1, ptr %i.m, align 4
   %index.next.1 = shl i64 %index, 3
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 %index.next.1 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 72
-  %broadcast.splatinsert.2 = insertelement <2 x i64> poison, i64 %9, i64 0
-  %broadcast.splat.2 = shufflevector <2 x i64> %broadcast.splatinsert.2, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat.2 = shufflevector <2 x i64> %10, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 88
   store <2 x i64> %broadcast.splat.2, ptr %i.o, align 4
   store <2 x i64> %broadcast.splat.2, ptr %i.p, align 4
@@ -242,8 +240,7 @@ vector.body.3:                                    ; preds = %vector.body
   %index.next.2 = shl i64 %index, 3
   %i.r = getelementptr inbounds nuw i8, ptr %i.f, i64 %index.next.2 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 104
-  %broadcast.splatinsert.3 = insertelement <2 x i64> poison, i64 %9, i64 0
-  %broadcast.splat.3 = shufflevector <2 x i64> %broadcast.splatinsert.3, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %broadcast.splat.3 = shufflevector <2 x i64> %10, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 120
   store <2 x i64> %broadcast.splat.3, ptr %i.s, align 4
   store <2 x i64> %broadcast.splat.3, ptr %i.t, align 4

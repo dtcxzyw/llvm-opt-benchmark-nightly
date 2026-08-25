@@ -204,9 +204,8 @@ vector.memcheck:                                  ; preds = %.lr.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.cc, -8                      ; 3 uses
-  %6 = load float, ptr %i.cd, align 8, !tbaa !51, !alias.scope !76
-  %broadcast.splatinsert = insertelement <4 x float> poison, float %6, i64 0
-  %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer
+  %6 = load <4 x float>, ptr %i.cd, align 8
+  %broadcast.splat = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ch = fpext <4 x float> %broadcast.splat to <4 x double> ; 2 uses
   br label %vector.body
 
@@ -214,16 +213,16 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ci = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %index ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 16 ; 2 uses
-  %wide.load = load <4 x float>, ptr %i.ci, align 4, !tbaa !62, !alias.scope !79, !noalias !76
-  %wide.load271 = load <4 x float>, ptr %i.cj, align 4, !tbaa !62, !alias.scope !79, !noalias !76
+  %wide.load = load <4 x float>, ptr %i.ci, align 4, !tbaa !62, !alias.scope !76, !noalias !79
+  %wide.load271 = load <4 x float>, ptr %i.cj, align 4, !tbaa !62, !alias.scope !76, !noalias !79
   %i.ck = fpext <4 x float> %wide.load to <4 x double>
   %i.cl = fpext <4 x float> %wide.load271 to <4 x double>
   %i.cm = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ch, <4 x double> splat (double -2.500000e-01), <4 x double> %i.ck)
   %i.cn = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.ch, <4 x double> splat (double -2.500000e-01), <4 x double> %i.cl)
   %i.co = fptrunc <4 x double> %i.cm to <4 x float>
   %i.cp = fptrunc <4 x double> %i.cn to <4 x float>
-  store <4 x float> %i.co, ptr %i.ci, align 4, !tbaa !62, !alias.scope !79, !noalias !76
-  store <4 x float> %i.cp, ptr %i.cj, align 4, !tbaa !62, !alias.scope !79, !noalias !76
+  store <4 x float> %i.co, ptr %i.ci, align 4, !tbaa !62, !alias.scope !76, !noalias !79
+  store <4 x float> %i.cp, ptr %i.cj, align 4, !tbaa !62, !alias.scope !76, !noalias !79
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.cq = icmp eq i64 %index.next, %n.vec
   br i1 %i.cq, label %middle.block, label %vector.body, !llvm.loop !81
