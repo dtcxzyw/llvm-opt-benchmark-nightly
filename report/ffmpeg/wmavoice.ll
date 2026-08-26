@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ib = add nsw i32 %i.hz, -127
   %i.ic = uitofp nneg i32 %i.ib to float
   %i.id = call nsz float @llvm.pow.f32(float f0x3F843ECB, float %i.ic)
-  %i.ie = fmul nsz float %i.id, f0x3F892964
+  %i.ie = fmul nnan nsz float %i.id, f0x3F892964
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k

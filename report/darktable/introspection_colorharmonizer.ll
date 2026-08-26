@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.j
   %i.gu = phi float [ %i.gq, %bb.k ], [ 2.098850e+00, %bb.j ] ; 2 uses
   %i.gv = fmul reassoc nnan nsz arcp contract afn float %i.gp, f0x3F7CF0E2
   %i.gw = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %i.gu, float f0x3F2703AC)
-  %i.gx = fmul reassoc nsz arcp contract afn float %i.gw, f0x417EED8B
+  %i.gx = fmul reassoc nnan nsz arcp contract afn float %i.gw, f0x417EED8B
   %i.gy = fdiv reassoc nsz arcp contract afn float %i.gv, %i.gx
   %i.gz = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %i.gy, float f0x3F5510A2)
   br label %dt_UCS_JCH_to_xyY.exit
@@ -608,7 +608,7 @@ bb.w:                                             ; preds = %bb.v
   %i.tb = phi float [ %i.sx, %bb.w ], [ 2.098850e+00, %bb.v ] ; 2 uses
   %i.tc = fmul reassoc nnan nsz arcp contract afn float %i.su, f0x3F7CF0E2
   %i.td = call reassoc nsz arcp contract afn float @llvm.pow.f32(float %i.tb, float f0x3F2703AC)
-  %i.te = fmul reassoc nsz arcp contract afn float %i.td, f0x417EED8B
+  %i.te = fmul reassoc nnan nsz arcp contract afn float %i.td, f0x417EED8B
   %i.tf = fdiv reassoc nsz arcp contract afn float %i.tc, %i.te
   %i.tg = call reassoc nsz arcp contract afn float @llvm.pow.f32(float %i.tf, float f0x3F5510A2)
   br label %dt_UCS_JCH_to_xyY.exit225
@@ -1011,7 +1011,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = load float, ptr %i.g, align 4, !tbaa !32
   %i.i = fmul reassoc nsz arcp contract afn float %i.h, %1
   %i.j = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %i.f, float f0x3F2703AC)
-  %i.k = fmul reassoc nsz arcp contract afn float %i.j, f0x417EED8B
+  %i.k = fmul reassoc nnan nsz arcp contract afn float %i.j, f0x417EED8B
   %i.l = fdiv reassoc nsz arcp contract afn float %i.i, %i.k
   %i.m = tail call reassoc nsz arcp contract afn float @llvm.pow.f32(float %i.l, float f0x3F5510A2)
   br label %dt_UCS_JCH_to_xyY.exit.i

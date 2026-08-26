@@ -204,8 +204,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = fmul nnan nsz double %0, -4.000000e+00
   %i.c = tail call nsz double @llvm.pow.f64(double %i.b, double 4.500000e-01)
-  %i.d = tail call nsz double @llvm.fmuladd.f64(double %i.c, double f0x3FF196B844FBE3DC, double f0x3FB96B844FBE3DC0)
-  %i.e = fmul nsz double %i.d, -2.500000e-01
+  %i.d = tail call nnan nsz double @llvm.fmuladd.f64(double %i.c, double f0x3FF196B844FBE3DC, double f0x3FB96B844FBE3DC0)
+  %i.e = fmul nnan nsz double %i.d, -2.500000e-01
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
