@@ -205,7 +205,7 @@ bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.r, ptr noundef nonnull align 4 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !36
   %.sroa.0.0.copyload3.i = load <2 x float>, ptr %6, align 4 ; 4 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %.sroa.8.0.copyload.i = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !11 ; 2 uses
+  %.sroa.8.8.vec.extract.i = load float, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !11 ; 2 uses
   %i.s = load ptr, ptr %i.d, align 8, !tbaa !38
   %i.t = getelementptr inbounds [688 x i8], ptr %i.s, i64 %i.f ; 21 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 564
@@ -215,25 +215,26 @@ bb.a:
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 560
   store i32 3, ptr %i.w, align 8, !tbaa !87
   %.sroa.0.0.copyload3.i38 = load <2 x float>, ptr %6, align 4 ; 4 uses
-  %.sroa.8.0.copyload.i40 = load <2 x float>, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !11 ; 2 uses
+  %.sroa.8.8.vec.extract.i43 = load float, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !11 ; 2 uses
   %i.x = shufflevector <2 x float> %.sroa.0.0.copyload3.i, <2 x float> %.sroa.0.0.copyload3.i38, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.y = fmul <2 x float> %i.x, %i.x
   %i.z = shufflevector <2 x float> %.sroa.0.0.copyload3.i, <2 x float> %.sroa.0.0.copyload3.i38, <2 x i32> <i32 0, i32 2> ; 2 uses
   %i.aa = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.z, <2 x float> %i.z, <2 x float> %i.y)
-  %9 = shufflevector <2 x float> %.sroa.8.0.copyload.i, <2 x float> %.sroa.8.0.copyload.i40, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %i.ab = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %9, <2 x float> %9, <2 x float> %i.aa)
+  %9 = insertelement <2 x float> poison, float %.sroa.8.8.vec.extract.i, i64 0
+  %10 = insertelement <2 x float> %9, float %.sroa.8.8.vec.extract.i43, i64 1 ; 2 uses
+  %i.ab = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %10, <2 x float> %10, <2 x float> %i.aa)
   %i.ac = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.ab)
   %i.ad = fdiv <2 x float> splat (float 1.000000e+00), %i.ac ; 4 uses
+  %11 = extractelement <2 x float> %i.ad, i64 0
   %foldExtExtBinop = fmul <2 x float> %.sroa.0.0.copyload3.i, %i.ad
   %i.ae = extractelement <2 x float> %foldExtExtBinop, i64 0
   %shift = shufflevector <2 x float> %.sroa.0.0.copyload3.i, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop114 = fmul <2 x float> %shift, %i.ad
   %i.af = extractelement <2 x float> %foldExtExtBinop114, i64 0
-  %foldExtExtBinop116 = fmul <2 x float> %.sroa.8.0.copyload.i, %i.ad
-  %10 = extractelement <2 x float> %foldExtExtBinop116, i64 0
+  %12 = fmul float %.sroa.8.8.vec.extract.i, %11
   %i.ag = fmul float %i.af, 0.000000e+00
   %i.ah = fadd float %i.ae, %i.ag
-  %i.ai = tail call noundef float @llvm.fmuladd.f32(float %10, float 0.000000e+00, float %i.ah)
+  %i.ai = tail call noundef float @llvm.fmuladd.f32(float %12, float 0.000000e+00, float %i.ah)
   %i.aj = fpext float %i.ai to double
   %i.ak = fcmp ogt double %i.aj, f0x3FEFF7CED916872B
   %i.al = getelementptr inbounds nuw i8, ptr %i.t, i64 136
@@ -252,9 +253,10 @@ bb.a:
   %i.av = insertelement <2 x i1> poison, i1 %i.ak, i64 0
   %i.aw = shufflevector <2 x i1> %i.av, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.ax = select <2 x i1> %i.aw, <2 x float> <float 0.000000e+00, float 1.000000e+00>, <2 x float> <float 1.000000e+00, float 0.000000e+00> ; 3 uses
-  %11 = shufflevector <2 x float> %.sroa.8.0.copyload.i40, <2 x float> %.sroa.0.0.copyload3.i38, <2 x i32> <i32 0, i32 2>
+  %13 = shufflevector <2 x float> %.sroa.0.0.copyload3.i38, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
+  %14 = insertelement <2 x float> %13, float %.sroa.8.8.vec.extract.i43, i64 0
   %i.ay = shufflevector <2 x float> %i.ad, <2 x float> poison, <2 x i32> <i32 1, i32 1> ; 2 uses
-  %i.az = fmul <2 x float> %11, %i.ay             ; 5 uses
+  %i.az = fmul <2 x float> %14, %i.ay             ; 5 uses
   %i.ba = fmul <2 x float> %.sroa.0.0.copyload3.i38, %i.ay ; 3 uses
   %i.bb = extractelement <2 x float> %i.az, i64 1 ; 2 uses
   store float %i.bb, ptr %i.al, align 8, !tbaa !9

@@ -1,6 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/trim_with_solid?download=true
-inline.NumInlined: 3886
-inline.NumDeleted: 1543
+inline.NumInlined: 3885
+inline.NumDeleted: 1542
 loop-unroll.NumCompletelyUnrolled: 8
 loop-unroll.NumRuntimeUnrolled: 64
 loop-unroll.NumUnrolled: 72
@@ -204,6 +204,8 @@ $_ZNSt6vectorIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends
 $_ZNSt6vectorIS_IN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEESaISF_EESaISH_EED2Ev = comdat any
 
 $_ZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEEdVEd = comdat any
+
+$_ZN4CGAL14Lazy_exact_DivIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EC2ERKNS_13Lazy_exact_ntISD_EESI_ = comdat any
 
 $_ZN4CGAL14Lazy_exact_CstIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEdED0Ev = comdat any
 
@@ -607,20 +609,17 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #29
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(9) ptr @_ZN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEEdVEd(ptr noundef nonnull align 8 dereferenceable(9) %0, double noundef %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca i32, align 4                        ; 4 uses
-  %3 = alloca i32, align 4                        ; 4 uses
-  %4 = alloca i32, align 4                        ; 4 uses
-  %5 = alloca i32, align 4                        ; 4 uses
-  %6 = alloca i32, align 4                        ; 4 uses
-  %7 = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #38 ; 10 uses
+  %2 = alloca %"class.CGAL::Lazy_exact_nt", align 8 ; 8 uses
+  %3 = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #38 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   %i.a = invoke noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #38
-          to label %bb.b unwind label %bb.q       ; 11 uses
+          to label %bb.b unwind label %9          ; 7 uses
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = fneg double %1                           ; 2 uses
+  %i.b = fneg double %1
   %i.c = insertelement <2 x double> poison, double %i.b, i64 0
   %i.d = insertelement <2 x double> %i.c, double %1, i64 1
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 7 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i32 1, ptr %i.e, align 4, !tbaa !114
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store <2 x double> %i.d, ptr %i.f, align 16, !tbaa !72
@@ -631,116 +630,15 @@ bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL14Lazy_exact_CstIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEdEE, i64 16), ptr %i.a, align 16, !tbaa !37
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store double %1, ptr %i.i, align 16, !tbaa !611
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.x86.sse.stmxcsr(ptr nonnull %6)
-  %8 = load i32, ptr %6, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.x86.sse.stmxcsr(ptr nonnull %4)
-  %9 = load i32, ptr %4, align 4
-  %10 = and i32 %9, -24577
-  %11 = or disjoint i32 %10, 16384
-  store i32 %11, ptr %5, align 4
-  call void @llvm.x86.sse.ldmxcsr(ptr nonnull %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %12 = load ptr, ptr %0, align 8, !tbaa !92      ; 3 uses
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
-  %14 = fcmp ogt double %1, 0.000000e+00
-  br i1 %14, label %15, label %30
+  store ptr %i.a, ptr %2, align 8, !tbaa !92
+  invoke void @_ZN4CGAL14Lazy_exact_DivIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EC2ERKNS_13Lazy_exact_ntISD_EESI_(ptr noundef nonnull align 16 dereferenceable(80) %3, ptr noundef nonnull align 8 dereferenceable(9) %0, ptr noundef nonnull align 8 dereferenceable(9) %2)
+          to label %bb.c unwind label %bb.q
 
-15:                                               ; preds = %bb.b
-  %16 = load <2 x double>, ptr %13, align 16
-  %17 = extractelement <2 x double> %16, i64 0
-  %18 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %17) #23, !srcloc !613
-  %19 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %1) #23, !srcloc !613
-  %20 = fdiv double %18, %19
-  %21 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %20) #23, !srcloc !613
-  %22 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  %23 = load double, ptr %22, align 8, !tbaa !72
-  %24 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %23) #23, !srcloc !613
-  %25 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %1) #23, !srcloc !613
-  %26 = fdiv double %24, %25
-  %27 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %26) #23, !srcloc !613
-  %28 = insertelement <2 x double> poison, double %21, i64 0
-  %29 = insertelement <2 x double> %28, double %27, i64 1
-  br label %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit.i
-
-30:                                               ; preds = %bb.b
-  %31 = fcmp olt double %1, 0.000000e+00
-  br i1 %31, label %32, label %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit.i
-
-32:                                               ; preds = %30
-  %33 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  %34 = load double, ptr %33, align 8
-  %35 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %34) #23, !srcloc !613
-  %36 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %i.b) #23, !srcloc !613
-  %37 = fdiv double %35, %36
-  %38 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %37) #23, !srcloc !613
-  %39 = load <2 x double>, ptr %13, align 16, !tbaa !72
-  %40 = extractelement <2 x double> %39, i64 0
-  %41 = fneg double %40
-  %42 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %41) #23, !srcloc !613
-  %43 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %1) #23, !srcloc !613
-  %44 = fdiv double %42, %43
-  %45 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %44) #23, !srcloc !613
-  %46 = insertelement <2 x double> poison, double %38, i64 0
-  %47 = insertelement <2 x double> %46, double %45, i64 1
-  br label %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit.i
-
-_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit.i:   ; preds = %32, %30, %15
-  %.sroa.025.0.i.i = phi <2 x double> [ %29, %15 ], [ %47, %32 ], [ splat (double +inf), %30 ]
-  %48 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store i32 1, ptr %48, align 4, !tbaa !114
-  %49 = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store <2 x double> %.sroa.025.0.i.i, ptr %49, align 16, !tbaa !72
-  %50 = getelementptr inbounds nuw i8, ptr %7, i64 32
-  store ptr null, ptr %50, align 16, !tbaa !116
-  %51 = getelementptr inbounds nuw i8, ptr %7, i64 40
-  store i32 0, ptr %51, align 8, !tbaa !119
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL17Lazy_exact_binaryIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EE, i64 16), ptr %7, align 16, !tbaa !37
-  %52 = getelementptr inbounds nuw i8, ptr %7, i64 48
-  %53 = load ptr, ptr %0, align 8, !tbaa !92      ; 2 uses
-  store ptr %53, ptr %52, align 16, !tbaa !92
-  %54 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !72
-  %.not.i.i.i.i.i.i = icmp eq i8 %54, 0
-  %55 = getelementptr inbounds nuw i8, ptr %53, i64 8 ; 3 uses
-  br i1 %.not.i.i.i.i.i.i, label %61, label %56
-
-56:                                               ; preds = %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit.i
-  %57 = load atomic i32, ptr %55 monotonic, align 4
-  %58 = add nsw i32 %57, 1
-  store atomic i32 %58, ptr %55 monotonic, align 4
-  %59 = load atomic i32, ptr %i.e monotonic, align 8
-  %60 = add nsw i32 %59, 1
-  store atomic i32 %60, ptr %i.e monotonic, align 8
-  br label %bb.c
-
-61:                                               ; preds = %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit.i
-  %62 = atomicrmw add ptr %55, i32 1 monotonic, align 4 ; 0 uses
-  %63 = atomicrmw add ptr %i.e, i32 1 monotonic, align 4 ; 0 uses
-  br label %bb.c
-
-bb.c:                                             ; preds = %61, %56
-  %64 = getelementptr inbounds nuw i8, ptr %7, i64 64
-  store ptr %i.a, ptr %64, align 16, !tbaa !92
-  %65 = and i32 %8, 24576
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.x86.sse.stmxcsr(ptr nonnull %2)
-  %66 = load i32, ptr %2, align 4
-  %67 = and i32 %66, -24577
-  %68 = or disjoint i32 %67, %65
-  store i32 %68, ptr %3, align 4
-  call void @llvm.x86.sse.ldmxcsr(ptr nonnull %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL14Lazy_exact_DivIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EE, i64 16), ptr %7, align 16, !tbaa !37
-  %i.j = load ptr, ptr %0, align 8, !tbaa !614    ; 6 uses
-  store ptr %7, ptr %0, align 8, !tbaa !614
+bb.c:                                             ; preds = %bb.b
+  %i.j = load ptr, ptr %0, align 8, !tbaa !613    ; 6 uses
+  store ptr %3, ptr %0, align 8, !tbaa !613
   %.not.i.i = icmp eq ptr %i.j, null
-  br i1 %.not.i.i, label %_ZN4CGAL6HandleD2Ev.exit.a, label %bb.d
+  br i1 %.not.i.i, label %_ZN4CGAL6HandleD2Ev.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = load i8, ptr @__libc_single_threaded, align 1, !tbaa !72
@@ -758,12 +656,12 @@ bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.q = load ptr, ptr %i.p, align 8
   call void %i.q(ptr noundef nonnull align 8 dereferenceable(12) %i.j) #23, !inline_history !154
-  br label %_ZN4CGAL6HandleD2Ev.exit.a
+  br label %_ZN4CGAL6HandleD2Ev.exit
 
 bb.g:                                             ; preds = %bb.e
   %i.r = add nsw i32 %i.m, -1
   store atomic i32 %i.r, ptr %i.l monotonic, align 4
-  br label %_ZN4CGAL6HandleD2Ev.exit.a
+  br label %_ZN4CGAL6HandleD2Ev.exit
 
 bb.h:                                             ; preds = %bb.d
   br i1 %i.n, label %bb.j, label %bb.i
@@ -771,7 +669,7 @@ bb.h:                                             ; preds = %bb.d
 bb.i:                                             ; preds = %bb.h
   %i.s = atomicrmw sub ptr %i.l, i32 1 release, align 4
   %i.t = icmp eq i32 %i.s, 1
-  br i1 %i.t, label %bb.j, label %_ZN4CGAL6HandleD2Ev.exit.a
+  br i1 %i.t, label %bb.j, label %_ZN4CGAL6HandleD2Ev.exit
 
 bb.j:                                             ; preds = %bb.h, %bb.i
   fence acquire
@@ -779,12 +677,18 @@ bb.j:                                             ; preds = %bb.h, %bb.i
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.w = load ptr, ptr %i.v, align 8
   call void %i.w(ptr noundef nonnull align 8 dereferenceable(12) %i.j) #23, !inline_history !154
-  br label %_ZN4CGAL6HandleD2Ev.exit.a
+  br label %_ZN4CGAL6HandleD2Ev.exit
 
-_ZN4CGAL6HandleD2Ev.exit.a:                       ; preds = %bb.j, %bb.i, %bb.g, %bb.f, %bb.c
+_ZN4CGAL6HandleD2Ev.exit:                         ; preds = %bb.c, %bb.f, %bb.g, %bb.i, %bb.j
+  %4 = load ptr, ptr %2, align 8, !tbaa !92       ; 4 uses
+  %.not.i.i6 = icmp eq ptr %4, null
+  br i1 %.not.i.i6, label %_ZN4CGAL6HandleD2Ev.exit8, label %_ZN4CGAL6HandleD2Ev.exit.a
+
+_ZN4CGAL6HandleD2Ev.exit.a:                       ; preds = %_ZN4CGAL6HandleD2Ev.exit
   %i.x = load i8, ptr @__libc_single_threaded, align 1, !tbaa !72
   %.not.i.i.i7 = icmp eq i8 %i.x, 0
-  %i.y = load atomic i32, ptr %i.e monotonic, align 8 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.y = load atomic i32, ptr %5 monotonic, align 4 ; 2 uses
   %i.z = icmp eq i32 %i.y, 1                      ; 2 uses
   br i1 %.not.i.i.i7, label %bb.n, label %bb.k
 
@@ -792,41 +696,214 @@ bb.k:                                             ; preds = %_ZN4CGAL6HandleD2Ev
   br i1 %i.z, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.aa = load ptr, ptr %i.a, align 16, !tbaa !37
+  %i.aa = load ptr, ptr %4, align 8, !tbaa !37
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8
-  call void %i.ac(ptr noundef nonnull align 8 dereferenceable(12) %i.a) #23, !inline_history !154
+  call void %i.ac(ptr noundef nonnull align 8 dereferenceable(12) %4) #23, !inline_history !154
   br label %_ZN4CGAL6HandleD2Ev.exit8
 
 bb.m:                                             ; preds = %bb.k
   %i.ad = add nsw i32 %i.y, -1
-  store atomic i32 %i.ad, ptr %i.e monotonic, align 8
+  store atomic i32 %i.ad, ptr %5 monotonic, align 4
   br label %_ZN4CGAL6HandleD2Ev.exit8
 
 bb.n:                                             ; preds = %_ZN4CGAL6HandleD2Ev.exit.a
-  br i1 %i.z, label %bb.p, label %bb.o
+  br i1 %i.z, label %6, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.ae = atomicrmw sub ptr %i.e, i32 1 release, align 4
+  %i.ae = atomicrmw sub ptr %5, i32 1 release, align 4
   %i.af = icmp eq i32 %i.ae, 1
-  br i1 %i.af, label %bb.p, label %_ZN4CGAL6HandleD2Ev.exit8
+  br i1 %i.af, label %6, label %_ZN4CGAL6HandleD2Ev.exit8
 
-bb.p:                                             ; preds = %bb.n, %bb.o
+6:                                                ; preds = %bb.o, %bb.n
   fence acquire
-  %i.ag = load ptr, ptr %i.a, align 16, !tbaa !37
+  %7 = load ptr, ptr %2, align 8, !tbaa !92       ; 3 uses
+  %8 = icmp eq ptr %7, null
+  br i1 %8, label %_ZN4CGAL6HandleD2Ev.exit8, label %bb.p
+
+bb.p:                                             ; preds = %6
+  %i.ag = load ptr, ptr %7, align 8, !tbaa !37
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ai = load ptr, ptr %i.ah, align 8
-  call void %i.ai(ptr noundef nonnull align 8 dereferenceable(12) %i.a) #23, !inline_history !154
+  call void %i.ai(ptr noundef nonnull align 8 dereferenceable(12) %7) #23, !inline_history !154
   br label %_ZN4CGAL6HandleD2Ev.exit8
 
-_ZN4CGAL6HandleD2Ev.exit8:                        ; preds = %bb.l, %bb.m, %bb.o, %bb.p
+_ZN4CGAL6HandleD2Ev.exit8:                        ; preds = %_ZN4CGAL6HandleD2Ev.exit, %bb.l, %bb.m, %bb.o, %6, %bb.p
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
   ret ptr %0
 
-bb.q:                                             ; preds = %bb.a
+9:                                                ; preds = %bb.a
+  %10 = landingpad { ptr, i32 }
+          cleanup
+  br label %11
+
+bb.q:                                             ; preds = %bb.b
   %i.aj = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef 80) #37
-  resume { ptr, i32 } %i.aj
+  call void @_ZN4CGAL6HandleD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(9) %2) #23
+  br label %11
+
+11:                                               ; preds = %bb.q, %9
+  %.pn = phi { ptr, i32 } [ %i.aj, %bb.q ], [ %10, %9 ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
+  call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef 80) #37
+  resume { ptr, i32 } %.pn
+}
+
+; Function Attrs: mustprogress uwtable
+define linkonce_odr dso_local void @_ZN4CGAL14Lazy_exact_DivIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EC2ERKNS_13Lazy_exact_ntISD_EESI_(ptr noundef nonnull align 16 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(9) %1, ptr noundef nonnull align 8 dereferenceable(9) %2) unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
+  %4 = alloca i32, align 4                        ; 4 uses
+  %5 = alloca i32, align 4                        ; 4 uses
+  %6 = alloca i32, align 4                        ; 4 uses
+  %7 = alloca i32, align 4                        ; 4 uses
+  %8 = alloca i32, align 4                        ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %8)
+  call void @llvm.x86.sse.stmxcsr(ptr nonnull %8)
+  %9 = load i32, ptr %8, align 4
+  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %7)
+  call void @llvm.x86.sse.stmxcsr(ptr nonnull %6)
+  %10 = load i32, ptr %6, align 4
+  %11 = and i32 %10, -24577
+  %12 = or disjoint i32 %11, 16384
+  store i32 %12, ptr %7, align 4
+  call void @llvm.x86.sse.ldmxcsr(ptr nonnull %7)
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  %13 = load ptr, ptr %1, align 8, !tbaa !92      ; 4 uses
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
+  %15 = load ptr, ptr %2, align 8, !tbaa !92      ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 16
+  %17 = load double, ptr %16, align 16, !tbaa !72 ; 2 uses
+  %18 = fneg double %17                           ; 6 uses
+  %19 = fcmp olt double %17, 0.000000e+00
+  %20 = getelementptr inbounds nuw i8, ptr %15, i64 24
+  %21 = load double, ptr %20, align 8, !tbaa !72  ; 7 uses
+  br i1 %19, label %22, label %43
+
+22:                                               ; preds = %3
+  %23 = load double, ptr %14, align 16, !tbaa !72 ; 2 uses
+  %24 = fcmp ogt double %23, 0.000000e+00
+  br i1 %24, label %25, label %30
+
+25:                                               ; preds = %22
+  %26 = getelementptr inbounds nuw i8, ptr %13, i64 24
+  %27 = load double, ptr %26, align 8, !tbaa !72
+  %28 = fcmp olt double %27, 0.000000e+00
+  br i1 %28, label %29, label %30
+
+29:                                               ; preds = %25
+  br label %30
+
+30:                                               ; preds = %29, %25, %22
+  %.024.i = phi double [ %18, %29 ], [ %18, %25 ], [ %21, %22 ]
+  %.023.i = phi double [ %21, %29 ], [ %18, %25 ], [ %18, %22 ]
+  %31 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %23) #23, !srcloc !614
+  %32 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %.024.i) #23, !srcloc !614
+  %33 = fdiv double %31, %32
+  %34 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %33) #23, !srcloc !614
+  %35 = getelementptr inbounds nuw i8, ptr %13, i64 24
+  %36 = load double, ptr %35, align 8, !tbaa !72
+  %37 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %36) #23, !srcloc !614
+  %38 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %.023.i) #23, !srcloc !614
+  %39 = fdiv double %37, %38
+  %40 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %39) #23, !srcloc !614
+  %41 = insertelement <2 x double> poison, double %34, i64 0
+  %42 = insertelement <2 x double> %41, double %40, i64 1
+  br label %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit
+
+43:                                               ; preds = %3
+  %44 = fcmp olt double %21, 0.000000e+00
+  br i1 %44, label %45, label %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit
+
+45:                                               ; preds = %43
+  %46 = load double, ptr %14, align 16, !tbaa !72
+  %47 = fcmp ogt double %46, 0.000000e+00
+  %48 = getelementptr inbounds nuw i8, ptr %13, i64 24
+  %49 = load double, ptr %48, align 8, !tbaa !72  ; 2 uses
+  br i1 %47, label %50, label %._crit_edge.i
+
+50:                                               ; preds = %45
+  %51 = fcmp olt double %49, 0.000000e+00
+  br i1 %51, label %52, label %._crit_edge.i
+
+52:                                               ; preds = %50
+  br label %._crit_edge.i
+
+._crit_edge.i:                                    ; preds = %52, %50, %45
+  %.022.i = phi double [ %18, %52 ], [ %21, %50 ], [ %21, %45 ]
+  %.0.i = phi double [ %21, %52 ], [ %21, %50 ], [ %18, %45 ]
+  %53 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %49) #23, !srcloc !614
+  %54 = fneg double %.022.i
+  %55 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %54) #23, !srcloc !614
+  %56 = fdiv double %53, %55
+  %57 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %56) #23, !srcloc !614
+  %58 = load double, ptr %14, align 16, !tbaa !72
+  %59 = fneg double %58
+  %60 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %59) #23, !srcloc !614
+  %61 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %.0.i) #23, !srcloc !614
+  %62 = fdiv double %60, %61
+  %63 = call noundef double asm sideeffect "", "=x,0,~{dirflag},~{fpsr},~{flags}"(double %62) #23, !srcloc !614
+  %64 = insertelement <2 x double> poison, double %57, i64 0
+  %65 = insertelement <2 x double> %64, double %63, i64 1
+  br label %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit
+
+_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit:     ; preds = %._crit_edge.i, %43, %30
+  %.sroa.025.0.i = phi <2 x double> [ %42, %30 ], [ %65, %._crit_edge.i ], [ splat (double +inf), %43 ]
+  %66 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 1, ptr %66, align 8, !tbaa !114
+  %67 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store <2 x double> %.sroa.025.0.i, ptr %67, align 16, !tbaa !72
+  %68 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  store ptr null, ptr %68, align 16, !tbaa !116
+  %69 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i32 0, ptr %69, align 8, !tbaa !119
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL17Lazy_exact_binaryIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EE, i64 16), ptr %0, align 16, !tbaa !37
+  %70 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %71 = load ptr, ptr %1, align 8, !tbaa !92      ; 2 uses
+  store ptr %71, ptr %70, align 16, !tbaa !92
+  %72 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !72
+  %.not.i.i.i.i.i = icmp eq i8 %72, 0
+  %73 = getelementptr inbounds nuw i8, ptr %71, i64 8 ; 3 uses
+  br i1 %.not.i.i.i.i.i, label %82, label %74
+
+74:                                               ; preds = %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit
+  %75 = load atomic i32, ptr %73 monotonic, align 4
+  %76 = add nsw i32 %75, 1
+  store atomic i32 %76, ptr %73 monotonic, align 4
+  %77 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %78 = load ptr, ptr %2, align 8, !tbaa !92      ; 2 uses
+  store ptr %78, ptr %77, align 16, !tbaa !92
+  %79 = getelementptr inbounds nuw i8, ptr %78, i64 8 ; 2 uses
+  %80 = load atomic i32, ptr %79 monotonic, align 4
+  %81 = add nsw i32 %80, 1
+  store atomic i32 %81, ptr %79 monotonic, align 4
+  br label %_ZN4CGAL17Lazy_exact_binaryIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EC2ERKNS_11Interval_ntILb0EEERKNS_13Lazy_exact_ntISD_EESM_.exit
+
+82:                                               ; preds = %_ZN4CGALdvERKNS_11Interval_ntILb0EEES3_.exit
+  %83 = atomicrmw add ptr %73, i32 1 monotonic, align 4 ; 0 uses
+  %84 = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %85 = load ptr, ptr %2, align 8, !tbaa !92      ; 2 uses
+  store ptr %85, ptr %84, align 16, !tbaa !92
+  %86 = getelementptr inbounds nuw i8, ptr %85, i64 8
+  %87 = atomicrmw add ptr %86, i32 1 monotonic, align 4 ; 0 uses
+  br label %_ZN4CGAL17Lazy_exact_binaryIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EC2ERKNS_11Interval_ntILb0EEERKNS_13Lazy_exact_ntISD_EESM_.exit
+
+_ZN4CGAL17Lazy_exact_binaryIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EC2ERKNS_11Interval_ntILb0EEERKNS_13Lazy_exact_ntISD_EESM_.exit: ; preds = %82, %74
+  %88 = and i32 %9, 24576
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  call void @llvm.x86.sse.stmxcsr(ptr nonnull %4)
+  %89 = load i32, ptr %4, align 4
+  %90 = and i32 %89, -24577
+  %91 = or disjoint i32 %90, %88
+  store i32 %91, ptr %5, align 4
+  call void @llvm.x86.sse.ldmxcsr(ptr nonnull %5)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL14Lazy_exact_DivIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEESD_SD_EE, i64 16), ptr %0, align 16, !tbaa !37
+  ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
@@ -1038,9 +1115,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.u = load double, ptr %i.t, align 8, !tbaa !72
-  %6 = load <2 x double>, ptr %i.s, align 16, !tbaa !72
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.v = fneg double %7
+  %6 = load double, ptr %i.s, align 16, !tbaa !72
+  %i.v = fneg double %6
   %i.w = fcmp oeq double %i.u, %i.v
   br i1 %i.w, label %bb.m, label %bb.k
 
@@ -1443,9 +1519,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.u = load double, ptr %i.t, align 8, !tbaa !72
-  %6 = load <2 x double>, ptr %i.s, align 16, !tbaa !72
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.v = fneg double %7
+  %6 = load double, ptr %i.s, align 16, !tbaa !72
+  %i.v = fneg double %6
   %i.w = fcmp oeq double %i.u, %i.v
   br i1 %i.w, label %bb.m, label %bb.k
 
@@ -1848,7 +1923,7 @@ bb.a:
   %4 = alloca %class.anon.265, align 8            ; 5 uses
   %5 = alloca %class.anon.264, align 8            ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !92     ; 6 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !92     ; 2 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !92     ; 3 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %bb.m, label %bb.b
 
@@ -1856,19 +1931,18 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.f = load double, ptr %i.e, align 8, !tbaa !72
-  %6 = load <2 x double>, ptr %i.d, align 16      ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.g = fneg double %7
+  %6 = load double, ptr %i.d, align 16, !tbaa !72
+  %i.g = fneg double %6
   %i.h = fcmp olt double %i.f, %i.g
   br i1 %i.h, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %8 = extractelement <2 x double> %6, i64 1
-  %9 = load <2 x double>, ptr %i.i, align 16, !tbaa !72
-  %10 = extractelement <2 x double> %9, i64 0
-  %11 = fneg double %10
-  %i.j = fcmp ugt double %8, %11
+  %7 = load double, ptr %i.i, align 16, !tbaa !72
+  %8 = fneg double %7
+  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %10 = load double, ptr %9, align 8, !tbaa !72
+  %i.j = fcmp ugt double %10, %8
   br i1 %i.j, label %bb.d, label %_ZN4CGALltERKNS_11Interval_ntILb0EEES3_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -2271,8 +2345,8 @@ begin_hunk_4_@llvm.abs.i64
 !610 = distinct !{!610, !45}
 !611 = !{!612, !471, i64 48}
 !612 = !{!"_ZTSN4CGAL14Lazy_exact_CstIN5boost14multiprecision6numberINS2_8backends16rational_adaptorINS4_15cpp_int_backendILm0ELm0ELNS2_16cpp_integer_typeE1ELNS2_18cpp_int_check_typeE0ESaIyEEEEELNS2_26expression_template_optionE1EEEdEE", !123, i64 0, !471, i64 48}
-!613 = !{i64 14926366}
-!614 = !{!94, !94, i64 0}
+!613 = !{!94, !94, i64 0}
+!614 = !{i64 14926366}
 !615 = !{!616, !617, i64 0}
 !616 = !{!"_ZTSZNK4CGAL8Lazy_repINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_11To_intervalISF_EELi1EE5exactEvEUlvE_", !617, i64 0}
 !617 = !{!"p1 _ZTSN4CGAL8Lazy_repINS_11Interval_ntILb0EEEN5boost14multiprecision6numberINS4_8backends16rational_adaptorINS6_15cpp_int_backendILm0ELm0ELNS4_16cpp_integer_typeE1ELNS4_18cpp_int_check_typeE0ESaIyEEEEELNS4_26expression_template_optionE1EEENS_11To_intervalISF_EELi1EEE", !11, i64 0}
