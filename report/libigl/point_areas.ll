@@ -205,17 +205,17 @@ bb.a:
   %i.bv = fneg double %i.bu                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.bt, i64 1 ; 2 uses
   %i.bw = fcmp olt double %.sroa.0.8.vec.extract.i.i.i, %i.bv
-  %4 = extractelement <2 x double> %i.bc, i64 1   ; 2 uses
   br i1 %i.bw, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.bx = extractelement <2 x double> %i.bt, i64 0
   %i.by = fneg double %i.bx                       ; 2 uses
-  %i.bz = fcmp olt double %4, %i.by
+  %.sroa.05.8.vec.extract.i.i.i = extractelement <2 x double> %i.bc, i64 1 ; 2 uses
+  %i.bz = fcmp olt double %.sroa.05.8.vec.extract.i.i.i, %i.by
   br i1 %i.bz, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ca = fcmp une double %4, %i.by
+  %i.ca = fcmp une double %.sroa.05.8.vec.extract.i.i.i, %i.by
   %i.cb = fcmp une double %.sroa.0.8.vec.extract.i.i.i, %i.bv
   %or.cond.not.i.i.i.i.i.i = or i1 %i.cb, %i.ca
   %i.cc = select i1 %or.cond.not.i.i.i.i.i.i, i64 8589934591, i64 0
@@ -618,17 +618,17 @@ begin_hunk_1_@_ZN4CGAL25side_of_oriented_circleC2INS_11Interval_ntILb0EEEEENS_19
   %i.jd = fneg double %i.jc                       ; 2 uses
   %.sroa.0.8.vec.extract.i = extractelement <2 x double> %i.jb, i64 1 ; 2 uses
   %i.je = fcmp olt double %.sroa.0.8.vec.extract.i, %i.jd
-  %8 = extractelement <2 x double> %i.ik, i64 1   ; 2 uses
   br i1 %i.je, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.jf = extractelement <2 x double> %i.jb, i64 0
   %i.jg = fneg double %i.jf                       ; 2 uses
-  %i.jh = fcmp olt double %8, %i.jg
+  %.sroa.05.8.vec.extract.i = extractelement <2 x double> %i.ik, i64 1 ; 2 uses
+  %i.jh = fcmp olt double %.sroa.05.8.vec.extract.i, %i.jg
   br i1 %i.jh, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ji = fcmp une double %8, %i.jg
+  %i.ji = fcmp une double %.sroa.05.8.vec.extract.i, %i.jg
   %i.jj = fcmp une double %.sroa.0.8.vec.extract.i, %i.jd
   %or.cond.not.i.i.i.i = or i1 %i.jj, %i.ji
   %i.jk = select i1 %or.cond.not.i.i.i.i, i64 8589934591, i64 0

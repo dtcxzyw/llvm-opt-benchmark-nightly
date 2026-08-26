@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 720
   %.sroa.0.0.copyload.i10 = load <2 x float>, ptr %i.p, align 8 ; 2 uses
   %.sroa.2.0..sroa_idx.i11 = getelementptr inbounds nuw i8, ptr %i.m, i64 728
-  %.sroa.2.0.copyload.i12 = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i11, align 8, !tbaa !51
   %i.q = bitcast <2 x float> %.sroa.0.0.copyload.i to i64
   %i.r = and i64 %i.q, 2147483647
   %i.s = icmp ne i64 %i.r, 0
@@ -213,9 +212,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.u = shufflevector <4 x float> %i.t, <4 x float> %i.o, <4 x i32> <i32 0, i32 4, i32 2, i32 3>
   %.fr = freeze <4 x float> %i.u
   %i.v = fcmp une <4 x float> %.fr, zeroinitializer
-  %.sroa.2.0.copyload.i12.fr = freeze <2 x float> %.sroa.2.0.copyload.i12
-  %.sroa.7.8.vec.extract = extractelement <2 x float> %.sroa.2.0.copyload.i12.fr, i64 0 ; 2 uses
-  %i.w = fcmp une float %.sroa.7.8.vec.extract, 0.000000e+00
+  %.sroa.7.8.vec.extract = load float, ptr %.sroa.2.0..sroa_idx.i11, align 8, !tbaa !51
+  %.sroa.7.8.vec.extract.fr = freeze float %.sroa.7.8.vec.extract ; 2 uses
+  %i.w = fcmp une float %.sroa.7.8.vec.extract.fr, 0.000000e+00
   %i.x = bitcast <4 x i1> %i.v to i4
   %i.y = icmp ne i4 %i.x, 0
   %op.rdx = or i1 %i.y, %i.w
@@ -226,7 +225,7 @@ bb.c:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.aa = fmul <2 x float> %.sroa.0.0.copyload.i10, splat (float 1.000000e-01)
-  %i.ab = fmul float %.sroa.7.8.vec.extract, 1.000000e-01
+  %i.ab = fmul float %.sroa.7.8.vec.extract.fr, 1.000000e-01
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ab, i64 0
   store <2 x float> %i.aa, ptr %4, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i, ptr %i.f, align 8
@@ -499,7 +498,6 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 720
   %.sroa.0.0.copyload.i10.i = load <2 x float>, ptr %i.p, align 8 ; 2 uses
   %.sroa.2.0..sroa_idx.i11.i = getelementptr inbounds nuw i8, ptr %i.m, i64 728
-  %.sroa.2.0.copyload.i12.i = load <2 x float>, ptr %.sroa.2.0..sroa_idx.i11.i, align 8, !tbaa !51
   %i.q = bitcast <2 x float> %.sroa.0.0.copyload.i.i to i64
   %i.r = and i64 %i.q, 2147483647
   %i.s = icmp ne i64 %i.r, 0
@@ -507,9 +505,9 @@ bb.b:                                             ; preds = %bb.d, %.lr.ph.i
   %i.u = shufflevector <4 x float> %i.t, <4 x float> %i.o, <4 x i32> <i32 0, i32 4, i32 2, i32 3>
   %.fr = freeze <4 x float> %i.u
   %i.v = fcmp une <4 x float> %.fr, zeroinitializer
-  %.sroa.2.0.copyload.i12.i.fr = freeze <2 x float> %.sroa.2.0.copyload.i12.i
-  %.sroa.7.8.vec.extract.i = extractelement <2 x float> %.sroa.2.0.copyload.i12.i.fr, i64 0 ; 2 uses
-  %i.w = fcmp une float %.sroa.7.8.vec.extract.i, 0.000000e+00
+  %.sroa.7.8.vec.extract.i = load float, ptr %.sroa.2.0..sroa_idx.i11.i, align 8, !tbaa !51
+  %.sroa.7.8.vec.extract.i.fr = freeze float %.sroa.7.8.vec.extract.i ; 2 uses
+  %i.w = fcmp une float %.sroa.7.8.vec.extract.i.fr, 0.000000e+00
   %i.x = bitcast <4 x i1> %i.v to i4
   %i.y = icmp ne i4 %i.x, 0
   %op.rdx = or i1 %i.y, %i.w
@@ -520,7 +518,7 @@ bb.c:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.aa = fmul <2 x float> %.sroa.0.0.copyload.i10.i, splat (float 1.000000e-01)
-  %i.ab = fmul float %.sroa.7.8.vec.extract.i, 1.000000e-01
+  %i.ab = fmul float %.sroa.7.8.vec.extract.i.fr, 1.000000e-01
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ab, i64 0
   store <2 x float> %i.aa, ptr %4, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %i.f, align 8

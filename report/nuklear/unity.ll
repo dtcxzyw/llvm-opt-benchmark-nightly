@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not2150, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 9472
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 392
@@ -223,13 +223,13 @@ bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %.01751, i64 420
   %i.j = load i8, ptr %i.i, align 4, !tbaa !834, !range !79, !noundef !80
   %i.k = trunc nuw i8 %i.j to i1
-  br i1 %i.k, label %bb.e, label %nk_input_is_mouse_hovering_rect.exit.thread.a
+  br i1 %i.k, label %bb.e, label %nk_input_is_mouse_hovering_rect.exit.thread
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %.01751, i64 360
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !815  ; 3 uses
   %.not23 = icmp eq ptr %i.m, null
-  br i1 %.not23, label %nk_input_is_mouse_hovering_rect.exit.thread.a, label %bb.f
+  br i1 %.not23, label %nk_input_is_mouse_hovering_rect.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 76
@@ -243,7 +243,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.u = fcmp olt float %i.r, %i.t
   %or.cond.i = select i1 %i.s, i1 %i.u, i1 false
-  br i1 %or.cond.i, label %bb.g, label %nk_input_is_mouse_hovering_rect.exit.thread.a
+  br i1 %or.cond.i, label %bb.g, label %nk_input_is_mouse_hovering_rect.exit.thread
 
 bb.g:                                             ; preds = %bb.f
   %.sroa.0.4.vec.extract.i = extractelement <2 x float> %i.o, i64 1
@@ -253,28 +253,27 @@ bb.g:                                             ; preds = %bb.f
   %i.x = extractelement <2 x float> %foldExtExtBinop60, i64 1
   %i.y = fcmp olt float %i.v, %i.x
   %or.cond = select i1 %i.w, i1 %i.y, i1 false
-  br i1 %or.cond, label %.loopexit, label %nk_input_is_mouse_hovering_rect.exit.thread.a
+  br i1 %or.cond, label %.loopexit, label %nk_input_is_mouse_hovering_rect.exit.thread
 
-nk_input_is_mouse_hovering_rect.exit.thread.a:    ; preds = %bb.f, %bb.g, %bb.e, %bb.d
+nk_input_is_mouse_hovering_rect.exit.thread:      ; preds = %bb.f, %bb.g, %bb.e, %bb.d
   %1 = and i32 %i.g, 32768
   %.not24 = icmp eq i32 %1, 0
   %2 = getelementptr inbounds nuw i8, ptr %.01751, i64 76
-  %3 = load <2 x float>, ptr %2, align 4          ; 5 uses
-  %4 = getelementptr inbounds nuw i8, ptr %.01751, i64 84
-  %5 = load <2 x float>, ptr %4, align 4          ; 2 uses
-  %.sroa.0.0.vec.extract.i34.a = extractelement <2 x float> %3, i64 0
+  %3 = load <2 x float>, ptr %2, align 4          ; 6 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.01751, i64 84 ; 2 uses
+  br i1 %.not24, label %bb.i, label %nk_input_is_mouse_hovering_rect.exit.thread.a
+
+nk_input_is_mouse_hovering_rect.exit.thread.a:    ; preds = %nk_input_is_mouse_hovering_rect.exit.thread
+  %.sroa.0.0.vec.extract.i34.a = extractelement <2 x float> %3, i64 0 ; 2 uses
   %i.z = load float, ptr %i.b, align 4, !tbaa !714 ; 2 uses
   %i.aa = fcmp ole float %.sroa.0.0.vec.extract.i34.a, %i.z
-  %foldExtExtBinop62 = fadd <2 x float> %3, %5
-  %6 = extractelement <2 x float> %foldExtExtBinop62, i64 0
-  %i.ab = fcmp olt float %i.z, %6
-  %or.cond.i36.a = select i1 %i.aa, i1 %i.ab, i1 false ; 2 uses
-  br i1 %.not24, label %bb.i, label %7
-
-7:                                                ; preds = %nk_input_is_mouse_hovering_rect.exit.thread.a
+  %.sroa.5.8.vec.extract.i27 = load float, ptr %4, align 4
+  %5 = fadd float %.sroa.0.0.vec.extract.i34.a, %.sroa.5.8.vec.extract.i27
+  %i.ab = fcmp olt float %i.z, %5
+  %or.cond.i36.a = select i1 %i.aa, i1 %i.ab, i1 false
   br i1 %or.cond.i36.a, label %bb.h, label %nk_input_is_mouse_hovering_rect.exit32.thread
 
-bb.h:                                             ; preds = %7
+bb.h:                                             ; preds = %nk_input_is_mouse_hovering_rect.exit.thread.a
   %i.ac = load float, ptr %i.d, align 8, !tbaa !907
   %i.ad = load ptr, ptr %i.e, align 8, !tbaa !767
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
@@ -288,20 +287,28 @@ bb.h:                                             ; preds = %7
   %or.cond46 = select i1 %i.ai, i1 %i.ak, i1 false
   br i1 %or.cond46, label %.loopexit, label %nk_input_is_mouse_hovering_rect.exit32.thread
 
-bb.i:                                             ; preds = %nk_input_is_mouse_hovering_rect.exit.thread.a
-  br i1 %or.cond.i36.a, label %bb.j, label %nk_input_is_mouse_hovering_rect.exit32.thread
+bb.i:                                             ; preds = %nk_input_is_mouse_hovering_rect.exit.thread
+  %6 = load <2 x float>, ptr %4, align 4          ; 2 uses
+  %.sroa.0.0.vec.extract.i34 = extractelement <2 x float> %3, i64 0
+  %7 = load float, ptr %i.b, align 4, !tbaa !714  ; 2 uses
+  %8 = fcmp ole float %.sroa.0.0.vec.extract.i34, %7
+  %foldExtExtBinop62 = fadd <2 x float> %3, %6
+  %9 = extractelement <2 x float> %foldExtExtBinop62, i64 0
+  %10 = fcmp olt float %7, %9
+  %or.cond.i36 = select i1 %8, i1 %10, i1 false
+  br i1 %or.cond.i36, label %bb.j, label %nk_input_is_mouse_hovering_rect.exit32.thread
 
 bb.j:                                             ; preds = %bb.i
   %.sroa.0.4.vec.extract.i38 = extractelement <2 x float> %3, i64 1
   %i.al = load float, ptr %i.c, align 8, !tbaa !715 ; 2 uses
   %i.am = fcmp ole float %.sroa.0.4.vec.extract.i38, %i.al
-  %foldExtExtBinop64 = fadd <2 x float> %3, %5
+  %foldExtExtBinop64 = fadd <2 x float> %3, %6
   %i.an = extractelement <2 x float> %foldExtExtBinop64, i64 1
   %i.ao = fcmp olt float %i.al, %i.an
   %or.cond48 = select i1 %i.am, i1 %i.ao, i1 false
   br i1 %or.cond48, label %.loopexit, label %nk_input_is_mouse_hovering_rect.exit32.thread
 
-nk_input_is_mouse_hovering_rect.exit32.thread:    ; preds = %bb.i, %bb.j, %7, %bb.h, %bb.c
+nk_input_is_mouse_hovering_rect.exit32.thread:    ; preds = %bb.i, %bb.j, %nk_input_is_mouse_hovering_rect.exit.thread.a, %bb.h, %bb.c
   %i.ap = getelementptr inbounds nuw i8, ptr %.01751, i64 528
   %.017 = load ptr, ptr %i.ap, align 8, !tbaa !294 ; 2 uses
   %.not21 = icmp eq ptr %.017, null
@@ -325,7 +332,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not2150.i, label %nk_window_is_any_hovered.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 9472
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 392
@@ -343,17 +350,12 @@ bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %.01751.i, i64 420
   %i.j = load i8, ptr %i.i, align 4, !tbaa !834, !range !79, !noundef !80
   %i.k = trunc nuw i8 %i.j to i1
-  br i1 %i.k, label %bb.e, label %.nk_input_is_mouse_hovering_rect.exit.thread.i_crit_edge
-
-.nk_input_is_mouse_hovering_rect.exit.thread.i_crit_edge: ; preds = %bb.d
-  %.pre = load float, ptr %i.b, align 4, !tbaa !714
-  br label %nk_input_is_mouse_hovering_rect.exit.thread.i
+  br i1 %i.k, label %bb.e, label %nk_input_is_mouse_hovering_rect.exit.thread.i
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %.01751.i, i64 360
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !815  ; 3 uses
   %.not23.i = icmp eq ptr %i.m, null
-  %.pre3 = load float, ptr %i.b, align 4, !tbaa !714 ; 5 uses
   br i1 %.not23.i, label %nk_input_is_mouse_hovering_rect.exit.thread.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -362,10 +364,11 @@ bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %i.m, i64 84
   %i.q = load <2 x float>, ptr %i.p, align 4      ; 2 uses
   %.sroa.0.0.vec.extract.i.i = extractelement <2 x float> %i.o, i64 0
-  %i.r = fcmp ole float %.sroa.0.0.vec.extract.i.i, %.pre3
+  %1 = load float, ptr %i.b, align 4, !tbaa !714  ; 2 uses
+  %i.r = fcmp ole float %.sroa.0.0.vec.extract.i.i, %1
   %foldExtExtBinop = fadd <2 x float> %i.o, %i.q
   %i.s = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %i.t = fcmp olt float %.pre3, %i.s
+  %i.t = fcmp olt float %1, %i.s
   %or.cond.i.i = select i1 %i.r, i1 %i.t, i1 false
   br i1 %or.cond.i.i, label %bb.g, label %nk_input_is_mouse_hovering_rect.exit.thread.i
 
@@ -379,24 +382,23 @@ bb.g:                                             ; preds = %bb.f
   %or.cond.i = select i1 %i.v, i1 %i.x, i1 false
   br i1 %or.cond.i, label %nk_window_is_any_hovered.exit, label %nk_input_is_mouse_hovering_rect.exit.thread.i
 
-nk_input_is_mouse_hovering_rect.exit.thread.i:    ; preds = %.nk_input_is_mouse_hovering_rect.exit.thread.i_crit_edge, %bb.g, %bb.f, %bb.e
-  %1 = phi float [ %.pre, %.nk_input_is_mouse_hovering_rect.exit.thread.i_crit_edge ], [ %.pre3, %bb.g ], [ %.pre3, %bb.f ], [ %.pre3, %bb.e ] ; 2 uses
+nk_input_is_mouse_hovering_rect.exit.thread.i:    ; preds = %bb.g, %bb.f, %bb.e, %bb.d
   %i.y = and i32 %i.g, 32768
   %.not24.i = icmp eq i32 %i.y, 0
   %i.z = getelementptr inbounds nuw i8, ptr %.01751.i, i64 76
-  %i.aa = load <2 x float>, ptr %i.z, align 4     ; 5 uses
-  %i.ab = getelementptr inbounds nuw i8, ptr %.01751.i, i64 84
-  %2 = load <2 x float>, ptr %i.ab, align 4       ; 2 uses
-  %.sroa.0.0.vec.extract.i34.i = extractelement <2 x float> %i.aa, i64 0
-  %3 = fcmp ole float %.sroa.0.0.vec.extract.i34.i, %1
-  %foldExtExtBinop8 = fadd <2 x float> %i.aa, %2
-  %4 = extractelement <2 x float> %foldExtExtBinop8, i64 0
-  %5 = fcmp olt float %1, %4
-  %or.cond.i36.i = select i1 %3, i1 %5, i1 false  ; 2 uses
+  %i.aa = load <2 x float>, ptr %i.z, align 4     ; 6 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %.01751.i, i64 84 ; 2 uses
   br i1 %.not24.i, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %nk_input_is_mouse_hovering_rect.exit.thread.i
-  br i1 %or.cond.i36.i, label %bb.i, label %nk_input_is_mouse_hovering_rect.exit32.thread.i
+  %.sroa.0.0.vec.extract.i26.i = extractelement <2 x float> %i.aa, i64 0 ; 2 uses
+  %2 = load float, ptr %i.b, align 4, !tbaa !714  ; 2 uses
+  %3 = fcmp ole float %.sroa.0.0.vec.extract.i26.i, %2
+  %.sroa.5.8.vec.extract.i27.i = load float, ptr %i.ab, align 4
+  %4 = fadd float %.sroa.0.0.vec.extract.i26.i, %.sroa.5.8.vec.extract.i27.i
+  %5 = fcmp olt float %2, %4
+  %or.cond.i28.i = select i1 %3, i1 %5, i1 false
+  br i1 %or.cond.i28.i, label %bb.i, label %nk_input_is_mouse_hovering_rect.exit32.thread.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ac = load float, ptr %i.d, align 8, !tbaa !907
@@ -413,13 +415,21 @@ bb.i:                                             ; preds = %bb.h
   br i1 %or.cond46.i, label %nk_window_is_any_hovered.exit, label %nk_input_is_mouse_hovering_rect.exit32.thread.i
 
 bb.j:                                             ; preds = %nk_input_is_mouse_hovering_rect.exit.thread.i
+  %6 = load <2 x float>, ptr %i.ab, align 4       ; 2 uses
+  %.sroa.0.0.vec.extract.i34.i = extractelement <2 x float> %i.aa, i64 0
+  %7 = load float, ptr %i.b, align 4, !tbaa !714  ; 2 uses
+  %8 = fcmp ole float %.sroa.0.0.vec.extract.i34.i, %7
+  %foldExtExtBinop7 = fadd <2 x float> %i.aa, %6
+  %9 = extractelement <2 x float> %foldExtExtBinop7, i64 0
+  %10 = fcmp olt float %7, %9
+  %or.cond.i36.i = select i1 %8, i1 %10, i1 false
   br i1 %or.cond.i36.i, label %bb.k, label %nk_input_is_mouse_hovering_rect.exit32.thread.i
 
 bb.k:                                             ; preds = %bb.j
   %.sroa.0.4.vec.extract.i38.i = extractelement <2 x float> %i.aa, i64 1
   %i.al = load float, ptr %i.c, align 8, !tbaa !715 ; 2 uses
   %i.am = fcmp ole float %.sroa.0.4.vec.extract.i38.i, %i.al
-  %foldExtExtBinop10 = fadd <2 x float> %i.aa, %2
+  %foldExtExtBinop10 = fadd <2 x float> %i.aa, %6
   %i.an = extractelement <2 x float> %foldExtExtBinop10, i64 1
   %i.ao = fcmp olt float %i.al, %i.an
   %or.cond48.i = select i1 %i.am, i1 %i.ao, i1 false

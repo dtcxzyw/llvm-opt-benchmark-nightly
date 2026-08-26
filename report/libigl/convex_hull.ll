@@ -205,17 +205,17 @@ bb.a:
   %i.bn = fneg double %i.bm                       ; 2 uses
   %.sroa.0.8.vec.extract.i = extractelement <2 x double> %i.bl, i64 1 ; 2 uses
   %i.bo = fcmp olt double %.sroa.0.8.vec.extract.i, %i.bn
-  %9 = extractelement <2 x double> %i.au, i64 1   ; 2 uses
   br i1 %i.bo, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.bp = extractelement <2 x double> %i.bl, i64 0
   %i.bq = fneg double %i.bp                       ; 2 uses
-  %i.br = fcmp olt double %9, %i.bq
+  %.sroa.05.8.vec.extract.i = extractelement <2 x double> %i.au, i64 1 ; 2 uses
+  %i.br = fcmp olt double %.sroa.05.8.vec.extract.i, %i.bq
   br i1 %i.br, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.bs = fcmp une double %9, %i.bq
+  %i.bs = fcmp une double %.sroa.05.8.vec.extract.i, %i.bq
   %i.bt = fcmp une double %.sroa.0.8.vec.extract.i, %i.bn
   %or.cond.not.i.i.i.i = or i1 %i.bt, %i.bs
   %i.bu = select i1 %or.cond.not.i.i.i.i, i64 8589934591, i64 0
@@ -290,17 +290,17 @@ bb.d:                                             ; preds = %_ZN4CGAL19sign_of_d
   %i.dv = fneg double %i.du                       ; 2 uses
   %.sroa.0.8.vec.extract.i18 = extractelement <2 x double> %i.dt, i64 1 ; 2 uses
   %i.dw = fcmp olt double %.sroa.0.8.vec.extract.i18, %i.dv
-  %10 = extractelement <2 x double> %i.de, i64 1  ; 2 uses
   br i1 %i.dw, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_.exit21, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.dx = extractelement <2 x double> %i.dt, i64 0
   %i.dy = fneg double %i.dx                       ; 2 uses
-  %i.dz = fcmp olt double %10, %i.dy
+  %.sroa.05.8.vec.extract.i21 = extractelement <2 x double> %i.de, i64 1 ; 2 uses
+  %i.dz = fcmp olt double %.sroa.05.8.vec.extract.i21, %i.dy
   br i1 %i.dz, label %_ZN4CGAL19sign_of_determinantINS_11Interval_ntILb0EEEEENS_3SgnIT_E11result_typeERKS4_S8_S8_S8_.exit21, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ea = fcmp une double %10, %i.dy
+  %i.ea = fcmp une double %.sroa.05.8.vec.extract.i21, %i.dy
   %i.eb = fcmp une double %.sroa.0.8.vec.extract.i18, %i.dv
   %or.cond.not.i.i.i.i19 = or i1 %i.eb, %i.ea
   %i.ec = select i1 %or.cond.not.i.i.i.i19, i64 8589934591, i64 0
@@ -355,17 +355,17 @@ bb.g:                                             ; preds = %_ZN4CGAL19sign_of_d
   %i.fj = fneg double %i.fi                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.fh, i64 1 ; 2 uses
   %i.fk = fcmp olt double %.sroa.0.8.vec.extract.i.i.i, %i.fj
-  %11 = extractelement <2 x double> %i.ev, i64 1  ; 2 uses
   br i1 %i.fk, label %_ZZN4CGAL11collinearC3INS_11Interval_ntILb0EEEEENS_8Equal_toIT_S4_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_ENKUlvE_clEv.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.fl = extractelement <2 x double> %i.fh, i64 0
   %i.fm = fneg double %i.fl                       ; 2 uses
-  %i.fn = fcmp olt double %11, %i.fm
+  %.sroa.05.8.vec.extract.i.i.i = extractelement <2 x double> %i.ev, i64 1 ; 2 uses
+  %i.fn = fcmp olt double %.sroa.05.8.vec.extract.i.i.i, %i.fm
   br i1 %i.fn, label %_ZZN4CGAL11collinearC3INS_11Interval_ntILb0EEEEENS_8Equal_toIT_S4_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_ENKUlvE_clEv.exit.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.fo = fcmp une double %11, %i.fm
+  %i.fo = fcmp une double %.sroa.05.8.vec.extract.i.i.i, %i.fm
   %i.fp = fcmp une double %.sroa.0.8.vec.extract.i.i.i, %i.fj
   %or.cond.not.i.i.i.i.i.i = or i1 %i.fp, %i.fo
   %i.fq = select i1 %or.cond.not.i.i.i.i.i.i, i64 8589934591, i64 0
@@ -768,17 +768,17 @@ bb.a:
   %i.dv = fneg double %i.du                       ; 2 uses
   %.sroa.0.8.vec.extract.i = extractelement <2 x double> %i.dt, i64 1 ; 2 uses
   %i.dw = fcmp olt double %.sroa.0.8.vec.extract.i, %i.dv
-  %9 = extractelement <2 x double> %i.bj, i64 1   ; 2 uses
   br i1 %i.dw, label %_ZN4CGAL19cmp_dist_to_pointC3INS_11Interval_ntILb0EEEEENS_7CompareIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.dx = extractelement <2 x double> %i.dt, i64 0
   %i.dy = fneg double %i.dx                       ; 2 uses
-  %i.dz = fcmp olt double %9, %i.dy
+  %.sroa.012.8.vec.extract.i = extractelement <2 x double> %i.bj, i64 1 ; 2 uses
+  %i.dz = fcmp olt double %.sroa.012.8.vec.extract.i, %i.dy
   br i1 %i.dz, label %_ZN4CGAL19cmp_dist_to_pointC3INS_11Interval_ntILb0EEEEENS_7CompareIT_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ea = fcmp une double %9, %i.dy
+  %i.ea = fcmp une double %.sroa.012.8.vec.extract.i, %i.dy
   %i.eb = fcmp une double %.sroa.0.8.vec.extract.i, %i.dv
   %or.cond.not.i.i.i.i = or i1 %i.eb, %i.ea
   %i.ec = select i1 %or.cond.not.i.i.i.i, i64 8589934591, i64 0
@@ -1181,15 +1181,15 @@ bb.a:
   %i.bw = extractelement <2 x double> %i.bv, i64 0 ; 2 uses
   %i.bx = fneg double %i.bw
   %i.by = fcmp olt double %i.bw, 0.000000e+00
-  %15 = extractelement <2 x double> %i.bv, i64 1  ; 2 uses
   br i1 %i.by, label %_ZN4CGAL34has_smaller_signed_dist_to_planeC3INS_11Interval_ntILb0EEEEENS_8Equal_toIT_S4_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.bz = fcmp olt double %15, 0.000000e+00
+  %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.bv, i64 1 ; 2 uses
+  %i.bz = fcmp olt double %.sroa.0.8.vec.extract.i.i.i, 0.000000e+00
   br i1 %i.bz, label %_ZN4CGAL34has_smaller_signed_dist_to_planeC3INS_11Interval_ntILb0EEEEENS_8Equal_toIT_S4_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ca = fcmp oeq double %15, %i.bx
+  %i.ca = fcmp oeq double %.sroa.0.8.vec.extract.i.i.i, %i.bx
   br i1 %i.ca, label %_ZN4CGAL34has_smaller_signed_dist_to_planeC3INS_11Interval_ntILb0EEEEENS_8Equal_toIT_S4_E11result_typeERKS4_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_S8_.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -1592,15 +1592,15 @@ bb.a:
   %i.cb = extractelement <2 x double> %i.ca, i64 0 ; 2 uses
   %i.cc = fneg double %i.cb
   %i.cd = fcmp olt double %i.cb, 0.000000e+00
-  %14 = extractelement <2 x double> %i.ca, i64 1  ; 2 uses
   br i1 %i.cd, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %.noexc
-  %i.ce = fcmp olt double %14, 0.000000e+00
+  %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.ca, i64 1 ; 2 uses
+  %i.ce = fcmp olt double %.sroa.0.8.vec.extract.i.i.i, 0.000000e+00
   br i1 %i.ce, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.cf = fcmp oeq double %14, %i.cc
+  %i.cf = fcmp oeq double %.sroa.0.8.vec.extract.i.i.i, %i.cc
   br i1 %i.cf, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -2003,17 +2003,17 @@ bb.a:
   %i.bv = fneg double %i.bu                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i.i = extractelement <2 x double> %i.bt, i64 1 ; 2 uses
   %i.bw = fcmp olt double %.sroa.0.8.vec.extract.i.i.i, %i.bv
-  %4 = extractelement <2 x double> %i.bc, i64 1   ; 2 uses
   br i1 %i.bw, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.bx = extractelement <2 x double> %i.bt, i64 0
   %i.by = fneg double %i.bx                       ; 2 uses
-  %i.bz = fcmp olt double %4, %i.by
+  %.sroa.05.8.vec.extract.i.i.i = extractelement <2 x double> %i.bc, i64 1 ; 2 uses
+  %i.bz = fcmp olt double %.sroa.05.8.vec.extract.i.i.i, %i.by
   br i1 %i.bz, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ca = fcmp une double %4, %i.by
+  %i.ca = fcmp une double %.sroa.05.8.vec.extract.i.i.i, %i.by
   %i.cb = fcmp une double %.sroa.0.8.vec.extract.i.i.i, %i.bv
   %or.cond.not.i.i.i.i.i.i = or i1 %i.cb, %i.ca
   %i.cc = select i1 %or.cond.not.i.i.i.i.i.i, i64 8589934591, i64 0
@@ -2416,17 +2416,17 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.fu = fneg double %i.ft                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.fs, i64 1 ; 2 uses
   %i.fv = fcmp olt double %.sroa.0.8.vec.extract.i.i.i.i, %i.fu
-  %16 = extractelement <2 x double> %i.fb, i64 1  ; 2 uses
   br i1 %i.fv, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.fw = extractelement <2 x double> %i.fs, i64 0
   %i.fx = fneg double %i.fw                       ; 2 uses
-  %i.fy = fcmp olt double %16, %i.fx
+  %.sroa.05.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.fb, i64 1 ; 2 uses
+  %i.fy = fcmp olt double %.sroa.05.8.vec.extract.i.i.i.i, %i.fx
   br i1 %i.fy, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.fz = fcmp une double %16, %i.fx
+  %i.fz = fcmp une double %.sroa.05.8.vec.extract.i.i.i.i, %i.fx
   %i.ga = fcmp une double %.sroa.0.8.vec.extract.i.i.i.i, %i.fu
   %or.cond.not.i.i.i.i.i.i.i = or i1 %i.ga, %i.fz
   %i.gb = select i1 %or.cond.not.i.i.i.i.i.i.i, i64 8589934591, i64 0
@@ -2829,17 +2829,17 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.gb = fneg double %i.ga                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.fz, i64 1 ; 2 uses
   %i.gc = fcmp olt double %.sroa.0.8.vec.extract.i.i.i.i, %i.gb
-  %16 = extractelement <2 x double> %i.fi, i64 1  ; 2 uses
   br i1 %i.gc, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.gd = extractelement <2 x double> %i.fz, i64 0
   %i.ge = fneg double %i.gd                       ; 2 uses
-  %i.gf = fcmp olt double %16, %i.ge
+  %.sroa.05.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.fi, i64 1 ; 2 uses
+  %i.gf = fcmp olt double %.sroa.05.8.vec.extract.i.i.i.i, %i.ge
   br i1 %i.gf, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.gg = fcmp une double %16, %i.ge
+  %i.gg = fcmp une double %.sroa.05.8.vec.extract.i.i.i.i, %i.ge
   %i.gh = fcmp une double %.sroa.0.8.vec.extract.i.i.i.i, %i.gb
   %or.cond.not.i.i.i.i.i.i.i = or i1 %i.gh, %i.gg
   %i.gi = select i1 %or.cond.not.i.i.i.i.i.i.i, i64 8589934591, i64 0
@@ -3242,17 +3242,17 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.gn = fneg double %i.gm                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.gl, i64 1 ; 2 uses
   %i.go = fcmp olt double %.sroa.0.8.vec.extract.i.i.i.i, %i.gn
-  %16 = extractelement <2 x double> %i.fu, i64 1  ; 2 uses
   br i1 %i.go, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.gp = extractelement <2 x double> %i.gl, i64 0
   %i.gq = fneg double %i.gp                       ; 2 uses
-  %i.gr = fcmp olt double %16, %i.gq
+  %.sroa.05.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.fu, i64 1 ; 2 uses
+  %i.gr = fcmp olt double %.sroa.05.8.vec.extract.i.i.i.i, %i.gq
   br i1 %i.gr, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.gs = fcmp une double %16, %i.gq
+  %i.gs = fcmp une double %.sroa.05.8.vec.extract.i.i.i.i, %i.gq
   %i.gt = fcmp une double %.sroa.0.8.vec.extract.i.i.i.i, %i.gn
   %or.cond.not.i.i.i.i.i.i.i = or i1 %i.gt, %i.gs
   %i.gu = select i1 %or.cond.not.i.i.i.i.i.i.i, i64 8589934591, i64 0
@@ -3655,15 +3655,15 @@ bb.k:                                             ; preds = %._crit_edge, %bb.j
   %i.ku = extractelement <2 x double> %i.kt, i64 0 ; 2 uses
   %i.kv = fneg double %i.ku
   %i.kw = fcmp olt double %i.ku, 0.000000e+00
-  %22 = extractelement <2 x double> %i.kt, i64 1  ; 2 uses
   br i1 %i.kw, label %bb.o, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.kx = fcmp olt double %22, 0.000000e+00
+  %.sroa.0185.8.vec.extract = extractelement <2 x double> %i.kt, i64 1 ; 2 uses
+  %i.kx = fcmp olt double %.sroa.0185.8.vec.extract, 0.000000e+00
   br i1 %i.kx, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ky = fcmp oeq double %22, %i.kv
+  %i.ky = fcmp oeq double %.sroa.0185.8.vec.extract, %i.kv
   br i1 %i.ky, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -4066,15 +4066,15 @@ begin_hunk_9_@_ZN4CGAL13Convex_hull_38internal19ch_quickhull_3_scanINS_30Triangu
   %i.kf = extractelement <2 x double> %i.ke, i64 0 ; 2 uses
   %i.kg = fneg double %i.kf
   %i.kh = fcmp olt double %i.kf, 0.000000e+00
-  %9 = extractelement <2 x double> %i.ke, i64 1   ; 2 uses
   br i1 %i.kh, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %.noexc110
-  %i.ki = fcmp olt double %9, 0.000000e+00
+  %.sroa.0.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.ke, i64 1 ; 2 uses
+  %i.ki = fcmp olt double %.sroa.0.8.vec.extract.i.i.i.i, 0.000000e+00
   br i1 %i.ki, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.kj = fcmp oeq double %9, %i.kg
+  %i.kj = fcmp oeq double %.sroa.0.8.vec.extract.i.i.i.i, %i.kg
   br i1 %i.kj, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -4477,17 +4477,17 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   %i.fu = fneg double %i.ft                       ; 2 uses
   %.sroa.0.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.fs, i64 1 ; 2 uses
   %i.fv = fcmp olt double %.sroa.0.8.vec.extract.i.i.i.i, %i.fu
-  %5 = extractelement <2 x double> %i.fb, i64 1   ; 2 uses
   br i1 %i.fv, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   %i.fw = extractelement <2 x double> %i.fs, i64 0
   %i.fx = fneg double %i.fw                       ; 2 uses
-  %i.fy = fcmp olt double %5, %i.fx
+  %.sroa.05.8.vec.extract.i.i.i.i = extractelement <2 x double> %i.fb, i64 1 ; 2 uses
+  %i.fy = fcmp olt double %.sroa.05.8.vec.extract.i.i.i.i, %i.fx
   br i1 %i.fy, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.fz = fcmp une double %5, %i.fx
+  %i.fz = fcmp une double %.sroa.05.8.vec.extract.i.i.i.i, %i.fx
   %i.ga = fcmp une double %.sroa.0.8.vec.extract.i.i.i.i, %i.fu
   %or.cond.not.i.i.i.i.i.i.i = or i1 %i.ga, %i.fz
   %i.gb = select i1 %or.cond.not.i.i.i.i.i.i.i, i64 8589934591, i64 0

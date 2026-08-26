@@ -205,26 +205,25 @@ bb.a:
   %4 = alloca %class.anon.185, align 8            ; 5 uses
   %5 = alloca %class.anon, align 8                ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !28     ; 6 uses
-  %i.b = load ptr, ptr %1, align 8, !tbaa !28     ; 2 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !28     ; 3 uses
   %i.c = icmp eq ptr %i.a, %i.b
   br i1 %i.c, label %_ZN5boost14multiprecisioneqINS0_8backends16rational_adaptorINS2_15cpp_int_backendILm0ELm0ELNS0_16cpp_integer_typeE1ELNS0_18cpp_int_check_typeE0ESaIyEEEEELNS0_26expression_template_optionE1ES9_LSA_1EEEbRKNS0_6numberIT_XT0_EEERKNSB_IT1_XT2_EEE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %6 = load <2 x double>, ptr %i.d, align 16      ; 2 uses
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.e = fneg double %7                           ; 2 uses
+  %6 = load double, ptr %i.d, align 16, !tbaa !11
+  %i.e = fneg double %6                           ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.g = load double, ptr %i.f, align 8, !tbaa !11 ; 2 uses
   %i.h = fcmp olt double %i.g, %i.e
-  %8 = extractelement <2 x double> %6, i64 1      ; 2 uses
   br i1 %i.h, label %_ZN4CGALeqERKNS_11Interval_ntILb0EEES3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %9 = load <2 x double>, ptr %i.i, align 16, !tbaa !11
-  %10 = extractelement <2 x double> %9, i64 0
-  %i.j = fneg double %10                          ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
+  %8 = load double, ptr %7, align 8, !tbaa !11    ; 2 uses
+  %9 = load double, ptr %i.i, align 16, !tbaa !11
+  %i.j = fneg double %9                           ; 2 uses
   %i.k = fcmp olt double %8, %i.j
   br i1 %i.k, label %_ZN4CGALeqERKNS_11Interval_ntILb0EEES3_.exit, label %bb.d
 
@@ -627,9 +626,8 @@ _ZN5boost14multiprecision6numberINS0_8backends16rational_adaptorINS2_15cpp_int_b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.z = load double, ptr %i.y, align 8, !tbaa !11
-  %6 = load <2 x double>, ptr %i.x, align 16, !tbaa !11
-  %7 = extractelement <2 x double> %6, i64 0
-  %i.aa = fneg double %7
+  %6 = load double, ptr %i.x, align 16, !tbaa !11
+  %i.aa = fneg double %6
   %i.ab = fcmp oeq double %i.z, %i.aa
   br i1 %i.ab, label %bb.o, label %bb.m
 
