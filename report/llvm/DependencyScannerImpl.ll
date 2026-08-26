@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.lr.ph.i
   br i1 %i.an, label %bb.i, label %.critedge
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph.i
-  %i.ao = add i64 %.026.i, 1                      ; 2 uses
+  %i.ao = add nuw i64 %.026.i, 1                  ; 2 uses
   %.not.i = icmp eq i64 %i.ao, %i.ae
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !34
 
