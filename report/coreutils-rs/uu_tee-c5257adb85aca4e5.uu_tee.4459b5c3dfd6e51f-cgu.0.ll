@@ -205,6 +205,7 @@ bb.ba:                                            ; preds = %_RNvNtNtNtCscC7ZI6N
   unreachable
 
 bb.bb:                                            ; preds = %bb.az
+  %sext.i = shl i64 %i.ir, 48
   %i.iu = load atomic ptr, ptr @_RNvNtNtNtCs6JMX4GRUq9U_4core2io5error12os_functions12OS_FUNCTIONS monotonic, align 8, !noalias !224
   %.not.i.i = icmp eq ptr %i.iu, @13
   br i1 %.not.i.i, label %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i, label %bb.bc, !prof !104
@@ -214,8 +215,9 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i
 
 _RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i: ; preds = %bb.bc, %bb.bb
-  %.neg.i = mul i64 %i.ir, -4294967296            ; 2 uses
-  %i.iv = lshr exact i64 %.neg.i, 32
+  %1 = ashr exact i64 %sext.i, 16
+  %2 = sub nsw i64 0, %1                          ; 2 uses
+  %i.iv = lshr exact i64 %2, 32
   %i.iw = trunc nuw i64 %i.iv to i32
   %i.ix = call noundef nonnull align 8 ptr @_RNvNtNtNtCs6JMX4GRUq9U_4core2io5error12os_functions16get_os_functions() #20
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 8
@@ -361,7 +363,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs5RPjO8Kzn89_6
   br i1 %i.kh, label %.loopexit314.i, label %bb.az
 
 bb.bn:                                            ; preds = %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i
-  %i.ki = or disjoint i64 %.neg.i, 2
+  %i.ki = or disjoint i64 %2, 2
   %i.kj = inttoptr i64 %i.ki to ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !224
   store ptr %i.kj, ptr %i.p, align 8, !noalias !224
@@ -764,16 +766,16 @@ bb.b:                                             ; preds = %_RNvXs_NtCs7tKScEop
 
 bb.c:                                             ; preds = %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i, %.lr.ph.i.i.i
   %.sroa.0.054.i.i.i = phi ptr [ %.val, %.lr.ph.i.i.i ], [ %i.l, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ] ; 8 uses
-  %.sroa.7.053.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.m, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ] ; 2 uses
-  %.sroa.10.052.i.i.i = phi i64 [ %.val1, %.lr.ph.i.i.i ], [ %i.j, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ]
-  %i.j = add nsw i64 %.sroa.10.052.i.i.i, -1      ; 2 uses
+  %.sroa.7.053.i.i.i = phi i64 [ %.val1, %.lr.ph.i.i.i ], [ %i.j, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ]
+  %.sroa.10.052.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.m, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ] ; 2 uses
+  %i.j = add nsw i64 %.sroa.7.053.i.i.i, -1       ; 2 uses
   %i.k = icmp eq ptr %.sroa.0.054.i.i.i, %i.h
   br i1 %i.k, label %_RNvXs1_NtNtNtCsh036I4OHgIr_6uucore8features6parser21shortcut_value_parserNtB5_19ShortcutValueParserNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.054.i.i.i, i64 72
-  %i.m = add nuw nsw i64 %.sroa.7.053.i.i.i, 1
-  %i.n = getelementptr inbounds nuw [72 x i8], ptr %i.f, i64 %.sroa.7.053.i.i.i ; 8 uses
+  %i.m = add nuw nsw i64 %.sroa.10.052.i.i.i, 1
+  %i.n = getelementptr inbounds nuw [72 x i8], ptr %i.f, i64 %.sroa.10.052.i.i.i ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !781)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !780
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0.054.i.i.i, i64 48
@@ -817,16 +819,16 @@ bb.g:                                             ; preds = %_RNvXs_NtCs7tKScEop
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.h, %.lr.ph.preheader.i.i.i.i.i.i
   %.sroa.0.022.i.i.i.i.i.i = phi ptr [ %i.ae, %bb.h ], [ %.val.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i ] ; 4 uses
-  %.sroa.7.021.i.i.i.i.i.i = phi i64 [ %i.ad, %bb.h ], [ 0, %.lr.ph.preheader.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.10.020.i.i.i.i.i.i = phi i64 [ %i.ac, %bb.h ], [ %.val4.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i ]
+  %.sroa.7.021.i.i.i.i.i.i = phi i64 [ %i.ac, %bb.h ], [ %.val4.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i ]
+  %.sroa.10.020.i.i.i.i.i.i = phi i64 [ %i.ad, %bb.h ], [ 0, %.lr.ph.preheader.i.i.i.i.i.i ] ; 2 uses
   %i.ab = icmp eq ptr %.sroa.0.022.i.i.i.i.i.i, %i.aa
   br i1 %i.ab, label %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i.i
-  %i.ac = add nsw i64 %.sroa.10.020.i.i.i.i.i.i, -1 ; 2 uses
-  %i.ad = add nuw nsw i64 %.sroa.7.021.i.i.i.i.i.i, 1
+  %i.ac = add nsw i64 %.sroa.7.021.i.i.i.i.i.i, -1 ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.10.020.i.i.i.i.i.i, 1
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 16
-  %i.af = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %.sroa.7.021.i.i.i.i.i.i ; 2 uses
+  %i.af = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %.sroa.10.020.i.i.i.i.i.i ; 2 uses
   %.val.i.i.i.i.i.i = load ptr, ptr %.sroa.0.022.i.i.i.i.i.i, align 8, !alias.scope !788, !noalias !798, !nonnull !5, !noundef !5
   %i.ag = getelementptr i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 8
   %.val13.i.i.i.i.i.i = load i64, ptr %i.ag, align 8, !alias.scope !788, !noalias !798, !noundef !5

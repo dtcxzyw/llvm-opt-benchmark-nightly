@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %._crit_edge
   tail call void @lean_internal_panic_out_of_memory() #9
   unreachable
 
-lean_del_object.exit.thread105:                   ; preds = %bb.y, %bb.x, %lean_del_object.exit
+lean_del_object.exit.thread105:                   ; preds = %bb.x, %bb.y, %lean_del_object.exit
   %i.bh = add i64 %.059119, 1                     ; 2 uses
   %.not114 = icmp eq i64 %i.bh, %2
   br i1 %.not114, label %._crit_edge, label %bb.b
@@ -607,7 +607,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph, %lean_dec_ref.exit117
   %.066171 = phi i64 [ %4, %.lr.ph ], [ %i.cz, %lean_dec_ref.exit117 ] ; 2 uses
-  %.068170 = phi ptr [ %5, %.lr.ph ], [ %.275156, %lean_dec_ref.exit117 ] ; 2 uses
+  %.068173 = phi ptr [ %5, %.lr.ph ], [ %.275156, %lean_dec_ref.exit117 ] ; 2 uses
+  %.068170 = phi ptr [ undef, %.lr.ph ], [ %.275156, %lean_dec_ref.exit117 ]
   %.val129 = load i64, ptr %i.a, align 8, !tbaa !12
   %i.i = shl i64 %.val129, 1
   %i.j = or disjoint i64 %i.i, 1
@@ -1010,7 +1011,7 @@ bb.bq:                                            ; preds = %bb.bp
 
 lean_dec_ref.exit109:                             ; preds = %bb.bo, %bb.bp, %bb.bq
   %i.cs = icmp eq i8 %i.co, 0
-  %.068. = select i1 %.0.i128, ptr undef, ptr %.068170
+  %.068. = select i1 %.0.i128, ptr %.068170, ptr %.068173
   %or.cond167 = select i1 %i.cs, i1 true, i1 %.0.i128
   br i1 %or.cond167, label %lean_dec_ref.exit113, label %lean_dec_ref.exit117
 
@@ -1039,11 +1040,11 @@ bb.bu:                                            ; preds = %bb.bt
   br label %.thread152
 
 .thread152:                                       ; preds = %lean_dec_ref.exit113, %bb.bs, %bb.bt, %bb.bu
-  %i.cy = tail call ptr @lean_array_push(ptr noundef %.068170, ptr noundef %i.al) #10
+  %i.cy = tail call ptr @lean_array_push(ptr noundef %.068173, ptr noundef %i.al) #10
   br label %lean_dec_ref.exit117
 
 lean_dec_ref.exit117:                             ; preds = %lean_dec_ref.exit109, %.thread152
-  %.275156 = phi ptr [ %i.cy, %.thread152 ], [ %.068., %lean_dec_ref.exit109 ] ; 2 uses
+  %.275156 = phi ptr [ %i.cy, %.thread152 ], [ %.068., %lean_dec_ref.exit109 ] ; 3 uses
   %i.cz = add nuw i64 %.066171, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.cz, %3
   br i1 %exitcond.not, label %._crit_edge, label %bb.e
@@ -1446,7 +1447,7 @@ lean_inc.exit:                                    ; preds = %bb.ej, %bb.ei, %bb.
   br label %lean_dec.exit172.thread
 
 lean_dec.exit172.thread:                          ; preds = %bb.eb, %bb.ea, %bb.dz, %bb.df, %bb.dg, %bb.dh, %lean_inc.exit149, %lean_inc.exit, %lean_inc.exit163, %lean_obj_tag.exit
-  %.8146 = phi ptr [ %i.aa, %lean_obj_tag.exit ], [ %i.aa, %bb.eb ], [ %i.aa, %bb.ea ], [ %i.aa, %bb.dz ], [ %i.fk, %bb.df ], [ %i.fk, %bb.dg ], [ %i.fk, %bb.dh ], [ %i.gu, %lean_inc.exit ], [ %i.fk, %lean_inc.exit149 ], [ %i.ar, %lean_inc.exit163 ] ; 6 uses
+  %.8146 = phi ptr [ %i.aa, %lean_obj_tag.exit ], [ %i.aa, %bb.eb ], [ %i.aa, %bb.ea ], [ %i.aa, %bb.dz ], [ %i.fk, %bb.df ], [ %i.fk, %bb.dg ], [ %i.fk, %bb.dh ], [ %i.fk, %lean_inc.exit149 ], [ %i.gu, %lean_inc.exit ], [ %i.ar, %lean_inc.exit163 ] ; 6 uses
   %i.gv = ptrtoint ptr %.8146 to i64              ; 2 uses
   %i.gw = and i64 %i.gv, 1
   %.not.i283 = icmp eq i64 %i.gw, 0

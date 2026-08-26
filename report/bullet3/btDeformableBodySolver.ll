@@ -205,10 +205,10 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %.lr.ph148, %bb.w
   %i.cw = phi i32 [ %i.co, %.lr.ph148 ], [ %i.do, %bb.w ]
-  %indvars.iv166 = phi i64 [ %i.cr, %.lr.ph148 ], [ %indvars.iv.next167.a, %bb.w ] ; 3 uses
-  %indvars.iv164 = phi i64 [ 0, %.lr.ph148 ], [ %indvars.iv.next165, %bb.w ] ; 2 uses
+  %indvars.iv166 = phi i64 [ 0, %.lr.ph148 ], [ %indvars.iv.next165, %bb.w ] ; 2 uses
+  %indvars.iv164 = phi i64 [ %i.cr, %.lr.ph148 ], [ %indvars.iv.next167.a, %bb.w ] ; 3 uses
   %i.cx = load ptr, ptr %i.cq, align 8, !tbaa !195
-  %i.cy = getelementptr inbounds nuw [256 x i8], ptr %i.cx, i64 %indvars.iv164
+  %i.cy = getelementptr inbounds nuw [256 x i8], ptr %i.cx, i64 %indvars.iv166
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 112
   %i.da = load float, ptr %i.cz, align 8, !tbaa !196 ; 2 uses
   %i.db = fcmp ogt float %i.da, 0.000000e+00
@@ -217,7 +217,7 @@ bb.u:                                             ; preds = %.lr.ph148, %bb.w
 bb.v:                                             ; preds = %bb.u
   %i.dc = fdiv float -1.000000e+00, %i.da         ; 2 uses
   %i.dd = load ptr, ptr %i.i, align 8, !tbaa !31
-  %i.de = getelementptr inbounds [16 x i8], ptr %i.dd, i64 %indvars.iv166 ; 2 uses
+  %i.de = getelementptr inbounds [16 x i8], ptr %i.dd, i64 %indvars.iv164 ; 2 uses
   %i.df = load <2 x float>, ptr %i.de, align 4, !tbaa !68
   %i.dg = insertelement <2 x float> poison, float %i.dc, i64 0
   %i.dh = shufflevector <2 x float> %i.dg, <2 x float> poison, <2 x i32> zeroinitializer
@@ -227,7 +227,7 @@ bb.v:                                             ; preds = %bb.u
   %i.dl = fmul float %i.dc, %i.dk
   %.sroa.3.12.vec.insert.i.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.dl, i64 0
   %i.dm = load ptr, ptr %i.j, align 8, !tbaa !31
-  %i.dn = getelementptr inbounds [16 x i8], ptr %i.dm, i64 %indvars.iv166 ; 2 uses
+  %i.dn = getelementptr inbounds [16 x i8], ptr %i.dm, i64 %indvars.iv164 ; 2 uses
   store <2 x float> %i.di, ptr %i.dn, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !51
@@ -236,8 +236,8 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.do = phi i32 [ %.pre, %bb.v ], [ %i.cw, %bb.u ] ; 2 uses
-  %indvars.iv.next167.a = add nsw i64 %indvars.iv166, 1 ; 2 uses
-  %indvars.iv.next165 = add nuw nsw i64 %indvars.iv164, 1 ; 2 uses
+  %indvars.iv.next167.a = add nsw i64 %indvars.iv164, 1 ; 2 uses
+  %indvars.iv.next165 = add nuw nsw i64 %indvars.iv166, 1 ; 2 uses
   %i.dp = sext i32 %i.do to i64
   %i.dq = icmp slt i64 %indvars.iv.next165, %i.dp
   br i1 %i.dq, label %bb.u, label %._crit_edge149.loopexit, !llvm.loop !204
@@ -640,7 +640,7 @@ bb.s:                                             ; preds = %bb.r
   %i.lj = load ptr, ptr %i.bm, align 8, !tbaa !417 ; 15 uses
   %i.lk = load <2 x float>, ptr %6, align 8, !tbaa !68 ; 5 uses
   %i.ll = load <2 x float>, ptr %4, align 8, !tbaa !68 ; 3 uses
-  %i.lm = load <2 x float>, ptr %i.h, align 4, !tbaa !68 ; 5 uses
+  %i.lm = load <2 x float>, ptr %i.h, align 4, !tbaa !68 ; 4 uses
   %i.ln = load <2 x float>, ptr %i.j, align 4, !tbaa !68 ; 6 uses
   %i.lo = load float, ptr %5, align 8, !tbaa !68  ; 4 uses
   %i.lp = load <2 x float>, ptr %i.cf, align 4, !tbaa !68 ; 3 uses
@@ -1043,8 +1043,8 @@ begin_hunk_2_@_ZN22btDeformableBodySolver15applyTransformsEf:bb.a
   %i.zl = shufflevector <4 x float> %i.zk, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.zm = shufflevector <2 x float> %i.ll, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison> ; 2 uses
   %i.zn = shufflevector <4 x float> %i.zm, <4 x float> %i.xf, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %10 = insertelement <2 x float> %i.lm, float %i.ys, i64 0
-  %11 = shufflevector <2 x float> %10, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %10 = shufflevector <2 x float> %i.lm, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1> ; 2 uses
+  %11 = insertelement <4 x float> %10, float %i.ys, i64 0
   %i.zo = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.zn, <4 x float> %11, <4 x float> %i.zd) ; 4 uses
   %i.zp = insertelement <4 x float> %i.zo, float 0.000000e+00, i64 3
   %i.zq = shufflevector <2 x float> %i.zj, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
@@ -1074,8 +1074,7 @@ begin_hunk_2_@_ZN22btDeformableBodySolver15applyTransformsEf:bb.a
   %i.aan = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.wb, <4 x float> %i.yq, <4 x float> %i.aam)
   store <4 x float> %i.aan, ptr %i.vw, align 8
   %i.aao = insertelement <4 x float> %i.zm, float 0.000000e+00, i64 3
-  %12 = shufflevector <2 x float> %i.lm, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>
-  %i.aap = shufflevector <4 x float> %i.aao, <4 x float> %12, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
+  %i.aap = shufflevector <4 x float> %i.aao, <4 x float> %10, <4 x i32> <i32 0, i32 1, i32 5, i32 3>
   %i.aaq = insertelement <4 x float> <float poison, float -0.000000e+00, float poison, float poison>, float %i.zu, i64 0
   %i.aar = shufflevector <4 x float> %i.aaq, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   %i.aas = shufflevector <2 x float> %i.aah, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 poison, i32 poison>

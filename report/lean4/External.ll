@@ -204,8 +204,8 @@ bb.fx:                                            ; preds = %bb.fw
   br label %lean_inc.exit315.thread
 
 lean_inc.exit315.thread:                          ; preds = %bb.gt, %bb.gs, %bb.gr, %bb.gy, %bb.gx, %bb.gw, %bb.t, %bb.s, %bb.r, %bb.af, %bb.ae, %bb.ad, %bb.cr, %bb.cq, %bb.cp, %bb.dh, %bb.dg, %bb.df, %bb.fx, %bb.fw, %bb.fv, %bb.j, %bb.i, %bb.h
-  %.10232489 = phi ptr [ inttoptr (i64 1 to ptr), %bb.j ], [ inttoptr (i64 1 to ptr), %bb.h ], [ inttoptr (i64 1 to ptr), %bb.i ], [ %.0.i389, %bb.t ], [ %.0.i389, %bb.s ], [ %.0.i389, %bb.r ], [ inttoptr (i64 1 to ptr), %bb.af ], [ inttoptr (i64 1 to ptr), %bb.ae ], [ inttoptr (i64 1 to ptr), %bb.ad ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.cr ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.cq ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.cp ], [ inttoptr (i64 1 to ptr), %bb.dh ], [ inttoptr (i64 1 to ptr), %bb.dg ], [ inttoptr (i64 1 to ptr), %bb.df ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.fx ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.fw ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.fv ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gw ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gx ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gy ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gr ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gs ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gt ] ; 5 uses
-  %i.ik = tail call zeroext i1 @lean_nat_big_eq(ptr noundef nonnull %i.d, ptr noundef nonnull %i.d) #7
+  %.10232489 = phi ptr [ inttoptr (i64 1 to ptr), %bb.j ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gt ], [ inttoptr (i64 1 to ptr), %bb.h ], [ inttoptr (i64 1 to ptr), %bb.i ], [ %.0.i389, %bb.t ], [ %.0.i389, %bb.s ], [ %.0.i389, %bb.r ], [ inttoptr (i64 1 to ptr), %bb.af ], [ inttoptr (i64 1 to ptr), %bb.ae ], [ inttoptr (i64 1 to ptr), %bb.ad ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.cr ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.cq ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.cp ], [ inttoptr (i64 1 to ptr), %bb.dh ], [ inttoptr (i64 1 to ptr), %bb.dg ], [ inttoptr (i64 1 to ptr), %bb.df ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.fx ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.fw ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__14_value, %bb.fv ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gw ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gx ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gy ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gr ], [ @l___private_Lean_Meta_Tactic_BVDecide_External_0__Lean_Meta_Tactic_BVDecide_External_ModelParser_parsePartialAssignment_wsLit___closed__9_value, %bb.gs ] ; 5 uses
+  %i.ik = tail call zeroext i1 @lean_nat_big_eq(ptr noundef nonnull %i.d, ptr noundef nonnull %i.d) #7 ; 4 uses
   %i.il = load i32, ptr %i.d, align 4, !tbaa !11  ; 3 uses
   %i.im = icmp sgt i32 %i.il, 1
   br i1 %i.im, label %bb.fy, label %bb.fz, !prof !10
@@ -217,7 +217,10 @@ bb.fy:                                            ; preds = %lean_inc.exit315.th
 
 bb.fz:                                            ; preds = %lean_inc.exit315.thread
   %.not.i349 = icmp eq i32 %i.il, 0
-  br i1 %.not.i349, label %lean_dec.exit, label %bb.ga
+  br i1 %.not.i349, label %.thread846, label %bb.ga
+
+.thread846:                                       ; preds = %bb.fz
+  br i1 %i.ik, label %lean_dec.exit.thread, label %bb.gf
 
 bb.ga:                                            ; preds = %bb.fz
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.d) #7
@@ -232,7 +235,7 @@ bb.gb:                                            ; preds = %bb.ga, %bb.fy
 bb.gc:                                            ; preds = %bb.gb
   %i.iq = add nsw i32 %i.io, -1
   store i32 %i.iq, ptr %i.d, align 4, !tbaa !11
-  br label %lean_dec.exit
+  br i1 %i.ik, label %lean_dec.exit.thread, label %bb.gf
 
 bb.gd:                                            ; preds = %bb.gb
   %.not.i351 = icmp eq i32 %i.io, 0
@@ -240,12 +243,12 @@ bb.gd:                                            ; preds = %bb.gb
 
 bb.ge:                                            ; preds = %bb.gd
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %i.d) #7
-  br label %lean_dec.exit
-
-lean_dec.exit:                                    ; preds = %bb.fz, %bb.ge, %bb.gd, %bb.gc
   br i1 %i.ik, label %lean_dec.exit.thread, label %bb.gf
 
-bb.gf:                                            ; preds = %lean_dec.exit
+lean_dec.exit:                                    ; preds = %bb.gd
+  br i1 %i.ik, label %lean_dec.exit.thread, label %bb.gf
+
+bb.gf:                                            ; preds = %bb.gc, %.thread846, %bb.ge, %lean_dec.exit
   %i.ir = load i32, ptr %.0184, align 4, !tbaa !11 ; 3 uses
   %i.is = icmp sgt i32 %i.ir, 1
   br i1 %i.is, label %bb.gg, label %bb.gh, !prof !10
@@ -297,7 +300,7 @@ bb.gn:                                            ; preds = %lean_inc.exit295
   tail call void @lean_internal_panic_out_of_memory() #8
   unreachable
 
-lean_dec.exit.thread:                             ; preds = %lean_nat_lt.exit.thread, %bb.gp, %bb.gu, %lean_obj_once.exit, %lean_dec.exit290, %lean_dec.exit278, %lean_dec.exit274, %lean_dec.exit260, %lean_dec.exit
+lean_dec.exit.thread:                             ; preds = %lean_nat_lt.exit.thread, %bb.gp, %bb.gu, %lean_obj_once.exit, %lean_dec.exit290, %lean_dec.exit278, %lean_dec.exit274, %lean_dec.exit260, %bb.gc, %.thread846, %bb.ge, %lean_dec.exit
   tail call void @lean_inc_heartbeat() #7
   %i.jb = tail call noalias ptr @mi_malloc_small(i64 noundef 24) #7 ; 2 uses
   %i.jc = icmp eq ptr %i.jb, null

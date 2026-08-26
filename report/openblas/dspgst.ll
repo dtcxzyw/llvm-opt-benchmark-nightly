@@ -126,13 +126,13 @@ bb.i:                                             ; preds = %bb.g
   br i1 %.not178196, label %.loopexit, label %.lr.ph199
 
 .lr.ph199:                                        ; preds = %bb.i, %bb.k
-  %.0198 = phi i32 [ %i.ar, %bb.k ], [ 1, %bb.i ] ; 3 uses
-  %.0165197 = phi i32 [ %i.br, %bb.k ], [ 1, %bb.i ] ; 9 uses
+  %.0198 = phi i32 [ %i.br, %bb.k ], [ 1, %bb.i ] ; 9 uses
+  %.0165197 = phi i32 [ %i.ar, %bb.k ], [ 1, %bb.i ] ; 2 uses
   %i.aq = load i32, ptr %2, align 4, !tbaa !8     ; 3 uses
-  %reass.sub200 = sub i32 %.0198, %.0165197
-  %6 = add i32 %reass.sub200, 1
-  %i.ar = add i32 %6, %i.aq                       ; 2 uses
-  %i.as = sext i32 %.0198 to i64                  ; 2 uses
+  %6 = add i32 %.0165197, 1                       ; 2 uses
+  %7 = sub i32 %6, %.0198
+  %i.ar = add i32 %7, %i.aq                       ; 2 uses
+  %i.as = sext i32 %.0165197 to i64               ; 2 uses
   %i.at = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.as ; 2 uses
   %i.au = load double, ptr %i.at, align 8, !tbaa !9
   %i.av = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.as
@@ -140,45 +140,44 @@ bb.i:                                             ; preds = %bb.g
   %i.ax = fmul double %i.aw, %i.aw
   %i.ay = fdiv double %i.au, %i.ax                ; 2 uses
   store double %i.ay, ptr %i.at, align 8, !tbaa !9
-  %i.az = icmp slt i32 %.0165197, %i.aq
+  %i.az = icmp slt i32 %.0198, %i.aq
   br i1 %i.az, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph199
-  %i.ba = sub nsw i32 %i.aq, %.0165197
+  %i.ba = sub nsw i32 %i.aq, %.0198
   store i32 %i.ba, ptr %i.b, align 4, !tbaa !8
   %i.bb = fdiv double 1.000000e+00, %i.aw
   store double %i.bb, ptr %i.c, align 8, !tbaa !9
-  %7 = add nsw i32 %.0198, 1
-  %i.bc = sext i32 %7 to i64                      ; 2 uses
+  %i.bc = sext i32 %6 to i64                      ; 2 uses
   %i.bd = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.bc ; 5 uses
   call void @dscal_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.bd, ptr noundef nonnull @c__1) #4
   %i.be = fmul double %i.ay, -5.000000e-01
   store double %i.be, ptr %i.e, align 8, !tbaa !9
   %i.bf = load i32, ptr %2, align 4, !tbaa !8
-  %i.bg = sub nsw i32 %i.bf, %.0165197
+  %i.bg = sub nsw i32 %i.bf, %.0198
   store i32 %i.bg, ptr %i.b, align 4, !tbaa !8
   %i.bh = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.bc ; 3 uses
   call void @daxpy_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, ptr noundef nonnull %i.bh, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bd, ptr noundef nonnull @c__1) #4
   %i.bi = load i32, ptr %2, align 4, !tbaa !8
-  %i.bj = sub nsw i32 %i.bi, %.0165197
+  %i.bj = sub nsw i32 %i.bi, %.0198
   store i32 %i.bj, ptr %i.b, align 4, !tbaa !8
   %i.bk = sext i32 %i.ar to i64                   ; 2 uses
   %i.bl = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.bk
   call void @dspr2_(ptr noundef %1, ptr noundef nonnull %i.b, ptr noundef nonnull @c_b9, ptr noundef nonnull %i.bd, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bh, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bl) #4
   %i.bm = load i32, ptr %2, align 4, !tbaa !8
-  %i.bn = sub nsw i32 %i.bm, %.0165197
+  %i.bn = sub nsw i32 %i.bm, %.0198
   store i32 %i.bn, ptr %i.b, align 4, !tbaa !8
   call void @daxpy_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.e, ptr noundef nonnull %i.bh, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bd, ptr noundef nonnull @c__1) #4
   %i.bo = load i32, ptr %2, align 4, !tbaa !8
-  %i.bp = sub nsw i32 %i.bo, %.0165197
+  %i.bp = sub nsw i32 %i.bo, %.0198
   store i32 %i.bp, ptr %i.b, align 4, !tbaa !8
   %i.bq = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.bk
   call void @dtpsv_(ptr noundef %1, ptr noundef nonnull @.str.5, ptr noundef nonnull @.str.6, ptr noundef nonnull %i.b, ptr noundef nonnull %i.bq, ptr noundef nonnull %i.bd, ptr noundef nonnull @c__1) #4
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph199
-  %i.br = add nuw nsw i32 %.0165197, 1
-  %.not178.not = icmp slt i32 %.0165197, %i.n
+  %i.br = add nuw nsw i32 %.0198, 1
+  %.not178.not = icmp slt i32 %.0198, %i.n
   br i1 %.not178.not, label %.lr.ph199, label %.loopexit, !llvm.loop !13
 
 bb.l:                                             ; preds = %bb.f

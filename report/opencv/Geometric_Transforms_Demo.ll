@@ -202,10 +202,11 @@ bb.r:                                             ; preds = %bb.e
   %.sroa_idx199 = getelementptr inbounds nuw i8, ptr %16, i64 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %16, i8 0, i64 16, i1 false)
   %i.cy = load <2 x i32>, ptr %i.cw, align 8, !tbaa !49
-  %36 = sitofp <2 x i32> %i.cy to <2 x float>     ; 3 uses
-  %37 = shufflevector <2 x float> %36, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.cz = extractelement <2 x float> %36, i64 0
-  %i.da = fadd <2 x float> %36, splat (float -1.000000e+00) ; 2 uses
+  %36 = shufflevector <2 x i32> %i.cy, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %37 = sitofp <4 x i32> %36 to <4 x float>       ; 3 uses
+  %i.cz = extractelement <4 x float> %37, i64 0
+  %38 = shufflevector <4 x float> %37, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %i.da = fadd <2 x float> %38, splat (float -1.000000e+00) ; 2 uses
   %i.db = extractelement <2 x float> %i.da, i64 1
   store float %i.db, ptr %i.cv, align 8
   %i.dc = extractelement <2 x float> %i.da, i64 0

@@ -186,11 +186,11 @@ init_params.exit:                                 ; preds = %bb.f, %.sink.split.
   br i1 %.not189.i, label %._crit_edge.i36, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %init_params.exit, %bb.m
-  %.0157191.i = phi i32 [ %.1158.i, %bb.m ], [ 0, %init_params.exit ] ; 3 uses
-  %.0159190.i = phi ptr [ %i.bo, %bb.m ], [ %i.an, %init_params.exit ] ; 2 uses
+  %.0157195.i = phi ptr [ %i.bo, %bb.m ], [ %i.an, %init_params.exit ] ; 2 uses
+  %.0159194.i = phi i32 [ %.1158.i, %bb.m ], [ 0, %init_params.exit ] ; 3 uses
   %i.ao = phi <2 x double> [ %i.bm, %bb.m ], [ zeroinitializer, %init_params.exit ] ; 3 uses
   %i.ap = phi <2 x double> [ %i.bn, %bb.m ], [ zeroinitializer, %init_params.exit ] ; 3 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %.0159190.i, i64 16
+  %i.aq = getelementptr inbounds nuw i8, ptr %.0157195.i, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !31 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 163
   %i.at = load i8, ptr %i.as, align 1, !tbaa !69
@@ -198,7 +198,7 @@ init_params.exit:                                 ; preds = %bb.f, %.sink.split.
   br i1 %.not185.i, label %bb.m, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.i
-  %.not186.i = icmp eq i32 %.0157191.i, 0
+  %.not186.i = icmp eq i32 %.0159194.i, 0
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 176
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !76 ; 3 uses
   %i.aw = load double, ptr %i.av, align 8, !tbaa !21 ; 2 uses
@@ -225,21 +225,21 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bj = phi <2 x double> [ %i.be, %bb.j ], [ %i.bi, %bb.k ]
   %i.bk = phi <2 x double> [ %i.bc, %bb.j ], [ %i.bi, %bb.k ]
-  %i.bl = add nsw i32 %.0157191.i, 1
+  %i.bl = add nsw i32 %.0159194.i, 1
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph.i
-  %.1158.i = phi i32 [ %i.bl, %bb.l ], [ %.0157191.i, %.lr.ph.i ] ; 2 uses
+  %.1158.i = phi i32 [ %i.bl, %bb.l ], [ %.0159194.i, %.lr.ph.i ] ; 2 uses
   %i.bm = phi <2 x double> [ %i.bj, %bb.l ], [ %i.ao, %.lr.ph.i ] ; 2 uses
   %i.bn = phi <2 x double> [ %i.bk, %bb.l ], [ %i.ap, %.lr.ph.i ] ; 2 uses
-  %i.bo = tail call ptr @agnxtnode(ptr noundef %0, ptr noundef nonnull %.0159190.i) #6 ; 2 uses
+  %i.bo = tail call ptr @agnxtnode(ptr noundef %0, ptr noundef nonnull %.0157195.i) #6 ; 2 uses
   %.not.i35 = icmp eq ptr %i.bo, null
   br i1 %.not.i35, label %._crit_edge.i36, label %.lr.ph.i, !llvm.loop !77
 
 ._crit_edge.i36:                                  ; preds = %bb.m, %init_params.exit
   %.0157.lcssa.i = phi i32 [ 0, %init_params.exit ], [ %.1158.i, %bb.m ] ; 3 uses
-  %i.bp = phi <2 x double> [ zeroinitializer, %init_params.exit ], [ %i.bm, %bb.m ] ; 2 uses
-  %i.bq = phi <2 x double> [ zeroinitializer, %init_params.exit ], [ %i.bn, %bb.m ] ; 3 uses
+  %i.bp = phi <2 x double> [ zeroinitializer, %init_params.exit ], [ %i.bm, %bb.m ] ; 3 uses
+  %i.bq = phi <2 x double> [ zeroinitializer, %init_params.exit ], [ %i.bn, %bb.m ] ; 5 uses
   %i.br = load double, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 48), align 8, !tbaa !23
   %i.bs = sitofp i32 %i.am to double
   %i.bt = tail call double @sqrt(double noundef %i.bs) #6
@@ -250,6 +250,8 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i
   store double %i.bx, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 88), align 8, !tbaa !79
   store double %i.bx, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 80), align 8, !tbaa !80
   %i.by = icmp eq i32 %.0157.lcssa.i, 1
+  %2 = extractelement <2 x double> %i.bq, i64 0
+  %3 = extractelement <2 x double> %i.bq, i64 1
   br i1 %i.by, label %bb.x, label %bb.n
 
 bb.n:                                             ; preds = %._crit_edge.i36
@@ -257,15 +259,19 @@ bb.n:                                             ; preds = %._crit_edge.i36
   br i1 %i.bz, label %bb.o, label %bb.x
 
 bb.o:                                             ; preds = %bb.n
+  %foldExtExtBinop = fadd <2 x double> %i.bp, %i.bq
+  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %5 = fmul double %4, 5.000000e-01
   %i.ca = fadd <2 x double> %i.bq, %i.bp
-  %2 = fmul <2 x double> %i.ca, splat (double 5.000000e-01)
+  %6 = extractelement <2 x double> %i.ca, i64 1
+  %7 = fmul double %6, 5.000000e-01
   %i.cb = fsub <2 x double> %i.bp, %i.bq
   %i.cc = fmul <2 x double> %i.cb, splat (double 1.200000e+00) ; 6 uses
   %i.cd = fmul double %i.bx, 4.000000e+00
   %i.ce = fmul double %i.bx, %i.cd                ; 3 uses
   %i.cf = extractelement <2 x double> %i.cc, i64 0 ; 3 uses
   %i.cg = extractelement <2 x double> %i.cc, i64 1 ; 3 uses
-  %i.ch = fmul double %i.cf, %i.cg
+  %i.ch = fmul double %i.cg, %i.cf
   %i.ci = fdiv double %i.ch, %i.ce                ; 3 uses
   %i.cj = fcmp ult double %i.ci, 1.000000e+00
   br i1 %i.cj, label %bb.q, label %bb.p
@@ -322,7 +328,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.n, %._crit_edge.i36
-  %3 = phi <2 x double> [ %i.bq, %._crit_edge.i36 ], [ %2, %bb.w ], [ zeroinitializer, %bb.n ] ; 8 uses
+  %.sroa.0147.0.i = phi double [ %2, %._crit_edge.i36 ], [ %5, %bb.w ], [ 0.000000e+00, %bb.n ] ; 5 uses
+  %.sroa.8151.0.i = phi double [ %3, %._crit_edge.i36 ], [ %7, %bb.w ], [ 0.000000e+00, %bb.n ] ; 5 uses
   %i.dk = load i32, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 64), align 8, !tbaa !28
   %i.dl = icmp eq i32 %i.dk, 2
   br i1 %i.dl, label %bb.y, label %bb.z
@@ -344,22 +351,17 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
 .preheader.i:                                     ; preds = %bb.aa
   %i.do = load ptr, ptr %i.e, align 8, !tbaa !81
   %.not177200.i = icmp eq ptr %i.do, null
-  br i1 %.not177200.i, label %._crit_edge203.i, label %.lr.ph202.i.preheader
+  br i1 %.not177200.i, label %._crit_edge203.i, label %.lr.ph202.i
 
-.lr.ph202.i.preheader:                            ; preds = %.preheader.i
-  %4 = extractelement <2 x double> %3, i64 0
-  %5 = extractelement <2 x double> %3, i64 1
-  br label %.lr.ph202.i
-
-.lr.ph202.i:                                      ; preds = %.lr.ph202.i.preheader, %.lr.ph202.i
-  %.0161201.i = phi ptr [ %i.eg, %.lr.ph202.i ], [ %i.e, %.lr.ph202.i.preheader ] ; 3 uses
+.lr.ph202.i:                                      ; preds = %.preheader.i, %.lr.ph202.i
+  %.0161201.i = phi ptr [ %i.eg, %.lr.ph202.i ], [ %i.e, %.preheader.i ] ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %.0161201.i, i64 8
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !83
   %i.dr = load double, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 80), align 8, !tbaa !80
   %i.ds = getelementptr inbounds nuw i8, ptr %.0161201.i, i64 16 ; 2 uses
   %i.dt = load double, ptr %i.ds, align 8, !tbaa !84
   %i.du = tail call double @cos(double noundef %i.dt) #6
-  %i.dv = tail call double @llvm.fmuladd.f64(double %i.dr, double %i.du, double %4)
+  %i.dv = tail call double @llvm.fmuladd.f64(double %i.dr, double %i.du, double %.sroa.0147.0.i)
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dq, i64 16
   %i.dx = load ptr, ptr %i.dw, align 8, !tbaa !31 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 176
@@ -368,7 +370,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   %i.ea = load double, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 88), align 8, !tbaa !79
   %i.eb = load double, ptr %i.ds, align 8, !tbaa !84
   %i.ec = tail call double @sin(double noundef %i.eb) #6
-  %i.ed = tail call double @llvm.fmuladd.f64(double %i.ea, double %i.ec, double %5)
+  %i.ed = tail call double @llvm.fmuladd.f64(double %i.ea, double %i.ec, double %.sroa.8151.0.i)
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
   store double %i.ed, ptr %i.ee, align 8, !tbaa !21
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dx, i64 163
@@ -384,7 +386,9 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not178215.i, label %initPositions.exit, label %.lr.ph219.i
 
 .lr.ph219.i:                                      ; preds = %._crit_edge203.i
-  %i.ej = fmul <2 x double> %3, splat (double 1.000000e-01)
+  %8 = insertelement <2 x double> poison, double %.sroa.0147.0.i, i64 0
+  %9 = insertelement <2 x double> %8, double %.sroa.8151.0.i, i64 1 ; 2 uses
+  %i.ej = fmul <2 x double> %9, splat (double 1.000000e-01)
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.an, %.lr.ph219.i
@@ -414,7 +418,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.eu = getelementptr inbounds nuw i8, ptr %i.el, i64 176
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !76 ; 2 uses
   %i.ew = load <2 x double>, ptr %i.ev, align 8, !tbaa !21
-  %i.ex = fsub <2 x double> %i.ew, %3
+  %i.ex = fsub <2 x double> %i.ew, %9
   store <2 x double> %i.ex, ptr %i.ev, align 8, !tbaa !21
   br label %bb.an
 
@@ -562,8 +566,8 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %.not174224.i, label %initPositions.exit, label %.lr.ph223.i.preheader
 
 .lr.ph223.i.preheader:                            ; preds = %bb.ap
-  %6 = extractelement <2 x double> %3, i64 0
-  %7 = extractelement <2 x double> %3, i64 1
+  %10 = insertelement <2 x double> poison, double %.sroa.0147.0.i, i64 0
+  %11 = insertelement <2 x double> %10, double %.sroa.8151.0.i, i64 1
   br label %.lr.ph223.i
 
 .lr.ph223.i:                                      ; preds = %.lr.ph223.i.preheader, %bb.as
@@ -577,14 +581,10 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %.lr.ph223.i
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hr, i64 176
-  %i.hv = load ptr, ptr %i.hu, align 8, !tbaa !76 ; 3 uses
-  %8 = load double, ptr %i.hv, align 8, !tbaa !21
-  %9 = fsub double %8, %6
-  store double %9, ptr %i.hv, align 8, !tbaa !21
-  %10 = getelementptr inbounds nuw i8, ptr %i.hv, i64 8 ; 2 uses
-  %11 = load double, ptr %10, align 8, !tbaa !21
-  %12 = fsub double %11, %7
-  store double %12, ptr %10, align 8, !tbaa !21
+  %i.hv = load ptr, ptr %i.hu, align 8, !tbaa !76 ; 2 uses
+  %12 = load <2 x double>, ptr %i.hv, align 8, !tbaa !21
+  %13 = fsub <2 x double> %12, %11
+  store <2 x double> %13, ptr %i.hv, align 8, !tbaa !21
   br label %bb.as
 
 bb.ar:                                            ; preds = %.lr.ph223.i
@@ -987,31 +987,30 @@ adjust.exit:                                      ; preds = %.lr.ph90, %._crit_e
   br i1 %i.tc, label %.lr.ph90, label %.loopexit75, !llvm.loop !117
 
 .loopexit75:                                      ; preds = %adjust.exit, %.preheader, %._crit_edge
-  %13 = extractelement <2 x double> %3, i64 0     ; 2 uses
-  %i.td = fcmp une double %13, 0.000000e+00
-  %14 = extractelement <2 x double> %3, i64 1     ; 2 uses
-  %i.te = fcmp une double %14, 0.000000e+00
+  %i.td = fcmp une double %.sroa.0147.0.i, 0.000000e+00
+  %i.te = fcmp une double %.sroa.8151.0.i, 0.000000e+00
   %or.cond = select i1 %i.td, i1 true, i1 %i.te
   br i1 %or.cond, label %bb.bq, label %.loopexit
 
 bb.bq:                                            ; preds = %.loopexit75
   %i.tf = tail call ptr @agfstnode(ptr noundef %0) #6 ; 2 uses
   %.not3491 = icmp eq ptr %i.tf, null
-  br i1 %.not3491, label %.loopexit, label %.lr.ph94
+  br i1 %.not3491, label %.loopexit, label %.lr.ph94.preheader
 
-.lr.ph94:                                         ; preds = %bb.bq, %.lr.ph94
-  %.092 = phi ptr [ %i.tk, %.lr.ph94 ], [ %i.tf, %bb.bq ] ; 2 uses
+.lr.ph94.preheader:                               ; preds = %bb.bq
+  %14 = insertelement <2 x double> poison, double %.sroa.0147.0.i, i64 0
+  %15 = insertelement <2 x double> %14, double %.sroa.8151.0.i, i64 1
+  br label %.lr.ph94
+
+.lr.ph94:                                         ; preds = %.lr.ph94.preheader, %.lr.ph94
+  %.092 = phi ptr [ %i.tk, %.lr.ph94 ], [ %i.tf, %.lr.ph94.preheader ] ; 2 uses
   %i.tg = getelementptr inbounds nuw i8, ptr %.092, i64 16
   %i.th = load ptr, ptr %i.tg, align 8, !tbaa !31
   %i.ti = getelementptr inbounds nuw i8, ptr %i.th, i64 176
-  %i.tj = load ptr, ptr %i.ti, align 8, !tbaa !76 ; 3 uses
-  %15 = load double, ptr %i.tj, align 8, !tbaa !21
-  %16 = fadd double %13, %15
-  store double %16, ptr %i.tj, align 8, !tbaa !21
-  %17 = getelementptr inbounds nuw i8, ptr %i.tj, i64 8 ; 2 uses
-  %18 = load double, ptr %17, align 8, !tbaa !21
-  %19 = fadd double %14, %18
-  store double %19, ptr %17, align 8, !tbaa !21
+  %i.tj = load ptr, ptr %i.ti, align 8, !tbaa !76 ; 2 uses
+  %16 = load <2 x double>, ptr %i.tj, align 8, !tbaa !21
+  %17 = fadd <2 x double> %15, %16
+  store <2 x double> %17, ptr %i.tj, align 8, !tbaa !21
   %i.tk = tail call ptr @agnxtnode(ptr noundef %0, ptr noundef nonnull %.092) #6 ; 2 uses
   %.not34 = icmp eq ptr %i.tk, null
   br i1 %.not34, label %.loopexit, label %.lr.ph94, !llvm.loop !118

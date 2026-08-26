@@ -170,14 +170,13 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
   %i.g = getelementptr i8, ptr %i.f, i64 24
   %.val = load i64, ptr %i.g, align 8
   %i.h = and i64 %.val, 7936
-  %3 = icmp ne i64 %i.h, %i.e                     ; 2 uses
-  %4 = icmp ne i32 %.01118, 0
-  %.not16 = select i1 %3, i1 true, i1 %4
-  br i1 %.not16, label %bb.c, label %._crit_edge
+  %3 = icmp eq i64 %i.h, %i.e                     ; 2 uses
+  %4 = icmp eq i32 %.01118, 0
+  %.not16 = select i1 %3, i1 %4, i1 false
+  br i1 %.not16, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %not. = xor i1 %3, true
-  %i.i = sext i1 %not. to i32
+  %i.i = sext i1 %3 to i32
   %.2.a = add i32 %.01118, %i.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
@@ -248,14 +247,13 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   %i.f = getelementptr i8, ptr %i.e, i64 24
   %.val.i = load i64, ptr %i.f, align 8
   %i.g = and i64 %.val.i, 7936
-  %3 = icmp ne i64 %i.g, 512                      ; 2 uses
-  %4 = icmp ne i32 %.01118.i, 0
-  %.not16.i = select i1 %3, i1 true, i1 %4
-  br i1 %.not16.i, label %bb.c, label %platform_get_resource.exit
+  %3 = icmp eq i64 %i.g, 512                      ; 2 uses
+  %4 = icmp eq i32 %.01118.i, 0
+  %.not16.i = select i1 %3, i1 %4, i1 false
+  br i1 %.not16.i, label %platform_get_resource.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %not..i = xor i1 %3, true
-  %i.h = sext i1 %not..i to i32
+  %i.h = sext i1 %3 to i32
   %.2.i.a = add i32 %.01118.i, %i.h
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
@@ -300,14 +298,13 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
   %i.f = getelementptr i8, ptr %i.e, i64 24
   %.val.i.i = load i64, ptr %i.f, align 8
   %i.g = and i64 %.val.i.i, 7936
-  %2 = icmp ne i64 %i.g, 512                      ; 2 uses
-  %3 = icmp ne i32 %.01118.i.i, 0
-  %.not16.i.i = select i1 %2, i1 true, i1 %3
-  br i1 %.not16.i.i, label %bb.c, label %devm_platform_get_and_ioremap_resource.exit
+  %2 = icmp eq i64 %i.g, 512                      ; 2 uses
+  %3 = icmp eq i32 %.01118.i.i, 0
+  %.not16.i.i = select i1 %2, i1 %3, i1 false
+  br i1 %.not16.i.i, label %devm_platform_get_and_ioremap_resource.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %not..i.i = xor i1 %2, true
-  %i.h = sext i1 %not..i.i to i32
+  %i.h = sext i1 %2 to i32
   %.2.i.i.a = add i32 %.01118.i.i, %i.h
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
@@ -434,14 +431,13 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   %i.h = getelementptr i8, ptr %i.g, i64 24
   %.val.i = load i64, ptr %i.h, align 8
   %i.i = and i64 %.val.i, 7936
-  %3 = icmp ne i64 %i.i, 1024                     ; 2 uses
-  %4 = icmp ne i32 %.01118.i, 0
-  %.not16.i = select i1 %3, i1 true, i1 %4
-  br i1 %.not16.i, label %bb.c, label %platform_get_resource.exit
+  %3 = icmp eq i64 %i.i, 1024                     ; 2 uses
+  %4 = icmp eq i32 %.01118.i, 0
+  %.not16.i = select i1 %3, i1 %4, i1 false
+  br i1 %.not16.i, label %platform_get_resource.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %not..i = xor i1 %3, true
-  %i.j = sext i1 %not..i to i32
+  %i.j = sext i1 %3 to i32
   %.2.i = add i32 %.01118.i, %i.j
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
@@ -782,14 +778,13 @@ bb.d:                                             ; preds = %bb.e, %.lr.ph.i.i
   %i.m = getelementptr i8, ptr %i.l, i64 24
   %.val.i.i = load i64, ptr %i.m, align 8         ; 2 uses
   %i.n = and i64 %.val.i.i, 7936
-  %2 = icmp ne i64 %i.n, 1024                     ; 2 uses
-  %3 = icmp ne i32 %.01118.i.i, 0
-  %.not16.i.i = select i1 %2, i1 true, i1 %3
-  br i1 %.not16.i.i, label %bb.e, label %platform_get_resource.exit.i
+  %2 = icmp eq i64 %i.n, 1024                     ; 2 uses
+  %3 = icmp eq i32 %.01118.i.i, 0
+  %.not16.i.i = select i1 %2, i1 %3, i1 false
+  br i1 %.not16.i.i, label %platform_get_resource.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %not..i.i = xor i1 %2, true
-  %i.o = sext i1 %not..i.i to i32
+  %i.o = sext i1 %2 to i32
   %.2.i.i = add i32 %.01118.i.i, %i.o
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i

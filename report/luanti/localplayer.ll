@@ -204,9 +204,9 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.26.12.copyload = load float, ptr %.sroa.26.12..sroa_idx, align 4, !tbaa !34
   %.sroa.01.07.i = getelementptr inbounds nuw i8, ptr %.val103, i64 24 ; 2 uses
   %.not8.i = icmp eq ptr %.sroa.01.07.i, %.val104
-  %7 = shufflevector <2 x float> %i.dd, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
-  %i.de = insertelement <4 x float> %7, float %.sroa.0186.0.copyload, i64 0
-  %i.df = insertelement <4 x float> %i.de, float %.sroa.26.12.copyload, i64 3 ; 3 uses
+  %7 = shufflevector <2 x float> %i.dd, <2 x float> poison, <4 x i32> <i32 poison, i32 1, i32 0, i32 poison>
+  %i.de = insertelement <4 x float> %7, float %.sroa.26.12.copyload, i64 0
+  %i.df = insertelement <4 x float> %i.de, float %.sroa.0186.0.copyload, i64 3 ; 3 uses
   br i1 %.not8.i, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.p, %.lr.ph.i
@@ -218,20 +218,19 @@ bb.p:                                             ; preds = %bb.o
   %i.dj = load float, ptr %i.di, align 4, !tbaa !90, !noalias !137
   %i.dk = load float, ptr %.sroa.01.010.i, align 4, !tbaa !88, !noalias !137
   %i.dl = getelementptr inbounds nuw i8, ptr %.0.val.pn9.i, i64 32
-  %i.dm = load <2 x float>, ptr %i.dl, align 4, !tbaa !34, !noalias !137
-  %8 = shufflevector <2 x float> %i.dm, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
-  %i.dn = insertelement <2 x float> %8, float %i.dj, i64 1
+  %i.dm = load <2 x float>, ptr %i.dl, align 4, !tbaa !34, !noalias !137 ; 2 uses
+  %i.dn = insertelement <2 x float> %i.dm, float %i.dj, i64 0
   %i.do = shufflevector <2 x float> %i.dn, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
+  %8 = fcmp nsz ogt <4 x float> %i.do, %i.dg
   %9 = fcmp nsz olt <4 x float> %i.do, %i.dg
-  %10 = fcmp nsz ogt <4 x float> %i.do, %i.dg
-  %i.dp = shufflevector <4 x i1> %9, <4 x i1> %10, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
+  %i.dp = shufflevector <4 x i1> %8, <4 x i1> %9, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %i.dq = select <4 x i1> %i.dp, <4 x float> %i.do, <4 x float> %i.dh
   %i.dr = select <4 x i1> %i.dp, <4 x float> %i.do, <4 x float> %i.dg ; 3 uses
-  %i.ds = insertelement <2 x float> %8, float %i.dk, i64 0
+  %i.ds = insertelement <2 x float> %i.dm, float %i.dk, i64 1
   %i.dt = shufflevector <2 x float> %i.ds, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1> ; 4 uses
+  %10 = fcmp nsz ogt <4 x float> %i.dt, %i.dr
   %11 = fcmp nsz olt <4 x float> %i.dt, %i.dr
-  %12 = fcmp nsz ogt <4 x float> %i.dt, %i.dr
-  %i.du = shufflevector <4 x i1> %11, <4 x i1> %12, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
+  %i.du = shufflevector <4 x i1> %10, <4 x i1> %11, <4 x i32> <i32 0, i32 1, i32 6, i32 7> ; 2 uses
   %i.dv = select <4 x i1> %i.du, <4 x float> %i.dt, <4 x float> %i.dq ; 2 uses
   %i.dw = select <4 x i1> %i.du, <4 x float> %i.dt, <4 x float> %i.dr
   %.sroa.01.0.i = getelementptr inbounds nuw i8, ptr %.sroa.01.010.i, i64 24 ; 2 uses
@@ -244,10 +243,12 @@ bb.p:                                             ; preds = %bb.o
   %i.dz = shufflevector <4 x float> %i.dx, <4 x float> poison, <2 x i32> <i32 2, i32 3>
   %i.ea = fadd nsz <2 x float> %i.dy, %i.dz
   %i.eb = fmul nsz <2 x float> %i.ea, splat (float 5.000000e-01) ; 2 uses
-  %foldExtExtBinop = fadd nsz <2 x float> %i.db, %i.eb
+  %shift = shufflevector <2 x float> %i.eb, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd nsz <2 x float> %i.db, %shift
   %i.ec = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %foldExtExtBinop287 = fadd nsz <2 x float> %i.db, %i.eb
-  %i.ed = extractelement <2 x float> %foldExtExtBinop287, i64 1
+  %shift287 = shufflevector <2 x float> %i.db, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop287 = fadd nsz <2 x float> %shift287, %i.eb
+  %i.ed = extractelement <2 x float> %foldExtExtBinop287, i64 0
   %.not.i.i.i = icmp eq ptr %.val103, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN4core8aabbox3dIfEESaIS2_EED2Ev.exit, label %bb.q
 
@@ -650,9 +651,9 @@ bb.bh:                                            ; preds = %bb.bg
 .preheader:                                       ; preds = %bb.bh, %bb.bj
   %.0320815 = phi float [ 1.000000e+06, %bb.bh ], [ %.2322, %bb.bj ]
   %.0323814 = phi i16 [ -1, %bb.bh ], [ %i.sp, %bb.bj ] ; 2 uses
-  %.sroa.0656.0813 = phi i16 [ %.sroa.0656.0.copyload, %bb.bh ], [ %.sroa.0656.2, %bb.bj ]
+  %.sroa.0656.0813 = phi i16 [ %.sroa.7660.0.copyload, %bb.bh ], [ %.sroa.0656.2, %bb.bj ]
   %.sroa.6.0812 = phi i16 [ %.sroa.6.0.copyload, %bb.bh ], [ %.sroa.6.2, %bb.bj ]
-  %.sroa.7660.0811 = phi i16 [ %.sroa.7660.0.copyload, %bb.bh ], [ %.sroa.7660.2.a, %bb.bj ]
+  %.sroa.7660.0811 = phi i16 [ %.sroa.0656.0.copyload, %bb.bh ], [ %.sroa.7660.2.a, %bb.bj ]
   %i.si = add i16 %.0323814, %i.rz                ; 3 uses
   %i.sj = sitofp nsz i16 %i.si to float
   %i.sk = fmul nnan nsz float %i.sj, 1.000000e+01
@@ -667,9 +668,9 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bj
   %i.sn = fcmp nsz olt float %.2322, 9.000000e+05 ; 2 uses
   %i.so = zext i1 %i.sn to i8
-  store i16 %.sroa.0656.2, ptr %i.sc, align 2, !tbaa !135
+  store i16 %.sroa.7660.2.a, ptr %i.sc, align 2, !tbaa !135
   store i16 %.sroa.6.2, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !135
-  store i16 %.sroa.7660.2.a, ptr %.sroa.7660.0..sroa_idx, align 2, !tbaa !135
+  store i16 %.sroa.0656.2, ptr %.sroa.7660.0..sroa_idx, align 2, !tbaa !135
   store i8 %i.so, ptr %i.ny, align 4, !tbaa !84
   br i1 %i.sn, label %bb.cg, label %.critedge371
 
@@ -845,9 +846,9 @@ bb.ce:                                            ; preds = %_ZNK14NodeDefManage
   br label %bb.cf
 
 bb.cf:                                            ; preds = %bb.bz, %_ZNK14NodeDefManager3getERK7MapNode.exit542, %bb.bs, %_ZNK14NodeDefManager3getERK7MapNode.exit534, %bb.bm, %_ZNK14NodeDefManager3getERK7MapNode.exit526, %bb.bk, %bb.ce
-  %.sroa.7660.2.a = phi i16 [ %.sroa.7660.1804, %bb.bk ], [ %.sroa.7660.1804, %_ZNK14NodeDefManager3getERK7MapNode.exit534 ], [ %i.sq, %bb.ce ], [ %.sroa.7660.1804, %_ZNK14NodeDefManager3getERK7MapNode.exit542 ], [ %.sroa.7660.1804, %bb.bz ], [ %.sroa.7660.1804, %bb.bs ], [ %.sroa.7660.1804, %_ZNK14NodeDefManager3getERK7MapNode.exit526 ], [ %.sroa.7660.1804, %bb.bm ] ; 3 uses
+  %.sroa.7660.2.a = phi i16 [ %.sroa.7660.1804, %bb.bk ], [ %.sroa.7660.1804, %_ZNK14NodeDefManager3getERK7MapNode.exit534 ], [ %i.si, %bb.ce ], [ %.sroa.7660.1804, %_ZNK14NodeDefManager3getERK7MapNode.exit542 ], [ %.sroa.7660.1804, %bb.bz ], [ %.sroa.7660.1804, %bb.bs ], [ %.sroa.7660.1804, %_ZNK14NodeDefManager3getERK7MapNode.exit526 ], [ %.sroa.7660.1804, %bb.bm ] ; 3 uses
   %.sroa.6.2 = phi i16 [ %.sroa.6.1805, %bb.bk ], [ %.sroa.6.1805, %_ZNK14NodeDefManager3getERK7MapNode.exit534 ], [ %i.rr, %bb.ce ], [ %.sroa.6.1805, %_ZNK14NodeDefManager3getERK7MapNode.exit542 ], [ %.sroa.6.1805, %bb.bz ], [ %.sroa.6.1805, %bb.bs ], [ %.sroa.6.1805, %_ZNK14NodeDefManager3getERK7MapNode.exit526 ], [ %.sroa.6.1805, %bb.bm ] ; 3 uses
-  %.sroa.0656.2 = phi i16 [ %.sroa.0656.1806, %bb.bk ], [ %.sroa.0656.1806, %_ZNK14NodeDefManager3getERK7MapNode.exit534 ], [ %i.si, %bb.ce ], [ %.sroa.0656.1806, %_ZNK14NodeDefManager3getERK7MapNode.exit542 ], [ %.sroa.0656.1806, %bb.bz ], [ %.sroa.0656.1806, %bb.bs ], [ %.sroa.0656.1806, %_ZNK14NodeDefManager3getERK7MapNode.exit526 ], [ %.sroa.0656.1806, %bb.bm ] ; 3 uses
+  %.sroa.0656.2 = phi i16 [ %.sroa.0656.1806, %bb.bk ], [ %.sroa.0656.1806, %_ZNK14NodeDefManager3getERK7MapNode.exit534 ], [ %i.sq, %bb.ce ], [ %.sroa.0656.1806, %_ZNK14NodeDefManager3getERK7MapNode.exit542 ], [ %.sroa.0656.1806, %bb.bz ], [ %.sroa.0656.1806, %bb.bs ], [ %.sroa.0656.1806, %_ZNK14NodeDefManager3getERK7MapNode.exit526 ], [ %.sroa.0656.1806, %bb.bm ] ; 3 uses
   %.2322 = phi nsz float [ %.1321808, %bb.bk ], [ %.1321808, %_ZNK14NodeDefManager3getERK7MapNode.exit534 ], [ %i.sw, %bb.ce ], [ %.1321808, %_ZNK14NodeDefManager3getERK7MapNode.exit542 ], [ %.1321808, %bb.bz ], [ %.1321808, %bb.bs ], [ %.1321808, %_ZNK14NodeDefManager3getERK7MapNode.exit526 ], [ %.1321808, %bb.bm ] ; 3 uses
   %i.vs = add nsw i16 %.0324807, 1                ; 2 uses
   %exitcond.not = icmp eq i16 %i.vs, 2
@@ -1250,8 +1251,8 @@ bb.cp:                                            ; preds = %bb.cn, %bb.cm
   br label %bb.cq
 
 bb.cq:                                            ; preds = %bb.co, %bb.cp, %bb.ci
-  %.1151 = phi nsz float [ %i.lg, %bb.co ], [ %i.ln, %bb.cp ], [ %.0150, %bb.ci ]
-  %.0149 = phi nsz float [ %i.lg, %bb.co ], [ %i.ln, %bb.cp ], [ 0.000000e+00, %bb.ci ]
+  %.1151 = phi nsz float [ %i.lg, %bb.co ], [ %i.ln, %bb.cp ], [ 0.000000e+00, %bb.ci ]
+  %.0149 = phi nsz float [ %i.lg, %bb.co ], [ %i.ln, %bb.cp ], [ %.0150, %bb.ci ]
   br i1 %i.an, label %bb.cu, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
@@ -1317,9 +1318,9 @@ bb.cy:                                            ; preds = %._crit_edge, %bb.cw
   store <2 x float> %.sroa.0.4.vec.insert.i206, ptr %6, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
   store float %i.ml, ptr %.sroa.2.0..sroa_idx, align 8
-  %i.mm = fmul nsz float %.1151, %i.mi
+  %i.mm = fmul nsz float %.0149, %i.mi
   %i.mn = fmul nsz float %.0148, %i.mm
-  %i.mo = fmul nsz float %.0149, %i.mi
+  %i.mo = fmul nsz float %.1151, %i.mi
   call void @_ZN11LocalPlayer10accelerateERKN4core8vector3dIfEEffb(ptr noundef nonnull align 8 dereferenceable(864) %0, ptr noundef nonnull align 4 dereferenceable(12) %6, float noundef %i.mn, float noundef %i.mo, i1 noundef zeroext %i.ay)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26

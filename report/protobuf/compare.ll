@@ -54,12 +54,12 @@ bb.a:
   %5 = alloca %union.upb_MessageValue, align 8    ; 7 uses
   %6 = alloca %union.upb_MessageValue, align 8    ; 6 uses
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca i64, align 8                      ; 9 uses
-  %i.c = alloca i64, align 8                      ; 9 uses
-  %i.d = alloca ptr, align 8                      ; 16 uses
-  %i.e = alloca ptr, align 8                      ; 16 uses
-  %7 = alloca %union.upb_MessageValue, align 8    ; 19 uses
-  %8 = alloca %union.upb_MessageValue, align 8    ; 19 uses
+  %i.b = alloca i64, align 8                      ; 7 uses
+  %i.c = alloca i64, align 8                      ; 7 uses
+  %i.d = alloca ptr, align 8                      ; 15 uses
+  %i.e = alloca ptr, align 8                      ; 15 uses
+  %7 = alloca %union.upb_MessageValue, align 8    ; 18 uses
+  %8 = alloca %union.upb_MessageValue, align 8    ; 18 uses
   %i.f = icmp eq ptr %0, %1
   br i1 %i.f, label %_upb_Message_ExtensionsAreEqual.exit.thread, label %bb.b, !prof !9
 
@@ -68,6 +68,11 @@ bb.b:                                             ; preds = %bb.a
   store i64 -1, ptr %i.b, align 8, !tbaa !7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #4
   store i64 -1, ptr %i.c, align 8, !tbaa !7
+  %9 = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %10 = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %12 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %13 = getelementptr inbounds nuw i8, ptr %6, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #4
@@ -75,17 +80,9 @@ bb.b:                                             ; preds = %bb.a
   %i.g = call zeroext i1 @_upb_Message_NextBaseField_dont_copy_me__upb_internal_use_only(ptr noundef %0, ptr noundef %2, ptr noundef nonnull %i.d, ptr noundef nonnull %7, ptr noundef nonnull %i.b) #4, !inline_history !10 ; 2 uses
   %i.h = call zeroext i1 @_upb_Message_NextBaseField_dont_copy_me__upb_internal_use_only(ptr noundef %1, ptr noundef %2, ptr noundef nonnull %i.e, ptr noundef nonnull %8, ptr noundef nonnull %i.c) #4, !inline_history !10 ; 2 uses
   %i.i = and i1 %i.g, %i.h
-  br i1 %i.i, label %.lr.ph137, label %.thread
+  br i1 %i.i, label %bb.c, label %.thread
 
-.lr.ph137:                                        ; preds = %bb.b
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %11 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %12 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %13 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  br label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph137, %.backedge107
+bb.c:                                             ; preds = %bb.b, %.backedge107
   %i.j = load ptr, ptr %i.d, align 8, !tbaa !11   ; 5 uses
   %i.k = load ptr, ptr %i.e, align 8, !tbaa !11
   %.not.i = icmp eq ptr %i.j, %i.k
@@ -174,7 +171,7 @@ upb_MiniTableField_CType.exit:                    ; preds = %upb_MiniTable_SubMe
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
   br i1 %i.ae, label %.backedge107, label %_upb_Message_BaseFieldsAreEqual.exit
 
-.backedge107.sink.split:                          ; preds = %bb.x, %bb.h, %upb_MiniTableField_CType.exit, %.split87
+.backedge107.sink.split:                          ; preds = %upb_MiniTableField_CType.exit, %bb.h, %bb.x, %.split87
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #4
@@ -354,18 +351,12 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.r
   unreachable
 
-.split87.thread:                                  ; preds = %bb.s, %.split67.a, %.split66, %.split65, %.split64, %.split, %.lr.ph
+.split87.thread:                                  ; preds = %.lr.ph, %.split, %.split64, %.split65, %.split66, %.split67.a, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  br label %_upb_Message_ExtensionsAreEqual.exit.thread
+  br label %_upb_Message_BaseFieldsAreEqual.exit.thread
 
 .split87:                                         ; preds = %upb_MessageValue_IsEqual.exit.i.backedge, %upb_MiniTableField_CType.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
@@ -474,16 +465,14 @@ default.unreachable:                              ; preds = %upb_MiniTableField_
   %.not.i44140 = icmp eq i64 %i.cq, 0
   br i1 %.not.i44140, label %_upb_Message_ExtensionsAreEqual.exit, label %.preheader.i
 
-_upb_Message_BaseFieldsAreEqual.exit.thread:      ; preds = %bb.w, %bb.m
+_upb_Message_BaseFieldsAreEqual.exit.thread:      ; preds = %bb.m, %bb.w, %.split87.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
-  br label %_upb_Message_ExtensionsAreEqual.exit.thread
+  br label %_upb_Message_BaseFieldsAreEqual.exit
 
-_upb_Message_BaseFieldsAreEqual.exit:             ; preds = %.split85, %.split83, %.split81, %.split79, %.split77, %.split75
+_upb_Message_BaseFieldsAreEqual.exit:             ; preds = %.split75, %.split77, %.split79, %.split81, %.split83, %.split85, %_upb_Message_BaseFieldsAreEqual.exit.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   br label %_upb_Message_ExtensionsAreEqual.exit.thread
@@ -721,8 +710,8 @@ bb.aq:                                            ; preds = %bb.ap
   %i.fi = icmp eq i32 %i.fh, 0
   br label %_upb_Message_ExtensionsAreEqual.exit.thread
 
-_upb_Message_ExtensionsAreEqual.exit.thread:      ; preds = %bb.am, %.split100, %.split99, %.split98, %.split97, %.split96, %.loopexit, %.split101, %_upb_Message_BaseFieldsAreEqual.exit, %.split87.thread, %.thread.thread, %.thread, %_upb_Message_BaseFieldsAreEqual.exit.thread, %bb.ap, %_upb_Message_ExtensionsAreEqual.exit, %bb.a, %bb.aq
-  %.0 = phi i1 [ true, %bb.a ], [ %i.fi, %bb.aq ], [ false, %_upb_Message_ExtensionsAreEqual.exit ], [ false, %_upb_Message_BaseFieldsAreEqual.exit ], [ true, %bb.ap ], [ false, %_upb_Message_BaseFieldsAreEqual.exit.thread ], [ false, %.thread ], [ false, %.split87.thread ], [ false, %.thread.thread ], [ false, %.split101 ], [ false, %.loopexit ], [ false, %.split96 ], [ false, %.split97 ], [ false, %.split98 ], [ false, %.split99 ], [ false, %.split100 ], [ false, %bb.am ]
+_upb_Message_ExtensionsAreEqual.exit.thread:      ; preds = %bb.am, %.loopexit, %.split96, %.split97, %.split98, %.split99, %.split100, %.split101, %_upb_Message_BaseFieldsAreEqual.exit, %.thread.thread, %.thread, %bb.ap, %_upb_Message_ExtensionsAreEqual.exit, %bb.a, %bb.aq
+  %.0 = phi i1 [ true, %bb.a ], [ %i.fi, %bb.aq ], [ false, %_upb_Message_ExtensionsAreEqual.exit ], [ false, %_upb_Message_BaseFieldsAreEqual.exit ], [ true, %bb.ap ], [ false, %.thread ], [ false, %.thread.thread ], [ false, %.split101 ], [ false, %.split100 ], [ false, %.split99 ], [ false, %.split98 ], [ false, %.split97 ], [ false, %.split96 ], [ false, %.loopexit ], [ false, %bb.am ]
   ret i1 %.0
 }
 

@@ -204,6 +204,7 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
   br i1 %i.cx, label %_ZN12lldb_private13SourceManager4File11LineIsValidEj.exit.thread, label %.lr.ph331, !llvm.loop !419
 
 .lr.ph331:                                        ; preds = %.lr.ph244, %bb.x
+  %.sroa.0174.0243332 = phi i64 [ %.sroa.0174.1, %bb.x ], [ undef, %.lr.ph244 ]
   %.051243330 = phi i32 [ %i.ku, %bb.x ], [ %.050, %.lr.ph244 ] ; 6 uses
   %i.cy = load ptr, ptr %15, align 8, !tbaa !327  ; 3 uses
   %i.cz = call noundef zeroext i1 @_ZN12lldb_private13SourceManager4File20CalculateLineOffsetsEj(ptr noundef nonnull align 8 dereferenceable(128) %i.cy, i32 poison)
@@ -606,10 +607,11 @@ _ZNSt12__shared_ptrIN12lldb_private8DebuggerELN9__gnu_cxx12_Lock_policyE2EED2Ev.
   %i.hc = load ptr, ptr %16, align 8, !tbaa !441
   %i.hd = load ptr, ptr %19, align 8, !tbaa !441
   %i.he = call noundef i64 (ptr, ptr, ...) @_ZN12lldb_private6Stream6PrintfEPKcz(ptr noundef nonnull align 8 dereferenceable(88) %6, ptr noundef nonnull @.str.13, ptr noundef %i.hc, ptr noundef %i.hd, i32 noundef %.051243330) #20 ; 0 uses
-  %or.cond = and i1 %i.cq, %i.eg                  ; 2 uses
+  %or.cond = and i1 %i.cq, %i.eg                  ; 3 uses
+  %.sroa.0174.1 = select i1 %or.cond, i64 %.sink.i, i64 %.sroa.0174.0243332 ; 2 uses
   %.sroa.5.0 = zext i1 %or.cond to i8
   %i.hf = load ptr, ptr %15, align 8, !tbaa !327
-  %i.hg = call noundef i64 @_ZN12lldb_private13SourceManager4File18DisplaySourceLinesEjSt8optionalImEjjPNS_6StreamEN4lldb12LanguageTypeE(ptr noundef nonnull align 8 dereferenceable(128) %i.hf, i32 noundef %.051243330, i64 %.sink.i, i8 %.sroa.5.0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %6, i32 noundef %8)
+  %i.hg = call noundef i64 @_ZN12lldb_private13SourceManager4File18DisplaySourceLinesEjSt8optionalImEjjPNS_6StreamEN4lldb12LanguageTypeE(ptr noundef nonnull align 8 dereferenceable(128) %i.hf, i32 noundef %.051243330, i64 %.sroa.0174.1, i8 %.sroa.5.0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %6, i32 noundef %8)
   br i1 %or.cond, label %bb.be, label %_ZL34should_show_stop_column_with_caretSt10shared_ptrIN12lldb_private8DebuggerEE.exit.thread228
 
 bb.be:                                            ; preds = %_ZNSt12__shared_ptrIN12lldb_private8DebuggerELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.thread

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 Vec_IntFind.exit:                                 ; preds = %bb.c
   %i.p = trunc nuw nsw i64 %indvars.iv.i to i32
-  switch i32 %i.p, label %unreachable [
+  switch i32 %i.p, label %.loopexit [
     i32 -1, label %Vec_IntFind.exit.thread
     i32 1, label %.loopexit.a
     i32 2, label %bb.f
@@ -215,25 +215,27 @@ Vec_IntFind.exit:                                 ; preds = %bb.c
 bb.e:                                             ; preds = %Vec_IntFind.exit
   br label %bb.f
 
-unreachable:                                      ; preds = %Vec_IntFind.exit
-  unreachable
-
 .loopexit.a:                                      ; preds = %Vec_IntFind.exit
   br label %bb.f
 
 bb.f:                                             ; preds = %Vec_IntFind.exit, %.loopexit.a, %bb.e
   %.sink154 = phi i64 [ 8, %.loopexit.a ], [ 4, %bb.e ], [ 4, %Vec_IntFind.exit ]
   %.sink = phi i64 [ 12, %.loopexit.a ], [ 8, %bb.e ], [ 12, %Vec_IntFind.exit ]
-  %6 = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sink154
-  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sink
-  %.0 = load i32, ptr %i.q, align 4, !tbaa !31    ; 3 uses
-  %.048 = load i32, ptr %6, align 4, !tbaa !31    ; 3 uses
-  %i.r = getelementptr i8, ptr %3, i64 4
-  %.val.i.a = load i32, ptr %i.r, align 4, !tbaa !35 ; 3 uses
-  %7 = icmp sgt i32 %.val.i.a, 1
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sink154
+  %.048 = load i32, ptr %i.q, align 4, !tbaa !31
+  %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 %.sink
+  %.val.i.a = load i32, ptr %i.r, align 4, !tbaa !31
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %Vec_IntFind.exit, %bb.f
+  %.159 = phi i32 [ %.048, %bb.f ], [ undef, %Vec_IntFind.exit ] ; 3 uses
+  %.155 = phi i32 [ %.val.i.a, %bb.f ], [ undef, %Vec_IntFind.exit ] ; 3 uses
+  %6 = getelementptr i8, ptr %3, i64 4
+  %.val.i = load i32, ptr %6, align 4, !tbaa !35  ; 3 uses
+  %7 = icmp sgt i32 %.val.i, 1
   br i1 %7, label %.critedge.lr.ph.i, label %Gia_ManMulFindNextEntryCount.exit80
 
-.critedge.lr.ph.i:                                ; preds = %bb.f
+.critedge.lr.ph.i:                                ; preds = %.loopexit
   %i.s = getelementptr i8, ptr %3, i64 8
   %.val13.i = load ptr, ptr %i.s, align 8, !tbaa !37 ; 4 uses
   br label %.critedge.i
@@ -242,14 +244,14 @@ bb.g:                                             ; preds = %.critedge.i
   %indvars.iv.next.i71 = add nuw nsw i64 %indvars.iv.i70, 2 ; 2 uses
   %i.t = trunc i64 %indvars.iv.next.i71 to i32
   %i.u = or disjoint i32 %i.t, 1
-  %i.v = icmp slt i32 %i.u, %.val.i.a
+  %i.v = icmp slt i32 %i.u, %.val.i
   br i1 %i.v, label %.critedge.i, label %.critedge.lr.ph.i74, !llvm.loop !87
 
 .critedge.i:                                      ; preds = %bb.g, %.critedge.lr.ph.i
   %indvars.iv.i70 = phi i64 [ 0, %.critedge.lr.ph.i ], [ %indvars.iv.next.i71, %bb.g ] ; 3 uses
   %i.w = getelementptr inbounds nuw [4 x i8], ptr %.val13.i, i64 %indvars.iv.i70
   %i.x = load i32, ptr %i.w, align 4, !tbaa !31
-  %i.y = icmp eq i32 %i.x, %.048
+  %i.y = icmp eq i32 %i.x, %.159
   br i1 %i.y, label %.split.loop.exit14.i, label %bb.g
 
 .split.loop.exit14.i:                             ; preds = %.critedge.i
@@ -266,14 +268,14 @@ bb.h:                                             ; preds = %.critedge.i76
   %indvars.iv.next.i78 = add nuw nsw i64 %indvars.iv.i77, 2 ; 2 uses
   %i.ac = trunc i64 %indvars.iv.next.i78 to i32
   %i.ad = or disjoint i32 %i.ac, 1
-  %i.ae = icmp slt i32 %i.ad, %.val.i.a
+  %i.ae = icmp slt i32 %i.ad, %.val.i
   br i1 %i.ae, label %.critedge.i76, label %Gia_ManMulFindNextEntryCount.exit80, !llvm.loop !87
 
 .critedge.i76:                                    ; preds = %bb.h, %.critedge.lr.ph.i74
   %indvars.iv.i77 = phi i64 [ 0, %.critedge.lr.ph.i74 ], [ %indvars.iv.next.i78, %bb.h ] ; 3 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %.val13.i, i64 %indvars.iv.i77
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !31
-  %i.ah = icmp eq i32 %i.ag, %.0
+  %i.ah = icmp eq i32 %i.ag, %.155
   br i1 %i.ah, label %.split.loop.exit14.i79, label %bb.h
 
 .split.loop.exit14.i79:                           ; preds = %.critedge.i76
@@ -282,13 +284,13 @@ bb.h:                                             ; preds = %.critedge.i76
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !31
   br label %Gia_ManMulFindNextEntryCount.exit80
 
-Gia_ManMulFindNextEntryCount.exit80:              ; preds = %bb.h, %bb.f, %.split.loop.exit14.i79
-  %.010.i91 = phi i32 [ %.010.i, %.split.loop.exit14.i79 ], [ -1, %bb.f ], [ %.010.i, %bb.h ]
-  %.010.i73 = phi i32 [ %i.ak, %.split.loop.exit14.i79 ], [ -1, %bb.f ], [ -1, %bb.h ]
+Gia_ManMulFindNextEntryCount.exit80:              ; preds = %bb.h, %.loopexit, %.split.loop.exit14.i79
+  %.010.i91 = phi i32 [ %.010.i, %.split.loop.exit14.i79 ], [ -1, %.loopexit ], [ %.010.i, %bb.h ]
+  %.010.i73 = phi i32 [ %i.ak, %.split.loop.exit14.i79 ], [ -1, %.loopexit ], [ -1, %bb.h ]
   %.not = icmp sgt i32 %.010.i91, %.010.i73       ; 2 uses
-  %i.al = select i1 %.not, i32 %.0, i32 %.048
+  %i.al = select i1 %.not, i32 %.155, i32 %.159
   store i32 %i.al, ptr %4, align 4, !tbaa !31
-  %i.am = select i1 %.not, i32 %.048, i32 %.0
+  %i.am = select i1 %.not, i32 %.159, i32 %.155
   store i32 %i.am, ptr %5, align 4, !tbaa !31
   %.val57120 = load i32, ptr %i.a, align 4, !tbaa !35 ; 2 uses
   %i.an = icmp sgt i32 %.val57120, 0
@@ -691,7 +693,7 @@ bb.f:                                             ; preds = %.lr.ph199, %.crited
   %.val119246 = phi i32 [ %.val119, %Vec_IntDrop.exit142 ], [ %.val120247, %.lr.ph196 ]
   %i.bc = phi i32 [ %i.cs, %Vec_IntDrop.exit142 ], [ %i.aw, %.lr.ph196 ] ; 8 uses
   %.1195 = phi i32 [ %.1, %Vec_IntDrop.exit142 ], [ %.1192, %.lr.ph196 ] ; 3 uses
-  %.2111194 = phi i32 [ %.3112, %Vec_IntDrop.exit142 ], [ %.1110198, %.lr.ph196 ] ; 3 uses
+  %.2111194 = phi i32 [ %.2, %Vec_IntDrop.exit142 ], [ %.1110198, %.lr.ph196 ] ; 3 uses
   %.val125 = load ptr, ptr %i.au, align 8, !tbaa !37
   %i.bd = sext i32 %.1195 to i64                  ; 2 uses
   %i.be = getelementptr inbounds [4 x i8], ptr %.val125, i64 %i.bd
@@ -811,14 +813,14 @@ Vec_IntDrop.exit142:                              ; preds = %bb.q, %Vec_IntDrop.
   %.val120250 = phi i32 [ %.val120249, %.lr.ph196.split ], [ %i.ci, %Vec_IntDrop.exit ], [ %i.cp, %bb.q ] ; 2 uses
   %.val119 = phi i32 [ %.val119246, %.lr.ph196.split ], [ %i.ci, %Vec_IntDrop.exit ], [ %i.cp, %bb.q ] ; 2 uses
   %i.cs = phi i32 [ %i.bc, %.lr.ph196.split ], [ %i.bu, %Vec_IntDrop.exit ], [ %i.bu, %bb.q ] ; 2 uses
-  %.3112 = phi i32 [ %.2111194, %.lr.ph196.split ], [ %i.ci, %Vec_IntDrop.exit ], [ %i.cp, %bb.q ] ; 2 uses
-  %.2 = phi i32 [ %.1195, %.lr.ph196.split ], [ %i.ci, %Vec_IntDrop.exit ], [ %i.cp, %bb.q ]
-  %.1 = add nsw i32 %.2, 1                        ; 2 uses
+  %.3112 = phi i32 [ %.1195, %.lr.ph196.split ], [ %i.ci, %Vec_IntDrop.exit ], [ %i.cp, %bb.q ]
+  %.2 = phi i32 [ %.2111194, %.lr.ph196.split ], [ %i.ci, %Vec_IntDrop.exit ], [ %i.cp, %bb.q ] ; 2 uses
+  %.1 = add nsw i32 %.3112, 1                     ; 2 uses
   %i.ct = icmp slt i32 %.1, %.val119
   br i1 %i.ct, label %.lr.ph196.split, label %.critedge12.loopexit, !llvm.loop !97
 
 .critedge12.loopexit:                             ; preds = %Vec_IntDrop.exit142
-  %.pre263 = add nsw i32 %.3112, 1
+  %.pre263 = add nsw i32 %.2, 1
   br label %.critedge12
 
 .critedge12:                                      ; preds = %.lr.ph196, %.critedge12.loopexit, %bb.f

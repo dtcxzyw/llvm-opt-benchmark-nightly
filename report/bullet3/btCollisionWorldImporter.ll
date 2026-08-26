@@ -205,6 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph228, %bb.ar
   %indvars.iv258 = phi i64 [ 0, %.lr.ph228 ], [ %indvars.iv.next259, %bb.ar ] ; 13 uses
+  %.sroa.17.0228 = phi i32 [ undef, %.lr.ph228 ], [ %.sroa.17.2, %bb.ar ]
+  %.sroa.12207.0227 = phi ptr [ undef, %.lr.ph228 ], [ %.sroa.12207.3, %bb.ar ]
   %i.af = load ptr, ptr %1, align 8, !tbaa !338   ; 2 uses
   %i.ag = getelementptr inbounds nuw [56 x i8], ptr %i.af, i64 %indvars.iv258 ; 4 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 48
@@ -607,8 +609,9 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph218.ne
 
 .loopexit214:                                     ; preds = %.epil.preheader, %.loopexit214.loopexit.unr-lcssa, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit, %bb.h
   %i.go = phi ptr [ %i.af, %bb.h ], [ %.pre, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit ], [ %.pre, %.loopexit214.loopexit.unr-lcssa ], [ %.pre, %.epil.preheader ] ; 2 uses
-  %.sroa.31.0.a = phi i32 [ 2, %bb.h ], [ 3, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit ], [ 3, %.loopexit214.loopexit.unr-lcssa ], [ 3, %.epil.preheader ]
-  %.sroa.12207.0 = phi ptr [ undef, %bb.h ], [ %i.dq, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit ], [ %i.dq, %.loopexit214.loopexit.unr-lcssa ], [ %i.dq, %.epil.preheader ]
+  %.sroa.12207.1 = phi ptr [ %.sroa.12207.0227, %bb.h ], [ %i.dq, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit ], [ %i.dq, %.loopexit214.loopexit.unr-lcssa ], [ %i.dq, %.epil.preheader ]
+  %.sroa.31.0.a = phi i32 [ %.sroa.17.0228, %bb.h ], [ 6, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit ], [ 6, %.loopexit214.loopexit.unr-lcssa ], [ 6, %.epil.preheader ]
+  %.sroa.31.0 = phi i32 [ 2, %bb.h ], [ 3, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit ], [ 3, %.loopexit214.loopexit.unr-lcssa ], [ 3, %.epil.preheader ]
   %i.gp = getelementptr inbounds nuw [56 x i8], ptr %i.go, i64 %indvars.iv258
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gp, i64 40
   %i.gr = load ptr, ptr %i.gq, align 8, !tbaa !348
@@ -860,8 +863,9 @@ scalar.ph338:                                     ; preds = %scalar.ph338.prol.l
 
 .loopexit213:                                     ; preds = %scalar.ph338.prol.loopexit, %scalar.ph338, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit135, %.loopexit214
   %i.ju = phi ptr [ %i.go, %.loopexit214 ], [ %.pre261, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit135 ], [ %.pre261, %scalar.ph338 ], [ %.pre261, %scalar.ph338.prol.loopexit ]
-  %.sroa.31.1.a = phi i32 [ %.sroa.31.0.a, %.loopexit214 ], [ 3, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit135 ], [ 3, %scalar.ph338 ], [ 3, %scalar.ph338.prol.loopexit ]
-  %.sroa.12207.1 = phi ptr [ %.sroa.12207.0, %.loopexit214 ], [ %i.gu, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit135 ], [ %i.gu, %scalar.ph338 ], [ %i.gu, %scalar.ph338.prol.loopexit ]
+  %.sroa.12207.2 = phi ptr [ %.sroa.12207.1, %.loopexit214 ], [ %i.gu, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit135 ], [ %i.gu, %scalar.ph338 ], [ %i.gu, %scalar.ph338.prol.loopexit ]
+  %.sroa.31.1.a = phi i32 [ %.sroa.31.0.a, %.loopexit214 ], [ 6, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit135 ], [ 6, %scalar.ph338 ], [ 6, %scalar.ph338.prol.loopexit ]
+  %.sroa.31.1 = phi i32 [ %.sroa.31.0, %.loopexit214 ], [ 3, %_ZN20btAlignedObjectArrayIPsE9push_backERKS0_.exit135 ], [ 3, %scalar.ph338 ], [ 3, %scalar.ph338.prol.loopexit ]
   %i.jv = getelementptr inbounds nuw [56 x i8], ptr %i.ju, i64 %indvars.iv258
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 32
   %i.jx = load ptr, ptr %i.jw, align 8, !tbaa !349
@@ -1053,9 +1057,9 @@ _ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit: ; preds = %bb.t, %bb.u, %_ZN
   br i1 %exitcond247.not, label %.loopexit212, label %.lr.ph222, !llvm.loop !449
 
 .loopexit212:                                     ; preds = %scalar.ph381.prol.loopexit, %scalar.ph381, %.lr.ph222, %middle.block390, %_ZN20btAlignedObjectArrayIPiE9push_backERKS0_.exit, %_ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit, %.loopexit213
-  %.sroa.31.2 = phi i32 [ %.sroa.31.1.a, %.loopexit213 ], [ 5, %_ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit ], [ 2, %_ZN20btAlignedObjectArrayIPiE9push_backERKS0_.exit ], [ 2, %middle.block390 ], [ 5, %.lr.ph222 ], [ 2, %scalar.ph381 ], [ 2, %scalar.ph381.prol.loopexit ] ; 2 uses
-  %.sroa.17.2 = phi i32 [ 6, %.loopexit213 ], [ 3, %_ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit ], [ 12, %_ZN20btAlignedObjectArrayIPiE9push_backERKS0_.exit ], [ 12, %middle.block390 ], [ 3, %.lr.ph222 ], [ 12, %scalar.ph381 ], [ 12, %scalar.ph381.prol.loopexit ]
-  %.sroa.12207.2 = phi ptr [ %.sroa.12207.1, %.loopexit213 ], [ %i.ka, %_ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit ], [ %i.ap, %_ZN20btAlignedObjectArrayIPiE9push_backERKS0_.exit ], [ %i.ap, %middle.block390 ], [ %i.ka, %.lr.ph222 ], [ %i.ap, %scalar.ph381 ], [ %i.ap, %scalar.ph381.prol.loopexit ] ; 2 uses
+  %.sroa.12207.3 = phi ptr [ %.sroa.12207.2, %.loopexit213 ], [ %i.ka, %_ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit ], [ %i.ap, %_ZN20btAlignedObjectArrayIPiE9push_backERKS0_.exit ], [ %i.ap, %middle.block390 ], [ %i.ka, %.lr.ph222 ], [ %i.ap, %scalar.ph381 ], [ %i.ap, %scalar.ph381.prol.loopexit ] ; 3 uses
+  %.sroa.17.2 = phi i32 [ %.sroa.31.1.a, %.loopexit213 ], [ 3, %_ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit ], [ 12, %_ZN20btAlignedObjectArrayIPiE9push_backERKS0_.exit ], [ 12, %middle.block390 ], [ 3, %.lr.ph222 ], [ 12, %scalar.ph381 ], [ 12, %scalar.ph381.prol.loopexit ] ; 2 uses
+  %.sroa.31.2 = phi i32 [ %.sroa.31.1, %.loopexit213 ], [ 5, %_ZN20btAlignedObjectArrayIPhE9push_backERKS0_.exit ], [ 2, %_ZN20btAlignedObjectArrayIPiE9push_backERKS0_.exit ], [ 2, %middle.block390 ], [ 5, %.lr.ph222 ], [ 2, %scalar.ph381 ], [ 2, %scalar.ph381.prol.loopexit ] ; 2 uses
   %i.mr = load ptr, ptr %1, align 8, !tbaa !338
   %i.ms = getelementptr inbounds nuw [56 x i8], ptr %i.mr, i64 %indvars.iv258
   %i.mt = load ptr, ptr %i.ms, align 8, !tbaa !339
@@ -1458,10 +1462,10 @@ bb.aj:                                            ; preds = %bb.aj, %.lr.ph226.n
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.epil.preheader439, %.loopexit.loopexit416.unr-lcssa, %.epil.preheader448, %.loopexit.loopexit.unr-lcssa, %_ZN20btAlignedObjectArrayIP18btVector3FloatDataE9push_backERKS1_.exit, %_ZN20btAlignedObjectArrayIP19btVector3DoubleDataE9push_backERKS1_.exit
-  %.sroa.37.0 = phi i32 [ 1, %_ZN20btAlignedObjectArrayIP19btVector3DoubleDataE9push_backERKS1_.exit ], [ 0, %_ZN20btAlignedObjectArrayIP18btVector3FloatDataE9push_backERKS1_.exit ], [ 1, %.epil.preheader448 ], [ 1, %.loopexit.loopexit.unr-lcssa ], [ 0, %.loopexit.loopexit416.unr-lcssa ], [ 0, %.epil.preheader439 ]
-  %.sroa.29.0 = phi i32 [ 32, %_ZN20btAlignedObjectArrayIP19btVector3DoubleDataE9push_backERKS1_.exit ], [ 16, %_ZN20btAlignedObjectArrayIP18btVector3FloatDataE9push_backERKS1_.exit ], [ 32, %.epil.preheader448 ], [ 32, %.loopexit.loopexit.unr-lcssa ], [ 16, %.loopexit.loopexit416.unr-lcssa ], [ 16, %.epil.preheader439 ]
   %.sroa.26.0 = phi ptr [ %i.ps, %_ZN20btAlignedObjectArrayIP19btVector3DoubleDataE9push_backERKS1_.exit ], [ %i.mw, %_ZN20btAlignedObjectArrayIP18btVector3FloatDataE9push_backERKS1_.exit ], [ %i.ps, %.epil.preheader448 ], [ %i.ps, %.loopexit.loopexit.unr-lcssa ], [ %i.mw, %.loopexit.loopexit416.unr-lcssa ], [ %i.mw, %.epil.preheader439 ] ; 2 uses
-  %i.tm = icmp ne ptr %.sroa.12207.2, null
+  %.sroa.29.0 = phi i32 [ 32, %_ZN20btAlignedObjectArrayIP19btVector3DoubleDataE9push_backERKS1_.exit ], [ 16, %_ZN20btAlignedObjectArrayIP18btVector3FloatDataE9push_backERKS1_.exit ], [ 32, %.epil.preheader448 ], [ 32, %.loopexit.loopexit.unr-lcssa ], [ 16, %.loopexit.loopexit416.unr-lcssa ], [ 16, %.epil.preheader439 ]
+  %.sroa.37.0 = phi i32 [ 1, %_ZN20btAlignedObjectArrayIP19btVector3DoubleDataE9push_backERKS1_.exit ], [ 0, %_ZN20btAlignedObjectArrayIP18btVector3FloatDataE9push_backERKS1_.exit ], [ 1, %.epil.preheader448 ], [ 1, %.loopexit.loopexit.unr-lcssa ], [ 0, %.loopexit.loopexit416.unr-lcssa ], [ 0, %.epil.preheader439 ]
+  %i.tm = icmp ne ptr %.sroa.12207.3, null
   %i.tn = icmp ne ptr %.sroa.26.0, null
   %or.cond = and i1 %i.tm, %i.tn
   br i1 %or.cond, label %bb.ak, label %bb.ar
@@ -1565,7 +1569,7 @@ _ZN26btTriangleIndexVertexArray14addIndexedMeshERK13btIndexedMesh14PHY_ScalarTyp
   %i.up = getelementptr inbounds [48 x i8], ptr %i.un, i64 %i.uo ; 8 uses
   store i32 %i.ai, ptr %i.up, align 8, !tbaa !199
   %.sroa.12207.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.up, i64 8
-  store ptr %.sroa.12207.2, ptr %.sroa.12207.0..sroa_idx, align 8, !tbaa !178
+  store ptr %.sroa.12207.3, ptr %.sroa.12207.0..sroa_idx, align 8, !tbaa !178
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.up, i64 16
   store i32 %.sroa.17.2, ptr %.sroa.17.0..sroa_idx, align 8, !tbaa !199
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.up, i64 20
