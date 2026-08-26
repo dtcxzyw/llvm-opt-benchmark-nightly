@@ -1,0 +1,439 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index 8b759e701da60..5365a33d90188 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -677,7 +677,8 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+   /// second operand.
+   Instruction *FoldOpIntoSelect(Instruction &Op, SelectInst *SI,
+                                 bool FoldWithMultiUse = false,
+-                                bool SimplifyBothArms = false);
++                                bool SimplifyBothArms = false,
++                                bool AllowNoArmSimplification = false);
+ 
+   Instruction *foldBinOpSelectBinOp(BinaryOperator &Op);
+ 
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp b/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
+index 4e1aa36230550..4a6ba445a39bb 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineMulDivRem.cpp
+@@ -1318,6 +1318,33 @@ static Value *foldIDivShl(BinaryOperator &I, InstCombiner::BuilderTy &Builder) {
+   return nullptr;
+ }
+ 
++/// True if the divisor selects between two constants, so that splitting the
++/// division leaves a constant divisor on either arm.
++static bool isSplittableSelectDivisor(BinaryOperator &I) {
++  const APInt *C1, *C2;
++  if (!match(I.getOperand(1), m_Select(m_Value(), m_APInt(C1), m_APInt(C2))))
++    return false;
++
++  // Both arms are evaluated after the split, so neither may divide by zero.
++  if (C1->isZero() || C2->isZero())
++    return false;
++
++  // Signed division of INT_MIN by -1 overflows so an arm dividing by -1 would
++  // be undefined on a path that previously chose the other arm.
++  bool IsSigned =
++      I.getOpcode() == Instruction::SDiv || I.getOpcode() == Instruction::SRem;
++  if (IsSigned && (C1->isAllOnes() || C2->isAllOnes()))
++    return false;
++
++  // An unsigned divisor with the high bit set leaves a quotient of zero or
++  // one which folds to a compare against the select without a split.
++  if (I.getOpcode() == Instruction::UDiv && C1->isNegative() &&
++      C2->isNegative())
++    return false;
++
++  return true;
++}
++
+ /// Common integer divide/remainder transforms
+ Instruction *InstCombinerImpl::commonIDivRemTransforms(BinaryOperator &I) {
+   assert(I.isIntDivRem() && "Unexpected instruction");
+@@ -1352,6 +1379,16 @@ Instruction *InstCombinerImpl::commonIDivRemTransforms(BinaryOperator &I) {
+       return R;
+   }
+ 
++  // X div/rem (select C, C1, C2) --> select C, (X div/rem C1), (X div/rem C2)
++  // This increases instruction count but it's okay since a constant divisor
++  // does not need the hardware divider.
++  if (!MinimizeSize && isSplittableSelectDivisor(I))
++    if (Instruction *R = FoldOpIntoSelect(I, cast<SelectInst>(Op1),
++                                          /*FoldWithMultiUse=*/true,
++                                          /*SimplifyBothArms=*/false,
++                                          /*AllowNoArmSimplification=*/true))
++      return R;
++
+   return nullptr;
+ }
+ 
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index 558ad2ebccc37..20df1a09100fe 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -460,6 +460,12 @@ Instruction *InstCombinerImpl::foldSelectOpOp(SelectInst &SI, Instruction *TI,
+   if (!MatchOp)
+     return nullptr;
+ 
++  // Two constant divisors would become one variable divisor, which needs a
++  // hardware divide that neither of them needed.
++  if (TI->isIntDivRem() && MatchIsOpZero && isa<Constant>(OtherOpT) &&
++      isa<Constant>(OtherOpF))
++    return nullptr;
++
+   // If the select condition is a vector, the operands of the original select's
+   // operands also must be vectors. This may not be the case for getelementptr
+   // for example.
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 1fd813fb856ad..cedef12727c53 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -1781,7 +1781,8 @@ static Value *foldOperationIntoSelectOperand(Instruction &I, SelectInst *SI,
+ 
+ Instruction *InstCombinerImpl::FoldOpIntoSelect(Instruction &Op, SelectInst *SI,
+                                                 bool FoldWithMultiUse,
+-                                                bool SimplifyBothArms) {
++                                                bool SimplifyBothArms,
++                                                bool AllowNoArmSimplification) {
+   // Don't modify shared select instructions unless set FoldWithMultiUse
+   if (!SI->hasOneUser() && !FoldWithMultiUse)
+     return nullptr;
+@@ -1822,7 +1823,7 @@ Instruction *InstCombinerImpl::FoldOpIntoSelect(Instruction &Op, SelectInst *SI,
+   Value *NewTV = simplifyOperationIntoSelectOperand(Op, SI, /*IsTrueArm=*/true);
+   Value *NewFV =
+       simplifyOperationIntoSelectOperand(Op, SI, /*IsTrueArm=*/false);
+-  if (!NewTV && !NewFV)
++  if (!NewTV && !NewFV && !AllowNoArmSimplification)
+     return nullptr;
+ 
+   if (SimplifyBothArms && !(NewTV && NewFV))
+diff --git a/llvm/test/Transforms/InstCombine/div.ll b/llvm/test/Transforms/InstCombine/div.ll
+index 75a6c897e6133..933d41c93d685 100644
+--- a/llvm/test/Transforms/InstCombine/div.ll
++++ b/llvm/test/Transforms/InstCombine/div.ll
+@@ -1180,12 +1180,13 @@ define <2 x i8> @sdiv_constant_dividend_select_of_constants_divisor_vec_ub2(i1 %
+   ret <2 x i8> %r
+ }
+ 
+-; negative test - must have constant dividend
++; a variable dividend splits into a constant division per arm
+ 
+ define i32 @sdiv_select_of_constants_divisor(i1 %b, i32 %x) {
+ ; CHECK-LABEL: @sdiv_select_of_constants_divisor(
+-; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 12, i32 -3
+-; CHECK-NEXT:    [[R:%.*]] = sdiv i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sdiv i32 [[X:%.*]], 12
++; CHECK-NEXT:    [[TMP2:%.*]] = sdiv i32 [[X]], -3
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP2]]
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+   %s = select i1 %b, i32 12, i32 -3
+@@ -1193,6 +1194,29 @@ define i32 @sdiv_select_of_constants_divisor(i1 %b, i32 %x) {
+   ret i32 %r
+ }
+ 
++define i32 @sdiv_select_of_constants_divisor_exact(i1 %b, i32 %x) {
++; CHECK-LABEL: @sdiv_select_of_constants_divisor_exact(
++; CHECK-NEXT:    [[TMP1:%.*]] = ashr exact i32 [[X:%.*]], 2
++; CHECK-NEXT:    [[TMP2:%.*]] = sdiv exact i32 [[X]], 5
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP2]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 4, i32 5
++  %r = sdiv exact i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @sdiv_select_of_constants_divisor_minus_one_arm(i1 %b, i32 %x) {
++; CHECK-LABEL: @sdiv_select_of_constants_divisor_minus_one_arm(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 -2, i32 -1
++; CHECK-NEXT:    [[R:%.*]] = sdiv i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 -2, i32 -1
++  %r = sdiv i32 %x, %s
++  ret i32 %r
++}
++
+ define i32 @udiv_constant_dividend_select_of_constants_divisor(i1 %b) {
+ ; CHECK-LABEL: @udiv_constant_dividend_select_of_constants_divisor(
+ ; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 3, i32 0
+@@ -1287,12 +1311,14 @@ define <2 x i8> @udiv_constant_dividend_select_of_constants_divisor_vec_ub2(i1 %
+   ret <2 x i8> %r
+ }
+ 
+-; negative test - must have constant dividend
++; a variable dividend splits into a constant division per arm
+ 
+ define i32 @udiv_select_of_constants_divisor(i1 %b, i32 %x) {
+ ; CHECK-LABEL: @udiv_select_of_constants_divisor(
+-; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 12, i32 -3
+-; CHECK-NEXT:    [[R:%.*]] = udiv i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    [[TMP1:%.*]] = udiv i32 [[X:%.*]], 12
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp ugt i32 [[X]], -4
++; CHECK-NEXT:    [[TMP3:%.*]] = zext i1 [[TMP2]] to i32
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP3]]
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+   %s = select i1 %b, i32 12, i32 -3
+@@ -1300,6 +1326,155 @@ define i32 @udiv_select_of_constants_divisor(i1 %b, i32 %x) {
+   ret i32 %r
+ }
+ 
++define i32 @udiv_select_of_constants_divisor_pow2_arm(i1 %b, i32 %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_pow2_arm(
++; CHECK-NEXT:    [[TMP1:%.*]] = lshr i32 [[X:%.*]], 2
++; CHECK-NEXT:    [[TMP2:%.*]] = udiv i32 [[X]], 5
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP2]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 4, i32 5
++  %r = udiv i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @udiv_select_of_constants_divisor_from_zext_add(i1 %b, i32 %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_from_zext_add(
++; CHECK-NEXT:    [[TMP1:%.*]] = udiv i32 [[X:%.*]], 5
++; CHECK-NEXT:    [[TMP2:%.*]] = lshr i32 [[X]], 2
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP2]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %z = zext i1 %b to i32
++  %s = add i32 %z, 4
++  %r = udiv i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @udiv_select_of_constants_divisor_both_pow2(i1 %b, i32 %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_both_pow2(
++; CHECK-NEXT:    [[R_V:%.*]] = select i1 [[B:%.*]], i32 2, i32 3
++; CHECK-NEXT:    [[R:%.*]] = lshr i32 [[X:%.*]], [[R_V]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 4, i32 8
++  %r = udiv i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @udiv_select_of_constants_divisor_exact(i1 %b, i32 %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_exact(
++; CHECK-NEXT:    [[TMP1:%.*]] = lshr exact i32 [[X:%.*]], 2
++; CHECK-NEXT:    [[TMP2:%.*]] = udiv exact i32 [[X]], 5
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP2]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 4, i32 5
++  %r = udiv exact i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @udiv_select_of_constants_divisor_minus_one_arm(i1 %b, i32 %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_minus_one_arm(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 -2, i32 -1
++; CHECK-NEXT:    [[R_V:%.*]] = icmp uge i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    [[R:%.*]] = zext i1 [[R_V]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 -2, i32 -1
++  %r = udiv i32 %x, %s
++  ret i32 %r
++}
++
++define <2 x i32> @udiv_select_of_constants_divisor_splat(i1 %b, <2 x i32> %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_splat(
++; CHECK-NEXT:    [[TMP1:%.*]] = lshr <2 x i32> [[X:%.*]], splat (i32 2)
++; CHECK-NEXT:    [[TMP2:%.*]] = udiv <2 x i32> [[X]], splat (i32 5)
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], <2 x i32> [[TMP1]], <2 x i32> [[TMP2]]
++; CHECK-NEXT:    ret <2 x i32> [[R]]
++;
++  %s = select i1 %b, <2 x i32> splat (i32 4), <2 x i32> splat (i32 5)
++  %r = udiv <2 x i32> %x, %s
++  ret <2 x i32> %r
++}
++
++define <2 x i32> @udiv_select_of_constants_divisor_splat_poison(i1 %b, <2 x i32> %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_splat_poison(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], <2 x i32> <i32 4, i32 poison>, <2 x i32> <i32 5, i32 poison>
++; CHECK-NEXT:    [[R:%.*]] = udiv <2 x i32> [[X:%.*]], [[S]]
++; CHECK-NEXT:    ret <2 x i32> [[R]]
++;
++  %s = select i1 %b, <2 x i32> <i32 4, i32 poison>, <2 x i32> <i32 5, i32 poison>
++  %r = udiv <2 x i32> %x, %s
++  ret <2 x i32> %r
++}
++
++define <2 x i32> @udiv_select_of_constants_divisor_non_splat(i1 %b, <2 x i32> %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_non_splat(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], <2 x i32> <i32 4, i32 8>, <2 x i32> <i32 5, i32 9>
++; CHECK-NEXT:    [[R:%.*]] = udiv <2 x i32> [[X:%.*]], [[S]]
++; CHECK-NEXT:    ret <2 x i32> [[R]]
++;
++  %s = select i1 %b, <2 x i32> <i32 4, i32 8>, <2 x i32> <i32 5, i32 9>
++  %r = udiv <2 x i32> %x, %s
++  ret <2 x i32> %r
++}
++
++define i32 @udiv_select_of_constants_divisor_minsize(i1 %b, i32 %x) minsize {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_minsize(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 4, i32 5
++; CHECK-NEXT:    [[R:%.*]] = udiv i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 4, i32 5
++  %r = udiv i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @udiv_select_of_constants_divisor_variable_arm(i1 %b, i32 %x, i32 %y) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_variable_arm(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 [[Y:%.*]], i32 4
++; CHECK-NEXT:    [[R:%.*]] = udiv i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 %y, i32 4
++  %r = udiv i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @udiv_urem_select_of_constants_divisor(i1 %b, i32 %x) {
++; CHECK-LABEL: @udiv_urem_select_of_constants_divisor(
++; CHECK-NEXT:    [[TMP1:%.*]] = lshr i32 [[X:%.*]], 2
++; CHECK-NEXT:    [[TMP2:%.*]] = udiv i32 [[X]], 5
++; CHECK-NEXT:    [[D:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP2]]
++; CHECK-NEXT:    [[TMP3:%.*]] = and i32 [[X]], 3
++; CHECK-NEXT:    [[TMP4:%.*]] = urem i32 [[X]], 5
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B]], i32 [[TMP3]], i32 [[TMP4]]
++; CHECK-NEXT:    [[A:%.*]] = add nuw nsw i32 [[D]], [[R]]
++; CHECK-NEXT:    ret i32 [[A]]
++;
++  %s = select i1 %b, i32 4, i32 5
++  %d = udiv i32 %x, %s
++  %r = urem i32 %x, %s
++  %a = add i32 %d, %r
++  ret i32 %a
++}
++
++define i32 @udiv_select_of_constants_divisor_multi_use(i1 %b, i32 %x) {
++; CHECK-LABEL: @udiv_select_of_constants_divisor_multi_use(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 4, i32 5
++; CHECK-NEXT:    call void @use(i32 [[S]])
++; CHECK-NEXT:    [[TMP1:%.*]] = lshr i32 [[X:%.*]], 2
++; CHECK-NEXT:    [[TMP2:%.*]] = udiv i32 [[X]], 5
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B]], i32 [[TMP1]], i32 [[TMP2]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 4, i32 5
++  call void @use(i32 %s)
++  %r = udiv i32 %x, %s
++  ret i32 %r
++}
++
+ ; PR34063
+ ; 1 / X !=/== -1
+ 
+@@ -1944,7 +2119,8 @@ define i32 @sdiv_select_one_multiuse(i32 %a, i1 %b) {
+ ; CHECK-LABEL: @sdiv_select_one_multiuse(
+ ; CHECK-NEXT:    [[SUB:%.*]] = select i1 [[B:%.*]], i32 1, i32 2
+ ; CHECK-NEXT:    call void @use(i32 [[SUB]])
+-; CHECK-NEXT:    [[DIV:%.*]] = sdiv i32 [[A:%.*]], [[SUB]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sdiv i32 [[A:%.*]], 2
++; CHECK-NEXT:    [[DIV:%.*]] = select i1 [[B]], i32 [[A]], i32 [[TMP1]]
+ ; CHECK-NEXT:    ret i32 [[DIV]]
+ ;
+   %sub = select i1 %b, i32 1, i32 2
+@@ -2359,6 +2535,8 @@ define <2 x i8> @udiv_udiv_vec(<2 x i8> %a, <2 x i8> %b, <2 x i8> %c) {
+ 
+ !0 = !{!"function_entry_count", i64 1000}
+ ;.
++; CHECK: attributes #[[ATTR0:[0-9]+]] = { minsize }
++;.
+ ; CHECK: [[META0:![0-9]+]] = !{!"function_entry_count", i64 1000}
+ ; CHECK: [[PROF1]] = !{!"unknown", !"instcombine"}
+ ;.
+diff --git a/llvm/test/Transforms/InstCombine/rem.ll b/llvm/test/Transforms/InstCombine/rem.ll
+index d0730cc4ecce7..94904a36b10a0 100644
+--- a/llvm/test/Transforms/InstCombine/rem.ll
++++ b/llvm/test/Transforms/InstCombine/rem.ll
+@@ -242,8 +242,8 @@ define <2 x i1> @test3a_vec(<2 x i32> %A) {
+ 
+ define i32 @test4(i32 %X, i1 %C) {
+ ; CHECK-LABEL: @test4(
+-; CHECK-NEXT:    [[TMP1:%.*]] = select i1 [[C:%.*]], i32 0, i32 7
+-; CHECK-NEXT:    [[R:%.*]] = and i32 [[X:%.*]], [[TMP1]]
++; CHECK-NEXT:    [[TMP1:%.*]] = and i32 [[X:%.*]], 7
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[C:%.*]], i32 0, i32 [[TMP1]]
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+   %V = select i1 %C, i32 1, i32 8
+@@ -914,12 +914,13 @@ define <2 x i8> @srem_constant_dividend_select_of_constants_divisor_vec_ub2(i1 %
+   ret <2 x i8> %r
+ }
+ 
+-; negative test - must have constant dividend
++; a variable dividend splits into a constant division per arm
+ 
+ define i32 @srem_select_of_constants_divisor(i1 %b, i32 %x) {
+ ; CHECK-LABEL: @srem_select_of_constants_divisor(
+-; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 12, i32 -3
+-; CHECK-NEXT:    [[R:%.*]] = srem i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    [[TMP1:%.*]] = srem i32 [[X:%.*]], 12
++; CHECK-NEXT:    [[TMP2:%.*]] = srem i32 [[X]], 3
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP2]]
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+   %s = select i1 %b, i32 12, i32 -3
+@@ -927,6 +928,33 @@ define i32 @srem_select_of_constants_divisor(i1 %b, i32 %x) {
+   ret i32 %r
+ }
+ 
++define i32 @srem_select_of_constants_divisor_minus_one_arm(i1 %b, i32 %x) {
++; CHECK-LABEL: @srem_select_of_constants_divisor_minus_one_arm(
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 -2, i32 -1
++; CHECK-NEXT:    [[R:%.*]] = srem i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 -2, i32 -1
++  %r = srem i32 %x, %s
++  ret i32 %r
++}
++
++define i32 @urem_select_of_constants_divisor_high_bits(i1 %b, i32 %x) {
++; CHECK-LABEL: @urem_select_of_constants_divisor_high_bits(
++; CHECK-NEXT:    [[X_FR:%.*]] = freeze i32 [[X:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = icmp ult i32 [[X_FR]], -2
++; CHECK-NEXT:    [[TMP2:%.*]] = add i32 [[X_FR]], 2
++; CHECK-NEXT:    [[TMP3:%.*]] = select i1 [[TMP1]], i32 [[X_FR]], i32 [[TMP2]]
++; CHECK-NEXT:    [[DOTNOT:%.*]] = icmp eq i32 [[X_FR]], -1
++; CHECK-NEXT:    [[TMP4:%.*]] = select i1 [[DOTNOT]], i32 0, i32 [[X_FR]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP3]], i32 [[TMP4]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %s = select i1 %b, i32 -2, i32 -1
++  %r = urem i32 %x, %s
++  ret i32 %r
++}
++
+ define i32 @urem_constant_dividend_select_of_constants_divisor(i1 %b) {
+ ; CHECK-LABEL: @urem_constant_dividend_select_of_constants_divisor(
+ ; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 6, i32 42
+@@ -1021,12 +1049,16 @@ define <2 x i8> @urem_constant_dividend_select_of_constants_divisor_vec_ub2(i1 %
+   ret <2 x i8> %r
+ }
+ 
+-; negative test - must have constant dividend
++; a variable dividend splits into a constant division per arm
+ 
+ define i32 @urem_select_of_constants_divisor(i1 %b, i32 %x) {
+ ; CHECK-LABEL: @urem_select_of_constants_divisor(
+-; CHECK-NEXT:    [[S:%.*]] = select i1 [[B:%.*]], i32 12, i32 -3
+-; CHECK-NEXT:    [[R:%.*]] = urem i32 [[X:%.*]], [[S]]
++; CHECK-NEXT:    [[X_FR:%.*]] = freeze i32 [[X:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = urem i32 [[X_FR]], 12
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp ult i32 [[X_FR]], -3
++; CHECK-NEXT:    [[TMP3:%.*]] = add i32 [[X_FR]], 3
++; CHECK-NEXT:    [[TMP4:%.*]] = select i1 [[TMP2]], i32 [[X_FR]], i32 [[TMP3]]
++; CHECK-NEXT:    [[R:%.*]] = select i1 [[B:%.*]], i32 [[TMP1]], i32 [[TMP4]]
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+   %s = select i1 %b, i32 12, i32 -3
