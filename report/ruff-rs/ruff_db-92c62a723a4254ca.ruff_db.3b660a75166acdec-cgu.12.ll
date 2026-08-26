@@ -202,9 +202,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs56aZGHL6Dc6_7ruff_db10diagnostic4S
   %i.fs = load ptr, ptr %i.al, align 8, !nonnull !3, !noundef !3 ; 4 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 232
   %i.fu = load i8, ptr %i.ft, align 8, !range !544, !noundef !3
-  %2 = zext nneg i8 %i.fr to i64
-  %3 = zext nneg i8 %i.fu to i64
-  %i.fv = call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.fv = call i8 @llvm.ucmp.i8.i8(i8 %i.fr, i8 %i.fu)
   switch i8 %i.fv, label %bb.ay [
     i8 -1, label %bb.an
     i8 0, label %bb.az
@@ -606,6 +604,9 @@ declare i64 @llvm.umin.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #35
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #27
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #36

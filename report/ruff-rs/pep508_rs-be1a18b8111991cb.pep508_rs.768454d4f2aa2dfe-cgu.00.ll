@@ -204,11 +204,9 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !384)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i8, ptr %i.c, align 8, !range !297, !alias.scope !381, !noalias !384, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.f = load i8, ptr %i.e, align 8, !range !297, !alias.scope !384, !noalias !381, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -283,11 +281,9 @@ bb.a:
   %i.b = alloca [48 x i8], align 8                ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i8, ptr %i.c, align 8, !range !297, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.f = load i8, ptr %i.e, align 8, !range !297, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -690,11 +686,9 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !431)
   %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.r = load i8, ptr %i.q, align 8, !range !291, !alias.scope !433, !noalias !434, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.t = load i8, ptr %i.s, align 8, !range !291, !alias.scope !434, !noalias !433, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.t to i64
-  %i.u = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.u = tail call i8 @llvm.ucmp.i8.i8(i8 %i.r, i8 %i.t)
   %i.v = icmp eq i8 %i.r, %i.t
   br i1 %i.v, label %bb.d, label %_RNvXs2a_NtNtCsaaRuwTSDeTG_9pep508_rs6marker4treeNtB6_14MarkerTreeKindNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit
 
@@ -733,11 +727,9 @@ bb.e:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !446)
   %i.al = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.am = load i8, ptr %i.al, align 8, !range !297, !alias.scope !448, !noalias !449, !noundef !4 ; 2 uses
-  %4 = zext nneg i8 %i.am to i64
   %i.an = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.ao = load i8, ptr %i.an, align 8, !range !297, !alias.scope !449, !noalias !448, !noundef !4 ; 2 uses
-  %5 = zext nneg i8 %i.ao to i64
-  %i.ap = tail call i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.ap = tail call i8 @llvm.ucmp.i8.i8(i8 %i.am, i8 %i.ao)
   %i.aq = icmp eq i8 %i.am, %i.ao
   br i1 %i.aq, label %bb.f, label %_RNvXs2a_NtNtCsaaRuwTSDeTG_9pep508_rs6marker4treeNtB6_14MarkerTreeKindNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit
 
@@ -776,11 +768,9 @@ bb.g:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !461)
   %i.bg = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %i.bh = load i8, ptr %i.bg, align 8, !range !297, !alias.scope !463, !noalias !464, !noundef !4 ; 2 uses
-  %6 = zext nneg i8 %i.bh to i64
   %i.bi = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   %i.bj = load i8, ptr %i.bi, align 8, !range !297, !alias.scope !464, !noalias !463, !noundef !4 ; 2 uses
-  %7 = zext nneg i8 %i.bj to i64
-  %i.bk = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.bk = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bh, i8 %i.bj)
   %i.bl = icmp eq i8 %i.bh, %i.bj
   br i1 %i.bl, label %bb.h, label %bb.i
 
@@ -850,11 +840,9 @@ bb.k:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !469)
   %i.cf = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %i.cg = load i8, ptr %i.cf, align 8, !range !297, !alias.scope !471, !noalias !472, !noundef !4 ; 2 uses
-  %8 = zext nneg i8 %i.cg to i64
   %i.ch = getelementptr inbounds nuw i8, ptr %i.k, i64 40
   %i.ci = load i8, ptr %i.ch, align 8, !range !297, !alias.scope !472, !noalias !471, !noundef !4 ; 2 uses
-  %9 = zext nneg i8 %i.ci to i64
-  %i.cj = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.cj = tail call i8 @llvm.ucmp.i8.i8(i8 %i.cg, i8 %i.ci)
   %i.ck = icmp eq i8 %i.cg, %i.ci
   br i1 %i.ck, label %bb.l, label %bb.m
 
@@ -1047,11 +1035,9 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !493)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i8, ptr %i.c, align 8, !range !291, !alias.scope !490, !noalias !493, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load i8, ptr %i.e, align 8, !range !291, !alias.scope !493, !noalias !490, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %_RNvXst_NtNtCsaaRuwTSDeTG_9pep508_rs6marker4treeNtB5_17VersionMarkerTreeNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit
 
@@ -1454,11 +1440,9 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i8, ptr %i.c, align 8, !range !291, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load i8, ptr %i.e, align 8, !range !291, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -1504,11 +1488,9 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !588)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i8, ptr %i.c, align 8, !range !297, !alias.scope !585, !noalias !588, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load i8, ptr %i.e, align 8, !range !297, !alias.scope !588, !noalias !585, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %_RNvXsw_NtNtCsaaRuwTSDeTG_9pep508_rs6marker4treeNtB5_16StringMarkerTreeNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit
 
@@ -1552,11 +1534,9 @@ bb.a:
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i8, ptr %i.c, align 8, !range !297, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load i8, ptr %i.e, align 8, !range !297, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -1602,11 +1582,9 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !607)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i8, ptr %i.c, align 8, !range !297, !alias.scope !604, !noalias !607, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.f = load i8, ptr %i.e, align 8, !range !297, !alias.scope !607, !noalias !604, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -1681,11 +1659,9 @@ bb.a:
   %i.b = alloca [48 x i8], align 8                ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i8, ptr %i.c, align 8, !range !297, !noundef !4 ; 2 uses
-  %2 = zext nneg i8 %i.d to i64
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.f = load i8, ptr %i.e, align 8, !range !297, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.f to i64
-  %i.g = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.g = tail call i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.f)
   %i.h = icmp eq i8 %i.d, %i.f
   br i1 %i.h, label %bb.b, label %bb.c
 
@@ -2082,6 +2058,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #14
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #18

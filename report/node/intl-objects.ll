@@ -206,9 +206,7 @@ bb.ax:                                            ; preds = %bb.aw
   br i1 %.not.i.i.i, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  %14 = zext i8 %i.hi to i32
-  %15 = zext i8 %i.he to i32
-  %i.hj = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %15, i32 %14)
+  %i.hj = call i32 @llvm.ucmp.i32.i8(i8 %i.he, i8 %i.hi)
   br label %.loopexit.i
 
 bb.az:                                            ; preds = %bb.ax
@@ -220,11 +218,9 @@ bb.az:                                            ; preds = %bb.ax
 bb.ba:                                            ; preds = %bb.az
   %i.hl = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.hc
   %i.hm = load i8, ptr %i.hl, align 1
-  %16 = zext i8 %i.hm to i32
   %i.hn = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.hg
   %i.ho = load i8, ptr %i.hn, align 1
-  %17 = zext i8 %i.ho to i32
-  %i.hp = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %16, i32 %17)
+  %i.hp = call i32 @llvm.ucmp.i32.i8(i8 %i.hm, i8 %i.ho)
   %i.hq = trunc nuw i8 %.sroa.46.0.i to i1
   %spec.select.i = select i1 %i.hq, i32 %.sroa.35.0.i, i32 %i.hf
   br label %bb.bb
@@ -274,9 +270,7 @@ bb.be:                                            ; preds = %_ZN2v88internal12_G
   br i1 %.not.i26.i.i, label %bb.bg, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be
-  %18 = zext i8 %i.id to i32
-  %19 = zext i8 %i.hx to i32
-  %i.ie = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %19, i32 %18)
+  %i.ie = call i32 @llvm.ucmp.i32.i8(i8 %i.hx, i8 %i.id)
   br label %.loopexit.i
 
 bb.bg:                                            ; preds = %bb.be
@@ -289,11 +283,9 @@ bb.bg:                                            ; preds = %bb.be
 bb.bh:                                            ; preds = %bb.bg
   %i.ih = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.hv
   %i.ii = load i8, ptr %i.ih, align 1
-  %20 = zext i8 %i.ii to i32
   %i.ij = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.ib
   %i.ik = load i8, ptr %i.ij, align 1
-  %21 = zext i8 %i.ik to i32
-  %i.il = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %20, i32 %21)
+  %i.il = call i32 @llvm.ucmp.i32.i8(i8 %i.ii, i8 %i.ik)
   %i.im = trunc nuw i8 %.sroa.46.3.i to i1
   %spec.select336.i = select i1 %i.im, i32 %.sroa.35.3.i, i32 %i.ia
   br label %bb.bi
@@ -348,9 +340,7 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %.not.i44.i.i, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  %22 = zext i8 %i.iy to i32
-  %23 = zext i8 %i.iv to i32
-  %i.iz = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %23, i32 %22)
+  %i.iz = call i32 @llvm.ucmp.i32.i8(i8 %i.iv, i8 %i.iy)
   br label %.loopexit.i
 
 bb.bp:                                            ; preds = %bb.bn
@@ -363,11 +353,9 @@ bb.bp:                                            ; preds = %bb.bn
 bb.bq:                                            ; preds = %bb.bp
   %i.jc = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.it
   %i.jd = load i8, ptr %i.jc, align 1
-  %24 = zext i8 %i.jd to i32
   %i.je = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.iw
   %i.jf = load i8, ptr %i.je, align 1
-  %25 = zext i8 %i.jf to i32
-  %i.jg = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %24, i32 %25)
+  %i.jg = call i32 @llvm.ucmp.i32.i8(i8 %i.jd, i8 %i.jf)
   %i.jh = trunc nuw i8 %.sroa.46.6.i to i1
   %spec.select338.i = select i1 %i.jh, i32 %.sroa.35.6.i, i32 %i.is
   br label %bb.br
@@ -421,9 +409,7 @@ bb.bu:                                            ; preds = %_ZN2v88internal12_G
   br i1 %.not.i60.i.i, label %bb.bw, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
-  %26 = zext i8 %i.jv to i32
-  %27 = zext i8 %i.jq to i32
-  %i.jw = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %27, i32 %26)
+  %i.jw = call i32 @llvm.ucmp.i32.i8(i8 %i.jq, i8 %i.jv)
   br label %.loopexit.i
 
 bb.bw:                                            ; preds = %bb.bu
@@ -435,11 +421,9 @@ bb.bw:                                            ; preds = %bb.bu
 bb.bx:                                            ; preds = %bb.bw
   %i.jy = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.jo
   %i.jz = load i8, ptr %i.jy, align 1
-  %28 = zext i8 %i.jz to i32
   %i.ka = getelementptr inbounds nuw i8, ptr @_ZN2v88internal12_GLOBAL__N_119kCollationWeightsL3E, i64 %i.jt
   %i.kb = load i8, ptr %i.ka, align 1
-  %29 = zext i8 %i.kb to i32
-  %i.kc = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %28, i32 %29)
+  %i.kc = call i32 @llvm.ucmp.i32.i8(i8 %i.jz, i8 %i.kb)
   %i.kd = trunc nuw i8 %.sroa.46.9.i to i1
   %spec.select340.i = select i1 %i.kd, i32 %.sroa.35.9.i, i32 %i.jn
   br label %bb.by
@@ -840,6 +824,9 @@ declare i64 @llvm.smin.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #22

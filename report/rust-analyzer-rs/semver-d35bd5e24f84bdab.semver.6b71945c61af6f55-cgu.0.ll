@@ -202,8 +202,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 bb.ad:                                            ; preds = %bb.ac
   %i.by = call i32 @memcmp(ptr nonnull readonly %i.au, ptr nonnull readonly %i.ax, i64 %i.av)
-  %2 = sext i32 %i.by to i64
-  %i.bz = call range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.bz = call i8 @llvm.scmp.i8.i32(i32 %i.by, i32 0)
   br label %_RINvMNtCshzWfHUSfYae_4core3cmpNtB3_8Ordering9then_withNCNvXs5_NtCs9dV2ZPf2jOH_6semver5implsNtB10_10PrereleaseNtB3_3Ord3cmp0EB10_.exit
 }
 
@@ -573,8 +572,7 @@ _RINvMNtCshzWfHUSfYae_4core3stre18trim_start_matchescECs9dV2ZPf2jOH_6semver.exit
 bb.ae:                                            ; preds = %_RINvMNtCshzWfHUSfYae_4core3stre18trim_start_matchescECs9dV2ZPf2jOH_6semver.exit43
   %i.cz = getelementptr inbounds nuw i8, ptr %i.az, i64 %.sroa.0.0.i40
   %i.da = call i32 @memcmp(ptr nonnull readonly %i.ck, ptr nonnull readonly %i.cz, i64 %i.cj)
-  %2 = sext i32 %i.da to i64
-  %i.db = call range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.db = call i8 @llvm.scmp.i8.i32(i32 %i.da, i32 0)
   br label %_RINvMNtCshzWfHUSfYae_4core3cmpNtB3_8Ordering9then_withNCNvXs6_NtCs9dV2ZPf2jOH_6semver5implsNtB10_13BuildMetadataNtB3_3Ord3cmps_0EB10_.exit
 
 _RINvMNtCshzWfHUSfYae_4core3cmpNtB3_8Ordering9then_withNCNvXs6_NtCs9dV2ZPf2jOH_6semver5implsNtB10_13BuildMetadataNtB3_3Ord3cmps_0EB10_.exit: ; preds = %_RINvMNtCshzWfHUSfYae_4core3stre18trim_start_matchescECs9dV2ZPf2jOH_6semver.exit43, %bb.ae
@@ -976,6 +974,9 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #15

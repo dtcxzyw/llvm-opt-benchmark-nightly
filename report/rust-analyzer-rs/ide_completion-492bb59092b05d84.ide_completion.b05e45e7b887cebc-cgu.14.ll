@@ -204,10 +204,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !811)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !814)
   %i.n = load i8, ptr %i.l, align 8, !range !816, !alias.scope !817, !noalias !818, !noundef !18 ; 3 uses
-  %2 = zext nneg i8 %i.n to i64
   %i.o = load i8, ptr %i.m, align 8, !range !816, !alias.scope !818, !noalias !817, !noundef !18 ; 2 uses
-  %3 = zext nneg i8 %i.o to i64
-  %i.p = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.p = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %i.o)
   %i.q = icmp eq i8 %i.n, %i.o
   br i1 %i.q, label %bb.c, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i
 
@@ -351,10 +349,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !856)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !859)
   %i.n = load i8, ptr %i.l, align 8, !range !816, !alias.scope !861, !noalias !862, !noundef !18 ; 3 uses
-  %2 = zext nneg i8 %i.n to i64
   %i.o = load i8, ptr %i.m, align 8, !range !816, !alias.scope !862, !noalias !861, !noundef !18 ; 2 uses
-  %3 = zext nneg i8 %i.o to i64
-  %i.p = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.p = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %i.o)
   %i.q = icmp eq i8 %i.n, %i.o
   br i1 %i.q, label %bb.c, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i
 
@@ -498,10 +494,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !899)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !902)
   %i.n = load i8, ptr %i.l, align 8, !range !816, !alias.scope !904, !noalias !905, !noundef !18 ; 3 uses
-  %2 = zext nneg i8 %i.n to i64
   %i.o = load i8, ptr %i.m, align 8, !range !816, !alias.scope !905, !noalias !904, !noundef !18 ; 2 uses
-  %3 = zext nneg i8 %i.o to i64
-  %i.p = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.p = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %i.o)
   %i.q = icmp eq i8 %i.n, %i.o
   br i1 %i.q, label %bb.c, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i
 

@@ -205,12 +205,12 @@ bb.m:                                             ; preds = %bb.s, %.lr.ph.i
   %.val.val.i = load ptr, ptr %.sroa.0.0.copyload, align 8, !tbaa !760 ; 3 uses
   %.val62.val.i = load ptr, ptr %.sroa.2.0.copyload, align 8, !tbaa !760
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.fp = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %.val.val.i, i32 noundef %i.fl)
-  %i.fq = zext i1 %i.fp to i8                     ; 2 uses
+  %i.fp = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %.val.val.i, i32 noundef %i.fl) ; 2 uses
+  %i.fq = zext i1 %i.fp to i8
   store i8 %i.fq, ptr %i.b, align 1, !tbaa !58
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
-  %i.fr = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %.val62.val.i, i32 noundef %i.fo)
-  %i.fs = zext i1 %i.fr to i8                     ; 2 uses
+  %i.fr = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %.val62.val.i, i32 noundef %i.fo) ; 2 uses
+  %i.fs = zext i1 %i.fr to i8
   store i8 %i.fs, ptr %i.c, align 1, !tbaa !58
   %i.ft = getelementptr inbounds nuw i8, ptr %.val.val.i, i64 25
   %i.fu = load i8, ptr %i.ft, align 1, !tbaa !977, !range !73, !noundef !74
@@ -232,7 +232,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE0EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
 bb.o:                                             ; preds = %bb.m
-  %i.fz = call i32 @llvm.ucmp.i32.i8(i8 %i.fq, i8 %i.fs)
+  %i.fz = call i32 @llvm.ucmp.i32.i1(i1 %i.fp, i1 %i.fr)
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE0EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i
 
 _ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE0EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E0_clIiiEEDaSE_SF_.exit.i: ; preds = %bb.o, %bb.n
@@ -635,12 +635,12 @@ bb.m:                                             ; preds = %bb.s, %.lr.ph.i
   %i.fx = getelementptr inbounds [4 x i8], ptr %i.fv, i64 %i.fw
   %i.fy = load i32, ptr %i.fx, align 4, !tbaa !44
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
-  %i.fz = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %i.fp, i32 noundef %i.fu)
-  %i.ga = zext i1 %i.fz to i8                     ; 2 uses
+  %i.fz = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %i.fp, i32 noundef %i.fu) ; 2 uses
+  %i.ga = zext i1 %i.fz to i8
   store i8 %i.ga, ptr %i.b, align 1, !tbaa !58
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
-  %i.gb = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %i.fq, i32 noundef %i.fy)
-  %i.gc = zext i1 %i.gb to i8                     ; 2 uses
+  %i.gb = call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %i.fq, i32 noundef %i.fy) ; 2 uses
+  %i.gc = zext i1 %i.gb to i8
   store i8 %i.gc, ptr %i.c, align 1, !tbaa !58
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fp, i64 25
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !977, !range !73, !noundef !74
@@ -662,7 +662,7 @@ bb.n:                                             ; preds = %bb.m
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE0EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 
 bb.o:                                             ; preds = %bb.m
-  %i.gj = call i32 @llvm.ucmp.i32.i8(i8 %i.ga, i8 %i.gc)
+  %i.gj = call i32 @llvm.ucmp.i32.i1(i1 %i.fz, i1 %i.gb)
   br label %_ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE0EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i
 
 _ZZN8facebook5velox9functions12_GLOBAL__N_118MapZipWithFunction21mergeScalarNoNullKeysILNS0_8TypeKindE0EEEiRKNS0_17SelectivityVectorERKNS2_13DecodedInputsERNS2_12MergeResultsEENKUlT_T0_E1_clIiiEEDaSE_SF_.exit.i: ; preds = %bb.o, %bb.n
@@ -1065,7 +1065,7 @@ declare i64 @llvm.umax.i64(i64, i64) #18
 declare i64 @llvm.smax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #18
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i1(i1, i1) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #18

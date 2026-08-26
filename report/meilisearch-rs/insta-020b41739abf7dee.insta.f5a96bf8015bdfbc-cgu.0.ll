@@ -205,7 +205,7 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
   %.tr122 = phi ptr [ %1, %bb.a ], [ %.tr122.be, %tailrecurse.backedge ] ; 62 uses
   %i.a = load i8, ptr %.tr, align 16, !range !1276, !noundef !15 ; 2 uses
   %i.b = load i8, ptr %.tr122, align 16, !range !1276, !noundef !15 ; 29 uses
-  switch i8 %i.a, label %.loopexit [
+  switch i8 %i.a, label %bb.b [
     i8 0, label %bb.c
     i8 1, label %bb.d
     i8 2, label %bb.e
@@ -236,14 +236,8 @@ tailrecurse:                                      ; preds = %tailrecurse.backedg
     i8 29, label %bb.ad
   ]
 
-.loopexit:                                        ; preds = %tailrecurse, %bb.s, %bb.v, %bb.w
-  %2 = zext nneg i8 %i.a to i64
-  br label %bb.b
-
-bb.b:                                             ; preds = %.loopexit, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.u, %bb.t, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
-  %3 = phi i64 [ %2, %.loopexit ], [ 29, %bb.ad ], [ 28, %bb.ac ], [ 27, %bb.ab ], [ 26, %bb.aa ], [ 25, %bb.z ], [ 24, %bb.y ], [ 23, %bb.x ], [ 20, %bb.u ], [ 19, %bb.t ], [ 15, %bb.r ], [ 14, %bb.q ], [ 13, %bb.p ], [ 12, %bb.o ], [ 11, %bb.n ], [ 10, %bb.m ], [ 9, %bb.l ], [ 8, %bb.k ], [ 7, %bb.j ], [ 6, %bb.i ], [ 5, %bb.h ], [ 4, %bb.g ], [ 3, %bb.f ], [ 2, %bb.e ], [ 1, %bb.d ], [ 0, %bb.c ]
-  %4 = zext nneg i8 %i.b to i64
-  %i.c = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+bb.b:                                             ; preds = %bb.w, %bb.v, %bb.s, %tailrecurse, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.u, %bb.t, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+  %i.c = tail call i8 @llvm.ucmp.i8.i8(i8 %i.a, i8 %i.b)
   br label %"_ZN55_$LT$A$u20$as$u20$core..slice..cmp..SlicePartialOrd$GT$15partial_compare17hc945059cf2ec4d93E.exit"
 
 bb.c:                                             ; preds = %tailrecurse
@@ -312,7 +306,7 @@ bb.r:                                             ; preds = %tailrecurse
 
 bb.s:                                             ; preds = %tailrecurse
   %i.t = icmp eq i8 %i.b, 17
-  br i1 %i.t, label %tailrecurse.backedge, label %.loopexit
+  br i1 %i.t, label %tailrecurse.backedge, label %bb.b
 
 bb.t:                                             ; preds = %tailrecurse
   %i.u = icmp eq i8 %i.b, 19
@@ -324,11 +318,11 @@ bb.u:                                             ; preds = %tailrecurse
 
 bb.v:                                             ; preds = %tailrecurse
   %i.w = icmp eq i8 %i.b, 21
-  br i1 %i.w, label %bb.be, label %.loopexit
+  br i1 %i.w, label %bb.be, label %bb.b
 
 bb.w:                                             ; preds = %tailrecurse
   %i.x = icmp eq i8 %i.b, 22
-  br i1 %i.x, label %bb.bg, label %.loopexit
+  br i1 %i.x, label %bb.bg, label %bb.b
 
 bb.x:                                             ; preds = %tailrecurse
   %i.y = icmp eq i8 %i.b, 23
@@ -731,9 +725,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20301)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20304)
   %i.a = load i8, ptr %0, align 16, !range !2843, !alias.scope !20301, !noalias !20304, !noundef !15 ; 2 uses
-  %2 = zext nneg i8 %i.a to i64
   %i.b = load i8, ptr %1, align 16, !range !2843, !alias.scope !20304, !noalias !20301, !noundef !15 ; 9 uses
-  %3 = zext nneg i8 %i.b to i64
   switch i8 %i.a, label %default.unreachable [
     i8 0, label %bb.b
     i8 1, label %bb.c
@@ -782,7 +774,7 @@ bb.i:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.t, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %i.k = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.k = tail call i8 @llvm.ucmp.i8.i8(i8 %i.a, i8 %i.b)
   br label %"_ZN76_$LT$insta..content..serialization..Key$u20$as$u20$core..cmp..PartialOrd$GT$11partial_cmp17h7007cbc39aed0e4bE.exit"
 
 bb.k:                                             ; preds = %bb.b
@@ -1185,7 +1177,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !20849, !noalias !20850, !noundef !15 ; 3 uses
-  %3 = zext nneg i8 %2 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -1209,8 +1200,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.8.0.i.i.i.i209 = phi i64 [ %i.l, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.sroa.03.0.i.i.i.i208 = phi ptr [ %i.m, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
   %.val7.i.i.i.i = load i8, ptr %.sroa.03.0.i.i.i.i208, align 1, !range !2843, !noalias !20852, !noundef !15
-  %4 = zext nneg i8 %.val7.i.i.i.i to i64
-  %i.o = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.o = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 4) %2, i8 %.val7.i.i.i.i)
   switch i8 %i.o, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %"_ZN5alloc11collections5btree3map25BTreeMap$LT$K$C$V$C$A$GT$6insert17h217f4a4b8d4817b1E.exit"

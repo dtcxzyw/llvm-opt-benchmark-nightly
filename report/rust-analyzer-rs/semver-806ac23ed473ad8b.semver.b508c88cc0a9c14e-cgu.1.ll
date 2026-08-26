@@ -202,8 +202,7 @@ bb.aa:                                            ; preds = %_RINvYINtNtNtCshzWf
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cu = tail call i32 @memcmp(ptr nonnull %.sroa.0.1.i219, ptr nonnull %.sroa.0.1.i59230, i64 %.sroa.4.1.i218), !noalias !79
-  %2 = sext i32 %i.cu to i64
-  %i.cv = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.cv = tail call i8 @llvm.scmp.i8.i32(i32 %i.cu, i32 0)
   br label %bb.z
 }
 
@@ -559,8 +558,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cw = extractvalue { ptr, i64 } %i.cs, 0
   %i.cx = extractvalue { ptr, i64 } %i.cq, 0
   %i.cy = tail call i32 @memcmp(ptr %i.cx, ptr %i.cw, i64 %i.cr)
-  %2 = sext i32 %i.cy to i64
-  %i.cz = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.cz = tail call i8 @llvm.scmp.i8.i32(i32 %i.cy, i32 0)
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.y, %bb.z
@@ -926,6 +924,9 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #8
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

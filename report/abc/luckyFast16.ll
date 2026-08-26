@@ -204,11 +204,9 @@ bb.a:
   %indvars.iv = phi i64 [ %i.d, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 5 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9
-  %3 = zext i32 %i.f to i64
   %i.g = getelementptr i8, ptr %i.e, i64 -12
   %i.h = load i32, ptr %i.g, align 4, !tbaa !9
-  %4 = zext i32 %i.h to i64
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %3, i64 %4)
+  %.0.i = tail call i32 @llvm.ucmp.i32.i32(i32 %i.f, i32 %i.h)
   switch i32 %.0.i, label %bb.c [
     i32 0, label %bb.d
     i32 -1, label %bb.b
@@ -253,11 +251,9 @@ bb.a:
   %indvars.iv = phi i64 [ %i.d, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 5 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.f = load i32, ptr %i.e, align 4, !tbaa !9
-  %3 = zext i32 %i.f to i64
   %i.g = getelementptr i8, ptr %i.e, i64 -4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !9
-  %4 = zext i32 %i.h to i64
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %3, i64 %4)
+  %.0.i = tail call i32 @llvm.ucmp.i32.i32(i32 %i.f, i32 %i.h)
   switch i32 %.0.i, label %bb.c [
     i32 0, label %bb.d
     i32 -1, label %bb.b
@@ -305,12 +301,10 @@ bb.a:
   %i.g = sub nsw i64 %indvars.iv, %i.e
   %i.h = getelementptr inbounds [4 x i8], ptr %0, i64 %i.g
   %i.i = load i32, ptr %i.h, align 4, !tbaa !9
-  %5 = zext i32 %i.i to i64
   %i.j = sub nsw i64 %indvars.iv, %i.f
   %i.k = getelementptr inbounds [4 x i8], ptr %0, i64 %i.j
   %i.l = load i32, ptr %i.k, align 4, !tbaa !9
-  %6 = zext i32 %i.l to i64
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %5, i64 %6)
+  %.0.i = tail call i32 @llvm.ucmp.i32.i32(i32 %i.i, i32 %i.l)
   switch i32 %.0.i, label %bb.c [
     i32 0, label %bb.d
     i32 -1, label %bb.b
@@ -357,12 +351,10 @@ bb.a:
   %i.f = sub nsw i64 %indvars.iv, %i.d
   %i.g = getelementptr inbounds [4 x i8], ptr %0, i64 %i.f
   %i.h = load i32, ptr %i.g, align 4, !tbaa !9
-  %6 = zext i32 %i.h to i64
   %i.i = sub nsw i64 %indvars.iv, %i.e
   %i.j = getelementptr inbounds [4 x i8], ptr %0, i64 %i.i
   %i.k = load i32, ptr %i.j, align 4, !tbaa !9
-  %7 = zext i32 %i.k to i64
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %6, i64 %7)
+  %.0.i = tail call i32 @llvm.ucmp.i32.i32(i32 %i.h, i32 %i.k)
   switch i32 %.0.i, label %bb.c [
     i32 0, label %bb.d
     i32 -1, label %bb.b
@@ -416,11 +408,9 @@ bb.a:
   %indvars.iv.i = phi i64 [ %i.g, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.d ] ; 5 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.i ; 2 uses
   %i.i = load i32, ptr %i.h, align 4, !tbaa !9
-  %4 = zext i32 %i.i to i64
   %i.j = getelementptr i8, ptr %i.h, i64 -12
   %i.k = load i32, ptr %i.j, align 4, !tbaa !9
-  %5 = zext i32 %i.k to i64
-  %.0.i.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %4, i64 %5)
+  %.0.i.i = tail call i32 @llvm.ucmp.i32.i32(i32 %i.i, i32 %i.k)
   switch i32 %.0.i.i, label %bb.c [
     i32 0, label %bb.d
     i32 -1, label %bb.b
@@ -455,11 +445,9 @@ minTemp0_fast_iVar5.exit:                         ; preds = %bb.d, %bb.b, %bb.c
   %indvars.iv.i53 = phi i64 [ %i.t, %minTemp0_fast_iVar5.exit ], [ %indvars.iv.next.i55, %bb.g ] ; 5 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.i53 ; 2 uses
   %i.v = load i32, ptr %i.u, align 4, !tbaa !9
-  %6 = zext i32 %i.v to i64
   %i.w = getelementptr i8, ptr %i.u, i64 -4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !9
-  %7 = zext i32 %i.x to i64
-  %.0.i.i54 = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %6, i64 %7)
+  %.0.i.i54 = tail call i32 @llvm.ucmp.i32.i32(i32 %i.v, i32 %i.x)
   switch i32 %.0.i.i54, label %bb.f [
     i32 0, label %bb.g
     i32 -1, label %bb.e
@@ -497,12 +485,10 @@ minTemp1_fast_iVar5.exit:                         ; preds = %bb.g, %bb.e, %bb.f
   %i.ai = sub nsw i64 %indvars.iv.i60, %i.ag
   %i.aj = getelementptr inbounds [4 x i8], ptr %0, i64 %i.ai
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !9
-  %8 = zext i32 %i.ak to i64
   %i.al = sub nsw i64 %indvars.iv.i60, %i.ah
   %i.am = getelementptr inbounds [4 x i8], ptr %0, i64 %i.al
   %i.an = load i32, ptr %i.am, align 4, !tbaa !9
-  %9 = zext i32 %i.an to i64
-  %.0.i.i61 = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %8, i64 %9)
+  %.0.i.i61 = tail call i32 @llvm.ucmp.i32.i32(i32 %i.ak, i32 %i.an)
   switch i32 %.0.i.i61, label %bb.i [
     i32 0, label %bb.j
     i32 -1, label %bb.h
@@ -782,12 +768,10 @@ bb.x:                                             ; preds = %bb.x, %.lr.ph.i82
   %i.fz = sub nsw i64 %indvars.iv.i92, %i.fx
   %i.ga = getelementptr inbounds [4 x i8], ptr %0, i64 %i.fz
   %i.gb = load i32, ptr %i.ga, align 4, !tbaa !9
-  %10 = zext i32 %i.gb to i64
   %i.gc = sub nsw i64 %indvars.iv.i92, %i.fy
   %i.gd = getelementptr inbounds [4 x i8], ptr %0, i64 %i.gc
   %i.ge = load i32, ptr %i.gd, align 4, !tbaa !9
-  %11 = zext i32 %i.ge to i64
-  %.0.i.i93 = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %10, i64 %11)
+  %.0.i.i93 = tail call i32 @llvm.ucmp.i32.i32(i32 %i.gb, i32 %i.ge)
   switch i32 %.0.i.i93, label %bb.z [
     i32 0, label %bb.aa
     i32 -1, label %bb.y
@@ -967,11 +951,9 @@ bb.a:
   %indvars.iv.i = phi i64 [ %i.e, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.b ] ; 6 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.i ; 2 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !9
-  %4 = zext i32 %i.g to i64
   %i.h = getelementptr i8, ptr %i.f, i64 -4
   %i.i = load i32, ptr %i.h, align 4, !tbaa !9
-  %5 = zext i32 %i.i to i64
-  %.0.i.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %4, i64 %5)
+  %.0.i.i = tail call i32 @llvm.ucmp.i32.i32(i32 %i.g, i32 %i.i)
   switch i32 %.0.i.i, label %bb.c [
     i32 0, label %bb.b
     i32 -1, label %minTemp1_fast_iVar5.exit.thread
@@ -1374,11 +1356,9 @@ bb.l:                                             ; preds = %bb.k
   %indvars.iv.i.i = phi i64 [ %i.aa, %.lr.ph.preheader.i.i ], [ %indvars.iv.next.i.i, %bb.m ] ; 6 uses
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv.i.i ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !9
-  %6 = zext i32 %i.ac to i64
   %i.ad = getelementptr i8, ptr %i.ab, i64 -4
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !9
-  %7 = zext i32 %i.ae to i64
-  %.0.i.i.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64 %6, i64 %7)
+  %.0.i.i.i = tail call i32 @llvm.ucmp.i32.i32(i32 %i.ac, i32 %i.ae)
   switch i32 %.0.i.i.i, label %bb.n [
     i32 0, label %bb.m
     i32 -1, label %minimalSwapAndFlipIVar_superFast_iVar5_noEBFC.exit
@@ -1769,6 +1749,9 @@ declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -205,12 +205,12 @@ bb.k:                                             ; preds = %bb.d
 
 bb.l:                                             ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #35
-  %i.ab = tail call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %0, i32 noundef %2)
-  %i.ac = zext i1 %i.ab to i8                     ; 2 uses
+  %i.ab = tail call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %0, i32 noundef %2) ; 2 uses
+  %i.ac = zext i1 %i.ab to i8
   store i8 %i.ac, ptr %i.b, align 1, !tbaa !32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #35
-  %i.ad = tail call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %1, i32 noundef %3)
-  %i.ae = zext i1 %i.ad to i8                     ; 2 uses
+  %i.ad = tail call noundef zeroext i1 @_ZNK8facebook5velox10FlatVectorIbE11valueAtFastEi(ptr noundef nonnull align 8 dereferenceable(176) %1, i32 noundef %3) ; 2 uses
+  %i.ae = zext i1 %i.ad to i8
   store i8 %i.ae, ptr %i.c, align 1, !tbaa !32
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 25
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !1198, !range !58, !noundef !59
@@ -234,7 +234,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.o
 
 bb.n:                                             ; preds = %bb.l
-  %i.an = tail call i32 @llvm.ucmp.i32.i8(i8 %i.ac, i8 %i.ae)
+  %i.an = tail call i32 @llvm.ucmp.i32.i1(i1 %i.ab, i1 %i.ad)
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
@@ -323,15 +323,15 @@ bb.j:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %0, align 8, !tbaa !48
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 384
   %i.z = load ptr, ptr %i.y, align 8
-  %i.aa = tail call noundef zeroext i1 %i.z(ptr noundef nonnull align 8 dereferenceable(108) %0, i32 noundef %2)
-  %i.ab = zext i1 %i.aa to i8                     ; 2 uses
+  %i.aa = tail call noundef zeroext i1 %i.z(ptr noundef nonnull align 8 dereferenceable(108) %0, i32 noundef %2) ; 2 uses
+  %i.ab = zext i1 %i.aa to i8
   store i8 %i.ab, ptr %i.b, align 1, !tbaa !32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #35
   %i.ac = load ptr, ptr %i.k, align 8, !tbaa !48
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 384
   %i.ae = load ptr, ptr %i.ad, align 8
-  %i.af = tail call noundef zeroext i1 %i.ae(ptr noundef nonnull align 8 dereferenceable(108) %i.k, i32 noundef %3)
-  %i.ag = zext i1 %i.af to i8                     ; 2 uses
+  %i.af = tail call noundef zeroext i1 %i.ae(ptr noundef nonnull align 8 dereferenceable(108) %i.k, i32 noundef %3) ; 2 uses
+  %i.ag = zext i1 %i.af to i8
   store i8 %i.ag, ptr %i.c, align 1, !tbaa !32
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 25
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !1198, !range !58, !noundef !59
@@ -355,7 +355,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %i.ap = tail call i32 @llvm.ucmp.i32.i8(i8 %i.ab, i8 %i.ag)
+  %i.ap = tail call i32 @llvm.ucmp.i32.i1(i1 %i.aa, i1 %i.af)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -758,7 +758,7 @@ declare i32 @llvm.smin.i32(i32, i32) #31
 declare i32 @llvm.smax.i32(i32, i32) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #31
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i1(i1, i1) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshr.i32(i32, i32, i32) #31

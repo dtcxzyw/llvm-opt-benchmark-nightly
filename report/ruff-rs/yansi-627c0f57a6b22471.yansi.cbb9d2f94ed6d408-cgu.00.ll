@@ -202,8 +202,6 @@ bb.d:                                             ; preds = %_RNvXs8_NtCshuqxroU
 bb.e:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !45)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
-  %2 = zext nneg i8 %i.b to i64
-  %3 = zext nneg i8 %i.d to i64
   %.not.i = icmp eq i8 %i.b, %i.d
   br i1 %.not.i, label %bb.f, label %bb.g
 
@@ -214,7 +212,7 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.i = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.i = tail call i8 @llvm.ucmp.i8.i8(i8 %i.b, i8 %i.d)
   br label %_RNvXs8_NtCshuqxroUi4Em_5yansi5colorNtB5_5ColorNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd11partial_cmp.exit
 
 bb.h:                                             ; preds = %bb.f
@@ -273,8 +271,6 @@ bb.n:                                             ; preds = %_RNvXs8_NtCshuqxroU
 bb.o:                                             ; preds = %bb.l
   tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !53)
-  %4 = zext nneg i8 %i.f to i64
-  %5 = zext nneg i8 %i.h to i64
   %.not.i13 = icmp eq i8 %i.f, %i.h
   br i1 %.not.i13, label %bb.p, label %bb.q
 
@@ -285,7 +281,7 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p, %bb.o
-  %i.al = tail call i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.al = tail call i8 @llvm.ucmp.i8.i8(i8 %i.f, i8 %i.h)
   br label %_RNvXs8_NtCshuqxroUi4Em_5yansi5colorNtB5_5ColorNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd11partial_cmp.exit15
 
 bb.r:                                             ; preds = %bb.p
@@ -361,9 +357,7 @@ _RNvXs9_NtCshuqxroUi4Em_5yansi5colorNtB5_5ColorNtNtCs4NRVxsYgnAr_4core3cmp3Ord3c
 bb.d:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
-  %2 = zext nneg i8 %i.b to i64
-  %3 = zext nneg i8 %i.d to i64
-  %i.i = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.i = tail call i8 @llvm.ucmp.i8.i8(i8 %i.b, i8 %i.d)
   %i.j = icmp eq i8 %i.b, %i.d
   br i1 %i.j, label %bb.e, label %_RNvXs9_NtCshuqxroUi4Em_5yansi5colorNtB5_5ColorNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit
 
@@ -429,9 +423,7 @@ _RNvXs9_NtCshuqxroUi4Em_5yansi5colorNtB5_5ColorNtNtCs4NRVxsYgnAr_4core3cmp3Ord3c
 bb.l:                                             ; preds = %bb.j
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63)
-  %4 = zext nneg i8 %i.f to i64
-  %5 = zext nneg i8 %i.h to i64
-  %i.am = tail call i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.am = tail call i8 @llvm.ucmp.i8.i8(i8 %i.f, i8 %i.h)
   %i.an = icmp eq i8 %i.f, %i.h
   br i1 %i.an, label %bb.m, label %_RNvXs9_NtCshuqxroUi4Em_5yansi5colorNtB5_5ColorNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit10
 
@@ -729,9 +721,6 @@ declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i16(i16, i16) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64, i64) #7
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvNtCs4NRVxsYgnAr_4core3fmt5write(ptr noundef nonnull, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48), ptr noundef nonnull, ptr noundef nonnull) unnamed_addr #0

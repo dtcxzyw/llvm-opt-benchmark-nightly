@@ -205,9 +205,7 @@ define hidden noundef range(i8 -1, 2) i8 @_RNvXs2_NtNtNtCs4NRVxsYgnAr_4core3ops8
 bb.a:
   %.val = load i8, ptr %1, align 1, !range !3967, !noundef !3
   %.val1 = load i8, ptr %2, align 1, !range !3967, !noundef !3
-  %3 = zext nneg i8 %.val to i64
-  %4 = zext nneg i8 %.val1 to i64
-  %i.a = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.a = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %.val, i8 %.val1)
   ret i8 %i.a
 }
 
@@ -609,6 +607,9 @@ declare void @_RNvMNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class5knownNtB2
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvMsp_NtNtNtCsoTR8nlGN3X_18ty_python_semantic5types5class14static_literalNtB5_18StaticClassLiteral16own_class_member(ptr dead_on_unwind noalias noundef writable sret([36 x i8]) align 4 captures(address) dereferenceable(36), i32 noundef range(i32 1, 0), i32 noundef, ptr noundef nonnull, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272), ptr noundef nonnull align 4, i32 noundef, i32, i32 noundef, i32, ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #44
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { i32, i32 } @_RNvMs5_NtNtCsoTR8nlGN3X_18ty_python_semantic5types7typevarNtB5_20BoundTypeVarInstance14synthetic_self(ptr noundef nonnull, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(272), ptr noalias noundef readonly align 4 captures(none) dead_on_return dereferenceable(16), ptr noalias noundef align 4 captures(address) dead_on_return dereferenceable(12)) unnamed_addr #0

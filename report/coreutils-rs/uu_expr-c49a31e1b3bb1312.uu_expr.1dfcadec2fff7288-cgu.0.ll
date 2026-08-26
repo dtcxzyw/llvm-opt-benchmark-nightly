@@ -205,10 +205,8 @@ bb.am:                                            ; preds = %bb.x
   call void @llvm.experimental.noalias.scope.decl(metadata !1282)
   call void @llvm.experimental.noalias.scope.decl(metadata !1285)
   %i.fu = load i8, ptr %i.cg, align 8, !range !1202, !alias.scope !1282, !noalias !1287, !noundef !4 ; 3 uses
-  %2 = zext nneg i8 %i.fu to i64
   %i.fv = load i8, ptr %i.ch, align 8, !range !1202, !alias.scope !1285, !noalias !1288, !noundef !4 ; 2 uses
-  %3 = zext nneg i8 %i.fv to i64
-  %i.fw = call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.fw = call i8 @llvm.ucmp.i8.i8(i8 %i.fu, i8 %i.fv)
   %.not.i71.i.i = icmp eq i8 %i.fu, %i.fv
   br i1 %.not.i71.i.i, label %bb.an, label %_RNvXs4_NtCsioiJd4mgmsb_10num_bigint6bigintNtB5_6BigIntNtNtCs6JMX4GRUq9U_4core3cmp3Ord3cmp.exit.i.i
 
@@ -611,9 +609,6 @@ declare noundef i64 @_RNvNtNtCs6JMX4GRUq9U_4core3str5count14do_count_chars(ptr n
 ; Function Attrs: nounwind nonlazybind uwtable
 declare noundef i64 @_RNvNtNtCs6JMX4GRUq9U_4core3str5count23char_count_general_case(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #0
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64, i64) #18
-
 ; Function Attrs: noinline nounwind nonlazybind uwtable
 declare void @_RNvXs2_NtNtCs6JMX4GRUq9U_4core3num11float_parsedNtNtNtB9_3str6traits7FromStr8from_str(ptr dead_on_unwind noalias nofree noundef writable sret([16 x i8]) align 8 captures(address) dereferenceable(16), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #14
 
@@ -670,6 +665,9 @@ declare noundef zeroext i1 @_RNvXsi_NtCs6JMX4GRUq9U_4core3fmteNtB5_7Display3fmt(
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #22

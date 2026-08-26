@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   %.sroa.10.i.sroa.0.1.i.i.i = phi ptr [ %.sroa.10.i.sroa.0.0.copyload.i.i.i, %bb.c ], [ %.sroa.10.i.sroa.0.035.i.i.i, %bb.b ], [ %.sroa.10.i.sroa.0.035.i.i.i, %bb.d ], [ %.sroa.10.i.sroa.0.035.i.i.i, %bb.e ], [ %.sroa.10.i.sroa.0.035.i.i.i, %bb.f ] ; 5 uses
   %.sroa.10.i.sroa.4.1.i.i.i = phi i64 [ %.sroa.10.i.sroa.4.0.copyload.i.i.i, %bb.c ], [ %.sroa.10.i.sroa.4.036.i.i.i, %bb.b ], [ %.sroa.10.i.sroa.4.036.i.i.i, %bb.d ], [ %.sroa.10.i.sroa.4.036.i.i.i, %bb.e ], [ %.sroa.10.i.sroa.4.036.i.i.i, %bb.f ] ; 5 uses
   %.sroa.8.i.sroa.0.1.i.i.i = phi i8 [ %.sroa.8.i.sroa.0.0.copyload.i.i.i, %bb.c ], [ %.sroa.8.i.sroa.0.037.i.i.i, %bb.b ], [ %.sroa.8.i.sroa.0.037.i.i.i, %bb.d ], [ %.sroa.8.i.sroa.0.037.i.i.i, %bb.e ], [ %.sroa.8.i.sroa.0.037.i.i.i, %bb.f ] ; 3 uses
-  %.sroa.09.0.i.i.i.i = phi i8 [ %i.g, %bb.c ], [ 6, %bb.b ], [ 7, %bb.d ], [ 8, %bb.e ], [ 9, %bb.f ] ; 4 uses
+  %.sroa.09.0.i.i.i.i = phi i8 [ %i.g, %bb.c ], [ 6, %bb.b ], [ 7, %bb.d ], [ 8, %bb.e ], [ 9, %bb.f ] ; 5 uses
   %.sroa.812.0.i.i.i.i = phi ptr [ %.sroa.53.0.copyload.i.i.i.i, %bb.c ], [ undef, %bb.b ], [ undef, %bb.d ], [ undef, %bb.e ], [ %.sroa.53.0.copyload.i.i.i.i, %bb.f ] ; 10 uses
   %.sroa.9.0.i.i.i.i = phi i64 [ %.sroa.6.0.copyload.i.i.i.i, %bb.c ], [ undef, %bb.b ], [ undef, %bb.d ], [ undef, %bb.e ], [ %.sroa.6.0.copyload.i.i.i.i, %bb.f ] ; 10 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !76
@@ -244,16 +244,16 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j,
   %.sroa.10.i.sroa.0.0.i.i.i.i.i = phi ptr [ %.sroa.10.i.sroa.0.0.copyload.i.i.i.i.i, %bb.i ], [ undef, %bb.h ], [ undef, %bb.j ], [ undef, %bb.k ], [ undef, %bb.l ] ; 4 uses
   %.sroa.10.i.sroa.4.0.i.i.i.i.i = phi i64 [ %.sroa.10.i.sroa.4.0.copyload.i.i.i.i.i, %bb.i ], [ undef, %bb.h ], [ undef, %bb.j ], [ undef, %bb.k ], [ undef, %bb.l ] ; 4 uses
   %.sroa.8.i.sroa.0.0.i.i.i.i.i = phi i8 [ %.sroa.8.i.sroa.0.0.copyload.i.i.i.i.i, %bb.i ], [ undef, %bb.h ], [ undef, %bb.j ], [ undef, %bb.k ], [ undef, %bb.l ] ; 2 uses
-  %.sroa.09.0.i.i.i.i.i.i = phi i8 [ %i.h, %bb.i ], [ 6, %bb.h ], [ 7, %bb.j ], [ 8, %bb.k ], [ 9, %bb.l ] ; 3 uses
+  %.sroa.09.0.i.i.i.i.i.i = phi i8 [ %i.h, %bb.i ], [ 6, %bb.h ], [ 7, %bb.j ], [ 8, %bb.k ], [ 9, %bb.l ] ; 4 uses
   %.sroa.812.0.i.i.i.i.i.i = phi ptr [ %.sroa.53.0.copyload.i.i.i.i.i.i, %bb.i ], [ undef, %bb.h ], [ undef, %bb.j ], [ undef, %bb.k ], [ %.sroa.53.0.copyload.i.i.i.i.i.i, %bb.l ] ; 10 uses
   %.sroa.9.0.i.i.i.i.i.i = phi i64 [ %.sroa.6.0.copyload.i.i.i.i.i.i, %bb.i ], [ undef, %bb.h ], [ undef, %bb.j ], [ undef, %bb.k ], [ %.sroa.6.0.copyload.i.i.i.i.i.i, %bb.l ] ; 10 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !92
   %i.i = icmp samesign ugt i8 %.sroa.09.0.i.i.i.i, 5
-  %i.j = zext nneg i8 %.sroa.09.0.i.i.i.i to i64  ; 2 uses
+  %i.j = zext nneg i8 %.sroa.09.0.i.i.i.i to i64
   %i.k = add nsw i64 %i.j, -5
   %i.l = select i1 %i.i, i64 %i.k, i64 0          ; 3 uses
   %i.m = icmp samesign ult i8 %.sroa.09.0.i.i.i.i.i.i, 6 ; 2 uses
-  %i.n = zext nneg i8 %.sroa.09.0.i.i.i.i.i.i to i64 ; 2 uses
+  %i.n = zext nneg i8 %.sroa.09.0.i.i.i.i.i.i to i64
   %i.o = add nsw i64 %i.n, -5
   %i.p = select i1 %i.m, i64 0, i64 %i.o          ; 2 uses
   %i.q = call i8 @llvm.scmp.i8.i64(i64 %i.l, i64 %i.p)
@@ -270,7 +270,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.m, label %bb.p, label %select.unfold.i.i.i
 
 bb.p:                                             ; preds = %bb.o
-  %i.s = call i8 @llvm.scmp.i8.i64(i64 %i.j, i64 %i.n)
+  %i.s = call i8 @llvm.ucmp.i8.i8(i8 %.sroa.09.0.i.i.i.i, i8 %.sroa.09.0.i.i.i.i.i.i)
   %i.t = icmp eq i8 %.sroa.09.0.i.i.i.i, %.sroa.09.0.i.i.i.i.i.i
   br i1 %i.t, label %bb.q, label %_RNCINvYNtCs9p4rgIae0RV_6camino14Utf8ComponentsNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3cmpB5_E0B7_.exit.i.i.i.i.i.i
 

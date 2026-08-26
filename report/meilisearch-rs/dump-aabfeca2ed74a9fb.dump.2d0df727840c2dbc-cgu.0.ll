@@ -206,15 +206,11 @@ bb.ce:                                            ; preds = %.noexc26.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !106651
   call void @llvm.experimental.noalias.scope.decl(metadata !106684)
   call void @llvm.experimental.noalias.scope.decl(metadata !106687)
-  br i1 %.not.i.i.i.i.i, label %.thread.i.i.i.i, label %2
+  br i1 %.not.i.i.i.i.i, label %.thread.i.i.i.i, label %bb.cf
 
-2:                                                ; preds = %bb.ce
-  %3 = zext nneg i8 %.sroa.10.020.i.i.i.i.i to i64
-  br label %bb.cf
-
-bb.cf:                                            ; preds = %bb.ci, %2
-  %.sroa.3.0.i.i.i.i.i.i = phi i64 [ %i.bq, %2 ], [ %i.gi, %bb.ci ] ; 2 uses
-  %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %.ph584, %2 ], [ %i.gh, %bb.ci ] ; 8 uses
+bb.cf:                                            ; preds = %bb.ce, %bb.ci
+  %.sroa.3.0.i.i.i.i.i.i = phi i64 [ %i.gi, %bb.ci ], [ %i.bq, %bb.ce ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.gh, %bb.ci ], [ %.ph584, %bb.ce ] ; 8 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 56 ; 4 uses
   %i.fu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 54
   %i.fv = load i16, ptr %i.fu, align 2, !noalias !106690, !noundef !13 ; 4 uses
@@ -233,8 +229,7 @@ bb.cg:                                            ; preds = %.lr.ph
   %.sroa.8.0.i.i.i.i.i.i.i576 = phi i64 [ %i.fz, %bb.cg ], [ 0, %bb.cf ] ; 3 uses
   %.sroa.03.0.i.i.i.i.i.i.i575 = phi ptr [ %i.ga, %bb.cg ], [ %i.ft, %bb.cf ] ; 2 uses
   %.val7.i.i.i.i.i.i.i = load i8, ptr %.sroa.03.0.i.i.i.i.i.i.i575, align 1, !range !85928, !noalias !106690, !noundef !13
-  %4 = zext nneg i8 %.val7.i.i.i.i.i.i.i to i64
-  %i.gc = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.gc = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %.sroa.10.020.i.i.i.i.i, i8 %.val7.i.i.i.i.i.i.i)
   switch i8 %i.gc, label %bb.ch [
     i8 -1, label %._crit_edge
     i8 0, label %bb.cj
@@ -637,15 +632,11 @@ bb.s:                                             ; preds = %.noexc8.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !108157
   tail call void @llvm.experimental.noalias.scope.decl(metadata !108207)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !108210)
-  br i1 %.not.i.i.i.i.i, label %.thread.i.i.i.i, label %2
+  br i1 %.not.i.i.i.i.i, label %.thread.i.i.i.i, label %bb.t
 
-2:                                                ; preds = %bb.s
-  %3 = zext nneg i8 %i.bl to i64
-  br label %bb.t
-
-bb.t:                                             ; preds = %bb.w, %2
-  %.sroa.3.0.i.i.i.i.i.i = phi i64 [ %i.az, %2 ], [ %i.cv, %bb.w ] ; 2 uses
-  %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %.ph347, %2 ], [ %i.cu, %bb.w ] ; 8 uses
+bb.t:                                             ; preds = %bb.s, %bb.w
+  %.sroa.3.0.i.i.i.i.i.i = phi i64 [ %i.cv, %bb.w ], [ %i.az, %bb.s ] ; 2 uses
+  %.sroa.0.0.i.i.i.i.i.i = phi ptr [ %i.cu, %bb.w ], [ %.ph347, %bb.s ] ; 8 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 56 ; 4 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i.i.i.i, i64 54
   %i.ci = load i16, ptr %i.ch, align 2, !noalias !108213, !noundef !13 ; 4 uses
@@ -664,8 +655,7 @@ bb.u:                                             ; preds = %.lr.ph
   %.sroa.8.0.i.i.i.i.i.i.i342 = phi i64 [ %i.cm, %bb.u ], [ 0, %bb.t ] ; 3 uses
   %.sroa.03.0.i.i.i.i.i.i.i341 = phi ptr [ %i.cn, %bb.u ], [ %i.cg, %bb.t ] ; 2 uses
   %.val7.i.i.i.i.i.i.i = load i8, ptr %.sroa.03.0.i.i.i.i.i.i.i341, align 1, !range !5618, !noalias !108213, !noundef !13
-  %4 = zext nneg i8 %.val7.i.i.i.i.i.i.i to i64
-  %i.cp = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.cp = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 5) %i.bl, i8 %.val7.i.i.i.i.i.i.i)
   switch i8 %i.cp, label %bb.v [
     i8 -1, label %._crit_edge
     i8 0, label %bb.x
@@ -1068,8 +1058,7 @@ loadbb2022:                                       ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb2022
   %phi.res = phi i32 [ 0, %loadbb2022 ], [ %i.qi, %res_block ]
-  %2 = sext i32 %phi.res to i64
-  %i.qq = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.qq = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.qq, label %bb.es [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h7388d2f0e72c1067E.exit.i.i.i.i.i.i.i._crit_edge"
     i8 0, label %"_ZN5alloc11collections5btree3map25BTreeMap$LT$K$C$V$C$A$GT$6insert17hbc5679b822478e31E.exit.i.i.i"
@@ -1472,6 +1461,9 @@ declare float @llvm.fabs.f32(float) #31
 ; Function Attrs: nocallback nofree nosync nounwind nonlazybind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #39
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #31
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #40
 
@@ -1492,6 +1484,9 @@ declare i8 @llvm.umin.i8(i8, i8) #31
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #31
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #31
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.abs.i8(i8, i1 immarg) #33

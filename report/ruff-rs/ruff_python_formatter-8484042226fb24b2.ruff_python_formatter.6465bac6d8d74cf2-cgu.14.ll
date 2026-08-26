@@ -205,8 +205,7 @@ bb.g:                                             ; preds = %bb.a
   %i.r = tail call i64 @llvm.usub.sat.i64(i64 %i.p, i64 1) ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 33 ; 2 uses
   %i.t = load i8, ptr %i.s, align 1, !range !45, !noundef !4
-  %3 = zext nneg i8 %i.t to i64
-  %i.u = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 2)
+  %i.u = tail call i8 @llvm.ucmp.i8.i8(i8 %i.t, i8 2)
   switch i8 %i.u, label %bb.b [
     i8 -1, label %bb.q
     i8 0, label %bb.r
@@ -609,9 +608,6 @@ declare hidden noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh11starts_wi
 declare hidden noundef zeroext i1 @_RNvMNtCs4NRVxsYgnAr_4core5sliceSh9ends_withCs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808), ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64, i64) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #13
 
 ; Function Attrs: nonlazybind uwtable
@@ -811,6 +807,9 @@ declare hidden { ptr, i64 } @_RINvMs0_NtCs8CpBcHC8tKo_21ruff_python_formatter8co
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef nonnull align 2 ptr @_RNvMNtCs7Ma6rQP8bRy_14ruff_formatter9formatterINtB2_9FormatterNtNtCs8CpBcHC8tKo_21ruff_python_formatter7context15PyFormatContextE7optionsB12_(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16)) unnamed_addr #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #13
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden { ptr, i64 } @_RNvXs0_NtCs7Ma6rQP8bRy_14ruff_formatter9formatterINtB5_9FormatterNtNtCs8CpBcHC8tKo_21ruff_python_formatter7context15PyFormatContextENtNtB7_6buffer6Buffer8elementsB15_(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16)) unnamed_addr #1

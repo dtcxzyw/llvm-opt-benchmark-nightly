@@ -205,9 +205,7 @@ bb.e:                                             ; preds = %bb.c
   ]
 
 bb.f:                                             ; preds = %bb.c
-  %4 = zext nneg i8 %i.z to i64
-  %5 = zext nneg i8 %i.x to i64
-  %i.ag = tail call i8 @llvm.scmp.i8.i64(i64 %5, i64 %4)
+  %i.ag = tail call i8 @llvm.ucmp.i8.i8(i8 %i.x, i8 %i.z)
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit.i
 
 bb.g:                                             ; preds = %bb.e
@@ -232,9 +230,7 @@ bb.j:                                             ; preds = %bb.k, %bb.i
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit.i
 
 bb.k:                                             ; preds = %bb.h
-  %6 = zext nneg i8 %i.ai to i64
-  %7 = zext nneg i8 %i.ak to i64
-  %i.ao = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.ao = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ai, i8 %i.ak)
   %i.ap = icmp eq i8 %i.ai, %i.ak
   br i1 %i.ap, label %bb.j, label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit.i
 
@@ -342,9 +338,7 @@ bb.g:                                             ; preds = %bb.e
   ]
 
 bb.h:                                             ; preds = %bb.e
-  %4 = zext nneg i8 %i.ac to i64
-  %5 = zext nneg i8 %i.aa to i64
-  %i.aj = tail call i8 @llvm.scmp.i8.i64(i64 %5, i64 %4)
+  %i.aj = tail call i8 @llvm.ucmp.i8.i8(i8 %i.aa, i8 %i.ac)
   br label %_RNvXsd_NtCsj6eKBz9Db1c_4core5tupleTNtNtCskXtk6F4WjxZ_4just10expression10ExpressionNtNtBB_14string_literal13StringLiteralENtNtB7_3cmp3Ord3cmpBB_.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -369,9 +363,7 @@ bb.l:                                             ; preds = %bb.m, %bb.k
   br label %_RNvXsd_NtCsj6eKBz9Db1c_4core5tupleTNtNtCskXtk6F4WjxZ_4just10expression10ExpressionNtNtBB_14string_literal13StringLiteralENtNtB7_3cmp3Ord3cmpBB_.exit
 
 bb.m:                                             ; preds = %bb.j
-  %6 = zext nneg i8 %i.al to i64
-  %7 = zext nneg i8 %i.an to i64
-  %i.ar = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.ar = tail call i8 @llvm.ucmp.i8.i8(i8 %i.al, i8 %i.an)
   %i.as = icmp eq i8 %i.al, %i.an
   br i1 %i.as, label %bb.l, label %_RNvXsd_NtCsj6eKBz9Db1c_4core5tupleTNtNtCskXtk6F4WjxZ_4just10expression10ExpressionNtNtBB_14string_literal13StringLiteralENtNtB7_3cmp3Ord3cmpBB_.exit
 
@@ -774,7 +766,6 @@ bb.o:                                             ; preds = %bb.m, %bb.l, %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bo = load i64, ptr %i.ac, align 8, !alias.scope !38002, !noalias !38003, !noundef !29 ; 3 uses
-  %1 = zext nneg i8 %.sroa.04.0 to i64
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.t, %bb.p
@@ -798,8 +789,7 @@ bb.r:                                             ; preds = %.lr.ph348
   %.sroa.0.03.i.i.i.i347 = phi ptr [ %i.bv, %bb.r ], [ %i.bp, %bb.q ] ; 2 uses
   %.sroa.8.0.i.i.i.i346 = phi i64 [ %i.bw, %bb.r ], [ 0, %bb.q ] ; 2 uses
   %.val6.i.i.i.i = load i8, ptr %.sroa.0.03.i.i.i.i347, align 1, !range !190, !noalias !38005, !noundef !29
-  %2 = zext nneg i8 %.val6.i.i.i.i to i64
-  %i.by = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %1, i64 %2)
+  %i.by = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 3) %.sroa.04.0, i8 %.val6.i.i.i.i)
   switch i8 %i.by, label %bb.s [
     i8 -1, label %._crit_edge
     i8 0, label %.thread
@@ -1202,7 +1192,7 @@ bb.qz:                                            ; preds = %bb.qy
   %i.bal = icmp samesign ugt i64 %.sroa.0996.6, 1 ; 2 uses
   %i.bam = select i1 %i.bal, i64 %i.bak, i64 1
   %i.ban = inttoptr i64 %.sroa.46.6 to ptr        ; 2 uses
-  switch i64 %i.bam, label %2 [
+  switch i64 %i.bam, label %bb.rb [
     i64 1, label %_RNvMs_NtCskXtk6F4WjxZ_4just9attributeNtB4_9Attribute10repeatable.exit.thread
     i64 8, label %_RNvMs_NtCskXtk6F4WjxZ_4just9attributeNtB4_9Attribute10repeatable.exit.thread
     i64 12, label %_RNvMs_NtCskXtk6F4WjxZ_4just9attributeNtB4_9Attribute10repeatable.exit.thread
@@ -1224,19 +1214,16 @@ bb.ra:                                            ; preds = %bb.ul
           cleanup
   br label %.body
 
-2:                                                ; preds = %bb.qz
+bb.rb:                                            ; preds = %bb.qz
+  %2 = trunc i64 %.sroa.0996.6 to i8
+  %3 = add i8 %2, -2
+  %switch.idx.cast.i.i = select i1 %i.bal, i8 %3, i8 1
   %.not.i712 = icmp eq ptr %i.ht, null
-  br i1 %.not.i712, label %_RNvMs_NtCskXtk6F4WjxZ_4just9attributeNtB4_9Attribute10repeatable.exit.thread, label %bb.rb
+  br i1 %.not.i712, label %_RNvMs_NtCskXtk6F4WjxZ_4just9attributeNtB4_9Attribute10repeatable.exit.thread, label %bb.rc
 
-bb.rb:                                            ; preds = %2
-  %3 = add i64 %.sroa.0996.6, 254
-  %4 = and i64 %3, 255
-  %5 = select i1 %i.bal, i64 %4, i64 1
-  br label %bb.rc
-
-bb.rc:                                            ; preds = %bb.rf, %bb.rb
-  %.sroa.3.0.i.i = phi i64 [ %.val620965.a, %bb.rb ], [ %i.bbd, %bb.rf ] ; 2 uses
-  %.sroa.0.0.i.i713 = phi ptr [ %i.ht, %bb.rb ], [ %i.bbc, %bb.rf ] ; 4 uses
+bb.rc:                                            ; preds = %bb.rb, %bb.rf
+  %.sroa.3.0.i.i = phi i64 [ %i.bbd, %bb.rf ], [ %.val620965.a, %bb.rb ] ; 2 uses
+  %.sroa.0.0.i.i713 = phi ptr [ %i.bbc, %bb.rf ], [ %i.ht, %bb.rb ] ; 4 uses
   %i.bao = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i713, i64 100 ; 2 uses
   %i.bap = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i713, i64 98
   %i.baq = load i16, ptr %i.bap, align 2, !noalias !45745, !noundef !29 ; 2 uses
@@ -1255,8 +1242,7 @@ bb.rd:                                            ; preds = %.lr.ph15309
   %.sroa.0.03.i.i.i15307 = phi ptr [ %i.bau, %bb.rd ], [ %i.bao, %bb.rc ] ; 2 uses
   %.sroa.8.0.i.i.i15306 = phi i64 [ %i.bav, %bb.rd ], [ 0, %bb.rc ] ; 4 uses
   %.val6.i.i.i = load i8, ptr %.sroa.0.03.i.i.i15307, align 1, !range !34820, !noalias !45745, !noundef !29
-  %6 = zext nneg i8 %.val6.i.i.i to i64
-  %i.bax = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.bax = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %switch.idx.cast.i.i, i8 %.val6.i.i.i)
   switch i8 %i.bax, label %bb.re [
     i8 -1, label %._crit_edge15310
     i8 0, label %bb.rg
@@ -1280,7 +1266,7 @@ bb.rf:                                            ; preds = %._crit_edge15310
   %i.bbd = add i64 %.sroa.3.0.i.i, -1
   br label %bb.rc
 
-_RNvMs_NtCskXtk6F4WjxZ_4just9attributeNtB4_9Attribute10repeatable.exit.thread: ; preds = %._crit_edge15310, %2, %bb.qz, %bb.qz, %bb.qz, %bb.qz
+_RNvMs_NtCskXtk6F4WjxZ_4just9attributeNtB4_9Attribute10repeatable.exit.thread: ; preds = %._crit_edge15310, %bb.rb, %bb.qz, %bb.qz, %bb.qz, %bb.qz
   %i.bbe = icmp samesign ult i64 %.sroa.0996.6, 2
   br i1 %i.bbe, label %bb.rm, label %bb.rq
 
@@ -1656,15 +1642,11 @@ bb.so:                                            ; preds = %._crit_edge, %bb.sn
   %switch.idx.cast.i.i747 = select i1 %i.ber, i8 %i.bet, i8 1 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !45807)
   %.not.i.i757 = icmp eq ptr %i.ht, null
-  br i1 %.not.i.i757, label %.thread.i788, label %7
+  br i1 %.not.i.i757, label %.thread.i788, label %bb.sp
 
-7:                                                ; preds = %bb.so
-  %8 = zext nneg i8 %switch.idx.cast.i.i747 to i64
-  br label %bb.sp
-
-bb.sp:                                            ; preds = %bb.ss, %7
-  %.sroa.3.0.i.i.i758 = phi i64 [ %.val620965.a, %7 ], [ %i.bfj, %bb.ss ] ; 2 uses
-  %.sroa.0.0.i.i.i759 = phi ptr [ %i.ht, %7 ], [ %i.bfi, %bb.ss ] ; 11 uses
+bb.sp:                                            ; preds = %bb.so, %bb.ss
+  %.sroa.3.0.i.i.i758 = phi i64 [ %i.bfj, %bb.ss ], [ %.val620965.a, %bb.so ] ; 2 uses
+  %.sroa.0.0.i.i.i759 = phi ptr [ %i.bfi, %bb.ss ], [ %i.ht, %bb.so ] ; 11 uses
   %i.beu = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i759, i64 100 ; 6 uses
   %i.bev = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i759, i64 98
   %i.bew = load i16, ptr %i.bev, align 2, !noalias !45810, !noundef !29 ; 4 uses
@@ -1683,8 +1665,7 @@ bb.sq:                                            ; preds = %.lr.ph15331
   %.sroa.0.03.i.i.i.i76115329 = phi ptr [ %i.bfa, %bb.sq ], [ %i.beu, %bb.sp ] ; 2 uses
   %.sroa.8.0.i.i.i.i76015328 = phi i64 [ %i.bfb, %bb.sq ], [ 0, %bb.sp ] ; 3 uses
   %.val6.i.i.i.i = load i8, ptr %.sroa.0.03.i.i.i.i76115329, align 1, !range !34820, !noalias !45810, !noundef !29
-  %9 = zext nneg i8 %.val6.i.i.i.i to i64
-  %i.bfd = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.bfd = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 30) %switch.idx.cast.i.i747, i8 %.val6.i.i.i.i)
   switch i8 %i.bfd, label %bb.sr [
     i8 -1, label %._crit_edge15332
     i8 0, label %bb.st
@@ -2087,8 +2068,7 @@ bb.ly:                                            ; preds = %.lr.ph13065
   %.sroa.0.03.i.i.i13064 = phi ptr [ %i.bgw, %bb.ly ], [ %i.bgq, %.preheader ] ; 2 uses
   %.sroa.8.0.i.i.i644713063 = phi i64 [ %i.bgx, %bb.ly ], [ 0, %.preheader ] ; 2 uses
   %.val6.i.i.i6448 = load i8, ptr %.sroa.0.03.i.i.i13064, align 1, !range !190, !noalias !50605, !noundef !29
-  %16 = zext nneg i8 %.val6.i.i.i6448 to i64
-  %i.bgz = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 0, i64 %16)
+  %i.bgz = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 0, i8 %.val6.i.i.i6448)
   switch i8 %i.bgz, label %bb.lz [
     i8 -1, label %._crit_edge13066
     i8 0, label %.loopexit13129
@@ -2154,10 +2134,11 @@ bb.mc:                                            ; preds = %.lr.ph13073
   %.sroa.0.03.i.i.i645513071 = phi ptr [ %i.bho, %bb.mc ], [ %i.bhi, %.loopexit13129 ] ; 2 uses
   %.sroa.8.0.i.i.i645413070 = phi i64 [ %i.bhp, %bb.mc ], [ 0, %.loopexit13129 ] ; 2 uses
   %.val6.i.i.i6456 = load i8, ptr %.sroa.0.03.i.i.i645513071, align 1, !range !190, !noalias !50608, !noundef !29
-  switch i8 %.val6.i.i.i6456, label %bb.md [
-    i8 2, label %._crit_edge13074
-    i8 1, label %bb.mf
-    i8 0, label %bb.mc
+  %16 = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 1, i8 %.val6.i.i.i6456)
+  switch i8 %16, label %bb.md [
+    i8 -1, label %._crit_edge13074
+    i8 0, label %bb.mf
+    i8 1, label %bb.mc
   ]
 
 bb.md:                                            ; preds = %.lr.ph13073
@@ -2560,8 +2541,7 @@ bb.dm:                                            ; preds = %.lr.ph1839
   %.sroa.0.03.i.i.i.i1838 = phi ptr [ %i.se, %bb.dm ], [ %i.ry, %.preheader.i ] ; 2 uses
   %.sroa.8.0.i.i.i.i1837 = phi i64 [ %i.sf, %bb.dm ], [ 0, %.preheader.i ] ; 2 uses
   %.val6.i.i.i.i = load i8, ptr %.sroa.0.03.i.i.i.i1838, align 1, !range !190, !noalias !69306, !noundef !29
-  %10 = zext nneg i8 %.val6.i.i.i.i to i64
-  %i.sh = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 0, i64 %10)
+  %i.sh = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 0, i8 %.val6.i.i.i.i)
   switch i8 %i.sh, label %bb.dn [
     i8 -1, label %._crit_edge
     i8 0, label %_RINvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskXtk6F4WjxZ_4just5sigil5SigilNtNtB8_7set_val9SetValZSTE3getB18_EB1c_.exit.i
@@ -2610,10 +2590,11 @@ bb.dq:                                            ; preds = %.lr.ph1845
   %.sroa.0.03.i.i.i341.i1843 = phi ptr [ %i.su, %bb.dq ], [ %i.so, %bb.dp ] ; 2 uses
   %.sroa.8.0.i.i.i340.i1842 = phi i64 [ %i.sv, %bb.dq ], [ 0, %bb.dp ] ; 2 uses
   %.val6.i.i.i342.i = load i8, ptr %.sroa.0.03.i.i.i341.i1843, align 1, !range !190, !noalias !69309, !noundef !29
-  switch i8 %.val6.i.i.i342.i, label %default.unreachable [
-    i8 2, label %._crit_edge1846
-    i8 1, label %_RINvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskXtk6F4WjxZ_4just5sigil5SigilNtNtB8_7set_val9SetValZSTE3getB18_EB1c_.exit346.i
-    i8 0, label %bb.dq
+  %10 = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 1, i8 %.val6.i.i.i342.i)
+  switch i8 %10, label %default.unreachable [
+    i8 -1, label %._crit_edge1846
+    i8 0, label %_RINvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskXtk6F4WjxZ_4just5sigil5SigilNtNtB8_7set_val9SetValZSTE3getB18_EB1c_.exit346.i
+    i8 1, label %bb.dq
   ]
 
 default.unreachable:                              ; preds = %.lr.ph1845
@@ -2658,8 +2639,7 @@ bb.dt:                                            ; preds = %.lr.ph1853
   %.sroa.0.03.i.i.i351.i1851 = phi ptr [ %i.tj, %bb.dt ], [ %i.td, %bb.ds ] ; 2 uses
   %.sroa.8.0.i.i.i350.i1850 = phi i64 [ %i.tk, %bb.dt ], [ 0, %bb.ds ] ; 2 uses
   %.val6.i.i.i352.i = load i8, ptr %.sroa.0.03.i.i.i351.i1851, align 1, !range !190, !noalias !69312, !noundef !29
-  %11 = zext nneg i8 %.val6.i.i.i352.i to i64
-  %i.tm = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 2, i64 %11)
+  %i.tm = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 2, i8 %.val6.i.i.i352.i)
   switch i8 %i.tm, label %bb.du [
     i8 -1, label %._crit_edge1854
     i8 0, label %_RINvMsi_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mapINtB6_8BTreeMapNtNtCskXtk6F4WjxZ_4just5sigil5SigilNtNtB8_7set_val9SetValZSTE3getB18_EB1c_.exit356.i
@@ -3062,7 +3042,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !71648, !noalias !71651, !noundef !29 ; 3 uses
-  %2 = zext nneg i8 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -3086,8 +3065,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i.i59 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i58 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i.i = load i8, ptr %.sroa.0.03.i.i.i59, align 1, !range !40372, !noalias !71653, !noundef !29
-  %3 = zext nneg i8 %.val6.i.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 42) %1, i8 %.val6.i.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %.loopexit
@@ -3490,7 +3468,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !71759, !noalias !71762, !noundef !29 ; 3 uses
-  %2 = zext nneg i8 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -3514,8 +3491,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i.i59 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i58 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i.i = load i8, ptr %.sroa.0.03.i.i.i59, align 1, !range !190, !noalias !71764, !noundef !29
-  %3 = zext nneg i8 %.val6.i.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 3) %1, i8 %.val6.i.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %.loopexit
@@ -3918,9 +3894,7 @@ bb.d:                                             ; preds = %bb.c
   ]
 
 bb.e:                                             ; preds = %bb.c
-  %2 = zext nneg i8 %i.w to i64
-  %3 = zext nneg i8 %i.u to i64
-  %i.ad = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %2)
+  %i.ad = tail call i8 @llvm.ucmp.i8.i8(i8 %i.u, i8 %i.w)
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit
 
 bb.f:                                             ; preds = %bb.d
@@ -3945,9 +3919,7 @@ bb.i:                                             ; preds = %bb.j, %bb.h
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit
 
 bb.j:                                             ; preds = %bb.g
-  %4 = zext nneg i8 %i.af to i64
-  %5 = zext nneg i8 %i.ah to i64
-  %i.al = tail call i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.al = tail call i8 @llvm.ucmp.i8.i8(i8 %i.af, i8 %i.ah)
   %i.am = icmp eq i8 %i.af, %i.ah
   br i1 %i.am, label %bb.i, label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit
 
@@ -4036,9 +4008,7 @@ bb.n:                                             ; preds = %bb.m
   ]
 
 bb.o:                                             ; preds = %bb.m
-  %6 = zext nneg i8 %i.bv to i64
-  %7 = zext nneg i8 %i.bt to i64
-  %i.cc = tail call i8 @llvm.scmp.i8.i64(i64 %7, i64 %6)
+  %i.cc = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bt, i8 %i.bv)
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit.i.i.i
 
 bb.p:                                             ; preds = %bb.n
@@ -4063,9 +4033,7 @@ bb.s:                                             ; preds = %bb.t, %bb.r
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit.i.i.i
 
 bb.t:                                             ; preds = %bb.q
-  %8 = zext nneg i8 %i.ce to i64
-  %9 = zext nneg i8 %i.cg to i64
-  %i.ck = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.ck = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ce, i8 %i.cg)
   %i.cl = icmp eq i8 %i.ce, %i.cg
   br i1 %i.cl, label %bb.s, label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit.i.i.i
 
@@ -4468,9 +4436,7 @@ bb.e:                                             ; preds = %bb.c
   ]
 
 bb.f:                                             ; preds = %bb.c
-  %2 = zext nneg i8 %i.w to i64
-  %3 = zext nneg i8 %i.u to i64
-  %i.ad = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %2)
+  %i.ad = tail call i8 @llvm.ucmp.i8.i8(i8 %i.u, i8 %i.w)
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.e
@@ -4495,9 +4461,7 @@ bb.j:                                             ; preds = %bb.i, %bb.k
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.h
-  %4 = zext nneg i8 %i.af to i64
-  %5 = zext nneg i8 %i.ah to i64
-  %i.al = tail call i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.al = tail call i8 @llvm.ucmp.i8.i8(i8 %i.af, i8 %i.ah)
   %i.am = icmp eq i8 %i.af, %i.ah
   br i1 %i.am, label %bb.j, label %bb.l
 
@@ -4900,9 +4864,7 @@ bb.n:                                             ; preds = %bb.l
   ]
 
 bb.o:                                             ; preds = %bb.l
-  %2 = zext nneg i8 %i.cg to i64
-  %3 = zext nneg i8 %i.ce to i64
-  %i.cn = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %2)
+  %i.cn = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ce, i8 %i.cg)
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit
 
 bb.p:                                             ; preds = %bb.n
@@ -4927,9 +4889,7 @@ bb.s:                                             ; preds = %bb.t, %bb.r
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit
 
 bb.t:                                             ; preds = %bb.q
-  %4 = zext nneg i8 %i.cp to i64
-  %5 = zext nneg i8 %i.cr to i64
-  %i.cv = tail call i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.cv = tail call i8 @llvm.ucmp.i8.i8(i8 %i.cp, i8 %i.cr)
   %i.cw = icmp eq i8 %i.cp, %i.cr
   br i1 %i.cw, label %bb.s, label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit
 
@@ -5078,9 +5038,7 @@ bb.ac:                                            ; preds = %bb.ab
   ]
 
 bb.ad:                                            ; preds = %bb.ab
-  %6 = zext nneg i8 %i.fq to i64
-  %7 = zext nneg i8 %i.fo to i64
-  %i.fx = tail call i8 @llvm.scmp.i8.i64(i64 %7, i64 %6)
+  %i.fx = tail call i8 @llvm.ucmp.i8.i8(i8 %i.fo, i8 %i.fq)
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit66
 
 bb.ae:                                            ; preds = %bb.ac
@@ -5105,9 +5063,7 @@ bb.ah:                                            ; preds = %bb.ai, %bb.ag
   br label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit66
 
 bb.ai:                                            ; preds = %bb.af
-  %8 = zext nneg i8 %i.fz to i64
-  %9 = zext nneg i8 %i.gb to i64
-  %i.gf = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.gf = tail call i8 @llvm.ucmp.i8.i8(i8 %i.fz, i8 %i.gb)
   %i.gg = icmp eq i8 %i.fz, %i.gb
   br i1 %i.gg, label %bb.ah, label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit66
 
@@ -5175,11 +5131,9 @@ bb.aq:                                            ; preds = %bb.f
 bb.ar:                                            ; preds = %bb.g
   %i.hh = getelementptr inbounds nuw i8, ptr %.tr132, i64 96
   %i.hi = load i8, ptr %i.hh, align 8, !range !15324, !noundef !29 ; 2 uses
-  %10 = zext nneg i8 %i.hi to i64
   %i.hj = getelementptr inbounds nuw i8, ptr %.tr71133, i64 96
   %i.hk = load i8, ptr %i.hj, align 8, !range !15324, !noundef !29 ; 2 uses
-  %11 = zext nneg i8 %i.hk to i64
-  %i.hl = tail call i8 @llvm.scmp.i8.i64(i64 %10, i64 %11)
+  %i.hl = tail call i8 @llvm.ucmp.i8.i8(i8 %i.hi, i8 %i.hk)
   %i.hm = icmp eq i8 %i.hi, %i.hk
   br i1 %i.hm, label %bb.as, label %_RNvXs4_NtCskXtk6F4WjxZ_4just14string_literalNtB5_13StringLiteralNtNtCsj6eKBz9Db1c_4core3cmp3Ord3cmp.exit66
 
@@ -5582,11 +5536,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.j = load i8, ptr %i.i, align 8, !range !40372, !noundef !29 ; 2 uses
-  %2 = zext nneg i8 %i.j to i64
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.l = load i8, ptr %i.k, align 8, !range !40372, !noundef !29 ; 2 uses
-  %3 = zext nneg i8 %i.l to i64
-  %i.m = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call i8 @llvm.ucmp.i8.i8(i8 %i.j, i8 %i.l)
   %i.n = icmp eq i8 %i.j, %i.l
   br i1 %i.n, label %bb.c, label %bb.h
 
@@ -5987,6 +5939,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #58
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #58
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #58
