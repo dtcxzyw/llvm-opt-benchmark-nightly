@@ -201,8 +201,8 @@ check_flag.exit165:                               ; preds = %bb.y
   br label %bb.ay
 
 check_flag.exit165.thread:                        ; preds = %bb.y, %check_flag.exit153.thread
-  %.0105.a = phi ptr [ null, %check_flag.exit153.thread ], [ %i.bz, %bb.y ]
-  %.0104.a = phi ptr [ null, %check_flag.exit153.thread ], [ %i.cd, %bb.y ]
+  %.0105.a = phi ptr [ null, %check_flag.exit153.thread ], [ %i.cd, %bb.y ]
+  %.0104.a = phi ptr [ null, %check_flag.exit153.thread ], [ %i.bz, %bb.y ]
   br i1 %i.am, label %bb.z, label %check_flag.exit167.thread
 
 bb.z:                                             ; preds = %check_flag.exit165.thread
@@ -501,8 +501,8 @@ bb.ax:                                            ; preds = %check_flag.exit206,
   %.1 = phi i32 [ %i.ht, %check_flag.exit206 ], [ %.0106, %bb.ap ]
   %putchar134 = call i32 @putchar(i32 10)         ; 0 uses
   call void @ARKodeFree(ptr noundef nonnull %i.d) #8
-  %i.ij = call i32 @SUNLinSolFree(ptr noundef %.0104.a) #8 ; 0 uses
-  call void @SUNMatDestroy(ptr noundef %.0105.a) #8
+  %i.ij = call i32 @SUNLinSolFree(ptr noundef %.0105.a) #8 ; 0 uses
+  call void @SUNMatDestroy(ptr noundef %.0104.a) #8
   call void @N_VDestroy(ptr noundef nonnull %i.at) #8
   call void @N_VDestroy(ptr noundef nonnull %i.ba) #8
   %i.ik = call i32 @SUNContext_Free(ptr noundef nonnull %i.a) #8 ; 0 uses

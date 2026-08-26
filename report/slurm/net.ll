@@ -202,13 +202,13 @@ bb.j:                                             ; preds = %bb.i
   br label %.critedge
 
 bb.k:                                             ; preds = %bb.h, %bb.f, %bb.c, %bb.b
+  %.033 = phi i16 [ %rev.i46, %bb.h ], [ %rev.i, %bb.c ], [ %rev.i, %bb.b ], [ %rev.i46, %bb.f ] ; 2 uses
   %.4 = phi ptr [ %i.c, %bb.h ], [ %i.c, %bb.c ], [ %1, %bb.b ], [ %1, %bb.f ] ; 2 uses
-  %.030 = phi i16 [ %rev.i46, %bb.h ], [ %rev.i, %bb.c ], [ %rev.i, %bb.b ], [ %rev.i46, %bb.f ] ; 2 uses
-  %.not58 = icmp eq i16 %.030, 0
+  %.not58 = icmp eq i16 %.033, 0
   br i1 %.not58, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ab = zext i16 %.030 to i32
+  %i.ab = zext i16 %.033 to i32
   call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.28, ptr noundef nonnull %.4, i32 noundef %i.ab) #11
   br label %bb.n
 

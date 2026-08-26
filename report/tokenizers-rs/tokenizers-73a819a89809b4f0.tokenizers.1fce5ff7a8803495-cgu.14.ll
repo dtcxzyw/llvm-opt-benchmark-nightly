@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.d
           to label %.body.thread.i.i unwind label %bb.h, !noalias !1398
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.d, %bb.c, %bb.b
-  %.sroa.76.0.i.i = phi ptr [ undef, %bb.b ], [ %i.ai, %bb.d ], [ undef, %bb.c ] ; 2 uses
   %cond = phi i1 [ true, %bb.b ], [ undef, %bb.d ], [ false, %bb.c ]
+  %.sroa.76.0.i.i = phi ptr [ undef, %bb.b ], [ %i.ai, %bb.d ], [ undef, %bb.c ] ; 2 uses
   %.sink.i.i.i.i.i.i.i = phi i1 [ false, %bb.b ], [ true, %bb.d ], [ false, %bb.c ]
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e)
           to label %_RINvXs_NvXNvNtNtCs2JiOgHzbbc7_10tokenizers11normalizers7replaces_1__NtBa_14ReplacePatternNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializeNtB5_7___FieldB1p_11deserializeINtNtB1r_5value18StringDeserializerNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEEBe_.exit.i.i.i unwind label %bb.f, !noalias !1398
@@ -606,8 +606,8 @@ bb.e:                                             ; preds = %bb.d
           to label %.body.thread.i.i unwind label %bb.h, !noalias !1628
 
 .noexc.i.i.i.i.i.i:                               ; preds = %bb.d, %bb.c, %bb.b
-  %.sroa.76.0.i.i = phi ptr [ undef, %bb.b ], [ %i.ai, %bb.d ], [ undef, %bb.c ] ; 2 uses
   %cond = phi i1 [ true, %bb.b ], [ undef, %bb.d ], [ false, %bb.c ]
+  %.sroa.76.0.i.i = phi ptr [ undef, %bb.b ], [ %i.ai, %bb.d ], [ undef, %bb.c ] ; 2 uses
   %.sink.i.i.i.i.i.i.i = phi i1 [ false, %bb.b ], [ true, %bb.d ], [ false, %bb.c ]
   invoke void @_RNvXso_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.e)
           to label %_RINvXs_NvXNvNtNtCs2JiOgHzbbc7_10tokenizers14pre_tokenizers5splits_1__NtBa_12SplitPatternNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializeNtB5_7___FieldB1o_11deserializeINtNtB1q_5value18StringDeserializerNtNtCs5PtHgSLqj5O_10serde_json5error5ErrorEEBe_.exit.i.i.i unwind label %bb.f, !noalias !1628
@@ -1010,8 +1010,8 @@ bb.i:                                             ; preds = %bb.g
   br label %_RINvXNvXNtNtCs5PtHgSLqj5O_10serde_json5value2deNtB8_5ValueNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECs2JiOgHzbbc7_10tokenizers.exit.i.i
 
 _RINvXNvXNtNtCs5PtHgSLqj5O_10serde_json5value2deNtB8_5ValueNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECs2JiOgHzbbc7_10tokenizers.exit.i.i: ; preds = %bb.i, %bb.h
-  %.sroa.5.sroa.5.0.i.i.i = phi double [ %.sroa.5.sroa.5.0.copyload11.i.i.i, %bb.h ], [ %i.l, %bb.i ]
   %.sroa.5.sroa.4.0.i.i.i = phi i64 [ %.sroa.5.sroa.4.0.copyload10.i.i.i, %bb.h ], [ 2, %bb.i ]
+  %.sroa.5.sroa.5.0.i.i.i = phi double [ %.sroa.5.sroa.5.0.copyload11.i.i.i, %bb.h ], [ %i.l, %bb.i ]
   %.sroa.6.0.i.i.i = phi i64 [ %.sroa.6.0.copyload7.i.i.i, %bb.h ], [ undef, %bb.i ]
   %.sroa.0.0.i.i.i = phi i8 [ 0, %bb.h ], [ 2, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !1722
@@ -1414,8 +1414,8 @@ bb.c:                                             ; preds = %bb.a
   br label %_RINvXNvXNtNtCs5PtHgSLqj5O_10serde_json5value2deNtB8_5ValueNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECs2JiOgHzbbc7_10tokenizers.exit
 
 _RINvXNvXNtNtCs5PtHgSLqj5O_10serde_json5value2deNtB8_5ValueNtNtCsboAIIHEtPkY_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_f64NtNtBa_5error5ErrorECs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.b, %bb.c
-  %.sroa.5.sroa.5.0.i = phi double [ %.sroa.5.sroa.5.0.copyload11.i, %bb.b ], [ %i.b, %bb.c ]
   %.sroa.5.sroa.4.0.i = phi i64 [ %.sroa.5.sroa.4.0.copyload10.i, %bb.b ], [ 2, %bb.c ]
+  %.sroa.5.sroa.5.0.i = phi double [ %.sroa.5.sroa.5.0.copyload11.i, %bb.b ], [ %i.b, %bb.c ]
   %.sroa.6.0.i = phi i64 [ %.sroa.6.0.copyload7.i, %bb.b ], [ undef, %bb.c ]
   %.sroa.0.0.i = phi i8 [ 0, %bb.b ], [ 2, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !3100

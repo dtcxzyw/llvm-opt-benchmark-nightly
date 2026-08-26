@@ -204,8 +204,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n176, label %.lr.ph101, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.sroa.076.098.ph = phi ptr [ %i.ah, %iter.check ], [ %i.ar, %vec.epilog.iter.check ], [ %i.bd, %vec.epilog.middle.block ]
-  %.09097.ph = phi i32 [ 32002, %iter.check ], [ %i.bb, %vec.epilog.iter.check ], [ %i.bh, %vec.epilog.middle.block ]
+  %.09098.ph = phi i32 [ 32002, %iter.check ], [ %i.bb, %vec.epilog.iter.check ], [ %i.bh, %vec.epilog.middle.block ]
+  %.sroa.076.097.ph = phi ptr [ %i.ah, %iter.check ], [ %i.ar, %vec.epilog.iter.check ], [ %i.bd, %vec.epilog.middle.block ]
   br label %.lr.ph
 
 .lr.ph101:                                        ; preds = %.lr.ph, %vec.epilog.middle.block, %middle.block
@@ -214,17 +214,17 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br label %bb.h
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.sroa.076.098 = phi ptr [ %i.bp, %.lr.ph ], [ %.sroa.076.098.ph, %.lr.ph.preheader ] ; 2 uses
-  %.09097 = phi i32 [ %.sroa.speculated86, %.lr.ph ], [ %.09097.ph, %.lr.ph.preheader ]
-  %i.bi = load ptr, ptr %.sroa.076.098, align 8, !tbaa !89
+  %.09098 = phi i32 [ %.sroa.speculated86, %.lr.ph ], [ %.09098.ph, %.lr.ph.preheader ]
+  %.sroa.076.097 = phi ptr [ %i.bp, %.lr.ph ], [ %.sroa.076.097.ph, %.lr.ph.preheader ] ; 2 uses
+  %i.bi = load ptr, ptr %.sroa.076.097, align 8, !tbaa !89
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !116
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 11421080
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !313
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   %i.bo = load i32, ptr %i.bn, align 4, !tbaa !279
-  %.sroa.speculated86 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %.09097) ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.076.098, i64 8 ; 2 uses
+  %.sroa.speculated86 = call i32 @llvm.smin.i32(i32 %i.bo, i32 %.09098) ; 2 uses
+  %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.076.097, i64 8 ; 2 uses
   %.not93 = icmp eq ptr %i.bp, %i.ai
   br i1 %.not93, label %.lr.ph101, label %.lr.ph, !llvm.loop !328
 
@@ -627,10 +627,10 @@ _ZNSt10_HashtableIN9Stockfish4MoveESt4pairIKS1_lESaIS4_ENSt8__detail10_Select1st
   br i1 %.not29, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt10_HashtableIN9Stockfish4MoveESt4pairIKS1_lESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS1_8MoveHashENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit, %bb.j
-  %.031 = phi i64 [ %.1, %bb.j ], [ 0, %_ZNSt10_HashtableIN9Stockfish4MoveESt4pairIKS1_lESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS1_8MoveHashENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
-  %.02530 = phi ptr [ %i.i, %bb.j ], [ %i.h, %_ZNSt10_HashtableIN9Stockfish4MoveESt4pairIKS1_lESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS1_8MoveHashENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
-  %i.i = load ptr, ptr %.02530, align 8, !tbaa !375 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.02530, i64 24
+  %.031 = phi ptr [ %i.i, %bb.j ], [ %i.h, %_ZNSt10_HashtableIN9Stockfish4MoveESt4pairIKS1_lESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS1_8MoveHashENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
+  %.02530 = phi i64 [ %.1, %bb.j ], [ 0, %_ZNSt10_HashtableIN9Stockfish4MoveESt4pairIKS1_lESaIS4_ENSt8__detail10_Select1stESt8equal_toIS1_ENS1_8MoveHashENS6_18_Mod_range_hashingENS6_20_Default_ranged_hashENS6_20_Prime_rehash_policyENS6_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
+  %i.i = load ptr, ptr %.031, align 8, !tbaa !375 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.031, i64 24
   %i.k = load i64, ptr %i.j, align 8, !tbaa !544
   %i.l = urem i64 %i.k, %1                        ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %i.l ; 3 uses
@@ -640,27 +640,27 @@ _ZNSt10_HashtableIN9Stockfish4MoveESt4pairIKS1_lESaIS4_ENSt8__detail10_Select1st
 
 bb.g:                                             ; preds = %.lr.ph
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !374
-  store ptr %i.o, ptr %.02530, align 8, !tbaa !375
-  store ptr %.02530, ptr %i.g, align 8, !tbaa !374
+  store ptr %i.o, ptr %.031, align 8, !tbaa !375
+  store ptr %.031, ptr %i.g, align 8, !tbaa !374
   store ptr %i.g, ptr %i.m, align 8, !tbaa !543
-  %i.p = load ptr, ptr %.02530, align 8, !tbaa !375
+  %i.p = load ptr, ptr %.031, align 8, !tbaa !375
   %.not28 = icmp eq ptr %i.p, null
   br i1 %.not28, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.031
-  store ptr %.02530, ptr %i.q, align 8, !tbaa !543
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.02530
+  store ptr %.031, ptr %i.q, align 8, !tbaa !543
   br label %bb.j
 
 bb.i:                                             ; preds = %.lr.ph
   %i.r = load ptr, ptr %i.n, align 8, !tbaa !375
-  store ptr %i.r, ptr %.02530, align 8, !tbaa !375
+  store ptr %i.r, ptr %.031, align 8, !tbaa !375
   %i.s = load ptr, ptr %i.m, align 8, !tbaa !543
-  store ptr %.02530, ptr %i.s, align 8, !tbaa !375
+  store ptr %.031, ptr %i.s, align 8, !tbaa !375
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
-  %.1 = phi i64 [ %.031, %bb.i ], [ %i.l, %bb.h ], [ %i.l, %bb.g ]
+  %.1 = phi i64 [ %.02530, %bb.i ], [ %i.l, %bb.h ], [ %i.l, %bb.g ]
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !550
 

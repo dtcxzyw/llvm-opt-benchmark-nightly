@@ -202,9 +202,9 @@ bb.g:                                             ; preds = %bb.d
 
 ._crit_edge.i.i78:                                ; preds = %bb.g, %._crit_edge
   %.pre-phi = phi double [ %i.cw, %bb.g ], [ %i.br, %._crit_edge ]
-  %.063 = phi double [ %.sroa.speculated84, %bb.g ], [ %i.cj, %._crit_edge ]
-  %.062 = phi double [ %i.de, %bb.g ], [ %.sroa.speculated89, %._crit_edge ]
-  %i.df = fmul double %.063, %.pre-phi
+  %.063 = phi double [ %i.de, %bb.g ], [ %.sroa.speculated89, %._crit_edge ]
+  %.062 = phi double [ %.sroa.speculated84, %bb.g ], [ %i.cj, %._crit_edge ]
+  %i.df = fmul double %.062, %.pre-phi
   %i.dg = fptosi double %i.df to i64              ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   store i64 %i.dg, ptr %i.dh, align 8, !tbaa !27
@@ -214,7 +214,7 @@ bb.g:                                             ; preds = %bb.d
   %i.dl = fneg double %i.dk
   %i.dm = call double @llvm.fmuladd.f64(double %i.dj, double 8.251790e-01, double %i.dl) ; 2 uses
   %i.dn = sitofp i64 %i.dg to double
-  %i.do = fmul double %.062, %i.dn                ; 2 uses
+  %i.do = fmul double %.063, %i.dn                ; 2 uses
   %i.dp = fcmp olt double %i.do, %i.dm
   %.sroa.speculated = select i1 %i.dp, double %i.do, double %i.dm
   %i.dq = fptosi double %.sroa.speculated to i64

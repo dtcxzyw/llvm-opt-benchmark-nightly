@@ -205,8 +205,8 @@ bb.bc:                                            ; preds = %dbuf_free.exit193
 
 bb.bd:                                            ; preds = %bb.ba, %bb.bb, %bb.bc
   %i.fp = phi ptr [ %.pre285, %bb.ba ], [ %.pre285, %bb.bb ], [ %.pre284, %bb.bc ] ; 2 uses
-  %.sroa.9.0.a = phi i64 [ %i.fc, %bb.ba ], [ %i.fc, %bb.bb ], [ %.sroa.12.1, %bb.bc ]
-  %.sroa.021.0 = phi i64 [ %i.fb, %bb.ba ], [ %i.fb, %bb.bb ], [ %.sroa.031.sroa.0.0.insert.insert51, %bb.bc ] ; 2 uses
+  %.sroa.9.0.a = phi i64 [ %i.fb, %bb.ba ], [ %i.fb, %bb.bb ], [ %.sroa.031.sroa.0.0.insert.insert51, %bb.bc ] ; 2 uses
+  %.sroa.021.0 = phi i64 [ %i.fc, %bb.ba ], [ %i.fc, %bb.bb ], [ %.sroa.12.1, %bb.bc ]
   %.not.i194 = icmp eq ptr %i.fp, null
   br i1 %.not.i194, label %dbuf_free.exit195, label %bb.be
 
@@ -217,7 +217,7 @@ bb.be:                                            ; preds = %bb.bd
   br label %dbuf_free.exit195
 
 dbuf_free.exit195:                                ; preds = %bb.bd, %bb.be
-  %.sroa.7.0.extract.shift141 = and i64 %.sroa.021.0, -4294967296
+  %.sroa.7.0.extract.shift141 = and i64 %.sroa.9.0.a, -4294967296
   br label %dbuf_free.exit
 
 bb.bf:                                            ; preds = %bb.ap, %._crit_edge, %bb.ax, %bb.ad
@@ -259,9 +259,9 @@ dbuf_free.exit199:                                ; preds = %dbuf_free.exit197, 
   br label %dbuf_free.exit
 
 dbuf_free.exit:                                   ; preds = %bb.z, %bb.y, %bb.a, %dbuf_free.exit199, %dbuf_free.exit195, %bb.ac, %get_bool_option.exit
-  %.sroa.0139.0 = phi i64 [ 0, %get_bool_option.exit ], [ 0, %bb.a ], [ 0, %dbuf_free.exit199 ], [ %.sroa.021.0, %dbuf_free.exit195 ], [ %i.bz, %bb.ac ], [ 0, %bb.y ], [ 0, %bb.z ]
+  %.sroa.0139.0 = phi i64 [ 0, %get_bool_option.exit ], [ 0, %bb.a ], [ 0, %dbuf_free.exit199 ], [ %.sroa.9.0.a, %dbuf_free.exit195 ], [ %i.bz, %bb.ac ], [ 0, %bb.y ], [ 0, %bb.z ]
   %.sroa.7.0 = phi i64 [ 0, %get_bool_option.exit ], [ 0, %bb.a ], [ 0, %dbuf_free.exit199 ], [ %.sroa.7.0.extract.shift141, %dbuf_free.exit195 ], [ %.sroa.7.0.extract.shift, %bb.ac ], [ 0, %bb.y ], [ 0, %bb.z ]
-  %.sroa.11.0 = phi i64 [ 6, %get_bool_option.exit ], [ 6, %bb.a ], [ 6, %dbuf_free.exit199 ], [ %.sroa.9.0.a, %dbuf_free.exit195 ], [ %i.ca, %bb.ac ], [ 6, %bb.y ], [ 6, %bb.z ]
+  %.sroa.11.0 = phi i64 [ 6, %get_bool_option.exit ], [ 6, %bb.a ], [ 6, %dbuf_free.exit199 ], [ %.sroa.021.0, %dbuf_free.exit195 ], [ %i.ca, %bb.ac ], [ 6, %bb.y ], [ 6, %bb.z ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
@@ -334,8 +334,8 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.pn = phi { i64, i64 } [ %i.o, %bb.g ], [ %i.p, %bb.h ] ; 2 uses
-  %.sroa.03.0 = extractvalue { i64, i64 } %.pn, 0
   %.sroa.5.0 = extractvalue { i64, i64 } %.pn, 1
+  %.sroa.03.0 = extractvalue { i64, i64 } %.pn, 0
   br label %get_bool_option.exit
 
 get_bool_option.exit:                             ; preds = %bb.b, %bb.e, %bb.d, %bb.i
@@ -396,8 +396,8 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.b
-  %.sroa.013.sroa.0.0 = phi i32 [ %.sroa.013.sroa.0.0.extract.trunc, %bb.e ], [ 0, %bb.f ], [ 0, %bb.b ] ; 4 uses
   %.sroa.7.0 = phi i64 [ %i.k, %bb.e ], [ 3, %bb.f ], [ 3, %bb.b ] ; 4 uses
+  %.sroa.013.sroa.0.0 = phi i32 [ %.sroa.013.sroa.0.0.extract.trunc, %bb.e ], [ 0, %bb.f ], [ 0, %bb.b ] ; 4 uses
   %.sroa.013.sroa.6.0 = phi i32 [ %.sroa.013.sroa.6.0.extract.trunc, %bb.e ], [ 0, %bb.f ], [ 0, %bb.b ] ; 4 uses
   %.sroa.034.0 = phi i64 [ %i.j, %bb.e ], [ %.sroa.034.0.copyload, %bb.f ], [ %.sroa.034.0.copyload, %bb.b ] ; 3 uses
   %.sroa.10.0 = phi i64 [ %i.k, %bb.e ], [ %.sroa.10.0.copyload, %bb.f ], [ %.sroa.10.0.copyload, %bb.b ] ; 4 uses
@@ -465,13 +465,13 @@ bb.n:                                             ; preds = %.split103, %.split,
 bb.o:                                             ; preds = %.split103, %.split, %.thread87, %bb.n, %bb.m
   %.sroa.725.097 = phi i64 [ 6, %.thread87 ], [ %.sroa.725.0101, %bb.n ], [ %.sroa.725.0, %bb.m ], [ 6, %.split ], [ 6, %.split103 ]
   %.sroa.013.sroa.6.196 = phi i32 [ 0, %.thread87 ], [ %.sroa.013.sroa.6.0, %bb.n ], [ %.sroa.013.sroa.6.0, %bb.m ], [ %.sroa.013.sroa.6.0, %.split ], [ %.sroa.013.sroa.6.0, %.split103 ]
-  %.sroa.7.195 = phi i64 [ 3, %.thread87 ], [ %.sroa.7.0, %bb.n ], [ %.sroa.7.0, %bb.m ], [ %.sroa.7.0, %.split ], [ %.sroa.7.0, %.split103 ]
-  %.sroa.013.sroa.0.194 = phi i32 [ 0, %.thread87 ], [ %.sroa.013.sroa.0.0, %bb.n ], [ %.sroa.013.sroa.0.0, %bb.m ], [ %.sroa.013.sroa.0.0, %.split ], [ %.sroa.013.sroa.0.0, %.split103 ]
+  %.sroa.013.sroa.0.195 = phi i32 [ 0, %.thread87 ], [ %.sroa.013.sroa.0.0, %bb.n ], [ %.sroa.013.sroa.0.0, %bb.m ], [ %.sroa.013.sroa.0.0, %.split ], [ %.sroa.013.sroa.0.0, %.split103 ]
+  %.sroa.7.194 = phi i64 [ 3, %.thread87 ], [ %.sroa.7.0, %bb.n ], [ %.sroa.7.0, %bb.m ], [ %.sroa.7.0, %.split ], [ %.sroa.7.0, %.split103 ]
   %.sroa.013.sroa.6.0.insert.ext = zext i32 %.sroa.013.sroa.6.196 to i64
   %.sroa.013.sroa.6.0.insert.shift = shl nuw i64 %.sroa.013.sroa.6.0.insert.ext, 32
-  %.sroa.013.sroa.0.0.insert.ext = zext i32 %.sroa.013.sroa.0.194 to i64
+  %.sroa.013.sroa.0.0.insert.ext = zext i32 %.sroa.013.sroa.0.195 to i64
   %.sroa.013.sroa.0.0.insert.insert = or disjoint i64 %.sroa.013.sroa.6.0.insert.shift, %.sroa.013.sroa.0.0.insert.ext
-  call void @JS_FreeValue(ptr noundef %0, i64 %.sroa.013.sroa.0.0.insert.insert, i64 %.sroa.7.195) #34
+  call void @JS_FreeValue(ptr noundef %0, i64 %.sroa.013.sroa.0.0.insert.insert, i64 %.sroa.7.194) #34
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.a, %bb.o
@@ -874,8 +874,8 @@ bb.v:                                             ; preds = %.sink.split, %bb.g
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.r, %bb.f, %bb.e, %bb.v, %bb.t
-  %.sroa.014.0 = phi i64 [ %i.at, %bb.r ], [ %i.at, %bb.t ], [ 0, %bb.v ], [ 0, %bb.f ], [ 0, %bb.e ]
   %.061 = phi ptr [ %i.u, %bb.r ], [ %i.u, %bb.t ], [ %i.u, %bb.v ], [ null, %bb.f ], [ null, %bb.e ]
+  %.sroa.014.0 = phi i64 [ %i.at, %bb.r ], [ %i.at, %bb.t ], [ 0, %bb.v ], [ 0, %bb.f ], [ 0, %bb.e ]
   %.sroa.7.0 = phi i64 [ %i.au, %bb.r ], [ %i.au, %bb.t ], [ 3, %bb.v ], [ 3, %bb.f ], [ 3, %bb.e ]
   %.0 = phi ptr [ %calloc, %bb.r ], [ %calloc, %bb.t ], [ %calloc, %bb.v ], [ null, %bb.f ], [ null, %bb.e ] ; 6 uses
   call void @JS_FreeCString(ptr noundef %0, ptr noundef %i.q) #34
@@ -941,8 +941,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.7.0 = phi i64 [ %i.i, %bb.b ], [ %i.k, %bb.c ] ; 2 uses
   %.pn = phi { i64, i64 } [ %i.h, %bb.b ], [ %i.j, %bb.c ]
+  %.sroa.7.0 = phi i64 [ %i.i, %bb.b ], [ %i.k, %bb.c ] ; 2 uses
   %.sroa.08.0 = extractvalue { i64, i64 } %.pn, 0 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 124
   %i.o = load i32, ptr %i.n, align 4, !tbaa !73
@@ -1345,9 +1345,9 @@ bb.ac:                                            ; preds = %bb.ab
   br label %.thread315
 
 .lr.ph345:                                        ; preds = %.preheader327, %bb.ah
-  %.0252344 = phi i64 [ %i.cr, %bb.ah ], [ 0, %.preheader327 ] ; 5 uses
-  %.0268343 = phi i32 [ %.1269, %bb.ah ], [ 0, %.preheader327 ] ; 6 uses
-  %i.ch = call { i64, i64 } @JS_GetPropertyInt64(ptr noundef %0, i64 %i.cc, i64 %i.cd, i64 noundef %.0252344) #34 ; 2 uses
+  %.0267344 = phi i32 [ %.1269, %bb.ah ], [ 0, %.preheader327 ] ; 6 uses
+  %.0271343 = phi i64 [ %i.cr, %bb.ah ], [ 0, %.preheader327 ] ; 5 uses
+  %i.ch = call { i64, i64 } @JS_GetPropertyInt64(ptr noundef %0, i64 %i.cc, i64 %i.cd, i64 noundef %.0271343) #34 ; 2 uses
   %i.ci = extractvalue { i64, i64 } %i.ch, 1      ; 3 uses
   %trunc323 = trunc i64 %i.ci to i32
   switch i32 %trunc323, label %bb.ad [
@@ -1363,7 +1363,7 @@ bb.ad:                                            ; preds = %.lr.ph345
   br i1 %.not301, label %bb.ae, label %.loopexit328
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cl = icmp eq i32 %.0268343, 64
+  %i.cl = icmp eq i32 %.0267344, 64
   br i1 %i.cl, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
@@ -1371,26 +1371,26 @@ bb.af:                                            ; preds = %bb.ae
   br label %.loopexit328
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.cn = sext i32 %.0268343 to i64
+  %i.cn = sext i32 %.0267344 to i64
   %i.co = load i32, ptr %i.j, align 4, !tbaa !14
-  %i.cp = add nsw i32 %.0268343, 1
+  %i.cp = add nsw i32 %.0267344, 1
   %i.cq = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.cn
   store i32 %i.co, ptr %i.cq, align 4, !tbaa !14
   br label %bb.ah
 
 bb.ah:                                            ; preds = %.lr.ph345, %bb.ag
-  %.1269 = phi i32 [ %.0268343, %.lr.ph345 ], [ %i.cp, %bb.ag ] ; 2 uses
-  %i.cr = add nuw nsw i64 %.0252344, 1            ; 3 uses
+  %.1269 = phi i32 [ %.0267344, %.lr.ph345 ], [ %i.cp, %bb.ag ] ; 2 uses
+  %i.cr = add nuw nsw i64 %.0271343, 1            ; 3 uses
   %i.cs = load i64, ptr %i.i, align 8, !tbaa !12
   %i.ct = icmp slt i64 %i.cr, %i.cs
   br i1 %i.ct, label %.lr.ph345, label %.loopexit328, !llvm.loop !175
 
 .loopexit328:                                     ; preds = %bb.ah, %bb.ad, %.lr.ph345, %.preheader327, %bb.af
-  %.0268338 = phi i32 [ 64, %bb.af ], [ 0, %.preheader327 ], [ %.1269, %bb.ah ], [ %.0268343, %bb.ad ], [ %.0268343, %.lr.ph345 ]
-  %.0252336 = phi i64 [ %.0252344, %bb.af ], [ 0, %.preheader327 ], [ %i.cr, %bb.ah ], [ %.0252344, %bb.ad ], [ %.0252344, %.lr.ph345 ]
+  %.0271338 = phi i64 [ %.0271343, %bb.af ], [ 0, %.preheader327 ], [ %i.cr, %bb.ah ], [ %.0271343, %bb.ad ], [ %.0271343, %.lr.ph345 ]
+  %.0267336 = phi i32 [ 64, %bb.af ], [ 0, %.preheader327 ], [ %.1269, %bb.ah ], [ %.0267344, %bb.ad ], [ %.0267344, %.lr.ph345 ]
   call void @JS_FreeValue(ptr noundef %0, i64 %i.cc, i64 %i.cd) #34
   %i.cu = load i64, ptr %i.i, align 8, !tbaa !12
-  %i.cv = icmp slt i64 %.0252336, %i.cu
+  %i.cv = icmp slt i64 %.0271338, %i.cu
   br i1 %i.cv, label %.thread315, label %bb.ai
 
 .thread315:                                       ; preds = %bb.ac, %.loopexit328
@@ -1407,7 +1407,7 @@ bb.aj:                                            ; preds = %bb.aa, %bb.ai, %._c
   %.sroa.8.0 = phi i32 [ %.sroa.8.1, %bb.ai ], [ %.sroa.8.1, %bb.aa ], [ 2, %._crit_edge ] ; 2 uses
   %.sroa.5.0 = phi i32 [ %.sroa.5.1, %bb.ai ], [ %.sroa.5.1, %bb.aa ], [ 1, %._crit_edge ] ; 2 uses
   %.sroa.0.1 = phi i32 [ %.sroa.0.0, %bb.ai ], [ %.sroa.0.0, %bb.aa ], [ 0, %._crit_edge ] ; 2 uses
-  %.3271 = phi i32 [ %.0268338, %bb.ai ], [ -1, %bb.aa ], [ -1, %._crit_edge ] ; 2 uses
+  %.3271 = phi i32 [ %.0267336, %bb.ai ], [ -1, %bb.aa ], [ -1, %._crit_edge ] ; 2 uses
   %.1259 = phi ptr [ %.0258, %bb.ai ], [ %.0258, %bb.aa ], [ %i.k, %._crit_edge ] ; 4 uses
   %.1255 = phi ptr [ %.0254, %bb.ai ], [ %.0254, %bb.aa ], [ null, %._crit_edge ] ; 4 uses
   %.1 = phi ptr [ %.0253.a, %bb.ai ], [ %.0253.a, %bb.aa ], [ null, %._crit_edge ] ; 4 uses

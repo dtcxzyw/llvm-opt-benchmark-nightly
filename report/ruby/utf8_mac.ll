@@ -171,16 +171,16 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.preheader, %bb.i
-  %.015.i.i60 = phi i32 [ %i.bn, %bb.i ], [ 0, %.preheader ] ; 2 uses
-  %.016.i.i59 = phi i64 [ %i.cr, %bb.i ], [ 142312, %.preheader ]
-  %i.bn = add nuw nsw i32 %.015.i.i60, 1          ; 2 uses
-  %i.bo = add nsw i32 %.015.i.i60, %i.bc
+  %.015.i.i60 = phi i64 [ %i.cr, %bb.i ], [ 142312, %.preheader ]
+  %.016.i.i59 = phi i32 [ %i.bn, %bb.i ], [ 0, %.preheader ] ; 2 uses
+  %i.bn = add nuw nsw i32 %.016.i.i59, 1          ; 2 uses
+  %i.bo = add nsw i32 %.016.i.i59, %i.bc
   %i.bp = srem i32 %i.bo, 16
   %i.bq = sext i32 %i.bp to i64
   %i.br = getelementptr inbounds i8, ptr %0, i64 %i.bq
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !13  ; 3 uses
   %i.bt = zext i8 %i.bs to i64
-  %i.bu = lshr i64 %.016.i.i59, 2
+  %i.bu = lshr i64 %.015.i.i60, 2
   %i.bv = getelementptr inbounds nuw [4 x i8], ptr @utf8_mac_word_array, i64 %i.bu ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !6
   %i.bx = zext i32 %i.bw to i64

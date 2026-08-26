@@ -155,15 +155,15 @@ bb.a:
 
 .preheader121:                                    ; preds = %.preheader121.lr.ph, %.loopexit
   %i.c = phi i8 [ %i.a, %.preheader121.lr.ph ], [ %.pre142, %.loopexit ]
-  %.085132 = phi ptr [ null, %.preheader121.lr.ph ], [ %.2, %.loopexit ] ; 8 uses
-  %.086131 = phi ptr [ %0, %.preheader121.lr.ph ], [ %i.bc, %.loopexit ] ; 2 uses
-  %.089130 = phi i32 [ 0, %.preheader121.lr.ph ], [ %.291, %.loopexit ] ; 9 uses
-  %.092129 = phi i32 [ 1, %.preheader121.lr.ph ], [ %i.bd, %.loopexit ] ; 2 uses
+  %.0132 = phi i32 [ 1, %.preheader121.lr.ph ], [ %i.bd, %.loopexit ] ; 2 uses
+  %.086131 = phi ptr [ null, %.preheader121.lr.ph ], [ %.2, %.loopexit ] ; 8 uses
+  %.089130 = phi i32 [ 0, %.preheader121.lr.ph ], [ %.289, %.loopexit ] ; 9 uses
+  %.090129 = phi ptr [ %0, %.preheader121.lr.ph ], [ %i.bc, %.loopexit ] ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader121, %.critedge
   %i.d = phi i8 [ %.pr, %.critedge ], [ %i.c, %.preheader121 ]
-  %.187 = phi ptr [ %i.e, %.critedge ], [ %.086131, %.preheader121 ] ; 3 uses
+  %.187 = phi ptr [ %i.e, %.critedge ], [ %.090129, %.preheader121 ] ; 3 uses
   switch i8 %i.d, label %.loopexit119 [
     i8 32, label %.critedge
     i8 9, label %.critedge
@@ -298,16 +298,16 @@ bb.l:                                             ; preds = %stb_include_isspace
   %.4.lcssa.sink = phi ptr [ %.6, %stb_include_isspace.exit116.thread ], [ %.6, %stb_include_isspace.exit116.thread ], [ %.6, %stb_include_isspace.exit116.thread ], [ %.4, %bb.i ], [ %.4, %bb.i ], [ %.4, %bb.i ] ; 2 uses
   %.sink160 = phi ptr [ null, %stb_include_isspace.exit116.thread ], [ null, %stb_include_isspace.exit116.thread ], [ null, %stb_include_isspace.exit116.thread ], [ %i.t, %bb.i ], [ %i.t, %bb.i ], [ %i.t, %bb.i ]
   %i.ad = add nsw i32 %.089130, 1                 ; 2 uses
-  %i.ae = ptrtoint ptr %.086131 to i64
+  %i.ae = ptrtoint ptr %.090129 to i64
   %i.af = sub i64 %i.ae, %i.b
   %i.ag = trunc i64 %i.af to i32
   %i.ah = ptrtoint ptr %.4.lcssa.sink to i64
   %i.ai = sub i64 %i.ah, %i.b
   %i.aj = trunc i64 %i.ai to i32
-  %i.ak = add nuw nsw i32 %.092129, 1
+  %i.ak = add nuw nsw i32 %.0132, 1
   %i.al = sext i32 %i.ad to i64
   %i.am = mul nsw i64 %i.al, 24
-  %i.an = tail call ptr @realloc(ptr noundef %.085132, i64 noundef %i.am) #15 ; 2 uses
+  %i.an = tail call ptr @realloc(ptr noundef %.086131, i64 noundef %i.am) #15 ; 2 uses
   %i.ao = sext i32 %.089130 to i64
   %i.ap = getelementptr inbounds [24 x i8], ptr %i.an, i64 %i.ao ; 4 uses
   store i32 %i.ag, ptr %i.ap, align 8, !tbaa !11
@@ -320,9 +320,9 @@ bb.l:                                             ; preds = %stb_include_isspace
   br label %.loopexit119
 
 .loopexit119:                                     ; preds = %bb.b, %.critedge118, %bb.f, %bb.f, %bb.f, %.loopexit119.sink.split, %bb.k, %stb_include_isspace.exit
-  %.291 = phi i32 [ %.089130, %bb.f ], [ %.089130, %.critedge118 ], [ %i.ad, %.loopexit119.sink.split ], [ %.089130, %bb.k ], [ %.089130, %stb_include_isspace.exit ], [ %.089130, %bb.f ], [ %.089130, %bb.f ], [ %.089130, %bb.b ] ; 3 uses
   %.7 = phi ptr [ %i.m, %bb.f ], [ %.3, %.critedge118 ], [ %.4.lcssa.sink, %.loopexit119.sink.split ], [ %.288, %bb.k ], [ %.288, %stb_include_isspace.exit ], [ %i.m, %bb.f ], [ %i.m, %bb.f ], [ %.187, %bb.b ]
-  %.2 = phi ptr [ %.085132, %bb.f ], [ %.085132, %.critedge118 ], [ %i.an, %.loopexit119.sink.split ], [ %.085132, %bb.k ], [ %.085132, %stb_include_isspace.exit ], [ %.085132, %bb.f ], [ %.085132, %bb.f ], [ %.085132, %bb.b ] ; 3 uses
+  %.289 = phi i32 [ %.089130, %bb.f ], [ %.089130, %.critedge118 ], [ %i.ad, %.loopexit119.sink.split ], [ %.089130, %bb.k ], [ %.089130, %stb_include_isspace.exit ], [ %.089130, %bb.f ], [ %.089130, %bb.f ], [ %.089130, %bb.b ] ; 3 uses
+  %.2 = phi ptr [ %.086131, %bb.f ], [ %.086131, %.critedge118 ], [ %i.an, %.loopexit119.sink.split ], [ %.086131, %bb.k ], [ %.086131, %stb_include_isspace.exit ], [ %.086131, %bb.f ], [ %.086131, %bb.f ], [ %.086131, %bb.b ] ; 3 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.n, %.loopexit119
@@ -348,12 +348,12 @@ bb.n:                                             ; preds = %bb.m
   %i.bb = select i1 %i.ba, i64 2, i64 1
   %i.bc = getelementptr inbounds nuw i8, ptr %.8, i64 %i.bb ; 2 uses
   %.pre142 = load i8, ptr %i.bc, align 1, !tbaa !10 ; 2 uses
-  %i.bd = add nuw nsw i32 %.092129, 1
+  %i.bd = add nuw nsw i32 %.0132, 1
   %.not = icmp eq i8 %.pre142, 0
   br i1 %.not, label %._crit_edge, label %.preheader121, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.m, %bb.a
-  %.089.lcssa = phi i32 [ 0, %bb.a ], [ %.291, %bb.m ], [ %.291, %.loopexit ]
+  %.089.lcssa = phi i32 [ 0, %bb.a ], [ %.289, %bb.m ], [ %.289, %.loopexit ]
   %.085.lcssa = phi ptr [ null, %bb.a ], [ %.2, %bb.m ], [ %.2, %.loopexit ]
   store ptr %.085.lcssa, ptr %1, align 8, !tbaa !28
   ret i32 %.089.lcssa

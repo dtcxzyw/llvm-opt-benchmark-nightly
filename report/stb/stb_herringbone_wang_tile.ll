@@ -204,9 +204,9 @@ bb.as:                                            ; preds = %._crit_edge544, %bb
   br label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph474, %._crit_edge469
-  %indvars.iv529 = phi i64 [ -1, %.lr.ph474 ], [ %indvars.iv.next530, %._crit_edge469 ] ; 3 uses
-  %indvars.iv527 = phi i64 [ %i.gr, %.lr.ph474 ], [ %indvars.iv.next528.a, %._crit_edge469 ] ; 4 uses
-  %i.gs = trunc nsw i64 %indvars.iv529 to i32     ; 2 uses
+  %indvars.iv529 = phi i64 [ %i.gr, %.lr.ph474 ], [ %indvars.iv.next528.a, %._crit_edge469 ] ; 4 uses
+  %indvars.iv527 = phi i64 [ -1, %.lr.ph474 ], [ %indvars.iv.next530, %._crit_edge469 ] ; 3 uses
+  %i.gs = trunc nsw i64 %indvars.iv527 to i32     ; 2 uses
   %i.gt = and i32 %i.gs, 3
   %i.gu = icmp eq i32 %i.gt, 0
   %i.gv = or i32 %i.gs, -4
@@ -216,13 +216,13 @@ bb.at:                                            ; preds = %.lr.ph474, %._crit_
   br i1 %.not303466, label %.lr.ph, label %._crit_edge469
 
 .lr.ph:                                           ; preds = %bb.at
-  %i.gx = getelementptr [106 x i8], ptr @c_color, i64 %indvars.iv529 ; 3 uses
+  %i.gx = getelementptr [106 x i8], ptr @c_color, i64 %indvars.iv527 ; 3 uses
   %i.gy = getelementptr i8, ptr %i.gx, i64 212    ; 5 uses
   %i.gz = getelementptr i8, ptr %i.gx, i64 318    ; 5 uses
   %i.ha = getelementptr i8, ptr %i.gx, i64 424    ; 2 uses
   %i.hb = sext i32 %.2261 to i64
   %i.hc = sext i32 %i.gw to i64
-  %i.hd = trunc nsw i64 %indvars.iv527 to i32
+  %i.hd = trunc nsw i64 %indvars.iv529 to i32
   br label %bb.au
 
 bb.au:                                            ; preds = %.lr.ph, %.loopexit451
@@ -260,7 +260,7 @@ bb.aw:                                            ; preds = %bb.av
 
 .lr.ph33.split.us.i:                              ; preds = %..loopexit_crit_edge.us.i, %.lr.ph33.split.us.preheader.i
   %indvars.iv36.i = phi i64 [ 0, %.lr.ph33.split.us.preheader.i ], [ %indvars.iv.next37.i, %..loopexit_crit_edge.us.i ] ; 3 uses
-  %i.hw = add nsw i64 %indvars.iv36.i, %indvars.iv527 ; 2 uses
+  %i.hw = add nsw i64 %indvars.iv36.i, %indvars.iv529 ; 2 uses
   %i.hx = icmp slt i64 %i.hw, %i.gm
   br i1 %i.hx, label %.preheader.us.i, label %..loopexit_crit_edge.us.i
 
@@ -329,7 +329,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 .lr.ph33.split.us.i371:                           ; preds = %..loopexit_crit_edge.us.i374, %.lr.ph33.split.us.preheader.i368
   %indvars.iv36.i372 = phi i64 [ 0, %.lr.ph33.split.us.preheader.i368 ], [ %indvars.iv.next37.i375, %..loopexit_crit_edge.us.i374 ] ; 3 uses
-  %i.iz = add nsw i64 %indvars.iv36.i372, %indvars.iv527 ; 3 uses
+  %i.iz = add nsw i64 %indvars.iv36.i372, %indvars.iv529 ; 3 uses
   %i.ja = icmp sgt i64 %i.iz, -1
   %i.jb = icmp slt i64 %i.iz, %i.gm
   %or.cond.us.i373 = and i1 %i.ja, %i.jb
@@ -377,8 +377,8 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   br i1 %.not303, label %bb.au, label %._crit_edge469
 
 ._crit_edge469:                                   ; preds = %.loopexit451, %bb.at
-  %indvars.iv.next528.a = add nsw i64 %indvars.iv527, %i.gq ; 2 uses
-  %indvars.iv.next530 = add nsw i64 %indvars.iv529, 1
+  %indvars.iv.next528.a = add nsw i64 %indvars.iv529, %i.gq ; 2 uses
+  %indvars.iv.next530 = add nsw i64 %indvars.iv527, 1
   %.not306 = icmp slt i64 %indvars.iv.next528.a, %i.gm
   br i1 %.not306, label %bb.at, label %.critedge324, !llvm.loop !99
 

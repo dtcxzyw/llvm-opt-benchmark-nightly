@@ -203,14 +203,14 @@ bb.m:                                             ; preds = %bb.c
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k, %bb.g, %bb.c
-  %.sroa.4.2.a = phi double [ %i.d, %bb.c ], [ %.sroa.4.0, %bb.g ], [ %.sroa.4.1, %bb.k ], [ %i.ap, %bb.l ], [ %i.aq, %bb.m ]
+  %.sroa.4.2.a = phi double [ %0, %bb.c ], [ %i.af, %bb.g ], [ %i.ao, %bb.k ], [ %0, %bb.l ], [ %0, %bb.m ]
   %.sroa.7.0 = phi double [ %1, %bb.c ], [ %i.ad, %bb.g ], [ %i.an, %bb.k ], [ %1, %bb.l ], [ %i.ar, %bb.m ]
-  %.sroa.0.0 = phi double [ %0, %bb.c ], [ %i.af, %bb.g ], [ %i.ao, %bb.k ], [ %0, %bb.l ], [ %0, %bb.m ]
-  %i.as = tail call double @atan2(double noundef %.sroa.0.0, double noundef %.sroa.7.0) #9
+  %.sroa.0.0 = phi double [ %i.d, %bb.c ], [ %.sroa.4.0, %bb.g ], [ %.sroa.4.1, %bb.k ], [ %i.ap, %bb.l ], [ %i.aq, %bb.m ]
+  %i.as = tail call double @atan2(double noundef %.sroa.4.2.a, double noundef %.sroa.7.0) #9
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.b
-  %.sroa.4.3 = phi double [ %i.l, %bb.b ], [ %.sroa.4.2.a, %bb.n ]
+  %.sroa.4.3 = phi double [ %i.l, %bb.b ], [ %.sroa.0.0, %bb.n ]
   %.sroa.029.0 = phi double [ 0.000000e+00, %bb.b ], [ %i.as, %bb.n ]
   %.fca.0.insert = insertvalue { double, double } poison, double %.sroa.029.0, 0
   %.fca.1.insert = insertvalue { double, double } %.fca.0.insert, double %.sroa.4.3, 1

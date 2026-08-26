@@ -202,9 +202,9 @@ bb.kz:                                            ; preds = %bb.lo
   br label %bb.ky
 
 bb.la:                                            ; preds = %bb.kk, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864
-  %.sroa.12.1.a = phi i64 [ 0, %bb.kk ], [ %.sroa.71130.0.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ]
+  %.sroa.12.1.a = phi i64 [ -1, %bb.kk ], [ %.sroa.61125.sroa.5.0.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ]
   %.sroa.81100.1 = phi i32 [ 1, %bb.kk ], [ %.sroa.81100.0, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ]
-  %.sroa.7.1 = phi i64 [ -1, %bb.kk ], [ %.sroa.61125.sroa.5.0.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ]
+  %.sroa.7.1 = phi i64 [ 0, %bb.kk ], [ %.sroa.71130.0.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ]
   %.sroa.01095.sroa.0.1 = phi i64 [ %.sroa.01141.0.copyload, %bb.kk ], [ %i.mm, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ]
   %.sroa.0506.2 = phi i1 [ false, %bb.kk ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ] ; 2 uses
   %.sroa.0507.2 = phi i1 [ true, %bb.kk ], [ false, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCsgbWeKYPjk8w_3syn10punctuated8IntoIterNtNtBG_8generics14TypeParamBoundEEBG_.exit864 ] ; 2 uses
@@ -225,7 +225,7 @@ bb.la:                                            ; preds = %bb.kk, %_RINvNtCsj6
   %.sroa.01095.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.01095.sroa.7.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.01095.sroa.7, i64 40, i1 false)
   %.sroa.7.0..sroa_idx1096 = getelementptr inbounds nuw i8, ptr %i.az, i64 48
-  store i64 %.sroa.7.1, ptr %.sroa.7.0..sroa_idx1096, align 8
+  store i64 %.sroa.12.1.a, ptr %.sroa.7.0..sroa_idx1096, align 8
   %.sroa.8.0..sroa_idx1099 = getelementptr inbounds nuw i8, ptr %i.az, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8.0..sroa_idx1099, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8, i64 40, i1 false)
   %.sroa.81100.0..sroa_idx1101 = getelementptr inbounds nuw i8, ptr %i.az, i64 96
@@ -233,7 +233,7 @@ bb.la:                                            ; preds = %bb.kk, %_RINvNtCsj6
   %.sroa.10.0..sroa_idx1103 = getelementptr inbounds nuw i8, ptr %i.az, i64 100
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10.0..sroa_idx1103, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.10, i64 12, i1 false)
   %.sroa.12.0..sroa_idx1104 = getelementptr inbounds nuw i8, ptr %i.az, i64 112
-  store i64 %.sroa.12.1.a, ptr %.sroa.12.0..sroa_idx1104, align 8
+  store i64 %.sroa.7.1, ptr %.sroa.12.0..sroa_idx1104, align 8
   invoke void @_RNvMNtCsgbWeKYPjk8w_3syn10punctuatedINtB2_10PunctuatedNtNtB4_8generics14TypeParamBoundNtNtB4_5token4PlusE10push_valueB4_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.ba, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(120) %i.az)
           to label %bb.lc unwind label %.loopexit.split-lp1059
 

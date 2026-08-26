@@ -119,12 +119,12 @@ bb.e:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %bb.b, %bb.e
-  %.070 = phi double [ %i.b, %bb.b ], [ %i.b, %bb.e ], [ %2, %bb.a ]
   %.067.a = phi i32 [ %4, %bb.b ], [ 0, %bb.e ], [ %3, %bb.a ] ; 5 uses
   %.066 = phi ptr [ %0, %bb.b ], [ %i.e, %bb.e ], [ %0, %bb.a ] ; 7 uses
+  %.068 = phi double [ %i.b, %bb.b ], [ %i.b, %bb.e ], [ %2, %bb.a ]
   %.065 = phi i64 [ %1, %bb.b ], [ %i.d, %bb.e ], [ %1, %bb.a ] ; 4 uses
   %i.f = load double, ptr @_ZL4CONV, align 8, !tbaa !8
-  %i.g = tail call double @llvm.fmuladd.f64(double %.070, double %i.f, double 5.000000e-01)
+  %i.g = tail call double @llvm.fmuladd.f64(double %.068, double %i.f, double 5.000000e-01)
   %i.h = tail call double @llvm.floor.f64(double %i.g) ; 2 uses
   %i.i = load double, ptr @_ZL3RES, align 8, !tbaa !8
   %i.j = fdiv double %i.h, %i.i

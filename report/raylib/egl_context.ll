@@ -202,11 +202,11 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %.lr.ph, %bb.s
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.s ] ; 2 uses
-  %.05271 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.s ] ; 4 uses
-  %.05470 = phi i32 [ 0, %.lr.ph ], [ %.155, %bb.s ] ; 6 uses
+  %.05271 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.s ] ; 6 uses
+  %.05470 = phi i32 [ 0, %.lr.ph ], [ %.155, %bb.s ] ; 4 uses
   %i.am = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv
   %i.an = load ptr, ptr %i.am, align 8            ; 12 uses
-  %i.ao = sext i32 %.05470 to i64
+  %i.ao = sext i32 %.05271 to i64
   %i.ap = getelementptr inbounds [72 x i8], ptr %i.ag, i64 %i.ao ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #4
   %i.aq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133592), align 8
@@ -350,7 +350,7 @@ bb.r:                                             ; preds = %bb.q
   %i.de = ptrtoint ptr %i.an to i64
   %i.df = getelementptr inbounds nuw i8, ptr %i.ap, i64 64
   store i64 %i.de, ptr %i.df, align 8
-  %i.dg = add nsw i32 %.05470, 1
+  %i.dg = add nsw i32 %.05271, 1
   br label %bb.s
 
 .critedge:                                        ; preds = %bb.k
@@ -358,8 +358,8 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %.critedge, %bb.i, %bb.h, %bb.r
-  %.155 = phi i32 [ %.05470, %bb.h ], [ %i.dg, %bb.r ], [ %.05470, %.critedge ], [ %.05470, %bb.q ], [ %.05470, %bb.i ] ; 2 uses
-  %.1 = phi i32 [ %.05271, %bb.h ], [ %.05271, %bb.r ], [ %.05271, %.critedge ], [ 1, %bb.q ], [ %.05271, %bb.i ] ; 2 uses
+  %.155 = phi i32 [ %.05470, %bb.h ], [ %.05470, %bb.r ], [ %.05470, %.critedge ], [ 1, %bb.q ], [ %.05470, %bb.i ] ; 2 uses
+  %.1 = phi i32 [ %.05271, %bb.h ], [ %i.dg, %bb.r ], [ %.05271, %.critedge ], [ %.05271, %bb.q ], [ %.05271, %bb.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.dh = load i32, ptr %i.l, align 4
   %i.di = sext i32 %i.dh to i64
@@ -367,7 +367,7 @@ bb.s:                                             ; preds = %bb.q, %.critedge, %
   br i1 %i.dj, label %bb.h, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.s
-  %i.dk = call ptr @_glfwChooseFBConfig(ptr noundef %1, ptr noundef %i.ag, i32 noundef %.155) #4 ; 2 uses
+  %i.dk = call ptr @_glfwChooseFBConfig(ptr noundef %1, ptr noundef %i.ag, i32 noundef %.1) #4 ; 2 uses
   %.not81.a = icmp eq ptr %i.dk, null
   br i1 %.not81.a, label %bb.u, label %bb.t
 
@@ -385,7 +385,7 @@ bb.t:                                             ; preds = %._crit_edge.thread,
   br label %bb.aa
 
 bb.u:                                             ; preds = %._crit_edge
-  %i.dq = icmp eq i32 %.1, 0
+  %i.dq = icmp eq i32 %.155, 0
   br i1 %i.dq, label %.thread, label %bb.v
 
 bb.v:                                             ; preds = %bb.u

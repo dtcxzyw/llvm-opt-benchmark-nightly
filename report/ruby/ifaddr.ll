@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %bb.c
 .preheader.i:                                     ; preds = %bb.c, %.preheader.i
   %indvar = phi i64 [ %indvar.next, %.preheader.i ], [ 0, %bb.c ] ; 2 uses
   %indvars.iv47.i = phi i32 [ %indvars.iv.next48.i, %.preheader.i ], [ 1, %bb.c ] ; 2 uses
-  %.03441.i = phi ptr [ %i.i, %.preheader.i ], [ %i.f, %bb.c ]
-  %.03740.i = phi i32 [ %i.h, %.preheader.i ], [ 0, %bb.c ] ; 2 uses
-  %i.h = add nuw nsw i32 %.03740.i, 1             ; 3 uses
-  %i.i = load ptr, ptr %.03441.i, align 8, !tbaa !25 ; 2 uses
+  %.03441.i = phi i32 [ %i.h, %.preheader.i ], [ 0, %bb.c ] ; 2 uses
+  %.03640.i = phi ptr [ %i.i, %.preheader.i ], [ %i.f, %bb.c ]
+  %i.h = add nuw nsw i32 %.03441.i, 1             ; 3 uses
+  %i.i = load ptr, ptr %.03640.i, align 8, !tbaa !25 ; 2 uses
   %.not39.i = icmp eq ptr %i.i, null
   %indvars.iv.next48.i = add nuw i32 %indvars.iv47.i, 1
   %indvar.next = add i64 %indvar, 1
@@ -301,7 +301,7 @@ bb.g:                                             ; preds = %bb.g, %.epil.prehea
   store i32 1, ptr %i.o, align 8, !tbaa !37
   %i.aj = call i64 @rb_ary_new_capa(i64 noundef %i.l) #8 ; 4 uses
   %i.ak = call i64 @rb_ary_push(i64 noundef %i.aj, i64 noundef %i.k) #8 ; 0 uses
-  %.not45.i = icmp eq i32 %.03740.i, 0
+  %.not45.i = icmp eq i32 %.03441.i, 0
   br i1 %.not45.i, label %rsock_getifaddrs.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.epilog-lcssa, %.lr.ph.i

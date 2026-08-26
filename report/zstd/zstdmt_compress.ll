@@ -205,8 +205,8 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.g
-  %.sroa.9.0 = phi i64 [ %i.at, %bb.j ], [ %.sroa.9.0.copyload, %bb.g ] ; 2 uses
   %.sroa.058.0 = phi ptr [ %i.an, %bb.j ], [ %.sroa.058.0.copyload, %bb.g ] ; 4 uses
+  %.sroa.9.0 = phi i64 [ %i.at, %bb.j ], [ %.sroa.9.0.copyload, %bb.g ] ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.av = load i32, ptr %i.au, align 8, !tbaa !112
   %i.aw = icmp eq i32 %i.av, 1
@@ -499,11 +499,11 @@ bb.ak:                                            ; preds = %.thread195, %ZSTDMT
 
 bb.al:                                            ; preds = %.lr.ph, %bb.am
   %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.am ] ; 2 uses
-  %.0156219 = phi ptr [ %.sroa.058.0, %.lr.ph ], [ %i.gl, %bb.am ] ; 3 uses
-  %.0157218 = phi ptr [ %i.fx, %.lr.ph ], [ %i.gk, %bb.am ] ; 2 uses
-  %i.ge = ptrtoint ptr %.0156219 to i64
+  %.0156219 = phi ptr [ %i.fx, %.lr.ph ], [ %i.gk, %bb.am ] ; 2 uses
+  %.0157218 = phi ptr [ %.sroa.058.0, %.lr.ph ], [ %i.gl, %bb.am ] ; 3 uses
+  %i.ge = ptrtoint ptr %.0157218 to i64
   %i.gf = sub i64 %i.ga, %i.ge
-  %i.gg = call i64 @ZSTD_compressContinue_public(ptr noundef nonnull %.0.i, ptr noundef %.0156219, i64 noundef %i.gf, ptr noundef %.0157218, i64 noundef 524288) #14 ; 4 uses
+  %i.gg = call i64 @ZSTD_compressContinue_public(ptr noundef nonnull %.0.i, ptr noundef %.0157218, i64 noundef %i.gf, ptr noundef %.0156219, i64 noundef 524288) #14 ; 4 uses
   %i.gh = icmp ult i64 %i.gg, -119
   br i1 %i.gh, label %bb.am, label %.thread208
 
@@ -514,8 +514,8 @@ bb.al:                                            ; preds = %.lr.ph, %bb.am
   br label %.thread193
 
 bb.am:                                            ; preds = %bb.al
-  %i.gk = getelementptr inbounds nuw i8, ptr %.0157218, i64 524288 ; 2 uses
-  %i.gl = getelementptr inbounds nuw i8, ptr %.0156219, i64 %i.gg ; 2 uses
+  %i.gk = getelementptr inbounds nuw i8, ptr %.0156219, i64 524288 ; 2 uses
+  %i.gl = getelementptr inbounds nuw i8, ptr %.0157218, i64 %i.gg ; 2 uses
   %i.gm = call i32 @pthread_mutex_lock(ptr noundef nonnull %i.gb) #14 ; 0 uses
   %i.gn = load i64, ptr %i.gc, align 8, !tbaa !93
   %i.go = add i64 %i.gn, %i.gg
@@ -529,8 +529,8 @@ bb.am:                                            ; preds = %bb.al
   br i1 %exitcond.not, label %._crit_edge, label %bb.al, !llvm.loop !196
 
 ._crit_edge:                                      ; preds = %bb.am, %bb.ak
-  %.0157.lcssa = phi ptr [ %i.fx, %bb.ak ], [ %i.gk, %bb.am ] ; 2 uses
-  %.0156.lcssa = phi ptr [ %.sroa.058.0, %bb.ak ], [ %i.gl, %bb.am ] ; 3 uses
+  %.0157.lcssa = phi ptr [ %.sroa.058.0, %bb.ak ], [ %i.gl, %bb.am ] ; 3 uses
+  %.0156.lcssa = phi ptr [ %i.fx, %bb.ak ], [ %i.gk, %bb.am ] ; 2 uses
   %i.gs = icmp sgt i32 %i.fw, 0
   %i.gt = zext i1 %i.gs to i32
   %i.gu = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -548,16 +548,16 @@ bb.an:                                            ; preds = %._crit_edge
   %i.hc = select i1 %i.hb, i64 524288, i64 %i.gy  ; 2 uses
   %.not180 = icmp eq i32 %i.gv, 0
   %i.hd = ptrtoint ptr %i.fy to i64
-  %i.he = ptrtoint ptr %.0156.lcssa to i64
+  %i.he = ptrtoint ptr %.0157.lcssa to i64
   %i.hf = sub i64 %i.hd, %i.he                    ; 2 uses
   br i1 %.not180, label %bb.ap, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
-  %i.hg = call i64 @ZSTD_compressEnd_public(ptr noundef nonnull %.0.i, ptr noundef %.0156.lcssa, i64 noundef %i.hf, ptr noundef %.0157.lcssa, i64 noundef %i.hc) #14
+  %i.hg = call i64 @ZSTD_compressEnd_public(ptr noundef nonnull %.0.i, ptr noundef %.0157.lcssa, i64 noundef %i.hf, ptr noundef %.0156.lcssa, i64 noundef %i.hc) #14
   br label %bb.aq
 
 bb.ap:                                            ; preds = %bb.an
-  %i.hh = call i64 @ZSTD_compressContinue_public(ptr noundef nonnull %.0.i, ptr noundef %.0156.lcssa, i64 noundef %i.hf, ptr noundef %.0157.lcssa, i64 noundef %i.hc) #14
+  %i.hh = call i64 @ZSTD_compressContinue_public(ptr noundef nonnull %.0.i, ptr noundef %.0157.lcssa, i64 noundef %i.hf, ptr noundef %.0156.lcssa, i64 noundef %i.hc) #14
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao

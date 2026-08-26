@@ -202,8 +202,8 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.q, %bb.o
+  %.059 = phi i32 [ 0, %bb.o ], [ %i.cg, %bb.q ]
   %.058 = phi double [ 1.000000e-08, %bb.o ], [ %i.ch, %bb.q ] ; 2 uses
-  %.0 = phi i32 [ 0, %bb.o ], [ %i.cg, %bb.q ]
   %i.cb = call i32 @IDASolve(ptr noundef nonnull %i.al, double noundef %.058, ptr noundef nonnull %i.b, ptr noundef nonnull %i.n, ptr noundef nonnull %i.r, i32 noundef 1) #11 ; 2 uses
   %i.cc = icmp slt i32 %i.cb, 0
   br i1 %i.cc, label %check_retval.exit105, label %bb.q
@@ -216,7 +216,7 @@ check_retval.exit105:                             ; preds = %bb.p
 bb.q:                                             ; preds = %bb.p
   %i.cf = load double, ptr %i.b, align 8, !tbaa !12
   call fastcc void @PrintOutput(ptr noundef nonnull %i.al, double noundef %i.cf, ptr noundef nonnull %i.n)
-  %i.cg = add nuw nsw i32 %.0, 1                  ; 2 uses
+  %i.cg = add nuw nsw i32 %.059, 1                ; 2 uses
   %i.ch = fmul double %.058, f0x400492BA408F6B52
   %exitcond = icmp eq i32 %i.cg, 26
   br i1 %exitcond, label %bb.r, label %bb.p

@@ -205,8 +205,8 @@ bb.l:                                             ; preds = %bb.k
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.as = load i32, ptr %i.ar, align 4            ; 2 uses
   %.not121.i.a = icmp eq i32 %i.as, -2147483648   ; 2 uses
-  %spec.select.i = select i1 %.not121.i.a, i32 0, i32 %i.aq
-  %spec.select144.i = select i1 %.not121.i.a, i32 0, i32 %i.as
+  %spec.select.i = select i1 %.not121.i.a, i32 0, i32 %i.as
+  %spec.select144.i = select i1 %.not121.i.a, i32 0, i32 %i.aq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -255,7 +255,7 @@ _glfwIsVisualTransparentX11.exit.i:               ; preds = %bb.o, %bb.n, %bb.m
   %i.bn = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_glfw, i64 133888), align 8
   %i.bo = extractelement <4 x i32> %i.ap, i64 0
   %i.bp = extractelement <4 x i32> %i.ap, i64 1
-  %i.bq = call i64 %i.bm(ptr noundef %i.bn, i64 noundef %i.bk, i32 noundef %.0107.i.a, i32 noundef %.0106.i, i32 noundef %i.bo, i32 noundef %i.bp, i32 noundef 0, i32 noundef %i.ad, i32 noundef 1, ptr noundef %i.ae, i64 noundef 10248, ptr noundef nonnull %10) #17, !inline_history !6
+  %i.bq = call i64 %i.bm(ptr noundef %i.bn, i64 noundef %i.bk, i32 noundef %.0106.i, i32 noundef %.0107.i.a, i32 noundef %i.bo, i32 noundef %i.bp, i32 noundef 0, i32 noundef %i.ad, i32 noundef 1, ptr noundef %i.ae, i64 noundef 10248, ptr noundef nonnull %10) #17, !inline_history !6
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 864 ; 21 uses
   store i64 %i.bq, ptr %i.br, align 8
   call void @_glfwReleaseErrorHandlerX11() #17
@@ -658,20 +658,20 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %.0218.i = phi ptr [ %i.dk, %bb.t ], [ %i.cz, %bb.s ]
-  %.0217.i = phi double [ %i.dj, %bb.t ], [ %i.db, %bb.s ]
+  %.0213.i = phi double [ %i.dj, %bb.t ], [ %i.db, %bb.s ]
+  %.0212.i = phi ptr [ %i.dk, %bb.t ], [ %i.cz, %bb.s ]
   %i.dl = and i8 %i.dg, 2
   %.not285.i = icmp eq i8 %i.dl, 0
   br i1 %.not285.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.dm = load double, ptr %.0218.i, align 8
+  %i.dm = load double, ptr %.0212.i, align 8
   %i.dn = fadd double %i.dd, %i.dm
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.0216.i.a = phi double [ %i.dn, %bb.v ], [ %i.dd, %bb.u ]
-  call void @_glfwInputCursorPos(ptr noundef nonnull %i.ck, double noundef %.0217.i, double noundef %.0216.i.a) #17
+  call void @_glfwInputCursorPos(ptr noundef nonnull %i.ck, double noundef %.0213.i, double noundef %.0216.i.a) #17
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n
@@ -820,8 +820,8 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.fu = phi i32 [ %.pr325.i, %bb.al ], [ %i.fk, %bb.ak ]
+  %.0218.i = phi ptr [ %i.fo, %bb.al ], [ %i.g, %bb.ak ] ; 5 uses
   %.0215.i = phi i32 [ %i.ft, %bb.al ], [ %i.fj, %bb.ak ] ; 2 uses
-  %.0214.i = phi ptr [ %i.fo, %bb.al ], [ %i.g, %bb.ak ] ; 5 uses
   switch i32 %i.fu, label %.loopexit.i [
     i32 4, label %bb.an
     i32 2, label %bb.an
@@ -829,14 +829,14 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 
 bb.an:                                            ; preds = %bb.am, %bb.am
   %i.fv = sext i32 %.0215.i to i64                ; 2 uses
-  %i.fw = getelementptr inbounds i8, ptr %.0214.i, i64 %i.fv
+  %i.fw = getelementptr inbounds i8, ptr %.0218.i, i64 %i.fv
   store i8 0, ptr %i.fw, align 1
-  %i.fx = ptrtoint ptr %.0214.i to i64
+  %i.fx = ptrtoint ptr %.0218.i to i64
   %i.fy = icmp sgt i32 %.0215.i, 0
   br i1 %i.fy, label %.lr.ph335.i, label %.loopexit.i
 
 .lr.ph335.i:                                      ; preds = %bb.an, %decodeUTF8.exit.i
-  %.0324333.i = phi ptr [ %i.gf, %decodeUTF8.exit.i ], [ %.0214.i, %bb.an ] ; 2 uses
+  %.0324333.i = phi ptr [ %i.gf, %decodeUTF8.exit.i ], [ %.0218.i, %bb.an ] ; 2 uses
   %i.fz = load ptr, ptr %i.e, align 8
   %.pre.i.i = load i8, ptr %.0324333.i, align 1
   br label %bb.ao
@@ -867,11 +867,11 @@ decodeUTF8.exit.i:                                ; preds = %bb.ao
   br i1 %i.gp, label %.lr.ph335.i, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %decodeUTF8.exit.i, %bb.an, %bb.am
-  %.not278.i = icmp eq ptr %.0214.i, %i.g
+  %.not278.i = icmp eq ptr %.0218.i, %i.g
   br i1 %.not278.i, label %bb.aq, label %bb.ap
 
 bb.ap:                                            ; preds = %.loopexit.i
-  call void @_glfw_free(ptr noundef %.0214.i) #17
+  call void @_glfw_free(ptr noundef %.0218.i) #17
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %.loopexit.i
@@ -1274,12 +1274,12 @@ bb.k:                                             ; preds = %.thread69
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.i
   %i.ci = phi i8 [ %i.cm, %.lr.ph.i ], [ %i.ch, %bb.k ]
-  %.01321.i = phi ptr [ %i.cl, %.lr.ph.i ], [ %.16872, %bb.k ]
-  %.01420.i = phi i64 [ %i.ck, %.lr.ph.i ], [ 1, %bb.k ]
+  %.01321.i = phi i64 [ %i.ck, %.lr.ph.i ], [ 1, %bb.k ]
+  %.01420.i = phi ptr [ %i.cl, %.lr.ph.i ], [ %.16872, %bb.k ]
   %.not18.i = icmp sgt i8 %i.ci, -1
   %i.cj = select i1 %.not18.i, i64 1, i64 2
-  %i.ck = add i64 %i.cj, %.01420.i                ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %.01321.i, i64 1 ; 2 uses
+  %i.ck = add i64 %i.cj, %.01321.i                ; 2 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %.01420.i, i64 1 ; 2 uses
   %i.cm = load i8, ptr %i.cl, align 1             ; 2 uses
   %.not.i50 = icmp eq i8 %i.cm, 0
   br i1 %.not.i50, label %._crit_edge.i, label %.lr.ph.i
@@ -1328,12 +1328,12 @@ bb.o:                                             ; preds = %bb.n
 
 .lr.ph.i52:                                       ; preds = %bb.o, %.lr.ph.i52
   %i.cz = phi i8 [ %i.dd, %.lr.ph.i52 ], [ %i.cy, %bb.o ]
-  %.01321.i53 = phi ptr [ %i.dc, %.lr.ph.i52 ], [ %i.cx, %bb.o ]
-  %.01420.i54 = phi i64 [ %i.db, %.lr.ph.i52 ], [ 1, %bb.o ]
+  %.01321.i53 = phi i64 [ %i.db, %.lr.ph.i52 ], [ 1, %bb.o ]
+  %.01420.i54 = phi ptr [ %i.dc, %.lr.ph.i52 ], [ %i.cx, %bb.o ]
   %.not18.i55 = icmp sgt i8 %i.cz, -1
   %i.da = select i1 %.not18.i55, i64 1, i64 2
-  %i.db = add i64 %i.da, %.01420.i54              ; 2 uses
-  %i.dc = getelementptr inbounds nuw i8, ptr %.01321.i53, i64 1 ; 2 uses
+  %i.db = add i64 %i.da, %.01321.i53              ; 2 uses
+  %i.dc = getelementptr inbounds nuw i8, ptr %.01420.i54, i64 1 ; 2 uses
   %i.dd = load i8, ptr %i.dc, align 1             ; 2 uses
   %.not.i56 = icmp eq i8 %i.dd, 0
   br i1 %.not.i56, label %._crit_edge.i57, label %.lr.ph.i52
