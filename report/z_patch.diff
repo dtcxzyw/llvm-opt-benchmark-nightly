@@ -1,0 +1,827 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 2db6396b9d661..b68aa62321bbe 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -1235,9 +1235,21 @@ Instruction *InstCombinerImpl::visitTrunc(TruncInst &Trunc) {
+       // FoldShiftByConstant and is the extend in reg pattern.
+       APInt Threshold = APInt(C->getType()->getScalarSizeInBits(), DestWidth);
+       if (match(C, m_SpecificInt_ICMP(ICmpInst::ICMP_ULT, Threshold))) {
+-        Value *NewTrunc = Builder.CreateTrunc(A, DestTy, A->getName() + ".tr");
+-        return BinaryOperator::Create(Instruction::Shl, NewTrunc,
+-                                      ConstantExpr::getTrunc(C, DestTy));
++        // If neither the wide shift nor the truncate wrap, then A << C is the
++        // exact product and it fits the destination type, so A also fits and
++        // the narrow shift does not wrap either. Both flags are needed: for a
++        // wide shift that wraps, a non-wrapping truncate says nothing about the
++        // narrow shift.
++        auto *WideShl = cast<OverflowingBinaryOperator>(Src);
++        bool NUW = Trunc.hasNoUnsignedWrap() && WideShl->hasNoUnsignedWrap();
++        bool NSW = Trunc.hasNoSignedWrap() && WideShl->hasNoSignedWrap();
++        Value *NewTrunc = Builder.CreateTrunc(A, DestTy, A->getName() + ".tr",
++                                              /*IsNUW=*/NUW);
++        auto *NewShl = BinaryOperator::Create(
++            Instruction::Shl, NewTrunc, ConstantExpr::getTrunc(C, DestTy));
++        NewShl->setHasNoUnsignedWrap(NUW);
++        NewShl->setHasNoSignedWrap(NSW);
++        return NewShl;
+       }
+     }
+   }
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 054ab3b45e108..09996fa407de6 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1106,8 +1106,12 @@ void State::addInfoForInductions(BasicBlock &BB) {
+   // header, which also holds for the next loop iteration. This would no longer
+   // be correct if the post-inc handling would inject a more precise PN + Step <
+   // B constraint instead.
+-  if (&BB == Latch && !IncStep)
+-    return;
++  //
++  // Latch conditions comparing the phi itself need no such carrying over: the
++  // facts derived below bound the phi by StartValue and B in every iteration,
++  // with a non-strict bound on B, as the header is also entered with PN == B in
++  // the final iteration.
++  bool IsLatchPhiCmp = &BB == Latch && !IncStep;
+ 
+   BasicBlock *InLoopSucc = nullptr;
+   if (Pred == CmpInst::ICMP_NE)
+@@ -1171,11 +1175,17 @@ void State::addInfoForInductions(BasicBlock &BB) {
+     if (!(Info.Decreasing && Info.Signed))
+       WorkList.push_back(FactOrCheck::getConditionFact(
+           DTN, CmpInst::ICMP_SGE, StartValue, PN, BBeforeStartSigned));
+-    // Add PN > B, which holds as the loop exits when reaching B.
+-    WorkList.push_back(FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_UGT, PN,
+-                                                     B, BBeforeStartUnsigned));
+-    WorkList.push_back(FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_SGT, PN,
+-                                                     B, BBeforeStartSigned));
++    // Add PN > B, which holds as the loop exits when reaching B. For a latch
++    // condition comparing the phi, the successor is the header of the next
++    // iteration, which is also entered with PN == B in the final iteration, so
++    // only PN >= B holds there.
++    CmpInst::Predicate UBoundOnB =
++        IsLatchPhiCmp ? CmpInst::ICMP_UGE : CmpInst::ICMP_UGT;
++    WorkList.push_back(FactOrCheck::getConditionFact(
++        DTN, UBoundOnB, PN, B, BBeforeStartUnsigned));
++    WorkList.push_back(FactOrCheck::getConditionFact(
++        DTN, ICmpInst::getSignedPredicate(UBoundOnB), PN, B,
++        BBeforeStartSigned));
+     return;
+   }
+ 
+@@ -1221,15 +1231,22 @@ void State::addInfoForInductions(BasicBlock &BB) {
+     WorkList.push_back(FactOrCheck::getConditionFact(
+         DTN, CmpInst::ICMP_SGE, PN, StartValue, StartBeforeBoundSLE));
+ 
++  // PN < B, as the loop exits when the compared value reaches B. For a latch
++  // condition comparing the phi, the successor is the header of the next
++  // iteration, which is also entered with PN == B in the final iteration, so
++  // only PN <= B holds there.
++  CmpInst::Predicate UBoundOnB =
++      IsLatchPhiCmp ? CmpInst::ICMP_ULE : CmpInst::ICMP_ULT;
+   if (LowerBoundNSW)
+-    WorkList.push_back(FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_SLT, PN,
+-                                                     B, StartBeforeBoundSLE));
++    WorkList.push_back(FactOrCheck::getConditionFact(
++        DTN, ICmpInst::getSignedPredicate(UBoundOnB), PN, B,
++        StartBeforeBoundSLE));
+ 
+   if (!LowerBoundNUW)
+     return;
+ 
+-  WorkList.push_back(FactOrCheck::getConditionFact(DTN, CmpInst::ICMP_ULT, PN,
+-                                                   B, StartBeforeBoundULE));
++  WorkList.push_back(FactOrCheck::getConditionFact(DTN, UBoundOnB, PN, B,
++                                                   StartBeforeBoundULE));
+ 
+   // Try to add condition from the header or latch to the dedicated exit
+   // blocks. When exiting either with EQ or NE, we know that the induction value
+@@ -1391,8 +1408,8 @@ void State::addInfoFor(BasicBlock &BB) {
+     // Add facts from unsigned division, remainder and logical shift right, and
+     // from signed remainder.
+     //   urem x, n: result < n  and  result <= x
+-    //   udiv x, n: result <= x
+-    //   lshr x, n: result <= x
++    //   udiv x, n: result <= x  and  result <= UMAX / n,  if n is constant
++    //   lshr x, n: result <= x  and  result <= UMAX >> n, if n is constant
+     //   srem x, n: result >= 0 and result <= x, if x >= 0
+     //              result < n,                  if n > 0
+     if (auto *BO = dyn_cast<BinaryOperator>(&I)) {
+@@ -2277,21 +2294,39 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+       }
+ 
+       if (auto *BO = dyn_cast<BinaryOperator>(CB.Inst)) {
++        Value *Op0 = BO->getOperand(0), *Op1 = BO->getOperand(1);
++        // For a constant Op1, the result is also bounded by the largest value
++        // the operation can produce. Unlike result <= Op0, this is an absolute
++        // bound, which later can be combined with relational facts about the
++        // result.
++        auto AddAbsoluteUpperBound = [&](const APInt &Max) {
++          AddFact(CmpInst::ICMP_ULE, BO, ConstantInt::get(BO->getType(), Max));
++        };
+         if (BO->getOpcode() == Instruction::URem) {
+           // urem x, n: result < n (remainder is always less than divisor)
+-          AddFact(CmpInst::ICMP_ULT, BO, BO->getOperand(1));
++          AddFact(CmpInst::ICMP_ULT, BO, Op1);
+           // urem x, n: result <= x (remainder is at most the dividend)
+-          AddFact(CmpInst::ICMP_ULE, BO, BO->getOperand(0));
++          AddFact(CmpInst::ICMP_ULE, BO, Op0);
+           continue;
+         }
+         if (BO->getOpcode() == Instruction::UDiv) {
+           // udiv x, n: result <= x (quotient is at most the dividend)
+-          AddFact(CmpInst::ICMP_ULE, BO, BO->getOperand(0));
++          AddFact(CmpInst::ICMP_ULE, BO, Op0);
++          // udiv x, n: result <= UMAX / n, if n is a non-zero constant
++          if (auto *C = dyn_cast<ConstantInt>(Op1))
++            if (!C->isZero())
++              AddAbsoluteUpperBound(
++                  APInt::getMaxValue(C->getBitWidth()).udiv(C->getValue()));
+           continue;
+         }
+         if (BO->getOpcode() == Instruction::LShr) {
+           // lshr x, n: result <= x (right shift cannot increase the value)
+-          AddFact(CmpInst::ICMP_ULE, BO, BO->getOperand(0));
++          AddFact(CmpInst::ICMP_ULE, BO, Op0);
++          // lshr x, n: result <= UMAX >> n, if n is an in-range constant
++          if (auto *C = dyn_cast<ConstantInt>(Op1))
++            if (C->getValue().ult(C->getBitWidth()))
++              AddAbsoluteUpperBound(
++                  APInt::getMaxValue(C->getBitWidth()).lshr(C->getValue()));
+           continue;
+         }
+         if (BO->getOpcode() == Instruction::SRem) {
+diff --git a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+index 31ae62c564dd6..a762be8e6eb0a 100644
+--- a/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
++++ b/llvm/test/Transforms/ConstraintElimination/induction-condition-in-loop-exit-latch-counted.ll
+@@ -72,8 +72,7 @@ define i1 @latch_counted_phi_not_removable(ptr %p, i64 %n, i64 %lim) {
+ ; CHECK:       [[LOOP_HEADER]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+ ; CHECK-NEXT:    [[OFF:%.*]] = shl nuw nsw i64 [[IV]], 2
+-; CHECK-NEXT:    [[RC:%.*]] = icmp ult i64 [[OFF]], [[LIM]]
+-; CHECK-NEXT:    br i1 [[RC]], label %[[LOOP_LATCH]], label %[[EXIT_1]]
++; CHECK-NEXT:    br i1 true, label %[[LOOP_LATCH]], label %[[EXIT_1]]
+ ; CHECK:       [[LOOP_LATCH]]:
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[OFF]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+@@ -332,3 +331,405 @@ exit.0:
+ exit.1:
+   ret i1 false
+ }
++
++declare void @use(i1)
++
++; The latch exit test compares the phi itself, not the post-increment, so the
++; header is entered with %iv between the start value and %b, inclusive.
++define void @latch_phi_negative_step(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_negative_step(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ule i64 [[B]], [[N]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ule i64 %b, %n
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %upper = icmp ule i64 %iv, %n
++  call void @use(i1 %upper)
++  %lower = icmp uge i64 %iv, %b
++  call void @use(i1 %lower)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, -1
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; The lower bound is not strict: the final header entry has %iv == %b.
++define void @latch_phi_negative_step_no_strict_lower_bound(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_negative_step_no_strict_lower_bound(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ule i64 [[B]], [[N]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[LOWER:%.*]] = icmp ugt i64 [[IV]], [[B]]
++; CHECK-NEXT:    call void @use(i1 [[LOWER]])
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ule i64 %b, %n
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %lower = icmp ugt i64 %iv, %b
++  call void @use(i1 %lower)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, -1
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; Same for the signed system.
++define void @latch_phi_negative_step_signed(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_negative_step_signed(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sle i64 [[B]], [[N]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[STRICT:%.*]] = icmp sgt i64 [[IV]], [[B]]
++; CHECK-NEXT:    call void @use(i1 [[STRICT]])
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp sle i64 %b, %n
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %upper = icmp sle i64 %iv, %n
++  call void @use(i1 %upper)
++  %lower = icmp sge i64 %iv, %b
++  call void @use(i1 %lower)
++  %strict = icmp sgt i64 %iv, %b
++  call void @use(i1 %strict)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, -1
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; Negative: without %b <=u %n the induction may wrap before reaching %b.
++define void @latch_phi_negative_step_no_precondition(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_negative_step_no_precondition(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[UPPER:%.*]] = icmp ule i64 [[IV]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[UPPER]])
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT:.*]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %loop.header
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %upper = icmp ule i64 %iv, %n
++  call void @use(i1 %upper)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, -1
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; Negative: a step of -2 is not supported.
++define void @latch_phi_negative_step_two(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_negative_step_two(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ule i64 [[B]], [[N]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[UPPER:%.*]] = icmp ule i64 [[IV]], [[N]]
++; CHECK-NEXT:    call void @use(i1 [[UPPER]])
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], -2
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ule i64 %b, %n
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %upper = icmp ule i64 %iv, %n
++  call void @use(i1 %upper)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, -2
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; Increasing induction, latch exit test on the phi: %n <= %iv <= %b.
++define void @latch_phi_positive_step(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_positive_step(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ule i64 [[N]], [[B]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ule i64 %n, %b
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %lower = icmp uge i64 %iv, %n
++  call void @use(i1 %lower)
++  %upper = icmp ule i64 %iv, %b
++  call void @use(i1 %upper)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, 1
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; The upper bound is not strict: the final header entry has %iv == %b.
++define void @latch_phi_positive_step_no_strict_upper_bound(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_positive_step_no_strict_upper_bound(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ule i64 [[N]], [[B]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[UPPER:%.*]] = icmp ult i64 [[IV]], [[B]]
++; CHECK-NEXT:    call void @use(i1 [[UPPER]])
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ule i64 %n, %b
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %upper = icmp ult i64 %iv, %b
++  call void @use(i1 %upper)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, 1
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; Same for the signed system.
++define void @latch_phi_positive_step_signed(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_positive_step_signed(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp sle i64 [[N]], [[B]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[STRICT:%.*]] = icmp slt i64 [[IV]], [[B]]
++; CHECK-NEXT:    call void @use(i1 [[STRICT]])
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 1
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp sle i64 %n, %b
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %lower = icmp sge i64 %iv, %n
++  call void @use(i1 %lower)
++  %upper = icmp sle i64 %iv, %b
++  call void @use(i1 %upper)
++  %strict = icmp slt i64 %iv, %b
++  call void @use(i1 %strict)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, 1
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; A step of 2 needs %b - %n to be a multiple of the step, which is not known
++; here, so the induction may step over %b and wrap.
++define void @latch_phi_positive_step_two_not_multiple(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_positive_step_two_not_multiple(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ule i64 [[N]], [[B]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[UPPER:%.*]] = icmp ule i64 [[IV]], [[B]]
++; CHECK-NEXT:    call void @use(i1 [[UPPER]])
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 2
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %pre = icmp ule i64 %n, %b
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n, %entry ], [ %iv.next, %loop.latch ]
++  %upper = icmp ule i64 %iv, %b
++  call void @use(i1 %upper)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, 2
++  %done = icmp eq i64 %iv, %b
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
++
++; Step of 2 with both the start value and the bound even, so %b - %n is a
++; multiple of the step.
++define void @latch_phi_positive_step_two_multiple(i64 %n, i64 %b) {
++; CHECK-LABEL: define void @latch_phi_positive_step_two_multiple(
++; CHECK-SAME: i64 [[N:%.*]], i64 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[N2:%.*]] = shl i64 [[N]], 1
++; CHECK-NEXT:    [[B2:%.*]] = shl i64 [[B]], 1
++; CHECK-NEXT:    [[PRE:%.*]] = icmp ule i64 [[N2]], [[B2]]
++; CHECK-NEXT:    br i1 [[PRE]], label %[[LOOP_HEADER:.*]], label %[[EXIT:.*]]
++; CHECK:       [[LOOP_HEADER]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ [[N2]], %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    br label %[[LOOP_LATCH]]
++; CHECK:       [[LOOP_LATCH]]:
++; CHECK-NEXT:    [[IV_NEXT]] = add i64 [[IV]], 2
++; CHECK-NEXT:    [[DONE:%.*]] = icmp eq i64 [[IV]], [[B2]]
++; CHECK-NEXT:    br i1 [[DONE]], label %[[EXIT]], label %[[LOOP_HEADER]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %n2 = shl i64 %n, 1
++  %b2 = shl i64 %b, 1
++  %pre = icmp ule i64 %n2, %b2
++  br i1 %pre, label %loop.header, label %exit
++
++loop.header:
++  %iv = phi i64 [ %n2, %entry ], [ %iv.next, %loop.latch ]
++  %upper = icmp ule i64 %iv, %b2
++  call void @use(i1 %upper)
++  br label %loop.latch
++
++loop.latch:
++  %iv.next = add i64 %iv, 2
++  %done = icmp eq i64 %iv, %b2
++  br i1 %done, label %exit, label %loop.header
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/lshr.ll b/llvm/test/Transforms/ConstraintElimination/lshr.ll
+index 427effd41d656..f103f9e0b9ed6 100644
+--- a/llvm/test/Transforms/ConstraintElimination/lshr.ll
++++ b/llvm/test/Transforms/ConstraintElimination/lshr.ll
+@@ -85,3 +85,83 @@ guarded:
+ out:
+   ret i1 false
+ }
++
++; The shifted-in zero bits give an absolute upper bound, not just result <= x.
++define i1 @lshr_absolute_upper_bound(i64 %x, i64 %n) {
++; CHECK-LABEL: define i1 @lshr_absolute_upper_bound(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i64 [[X]], [[N]]
++; CHECK-NEXT:    br i1 [[INRANGE]], label %[[GUARDED:.*]], label %[[OUT:.*]]
++; CHECK:       [[GUARDED]]:
++; CHECK-NEXT:    [[H:%.*]] = lshr i64 [[X]], 4
++; CHECK-NEXT:    ret i1 true
++; CHECK:       [[OUT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %inrange = icmp ult i64 %x, %n
++  br i1 %inrange, label %guarded, label %out
++
++guarded:
++  %h = lshr i64 %x, 4
++  %chk = icmp ult i64 %h, 1152921504606846976
++  ret i1 %chk
++
++out:
++  ret i1 false
++}
++
++; One less than the bound above, so the check must be preserved.
++define i1 @lshr_absolute_upper_bound_too_tight(i64 %x, i64 %n) {
++; CHECK-LABEL: define i1 @lshr_absolute_upper_bound_too_tight(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i64 [[X]], [[N]]
++; CHECK-NEXT:    br i1 [[INRANGE]], label %[[GUARDED:.*]], label %[[OUT:.*]]
++; CHECK:       [[GUARDED]]:
++; CHECK-NEXT:    [[H:%.*]] = lshr i64 [[X]], 4
++; CHECK-NEXT:    [[CHK:%.*]] = icmp ult i64 [[H]], 1152921504606846975
++; CHECK-NEXT:    ret i1 [[CHK]]
++; CHECK:       [[OUT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %inrange = icmp ult i64 %x, %n
++  br i1 %inrange, label %guarded, label %out
++
++guarded:
++  %h = lshr i64 %x, 4
++  %chk = icmp ult i64 %h, 1152921504606846975
++  ret i1 %chk
++
++out:
++  ret i1 false
++}
++
++; Negative: no absolute bound is known for a variable shift amount.
++define i1 @lshr_no_absolute_upper_bound_variable_shift(i64 %x, i64 %n, i64 %s) {
++; CHECK-LABEL: define i1 @lshr_no_absolute_upper_bound_variable_shift(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[N:%.*]], i64 [[S:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i64 [[X]], [[N]]
++; CHECK-NEXT:    br i1 [[INRANGE]], label %[[GUARDED:.*]], label %[[OUT:.*]]
++; CHECK:       [[GUARDED]]:
++; CHECK-NEXT:    [[H:%.*]] = lshr i64 [[X]], [[S]]
++; CHECK-NEXT:    [[CHK:%.*]] = icmp ult i64 [[H]], 1152921504606846976
++; CHECK-NEXT:    ret i1 [[CHK]]
++; CHECK:       [[OUT]]:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %inrange = icmp ult i64 %x, %n
++  br i1 %inrange, label %guarded, label %out
++
++guarded:
++  %h = lshr i64 %x, %s
++  %chk = icmp ult i64 %h, 1152921504606846976
++  ret i1 %chk
++
++out:
++  ret i1 false
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/urem-udiv.ll b/llvm/test/Transforms/ConstraintElimination/urem-udiv.ll
+index c9c3260326619..447fed6a5be7f 100644
+--- a/llvm/test/Transforms/ConstraintElimination/urem-udiv.ll
++++ b/llvm/test/Transforms/ConstraintElimination/urem-udiv.ll
+@@ -359,3 +359,56 @@ check:
+ else:
+   ret i1 false
+ }
++
++; The quotient of a constant divisor has an absolute upper bound.
++define i1 @udiv_absolute_upper_bound(i64 %x, i64 %n) {
++; CHECK-LABEL: define i1 @udiv_absolute_upper_bound(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i64 [[X]], [[N]]
++; CHECK-NEXT:    br i1 [[INRANGE]], label [[GUARDED:%.*]], label [[OUT:%.*]]
++; CHECK:       guarded:
++; CHECK-NEXT:    [[D:%.*]] = udiv i64 [[X]], 16
++; CHECK-NEXT:    ret i1 true
++; CHECK:       out:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %inrange = icmp ult i64 %x, %n
++  br i1 %inrange, label %guarded, label %out
++
++guarded:
++  %d = udiv i64 %x, 16
++  %chk = icmp ult i64 %d, 1152921504606846976
++  ret i1 %chk
++
++out:
++  ret i1 false
++}
++
++; Negative: no absolute bound is known for a variable divisor.
++define i1 @udiv_no_absolute_upper_bound_variable_divisor(i64 %x, i64 %n, i64 %d) {
++; CHECK-LABEL: define i1 @udiv_no_absolute_upper_bound_variable_divisor(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[N:%.*]], i64 [[D:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i64 [[X]], [[N]]
++; CHECK-NEXT:    br i1 [[INRANGE]], label [[GUARDED:%.*]], label [[OUT:%.*]]
++; CHECK:       guarded:
++; CHECK-NEXT:    [[Q:%.*]] = udiv i64 [[X]], [[D]]
++; CHECK-NEXT:    [[CHK:%.*]] = icmp ult i64 [[Q]], 1152921504606846976
++; CHECK-NEXT:    ret i1 [[CHK]]
++; CHECK:       out:
++; CHECK-NEXT:    ret i1 false
++;
++entry:
++  %inrange = icmp ult i64 %x, %n
++  br i1 %inrange, label %guarded, label %out
++
++guarded:
++  %q = udiv i64 %x, %d
++  %chk = icmp ult i64 %q, 1152921504606846976
++  ret i1 %chk
++
++out:
++  ret i1 false
++}
+diff --git a/llvm/test/Transforms/InstCombine/trunc.ll b/llvm/test/Transforms/InstCombine/trunc.ll
+index 507a4678a7a1f..f342b1af20c2a 100644
+--- a/llvm/test/Transforms/InstCombine/trunc.ll
++++ b/llvm/test/Transforms/InstCombine/trunc.ll
+@@ -617,6 +617,80 @@ define i32 @trunc_shl_nsw_nuw_31_i32_i64(i64 %val) {
+   ret i32 %trunc
+ }
+ 
++; The no-wrap flags of the narrow shift need both the wide shift's and the
++; truncate's matching flag.
++define i32 @trunc_nuw_shl_nuw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_shl_nuw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc nuw i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nuw i64 %val, 3
++  %trunc = trunc nuw i64 %shl to i32
++  ret i32 %trunc
++}
++
++define i32 @trunc_nsw_shl_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nsw_shl_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nsw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nsw i64 %val, 3
++  %trunc = trunc nsw i64 %shl to i32
++  ret i32 %trunc
++}
++
++define i32 @trunc_nuw_nsw_shl_nuw_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_nsw_shl_nuw_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc nuw i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl nuw nsw i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nuw nsw i64 %val, 3
++  %trunc = trunc nuw nsw i64 %shl to i32
++  ret i32 %trunc
++}
++
++; Negative: the wide shift's matching flag is required in general, because for a
++; wide shift that wraps a non-wrapping truncate says nothing about the narrow
++; shift. Conservative here: for i64 -> i32 with a shift below 32 the wide shift
++; cannot drop a bit the narrow shift would overflow on.
++define i32 @trunc_nuw_shl_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_shl_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl i64 %val, 3
++  %trunc = trunc nuw i64 %shl to i32
++  ret i32 %trunc
++}
++
++; Negative: the truncate may wrap.
++define i32 @trunc_shl_nuw_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_shl_nuw_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nuw nsw i64 %val, 3
++  %trunc = trunc i64 %shl to i32
++  ret i32 %trunc
++}
++
++; Negative: mismatched flags.
++define i32 @trunc_nuw_shl_nsw_3_i32_i64(i64 %val) {
++; CHECK-LABEL: @trunc_nuw_shl_nsw_3_i32_i64(
++; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i32
++; CHECK-NEXT:    [[TRUNC:%.*]] = shl i32 [[VAL_TR]], 3
++; CHECK-NEXT:    ret i32 [[TRUNC]]
++;
++  %shl = shl nsw i64 %val, 3
++  %trunc = trunc nuw i64 %shl to i32
++  ret i32 %trunc
++}
++
+ define i16 @trunc_shl_15_i16_i64(i64 %val) {
+ ; CHECK-LABEL: @trunc_shl_15_i16_i64(
+ ; CHECK-NEXT:    [[VAL_TR:%.*]] = trunc i64 [[VAL:%.*]] to i16
+diff --git a/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll b/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
+index 4b5e0b278f350..86ab8038a5f1c 100644
+--- a/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
++++ b/llvm/test/Transforms/PhaseOrdering/constraint-eliminiation-interactions.ll
+@@ -1,4 +1,4 @@
+-; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --check-globals none --version 6
+ ; RUN: opt -O3 -S %s | FileCheck %s
+ 
+ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
+@@ -162,7 +162,8 @@ else:
+   ret i64 %res
+ }
+ 
+-; TODO: We should be able to preserve shl nuw.
++; The shl gets nuw from the bound on the decrementing induction: the systems
++; bound it by the lshr start value, which in turn is bounded by 2^31 - 1.
+ define void @shl_flags(i32 %n) {
+ ; CHECK-LABEL: define void @shl_flags(
+ ; CHECK-SAME: i32 [[N:%.*]]) local_unnamed_addr {
