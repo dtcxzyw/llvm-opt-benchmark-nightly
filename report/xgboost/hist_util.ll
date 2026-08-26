@@ -204,7 +204,7 @@ bb.a:
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = ashr exact i64 %i.k, 2                   ; 2 uses
-  %i.m = add nsw i64 %i.l, -1                     ; 10 uses
+  %i.m = add nsw i64 %i.l, -1                     ; 11 uses
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !407  ; 4 uses
   %i.p = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d) ; 2 uses
@@ -296,7 +296,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph126.split.us:                               ; preds = %.lr.ph126, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph126 ] ; 3 uses
-  %.071125.us = phi i64 [ %i.ay, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 6 uses
+  %.071125.us = phi i64 [ %i.ay, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 7 uses
   %umin185 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.m) ; 2 uses
   %i.ax = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ax, 1
@@ -312,14 +312,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bf = sub nsw i64 %i.be, %i.bb                ; 2 uses
   %i.bg = shl nsw i64 %i.bf, 1                    ; 4 uses
   %i.bh = icmp eq i32 %i.bd, %i.ba                ; 2 uses
-  br i1 %i.bh, label %.lr.ph118.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bh, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph126.split.us
   %.idx.i.i.us = shl nsw i64 %i.bf, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.083.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph118.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph118.us.preheader:                           ; preds = %.lr.ph126.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph126.split.us
+  %6 = icmp ugt i64 %i.m, %.071125.us
+  br i1 %6, label %.lr.ph118.us.preheader, label %._crit_edge121.split.us
+
+.lr.ph118.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter186 = and i64 %umin185, 1
   %lcmp.mod187.not = icmp eq i64 %xtraiter186, 0
   %i.bi = or disjoint i64 %.071125.us, 1          ; 2 uses
@@ -424,7 +428,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond133.not = icmp eq i64 %i.df, %2
   br i1 %exitcond133.not, label %._crit_edge121.split.us, label %.lr.ph118.us, !llvm.loop !414
 
-._crit_edge121.split.us:                          ; preds = %._crit_edge.us
+._crit_edge121.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bb, 4             ; 2 uses
   %i.dg = getelementptr i8, ptr %i.o, i64 %.idx.us ; 3 uses
   br i1 %i.bh, label %.loopexit.us, label %.lr.ph124.us.preheader
@@ -580,7 +584,7 @@ bb.a:
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = ashr exact i64 %i.k, 2                   ; 2 uses
-  %i.m = add nsw i64 %i.l, -1                     ; 10 uses
+  %i.m = add nsw i64 %i.l, -1                     ; 11 uses
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !407  ; 4 uses
   %i.p = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d) ; 2 uses
@@ -672,7 +676,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph126.split.us:                               ; preds = %.lr.ph126, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph126 ] ; 3 uses
-  %.071125.us = phi i64 [ %i.ay, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 6 uses
+  %.071125.us = phi i64 [ %i.ay, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 7 uses
   %umin185 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.m) ; 2 uses
   %i.ax = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ax, 1
@@ -688,14 +692,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bf = sub nsw i64 %i.be, %i.bb                ; 2 uses
   %i.bg = shl nsw i64 %i.bf, 1                    ; 4 uses
   %i.bh = icmp eq i32 %i.bd, %i.ba                ; 2 uses
-  br i1 %i.bh, label %.lr.ph118.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bh, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph126.split.us
   %.idx.i.i.us = shl nsw i64 %i.bf, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.083.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph118.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph118.us.preheader:                           ; preds = %.lr.ph126.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph126.split.us
+  %6 = icmp ugt i64 %i.m, %.071125.us
+  br i1 %6, label %.lr.ph118.us.preheader, label %._crit_edge121.split.us
+
+.lr.ph118.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter186 = and i64 %umin185, 1
   %lcmp.mod187.not = icmp eq i64 %xtraiter186, 0
   %i.bi = or disjoint i64 %.071125.us, 1          ; 2 uses
@@ -803,7 +811,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond133.not = icmp eq i64 %i.di, %2
   br i1 %exitcond133.not, label %._crit_edge121.split.us, label %.lr.ph118.us, !llvm.loop !434
 
-._crit_edge121.split.us:                          ; preds = %._crit_edge.us
+._crit_edge121.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bb, 4             ; 2 uses
   %i.dj = getelementptr i8, ptr %i.o, i64 %.idx.us ; 3 uses
   br i1 %i.bh, label %.loopexit.us, label %.lr.ph124.us.preheader
@@ -959,7 +967,7 @@ bb.a:
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = sub i64 %i.i, %i.j
   %i.l = ashr exact i64 %i.k, 2                   ; 2 uses
-  %i.m = add nsw i64 %i.l, -1                     ; 10 uses
+  %i.m = add nsw i64 %i.l, -1                     ; 11 uses
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !407  ; 4 uses
   %i.p = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.d) ; 2 uses
@@ -1051,7 +1059,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph126.split.us:                               ; preds = %.lr.ph126, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph126 ] ; 3 uses
-  %.071125.us = phi i64 [ %i.ay, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 6 uses
+  %.071125.us = phi i64 [ %i.ay, %.loopexit.us ], [ 0, %.lr.ph126 ] ; 7 uses
   %umin185 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.m) ; 2 uses
   %i.ax = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ax, 1
@@ -1067,14 +1075,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bf = sub nsw i64 %i.be, %i.bb                ; 2 uses
   %i.bg = shl nsw i64 %i.bf, 1                    ; 4 uses
   %i.bh = icmp eq i32 %i.bd, %i.ba                ; 2 uses
-  br i1 %i.bh, label %.lr.ph118.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bh, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph126.split.us
   %.idx.i.i.us = shl nsw i64 %i.bf, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.083.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph118.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph118.us.preheader:                           ; preds = %.lr.ph126.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph126.split.us
+  %6 = icmp ugt i64 %i.m, %.071125.us
+  br i1 %6, label %.lr.ph118.us.preheader, label %._crit_edge121.split.us
+
+.lr.ph118.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter186 = and i64 %umin185, 1
   %lcmp.mod187.not = icmp eq i64 %xtraiter186, 0
   %i.bi = or disjoint i64 %.071125.us, 1          ; 2 uses
@@ -1182,7 +1194,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond133.not = icmp eq i64 %i.di, %2
   br i1 %exitcond133.not, label %._crit_edge121.split.us, label %.lr.ph118.us, !llvm.loop !452
 
-._crit_edge121.split.us:                          ; preds = %._crit_edge.us
+._crit_edge121.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bb, 4             ; 2 uses
   %i.dj = getelementptr i8, ptr %i.o, i64 %.idx.us ; 3 uses
   br i1 %i.bh, label %.loopexit.us, label %.lr.ph124.us.preheader
@@ -1585,7 +1597,7 @@ bb.a:
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l
   %i.n = ashr exact i64 %i.m, 2                   ; 2 uses
-  %i.o = add nsw i64 %i.n, -1                     ; 10 uses
+  %i.o = add nsw i64 %i.n, -1                     ; 11 uses
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !407  ; 4 uses
   %i.r = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.f) ; 2 uses
@@ -1677,7 +1689,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph128.split.us:                               ; preds = %.lr.ph128, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph128 ] ; 3 uses
-  %.071127.us = phi i64 [ %i.ba, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 6 uses
+  %.071127.us = phi i64 [ %i.ba, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 7 uses
   %umin187 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.o) ; 2 uses
   %i.az = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.az, 1
@@ -1693,14 +1705,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bh = sub nsw i64 %i.bg, %i.bd                ; 2 uses
   %i.bi = shl nsw i64 %i.bh, 1                    ; 4 uses
   %i.bj = icmp eq i32 %i.bf, %i.bc                ; 2 uses
-  br i1 %i.bj, label %.lr.ph120.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bj, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph128.split.us
   %.idx.i.i.us = shl nsw i64 %i.bh, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.083.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph120.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph120.us.preheader:                           ; preds = %.lr.ph128.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph128.split.us
+  %6 = icmp ugt i64 %i.o, %.071127.us
+  br i1 %6, label %.lr.ph120.us.preheader, label %._crit_edge123.split.us
+
+.lr.ph120.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter188 = and i64 %umin187, 1
   %lcmp.mod189.not = icmp eq i64 %xtraiter188, 0
   %i.bk = or disjoint i64 %.071127.us, 1          ; 2 uses
@@ -1806,7 +1822,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond135.not = icmp eq i64 %i.di, %2
   br i1 %exitcond135.not, label %._crit_edge123.split.us, label %.lr.ph120.us, !llvm.loop !566
 
-._crit_edge123.split.us:                          ; preds = %._crit_edge.us
+._crit_edge123.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bd, 4             ; 2 uses
   %i.dj = getelementptr i8, ptr %i.q, i64 %.idx.us ; 3 uses
   br i1 %i.bj, label %.loopexit.us, label %.lr.ph126.us.preheader
@@ -1964,7 +1980,7 @@ bb.a:
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l
   %i.n = ashr exact i64 %i.m, 2                   ; 2 uses
-  %i.o = add nsw i64 %i.n, -1                     ; 10 uses
+  %i.o = add nsw i64 %i.n, -1                     ; 11 uses
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !407  ; 4 uses
   %i.r = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.f) ; 2 uses
@@ -2056,7 +2072,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph128.split.us:                               ; preds = %.lr.ph128, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph128 ] ; 3 uses
-  %.071127.us = phi i64 [ %i.ba, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 6 uses
+  %.071127.us = phi i64 [ %i.ba, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 7 uses
   %umin187 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.o) ; 2 uses
   %i.az = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.az, 1
@@ -2072,14 +2088,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bh = sub nsw i64 %i.bg, %i.bd                ; 2 uses
   %i.bi = shl nsw i64 %i.bh, 1                    ; 4 uses
   %i.bj = icmp eq i32 %i.bf, %i.bc                ; 2 uses
-  br i1 %i.bj, label %.lr.ph120.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bj, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph128.split.us
   %.idx.i.i.us = shl nsw i64 %i.bh, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.083.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph120.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph120.us.preheader:                           ; preds = %.lr.ph128.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph128.split.us
+  %6 = icmp ugt i64 %i.o, %.071127.us
+  br i1 %6, label %.lr.ph120.us.preheader, label %._crit_edge123.split.us
+
+.lr.ph120.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter188 = and i64 %umin187, 1
   %lcmp.mod189.not = icmp eq i64 %xtraiter188, 0
   %i.bk = or disjoint i64 %.071127.us, 1          ; 2 uses
@@ -2188,7 +2208,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond135.not = icmp eq i64 %i.dl, %2
   br i1 %exitcond135.not, label %._crit_edge123.split.us, label %.lr.ph120.us, !llvm.loop !584
 
-._crit_edge123.split.us:                          ; preds = %._crit_edge.us
+._crit_edge123.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bd, 4             ; 2 uses
   %i.dm = getelementptr i8, ptr %i.q, i64 %.idx.us ; 3 uses
   br i1 %i.bj, label %.loopexit.us, label %.lr.ph126.us.preheader
@@ -2346,7 +2366,7 @@ bb.a:
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l
   %i.n = ashr exact i64 %i.m, 2                   ; 2 uses
-  %i.o = add nsw i64 %i.n, -1                     ; 10 uses
+  %i.o = add nsw i64 %i.n, -1                     ; 11 uses
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !407  ; 4 uses
   %i.r = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.f) ; 2 uses
@@ -2438,7 +2458,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph128.split.us:                               ; preds = %.lr.ph128, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph128 ] ; 3 uses
-  %.071127.us = phi i64 [ %i.ba, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 6 uses
+  %.071127.us = phi i64 [ %i.ba, %.loopexit.us ], [ 0, %.lr.ph128 ] ; 7 uses
   %umin187 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.o) ; 2 uses
   %i.az = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.az, 1
@@ -2454,14 +2474,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bh = sub nsw i64 %i.bg, %i.bd                ; 2 uses
   %i.bi = shl nsw i64 %i.bh, 1                    ; 4 uses
   %i.bj = icmp eq i32 %i.bf, %i.bc                ; 2 uses
-  br i1 %i.bj, label %.lr.ph120.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bj, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph128.split.us
   %.idx.i.i.us = shl nsw i64 %i.bh, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.083.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph120.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph120.us.preheader:                           ; preds = %.lr.ph128.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph128.split.us
+  %6 = icmp ugt i64 %i.o, %.071127.us
+  br i1 %6, label %.lr.ph120.us.preheader, label %._crit_edge123.split.us
+
+.lr.ph120.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter188 = and i64 %umin187, 1
   %lcmp.mod189.not = icmp eq i64 %xtraiter188, 0
   %i.bk = or disjoint i64 %.071127.us, 1          ; 2 uses
@@ -2570,7 +2594,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %exitcond135.not = icmp eq i64 %i.dl, %2
   br i1 %exitcond135.not, label %._crit_edge123.split.us, label %.lr.ph120.us, !llvm.loop !602
 
-._crit_edge123.split.us:                          ; preds = %._crit_edge.us
+._crit_edge123.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bd, 4             ; 2 uses
   %i.dm = getelementptr i8, ptr %i.q, i64 %.idx.us ; 3 uses
   br i1 %i.bj, label %.loopexit.us, label %.lr.ph126.us.preheader
@@ -2973,7 +2997,7 @@ bb.a:
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
   %i.m = ashr exact i64 %i.l, 2                   ; 2 uses
-  %i.n = add nsw i64 %i.m, -1                     ; 11 uses
+  %i.n = add nsw i64 %i.m, -1                     ; 12 uses
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407  ; 4 uses
   %i.q = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.e) ; 2 uses
@@ -3065,7 +3089,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph129.split.us:                               ; preds = %.lr.ph129, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph129 ] ; 3 uses
-  %.076128.us = phi i64 [ %i.az, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 6 uses
+  %.076128.us = phi i64 [ %i.az, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 7 uses
   %umin190 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.n) ; 2 uses
   %i.ay = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ay, 1
@@ -3081,14 +3105,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bg = sub nsw i64 %i.bf, %i.bc                ; 2 uses
   %i.bh = shl nsw i64 %i.bg, 1                    ; 4 uses
   %i.bi = icmp eq i32 %i.be, %i.bb                ; 2 uses
-  br i1 %i.bi, label %.lr.ph121.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bi, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %.idx.i.i.us = shl nsw i64 %i.bg, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.088.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph121.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph121.us.preheader:                           ; preds = %.lr.ph129.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph129.split.us
+  %6 = icmp ugt i64 %i.n, %.076128.us
+  br i1 %6, label %.lr.ph121.us.preheader, label %._crit_edge124.split.us
+
+.lr.ph121.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter191 = and i64 %umin190, 1
   %lcmp.mod192.not = icmp eq i64 %xtraiter191, 0
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.076128.us
@@ -3173,14 +3201,14 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %i.dh = icmp ult i64 %i.az, %i.n
   %indvars.iv.next = add i64 %indvars.iv, 32
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dh, label %.lr.ph129.split.us, label %._crit_edge130.thread155, !llvm.loop !722
+  br i1 %i.dh, label %.lr.ph129.split.us, label %._crit_edge130, !llvm.loop !722
 
 ._crit_edge.us:                                   ; preds = %.lr.ph121.us.new, %.prol.loopexit
   %i.di = add nuw i64 %.078122.us, 1              ; 2 uses
   %exitcond136.not = icmp eq i64 %i.di, %2
   br i1 %exitcond136.not, label %._crit_edge124.split.us, label %.lr.ph121.us, !llvm.loop !723
 
-._crit_edge124.split.us:                          ; preds = %._crit_edge.us
+._crit_edge124.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bc, 4             ; 2 uses
   %i.dj = getelementptr i8, ptr %i.p, i64 %.idx.us ; 3 uses
   br i1 %i.bi, label %.loopexit.us, label %.lr.ph127.us.preheader
@@ -3233,11 +3261,11 @@ middle.block:                                     ; preds = %vector.body
   %i.dt = icmp ult i64 %i.dw, %i.n
   br i1 %i.dt, label %.lr.ph129.split, label %._crit_edge130, !llvm.loop !722
 
-._crit_edge130:                                   ; preds = %.loopexit
+._crit_edge130:                                   ; preds = %.loopexit.us, %.loopexit
   %.not.i.i.i = icmp eq ptr %.sroa.088.0.ph, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %._crit_edge130.thread155
 
-._crit_edge130.thread155:                         ; preds = %.loopexit.us, %._crit_edge130
+._crit_edge130.thread155:                         ; preds = %._crit_edge130
   %i.du = ptrtoint ptr %.sroa.088.0.ph to i64
   %i.dv = sub i64 %.sroa.10.0.ph, %i.du
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.088.0.ph, i64 noundef %i.dv) #29
@@ -3337,7 +3365,7 @@ bb.a:
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
   %i.m = ashr exact i64 %i.l, 2                   ; 2 uses
-  %i.n = add nsw i64 %i.m, -1                     ; 11 uses
+  %i.n = add nsw i64 %i.m, -1                     ; 12 uses
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407  ; 4 uses
   %i.q = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.e) ; 2 uses
@@ -3429,7 +3457,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph129.split.us:                               ; preds = %.lr.ph129, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph129 ] ; 3 uses
-  %.076128.us = phi i64 [ %i.az, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 6 uses
+  %.076128.us = phi i64 [ %i.az, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 7 uses
   %umin190 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.n) ; 2 uses
   %i.ay = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ay, 1
@@ -3445,14 +3473,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bg = sub nsw i64 %i.bf, %i.bc                ; 2 uses
   %i.bh = shl nsw i64 %i.bg, 1                    ; 4 uses
   %i.bi = icmp eq i32 %i.be, %i.bb                ; 2 uses
-  br i1 %i.bi, label %.lr.ph121.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bi, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %.idx.i.i.us = shl nsw i64 %i.bg, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.088.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph121.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph121.us.preheader:                           ; preds = %.lr.ph129.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph129.split.us
+  %6 = icmp ugt i64 %i.n, %.076128.us
+  br i1 %6, label %.lr.ph121.us.preheader, label %._crit_edge124.split.us
+
+.lr.ph121.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter191 = and i64 %umin190, 1
   %lcmp.mod192.not = icmp eq i64 %xtraiter191, 0
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.076128.us
@@ -3540,14 +3572,14 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %i.dk = icmp ult i64 %i.az, %i.n
   %indvars.iv.next = add i64 %indvars.iv, 32
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dk, label %.lr.ph129.split.us, label %._crit_edge130.thread155, !llvm.loop !740
+  br i1 %i.dk, label %.lr.ph129.split.us, label %._crit_edge130, !llvm.loop !740
 
 ._crit_edge.us:                                   ; preds = %.lr.ph121.us.new, %.prol.loopexit
   %i.dl = add nuw i64 %.078122.us, 1              ; 2 uses
   %exitcond136.not = icmp eq i64 %i.dl, %2
   br i1 %exitcond136.not, label %._crit_edge124.split.us, label %.lr.ph121.us, !llvm.loop !741
 
-._crit_edge124.split.us:                          ; preds = %._crit_edge.us
+._crit_edge124.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bc, 4             ; 2 uses
   %i.dm = getelementptr i8, ptr %i.p, i64 %.idx.us ; 3 uses
   br i1 %i.bi, label %.loopexit.us, label %.lr.ph127.us.preheader
@@ -3600,11 +3632,11 @@ middle.block:                                     ; preds = %vector.body
   %i.dw = icmp ult i64 %i.dz, %i.n
   br i1 %i.dw, label %.lr.ph129.split, label %._crit_edge130, !llvm.loop !740
 
-._crit_edge130:                                   ; preds = %.loopexit
+._crit_edge130:                                   ; preds = %.loopexit.us, %.loopexit
   %.not.i.i.i = icmp eq ptr %.sroa.088.0.ph, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %._crit_edge130.thread155
 
-._crit_edge130.thread155:                         ; preds = %.loopexit.us, %._crit_edge130
+._crit_edge130.thread155:                         ; preds = %._crit_edge130
   %i.dx = ptrtoint ptr %.sroa.088.0.ph to i64
   %i.dy = sub i64 %.sroa.10.0.ph, %i.dx
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.088.0.ph, i64 noundef %i.dy) #29
@@ -3704,7 +3736,7 @@ bb.a:
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
   %i.m = ashr exact i64 %i.l, 2                   ; 2 uses
-  %i.n = add nsw i64 %i.m, -1                     ; 11 uses
+  %i.n = add nsw i64 %i.m, -1                     ; 12 uses
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !407  ; 4 uses
   %i.q = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.e) ; 2 uses
@@ -3796,7 +3828,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph129.split.us:                               ; preds = %.lr.ph129, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph129 ] ; 3 uses
-  %.076128.us = phi i64 [ %i.az, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 6 uses
+  %.076128.us = phi i64 [ %i.az, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 7 uses
   %umin190 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.n) ; 2 uses
   %i.ay = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ay, 1
@@ -3812,14 +3844,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bg = sub nsw i64 %i.bf, %i.bc                ; 2 uses
   %i.bh = shl nsw i64 %i.bg, 1                    ; 4 uses
   %i.bi = icmp eq i32 %i.be, %i.bb                ; 2 uses
-  br i1 %i.bi, label %.lr.ph121.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bi, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %.idx.i.i.us = shl nsw i64 %i.bg, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.088.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph121.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph121.us.preheader:                           ; preds = %.lr.ph129.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph129.split.us
+  %6 = icmp ugt i64 %i.n, %.076128.us
+  br i1 %6, label %.lr.ph121.us.preheader, label %._crit_edge124.split.us
+
+.lr.ph121.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter191 = and i64 %umin190, 1
   %lcmp.mod192.not = icmp eq i64 %xtraiter191, 0
   %i.bj = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.076128.us
@@ -3907,14 +3943,14 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %i.dk = icmp ult i64 %i.az, %i.n
   %indvars.iv.next = add i64 %indvars.iv, 32
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dk, label %.lr.ph129.split.us, label %._crit_edge130.thread155, !llvm.loop !758
+  br i1 %i.dk, label %.lr.ph129.split.us, label %._crit_edge130, !llvm.loop !758
 
 ._crit_edge.us:                                   ; preds = %.lr.ph121.us.new, %.prol.loopexit
   %i.dl = add nuw i64 %.078122.us, 1              ; 2 uses
   %exitcond136.not = icmp eq i64 %i.dl, %2
   br i1 %exitcond136.not, label %._crit_edge124.split.us, label %.lr.ph121.us, !llvm.loop !759
 
-._crit_edge124.split.us:                          ; preds = %._crit_edge.us
+._crit_edge124.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.bc, 4             ; 2 uses
   %i.dm = getelementptr i8, ptr %i.p, i64 %.idx.us ; 3 uses
   br i1 %i.bi, label %.loopexit.us, label %.lr.ph127.us.preheader
@@ -3967,11 +4003,11 @@ middle.block:                                     ; preds = %vector.body
   %i.dw = icmp ult i64 %i.dz, %i.n
   br i1 %i.dw, label %.lr.ph129.split, label %._crit_edge130, !llvm.loop !758
 
-._crit_edge130:                                   ; preds = %.loopexit
+._crit_edge130:                                   ; preds = %.loopexit.us, %.loopexit
   %.not.i.i.i = icmp eq ptr %.sroa.088.0.ph, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %._crit_edge130.thread155
 
-._crit_edge130.thread155:                         ; preds = %.loopexit.us, %._crit_edge130
+._crit_edge130.thread155:                         ; preds = %._crit_edge130
   %i.dx = ptrtoint ptr %.sroa.088.0.ph to i64
   %i.dy = sub i64 %.sroa.10.0.ph, %i.dx
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.088.0.ph, i64 noundef %i.dy) #29
@@ -4374,7 +4410,7 @@ bb.a:
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
   %i.o = ashr exact i64 %i.n, 2                   ; 2 uses
-  %i.p = add nsw i64 %i.o, -1                     ; 11 uses
+  %i.p = add nsw i64 %i.o, -1                     ; 12 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !407  ; 4 uses
   %i.s = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.g) ; 2 uses
@@ -4466,7 +4502,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph129.split.us:                               ; preds = %.lr.ph129, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph129 ] ; 3 uses
-  %.076128.us = phi i64 [ %i.bb, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 6 uses
+  %.076128.us = phi i64 [ %i.bb, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 7 uses
   %umin190 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.p) ; 2 uses
   %i.ba = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ba, 1
@@ -4482,14 +4518,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bi = sub nsw i64 %i.bh, %i.be                ; 2 uses
   %i.bj = shl nsw i64 %i.bi, 1                    ; 4 uses
   %i.bk = icmp eq i32 %i.bg, %i.bd                ; 2 uses
-  br i1 %i.bk, label %.lr.ph121.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bk, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %.idx.i.i.us = shl nsw i64 %i.bi, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.088.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph121.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph121.us.preheader:                           ; preds = %.lr.ph129.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph129.split.us
+  %6 = icmp ugt i64 %i.p, %.076128.us
+  br i1 %6, label %.lr.ph121.us.preheader, label %._crit_edge124.split.us
+
+.lr.ph121.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter191 = and i64 %umin190, 1
   %lcmp.mod192.not = icmp eq i64 %xtraiter191, 0
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %.076128.us
@@ -4575,14 +4615,14 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %i.dk = icmp ult i64 %i.bb, %i.p
   %indvars.iv.next = add i64 %indvars.iv, 32
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dk, label %.lr.ph129.split.us, label %._crit_edge130.thread155, !llvm.loop !823
+  br i1 %i.dk, label %.lr.ph129.split.us, label %._crit_edge130, !llvm.loop !823
 
 ._crit_edge.us:                                   ; preds = %.lr.ph121.us.new, %.prol.loopexit
   %i.dl = add nuw i64 %.078122.us, 1              ; 2 uses
   %exitcond136.not = icmp eq i64 %i.dl, %2
   br i1 %exitcond136.not, label %._crit_edge124.split.us, label %.lr.ph121.us, !llvm.loop !824
 
-._crit_edge124.split.us:                          ; preds = %._crit_edge.us
+._crit_edge124.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.be, 4             ; 2 uses
   %i.dm = getelementptr i8, ptr %i.r, i64 %.idx.us ; 3 uses
   br i1 %i.bk, label %.loopexit.us, label %.lr.ph127.us.preheader
@@ -4635,11 +4675,11 @@ middle.block:                                     ; preds = %vector.body
   %i.dw = icmp ult i64 %i.dz, %i.p
   br i1 %i.dw, label %.lr.ph129.split, label %._crit_edge130, !llvm.loop !823
 
-._crit_edge130:                                   ; preds = %.loopexit
+._crit_edge130:                                   ; preds = %.loopexit.us, %.loopexit
   %.not.i.i.i = icmp eq ptr %.sroa.088.0.ph, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %._crit_edge130.thread155
 
-._crit_edge130.thread155:                         ; preds = %.loopexit.us, %._crit_edge130
+._crit_edge130.thread155:                         ; preds = %._crit_edge130
   %i.dx = ptrtoint ptr %.sroa.088.0.ph to i64
   %i.dy = sub i64 %.sroa.10.0.ph, %i.dx
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.088.0.ph, i64 noundef %i.dy) #29
@@ -4741,7 +4781,7 @@ bb.a:
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
   %i.o = ashr exact i64 %i.n, 2                   ; 2 uses
-  %i.p = add nsw i64 %i.o, -1                     ; 11 uses
+  %i.p = add nsw i64 %i.o, -1                     ; 12 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !407  ; 4 uses
   %i.s = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.g) ; 2 uses
@@ -4833,7 +4873,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph129.split.us:                               ; preds = %.lr.ph129, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph129 ] ; 3 uses
-  %.076128.us = phi i64 [ %i.bb, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 6 uses
+  %.076128.us = phi i64 [ %i.bb, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 7 uses
   %umin190 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.p) ; 2 uses
   %i.ba = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ba, 1
@@ -4849,14 +4889,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bi = sub nsw i64 %i.bh, %i.be                ; 2 uses
   %i.bj = shl nsw i64 %i.bi, 1                    ; 4 uses
   %i.bk = icmp eq i32 %i.bg, %i.bd                ; 2 uses
-  br i1 %i.bk, label %.lr.ph121.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bk, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %.idx.i.i.us = shl nsw i64 %i.bi, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.088.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph121.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph121.us.preheader:                           ; preds = %.lr.ph129.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph129.split.us
+  %6 = icmp ugt i64 %i.p, %.076128.us
+  br i1 %6, label %.lr.ph121.us.preheader, label %._crit_edge124.split.us
+
+.lr.ph121.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter191 = and i64 %umin190, 1
   %lcmp.mod192.not = icmp eq i64 %xtraiter191, 0
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %.076128.us
@@ -4945,14 +4989,14 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %i.dn = icmp ult i64 %i.bb, %i.p
   %indvars.iv.next = add i64 %indvars.iv, 32
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dn, label %.lr.ph129.split.us, label %._crit_edge130.thread155, !llvm.loop !841
+  br i1 %i.dn, label %.lr.ph129.split.us, label %._crit_edge130, !llvm.loop !841
 
 ._crit_edge.us:                                   ; preds = %.lr.ph121.us.new, %.prol.loopexit
   %i.do = add nuw i64 %.078122.us, 1              ; 2 uses
   %exitcond136.not = icmp eq i64 %i.do, %2
   br i1 %exitcond136.not, label %._crit_edge124.split.us, label %.lr.ph121.us, !llvm.loop !842
 
-._crit_edge124.split.us:                          ; preds = %._crit_edge.us
+._crit_edge124.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.be, 4             ; 2 uses
   %i.dp = getelementptr i8, ptr %i.r, i64 %.idx.us ; 3 uses
   br i1 %i.bk, label %.loopexit.us, label %.lr.ph127.us.preheader
@@ -5005,11 +5049,11 @@ middle.block:                                     ; preds = %vector.body
   %i.dz = icmp ult i64 %i.ec, %i.p
   br i1 %i.dz, label %.lr.ph129.split, label %._crit_edge130, !llvm.loop !841
 
-._crit_edge130:                                   ; preds = %.loopexit
+._crit_edge130:                                   ; preds = %.loopexit.us, %.loopexit
   %.not.i.i.i = icmp eq ptr %.sroa.088.0.ph, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %._crit_edge130.thread155
 
-._crit_edge130.thread155:                         ; preds = %.loopexit.us, %._crit_edge130
+._crit_edge130.thread155:                         ; preds = %._crit_edge130
   %i.ea = ptrtoint ptr %.sroa.088.0.ph to i64
   %i.eb = sub i64 %.sroa.10.0.ph, %i.ea
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.088.0.ph, i64 noundef %i.eb) #29
@@ -5111,7 +5155,7 @@ bb.a:
   %i.m = ptrtoint ptr %i.k to i64
   %i.n = sub i64 %i.l, %i.m
   %i.o = ashr exact i64 %i.n, 2                   ; 2 uses
-  %i.p = add nsw i64 %i.o, -1                     ; 11 uses
+  %i.p = add nsw i64 %i.o, -1                     ; 12 uses
   %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !407  ; 4 uses
   %i.s = tail call noundef nonnull align 8 dereferenceable(24) ptr @_ZNK7xgboost16HostDeviceVectorIjE15ConstHostVectorEv(ptr noundef nonnull align 8 dereferenceable(8) %i.g) ; 2 uses
@@ -5203,7 +5247,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 .lr.ph129.split.us:                               ; preds = %.lr.ph129, %.loopexit.us
   %indvar = phi i64 [ %indvar.next, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %.loopexit.us ], [ 32, %.lr.ph129 ] ; 3 uses
-  %.076128.us = phi i64 [ %i.bb, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 6 uses
+  %.076128.us = phi i64 [ %i.bb, %.loopexit.us ], [ 0, %.lr.ph129 ] ; 7 uses
   %umin190 = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %i.p) ; 2 uses
   %i.ba = shl i64 %indvar, 5
   %.neg = or disjoint i64 %i.ba, 1
@@ -5219,14 +5263,18 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bi = sub nsw i64 %i.bh, %i.be                ; 2 uses
   %i.bj = shl nsw i64 %i.bi, 1                    ; 4 uses
   %i.bk = icmp eq i32 %i.bg, %i.bd                ; 2 uses
-  br i1 %i.bk, label %.lr.ph121.us.preheader, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+  br i1 %i.bk, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us, label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
 
 _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %.idx.i.i.us = shl nsw i64 %i.bi, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %.sroa.088.0.ph, i8 0, i64 %.idx.i.i.us, i1 false), !tbaa !255
-  br label %.lr.ph121.us.preheader
+  br label %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
 
-.lr.ph121.us.preheader:                           ; preds = %.lr.ph129.split.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit
+_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us:           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit, %.lr.ph129.split.us
+  %6 = icmp ugt i64 %i.p, %.076128.us
+  br i1 %6, label %.lr.ph121.us.preheader, label %._crit_edge124.split.us
+
+.lr.ph121.us.preheader:                           ; preds = %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %xtraiter191 = and i64 %umin190, 1
   %lcmp.mod192.not = icmp eq i64 %xtraiter191, 0
   %i.bl = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %.076128.us
@@ -5315,14 +5363,14 @@ _ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us.loopexit:  ; preds = %.lr.ph129.split.us
   %i.dn = icmp ult i64 %i.bb, %i.p
   %indvars.iv.next = add i64 %indvars.iv, 32
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.dn, label %.lr.ph129.split.us, label %._crit_edge130.thread155, !llvm.loop !859
+  br i1 %i.dn, label %.lr.ph129.split.us, label %._crit_edge130, !llvm.loop !859
 
 ._crit_edge.us:                                   ; preds = %.lr.ph121.us.new, %.prol.loopexit
   %i.do = add nuw i64 %.078122.us, 1              ; 2 uses
   %exitcond136.not = icmp eq i64 %i.do, %2
   br i1 %exitcond136.not, label %._crit_edge124.split.us, label %.lr.ph121.us, !llvm.loop !860
 
-._crit_edge124.split.us:                          ; preds = %._crit_edge.us
+._crit_edge124.split.us:                          ; preds = %._crit_edge.us, %_ZSt6fill_nIPdmdET_S1_T0_RKT1_.exit.us
   %.idx.us = shl nuw nsw i64 %i.be, 4             ; 2 uses
   %i.dp = getelementptr i8, ptr %i.r, i64 %.idx.us ; 3 uses
   br i1 %i.bk, label %.loopexit.us, label %.lr.ph127.us.preheader
@@ -5375,11 +5423,11 @@ middle.block:                                     ; preds = %vector.body
   %i.dz = icmp ult i64 %i.ec, %i.p
   br i1 %i.dz, label %.lr.ph129.split, label %._crit_edge130, !llvm.loop !859
 
-._crit_edge130:                                   ; preds = %.loopexit
+._crit_edge130:                                   ; preds = %.loopexit.us, %.loopexit
   %.not.i.i.i = icmp eq ptr %.sroa.088.0.ph, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIdSaIdEED2Ev.exit, label %._crit_edge130.thread155
 
-._crit_edge130.thread155:                         ; preds = %.loopexit.us, %._crit_edge130
+._crit_edge130.thread155:                         ; preds = %._crit_edge130
   %i.ea = ptrtoint ptr %.sroa.088.0.ph to i64
   %i.eb = sub i64 %.sroa.10.0.ph, %i.ea
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.088.0.ph, i64 noundef %i.eb) #29

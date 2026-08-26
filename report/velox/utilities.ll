@@ -202,8 +202,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %3 = icmp slt i64 %indvars.iv.next, %i.r
-  br i1 %3, label %bb.b, label %.thread146, !llvm.loop !36
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.r
+  br i1 %exitcond.not, label %.thread146, label %bb.b, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %bb.c
   %i.ad = trunc nsw i64 %indvars.iv to i32        ; 2 uses

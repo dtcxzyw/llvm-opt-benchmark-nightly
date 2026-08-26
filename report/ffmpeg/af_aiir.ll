@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph11:                                         ; preds = %biquad_process.exit.loopexit
   %i.af = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  %wide.trip.count.i118 = zext nneg i32 %i.i to i64 ; 5 uses
+  %wide.trip.count.i118 = zext nneg i32 %i.i to i64 ; 2 uses
   %i.ag = shl nuw nsw i64 %wide.trip.count.i118, 3
   %i.ah = add nsw i32 %i.i, -1
   %i.ai = sext i32 %i.ah to i64
@@ -260,14 +260,14 @@ biquad_process.exit.loopexit:                     ; preds = %.lr.ph.i
 ._crit_edge:                                      ; preds = %biquad_process.exit125
   %i.bi = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 6 uses
-  %i.bk = zext nneg i32 %i.i to i64               ; 32 uses
-  %1 = add nsw i64 %wide.trip.count.i118, -2
-  %xtraiter101 = and i64 %wide.trip.count.i118, 2 ; 2 uses
-  %2 = add nsw i32 %i.i, -1
-  %i.bl = icmp ult i32 %2, 3
-  %unroll_iter105 = and i64 %wide.trip.count.i118, 2147483644
-  %lcmp.mod103.not = icmp eq i64 %xtraiter101, 0
-  %lcmp.mod104 = icmp ne i64 %xtraiter101, 0
+  %i.bk = zext nneg i32 %i.i to i64               ; 34 uses
+  %umax = tail call i64 @llvm.umax.i64(i64 %i.bk, i64 1) ; 2 uses
+  %1 = add nsw i64 %i.bk, -2
+  %xtraiter102 = and i64 %umax, 3                 ; 3 uses
+  %i.bl = icmp ult i32 %i.i, 4
+  %unroll_iter105 = and i64 %umax, 2147483644
+  %lcmp.mod103.not = icmp eq i64 %xtraiter102, 0
+  %lcmp.mod104 = icmp ne i64 %xtraiter102, 0
   br label %.preheader113.i
 
 .loopexit.i:                                      ; preds = %._crit_edge.us120.i, %.preheader111.i.prol.loopexit, %.preheader111.i, %.split.us.i
@@ -373,8 +373,8 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   %gep206.i.a = getelementptr [8 x i8], ptr %invariant.gep.i, i64 %indvars.iv145.i
   store double %i.ck, ptr %gep206.i.a, align 8, !tbaa !77
   %indvars.iv.next146.i = add nuw nsw i64 %indvars.iv145.i, 1 ; 2 uses
-  %exitcond149.not.i = icmp eq i64 %indvars.iv.next146.i, %i.bk
-  br i1 %exitcond149.not.i, label %.split.us.i, label %.preheader112.us.i, !llvm.loop !199
+  %2 = icmp samesign ult i64 %indvars.iv.next146.i, %i.bk
+  br i1 %2, label %.preheader112.us.i, label %.split.us.i, !llvm.loop !199
 
 .preheader112.i:                                  ; preds = %.preheader112.i.preheader, %.preheader112.i
   %indvars.iv150.i = phi i64 [ %indvars.iv.next151.i.3, %.preheader112.i ], [ 0, %.preheader112.i.preheader ] ; 6 uses
@@ -430,7 +430,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
   store double %i.de, ptr %i.df, align 8, !tbaa !77
   %indvars.iv.next151.i.epil = add nuw nsw i64 %indvars.iv150.i.epil, 1
   %epil.iter102.next = add i64 %epil.iter102, 1   ; 2 uses
-  %epil.iter102.cmp.not = icmp eq i64 %epil.iter102.next, 2
+  %epil.iter102.cmp.not = icmp eq i64 %epil.iter102.next, %xtraiter102
   br i1 %epil.iter102.cmp.not, label %.split.us.thread.i, label %.preheader112.i.epil, !llvm.loop !200
 
 .split.us.thread.i:                               ; preds = %.preheader112.i.epil, %.split.us.thread.i.unr-lcssa
@@ -832,6 +832,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare { <2 x double>, <2 x double> } @llvm.sincos.v2f64(<2 x double>) #12
