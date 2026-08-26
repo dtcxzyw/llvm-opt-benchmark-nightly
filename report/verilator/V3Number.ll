@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 2597
 inline.NumDeleted: 451
 loop-unroll.NumCompletelyUnrolled: 19
-loop-unroll.NumRuntimeUnrolled: 16
-loop-unroll.NumUnrolled: 35
+loop-unroll.NumRuntimeUnrolled: 17
+loop-unroll.NumUnrolled: 36
 begin_hunk_0_@_ZN8V3Number5opLteERKS_S1_:bb.a
   ret ptr %0
 }
@@ -205,42 +205,74 @@ bb.i:                                             ; preds = %bb.g
   %i.v = tail call noundef nonnull align 8 dereferenceable(56) ptr @_ZN8V3Number7setZeroEv(ptr noundef nonnull align 8 dereferenceable(56) %0) ; 0 uses
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.x = load i32, ptr %i.w, align 8, !tbaa !41
-  %.fr.i.i.i = freeze i32 %i.x                    ; 4 uses
+  %.fr.i.i.i = freeze i32 %i.x                    ; 6 uses
   %i.y = icmp sgt i32 %.fr.i.i.i, 32
-  br i1 %i.y, label %.lr.ph.i.a, label %.critedge
+  br i1 %i.y, label %.lr.ph.i, label %.critedge
 
-.lr.ph.i.a:                                       ; preds = %bb.i
-  %4 = add nsw i32 %.fr.i.i.i, -1                 ; 3 uses
-  %5 = load i8, ptr %i.m, align 4, !tbaa !42
-  %.fr24.i = freeze i8 %5
-  %6 = add i8 %.fr24.i, -3
-  %spec.select.i.i.i = icmp ult i8 %6, -2
-  %7 = icmp samesign ult i32 %.fr.i.i.i, 129
-  %8 = load ptr, ptr %2, align 8
-  %spec.select.i7.i.i.i = select i1 %7, ptr %2, ptr %8 ; 2 uses
-  %9 = lshr i32 %4, 5
-  %i.z = zext nneg i32 %9 to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i7.i.i.i, i64 %i.z
-  %.sroa.3.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %10, i64 4
-  %11 = and i32 %4, 31
+.lr.ph.i:                                         ; preds = %bb.i
+  %4 = load i8, ptr %i.m, align 4, !tbaa !42
+  %.fr24.i = freeze i8 %4
+  %5 = add i8 %.fr24.i, -3
+  %spec.select.i.i.i = icmp ult i8 %5, -2
+  %6 = icmp samesign ult i32 %.fr.i.i.i, 129
+  %7 = load ptr, ptr %2, align 8
+  %spec.select.i7.i.i.i = select i1 %6, ptr %2, ptr %7 ; 2 uses
+  br i1 %spec.select.i.i.i, label %.critedge37, label %.lr.ph.split.split.i.preheader, !prof !329
+
+.lr.ph.split.split.i.preheader:                   ; preds = %.lr.ph.i
+  %xtraiter = and i32 %.fr.i.i.i, 1
+  %8 = icmp eq i32 %.fr.i.i.i, 33
+  br i1 %8, label %_ZNK8V3Number6bitIs0Ei.exit.i, label %.lr.ph.split.split.i.preheader.new
+
+.lr.ph.split.split.i.preheader.new:               ; preds = %.lr.ph.split.split.i.preheader
+  %9 = and i32 %.fr.i.i.i, 2147483646
+  %10 = add nsw i32 %9, -34
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %tailrecurse.preheader.i.i.i, %.lr.ph.split.split.i.preheader.new
+  %.0713.i = phi i32 [ 32, %.lr.ph.split.split.i.preheader.new ], [ %28, %tailrecurse.preheader.i.i.i ] ; 4 uses
+  %niter = phi i32 [ 0, %.lr.ph.split.split.i.preheader.new ], [ %niter.next.1, %tailrecurse.preheader.i.i.i ] ; 2 uses
+  %11 = lshr i32 %.0713.i, 5
   %12 = zext nneg i32 %11 to i64
-  %13 = shl nuw nsw i64 1, %12
-  br i1 %spec.select.i.i.i, label %.critedge37, label %.lr.ph.split.split.i, !prof !329
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i7.i.i.i, i64 %12 ; 2 uses
+  %.sroa.0.0.copyload.i.i = load i32, ptr %13, align 4, !tbaa !66 ; 2 uses
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %.sroa.4.0.copyload.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i, align 4, !tbaa !66 ; 2 uses
+  %14 = or i32 %.sroa.4.0.copyload.i.i, %.sroa.0.0.copyload.i.i
+  %i.z = zext i32 %14 to i64
+  %15 = and i32 %.0713.i, 30
+  %16 = zext nneg i32 %15 to i64
+  %17 = shl nuw nsw i64 1, %16
+  %18 = and i64 %17, %i.z
+  %19 = icmp eq i64 %18, 0
+  br i1 %19, label %.lr.ph.split.split.i, label %.critedge37, !prof !330
 
-.lr.ph.split.split.i:                             ; preds = %.lr.ph.i.a, %_ZNK8V3Number6bitIs0Ei.exit.thread.i
-  %.0713.i = phi i32 [ %16, %_ZNK8V3Number6bitIs0Ei.exit.thread.i ], [ 32, %.lr.ph.i.a ] ; 5 uses
-  %.not.i.i = icmp slt i32 %.0713.i, %.fr.i.i.i
-  br i1 %.not.i.i, label %_ZNK8V3Number6bitIs0Ei.exit.i, label %tailrecurse.preheader.i.i.i
+.lr.ph.split.split.i:                             ; preds = %.lr.ph.i.a
+  %20 = or i32 %.sroa.4.0.copyload.i.i, %.sroa.0.0.copyload.i.i
+  %21 = zext i32 %20 to i64
+  %22 = and i32 %.0713.i, 30
+  %23 = or disjoint i32 %22, 1
+  %24 = zext nneg i32 %23 to i64
+  %25 = shl nuw nsw i64 1, %24
+  %26 = and i64 %25, %21
+  %27 = icmp eq i64 %26, 0
+  br i1 %27, label %tailrecurse.preheader.i.i.i, label %.critedge37, !prof !330
 
 tailrecurse.preheader.i.i.i:                      ; preds = %.lr.ph.split.split.i
-  %.sroa.3.0.copyload.i.i.i = load i32, ptr %.sroa.3.0..sroa_idx.i.i.i, align 4, !tbaa !66
-  %14 = zext i32 %.sroa.3.0.copyload.i.i.i to i64
-  %15 = and i64 %13, %14
-  %i.aa = icmp eq i64 %15, 0
-  br i1 %i.aa, label %_ZNK8V3Number6bitIs0Ei.exit.thread.i, label %.critedge37, !prof !330
+  %28 = add nuw nsw i32 %.0713.i, 2               ; 2 uses
+  %niter.next.1 = add i32 %niter, 2
+  %i.aa = icmp eq i32 %niter, %10
+  br i1 %i.aa, label %.critedge.loopexit.unr-lcssa, label %.lr.ph.i.a, !llvm.loop !331
 
-_ZNK8V3Number6bitIs0Ei.exit.i:                    ; preds = %.lr.ph.split.split.i
-  %i.ab = lshr i32 %.0713.i, 5
+.critedge.loopexit.unr-lcssa:                     ; preds = %tailrecurse.preheader.i.i.i
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.critedge, label %_ZNK8V3Number6bitIs0Ei.exit.i
+
+_ZNK8V3Number6bitIs0Ei.exit.i:                    ; preds = %.critedge.loopexit.unr-lcssa, %.lr.ph.split.split.i.preheader
+  %.0713.i.epil.init = phi i32 [ 32, %.lr.ph.split.split.i.preheader ], [ %28, %.critedge.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod52 = trunc i32 %.fr.i.i.i to i1
+  tail call void @llvm.assume(i1 %lcmp.mod52)
+  %i.ab = lshr i32 %.0713.i.epil.init, 5
   %i.ac = zext nneg i32 %i.ab to i64
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %spec.select.i7.i.i.i, i64 %i.ac ; 2 uses
   %.sroa.0.0.copyload.i.i.a = load i32, ptr %i.ad, align 4, !tbaa !66
@@ -248,19 +280,14 @@ _ZNK8V3Number6bitIs0Ei.exit.i:                    ; preds = %.lr.ph.split.split.
   %.sroa.4.0.copyload.i.i.a = load i32, ptr %.sroa.4.0..sroa_idx.i.i.a, align 4, !tbaa !66
   %i.ae = or i32 %.sroa.4.0.copyload.i.i.a, %.sroa.0.0.copyload.i.i.a
   %i.af = zext i32 %i.ae to i64
-  %i.ag = and i32 %.0713.i, 31
+  %i.ag = and i32 %.0713.i.epil.init, 31
   %i.ah = zext nneg i32 %i.ag to i64
   %i.ai = shl nuw nsw i64 1, %i.ah
   %i.aj = and i64 %i.ai, %i.af
   %i.ak = icmp eq i64 %i.aj, 0
-  br i1 %i.ak, label %_ZNK8V3Number6bitIs0Ei.exit.thread.i, label %.critedge37, !prof !330
+  br i1 %i.ak, label %.critedge, label %.critedge37, !prof !330
 
-_ZNK8V3Number6bitIs0Ei.exit.thread.i:             ; preds = %_ZNK8V3Number6bitIs0Ei.exit.i, %tailrecurse.preheader.i.i.i
-  %16 = add nuw nsw i32 %.0713.i, 1
-  %exitcond.not.i = icmp eq i32 %.0713.i, %4
-  br i1 %exitcond.not.i, label %.critedge, label %.lr.ph.split.split.i, !llvm.loop !331
-
-.critedge:                                        ; preds = %_ZNK8V3Number6bitIs0Ei.exit.thread.i, %bb.i
+.critedge:                                        ; preds = %.critedge.loopexit.unr-lcssa, %_ZNK8V3Number6bitIs0Ei.exit.i, %bb.i
   %i.al = tail call noundef i32 @_ZNK8V3Number6toUIntEv(ptr noundef nonnull align 8 dereferenceable(56) %2) ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.an = load i32, ptr %i.am, align 8, !tbaa !41
@@ -283,7 +310,7 @@ _ZNK8V3Number6bitIs0Ei.exit.thread.i:             ; preds = %_ZNK8V3Number6bitIs
   %i.av = icmp slt i32 %i.at, %i.au
   br i1 %i.av, label %.lr.ph, label %.loopexit, !llvm.loop !386
 
-.critedge37:                                      ; preds = %_ZNK8V3Number6bitIs0Ei.exit.i, %tailrecurse.preheader.i.i.i, %.lr.ph.i.a, %.critedge
+.critedge37:                                      ; preds = %_ZNK8V3Number6bitIs0Ei.exit.i, %.lr.ph.split.split.i, %.lr.ph.i.a, %.lr.ph.i, %.critedge
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.ax = load i32, ptr %i.aw, align 8, !tbaa !41
   %i.ay = icmp sgt i32 %i.ax, 0
