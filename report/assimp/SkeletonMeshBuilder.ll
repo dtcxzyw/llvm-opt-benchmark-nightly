@@ -205,8 +205,8 @@ _ZN10aiVector3tIfEdVEf.exit.i188:                 ; preds = %_ZN10aiVector3tIfE9
   br label %_ZN10aiVector3tIfE9NormalizeEv.exit190
 
 _ZN10aiVector3tIfE9NormalizeEv.exit190:           ; preds = %_ZN10aiVector3tIfE9NormalizeEv.exit183, %_ZN10aiVector3tIfEdVEf.exit.i188
-  %.sroa.81251.0 = phi float [ %i.bo, %_ZN10aiVector3tIfE9NormalizeEv.exit183 ], [ %i.bw, %_ZN10aiVector3tIfEdVEf.exit.i188 ] ; 2 uses
   %.sroa.01248.0 = phi <2 x float> [ %.sroa.0.4.vec.insert.i185, %_ZN10aiVector3tIfE9NormalizeEv.exit183 ], [ %.sroa.01248.4.vec.insert, %_ZN10aiVector3tIfEdVEf.exit.i188 ] ; 2 uses
+  %.sroa.81251.0 = phi float [ %i.bo, %_ZN10aiVector3tIfE9NormalizeEv.exit183 ], [ %i.bw, %_ZN10aiVector3tIfEdVEf.exit.i188 ] ; 2 uses
   %i.bx = load ptr, ptr %i.a, align 8             ; 6 uses
   %i.by = load ptr, ptr %0, align 8               ; 5 uses
   %i.bz = ptrtoint ptr %i.bx to i64
@@ -609,16 +609,16 @@ bb.a:
   %i.r = load <2 x float>, ptr %i.b, align 4      ; 9 uses
   %i.s = extractelement <2 x float> %i.r, i64 0
   %i.t = fmul float %i.a, %i.s                    ; 2 uses
-  %i.u = load <2 x float>, ptr %i.j, align 4      ; 8 uses
-  %i.v = load <2 x float>, ptr %i.i, align 4      ; 5 uses
+  %i.u = load <2 x float>, ptr %i.j, align 4      ; 7 uses
+  %i.v = load <2 x float>, ptr %i.i, align 4      ; 4 uses
   %i.w = load float, ptr %i.g, align 4            ; 6 uses
-  %1 = shufflevector <2 x float> %i.v, <2 x float> %i.u, <2 x i32> <i32 1, i32 3>
-  %2 = fneg <2 x float> %1                        ; 3 uses
-  %i.x = extractelement <2 x float> %2, i64 0
+  %1 = shufflevector <2 x float> %i.v, <2 x float> %i.u, <4 x i32> <i32 1, i32 1, i32 1, i32 3> ; 2 uses
+  %2 = fneg <4 x float> %1                        ; 4 uses
+  %i.x = extractelement <4 x float> %2, i64 0
   %i.y = extractelement <2 x float> %i.v, i64 0   ; 7 uses
   %i.z = extractelement <2 x float> %i.u, i64 0   ; 3 uses
   %i.aa = fneg float %i.z                         ; 4 uses
-  %i.ab = extractelement <2 x float> %2, i64 1    ; 3 uses
+  %i.ab = extractelement <4 x float> %2, i64 3    ; 3 uses
   %i.ac = load <2 x float>, ptr %i.l, align 4     ; 6 uses
   %i.ad = extractelement <2 x float> %i.ac, i64 0
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -708,11 +708,10 @@ bb.a:
   br i1 %i.db, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = shufflevector <2 x float> %2, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1> ; 2 uses
   %i.dc = fdiv float 1.000000e+00, %i.da          ; 3 uses
   %i.dd = shufflevector <2 x float> %i.af, <2 x float> %i.ag, <4 x i32> <i32 3, i32 1, i32 poison, i32 poison>
   %i.de = shufflevector <2 x float> %i.ag, <2 x float> %i.af, <4 x i32> <i32 1, i32 1, i32 3, i32 3>
-  %i.df = fmul <4 x float> %i.de, %3
+  %i.df = fmul <4 x float> %i.de, %2
   %i.dg = fneg float %i.e
   %i.dh = fneg float %i.y
   %i.di = fneg float %i.dc                        ; 2 uses
@@ -740,8 +739,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ee = insertelement <4 x float> %i.ed, float %i.aa, i64 1
   %i.ef = shufflevector <4 x float> %i.ee, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1> ; 2 uses
   %i.eg = fmul <4 x float> %i.dj, %i.ef
-  %4 = shufflevector <2 x float> %i.v, <2 x float> %i.u, <4 x i32> <i32 1, i32 1, i32 1, i32 3>
-  %i.eh = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dp, <4 x float> %4, <4 x float> %i.eg) ; 2 uses
+  %i.eh = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dp, <4 x float> %1, <4 x float> %i.eg) ; 2 uses
   %i.ei = shufflevector <2 x float> %i.af, <2 x float> %i.aw, <4 x i32> <i32 1, i32 3, i32 3, i32 3>
   %i.ej = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ei, <4 x float> %i.eh, <4 x float> %i.ec)
   %i.ek = insertelement <4 x float> poison, float %i.dc, i64 0
@@ -807,6 +805,7 @@ bb.b:                                             ; preds = %bb.a
   %i.gs = insertelement <4 x float> poison, float %i.ay, i64 0
   %i.gt = insertelement <4 x float> %i.gs, float %i.bb, i64 1
   %i.gu = shufflevector <4 x float> %i.gt, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
+  %3 = shufflevector <4 x float> %2, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 3>
   %i.gv = fmul <4 x float> %i.gu, %3
   %i.gw = shufflevector <2 x float> %i.ag, <2 x float> %i.af, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
   %i.gx = insertelement <4 x float> %i.er, float %i.ay, i64 1

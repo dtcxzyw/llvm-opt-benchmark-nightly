@@ -199,10 +199,9 @@ bb.b:                                             ; preds = %bb.a
   call void @gdk_cairo_set_source_rgba(ptr noundef %i.aa, ptr noundef nonnull %4) #6
   store i32 0, ptr %i.b, align 4, !tbaa !76
   %i.ak = insertelement <2 x double> poison, double %i.j, i64 0
-  %5 = shufflevector <2 x double> %i.ak, <2 x double> poison, <2 x i32> zeroinitializer
-  %6 = fmul reassoc nnan nsz arcp contract afn <2 x double> %5, <double 5.000000e-01, double 2.000000e-01> ; 2 uses
-  %7 = shufflevector <2 x double> %6, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  %i.al = fptrunc <4 x double> %7 to <4 x float>  ; 5 uses
+  %5 = shufflevector <2 x double> %i.ak, <2 x double> poison, <4 x i32> zeroinitializer
+  %6 = fmul reassoc nnan nsz arcp contract afn <4 x double> %5, <double 5.000000e-01, double 2.000000e-01, double 5.000000e-01, double 2.000000e-01> ; 2 uses
+  %i.al = fptrunc <4 x double> %6 to <4 x float>  ; 5 uses
   %i.am = extractelement <4 x float> %i.al, i64 1 ; 8 uses
   %i.an = extractelement <4 x float> %i.al, i64 0 ; 12 uses
   %foldExtExtBinop = fsub reassoc nsz arcp contract afn <4 x float> %i.al, %i.al
@@ -242,7 +241,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bv = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.bw = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.bx = fadd reassoc nsz arcp contract afn float %i.n, %i.f
-  %i.by = extractelement <2 x double> %6, i64 0
+  %i.by = extractelement <4 x double> %6, i64 0
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.h

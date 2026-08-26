@@ -202,7 +202,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %.0106 = phi i1 [ false, %bb.a ], [ %.0106.be, %.backedge ] ; 9 uses
   %.0104.a = phi i1 [ false, %bb.a ], [ %.0104.be.a, %.backedge ] ; 9 uses
   %.0102.a = phi i1 [ false, %bb.a ], [ %.0102.be.a, %.backedge ] ; 10 uses
   %.0100.a = phi i1 [ false, %bb.a ], [ %.0100.be.a, %.backedge ] ; 9 uses
@@ -212,6 +211,7 @@ bb.b:                                             ; preds = %.backedge, %bb.a
   %.089.a = phi i64 [ 0, %bb.a ], [ %.089.be.a, %.backedge ] ; 12 uses
   %.087.a = phi i64 [ 0, %bb.a ], [ %.087.be.a, %.backedge ] ; 9 uses
   %.085.a = phi i32 [ 0, %bb.a ], [ %.085.be.a, %.backedge ] ; 12 uses
+  %.085 = phi i1 [ false, %bb.a ], [ %.085.be, %.backedge ] ; 9 uses
   %.084 = phi i1 [ false, %bb.a ], [ %.084.be, %.backedge ] ; 9 uses
   %i.f = call i32 @getopt(i32 noundef %1, ptr noundef %2, ptr noundef nonnull @.str.22) #24
   switch i32 %i.f, label %bb.n [
@@ -283,7 +283,6 @@ parse_pattern.exit:                               ; preds = %bb.h
   br label %.backedge
 
 .backedge:                                        ; preds = %parse_pattern.exit, %bb.b, %bb.k, %bb.e, %bb.m, %bb.j, %bb.i, %bb.d, %bb.c
-  %.0106.be = phi i1 [ %.0106, %bb.c ], [ %.0106, %bb.d ], [ %.0106, %bb.e ], [ %.0106, %bb.b ], [ %.0106, %parse_pattern.exit ], [ true, %bb.i ], [ %.0106, %bb.j ], [ %.0106, %bb.k ], [ %.0106, %bb.m ]
   %.0104.be.a = phi i1 [ %.0104.a, %bb.c ], [ %.0104.a, %bb.d ], [ %.0104.a, %bb.e ], [ %.0104.a, %bb.b ], [ %.0104.a, %parse_pattern.exit ], [ %.0104.a, %bb.i ], [ %.0104.a, %bb.j ], [ %.0104.a, %bb.k ], [ true, %bb.m ]
   %.0102.be.a = phi i1 [ %.0102.a, %bb.c ], [ %.0102.a, %bb.d ], [ %.0102.a, %bb.e ], [ %.0102.a, %bb.b ], [ true, %parse_pattern.exit ], [ %.0102.a, %bb.i ], [ %.0102.a, %bb.j ], [ %.0102.a, %bb.k ], [ %.0102.a, %bb.m ]
   %.0100.be.a = phi i1 [ %.0100.a, %bb.c ], [ %.0100.a, %bb.d ], [ %.0100.a, %bb.e ], [ %.0100.a, %bb.b ], [ %.0100.a, %parse_pattern.exit ], [ %.0100.a, %bb.i ], [ %.0100.a, %bb.j ], [ true, %bb.k ], [ %.0100.a, %bb.m ]
@@ -293,6 +292,7 @@ parse_pattern.exit:                               ; preds = %bb.h
   %.089.be.a = phi i64 [ %.089.a, %bb.c ], [ %.089.a, %bb.d ], [ %.089.a, %bb.e ], [ %.089.a, %bb.b ], [ %.089.a, %parse_pattern.exit ], [ %.089.a, %bb.i ], [ %.089.a, %bb.j ], [ %.0.i128, %bb.k ], [ %.089.a, %bb.m ]
   %.087.be.a = phi i64 [ %.087.a, %bb.c ], [ %.087.a, %bb.d ], [ %.0.i, %bb.e ], [ %.087.a, %bb.b ], [ %.087.a, %parse_pattern.exit ], [ %.087.a, %bb.i ], [ %.087.a, %bb.j ], [ %.087.a, %bb.k ], [ %.087.a, %bb.m ]
   %.085.be.a = phi i32 [ %.085.a, %bb.c ], [ %.085.a, %bb.d ], [ %.085.a, %bb.e ], [ %.085.a, %bb.b ], [ %.085.a, %parse_pattern.exit ], [ %.085.a, %bb.i ], [ %i.w, %bb.j ], [ %.085.a, %bb.k ], [ %.085.a, %bb.m ]
+  %.085.be = phi i1 [ %.085, %bb.c ], [ %.085, %bb.d ], [ %.085, %bb.e ], [ %.085, %bb.b ], [ %.085, %parse_pattern.exit ], [ true, %bb.i ], [ %.085, %bb.j ], [ %.085, %bb.k ], [ %.085, %bb.m ]
   %.084.be = phi i1 [ %.084, %bb.c ], [ true, %bb.d ], [ %.084, %bb.e ], [ %.084, %bb.b ], [ %.084, %parse_pattern.exit ], [ %.084, %bb.i ], [ %.084, %bb.j ], [ %.084, %bb.k ], [ %.084, %bb.m ]
   br label %bb.b, !llvm.loop !15
 
@@ -529,7 +529,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
 
 bb.ao:                                            ; preds = %bb.an, %bb.ak
   %.295 = phi i32 [ %.194, %bb.an ], [ 0, %bb.ak ] ; 2 uses
-  br i1 %.0106, label %bb.as, label %bb.ap
+  br i1 %.085, label %bb.as, label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao
   br i1 %.0104.a, label %bb.aq, label %bb.ar
@@ -930,34 +930,33 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %5, i8 0, i64 40, i1 false), !annotation !11
   br label %.outer
 
-.outer:                                           ; preds = %.loopexit163, %bb.a
-  %.052.ph = phi i1 [ true, %.loopexit163 ], [ false, %bb.a ]
-  %.050.ph = phi i1 [ %.050.ph124, %.loopexit163 ], [ false, %bb.a ]
-  %.046.ph = phi i32 [ %.046.ph130, %.loopexit163 ], [ 0, %bb.a ]
-  %.044.ph = phi i1 [ %.044.ph131, %.loopexit163 ], [ false, %bb.a ]
-  %.042.ph = phi i32 [ %.042.ph135, %.loopexit163 ], [ 0, %bb.a ]
-  %.041.ph = phi i1 [ %.041.lcssa139.a, %.loopexit163 ], [ false, %bb.a ]
+.outer:                                           ; preds = %.loopexit165, %bb.a
+  %.052.ph = phi i1 [ true, %.loopexit165 ], [ false, %bb.a ]
+  %.048.ph = phi i32 [ %.048.ph124, %.loopexit165 ], [ 0, %bb.a ]
+  %.050.ph = phi i1 [ %.050.ph124, %.loopexit165 ], [ false, %bb.a ]
+  %.046.ph = phi i32 [ %.046.ph130, %.loopexit165 ], [ 0, %bb.a ]
+  %.044.ph = phi i1 [ %.042.ph134, %.loopexit165 ], [ false, %bb.a ]
+  %.041.ph = phi i1 [ %.041.lcssa141, %.loopexit165 ], [ false, %bb.a ]
   br label %.outer123
 
-.outer123:                                        ; preds = %.outer, %.loopexit165
-  %.050.ph124 = phi i1 [ %.050.ph, %.outer ], [ true, %.loopexit165 ] ; 2 uses
-  %.046.ph125 = phi i32 [ %.046.ph, %.outer ], [ %.046.ph130, %.loopexit165 ]
-  %.044.ph126 = phi i1 [ %.044.ph, %.outer ], [ %.044.ph131, %.loopexit165 ]
-  %.042.ph127 = phi i32 [ %.042.ph, %.outer ], [ %.042.ph135, %.loopexit165 ]
-  %.041.ph128 = phi i1 [ %.041.ph, %.outer ], [ %.041.lcssa141, %.loopexit165 ]
+.outer123:                                        ; preds = %.outer, %parse_pattern.exit
+  %.048.ph124 = phi i32 [ %.048.ph, %.outer ], [ %i.k, %parse_pattern.exit ] ; 2 uses
+  %.050.ph124 = phi i1 [ %.050.ph, %.outer ], [ true, %parse_pattern.exit ] ; 2 uses
+  %.046.ph125 = phi i32 [ %.046.ph, %.outer ], [ %.046.ph130, %parse_pattern.exit ] ; 2 uses
+  %.044.ph126 = phi i1 [ %.044.ph, %.outer ], [ %.042.ph134, %parse_pattern.exit ]
+  %.041.ph128 = phi i1 [ %.041.ph, %.outer ], [ %.041.lcssa138.a, %parse_pattern.exit ]
+  %6 = or i32 %.046.ph125, 8
   br label %.outer129
 
-.outer129:                                        ; preds = %.outer123, %parse_pattern.exit
-  %.046.ph130 = phi i32 [ %.046.ph125, %.outer123 ], [ %i.k, %parse_pattern.exit ] ; 3 uses
-  %.044.ph131 = phi i1 [ %.044.ph126, %.outer123 ], [ true, %parse_pattern.exit ] ; 3 uses
-  %.042.ph132 = phi i32 [ %.042.ph127, %.outer123 ], [ %.042.ph135, %parse_pattern.exit ] ; 2 uses
-  %.041.ph133 = phi i1 [ %.041.ph128, %.outer123 ], [ %.041.lcssa138.a, %parse_pattern.exit ]
-  %6 = or i32 %.042.ph132, 8
+.outer129:                                        ; preds = %.outer123, %.loopexit164
+  %.046.ph130 = phi i32 [ %.046.ph125, %.outer123 ], [ %6, %.loopexit164 ] ; 4 uses
+  %.044.ph131 = phi i1 [ %.044.ph126, %.outer123 ], [ %.042.ph134, %.loopexit164 ]
+  %.041.ph133 = phi i1 [ %.041.ph128, %.outer123 ], [ %.041.lcssa140.a, %.loopexit164 ]
   br label %.outer134
 
-.outer134:                                        ; preds = %.outer129, %.loopexit164
-  %.042.ph135 = phi i32 [ %.042.ph132, %.outer129 ], [ %6, %.loopexit164 ] ; 5 uses
-  %.041.ph136 = phi i1 [ %.041.ph133, %.outer129 ], [ %.041.lcssa140.a, %.loopexit164 ] ; 5 uses
+.outer134:                                        ; preds = %.outer129, %.loopexit163
+  %.042.ph134 = phi i1 [ %.044.ph131, %.outer129 ], [ true, %.loopexit163 ] ; 4 uses
+  %.041.ph136 = phi i1 [ %.041.ph133, %.outer129 ], [ %.041.lcssa139.a, %.loopexit163 ] ; 5 uses
   %i.d = call i32 @getopt(i32 noundef %1, ptr noundef %2, ptr noundef nonnull @.str.58) #24
   switch i32 %i.d, label %.loopexit [
     i32 -1, label %.loopexit161
@@ -1002,19 +1001,19 @@ parse_pattern.exit.thread:                        ; preds = %.loopexit162.a, %bb
 parse_pattern.exit:                               ; preds = %bb.b
   %i.k = trunc nuw nsw i64 %i.g to i32
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #24
-  br label %.outer129, !llvm.loop !23
+  br label %.outer123, !llvm.loop !23
 
-.loopexit163:                                     ; preds = %.outer134, %.outer134.peel.newph
-  %.041.lcssa139.a = phi i1 [ true, %.outer134.peel.newph ], [ %.041.ph136, %.outer134 ]
-  br label %.outer, !llvm.loop !23
-
-.loopexit164:                                     ; preds = %.outer134.peel.newph, %.outer134
-  %.041.lcssa140.a = phi i1 [ %.041.ph136, %.outer134 ], [ true, %.outer134.peel.newph ]
+.loopexit163:                                     ; preds = %.outer134.peel.newph, %.outer134
+  %.041.lcssa139.a = phi i1 [ %.041.ph136, %.outer134 ], [ true, %.outer134.peel.newph ]
   br label %.outer134, !llvm.loop !23
+
+.loopexit164:                                     ; preds = %.outer134, %.outer134.peel.newph
+  %.041.lcssa140.a = phi i1 [ true, %.outer134.peel.newph ], [ %.041.ph136, %.outer134 ]
+  br label %.outer129, !llvm.loop !23
 
 .loopexit165:                                     ; preds = %.outer134, %.outer134.peel.newph
   %.041.lcssa141 = phi i1 [ true, %.outer134.peel.newph ], [ %.041.ph136, %.outer134 ]
-  br label %.outer123, !llvm.loop !23
+  br label %.outer, !llvm.loop !23
 
 .loopexit:                                        ; preds = %.outer134, %.outer134.peel.newph
   %i.l = call i32 (i32, ptr, ...) @__printf_chk(i32 noundef 1, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.56, ptr noundef nonnull @.str.57, ptr noundef nonnull @.str.21) #24 ; 0 uses
@@ -1067,7 +1066,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ag = sub i32 %1, %i.af
   %i.ah = sext i32 %i.af to i64
   %i.ai = getelementptr inbounds [8 x i8], ptr %2, i64 %i.ah
-  %i.aj = and i32 %.042.ph135, 8
+  %i.aj = and i32 %.046.ph130, 8
   %i.ak = icmp ne i32 %i.aj, 0                    ; 2 uses
   %i.al = call fastcc ptr @create_iovec(ptr noundef %0, ptr noundef nonnull %5, ptr noundef %i.ai, i32 noundef %i.ag, i32 noundef 171, i1 noundef zeroext %i.ak) ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -1077,7 +1076,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = call i32 @clock_gettime(i32 noundef 1, ptr noundef nonnull %3) #24 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i32 2147483647, ptr %i.a, align 4
-  %i.ao = call ptr @blk_aio_preadv(ptr noundef %0, i64 noundef range(i64 0, -9223372036854775808) %.0.i63, ptr noundef nonnull %5, i32 noundef range(i32 0, 16) %.042.ph135, ptr noundef nonnull @aio_rw_done, ptr noundef nonnull %i.a) #24 ; 0 uses
+  %i.ao = call ptr @blk_aio_preadv(ptr noundef %0, i64 noundef range(i64 0, -9223372036854775808) %.0.i63, ptr noundef nonnull %5, i32 noundef range(i32 0, 16) %.046.ph130, ptr noundef nonnull @aio_rw_done, ptr noundef nonnull %i.a) #24 ; 0 uses
   %i.ap = load i32, ptr %i.a, align 4             ; 2 uses
   %i.aq = icmp eq i32 %i.ap, 2147483647
   br i1 %i.aq, label %.lr.ph.i, label %do_aio_readv.exit
@@ -1104,13 +1103,13 @@ bb.h:                                             ; preds = %do_aio_readv.exit
   br label %bb.q
 
 bb.i:                                             ; preds = %do_aio_readv.exit
-  br i1 %.044.ph131, label %bb.j, label %bb.m
+  br i1 %.050.ph124, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
   %i.ba = load i64, ptr %i.at, align 8
   %i.bb = call noalias ptr @g_malloc(i64 noundef %i.ba) #26 ; 3 uses
   %i.bc = load i64, ptr %i.at, align 8            ; 3 uses
-  %i.bd = trunc i32 %.046.ph130 to i8
+  %i.bd = trunc i32 %.048.ph124 to i8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 %i.bb, i8 noundef %i.bd, i64 noundef %i.bc, i1 noundef false) #24
   %bcmp = call i32 @bcmp(ptr nonnull %i.al, ptr nonnull %i.bb, i64 %i.bc)
   %.not62 = icmp eq i32 %bcmp, 0
@@ -1127,10 +1126,10 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l, %bb.i
   %.149 = phi i32 [ %.048, %bb.l ], [ 0, %bb.i ]  ; 2 uses
-  br i1 %.052.ph, label %bb.q, label %bb.n
+  br i1 %.042.ph134, label %bb.q, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  br i1 %.050.ph124, label %bb.o, label %bb.p
+  br i1 %.052.ph, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.bf = load i64, ptr %i.at, align 8
