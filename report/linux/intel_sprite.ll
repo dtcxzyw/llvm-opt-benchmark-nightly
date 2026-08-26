@@ -182,7 +182,7 @@ ivb_plane_ratio.exit:                             ; preds = %bb.b, %bb.c, %bb.d,
 define dso_local i32 @hsw_plane_min_cdclk(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #0 align 16 prefalign(16) {
 hsw_plane_ratio.exit:
   %i.a = getelementptr i8, ptr %0, i64 872
-  %i.b = load i32, ptr %i.a, align 8
+  %i.b = load i32, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr i8, ptr %1, i64 192
   %.val3 = load ptr, ptr %i.c, align 8
   %i.d = getelementptr i8, ptr %.val3, i64 72
@@ -205,8 +205,8 @@ hsw_plane_ratio.exit:
   %i.n = mul i32 %.3.i, %i.b
   %i.o = select i1 %cond1.i, i32 7, i32 0
   %i.p = add i32 %i.o, %i.n
-  %2 = select i1 %cond1.i, i32 3, i32 0
-  %3 = lshr i32 %i.p, %2
+  %2 = lshr i32 %i.p, 3
+  %3 = select i1 %cond1.i, i32 %2, i32 %i.b
   ret i32 %3
 }
 

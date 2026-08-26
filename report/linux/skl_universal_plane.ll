@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %bb.c, %bb.b, %bb.d
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal i32 @skl_plane_min_cdclk(ptr noundef %0, ptr noundef %1) #2 align 16 prefalign(16) {
 bb.a:
-  %i.a = tail call i32 @intel_plane_pixel_rate(ptr noundef %0, ptr noundef %1) #10
+  %i.a = tail call i32 @intel_plane_pixel_rate(ptr noundef %0, ptr noundef %1) #10 ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 192
   %.val = load ptr, ptr %i.b, align 8
   %i.c = getelementptr i8, ptr %.val, i64 72
@@ -214,8 +214,8 @@ bb.a:
   %i.f = mul i32 %..i, %i.a
   %i.g = select i1 %i.e, i32 7, i32 0
   %i.h = add i32 %i.g, %i.f
-  %2 = select i1 %i.e, i32 3, i32 0
-  %3 = lshr i32 %i.h, %2
+  %2 = lshr i32 %i.h, 3
+  %3 = select i1 %i.e, i32 %2, i32 %i.a
   ret i32 %3
 }
 

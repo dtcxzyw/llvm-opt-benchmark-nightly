@@ -205,10 +205,9 @@ bb.ax:                                            ; preds = %bb.av, %bb.aw
   %i.im = load ptr, ptr %i.s, align 8, !tbaa !21
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 88
   %i.io = load i8, ptr %i.in, align 8, !tbaa !758, !range !128, !noundef !129
-  %i.ip = trunc nuw i8 %i.io to i1                ; 3 uses
-  %i.iq = select i1 %i.ip, i64 8, i64 4           ; 2 uses
-  %i.ir = select i1 %i.ip, i64 120, i64 60
-  %9 = add nsw i64 %i.iq, -1
+  %i.ip = trunc nuw i8 %i.io to i1                ; 4 uses
+  %i.iq = select i1 %i.ip, i64 120, i64 60
+  %i.ir = select i1 %i.ip, i64 7, i64 3
   %i.is = select i1 %i.ip, i64 3, i64 2
   br label %bb.bg
 
@@ -298,6 +297,7 @@ bb.bg:                                            ; preds = %.thread332, %._crit
   ]
 
 bb.bh:                                            ; preds = %bb.bg
+  %9 = select i1 %i.ip, i64 8, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
   %i.jz = getelementptr inbounds nuw i8, ptr %8, i64 40 ; 2 uses
   %i.ka = getelementptr inbounds nuw i8, ptr %8, i64 64 ; 28 uses
@@ -315,8 +315,8 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bg
   %i.ke = getelementptr inbounds nuw i8, ptr %.sroa.0181.0, i64 8 ; 2 uses
   %i.kf = load i64, ptr %i.ke, align 8, !tbaa !731 ; 3 uses
-  %i.kg = icmp ult i64 %i.kf, %i.ir
-  %i.kh = and i64 %i.kf, %9
+  %i.kg = icmp ult i64 %i.kf, %i.iq
+  %i.kh = and i64 %i.kf, %i.ir
   %i.ki = icmp eq i64 %i.kh, 0
   %or.cond = select i1 %i.kg, i1 %i.ki, i1 false
   br i1 %or.cond, label %bb.bj, label %.thread332
@@ -342,7 +342,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %bb.bg, !llvm.loop !848
 
 .critedge4:                                       ; preds = %bb.bm, %bb.cu, %bb.bh
-  %i.ko = call noundef nonnull align 8 dereferenceable(73) ptr @_ZN4LIEF15vector_iostream5alignEmh(ptr noundef nonnull align 8 dereferenceable(73) %8, i64 noundef %i.iq, i8 noundef zeroext 0) #26 ; 0 uses
+  %i.ko = call noundef nonnull align 8 dereferenceable(73) ptr @_ZN4LIEF15vector_iostream5alignEmh(ptr noundef nonnull align 8 dereferenceable(73) %8, i64 noundef %9, i8 noundef zeroext 0) #26 ; 0 uses
   %i.kp = load ptr, ptr %i.ka, align 8, !tbaa !837 ; 2 uses
   %i.kq = getelementptr inbounds nuw i8, ptr %i.kp, i64 8
   %i.kr = load ptr, ptr %i.kq, align 8, !tbaa !63 ; 2 uses
@@ -745,8 +745,8 @@ bb.a:
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !21
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 88
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !758, !range !128, !noundef !129
-  %i.al = trunc nuw i8 %i.ak to i1                ; 3 uses
-  %i.am = select i1 %i.al, i64 8, i64 4           ; 2 uses
+  %i.al = trunc nuw i8 %i.ak to i1                ; 4 uses
+  %i.am = select i1 %i.al, i64 8, i64 4
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !714 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -1149,7 +1149,7 @@ bb.ad:                                            ; preds = %bb.ab, %bb.ac
   %.sroa.0212.2.lcssa = phi ptr [ %i.gb, %bb.z ], [ %.sroa.0212.3, %._crit_edge287.loopexit ] ; 2 uses
   store i8 0, ptr %.sroa.0212.2.lcssa, align 8, !tbaa !887
   %i.gn = select i1 %i.al, i64 120, i64 60
-  %10 = add nsw i64 %i.am, -1
+  %.v = select i1 %i.al, i64 7, i64 3
   %i.go = select i1 %i.al, i64 3, i64 2
   br label %bb.ak
 
@@ -1250,7 +1250,7 @@ bb.am:                                            ; preds = %bb.ak
   %i.hx = getelementptr inbounds nuw i8, ptr %.sroa.0180.0, i64 8 ; 2 uses
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !889 ; 3 uses
   %i.hz = icmp ult i64 %i.hy, %i.gn
-  %i.ia = and i64 %i.hy, %10
+  %i.ia = and i64 %i.hy, %.v
   %i.ib = icmp eq i64 %i.ia, 0
   %or.cond = select i1 %i.hz, i1 %i.ib, i1 false
   br i1 %or.cond, label %bb.an, label %.thread264
@@ -1653,8 +1653,8 @@ bb.a:
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !21
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 88
   %i.ao = load i8, ptr %i.an, align 8, !tbaa !758, !range !128, !noundef !129
-  %i.ap = trunc nuw i8 %i.ao to i1                ; 3 uses
-  %i.aq = select i1 %i.ap, i64 8, i64 4           ; 2 uses
+  %i.ap = trunc nuw i8 %i.ao to i1                ; 4 uses
+  %i.aq = select i1 %i.ap, i64 8, i64 4
   %i.ar = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !714 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -2057,7 +2057,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
   %.sroa.0225.2.lcssa = phi ptr [ %i.gx, %bb.ag ], [ %.sroa.0225.3, %._crit_edge304.loopexit ] ; 2 uses
   store i8 0, ptr %.sroa.0225.2.lcssa, align 8, !tbaa !887
   %i.hj = select i1 %i.ap, i64 120, i64 60
-  %10 = add nsw i64 %i.aq, -1
+  %.v = select i1 %i.ap, i64 7, i64 3
   %i.hk = select i1 %i.ap, i64 3, i64 2
   br label %bb.ar
 
@@ -2158,7 +2158,7 @@ bb.at:                                            ; preds = %bb.ar
   %i.it = getelementptr inbounds nuw i8, ptr %.sroa.0193.0, i64 8 ; 2 uses
   %i.iu = load i64, ptr %i.it, align 8, !tbaa !889 ; 3 uses
   %i.iv = icmp ult i64 %i.iu, %i.hj
-  %i.iw = and i64 %i.iu, %10
+  %i.iw = and i64 %i.iu, %.v
   %i.ix = icmp eq i64 %i.iw, 0
   %or.cond = select i1 %i.iv, i1 %i.ix, i1 false
   br i1 %or.cond, label %bb.au, label %.thread279

@@ -205,9 +205,10 @@ _ZN11duckdb_zstdL23ZSTD_allocateChainTableENS_13ZSTD_strategyENS_18ZSTD_paramSwi
   %i.s = icmp eq i32 %i.h, 3                      ; 2 uses
   %i.t = icmp ne i32 %7, 0
   %i.u = or i1 %i.t, %i.s
-  %11 = select i1 %i.u, i64 3, i64 4
-  %12 = udiv i64 %i.f, %11                        ; 2 uses
-  %i.v = shl i64 %12, 3
+  %11 = udiv i64 %i.f, 3                          ; 2 uses
+  %12 = lshr i64 %i.f, 2
+  %13 = select i1 %i.u, i64 %11, i64 %12          ; 2 uses
+  %i.v = shl i64 %13, 3
   %i.w = add i64 %i.v, 56
   %i.x = and i64 %i.w, -64
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -241,27 +242,26 @@ _ZN11duckdb_zstdL23ZSTD_allocateChainTableENS_13ZSTD_strategyENS_18ZSTD_paramSwi
   %i.au = and i64 %i.at, -64
   %i.av = select i1 %i.ar, i64 %i.au, i64 0
   %.not = icmp eq i32 %2, 0
-  %13 = udiv i64 %i.f, 3
   %i.aw = lshr i64 %i.f, 10
   %i.ax = add nuw nsw i64 %i.aw, 2
-  %i.ay = add nuw nsw i64 %i.ax, %13
+  %i.ay = add nuw nsw i64 %i.ax, %11
   %.not43 = icmp eq i32 %7, 0
   %i.az = shl i64 %i.ay, 4
   %i.ba = add i64 %i.az, 48
   %i.bb = and i64 %i.ba, -64
   %i.bc = select i1 %.not43, i64 0, i64 %i.bb
-  %i.bd = mul nuw nsw i64 %12, 3
+  %i.bd = mul nuw nsw i64 %13, 3
   %i.be = select i1 %.not, i64 20184, i64 25432
   %i.bf = add i64 %4, 32
   %i.bg = add i64 %i.bf, %i.be
   %i.bh = add i64 %i.bg, %5
   %i.bi = add i64 %i.bh, %i.f
   %i.bj = add i64 %i.bi, %i.an
-  %i.bk = add i64 %i.bj, %i.am
-  %i.bl = add i64 %i.bk, %i.bc
-  %i.bm = add i64 %i.bl, %i.r
-  %i.bn = add i64 %i.bm, %i.bd
-  %i.bo = add i64 %i.bn, %i.x
+  %i.bk = add i64 %i.bj, %i.bd
+  %i.bl = add i64 %i.bk, %i.am
+  %i.bm = add i64 %i.bl, %i.x
+  %i.bn = add i64 %i.bm, %i.bc
+  %i.bo = add i64 %i.bn, %i.r
   %i.bp = add i64 %i.bo, %i.aj
   %i.bq = add i64 %i.bp, %i.ao
   %i.br = add i64 %i.bq, %i.ah
@@ -664,7 +664,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %spec.select304 = select i1 %i.l, i64 1, i64 %. ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 2 uses
   %i.n = load i64, ptr %i.m, align 8, !tbaa !94
-  %.189 = tail call i64 @llvm.umin.i64(i64 %i.n, i64 %spec.select304) ; 16 uses
+  %.189 = tail call i64 @llvm.umin.i64(i64 %i.n, i64 %spec.select304) ; 13 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 252
   %i.p = load i32, ptr %i.o, align 4, !tbaa !109
   %i.q = getelementptr i8, ptr %0, i64 424        ; 3 uses
@@ -672,8 +672,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.r = icmp ne ptr %.val196, null
   %i.s = icmp eq i32 %i.p, 3
   %i.t = or i1 %i.s, %i.r
-  %6 = select i1 %i.t, i64 3, i64 4               ; 4 uses
-  %7 = udiv i64 %.189, %6                         ; 5 uses
+  %6 = udiv i64 %.189, 3                          ; 2 uses
+  %7 = lshr i64 %.189, 2
+  %8 = select i1 %i.t, i64 %6, i64 %7             ; 8 uses
   %i.u = icmp eq i32 %5, 1
   br i1 %i.u, label %bb.d, label %bb.f
 
@@ -977,7 +978,7 @@ bb.x:                                             ; preds = %_ZN11duckdb_zstdL16
   br i1 %i.ej, label %bb.y, label %.thread290
 
 bb.y:                                             ; preds = %bb.x
-  %i.ek = shl i64 %7, 3
+  %i.ek = shl i64 %8, 3
   %i.el = add i64 %i.ek, 56
   %i.em = and i64 %i.el, -64                      ; 2 uses
   %i.en = load i32, ptr %i.di, align 8, !tbaa !353 ; 4 uses
@@ -1238,10 +1239,9 @@ bb.ba:                                            ; preds = %_ZN11duckdb_zstdL26
   br i1 %.not311, label %bb.bk, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %8 = udiv i64 %.189, 3
   %i.ib = lshr i64 %.189, 10
   %i.ic = add nuw nsw i64 %i.ib, 2
-  %i.id = add nuw nsw i64 %i.ic, %8               ; 2 uses
+  %i.id = add nuw nsw i64 %i.ic, %6               ; 2 uses
   %i.ie = getelementptr inbounds nuw i8, ptr %0, i64 5240
   store i64 %i.id, ptr %i.ie, align 8, !tbaa !433
   %i.if = shl i64 %i.id, 4
@@ -1632,7 +1632,7 @@ bb.cr:                                            ; preds = %_ZN11duckdb_zstdL25
   %i.nm = getelementptr inbounds nuw i8, ptr %0, i64 3160
   %i.nn = getelementptr inbounds nuw i8, ptr %0, i64 1008
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.nm, i8 0, i64 40, i1 false)
-  store i64 %7, ptr %i.nn, align 8, !tbaa !388
+  store i64 %8, ptr %i.nn, align 8, !tbaa !388
   %i.no = icmp slt i32 %i.nl, 3
   br i1 %i.no, label %bb.cs, label %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i254
 
@@ -1672,12 +1672,12 @@ bb.cv:                                            ; preds = %bb.cu
   br label %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i254
 
 _ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i254: ; preds = %.thread.i.i.i256, %bb.cr
-  %9 = icmp ugt i64 %6, %.189
+  %9 = icmp eq i64 %8, 0
   br i1 %9, label %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_bufferEPNS_10ZSTD_cwkspEm.exit259.thread, label %bb.cw
 
 bb.cw:                                            ; preds = %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i254
   %i.ob = load ptr, ptr %i.bv, align 8, !tbaa !423
-  %i.oc = sub nsw i64 0, %7
+  %i.oc = sub nsw i64 0, %8
   %i.od = getelementptr inbounds i8, ptr %i.ob, i64 %i.oc ; 5 uses
   %i.oe = load ptr, ptr %i.bu, align 8, !tbaa !68
   %i.of = icmp ult ptr %i.od, %i.oe
@@ -1741,12 +1741,12 @@ bb.dd:                                            ; preds = %bb.dc
   br label %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i260
 
 _ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i260: ; preds = %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_bufferEPNS_10ZSTD_cwkspEm.exit259.thread, %.thread.i.i.i262
-  %10 = icmp ugt i64 %6, %.189
+  %10 = icmp eq i64 %8, 0
   br i1 %10, label %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_bufferEPNS_10ZSTD_cwkspEm.exit265.thread, label %bb.de
 
 bb.de:                                            ; preds = %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i260
   %i.ow = load ptr, ptr %i.bv, align 8, !tbaa !423
-  %i.ox = sub nsw i64 0, %7
+  %i.ox = sub nsw i64 0, %8
   %i.oy = getelementptr inbounds i8, ptr %i.ow, i64 %i.ox ; 5 uses
   %i.oz = load ptr, ptr %i.bu, align 8, !tbaa !68
   %i.pa = icmp ult ptr %i.oy, %i.oz
@@ -1810,12 +1810,12 @@ bb.dl:                                            ; preds = %bb.dk
   br label %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i266
 
 _ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i266: ; preds = %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_bufferEPNS_10ZSTD_cwkspEm.exit265.thread, %.thread.i.i.i268
-  %11 = icmp ugt i64 %6, %.189
+  %11 = icmp eq i64 %8, 0
   br i1 %11, label %_ZN11duckdb_zstdL25ZSTD_cwksp_reserve_bufferEPNS_10ZSTD_cwkspEm.exit271, label %bb.dm
 
 bb.dm:                                            ; preds = %_ZN11duckdb_zstdL33ZSTD_cwksp_internal_advance_phaseEPNS_10ZSTD_cwkspENS_24ZSTD_cwksp_alloc_phase_eE.exit.i.i266
   %i.pr = load ptr, ptr %i.bv, align 8, !tbaa !423
-  %i.ps = sub nsw i64 0, %7
+  %i.ps = sub nsw i64 0, %8
   %i.pt = getelementptr inbounds i8, ptr %i.pr, i64 %i.ps ; 5 uses
   %i.pu = load ptr, ptr %i.bu, align 8, !tbaa !68
   %i.pv = icmp ult ptr %i.pt, %i.pu

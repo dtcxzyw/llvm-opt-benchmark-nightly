@@ -204,7 +204,7 @@ bb.bl:                                            ; preds = %.thread152.i, %_ZN4
   %i.qa = phi ptr [ %.pre201.i, %.thread152.i ], [ %i.kg, %_ZN4llvm5ErrorD2Ev.exit.i38 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #18, !noalias !142
   call void @_ZNK4llvm6object10ObjectFile10makeTripleEv(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Triple") align 8 %21, ptr noundef nonnull align 8 dereferenceable(48) %i.qa) #18, !noalias !142
-  %i.qb = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch32BitEv(ptr noundef nonnull align 8 dereferenceable(56) %21) #18, !noalias !142 ; 4 uses
+  %i.qb = call noundef zeroext i1 @_ZNK4llvm6Triple11isArch32BitEv(ptr noundef nonnull align 8 dereferenceable(56) %21) #18, !noalias !142 ; 5 uses
   %i.qc = load ptr, ptr %21, align 8, !tbaa !135, !noalias !142 ; 2 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
   %i.qe = icmp eq ptr %i.qc, %i.qd
@@ -218,12 +218,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN4llvm6TripleD2Ev.exit.i:                       ; preds = %bb.bl, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #18, !noalias !142
-  %i.qh = select i1 %i.qb, i64 16, i64 32         ; 3 uses
+  %i.qh = select i1 %i.qb, i64 16, i64 32         ; 2 uses
   %i.qi = getelementptr inbounds nuw i8, ptr %.sroa.0.0133143148.i, i64 %.sroa.13.0135141149.i
   %i.qj = ptrtoint ptr %.sroa.0.0133143148.i to i64 ; 5 uses
   %gepdiff.i = sub nsw i64 0, %.sroa.13.0135141149.i
-  %46 = add nsw i64 %i.qh, -1
-  %i.qk = and i64 %46, %gepdiff.i
+  %.v.i = select i1 %i.qb, i64 15, i64 31
+  %i.qk = and i64 %.v.i, %gepdiff.i
   %.not105.i = icmp eq i64 %i.qk, 0
   br i1 %.not105.i, label %bb.bn, label %bb.bm
 
