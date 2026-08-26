@@ -205,13 +205,14 @@ bb.ai:                                            ; preds = %can_reclaim_anon_pa
   %.sroa.5.0.i.i.i138 = phi i64 [ %i.fk, %bb.ag ], [ 0, %bb.ah ], [ 0, %bb.ai ] ; 3 uses
   %.sroa.0.0.i.i.i134 = phi i64 [ %i.fg, %bb.ag ], [ 0, %bb.ah ], [ 0, %bb.ai ] ; 4 uses
   %.fr396 = freeze i8 %i.fq                       ; 6 uses
-  %i.fr = zext nneg i8 %.fr396 to i32             ; 4 uses
-  %8 = add nuw nsw i32 %i.fr, 1                   ; 2 uses
+  %narrow = add nuw i8 %.fr396, 1                 ; 3 uses
+  %i.fr = zext i8 %narrow to i32                  ; 4 uses
+  %xtraiter = and i32 %i.fr, 1
   %i.fs = icmp eq i8 %.fr396, 0
   br i1 %i.fs, label %.lr.ph.i.i.i.i.epil.preheader, label %.lr.ph.i.preheader.i.i.i.new
 
 .lr.ph.i.preheader.i.i.i.new:                     ; preds = %.lr.ph.i.preheader.i.i.i
-  %unroll_iter = and i32 %8, 254
+  %unroll_iter = and i32 %i.fr, 254
   br label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.al, %.lr.ph.i.preheader.i.i.i.new
@@ -252,14 +253,13 @@ bb.al:                                            ; preds = %bb.ak, %.lr.ph.i.i.
   br i1 %niter.ncmp.1, label %lruvec_lru_size.exit.i.i.i.unr-lcssa, label %.lr.ph.i.i.i.i, !llvm.loop !61
 
 lruvec_lru_size.exit.i.i.i.unr-lcssa:             ; preds = %bb.al
-  %9 = and i32 %i.fr, 1
-  %lcmp.mod.not.not = icmp eq i32 %9, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.i.i.epil.preheader, label %lruvec_lru_size.exit.i.i.i
+  %lcmp.mod.not.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not.not, label %lruvec_lru_size.exit.i.i.i, label %.lr.ph.i.i.i.i.epil.preheader
 
 .lr.ph.i.i.i.i.epil.preheader:                    ; preds = %lruvec_lru_size.exit.i.i.i.unr-lcssa, %.lr.ph.i.preheader.i.i.i
   %.019.i.i.i.i.epil.init = phi ptr [ %0, %.lr.ph.i.preheader.i.i.i ], [ %i.gd, %lruvec_lru_size.exit.i.i.i.unr-lcssa ] ; 2 uses
   %.01417.i.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i.i.i ], [ %.1.i.i.i.i.1, %lruvec_lru_size.exit.i.i.i.unr-lcssa ] ; 2 uses
-  %lcmp.mod377 = trunc i32 %8 to i1
+  %lcmp.mod377 = trunc i8 %narrow to i1
   call void @llvm.assume(i1 %lcmp.mod377)
   %i.ge = getelementptr i8, ptr %.019.i.i.i.i.epil.init, i64 144
   %i.gf = load volatile i64, ptr %i.ge, align 8
@@ -321,12 +321,12 @@ default.unreachable:                              ; preds = %lruvec_lru_size.exi
   %.sink = phi i64 [ %spec.select.i.i.i, %.split ], [ %i.gt, %.split186 ], [ %i.gm, %lruvec_lru_size.exit.i.i.i ] ; 4 uses
   %.0.i.i.i156180 = phi i32 [ %.0.i.i.i154, %.split ], [ 1, %.split186 ], [ %.0.i.i.i154, %lruvec_lru_size.exit.i.i.i ] ; 3 uses
   store i64 %.sink, ptr %i.b, align 16
-  %10 = add nuw nsw i32 %i.fr, 1                  ; 2 uses
+  %xtraiter378 = and i32 %i.fr, 1
   %i.gu = icmp eq i8 %.fr396, 0
   br i1 %i.gu, label %.lr.ph.i.1.i.i.i.epil.preheader, label %.lr.ph.i.preheader.1.i.i.i.new
 
 .lr.ph.i.preheader.1.i.i.i.new:                   ; preds = %.lr.ph.i.preheader.1.i.i.i
-  %unroll_iter382 = and i32 %10, 254
+  %unroll_iter382 = and i32 %i.fr, 254
   br label %.lr.ph.i.1.i.i.i
 
 .lr.ph.i.1.i.i.i:                                 ; preds = %bb.ap, %.lr.ph.i.preheader.1.i.i.i.new
@@ -367,14 +367,13 @@ bb.ap:                                            ; preds = %bb.ao, %.lr.ph.i.1.
   br i1 %niter383.ncmp.1, label %lruvec_lru_size.exit.1.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.1.i.i.i, !llvm.loop !61
 
 lruvec_lru_size.exit.1.i.i.i.loopexit.unr-lcssa:  ; preds = %bb.ap
-  %11 = and i32 %i.fr, 1
-  %lcmp.mod379.not.not = icmp eq i32 %11, 0
-  br i1 %lcmp.mod379.not.not, label %.lr.ph.i.1.i.i.i.epil.preheader, label %lruvec_lru_size.exit.1.i.i.i
+  %lcmp.mod379.not.not = icmp eq i32 %xtraiter378, 0
+  br i1 %lcmp.mod379.not.not, label %lruvec_lru_size.exit.1.i.i.i, label %.lr.ph.i.1.i.i.i.epil.preheader
 
 .lr.ph.i.1.i.i.i.epil.preheader:                  ; preds = %lruvec_lru_size.exit.1.i.i.i.loopexit.unr-lcssa, %.lr.ph.i.preheader.1.i.i.i
   %.019.i.1.i.i.i.epil.init = phi ptr [ %0, %.lr.ph.i.preheader.1.i.i.i ], [ %i.hf, %lruvec_lru_size.exit.1.i.i.i.loopexit.unr-lcssa ] ; 2 uses
   %.01417.i.1.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.1.i.i.i ], [ %.1.i.1.i.i.i.1, %lruvec_lru_size.exit.1.i.i.i.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod381 = trunc i32 %10 to i1
+  %lcmp.mod381 = trunc i8 %narrow to i1
   call void @llvm.assume(i1 %lcmp.mod381)
   %i.hg = getelementptr i8, ptr %.019.i.1.i.i.i.epil.init, i64 144
   %i.hh = load volatile i64, ptr %i.hg, align 8

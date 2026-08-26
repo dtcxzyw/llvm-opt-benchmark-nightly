@@ -205,8 +205,8 @@ _ZNK2cv8MatShapeixEm.exit108:                     ; preds = %_ZNK2cv8MatShapeixE
   %wide.trip.count = zext nneg i32 %i.do to i64   ; 2 uses
   %i.dp = add nsw i32 %i.bp, -2
   %wide.trip.count166 = zext i32 %i.dp to i64     ; 5 uses
-  %wide.trip.count168 = zext nneg i32 %.fr to i64 ; 5 uses
-  %i.dq = add nsw i64 %wide.trip.count168, -1
+  %wide.trip.count168 = zext nneg i32 %.fr to i64 ; 3 uses
+  %i.dq = add nsw i64 %wide.trip.count168, -1     ; 3 uses
   %i.dr = tail call i64 @llvm.umin.i64(i64 %wide.trip.count166, i64 %wide.trip.count)
   %i.ds = tail call i64 @llvm.umin.i64(i64 %i.dq, i64 %i.dr) ; 2 uses
   %min.iters.check = icmp samesign ult i64 %i.ds, 8
@@ -354,8 +354,7 @@ _ZNK2cv8MatShapeixEm.exit120:                     ; preds = %_ZNK2cv8MatShapeixE
   store i32 1, ptr %i.fg, align 4, !tbaa !35
   %i.fh = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i32 1, ptr %i.fh, align 4, !tbaa !35
-  %34 = add nsw i64 %wide.trip.count168, -1
-  %i.fi = tail call i64 @llvm.umin.i64(i64 %34, i64 %wide.trip.count166) ; 2 uses
+  %i.fi = tail call i64 @llvm.umin.i64(i64 %i.dq, i64 %wide.trip.count166) ; 2 uses
   %i.fj = add nuw nsw i64 %i.fi, 1                ; 2 uses
   %min.iters.check297 = icmp samesign ult i64 %i.fi, 8
   br i1 %min.iters.check297, label %scalar.ph296.preheader, label %vector.scevcheck
@@ -366,8 +365,7 @@ scalar.ph296.preheader:                           ; preds = %vector.body300, %ve
   br label %scalar.ph296
 
 vector.scevcheck:                                 ; preds = %.lr.ph152
-  %35 = add nsw i64 %wide.trip.count168, -1
-  %umin = tail call i64 @llvm.umin.i64(i64 %35, i64 %wide.trip.count166)
+  %umin = tail call i64 @llvm.umin.i64(i64 %i.dq, i64 %wide.trip.count166)
   %i.fk = sub nsw i32 3, %.fr                     ; 2 uses
   %i.fl = trunc nuw i64 %umin to i32
   %i.fm = add i32 %i.fk, %i.fl
