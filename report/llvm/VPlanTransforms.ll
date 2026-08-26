@@ -205,11 +205,11 @@ bb.ad:                                            ; preds = %bb.ac, %_ZN4llvmplE
   store i32 2, ptr %i.in, align 4, !tbaa !15
   store ptr %i.id, ptr %i.il, align 8
   store i32 1, ptr %i.im, align 8, !tbaa !14
+  %32 = getelementptr inbounds nuw i8, ptr %i.id, i64 16 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.id, i64 24 ; 3 uses
   %.pre.i.i.i.a = load i32, ptr %.phi.trans.insert.i.i.i, align 8, !tbaa !14 ; 2 uses
   %.phi.trans.insert4.i.i.i = getelementptr inbounds nuw i8, ptr %i.id, i64 28
   %.pre5.i.i.i = load i32, ptr %.phi.trans.insert4.i.i.i, align 4, !tbaa !15
-  %32 = getelementptr inbounds nuw i8, ptr %i.id, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i.i48.i = icmp ult i32 %.pre.i.i.i.a, %.pre5.i.i.i
   br i1 %.not.i.i.i.i.i.i.i48.i, label %bb.af, label %bb.ae, !prof !150
 
@@ -612,7 +612,7 @@ bb.au:                                            ; preds = %.lr.ph.i
   store ptr %i.oj, ptr %i.om, align 8, !tbaa !111, !noalias !1022
   %i.pa = getelementptr inbounds nuw i8, ptr %i.om, i64 8 ; 2 uses
   store ptr null, ptr %i.pa, align 8, !tbaa !1030, !noalias !1022
-  %i.pb = load ptr, ptr %.069150, align 8, !tbaa !111 ; 6 uses
+  %i.pb = load ptr, ptr %.069150, align 8, !tbaa !111 ; 5 uses
   %i.pc = getelementptr inbounds nuw i8, ptr %i.pb, i64 8
   %i.pd = load i8, ptr %i.pc, align 8, !tbaa !399
   %i.pe = icmp eq i8 %i.pd, 0
@@ -647,11 +647,11 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i:
   store i32 2, ptr %i.po, align 4, !tbaa !15
   store ptr %i.pb, ptr %i.pm, align 8
   store i32 1, ptr %i.pn, align 8, !tbaa !14
-  %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %i.pb, i64 24
+  %13 = getelementptr inbounds nuw i8, ptr %i.pb, i64 16 ; 2 uses
+  %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %i.pb, i64 24 ; 3 uses
   %.pre166.a = load i32, ptr %.phi.trans.insert.a, align 8, !tbaa !14 ; 2 uses
   %.phi.trans.insert167 = getelementptr inbounds nuw i8, ptr %i.pb, i64 28
   %.pre168 = load i32, ptr %.phi.trans.insert167, align 4, !tbaa !15
-  %13 = getelementptr inbounds nuw i8, ptr %i.pb, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i106 = icmp ult i32 %.pre166.a, %.pre168
   br i1 %.not.i.i.i.i.i.i106, label %bb.ax, label %bb.aw, !prof !150
 
@@ -660,14 +660,13 @@ bb.aw:                                            ; preds = %_ZN4llvm23SmallVect
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i
 
 bb.ax:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i
-  %14 = getelementptr inbounds nuw i8, ptr %i.pb, i64 24 ; 2 uses
   %i.pp = zext i32 %.pre166.a to i64
   %i.pq = load ptr, ptr %13, align 8, !tbaa !12
   %i.pr = getelementptr inbounds nuw [8 x i8], ptr %i.pq, i64 %i.pp
   store ptr %i.pk, ptr %i.pr, align 1
-  %i.ps = load i32, ptr %14, align 8, !tbaa !14
+  %i.ps = load i32, ptr %.phi.trans.insert.a, align 8, !tbaa !14
   %i.pt = add i32 %i.ps, 1
-  store i32 %i.pt, ptr %14, align 8, !tbaa !14
+  store i32 %i.pt, ptr %.phi.trans.insert.a, align 8, !tbaa !14
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i
 
 _ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i: ; preds = %bb.ax, %bb.aw
@@ -1070,7 +1069,7 @@ bb.ae:                                            ; preds = %_ZN4llvm12VPIRMetad
   store i16 0, ptr %i.iq, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %84) #25
   store i16 257, ptr %i.ir, align 8
-  %i.si = call noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #26 ; 12 uses
+  %i.si = call noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #26 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %74) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.is, i8 0, i64 48, i1 false)
   store ptr %i.is, ptr %74, align 8, !tbaa !12
@@ -1154,11 +1153,11 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i3
   store i32 2, ptr %i.tf, align 4, !tbaa !15
   store ptr %i.sk, ptr %i.td, align 8
   store i32 1, ptr %i.te, align 8, !tbaa !14
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.si, i64 120
+  %129 = getelementptr inbounds nuw i8, ptr %i.si, i64 112 ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.si, i64 120 ; 3 uses
   %.pre481 = load i32, ptr %.phi.trans.insert, align 8, !tbaa !14 ; 2 uses
   %.phi.trans.insert482 = getelementptr inbounds nuw i8, ptr %i.si, i64 124
   %.pre483 = load i32, ptr %.phi.trans.insert482, align 4, !tbaa !15
-  %129 = getelementptr inbounds nuw i8, ptr %i.si, i64 112 ; 2 uses
   %.not.i.i.i.i.i.i357 = icmp ult i32 %.pre481, %.pre483
   br i1 %.not.i.i.i.i.i.i357, label %bb.ai, label %bb.ah, !prof !150
 
@@ -1167,14 +1166,13 @@ bb.ah:                                            ; preds = %_ZN4llvm23SmallVect
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i358
 
 bb.ai:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i356
-  %130 = getelementptr inbounds nuw i8, ptr %i.si, i64 120 ; 2 uses
   %i.tg = zext i32 %.pre481 to i64
   %i.th = load ptr, ptr %129, align 8, !tbaa !12
   %i.ti = getelementptr inbounds nuw [8 x i8], ptr %i.th, i64 %i.tg
   store ptr %i.tb, ptr %i.ti, align 1
-  %i.tj = load i32, ptr %130, align 8, !tbaa !14
+  %i.tj = load i32, ptr %.phi.trans.insert, align 8, !tbaa !14
   %i.tk = add i32 %i.tj, 1
-  store i32 %i.tk, ptr %130, align 8, !tbaa !14
+  store i32 %i.tk, ptr %.phi.trans.insert, align 8, !tbaa !14
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i358
 
 _ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i358: ; preds = %bb.ai, %bb.ah
@@ -1413,7 +1411,7 @@ _ZN4llvm9VPBuilder12createNaryOpEjNS_8ArrayRefIPNS_7VPValueEEERKNS_9VPIRFlagsENS
   store i8 1, ptr %i.jp, align 1, !tbaa !109
   store ptr @.str.42, ptr %92, align 8, !tbaa !110
   store i8 3, ptr %i.jo, align 8, !tbaa !106
-  %i.vm = call noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #26 ; 9 uses
+  %i.vm = call noalias noundef nonnull dereferenceable(264) ptr @_Znwm(i64 noundef 264) #26 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %72) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.jq, i8 0, i64 48, i1 false)
   store ptr %i.jq, ptr %72, align 8, !tbaa !12
@@ -1475,27 +1473,26 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i:
   store i32 2, ptr %i.wf, align 4, !tbaa !15
   store ptr %i.vv, ptr %i.wd, align 8
   store i32 1, ptr %i.we, align 8, !tbaa !14
-  %.phi.trans.insert484 = getelementptr inbounds nuw i8, ptr %i.vm, i64 120
+  %130 = getelementptr inbounds nuw i8, ptr %i.vm, i64 112 ; 2 uses
+  %.phi.trans.insert484 = getelementptr inbounds nuw i8, ptr %i.vm, i64 120 ; 3 uses
   %.pre485 = load i32, ptr %.phi.trans.insert484, align 8, !tbaa !14 ; 2 uses
   %.phi.trans.insert486 = getelementptr inbounds nuw i8, ptr %i.vm, i64 124
   %.pre487 = load i32, ptr %.phi.trans.insert486, align 4, !tbaa !15
-  %131 = getelementptr inbounds nuw i8, ptr %i.vm, i64 112 ; 2 uses
   %.not.i.i.i.i.i.i = icmp ult i32 %.pre485, %.pre487
   br i1 %.not.i.i.i.i.i.i, label %bb.aw, label %bb.av, !prof !150
 
 bb.av:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i
-  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %131, ptr noundef nonnull align 8 dereferenceable(40) %i.wb)
+  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %130, ptr noundef nonnull align 8 dereferenceable(40) %i.wb)
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i
 
 bb.aw:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i
-  %132 = getelementptr inbounds nuw i8, ptr %i.vm, i64 120 ; 2 uses
   %i.wg = zext i32 %.pre485 to i64
-  %i.wh = load ptr, ptr %131, align 8, !tbaa !12
+  %i.wh = load ptr, ptr %130, align 8, !tbaa !12
   %i.wi = getelementptr inbounds nuw [8 x i8], ptr %i.wh, i64 %i.wg
   store ptr %i.wb, ptr %i.wi, align 1
-  %i.wj = load i32, ptr %132, align 8, !tbaa !14
+  %i.wj = load i32, ptr %.phi.trans.insert484, align 8, !tbaa !14
   %i.wk = add i32 %i.wj, 1
-  store i32 %i.wk, ptr %132, align 8, !tbaa !14
+  store i32 %i.wk, ptr %.phi.trans.insert484, align 8, !tbaa !14
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i
 
 _ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i: ; preds = %bb.aw, %bb.av
@@ -1898,10 +1895,11 @@ bb.bv:                                            ; preds = %bb.bu
 _ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i577: ; preds = %bb.bv
   %i.ve = getelementptr inbounds i8, ptr %i.uj, i64 -24
   %i.vf = load ptr, ptr %i.ve, align 8, !tbaa !151 ; 3 uses
+  %54 = getelementptr inbounds i8, ptr %i.uj, i64 -80 ; 6 uses
   %i.vg = load ptr, ptr %i.up, align 8, !tbaa !12
   %i.vh = getelementptr inbounds nuw i8, ptr %i.vg, i64 8
-  %i.vi = load ptr, ptr %i.vh, align 8, !tbaa !111 ; 5 uses
-  %i.vj = call noalias noundef nonnull dereferenceable(232) ptr @_Znwm(i64 noundef 232) #26 ; 27 uses
+  %i.vi = load ptr, ptr %i.vh, align 8, !tbaa !111 ; 4 uses
+  %i.vj = call noalias noundef nonnull dereferenceable(232) ptr @_Znwm(i64 noundef 232) #26 ; 26 uses
   %i.vk = call i24 @_ZN4llvm9VPIRFlags15getDefaultFlagsEjPNS_4TypeE(i32 noundef 39, ptr noundef null) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.md, i8 0, i64 48, i1 false)
@@ -1923,31 +1921,29 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i5
   store i32 2, ptr %i.vr, align 4, !tbaa !15
   store ptr %i.vi, ptr %i.vp, align 8
   store i32 1, ptr %i.vq, align 8, !tbaa !14
-  %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %i.vi, i64 24
+  %55 = getelementptr inbounds nuw i8, ptr %i.vi, i64 16 ; 2 uses
+  %.phi.trans.insert.a = getelementptr inbounds nuw i8, ptr %i.vi, i64 24 ; 3 uses
   %.pre806.a = load i32, ptr %.phi.trans.insert.a, align 8, !tbaa !14 ; 2 uses
   %.phi.trans.insert807.a = getelementptr inbounds nuw i8, ptr %i.vi, i64 28
   %.pre808.a = load i32, ptr %.phi.trans.insert807.a, align 4, !tbaa !15
-  %54 = getelementptr inbounds nuw i8, ptr %i.vi, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i578 = icmp ult i32 %.pre806.a, %.pre808.a
   br i1 %.not.i.i.i.i.i.i578, label %bb.bx, label %bb.bw, !prof !150
 
 bb.bw:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i577
-  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %54, ptr noundef nonnull align 8 dereferenceable(40) %i.vn)
+  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %55, ptr noundef nonnull align 8 dereferenceable(40) %i.vn)
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i579
 
 bb.bx:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i577
-  %55 = getelementptr inbounds nuw i8, ptr %i.vi, i64 24 ; 2 uses
   %i.vs = zext i32 %.pre806.a to i64
-  %i.vt = load ptr, ptr %54, align 8, !tbaa !12
+  %i.vt = load ptr, ptr %55, align 8, !tbaa !12
   %i.vu = getelementptr inbounds nuw [8 x i8], ptr %i.vt, i64 %i.vs
   store ptr %i.vn, ptr %i.vu, align 1
-  %i.vv = load i32, ptr %55, align 8, !tbaa !14
+  %i.vv = load i32, ptr %.phi.trans.insert.a, align 8, !tbaa !14
   %i.vw = add i32 %i.vv, 1
-  store i32 %i.vw, ptr %55, align 8, !tbaa !14
+  store i32 %i.vw, ptr %.phi.trans.insert.a, align 8, !tbaa !14
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i579
 
 _ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i579: ; preds = %bb.bx, %bb.bw
-  %56 = getelementptr inbounds i8, ptr %i.uj, i64 -80 ; 6 uses
   %i.vx = getelementptr inbounds nuw i8, ptr %i.vj, i64 72 ; 2 uses
   %i.vy = getelementptr inbounds nuw i8, ptr %i.vj, i64 88
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.vx, i8 0, i64 16, i1 false)
@@ -2014,13 +2010,13 @@ _ZN4llvm17VPWidenCastRecipeC2ENS_11Instruction7CastOpsEPNS_7VPValueEPNS_4TypeEPN
 
 bb.bz:                                            ; preds = %_ZN4llvm17VPWidenCastRecipeC2ENS_11Instruction7CastOpsEPNS_7VPValueEPNS_4TypeEPNS_8CastInstERKNS_9VPIRFlagsERKNS_12VPIRMetadataENS_8DebugLocE.exit.i369
   store ptr %i.vf, ptr %i.vx, align 8, !tbaa !151
-  %i.wm = load ptr, ptr %56, align 8, !tbaa !286  ; 2 uses
+  %i.wm = load ptr, ptr %54, align 8, !tbaa !286  ; 2 uses
   %i.wn = getelementptr inbounds nuw i8, ptr %i.vj, i64 24
-  store ptr %56, ptr %i.wn, align 8, !tbaa !50
+  store ptr %54, ptr %i.wn, align 8, !tbaa !50
   store ptr %i.wm, ptr %i.vl, align 8, !tbaa !286
   %i.wo = getelementptr inbounds nuw i8, ptr %i.wm, i64 8
   store ptr %i.vl, ptr %i.wo, align 8, !tbaa !50
-  store ptr %i.vl, ptr %56, align 8, !tbaa !286
+  store ptr %i.vl, ptr %54, align 8, !tbaa !286
   br label %_ZN4llvm9VPBuilder20tryInsertInstructionINS_17VPWidenCastRecipeEEEPT_S4_.exit.i372
 
 _ZN4llvm9VPBuilder20tryInsertInstructionINS_17VPWidenCastRecipeEEEPT_S4_.exit.i372: ; preds = %bb.bz, %_ZN4llvm17VPWidenCastRecipeC2ENS_11Instruction7CastOpsEPNS_7VPValueEPNS_4TypeEPNS_8CastInstERKNS_9VPIRFlagsERKNS_12VPIRMetadataENS_8DebugLocE.exit.i369
@@ -2058,27 +2054,26 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i5
   store i32 2, ptr %i.xb, align 4, !tbaa !15
   store ptr %i.vz, ptr %i.wz, align 8
   store i32 1, ptr %i.xa, align 8, !tbaa !14
-  %.phi.trans.insert809.a = getelementptr inbounds nuw i8, ptr %i.vj, i64 120
+  %56 = getelementptr inbounds nuw i8, ptr %i.vj, i64 112 ; 2 uses
+  %.phi.trans.insert809.a = getelementptr inbounds nuw i8, ptr %i.vj, i64 120 ; 3 uses
   %.pre810.a = load i32, ptr %.phi.trans.insert809.a, align 8, !tbaa !14 ; 2 uses
   %.phi.trans.insert811.a = getelementptr inbounds nuw i8, ptr %i.vj, i64 124
   %.pre812.a = load i32, ptr %.phi.trans.insert811.a, align 4, !tbaa !15
-  %57 = getelementptr inbounds nuw i8, ptr %i.vj, i64 112 ; 2 uses
   %.not.i.i.i.i.i.i570 = icmp ult i32 %.pre810.a, %.pre812.a
   br i1 %.not.i.i.i.i.i.i570, label %bb.cc, label %bb.cb, !prof !150
 
 bb.cb:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i569
-  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %57, ptr noundef nonnull align 8 dereferenceable(40) %i.wx)
+  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %56, ptr noundef nonnull align 8 dereferenceable(40) %i.wx)
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i571
 
 bb.cc:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i569
-  %58 = getelementptr inbounds nuw i8, ptr %i.vj, i64 120 ; 2 uses
   %i.xc = zext i32 %.pre810.a to i64
-  %i.xd = load ptr, ptr %57, align 8, !tbaa !12
+  %i.xd = load ptr, ptr %56, align 8, !tbaa !12
   %i.xe = getelementptr inbounds nuw [8 x i8], ptr %i.xd, i64 %i.xc
   store ptr %i.wx, ptr %i.xe, align 1
-  %i.xf = load i32, ptr %58, align 8, !tbaa !14
+  %i.xf = load i32, ptr %.phi.trans.insert809.a, align 8, !tbaa !14
   %i.xg = add i32 %i.xf, 1
-  store i32 %i.xg, ptr %58, align 8, !tbaa !14
+  store i32 %i.xg, ptr %.phi.trans.insert809.a, align 8, !tbaa !14
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i571
 
 _ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i571: ; preds = %bb.cc, %bb.cb
@@ -2147,13 +2142,13 @@ _ZN4llvm17VPWidenCastRecipeC2ENS_11Instruction7CastOpsEPNS_7VPValueEPNS_4TypeEPN
 
 bb.ce:                                            ; preds = %_ZN4llvm17VPWidenCastRecipeC2ENS_11Instruction7CastOpsEPNS_7VPValueEPNS_4TypeEPNS_8CastInstERKNS_9VPIRFlagsERKNS_12VPIRMetadataENS_8DebugLocE.exit.i
   store ptr %i.vf, ptr %i.xh, align 8, !tbaa !151
-  %i.xw = load ptr, ptr %56, align 8, !tbaa !286  ; 2 uses
+  %i.xw = load ptr, ptr %54, align 8, !tbaa !286  ; 2 uses
   %i.xx = getelementptr inbounds nuw i8, ptr %i.wt, i64 24
-  store ptr %56, ptr %i.xx, align 8, !tbaa !50
+  store ptr %54, ptr %i.xx, align 8, !tbaa !50
   store ptr %i.xw, ptr %i.wv, align 8, !tbaa !286
   %i.xy = getelementptr inbounds nuw i8, ptr %i.xw, i64 8
   store ptr %i.wv, ptr %i.xy, align 8, !tbaa !50
-  store ptr %i.wv, ptr %56, align 8, !tbaa !286
+  store ptr %i.wv, ptr %54, align 8, !tbaa !286
   br label %_ZN4llvm9VPBuilder20tryInsertInstructionINS_17VPWidenCastRecipeEEEPT_S4_.exit.i
 
 _ZN4llvm9VPBuilder20tryInsertInstructionINS_17VPWidenCastRecipeEEEPT_S4_.exit.i: ; preds = %bb.ce, %_ZN4llvm17VPWidenCastRecipeC2ENS_11Instruction7CastOpsEPNS_7VPValueEPNS_4TypeEPNS_8CastInstERKNS_9VPIRFlagsERKNS_12VPIRMetadataENS_8DebugLocE.exit.i
@@ -2556,30 +2551,29 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i2
   %i.akm = getelementptr inbounds nuw i8, ptr %i.ake, i64 48
   %i.akn = getelementptr inbounds nuw i8, ptr %i.ake, i64 52
   store i32 2, ptr %i.akn, align 4, !tbaa !15
-  %i.ako = load ptr, ptr %i.r, align 8, !tbaa !111 ; 5 uses
+  %i.ako = load ptr, ptr %i.r, align 8, !tbaa !111 ; 4 uses
   store ptr %i.ako, ptr %i.akl, align 8
   store i32 1, ptr %i.akm, align 8, !tbaa !14
-  %.phi.trans.insert813 = getelementptr inbounds nuw i8, ptr %i.ako, i64 24
+  %57 = getelementptr inbounds nuw i8, ptr %i.ako, i64 16 ; 2 uses
+  %.phi.trans.insert813 = getelementptr inbounds nuw i8, ptr %i.ako, i64 24 ; 3 uses
   %.pre814 = load i32, ptr %.phi.trans.insert813, align 8, !tbaa !14 ; 2 uses
   %.phi.trans.insert815 = getelementptr inbounds nuw i8, ptr %i.ako, i64 28
   %.pre816 = load i32, ptr %.phi.trans.insert815, align 4, !tbaa !15
-  %59 = getelementptr inbounds nuw i8, ptr %i.ako, i64 16 ; 2 uses
   %.not.i.i.i.i.i.i284 = icmp ult i32 %.pre814, %.pre816
   br i1 %.not.i.i.i.i.i.i284, label %bb.ea, label %bb.dz, !prof !150
 
 bb.dz:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i283
-  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %59, ptr noundef nonnull align 8 dereferenceable(40) %i.akj)
+  call void @_ZN4llvm23SmallVectorTemplateBaseIPNS_6VPUserELb1EE15growAndPushBackES2_(ptr noundef nonnull align 8 dereferenceable(16) %57, ptr noundef nonnull align 8 dereferenceable(40) %i.akj)
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i285
 
 bb.ea:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIPNS_7VPValueELb1EE9push_backES2_.exit.i.i.i.i283
-  %60 = getelementptr inbounds nuw i8, ptr %i.ako, i64 24 ; 2 uses
   %i.akp = zext i32 %.pre814 to i64
-  %i.akq = load ptr, ptr %59, align 8, !tbaa !12
+  %i.akq = load ptr, ptr %57, align 8, !tbaa !12
   %i.akr = getelementptr inbounds nuw [8 x i8], ptr %i.akq, i64 %i.akp
   store ptr %i.akj, ptr %i.akr, align 1
-  %i.aks = load i32, ptr %60, align 8, !tbaa !14
+  %i.aks = load i32, ptr %.phi.trans.insert813, align 8, !tbaa !14
   %i.akt = add i32 %i.aks, 1
-  store i32 %i.akt, ptr %60, align 8, !tbaa !14
+  store i32 %i.akt, ptr %.phi.trans.insert813, align 8, !tbaa !14
   br label %_ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i285
 
 _ZN4llvm6VPUser10addOperandEPNS_7VPValueE.exit.i.i.i285: ; preds = %bb.ea, %bb.dz

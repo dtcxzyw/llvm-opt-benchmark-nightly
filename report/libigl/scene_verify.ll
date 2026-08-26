@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %.val.i, i64 32
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !4, !align !17 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !nonnull !4
-  %i.ab = load i8, ptr %i.aa, align 1, !range !3, !noundef !4 ; 4 uses
+  %i.ab = load i8, ptr %i.aa, align 1, !range !3, !noundef !4 ; 5 uses
   %i.ac = icmp ult i64 %i.t, %i.x
   br i1 %i.ac, label %.lr.ph.i.lr.ph.i.i.i.i, label %"_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImbZNS_15parallel_reduceImbZNS_15parallel_any_ofImZNS_5Scene21checkIfModifiedAndSetEvE3$_0EEbT_S6_T0_EUlRKNS_5rangeImEEE_St6bit_orIbEEES7_S6_S6_RKS7_RKT1_RKT2_EUlS9_E_SE_EES7_S6_S6_S6_S6_SG_SJ_SM_EUlmE_EEvS6_SG_ENKUlSB_E_clESB_.exit.i"
 
@@ -222,10 +222,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.i.i.prol
 
 .lr.ph.i.i.i.i.i.prol:                            ; preds = %.lr.ph.i.lr.ph.i.i.i.i
+  %1 = add nuw i64 %i.t, 1                        ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.t
   %i.ak = load ptr, ptr %i.aj, align 8            ; 2 uses
   %.not.i.i.i.i.i.i.prol = icmp eq ptr %i.ak, null
-  br i1 %.not.i.i.i.i.i.i.prol, label %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.prol", label %bb.c
+  br i1 %.not.i.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.prol
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
@@ -235,24 +236,20 @@ bb.c:                                             ; preds = %.lr.ph.i.i.i.i.i.pr
   %i.ap = load i32, ptr %i.ao, align 4
   %i.aq = icmp ugt i32 %i.am, %i.ap
   %i.ar = zext i1 %i.aq to i8
-  %i.as = or i8 %i.ab, %i.ar
-  br label %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.prol"
-
-"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.prol": ; preds = %bb.c, %.lr.ph.i.i.i.i.i.prol
-  %.0.i.i.i.i.i.i.i.prol = phi i8 [ %i.as, %bb.c ], [ %i.ab, %.lr.ph.i.i.i.i.i.prol ] ; 2 uses
-  %1 = add nuw i64 %i.t, 1
+  %i.as = or i8 %i.ab, %i.ar                      ; 2 uses
   br label %.lr.ph.i.i.i.i.i.prol.loopexit
 
-.lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.prol", %.lr.ph.i.lr.ph.i.i.i.i
-  %.0.i.i.i.i.i.i.i.lcssa.unr = phi i8 [ poison, %.lr.ph.i.lr.ph.i.i.i.i ], [ %.0.i.i.i.i.i.i.i.prol, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.prol" ]
-  %storemerge7.i.i.i.i.unr = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i.i ], [ %1, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.prol" ]
-  %.06.i.i.i.i.unr = phi i8 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i.i ], [ %.0.i.i.i.i.i.i.i.prol, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.prol" ]
+.lr.ph.i.i.i.i.i.prol.loopexit:                   ; preds = %.lr.ph.i.i.i.i.i.prol, %bb.c, %.lr.ph.i.lr.ph.i.i.i.i
+  %.0.i.i.i.i.i.i.i.lcssa.unr = phi i8 [ poison, %.lr.ph.i.lr.ph.i.i.i.i ], [ %i.as, %bb.c ], [ %i.ab, %.lr.ph.i.i.i.i.i.prol ]
+  %storemerge7.i.i.i.i.unr = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i.i ], [ %1, %bb.c ], [ %1, %.lr.ph.i.i.i.i.i.prol ]
+  %.06.i.i.i.i.unr = phi i8 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i.i ], [ %i.as, %bb.c ], [ %i.ab, %.lr.ph.i.i.i.i.i.prol ]
   %i.at = icmp eq i64 %i.w, %.neg
   br i1 %i.at, label %"_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImbZNS_15parallel_reduceImbZNS_15parallel_any_ofImZNS_5Scene21checkIfModifiedAndSetEvE3$_0EEbT_S6_T0_EUlRKNS_5rangeImEEE_St6bit_orIbEEES7_S6_S6_RKS7_RKT1_RKT2_EUlS9_E_SE_EES7_S6_S6_S6_S6_SG_SJ_SM_EUlmE_EEvS6_SG_ENKUlSB_E_clESB_.exit.i", label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.1"
-  %storemerge7.i.i.i.i = phi i64 [ %2, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.1" ], [ %storemerge7.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
+  %storemerge7.i.i.i.i = phi i64 [ %i.be, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.1" ], [ %storemerge7.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 4 uses
   %.06.i.i.i.i = phi i8 [ %.0.i.i.i.i.i.i.i.1, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.1" ], [ %.06.i.i.i.i.unr, %.lr.ph.i.i.i.i.i.prol.loopexit ] ; 2 uses
+  %2 = add nuw i64 %storemerge7.i.i.i.i, 1        ; 2 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %storemerge7.i.i.i.i
   %i.av = load ptr, ptr %i.au, align 8            ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.av, null
@@ -271,8 +268,8 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
 
 "_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i": ; preds = %bb.d, %.lr.ph.i.i.i.i.i
   %.0.i.i.i.i.i.i.i = phi i8 [ %i.bd, %bb.d ], [ %.06.i.i.i.i, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %i.be = add nuw i64 %storemerge7.i.i.i.i, 1     ; 2 uses
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %i.be
+  %i.be = add nuw i64 %storemerge7.i.i.i.i, 2     ; 2 uses
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %2
   %i.bg = load ptr, ptr %i.bf, align 8            ; 2 uses
   %.not.i.i.i.i.i.i.1 = icmp eq ptr %i.bg, null
   br i1 %.not.i.i.i.i.i.i.1, label %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.1", label %bb.e
@@ -281,7 +278,7 @@ bb.e:                                             ; preds = %"_ZZN6embree5Scene2
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 56
   %i.bi = load i32, ptr %i.bh, align 8
   %i.bj = load ptr, ptr %i.ah, align 8
-  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %i.be
+  %i.bk = getelementptr inbounds nuw [4 x i8], ptr %i.bj, i64 %2
   %i.bl = load i32, ptr %i.bk, align 4
   %i.bm = icmp ugt i32 %i.bi, %i.bl
   %i.bn = zext i1 %i.bm to i8
@@ -290,8 +287,7 @@ bb.e:                                             ; preds = %"_ZZN6embree5Scene2
 
 "_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.1": ; preds = %bb.e, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i"
   %.0.i.i.i.i.i.i.i.1 = phi i8 [ %i.bo, %bb.e ], [ %.0.i.i.i.i.i.i.i, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i" ] ; 2 uses
-  %2 = add nuw i64 %storemerge7.i.i.i.i, 2        ; 2 uses
-  %exitcond.not.i.i.i.i.1 = icmp eq i64 %2, %i.x
+  %exitcond.not.i.i.i.i.1 = icmp eq i64 %i.be, %i.x
   br i1 %exitcond.not.i.i.i.i.1, label %"_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImbZNS_15parallel_reduceImbZNS_15parallel_any_ofImZNS_5Scene21checkIfModifiedAndSetEvE3$_0EEbT_S6_T0_EUlRKNS_5rangeImEEE_St6bit_orIbEEES7_S6_S6_RKS7_RKT1_RKT2_EUlS9_E_SE_EES7_S6_S6_S6_S6_SG_SJ_SM_EUlmE_EEvS6_SG_ENKUlSB_E_clESB_.exit.i", label %.lr.ph.i.i.i.i.i, !llvm.loop !20
 
 "_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImbZNS_15parallel_reduceImbZNS_15parallel_any_ofImZNS_5Scene21checkIfModifiedAndSetEvE3$_0EEbT_S6_T0_EUlRKNS_5rangeImEEE_St6bit_orIbEEES7_S6_S6_RKS7_RKT1_RKT2_EUlS9_E_SE_EES7_S6_S6_S6_S6_SG_SJ_SM_EUlmE_EEvS6_SG_ENKUlSB_E_clESB_.exit.i": ; preds = %.lr.ph.i.i.i.i.i.prol.loopexit, %"_ZZN6embree5Scene21checkIfModifiedAndSetEvENK3$_0clEm.exit.i.i.i.i.i.1", %bb.b

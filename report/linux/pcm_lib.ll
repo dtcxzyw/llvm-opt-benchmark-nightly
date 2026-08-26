@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr i8, ptr %1, i64 40
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = ptrtoint ptr %i.b to i64
-  %i.d = trunc i64 %i.c to i32                    ; 14 uses
+  %i.d = trunc i64 %i.c to i32                    ; 12 uses
   %i.e = getelementptr i8, ptr %0, i64 296        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.f = getelementptr i8, ptr %0, i64 304        ; 2 uses
@@ -227,17 +227,15 @@ bb.a:
 .split.split.us.split.us:                         ; preds = %.split.split.us
   %i.m = load i32, ptr %i.g, align 4              ; 2 uses
   %i.n = icmp ult i32 %i.m, %i.d
-  br i1 %i.n, label %snd_interval_list.exit, label %.split.split.us.split.us.split
+  br i1 %i.n, label %snd_interval_list.exit, label %.split.split.us.split.us.split.split.us
 
-.split.split.us.split.us.split:                   ; preds = %.split.split.us.split.us
-  %3 = icmp eq i32 %i.m, %i.d
-  br i1 %3, label %.split.split.us.split.us.split.split.us, label %snd_interval_list.exit
-
-.split.split.us.split.us.split.split.us:          ; preds = %.split.split.us.split.us.split
+.split.split.us.split.us.split.split.us:          ; preds = %.split.split.us.split.us
+  %3 = icmp ne i32 %i.m, %i.d
   %i.o = and i8 %i.k, 2
-  %.not35.us.i.us.us.us = icmp eq i8 %i.o, 0      ; 2 uses
-  %spec.select.a = select i1 %.not35.us.i.us.us.us, i32 %i.d, i32 0
-  %spec.select60 = select i1 %.not35.us.i.us.us.us, i32 %i.d, i32 -1
+  %.not35.us.i.us.us.us = icmp eq i8 %i.o, 0
+  %or.cond = or i1 %3, %.not35.us.i.us.us.us      ; 2 uses
+  %spec.select.a = select i1 %or.cond, i32 %i.d, i32 0
+  %spec.select60 = select i1 %or.cond, i32 %i.d, i32 -1
   br label %snd_interval_list.exit
 
 .split.split:                                     ; preds = %.split
@@ -257,9 +255,9 @@ bb.a:
   %spec.select62 = select i1 %.not35.us.i.us23, i32 %i.d, i32 -1
   br label %snd_interval_list.exit
 
-snd_interval_list.exit:                           ; preds = %.split.split.split.split.us, %.split.split.us.split.us.split.split.us, %.split.split.split, %.split.split, %.split.split.us.split.us.split, %.split.split.us.split.us, %.split.split.us, %bb.a
-  %.us-phi = phi i32 [ %i.d, %.split.split.split ], [ 0, %.split.split.us.split.us ], [ %i.d, %.split.split.us.split.us.split ], [ 0, %.split.split ], [ %spec.select.a, %.split.split.us.split.us.split.split.us ], [ 0, %.split.split.us ], [ 0, %bb.a ], [ %spec.select61, %.split.split.split.split.us ]
-  %.us-phi4 = phi i32 [ %i.d, %.split.split.split ], [ -1, %.split.split.us.split.us ], [ %i.d, %.split.split.us.split.us.split ], [ -1, %.split.split ], [ %spec.select60, %.split.split.us.split.us.split.split.us ], [ -1, %.split.split.us ], [ -1, %bb.a ], [ %spec.select62, %.split.split.split.split.us ]
+snd_interval_list.exit:                           ; preds = %.split.split.us.split.us.split.split.us, %.split.split.split.split.us, %.split.split.split, %.split.split, %.split.split.us, %.split.split.us.split.us, %bb.a
+  %.us-phi = phi i32 [ 0, %.split.split ], [ 0, %.split.split.us.split.us ], [ %spec.select61, %.split.split.split.split.us ], [ 0, %bb.a ], [ %i.d, %.split.split.split ], [ %spec.select.a, %.split.split.us.split.us.split.split.us ], [ 0, %.split.split.us ]
+  %.us-phi4 = phi i32 [ -1, %.split.split ], [ -1, %.split.split.us.split.us ], [ %spec.select62, %.split.split.split.split.us ], [ -1, %bb.a ], [ %i.d, %.split.split.split ], [ %spec.select60, %.split.split.us.split.us.split.split.us ], [ -1, %.split.split.us ]
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i32 0, ptr %i.v, align 4, !annotation !17

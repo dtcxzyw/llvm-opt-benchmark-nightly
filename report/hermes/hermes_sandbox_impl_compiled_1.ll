@@ -204,126 +204,63 @@ bb.a:
   %i.n = add nuw nsw i64 %i.m, 4                  ; 3 uses
   %.val538 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.o = getelementptr inbounds nuw i8, ptr %.val538, i64 %i.n
-  %.0.copyload.i580 = load i32, ptr %i.o, align 1 ; 8 uses
+  %.0.copyload.i580 = load i32, ptr %i.o, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i580) #7, !srcloc !19
   %.val537 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.p = getelementptr inbounds nuw i8, ptr %.val537, i64 %i.e
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 12
-  %.0.copyload.i581 = load i32, ptr %i.q, align 1 ; 7 uses
+  %.0.copyload.i581 = load i32, ptr %i.q, align 1 ; 6 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i581) #7, !srcloc !19
   %i.r = icmp ult i32 %.0.copyload.i580, %.0.copyload.i581
   br i1 %i.r, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.s = sub nuw i32 %.0.copyload.i580, %.0.copyload.i581 ; 3 uses
+  %i.s = sub nuw i32 %.0.copyload.i580, %.0.copyload.i581 ; 2 uses
   %i.t = icmp eq i32 %i.s, -1
   br i1 %i.t, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.val555 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.u = getelementptr inbounds nuw i8, ptr %.val555, i64 %i.k
-  %.0.copyload.i582 = load i64, ptr %i.u, align 1
-  %.0.copyload.i582.fr = freeze i64 %.0.copyload.i582 ; 3 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i582.fr) #7, !srcloc !20
-  %i.v = lshr i64 %.0.copyload.i582.fr, 32        ; 2 uses
-  %i.w = trunc nuw i64 %i.v to i32                ; 4 uses
+  %.0.copyload.i582 = load i64, ptr %i.u, align 1 ; 3 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i582) #7, !srcloc !20
+  %i.v = lshr i64 %.0.copyload.i582, 32           ; 2 uses
+  %i.w = trunc nuw i64 %i.v to i32
   %.val536 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.x = getelementptr inbounds nuw i8, ptr %.val536, i64 %i.m
   %.0.copyload.i583 = load i32, ptr %i.x, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i583) #7, !srcloc !19
-  %i.y = trunc i64 %.0.copyload.i582.fr to i32
-  %.not511.a = icmp eq i64 %i.v, 0
-  br i1 %.not511.a, label %.split.us.preheader, label %.split
+  %i.y = trunc i64 %.0.copyload.i582 to i32
+  %.not511.a = icmp eq i32 %.0.copyload.i581, %i.w
+  br i1 %.not511.a, label %middle.block, label %.thread
 
-.split.us.preheader:                              ; preds = %bb.c
+middle.block:                                     ; preds = %bb.c
+  %cmp.n = icmp eq i64 %i.v, 0
+  br i1 %cmp.n, label %.split.us.preheader623, label %.split.us
+
+.split.us.preheader623:                           ; preds = %middle.block
   %4 = add i32 %.0.copyload.i580, 1
-  %5 = sub i32 %4, %.0.copyload.i581              ; 3 uses
-  %min.iters.check = icmp ult i32 %5, 8
-  br i1 %min.iters.check, label %.split.us.preheader623, label %vector.ph
+  %5 = sub i32 %4, %.0.copyload.i581
+  br label %bb.d
 
-vector.ph:                                        ; preds = %.split.us.preheader
-  %n.vec = and i32 %5, -8                         ; 3 uses
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.0.copyload.i580, i64 0
-  %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert618 = insertelement <4 x i32> poison, i32 %.0.copyload.i581, i64 0
-  %broadcast.splat619 = shufflevector <4 x i32> %broadcast.splatinsert618, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert620 = insertelement <4 x i32> poison, i32 %i.w, i64 0
-  %broadcast.splat621 = shufflevector <4 x i32> %broadcast.splatinsert620, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  br label %vector.body
-
-vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ]
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %vec.phi = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %14, %vector.body ]
-  %vec.phi622 = phi <4 x i32> [ zeroinitializer, %vector.ph ], [ %15, %vector.body ]
-  %step.add = add nuw <4 x i32> %vec.ind, splat (i32 4)
-  %6 = tail call <4 x i32> @llvm.usub.sat.v4i32(<4 x i32> %broadcast.splat, <4 x i32> %vec.ind)
-  %7 = tail call <4 x i32> @llvm.usub.sat.v4i32(<4 x i32> %broadcast.splat, <4 x i32> %step.add)
-  %8 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %6, <4 x i32> %broadcast.splat619)
-  %9 = tail call <4 x i32> @llvm.umin.v4i32(<4 x i32> %7, <4 x i32> %broadcast.splat619)
-  %10 = icmp eq <4 x i32> %8, %broadcast.splat621
-  %11 = icmp eq <4 x i32> %9, %broadcast.splat621
-  %12 = zext <4 x i1> %10 to <4 x i32>
-  %13 = zext <4 x i1> %11 to <4 x i32>
-  %14 = add <4 x i32> %vec.phi, %12               ; 2 uses
-  %15 = add <4 x i32> %vec.phi622, %13            ; 2 uses
-  %index.next = add nuw i32 %index, 8             ; 2 uses
-  %vec.ind.next = add nuw <4 x i32> %vec.ind, splat (i32 8)
-  %16 = icmp eq i32 %index.next, %n.vec
-  br i1 %16, label %middle.block, label %vector.body, !llvm.loop !39
-
-middle.block:                                     ; preds = %vector.body
-  %bin.rdx = add <4 x i32> %15, %14
-  %17 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %bin.rdx) ; 2 uses
-  %cmp.n = icmp eq i32 %5, %n.vec
-  br i1 %cmp.n, label %.split611.us, label %.split.us.preheader623
-
-.split.us.preheader623:                           ; preds = %.split.us.preheader, %middle.block
-  %.0500.us.ph = phi i32 [ 0, %.split.us.preheader ], [ %n.vec, %middle.block ]
-  %.0497.us.ph = phi i32 [ 0, %.split.us.preheader ], [ %17, %middle.block ]
-  br label %.split.us
-
-.split.us:                                        ; preds = %.split.us.preheader623, %.split.us
-  %.0500.us = phi i32 [ %i.aa, %.split.us ], [ %.0500.us.ph, %.split.us.preheader623 ] ; 3 uses
-  %.0497.us = phi i32 [ %spec.select, %.split.us ], [ %.0497.us.ph, %.split.us.preheader623 ]
-  %18 = tail call i32 @llvm.usub.sat.i32(i32 %.0.copyload.i580, i32 %.0500.us)
-  %19 = tail call i32 @llvm.umin.i32(i32 %18, i32 %.0.copyload.i581)
-  %.not.us = icmp eq i32 %19, %i.w
+.split.us:                                        ; preds = %middle.block, %.split.us
+  %.0500.us = phi i32 [ %i.aa, %.split.us ], [ 0, %middle.block ] ; 3 uses
+  %.0497.us = phi i32 [ %spec.select, %.split.us ], [ 0, %middle.block ]
+  %6 = add i32 %.0500.us, %.0.copyload.i583
+  %7 = tail call i32 @w2c_hermes_memcmp(ptr noundef nonnull %0, i32 noundef %6, i32 noundef %i.y, i32 noundef %.0.copyload.i581) #7
+  %.not.us = icmp eq i32 %7, 0
   %i.z = zext i1 %.not.us to i32
   %spec.select = add i32 %.0497.us, %i.z          ; 2 uses
   %i.aa = add nuw i32 %.0500.us, 1
   %.not513.us = icmp eq i32 %.0500.us, %i.s
-  br i1 %.not513.us, label %.split611.us, label %.split.us, !llvm.loop !42
+  br i1 %.not513.us, label %bb.d, label %.split.us
 
-.split:                                           ; preds = %bb.c, %bb.d
-  %.0500 = phi i32 [ %27, %bb.d ], [ 0, %bb.c ]   ; 3 uses
-  %.0497 = phi i32 [ %.1, %bb.d ], [ 0, %bb.c ]   ; 2 uses
-  %20 = tail call i32 @llvm.umin.i32(i32 %.0500, i32 %.0.copyload.i580) ; 2 uses
-  %21 = sub i32 %.0.copyload.i580, %20
-  %22 = tail call i32 @llvm.umin.i32(i32 %21, i32 %.0.copyload.i581)
-  %.not = icmp eq i32 %22, %i.w
-  br i1 %.not, label %23, label %bb.d
+bb.d:                                             ; preds = %.split.us, %.split.us.preheader623
+  %.1 = phi i32 [ %5, %.split.us.preheader623 ], [ %spec.select, %.split.us ]
+  %.not513 = icmp eq i32 %.1, 0
+  br i1 %.not513, label %.thread, label %bb.e
 
-23:                                               ; preds = %.split
-  %24 = add i32 %20, %.0.copyload.i583
-  %25 = tail call i32 @w2c_hermes_memcmp(ptr noundef %0, i32 noundef %24, i32 noundef %i.y, i32 noundef %i.w) #7
-  %.not512 = icmp eq i32 %25, 0
-  %26 = zext i1 %.not512 to i32
-  %spec.select612 = add i32 %.0497, %26
-  br label %bb.d
-
-bb.d:                                             ; preds = %23, %.split
-  %.1 = phi i32 [ %.0497, %.split ], [ %spec.select612, %23 ] ; 2 uses
-  %27 = add nuw i32 %.0500, 1
-  %.not513 = icmp eq i32 %.0500, %i.s
-  br i1 %.not513, label %.split611.us, label %.split
-
-.split611.us:                                     ; preds = %bb.d, %.split.us, %middle.block
-  %.us-phi = phi i32 [ %spec.select, %.split.us ], [ %17, %middle.block ], [ %.1, %bb.d ]
-  %.not514 = icmp eq i32 %.us-phi, 0
-  br i1 %.not514, label %.thread, label %bb.e
-
-.thread:                                          ; preds = %bb.b, %bb.a, %.split611.us
+.thread:                                          ; preds = %bb.c, %bb.b, %bb.a, %bb.d
   %.val535 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ab = getelementptr inbounds nuw i8, ptr %.val535, i64 %i.n
   %.0.copyload.i584 = load i32, ptr %i.ab, align 1 ; 9 uses
@@ -331,7 +268,7 @@ bb.d:                                             ; preds = %23, %.split
   %.not515 = icmp eq i32 %.0.copyload.i584, 0
   br i1 %.not515, label %bb.e, label %bb.u
 
-bb.e:                                             ; preds = %.thread, %.split611.us
+bb.e:                                             ; preds = %.thread, %bb.d
   %i.ac = zext i32 %2 to i64
   %i.ad = add nuw nsw i64 %i.ac, 16               ; 2 uses
   %.val575 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -347,7 +284,7 @@ bb.e:                                             ; preds = %.thread, %.split611
   store i8 %i.ah, ptr %i.ai, align 1
   %i.aj = add i32 %i.b, -36                       ; 3 uses
   %i.ak = select i1 %.not516, i32 64729, i32 64698
-  %i.al = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef %0, i32 noundef %i.aj, i32 noundef %i.ak, i32 noundef %i.af) #7 ; 0 uses
+  %i.al = tail call i32 @w2c_hermes_0x5F_memcpy(ptr noundef nonnull %0, i32 noundef %i.aj, i32 noundef %i.ak, i32 noundef %i.af) #7 ; 0 uses
   %i.am = or i32 %i.af, %i.aj
   %i.an = zext i32 %i.am to i64
   %.val563 = load ptr, ptr %i.d, align 8, !tbaa !18
@@ -750,7 +687,7 @@ bb.bq:                                            ; preds = %bb.bp, %.peel.next
   %i.np = lshr i32 %.11, 1                        ; 2 uses
   %i.nq = and i32 %.11, %.31258
   %.not1722 = icmp eq i32 %i.nq, 0
-  br i1 %.not1722, label %.peel.next, label %.loopexit1680, !llvm.loop !43
+  br i1 %.not1722, label %.peel.next, label %.loopexit1680, !llvm.loop !39
 
 .loopexit1680:                                    ; preds = %bb.bq, %bb.co
   %.41267.lcssa1659 = phi i32 [ %i.rm, %bb.co ], [ %.41267, %bb.bq ]
@@ -1153,7 +1090,7 @@ func_types_eq.exit:                               ; preds = %bb.d
   %i.bs = icmp ne i128 %i.br, 0
   %i.bt = zext i1 %i.bs to i32
   %.not.i = icmp eq i32 %i.bt, 0
-  br i1 %.not.i, label %func_types_eq.exit.thread, label %.critedge, !prof !45
+  br i1 %.not.i, label %func_types_eq.exit.thread, label %.critedge, !prof !41
 
 .critedge:                                        ; preds = %bb.d, %bb.b, %bb.a, %func_types_eq.exit
   tail call void @wasm_rt_trap(i32 noundef 6) #8
@@ -1272,7 +1209,7 @@ func_types_eq.exit443:                            ; preds = %bb.j
   %i.dr = icmp ne i128 %i.dq, 0
   %i.ds = zext i1 %i.dr to i32
   %.not.i442 = icmp eq i32 %i.ds, 0
-  br i1 %.not.i442, label %func_types_eq.exit443.thread, label %.critedge372, !prof !45
+  br i1 %.not.i442, label %func_types_eq.exit443.thread, label %.critedge372, !prof !41
 
 .critedge372:                                     ; preds = %bb.j, %bb.h, %bb.g, %func_types_eq.exit443
   tail call void @wasm_rt_trap(i32 noundef 6) #8
@@ -1396,7 +1333,7 @@ func_types_eq.exit453:                            ; preds = %bb.p
   %i.fw = icmp ne i128 %i.fv, 0
   %i.fx = zext i1 %i.fw to i32
   %.not.i452 = icmp eq i32 %i.fx, 0
-  br i1 %.not.i452, label %func_types_eq.exit453.thread, label %.critedge374, !prof !45
+  br i1 %.not.i452, label %func_types_eq.exit453.thread, label %.critedge374, !prof !41
 
 .critedge374:                                     ; preds = %bb.p, %bb.n, %bb.m, %func_types_eq.exit453
   tail call void @wasm_rt_trap(i32 noundef 6) #8
@@ -1799,13 +1736,13 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %.val1190 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ig = getelementptr inbounds nuw i8, ptr %.val1190, i64 %i.hi
   %.0.copyload.i1244 = load i8, ptr %i.ig, align 1 ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1244) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1244) #7, !srcloc !42
   %i.ih = zext i8 %.0.copyload.i1244 to i64
   %.val1189 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ii = getelementptr inbounds nuw i8, ptr %.val1189, i64 %i.e
   %i.ij = getelementptr inbounds nuw i8, ptr %i.ii, i64 15
   %.0.copyload.i1245 = load i8, ptr %i.ij, align 1 ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1245) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i1245) #7, !srcloc !42
   %i.ik = zext i8 %.0.copyload.i1245 to i64
   %i.il = shl nuw nsw i64 %i.ik, 1
   %i.im = or i64 %i.il, %i.ih
@@ -2208,7 +2145,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.hr, label %.loopexit54802, label %.preheader54801
 
 .preheader54801:                                  ; preds = %bb.i
-  br i1 %.not55207, label %.preheader54801.split.us, label %.preheader54801.split, !prof !47
+  br i1 %.not55207, label %.preheader54801.split.us, label %.preheader54801.split, !prof !43
 
 .preheader54801.split.us:                         ; preds = %.preheader54801, %bb.m
   %.043731.us = phi i32 [ %.0.copyload.i51266.us, %bb.m ], [ %.0.copyload.i51262, %.preheader54801 ] ; 2 uses
@@ -2307,7 +2244,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %.not55208 = icmp eq ptr %i.jb, null
-  br i1 %.not55208, label %.critedge, label %func_types_eq.exit, !prof !47
+  br i1 %.not55208, label %.critedge, label %func_types_eq.exit, !prof !43
 
 func_types_eq.exit:                               ; preds = %bb.q
   %i.jd = load i128, ptr %.fr55206, align 1
@@ -2710,7 +2647,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr @w2c_hermes_t3, align 8
   %.fr83 = freeze ptr %i.i                        ; 4 uses
   %.not84 = icmp eq ptr %.fr83, null
-  br i1 %.not84, label %.preheader.split.us, label %.preheader.split, !prof !47
+  br i1 %.not84, label %.preheader.split.us, label %.preheader.split, !prof !43
 
 .preheader.split.us:                              ; preds = %.preheader, %bb.f
   %.0.us = phi i32 [ %i.j, %bb.f ], [ %.0.copyload.i77, %.preheader ]
@@ -2812,7 +2749,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %.not85 = icmp eq ptr %i.at, null
-  br i1 %.not85, label %.critedge, label %func_types_eq.exit, !prof !47
+  br i1 %.not85, label %.critedge, label %func_types_eq.exit, !prof !43
 
 func_types_eq.exit:                               ; preds = %bb.j
   %i.av = load i128, ptr %.fr83, align 1
@@ -3215,7 +3152,7 @@ w2c_hermes_hermes0x3A0x3AVariable0x3A0x3AgetIndexInVariableList0x280x290x20const
   %i.lru = getelementptr inbounds nuw i8, ptr %.val86338, i64 %i.lrt
   %i.lrv = getelementptr inbounds nuw i8, ptr %i.lru, i64 28
   %.0.copyload.i88046 = load i8, ptr %i.lrv, align 1 ; 3 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i88046) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i88046) #7, !srcloc !42
   %.val81123 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.lrw = getelementptr inbounds nuw i8, ptr %.val81123, i64 %i.jm
   %.0.copyload.i88047 = load i32, ptr %i.lrw, align 1 ; 2 uses
@@ -3618,7 +3555,7 @@ w2c_hermes_hermes0x3A0x3AVariable0x3A0x3AgetIndexInVariableList0x280x290x20const
   %i.mzo = getelementptr inbounds nuw i8, ptr %.val86337, i64 %i.mzn
   %i.mzp = getelementptr inbounds nuw i8, ptr %i.mzo, i64 28
   %.0.copyload.i88256 = load i8, ptr %i.mzp, align 1 ; 3 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i88256) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i88256) #7, !srcloc !42
   %i.mzq = zext i32 %.0.copyload.i88217 to i64    ; 15 uses
   %i.mzr = add nuw nsw i64 %i.mzq, 4              ; 18 uses
   %.val81030 = load ptr, ptr %i.e, align 8, !tbaa !18
@@ -4021,7 +3958,7 @@ w2c_hermes_hermes0x3A0x3AVariable0x3A0x3AgetIndexInVariableList0x280x290x20const
   %i.qmu = getelementptr inbounds nuw i8, ptr %.val86336, i64 %i.qmt
   %i.qmv = getelementptr inbounds nuw i8, ptr %i.qmu, i64 28
   %.0.copyload.i88808 = load i8, ptr %i.qmv, align 1 ; 3 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i88808) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i88808) #7, !srcloc !42
   %.val80782 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.qmw = getelementptr inbounds nuw i8, ptr %.val80782, i64 %i.jm
   %.0.copyload.i88809 = load i32, ptr %i.qmw, align 1 ; 2 uses
@@ -4424,7 +4361,7 @@ w2c_hermes_hermes0x3A0x3AVariable0x3A0x3AgetIndexInVariableList0x280x290x20const
   %i.sdj = getelementptr inbounds nuw i8, ptr %.val86335, i64 %i.sdi
   %i.sdk = getelementptr inbounds nuw i8, ptr %i.sdj, i64 28
   %.0.copyload.i89124 = load i8, ptr %i.sdk, align 1 ; 3 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i89124) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i89124) #7, !srcloc !42
   %.val80651 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.sdl = getelementptr inbounds nuw i8, ptr %.val80651, i64 %i.jm
   %.0.copyload.i89125 = load i32, ptr %i.sdl, align 1 ; 2 uses
@@ -4827,7 +4764,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %i.gl = tail call i32 @llvm.umax.i32(i32 %.0, i32 %.0769) ; 3 uses
   %i.gm = add nuw nsw i32 %.0773, 1               ; 2 uses
   %.not812 = icmp eq i32 %i.gm, %i.bt
-  br i1 %.not812, label %.loopexit1065, label %.peel.next, !llvm.loop !48
+  br i1 %.not812, label %.loopexit1065, label %.peel.next, !llvm.loop !44
 
 .loopexit1065:                                    ; preds = %bb.z
   %i.gn = icmp eq i32 %i.gk, %i.gl
@@ -5230,7 +5167,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %.val123, i64 %i.g
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 14
   %.0.copyload.i125 = load i8, ptr %i.k, align 1
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i125) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i125) #7, !srcloc !42
   %.val121 = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.l = getelementptr inbounds nuw i8, ptr %.val121, i64 %i.g
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 12
@@ -5380,7 +5317,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %.val127, i64 %i.g
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 14
   %.0.copyload.i129 = load i8, ptr %i.k, align 1
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i129) #7, !srcloc !46
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i129) #7, !srcloc !42
   %.val125 = load ptr, ptr %i.a, align 8, !tbaa !18
   %i.l = getelementptr inbounds nuw i8, ptr %.val125, i64 %i.g
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 12
@@ -5783,15 +5720,6 @@ declare i64 @llvm.umax.i64(i64, i64) #4
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #4
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.usub.sat.v4i32(<4 x i32>, <4 x i32>) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i32> @llvm.umin.v4i32(<4 x i32>, <4 x i32>) #4
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #4
-
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { noreturn nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -5845,14 +5773,10 @@ attributes #8 = { noreturn nounwind }
 !36 = !{i64 2156011434}
 !37 = !{i64 2156015280}
 !38 = !{i64 2156016140}
-!39 = distinct !{!39, !40, !41}
-!40 = !{!"llvm.loop.isvectorized", i32 1}
-!41 = !{!"llvm.loop.unroll.runtime.disable"}
-!42 = distinct !{!42, !41, !40}
-!43 = distinct !{!43, !44}
-!44 = !{!"llvm.loop.peeled.count", i32 1}
-!45 = !{!"branch_weights", !"expected", i32 2147483112, i32 536}
-!46 = !{i64 2156013564}
-!47 = !{!"branch_weights", i32 4001, i32 4000000}
-!48 = distinct !{!48, !44}
+!39 = distinct !{!39, !40}
+!40 = !{!"llvm.loop.peeled.count", i32 1}
+!41 = !{!"branch_weights", !"expected", i32 2147483112, i32 536}
+!42 = !{i64 2156013564}
+!43 = !{!"branch_weights", i32 4001, i32 4000000}
+!44 = distinct !{!44, !40}
 end_hunk_12

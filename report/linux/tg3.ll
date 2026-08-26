@@ -205,15 +205,15 @@ bb.i:                                             ; preds = %.backedge.i
   %i.bh = zext i8 %i.bg to i32
   %i.bi = tail call fastcc range(i32 -16, 1) i32 @__tg3_writephy(ptr noundef %0, i32 noundef %i.bh, i32 noundef 0, i32 noundef 32768) #30, !srcloc !60
   %.not.i.i = icmp eq i32 %i.bi, 0
-  br i1 %.not.i.i, label %.preheader.i.i, label %tg3_bmcr_reset.exit.thread.i
+  br i1 %.not.i.i, label %.preheader.i.i, label %bb.m
 
 .preheader.i.i:                                   ; preds = %bb.i, %bb.l
-  %i.bj = phi i32 [ %i.bq, %bb.l ], [ 4999, %bb.i ] ; 3 uses
+  %i.bj = phi i32 [ %i.bq, %bb.l ], [ 4999, %bb.i ] ; 2 uses
   %i.bk = load i8, ptr %i.ap, align 4
   %i.bl = zext i8 %i.bk to i32
   %i.bm = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %i.bl, i32 noundef 0, ptr noundef nonnull %i.s) #30, !srcloc !59
   %.not8.i.i = icmp eq i32 %i.bm, 0
-  br i1 %.not8.i.i, label %bb.j, label %tg3_bmcr_reset.exit.thread.i
+  br i1 %.not8.i.i, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %.preheader.i.i
   %i.bn = load i32, ptr %i.s, align 4
@@ -223,24 +223,20 @@ bb.j:                                             ; preds = %.preheader.i.i
 
 bb.k:                                             ; preds = %bb.j
   tail call void @__const_udelay(i64 noundef 171800) #27
-  %1 = icmp slt i32 %i.bj, 0
-  br i1 %1, label %tg3_bmcr_reset.exit.thread.i, label %bb.m
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #28
+  br label %bb.n
 
 bb.l:                                             ; preds = %bb.j
   tail call void @__const_udelay(i64 noundef 42950) #27
   %i.bq = add nsw i32 %i.bj, -1
   %.not7.i.i = icmp eq i32 %i.bj, 0
-  br i1 %.not7.i.i, label %tg3_bmcr_reset.exit.thread.i, label %.preheader.i.i, !llvm.loop !61
+  br i1 %.not7.i.i, label %bb.m, label %.preheader.i.i, !llvm.loop !61
 
-tg3_bmcr_reset.exit.thread.i:                     ; preds = %bb.k, %bb.i, %bb.l, %.preheader.i.i
+bb.m:                                             ; preds = %bb.i, %bb.l, %.preheader.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #28
   br label %tg3_phy_reset_5703_4_5.exit.thread
 
-bb.m:                                             ; preds = %bb.k
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #28
-  br label %bb.n
-
-bb.n:                                             ; preds = %bb.m, %.backedge.i
+bb.n:                                             ; preds = %bb.k, %.backedge.i
   %i.br = load i8, ptr %i.ap, align 4
   %i.bs = zext i8 %i.br to i32
   %i.bt = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %i.bs, i32 noundef 16, ptr noundef nonnull %i.t) #30, !srcloc !59
@@ -359,27 +355,21 @@ tg3_phydsp_write.exit.i:                          ; preds = %tg3_phydsp_write.ex
   %i.en = tail call fastcc range(i32 -16, 1) i32 @__tg3_writephy(ptr noundef %0, i32 noundef %i.em, i32 noundef 22, i32 noundef 514) #30, !srcloc !60 ; 0 uses
   br label %bb.s
 
-bb.s:                                             ; preds = %2, %tg3_phydsp_write.exit.i
-  %i.eo = phi i32 [ 99, %tg3_phydsp_write.exit.i ], [ %3, %2 ] ; 2 uses
+bb.s:                                             ; preds = %1, %tg3_phydsp_write.exit.i
+  %i.eo = phi i32 [ 99, %tg3_phydsp_write.exit.i ], [ %2, %1 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #28
   store i32 0, ptr %i.o, align 4, !annotation !11
   %i.ep = load i8, ptr %i.ap, align 4
   %i.eq = zext i8 %i.ep to i32
   %i.er = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %i.eq, i32 noundef 22, ptr noundef nonnull %i.o) #30, !srcloc !59
   %.not6.i.i.i = icmp eq i32 %i.er, 0
-  br i1 %.not6.i.i.i, label %bb.t, label %2
+  br i1 %.not6.i.i.i, label %bb.t, label %1
 
 bb.t:                                             ; preds = %bb.s
   %i.es = load i32, ptr %i.o, align 4
   %i.et = and i32 %i.es, 4096
   %i.eu = icmp eq i32 %i.et, 0
-  br i1 %i.eu, label %tg3_wait_macro_done.exit.i.i, label %2
-
-2:                                                ; preds = %bb.t, %bb.s
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #28
-  %3 = add nsw i32 %i.eo, -1
-  %.not.i.i44.i = icmp eq i32 %i.eo, 0
-  br i1 %.not.i.i44.i, label %tg3_phy_write_and_check_testpat.exit.i, label %bb.s
+  br i1 %i.eu, label %tg3_wait_macro_done.exit.i.i, label %1
 
 tg3_wait_macro_done.exit.i.i:                     ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #28
@@ -391,37 +381,43 @@ tg3_wait_macro_done.exit.i.i:                     ; preds = %bb.t
   %i.fa = tail call fastcc range(i32 -16, 1) i32 @__tg3_writephy(ptr noundef %0, i32 noundef %i.ez, i32 noundef 22, i32 noundef 130) #30, !srcloc !60 ; 0 uses
   br label %bb.u
 
-bb.u:                                             ; preds = %bb.w, %tg3_wait_macro_done.exit.i.i
-  %i.fb = phi i32 [ 99, %tg3_wait_macro_done.exit.i.i ], [ %4, %bb.w ] ; 2 uses
+1:                                                ; preds = %bb.t, %bb.s
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #28
+  %2 = add nsw i32 %i.eo, -1
+  %.not.i.i44.i = icmp eq i32 %i.eo, 0
+  br i1 %.not.i.i44.i, label %tg3_phy_write_and_check_testpat.exit.i, label %bb.s
+
+bb.u:                                             ; preds = %tg3_wait_macro_done.exit55.i.i, %tg3_wait_macro_done.exit.i.i
+  %i.fb = phi i32 [ 99, %tg3_wait_macro_done.exit.i.i ], [ %6, %tg3_wait_macro_done.exit55.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #28
   store i32 0, ptr %i.n, align 4, !annotation !11
   %i.fc = load i8, ptr %i.ap, align 4
   %i.fd = zext i8 %i.fc to i32
   %i.fe = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %i.fd, i32 noundef 22, ptr noundef nonnull %i.n) #30, !srcloc !59
   %.not6.i51.i.i = icmp eq i32 %i.fe, 0
-  br i1 %.not6.i51.i.i, label %bb.v, label %bb.w
+  br i1 %.not6.i51.i.i, label %bb.v, label %tg3_wait_macro_done.exit55.i.i
 
 bb.v:                                             ; preds = %bb.u
   %i.ff = load i32, ptr %i.n, align 4
   %i.fg = and i32 %i.ff, 4096
   %i.fh = icmp eq i32 %i.fg, 0
-  br i1 %i.fh, label %tg3_wait_macro_done.exit55.i.i, label %bb.w
+  br i1 %i.fh, label %bb.w, label %tg3_wait_macro_done.exit55.i.i
 
-bb.w:                                             ; preds = %bb.v, %bb.u
+bb.w:                                             ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #28
-  %4 = add nsw i32 %i.fb, -1
+  %3 = load i8, ptr %i.ap, align 4
+  %4 = zext i8 %3 to i32
+  %5 = tail call fastcc range(i32 -16, 1) i32 @__tg3_writephy(ptr noundef %0, i32 noundef %4, i32 noundef 22, i32 noundef 2050) #30, !srcloc !60 ; 0 uses
+  br label %bb.x
+
+tg3_wait_macro_done.exit55.i.i:                   ; preds = %bb.v, %bb.u
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #28
+  %6 = add nsw i32 %i.fb, -1
   %.not.i52.i.i = icmp eq i32 %i.fb, 0
   br i1 %.not.i52.i.i, label %tg3_phy_write_and_check_testpat.exit.i, label %bb.u
 
-tg3_wait_macro_done.exit55.i.i:                   ; preds = %bb.v
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #28
-  %5 = load i8, ptr %i.ap, align 4
-  %6 = zext i8 %5 to i32
-  %7 = tail call fastcc range(i32 -16, 1) i32 @__tg3_writephy(ptr noundef %0, i32 noundef %6, i32 noundef 22, i32 noundef 2050) #30, !srcloc !60 ; 0 uses
-  br label %bb.x
-
-bb.x:                                             ; preds = %bb.z, %tg3_wait_macro_done.exit55.i.i
-  %i.fi = phi i32 [ 99, %tg3_wait_macro_done.exit55.i.i ], [ %i.fs, %bb.z ] ; 2 uses
+bb.x:                                             ; preds = %bb.z, %bb.w
+  %i.fi = phi i32 [ 99, %bb.w ], [ %i.fs, %bb.z ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #28
   store i32 0, ptr %i.m, align 4, !annotation !11
   %i.fj = load i8, ptr %i.ap, align 4
@@ -461,27 +457,21 @@ bb.aa:                                            ; preds = %tg3_wait_macro_done
   %.not45.i.i = icmp eq i32 %i.fv, 0
   br i1 %.not45.i.i, label %.preheader.i45.i, label %.critedge.i.i
 
-.preheader.i45.i:                                 ; preds = %bb.aa, %8
-  %i.fw = phi i32 [ %9, %8 ], [ 99, %bb.aa ]      ; 2 uses
+.preheader.i45.i:                                 ; preds = %bb.aa, %7
+  %i.fw = phi i32 [ %8, %7 ], [ 99, %bb.aa ]      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #28
   store i32 0, ptr %i.l, align 4, !annotation !11
   %i.fx = load i8, ptr %i.ap, align 4
   %i.fy = zext i8 %i.fx to i32
   %i.fz = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %i.fy, i32 noundef 22, ptr noundef nonnull %i.l) #30, !srcloc !59
   %.not6.i61.i.i = icmp eq i32 %i.fz, 0
-  br i1 %.not6.i61.i.i, label %bb.ab, label %8
+  br i1 %.not6.i61.i.i, label %bb.ab, label %7
 
 bb.ab:                                            ; preds = %.preheader.i45.i
   %i.ga = load i32, ptr %i.l, align 4
   %i.gb = and i32 %i.ga, 4096
   %i.gc = icmp eq i32 %i.gb, 0
-  br i1 %i.gc, label %tg3_wait_macro_done.exit65.i.i, label %8
-
-8:                                                ; preds = %bb.ab, %.preheader.i45.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #28
-  %9 = add nsw i32 %i.fw, -1
-  %.not.i62.i.i = icmp eq i32 %i.fw, 0
-  br i1 %.not.i62.i.i, label %.critedge.i.i, label %.preheader.i45.i
+  br i1 %i.gc, label %tg3_wait_macro_done.exit65.i.i, label %7
 
 tg3_wait_macro_done.exit65.i.i:                   ; preds = %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #28
@@ -493,6 +483,12 @@ tg3_wait_macro_done.exit65.i.i:                   ; preds = %bb.ab
   %.not48.i.i = icmp eq i32 %i.gg, %i.dn
   %or.cond.i.i110 = select i1 %.not47.i.i, i1 %.not48.i.i, i1 false
   br i1 %or.cond.i.i110, label %tg3_wait_macro_done.exit60.i.i, label %bb.ac
+
+7:                                                ; preds = %bb.ab, %.preheader.i45.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #28
+  %8 = add nsw i32 %i.fw, -1
+  %.not.i62.i.i = icmp eq i32 %i.fw, 0
+  br i1 %.not.i62.i.i, label %.critedge.i.i, label %.preheader.i45.i
 
 bb.ac:                                            ; preds = %tg3_wait_macro_done.exit65.2.i.i, %tg3_wait_macro_done.exit65.1.i.i, %tg3_wait_macro_done.exit65.i.i
   %i.gh = load i8, ptr %i.ap, align 4
@@ -619,14 +615,14 @@ tg3_wait_macro_done.exit60.2.i.i:                 ; preds = %tg3_wait_macro_done
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, 4
   br i1 %exitcond.not.i.i, label %tg3_phy_write_and_check_testpat.exit.thread.i, label %tg3_phydsp_write.exit.i, !llvm.loop !202
 
-.critedge.i.i:                                    ; preds = %bb.ag, %tg3_wait_macro_done.exit60.1.i.i, %bb.ad, %tg3_wait_macro_done.exit60.i.i, %bb.aa, %tg3_wait_macro_done.exit60.preheader.i.i, %8, %bb.af, %bb.ai, %bb.ac
-  %.2.i = phi i32 [ 0, %bb.ac ], [ 1, %bb.ai ], [ 1, %bb.af ], [ 1, %8 ], [ 1, %tg3_wait_macro_done.exit60.preheader.i.i ], [ 1, %bb.aa ], [ 1, %tg3_wait_macro_done.exit60.i.i ], [ 1, %bb.ad ], [ 1, %tg3_wait_macro_done.exit60.1.i.i ], [ 1, %bb.ag ]
+.critedge.i.i:                                    ; preds = %bb.ag, %tg3_wait_macro_done.exit60.1.i.i, %bb.ad, %tg3_wait_macro_done.exit60.i.i, %bb.aa, %tg3_wait_macro_done.exit60.preheader.i.i, %7, %bb.af, %bb.ai, %bb.ac
+  %.2.i = phi i32 [ 0, %bb.ac ], [ 1, %bb.ai ], [ 1, %bb.af ], [ 1, %7 ], [ 1, %tg3_wait_macro_done.exit60.preheader.i.i ], [ 1, %bb.aa ], [ 1, %tg3_wait_macro_done.exit60.i.i ], [ 1, %bb.ad ], [ 1, %tg3_wait_macro_done.exit60.1.i.i ], [ 1, %bb.ag ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #28
   br label %tg3_phy_write_and_check_testpat.exit.i
 
-tg3_phy_write_and_check_testpat.exit.i:           ; preds = %2, %bb.w, %bb.z, %.critedge.i.i
-  %.3.i = phi i32 [ 1, %bb.z ], [ %.2.i, %.critedge.i.i ], [ 1, %bb.w ], [ 1, %2 ]
+tg3_phy_write_and_check_testpat.exit.i:           ; preds = %1, %tg3_wait_macro_done.exit55.i.i, %bb.z, %.critedge.i.i
+  %.3.i = phi i32 [ 1, %bb.z ], [ %.2.i, %.critedge.i.i ], [ 1, %tg3_wait_macro_done.exit55.i.i ], [ 1, %1 ]
   %i.ia = add i32 %.0.i, -1                       ; 2 uses
   %.not38.i = icmp eq i32 %i.ia, 0
   br i1 %.not38.i, label %tg3_phy_write_and_check_testpat.exit.thread.i, label %.backedge.i.backedge
@@ -669,9 +665,25 @@ tg3_phy_write_and_check_testpat.exit.thread.i:    ; preds = %bb.aj, %tg3_phy_wri
   %i.iz = load i8, ptr %i.ap, align 4
   %i.ja = zext i8 %i.iz to i32
   %i.jb = tail call fastcc range(i32 -16, 1) i32 @__tg3_writephy(ptr noundef %0, i32 noundef %i.ja, i32 noundef 22, i32 noundef 514) #30, !srcloc !60 ; 0 uses
-  br label %10
+  br label %9
 
-bb.ak:                                            ; preds = %15
+9:                                                ; preds = %bb.ax, %tg3_phy_write_and_check_testpat.exit.thread.i
+  %10 = phi i32 [ 99, %tg3_phy_write_and_check_testpat.exit.thread.i ], [ %i.ng, %bb.ax ] ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #28
+  store i32 0, ptr %i.k, align 4, !annotation !11
+  %11 = load i8, ptr %i.ap, align 4
+  %12 = zext i8 %11 to i32
+  %13 = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %12, i32 noundef 22, ptr noundef nonnull %i.k) #30, !srcloc !59
+  %.not6.i.i46.i = icmp eq i32 %13, 0
+  br i1 %.not6.i.i46.i, label %14, label %bb.ax
+
+14:                                               ; preds = %9
+  %15 = load i32, ptr %i.k, align 4
+  %16 = and i32 %15, 4096
+  %17 = icmp eq i32 %16, 0
+  br i1 %17, label %bb.ak, label %bb.ax
+
+bb.ak:                                            ; preds = %14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #28
   %i.jc = load i8, ptr %i.ap, align 4
   %i.jd = zext i8 %i.jc to i32
@@ -838,27 +850,11 @@ bb.aw:                                            ; preds = %bb.au
   %.not.i49.i = icmp eq i32 %i.nf, 0
   br i1 %.not.i49.i, label %bb.ay, label %tg3_phydsp_write.exit51.i
 
-10:                                               ; preds = %bb.ax, %tg3_phy_write_and_check_testpat.exit.thread.i
-  %11 = phi i32 [ 99, %tg3_phy_write_and_check_testpat.exit.thread.i ], [ %i.ng, %bb.ax ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #28
-  store i32 0, ptr %i.k, align 4, !annotation !11
-  %12 = load i8, ptr %i.ap, align 4
-  %13 = zext i8 %12 to i32
-  %14 = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %13, i32 noundef 22, ptr noundef nonnull %i.k) #30, !srcloc !59
-  %.not6.i.i46.i = icmp eq i32 %14, 0
-  br i1 %.not6.i.i46.i, label %15, label %bb.ax
-
-15:                                               ; preds = %10
-  %16 = load i32, ptr %i.k, align 4
-  %17 = and i32 %16, 4096
-  %18 = icmp eq i32 %17, 0
-  br i1 %18, label %bb.ak, label %bb.ax
-
-bb.ax:                                            ; preds = %15, %10
+bb.ax:                                            ; preds = %14, %9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #28
-  %i.ng = add nsw i32 %11, -1
-  %.not.i.i47.i = icmp eq i32 %11, 0
-  br i1 %.not.i.i47.i, label %tg3_phy_reset_5703_4_5.exit.thread, label %10
+  %i.ng = add nsw i32 %10, -1
+  %.not.i.i47.i = icmp eq i32 %10, 0
+  br i1 %.not.i.i47.i, label %tg3_phy_reset_5703_4_5.exit.thread, label %9
 
 bb.ay:                                            ; preds = %bb.aw
   %i.nh = load i8, ptr %i.ap, align 4
@@ -909,8 +905,8 @@ tg3_phy_toggle_auxctl_smdsp.exit57.i:             ; preds = %bb.az, %tg3_phy_aux
   %.not40.i = icmp eq i32 %i.oi, 0
   br i1 %.not40.i, label %tg3_phy_reset_5703_4_5.exit, label %tg3_phy_reset_5703_4_5.exit.thread
 
-tg3_phy_reset_5703_4_5.exit.thread:               ; preds = %tg3_phy_toggle_auxctl_smdsp.exit.i, %bb.ax, %bb.an, %bb.ar, %bb.av, %tg3_bmcr_reset.exit.thread.i, %tg3_phy_toggle_auxctl_smdsp.exit.thread.i, %tg3_phy_toggle_auxctl_smdsp.exit57.i
-  %.027.i.ph = phi i32 [ -16, %bb.an ], [ -16, %tg3_bmcr_reset.exit.thread.i ], [ -16, %bb.ar ], [ -16, %bb.av ], [ %i.oi, %tg3_phy_toggle_auxctl_smdsp.exit57.i ], [ %.0.i.ph.i, %tg3_phy_toggle_auxctl_smdsp.exit.thread.i ], [ -16, %bb.ax ], [ %i.cs, %tg3_phy_toggle_auxctl_smdsp.exit.i ]
+tg3_phy_reset_5703_4_5.exit.thread:               ; preds = %tg3_phy_toggle_auxctl_smdsp.exit.i, %bb.ax, %bb.an, %bb.ar, %bb.av, %bb.m, %tg3_phy_toggle_auxctl_smdsp.exit.thread.i, %tg3_phy_toggle_auxctl_smdsp.exit57.i
+  %.027.i.ph = phi i32 [ -16, %bb.an ], [ -16, %bb.m ], [ -16, %bb.ar ], [ -16, %bb.av ], [ %i.oi, %tg3_phy_toggle_auxctl_smdsp.exit57.i ], [ %.0.i.ph.i, %tg3_phy_toggle_auxctl_smdsp.exit.thread.i ], [ -16, %bb.ax ], [ %i.cs, %tg3_phy_toggle_auxctl_smdsp.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #28
   br label %bb.dg
@@ -956,7 +952,7 @@ bb.bd:                                            ; preds = %bb.g, %bb.bb, %bb.b
   br i1 %.not.i111, label %.preheader.i, label %tg3_bmcr_reset.exit.thread
 
 .preheader.i:                                     ; preds = %bb.bd, %bb.bg
-  %i.oy = phi i32 [ %i.pf, %bb.bg ], [ 4999, %bb.bd ] ; 3 uses
+  %i.oy = phi i32 [ %i.pf, %bb.bg ], [ 4999, %bb.bd ] ; 2 uses
   %i.oz = load i8, ptr %i.ap, align 4
   %i.pa = zext i8 %i.oz to i32
   %i.pb = call fastcc range(i32 -16, 1) i32 @__tg3_readphy(ptr noundef %0, i32 noundef %i.pa, i32 noundef 0, ptr noundef nonnull %i.i) #30, !srcloc !59
@@ -971,8 +967,10 @@ bb.be:                                            ; preds = %.preheader.i
 
 bb.bf:                                            ; preds = %bb.be
   tail call void @__const_udelay(i64 noundef 171800) #27
-  %19 = icmp slt i32 %i.oy, 0
-  br i1 %19, label %tg3_bmcr_reset.exit.thread, label %20
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #28
+  %18 = and i32 %.0, 65536
+  %.not91 = icmp eq i32 %18, 0
+  br i1 %.not91, label %bb.bj, label %bb.bh
 
 bb.bg:                                            ; preds = %bb.be
   tail call void @__const_udelay(i64 noundef 42950) #27
@@ -980,17 +978,11 @@ bb.bg:                                            ; preds = %bb.be
   %.not7.i = icmp eq i32 %i.oy, 0
   br i1 %.not7.i, label %tg3_bmcr_reset.exit.thread, label %.preheader.i, !llvm.loop !61
 
-tg3_bmcr_reset.exit.thread:                       ; preds = %bb.bg, %.preheader.i, %bb.bd, %bb.bf
+tg3_bmcr_reset.exit.thread:                       ; preds = %bb.bg, %.preheader.i, %bb.bd
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #28
   br label %bb.dg
 
-20:                                               ; preds = %bb.bf
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #28
-  %21 = and i32 %.0, 65536
-  %.not91 = icmp eq i32 %21, 0
-  br i1 %.not91, label %bb.bj, label %bb.bh
-
-bb.bh:                                            ; preds = %20
+bb.bh:                                            ; preds = %bb.bf
   store i32 513, ptr %i.v, align 4
   %i.pg = load i8, ptr %i.ap, align 4
   %i.ph = zext i8 %i.pg to i32
@@ -1010,7 +1002,7 @@ tg3_phydsp_write.exit:                            ; preds = %bb.bh, %bb.bi
   tail call void %i.pn(ptr noundef %0, i32 noundef 13824, i32 noundef %.0) #27
   br label %bb.bj
 
-bb.bj:                                            ; preds = %tg3_phydsp_write.exit, %20
+bb.bj:                                            ; preds = %tg3_phydsp_write.exit, %bb.bf
   %i.po = load i32, ptr %i.w, align 4
   %i.pp = lshr i32 %i.po, 8
   switch i32 %i.pp, label %_tg3_flag.exit [

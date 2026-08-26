@@ -113,7 +113,7 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.k, %bb.o
   %.141 = phi i32 [ %.04084, %bb.k ], [ %i.ab, %bb.o ] ; 8 uses
-  %.139 = phi i32 [ %i.v, %bb.k ], [ %.03885, %bb.o ] ; 15 uses
+  %.139 = phi i32 [ %i.v, %bb.k ], [ %.03885, %bb.o ] ; 14 uses
   %i.ac = add nuw nsw i32 %.04283, 1              ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.086, i64 4
   %exitcond.not = icmp eq i32 %i.ac, %1
@@ -516,26 +516,22 @@ scalar.ph122:                                     ; preds = %scalar.ph122.prehea
   %.not92.i = icmp eq i64 %indvars.iv78.i, 0
   br i1 %.not92.i, label %.preheader.thread.i, label %scalar.ph122, !llvm.loop !59
 
-.loopexit.i:                                      ; preds = %.lr.ph71.i.prol.loopexit, %bb.ac, %.lr.ph74.i
+.loopexit.i:                                      ; preds = %bb.ac, %.lr.ph71.i.prol.loopexit
   %exitcond83.not.i = icmp eq i32 %.25272.i, %i.ew
   br i1 %exitcond83.not.i, label %.lr.ph92.preheader, label %.lr.ph74.i, !llvm.loop !60
 
 .lr.ph74.i:                                       ; preds = %.loopexit.i, %.lr.ph74.preheader.i
   %.273.i = phi ptr [ %i.fc, %.loopexit.i ], [ %i.cx, %.lr.ph74.preheader.i ] ; 6 uses
   %.25272.i = phi i32 [ %i.fb, %.loopexit.i ], [ 0, %.lr.ph74.preheader.i ] ; 5 uses
-  %i.fb = add nuw nsw i32 %.25272.i, 1            ; 3 uses
+  %i.fb = add nuw nsw i32 %.25272.i, 1            ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %.273.i, i64 4 ; 4 uses
-  %3 = icmp slt i32 %i.fb, %.139
-  br i1 %3, label %.lr.ph71.preheader.i, label %.loopexit.i
-
-.lr.ph71.preheader.i:                             ; preds = %.lr.ph74.i
   %.pre84.i = load i32, ptr %.273.i, align 4, !tbaa !12 ; 4 uses
-  %4 = sub nsw i32 %.25272.i, %.139
-  %5 = and i32 %4, 1
-  %lcmp.mod181.not.not = icmp eq i32 %5, 0
-  br i1 %lcmp.mod181.not.not, label %.lr.ph71.i.prol, label %.lr.ph71.i.prol.loopexit
+  %3 = sub nsw i32 %.25272.i, %.139
+  %4 = and i32 %3, 1
+  %lcmp.mod180.not.not = icmp eq i32 %4, 0
+  br i1 %lcmp.mod180.not.not, label %.lr.ph71.i.prol, label %.lr.ph71.i.prol.loopexit
 
-.lr.ph71.i.prol:                                  ; preds = %.lr.ph71.preheader.i
+.lr.ph71.i.prol:                                  ; preds = %.lr.ph74.i
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !12 ; 3 uses
   %i.fe = icmp sgt i32 %i.fd, %.pre84.i
   br i1 %i.fe, label %bb.z, label %.lr.ph71.i.prol.loopexit.unr-lcssa
@@ -551,10 +547,10 @@ bb.z:                                             ; preds = %.lr.ph71.i.prol
   %i.fh = getelementptr inbounds nuw i8, ptr %.273.i, i64 8
   br label %.lr.ph71.i.prol.loopexit
 
-.lr.ph71.i.prol.loopexit:                         ; preds = %.lr.ph71.i.prol.loopexit.unr-lcssa, %.lr.ph71.preheader.i
-  %.unr182 = phi i32 [ %.pre84.i, %.lr.ph71.preheader.i ], [ %i.ff, %.lr.ph71.i.prol.loopexit.unr-lcssa ]
-  %.24770.i.unr = phi ptr [ %i.fc, %.lr.ph71.preheader.i ], [ %i.fh, %.lr.ph71.i.prol.loopexit.unr-lcssa ]
-  %.14969.i.unr = phi i32 [ %i.fb, %.lr.ph71.preheader.i ], [ %i.fg, %.lr.ph71.i.prol.loopexit.unr-lcssa ]
+.lr.ph71.i.prol.loopexit:                         ; preds = %.lr.ph71.i.prol.loopexit.unr-lcssa, %.lr.ph74.i
+  %.unr182 = phi i32 [ %.pre84.i, %.lr.ph74.i ], [ %i.ff, %.lr.ph71.i.prol.loopexit.unr-lcssa ]
+  %.24770.i.unr = phi ptr [ %i.fc, %.lr.ph74.i ], [ %i.fh, %.lr.ph71.i.prol.loopexit.unr-lcssa ]
+  %.14969.i.unr = phi i32 [ %i.fb, %.lr.ph74.i ], [ %i.fg, %.lr.ph71.i.prol.loopexit.unr-lcssa ]
   %i.fi = icmp eq i32 %i.ew, %.25272.i
   br i1 %i.fi, label %.loopexit.i, label %.lr.ph71.i
 

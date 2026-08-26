@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %storemerge = phi i32 [ %i.q, %bb.b ], [ -1, %bb.a ]
-  store i32 %storemerge, ptr %0, align 8
+  store i32 %i.q, ptr %0, align 8
   ret void
 }
 
@@ -364,8 +363,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %storemerge = phi i32 [ %i.s, %bb.b ], [ -1, %bb.a ]
-  store i32 %storemerge, ptr %0, align 8
+  store i32 %i.s, ptr %0, align 8
   ret void
 }
 
@@ -768,8 +766,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %storemerge = phi i32 [ %i.o, %bb.b ], [ -1, %bb.a ]
-  store i32 %storemerge, ptr %0, align 8
+  store i32 %i.o, ptr %0, align 8
   ret void
 }
 
@@ -1172,8 +1169,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %storemerge = phi i32 [ %i.s, %bb.b ], [ -1, %bb.a ]
-  store i32 %storemerge, ptr %0, align 8
+  store i32 %i.s, ptr %0, align 8
   ret void
 }
 
@@ -1243,8 +1239,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %storemerge = phi i32 [ %i.q, %bb.b ], [ -1, %bb.a ]
-  store i32 %storemerge, ptr %0, align 8
+  store i32 %i.q, ptr %0, align 8
   ret void
 }
 
@@ -1360,8 +1355,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %storemerge = phi i32 [ %i.s, %bb.b ], [ -1, %bb.a ]
-  store i32 %storemerge, ptr %0, align 8
+  store i32 %i.s, ptr %0, align 8
   ret void
 }
 
@@ -1435,8 +1429,7 @@ bb.b:                                             ; preds = %.lr.ph.i
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %storemerge = phi i32 [ %i.q, %bb.b ], [ -1, %bb.a ]
-  store i32 %storemerge, ptr %0, align 8
+  store i32 %i.q, ptr %0, align 8
   ret void
 }
 
