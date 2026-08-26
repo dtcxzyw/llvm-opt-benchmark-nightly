@@ -204,7 +204,7 @@ _ZN4llvm5APIntD2Ev.exit:                          ; preds = %.thread, %bb.e, %bb
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZNK4llvm5APInt8toStringERNS_15SmallVectorImplIcEEjbbbb(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i32 noundef %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i1 noundef zeroext %5, i1 noundef zeroext %6) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [65 x i8], align 16               ; 6 uses
+  %i.a = alloca [65 x i8], align 16               ; 5 uses
   %7 = alloca %"class.llvm::APInt", align 8       ; 9 uses
   %i.b = alloca i64, align 8                      ; 4 uses
   br i1 %4, label %switch.lookup, label %bb.b
@@ -220,8 +220,7 @@ bb.b:                                             ; preds = %switch.lookup, %bb.
   %.079 = phi ptr [ @.str, %bb.a ], [ %switch.load, %switch.lookup ] ; 6 uses
   %i.e = icmp eq i32 %2, 8                        ; 2 uses
   %i.f = icmp eq i32 %2, 10
-  %i.g = or i1 %i.e, %i.f
-  %8 = select i1 %i.g, i32 3, i32 4               ; 3 uses
+  %i.g = or i1 %i.e, %i.f                         ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !8    ; 13 uses
   %i.j = icmp ult i32 %i.i, 65
@@ -234,7 +233,7 @@ bb.b:                                             ; preds = %switch.lookup, %bb.
 
 .thread:                                          ; preds = %.split
   %i.m = select i1 %5, i64 36, i64 0
-  %i.n = getelementptr inbounds nuw i8, ptr @_ZZNK4llvm5APInt8toStringERNS_15SmallVectorImplIcEEjbbbbE10BothDigits, i64 %i.m ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr @_ZZNK4llvm5APInt8toStringERNS_15SmallVectorImplIcEEjbbbbE10BothDigits, i64 %i.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   br i1 %3, label %_ZNK4llvm5APInt12getSExtValueEv.exit, label %bb.m
 
@@ -385,7 +384,7 @@ _ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit101: ; preds = %bb.k, %
   br label %bb.m
 
 bb.m:                                             ; preds = %.thread, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit101, %_ZNK4llvm5APInt12getSExtValueEv.exit
-  %.184 = phi i64 [ %.0.i.i, %_ZNK4llvm5APInt12getSExtValueEv.exit ], [ %i.bu, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit101 ], [ %i.k, %.thread ] ; 4 uses
+  %.184 = phi i64 [ %.0.i.i, %_ZNK4llvm5APInt12getSExtValueEv.exit ], [ %i.bu, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit101 ], [ %i.k, %.thread ] ; 2 uses
   %i.bv = load i8, ptr %.079, align 1, !tbaa !10  ; 2 uses
   %.not93154 = icmp eq i8 %i.bv, 0
   br i1 %.not93154, label %.preheader141, label %.lr.ph157
@@ -400,14 +399,8 @@ bb.m:                                             ; preds = %.thread, %_ZN4llvm2
   br i1 %.not94159, label %._crit_edge164, label %.lr.ph163
 
 .lr.ph163:                                        ; preds = %.preheader141
-  %i.by = zext i32 %2 to i64                      ; 5 uses
-  %9 = urem i64 %.184, %i.by
-  %10 = getelementptr inbounds nuw i8, ptr %i.n, i64 %9
-  %11 = load i8, ptr %10, align 1, !tbaa !10
-  %.ptr139.peel = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store i8 %11, ptr %.ptr139.peel, align 16, !tbaa !10
-  %.not94.peel = icmp ult i64 %.184, %i.by
-  br i1 %.not94.peel, label %._crit_edge164, label %.peel.next
+  %i.by = zext i32 %2 to i64                      ; 3 uses
+  br label %.peel.next
 
 bb.n:                                             ; preds = %.lr.ph157, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit103
   %i.bz = phi i8 [ %i.bv, %.lr.ph157 ], [ %i.ch, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit103 ] ; 2 uses
@@ -437,16 +430,19 @@ _ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit103: ; preds = %bb.o, %
   br i1 %.not93, label %.preheader141, label %bb.n, !llvm.loop !517
 
 .peel.next:                                       ; preds = %.lr.ph163, %bb.s
-  %.081.idx162 = phi i64 [ %.182.add, %bb.s ], [ 64, %.lr.ph163 ] ; 3 uses
-  %.184.pn = phi i64 [ %.285161, %bb.s ], [ %.184, %.lr.ph163 ]
-  %.086160 = phi i32 [ %i.cn, %bb.s ], [ 1, %.lr.ph163 ] ; 2 uses
-  %.285161 = udiv i64 %.184.pn, %i.by             ; 3 uses
+  %.081.idx162 = phi i64 [ 65, %.lr.ph163 ], [ %.182.add, %bb.s ] ; 3 uses
+  %.184.pn = phi i64 [ %.184, %.lr.ph163 ], [ %11, %bb.s ] ; 3 uses
+  %.086160 = phi i32 [ 0, %.lr.ph163 ], [ %i.cn, %bb.s ] ; 4 uses
   br i1 %6, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %.peel.next
-  %i.ci = urem i32 %.086160, %8
-  %i.cj = icmp eq i32 %i.ci, 0
-  br i1 %i.cj, label %bb.r, label %bb.s
+  %i.ci = urem i32 %.086160, 3
+  %8 = and i32 %.086160, 3
+  %9 = select i1 %i.g, i32 %i.ci, i32 %8
+  %i.cj = icmp eq i32 %9, 0
+  %10 = icmp ne i32 %.086160, 0
+  %or.cond = select i1 %i.cj, i1 %10, i1 false
+  br i1 %or.cond, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   %.081.add = add nsw i64 %.081.idx162, -1        ; 2 uses
@@ -456,18 +452,19 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %.peel.next
   %.182.idx = phi i64 [ %.081.add, %bb.r ], [ %.081.idx162, %bb.q ], [ %.081.idx162, %.peel.next ]
-  %i.ck = urem i64 %.285161, %i.by
+  %i.ck = urem i64 %.184.pn, %i.by
   %i.cl = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.ck
   %i.cm = load i8, ptr %i.cl, align 1, !tbaa !10
   %.182.add = add nsw i64 %.182.idx, -1           ; 3 uses
   %.ptr139 = getelementptr inbounds i8, ptr %i.a, i64 %.182.add
   store i8 %i.cm, ptr %.ptr139, align 1, !tbaa !10
+  %11 = udiv i64 %.184.pn, %i.by
   %i.cn = add nuw nsw i32 %.086160, 1
-  %.not94 = icmp ult i64 %.285161, %i.by
+  %.not94 = icmp ult i64 %.184.pn, %i.by
   br i1 %.not94, label %._crit_edge164, label %.peel.next, !llvm.loop !518
 
-._crit_edge164:                                   ; preds = %bb.s, %.lr.ph163, %.preheader141
-  %.081.idx.lcssa158 = phi i64 [ 65, %.preheader141 ], [ 64, %.lr.ph163 ], [ %.182.add, %bb.s ] ; 3 uses
+._crit_edge164:                                   ; preds = %bb.s, %.preheader141
+  %.081.idx.lcssa158 = phi i64 [ 65, %.preheader141 ], [ %.182.add, %bb.s ] ; 3 uses
   %.081.ptr.le = getelementptr inbounds i8, ptr %i.a, i64 %.081.idx.lcssa158
   %gepdiff = sub nsw i64 65, %.081.idx.lcssa158   ; 3 uses
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
@@ -681,7 +678,7 @@ bb.ab:                                            ; preds = %._crit_edge, %._cri
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.ab, %_ZN4llvm5APInt11lshrInPlaceEj.exit
-  %.080 = phi i32 [ 0, %bb.ab ], [ %i.hx, %_ZN4llvm5APInt11lshrInPlaceEj.exit ] ; 3 uses
+  %.080 = phi i32 [ 0, %bb.ab ], [ %i.hx, %_ZN4llvm5APInt11lshrInPlaceEj.exit ] ; 4 uses
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ad, %.lr.ph.i.i.i
@@ -717,10 +714,12 @@ bb.ae:                                            ; preds = %_ZNK4llvm5APInt12ge
   br i1 %6, label %bb.af, label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit113
 
 bb.af:                                            ; preds = %bb.ae
-  %i.gd = urem i32 %.080, %8
-  %i.ge = icmp eq i32 %i.gd, 0
+  %i.gd = urem i32 %.080, 3
+  %12 = and i32 %.080, 3
+  %13 = select i1 %i.g, i32 %i.gd, i32 %12
+  %i.ge = icmp eq i32 %13, 0
   %i.gf = icmp ne i32 %.080, 0
-  %or.cond7 = and i1 %i.gf, %i.ge
+  %or.cond7 = select i1 %i.ge, i1 %i.gf, i1 false
   br i1 %or.cond7, label %bb.ag, label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit113
 
 bb.ag:                                            ; preds = %bb.af
@@ -828,7 +827,7 @@ _ZN4llvm5APInt11lshrInPlaceEj.exit:               ; preds = %_ZN4llvm5APInt11lsh
 
 bb.al:                                            ; preds = %.preheader142, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit134
   %i.hy = phi i32 [ %.pre, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit134 ], [ %i.i, %.preheader142 ] ; 7 uses
-  %.0 = phi i32 [ %i.jl, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit134 ], [ 0, %.preheader142 ] ; 3 uses
+  %.0 = phi i32 [ %i.jl, %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit134 ], [ 0, %.preheader142 ] ; 4 uses
   %i.hz = icmp ult i32 %i.hy, 65
   br i1 %i.hz, label %.split207, label %.lr.ph.i.i.i119
 
@@ -882,10 +881,12 @@ bb.ao:                                            ; preds = %.split207, %_ZNK4ll
   br i1 %6, label %bb.ap, label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit132
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.it = urem i32 %.0, %8
-  %i.iu = icmp eq i32 %i.it, 0
+  %i.it = urem i32 %.0, 3
+  %14 = and i32 %.0, 3
+  %15 = select i1 %i.g, i32 %i.it, i32 %14
+  %i.iu = icmp eq i32 %15, 0
   %i.iv = icmp ne i32 %.0, 0
-  %or.cond9 = and i1 %i.iv, %i.iu
+  %or.cond9 = select i1 %i.iu, i1 %i.iv, i1 false
   br i1 %or.cond9, label %bb.aq, label %_ZN4llvm23SmallVectorTemplateBaseIcLb1EE9push_backEc.exit132
 
 bb.aq:                                            ; preds = %bb.ap
@@ -1288,7 +1289,7 @@ begin_hunk_1_@llvm.bitreverse.v2i64
 !515 = !{!513, !25, i64 0}
 !516 = distinct !{!516, !15}
 !517 = distinct !{!517, !15}
-!518 = distinct !{!518, !15, !16}
+!518 = distinct !{!518, !15}
 !519 = distinct !{!519, !15, !20, !21}
 !520 = distinct !{!520, !15, !21, !20}
 !521 = distinct !{!521, !15}

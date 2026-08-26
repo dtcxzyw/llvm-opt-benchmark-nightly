@@ -205,14 +205,15 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.d = load i64, ptr %i.c, align 8, !tbaa !30
   %i.e = icmp eq i64 %i.d, 1
-  %1 = select i1 %i.e, i64 12, i64 24
   %i.f = load ptr, ptr %0, align 8, !tbaa !8
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 56
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = tail call { ptr, i64 } %i.h(ptr noundef nonnull align 8 dereferenceable(192) %0) #23
-  %i.j = extractvalue { ptr, i64 } %i.i, 1
-  %i.k = udiv i64 %i.j, %1
-  ret i64 %i.k
+  %i.j = extractvalue { ptr, i64 } %i.i, 1        ; 2 uses
+  %1 = udiv i64 %i.j, 12
+  %i.k = udiv i64 %i.j, 24
+  %2 = select i1 %i.e, i64 %1, i64 %i.k
+  ret i64 %2
 }
 
 declare noundef zeroext i1 @_ZNK4LIEF6ObjecteqERKS0_(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #3

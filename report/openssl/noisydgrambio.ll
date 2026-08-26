@@ -202,11 +202,12 @@ bb.z:                                             ; preds = %bb.y
   %i.da = and i32 %i.cz, 7
   %i.db = shl nuw nsw i32 %i.cy, %i.da
   %i.dc = trunc nuw nsw i32 %i.db to i16
-  %i.dd = tail call i32 @test_random() #3
+  %i.dd = tail call i32 @test_random() #3         ; 2 uses
   %isneg = icmp slt i8 %i.cf, 0
-  %6 = select i1 %isneg, i32 50, i32 25
-  %i.de = urem i32 %i.dd, %6
-  %i.df = zext nneg i32 %i.de to i64
+  %6 = urem i32 %i.dd, 50
+  %i.de = urem i32 %i.dd, 25
+  %7 = select i1 %isneg, i32 %6, i32 %i.de
+  %i.df = zext nneg i32 %7 to i64
   br label %get_noise.exit
 
 get_noise.exit:                                   ; preds = %bb.w, %.thread.i, %bb.y, %bb.z

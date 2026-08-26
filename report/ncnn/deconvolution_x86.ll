@@ -205,18 +205,19 @@ _ZNK4ncnn3Mat8elembitsEv.exit.thread:             ; preds = %bb.a, %bb.b, %_ZNK4
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !53, !range !47, !noundef !48
   %i.bt = trunc nuw i8 %i.bs to i1
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.bv = load i32, ptr %i.bu, align 8, !tbaa !52 ; 2 uses
+  %i.bv = load i32, ptr %i.bu, align 8, !tbaa !52 ; 3 uses
   %i.bw = and i32 %i.bv, 3
   %i.bx = icmp eq i32 %i.bw, 0
-  %i.by = select i1 %i.bt, i1 %i.bx, i1 false     ; 4 uses
-  %.057 = select i1 %i.by, i32 4, i32 1           ; 2 uses
+  %i.by = select i1 %i.bt, i1 %i.bx, i1 false     ; 5 uses
+  %.057 = select i1 %i.by, i32 4, i32 1
   %i.bz = sext i32 %i.af to i64
   %i.ca = udiv i64 %i.al, %i.bz
   %i.cb = select i1 %i.by, i64 2, i64 0
   %i.cc = shl i64 %i.ca, %i.cb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #10
-  %i.cd = sdiv i32 %i.bv, %.057                   ; 6 uses
-  store i32 %i.cd, ptr %i.q, align 4, !tbaa !68
+  %i.cd = sdiv i32 %i.bv, 4
+  %8 = select i1 %i.by, i32 %i.cd, i32 %i.bv      ; 6 uses
+  store i32 %8, ptr %i.q, align 4, !tbaa !68
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.ce = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
@@ -334,7 +335,7 @@ bb.p:                                             ; preds = %bb.o
 
 .thread.invoke:                                   ; preds = %_ZNK4ncnn3Mat8elembitsEv.exit.thread, %bb.d, %bb.e, %bb.f, %bb.h, %.thread
   %.sink261 = phi i64 [ 8, %.thread ], [ 16, %bb.h ], [ 16, %bb.f ], [ 16, %bb.e ], [ 16, %bb.d ], [ 16, %_ZNK4ncnn3Mat8elembitsEv.exit.thread ]
-  %i.ee = phi i32 [ %i.ed, %.thread ], [ %i.cd, %bb.h ], [ %i.cd, %bb.f ], [ %i.cd, %bb.e ], [ %i.cd, %bb.d ], [ %i.cd, %_ZNK4ncnn3Mat8elembitsEv.exit.thread ]
+  %i.ee = phi i32 [ %i.ed, %.thread ], [ %8, %bb.h ], [ %8, %bb.f ], [ %8, %bb.e ], [ %8, %bb.d ], [ %8, %_ZNK4ncnn3Mat8elembitsEv.exit.thread ]
   %i.ef = getelementptr inbounds nuw i8, ptr %3, i64 %.sink261
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !242
   invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %4, i32 noundef %i.bi, i32 noundef %i.bq, i32 noundef %i.ee, i64 noundef %i.cc, i32 noundef %.057, ptr noundef %i.eg)
@@ -737,14 +738,15 @@ define hidden noundef range(i32 -100, 1) i32 @_ZNK4ncnn17Deconvolution_x8613forw
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !53, !range !47, !noundef !48
   %i.ay = trunc nuw i8 %i.ax to i1
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.ba = load i32, ptr %i.az, align 8, !tbaa !52 ; 2 uses
+  %i.ba = load i32, ptr %i.az, align 8, !tbaa !52 ; 3 uses
   %i.bb = and i32 %i.ba, 3
   %i.bc = icmp eq i32 %i.bb, 0
-  %i.bd = select i1 %i.ay, i1 %i.bc, i1 false
-  %.031 = select i1 %i.bd, i32 4, i32 1           ; 3 uses
+  %i.bd = select i1 %i.ay, i1 %i.bc, i1 false     ; 2 uses
+  %.031 = select i1 %i.bd, i32 4, i32 1           ; 2 uses
   %i.be = shl nuw nsw i32 %.031, 1
   %i.bf = zext nneg i32 %i.be to i64
-  %i.bg = sdiv i32 %i.ba, %.031
+  %i.bg = sdiv i32 %i.ba, 4
+  %5 = select i1 %i.bd, i32 %i.bg, i32 %i.ba
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   %i.bh = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
@@ -902,7 +904,7 @@ bb.s:                                             ; preds = %bb.r
   %.sink160 = phi i64 [ 8, %.thread ], [ 16, %bb.e ], [ 16, %bb.c ], [ 16, %bb.b ], [ 16, %bb.a ], [ 16, %._crit_edge ]
   %i.dq = getelementptr inbounds nuw i8, ptr %3, i64 %.sink160
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !242
-  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %4, i32 noundef %i.an, i32 noundef %i.av, i32 noundef %i.bg, i64 noundef %i.bf, i32 noundef %.031, ptr noundef %i.dr)
+  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %4, i32 noundef %i.an, i32 noundef %i.av, i32 noundef %5, i64 noundef %i.bf, i32 noundef %.031, ptr noundef %i.dr)
           to label %bb.t unwind label %bb.f
 
 bb.t:                                             ; preds = %.thread.invoke

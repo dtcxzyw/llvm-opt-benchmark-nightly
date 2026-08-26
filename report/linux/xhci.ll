@@ -205,8 +205,9 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 bb.v:                                             ; preds = %bb.u
   %i.cd = load ptr, ptr %i.ba, align 8
   %i.ce = getelementptr i8, ptr %i.cd, i64 28
-  %i.cf = load i32, ptr %i.ce, align 4            ; 2 uses
-  %i.cg = icmp ugt i32 %i.cf, 4
+  %i.cf = load i32, ptr %i.ce, align 4
+  %.fr.i.i = freeze i32 %i.cf                     ; 2 uses
+  %i.cg = icmp ugt i32 %.fr.i.i, 4
   br i1 %i.cg, label %bb.w, label %xhci_get_block_size.exit.i.i
 
 bb.w:                                             ; preds = %bb.v
@@ -226,7 +227,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cm, label %xhci_check_bw_table.exit.i.preheader, label %bb.ap
 
 xhci_get_block_size.exit.i.i:                     ; preds = %bb.v
-  %i.cn = icmp eq i32 %i.cf, 3                    ; 4 uses
+  %i.cn = icmp eq i32 %.fr.i.i, 3                 ; 6 uses
   %..i.i = select i1 %i.cn, i32 1607, i32 1285    ; 7 uses
   %.119.i.i = select i1 %i.cn, i32 322, i32 129   ; 2 uses
   %i.co = load ptr, ptr %i.az, align 8            ; 5 uses
@@ -279,12 +280,12 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %xhci_get_block_size.exit.i.i
-  %i.dk = load i32, ptr %i.co, align 8
-  %i.dl = select i1 %i.cn, i32 3, i32 0           ; 2 uses
+  %i.dk = load i32, ptr %i.co, align 8            ; 2 uses
+  %i.dl = select i1 %i.cn, i32 3, i32 0           ; 3 uses
   %i.dm = add i32 %i.dk, %i.dl
-  %6 = select i1 %i.cn, i32 2, i32 0              ; 2 uses
-  %7 = lshr i32 %i.dm, %6
-  %i.dn = getelementptr i8, ptr %i.co, i64 8      ; 2 uses
+  %6 = lshr i32 %i.dm, 2
+  %7 = select i1 %i.cn, i32 %6, i32 %i.dk
+  %i.dn = getelementptr i8, ptr %i.co, i64 8      ; 3 uses
   %i.do = load i32, ptr %i.dn, align 8
   %i.dp = getelementptr i8, ptr %i.co, i64 32
   %i.dq = load i32, ptr %i.dp, align 8
@@ -301,29 +302,29 @@ bb.ad:                                            ; preds = %bb.ac
 xhci_get_largest_overhead.exit.i.i:               ; preds = %bb.ad, %bb.ac
   %.0.i133.i.i = phi i32 [ 128, %bb.ac ], [ %..i134.i.i, %bb.ad ]
   %i.dt = mul i32 %.0.i133.i.i, %i.do
-  %i.du = add i32 %i.dt, %7
-  br label %bb.ae
+  %i.du = add i32 %i.dt, %7                       ; 2 uses
+  br i1 %i.cn, label %bb.ae, label %.critedge.i.i.preheader
 
-.critedge.i.i.a:                                  ; preds = %xhci_get_largest_overhead.exit139.i.i
+.critedge.i.i.a:                                  ; preds = %xhci_get_largest_overhead.exit139.us.i.i
   %i.dv = trunc nuw nsw i64 %indvars.iv.i.i305 to i32
   %i.dw = shl nuw nsw i32 2, %i.dv
   %i.dx = add nsw i32 %i.dw, -1
   %i.dy = and i32 %i.ed, %i.dx                    ; 3 uses
   %i.dz = icmp eq i32 %i.dy, 0                    ; 2 uses
-  %.not117.i.i.a = icmp eq i32 %i.ep, 0           ; 2 uses
-  %spec.select121.i.i.a = select i1 %.not117.i.i.a, i32 %.1103.i.i, i32 %.0.i136.i.i
+  %.not117.i.i.a = icmp eq i32 %15, 0             ; 2 uses
+  %spec.select121.i.i.a = select i1 %.not117.i.i.a, i32 %.1103.us.i.i, i32 %.0.i136.us.i.i
   %.2104.i.i.a = select i1 %i.dz, i32 0, i32 %spec.select121.i.i.a ; 2 uses
-  %spec.select120.i.i.a = select i1 %.not117.i.i.a, i32 %spec.select.i.i, i32 %.098.i.i
+  %spec.select120.i.i.a = select i1 %.not117.i.i.a, i32 %spec.select.us.i.i, i32 %.098.us.i.i
   %.2107.i.i.a = select i1 %i.dz, i32 0, i32 %spec.select120.i.i.a ; 2 uses
-  %exitcond.not.i.i.a = icmp eq i64 %indvars.iv.next.i.i, 16
+  %exitcond.not.i.i.a = icmp eq i64 %indvars.iv.next167.i.i, 16
   br i1 %exitcond.not.i.i.a, label %bb.aj, label %bb.ae, !llvm.loop !51
 
 bb.ae:                                            ; preds = %xhci_get_largest_overhead.exit.i.i, %.critedge.i.i.a
-  %.095.i.i309 = phi i32 [ %i.du, %xhci_get_largest_overhead.exit.i.i ], [ %i.es, %.critedge.i.i.a ]
-  %.0101.i.i308 = phi i32 [ 0, %xhci_get_largest_overhead.exit.i.i ], [ %i.dy, %.critedge.i.i.a ]
-  %.0102.i.i307 = phi i32 [ 0, %xhci_get_largest_overhead.exit.i.i ], [ %.2104.i.i.a, %.critedge.i.i.a ]
-  %.0105.i.i306 = phi i32 [ 0, %xhci_get_largest_overhead.exit.i.i ], [ %.2107.i.i.a, %.critedge.i.i.a ]
-  %indvars.iv.i.i305 = phi i64 [ 1, %xhci_get_largest_overhead.exit.i.i ], [ %indvars.iv.next.i.i, %.critedge.i.i.a ] ; 3 uses
+  %.095.i.i309 = phi i32 [ %18, %.critedge.i.i.a ], [ %i.du, %xhci_get_largest_overhead.exit.i.i ]
+  %.0101.i.i308 = phi i32 [ %i.dy, %.critedge.i.i.a ], [ 0, %xhci_get_largest_overhead.exit.i.i ]
+  %.0102.i.i307 = phi i32 [ %.2104.i.i.a, %.critedge.i.i.a ], [ 0, %xhci_get_largest_overhead.exit.i.i ]
+  %.0105.i.i306 = phi i32 [ %.2107.i.i.a, %.critedge.i.i.a ], [ 0, %xhci_get_largest_overhead.exit.i.i ]
+  %indvars.iv.i.i305 = phi i64 [ %indvars.iv.next167.i.i, %.critedge.i.i.a ], [ 1, %xhci_get_largest_overhead.exit.i.i ] ; 3 uses
   %i.ea = shl nuw nsw i32 %.0101.i.i308, 1
   %i.eb = getelementptr [40 x i8], ptr %i.dn, i64 %indvars.iv.i.i305 ; 4 uses
   %i.ec = load i32, ptr %i.eb, align 8
@@ -331,25 +332,87 @@ bb.ae:                                            ; preds = %xhci_get_largest_ov
   %i.ee = getelementptr i8, ptr %i.eb, i64 8      ; 2 uses
   %i.ef = load volatile ptr, ptr %i.ee, align 8   ; 2 uses
   %.not143.i.i.a = icmp eq ptr %i.ef, %i.ee
-  br i1 %.not143.i.i.a, label %bb.ag, label %bb.af
+  br i1 %.not143.i.i.a, label %8, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
   %i.eg = getelementptr i8, ptr %i.ef, i64 -16
   %i.eh = load i32, ptr %i.eg, align 4
   %i.ei = add i32 %i.eh, %i.dl
-  %i.ej = lshr i32 %i.ei, %6
+  %i.ej = lshr i32 %i.ei, 2
+  br label %8
+
+8:                                                ; preds = %bb.af, %bb.ae
+  %.098.us.i.i = phi i32 [ %i.ej, %bb.af ], [ 0, %bb.ae ] ; 2 uses
+  %spec.select.us.i.i = tail call i32 @llvm.umax.i32(i32 %.098.us.i.i, i32 %.0105.i.i306) ; 2 uses
+  %9 = getelementptr i8, ptr %i.eb, i64 24
+  %10 = load i32, ptr %9, align 8
+  %.not.i135.us.i.i = icmp eq i32 %10, 0
+  br i1 %.not.i135.us.i.i, label %11, label %xhci_get_largest_overhead.exit139.us.i.i
+
+11:                                               ; preds = %8
+  %12 = getelementptr i8, ptr %i.eb, i64 28
+  %13 = load i32, ptr %12, align 4
+  %.not2.i137.us.i.i = icmp eq i32 %13, 0
+  %..i138.us.i.i = select i1 %.not2.i137.us.i.i, i32 26, i32 20
+  br label %xhci_get_largest_overhead.exit139.us.i.i
+
+xhci_get_largest_overhead.exit139.us.i.i:         ; preds = %11, %8
+  %.0.i136.us.i.i = phi i32 [ 128, %8 ], [ %..i138.us.i.i, %11 ] ; 2 uses
+  %.1103.us.i.i = tail call i32 @llvm.umax.i32(i32 %.0.i136.us.i.i, i32 %.0102.i.i307) ; 2 uses
+  %indvars.iv.next167.i.i = add nuw nsw i64 %indvars.iv.i.i305, 1 ; 3 uses
+  %14 = trunc nuw nsw i64 %indvars.iv.next167.i.i to i32
+  %15 = lshr i32 %i.ed, %14                       ; 2 uses
+  %16 = add nuw nsw i32 %.1103.us.i.i, %spec.select.us.i.i
+  %17 = mul i32 %16, %15
+  %18 = add i32 %17, %.095.i.i309                 ; 4 uses
+  %.not118.us.i.i = icmp ugt i32 %18, %..i.i
+  br i1 %.not118.us.i.i, label %bb.ai, label %.critedge.i.i.a, !llvm.loop !51
+
+.critedge.i.i:                                    ; preds = %xhci_get_largest_overhead.exit139.i.i
+  %19 = trunc nuw nsw i64 %indvars.iv.i.i335 to i32
+  %20 = shl nuw nsw i32 2, %19
+  %21 = add nsw i32 %20, -1
+  %22 = and i32 %27, %21                          ; 3 uses
+  %23 = icmp eq i32 %22, 0                        ; 2 uses
+  %.not117.i.i = icmp eq i32 %i.ep, 0             ; 2 uses
+  %spec.select121.i.i = select i1 %.not117.i.i, i32 %.1103.i.i, i32 %.0.i136.i.i
+  %.2104.i.i = select i1 %23, i32 0, i32 %spec.select121.i.i ; 2 uses
+  %spec.select120.i.i = select i1 %.not117.i.i, i32 %spec.select.i.i, i32 %.098.i.i
+  %.2107.i.i = select i1 %23, i32 0, i32 %spec.select120.i.i ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, 16
+  br i1 %exitcond.not.i.i, label %bb.aj, label %.critedge.i.i.preheader, !llvm.loop !51
+
+.critedge.i.i.preheader:                          ; preds = %xhci_get_largest_overhead.exit.i.i, %.critedge.i.i
+  %.095.i.i339 = phi i32 [ %i.es, %.critedge.i.i ], [ %i.du, %xhci_get_largest_overhead.exit.i.i ]
+  %.0101.i.i338 = phi i32 [ %22, %.critedge.i.i ], [ 0, %xhci_get_largest_overhead.exit.i.i ]
+  %.0102.i.i337 = phi i32 [ %.2104.i.i, %.critedge.i.i ], [ 0, %xhci_get_largest_overhead.exit.i.i ]
+  %.0105.i.i336 = phi i32 [ %.2107.i.i, %.critedge.i.i ], [ 0, %xhci_get_largest_overhead.exit.i.i ]
+  %indvars.iv.i.i335 = phi i64 [ %indvars.iv.next.i.i, %.critedge.i.i ], [ 1, %xhci_get_largest_overhead.exit.i.i ] ; 3 uses
+  %24 = shl nuw nsw i32 %.0101.i.i338, 1
+  %25 = getelementptr [40 x i8], ptr %i.dn, i64 %indvars.iv.i.i335 ; 4 uses
+  %26 = load i32, ptr %25, align 8
+  %27 = add i32 %26, %24                          ; 2 uses
+  %28 = getelementptr i8, ptr %25, i64 8          ; 2 uses
+  %29 = load volatile ptr, ptr %28, align 8       ; 2 uses
+  %.not143.i.i = icmp eq ptr %29, %28
+  br i1 %.not143.i.i, label %bb.ag, label %30
+
+30:                                               ; preds = %.critedge.i.i.preheader
+  %31 = getelementptr i8, ptr %29, i64 -16
+  %32 = load i32, ptr %31, align 4
+  %33 = add i32 %32, %i.dl
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %.098.i.i = phi i32 [ %i.ej, %bb.af ], [ 0, %bb.ae ] ; 2 uses
-  %spec.select.i.i = tail call i32 @llvm.umax.i32(i32 %.098.i.i, i32 %.0105.i.i306) ; 2 uses
-  %i.ek = getelementptr i8, ptr %i.eb, i64 24
+bb.ag:                                            ; preds = %30, %.critedge.i.i.preheader
+  %.098.i.i = phi i32 [ %33, %30 ], [ 0, %.critedge.i.i.preheader ] ; 2 uses
+  %spec.select.i.i = tail call i32 @llvm.umax.i32(i32 %.098.i.i, i32 %.0105.i.i336) ; 2 uses
+  %i.ek = getelementptr i8, ptr %25, i64 24
   %i.el = load i32, ptr %i.ek, align 8
   %.not.i135.i.i = icmp eq i32 %i.el, 0
   br i1 %.not.i135.i.i, label %bb.ah, label %xhci_get_largest_overhead.exit139.i.i
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.em = getelementptr i8, ptr %i.eb, i64 28
+  %i.em = getelementptr i8, ptr %25, i64 28
   %i.en = load i32, ptr %i.em, align 4
   %.not2.i137.i.i = icmp eq i32 %i.en, 0
   %..i138.i.i = select i1 %.not2.i137.i.i, i32 26, i32 20
@@ -357,27 +420,32 @@ bb.ah:                                            ; preds = %bb.ag
 
 xhci_get_largest_overhead.exit139.i.i:            ; preds = %bb.ah, %bb.ag
   %.0.i136.i.i = phi i32 [ 128, %bb.ag ], [ %..i138.i.i, %bb.ah ] ; 2 uses
-  %.1103.i.i = tail call i32 @llvm.umax.i32(i32 %.0.i136.i.i, i32 %.0102.i.i307) ; 2 uses
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i305, 1 ; 3 uses
+  %.1103.i.i = tail call i32 @llvm.umax.i32(i32 %.0.i136.i.i, i32 %.0102.i.i337) ; 2 uses
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i335, 1 ; 3 uses
   %i.eo = trunc nuw nsw i64 %indvars.iv.next.i.i to i32
-  %i.ep = lshr i32 %i.ed, %i.eo                   ; 2 uses
+  %i.ep = lshr i32 %27, %i.eo                     ; 2 uses
   %i.eq = add i32 %.1103.i.i, %spec.select.i.i
   %i.er = mul i32 %i.eq, %i.ep
-  %i.es = add i32 %i.er, %.095.i.i309             ; 4 uses
+  %i.es = add i32 %i.er, %.095.i.i339             ; 4 uses
   %.not118.i.i = icmp ugt i32 %i.es, %..i.i
-  br i1 %.not118.i.i, label %bb.ai, label %.critedge.i.i.a, !llvm.loop !51
+  br i1 %.not118.i.i, label %bb.ai, label %.critedge.i.i, !llvm.loop !51
 
-bb.ai:                                            ; preds = %xhci_get_largest_overhead.exit139.i.i
+bb.ai:                                            ; preds = %xhci_get_largest_overhead.exit139.i.i, %xhci_get_largest_overhead.exit139.us.i.i
+  %.us-phi153.i.i = phi i32 [ %18, %xhci_get_largest_overhead.exit139.us.i.i ], [ %i.es, %xhci_get_largest_overhead.exit139.i.i ]
   %.val122.i.i = load ptr, ptr %0, align 8
   %i.et = load ptr, ptr %.val122.i.i, align 8
-  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.et, ptr noundef nonnull @.str.67, i32 noundef %i.es, i32 noundef %..i.i) #21
+  tail call void (ptr, ptr, ...) @_dev_warn(ptr noundef %i.et, ptr noundef nonnull @.str.67, i32 noundef %.us-phi153.i.i, i32 noundef %..i.i) #21
   br label %xhci_check_bw_table.exit.i.preheader
 
-bb.aj:                                            ; preds = %.critedge.i.i.a
-  %.not114.i.i = icmp eq i32 %i.dy, 0
-  %i.eu = add i32 %.2104.i.i.a, %.2107.i.i.a
+bb.aj:                                            ; preds = %.critedge.i.i, %.critedge.i.i.a
+  %.us-phi.i.i = phi i32 [ %.2107.i.i.a, %.critedge.i.i.a ], [ %.2107.i.i, %.critedge.i.i ]
+  %.us-phi148.i.i = phi i32 [ %.2104.i.i.a, %.critedge.i.i.a ], [ %.2104.i.i, %.critedge.i.i ]
+  %.us-phi149.i.i = phi i32 [ %i.dy, %.critedge.i.i.a ], [ %22, %.critedge.i.i ]
+  %.us-phi150.i.i = phi i32 [ %18, %.critedge.i.i.a ], [ %i.es, %.critedge.i.i ]
+  %.not114.i.i = icmp eq i32 %.us-phi149.i.i, 0
+  %i.eu = add i32 %.us-phi148.i.i, %.us-phi.i.i
   %i.ev = select i1 %.not114.i.i, i32 0, i32 %i.eu
-  %.196.i.i = add i32 %i.ev, %i.es                ; 3 uses
+  %.196.i.i = add i32 %i.ev, %.us-phi150.i.i      ; 3 uses
   %i.ew = load ptr, ptr %i.ar, align 8
   %.not115.i.i = icmp eq ptr %i.ew, null
   br i1 %.not115.i.i, label %bb.ak, label %bb.am
@@ -407,9 +475,11 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.
   %.297.i.i = phi i32 [ %.196.i.i, %bb.aj ], [ %i.fl, %bb.al ], [ %.196.i.i, %bb.ak ] ; 2 uses
   %i.fm = add i32 %.297.i.i, %.119.i.i            ; 4 uses
   %i.fn = sub i32 %..i.i, %i.fm
-  %i.fo = mul i32 %i.fn, 100
-  %i.fp = udiv i32 %i.fo, %..i.i
-  tail call void (ptr, ptr, ptr, ...) @xhci_dbg_trace(ptr noundef %0, ptr noundef nonnull @trace_xhci_dbg_quirks, ptr noundef nonnull @.str.68, i32 noundef %.297.i.i, i32 noundef %..i.i, i32 noundef %.119.i.i, i32 noundef %i.fp) #20
+  %i.fo = mul i32 %i.fn, 100                      ; 2 uses
+  %34 = udiv i32 %i.fo, 1607
+  %i.fp = udiv i32 %i.fo, 1285
+  %35 = select i1 %i.cn, i32 %34, i32 %i.fp
+  tail call void (ptr, ptr, ptr, ...) @xhci_dbg_trace(ptr noundef %0, ptr noundef nonnull @trace_xhci_dbg_quirks, ptr noundef nonnull @.str.68, i32 noundef %.297.i.i, i32 noundef %..i.i, i32 noundef %.119.i.i, i32 noundef %35) #20
   %i.fq = icmp ugt i32 %i.fm, %..i.i
   br i1 %i.fq, label %bb.an, label %bb.ao
 

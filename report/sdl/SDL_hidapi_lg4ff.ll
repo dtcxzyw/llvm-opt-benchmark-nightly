@@ -204,9 +204,9 @@ bb.bp:                                            ; preds = %SDL_HIDAPI_DriverLg
 
 bb.bq:                                            ; preds = %SDL_HIDAPI_DriverLg4ff_GetEnvInt.exit
   store i8 -8, ptr %i.b, align 1
-  %i.ii = icmp samesign ugt i32 %.011.i, 200      ; 2 uses
+  %i.ii = icmp samesign ugt i32 %.011.i, 200      ; 3 uses
   %..i = select i1 %i.ii, i8 3, i8 2
-  %.30.i = select i1 %i.ii, i32 900, i32 200      ; 2 uses
+  %.30.i = select i1 %i.ii, i32 900, i32 200
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ab, i8 0, i64 5, i1 false)
   store i8 %..i, ptr %i.aa, align 1
   %i.ij = load ptr, ptr %i.p, align 8
@@ -226,10 +226,12 @@ bb.br:                                            ; preds = %bb.bq
 bb.bs:                                            ; preds = %bb.br
   %i.im = sub nsw i32 %.30.i, %.011.i
   %i.in = mul nsw i32 %i.im, 2047
-  %i.io = add nsw i32 %i.in, 2047
-  %i.ip = sdiv i32 %i.io, %.30.i                  ; 3 uses
-  %i.iq = sub nsw i32 4095, %i.ip                 ; 2 uses
-  %i.ir = lshr i32 %i.ip, 4
+  %i.io = add nsw i32 %i.in, 2047                 ; 2 uses
+  %1 = sdiv i32 %i.io, 900
+  %i.ip = sdiv i32 %i.io, 200
+  %2 = select i1 %i.ii, i32 %1, i32 %i.ip         ; 3 uses
+  %i.iq = sub nsw i32 4095, %2                    ; 2 uses
+  %i.ir = lshr i32 %2, 4
   %i.is = trunc i32 %i.ir to i8
   store i8 %i.is, ptr %i.ab, align 1
   %i.it = lshr i32 %i.iq, 4
@@ -238,7 +240,7 @@ bb.bs:                                            ; preds = %bb.br
   store i8 -1, ptr %i.ad, align 1
   %i.iv = shl nsw i32 %i.iq, 4
   %i.iw = and i32 %i.iv, 224
-  %i.ix = and i32 %i.ip, 14
+  %i.ix = and i32 %2, 14
   %i.iy = or disjoint i32 %i.iw, %i.ix
   %i.iz = trunc nuw i32 %i.iy to i8
   store i8 %i.iz, ptr %i.ae, align 1

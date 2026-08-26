@@ -204,11 +204,12 @@ intel_dsc_get_pixel_rate_with_dsc_bubbles.exit51: ; preds = %dev_name.exit37.i48
   %i.ck = zext i16 %i.cj to i32
   %i.cl = add nuw nsw i32 %i.ck, 15
   %i.cm = lshr i32 %i.cl, 4
-  %i.cn = mul i32 %i.cm, %.0.i40
+  %i.cn = mul i32 %i.cm, %.0.i40                  ; 2 uses
   %i.co = icmp ugt i16 %i.bg, 13
-  %1 = select i1 %i.co, i32 72, i32 48
-  %i.cp = sdiv i32 %i.cn, %1
-  %i.cq = tail call i32 @llvm.smax.i32(i32 %i.ba, i32 %i.cp)
+  %1 = sdiv i32 %i.cn, 72
+  %i.cp = sdiv i32 %i.cn, 48
+  %2 = select i1 %i.co, i32 %1, i32 %i.cp
+  %i.cq = tail call i32 @llvm.smax.i32(i32 %i.ba, i32 %2)
   br label %bb.p
 
 bb.p:                                             ; preds = %intel_dsc_get_pixel_rate_with_dsc_bubbles.exit, %intel_dsc_get_pixel_rate_with_dsc_bubbles.exit51, %bb.c

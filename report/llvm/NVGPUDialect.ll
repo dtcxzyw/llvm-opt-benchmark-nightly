@@ -204,15 +204,15 @@ bb.aq:                                            ; preds = %bb.ai
   %.sroa.8.0.copyload = load i64, ptr %.sroa.8.0..sroa_idx, align 8 ; 3 uses
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.13.0.copyload = load i64, ptr %.sroa.13.0..sroa_idx, align 8, !tbaa !86 ; 3 uses
-  %45 = select i1 %6, i64 2, i64 1                ; 2 uses
   %i.dx = load i64, ptr %i.r, align 8, !tbaa !115 ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 2 uses
   %i.dz = load i64, ptr %i.dy, align 8, !tbaa !115
   %i.ea = shl i64 %i.dx, 5
   %i.eb = mul i64 %i.ea, %i.dz
-  %i.ec = mul nsw i64 %.sroa.13.0.copyload, %.sroa.0.0.copyload ; 2 uses
-  %i.ed = sdiv i64 %i.ec, %45
-  %.not54 = icmp eq i64 %i.eb, %i.ed
+  %i.ec = mul nsw i64 %.sroa.13.0.copyload, %.sroa.0.0.copyload ; 3 uses
+  %i.ed = sdiv i64 %i.ec, 2
+  %45 = select i1 %6, i64 %i.ed, i64 %i.ec
+  %.not54 = icmp eq i64 %i.eb, %45
   br i1 %.not54, label %bb.be, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
@@ -554,9 +554,10 @@ bb.bx:                                            ; preds = %._crit_edge, %bb.bu
   %i.hw = sdiv i64 %.sroa.0.0.copyload, 8         ; 2 uses
   %i.hx = sdiv i64 %.sroa.8.0.copyload, 8         ; 2 uses
   %i.hy = sdiv i64 %.sroa.13.0.copyload, %.0      ; 2 uses
-  %i.hz = mul nsw i64 %i.hy, %i.hw                ; 2 uses
-  %i.ia = sdiv i64 %i.hz, %45
-  %.not57 = icmp eq i64 %i.hv, %i.ia
+  %i.hz = mul nsw i64 %i.hy, %i.hw                ; 3 uses
+  %i.ia = sdiv i64 %i.hz, 2
+  %46 = select i1 %6, i64 %i.ia, i64 %i.hz
+  %.not57 = icmp eq i64 %i.hv, %46
   br i1 %.not57, label %bb.by, label %bb.bz
 
 bb.by:                                            ; preds = %bb.bx

@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/vbrquantize?download=true
 inline.NumInlined: 4
-loop-unroll.NumCompletelyUnrolled: 9
-loop-unroll.NumUnrolled: 10
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumUnrolled: 12
 begin_hunk_0_@find_scalefac:bb.a
 bb.i:                                             ; preds = %calc_sfb_ave_noise.exit.thread.us, %bb.h, %bb.g
   %.166.us = phi double [ %i.ai, %calc_sfb_ave_noise.exit.thread.us ], [ %i.ah, %bb.h ], [ %i.af, %bb.g ]
@@ -203,69 +203,79 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local double @compute_scalefacs_long(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) initializes((64, 68)) %1, ptr nofree noundef writeonly captures(none) %2) local_unnamed_addr #6 {
 bb.a:
-  %i.a = alloca [21 x double], align 16           ; 14 uses
+  %i.a = alloca [21 x double], align 16           ; 33 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.c = load i32, ptr %i.b, align 4, !tbaa !14
-  %i.d = icmp eq i32 %i.c, 0
-  %i.e = select i1 %i.d, i32 2, i32 1             ; 16 uses
+  %.fr43 = freeze i32 %i.c
+  %i.d = icmp eq i32 %.fr43, 0                    ; 2 uses
+  %i.e = select i1 %i.d, i32 2, i32 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(168) %i.a, ptr noundef nonnull align 8 dereferenceable(168) %0, i64 168, i1 false)
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 3 uses
   store i32 0, ptr %i.f, align 8, !tbaa !19
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 88 ; 2 uses
-  %i.h = load double, ptr %i.g, align 8, !tbaa !8
-  %i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 44), align 4, !tbaa !4
-  %3 = sdiv i32 %i.i, %i.e
-  %4 = sitofp i32 %3 to double
-  %5 = fadd double %i.h, %4                       ; 2 uses
-  %6 = fcmp ogt double %5, 0.000000e+00
-  br i1 %6, label %.thread, label %bb.b
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 88
+  %i.h = load double, ptr %i.g, align 8, !tbaa !8 ; 4 uses
+  %i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 44), align 4, !tbaa !4 ; 4 uses
+  br i1 %i.d, label %.split.us.preheader, label %.split.preheader
 
-bb.b:                                             ; preds = %bb.a
-  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 96 ; 2 uses
-  %i.k = load double, ptr %i.j, align 16, !tbaa !8
-  %i.l = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 48), align 16, !tbaa !4
-  %i.m = sdiv i32 %i.l, %i.e
+.split.preheader:                                 ; preds = %bb.a
+  %3 = sitofp i32 %i.i to double
+  %4 = fadd double %i.h, %3
+  %5 = fcmp ogt double %4, 0.000000e+00
+  br i1 %5, label %.thread, label %.split.1
+
+.split.us.preheader:                              ; preds = %bb.a
+  %6 = sdiv i32 %i.i, 2
+  %7 = sitofp i32 %6 to double
+  %8 = fadd double %i.h, %7
+  %9 = fcmp ogt double %8, 0.000000e+00
+  br i1 %9, label %.thread, label %bb.b
+
+bb.b:                                             ; preds = %.split.us.preheader
+  %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 96
+  %i.k = load double, ptr %i.j, align 16, !tbaa !8 ; 2 uses
+  %i.l = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 48), align 16, !tbaa !4 ; 2 uses
+  %i.m = sdiv i32 %i.l, 2
   %i.n = sitofp i32 %i.m to double
-  %i.o = fadd double %i.k, %i.n                   ; 2 uses
+  %i.o = fadd double %i.k, %i.n
   %i.p = fcmp ogt double %i.o, 0.000000e+00
   br i1 %i.p, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 104 ; 2 uses
-  %i.r = load double, ptr %i.q, align 8, !tbaa !8
-  %i.s = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 52), align 4, !tbaa !4
-  %i.t = sdiv i32 %i.s, %i.e
+  %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 104
+  %i.r = load double, ptr %i.q, align 8, !tbaa !8 ; 2 uses
+  %i.s = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 52), align 4, !tbaa !4 ; 2 uses
+  %i.t = sdiv i32 %i.s, 2
   %i.u = sitofp i32 %i.t to double
-  %i.v = fadd double %i.r, %i.u                   ; 2 uses
+  %i.v = fadd double %i.r, %i.u
   %i.w = fcmp ogt double %i.v, 0.000000e+00
   br i1 %i.w, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 112 ; 2 uses
-  %i.y = load double, ptr %i.x, align 16, !tbaa !8
-  %i.z = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 56), align 8, !tbaa !4
-  %i.aa = sdiv i32 %i.z, %i.e
+  %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 112
+  %i.y = load double, ptr %i.x, align 16, !tbaa !8 ; 2 uses
+  %i.z = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 56), align 8, !tbaa !4 ; 2 uses
+  %i.aa = sdiv i32 %i.z, 2
   %i.ab = sitofp i32 %i.aa to double
-  %i.ac = fadd double %i.y, %i.ab                 ; 2 uses
+  %i.ac = fadd double %i.y, %i.ab
   %i.ad = fcmp ogt double %i.ac, 0.000000e+00
   br i1 %i.ad, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 120 ; 2 uses
-  %i.af = load double, ptr %i.ae, align 8, !tbaa !8
-  %i.ag = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 60), align 4, !tbaa !4
-  %i.ah = sdiv i32 %i.ag, %i.e
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 120
+  %i.af = load double, ptr %i.ae, align 8, !tbaa !8 ; 2 uses
+  %i.ag = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 60), align 4, !tbaa !4 ; 2 uses
+  %i.ah = sdiv i32 %i.ag, 2
   %i.ai = sitofp i32 %i.ah to double
-  %i.aj = fadd double %i.af, %i.ai                ; 2 uses
+  %i.aj = fadd double %i.af, %i.ai
   %i.ak = fcmp ogt double %i.aj, 0.000000e+00
   br i1 %i.ak, label %.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 128 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.am = load double, ptr %i.al, align 16, !tbaa !8 ; 2 uses
   %i.an = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 64), align 16, !tbaa !4
-  %i.ao = sdiv i32 %i.an, %i.e
+  %i.ao = sdiv i32 %i.an, 2
   %i.ap = sitofp i32 %i.ao to double
   %i.aq = fadd double %i.am, %i.ap
   %i.ar = fcmp ogt double %i.aq, 0.000000e+00
@@ -275,7 +285,7 @@ bb.g:                                             ; preds = %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   %i.at = load double, ptr %i.as, align 8, !tbaa !8 ; 2 uses
   %i.au = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 68), align 4, !tbaa !4
-  %i.av = sdiv i32 %i.au, %i.e
+  %i.av = sdiv i32 %i.au, 2
   %i.aw = sitofp i32 %i.av to double
   %i.ax = fadd double %i.at, %i.aw
   %i.ay = fcmp ogt double %i.ax, 0.000000e+00
@@ -285,7 +295,7 @@ bb.h:                                             ; preds = %bb.g
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.ba = load double, ptr %i.az, align 16, !tbaa !8 ; 2 uses
   %i.bb = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 72), align 8, !tbaa !4
-  %i.bc = sdiv i32 %i.bb, %i.e
+  %i.bc = sdiv i32 %i.bb, 2
   %i.bd = sitofp i32 %i.bc to double
   %i.be = fadd double %i.ba, %i.bd
   %i.bf = fcmp ogt double %i.be, 0.000000e+00
@@ -295,56 +305,196 @@ bb.i:                                             ; preds = %bb.h
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   %i.bh = load double, ptr %i.bg, align 8, !tbaa !8 ; 2 uses
   %i.bi = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 76), align 4, !tbaa !4
-  %i.bj = sdiv i32 %i.bi, %i.e
+  %i.bj = sdiv i32 %i.bi, 2
   %i.bk = sitofp i32 %i.bj to double
   %i.bl = fadd double %i.bh, %i.bk
   %i.bm = fcmp ogt double %i.bl, 0.000000e+00
   br i1 %i.bm, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 160 ; 2 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 160
   %i.bo = load double, ptr %i.bn, align 16, !tbaa !8 ; 2 uses
   %i.bp = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 80), align 16, !tbaa !4
-  %i.bq = sdiv i32 %i.bp, %i.e
+  %i.bq = sdiv i32 %i.bp, 2
   %i.br = sitofp i32 %i.bq to double
   %i.bs = fadd double %i.bo, %i.br
   %i.bt = fcmp ogt double %i.bs, 0.000000e+00
   br i1 %i.bt, label %.thread, label %.thread.loopexit
 
+.split.1:                                         ; preds = %.split.preheader
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
+  %11 = load double, ptr %10, align 16, !tbaa !8  ; 2 uses
+  %12 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 48), align 16, !tbaa !4 ; 2 uses
+  %13 = sitofp i32 %12 to double
+  %14 = fadd double %11, %13
+  %15 = fcmp ogt double %14, 0.000000e+00
+  br i1 %15, label %.thread, label %.split.2
+
+.split.2:                                         ; preds = %.split.1
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 104
+  %17 = load double, ptr %16, align 8, !tbaa !8   ; 2 uses
+  %18 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 52), align 4, !tbaa !4 ; 2 uses
+  %19 = sitofp i32 %18 to double
+  %20 = fadd double %17, %19
+  %21 = fcmp ogt double %20, 0.000000e+00
+  br i1 %21, label %.thread, label %.split.3
+
+.split.3:                                         ; preds = %.split.2
+  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
+  %23 = load double, ptr %22, align 16, !tbaa !8  ; 2 uses
+  %24 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 56), align 8, !tbaa !4 ; 2 uses
+  %25 = sitofp i32 %24 to double
+  %26 = fadd double %23, %25
+  %27 = fcmp ogt double %26, 0.000000e+00
+  br i1 %27, label %.thread, label %.split.4
+
+.split.4:                                         ; preds = %.split.3
+  %28 = getelementptr inbounds nuw i8, ptr %i.a, i64 120
+  %29 = load double, ptr %28, align 8, !tbaa !8   ; 2 uses
+  %30 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 60), align 4, !tbaa !4 ; 2 uses
+  %31 = sitofp i32 %30 to double
+  %32 = fadd double %29, %31
+  %33 = fcmp ogt double %32, 0.000000e+00
+  br i1 %33, label %.thread, label %.split.5
+
+.split.5:                                         ; preds = %.split.4
+  %34 = getelementptr inbounds nuw i8, ptr %i.a, i64 128
+  %35 = load double, ptr %34, align 16, !tbaa !8  ; 2 uses
+  %36 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 64), align 16, !tbaa !4
+  %37 = sitofp i32 %36 to double
+  %38 = fadd double %35, %37
+  %39 = fcmp ogt double %38, 0.000000e+00
+  br i1 %39, label %.thread, label %.split.6
+
+.split.6:                                         ; preds = %.split.5
+  %40 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
+  %41 = load double, ptr %40, align 8, !tbaa !8   ; 2 uses
+  %42 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 68), align 4, !tbaa !4
+  %43 = sitofp i32 %42 to double
+  %44 = fadd double %41, %43
+  %45 = fcmp ogt double %44, 0.000000e+00
+  br i1 %45, label %.thread, label %.split.7
+
+.split.7:                                         ; preds = %.split.6
+  %46 = getelementptr inbounds nuw i8, ptr %i.a, i64 144
+  %47 = load double, ptr %46, align 16, !tbaa !8  ; 2 uses
+  %48 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 72), align 8, !tbaa !4
+  %49 = sitofp i32 %48 to double
+  %50 = fadd double %47, %49
+  %51 = fcmp ogt double %50, 0.000000e+00
+  br i1 %51, label %.thread, label %.split.8
+
+.split.8:                                         ; preds = %.split.7
+  %52 = getelementptr inbounds nuw i8, ptr %i.a, i64 152
+  %53 = load double, ptr %52, align 8, !tbaa !8   ; 2 uses
+  %54 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 76), align 4, !tbaa !4
+  %55 = sitofp i32 %54 to double
+  %56 = fadd double %53, %55
+  %57 = fcmp ogt double %56, 0.000000e+00
+  br i1 %57, label %.thread, label %.split.9
+
+.split.9:                                         ; preds = %.split.8
+  %58 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  %59 = load double, ptr %58, align 16, !tbaa !8  ; 2 uses
+  %60 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 80), align 16, !tbaa !4
+  %61 = sitofp i32 %60 to double
+  %62 = fadd double %59, %61
+  %63 = fcmp ogt double %62, 0.000000e+00
+  br i1 %63, label %.thread, label %.split39.preheader
+
+.split39.preheader:                               ; preds = %.split.9
+  store i32 1, ptr %i.f, align 8, !tbaa !19
+  %64 = insertelement <4 x i32> poison, i32 %i.i, i64 0
+  %65 = insertelement <4 x i32> %64, i32 %12, i64 1
+  %66 = insertelement <4 x i32> %65, i32 %18, i64 2
+  %67 = insertelement <4 x i32> %66, i32 %24, i64 3
+  %68 = sitofp <4 x i32> %67 to <4 x double>
+  %69 = getelementptr inbounds nuw i8, ptr %i.a, i64 88
+  %70 = insertelement <4 x double> poison, double %i.h, i64 0
+  %71 = insertelement <4 x double> %70, double %11, i64 1
+  %72 = insertelement <4 x double> %71, double %17, i64 2
+  %73 = insertelement <4 x double> %72, double %23, i64 3
+  %74 = fadd <4 x double> %73, %68
+  store <4 x double> %74, ptr %69, align 8, !tbaa !8
+  %75 = sitofp i32 %30 to double
+  %76 = getelementptr inbounds nuw i8, ptr %i.a, i64 120
+  %77 = fadd double %29, %75
+  store double %77, ptr %76, align 8, !tbaa !8
+  %78 = getelementptr inbounds nuw i8, ptr %i.a, i64 128
+  %79 = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 64), align 16, !tbaa !4
+  %80 = sitofp <2 x i32> %79 to <2 x double>
+  %81 = insertelement <2 x double> poison, double %35, i64 0
+  %82 = insertelement <2 x double> %81, double %41, i64 1
+  %83 = fadd <2 x double> %82, %80
+  store <2 x double> %83, ptr %78, align 16, !tbaa !8
+  %84 = getelementptr inbounds nuw i8, ptr %i.a, i64 144
+  %85 = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 72), align 8, !tbaa !4
+  %86 = sitofp <2 x i32> %85 to <2 x double>
+  %87 = insertelement <2 x double> poison, double %47, i64 0
+  %88 = insertelement <2 x double> %87, double %53, i64 1
+  %89 = fadd <2 x double> %88, %86
+  store <2 x double> %89, ptr %84, align 16, !tbaa !8
+  %90 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 80), align 16, !tbaa !4
+  br label %.thread.sink.split
+
 .thread.loopexit:                                 ; preds = %bb.j
   store i32 1, ptr %i.f, align 8, !tbaa !19
-  store double %5, ptr %i.g, align 8, !tbaa !8
-  store double %i.o, ptr %i.j, align 16, !tbaa !8
-  store double %i.v, ptr %i.q, align 8, !tbaa !8
-  store double %i.ac, ptr %i.x, align 16, !tbaa !8
-  store double %i.aj, ptr %i.ae, align 8, !tbaa !8
-  %i.bu = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 76), align 4, !tbaa !4
-  %7 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 72), align 8, !tbaa !4
-  %8 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 68), align 4, !tbaa !4
-  %9 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 64), align 16, !tbaa !4
-  %10 = sdiv i32 %i.bu, %i.e
-  %11 = sdiv i32 %7, %i.e
-  %12 = sdiv i32 %8, %i.e
-  %13 = sdiv i32 %9, %i.e
-  %14 = insertelement <4 x i32> poison, i32 %13, i64 0
-  %15 = insertelement <4 x i32> %14, i32 %12, i64 1
-  %16 = insertelement <4 x i32> %15, i32 %11, i64 2
-  %17 = insertelement <4 x i32> %16, i32 %10, i64 3
-  %18 = sitofp <4 x i32> %17 to <4 x double>
-  %19 = insertelement <4 x double> poison, double %i.am, i64 0
-  %20 = insertelement <4 x double> %19, double %i.at, i64 1
-  %21 = insertelement <4 x double> %20, double %i.ba, i64 2
-  %22 = insertelement <4 x double> %21, double %i.bh, i64 3
-  %23 = fadd <4 x double> %22, %18
-  store <4 x double> %23, ptr %i.al, align 16, !tbaa !8
-  %24 = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 80), align 16, !tbaa !4
-  %25 = sdiv i32 %24, %i.e
-  %i.bv = sitofp i32 %25 to double
-  %i.bw = fadd double %i.bo, %i.bv
-  store double %i.bw, ptr %i.bn, align 16, !tbaa !8
+  %91 = insertelement <2 x i32> poison, i32 %i.i, i64 0
+  %92 = insertelement <2 x i32> %91, i32 %i.l, i64 1
+  %93 = sdiv <2 x i32> %92, splat (i32 2)
+  %94 = getelementptr inbounds nuw i8, ptr %i.a, i64 88
+  %95 = sitofp <2 x i32> %93 to <2 x double>
+  %96 = insertelement <2 x double> poison, double %i.h, i64 0
+  %97 = insertelement <2 x double> %96, double %i.k, i64 1
+  %98 = fadd <2 x double> %97, %95
+  store <2 x double> %98, ptr %94, align 8, !tbaa !8
+  %99 = insertelement <2 x i32> poison, i32 %i.s, i64 0
+  %100 = insertelement <2 x i32> %99, i32 %i.z, i64 1
+  %101 = sdiv <2 x i32> %100, splat (i32 2)
+  %102 = getelementptr inbounds nuw i8, ptr %i.a, i64 104
+  %103 = sitofp <2 x i32> %101 to <2 x double>
+  %104 = insertelement <2 x double> poison, double %i.r, i64 0
+  %105 = insertelement <2 x double> %104, double %i.y, i64 1
+  %106 = fadd <2 x double> %105, %103
+  store <2 x double> %106, ptr %102, align 8, !tbaa !8
+  %107 = getelementptr inbounds nuw i8, ptr %i.a, i64 120
+  %i.bu = load i32, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 64), align 16, !tbaa !4
+  %108 = insertelement <2 x i32> poison, i32 %i.ag, i64 0
+  %109 = insertelement <2 x i32> %108, i32 %i.bu, i64 1
+  %110 = sdiv <2 x i32> %109, splat (i32 2)
+  %111 = sitofp <2 x i32> %110 to <2 x double>
+  %112 = insertelement <2 x double> poison, double %i.af, i64 0
+  %113 = insertelement <2 x double> %112, double %i.am, i64 1
+  %114 = fadd <2 x double> %113, %111
+  store <2 x double> %114, ptr %107, align 8, !tbaa !8
+  %115 = getelementptr inbounds nuw i8, ptr %i.a, i64 136
+  %116 = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 68), align 4, !tbaa !4
+  %117 = sdiv <2 x i32> %116, splat (i32 2)
+  %118 = sitofp <2 x i32> %117 to <2 x double>
+  %119 = insertelement <2 x double> poison, double %i.at, i64 0
+  %120 = insertelement <2 x double> %119, double %i.ba, i64 1
+  %121 = fadd <2 x double> %120, %118
+  store <2 x double> %121, ptr %115, align 8, !tbaa !8
+  %122 = getelementptr inbounds nuw i8, ptr %i.a, i64 152
+  %123 = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @pretab, i64 76), align 4, !tbaa !4
+  %124 = sdiv <2 x i32> %123, splat (i32 2)       ; 2 uses
+  %125 = extractelement <2 x i32> %124, i64 0
+  %i.bv = sitofp i32 %125 to double
+  %i.bw = fadd double %i.bh, %i.bv
+  store double %i.bw, ptr %122, align 8, !tbaa !8
+  %126 = extractelement <2 x i32> %124, i64 1
+  br label %.thread.sink.split
+
+.thread.sink.split:                               ; preds = %.thread.loopexit, %.split39.preheader
+  %.sink = phi i32 [ %90, %.split39.preheader ], [ %126, %.thread.loopexit ]
+  %.sink55 = phi double [ %59, %.split39.preheader ], [ %i.bo, %.thread.loopexit ]
+  %127 = sitofp i32 %.sink to double
+  %128 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  %129 = fadd double %.sink55, %127
+  store double %129, ptr %128, align 16, !tbaa !8
   br label %.thread
 
-.thread:                                          ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j, %.thread.loopexit
+.thread:                                          ; preds = %.thread.sink.split, %.split.preheader, %.split.1, %.split.2, %.split.3, %.split.4, %.split.5, %.split.6, %.split.7, %.split.8, %.split.9, %.split.us.preheader, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i, %bb.j
   %i.bx = uitofp nneg i32 %i.e to double          ; 2 uses
   br label %bb.k
 

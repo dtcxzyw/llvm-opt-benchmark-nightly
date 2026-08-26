@@ -205,7 +205,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 228 ; 4 uses
   store i32 0, ptr %i.l, align 4, !tbaa !46
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !8    ; 3 uses
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !8    ; 4 uses
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %bb.b, label %bb.c
 
@@ -320,9 +320,10 @@ bb.p:                                             ; preds = %bb.o
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.bi = load i32, ptr %i.bh, align 8, !tbaa !49
   %i.bj = icmp eq i32 %i.bi, 0
-  %9 = select i1 %i.bj, i64 200, i64 50
-  %i.bk = srem i64 %i.n, %9
-  %i.bl = icmp eq i64 %i.bk, 0
+  %9 = srem i64 %i.n, 200
+  %i.bk = srem i64 %i.n, 50
+  %10 = select i1 %i.bj, i64 %9, i64 %i.bk
+  %i.bl = icmp eq i64 %10, 0
   br i1 %i.bl, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p

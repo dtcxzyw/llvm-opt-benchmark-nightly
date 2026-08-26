@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i64 %i.ah, ptr %i.w, align 8, !dbg !31007
-  %.inv = icmp ugt i64 %i.ah, 2147483647, !dbg !31009
-  %. = select i1 %.inv, i64 4294967294, i64 2147483647, !dbg !31009 ; 4 uses
+  %.inv = icmp ugt i64 %i.ah, 2147483647, !dbg !31009 ; 3 uses
+  %. = select i1 %.inv, i64 4294967294, i64 2147483647, !dbg !31009 ; 2 uses
   %.not = icmp ugt i64 %i.ah, %., !dbg !31011
   br i1 %.not, label %.invoke, label %bb.e, !dbg !31011, !prof !2574
 
@@ -242,12 +242,16 @@ bb.e:                                             ; preds = %bb.b
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !31026 ; 3 uses
   %i.ar = load i64, ptr %i.aq, align 8, !dbg !31026, !noundef !12 ; 3 uses
   %i.as = urem i64 %i.ar, %i.ah, !dbg !31031
-  %i.at = sub nuw i64 %i.ar, %i.as, !dbg !31031   ; 2 uses
-  %i.au = udiv i64 %i.at, %., !dbg !31032
-  %i.av = urem i64 %i.at, %., !dbg !31036
-  %.not36 = icmp ne i64 %i.av, 0, !dbg !31038
+  %i.at = sub nuw i64 %i.ar, %i.as, !dbg !31031   ; 4 uses
+  %2 = udiv i64 %i.at, 4294967294, !dbg !31032
+  %i.au = udiv i64 %i.at, 2147483647, !dbg !31032
+  %3 = select i1 %.inv, i64 %2, i64 %i.au, !dbg !31009
+  %4 = urem i64 %i.at, 4294967294, !dbg !31036
+  %i.av = urem i64 %i.at, 2147483647, !dbg !31036
+  %5 = select i1 %.inv, i64 %4, i64 %i.av, !dbg !31009
+  %.not36 = icmp ne i64 %5, 0, !dbg !31038
   %i.aw = zext i1 %.not36 to i64, !dbg !31038
-  %.sroa.04.0 = add nuw nsw i64 %i.au, %i.aw, !dbg !31038 ; 6 uses
+  %.sroa.04.0 = add nuw nsw i64 %3, %i.aw, !dbg !31038 ; 6 uses
   %i.ax = icmp samesign ult i64 %.sroa.04.0, 4294967295, !dbg !31040
   br i1 %i.ax, label %bb.f, label %.invoke, !dbg !31040, !prof !2840
 
@@ -403,7 +407,7 @@ bb.r:                                             ; preds = %bb.k, %bb.q
           to label %bb.w unwind label %.loopexit.split-lp, !dbg !31164
 
 bb.s:                                             ; preds = %bb.p
-  %i.cl = add nuw nsw i64 %.sroa.028.0133, 1, !dbg !31165 ; 2 uses
+  %i.cl = add nuw i64 %.sroa.028.0133, 1, !dbg !31165 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !dbg !31171
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false), !dbg !31172
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.cc, i64 24, i1 false), !dbg !31173
@@ -435,8 +439,8 @@ _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecINtNtCsknLZRuU4977_13polars_buffer6b
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cs, ptr noundef nonnull align 8 dereferenceable(24) %i.t, i64 24, i1 false), !dbg !31198
   %i.ct = add i64 %i.cm, 1, !dbg !31200           ; 2 uses
   store i64 %i.ct, ptr %i.bz, align 8, !dbg !31200, !alias.scope !31177, !noalias !31180
-  %2 = icmp ult i64 %i.cl, %i.cb, !dbg !31108
-  br i1 %2, label %bb.p, label %._crit_edge.loopexit, !dbg !31110
+  %exitcond.not = icmp eq i64 %i.cl, %i.cb, !dbg !31108
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.p, !dbg !31110
 
 bb.w:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !dbg !31201
@@ -649,8 +653,8 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.ac
   %i.ef = add nuw nsw i64 %.sroa.026.0134, 1, !dbg !31360 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !dbg !31366
-  %3 = icmp samesign ult i64 %i.ef, %.sroa.04.0, !dbg !31367
-  br i1 %3, label %bb.ac, label %._crit_edge137, !dbg !31235
+  %exitcond140.not = icmp eq i64 %i.ef, %.sroa.04.0, !dbg !31367
+  br i1 %exitcond140.not, label %._crit_edge137, label %bb.ac, !dbg !31235
 
 bb.ay:                                            ; preds = %bb.ac
   %lpad.thr_comm.split-lp = landingpad { ptr, i32 }

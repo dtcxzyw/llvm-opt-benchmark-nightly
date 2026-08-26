@@ -205,11 +205,13 @@ bb.d:                                             ; preds = %_ZNK5clang4Type6cas
 bb.e:                                             ; preds = %bb.d
   %i.al = getelementptr inbounds nuw i8, ptr %i.z, i64 17
   %i.am = load i8, ptr %i.al, align 1, !tbaa !814
-  %i.an = icmp eq i8 %i.am, 109                   ; 7 uses
-  %. = select i1 %i.an, i32 4, i32 3              ; 2 uses
-  %.lhs.trunc = trunc i64 %i.ab to i32            ; 3 uses
-  %i.ao = urem i32 %.lhs.trunc, %.
-  %.not = icmp eq i32 %i.ao, 0
+  %i.an = icmp eq i8 %i.am, 109                   ; 8 uses
+  %. = select i1 %i.an, i32 4, i32 3
+  %.lhs.trunc = trunc i64 %i.ab to i32            ; 4 uses
+  %22 = and i32 %.lhs.trunc, 3
+  %i.ao = urem i32 %.lhs.trunc, 3
+  %23 = select i1 %i.an, i32 %22, i32 %i.ao
+  %.not = icmp eq i32 %23, 0
   br i1 %.not, label %bb.h, label %bb.g
 
 bb.f:                                             ; preds = %bb.d

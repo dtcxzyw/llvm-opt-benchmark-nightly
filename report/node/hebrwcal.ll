@@ -204,9 +204,10 @@ bb.c:                                             ; preds = %bb.b, %bb.b
   %i.i = icmp slt i64 %i.h, 0
   %i.j = select i1 %i.i, i64 -7, i64 12
   %.not = icmp slt i64 %i.h, %i.j                 ; 2 uses
-  %4 = select i1 %.not, i32 12, i32 13
-  %i.k = srem i32 %2, %4
-  %i.l = add nsw i32 %i.k, %i.c                   ; 5 uses
+  %4 = srem i32 %2, 12
+  %i.k = srem i32 %2, 13
+  %5 = select i1 %.not, i32 %4, i32 %i.k
+  %i.l = add nsw i32 %5, %i.c                     ; 5 uses
   br i1 %.not, label %bb.d, label %bb.g
 
 bb.d:                                             ; preds = %bb.c

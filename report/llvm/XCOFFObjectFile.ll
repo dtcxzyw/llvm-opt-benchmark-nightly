@@ -202,10 +202,11 @@ bb.e:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 64
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = tail call noundef zeroext i1 %i.r(ptr noundef nonnull align 8 dereferenceable(96) %0) #21, !inline_history !313
-  %.lhs.trunc = trunc nuw nsw i64 %i.b to i32
-  %.rhs.trunc = select i1 %i.s, i32 72, i32 40
-  %i.t = urem i32 %.lhs.trunc, %.rhs.trunc
-  %.not8 = icmp eq i32 %i.t, 0
+  %.lhs.trunc = trunc nuw nsw i64 %i.b to i32     ; 2 uses
+  %3 = urem i32 %.lhs.trunc, 72
+  %i.t = urem i32 %.lhs.trunc, 40
+  %4 = select i1 %i.s, i32 %3, i32 %i.t
+  %.not8 = icmp eq i32 %4, 0
   br i1 %.not8, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

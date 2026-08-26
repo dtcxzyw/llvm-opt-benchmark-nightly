@@ -205,16 +205,17 @@ bb.a:
   %i.h = trunc nuw i8 %i.g to i1
   %i.i = and i32 %i.d, 7
   %i.j = icmp eq i32 %i.i, 0
-  %i.k = and i1 %i.j, %i.h                        ; 3 uses
-  %.036 = select i1 %i.k, i32 8, i32 1            ; 6 uses
+  %i.k = and i1 %i.j, %i.h                        ; 4 uses
+  %.036 = select i1 %i.k, i32 8, i32 1            ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
   call void @_ZNK4ncnn3Mat7reshapeEiiPNS_9AllocatorE(ptr dead_on_unwind nonnull writable sret(%"class.ncnn::Mat") align 8 %2, ptr noundef nonnull align 8 dereferenceable(72) %i.l, i32 noundef %i.e, i32 noundef %i.d, ptr noundef null)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 600 ; 2 uses
-  %i.n = load i32, ptr %i.c, align 8, !tbaa !47
-  %i.o = sdiv i32 %i.n, %.036
+  %i.n = load i32, ptr %i.c, align 8, !tbaa !47   ; 2 uses
+  %i.o = sdiv i32 %i.n, 8
+  %3 = select i1 %i.k, i32 %i.o, i32 %i.n
   %i.p = zext nneg i32 %.036 to i64               ; 4 uses
-  invoke void @_ZN4ncnn3Mat6createEiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.m, i32 noundef %i.e, i32 noundef %i.o, i64 noundef %i.p, i32 noundef %.036, ptr noundef null)
+  invoke void @_ZN4ncnn3Mat6createEiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.m, i32 noundef %i.e, i32 noundef %3, i64 noundef %i.p, i32 noundef %.036, ptr noundef null)
           to label %.preheader50 unwind label %bb.i
 
 .preheader50:                                     ; preds = %bb.a
@@ -617,23 +618,24 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.aa
 
 bb.k:                                             ; preds = %_ZNK4ncnn3Mat5emptyEv.exit109
-  %i.bq = load i32, ptr %i.bc, align 8, !tbaa !104 ; 2 uses
+  %i.bq = load i32, ptr %i.bc, align 8, !tbaa !104 ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 39 ; 2 uses
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !48, !range !41, !noundef !42
   %i.bt = trunc nuw i8 %i.bs to i1
   %i.bu = and i32 %i.bq, 3
   %i.bv = icmp eq i32 %i.bu, 0
-  %i.bw = and i1 %i.bv, %i.bt                     ; 5 uses
-  %.0 = select i1 %i.bw, i32 4, i32 1             ; 3 uses
+  %i.bw = and i1 %i.bv, %i.bt                     ; 6 uses
+  %.0 = select i1 %i.bw, i32 4, i32 1             ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  %i.bx = sdiv i32 %i.bq, %.0                     ; 2 uses
-  store i32 %i.bx, ptr %i.b, align 4, !tbaa !100
+  %i.bx = sdiv i32 %i.bq, 4
+  %10 = select i1 %i.bw, i32 %i.bx, i32 %i.bq     ; 2 uses
+  store i32 %10, ptr %i.b, align 4, !tbaa !100
   %i.by = load i32, ptr %i.h, align 8, !tbaa !47
   %i.bz = shl nuw nsw i32 %.0, 2
   %i.ca = zext nneg i32 %i.bz to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !105
-  invoke void @_ZN4ncnn3Mat6createEiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.by, i32 noundef %i.bx, i64 noundef %i.ca, i32 noundef %.0, ptr noundef %i.cc)
+  invoke void @_ZN4ncnn3Mat6createEiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.by, i32 noundef %10, i64 noundef %i.ca, i32 noundef %.0, ptr noundef %i.cc)
           to label %bb.l unwind label %bb.m
 
 bb.l:                                             ; preds = %bb.k

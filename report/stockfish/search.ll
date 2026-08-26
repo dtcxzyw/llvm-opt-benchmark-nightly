@@ -205,10 +205,11 @@ bb.fg:                                            ; preds = %bb.ff, %bb.fe
 
 bb.fh:                                            ; preds = %bb.fg
   %i.arf = sub nsw i32 %i.apz, %i.arc
-  %i.arg = mul nsw i32 %i.arf, %.4740.ph978
-  %16 = select i1 %i.aqv, i32 10, i32 8
-  %i.arh = sdiv i32 %i.arg, %16
-  %.sroa.speculate.load.false.sroa.speculated = call i32 @llvm.smax.i32(i32 %i.arh, i32 -256)
+  %i.arg = mul nsw i32 %i.arf, %.4740.ph978       ; 2 uses
+  %16 = sdiv i32 %i.arg, 10
+  %i.arh = sdiv i32 %i.arg, 8
+  %17 = select i1 %i.aqv, i32 %16, i32 %i.arh
+  %.sroa.speculate.load.false.sroa.speculated = call i32 @llvm.smax.i32(i32 %17, i32 -256)
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated, i32 256)
   %.val474 = load ptr, ptr %i.de, align 8, !tbaa !139
   call fastcc void @_ZN9Stockfish12_GLOBAL__N_125update_correction_historyERKNS_8PositionEPNS_6Search5StackERNS4_6WorkerEi(ptr noundef nonnull align 8 dereferenceable(1048) %1, ptr noundef nonnull %2, ptr %.val474, i32 noundef %.sroa.speculated)
@@ -611,10 +612,11 @@ bb.fy:                                            ; preds = %bb.fx, %bb.fw
 
 bb.fz:                                            ; preds = %bb.fy
   %i.aqy = sub nsw i32 %.135191137, %i.aqv
-  %i.aqz = mul nsw i32 %i.aqy, %.10
-  %15 = select i1 %i.aqn, i32 10, i32 8
-  %i.ara = sdiv i32 %i.aqz, %15
-  %.sroa.speculate.load.false.sroa.speculated = call i32 @llvm.smax.i32(i32 %i.ara, i32 -256)
+  %i.aqz = mul nsw i32 %i.aqy, %.10               ; 2 uses
+  %15 = sdiv i32 %i.aqz, 10
+  %i.ara = sdiv i32 %i.aqz, 8
+  %16 = select i1 %i.aqn, i32 %15, i32 %i.ara
+  %.sroa.speculate.load.false.sroa.speculated = call i32 @llvm.smax.i32(i32 %16, i32 -256)
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated, i32 256)
   %.val668 = load ptr, ptr %i.ej, align 8, !tbaa !139
   call fastcc void @_ZN9Stockfish12_GLOBAL__N_125update_correction_historyERKNS_8PositionEPNS_6Search5StackERNS4_6WorkerEi(ptr noundef nonnull align 8 dereferenceable(1048) %1, ptr noundef nonnull %i.aqj, ptr %.val668, i32 noundef %.sroa.speculated)
@@ -1017,10 +1019,11 @@ bb.fj:                                            ; preds = %bb.fi, %bb.fh
 
 bb.fk:                                            ; preds = %bb.fj
   %i.aos = sub nsw i32 %.sroa.speculated732, %i.aop
-  %i.aot = mul nsw i32 %i.aos, %.10992
-  %15 = select i1 %i.aoh, i32 10, i32 8
-  %i.aou = sdiv i32 %i.aot, %15
-  %.sroa.speculate.load.false.sroa.speculated = call i32 @llvm.smax.i32(i32 %i.aou, i32 -256)
+  %i.aot = mul nsw i32 %i.aos, %.10992            ; 2 uses
+  %15 = sdiv i32 %i.aot, 10
+  %i.aou = sdiv i32 %i.aot, 8
+  %16 = select i1 %i.aoh, i32 %15, i32 %i.aou
+  %.sroa.speculate.load.false.sroa.speculated = call i32 @llvm.smax.i32(i32 %16, i32 -256)
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %.sroa.speculate.load.false.sroa.speculated, i32 256)
   %.val569 = load ptr, ptr %i.eh, align 8, !tbaa !139
   call fastcc void @_ZN9Stockfish12_GLOBAL__N_125update_correction_historyERKNS_8PositionEPNS_6Search5StackERNS4_6WorkerEi(ptr noundef nonnull align 8 dereferenceable(1048) %1, ptr noundef nonnull %i.aod, ptr %.val569, i32 noundef %.sroa.speculated)

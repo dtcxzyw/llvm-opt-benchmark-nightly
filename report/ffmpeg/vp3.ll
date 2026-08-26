@@ -205,7 +205,7 @@ bb.ks:                                            ; preds = %._crit_edge381.i, %
   %i.dcc = load i32, ptr %i.dcb, align 4, !tbaa !29
   %i.dcd = sext i32 %i.dcc to i64                 ; 2 uses
   %i.dce = load i32, ptr %i.cxd, align 8, !tbaa !136 ; 2 uses
-  %.not317.i = icmp ne i64 %indvars.iv436.i, 0    ; 5 uses
+  %.not317.i = icmp ne i64 %indvars.iv436.i, 0    ; 7 uses
   br i1 %.not317.i, label %.thread305.i, label %bb.kt
 
 .thread305.i:                                     ; preds = %bb.ks
@@ -386,10 +386,10 @@ bb.lb:                                            ; preds = %bb.la, %._crit_edge
 bb.lc:                                            ; preds = %bb.lb
   %i.dfx = sext i32 %i.den to i64
   %i.dfy = getelementptr inbounds [2 x i8], ptr %i.dde, i64 %i.dfx ; 2 uses
-  %i.dfz = load i8, ptr %i.dfy, align 1, !tbaa !51 ; 3 uses
+  %i.dfz = load i8, ptr %i.dfy, align 1, !tbaa !51 ; 4 uses
   %i.dga = sext i8 %i.dfz to i32                  ; 5 uses
   %i.dgb = getelementptr inbounds nuw i8, ptr %i.dfy, i64 1
-  %i.dgc = load i8, ptr %i.dgb, align 1, !tbaa !51 ; 3 uses
+  %i.dgc = load i8, ptr %i.dgb, align 1, !tbaa !51 ; 4 uses
   %i.dgd = sext i8 %i.dgc to i32                  ; 5 uses
   %.pre441.i = load i32, ptr %i.rj, align 4, !tbaa !67
   %i.dge = icmp sgt i32 %.pre441.i, 1             ; 2 uses
@@ -440,16 +440,19 @@ bb.lg:                                            ; preds = %bb.lf
   br label %.thread.i.us.i
 
 .thread.i.us.i:                                   ; preds = %bb.lg, %bb.lf
-  %.rhs.trunc.i.us.i = phi i8 [ 4, %bb.lg ], [ 2, %bb.lf ] ; 2 uses
   %i.dhh = phi i32 [ %i.dhd, %bb.lg ], [ %i.dgz, %bb.lf ] ; 3 uses
   %i.dhi = phi i32 [ %i.dhg, %bb.lg ], [ 0, %bb.lf ]
   %i.dhj = load i32, ptr %i.cym, align 4, !tbaa !129
   %i.dhk = ashr i32 %i.dhj, %i.dhi                ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  %i.dhl = sdiv i8 %i.dfz, %.rhs.trunc.i.us.i
-  %.sext.i.us.i = sext i8 %i.dhl to i32           ; 2 uses
-  %i.dhm = sdiv i8 %i.dgc, %.rhs.trunc.i.us.i
-  %.sext122.i.us.i = sext i8 %i.dhm to i32        ; 2 uses
+  %5 = sdiv i8 %i.dfz, 2
+  %i.dhl = sdiv i8 %i.dfz, 4
+  %.v.i.us.i = select i1 %.not317.i, i8 %i.dhl, i8 %5
+  %.sext.i.us.i = sext i8 %.v.i.us.i to i32       ; 2 uses
+  %6 = sdiv i8 %i.dgc, 2
+  %i.dhm = sdiv i8 %i.dgc, 4
+  %.v124.i.us.i = select i1 %.not317.i, i8 %i.dhm, i8 %6
+  %.sext122.i.us.i = sext i8 %.v124.i.us.i to i32 ; 2 uses
   %i.dhn = and i32 %i.ddp, %i.dga                 ; 2 uses
   %i.dho = and i32 %i.ddp, %i.dgd                 ; 2 uses
   %i.dhp = or i32 %i.dgd, %i.dga
@@ -459,17 +462,17 @@ bb.lg:                                            ; preds = %bb.lf
 
 bb.lh:                                            ; preds = %.thread.i.us.i
   %.not113.i.us.i = icmp eq i32 %i.dho, 0
+  %7 = add nsw i32 %i.dep, %.sext122.i.us.i
+  %8 = add nsw i32 %i.deq, %.sext.i.us.i
   %.not112.i.us.i = icmp eq i32 %i.dhn, 0
   %.inv.i.us.i = icmp sgt i8 %i.dfz, 0
   %i.dhr = or i1 %.inv.i.us.i, %.not112.i.us.i
   %.098.v.i.us.i = select i1 %i.dhr, i32 -1, i32 -2
-  %5 = add nsw i32 %.098.v.i.us.i, %i.deq
-  %.098.i.us.i = add i32 %5, %.sext.i.us.i        ; 2 uses
+  %.098.i.us.i = add nsw i32 %8, %.098.v.i.us.i   ; 2 uses
   %.inv116.i.us.i = icmp sgt i8 %i.dgc, 0
   %i.dhs = or i1 %.inv116.i.us.i, %.not113.i.us.i
   %.099.v.i.us.i = select i1 %i.dhs, i32 -1, i32 -2
-  %6 = add i32 %.099.v.i.us.i, %i.dep
-  %.099.i.us.i = add i32 %6, %.sext122.i.us.i     ; 2 uses
+  %.099.i.us.i = add nsw i32 %7, %.099.v.i.us.i   ; 2 uses
   %i.dht = add nsw i32 %.098.i.us.i, %i.ddq       ; 2 uses
   %i.dhu = icmp slt i32 %i.dht, 0
   br i1 %i.dhu, label %.thread311.us.i, label %bb.li
@@ -519,25 +522,46 @@ bb.lm:                                            ; preds = %bb.ll
   br label %bb.ls
 
 bb.ln:                                            ; preds = %.thread.i.us.i
-  %i.diq = sub nsw i32 0, %.sext.i.us.i           ; 2 uses
+  %i.diq = sub nsw i32 0, %.sext.i.us.i
   %i.dir = and i32 %i.diq, 7                      ; 2 uses
-  %i.dis = sub nsw i32 0, %.sext122.i.us.i        ; 2 uses
+  %i.dis = sub nsw i32 0, %.sext122.i.us.i
   %i.dit = and i32 %i.dis, 7                      ; 2 uses
-  %.not115.i.us.i = icmp eq i32 %i.dit, 0
-  %7 = or i32 %i.dis, %i.diq
-  %8 = and i32 %7, 7
-  %or.cond5.not.i.us.i = icmp eq i32 %8, 0
-  br i1 %or.cond5.not.i.us.i, label %.thread311.us.i, label %bb.lo
+  %9 = icmp ne i32 %i.dir, 0                      ; 2 uses
+  %10 = icmp ne i32 %i.dit, 0                     ; 2 uses
+  %or.cond5.i.us.i = select i1 %9, i1 true, i1 %10
+  br i1 %or.cond5.i.us.i, label %bb.lo, label %.thread311.us.i
+
+.thread311.us.i:                                  ; preds = %bb.ln, %bb.li, %bb.lh
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  br label %.thread307.us.i
+
+.thread307.us.i:                                  ; preds = %.thread311.us.i, %bb.le
+  %11 = icmp sgt i32 %i.dgm, -1
+  %12 = icmp sgt i32 %i.dgo, -1
+  %or.cond.not324.us.i = select i1 %11, i1 %12, i1 false
+  %13 = add nuw nsw i32 %i.dgm, 9
+  %.not282.us.i = icmp slt i32 %13, %i.ddb
+  %or.cond290.us.i = select i1 %or.cond.not324.us.i, i1 %.not282.us.i, i1 false
+  %14 = add nuw nsw i32 %i.dgo, 9
+  %.not283.us.i = icmp slt i32 %14, %i.dda
+  %or.cond291.us.i = select i1 %or.cond290.us.i, i1 %.not283.us.i, i1 false
+  br i1 %or.cond291.us.i, label %bb.lt, label %15
+
+15:                                               ; preds = %.thread307.us.i
+  %16 = load ptr, ptr %i.ly, align 16, !tbaa !85
+  %.0232.us.i = getelementptr inbounds nuw i8, ptr %16, i64 %.0233.idx.i ; 2 uses
+  %17 = load ptr, ptr %i.cxp, align 16, !tbaa !139
+  call void %17(ptr noundef %.0232.us.i, ptr noundef %i.dgx, i64 noundef %spec.select.i328, i64 noundef %spec.select.i328, i32 noundef 9, i32 noundef 9, i32 noundef %i.dgm, i32 noundef %i.dgo, i32 noundef %i.ddb, i32 noundef %i.dda) #11, !inline_history !138
+  br label %bb.lt
 
 bb.lo:                                            ; preds = %bb.ln
-  %.not114.i.us.i = icmp eq i32 %i.dir, 0
   %i.diu = load ptr, ptr %i.cxp, align 16, !tbaa !139
   %i.div = getelementptr inbounds i8, ptr %i.dgx, i64 %i.ddr
   %i.diw = getelementptr inbounds i8, ptr %i.div, i64 -1
   %i.dix = add nsw i32 %i.dgm, -1
   %i.diy = add nsw i32 %i.dgo, -1
   call void %i.diu(ptr noundef nonnull %i.a, ptr noundef nonnull %i.diw, i64 noundef 12, i64 noundef range(i64 -2147483648, 2147483649) %spec.select.i328, i32 noundef 12, i32 noundef 12, i32 noundef %i.dix, i32 noundef %i.diy, i32 noundef %i.dhh, i32 noundef %i.dhk) #11, !inline_history !140
-  br i1 %.not114.i.us.i, label %bb.lq, label %bb.lp
+  br i1 %9, label %bb.lp, label %bb.lq
 
 bb.lp:                                            ; preds = %bb.lo
   %i.diz = load ptr, ptr %i.cxq, align 8, !tbaa !141
@@ -548,7 +572,7 @@ bb.lp:                                            ; preds = %bb.lo
   br label %bb.lq
 
 bb.lq:                                            ; preds = %bb.lp, %bb.lo
-  br i1 %.not115.i.us.i, label %bb.ls, label %bb.lr
+  br i1 %10, label %bb.lr, label %bb.ls
 
 bb.lr:                                            ; preds = %bb.lq
   %i.djd = load ptr, ptr %i.cxr, align 16, !tbaa !142
@@ -580,34 +604,11 @@ bb.ls:                                            ; preds = %bb.lr, %bb.lq, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %bb.lt
 
-.thread311.us.i:                                  ; preds = %bb.ln, %bb.li, %bb.lh
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  br label %.thread307.us.i
-
-.thread307.us.i:                                  ; preds = %.thread311.us.i, %bb.le
-  %9 = icmp sgt i32 %i.dgm, -1
-  %10 = icmp sgt i32 %i.dgo, -1
-  %or.cond.not324.us.i = select i1 %9, i1 %10, i1 false
-  %11 = add nuw nsw i32 %i.dgm, 9
-  %.not282.us.i = icmp slt i32 %11, %i.ddb
-  %or.cond290.us.i = select i1 %or.cond.not324.us.i, i1 %.not282.us.i, i1 false
-  %12 = add nuw nsw i32 %i.dgo, 9
-  %.not283.us.i = icmp slt i32 %12, %i.dda
-  %or.cond291.us.i = select i1 %or.cond290.us.i, i1 %.not283.us.i, i1 false
-  br i1 %or.cond291.us.i, label %bb.lt, label %13
-
-13:                                               ; preds = %.thread307.us.i
-  %14 = load ptr, ptr %i.ly, align 16, !tbaa !85
-  %.0232.us.i = getelementptr inbounds nuw i8, ptr %14, i64 %.0233.idx.i ; 2 uses
-  %15 = load ptr, ptr %i.cxp, align 16, !tbaa !139
-  call void %15(ptr noundef %.0232.us.i, ptr noundef %i.dgx, i64 noundef %spec.select.i328, i64 noundef %spec.select.i328, i32 noundef 9, i32 noundef 9, i32 noundef %i.dgm, i32 noundef %i.dgo, i32 noundef %i.ddb, i32 noundef %i.dda) #11, !inline_history !138
-  br label %bb.lt
-
-bb.lt:                                            ; preds = %13, %.thread307.us.i, %bb.ls, %bb.lb, %bb.lb, %bb.lb
-  %.4249.us.i = phi ptr [ %i.dfw, %bb.lb ], [ %.0232.us.i, %13 ], [ %i.dgx, %.thread307.us.i ], [ %.0233.us.i, %bb.ls ], [ %i.dfw, %bb.lb ], [ %i.dfw, %bb.lb ] ; 3 uses
-  %.0244.us.i = phi i32 [ 0, %bb.lb ], [ %i.dgu, %13 ], [ %i.dgu, %.thread307.us.i ], [ %i.dgu, %bb.ls ], [ 0, %bb.lb ], [ 0, %bb.lb ] ; 2 uses
-  %.5241.us.i = phi i32 [ %.3239372.us.i, %bb.lb ], [ %.4240.us.i, %13 ], [ %.4240.us.i, %.thread307.us.i ], [ %.4240.us.i, %bb.ls ], [ %.3239372.us.i, %bb.lb ], [ %.3239372.us.i, %bb.lb ] ; 4 uses
-  %.5.us.i336 = phi i32 [ %.3373.us.i, %bb.lb ], [ %.4.us.i338, %13 ], [ %.4.us.i338, %.thread307.us.i ], [ %.4.us.i338, %bb.ls ], [ %.3373.us.i, %bb.lb ], [ %.3373.us.i, %bb.lb ] ; 4 uses
+bb.lt:                                            ; preds = %bb.ls, %15, %.thread307.us.i, %bb.lb, %bb.lb, %bb.lb
+  %.4249.us.i = phi ptr [ %i.dfw, %bb.lb ], [ %.0232.us.i, %15 ], [ %i.dgx, %.thread307.us.i ], [ %.0233.us.i, %bb.ls ], [ %i.dfw, %bb.lb ], [ %i.dfw, %bb.lb ] ; 3 uses
+  %.0244.us.i = phi i32 [ 0, %bb.lb ], [ %i.dgu, %15 ], [ %i.dgu, %.thread307.us.i ], [ %i.dgu, %bb.ls ], [ 0, %bb.lb ], [ 0, %bb.lb ] ; 2 uses
+  %.5241.us.i = phi i32 [ %.3239372.us.i, %bb.lb ], [ %.4240.us.i, %15 ], [ %.4240.us.i, %.thread307.us.i ], [ %.4240.us.i, %bb.ls ], [ %.3239372.us.i, %bb.lb ], [ %.3239372.us.i, %bb.lb ] ; 4 uses
+  %.5.us.i336 = phi i32 [ %.3373.us.i, %bb.lb ], [ %.4.us.i338, %15 ], [ %.4.us.i338, %.thread307.us.i ], [ %.4.us.i338, %bb.ls ], [ %.3373.us.i, %bb.lb ], [ %.3373.us.i, %bb.lb ] ; 4 uses
   %i.djq = load ptr, ptr %i.az, align 8, !tbaa !60
   %i.djr = getelementptr inbounds [4 x i8], ptr %i.djq, i64 %i.det
   %i.djs = getelementptr inbounds nuw i8, ptr %i.djr, i64 2

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/mpeg2dec?download=true
 inline.NumInlined: 10
 inline.NumDeleted: 8
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumCompletelyUnrolled: 5
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@main:bb.a
   unreachable
 
@@ -204,22 +204,29 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   %i.eb = getelementptr i8, ptr %i.ea, i64 -4
   %i.ec = load i32, ptr %i.eb, align 4, !tbaa !4
   store i32 %i.ec, ptr @block_count, align 4, !tbaa !4
-  %i.ed = mul nsw i32 %i.dy, %i.dw                ; 3 uses
+  %i.ed = mul nsw i32 %i.dy, %i.dw                ; 4 uses
   %i.ee = mul nsw i32 %i.ds, %i.dr
   %i.ef = load i32, ptr @Ersatz_Flag, align 4
   %.fr.i.i.i = freeze i32 %i.ef
-  %.not26.i.i.i = icmp eq i32 %.fr.i.i.i, 0       ; 4 uses
+  %.not26.i.i.i = icmp eq i32 %.fr.i.i.i, 0       ; 2 uses
   %i.eg = icmp eq i32 %.fr53.i.i.i, 2
   %i.eh = load i32, ptr @lower_layer_prediction_horizontal_size, align 4 ; 2 uses
   %i.ei = load i32, ptr @lower_layer_prediction_vertical_size, align 4 ; 2 uses
-  %i.ej = mul nsw i32 %i.ei, %i.eh                ; 2 uses
-  %i.ek = sext i32 %i.ee to i64                   ; 9 uses
+  %i.ej = mul nsw i32 %i.ei, %i.eh                ; 3 uses
+  %2 = sdiv i32 %i.ej, 4                          ; 2 uses
+  %i.ek = sext i32 %i.ee to i64                   ; 11 uses
   %i.el = tail call noalias ptr @malloc(i64 noundef %i.ek) #20 ; 2 uses
   store ptr %i.el, ptr @backward_reference_frame, align 16, !tbaa !8
-  %.not23.us.i.i.i = icmp eq ptr %i.el, null      ; 3 uses
-  br i1 %i.eg, label %.split.us.preheader.i.i.i, label %.split.i.i.i
+  %.not23.us.i.i.i = icmp eq ptr %i.el, null      ; 4 uses
+  br i1 %i.eg, label %.split.us.i.i.i, label %.split.i.i.i
 
-.split.us.preheader.i.i.i:                        ; preds = %bb.bo
+.split.us.i.i.i:                                  ; preds = %bb.bo
+  br i1 %.not26.i.i.i, label %.split.us.preheader.i.i.i, label %.split.us.split.preheader.i.i.i
+
+.split.us.split.preheader.i.i.i:                  ; preds = %.split.us.i.i.i
+  br i1 %.not23.us.i.i.i, label %.split33.us.i.i.i, label %18
+
+.split.us.preheader.i.i.i:                        ; preds = %.split.us.i.i.i
   br i1 %.not23.us.i.i.i, label %.split33.us.i.i.i, label %bb.bp
 
 bb.bp:                                            ; preds = %.split.us.preheader.i.i.i
@@ -235,104 +242,181 @@ bb.bq:                                            ; preds = %bb.bp
   br i1 %.not25.us.i.i.i.a, label %.split37.us.i.i.i, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
-  br i1 %.not26.i.i.i, label %bb.bt, label %bb.bs
+  %3 = sext i32 %i.ej to i64                      ; 2 uses
+  %4 = tail call noalias ptr @malloc(i64 noundef %3) #20 ; 2 uses
+  store ptr %4, ptr @llframe0, align 16, !tbaa !8
+  %.not29.us.us.i.i.i = icmp eq ptr %4, null
+  br i1 %.not29.us.us.i.i.i, label %.split41.us.i.i.i, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
-  %i.eo = tail call noalias ptr @malloc(i64 noundef %i.ek) #20 ; 2 uses
-  store ptr %i.eo, ptr @substitute_frame, align 16, !tbaa !8
+  %i.eo = tail call noalias ptr @malloc(i64 noundef %3) #20 ; 2 uses
+  store ptr %i.eo, ptr @llframe1, align 16, !tbaa !8
   %.not27.us.i.i.i.a = icmp eq ptr %i.eo, null
-  br i1 %.not27.us.i.i.i.a, label %.split39.us.i.i.i, label %bb.bt
+  br i1 %.not27.us.i.i.i.a, label %.split43.us.i.i.i, label %bb.bt
 
-bb.bt:                                            ; preds = %bb.bs, %bb.br
-  %i.ep = sext i32 %i.ej to i64                   ; 2 uses
+bb.bt:                                            ; preds = %bb.bs
+  %i.ep = sext i32 %i.ed to i64                   ; 6 uses
   %i.eq = tail call noalias ptr @malloc(i64 noundef %i.ep) #20 ; 2 uses
-  store ptr %i.eq, ptr @llframe0, align 16, !tbaa !8
+  store ptr %i.eq, ptr getelementptr inbounds nuw (i8, ptr @backward_reference_frame, i64 8), align 8, !tbaa !8
   %.not29.us.i.i.i.a = icmp eq ptr %i.eq, null
-  br i1 %.not29.us.i.i.i.a, label %.split41.us.i.i.i, label %bb.bu
+  br i1 %.not29.us.i.i.i.a, label %.split33.us.i.i.i, label %5
 
-bb.bu:                                            ; preds = %bb.bt
+5:                                                ; preds = %bb.bt
+  %6 = tail call noalias ptr @malloc(i64 noundef %i.ep) #20 ; 2 uses
+  store ptr %6, ptr getelementptr inbounds nuw (i8, ptr @forward_reference_frame, i64 8), align 8, !tbaa !8
+  %.not24.us.us.1.i.i.i = icmp eq ptr %6, null
+  br i1 %.not24.us.us.1.i.i.i, label %.split35.us.i.i.i, label %bb.bu
+
+bb.bu:                                            ; preds = %5
   %i.er = tail call noalias ptr @malloc(i64 noundef %i.ep) #20 ; 2 uses
-  store ptr %i.er, ptr @llframe1, align 16, !tbaa !8
+  store ptr %i.er, ptr getelementptr inbounds nuw (i8, ptr @auxframe, i64 8), align 8, !tbaa !8
   %.not30.us.i.i.i.a = icmp eq ptr %i.er, null
-  br i1 %.not30.us.i.i.i.a, label %.split43.us.i.i.i, label %.split.us.1.i.i.i
+  br i1 %.not30.us.i.i.i.a, label %.split37.us.i.i.i, label %.split.us.1.i.i.i
 
 .split.us.1.i.i.i:                                ; preds = %bb.bu
-  %i.es = sext i32 %i.ed to i64                   ; 8 uses
+  %i.es = sext i32 %2 to i64                      ; 4 uses
   %i.et = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
-  store ptr %i.et, ptr getelementptr inbounds nuw (i8, ptr @backward_reference_frame, i64 8), align 8, !tbaa !8
+  store ptr %i.et, ptr getelementptr inbounds nuw (i8, ptr @llframe0, i64 8), align 8, !tbaa !8
   %.not23.us.1.i.i.i.a = icmp eq ptr %i.et, null
-  br i1 %.not23.us.1.i.i.i.a, label %.split33.us.i.i.i, label %bb.bv
+  br i1 %.not23.us.1.i.i.i.a, label %.split41.us.i.i.i, label %7
 
-bb.bv:                                            ; preds = %.split.us.1.i.i.i
-  %i.eu = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
-  store ptr %i.eu, ptr getelementptr inbounds nuw (i8, ptr @forward_reference_frame, i64 8), align 8, !tbaa !8
+7:                                                ; preds = %.split.us.1.i.i.i
+  %8 = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
+  store ptr %8, ptr getelementptr inbounds nuw (i8, ptr @llframe1, i64 8), align 8, !tbaa !8
+  %.not30.us.us.1.i.i.i = icmp eq ptr %8, null
+  br i1 %.not30.us.us.1.i.i.i, label %.split43.us.i.i.i, label %.split.us.split.us.2.i.i.i
+
+.split.us.split.us.2.i.i.i:                       ; preds = %7
+  %9 = tail call noalias ptr @malloc(i64 noundef %i.ep) #20 ; 2 uses
+  store ptr %9, ptr getelementptr inbounds nuw (i8, ptr @backward_reference_frame, i64 16), align 16, !tbaa !8
+  %.not23.us.us.2.i.i.i = icmp eq ptr %9, null
+  br i1 %.not23.us.us.2.i.i.i, label %.split33.us.i.i.i, label %10
+
+10:                                               ; preds = %.split.us.split.us.2.i.i.i
+  %11 = tail call noalias ptr @malloc(i64 noundef %i.ep) #20 ; 2 uses
+  store ptr %11, ptr getelementptr inbounds nuw (i8, ptr @forward_reference_frame, i64 16), align 16, !tbaa !8
+  %.not24.us.us.2.i.i.i = icmp eq ptr %11, null
+  br i1 %.not24.us.us.2.i.i.i, label %.split35.us.i.i.i, label %12
+
+12:                                               ; preds = %10
+  %13 = tail call noalias ptr @malloc(i64 noundef %i.ep) #20 ; 2 uses
+  store ptr %13, ptr getelementptr inbounds nuw (i8, ptr @auxframe, i64 16), align 16, !tbaa !8
+  %.not25.us.us.2.i.i.i = icmp eq ptr %13, null
+  br i1 %.not25.us.us.2.i.i.i, label %.split37.us.i.i.i, label %14
+
+14:                                               ; preds = %12
+  %15 = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
+  store ptr %15, ptr getelementptr inbounds nuw (i8, ptr @llframe0, i64 16), align 16, !tbaa !8
+  %.not29.us.us.2.i.i.i = icmp eq ptr %15, null
+  br i1 %.not29.us.us.2.i.i.i, label %.split41.us.i.i.i, label %16
+
+16:                                               ; preds = %14
+  %17 = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
+  store ptr %17, ptr getelementptr inbounds nuw (i8, ptr @llframe1, i64 16), align 16, !tbaa !8
+  %.not30.us.us.2.i.i.i = icmp eq ptr %17, null
+  br i1 %.not30.us.us.2.i.i.i, label %.split43.us.i.i.i, label %.split45.us.i.i.i
+
+18:                                               ; preds = %.split.us.split.preheader.i.i.i
+  %19 = tail call noalias ptr @malloc(i64 noundef %i.ek) #20 ; 2 uses
+  store ptr %19, ptr @forward_reference_frame, align 16, !tbaa !8
+  %.not24.us.i.i.i = icmp eq ptr %19, null
+  br i1 %.not24.us.i.i.i, label %.split35.us.i.i.i, label %bb.bv
+
+bb.bv:                                            ; preds = %18
+  %i.eu = tail call noalias ptr @malloc(i64 noundef %i.ek) #20 ; 2 uses
+  store ptr %i.eu, ptr @auxframe, align 16, !tbaa !8
   %.not24.us.1.i.i.i.a = icmp eq ptr %i.eu, null
-  br i1 %.not24.us.1.i.i.i.a, label %.split35.us.i.i.i, label %bb.bw
+  br i1 %.not24.us.1.i.i.i.a, label %.split37.us.i.i.i, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %i.ev = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
-  store ptr %i.ev, ptr getelementptr inbounds nuw (i8, ptr @auxframe, i64 8), align 8, !tbaa !8
+  %i.ev = tail call noalias ptr @malloc(i64 noundef %i.ek) #20 ; 2 uses
+  store ptr %i.ev, ptr @substitute_frame, align 16, !tbaa !8
   %.not25.us.1.i.i.i.a = icmp eq ptr %i.ev, null
-  br i1 %.not25.us.1.i.i.i.a, label %.split37.us.i.i.i, label %bb.bx
+  br i1 %.not25.us.1.i.i.i.a, label %.split39.us.i.i.i, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  br i1 %.not26.i.i.i, label %bb.bz, label %bb.by
+  %20 = sext i32 %i.ej to i64                     ; 2 uses
+  %21 = tail call noalias ptr @malloc(i64 noundef %20) #20 ; 2 uses
+  store ptr %21, ptr @llframe0, align 16, !tbaa !8
+  %.not29.us.i.i.i = icmp eq ptr %21, null
+  br i1 %.not29.us.i.i.i, label %.split41.us.i.i.i, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %i.ew = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
-  store ptr %i.ew, ptr getelementptr inbounds nuw (i8, ptr @substitute_frame, i64 8), align 8, !tbaa !8
+  %i.ew = tail call noalias ptr @malloc(i64 noundef %20) #20 ; 2 uses
+  store ptr %i.ew, ptr @llframe1, align 16, !tbaa !8
   %.not27.us.1.i.i.i.a = icmp eq ptr %i.ew, null
-  br i1 %.not27.us.1.i.i.i.a, label %.split39.us.i.i.i, label %bb.bz
+  br i1 %.not27.us.1.i.i.i.a, label %.split43.us.i.i.i, label %bb.bz
 
-bb.bz:                                            ; preds = %bb.by, %bb.bx
-  %2 = sdiv i32 %i.ej, 4
-  %i.ex = sext i32 %2 to i64                      ; 4 uses
+bb.bz:                                            ; preds = %bb.by
+  %i.ex = sext i32 %i.ed to i64                   ; 8 uses
   %i.ey = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
-  store ptr %i.ey, ptr getelementptr inbounds nuw (i8, ptr @llframe0, i64 8), align 8, !tbaa !8
+  store ptr %i.ey, ptr getelementptr inbounds nuw (i8, ptr @backward_reference_frame, i64 8), align 8, !tbaa !8
   %.not29.us.1.i.i.i.a = icmp eq ptr %i.ey, null
-  br i1 %.not29.us.1.i.i.i.a, label %.split41.us.i.i.i, label %bb.ca
+  br i1 %.not29.us.1.i.i.i.a, label %.split33.us.i.i.i, label %22
 
-bb.ca:                                            ; preds = %bb.bz
-  %i.ez = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
-  store ptr %i.ez, ptr getelementptr inbounds nuw (i8, ptr @llframe1, i64 8), align 8, !tbaa !8
+22:                                               ; preds = %bb.bz
+  %23 = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+  store ptr %23, ptr getelementptr inbounds nuw (i8, ptr @forward_reference_frame, i64 8), align 8, !tbaa !8
+  %.not24.us.1.i.i.i = icmp eq ptr %23, null
+  br i1 %.not24.us.1.i.i.i, label %.split35.us.i.i.i, label %24
+
+24:                                               ; preds = %22
+  %25 = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+  store ptr %25, ptr getelementptr inbounds nuw (i8, ptr @auxframe, i64 8), align 8, !tbaa !8
+  %.not25.us.1.i.i.i = icmp eq ptr %25, null
+  br i1 %.not25.us.1.i.i.i, label %.split37.us.i.i.i, label %26
+
+26:                                               ; preds = %24
+  %27 = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+  store ptr %27, ptr getelementptr inbounds nuw (i8, ptr @substitute_frame, i64 8), align 8, !tbaa !8
+  %.not27.us.1.i.i.i = icmp eq ptr %27, null
+  br i1 %.not27.us.1.i.i.i, label %.split39.us.i.i.i, label %bb.ca
+
+bb.ca:                                            ; preds = %26
+  %28 = sext i32 %2 to i64                        ; 4 uses
+  %i.ez = tail call noalias ptr @malloc(i64 noundef %28) #20 ; 2 uses
+  store ptr %i.ez, ptr getelementptr inbounds nuw (i8, ptr @llframe0, i64 8), align 8, !tbaa !8
   %.not30.us.1.i.i.i.a = icmp eq ptr %i.ez, null
-  br i1 %.not30.us.1.i.i.i.a, label %.split43.us.i.i.i, label %.split.us.2.i.i.i
+  br i1 %.not30.us.1.i.i.i.a, label %.split41.us.i.i.i, label %.split.us.2.i.i.i
 
 .split.us.2.i.i.i:                                ; preds = %bb.ca
-  %i.fa = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
-  store ptr %i.fa, ptr getelementptr inbounds nuw (i8, ptr @backward_reference_frame, i64 16), align 16, !tbaa !8
+  %i.fa = tail call noalias ptr @malloc(i64 noundef %28) #20 ; 2 uses
+  store ptr %i.fa, ptr getelementptr inbounds nuw (i8, ptr @llframe1, i64 8), align 8, !tbaa !8
   %.not23.us.2.i.i.i.a = icmp eq ptr %i.fa, null
-  br i1 %.not23.us.2.i.i.i.a, label %.split33.us.i.i.i, label %bb.cb
+  br i1 %.not23.us.2.i.i.i.a, label %.split43.us.i.i.i, label %bb.cb
 
 bb.cb:                                            ; preds = %.split.us.2.i.i.i
-  %i.fb = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
-  store ptr %i.fb, ptr getelementptr inbounds nuw (i8, ptr @forward_reference_frame, i64 16), align 16, !tbaa !8
+  %i.fb = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+  store ptr %i.fb, ptr getelementptr inbounds nuw (i8, ptr @backward_reference_frame, i64 16), align 16, !tbaa !8
   %.not24.us.2.i.i.i.a = icmp eq ptr %i.fb, null
-  br i1 %.not24.us.2.i.i.i.a, label %.split35.us.i.i.i, label %bb.cc
+  br i1 %.not24.us.2.i.i.i.a, label %.split33.us.i.i.i, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.fc = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
-  store ptr %i.fc, ptr getelementptr inbounds nuw (i8, ptr @auxframe, i64 16), align 16, !tbaa !8
+  %i.fc = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+  store ptr %i.fc, ptr getelementptr inbounds nuw (i8, ptr @forward_reference_frame, i64 16), align 16, !tbaa !8
   %.not25.us.2.i.i.i.a = icmp eq ptr %i.fc, null
-  br i1 %.not25.us.2.i.i.i.a, label %.split37.us.i.i.i, label %bb.cd
+  br i1 %.not25.us.2.i.i.i.a, label %.split35.us.i.i.i, label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc
-  br i1 %.not26.i.i.i, label %bb.cf, label %bb.ce
+  %29 = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+  store ptr %29, ptr getelementptr inbounds nuw (i8, ptr @auxframe, i64 16), align 16, !tbaa !8
+  %.not25.us.2.i.i.i = icmp eq ptr %29, null
+  br i1 %.not25.us.2.i.i.i, label %.split37.us.i.i.i, label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd
-  %i.fd = tail call noalias ptr @malloc(i64 noundef %i.es) #20 ; 2 uses
+  %i.fd = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
   store ptr %i.fd, ptr getelementptr inbounds nuw (i8, ptr @substitute_frame, i64 16), align 16, !tbaa !8
   %.not27.us.2.i.i.i = icmp eq ptr %i.fd, null
   br i1 %.not27.us.2.i.i.i, label %.split39.us.i.i.i, label %bb.cf
 
-bb.cf:                                            ; preds = %bb.ce, %bb.cd
-  %i.fe = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+bb.cf:                                            ; preds = %bb.ce
+  %i.fe = tail call noalias ptr @malloc(i64 noundef %28) #20 ; 2 uses
   store ptr %i.fe, ptr getelementptr inbounds nuw (i8, ptr @llframe0, i64 16), align 16, !tbaa !8
   %.not29.us.2.i.i.i = icmp eq ptr %i.fe, null
   br i1 %.not29.us.2.i.i.i, label %.split41.us.i.i.i, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
-  %i.ff = tail call noalias ptr @malloc(i64 noundef %i.ex) #20 ; 2 uses
+  %i.ff = tail call noalias ptr @malloc(i64 noundef %28) #20 ; 2 uses
   store ptr %i.ff, ptr getelementptr inbounds nuw (i8, ptr @llframe1, i64 16), align 16, !tbaa !8
   %.not30.us.2.i.i.i = icmp eq ptr %i.ff, null
   br i1 %.not30.us.2.i.i.i, label %.split43.us.i.i.i, label %.split45.us.i.i.i
@@ -395,7 +479,7 @@ bb.cm:                                            ; preds = %bb.cl
   %.not25.us50.2.i.i.i = icmp eq ptr %i.fo, null
   br i1 %.not25.us50.2.i.i.i, label %.split37.us.i.i.i, label %Initialize_Sequence.exit.i.i
 
-.split33.us.i.i.i:                                ; preds = %.split.split.2.i.i.i, %.split.split.1.i.i.i, %.split.split.us.2.i.i.i, %.split.split.us.1.i.i.i, %.split.split.us.preheader.i.i.i, %.split.split.preheader.i.i.i, %.split.us.2.i.i.i, %.split.us.1.i.i.i, %.split.us.preheader.i.i.i
+.split33.us.i.i.i:                                ; preds = %.split.split.2.i.i.i, %.split.split.1.i.i.i, %.split.split.us.2.i.i.i, %.split.split.us.1.i.i.i, %.split.split.us.preheader.i.i.i, %.split.split.preheader.i.i.i, %bb.cb, %bb.bz, %.split.us.split.us.2.i.i.i, %bb.bt, %.split.us.preheader.i.i.i, %.split.us.split.preheader.i.i.i
   tail call void @Error(ptr noundef nonnull @.str.22)
   unreachable
 
@@ -405,7 +489,7 @@ bb.cn:                                            ; preds = %.split.split.prehea
   %.not24.i.i.i = icmp eq ptr %i.fp, null
   br i1 %.not24.i.i.i, label %.split35.us.i.i.i, label %bb.co
 
-.split35.us.i.i.i:                                ; preds = %bb.ct, %bb.cq, %bb.cn, %bb.cl, %bb.cj, %bb.ch, %bb.cb, %bb.bv, %bb.bp
+.split35.us.i.i.i:                                ; preds = %bb.ct, %bb.cq, %bb.cn, %bb.cl, %bb.cj, %bb.ch, %bb.cc, %22, %18, %10, %5, %bb.bp
   tail call void @Error(ptr noundef nonnull @.str.23)
   unreachable
 
@@ -415,7 +499,7 @@ bb.co:                                            ; preds = %bb.cn
   %.not25.i.i.i = icmp eq ptr %i.fq, null
   br i1 %.not25.i.i.i, label %.split37.us.i.i.i, label %bb.cp
 
-.split37.us.i.i.i:                                ; preds = %bb.cu, %bb.cr, %bb.co, %bb.cm, %bb.ck, %bb.ci, %bb.cc, %bb.bw, %bb.bq
+.split37.us.i.i.i:                                ; preds = %bb.cu, %bb.cr, %bb.co, %bb.cm, %bb.ck, %bb.ci, %bb.cd, %24, %bb.bv, %12, %bb.bu, %bb.bq
   tail call void @Error(ptr noundef nonnull @.str.24)
   unreachable
 
@@ -425,7 +509,7 @@ bb.cp:                                            ; preds = %bb.co
   %.not27.i.i.i = icmp eq ptr %i.fr, null
   br i1 %.not27.i.i.i, label %.split39.us.i.i.i, label %.split.split.1.i.i.i
 
-.split39.us.i.i.i:                                ; preds = %bb.cv, %bb.cs, %bb.cp, %bb.ce, %bb.by, %bb.bs
+.split39.us.i.i.i:                                ; preds = %bb.cv, %bb.cs, %bb.cp, %bb.ce, %26, %bb.bw
   tail call void @Error(ptr noundef nonnull @.str.25)
   unreachable
 
@@ -478,15 +562,15 @@ bb.cv:                                            ; preds = %bb.cu
   %.not27.2.i.i.i = icmp eq ptr %i.ga, null
   br i1 %.not27.2.i.i.i, label %.split39.us.i.i.i, label %Initialize_Sequence.exit.i.i
 
-.split41.us.i.i.i:                                ; preds = %bb.cf, %bb.bz, %bb.bt
+.split41.us.i.i.i:                                ; preds = %bb.cf, %bb.ca, %bb.bx, %14, %.split.us.1.i.i.i, %bb.br
   tail call void @Error(ptr noundef nonnull @.str.26)
   unreachable
 
-.split43.us.i.i.i:                                ; preds = %bb.cg, %bb.ca, %bb.bu
+.split43.us.i.i.i:                                ; preds = %bb.cg, %.split.us.2.i.i.i, %bb.by, %16, %7, %bb.bs
   tail call void @Error(ptr noundef nonnull @.str.27)
   unreachable
 
-.split45.us.i.i.i:                                ; preds = %bb.cg
+.split45.us.i.i.i:                                ; preds = %bb.cg, %16
   %i.gb = load i32, ptr @vertical_subsampling_factor_n, align 4, !tbaa !4
   %i.gc = mul nsw i32 %i.gb, %i.ei
   %i.gd = load i32, ptr @vertical_subsampling_factor_m, align 4, !tbaa !4

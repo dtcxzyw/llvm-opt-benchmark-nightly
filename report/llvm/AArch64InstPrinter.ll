@@ -205,7 +205,7 @@ _ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_.exit431: ; preds = %bb.bv, 
   br label %bb.de
 
 bb.bx:                                            ; preds = %bb.j
-  %i.ku = icmp eq i32 %i.b, 2099                  ; 2 uses
+  %i.ku = icmp eq i32 %i.b, 2099                  ; 4 uses
   %or.cond29 = icmp eq i32 %i.j, 2098
   br i1 %or.cond29, label %bb.by, label %bb.ce
 
@@ -239,9 +239,11 @@ bb.ca:                                            ; preds = %bb.bz
   br i1 %.not469, label %.critedge, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
-  %i.lk = select i1 %i.ku, i32 64, i32 32         ; 2 uses
-  %i.ll = sub nsw i32 %i.lk, %i.kz
-  %i.lm = srem i32 %i.ll, %i.lk
+  %i.lk = select i1 %i.ku, i32 64, i32 32
+  %i.ll = sub nsw i32 %i.lk, %i.kz                ; 2 uses
+  %21 = srem i32 %i.ll, 64
+  %i.lm = srem i32 %i.ll, 32
+  %22 = select i1 %i.ku, i32 %21, i32 %i.lm
   %i.ln = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull @.str.94) ; 0 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %i.kw, i64 8
   %i.lp = load i32, ptr %i.lo, align 8, !tbaa !32
@@ -255,7 +257,7 @@ bb.cb:                                            ; preds = %bb.ca
   %i.lu = call noundef nonnull align 8 dereferenceable(18) ptr @_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_(ptr noundef nonnull align 8 dereferenceable(18) %12, ptr noundef nonnull align 1 dereferenceable(2) @.str.89)
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lu, i64 8
   %i.lw = load ptr, ptr %i.lv, align 8, !tbaa !48, !nonnull !46, !align !47
-  %i.lx = sext i32 %i.lm to i64
+  %i.lx = sext i32 %22 to i64
   %i.ly = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %i.lw, i64 noundef %i.lx) #22 ; 0 uses
   call void @_ZN4llvm13MCInstPrinter10WithMarkupD1Ev(ptr noundef nonnull align 8 dead_on_return(18) dereferenceable(18) %12) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #22
@@ -279,9 +281,11 @@ bb.cb:                                            ; preds = %bb.ca
   br i1 %i.mg, label %bb.cc, label %bb.cd
 
 bb.cc:                                            ; preds = %.critedge
-  %i.mh = select i1 %i.ku, i32 64, i32 32         ; 2 uses
-  %i.mi = sub nsw i32 %i.mh, %i.kz
-  %i.mj = srem i32 %i.mi, %i.mh
+  %i.mh = select i1 %i.ku, i32 64, i32 32
+  %i.mi = sub nsw i32 %i.mh, %i.kz                ; 2 uses
+  %23 = srem i32 %i.mi, 64
+  %i.mj = srem i32 %i.mi, 32
+  %24 = select i1 %i.ku, i32 %23, i32 %i.mj
   %i.mk = tail call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef nonnull @.str.95) ; 0 uses
   %i.ml = getelementptr inbounds nuw i8, ptr %i.kw, i64 8
   %i.mm = load i32, ptr %i.ml, align 8, !tbaa !32
@@ -301,7 +305,7 @@ bb.cc:                                            ; preds = %.critedge
   %i.mw = call noundef nonnull align 8 dereferenceable(18) ptr @_ZN4llvm13MCInstPrinter10WithMarkuplsIA2_cEERS1_RKT_(ptr noundef nonnull align 8 dereferenceable(18) %14, ptr noundef nonnull align 1 dereferenceable(2) @.str.89)
   %i.mx = getelementptr inbounds nuw i8, ptr %i.mw, i64 8
   %i.my = load ptr, ptr %i.mx, align 8, !tbaa !48, !nonnull !46, !align !47
-  %i.mz = sext i32 %i.mj to i64
+  %i.mz = sext i32 %24 to i64
   %i.na = call noundef nonnull align 8 dereferenceable(48) ptr @_ZN4llvm11raw_ostreamlsEl(ptr noundef nonnull align 8 dereferenceable(48) %i.my, i64 noundef %i.mz) #22 ; 0 uses
   call void @_ZN4llvm13MCInstPrinter10WithMarkupD1Ev(ptr noundef nonnull align 8 dead_on_return(18) dereferenceable(18) %14) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22

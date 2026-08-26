@@ -205,8 +205,8 @@ bb.bx:                                            ; preds = %bb.bv, %bb.bw, %bb.
   %i.ka = trunc nuw i8 %i.jz to i1
   %i.kb = and i32 %i.jx, 3
   %i.kc = icmp eq i32 %i.kb, 0
-  %i.kd = select i1 %i.ka, i1 %i.kc, i1 false     ; 3 uses
-  %.0158 = select i1 %i.kd, i32 4, i32 1          ; 5 uses
+  %i.kd = select i1 %i.ka, i1 %i.kc, i1 false     ; 5 uses
+  %.0158 = select i1 %i.kd, i32 4, i32 1          ; 3 uses
   %i.ke = sext i32 %i.aq to i64
   %i.kf = udiv i64 %i.as, %i.ke
   %i.kg = select i1 %i.kd, i64 2, i64 0
@@ -392,11 +392,12 @@ bb.cm:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.nb, label %bb.cn, label %bb.cp
 
 bb.cn:                                            ; preds = %bb.cm
-  %i.ne = load i32, ptr %i.d, align 4, !tbaa !37
-  %i.nf = sdiv i32 %i.ne, %.0158
+  %i.ne = load i32, ptr %i.d, align 4, !tbaa !37  ; 2 uses
+  %i.nf = sdiv i32 %i.ne, 4
+  %8 = select i1 %i.kd, i32 %i.nf, i32 %i.ne
   %i.ng = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.nh = load ptr, ptr %i.ng, align 8, !tbaa !62
-  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.nc, i32 noundef %i.nd, i32 noundef %i.nf, i64 noundef %i.kh, i32 noundef %.0158, ptr noundef %i.nh)
+  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.nc, i32 noundef %i.nd, i32 noundef %8, i64 noundef %i.kh, i32 noundef %.0158, ptr noundef %i.nh)
           to label %bb.cq unwind label %bb.co
 
 bb.co:                                            ; preds = %bb.cp, %bb.cn
@@ -406,11 +407,12 @@ bb.co:                                            ; preds = %bb.cp, %bb.cn
 
 bb.cp:                                            ; preds = %bb.cm
   %i.nj = load i32, ptr %i.c, align 4, !tbaa !37
-  %i.nk = load i32, ptr %i.d, align 4, !tbaa !37
-  %i.nl = sdiv i32 %i.nk, %.0158
+  %i.nk = load i32, ptr %i.d, align 4, !tbaa !37  ; 2 uses
+  %i.nl = sdiv i32 %i.nk, 4
+  %9 = select i1 %i.kd, i32 %i.nl, i32 %i.nk
   %i.nm = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.nn = load ptr, ptr %i.nm, align 8, !tbaa !62
-  invoke void @_ZN4ncnn3Mat6createEiiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.nc, i32 noundef %i.nd, i32 noundef %i.nj, i32 noundef %i.nl, i64 noundef %i.kh, i32 noundef %.0158, ptr noundef %i.nn)
+  invoke void @_ZN4ncnn3Mat6createEiiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.nc, i32 noundef %i.nd, i32 noundef %i.nj, i32 noundef %9, i64 noundef %i.kh, i32 noundef %.0158, ptr noundef %i.nn)
           to label %bb.cq unwind label %bb.co
 
 bb.cq:                                            ; preds = %bb.cp, %bb.cn
@@ -813,8 +815,8 @@ bb.bw:                                            ; preds = %bb.bu, %bb.bv, %bb.
   %i.jt = trunc nuw i8 %i.js to i1
   %i.ju = and i32 %i.jq, 3
   %i.jv = icmp eq i32 %i.ju, 0
-  %i.jw = select i1 %i.jt, i1 %i.jv, i1 false     ; 3 uses
-  %.0153 = select i1 %i.jw, i32 4, i32 1          ; 5 uses
+  %i.jw = select i1 %i.jt, i1 %i.jv, i1 false     ; 5 uses
+  %.0153 = select i1 %i.jw, i32 4, i32 1          ; 3 uses
   %i.jx = sext i32 %i.aj to i64
   %i.jy = udiv i64 %i.al, %i.jx
   %i.jz = select i1 %i.jw, i64 2, i64 0
@@ -1000,11 +1002,12 @@ bb.cl:                                            ; preds = %_ZNK4ncnn3Mat5empty
   br i1 %i.mu, label %bb.cm, label %bb.co
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.mx = load i32, ptr %i.d, align 4, !tbaa !37
-  %i.my = sdiv i32 %i.mx, %.0153
+  %i.mx = load i32, ptr %i.d, align 4, !tbaa !37  ; 2 uses
+  %i.my = sdiv i32 %i.mx, 4
+  %8 = select i1 %i.jw, i32 %i.my, i32 %i.mx
   %i.mz = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.na = load ptr, ptr %i.mz, align 8, !tbaa !62
-  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.mv, i32 noundef %i.mw, i32 noundef %i.my, i64 noundef %i.ka, i32 noundef %.0153, ptr noundef %i.na)
+  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.mv, i32 noundef %i.mw, i32 noundef %8, i64 noundef %i.ka, i32 noundef %.0153, ptr noundef %i.na)
           to label %bb.cp unwind label %bb.cn
 
 bb.cn:                                            ; preds = %bb.co, %bb.cm
@@ -1014,11 +1017,12 @@ bb.cn:                                            ; preds = %bb.co, %bb.cm
 
 bb.co:                                            ; preds = %bb.cl
   %i.nc = load i32, ptr %i.c, align 4, !tbaa !37
-  %i.nd = load i32, ptr %i.d, align 4, !tbaa !37
-  %i.ne = sdiv i32 %i.nd, %.0153
+  %i.nd = load i32, ptr %i.d, align 4, !tbaa !37  ; 2 uses
+  %i.ne = sdiv i32 %i.nd, 4
+  %9 = select i1 %i.jw, i32 %i.ne, i32 %i.nd
   %i.nf = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ng = load ptr, ptr %i.nf, align 8, !tbaa !62
-  invoke void @_ZN4ncnn3Mat6createEiiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.mv, i32 noundef %i.mw, i32 noundef %i.nc, i32 noundef %i.ne, i64 noundef %i.ka, i32 noundef %.0153, ptr noundef %i.ng)
+  invoke void @_ZN4ncnn3Mat6createEiiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.h, i32 noundef %i.mv, i32 noundef %i.mw, i32 noundef %i.nc, i32 noundef %9, i64 noundef %i.ka, i32 noundef %.0153, ptr noundef %i.ng)
           to label %bb.cp unwind label %bb.cn
 
 bb.cp:                                            ; preds = %bb.co, %bb.cm

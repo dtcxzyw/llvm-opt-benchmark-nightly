@@ -205,8 +205,8 @@ bb.a:
   call void @cairo_set_antialias(ptr noundef %i.v, i32 noundef 1) #23
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 1176 ; 2 uses
   %i.x = load i32, ptr %i.w, align 4, !tbaa !18
-  %i.y = icmp sgt i32 %i.x, 24                    ; 2 uses
-  %i.z = select i1 %i.y, i32 7, i32 6             ; 4 uses
+  %i.y = icmp sgt i32 %i.x, 24                    ; 4 uses
+  %i.z = select i1 %i.y, i32 7, i32 6             ; 2 uses
   %i.aa = select i1 %i.y, i32 7, i32 4            ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 196
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 392
@@ -239,7 +239,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c
   %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 60
-  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !166 ; 4 uses
+  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !166 ; 6 uses
   %.not = icmp eq i32 %i.ay, -1
   br i1 %.not, label %bb.m, label %bb.l
 
@@ -465,8 +465,12 @@ bb.k:                                             ; preds = %bb.i, %bb.j, %bb.d
   br i1 %exitcond.not, label %bb.c, label %bb.d
 
 bb.l:                                             ; preds = %bb.b
-  %i.hp = srem i32 %i.ay, %i.z
-  %i.hq = sdiv i32 %i.ay, %i.z
+  %4 = srem i32 %i.ay, 7
+  %i.hp = srem i32 %i.ay, 6
+  %5 = select i1 %i.y, i32 %4, i32 %i.hp
+  %6 = sdiv i32 %i.ay, 7
+  %i.hq = sdiv i32 %i.ay, 6
+  %7 = select i1 %i.y, i32 %6, i32 %i.hq
   %i.hr = sext i32 %i.ay to i64
   %i.hs = getelementptr inbounds [4 x i8], ptr %i.b, i64 %i.hr
   %i.ht = load float, ptr %i.hs, align 4, !tbaa !13
@@ -478,7 +482,7 @@ bb.l:                                             ; preds = %bb.b
   %i.hy = fmul reassoc nsz arcp contract afn double %i.hx, 2.000000e+00
   call void @cairo_set_line_width(ptr noundef %i.v, double noundef %i.hy) #23
   call void @cairo_set_source_rgb(ptr noundef %i.v, double noundef %.0, double noundef %.0, double noundef %.0) #23
-  %i.hz = mul nsw i32 %i.hp, %i.f
+  %i.hz = mul nsw i32 %5, %i.f
   %i.ia = sitofp reassoc nsz arcp contract afn i32 %i.hz to float
   %i.ib = fdiv reassoc nsz arcp contract afn float %i.ia, %i.ad
   %i.ic = fpext reassoc nsz arcp contract afn float %i.ib to double
@@ -487,7 +491,7 @@ bb.l:                                             ; preds = %bb.b
   %i.if = load double, ptr %i.ie, align 8, !tbaa !230 ; 2 uses
   %i.ig = fmul reassoc nsz arcp contract afn double %i.if, 5.000000e+00 ; 2 uses
   %i.ih = fadd reassoc nsz arcp contract afn double %i.ig, %i.ic
-  %i.ii = mul nsw i32 %i.hq, %i.h
+  %i.ii = mul nsw i32 %7, %i.h
   %i.ij = sitofp reassoc nsz arcp contract afn i32 %i.ii to float
   %i.ik = fdiv reassoc nsz arcp contract afn float %i.ij, %i.ae
   %i.il = fpext reassoc nsz arcp contract afn float %i.ik to double

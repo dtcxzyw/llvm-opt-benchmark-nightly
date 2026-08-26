@@ -205,17 +205,22 @@ bb.am:                                            ; preds = %.thread
   br i1 %.not219, label %.preheader223, label %.preheader225
 
 .preheader225:                                    ; preds = %bb.am
-  %1 = load i32, ptr %i.ax, align 8, !tbaa !56
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %3 = load i32, ptr %2, align 4, !tbaa !66
-  %4 = mul nsw i32 %3, %1
   %i.gh = load i32, ptr %i.av, align 4, !tbaa !55 ; 3 uses
   %i.gi = icmp sgt i32 %i.gh, 0
   %i.gj = getelementptr inbounds nuw i8, ptr %i.c, i64 136
   br i1 %i.gi, label %.lr.ph250.preheader, label %.loopexit224.split
 
 .lr.ph250.preheader:                              ; preds = %.preheader225
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 116
+  %2 = load i32, ptr %1, align 4, !tbaa !66
+  %3 = load i32, ptr %i.ax, align 8, !tbaa !56
+  %4 = mul nsw i32 %2, %3
+  %5 = insertelement <2 x i32> poison, i32 %4, i64 0
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <2 x i32> zeroinitializer
+  %7 = sdiv <2 x i32> %6, <i32 10, i32 40>        ; 2 uses
   %wide.trip.count285 = zext nneg i32 %i.gh to i64
+  %8 = extractelement <2 x i32> %7, i64 0
+  %9 = extractelement <2 x i32> %7, i64 1
   br label %.lr.ph250
 
 .preheader223:                                    ; preds = %bb.am
@@ -227,8 +232,7 @@ bb.am:                                            ; preds = %.thread
 .lr.ph250:                                        ; preds = %.lr.ph250.preheader, %._crit_edge251
   %indvars.iv287 = phi i64 [ 0, %.lr.ph250.preheader ], [ %indvars.iv.next288, %._crit_edge251 ] ; 3 uses
   %.not221 = icmp eq i64 %indvars.iv287, 0
-  %i.gn = select i1 %.not221, i32 10, i32 40
-  %5 = sdiv i32 %4, %i.gn
+  %i.gn = select i1 %.not221, i32 %8, i32 %9
   %i.go = getelementptr inbounds nuw [131072 x i8], ptr %i.gj, i64 %indvars.iv287
   br label %bb.an
 
@@ -239,7 +243,7 @@ bb.an:                                            ; preds = %.lr.ph250, %bb.an
   %..3185 = tail call i32 @llvm.smin.i32(i32 %indvars284, i32 %i.gp) ; 2 uses
   %i.gq = mul nuw nsw i32 %..3185, %..3185
   %i.gr = add nuw nsw i32 %i.gq, 1
-  %i.gs = sdiv i32 %5, %i.gr
+  %i.gs = sdiv i32 %i.gn, %i.gr
   %i.gt = sext i32 %i.gs to i64
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %indvars.iv282
   store i64 %i.gt, ptr %i.gu, align 8, !tbaa !73

@@ -205,19 +205,20 @@ define hidden noundef range(i32 -100, 1) i32 @_ZNK4ncnn20DeformableConv2D_x867fo
   %i.cg = load i8, ptr %i.cf, align 1, !tbaa !48, !range !50, !noundef !51
   %i.ch = trunc nuw i8 %i.cg to i1
   %i.ci = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.cj = load i32, ptr %i.ci, align 8, !tbaa !47 ; 2 uses
+  %i.cj = load i32, ptr %i.ci, align 8, !tbaa !47 ; 3 uses
   %i.ck = and i32 %i.cj, 3
   %i.cl = icmp eq i32 %i.ck, 0
-  %i.cm = and i1 %i.cl, %i.ch                     ; 2 uses
-  %.056 = select i1 %i.cm, i32 4, i32 1           ; 2 uses
+  %i.cm = and i1 %i.cl, %i.ch                     ; 3 uses
+  %.056 = select i1 %i.cm, i32 4, i32 1
   %i.cn = sext i32 %i.aw to i64
   %i.co = udiv i64 %i.au, %i.cn
   %i.cp = select i1 %i.cm, i64 2, i64 0
   %i.cq = shl i64 %i.co, %i.cp
-  %i.cr = sdiv i32 %i.cj, %.056
+  %i.cr = sdiv i32 %i.cj, 4
+  %8 = select i1 %i.cm, i32 %i.cr, i32 %i.cj
   %i.cs = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !86
-  tail call void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.am, i32 noundef %i.bt, i32 noundef %i.ce, i32 noundef %i.cr, i64 noundef %i.cq, i32 noundef %.056, ptr noundef %i.ct)
+  tail call void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %i.am, i32 noundef %i.bt, i32 noundef %i.ce, i32 noundef %8, i64 noundef %i.cq, i32 noundef %.056, ptr noundef %i.ct)
   %i.cu = load ptr, ptr %i.am, align 8, !tbaa !18
   %i.cv = icmp eq ptr %i.cu, null
   br i1 %i.cv, label %_ZNK4ncnn3Mat5emptyEv.exit.thread, label %_ZNK4ncnn3Mat5emptyEv.exit

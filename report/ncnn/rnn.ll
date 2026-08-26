@@ -204,14 +204,15 @@ bb.a:
   %6 = alloca %"class.ncnn::Mat", align 16        ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.b = load i32, ptr %i.a, align 8, !tbaa !38
-  %i.c = icmp eq i32 %i.b, 2
-  %i.d = select i1 %i.c, i32 2, i32 1             ; 6 uses
+  %i.c = icmp eq i32 %i.b, 2                      ; 2 uses
+  %i.d = select i1 %i.c, i32 2, i32 1             ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 212
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !37
-  %i.g = sdiv i32 %i.f, %i.d
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !37   ; 2 uses
+  %i.g = sdiv i32 %i.f, 2
+  %7 = select i1 %i.c, i32 %i.g, i32 %i.f
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 208 ; 5 uses
   %i.i = load i32, ptr %i.h, align 8, !tbaa !21   ; 2 uses
-  %i.j = sdiv i32 %i.g, %i.i
+  %i.j = sdiv i32 %7, %i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #9
   %i.k = load ptr, ptr %1, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 32

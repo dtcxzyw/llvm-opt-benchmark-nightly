@@ -204,10 +204,11 @@ _ZNK4llvm4Type13getScalarTypeEv.exit:             ; preds = %bb.d, %bb.e
   %i.ar = mul i32 %i.aq, 1014762177
   %i.as = add i32 %i.ar, -459732383               ; 2 uses
   store i32 %i.as, ptr %.val, align 4, !tbaa !174
-  %i.at = and i32 %i.as, 524287
-  %spec.select = select i1 %cond.fr, i32 7, i32 13
-  %i.au = urem i32 %i.at, %spec.select
-  switch i32 %i.au, label %default.unreachable28 [
+  %i.at = and i32 %i.as, 524287                   ; 2 uses
+  %2 = urem i32 %i.at, 7
+  %i.au = urem i32 %i.at, 13
+  %spec.select = select i1 %cond.fr, i32 %2, i32 %i.au
+  switch i32 %spec.select, label %default.unreachable28 [
     i32 0, label %bb.f
     i32 1, label %bb.g
     i32 2, label %bb.h

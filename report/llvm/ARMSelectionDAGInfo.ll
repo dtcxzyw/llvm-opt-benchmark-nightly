@@ -205,12 +205,14 @@ bb.l:                                             ; preds = %bb.j
   %i.bk = trunc nuw i8 %i.ar to i1
   %i.bl = trunc nuw i8 %i.at to i1
   %i.bm = xor i1 %i.bl, true
-  %i.bn = select i1 %i.bk, i1 %i.bm, i1 false
-  %i.bo = select i1 %i.bn, i32 4, i32 6           ; 3 uses
+  %i.bn = select i1 %i.bk, i1 %i.bm, i1 false     ; 2 uses
+  %i.bo = select i1 %i.bn, i32 4, i32 6
   %i.bp = add i32 %i.bj, -1
   %i.bq = add i32 %i.bp, %i.bo                    ; 2 uses
-  %i.br = udiv i32 %i.bq, %i.bo                   ; 5 uses
-  %i.bs = icmp samesign ugt i32 %i.br, 1
+  %32 = lshr i32 %i.bq, 2
+  %i.br = udiv i32 %i.bq, 6
+  %33 = select i1 %i.bn, i32 %32, i32 %i.br       ; 6 uses
+  %i.bs = icmp samesign ugt i32 %33, 1
   br i1 %i.bs, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -231,7 +233,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ca = extractvalue { ptr, i32 } %i.by, 1      ; 2 uses
   %.promoted = load i64, ptr %12, align 8         ; 7 uses
   %.promoted322 = load i64, ptr %13, align 8      ; 7 uses
-  %.not229324 = icmp ugt i32 %i.bo, %i.bq
+  %.not229324 = icmp eq i32 %33, 0
   br i1 %.not229324, label %bb.u, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.n
@@ -251,7 +253,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %.promoted337 = load i64, ptr %i.ce, align 8
   %.promoted339 = load i8, ptr %i.cf, align 4     ; 2 uses
   %.promoted340 = load i32, ptr %i.cg, align 8
-  %i.ch = udiv i32 %i.bj, %i.br                   ; 3 uses
+  %i.ch = udiv i32 %i.bj, %33                     ; 3 uses
   store ptr %3, ptr %22, align 8, !tbaa !249
   store i32 %4, ptr %.sroa.10.0..sroa_idx204, align 8, !tbaa !250
   %i.ci = zext i32 %i.ch to i64
@@ -355,7 +357,7 @@ _ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit241.peel: ; preds = %_ZNK4llv
   %.sroa.0284.0.peel = phi i64 [ %.promoted322, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i236.peel ], [ %.promoted322, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i238.peel ], [ 0, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit.peel ] ; 2 uses
   %.sroa.7.0.peel = phi i32 [ %i.dn, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i236.peel ], [ %i.dy, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i238.peel ], [ %.promoted340, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit.peel ] ; 2 uses
   %.sroa.10.0315.peel = phi i8 [ %.promoted339, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i236.peel ], [ %.promoted339, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i238.peel ], [ 0, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit.peel ] ; 2 uses
-  %.not229.peel = icmp eq i32 %i.br, 1
+  %.not229.peel = icmp eq i32 %33, 1
   br i1 %.not229.peel, label %._crit_edge, label %.peel.next
 
 .peel.next:                                       ; preds = %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit241.peel
@@ -419,9 +421,9 @@ bb.v:                                             ; preds = %.peel.next, %_ZNK4l
   %.0215328 = phi i32 [ %i.ch, %.peel.next ], [ %i.ew, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit241 ]
   %.0220327 = phi i32 [ 1, %.peel.next ], [ %i.eu, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit241 ]
   %.sroa.0284.0323325 = phi i64 [ %.sroa.0284.0.peel, %.peel.next ], [ %.sroa.0284.0, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit241 ] ; 6 uses
-  %i.eu = add i32 %.0220327, 1                    ; 3 uses
+  %i.eu = add nuw nsw i32 %.0220327, 1            ; 3 uses
   %i.ev = mul i32 %i.eu, %i.bj
-  %i.ew = udiv i32 %i.ev, %i.br                   ; 2 uses
+  %i.ew = udiv i32 %i.ev, %33                     ; 2 uses
   %i.ex = sub i32 %i.ew, %.0215328                ; 2 uses
   store ptr %.sroa.0201.0329, ptr %22, align 8, !tbaa !249
   %i.ey = zext i32 %i.ex to i64
@@ -516,7 +518,7 @@ _ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit241: ; preds = %_ZNK4llvm18Ma
   %.sroa.0284.0 = phi i64 [ %.sroa.0284.0323325, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i236 ], [ %.sroa.0284.0323325, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i238 ], [ 0, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit ] ; 2 uses
   %.sroa.7.0 = phi i32 [ %i.gg, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i236 ], [ %i.gc, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i238 ], [ %i.eo, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit ] ; 2 uses
   %.sroa.10.0315 = phi i8 [ %i.ep, %_ZN4llvm18MachinePointerInfoC2EPKNS_17PseudoSourceValueElh.exit.i236 ], [ %i.ep, %_ZNK4llvm4Type22getPointerAddressSpaceEv.exit.i.i238 ], [ 0, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit ] ; 2 uses
-  %.not229 = icmp eq i32 %i.eu, %i.br
+  %.not229 = icmp eq i32 %i.eu, %33
   br i1 %.not229, label %._crit_edge, label %bb.v, !llvm.loop !490
 
 bb.ac:                                            ; preds = %.preheader, %_ZNK4llvm18MachinePointerInfo13getWithOffsetEl.exit248

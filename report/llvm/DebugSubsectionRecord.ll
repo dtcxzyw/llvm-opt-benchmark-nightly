@@ -202,14 +202,15 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 .critedge:                                        ; preds = %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.j, %bb.h, %.thread47
   %i.an = phi i32 [ %i.g, %.thread47 ], [ %i.x, %bb.h ], [ %i.x, %bb.j ], [ %i.x, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i ], [ %i.x, %bb.n ] ; 2 uses
-  %i.ao = icmp eq i32 %3, 0
+  %i.ao = icmp eq i32 %3, 0                       ; 2 uses
   %i.ap = icmp ne i32 %i.an, 0
   %i.aq = zext i1 %i.ap to i32                    ; 2 uses
-  %i.ar = sub i32 %i.an, %i.aq
-  %i.as = select i1 %i.ao, i32 0, i32 2           ; 2 uses
-  %6 = lshr i32 %i.ar, %i.as
-  %7 = add i32 %6, %i.aq
-  %i.at = shl i32 %7, %i.as
+  %i.ar = sub i32 %i.an, %i.aq                    ; 2 uses
+  %6 = lshr i32 %i.ar, 2
+  %i.as = select i1 %i.ao, i32 %i.ar, i32 %6
+  %7 = add i32 %i.as, %i.aq
+  %8 = select i1 %i.ao, i32 0, i32 2
+  %i.at = shl i32 %7, %8
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 4
   store i32 %i.at, ptr %i.au, align 4
   call void @_ZN4llvm18BinaryStreamWriter10writeBytesENS_8ArrayRefIhEE(ptr dead_on_unwind writable sret(%"class.llvm::Error") align 8 %0, ptr noundef nonnull align 8 dereferenceable(64) %2, ptr nonnull align 1 dereferenceable(8) %4, i64 8) #10

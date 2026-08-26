@@ -205,7 +205,7 @@ define dso_local range(i32 0, 2) i32 @ssl_cache_cipherlist(ptr noundef %0, ptr n
 bb.a:
   %.not = icmp eq i32 %2, 0                       ; 2 uses
   %i.a = getelementptr i8, ptr %1, i64 8          ; 3 uses
-  %.val43 = load i64, ptr %i.a, align 8, !tbaa !498 ; 2 uses
+  %.val43 = load i64, ptr %i.a, align 8, !tbaa !498 ; 3 uses
   %i.b = icmp eq i64 %.val43, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -216,9 +216,10 @@ bb.b:                                             ; preds = %bb.a
   br label %.critedge
 
 bb.c:                                             ; preds = %bb.a
-  %3 = select i1 %.not, i64 2, i64 3
-  %i.c = urem i64 %.val43, %3
-  %.not34 = icmp eq i64 %i.c, 0
+  %3 = and i64 %.val43, 1
+  %i.c = urem i64 %.val43, 3
+  %4 = select i1 %.not, i64 %3, i64 %i.c
+  %.not34 = icmp eq i64 %4, 0
   br i1 %.not34, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -372,9 +373,9 @@ define dso_local range(i32 0, 2) i32 @ossl_bytes_to_cipher_list(ptr noundef %0, 
 bb.a:
   %i.a = alloca [3 x i8], align 1                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
-  %.not81.not = icmp ne i32 %4, 0                 ; 3 uses
+  %.not81.not = icmp ne i32 %4, 0                 ; 4 uses
   %i.b = getelementptr i8, ptr %1, i64 8          ; 6 uses
-  %.val62 = load i64, ptr %i.b, align 8, !tbaa !498 ; 2 uses
+  %.val62 = load i64, ptr %i.b, align 8, !tbaa !498 ; 3 uses
   %i.c = icmp eq i64 %.val62, 0
   br i1 %i.c, label %bb.b, label %bb.e
 
@@ -394,9 +395,11 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.af
 
 bb.e:                                             ; preds = %bb.a
-  %i.d = select i1 %.not81.not, i64 3, i64 2      ; 10 uses
-  %i.e = urem i64 %.val62, %i.d
-  %.not = icmp eq i64 %i.e, 0
+  %i.d = select i1 %.not81.not, i64 3, i64 2      ; 9 uses
+  %i.e = urem i64 %.val62, 3
+  %6 = and i64 %.val62, 1
+  %7 = select i1 %.not81.not, i64 %i.e, i64 %6
+  %.not = icmp eq i64 %7, 0
   br i1 %.not, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e

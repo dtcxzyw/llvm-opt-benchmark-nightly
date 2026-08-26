@@ -202,12 +202,14 @@ bb.cu:                                            ; preds = %bb.ct
   %i.wn = sub i64 %i.wl, %i.wm
   %i.wo = sdiv exact i64 %i.wn, 248
   %i.wp = trunc i64 %i.wo to i32
-  %i.wq = icmp sgt i32 %i.wp, 65279
-  %i.wr = select i1 %i.wq, i64 20, i64 18         ; 2 uses
+  %i.wq = icmp sgt i32 %i.wp, 65279               ; 2 uses
+  %i.wr = select i1 %i.wq, i64 20, i64 18
   %i.ws = add i64 %i.wj, -1
-  %i.wt = add i64 %i.ws, %i.wr
-  %i.wu = udiv i64 %i.wt, %i.wr
-  %i.wv = trunc i64 %i.wu to i32
+  %i.wt = add i64 %i.ws, %i.wr                    ; 2 uses
+  %33 = udiv i64 %i.wt, 20
+  %i.wu = udiv i64 %i.wt, 18
+  %34 = select i1 %i.wq, i64 %33, i64 %i.wu
+  %i.wv = trunc i64 %34 to i32
   %i.ww = add i32 %i.wv, %.2.i
   br label %bb.cv
 

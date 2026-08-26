@@ -205,14 +205,16 @@ bb.n:                                             ; preds = %bb.l
   %i.ad = load i8, ptr %i.w, align 1, !tbaa !7    ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %i.ad, ptr %i.ae, align 8, !tbaa !224
-  %i.af = icmp eq i8 %i.ad, 8                     ; 2 uses
-  %4 = select i1 %i.af, i32 6, i32 10             ; 3 uses
+  %i.af = icmp eq i8 %i.ad, 8                     ; 3 uses
   %i.ag = trunc i64 %strlen to i32
   %reass.sub = sub i32 %2, %i.ag
-  %i.ah = add i32 %reass.sub, -2                  ; 3 uses
-  %i.ai = urem i32 %i.ah, %4
-  %i.aj = udiv i32 %i.ah, %4                      ; 2 uses
-  %.not90 = icmp eq i32 %i.ai, 0
+  %i.ah = add i32 %reass.sub, -2                  ; 4 uses
+  %4 = urem i32 %i.ah, 6
+  %5 = udiv i32 %i.ah, 6
+  %i.ai = urem i32 %i.ah, 10
+  %i.aj = udiv i32 %i.ah, 10
+  %6 = select i1 %i.af, i32 %4, i32 %i.ai
+  %.not90 = icmp eq i32 %6, 0
   br i1 %.not90, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -220,9 +222,10 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
+  %7 = select i1 %i.af, i32 %5, i32 %i.aj         ; 3 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store i32 %i.aj, ptr %i.ak, align 8, !tbaa !227
-  %i.al = zext nneg i32 %i.aj to i64              ; 3 uses
+  store i32 %7, ptr %i.ak, align 8, !tbaa !227
+  %i.al = zext nneg i32 %7 to i64                 ; 3 uses
   %i.am = mul nuw nsw i64 %i.al, 10
   %i.an = tail call noalias ptr @png_malloc_warn(ptr noundef nonnull %0, i64 noundef %i.am) #13 ; 4 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -231,7 +234,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.ap, label %bb.q, label %.preheader
 
 .preheader:                                       ; preds = %bb.p
-  %.not = icmp ugt i32 %4, %i.ah
+  %.not = icmp eq i32 %7, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader
