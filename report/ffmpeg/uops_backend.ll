@@ -205,6 +205,9 @@ bb.f:                                             ; preds = %.lr.ph
 .thread:                                          ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %i.d, i64 684
   %i.v = load i32, ptr %i.u, align 4, !tbaa !20
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 36 ; 2 uses
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 52
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.8.0..sroa_idx, i8 0, i64 32, i1 false)
   store ptr @process, ptr %2, align 8, !tbaa !22
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -214,15 +217,14 @@ bb.f:                                             ; preds = %.lr.ph
   store i32 %i.v, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !23
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 32
   store i32 32, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !23
-  %.sroa.8.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 36 ; 2 uses
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 52
+  %.sroa.8.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 68
+  store i32 0, ptr %.sroa.8.0..sroa_idx.a, align 4
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 72
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.8.0..sroa_idx.a, i8 0, i64 36, i1 false)
   store ptr %i.d, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !24
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 80
   store ptr @ff_sws_op_chain_free_cb, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !24
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 688
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.8.0..sroa_idx.a, ptr noundef nonnull align 16 dereferenceable(16) %i.w, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.8.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(16) %i.w, i64 16, i1 false)
   %i.x = getelementptr inbounds nuw i8, ptr %i.d, i64 704
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9.0..sroa_idx, ptr noundef nonnull align 16 dereferenceable(16) %i.x, i64 16, i1 false)
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 48, ptr noundef nonnull @.str.4) #12

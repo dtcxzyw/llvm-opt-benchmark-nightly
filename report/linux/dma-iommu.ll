@@ -204,7 +204,7 @@ __iommu_dma_free_pages.exit:                      ; preds = %.lr.ph.i, %bb.a
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @__iommu_dma_unmap(ptr noundef %0, i64 noundef %1, i64 noundef %2) unnamed_addr #1 align 16 prefalign(16) {
 bb.a:
-  %3 = alloca %struct.iommu_iotlb_gather, align 8 ; 12 uses
+  %3 = alloca %struct.iommu_iotlb_gather, align 8 ; 14 uses
   %i.a = tail call ptr @iommu_get_dma_domain(ptr noundef %0) #14 ; 5 uses
   %i.b = getelementptr i8, ptr %i.a, i64 80       ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
@@ -220,19 +220,21 @@ bb.a:
   %i.k = sub i64 0, %.val25
   %i.l = and i64 %i.j, %i.k                       ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 6 uses
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 41
+  %.sroa.2.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 40
+  store i64 0, ptr %.sroa.2.0..sroa_idx.i.a, align 8
   store i64 -1, ptr %3, align 8
-  %.sroa.2.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2.0..sroa_idx.i.a, i8 0, i64 16, i1 false)
+  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.a, i8 0, i64 16, i1 false)
   store ptr %i.m, ptr %i.m, align 8
-  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  store ptr %i.m, ptr %.sroa.5.0..sroa_idx.i.a, align 8
-  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 4 uses
-  store i64 0, ptr %.sroa.6.0..sroa_idx.i.a, align 8
+  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
+  store ptr %i.m, ptr %.sroa.6.0..sroa_idx.i.a, align 8
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 3 uses
   %i.n = getelementptr i8, ptr %i.c, i64 216
   %i.o = load volatile ptr, ptr %i.n, align 8
   %i.p = icmp ne ptr %i.o, null
   %i.q = zext i1 %i.p to i8
-  store i8 %i.q, ptr %.sroa.6.0..sroa_idx.i.a, align 8
+  store i8 %i.q, ptr %.sroa.6.0..sroa_idx.i, align 8
   %i.r = call i64 @iommu_unmap_fast(ptr noundef %i.a, i64 noundef %i.g, i64 noundef %i.l, ptr noundef nonnull %3) #14
   %.not = icmp eq i64 %i.r, %i.l
   br i1 %.not, label %bb.c, label %bb.b, !prof !27
@@ -244,7 +246,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.s = load i8, ptr %.sroa.6.0..sroa_idx.i.a, align 8, !range !10, !noundef !44
+  %i.s = load i8, ptr %.sroa.6.0..sroa_idx.i, align 8, !range !10, !noundef !44
   %i.t = trunc nuw i8 %i.s to i1
   br i1 %i.t, label %bb.g, label %bb.d
 
@@ -258,7 +260,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.y = load i64, ptr %3, align 8
-  %i.z = load i64, ptr %.sroa.2.0..sroa_idx.i.a, align 8
+  %i.z = load i64, ptr %.sroa.5.0..sroa_idx.i.a, align 8
   %i.aa = icmp ult i64 %i.y, %i.z
   br i1 %i.aa, label %bb.f, label %iommu_iotlb_sync.exit, !prof !27
 
@@ -267,11 +269,12 @@ bb.f:                                             ; preds = %bb.e
   br label %iommu_iotlb_sync.exit
 
 iommu_iotlb_sync.exit:                            ; preds = %bb.d, %bb.e, %bb.f
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx.i, i8 0, i64 7, i1 false)
   store i64 -1, ptr %3, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2.0..sroa_idx.i.a, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.a, i8 0, i64 16, i1 false)
   store ptr %i.m, ptr %i.m, align 8
-  store ptr %i.m, ptr %.sroa.5.0..sroa_idx.i.a, align 8
-  store i64 0, ptr %.sroa.6.0..sroa_idx.i.a, align 8
+  store ptr %i.m, ptr %.sroa.6.0..sroa_idx.i.a, align 8
+  store i8 0, ptr %.sroa.6.0..sroa_idx.i, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %iommu_iotlb_sync.exit, %bb.c
@@ -674,7 +677,7 @@ bb.a:
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define internal fastcc void @__iommu_dma_iova_unlink(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3, i32 noundef %4, i64 noundef %5, i1 noundef zeroext %6) unnamed_addr #1 align 16 prefalign(16) {
 bb.a:
-  %7 = alloca %struct.iommu_iotlb_gather, align 8 ; 12 uses
+  %7 = alloca %struct.iommu_iotlb_gather, align 8 ; 13 uses
   %i.a = tail call ptr @iommu_get_dma_domain(ptr noundef %0) #14 ; 5 uses
   %i.b = getelementptr i8, ptr %i.a, i64 80       ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
@@ -773,15 +776,16 @@ swiotlb_tbl_unmap_single.exit.i:                  ; preds = %swiotlb_find_pool.e
   br i1 %i.al, label %.peel.next.i, label %iommu_dma_iova_unlink_range_slow.exit, !llvm.loop !114
 
 iommu_dma_iova_unlink_range_slow.exit:            ; preds = %swiotlb_tbl_unmap_single.exit.i, %.loopexit.i, %swiotlb_tbl_unmap_single.exit.peel.i, %bb.a
-  %i.am = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 6 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 6 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %7, i64 41 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.am, i8 0, i64 7, i1 false)
   store i64 -1, ptr %7, align 8
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2.0..sroa_idx.i, i8 0, i64 16, i1 false)
-  store ptr %i.am, ptr %i.am, align 8
+  store ptr %8, ptr %8, align 8
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
-  store ptr %i.am, ptr %.sroa.5.0..sroa_idx.i, align 8
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 4 uses
-  store i64 0, ptr %.sroa.6.0..sroa_idx.i, align 8
+  store ptr %8, ptr %.sroa.5.0..sroa_idx.i, align 8
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 3 uses
   br i1 %6, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %iommu_dma_iova_unlink_range_slow.exit
@@ -835,11 +839,12 @@ bb.m:                                             ; preds = %bb.l
   br label %iommu_iotlb_sync.exit
 
 iommu_iotlb_sync.exit:                            ; preds = %bb.k, %bb.l, %bb.m
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.am, i8 0, i64 7, i1 false)
   store i64 -1, ptr %7, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2.0..sroa_idx.i, i8 0, i64 16, i1 false)
-  store ptr %i.am, ptr %i.am, align 8
-  store ptr %i.am, ptr %.sroa.5.0..sroa_idx.i, align 8
-  store i64 0, ptr %.sroa.6.0..sroa_idx.i, align 8
+  store ptr %8, ptr %8, align 8
+  store ptr %8, ptr %.sroa.5.0..sroa_idx.i, align 8
+  store i8 0, ptr %.sroa.6.0..sroa_idx.i, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %iommu_iotlb_sync.exit, %bb.j

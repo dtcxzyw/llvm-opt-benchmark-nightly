@@ -205,7 +205,7 @@ bb.a:
   %i.e = alloca [32 x i8], align 8                ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [56 x i8], align 8                ; 7 uses
-  %.sroa.69 = alloca [20 x i8], align 8           ; 3 uses
+  %.sroa.69 = alloca [20 x i8], align 8           ; 6 uses
   %i.h = alloca [240 x i8], align 8               ; 7 uses
   %.sroa.6 = alloca [112 x i8], align 8           ; 6 uses
   %i.i = alloca [240 x i8], align 8               ; 10 uses
@@ -244,6 +244,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(112) %.sroa.6, i64 112, i1 false)
   store i64 %i.m, ptr %i.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.69)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3837)
@@ -430,14 +431,16 @@ bb.u:                                             ; preds = %bb.t
   store i64 -9223372036854775805, ptr %0, align 8
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.ax, ptr %.sroa.429.0..sroa_idx, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.69)
   call fastcc void @"_ZN4core3ptr60drop_in_place$LT$zip..read..ZipFile$LT$std..fs..File$GT$$GT$17h7fc96db745c6aa7fE"(ptr noalias noundef align 8 dereferenceable(240) %i.i)
   br label %bb.x
 
 bb.v:                                             ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  store i8 1, ptr %i.j, align 4
   %.sroa.56.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 37
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.56.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.69, i64 20, i1 false)
+  store i8 1, ptr %i.j, align 4
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.69)
   call fastcc void @"_ZN4core3ptr60drop_in_place$LT$zip..read..ZipFile$LT$std..fs..File$GT$$GT$17h7fc96db745c6aa7fE"(ptr noalias noundef align 8 dereferenceable(240) %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   br label %bb.b
@@ -840,7 +843,6 @@ bb.a:
   %i.k = alloca [24 x i8], align 8                ; 13 uses
   %i.l = alloca [32 x i8], align 8                ; 5 uses
   %i.m = alloca [56 x i8], align 8                ; 6 uses
-  %.sroa.428 = alloca [20 x i8], align 1          ; 4 uses
   %i.n = alloca [112 x i8], align 8               ; 19 uses
   %.sroa.820 = alloca [20 x i8], align 8          ; 7 uses
   %i.o = alloca [56 x i8], align 8                ; 7 uses
@@ -1243,14 +1245,11 @@ bb.ap:                                            ; preds = %.thread128, %bb.an
   %.sroa.567.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.n, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.820, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.567.0..sroa_idx, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.428)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.428, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.820, i64 20, i1 false)
+  %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 37
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.428.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.820, i64 20, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.820)
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 36
   store i8 1, ptr %i.ci, align 4
-  %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 37
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %.sroa.428.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(20) %.sroa.428, i64 20, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.428)
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ar, %bb.ap

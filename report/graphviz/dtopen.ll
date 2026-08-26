@@ -26,11 +26,11 @@ bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 72
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, i8 0, i64 24, i1 false)
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %2 = load i32, ptr %i.i, align 8, !tbaa !16
-  store i32 %2, ptr %i.h, align 8, !tbaa !18
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 20
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.3.0..sroa_idx, i8 0, i64 36, i1 false)
+  %i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.i, i8 0, i64 36, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %3 = load i32, ptr %2, align 8, !tbaa !16
+  store i32 %3, ptr %i.h, align 8, !tbaa !18
   %i.j = load ptr, ptr %1, align 8, !tbaa !19
   store ptr %i.j, ptr %i.c, align 8, !tbaa !20
   store ptr %1, ptr %i.d, align 8, !tbaa !8

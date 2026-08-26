@@ -205,13 +205,13 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.not.i94, label %_ZN11StreamProxylsEPFRSoS0_E.exit, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 6
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(18) %.sroa.7.0..sroa_idx.i, i8 0, i64 18, i1 false)
   store i16 1, ptr %.sroa.0123.0, align 4, !tbaa !229
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 2
-  store i16 1, ptr %.sroa.5.0..sroa_idx.i, align 2, !tbaa !229
-  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 4
-  store i16 1, ptr %.sroa.6.0..sroa_idx.i.a, align 4, !tbaa !229
-  %.sroa.7.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(18) %.sroa.7.0..sroa_idx.i.a, i8 0, i64 18, i1 false)
+  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 2
+  store i16 1, ptr %.sroa.6.0..sroa_idx.i.a, align 2, !tbaa !229
+  %.sroa.7.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 4
+  store i16 1, ptr %.sroa.7.0..sroa_idx.i.a, align 4, !tbaa !229
   br label %_ZN11StreamProxylsEPFRSoS0_E.exit
 
 bb.at:                                            ; preds = %bb.am, %bb.al, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit93, %bb.an, %bb.u
@@ -220,13 +220,13 @@ bb.at:                                            ; preds = %bb.am, %bb.al, %_ZN
   br i1 %.not.i95, label %_ZN23MapEditEventAreaIgnorerD2Ev.exit99, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
+  %.sroa.7.0..sroa_idx.i96 = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 6
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(18) %.sroa.7.0..sroa_idx.i96, i8 0, i64 18, i1 false)
   store i16 1, ptr %.sroa.0123.0, align 4, !tbaa !229
-  %.sroa.5.0..sroa_idx.i96 = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 2
-  store i16 1, ptr %.sroa.5.0..sroa_idx.i96, align 2, !tbaa !229
-  %.sroa.6.0..sroa_idx.i97 = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 4
-  store i16 1, ptr %.sroa.6.0..sroa_idx.i97, align 4, !tbaa !229
-  %.sroa.7.0..sroa_idx.i98 = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 6
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(18) %.sroa.7.0..sroa_idx.i98, i8 0, i64 18, i1 false)
+  %.sroa.6.0..sroa_idx.i97 = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 2
+  store i16 1, ptr %.sroa.6.0..sroa_idx.i97, align 2, !tbaa !229
+  %.sroa.7.0..sroa_idx.i98 = getelementptr inbounds nuw i8, ptr %.sroa.0123.0, i64 4
+  store i16 1, ptr %.sroa.7.0..sroa_idx.i98, align 4, !tbaa !229
   br label %_ZN23MapEditEventAreaIgnorerD2Ev.exit99
 
 _ZN11StreamProxylsEPFRSoS0_E.exit:                ; preds = %bb.as, %bb.ar, %bb.i, %.noexc104

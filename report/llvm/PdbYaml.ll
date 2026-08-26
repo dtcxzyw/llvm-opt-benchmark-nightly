@@ -205,6 +205,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.p, label %.thread, label %_ZN4llvm3pdb4yaml12PdbDbiStreamD2Ev.exit
 
 _ZN4llvm3pdb4yaml12PdbDbiStreamD2Ev.exit:         ; preds = %bb.d
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 48
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   store i32 19990903, ptr %3, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 1, ptr %.sroa.5.0..sroa_idx, align 4
@@ -215,9 +217,11 @@ _ZN4llvm3pdb4yaml12PdbDbiStreamD2Ev.exit:         ; preds = %bb.d
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 20
   store i32 332, ptr %.sroa.10.0..sroa_idx, align 4
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.q, i8 0, i64 24, i1 false)
+  %9 = getelementptr inbounds nuw i8, ptr %3, i64 72
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 128
   store i8 0, ptr %i.r, align 8, !tbaa !127
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.q, i8 0, i64 72, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 0, i64 24, i1 false)
   store i8 1, ptr %.phi.trans.insert, align 8, !tbaa !214
   br label %.thread
 

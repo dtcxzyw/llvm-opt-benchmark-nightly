@@ -59,7 +59,6 @@ define hidden void @_RNCNvMs1_Cs2RXd34xq0RM_12synstructureNtB7_11VariantInfo3new
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [32 x i8], align 8                ; 7 uses
-  %4 = alloca [24 x i8], align 8                  ; 2 uses
   %i.c = alloca [16 x i8], align 8                ; 2 uses
   %i.d = alloca [16 x i8], align 8                ; 2 uses
   %i.e = alloca [24 x i8], align 8                ; 2 uses
@@ -139,7 +138,7 @@ bb.g:                                             ; preds = %.noexc, %bb.d
           to label %bb.j unwind label %bb.i
 
 bb.h:                                             ; preds = %.noexc2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -150,7 +149,6 @@ bb.h:                                             ; preds = %.noexc2
   store ptr %3, ptr %i.ad, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %i.v, ptr %i.ae, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
   %i.af = load i64, ptr %i.j, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 %i.af, ptr %i.ag, align 8
@@ -553,9 +551,9 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.h unwind label %bb.g
 
 bb.f:                                             ; preds = %bb.d
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %2, ptr %i.n, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.o, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 40, i1 false)
   %i.p = load ptr, ptr %i.d, align 8

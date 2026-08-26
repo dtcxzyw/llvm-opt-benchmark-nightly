@@ -204,16 +204,20 @@ declare void @free_worktrees(ptr noundef) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define dso_local void @repo_init_revisions(ptr noundef %0, ptr noundef initializes((0, 3112)) %1, ptr noundef %2) local_unnamed_addr #4 {
 bb.a:
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(312) %.sroa.5.0..sroa_idx, i8 0, i64 312, i1 false)
+  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 340
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.10.0..sroa_idx, i8 0, i64 28, i1 false)
+  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 384
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1068) %.sroa.14.0..sroa_idx, i8 0, i64 1068, i1 false)
   %i.a = load i32, ptr @default_abbrev, align 4, !tbaa !55
   store ptr null, ptr %1, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr @compare_commits_by_commit_date, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %1, i64 332
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(316) %.sroa.5.0..sroa_idx, i8 0, i64 316, i1 false)
-  store i64 132, ptr %.sroa.6.0..sroa_idx.a, align 4
-  %.sroa.10.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %1, i64 340
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.10.0..sroa_idx.a, i8 0, i64 28, i1 false)
+  %.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %1, i64 328
+  store i32 0, ptr %.sroa.6.0..sroa_idx.a, align 8
+  %.sroa.10.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %1, i64 332
+  store i64 132, ptr %.sroa.10.0..sroa_idx.a, align 4
   %.sroa.103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 368
   store i32 -1, ptr %.sroa.103.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 372
@@ -222,8 +226,6 @@ bb.a:
   store i32 %i.a, ptr %.sroa.12.0..sroa_idx, align 8
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 380
   store i32 1, ptr %.sroa.13.0..sroa_idx, align 4
-  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 384
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1068) %.sroa.14.0..sroa_idx, i8 0, i64 1068, i1 false)
   %.sroa.144.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1452
   store i32 -1, ptr %.sroa.144.0..sroa_idx, align 4
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1456

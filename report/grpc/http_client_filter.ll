@@ -202,9 +202,7 @@ declare ptr @llvm.invariant.start.p0(i64 immarg, ptr captures(none)) #0
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN9grpc_core16HttpClientFilter4Call23OnClientInitialMetadataER19grpc_metadata_batchPS0_(ptr nofree nonnull readnone align 1 captures(none) %0, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(664) initializes((96, 120), (628, 632)) %1, ptr nofree noundef readonly captures(none) %2) #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.4 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 4 uses
-  %.sroa.6.i.i.i = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 4 uses
-  %.sroa.8 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 5 uses
+  %.sroa.8 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 9
   %i.b = load i8, ptr %i.a, align 1, !tbaa !8, !range !19, !noundef !20
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 2
@@ -244,28 +242,26 @@ _ZNK9grpc_core5Slice3RefEv.exit:                  ; preds = %bb.a, %bb.b
   store i16 %storemerge.i.i.i.i18, ptr %1, align 8, !tbaa !21
   %i.q = and i16 %i.p, 16
   %.not.i.i.i = icmp eq i16 %i.q, 0
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 96
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8, i64 24, i1 false)
   br i1 %.not.i.i.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK9grpc_core5Slice3RefEv.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8, i64 24, i1 false)
   %.sroa.011.0.copyload.i.i.i = load ptr, ptr %i.o, align 8, !tbaa !39 ; 4 uses
   store ptr %.sroa.0.0.copyload, ptr %i.o, align 8, !tbaa !39
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.i.i.i, i64 24, i1 false), !tbaa.struct !40
   %i.r = icmp ugt ptr %.sroa.011.0.copyload.i.i.i, inttoptr (i64 1 to ptr)
-  br i1 %i.r, label %bb.d, label %_ZN9grpc_core15metadata_detail5ValueINS_17UserAgentMetadataEvED2Ev.exit.i.i.i
+  br i1 %i.r, label %bb.d, label %_ZN9grpc_core5SliceD2Ev.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.s = atomicrmw sub ptr %.sroa.011.0.copyload.i.i.i, i64 1 acq_rel, align 8
   %i.t = icmp eq i64 %i.s, 1
-  br i1 %i.t, label %bb.e, label %_ZN9grpc_core15metadata_detail5ValueINS_17UserAgentMetadataEvED2Ev.exit.i.i.i
+  br i1 %i.t, label %bb.e, label %_ZN9grpc_core5SliceD2Ev.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.011.0.copyload.i.i.i, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !42
   invoke void %i.v(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.011.0.copyload.i.i.i)
-          to label %_ZN9grpc_core15metadata_detail5ValueINS_17UserAgentMetadataEvED2Ev.exit.i.i.i unwind label %bb.f, !inline_history !47
+          to label %_ZN9grpc_core5SliceD2Ev.exit unwind label %bb.f, !inline_history !47
 
 bb.f:                                             ; preds = %bb.e
   %i.w = landingpad { ptr, i32 }
@@ -274,19 +270,11 @@ bb.f:                                             ; preds = %bb.e
   tail call void @__clang_call_terminate(ptr %i.x) #29
   unreachable
 
-_ZN9grpc_core15metadata_detail5ValueINS_17UserAgentMetadataEvED2Ev.exit.i.i.i: ; preds = %bb.e, %bb.d, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i.i)
-  br label %_ZN9grpc_core5SliceD2Ev.exit
-
 bb.g:                                             ; preds = %_ZNK9grpc_core5Slice3RefEv.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8, i64 24, i1 false), !tbaa.struct !40
   store ptr %.sroa.0.0.copyload, ptr %i.o, align 8, !tbaa !39
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4, i64 24, i1 false), !tbaa.struct !40
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   br label %_ZN9grpc_core5SliceD2Ev.exit
 
-_ZN9grpc_core5SliceD2Ev.exit:                     ; preds = %_ZN9grpc_core15metadata_detail5ValueINS_17UserAgentMetadataEvED2Ev.exit.i.i.i, %bb.g
+_ZN9grpc_core5SliceD2Ev.exit:                     ; preds = %bb.c, %bb.d, %bb.e, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   ret void
 }
@@ -689,7 +677,7 @@ declare void @_ZNK9grpc_core5Arena7DestroyEv(ptr noundef nonnull align 8 derefer
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN9grpc_core21promise_filter_detail11RunCallImplIMNS_16HttpClientFilter4CallEFvR19grpc_metadata_batchPS2_ES2_vE3RunENS_8CallArgsESt8functionIFNS_12ArenaPromiseISt10unique_ptrIS4_NS_5Arena13PooledDeleterEEEESA_EEPNS0_14FilterCallDataIS2_EE(ptr dead_on_unwind noalias writable sret(%"class.grpc_core::ArenaPromise") align 16 %0, ptr noundef align 8 %1, ptr noundef align 8 %2, ptr noundef %3) local_unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.8.i = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 3 uses
+  %.sroa.8.i = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 4 uses
   %4 = alloca %"struct.grpc_core::CallArgs", align 8 ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !184  ; 9 uses
@@ -712,6 +700,7 @@ bb.a:
   store i16 %storemerge.i.i.i.i16.i, ptr %i.g, align 2, !tbaa !21
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 630
   store i8 0, ptr %i.m, align 2, !tbaa !32
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8.i)
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !35, !noalias !334 ; 3 uses
   %i.p = icmp ugt ptr %i.o, inttoptr (i64 1 to ptr)
@@ -725,20 +714,20 @@ bb.b:                                             ; preds = %bb.a
 _ZNK9grpc_core5Slice3RefEv.exit.i:                ; preds = %bb.b, %bb.a
   %.sroa.0.0.copyload.i = phi ptr [ %i.o, %bb.a ], [ %.sroa.0.0.copyload.pre.i, %bb.b ] ; 2 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.i, ptr noundef nonnull readonly align 8 dereferenceable(24) %.sroa.8.0..sroa_idx.i, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.i, ptr noundef nonnull readonly align 8 dereferenceable(24) %.sroa.8.0..sroa_idx.i, i64 24, i1 false), !tbaa.struct !40
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 3 uses
   %i.s = load i16, ptr %i.b, align 2, !tbaa !21   ; 2 uses
   %storemerge.i.i.i.i18.i = or i16 %i.s, 16
   store i16 %storemerge.i.i.i.i18.i, ptr %i.b, align 2, !tbaa !21
   %i.t = and i16 %i.s, 16
   %.not.i.i.i.i = icmp eq i16 %i.t, 0
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 96 ; 2 uses
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 96
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.i, i64 24, i1 false)
   br i1 %.not.i.i.i.i, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %_ZNK9grpc_core5Slice3RefEv.exit.i
   %.sroa.011.0.copyload.i.i.i.i = load ptr, ptr %i.r, align 8, !tbaa !39 ; 4 uses
   store ptr %.sroa.0.0.copyload.i, ptr %i.r, align 8, !tbaa !39
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.i, i64 24, i1 false)
   %i.u = icmp ugt ptr %.sroa.011.0.copyload.i.i.i.i, inttoptr (i64 1 to ptr)
   br i1 %i.u, label %bb.d, label %_ZN9grpc_core16HttpClientFilter4Call23OnClientInitialMetadataER19grpc_metadata_batchPS0_.exit
 
@@ -762,10 +751,10 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %_ZNK9grpc_core5Slice3RefEv.exit.i
   store ptr %.sroa.0.0.copyload.i, ptr %i.r, align 8, !tbaa !39
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.8.i, i64 24, i1 false)
   br label %_ZN9grpc_core16HttpClientFilter4Call23OnClientInitialMetadataER19grpc_metadata_batchPS0_.exit
 
 _ZN9grpc_core16HttpClientFilter4Call23OnClientInitialMetadataER19grpc_metadata_batchPS0_.exit: ; preds = %bb.c, %bb.d, %bb.e, %bb.g
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i)
   %i.ab = load i8, ptr %1, align 8, !tbaa !183
   store i8 %i.ab, ptr %4, align 8, !tbaa !183
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses

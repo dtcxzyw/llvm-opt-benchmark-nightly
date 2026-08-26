@@ -205,13 +205,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store i32 %.0.i24.i.i.i.i.i.i, ptr %i.oh, align 4, !tbaa !3358, !alias.scope !3475
   %i.ok = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ol = getelementptr inbounds nuw i8, ptr %5, i64 104
-  %i.om = getelementptr inbounds nuw i8, ptr %5, i64 120
-  %12 = load <2 x i64>, ptr %i.x, align 8, !tbaa !12, !noalias !3475
-  store <2 x i64> %12, ptr %i.ok, align 8, !alias.scope !3475
-  %.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 104
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.i.i.i.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ol, i64 16, i1 false)
-  %.sroa.6.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i.i.i.i.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.om, i64 16, i1 false)
+  %i.om = getelementptr inbounds nuw i8, ptr %0, i64 104
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.om, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ol, i64 16, i1 false)
+  %12 = getelementptr inbounds nuw i8, ptr %5, i64 120
+  %.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.i.i.i.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %12, i64 16, i1 false)
+  %13 = load <2 x i64>, ptr %i.x, align 8, !tbaa !12, !noalias !3475
+  store <2 x i64> %13, ptr %i.ok, align 8, !alias.scope !3475
   %i.on = getelementptr inbounds nuw i8, ptr %0, i64 176
   store i8 3, ptr %i.on, align 8, !tbaa !3362, !alias.scope !3475
   br label %"_ZSt5visitIN4cvc510overloadedIJZNKS0_6Solver13getOptionInfoERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0ZNKS2_13getOptionInfoESA_E3$_1ZNKS2_13getOptionInfoESA_E3$_2ZNKS2_13getOptionInfoESA_E3$_3ZNKS2_13getOptionInfoESA_E3$_4ZNKS2_13getOptionInfoESA_E3$_5ZNKS2_13getOptionInfoESA_E3$_6EEEJRSt7variantIJNS0_8internal7options10OptionInfo8VoidInfoENSM_9ValueInfoIbEENSO_IS8_EENSM_10NumberInfoIlEENSR_ImEENSR_IdEENSM_8ModeInfoEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalIS11_EEEEE4typeEE4typeEOS1A_EEEE4typeEOSZ_DpOS11_.exit"
@@ -455,13 +455,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store i32 %.0.i24.i.i.i.i82.i.i, ptr %i.rl, align 4, !tbaa !3358, !alias.scope !3489
   %i.ro = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.rp = getelementptr inbounds nuw i8, ptr %5, i64 104
-  %i.rq = getelementptr inbounds nuw i8, ptr %5, i64 120
-  %13 = load <2 x i64>, ptr %i.x, align 8, !tbaa !12, !noalias !3489
-  store <2 x i64> %13, ptr %i.ro, align 8, !alias.scope !3489
-  %.sroa.5.0..sroa_idx.i.i.i.i84.i.i = getelementptr inbounds nuw i8, ptr %0, i64 104
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.i.i.i84.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.rp, i64 16, i1 false)
-  %.sroa.6.0..sroa_idx.i.i.i.i85.i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i.i.i.i85.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.rq, i64 16, i1 false)
+  %i.rq = getelementptr inbounds nuw i8, ptr %0, i64 104
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.rq, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.rp, i64 16, i1 false)
+  %14 = getelementptr inbounds nuw i8, ptr %5, i64 120
+  %.sroa.5.0..sroa_idx.i.i.i.i84.i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.i.i.i84.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %14, i64 16, i1 false)
+  %15 = load <2 x i64>, ptr %i.x, align 8, !tbaa !12, !noalias !3489
+  store <2 x i64> %15, ptr %i.ro, align 8, !alias.scope !3489
   %i.rr = getelementptr inbounds nuw i8, ptr %0, i64 176
   store i8 4, ptr %i.rr, align 8, !tbaa !3362, !alias.scope !3489
   br label %"_ZSt5visitIN4cvc510overloadedIJZNKS0_6Solver13getOptionInfoERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0ZNKS2_13getOptionInfoESA_E3$_1ZNKS2_13getOptionInfoESA_E3$_2ZNKS2_13getOptionInfoESA_E3$_3ZNKS2_13getOptionInfoESA_E3$_4ZNKS2_13getOptionInfoESA_E3$_5ZNKS2_13getOptionInfoESA_E3$_6EEEJRSt7variantIJNS0_8internal7options10OptionInfo8VoidInfoENSM_9ValueInfoIbEENSO_IS8_EENSM_10NumberInfoIlEENSR_ImEENSR_IdEENSM_8ModeInfoEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalIS11_EEEEE4typeEE4typeEOS1A_EEEE4typeEOSZ_DpOS11_.exit"
@@ -705,13 +705,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   store i32 %.0.i24.i.i.i.i111.i.i, ptr %i.up, align 4, !tbaa !3358, !alias.scope !3503
   %i.us = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ut = getelementptr inbounds nuw i8, ptr %5, i64 104
-  %i.uu = getelementptr inbounds nuw i8, ptr %5, i64 120
-  %14 = load <2 x double>, ptr %i.x, align 8, !tbaa !2812, !noalias !3503
-  store <2 x double> %14, ptr %i.us, align 8, !alias.scope !3503
-  %.sroa.5.0..sroa_idx.i.i.i.i113.i.i = getelementptr inbounds nuw i8, ptr %0, i64 104
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.i.i.i113.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ut, i64 16, i1 false)
-  %.sroa.6.0..sroa_idx.i.i.i.i114.i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx.i.i.i.i114.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.uu, i64 16, i1 false)
+  %i.uu = getelementptr inbounds nuw i8, ptr %0, i64 104
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.uu, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ut, i64 16, i1 false)
+  %16 = getelementptr inbounds nuw i8, ptr %5, i64 120
+  %.sroa.5.0..sroa_idx.i.i.i.i113.i.i = getelementptr inbounds nuw i8, ptr %0, i64 120
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.i.i.i113.i.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %16, i64 16, i1 false)
+  %17 = load <2 x double>, ptr %i.x, align 8, !tbaa !2812, !noalias !3503
+  store <2 x double> %17, ptr %i.us, align 8, !alias.scope !3503
   %i.uv = getelementptr inbounds nuw i8, ptr %0, i64 176
   store i8 5, ptr %i.uv, align 8, !tbaa !3362, !alias.scope !3503
   br label %"_ZSt5visitIN4cvc510overloadedIJZNKS0_6Solver13getOptionInfoERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE3$_0ZNKS2_13getOptionInfoESA_E3$_1ZNKS2_13getOptionInfoESA_E3$_2ZNKS2_13getOptionInfoESA_E3$_3ZNKS2_13getOptionInfoESA_E3$_4ZNKS2_13getOptionInfoESA_E3$_5ZNKS2_13getOptionInfoESA_E3$_6EEEJRSt7variantIJNS0_8internal7options10OptionInfo8VoidInfoENSM_9ValueInfoIbEENSO_IS8_EENSM_10NumberInfoIlEENSR_ImEENSR_IdEENSM_8ModeInfoEEEEENSt13invoke_resultIT_JDpNSt13__conditionalIX21is_lvalue_reference_vIT0_EEE4typeIRNSt19variant_alternativeILm0ENSt16remove_referenceIDTclsr9__variantE4__asclsr3stdE7declvalIS11_EEEEE4typeEE4typeEOS1A_EEEE4typeEOSZ_DpOS11_.exit"

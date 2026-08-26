@@ -202,8 +202,6 @@ begin_hunk_0
 @.str.308 = private unnamed_addr constant [37 x i8] c" (15.4 Cp29 channel %d, %d.%03d MHz)\00", align 1
 @.str.309 = private unnamed_addr constant [37 x i8] c" (15.4 Cp30 channel %d, %d.%03d MHz)\00", align 1
 @.str.310 = private unnamed_addr constant [37 x i8] c" (15.4 Cp31 channel %d, %d.%03d MHz)\00", align 1
-@switch.table.dissect_silabs_dch = private unnamed_addr constant [8 x ptr] [ptr @.str.231, ptr @.str.297, ptr @.str.233, ptr @.str.234, ptr @.str.235, ptr @.str.298, ptr @.str.237, ptr @.str.299], align 8
-@switch.table.dissect_silabs_dch.3 = private unnamed_addr constant [8 x i8] c"\02\02\02\03\02\02\02\04", align 4
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define hidden void @proto_register_silabs_dch() local_unnamed_addr #0 {
@@ -448,23 +446,59 @@ bb.u:                                             ; preds = %get_efr32_appended_
   %i.bz = call zeroext i8 @tvb_get_uint8(ptr noundef %i.ae, i32 noundef %i.by)
   %i.ca = and i8 %i.bz, 15                        ; 8 uses
   %i.cb = load ptr, ptr %i.ao, align 8
-  %i.cc = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.cb, i64 noundef 16) #9 ; 0 uses
-  %4 = icmp samesign ult i8 %i.ca, 8
-  br i1 %4, label %switch.lookup, label %get_protocol_info.exit.i
+  %i.cc = call noalias dereferenceable_or_null(16) ptr @wmem_alloc(ptr noundef %i.cb, i64 noundef 16) #9 ; 5 uses
+  %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 9
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.3.0..sroa_idx.i.i, i8 0, i64 7, i1 false)
+  switch i8 %i.ca, label %10 [
+    i8 0, label %switch.lookup
+    i8 1, label %4
+    i8 2, label %5
+    i8 3, label %6
+    i8 4, label %7
+    i8 5, label %8
+    i8 6, label %11
+    i8 7, label %9
+  ]
 
-switch.lookup:                                    ; preds = %bb.u
-  %5 = zext nneg i8 %i.ca to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.dissect_silabs_dch, i64 %5
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  %6 = zext nneg i8 %i.ca to i64
-  %switch.gep46 = getelementptr inbounds nuw i8, ptr @switch.table.dissect_silabs_dch.3, i64 %6
-  %switch.load47 = load i8, ptr %switch.gep46, align 1
-  %switch.ext = zext i8 %switch.load47 to i32
+4:                                                ; preds = %bb.u
+  br label %switch.lookup
+
+5:                                                ; preds = %bb.u
+  br label %switch.lookup
+
+6:                                                ; preds = %bb.u
+  br label %switch.lookup
+
+7:                                                ; preds = %bb.u
+  br label %switch.lookup
+
+8:                                                ; preds = %bb.u
+  br label %switch.lookup
+
+9:                                                ; preds = %bb.u
+  br label %switch.lookup
+
+10:                                               ; preds = %bb.u
+  br label %switch.lookup
+
+switch.lookup:                                    ; preds = %10, %9, %8, %7, %6, %5, %4, %bb.u
+  %.str.292.sink.i.ph.i = phi ptr [ @.str.231, %bb.u ], [ @.str.297, %4 ], [ @.str.233, %5 ], [ @.str.234, %6 ], [ @.str.235, %7 ], [ @.str.298, %8 ], [ @.str.299, %9 ], [ @.str.292, %10 ] ; 2 uses
+  %.sink.i159.ph.i = phi i8 [ 2, %bb.u ], [ 2, %4 ], [ %i.ca, %5 ], [ %i.ca, %6 ], [ 2, %7 ], [ 2, %8 ], [ 4, %9 ], [ 0, %10 ] ; 2 uses
+  %.sroa.2.0..sroa_idx.i178.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
+  store ptr %.str.292.sink.i.ph.i, ptr %i.cc, align 8
+  store i8 %.sink.i159.ph.i, ptr %.sroa.2.0..sroa_idx.i178.i, align 8
+  %switch.ext = zext nneg i8 %.sink.i159.ph.i to i32
   br label %get_protocol_info.exit.i
 
-get_protocol_info.exit.i:                         ; preds = %bb.u, %switch.lookup
-  %i.cd = phi ptr [ %switch.load, %switch.lookup ], [ @.str.292, %bb.u ]
-  %.not.i = phi i32 [ %switch.ext, %switch.lookup ], [ 0, %bb.u ] ; 5 uses
+11:                                               ; preds = %bb.u
+  %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
+  store ptr @.str.237, ptr %i.cc, align 8
+  store i8 -1, ptr %.sroa.2.0..sroa_idx.i.i, align 8
+  br label %get_protocol_info.exit.i
+
+get_protocol_info.exit.i:                         ; preds = %11, %switch.lookup
+  %i.cd = phi ptr [ @.str.237, %11 ], [ %.str.292.sink.i.ph.i, %switch.lookup ]
+  %.not.i = phi i32 [ 2, %11 ], [ %switch.ext, %switch.lookup ] ; 5 uses
   %i.ce = sub nuw nsw i8 -4, %i.av
   %i.cf = sext i8 %i.ce to i32
   %i.cg = add i32 %i.am, %i.cf                    ; 10 uses

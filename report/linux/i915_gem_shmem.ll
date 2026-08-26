@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define internal i32 @shmem_pwrite(ptr noundef %0, ptr noundef %1) #0 align 16 prefalign(16) {
 bb.a:
   %2 = alloca %struct.kiocb, align 8              ; 11 uses
-  %3 = alloca %struct.iov_iter, align 8           ; 10 uses
+  %3 = alloca %struct.iov_iter, align 8           ; 11 uses
   %i.a = getelementptr i8, ptr %1, i64 24
   %i.b = load i64, ptr %i.a, align 8
   %i.c = inttoptr i64 %i.b to ptr
@@ -323,15 +323,17 @@ init_sync_kiocb.exit:                             ; preds = %bb.j, %.sink.split.
   %i.ar = getelementptr i8, ptr %1, i64 8
   %i.as = load i64, ptr %i.ar, align 8
   store i64 %i.as, ptr %.sroa.2.0..sroa_idx.i, align 8
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 3
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %.sroa.4.0..sroa_idx.i, i8 0, i64 5, i1 false)
   store i8 0, ptr %3, align 8
   %.sroa.2.0..sroa_idx.i25 = getelementptr inbounds nuw i8, ptr %3, i64 1
   store i8 0, ptr %.sroa.2.0..sroa_idx.i25, align 1
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 2
   store i8 1, ptr %.sroa.3.0..sroa_idx.i, align 2
-  %.sroa.4.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 3
-  %.sroa.6.0..sroa_idx.i26 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.4.0..sroa_idx.i.a, i8 0, i64 13, i1 false)
-  store ptr %i.c, ptr %.sroa.6.0..sroa_idx.i26, align 8
+  %.sroa.4.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 0, ptr %.sroa.4.0..sroa_idx.i.a, align 8
+  %.sroa.6.0..sroa_idx.i27 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  store ptr %i.c, ptr %.sroa.6.0..sroa_idx.i27, align 8
   %.sroa.7.0..sroa_idx.i27 = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i64 %i.g, ptr %.sroa.7.0..sroa_idx.i27, align 8
   %.sroa.8.0..sroa_idx.i28 = getelementptr inbounds nuw i8, ptr %3, i64 32

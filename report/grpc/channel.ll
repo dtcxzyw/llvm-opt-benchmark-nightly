@@ -202,25 +202,24 @@ define void @_ZN9grpc_core7Channel14RegisteredCallC2EPKcS3_(ptr noundef nonnull 
 bb.a:
   %3 = alloca %struct.grpc_slice, align 8         ; 4 uses
   %4 = alloca %struct.grpc_slice, align 8         ; 4 uses
-  %5 = alloca %struct.grpc_slice, align 8         ; 4 uses
-  %6 = alloca %"class.grpc_core::Slice", align 8  ; 7 uses
-  %7 = alloca %"class.grpc_core::Slice", align 8  ; 8 uses
+  %5 = alloca %"class.grpc_core::Slice", align 8  ; 7 uses
+  %6 = alloca %"class.grpc_core::Slice", align 8  ; 8 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, i8 0, i64 32, i1 false), !alias.scope !8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   store i8 0, ptr %i.b, align 8, !tbaa !11
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #31
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
   %i.c = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #32, !noalias !14
-  invoke void @grpc_slice_from_copied_buffer(ptr dead_on_unwind nonnull writable sret(%struct.grpc_slice) align 8 %6, ptr noundef nonnull %1, i64 noundef %i.c)
+  invoke void @grpc_slice_from_copied_buffer(ptr dead_on_unwind nonnull writable sret(%struct.grpc_slice) align 8 %5, ptr noundef nonnull %1, i64 noundef %i.c)
           to label %_ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.exit unwind label %bb.j
 
 _ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.exit: ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  %i.d = load ptr, ptr %6, align 8, !tbaa !22     ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !17
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !17
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 32, i1 false), !tbaa.struct !17
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  %i.d = load ptr, ptr %5, align 8, !tbaa !22     ; 4 uses
   %i.e = icmp ugt ptr %i.d, inttoptr (i64 1 to ptr)
   br i1 %i.e, label %bb.b, label %_ZN9grpc_core5SliceD2Ev.exit
 
@@ -243,7 +242,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN9grpc_core5SliceD2Ev.exit:                     ; preds = %_ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.exit, %bb.b, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.l, label %bb.e
 
@@ -253,9 +252,9 @@ bb.e:                                             ; preds = %_ZN9grpc_core5Slice
   br i1 %.not8, label %bb.l, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #31
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #31
   %i.m = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %2) #32, !noalias !30
-  invoke void @grpc_slice_from_copied_buffer(ptr dead_on_unwind nonnull writable sret(%struct.grpc_slice) align 8 %7, ptr noundef nonnull %2, i64 noundef %i.m)
+  invoke void @grpc_slice_from_copied_buffer(ptr dead_on_unwind nonnull writable sret(%struct.grpc_slice) align 8 %6, ptr noundef nonnull %2, i64 noundef %i.m)
           to label %_ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.exit10 unwind label %bb.k
 
 _ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.exit10: ; preds = %bb.f
@@ -264,20 +263,17 @@ _ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.
   br i1 %i.o, label %_ZNSt8optionalIN9grpc_core5SliceEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit, label %_ZNSt8optionalIN9grpc_core5SliceEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit.thread
 
 _ZNSt8optionalIN9grpc_core5SliceEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit.thread: ; preds = %_ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.exit10
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false)
   store i8 1, ptr %i.b, align 8, !tbaa !11
   br label %_ZN9grpc_core5SliceD2Ev.exit11
 
 _ZNSt8optionalIN9grpc_core5SliceEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit: ; preds = %_ZN9grpc_core12slice_detail16CopyConstructorsINS_5SliceEE16FromCopiedStringEPKc.exit10
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 32, i1 false), !tbaa.struct !17
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %.pr = load ptr, ptr %7, align 8, !tbaa !22     ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 32, i1 false), !tbaa.struct !17
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !tbaa.struct !17
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !17
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  %.pr = load ptr, ptr %6, align 8, !tbaa !22     ; 4 uses
   %i.p = icmp ugt ptr %.pr, inttoptr (i64 1 to ptr)
   br i1 %i.p, label %bb.g, label %_ZN9grpc_core5SliceD2Ev.exit11
 
@@ -300,19 +296,19 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZN9grpc_core5SliceD2Ev.exit11:                   ; preds = %_ZNSt8optionalIN9grpc_core5SliceEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit.thread, %_ZNSt8optionalIN9grpc_core5SliceEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit, %bb.g, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.a
   %i.w = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.f
   %i.x = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #31
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #31
   br label %bb.m
 
 bb.l:                                             ; preds = %_ZN9grpc_core5SliceD2Ev.exit11, %bb.e, %_ZN9grpc_core5SliceD2Ev.exit
@@ -401,7 +397,6 @@ _ZNSt17_Optional_payloadIN9grpc_core5SliceELb0ELb0ELb0EED2Ev.exit: ; preds = %bb
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN9grpc_core7Channel14RegisteredCallC2ERKS1_(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(72) initializes((0, 32), (64, 65)) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(72) %1) unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.414 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 4 uses
   %.sroa.9 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 6 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !22, !noalias !35 ; 2 uses
   %i.b = icmp ugt ptr %i.a, inttoptr (i64 1 to ptr)
@@ -444,12 +439,9 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNSt8optionalIN9grpc_core5SliceEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit.thread: ; preds = %.thread, %bb.d
   %.sroa.0.0.copyload20 = phi ptr [ %i.j, %.thread ], [ %.sroa.0.0.copyload.pre, %bb.d ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.414)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.414, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9, i64 24, i1 false), !tbaa.struct !41
-  store ptr %.sroa.0.0.copyload20, ptr %i.d, align 8, !tbaa !18
   %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.414.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.414, i64 24, i1 false), !tbaa.struct !41
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.414)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.414.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9, i64 24, i1 false)
+  store ptr %.sroa.0.0.copyload20, ptr %i.d, align 8, !tbaa !18
   store i8 1, ptr %i.e, align 8, !tbaa !11
   br label %_ZN9grpc_core5SliceD2Ev.exit
 

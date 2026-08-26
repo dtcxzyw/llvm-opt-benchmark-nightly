@@ -202,11 +202,13 @@ bb.ba:                                            ; preds = %bb.az
   %i.ga = tail call { double, double } @edgeMidpoint(ptr noundef nonnull %0, ptr noundef nonnull %.1178487.i) #16 ; 2 uses
   %i.gb = extractvalue { double, double } %i.ga, 0
   %i.gc = extractvalue { double, double } %i.ga, 1
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.2195486.i, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.sroa.3.0..0.7.sroa_idx.i.i, i8 0, i64 16, i1 false)
   store double %i.gb, ptr %.2195486.i, align 8, !tbaa !14
   %.sroa.0.sroa.2.0..0.7.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.2195486.i, i64 8
   store double %i.gc, ptr %.sroa.0.sroa.2.0..0.7.sroa_idx.i.i, align 8, !tbaa !14
-  %.sroa.0.sroa.3.0..0.7.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.2195486.i, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.sroa.3.0..0.7.sroa_idx.i.i.a, i8 0, i64 24, i1 false)
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.2195486.i, i64 32 ; 2 uses
+  store ptr null, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i.i.a, align 8, !tbaa !89
   %i.gd = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noundef !57
   %i.ge = trunc nuw i8 %i.gd to i1
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fd, i64 40 ; 2 uses
@@ -227,13 +229,12 @@ addXLabel.exit297.i:                              ; preds = %bb.bc, %bb.bb
   store ptr %i.fd, ptr %i.gi, align 8, !tbaa !82
   %i.gj = getelementptr inbounds nuw i8, ptr %.2202485.i, i64 40
   store i8 0, ptr %i.gj, align 8, !tbaa !84
-  %6 = getelementptr inbounds nuw i8, ptr %.2195486.i, i64 32
-  store ptr %.2202485.i, ptr %6, align 8, !tbaa !85
+  store ptr %.2202485.i, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i.i.a, align 8, !tbaa !85
   %i.gk = getelementptr inbounds nuw i8, ptr %.2202485.i, i64 48
   br label %bb.be
 
 bb.bd:                                            ; preds = %bb.az, %bb.ay
-  %i.gl = load ptr, ptr %i.fd, align 8, !tbaa !89
+  %i.gl = load ptr, ptr %i.fd, align 8, !tbaa !90
   tail call void (ptr, ...) @agwarningf(ptr noundef nonnull @.str.4, ptr noundef %i.gl) #16
   br label %bb.co
 
@@ -263,26 +264,26 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %i.gw, label %bb.bh, label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.gx = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noalias !90, !noundef !57
+  %i.gx = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noalias !91, !noundef !57
   %i.gy = trunc nuw i8 %i.gx to i1                ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gt, i64 40 ; 2 uses
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gt, i64 48 ; 2 uses
   %..i298.i = select i1 %i.gy, ptr %i.ha, ptr %i.gz
   %.23.i299.i = select i1 %i.gy, ptr %i.gz, ptr %i.ha
-  %.sink.i300.i = load double, ptr %.23.i299.i, align 8, !tbaa !14, !noalias !90 ; 2 uses
-  %.sink22.i301.i = load double, ptr %..i298.i, align 8, !tbaa !14, !noalias !90 ; 2 uses
+  %.sink.i300.i = load double, ptr %.23.i299.i, align 8, !tbaa !14, !noalias !91 ; 2 uses
+  %.sink22.i301.i = load double, ptr %..i298.i, align 8, !tbaa !14, !noalias !91 ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %.3196.i, i64 16
-  store double %.sink22.i301.i, ptr %i.hb, align 8, !tbaa !79, !noalias !90
+  store double %.sink22.i301.i, ptr %i.hb, align 8, !tbaa !79, !noalias !91
   %i.hc = getelementptr inbounds nuw i8, ptr %.3196.i, i64 24
-  store double %.sink.i300.i, ptr %i.hc, align 8, !tbaa !81, !noalias !90
+  store double %.sink.i300.i, ptr %i.hc, align 8, !tbaa !81, !noalias !91
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gt, i64 72
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.3196.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.hd, i64 16, i1 false), !tbaa.struct !75, !noalias !90
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.3196.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.hd, i64 16, i1 false), !tbaa.struct !75, !noalias !91
   %i.he = insertelement <2 x double> poison, double %.sink22.i301.i, i64 0
   %i.hf = insertelement <2 x double> %i.he, double %.sink.i300.i, i64 1 ; 2 uses
   %i.hg = fmul <2 x double> %i.hf, splat (double 5.000000e-01)
-  %i.hh = load <2 x double>, ptr %.3196.i, align 8, !tbaa !14, !noalias !90
+  %i.hh = load <2 x double>, ptr %.3196.i, align 8, !tbaa !14, !noalias !91
   %i.hi = fsub <2 x double> %i.hh, %i.hg          ; 4 uses
-  store <2 x double> %i.hi, ptr %.3196.i, align 8, !tbaa !14, !noalias !90
+  store <2 x double> %i.hi, ptr %.3196.i, align 8, !tbaa !14, !noalias !91
   %i.hj = fcmp olt <2 x double> %i.gq, %i.hi
   %i.hk = select <2 x i1> %i.hj, <2 x double> %i.gq, <2 x double> %i.hi
   %i.hl = fadd <2 x double> %i.hf, %i.hi          ; 2 uses
@@ -305,9 +306,9 @@ bb.bk:                                            ; preds = %bb.bj
   br i1 %i.hr, label %edgeTailpoint.exit.i, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.hs = load ptr, ptr %i.hq, align 8, !tbaa !93 ; 3 uses
+  %i.hs = load ptr, ptr %i.hq, align 8, !tbaa !94 ; 3 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hs, i64 16
-  %i.hu = load i32, ptr %i.ht, align 8, !tbaa !96
+  %i.hu = load i32, ptr %i.ht, align 8, !tbaa !97
   %.not.i313.i = icmp eq i32 %i.hu, 0
   br i1 %.not.i313.i, label %bb.bn, label %bb.bm
 
@@ -317,15 +318,17 @@ bb.bm:                                            ; preds = %bb.bl
   br label %edgeTailpoint.exit.i
 
 bb.bn:                                            ; preds = %bb.bl
-  %i.hx = load ptr, ptr %i.hs, align 8, !tbaa !98
+  %i.hx = load ptr, ptr %i.hs, align 8, !tbaa !99
   %i.hy = load <2 x double>, ptr %i.hx, align 8, !tbaa !14
   br label %edgeTailpoint.exit.i
 
 edgeTailpoint.exit.i:                             ; preds = %bb.bn, %bb.bm, %bb.bk
   %i.hz = phi <2 x double> [ %i.hy, %bb.bn ], [ %i.hw, %bb.bm ], [ zeroinitializer, %bb.bk ]
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i314.i = getelementptr inbounds nuw i8, ptr %.3196.i, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.sroa.3.0..0.7.sroa_idx.i314.i, i8 0, i64 16, i1 false)
   store <2 x double> %i.hz, ptr %.3196.i, align 8, !tbaa !14
-  %.sroa.0.sroa.3.0..0.7.sroa_idx.i315.i = getelementptr inbounds nuw i8, ptr %.3196.i, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.sroa.3.0..0.7.sroa_idx.i315.i, i8 0, i64 24, i1 false)
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i315.i = getelementptr inbounds nuw i8, ptr %.3196.i, i64 32 ; 2 uses
+  store ptr null, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i315.i, align 8, !tbaa !89
   %i.ia = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noundef !57
   %i.ib = trunc nuw i8 %i.ia to i1
   %i.ic = getelementptr inbounds nuw i8, ptr %i.gt, i64 40 ; 2 uses
@@ -346,13 +349,12 @@ addXLabel.exit316.i:                              ; preds = %bb.bp, %bb.bo
   store ptr %i.gt, ptr %i.if, align 8, !tbaa !82
   %i.ig = getelementptr inbounds nuw i8, ptr %.4204.i, i64 40
   store i8 0, ptr %i.ig, align 8, !tbaa !84
-  %7 = getelementptr inbounds nuw i8, ptr %.3196.i, i64 32
-  store ptr %.4204.i, ptr %7, align 8, !tbaa !85
+  store ptr %.4204.i, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i315.i, align 8, !tbaa !85
   %i.ih = getelementptr inbounds nuw i8, ptr %.4204.i, i64 48
   br label %bb.br
 
 bb.bq:                                            ; preds = %bb.bj, %bb.bi
-  %i.ii = load ptr, ptr %i.gt, align 8, !tbaa !89
+  %i.ii = load ptr, ptr %i.gt, align 8, !tbaa !90
   tail call void (ptr, ...) @agwarningf(ptr noundef nonnull @.str.5, ptr noundef %i.ii) #16
   br label %bb.co
 
@@ -382,26 +384,26 @@ bb.bt:                                            ; preds = %bb.bs
   br i1 %i.it, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
-  %i.iu = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noalias !99, !noundef !57
+  %i.iu = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noalias !100, !noundef !57
   %i.iv = trunc nuw i8 %i.iu to i1                ; 2 uses
   %i.iw = getelementptr inbounds nuw i8, ptr %i.iq, i64 40 ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.iq, i64 48 ; 2 uses
   %..i317.i = select i1 %i.iv, ptr %i.ix, ptr %i.iw
   %.23.i318.i = select i1 %i.iv, ptr %i.iw, ptr %i.ix
-  %.sink.i319.i = load double, ptr %.23.i318.i, align 8, !tbaa !14, !noalias !99 ; 2 uses
-  %.sink22.i320.i = load double, ptr %..i317.i, align 8, !tbaa !14, !noalias !99 ; 2 uses
+  %.sink.i319.i = load double, ptr %.23.i318.i, align 8, !tbaa !14, !noalias !100 ; 2 uses
+  %.sink22.i320.i = load double, ptr %..i317.i, align 8, !tbaa !14, !noalias !100 ; 2 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %.4197.i, i64 16
-  store double %.sink22.i320.i, ptr %i.iy, align 8, !tbaa !79, !noalias !99
+  store double %.sink22.i320.i, ptr %i.iy, align 8, !tbaa !79, !noalias !100
   %i.iz = getelementptr inbounds nuw i8, ptr %.4197.i, i64 24
-  store double %.sink.i319.i, ptr %i.iz, align 8, !tbaa !81, !noalias !99
+  store double %.sink.i319.i, ptr %i.iz, align 8, !tbaa !81, !noalias !100
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iq, i64 72
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.4197.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ja, i64 16, i1 false), !tbaa.struct !75, !noalias !99
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.4197.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ja, i64 16, i1 false), !tbaa.struct !75, !noalias !100
   %i.jb = insertelement <2 x double> poison, double %.sink22.i320.i, i64 0
   %i.jc = insertelement <2 x double> %i.jb, double %.sink.i319.i, i64 1 ; 2 uses
   %i.jd = fmul <2 x double> %i.jc, splat (double 5.000000e-01)
-  %i.je = load <2 x double>, ptr %.4197.i, align 8, !tbaa !14, !noalias !99
+  %i.je = load <2 x double>, ptr %.4197.i, align 8, !tbaa !14, !noalias !100
   %i.jf = fsub <2 x double> %i.je, %i.jd          ; 4 uses
-  store <2 x double> %i.jf, ptr %.4197.i, align 8, !tbaa !14, !noalias !99
+  store <2 x double> %i.jf, ptr %.4197.i, align 8, !tbaa !14, !noalias !100
   %i.jg = fcmp olt <2 x double> %i.in, %i.jf
   %i.jh = select <2 x i1> %i.jg, <2 x double> %i.in, <2 x double> %i.jf
   %i.ji = fadd <2 x double> %i.jc, %i.jf          ; 2 uses
@@ -424,20 +426,20 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %i.jo, label %edgeHeadpoint.exit.i, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
-  %i.jp = load ptr, ptr %i.jn, align 8, !tbaa !93
+  %i.jp = load ptr, ptr %i.jn, align 8, !tbaa !94
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jn, i64 8
-  %i.jr = load i64, ptr %i.jq, align 8, !tbaa !102
+  %i.jr = load i64, ptr %i.jq, align 8, !tbaa !103
   %i.js = getelementptr [56 x i8], ptr %i.jp, i64 %i.jr ; 4 uses
   %i.jt = getelementptr i8, ptr %i.js, i64 -36
-  %i.ju = load i32, ptr %i.jt, align 4, !tbaa !103
+  %i.ju = load i32, ptr %i.jt, align 4, !tbaa !104
   %.not.i332.i = icmp eq i32 %i.ju, 0
   br i1 %.not.i332.i, label %bb.bz, label %.sink.split.i.i
 
 bb.bz:                                            ; preds = %bb.by
   %i.jv = getelementptr i8, ptr %i.js, i64 -56
-  %i.jw = load ptr, ptr %i.jv, align 8, !tbaa !98
+  %i.jw = load ptr, ptr %i.jv, align 8, !tbaa !99
   %i.jx = getelementptr i8, ptr %i.js, i64 -48
-  %i.jy = load i64, ptr %i.jx, align 8, !tbaa !104
+  %i.jy = load i64, ptr %i.jx, align 8, !tbaa !105
   %i.jz = getelementptr [16 x i8], ptr %i.jw, i64 %i.jy
   br label %.sink.split.i.i
 
@@ -449,9 +451,11 @@ bb.bz:                                            ; preds = %bb.by
 
 edgeHeadpoint.exit.i:                             ; preds = %.sink.split.i.i, %bb.bx
   %i.kc = phi <2 x double> [ zeroinitializer, %bb.bx ], [ %i.kb, %.sink.split.i.i ]
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i338.i = getelementptr inbounds nuw i8, ptr %.4197.i, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.sroa.3.0..0.7.sroa_idx.i338.i, i8 0, i64 16, i1 false)
   store <2 x double> %i.kc, ptr %.4197.i, align 8, !tbaa !14
-  %.sroa.0.sroa.3.0..0.7.sroa_idx.i338.i.a = getelementptr inbounds nuw i8, ptr %.4197.i, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.sroa.3.0..0.7.sroa_idx.i338.i.a, i8 0, i64 24, i1 false)
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i338.i.a = getelementptr inbounds nuw i8, ptr %.4197.i, i64 32 ; 2 uses
+  store ptr null, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i338.i.a, align 8, !tbaa !89
   %i.kd = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noundef !57
   %i.ke = trunc nuw i8 %i.kd to i1
   %i.kf = getelementptr inbounds nuw i8, ptr %i.iq, i64 40 ; 2 uses
@@ -472,13 +476,12 @@ addXLabel.exit339.i:                              ; preds = %bb.cb, %bb.ca
   store ptr %i.iq, ptr %i.ki, align 8, !tbaa !82
   %i.kj = getelementptr inbounds nuw i8, ptr %.6206.i, i64 40
   store i8 0, ptr %i.kj, align 8, !tbaa !84
-  %8 = getelementptr inbounds nuw i8, ptr %.4197.i, i64 32
-  store ptr %.6206.i, ptr %8, align 8, !tbaa !85
+  store ptr %.6206.i, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i338.i.a, align 8, !tbaa !85
   %i.kk = getelementptr inbounds nuw i8, ptr %.6206.i, i64 48
   br label %bb.cd
 
 bb.cc:                                            ; preds = %bb.bw, %bb.bv
-  %i.kl = load ptr, ptr %i.iq, align 8, !tbaa !89
+  %i.kl = load ptr, ptr %i.iq, align 8, !tbaa !90
   tail call void (ptr, ...) @agwarningf(ptr noundef nonnull @.str.6, ptr noundef %i.kl) #16
   br label %bb.co
 
@@ -508,26 +511,26 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %i.kw, label %bb.cg, label %bb.ch
 
 bb.cg:                                            ; preds = %bb.cf
-  %i.kx = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noalias !105, !noundef !57
+  %i.kx = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noalias !106, !noundef !57
   %i.ky = trunc nuw i8 %i.kx to i1                ; 2 uses
   %i.kz = getelementptr inbounds nuw i8, ptr %i.kt, i64 40 ; 2 uses
   %i.la = getelementptr inbounds nuw i8, ptr %i.kt, i64 48 ; 2 uses
   %..i340.i = select i1 %i.ky, ptr %i.la, ptr %i.kz
   %.23.i341.i = select i1 %i.ky, ptr %i.kz, ptr %i.la
-  %.sink.i342.i = load double, ptr %.23.i341.i, align 8, !tbaa !14, !noalias !105 ; 2 uses
-  %.sink22.i343.i = load double, ptr %..i340.i, align 8, !tbaa !14, !noalias !105 ; 2 uses
+  %.sink.i342.i = load double, ptr %.23.i341.i, align 8, !tbaa !14, !noalias !106 ; 2 uses
+  %.sink22.i343.i = load double, ptr %..i340.i, align 8, !tbaa !14, !noalias !106 ; 2 uses
   %i.lb = getelementptr inbounds nuw i8, ptr %.5198.i, i64 16
-  store double %.sink22.i343.i, ptr %i.lb, align 8, !tbaa !79, !noalias !105
+  store double %.sink22.i343.i, ptr %i.lb, align 8, !tbaa !79, !noalias !106
   %i.lc = getelementptr inbounds nuw i8, ptr %.5198.i, i64 24
-  store double %.sink.i342.i, ptr %i.lc, align 8, !tbaa !81, !noalias !105
+  store double %.sink.i342.i, ptr %i.lc, align 8, !tbaa !81, !noalias !106
   %i.ld = getelementptr inbounds nuw i8, ptr %i.kt, i64 72
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.5198.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ld, i64 16, i1 false), !tbaa.struct !75, !noalias !105
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.5198.i, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ld, i64 16, i1 false), !tbaa.struct !75, !noalias !106
   %i.le = insertelement <2 x double> poison, double %.sink22.i343.i, i64 0
   %i.lf = insertelement <2 x double> %i.le, double %.sink.i342.i, i64 1 ; 2 uses
   %i.lg = fmul <2 x double> %i.lf, splat (double 5.000000e-01)
-  %i.lh = load <2 x double>, ptr %.5198.i, align 8, !tbaa !14, !noalias !105
+  %i.lh = load <2 x double>, ptr %.5198.i, align 8, !tbaa !14, !noalias !106
   %i.li = fsub <2 x double> %i.lh, %i.lg          ; 4 uses
-  store <2 x double> %i.li, ptr %.5198.i, align 8, !tbaa !14, !noalias !105
+  store <2 x double> %i.li, ptr %.5198.i, align 8, !tbaa !14, !noalias !106
   %i.lj = fcmp olt <2 x double> %i.kq, %i.li
   %i.lk = select <2 x i1> %i.lj, <2 x double> %i.kq, <2 x double> %i.li
   %i.ll = fadd <2 x double> %i.lf, %i.li          ; 2 uses
@@ -548,11 +551,13 @@ bb.cj:                                            ; preds = %bb.ci
   %i.lq = tail call { double, double } @edgeMidpoint(ptr noundef nonnull %0, ptr noundef nonnull %.1178487.i) #16 ; 2 uses
   %i.lr = extractvalue { double, double } %i.lq, 0
   %i.ls = extractvalue { double, double } %i.lq, 1
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i357.i = getelementptr inbounds nuw i8, ptr %.5198.i, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.sroa.3.0..0.7.sroa_idx.i357.i, i8 0, i64 16, i1 false)
   store double %i.lr, ptr %.5198.i, align 8, !tbaa !14
   %.sroa.0.sroa.2.0..0.7.sroa_idx.i355.i = getelementptr inbounds nuw i8, ptr %.5198.i, i64 8
   store double %i.ls, ptr %.sroa.0.sroa.2.0..0.7.sroa_idx.i355.i, align 8, !tbaa !14
-  %.sroa.0.sroa.3.0..0.7.sroa_idx.i356.i = getelementptr inbounds nuw i8, ptr %.5198.i, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.sroa.3.0..0.7.sroa_idx.i356.i, i8 0, i64 24, i1 false)
+  %.sroa.0.sroa.3.0..0.7.sroa_idx.i356.i = getelementptr inbounds nuw i8, ptr %.5198.i, i64 32 ; 2 uses
+  store ptr null, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i356.i, align 8, !tbaa !89
   %i.lt = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noundef !57
   %i.lu = trunc nuw i8 %i.lt to i1
   %i.lv = getelementptr inbounds nuw i8, ptr %i.kt, i64 40 ; 2 uses
@@ -573,13 +578,12 @@ addXLabel.exit357.i:                              ; preds = %bb.cl, %bb.ck
   store ptr %i.kt, ptr %i.ly, align 8, !tbaa !82
   %i.lz = getelementptr inbounds nuw i8, ptr %.8.i, i64 40
   store i8 0, ptr %i.lz, align 8, !tbaa !84
-  %9 = getelementptr inbounds nuw i8, ptr %.5198.i, i64 32
-  store ptr %.8.i, ptr %9, align 8, !tbaa !85
+  store ptr %.8.i, ptr %.sroa.0.sroa.3.0..0.7.sroa_idx.i356.i, align 8, !tbaa !85
   %i.ma = getelementptr inbounds nuw i8, ptr %.8.i, i64 48
   br label %bb.cn
 
 bb.cm:                                            ; preds = %bb.ci, %bb.ch
-  %i.mb = load ptr, ptr %i.kt, align 8, !tbaa !89
+  %i.mb = load ptr, ptr %i.kt, align 8, !tbaa !90
   tail call void (ptr, ...) @agwarningf(ptr noundef nonnull @.str.7, ptr noundef %i.mb) #16
   br label %bb.co
 
@@ -597,7 +601,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.cm, %bb.
   %i.mg = phi <2 x double> [ %i.kr, %bb.ce ], [ %i.md, %bb.cn ], [ %i.kr, %bb.cm ], [ %i.io, %bb.cc ], [ %i.gr, %bb.bq ], [ %i.ez, %bb.bd ] ; 2 uses
   %i.mh = tail call ptr @agnxtout(ptr noundef nonnull %0, ptr noundef nonnull %.1178487.i) #16 ; 2 uses
   %.not230.i = icmp eq ptr %i.mh, null
-  br i1 %.not230.i, label %._crit_edge492.i, label %.lr.ph491.i, !llvm.loop !108
+  br i1 %.not230.i, label %._crit_edge492.i, label %.lr.ph491.i, !llvm.loop !109
 
 ._crit_edge492.i:                                 ; preds = %bb.co, %bb.av
   %.2202.lcssa.i = phi ptr [ %.1201.i, %bb.av ], [ %.10.i, %bb.co ]
@@ -606,7 +610,7 @@ bb.co:                                            ; preds = %bb.cn, %bb.cm, %bb.
   %i.mj = phi <2 x double> [ %i.ev, %bb.av ], [ %i.mg, %bb.co ] ; 2 uses
   %i.mk = tail call ptr @agnxtnode(ptr noundef nonnull %0, ptr noundef nonnull %.1506.i) #16 ; 2 uses
   %.not223.i = icmp eq ptr %i.mk, null
-  br i1 %.not223.i, label %._crit_edge508.i, label %bb.ap, !llvm.loop !109
+  br i1 %.not223.i, label %._crit_edge508.i, label %bb.ap, !llvm.loop !110
 
 ._crit_edge508.i:                                 ; preds = %._crit_edge492.i, %gv_calloc.exit267.i
   %.0193.lcssa.i = phi ptr [ %i.cn, %gv_calloc.exit267.i ], [ %.2195.lcssa.i, %._crit_edge492.i ]
@@ -621,10 +625,10 @@ bb.cp:                                            ; preds = %._crit_edge508.i
   %.sroa.25.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   store <2 x double> %i.mm, ptr %.sroa.25.0..sroa_idx.i, align 16, !tbaa !14
   %i.mn = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store ptr %.0193.lcssa.i, ptr %i.mn, align 16, !tbaa !110
+  store ptr %.0193.lcssa.i, ptr %i.mn, align 16, !tbaa !111
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   call fastcc void @addClusterObj(ptr dead_on_unwind noalias writable align 8 %3, ptr noundef nonnull %0, ptr noundef nonnull byval(%struct.cinfo_t) align 8 %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false), !tbaa.struct !112
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false), !tbaa.struct !113
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   %i.mo = load <2 x double>, ptr %2, align 16, !tbaa !14
   %i.mp = load <2 x double>, ptr %.sroa.25.0..sroa_idx.i, align 16, !tbaa !14
@@ -965,7 +969,7 @@ bb.ea:                                            ; preds = %bb.dz
 
 .preheader.i.i:                                   ; preds = %.lr.ph.i74
   %i.rx = getelementptr inbounds nuw i8, ptr %i.rv, i64 8
-  %i.ry = load i64, ptr %i.rx, align 8, !tbaa !102
+  %i.ry = load i64, ptr %i.rx, align 8, !tbaa !103
   %.not77.i.i = icmp eq i64 %i.ry, 0
   br i1 %.not77.i.i, label %._crit_edge76.i.i, label %.lr.ph75.i.i
 
@@ -1009,7 +1013,7 @@ bb.ed:                                            ; preds = %bb.ec
   %.pre80.pre8486.i.i = phi ptr [ %.pre80.pre8487.i.i, %bb.eh ], [ %i.rt, %.preheader.i.i ]
   %i.st = phi ptr [ %i.uu, %bb.eh ], [ %i.rv, %.preheader.i.i ]
   %.074.i.i = phi i64 [ %i.us, %bb.eh ], [ 0, %.preheader.i.i ] ; 4 uses
-  %i.su = load ptr, ptr %i.st, align 8, !tbaa !93
+  %i.su = load ptr, ptr %i.st, align 8, !tbaa !94
   %i.sv = getelementptr inbounds nuw [56 x i8], ptr %i.su, i64 %.074.i.i ; 4 uses
   %.sroa.023.0.copyload.i.i = load ptr, ptr %i.sv, align 8, !tbaa !129
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.sv, i64 8
@@ -1053,7 +1057,7 @@ bb.ed:                                            ; preds = %bb.ec
 bb.ee:                                            ; preds = %._crit_edge.i.i
   %i.tk = getelementptr inbounds nuw i8, ptr %.pre80.pre84.i.i, i64 16
   %i.tl = load ptr, ptr %i.tk, align 8, !tbaa !64
-  %i.tm = load ptr, ptr %i.tl, align 8, !tbaa !93
+  %i.tm = load ptr, ptr %i.tl, align 8, !tbaa !94
   %i.tn = getelementptr inbounds nuw [56 x i8], ptr %i.tm, i64 %.074.i.i ; 2 uses
   %i.to = getelementptr inbounds nuw i8, ptr %i.tn, i64 24 ; 2 uses
   %i.tp = load double, ptr %i.to, align 8
@@ -1080,7 +1084,7 @@ bb.ef:                                            ; preds = %bb.ee, %._crit_edge
 bb.eg:                                            ; preds = %bb.ef
   %i.ub = getelementptr inbounds nuw i8, ptr %.pre80.pre8488.i.i, i64 16
   %i.uc = load ptr, ptr %i.ub, align 8, !tbaa !64
-  %i.ud = load ptr, ptr %i.uc, align 8, !tbaa !93
+  %i.ud = load ptr, ptr %i.uc, align 8, !tbaa !94
   %i.ue = getelementptr inbounds nuw [56 x i8], ptr %i.ud, i64 %.074.i.i ; 2 uses
   %i.uf = getelementptr inbounds nuw i8, ptr %i.ue, i64 40 ; 2 uses
   %i.ug = load double, ptr %i.uf, align 8
@@ -1105,7 +1109,7 @@ bb.eh:                                            ; preds = %bb.eg, %bb.ef
   %i.ut = getelementptr inbounds nuw i8, ptr %.pre80.pre8487.i.i, i64 16
   %i.uu = load ptr, ptr %i.ut, align 8, !tbaa !64 ; 2 uses
   %i.uv = getelementptr inbounds nuw i8, ptr %i.uu, i64 8
-  %i.uw = load i64, ptr %i.uv, align 8, !tbaa !102
+  %i.uw = load i64, ptr %i.uv, align 8, !tbaa !103
   %i.ux = icmp ult i64 %i.us, %i.uw
   br i1 %i.ux, label %.lr.ph75.i.i, label %._crit_edge76.i.i, !llvm.loop !132
 
@@ -1508,7 +1512,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %indvars.iv
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !40
   call fastcc void @addClusterObj(ptr dead_on_unwind noalias writable align 8 %3, ptr noundef %i.i, ptr noundef nonnull byval(%struct.cinfo_t) align 8 %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false), !tbaa.struct !112
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %2, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false), !tbaa.struct !113
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !8    ; 2 uses
@@ -1538,7 +1542,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !110  ; 6 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !111  ; 6 uses
   %.sroa.515.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.w = load i8, ptr @Flip, align 1, !tbaa !44, !range !56, !noalias !145, !noundef !57
   %i.x = trunc nuw i8 %i.w to i1                  ; 2 uses
@@ -1570,11 +1574,11 @@ bb.d:                                             ; preds = %bb.c
   %i.ao = select <2 x i1> %i.an, <2 x double> %i.al, <2 x double> %i.am
   store <2 x double> %i.ao, ptr %.sroa.515.0..sroa_idx, align 8, !tbaa !14
   %i.ap = getelementptr inbounds nuw i8, ptr %i.v, i64 40
-  store ptr %i.ap, ptr %i.u, align 8, !tbaa !110
+  store ptr %i.ap, ptr %i.u, align 8, !tbaa !111
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %._crit_edge
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false), !tbaa.struct !112
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false), !tbaa.struct !113
   ret void
 }
 
@@ -1633,7 +1637,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph
   %i.ac = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !82
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !89
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !90
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.c
@@ -1660,7 +1664,7 @@ bb.e:                                             ; preds = %._crit_edge, %bb.e
   %i.at = load double, ptr %i.as, align 8, !tbaa !158
   %i.au = getelementptr inbounds nuw i8, ptr %.03337, i64 32
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !82
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !89
+  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !90
   %i.ax = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.aj, ptr noundef nonnull @.str.18, i64 noundef %.038, ptr noundef nonnull %.03337, i32 noundef %i.am, double noundef %i.ao, double noundef %i.aq, double noundef %i.ar, double noundef %i.at, ptr noundef %i.aw) #18 ; 0 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.03337, i64 48
   %i.az = add nuw i64 %.038, 1                    ; 2 uses
@@ -1914,31 +1918,31 @@ attributes #22 = { nounwind allocsize(1) }
 !86 = !{!87}
 !87 = distinct !{!87, !88, !"addLabelObj: argument 0"}
 !88 = distinct !{!88, !"addLabelObj"}
-!89 = !{!55, !20, i64 0}
-!90 = !{!91}
-!91 = distinct !{!91, !92, !"addLabelObj: argument 0"}
-!92 = distinct !{!92, !"addLabelObj"}
-!93 = !{!94, !95, i64 0}
-!94 = !{!"splines", !95, i64 0, !11, i64 8, !23, i64 16}
-!95 = !{!"p1 _ZTS6bezier", !13, i64 0}
-!96 = !{!97, !5, i64 16}
-!97 = !{!"bezier", !63, i64 0, !11, i64 8, !5, i64 16, !5, i64 20, !24, i64 24, !24, i64 40}
-!98 = !{!97, !63, i64 0}
-!99 = !{!100}
-!100 = distinct !{!100, !101, !"addLabelObj: argument 0"}
-!101 = distinct !{!101, !"addLabelObj"}
-!102 = !{!94, !11, i64 8}
-!103 = !{!97, !5, i64 20}
-!104 = !{!97, !11, i64 8}
-!105 = !{!106}
-!106 = distinct !{!106, !107, !"addLabelObj: argument 0"}
-!107 = distinct !{!107, !"addLabelObj"}
-!108 = distinct !{!108, !42}
+!89 = !{!13, !13, i64 0}
+!90 = !{!55, !20, i64 0}
+!91 = !{!92}
+!92 = distinct !{!92, !93, !"addLabelObj: argument 0"}
+!93 = distinct !{!93, !"addLabelObj"}
+!94 = !{!95, !96, i64 0}
+!95 = !{!"splines", !96, i64 0, !11, i64 8, !23, i64 16}
+!96 = !{!"p1 _ZTS6bezier", !13, i64 0}
+!97 = !{!98, !5, i64 16}
+!98 = !{!"bezier", !63, i64 0, !11, i64 8, !5, i64 16, !5, i64 20, !24, i64 24, !24, i64 40}
+!99 = !{!98, !63, i64 0}
+!100 = !{!101}
+!101 = distinct !{!101, !102, !"addLabelObj: argument 0"}
+!102 = distinct !{!102, !"addLabelObj"}
+!103 = !{!95, !11, i64 8}
+!104 = !{!98, !5, i64 20}
+!105 = !{!98, !11, i64 8}
+!106 = !{!107}
+!107 = distinct !{!107, !108, !"addLabelObj: argument 0"}
+!108 = distinct !{!108, !"addLabelObj"}
 !109 = distinct !{!109, !42}
-!110 = !{!111, !13, i64 32}
-!111 = !{!"", !23, i64 0, !13, i64 32}
-!112 = !{i64 0, i64 8, !14, i64 8, i64 8, !14, i64 16, i64 8, !14, i64 24, i64 8, !14, i64 32, i64 8, !113}
-!113 = !{!13, !13, i64 0}
+!110 = distinct !{!110, !42}
+!111 = !{!112, !13, i64 32}
+!112 = !{!"", !23, i64 0, !13, i64 32}
+!113 = !{i64 0, i64 8, !14, i64 8, i64 8, !14, i64 16, i64 8, !14, i64 24, i64 8, !14, i64 32, i64 8, !89}
 !114 = !{!115, !25, i64 32}
 !115 = !{!"", !23, i64 0, !25, i64 32}
 !116 = !{!6, !6, i64 0}

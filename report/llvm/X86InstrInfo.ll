@@ -205,12 +205,14 @@ bb.ad:                                            ; preds = %bb.a, %bb.a, %bb.a,
   br i1 %i.ev, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
+  %.sroa.641.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.641.0..sroa_idx.i, i8 0, i64 16, i1 false), !alias.scope !1730
   store i32 0, ptr %0, align 8, !alias.scope !1730
   %.sroa.439.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.eq, ptr %.sroa.439.0..sroa_idx.i, align 4, !alias.scope !1730
   %.sroa.540.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr null, ptr %.sroa.540.0..sroa_idx.i, align 8, !alias.scope !1730
   %.sroa.742.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.540.0..sroa_idx.i, i8 0, i64 24, i1 false), !alias.scope !1730
   store ptr %i.eu, ptr %.sroa.742.0..sroa_idx.i, align 8, !alias.scope !1730
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %i.ew, align 8, !tbaa !1718, !alias.scope !1730
@@ -223,12 +225,14 @@ bb.af:                                            ; preds = %bb.ad
 
 bb.ag:                                            ; preds = %bb.af
   %i.ey = tail call i32 @_ZNK4llvm14MCRegisterInfo9getSubRegENS_10MCRegisterEj(ptr noundef nonnull align 8 dereferenceable(240) %i.a, i32 %i.eq, i32 noundef %i.ex) #29, !noalias !1730
+  %.sroa.631.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.631.0..sroa_idx.i, i8 0, i64 16, i1 false), !alias.scope !1730
   store i32 0, ptr %0, align 8, !alias.scope !1730
   %.sroa.429.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.ey, ptr %.sroa.429.0..sroa_idx.i, align 4, !alias.scope !1730
   %.sroa.530.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr null, ptr %.sroa.530.0..sroa_idx.i, align 8, !alias.scope !1730
   %.sroa.732.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.530.0..sroa_idx.i, i8 0, i64 24, i1 false), !alias.scope !1730
   store ptr %i.eu, ptr %.sroa.732.0..sroa_idx.i, align 8, !alias.scope !1730
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %i.ez, align 8, !tbaa !1718, !alias.scope !1730
@@ -282,12 +286,14 @@ _ZNK4llvm14MCRegisterInfo15isSuperRegisterENS_10MCRegisterES1_.exit.thread.i: ; 
   br label %_ZL24describeMOVrrLoadedValueRKN4llvm12MachineInstrENS_8RegisterEPKNS_18TargetRegisterInfoE.exit
 
 _ZNK4llvm14MCRegisterInfo15isSuperRegisterENS_10MCRegisterES1_.exit.i: ; preds = %.lr.ph.i.i.i.i.i.i112
+  %.sroa.623.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.623.0..sroa_idx.i, i8 0, i64 16, i1 false), !alias.scope !1730
   store i32 0, ptr %0, align 8, !alias.scope !1730
   %.sroa.421.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %i.eq, ptr %.sroa.421.0..sroa_idx.i, align 4, !alias.scope !1730
   %.sroa.522.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr null, ptr %.sroa.522.0..sroa_idx.i, align 8, !alias.scope !1730
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.522.0..sroa_idx.i, i8 0, i64 24, i1 false), !alias.scope !1730
   store ptr %i.eu, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !1730
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 1, ptr %i.fw, align 8, !tbaa !1718, !alias.scope !1730

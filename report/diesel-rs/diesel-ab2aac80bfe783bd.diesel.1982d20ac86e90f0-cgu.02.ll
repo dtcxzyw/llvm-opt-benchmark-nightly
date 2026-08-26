@@ -205,7 +205,6 @@ bb.k:                                             ; preds = %bb.g, %bb.d
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvXs1a_NtNtNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals5mysql18information_schema16key_column_usage7columnsNtB6_11column_nameINtNtCsjRvGck33osM_6diesel13query_builder13QueryFragmentNtNtNtB2c_5mysql7backend5MysqlE8walk_astBg_(ptr dead_on_unwind noalias noundef nonnull writable align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef nonnull align 8 captures(address) dead_on_return dereferenceable(32) %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca [32 x i8], align 8                  ; 4 uses
   %i.a = alloca [32 x i8], align 8                ; 8 uses
   %i.b = alloca [32 x i8], align 8                ; 7 uses
   %i.c = load i64, ptr %1, align 8, !range !1416, !noundef !5 ; 4 uses
@@ -259,11 +258,8 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %.thre
   br i1 %.not, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.b, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.b, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   br label %bb.k
 
 bb.h:                                             ; preds = %bb.f

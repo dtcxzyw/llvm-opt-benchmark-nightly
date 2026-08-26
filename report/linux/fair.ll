@@ -204,12 +204,12 @@ arch_static_branch.exit156:                       ; preds = %.arch_static_branch
   %.pre-phi = phi i64 [ %.pre344, %.arch_static_branch.exit156_crit_edge ], [ %i.ag, %bb.b ] ; 5 uses
   %i.ak = getelementptr i8, ptr %2, i64 60
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %6, i64 96 ; 5 uses
-  %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %6, i64 100 ; 3 uses
-  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 136 ; 5 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 6 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 192 ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 104 ; 2 uses
+  %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %6, i64 100 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %6, i64 104 ; 2 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %6, i64 136 ; 5 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %6, i64 48 ; 6 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 192 ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 88 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 120 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %6, i64 132
@@ -408,9 +408,8 @@ raw_atomic_try_cmpxchg_acquire.exit:              ; preds = %bb.q
 bb.r:                                             ; preds = %raw_atomic_try_cmpxchg_acquire.exit, %bb.q, %bb.p
   %.2121 = phi i8 [ 1, %bb.p ], [ 1, %raw_atomic_try_cmpxchg_acquire.exit ], [ 0, %bb.q ] ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %6, i8 0, i64 96, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(224) %6, i8 0, i64 224, i1 false)
   store i32 -1, ptr %.sroa.2.0..sroa_idx.i.i, align 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(124) %.sroa.3.0..sroa_idx.i.i, i8 0, i64 124, i1 false)
   %i.ec = load ptr, ptr %7, align 8
   %i.ed = getelementptr i8, ptr %i.ec, i64 16
   %i.ee = load ptr, ptr %i.ed, align 8
@@ -476,7 +475,7 @@ arch_test_bit.exit.i.i:                           ; preds = %update_sd_pick_busi
   br i1 %i.fc, label %bb.x, label %bb.aa
 
 bb.x:                                             ; preds = %arch_test_bit.exit.i.i
-  store ptr %.054.i.i, ptr %i.am, align 8
+  store ptr %.054.i.i, ptr %i.an, align 8
   %i.fd = load i32, ptr %i.q, align 4
   %.not.i.i169 = icmp eq i32 %i.fd, 2
   br i1 %.not.i.i169, label %bb.y, label %bb.z
@@ -498,14 +497,14 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %arch_test_bit.exit.i.i
-  %.0.i.i162 = phi ptr [ %i.al, %bb.z ], [ %i.al, %bb.y ], [ %5, %arch_test_bit.exit.i.i ] ; 22 uses
+  %.0.i.i162 = phi ptr [ %i.am, %bb.z ], [ %i.am, %bb.y ], [ %5, %arch_test_bit.exit.i.i ] ; 22 uses
   %i.fn = load ptr, ptr %7, align 8               ; 2 uses
   %i.fo = getelementptr i8, ptr %i.fn, i64 60
   %i.fp = load i32, ptr %i.fo, align 4
   %i.fq = load ptr, ptr %i.fn, align 8
   %.not.i62.i.i = icmp eq ptr %i.fq, null
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.0.i.i162, i8 0, i64 88, i1 false)
-  %i.fr = load ptr, ptr %i.am, align 8
+  %i.fr = load ptr, ptr %i.an, align 8
   %i.fs = icmp eq ptr %.054.i.i, %i.fr            ; 2 uses
   %i.ft = getelementptr i8, ptr %.0.i.i162, i64 8 ; 4 uses
   %i.fu = getelementptr i8, ptr %.0.i.i162, i64 24 ; 6 uses
@@ -908,13 +907,13 @@ bb.cj:                                            ; preds = %bb.ci
   %i.qr = load i64, ptr %i.qq, align 8
   %i.qs = mul i64 %i.qr, 1078
   %i.qt = icmp ugt i64 %i.qo, %i.qs
-  %i.qu = load i32, ptr %i.ao, align 8
+  %i.qu = load i32, ptr %i.ap, align 8
   %.not52.i.i.i = icmp eq i32 %i.qu, 0
   %or.cond64.i = select i1 %i.qt, i1 %.not52.i.i.i, i1 false
   br i1 %or.cond64.i, label %._crit_edge.i.i.i, label %update_sd_pick_busiest.exit.thread.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %bb.cj, %bb.ch
-  %i.qv = load i32, ptr %i.ap, align 8            ; 2 uses
+  %i.qv = load i32, ptr %i.al, align 8            ; 2 uses
   %i.qw = icmp ugt i32 %i.ps, %i.qv
   br i1 %i.qw, label %update_sd_pick_busiest.exit.thread76.i.i, label %bb.ck
 
@@ -936,7 +935,7 @@ bb.cl:                                            ; preds = %bb.ck
 
 .split81.i.i:                                     ; preds = %bb.cl
   %i.qy = load i64, ptr %.0.i.i162, align 8
-  %i.qz = load i64, ptr %i.an, align 8
+  %i.qz = load i64, ptr %i.ao, align 8
   %i.ra = icmp ugt i64 %i.qy, %i.qz
   br i1 %i.ra, label %update_sd_pick_busiest.exit.thread76.i.i, label %update_sd_pick_busiest.exit.thread.i.i
 
@@ -962,7 +961,7 @@ bb.cm:                                            ; preds = %bb.cl
 
 bb.cn:                                            ; preds = %bb.cm, %bb.cl
   %i.rh = load i64, ptr %.0.i.i162, align 8       ; 2 uses
-  %i.ri = load i64, ptr %i.an, align 8            ; 2 uses
+  %i.ri = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.rj = icmp ult i64 %i.rh, %i.ri
   br i1 %i.rj, label %update_sd_pick_busiest.exit.thread.i.i, label %bb.co
 
@@ -1053,7 +1052,7 @@ update_sd_pick_busiest.exit.i.i:                  ; preds = %bb.cl
 
 update_sd_pick_busiest.exit.thread76.i.i:         ; preds = %update_sd_pick_busiest.exit.i.i, %bb.cu, %bb.ct, %.split78.i.i, %.split80.i.i, %.split79.i.i, %.split81.i.i, %._crit_edge.i.i.i
   store ptr %.054.i.i, ptr %6, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.an, ptr noundef nonnull align 8 dereferenceable(88) %.0.i.i162, i64 88, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.ao, ptr noundef nonnull align 8 dereferenceable(88) %.0.i.i162, i64 88, i1 false)
   br label %update_sd_pick_busiest.exit.thread.i.i
 
 update_sd_pick_busiest.exit.thread.i.i:           ; preds = %update_sd_pick_busiest.exit.thread76.i.i, %update_sd_pick_busiest.exit.i.i, %bb.cu, %bb.cs, %smt_vs_nonsmt_groups.exit.thread.i.i.i, %.split78.i.i, %bb.cp, %bb.cn, %.split80.i.i, %.split79.i.i, %.split81.i.i, %bb.cl, %bb.ck, %bb.cj, %bb.ci, %bb.cg, %update_sg_lb_stats.exit.i.i
@@ -1165,7 +1164,7 @@ update_sd_lb_stats.exit.i:                        ; preds = %bb.df, %bb.de, %bb.
   br i1 %.not.i163, label %calculate_imbalance.exit.thread134.i.sink.split, label %bb.dg
 
 bb.dg:                                            ; preds = %update_sd_lb_stats.exit.i
-  %i.uz = load i32, ptr %i.ap, align 8            ; 10 uses
+  %i.uz = load i32, ptr %i.al, align 8            ; 10 uses
   %i.va = icmp eq i32 %i.uz, 2
   br i1 %i.va, label %.thread58.i, label %bb.dh
 
@@ -1175,7 +1174,7 @@ bb.dh:                                            ; preds = %bb.dg
   br i1 %switch.i, label %bb.dv, label %bb.di
 
 bb.di:                                            ; preds = %bb.dh
-  %i.vc = load i32, ptr %i.ao, align 8            ; 4 uses
+  %i.vc = load i32, ptr %i.ap, align 8            ; 4 uses
   %i.vd = icmp ugt i32 %i.vc, %i.uz
   br i1 %i.vd, label %calculate_imbalance.exit.thread134.i.sink.split, label %bb.dj
 
@@ -1184,8 +1183,8 @@ bb.dj:                                            ; preds = %bb.di
   br i1 %i.ve, label %bb.dk, label %bb.dn
 
 bb.dk:                                            ; preds = %bb.dj
-  %i.vf = load i64, ptr %i.al, align 8            ; 4 uses
-  %i.vg = load i64, ptr %i.an, align 8            ; 3 uses
+  %i.vf = load i64, ptr %i.am, align 8            ; 4 uses
+  %i.vg = load i64, ptr %i.ao, align 8            ; 3 uses
   %.not38.i166 = icmp ult i64 %i.vf, %i.vg
   br i1 %.not38.i166, label %bb.dl, label %calculate_imbalance.exit.thread134.i.sink.split
 
@@ -1221,7 +1220,7 @@ bb.do:                                            ; preds = %bb.dn
 
 bb.dp:                                            ; preds = %bb.do
   %.val.i165 = load i32, ptr %i.q, align 4        ; 2 uses
-  %i.vu = call fastcc i64 @sibling_imbalance(i32 %.val.i165, ptr noundef nonnull %6, ptr noundef nonnull %i.an, ptr noundef nonnull %i.al) #29
+  %i.vu = call fastcc i64 @sibling_imbalance(i32 %.val.i165, ptr noundef nonnull %6, ptr noundef nonnull %i.ao, ptr noundef nonnull %i.am) #29
   %i.vv = icmp sgt i64 %i.vu, 1
   br i1 %i.vv, label %bb.dv, label %.thread.thread124.i
 
@@ -1251,7 +1250,7 @@ bb.dr:                                            ; preds = %bb.dq
   br i1 %i.vx, label %bb.ds, label %smt_vs_nonsmt_groups.exit.thread.i
 
 bb.ds:                                            ; preds = %bb.dr
-  %i.vy = load ptr, ptr %i.am, align 8            ; 2 uses
+  %i.vy = load ptr, ptr %i.an, align 8            ; 2 uses
   %.not70.i = icmp eq ptr %i.vy, null
   br i1 %.not70.i, label %smt_vs_nonsmt_groups.exit.thread.i, label %smt_vs_nonsmt_groups.exit.i
 
@@ -1316,7 +1315,7 @@ bb.dy:                                            ; preds = %smt_vs_nonsmt_group
   br label %.sink.split
 
 bb.dz:                                            ; preds = %bb.dv
-  %i.wt = load i32, ptr %i.ao, align 8            ; 2 uses
+  %i.wt = load i32, ptr %i.ap, align 8            ; 2 uses
   %i.wu = icmp eq i32 %i.wt, 0
   br i1 %i.wu, label %bb.ea, label %bb.el
 
@@ -1369,7 +1368,7 @@ bb.ee:                                            ; preds = %bb.ed
 bb.ef:                                            ; preds = %bb.ee
   %i.xi = getelementptr i8, ptr %i.uy, i64 16
   %i.xj = load i32, ptr %i.xi, align 8            ; 4 uses
-  %i.xk = load ptr, ptr %i.am, align 8
+  %i.xk = load ptr, ptr %i.an, align 8
   %i.xl = getelementptr i8, ptr %i.xk, i64 16
   %i.xm = load i32, ptr %i.xl, align 8            ; 4 uses
   %i.xn = icmp eq i32 %i.xj, %i.xm
@@ -1447,12 +1446,12 @@ bb.ek:                                            ; preds = %bb.ej, %sibling_imb
 bb.el:                                            ; preds = %.thread61.i, %bb.dz
   %i.zd = phi i32 [ %i.vc, %.thread61.i ], [ %i.wt, %bb.dz ]
   %i.ze = icmp ult i32 %i.zd, 7
-  %.pre.i = load i64, ptr %i.an, align 8          ; 3 uses
+  %.pre.i = load i64, ptr %i.ao, align 8          ; 3 uses
   br i1 %i.ze, label %bb.em, label %.._crit_edge.i_crit_edge
 
 .._crit_edge.i_crit_edge:                         ; preds = %bb.el
   %.pre74.i.pre = load i64, ptr %i.aw, align 8
-  %.pre75.i.pre = load i64, ptr %i.al, align 8
+  %.pre75.i.pre = load i64, ptr %i.am, align 8
   br label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.._crit_edge.i_crit_edge, %.thread.thread.i

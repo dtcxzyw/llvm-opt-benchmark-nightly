@@ -68,11 +68,11 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !25
   store ptr %i.c, ptr %i.a, align 8, !tbaa !26
   %i.d = call i32 @delete_tempfile(ptr noundef nonnull %i.a) #6
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx, i8 0, i64 12, i1 false)
   store ptr null, ptr %0, align 8, !tbaa !28
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 -1, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !29
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx.a, i8 0, i64 12, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 -1, ptr %.sroa.3.0..sroa_idx.a, align 8, !tbaa !29
   %i.e = icmp slt i32 %i.d, 0
   %. = select i1 %i.e, i32 -2, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
@@ -93,11 +93,11 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !25
   store ptr %i.c, ptr %i.a, align 8, !tbaa !26
   %i.d = call i32 @rename_tempfile(ptr noundef nonnull %i.a, ptr noundef %1) #6
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx, i8 0, i64 12, i1 false)
   store ptr null, ptr %0, align 8, !tbaa !28
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 -1, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !29
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx.a, i8 0, i64 12, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 -1, ptr %.sroa.3.0..sroa_idx.a, align 8, !tbaa !29
   %i.e = icmp slt i32 %i.d, 0
   %. = select i1 %i.e, i32 -2, i32 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
@@ -183,11 +183,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @rollback_lock_file(ptr noundef nonnull %i.b) #6
   tail call void @reftable_free(ptr noundef nonnull %i.b) #6
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx, i8 0, i64 12, i1 false)
   store ptr null, ptr %0, align 8, !tbaa !28
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 -1, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !29
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx.a, i8 0, i64 12, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 -1, ptr %.sroa.3.0..sroa_idx.a, align 8, !tbaa !29
   %i.d = icmp slt i32 %i.c, 0
   %. = select i1 %i.d, i32 -2, i32 0
   br label %bb.c
@@ -210,11 +210,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call i32 @commit_lock_file(ptr noundef nonnull %i.b) #6
   tail call void @reftable_free(ptr noundef nonnull %i.b) #6
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx, i8 0, i64 12, i1 false)
   store ptr null, ptr %0, align 8, !tbaa !28
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 -1, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !29
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 12
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx.a, i8 0, i64 12, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i32 -1, ptr %.sroa.3.0..sroa_idx.a, align 8, !tbaa !29
   %i.d = icmp slt i32 %i.c, 0
   %. = select i1 %i.d, i32 -2, i32 0
   br label %bb.c

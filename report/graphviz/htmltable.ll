@@ -204,7 +204,7 @@ popFontInfo.exit:                                 ; preds = %bb.cf, %bb.ce, %bb.
 ; Function Attrs: nofree nounwind uwtable
 define internal fastcc void @pos_html_tbl(ptr nofree noundef captures(none) %0, ptr nofree noundef byval(%struct.boxf) align 8 captures(none) %1, i8 noundef zeroext range(i8 0, 16) %2) unnamed_addr #8 {
 bb.a:
-  %3 = alloca %struct.boxf, align 8               ; 10 uses
+  %3 = alloca %struct.boxf, align 8               ; 12 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !24   ; 2 uses
@@ -571,6 +571,7 @@ bb.w:                                             ; preds = %._crit_edge158, %bb
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %.pre-phi171
   %i.fw = load double, ptr %i.fv, align 8, !tbaa !28
   %i.fx = fadd double %i.fw, %i.fq                ; 7 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   %i.fy = getelementptr inbounds nuw i8, ptr %i.eo, i64 48 ; 2 uses
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !269
   %.not.i = icmp eq ptr %i.fz, null
@@ -694,16 +695,16 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.
   %i.hq = load i8, ptr %i.hp, align 2, !tbaa !224
   %i.hr = uitofp i8 %i.hq to double               ; 4 uses
   %i.hs = fadd double %i.ho, %i.hr                ; 6 uses
-  store double %i.hs, ptr %3, align 8
+  store double %i.hs, ptr %3, align 8, !tbaa !271
   %i.ht = fadd double %.sroa.9.0, %i.hn
   %i.hu = fadd double %i.ht, %i.hr                ; 6 uses
-  store double %i.hu, ptr %i.dn, align 8
+  store double %i.hu, ptr %i.dn, align 8, !tbaa !272
   %i.hv = fsub double %.sroa.15.1, %i.hn
   %i.hw = fsub double %i.hv, %i.hr                ; 6 uses
-  store double %i.hw, ptr %i.do, align 8
+  store double %i.hw, ptr %i.do, align 8, !tbaa !123
   %i.hx = fsub double %.sroa.22.0, %i.hn
   %i.hy = fsub double %i.hx, %i.hr                ; 6 uses
-  store double %i.hy, ptr %i.dp, align 8
+  store double %i.hy, ptr %i.dp, align 8, !tbaa !124
   %i.hz = getelementptr inbounds nuw i8, ptr %i.eo, i64 112 ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.eo, i64 120
   %i.ib = load i32, ptr %i.ia, align 8, !tbaa !109
@@ -736,12 +737,12 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ao
   %i.ii = fsub double %i.hw, %i.if
-  store double %i.ii, ptr %i.do, align 8
+  store double %i.ii, ptr %i.do, align 8, !tbaa !123
   br label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ao
   %i.ij = fadd double %i.hs, %i.if
-  store double %i.ij, ptr %3, align 8
+  store double %i.ij, ptr %3, align 8, !tbaa !271
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ap, %bb.ao, %bb.an
@@ -759,12 +760,12 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   %i.io = fsub double %i.hy, %i.il
-  store double %i.io, ptr %i.dp, align 8
+  store double %i.io, ptr %i.dp, align 8, !tbaa !124
   br label %bb.av
 
 bb.au:                                            ; preds = %bb.as
   %i.ip = fadd double %i.hu, %i.il
-  store double %i.ip, ptr %i.dn, align 8
+  store double %i.ip, ptr %i.dn, align 8, !tbaa !272
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %bb.as, %bb.ar
@@ -792,12 +793,12 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.iv = fsub double %i.hw, %i.is
-  store double %i.iv, ptr %i.do, align 8
+  store double %i.iv, ptr %i.do, align 8, !tbaa !123
   br label %bb.bb
 
 bb.az:                                            ; preds = %bb.ax
   %i.iw = fadd double %i.hs, %i.is
-  store double %i.iw, ptr %3, align 8
+  store double %i.iw, ptr %3, align 8, !tbaa !271
   br label %bb.bb
 
 .unreachabledefault.i:                            ; preds = %bb.ax
@@ -806,9 +807,9 @@ bb.az:                                            ; preds = %bb.ax
 bb.ba:                                            ; preds = %bb.ax
   %i.ix = fmul nnan double %i.is, 5.000000e-01    ; 2 uses
   %i.iy = fadd double %i.hs, %i.ix
-  store double %i.iy, ptr %3, align 8
+  store double %i.iy, ptr %3, align 8, !tbaa !271
   %i.iz = fsub double %i.hw, %i.ix
-  store double %i.iz, ptr %i.do, align 8
+  store double %i.iz, ptr %i.do, align 8, !tbaa !123
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az, %bb.ay, %bb.ax, %bb.aw
@@ -826,25 +827,25 @@ bb.bc:                                            ; preds = %bb.bb
 
 bb.bd:                                            ; preds = %bb.bc
   %i.je = fsub double %i.hy, %i.jb
-  store double %i.je, ptr %i.dp, align 8
+  store double %i.je, ptr %i.dp, align 8, !tbaa !124
   br label %bb.bg
 
 bb.be:                                            ; preds = %bb.bc
   %i.jf = fadd double %i.hu, %i.jb
-  store double %i.jf, ptr %i.dn, align 8
+  store double %i.jf, ptr %i.dn, align 8, !tbaa !272
   br label %bb.bg
 
 bb.bf:                                            ; preds = %bb.bc
   %i.jg = fmul nnan double %i.jb, 5.000000e-01    ; 2 uses
   %i.jh = fadd double %i.hu, %i.jg
-  store double %i.jh, ptr %i.dn, align 8
+  store double %i.jh, ptr %i.dn, align 8, !tbaa !272
   %i.ji = fsub double %i.hy, %i.jg
-  store double %i.ji, ptr %i.dp, align 8
+  store double %i.ji, ptr %i.dp, align 8, !tbaa !124
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.bd, %bb.bb
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ic, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.jj, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.jj, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !277
   %i.jk = load i16, ptr %i.gk, align 8, !tbaa !221
   %i.jl = and i16 %i.jk, 768                      ; 2 uses
   %switch.selectcmp.i = icmp eq i16 %i.jl, 256
@@ -1068,7 +1069,7 @@ pred.store.if220:                                 ; preds = %pred.store.continue
 pred.store.continue221:                           ; preds = %pred.store.if220, %pred.store.continue219
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.mu = icmp eq i64 %index.next, %n.vec
-  br i1 %i.mu, label %middle.block, label %vector.body, !llvm.loop !277
+  br i1 %i.mu, label %middle.block, label %vector.body, !llvm.loop !278
 
 middle.block:                                     ; preds = %pred.store.continue221
   %cmp.n = icmp eq i64 %i.jo, %n.vec
@@ -1076,7 +1077,7 @@ middle.block:                                     ; preds = %pred.store.continue
 
 vec.epilog.iter.check:                            ; preds = %middle.block
   %min.epilog.iters.check.not.not = icmp eq i64 %i.jq, 0
-  br i1 %min.epilog.iters.check.not.not, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !278
+  br i1 %min.epilog.iters.check.not.not, label %vec.epilog.scalar.ph.preheader, label %vec.epilog.ph, !prof !279
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
@@ -1184,7 +1185,7 @@ pred.store.if238:                                 ; preds = %pred.store.continue
 pred.store.continue239:                           ; preds = %pred.store.if238, %pred.store.continue237
   %index.next240 = add nuw i64 %index223, 8       ; 2 uses
   %i.ok = icmp eq i64 %index.next240, %n.vec222
-  br i1 %i.ok, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !279
+  br i1 %i.ok, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !280
 
 vec.epilog.middle.block:                          ; preds = %pred.store.continue239
   %cmp.n241 = icmp eq i64 %i.jo, %n.vec222
@@ -1209,18 +1210,19 @@ bb.bh:                                            ; preds = %vec.epilog.scalar.p
 bb.bi:                                            ; preds = %bb.bh, %vec.epilog.scalar.ph
   %i.op = add nuw i64 %.07.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.op, %i.jo
-  br i1 %exitcond.not.i, label %pos_html_cell.exit, label %vec.epilog.scalar.ph, !llvm.loop !280
+  br i1 %exitcond.not.i, label %pos_html_cell.exit, label %vec.epilog.scalar.ph, !llvm.loop !281
 
 pos_html_cell.exit:                               ; preds = %bb.bi, %middle.block, %vec.epilog.middle.block, %bb.bg, %bb.am, %bb.av
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   %i.oq = load ptr, ptr %i.ep, align 8, !tbaa !98 ; 2 uses
   %.not137 = icmp eq ptr %i.oq, null
-  br i1 %.not137, label %._crit_edge, label %bb.u, !llvm.loop !281
+  br i1 %.not137, label %._crit_edge, label %bb.u, !llvm.loop !282
 
 ._crit_edge:                                      ; preds = %pos_html_cell.exit, %.preheader
   %i.or = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.os = getelementptr inbounds nuw i8, ptr %0, i64 63
-  store i8 %2, ptr %i.os, align 1, !tbaa !282
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.or, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !283
+  store i8 %2, ptr %i.os, align 1, !tbaa !283
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.or, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false), !tbaa.struct !277
   ret void
 }
 
@@ -1623,13 +1625,13 @@ begin_hunk_1_@llvm.assume
 !274 = distinct !{!274, !114}
 !275 = !{!101, !6, i64 63}
 !276 = distinct !{null}
-!277 = distinct !{!277, !114, !245, !246}
-!278 = !{!"branch_weights", i32 8, i32 8}
-!279 = distinct !{!279, !114, !245, !246}
-!280 = distinct !{!280, !114, !246, !245}
-!281 = distinct !{!281, !114}
-!282 = !{!77, !6, i64 63}
-!283 = !{i64 0, i64 8, !28, i64 8, i64 8, !28, i64 16, i64 8, !28, i64 24, i64 8, !28}
+!277 = !{i64 0, i64 8, !28, i64 8, i64 8, !28, i64 16, i64 8, !28, i64 24, i64 8, !28}
+!278 = distinct !{!278, !114, !245, !246}
+!279 = !{!"branch_weights", i32 8, i32 8}
+!280 = distinct !{!280, !114, !245, !246}
+!281 = distinct !{!281, !114, !246, !245}
+!282 = distinct !{!282, !114}
+!283 = !{!77, !6, i64 63}
 !284 = !{!128, !13, i64 40}
 !285 = distinct !{!285, !114, !286}
 !286 = !{!"llvm.loop.peeled.count", i32 1}

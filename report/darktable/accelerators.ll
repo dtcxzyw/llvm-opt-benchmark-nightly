@@ -204,11 +204,12 @@ bb.a:
   %2 = alloca %struct.dt_shortcut_t, align 8      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(56) @_sc, i64 56, i1 false), !tbaa.struct !168
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) getelementptr inbounds nuw (i8, ptr @_sc, i64 9), i8 0, i64 3, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_sc, i64 16), i8 0, i64 40, i1 false)
   store i64 0, ptr @_sc, align 8
   store i8 %0, ptr getelementptr inbounds nuw (i8, ptr @_sc, i64 8), align 8, !tbaa !11
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) getelementptr inbounds nuw (i8, ptr @_sc, i64 9), i8 0, i64 3, i1 false)
   store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @_sc, i64 12), align 4, !tbaa !12
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) getelementptr inbounds nuw (i8, ptr @_sc, i64 16), i8 0, i64 40, i1 false)
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_sc, i64 24), align 8, !tbaa !96
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @_sc, i64 48), align 8, !tbaa !134
   store i16 0, ptr getelementptr inbounds nuw (i8, ptr @_sc, i64 20), align 4
   store i32 0, ptr @_break_stuck, align 4, !tbaa !12

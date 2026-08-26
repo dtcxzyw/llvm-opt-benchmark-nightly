@@ -205,11 +205,11 @@ bb.cg:                                            ; preds = %bb.cf
   %i.kz = sext i32 %.0434 to i64
   %i.la = load ptr, ptr %i.b, align 8, !tbaa !38
   %i.lb = getelementptr inbounds nuw [88 x i8], ptr %i.la, i64 %i.kz ; 9 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.lb, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.5.0..sroa_idx, i8 0, i64 9, i1 false)
   store i32 0, ptr %i.lb, align 8, !tbaa !97
-  %.sroa.4257.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.lb, i64 4
-  store i32 -1, ptr %.sroa.4257.0..sroa_idx, align 4, !tbaa !97
-  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.lb, i64 8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.5.0..sroa_idx.a, i8 0, i64 9, i1 false)
+  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.lb, i64 4
+  store i32 -1, ptr %.sroa.5.0..sroa_idx.a, align 4, !tbaa !97
   %i.lc = getelementptr i8, ptr %i.lb, i64 20
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %i.lc, i8 0, i64 68, i1 false)
   %i.ld = shl nsw i32 %.0434, 2
@@ -612,11 +612,13 @@ bb.d:                                             ; preds = %bb.c
   %i.w = sext i32 %i.r to i64
   %i.x = load ptr, ptr %i.a, align 8, !tbaa !38
   %i.y = getelementptr inbounds nuw [88 x i8], ptr %i.x, i64 %i.w ; 21 uses
-  %.sroa.4112.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.y, i64 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 3 uses
+  %.sroa.4112.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.y, i64 8 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.4112.0..sroa_idx.a, i8 0, i64 9, i1 false)
+  store i32 0, ptr %i.y, align 8, !tbaa !97
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 4 ; 2 uses
+  store i32 0, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !97
   %3 = getelementptr i8, ptr %i.y, i64 20
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(68) %3, i8 0, i64 68, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.y, i8 0, i64 17, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(68) %3, i8 0, i64 68, i1 false)
   %i.z = add nsw i32 %.0117, 1                    ; 7 uses
   %i.aa = load ptr, ptr %i.g, align 8, !tbaa !297 ; 4 uses
   %i.ab = load ptr, ptr %i.h, align 8, !tbaa !294
@@ -691,7 +693,7 @@ _ZNSt6vectorIPN2cv14ChessBoardQuadESaIS2_EE9push_backEOS2_.exit: ; preds = %bb.e
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.ba
   store ptr %1, ptr %i.bb, align 8, !tbaa !156
   %i.bc = load i32, ptr %i.i, align 4, !tbaa !200
-  store i32 %i.bc, ptr %.sroa.4112.0..sroa_idx.a, align 4, !tbaa !200
+  store i32 %i.bc, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !200
   store i32 1, ptr %i.y, align 8, !tbaa !162
   %i.bd = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   store i8 0, ptr %i.bd, align 8, !tbaa !308
@@ -767,7 +769,7 @@ switch.lookup:                                    ; preds = %_ZNSt6vectorIPN2cv1
   store i32 %i.cu, ptr %i.cv, align 4, !tbaa !307
   %i.cw = load i32, ptr %i.n, align 8, !tbaa !306
   %i.cx = add nsw i32 %i.cw, %switch.load135
-  store i32 %i.cx, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !306
+  store i32 %i.cx, ptr %.sroa.4112.0..sroa_idx.a, align 8, !tbaa !306
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIPN2cv14ChessBoardQuadESaIS2_EE9push_backEOS2_.exit, %switch.lookup
@@ -811,7 +813,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.du = load i32, ptr %i.dt, align 8, !tbaa !306
-  %i.dv = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !306
+  %i.dv = load i32, ptr %.sroa.4112.0..sroa_idx.a, align 8, !tbaa !306
   %i.dw = sub nsw i32 %i.du, %i.dv
   %i.dx = tail call i32 @llvm.abs.i32(i32 %i.dw, i1 true)
   %i.dy = icmp eq i32 %i.dx, 1
@@ -877,7 +879,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.u
   %i.ff = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
   %i.fg = load i32, ptr %i.ff, align 8, !tbaa !306
-  %i.fh = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !306
+  %i.fh = load i32, ptr %.sroa.4112.0..sroa_idx.a, align 8, !tbaa !306
   %i.fi = sub nsw i32 %i.fg, %i.fh
   %i.fj = tail call i32 @llvm.abs.i32(i32 %i.fi, i1 true)
   %i.fk = icmp eq i32 %i.fj, 1

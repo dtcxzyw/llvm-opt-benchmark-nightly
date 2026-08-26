@@ -204,18 +204,18 @@ bb.a:
   %9 = alloca %struct.v_t, align 16               ; 3 uses
   %10 = alloca %struct.v_t, align 16              ; 3 uses
   %i.a = fmul double %5, 2.000000e+00
-  %11 = icmp sgt i32 %1, 1
-  %12 = select i1 %11, i32 %2, i32 1
-  %13 = sext i32 %12 to i64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
-  %.sroa.4116.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store double %i.a, ptr %.sroa.4116.0..sroa_idx, align 8, !tbaa !25
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %11, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  %12 = icmp sgt i32 %1, 1
+  %13 = select i1 %12, i32 %2, i32 1
+  %14 = sext i32 %13 to i64
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store double %i.a, ptr %i.b, align 8, !tbaa !25
   %.sroa.4114.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store double %5, ptr %.sroa.4114.0..sroa_idx, align 8, !tbaa !25
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 %13, ptr %i.c, align 8, !tbaa !61
+  store i64 %14, ptr %i.c, align 8, !tbaa !61
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.e = icmp slt i32 %1, 2
   br i1 %i.e, label %bb.aa, label %bb.b

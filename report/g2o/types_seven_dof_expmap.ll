@@ -205,10 +205,10 @@ define linkonce_odr void @_ZN3g2o16VertexSim3Expmap15setToOriginImplEv(ptr nound
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 208
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 232
-  store double 1.000000e+00, ptr %.sroa.4.0..sroa_idx.a, align 8, !tbaa !17
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 240
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 240
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.4.0..sroa_idx.a, i8 0, i64 24, i1 false)
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 232
+  store double 1.000000e+00, ptr %i.b, align 8, !tbaa !17
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 264
   store double 1.000000e+00, ptr %i.c, align 8, !tbaa !35
   ret void

@@ -205,13 +205,13 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 32), i8 0, i64 16, i1 false)
   store i16 8, ptr @net_hotdata, align 8
   store i16 0, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 2), align 2
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 4), align 4
   store ptr @inet_gso_segment, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 8), align 8
   store ptr @inet_gro_receive, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 16), align 8
   store ptr @inet_gro_complete, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 24), align 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 32), i8 0, i64 16, i1 false)
   tail call void @dev_add_offload(ptr noundef nonnull @net_hotdata) #16
   ret i32 0
 }
@@ -252,10 +252,11 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 153), i8 0, i64 3, i1 false)
   store ptr @udp_rcv, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 136), align 8
   store ptr @udp_err, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 144), align 8
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 152), align 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 153), i8 0, i64 7, i1 false)
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 156), align 4
   %i.i = tail call i32 @inet_add_protocol(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 136), i8 noundef zeroext 17) #16
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %bb.h, label %bb.i
@@ -265,10 +266,11 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 97), i8 0, i64 3, i1 false)
   store ptr @tcp_v4_rcv, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 80), align 8
   store ptr @tcp_v4_err, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 88), align 8
   store i8 3, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 96), align 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 97), i8 0, i64 7, i1 false)
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 100), align 4
   %i.l = tail call i32 @inet_add_protocol(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @net_hotdata, i64 80), i8 noundef zeroext 6) #16
   %i.m = icmp slt i32 %i.l, 0
   br i1 %i.m, label %bb.j, label %bb.k

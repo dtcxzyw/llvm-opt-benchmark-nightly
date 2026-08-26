@@ -205,9 +205,9 @@ begin_hunk_0
 %"class.std::_Function_base" = type { %"union.std::_Any_data", ptr }
 %"union.std::_Any_data" = type { %"union.std::_Nocopy_types" }
 %"union.std::_Nocopy_types" = type { { i64, i64 } }
+%struct.grpc_slice = type { ptr, %"union.grpc_slice::grpc_slice_data" }
 %"union.grpc_slice::grpc_slice_data" = type { %"struct.grpc_slice::grpc_slice_data::grpc_slice_refcounted", [8 x i8] }
 %"struct.grpc_slice::grpc_slice_data::grpc_slice_refcounted" = type { i64, ptr }
-%struct.grpc_slice = type { ptr, %"union.grpc_slice::grpc_slice_data" }
 %class.anon.295 = type { ptr }
 %class.anon.296 = type { ptr }
 %"class.grpc_core::promise_filter_detail::ServerCallData::PollContext" = type <{ %"class.grpc_core::ManualConstructor.275", ptr, ptr, i8, i8, [6 x i8] }>
@@ -610,15 +610,13 @@ bb.al:                                            ; preds = %_ZNSt7__cxx1112basi
 ; Function Attrs: mustprogress uwtable
 define void @_ZN9grpc_core21promise_filter_detail14ClientCallData18SetStatusFromErrorEP19grpc_metadata_batchN4absl12lts_202505126StatusE(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(272) %0, ptr noundef %1, ptr noundef align 8 %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.4 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 4 uses
-  %.sroa.6.i.i.i = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 4 uses
   %3 = alloca %struct.grpc_slice, align 8         ; 6 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 6 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %6 = alloca %"class.absl::lts_20250512::Status", align 8 ; 4 uses
-  %.sroa.9 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 6 uses
+  %.sroa.9 = alloca %"union.grpc_slice::grpc_slice_data", align 8 ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #40
@@ -789,28 +787,26 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   store i16 %storemerge.i.i.i.i14, ptr %1, align 4, !tbaa !22
   %i.az = and i16 %i.ay, 32
   %.not.i.i.i = icmp eq i16 %i.az, 0
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 128 ; 2 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 128
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9, i64 24, i1 false)
   br i1 %.not.i.i.i, label %bb.q, label %bb.m
 
 bb.m:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9, i64 24, i1 false)
   %.sroa.011.0.copyload.i.i.i = load ptr, ptr %i.ax, align 8, !tbaa !828 ; 4 uses
   store ptr %.sroa.0.0.copyload, ptr %i.ax, align 8, !tbaa !828
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.i.i.i, i64 24, i1 false), !tbaa.struct !829
   %i.ba = icmp ugt ptr %.sroa.011.0.copyload.i.i.i, inttoptr (i64 1 to ptr)
-  br i1 %i.ba, label %bb.n, label %_ZN9grpc_core15metadata_detail5ValueINS_19GrpcMessageMetadataEvED2Ev.exit.i.i.i
+  br i1 %i.ba, label %bb.n, label %_ZN9grpc_core5SliceD2Ev.exit
 
 bb.n:                                             ; preds = %bb.m
   %i.bb = atomicrmw sub ptr %.sroa.011.0.copyload.i.i.i, i64 1 acq_rel, align 8
   %i.bc = icmp eq i64 %i.bb, 1
-  br i1 %i.bc, label %bb.o, label %_ZN9grpc_core15metadata_detail5ValueINS_19GrpcMessageMetadataEvED2Ev.exit.i.i.i
+  br i1 %i.bc, label %bb.o, label %_ZN9grpc_core5SliceD2Ev.exit
 
 bb.o:                                             ; preds = %bb.n
   %i.bd = getelementptr inbounds nuw i8, ptr %.sroa.011.0.copyload.i.i.i, i64 8
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !732
   invoke void %i.be(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.011.0.copyload.i.i.i)
-          to label %_ZN9grpc_core15metadata_detail5ValueINS_19GrpcMessageMetadataEvED2Ev.exit.i.i.i unwind label %bb.p, !inline_history !734
+          to label %_ZN9grpc_core5SliceD2Ev.exit unwind label %bb.p, !inline_history !734
 
 bb.p:                                             ; preds = %bb.o
   %i.bf = landingpad { ptr, i32 }
@@ -819,19 +815,11 @@ bb.p:                                             ; preds = %bb.o
   call void @__clang_call_terminate(ptr %i.bg) #41
   unreachable
 
-_ZN9grpc_core15metadata_detail5ValueINS_19GrpcMessageMetadataEvED2Ev.exit.i.i.i: ; preds = %bb.o, %bb.n, %bb.m
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i.i)
-  br label %_ZN9grpc_core5SliceD2Ev.exit
-
 bb.q:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9, i64 24, i1 false), !tbaa.struct !829
   store ptr %.sroa.0.0.copyload, ptr %i.ax, align 8, !tbaa !828
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4, i64 24, i1 false), !tbaa.struct !829
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   br label %_ZN9grpc_core5SliceD2Ev.exit
 
-_ZN9grpc_core5SliceD2Ev.exit:                     ; preds = %bb.q, %_ZN9grpc_core15metadata_detail5ValueINS_19GrpcMessageMetadataEvED2Ev.exit.i.i.i
+_ZN9grpc_core5SliceD2Ev.exit:                     ; preds = %bb.m, %bb.n, %bb.o, %bb.q
   %.pre = load ptr, ptr %7, align 8, !tbaa !195   ; 2 uses
   %i.bh = icmp eq ptr %.pre, %i.r
   br i1 %i.bh, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i15

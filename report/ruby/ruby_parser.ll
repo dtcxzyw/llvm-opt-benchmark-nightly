@@ -202,15 +202,15 @@ bb.b:                                             ; preds = %bb.a
 RTYPEDDATA_GET_DATA.exit:                         ; preds = %bb.a, %bb.b
   %i.h = phi ptr [ %i.g, %bb.b ], [ %i.f, %bb.a ] ; 5 uses
   %i.i = getelementptr i8, ptr %i.h, i64 8
+  %.sroa.9.0..sroa_idx = getelementptr i8, ptr %i.h, i64 29
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.9.0..sroa_idx, i8 0, i64 3, i1 false)
   store ptr %0, ptr %i.i, align 8, !tbaa !108
-  %.sroa.2.0..sroa_idx = getelementptr i8, ptr %i.h, i64 16
-  store ptr null, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !110
-  %.sroa.3.0..sroa_idx.a = getelementptr i8, ptr %i.h, i64 24
-  store i32 0, ptr %.sroa.3.0..sroa_idx.a, align 8, !tbaa !7
-  %.sroa.4.0..sroa_idx.a = getelementptr i8, ptr %i.h, i64 28
-  store i8 15, ptr %.sroa.4.0..sroa_idx.a, align 4, !tbaa !33
-  %.sroa.9.0..sroa_idx.a = getelementptr i8, ptr %i.h, i64 29
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.9.0..sroa_idx.a, i8 0, i64 3, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr i8, ptr %i.h, i64 16
+  store ptr null, ptr %.sroa.3.0..sroa_idx.a, align 8, !tbaa !110
+  %.sroa.4.0..sroa_idx.a = getelementptr i8, ptr %i.h, i64 24
+  store i32 0, ptr %.sroa.4.0..sroa_idx.a, align 8, !tbaa !7
+  %.sroa.9.0..sroa_idx.a = getelementptr i8, ptr %i.h, i64 28
+  store i8 15, ptr %.sroa.9.0..sroa_idx.a, align 4, !tbaa !33
   ret i64 %i.a
 }
 

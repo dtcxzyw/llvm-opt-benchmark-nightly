@@ -205,7 +205,7 @@ bb.dg:                                            ; preds = %bb.cy
   br i1 %.not.i, label %._crit_edge1055.i, label %.lr.ph1047.i
 
 .lr.ph1047.i:                                     ; preds = %bb.dg
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bm, i64 858 ; 2 uses
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.bm, i64 858 ; 3 uses
   %i.kl = getelementptr inbounds nuw i8, ptr %i.q, i64 4 ; 3 uses
   %i.km = getelementptr inbounds nuw i8, ptr %i.q, i64 20
   %i.kn = getelementptr inbounds nuw i8, ptr %i.q, i64 3
@@ -557,9 +557,10 @@ bb.ei:                                            ; preds = %bb.dh
           to label %bb.ej unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.i, !noalias !681
 
 bb.ej:                                            ; preds = %bb.ei
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(16) %.sroa.7.0..sroa_idx.i, i8 0, i64 16, i1 false), !alias.scope !684, !noalias !681
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(9) %.sroa.8.0..sroa_idx.i, ptr noundef nonnull align 1 dereferenceable(9) %i.au, i64 9, i1 false), !noalias !681
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au), !noalias !713
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(20) %i.ec, i8 0, i64 20, i1 false), !alias.scope !684, !noalias !681
+  store i32 0, ptr %i.ec, align 2, !alias.scope !684, !noalias !681
   store i8 0, ptr %.sroa.9.0..sroa_idx.i, align 1, !alias.scope !684, !noalias !681
   %i.qi = load i16, ptr %i.dn, align 4, !alias.scope !684, !noalias !681, !noundef !5 ; 2 uses
   %i.qj = zext i16 %i.qi to i64

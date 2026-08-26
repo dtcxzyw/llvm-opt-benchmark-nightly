@@ -202,16 +202,16 @@ declare i32 @pthread_atfork(ptr noundef, ptr noundef, ptr noundef) local_unnamed
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define internal void @_atfork_child() #7 {
 bb.a:
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @pctl, i64 56), i8 0, i64 56, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) getelementptr inbounds nuw (i8, ptr @pctl, i64 120), i8 0, i64 60, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) getelementptr inbounds nuw (i8, ptr @pctl, i64 184), i8 0, i64 20, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) getelementptr inbounds nuw (i8, ptr @pctl, i64 212), i8 0, i64 12, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) @pctl, i8 0, i64 48, i1 false)
   store ptr @.str.9, ptr getelementptr inbounds nuw (i8, ptr @pctl, i64 48), align 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @pctl, i64 56), i8 0, i64 56, i1 false)
   store ptr @.str.10, ptr getelementptr inbounds nuw (i8, ptr @pctl, i64 112), align 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) getelementptr inbounds nuw (i8, ptr @pctl, i64 120), i8 0, i64 60, i1 false)
   store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @pctl, i64 180), align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) getelementptr inbounds nuw (i8, ptr @pctl, i64 184), i8 0, i64 20, i1 false)
   store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @pctl, i64 204), align 4
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @pctl, i64 208), align 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) getelementptr inbounds nuw (i8, ptr @pctl, i64 212), i8 0, i64 12, i1 false)
   ret void
 }
 

@@ -205,8 +205,6 @@ bb.a:
   %.sroa.04.i.i.i.i.i = alloca [3 x %"class.CGAL::Interval_nt"], align 16 ; 6 uses
   %7 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
   %8 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
-  %.sroa.0 = alloca [3 x %"class.CGAL::Interval_nt"], align 16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.a = load ptr, ptr %3, align 8, !tbaa !653    ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %4, align 8, !tbaa !653    ; 3 uses
@@ -231,19 +229,17 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.16..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %7, i64 16, i1 false), !noalias !2269
   %.sroa.04.32..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.04.i.i.i.i.i, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.04.32..sroa_idx.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %8, i64 16, i1 false), !noalias !2269
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i.i.i.i, i64 48, i1 false)
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %9, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.04.i.i.i.i.i, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.04.i.i.i.i.i), !noalias !2269
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #38, !noalias !2269
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #38, !noalias !2269
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 1, ptr %i.q, align 8, !tbaa !660
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %9, ptr noundef nonnull align 16 dereferenceable(48) %.sroa.0, i64 48, i1 false)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr null, ptr %i.r, align 16, !tbaa !723
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 0, ptr %i.s, align 8, !tbaa !665
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_7Point_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS1_INS2_IN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEEEENS_23CartesianKernelFunctors24Construct_circumcenter_3IS5_EENSN_ISK_EENS_19Cartesian_converterISK_S5_NS_12NT_converterISJ_S4_EEEELb0EJNS1_INS_5EpeckEEESV_SV_SV_EEE, i64 16), ptr %0, align 16, !tbaa !68
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.u = load ptr, ptr %6, align 8, !tbaa !653    ; 2 uses

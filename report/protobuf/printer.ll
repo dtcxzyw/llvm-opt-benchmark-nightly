@@ -204,14 +204,18 @@ _ZNSt6vectorIN6google8protobuf2io7Printer6Format4LineESaIS5_EED2Ev.exit: ; preds
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN6google8protobuf2io7PrinterC2EPNS1_20ZeroCopyOutputStreamE(ptr nofree noundef nonnull writeonly align 16 captures(none) dereferenceable(296) initializes((0, 33), (40, 114), (120, 200), (224, 264), (272, 296)) %0, ptr noundef %1) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 41
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.45.0..sroa_idx, i8 0, i64 7, i1 false)
+  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 98
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.13.0..sroa_idx, i8 0, i64 6, i1 false)
   store ptr %1, ptr %0, align 16, !tbaa !136
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(25) %i.a, i8 0, i64 25, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i8 36, ptr %i.b, align 8
-  %.sroa.45.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 41
+  %.sroa.45.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 48
+  store ptr null, ptr %.sroa.45.0..sroa_idx.a, align 16
   %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.45.0..sroa_idx.a, i8 0, i64 15, i1 false)
   store i64 2, ptr %.sroa.67.0..sroa_idx, align 8
   %.sroa.78.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr @.str.31, ptr %.sroa.78.0..sroa_idx, align 16
@@ -222,15 +226,19 @@ bb.a:
   %.sroa.1011.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i64 2, ptr %.sroa.1011.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 112
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.11.0..sroa_idx, i8 0, i64 16, i1 false)
-  store i8 1, ptr %i.c, align 16, !tbaa !27
+  store i8 0, ptr %.sroa.11.0..sroa_idx, align 16
+  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 97
+  store i8 0, ptr %.sroa.12.0..sroa_idx, align 1
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
+  store i64 0, ptr %i.c, align 8, !tbaa !137
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 112
+  store i8 1, ptr %2, align 16, !tbaa !27
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 113
-  store i8 0, ptr %i.d, align 1, !tbaa !137
+  store i8 0, ptr %i.d, align 1, !tbaa !138
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 224
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.e, i8 0, i64 80, i1 false)
-  store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr %i.f, align 16, !tbaa !138
+  store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr %i.f, align 16, !tbaa !139
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 232
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 256
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.g, i8 0, i64 24, i1 false)
@@ -239,7 +247,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.h, i8 0, i64 24, i1 false)
   %i.i = load atomic i8, ptr @_ZGVZN6google8protobuf2io7PrinterC1EPNS1_20ZeroCopyOutputStreamENS2_7OptionsEE19kEnableCodegenTrace acquire, align 8
   %i.j = icmp eq i8 %i.i, 0
-  br i1 %i.j, label %bb.b, label %_ZN6google8protobuf2io7PrinterC2EPNS1_20ZeroCopyOutputStreamENS2_7OptionsE.exit, !prof !139
+  br i1 %i.j, label %bb.b, label %_ZN6google8protobuf2io7PrinterC2EPNS1_20ZeroCopyOutputStreamENS2_7OptionsE.exit, !prof !140
 
 bb.b:                                             ; preds = %bb.a
   %i.k = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN6google8protobuf2io7PrinterC1EPNS1_20ZeroCopyOutputStreamENS2_7OptionsEE19kEnableCodegenTrace) #28
@@ -275,15 +283,15 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.b, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store i64 0, ptr %i.c, align 8, !tbaa !140
+  store i64 0, ptr %i.c, align 8, !tbaa !137
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i8 1, ptr %i.d, align 16, !tbaa !27
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 113
-  store i8 0, ptr %i.e, align 1, !tbaa !137
+  store i8 0, ptr %i.e, align 1, !tbaa !138
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 224
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.f, i8 0, i64 80, i1 false)
-  store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr %i.g, align 16, !tbaa !138
+  store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr %i.g, align 16, !tbaa !139
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 232
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 256
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, i8 0, i64 24, i1 false)
@@ -299,7 +307,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.n = load atomic i8, ptr @_ZGVZN6google8protobuf2io7PrinterC1EPNS1_20ZeroCopyOutputStreamENS2_7OptionsEE19kEnableCodegenTrace acquire, align 8
   %i.o = icmp eq i8 %i.n, 0
-  br i1 %i.o, label %bb.c, label %bb.e, !prof !139
+  br i1 %i.o, label %bb.c, label %bb.e, !prof !140
 
 bb.c:                                             ; preds = %bb.b
   %i.p = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN6google8protobuf2io7PrinterC1EPNS1_20ZeroCopyOutputStreamENS2_7OptionsEE19kEnableCodegenTrace) #28
@@ -361,15 +369,15 @@ bb.a:
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 97
   store i8 0, ptr %.sroa.12.0..sroa_idx, align 1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104
-  store i64 0, ptr %i.c, align 8, !tbaa !140
+  store i64 0, ptr %i.c, align 8, !tbaa !137
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i8 1, ptr %i.d, align 16, !tbaa !27
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 113
-  store i8 0, ptr %i.e, align 1, !tbaa !137
+  store i8 0, ptr %i.e, align 1, !tbaa !138
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 224
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.f, i8 0, i64 80, i1 false)
-  store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr %i.g, align 16, !tbaa !138
+  store ptr @_ZN4absl12lts_2025051222internal_any_invocable12EmptyManagerENS1_14FunctionToCallEPNS1_15TypeErasedStateES4_, ptr %i.g, align 16, !tbaa !139
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 232
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 256
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, i8 0, i64 24, i1 false)
@@ -378,7 +386,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.i, i8 0, i64 24, i1 false)
   %i.j = load atomic i8, ptr @_ZGVZN6google8protobuf2io7PrinterC1EPNS1_20ZeroCopyOutputStreamENS2_7OptionsEE19kEnableCodegenTrace acquire, align 8
   %i.k = icmp eq i8 %i.j, 0
-  br i1 %i.k, label %bb.b, label %_ZN6google8protobuf2io7PrinterC2EPNS1_20ZeroCopyOutputStreamENS2_7OptionsE.exit, !prof !139
+  br i1 %i.k, label %bb.b, label %_ZN6google8protobuf2io7PrinterC2EPNS1_20ZeroCopyOutputStreamENS2_7OptionsE.exit, !prof !140
 
 bb.b:                                             ; preds = %bb.a
   %i.l = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN6google8protobuf2io7PrinterC1EPNS1_20ZeroCopyOutputStreamENS2_7OptionsEE19kEnableCodegenTrace) #28
@@ -679,7 +687,7 @@ define void @_ZN6google8protobuf2io7Printer7OutdentENS2_14SourceLocationE(ptr no
   store i64 0, ptr %i.b, align 8, !tbaa !163
   store i8 0, ptr %i.a, align 8, !tbaa !76
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !140
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !137
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !164
   %i.g = icmp uge i64 %i.d, %i.f                  ; 2 uses
@@ -761,9 +769,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i37
 
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.ad = load i64, ptr %i.e, align 8, !tbaa !164
-  %i.ae = load i64, ptr %i.c, align 8, !tbaa !140
+  %i.ae = load i64, ptr %i.c, align 8, !tbaa !137
   %i.af = sub i64 %i.ae, %i.ad
-  store i64 %i.af, ptr %i.c, align 8, !tbaa !140
+  store i64 %i.af, ptr %i.c, align 8, !tbaa !137
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.e
@@ -1166,7 +1174,7 @@ bb.a:
   %35 = alloca %class.anon.116, align 8           ; 6 uses
   %36 = alloca %class.anon.117, align 8           ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 8 uses
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !140  ; 3 uses
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !137  ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 16, !tbaa !258 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 4 uses
@@ -1402,7 +1410,7 @@ bb.m:                                             ; preds = %_ZNSt6vectorINSt7__
   %i.cy = getelementptr inbounds nuw i8, ptr %i.ce, i64 24
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !97
   %i.da = add i64 %i.cz, %i.d
-  store i64 %i.da, ptr %i.c, align 8, !tbaa !140
+  store i64 %i.da, ptr %i.c, align 8, !tbaa !137
   %i.db = getelementptr inbounds nuw i8, ptr %i.ce, i64 8 ; 5 uses
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !117
   %i.dd = load ptr, ptr %i.ce, align 8, !tbaa !124 ; 2 uses
@@ -1567,7 +1575,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.er, label %.preheader.i, label %_ZN6google8protobuf2io7Printer15IndentIfAtStartEv.exit
 
 .preheader.i:                                     ; preds = %bb.ac
-  %i.es = load i64, ptr %i.c, align 8, !tbaa !140
+  %i.es = load i64, ptr %i.c, align 8, !tbaa !137
   %.not.i = icmp eq i64 %i.es, 0
   br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
 
@@ -1582,7 +1590,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 .noexc308:                                        ; preds = %.lr.ph.i
   %i.et = add nuw i64 %.02.i, 1                   ; 2 uses
-  %i.eu = load i64, ptr %i.c, align 8, !tbaa !140
+  %i.eu = load i64, ptr %i.c, align 8, !tbaa !137
   %i.ev = icmp ult i64 %i.et, %i.eu
   br i1 %i.ev, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !270
 
@@ -1985,7 +1993,7 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %i.ni, label %.preheader.i363, label %_ZN6google8protobuf2io7Printer15IndentIfAtStartEv.exit369
 
 .preheader.i363:                                  ; preds = %bb.bx
-  %i.nj = load i64, ptr %i.c, align 8, !tbaa !140
+  %i.nj = load i64, ptr %i.c, align 8, !tbaa !137
   %.not.i364 = icmp eq i64 %i.nj, 0
   br i1 %.not.i364, label %._crit_edge.i367, label %.lr.ph.i365
 
@@ -2000,7 +2008,7 @@ bb.bx:                                            ; preds = %bb.bw
 
 .noexc368:                                        ; preds = %.lr.ph.i365
   %i.nk = add nuw i64 %.02.i366, 1                ; 2 uses
-  %i.nl = load i64, ptr %i.c, align 8, !tbaa !140
+  %i.nl = load i64, ptr %i.c, align 8, !tbaa !137
   %i.nm = icmp ult i64 %i.nk, %i.nl
   br i1 %i.nm, label %.lr.ph.i365, label %._crit_edge.i367, !llvm.loop !270
 
@@ -2403,7 +2411,7 @@ bb.gf:                                            ; preds = %_ZSt8_DestroyIPN6go
 
 "_ZN4absl12lts_202505127CleanupINS0_16cleanup_internal3TagEZN6google8protobuf2io7Printer9PrintImplESt17basic_string_viewIcSt11char_traitsIcEENS0_4SpanIKNSt7__cxx1112basic_stringIcSA_SaIcEEEEENS7_12PrintOptionsEE3$_0ED2Ev.exit": ; preds = %_ZSt8_DestroyIPN6google8protobuf2io7Printer6Format4LineES5_EvT_S7_RSaIT0_E.exit.i.i, %bb.gf
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #28
-  store i64 %i.d, ptr %i.c, align 8, !tbaa !140
+  store i64 %i.d, ptr %i.c, align 8, !tbaa !137
   ret void
 
 bb.gg:                                            ; preds = %bb.n, %bb.ft, %bb.m, %bb.ga, %bb.fz, %bb.fy
@@ -2437,7 +2445,7 @@ bb.gj:                                            ; preds = %bb.gi, %bb.g
 
 "_ZN4absl12lts_202505127CleanupINS0_16cleanup_internal3TagEZN6google8protobuf2io7Printer9PrintImplESt17basic_string_viewIcSt11char_traitsIcEENS0_4SpanIKNSt7__cxx1112basic_stringIcSA_SaIcEEEEENS7_12PrintOptionsEE3$_0ED2Ev.exit491": ; preds = %bb.gj, %bb.d
   %.pn273.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn273.pn.pn.pn.pn, %bb.gj ], [ %i.v, %bb.d ]
-  store i64 %i.d, ptr %i.c, align 8, !tbaa !140
+  store i64 %i.d, ptr %i.c, align 8, !tbaa !137
   resume { ptr, i32 } %.pn273.pn.pn.pn.pn.pn
 }
 
@@ -2840,7 +2848,7 @@ bb.a:
   %3 = alloca %"struct.std::pair.114", align 8    ; 5 uses
   %i.b = alloca i8, align 1                       ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 113 ; 4 uses
-  %i.d = load i8, ptr %i.c, align 1, !tbaa !137, !range !14, !noundef !15
+  %i.d = load i8, ptr %i.c, align 1, !tbaa !138, !range !14, !noundef !15
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = icmp eq i64 %2, 0
   %or.cond = or i1 %i.f, %i.e
@@ -2859,7 +2867,7 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i:                                     ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !140
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !137
   %.not.i = icmp eq i64 %i.l, 0
   br i1 %.not.i, label %_ZN6google8protobuf2io7Printer15IndentIfAtStartEv.exit.thread, label %.lr.ph.i
 
@@ -2871,12 +2879,12 @@ _ZN6google8protobuf2io7Printer15IndentIfAtStartEv.exit.thread: ; preds = %.prehe
   %.02.i = phi i64 [ %i.m, %.lr.ph.i ], [ 0, %.preheader.i ]
   tail call void @_ZN6google8protobuf2io16zc_sink_internal22ZeroCopyStreamByteSink6AppendEPKcm(ptr noundef nonnull align 16 dereferenceable(296) %0, ptr noundef nonnull @.str.2, i64 noundef 1)
   %i.m = add nuw i64 %.02.i, 1                    ; 2 uses
-  %i.n = load i64, ptr %i.k, align 8, !tbaa !140
+  %i.n = load i64, ptr %i.k, align 8, !tbaa !137
   %i.o = icmp ult i64 %i.m, %i.n
   br i1 %i.o, label %.lr.ph.i, label %_ZN6google8protobuf2io7Printer15IndentIfAtStartEv.exit, !llvm.loop !270
 
 _ZN6google8protobuf2io7Printer15IndentIfAtStartEv.exit: ; preds = %.lr.ph.i
-  %.pre = load i8, ptr %i.c, align 1, !tbaa !137, !range !14
+  %.pre = load i8, ptr %i.c, align 1, !tbaa !138, !range !14
   %i.p = trunc nuw i8 %.pre to i1
   store i8 0, ptr %i.g, align 16, !tbaa !27
   br i1 %i.p, label %bb.t, label %bb.d
@@ -2956,7 +2964,7 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicy
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i, i64 32 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
-  %i.an = load i64, ptr %i.k, align 8, !tbaa !140
+  %i.an = load i64, ptr %i.k, align 8, !tbaa !137
   %i.ao = load <2 x i64>, ptr %i.am, align 8, !tbaa !71
   %i.ap = insertelement <2 x i64> poison, i64 %i.an, i64 0
   %i.aq = shufflevector <2 x i64> %i.ap, <2 x i64> poison, <2 x i32> zeroinitializer
@@ -3080,9 +3088,9 @@ bb.s:                                             ; preds = %bb.l, %bb.r, %bb.q,
 .loopexit:                                        ; preds = %bb.s, %bb.i
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.cd = load i8, ptr %i.cc, align 16, !tbaa !410, !range !14, !noundef !15
-  %i.ce = load i8, ptr %i.c, align 1, !tbaa !137, !range !14, !noundef !15
+  %i.ce = load i8, ptr %i.c, align 1, !tbaa !138, !range !14, !noundef !15
   %i.cf = or i8 %i.ce, %i.cd
-  store i8 %i.cf, ptr %i.c, align 1, !tbaa !137
+  store i8 %i.cf, ptr %i.c, align 1, !tbaa !138
   br label %bb.t
 
 bb.t:                                             ; preds = %_ZN6google8protobuf2io7Printer15IndentIfAtStartEv.exit, %bb.a, %.loopexit
@@ -3099,7 +3107,7 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !140
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !137
   %.not = icmp eq i64 %i.e, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -3111,7 +3119,7 @@ bb.a:
   %.02 = phi i64 [ %i.f, %.lr.ph ], [ 0, %.preheader ]
   tail call void @_ZN6google8protobuf2io16zc_sink_internal22ZeroCopyStreamByteSink6AppendEPKcm(ptr noundef nonnull align 8 dereferenceable(33) %0, ptr noundef nonnull @.str.2, i64 noundef 1)
   %i.f = add nuw i64 %.02, 1                      ; 2 uses
-  %i.g = load i64, ptr %i.d, align 8, !tbaa !140
+  %i.g = load i64, ptr %i.d, align 8, !tbaa !137
   %i.h = icmp ult i64 %i.f, %i.g
   br i1 %i.h, label %.lr.ph, label %._crit_edge, !llvm.loop !270
 
@@ -3514,10 +3522,10 @@ attributes #33 = { noreturn nounwind }
 !134 = !{!21, !22, i64 0}
 !135 = distinct !{!135, !25}
 !136 = !{!29, !30, i64 0}
-!137 = !{!28, !13, i64 113}
-!138 = !{!57, !23, i64 16}
-!139 = !{!"branch_weights", i32 1, i32 1048575}
-!140 = !{!28, !31, i64 104}
+!137 = !{!28, !31, i64 104}
+!138 = !{!28, !13, i64 113}
+!139 = !{!57, !23, i64 16}
+!140 = !{!"branch_weights", i32 1, i32 1048575}
 !141 = !{!39, !13, i64 1}
 !142 = !{!48, !49, i64 0}
 !143 = !{!48, !49, i64 8}

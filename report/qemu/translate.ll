@@ -204,6 +204,8 @@ bb.b:                                             ; preds = %cc_op_size.exit
   tail call void @tcg_gen_ext_i64(ptr noundef %i.i, ptr noundef %i.i, i32 noundef %i.f) #14
   %i.j = load ptr, ptr %i.g, align 8
   %i.k = load ptr, ptr @cpu_cc_src, align 8
+  %.sroa.843.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.843.0..sroa_idx, i8 0, i64 6, i1 false)
   store i32 15, ptr %0, align 8
   %.sroa.237.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %.sroa.237.0..sroa_idx, align 4
@@ -216,7 +218,7 @@ bb.b:                                             ; preds = %cc_op_size.exit
   %.sroa.641.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 1, ptr %.sroa.641.0..sroa_idx, align 8
   %.sroa.742.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 33
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.742.0..sroa_idx, i8 0, i64 7, i1 false)
+  store i8 0, ptr %.sroa.742.0..sroa_idx, align 1
   br label %bb.ar
 
 bb.c:                                             ; preds = %cc_op_size.exit
@@ -232,6 +234,8 @@ bb.d:                                             ; preds = %cc_op_size.exit, %b
   tail call void @tcg_gen_ext_i64(ptr noundef %i.o, ptr noundef %i.o, i32 noundef %i.n) #14
   %i.p = load ptr, ptr %i.l, align 8
   %i.q = load ptr, ptr @cpu_cc_src, align 8
+  %.sroa.835.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.835.0..sroa_idx, i8 0, i64 6, i1 false)
   store i32 %.091, ptr %0, align 8
   %.sroa.229.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %.sroa.229.0..sroa_idx, align 4
@@ -244,7 +248,7 @@ bb.d:                                             ; preds = %cc_op_size.exit, %b
   %.sroa.633.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 1, ptr %.sroa.633.0..sroa_idx, align 8
   %.sroa.734.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 33
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.734.0..sroa_idx, i8 0, i64 7, i1 false)
+  store i8 0, ptr %.sroa.734.0..sroa_idx, align 1
   br label %bb.ar
 
 bb.e:                                             ; preds = %bb.a
@@ -276,13 +280,15 @@ bb.g:                                             ; preds = %bb.f
   %i.x = or i32 %i.v, 8
   tail call void @tcg_gen_ext_i64(ptr noundef %i.w, ptr noundef %i.w, i32 noundef %i.x) #14
   %i.y = load ptr, ptr @cpu_cc_dst, align 8
+  %.sroa.827.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.827.0..sroa_idx, i8 0, i64 6, i1 false)
   store i32 7, ptr %0, align 8
   %.sroa.221.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %.sroa.221.0..sroa_idx, align 4
   %.sroa.322.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.y, ptr %.sroa.322.0..sroa_idx, align 8
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.423.0..sroa_idx, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(18) %.sroa.423.0..sroa_idx, i8 0, i64 18, i1 false)
   br label %bb.ar
 
 bb.h:                                             ; preds = %bb.e, %bb.a
@@ -632,6 +638,8 @@ bb.af:                                            ; preds = %bb.h
   tail call fastcc void @gen_mov_eflags(ptr noundef nonnull %1, ptr noundef %i.dl)
   tail call fastcc void @set_cc_op_1(ptr noundef nonnull %1, i32 noundef 0, i1 noundef zeroext true)
   %i.dm = load ptr, ptr @cpu_cc_src, align 8
+  %.sroa.819.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.819.0..sroa_idx, i8 0, i64 6, i1 false)
   store i32 13, ptr %0, align 8
   %.sroa.213.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %.sroa.213.0..sroa_idx, align 4
@@ -642,7 +650,9 @@ bb.af:                                            ; preds = %bb.h
   %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 65, ptr %.sroa.516.0..sroa_idx, align 8
   %.sroa.617.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 0, ptr %.sroa.617.0..sroa_idx, align 8
+  store i8 0, ptr %.sroa.617.0..sroa_idx, align 8
+  %.sroa.718.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 33
+  store i8 0, ptr %.sroa.718.0..sroa_idx, align 1
   br label %bb.ar
 
 .thread186:                                       ; preds = %bb.f, %bb.f, %cc_op_size.exit, %bb.h
@@ -740,6 +750,8 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   %i.ed = phi ptr [ %.pre198, %bb.am ], [ %i.ea, %bb.al ]
   %.0 = phi ptr [ %i.ec, %bb.am ], [ %3, %bb.al ] ; 2 uses
   tail call void @tcg_gen_addi_i64(ptr noundef %.0, ptr noundef %i.ed, i64 noundef 1920) #14
+  %.sroa.811.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.811.0..sroa_idx, i8 0, i64 6, i1 false)
   store i32 13, ptr %0, align 8
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %.sroa.25.0..sroa_idx, align 4
@@ -750,7 +762,9 @@ bb.an:                                            ; preds = %bb.al, %bb.am
   %.sroa.58.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 2048, ptr %.sroa.58.0..sroa_idx, align 8
   %.sroa.69.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 0, ptr %.sroa.69.0..sroa_idx, align 8
+  store i8 0, ptr %.sroa.69.0..sroa_idx, align 8
+  %.sroa.710.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 33
+  store i8 0, ptr %.sroa.710.0..sroa_idx, align 1
   br label %bb.ar
 
 default.unreachable:                              ; preds = %bb.h, %bb.f, %cc_op_size.exit
@@ -775,6 +789,8 @@ bb.aq:                                            ; preds = %bb.ao, %bb.ap
   %i.ei = phi ptr [ %.pre, %bb.ap ], [ %i.ef, %bb.ao ]
   %.1 = phi ptr [ %i.eh, %bb.ap ], [ %3, %bb.ao ] ; 2 uses
   tail call void @tcg_gen_addi_i64(ptr noundef %.1, ptr noundef %i.ei, i64 noundef 1920) #14
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 34
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.8.0..sroa_idx, i8 0, i64 6, i1 false)
   store i32 13, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 0, ptr %.sroa.2.0..sroa_idx, align 4
@@ -785,7 +801,9 @@ bb.aq:                                            ; preds = %bb.ao, %bb.ap
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 2112, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 0, ptr %.sroa.6.0..sroa_idx, align 8
+  store i8 0, ptr %.sroa.6.0..sroa_idx, align 8
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 33
+  store i8 0, ptr %.sroa.7.0..sroa_idx, align 1
   br label %bb.ar
 
 bb.ar:                                            ; preds = %gen_prepare_eflags_o.exit, %gen_prepare_eflags_c.exit, %gen_prepare_eflags_z.exit, %bb.af, %gen_prepare_eflags_s.exit, %bb.ak, %bb.an, %bb.aq, %bb.b, %bb.d, %bb.g

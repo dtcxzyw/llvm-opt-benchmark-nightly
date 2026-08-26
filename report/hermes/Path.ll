@@ -205,20 +205,20 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
-  %.sroa.419.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 32
-  store i32 1, ptr %.sroa.419.0..sroa_idx.a, align 8
-  %.sroa.520.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 36
-  store i32 65535, ptr %.sroa.520.0..sroa_idx.a, align 4
-  %.sroa.621.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.621.0..sroa_idx, i8 0, i64 24, i1 false)
+  %.sroa.419.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 40
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.419.0..sroa_idx.a, i8 0, i64 24, i1 false)
+  %.sroa.520.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 32
+  store i32 1, ptr %.sroa.520.0..sroa_idx.a, align 8
+  %.sroa.621.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 36
+  store i32 65535, ptr %.sroa.621.0..sroa_idx, align 4
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
-  %.sroa.516.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 36
+  %.sroa.516.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %2, i64 40
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.516.0..sroa_idx.a, i8 0, i64 24, i1 false)
+  %.sroa.516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 36
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %2, i8 0, i64 36, i1 false)
-  store i32 65535, ptr %.sroa.516.0..sroa_idx.a, align 4
-  %.sroa.617.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.617.0..sroa_idx, i8 0, i64 24, i1 false)
+  store i32 65535, ptr %.sroa.516.0..sroa_idx, align 4
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a

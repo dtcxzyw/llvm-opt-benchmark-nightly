@@ -133,8 +133,6 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -2147483648, 2) i32 @zfor(ptr noundef %0) #2 {
 bb.a:
-  %1 = alloca %struct.ref_s, align 8              ; 4 uses
-  %2 = alloca %struct.ref_s, align 8              ; 4 uses
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.b = tail call i32 @num_params(ptr noundef nonnull %i.a, i32 noundef 3, ptr noundef null) #7 ; 6 uses
   %i.c = icmp slt i32 %i.b, 0
@@ -174,7 +172,6 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.s, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.t = load i64, ptr %i.j, align 8, !tbaa !12   ; 3 uses
   %i.u = load i64, ptr %i.l, align 8, !tbaa !12   ; 2 uses
   %i.v = icmp sgt i64 %i.u, -1
@@ -191,7 +188,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   store ptr %i.d, ptr @esp, align 8, !tbaa !8
-  br label %for_int_continue.exit
+  br label %bb.x
 
 bb.h:                                             ; preds = %bb.f, %bb.e
   store ptr %i.k, ptr @osp, align 8, !tbaa !8
@@ -201,28 +198,22 @@ bb.h:                                             ; preds = %bb.f, %bb.e
 
 bb.i:                                             ; preds = %bb.h
   store ptr %i.r, ptr @osp, align 8, !tbaa !8
-  br label %for_int_continue.exit
+  br label %bb.x
 
 bb.j:                                             ; preds = %bb.h
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !11
   %i.ab = add nsw i64 %i.u, %i.t
   store i64 %i.ab, ptr %i.j, align 8, !tbaa !12
   %i.ac = load ptr, ptr @esp, align 8, !tbaa !8   ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !11
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
-  store ptr @for_int_continue, ptr %i.ad, align 8, !tbaa !12
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
-  store i16 37, ptr %i.ae, align 8, !tbaa !15
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 26
-  store i16 0, ptr %i.af, align 2, !tbaa !17
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 32 ; 2 uses
-  store ptr %i.ag, ptr @esp, align 8, !tbaa !8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !11
-  br label %for_int_continue.exit
-
-for_int_continue.exit:                            ; preds = %bb.g, %bb.i, %bb.j
-  %.0.i = phi i32 [ 1, %bb.g ], [ -16, %bb.i ], [ 1, %bb.j ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 32 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false)
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
+  store ptr @for_int_continue, ptr %i.ae, align 8, !tbaa !12
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
+  store i16 37, ptr %i.af, align 8, !tbaa !15
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 26
+  store i16 0, ptr %i.ag, align 2, !tbaa !17
+  store ptr %i.ad, ptr @esp, align 8, !tbaa !8
   br label %bb.x
 
 bb.k:                                             ; preds = %bb.c
@@ -272,7 +263,6 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %._crit_edge, %bb.p
   %i.au = phi float [ %.pre, %._crit_edge ], [ %i.as, %bb.p ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.av = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 3 uses
   %i.aw = load float, ptr %i.av, align 8, !tbaa !12 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.d, i64 48
@@ -290,7 +280,7 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s, %bb.r
   store ptr %i.d, ptr @esp, align 8, !tbaa !8
-  br label %for_real_continue.exit
+  br label %bb.x
 
 bb.u:                                             ; preds = %bb.s, %bb.r
   store ptr %i.k, ptr @osp, align 8, !tbaa !8
@@ -300,32 +290,26 @@ bb.u:                                             ; preds = %bb.s, %bb.r
 
 bb.v:                                             ; preds = %bb.u
   store ptr %i.r, ptr @osp, align 8, !tbaa !8
-  br label %for_real_continue.exit
+  br label %bb.x
 
 bb.w:                                             ; preds = %bb.u
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull align 8 dereferenceable(16) %i.av, i64 16, i1 false), !tbaa.struct !11
   %i.be = fadd float %i.aw, %i.ay
   store float %i.be, ptr %i.av, align 8, !tbaa !12
   %i.bf = load ptr, ptr @esp, align 8, !tbaa !8   ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 16, i1 false), !tbaa.struct !11
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
-  store ptr @for_real_continue, ptr %i.bg, align 8, !tbaa !12
-  %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 24
-  store i16 37, ptr %i.bh, align 8, !tbaa !15
-  %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 26
-  store i16 0, ptr %i.bi, align 2, !tbaa !17
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bf, i64 32 ; 2 uses
-  store ptr %i.bj, ptr @esp, align 8, !tbaa !8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bj, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !11
-  br label %for_real_continue.exit
-
-for_real_continue.exit:                           ; preds = %bb.t, %bb.v, %bb.w
-  %.0.i17 = phi i32 [ 1, %bb.t ], [ -16, %bb.v ], [ 1, %bb.w ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 32 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %i.bf, i64 16, i1 false)
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 16
+  store ptr @for_real_continue, ptr %i.bh, align 8, !tbaa !12
+  %i.bi = getelementptr inbounds nuw i8, ptr %i.bf, i64 24
+  store i16 37, ptr %i.bi, align 8, !tbaa !15
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bf, i64 26
+  store i16 0, ptr %i.bj, align 2, !tbaa !17
+  store ptr %i.bg, ptr @esp, align 8, !tbaa !8
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.b, %bb.a, %for_real_continue.exit, %for_int_continue.exit
-  %.0 = phi i32 [ %.0.i17, %for_real_continue.exit ], [ %i.b, %bb.a ], [ %.0.i, %for_int_continue.exit ], [ -5, %bb.b ]
+bb.x:                                             ; preds = %bb.w, %bb.v, %bb.t, %bb.j, %bb.i, %bb.g, %bb.b, %bb.a
+  %.0 = phi i32 [ 1, %bb.j ], [ %i.b, %bb.a ], [ -5, %bb.b ], [ 1, %bb.g ], [ -16, %bb.i ], [ 1, %bb.t ], [ -16, %bb.v ], [ 1, %bb.w ]
   ret i32 %.0
 }
 
@@ -337,8 +321,6 @@ declare i32 @num_params(ptr noundef, i32 noundef, ptr noundef) local_unnamed_add
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -16, 2) i32 @for_int_continue(ptr noundef %0) #0 {
 bb.a:
-  %1 = alloca %struct.ref_s, align 8              ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.a = load ptr, ptr @esp, align 8, !tbaa !8    ; 4 uses
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -48 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !12   ; 3 uses
@@ -378,29 +360,25 @@ bb.g:                                             ; preds = %bb.e
   %i.o = add nsw i64 %i.e, %i.c
   store i64 %i.o, ptr %i.b, align 8, !tbaa !12
   %i.p = load ptr, ptr @esp, align 8, !tbaa !8    ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.p, i64 16, i1 false), !tbaa.struct !11
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  store ptr @for_int_continue, ptr %i.q, align 8, !tbaa !12
-  %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  store i16 37, ptr %i.r, align 8, !tbaa !15
-  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 26
-  store i16 0, ptr %i.s, align 2, !tbaa !17
-  %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 32 ; 2 uses
-  store ptr %i.t, ptr @esp, align 8, !tbaa !8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !11
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 32 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.q, ptr noundef nonnull align 8 dereferenceable(16) %i.p, i64 16, i1 false)
+  %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16
+  store ptr @for_int_continue, ptr %i.r, align 8, !tbaa !12
+  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  store i16 37, ptr %i.s, align 8, !tbaa !15
+  %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 26
+  store i16 0, ptr %i.t, align 2, !tbaa !17
+  store ptr %i.q, ptr @esp, align 8, !tbaa !8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
   %.0 = phi i32 [ 1, %bb.d ], [ -16, %bb.f ], [ 1, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   ret i32 %.0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -16, 2) i32 @for_real_continue(ptr noundef %0) #0 {
 bb.a:
-  %1 = alloca %struct.ref_s, align 8              ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.a = load ptr, ptr @esp, align 8, !tbaa !8    ; 4 uses
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -48 ; 3 uses
   %i.c = load float, ptr %i.b, align 8, !tbaa !12 ; 3 uses
@@ -440,21 +418,19 @@ bb.g:                                             ; preds = %bb.e
   %i.o = fadd float %i.c, %i.e
   store float %i.o, ptr %i.b, align 8, !tbaa !12
   %i.p = load ptr, ptr @esp, align 8, !tbaa !8    ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.p, i64 16, i1 false), !tbaa.struct !11
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  store ptr @for_real_continue, ptr %i.q, align 8, !tbaa !12
-  %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  store i16 37, ptr %i.r, align 8, !tbaa !15
-  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 26
-  store i16 0, ptr %i.s, align 2, !tbaa !17
-  %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 32 ; 2 uses
-  store ptr %i.t, ptr @esp, align 8, !tbaa !8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !11
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 32 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.q, ptr noundef nonnull align 8 dereferenceable(16) %i.p, i64 16, i1 false)
+  %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16
+  store ptr @for_real_continue, ptr %i.r, align 8, !tbaa !12
+  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  store i16 37, ptr %i.s, align 8, !tbaa !15
+  %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 26
+  store i16 0, ptr %i.t, align 2, !tbaa !17
+  store ptr %i.q, ptr @esp, align 8, !tbaa !8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
   %.0 = phi i32 [ 1, %bb.d ], [ -16, %bb.f ], [ 1, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   ret i32 %.0
 }
 
@@ -585,6 +561,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load ptr, ptr @osp, align 8, !tbaa !8
   %i.k = getelementptr inbounds i8, ptr %i.j, i64 -16
   store ptr %i.k, ptr @osp, align 8, !tbaa !8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   store ptr @loop_continue, ptr %i.l, align 8, !tbaa !12
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 56
@@ -592,7 +569,6 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 58
   store i16 0, ptr %i.n, align 2, !tbaa !17
   store ptr %i.d, ptr @esp, align 8, !tbaa !8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
@@ -603,20 +579,16 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef i32 @loop_continue(ptr nofree readnone captures(none) %0) #0 {
 bb.a:
-  %1 = alloca %struct.ref_s, align 8              ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.a = load ptr, ptr @esp, align 8, !tbaa !8    ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false), !tbaa.struct !11
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  store ptr @loop_continue, ptr %i.b, align 8, !tbaa !12
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i16 37, ptr %i.c, align 8, !tbaa !15
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 26
-  store i16 0, ptr %i.d, align 2, !tbaa !17
-  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
-  store ptr %i.e, ptr @esp, align 8, !tbaa !8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !11
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false)
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store ptr @loop_continue, ptr %i.c, align 8, !tbaa !12
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  store i16 37, ptr %i.d, align 8, !tbaa !15
+  %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 26
+  store i16 0, ptr %i.e, align 2, !tbaa !17
+  store ptr %i.b, ptr @esp, align 8, !tbaa !8
   ret i32 1
 }
 

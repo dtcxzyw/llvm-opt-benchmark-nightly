@@ -205,8 +205,7 @@ bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   %5 = alloca %struct.sha256_state_st, align 4    ; 8 uses
   %i.b = alloca [32 x i8], align 16               ; 4 uses
-  %6 = alloca [16 x i8], align 16                 ; 4 uses
-  %7 = alloca %struct.sha256_state_st, align 4    ; 8 uses
+  %6 = alloca %struct.sha256_state_st, align 4    ; 8 uses
   %i.c = alloca [32 x i8], align 16               ; 4 uses
   %i.d = alloca [32 x i8], align 16               ; 9 uses
   %i.e = alloca [32 x i8], align 16               ; 10 uses
@@ -246,17 +245,17 @@ bb.b:                                             ; preds = %_ZL5chainPhPKhjjS1_
   %i.v = load i8, ptr %i.l, align 1, !tbaa !13
   %i.w = getelementptr inbounds nuw i8, ptr %i.d, i64 13
   store i8 %i.v, ptr %i.w, align 1, !tbaa !13
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #36
-  %i.x = call i32 @SHA256_Init(ptr noundef nonnull %7) #36 ; 0 uses
-  %i.y = call i32 @SHA256_Update(ptr noundef nonnull %7, ptr noundef %2, i64 noundef 16) #36 ; 0 uses
-  %i.z = call i32 @SHA256_Update(ptr noundef nonnull %7, ptr noundef nonnull @_ZZL12slhdsa_thashPhPKhmS1_S_E6kZeros, i64 noundef 48) #36 ; 0 uses
-  %i.aa = call i32 @SHA256_Update(ptr noundef nonnull %7, ptr noundef nonnull %i.d, i64 noundef 22) #36 ; 0 uses
-  %i.ab = call i32 @SHA256_Update(ptr noundef nonnull %7, ptr noundef nonnull %i.f, i64 noundef 560) #36 ; 0 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #36
+  %i.x = call i32 @SHA256_Init(ptr noundef nonnull %6) #36 ; 0 uses
+  %i.y = call i32 @SHA256_Update(ptr noundef nonnull %6, ptr noundef %2, i64 noundef 16) #36 ; 0 uses
+  %i.z = call i32 @SHA256_Update(ptr noundef nonnull %6, ptr noundef nonnull @_ZZL12slhdsa_thashPhPKhmS1_S_E6kZeros, i64 noundef 48) #36 ; 0 uses
+  %i.aa = call i32 @SHA256_Update(ptr noundef nonnull %6, ptr noundef nonnull %i.d, i64 noundef 22) #36 ; 0 uses
+  %i.ab = call i32 @SHA256_Update(ptr noundef nonnull %6, ptr noundef nonnull %i.f, i64 noundef 560) #36 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #36
-  %i.ac = call i32 @SHA256_Final(ptr noundef nonnull %i.c, ptr noundef nonnull %7) #36 ; 0 uses
+  %i.ac = call i32 @SHA256_Final(ptr noundef nonnull %i.c, ptr noundef nonnull %6) #36 ; 0 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.c, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #36
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #36
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #36
@@ -266,7 +265,6 @@ bb.c:                                             ; preds = %bb.a, %_ZL5chainPhP
   %.012 = phi i64 [ 0, %bb.a ], [ %i.au, %_ZL5chainPhPKhjjS1_S_.exit ] ; 3 uses
   %i.ad = shl nuw nsw i64 %.012, 4
   %i.ae = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.ad ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
   %i.af = trunc nuw i64 %.012 to i8               ; 2 uses
   store i8 %i.af, ptr %i.o, align 1, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
@@ -277,11 +275,10 @@ bb.c:                                             ; preds = %bb.a, %_ZL5chainPhP
   %i.ak = call i32 @SHA256_Update(ptr noundef nonnull %5, ptr noundef %1, i64 noundef 16) #36 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #36
   %i.al = call i32 @SHA256_Final(ptr noundef nonnull %i.b, ptr noundef nonnull %5) #36 ; 0 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %6, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.b, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ae, ptr noundef nonnull readonly align 16 dereferenceable(16) %i.b, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #36
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #36
   store i8 %i.af, ptr %i.p, align 1, !tbaa !13
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ae, ptr noundef nonnull readonly align 16 dereferenceable(16) %6, i64 16, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
@@ -304,7 +301,6 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   br i1 %exitcond.not.i, label %_ZL5chainPhPKhjjS1_S_.exit, label %bb.d, !llvm.loop !1436
 
 _ZL5chainPhPKhjjS1_S_.exit:                       ; preds = %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.au = add nuw nsw i64 %.012, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.au, 35
   br i1 %exitcond.not, label %bb.b, label %bb.c, !llvm.loop !1437

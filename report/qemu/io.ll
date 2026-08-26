@@ -202,9 +202,9 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.g = tail call noalias dereferenceable_or_null(128) ptr @g_malloc(i64 noundef 128) #16 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16464
-  store ptr %0, ptr %i.g, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(120) %i.h, i64 120, i1 false)
+  store ptr %0, ptr %i.g, align 8
   tail call void @tran_add(ptr noundef nonnull %1, ptr noundef nonnull @bdrv_refresh_limits_drv, ptr noundef nonnull %i.g) #14
   br label %bb.e
 
@@ -607,7 +607,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 3 uses
   %i.d = alloca i64, align 8                      ; 3 uses
   %i.e = alloca i32, align 4                      ; 4 uses
-  %6 = alloca %struct.BdrvTrackedRequest, align 8 ; 19 uses
+  %6 = alloca %struct.BdrvTrackedRequest, align 8 ; 20 uses
   %7 = alloca %struct.BdrvRequestPadding, align 8 ; 12 uses
   store i64 %1, ptr %i.a, align 8
   store i64 %2, ptr %i.b, align 8
@@ -686,6 +686,8 @@ bb.k:                                             ; preds = %bb.j
   %i.ad = load i64, ptr %i.b, align 8             ; 4 uses
   %i.ae = call range(i32 -5, 1) i32 @bdrv_check_qiov_request(i64 noundef %i.ac, i64 noundef %i.ad, ptr noundef null, i64 noundef 0, ptr noundef nonnull @error_abort) ; 0 uses
   %i.af = call ptr @qemu_coroutine_self() #14
+  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.0..sroa_idx.i, i8 0, i64 16, i1 false)
   store ptr %i.f, ptr %6, align 8
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 %i.ac, ptr %.sroa.2.0..sroa_idx.i, align 8
@@ -703,9 +705,9 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.0..sroa_idx.i, i8 0, i64 16, i1 false)
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 64
   store ptr %i.af, ptr %.sroa.10.0..sroa_idx.i, align 8
-  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.0..sroa_idx.i.a, i8 0, i64 24, i1 false)
-  call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx.i.a) #14
+  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %6, i64 88
+  store ptr null, ptr %.sroa.11.0..sroa_idx.i.a, align 8
+  call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx.i) #14
   %i.ag = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.f, i64 16984 ; 2 uses
   call void %i.ag(ptr noundef nonnull %i.ah, ptr noundef nonnull @.str.1, i32 noundef 625) #14, !inline_history !35
@@ -763,7 +765,7 @@ tracked_request_end.exit:                         ; preds = %bb.n, %bb.o
   %i.bd = load ptr, ptr %6, align 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 16984
   call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.be, ptr noundef nonnull @.str.1, i32 noundef 591) #14
-  call void @qemu_co_queue_restart_all(ptr noundef nonnull %.sroa.11.0..sroa_idx.i.a) #14
+  call void @qemu_co_queue_restart_all(ptr noundef nonnull %.sroa.11.0..sroa_idx.i) #14
   %i.bf = getelementptr inbounds nuw i8, ptr %7, i64 88 ; 2 uses
   %i.bg = load ptr, ptr %i.bf, align 8            ; 3 uses
   %.not.i22 = icmp eq ptr %i.bg, null
@@ -1080,6 +1082,8 @@ define internal void @tracked_request_begin(ptr noundef initializes((0, 96)) %0,
 bb.a:
   %i.a = tail call range(i32 -5, 1) i32 @bdrv_check_qiov_request(i64 noundef %2, i64 noundef %3, ptr noundef null, i64 noundef 0, ptr noundef nonnull @error_abort) ; 0 uses
   %i.b = tail call ptr @qemu_coroutine_self() #14
+  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.0..sroa_idx, i8 0, i64 16, i1 false)
   store ptr %1, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %2, ptr %.sroa.2.0..sroa_idx, align 8
@@ -1097,9 +1101,9 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.0..sroa_idx, i8 0, i64 16, i1 false)
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store ptr %i.b, ptr %.sroa.10.0..sroa_idx, align 8
-  %.sroa.11.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.0..sroa_idx.a, i8 0, i64 24, i1 false)
-  tail call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx.a) #14
+  %.sroa.11.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 88
+  store ptr null, ptr %.sroa.11.0..sroa_idx.a, align 8
+  tail call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx) #14
   %i.c = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16984 ; 2 uses
   tail call void %i.c(ptr noundef nonnull %i.d, ptr noundef nonnull @.str.1, i32 noundef 625) #14
@@ -1449,7 +1453,7 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 3 uses
   %i.d = alloca i64, align 8                      ; 3 uses
   %i.e = alloca i32, align 4                      ; 3 uses
-  %6 = alloca %struct.BdrvTrackedRequest, align 8 ; 25 uses
+  %6 = alloca %struct.BdrvTrackedRequest, align 8 ; 26 uses
   %7 = alloca %struct.BdrvRequestPadding, align 8 ; 13 uses
   %i.f = alloca i8, align 1                       ; 5 uses
   store i64 %1, ptr %i.a, align 8
@@ -1544,6 +1548,8 @@ bb.l:                                             ; preds = %._crit_edge, %bb.j
   %i.aj = atomicrmw add ptr %i.ai, i32 1 seq_cst, align 4 ; 0 uses
   %i.ak = call range(i32 -5, 1) i32 @bdrv_check_qiov_request(i64 noundef %i.ah, i64 noundef %i.ag, ptr noundef null, i64 noundef 0, ptr noundef nonnull @error_abort) ; 0 uses
   %i.al = call ptr @qemu_coroutine_self() #14
+  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.0..sroa_idx.i, i8 0, i64 16, i1 false)
   store ptr %i.g, ptr %6, align 8
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i64 %i.ah, ptr %.sroa.2.0..sroa_idx.i, align 8
@@ -1561,9 +1567,9 @@ bb.l:                                             ; preds = %._crit_edge, %bb.j
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.0..sroa_idx.i, i8 0, i64 16, i1 false)
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 64
   store ptr %i.al, ptr %.sroa.10.0..sroa_idx.i, align 8
-  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.0..sroa_idx.i.a, i8 0, i64 24, i1 false)
-  call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx.i.a) #14
+  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %6, i64 88
+  store ptr null, ptr %.sroa.11.0..sroa_idx.i.a, align 8
+  call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx.i) #14
   %i.am = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.g, i64 16984 ; 2 uses
   call void %i.am(ptr noundef nonnull %i.an, ptr noundef nonnull @.str.1, i32 noundef 625) #14, !inline_history !35
@@ -1731,7 +1737,7 @@ tracked_request_end.exit:                         ; preds = %bb.ad, %bb.ae
   %i.cx = load ptr, ptr %6, align 8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 16984
   call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.cy, ptr noundef nonnull @.str.1, i32 noundef 591) #14
-  call void @qemu_co_queue_restart_all(ptr noundef nonnull %.sroa.11.0..sroa_idx.i.a) #14
+  call void @qemu_co_queue_restart_all(ptr noundef nonnull %.sroa.11.0..sroa_idx.i) #14
   %i.cz = atomicrmw sub ptr %i.ai, i32 1 seq_cst, align 4 ; 0 uses
   call void @aio_wait_kick() #14
   br label %bb.af
@@ -2134,7 +2140,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local i32 @bdrv_co_truncate(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i1 noundef zeroext %2, i32 noundef %3, i32 noundef %4, ptr noundef %5) #0 {
 bb.a:
-  %6 = alloca %struct.BdrvTrackedRequest, align 8 ; 24 uses
+  %6 = alloca %struct.BdrvTrackedRequest, align 8 ; 25 uses
   %i.a = load ptr, ptr %0, align 8                ; 13 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
@@ -2190,6 +2196,8 @@ bb.i:                                             ; preds = %bb.g
   %i.m = sub nsw i64 %1, %.081                    ; 5 uses
   %i.n = tail call range(i32 -5, 1) i32 @bdrv_check_qiov_request(i64 noundef %i.m, i64 noundef %.081, ptr noundef null, i64 noundef 0, ptr noundef nonnull @error_abort) ; 0 uses
   %i.o = tail call ptr @qemu_coroutine_self() #14
+  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.0..sroa_idx.i, i8 0, i64 16, i1 false)
   store ptr %i.a, ptr %6, align 8
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i64 %i.m, ptr %.sroa.2.0..sroa_idx.i, align 8
@@ -2207,9 +2215,9 @@ bb.i:                                             ; preds = %bb.g
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.0..sroa_idx.i, i8 0, i64 16, i1 false)
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 64
   store ptr %i.o, ptr %.sroa.10.0..sroa_idx.i, align 8
-  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %6, i64 72 ; 3 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.0..sroa_idx.i.a, i8 0, i64 24, i1 false)
-  call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx.i.a) #14
+  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %6, i64 88
+  store ptr null, ptr %.sroa.11.0..sroa_idx.i.a, align 8
+  call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.11.0..sroa_idx.i) #14
   %i.p = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 16984 ; 2 uses
   call void %i.p(ptr noundef nonnull %i.q, ptr noundef nonnull @.str.1, i32 noundef 625) #14, !inline_history !35
@@ -2399,7 +2407,7 @@ tracked_request_end.exit:                         ; preds = %bb.ad, %bb.ae
   %i.cd = load ptr, ptr %6, align 8
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 16984
   call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.ce, ptr noundef nonnull @.str.1, i32 noundef 591) #14
-  call void @qemu_co_queue_restart_all(ptr noundef nonnull %.sroa.11.0..sroa_idx.i.a) #14
+  call void @qemu_co_queue_restart_all(ptr noundef nonnull %.sroa.11.0..sroa_idx.i) #14
   %i.cf = atomicrmw sub ptr %i.k, i32 1 seq_cst, align 4 ; 0 uses
   call void @aio_wait_kick() #14
   br label %bb.af

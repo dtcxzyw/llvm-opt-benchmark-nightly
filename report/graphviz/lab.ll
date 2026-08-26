@@ -204,9 +204,6 @@ XYZ2RGB.exit:                                     ; preds = %bb.k, %bb.l
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @pow(double noundef, double noundef) local_unnamed_addr #6
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
-
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define void @XYZ2RGB(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.rgb_struct) align 8 captures(none) initializes((0, 24)) %0, ptr nofree noundef readonly byval(%struct.xyz_struct) align 8 captures(none) %1) local_unnamed_addr #1 {
 bb.a:
@@ -501,7 +498,6 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %2 = alloca %struct.rgb_struct, align 8         ; 6 uses
-  %3 = alloca %struct.lab_struct, align 8         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #18
@@ -569,13 +565,10 @@ bb.d:                                             ; preds = %bb.c
   store double %i.aa, ptr %i.s, align 8, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ab = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %indvars.iv
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
-  call void @RGB2LAB(ptr dead_on_unwind nonnull writable sret(%struct.lab_struct) align 8 %3, ptr noundef nonnull byval(%struct.rgb_struct) align 8 %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ab, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !53
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
+  call void @RGB2LAB(ptr dead_on_unwind nonnull writable sret(%struct.lab_struct) align 8 %i.ab, ptr noundef nonnull byval(%struct.rgb_struct) align 8 %2)
   %i.ac = call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.t, i32 noundef 44) #22 ; 2 uses
   %.not116 = icmp eq ptr %i.ac, null
-  br i1 %.not116, label %bb.e, label %bb.c, !llvm.loop !54
+  br i1 %.not116, label %bb.e, label %bb.c, !llvm.loop !53
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %.2.in = phi i64 [ %indvars.iv, %bb.c ], [ %indvars.iv.next, %bb.d ]
@@ -654,7 +647,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x double> %i.bp, ptr %i.bq, align 8, !tbaa !21
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.br = icmp eq i64 %index.next, %n.vec
-  br i1 %i.br, label %middle.block, label %vector.body, !llvm.loop !55
+  br i1 %i.br, label %middle.block, label %vector.body, !llvm.loop !54
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -699,7 +692,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv.next160
   store double %sqrt.i, ptr %i.cb, align 8, !tbaa !21
   %exitcond.not = icmp eq i64 %indvars.iv.next160, %wide.trip.count
-  br i1 %exitcond.not, label %.lr.ph144.preheader, label %.lr.ph141, !llvm.loop !58
+  br i1 %exitcond.not, label %.lr.ph144.preheader, label %.lr.ph141, !llvm.loop !57
 
 .lr.ph144:                                        ; preds = %.lr.ph144, %.lr.ph144.preheader.new
   %i.cc = phi double [ 0.000000e+00, %.lr.ph144.preheader.new ], [ %i.cr, %.lr.ph144 ]
@@ -727,7 +720,7 @@ middle.block:                                     ; preds = %vector.body
   store double %i.cr, ptr %i.cp, align 8, !tbaa !21
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %._crit_edge145.loopexit.unr-lcssa, label %.lr.ph144, !llvm.loop !59
+  br i1 %niter.ncmp.3, label %._crit_edge145.loopexit.unr-lcssa, label %.lr.ph144, !llvm.loop !58
 
 ._crit_edge145.loopexit.unr-lcssa:                ; preds = %.lr.ph144
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -751,7 +744,7 @@ middle.block:                                     ; preds = %vector.body
   store double %i.cv, ptr %i.ct, align 8, !tbaa !21
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge145, label %.lr.ph144.epil, !llvm.loop !60
+  br i1 %epil.iter.cmp.not, label %._crit_edge145, label %.lr.ph144.epil, !llvm.loop !59
 
 ._crit_edge145:                                   ; preds = %._crit_edge145.loopexit.unr-lcssa, %.lr.ph144.epil, %gv_calloc.exit120
   %i.cw = load i8, ptr @Verbose, align 1, !tbaa !41
@@ -808,7 +801,7 @@ bb.l:                                             ; preds = %bb.l, %bb.k
   %i.dv = load double, ptr %i.du, align 8, !tbaa !21
   %i.dw = fcmp olt double %i.dv, %i.dt
   %indvars.iv.next170 = add nuw nsw i64 %indvars.iv169, 1
-  br i1 %i.dw, label %bb.l, label %.lr.ph157.preheader, !llvm.loop !61
+  br i1 %i.dw, label %bb.l, label %.lr.ph157.preheader, !llvm.loop !60
 
 .lr.ph157.preheader:                              ; preds = %bb.l
   %i.dx = trunc nuw nsw i64 %indvars.iv169 to i32
@@ -872,7 +865,7 @@ bb.m:                                             ; preds = %.lr.ph148, %bb.n
 bb.n:                                             ; preds = %bb.m
   %indvars.iv.next174 = add nsw i64 %indvars.iv173, 1 ; 2 uses
   %exitcond177.not = icmp eq i64 %indvars.iv.next174, %i.do
-  br i1 %exitcond177.not, label %.critedge, label %bb.m, !llvm.loop !62
+  br i1 %exitcond177.not, label %.critedge, label %bb.m, !llvm.loop !61
 
 .critedge.loopexit.split.loop.exit:               ; preds = %bb.m
   %i.ff = trunc nsw i64 %indvars.iv173 to i32
@@ -882,7 +875,7 @@ bb.n:                                             ; preds = %bb.m
   %.2107.lcssa = phi i32 [ %.1106152, %.lr.ph157 ], [ %i.ff, %.critedge.loopexit.split.loop.exit ], [ %i.ak, %bb.n ]
   %i.fg = add nuw nsw i32 %.2101155, 1            ; 2 uses
   %exitcond178.not = icmp eq i32 %i.fg, %1
-  br i1 %exitcond178.not, label %.loopexit, label %.lr.ph157, !llvm.loop !63
+  br i1 %exitcond178.not, label %.loopexit, label %.lr.ph157, !llvm.loop !62
 
 .loopexit:                                        ; preds = %.critedge, %bb.j
   call void @free(ptr noundef nonnull %i.af) #18
@@ -1022,15 +1015,14 @@ attributes #23 = { cold noreturn nounwind }
 !50 = !{!"llvm.loop.mustprogress"}
 !51 = distinct !{!51, !50}
 !52 = distinct !{!52, !50}
-!53 = !{i64 0, i64 8, !21, i64 8, i64 8, !21, i64 16, i64 8, !21}
-!54 = distinct !{!54, !50}
-!55 = distinct !{!55, !50, !56, !57}
-!56 = !{!"llvm.loop.isvectorized", i32 1}
-!57 = !{!"llvm.loop.unroll.runtime.disable"}
-!58 = distinct !{!58, !50, !57, !56}
-!59 = distinct !{!59, !50}
-!60 = distinct !{!60, !48}
+!53 = distinct !{!53, !50}
+!54 = distinct !{!54, !50, !55, !56}
+!55 = !{!"llvm.loop.isvectorized", i32 1}
+!56 = !{!"llvm.loop.unroll.runtime.disable"}
+!57 = distinct !{!57, !50, !56, !55}
+!58 = distinct !{!58, !50}
+!59 = distinct !{!59, !48}
+!60 = distinct !{!60, !50}
 !61 = distinct !{!61, !50}
 !62 = distinct !{!62, !50}
-!63 = distinct !{!63, !50}
 end_hunk_0

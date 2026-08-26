@@ -189,10 +189,10 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   store i32 2, ptr %i.v, align 4, !tbaa !52
-  store i32 1, ptr %i.ac, align 8, !tbaa !32
-  store i32 17, ptr %i.ag, align 4, !tbaa !32
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 56
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.4.0..sroa_idx.i, i8 0, i64 80, i1 false)
+  store i32 1, ptr %i.ac, align 8, !tbaa !32
+  store i32 17, ptr %i.ag, align 4, !tbaa !32
   br label %bb.m
 
 bb.i:                                             ; preds = %bb.g
@@ -595,22 +595,21 @@ declare i64 @av_div_q(i64, i64) local_unnamed_addr #6
 define void @ff_fmt_from_pixfmt(i32 noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 136)) %1) local_unnamed_addr #1 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
-  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.3.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 20
-  store i32 0, ptr %.sroa.3.0..sroa_idx.i.a, align 4, !tbaa !32
-  %.sroa.31.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
-  store i32 0, ptr %.sroa.31.0..sroa_idx.i.a, align 8, !tbaa !32
-  %.sroa.4.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 4 uses
-  store i32 2, ptr %.sroa.4.0..sroa_idx.i.a, align 4, !tbaa !32
-  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %.sroa.62.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i.a, i8 0, i64 16, i1 false)
-  store i32 2, ptr %.sroa.62.0..sroa_idx.i.a, align 8, !tbaa !32
-  %.sroa.7.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 2 uses
-  store i32 2, ptr %.sroa.7.0..sroa_idx.i.a, align 4, !tbaa !32
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.8.0..sroa_idx.i, i8 0, i64 80, i1 false)
-  store i32 %0, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !40
+  %.sroa.3.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 36
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx.i.a, i8 0, i64 12, i1 false)
+  %.sroa.31.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.31.0..sroa_idx.i.a, i8 0, i64 80, i1 false)
+  %.sroa.4.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
+  %.sroa.62.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 3 uses
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 32
+  store <4 x i32> <i32 0, i32 0, i32 2, i32 0>, ptr %.sroa.3.0..sroa_idx.i, align 4, !tbaa !32
+  %.sroa.7.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  store i32 2, ptr %.sroa.7.0..sroa_idx.i.a, align 8, !tbaa !32
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 2 uses
+  store i32 2, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !32
+  store i32 %0, ptr %.sroa.4.0..sroa_idx.i.a, align 8, !tbaa !40
   %i.a = tail call ptr @av_pix_fmt_desc_get(i32 noundef %0) #15 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 40
   store ptr %i.a, ptr %i.b, align 8, !tbaa !45
@@ -621,8 +620,8 @@ bb.a:
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  store i32 0, ptr %.sroa.4.0..sroa_idx.i.a, align 4, !tbaa !52
-  store i32 2, ptr %.sroa.31.0..sroa_idx.i.a, align 8, !tbaa !43
+  store i32 0, ptr %.sroa.62.0..sroa_idx.i.a, align 4, !tbaa !52
+  store i32 2, ptr %.sroa.5.0..sroa_idx.i.a, align 8, !tbaa !43
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
@@ -631,10 +630,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not17.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i32 2, ptr %.sroa.4.0..sroa_idx.i.a, align 4, !tbaa !52
-  store i32 1, ptr %.sroa.62.0..sroa_idx.i.a, align 8, !tbaa !32
-  store i32 17, ptr %.sroa.7.0..sroa_idx.i.a, align 4, !tbaa !32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.8.0..sroa_idx.i, i8 0, i64 80, i1 false)
+  store i32 2, ptr %.sroa.62.0..sroa_idx.i.a, align 4, !tbaa !52
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.31.0..sroa_idx.i.a, i8 0, i64 80, i1 false)
+  store i32 1, ptr %.sroa.7.0..sroa_idx.i.a, align 8, !tbaa !32
+  store i32 17, ptr %.sroa.8.0..sroa_idx.i, align 4, !tbaa !32
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.c
@@ -644,18 +643,18 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.i, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %bb.e
-  store i32 2, ptr %.sroa.62.0..sroa_idx.i.a, align 8, !tbaa !54
-  store i32 2, ptr %.sroa.4.0..sroa_idx.i.a, align 4, !tbaa !52
+  store i32 2, ptr %.sroa.7.0..sroa_idx.i.a, align 8, !tbaa !54
+  store i32 2, ptr %.sroa.62.0..sroa_idx.i.a, align 4, !tbaa !52
   %i.j = and i64 %i.d, 512
   %.not18.i = icmp eq i64 %i.j, 0
   br i1 %.not18.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  store i32 0, ptr %.sroa.31.0..sroa_idx.i.a, align 8, !tbaa !43
+  store i32 0, ptr %.sroa.5.0..sroa_idx.i.a, align 8, !tbaa !43
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  store i32 2, ptr %.sroa.31.0..sroa_idx.i.a, align 8, !tbaa !43
+  store i32 2, ptr %.sroa.5.0..sroa_idx.i.a, align 8, !tbaa !43
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e, %bb.d, %bb.b
@@ -669,7 +668,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.e,
   ]
 
 bb.j:                                             ; preds = %bb.i, %bb.i, %bb.i, %bb.i, %bb.i
-  store i32 2, ptr %.sroa.31.0..sroa_idx.i.a, align 8, !tbaa !43
+  store i32 2, ptr %.sroa.5.0..sroa_idx.i.a, align 8, !tbaa !43
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -685,7 +684,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not20.i, label %bb.m, label %sanitize_fmt.exit
 
 bb.m:                                             ; preds = %bb.l
-  store i32 0, ptr %.sroa.5.0..sroa_idx.i.a, align 8, !tbaa !57
+  store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !57
   br label %sanitize_fmt.exit
 
 sanitize_fmt.exit:                                ; preds = %bb.k, %bb.l, %bb.m

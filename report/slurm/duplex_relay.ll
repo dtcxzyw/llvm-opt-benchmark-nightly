@@ -44,10 +44,14 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %_assign.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 64, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str, i32 noundef 242, ptr noundef nonnull @__func__.duplex_relay_assign) #7 ; 9 uses
+  %i.d = tail call ptr @slurm_xcalloc(i64 noundef 1, i64 noundef 64, i1 noundef zeroext true, i1 noundef zeroext false, ptr noundef nonnull @.str, i32 noundef 242, ptr noundef nonnull @__func__.duplex_relay_assign) #7 ; 11 uses
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %.sroa.3.0..sroa_idx, i8 0, i64 20, i1 false)
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 28
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %.sroa.4.0..sroa_idx, i8 0, i64 36, i1 false)
   store i32 1146441804, ptr %i.d, align 8
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.d, i64 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(60) %.sroa.3.0..sroa_idx.a, i8 0, i64 60, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.d, i64 24
+  store i32 0, ptr %.sroa.3.0..sroa_idx.a, align 8
   %i.e = tail call ptr @conmgr_con_link(ptr noundef nonnull %0) #7
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 2 uses
   store ptr %i.e, ptr %i.f, align 8

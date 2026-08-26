@@ -202,11 +202,11 @@ bb.a:
 ; Function Attrs: nonlazybind optsize uwtable
 define void @_RINvYNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtNtNtNtB9_5plans7visitor8visitors10TreeWalker7rewriteINtNtBU_8iterator10ExprMapperNCINvMs0_B1J_B3_8map_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB2I_10SQLContext14execute_selects3_00E0EEB2K_(ptr dead_on_unwind noalias noundef writable sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(144) %1, ptr noalias noundef align 8 dereferenceable(8) %2, ptr noalias noundef nonnull %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !22374 {
 bb.a:
-  %.sroa.07.i = alloca [112 x i8], align 16       ; 6 uses
   %i.a = alloca [144 x i8], align 16              ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [144 x i8], align 16              ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 8 uses
+  %.sroa.07.i = alloca [112 x i8], align 16       ; 7 uses
   %i.e = alloca [160 x i8], align 16              ; 7 uses
   %i.f = invoke noundef i64 @_RNvCseW9CSxMs6pk_9recursive22get_minimum_stack_size()
           to label %bb.b unwind label %bb.k, !dbg !22378
@@ -241,8 +241,8 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !22390, !noalias !22395
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.c, ptr noundef nonnull align 16 dereferenceable(144) %1, i64 144, i1 false), !dbg !22399
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22400), !dbg !22399
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22401
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !22401
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22390
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !22390, !noalias !22395
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22402, !noalias !22395
   store ptr %2, ptr %i.b, align 8, !dbg !22402, !noalias !22395
@@ -256,10 +256,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, ptr noundef nonnull align 16 dereferenceable(72) %i.d, i64 72, i1 false), !dbg !22409, !noalias !22395
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !22410, !noalias !22395
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22411, !noalias !22418
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22411
-  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22411, !alias.scope !22400, !noalias !22418
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22410, !noalias !22411
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22412
+  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22412, !alias.scope !22400, !noalias !22411
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22419, !noalias !22395
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22419
   br label %bb.h, !dbg !22420
 
 bb.g:                                             ; preds = %.noexc
@@ -272,11 +273,11 @@ bb.g:                                             ; preds = %.noexc
   %.sroa.78.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %i.a, i64 112, !dbg !22390
   store i64 %i.o, ptr %.sroa.78.0..sroa_idx9.i, align 16, !dbg !22390, !noalias !22395
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22419, !noalias !22395
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22419
   call void @_RNvXs_NtNtCsfcROwRM8ZtH_11polars_plan5plans8iteratorINtB4_10ExprMapperNCINvMs0_B4_NtNtNtB8_3dsl4expr4Expr8map_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB1Y_10SQLContext14execute_selects3_00E0ENtNtNtB6_7visitor8visitors16RewritingVisitor6mutateB20_(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %2, ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(144) %i.a, ptr noalias noundef nonnull %3), !dbg !22423
   br label %bb.h, !dbg !22423
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22425
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !22425
   br label %_RINvCsiMOpCev58qw_7stacker10maybe_growINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorENCINvYB1c_NtNtNtNtB1i_5plans7visitor8visitors10TreeWalker7rewriteINtNtB2V_8iterator10ExprMapperNCINvMs0_B3L_B1c_8map_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB4M_10SQLContext14execute_selects3_00E0EE0EB4O_.exit, !dbg !22389
 
@@ -316,11 +317,11 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: nonlazybind optsize uwtable
 define void @_RINvYNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtNtNtNtB9_5plans7visitor8visitors10TreeWalker7rewriteINtNtBU_8iterator10ExprMapperNCINvMs0_B1J_B3_8map_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB2I_10SQLContext16process_group_bys1_00E0EEB2K_(ptr dead_on_unwind noalias noundef writable sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(144) %1, ptr noalias noundef align 8 dereferenceable(8) %2, ptr noalias noundef nonnull %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !22433 {
 bb.a:
-  %.sroa.07.i = alloca [112 x i8], align 16       ; 6 uses
   %i.a = alloca [144 x i8], align 16              ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [144 x i8], align 16              ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 8 uses
+  %.sroa.07.i = alloca [112 x i8], align 16       ; 7 uses
   %i.e = alloca [160 x i8], align 16              ; 7 uses
   %i.f = invoke noundef i64 @_RNvCseW9CSxMs6pk_9recursive22get_minimum_stack_size()
           to label %bb.b unwind label %bb.k, !dbg !22434
@@ -355,8 +356,8 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !22446, !noalias !22450
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.c, ptr noundef nonnull align 16 dereferenceable(144) %1, i64 144, i1 false), !dbg !22454
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22455), !dbg !22454
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22456
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !22456
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22446
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !22446, !noalias !22450
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22457, !noalias !22450
   store ptr %2, ptr %i.b, align 8, !dbg !22457, !noalias !22450
@@ -370,10 +371,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, ptr noundef nonnull align 16 dereferenceable(72) %i.d, i64 72, i1 false), !dbg !22464, !noalias !22450
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !22465, !noalias !22450
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22466, !noalias !22473
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22466
-  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22466, !alias.scope !22455, !noalias !22473
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22465, !noalias !22466
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22467
+  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22467, !alias.scope !22455, !noalias !22466
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22474, !noalias !22450
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22474
   br label %bb.h, !dbg !22475
 
 bb.g:                                             ; preds = %.noexc
@@ -386,11 +388,11 @@ bb.g:                                             ; preds = %.noexc
   %.sroa.78.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %i.a, i64 112, !dbg !22446
   store i64 %i.o, ptr %.sroa.78.0..sroa_idx9.i, align 16, !dbg !22446, !noalias !22450
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22474, !noalias !22450
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22474
   call void @_RNvXs_NtNtCsfcROwRM8ZtH_11polars_plan5plans8iteratorINtB4_10ExprMapperNCINvMs0_B4_NtNtNtB8_3dsl4expr4Expr8map_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB1Y_10SQLContext16process_group_bys1_00E0ENtNtNtB6_7visitor8visitors16RewritingVisitor6mutateB20_(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %2, ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(144) %i.a, ptr noalias noundef nonnull %3), !dbg !22478
   br label %bb.h, !dbg !22478
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22480
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !22480
   br label %_RINvCsiMOpCev58qw_7stacker10maybe_growINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorENCINvYB1c_NtNtNtNtB1i_5plans7visitor8visitors10TreeWalker7rewriteINtNtB2V_8iterator10ExprMapperNCINvMs0_B3L_B1c_8map_exprNCNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB4M_10SQLContext16process_group_bys1_00E0EE0EB4O_.exit, !dbg !22445
 
@@ -430,11 +432,11 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: nonlazybind optsize uwtable
 define void @_RINvYNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtNtNtNtB9_5plans7visitor8visitors10TreeWalker7rewriteINtNtBU_8iterator10ExprMapperNCINvMs0_B1J_B3_8map_exprNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB2G_10SQLContext15expr_or_ordinals0_0E0EEB2I_(ptr dead_on_unwind noalias noundef writable sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(144) %1, ptr noalias noundef align 8 dereferenceable(8) %2, ptr noalias noundef nonnull %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !22488 {
 bb.a:
-  %.sroa.07.i = alloca [112 x i8], align 16       ; 6 uses
   %i.a = alloca [144 x i8], align 16              ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [144 x i8], align 16              ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 8 uses
+  %.sroa.07.i = alloca [112 x i8], align 16       ; 7 uses
   %i.e = alloca [160 x i8], align 16              ; 7 uses
   %i.f = invoke noundef i64 @_RNvCseW9CSxMs6pk_9recursive22get_minimum_stack_size()
           to label %bb.b unwind label %bb.k, !dbg !22489
@@ -469,8 +471,8 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !22501, !noalias !22505
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.c, ptr noundef nonnull align 16 dereferenceable(144) %1, i64 144, i1 false), !dbg !22509
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22510), !dbg !22509
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22511
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !22511
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22501
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !22501, !noalias !22505
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22512, !noalias !22505
   store ptr %2, ptr %i.b, align 8, !dbg !22512, !noalias !22505
@@ -484,10 +486,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, ptr noundef nonnull align 16 dereferenceable(72) %i.d, i64 72, i1 false), !dbg !22519, !noalias !22505
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !22520, !noalias !22505
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22521, !noalias !22528
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22521
-  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22521, !alias.scope !22510, !noalias !22528
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22520, !noalias !22521
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22522
+  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22522, !alias.scope !22510, !noalias !22521
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22529, !noalias !22505
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22529
   br label %bb.h, !dbg !22530
 
 bb.g:                                             ; preds = %.noexc
@@ -500,11 +503,11 @@ bb.g:                                             ; preds = %.noexc
   %.sroa.78.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %i.a, i64 112, !dbg !22501
   store i64 %i.o, ptr %.sroa.78.0..sroa_idx9.i, align 16, !dbg !22501, !noalias !22505
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22529, !noalias !22505
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22529
   call void @_RNvXs_NtNtCsfcROwRM8ZtH_11polars_plan5plans8iteratorINtB4_10ExprMapperNCINvMs0_B4_NtNtNtB8_3dsl4expr4Expr8map_exprNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB1W_10SQLContext15expr_or_ordinals0_0E0ENtNtNtB6_7visitor8visitors16RewritingVisitor6mutateB1Y_(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %2, ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(144) %i.a, ptr noalias noundef nonnull %3), !dbg !22533
   br label %bb.h, !dbg !22533
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22535
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !22535
   br label %_RINvCsiMOpCev58qw_7stacker10maybe_growINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorENCINvYB1c_NtNtNtNtB1i_5plans7visitor8visitors10TreeWalker7rewriteINtNtB2V_8iterator10ExprMapperNCINvMs0_B3L_B1c_8map_exprNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB4K_10SQLContext15expr_or_ordinals0_0E0EE0EB4M_.exit, !dbg !22500
 
@@ -544,11 +547,11 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: nonlazybind optsize uwtable
 define void @_RINvYNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtNtNtNtB9_5plans7visitor8visitors10TreeWalker7rewriteINtNtBU_8iterator10ExprMapperNCINvMs0_B1J_B3_8map_exprNCNvNtCshquuC4dCYVj_10polars_sql7context26suffix_conflicting_columns0E0EEB2E_(ptr dead_on_unwind noalias noundef writable sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(144) %1, ptr noalias noundef align 8 dereferenceable(8) %2, ptr noalias noundef nonnull %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !22543 {
 bb.a:
-  %.sroa.07.i = alloca [112 x i8], align 16       ; 6 uses
   %i.a = alloca [144 x i8], align 16              ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [144 x i8], align 16              ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 8 uses
+  %.sroa.07.i = alloca [112 x i8], align 16       ; 7 uses
   %i.e = alloca [160 x i8], align 16              ; 7 uses
   %i.f = invoke noundef i64 @_RNvCseW9CSxMs6pk_9recursive22get_minimum_stack_size()
           to label %bb.b unwind label %bb.k, !dbg !22544
@@ -583,8 +586,8 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !22556, !noalias !22560
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.c, ptr noundef nonnull align 16 dereferenceable(144) %1, i64 144, i1 false), !dbg !22564
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22565), !dbg !22564
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22566
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !22566
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22556
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !22556, !noalias !22560
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22567, !noalias !22560
   store ptr %2, ptr %i.b, align 8, !dbg !22567, !noalias !22560
@@ -598,10 +601,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, ptr noundef nonnull align 16 dereferenceable(72) %i.d, i64 72, i1 false), !dbg !22574, !noalias !22560
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !22575, !noalias !22560
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22576, !noalias !22583
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22576
-  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22576, !alias.scope !22565, !noalias !22583
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22575, !noalias !22576
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22577
+  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22577, !alias.scope !22565, !noalias !22576
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22584, !noalias !22560
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22584
   br label %bb.h, !dbg !22585
 
 bb.g:                                             ; preds = %.noexc
@@ -614,11 +618,11 @@ bb.g:                                             ; preds = %.noexc
   %.sroa.78.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %i.a, i64 112, !dbg !22556
   store i64 %i.o, ptr %.sroa.78.0..sroa_idx9.i, align 16, !dbg !22556, !noalias !22560
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22584, !noalias !22560
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22584
   call void @_RNvXs_NtNtCsfcROwRM8ZtH_11polars_plan5plans8iteratorINtB4_10ExprMapperNCINvMs0_B4_NtNtNtB8_3dsl4expr4Expr8map_exprNCNvNtCshquuC4dCYVj_10polars_sql7context26suffix_conflicting_columns0E0ENtNtNtB6_7visitor8visitors16RewritingVisitor6mutateB1U_(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef nonnull align 8 dereferenceable(8) %2, ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(144) %i.a, ptr noalias noundef nonnull %3), !dbg !22588
   br label %bb.h, !dbg !22588
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22590
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !22590
   br label %_RINvCsiMOpCev58qw_7stacker10maybe_growINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorENCINvYB1c_NtNtNtNtB1i_5plans7visitor8visitors10TreeWalker7rewriteINtNtB2V_8iterator10ExprMapperNCINvMs0_B3L_B1c_8map_exprNCNvNtCshquuC4dCYVj_10polars_sql7context26suffix_conflicting_columns0E0EE0EB4I_.exit, !dbg !22555
 
@@ -658,11 +662,11 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: nonlazybind optsize uwtable
 define void @_RINvYNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtNtNtNtB9_5plans7visitor8visitors10TreeWalker7rewriteINtNtBU_8iterator10ExprMapperNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB2h_10SQLContext18process_subqueries0EEB2j_(ptr dead_on_unwind noalias noundef writable sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef align 16 captures(address) dead_on_return dereferenceable(144) %1, ptr noalias noundef align 8 dereferenceable(16) %2, ptr noalias noundef nonnull %3) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !22598 {
 bb.a:
-  %.sroa.07.i = alloca [112 x i8], align 16       ; 6 uses
   %i.a = alloca [144 x i8], align 16              ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 5 uses
   %i.c = alloca [144 x i8], align 16              ; 4 uses
   %i.d = alloca [144 x i8], align 16              ; 8 uses
+  %.sroa.07.i = alloca [112 x i8], align 16       ; 7 uses
   %i.e = alloca [160 x i8], align 16              ; 7 uses
   %i.f = invoke noundef i64 @_RNvCseW9CSxMs6pk_9recursive22get_minimum_stack_size()
           to label %bb.b unwind label %bb.k, !dbg !22599
@@ -697,8 +701,8 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !22611, !noalias !22615
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %i.c, ptr noundef nonnull align 16 dereferenceable(144) %1, i64 144, i1 false), !dbg !22619
   tail call void @llvm.experimental.noalias.scope.decl(metadata !22620), !dbg !22619
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22621
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !22621
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.07.i), !dbg !22611
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !22611, !noalias !22615
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !22622, !noalias !22615
   store ptr %2, ptr %i.b, align 8, !dbg !22622, !noalias !22615
@@ -712,10 +716,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.noexc
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, ptr noundef nonnull align 16 dereferenceable(72) %i.d, i64 72, i1 false), !dbg !22629, !noalias !22615
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !dbg !22630, !noalias !22615
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22631, !noalias !22638
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22631
-  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22631, !alias.scope !22620, !noalias !22638
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(144) %0, ptr noundef nonnull align 16 dereferenceable(72) %.sroa.07.i, i64 72, i1 false), !dbg !22630, !noalias !22631
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 112, !dbg !22632
+  store i64 -9223372036854775780, ptr %i.q, align 16, !dbg !22632, !alias.scope !22620, !noalias !22631
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22639, !noalias !22615
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22639
   br label %bb.h, !dbg !22640
 
 bb.g:                                             ; preds = %.noexc
@@ -728,11 +733,11 @@ bb.g:                                             ; preds = %.noexc
   %.sroa.78.0..sroa_idx9.i = getelementptr inbounds nuw i8, ptr %i.a, i64 112, !dbg !22611
   store i64 %i.o, ptr %.sroa.78.0..sroa_idx9.i, align 16, !dbg !22611, !noalias !22615
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !22639, !noalias !22615
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22639
   call void @_RNvXs_NtNtCsfcROwRM8ZtH_11polars_plan5plans8iteratorINtB4_10ExprMapperNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB1e_10SQLContext18process_subqueries0ENtNtNtB6_7visitor8visitors16RewritingVisitor6mutateB1g_(ptr noalias noundef nonnull sret([144 x i8]) align 16 captures(address) dereferenceable(144) %0, ptr noalias noundef nonnull align 8 dereferenceable(16) %2, ptr noalias noundef nonnull readonly align 16 captures(none) dereferenceable(144) %i.a, ptr noalias noundef nonnull %3), !dbg !22643
   br label %bb.h, !dbg !22643
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.07.i), !dbg !22645
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !22645
   br label %_RINvCsiMOpCev58qw_7stacker10maybe_growINtNtCscgRAwXFJnXP_4core6result6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorENCINvYB1c_NtNtNtNtB1i_5plans7visitor8visitors10TreeWalker7rewriteINtNtB2V_8iterator10ExprMapperNCNvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB4k_10SQLContext18process_subqueries0EE0EB4m_.exit, !dbg !22610
 
@@ -1135,14 +1140,14 @@ begin_hunk_1_@memcmp
 !22408 = !DILocation(line: 2173, column: 9, scope: !22406, inlinedAt: !22407)
 !22409 = !DILocation(line: 2175, column: 17, scope: !22406, inlinedAt: !22407)
 !22410 = !DILocation(line: 60, column: 87, scope: !22391, inlinedAt: !22394)
-!22411 = !DILocation(line: 2189, column: 23, scope: !22412, inlinedAt: !22414)
-!22412 = distinct !DILexicalBlock(scope: !22413, file: !675, line: 2189, column: 13)
-!22413 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!22414 = distinct !DILocation(line: 60, column: 13, scope: !22415, inlinedAt: !22394)
-!22415 = !DILexicalBlockFile(scope: !22416, file: !22375, discriminator: 2)
-!22416 = distinct !DILexicalBlock(scope: !22417, file: !22375, line: 60, column: 87)
-!22417 = distinct !DILexicalBlock(scope: !22391, file: !22375, line: 60, column: 87)
-!22418 = !{!22398, !22385}
+!22411 = !{!22398, !22385}
+!22412 = !DILocation(line: 2189, column: 23, scope: !22413, inlinedAt: !22415)
+!22413 = distinct !DILexicalBlock(scope: !22414, file: !675, line: 2189, column: 13)
+!22414 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22415 = distinct !DILocation(line: 60, column: 13, scope: !22416, inlinedAt: !22394)
+!22416 = !DILexicalBlockFile(scope: !22417, file: !22375, discriminator: 2)
+!22417 = distinct !DILexicalBlock(scope: !22418, file: !22375, line: 60, column: 87)
+!22418 = distinct !DILexicalBlock(scope: !22391, file: !22375, line: 60, column: 87)
 !22419 = !DILocation(line: 60, column: 88, scope: !22391, inlinedAt: !22394)
 !22420 = !DILocation(line: 0, scope: !22421, inlinedAt: !22394)
 !22421 = !DILexicalBlockFile(scope: !22391, file: !5429, discriminator: 0)
@@ -1190,14 +1195,14 @@ begin_hunk_1_@memcmp
 !22463 = !DILocation(line: 2173, column: 9, scope: !22461, inlinedAt: !22462)
 !22464 = !DILocation(line: 2175, column: 17, scope: !22461, inlinedAt: !22462)
 !22465 = !DILocation(line: 60, column: 87, scope: !22447, inlinedAt: !22449)
-!22466 = !DILocation(line: 2189, column: 23, scope: !22467, inlinedAt: !22469)
-!22467 = distinct !DILexicalBlock(scope: !22468, file: !675, line: 2189, column: 13)
-!22468 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!22469 = distinct !DILocation(line: 60, column: 13, scope: !22470, inlinedAt: !22449)
-!22470 = !DILexicalBlockFile(scope: !22471, file: !22375, discriminator: 2)
-!22471 = distinct !DILexicalBlock(scope: !22472, file: !22375, line: 60, column: 87)
-!22472 = distinct !DILexicalBlock(scope: !22447, file: !22375, line: 60, column: 87)
-!22473 = !{!22453, !22441}
+!22466 = !{!22453, !22441}
+!22467 = !DILocation(line: 2189, column: 23, scope: !22468, inlinedAt: !22470)
+!22468 = distinct !DILexicalBlock(scope: !22469, file: !675, line: 2189, column: 13)
+!22469 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22470 = distinct !DILocation(line: 60, column: 13, scope: !22471, inlinedAt: !22449)
+!22471 = !DILexicalBlockFile(scope: !22472, file: !22375, discriminator: 2)
+!22472 = distinct !DILexicalBlock(scope: !22473, file: !22375, line: 60, column: 87)
+!22473 = distinct !DILexicalBlock(scope: !22447, file: !22375, line: 60, column: 87)
 !22474 = !DILocation(line: 60, column: 88, scope: !22447, inlinedAt: !22449)
 !22475 = !DILocation(line: 0, scope: !22476, inlinedAt: !22449)
 !22476 = !DILexicalBlockFile(scope: !22447, file: !5429, discriminator: 0)
@@ -1245,14 +1250,14 @@ begin_hunk_1_@memcmp
 !22518 = !DILocation(line: 2173, column: 9, scope: !22516, inlinedAt: !22517)
 !22519 = !DILocation(line: 2175, column: 17, scope: !22516, inlinedAt: !22517)
 !22520 = !DILocation(line: 60, column: 87, scope: !22502, inlinedAt: !22504)
-!22521 = !DILocation(line: 2189, column: 23, scope: !22522, inlinedAt: !22524)
-!22522 = distinct !DILexicalBlock(scope: !22523, file: !675, line: 2189, column: 13)
-!22523 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!22524 = distinct !DILocation(line: 60, column: 13, scope: !22525, inlinedAt: !22504)
-!22525 = !DILexicalBlockFile(scope: !22526, file: !22375, discriminator: 2)
-!22526 = distinct !DILexicalBlock(scope: !22527, file: !22375, line: 60, column: 87)
-!22527 = distinct !DILexicalBlock(scope: !22502, file: !22375, line: 60, column: 87)
-!22528 = !{!22508, !22496}
+!22521 = !{!22508, !22496}
+!22522 = !DILocation(line: 2189, column: 23, scope: !22523, inlinedAt: !22525)
+!22523 = distinct !DILexicalBlock(scope: !22524, file: !675, line: 2189, column: 13)
+!22524 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22525 = distinct !DILocation(line: 60, column: 13, scope: !22526, inlinedAt: !22504)
+!22526 = !DILexicalBlockFile(scope: !22527, file: !22375, discriminator: 2)
+!22527 = distinct !DILexicalBlock(scope: !22528, file: !22375, line: 60, column: 87)
+!22528 = distinct !DILexicalBlock(scope: !22502, file: !22375, line: 60, column: 87)
 !22529 = !DILocation(line: 60, column: 88, scope: !22502, inlinedAt: !22504)
 !22530 = !DILocation(line: 0, scope: !22531, inlinedAt: !22504)
 !22531 = !DILexicalBlockFile(scope: !22502, file: !5429, discriminator: 0)
@@ -1300,14 +1305,14 @@ begin_hunk_1_@memcmp
 !22573 = !DILocation(line: 2173, column: 9, scope: !22571, inlinedAt: !22572)
 !22574 = !DILocation(line: 2175, column: 17, scope: !22571, inlinedAt: !22572)
 !22575 = !DILocation(line: 60, column: 87, scope: !22557, inlinedAt: !22559)
-!22576 = !DILocation(line: 2189, column: 23, scope: !22577, inlinedAt: !22579)
-!22577 = distinct !DILexicalBlock(scope: !22578, file: !675, line: 2189, column: 13)
-!22578 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!22579 = distinct !DILocation(line: 60, column: 13, scope: !22580, inlinedAt: !22559)
-!22580 = !DILexicalBlockFile(scope: !22581, file: !22375, discriminator: 2)
-!22581 = distinct !DILexicalBlock(scope: !22582, file: !22375, line: 60, column: 87)
-!22582 = distinct !DILexicalBlock(scope: !22557, file: !22375, line: 60, column: 87)
-!22583 = !{!22563, !22551}
+!22576 = !{!22563, !22551}
+!22577 = !DILocation(line: 2189, column: 23, scope: !22578, inlinedAt: !22580)
+!22578 = distinct !DILexicalBlock(scope: !22579, file: !675, line: 2189, column: 13)
+!22579 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22580 = distinct !DILocation(line: 60, column: 13, scope: !22581, inlinedAt: !22559)
+!22581 = !DILexicalBlockFile(scope: !22582, file: !22375, discriminator: 2)
+!22582 = distinct !DILexicalBlock(scope: !22583, file: !22375, line: 60, column: 87)
+!22583 = distinct !DILexicalBlock(scope: !22557, file: !22375, line: 60, column: 87)
 !22584 = !DILocation(line: 60, column: 88, scope: !22557, inlinedAt: !22559)
 !22585 = !DILocation(line: 0, scope: !22586, inlinedAt: !22559)
 !22586 = !DILexicalBlockFile(scope: !22557, file: !5429, discriminator: 0)
@@ -1355,14 +1360,14 @@ begin_hunk_1_@memcmp
 !22628 = !DILocation(line: 2173, column: 9, scope: !22626, inlinedAt: !22627)
 !22629 = !DILocation(line: 2175, column: 17, scope: !22626, inlinedAt: !22627)
 !22630 = !DILocation(line: 60, column: 87, scope: !22612, inlinedAt: !22614)
-!22631 = !DILocation(line: 2189, column: 23, scope: !22632, inlinedAt: !22634)
-!22632 = distinct !DILexicalBlock(scope: !22633, file: !675, line: 2189, column: 13)
-!22633 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!22634 = distinct !DILocation(line: 60, column: 13, scope: !22635, inlinedAt: !22614)
-!22635 = !DILexicalBlockFile(scope: !22636, file: !22375, discriminator: 2)
-!22636 = distinct !DILexicalBlock(scope: !22637, file: !22375, line: 60, column: 87)
-!22637 = distinct !DILexicalBlock(scope: !22612, file: !22375, line: 60, column: 87)
-!22638 = !{!22618, !22606}
+!22631 = !{!22618, !22606}
+!22632 = !DILocation(line: 2189, column: 23, scope: !22633, inlinedAt: !22635)
+!22633 = distinct !DILexicalBlock(scope: !22634, file: !675, line: 2189, column: 13)
+!22634 = distinct !DISubprogram(name: "from_residual<polars_plan::dsl::expr::Expr, polars_error::PolarsError, polars_error::PolarsError>", linkageName: "_RNvXsq_NtCscgRAwXFJnXP_4core6resultINtB5_6ResultNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1v_EE13from_residualCshquuC4dCYVj_10polars_sql", scope: !1241, file: !675, line: 2187, type: !13, scopeLine: 2187, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22635 = distinct !DILocation(line: 60, column: 13, scope: !22636, inlinedAt: !22614)
+!22636 = !DILexicalBlockFile(scope: !22637, file: !22375, discriminator: 2)
+!22637 = distinct !DILexicalBlock(scope: !22638, file: !22375, line: 60, column: 87)
+!22638 = distinct !DILexicalBlock(scope: !22612, file: !22375, line: 60, column: 87)
 !22639 = !DILocation(line: 60, column: 88, scope: !22612, inlinedAt: !22614)
 !22640 = !DILocation(line: 0, scope: !22641, inlinedAt: !22614)
 !22641 = !DILexicalBlockFile(scope: !22612, file: !5429, discriminator: 0)
