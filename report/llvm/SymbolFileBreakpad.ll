@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = call noundef ptr %i.h(ptr noundef nonnull align 8 dereferenceable(200) %i.e, i1 noundef zeroext true) #20, !inline_history !49
   %i.j = call noundef i64 @_ZNK12lldb_private11SectionList14GetNumSectionsEj(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i32 noundef 0) #20
+  %14 = trunc i64 %i.j to i32                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #20
   %i.k = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 40 ; 3 uses
@@ -291,7 +292,6 @@ _ZSt10_ConstructIN12lldb_private12AddressRangeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.bd = load <2 x i64>, ptr %i.bc, align 16, !tbaa !41
   store <2 x i64> %i.bd, ptr %i.bb, align 8, !tbaa !41
-  %14 = trunc i64 %i.j to i32                     ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.v, i64 40 ; 2 uses
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !188 ; 5 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.v, i64 48 ; 2 uses

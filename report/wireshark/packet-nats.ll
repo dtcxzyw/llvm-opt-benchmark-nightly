@@ -204,10 +204,6 @@ bb.z:                                             ; preds = %bb.y
   %i.ih = call zeroext i1 @tvb_get_token_len_length(ptr noundef %0, i32 noundef %.091116, i32 noundef %i.ig, ptr noundef nonnull %i.j, ptr noundef null)
   br i1 %i.ih, label %nats_parse_tokens.exit.thread.i98, label %nats_parse_tokens.exit.i
 
-nats_parse_tokens.exit.i:                         ; preds = %bb.z
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #7
-  br label %dissect_nats_sub.exit.thread
-
 nats_parse_tokens.exit.thread.i98:                ; preds = %bb.z
   %i.ii = load i32, ptr %i.j, align 4             ; 2 uses
   %i.ij = load ptr, ptr %i.x, align 8
@@ -226,6 +222,10 @@ nats_parse_tokens.exit.thread.i98:                ; preds = %bb.z
   %i.iu = load i32, ptr @hf_nats_op, align 4
   %i.iv = call ptr @proto_tree_add_string(ptr noundef %i.it, i32 noundef %i.iu, ptr noundef %0, i32 noundef %.091116, i32 noundef %i.ii, ptr noundef %i.ik) ; 0 uses
   br label %dissect_nats_sub.exit
+
+nats_parse_tokens.exit.i:                         ; preds = %bb.z
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #7
+  br label %dissect_nats_sub.exit.thread
 
 bb.aa:                                            ; preds = %bb.b
   %i.iw = call i32 @tvb_strncaseeql(ptr noundef %0, i32 noundef %.091116, ptr noundef nonnull @.str.72, i64 noundef 4)
@@ -490,10 +490,6 @@ bb.as:                                            ; preds = %bb.ar
   %i.nr = call zeroext i1 @tvb_get_token_len_length(ptr noundef %0, i32 noundef %.091116, i32 noundef %i.nq, ptr noundef nonnull %i.g, ptr noundef null)
   br i1 %i.nr, label %nats_parse_tokens.exit.thread.i108, label %nats_parse_tokens.exit.i106
 
-nats_parse_tokens.exit.i106:                      ; preds = %bb.as
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #7
-  br label %dissect_nats_sub.exit.thread
-
 nats_parse_tokens.exit.thread.i108:               ; preds = %bb.as
   %i.ns = load i32, ptr %i.g, align 4             ; 2 uses
   %i.nt = load ptr, ptr %i.x, align 8
@@ -513,6 +509,10 @@ nats_parse_tokens.exit.thread.i108:               ; preds = %bb.as
   %i.of = call ptr @proto_tree_add_string(ptr noundef %i.od, i32 noundef %i.oe, ptr noundef %0, i32 noundef %.091116, i32 noundef %i.ns, ptr noundef %i.nu) ; 0 uses
   br label %dissect_nats_sub.exit
 
+nats_parse_tokens.exit.i106:                      ; preds = %bb.as
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #7
+  br label %dissect_nats_sub.exit.thread
+
 bb.at:                                            ; preds = %bb.ar
   %i.og = call i32 @tvb_strncaseeql(ptr noundef %0, i32 noundef %.091116, ptr noundef nonnull @.str.76, i64 noundef 4)
   %i.oh = icmp eq i32 %i.og, 0
@@ -524,10 +524,6 @@ bb.au:                                            ; preds = %bb.at
   %i.oj = sub i32 %i.oi, %.091116                 ; 3 uses
   %i.ok = call zeroext i1 @tvb_get_token_len_length(ptr noundef %0, i32 noundef %.091116, i32 noundef %i.oj, ptr noundef nonnull %i.f, ptr noundef null)
   br i1 %i.ok, label %nats_parse_tokens.exit.thread.i111, label %nats_parse_tokens.exit.i109
-
-nats_parse_tokens.exit.i109:                      ; preds = %bb.au
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #7
-  br label %dissect_nats_sub.exit.thread
 
 nats_parse_tokens.exit.thread.i111:               ; preds = %bb.au
   %i.ol = load i32, ptr %i.f, align 4             ; 2 uses
@@ -547,6 +543,10 @@ nats_parse_tokens.exit.thread.i111:               ; preds = %bb.au
   %i.ox = load i32, ptr @hf_nats_op, align 4
   %i.oy = call ptr @proto_tree_add_string(ptr noundef %i.ow, i32 noundef %i.ox, ptr noundef %0, i32 noundef %.091116, i32 noundef %i.ol, ptr noundef %i.on) ; 0 uses
   br label %dissect_nats_sub.exit
+
+nats_parse_tokens.exit.i109:                      ; preds = %bb.au
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #7
+  br label %dissect_nats_sub.exit.thread
 
 bb.av:                                            ; preds = %bb.at
   %i.oz = call i32 @tvb_strncaseeql(ptr noundef %0, i32 noundef %.091116, ptr noundef nonnull @.str.58, i64 noundef 4)

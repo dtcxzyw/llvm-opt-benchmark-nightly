@@ -204,22 +204,22 @@ bb.a:
   %i.a = tail call i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 1008, ptr noundef %1, i64 noundef 1) #11 ; 2 uses
   %i.b = and i64 %i.a, 2147483648
   %i.c = icmp eq i64 %i.b, 0
-  br i1 %i.c, label %bb.b, label %.preheader.i.preheader
+  br i1 %i.c, label %.preheader.i.preheader, label %bb.b
 
 .preheader.i.preheader:                           ; preds = %bb.a
-  %2 = tail call i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef range(i32 112, 8227) 1008, ptr noundef %1, i64 noundef 1) #11
-  %3 = trunc i64 %2 to i32
-  %spec.select = tail call i32 @llvm.smin.i32(i32 %3, i32 0)
+  %2 = and i64 %i.a, 2147483647
+  %3 = icmp eq i64 %2, 0
+  %..i = select i1 %3, i32 -71, i32 0
   br label %drm_dp_dpcd_read_data.exit
 
 bb.b:                                             ; preds = %bb.a
-  %4 = and i64 %i.a, 2147483647
-  %5 = icmp eq i64 %4, 0
-  %..i = select i1 %5, i32 -71, i32 0
+  %4 = tail call i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef range(i32 112, 8227) 1008, ptr noundef %1, i64 noundef 1) #11
+  %5 = trunc i64 %4 to i32
+  %spec.select = tail call i32 @llvm.smin.i32(i32 %5, i32 0)
   br label %drm_dp_dpcd_read_data.exit
 
-drm_dp_dpcd_read_data.exit:                       ; preds = %.preheader.i.preheader, %bb.b
-  %.018.i = phi i32 [ %..i, %bb.b ], [ %spec.select, %.preheader.i.preheader ]
+drm_dp_dpcd_read_data.exit:                       ; preds = %bb.b, %.preheader.i.preheader
+  %.018.i = phi i32 [ %..i, %.preheader.i.preheader ], [ %spec.select, %bb.b ]
   ret i32 %.018.i
 }
 

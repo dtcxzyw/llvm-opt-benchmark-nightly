@@ -205,10 +205,10 @@ _ZN7rocksdb10autovectorIPNS_16ColumnFamilyDataELm8EE9push_backERKS2_.exit155: ; 
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.jm, i8 0, i64 24, i1 false)
   store i64 1, ptr %10, align 8, !tbaa !891
   store ptr %i.mu, ptr %i.jl, align 8, !tbaa !924
-  %.pre227 = load ptr, ptr %i.et, align 8
-  %.pre226 = load ptr, ptr %i.er, align 8
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %.pre226, i64 %.022205
-  %i.mv = getelementptr [4 x i8], ptr %.pre227, i64 %.022205
+  %.pre227 = load ptr, ptr %i.er, align 8
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %.pre227, i64 %.022205
+  %12 = load ptr, ptr %i.et, align 8
+  %i.mv = getelementptr [4 x i8], ptr %12, i64 %.022205
   %i.mw = getelementptr i8, ptr %i.mv, i64 -32
   %.0.i87 = select i1 %i.mp, ptr %11, ptr %i.mw
   %i.mx = load i32, ptr %.0.i87, align 4, !tbaa !1474

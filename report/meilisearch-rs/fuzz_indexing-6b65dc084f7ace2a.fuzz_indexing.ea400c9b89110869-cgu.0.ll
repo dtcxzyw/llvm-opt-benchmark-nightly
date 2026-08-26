@@ -205,7 +205,7 @@ _ZN10serde_json3ser9Formatter10end_object17hce621a3d182bff46E.exit.i10.i.i.i: ; 
   %.not.i11.i.i.i = icmp eq ptr %i.zs, null
   br i1 %.not.i11.i.i.i, label %.loopexit167.i, label %.loopexit170.invoke.i, !prof !6367
 
-"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17hb92c8151464fc21cE.exit.i.i.i._crit_edge": ; preds = %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h9f5e4be29d88b593E.exit.i", %bb.jx, %"_ZN103_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc6c725135e0da8e8E.exit.lr.ph.i"
+"_ZN4core3ptr97drop_in_place$LT$serde_json..map..Map$LT$alloc..string..String$C$serde_json..value..Value$GT$$GT$17hb92c8151464fc21cE.exit.i.i.i._crit_edge": ; preds = %"_ZN103_$LT$alloc..vec..into_iter..IntoIter$LT$T$C$A$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hc6c725135e0da8e8E.exit.lr.ph.i", %bb.jx, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h9f5e4be29d88b593E.exit.i"
   call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %i.wh, i64 noundef 72, i64 noundef range(i64 1, -9223372036854775807) 8) #65, !noalias !15109
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.863.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !14967

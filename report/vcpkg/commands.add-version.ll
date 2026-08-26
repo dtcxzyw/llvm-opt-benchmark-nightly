@@ -205,7 +205,7 @@ _ZN5vcpkg15LocalizedStringD2Ev.exit211.i:         ; preds = %bb.dx, %_ZNKSt7__cx
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #21
   br label %bb.dy
 
-.lr.ph.i.i.i.preheader.i:                         ; preds = %_ZN5vcpkg15LocalizedStringD2Ev.exit.i, %bb.dp
+.lr.ph.i.i.i.preheader.i:                         ; preds = %bb.dp, %_ZN5vcpkg15LocalizedStringD2Ev.exit.i
   %i.sh = getelementptr inbounds nuw i8, ptr %i.qs, i64 48
   %i.si = load ptr, ptr %i.sh, align 8, !tbaa !28 ; 2 uses
   %i.sj = getelementptr inbounds nuw i8, ptr %i.qs, i64 64 ; 2 uses

@@ -204,17 +204,17 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i32 1, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !523
   store ptr %i.f, ptr %i.e, align 8, !tbaa !168, !alias.scope !523
-  %.pre = load ptr, ptr %3, align 8, !tbaa !185   ; 3 uses
   store ptr %i.f, ptr %i.c, align 8, !alias.scope !523
   store ptr %i.d, ptr %5, align 8, !alias.scope !523
-  store ptr %.pre, ptr %6, align 8, !tbaa !185
-  %i.g = ptrtoint ptr %.pre to i64
+  %7 = load ptr, ptr %3, align 8, !tbaa !185      ; 3 uses
+  store ptr %7, ptr %6, align 8, !tbaa !185
+  %i.g = ptrtoint ptr %7 to i64
   %notsub.i.i.i = add i64 %i.g, -1
   %i.h = icmp ult i64 %notsub.i.i.i, -32
   br i1 %i.h, label %bb.a, label %_ZN4llvm3orc15SymbolStringPtrC2ERKS1_.exit
 
 bb.a:                                             ; preds = %_ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9push_backEOS6_.exit.i
-  %i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.i = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.j = atomicrmw add ptr %i.i, i64 1 seq_cst, align 8 ; 0 uses
   br label %_ZN4llvm3orc15SymbolStringPtrC2ERKS1_.exit
 

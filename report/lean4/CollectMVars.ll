@@ -204,14 +204,7 @@ bb.f:                                             ; preds = %bb.c
 lean_inc.exit83.us:                               ; preds = %bb.f, %bb.e, %bb.d, %bb.b
   %.val.i103.us = load i32, ptr %i.e, align 8, !tbaa !11 ; 4 uses
   %i.u = icmp eq i32 %.val.i103.us, 1
-  br i1 %i.u, label %.preheader.i105.us.preheader, label %bb.g
-
-.preheader.i105.us.preheader:                     ; preds = %lean_inc.exit83.us
-  %10 = load ptr, ptr %i.n, align 8, !tbaa !9     ; 4 uses
-  %11 = ptrtoint ptr %10 to i64
-  %12 = and i64 %11, 1
-  %.not.i.i107.us = icmp eq i64 %12, 0
-  br i1 %.not.i.i107.us, label %bb.k, label %lean_dec.exit.i108.us
+  br i1 %i.u, label %.preheader.i105.preheader.us, label %bb.g
 
 bb.g:                                             ; preds = %lean_inc.exit83.us
   %i.v = icmp sgt i32 %.val.i103.us, 1
@@ -230,8 +223,8 @@ bb.j:                                             ; preds = %bb.g
   store i32 %i.w, ptr %i.e, align 8, !tbaa !11
   br label %lean_dec_ref_known.exit112.us
 
-bb.k:                                             ; preds = %.preheader.i105.us.preheader
-  %i.x = load i32, ptr %10, align 4, !tbaa !11    ; 3 uses
+bb.k:                                             ; preds = %.preheader.i105.preheader.us
+  %i.x = load i32, ptr %13, align 4, !tbaa !11    ; 3 uses
   %i.y = icmp sgt i32 %i.x, 1
   br i1 %i.y, label %bb.n, label %bb.l, !prof !13
 
@@ -240,15 +233,15 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i7.i111.us, label %lean_dec.exit.i108.us, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %10) #5
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %13) #5
   br label %lean_dec.exit.i108.us
 
 bb.n:                                             ; preds = %bb.k
   %i.z = add nsw i32 %i.x, -1
-  store i32 %i.z, ptr %10, align 4, !tbaa !11
+  store i32 %i.z, ptr %13, align 4, !tbaa !11
   br label %lean_dec.exit.i108.us
 
-lean_dec.exit.i108.us:                            ; preds = %bb.n, %bb.m, %bb.l, %.preheader.i105.us.preheader
+lean_dec.exit.i108.us:                            ; preds = %bb.n, %bb.m, %bb.l, %.preheader.i105.preheader.us
   tail call void @lean_free_object(ptr noundef nonnull %i.e) #5
   br label %lean_dec_ref_known.exit112.us
 
@@ -307,14 +300,7 @@ bb.w:                                             ; preds = %bb.t
 lean_inc.exit85.us:                               ; preds = %bb.w, %bb.v, %bb.u, %bb.s
   %.val.i94.us = load i32, ptr %i.e, align 8, !tbaa !11 ; 4 uses
   %i.am = icmp eq i32 %.val.i94.us, 1
-  br i1 %i.am, label %.preheader.i.us.preheader, label %bb.x
-
-.preheader.i.us.preheader:                        ; preds = %lean_inc.exit85.us
-  %13 = load ptr, ptr %i.af, align 8, !tbaa !9    ; 4 uses
-  %14 = ptrtoint ptr %13 to i64
-  %15 = and i64 %14, 1
-  %.not.i.i95.us = icmp eq i64 %15, 0
-  br i1 %.not.i.i95.us, label %bb.ab, label %lean_dec.exit.i.us
+  br i1 %i.am, label %.preheader.i.preheader.us, label %bb.x
 
 bb.x:                                             ; preds = %lean_inc.exit85.us
   %i.an = icmp sgt i32 %.val.i94.us, 1
@@ -333,8 +319,8 @@ bb.aa:                                            ; preds = %bb.x
   store i32 %i.ao, ptr %i.e, align 8, !tbaa !11
   br label %lean_dec_ref_known.exit.us
 
-bb.ab:                                            ; preds = %.preheader.i.us.preheader
-  %i.ap = load i32, ptr %13, align 4, !tbaa !11   ; 3 uses
+bb.ab:                                            ; preds = %.preheader.i.preheader.us
+  %i.ap = load i32, ptr %10, align 4, !tbaa !11   ; 3 uses
   %i.aq = icmp sgt i32 %i.ap, 1
   br i1 %i.aq, label %bb.ae, label %bb.ac, !prof !13
 
@@ -343,15 +329,15 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not.i7.i.us, label %lean_dec.exit.i.us, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @lean_dec_ref_cold(ptr noundef nonnull %13) #5
+  tail call void @lean_dec_ref_cold(ptr noundef nonnull %10) #5
   br label %lean_dec.exit.i.us
 
 bb.ae:                                            ; preds = %bb.ab
   %i.ar = add nsw i32 %i.ap, -1
-  store i32 %i.ar, ptr %13, align 4, !tbaa !11
+  store i32 %i.ar, ptr %10, align 4, !tbaa !11
   br label %lean_dec.exit.i.us
 
-lean_dec.exit.i.us:                               ; preds = %bb.ae, %bb.ad, %bb.ac, %.preheader.i.us.preheader
+lean_dec.exit.i.us:                               ; preds = %bb.ae, %bb.ad, %bb.ac, %.preheader.i.preheader.us
   tail call void @lean_free_object(ptr noundef nonnull %i.e) #5
   br label %lean_dec_ref_known.exit.us
 
@@ -414,6 +400,20 @@ bb.am:                                            ; preds = %bb.aj
   %i.bd = add nuw i64 %.057152.us, 1              ; 2 uses
   %exitcond162.not = icmp eq i64 %i.bd, %2
   br i1 %exitcond162.not, label %._crit_edge, label %.lr.ph.split.us
+
+.preheader.i.preheader.us:                        ; preds = %lean_inc.exit85.us
+  %10 = load ptr, ptr %i.af, align 8, !tbaa !9    ; 4 uses
+  %11 = ptrtoint ptr %10 to i64
+  %12 = and i64 %11, 1
+  %.not.i.i95.us = icmp eq i64 %12, 0
+  br i1 %.not.i.i95.us, label %bb.ab, label %lean_dec.exit.i.us
+
+.preheader.i105.preheader.us:                     ; preds = %lean_inc.exit83.us
+  %13 = load ptr, ptr %i.n, align 8, !tbaa !9     ; 4 uses
+  %14 = ptrtoint ptr %13 to i64
+  %15 = and i64 %14, 1
+  %.not.i.i107.us = icmp eq i64 %15, 0
+  br i1 %.not.i.i107.us, label %bb.k, label %lean_dec.exit.i108.us
 
 ._crit_edge:                                      ; preds = %.thread129, %.thread136.us, %bb.a
   %.059.lcssa = phi ptr [ %4, %bb.a ], [ %.364134.us, %.thread136.us ], [ %i.cd, %.thread129 ]

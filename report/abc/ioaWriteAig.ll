@@ -204,7 +204,7 @@ Vec_StrPush.exit.i242:                            ; preds = %Vec_StrGrow.exit11.
   %i.ig = getelementptr i8, ptr %i.if, i64 4
   %.val117303 = load i32, ptr %i.ig, align 4, !tbaa !38
   %i.ih = icmp sgt i32 %.val117303, 0
-  br i1 %i.ih, label %.lr.ph305, label %.lr.ph.i272.preheader
+  br i1 %i.ih, label %.lr.ph305, label %.lr.ph.i272
 
 .lr.ph.i254:                                      ; preds = %.critedge4.preheader, %Vec_StrPush.exit.i259
   %indvars.iv314 = phi i64 [ %indvars.iv.next315, %Vec_StrPush.exit.i259 ], [ 0, %.critedge4.preheader ] ; 2 uses
@@ -297,12 +297,6 @@ Vec_StrPush.exit.i259:                            ; preds = %Vec_StrGrow.exit11.
   %i.jr = icmp slt i64 %indvars.iv.next315, %i.jq
   br i1 %i.jr, label %.lr.ph.i254, label %.critedge6.preheader, !llvm.loop !53
 
-.lr.ph.i272.preheader:                            ; preds = %.critedge6, %.critedge6.preheader
-  %1 = load i32, ptr %i.ao, align 4, !tbaa !11    ; 7 uses
-  %2 = load i32, ptr %i.am, align 8, !tbaa !15
-  %3 = icmp eq i32 %1, %2
-  br i1 %3, label %bb.cc, label %.Vec_StrPush.exit_crit_edge.i275
-
 .lr.ph305:                                        ; preds = %.critedge6.preheader, %.critedge6
   %i.js = phi ptr [ %i.kx, %.critedge6 ], [ %i.if, %.critedge6.preheader ] ; 3 uses
   %indvars.iv317 = phi i64 [ %indvars.iv.next318, %.critedge6 ], [ 0, %.critedge6.preheader ] ; 2 uses
@@ -364,13 +358,19 @@ bb.cb:                                            ; preds = %bb.ca
   %.val117 = load i32, ptr %i.ky, align 4, !tbaa !38
   %i.kz = sext i32 %.val117 to i64
   %i.la = icmp slt i64 %indvars.iv.next318, %i.kz
-  br i1 %i.la, label %.lr.ph305, label %.lr.ph.i272.preheader, !llvm.loop !55
+  br i1 %i.la, label %.lr.ph305, label %.lr.ph.i272, !llvm.loop !55
 
-.Vec_StrPush.exit_crit_edge.i275:                 ; preds = %.lr.ph.i272.preheader
+.lr.ph.i272:                                      ; preds = %.critedge6, %.critedge6.preheader
+  %1 = load i32, ptr %i.ao, align 4, !tbaa !11    ; 7 uses
+  %2 = load i32, ptr %i.am, align 8, !tbaa !15
+  %3 = icmp eq i32 %1, %2
+  br i1 %3, label %bb.cc, label %.Vec_StrPush.exit_crit_edge.i275
+
+.Vec_StrPush.exit_crit_edge.i275:                 ; preds = %.lr.ph.i272
   %.pre.i276 = load ptr, ptr %i.au, align 8, !tbaa !16
   br label %Vec_StrPush.exit.i277
 
-bb.cc:                                            ; preds = %.lr.ph.i272.preheader
+bb.cc:                                            ; preds = %.lr.ph.i272
   %i.lb = icmp slt i32 %1, 16
   br i1 %i.lb, label %bb.cd, label %bb.cg
 

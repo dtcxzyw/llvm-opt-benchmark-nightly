@@ -204,16 +204,23 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.e, ptr @shared_evp_pkey, align 8, !tbaa !21
   %i.f = tail call i32 @test_ptr(ptr noundef nonnull @.str.18, i32 noundef 1022, ptr noundef nonnull @.str.148, ptr noundef %i.e) #11
   %.not2 = icmp eq i32 %i.f, 0
-  br i1 %.not2, label %teardown_threads.exit, label %bb.c
+  br i1 %.not2, label %teardown_threads.exit, label %1
 
-bb.c:                                             ; preds = %bb.b
+1:                                                ; preds = %bb.b
+  %2 = load i64, ptr @multi_num_threads, align 8, !tbaa !16
+  %3 = add i64 %2, 1
+  %4 = tail call i32 @test_size_t_le(ptr noundef nonnull @.str.18, i32 noundef 825, ptr noundef nonnull @.str.55, ptr noundef nonnull @.str.56, i64 noundef %3, i64 noundef 10) #11
+  %.not.i = icmp eq i32 %4, 0
+  br i1 %.not.i, label %teardown_threads.exit, label %.preheader.i.preheader
+
+bb.c:                                             ; preds = %.preheader.i.preheader
   %i.g = load i64, ptr @multi_num_threads, align 8, !tbaa !16
   %i.h = add i64 %i.g, 1
   %i.i = tail call i32 @test_size_t_le(ptr noundef nonnull @.str.18, i32 noundef 825, ptr noundef nonnull @.str.55, ptr noundef nonnull @.str.56, i64 noundef %i.h, i64 noundef 10) #11
   %.not.i.a = icmp eq i32 %i.i, 0
-  br i1 %.not.i.a, label %teardown_threads.exit, label %.preheader.i.preheader
+  br i1 %.not.i.a, label %teardown_threads.exit, label %.preheader.i8.preheader
 
-.preheader.i.preheader:                           ; preds = %bb.c
+.preheader.i.preheader:                           ; preds = %1
   %i.j = load i64, ptr @multi_num_threads, align 8, !tbaa !16 ; 2 uses
   %i.k = add i64 %i.j, 1
   store i64 %i.k, ptr @multi_num_threads, align 8, !tbaa !16
@@ -223,16 +230,15 @@ bb.c:                                             ; preds = %bb.b
   %i.o = zext i1 %i.n to i32
   %i.p = tail call i32 @test_true(ptr noundef nonnull @.str.18, i32 noundef 829, ptr noundef nonnull @.str.57, i32 noundef %i.o) #11
   %.not6.i = icmp eq i32 %i.p, 0
-  br i1 %.not6.i, label %teardown_threads.exit, label %start_threads.exit
+  br i1 %.not6.i, label %teardown_threads.exit, label %bb.c
 
-start_threads.exit:                               ; preds = %.preheader.i.preheader
-  %1 = load i64, ptr @multi_num_threads, align 8, !tbaa !16
-  %2 = add i64 %1, 1
-  %3 = tail call i32 @test_size_t_le(ptr noundef nonnull @.str.18, i32 noundef 825, ptr noundef nonnull @.str.55, ptr noundef nonnull @.str.56, i64 noundef %2, i64 noundef 10) #11
-  %.not.i7 = icmp eq i32 %3, 0
-  br i1 %.not.i7, label %teardown_threads.exit, label %.preheader.i8.preheader
+start_threads.exit:                               ; preds = %.preheader.i8.preheader
+  tail call void @thread_shared_evp_pkey()
+  %5 = load i64, ptr @multi_num_threads, align 8, !tbaa !16
+  %.not.i7 = icmp eq i64 %5, 0
+  br i1 %.not.i7, label %.loopexit, label %.lr.ph.i
 
-.preheader.i8.preheader:                          ; preds = %start_threads.exit
+.preheader.i8.preheader:                          ; preds = %bb.c
   %i.q = load i64, ptr @multi_num_threads, align 8, !tbaa !16 ; 2 uses
   %i.r = add i64 %i.q, 1
   store i64 %i.r, ptr @multi_num_threads, align 8, !tbaa !16
@@ -242,13 +248,7 @@ start_threads.exit:                               ; preds = %.preheader.i.prehea
   %i.v = zext i1 %i.u to i32
   %i.w = tail call i32 @test_true(ptr noundef nonnull @.str.18, i32 noundef 829, ptr noundef nonnull @.str.57, i32 noundef %i.v) #11
   %.not6.i10 = icmp eq i32 %i.w, 0
-  br i1 %.not6.i10, label %teardown_threads.exit, label %start_threads.exit13
-
-start_threads.exit13:                             ; preds = %.preheader.i8.preheader
-  tail call void @thread_shared_evp_pkey()
-  %4 = load i64, ptr @multi_num_threads, align 8, !tbaa !16
-  %.not8.i = icmp eq i64 %4, 0
-  br i1 %.not8.i, label %.loopexit, label %.lr.ph.i
+  br i1 %.not6.i10, label %teardown_threads.exit, label %start_threads.exit
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.x = add nuw i64 %.05.i14, 1                  ; 2 uses
@@ -256,8 +256,8 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.z = icmp ult i64 %i.x, %i.y
   br i1 %i.z, label %.lr.ph.i, label %.loopexit, !llvm.loop !23
 
-.lr.ph.i:                                         ; preds = %start_threads.exit13, %bb.d
-  %.05.i14 = phi i64 [ %i.x, %bb.d ], [ 0, %start_threads.exit13 ] ; 2 uses
+.lr.ph.i:                                         ; preds = %start_threads.exit, %bb.d
+  %.05.i14 = phi i64 [ %i.x, %bb.d ], [ 0, %start_threads.exit ] ; 2 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr @multi_threads, i64 %.05.i14
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !16
   %i.ac = tail call i32 @pthread_join(i64 noundef %i.ab, ptr noundef null) #11
@@ -267,7 +267,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   %.not.i15 = icmp eq i32 %i.af, 0
   br i1 %.not.i15, label %teardown_threads.exit, label %bb.d
 
-.loopexit:                                        ; preds = %bb.d, %start_threads.exit13
+.loopexit:                                        ; preds = %bb.d, %start_threads.exit
   %.b1 = load i1, ptr @multi_success, align 4
   %i.ag = zext i1 %.b1 to i32
   %i.ah = tail call i32 @test_true(ptr noundef nonnull @.str.18, i32 noundef 1030, ptr noundef nonnull @.str.50, i32 noundef %i.ag) #11
@@ -275,8 +275,8 @@ bb.d:                                             ; preds = %.lr.ph.i
   %spec.select = zext i1 %.not6 to i32
   br label %teardown_threads.exit
 
-teardown_threads.exit:                            ; preds = %.lr.ph.i, %.preheader.i.preheader, %.preheader.i8.preheader, %start_threads.exit, %bb.c, %.loopexit, %bb.a, %bb.b
-  %.0 = phi i32 [ 0, %bb.a ], [ %spec.select, %.loopexit ], [ 0, %bb.b ], [ 0, %.preheader.i.preheader ], [ 0, %.preheader.i8.preheader ], [ 0, %bb.c ], [ 0, %start_threads.exit ], [ 0, %.lr.ph.i ]
+teardown_threads.exit:                            ; preds = %.lr.ph.i, %.preheader.i.preheader, %.preheader.i8.preheader, %bb.c, %1, %.loopexit, %bb.a, %bb.b
+  %.0 = phi i32 [ 0, %bb.a ], [ %spec.select, %.loopexit ], [ 0, %bb.b ], [ 0, %.preheader.i.preheader ], [ 0, %.preheader.i8.preheader ], [ 0, %1 ], [ 0, %bb.c ], [ 0, %.lr.ph.i ]
   %i.ai = load ptr, ptr @shared_evp_pkey, align 8, !tbaa !21
   tail call void @EVP_PKEY_free(ptr noundef %i.ai) #11
   %i.aj = load ptr, ptr @multi_provider, align 16, !tbaa !25 ; 2 uses

@@ -205,30 +205,30 @@ bb.a:                                             ; preds = %.lr.ph.i
           cleanup
   %.val2.i.i.i = load i64, ptr %0, align 8, !alias.scope !836 ; 2 uses
   %i.b = icmp eq i64 %.val2.i.i.i, 0
-  br i1 %i.b, label %.body.i, label %bb.b
+  br i1 %i.b, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsiU5vK8fN4ZC_11ide_assists.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val3.i.i.i = load ptr, ptr %i.c, align 8, !alias.scope !845, !nonnull !10, !noundef !10
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.i.i.i, i64 noundef %.val2.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #38, !noalias !846
-  br label %.body.i
+  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsiU5vK8fN4ZC_11ide_assists.exit.i
 
 bb.c:                                             ; preds = %.lr.ph.i
   %.val.i.i.i = load i64, ptr %0, align 8, !alias.scope !836 ; 2 uses
   %i.d = icmp eq i64 %.val.i.i.i, 0
-  br i1 %i.d, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsiU5vK8fN4ZC_11ide_assists.exit.i, label %bb.d
+  br i1 %i.d, label %.body.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val1.i.i.i = load ptr, ptr %i.e, align 8, !alias.scope !845, !nonnull !10, !noundef !10
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i.i, i64 noundef %.val.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #38, !noalias !849
-  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsiU5vK8fN4ZC_11ide_assists.exit.i
+  br label %.body.i
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsiU5vK8fN4ZC_11ide_assists.exit.i: ; preds = %bb.d, %bb.c
-  ret void
-
-.body.i:                                          ; preds = %bb.a, %bb.b
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsiU5vK8fN4ZC_11ide_assists.exit.i: ; preds = %bb.a, %bb.b
   resume { ptr, i32 } %i.a
+
+.body.i:                                          ; preds = %bb.c, %bb.d
+  ret void
 }
 
 ; Function Attrs: nonlazybind uwtable

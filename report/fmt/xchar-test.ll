@@ -205,7 +205,7 @@ _ZN3fmt3v126detail14init_named_argIwNS1_9named_argIRA5_KwwEETnNSt9enable_ifIXsr1
   %i.p = add i64 %wcslen.i.i6, 1
   br label %.lr.ph.preheader.i7.i10
 
-.lr.ph.preheader.i7.i10:                          ; preds = %_ZN3fmt3v126detail14init_named_argIwNS1_9named_argIRA5_KwwEETnNSt9enable_ifIXsr12is_named_argIT0_EE5valueEiE4typeELi0EEEvPNS1_14named_arg_infoIT_EERiSG_RKS9_.exit, %.lr.ph.preheader.i.i4
+.lr.ph.preheader.i7.i10:                          ; preds = %.lr.ph.preheader.i.i4, %_ZN3fmt3v126detail14init_named_argIwNS1_9named_argIRA5_KwwEETnNSt9enable_ifIXsr12is_named_argIT0_EE5valueEiE4typeELi0EEEvPNS1_14named_arg_infoIT_EERiSG_RKS9_.exit
   %.0.lcssa.i.i8 = phi i64 [ 0, %_ZN3fmt3v126detail14init_named_argIwNS1_9named_argIRA5_KwwEETnNSt9enable_ifIXsr12is_named_argIT0_EE5valueEiE4typeELi0EEEvPNS1_14named_arg_infoIT_EERiSG_RKS9_.exit ], [ %i.p, %.lr.ph.preheader.i.i4 ] ; 2 uses
   %i.q = load i32, ptr %i.m, align 4, !tbaa !208
   %.not5.i.i.i14 = icmp eq i32 %i.q, 0            ; 2 uses
@@ -381,7 +381,7 @@ _ZN3fmt3v126detail14init_named_argIwNS1_9named_argIA5_wwEETnNSt9enable_ifIXsr12i
   %i.p = add i64 %wcslen.i.i6, 1
   br label %.lr.ph.preheader.i7.i10
 
-.lr.ph.preheader.i7.i10:                          ; preds = %_ZN3fmt3v126detail14init_named_argIwNS1_9named_argIA5_wwEETnNSt9enable_ifIXsr12is_named_argIT0_EE5valueEiE4typeELi0EEEvPNS1_14named_arg_infoIT_EERiSE_RKS7_.exit, %.lr.ph.preheader.i.i4
+.lr.ph.preheader.i7.i10:                          ; preds = %.lr.ph.preheader.i.i4, %_ZN3fmt3v126detail14init_named_argIwNS1_9named_argIA5_wwEETnNSt9enable_ifIXsr12is_named_argIT0_EE5valueEiE4typeELi0EEEvPNS1_14named_arg_infoIT_EERiSE_RKS7_.exit
   %.0.lcssa.i.i8 = phi i64 [ 0, %_ZN3fmt3v126detail14init_named_argIwNS1_9named_argIA5_wwEETnNSt9enable_ifIXsr12is_named_argIT0_EE5valueEiE4typeELi0EEEvPNS1_14named_arg_infoIT_EERiSE_RKS7_.exit ], [ %i.p, %.lr.ph.preheader.i.i4 ] ; 2 uses
   %i.q = load i32, ptr %i.m, align 4, !tbaa !208
   %.not5.i.i.i14 = icmp eq i32 %i.q, 0            ; 2 uses

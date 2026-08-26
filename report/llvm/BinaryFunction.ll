@@ -205,6 +205,7 @@ _ZN4llvm11raw_ostreamlsEc.exit640:                ; preds = %bb.iq, %bb.ip, %_ZN
   %.016.i = phi i64 [ %i.bcv, %.lr.ph.i.lr.ph.i ], [ %i.bei, %_ZNK4llvm4bolt13BinaryContext15computeCodeSizeIN9__gnu_cxx17__normal_iteratorIPKNS_6MCInstESt6vectorIS5_SaIS5_EEEEEEmT_SC_PKNS_13MCCodeEmitterE.exit.i ] ; 2 uses
   %.sroa.010.015.i = phi ptr [ %i.bcx, %.lr.ph.i.lr.ph.i ], [ %34, %_ZNK4llvm4bolt13BinaryContext15computeCodeSizeIN9__gnu_cxx17__normal_iteratorIPKNS_6MCInstESt6vectorIS5_SaIS5_EEEEEEmT_SC_PKNS_13MCCodeEmitterE.exit.i ] ; 7 uses
   call void @_ZNK4llvm4bolt13BinaryContext16printInstructionERNS_11raw_ostreamERKNS_6MCInstEmPKNS0_14BinaryFunctionEbbbNS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(2268) %i.bcw, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(128) %.sroa.010.015.i, i64 noundef %.016.i, ptr noundef nonnull %0, i1 noundef zeroext false, i1 noundef zeroext false, i1 noundef zeroext false, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %8) #30
+  %34 = getelementptr inbounds nuw i8, ptr %.sroa.010.015.i, i64 128 ; 2 uses
   %i.bdd = load ptr, ptr %i.bda, align 8, !tbaa !579 ; 2 uses
   %i.bde = load ptr, ptr %i.bdd, align 8, !tbaa !8
   %i.bdf = getelementptr inbounds nuw i8, ptr %i.bde, i64 104
@@ -285,7 +286,6 @@ _ZN4llvm11SmallVectorIcLj256EED2Ev.exit.i.i:      ; preds = %bb.jd, %_ZN4llvm11S
 
 _ZNK4llvm4bolt13BinaryContext15computeCodeSizeIN9__gnu_cxx17__normal_iteratorIPKNS_6MCInstESt6vectorIS5_SaIS5_EEEEEEmT_SC_PKNS_13MCCodeEmitterE.exit.i: ; preds = %_ZN4llvm11SmallVectorIcLj256EED2Ev.exit.i.i, %bb.ja, %bb.iy, %bb.ix, %.lr.ph.i.i662
   %.1.i.i = phi i64 [ 0, %.lr.ph.i.i662 ], [ %i.bdl, %bb.ix ], [ %i.bed, %_ZN4llvm11SmallVectorIcLj256EED2Ev.exit.i.i ], [ %i.bdx, %bb.ja ], [ 0, %bb.iy ]
-  %34 = getelementptr inbounds nuw i8, ptr %.sroa.010.015.i, i64 128 ; 2 uses
   %i.bei = add i64 %.1.i.i, %.016.i               ; 2 uses
   %.not.i663 = icmp eq ptr %34, %i.bcz
   br i1 %.not.i663, label %_ZNK4llvm4bolt13BinaryContext17printInstructionsIN9__gnu_cxx17__normal_iteratorIPKNS_6MCInstESt6vectorIS5_SaIS5_EEEEEEmRNS_11raw_ostreamET_SE_mPKNS0_14BinaryFunctionEbbbNS_9StringRefE.exit.loopexit, label %.lr.ph.i.i662, !llvm.loop !798
@@ -688,6 +688,7 @@ bb.a:
   %.016 = phi i64 [ %4, %.lr.ph.i.lr.ph ], [ %i.ao, %_ZNK4llvm4bolt13BinaryContext15computeCodeSizeIN9__gnu_cxx17__normal_iteratorIPNS_6MCInstESt6vectorIS5_SaIS5_EEEEEEmT_SB_PKNS_13MCCodeEmitterE.exit ] ; 2 uses
   %.sroa.010.015 = phi ptr [ %2, %.lr.ph.i.lr.ph ], [ %12, %_ZNK4llvm4bolt13BinaryContext15computeCodeSizeIN9__gnu_cxx17__normal_iteratorIPNS_6MCInstESt6vectorIS5_SaIS5_EEEEEEmT_SB_PKNS_13MCCodeEmitterE.exit ] ; 7 uses
   call void @_ZNK4llvm4bolt13BinaryContext16printInstructionERNS_11raw_ostreamERKNS_6MCInstEmPKNS0_14BinaryFunctionEbbbNS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(2268) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(128) %.sroa.010.015, i64 noundef %.016, ptr noundef %5, i1 noundef zeroext %6, i1 noundef zeroext %7, i1 noundef zeroext %8, ptr noundef nonnull byval(%"class.llvm::StringRef") align 8 %9) #30
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.010.015, i64 128 ; 2 uses
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !579  ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !8
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 104
@@ -768,7 +769,6 @@ _ZN4llvm11SmallVectorIcLj256EED2Ev.exit.i:        ; preds = %bb.i, %_ZN4llvm11Sm
 
 _ZNK4llvm4bolt13BinaryContext15computeCodeSizeIN9__gnu_cxx17__normal_iteratorIPNS_6MCInstESt6vectorIS5_SaIS5_EEEEEEmT_SB_PKNS_13MCCodeEmitterE.exit: ; preds = %_ZN4llvm11SmallVectorIcLj256EED2Ev.exit.i, %bb.f, %bb.d, %bb.c, %.lr.ph.i
   %.1.i = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %bb.c ], [ %i.aj, %_ZN4llvm11SmallVectorIcLj256EED2Ev.exit.i ], [ %i.ad, %bb.f ], [ 0, %bb.d ]
-  %12 = getelementptr inbounds nuw i8, ptr %.sroa.010.015, i64 128 ; 2 uses
   %i.ao = add i64 %.1.i, %.016                    ; 2 uses
   %.not = icmp eq ptr %12, %3
   br i1 %.not, label %._crit_edge, label %.lr.ph.i, !llvm.loop !1970

@@ -204,38 +204,29 @@ define dso_local void @_ZN7TestMap26testForEachNodeInAreaBlankEP8IGameDef(ptr no
 
 .preheader208.lr.ph.split.split.i:                ; preds = %.preheader210.i
   %.not77.i = icmp eq ptr %i.f, null
-  br i1 %.not77.i, label %.preheader.us217.us.i, label %.preheader.i
+  br i1 %.not77.i, label %.preheader.i, label %.preheader.us217.us.i
 
 .preheader.us217.us.i:                            ; preds = %.preheader208.lr.ph.split.split.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
+  %6 = load ptr, ptr %5, align 8, !tbaa !52
+  %.sroa.0.0.copyload.i.i = load i32, ptr %6, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
   store i8 1, ptr %i.e, align 1, !tbaa !138
   %i.g = invoke i32 @_ZN3Map7getNodeEN4core8vector3dIsEEPb(ptr noundef nonnull align 8 dereferenceable(144) %4, i48 0, ptr noundef nonnull %i.e)
-          to label %.noexc18 unwind label %.loopexit
-
-.noexc18:                                         ; preds = %.preheader.us217.us.i
-  %or.cond11.i.us.us.us.i = icmp eq i32 %i.g, 127
-  br i1 %or.cond11.i.us.us.us.i, label %5, label %_ZNK7MapNodeeqERKS_.exit.thread.i.i
-
-5:                                                ; preds = %.noexc18
-  %6 = load i8, ptr %i.e, align 1, !tbaa !138, !range !93, !noundef !94
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %.noexc.i125.i, label %._crit_edge.i
+          to label %.noexc19 unwind label %.loopexit.split-lp.loopexit
 
 .preheader.i:                                     ; preds = %.preheader208.lr.ph.split.split.i
-  %8 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %9 = load ptr, ptr %8, align 8, !tbaa !52
-  %.sroa.0.0.copyload.i.i.peel = load i32, ptr %9, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #22
   store i8 1, ptr %i.e, align 1, !tbaa !138
   %i.h = invoke i32 @_ZN3Map7getNodeEN4core8vector3dIsEEPb(ptr noundef nonnull align 8 dereferenceable(144) %4, i48 0, ptr noundef nonnull %i.e)
-          to label %.noexc19.peel unwind label %.loopexit.split-lp.loopexit
+          to label %.noexc19.peel unwind label %.loopexit
 
 .noexc19.peel:                                    ; preds = %.preheader.i
-  %or.cond11.i.i.peel = icmp eq i32 %.sroa.0.0.copyload.i.i.peel, %i.h
+  %or.cond11.i.i.peel = icmp eq i32 %i.h, 127
   br i1 %or.cond11.i.i.peel, label %bb.a, label %_ZNK7MapNodeeqERKS_.exit.thread.i.i
 
 bb.a:                                             ; preds = %.noexc19.peel
@@ -243,7 +234,11 @@ bb.a:                                             ; preds = %.noexc19.peel
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %.noexc.i125.i, label %._crit_edge.i
 
-_ZNK7MapNodeeqERKS_.exit.thread.i.i:              ; preds = %.noexc19.peel, %.noexc18
+.noexc19:                                         ; preds = %.preheader.us217.us.i
+  %or.cond11.i.i = icmp eq i32 %.sroa.0.0.copyload.i.i, %i.g
+  br i1 %or.cond11.i.i, label %7, label %_ZNK7MapNodeeqERKS_.exit.thread.i.i
+
+_ZNK7MapNodeeqERKS_.exit.thread.i.i:              ; preds = %.noexc19, %.noexc19.peel
   %i.k = call ptr @__cxa_allocate_exception(i64 72) #22 ; 13 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 11 uses
   store ptr %i.l, ptr %2, align 8, !tbaa !29
@@ -404,7 +399,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.ba, i64 noundef %i.bd) #21
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.thread.i
 
-.noexc.i125.i:                                    ; preds = %bb.a, %5
+7:                                                ; preds = %.noexc19
+  %8 = load i8, ptr %i.e, align 1, !tbaa !138, !range !93, !noundef !94
+  %9 = trunc nuw i8 %8 to i1
+  br i1 %9, label %.noexc.i125.i, label %._crit_edge.i
+
+.noexc.i125.i:                                    ; preds = %7, %bb.a
   %i.be = call ptr @__cxa_allocate_exception(i64 72) #22 ; 13 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 11 uses
   store ptr %i.bf, ptr %3, align 8, !tbaa !29
@@ -580,7 +580,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.thread.i: ; pre
 bb.v:                                             ; preds = %bb.u, %bb.k
   unreachable
 
-._crit_edge.i:                                    ; preds = %bb.a, %5
+._crit_edge.i:                                    ; preds = %7, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
@@ -588,12 +588,12 @@ bb.v:                                             ; preds = %bb.u, %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   ret void
 
-.loopexit:                                        ; preds = %.preheader.us217.us.i
+.loopexit:                                        ; preds = %.preheader.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %.body
 
-.loopexit.split-lp.loopexit:                      ; preds = %.preheader.i
+.loopexit.split-lp.loopexit:                      ; preds = %.preheader.us217.us.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body

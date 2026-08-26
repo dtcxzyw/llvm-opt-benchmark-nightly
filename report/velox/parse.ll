@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %bb.d
 .lr.ph.i:                                         ; preds = %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   store ptr %i.i, ptr %i.j, align 8, !tbaa !28
-  %2 = add i32 %1, -65
-  %3 = tail call noundef zeroext i1 @_ZN3re216CharClassBuilder8AddRangeEii(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i32 noundef %1, i32 noundef %1) ; 0 uses
-  %or.cond.i = icmp ult i32 %2, 26
+  %2 = tail call noundef zeroext i1 @_ZN3re216CharClassBuilder8AddRangeEii(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i32 noundef %1, i32 noundef %1) ; 0 uses
+  %3 = add i32 %1, -65
+  %or.cond.i = icmp ult i32 %3, 26
   br i1 %or.cond.i, label %.thread.i, label %bb.f
 
 .thread.i:                                        ; preds = %.lr.ph.i

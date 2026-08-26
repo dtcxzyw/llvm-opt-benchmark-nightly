@@ -204,7 +204,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.ld = load ptr, ptr %i.lc, align 8, !tbaa !223 ; 2 uses
   %i.le = load ptr, ptr %i.ci, align 8, !tbaa !224
   %i.lf = icmp eq ptr %i.ld, %i.le
-  br i1 %i.lf, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i192, label %.noexc80
+  br i1 %i.lf, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i192, label %.noexc81
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i192: ; preds = %.loopexit296
   %i.lg = ptrtoint ptr %i.ld to i64
@@ -286,27 +286,27 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   store ptr %i.mh, ptr %i.lh, align 8, !tbaa !225
   %i.mi = getelementptr inbounds nuw i8, ptr %i.ll, i64 32
   store ptr %i.mi, ptr %i.lc, align 8, !tbaa !223
-  br label %.noexc80
+  br label %.noexc81
 
-.noexc80:                                         ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i206, %.loopexit296
+.noexc80:                                         ; preds = %.noexc82, %.lr.ph.i.i.i.i77
+  %.sroa.03.07.i.i.i.i78 = phi ptr [ %17, %.lr.ph.i.i.i.i77 ], [ %i.mk, %.noexc82 ] ; 3 uses
+  %16 = invoke { ptr, i8 } @_ZNSt10_HashtableISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_insert_uniqueIRNSt7__cxx1112basic_stringIcS2_SaIcEEESM_NS5_10_AllocNodeISaINS5_10_Hash_nodeIS3_Lb1EEEEEEEESt4pairINS5_14_Node_iteratorIS3_Lb1ELb1EEEbEOT_OT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(56) %i.cj, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i78, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i78, ptr noundef nonnull align 8 dereferenceable(8) %9)
+          to label %.lr.ph.i.i.i.i77 unwind label %.loopexit284 ; 0 uses
+
+.lr.ph.i.i.i.i77:                                 ; preds = %.noexc80
+  %17 = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i78, i64 32 ; 2 uses
+  %.not.i.i.i.i79 = icmp eq ptr %17, %i.mm
+  br i1 %.not.i.i.i.i79, label %.loopexit288, label %.noexc80, !llvm.loop !236
+
+.noexc81:                                         ; preds = %.loopexit296, %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i206
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #34
   store i64 2, ptr %10, align 8, !tbaa !13
-  %.sroa.5311.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store ptr @.str.38, ptr %.sroa.5311.0..sroa_idx, align 8, !tbaa !235
-  %16 = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRSt17basic_string_viewIcS3_EEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(80) %i.ci, ptr noundef nonnull align 8 dereferenceable(16) %10)
+  %i.mj = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store ptr @.str.38, ptr %i.mj, align 8, !tbaa !235
+  %18 = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRSt17basic_string_viewIcS3_EEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(80) %i.ci, ptr noundef nonnull align 8 dereferenceable(16) %10)
           to label %.noexc82 unwind label %.loopexit.split-lp285.loopexit ; 0 uses
 
-.lr.ph.i.i.i.i77:                                 ; preds = %.noexc82, %.noexc81
-  %.sroa.03.07.i.i.i.i78 = phi ptr [ %i.mj, %.noexc81 ], [ %i.mk, %.noexc82 ] ; 3 uses
-  %17 = invoke { ptr, i8 } @_ZNSt10_HashtableISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_insert_uniqueIRNSt7__cxx1112basic_stringIcS2_SaIcEEESM_NS5_10_AllocNodeISaINS5_10_Hash_nodeIS3_Lb1EEEEEEEESt4pairINS5_14_Node_iteratorIS3_Lb1ELb1EEEbEOT_OT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(56) %i.cj, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i78, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i78, ptr noundef nonnull align 8 dereferenceable(8) %9)
-          to label %.noexc81 unwind label %.loopexit284 ; 0 uses
-
-.noexc81:                                         ; preds = %.lr.ph.i.i.i.i77
-  %i.mj = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i78, i64 32 ; 2 uses
-  %.not.i.i.i.i79 = icmp eq ptr %i.mj, %i.mm
-  br i1 %.not.i.i.i.i79, label %.loopexit288, label %.lr.ph.i.i.i.i77, !llvm.loop !236
-
-.noexc82:                                         ; preds = %.noexc80
+.noexc82:                                         ; preds = %.noexc81
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #34
   %i.mk = load ptr, ptr %i.ci, align 8, !tbaa !237 ; 2 uses
   %i.ml = getelementptr inbounds nuw i8, ptr %0, i64 1528
@@ -314,9 +314,9 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #34
   store ptr %i.cj, ptr %9, align 8, !tbaa !238
   %.not6.i.i.i.i76 = icmp eq ptr %i.mk, %i.mm
-  br i1 %.not6.i.i.i.i76, label %.loopexit288, label %.lr.ph.i.i.i.i77
+  br i1 %.not6.i.i.i.i76, label %.loopexit288, label %.noexc80
 
-.loopexit288:                                     ; preds = %.noexc81, %.noexc82
+.loopexit288:                                     ; preds = %.lr.ph.i.i.i.i77, %.noexc82
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #34
   %i.mn = getelementptr inbounds nuw i8, ptr %0, i64 1696 ; 3 uses
   %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !223
@@ -482,7 +482,7 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   %i.oj = load ptr, ptr %i.oi, align 8, !tbaa !223 ; 2 uses
   %i.ok = load ptr, ptr %i.dd, align 8, !tbaa !224
   %i.ol = icmp eq ptr %i.oj, %i.ok
-  br i1 %i.ol, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i226, label %.noexc104
+  br i1 %i.ol, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i226, label %.noexc105
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i226: ; preds = %.loopexit280
   %i.om = ptrtoint ptr %i.oj to i64
@@ -564,27 +564,27 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   store ptr %i.pn, ptr %i.on, align 8, !tbaa !225
   %i.po = getelementptr inbounds nuw i8, ptr %i.or, i64 32
   store ptr %i.po, ptr %i.oi, align 8, !tbaa !223
-  br label %.noexc104
+  br label %.noexc105
 
-.noexc104:                                        ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i240, %.loopexit280
+.noexc104:                                        ; preds = %.noexc106, %.lr.ph.i.i.i.i101
+  %.sroa.03.07.i.i.i.i102 = phi ptr [ %20, %.lr.ph.i.i.i.i101 ], [ %i.pq, %.noexc106 ] ; 3 uses
+  %19 = invoke { ptr, i8 } @_ZNSt10_HashtableISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_insert_uniqueIRNSt7__cxx1112basic_stringIcS2_SaIcEEESM_NS5_10_AllocNodeISaINS5_10_Hash_nodeIS3_Lb1EEEEEEEESt4pairINS5_14_Node_iteratorIS3_Lb1ELb1EEEbEOT_OT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(56) %i.de, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i102, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i102, ptr noundef nonnull align 8 dereferenceable(8) %5)
+          to label %.lr.ph.i.i.i.i101 unwind label %.loopexit268 ; 0 uses
+
+.lr.ph.i.i.i.i101:                                ; preds = %.noexc104
+  %20 = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i102, i64 32 ; 2 uses
+  %.not.i.i.i.i103 = icmp eq ptr %20, %i.ps
+  br i1 %.not.i.i.i.i103, label %.loopexit272, label %.noexc104, !llvm.loop !236
+
+.noexc105:                                        ; preds = %.loopexit280, %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i240
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
   store i64 3, ptr %6, align 8, !tbaa !13
-  %.sroa.5309.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store ptr @.str.65, ptr %.sroa.5309.0..sroa_idx, align 8, !tbaa !235
-  %18 = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRSt17basic_string_viewIcS3_EEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(80) %i.dd, ptr noundef nonnull align 8 dereferenceable(16) %6)
+  %i.pp = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store ptr @.str.65, ptr %i.pp, align 8, !tbaa !235
+  %21 = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRSt17basic_string_viewIcS3_EEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(80) %i.dd, ptr noundef nonnull align 8 dereferenceable(16) %6)
           to label %.noexc106 unwind label %.loopexit.split-lp269.loopexit ; 0 uses
 
-.lr.ph.i.i.i.i101:                                ; preds = %.noexc106, %.noexc105
-  %.sroa.03.07.i.i.i.i102 = phi ptr [ %i.pp, %.noexc105 ], [ %i.pq, %.noexc106 ] ; 3 uses
-  %19 = invoke { ptr, i8 } @_ZNSt10_HashtableISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_insert_uniqueIRNSt7__cxx1112basic_stringIcS2_SaIcEEESM_NS5_10_AllocNodeISaINS5_10_Hash_nodeIS3_Lb1EEEEEEEESt4pairINS5_14_Node_iteratorIS3_Lb1ELb1EEEbEOT_OT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(56) %i.de, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i102, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i102, ptr noundef nonnull align 8 dereferenceable(8) %5)
-          to label %.noexc105 unwind label %.loopexit268 ; 0 uses
-
-.noexc105:                                        ; preds = %.lr.ph.i.i.i.i101
-  %i.pp = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i102, i64 32 ; 2 uses
-  %.not.i.i.i.i103 = icmp eq ptr %i.pp, %i.ps
-  br i1 %.not.i.i.i.i103, label %.loopexit272, label %.lr.ph.i.i.i.i101, !llvm.loop !236
-
-.noexc106:                                        ; preds = %.noexc104
+.noexc106:                                        ; preds = %.noexc105
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #34
   %i.pq = load ptr, ptr %i.dd, align 8, !tbaa !237 ; 2 uses
   %i.pr = getelementptr inbounds nuw i8, ptr %0, i64 1768
@@ -592,15 +592,15 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   store ptr %i.de, ptr %5, align 8, !tbaa !238
   %.not6.i.i.i.i100 = icmp eq ptr %i.pq, %i.ps
-  br i1 %.not6.i.i.i.i100, label %.loopexit272, label %.lr.ph.i.i.i.i101
+  br i1 %.not6.i.i.i.i100, label %.loopexit272, label %.noexc104
 
-.loopexit272:                                     ; preds = %.noexc105, %.noexc106
+.loopexit272:                                     ; preds = %.lr.ph.i.i.i.i101, %.noexc106
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   %i.pt = getelementptr inbounds nuw i8, ptr %0, i64 1616 ; 3 uses
   %i.pu = load ptr, ptr %i.pt, align 8, !tbaa !223 ; 2 uses
   %i.pv = load ptr, ptr %i.cp, align 8, !tbaa !224
   %i.pw = icmp eq ptr %i.pu, %i.pv
-  br i1 %i.pw, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i243, label %.noexc116
+  br i1 %i.pw, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i243, label %.noexc117
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit.i243: ; preds = %.loopexit272
   %i.px = ptrtoint ptr %i.pu to i64
@@ -682,27 +682,27 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   store ptr %i.qy, ptr %i.py, align 8, !tbaa !225
   %i.qz = getelementptr inbounds nuw i8, ptr %i.qc, i64 32
   store ptr %i.qz, ptr %i.pt, align 8, !tbaa !223
-  br label %.noexc116
+  br label %.noexc117
 
-.noexc116:                                        ; preds = %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i257, %.loopexit272
+.noexc116:                                        ; preds = %.noexc118, %.lr.ph.i.i.i.i113
+  %.sroa.03.07.i.i.i.i114 = phi ptr [ %23, %.lr.ph.i.i.i.i113 ], [ %i.rb, %.noexc118 ] ; 3 uses
+  %22 = invoke { ptr, i8 } @_ZNSt10_HashtableISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_insert_uniqueIRNSt7__cxx1112basic_stringIcS2_SaIcEEESM_NS5_10_AllocNodeISaINS5_10_Hash_nodeIS3_Lb1EEEEEEEESt4pairINS5_14_Node_iteratorIS3_Lb1ELb1EEEbEOT_OT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(56) %i.cq, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i114, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i114, ptr noundef nonnull align 8 dereferenceable(8) %3)
+          to label %.lr.ph.i.i.i.i113 unwind label %.loopexit ; 0 uses
+
+.lr.ph.i.i.i.i113:                                ; preds = %.noexc116
+  %23 = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i114, i64 32 ; 2 uses
+  %.not.i.i.i.i115 = icmp eq ptr %23, %i.rd
+  br i1 %.not.i.i.i.i115, label %.loopexit264, label %.noexc116, !llvm.loop !236
+
+.noexc117:                                        ; preds = %.loopexit272, %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit.i257
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
   store i64 4, ptr %4, align 8, !tbaa !13
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr @.str.66, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !235
-  %20 = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRSt17basic_string_viewIcS3_EEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(80) %i.cp, ptr noundef nonnull align 8 dereferenceable(16) %4)
+  %i.ra = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store ptr @.str.66, ptr %i.ra, align 8, !tbaa !235
+  %24 = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12emplace_backIJRSt17basic_string_viewIcS3_EEEERS5_DpOT_(ptr noundef nonnull align 8 dereferenceable(80) %i.cp, ptr noundef nonnull align 8 dereferenceable(16) %4)
           to label %.noexc118 unwind label %.loopexit.split-lp.loopexit ; 0 uses
 
-.lr.ph.i.i.i.i113:                                ; preds = %.noexc118, %.noexc117
-  %.sroa.03.07.i.i.i.i114 = phi ptr [ %i.ra, %.noexc117 ], [ %i.rb, %.noexc118 ] ; 3 uses
-  %21 = invoke { ptr, i8 } @_ZNSt10_HashtableISt17basic_string_viewIcSt11char_traitsIcEES3_SaIS3_ENSt8__detail9_IdentityESt8equal_toIS3_ESt4hashIS3_ENS5_18_Mod_range_hashingENS5_20_Default_ranged_hashENS5_20_Prime_rehash_policyENS5_17_Hashtable_traitsILb1ELb1ELb1EEEE16_M_insert_uniqueIRNSt7__cxx1112basic_stringIcS2_SaIcEEESM_NS5_10_AllocNodeISaINS5_10_Hash_nodeIS3_Lb1EEEEEEEESt4pairINS5_14_Node_iteratorIS3_Lb1ELb1EEEbEOT_OT0_RKT1_(ptr noundef nonnull align 8 dereferenceable(56) %i.cq, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i114, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.03.07.i.i.i.i114, ptr noundef nonnull align 8 dereferenceable(8) %3)
-          to label %.noexc117 unwind label %.loopexit ; 0 uses
-
-.noexc117:                                        ; preds = %.lr.ph.i.i.i.i113
-  %i.ra = getelementptr inbounds nuw i8, ptr %.sroa.03.07.i.i.i.i114, i64 32 ; 2 uses
-  %.not.i.i.i.i115 = icmp eq ptr %i.ra, %i.rd
-  br i1 %.not.i.i.i.i115, label %.loopexit264, label %.lr.ph.i.i.i.i113, !llvm.loop !236
-
-.noexc118:                                        ; preds = %.noexc116
+.noexc118:                                        ; preds = %.noexc117
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
   %i.rb = load ptr, ptr %i.cp, align 8, !tbaa !237 ; 2 uses
   %i.rc = getelementptr inbounds nuw i8, ptr %0, i64 1608
@@ -710,9 +710,9 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   store ptr %i.cq, ptr %3, align 8, !tbaa !238
   %.not6.i.i.i.i112 = icmp eq ptr %i.rb, %i.rd
-  br i1 %.not6.i.i.i.i112, label %.loopexit264, label %.lr.ph.i.i.i.i113
+  br i1 %.not6.i.i.i.i112, label %.loopexit264, label %.noexc116
 
-.loopexit264:                                     ; preds = %.noexc117, %.noexc118
+.loopexit264:                                     ; preds = %.lr.ph.i.i.i.i113, %.noexc118
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   ret void
 
@@ -746,12 +746,12 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
           cleanup
   br label %.loopexit.split-lp301
 
-.loopexit284:                                     ; preds = %.lr.ph.i.i.i.i77
+.loopexit284:                                     ; preds = %.noexc80
   %lpad.loopexit286 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp301
 
-.loopexit.split-lp285.loopexit:                   ; preds = %.noexc80
+.loopexit.split-lp285.loopexit:                   ; preds = %.noexc81
   %lpad.loopexit289 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp301
@@ -776,12 +776,12 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
           cleanup
   br label %.loopexit.split-lp301
 
-.loopexit268:                                     ; preds = %.lr.ph.i.i.i.i101
+.loopexit268:                                     ; preds = %.noexc104
   %lpad.loopexit270 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp301
 
-.loopexit.split-lp269.loopexit:                   ; preds = %.noexc104
+.loopexit.split-lp269.loopexit:                   ; preds = %.noexc105
   %lpad.loopexit273 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp301
@@ -791,12 +791,12 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
           cleanup
   br label %.loopexit.split-lp301
 
-.loopexit:                                        ; preds = %.lr.ph.i.i.i.i113
+.loopexit:                                        ; preds = %.noexc116
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp301
 
-.loopexit.split-lp.loopexit:                      ; preds = %.noexc116
+.loopexit.split-lp.loopexit:                      ; preds = %.noexc117
   %lpad.loopexit265 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp301

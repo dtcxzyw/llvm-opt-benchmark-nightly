@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @_RINvNvXs6_CsbdtVtHYmo6x_8thin_vecINtB8_7ThinVecpENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4drop18drop_non_singletonNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9UseArgRefEB1T_(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.e) #37
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundEBH_.exit.i
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundEBH_.exit.i: ; preds = %bb.d, %bb.b, %bb.c, %bb.a, %.lr.ph.i
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtCsileJQcQObtj_7hir_def3hir8type_ref9TypeBoundEBH_.exit.i: ; preds = %bb.d, %bb.b, %.lr.ph.i, %bb.a, %bb.c
   ret void
 }
 

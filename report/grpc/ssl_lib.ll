@@ -205,14 +205,9 @@ SSL_CTX_set_strict_cipher_list.exit.i8:           ; preds = %bb.n, %bb.m
   %i.ah = icmp ne i32 %i.ag, 0
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.aj = tail call noundef zeroext i1 @_ZN4bssl22ssl_create_cipher_listEPSt10unique_ptrINS_23SSLCipherPreferenceListENS_8internal7DeleterEEbPKcb(ptr noundef nonnull %i.ai, i1 noundef zeroext %i.ah, ptr noundef nonnull @_ZN9wpa202304L13kTLS12CiphersE, i1 noundef zeroext true)
-  br i1 %i.aj, label %.critedge.i.i.preheader.i9, label %_ZN10fips202205L9ConfigureEP10ssl_ctx_st.exit
+  br i1 %i.aj, label %.critedge.i.i.i, label %_ZN10fips202205L9ConfigureEP10ssl_ctx_st.exit
 
-.critedge.i.i.preheader.i9:                       ; preds = %SSL_CTX_set_strict_cipher_list.exit.i8
-  %2 = tail call noundef i32 @_ZN4bssl19ssl_group_id_to_nidEt(i16 noundef zeroext 24)
-  %.not12.i.i.i10 = icmp eq i32 %2, 0
-  br i1 %.not12.i.i.i10, label %_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i12, label %bb.o
-
-bb.o:                                             ; preds = %.critedge.i.i.preheader.i9
+bb.o:                                             ; preds = %.critedge.i.i.i
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 544 ; 3 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !211
   tail call void @OPENSSL_free(ptr noundef %i.al)
@@ -222,7 +217,12 @@ bb.o:                                             ; preds = %.critedge.i.i.prehe
   %i.an = icmp eq ptr %i.am, null
   br i1 %i.an, label %_ZN10fips202205L9ConfigureEP10ssl_ctx_st.exit, label %bb.p
 
-_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i12:  ; preds = %.critedge.i.i.preheader.i9
+.critedge.i.i.i:                                  ; preds = %SSL_CTX_set_strict_cipher_list.exit.i8
+  %2 = tail call noundef i32 @_ZN4bssl19ssl_group_id_to_nidEt(i16 noundef zeroext 24)
+  %.not12.i.i.i9 = icmp eq i32 %2, 0
+  br i1 %.not12.i.i.i9, label %_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i12, label %bb.o
+
+_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i12:  ; preds = %.critedge.i.i.i
   tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 239, ptr noundef nonnull @.str, i32 noundef 1819)
   br label %_ZN10fips202205L9ConfigureEP10ssl_ctx_st.exit
 
@@ -403,14 +403,9 @@ SSL_set_strict_cipher_list.exit.i9:               ; preds = %bb.q, %bb.p
 bb.r:                                             ; preds = %SSL_set_strict_cipher_list.exit.i9
   %i.au = load ptr, ptr %i.ad, align 8, !tbaa !191
   %.not.i11.i10 = icmp eq ptr %i.au, null
-  br i1 %.not.i11.i10, label %_ZN10fips202205L9ConfigureEP6ssl_st.exit, label %.critedge.i.i.preheader.i11
+  br i1 %.not.i11.i10, label %_ZN10fips202205L9ConfigureEP6ssl_st.exit, label %.critedge.i.i.i
 
-.critedge.i.i.preheader.i11:                      ; preds = %bb.r
-  %2 = tail call noundef i32 @_ZN4bssl19ssl_group_id_to_nidEt(i16 noundef zeroext 24)
-  %.not12.i.i.i12 = icmp eq i32 %2, 0
-  br i1 %.not12.i.i.i12, label %_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i14, label %bb.s
-
-bb.s:                                             ; preds = %.critedge.i.i.preheader.i11
+bb.s:                                             ; preds = %.critedge.i.i.i
   %i.av = load ptr, ptr %i.ad, align 8, !tbaa !191 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 128 ; 3 uses
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !211
@@ -421,7 +416,12 @@ bb.s:                                             ; preds = %.critedge.i.i.prehe
   %i.az = icmp eq ptr %i.ay, null
   br i1 %i.az, label %_ZN10fips202205L9ConfigureEP6ssl_st.exit, label %bb.t
 
-_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i14:  ; preds = %.critedge.i.i.preheader.i11
+.critedge.i.i.i:                                  ; preds = %bb.r
+  %2 = tail call noundef i32 @_ZN4bssl19ssl_group_id_to_nidEt(i16 noundef zeroext 24)
+  %.not12.i.i.i11 = icmp eq i32 %2, 0
+  br i1 %.not12.i.i.i11, label %_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i14, label %bb.s
+
+_ZL15check_group_idsN4bssl4SpanIKtEE.exit.i.i14:  ; preds = %.critedge.i.i.i
   tail call void @ERR_put_error(i32 noundef 16, i32 noundef 0, i32 noundef 239, ptr noundef nonnull @.str, i32 noundef 1819)
   br label %_ZN10fips202205L9ConfigureEP6ssl_st.exit
 
