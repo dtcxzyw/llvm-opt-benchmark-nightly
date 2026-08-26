@@ -1,0 +1,81 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 8a9c99eb36f66..688bcd9536f33 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -612,6 +612,24 @@ static Instruction *foldCttzCtlz(IntrinsicInst &II, InstCombinerImpl &IC) {
+       auto *Bw = ConstantInt::get(Ty, APInt(BitWidth, BitWidth));
+       return IC.replaceInstUsesWith(II, IC.Builder.CreateSub(Bw, Cttz));
+     }
++
++    // ctlz(zext(bitreverse(x))) -> zext(cttz(x) | (WideBits - NarrowBits))
++    // [poison-on-zero]
++    // ctlz(zext(bitreverse(x))) -> zext(cttz(x) + (WideBits - NarrowBits))
++    // [defined-on-zero]
++    if (match(Op0, m_OneUse(m_ZExt(m_BitReverse(m_Value(X)))))) {
++      Type *NarrowTy = X->getType();
++      unsigned WideBits = II.getType()->getScalarSizeInBits();
++      unsigned NarrowBits = NarrowTy->getScalarSizeInBits();
++      bool IsPoison = match(Op1, m_One());
++
++      auto *Cttz = IC.Builder.CreateBinaryIntrinsic(
++          Intrinsic::cttz, X, ConstantInt::getBool(II.getContext(), IsPoison));
++      auto *Diff = ConstantInt::get(NarrowTy, WideBits - NarrowBits);
++      Value *Combined = IC.Builder.CreateNUWAdd(Cttz, Diff);
++      auto *ZextResult = IC.Builder.CreateZExt(Combined, II.getType());
++      return IC.replaceInstUsesWith(II, ZextResult);
++    }
+   }
+ 
+   // cttz(Pow2) -> Log2(Pow2)
+diff --git a/llvm/test/Transforms/InstCombine/ctlz-cttz-bitreverse.ll b/llvm/test/Transforms/InstCombine/ctlz-cttz-bitreverse.ll
+index ec822f4b8fb3a..3624c8a9e5418 100644
+--- a/llvm/test/Transforms/InstCombine/ctlz-cttz-bitreverse.ll
++++ b/llvm/test/Transforms/InstCombine/ctlz-cttz-bitreverse.ll
+@@ -61,6 +61,47 @@ define i32 @cttz_false_bitreverse(i32 %x) {
+   ret i32 %b
+ }
+ 
++define i32 @ctlz_true_zext_bitreverse(i16 %x) {
++; CHECK-LABEL: @ctlz_true_zext_bitreverse(
++; CHECK-NEXT:    [[TMP1:%.*]] = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 [[X:%.*]], i1 true)
++; CHECK-NEXT:    [[TMP2:%.*]] = or disjoint i16 [[TMP1]], 16
++; CHECK-NEXT:    [[B:%.*]] = zext nneg i16 [[TMP2]] to i32
++; CHECK-NEXT:    ret i32 [[B]]
++;
++  %a = tail call i16 @llvm.bitreverse.i16(i16 %x)
++  %z = zext i16 %a to i32
++  %b = tail call i32 @llvm.ctlz.i32(i32 %z, i1 true)
++  ret i32 %b
++}
++
++define i32 @ctlz_false_zext_bitreverse(i16 %x) {
++; CHECK-LABEL: @ctlz_false_zext_bitreverse(
++; CHECK-NEXT:    [[TMP1:%.*]] = call range(i16 0, 17) i16 @llvm.cttz.i16(i16 [[X:%.*]], i1 false)
++; CHECK-NEXT:    [[TMP2:%.*]] = add nuw nsw i16 [[TMP1]], 16
++; CHECK-NEXT:    [[B:%.*]] = zext nneg i16 [[TMP2]] to i32
++; CHECK-NEXT:    ret i32 [[B]]
++;
++  %a = tail call i16 @llvm.bitreverse.i16(i16 %x)
++  %z = zext i16 %a to i32
++  %b = tail call i32 @llvm.ctlz.i32(i32 %z, i1 false)
++  ret i32 %b
++}
++
++define i64 @ctlz_i32_zext_bitreverse(i32 %x) {
++; CHECK-LABEL: @ctlz_i32_zext_bitreverse(
++; CHECK-NEXT:    [[TMP1:%.*]] = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 [[X:%.*]], i1 true)
++; CHECK-NEXT:    [[TMP2:%.*]] = or disjoint i32 [[TMP1]], 32
++; CHECK-NEXT:    [[B:%.*]] = zext nneg i32 [[TMP2]] to i64
++; CHECK-NEXT:    ret i64 [[B]]
++;
++  %a = tail call i32 @llvm.bitreverse.i32(i32 %x)
++  %z = zext i32 %a to i64
++  %b = tail call i64 @llvm.ctlz.i64(i64 %z, i1 true)
++  ret i64 %b
++}
++
++declare i64 @llvm.ctlz.i64(i64, i1)
++declare i16 @llvm.bitreverse.i16(i16)
+ declare i32 @llvm.bitreverse.i32(i32)
+ declare <2 x i64> @llvm.bitreverse.v2i64(<2 x i64>)
+ declare i32 @llvm.ctlz.i32(i32, i1)
