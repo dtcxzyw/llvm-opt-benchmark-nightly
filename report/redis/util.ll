@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.s, %bb.w, %bb.k,
   %i.bf = load i8, ptr %.0.i, align 1, !tbaa !13  ; 3 uses
   %i.bg = icmp eq i8 %i.bf, 120                   ; 2 uses
   %i.bh = icmp eq i8 %i.bf, 112                   ; 2 uses
-  %i.bi = or i1 %i.bg, %i.bh                      ; 2 uses
+  %i.bi = or i1 %i.bg, %i.bh                      ; 4 uses
   %i.bj = icmp eq i8 %i.bf, 117
   br i1 %i.bj, label %bb.y, label %bb.aa
 
@@ -240,18 +240,22 @@ bb.aa:                                            ; preds = %bb.x
 
 .loopexit55.i:                                    ; preds = %.loopexit55.loopexit.i, %bb.aa
   %.1.i = phi i64 [ %spec.select.i, %bb.aa ], [ %i.bq, %.loopexit55.loopexit.i ]
-  %i.br = select i1 %i.bi, i64 16, i64 10         ; 3 uses
+  %i.br = select i1 %i.bi, i64 16, i64 10
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.ab, %.loopexit55.i
   %.050.i = phi ptr [ %i.g, %.loopexit55.i ], [ %i.bv, %bb.ab ] ; 3 uses
-  %.2.i = phi i64 [ %.1.i, %.loopexit55.i ], [ %i.bw, %bb.ab ] ; 3 uses
-  %i.bs = urem i64 %.2.i, %i.br
-  %i.bt = getelementptr inbounds nuw i8, ptr @HEX, i64 %i.bs
+  %.2.i = phi i64 [ %.1.i, %.loopexit55.i ], [ %7, %bb.ab ] ; 5 uses
+  %4 = and i64 %.2.i, 15
+  %i.bs = urem i64 %.2.i, 10
+  %5 = select i1 %i.bi, i64 %4, i64 %i.bs
+  %i.bt = getelementptr inbounds nuw i8, ptr @HEX, i64 %5
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !13
   %i.bv = getelementptr inbounds i8, ptr %.050.i, i64 -1 ; 3 uses
   store i8 %i.bu, ptr %.050.i, align 1, !tbaa !13
-  %i.bw = udiv i64 %.2.i, %i.br
+  %6 = lshr i64 %.2.i, 4
+  %i.bw = udiv i64 %.2.i, 10
+  %7 = select i1 %i.bi, i64 %6, i64 %i.bw
   %.not.i70 = icmp ult i64 %.2.i, %i.br
   br i1 %.not.i70, label %bb.ac, label %bb.ab, !llvm.loop !72
 

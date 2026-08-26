@@ -204,7 +204,7 @@ _ZNK2cv10ExrDecoder4typeEv.exit:
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !118  ; 18 uses
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %i.x = load i64, ptr %i.w, align 8, !tbaa !119  ; 18 uses
+  %i.x = load i64, ptr %i.w, align 8, !tbaa !119  ; 33 uses
   br i1 %i.k, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %_ZNK2cv10ExrDecoder4typeEv.exit
@@ -607,8 +607,8 @@ bb.ej:                                            ; preds = %bb.ei
   br i1 %or.cond560, label %bb.ek, label %._crit_edge486
 
 ._crit_edge486:                                   ; preds = %bb.ej
-  %30 = select i1 %i.k, i64 2, i64 0
-  %31 = lshr i64 %i.x, %30
+  %30 = lshr i64 %i.x, 2
+  %31 = select i1 %i.k, i64 %30, i64 %i.x
   %i.rv = trunc i64 %31 to i32
   call void @_ZN2cv10ExrDecoder8UpSampleEPhiiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef %i.v, i32 noundef %i.bg, i32 noundef %i.rv, i32 noundef %i.rs, i32 noundef %i.ru)
   br label %bb.ek
@@ -631,8 +631,8 @@ bb.el:                                            ; preds = %bb.ek
 
 ._crit_edge489:                                   ; preds = %bb.el
   %i.sc = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.bb
-  %32 = select i1 %i.k, i64 2, i64 0
-  %33 = lshr i64 %i.x, %32
+  %32 = lshr i64 %i.x, 2
+  %33 = select i1 %i.k, i64 %32, i64 %i.x
   %i.sd = trunc i64 %33 to i32
   call void @_ZN2cv10ExrDecoder8UpSampleEPhiiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.sc, i32 noundef %i.bg, i32 noundef %i.sd, i32 noundef %i.rz, i32 noundef %i.sb)
   br label %bb.em
@@ -656,8 +656,8 @@ bb.en:                                            ; preds = %bb.em
 ._crit_edge492:                                   ; preds = %bb.en
   %i.sk = shl nuw nsw i64 %i.bb, 1
   %i.sl = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.sk
-  %34 = select i1 %i.k, i64 2, i64 0
-  %35 = lshr i64 %i.x, %34
+  %34 = lshr i64 %i.x, 2
+  %35 = select i1 %i.k, i64 %34, i64 %i.x
   %i.sm = trunc i64 %35 to i32
   call void @_ZN2cv10ExrDecoder8UpSampleEPhiiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.sl, i32 noundef %i.bg, i32 noundef %i.sm, i32 noundef %i.sh, i32 noundef %i.sj)
   br label %bb.ew
@@ -679,8 +679,8 @@ bb.ep:                                            ; preds = %bb.eo
   br i1 %or.cond563, label %bb.eq, label %._crit_edge477
 
 ._crit_edge477:                                   ; preds = %bb.ep
-  %36 = select i1 %i.k, i64 2, i64 0
-  %37 = lshr i64 %i.x, %36
+  %36 = lshr i64 %i.x, 2
+  %37 = select i1 %i.k, i64 %36, i64 %i.x
   %i.st = trunc i64 %37 to i32
   call void @_ZN2cv10ExrDecoder8UpSampleEPhiiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef %i.v, i32 noundef %i.bg, i32 noundef %i.st, i32 noundef %i.sq, i32 noundef %i.ss)
   br label %bb.eq
@@ -703,8 +703,8 @@ bb.er:                                            ; preds = %bb.eq
 
 ._crit_edge480:                                   ; preds = %bb.er
   %i.ta = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.bb
-  %38 = select i1 %i.k, i64 2, i64 0
-  %39 = lshr i64 %i.x, %38
+  %38 = lshr i64 %i.x, 2
+  %39 = select i1 %i.k, i64 %38, i64 %i.x
   %i.tb = trunc i64 %39 to i32
   call void @_ZN2cv10ExrDecoder8UpSampleEPhiiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.ta, i32 noundef %i.bg, i32 noundef %i.tb, i32 noundef %i.sx, i32 noundef %i.sz)
   br label %bb.es
@@ -728,8 +728,8 @@ bb.et:                                            ; preds = %bb.es
 ._crit_edge483:                                   ; preds = %bb.et
   %i.ti = shl nuw nsw i64 %i.bb, 1
   %i.tj = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.ti
-  %40 = select i1 %i.k, i64 2, i64 0
-  %41 = lshr i64 %i.x, %40
+  %40 = lshr i64 %i.x, 2
+  %41 = select i1 %i.k, i64 %40, i64 %i.x
   %i.tk = trunc i64 %41 to i32
   call void @_ZN2cv10ExrDecoder8UpSampleEPhiiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.tj, i32 noundef %i.bg, i32 noundef %i.tk, i32 noundef %i.tf, i32 noundef %i.th)
   br label %bb.ew
@@ -751,8 +751,8 @@ bb.ev:                                            ; preds = %bb.eu
   br i1 %or.cond566, label %bb.ew, label %._crit_edge474
 
 ._crit_edge474:                                   ; preds = %bb.ev
-  %42 = select i1 %i.k, i64 2, i64 0
-  %43 = lshr i64 %i.x, %42
+  %42 = lshr i64 %i.x, 2
+  %43 = select i1 %i.k, i64 %42, i64 %i.x
   %i.tr = trunc i64 %43 to i32
   call void @_ZN2cv10ExrDecoder8UpSampleEPhiiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef %i.v, i32 noundef %i.bg, i32 noundef %i.tr, i32 noundef %i.to, i32 noundef %i.tq)
   br label %bb.ew
@@ -763,8 +763,8 @@ bb.ew:                                            ; preds = %bb.ev, %bb.et, %bb.
 bb.ex:                                            ; preds = %bb.ew
   %i.ts = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.tt = load i32, ptr %i.ts, align 4, !tbaa !98 ; 2 uses
-  %44 = select i1 %i.k, i64 2, i64 0
-  %45 = lshr i64 %i.x, %44
+  %44 = lshr i64 %i.x, 2
+  %45 = select i1 %i.k, i64 %44, i64 %i.x
   %i.tu = trunc i64 %45 to i32                    ; 2 uses
   br i1 %.0262, label %bb.ey, label %bb.ez
 
@@ -1129,8 +1129,8 @@ bb.fm:                                            ; preds = %bb.fl
   br i1 %or.cond567, label %bb.fn, label %._crit_edge465
 
 ._crit_edge465:                                   ; preds = %bb.fm
-  %46 = select i1 %i.k, i64 2, i64 0
-  %47 = lshr i64 %i.x, %46
+  %46 = lshr i64 %i.x, 2
+  %47 = select i1 %i.k, i64 %46, i64 %i.x
   %i.xw = trunc i64 %47 to i32
   call void @_ZN2cv10ExrDecoder9UpSampleYEPhiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef %i.v, i32 noundef 3, i32 noundef %i.xw, i32 noundef %i.xv)
   br label %bb.fn
@@ -1153,8 +1153,8 @@ bb.fo:                                            ; preds = %bb.fn
 
 ._crit_edge468:                                   ; preds = %bb.fo
   %i.yd = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.bb
-  %48 = select i1 %i.k, i64 2, i64 0
-  %49 = lshr i64 %i.x, %48
+  %48 = lshr i64 %i.x, 2
+  %49 = select i1 %i.k, i64 %48, i64 %i.x
   %i.ye = trunc i64 %49 to i32
   call void @_ZN2cv10ExrDecoder9UpSampleYEPhiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.yd, i32 noundef 3, i32 noundef %i.ye, i32 noundef %i.yc)
   br label %bb.fp
@@ -1178,8 +1178,8 @@ bb.fq:                                            ; preds = %bb.fp
 ._crit_edge471:                                   ; preds = %bb.fq
   %i.yl = shl nuw nsw i64 %i.bb, 1
   %i.ym = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.yl
-  %50 = select i1 %i.k, i64 2, i64 0
-  %51 = lshr i64 %i.x, %50
+  %50 = lshr i64 %i.x, 2
+  %51 = select i1 %i.k, i64 %50, i64 %i.x
   %i.yn = trunc i64 %51 to i32
   call void @_ZN2cv10ExrDecoder9UpSampleYEPhiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.ym, i32 noundef 3, i32 noundef %i.yn, i32 noundef %i.yk)
   br label %bb.fz
@@ -1201,8 +1201,8 @@ bb.fs:                                            ; preds = %bb.fr
   br i1 %or.cond570, label %bb.ft, label %._crit_edge456
 
 ._crit_edge456:                                   ; preds = %bb.fs
-  %52 = select i1 %i.k, i64 2, i64 0
-  %53 = lshr i64 %i.x, %52
+  %52 = lshr i64 %i.x, 2
+  %53 = select i1 %i.k, i64 %52, i64 %i.x
   %i.yu = trunc i64 %53 to i32
   call void @_ZN2cv10ExrDecoder9UpSampleYEPhiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef %i.v, i32 noundef 3, i32 noundef %i.yu, i32 noundef %i.yt)
   br label %bb.ft
@@ -1225,8 +1225,8 @@ bb.fu:                                            ; preds = %bb.ft
 
 ._crit_edge459:                                   ; preds = %bb.fu
   %i.zb = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.bb
-  %54 = select i1 %i.k, i64 2, i64 0
-  %55 = lshr i64 %i.x, %54
+  %54 = lshr i64 %i.x, 2
+  %55 = select i1 %i.k, i64 %54, i64 %i.x
   %i.zc = trunc i64 %55 to i32
   call void @_ZN2cv10ExrDecoder9UpSampleYEPhiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.zb, i32 noundef 3, i32 noundef %i.zc, i32 noundef %i.za)
   br label %bb.fv
@@ -1250,8 +1250,8 @@ bb.fw:                                            ; preds = %bb.fv
 ._crit_edge462:                                   ; preds = %bb.fw
   %i.zj = shl nuw nsw i64 %i.bb, 1
   %i.zk = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.zj
-  %56 = select i1 %i.k, i64 2, i64 0
-  %57 = lshr i64 %i.x, %56
+  %56 = lshr i64 %i.x, 2
+  %57 = select i1 %i.k, i64 %56, i64 %i.x
   %i.zl = trunc i64 %57 to i32
   call void @_ZN2cv10ExrDecoder9UpSampleYEPhiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef nonnull %i.zk, i32 noundef 3, i32 noundef %i.zl, i32 noundef %i.zi)
   br label %bb.fz
@@ -1273,8 +1273,8 @@ bb.fy:                                            ; preds = %bb.fx
   br i1 %or.cond573, label %bb.fz, label %._crit_edge455
 
 ._crit_edge455:                                   ; preds = %bb.fy
-  %58 = select i1 %i.k, i64 2, i64 0
-  %59 = lshr i64 %i.x, %58
+  %58 = lshr i64 %i.x, 2
+  %59 = select i1 %i.k, i64 %58, i64 %i.x
   %i.zs = trunc i64 %59 to i32
   call void @_ZN2cv10ExrDecoder9UpSampleYEPhiii(ptr noundef nonnull align 8 dereferenceable(832) %0, ptr noundef %i.v, i32 noundef 1, i32 noundef %i.zs, i32 noundef %i.zr)
   br label %bb.fz

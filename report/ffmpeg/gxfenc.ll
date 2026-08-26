@@ -204,8 +204,8 @@ bb.a:
   %i.ag = load ptr, ptr %i.d, align 8, !tbaa !9   ; 15 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.af, i64 48
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !60
-  %i.aj = icmp eq i32 %i.ai, 60000
-  %i.ak = select i1 %i.aj, i32 60, i32 50         ; 5 uses
+  %i.aj = icmp eq i32 %i.ai, 60000                ; 3 uses
+  %i.ak = select i1 %i.aj, i32 60, i32 50         ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i64 0, ptr %i.a, align 8, !tbaa !104
   %i.al = call i32 @ff_parse_creation_time_metadata(ptr noundef %0, ptr noundef nonnull %i.a, i32 noundef 1) #10 ; 0 uses
@@ -241,7 +241,7 @@ bb.a:
   %i.bp = add i32 %i.bn, %i.bl
   %i.bq = add i32 %i.bp, %i.bo
   %i.br = add i32 %i.bq, %i.bd
-  %i.bs = add i32 %i.br, %i.bj                    ; 4 uses
+  %i.bs = add i32 %i.br, %i.bj                    ; 6 uses
   %i.bt = udiv i32 %i.bs, %i.bk
   %.lhs.trunc.i = trunc nuw nsw i32 %i.bt to i16
   %i.bu = urem i16 %.lhs.trunc.i, 24
@@ -251,12 +251,16 @@ bb.a:
   %i.bx = urem i32 %i.bw, 60
   %i.by = shl nuw nsw i32 %i.bx, 16
   %i.bz = or disjoint i32 %i.bv, %i.by
-  %i.ca = udiv i32 %i.bs, %i.ak
-  %i.cb = urem i32 %i.ca, 60
+  %1 = udiv i32 %i.bs, 60
+  %i.ca = udiv i32 %i.bs, 50
+  %2 = select i1 %i.aj, i32 %1, i32 %i.ca
+  %i.cb = urem i32 %2, 60
   %i.cc = shl nuw nsw i32 %i.cb, 8
-  %i.cd = or disjoint i32 %i.bz, %i.cc
-  %i.ce = urem i32 %i.bs, %i.ak
-  %i.cf = or disjoint i32 %i.cd, %i.ce
+  %i.cd = or disjoint i32 %i.cc, %i.bz
+  %3 = urem i32 %i.bs, 60
+  %i.ce = urem i32 %i.bs, 50
+  %4 = select i1 %i.aj, i32 %3, i32 %i.ce
+  %i.cf = or disjoint i32 %i.cd, %4
   %i.cg = or disjoint i32 %i.cf, %i.at
   %i.ch = getelementptr inbounds nuw i8, ptr %i.af, i64 52
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !30

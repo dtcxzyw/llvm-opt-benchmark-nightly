@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ex = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.eu, ptr noundef nonnull @.str.176, ptr noundef %i.ew) #27 ; 0 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.et, i64 216
   %i.ez = load i32, ptr %i.ey, align 8, !tbaa !576
-  %i.fa = icmp eq i32 %i.ez, 2                    ; 2 uses
+  %i.fa = icmp eq i32 %i.ez, 2                    ; 3 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %i.et, i64 212
   %i.fc = load i32, ptr %i.fb, align 4, !tbaa !575 ; 2 uses
   %i.fd = sdiv i32 %i.fc, 2
@@ -281,7 +281,7 @@ _ZN4ncnn3Mat6addrefEv.exit228:                    ; preds = %bb.p, %_ZN4ncnn3Mat
   %i.gr = getelementptr inbounds nuw i8, ptr %i.et, i64 304 ; 4 uses
   %i.gs = load i32, ptr %i.ff, align 4, !tbaa !577
   %i.gt = shl nsw i32 %i.gs, 2
-  %i.gu = zext i1 %i.fa to i32                    ; 4 uses
+  %i.gu = zext i1 %i.fa to i32                    ; 3 uses
   %i.gv = shl i32 %i.gt, %i.gu
   invoke void @_ZNK4ncnn3Mat7reshapeEiiPNS_9AllocatorE(ptr dead_on_unwind nonnull writable sret(%"class.ncnn::Mat") align 8 %5, ptr noundef nonnull align 8 dereferenceable(72) %i.gr, i32 noundef %i.fi, i32 noundef %i.gv, ptr noundef null)
           to label %bb.q unwind label %bb.s
@@ -684,9 +684,9 @@ bb.bw:                                            ; preds = %_ZNK4ncnn3Mat5empty
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
   %i.ll = load i32, ptr %i.jp, align 8, !tbaa !573
   %i.lm = load i32, ptr %i.ff, align 4, !tbaa !577
-  %13 = shl i32 %i.ll, 2
-  %14 = mul i32 %13, %i.lm
-  %i.ln = shl i32 %14, %i.gu
+  %13 = mul nsw i32 %i.lm, %i.ll
+  %14 = select i1 %i.fa, i32 3, i32 2
+  %i.ln = shl i32 %13, %14
   invoke void @_ZNK4ncnn3Mat7reshapeEiPNS_9AllocatorE(ptr dead_on_unwind nonnull writable sret(%"class.ncnn::Mat") align 8 %12, ptr noundef nonnull align 8 dereferenceable(72) %10, i32 noundef %i.ln, ptr noundef null)
           to label %bb.bx unwind label %bb.ec
 
@@ -1089,7 +1089,7 @@ bb.n:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.fd = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.fa, ptr noundef nonnull @.str.177, ptr noundef %i.fc) #27 ; 0 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.ez, i64 216
   %i.ff = load i32, ptr %i.fe, align 8, !tbaa !533
-  %i.fg = icmp eq i32 %i.ff, 2                    ; 2 uses
+  %i.fg = icmp eq i32 %i.ff, 2                    ; 3 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ez, i64 212
   %i.fi = load i32, ptr %i.fh, align 4, !tbaa !532 ; 2 uses
   %i.fj = sdiv i32 %i.fi, 2
@@ -1166,7 +1166,7 @@ _ZN4ncnn3Mat6addrefEv.exit228:                    ; preds = %bb.p, %_ZN4ncnn3Mat
   %i.gx = getelementptr inbounds nuw i8, ptr %i.ez, i64 296 ; 4 uses
   %i.gy = load i32, ptr %i.fl, align 8, !tbaa !530
   %i.gz = mul nsw i32 %i.gy, 3
-  %i.ha = zext i1 %i.fg to i32                    ; 4 uses
+  %i.ha = zext i1 %i.fg to i32                    ; 3 uses
   %i.hb = shl i32 %i.gz, %i.ha
   invoke void @_ZNK4ncnn3Mat7reshapeEiiPNS_9AllocatorE(ptr dead_on_unwind nonnull writable sret(%"class.ncnn::Mat") align 8 %5, ptr noundef nonnull align 8 dereferenceable(72) %i.gx, i32 noundef %i.fo, i32 noundef %i.hb, ptr noundef null)
           to label %bb.q unwind label %bb.s
@@ -1569,9 +1569,9 @@ bb.bv:                                            ; preds = %bb.ax
 bb.bw:                                            ; preds = %_ZNK4ncnn3Mat5emptyEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #25
   %i.lp = load i32, ptr %i.fl, align 8, !tbaa !530 ; 2 uses
-  %13 = mul i32 %i.lp, 3
-  %i.lq = mul i32 %13, %i.lp
-  %14 = shl nuw i32 %i.lq, %i.ha
+  %13 = select i1 %i.fg, i32 6, i32 3
+  %i.lq = mul i32 %i.lp, %13
+  %14 = mul i32 %i.lq, %i.lp
   invoke void @_ZNK4ncnn3Mat7reshapeEiPNS_9AllocatorE(ptr dead_on_unwind nonnull writable sret(%"class.ncnn::Mat") align 8 %12, ptr noundef nonnull align 8 dereferenceable(72) %10, i32 noundef %14, ptr noundef null)
           to label %bb.bx unwind label %bb.ec
 

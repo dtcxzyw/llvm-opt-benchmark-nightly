@@ -205,8 +205,8 @@ _ZNK4llvm3EVT20getVectorNumElementsEv.exit.i483:  ; preds = %.split.i.i481
   %i.bif = zext i16 %i.bie to i32                 ; 3 uses
   %i.big = getelementptr inbounds nuw i8, ptr %i.bgg, i64 348
   %i.bih = load i8, ptr %i.big, align 4, !tbaa !141, !range !26, !noundef !27
-  %i.bii = trunc nuw i8 %i.bih to i1              ; 2 uses
-  %i.bij = select i1 %i.bii, i32 256, i32 128     ; 2 uses
+  %i.bii = trunc nuw i8 %i.bih to i1              ; 3 uses
+  %i.bij = select i1 %i.bii, i32 256, i32 128
   %i.bik = call range(i32 0, 17) i32 @llvm.ctpop.i32(i32 %i.bif)
   %or.cond20.i = icmp eq i32 %i.bik, 1
   %.not.i.i81.i = icmp ne i32 %i.bia, 0
@@ -217,8 +217,8 @@ _ZNK4llvm3EVT20getVectorNumElementsEv.exit.i483:  ; preds = %.split.i.i481
   br i1 %or.cond23.i, label %bb.ky, label %_ZN4llvm13isPowerOf2_32Ej.exit.thread.i
 
 bb.ky:                                            ; preds = %_ZNK4llvm3EVT20getVectorNumElementsEv.exit.i483
-  %163 = add nsw i32 %i.bij, -1
-  %i.bin = and i32 %163, %i.bhp
+  %.v.i = select i1 %i.bii, i32 255, i32 127
+  %i.bin = and i32 %.v.i, %i.bhp
   %i.bio = icmp ne i32 %i.bin, 0
   %i.bip = icmp ne i32 %i.bhp, 128
   %or.cond.i484 = and i1 %i.bip, %i.bio

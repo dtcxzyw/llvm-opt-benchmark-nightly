@@ -205,8 +205,8 @@ bb.bj:                                            ; preds = %bb.bi, %bb.bi
 bb.bk:                                            ; preds = %bb.bi, %bb.bj, %bb.bh
   %.1224 = phi i8 [ 48, %bb.bj ], [ %.0223, %bb.bi ], [ %.0223, %bb.bh ] ; 5 uses
   %.5221 = phi i64 [ %spec.store.select, %bb.bj ], [ 0, %bb.bi ], [ %.3219, %bb.bh ] ; 5 uses
-  %i.ep = or i1 %i.cc, %i.cb
-  %i.eq = select i1 %i.ep, i64 16, i64 10         ; 3 uses
+  %i.ep = or i1 %i.cc, %i.cb                      ; 3 uses
+  %i.eq = select i1 %i.ep, i64 16, i64 10
   %i.er = icmp eq i64 %.0208, 0
   br i1 %i.er, label %bb.bl, label %bb.bo
 
@@ -238,15 +238,17 @@ bb.bo:                                            ; preds = %bb.bk
 .split.i:                                         ; preds = %bb.bo, %mi_outc.exit51.i
   %.16 = phi ptr [ %.17, %mi_outc.exit51.i ], [ %.1338, %bb.bo ]
   %i.ev = phi ptr [ %i.fe, %mi_outc.exit51.i ], [ %.1338, %bb.bo ] ; 4 uses
-  %.054.i = phi i64 [ %i.ew, %mi_outc.exit51.i ], [ %.0208, %bb.bo ] ; 3 uses
+  %.054.i = phi i64 [ %7, %mi_outc.exit51.i ], [ %.0208, %bb.bo ] ; 5 uses
   %.not.i50.i = icmp ult ptr %i.ev, %i.e
-  %i.ew = udiv i64 %.054.i, %i.eq
-  %i.ex = urem i64 %.054.i, %i.eq                 ; 2 uses
+  %i.ew = udiv i64 %.054.i, 10
+  %i.ex = urem i64 %.054.i, 10
   br i1 %.not.i50.i, label %bb.bp, label %mi_outc.exit51.i
 
 bb.bp:                                            ; preds = %.split.i
-  %i.ey = icmp samesign ult i64 %i.ex, 10
-  %i.ez = trunc nuw nsw i64 %i.ex to i8           ; 2 uses
+  %4 = and i64 %.054.i, 15
+  %5 = select i1 %i.ep, i64 %4, i64 %i.ex         ; 2 uses
+  %i.ey = icmp samesign ult i64 %5, 10
+  %i.ez = trunc nuw nsw i64 %5 to i8              ; 2 uses
   %i.fa = or disjoint i8 %i.ez, 48
   %i.fb = add nuw nsw i8 %i.ez, 55
   %i.fc = select i1 %i.ey, i8 %i.fa, i8 %i.fb
@@ -257,6 +259,8 @@ bb.bp:                                            ; preds = %.split.i
 mi_outc.exit51.i:                                 ; preds = %bb.bp, %.split.i
   %.17 = phi ptr [ %i.fd, %bb.bp ], [ %.16, %.split.i ] ; 2 uses
   %i.fe = phi ptr [ %i.fd, %bb.bp ], [ %i.ev, %.split.i ] ; 2 uses
+  %6 = lshr i64 %.054.i, 4
+  %7 = select i1 %i.ep, i64 %6, i64 %i.ew
   %.not.i289 = icmp ugt i64 %i.eq, %.054.i
   br i1 %.not.i289, label %.split56.us.i, label %.split.i, !llvm.loop !22
 

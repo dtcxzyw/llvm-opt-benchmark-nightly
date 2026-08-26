@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.ep = sdiv i32 %i.em, %i.eo
   %i.eq = add nsw i32 %i.ep, 1                    ; 3 uses
   store i32 %i.eq, ptr %i.c, align 4, !tbaa !72
-  %i.er = mul nsw i32 %i.eg, %i.dz                ; 5 uses
+  %i.er = mul nsw i32 %i.eg, %i.dz                ; 6 uses
   %i.es = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 12 uses
   %i.et = load i32, ptr %i.es, align 8, !tbaa !61
   %i.eu = icmp eq i32 %i.er, %i.et
@@ -223,8 +223,8 @@ bb.z:                                             ; preds = %bb.y
   %i.fa = trunc nuw i8 %i.ez to i1
   %i.fb = and i32 %i.er, 7
   %i.fc = icmp eq i32 %i.fb, 0
-  %i.fd = and i1 %i.fc, %i.fa
-  %.0217 = select i1 %i.fd, i32 8, i32 1          ; 4 uses
+  %i.fd = and i1 %i.fc, %i.fa                     ; 2 uses
+  %.0217 = select i1 %i.fd, i32 8, i32 1          ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #13
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 268
   %i.ff = load i32, ptr %i.fe, align 4, !tbaa !88
@@ -234,10 +234,11 @@ bb.z:                                             ; preds = %bb.y
   %i.fi = shl nuw nsw i32 %.0217, 2
   %i.fj = select i1 %i.fg, i32 %.0217, i32 %i.fi
   %i.fk = zext nneg i32 %i.fj to i64
-  %i.fl = sdiv i32 %i.er, %.0217
+  %i.fl = sdiv i32 %i.er, 8
+  %24 = select i1 %i.fd, i32 %i.fl, i32 %i.er
   %i.fm = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.fn = load ptr, ptr %i.fm, align 8, !tbaa !90
-  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.el, i32 noundef %i.eq, i32 noundef %i.fl, i64 noundef %i.fk, i32 noundef %.0217, ptr noundef %i.fn)
+  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.el, i32 noundef %i.eq, i32 noundef %24, i64 noundef %i.fk, i32 noundef %.0217, ptr noundef %i.fn)
           to label %bb.aa unwind label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z

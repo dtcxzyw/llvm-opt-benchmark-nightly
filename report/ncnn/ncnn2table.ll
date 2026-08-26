@@ -205,14 +205,14 @@ bb.g:                                             ; preds = %.lr.ph542, %.split5
   %i.hw = load ptr, ptr %i.hv, align 8, !tbaa !151 ; 11 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %i.hw, i64 216
   %i.hy = load i32, ptr %i.hx, align 8, !tbaa !239
-  %i.hz = icmp eq i32 %i.hy, 2                    ; 2 uses
-  %1 = select i1 %i.hz, i32 2, i32 1              ; 2 uses
+  %i.hz = icmp eq i32 %i.hy, 2                    ; 3 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hw, i64 212
-  %i.ib = load i32, ptr %i.ia, align 4, !tbaa !241
-  %i.ic = sdiv i32 %i.ib, %1
+  %i.ib = load i32, ptr %i.ia, align 4, !tbaa !241 ; 2 uses
+  %i.ic = sdiv i32 %i.ib, 2
+  %1 = select i1 %i.hz, i32 %i.ic, i32 %i.ib
   %i.id = getelementptr inbounds nuw i8, ptr %i.hw, i64 208 ; 3 uses
   %i.ie = load i32, ptr %i.id, align 8, !tbaa !242 ; 2 uses
-  %i.if = sdiv i32 %i.ic, %i.ie                   ; 4 uses
+  %i.if = sdiv i32 %1, %i.ie                      ; 4 uses
   %i.ig = load ptr, ptr %i.cg, align 8, !tbaa !106
   %i.ih = getelementptr inbounds nuw [144 x i8], ptr %i.ig, i64 %indvars.iv750
   %i.ii = zext i1 %i.hz to i32                    ; 2 uses
@@ -229,6 +229,7 @@ bb.g:                                             ; preds = %.lr.ph542, %.split5
   br i1 %i.iq, label %.split, label %.split531
 
 .split:                                           ; preds = %bb.g
+  %wide.trip.count748 = select i1 %i.hz, i64 2, i64 1 ; 2 uses
   %i.ir = getelementptr inbounds nuw i8, ptr %i.hw, i64 240
   %i.is = getelementptr inbounds nuw i8, ptr %i.hw, i64 288
   %i.it = getelementptr inbounds nuw i8, ptr %i.hw, i64 268
@@ -258,7 +259,6 @@ bb.g:                                             ; preds = %.lr.ph542, %.split5
   %i.jn = getelementptr inbounds nuw i8, ptr %i.jg, i64 72
   %i.jo = load ptr, ptr %i.jn, align 8, !tbaa !116 ; 2 uses
   %i.jp = zext nneg i32 %i.ip to i64              ; 2 uses
-  %wide.trip.count748 = zext nneg i32 %1 to i64   ; 2 uses
   %wide.trip.count743 = zext nneg i32 %i.ip to i64 ; 6 uses
   br i1 %i.iv, label %.preheader455.us.us.preheader, label %.preheader455.us538.preheader
 
@@ -488,14 +488,14 @@ bb.h:                                             ; preds = %.lr.ph587, %.split5
   %i.mn = load ptr, ptr %i.mm, align 8, !tbaa !151 ; 12 uses
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mn, i64 216
   %i.mp = load i32, ptr %i.mo, align 8, !tbaa !254
-  %i.mq = icmp eq i32 %i.mp, 2                    ; 2 uses
-  %2 = select i1 %i.mq, i32 2, i32 1              ; 2 uses
+  %i.mq = icmp eq i32 %i.mp, 2                    ; 3 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mn, i64 212
-  %i.ms = load i32, ptr %i.mr, align 4, !tbaa !256
-  %i.mt = sdiv i32 %i.ms, %2
+  %i.ms = load i32, ptr %i.mr, align 4, !tbaa !256 ; 2 uses
+  %i.mt = sdiv i32 %i.ms, 2
+  %2 = select i1 %i.mq, i32 %i.mt, i32 %i.ms
   %i.mu = getelementptr inbounds nuw i8, ptr %i.mn, i64 220 ; 3 uses
   %i.mv = load i32, ptr %i.mu, align 4, !tbaa !257 ; 2 uses
-  %i.mw = sdiv i32 %i.mt, %i.mv                   ; 4 uses
+  %i.mw = sdiv i32 %2, %i.mv                      ; 4 uses
   %i.mx = sdiv i32 %i.mw, 4                       ; 3 uses
   %i.my = load ptr, ptr %i.ho, align 8, !tbaa !106
   %i.mz = getelementptr inbounds nuw [144 x i8], ptr %i.my, i64 %indvars.iv818
@@ -516,6 +516,7 @@ bb.h:                                             ; preds = %.lr.ph587, %.split5
   br i1 %i.nl, label %.split568, label %.split569
 
 .split568:                                        ; preds = %bb.h
+  %wide.trip.count816 = select i1 %i.mq, i64 2, i64 1 ; 4 uses
   %i.nm = getelementptr inbounds nuw i8, ptr %i.mn, i64 208
   %i.nn = getelementptr inbounds nuw i8, ptr %i.mn, i64 248
   %i.no = getelementptr inbounds nuw i8, ptr %i.mn, i64 296
@@ -550,7 +551,6 @@ bb.h:                                             ; preds = %.lr.ph587, %.split5
   %i.on = load ptr, ptr %i.om, align 8, !tbaa !116 ; 10 uses
   %i.oo = ptrtoaddr ptr %i.on to i64
   %smax810 = tail call i32 @llvm.smax.i32(i32 %i.nk, i32 1)
-  %wide.trip.count816 = zext nneg i32 %2 to i64   ; 4 uses
   %wide.trip.count811 = zext nneg i32 %smax810 to i64 ; 8 uses
   br i1 %i.nr, label %.split568.split.us, label %.split568.split
 
@@ -953,14 +953,14 @@ bb.i:                                             ; preds = %.lr.ph633, %.split6
   %i.ti = load ptr, ptr %i.th, align 8, !tbaa !151 ; 11 uses
   %i.tj = getelementptr inbounds nuw i8, ptr %i.ti, i64 216
   %i.tk = load i32, ptr %i.tj, align 8, !tbaa !275
-  %i.tl = icmp eq i32 %i.tk, 2                    ; 2 uses
-  %3 = select i1 %i.tl, i32 2, i32 1              ; 2 uses
+  %i.tl = icmp eq i32 %i.tk, 2                    ; 3 uses
   %i.tm = getelementptr inbounds nuw i8, ptr %i.ti, i64 212
-  %i.tn = load i32, ptr %i.tm, align 4, !tbaa !277
-  %i.to = sdiv i32 %i.tn, %3
+  %i.tn = load i32, ptr %i.tm, align 4, !tbaa !277 ; 2 uses
+  %i.to = sdiv i32 %i.tn, 2
+  %3 = select i1 %i.tl, i32 %i.to, i32 %i.tn
   %i.tp = getelementptr inbounds nuw i8, ptr %i.ti, i64 208 ; 3 uses
   %i.tq = load i32, ptr %i.tp, align 8, !tbaa !278 ; 2 uses
-  %i.tr = sdiv i32 %i.to, %i.tq                   ; 3 uses
+  %i.tr = sdiv i32 %3, %i.tq                      ; 3 uses
   %i.ts = sdiv i32 %i.tr, 3                       ; 2 uses
   %i.tt = load ptr, ptr %i.mf, align 8, !tbaa !106
   %i.tu = getelementptr inbounds nuw [144 x i8], ptr %i.tt, i64 %indvars.iv887
@@ -981,6 +981,7 @@ bb.i:                                             ; preds = %.lr.ph633, %.split6
   br i1 %i.ug, label %.split614, label %.split615
 
 .split614:                                        ; preds = %bb.i
+  %wide.trip.count885 = select i1 %i.tl, i64 2, i64 1 ; 2 uses
   %i.uh = getelementptr inbounds nuw i8, ptr %i.ti, i64 240
   %i.ui = getelementptr inbounds nuw i8, ptr %i.ti, i64 288
   %i.uj = getelementptr inbounds nuw i8, ptr %i.ti, i64 268
@@ -1010,7 +1011,6 @@ bb.i:                                             ; preds = %.lr.ph633, %.split6
   %i.vd = getelementptr inbounds nuw i8, ptr %i.uw, i64 72
   %i.ve = load ptr, ptr %i.vd, align 8, !tbaa !116 ; 2 uses
   %smax879 = tail call i32 @llvm.smax.i32(i32 %i.uf, i32 1)
-  %wide.trip.count885 = zext nneg i32 %3 to i64   ; 2 uses
   %wide.trip.count880 = zext nneg i32 %smax879 to i64 ; 2 uses
   br i1 %i.ul, label %.preheader.us.us.preheader, label %.preheader.us627.preheader
 

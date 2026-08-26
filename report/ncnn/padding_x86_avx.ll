@@ -204,14 +204,14 @@ bb.au:                                            ; preds = %bb.al
   %i.ml = add nsw i32 %i.mi, %i.mk
   %i.mm = getelementptr inbounds nuw i8, ptr %0, i64 236
   %i.mn = load i32, ptr %i.mm, align 4, !tbaa !53
-  %i.mo = add nsw i32 %i.ml, %i.mn                ; 5 uses
+  %i.mo = add nsw i32 %i.ml, %i.mn                ; 6 uses
   store i32 %i.mo, ptr %i.g, align 4, !tbaa !58
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #12
   %i.mp = and i32 %i.mo, 7                        ; 2 uses
   %.not303 = icmp eq i32 %i.mp, 0                 ; 2 uses
   %i.mq = and i32 %i.mo, 3
-  %i.mr = icmp eq i32 %i.mq, 0                    ; 2 uses
-  %i.ms = select i1 %i.mr, i32 4, i32 1           ; 3 uses
+  %i.mr = icmp eq i32 %i.mq, 0                    ; 3 uses
+  %i.ms = select i1 %i.mr, i32 4, i32 1           ; 2 uses
   %i.mt = select i1 %.not303, i32 8, i32 %i.ms
   store i32 %i.mt, ptr %i.h, align 4, !tbaa !58
   %i.mu = lshr i64 %.pre, 2
@@ -235,10 +235,11 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %.not215, label %bb.ax, label %bb.az
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av
-  %6 = sdiv i32 %i.mo, %i.ms
+  %6 = ashr exact i32 %i.mo, 2
+  %7 = select i1 %i.mr, i32 %6, i32 %i.mo
   %i.nd = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.ne = load ptr, ptr %i.nd, align 8, !tbaa !62
-  tail call void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.md, i32 noundef %i.mh, i32 noundef %6, i64 noundef %i.mx, i32 noundef %i.ms, ptr noundef %i.ne)
+  tail call void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.md, i32 noundef %i.mh, i32 noundef %7, i64 noundef %i.mx, i32 noundef %i.ms, ptr noundef %i.ne)
   %i.nf = load ptr, ptr %2, align 8, !tbaa !18
   %i.ng = icmp eq ptr %i.nf, null
   br i1 %i.ng, label %.thread292, label %_ZNK4ncnn3Mat5emptyEv.exit230
@@ -641,14 +642,14 @@ bb.bd:                                            ; preds = %bb.aq
   %i.rm = add nsw i32 %i.rj, %i.rl
   %i.rn = getelementptr inbounds nuw i8, ptr %0, i64 236
   %i.ro = load i32, ptr %i.rn, align 4, !tbaa !53
-  %i.rp = add nsw i32 %i.rm, %i.ro                ; 5 uses
+  %i.rp = add nsw i32 %i.rm, %i.ro                ; 6 uses
   store i32 %i.rp, ptr %i.h, align 4, !tbaa !58
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #12
   %i.rq = and i32 %i.rp, 7                        ; 2 uses
   %.not334 = icmp eq i32 %i.rq, 0                 ; 2 uses
   %i.rr = and i32 %i.rp, 3
-  %i.rs = icmp eq i32 %i.rr, 0                    ; 2 uses
-  %i.rt = select i1 %i.rs, i32 4, i32 1           ; 3 uses
+  %i.rs = icmp eq i32 %i.rr, 0                    ; 3 uses
+  %i.rt = select i1 %i.rs, i32 4, i32 1           ; 2 uses
   %i.ru = select i1 %.not334, i32 8, i32 %i.rt
   store i32 %i.ru, ptr %i.i, align 4, !tbaa !58
   %i.rv = lshr i64 %i.x, 2
@@ -672,10 +673,11 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %.not232, label %bb.bg, label %bb.bk
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be
-  %7 = sdiv i32 %i.rp, %i.rt
+  %7 = ashr exact i32 %i.rp, 2
+  %8 = select i1 %i.rs, i32 %7, i32 %i.rp
   %i.se = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.sf = load ptr, ptr %i.se, align 8, !tbaa !62
-  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.rb, i32 noundef %i.rh, i32 noundef %7, i64 noundef %i.ry, i32 noundef %i.rt, ptr noundef %i.sf)
+  invoke void @_ZN4ncnn3Mat6createEiiimiPNS_9AllocatorE(ptr noundef nonnull align 8 dereferenceable(72) %2, i32 noundef %i.rb, i32 noundef %i.rh, i32 noundef %8, i64 noundef %i.ry, i32 noundef %i.rt, ptr noundef %i.sf)
           to label %bb.bh unwind label %bb.bi
 
 bb.bh:                                            ; preds = %bb.bg

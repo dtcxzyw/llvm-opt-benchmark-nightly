@@ -204,16 +204,17 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.h = load i32, ptr %i.g, align 8, !tbaa !37
-  %i.i = icmp eq i32 %i.h, 2
-  %i.j = select i1 %i.i, i32 2, i32 1             ; 5 uses
+  %i.i = icmp eq i32 %i.h, 2                      ; 2 uses
+  %i.j = select i1 %i.i, i32 2, i32 1             ; 4 uses
   store i32 %i.j, ptr %i.a, align 4, !tbaa !38
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 212
-  %i.l = load i32, ptr %i.k, align 4, !tbaa !39
-  %i.m = sdiv i32 %i.l, %i.j
+  %i.l = load i32, ptr %i.k, align 4, !tbaa !39   ; 2 uses
+  %i.m = sdiv i32 %i.l, 2
+  %2 = select i1 %i.i, i32 %i.m, i32 %i.l
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 220 ; 3 uses
   %i.o = load i32, ptr %i.n, align 4, !tbaa !40   ; 2 uses
-  %i.p = sdiv i32 %i.m, %i.o
+  %i.p = sdiv i32 %2, %i.o
   %i.q = sdiv i32 %i.p, 4                         ; 2 uses
   store i32 %i.q, ptr %i.b, align 4, !tbaa !38
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 664
@@ -616,14 +617,15 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.f = load i32, ptr %i.e, align 8, !tbaa !37
-  %i.g = icmp eq i32 %i.f, 2
-  %i.h = select i1 %i.g, i32 2, i32 1             ; 5 uses
+  %i.g = icmp eq i32 %i.f, 2                      ; 2 uses
+  %i.h = select i1 %i.g, i32 2, i32 1             ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 212
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !39
-  %i.k = sdiv i32 %i.j, %i.h
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !39   ; 2 uses
+  %i.k = sdiv i32 %i.j, 2
+  %2 = select i1 %i.g, i32 %i.k, i32 %i.j
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 220
   %i.m = load i32, ptr %i.l, align 4, !tbaa !40   ; 5 uses
-  %i.n = sdiv i32 %i.k, %i.m
+  %i.n = sdiv i32 %2, %i.m
   %i.o = sdiv i32 %i.n, 4                         ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 304 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 3 uses

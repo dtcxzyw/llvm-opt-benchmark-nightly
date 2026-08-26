@@ -205,19 +205,11 @@ define internal fastcc noundef nonnull align 8 dereferenceable(24) ptr @_ZN12_GL
 bb.a:
   %i.a = alloca [32768 x i8], align 16            ; 50 uses
   %i.b = alloca [32768 x i8], align 16            ; 36 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !88     ; 3 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !88     ; 2 uses
   %.not = icmp eq ptr %i.c, null
-  br i1 %.not, label %bb.f, label %3
+  br i1 %.not, label %bb.f, label %.lr.ph11.preheader.i
 
-3:                                                ; preds = %bb.a
-  %4 = urem i64 %1, 11939
-  %5 = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %4 ; 3 uses
-  %6 = load i64, ptr %5, align 8, !tbaa !207      ; 2 uses
-  %7 = icmp eq i64 %6, %1
-  br i1 %7, label %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, label %.lr.ph11.preheader.i
-
-.lr.ph11.preheader.i:                             ; preds = %3
-  %8 = udiv i64 %1, 11939
+.lr.ph11.preheader.i:                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 3
@@ -266,37 +258,43 @@ bb.a:
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 46
   br label %.lr.ph11.i
 
-.lr.ph11.i:                                       ; preds = %tailrecurse.backedge.i, %.lr.ph11.preheader.i
-  %i.ax = phi i64 [ %14, %tailrecurse.backedge.i ], [ %6, %.lr.ph11.preheader.i ] ; 3 uses
-  %9 = phi ptr [ %13, %tailrecurse.backedge.i ], [ %5, %.lr.ph11.preheader.i ] ; 5 uses
-  %10 = phi i64 [ %11, %tailrecurse.backedge.i ], [ %8, %.lr.ph11.preheader.i ] ; 2 uses
-  %.tr49.i = phi i32 [ %.tr4.be.i, %tailrecurse.backedge.i ], [ 0, %.lr.ph11.preheader.i ] ; 6 uses
-  %.tr8.i = phi ptr [ %.tr.be.i, %tailrecurse.backedge.i ], [ %i.c, %.lr.ph11.preheader.i ]
-  %i.ay = icmp eq i64 %i.ax, 0
-  br i1 %i.ay, label %bb.b, label %bb.c
+.lr.ph11.i:                                       ; preds = %.lr.ph11.preheader.i, %tailrecurse.backedge.i
+  %.tr.i = phi ptr [ %.tr.be.i, %tailrecurse.backedge.i ], [ %i.c, %.lr.ph11.preheader.i ] ; 2 uses
+  %i.ax = phi i64 [ %6, %tailrecurse.backedge.i ], [ %1, %.lr.ph11.preheader.i ] ; 4 uses
+  %.tr4.i = phi i32 [ %.tr4.be.i, %tailrecurse.backedge.i ], [ 0, %.lr.ph11.preheader.i ] ; 6 uses
+  %3 = icmp eq i32 %.tr4.i, 0                     ; 3 uses
+  %4 = udiv i64 %i.ax, 11939
+  %5 = udiv i64 %i.ax, 233
+  %6 = select i1 %3, i64 %4, i64 %5
+  %7 = urem i64 %i.ax, 11939
+  %8 = urem i64 %i.ax, 233
+  %9 = select i1 %3, i64 %7, i64 %8
+  %10 = getelementptr inbounds nuw [24 x i8], ptr %.tr.i, i64 %9 ; 7 uses
+  %11 = load i64, ptr %10, align 8, !tbaa !207    ; 4 uses
+  %i.ay = icmp eq i64 %11, %1
+  br i1 %i.ay, label %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, label %12
 
-bb.b:                                             ; preds = %.lr.ph11.i
-  store i64 %1, ptr %9, align 8, !tbaa !207
+12:                                               ; preds = %.lr.ph11.i
+  %13 = icmp eq i64 %11, 0
+  br i1 %13, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %12
+  store i64 %1, ptr %10, align 8, !tbaa !207
   br label %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit
 
-bb.c:                                             ; preds = %.lr.ph11.i
-  %i.az = icmp slt i64 %i.ax, 0
+bb.c:                                             ; preds = %12
+  %i.az = icmp slt i64 %11, 0
   br i1 %i.az, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.ba = and i64 %i.ax, 9223372036854775807
+  %i.ba = and i64 %11, 9223372036854775807
   %i.bb = inttoptr i64 %i.ba to ptr
   br label %tailrecurse.backedge.i
 
 tailrecurse.backedge.i:                           ; preds = %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i20, %._crit_edge.i, %bb.d
-  %.tr.be.i = phi ptr [ %i.bb, %bb.d ], [ %i.bc, %._crit_edge.i ], [ %i.bc, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i20 ] ; 2 uses
-  %.tr4.be.i = add nuw i32 %.tr49.i, 1
-  %11 = udiv i64 %10, 233
-  %12 = urem i64 %10, 233
-  %13 = getelementptr inbounds nuw [24 x i8], ptr %.tr.be.i, i64 %12 ; 3 uses
-  %14 = load i64, ptr %13, align 8, !tbaa !207    ; 2 uses
-  %15 = icmp eq i64 %14, %1
-  br i1 %15, label %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, label %.lr.ph11.i
+  %.tr.be.i = phi ptr [ %i.bb, %bb.d ], [ %i.bc, %._crit_edge.i ], [ %i.bc, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i20 ]
+  %.tr4.be.i = add nuw nsw i32 %.tr4.i, 1
+  br label %.lr.ph11.i
 
 bb.e:                                             ; preds = %bb.c
   %i.bc = call fastcc noundef ptr @_ZN12_GLOBAL__N_116BumpPtrAllocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(26) %2, i64 noundef 5592) #13, !inline_history !238 ; 5 uses
@@ -334,18 +332,17 @@ bb.e:                                             ; preds = %bb.c
   br i1 %exitcond.not.i.i.i.11, label %_ZnamRN12_GLOBAL__N_116BumpPtrAllocatorEc.exit.i, label %.lr.ph.i.i.i, !llvm.loop !17
 
 _ZnamRN12_GLOBAL__N_116BumpPtrAllocatorEc.exit.i: ; preds = %.lr.ph.i.i.i
-  %i.bq = load i64, ptr %9, align 8, !tbaa !207
+  %i.bq = load i64, ptr %10, align 8, !tbaa !207
   %i.br = udiv i64 %i.bq, 11939                   ; 3 uses
-  %.not23 = icmp eq i32 %.tr49.i, 0
-  br i1 %.not23, label %._crit_edge.i, label %.lr.ph.i.preheader
+  br i1 %3, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZnamRN12_GLOBAL__N_116BumpPtrAllocatorEc.exit.i
-  %xtraiter = and i32 %.tr49.i, 1
-  %i.bs = icmp eq i32 %.tr49.i, 1
+  %xtraiter = and i32 %.tr4.i, 1
+  %i.bs = icmp eq i32 %.tr4.i, 1
   br i1 %i.bs, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
 .lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
-  %unroll_iter = and i32 %.tr49.i, -2
+  %unroll_iter = and i32 %.tr4.i, 2147483646
   br label %.lr.ph.i
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
@@ -354,7 +351,7 @@ _ZnamRN12_GLOBAL__N_116BumpPtrAllocatorEc.exit.i: ; preds = %.lr.ph.i.i.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i.preheader
   %.0416.i.epil.init = phi i64 [ %i.br, %.lr.ph.i.preheader ], [ %i.cd, %._crit_edge.i.loopexit.unr-lcssa ]
-  %lcmp.mod48 = trunc i32 %.tr49.i to i1
+  %lcmp.mod48 = trunc i32 %.tr4.i to i1
   call void @llvm.assume(i1 %lcmp.mod48)
   %i.bt = udiv i64 %.0416.i.epil.init, 233
   br label %._crit_edge.i
@@ -363,13 +360,13 @@ _ZnamRN12_GLOBAL__N_116BumpPtrAllocatorEc.exit.i: ; preds = %.lr.ph.i.i.i
   %.041.lcssa.i = phi i64 [ %i.br, %_ZnamRN12_GLOBAL__N_116BumpPtrAllocatorEc.exit.i ], [ %i.cd, %._crit_edge.i.loopexit.unr-lcssa ], [ %i.bt, %.lr.ph.i.epil.preheader ]
   %i.bu = urem i64 %.041.lcssa.i, 233
   %i.bv = getelementptr inbounds nuw [24 x i8], ptr %i.bc, i64 %i.bu ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bv, ptr noundef nonnull align 8 dereferenceable(24) %9, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bv, ptr noundef nonnull align 8 dereferenceable(24) %10, i64 24, i1 false)
   %i.bw = ptrtoint ptr %i.bc to i64
   %i.bx = or i64 %i.bw, -9223372036854775808
-  store i64 %i.bx, ptr %9, align 8, !tbaa !207
+  store i64 %i.bx, ptr %10, align 8, !tbaa !207
   %i.by = load i64, ptr %i.bv, align 8, !tbaa !207
   %i.bz = and i64 %i.by, 9223372036854775807
-  %i.ca = ptrtoint ptr %.tr8.i to i64
+  %i.ca = ptrtoint ptr %.tr.i to i64
   %.not24 = icmp eq i64 %i.bz, %i.ca
   br i1 %.not24, label %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i20, label %tailrecurse.backedge.i
 
@@ -435,8 +432,7 @@ _ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i20:      ; preds = %._crit_edge.i
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !239
 
-_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit: ; preds = %tailrecurse.backedge.i, %3, %bb.b
-  %16 = phi ptr [ %5, %3 ], [ %9, %bb.b ], [ %13, %tailrecurse.backedge.i ] ; 2 uses
+_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit: ; preds = %.lr.ph11.i, %bb.b
   %.not9 = icmp sgt i64 %1, -1
   br i1 %.not9, label %_ZN12_GLOBAL__N_16assertEbPKc.exit, label %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i
 
@@ -555,7 +551,7 @@ _ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE15first
   br label %_ZN12_GLOBAL__N_16assertEbPKc.exit
 
 _ZN12_GLOBAL__N_16assertEbPKc.exit:               ; preds = %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i, %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit, %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE15firstAllocationEmRNS_16BumpPtrAllocatorE.exit
-  %.0 = phi ptr [ %i.eb, %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE15firstAllocationEmRNS_16BumpPtrAllocatorE.exit ], [ %16, %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit ], [ %16, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i ]
+  %.0 = phi ptr [ %i.eb, %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE15firstAllocationEmRNS_16BumpPtrAllocatorE.exit ], [ %10, %_ZN12_GLOBAL__N_115SimpleHashTableINS_17CallFlowEntryBaseELj11939ELj233EE8getEntryEPS1_mmRNS_16BumpPtrAllocatorEi.exit ], [ %10, %_ZN12_GLOBAL__N_17strCopyEPcPKci.exit16.i ]
   ret ptr %.0
 }
 

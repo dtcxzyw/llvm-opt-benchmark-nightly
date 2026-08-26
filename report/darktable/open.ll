@@ -205,17 +205,20 @@ bb.ci:                                            ; preds = %bb.cg, %bb.cf
 bb.cj:                                            ; preds = %bb.bx
   %i.nx = getelementptr inbounds nuw i8, ptr %0, i64 381912
   %i.ny = load i32, ptr %i.nx, align 8, !tbaa !2273
-  %i.nz = icmp eq i32 %i.ny, 14
+  %i.nz = icmp eq i32 %i.ny, 14                   ; 2 uses
   %i.oa = getelementptr inbounds nuw i8, ptr %0, i64 18
-  %i.ob = load i16, ptr %i.oa, align 2, !tbaa !2220 ; 2 uses
-  %.rhs.trunc651 = select i1 %i.nz, i16 9, i16 10 ; 2 uses
-  %i.oc = urem i16 %i.ob, %.rhs.trunc651
-  %i.od = udiv i16 %i.ob, %.rhs.trunc651
-  %i.oe = icmp eq i16 %i.oc, 0
+  %i.ob = load i16, ptr %i.oa, align 2, !tbaa !2220 ; 4 uses
+  %2 = urem i16 %i.ob, 9
+  %3 = udiv i16 %i.ob, 9
+  %i.oc = urem i16 %i.ob, 10
+  %i.od = udiv i16 %i.ob, 10
+  %.v = select i1 %i.nz, i16 %2, i16 %i.oc
+  %i.oe = icmp eq i16 %.v, 0
   br i1 %i.oe, label %bb.ck, label %bb.cm
 
 bb.ck:                                            ; preds = %bb.cj
-  %.zext655 = zext nneg i16 %i.od to i64
+  %.v668 = select i1 %i.nz, i16 %3, i16 %i.od
+  %.zext655 = zext nneg i16 %.v668 to i64
   %i.of = shl nuw nsw i64 %.zext655, 4
   %i.og = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.oh = load i16, ptr %i.og, align 8, !tbaa !2221

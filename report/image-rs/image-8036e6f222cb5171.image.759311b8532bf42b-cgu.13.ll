@@ -205,11 +205,12 @@ bb.a:
   %i.s = alloca [24 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %trunc.i = trunc nuw i8 %4 to i1                ; 4 uses
-  %..i = select i1 %trunc.i, i64 4, i64 3         ; 2 uses
-  %i.t = urem i64 %2, %..i
-  %i.u = udiv i64 %2, %..i
-  %i.v = icmp eq i64 %i.t, 0
+  %trunc.i = trunc nuw i8 %4 to i1                ; 5 uses
+  %6 = and i64 %2, 3
+  %i.t = urem i64 %2, 3
+  %i.u = udiv i64 %2, 3                           ; 5 uses
+  %7 = select i1 %trunc.i, i64 %6, i64 %i.t
+  %i.v = icmp eq i64 %7, 0
   br i1 %i.v, label %switch.lookup, label %bb.b, !prof !1329
 
 default.unreachable:                              ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
@@ -220,12 +221,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 switch.lookup:                                    ; preds = %bb.a
+  %8 = lshr i64 %2, 2                             ; 4 uses
+  %9 = select i1 %trunc.i, i64 %8, i64 %i.u       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1330
   %i.w = zext nneg i8 %5 to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb21cast_pixels_by_layoutttEBa_.210, i64 %i.w
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
-  %i.x = mul nuw nsw i64 %i.u, %switch.ext
+  %i.x = mul nuw nsw i64 %9, %switch.ext
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !1334
   store i64 0, ptr %i.p, align 16, !noalias !1334
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -326,8 +329,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 bb.m:                                             ; preds = %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !1346)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !1330
-  %6 = udiv i64 %2, 3                             ; 2 uses
-  %i.an = shl nuw nsw i64 %6, 2
+  %i.an = shl nuw nsw i64 %i.u, 2
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecfE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef %i.an, float noundef 0.000000e+00)
           to label %.noexc.i unwind label %bb.n, !noalias !1330
 
@@ -335,7 +337,7 @@ bb.m:                                             ; preds = %bb.j
   %i.ao = load ptr, ptr %.sroa.6.0..sroa_idx2.i, align 8, !alias.scope !1346, !noalias !1349, !nonnull !7, !noundef !7 ; 2 uses
   %i.ap = load i64, ptr %.sroa.8.0..sroa_idx4.i, align 16, !alias.scope !1346, !noalias !1349, !noundef !7
   %i.aq = lshr i64 %i.ap, 2
-  %i.ar = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %6
+  %i.ar = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %i.u
   %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ao, i64 %i.aq
   invoke void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E3newCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.n, ptr noundef nonnull readonly align 4 %1, ptr noundef nonnull readonly %i.ar, ptr noundef nonnull align 4 %i.ao, ptr noundef nonnull %i.as)
           to label %.noexc10.i unwind label %bb.n, !noalias !1345
@@ -419,8 +421,7 @@ bb.n:                                             ; preds = %.noexc20.i, %bb.o, 
 bb.o:                                             ; preds = %bb.k
   call void @llvm.experimental.noalias.scope.decl(metadata !1352)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !1330
-  %7 = lshr i64 %2, 2                             ; 2 uses
-  %i.bv = mul nuw nsw i64 %7, 3
+  %i.bv = mul nuw nsw i64 %8, 3
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecfE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef %i.bv, float noundef 0.000000e+00)
           to label %.noexc20.i unwind label %bb.n, !noalias !1330
 
@@ -428,7 +429,7 @@ bb.o:                                             ; preds = %bb.k
   %i.bw = load ptr, ptr %.sroa.6.0..sroa_idx2.i, align 8, !alias.scope !1352, !noalias !1355, !nonnull !7, !noundef !7 ; 2 uses
   %i.bx = load i64, ptr %.sroa.8.0..sroa_idx4.i, align 16, !alias.scope !1352, !noalias !1355, !noundef !7
   %i.by = udiv i64 %i.bx, 3
-  %i.bz = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %7
+  %i.bz = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %8
   %i.ca = getelementptr inbounds nuw [12 x i8], ptr %i.bw, i64 %i.by
   invoke void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj4_EINtBZ_7IterMutAfj3_EEINtB5_7ZipImplBW_B1s_E3newCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.m, ptr noundef nonnull readonly align 4 %1, ptr noundef nonnull readonly %i.bz, ptr noundef nonnull align 4 %i.bw, ptr noundef nonnull %i.ca)
           to label %.noexc21.i unwind label %bb.n, !noalias !1345
@@ -619,11 +620,10 @@ bb.ai:                                            ; preds = %bb.q
 
 _RNvMs_NtNtCsa5QsYiPB8Gl_5image6traits7privateNtB4_15LayoutWithColor8channels.exit: ; preds = %bb.ai, %bb.ah
   %i.db = icmp eq i8 %4, 0
-  %spec.select = select i1 %i.db, i64 3, i64 4
-  %8 = udiv i64 %2, %spec.select
+  %spec.select = select i1 %i.db, i64 %i.u, i64 %8
   %i.dc = icmp eq i8 %5, 3
   %i.dd = zext i1 %i.dc to i64
-  %i.de = shl nuw nsw i64 %8, %i.dd
+  %i.de = shl nuw nsw i64 %spec.select, %i.dd
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecfE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s, i64 noundef %i.de, float noundef 0.000000e+00)
           to label %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputfEBa_.exit unwind label %.loopexit.split-lp
 
@@ -637,27 +637,15 @@ _RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputfEBa_
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4096) %i.j, i8 0, i64 4096, i1 false), !noalias !1365
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !1365
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4096) %i.i, i8 0, i64 4096, i1 false), !noalias !1365
-  br i1 %trunc.i, label %.loopexit.loopexit.i, label %.loopexit.loopexit215.i
-
-.loopexit.loopexit215.i:                          ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputfEBa_.exit
-  %9 = udiv i64 %2, 3
-  br label %.loopexit.i
-
-.loopexit.loopexit.i:                             ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputfEBa_.exit
-  %10 = lshr i64 %2, 2
-  br label %.loopexit.i
-
-.loopexit.i:                                      ; preds = %.loopexit.loopexit.i, %.loopexit.loopexit215.i
-  %.sroa.017.0.i = phi i64 [ 4, %.loopexit.loopexit.i ], [ 3, %.loopexit.loopexit215.i ]
-  %.sroa.0.2.i = phi i64 [ %10, %.loopexit.loopexit.i ], [ %9, %.loopexit.loopexit215.i ] ; 5 uses
-  %11 = icmp eq i8 %5, 3                          ; 3 uses
-  %.sroa.019.0.i = select i1 %11, i64 4, i64 3
-  %12 = add nuw nsw i64 %.sroa.0.2.i, 255
-  %.sroa.05.0.i.i.i = lshr i64 %12, 8             ; 2 uses
+  %spec.select4 = select i1 %trunc.i, i64 4, i64 3
+  %10 = icmp eq i8 %5, 3                          ; 3 uses
+  %.sroa.019.0.i = select i1 %10, i64 4, i64 3
+  %11 = add nuw nsw i64 %9, 255
+  %.sroa.05.0.i.i.i = lshr i64 %11, 8             ; 2 uses
   %.not211.i = icmp eq i64 %.sroa.05.0.i.i.i, 0
   br i1 %.not211.i, label %.loopexit5, label %.lr.ph214.i
 
-.lr.ph214.i:                                      ; preds = %.loopexit.i
+.lr.ph214.i:                                      ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputfEBa_.exit
   %.sroa.44.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.sroa.55.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -702,9 +690,9 @@ bb.aj:                                            ; preds = %bb.ax, %.lr.ph214.i
   %.sroa.038.0212.i = phi i64 [ 0, %.lr.ph214.i ], [ %i.dm, %bb.ax ] ; 12 uses
   %i.dm = add nuw nsw i64 %.sroa.038.0212.i, 256  ; 2 uses
   %i.dn = add nsw i64 %.sroa.041.0213.i, -1       ; 2 uses
-  %..i.i = call noundef range(i64 0, -8589934590) i64 @llvm.umin.i64(i64 range(i64 0, -8589934590) %.sroa.0.2.i, i64 %i.dm) ; 9 uses
+  %..i.i = call noundef range(i64 0, -8589934590) i64 @llvm.umin.i64(i64 range(i64 0, -8589934590) %9, i64 %i.dm) ; 9 uses
   %i.do = sub nsw i64 %..i.i, %.sroa.038.0212.i   ; 9 uses
-  %i.dp = mul i64 %i.do, %.sroa.017.0.i           ; 8 uses
+  %i.dp = mul i64 %i.do, %spec.select4            ; 8 uses
   %i.dq = icmp ult i64 %i.dp, 1025
   br i1 %i.dq, label %bb.ak, label %.invoke, !prof !1369
 
@@ -725,7 +713,7 @@ bb.ak:                                            ; preds = %bb.aj
 bb.al:                                            ; preds = %bb.ak
   %i.dv = mul nuw nsw i64 %.sroa.038.0212.i, 3    ; 2 uses
   %i.dw = mul nuw nsw i64 %..i.i, 3               ; 3 uses
-  %i.dx = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0212.i
+  %i.dx = icmp samesign ult i64 %i.u, %.sroa.038.0212.i
   %.not73.i = icmp samesign ugt i64 %i.dw, %2
   %or.cond.i = or i1 %i.dx, %.not73.i
   br i1 %or.cond.i, label %.invoke, label %bb.an, !prof !1370
@@ -949,11 +937,11 @@ bb.ap:                                            ; preds = %.loopexit288.i, %.l
 
 .loopexit289.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol.loopexit, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i.i, %middle.block277, %.noexc9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1365
-  br i1 %11, label %bb.aq, label %bb.ap
+  br i1 %10, label %bb.aq, label %bb.ap
 
 .loopexit288.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i94.i.prol.loopexit, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i94.i, %middle.block261, %.noexc11
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1365
-  br i1 %11, label %bb.ap, label %bb.ar
+  br i1 %10, label %bb.ap, label %bb.ar
 
 bb.aq:                                            ; preds = %.loopexit289.i
   %.lhs.trunc157.i = trunc nuw nsw i64 %i.dp to i16
@@ -1073,7 +1061,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 bb.as:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
   %i.if = mul nuw nsw i64 %.sroa.038.0212.i, 3    ; 2 uses
   %i.ig = mul nuw nsw i64 %..i.i, 3               ; 3 uses
-  %i.ih = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0212.i
+  %i.ih = icmp samesign ult i64 %9, %.sroa.038.0212.i
   %.not80.i = icmp samesign ugt i64 %i.ig, %i.di
   %or.cond82.i = or i1 %i.ih, %.not80.i
   br i1 %or.cond82.i, label %.invoke, label %bb.aw, !prof !1370
@@ -1087,7 +1075,7 @@ bb.at:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
   br i1 %or.cond83.i, label %.invoke, label %bb.ay, !prof !1370
 
 bb.au:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
-  %i.il = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0212.i
+  %i.il = icmp samesign ult i64 %9, %.sroa.038.0212.i
   %.not78.i = icmp samesign ugt i64 %..i.i, %i.di
   %or.cond84.i = or i1 %i.il, %.not78.i
   br i1 %or.cond84.i, label %.invoke, label %bb.az, !prof !1370
@@ -1490,7 +1478,7 @@ _RINvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_13CicpTransform15clamp_rgba_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1365
   br label %bb.ax
 
-.loopexit5:                                       ; preds = %bb.ax, %.loopexit.i
+.loopexit5:                                       ; preds = %bb.ax, %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputfEBa_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !1365
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !1365
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false)
@@ -1528,11 +1516,12 @@ bb.a:
   %i.s = alloca [24 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %trunc.i = trunc nuw i8 %4 to i1                ; 4 uses
-  %..i = select i1 %trunc.i, i64 4, i64 3         ; 2 uses
-  %i.t = urem i64 %2, %..i
-  %i.u = udiv i64 %2, %..i
-  %i.v = icmp eq i64 %i.t, 0
+  %trunc.i = trunc nuw i8 %4 to i1                ; 5 uses
+  %6 = and i64 %2, 3
+  %i.t = urem i64 %2, 3
+  %i.u = udiv i64 %2, 3                           ; 5 uses
+  %7 = select i1 %trunc.i, i64 %6, i64 %i.t
+  %i.v = icmp eq i64 %7, 0
   br i1 %i.v, label %switch.lookup, label %bb.b, !prof !1329
 
 default.unreachable:                              ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
@@ -1543,12 +1532,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 switch.lookup:                                    ; preds = %bb.a
+  %8 = lshr i64 %2, 2                             ; 4 uses
+  %9 = select i1 %trunc.i, i64 %8, i64 %i.u       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1430
   %i.w = zext nneg i8 %5 to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb21cast_pixels_by_layoutttEBa_.210, i64 %i.w
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
-  %i.x = mul nuw nsw i64 %i.u, %switch.ext
+  %i.x = mul nuw nsw i64 %9, %switch.ext
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !1434
   store i64 0, ptr %i.p, align 16, !noalias !1434
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -1649,8 +1640,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 bb.m:                                             ; preds = %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !1445)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !1430
-  %6 = udiv i64 %2, 3                             ; 2 uses
-  %i.an = shl nuw nsw i64 %6, 2
+  %i.an = shl nuw nsw i64 %i.u, 2
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef %i.an, i8 noundef 0)
           to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1430
 
@@ -1658,7 +1648,7 @@ bb.m:                                             ; preds = %bb.j
   %i.ao = load ptr, ptr %.sroa.6.0..sroa_idx2.i, align 8, !alias.scope !1445, !noalias !1448, !nonnull !7, !noundef !7 ; 2 uses
   %i.ap = load i64, ptr %.sroa.8.0..sroa_idx4.i, align 16, !alias.scope !1445, !noalias !1448, !noundef !7
   %i.aq = lshr i64 %i.ap, 2
-  %i.ar = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %6
+  %i.ar = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %i.u
   %i.as = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.aq
   invoke void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAhj4_EEINtB5_7ZipImplBW_B1s_E3newCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.n, ptr noundef nonnull readonly align 4 %1, ptr noundef nonnull readonly %i.ar, ptr noundef nonnull %i.ao, ptr noundef nonnull %i.as)
           to label %.noexc10.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1444
@@ -1738,8 +1728,7 @@ _RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb25subpixel_cast_rgb_
 bb.n:                                             ; preds = %bb.k
   call void @llvm.experimental.noalias.scope.decl(metadata !1451)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !1430
-  %7 = lshr i64 %2, 2                             ; 2 uses
-  %i.bi = mul nuw nsw i64 %7, 3
+  %i.bi = mul nuw nsw i64 %8, 3
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef %i.bi, i8 noundef 0)
           to label %.noexc23.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1430
 
@@ -1747,7 +1736,7 @@ bb.n:                                             ; preds = %bb.k
   %i.bj = load ptr, ptr %.sroa.6.0..sroa_idx2.i, align 8, !alias.scope !1451, !noalias !1454, !nonnull !7, !noundef !7 ; 2 uses
   %i.bk = load i64, ptr %.sroa.8.0..sroa_idx4.i, align 16, !alias.scope !1451, !noalias !1454, !noundef !7
   %i.bl = udiv i64 %i.bk, 3
-  %i.bm = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %7
+  %i.bm = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %8
   %i.bn = getelementptr inbounds nuw [3 x i8], ptr %i.bj, i64 %i.bl
   invoke void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj4_EINtBZ_7IterMutAhj3_EEINtB5_7ZipImplBW_B1s_E3newCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.m, ptr noundef nonnull readonly align 4 %1, ptr noundef nonnull readonly %i.bm, ptr noundef nonnull %i.bj, ptr noundef nonnull %i.bn)
           to label %.noexc24.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1444
@@ -1924,11 +1913,10 @@ bb.ah:                                            ; preds = %bb.p
 
 _RNvMs_NtNtCsa5QsYiPB8Gl_5image6traits7privateNtB4_15LayoutWithColor8channels.exit: ; preds = %bb.ah, %bb.ag
   %i.ce = icmp eq i8 %4, 0
-  %spec.select = select i1 %i.ce, i64 3, i64 4
-  %8 = udiv i64 %2, %spec.select
+  %spec.select = select i1 %i.ce, i64 %i.u, i64 %8
   %i.cf = icmp eq i8 %5, 3
   %i.cg = zext i1 %i.cf to i64
-  %i.ch = shl nuw nsw i64 %8, %i.cg
+  %i.ch = shl nuw nsw i64 %spec.select, %i.cg
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s, i64 noundef %i.ch, i8 noundef 0)
           to label %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputhEBa_.exit unwind label %.loopexit.split-lp
 
@@ -1942,27 +1930,15 @@ _RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputhEBa_
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4096) %i.j, i8 0, i64 4096, i1 false), !noalias !1464
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !1464
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4096) %i.i, i8 0, i64 4096, i1 false), !noalias !1464
-  br i1 %trunc.i, label %.loopexit.loopexit.i, label %.loopexit.loopexit213.i
-
-.loopexit.loopexit213.i:                          ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputhEBa_.exit
-  %9 = udiv i64 %2, 3
-  br label %.loopexit.i6
-
-.loopexit.loopexit.i:                             ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputhEBa_.exit
-  %10 = lshr i64 %2, 2
-  br label %.loopexit.i6
-
-.loopexit.i6:                                     ; preds = %.loopexit.loopexit.i, %.loopexit.loopexit213.i
-  %.sroa.017.0.i = phi i64 [ 4, %.loopexit.loopexit.i ], [ 3, %.loopexit.loopexit213.i ]
-  %.sroa.0.2.i = phi i64 [ %10, %.loopexit.loopexit.i ], [ %9, %.loopexit.loopexit213.i ] ; 5 uses
-  %11 = icmp eq i8 %5, 3                          ; 3 uses
-  %.sroa.019.0.i = select i1 %11, i64 4, i64 3
-  %12 = add nuw nsw i64 %.sroa.0.2.i, 255
-  %.sroa.05.0.i.i.i = lshr i64 %12, 8             ; 2 uses
+  %spec.select4 = select i1 %trunc.i, i64 4, i64 3
+  %10 = icmp eq i8 %5, 3                          ; 3 uses
+  %.sroa.019.0.i = select i1 %10, i64 4, i64 3
+  %11 = add nuw nsw i64 %9, 255
+  %.sroa.05.0.i.i.i = lshr i64 %11, 8             ; 2 uses
   %.not209.i = icmp eq i64 %.sroa.05.0.i.i.i, 0
   br i1 %.not209.i, label %.loopexit5, label %.lr.ph212.i
 
-.lr.ph212.i:                                      ; preds = %.loopexit.i6
+.lr.ph212.i:                                      ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputhEBa_.exit
   %.sroa.44.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.sroa.55.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -2009,9 +1985,9 @@ bb.ai:                                            ; preds = %bb.aw, %.lr.ph212.i
   %.sroa.038.0210.i = phi i64 [ 0, %.lr.ph212.i ], [ %i.cr, %bb.aw ] ; 12 uses
   %i.cr = add nuw nsw i64 %.sroa.038.0210.i, 256  ; 2 uses
   %i.cs = add nsw i64 %.sroa.041.0211.i, -1       ; 2 uses
-  %..i.i = call noundef range(i64 0, -8589934590) i64 @llvm.umin.i64(i64 range(i64 0, -8589934590) %.sroa.0.2.i, i64 %i.cr) ; 9 uses
+  %..i.i = call noundef range(i64 0, -8589934590) i64 @llvm.umin.i64(i64 range(i64 0, -8589934590) %9, i64 %i.cr) ; 9 uses
   %i.ct = sub nsw i64 %..i.i, %.sroa.038.0210.i   ; 9 uses
-  %i.cu = mul i64 %i.ct, %.sroa.017.0.i           ; 8 uses
+  %i.cu = mul i64 %i.ct, %spec.select4            ; 8 uses
   %i.cv = icmp ult i64 %i.cu, 1025
   br i1 %i.cv, label %bb.aj, label %.invoke, !prof !1369
 
@@ -2032,7 +2008,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   %i.da = mul nuw nsw i64 %.sroa.038.0210.i, 3    ; 2 uses
   %i.db = mul nuw nsw i64 %..i.i, 3               ; 3 uses
-  %i.dc = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0210.i
+  %i.dc = icmp samesign ult i64 %i.u, %.sroa.038.0210.i
   %.not73.i = icmp samesign ugt i64 %i.db, %2
   %or.cond.i = or i1 %i.dc, %.not73.i
   br i1 %or.cond.i, label %.invoke, label %bb.am, !prof !1370
@@ -2256,11 +2232,11 @@ bb.ao:                                            ; preds = %.loopexit284.i, %.l
 
 .loopexit285.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol.loopexit, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i.i, %middle.block283, %.noexc10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1464
-  br i1 %11, label %bb.ap, label %bb.ao
+  br i1 %10, label %bb.ap, label %bb.ao
 
 .loopexit284.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i94.i.prol.loopexit, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i94.i, %middle.block267, %.noexc12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1464
-  br i1 %11, label %bb.ao, label %bb.aq
+  br i1 %10, label %bb.ao, label %bb.aq
 
 bb.ap:                                            ; preds = %.loopexit285.i
   %.lhs.trunc155.i = trunc nuw nsw i64 %i.cu to i16
@@ -2380,7 +2356,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 bb.ar:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
   %i.hk = mul nuw nsw i64 %.sroa.038.0210.i, 3    ; 2 uses
   %i.hl = mul nuw nsw i64 %..i.i, 3               ; 3 uses
-  %i.hm = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0210.i
+  %i.hm = icmp samesign ult i64 %9, %.sroa.038.0210.i
   %.not80.i = icmp samesign ugt i64 %i.hl, %i.cl
   %or.cond82.i = or i1 %i.hm, %.not80.i
   br i1 %or.cond82.i, label %.invoke, label %bb.av, !prof !1370
@@ -2394,7 +2370,7 @@ bb.as:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
   br i1 %or.cond83.i, label %.invoke, label %bb.ax, !prof !1370
 
 bb.at:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
-  %i.hq = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0210.i
+  %i.hq = icmp samesign ult i64 %9, %.sroa.038.0210.i
   %.not78.i = icmp samesign ugt i64 %..i.i, %i.cl
   %or.cond84.i = or i1 %i.hq, %.not78.i
   br i1 %or.cond84.i, label %.invoke, label %bb.ay, !prof !1370
@@ -2797,7 +2773,7 @@ _RINvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_13CicpTransform15clamp_rgba_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1464
   br label %bb.aw
 
-.loopexit5:                                       ; preds = %bb.aw, %.loopexit.i6
+.loopexit5:                                       ; preds = %bb.aw, %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputhEBa_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !1464
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !1464
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false)
@@ -2835,11 +2811,12 @@ bb.a:
   %i.s = alloca [24 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  %trunc.i = trunc nuw i8 %4 to i1                ; 4 uses
-  %..i = select i1 %trunc.i, i64 4, i64 3         ; 2 uses
-  %i.t = urem i64 %2, %..i
-  %i.u = udiv i64 %2, %..i
-  %i.v = icmp eq i64 %i.t, 0
+  %trunc.i = trunc nuw i8 %4 to i1                ; 5 uses
+  %6 = and i64 %2, 3
+  %i.t = urem i64 %2, 3
+  %i.u = udiv i64 %2, 3                           ; 5 uses
+  %7 = select i1 %trunc.i, i64 %6, i64 %i.t
+  %i.v = icmp eq i64 %7, 0
   br i1 %i.v, label %switch.lookup, label %bb.b, !prof !1329
 
 default.unreachable:                              ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
@@ -2850,12 +2827,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 switch.lookup:                                    ; preds = %bb.a
+  %8 = lshr i64 %2, 2                             ; 4 uses
+  %9 = select i1 %trunc.i, i64 %8, i64 %i.u       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1533
   %i.w = zext nneg i8 %5 to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb21cast_pixels_by_layoutttEBa_.210, i64 %i.w
   %switch.load = load i8, ptr %switch.gep, align 1
   %switch.ext = zext i8 %switch.load to i64
-  %i.x = mul nuw nsw i64 %i.u, %switch.ext
+  %i.x = mul nuw nsw i64 %9, %switch.ext
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !1537
   store i64 0, ptr %i.p, align 16, !noalias !1537
   %i.y = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -2956,8 +2935,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 bb.m:                                             ; preds = %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !1548)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !1533
-  %6 = udiv i64 %2, 3                             ; 2 uses
-  %i.an = shl nuw nsw i64 %6, 2
+  %i.an = shl nuw nsw i64 %i.u, 2
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VectE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef %i.an, i16 noundef 0)
           to label %.noexc.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1533
 
@@ -2965,7 +2943,7 @@ bb.m:                                             ; preds = %bb.j
   %i.ao = load ptr, ptr %.sroa.6.0..sroa_idx2.i, align 8, !alias.scope !1548, !noalias !1551, !nonnull !7, !noundef !7 ; 2 uses
   %i.ap = load i64, ptr %.sroa.8.0..sroa_idx4.i, align 16, !alias.scope !1548, !noalias !1551, !noundef !7
   %i.aq = lshr i64 %i.ap, 2
-  %i.ar = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %6
+  %i.ar = getelementptr inbounds nuw [12 x i8], ptr %1, i64 %i.u
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %i.aq
   invoke void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAtj4_EEINtB5_7ZipImplBW_B1s_E3newCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.n, ptr noundef nonnull readonly align 4 %1, ptr noundef nonnull readonly %i.ar, ptr noundef nonnull align 2 %i.ao, ptr noundef nonnull %i.as)
           to label %.noexc10.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1547
@@ -3045,8 +3023,7 @@ _RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb25subpixel_cast_rgb_
 bb.n:                                             ; preds = %bb.k
   call void @llvm.experimental.noalias.scope.decl(metadata !1554)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !1533
-  %7 = lshr i64 %2, 2                             ; 2 uses
-  %i.bi = mul nuw nsw i64 %7, 3
+  %i.bi = mul nuw nsw i64 %8, 3
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VectE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.q, i64 noundef %i.bi, i16 noundef 0)
           to label %.noexc23.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1533
 
@@ -3054,7 +3031,7 @@ bb.n:                                             ; preds = %bb.k
   %i.bj = load ptr, ptr %.sroa.6.0..sroa_idx2.i, align 8, !alias.scope !1554, !noalias !1557, !nonnull !7, !noundef !7 ; 2 uses
   %i.bk = load i64, ptr %.sroa.8.0..sroa_idx4.i, align 16, !alias.scope !1554, !noalias !1557, !noundef !7
   %i.bl = udiv i64 %i.bk, 3
-  %i.bm = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %7
+  %i.bm = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %8
   %i.bn = getelementptr inbounds nuw [6 x i8], ptr %i.bj, i64 %i.bl
   invoke void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj4_EINtBZ_7IterMutAtj3_EEINtB5_7ZipImplBW_B1s_E3newCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.m, ptr noundef nonnull readonly align 4 %1, ptr noundef nonnull readonly %i.bm, ptr noundef nonnull align 2 %i.bj, ptr noundef nonnull %i.bn)
           to label %.noexc24.i unwind label %.loopexit.split-lp.loopexit.split-lp.i, !noalias !1547
@@ -3231,11 +3208,10 @@ bb.ah:                                            ; preds = %bb.p
 
 _RNvMs_NtNtCsa5QsYiPB8Gl_5image6traits7privateNtB4_15LayoutWithColor8channels.exit: ; preds = %bb.ah, %bb.ag
   %i.ce = icmp eq i8 %4, 0
-  %spec.select = select i1 %i.ce, i64 3, i64 4
-  %8 = udiv i64 %2, %spec.select
+  %spec.select = select i1 %i.ce, i64 %i.u, i64 %8
   %i.cf = icmp eq i8 %5, 3
   %i.cg = zext i1 %i.cf to i64
-  %i.ch = shl nuw nsw i64 %8, %i.cg
+  %i.ch = shl nuw nsw i64 %spec.select, %i.cg
   invoke void @_RNvMs1_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VectE6resizeCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.s, i64 noundef %i.ch, i16 noundef 0)
           to label %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputtEBa_.exit unwind label %.loopexit.split-lp
 
@@ -3249,27 +3225,15 @@ _RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputtEBa_
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4096) %i.j, i8 0, i64 4096, i1 false), !noalias !1567
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !1567
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(4096) %i.i, i8 0, i64 4096, i1 false), !noalias !1567
-  br i1 %trunc.i, label %.loopexit.loopexit.i, label %.loopexit.loopexit213.i
-
-.loopexit.loopexit213.i:                          ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputtEBa_.exit
-  %9 = udiv i64 %2, 3
-  br label %.loopexit.i6
-
-.loopexit.loopexit.i:                             ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputtEBa_.exit
-  %10 = lshr i64 %2, 2
-  br label %.loopexit.i6
-
-.loopexit.i6:                                     ; preds = %.loopexit.loopexit.i, %.loopexit.loopexit213.i
-  %.sroa.017.0.i = phi i64 [ 4, %.loopexit.loopexit.i ], [ 3, %.loopexit.loopexit213.i ]
-  %.sroa.0.2.i = phi i64 [ %10, %.loopexit.loopexit.i ], [ %9, %.loopexit.loopexit213.i ] ; 5 uses
-  %11 = icmp eq i8 %5, 3                          ; 3 uses
-  %.sroa.019.0.i = select i1 %11, i64 4, i64 3
-  %12 = add nuw nsw i64 %.sroa.0.2.i, 255
-  %.sroa.05.0.i.i.i = lshr i64 %12, 8             ; 2 uses
+  %spec.select4 = select i1 %trunc.i, i64 4, i64 3
+  %10 = icmp eq i8 %5, 3                          ; 3 uses
+  %.sroa.019.0.i = select i1 %10, i64 4, i64 3
+  %11 = add nuw nsw i64 %9, 255
+  %.sroa.05.0.i.i.i = lshr i64 %11, 8             ; 2 uses
   %.not209.i = icmp eq i64 %.sroa.05.0.i.i.i, 0
   br i1 %.not209.i, label %.loopexit5, label %.lr.ph212.i
 
-.lr.ph212.i:                                      ; preds = %.loopexit.i6
+.lr.ph212.i:                                      ; preds = %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputtEBa_.exit
   %.sroa.44.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %.sroa.55.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -3316,9 +3280,9 @@ bb.ai:                                            ; preds = %bb.aw, %.lr.ph212.i
   %.sroa.038.0210.i = phi i64 [ 0, %.lr.ph212.i ], [ %i.cr, %bb.aw ] ; 12 uses
   %i.cr = add nuw nsw i64 %.sroa.038.0210.i, 256  ; 2 uses
   %i.cs = add nsw i64 %.sroa.041.0211.i, -1       ; 2 uses
-  %..i.i = call noundef range(i64 0, -8589934590) i64 @llvm.umin.i64(i64 range(i64 0, -8589934590) %.sroa.0.2.i, i64 %i.cr) ; 9 uses
+  %..i.i = call noundef range(i64 0, -8589934590) i64 @llvm.umin.i64(i64 range(i64 0, -8589934590) %9, i64 %i.cr) ; 9 uses
   %i.ct = sub nsw i64 %..i.i, %.sroa.038.0210.i   ; 9 uses
-  %i.cu = mul i64 %i.ct, %.sroa.017.0.i           ; 8 uses
+  %i.cu = mul i64 %i.ct, %spec.select4            ; 8 uses
   %i.cv = icmp ult i64 %i.cu, 1025
   br i1 %i.cv, label %bb.aj, label %.invoke, !prof !1369
 
@@ -3339,7 +3303,7 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   %i.da = mul nuw nsw i64 %.sroa.038.0210.i, 3    ; 2 uses
   %i.db = mul nuw nsw i64 %..i.i, 3               ; 3 uses
-  %i.dc = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0210.i
+  %i.dc = icmp samesign ult i64 %i.u, %.sroa.038.0210.i
   %.not73.i = icmp samesign ugt i64 %i.db, %2
   %or.cond.i = or i1 %i.dc, %.not73.i
   br i1 %or.cond.i, label %.invoke, label %bb.am, !prof !1370
@@ -3563,11 +3527,11 @@ bb.ao:                                            ; preds = %.loopexit284.i, %.l
 
 .loopexit285.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol.loopexit, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i.i, %middle.block283, %.noexc10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1567
-  br i1 %11, label %bb.ap, label %bb.ao
+  br i1 %10, label %bb.ap, label %bb.ao
 
 .loopexit284.i:                                   ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i94.i.prol.loopexit, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterfEINtBZ_7IterMutfEEINtB5_7ZipImplBW_B1o_E4nextCsa5QsYiPB8Gl_5image.exit.i94.i, %middle.block267, %.noexc12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !1567
-  br i1 %11, label %bb.ao, label %bb.aq
+  br i1 %10, label %bb.ao, label %bb.aq
 
 bb.ap:                                            ; preds = %.loopexit285.i
   %.lhs.trunc155.i = trunc nuw nsw i64 %i.cu to i16
@@ -3687,7 +3651,7 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
 bb.ar:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
   %i.hk = mul nuw nsw i64 %.sroa.038.0210.i, 3    ; 2 uses
   %i.hl = mul nuw nsw i64 %..i.i, 3               ; 3 uses
-  %i.hm = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0210.i
+  %i.hm = icmp samesign ult i64 %9, %.sroa.038.0210.i
   %.not80.i = icmp samesign ugt i64 %i.hl, %i.cl
   %or.cond82.i = or i1 %i.hm, %.not80.i
   br i1 %or.cond82.i, label %.invoke, label %bb.av, !prof !1370
@@ -3701,7 +3665,7 @@ bb.as:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
   br i1 %or.cond83.i, label %.invoke, label %bb.ax, !prof !1370
 
 bb.at:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterAfj3_EINtBZ_7IterMutAfj4_EEINtB5_7ZipImplBW_B1s_E4nextCsa5QsYiPB8Gl_5image.exit.thread.thread.i
-  %i.hq = icmp samesign ult i64 %.sroa.0.2.i, %.sroa.038.0210.i
+  %i.hq = icmp samesign ult i64 %9, %.sroa.038.0210.i
   %.not78.i = icmp samesign ugt i64 %..i.i, %i.cl
   %or.cond84.i = or i1 %i.hq, %.not78.i
   br i1 %or.cond84.i, label %.invoke, label %bb.ay, !prof !1370
@@ -4104,7 +4068,7 @@ _RINvMs1_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_13CicpTransform15clamp_rgba_
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1567
   br label %bb.aw
 
-.loopexit5:                                       ; preds = %bb.aw, %.loopexit.i6
+.loopexit5:                                       ; preds = %bb.aw, %_RINvMs2_NtNtCsa5QsYiPB8Gl_5image8metadata4cicpNtB6_7CicpRgb13create_outputtEBa_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !1567
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !1567
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.s, i64 24, i1 false)

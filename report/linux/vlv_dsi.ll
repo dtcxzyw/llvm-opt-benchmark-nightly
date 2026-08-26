@@ -204,7 +204,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.
   %i.fd = getelementptr i8, ptr %i.ek, i64 8
   %i.fe = load i64, ptr %i.fd, align 8
   %i.ff = and i64 %i.fe, 34359738368
-  %.not123.i = icmp eq i64 %i.ff, 0               ; 2 uses
+  %.not123.i = icmp eq i64 %i.ff, 0               ; 6 uses
   %i.fg = getelementptr i8, ptr %i.en, i64 104
   %i.fh = load i8, ptr %i.fg, align 1
   %i.fi = getelementptr i8, ptr %i.en, i64 94
@@ -212,11 +212,12 @@ bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.
   %i.fk = call i8 @llvm.umax.i8(i8 %i.fh, i8 %i.fj)
   %i.fl = zext i8 %i.fk to i32                    ; 3 uses
   %i.fm = mul i32 %i.er, %i.fl
-  %i.fn = select i1 %.not123.i, i32 2000000, i32 8000000 ; 5 uses
-  %i.fo = add nsw i32 %i.fn, -1                   ; 4 uses
-  %1 = add i32 %i.fm, %i.fo
-  %i.fp = udiv i32 %1, %i.fn                      ; 3 uses
-  %i.fq = icmp samesign ugt i32 %i.fp, 63
+  %i.fn = select i1 %.not123.i, i32 1999999, i32 7999999 ; 4 uses
+  %i.fo = add i32 %i.fm, %i.fn                    ; 2 uses
+  %1 = udiv i32 %i.fo, 2000000
+  %i.fp = udiv i32 %i.fo, 8000000
+  %2 = select i1 %.not123.i, i32 %1, i32 %i.fp    ; 3 uses
+  %i.fq = icmp samesign ugt i32 %2, 63
   br i1 %i.fq, label %bb.ap, label %bb.ar
 
 bb.ap:                                            ; preds = %bb.ao
@@ -231,23 +232,25 @@ bb.aq:                                            ; preds = %bb.ap
 
 __drm_to_dev.exit.i:                              ; preds = %bb.aq, %bb.ap
   %i.fu = phi ptr [ %i.ft, %bb.aq ], [ null, %bb.ap ]
-  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.fu, i32 noundef 2, ptr noundef nonnull @.str.32, i32 noundef %i.fp) #9
+  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.fu, i32 noundef 2, ptr noundef nonnull @.str.32, i32 noundef %2) #9
   br label %bb.ar
 
 bb.ar:                                            ; preds = %__drm_to_dev.exit.i, %bb.ao
-  %.0110.i = phi i32 [ 63, %__drm_to_dev.exit.i ], [ %i.fp, %bb.ao ] ; 3 uses
+  %.0110.i = phi i32 [ 63, %__drm_to_dev.exit.i ], [ %2, %bb.ao ] ; 3 uses
   %i.fv = sub nsw i32 %i.ex, %i.fl
   %i.fw = mul i32 %i.fv, %i.er
-  %i.fx = add i32 %i.fw, %i.fo
-  %i.fy = udiv i32 %i.fx, %i.fn                   ; 2 uses
+  %i.fx = add i32 %i.fw, %i.fn                    ; 2 uses
+  %3 = udiv i32 %i.fx, 2000000
+  %i.fy = udiv i32 %i.fx, 8000000
+  %4 = select i1 %.not123.i, i32 %3, i32 %i.fy    ; 2 uses
   %i.fz = mul i32 %i.er, 55                       ; 2 uses
   %i.ga = udiv i32 %i.fz, 1000000
-  %i.gb = icmp samesign ult i32 %i.fy, %i.ga
+  %i.gb = icmp samesign ult i32 %4, %i.ga
   %i.gc = urem i32 %i.fz, 1000000
   %.not124.i = icmp ne i32 %i.gc, 0
   %or.cond.not.i = and i1 %.not124.i, %i.gb
   %i.gd = zext i1 %or.cond.not.i to i32
-  %.0111.i = add nuw nsw i32 %i.fy, %i.gd         ; 3 uses
+  %.0111.i = add nuw nsw i32 %4, %i.gd            ; 3 uses
   %i.ge = icmp samesign ugt i32 %.0111.i, 63
   br i1 %i.ge, label %bb.as, label %bb.au
 
@@ -270,9 +273,11 @@ bb.au:                                            ; preds = %__drm_to_dev.exit12
   %.1.i = phi i32 [ 63, %__drm_to_dev.exit126.i ], [ %.0111.i, %bb.ar ] ; 2 uses
   %i.gj = sub nsw i32 %i.eu, %i.fl
   %i.gk = mul i32 %i.gj, %i.er
-  %i.gl = add i32 %i.gk, %i.fo
-  %i.gm = udiv i32 %i.gl, %i.fn                   ; 3 uses
-  %i.gn = icmp samesign ugt i32 %i.gm, 255
+  %i.gl = add i32 %i.gk, %i.fn                    ; 2 uses
+  %5 = udiv i32 %i.gl, 2000000
+  %i.gm = udiv i32 %i.gl, 8000000
+  %6 = select i1 %.not123.i, i32 %5, i32 %i.gm    ; 3 uses
+  %i.gn = icmp samesign ugt i32 %6, 255
   br i1 %i.gn, label %bb.av, label %bb.ax
 
 bb.av:                                            ; preds = %bb.au
@@ -287,11 +292,11 @@ bb.aw:                                            ; preds = %bb.av
 
 __drm_to_dev.exit128.i:                           ; preds = %bb.aw, %bb.av
   %i.gr = phi ptr [ %i.gq, %bb.aw ], [ null, %bb.av ]
-  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.gr, i32 noundef 2, ptr noundef nonnull @.str.34, i32 noundef %i.gm) #9
+  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.gr, i32 noundef 2, ptr noundef nonnull @.str.34, i32 noundef %6) #9
   br label %bb.ax
 
 bb.ax:                                            ; preds = %__drm_to_dev.exit128.i, %bb.au
-  %.0112.i = phi i32 [ 255, %__drm_to_dev.exit128.i ], [ %i.gm, %bb.au ] ; 2 uses
+  %.0112.i = phi i32 [ 255, %__drm_to_dev.exit128.i ], [ %6, %bb.au ] ; 2 uses
   %i.gs = getelementptr i8, ptr %i.en, i64 97
   %i.gt = load i8, ptr %i.gs, align 1
   %i.gu = getelementptr i8, ptr %i.en, i64 110    ; 2 uses
@@ -299,9 +304,11 @@ bb.ax:                                            ; preds = %__drm_to_dev.exit12
   %i.gw = call i8 @llvm.umax.i8(i8 %i.gt, i8 %i.gv)
   %i.gx = zext i8 %i.gw to i32
   %i.gy = mul i32 %i.er, %i.gx
-  %i.gz = add i32 %i.gy, %i.fo
-  %i.ha = udiv i32 %i.gz, %i.fn                   ; 3 uses
-  %i.hb = icmp samesign ugt i32 %i.ha, 31
+  %i.gz = add i32 %i.gy, %i.fn                    ; 2 uses
+  %7 = udiv i32 %i.gz, 2000000
+  %i.ha = udiv i32 %i.gz, 8000000
+  %8 = select i1 %.not123.i, i32 %7, i32 %i.ha    ; 3 uses
+  %i.hb = icmp samesign ugt i32 %8, 31
   br i1 %i.hb, label %bb.ay, label %vlv_dphy_param_init.exit
 
 bb.ay:                                            ; preds = %bb.ax
@@ -316,11 +323,11 @@ bb.az:                                            ; preds = %bb.ay
 
 __drm_to_dev.exit130.i:                           ; preds = %bb.az, %bb.ay
   %i.hf = phi ptr [ %i.he, %bb.az ], [ null, %bb.ay ]
-  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.hf, i32 noundef 2, ptr noundef nonnull @.str.35, i32 noundef %i.ha) #9
+  call void (ptr, ptr, i32, ptr, ...) @__drm_dev_dbg(ptr noundef null, ptr noundef %i.hf, i32 noundef 2, ptr noundef nonnull @.str.35, i32 noundef %8) #9
   br label %vlv_dphy_param_init.exit
 
 vlv_dphy_param_init.exit:                         ; preds = %bb.ax, %__drm_to_dev.exit130.i
-  %.0113.i = phi i32 [ 31, %__drm_to_dev.exit130.i ], [ %i.ha, %bb.ax ] ; 2 uses
+  %.0113.i = phi i32 [ 31, %__drm_to_dev.exit130.i ], [ %8, %bb.ax ] ; 2 uses
   %i.hg = shl nuw nsw i32 %.1.i, 24
   %i.hh = shl nuw nsw i32 %.0113.i, 16
   %i.hi = or disjoint i32 %i.hh, %i.hg

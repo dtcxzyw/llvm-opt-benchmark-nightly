@@ -204,13 +204,14 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8
   %.0.v.i = select i1 %.not.i2, ptr %i.f, ptr %i.d
   %.0.i = ptrtoint ptr %.0.v.i to i64
-  %i.g = sub i64 %i.b, %.0.i
+  %i.g = sub i64 %i.b, %.0.i                      ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !65
   %.not.i3 = icmp eq ptr %i.i, null
-  %..i = select i1 %.not.i3, i64 20, i64 18
-  %i.j = udiv i64 %i.g, %..i
-  %i.k = trunc i64 %i.j to i32
+  %3 = udiv i64 %i.g, 20
+  %i.j = udiv i64 %i.g, 18
+  %4 = select i1 %.not.i3, i64 %3, i64 %i.j
+  %i.k = trunc i64 %4 to i32
   ret i32 %i.k
 }
 

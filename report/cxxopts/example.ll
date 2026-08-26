@@ -205,9 +205,11 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.k = load i64, ptr %i.j, align 8, !tbaa !18
   %.fr = freeze i64 %i.k
-  %.not.not = icmp eq i64 %.fr, 0                 ; 2 uses
-  %spec.select = select i1 %i.c, i32 -2147483648, i32 2147483647 ; 4 uses
-  %i.l = select i1 %.not.not, i32 10, i32 16      ; 4 uses
+  %.not.not = icmp eq i64 %.fr, 0                 ; 3 uses
+  %spec.select = select i1 %i.c, i32 -2147483648, i32 2147483647 ; 3 uses
+  %4 = lshr i32 %spec.select, 4
+  %5 = select i1 %.not.not, i32 214748364, i32 %4 ; 2 uses
+  %i.l = select i1 %.not.not, i32 10, i32 16      ; 2 uses
   br i1 %.not.not, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.d
@@ -220,8 +222,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.split.us
   %i.o = zext nneg i8 %i.n to i32                 ; 2 uses
-  %4 = udiv i32 %spec.select, %i.l
-  %i.p = icmp ugt i32 %.07178.us, %4
+  %i.p = icmp ugt i32 %.07178.us, %5
   br i1 %i.p, label %.split80.us, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -287,7 +288,6 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.f, %bb.e, %.lr.ph.split
   %.sink = phi i32 [ -48, %.lr.ph.split ], [ -87, %bb.e ], [ -55, %bb.f ]
   %i.af = add nsw i32 %.sink, %i.w                ; 2 uses
-  %5 = udiv i32 %spec.select, %i.l
   %i.ag = icmp ugt i32 %.07178, %5
   br i1 %i.ag, label %.split80.us, label %bb.m
 

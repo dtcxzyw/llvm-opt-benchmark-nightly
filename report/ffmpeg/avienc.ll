@@ -67,7 +67,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !9    ; 11 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !26   ; 80 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !26   ; 88 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
@@ -470,10 +470,10 @@ bb.ah:                                            ; preds = %._crit_edge432, %bb
   %i.ga = load i32, ptr %i.b, align 4, !tbaa !78
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %i.ga) #9
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef 0) #9
-  %i.gb = getelementptr inbounds nuw i8, ptr %i.eq, i64 72 ; 6 uses
+  %i.gb = getelementptr inbounds nuw i8, ptr %i.eq, i64 72 ; 8 uses
   %i.gc = load i32, ptr %i.gb, align 8, !tbaa !73 ; 3 uses
   %i.gd = icmp sgt i32 %i.gc, 65535
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.eq, i64 76 ; 6 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.eq, i64 76 ; 8 uses
   %.pre435 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !74 ; 2 uses
   %i.ge = icmp sgt i32 %.pre435, 65535
   %or.cond511 = select i1 %i.gd, i1 true, i1 %i.ge
@@ -682,11 +682,12 @@ bb.bj:                                            ; preds = %bb.bi
   %i.ja = ashr exact i64 %sext, 32
   %i.jb = ashr i64 %i.iz, 32
   %i.jc = call i32 @av_reduce(ptr noundef nonnull %i.d, ptr noundef nonnull %i.e, i64 noundef %i.ja, i64 noundef %i.jb, i64 noundef 65535) #9 ; 0 uses
-  %i.jd = getelementptr inbounds nuw i8, ptr %i.eq, i64 96 ; 2 uses
+  %i.jd = getelementptr inbounds nuw i8, ptr %i.eq, i64 96 ; 3 uses
   %i.je = load i32, ptr %i.jd, align 8, !tbaa !90
-  %.off = add i32 %i.je, -2
-  %switch = icmp ult i32 %.off, 4
-  %spec.select346 = select i1 %switch, i32 2, i32 1 ; 4 uses
+  %.fr = freeze i32 %i.je
+  %.off = add i32 %.fr, -2
+  %switch = icmp ult i32 %.off, 4                 ; 2 uses
+  %spec.select346 = select i1 %switch, i32 2, i32 1 ; 3 uses
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef 0) #9
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef 0) #9
   %i.jf = getelementptr inbounds nuw i8, ptr %i.eo, i64 32
@@ -715,36 +716,36 @@ bb.bj:                                            ; preds = %bb.bi
   %i.jw = load i32, ptr %.phi.trans.insert, align 4, !tbaa !74
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %i.jw) #9
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %spec.select346) #9
-  br label %bb.bk
+  br i1 %switch, label %bb.bk, label %.split
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bn
-  %.0284391.a = phi i32 [ 0, %bb.bj ], [ %i.ke, %bb.bn ] ; 3 uses
+  %.0284391.a = phi i32 [ %i.ke, %bb.bn ], [ 0, %bb.bj ] ; 3 uses
   %i.jx = load i32, ptr %i.jd, align 8, !tbaa !90
   switch i32 %i.jx, label %bb.bn [
-    i32 2, label %bb.bl
-    i32 4, label %bb.bl
-    i32 3, label %bb.bm
-    i32 5, label %bb.bm
+    i32 2, label %bb.bm
+    i32 4, label %bb.bm
+    i32 3, label %bb.bl
+    i32 5, label %bb.bl
   ]
 
 bb.bl:                                            ; preds = %bb.bk, %bb.bk
-  %1 = icmp ne i32 %.0284391.a, 0
+  %1 = icmp eq i32 %.0284391.a, 0
   br label %bb.bn
 
 bb.bm:                                            ; preds = %bb.bk, %bb.bk
-  %2 = icmp eq i32 %.0284391.a, 0
+  %2 = icmp ne i32 %.0284391.a, 0
   br label %bb.bn
 
-bb.bn:                                            ; preds = %bb.bk, %bb.bm, %bb.bl
-  %.0.shrunk.a = phi i1 [ %1, %bb.bl ], [ %2, %bb.bm ], [ false, %bb.bk ]
+bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.bk
+  %.0.shrunk.a = phi i1 [ %2, %bb.bm ], [ %1, %bb.bl ], [ false, %bb.bk ]
   %.0.a = zext i1 %.0.shrunk.a to i32
   %i.jy = load i32, ptr %.phi.trans.insert, align 4, !tbaa !74
-  %i.jz = sdiv i32 %i.jy, %spec.select346
+  %i.jz = sdiv i32 %i.jy, 2
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %i.jz) #9
   %i.ka = load i32, ptr %i.gb, align 8, !tbaa !73
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %i.ka) #9
   %i.kb = load i32, ptr %.phi.trans.insert, align 4, !tbaa !74
-  %i.kc = sdiv i32 %i.kb, %spec.select346
+  %i.kc = sdiv i32 %i.kb, 2
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %i.kc) #9
   %i.kd = load i32, ptr %i.gb, align 8, !tbaa !73
   call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %i.kd) #9
@@ -756,7 +757,44 @@ bb.bn:                                            ; preds = %bb.bk, %bb.bm, %bb.
   %exitcond421.not = icmp eq i32 %i.ke, %spec.select346
   br i1 %exitcond421.not, label %bb.bo, label %bb.bk, !llvm.loop !91
 
-bb.bo:                                            ; preds = %bb.bn
+.split:                                           ; preds = %bb.bj, %8
+  %.0284391 = phi i32 [ %13, %8 ], [ 0, %bb.bj ]  ; 3 uses
+  %3 = load i32, ptr %i.jd, align 8, !tbaa !90
+  switch i32 %3, label %8 [
+    i32 2, label %4
+    i32 4, label %4
+    i32 3, label %6
+    i32 5, label %6
+  ]
+
+4:                                                ; preds = %.split, %.split
+  %5 = icmp ne i32 %.0284391, 0
+  br label %8
+
+6:                                                ; preds = %.split, %.split
+  %7 = icmp eq i32 %.0284391, 0
+  br label %8
+
+8:                                                ; preds = %.split, %6, %4
+  %.0.shrunk = phi i1 [ %5, %4 ], [ %7, %6 ], [ false, %.split ]
+  %.0 = zext i1 %.0.shrunk to i32
+  %9 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !74
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %9) #9
+  %10 = load i32, ptr %i.gb, align 8, !tbaa !73
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %10) #9
+  %11 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !74
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %11) #9
+  %12 = load i32, ptr %i.gb, align 8, !tbaa !73
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %12) #9
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef 0) #9
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef 0) #9
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef 0) #9
+  call void @avio_wl32(ptr noundef nonnull %i.i, i32 noundef %.0) #9
+  %13 = add nuw nsw i32 %.0284391, 1              ; 2 uses
+  %exitcond424.not = icmp eq i32 %13, %spec.select346
+  br i1 %exitcond424.not, label %bb.bo, label %.split, !llvm.loop !91
+
+bb.bo:                                            ; preds = %8, %bb.bn
   %sext339 = shl i64 %i.iw, 32
   %i.kf = ashr exact i64 %sext339, 32
   call void @ff_end_tag(ptr noundef nonnull %i.i, i64 noundef %i.kf) #9

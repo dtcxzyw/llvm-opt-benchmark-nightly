@@ -205,8 +205,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #19
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 5 uses
   %i.k = load i32, ptr %i.j, align 4, !tbaa !97   ; 2 uses
-  %i.l = icmp sgt i32 %i.k, 1                     ; 4 uses
-  %i.m = select i1 %i.l, i32 16, i32 8            ; 17 uses
+  %i.l = icmp sgt i32 %i.k, 1                     ; 5 uses
+  %i.m = select i1 %i.l, i32 16, i32 8            ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.h, i8 0, i64 12, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #19
@@ -222,9 +222,11 @@ bb.a:
   %i.v = shl nsw i32 %i.u, 1                      ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !95   ; 2 uses
-  %i.y = add nsw i32 %i.t, -1
-  %i.z = sdiv i32 %i.y, %i.m
-  %i.aa = add nsw i32 %i.z, 1                     ; 3 uses
+  %i.y = add nsw i32 %i.t, -1                     ; 2 uses
+  %8 = sdiv i32 %i.y, 16
+  %i.z = sdiv i32 %i.y, 8
+  %9 = select i1 %i.l, i32 %8, i32 %i.z
+  %i.aa = add nsw i32 %9, 1                       ; 3 uses
   %i.ab = load i32, ptr %1, align 4, !tbaa !149   ; 2 uses
   %i.ac = icmp sgt i32 %i.ab, 0
   br i1 %i.ac, label %bb.b, label %.loopexit334

@@ -205,8 +205,8 @@ bb.a:
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !63   ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !12
-  %i.x = icmp sgt i64 %i.w, -1                    ; 2 uses
-  %spec.select = select i1 %i.x, i64 2, i64 1     ; 7 uses
+  %i.x = icmp sgt i64 %i.w, -1                    ; 6 uses
+  %spec.select = select i1 %i.x, i64 2, i64 1     ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 6 uses
   %.not = icmp eq ptr %1, null                    ; 2 uses
   %i.z = getelementptr inbounds i8, ptr %1, i64 -8
@@ -297,8 +297,9 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.bk = xor i64 %.0320, -1
   %i.bl = add i64 %spec.select, %i.bk
-  %i.bm = add i64 %i.bl, %.0322
-  %i.bn = sdiv i64 %i.bm, %spec.select            ; 2 uses
+  %i.bm = add i64 %i.bl, %.0322                   ; 2 uses
+  %i.bn = sdiv i64 %i.bm, 2                       ; 2 uses
+  %6 = select i1 %i.x, i64 %i.bn, i64 %i.bm
   store ptr %4, ptr %i.b, align 16, !tbaa !66
   br i1 %i.x, label %.lr.ph, label %.preheader368
 
@@ -417,7 +418,7 @@ bb.q:                                             ; preds = %bb.o, %bb.p
 
 ._crit_edge374:                                   ; preds = %._crit_edge, %.preheader366
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #11, !srcloc !71
-  %i.dd = add nsw i64 %.0313385, %i.bn            ; 3 uses
+  %i.dd = add nsw i64 %.0313385, %6               ; 3 uses
   %i.de = tail call i64 @llvm.smin.i64(i64 %.0322, i64 %i.dd) ; 3 uses
   %i.df = icmp slt i64 %.0313385, %i.de
   br i1 %i.df, label %.lr.ph377, label %._crit_edge378
@@ -480,8 +481,9 @@ bb.t:                                             ; preds = %.preheader367, %._c
   %i.ef = load i64, ptr %i.ee, align 8, !tbaa !13 ; 2 uses
   %i.eg = load i64, ptr %i.ed, align 8, !tbaa !13 ; 4 uses
   %i.eh = add i64 %i.cg, %i.ef
-  %i.ei = sub i64 %i.eh, %i.eg
-  %i.ej = sdiv i64 %i.ei, %spec.select            ; 3 uses
+  %i.ei = sub i64 %i.eh, %i.eg                    ; 2 uses
+  %i.ej = sdiv i64 %i.ei, 2
+  %7 = select i1 %i.x, i64 %i.ej, i64 %i.ei       ; 3 uses
   %i.ek = icmp slt i64 %i.eg, %i.ef
   br i1 %i.ek, label %.lr.ph393, label %._crit_edge394
 
@@ -500,7 +502,7 @@ bb.t:                                             ; preds = %.preheader367, %._c
   %.idx352.us.us = shl nsw i64 %.1310391.us.us, 6
   %i.el = getelementptr inbounds nuw i8, ptr %gep396, i64 %.idx352.us.us
   %i.em = atomicrmw xchg ptr %i.el, i64 0 seq_cst, align 8 ; 0 uses
-  %i.en = add nsw i64 %.1314390.us.us, %i.ej      ; 2 uses
+  %i.en = add nsw i64 %.1314390.us.us, %7         ; 2 uses
   %i.eo = add nuw nsw i64 %.1310391.us.us, 1
   %i.ep = load i64, ptr %i.ee, align 8, !tbaa !13
   %i.eq = icmp slt i64 %i.en, %i.ep
@@ -525,7 +527,7 @@ bb.t:                                             ; preds = %.preheader367, %._c
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #11, !srcloc !80
   %i.ew = load i64, ptr %i.ee, align 8, !tbaa !13
   %i.ex = sub nsw i64 %i.ew, %.1314390
-  %. = tail call i64 @llvm.smin.i64(i64 %i.ex, i64 %i.ej)
+  %. = tail call i64 @llvm.smin.i64(i64 %i.ex, i64 %7)
   %i.ey = load double, ptr %i.s, align 8, !tbaa !64
   %i.ez = load atomic i64, ptr %i.er seq_cst, align 8, !tbaa !50
   %i.fa = inttoptr i64 %i.ez to ptr
@@ -540,7 +542,7 @@ bb.u:                                             ; preds = %._crit_edge388
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge388, %bb.u
-  %i.ff = add nsw i64 %.1314390, %i.ej            ; 2 uses
+  %i.ff = add nsw i64 %.1314390, %7               ; 2 uses
   %i.fg = add nuw nsw i64 %.1310391, 1
   %i.fh = load i64, ptr %i.ee, align 8, !tbaa !13
   %i.fi = icmp slt i64 %i.ff, %i.fh
@@ -591,8 +593,9 @@ bb.z:                                             ; preds = %.lr.ph410, %bb.x, %
   %i.ga = getelementptr inbounds [8 x i8], ptr %2, i64 %.2.us
   %i.gb = load i64, ptr %i.ga, align 8, !tbaa !13 ; 3 uses
   %i.gc = add i64 %i.cg, %i.fz
-  %i.gd = sub i64 %i.gc, %i.gb
-  %i.ge = sdiv i64 %i.gd, %spec.select            ; 2 uses
+  %i.gd = sub i64 %i.gc, %i.gb                    ; 2 uses
+  %i.ge = sdiv i64 %i.gd, 2
+  %8 = select i1 %i.x, i64 %i.ge, i64 %i.gd       ; 2 uses
   %i.gf = icmp slt i64 %i.gb, %i.fz
   br i1 %i.gf, label %.lr.ph402.us, label %._crit_edge403.split.us.us
 
@@ -611,7 +614,7 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph402.u
   %.2311400.us.us = phi i64 [ 0, %.lr.ph402.us ], [ %i.gq, %bb.aa ] ; 2 uses
   %.2315399.us.us = phi i64 [ %i.gb, %.lr.ph402.us ], [ %i.gp, %bb.aa ] ; 3 uses
   %i.gh = sub nsw i64 %i.gg, %.2315399.us.us
-  %.359.us.us = tail call i64 @llvm.smin.i64(i64 %i.gh, i64 %i.ge)
+  %.359.us.us = tail call i64 @llvm.smin.i64(i64 %i.gh, i64 %8)
   %i.gi = load double, ptr %i.s, align 8, !tbaa !64
   %.idx348.us.us = shl nuw nsw i64 %.2311400.us.us, 6
   %i.gj = getelementptr inbounds nuw i8, ptr %gep405.us, i64 %.idx348.us.us
@@ -620,7 +623,7 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph402.u
   %i.gm = mul nsw i64 %.2315399.us.us, %i.q
   %i.gn = getelementptr [8 x i8], ptr %i.fv, i64 %i.gm
   %i.go = tail call i32 @dgemm_kernel(i64 noundef %.1307, i64 noundef %.359.us.us, i64 noundef %.0305, double noundef %i.gi, ptr noundef %3, ptr noundef %i.gl, ptr noundef %i.gn, i64 noundef %i.q) #11 ; 0 uses
-  %i.gp = add nsw i64 %.2315399.us.us, %i.ge      ; 2 uses
+  %i.gp = add nsw i64 %.2315399.us.us, %8         ; 2 uses
   %i.gq = add nuw nsw i64 %.2311400.us.us, 1
   %i.gr = load i64, ptr %i.fy, align 8, !tbaa !13 ; 2 uses
   %i.gs = icmp slt i64 %i.gp, %i.gr
@@ -634,8 +637,9 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph402.u
   %i.gw = getelementptr inbounds [8 x i8], ptr %2, i64 %.2
   %i.gx = load i64, ptr %i.gw, align 8, !tbaa !13 ; 3 uses
   %i.gy = add i64 %i.cg, %i.gv
-  %i.gz = sub i64 %i.gy, %i.gx
-  %i.ha = sdiv i64 %i.gz, %spec.select            ; 2 uses
+  %i.gz = sub i64 %i.gy, %i.gx                    ; 2 uses
+  %i.ha = sdiv i64 %i.gz, 2
+  %9 = select i1 %i.x, i64 %i.ha, i64 %i.gz       ; 2 uses
   %i.hb = icmp slt i64 %i.gx, %i.gv
   br i1 %i.hb, label %.lr.ph402, label %._crit_edge403.split
 
@@ -648,7 +652,7 @@ bb.ab:                                            ; preds = %.lr.ph402, %bb.ab
   %.2311400 = phi i64 [ 0, %.lr.ph402 ], [ %i.hn, %bb.ab ] ; 2 uses
   %.2315399 = phi i64 [ %i.gx, %.lr.ph402 ], [ %i.hm, %bb.ab ] ; 3 uses
   %i.hd = sub nsw i64 %i.hc, %.2315399
-  %.359 = tail call i64 @llvm.smin.i64(i64 %i.hd, i64 %i.ha)
+  %.359 = tail call i64 @llvm.smin.i64(i64 %i.hd, i64 %9)
   %i.he = load double, ptr %i.s, align 8, !tbaa !64
   %.idx348 = shl nuw nsw i64 %.2311400, 6
   %i.hf = getelementptr inbounds nuw i8, ptr %gep405, i64 %.idx348 ; 2 uses
@@ -659,7 +663,7 @@ bb.ab:                                            ; preds = %.lr.ph402, %bb.ab
   %i.hk = tail call i32 @dgemm_kernel(i64 noundef %.1307, i64 noundef %.359, i64 noundef %.0305, double noundef %i.he, ptr noundef %3, ptr noundef %i.hh, ptr noundef %i.hj, i64 noundef %i.q) #11 ; 0 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #11, !srcloc !84
   %i.hl = atomicrmw xchg ptr %i.hf, i64 0 seq_cst, align 8 ; 0 uses
-  %i.hm = add nsw i64 %.2315399, %i.ha            ; 2 uses
+  %i.hm = add nsw i64 %.2315399, %9               ; 2 uses
   %i.hn = add nuw nsw i64 %.2311400, 1
   %i.ho = load i64, ptr %i.gu, align 8, !tbaa !13 ; 2 uses
   %i.hp = icmp slt i64 %i.hm, %i.ho

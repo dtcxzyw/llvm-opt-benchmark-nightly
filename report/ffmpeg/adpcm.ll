@@ -205,11 +205,12 @@ bytestream2_get_le32.exit318.i:                   ; preds = %bb.k, %bb.l
   %.0.i317.i = phi i32 [ %i.aw, %bb.l ], [ 0, %bb.k ] ; 2 uses
   %i.ax = srem i32 %.0.i317.i, 28
   %i.ay = sub nsw i32 %.0.i317.i, %i.ax
-  %i.az = add nsw i32 %i.k, -12
+  %i.az = add nsw i32 %i.k, -12                   ; 2 uses
   %i.ba = icmp eq i32 %i.o, 2
-  %4 = select i1 %i.ba, i32 30, i32 15
-  %i.bb = sdiv i32 %i.az, %4
-  %i.bc = mul nuw nsw i32 %i.bb, 28
+  %4 = sdiv i32 %i.az, 30
+  %i.bb = sdiv i32 %i.az, 15
+  %5 = select i1 %i.ba, i32 %4, i32 %i.bb
+  %i.bc = mul nuw nsw i32 %5, 28
   br label %bb.bi
 
 bb.m:                                             ; preds = %.thread323.i, %bb.c

@@ -206,16 +206,17 @@ bb.ac:                                            ; preds = %bb.ab
   %i.df = load ptr, ptr %.054.i, align 8, !tbaa !6914
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !229
   %i.dh = icmp eq i8 %i.dg, 4                     ; 2 uses
-  %7 = select i1 %i.dh, i32 4, i32 8
   %i.di = getelementptr inbounds nuw i8, ptr %.054.i, i64 8
   %i.dj = load i32, ptr %i.di, align 8, !tbaa !6916
-  %i.dk = add nsw i32 %i.dj, -8
-  %i.dl = sdiv i32 %i.dk, %7                      ; 2 uses
-  %i.dm = icmp sgt i32 %i.dl, 0
+  %i.dk = add nsw i32 %i.dj, -8                   ; 2 uses
+  %7 = sdiv i32 %i.dk, 4
+  %i.dl = sdiv i32 %i.dk, 8
+  %8 = select i1 %i.dh, i32 %7, i32 %i.dl         ; 2 uses
+  %i.dm = icmp sgt i32 %8, 0
   br i1 %i.dm, label %.lr.ph85.preheader.i, label %fts5IndexTombstoneAddToPage.exit.i
 
 .lr.ph85.preheader.i:                             ; preds = %bb.ac
-  %wide.trip.count100.i = zext nneg i32 %i.dl to i64
+  %wide.trip.count100.i = zext nneg i32 %8 to i64
   br label %.lr.ph85.i
 
 .lr.ph85.i:                                       ; preds = %.thread.i, %.lr.ph85.preheader.i

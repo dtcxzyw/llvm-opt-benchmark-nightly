@@ -205,7 +205,6 @@ bb.f:                                             ; preds = %bb.d, %bb.d, %bb.d,
   br label %bb.o
 
 bb.g:                                             ; preds = %bb.a
-  %11 = select i1 %5, i32 2, i32 4                ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !345 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 40
@@ -227,15 +226,18 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i: ; preds = %bb
   %i.ap = load ptr, ptr %i.al, align 8
   %spec.select.i.i.i.i = select i1 %i.ao, ptr %i.al, ptr %i.ap
   %.0.i.i.i15.i = load i64, ptr %spec.select.i.i.i.i, align 8, !tbaa !361
-  %i.aq = trunc i64 %.0.i.i.i15.i to i32          ; 2 uses
-  %12 = add nsw i32 %11, -1
-  %13 = and i32 %12, %i.aq
-  %.not13.i = icmp eq i32 %13, 0
+  %i.aq = trunc i64 %.0.i.i.i15.i to i32          ; 4 uses
+  %11 = srem i32 %i.aq, 2
+  %12 = sdiv i32 %i.aq, 2
+  %13 = srem i32 %i.aq, 4
+  %14 = sdiv i32 %i.aq, 4
+  %15 = select i1 %5, i32 %11, i32 %13
+  %.not13.i = icmp eq i32 %15, 0
   br i1 %.not13.i, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
 
 _ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i
-  %14 = sdiv i32 %i.aq, %11                       ; 3 uses
-  %i.ar = add nsw i32 %14, 255
+  %16 = select i1 %5, i32 %12, i32 %14            ; 3 uses
+  %i.ar = add nsw i32 %16, 255
   %spec.select.i = icmp ult i32 %i.ar, 511
   br i1 %spec.select.i, label %bb.h, label %_ZL23isScaledConstantInRangeN4llvm7SDValueEiiiRi.exit.thread
 
@@ -269,9 +271,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %spec.select = tail call i32 @llvm.abs.i32(i32 %14, i1 true)
+  %spec.select = tail call i32 @llvm.abs.i32(i32 %16, i1 true)
   %i.bj = load ptr, ptr %i.a, align 8, !tbaa !332 ; 2 uses
-  %i.bk = lshr i32 %14, 23
+  %i.bk = lshr i32 %16, 23
   %i.bl = and i32 %i.bk, 256
   %i.bm = or disjoint i32 %i.bl, %spec.select
   %i.bn = zext nneg i32 %i.bm to i64              ; 2 uses

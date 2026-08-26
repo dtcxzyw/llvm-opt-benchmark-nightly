@@ -204,22 +204,23 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.cq
 
 bb.w:                                             ; preds = %bb.u
-  %.not397 = icmp samesign ult i64 %i.dn, 16
-  %i.dy = select i1 %.not397, i32 1, i32 32       ; 2 uses
+  %.not397 = icmp samesign ult i64 %i.dn, 16      ; 2 uses
+  %i.dy = select i1 %.not397, i32 1, i32 32
   %i.dz = getelementptr inbounds nuw i8, ptr %i.h, i64 20
   store i32 %i.dy, ptr %i.dz, align 4
-  %i.ea = load i32, ptr %i.bg, align 4
-  %i.eb = sdiv i32 %i.ea, %i.dy                   ; 4 uses
+  %i.ea = load i32, ptr %i.bg, align 4            ; 2 uses
+  %i.eb = sdiv i32 %i.ea, 32
+  %10 = select i1 %.not397, i32 %i.ea, i32 %i.eb  ; 4 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  store i32 %i.eb, ptr %i.ec, align 8
-  %i.ed = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.eb, i1 false)
+  store i32 %10, ptr %i.ec, align 8
+  %i.ed = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %10, i1 false)
   %i.ee = getelementptr inbounds nuw i8, ptr %i.h, i64 12
   store i32 %i.ed, ptr %i.ee, align 4
-  %i.ef = icmp slt i32 %i.eb, 512
+  %i.ef = icmp slt i32 %10, 512
   br i1 %i.ef, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %spec.select, ptr noundef nonnull @.str.1, i32 noundef 1563, ptr noundef nonnull @__func__.qcow2_do_open, ptr noundef nonnull @.str.158, i32 noundef %i.eb) #20
+  call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %spec.select, ptr noundef nonnull @.str.1, i32 noundef 1563, ptr noundef nonnull @__func__.qcow2_do_open, ptr noundef nonnull @.str.158, i32 noundef %10) #20
   br label %bb.cq
 
 bb.y:                                             ; preds = %bb.w

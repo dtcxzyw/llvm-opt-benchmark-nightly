@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.i = tail call i32 @tvb_get_letohl(ptr noundef %0, i32 noundef 0) ; 2 uses
-  %.not = icmp eq i32 %i.i, 1213023054            ; 8 uses
+  %.not = icmp eq i32 %i.i, 1213023054            ; 9 uses
   switch i32 %i.i, label %bb.av [
     i32 1751999342, label %bb.c
     i32 1213023054, label %bb.c
@@ -297,8 +297,7 @@ bb.l:                                             ; preds = %bb.j
 
 .lr.ph:                                           ; preds = %.preheader359
   %i.av = getelementptr i8, ptr %1, i64 416
-  %i.aw = select i1 %.not, i32 4, i32 8           ; 2 uses
-  %4 = add nsw i32 %i.aw, -1
+  %i.aw = select i1 %.not, i32 3, i32 7
   %. = select i1 %.not, i32 2, i32 4              ; 3 uses
   %.513 = select i1 %.not, i32 4, i32 8
   br label %bb.n
@@ -623,12 +622,13 @@ bb.v:                                             ; preds = %bb.q, %bb.p, %bb.r,
   %i.id = load i32, ptr @hf_mbim_bulk_ndp_length, align 4
   %i.ie = call ptr @proto_tree_add_item_ret_uint(ptr noundef %i.bb, i32 noundef %i.id, ptr noundef %0, i32 noundef %i.ic, i32 noundef 2, i32 noundef -2147483648, ptr noundef nonnull %i.a)
   %i.if = load i32, ptr %i.a, align 4             ; 2 uses
-  %i.ig = and i32 %i.if, %4
+  %i.ig = and i32 %i.if, %i.aw
   %.not300 = icmp eq i32 %i.ig, 0
   br i1 %.not300, label %bb.x, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.ih = call ptr (ptr, ptr, ptr, ptr, ...) @expert_add_info_format(ptr noundef %1, ptr noundef %i.ie, ptr noundef nonnull @ei_mbim_alignment_error, ptr noundef nonnull @.str.2773, i32 noundef %i.aw) ; 0 uses
+  %4 = select i1 %.not, i32 4, i32 8
+  %i.ih = call ptr (ptr, ptr, ptr, ptr, ...) @expert_add_info_format(ptr noundef %1, ptr noundef %i.ie, ptr noundef nonnull @ei_mbim_alignment_error, ptr noundef nonnull @.str.2773, i32 noundef %4) ; 0 uses
   br label %.sink.split
 
 bb.x:                                             ; preds = %bb.v

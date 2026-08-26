@@ -205,8 +205,8 @@ bb.ip:                                            ; preds = %bb.io
   store ptr %i.djh, ptr %i.akc, align 8, !tbaa !147
   store ptr %i.djh, ptr %i.akd, align 16, !tbaa !147
   store ptr %i.djh, ptr %i.ake, align 8, !tbaa !147
-  %.not.i651 = icmp eq i32 %i.djc, 0              ; 2 uses
-  %i.dji = select i1 %.not.i651, i32 2, i32 3     ; 5 uses
+  %.not.i651 = icmp eq i32 %i.djc, 0              ; 4 uses
+  %i.dji = select i1 %.not.i651, i32 2, i32 3     ; 2 uses
   %i.djj = mul i32 %i.akg, %i.dji
   %i.djk = sext i32 %i.djj to i64
   %i.djl = shl nsw i64 %i.djk, 2
@@ -235,9 +235,11 @@ bb.ip:                                            ; preds = %bb.io
   %.096105.i = phi i32 [ undef, %.preheader37.lr.ph.i ], [ %.197.lcssa.i, %._crit_edge103.i ] ; 2 uses
   %i.djw = load ptr, ptr %i.ajl, align 8, !tbaa !328 ; 3 uses
   %i.djx = trunc i64 %indvars.iv169.i to i32
-  %i.djy = sub i32 %i.x, %i.djx                   ; 3 uses
-  %i.djz = srem i32 %i.djy, %i.dji
-  %i.dka = mul nsw i32 %i.djz, %i.akf
+  %i.djy = sub i32 %i.x, %i.djx                   ; 4 uses
+  %3 = srem i32 %i.djy, 2
+  %i.djz = srem i32 %i.djy, 3
+  %4 = select i1 %.not.i651, i32 %3, i32 %i.djz
+  %i.dka = mul nsw i32 %4, %i.akf
   %i.dkb = sext i32 %i.dka to i64
   %invariant.gep.i655 = getelementptr [4 x i8], ptr %i.djw, i64 %i.dkb ; 4 uses
   %i.dkc = getelementptr inbounds nuw i8, ptr %invariant.gep.i655, i64 12 ; 2 uses
@@ -251,9 +253,11 @@ bb.ip:                                            ; preds = %bb.io
   %gep.3.i = getelementptr [4 x i8], ptr %invariant.gep.i655, i64 %i.djv
   %i.dkf = getelementptr inbounds nuw i8, ptr %gep.3.i, i64 12 ; 2 uses
   store ptr %i.dkf, ptr %gep44.3.i, align 8, !tbaa !147
-  %i.dkg = add i32 %i.djy, 1
-  %i.dkh = srem i32 %i.dkg, %i.dji
-  %i.dki = mul nsw i32 %i.dkh, %i.akf
+  %i.dkg = add i32 %i.djy, 1                      ; 2 uses
+  %5 = srem i32 %i.dkg, 2
+  %i.dkh = srem i32 %i.dkg, 3
+  %6 = select i1 %.not.i651, i32 %5, i32 %i.dkh
+  %i.dki = mul nsw i32 %6, %i.akf
   %i.dkj = sext i32 %i.dki to i64
   %invariant.gep.i655.1 = getelementptr [4 x i8], ptr %i.djw, i64 %i.dkj ; 4 uses
   %i.dkk = getelementptr inbounds nuw i8, ptr %invariant.gep.i655.1, i64 12
@@ -281,7 +285,7 @@ bb.ip:                                            ; preds = %bb.io
 
 .preheader34.i.2:                                 ; preds = %.preheader37.i
   %i.dks = add i32 %i.djy, 2
-  %i.dkt = srem i32 %i.dks, %i.dji
+  %i.dkt = srem i32 %i.dks, 3
   %i.dku = mul nsw i32 %i.dkt, %i.akf
   %i.dkv = sext i32 %i.dku to i64
   %invariant.gep.i655.2 = getelementptr [4 x i8], ptr %i.djw, i64 %i.dkv ; 4 uses
@@ -684,8 +688,8 @@ bb.ox:                                            ; preds = %bb.ow
   store ptr %i.fnb, ptr %i.ajn, align 8, !tbaa !147
   store ptr %i.fnb, ptr %i.ajo, align 16, !tbaa !147
   store ptr %i.fnb, ptr %i.ajp, align 8, !tbaa !147
-  %.not.i674 = icmp eq i32 %i.fna, 0              ; 2 uses
-  %i.fnc = select i1 %.not.i674, i32 2, i32 3     ; 5 uses
+  %.not.i674 = icmp eq i32 %i.fna, 0              ; 4 uses
+  %i.fnc = select i1 %.not.i674, i32 2, i32 3     ; 2 uses
   %i.fnd = mul i32 %i.ajs, %i.fnc
   %i.fne = sext i32 %i.fnd to i64
   %i.fnf = shl nsw i64 %i.fne, 2
@@ -707,9 +711,11 @@ bb.ox:                                            ; preds = %bb.ow
   %.0106340.i = phi i32 [ 0, %.preheader275.lr.ph.i ], [ %i.hra, %bb.vc ] ; 4 uses
   %i.fnn = load ptr, ptr %i.ajl, align 8, !tbaa !328 ; 3 uses
   %i.fno = lshr exact i32 %.0106340.i, 1
-  %i.fnp = sub nsw i32 %i.x, %i.fno               ; 3 uses
-  %i.fnq = srem i32 %i.fnp, %i.fnc
-  %i.fnr = mul nsw i32 %i.fnq, %i.ajr
+  %i.fnp = sub nsw i32 %i.x, %i.fno               ; 4 uses
+  %7 = srem i32 %i.fnp, 2
+  %i.fnq = srem i32 %i.fnp, 3
+  %8 = select i1 %.not.i674, i32 %7, i32 %i.fnq
+  %i.fnr = mul nsw i32 %8, %i.ajr
   %i.fns = sext i32 %i.fnr to i64
   %invariant.gep.i680 = getelementptr [4 x i8], ptr %i.fnn, i64 %i.fns ; 4 uses
   %i.fnt = getelementptr inbounds nuw i8, ptr %invariant.gep.i680, i64 12 ; 2 uses
@@ -723,9 +729,11 @@ bb.ox:                                            ; preds = %bb.ow
   %gep.3.i683 = getelementptr [4 x i8], ptr %invariant.gep.i680, i64 %i.fnm
   %i.fnw = getelementptr inbounds nuw i8, ptr %gep.3.i683, i64 12 ; 2 uses
   store ptr %i.fnw, ptr %gep283.3.i, align 8, !tbaa !147
-  %i.fnx = add i32 %i.fnp, 1
-  %i.fny = srem i32 %i.fnx, %i.fnc
-  %i.fnz = mul nsw i32 %i.fny, %i.ajr
+  %i.fnx = add i32 %i.fnp, 1                      ; 2 uses
+  %9 = srem i32 %i.fnx, 2
+  %i.fny = srem i32 %i.fnx, 3
+  %10 = select i1 %.not.i674, i32 %9, i32 %i.fny
+  %i.fnz = mul nsw i32 %10, %i.ajr
   %i.foa = sext i32 %i.fnz to i64
   %invariant.gep.i680.1 = getelementptr [4 x i8], ptr %i.fnn, i64 %i.foa ; 4 uses
   %i.fob = getelementptr inbounds nuw i8, ptr %invariant.gep.i680.1, i64 12
@@ -750,7 +758,7 @@ bb.ox:                                            ; preds = %bb.ow
 
 .preheader272.i.2:                                ; preds = %.preheader275.i
   %i.fog = add i32 %i.fnp, 2
-  %i.foh = srem i32 %i.fog, %i.fnc
+  %i.foh = srem i32 %i.fog, 3
   %i.foi = mul nsw i32 %i.foh, %i.ajr
   %i.foj = sext i32 %i.foi to i64
   %invariant.gep.i680.2 = getelementptr [4 x i8], ptr %i.fnn, i64 %i.foj ; 4 uses
@@ -1153,8 +1161,8 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !87
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 25196
   %i.f = load i32, ptr %i.e, align 4, !tbaa !137
-  %.not = icmp eq i32 %i.f, 0                     ; 2 uses
-  %i.g = select i1 %.not, i32 2, i32 3            ; 4 uses
+  %.not = icmp eq i32 %i.f, 0                     ; 4 uses
+  %i.g = select i1 %.not, i32 2, i32 3
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 4 uses
   store i32 0, ptr %i.h, align 8, !tbaa !327
   %i.i = load ptr, ptr %1, align 8, !tbaa !201    ; 2 uses
@@ -1276,15 +1284,19 @@ bb.a:
   %i.bk = add i64 %i.bj, %i.o
   %i.bl = load ptr, ptr %1, align 8, !tbaa !201   ; 3 uses
   %i.bm = trunc i64 %indvars.iv808 to i32
-  %i.bn = sub i32 %4, %i.bm                       ; 3 uses
-  %i.bo = srem i32 %i.bn, %i.g
-  %i.bp = mul nsw i32 %i.bo, %i.j
+  %i.bn = sub i32 %4, %i.bm                       ; 4 uses
+  %10 = srem i32 %i.bn, 2
+  %i.bo = srem i32 %i.bn, 3
+  %11 = select i1 %.not, i32 %10, i32 %i.bo
+  %i.bp = mul nsw i32 %11, %i.j
   %i.bq = sext i32 %i.bp to i64
   %i.br = getelementptr inbounds [2 x i8], ptr %i.bl, i64 %i.bq ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 6 ; 40 uses
-  %i.bt = add i32 %i.bn, 1
-  %i.bu = srem i32 %i.bt, %i.g
-  %i.bv = mul nsw i32 %i.bu, %i.j
+  %i.bt = add i32 %i.bn, 1                        ; 2 uses
+  %12 = srem i32 %i.bt, 2
+  %i.bu = srem i32 %i.bt, 3
+  %13 = select i1 %.not, i32 %12, i32 %i.bu
+  %i.bv = mul nsw i32 %13, %i.j
   %i.bw = sext i32 %i.bv to i64
   %i.bx = getelementptr inbounds [2 x i8], ptr %i.bl, i64 %i.bw
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 6 ; 6 uses
@@ -1292,7 +1304,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.preheader554
   %i.bz = add i32 %i.bn, 2
-  %i.ca = srem i32 %i.bz, %i.g
+  %i.ca = srem i32 %i.bz, 3
   %i.cb = mul nsw i32 %i.ca, %i.j
   %i.cc = sext i32 %i.cb to i64
   %i.cd = getelementptr inbounds [2 x i8], ptr %i.bl, i64 %i.cc
@@ -1695,8 +1707,8 @@ bb.a:
   store ptr %i.r, ptr %i.u, align 16, !tbaa !147
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   store ptr %i.r, ptr %i.v, align 8, !tbaa !147
-  %.not = icmp eq i32 %i.e, 0                     ; 2 uses
-  %i.w = select i1 %.not, i32 2, i32 3            ; 5 uses
+  %.not = icmp eq i32 %i.e, 0                     ; 4 uses
+  %i.w = select i1 %.not, i32 2, i32 3            ; 2 uses
   %i.x = icmp slt i32 %i.k, 9
   %.not162 = icmp eq ptr %i.m, null
   %i.y = add nsw i32 %3, 6                        ; 5 uses
@@ -1785,9 +1797,11 @@ bb.a:
   %.0140743 = phi i32 [ undef, %.preheader620.lr.ph ], [ %.1141.lcssa, %._crit_edge741 ] ; 2 uses
   %.0154742 = phi i32 [ 0, %.preheader620.lr.ph ], [ %i.dji, %._crit_edge741 ] ; 7 uses
   %i.cb = load ptr, ptr %i.q, align 8, !tbaa !328 ; 3 uses
-  %i.cc = sub nsw i32 %4, %.0154742               ; 3 uses
-  %i.cd = srem i32 %i.cc, %i.w
-  %i.ce = mul nsw i32 %i.cd, %i.y
+  %i.cc = sub nsw i32 %4, %.0154742               ; 4 uses
+  %7 = srem i32 %i.cc, 2
+  %i.cd = srem i32 %i.cc, 3
+  %8 = select i1 %.not, i32 %7, i32 %i.cd
+  %i.ce = mul nsw i32 %8, %i.y
   %i.cf = sext i32 %i.ce to i64
   %invariant.gep = getelementptr [4 x i8], ptr %i.cb, i64 %i.cf ; 4 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 12 ; 2 uses
@@ -1801,9 +1815,11 @@ bb.a:
   %gep.3 = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.ca
   %i.cj = getelementptr inbounds nuw i8, ptr %gep.3, i64 12 ; 2 uses
   store ptr %i.cj, ptr %gep632.3, align 8, !tbaa !147
-  %i.ck = add i32 %i.cc, 1
-  %i.cl = srem i32 %i.ck, %i.w
-  %i.cm = mul nsw i32 %i.cl, %i.y
+  %i.ck = add i32 %i.cc, 1                        ; 2 uses
+  %9 = srem i32 %i.ck, 2
+  %i.cl = srem i32 %i.ck, 3
+  %10 = select i1 %.not, i32 %9, i32 %i.cl
+  %i.cm = mul nsw i32 %10, %i.y
   %i.cn = sext i32 %i.cm to i64
   %invariant.gep.1 = getelementptr [4 x i8], ptr %i.cb, i64 %i.cn ; 4 uses
   %i.co = getelementptr inbounds nuw i8, ptr %invariant.gep.1, i64 12
@@ -1828,7 +1844,7 @@ bb.a:
 
 .preheader617.2:                                  ; preds = %.preheader620
   %i.ct = add i32 %i.cc, 2
-  %i.cu = srem i32 %i.ct, %i.w
+  %i.cu = srem i32 %i.ct, 3
   %i.cv = mul nsw i32 %i.cu, %i.y
   %i.cw = sext i32 %i.cv to i64
   %invariant.gep.2 = getelementptr [4 x i8], ptr %i.cb, i64 %i.cw ; 4 uses
@@ -2231,8 +2247,8 @@ bb.a:
   store ptr %i.q, ptr %i.t, align 16, !tbaa !148
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   store ptr %i.q, ptr %i.u, align 8, !tbaa !148
-  %.not = icmp eq i32 %i.e, 0                     ; 2 uses
-  %i.v = select i1 %.not, i32 2, i32 3            ; 5 uses
+  %.not = icmp eq i32 %i.e, 0                     ; 4 uses
+  %i.v = select i1 %.not, i32 2, i32 3            ; 2 uses
   %i.w = icmp slt i32 %i.k, 9
   %.not175 = icmp eq ptr %i.m, null
   %i.x = add nsw i32 %3, 6                        ; 5 uses
@@ -2321,9 +2337,11 @@ bb.a:
   %.0153756 = phi i32 [ undef, %.preheader633.lr.ph ], [ %.1154.lcssa, %._crit_edge754 ] ; 2 uses
   %.0167755 = phi i32 [ 0, %.preheader633.lr.ph ], [ %i.dma, %._crit_edge754 ] ; 10 uses
   %i.ca = load ptr, ptr %1, align 8, !tbaa !201   ; 3 uses
-  %i.cb = sub nsw i32 %4, %.0167755               ; 3 uses
-  %i.cc = srem i32 %i.cb, %i.v
-  %i.cd = mul nsw i32 %i.cc, %i.x
+  %i.cb = sub nsw i32 %4, %.0167755               ; 4 uses
+  %7 = srem i32 %i.cb, 2
+  %i.cc = srem i32 %i.cb, 3
+  %8 = select i1 %.not, i32 %7, i32 %i.cc
+  %i.cd = mul nsw i32 %8, %i.x
   %i.ce = sext i32 %i.cd to i64
   %invariant.gep = getelementptr [2 x i8], ptr %i.ca, i64 %i.ce ; 4 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %invariant.gep, i64 6 ; 2 uses
@@ -2337,9 +2355,11 @@ bb.a:
   %gep.3 = getelementptr [2 x i8], ptr %invariant.gep, i64 %i.bz
   %i.ci = getelementptr inbounds nuw i8, ptr %gep.3, i64 6 ; 2 uses
   store ptr %i.ci, ptr %gep645.3, align 8, !tbaa !148
-  %i.cj = add i32 %i.cb, 1
-  %i.ck = srem i32 %i.cj, %i.v
-  %i.cl = mul nsw i32 %i.ck, %i.x
+  %i.cj = add i32 %i.cb, 1                        ; 2 uses
+  %9 = srem i32 %i.cj, 2
+  %i.ck = srem i32 %i.cj, 3
+  %10 = select i1 %.not, i32 %9, i32 %i.ck
+  %i.cl = mul nsw i32 %10, %i.x
   %i.cm = sext i32 %i.cl to i64
   %invariant.gep.1 = getelementptr [2 x i8], ptr %i.ca, i64 %i.cm ; 4 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %invariant.gep.1, i64 6
@@ -2368,7 +2388,7 @@ bb.a:
 
 .preheader630.2:                                  ; preds = %.preheader633
   %i.cu = add i32 %i.cb, 2
-  %i.cv = srem i32 %i.cu, %i.v
+  %i.cv = srem i32 %i.cu, 3
   %i.cw = mul nsw i32 %i.cv, %i.x
   %i.cx = sext i32 %i.cw to i64
   %invariant.gep.2 = getelementptr [2 x i8], ptr %i.ca, i64 %i.cx ; 4 uses

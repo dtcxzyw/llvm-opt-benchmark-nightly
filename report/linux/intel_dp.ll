@@ -205,15 +205,16 @@ bb.a:
 define dso_local range(i32 -214748364, 214748365) i32 @intel_dp_link_symbol_clock(i32 noundef %0) local_unnamed_addr #2 align 16 prefalign(16) {
 bb.a:
   %i.a = mul i32 %0, 10                           ; 2 uses
-  %i.b = icmp sgt i32 %0, 999999
-  %i.c = select i1 %i.b, i32 32, i32 10           ; 2 uses
+  %i.b = icmp sgt i32 %0, 999999                  ; 2 uses
+  %i.c = select i1 %i.b, i32 16, i32 5            ; 2 uses
   %i.d = icmp sgt i32 %i.a, 0
-  %1 = lshr exact i32 %i.c, 1                     ; 2 uses
-  %i.e = sub nsw i32 0, %1
-  %.pn.p = select i1 %i.d, i32 %1, i32 %i.e
-  %.pn = add i32 %.pn.p, %i.a
-  %i.f = sdiv i32 %.pn, %i.c
-  ret i32 %i.f
+  %i.e = sub nsw i32 0, %i.c
+  %.pn.p = select i1 %i.d, i32 %i.c, i32 %i.e
+  %.pn = add i32 %.pn.p, %i.a                     ; 2 uses
+  %1 = sdiv i32 %.pn, 32
+  %i.f = sdiv i32 %.pn, 10
+  %2 = select i1 %i.b, i32 %1, i32 %i.f
+  ret i32 %2
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong

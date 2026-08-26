@@ -205,8 +205,8 @@ _ZN4llvm3MVT11getVectorVTES0_j.exit:
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 344
   %i.i = load i8, ptr %i.h, align 8, !range !18
   %i.j = trunc nuw i8 %i.i to i1
-  %i.k = select i1 %i.g, i1 %i.j, i1 false        ; 4 uses
-  %spec.select.i = select i1 %i.k, i32 64, i32 128 ; 4 uses
+  %i.k = select i1 %i.g, i1 %i.j, i1 false        ; 5 uses
+  %spec.select.i = select i1 %i.k, i32 64, i32 128 ; 3 uses
   %.sroa.0.0.i = select i1 %i.k, i16 50, i16 51   ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !231
@@ -410,7 +410,7 @@ _ZN4llvm12SelectionDAG9getSelectERKNS_5SDLocENS_3EVTENS_7SDValueES5_S5_NS_11SDNo
   store i32 0, ptr %i.bv, align 8, !tbaa !225
   %i.bw = getelementptr inbounds nuw i8, ptr %21, i64 12 ; 2 uses
   store i32 128, ptr %i.bw, align 4, !tbaa !226
-  %24 = add nsw i32 %spec.select.i, -1
+  %.v = select i1 %i.k, i32 56, i32 120
   %i.bx = select i1 %i.k, i32 3, i32 4
   br label %bb.x
 
@@ -627,7 +627,7 @@ _ZN4llvm11SmallVectorIPNS_8ConstantELj128EED2Ev.exit: ; preds = %_ZN4llvm11Small
 bb.x:                                             ; preds = %_ZN4llvm12SelectionDAG9getSelectERKNS_5SDLocENS_3EVTENS_7SDValueES5_S5_NS_11SDNodeFlagsE.exit, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit
   %.0194253 = phi i32 [ 0, %_ZN4llvm12SelectionDAG9getSelectERKNS_5SDLocENS_3EVTENS_7SDValueES5_S5_NS_11SDNodeFlagsE.exit ], [ %i.fe, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit ] ; 3 uses
   %i.et = shl i32 %.0194253, 3
-  %i.eu = and i32 %i.et, %24
+  %i.eu = and i32 %i.et, %.v
   %i.ev = lshr i32 %.0194253, %i.bx
   %i.ew = add nuw nsw i32 %i.eu, %i.ev            ; 2 uses
   %i.ex = load i32, ptr %i.bv, align 8, !tbaa !225 ; 2 uses

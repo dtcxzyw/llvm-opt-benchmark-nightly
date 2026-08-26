@@ -189,13 +189,14 @@ bb.o:                                             ; preds = %bb.n
 
 _ZN4absl12lts_2026052618debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS4_jRj.exit: ; preds = %bb.n
   %i.bo = trunc nuw nsw i64 %i.bh to i32          ; 3 uses
-  %i.bp = sub nsw i32 %i.bo, %.073100148
+  %i.bp = sub nsw i32 %i.bo, %.073100148          ; 2 uses
   %i.bq = icmp eq i32 %.073100148, 0
-  %3 = select i1 %i.bq, i32 700, i32 2
-  %4 = udiv i32 %i.bp, %3                         ; 2 uses
+  %3 = udiv i32 %i.bp, 700
+  %4 = lshr i32 %i.bp, 1
+  %5 = select i1 %i.bq, i32 %3, i32 %4            ; 2 uses
   %i.br = add nuw nsw i32 %.0101147, 1            ; 5 uses
-  %i.bs = udiv i32 %4, %i.br
-  %i.bt = add nuw i32 %i.bs, %4                   ; 3 uses
+  %i.bs = udiv i32 %5, %i.br
+  %i.bt = add nuw i32 %i.bs, %5                   ; 3 uses
   %i.bu = icmp ugt i32 %i.bt, 455
   br i1 %i.bu, label %.lr.ph, label %._crit_edge
 

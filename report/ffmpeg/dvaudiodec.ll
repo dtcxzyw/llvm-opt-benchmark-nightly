@@ -69,39 +69,46 @@ bb.f:                                             ; preds = %bb.c, %bb.e, %bb.b
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 368
   store ptr null, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !39
   %i.r = load i32, ptr %i.j, align 4, !tbaa !33
-  %.not = icmp eq i32 %i.r, 0
-  %1 = select i1 %.not, i32 15, i32 18            ; 2 uses
-  %.rhs.trunc = trunc nuw nsw i32 %1 to i16
-  %i.s = trunc nuw nsw i32 %1 to i16
-  %.rhs.trunc41 = mul nuw nsw i16 %i.s, 3         ; 2 uses
+  %.not = icmp eq i32 %i.r, 0                     ; 3 uses
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %2 = load i32, ptr %i.o, align 4, !tbaa !35
-  %3 = trunc i32 %2 to i16
-  %4 = add i16 %3, 2
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  %i.s = trunc i32 %2 to i16
+  %3 = add i16 %i.s, 2
+  %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %3, i64 0
+  %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.g
-  %indvars.iv = phi i64 [ 0, %bb.f ], [ %indvars.iv.next, %bb.g ] ; 3 uses
-  %.lhs.trunc = trunc i64 %indvars.iv to i16      ; 4 uses
-  %6 = urem i16 %.lhs.trunc, 3
-  %narrow = mul nuw nsw i16 %6, 21
-  %7 = udiv i16 %.lhs.trunc, 3
-  %narrow46 = mul nuw nsw i16 %7, 9
-  %narrow47 = add nuw nsw i16 %narrow, %narrow46
-  %8 = udiv i16 %.lhs.trunc, %.rhs.trunc
-  %.lhs.trunc38 = trunc i16 %8 to i8
-  %9 = urem i8 %.lhs.trunc38, 3
-  %.zext39 = zext nneg i8 %9 to i16
-  %.lhs.trunc40 = add nuw i16 %narrow47, %.zext39
-  %10 = urem i16 %.lhs.trunc40, %.rhs.trunc41
-  %narrow48 = mul nuw nsw i16 %10, 80
-  %11 = udiv i16 %.lhs.trunc, %.rhs.trunc41
-  %12 = mul i16 %4, %11
-  %13 = or disjoint i16 %narrow48, 8
-  %14 = add i16 %13, %12
-  %i.t = getelementptr inbounds nuw [2 x i8], ptr %5, i64 %indvars.iv
-  store i16 %14, ptr %i.t, align 2, !tbaa !40
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+bb.g:                                             ; preds = %bb.g, %bb.f
+  %indvars.iv = phi i64 [ 0, %bb.f ], [ %indvars.iv.next, %bb.g ] ; 2 uses
+  %vec.ind = phi <8 x i16> [ <i16 0, i16 1, i16 2, i16 3, i16 4, i16 5, i16 6, i16 7>, %bb.f ], [ %vec.ind.next, %bb.g ] ; 6 uses
+  %vec.ind.frozen = freeze <8 x i16> %vec.ind     ; 2 uses
+  %4 = udiv <8 x i16> %vec.ind.frozen, splat (i16 3) ; 2 uses
+  %5 = mul <8 x i16> %4, splat (i16 3)
+  %.decomposed = sub <8 x i16> %vec.ind.frozen, %5
+  %6 = mul nuw nsw <8 x i16> %.decomposed, splat (i16 21)
+  %7 = mul nuw nsw <8 x i16> %4, splat (i16 9)
+  %8 = add nuw nsw <8 x i16> %6, %7
+  %9 = udiv <8 x i16> %vec.ind, splat (i16 15)
+  %10 = udiv <8 x i16> %vec.ind, splat (i16 18)
+  %11 = select i1 %.not, <8 x i16> %9, <8 x i16> %10
+  %12 = trunc nuw <8 x i16> %11 to <8 x i8>
+  %13 = urem <8 x i8> %12, splat (i8 3)
+  %14 = zext nneg <8 x i8> %13 to <8 x i16>
+  %15 = add nuw <8 x i16> %8, %14                 ; 2 uses
+  %16 = urem <8 x i16> %15, splat (i16 45)
+  %17 = urem <8 x i16> %15, splat (i16 54)
+  %18 = select i1 %.not, <8 x i16> %16, <8 x i16> %17
+  %19 = mul nuw nsw <8 x i16> %18, splat (i16 80)
+  %20 = udiv <8 x i16> %vec.ind, splat (i16 45)
+  %21 = udiv <8 x i16> %vec.ind, splat (i16 54)
+  %22 = select i1 %.not, <8 x i16> %20, <8 x i16> %21
+  %23 = mul <8 x i16> %broadcast.splat, %22
+  %24 = add <8 x i16> %23, splat (i16 8)
+  %25 = add <8 x i16> %24, %19
+  %i.t = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv
+  store <8 x i16> %25, ptr %i.t, align 2, !tbaa !40
+  %indvars.iv.next = add nuw i64 %indvars.iv, 8   ; 2 uses
+  %vec.ind.next = add <8 x i16> %vec.ind, splat (i16 8)
   %exitcond.not = icmp eq i64 %indvars.iv.next, 2000
   br i1 %exitcond.not, label %.loopexit, label %bb.g, !llvm.loop !42
 
@@ -116,9 +123,9 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !9    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !44   ; 6 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !46   ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !46
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !48
   %i.g = load i32, ptr %i.b, align 4, !tbaa !30
   %i.h = icmp slt i32 %i.f, %i.g
   br i1 %i.h, label %bb.n, label %bb.b
@@ -156,14 +163,14 @@ dv_get_audio_sample_count.exit:                   ; preds = %bb.c, %bb.d, %bb.e
   %i.s = zext nneg i8 %i.r to i32
   %.0.i = add nuw nsw i32 %.pn.i, %i.s
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 2 uses
-  store i32 %.0.i, ptr %i.t, align 8, !tbaa !47
+  store i32 %.0.i, ptr %i.t, align 8, !tbaa !49
   %i.u = tail call i32 @ff_get_buffer(ptr noundef nonnull %0, ptr noundef %1, i32 noundef 0) #5 ; 2 uses
   %i.v = icmp slt i32 %i.u, 0
   br i1 %i.v, label %bb.n, label %bb.f
 
 bb.f:                                             ; preds = %dv_get_audio_sample_count.exit
-  %i.w = load ptr, ptr %1, align 8, !tbaa !52     ; 3 uses
-  %i.x = load i32, ptr %i.t, align 8, !tbaa !47   ; 5 uses
+  %i.w = load ptr, ptr %1, align 8, !tbaa !54     ; 3 uses
+  %i.x = load i32, ptr %i.t, align 8, !tbaa !49   ; 5 uses
   %i.y = icmp sgt i32 %i.x, 0
   br i1 %i.y, label %.lr.ph, label %._crit_edge
 
@@ -225,7 +232,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.split
   %indvars.iv.next45.1 = add nuw nsw i64 %indvars.iv44, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.g, !llvm.loop !53
+  br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.g, !llvm.loop !55
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %dv_audio_12to16.exit39
   %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %dv_audio_12to16.exit39 ] ; 2 uses
@@ -324,7 +331,7 @@ dv_audio_12to16.exit39:                           ; preds = %dv_audio_12to16.exi
   %.1 = getelementptr inbounds nuw i8, ptr %.03240, i64 4
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !53
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split, !llvm.loop !55
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.g
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -422,16 +429,18 @@ attributes #5 = { nounwind }
 !39 = !{!12, !12, i64 0}
 !40 = !{!41, !41, i64 0}
 !41 = !{!"short", !7, i64 0}
-!42 = distinct !{!42, !43}
+!42 = distinct !{!42, !43, !44, !45}
 !43 = !{!"llvm.loop.mustprogress"}
-!44 = !{!45, !16, i64 24}
-!45 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
-!46 = !{!45, !6, i64 32}
-!47 = !{!48, !6, i64 112}
-!48 = !{!"AVFrame", !7, i64 0, !7, i64 64, !49, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !50, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !51, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
-!49 = !{!"p2 omnipotent char", !28, i64 0}
-!50 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
-!51 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
-!52 = !{!16, !16, i64 0}
-!53 = distinct !{!53, !43}
+!44 = !{!"llvm.loop.isvectorized", i32 1}
+!45 = !{!"llvm.loop.unroll.runtime.disable"}
+!46 = !{!47, !16, i64 24}
+!47 = !{!"AVPacket", !23, i64 0, !15, i64 8, !15, i64 16, !16, i64 24, !6, i64 32, !6, i64 36, !6, i64 40, !25, i64 48, !6, i64 56, !15, i64 64, !15, i64 72, !12, i64 80, !23, i64 88, !17, i64 96}
+!48 = !{!47, !6, i64 32}
+!49 = !{!50, !6, i64 112}
+!50 = !{!"AVFrame", !7, i64 0, !7, i64 64, !51, i64 96, !6, i64 104, !6, i64 108, !6, i64 112, !6, i64 116, !6, i64 120, !17, i64 124, !15, i64 136, !15, i64 144, !17, i64 152, !6, i64 160, !12, i64 168, !6, i64 176, !6, i64 180, !7, i64 184, !52, i64 248, !6, i64 256, !27, i64 264, !6, i64 272, !6, i64 276, !6, i64 280, !6, i64 284, !6, i64 288, !6, i64 292, !6, i64 296, !15, i64 304, !53, i64 312, !6, i64 320, !23, i64 328, !23, i64 336, !15, i64 344, !15, i64 352, !15, i64 360, !15, i64 368, !12, i64 376, !20, i64 384, !15, i64 408, !6, i64 416}
+!51 = !{!"p2 omnipotent char", !28, i64 0}
+!52 = !{!"p2 _ZTS11AVBufferRef", !28, i64 0}
+!53 = !{!"p1 _ZTS12AVDictionary", !12, i64 0}
+!54 = !{!16, !16, i64 0}
+!55 = distinct !{!55, !43}
 end_hunk_0

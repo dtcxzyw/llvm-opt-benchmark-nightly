@@ -205,9 +205,10 @@ bb.ac:                                            ; preds = %bb.h
   call void @_ZN4llvm16SGPRSpillBuilder7prepareEv(ptr noundef nonnull align 8 dereferenceable(136) %23)
   %i.hw = load i32, ptr %i.aw, align 8, !tbaa !912 ; 2 uses
   %i.hx = load i8, ptr %i.al, align 8, !tbaa !910, !range !200, !noundef !193
-  %i.hy = trunc nuw i8 %i.hx to i1                ; 2 uses
-  %i.hz = select i1 %i.hy, i32 31, i32 63         ; 2 uses
-  %i.ia = add i32 %i.hz, %i.hw
+  %i.hy = trunc nuw i8 %i.hx to i1                ; 3 uses
+  %i.hz = select i1 %i.hy, i32 32, i32 64
+  %29 = add i32 %i.hw, -1
+  %i.ia = add i32 %29, %i.hz
   %i.ib = select i1 %i.hy, i32 5, i32 6           ; 3 uses
   %i.ic = lshr i32 %i.ia, %i.ib                   ; 2 uses
   %.not222 = icmp eq i32 %i.ic, 0
@@ -225,6 +226,7 @@ bb.ac:                                            ; preds = %bb.h
   %i.il = select i1 %i.ig, i32 67108864, i32 0
   %i.im = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.in = getelementptr inbounds nuw i8, ptr %14, i64 16
+  %.v = select i1 %i.hy, i64 31, i64 63
   %i.io = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.ip = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.iq = getelementptr inbounds nuw i8, ptr %12, i64 8
@@ -246,7 +248,6 @@ bb.ac:                                            ; preds = %bb.h
   %i.jf = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.jg = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.jh = icmp ne ptr %4, null
-  %29 = zext nneg i32 %i.hz to i64
   br label %bb.ad
 
 ._crit_edge221:                                   ; preds = %.critedge.thread, %bb.ac
@@ -336,7 +337,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   store i32 %i.il, ptr %14, align 8, !alias.scope !994
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.kg, ptr noundef nonnull align 8 dereferenceable(1065) %i.kf, ptr noundef nonnull align 8 dereferenceable(32) %14) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #27
-  %i.kr = and i64 %indvars.iv233, %29
+  %i.kr = and i64 %.v, %indvars.iv233
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #27
   store i32 1, ptr %13, align 8, !alias.scope !997
   store ptr null, ptr %i.io, align 8, !tbaa !509, !alias.scope !997
@@ -739,9 +740,10 @@ bb.a:
   call void @_ZN4llvm16SGPRSpillBuilder7prepareEv(ptr noundef nonnull align 8 dereferenceable(136) %14)
   %i.ap = load i32, ptr %i.am, align 8, !tbaa !912 ; 2 uses
   %i.aq = load i8, ptr %i.ab, align 8, !tbaa !910, !range !200, !noundef !193
-  %i.ar = trunc nuw i8 %i.aq to i1                ; 2 uses
-  %i.as = select i1 %i.ar, i32 31, i32 63         ; 3 uses
-  %i.at = add i32 %i.as, %i.ap
+  %i.ar = trunc nuw i8 %i.aq to i1                ; 3 uses
+  %i.as = select i1 %i.ar, i32 32, i32 64
+  %15 = add i32 %i.ap, -1
+  %i.at = add i32 %15, %i.as
   %i.au = select i1 %i.ar, i32 5, i32 6           ; 5 uses
   %i.av = lshr i32 %i.at, %i.au                   ; 3 uses
   %.not124 = icmp eq i32 %i.av, 0
@@ -765,6 +767,7 @@ bb.a:
   %i.bf = select i1 %i.ba, i32 67108864, i32 0    ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %12, i64 4 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
+  %.v = select i1 %i.ar, i32 31, i32 63           ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
@@ -773,7 +776,7 @@ bb.a:
   %i.bn = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %9, i64 4 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 2 uses
-  %i.bq = zext nneg i32 %i.as to i64
+  %i.bq = zext nneg i32 %.v to i64
   br label %bb.b
 
 .loopexit112:                                     ; preds = %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit._crit_edge, %_ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEERKNS_10MIMetadataERKNS_11MCInstrDescENS_8RegisterE.exit.peel._crit_edge, %bb.b
@@ -866,7 +869,7 @@ _ZN4llvm7BuildMIERNS_17MachineBasicBlockENS_26MachineInstrBundleIteratorINS_12Ma
   store i32 %i.bf, ptr %12, align 8, !alias.scope !1265
   call void @_ZN4llvm12MachineInstr10addOperandERNS_15MachineFunctionERKNS_14MachineOperandE(ptr noundef nonnull align 8 dereferenceable(80) %i.cy, ptr noundef nonnull align 8 dereferenceable(1065) %i.cx, ptr noundef nonnull align 8 dereferenceable(32) %12) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #27
-  %i.dj = and i32 %i.cd, %i.as
+  %i.dj = and i32 %i.cd, %.v
   %i.dk = zext nneg i32 %i.dj to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #27
   store i32 1, ptr %11, align 8, !alias.scope !1268

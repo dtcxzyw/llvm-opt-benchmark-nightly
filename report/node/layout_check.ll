@@ -205,61 +205,125 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 8              ; 2 uses
   %i.g = icmp eq i32 %i.f, -17958194
   %i.h = icmp eq i32 %i.f, -822415874
-  %spec.select.i = or i1 %i.g, %i.h               ; 2 uses
-  %.neg = select i1 %spec.select.i, i32 -56, i32 -72
-  %i.i = select i1 %spec.select.i, i64 68, i64 80 ; 2 uses
+  %spec.select.i = or i1 %i.g, %i.h
+  %spec.select.i.fr = freeze i1 %spec.select.i    ; 3 uses
+  %.neg = select i1 %spec.select.i.fr, i32 -56, i32 -72 ; 2 uses
+  %i.i = select i1 %spec.select.i.fr, i64 68, i64 80 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 232
-  %i.k = load ptr, ptr %i.j, align 8, !noalias !106 ; 3 uses
+  %i.k = load ptr, ptr %i.j, align 8, !noalias !106 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 240
   %i.m = load ptr, ptr %i.l, align 8, !noalias !109 ; 2 uses
   %i.n = ptrtoint ptr %i.m to i64
   %i.o = ptrtoint ptr %i.k to i64
   %i.p = sub i64 %i.n, %i.o
-  %i.q = ashr exact i64 %i.p, 3
+  %i.q = ashr exact i64 %i.p, 3                   ; 2 uses
   %.not7487 = icmp eq ptr %i.m, %i.k
-  br i1 %.not7487, label %._crit_edge.i.i, label %.lr.ph.a
+  br i1 %.not7487, label %._crit_edge.i.i, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %bb.a, %bb.m
-  %.sroa.8.089 = phi i64 [ %i.av, %bb.m ], [ 0, %bb.a ]
-  %.sroa.460.088 = phi ptr [ %i.au, %bb.m ], [ %i.k, %bb.a ] ; 2 uses
-  %i.r = load ptr, ptr %.sroa.460.088, align 8    ; 11 uses
+.lr.ph:                                           ; preds = %bb.a
+  br i1 %spec.select.i.fr, label %.lr.ph.split.us, label %.lr.ph.a
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %30
+  %.sroa.8.091.us = phi i64 [ %32, %30 ], [ 0, %.lr.ph ]
+  %.sroa.460.090.us = phi ptr [ %31, %30 ], [ %i.k, %.lr.ph ] ; 2 uses
+  %3 = load ptr, ptr %.sroa.460.090.us, align 8   ; 12 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 40
+  %5 = load i32, ptr %4, align 8                  ; 2 uses
+  %6 = add i32 %5, %.neg                          ; 3 uses
+  %7 = icmp slt i32 %6, 0
+  br i1 %7, label %bb.b, label %8
+
+8:                                                ; preds = %.lr.ph.split.us
+  %9 = urem i32 %6, 68
+  %.not.us = icmp eq i32 %9, 0
+  br i1 %.not.us, label %10, label %bb.d
+
+10:                                               ; preds = %8
+  %11 = zext nneg i32 %6 to i64
+  %12 = getelementptr inbounds nuw i8, ptr %3, i64 128
+  %13 = load i32, ptr %12, align 8                ; 2 uses
+  %14 = zext i32 %13 to i64
+  %15 = mul nuw nsw i64 %i.i, %14
+  %.not43.us = icmp eq i64 %15, %11
+  br i1 %.not43.us, label %16, label %bb.f
+
+16:                                               ; preds = %10
+  %17 = getelementptr inbounds nuw i8, ptr %3, i64 112
+  %18 = load i64, ptr %17, align 8
+  %19 = getelementptr inbounds nuw i8, ptr %3, i64 96
+  %20 = load i64, ptr %19, align 8                ; 2 uses
+  %21 = icmp ugt i64 %18, %20
+  br i1 %21, label %22, label %27
+
+22:                                               ; preds = %16
+  %.not44.us = icmp eq i64 %20, 0
+  br i1 %.not44.us, label %23, label %bb.j
+
+23:                                               ; preds = %22
+  %24 = getelementptr inbounds nuw i8, ptr %3, i64 132
+  %25 = load i32, ptr %24, align 4
+  %26 = and i32 %25, 4
+  %.not45.us = icmp eq i32 %26, 0
+  br i1 %.not45.us, label %27, label %bb.j
+
+27:                                               ; preds = %23, %16
+  %28 = getelementptr inbounds nuw i8, ptr %3, i64 124
+  %29 = load i32, ptr %28, align 4
+  %.not46.us = icmp ult i32 %29, 8
+  br i1 %.not46.us, label %30, label %bb.l
+
+30:                                               ; preds = %27
+  %31 = getelementptr inbounds nuw i8, ptr %.sroa.460.090.us, i64 8
+  %32 = add nuw nsw i64 %.sroa.8.091.us, 1        ; 2 uses
+  %.not76.us = icmp eq i64 %32, %i.q
+  br i1 %.not76.us, label %._crit_edge.i.i, label %.lr.ph.split.us
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.m
+  %.sroa.8.089 = phi i64 [ %i.av, %bb.m ], [ 0, %.lr.ph ]
+  %.sroa.460.088 = phi ptr [ %i.au, %bb.m ], [ %i.k, %.lr.ph ] ; 2 uses
+  %i.r = load ptr, ptr %.sroa.460.088, align 8    ; 12 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 40
   %i.t = load i32, ptr %i.s, align 8              ; 2 uses
-  %i.u = add i32 %i.t, %.neg                      ; 2 uses
+  %i.u = add i32 %i.t, %.neg                      ; 3 uses
   %i.v = icmp slt i32 %i.u, 0
   br i1 %i.v, label %bb.b, label %bb.c
 
-bb.b:                                             ; preds = %.lr.ph.a
-  %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 56
+bb.b:                                             ; preds = %.lr.ph.a, %.lr.ph.split.us
+  %.us-phi = phi ptr [ %3, %.lr.ph.split.us ], [ %i.r, %.lr.ph.a ]
+  %i.w = getelementptr inbounds nuw i8, ptr %.us-phi, i64 56
   %i.x = tail call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.11, ptr noundef nonnull align 8 dereferenceable(32) %i.w)
   br label %.thread67
 
 bb.c:                                             ; preds = %.lr.ph.a
-  %3 = zext nneg i32 %i.u to i64                  ; 2 uses
-  %4 = urem i64 %3, %i.i
-  %.not = icmp eq i64 %4, 0
+  %33 = urem i32 %i.u, 80
+  %.not = icmp eq i32 %33, 0
   br i1 %.not, label %bb.e, label %bb.d
 
-bb.d:                                             ; preds = %bb.c
-  %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 56
+bb.d:                                             ; preds = %bb.c, %8
+  %.us-phi104 = phi ptr [ %3, %8 ], [ %i.r, %bb.c ]
+  %.us-phi105 = phi i32 [ %5, %8 ], [ %i.t, %bb.c ]
+  %i.y = getelementptr inbounds nuw i8, ptr %.us-phi104, i64 56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  store i32 %i.t, ptr %i.a, align 4
+  store i32 %.us-phi105, ptr %i.a, align 4
   %i.z = call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEjEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.12, ptr noundef nonnull align 8 dereferenceable(32) %i.y, ptr noundef nonnull align 4 dereferenceable(4) %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   br label %.thread67
 
 bb.e:                                             ; preds = %bb.c
+  %34 = zext nneg i32 %i.u to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %i.r, i64 128
   %i.ab = load i32, ptr %i.aa, align 8            ; 2 uses
   %i.ac = zext i32 %i.ab to i64
   %i.ad = mul nuw nsw i64 %i.i, %i.ac
-  %.not43 = icmp eq i64 %i.ad, %3
+  %.not43 = icmp eq i64 %i.ad, %34
   br i1 %.not43, label %bb.g, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.r, i64 56
+bb.f:                                             ; preds = %bb.e, %10
+  %.us-phi94 = phi i32 [ %13, %10 ], [ %i.ab, %bb.e ]
+  %.us-phi95 = phi ptr [ %3, %10 ], [ %i.r, %bb.e ]
+  %i.ae = getelementptr inbounds nuw i8, ptr %.us-phi95, i64 56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
-  store i32 %i.ab, ptr %i.b, align 4
+  store i32 %.us-phi94, ptr %i.b, align 4
   %i.af = call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEjEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.13, ptr noundef nonnull align 8 dereferenceable(32) %i.ae, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   br label %.thread67
@@ -283,8 +347,9 @@ bb.i:                                             ; preds = %bb.h
   %.not45 = icmp eq i32 %i.an, 0
   br i1 %.not45, label %bb.k, label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.r, i64 56
+bb.j:                                             ; preds = %bb.h, %bb.i, %22, %23
+  %.us-phi98 = phi ptr [ %3, %22 ], [ %3, %23 ], [ %i.r, %bb.i ], [ %i.r, %bb.h ]
+  %i.ao = getelementptr inbounds nuw i8, ptr %.us-phi98, i64 56
   %i.ap = tail call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.14, ptr noundef nonnull align 8 dereferenceable(32) %i.ao)
   br label %.thread67
 
@@ -294,8 +359,9 @@ bb.k:                                             ; preds = %bb.i, %bb.g
   %.not46 = icmp ult i32 %i.ar, 8
   br i1 %.not46, label %bb.m, label %bb.l
 
-bb.l:                                             ; preds = %bb.k
-  %i.as = getelementptr inbounds nuw i8, ptr %i.r, i64 56
+bb.l:                                             ; preds = %bb.k, %27
+  %.us-phi101 = phi ptr [ %3, %27 ], [ %i.r, %bb.k ]
+  %i.as = getelementptr inbounds nuw i8, ptr %.us-phi101, i64 56
   %i.at = tail call noundef zeroext i1 @_ZN4LIEF5MachO13LayoutChecker5errorIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEbPKcDpRKT_(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull @.str.15, ptr noundef nonnull align 8 dereferenceable(32) %i.as)
   br label %.thread67
 
@@ -305,7 +371,7 @@ bb.m:                                             ; preds = %bb.k
   %.not74 = icmp eq i64 %i.av, %i.q
   br i1 %.not74, label %._crit_edge.i.i, label %.lr.ph.a
 
-._crit_edge.i.i:                                  ; preds = %bb.m, %bb.a
+._crit_edge.i.i:                                  ; preds = %bb.m, %30, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
   store ptr %i.aw, ptr %1, align 8

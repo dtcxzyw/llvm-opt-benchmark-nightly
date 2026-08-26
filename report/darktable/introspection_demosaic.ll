@@ -205,7 +205,7 @@ bb.gq:                                            ; preds = %bb.gp, %bb.go, %bb.
   %i.amd = sdiv i64 %.1.i, %i.amc
   %.fr.i = freeze i64 %i.amd
   %i.ame = sdiv i64 %.fr.i, 4
-  %i.amf = trunc i64 %i.ame to i32                ; 3 uses
+  %i.amf = trunc i64 %i.ame to i32                ; 4 uses
   %i.amg = sdiv i64 %.064.i, %i.amc
   %i.amh = trunc i64 %i.amg to i32                ; 2 uses
   %i.ami = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !118 ; 2 uses
@@ -233,11 +233,13 @@ bb.gs:                                            ; preds = %bb.gr, %bb.gq
 _tiling_requirements.exit:                        ; preds = %bb.gs
   %i.amr = load i32, ptr %i.ac, align 4, !tbaa !84
   %i.ams = icmp eq i32 %i.amr, 9
-  %6 = select i1 %i.ams, i32 6, i32 2
-  %i.amt = srem i32 %i.amf, %6
-  %i.amu = sub nsw i32 %i.amf, %i.amt             ; 2 uses
+  %6 = sdiv i32 %i.amf, 2
+  %i.amt = srem i32 %i.amf, 6
+  %i.amu = sub nsw i32 %i.amf, %i.amt
+  %7 = shl nsw i32 %6, 1
+  %8 = select i1 %i.ams, i32 %i.amu, i32 %7       ; 2 uses
   %i.amv = shl nuw nsw i32 %spec.select.i, 1      ; 2 uses
-  %i.amw = sub nsw i32 %i.amu, %i.amv             ; 4 uses
+  %i.amw = sub nsw i32 %8, %i.amv                 ; 4 uses
   %i.amx = add nsw i32 %.val451, -1
   %i.amy = add i32 %i.amx, %i.amw
   %i.amz = sdiv i32 %i.amy, %i.amw
@@ -260,7 +262,7 @@ _tiling_requirements.exit:                        ; preds = %bb.gs
 bb.gt:                                            ; preds = %_tiling_requirements.exit, %.split, %.thread
   %.0677715 = phi i32 [ %i.and, %.split ], [ 1, %.thread ], [ %i.amz, %_tiling_requirements.exit ] ; 3 uses
   %.0679712 = phi i32 [ 30, %.split ], [ %i.bq, %.thread ], [ %i.amw, %_tiling_requirements.exit ] ; 2 uses
-  %.0681709 = phi i32 [ %i.anb, %.split ], [ %i.bq, %.thread ], [ %i.amu, %_tiling_requirements.exit ] ; 3 uses
+  %.0681709 = phi i32 [ %i.anb, %.split ], [ %i.bq, %.thread ], [ %8, %_tiling_requirements.exit ] ; 3 uses
   %.0683701706 = phi i32 [ %spec.select.i, %.split ], [ 0, %.thread ], [ %spec.select.i, %_tiling_requirements.exit ] ; 3 uses
   %i.ang = phi ptr [ @.str.21, %.split ], [ @.str.11, %.thread ], [ @.str.11, %_tiling_requirements.exit ]
   %i.anh = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !118
@@ -663,7 +665,7 @@ bb.a:
   %i.b = alloca [8 x float], align 16             ; 14 uses
   %i.c = alloca [4 x float], align 16             ; 41 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #27
-  %.not406 = icmp eq i32 %4, 9                    ; 4 uses
+  %.not406 = icmp eq i32 %4, 9                    ; 6 uses
   switch i32 %4, label %switch.edge [
     i32 -505290271, label %switch.edge.thread
     i32 -1263225676, label %switch.edge.thread
@@ -700,8 +702,8 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %switch.edge.thread, %switch.edge, %bb.c, %bb.d
   %spec.select332 = phi i1 [ true, %bb.d ], [ true, %bb.c ], [ false, %switch.edge ], [ false, %switch.edge.thread ]
   %.pre478 = phi i64 [ 4, %bb.d ], [ 4, %bb.c ], [ 3, %switch.edge ], [ %i.f, %switch.edge.thread ] ; 28 uses
-  %i.k = phi i32 [ 2, %bb.d ], [ 2, %bb.c ], [ 6, %switch.edge ], [ %i.e, %switch.edge.thread ] ; 3 uses
-  %i.l = phi i32 [ 8, %bb.d ], [ 8, %bb.c ], [ 6, %switch.edge ], [ %i.d, %switch.edge.thread ] ; 3 uses
+  %i.k = phi i32 [ 2, %bb.d ], [ 2, %bb.c ], [ 6, %switch.edge ], [ %i.e, %switch.edge.thread ] ; 2 uses
+  %i.l = phi i32 [ 8, %bb.d ], [ 8, %bb.c ], [ 6, %switch.edge ], [ %i.d, %switch.edge.thread ] ; 2 uses
   %.0270 = phi i32 [ %i.j, %bb.d ], [ %i.i, %bb.c ], [ 9, %switch.edge ], [ %4, %switch.edge.thread ] ; 21 uses
   tail call fastcc void @_vng_lininterpolate(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %.0270, ptr noundef %5, i32 noundef 1000000)
   %.not = icmp eq i32 %6, 0
@@ -1104,17 +1106,22 @@ fcol.exit323.thread.7:                            ; preds = %fcol.exit326.6, %fc
   br i1 %i.cz, label %.lr.ph398, label %._crit_edge399
 
 .lr.ph398:                                        ; preds = %.preheader364
-  %i.sp = trunc nuw nsw i64 %indvars.iv447 to i32
-  %7 = urem i32 %i.sp, %i.l
-  %8 = zext nneg i32 %7 to i64
-  %9 = getelementptr inbounds nuw [128 x i8], ptr %i.a, i64 %8
-  %indvars.iv447.tr = trunc i64 %indvars.iv447 to i32
-  %10 = shl i32 %indvars.iv447.tr, 1
-  %11 = and i32 %10, 14
-  %12 = trunc i64 %indvars.iv447 to i32
-  %13 = add i32 %12, 600
-  %14 = urem i32 %13, 6
-  %i.sq = zext nneg i32 %14 to i64
+  %i.sp = trunc i64 %indvars.iv447 to i32
+  %7 = shl i32 %i.sp, 1
+  %8 = and i32 %7, 14
+  %9 = trunc i64 %indvars.iv447 to i32
+  %10 = insertelement <2 x i32> poison, i32 %9, i64 0
+  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <2 x i32> zeroinitializer
+  %indvars.iv447.tr = trunc nuw nsw i64 %indvars.iv447 to i32
+  %12 = and i32 %indvars.iv447.tr, 7
+  %13 = add <2 x i32> %11, <i32 0, i32 600>
+  %14 = urem <2 x i32> %13, splat (i32 6)         ; 2 uses
+  %15 = extractelement <2 x i32> %14, i64 0
+  %16 = select i1 %.not406, i32 %15, i32 %12
+  %17 = zext nneg i32 %16 to i64
+  %18 = getelementptr inbounds nuw [128 x i8], ptr %i.a, i64 %17
+  %19 = extractelement <2 x i32> %14, i64 1
+  %i.sq = zext nneg i32 %19 to i64
   %i.sr = getelementptr inbounds nuw [6 x i8], ptr %5, i64 %i.sq
   %i.ss = trunc i64 %indvars.iv447 to i32
   %i.st = mul i32 %2, %i.ss
@@ -1156,9 +1163,11 @@ bb.an:                                            ; preds = %.lr.ph398, %bb.ev
   %i.tk = zext nneg i32 %i.tj to i64
   %i.tl = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.tk ; 60 uses
   %i.tm = trunc nuw nsw i64 %indvars.iv438 to i32 ; 2 uses
-  %i.tn = urem i32 %i.tm, %i.k
-  %i.to = zext nneg i32 %i.tn to i64
-  %i.tp = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %i.to
+  %i.tn = urem i32 %i.tm, 6
+  %20 = and i32 %i.tm, 1                          ; 2 uses
+  %21 = select i1 %.not406, i32 %i.tn, i32 %20
+  %i.to = zext nneg i32 %21 to i64
+  %i.tp = getelementptr inbounds nuw [8 x i8], ptr %18, i64 %i.to
   %i.tq = load ptr, ptr %i.tp, align 8, !tbaa !600 ; 3 uses
   %i.tr = load i32, ptr %i.tq, align 4, !tbaa !32 ; 2 uses
   %.not302385 = icmp eq i32 %i.tr, 2147483647
@@ -1300,8 +1309,7 @@ bb.ar:                                            ; preds = %bb.aq
   br label %fcol.exit329
 
 bb.as:                                            ; preds = %bb.aq
-  %15 = and i32 %i.tm, 1
-  %.tr.i.i327 = or disjoint i32 %15, %11
+  %.tr.i.i327 = or disjoint i32 %20, %8
   %i.wo = shl nuw nsw i32 %.tr.i.i327, 1
   %i.wp = lshr i32 %.0270, %i.wo
   %i.wq = and i32 %i.wp, 3
@@ -1704,7 +1712,7 @@ bb.a:
   %i.b = alloca [4 x i8], align 4                 ; 13 uses
   %i.c = alloca [4 x i32], align 16               ; 33 uses
   %i.d = alloca [4 x float], align 16             ; 7 uses
-  %i.e = icmp eq i32 %4, 9                        ; 8 uses
+  %i.e = icmp eq i32 %4, 9                        ; 9 uses
   %i.f = select i1 %i.e, i32 3, i32 4             ; 3 uses
   %i.g = icmp sgt i32 %3, 0
   br i1 %i.g, label %.preheader236.lr.ph, label %._crit_edge248.split
@@ -1747,7 +1755,6 @@ bb.a:
 
 ._crit_edge248.split:                             ; preds = %._crit_edge, %.preheader236.lr.ph, %bb.a
   %i.x = tail call noalias dereferenceable_or_null(32768) ptr @malloc(i64 noundef 32768) #28 ; 4 uses
-  %7 = select i1 %i.e, i32 6, i32 16              ; 2 uses
   %i.y = insertelement <2 x i32> <i32 poison, i32 0>, i32 %2, i64 0 ; 10 uses
   %i.z = sub nsw <2 x i32> <i32 0, i32 2>, %i.y
   %i.aa = sub nsw <2 x i32> <i32 0, i32 2>, %i.y
@@ -2150,7 +2157,12 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %i.ti
   %i.tj = mul nuw nsw i64 %indvars.iv367, %i.nv
   %gep287 = getelementptr [4 x i8], ptr %invariant.gep286, i64 %i.tj
-  %i.tk = trunc nuw nsw i64 %indvars.iv367 to i32
+  %i.tk = trunc nuw nsw i64 %indvars.iv367 to i32 ; 2 uses
+  %7 = urem i32 %i.tk, 6
+  %8 = and i32 %i.tk, 15
+  %9 = select i1 %i.e, i32 %7, i32 %8
+  %10 = zext nneg i32 %9 to i64
+  %11 = getelementptr inbounds nuw [2048 x i8], ptr %i.x, i64 %10
   br label %bb.ba
 
 bb.ba:                                            ; preds = %.lr.ph280, %._crit_edge274
@@ -2164,19 +2176,18 @@ bb.ba:                                            ; preds = %.lr.ph280, %._crit_
   %or.cond221 = select i1 %or.cond219.not232, i1 %i.th, i1 false ; 3 uses
   %.1185 = select i1 %or.cond221, ptr %gep, ptr %.0184 ; 5 uses
   %.1183 = select i1 %or.cond221, ptr %gep287, ptr %.0182 ; 5 uses
-  %.1181 = select i1 %or.cond221, i32 %i.nu, i32 %.0180278 ; 3 uses
+  %.1181 = select i1 %or.cond221, i32 %i.nu, i32 %.0180278 ; 4 uses
   %i.tm = icmp eq i32 %.1181, %2
   br i1 %i.tm, label %._crit_edge281, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
-  %8 = urem i32 %i.tk, %7
-  %9 = zext nneg i32 %8 to i64
-  %10 = getelementptr inbounds nuw [2048 x i8], ptr %i.x, i64 %9
-  %11 = srem i32 %.1181, %7
-  %i.tn = sext i32 %11 to i64
-  %i.to = getelementptr inbounds [128 x i8], ptr %10, i64 %i.tn ; 5 uses
+  %12 = srem i32 %.1181, 6
+  %13 = srem i32 %.1181, 16
+  %14 = select i1 %i.e, i32 %12, i32 %13
+  %i.tn = sext i32 %14 to i64
+  %i.to = getelementptr inbounds [128 x i8], ptr %11, i64 %i.tn ; 5 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %i.to, i64 4 ; 3 uses
   %i.tq = load i32, ptr %i.to, align 4, !tbaa !32 ; 5 uses
   %.not209267 = icmp eq i32 %i.tq, 0

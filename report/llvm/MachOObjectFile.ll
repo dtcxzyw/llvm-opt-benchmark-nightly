@@ -204,10 +204,11 @@ bb.e:                                             ; preds = %_ZNK4llvm6object15M
   %i.u = extractvalue { ptr, i64 } %i.t, 0
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.s
   %i.w = ptrtoint ptr %i.v to i64
-  %i.x = sub i64 %1, %i.w
-  %2 = select i1 %i.r, i64 16, i64 12
-  %i.y = udiv i64 %i.x, %2
-  ret i64 %i.y
+  %i.x = sub i64 %1, %i.w                         ; 2 uses
+  %2 = lshr i64 %i.x, 4
+  %i.y = udiv i64 %i.x, 12
+  %3 = select i1 %i.r, i64 %2, i64 %i.y
+  ret i64 %3
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
