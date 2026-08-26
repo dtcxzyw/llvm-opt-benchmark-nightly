@@ -204,25 +204,29 @@ bb.ah:                                            ; preds = %bb.af
 
 bb.ai:                                            ; preds = %bb.af, %bb.ag, %bb.aa, %bb.ad, %bb.ac, %bb.ab
   %.0158 = phi i32 [ %i.gd, %bb.ad ], [ %i.gj, %bb.ag ], [ %i.fi, %bb.aa ], [ %i.fx, %bb.ac ], [ %i.fn, %bb.ab ], [ %i.o, %bb.af ]
-  %i.gk = tail call noalias dereferenceable_or_null(104) ptr @g_malloc0(i64 noundef 104) #16 ; 14 uses
+  %i.gk = tail call noalias dereferenceable_or_null(104) ptr @g_malloc0(i64 noundef 104) #16 ; 17 uses
   store ptr %i.gk, ptr %5, align 8
   %.val187 = load i32, ptr %i.j, align 4
   %i.gl = sub i32 0, %.val187
   %i.gm = sext i32 %i.gl to i64
   %i.gn = and i64 %2, %i.gm
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 21
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 24
   %i.go = sub i32 %i.n, %.0157
   %i.gp = sub i32 %.0158, %i.o
+  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 58
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.sroa.13.0..sroa_idx, i8 0, i64 6, i1 false)
+  %.sroa.2.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 88
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.2.0..sroa_idx.a, i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(19) %.sroa.5.0..sroa_idx, i8 0, i64 19, i1 false)
   store i64 %i.gn, ptr %i.gk, align 8
-  %.sroa.2.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 8
-  store i64 %1, ptr %.sroa.2.0..sroa_idx.a, align 8
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 16
-  store i32 %i.s, ptr %.sroa.3.0..sroa_idx, align 8
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 20
-  store i8 %i.a, ptr %.sroa.4.0..sroa_idx.a, align 4
-  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 21
-  %.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 24
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 8
+  store i64 %1, ptr %.sroa.4.0..sroa_idx.a, align 8
+  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 16
+  store i32 %i.s, ptr %.sroa.5.0..sroa_idx.a, align 8
+  %.sroa.6.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 20
+  store i8 %i.a, ptr %.sroa.6.0..sroa_idx.a, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 40
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(19) %.sroa.5.0..sroa_idx.a, i8 0, i64 19, i1 false)
   store i32 %.0157, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 44
   store i32 %i.go, ptr %.sroa.8.0..sroa_idx, align 4
@@ -231,12 +235,14 @@ bb.ai:                                            ; preds = %bb.af, %bb.ag, %bb.
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 52
   store i32 %i.gp, ptr %.sroa.10.0..sroa_idx, align 4
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 56
-  %.sroa.16.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 80
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11.0..sroa_idx, i8 0, i64 24, i1 false)
-  store ptr %i.t, ptr %.sroa.16.0..sroa_idx.a, align 8
-  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 88
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.17.0..sroa_idx, i8 0, i64 16, i1 false)
-  tail call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.6.0..sroa_idx.a) #13
+  store i8 0, ptr %.sroa.11.0..sroa_idx, align 8
+  %.sroa.16.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.gk, i64 57
+  store i8 0, ptr %.sroa.16.0..sroa_idx.a, align 1
+  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 64
+  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.gk, i64 80
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.14.0..sroa_idx, i8 0, i64 16, i1 false)
+  store ptr %i.t, ptr %.sroa.17.0..sroa_idx, align 8
+  tail call void @qemu_co_queue_init(ptr noundef nonnull %.sroa.6.0..sroa_idx) #13
   %i.gq = getelementptr inbounds nuw i8, ptr %i.c, i64 136 ; 3 uses
   %i.gr = load ptr, ptr %i.gq, align 8            ; 3 uses
   %i.gs = load ptr, ptr %5, align 8

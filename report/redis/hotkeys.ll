@@ -190,11 +190,11 @@ bb.i:                                             ; preds = %nearestNextPowerOf2
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 120
   store i32 1, ptr %i.ab, align 8, !tbaa !30
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 152
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 160
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.3.0..sroa_idx, i8 0, i64 56, i1 false)
   store i32 0, ptr %i.ac, align 8, !tbaa !9
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 156
-  store i32 6, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !9
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.3.0..sroa_idx.a, i8 0, i64 56, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.b, i64 156
+  store i32 6, ptr %.sroa.3.0..sroa_idx.a, align 4, !tbaa !9
   %i.ad = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8064), align 8, !tbaa !31
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i64 %i.ad, ptr %i.ae, align 8, !tbaa !61
@@ -309,11 +309,11 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %.in = getelementptr inbounds nuw i8, ptr %1, i64 %.in.v
   %i.h = load i32, ptr %.in, align 4, !tbaa !9
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.3.0..sroa_idx, i8 0, i64 56, i1 false)
   store i32 0, ptr %i.i, align 8, !tbaa !9
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 156
-  store i32 6, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !9
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 160
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.3.0..sroa_idx.a, i8 0, i64 56, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 156
+  store i32 6, ptr %.sroa.3.0..sroa_idx.a, align 4, !tbaa !9
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 216
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !80
   %i.l = tail call i32 @getKeysFromCommandWithSpecs(ptr noundef %i.k, ptr noundef %i.g, i32 noundef %i.h, i32 noundef 0, ptr noundef nonnull %i.i) #12
@@ -651,11 +651,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   tail call void @getKeysFreeResult(ptr noundef nonnull %i.c) #12
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.3.0..sroa_idx, i8 0, i64 56, i1 false)
   store i32 0, ptr %i.c, align 8, !tbaa !9
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 156
   store i32 6, ptr %.sroa.2.0..sroa_idx, align 4, !tbaa !9
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 160
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.3.0..sroa_idx.a, i8 0, i64 72, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 216
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.0..sroa_idx.a, i8 0, i64 16, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c

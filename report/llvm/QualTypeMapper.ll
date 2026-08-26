@@ -204,9 +204,11 @@ bb.g:                                             ; preds = %._crit_edge.i
   br i1 %niter.ncmp.1, label %._crit_edge.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !642
 
 _ZN4llvm3abi11TypeBuilder12getUnionTypeENS_8ArrayRefINS0_9FieldInfoEEENS_8TypeSizeENS_5AlignENS0_13StructPackingENS0_11RecordFlagsE.exit: ; preds = %bb.f, %bb.g
-  %.0.i.i.i.i17.i = phi ptr [ %i.bk, %bb.f ], [ %i.br, %bb.g ] ; 9 uses
+  %.0.i.i.i.i17.i = phi ptr [ %i.bk, %bb.f ], [ %i.br, %bb.g ] ; 11 uses
   %i.cu = select i1 %i.ag, i32 10, i32 2
   %i.cv = or disjoint i32 %spec.select21, %i.cu
+  %3 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i17.i, i64 64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false)
   store i32 8, ptr %.0.i.i.i.i17.i, align 8, !tbaa !67
   %i.cw = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i17.i, i64 8
   store i64 %i.f, ptr %i.cw, align 8
@@ -219,9 +221,11 @@ _ZN4llvm3abi11TypeBuilder12getUnionTypeENS_8ArrayRefINS0_9FieldInfoEEENS_8TypeSi
   %.sroa.27.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i17.i, i64 40
   store i64 %i.ak, ptr %.sroa.27.0..sroa_idx.i.i, align 8, !tbaa !482
   %i.cz = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i17.i, i64 48
-  %i.da = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i17.i, i64 84
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(36) %i.cz, i8 0, i64 36, i1 false)
-  store i32 %i.cv, ptr %i.da, align 4, !tbaa !628
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cz, i8 0, i64 16, i1 false)
+  %i.da = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i17.i, i64 80
+  store i32 0, ptr %i.da, align 8, !tbaa !624
+  %4 = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i17.i, i64 84
+  store i32 %i.cv, ptr %4, align 4, !tbaa !628
   %i.db = load ptr, ptr %2, align 8, !tbaa !629   ; 2 uses
   %i.dc = icmp eq ptr %i.db, %i.c
   br i1 %i.dc, label %_ZN4llvm11SmallVectorINS_3abi9FieldInfoELj16EED2Ev.exit, label %bb.h

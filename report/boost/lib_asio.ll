@@ -204,15 +204,17 @@ _ZN5boost4asio6detail11scoped_lockINS1_18posix_static_mutexEE6unlockEv.exit: ; p
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !712, !nonnull !110, !align !111
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.ak = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #54 ; 6 uses
+  %i.ak = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #54 ; 7 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   store ptr null, ptr %i.ak, align 8, !tbaa !198
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   store ptr @_ZN5boost4asio6detail18signal_set_service12pipe_read_op11do_completeEPvPNS1_19scheduler_operationERKNS_6system10error_codeEm, ptr %i.al, align 8, !tbaa !201
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   store i32 0, ptr %i.am, align 8, !tbaa !437
-  %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.an, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, i8 0, i64 16, i1 false)
   store ptr @_ZN5boost4asio6detail18signal_set_service12pipe_read_op10do_performEPNS1_10reactor_opE, ptr %i.ao, align 8, !tbaa !495
   %i.ap = tail call noundef i32 @_ZN5boost4asio6detail13epoll_reactor28register_internal_descriptorEiiRPNS2_16descriptor_stateEPNS1_10reactor_opE(ptr noundef nonnull align 8 dereferenceable(152) %i.ai, i32 noundef 0, i32 noundef %i.af, ptr noundef nonnull align 8 dereferenceable(8) %i.aj, ptr noundef nonnull %i.ak) ; 0 uses
   ret void
@@ -496,15 +498,17 @@ _ZN5boost4asio6detail11scoped_lockINS1_18posix_static_mutexEE6unlockEv.exit25: ;
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !712, !nonnull !110, !align !111
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.p = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #54 ; 6 uses
+  %i.p = tail call noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #54 ; 7 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   store ptr null, ptr %i.p, align 8, !tbaa !198
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store ptr @_ZN5boost4asio6detail18signal_set_service12pipe_read_op11do_completeEPvPNS1_19scheduler_operationERKNS_6system10error_codeEm, ptr %i.q, align 8, !tbaa !201
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   store i32 0, ptr %i.r, align 8, !tbaa !437
-  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 24
+  %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 48
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 64
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.s, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
   store ptr @_ZN5boost4asio6detail18signal_set_service12pipe_read_op10do_performEPNS1_10reactor_opE, ptr %i.t, align 8, !tbaa !495
   %i.u = tail call noundef i32 @_ZN5boost4asio6detail13epoll_reactor28register_internal_descriptorEiiRPNS2_16descriptor_stateEPNS1_10reactor_opE(ptr noundef nonnull align 8 dereferenceable(152) %i.n, i32 noundef 0, i32 noundef %i.k, ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull %i.p) ; 0 uses
   br label %_ZN5boost4asio6detail11scoped_lockINS1_18posix_static_mutexEED2Ev.exit
@@ -555,18 +559,20 @@ _ZN5boost4asio6detail11scoped_lockINS1_18posix_static_mutexEE6unlockEv.exit28: ;
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !712, !nonnull !110, !align !111
   %i.ak = invoke noalias noundef nonnull dereferenceable(72) ptr @_Znwm(i64 noundef 72) #54
-          to label %bb.i unwind label %bb.m       ; 6 uses
+          to label %bb.i unwind label %bb.m       ; 7 uses
 
 bb.i:                                             ; preds = %_ZN5boost4asio6detail11scoped_lockINS1_18posix_static_mutexEE6unlockEv.exit28
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %5 = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   store ptr null, ptr %i.ak, align 8, !tbaa !198
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   store ptr @_ZN5boost4asio6detail18signal_set_service12pipe_read_op11do_completeEPvPNS1_19scheduler_operationERKNS_6system10error_codeEm, ptr %i.am, align 8, !tbaa !201
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   store i32 0, ptr %i.an, align 8, !tbaa !437
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ao, i8 0, i64 40, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, i8 0, i64 16, i1 false)
   store ptr @_ZN5boost4asio6detail18signal_set_service12pipe_read_op10do_performEPNS1_10reactor_opE, ptr %i.ap, align 8, !tbaa !495
   %i.aq = invoke noundef i32 @_ZN5boost4asio6detail13epoll_reactor28register_internal_descriptorEiiRPNS2_16descriptor_stateEPNS1_10reactor_opE(ptr noundef nonnull align 8 dereferenceable(152) %i.aj, i32 noundef 0, i32 noundef %i.ag, ptr noundef nonnull align 8 dereferenceable(8) %i.al, ptr noundef nonnull %i.ak)
           to label %bb.j unwind label %bb.m       ; 0 uses

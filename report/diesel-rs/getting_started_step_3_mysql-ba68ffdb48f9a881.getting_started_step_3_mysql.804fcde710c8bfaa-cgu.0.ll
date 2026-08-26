@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.b
 define hidden void @_RINvXs1_NtNtCsjRvGck33osM_6diesel5mysql10connectionNtB6_15MysqlConnectionNtNtBa_10connection10Connection23execute_returning_countINtNtNtBa_13query_builder16insert_statement15InsertStatementNtNtNtCsb101nepifEY_28getting_started_step_3_mysql6schema5posts5tableINtB26_12ValuesClauseTINtNtBa_10insertable28DefaultableColumnInsertValueINtB4x_17ColumnInsertValueNtNtB33_7columns5titleINtNtNtBa_10expression5bound5BoundNtNtBa_9sql_types4TextRReEEEIB4v_IB5j_NtB5K_4bodyB64_EEEB31_EEEB37_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias noundef align 8 dereferenceable(56) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [0 x i8], align 1
-  %.sroa.5.i2 = alloca [32 x i8], align 8         ; 5 uses
   %3 = alloca [40 x i8], align 8                  ; 5 uses
+  %.sroa.5.i2 = alloca [32 x i8], align 8         ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 8 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
   %i.d = alloca [32 x i8], align 8                ; 6 uses
@@ -450,8 +450,8 @@ bb.v:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !130
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.l, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.7, i64 32, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i2)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !159
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5.i2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3), !noalias !159
   call void @_RNvMs0_NtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmtINtNtNtBb_10connection15statement_cache11MaybeCachedNtB5_9StatementE7execute(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %3, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.l), !noalias !163
   %i.ay = load i64, ptr %3, align 8, !range !139, !noalias !159, !noundef !4
@@ -463,10 +463,12 @@ bb.v:                                             ; preds = %bb.k
 
 bb.w:                                             ; preds = %bb.v
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.n, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.i2, i64 32, i1 false), !noalias !164
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i2)
   br label %_RNCINvXs1_NtNtCsjRvGck33osM_6diesel5mysql10connectionNtB8_15MysqlConnectionNtNtBc_10connection10Connection23execute_returning_countINtNtNtBc_13query_builder16insert_statement15InsertStatementNtNtNtCsb101nepifEY_28getting_started_step_3_mysql6schema5posts5tableINtB28_12ValuesClauseTINtNtBc_10insertable28DefaultableColumnInsertValueINtB4z_17ColumnInsertValueNtNtB35_7columns5titleINtNtNtBc_10expression5bound5BoundNtNtBc_9sql_types4TextRReEEEIB4x_IB5l_NtB5M_4bodyB66_EEEB33_EEE0B39_.exit
 
 bb.x:                                             ; preds = %bb.v
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.5.i2, i64 32, i1 false), !noalias !159
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i2)
   invoke void @_RNvMs2_NtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmtNtB5_12StatementUse13affected_rows(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.n, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b)
           to label %bb.z unwind label %bb.y, !noalias !164
 
@@ -504,7 +506,6 @@ bb.ac:                                            ; preds = %bb.y
 
 _RNCINvXs1_NtNtCsjRvGck33osM_6diesel5mysql10connectionNtB8_15MysqlConnectionNtNtBc_10connection10Connection23execute_returning_countINtNtNtBc_13query_builder16insert_statement15InsertStatementNtNtNtCsb101nepifEY_28getting_started_step_3_mysql6schema5posts5tableINtB28_12ValuesClauseTINtNtBc_10insertable28DefaultableColumnInsertValueINtB4z_17ColumnInsertValueNtNtB35_7columns5titleINtNtNtBc_10expression5bound5BoundNtNtBc_9sql_types4TextRReEEEIB4x_IB5l_NtB5M_4bodyB66_EEEB33_EEE0B39_.exit: ; preds = %bb.w, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt12StatementUseECsb101nepifEY_28getting_started_step_3_mysql.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !159
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   br label %bb.ad
 

@@ -204,7 +204,7 @@ _ieee80211_hw_check.exit:
   %i.p = load ptr, ptr %i.o, align 8              ; 5 uses
   %i.q = load ptr, ptr %1, align 8                ; 6 uses
   %i.r = getelementptr i8, ptr %1, i64 48
-  %i.s = load ptr, ptr %i.r, align 8              ; 26 uses
+  %i.s = load ptr, ptr %i.r, align 8              ; 28 uses
   %i.t = getelementptr i8, ptr %0, i64 1856       ; 10 uses
   %i.u = load ptr, ptr %i.t, align 8
   %i.v = getelementptr i8, ptr %i.u, i64 80
@@ -226,6 +226,8 @@ _ieee80211_hw_check.exit:
   %i.ag = load i32, ptr %i.af, align 4
   %i.ah = getelementptr i8, ptr %i.q, i64 8
   %i.ai = load i16, ptr %i.ah, align 8
+  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 43
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %.sroa.11.0..sroa_idx, i8 0, i64 5, i1 false)
   store ptr %i.q, ptr %i.s, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store ptr null, ptr %.sroa.2.0..sroa_idx, align 8
@@ -240,10 +242,13 @@ _ieee80211_hw_check.exit:
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 36
   store i16 %i.ai, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 38
-  %.sroa.10.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.s, i64 42
-  %i.aj = getelementptr i8, ptr %i.ab, i64 16     ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.8.0..sroa_idx, i8 0, i64 10, i1 false)
-  %i.ak = load i32, ptr %i.aj, align 8
+  store i16 0, ptr %.sroa.8.0..sroa_idx, align 2
+  %.sroa.10.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.s, i64 40
+  store i16 0, ptr %.sroa.10.0..sroa_idx.a, align 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.s, i64 42 ; 2 uses
+  store i8 0, ptr %i.aj, align 2
+  %9 = getelementptr i8, ptr %i.ab, i64 16        ; 3 uses
+  %i.ak = load i32, ptr %9, align 8
   switch i32 %i.ak, label %bb.n [
     i32 4, label %bb.a
     i32 3, label %bb.c
@@ -258,7 +263,7 @@ bb.a:                                             ; preds = %_ieee80211_hw_check
 
 bb.b:                                             ; preds = %bb.a
   store i32 8, ptr %.sroa.3.0..sroa_idx, align 8
-  store i8 0, ptr %.sroa.10.0..sroa_idx.a, align 2
+  store i8 0, ptr %i.aj, align 2
   br label %.thread272
 
 bb.c:                                             ; preds = %_ieee80211_hw_check.exit
@@ -425,12 +430,12 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not210, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %i.cx = load i32, ptr %i.aj, align 8
+  %i.cx = load i32, ptr %9, align 8
   %i.cy = icmp eq i32 %i.cx, 1
   br i1 %i.cy, label %.thread272, label %bb.ad
 
 bb.aa:                                            ; preds = %bb.y
-  %i.cz = load i32, ptr %i.aj, align 8
+  %i.cz = load i32, ptr %9, align 8
   %i.da = icmp eq i32 %i.cz, 0
   br i1 %i.da, label %bb.ad, label %bb.ab
 

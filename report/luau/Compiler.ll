@@ -204,11 +204,13 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.i
 
 bb.c:                                             ; preds = %bb.b
+  %.sroa.490.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1736
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.490.0..sroa_idx, i8 0, i64 16, i1 false)
   %i.an = ptrtoint ptr %i.am to i64
   store i64 %i.an, ptr %i.al, align 8, !tbaa !27
-  %.sroa.490.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 1736
+  %.sroa.490.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 1752
   %.sroa.894.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1776
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.490.0..sroa_idx.a, i8 0, i64 40, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.490.0..sroa_idx.a, i8 0, i64 24, i1 false)
   store i8 1, ptr %.sroa.894.0..sroa_idx, align 8, !tbaa !228
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1777
   store i8 0, ptr %.sroa.9.0..sroa_idx, align 1, !tbaa !228

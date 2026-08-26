@@ -202,7 +202,7 @@ bb.a:
   %i.n = alloca [64 x i8], align 8                ; 9 uses
   %i.o = alloca [32 x i8], align 8                ; 6 uses
   %i.p = alloca [24 x i8], align 8                ; 10 uses
-  %i.q = alloca [32 x i8], align 8                ; 4 uses
+  %i.q = alloca [32 x i8], align 8                ; 7 uses
   %i.r = alloca [48 x i8], align 8                ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !35)
@@ -312,6 +312,7 @@ bb.h:                                             ; preds = %_RNvMs3_NtNtCsjRvGc
   store ptr %.sroa.13.0120, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.812.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 40
   store i64 %6, ptr %.sroa.812.0..sroa_idx, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   invoke void %.32.val1(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.q, ptr noundef nonnull %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %4)
           to label %bb.j unwind label %bb.i
 
@@ -329,6 +330,7 @@ bb.k:                                             ; preds = %bb.j
   %i.af = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.ag = load i8, ptr %i.af, align 8, !range !61, !noundef !6
   %i.ah = trunc nuw i8 %i.ag to i1
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br i1 %i.ah, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -706,6 +708,7 @@ bb.as:                                            ; preds = %.noexc47
 
 bb.at:                                            ; preds = %bb.j
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.q, i64 32, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br label %bb.y
 
 .thread128:                                       ; preds = %bb.t, %bb.s, %bb.o, %bb.i

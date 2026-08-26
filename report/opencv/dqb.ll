@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN2cv6dynafu3DQBERSt6vectorIfSaIfEERS1_INS_7Affine3IfEESaIS6_EE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.cv::Affine3") align 4 captures(none) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.cv::dynafu::Quaternion", align 16 ; 4 uses
+  %3 = alloca %"class.cv::dynafu::DualQuaternion", align 16 ; 7 uses
   %4 = alloca %"class.cv::dynafu::DualQuaternion", align 16 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !60   ; 3 uses
@@ -241,44 +241,51 @@ _ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit: ; preds = %.lr.
   %.sroa.018.0 = phi ptr [ %i.j, %.lr.ph.preheader.i.i.i.i.i ], [ null, %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ] ; 7 uses
   %.sink.i = phi i64 [ %i.l, %.lr.ph.preheader.i.i.i.i.i ], [ 0, %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i ]
   %.not15.i = icmp eq ptr %i.n, %i.m
-  br i1 %.not15.i, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPN2cv7Affine3IfEESt6vectorIS4_SaIS4_EEEENS1_IPNS2_6dynafu14DualQuaternionES6_ISB_SaISB_EEEEZNSA_3DQBERS6_IfSaIfEERS8_E3$_0ET0_T_SM_SL_T1_.exit", label %.lr.ph.i.a
+  br i1 %.not15.i, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPN2cv7Affine3IfEESt6vectorIS4_SaIS4_EEEENS1_IPNS2_6dynafu14DualQuaternionES6_ISB_SaISB_EEEEZNSA_3DQBERS6_IfSaIfEERS8_E3$_0ET0_T_SM_SL_T1_.exit", label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit, %.lr.ph.i.a
-  %.sroa.012.017.i = phi ptr [ %i.af, %.lr.ph.i.a ], [ %i.n, %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit ] ; 5 uses
-  %.sroa.09.016.i = phi ptr [ %i.ag, %.lr.ph.i.a ], [ %.sroa.018.0, %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15, !noalias !65
-  call void @_ZN2cv6dynafu10QuaternionC2ERKNS_7Affine3IfEE(ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull readonly align 4 dereferenceable(64) %.sroa.012.017.i), !noalias !65
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.012.017.i, i64 12
-  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.012.017.i, i64 28
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.012.017.i, i64 44
-  %7 = load <4 x float>, ptr %3, align 16         ; 5 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15, !noalias !65
-  %8 = load float, ptr %5, align 4, !tbaa !8, !noalias !68 ; 2 uses
-  %i.p = load float, ptr %i.o, align 4, !tbaa !8, !noalias !68
-  %9 = load float, ptr %6, align 4, !tbaa !8, !noalias !68 ; 2 uses
-  %i.q = fneg float %9
-  %10 = fneg float %8
-  store <4 x float> %7, ptr %.sroa.09.016.i, align 4
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.09.016.i, i64 16
-  %i.r = insertelement <4 x float> poison, float %i.p, i64 0
-  %11 = fneg <4 x float> %7
+.lr.ph.i:                                         ; preds = %_ZNSt6vectorIN2cv6dynafu14DualQuaternionESaIS2_EEC2EmRKS3_.exit
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i.a, %.lr.ph.i
+  %.sroa.012.017.i = phi ptr [ %.sroa.018.0, %.lr.ph.i ], [ %i.ag, %.lr.ph.i.a ] ; 2 uses
+  %.sroa.09.016.i = phi ptr [ %i.n, %.lr.ph.i ], [ %i.af, %.lr.ph.i.a ] ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
+  call void @_ZN2cv6dynafu10QuaternionC2ERKNS_7Affine3IfEE(ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull readonly align 4 dereferenceable(64) %.sroa.09.016.i)
+  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.09.016.i, i64 12
+  %7 = load float, ptr %i.o, align 4, !tbaa !8, !noalias !68 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.09.016.i, i64 28
+  %9 = load float, ptr %8, align 4, !tbaa !8, !noalias !68
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.09.016.i, i64 44
+  %i.p = load float, ptr %10, align 4, !tbaa !8, !noalias !68 ; 2 uses
+  %11 = fneg float %i.p
+  %i.q = fneg float %7
+  %12 = load <4 x float>, ptr %3, align 16, !tbaa !8, !alias.scope !65 ; 3 uses
+  %13 = load float, ptr %6, align 4, !tbaa !8, !alias.scope !65
+  %14 = fneg float %13
+  %i.r = insertelement <4 x float> poison, float %9, i64 0
+  %15 = insertelement <4 x float> %12, float %14, i64 1
   %i.s = shufflevector <4 x float> %i.r, <4 x float> poison, <4 x i32> zeroinitializer
-  %12 = shufflevector <4 x float> %7, <4 x float> %11, <4 x i32> <i32 3, i32 2, i32 5, i32 0>
-  %i.t = fmul <4 x float> %i.s, %12
-  %i.u = insertelement <4 x float> poison, float %8, i64 0
-  %i.v = insertelement <4 x float> %i.u, float %10, i64 1
+  %16 = shufflevector <4 x float> %15, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %i.t = fmul <4 x float> %i.s, %16
+  %i.u = insertelement <4 x float> poison, float %7, i64 0
+  %i.v = insertelement <4 x float> %i.u, float %i.q, i64 1
   %i.w = shufflevector <4 x float> %i.v, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
-  %i.x = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.w, <4 x float> %7, <4 x float> %i.t)
+  %i.x = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.w, <4 x float> %12, <4 x float> %i.t)
   %i.y = shufflevector <4 x float> %i.x, <4 x float> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  %i.z = insertelement <4 x float> poison, float %9, i64 0
-  %i.aa = insertelement <4 x float> %i.z, float %i.q, i64 1
+  %i.z = insertelement <4 x float> poison, float %i.p, i64 0
+  %i.aa = insertelement <4 x float> %i.z, float %11, i64 1
   %i.ab = shufflevector <4 x float> %i.aa, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 0>
-  %i.ac = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ab, <4 x float> %7, <4 x float> %i.y)
+  %i.ac = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ab, <4 x float> %12, <4 x float> %i.y)
   %i.ad = fmul <4 x float> %i.ac, <float 5.000000e-01, float 5.000000e-01, float 5.000000e-01, float -5.000000e-01>
   %i.ae = shufflevector <4 x float> %i.ad, <4 x float> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x float> %i.ae, ptr %.sroa.8.0..sroa_idx.i, align 4
-  %i.af = getelementptr inbounds nuw i8, ptr %.sroa.012.017.i, i64 64 ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.09.016.i, i64 32
+  store <4 x float> %i.ae, ptr %5, align 16, !alias.scope !65
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.sroa.012.017.i, ptr noundef nonnull align 16 dereferenceable(32) %3, i64 32, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
+  %i.af = getelementptr inbounds nuw i8, ptr %.sroa.09.016.i, i64 64 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.012.017.i, i64 32
   %.not.i = icmp eq ptr %i.af, %i.m
   br i1 %.not.i, label %"_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPN2cv7Affine3IfEESt6vectorIS4_SaIS4_EEEENS1_IPNS2_6dynafu14DualQuaternionES6_ISB_SaISB_EEEEZNSA_3DQBERS6_IfSaIfEERS8_E3$_0ET0_T_SM_SL_T1_.exit", label %.lr.ph.i.a, !llvm.loop !71
 

@@ -204,14 +204,16 @@ bb.a:
   %i.f = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %i.e
   store i32 3, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4512 ; 2 uses
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4513
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.2.0..sroa_idx, i8 0, i64 7, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4368
   %i.i = load i16, ptr %i.h, align 16
   %i.j = zext i16 %i.i to i32
   %i.k = load i64, ptr %i.b, align 8
   %i.l = trunc i64 %i.k to i32
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4549
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.9.0..sroa_idx, i8 0, i64 3, i1 false)
   store i8 %1, ptr %i.g, align 16
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4513
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.2.0..sroa_idx, i8 0, i64 7, i1 false)
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4520
   store ptr %i.a, ptr %.sroa.3.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4528
@@ -223,8 +225,8 @@ bb.a:
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4544
   store i32 %i.l, ptr %.sroa.7.0..sroa_idx, align 16
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4548
+  store i8 0, ptr %.sroa.8.0..sroa_idx, align 4
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 4552
-  store i32 0, ptr %.sroa.8.0..sroa_idx, align 4
   %i.m = load ptr, ptr %2, align 8
   tail call void @tpm_backend_deliver_request(ptr noundef %i.m, ptr noundef nonnull %i.g) #9
   ret void

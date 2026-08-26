@@ -21,7 +21,7 @@ define { i64, ptr } @taper(ptr nofree noundef readonly captures(none) %0, ptr no
 bb.a:
   %3 = alloca [4 x %struct.pointf_s], align 16    ; 8 uses
   %4 = alloca %struct.stroke_t, align 8           ; 11 uses
-  %5 = alloca %struct.vararr_t, align 8           ; 12 uses
+  %5 = alloca %struct.vararr_t, align 8           ; 16 uses
   %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = alloca ptr, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
@@ -31,13 +31,22 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %5, i8 0, i64 40, i1 false), !alias.scope !16
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12, !noalias !16
+  %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 65 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
+  %.sroa.11.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 89 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.11.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.e = load <2 x double>, ptr %.val, align 8, !noalias !16
   store <2 x double> %i.e, ptr %i.d, align 8, !tbaa !19, !alias.scope !16
-  %.sroa.5.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 2 uses
-  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.5.0..sroa_idx.i.i.a, i8 0, i64 48, i1 false), !alias.scope !16
+  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 2 uses
+  store double 0.000000e+00, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
+  %.sroa.5.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %5, i64 64 ; 2 uses
+  store i8 0, ptr %.sroa.5.0..sroa_idx.i.i.a, align 8, !tbaa !20, !alias.scope !16
+  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 17, i1 false), !alias.scope !16
+  %.sroa.12.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 2 uses
+  store double 0.000000e+00, ptr %.sroa.12.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
   %i.f = call i64 @gv_list_append_slot_(ptr noundef nonnull align 8 %5, i64 noundef 64) #12
   %i.g = load ptr, ptr %5, align 8, !tbaa !20, !alias.scope !16
   %i.h = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %i.f
@@ -85,10 +94,14 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   %i.v = fsub double %.sroa.5.03.i, %i.t
   %i.w = call double @hypot(double noundef %i.u, double noundef %i.v) #12
   %i.x = fadd double %.14.i, %i.w                 ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.11.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
   store double %i.s, ptr %i.d, align 8, !tbaa !19, !alias.scope !16
   store double %i.t, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
-  store double %i.x, ptr %.sroa.5.0..sroa_idx.i.i.a, align 8, !tbaa !19, !alias.scope !16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 40, i1 false), !alias.scope !16
+  store double %i.x, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
+  store i8 0, ptr %.sroa.5.0..sroa_idx.i.i.a, align 8, !tbaa !20, !alias.scope !16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 17, i1 false), !alias.scope !16
+  store double 0.000000e+00, ptr %.sroa.12.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
   %i.y = call i64 @gv_list_append_slot_(ptr noundef nonnull align 8 %5, i64 noundef 64) #12
   %i.z = load ptr, ptr %5, align 8, !tbaa !20, !alias.scope !16
   %i.aa = getelementptr inbounds nuw [64 x i8], ptr %i.z, i64 %i.y

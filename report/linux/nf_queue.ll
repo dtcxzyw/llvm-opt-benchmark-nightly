@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %refcount_inc_not_ze
   br label %sk_is_refcounted.exit.thread.i
 
 sk_is_refcounted.exit.thread.i:                   ; preds = %bb.b, %bb.c, %sk_is_refcounted.exit.i, %bb.f
-  %i.aa = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 104, 141) %switch.select48.i, i32 noundef 2080) #9 ; 23 uses
+  %i.aa = tail call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 104, 141) %switch.select48.i, i32 noundef 2080) #9 ; 24 uses
   %.not45.i = icmp eq ptr %i.aa, null
   br i1 %.not45.i, label %.thread, label %bb.g
 
@@ -247,20 +247,22 @@ skb_dst_force.exit.i:                             ; preds = %dst_hold_safe.exit.
   br i1 %.not.i50.i, label %.critedge.sink.split.i, label %skb_dst_force.exit.thread.i
 
 skb_dst_force.exit.thread.i:                      ; preds = %skb_dst_force.exit.i, %bb.g
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aa, i8 0, i64 16, i1 false)
   %i.aq = getelementptr i8, ptr %0, i64 16
   %i.ar = load ptr, ptr %i.aq, align 8            ; 2 uses
+  %.sroa.7.0..sroa_idx.i = getelementptr i8, ptr %i.aa, i64 48 ; 3 uses
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.0..sroa_idx.i, ptr noundef readonly align 8 dereferenceable(48) %1, i64 48, i1 false)
   %i.as = trunc nuw nsw i64 %switch.select48.i to i16
-  %.sroa.3.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aa, i8 0, i64 24, i1 false)
-  store ptr %0, ptr %.sroa.3.0..sroa_idx.i.a, align 8
-  %.sroa.4.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 32 ; 3 uses
-  store ptr %i.ar, ptr %.sroa.4.0..sroa_idx.i.a, align 8
-  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 40
-  store i32 0, ptr %.sroa.5.0..sroa_idx.i.a, align 8
-  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 44
-  store i32 %2, ptr %.sroa.6.0..sroa_idx.i.a, align 4
-  %.sroa.7.0..sroa_idx.i.a = getelementptr i8, ptr %i.aa, i64 48 ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(48) %.sroa.7.0..sroa_idx.i.a, ptr noundef readonly align 8 dereferenceable(48) %1, i64 48, i1 false)
+  %.sroa.3.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
+  store i64 0, ptr %.sroa.3.0..sroa_idx.i.a, align 8
+  %.sroa.4.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
+  store ptr %0, ptr %.sroa.4.0..sroa_idx.i.a, align 8
+  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 32 ; 3 uses
+  store ptr %i.ar, ptr %.sroa.5.0..sroa_idx.i.a, align 8
+  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 40
+  store i32 0, ptr %.sroa.6.0..sroa_idx.i.a, align 8
+  %.sroa.7.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.aa, i64 44
+  store i32 %2, ptr %.sroa.7.0..sroa_idx.i.a, align 4
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 96
   store i8 0, ptr %.sroa.8.0..sroa_idx.i, align 8
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aa, i64 97
@@ -311,7 +313,7 @@ refcount_inc_not_zero.exit.i.i:                   ; preds = %bb.j, %arch_atomic_
   br i1 %.not14.i.i, label %.critedge.sink.split.i, label %refcount_inc_not_zero.exit.i._crit_edge.i
 
 refcount_inc_not_zero.exit.i._crit_edge.i:        ; preds = %refcount_inc_not_zero.exit.i.i
-  %.pre.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.a, align 8
+  %.pre.i = load ptr, ptr %.sroa.5.0..sroa_idx.i.a, align 8
   br label %bb.k
 
 bb.k:                                             ; preds = %refcount_inc_not_zero.exit.i._crit_edge.i, %skb_dst_force.exit.thread.i
@@ -358,7 +360,7 @@ bb.o:                                             ; preds = %bb.n, %dev_hold.exi
   ]
 
 bb.p:                                             ; preds = %bb.o
-  %i.bq = load i8, ptr %.sroa.7.0..sroa_idx.i.a, align 8
+  %i.bq = load i8, ptr %.sroa.7.0..sroa_idx.i, align 8
   %i.br = icmp eq i8 %i.bq, 3
   br i1 %i.br, label %bb.q, label %nf_ip_saveroute.exit.i
 
@@ -384,7 +386,7 @@ bb.q:                                             ; preds = %bb.p
   br label %nf_ip_saveroute.exit.sink.split.i
 
 bb.r:                                             ; preds = %bb.o
-  %i.cf = load i8, ptr %.sroa.7.0..sroa_idx.i.a, align 8
+  %i.cf = load i8, ptr %.sroa.7.0..sroa_idx.i, align 8
   %i.cg = icmp eq i8 %i.cf, 3
   br i1 %i.cg, label %bb.s, label %nf_ip_saveroute.exit.i
 
@@ -418,7 +420,7 @@ nf_ip_saveroute.exit.i:                           ; preds = %nf_ip_saveroute.exi
   br i1 %i.cu, label %bb.t, label %__nf_queue.exit
 
 bb.t:                                             ; preds = %nf_ip_saveroute.exit.i
-  %i.cv = load ptr, ptr %.sroa.4.0..sroa_idx.i.a, align 8 ; 2 uses
+  %i.cv = load ptr, ptr %.sroa.5.0..sroa_idx.i.a, align 8 ; 2 uses
   %.not.i.i.i.i55.i = icmp eq ptr %i.cv, null
   br i1 %.not.i.i.i.i55.i, label %dev_put.exit.i.i.i, label %bb.u
 

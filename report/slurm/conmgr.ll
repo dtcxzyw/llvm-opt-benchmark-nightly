@@ -202,25 +202,27 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i32 -1, ptr @mgr, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(84) getelementptr inbounds nuw (i8, ptr @mgr, i64 4), i8 0, i64 84, i1 false)
-  store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 88), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(61) getelementptr inbounds nuw (i8, ptr @mgr, i64 92), i8 0, i64 61, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) getelementptr inbounds nuw (i8, ptr @mgr, i64 154), i8 0, i64 62, i1 false)
-  store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 216), align 8
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(38) getelementptr inbounds nuw (i8, ptr @mgr, i64 154), i8 0, i64 38, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) getelementptr inbounds nuw (i8, ptr @mgr, i64 196), i8 0, i64 20, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(52) getelementptr inbounds nuw (i8, ptr @mgr, i64 220), i8 0, i64 52, i1 false)
-  store ptr @.str, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 272), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @mgr, i64 280), i8 0, i64 56, i1 false)
-  store ptr @.str.1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 336), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @mgr, i64 344), i8 0, i64 56, i1 false)
-  store ptr @.str.2, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 400), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @mgr, i64 408), i8 0, i64 56, i1 false)
-  store ptr @.str.3, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 464), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @mgr, i64 472), i8 0, i64 56, i1 false)
-  store ptr @.str.4, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 528), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @mgr, i64 536), i8 0, i64 56, i1 false)
-  store ptr @.str.5, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 592), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) getelementptr inbounds nuw (i8, ptr @mgr, i64 600), i8 0, i64 56, i1 false)
+  store i32 -1, ptr @mgr, align 8
+  store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 88), align 8
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 192), align 8
+  store i32 -1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 216), align 8
+  store ptr @.str, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 272), align 8
+  store ptr @.str.1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 336), align 8
+  store ptr @.str.2, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 400), align 8
+  store ptr @.str.3, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 464), align 8
+  store ptr @.str.4, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 528), align 8
+  store ptr @.str.5, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 592), align 8
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 120), align 8
   store i8 1, ptr getelementptr inbounds nuw (i8, ptr @mgr, i64 153), align 1
   br label %bb.c
