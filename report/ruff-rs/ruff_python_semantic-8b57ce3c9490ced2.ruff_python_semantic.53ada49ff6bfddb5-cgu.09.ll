@@ -202,16 +202,25 @@ bb.e:                                             ; preds = %.lr.ph
   %narrow1.i.i.i = select i1 %i.u, i8 %i.t, i8 2  ; 2 uses
   %i.v = icmp eq i8 %narrow.i.i.i, 2
   %i.w = icmp eq i8 %narrow1.i.i.i, 2
-  %or.cond.i.i.i = and i1 %i.v, %i.w              ; 2 uses
-  %.0.val.narrow.i.i.i = select i1 %or.cond.i.i.i, i8 %.val, i8 %narrow.i.i.i
-  %.0.val1.narrow1.i.i.i = select i1 %or.cond.i.i.i, i8 %.val11, i8 %narrow1.i.i.i
-  %3 = icmp samesign ult i8 %.0.val.narrow.i.i.i, %.0.val1.narrow1.i.i.i
-  %4 = zext i1 %3 to i64
-  %5 = add nuw nsw i64 %i.j, %4
+  %or.cond.i.i.i = and i1 %i.v, %i.w
+  br i1 %or.cond.i.i.i, label %5, label %3
+
+3:                                                ; preds = %bb.e
+  %4 = icmp samesign ult i8 %narrow.i.i.i, %narrow1.i.i.i
+  br label %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit
+
+5:                                                ; preds = %bb.e
+  %6 = icmp samesign ult i8 %.val, %.val11
+  br label %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit
+
+_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit: ; preds = %3, %5
+  %.sroa.0.0.i.i.i = phi i1 [ %6, %5 ], [ %4, %3 ]
+  %7 = zext i1 %.sroa.0.0.i.i.i to i64
+  %8 = add nuw nsw i64 %i.j, %7
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %.lr.ph
-  %.sroa.04.0.i = phi i64 [ %5, %bb.e ], [ %i.j, %.lr.ph ] ; 3 uses
+bb.f:                                             ; preds = %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit, %.lr.ph
+  %.sroa.04.0.i = phi i64 [ %8, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit ], [ %i.j, %.lr.ph ] ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.0.0.i21 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 %.sroa.04.0.i ; 2 uses
   %.val12 = load i8, ptr %i.x, align 1, !range !45, !noundef !4 ; 5 uses
@@ -228,13 +237,18 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
   %narrow1.i.i.i16 = select i1 %i.ae, i8 %i.ad, i8 2 ; 2 uses
   %i.af = icmp eq i8 %narrow.i.i.i15, 2
   %i.ag = icmp eq i8 %narrow1.i.i.i16, 2
-  %or.cond.i.i.i17 = and i1 %i.af, %i.ag          ; 2 uses
-  %.0.val.narrow.i.i.i18 = select i1 %or.cond.i.i.i17, i8 %.val12, i8 %narrow.i.i.i15
-  %.0.val1.narrow1.i.i.i19 = select i1 %or.cond.i.i.i17, i8 %.val13, i8 %narrow1.i.i.i16
-  %6 = icmp samesign ult i8 %.0.val.narrow.i.i.i18, %.0.val1.narrow1.i.i.i19
-  br i1 %6, label %bb.g, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit
+  %or.cond.i.i.i17 = and i1 %i.af, %i.ag
+  br i1 %or.cond.i.i.i17, label %.split, label %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit19
 
-bb.g:                                             ; preds = %bb.f
+.split:                                           ; preds = %bb.f
+  %9 = icmp samesign ult i8 %.val12, %.val13
+  br i1 %9, label %bb.g, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit
+
+_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit19: ; preds = %bb.f
+  %10 = icmp samesign ult i8 %narrow.i.i.i15, %narrow1.i.i.i16
+  br i1 %10, label %bb.g, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit
+
+bb.g:                                             ; preds = %.split, %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit19
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
   store i8 %.val13, ptr %i.x, align 1, !alias.scope !46, !noalias !49
@@ -244,7 +258,7 @@ bb.g:                                             ; preds = %bb.f
   %.not.i = icmp ult i64 %i.ai, %.sroa.0.0.i14
   br i1 %.not.i, label %.lr.ph, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit
 
-_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit: ; preds = %bb.f, %bb.g, %bb.d
+_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltEB1c_.exit: ; preds = %_RNvYNvYNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1p_3ops8function5FnMutTRB5_B2w_EE8call_mutBb_.exit19, %bb.g, %.split, %bb.d
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph25
 }

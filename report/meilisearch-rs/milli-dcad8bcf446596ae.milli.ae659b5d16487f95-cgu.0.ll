@@ -206,8 +206,7 @@ loadbb95:                                         ; preds = %loadbb
 
 endblock:                                         ; preds = %res_block, %loadbb95
   %phi.res = phi i32 [ 0, %loadbb95 ], [ %i.u, %res_block ]
-  %2 = sext i32 %phi.res to i64
-  %i.aj = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.aj = tail call i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   br label %"_ZN87_$LT$milli..update..new..indexer..mini_string..MiniString$u20$as$u20$core..cmp..Ord$GT$3cmp17h0908821f7c2db0bfE.exit.i.i.i"
 
 bb.e:                                             ; preds = %.lr.ph
@@ -609,6 +608,9 @@ declare i8 @llvm.umax.i8(i8, i8) #89
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #89
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #89
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #105
