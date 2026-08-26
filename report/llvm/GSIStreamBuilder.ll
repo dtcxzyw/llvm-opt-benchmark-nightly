@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %"_ZSt25__unguarded_
   %i.aj = zext i32 %.val3.i.i.i.i.i.i.i.i to i64
   %i.ak = getelementptr inbounds nuw [24 x i8], ptr %i.t, i64 %i.aj ; 3 uses
   %i.al = load ptr, ptr %i.af, align 8, !tbaa !55 ; 6 uses
-  %i.am = load i32, ptr %i.ah, align 8, !tbaa !58 ; 2 uses
-  %i.an = zext i32 %i.am to i64                   ; 9 uses
+  %i.am = load i32, ptr %i.ah, align 8, !tbaa !58 ; 3 uses
+  %i.an = zext i32 %i.am to i64                   ; 8 uses
   %i.ao = load ptr, ptr %i.ak, align 8, !tbaa !55 ; 6 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !58 ; 2 uses
@@ -217,8 +217,7 @@ bb.d:                                             ; preds = %"_ZSt25__unguarded_
   br i1 %.not.i.i.i.i.i.i.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
-  %3 = zext i32 %i.aq to i64
-  %i.ar = call i32 @llvm.ucmp.i32.i64(i64 %i.an, i64 %3)
+  %i.ar = call i32 @llvm.ucmp.i32.i32(i32 %i.am, i32 %i.aq)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i.i.i.i.i.i.i
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i
@@ -536,8 +535,8 @@ bb.c:                                             ; preds = %"_ZSt13__adjust_hea
   %i.af = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.ae ; 3 uses
   %i.ag = load ptr, ptr %i.ad, align 8, !tbaa !55 ; 6 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !58 ; 2 uses
-  %i.aj = zext i32 %i.ai to i64                   ; 9 uses
+  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !58 ; 3 uses
+  %i.aj = zext i32 %i.ai to i64                   ; 8 uses
   %i.ak = load ptr, ptr %i.af, align 8, !tbaa !55 ; 6 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.am = load i32, ptr %i.al, align 8, !tbaa !58 ; 2 uses
@@ -548,8 +547,7 @@ bb.c:                                             ; preds = %"_ZSt13__adjust_hea
   br i1 %.not.i.i11.i.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i.i.i
-  %10 = zext i32 %i.am to i64
-  %i.an = call i32 @llvm.ucmp.i32.i64(i64 %i.aj, i64 %10)
+  %i.an = call i32 @llvm.ucmp.i32.i32(i32 %i.ai, i32 %i.am)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i12.i.i.i
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i.i
@@ -809,8 +807,8 @@ bb.aa:                                            ; preds = %bb.z, %._crit_edge.
   %i.dd = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.dc ; 3 uses
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !55 ; 6 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  %i.dg = load i32, ptr %i.df, align 8, !tbaa !58 ; 2 uses
-  %i.dh = zext i32 %i.dg to i64                   ; 9 uses
+  %i.dg = load i32, ptr %i.df, align 8, !tbaa !58 ; 3 uses
+  %i.dh = zext i32 %i.dg to i64                   ; 8 uses
   %i.di = load ptr, ptr %i.cy, align 8, !tbaa !55 ; 6 uses
   %i.dj = load i32, ptr %i.cz, align 8, !tbaa !58 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
@@ -820,8 +818,7 @@ bb.aa:                                            ; preds = %bb.z, %._crit_edge.
   br i1 %.not.i.i.i.i.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph.i.i.i.i.i
-  %11 = zext i32 %i.dj to i64
-  %i.dk = call i32 @llvm.ucmp.i32.i64(i64 %i.dh, i64 %11)
+  %i.dk = call i32 @llvm.ucmp.i32.i32(i32 %i.dg, i32 %i.dj)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i.i.i.i
 
 bb.ac:                                            ; preds = %.lr.ph.i.i.i.i.i
@@ -1090,8 +1087,8 @@ bb.aw:                                            ; preds = %"_ZSt10__pop_heapIN
   %i.gk = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.gj ; 3 uses
   %i.gl = load ptr, ptr %i.gi, align 8, !tbaa !55 ; 6 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gi, i64 8
-  %i.gn = load i32, ptr %i.gm, align 8, !tbaa !58 ; 2 uses
-  %i.go = zext i32 %i.gn to i64                   ; 9 uses
+  %i.gn = load i32, ptr %i.gm, align 8, !tbaa !58 ; 3 uses
+  %i.go = zext i32 %i.gn to i64                   ; 8 uses
   %i.gp = load ptr, ptr %i.gk, align 8, !tbaa !55 ; 6 uses
   %i.gq = getelementptr inbounds nuw i8, ptr %i.gk, i64 8
   %i.gr = load i32, ptr %i.gq, align 8, !tbaa !58 ; 2 uses
@@ -1102,8 +1099,7 @@ bb.aw:                                            ; preds = %"_ZSt10__pop_heapIN
   br i1 %.not.i.i4.i.i, label %bb.ay, label %bb.ax
 
 bb.ax:                                            ; preds = %.lr.ph.i.i.i75.i
-  %12 = zext i32 %i.gr to i64
-  %i.gs = call i32 @llvm.ucmp.i32.i64(i64 %i.go, i64 %12)
+  %i.gs = call i32 @llvm.ucmp.i32.i32(i32 %i.gn, i32 %i.gr)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i5.i.i
 
 bb.ay:                                            ; preds = %.lr.ph.i.i.i75.i
@@ -1373,8 +1369,8 @@ bb.bu:                                            ; preds = %bb.bt, %._crit_edge
   %i.jp = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.jo ; 3 uses
   %i.jq = load ptr, ptr %i.jp, align 8, !tbaa !55 ; 6 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jp, i64 8
-  %i.js = load i32, ptr %i.jr, align 8, !tbaa !58 ; 2 uses
-  %i.jt = zext i32 %i.js to i64                   ; 9 uses
+  %i.js = load i32, ptr %i.jr, align 8, !tbaa !58 ; 3 uses
+  %i.jt = zext i32 %i.js to i64                   ; 8 uses
   %i.ju = load ptr, ptr %i.jk, align 8, !tbaa !55 ; 6 uses
   %i.jv = load i32, ptr %i.jl, align 8, !tbaa !58 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
@@ -1384,8 +1380,7 @@ bb.bu:                                            ; preds = %bb.bt, %._crit_edge
   br i1 %.not.i.i.i21.i, label %bb.bw, label %bb.bv
 
 bb.bv:                                            ; preds = %.lr.ph.i.i.i.i16.i
-  %13 = zext i32 %i.jv to i64
-  %i.jw = call i32 @llvm.ucmp.i32.i64(i64 %i.jt, i64 %13)
+  %i.jw = call i32 @llvm.ucmp.i32.i32(i32 %i.js, i32 %i.jv)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i.i22.i
 
 bb.bw:                                            ; preds = %.lr.ph.i.i.i.i16.i
@@ -1708,8 +1703,8 @@ bb.da:                                            ; preds = %bb.dv, %"_ZSt22__mo
   %i.mz = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.my ; 3 uses
   %i.na = load ptr, ptr %i.mx, align 8, !tbaa !55 ; 6 uses
   %i.nb = getelementptr inbounds nuw i8, ptr %i.mx, i64 8
-  %i.nc = load i32, ptr %i.nb, align 8, !tbaa !58 ; 2 uses
-  %i.nd = zext i32 %i.nc to i64                   ; 9 uses
+  %i.nc = load i32, ptr %i.nb, align 8, !tbaa !58 ; 3 uses
+  %i.nd = zext i32 %i.nc to i64                   ; 8 uses
   %i.ne = load ptr, ptr %i.mz, align 8, !tbaa !55 ; 6 uses
   %i.nf = getelementptr inbounds nuw i8, ptr %i.mz, i64 8
   %i.ng = load i32, ptr %i.nf, align 8, !tbaa !58 ; 2 uses
@@ -1720,8 +1715,7 @@ bb.da:                                            ; preds = %bb.dv, %"_ZSt22__mo
   br i1 %.not.i.i.i.i18, label %bb.dc, label %bb.db
 
 bb.db:                                            ; preds = %bb.da
-  %14 = zext i32 %i.ng to i64
-  %i.nh = call i32 @llvm.ucmp.i32.i64(i64 %i.nd, i64 %14)
+  %i.nh = call i32 @llvm.ucmp.i32.i32(i32 %i.nc, i32 %i.ng)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i.i.i
 
 bb.dc:                                            ; preds = %bb.da
@@ -1956,8 +1950,8 @@ bb.dw:                                            ; preds = %.backedge, %.prehea
   %i.po = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.pn ; 3 uses
   %i.pp = load ptr, ptr %i.pm, align 8, !tbaa !55 ; 6 uses
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pm, i64 8
-  %i.pr = load i32, ptr %i.pq, align 8, !tbaa !58 ; 2 uses
-  %i.ps = zext i32 %i.pr to i64                   ; 9 uses
+  %i.pr = load i32, ptr %i.pq, align 8, !tbaa !58 ; 3 uses
+  %i.ps = zext i32 %i.pr to i64                   ; 8 uses
   %i.pt = load ptr, ptr %i.po, align 8, !tbaa !55 ; 6 uses
   %i.pu = getelementptr inbounds nuw i8, ptr %i.po, i64 8
   %i.pv = load i32, ptr %i.pu, align 8, !tbaa !58 ; 2 uses
@@ -1968,8 +1962,7 @@ bb.dw:                                            ; preds = %.backedge, %.prehea
   br i1 %.not.i.i11.i.i, label %bb.dy, label %bb.dx
 
 bb.dx:                                            ; preds = %bb.dw
-  %15 = zext i32 %i.pv to i64
-  %i.pw = call i32 @llvm.ucmp.i32.i64(i64 %i.ps, i64 %15)
+  %i.pw = call i32 @llvm.ucmp.i32.i32(i32 %i.pr, i32 %i.pv)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i12.i.i
 
 bb.dy:                                            ; preds = %bb.dw
@@ -2223,8 +2216,8 @@ bb.a:
   %i.d = getelementptr inbounds nuw [24 x i8], ptr %.0.val, i64 %i.c ; 3 uses
   %i.e = load ptr, ptr %i.b, align 8, !tbaa !55   ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !58   ; 2 uses
-  %i.h = zext i32 %i.g to i64                     ; 9 uses
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !58   ; 3 uses
+  %i.h = zext i32 %i.g to i64                     ; 8 uses
   %i.i = load ptr, ptr %i.d, align 8, !tbaa !55   ; 6 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.k = load i32, ptr %i.j, align 8, !tbaa !58   ; 2 uses
@@ -2236,8 +2229,7 @@ bb.a:
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = zext i32 %i.k to i64
-  %i.m = tail call i32 @llvm.ucmp.i32.i64(i64 %i.h, i64 %1)
+  %i.m = tail call i32 @llvm.ucmp.i32.i32(i32 %i.g, i32 %i.k)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -2534,8 +2526,8 @@ bb.g:                                             ; preds = %bb.b
   %i.v = zext i32 %.val3.i.i to i64
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %i.v ; 3 uses
   %i.x = load ptr, ptr %i.r, align 8, !tbaa !55   ; 6 uses
-  %i.y = load i32, ptr %i.t, align 8, !tbaa !58   ; 2 uses
-  %i.z = zext i32 %i.y to i64                     ; 9 uses
+  %i.y = load i32, ptr %i.t, align 8, !tbaa !58   ; 3 uses
+  %i.z = zext i32 %i.y to i64                     ; 8 uses
   %i.aa = load ptr, ptr %i.w, align 8, !tbaa !55  ; 6 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.w, i64 8
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !58 ; 2 uses
@@ -2546,8 +2538,7 @@ bb.g:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i
-  %4 = zext i32 %i.ac to i64
-  %i.ad = call i32 @llvm.ucmp.i32.i64(i64 %i.z, i64 %4)
+  %i.ad = call i32 @llvm.ucmp.i32.i32(i32 %i.y, i32 %i.ac)
   br label %_ZL12gsiRecordCmpN4llvm9StringRefES0_.exit.i
 
 bb.i:                                             ; preds = %.lr.ph.i
@@ -2950,26 +2941,26 @@ _ZN4llvm8DenseMapINS_8codeview8CVRecordINS1_10SymbolKindEEENS_6detail13DenseSetE
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.cttz.i32(i32, i1 immarg) #15
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #19
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #20
+declare void @llvm.experimental.noalias.scope.decl(metadata) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #19
+declare i64 @llvm.umax.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #19
+declare i64 @llvm.umin.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #19
+declare i32 @llvm.umin.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #19
+declare i32 @llvm.umax.i32(i32, i32) #20
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -2990,8 +2981,8 @@ attributes #15 = { nocallback nofree nosync nounwind speculatable willreturn mem
 attributes #16 = { mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #17 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #19 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #20 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #20 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #21 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 attributes #22 = { nounwind }
 attributes #23 = { builtin nounwind allocsize(0) }

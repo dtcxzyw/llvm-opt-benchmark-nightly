@@ -204,10 +204,8 @@ bb.d:                                             ; preds = %.noexc4
   call void @llvm.experimental.noalias.scope.decl(metadata !269)
   call void @llvm.experimental.noalias.scope.decl(metadata !272)
   %i.y = load i8, ptr %i.d, align 8, !range !274, !alias.scope !275, !noalias !276, !noundef !5 ; 3 uses
-  %2 = zext nneg i8 %i.y to i64
   %i.z = load i8, ptr %i.x, align 4, !range !274, !alias.scope !276, !noalias !275, !noundef !5 ; 2 uses
-  %3 = zext nneg i8 %i.z to i64
-  %i.aa = call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.aa = call i8 @llvm.ucmp.i8.i8(i8 %i.y, i8 %i.z)
   %i.ab = icmp eq i8 %i.y, %i.z
   br i1 %i.ab, label %bb.e, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i
 
@@ -357,10 +355,8 @@ bb.d:                                             ; preds = %.noexc4
   call void @llvm.experimental.noalias.scope.decl(metadata !316)
   call void @llvm.experimental.noalias.scope.decl(metadata !319)
   %i.y = load i8, ptr %i.d, align 8, !range !274, !alias.scope !321, !noalias !322, !noundef !5 ; 3 uses
-  %2 = zext nneg i8 %i.y to i64
   %i.z = load i8, ptr %i.x, align 4, !range !274, !alias.scope !322, !noalias !321, !noundef !5 ; 2 uses
-  %3 = zext nneg i8 %i.z to i64
-  %i.aa = call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.aa = call i8 @llvm.ucmp.i8.i8(i8 %i.y, i8 %i.z)
   %i.ab = icmp eq i8 %i.y, %i.z
   br i1 %i.ab, label %bb.e, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i
 
@@ -510,10 +506,8 @@ bb.d:                                             ; preds = %.noexc4
   call void @llvm.experimental.noalias.scope.decl(metadata !361)
   call void @llvm.experimental.noalias.scope.decl(metadata !364)
   %i.y = load i8, ptr %i.d, align 8, !range !274, !alias.scope !366, !noalias !367, !noundef !5 ; 3 uses
-  %2 = zext nneg i8 %i.y to i64
   %i.z = load i8, ptr %i.x, align 4, !range !274, !alias.scope !367, !noalias !366, !noundef !5 ; 2 uses
-  %3 = zext nneg i8 %i.z to i64
-  %i.aa = call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.aa = call i8 @llvm.ucmp.i8.i8(i8 %i.y, i8 %i.z)
   %i.ab = icmp eq i8 %i.y, %i.z
   br i1 %i.ab, label %bb.e, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i
 
@@ -916,10 +910,8 @@ bb.o:                                             ; preds = %.noexc50
   call void @llvm.experimental.noalias.scope.decl(metadata !443)
   call void @llvm.experimental.noalias.scope.decl(metadata !446)
   %i.dy = load i8, ptr %i.dw, align 8, !range !274, !alias.scope !448, !noalias !449, !noundef !5 ; 3 uses
-  %5 = zext nneg i8 %i.dy to i64
   %i.dz = load i8, ptr %i.dx, align 8, !range !274, !alias.scope !449, !noalias !448, !noundef !5 ; 2 uses
-  %6 = zext nneg i8 %i.dz to i64
-  %i.ea = call i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.ea = call i8 @llvm.ucmp.i8.i8(i8 %i.dy, i8 %i.dz)
   %i.eb = icmp eq i8 %i.dy, %i.dz
   br i1 %i.eb, label %bb.p, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i43
 
@@ -1030,10 +1022,8 @@ bb.v:                                             ; preds = %.noexc38
   call void @llvm.experimental.noalias.scope.decl(metadata !478)
   call void @llvm.experimental.noalias.scope.decl(metadata !481)
   %i.fv = load i8, ptr %i.br, align 8, !range !274, !alias.scope !483, !noalias !484, !noundef !5 ; 3 uses
-  %7 = zext nneg i8 %i.fv to i64
   %i.fw = load i8, ptr %i.fu, align 4, !range !274, !alias.scope !484, !noalias !483, !noundef !5 ; 2 uses
-  %8 = zext nneg i8 %i.fw to i64
-  %i.fx = call i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.fx = call i8 @llvm.ucmp.i8.i8(i8 %i.fv, i8 %i.fw)
   %i.fy = icmp eq i8 %i.fv, %i.fw
   br i1 %i.fy, label %bb.w, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i
 
@@ -1378,10 +1368,8 @@ bb.o:                                             ; preds = %.noexc50
   call void @llvm.experimental.noalias.scope.decl(metadata !539)
   call void @llvm.experimental.noalias.scope.decl(metadata !542)
   %i.dy = load i8, ptr %i.dw, align 8, !range !274, !alias.scope !544, !noalias !545, !noundef !5 ; 3 uses
-  %5 = zext nneg i8 %i.dy to i64
   %i.dz = load i8, ptr %i.dx, align 8, !range !274, !alias.scope !545, !noalias !544, !noundef !5 ; 2 uses
-  %6 = zext nneg i8 %i.dz to i64
-  %i.ea = call i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.ea = call i8 @llvm.ucmp.i8.i8(i8 %i.dy, i8 %i.dz)
   %i.eb = icmp eq i8 %i.dy, %i.dz
   br i1 %i.eb, label %bb.p, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i43
 
@@ -1492,10 +1480,8 @@ bb.v:                                             ; preds = %.noexc38
   call void @llvm.experimental.noalias.scope.decl(metadata !574)
   call void @llvm.experimental.noalias.scope.decl(metadata !577)
   %i.fv = load i8, ptr %i.br, align 8, !range !274, !alias.scope !579, !noalias !580, !noundef !5 ; 3 uses
-  %7 = zext nneg i8 %i.fv to i64
   %i.fw = load i8, ptr %i.fu, align 4, !range !274, !alias.scope !580, !noalias !579, !noundef !5 ; 2 uses
-  %8 = zext nneg i8 %i.fw to i64
-  %i.fx = call i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.fx = call i8 @llvm.ucmp.i8.i8(i8 %i.fv, i8 %i.fw)
   %i.fy = icmp eq i8 %i.fv, %i.fw
   br i1 %i.fy, label %bb.w, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i
 
@@ -1840,10 +1826,8 @@ bb.o:                                             ; preds = %.noexc50
   call void @llvm.experimental.noalias.scope.decl(metadata !635)
   call void @llvm.experimental.noalias.scope.decl(metadata !638)
   %i.dy = load i8, ptr %i.dw, align 8, !range !274, !alias.scope !640, !noalias !641, !noundef !5 ; 3 uses
-  %5 = zext nneg i8 %i.dy to i64
   %i.dz = load i8, ptr %i.dx, align 8, !range !274, !alias.scope !641, !noalias !640, !noundef !5 ; 2 uses
-  %6 = zext nneg i8 %i.dz to i64
-  %i.ea = call i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.ea = call i8 @llvm.ucmp.i8.i8(i8 %i.dy, i8 %i.dz)
   %i.eb = icmp eq i8 %i.dy, %i.dz
   br i1 %i.eb, label %bb.p, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i43
 
@@ -1954,10 +1938,8 @@ bb.v:                                             ; preds = %.noexc38
   call void @llvm.experimental.noalias.scope.decl(metadata !670)
   call void @llvm.experimental.noalias.scope.decl(metadata !673)
   %i.fv = load i8, ptr %i.br, align 8, !range !274, !alias.scope !675, !noalias !676, !noundef !5 ; 3 uses
-  %7 = zext nneg i8 %i.fv to i64
   %i.fw = load i8, ptr %i.fu, align 4, !range !274, !alias.scope !676, !noalias !675, !noundef !5 ; 2 uses
-  %8 = zext nneg i8 %i.fw to i64
-  %i.fx = call i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.fx = call i8 @llvm.ucmp.i8.i8(i8 %i.fv, i8 %i.fw)
   %i.fy = icmp eq i8 %i.fv, %i.fw
   br i1 %i.fy, label %bb.w, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i.i
 
@@ -2360,10 +2342,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1513)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1516)
   %i.n = load i8, ptr %i.l, align 8, !range !274, !alias.scope !1518, !noalias !1519, !noundef !5 ; 3 uses
-  %2 = zext nneg i8 %i.n to i64
   %i.o = load i8, ptr %i.m, align 8, !range !274, !alias.scope !1519, !noalias !1518, !noundef !5 ; 2 uses
-  %3 = zext nneg i8 %i.o to i64
-  %i.p = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.p = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %i.o)
   %i.q = icmp eq i8 %i.n, %i.o
   br i1 %i.q, label %bb.c, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i
 
@@ -2458,10 +2438,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1541)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1544)
   %i.n = load i8, ptr %i.l, align 8, !range !274, !alias.scope !1546, !noalias !1547, !noundef !5 ; 3 uses
-  %2 = zext nneg i8 %i.n to i64
   %i.o = load i8, ptr %i.m, align 8, !range !274, !alias.scope !1547, !noalias !1546, !noundef !5 ; 2 uses
-  %3 = zext nneg i8 %i.o to i64
-  %i.p = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.p = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %i.o)
   %i.q = icmp eq i8 %i.n, %i.o
   br i1 %i.q, label %bb.c, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i
 
@@ -2556,10 +2534,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1569)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1572)
   %i.n = load i8, ptr %i.l, align 8, !range !274, !alias.scope !1574, !noalias !1575, !noundef !5 ; 3 uses
-  %2 = zext nneg i8 %i.n to i64
   %i.o = load i8, ptr %i.m, align 8, !range !274, !alias.scope !1575, !noalias !1574, !noundef !5 ; 2 uses
-  %3 = zext nneg i8 %i.o to i64
-  %i.p = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.p = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %i.o)
   %i.q = icmp eq i8 %i.n, %i.o
   br i1 %i.q, label %bb.c, label %_RNvXsk_NtCs33K2ylI4knu_10hir_expand8mod_pathNtB5_8PathKindNtNtCshzWfHUSfYae_4core3cmp3Ord3cmp.exit.i
 
@@ -2961,9 +2937,6 @@ declare hidden void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecTINtCs83ee1IJTi
 
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef align 8 dereferenceable(24), ptr noalias nofree noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #0
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64, i64) #22
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
 declare void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #28

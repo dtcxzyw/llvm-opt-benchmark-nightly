@@ -202,9 +202,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.o, label %_RNvXs23_Cs16MGpdaJTHl_6caminoNtB6_13Utf8ComponentNtNtCshzWfHUSfYae_4core3cmp3Ord3cmpB6_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %3 = zext i8 %i.a to i64
-  %4 = zext nneg i8 %i.g to i64
-  %i.q = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.q = tail call i8 @llvm.ucmp.i8.i8(i8 %i.a, i8 %i.g)
   %i.r = icmp eq i8 %i.a, %i.g
   br i1 %i.r, label %bb.f, label %_RNvXs23_Cs16MGpdaJTHl_6caminoNtB6_13Utf8ComponentNtNtCshzWfHUSfYae_4core3cmp3Ord3cmpB6_.exit
 

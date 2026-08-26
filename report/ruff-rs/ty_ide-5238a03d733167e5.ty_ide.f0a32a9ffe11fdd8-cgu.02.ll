@@ -204,87 +204,71 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3119)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3122)
   %i.k = load i8, ptr %i.a, align 8, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %2 = zext nneg i8 %i.k to i64
   %i.l = load i8, ptr %i.f, align 8, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %3 = zext nneg i8 %i.l to i64
-  %i.m = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call i8 @llvm.ucmp.i8.i8(i8 %i.k, i8 %i.l)
   %i.n = icmp eq i8 %i.k, %i.l
   br i1 %i.n, label %bb.b, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 177
   %i.p = load i8, ptr %i.o, align 1, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %4 = zext nneg i8 %i.p to i64
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 177
   %i.r = load i8, ptr %i.q, align 1, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %5 = zext nneg i8 %i.r to i64
-  %i.s = tail call i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.s = tail call i8 @llvm.ucmp.i8.i8(i8 %i.p, i8 %i.r)
   %i.t = icmp eq i8 %i.p, %i.r
   br i1 %i.t, label %bb.c, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.c:                                             ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 178
   %i.v = load i8, ptr %i.u, align 2, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %6 = zext nneg i8 %i.v to i64
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 178
   %i.x = load i8, ptr %i.w, align 2, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %7 = zext nneg i8 %i.x to i64
-  %i.y = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.y = tail call i8 @llvm.ucmp.i8.i8(i8 %i.v, i8 %i.x)
   %i.z = icmp eq i8 %i.v, %i.x
   br i1 %i.z, label %bb.d, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 179
   %i.ab = load i8, ptr %i.aa, align 1, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %8 = zext nneg i8 %i.ab to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 179
   %i.ad = load i8, ptr %i.ac, align 1, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %9 = zext nneg i8 %i.ad to i64
-  %i.ae = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.ae = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ab, i8 %i.ad)
   %i.af = icmp eq i8 %i.ab, %i.ad
   br i1 %i.af, label %bb.e, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.e:                                             ; preds = %bb.d
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 180
   %i.ah = load i8, ptr %i.ag, align 4, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %10 = zext nneg i8 %i.ah to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 180
   %i.aj = load i8, ptr %i.ai, align 4, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %11 = zext nneg i8 %i.aj to i64
-  %i.ak = tail call i8 @llvm.scmp.i8.i64(i64 %10, i64 %11)
+  %i.ak = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ah, i8 %i.aj)
   %i.al = icmp eq i8 %i.ah, %i.aj
   br i1 %i.al, label %bb.f, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.f:                                             ; preds = %bb.e
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 181
   %i.an = load i8, ptr %i.am, align 1, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %12 = zext nneg i8 %i.an to i64
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 181
   %i.ap = load i8, ptr %i.ao, align 1, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %13 = zext nneg i8 %i.ap to i64
-  %i.aq = tail call i8 @llvm.scmp.i8.i64(i64 %12, i64 %13)
+  %i.aq = tail call i8 @llvm.ucmp.i8.i8(i8 %i.an, i8 %i.ap)
   %i.ar = icmp eq i8 %i.an, %i.ap
   br i1 %i.ar, label %bb.g, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.g:                                             ; preds = %bb.f
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 182
   %i.at = load i8, ptr %i.as, align 2, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %14 = zext nneg i8 %i.at to i64
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 182
   %i.av = load i8, ptr %i.au, align 2, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %15 = zext nneg i8 %i.av to i64
-  %i.aw = tail call i8 @llvm.scmp.i8.i64(i64 %14, i64 %15)
+  %i.aw = tail call i8 @llvm.ucmp.i8.i8(i8 %i.at, i8 %i.av)
   %i.ax = icmp eq i8 %i.at, %i.av
   br i1 %i.ax, label %bb.h, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.h:                                             ; preds = %bb.g
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 183
   %i.az = load i8, ptr %i.ay, align 1, !range !1290, !alias.scope !3119, !noalias !3124, !noundef !9 ; 2 uses
-  %16 = zext nneg i8 %i.az to i64
   %i.ba = getelementptr inbounds nuw i8, ptr %1, i64 183
   %i.bb = load i8, ptr %i.ba, align 1, !range !1290, !alias.scope !3122, !noalias !3128, !noundef !9 ; 2 uses
-  %17 = zext nneg i8 %i.bb to i64
-  %i.bc = tail call i8 @llvm.scmp.i8.i64(i64 %16, i64 %17)
+  %i.bc = tail call i8 @llvm.ucmp.i8.i8(i8 %i.az, i8 %i.bb)
   %i.bd = icmp eq i8 %i.az, %i.bb
   br i1 %i.bd, label %bb.i, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
@@ -306,17 +290,13 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.m, %bb.k
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.bj = load i8, ptr %i.bi, align 8, !range !3118, !alias.scope !3119, !noalias !3124, !noundef !9
-  %18 = zext nneg i8 %i.bj to i64
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 184
   %i.bl = load i8, ptr %i.bk, align 8, !range !3118, !alias.scope !3122, !noalias !3128, !noundef !9
-  %19 = zext nneg i8 %i.bl to i64
-  %i.bm = tail call i8 @llvm.scmp.i8.i64(i64 %18, i64 %19)
+  %i.bm = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bj, i8 %i.bl)
   br label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
 bb.m:                                             ; preds = %bb.j
-  %20 = zext nneg i8 %i.bf to i64
-  %21 = zext nneg i8 %i.bh to i64
-  %i.bn = tail call i8 @llvm.scmp.i8.i64(i64 %20, i64 %21)
+  %i.bn = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bf, i8 %i.bh)
   %i.bo = icmp eq i8 %i.bf, %i.bh
   br i1 %i.bo, label %bb.l, label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtCskEUeM34gmJU_6ty_ide10completion9RelevanceNtB7_3Ord3cmpBH_.exit.i
 
@@ -344,9 +324,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_RNvXsh_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtCskEUeM34gmJU_6ty_ide10completion20ModuleDependencyKindENtNtB7_3cmp3Ord3cmpBO_.exit.i
 
 bb.r:                                             ; preds = %bb.p
-  %22 = zext nneg i8 %i.d to i64
-  %23 = zext nneg i8 %i.i to i64
-  %i.bs = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %22, i64 %23)
+  %i.bs = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %i.d, i8 %i.i)
   br label %_RNvXsh_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtCskEUeM34gmJU_6ty_ide10completion20ModuleDependencyKindENtNtB7_3cmp3Ord3cmpBO_.exit.i
 
 _RNvXsh_NtCs4NRVxsYgnAr_4core6optionINtB5_6OptionNtNtCskEUeM34gmJU_6ty_ide10completion20ModuleDependencyKindENtNtB7_3cmp3Ord3cmpBO_.exit.i: ; preds = %bb.r, %bb.q
@@ -749,9 +727,6 @@ declare { ptr, i64 } @_RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_
 ; Function Attrs: nonlazybind uwtable
 declare { ptr, i64 } @_RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_6Tokens6before(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24), i32 noundef) unnamed_addr #1
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64, i64) #17
-
 ; Function Attrs: nonlazybind uwtable
 declare { ptr, i64 } @_RNvMNtNtCskLngH8kgpZI_15ruff_python_ast5token6tokensNtB2_6Tokens5after(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24), i32 noundef) unnamed_addr #1
 
@@ -765,7 +740,7 @@ declare void @_RNvMs3_NtCscdodAO9FK5_5alloc3stre12to_lowercase(ptr dead_on_unwin
 declare hidden void @_RNvMNtCskEUeM34gmJU_6ty_ide7symbolsNtB2_12QueryPattern5fuzzy(ptr dead_on_unwind noalias noundef writable sret([64 x i8]) align 8 captures(none) dereferenceable(64), ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #1
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
-declare void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #18
+declare void @_RNvNtCscdodAO9FK5_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #17
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvMNtCskEUeM34gmJU_6ty_ide7symbolsNtB2_12QueryPattern7exactly(ptr dead_on_unwind noalias noundef writable sret([64 x i8]) align 8 captures(none) dereferenceable(64), ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef) unnamed_addr #1
@@ -897,7 +872,7 @@ declare hidden noundef zeroext i1 @_RNvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB5_7
 declare void @_RNvMNtCsoTR8nlGN3X_18ty_python_semantic14semantic_modelNtB2_13SemanticModel35expected_string_literal_completions(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32), ptr noundef nonnull align 8) unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #17
+declare i64 @llvm.usub.sat.i64(i64, i64) #18
 
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i64 } @_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr14memchr_aligned(i8 noundef, ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #1
@@ -918,7 +893,7 @@ declare hidden noundef zeroext i1 @_RINvYNtNtCsdjunURa2XPj_19ruff_python_literal
 declare hidden void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCskEUeM34gmJU_6ty_ide(ptr dead_on_unwind noalias noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), i64 noundef, i1 noundef zeroext, i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #1
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
-declare void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef range(i64 0, -9223372036854775807), i64) unnamed_addr #18
+declare void @_RNvNtCscdodAO9FK5_5alloc7raw_vec12handle_error(i64 noundef range(i64 0, -9223372036854775807), i64) unnamed_addr #17
 
 ; Function Attrs: nonlazybind uwtable
 declare { i64, i64 } @_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr7memrchr(i8 noundef, ptr noalias noundef nonnull readonly captures(address, read_provenance), i64 noundef range(i64 0, -9223372036854775808)) unnamed_addr #1
@@ -981,16 +956,19 @@ declare void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #17
+declare i64 @llvm.umin.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #18
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.umin.i8(i8, i8) #17
+declare i8 @llvm.umin.i8(i8, i8) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #17
+declare i64 @llvm.umax.i64(i64, i64) #18
 
 attributes #0 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -1009,8 +987,8 @@ attributes #13 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #14 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #15 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCs9wFQrvczXsK_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #16 = { cold noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #18 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #17 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #18 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #19 = { cold nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #20 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #21 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }

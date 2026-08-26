@@ -205,7 +205,6 @@ tailrecurse.backedge.i19:                         ; preds = %_ZNK5clang4Type5get
 
 _ZNK5clang4Type5getAsINS_11ComplexTypeEEEPKT_v.exit.thread13.i14: ; preds = %bb.c, %_ZNK5clang4Type5getAsINS_11ComplexTypeEEEPKT_v.exit._ZNK5clang4Type5getAsINS_11ComplexTypeEEEPKT_v.exit.thread13_crit_edge.i23
   %i.ah = phi ptr [ %.pre42, %_ZNK5clang4Type5getAsINS_11ComplexTypeEEEPKT_v.exit._ZNK5clang4Type5getAsINS_11ComplexTypeEEEPKT_v.exit.thread13_crit_edge.i23 ], [ %i.ac, %bb.c ]
-  %switch.ext = zext i8 %switch.load to i32
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
   %i.aj = load i32, ptr %i.ai, align 16
   %i.ak = lshr i32 %i.aj, 19
@@ -214,8 +213,7 @@ _ZNK5clang4Type5getAsINS_11ComplexTypeEEEPKT_v.exit.thread13.i14: ; preds = %bb.
   %i.an = getelementptr i8, ptr @switch.table._ZNK5clang10ASTContext20getFloatingTypeOrderENS_8QualTypeES1_.78, i64 %i.am
   %switch.gep58 = getelementptr i8, ptr %i.an, i64 -497
   %switch.load59 = load i8, ptr %switch.gep58, align 1
-  %switch.ext60 = zext i8 %switch.load59 to i32
-  %.0 = tail call i32 @llvm.ucmp.i32.i32(i32 %switch.ext, i32 %switch.ext60)
+  %.0 = tail call i32 @llvm.ucmp.i32.i8(i8 %switch.load, i8 %switch.load59)
   ret i32 %.0
 }
 
@@ -618,9 +616,6 @@ declare i8 @llvm.umax.i8(i8, i8) #25
 declare i64 @llvm.umax.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #25
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -637,6 +632,9 @@ declare <2 x i32> @llvm.umin.v2i32(<2 x i32>, <2 x i32>) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v8i64(<8 x i64>) #25
