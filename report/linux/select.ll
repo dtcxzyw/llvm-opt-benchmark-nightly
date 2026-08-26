@@ -74,7 +74,7 @@ bb.b:                                             ; preds = %bb.a
   call void @set_normalized_timespec64(ptr noundef nonnull %1, i64 noundef %i.l, i64 noundef %i.m) #13
   %.fca.0.load.i = load i64, ptr %1, align 8      ; 3 uses
   %.fca.1.gep.i = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.fca.1.load.i = load i64, ptr %.fca.1.gep.i, align 8
+  %.fca.1.load.i = load i64, ptr %.fca.1.gep.i, align 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.n = icmp slt i64 %.fca.0.load.i, 0
   br i1 %i.n, label %__estimate_accuracy.exit, label %bb.c
@@ -83,20 +83,18 @@ bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr i8, ptr %i.b, i64 108
   %.val.i = load i32, ptr %i.o, align 4
   %i.p = add i32 %.val.i, -120
-  %i.q = icmp sgt i32 %i.p, 0
-  %spec.select.i = select i1 %i.q, i64 200, i64 1000 ; 2 uses
-  %.rhs.trunc.i = trunc nuw nsw i64 %spec.select.i to i32
-  %3 = udiv i32 1000000000, %.rhs.trunc.i         ; 2 uses
-  %4 = udiv i32 100000000, %3
-  %.zext2.i = zext nneg i32 %4 to i64
-  %i.r = icmp samesign ugt i64 %.fca.0.load.i, %.zext2.i
+  %i.q = icmp sgt i32 %i.p, 0                     ; 3 uses
+  %spec.select.i = select i1 %i.q, i64 20, i64 100
+  %i.r = icmp samesign ugt i64 %.fca.0.load.i, %spec.select.i
   br i1 %i.r, label %__estimate_accuracy.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %.zext.i = zext nneg i32 %3 to i64
-  %i.s = sdiv i64 %.fca.1.load.i, %spec.select.i
-  %i.t = mul nuw nsw i64 %.fca.0.load.i, %.zext.i
-  %i.u = add nsw i64 %i.s, %i.t
+  %.zext.i = select i1 %i.q, i64 5000000, i64 1000000
+  %3 = sdiv i64 %.fca.1.load.i, 200
+  %i.s = sdiv i64 %.fca.1.load.i, 1000
+  %4 = select i1 %i.q, i64 %3, i64 %i.s
+  %i.t = mul nuw nsw i64 %.zext.i, %.fca.0.load.i
+  %i.u = add nsw i64 %i.t, %4
   %..i = call i64 @llvm.smin.i64(i64 %i.u, i64 100000000)
   br label %__estimate_accuracy.exit
 
@@ -499,7 +497,7 @@ bb.m:                                             ; preds = %bb.l
   call void @set_normalized_timespec64(ptr noundef nonnull %3, i64 noundef %i.cl, i64 noundef %i.cm) #13
   %.fca.0.load.i.i = load i64, ptr %3, align 8    ; 3 uses
   %.fca.1.gep.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.fca.1.load.i.i = load i64, ptr %.fca.1.gep.i.i, align 8
+  %.fca.1.load.i.i = load i64, ptr %.fca.1.gep.i.i, align 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.cn = icmp slt i64 %.fca.0.load.i.i, 0
   br i1 %i.cn, label %__estimate_accuracy.exit.i, label %bb.n
@@ -508,20 +506,18 @@ bb.n:                                             ; preds = %bb.m
   %i.co = getelementptr i8, ptr %i.g, i64 108
   %.val.i.i = load i32, ptr %i.co, align 4
   %i.cp = add i32 %.val.i.i, -120
-  %i.cq = icmp sgt i32 %i.cp, 0
-  %spec.select.i.i = select i1 %i.cq, i64 200, i64 1000 ; 2 uses
-  %.rhs.trunc.i.i = trunc nuw nsw i64 %spec.select.i.i to i32
-  %6 = udiv i32 1000000000, %.rhs.trunc.i.i       ; 2 uses
-  %7 = udiv i32 100000000, %6
-  %.zext2.i.i = zext nneg i32 %7 to i64
-  %i.cr = icmp samesign ugt i64 %.fca.0.load.i.i, %.zext2.i.i
+  %i.cq = icmp sgt i32 %i.cp, 0                   ; 3 uses
+  %spec.select.i.i = select i1 %i.cq, i64 20, i64 100
+  %i.cr = icmp samesign ugt i64 %.fca.0.load.i.i, %spec.select.i.i
   br i1 %i.cr, label %__estimate_accuracy.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %.zext.i.i = zext nneg i32 %6 to i64
-  %i.cs = sdiv i64 %.fca.1.load.i.i, %spec.select.i.i
-  %i.ct = mul nuw nsw i64 %.fca.0.load.i.i, %.zext.i.i
-  %i.cu = add nsw i64 %i.cs, %i.ct
+  %.zext.i.i = select i1 %i.cq, i64 5000000, i64 1000000
+  %6 = sdiv i64 %.fca.1.load.i.i, 200
+  %i.cs = sdiv i64 %.fca.1.load.i.i, 1000
+  %7 = select i1 %i.cq, i64 %6, i64 %i.cs
+  %i.ct = mul nuw nsw i64 %.zext.i.i, %.fca.0.load.i.i
+  %i.cu = add nsw i64 %i.ct, %7
   %..i.i = call i64 @llvm.smin.i64(i64 %i.cu, i64 100000000)
   br label %__estimate_accuracy.exit.i
 
@@ -924,7 +920,7 @@ bb.i:                                             ; preds = %bb.h
   call void @set_normalized_timespec64(ptr noundef nonnull %3, i64 noundef %i.aw, i64 noundef %i.ax) #13
   %.fca.0.load.i.i.i = load i64, ptr %3, align 8  ; 3 uses
   %.fca.1.gep.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.fca.1.load.i.i.i = load i64, ptr %.fca.1.gep.i.i.i, align 8
+  %.fca.1.load.i.i.i = load i64, ptr %.fca.1.gep.i.i.i, align 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.ay = icmp slt i64 %.fca.0.load.i.i.i, 0
   br i1 %i.ay, label %__estimate_accuracy.exit.i.i, label %bb.j
@@ -933,20 +929,18 @@ bb.j:                                             ; preds = %bb.i
   %i.az = getelementptr i8, ptr %i.e, i64 108
   %.val.i.i.i = load i32, ptr %i.az, align 4
   %i.ba = add i32 %.val.i.i.i, -120
-  %i.bb = icmp sgt i32 %i.ba, 0
-  %spec.select.i.i.i = select i1 %i.bb, i64 200, i64 1000 ; 2 uses
-  %.rhs.trunc.i.i.i = trunc nuw nsw i64 %spec.select.i.i.i to i32
-  %6 = udiv i32 1000000000, %.rhs.trunc.i.i.i     ; 2 uses
-  %7 = udiv i32 100000000, %6
-  %.zext2.i.i.i = zext nneg i32 %7 to i64
-  %i.bc = icmp samesign ugt i64 %.fca.0.load.i.i.i, %.zext2.i.i.i
+  %i.bb = icmp sgt i32 %i.ba, 0                   ; 3 uses
+  %spec.select.i.i.i = select i1 %i.bb, i64 20, i64 100
+  %i.bc = icmp samesign ugt i64 %.fca.0.load.i.i.i, %spec.select.i.i.i
   br i1 %i.bc, label %__estimate_accuracy.exit.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %.zext.i.i.i = zext nneg i32 %6 to i64
-  %i.bd = sdiv i64 %.fca.1.load.i.i.i, %spec.select.i.i.i
-  %i.be = mul nuw nsw i64 %.fca.0.load.i.i.i, %.zext.i.i.i
-  %i.bf = add nsw i64 %i.bd, %i.be
+  %.zext.i.i.i = select i1 %i.bb, i64 5000000, i64 1000000
+  %6 = sdiv i64 %.fca.1.load.i.i.i, 200
+  %i.bd = sdiv i64 %.fca.1.load.i.i.i, 1000
+  %7 = select i1 %i.bb, i64 %6, i64 %i.bd
+  %i.be = mul nuw nsw i64 %.zext.i.i.i, %.fca.0.load.i.i.i
+  %i.bf = add nsw i64 %i.be, %7
   %..i.i.i = call i64 @llvm.smin.i64(i64 %i.bf, i64 100000000)
   br label %__estimate_accuracy.exit.i.i
 
