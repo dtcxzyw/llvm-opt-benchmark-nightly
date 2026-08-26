@@ -174,7 +174,7 @@ bb.l:                                             ; preds = %bb.k, %bb.k, %bb.k,
   %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 228
   %i.ck = load i32, ptr %i.cj, align 4, !tbaa !35
   %i.cl = add nsw i32 %i.ck, 4                    ; 2 uses
-  %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 144
+  %i.cm = getelementptr inbounds nuw i8, ptr %2, i64 144 ; 2 uses
   %i.cn = load i32, ptr %i.cm, align 8, !tbaa !37
   %i.co = shl nuw i32 1, %i.cl
   %i.cp = ashr i32 %i.co, 1
@@ -577,7 +577,6 @@ bb.ab:                                            ; preds = %generate_scaling_8.
   %i.uu = getelementptr inbounds nuw i8, ptr %i.c, i64 12136
   %i.uv = getelementptr inbounds nuw i8, ptr %i.d, i64 256
   %i.uw = getelementptr inbounds nuw i8, ptr %i.d, i64 512
-  %scevgep222 = getelementptr i8, ptr %2, i64 144
   br label %bb.ac
 
 bb.ac:                                            ; preds = %apply_grain_row_8.exit.i, %.lr.ph106.i
@@ -882,7 +881,7 @@ scalar.ph249:                                     ; preds = %.loopexit.i88.i, %s
   %bound0 = icmp ult ptr %scevgep, %scevgep221
   %bound1 = icmp ult ptr %scevgep220, %scevgep219
   %found.conflict = and i1 %bound0, %bound1
-  %bound0224 = icmp ult ptr %scevgep, %scevgep222
+  %bound0224 = icmp ult ptr %scevgep, %i.cm
   %bound1225 = icmp ult ptr %i.uk, %scevgep219
   %found.conflict226 = and i1 %bound0224, %bound1225
   %i.abk = or i1 %found.conflict226, %stride.check227
