@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 35
 inline.NumDeleted: 4
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@wwunpack:bb.a
 ._crit_edge.i:                                    ; preds = %bb.et
   %.pre528.i = load i32, ptr %i.c, align 4, !tbaa !4
@@ -205,10 +205,7 @@ bb.ez:                                            ; preds = %bb.ey
   store i32 %i.ol, ptr %i.om, align 1
   %i.on = getelementptr inbounds nuw i8, ptr %i.oh, i64 80 ; 2 uses
   %.val118 = load i32, ptr %i.on, align 1
-  %9 = and i32 %7, 4095
-  %.not107 = icmp eq i32 %9, 0
-  %10 = select i1 %.not107, i32 0, i32 4096
-  %i.oo = add i32 %10, %7
+  %i.oo = add i32 %7, 4095
   %i.op = and i32 %i.oo, -4096
   %i.oq = sub i32 %.val118, %i.op
   store i32 %i.oq, ptr %i.on, align 1
@@ -216,42 +213,81 @@ bb.ez:                                            ; preds = %bb.ey
   %.val117 = load i32, ptr %i.or, align 1
   %i.os = and i32 %.val117, 65535
   %i.ot = zext nneg i32 %i.os to i64
-  %i.ou = getelementptr inbounds nuw i8, ptr %i.oh, i64 %i.ot
+  %i.ou = getelementptr inbounds nuw i8, ptr %i.oh, i64 %i.ot ; 6 uses
   %i.ov = getelementptr inbounds nuw i8, ptr %i.ou, i64 24 ; 2 uses
   %.not108152 = icmp eq i16 %8, 0
   br i1 %.not108152, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ez
-  %i.ow = sub i32 %2, %3
-  br label %bb.fa
+  %i.ow = sub i32 %2, %3                          ; 3 uses
+  %xtraiter306 = and i16 %8, 1
+  %lcmp.mod307.not = icmp eq i16 %xtraiter306, 0
+  br i1 %lcmp.mod307.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.fa:                                            ; preds = %.lr.ph, %bb.fa
-  %.089154 = phi i16 [ %8, %.lr.ph ], [ %11, %bb.fa ]
-  %.1153 = phi ptr [ %i.ov, %.lr.ph ], [ %i.pe, %bb.fa ] ; 5 uses
-  %11 = add i16 %.089154, -1                      ; 2 uses
-  %i.ox = getelementptr inbounds nuw i8, ptr %.1153, i64 8 ; 2 uses
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
+  %9 = add nsw i16 %8, -1
+  %10 = getelementptr inbounds nuw i8, ptr %i.ou, i64 32 ; 2 uses
+  %.val116.prol = load i32, ptr %10, align 1
+  %11 = getelementptr inbounds nuw i8, ptr %i.ou, i64 40 ; 2 uses
+  %.val115.prol = load i32, ptr %11, align 1
+  %12 = tail call i32 @llvm.umax.i32(i32 %.val115.prol, i32 %.val116.prol)
+  %13 = add i32 %12, 4095
+  %14 = and i32 %13, -4096                        ; 2 uses
+  store i32 %14, ptr %10, align 1
+  store i32 %14, ptr %11, align 1
+  %15 = getelementptr inbounds nuw i8, ptr %i.ou, i64 44
+  %16 = getelementptr inbounds nuw i8, ptr %i.ou, i64 36
+  %.val.prol = load i32, ptr %16, align 1
+  %17 = add i32 %i.ow, %.val.prol
+  store i32 %17, ptr %15, align 1
+  %18 = getelementptr inbounds nuw i8, ptr %i.ou, i64 64 ; 2 uses
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
+  %.lcssa.unr = phi ptr [ poison, %.lr.ph ], [ %18, %.prol.loopexit.unr-lcssa ]
+  %.089154.unr = phi i16 [ %8, %.lr.ph ], [ %9, %.prol.loopexit.unr-lcssa ]
+  %.1153.unr = phi ptr [ %i.ov, %.lr.ph ], [ %18, %.prol.loopexit.unr-lcssa ]
+  %19 = icmp eq i16 %8, 1
+  br i1 %19, label %._crit_edge, label %bb.fa
+
+bb.fa:                                            ; preds = %.prol.loopexit, %bb.fa
+  %.089154 = phi i16 [ %26, %bb.fa ], [ %.089154.unr, %.prol.loopexit ]
+  %.1153 = phi ptr [ %i.pe, %bb.fa ], [ %.1153.unr, %.prol.loopexit ] ; 9 uses
+  %20 = getelementptr inbounds nuw i8, ptr %.1153, i64 8 ; 2 uses
+  %.val116 = load i32, ptr %20, align 1
+  %i.ox = getelementptr inbounds nuw i8, ptr %.1153, i64 16 ; 2 uses
   %.val116.a = load i32, ptr %i.ox, align 1
-  %i.oy = getelementptr inbounds nuw i8, ptr %.1153, i64 16 ; 2 uses
+  %21 = tail call i32 @llvm.umax.i32(i32 %.val116.a, i32 %.val116)
+  %22 = add i32 %21, 4095
+  %23 = and i32 %22, -4096                        ; 2 uses
+  store i32 %23, ptr %20, align 1
+  store i32 %23, ptr %i.ox, align 1
+  %24 = getelementptr inbounds nuw i8, ptr %.1153, i64 20
+  %i.oy = getelementptr inbounds nuw i8, ptr %.1153, i64 12
   %.val115 = load i32, ptr %i.oy, align 1
-  %12 = tail call i32 @llvm.umax.i32(i32 %.val115, i32 %.val116.a) ; 2 uses
-  %13 = and i32 %12, 4095
-  %.not109 = icmp eq i32 %13, 0
-  %14 = select i1 %.not109, i32 0, i32 4096
-  %i.oz = add i32 %14, %12
+  %25 = add i32 %i.ow, %.val115
+  store i32 %25, ptr %24, align 1
+  %26 = add i16 %.089154, -2                      ; 2 uses
+  %27 = getelementptr inbounds nuw i8, ptr %.1153, i64 48 ; 2 uses
+  %.val116.1 = load i32, ptr %27, align 1
+  %28 = getelementptr inbounds nuw i8, ptr %.1153, i64 56 ; 2 uses
+  %.val115.1 = load i32, ptr %28, align 1
+  %29 = tail call i32 @llvm.umax.i32(i32 %.val115.1, i32 %.val116.1)
+  %i.oz = add i32 %29, 4095
   %i.pa = and i32 %i.oz, -4096                    ; 2 uses
-  store i32 %i.pa, ptr %i.ox, align 1
-  store i32 %i.pa, ptr %i.oy, align 1
-  %i.pb = getelementptr inbounds nuw i8, ptr %.1153, i64 20
-  %i.pc = getelementptr inbounds nuw i8, ptr %.1153, i64 12
+  store i32 %i.pa, ptr %27, align 1
+  store i32 %i.pa, ptr %28, align 1
+  %i.pb = getelementptr inbounds nuw i8, ptr %.1153, i64 60
+  %i.pc = getelementptr inbounds nuw i8, ptr %.1153, i64 52
   %.val = load i32, ptr %i.pc, align 1
   %i.pd = add i32 %i.ow, %.val
   store i32 %i.pd, ptr %i.pb, align 1
-  %i.pe = getelementptr inbounds nuw i8, ptr %.1153, i64 40 ; 2 uses
-  %.not108 = icmp eq i16 %11, 0
+  %i.pe = getelementptr inbounds nuw i8, ptr %.1153, i64 80 ; 2 uses
+  %.not108 = icmp eq i16 %26, 0
   br i1 %.not108, label %._crit_edge, label %bb.fa, !llvm.loop !21
 
-._crit_edge:                                      ; preds = %bb.fa, %bb.ez
-  %.1.lcssa = phi ptr [ %i.ov, %bb.ez ], [ %i.pe, %bb.fa ]
+._crit_edge:                                      ; preds = %.prol.loopexit, %bb.fa, %bb.ez
+  %.1.lcssa = phi ptr [ %i.ov, %bb.ez ], [ %.lcssa.unr, %.prol.loopexit ], [ %i.pe, %bb.fa ]
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %.1.lcssa, i8 0, i64 40, i1 false)
   br label %bb.fb
 
