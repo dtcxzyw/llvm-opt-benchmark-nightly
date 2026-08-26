@@ -145,6 +145,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.bj, %bb.f
+  %.sroa.0119.0 = phi i32 [ undef, %bb.f ], [ %.sroa.0119.0.a, %bb.bj ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6120)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11)
   call void @llvm.experimental.noalias.scope.decl(metadata !5)
@@ -172,7 +173,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %.noexc
-  %.sroa.0119.0.a = phi i32 [ undef, %.noexc ], [ undef, %bb.h ], [ %i.az, %bb.i ]
+  %.sroa.0119.0.a = phi i32 [ %.sroa.0119.0, %.noexc ], [ %.sroa.0119.0, %bb.h ], [ %i.az, %bb.i ] ; 2 uses
   %.sink20.i.sroa.phi = phi ptr [ %.sroa.6120, %.noexc ], [ %.sroa.6120, %bb.h ], [ %.sroa.11, %bb.i ]
   %.sink.i = phi ptr [ null, %.noexc ], [ null, %bb.h ], [ %i.bb, %bb.i ]
   store ptr %.sink.i, ptr %.sink20.i.sroa.phi, align 8, !alias.scope !5, !noalias !8

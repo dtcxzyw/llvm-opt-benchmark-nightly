@@ -205,6 +205,7 @@ _RNvXs0_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB5_11ListNestingNtNtCshzWfHUSfYa
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.gh, %_RNvXs0_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB5_11ListNestingNtNtCshzWfHUSfYae_4core7default7Default7default.exit.i.i
+  %.sroa.7.0.i.i = phi i64 [ undef, %_RNvXs0_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB5_11ListNestingNtNtCshzWfHUSfYae_4core7default7Default7default.exit.i.i ], [ %.sroa.7.1.i.i, %bb.gh ] ; 9 uses
   %i.gg = load i64, ptr %i.bb, align 8, !range !6, !noundef !5 ; 2 uses
   %.not.i.i91.i = icmp eq i64 %i.gg, -3
   br i1 %.not.i.i91.i, label %bb.br, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsbSS6DM8SDEO_5alloc6string6StringNtNtNtB5_2io5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2D_8PeekableINtNtNtB1c_2io4util5LinesINtNtB1O_6cursor6CursorRB18_EEE4peek0ECslkzCjlEuW1f_5xtask.exit.i.i
@@ -607,6 +608,7 @@ bb.dr:                                            ; preds = %bb.dq
   br i1 %.not139.i.i, label %bb.ds, label %_RNvNtCsdRkQxkTxnTp_6anyhow9___private10format_err.exit.i.i
 
 bb.ds:                                            ; preds = %bb.dh, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit249.i.i, %bb.dr, %bb.dp, %bb.dn, %bb.dl, %bb.dj
+  %.sroa.7.1.i.i = phi i64 [ %.sroa.7.0.i.i, %bb.dr ], [ %.sroa.7.0.i.i, %bb.dp ], [ %.sroa.7.0.i.i, %bb.dn ], [ %.sroa.7.0.i.i, %bb.dl ], [ %.sroa.7.0.i.i, %bb.dj ], [ %.sroa.7.2.ph194.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECslkzCjlEuW1f_5xtask.exit249.i.i ], [ %.sroa.7.0.i.i, %bb.dh ]
   %i.ji = invoke fastcc noundef ptr @_RNvMNtNtCslkzCjlEuW1f_5xtask7publish5notesINtB2_9ConverterINtNtNtCshzWfHUSfYae_4core2io6cursor6CursorRNtNtCsbSS6DM8SDEO_5alloc6string6StringEE16skip_blank_linesB6_(ptr nonnull %i.bb)
           to label %bb.gh unwind label %.loopexit34.i.i.a ; 2 uses
 
@@ -760,7 +762,7 @@ bb.eh:                                            ; preds = %bb.eg
 bb.ei:                                            ; preds = %bb.eh, %bb.ef
   %.sroa.14.0.ph.i.i = phi i64 [ %i.js, %bb.ef ], [ %i.jv, %bb.eh ] ; 3 uses
   %.sroa.102.0.ph.i.i = phi ptr [ %i.jq, %bb.ef ], [ %i.jt, %bb.eh ] ; 3 uses
-  %.sroa.7.0.ph.i.i = phi i64 [ %i.jr, %bb.ef ], [ %i.ju, %bb.eh ] ; 3 uses
+  %.sroa.7.0.ph.i.i = phi i64 [ %i.jr, %bb.ef ], [ %i.ju, %bb.eh ] ; 4 uses
   %.sroa.01.0.ph.i.i = phi i64 [ 0, %bb.ef ], [ 2, %bb.eh ] ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !326)
   %i.jw = load ptr, ptr %.sroa.4.0..sroa_idx.i.i87.i, align 8, !alias.scope !326, !nonnull !5, !noundef !5 ; 4 uses
@@ -815,6 +817,7 @@ _RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0B
 .split.us.i.i.i:                                  ; preds = %bb.ej, %.lr.ph.i.split.us.i.i.i
   %.sroa.14.0.ph186204.i.i = phi i64 [ %i.ka, %.lr.ph.i.split.us.i.i.i ], [ %.sroa.14.0.ph.i.i, %bb.ej ]
   %.sroa.102.0.ph189202.i.i = phi ptr [ %i.kb, %.lr.ph.i.split.us.i.i.i ], [ %.sroa.102.0.ph.i.i, %bb.ej ]
+  %.sroa.7.2.ph192203.i.i = phi i64 [ %.sroa.7.0.i.i, %.lr.ph.i.split.us.i.i.i ], [ %.sroa.7.0.ph.i.i, %bb.ej ]
   %i.ks = phi i64 [ %i.kd, %.lr.ph.i.split.us.i.i.i ], [ %i.jx, %bb.ej ]
   %.us-phi.i.i.i = phi i64 [ %.sroa.02.013.i.us.i.i.i, %.lr.ph.i.split.us.i.i.i ], [ %.sroa.02.013.i.i.i.i, %bb.ej ] ; 2 uses
   %i.kt = icmp ult i64 %.us-phi.i.i.i, %i.ks
@@ -827,7 +830,7 @@ _RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0B
   %i.kv = phi i64 [ 0, %.thread.i.i ], [ %i.kd, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.us.i.i.i ], [ 0, %bb.ei ], [ %i.jx, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.i.i.i ] ; 3 uses
   %i.kw = phi ptr [ %i.kc, %.thread.i.i ], [ %i.kc, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.us.i.i.i ], [ %i.jw, %bb.ei ], [ %i.jw, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.i.i.i ]
   %.sroa.01.0.ph194.i.i = phi i64 [ 1, %.thread.i.i ], [ 1, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.us.i.i.i ], [ %.sroa.01.0.ph.i.i, %bb.ei ], [ %.sroa.01.0.ph.i.i, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.i.i.i ]
-  %.sroa.7.0.ph192.i.i = phi i64 [ undef, %.thread.i.i ], [ undef, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.us.i.i.i ], [ %.sroa.7.0.ph.i.i, %bb.ei ], [ %.sroa.7.0.ph.i.i, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.i.i.i ]
+  %.sroa.7.0.ph192.i.i = phi i64 [ %.sroa.7.0.i.i, %.thread.i.i ], [ %.sroa.7.0.i.i, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.us.i.i.i ], [ %.sroa.7.0.ph.i.i, %bb.ei ], [ %.sroa.7.0.ph.i.i, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.i.i.i ] ; 2 uses
   %.sroa.102.0.ph190.i.i = phi ptr [ %i.kb, %.thread.i.i ], [ %i.kb, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.us.i.i.i ], [ %.sroa.102.0.ph.i.i, %bb.ei ], [ %.sroa.102.0.ph.i.i, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.i.i.i ]
   %.sroa.14.0.ph187.i.i = phi i64 [ %i.ka, %.thread.i.i ], [ %i.ka, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.us.i.i.i ], [ %.sroa.14.0.ph.i.i, %bb.ei ], [ %.sroa.14.0.ph.i.i, %_RNCNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB6_11ListNesting11set_current0Ba_.exit.thread9.i.i.i.i ]
   %i.kx = load i64, ptr %i.ag, align 8, !range !335, !alias.scope !336, !noundef !5
@@ -862,6 +865,7 @@ _RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exi
   br label %_RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exit.i.i
 
 _RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exit.i.i: ; preds = %_RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exitthread-pre-split.i.i, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerE8push_mutBL_.exit.i.i.i
+  %.sroa.7.2.ph194.i.i = phi i64 [ %.sroa.7.2.ph192203.i.i, %_RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exitthread-pre-split.i.i ], [ %.sroa.7.0.ph192.i.i, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerE8push_mutBL_.exit.i.i.i ]
   %.sroa.102.0.ph188.i.i = phi ptr [ %.sroa.102.0.ph189202.i.i, %_RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exitthread-pre-split.i.i ], [ %.sroa.102.0.ph190.i.i, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerE8push_mutBL_.exit.i.i.i ]
   %.sroa.14.0.ph185.i.i = phi i64 [ %.sroa.14.0.ph186204.i.i, %_RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exitthread-pre-split.i.i ], [ %.sroa.14.0.ph187.i.i, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerE8push_mutBL_.exit.i.i.i ] ; 4 uses
   %.val173.i.i = phi i64 [ %.val173.pr.i.i, %_RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting11set_current.exitthread-pre-split.i.i ], [ %i.lc, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerE8push_mutBL_.exit.i.i.i ] ; 5 uses
@@ -949,13 +953,13 @@ bb.em:                                            ; preds = %_RINvXs8_NtNtNtCshz
   %i.mb = getelementptr i8, ptr %i.ld, i64 -16
   %i.mc = load i64, ptr %i.mb, align 8, !range !23, !noalias !347, !noundef !5
   %i.md = icmp eq i64 %i.mc, 2                    ; 2 uses
-  %..i.i.i.i = select i1 %i.md, i64 3, i64 2
-  %.2.i.i.i.i = select i1 %i.md, ptr @15, ptr @14
+  %..i.i.i.i = select i1 %i.md, ptr @15, ptr @14
+  %.2.i.i.i.i = select i1 %i.md, i64 3, i64 2
   br label %_RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting6marker.exit.i.i.i
 
 _RNvMs_NtNtCslkzCjlEuW1f_5xtask7publish5notesNtB4_11ListNesting6marker.exit.i.i.i: ; preds = %bb.em, %_RINvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4takeINtB6_4TakeINtNtNtBc_5slice4iter4IterNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerEENtB6_8SpecTake9spec_foldjNCINvNtB8_3map8map_foldRB1p_jjNCNvMs_B1r_NtB1r_11ListNesting6marker0NCINvXsK_NtNtBa_6traits5accumjNtB3V_3Sum3sumINtB2L_3MapBO_B3a_EE0E0EB1v_.exit.i.i.i.i
-  %.sroa.5.0.i.i.i.i = phi i64 [ %..i.i.i.i, %bb.em ], [ 0, %_RINvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4takeINtB6_4TakeINtNtNtBc_5slice4iter4IterNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerEENtB6_8SpecTake9spec_foldjNCINvNtB8_3map8map_foldRB1p_jjNCNvMs_B1r_NtB1r_11ListNesting6marker0NCINvXsK_NtNtBa_6traits5accumjNtB3V_3Sum3sumINtB2L_3MapBO_B3a_EE0E0EB1v_.exit.i.i.i.i ] ; 4 uses
-  %.sroa.01.0.i.i.i.i = phi ptr [ %.2.i.i.i.i, %bb.em ], [ inttoptr (i64 1 to ptr), %_RINvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4takeINtB6_4TakeINtNtNtBc_5slice4iter4IterNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerEENtB6_8SpecTake9spec_foldjNCINvNtB8_3map8map_foldRB1p_jjNCNvMs_B1r_NtB1r_11ListNesting6marker0NCINvXsK_NtNtBa_6traits5accumjNtB3V_3Sum3sumINtB2L_3MapBO_B3a_EE0E0EB1v_.exit.i.i.i.i ]
+  %.sroa.01.0.i.i.i.i = phi ptr [ %..i.i.i.i, %bb.em ], [ inttoptr (i64 1 to ptr), %_RINvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4takeINtB6_4TakeINtNtNtBc_5slice4iter4IterNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerEENtB6_8SpecTake9spec_foldjNCINvNtB8_3map8map_foldRB1p_jjNCNvMs_B1r_NtB1r_11ListNesting6marker0NCINvXsK_NtNtBa_6traits5accumjNtB3V_3Sum3sumINtB2L_3MapBO_B3a_EE0E0EB1v_.exit.i.i.i.i ]
+  %.sroa.5.0.i.i.i.i = phi i64 [ %.2.i.i.i.i, %bb.em ], [ 0, %_RINvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4takeINtB6_4TakeINtNtNtBc_5slice4iter4IterNtNtNtCslkzCjlEuW1f_5xtask7publish5notes10ListMarkerEENtB6_8SpecTake9spec_foldjNCINvNtB8_3map8map_foldRB1p_jjNCNvMs_B1r_NtB1r_11ListNesting6marker0NCINvXsK_NtNtBa_6traits5accumjNtB3V_3Sum3sumINtB2L_3MapBO_B3a_EE0E0EB1v_.exit.i.i.i.i ] ; 4 uses
   %.not.i206.i.i = icmp eq i64 %.sroa.0.0.lcssa.i.i.i.i.i, 0
   br i1 %.not.i206.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 

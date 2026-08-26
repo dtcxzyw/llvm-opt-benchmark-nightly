@@ -204,12 +204,12 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.3.i, label %dissect_zvt_tlv_tag.exit, label %dissect_zvt_tlv_tag.exit.thread
 
 dissect_zvt_tlv_tag.exit:                         ; preds = %.lr.ph, %.preheader.preheader.i, %.preheader.1.i, %.preheader.2.i, %.preheader.3.i
-  %.136.i = phi i32 [ %i.k, %.lr.ph ], [ %i.s, %.preheader.preheader.i ], [ %i.y, %.preheader.1.i ], [ %i.ae, %.preheader.2.i ], [ %i.ak, %.preheader.3.i ] ; 7 uses
-  %.1.i = phi i32 [ %i.j, %.lr.ph ], [ %i.r, %.preheader.preheader.i ], [ %i.x, %.preheader.1.i ], [ %i.ad, %.preheader.2.i ], [ %i.aj, %.preheader.3.i ] ; 4 uses
+  %.136.i = phi i32 [ %i.j, %.lr.ph ], [ %i.r, %.preheader.preheader.i ], [ %i.x, %.preheader.1.i ], [ %i.ad, %.preheader.2.i ], [ %i.aj, %.preheader.3.i ] ; 4 uses
+  %.1.i = phi i32 [ %i.k, %.lr.ph ], [ %i.s, %.preheader.preheader.i ], [ %i.y, %.preheader.1.i ], [ %i.ae, %.preheader.2.i ], [ %i.ak, %.preheader.3.i ] ; 7 uses
   %i.al = load i32, ptr @hf_zvt_tlv_tag, align 4
-  %i.am = sub i32 %.136.i, %.04168                ; 3 uses
-  %i.an = call ptr @val_to_str_ext_const(i32 noundef %.1.i, ptr noundef nonnull @tlv_tags_ext, ptr noundef nonnull @.str.183)
-  %i.ao = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %i.h, i32 noundef %i.al, ptr noundef %0, i32 noundef %.04168, i32 noundef %i.am, i32 noundef %.1.i, ptr noundef nonnull @.str.186, ptr noundef %i.an, i32 noundef %.1.i)
+  %i.am = sub i32 %.1.i, %.04168                  ; 3 uses
+  %i.an = call ptr @val_to_str_ext_const(i32 noundef %.136.i, ptr noundef nonnull @tlv_tags_ext, ptr noundef nonnull @.str.183)
+  %i.ao = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format(ptr noundef %i.h, i32 noundef %i.al, ptr noundef %0, i32 noundef %.04168, i32 noundef %i.am, i32 noundef %.136.i, ptr noundef nonnull @.str.186, ptr noundef %i.an, i32 noundef %.136.i)
   %i.ap = load i32, ptr @ett_zvt_tlv_tag, align 4
   %i.aq = call ptr @proto_item_add_subtree(ptr noundef %i.ao, i32 noundef %i.ap) ; 2 uses
   %i.ar = load i32, ptr @hf_zvt_tlv_tag_class, align 4
@@ -221,7 +221,7 @@ dissect_zvt_tlv_tag.exit:                         ; preds = %.lr.ph, %.preheader
 
 bb.d:                                             ; preds = %dissect_zvt_tlv_tag.exit
   %i.aw = load i32, ptr @hf_zvt_tlv_len, align 4
-  %i.ax = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.136.i) ; 3 uses
+  %i.ax = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.1.i) ; 3 uses
   %i.ay = zext nneg i8 %i.ax to i16
   %.not.i51 = icmp sgt i8 %i.ax, -1
   br i1 %.not.i51, label %bb.h, label %bb.e
@@ -238,13 +238,13 @@ bb.e:                                             ; preds = %bb.d
   br label %dissect_zvt_tlv_len.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.ba = add i32 %.136.i, 1
+  %i.ba = add i32 %.1.i, 1
   %i.bb = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.ba)
   %i.bc = zext i8 %i.bb to i16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.bd = add i32 %.136.i, 1
+  %i.bd = add i32 %.1.i, 1
   %i.be = call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.bd)
   br label %bb.h
 
@@ -252,15 +252,15 @@ bb.h:                                             ; preds = %bb.d, %bb.f, %bb.g
   %.021.i = phi i16 [ %i.bc, %bb.f ], [ %i.be, %bb.g ], [ %i.ay, %bb.d ] ; 2 uses
   %.0.i = phi i32 [ 2, %bb.f ], [ 3, %bb.g ], [ 1, %bb.d ] ; 3 uses
   %i.bf = zext i16 %.021.i to i32                 ; 2 uses
-  %i.bg = call ptr @proto_tree_add_uint(ptr noundef %i.h, i32 noundef %i.aw, ptr noundef %0, i32 noundef %.136.i, i32 noundef %.0.i, i32 noundef %i.bf) ; 0 uses
-  %i.bh = add i32 %.0.i, %.136.i
+  %i.bg = call ptr @proto_tree_add_uint(ptr noundef %i.h, i32 noundef %i.aw, ptr noundef %0, i32 noundef %.1.i, i32 noundef %.0.i, i32 noundef %i.bf) ; 0 uses
+  %i.bh = add i32 %.0.i, %.1.i
   br label %dissect_zvt_tlv_len.exit
 
 dissect_zvt_tlv_len.exit:                         ; preds = %.dissect_zvt_tlv_len.exit_crit_edge, %bb.h
   %.pre-phi = phi i32 [ %.pre, %.dissect_zvt_tlv_len.exit_crit_edge ], [ %i.bf, %bb.h ] ; 3 uses
   %.022.i65 = phi i32 [ -1, %.dissect_zvt_tlv_len.exit_crit_edge ], [ %.0.i, %bb.h ]
   %.163 = phi i16 [ %.05667, %.dissect_zvt_tlv_len.exit_crit_edge ], [ %.021.i, %bb.h ] ; 2 uses
-  %i.bi = phi i32 [ %.136.i, %.dissect_zvt_tlv_len.exit_crit_edge ], [ %i.bh, %bb.h ] ; 3 uses
+  %i.bi = phi i32 [ %.1.i, %.dissect_zvt_tlv_len.exit_crit_edge ], [ %i.bh, %bb.h ] ; 3 uses
   %i.bj = load ptr, ptr %i.a, align 8
   %i.bk = add i32 %.022.i65, %i.am
   %i.bl = add nuw i32 %i.bk, %.pre-phi
@@ -270,7 +270,7 @@ dissect_zvt_tlv_len.exit:                         ; preds = %.dissect_zvt_tlv_le
 
 bb.i:                                             ; preds = %dissect_zvt_tlv_len.exit
   %i.bn = load ptr, ptr @tlv_table, align 8
-  %i.bo = zext i32 %.1.i to i64
+  %i.bo = zext i32 %.136.i to i64
   %i.bp = inttoptr i64 %i.bo to ptr
   %i.bq = call ptr @g_hash_table_lookup(ptr noundef %i.bn, ptr noundef %i.bp) ; 2 uses
   %.not49 = icmp eq ptr %i.bq, null
@@ -403,7 +403,7 @@ declare void @col_clear(ptr noundef, i32 noundef) local_unnamed_addr #2
 declare ptr @proto_tree_add_protocol_format(ptr noundef, i32 noundef, ptr noundef, i32 noundef, i32 noundef, ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal fastcc range(i32 -1, 65541) i32 @dissect_zvt_apdu(ptr noundef %0, i32 noundef range(i32 0, 3) %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 {
+define internal fastcc range(i32 -1, 65543) i32 @dissect_zvt_apdu(ptr noundef %0, i32 noundef range(i32 0, 3) %1, ptr noundef %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i16, align 2                      ; 7 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
@@ -427,12 +427,12 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0100 = phi i32 [ 3, %bb.c ], [ 1, %bb.b ]     ; 3 uses
-  %.099 = phi i16 [ %i.j, %bb.c ], [ %i.g, %bb.b ] ; 3 uses
+  %.0102 = phi i16 [ %i.j, %bb.c ], [ %i.g, %bb.b ] ; 3 uses
+  %.0101 = phi i32 [ 3, %bb.c ], [ 1, %bb.b ]     ; 3 uses
   %i.k = tail call i32 @tvb_captured_length_remaining(ptr noundef %0, i32 noundef %1)
-  %i.l = add nuw nsw i32 %.0100, 2
-  %i.m = zext i16 %.099 to i32                    ; 4 uses
-  %i.n = add nuw nsw i32 %i.l, %i.m               ; 3 uses
+  %i.l = add nuw nsw i32 %.0101, 2
+  %i.m = zext i16 %.0102 to i32                   ; 5 uses
+  %i.n = add nuw nsw i32 %i.l, %i.m
   %i.o = icmp ult i32 %i.k, %i.n
   br i1 %i.o, label %bb.ag, label %bb.e
 
@@ -579,7 +579,7 @@ bb.s:                                             ; preds = %bb.l
   %i.cg = inttoptr i64 %i.cf to ptr
   %i.ch = call ptr @g_hash_table_lookup(ptr noundef %i.cd, ptr noundef %i.cg) ; 3 uses
   %i.ci = load i32, ptr @hf_zvt_len, align 4
-  %i.cj = call ptr @proto_tree_add_uint(ptr noundef %i.q, i32 noundef %i.ci, ptr noundef %0, i32 noundef %i.e, i32 noundef %.0100, i32 noundef %i.m)
+  %i.cj = call ptr @proto_tree_add_uint(ptr noundef %i.q, i32 noundef %i.ci, ptr noundef %0, i32 noundef %i.e, i32 noundef %.0101, i32 noundef %i.m)
   %.not115 = icmp eq ptr %i.ch, null              ; 2 uses
   br i1 %.not115, label %bb.v, label %bb.t
 
@@ -596,7 +596,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t, %.critedge
-  %i.co = add nuw nsw i32 %.0100, %i.e            ; 2 uses
+  %i.co = add nuw nsw i32 %.0101, %i.e            ; 3 uses
   %.not.i122 = icmp eq ptr %.0, null
   br i1 %.not.i122, label %zvt_set_addresses.exit, label %bb.w
 
@@ -664,7 +664,7 @@ bb.aa:                                            ; preds = %bb.x
   br label %zvt_set_addresses.exit
 
 zvt_set_addresses.exit:                           ; preds = %bb.v, %bb.w, %bb.y, %bb.aa, %.thread.sink.split.i
-  %.not117 = icmp eq i16 %.099, 0
+  %.not117 = icmp eq i16 %.0102, 0
   br i1 %.not117, label %bb.af, label %bb.ab
 
 bb.ab:                                            ; preds = %zvt_set_addresses.exit
@@ -677,7 +677,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %.not118, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  call void %i.dq(ptr noundef %0, i32 noundef %i.co, i16 noundef zeroext %.099, ptr noundef %2, ptr noundef %i.q, ptr noundef %.0)
+  call void %i.dq(ptr noundef %0, i32 noundef %i.co, i16 noundef zeroext %.0102, ptr noundef %2, ptr noundef %i.q, ptr noundef %.0)
   br label %bb.af
 
 bb.ae:                                            ; preds = %bb.ac, %bb.ab
@@ -687,11 +687,13 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ab
 
 bb.af:                                            ; preds = %bb.ad, %bb.ae, %zvt_set_addresses.exit
   %i.dt = load ptr, ptr %i.b, align 8
-  call void @proto_item_set_len(ptr noundef %i.dt, i32 noundef %i.n)
+  %4 = sub nsw i32 %i.m, %1
+  %5 = add nsw i32 %4, %i.co                      ; 2 uses
+  call void @proto_item_set_len(ptr noundef %i.dt, i32 noundef %5)
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.d, %bb.a, %bb.af
-  %.0101.a = phi i32 [ %i.n, %bb.af ], [ -1, %bb.a ], [ -1, %bb.d ]
+  %.0101.a = phi i32 [ %5, %bb.af ], [ -1, %bb.a ], [ -1, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.0101.a

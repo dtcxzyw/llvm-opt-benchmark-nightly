@@ -202,8 +202,8 @@ _ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph.i.i.i.i16, %bb.j, %bb.l, %..loopexit_crit_edge21.i.i.i.i20, %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit24
-  %.sroa.5.0 = phi i8 [ 1, %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit24 ], [ 0, %..loopexit_crit_edge21.i.i.i.i20 ], [ 0, %bb.j ], [ 0, %bb.l ], [ 0, %.lr.ph.i.i.i.i16 ] ; 2 uses
   %.sroa.027.0 = phi i64 [ %i.be, %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit24 ], [ undef, %..loopexit_crit_edge21.i.i.i.i20 ], [ undef, %bb.j ], [ undef, %bb.l ], [ undef, %.lr.ph.i.i.i.i16 ] ; 2 uses
+  %.sroa.5.0 = phi i8 [ 1, %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit24 ], [ 0, %..loopexit_crit_edge21.i.i.i.i20 ], [ 0, %bb.j ], [ 0, %bb.l ], [ 0, %.lr.ph.i.i.i.i16 ] ; 2 uses
   %i.bf = icmp eq i64 %i.ac, 0
   br i1 %i.bf, label %bb.p, label %bb.q
 
@@ -606,6 +606,7 @@ bb.k:                                             ; preds = %bb.h
 bb.l:                                             ; preds = %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit.thread.i, %.lr.ph.i27
   %.1 = phi i1 [ false, %.lr.ph.i27 ], [ %.2, %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit.thread.i ] ; 7 uses
   %.sroa.059.084.i = phi ptr [ %i.bj, %.lr.ph.i27 ], [ %i.du, %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit.thread.i ] ; 2 uses
+  %.sroa.052.086.i = phi i64 [ undef, %.lr.ph.i27 ], [ %.sroa.052.2.ph.i, %_ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit.thread.i ] ; 8 uses
   %i.br = load i32, ptr %.sroa.059.084.i, align 4, !noalias !95 ; 8 uses
   br i1 %.not.not.i.i.i28, label %.preheader60, label %bb.n
 
@@ -723,7 +724,7 @@ bb.v:                                             ; preds = %.lr.ph.i.i.i.i36.i
 
 .loopexit.i:                                      ; preds = %.lr.ph.i.i.i.i36.i, %.preheader, %.loopexit73.i, %..loopexit_crit_edge21.i.i.i.i40.i, %bb.s
   %.sroa.4.0.i = phi i8 [ 1, %.loopexit73.i ], [ 0, %..loopexit_crit_edge21.i.i.i.i40.i ], [ 0, %.preheader ], [ 0, %bb.s ], [ 0, %.lr.ph.i.i.i.i36.i ] ; 2 uses
-  %.sroa.052.0.i = phi i64 [ %i.di, %.loopexit73.i ], [ undef, %..loopexit_crit_edge21.i.i.i.i40.i ], [ undef, %.preheader ], [ undef, %bb.s ], [ undef, %.lr.ph.i.i.i.i36.i ]
+  %.sroa.052.0.i = phi i64 [ %i.di, %.loopexit73.i ], [ %.sroa.052.086.i, %..loopexit_crit_edge21.i.i.i.i40.i ], [ %.sroa.052.086.i, %.preheader ], [ %.sroa.052.086.i, %bb.s ], [ %.sroa.052.086.i, %.lr.ph.i.i.i.i36.i ] ; 4 uses
   %.in.i = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i.i35, i64 16
   %i.dj = load i64, ptr %.in.i, align 8, !tbaa !79, !noalias !95 ; 2 uses
   %i.dk = icmp eq i64 %i.dj, 0
@@ -808,6 +809,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 _ZNKSt13unordered_mapIjmSt4hashIjESt8equal_toIjESaISt4pairIKjmEEE4findERS5_.exit.thread.i: ; preds = %.lr.ph.i.i.i.i.i30, %.preheader60, %.thread.i, %bb.ac, %_ZN7rocksdb12_GLOBAL__N_115GetRecoveryTypeEmRKSt8optionalImE.exit.i, %..loopexit_crit_edge21.i.i.i.i.i34, %bb.n
   %.2 = phi i1 [ true, %.thread.i ], [ %.1, %_ZN7rocksdb12_GLOBAL__N_115GetRecoveryTypeEmRKSt8optionalImE.exit.i ], [ %.1, %..loopexit_crit_edge21.i.i.i.i.i34 ], [ %.1, %bb.n ], [ %.1, %.preheader60 ], [ true, %bb.ac ], [ %.1, %.lr.ph.i.i.i.i.i30 ] ; 2 uses
+  %.sroa.052.2.ph.i = phi i64 [ %.sroa.052.0.i, %.thread.i ], [ %.sroa.052.0.i, %_ZN7rocksdb12_GLOBAL__N_115GetRecoveryTypeEmRKSt8optionalImE.exit.i ], [ %.sroa.052.086.i, %..loopexit_crit_edge21.i.i.i.i.i34 ], [ %.sroa.052.086.i, %bb.n ], [ %.sroa.052.086.i, %.preheader60 ], [ %.sroa.052.0.i, %bb.ac ], [ %.sroa.052.086.i, %.lr.ph.i.i.i.i.i30 ]
   %i.du = getelementptr inbounds nuw i8, ptr %.sroa.059.084.i, i64 4 ; 2 uses
   %i.dv = icmp eq ptr %i.du, %i.bl
   br i1 %i.dv, label %.critedge.i, label %bb.l

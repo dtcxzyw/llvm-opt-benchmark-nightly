@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i
-  %.044.i = phi i32 [ -1, %.lr.ph.i ], [ %.1.i, %bb.d ] ; 2 uses
+  %.044.i = phi i32 [ %i.h, %.lr.ph.i ], [ %.1.i, %bb.d ] ; 2 uses
   %.02443.i = phi i32 [ -1, %.lr.ph.i ], [ %.125.i, %bb.d ] ; 2 uses
-  %.02642.i = phi i32 [ %i.i, %.lr.ph.i ], [ %.127.i, %bb.d ] ; 2 uses
-  %.02841.i = phi i32 [ %i.h, %.lr.ph.i ], [ %.129.i, %bb.d ] ; 2 uses
-  %i.k = add i32 %.02841.i, %.02642.i
+  %.02642.i = phi i32 [ -1, %.lr.ph.i ], [ %.127.i, %bb.d ] ; 2 uses
+  %.02841.i = phi i32 [ %i.i, %.lr.ph.i ], [ %.129.i, %bb.d ] ; 2 uses
+  %i.k = add i32 %.02841.i, %.044.i
   %i.l = lshr i32 %i.k, 1                         ; 5 uses
   %i.m = load ptr, ptr %i.j, align 8, !tbaa !16
   %i.n = zext nneg i32 %i.l to i64
@@ -222,8 +222,8 @@ _ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.ex
   %i.u = tail call i64 @_ZNK4toku8locktree11get_dict_idEv(ptr noundef nonnull align 8 dereferenceable(400) %i.t)
   %i.v = load i64, ptr %1, align 8, !tbaa !51
   %.not39.i = icmp eq i64 %i.u, %i.v              ; 2 uses
-  %.024..i = select i1 %.not39.i, i32 %.02443.i, i32 %i.l
-  %..0.i = select i1 %.not39.i, i32 %i.l, i32 %.044.i
+  %.024..i = select i1 %.not39.i, i32 %.02642.i, i32 %i.l
+  %..0.i = select i1 %.not39.i, i32 %i.l, i32 %.02443.i
   br label %bb.d
 
 _ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i: ; preds = %bb.c
@@ -231,15 +231,15 @@ _ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.ex
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i
-  %.129.i = phi i32 [ %i.w, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %.02841.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 2 uses
-  %.127.i = phi i32 [ %.02642.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %i.l, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 2 uses
-  %.125.i = phi i32 [ %.02443.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %.024..i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 3 uses
-  %.1.i = phi i32 [ %.044.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %..0.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 4 uses
-  %.not.i = icmp eq i32 %.129.i, %.127.i
+  %.129.i = phi i32 [ %.02841.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %i.l, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 2 uses
+  %.127.i = phi i32 [ %.02642.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %.024..i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 3 uses
+  %.125.i = phi i32 [ %.02443.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %..0.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 4 uses
+  %.1.i = phi i32 [ %i.w, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i ], [ %.044.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i ] ; 2 uses
+  %.not.i = icmp eq i32 %.1.i, %.129.i
   br i1 %.not.i, label %._crit_edge.i, label %bb.c, !llvm.loop !53
 
 ._crit_edge.i:                                    ; preds = %bb.d
-  %.not33.i = icmp eq i32 %.1.i, -1
+  %.not33.i = icmp eq i32 %.125.i, -1
   br i1 %.not33.i, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.i
@@ -248,7 +248,7 @@ bb.e:                                             ; preds = %._crit_edge.i
 
 bb.f:                                             ; preds = %bb.e
   %i.x = load ptr, ptr %i.j, align 8, !tbaa !16
-  %i.y = zext nneg i32 %.1.i to i64
+  %i.y = zext nneg i32 %.125.i to i64
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %i.y
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !49
   store ptr %i.aa, ptr %2, align 8, !tbaa !49
@@ -256,11 +256,11 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ab = load i32, ptr %i.e, align 8, !tbaa !16
-  %i.ac = sub i32 %.1.i, %i.ab
+  %i.ac = sub i32 %.125.i, %i.ab
   br label %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE24find_internal_zero_arrayI13DICTIONARY_IDTnPFiRKS2_RKT_EXadL_ZNS_16locktree_manager15find_by_dict_idES7_RKS5_EEEEiSA_PS2_Pj.exit
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %.not34.i = icmp eq i32 %.125.i, -1
+  %.not34.i = icmp eq i32 %.127.i, -1
   br i1 %.not34.i, label %..thread.i_crit_edge, label %bb.i
 
 ..thread.i_crit_edge:                             ; preds = %bb.h
@@ -269,7 +269,7 @@ bb.h:                                             ; preds = %._crit_edge.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ad = load i32, ptr %i.e, align 8, !tbaa !16
-  %i.ae = sub i32 %.125.i, %i.ad
+  %i.ae = sub i32 %.127.i, %i.ad
   br label %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE24find_internal_zero_arrayI13DICTIONARY_IDTnPFiRKS2_RKT_EXadL_ZNS_16locktree_manager15find_by_dict_idES7_RKS5_EEEEiSA_PS2_Pj.exit
 
 _ZNK4toku3omtIPNS_8locktreeES2_Lb0EE24find_internal_zero_arrayI13DICTIONARY_IDTnPFiRKS2_RKT_EXadL_ZNS_16locktree_manager15find_by_dict_idES7_RKS5_EEEEiSA_PS2_Pj.exit: ; preds = %bb.b, %..thread.i_crit_edge, %bb.g, %bb.i
@@ -326,11 +326,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i
-  %.044.i.i = phi i32 [ -1, %.lr.ph.i.i ], [ %.1.i.i, %bb.d ] ; 2 uses
+  %.044.i.i = phi i32 [ %i.g, %.lr.ph.i.i ], [ %.1.i.i, %bb.d ] ; 2 uses
   %.02443.i.i = phi i32 [ -1, %.lr.ph.i.i ], [ %.125.i.i, %bb.d ] ; 2 uses
-  %.02642.i.i = phi i32 [ %i.h, %.lr.ph.i.i ], [ %.127.i.i, %bb.d ] ; 2 uses
-  %.02841.i.i = phi i32 [ %i.g, %.lr.ph.i.i ], [ %.129.i.i, %bb.d ] ; 2 uses
-  %i.j = add i32 %.02841.i.i, %.02642.i.i
+  %.02642.i.i = phi i32 [ -1, %.lr.ph.i.i ], [ %.127.i.i, %bb.d ] ; 2 uses
+  %.02841.i.i = phi i32 [ %i.h, %.lr.ph.i.i ], [ %.129.i.i, %bb.d ] ; 2 uses
+  %i.j = add i32 %.02841.i.i, %.044.i.i
   %i.k = lshr i32 %i.j, 1                         ; 5 uses
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !16
   %i.m = zext nneg i32 %i.k to i64
@@ -346,8 +346,8 @@ _ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.ex
   %i.t = tail call i64 @_ZNK4toku8locktree11get_dict_idEv(ptr noundef nonnull align 8 dereferenceable(400) %i.s)
   %i.u = load i64, ptr %2, align 8, !tbaa !51
   %.not39.i.i = icmp eq i64 %i.t, %i.u            ; 2 uses
-  %.024..i.i = select i1 %.not39.i.i, i32 %.02443.i.i, i32 %i.k
-  %..0.i.i = select i1 %.not39.i.i, i32 %i.k, i32 %.044.i.i
+  %.024..i.i = select i1 %.not39.i.i, i32 %.02642.i.i, i32 %i.k
+  %..0.i.i = select i1 %.not39.i.i, i32 %i.k, i32 %.02443.i.i
   br label %bb.d
 
 _ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i: ; preds = %bb.c
@@ -355,24 +355,24 @@ _ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.ex
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i
-  %.129.i.i = phi i32 [ %i.v, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %.02841.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 2 uses
-  %.127.i.i = phi i32 [ %.02642.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %i.k, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 2 uses
-  %.125.i.i = phi i32 [ %.02443.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %.024..i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 3 uses
-  %.1.i.i = phi i32 [ %.044.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %..0.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 3 uses
-  %.not.i.i = icmp eq i32 %.129.i.i, %.127.i.i
+  %.129.i.i = phi i32 [ %.02841.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %i.k, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 2 uses
+  %.127.i.i = phi i32 [ %.02642.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %.024..i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 3 uses
+  %.125.i.i = phi i32 [ %.02443.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %..0.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 3 uses
+  %.1.i.i = phi i32 [ %i.v, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.thread.i.i ], [ %.044.i.i, %_ZN4toku16locktree_manager15find_by_dict_idERKPNS_8locktreeERK13DICTIONARY_ID.exit.i.i ] ; 2 uses
+  %.not.i.i = icmp eq i32 %.1.i.i, %.129.i.i
   br i1 %.not.i.i, label %._crit_edge.i.i, label %bb.c, !llvm.loop !53
 
 ._crit_edge.i.i:                                  ; preds = %bb.d
-  %.not33.i.i = icmp eq i32 %.1.i.i, -1
+  %.not33.i.i = icmp eq i32 %.125.i.i, -1
   br i1 %.not33.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.i.i
   %i.w = load i32, ptr %i.d, align 8, !tbaa !16
-  %i.x = sub i32 %.1.i.i, %i.w
+  %i.x = sub i32 %.125.i.i, %i.w
   br label %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE24find_internal_zero_arrayI13DICTIONARY_IDTnPFiRKS2_RKT_EXadL_ZNS_16locktree_manager15find_by_dict_idES7_RKS5_EEEEiSA_PS2_Pj.exit.i
 
 bb.f:                                             ; preds = %._crit_edge.i.i
-  %.not34.i.i = icmp eq i32 %.125.i.i, -1
+  %.not34.i.i = icmp eq i32 %.127.i.i, -1
   br i1 %.not34.i.i, label %..thread.i_crit_edge.i, label %bb.g
 
 ..thread.i_crit_edge.i:                           ; preds = %bb.f
@@ -381,7 +381,7 @@ bb.f:                                             ; preds = %._crit_edge.i.i
 
 bb.g:                                             ; preds = %bb.f
   %i.y = load i32, ptr %i.d, align 8, !tbaa !16
-  %i.z = sub i32 %.125.i.i, %i.y
+  %i.z = sub i32 %.127.i.i, %i.y
   br label %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE24find_internal_zero_arrayI13DICTIONARY_IDTnPFiRKS2_RKT_EXadL_ZNS_16locktree_manager15find_by_dict_idES7_RKS5_EEEEiSA_PS2_Pj.exit.i
 
 _ZNK4toku3omtIPNS_8locktreeES2_Lb0EE24find_internal_zero_arrayI13DICTIONARY_IDTnPFiRKS2_RKT_EXadL_ZNS_16locktree_manager15find_by_dict_idES7_RKS5_EEEEiSA_PS2_Pj.exit.i: ; preds = %bb.g, %..thread.i_crit_edge.i, %bb.e, %bb.b
@@ -784,21 +784,23 @@ _ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit: ; preds = %bb.c, %bb.e
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.d, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit
   %.0.i73 = phi i64 [ 0, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ 0, %bb.d ], [ %i.am, %._crit_edge.loopexit ]
-  %.sroa.16.0.lcssa.a = phi i64 [ %.sroa.16.0.copyload, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ %.sroa.16.0.copyload, %bb.d ], [ %.sroa.16.2.a, %._crit_edge.loopexit ]
+  %.sroa.16.0.lcssa = phi i64 [ %.sroa.16.0.copyload, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ %.sroa.16.0.copyload, %bb.d ], [ %.sroa.16.2, %._crit_edge.loopexit ]
+  %.sroa.16.0.lcssa.a = phi i64 [ 0, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ 0, %bb.d ], [ %.sroa.16.2.a, %._crit_edge.loopexit ]
   %.023.lcssa = phi i64 [ 0, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ 0, %bb.d ], [ %.225.a, %._crit_edge.loopexit ]
   %.020.lcssa = phi i64 [ 0, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ 0, %bb.d ], [ %.121, %._crit_edge.loopexit ]
-  %3 = phi <4 x i64> [ %i.v, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ %i.v, %bb.d ], [ %9, %._crit_edge.loopexit ]
-  %4 = phi <2 x i64> [ zeroinitializer, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ zeroinitializer, %bb.d ], [ %10, %._crit_edge.loopexit ]
+  %.0.lcssa = phi i64 [ 0, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ 0, %bb.d ], [ %.2, %._crit_edge.loopexit ]
+  %3 = phi <4 x i64> [ %i.v, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit ], [ %i.v, %bb.d ], [ %10, %._crit_edge.loopexit ]
   %i.an = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.r) #13 ; 0 uses
   br label %bb.o
 
 bb.f:                                             ; preds = %.lr.ph, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread
+  %.058 = phi i64 [ 0, %.lr.ph ], [ %.2, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
   %.055 = phi i32 [ 0, %.lr.ph ], [ %i.dd, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 5 uses
   %.02052 = phi i64 [ 0, %.lr.ph ], [ %.121, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
   %.02351 = phi i64 [ 0, %.lr.ph ], [ %.225.a, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
-  %.sroa.16.050 = phi i64 [ %.sroa.16.0.copyload, %.lr.ph ], [ %.sroa.16.2.a, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
-  %5 = phi <4 x i64> [ %i.v, %.lr.ph ], [ %9, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
-  %6 = phi <2 x i64> [ zeroinitializer, %.lr.ph ], [ %10, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
+  %.sroa.16.050 = phi i64 [ 0, %.lr.ph ], [ %.sroa.16.2.a, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
+  %.sroa.16.052 = phi i64 [ %.sroa.16.0.copyload, %.lr.ph ], [ %.sroa.16.2, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
+  %4 = phi <4 x i64> [ %i.v, %.lr.ph ], [ %10, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread ] ; 4 uses
   %i.ao = load i8, ptr %i.w, align 8, !tbaa !38, !range !45, !noundef !46
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i, label %bb.g
@@ -866,7 +868,7 @@ bb.i:                                             ; preds = %_ZNK4toku3omtIPNS_8
 
 .loopexit:                                        ; preds = %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE7nweightERKNS_12omt_internal17subtree_templatedILb0EEE.exit.thread.i.i, %bb.h
   %.sink.in.i = phi ptr [ %i.bc, %bb.h ], [ %i.bf, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE7nweightERKNS_12omt_internal17subtree_templatedILb0EEE.exit.thread.i.i ]
-  %.sink.i = load ptr, ptr %.sink.in.i, align 8, !tbaa !49 ; 8 uses
+  %.sink.i = load ptr, ptr %.sink.in.i, align 8, !tbaa !49 ; 9 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %.sink.i, i64 112 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !70 ; 2 uses
@@ -912,14 +914,14 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %.0.i28 = phi i32 [ %i.cc, %bb.k ], [ %i.cl, %bb.m ], [ 0, %bb.l ]
   %i.cm = zext i32 %.0.i28 to i64
-  %i.cn = add i64 %.02351, %i.cm
+  %i.cn = add i64 %.058, %i.cm
   %i.co = call noundef ptr @_ZN4toku8locktree21get_lock_request_infoEv(ptr noundef nonnull align 8 dereferenceable(400) %.sink.i) ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 56
   %i.cq = load <4 x i64>, ptr %i.cp, align 8, !tbaa !59
-  %i.cr = add <4 x i64> %i.cq, %5
+  %i.cr = add <4 x i64> %i.cq, %4
   %i.cs = getelementptr inbounds nuw i8, ptr %i.co, i64 88
   %i.ct = load i64, ptr %i.cs, align 8, !tbaa !63
-  %i.cu = add i64 %i.ct, %.sroa.16.050
+  %i.cu = add i64 %i.ct, %.sroa.16.052
   %i.cv = load ptr, ptr %i.bs, align 8, !tbaa !70 ; 2 uses
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !21
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 32
@@ -927,36 +929,39 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   call void %i.cy(ptr noundef nonnull align 8 dereferenceable(8) %i.cv), !inline_history !83
   %i.cz = call noundef zeroext i1 @_ZNK4toku8locktree25sto_txnid_is_valid_unsafeEv(ptr noundef nonnull align 8 dereferenceable(400) %.sink.i)
   %i.da = zext i1 %i.cz to i64
-  %i.db = add i64 %.02052, %i.da
+  %i.db = add i64 %.sroa.16.050, %i.da
   %i.dc = getelementptr inbounds nuw i8, ptr %.sink.i, i64 384
-  %7 = load <2 x i64>, ptr %i.dc, align 8, !tbaa !59
-  %8 = add <2 x i64> %7, %6
+  %5 = load i64, ptr %i.dc, align 8, !tbaa !90
+  %6 = add i64 %5, %.02351
+  %7 = getelementptr inbounds nuw i8, ptr %.sink.i, i64 392
+  %8 = load i64, ptr %7, align 8, !tbaa !106
+  %9 = add i64 %8, %.02052
   br label %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread
 
 _ZNK4toku3omtIPNS_8locktreeES2_Lb0EE5fetchEjPS2_.exit.thread: ; preds = %bb.g, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i, %bb.n
-  %.sroa.16.2.a = phi i64 [ %i.cu, %bb.n ], [ %.sroa.16.050, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.sroa.16.050, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.sroa.16.050, %bb.g ] ; 2 uses
-  %.225.a = phi i64 [ %i.cn, %bb.n ], [ %.02351, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.02351, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.02351, %bb.g ] ; 2 uses
-  %.121 = phi i64 [ %i.db, %bb.n ], [ %.02052, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.02052, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.02052, %bb.g ] ; 2 uses
-  %9 = phi <4 x i64> [ %i.cr, %bb.n ], [ %5, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %5, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %5, %bb.g ] ; 2 uses
-  %10 = phi <2 x i64> [ %8, %bb.n ], [ %6, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %6, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %6, %bb.g ] ; 2 uses
+  %.sroa.16.2 = phi i64 [ %i.cu, %bb.n ], [ %.sroa.16.052, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.sroa.16.052, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.sroa.16.052, %bb.g ] ; 2 uses
+  %.sroa.16.2.a = phi i64 [ %i.db, %bb.n ], [ %.sroa.16.050, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.sroa.16.050, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.sroa.16.050, %bb.g ] ; 2 uses
+  %.225.a = phi i64 [ %6, %bb.n ], [ %.02351, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.02351, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.02351, %bb.g ] ; 2 uses
+  %.121 = phi i64 [ %9, %bb.n ], [ %.02052, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.02052, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.02052, %bb.g ] ; 2 uses
+  %.2 = phi i64 [ %i.cn, %bb.n ], [ %.058, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %.058, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %.058, %bb.g ] ; 2 uses
+  %10 = phi <4 x i64> [ %i.cr, %bb.n ], [ %4, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.i ], [ %4, %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE4sizeEv.exit.thread10.i ], [ %4, %bb.g ] ; 2 uses
   %i.dd = add nuw i32 %.055, 1                    ; 2 uses
   %exitcond.not = icmp eq i32 %i.dd, %.0.i
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !90
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.f, !llvm.loop !107
 
 bb.o:                                             ; preds = %._crit_edge, %bb.a
+  %.sroa.16.3 = phi i64 [ %.sroa.16.0.lcssa, %._crit_edge ], [ 0, %bb.a ]
   %.sroa.16.3.a = phi i64 [ %.sroa.16.0.lcssa.a, %._crit_edge ], [ 0, %bb.a ]
   %.3.a = phi i64 [ %.023.lcssa, %._crit_edge ], [ 0, %bb.a ]
   %.222 = phi i64 [ %.020.lcssa, %._crit_edge ], [ 0, %bb.a ]
   %.015 = phi i64 [ %.0.i73, %._crit_edge ], [ 0, %bb.a ]
+  %.3 = phi i64 [ %.0.lcssa, %._crit_edge ], [ 0, %bb.a ]
   %11 = phi <4 x i64> [ %3, %._crit_edge ], [ zeroinitializer, %bb.a ] ; 4 uses
-  %12 = phi <2 x i64> [ %4, %._crit_edge ], [ zeroinitializer, %bb.a ] ; 2 uses
   store i64 %.015, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 352), align 8, !tbaa !16
-  store i64 %.3.a, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 416), align 8, !tbaa !16
-  store i64 %.222, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 480), align 8, !tbaa !16
-  %13 = extractelement <2 x i64> %12, i64 0
-  store i64 %13, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 544), align 8, !tbaa !16
-  %14 = extractelement <2 x i64> %12, i64 1
-  store i64 %14, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 608), align 8, !tbaa !16
+  store i64 %.3, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 416), align 8, !tbaa !16
+  store i64 %.sroa.16.3.a, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 480), align 8, !tbaa !16
+  store i64 %.3.a, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 544), align 8, !tbaa !16
+  store i64 %.222, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 608), align 8, !tbaa !16
   %i.de = extractelement <4 x i64> %11, i64 0
   store i64 %i.de, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 672), align 8, !tbaa !16
   %i.df = extractelement <4 x i64> %11, i64 1
@@ -965,8 +970,8 @@ bb.o:                                             ; preds = %._crit_edge, %bb.a
   store i64 %i.dg, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 800), align 8, !tbaa !16
   %i.dh = extractelement <4 x i64> %11, i64 3
   store i64 %i.dh, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 864), align 8, !tbaa !16
-  store i64 %.sroa.16.3.a, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 928), align 8, !tbaa !16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1217) %1, ptr noundef nonnull align 8 dereferenceable(1217) @ltm_status, i64 1217, i1 false), !tbaa.struct !91
+  store i64 %.sroa.16.3, ptr getelementptr inbounds nuw (i8, ptr @ltm_status, i64 928), align 8, !tbaa !16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1217) %1, ptr noundef nonnull align 8 dereferenceable(1217) @ltm_status, i64 1217, i1 false), !tbaa.struct !108
   ret void
 }
 
@@ -980,7 +985,7 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !21
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !93
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !110
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1, !tbaa !16
   %.not.i = icmp eq i8 %i.e, 0
@@ -1005,7 +1010,7 @@ bb.d:                                             ; preds = %_ZN9__gnu_cxx27__ex
   %i.j = load ptr, ptr %0, align 8, !tbaa !21
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !93
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #13, !inline_history !110
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -1128,7 +1133,7 @@ _ZNK4toku3omtIPNS_8locktreeES2_Lb0EE7nweightERKNS_12omt_internal17subtree_templa
   br i1 %.not34, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE7nweightERKNS_12omt_internal17subtree_templatedILb0EEE.exit37
-  %i.an = load ptr, ptr %i.g, align 8, !tbaa !94
+  %i.an = load ptr, ptr %i.g, align 8, !tbaa !111
   store ptr %i.an, ptr %3, align 8, !tbaa !49
   br label %bb.h
 
@@ -1431,7 +1436,7 @@ tailrecurse.outer._crit_edge:                     ; preds = %_ZNK4toku3omtIPNS_8
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   store i32 -1, ptr %i.n, align 8, !tbaa !47
   %i.o = load ptr, ptr %2, align 8, !tbaa !49
-  store ptr %i.o, ptr %i.k, align 8, !tbaa !94
+  store ptr %i.o, ptr %i.k, align 8, !tbaa !111
   store i32 %i.f, ptr %.tr40.lcssa, align 4, !tbaa !47
   ret void
 
@@ -1698,7 +1703,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNK4toku3
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %i.f ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 12 ; 2 uses
   tail call void @_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE30fill_array_with_subtree_valuesEPS2_RKNS_12omt_internal17subtree_templatedILb0EEE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %.tr1416, ptr noundef nonnull align 4 dereferenceable(4) %i.h)
-  %i.i = load ptr, ptr %i.g, align 8, !tbaa !94   ; 2 uses
+  %i.i = load ptr, ptr %i.g, align 8, !tbaa !111  ; 2 uses
   %i.j = load i32, ptr %i.h, align 4, !tbaa !47   ; 2 uses
   %i.k = icmp eq i32 %i.j, -1
   br i1 %i.k, label %_ZNK4toku3omtIPNS_8locktreeES2_Lb0EE7nweightERKNS_12omt_internal17subtree_templatedILb0EEE.exit.thread, label %bb.c
@@ -1768,7 +1773,7 @@ tailrecurse:                                      ; preds = %.lr.ph, %tailrecurs
   %i.k = zext nneg i32 %i.d to i64
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %.tr2023, i64 %i.k
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !49
-  store ptr %i.m, ptr %i.i, align 8, !tbaa !94
+  store ptr %i.m, ptr %i.i, align 8, !tbaa !111
   store i32 %i.e, ptr %.tr1922, align 4, !tbaa !47
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 12
   tail call void @_ZN4toku3omtIPNS_8locktreeES2_Lb0EE25rebuild_from_sorted_arrayEPNS_12omt_internal17subtree_templatedILb0EEEPKS2_j(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.n, ptr noundef %.tr2023, i32 noundef %i.d)
@@ -2121,8 +2126,8 @@ _ZNK4toku3omtIPNS_8locktreeES2_Lb0EE19will_need_rebalanceERKNS_12omt_internal17s
 
 .sink.split:                                      ; preds = %bb.h, %bb.g
   %.lcssa136.lcssa.lcssa.sink = phi ptr [ %.lcssa81, %bb.g ], [ %i.k, %bb.h ]
-  %i.dk = load ptr, ptr %.lcssa136.lcssa.lcssa.sink, align 8, !tbaa !94
-  store ptr %i.dk, ptr %.tr78.ph.ph, align 8, !tbaa !94
+  %i.dk = load ptr, ptr %.lcssa136.lcssa.lcssa.sink, align 8, !tbaa !111
+  store ptr %i.dk, ptr %.tr78.ph.ph, align 8, !tbaa !111
   br label %bb.p
 
 bb.p:                                             ; preds = %.sink.split, %bb.h, %bb.g
@@ -2243,9 +2248,26 @@ attributes #15 = { builtin nounwind }
 !87 = !{!26, !27, i64 264}
 !88 = !{!26, !27, i64 272}
 !89 = distinct !{null}
-!90 = distinct !{!90, !54}
-!91 = !{i64 0, i64 1216, !16, i64 1216, i64 1, !92}
-!92 = !{!30, !30, i64 0}
-!93 = distinct !{null}
-!94 = !{!56, !50, i64 0}
+!90 = !{!91, !27, i64 384}
+!91 = !{!"_ZTSN4toku8locktreeE", !92, i64 0, !52, i64 8, !6, i64 16, !93, i64 24, !12, i64 48, !12, i64 56, !94, i64 64, !12, i64 72, !95, i64 80, !27, i64 304, !102, i64 312, !6, i64 376, !27, i64 384, !27, i64 392}
+!92 = !{!"p1 _ZTSN4toku16locktree_managerE", !12, i64 0}
+!93 = !{!"_ZTSN4toku10comparatorE", !12, i64 0, !12, i64 8, !7, i64 16}
+!94 = !{!"p1 _ZTSN4toku15concurrent_treeE", !12, i64 0}
+!95 = !{!"_ZTSN4toku20lt_lock_request_infoE", !77, i64 0, !96, i64 24, !98, i64 32, !30, i64 48, !28, i64 56, !99, i64 96, !101, i64 104, !32, i64 112, !35, i64 160, !30, i64 216}
+!96 = !{!"_ZTSSt6atomicIbE", !97, i64 0}
+!97 = !{!"_ZTSSt13__atomic_baseIbE", !30, i64 0}
+!98 = !{!"_ZTSSt10shared_ptrIN7rocksdb18TransactionDBMutexEE", !71, i64 0}
+!99 = !{!"_ZTSSt6atomicIyE", !100, i64 0}
+!100 = !{!"_ZTSSt13__atomic_baseIyE", !101, i64 0}
+!101 = !{!"long long", !7, i64 0}
+!102 = !{!"_ZTSN4toku12range_bufferE", !103, i64 0, !6, i64 56}
+!103 = !{!"_ZTS8memarena", !104, i64 0, !105, i64 24, !6, i64 32, !27, i64 40, !27, i64 48}
+!104 = !{!"_ZTSN8memarena11arena_chunkE", !75, i64 0, !27, i64 8, !27, i64 16}
+!105 = !{!"p1 _ZTSN8memarena11arena_chunkE", !12, i64 0}
+!106 = !{!91, !27, i64 392}
+!107 = distinct !{!107, !54}
+!108 = !{i64 0, i64 1216, !16, i64 1216, i64 1, !109}
+!109 = !{!30, !30, i64 0}
+!110 = distinct !{null}
+!111 = !{!56, !50, i64 0}
 end_hunk_1

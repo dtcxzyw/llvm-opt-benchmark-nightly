@@ -204,8 +204,8 @@ bb.ba:                                            ; preds = %_RINvNtCs4NRVxsYgnA
           to label %.body48 unwind label %bb.bo
 
 bb.bb:                                            ; preds = %_RNCINvNtCs7NzLGBMhIGf_9criterion2fs4loadNtNtB6_6report11BenchmarkIdNtNtCs2AWtUsOyxgP_3std4path4PathE0B6_.exit.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs7NzLGBMhIGf_9criterion.exit46.i
-  %.sroa.16.0.ph = phi ptr [ %i.de, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs7NzLGBMhIGf_9criterion.exit46.i ], [ %i.cw, %_RNCINvNtCs7NzLGBMhIGf_9criterion2fs4loadNtNtB6_6report11BenchmarkIdNtNtCs2AWtUsOyxgP_3std4path4PathE0B6_.exit.i ]
   %.sroa.880.0.ph = phi i64 [ -9223372036854775806, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs7NzLGBMhIGf_9criterion.exit46.i ], [ -9223372036854775808, %_RNCINvNtCs7NzLGBMhIGf_9criterion2fs4loadNtNtB6_6report11BenchmarkIdNtNtCs2AWtUsOyxgP_3std4path4PathE0B6_.exit.i ]
+  %.sroa.16.0.ph = phi ptr [ %i.de, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs7NzLGBMhIGf_9criterion.exit46.i ], [ %i.cw, %_RNCINvNtCs7NzLGBMhIGf_9criterion2fs4loadNtNtB6_6report11BenchmarkIdNtNtCs2AWtUsOyxgP_3std4path4PathE0B6_.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !124
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.623.sroa.7, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.1382, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.1382)
@@ -608,8 +608,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.bw, %bb.c
-  %i.ah = phi i64 [ %i.bz, %bb.bw ], [ %.promoted, %bb.c ] ; 3 uses
-  %.pre216 = phi i64 [ %.pre, %bb.bw ], [ %.val, %bb.c ]
+  %i.ah = phi i64 [ %.promoted, %bb.c ], [ %i.bz, %bb.bw ] ; 3 uses
+  %.pre216 = phi i64 [ %.val, %bb.c ], [ %.pre, %bb.bw ]
+  %.sroa.16.0 = phi double [ undef, %bb.c ], [ %.sroa.16.0.ph, %bb.bw ]
   call void @llvm.experimental.noalias.scope.decl(metadata !252)
   call void @llvm.experimental.noalias.scope.decl(metadata !255)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !258
@@ -1012,7 +1013,7 @@ bb.bp:                                            ; preds = %bb.e
 bb.bq:                                            ; preds = %.loopexit108, %.thread87
   %.sroa.0.194 = phi i64 [ %.sroa.8.0.ph, %.thread87 ], [ %.sroa.0.0.copyload57, %.loopexit108 ]
   %.sroa.11.193 = phi i64 [ %i.bs, %.thread87 ], [ %.sroa.11.0.copyload59, %.loopexit108 ]
-  %.sroa.16.192 = phi double [ undef, %.thread87 ], [ %.sroa.16.0.copyload61, %.loopexit108 ]
+  %.sroa.16.192 = phi double [ %.sroa.16.0, %.thread87 ], [ %.sroa.16.0.copyload61, %.loopexit108 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !258
   store i64 %.sroa.0.194, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1041,7 +1042,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc3vec3VecdEECs7Nz
   br label %bb.bx
 
 bb.bt:                                            ; preds = %_RINvXs3_NtCs6nZeqdiIoCH_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDatadENtB6_15DeserializeSeed11deserializeQINtNtCsdCGSpSJmIcn_8ciborium2de12DeserializerRShEECs7NzLGBMhIGf_9criterion.exit._crit_edge.i.i, %_RINvXs3_NtCs6nZeqdiIoCH_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDatadENtB6_15DeserializeSeed11deserializeQINtNtCsdCGSpSJmIcn_8ciborium2de12DeserializerRShEECs7NzLGBMhIGf_9criterion.exit.thread.i.i
-  %.sroa.16.0.ph = phi double [ %i.dk, %_RINvXs3_NtCs6nZeqdiIoCH_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDatadENtB6_15DeserializeSeed11deserializeQINtNtCsdCGSpSJmIcn_8ciborium2de12DeserializerRShEECs7NzLGBMhIGf_9criterion.exit.thread.i.i ], [ %.pre31.i.i, %_RINvXs3_NtCs6nZeqdiIoCH_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDatadENtB6_15DeserializeSeed11deserializeQINtNtCsdCGSpSJmIcn_8ciborium2de12DeserializerRShEECs7NzLGBMhIGf_9criterion.exit._crit_edge.i.i ]
+  %.sroa.16.0.ph = phi double [ %i.dk, %_RINvXs3_NtCs6nZeqdiIoCH_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDatadENtB6_15DeserializeSeed11deserializeQINtNtCsdCGSpSJmIcn_8ciborium2de12DeserializerRShEECs7NzLGBMhIGf_9criterion.exit.thread.i.i ], [ %.pre31.i.i, %_RINvXs3_NtCs6nZeqdiIoCH_10serde_core2deINtNtCs4NRVxsYgnAr_4core6marker11PhantomDatadENtB6_15DeserializeSeed11deserializeQINtNtCsdCGSpSJmIcn_8ciborium2de12DeserializerRShEECs7NzLGBMhIGf_9criterion.exit._crit_edge.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !319
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !258
   %i.do = load i64, ptr %i.z, align 8, !alias.scope !399, !noundef !4 ; 3 uses

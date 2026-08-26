@@ -204,6 +204,7 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %.lr.ph251, %bb.ar
   %.0131250 = phi i32 [ 0, %.lr.ph251 ], [ %i.dz, %bb.ar ]
   %.0139249 = phi i64 [ 0, %.lr.ph251 ], [ %i.dy, %bb.ar ]
+  %.0124252 = phi i32 [ undef, %.lr.ph251 ], [ %.9209, %bb.ar ]
   %i.ao = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7768), align 8, !tbaa !55 ; 3 uses
   %i.ap = and i32 %i.ao, 11
   %i.aq = icmp ne i32 %i.ap, 0
@@ -216,7 +217,7 @@ bb.t:                                             ; preds = %bb.s
   br label %.preheader228
 
 .preheader228:                                    ; preds = %bb.t, %.loopexit227
-  %.0114248 = phi i32 [ undef, %bb.t ], [ %.4118, %.loopexit227 ]
+  %.0114248 = phi i32 [ %.0124252, %bb.t ], [ %.4118, %.loopexit227 ]
   %i.at = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6516), align 4, !tbaa !105
   %i.au = icmp sgt i32 %i.at, 0
   br i1 %i.au, label %.lr.ph244, label %.thread216
@@ -334,7 +335,7 @@ bb.z:                                             ; preds = %bb.y
 
 .loopexit227:                                     ; preds = %.thread, %bb.z
   %.5124 = phi ptr [ %i.ck, %bb.z ], [ null, %.thread ] ; 2 uses
-  %.4118 = phi i32 [ %i.bx, %bb.z ], [ %.2116, %.thread ] ; 2 uses
+  %.4118 = phi i32 [ %i.bx, %bb.z ], [ %.2116, %.thread ] ; 3 uses
   %i.cl = icmp eq ptr %.5124, null
   br i1 %i.cl, label %.preheader228, label %.thread202.loopexit
 
@@ -355,7 +356,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.aa
   %i.cp = load i32, ptr @performEvictions.next_db, align 4, !tbaa !9
   %i.cq = add i32 %i.cp, 1                        ; 2 uses
   store i32 %i.cq, ptr @performEvictions.next_db, align 4, !tbaa !9
-  %i.cr = urem i32 %i.cq, %i.co
+  %i.cr = urem i32 %i.cq, %i.co                   ; 2 uses
   %i.cs = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 64), align 8, !tbaa !106
   %i.ct = sext i32 %i.cr to i64                   ; 2 uses
   %i.cu = getelementptr inbounds [96 x i8], ptr %i.cs, i64 %i.ct
@@ -391,6 +392,7 @@ bb.ae:                                            ; preds = %bb.ac
 
 .thread202:                                       ; preds = %.thread202.loopexit, %bb.ae
   %.pre-phi = phi i64 [ %.pre271, %.thread202.loopexit ], [ %i.ct, %bb.ae ]
+  %.9209 = phi i32 [ %.4118, %.thread202.loopexit ], [ %i.cr, %bb.ae ]
   %.9206 = phi ptr [ %.5124, %.thread202.loopexit ], [ %i.de, %bb.ae ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %i.df = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 64), align 8, !tbaa !106

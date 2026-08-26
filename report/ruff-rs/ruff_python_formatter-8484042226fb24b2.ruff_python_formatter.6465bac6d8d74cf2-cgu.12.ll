@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.d
-  %.sroa.4.0 = phi i64 [ %i.aa, %bb.d ], [ %i.aj, %bb.g ]
   %.sroa.03.0 = phi ptr [ %i.z, %bb.d ], [ %i.ai, %bb.g ] ; 3 uses
+  %.sroa.4.0 = phi i64 [ %i.aa, %bb.d ], [ %i.aj, %bb.g ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.03.0) ]
   %i.ak = getelementptr inbounds nuw [12 x i8], ptr %.sroa.03.0, i64 %.sroa.4.0
   br label %bb.i
@@ -609,7 +609,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %.sroa.10.0 = phi i32 [ %i.p, %bb.a ], [ %.sroa.10.1.ph.ph, %.backedge ] ; 6 uses
+  %.sroa.1056.0 = phi i32 [ undef, %bb.a ], [ %.sroa.10.0, %.backedge ]
+  %.sroa.10.0 = phi i32 [ %i.p, %bb.a ], [ %.sroa.10.1.ph.ph, %.backedge ] ; 7 uses
   %.sroa.0.0 = phi ptr [ %i.t, %bb.a ], [ %.sroa.0.2.ph.ph, %.backedge ] ; 2 uses
   %.sroa.01.0 = phi i1 [ true, %bb.a ], [ false, %.backedge ]
   %i.ae = icmp eq ptr %.sroa.0.0, %i.v
@@ -679,6 +680,8 @@ bb.j:                                             ; preds = %bb.k, %bb.ab, %_RNv
 
 bb.k:                                             ; preds = %.lr.ph.i
   store i32 0, ptr %0, align 8
+  %.sroa.440.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %.sroa.1056.0, ptr %.sroa.440.0..sroa_idx, align 4
   %.sroa.440.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 ptrtoint (ptr @65 to i32), ptr %.sroa.440.0..sroa_idx.sroa_idx, align 8
   %.sroa.541.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
@@ -881,11 +884,11 @@ bb.z:                                             ; preds = %.lr.ph.i48.2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %i.de = trunc nuw i64 %.sroa.13.12.extract.shift99 to i1
+  %i.de = trunc i64 %.sroa.13.12.extract.shift99 to i1
   br i1 %i.de, label %bb.ac, label %.backedge
 
 bb.aa:                                            ; preds = %_RINvMs3_NtCs8CpBcHC8tKo_21ruff_python_formatter8verbatimNtB6_11Indentation11trim_indentRNtB6_11LogicalLineEB8_.exit
-  %i.df = trunc nuw i64 %.sroa.13.12.extract.shift99 to i1
+  %i.df = trunc i64 %.sroa.13.12.extract.shift99 to i1
   br i1 %i.df, label %bb.ad, label %.backedge
 
 bb.ab:                                            ; preds = %.lr.ph.i48.2, %.lr.ph.i48.1, %.lr.ph.i48

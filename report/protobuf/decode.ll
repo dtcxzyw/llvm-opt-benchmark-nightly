@@ -107,6 +107,10 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %_upb_Decoder_DecodeField.exit, %bb.a
+  %.sroa.5.0 = phi i64 [ undef, %bb.a ], [ %.sroa.5.3, %_upb_Decoder_DecodeField.exit ] ; 20 uses
+  %.sroa.0197.0 = phi ptr [ undef, %bb.a ], [ %.sroa.0197.3, %_upb_Decoder_DecodeField.exit ] ; 20 uses
+  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ %.sroa.4.3, %_upb_Decoder_DecodeField.exit ] ; 19 uses
+  %.sroa.0188.0 = phi ptr [ undef, %bb.a ], [ %.sroa.0188.3, %_upb_Decoder_DecodeField.exit ] ; 19 uses
   %.0 = phi ptr [ %1, %bb.a ], [ %.0.i15, %_upb_Decoder_DecodeField.exit ] ; 5 uses
   %i.v = load ptr, ptr %0, align 8, !tbaa !18
   %i.w = ptrtoint ptr %.0 to i64
@@ -189,9 +193,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.k, %bb.i
-  %.029.i.i = phi i32 [ %i.az, %bb.i ], [ %.029..i.i, %bb.k ] ; 3 uses
-  %.0.i.i.a = phi i32 [ %i.bg, %bb.i ], [ %..0.i.i, %bb.k ] ; 3 uses
-  %.not.i.i26 = icmp slt i32 %.029.i.i, %.0.i.i.a
+  %.029.i.i = phi i32 [ %i.bg, %bb.i ], [ %.029..i.i, %bb.k ] ; 3 uses
+  %.0.i.i.a = phi i32 [ %i.az, %bb.i ], [ %..0.i.i, %bb.k ] ; 3 uses
+  %.not.i.i26 = icmp slt i32 %.0.i.i.a, %.029.i.i
   br i1 %.not.i.i26, label %upb_MiniTable_FindFieldByNumber.exit.thread.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -204,8 +208,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bn = add nuw i32 %i.bi, 1
   %.not40.i.i = icmp eq i32 %i.bl, %i.ap
   %i.bo = icmp ult i32 %i.bl, %i.ap               ; 2 uses
-  %.029..i.i = select i1 %i.bo, i32 %.029.i.i, i32 %i.bm, !prof !29
-  %..0.i.i = select i1 %i.bo, i32 %i.bn, i32 %.0.i.i.a, !prof !29
+  %.029..i.i = select i1 %i.bo, i32 %i.bn, i32 %.029.i.i, !prof !29
+  %..0.i.i = select i1 %i.bo, i32 %.0.i.i.a, i32 %i.bm, !prof !29
   br i1 %.not40.i.i, label %_upb_Decoder_FindField.exit, label %bb.j, !llvm.loop !30
 
 upb_MiniTable_FindFieldByNumber.exit.i:           ; preds = %bb.f
@@ -359,8 +363,8 @@ bb.w:                                             ; preds = %upb_WireReader_Read
   %i.dy = trunc i64 %i.dx to i8
   br label %_upb_Decoder_Munge.exit
 
-_upb_Decoder_Munge.exit:                          ; preds = %.lr.ph.i, %.split, %upb_WireReader_ReadVarint.exit, %bb.w, %bb.v, %bb.u, %bb.t
-  %.sroa.0.0..sroa.0.0..sroa.0.0.180295 = phi i8 [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %.split ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %upb_WireReader_ReadVarint.exit ], [ %i.dy, %bb.w ], [ %i.dt, %bb.v ], [ %i.dn, %bb.u ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %bb.t ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %.lr.ph.i ]
+_upb_Decoder_Munge.exit:                          ; preds = %.lr.ph.i, %upb_WireReader_ReadVarint.exit, %.split, %bb.t, %bb.w, %bb.v, %bb.u
+  %.sroa.0.0..sroa.0.0..sroa.0.0.180295 = phi i8 [ %i.dn, %bb.u ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %upb_WireReader_ReadVarint.exit ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %.split ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %bb.t ], [ %i.dy, %bb.w ], [ %i.dt, %bb.v ], [ %.sroa.0.0..sroa.0.0..sroa.0.0.180296, %.lr.ph.i ]
   %i.dz = zext i8 %.val to i64
   %i.ea = getelementptr inbounds nuw i8, ptr @_upb_Decoder_GetVarintOp.kVarintOps, i64 %i.dz
   %i.eb = load i8, ptr %i.ea, align 1, !tbaa !22
@@ -500,17 +504,17 @@ bb.aj:                                            ; preds = %_upb_Decoder_FindFi
   unreachable
 
 _upb_Decoder_DecodeWireValue.exit:                ; preds = %bb.af, %bb.ac, %bb.ae, %bb.ad, %bb.ab, %_upb_Decoder_Munge.exit
-  %.sroa.0.0..sroa.0.0..sroa.0.0.180294 = phi i8 [ %.sroa.0.0..sroa.0.0..sroa.0.0.180295, %_upb_Decoder_Munge.exit ], [ %i.fn, %bb.ac ], [ %i.fn, %bb.ae ], [ %i.fn, %bb.ad ], [ %i.fn, %bb.ab ], [ %i.fn, %bb.af ]
-  %.1.in = phi i8 [ %i.eb, %_upb_Decoder_Munge.exit ], [ %i.fk, %bb.ac ], [ %i.fk, %bb.ae ], [ %i.fk, %bb.ad ], [ %i.fk, %bb.ab ], [ %i.fk, %bb.af ] ; 3 uses
-  %.1.i = phi ptr [ %.0.i19, %_upb_Decoder_Munge.exit ], [ %.0.i21, %bb.ac ], [ %.0.i21, %bb.ae ], [ %.0.i21, %bb.ad ], [ %.0.i21, %bb.ab ], [ %.0.i21, %bb.af ] ; 3 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0.180294 = phi i8 [ %.sroa.0.0..sroa.0.0..sroa.0.0.180295, %_upb_Decoder_Munge.exit ], [ %i.fn, %bb.ac ], [ %i.fn, %bb.ad ], [ %i.fn, %bb.ab ], [ %i.fn, %bb.ae ], [ %i.fn, %bb.af ]
+  %.1.in = phi i8 [ %i.eb, %_upb_Decoder_Munge.exit ], [ %i.fk, %bb.ac ], [ %i.fk, %bb.ad ], [ %i.fk, %bb.ab ], [ %i.fk, %bb.ae ], [ %i.fk, %bb.af ] ; 3 uses
+  %.1.i = phi ptr [ %.0.i19, %_upb_Decoder_Munge.exit ], [ %.0.i21, %bb.ac ], [ %.0.i21, %bb.ad ], [ %.0.i21, %bb.ab ], [ %.0.i21, %bb.ae ], [ %.0.i21, %bb.af ] ; 3 uses
   %.1 = zext nneg i8 %.1.in to i32
   %i.gn = icmp sgt i8 %.1.in, -1
   br i1 %i.gn, label %_upb_Decoder_DecodeWireValue.exit.thread248, label %_upb_Decoder_DecodeWireValue.exit.thread
 
-_upb_Decoder_DecodeWireValue.exit.thread248:      ; preds = %bb.ah, %bb.ai, %bb.y, %bb.x, %bb.af, %_upb_Decoder_DecodeWireValue.exit
-  %.sroa.0.0..sroa.0.0..sroa.0.0.180 = phi i8 [ %.sroa.0.0..sroa.0.0..sroa.0.0.180294, %_upb_Decoder_DecodeWireValue.exit ], [ %i.fn, %bb.af ], [ %i.gc, %bb.ai ], [ %i.gc, %bb.ah ], [ %i.er, %bb.y ], [ %i.ej, %bb.x ]
-  %.1.i252 = phi ptr [ %.1.i, %_upb_Decoder_DecodeWireValue.exit ], [ %.0.i21, %bb.af ], [ %.0.i16, %bb.ai ], [ %.0.i16, %bb.ah ], [ %i.eq, %bb.y ], [ %i.ei, %bb.x ] ; 24 uses
-  %.1251 = phi i32 [ %.1, %_upb_Decoder_DecodeWireValue.exit ], [ 4, %bb.af ], [ 6, %bb.ai ], [ 6, %bb.ah ], [ 3, %bb.y ], [ 2, %bb.x ] ; 7 uses
+_upb_Decoder_DecodeWireValue.exit.thread248:      ; preds = %bb.ai, %bb.af, %bb.y, %bb.x, %bb.ah, %_upb_Decoder_DecodeWireValue.exit
+  %.sroa.0.0..sroa.0.0..sroa.0.0.180 = phi i8 [ %.sroa.0.0..sroa.0.0..sroa.0.0.180294, %_upb_Decoder_DecodeWireValue.exit ], [ %i.gc, %bb.ai ], [ %i.gc, %bb.ah ], [ %i.er, %bb.y ], [ %i.ej, %bb.x ], [ %i.fn, %bb.af ]
+  %.1.i252 = phi ptr [ %.1.i, %_upb_Decoder_DecodeWireValue.exit ], [ %.0.i16, %bb.ai ], [ %.0.i16, %bb.ah ], [ %i.eq, %bb.y ], [ %i.ei, %bb.x ], [ %.0.i21, %bb.af ] ; 24 uses
+  %.1251 = phi i32 [ %.1, %_upb_Decoder_DecodeWireValue.exit ], [ 6, %bb.ai ], [ 6, %bb.ah ], [ 3, %bb.y ], [ 2, %bb.x ], [ 4, %bb.af ] ; 7 uses
   %i.go = getelementptr inbounds nuw i8, ptr %.0.i27, i64 11
   %i.gp = load i8, ptr %i.go, align 1, !tbaa !36
   %i.gq = zext i8 %i.gp to i32                    ; 2 uses
@@ -913,7 +917,8 @@ bb.br:                                            ; preds = %bb.bp
   br label %upb_EpsCopyInputStream_ReadStringEphemeral.exit
 
 upb_EpsCopyInputStream_ReadStringEphemeral.exit:  ; preds = %bb.bq, %bb.br
-  %.sroa.0189.0 = phi ptr [ undef, %bb.bq ], [ %.1.i252, %bb.br ]
+  %.sroa.4.6 = phi i64 [ %.sroa.4.0, %bb.bq ], [ %i.nj, %bb.br ] ; 3 uses
+  %.sroa.0189.0 = phi ptr [ %.sroa.0188.0, %bb.bq ], [ %.1.i252, %bb.br ] ; 3 uses
   %.0.i85 = phi ptr [ %i.nq, %bb.bq ], [ %i.nr, %bb.br ] ; 3 uses
   %.not.i.i47 = icmp eq ptr %.0.i85, null
   br i1 %.not.i.i47, label %bb.bs, label %bb.bt
@@ -974,7 +979,7 @@ _upb_Decoder_Reserve.exit84:                      ; preds = %._upb_Decoder_Reser
   %i.om = zext nneg i32 %i.ni to i64
   %i.on = shl i64 %i.oi, %i.om
   %i.oo = getelementptr inbounds nuw i8, ptr %i.ok, i64 %i.on
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.oo, ptr align 1 %.sroa.0189.0, i64 %i.nj, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.oo, ptr align 1 %.sroa.0189.0, i64 %.sroa.4.6, i1 false)
   br label %_upb_Decoder_DecodeField.exit
 
 bb.bz:                                            ; preds = %_upb_Decoder_Reserve.exit96, %_upb_Decoder_Reserve.exit96, %_upb_Decoder_Reserve.exit96
@@ -1377,11 +1382,11 @@ _upb_Decoder_DecodeWireValue.exit.thread:         ; preds = %_upb_Decoder_Decode
   br i1 %i.aad, label %_upb_Decoder_DecodeWireValue.exit.thread.thread, label %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader
 
 _upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader: ; preds = %bb.ag, %_upb_Decoder_DecodeWireValue.exit.thread
-  %.0217.ph = phi ptr [ %.1.i, %_upb_Decoder_DecodeWireValue.exit.thread ], [ %.0.i16, %bb.ag ]
+  %.0217.ph = phi ptr [ %.0.i16, %bb.ag ], [ %.1.i, %_upb_Decoder_DecodeWireValue.exit.thread ]
   br label %_upb_Decoder_DecodeWireValue.exit.thread.thread281
 
-_upb_Decoder_DecodeWireValue.exit.thread.thread:  ; preds = %bb.s, %.split, %bb.ag, %bb.ac, %bb.t, %bb.r, %bb.ai, %bb.x, %bb.y, %_upb_Decoder_DecodeWireValue.exit.thread
-  %.1.i244280 = phi ptr [ %.1.i, %_upb_Decoder_DecodeWireValue.exit.thread ], [ %.0.i21, %bb.ac ], [ %.0.i16, %bb.ag ], [ %.0.i19, %bb.t ], [ %.0.i19, %bb.r ], [ %i.eq, %bb.y ], [ %.0.i16, %bb.ai ], [ %i.ei, %bb.x ], [ %.0.i19, %.split ], [ %.0.i19, %bb.s ] ; 8 uses
+_upb_Decoder_DecodeWireValue.exit.thread.thread:  ; preds = %bb.s, %bb.ag, %bb.ac, %bb.r, %bb.t, %.split, %bb.ai, %bb.x, %bb.y, %_upb_Decoder_DecodeWireValue.exit.thread
+  %.1.i244280 = phi ptr [ %.1.i, %_upb_Decoder_DecodeWireValue.exit.thread ], [ %.0.i21, %bb.ac ], [ %.0.i19, %bb.r ], [ %.0.i16, %bb.ag ], [ %i.eq, %bb.y ], [ %.0.i19, %bb.t ], [ %.0.i19, %.split ], [ %.0.i16, %bb.ai ], [ %i.ei, %bb.x ], [ %.0.i19, %bb.s ] ; 8 uses
   %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0.181 = load i64, ptr %.sroa.0, align 8
   %i.aae = icmp eq i32 %i.ap, 0
   br i1 %i.aae, label %bb.en, label %bb.eo
@@ -1571,10 +1576,12 @@ bb.fg:                                            ; preds = %_upb_Message_AddUnk
   unreachable
 
 _upb_Decoder_DecodeWireValue.exit.thread.thread281: ; preds = %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader
+  %.sroa.5.4 = phi i64 [ %.sroa.5.0, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.sroa.5.4.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 13 uses
+  %.sroa.0197.4 = phi ptr [ %.sroa.0197.0, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.sroa.0197.4.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 13 uses
   %.0217 = phi ptr [ %.0217.ph, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.0217.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 4 uses
   %.028.i = phi i32 [ 0, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.028.i.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 13 uses
   %.sroa.0.0.i64 = phi ptr [ null, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.sroa.0.0.i64.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 14 uses
-  %.sroa.5.0.i65 = phi i32 [ 0, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.sroa.5.0.i65.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 14 uses
+  %.sroa.5.0.i64 = phi i64 [ 0, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.sroa.5.0.i64.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 14 uses
   %.027.i = phi i32 [ 0, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.preheader ], [ %.027.i.be, %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge ] ; 16 uses
   %i.acu = load ptr, ptr %0, align 8, !tbaa !18
   %i.acv = ptrtoint ptr %.0217 to i64
@@ -1656,31 +1663,30 @@ bb.fl:                                            ; preds = %upb_WireReader_Read
   br i1 %.not37.i71, label %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge, label %bb.fm
 
 bb.fm:                                            ; preds = %bb.fl
-  call fastcc void @upb_Decoder_AddMessageSetItem(ptr noundef nonnull %0, ptr noundef %2, ptr noundef %3, i32 noundef %i.adx, ptr noundef %.sroa.0.0.i64, i32 noundef %.sroa.5.0.i65), !inline_history !78
+  %5 = trunc i64 %.sroa.5.0.i64 to i32
+  call fastcc void @upb_Decoder_AddMessageSetItem(ptr noundef nonnull %0, ptr noundef %2, ptr noundef %3, i32 noundef %i.adx, ptr noundef %.sroa.0.0.i64, i32 noundef %5), !inline_history !78
   br label %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge
 
 bb.fn:                                            ; preds = %upb_WireReader_ReadTag.exit.i
-  %i.adz = load i8, ptr %.0.i.i66, align 1, !tbaa !22 ; 3 uses
+  %i.adz = load i8, ptr %.0.i.i66, align 1, !tbaa !22 ; 2 uses
   %i.aea = icmp sgt i8 %i.adz, -1
+  %6 = zext i8 %i.adz to i64                      ; 2 uses
   br i1 %i.aea, label %bb.fo, label %upb_EpsCopyInputStream_HasErrorHandler.exit.i148, !prof !20
 
 bb.fo:                                            ; preds = %bb.fn
-  %5 = zext nneg i8 %i.adz to i32
   %i.aeb = getelementptr inbounds nuw i8, ptr %.0.i.i66, i64 1
   br label %upb_WireReader_ReadSize.exit.i
 
 upb_EpsCopyInputStream_HasErrorHandler.exit.i148: ; preds = %bb.fn
-  %6 = zext i8 %i.adz to i64
   %i.aec = call { ptr, i64 } @_upb_WireReader_ReadLongSize_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %.0.i.i66, i64 noundef %6, ptr noundef nonnull %0) #12, !inline_history !78 ; 2 uses
   %i.aed = extractvalue { ptr, i64 } %i.aec, 0
   %i.aee = extractvalue { ptr, i64 } %i.aec, 1
-  %7 = trunc i64 %i.aee to i32
   br label %upb_WireReader_ReadSize.exit.i
 
 upb_WireReader_ReadSize.exit.i:                   ; preds = %upb_EpsCopyInputStream_HasErrorHandler.exit.i148, %bb.fo
-  %.0220 = phi i32 [ %5, %bb.fo ], [ %7, %upb_EpsCopyInputStream_HasErrorHandler.exit.i148 ] ; 3 uses
+  %.0208 = phi i64 [ %6, %bb.fo ], [ %i.aee, %upb_EpsCopyInputStream_HasErrorHandler.exit.i148 ]
   %.0.i39.i = phi ptr [ %i.aeb, %bb.fo ], [ %i.aed, %upb_EpsCopyInputStream_HasErrorHandler.exit.i148 ] ; 2 uses
-  %8 = zext i32 %.0220 to i64                     ; 2 uses
+  %7 = and i64 %.0208, 4294967295                 ; 3 uses
   %i.aef = load ptr, ptr %0, align 8, !tbaa !18
   %i.aeg = load i64, ptr %i.l, align 8, !tbaa !51 ; 2 uses
   %i.aeh = icmp eq i64 %i.aeg, 0
@@ -1689,8 +1695,8 @@ upb_WireReader_ReadSize.exit.i:                   ; preds = %upb_EpsCopyInputStr
   %i.aek = ptrtoint ptr %i.aej to i64
   %i.ael = ptrtoint ptr %.0.i39.i to i64          ; 2 uses
   %i.aem = sub i64 %i.aek, %i.ael
-  %9 = icmp slt i64 %i.aem, %8
-  br i1 %9, label %bb.fp, label %bb.fq
+  %8 = icmp sgt i64 %7, %i.aem
+  br i1 %8, label %bb.fp, label %bb.fq
 
 bb.fp:                                            ; preds = %upb_WireReader_ReadSize.exit.i
   %i.aen = call ptr @upb_EpsCopyInputStream_ReturnError_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %0) #12
@@ -1702,11 +1708,12 @@ bb.fq:                                            ; preds = %upb_WireReader_Read
   %i.aep = sub i64 %i.aeg, %i.aeo
   %i.aeq = getelementptr i8, ptr %.val14.i, i64 %i.aep
   %i.aer = getelementptr i8, ptr %i.aeq, i64 %i.ael
-  %i.aes = getelementptr inbounds nuw i8, ptr %.0.i39.i, i64 %8
+  %i.aes = getelementptr inbounds nuw i8, ptr %.0.i39.i, i64 %7
   br label %upb_EpsCopyInputStream_ReadStringAlwaysAlias.exit
 
 upb_EpsCopyInputStream_ReadStringAlwaysAlias.exit: ; preds = %bb.fp, %bb.fq
-  %.sroa.0198.0 = phi ptr [ undef, %bb.fp ], [ %i.aer, %bb.fq ] ; 2 uses
+  %.sroa.5.6 = phi i64 [ %.sroa.5.4, %bb.fp ], [ %7, %bb.fq ] ; 5 uses
+  %.sroa.0198.0 = phi ptr [ %.sroa.0197.4, %bb.fp ], [ %i.aer, %bb.fq ] ; 5 uses
   %.0.i146 = phi ptr [ %i.aen, %bb.fp ], [ %i.aes, %bb.fq ] ; 4 uses
   %.not.i67 = icmp eq ptr %.0.i146, null
   br i1 %.not.i67, label %bb.fr, label %bb.fs
@@ -1728,7 +1735,8 @@ bb.ft:                                            ; preds = %bb.fs
   br i1 %.not35.i, label %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge, label %bb.fu
 
 bb.fu:                                            ; preds = %bb.ft
-  call fastcc void @upb_Decoder_AddMessageSetItem(ptr noundef nonnull %0, ptr noundef %2, ptr noundef %3, i32 noundef %.028.i, ptr noundef %.sroa.0198.0, i32 noundef %.0220), !inline_history !78
+  %9 = trunc i64 %.sroa.5.6 to i32
+  call fastcc void @upb_Decoder_AddMessageSetItem(ptr noundef nonnull %0, ptr noundef %2, ptr noundef %3, i32 noundef %.028.i, ptr noundef %.sroa.0198.0, i32 noundef %9), !inline_history !78
   br label %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge
 
 bb.fv:                                            ; preds = %upb_WireReader_ReadTag.exit.i
@@ -1758,11 +1766,13 @@ upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i: ; preds = %bb.fw
   br label %_upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge
 
 _upb_Decoder_DecodeWireValue.exit.thread.thread281.backedge: ; preds = %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i, %bb.gf, %bb.ge, %bb.gd, %bb.gc, %bb.fz, %bb.fy, %bb.fx, %bb.fs, %bb.fu, %bb.ft, %upb_WireReader_ReadVarint.exit.i, %bb.fl, %bb.fm
-  %.0217.be = phi ptr [ %i.afb, %bb.fx ], [ %i.afe, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.0.i146, %bb.fs ], [ %i.afs, %bb.gc ], [ %.0.i38.i, %upb_WireReader_ReadVarint.exit.i ], [ %.0.i38.i, %bb.fm ], [ %.0.i38.i, %bb.fl ], [ %.0.i146, %bb.ft ], [ %.0.i146, %bb.fu ], [ %i.afw, %bb.gf ], [ %i.afv, %bb.ge ], [ %i.aff, %bb.fy ], [ %i.afg, %bb.fz ], [ %i.aft, %bb.gd ]
-  %.028.i.be = phi i32 [ %.028.i, %bb.fx ], [ %.028.i, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.028.i, %bb.fs ], [ %.028.i, %bb.gc ], [ %.028.i, %upb_WireReader_ReadVarint.exit.i ], [ %i.adx, %bb.fm ], [ %i.adx, %bb.fl ], [ %.028.i, %bb.ft ], [ %.028.i, %bb.fu ], [ %.028.i, %bb.gf ], [ %.028.i, %bb.ge ], [ %.028.i, %bb.fy ], [ %.028.i, %bb.fz ], [ %.028.i, %bb.gd ]
-  %.sroa.0.0.i64.be = phi ptr [ %.sroa.0.0.i64, %bb.fx ], [ %.sroa.0.0.i64, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.sroa.0.0.i64, %bb.fs ], [ %.sroa.0.0.i64, %bb.gc ], [ %.sroa.0.0.i64, %upb_WireReader_ReadVarint.exit.i ], [ %.sroa.0.0.i64, %bb.fm ], [ %.sroa.0.0.i64, %bb.fl ], [ %.sroa.0198.0, %bb.ft ], [ %.sroa.0.0.i64, %bb.fu ], [ %.sroa.0.0.i64, %bb.gf ], [ %.sroa.0.0.i64, %bb.ge ], [ %.sroa.0.0.i64, %bb.fy ], [ %.sroa.0.0.i64, %bb.fz ], [ %.sroa.0.0.i64, %bb.gd ]
-  %.sroa.5.0.i65.be = phi i32 [ %.sroa.5.0.i65, %bb.fx ], [ %.sroa.5.0.i65, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.sroa.5.0.i65, %bb.fs ], [ %.sroa.5.0.i65, %bb.gc ], [ %.sroa.5.0.i65, %upb_WireReader_ReadVarint.exit.i ], [ %.sroa.5.0.i65, %bb.fm ], [ %.sroa.5.0.i65, %bb.fl ], [ %.0220, %bb.ft ], [ %.sroa.5.0.i65, %bb.fu ], [ %.sroa.5.0.i65, %bb.gf ], [ %.sroa.5.0.i65, %bb.ge ], [ %.sroa.5.0.i65, %bb.fy ], [ %.sroa.5.0.i65, %bb.fz ], [ %.sroa.5.0.i65, %bb.gd ]
-  %.027.i.be = phi i32 [ %.027.i, %bb.fx ], [ %.027.i, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.027.i, %bb.fs ], [ %.027.i, %bb.gc ], [ %.027.i, %upb_WireReader_ReadVarint.exit.i ], [ %i.adw, %bb.fm ], [ %i.adw, %bb.fl ], [ %i.aev, %bb.ft ], [ %i.aev, %bb.fu ], [ %.027.i, %bb.gf ], [ %.027.i, %bb.ge ], [ %.027.i, %bb.fy ], [ %.027.i, %bb.fz ], [ %.027.i, %bb.gd ]
+  %.sroa.5.4.be = phi i64 [ %.sroa.5.4, %bb.gc ], [ %.sroa.5.4, %bb.gd ], [ %.sroa.5.6, %bb.fs ], [ %.sroa.5.4, %bb.gf ], [ %.sroa.5.4, %upb_WireReader_ReadVarint.exit.i ], [ %.sroa.5.4, %bb.fm ], [ %.sroa.5.4, %bb.fl ], [ %.sroa.5.6, %bb.ft ], [ %.sroa.5.6, %bb.fu ], [ %.sroa.5.4, %bb.fx ], [ %.sroa.5.4, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.sroa.5.4, %bb.ge ], [ %.sroa.5.4, %bb.fy ], [ %.sroa.5.4, %bb.fz ]
+  %.sroa.0197.4.be = phi ptr [ %.sroa.0197.4, %bb.gc ], [ %.sroa.0197.4, %bb.gd ], [ %.sroa.0198.0, %bb.fs ], [ %.sroa.0197.4, %bb.gf ], [ %.sroa.0197.4, %upb_WireReader_ReadVarint.exit.i ], [ %.sroa.0197.4, %bb.fm ], [ %.sroa.0197.4, %bb.fl ], [ %.sroa.0198.0, %bb.ft ], [ %.sroa.0198.0, %bb.fu ], [ %.sroa.0197.4, %bb.fx ], [ %.sroa.0197.4, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.sroa.0197.4, %bb.ge ], [ %.sroa.0197.4, %bb.fy ], [ %.sroa.0197.4, %bb.fz ]
+  %.0217.be = phi ptr [ %i.afs, %bb.gc ], [ %i.aft, %bb.gd ], [ %.0.i146, %bb.fs ], [ %i.afw, %bb.gf ], [ %.0.i38.i, %upb_WireReader_ReadVarint.exit.i ], [ %.0.i38.i, %bb.fm ], [ %.0.i38.i, %bb.fl ], [ %.0.i146, %bb.ft ], [ %.0.i146, %bb.fu ], [ %i.afb, %bb.fx ], [ %i.afe, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %i.afv, %bb.ge ], [ %i.aff, %bb.fy ], [ %i.afg, %bb.fz ]
+  %.028.i.be = phi i32 [ %.028.i, %bb.gc ], [ %.028.i, %bb.gd ], [ %.028.i, %bb.fs ], [ %.028.i, %bb.gf ], [ %.028.i, %upb_WireReader_ReadVarint.exit.i ], [ %i.adx, %bb.fm ], [ %i.adx, %bb.fl ], [ %.028.i, %bb.ft ], [ %.028.i, %bb.fu ], [ %.028.i, %bb.fx ], [ %.028.i, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.028.i, %bb.ge ], [ %.028.i, %bb.fy ], [ %.028.i, %bb.fz ]
+  %.sroa.0.0.i64.be = phi ptr [ %.sroa.0.0.i64, %bb.gc ], [ %.sroa.0.0.i64, %bb.gd ], [ %.sroa.0.0.i64, %bb.fs ], [ %.sroa.0.0.i64, %bb.gf ], [ %.sroa.0.0.i64, %upb_WireReader_ReadVarint.exit.i ], [ %.sroa.0.0.i64, %bb.fm ], [ %.sroa.0.0.i64, %bb.fl ], [ %.sroa.0198.0, %bb.ft ], [ %.sroa.0.0.i64, %bb.fu ], [ %.sroa.0.0.i64, %bb.fx ], [ %.sroa.0.0.i64, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.sroa.0.0.i64, %bb.ge ], [ %.sroa.0.0.i64, %bb.fy ], [ %.sroa.0.0.i64, %bb.fz ]
+  %.sroa.5.0.i64.be = phi i64 [ %.sroa.5.0.i64, %bb.gc ], [ %.sroa.5.0.i64, %bb.gd ], [ %.sroa.5.0.i64, %bb.fs ], [ %.sroa.5.0.i64, %bb.gf ], [ %.sroa.5.0.i64, %upb_WireReader_ReadVarint.exit.i ], [ %.sroa.5.0.i64, %bb.fm ], [ %.sroa.5.0.i64, %bb.fl ], [ %.sroa.5.6, %bb.ft ], [ %.sroa.5.0.i64, %bb.fu ], [ %.sroa.5.0.i64, %bb.fx ], [ %.sroa.5.0.i64, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.sroa.5.0.i64, %bb.ge ], [ %.sroa.5.0.i64, %bb.fy ], [ %.sroa.5.0.i64, %bb.fz ]
+  %.027.i.be = phi i32 [ %.027.i, %bb.gc ], [ %.027.i, %bb.gd ], [ %.027.i, %bb.fs ], [ %.027.i, %bb.gf ], [ %.027.i, %upb_WireReader_ReadVarint.exit.i ], [ %i.adw, %bb.fm ], [ %i.adw, %bb.fl ], [ %i.aev, %bb.ft ], [ %i.aev, %bb.fu ], [ %.027.i, %bb.fx ], [ %.027.i, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i.i ], [ %.027.i, %bb.ge ], [ %.027.i, %bb.fy ], [ %.027.i, %bb.fz ]
   br label %_upb_Decoder_DecodeWireValue.exit.thread.thread281, !llvm.loop !79
 
 bb.fy:                                            ; preds = %bb.fv
@@ -1827,7 +1837,11 @@ upb_EpsCopyInputStream_IsDone.exit163.thread:     ; preds = %bb.fh, %upb_EpsCopy
   unreachable
 
 _upb_Decoder_DecodeField.exit:                    ; preds = %upb_WireReader_ReadTag.exit.i, %bb.el, %bb.ek, %bb.ej, %_upb_Decoder_ReadString2.exit128, %bb.eb, %_upb_Decoder_RecurseSubMessage.exit52.i, %_upb_Decoder_RecurseSubMessage.exit.i57, %bb.ck, %_upb_Decoder_DecodeVarintPacked.exit.i, %_upb_Decoder_RecurseSubMessage.exit73.i, %_upb_Decoder_RecurseSubMessage.exit.i, %_upb_Decoder_ReadString2.exit, %bb.av, %bb.au, %_upb_Decoder_Reserve.exit84, %bb.bv, %_upb_Decoder_DecodeToMap.exit, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.thread.i, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i
-  %.0.i15 = phi ptr [ %.026.i, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i ], [ %i.yq, %_upb_Decoder_RecurseSubMessage.exit52.i ], [ %.0.i85, %bb.bv ], [ %i.tv, %_upb_Decoder_DecodeToMap.exit ], [ %.1.i252, %bb.au ], [ %i.ix, %bb.av ], [ %.0.i.i.i90, %_upb_Decoder_ReadString2.exit ], [ %i.ri, %bb.ck ], [ %i.mz, %_upb_Decoder_RecurseSubMessage.exit73.i ], [ %.1213255, %_upb_Decoder_DecodeVarintPacked.exit.i ], [ %i.lz, %_upb_Decoder_RecurseSubMessage.exit.i ], [ %.0.i85, %_upb_Decoder_Reserve.exit84 ], [ %.0.i.i.i119, %_upb_Decoder_ReadString2.exit128 ], [ %i.yz, %bb.eb ], [ %.1.i252, %bb.el ], [ %.1.i252, %bb.ej ], [ %.1.i252, %bb.ek ], [ %i.xp, %_upb_Decoder_RecurseSubMessage.exit.i57 ], [ %.026.i, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.thread.i ], [ %.0.i.i66, %upb_WireReader_ReadTag.exit.i ] ; 2 uses
+  %.sroa.5.3 = phi i64 [ %.sroa.5.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i ], [ %.sroa.5.0, %_upb_Decoder_DecodeToMap.exit ], [ %.sroa.5.0, %bb.el ], [ %.sroa.5.0, %bb.ek ], [ %.sroa.5.0, %bb.ej ], [ %.sroa.5.0, %_upb_Decoder_ReadString2.exit128 ], [ %.sroa.5.0, %bb.eb ], [ %.sroa.5.0, %_upb_Decoder_RecurseSubMessage.exit52.i ], [ %.sroa.5.0, %_upb_Decoder_RecurseSubMessage.exit.i57 ], [ %.sroa.5.0, %bb.ck ], [ %.sroa.5.0, %_upb_Decoder_DecodeVarintPacked.exit.i ], [ %.sroa.5.0, %_upb_Decoder_RecurseSubMessage.exit73.i ], [ %.sroa.5.0, %_upb_Decoder_RecurseSubMessage.exit.i ], [ %.sroa.5.0, %_upb_Decoder_ReadString2.exit ], [ %.sroa.5.0, %bb.av ], [ %.sroa.5.0, %bb.au ], [ %.sroa.5.0, %_upb_Decoder_Reserve.exit84 ], [ %.sroa.5.0, %bb.bv ], [ %.sroa.5.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.thread.i ], [ %.sroa.5.4, %upb_WireReader_ReadTag.exit.i ]
+  %.sroa.0197.3 = phi ptr [ %.sroa.0197.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i ], [ %.sroa.0197.0, %_upb_Decoder_DecodeToMap.exit ], [ %.sroa.0197.0, %bb.el ], [ %.sroa.0197.0, %bb.ek ], [ %.sroa.0197.0, %bb.ej ], [ %.sroa.0197.0, %_upb_Decoder_ReadString2.exit128 ], [ %.sroa.0197.0, %bb.eb ], [ %.sroa.0197.0, %_upb_Decoder_RecurseSubMessage.exit52.i ], [ %.sroa.0197.0, %_upb_Decoder_RecurseSubMessage.exit.i57 ], [ %.sroa.0197.0, %bb.ck ], [ %.sroa.0197.0, %_upb_Decoder_DecodeVarintPacked.exit.i ], [ %.sroa.0197.0, %_upb_Decoder_RecurseSubMessage.exit73.i ], [ %.sroa.0197.0, %_upb_Decoder_RecurseSubMessage.exit.i ], [ %.sroa.0197.0, %_upb_Decoder_ReadString2.exit ], [ %.sroa.0197.0, %bb.av ], [ %.sroa.0197.0, %bb.au ], [ %.sroa.0197.0, %_upb_Decoder_Reserve.exit84 ], [ %.sroa.0197.0, %bb.bv ], [ %.sroa.0197.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.thread.i ], [ %.sroa.0197.4, %upb_WireReader_ReadTag.exit.i ]
+  %.sroa.4.3 = phi i64 [ %.sroa.4.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i ], [ %.sroa.4.0, %_upb_Decoder_DecodeToMap.exit ], [ %.sroa.4.0, %bb.el ], [ %.sroa.4.0, %bb.ek ], [ %.sroa.4.0, %bb.ej ], [ %.sroa.4.0, %_upb_Decoder_ReadString2.exit128 ], [ %.sroa.4.0, %bb.eb ], [ %.sroa.4.0, %_upb_Decoder_RecurseSubMessage.exit52.i ], [ %.sroa.4.0, %_upb_Decoder_RecurseSubMessage.exit.i57 ], [ %.sroa.4.0, %bb.ck ], [ %.sroa.4.0, %_upb_Decoder_DecodeVarintPacked.exit.i ], [ %.sroa.4.0, %_upb_Decoder_RecurseSubMessage.exit73.i ], [ %.sroa.4.0, %_upb_Decoder_RecurseSubMessage.exit.i ], [ %.sroa.4.0, %_upb_Decoder_ReadString2.exit ], [ %.sroa.4.0, %bb.av ], [ %.sroa.4.0, %bb.au ], [ %.sroa.4.6, %_upb_Decoder_Reserve.exit84 ], [ %.sroa.4.6, %bb.bv ], [ %.sroa.4.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.thread.i ], [ %.sroa.4.0, %upb_WireReader_ReadTag.exit.i ]
+  %.sroa.0188.3 = phi ptr [ %.sroa.0188.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i ], [ %.sroa.0188.0, %_upb_Decoder_DecodeToMap.exit ], [ %.sroa.0188.0, %bb.el ], [ %.sroa.0188.0, %bb.ek ], [ %.sroa.0188.0, %bb.ej ], [ %.sroa.0188.0, %_upb_Decoder_ReadString2.exit128 ], [ %.sroa.0188.0, %bb.eb ], [ %.sroa.0188.0, %_upb_Decoder_RecurseSubMessage.exit52.i ], [ %.sroa.0188.0, %_upb_Decoder_RecurseSubMessage.exit.i57 ], [ %.sroa.0188.0, %bb.ck ], [ %.sroa.0188.0, %_upb_Decoder_DecodeVarintPacked.exit.i ], [ %.sroa.0188.0, %_upb_Decoder_RecurseSubMessage.exit73.i ], [ %.sroa.0188.0, %_upb_Decoder_RecurseSubMessage.exit.i ], [ %.sroa.0188.0, %_upb_Decoder_ReadString2.exit ], [ %.sroa.0188.0, %bb.av ], [ %.sroa.0188.0, %bb.au ], [ %.sroa.0189.0, %_upb_Decoder_Reserve.exit84 ], [ %.sroa.0189.0, %bb.bv ], [ %.sroa.0188.0, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.thread.i ], [ %.sroa.0188.0, %upb_WireReader_ReadTag.exit.i ]
+  %.0.i15 = phi ptr [ %.026.i, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i ], [ %i.tv, %_upb_Decoder_DecodeToMap.exit ], [ %.1.i252, %bb.el ], [ %.1.i252, %bb.ek ], [ %.1.i252, %bb.ej ], [ %.0.i.i.i119, %_upb_Decoder_ReadString2.exit128 ], [ %i.yz, %bb.eb ], [ %i.yq, %_upb_Decoder_RecurseSubMessage.exit52.i ], [ %i.xp, %_upb_Decoder_RecurseSubMessage.exit.i57 ], [ %i.ri, %bb.ck ], [ %.1213255, %_upb_Decoder_DecodeVarintPacked.exit.i ], [ %i.mz, %_upb_Decoder_RecurseSubMessage.exit73.i ], [ %i.lz, %_upb_Decoder_RecurseSubMessage.exit.i ], [ %.0.i.i.i90, %_upb_Decoder_ReadString2.exit ], [ %i.ix, %bb.av ], [ %.1.i252, %bb.au ], [ %.0.i85, %_upb_Decoder_Reserve.exit84 ], [ %.0.i85, %bb.bv ], [ %.026.i, %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.thread.i ], [ %.0.i.i66, %upb_WireReader_ReadTag.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %.pre301 = load i8, ptr %i.f, align 1, !tbaa !80, !range !67
   %i.afy = trunc nuw i8 %.pre301 to i1

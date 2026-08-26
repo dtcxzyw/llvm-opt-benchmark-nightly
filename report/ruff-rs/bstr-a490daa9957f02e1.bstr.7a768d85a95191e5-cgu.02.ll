@@ -94,6 +94,10 @@ bb.h:                                             ; preds = %bb.b
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   store i64 0, ptr %0, align 8, !alias.scope !3, !noalias !19
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %2, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !3, !noalias !19
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %3, ptr %.sroa.8.0..sroa_idx.i, align 8, !alias.scope !3, !noalias !19
   br label %_RINvNtNtCs98D8VPWzHuM_14regex_automata4util5empty11skip_splitsNtNtB4_6search9HalfMatchNCNvYINtNtNtB6_3dfa5dense3DFARSmENtNtB1w_9automaton9Automaton14try_search_fwd0ECsavRPklju9Q7_4bstr.exit
 
 bb.j:                                             ; preds = %bb.h, %bb.g
@@ -281,6 +285,10 @@ bb.h:                                             ; preds = %bb.b
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   store i64 0, ptr %0, align 8, !alias.scope !28, !noalias !40
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %2, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !28, !noalias !40
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %3, ptr %.sroa.8.0..sroa_idx.i, align 8, !alias.scope !28, !noalias !40
   br label %_RINvNtNtCs98D8VPWzHuM_14regex_automata4util5empty11skip_splitsNtNtB4_6search9HalfMatchNCNvYINtNtNtB6_3dfa6sparse3DFARShENtNtB1w_9automaton9Automaton14try_search_fwd0ECsavRPklju9Q7_4bstr.exit
 
 bb.j:                                             ; preds = %bb.h, %bb.g
@@ -463,6 +471,10 @@ bb.h:                                             ; preds = %bb.b
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   store i64 0, ptr %0, align 8, !alias.scope !48, !noalias !61
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %2, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !48, !noalias !61
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %3, ptr %.sroa.8.0..sroa_idx.i, align 8, !alias.scope !48, !noalias !61
   br label %_RINvNtNtCs98D8VPWzHuM_14regex_automata4util5empty11skip_splitsNtNtB4_6search9HalfMatchNCNvYINtNtNtB6_3dfa5dense3DFARSmENtNtB1w_9automaton9Automaton14try_search_rev0ECsavRPklju9Q7_4bstr.exit
 
 bb.j:                                             ; preds = %bb.h, %bb.g
@@ -641,6 +653,10 @@ bb.h:                                             ; preds = %bb.b
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   store i64 0, ptr %0, align 8, !alias.scope !68, !noalias !81
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %2, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !68, !noalias !81
+  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %3, ptr %.sroa.8.0..sroa_idx.i, align 8, !alias.scope !68, !noalias !81
   br label %_RINvNtNtCs98D8VPWzHuM_14regex_automata4util5empty11skip_splitsNtNtB4_6search9HalfMatchNCNvYINtNtNtB6_3dfa6sparse3DFARShENtNtB1w_9automaton9Automaton14try_search_rev0ECsavRPklju9Q7_4bstr.exit
 
 bb.j:                                             ; preds = %bb.h, %bb.g

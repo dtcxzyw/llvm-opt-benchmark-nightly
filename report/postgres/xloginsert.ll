@@ -204,12 +204,15 @@ bb.i:                                             ; preds = %bb.aw, %.lr.ph.i12
   %.1 = phi i64 [ 0, %.lr.ph.i12 ], [ %.2, %bb.aw ] ; 3 uses
   %i.al = phi i32 [ %i.ah, %.lr.ph.i12 ], [ %i.fe, %bb.aw ]
   %i.am = phi ptr [ %.pre234.i, %.lr.ph.i12 ], [ %i.ff, %bb.aw ] ; 2 uses
-  %indvars.iv.i13.a = phi i64 [ 0, %.lr.ph.i12 ], [ %indvars.iv.next.i14, %bb.aw ] ; 3 uses
-  %.0161222.i = phi ptr [ %i.ac, %.lr.ph.i12 ], [ %.3.i, %bb.aw ] ; 9 uses
-  %.0163221.i = phi ptr [ @hdr_rdt, %.lr.ph.i12 ], [ %.4167.i, %bb.aw ] ; 3 uses
-  %.0169220.i = phi ptr [ null, %.lr.ph.i12 ], [ %.1170.i, %bb.aw ] ; 5 uses
-  %.0173218.i = phi i64 [ 0, %.lr.ph.i12 ], [ %.3176.i, %bb.aw ] ; 3 uses
-  %i.an = getelementptr inbounds nuw [8304 x i8], ptr %i.am, i64 %indvars.iv.i13.a ; 24 uses
+  %indvars.iv.i13 = phi i64 [ 0, %.lr.ph.i12 ], [ %indvars.iv.next.i14, %bb.aw ] ; 3 uses
+  %indvars.iv.i13.a = phi i64 [ 0, %.lr.ph.i12 ], [ %.3.i, %bb.aw ] ; 3 uses
+  %.0161222.i = phi ptr [ null, %.lr.ph.i12 ], [ %.4167.i, %bb.aw ] ; 5 uses
+  %.0163221.i = phi ptr [ @hdr_rdt, %.lr.ph.i12 ], [ %.1170.i, %bb.aw ] ; 3 uses
+  %.sroa.034.0221.i = phi i16 [ undef, %.lr.ph.i12 ], [ %.sroa.034.3.i, %bb.aw ] ; 2 uses
+  %.sroa.7.0220.i = phi i16 [ undef, %.lr.ph.i12 ], [ %.sroa.7.4.i, %bb.aw ] ; 2 uses
+  %.sroa.14.0219.i = phi i8 [ undef, %.lr.ph.i12 ], [ %.sroa.14.5.i, %bb.aw ] ; 2 uses
+  %.0170218.i = phi ptr [ %i.ac, %.lr.ph.i12 ], [ %.3173.i, %bb.aw ] ; 9 uses
+  %i.an = getelementptr inbounds nuw [8304 x i8], ptr %i.am, i64 %indvars.iv.i13 ; 24 uses
   %i.ao = load i8, ptr %i.an, align 8, !range !8, !noundef !9
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %bb.j, label %bb.aw
@@ -259,7 +262,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.0159.i = phi i1 [ %spec.select196.i, %bb.o ], [ false, %bb.n ]
-  %i.bf = trunc i64 %indvars.iv.i13.a to i8
+  %i.bf = trunc i64 %indvars.iv.i13 to i8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.bh = load i32, ptr %i.bg, align 8
   %i.bi = trunc i32 %i.bh to i8                   ; 2 uses
@@ -437,27 +440,27 @@ bb.ai:                                            ; preds = %bb.ag
 bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.af
   %.sink248.i = phi i64 [ 72, %bb.ah ], [ 96, %bb.ai ], [ 72, %bb.af ]
   %.sink.i = phi i32 [ 8192, %bb.ah ], [ %i.dr, %bb.ai ], [ %i.dg, %bb.af ]
-  %.1164.i = phi ptr [ %i.cu, %bb.ah ], [ %i.dm, %bb.ai ], [ %i.cu, %bb.af ]
   %.sroa.14.2.i = phi i8 [ %.sroa.14.0.i, %bb.ah ], [ %.sroa.14.0.i, %bb.ai ], [ %.sroa.14.1.i, %bb.af ]
   %.sroa.034.0.i = phi i16 [ 8192, %bb.ah ], [ %i.di, %bb.ai ], [ %.0.i, %bb.af ] ; 2 uses
+  %.1163.i = phi ptr [ %i.cu, %bb.ah ], [ %i.dm, %bb.ai ], [ %i.cu, %bb.af ]
   %i.ds = getelementptr inbounds nuw i8, ptr %i.an, i64 %.sink248.i
   store i32 %.sink.i, ptr %i.ds, align 8
   %i.dt = zext i16 %.sroa.034.0.i to i64          ; 2 uses
-  %i.du = add i64 %.0173218.i, %i.dt
+  %i.du = add i64 %indvars.iv.i13.a, %i.dt
   %i.dv = add i64 %.1, %i.dt
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.p
   %.332 = phi i32 [ %i.ct, %bb.aj ], [ %.130, %bb.p ]
   %.3 = phi i64 [ %i.dv, %bb.aj ], [ %.1, %bb.p ]
-  %.1174.i = phi i64 [ %i.du, %bb.aj ], [ %.0173218.i, %bb.p ] ; 2 uses
-  %.2165.i = phi ptr [ %.1164.i, %bb.aj ], [ %.0163221.i, %bb.p ] ; 2 uses
   %.sroa.4.1.i = phi i8 [ %i.cs, %bb.aj ], [ %.sroa.4.0.i, %bb.p ] ; 2 uses
-  %.sroa.14.3.i = phi i8 [ %.sroa.14.2.i, %bb.aj ], [ undef, %bb.p ]
-  %.sroa.7.2.i = phi i16 [ %.sroa.7.1.i, %bb.aj ], [ undef, %bb.p ]
-  %.sroa.034.1.i = phi i16 [ %.sroa.034.0.i, %bb.aj ], [ undef, %bb.p ]
+  %.sroa.14.3.i = phi i8 [ %.sroa.14.2.i, %bb.aj ], [ %.sroa.14.0219.i, %bb.p ] ; 2 uses
+  %.sroa.7.2.i = phi i16 [ %.sroa.7.1.i, %bb.aj ], [ %.sroa.7.0220.i, %bb.p ] ; 2 uses
+  %.sroa.034.1.i = phi i16 [ %.sroa.034.0.i, %bb.aj ], [ %.sroa.034.0221.i, %bb.p ] ; 2 uses
   %.sroa.0.2.i = phi i16 [ %.sroa.0.1.i, %bb.aj ], [ 0, %bb.p ] ; 2 uses
   %.1.i.a = phi i1 [ %.0156.i.a, %bb.aj ], [ false, %bb.p ]
+  %.2164.i = phi ptr [ %.1163.i, %bb.aj ], [ %.0163221.i, %bb.p ] ; 2 uses
+  %.1.i = phi i64 [ %i.du, %bb.aj ], [ %indvars.iv.i13.a, %bb.p ] ; 2 uses
   br i1 %.0159.i, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
@@ -465,28 +468,28 @@ bb.al:                                            ; preds = %bb.ak
   %i.dx = load i32, ptr %i.ba, align 8            ; 2 uses
   %i.dy = trunc i32 %i.dx to i16
   %i.dz = zext i32 %i.dx to i64
-  %i.ea = add i64 %.1174.i, %i.dz
+  %i.ea = add i64 %.1.i, %i.dz
   %i.eb = getelementptr inbounds nuw i8, ptr %i.an, i64 40
   %i.ec = load ptr, ptr %i.eb, align 8
-  store ptr %i.ec, ptr %.2165.i, align 8
+  store ptr %i.ec, ptr %.2164.i, align 8
   %i.ed = getelementptr inbounds nuw i8, ptr %i.an, i64 48
   %i.ee = load ptr, ptr %i.ed, align 8
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %.2175.i = phi i64 [ %i.ea, %bb.al ], [ %.1174.i, %bb.ak ]
-  %.3166.i = phi ptr [ %i.ee, %bb.al ], [ %.2165.i, %bb.ak ]
   %.sroa.13.0.i = phi i16 [ %i.dy, %bb.al ], [ 0, %bb.ak ]
   %.sroa.4.2.i = phi i8 [ %i.dw, %bb.al ], [ %.sroa.4.1.i, %bb.ak ] ; 5 uses
-  %.not193.i = icmp eq ptr %.0169220.i, null
+  %.3165.i = phi ptr [ %i.ee, %bb.al ], [ %.2164.i, %bb.ak ]
+  %.2.i = phi i64 [ %i.ea, %bb.al ], [ %.1.i, %bb.ak ]
+  %.not193.i = icmp eq ptr %.0161222.i, null
   br i1 %.not193.i, label %bb.aq, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   %i.ef = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   %i.eg = getelementptr inbounds nuw i8, ptr %i.an, i64 12
   %i.eh = load i32, ptr %i.eg, align 4
-  %i.ei = getelementptr inbounds nuw i8, ptr %.0169220.i, i64 4
-  %i.ej = getelementptr inbounds nuw i8, ptr %.0169220.i, i64 12
+  %i.ei = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 4
+  %i.ej = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 12
   %i.ek = load i32, ptr %i.ej, align 4
   %i.el = icmp eq i32 %i.eh, %i.ek
   br i1 %i.el, label %bb.ao, label %bb.aq
@@ -494,7 +497,7 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.an
   %i.em = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.en = load i32, ptr %i.em, align 8
-  %i.eo = getelementptr inbounds nuw i8, ptr %.0169220.i, i64 8
+  %i.eo = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 8
   %i.ep = load i32, ptr %i.eo, align 4
   %i.eq = icmp eq i32 %i.en, %i.ep
   br i1 %i.eq, label %bb.ap, label %bb.aq
@@ -510,28 +513,28 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap, %bb.ao, %bb.an, %bb.am
   %.sroa.4.3.i = phi i8 [ %.sroa.4.2.i, %bb.am ], [ %spec.select199.i, %bb.ap ], [ %.sroa.4.2.i, %bb.ao ], [ %.sroa.4.2.i, %bb.an ]
   %.0157.i = phi i1 [ false, %bb.am ], [ %i.et, %bb.ap ], [ false, %bb.ao ], [ false, %bb.an ]
-  store i8 %i.bf, ptr %.0161222.i, align 1
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 1
+  store i8 %i.bf, ptr %.0170218.i, align 1
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0170218.i, i64 1
   store i8 %.sroa.4.3.i, ptr %.sroa.4.0..sroa_idx.i, align 1
-  %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 2
+  %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0170218.i, i64 2
   store i16 %.sroa.13.0.i, ptr %.sroa.13.0..sroa_idx.i, align 1
-  %i.ev = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 4 ; 2 uses
+  %i.ev = getelementptr inbounds nuw i8, ptr %.0170218.i, i64 4 ; 2 uses
   br i1 %i.bm, label %bb.ar, label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
   store i16 %.sroa.034.1.i, ptr %i.ev, align 1
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 6
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0170218.i, i64 6
   store i16 %.sroa.7.2.i, ptr %.sroa.7.0..sroa_idx.i, align 1
-  %.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 8
+  %.sroa.14.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.0170218.i, i64 8
   store i8 %.sroa.14.3.i, ptr %.sroa.14.0..sroa_idx.i, align 1
-  %i.ew = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 9 ; 2 uses
+  %i.ew = getelementptr inbounds nuw i8, ptr %.0170218.i, i64 9 ; 2 uses
   %i.ex = icmp ne i16 %.sroa.0.2.i, 0
   %or.cond4.i = and i1 %i.ex, %.1.i.a
   br i1 %or.cond4.i, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
   store i16 %.sroa.0.2.i, ptr %i.ew, align 1
-  %i.ey = getelementptr inbounds nuw i8, ptr %.0161222.i, i64 11
+  %i.ey = getelementptr inbounds nuw i8, ptr %.0170218.i, i64 11
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %bb.ar, %bb.aq
@@ -560,11 +563,14 @@ bb.aw:                                            ; preds = %bb.av, %bb.i
   %.2 = phi i64 [ %.3, %bb.av ], [ %.1, %bb.i ]   ; 2 uses
   %i.fe = phi i32 [ %.pre236.i, %bb.av ], [ %i.al, %bb.i ] ; 2 uses
   %i.ff = phi ptr [ %.pre.i, %bb.av ], [ %i.am, %bb.i ]
-  %.3176.i = phi i64 [ %.2175.i, %bb.av ], [ %.0173218.i, %bb.i ] ; 2 uses
-  %.1170.i = phi ptr [ %i.an, %bb.av ], [ %.0169220.i, %bb.i ]
-  %.4167.i = phi ptr [ %.3166.i, %bb.av ], [ %.0163221.i, %bb.i ] ; 2 uses
-  %.3.i = phi ptr [ %i.fd, %bb.av ], [ %.0161222.i, %bb.i ] ; 2 uses
-  %indvars.iv.next.i14 = add nuw nsw i64 %indvars.iv.i13.a, 1 ; 2 uses
+  %.3173.i = phi ptr [ %i.fd, %bb.av ], [ %.0170218.i, %bb.i ] ; 2 uses
+  %.sroa.14.5.i = phi i8 [ %.sroa.14.3.i, %bb.av ], [ %.sroa.14.0219.i, %bb.i ]
+  %.sroa.7.4.i = phi i16 [ %.sroa.7.2.i, %bb.av ], [ %.sroa.7.0220.i, %bb.i ]
+  %.sroa.034.3.i = phi i16 [ %.sroa.034.1.i, %bb.av ], [ %.sroa.034.0221.i, %bb.i ]
+  %.1170.i = phi ptr [ %.3165.i, %bb.av ], [ %.0163221.i, %bb.i ] ; 2 uses
+  %.4167.i = phi ptr [ %i.an, %bb.av ], [ %.0161222.i, %bb.i ]
+  %.3.i = phi i64 [ %.2.i, %bb.av ], [ %indvars.iv.i13.a, %bb.i ] ; 2 uses
+  %indvars.iv.next.i14 = add nuw nsw i64 %indvars.iv.i13, 1 ; 2 uses
   %i.fg = sext i32 %i.fe to i64
   %i.fh = icmp slt i64 %indvars.iv.next.i14, %i.fg
   br i1 %i.fh, label %bb.i, label %._crit_edge.i, !llvm.loop !10
@@ -573,9 +579,9 @@ bb.aw:                                            ; preds = %bb.av, %bb.i
   %.033 = phi i64 [ 0, %bb.h ], [ %.235, %bb.aw ]
   %.029 = phi i32 [ 0, %bb.h ], [ %.231, %bb.aw ]
   %.028 = phi i64 [ 0, %bb.h ], [ %.2, %bb.aw ]
-  %.0173.lcssa.i = phi i64 [ 0, %bb.h ], [ %.3176.i, %bb.aw ] ; 2 uses
-  %.0163.lcssa.i = phi ptr [ @hdr_rdt, %bb.h ], [ %.4167.i, %bb.aw ] ; 2 uses
-  %.0161.lcssa.i = phi ptr [ %i.ac, %bb.h ], [ %.3.i, %bb.aw ] ; 4 uses
+  %.0170.lcssa.i = phi ptr [ %i.ac, %bb.h ], [ %.3173.i, %bb.aw ] ; 4 uses
+  %.0163.lcssa.i = phi ptr [ @hdr_rdt, %bb.h ], [ %.1170.i, %bb.aw ] ; 2 uses
+  %.0157.lcssa.i = phi i64 [ 0, %bb.h ], [ %.3.i, %bb.aw ] ; 2 uses
   %i.fi = load i8, ptr @curinsert_flags, align 1
   %i.fj = trunc i8 %i.fi to i1
   %i.fk = load i16, ptr @replorigin_xact_state, align 8
@@ -584,15 +590,15 @@ bb.aw:                                            ; preds = %bb.av, %bb.i
   br i1 %or.cond7.i, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %._crit_edge.i
-  %i.fm = getelementptr inbounds nuw i8, ptr %.0161.lcssa.i, i64 1
-  store i8 -3, ptr %.0161.lcssa.i, align 1
+  %i.fm = getelementptr inbounds nuw i8, ptr %.0170.lcssa.i, i64 1
+  store i8 -3, ptr %.0170.lcssa.i, align 1
   %i.fn = load i16, ptr @replorigin_xact_state, align 8
   store i16 %i.fn, ptr %i.fm, align 1
-  %i.fo = getelementptr inbounds nuw i8, ptr %.0161.lcssa.i, i64 3
+  %i.fo = getelementptr inbounds nuw i8, ptr %.0170.lcssa.i, i64 3
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %._crit_edge.i
-  %.4.i.a = phi ptr [ %i.fo, %bb.ax ], [ %.0161.lcssa.i, %._crit_edge.i ] ; 4 uses
+  %.4.i.a = phi ptr [ %i.fo, %bb.ax ], [ %.0170.lcssa.i, %._crit_edge.i ] ; 4 uses
   %i.fp = call zeroext i1 @IsSubxactTopXidLogPending() #9 ; 2 uses
   br i1 %i.fp, label %bb.az, label %bb.ba
 
@@ -649,13 +655,13 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be
   store ptr %i.gh, ptr %.0163.lcssa.i, align 8
   %i.gi = load ptr, ptr @mainrdata_last, align 8
   %i.gj = load i64, ptr @mainrdata_len, align 8
-  %i.gk = add i64 %i.gj, %.0173.lcssa.i
+  %i.gk = add i64 %i.gj, %.0157.lcssa.i
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.ba
-  %.4177.i = phi i64 [ %i.gk, %bb.bg ], [ %.0173.lcssa.i, %bb.ba ]
-  %.5168.i = phi ptr [ %i.gi, %bb.bg ], [ %.0163.lcssa.i, %bb.ba ]
   %.7.i = phi ptr [ %.6.i, %bb.bg ], [ %.5.i.a, %bb.ba ]
+  %.5168.i = phi ptr [ %i.gi, %bb.bg ], [ %.0163.lcssa.i, %bb.ba ]
+  %.4.i = phi i64 [ %i.gk, %bb.bg ], [ %.0157.lcssa.i, %bb.ba ]
   store ptr null, ptr %.5168.i, align 8
   %i.gl = load ptr, ptr @hdr_scratch, align 8     ; 2 uses
   %i.gm = ptrtoint ptr %.7.i to i64
@@ -664,7 +670,7 @@ bb.bh:                                            ; preds = %bb.bg, %bb.ba
   %i.gp = trunc i64 %i.go to i32
   store i32 %i.gp, ptr getelementptr inbounds nuw (i8, ptr @hdr_rdt, i64 16), align 8
   %i.gq = and i64 %i.go, 4294967295               ; 2 uses
-  %i.gr = add i64 %i.gq, %.4177.i                 ; 3 uses
+  %i.gr = add i64 %i.gq, %.4.i                    ; 3 uses
   %i.gs = load ptr, ptr @pg_comp_crc32c, align 8
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gl, i64 24
   %i.gu = add nsw i64 %i.gq, -24

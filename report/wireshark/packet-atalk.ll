@@ -202,29 +202,29 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not75, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %.074 = phi i32 [ %i.ad, %.lr.ph ], [ 0, %bb.b ]
-  %.07173 = phi i32 [ %i.bi, %.lr.ph ], [ 2, %bb.b ] ; 8 uses
+  %.074 = phi i32 [ %i.bi, %.lr.ph ], [ 2, %bb.b ] ; 8 uses
+  %.07173 = phi i32 [ %i.ad, %.lr.ph ], [ 0, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.ac = load i32, ptr @ett_nbp_node, align 4
-  %i.ad = add nuw nsw i32 %.074, 1                ; 3 uses
-  %i.ae = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.p, ptr noundef %0, i32 noundef %.07173, i32 noundef -1, i32 noundef %i.ac, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.439, i32 noundef %i.ad) ; 7 uses
+  %i.ad = add nuw nsw i32 %.07173, 1              ; 3 uses
+  %i.ae = call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.p, ptr noundef %0, i32 noundef %.074, i32 noundef -1, i32 noundef %i.ac, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.439, i32 noundef %i.ad) ; 7 uses
   %i.af = load i32, ptr @hf_nbp_node_net, align 4
-  %i.ag = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.af, ptr noundef %0, i32 noundef %.07173, i32 noundef 2, i32 noundef 0) ; 0 uses
-  %i.ah = add i32 %.07173, 2
+  %i.ag = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.af, ptr noundef %0, i32 noundef %.074, i32 noundef 2, i32 noundef 0) ; 0 uses
+  %i.ah = add i32 %.074, 2
   %i.ai = load i32, ptr @hf_nbp_node_node, align 4
   %i.aj = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.ai, ptr noundef %0, i32 noundef %i.ah, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.ak = add i32 %.07173, 3
+  %i.ak = add i32 %.074, 3
   %i.al = load i32, ptr @hf_nbp_node_port, align 4
   %i.am = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.al, ptr noundef %0, i32 noundef %i.ak, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.an = add i32 %.07173, 4
+  %i.an = add i32 %.074, 4
   %i.ao = load i32, ptr @hf_nbp_node_enum, align 4
   %i.ap = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.ao, ptr noundef %0, i32 noundef %i.an, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.aq = add i32 %.07173, 5                      ; 2 uses
+  %i.aq = add i32 %.074, 5                        ; 2 uses
   %i.ar = load i32, ptr @hf_nbp_node_object, align 4
   %i.as = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.aq)
   %i.at = zext i8 %i.as to i32
   %i.au = call ptr @proto_tree_add_item(ptr noundef %i.ae, i32 noundef %i.ar, ptr noundef %0, i32 noundef %i.aq, i32 noundef 1, i32 noundef 48) ; 0 uses
-  %i.av = add i32 %.07173, 6
+  %i.av = add i32 %.074, 6
   %i.aw = add i32 %i.av, %i.at                    ; 3 uses
   %i.ax = load i32, ptr @hf_nbp_node_type, align 4
   %i.ay = call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.aw)
@@ -239,7 +239,7 @@ bb.b:                                             ; preds = %bb.a
   %i.bh = add i32 %i.bc, 1
   %i.bi = add i32 %i.bh, %i.bf                    ; 2 uses
   %i.bj = load ptr, ptr %i.a, align 8
-  %i.bk = sub i32 %i.bi, %.07173
+  %i.bk = sub i32 %i.bi, %.074
   call void @proto_item_set_len(ptr noundef %i.bj, i32 noundef %i.bk)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %exitcond.not = icmp eq i32 %i.ad, %i.h
@@ -307,7 +307,7 @@ is_ddp_address.exit181:                           ; preds = %bb.b
   %i.af = tail call ptr @find_or_create_conversation(ptr noundef %1) ; 3 uses
   %i.ag = load i8, ptr @atp_defragment, align 1, !range !8, !noundef !9
   %i.ah = trunc nuw i8 %i.ag to i1
-  br i1 %i.ah, label %bb.c, label %bb.f
+  br i1 %i.ah, label %bb.c, label %6
 
 bb.c:                                             ; preds = %._crit_edge
   %i.ai = xor i1 %i.ae, true
@@ -346,15 +346,22 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.0158 = phi ptr [ %i.aw, %bb.d ], [ %i.aq, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   %i.az = icmp ne ptr %.0158, null
+  br label %6
+
+6:                                                ; preds = %bb.e, %._crit_edge
+  %.1 = phi i1 [ %i.az, %bb.e ], [ false, %._crit_edge ]
+  br i1 %i.x, label %7, label %bb.f
+
+7:                                                ; preds = %6
+  %8 = and i32 %i.u, 16
+  %.not172 = icmp eq i32 %8, 0
+  %9 = and i1 %.not172, %.1
+  %10 = zext i8 %i.q to i32
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %._crit_edge
-  %.1.a = phi i1 [ %i.az, %bb.e ], [ false, %._crit_edge ]
-  %6 = and i32 %i.u, 16
-  %.not172 = icmp eq i32 %6, 0
-  %7 = and i1 %.not172, %.1.a                     ; 3 uses
-  %8 = zext i8 %i.q to i32                        ; 3 uses
-  %.0161 = select i1 %i.x, i1 %7, i1 false
+bb.f:                                             ; preds = %7, %6
+  %.1.a = phi i1 [ %9, %7 ], [ false, %6 ]        ; 3 uses
+  %.0159 = phi i32 [ %10, %7 ], [ 0, %6 ]         ; 2 uses
   %i.ba = load ptr, ptr %i.n, align 8
   call void @col_clear(ptr noundef %i.ba, i32 noundef 25)
   %i.bb = load ptr, ptr %i.n, align 8
@@ -363,7 +370,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge
   %i.be = call ptr @val_to_str(ptr noundef %i.bd, i32 noundef %i.v, ptr noundef nonnull @atp_function_vals, ptr noundef nonnull @.str.436)
   %i.bf = zext i16 %i.r to i32                    ; 2 uses
   call void (ptr, i32, ptr, ...) @col_add_fstr(ptr noundef %i.bb, i32 noundef 25, ptr noundef nonnull @.str.440, ptr noundef %i.be, i32 noundef %i.bf)
-  br i1 %.0161, label %bb.g, label %bb.h
+  br i1 %.1.a, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.bg = load ptr, ptr %i.n, align 8
@@ -407,8 +414,9 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   br i1 %i.ae, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
+  %11 = zext i8 %i.q to i32                       ; 2 uses
   %i.cd = zext nneg i8 %i.t to i32
-  %i.ce = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.bk, i32 noundef %i.cc, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef %8, ptr noundef nonnull @.str.442, i32 noundef %8, i32 noundef %i.cd) ; 0 uses
+  %i.ce = call ptr (ptr, i32, ptr, i32, i32, i32, ptr, ...) @proto_tree_add_uint_format_value(ptr noundef %i.bk, i32 noundef %i.cc, ptr noundef %0, i32 noundef 1, i32 noundef 1, i32 noundef %11, ptr noundef nonnull @.str.442, i32 noundef %11, i32 noundef %i.cd) ; 0 uses
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
@@ -438,14 +446,14 @@ bb.o:                                             ; preds = %bb.h
   br i1 %or.cond9, label %bb.p, label %bb.r
 
 bb.p:                                             ; preds = %.thread
-  %i.co = icmp ne i8 %i.q, 0                      ; 2 uses
-  %or.cond12 = select i1 %7, i1 true, i1 %i.co
+  %i.co = icmp ne i32 %.0159, 0                   ; 2 uses
+  %or.cond12 = select i1 %.1.a, i1 true, i1 %i.co
   br i1 %or.cond12, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
   %spec.select = select i1 %i.co, i32 8, i32 4    ; 2 uses
   %i.cp = call i32 @tvb_reported_length_remaining(ptr noundef %0, i32 noundef %spec.select)
-  %i.cq = call ptr @fragment_add_seq_check(ptr noundef nonnull @atp_reassembly_table, ptr noundef %0, i32 noundef %spec.select, ptr noundef %1, i32 noundef %i.bf, ptr noundef null, i32 noundef %8, i32 noundef %i.cp, i1 noundef zeroext %7)
+  %i.cq = call ptr @fragment_add_seq_check(ptr noundef nonnull @atp_reassembly_table, ptr noundef %0, i32 noundef %spec.select, ptr noundef %1, i32 noundef %i.bf, ptr noundef null, i32 noundef %.0159, i32 noundef %i.cp, i1 noundef zeroext %.1.a)
   %i.cr = call ptr @process_reassembled_data(ptr noundef %0, i32 noundef 4, ptr noundef %1, ptr noundef nonnull @.str.443, ptr noundef %i.cq, ptr noundef nonnull @atp_frag_items, ptr noundef null, ptr noundef %.0164184)
   br label %bb.s
 
@@ -848,8 +856,8 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0103 = phi i32 [ 1, %bb.b ], [ 2, %bb.c ]     ; 4 uses
   %.0102 = phi i16 [ %i.i, %bb.b ], [ %i.j, %bb.c ]
+  %.0101 = phi i32 [ 1, %bb.b ], [ 2, %bb.c ]     ; 4 uses
   %i.k = load ptr, ptr %i.a, align 8
   %i.l = zext i16 %i.d to i32                     ; 2 uses
   %i.m = zext i16 %.0102 to i32                   ; 2 uses
@@ -867,17 +875,17 @@ bb.e:                                             ; preds = %bb.d
   %i.t = load i32, ptr @hf_rtmp_node_len, align 4
   %i.u = tail call ptr @proto_tree_add_uint(ptr noundef %i.q, i32 noundef %i.t, ptr noundef %0, i32 noundef 2, i32 noundef 1, i32 noundef %i.f) ; 0 uses
   %i.v = load i32, ptr @hf_rtmp_node, align 4
-  %i.w = tail call ptr @proto_tree_add_uint(ptr noundef %i.q, i32 noundef %i.v, ptr noundef %0, i32 noundef 3, i32 noundef %.0103, i32 noundef %i.m) ; 0 uses
-  %i.x = add nuw nsw i32 %.0103, 3                ; 2 uses
+  %i.w = tail call ptr @proto_tree_add_uint(ptr noundef %i.q, i32 noundef %i.v, ptr noundef %0, i32 noundef 3, i32 noundef %.0101, i32 noundef %i.m) ; 0 uses
+  %i.x = add nuw nsw i32 %.0101, 3                ; 2 uses
   %i.y = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.x)
   %i.z = icmp eq i16 %i.y, 0
   br i1 %i.z, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.aa = load i32, ptr @hf_rtmp_version, align 4
-  %i.ab = add nuw nsw i32 %.0103, 5
+  %i.ab = add nuw nsw i32 %.0101, 5
   %i.ac = tail call ptr @proto_tree_add_item(ptr noundef %i.q, i32 noundef %i.aa, ptr noundef %0, i32 noundef %i.ab, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %i.ad = add nuw nsw i32 %.0103, 6
+  %i.ad = add nuw nsw i32 %.0101, 6
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -886,21 +894,21 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.ae, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.g, %bb.n
-  %.0101108 = phi i32 [ %i.bm, %bb.n ], [ 1, %bb.g ] ; 4 uses
-  %.1107 = phi i32 [ %i.bl, %bb.n ], [ %.0104.a, %bb.g ] ; 10 uses
-  %i.af = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.1107) ; 2 uses
-  %i.ag = add i32 %.1107, 2                       ; 3 uses
+  %.0101108 = phi i32 [ %i.bl, %bb.n ], [ %.0104.a, %bb.g ] ; 10 uses
+  %.1107 = phi i32 [ %i.bm, %bb.n ], [ 1, %bb.g ] ; 4 uses
+  %i.af = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %.0101108) ; 2 uses
+  %i.ag = add i32 %.0101108, 2                    ; 3 uses
   %i.ah = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.ag) ; 2 uses
   %i.ai = zext i8 %i.ah to i32                    ; 3 uses
   %.not106 = icmp sgt i8 %i.ah, -1
   br i1 %.not106, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph
-  %i.aj = add i32 %.1107, 3                       ; 2 uses
+  %i.aj = add i32 %.0101108, 3                    ; 2 uses
   %i.ak = tail call zeroext i16 @tvb_get_ntohs(ptr noundef %0, i32 noundef %i.aj)
-  %i.al = add i32 %.1107, 5                       ; 2 uses
+  %i.al = add i32 %.0101108, 5                    ; 2 uses
   %i.am = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %i.al) ; 2 uses
-  %i.an = icmp eq i32 %.0101108, 1                ; 2 uses
+  %i.an = icmp eq i32 %.1107, 1                   ; 2 uses
   %i.ao = load i32, ptr @ett_rtmp_tuple, align 4  ; 2 uses
   %i.ap = zext i16 %i.af to i32                   ; 3 uses
   %i.aq = and i32 %i.ai, 127                      ; 3 uses
@@ -909,17 +917,17 @@ bb.h:                                             ; preds = %.lr.ph
 
 bb.i:                                             ; preds = %bb.h
   %i.as = zext i8 %i.am to i32
-  %i.at = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.q, ptr noundef %0, i32 noundef %.1107, i32 noundef 6, i32 noundef %i.ao, ptr noundef null, ptr noundef nonnull @.str.457, i32 noundef 1, i32 noundef %i.ap, i32 noundef %i.aq, i32 noundef %i.ar, i32 noundef %i.as)
+  %i.at = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.q, ptr noundef %0, i32 noundef %.0101108, i32 noundef 6, i32 noundef %i.ao, ptr noundef null, ptr noundef nonnull @.str.457, i32 noundef 1, i32 noundef %i.ap, i32 noundef %i.aq, i32 noundef %i.ar, i32 noundef %i.as)
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
-  %i.au = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.q, ptr noundef %0, i32 noundef %.1107, i32 noundef 6, i32 noundef %i.ao, ptr noundef null, ptr noundef nonnull @.str.458, i32 noundef %.0101108, i32 noundef %i.ap, i32 noundef %i.aq, i32 noundef %i.ar)
+  %i.au = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.q, ptr noundef %0, i32 noundef %.0101108, i32 noundef 6, i32 noundef %i.ao, ptr noundef null, ptr noundef nonnull @.str.458, i32 noundef %.1107, i32 noundef %i.ap, i32 noundef %i.aq, i32 noundef %i.ar)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.0 = phi ptr [ %i.au, %bb.j ], [ %i.at, %bb.i ] ; 4 uses
   %i.av = load i32, ptr @hf_rtmp_tuple_range_start, align 4
-  %i.aw = tail call ptr @proto_tree_add_uint(ptr noundef %.0, i32 noundef %i.av, ptr noundef %0, i32 noundef %.1107, i32 noundef 2, i32 noundef %i.ap) ; 0 uses
+  %i.aw = tail call ptr @proto_tree_add_uint(ptr noundef %.0, i32 noundef %i.av, ptr noundef %0, i32 noundef %.0101108, i32 noundef 2, i32 noundef %i.ap) ; 0 uses
   %i.ax = load i32, ptr @hf_rtmp_tuple_dist, align 4
   %i.ay = tail call ptr @proto_tree_add_uint(ptr noundef %.0, i32 noundef %i.ax, ptr noundef %0, i32 noundef %i.ag, i32 noundef 1, i32 noundef %i.aq) ; 0 uses
   %i.az = load i32, ptr @hf_rtmp_tuple_range_end, align 4
@@ -935,17 +943,17 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %.lr.ph
   %i.be = load i32, ptr @ett_rtmp_tuple, align 4
   %i.bf = zext i16 %i.af to i32                   ; 2 uses
-  %i.bg = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.q, ptr noundef %0, i32 noundef %.1107, i32 noundef 3, i32 noundef %i.be, ptr noundef null, ptr noundef nonnull @.str.459, i32 noundef %.0101108, i32 noundef %i.bf, i32 noundef %i.ai) ; 2 uses
+  %i.bg = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %i.q, ptr noundef %0, i32 noundef %.0101108, i32 noundef 3, i32 noundef %i.be, ptr noundef null, ptr noundef nonnull @.str.459, i32 noundef %.1107, i32 noundef %i.bf, i32 noundef %i.ai) ; 2 uses
   %i.bh = load i32, ptr @hf_rtmp_tuple_net, align 4
-  %i.bi = tail call ptr @proto_tree_add_uint(ptr noundef %i.bg, i32 noundef %i.bh, ptr noundef %0, i32 noundef %.1107, i32 noundef 2, i32 noundef %i.bf) ; 0 uses
+  %i.bi = tail call ptr @proto_tree_add_uint(ptr noundef %i.bg, i32 noundef %i.bh, ptr noundef %0, i32 noundef %.0101108, i32 noundef 2, i32 noundef %i.bf) ; 0 uses
   %i.bj = load i32, ptr @hf_rtmp_tuple_dist, align 4
   %i.bk = tail call ptr @proto_tree_add_uint(ptr noundef %i.bg, i32 noundef %i.bj, ptr noundef %0, i32 noundef %i.ag, i32 noundef 1, i32 noundef %i.ai) ; 0 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
   %.sink = phi i32 [ 3, %bb.m ], [ 6, %bb.l ], [ 6, %bb.k ]
-  %i.bl = add i32 %.1107, %.sink                  ; 2 uses
-  %i.bm = add i32 %.0101108, 1
+  %i.bl = add i32 %.0101108, %.sink               ; 2 uses
+  %i.bm = add i32 %.1107, 1
   %i.bn = tail call zeroext i1 @tvb_offset_exists(ptr noundef %0, i32 noundef %i.bl)
   br i1 %i.bn, label %.lr.ph, label %.loopexit, !llvm.loop !13
 

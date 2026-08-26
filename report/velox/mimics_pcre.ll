@@ -202,6 +202,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 40
   %i.ar = load ptr, ptr %i.aq, align 8
   %i.as = call noundef zeroext i1 %i.ar(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef %i.ag, i1 noundef zeroext %i.ao)
+  %7 = zext i1 %i.as to i8
   br label %bb.z
 
 bb.j:                                             ; preds = %bb.h
@@ -213,9 +214,9 @@ bb.j:                                             ; preds = %bb.h
   %i.aw = load ptr, ptr %0, align 8, !tbaa !23
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.ay = load ptr, ptr %i.ax, align 8
-  %i.az = call noundef zeroext i1 %i.ay(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef %i.ag, i1 noundef zeroext %i.av, ptr noundef nonnull %i.a) ; 2 uses
+  %i.az = call noundef zeroext i1 %i.ay(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef %i.ag, i1 noundef zeroext %i.av, ptr noundef nonnull %i.a)
   %i.ba = getelementptr inbounds i8, ptr %i.ae, i64 -11
-  %i.bb = zext i1 %i.az to i8
+  %i.bb = zext i1 %i.az to i8                     ; 2 uses
   store i8 %i.bb, ptr %i.ba, align 1, !tbaa !72
   %i.bc = load i8, ptr %i.a, align 1, !tbaa !10, !range !12, !noundef !13
   %i.bd = trunc nuw i8 %i.bc to i1
@@ -353,7 +354,8 @@ bb.w:                                             ; preds = %bb.p, %bb.o
   %i.dh = load ptr, ptr %0, align 8, !tbaa !23
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 24
   %i.dj = load ptr, ptr %i.di, align 8
-  %i.dk = call noundef zeroext i1 %i.dj(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %i.ag, i1 noundef zeroext %i.db, i1 noundef zeroext %i.de, ptr noundef %i.dg, i32 noundef %.pre) ; 3 uses
+  %i.dk = call noundef zeroext i1 %i.dj(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %i.ag, i1 noundef zeroext %i.db, i1 noundef zeroext %i.de, ptr noundef %i.dg, i32 noundef %.pre)
+  %8 = zext i1 %i.dk to i8                        ; 3 uses
   %i.dl = load i16, ptr %i.bk, align 2, !tbaa !19
   %i.dm = icmp ugt i16 %i.dl, 1
   br i1 %i.dm, label %bb.x, label %bb.z
@@ -368,7 +370,7 @@ bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.n, %bb.w, %bb.y, %bb.x, %bb.i
-  %.161 = phi i1 [ %i.as, %bb.i ], [ %i.dk, %bb.x ], [ %i.dk, %bb.y ], [ %i.dk, %bb.w ], [ %i.az, %bb.n ] ; 4 uses
+  %.3 = phi i8 [ %7, %bb.i ], [ %8, %bb.x ], [ %8, %bb.y ], [ %8, %bb.w ], [ %i.bb, %bb.n ] ; 3 uses
   %i.dp = load ptr, ptr %i.i, align 8, !tbaa !52  ; 2 uses
   %i.dq = load ptr, ptr %i.p, align 8, !tbaa !61  ; 3 uses
   %.not.i.i = icmp eq ptr %i.dp, %i.dq
@@ -379,7 +381,7 @@ _ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit: ; preds = %bb.z
   store ptr %i.dr, ptr %i.i, align 8, !tbaa !52
   %i.ds = load ptr, ptr %i.w, align 8, !tbaa !53
   %i.dt = icmp eq ptr %i.dr, %i.ds
-  br i1 %i.dt, label %.thread80, label %bb.aa
+  br i1 %i.dt, label %.thread82, label %bb.aa
 
 _ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit.thread: ; preds = %bb.z
   call void @_ZdlPvm(ptr noundef %i.dq, i64 noundef 504) #17
@@ -394,7 +396,11 @@ _ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit.thread: ; preds 
   store ptr %i.dy, ptr %i.i, align 8, !tbaa !52
   %i.dz = load ptr, ptr %i.w, align 8, !tbaa !53
   %i.ea = icmp eq ptr %i.dy, %i.dz
-  br i1 %i.ea, label %.thread80, label %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3topEv.exit75
+  br i1 %i.ea, label %.thread82, label %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3topEv.exit75
+
+.thread82:                                        ; preds = %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit.thread, %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit
+  %9 = trunc nuw i8 %.3 to i1
+  br label %.thread80
 
 bb.aa:                                            ; preds = %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit
   %i.eb = icmp eq ptr %i.dr, %i.dq
@@ -419,14 +425,12 @@ bb.ac:                                            ; preds = %_ZNSt5stackIN3re29W
   %i.ek = load i32, ptr %i.ej, align 8, !tbaa !63 ; 2 uses
   %i.el = sext i32 %i.ek to i64
   %i.em = getelementptr inbounds i8, ptr %i.ei, i64 %i.el
-  %7 = zext i1 %.161 to i8
-  store i8 %7, ptr %i.em, align 1, !tbaa !10
+  store i8 %.3, ptr %i.em, align 1, !tbaa !10
   br label %bb.ae
 
 bb.ad:                                            ; preds = %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3topEv.exit75
   %i.en = getelementptr inbounds i8, ptr %i.eg, i64 -10
-  %8 = zext i1 %.161 to i8
-  store i8 %8, ptr %i.en, align 2, !tbaa !77
+  store i8 %.3, ptr %i.en, align 2, !tbaa !77
   %.phi.trans.insert = getelementptr inbounds i8, ptr %i.eg, i64 -16
   %.pre83 = load i32, ptr %.phi.trans.insert, align 8, !tbaa !63
   br label %bb.ae
@@ -438,9 +442,9 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   store i32 %i.eq, ptr %i.ep, align 8, !tbaa !63
   br label %.thread78.backedge
 
-.thread80:                                        ; preds = %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit, %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit.thread, %_ZN4absl12lts_2024011612log_internal10LogMessagelsILi10EEERS2_RAT__Kc.exit
-  %.264 = phi i1 [ %2, %_ZN4absl12lts_2024011612log_internal10LogMessagelsILi10EEERS2_RAT__Kc.exit ], [ %.161, %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit.thread ], [ %.161, %_ZNSt5stackIN3re29WalkStateIbEESt5dequeIS2_SaIS2_EEE3popEv.exit ]
-  ret i1 %.264
+.thread80:                                        ; preds = %.thread82, %_ZN4absl12lts_2024011612log_internal10LogMessagelsILi10EEERS2_RAT__Kc.exit
+  %.2 = phi i1 [ %2, %_ZN4absl12lts_2024011612log_internal10LogMessagelsILi10EEERS2_RAT__Kc.exit ], [ %9, %.thread82 ]
+  ret i1 %.2
 }
 
 ; Function Attrs: nobuiltin allocsize(0)

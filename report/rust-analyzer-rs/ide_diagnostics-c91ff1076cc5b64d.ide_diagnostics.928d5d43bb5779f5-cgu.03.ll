@@ -95,6 +95,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.ae, %bb.a
+  %.sroa.12.0 = phi ptr [ undef, %bb.a ], [ %.sroa.0.0.i.i.i, %bb.ae ]
   call void @llvm.experimental.noalias.scope.decl(metadata !15)
   call void @llvm.experimental.noalias.scope.decl(metadata !18)
   %i.j = load ptr, ptr %i.f, align 8, !alias.scope !21, !noalias !22, !noundef !9
@@ -220,7 +221,7 @@ bb.q:                                             ; preds = %bb.p
           to label %.body unwind label %bb.t, !noalias !22
 
 _RNvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1h_9generated5nodes4AttrENCINvMNtNtB1h_14syntax_factory12constructorsNtB2z_13SyntaxFactory4use_INtNtBb_6option6OptionB1V_EE0EEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4AttrENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory4use_IBC_B2c_EE0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i, %bb.j, %bb.f, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i
-  %.sroa.0.0.i.i.i = phi ptr [ null, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i ], [ null, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4AttrENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory4use_IBC_B2c_EE0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ], [ %i.r, %bb.f ], [ %i.r, %bb.j ] ; 4 uses
+  %.sroa.0.0.i.i.i = phi ptr [ null, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i ], [ null, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4AttrENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory4use_IBC_B2c_EE0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ], [ %i.r, %bb.f ], [ %i.r, %bb.j ] ; 5 uses
   %.not.i = icmp eq ptr %.sroa.0.0.i.i, null
   %.not16.i = icmp eq ptr %.sroa.0.0.i.i.i, null  ; 2 uses
   br i1 %.not.i, label %bb.s, label %bb.r
@@ -317,7 +318,7 @@ bb.ac:                                            ; preds = %bb.r
 bb.ad:                                            ; preds = %bb.r
   store i64 1, ptr %i.b, align 8
   store ptr %.sroa.0.0.i.i, ptr %.sroa.9.0..sroa_idx32, align 8
-  store ptr null, ptr %.sroa.12.0..sroa_idx33, align 8
+  store ptr %.sroa.12.0, ptr %.sroa.12.0..sroa_idx33, align 8
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 189 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #25
           to label %bb.af unwind label %bb.ag
 
@@ -400,6 +401,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.ac, %bb.a
+  %.sroa.12.0 = phi ptr [ undef, %bb.a ], [ %.sroa.0.0.i.i.i, %bb.ac ]
   call void @llvm.experimental.noalias.scope.decl(metadata !57)
   call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.j = load ptr, ptr %i.f, align 8, !alias.scope !63, !noalias !64, !noundef !9
@@ -528,7 +530,7 @@ bb.o:                                             ; preds = %bb.n
           to label %.body unwind label %bb.r, !noalias !64
 
 _RNvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1h_9generated5nodes4ExprENCINvMNtNtB1h_14syntax_factory12constructorsNtB2z_13SyntaxFactory8arg_listAB1V_j1_E0EEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4ExprENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory8arg_listAB2c_j1_E0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECscA5P7HRgTCP_15ide_diagnostics.exit.sink.split.i6.i.i.i.i.i.i, %bb.f, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i
-  %.sroa.0.0.i.i.i = phi ptr [ null, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i ], [ null, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4ExprENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory8arg_listAB2c_j1_E0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ], [ %i.t, %bb.f ], [ %i.t, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECscA5P7HRgTCP_15ide_diagnostics.exit.sink.split.i6.i.i.i.i.i.i ] ; 4 uses
+  %.sroa.0.0.i.i.i = phi ptr [ null, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i ], [ null, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4ExprENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory8arg_listAB2c_j1_E0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ], [ %i.t, %bb.f ], [ %i.t, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECscA5P7HRgTCP_15ide_diagnostics.exit.sink.split.i6.i.i.i.i.i.i ] ; 5 uses
   %.not.i = icmp eq ptr %.sroa.0.0.i.i, null
   %.not16.i = icmp eq ptr %.sroa.0.0.i.i.i, null  ; 2 uses
   br i1 %.not.i, label %bb.q, label %bb.p
@@ -625,7 +627,7 @@ bb.aa:                                            ; preds = %bb.p
 bb.ab:                                            ; preds = %bb.p
   store i64 1, ptr %i.b, align 8
   store ptr %.sroa.0.0.i.i, ptr %.sroa.9.0..sroa_idx32, align 8
-  store ptr null, ptr %.sroa.12.0..sroa_idx33, align 8
+  store ptr %.sroa.12.0, ptr %.sroa.12.0..sroa_idx33, align 8
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 189 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #25
           to label %bb.ad unwind label %bb.ae
 
@@ -711,6 +713,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.af, %bb.a
+  %.sroa.12.0 = phi ptr [ undef, %bb.a ], [ %.sroa.0.0.i.i.i, %bb.af ]
   call void @llvm.experimental.noalias.scope.decl(metadata !97)
   call void @llvm.experimental.noalias.scope.decl(metadata !100)
   %i.m = load ptr, ptr %i.h, align 8, !alias.scope !103, !noalias !104, !noundef !9
@@ -872,7 +875,7 @@ bb.r:                                             ; preds = %bb.q
           to label %.body unwind label %bb.u, !noalias !104
 
 _RNvXs8_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1h_9generated5nodes4StmtENCINvMNtNtB1h_14syntax_factory12constructorsNtB2z_13SyntaxFactory10block_exprB1e_E0EEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4StmtENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory10block_exprB1v_E0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i, %_RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtBW_9generated5nodes4StmtENCINvMNtNtBW_14syntax_factory12constructorsNtB2d_13SyntaxFactory10block_exprBT_E0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i
-  %.sroa.0.0.i.i.i = phi ptr [ null, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i ], [ null, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4StmtENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory10block_exprB1v_E0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ], [ %.val.i.i.i.i.i.i, %_RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtBW_9generated5nodes4StmtENCINvMNtNtBW_14syntax_factory12constructorsNtB2d_13SyntaxFactory10block_exprBT_E0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ] ; 4 uses
+  %.sroa.0.0.i.i.i = phi ptr [ null, %_RNvXs9_NtNtNtCshzWfHUSfYae_4core4iter8adapters4fuseINtB5_4FuseINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api10SyntaxNodeNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEEINtB5_8FuseImplBY_E4nextCscA5P7HRgTCP_15ide_diagnostics.exit.i ], [ null, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtB4_4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB1y_9generated5nodes4StmtENCINvMNtNtB1y_14syntax_factory12constructorsNtB2Q_13SyntaxFactory10block_exprB1v_E0EEECscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ], [ %.val.i.i.i.i.i.i, %_RNvYNvYINtNtNtNtCshzWfHUSfYae_4core4iter8adapters3map3MapINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtBW_9generated5nodes4StmtENCINvMNtNtBW_14syntax_factory12constructorsNtB2d_13SyntaxFactory10block_exprBT_E0ENtNtNtBc_6traits8iterator8Iterator4nextINtNtNtBe_3ops8function6FnOnceTQB5_EE9call_onceCscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i ] ; 5 uses
   %.not.i = icmp eq ptr %.sroa.0.0.i.i, null
   %.not16.i = icmp eq ptr %.sroa.0.0.i.i.i, null  ; 2 uses
   br i1 %.not.i, label %bb.t, label %bb.s
@@ -969,7 +972,7 @@ bb.ad:                                            ; preds = %bb.s
 bb.ae:                                            ; preds = %bb.s
   store i64 1, ptr %i.d, align 8
   store ptr %.sroa.0.0.i.i, ptr %.sroa.9.0..sroa_idx32, align 8
-  store ptr null, ptr %.sroa.12.0..sroa_idx33, align 8
+  store ptr %.sroa.12.0, ptr %.sroa.12.0..sroa_idx33, align 8
   invoke void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 189 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #25
           to label %bb.ag unwind label %bb.ah
 

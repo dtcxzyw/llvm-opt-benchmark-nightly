@@ -204,11 +204,13 @@ begin_hunk_0_@_RNvMs_Cs65Ktfge4woL_10vfs_notifyNtB4_11NotifyActor3run:bb.a
   br label %.outer
 
 .outer:                                           ; preds = %_RINvCs65Ktfge4woL_10vfs_notify16log_notify_errorNtNtCskihuepUL9Ty_12notify_types5event5EventEB2_.exit.thread, %bb.a
+  %.sroa.619.sroa.5.0.ph = phi i64 [ %.sroa.619.sroa.5.4, %_RINvCs65Ktfge4woL_10vfs_notify16log_notify_errorNtNtCskihuepUL9Ty_12notify_types5event5EventEB2_.exit.thread ], [ undef, %bb.a ] ; 13 uses
   %.sroa.619.sroa.6.0.ph = phi ptr [ %.sroa.619.sroa.6.4, %_RINvCs65Ktfge4woL_10vfs_notify16log_notify_errorNtNtCskihuepUL9Ty_12notify_types5event5EventEB2_.exit.thread ], [ undef, %bb.a ] ; 13 uses
-  %.sroa.619.sroa.5.0.ph.a = phi i64 [ %.sroa.619.sroa.5.4, %_RINvCs65Ktfge4woL_10vfs_notify16log_notify_errorNtNtCskihuepUL9Ty_12notify_types5event5EventEB2_.exit.thread ], [ undef, %bb.a ] ; 13 uses
+  %.sroa.619.sroa.5.0.ph.a = phi i64 [ %.sroa.9.3249, %_RINvCs65Ktfge4woL_10vfs_notify16log_notify_errorNtNtCskihuepUL9Ty_12notify_types5event5EventEB2_.exit.thread ], [ undef, %bb.a ]
   br label %bb.b
 
 bb.b:                                             ; preds = %.outer, %bb.hh
+  %.sroa.9.0 = phi i64 [ %.sroa.9.3249, %bb.hh ], [ %.sroa.619.sroa.5.0.ph.a, %.outer ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12)
   call void @llvm.experimental.noalias.scope.decl(metadata !307)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af)
@@ -309,9 +311,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.v
-  %.sroa.9.0.a = phi i64 [ %i.fx, %bb.v ], [ %.sroa.0.0.copyload.i, %bb.i ], [ -2, %bb.h ]
-  %.not = phi i1 [ false, %bb.v ], [ false, %bb.i ], [ true, %bb.h ]
-  %.sroa.0.0 = phi i64 [ 1, %bb.v ], [ 0, %bb.i ], [ 2, %bb.h ]
+  %.sroa.9.0.a = phi i64 [ %i.fx, %bb.v ], [ %.sroa.9.0, %bb.h ], [ %.sroa.0.0.copyload.i, %bb.i ]
+  %.not = phi i1 [ false, %bb.v ], [ true, %bb.h ], [ false, %bb.i ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.v ], [ 2, %bb.h ], [ 0, %bb.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !313
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !313
   invoke void @_RNvXsb_NtCsM5evIHPibA_17crossbeam_channel7channelINtB5_8ReceiveruENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs65Ktfge4woL_10vfs_notify(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.aj)
@@ -506,7 +508,7 @@ bb.ah:                                            ; preds = %bb.ab
 
 bb.ai:                                            ; preds = %bb.aa, %.thread245
   %.sroa.0.1250 = phi i64 [ 0, %.thread245 ], [ %.sroa.0.0, %bb.aa ]
-  %.sroa.9.3249 = phi i64 [ %i.fi, %.thread245 ], [ %.sroa.9.0.a, %bb.aa ]
+  %.sroa.9.3249 = phi i64 [ %i.fi, %.thread245 ], [ %.sroa.9.0.a, %bb.aa ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cd)
   store i64 %.sroa.0.1250, ptr %i.cd, align 8
   store i64 %.sroa.9.3249, ptr %.sroa.9.0..sroa_idx, align 8
@@ -689,14 +691,14 @@ bb.bf:                                            ; preds = %bb.be
           cleanup
   store i64 -1, ptr %i.cg, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.619.0..sroa_idx20, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.619.sroa.0, i64 16, i1 false)
-  store i64 %.sroa.619.sroa.5.0.ph.a, ptr %i.ci, align 8
+  store i64 %.sroa.619.sroa.5.0.ph, ptr %i.ci, align 8
   store ptr %.sroa.619.sroa.6.0.ph, ptr %.sroa.619.sroa.6.0..sroa.619.0..sroa_idx20.sroa_idx, align 8
   br label %.thread251
 
 bb.bg:                                            ; preds = %bb.be
   store i64 -1, ptr %i.cg, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.619.0..sroa_idx20, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.619.sroa.0, i64 16, i1 false)
-  store i64 %.sroa.619.sroa.5.0.ph.a, ptr %i.ci, align 8
+  store i64 %.sroa.619.sroa.5.0.ph, ptr %i.ci, align 8
   store ptr %.sroa.619.sroa.6.0.ph, ptr %.sroa.619.sroa.6.0..sroa.619.0..sroa_idx20.sroa_idx, align 8
   %i.hm = load i64, ptr %i.db, align 8, !noundef !5 ; 2 uses
   %i.hn = icmp ult i64 %i.hm, 1152921504606846976
@@ -710,8 +712,8 @@ bb.bh:                                            ; preds = %bb.bg
           to label %bb.bz unwind label %bb.by
 
 bb.bi:                                            ; preds = %bb.da, %bb.bg
+  %.sroa.619.sroa.5.1 = phi i64 [ %.sroa.619.sroa.5.0.ph, %bb.bg ], [ %.sroa.619.sroa.5.2, %bb.da ]
   %.sroa.619.sroa.6.1 = phi ptr [ %.sroa.619.sroa.6.0.ph, %bb.bg ], [ %.sroa.619.sroa.6.2, %bb.da ]
-  %.sroa.619.sroa.5.1 = phi i64 [ %.sroa.619.sroa.5.0.ph.a, %bb.bg ], [ %.sroa.619.sroa.5.2, %bb.da ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bt)
   %i.hp = load i32, ptr %i.dl, align 8, !noundef !5
   store i32 %i.hp, ptr %i.bt, align 4
@@ -1058,8 +1060,8 @@ bb.cy:                                            ; preds = %bb.cs
   unreachable
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNCNvMs_Cs65Ktfge4woL_10vfs_notifyNtBI_11NotifyActor3runs_0EBI_.exit: ; preds = %bb.cw, %bb.cu, %bb.ct, %bb.cv, %bb.cx, %bb.cz
+  %.sroa.619.sroa.5.2 = phi i64 [ %i.iu, %bb.cz ], [ %.sroa.619.sroa.5.0.ph, %bb.cx ], [ %.sroa.619.sroa.5.0.ph, %bb.cv ], [ %.sroa.619.sroa.5.0.ph, %bb.ct ], [ %.sroa.619.sroa.5.0.ph, %bb.cu ], [ %.sroa.619.sroa.5.0.ph, %bb.cw ] ; 3 uses
   %.sroa.619.sroa.6.2 = phi ptr [ %i.iv, %bb.cz ], [ %.sroa.619.sroa.6.0.ph, %bb.cx ], [ %.sroa.619.sroa.6.0.ph, %bb.cv ], [ %.sroa.619.sroa.6.0.ph, %bb.ct ], [ %.sroa.619.sroa.6.0.ph, %bb.cu ], [ %.sroa.619.sroa.6.0.ph, %bb.cw ] ; 3 uses
-  %.sroa.619.sroa.5.2 = phi i64 [ %i.iu, %bb.cz ], [ %.sroa.619.sroa.5.0.ph.a, %bb.cx ], [ %.sroa.619.sroa.5.0.ph.a, %bb.cv ], [ %.sroa.619.sroa.5.0.ph.a, %bb.ct ], [ %.sroa.619.sroa.5.0.ph.a, %bb.cu ], [ %.sroa.619.sroa.5.0.ph.a, %bb.cw ] ; 3 uses
   %.sroa.014.0 = phi i64 [ %.sroa.04.0.copyload.i114, %bb.cz ], [ -1, %bb.cx ], [ -1, %bb.cv ], [ -1, %bb.ct ], [ -1, %bb.cu ], [ -1, %bb.cw ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bu)
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtCs6B6HQbbxj7M_6notify7inotify14INotifyWatcherINtNtCsM5evIHPibA_17crossbeam_channel7channel8ReceiverINtNtB4_6result6ResultNtNtCskihuepUL9Ty_12notify_types5event5EventNtNtB12_5error5ErrorEEEEECs65Ktfge4woL_10vfs_notify(ptr noalias nofree noundef align 8 dereferenceable(40) %i.cg)
@@ -1462,8 +1464,8 @@ bb.gm:                                            ; preds = %.noexc177
   br label %_RINvCs65Ktfge4woL_10vfs_notify16log_notify_errorNtNtCskihuepUL9Ty_12notify_types5event5EventEB2_.exit.thread
 
 _RINvCs65Ktfge4woL_10vfs_notify16log_notify_errorNtNtCskihuepUL9Ty_12notify_types5event5EventEB2_.exit.thread: ; preds = %bb.bb, %bb.ho, %.noexc101, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCskihuepUL9Ty_12notify_types5event5EventECs65Ktfge4woL_10vfs_notify.exit, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecjEECs65Ktfge4woL_10vfs_notify.exit, %bb.gm
+  %.sroa.619.sroa.5.4 = phi i64 [ %.sroa.619.sroa.5.1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecjEECs65Ktfge4woL_10vfs_notify.exit ], [ %.sroa.619.sroa.5.0.ph, %bb.gm ], [ %.sroa.619.sroa.5.0.ph, %bb.ho ], [ %.sroa.619.sroa.5.0.ph, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCskihuepUL9Ty_12notify_types5event5EventECs65Ktfge4woL_10vfs_notify.exit ], [ %.sroa.619.sroa.5.0.ph, %.noexc101 ], [ %.sroa.619.sroa.5.0.ph, %bb.bb ]
   %.sroa.619.sroa.6.4 = phi ptr [ %.sroa.619.sroa.6.1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecjEECs65Ktfge4woL_10vfs_notify.exit ], [ %.sroa.619.sroa.6.0.ph, %bb.gm ], [ %.sroa.619.sroa.6.0.ph, %bb.ho ], [ %.sroa.619.sroa.6.0.ph, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCskihuepUL9Ty_12notify_types5event5EventECs65Ktfge4woL_10vfs_notify.exit ], [ %.sroa.619.sroa.6.0.ph, %.noexc101 ], [ %.sroa.619.sroa.6.0.ph, %bb.bb ]
-  %.sroa.619.sroa.5.4 = phi i64 [ %.sroa.619.sroa.5.1, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecjEECs65Ktfge4woL_10vfs_notify.exit ], [ %.sroa.619.sroa.5.0.ph.a, %bb.gm ], [ %.sroa.619.sroa.5.0.ph.a, %bb.ho ], [ %.sroa.619.sroa.5.0.ph.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCskihuepUL9Ty_12notify_types5event5EventECs65Ktfge4woL_10vfs_notify.exit ], [ %.sroa.619.sroa.5.0.ph.a, %.noexc101 ], [ %.sroa.619.sroa.5.0.ph.a, %bb.bb ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cd)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12)
   br label %.outer

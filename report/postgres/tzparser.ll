@@ -147,13 +147,18 @@ bb.f:                                             ; preds = %._crit_edge
 bb.g:                                             ; preds = %._crit_edge
   call void @get_share_path(ptr noundef nonnull @my_exec_path, ptr noundef nonnull %i.c) #9
   %i.x = call i32 (ptr, i64, ptr, ...) @pg_snprintf(ptr noundef nonnull %i.d, i64 noundef 1024, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.c, ptr noundef nonnull %0) #9 ; 0 uses
-  %i.y = call ptr @AllocateFile(ptr noundef nonnull %i.d, ptr noundef nonnull @.str.5) #9 ; 6 uses
+  %i.y = call ptr @AllocateFile(ptr noundef nonnull %i.d, ptr noundef nonnull @.str.5) #9 ; 8 uses
   %.not69.a = icmp eq ptr %i.y, null
-  br i1 %.not69.a, label %bb.h, label %.preheader127
+  br i1 %.not69.a, label %bb.h, label %.preheader126
 
-.preheader127:                                    ; preds = %bb.g
+.preheader126:                                    ; preds = %bb.g
+  %5 = call i32 @feof(ptr noundef nonnull %i.y) #9
+  %.not69167171176 = icmp eq i32 %5, 0
+  br i1 %.not69167171176, label %.preheader127, label %.loopexit128
+
+.preheader127:                                    ; preds = %.preheader126
   %i.z = add nuw nsw i32 %1, 1
-  br label %.outer
+  br label %.lr.ph169.lr.ph
 
 bb.h:                                             ; preds = %bb.g
   %i.aa = tail call ptr @__errno_location() #10   ; 4 uses
@@ -188,8 +193,8 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.am, ptr @GUC_check_errmsg_string, align 8
   br label %bb.ax
 
-.lr.ph175:                                        ; preds = %.outer129, %.backedge
-  %.055174 = phi i32 [ %i.an, %.backedge ], [ %.055.ph130, %.outer129 ]
+.lr.ph175:                                        ; preds = %.outer, %.backedge
+  %.055174 = phi i32 [ %.055.ph, %.outer ], [ %i.an, %.backedge ]
   %i.an = add i32 %.055174, 1                     ; 10 uses
   %i.ao = call ptr @fgets(ptr noundef nonnull %i.e, i32 noundef 1024, ptr noundef nonnull %i.y)
   %i.ap = icmp eq ptr %i.ao, null
@@ -259,7 +264,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %.critedge
   %i.bk = call i32 @pg_strncasecmp(ptr noundef nonnull %.056171, ptr noundef nonnull @.str.11, i64 noundef 8) #9
   %i.bl = icmp eq i32 %i.bk, 0
-  br i1 %i.bl, label %bb.s, label %bb.x
+  br i1 %i.bl, label %bb.s, label %.outer129
 
 bb.s:                                             ; preds = %bb.r
   %i.bm = getelementptr inbounds nuw i8, ptr %.056171, i64 8
@@ -297,28 +302,33 @@ bb.w:                                             ; preds = %bb.v
   br label %.outer.backedge
 
 .outer.backedge:                                  ; preds = %bb.w, %addToArray.exit
-  %.057.ph.be = phi i32 [ %.260.i, %addToArray.exit ], [ %i.bt, %bb.w ]
-  br label %.outer, !llvm.loop !7
+  %.057.ph.be = phi i32 [ %.260.i, %addToArray.exit ], [ %i.bt, %bb.w ] ; 2 uses
+  %6 = call i32 @feof(ptr noundef nonnull %i.y) #9
+  %.not69167 = icmp eq i32 %6, 0
+  br i1 %.not69167, label %.outer, label %.loopexit128, !llvm.loop !7
 
-.outer:                                           ; preds = %.outer.backedge, %.preheader127
-  %.057.ph = phi i32 [ %4, %.preheader127 ], [ %.057.ph.be, %.outer.backedge ] ; 11 uses
-  %.055.ph = phi i32 [ 0, %.preheader127 ], [ %i.an, %.outer.backedge ]
-  %.054.ph = phi i1 [ false, %.preheader127 ], [ %.054.ph131, %.outer.backedge ]
-  br label %.outer129
+.outer:                                           ; preds = %.lr.ph169.lr.ph, %.outer.backedge
+  %.057.ph = phi i32 [ %.053.ph179, %.lr.ph169.lr.ph ], [ %.057.ph.be, %.outer.backedge ] ; 12 uses
+  %.055.ph = phi i32 [ %.058.ph177, %.lr.ph169.lr.ph ], [ %i.an, %.outer.backedge ]
+  br label %.lr.ph175
 
-.outer129:                                        ; preds = %.outer, %bb.x
-  %.055.ph130 = phi i32 [ %.055.ph, %.outer ], [ %i.an, %bb.x ]
-  %.054.ph131 = phi i1 [ %.054.ph, %.outer ], [ true, %bb.x ] ; 2 uses
-  %5 = call i32 @feof(ptr noundef nonnull %i.y) #9
-  %.not70173 = icmp eq i32 %5, 0
-  br i1 %.not70173, label %.lr.ph175, label %.loopexit128
+.outer129:                                        ; preds = %bb.r
+  %7 = call i32 @pg_strncasecmp(ptr noundef nonnull %.056171, ptr noundef nonnull @.str.14, i64 noundef 9) #9
+  %.not70173 = icmp eq i32 %7, 0
+  br i1 %.not70173, label %bb.x, label %bb.y
 
-bb.x:                                             ; preds = %bb.r
-  %6 = call i32 @pg_strncasecmp(ptr noundef nonnull %.056171, ptr noundef nonnull @.str.14, i64 noundef 9) #9
-  %i.bv = icmp eq i32 %6, 0
-  br i1 %i.bv, label %.outer129, label %bb.y, !llvm.loop !7
+bb.x:                                             ; preds = %.outer129
+  %8 = call i32 @feof(ptr noundef nonnull %i.y) #9
+  %i.bv = icmp eq i32 %8, 0
+  br i1 %i.bv, label %.lr.ph169.lr.ph, label %.loopexit128, !llvm.loop !7
 
-bb.y:                                             ; preds = %bb.x
+.lr.ph169.lr.ph:                                  ; preds = %.preheader127, %bb.x
+  %.053.ph179 = phi i32 [ %4, %.preheader127 ], [ %.057.ph, %bb.x ]
+  %.057.ph178 = phi i1 [ false, %.preheader127 ], [ true, %bb.x ]
+  %.058.ph177 = phi i32 [ 0, %.preheader127 ], [ %i.an, %bb.x ]
+  br label %.outer
+
+bb.y:                                             ; preds = %.outer129
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.bw = call ptr @strtok_r(ptr noundef nonnull %.056171, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.a) #9 ; 2 uses
@@ -458,8 +468,8 @@ validateTzEntry.exit:                             ; preds = %bb.ah, %bb.aj
   br i1 %.not76.i, label %._crit_edge.i, label %.lr.ph.i79
 
 .lr.ph.i79:                                       ; preds = %.loopexit, %bb.au
-  %.05478.i = phi i32 [ %.2.i.a, %bb.au ], [ %i.di, %.loopexit ] ; 2 uses
-  %.05577.i = phi i32 [ %.257.i.a, %bb.au ], [ 0, %.loopexit ] ; 2 uses
+  %.05478.i = phi i32 [ %.2.i.a, %bb.au ], [ 0, %.loopexit ] ; 2 uses
+  %.05577.i = phi i32 [ %.257.i.a, %bb.au ], [ %i.di, %.loopexit ] ; 2 uses
   %i.dj = add i32 %.05577.i, %.05478.i
   %i.dk = ashr i32 %i.dj, 1                       ; 3 uses
   %i.dl = sext i32 %i.dk to i64
@@ -513,7 +523,7 @@ bb.as:                                            ; preds = %bb.ar
 
 .thread.i:                                        ; preds = %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao
   %i.ee = phi ptr [ %.sroa.8.3.ph, %bb.ao ], [ null, %bb.ap ], [ null, %bb.aq ], [ %.sroa.8.3.ph, %bb.as ], [ null, %bb.ar ]
-  br i1 %.054.ph131, label %bb.at, label %addToArray.exit.thread
+  br i1 %.057.ph178, label %bb.at, label %addToArray.exit.thread
 
 bb.at:                                            ; preds = %.thread.i
   store ptr %i.ee, ptr %i.ds, align 8
@@ -540,13 +550,13 @@ addToArray.exit.thread:                           ; preds = %.thread.i
   br label %.loopexit128
 
 bb.au:                                            ; preds = %bb.am, %bb.ak
-  %.257.i.a = phi i32 [ %.05577.i, %bb.ak ], [ %i.dr, %bb.am ] ; 3 uses
-  %.2.i.a = phi i32 [ %i.dq, %bb.ak ], [ %.05478.i, %bb.am ] ; 2 uses
-  %.not.i80 = icmp sgt i32 %.257.i.a, %.2.i.a
+  %.257.i.a = phi i32 [ %i.dq, %bb.ak ], [ %.05577.i, %bb.am ] ; 2 uses
+  %.2.i.a = phi i32 [ %.05478.i, %bb.ak ], [ %i.dr, %bb.am ] ; 3 uses
+  %.not.i80 = icmp sgt i32 %.2.i.a, %.257.i.a
   br i1 %.not.i80, label %._crit_edge.i, label %.lr.ph.i79, !llvm.loop !11
 
 ._crit_edge.i:                                    ; preds = %bb.au, %.loopexit
-  %.055.lcssa.i = phi i32 [ 0, %.loopexit ], [ %.257.i.a, %bb.au ] ; 2 uses
+  %.055.lcssa.i = phi i32 [ 0, %.loopexit ], [ %.2.i.a, %bb.au ] ; 2 uses
   %i.eq = load i32, ptr %3, align 4               ; 2 uses
   %.not65.i = icmp slt i32 %.057.ph, %i.eq
   br i1 %.not65.i, label %bb.aw, label %bb.av
@@ -589,8 +599,8 @@ addToArray.exit:                                  ; preds = %bb.aq, %bb.as, %bb.
   %i.fe = icmp slt i32 %.260.i, 0
   br i1 %i.fe, label %.loopexit128, label %.outer.backedge
 
-.loopexit128:                                     ; preds = %addToArray.exit, %.outer129, %.backedge, %addToArray.exit.thread, %validateTzEntry.exit, %splitTzLine.exit, %.thread, %bb.l, %bb.o, %bb.m
-  %.2 = phi i32 [ -1, %bb.m ], [ %.057.ph, %bb.l ], [ -1, %bb.o ], [ %.1.ph, %.thread ], [ -1, %validateTzEntry.exit ], [ -1, %splitTzLine.exit ], [ -1, %addToArray.exit.thread ], [ %.057.ph, %.backedge ], [ %.057.ph, %.outer129 ], [ %.260.i, %addToArray.exit ]
+.loopexit128:                                     ; preds = %bb.x, %.outer.backedge, %addToArray.exit, %.backedge, %.preheader126, %addToArray.exit.thread, %validateTzEntry.exit, %splitTzLine.exit, %.thread, %bb.l, %bb.o, %bb.m
+  %.2 = phi i32 [ -1, %bb.m ], [ %.057.ph, %bb.l ], [ -1, %bb.o ], [ %.1.ph, %.thread ], [ -1, %validateTzEntry.exit ], [ -1, %splitTzLine.exit ], [ -1, %addToArray.exit.thread ], [ %4, %.preheader126 ], [ %.260.i, %addToArray.exit ], [ %.057.ph, %.backedge ], [ %.057.ph.be, %.outer.backedge ], [ %.057.ph, %bb.x ]
   %i.ff = call i32 @FreeFile(ptr noundef nonnull %i.y) #9 ; 0 uses
   br label %bb.ax
 

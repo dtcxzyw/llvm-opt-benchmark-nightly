@@ -204,7 +204,6 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %_RNvMs4_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedWriter16write_ascii_char.exit77.i, %.thread.i
   %cond.i = icmp eq i64 %i.x, -2
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   br i1 %cond.i, label %bb.r, label %bb.s
 
 bb.n:                                             ; preds = %.thread.i
@@ -257,6 +256,7 @@ _RNvMs4_NtNtCs5oRRSLMQMUC_4jiff3fmt6bufferNtB5_14BorrowedWriter16write_ascii_cha
   br label %bb.m
 
 bb.r:                                             ; preds = %bb.m
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.cb = load i32, ptr %4, align 8, !alias.scope !330, !noalias !334, !noundef !4
   %i.cc = call fastcc { i64, ptr } @_RNvMNtNtNtCs5oRRSLMQMUC_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter24print_offset_rounded_wtr(i32 %i.cb, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.b), !noalias !336 ; 2 uses
   %i.cd = extractvalue { i64, ptr } %i.cc, 0
@@ -264,9 +264,10 @@ bb.r:                                             ; preds = %bb.m
   br i1 %i.ce, label %bb.z, label %bb.v
 
 bb.s:                                             ; preds = %bb.m
-  %.sroa.057.0.i = load ptr, ptr %4, align 8, !alias.scope !330, !noalias !334, !nonnull !4, !noundef !4 ; 2 uses
-  %.sroa.3.0.in.i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.3.0.i4 = load i64, ptr %.sroa.3.0.in.i.a, align 8, !alias.scope !330, !noalias !334, !noundef !4 ; 6 uses
+  %.sroa.3.0.in.i = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %.sroa.3.0.i4 = load i64, ptr %.sroa.3.0.in.i, align 8, !alias.scope !330, !noalias !334, !noundef !4 ; 6 uses
+  %.sroa.3.0.in.i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.sroa.057.0.i = load ptr, ptr %.sroa.3.0.in.i.a, align 8, !alias.scope !330, !noalias !334, !nonnull !4, !noundef !4 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !357)
   %i.cf = load ptr, ptr %i.b, align 8, !alias.scope !360, !noalias !361, !nonnull !4, !align !156, !noundef !4 ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
@@ -669,8 +670,8 @@ bb.c:                                             ; preds = %_RNvMs4_NtNtCs5oRRS
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %.sroa.46.0.i = phi i64 [ %i.l, %bb.a ], [ %i.p, %bb.b ], [ %i.t, %bb.c ]
   %.sroa.05.0.i = phi ptr [ %i.i, %bb.a ], [ %i.n, %bb.b ], [ %i.r, %bb.c ]
+  %.sroa.46.0.i = phi i64 [ %i.l, %bb.a ], [ %i.p, %bb.b ], [ %i.t, %bb.c ]
   %i.u = call fastcc { i64, ptr } @_RNvMNtNtNtCs5oRRSLMQMUC_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter28print_posix_abbreviation_wtr(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.05.0.i, i64 noundef %.sroa.46.0.i, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a) ; 2 uses
   %i.v = extractvalue { i64, ptr } %i.u, 0
   %i.w = trunc nuw i64 %i.v to i1
@@ -770,8 +771,8 @@ bb.n:                                             ; preds = %bb.k
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
-  %.sroa.45.0.i.i = phi i64 [ %i.ay, %bb.l ], [ %i.bc, %bb.m ], [ %i.bg, %bb.n ]
   %.sroa.04.0.i.i = phi ptr [ %i.av, %bb.l ], [ %i.ba, %bb.m ], [ %i.be, %bb.n ]
+  %.sroa.45.0.i.i = phi i64 [ %i.ay, %bb.l ], [ %i.bc, %bb.m ], [ %i.bg, %bb.n ]
   %i.bh = call fastcc { i64, ptr } @_RNvMNtNtNtCs5oRRSLMQMUC_4jiff3fmt8temporal7printerNtB2_15DateTimePrinter28print_posix_abbreviation_wtr(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.04.0.i.i, i64 noundef %.sroa.45.0.i.i, ptr noalias noundef nonnull align 8 dereferenceable(24) %i.a) ; 2 uses
   %i.bi = extractvalue { i64, ptr } %i.bh, 0
   %i.bj = trunc nuw i64 %i.bi to i1

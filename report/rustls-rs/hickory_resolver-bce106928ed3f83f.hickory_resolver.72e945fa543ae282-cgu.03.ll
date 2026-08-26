@@ -202,38 +202,36 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef zeroext i1 @_RNvMs_NtCs7w1SCUKeMLI_11prefix_trie3mapINtB4_9PrefixMapNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE6insertCs9RFwvXNxPyg_16hickory_resolver(ptr noalias nofree noundef align 8 dereferenceable(56) %0, i40 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [5 x i8], align 8                 ; 9 uses
+  %i.a = alloca [5 x i8], align 8                 ; 10 uses
   store i40 %1, ptr %i.a, align 8
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 12 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 13 uses
+  %2 = tail call noundef nonnull align 8 ptr @_RNvXs3_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB5_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCs9RFwvXNxPyg_16hickory_resolver(ptr noundef nonnull align 8 %i.b, i64 noundef 0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @22), !noalias !507 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %4 = call noundef zeroext i1 @_RNvYNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetNtNtCs7w1SCUKeMLI_11prefix_trie6prefix6Prefix2eqCs9RFwvXNxPyg_16hickory_resolver(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.a), !noalias !511
   %i.c = lshr i40 %1, 32
   %i.d = trunc nuw i40 %i.c to i8
-  br label %bb.b
+  br i1 %4, label %bb.g, label %bb.b
 
-bb.b:                                             ; preds = %bb.e, %bb.a
-  %.sroa.03.0 = phi i64 [ 0, %bb.a ], [ %.sroa.0.0.i.i, %bb.e ] ; 21 uses
-  %2 = call noundef nonnull align 8 ptr @_RNvXs3_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB5_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCs9RFwvXNxPyg_16hickory_resolver(ptr noundef nonnull align 8 %i.b, i64 noundef %.sroa.03.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @22), !noalias !507 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.e = call noundef zeroext i1 @_RNvYNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetNtNtCs7w1SCUKeMLI_11prefix_trie6prefix6Prefix2eqCs9RFwvXNxPyg_16hickory_resolver(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.a), !noalias !511
-  br i1 %i.e, label %bb.g, label %4
+bb.b:                                             ; preds = %bb.a, %7
+  %5 = phi ptr [ %8, %7 ], [ %2, %bb.a ]
+  %.sroa.03.0 = phi i64 [ %.sroa.0.0.i.i, %7 ], [ 0, %bb.a ] ; 17 uses
+  %6 = getelementptr i8, ptr %5, i64 20
+  %.val50 = load i8, ptr %6, align 4, !noundef !14
+  %i.e = call noundef zeroext i1 @_RNvYNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetNtNtCs7w1SCUKeMLI_11prefix_trie6prefix6Prefix10is_bit_setCs9RFwvXNxPyg_16hickory_resolver(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.a, i8 noundef %.val50), !noalias !511 ; 4 uses
+  br i1 %i.e, label %bb.d, label %bb.c
 
-4:                                                ; preds = %bb.b
-  %5 = getelementptr i8, ptr %2, i64 20
-  %.val50 = load i8, ptr %5, align 4, !noundef !14
-  %6 = call noundef zeroext i1 @_RNvYNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetNtNtCs7w1SCUKeMLI_11prefix_trie6prefix6Prefix10is_bit_setCs9RFwvXNxPyg_16hickory_resolver(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.a, i8 noundef %.val50), !noalias !511 ; 4 uses
-  br i1 %6, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %4
+bb.c:                                             ; preds = %bb.b
   %i.f = call noundef nonnull align 8 ptr @_RNvXs3_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB5_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCs9RFwvXNxPyg_16hickory_resolver(ptr noundef nonnull align 8 %i.b, i64 noundef %.sroa.03.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2), !noalias !511
   br label %_RINvMs8_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB6_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE9get_childjECs9RFwvXNxPyg_16hickory_resolver.exit.i
 
-bb.d:                                             ; preds = %4
+bb.d:                                             ; preds = %bb.b
   %i.g = call noundef nonnull align 8 ptr @_RNvXs3_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB5_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCs9RFwvXNxPyg_16hickory_resolver(ptr noundef nonnull align 8 %i.b, i64 noundef %.sroa.03.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3), !noalias !511
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   br label %_RINvMs8_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB6_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE9get_childjECs9RFwvXNxPyg_16hickory_resolver.exit.i
 
 _RINvMs8_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB6_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE9get_childjECs9RFwvXNxPyg_16hickory_resolver.exit.i: ; preds = %bb.d, %bb.c
   %.sroa.0.0.in.i.i = phi ptr [ %i.h, %bb.d ], [ %i.f, %bb.c ]
-  %.sroa.0.0.i.i = load i64, ptr %.sroa.0.0.in.i.i, align 8, !noalias !511, !noundef !14 ; 3 uses
+  %.sroa.0.0.i.i = load i64, ptr %.sroa.0.0.in.i.i, align 8, !noalias !511, !noundef !14 ; 5 uses
   %.not.i48 = icmp eq i64 %.sroa.0.0.i.i, 0
   br i1 %.not.i48, label %bb.h, label %bb.e
 
@@ -241,17 +239,24 @@ bb.e:                                             ; preds = %_RINvMs8_NtCs7w1SCU
   %i.i = call noundef nonnull align 8 ptr @_RNvXs3_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB5_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexINtNtNtB1B_3num7nonzero7NonZerojEE5indexCs9RFwvXNxPyg_16hickory_resolver(ptr noundef nonnull align 8 %i.b, i64 noundef %.sroa.0.0.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @23), !noalias !511
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 4 uses
   %i.k = call noundef zeroext i1 @_RNvXNtCs7w1SCUKeMLI_11prefix_trie6prefixNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetNtB2_6Prefix8contains(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.j, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.a), !noalias !511
-  br i1 %i.k, label %bb.b, label %bb.f
+  br i1 %i.k, label %7, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.l = call noundef zeroext i1 @_RNvXNtCs7w1SCUKeMLI_11prefix_trie6prefixNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetNtB2_6Prefix8contains(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.j), !noalias !511
   br i1 %i.l, label %bb.v, label %bb.aj
 
-bb.g:                                             ; preds = %bb.b
+bb.g:                                             ; preds = %7, %bb.a
+  %.sroa.03.0.lcssa = phi i64 [ 0, %bb.a ], [ %.sroa.0.0.i.i, %7 ] ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.n = load i64, ptr %i.m, align 8, !noundef !14 ; 2 uses
-  %i.o = icmp ult i64 %.sroa.03.0, %i.n
+  %i.o = icmp ult i64 %.sroa.03.0.lcssa, %i.n
   br i1 %i.o, label %bb.be, label %bb.bf
+
+7:                                                ; preds = %bb.e
+  %8 = call noundef nonnull align 8 ptr @_RNvXs3_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB5_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuEINtNtNtCsj6eKBz9Db1c_4core3ops5index5IndexjE5indexCs9RFwvXNxPyg_16hickory_resolver(ptr noundef nonnull align 8 %i.b, i64 noundef %.sroa.0.0.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @22), !noalias !507 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16
+  %10 = call noundef zeroext i1 @_RNvYNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetNtNtCs7w1SCUKeMLI_11prefix_trie6prefix6Prefix2eqCs9RFwvXNxPyg_16hickory_resolver(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %9, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(5) %i.a), !noalias !511
+  br i1 %10, label %bb.g, label %bb.b
 
 bb.h:                                             ; preds = %_RINvMs8_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB6_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE9get_childjECs9RFwvXNxPyg_16hickory_resolver.exit.i
   call void @llvm.experimental.noalias.scope.decl(metadata !512)
@@ -336,7 +341,7 @@ _RNvMs2_NtCs7w1SCUKeMLI_11prefix_trie3mapINtB5_9PrefixMapNtNtCsdCd4pHk2fcR_5ipne
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.av = load i64, ptr %i.au, align 8, !alias.scope !521, !noundef !14 ; 3 uses
   %i.aw = icmp ult i64 %.sroa.03.0, %i.av         ; 2 uses
-  br i1 %6, label %bb.q, label %bb.p
+  br i1 %i.e, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %_RNvMs2_NtCs7w1SCUKeMLI_11prefix_trie3mapINtB5_9PrefixMapNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE8new_nodeCs9RFwvXNxPyg_16hickory_resolver.exit47
   br i1 %i.aw, label %bb.r, label %bb.s
@@ -451,7 +456,7 @@ _RNvMs2_NtCs7w1SCUKeMLI_11prefix_trie3mapINtB5_9PrefixMapNtNtCsdCd4pHk2fcR_5ipne
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.cl = load i64, ptr %i.ck, align 8, !alias.scope !532, !noundef !14 ; 3 uses
   %i.cm = icmp ult i64 %.sroa.03.0, %i.cl         ; 2 uses
-  br i1 %6, label %bb.ae, label %bb.ad
+  br i1 %i.e, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %_RNvMs2_NtCs7w1SCUKeMLI_11prefix_trie3mapINtB5_9PrefixMapNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE8new_nodeCs9RFwvXNxPyg_16hickory_resolver.exit44
   br i1 %i.cm, label %bb.af, label %bb.ag
@@ -650,7 +655,7 @@ _RNvMs2_NtCs7w1SCUKeMLI_11prefix_trie3mapINtB5_9PrefixMapNtNtCsdCd4pHk2fcR_5ipne
   %i.fe = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ff = load i64, ptr %i.fe, align 8, !alias.scope !551, !noundef !14 ; 3 uses
   %i.fg = icmp ult i64 %.sroa.03.0, %i.ff         ; 2 uses
-  br i1 %6, label %bb.az, label %bb.ay
+  br i1 %i.e, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %_RNvMs2_NtCs7w1SCUKeMLI_11prefix_trie3mapINtB5_9PrefixMapNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE8new_nodeCs9RFwvXNxPyg_16hickory_resolver.exit
   br i1 %i.fg, label %bb.ba, label %bb.bb
@@ -691,7 +696,7 @@ _RINvMs8_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB6_5TableNtNtCsdCd4pHk2fcR_5ipnet
 bb.be:                                            ; preds = %bb.g
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.fr = load ptr, ptr %i.fq, align 8, !nonnull !14, !noundef !14
-  %i.fs = getelementptr inbounds nuw [24 x i8], ptr %i.fr, i64 %.sroa.03.0 ; 2 uses
+  %i.fs = getelementptr inbounds nuw [24 x i8], ptr %i.fr, i64 %.sroa.03.0.lcssa ; 2 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 16
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.ft, ptr noundef nonnull align 8 dereferenceable(5) %i.a, i64 5, i1 false)
   %i.fu = getelementptr inbounds nuw i8, ptr %i.fs, i64 21 ; 2 uses
@@ -707,7 +712,7 @@ bb.be:                                            ; preds = %bb.g
   br label %_RINvMs8_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB6_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE9set_childjECs9RFwvXNxPyg_16hickory_resolver.exit38
 
 bb.bf:                                            ; preds = %bb.g
-  call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %.sroa.03.0, i64 noundef %i.n, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #26
+  call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %.sroa.03.0.lcssa, i64 noundef %i.n, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @24) #26
   unreachable
 
 _RINvMs8_NtCs7w1SCUKeMLI_11prefix_trie5innerINtB6_5TableNtNtCsdCd4pHk2fcR_5ipnet5ipnet7Ipv4NetuE9set_childjECs9RFwvXNxPyg_16hickory_resolver.exit38: ; preds = %bb.bx, %bb.bv, %bb.bl, %bb.bj, %bb.t, %bb.r, %bb.be

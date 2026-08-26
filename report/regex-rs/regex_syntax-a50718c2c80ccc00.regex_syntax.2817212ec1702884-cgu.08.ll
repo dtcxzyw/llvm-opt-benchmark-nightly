@@ -202,6 +202,10 @@ _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.h
     #dbg_value(i32 1114112, !5822, !DIExpression(DW_OP_LLVM_fragment, 1216, 32), !6069)
     #dbg_value(i32 1114112, !5822, !DIExpression(DW_OP_LLVM_fragment, 1216, 32), !6067)
     #dbg_value(i32 1114112, !5822, !DIExpression(DW_OP_LLVM_fragment, 1216, 32), !6065)
+    #dbg_value(i32 undef, !5822, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !5823)
+    #dbg_value(i32 undef, !5822, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !6069)
+    #dbg_value(i32 undef, !5822, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !6067)
+    #dbg_value(i32 undef, !5822, !DIExpression(DW_OP_LLVM_fragment, 1248, 32), !6065)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.ac, ptr noundef nonnull align 8 dereferenceable(160) %0, i64 160, i1 false), !dbg !6071
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, i8 0, i64 48, i1 false), !dbg !6072
   store i32 1114112, ptr %i.i, align 8, !dbg !6072

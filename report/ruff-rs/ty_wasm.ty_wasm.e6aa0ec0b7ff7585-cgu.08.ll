@@ -202,9 +202,9 @@ bb.ar:                                            ; preds = %bb.d, %bb.c
   unreachable
 
 bb.as:                                            ; preds = %bb.y, %bb.x, %bb.w, %bb.v
-  %.sroa.10.0.i = phi i8 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sink.i.i.i, %bb.v ]
   %.sroa.9.0.i = phi i32 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sroa.6.0.extract.trunc.i99.sink.i.i.i, %bb.v ]
   %.sroa.8.0.i = phi i32 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sroa.6.0.extract.trunc.i.sink.i.i.i, %bb.v ]
+  %.sroa.10.0.i = phi i8 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sink.i.i.i, %bb.v ]
   %.sroa.03.0.i = phi i64 [ -1, %bb.y ], [ -1, %bb.x ], [ -1, %bb.w ], [ %i.ae, %bb.v ]
   %.sroa.5.0.i = phi ptr [ %i.ag, %bb.y ], [ %i.ag, %bb.x ], [ %i.ag, %bb.w ], [ %i.af, %bb.v ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !245
@@ -501,9 +501,9 @@ bb.aq:                                            ; preds = %bb.d, %bb.c
   unreachable
 
 bb.ar:                                            ; preds = %bb.x, %bb.w, %bb.v, %bb.u
-  %.sroa.10.0.i = phi i8 [ undef, %bb.x ], [ undef, %bb.w ], [ undef, %bb.v ], [ %.sink.i.i.i, %bb.u ]
   %.sroa.9.0.i = phi i32 [ undef, %bb.x ], [ undef, %bb.w ], [ undef, %bb.v ], [ %.sroa.6.0.extract.trunc.i99.sink.i.i.i, %bb.u ]
   %.sroa.8.0.i = phi i32 [ undef, %bb.x ], [ undef, %bb.w ], [ undef, %bb.v ], [ %.sroa.6.0.extract.trunc.i.sink.i.i.i, %bb.u ]
+  %.sroa.10.0.i = phi i8 [ undef, %bb.x ], [ undef, %bb.w ], [ undef, %bb.v ], [ %.sink.i.i.i, %bb.u ]
   %.sroa.03.0.i = phi i64 [ -1, %bb.x ], [ -1, %bb.w ], [ -1, %bb.v ], [ %i.ae, %bb.u ]
   %.sroa.5.0.i = phi ptr [ %i.ag, %bb.x ], [ %i.ag, %bb.w ], [ %i.ag, %bb.v ], [ %i.af, %bb.u ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !286
@@ -800,9 +800,9 @@ bb.ar:                                            ; preds = %bb.d, %bb.c
   unreachable
 
 bb.as:                                            ; preds = %bb.y, %bb.x, %bb.w, %bb.v
-  %.sroa.10.0.i = phi i8 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sink.i.i.i, %bb.v ]
   %.sroa.9.0.i = phi i32 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sroa.6.0.extract.trunc.i99.sink.i.i.i, %bb.v ]
   %.sroa.8.0.i = phi i32 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sroa.6.0.extract.trunc.i.sink.i.i.i, %bb.v ]
+  %.sroa.10.0.i = phi i8 [ undef, %bb.y ], [ undef, %bb.x ], [ undef, %bb.w ], [ %.sink.i.i.i, %bb.v ]
   %.sroa.03.0.i = phi i64 [ -1, %bb.y ], [ -1, %bb.x ], [ -1, %bb.w ], [ %i.ae, %bb.v ]
   %.sroa.5.0.i = phi ptr [ %i.ag, %bb.y ], [ %i.ag, %bb.x ], [ %i.ag, %bb.w ], [ %i.af, %bb.v ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !327
@@ -1205,6 +1205,7 @@ _RNvMs1_NtCs5e9M2GLoJMY_8indexmap3mapINtB5_8IndexMapINtCs2Qp84xiUxLo_17ruff_rang
   br label %bb.l
 
 bb.l:                                             ; preds = %_RNvMs1_NtCs5e9M2GLoJMY_8indexmap3mapINtB5_8IndexMapINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCscdodAO9FK5_5alloc6string6StringEIBO_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE24with_capacity_and_hasherCsjNOSlFB5dgD_7ty_wasm.exit, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEEECsjNOSlFB5dgD_7ty_wasm.exit
+  %.sroa.930.0 = phi i32 [ undef, %_RNvMs1_NtCs5e9M2GLoJMY_8indexmap3mapINtB5_8IndexMapINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCscdodAO9FK5_5alloc6string6StringEIBO_NtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEINtNtCs4NRVxsYgnAr_4core4hash18BuildHasherDefaultNtCsjp5HOZs6k8V_10rustc_hash8FxHasherEE24with_capacity_and_hasherCsjNOSlFB5dgD_7ty_wasm.exit ], [ %.sroa.930.041, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEEECsjNOSlFB5dgD_7ty_wasm.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.13)
   call void @llvm.experimental.noalias.scope.decl(metadata !668)
   call void @llvm.experimental.noalias.scope.decl(metadata !671)
@@ -1381,7 +1382,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap5inner4CoreI
 
 bb.ab:                                            ; preds = %.thread38, %bb.w
   %.sroa.0.042 = phi i64 [ -1, %.thread38 ], [ %.sroa.031.0.copyload, %bb.w ] ; 2 uses
-  %.sroa.930.041 = phi i32 [ undef, %.thread38 ], [ %.sroa.432.0.copyload, %bb.w ]
+  %.sroa.930.041 = phi i32 [ %.sroa.930.0, %.thread38 ], [ %.sroa.432.0.copyload, %bb.w ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(76) %.sroa.4, ptr noundef nonnull align 4 dereferenceable(76) %.sroa.13, i64 76, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13)
   %.not = icmp eq i64 %.sroa.0.042, -1
@@ -1515,6 +1516,7 @@ bb.b:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   br label %.body12
 
 bb.c:                                             ; preds = %bb.a, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEEECsjNOSlFB5dgD_7ty_wasm.exit
+  %.sroa.922.0 = phi i32 [ undef, %bb.a ], [ %.sroa.922.032, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtCsoTR8nlGN3X_18ty_python_semantic4lint5LevelEEECsjNOSlFB5dgD_7ty_wasm.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.13)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.525)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !708
@@ -1651,7 +1653,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5e9M2GLoJMY_8indexmap5inner4CoreI
 
 bb.o:                                             ; preds = %.thread29, %bb.j
   %.sroa.0.033 = phi i64 [ -1, %.thread29 ], [ %.sroa.023.0.copyload, %bb.j ] ; 2 uses
-  %.sroa.922.032 = phi i32 [ undef, %.thread29 ], [ %.sroa.424.0.copyload, %bb.j ]
+  %.sroa.922.032 = phi i32 [ %.sroa.922.0, %.thread29 ], [ %.sroa.424.0.copyload, %bb.j ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(76) %.sroa.4, ptr noundef nonnull align 4 dereferenceable(76) %.sroa.13, i64 76, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13)
   %.not = icmp eq i64 %.sroa.0.033, -1

@@ -202,17 +202,17 @@ bb.dr:                                            ; preds = %bb.dm
   br i1 %i.pu, label %.lr.ph.i54, label %._crit_edge.i51
 
 .lr.ph.i54:                                       ; preds = %bb.dr, %.lr.ph.i54
-  %.0115.i = phi i32 [ %i.pv, %.lr.ph.i54 ], [ %i.ps, %bb.dr ]
-  %.0112114.i = phi i64 [ %i.pw, %.lr.ph.i54 ], [ 9, %bb.dr ]
-  %i.pv = udiv i32 %.0115.i, 1000                 ; 3 uses
-  %i.pw = add i64 %.0112114.i, -3                 ; 2 uses
+  %.0115.i = phi i64 [ %i.pw, %.lr.ph.i54 ], [ 9, %bb.dr ]
+  %.0112114.i = phi i32 [ %i.pv, %.lr.ph.i54 ], [ %i.ps, %bb.dr ]
+  %i.pv = udiv i32 %.0112114.i, 1000              ; 3 uses
+  %i.pw = add i64 %.0115.i, -3                    ; 2 uses
   %i.px = urem i32 %i.pv, 1000
   %i.py = icmp eq i32 %i.px, 0
   br i1 %i.py, label %.lr.ph.i54, label %._crit_edge.i51, !llvm.loop !171
 
 ._crit_edge.i51:                                  ; preds = %.lr.ph.i54, %bb.dr
-  %.0112.lcssa.i = phi i64 [ 9, %bb.dr ], [ %i.pw, %.lr.ph.i54 ]
-  %.0.lcssa.i = phi i32 [ %i.ps, %bb.dr ], [ %i.pv, %.lr.ph.i54 ]
+  %.0112.lcssa.i = phi i32 [ %i.ps, %bb.dr ], [ %i.pv, %.lr.ph.i54 ]
+  %.0.lcssa.i = phi i64 [ 9, %bb.dr ], [ %i.pw, %.lr.ph.i54 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #28, !noalias !156
   %i.pz = icmp slt i64 %i.oc, 0
   %i.qa = icmp slt i32 %i.oo, 0
@@ -234,12 +234,12 @@ bb.dr:                                            ; preds = %bb.dm
   %i.qj = getelementptr inbounds nuw i8, ptr %13, i64 24
   store ptr @_ZN4absl12lts_2025051219str_format_internal13FormatArgImpl8DispatchIlEEbNS2_4DataENS1_24FormatConversionSpecImplEPv, ptr %i.qj, align 8, !tbaa !88, !noalias !175
   %i.qk = getelementptr inbounds nuw i8, ptr %13, i64 32
-  %i.ql = inttoptr i64 %.0112.lcssa.i to ptr
+  %i.ql = inttoptr i64 %.0.lcssa.i to ptr
   store ptr %i.ql, ptr %i.qk, align 8, !tbaa !21, !noalias !175
   %i.qm = getelementptr inbounds nuw i8, ptr %13, i64 40
   store ptr @_ZN4absl12lts_2025051219str_format_internal13FormatArgImpl8DispatchImEEbNS2_4DataENS1_24FormatConversionSpecImplEPv, ptr %i.qm, align 8, !tbaa !88, !noalias !175
   %i.qn = getelementptr inbounds nuw i8, ptr %13, i64 48
-  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i32 %.0.lcssa.i to i64
+  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i32 %.0112.lcssa.i to i64
   %i.qo = inttoptr i64 %.sroa.0.0.insert.ext.i.i.i.i.i to ptr
   store ptr %i.qo, ptr %i.qn, align 8, !tbaa !21, !noalias !175
   %i.qp = getelementptr inbounds nuw i8, ptr %13, i64 56
@@ -642,17 +642,17 @@ bb.do:                                            ; preds = %bb.dj
   br i1 %i.rx, label %.lr.ph.i54, label %._crit_edge.i51
 
 .lr.ph.i54:                                       ; preds = %bb.do, %.lr.ph.i54
-  %.0109.i = phi i32 [ %i.ry, %.lr.ph.i54 ], [ %i.rv, %bb.do ]
-  %.0106108.i = phi i64 [ %i.rz, %.lr.ph.i54 ], [ 9, %bb.do ]
-  %i.ry = udiv i32 %.0109.i, 1000                 ; 3 uses
-  %i.rz = add i64 %.0106108.i, -3                 ; 2 uses
+  %.0109.i = phi i64 [ %i.rz, %.lr.ph.i54 ], [ 9, %bb.do ]
+  %.0106108.i = phi i32 [ %i.ry, %.lr.ph.i54 ], [ %i.rv, %bb.do ]
+  %i.ry = udiv i32 %.0106108.i, 1000              ; 3 uses
+  %i.rz = add i64 %.0109.i, -3                    ; 2 uses
   %i.sa = urem i32 %i.ry, 1000
   %i.sb = icmp eq i32 %i.sa, 0
   br i1 %i.sb, label %.lr.ph.i54, label %._crit_edge.i51, !llvm.loop !384
 
 ._crit_edge.i51:                                  ; preds = %.lr.ph.i54, %bb.do
-  %.0106.lcssa.i = phi i64 [ 9, %bb.do ], [ %i.rz, %.lr.ph.i54 ]
-  %.0.lcssa.i = phi i32 [ %i.rv, %bb.do ], [ %i.ry, %.lr.ph.i54 ]
+  %.0106.lcssa.i = phi i32 [ %i.rv, %bb.do ], [ %i.ry, %.lr.ph.i54 ]
+  %.0.lcssa.i = phi i64 [ 9, %bb.do ], [ %i.rz, %.lr.ph.i54 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #28, !noalias !368
   %i.sc = icmp slt i64 %i.qf, 0
   %i.sd = icmp slt i32 %i.qv, 0
@@ -674,12 +674,12 @@ bb.do:                                            ; preds = %bb.dj
   %i.sm = getelementptr inbounds nuw i8, ptr %11, i64 24
   store ptr @_ZN4absl12lts_2025051219str_format_internal13FormatArgImpl8DispatchIlEEbNS2_4DataENS1_24FormatConversionSpecImplEPv, ptr %i.sm, align 8, !tbaa !88, !noalias !385
   %i.sn = getelementptr inbounds nuw i8, ptr %11, i64 32
-  %i.so = inttoptr i64 %.0106.lcssa.i to ptr
+  %i.so = inttoptr i64 %.0.lcssa.i to ptr
   store ptr %i.so, ptr %i.sn, align 8, !tbaa !21, !noalias !385
   %i.sp = getelementptr inbounds nuw i8, ptr %11, i64 40
   store ptr @_ZN4absl12lts_2025051219str_format_internal13FormatArgImpl8DispatchImEEbNS2_4DataENS1_24FormatConversionSpecImplEPv, ptr %i.sp, align 8, !tbaa !88, !noalias !385
   %i.sq = getelementptr inbounds nuw i8, ptr %11, i64 48
-  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i32 %.0.lcssa.i to i64
+  %.sroa.0.0.insert.ext.i.i.i.i.i = zext nneg i32 %.0106.lcssa.i to i64
   %i.sr = inttoptr i64 %.sroa.0.0.insert.ext.i.i.i.i.i to ptr
   store ptr %i.sr, ptr %i.sq, align 8, !tbaa !21, !noalias !385
   %i.ss = getelementptr inbounds nuw i8, ptr %11, i64 56
@@ -1082,28 +1082,28 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.n
 
 ._crit_edge:                                      ; preds = %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit
-  %.not.i.i.i = icmp eq ptr %.sroa.0132.1.a, %.sroa.13.1
+  %.not.i.i.i = icmp eq ptr %.sroa.21.1, %.sroa.13.1
   br i1 %.not.i.i.i, label %.critedge37, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
   %i.q = ptrtoint ptr %.sroa.13.1 to i64
-  %i.r = ptrtoint ptr %.sroa.0132.1.a to i64      ; 2 uses
+  %i.r = ptrtoint ptr %.sroa.21.1 to i64          ; 2 uses
   %i.s = sub i64 %i.q, %i.r                       ; 2 uses
   %i.t = ashr exact i64 %i.s, 3
   %i.u = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.t, i1 true)
   %i.v = shl nuw nsw i64 %i.u, 1
   %i.w = xor i64 %i.v, 126
-  tail call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_12_GLOBAL__N_111WriteFieldsINS4_17UnparseProto3TypeEEEN4absl12lts_202505126StatusERNS4_10JsonWriterERKNT_3MsgERKNSO_4DescERbEUlRKSO_RKT0_E_EEEvSO_SO_SY_T1_(ptr %.sroa.0132.1.a, ptr %.sroa.13.1, i64 noundef %i.w)
+  tail call fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEElNS0_5__ops15_Iter_comp_iterIZNS4_12_GLOBAL__N_111WriteFieldsINS4_17UnparseProto3TypeEEEN4absl12lts_202505126StatusERNS4_10JsonWriterERKNT_3MsgERKNSO_4DescERbEUlRKSO_RKT0_E_EEEvSO_SO_SY_T1_(ptr %.sroa.21.1, ptr %.sroa.13.1, i64 noundef %i.w)
   %i.x = icmp sgt i64 %i.s, 128
-  %scevgep.i.i.i.i = getelementptr i8, ptr %.sroa.0132.1.a, i64 8 ; 3 uses
+  %scevgep.i.i.i.i = getelementptr i8, ptr %.sroa.21.1, i64 8 ; 3 uses
   br i1 %i.x, label %.lr.ph.i.i.i.i.i, label %bb.h
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %bb.c, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i
   %.sroa.0.021.i.idx.i.i.i.i = phi i64 [ %.sroa.0.021.i.add.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i ], [ 8, %bb.c ] ; 4 uses
-  %.pn20.i.i.i.i.i = phi ptr [ %.sroa.0.021.i.ptr.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i ], [ %.sroa.0132.1.a, %bb.c ] ; 3 uses
-  %.sroa.0.021.i.ptr.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0132.1.a, i64 %.sroa.0.021.i.idx.i.i.i.i ; 4 uses
+  %.pn20.i.i.i.i.i = phi ptr [ %.sroa.0.021.i.ptr.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i ], [ %.sroa.21.1, %bb.c ] ; 3 uses
+  %.sroa.0.021.i.ptr.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.21.1, i64 %.sroa.0.021.i.idx.i.i.i.i ; 4 uses
   %.val.i.i.i.i.i.i = load ptr, ptr %.sroa.0.021.i.ptr.i.i.i.i, align 8, !tbaa !413 ; 2 uses
-  %.val1.i.i.i.i.i.i = load ptr, ptr %.sroa.0132.1.a, align 8, !tbaa !413 ; 2 uses
+  %.val1.i.i.i.i.i.i = load ptr, ptr %.sroa.21.1, align 8, !tbaa !413 ; 2 uses
   %i.y = getelementptr i8, ptr %.val.i.i.i.i.i.i, i64 8
   %.val.val.i.i.i.i.i.i = load ptr, ptr %i.y, align 8, !tbaa !243
   %i.z = getelementptr i8, ptr %.val1.i.i.i.i.i.i, i64 8
@@ -1120,7 +1120,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
   br i1 %i.ad, label %bb.e, label %bb.f, !prof !50
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0132.1.a, i64 %.sroa.0.021.i.idx.i.i.i.i, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.21.1, i64 %.sroa.0.021.i.idx.i.i.i.i, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -1153,14 +1153,14 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i
   br i1 %i.ak, label %.lr.ph.i.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i, !llvm.loop !810
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.g, %bb.f, %bb.e
-  %.sink.i.i.i.i.i = phi ptr [ %.sroa.0132.1.a, %bb.f ], [ %.sroa.0132.1.a, %bb.e ], [ %.sroa.0.021.i.ptr.i.i.i.i, %bb.g ], [ %.sroa.0.012.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ]
+  %.sink.i.i.i.i.i = phi ptr [ %.sroa.21.1, %bb.f ], [ %.sroa.21.1, %bb.e ], [ %.sroa.0.021.i.ptr.i.i.i.i, %bb.g ], [ %.sroa.0.012.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ]
   store ptr %.val.i.i.i.i.i.i, ptr %.sink.i.i.i.i.i, align 8, !tbaa !413
   %.sroa.0.021.i.add.i.i.i.i = add nuw nsw i64 %.sroa.0.021.i.idx.i.i.i.i, 8 ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %.sroa.0.021.i.add.i.i.i.i, 128
   br i1 %.not.i.i.i.i.i, label %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS4_12_GLOBAL__N_111WriteFieldsINS4_17UnparseProto3TypeEEEN4absl12lts_202505126StatusERNS4_10JsonWriterERKNT_3MsgERKNSO_4DescERbEUlRKSO_RKT0_E_EEEvSO_SO_SY_.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !811
 
 _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterIZNS4_12_GLOBAL__N_111WriteFieldsINS4_17UnparseProto3TypeEEEN4absl12lts_202505126StatusERNS4_10JsonWriterERKNT_3MsgERKNSO_4DescERbEUlRKSO_RKT0_E_EEEvSO_SO_SY_.exit.i.i.i.i: ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i.i.i.i.i
-  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.0132.1.a, i64 128 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.21.1, i64 128 ; 2 uses
   %.not6.i.i.i.i.i = icmp eq ptr %i.al, %.sroa.13.1
   br i1 %.not6.i.i.i.i.i, label %.noexc45.lr.ph, label %.lr.ph.i12.i.i.i.i
 
@@ -1208,9 +1208,9 @@ bb.h:                                             ; preds = %bb.c
 
 .lr.ph.i30.i.i.i.i:                               ; preds = %bb.h, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i42.i.i.i.i
   %.sroa.0.021.i31.i.i.i.i = phi ptr [ %.sroa.0.0.i44.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i42.i.i.i.i ], [ %scevgep.i.i.i.i, %bb.h ] ; 6 uses
-  %.pn20.i32.i.i.i.i = phi ptr [ %.sroa.0.021.i31.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i42.i.i.i.i ], [ %.sroa.0132.1.a, %bb.h ] ; 4 uses
+  %.pn20.i32.i.i.i.i = phi ptr [ %.sroa.0.021.i31.i.i.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i42.i.i.i.i ], [ %.sroa.21.1, %bb.h ] ; 4 uses
   %.val.i.i33.i.i.i.i = load ptr, ptr %.sroa.0.021.i31.i.i.i.i, align 8, !tbaa !413 ; 2 uses
-  %.val1.i.i34.i.i.i.i = load ptr, ptr %.sroa.0132.1.a, align 8, !tbaa !413 ; 2 uses
+  %.val1.i.i34.i.i.i.i = load ptr, ptr %.sroa.21.1, align 8, !tbaa !413 ; 2 uses
   %i.aw = getelementptr i8, ptr %.val.i.i33.i.i.i.i, i64 8
   %.val.val.i.i35.i.i.i.i = load ptr, ptr %i.aw, align 8, !tbaa !243
   %i.ax = getelementptr i8, ptr %.val1.i.i34.i.i.i.i, i64 8
@@ -1233,7 +1233,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bf = getelementptr inbounds nuw i8, ptr %.pn20.i32.i.i.i.i, i64 16
   %i.bg = sub nsw i64 0, %i.bd
   %i.bh = getelementptr inbounds [8 x i8], ptr %i.bf, i64 %i.bg
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bh, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.0132.1.a, i64 %i.bc, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.bh, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.21.1, i64 %i.bc, i1 false)
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i42.i.i.i.i
 
 bb.k:                                             ; preds = %bb.i
@@ -1270,7 +1270,7 @@ bb.m:                                             ; preds = %.lr.ph.i30.i.i.i.i
   br i1 %i.bp, label %.lr.ph.i.i46.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i42.i.i.i.i, !llvm.loop !810
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_internal12ResolverPool5FieldESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit.i42.i.i.i.i: ; preds = %.lr.ph.i.i46.i.i.i.i, %bb.m, %bb.l, %bb.k, %bb.j
-  %.sink.i43.i.i.i.i = phi ptr [ %.sroa.0132.1.a, %bb.l ], [ %.sroa.0132.1.a, %bb.j ], [ %.sroa.0132.1.a, %bb.k ], [ %.sroa.0.021.i31.i.i.i.i, %bb.m ], [ %.sroa.0.012.i.i48.i.i.i.i, %.lr.ph.i.i46.i.i.i.i ]
+  %.sink.i43.i.i.i.i = phi ptr [ %.sroa.21.1, %bb.l ], [ %.sroa.21.1, %bb.j ], [ %.sroa.21.1, %bb.k ], [ %.sroa.0.021.i31.i.i.i.i, %bb.m ], [ %.sroa.0.012.i.i48.i.i.i.i, %.lr.ph.i.i46.i.i.i.i ]
   store ptr %.val.i.i33.i.i.i.i, ptr %.sink.i43.i.i.i.i, align 8, !tbaa !413
   %.sroa.0.0.i44.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.021.i31.i.i.i.i, i64 8 ; 2 uses
   %.not.i45.i.i.i.i = icmp eq ptr %.sroa.0.0.i44.i.i.i.i, %.sroa.13.1
@@ -1278,9 +1278,9 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPPKN6google8protobuf13json_in
 
 bb.n:                                             ; preds = %.lr.ph, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit
   %.027205 = phi i64 [ 0, %.lr.ph ], [ %i.dh, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit ] ; 2 uses
-  %.sroa.21.0204 = phi ptr [ %i.o, %.lr.ph ], [ %.sroa.21.1, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit ] ; 9 uses
-  %.sroa.13.0203 = phi ptr [ %i.n, %.lr.ph ], [ %.sroa.13.1, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit ] ; 6 uses
-  %.sroa.0132.0202 = phi ptr [ %i.n, %.lr.ph ], [ %.sroa.0132.1.a, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit ] ; 11 uses
+  %.sroa.21.0204 = phi ptr [ %i.n, %.lr.ph ], [ %.sroa.21.1, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit ] ; 11 uses
+  %.sroa.13.0203 = phi ptr [ %i.n, %.lr.ph ], [ %.sroa.13.1, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit ] ; 9 uses
+  %.sroa.0132.0202 = phi ptr [ %i.o, %.lr.ph ], [ %.sroa.0132.1.a, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit ] ; 7 uses
   %i.bq = invoke { ptr, i64 } @_ZNK6google8protobuf13json_internal12ResolverPool7Message13FieldsByIndexEv(ptr noundef nonnull align 8 dereferenceable(184) %3)
           to label %bb.o unwind label %bb.s
 
@@ -1337,6 +1337,7 @@ bb.s:                                             ; preds = %bb.n
   br label %.body
 
 .loopexit185:                                     ; preds = %bb.o, %_ZNKSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE12_M_check_lenEmPKc.exit.i.i
+  %.sroa.21.0202.lcssa212 = phi ptr [ %.sroa.0132.0202, %bb.o ], [ %.sroa.13.0203, %_ZNKSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE12_M_check_lenEmPKc.exit.i.i ]
   %lpad.loopexit187 = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -1350,7 +1351,7 @@ bb.t:                                             ; preds = %_ZN6google8protobuf
   br i1 %i.by, label %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit.thread, label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit
 
 _ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit.thread: ; preds = %.split, %bb.p, %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit, %bb.t
-  %.not.i = icmp eq ptr %.sroa.13.0203, %.sroa.21.0204
+  %.not.i = icmp eq ptr %.sroa.13.0203, %.sroa.0132.0202
   br i1 %.not.i, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit.thread
@@ -1359,8 +1360,8 @@ bb.u:                                             ; preds = %_ZN6google8protobuf
   br label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit
 
 bb.v:                                             ; preds = %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit.thread
-  %i.cs = ptrtoint ptr %.sroa.21.0204 to i64
-  %i.ct = ptrtoint ptr %.sroa.0132.0202 to i64
+  %i.cs = ptrtoint ptr %.sroa.13.0203 to i64
+  %i.ct = ptrtoint ptr %.sroa.21.0204 to i64
   %i.cu = sub i64 %i.cs, %i.ct                    ; 6 uses
   %i.cv = icmp eq i64 %i.cu, 9223372036854775800
   br i1 %i.cv, label %bb.w, label %_ZNKSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE12_M_check_lenEmPKc.exit.i.i
@@ -1392,16 +1393,16 @@ _ZNKSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE12_
   br i1 %i.de, label %bb.x, label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i
 
 bb.x:                                             ; preds = %.noexc44
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dc, ptr align 8 %.sroa.0132.0202, i64 %i.cu, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dc, ptr align 8 %.sroa.21.0204, i64 %i.cu, i1 false)
   br label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i
 
 _ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i: ; preds = %bb.x, %.noexc44
   %i.df = getelementptr inbounds nuw i8, ptr %i.dd, i64 8
-  %.not.i17.i.i = icmp eq ptr %.sroa.0132.0202, null
+  %.not.i17.i.i = icmp eq ptr %.sroa.21.0204, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i, label %bb.y
 
 bb.y:                                             ; preds = %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0132.0202, i64 noundef %i.cu) #30
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.21.0204, i64 noundef %i.cu) #30
   br label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i: ; preds = %bb.y, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i
@@ -1409,9 +1410,9 @@ _ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M
   br label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit
 
 _ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9push_backERKS6_.exit: ; preds = %.split, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i, %bb.u, %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit, %bb.t
-  %.sroa.0132.1.a = phi ptr [ %.sroa.0132.0202, %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit ], [ %.sroa.0132.0202, %bb.t ], [ %i.dc, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i ], [ %.sroa.0132.0202, %bb.u ], [ %.sroa.0132.0202, %.split ] ; 26 uses
+  %.sroa.0132.1.a = phi ptr [ %.sroa.0132.0202, %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit ], [ %.sroa.0132.0202, %bb.t ], [ %i.dg, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i ], [ %.sroa.0132.0202, %bb.u ], [ %.sroa.0132.0202, %.split ] ; 8 uses
   %.sroa.13.1 = phi ptr [ %.sroa.13.0203, %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit ], [ %.sroa.13.0203, %bb.t ], [ %i.df, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i ], [ %i.cr, %bb.u ], [ %.sroa.13.0203, %.split ] ; 9 uses
-  %.sroa.21.1 = phi ptr [ %.sroa.21.0204, %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit ], [ %.sroa.21.0204, %bb.t ], [ %i.dg, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i ], [ %.sroa.21.0204, %bb.u ], [ %.sroa.21.0204, %.split ] ; 8 uses
+  %.sroa.21.1 = phi ptr [ %.sroa.21.0204, %_ZN6google8protobuf13json_internal10Proto3Type18IsImplicitPresenceEPKNS1_12ResolverPool5FieldE.exit ], [ %.sroa.21.0204, %bb.t ], [ %i.dc, %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE17_M_realloc_insertIJRKS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i ], [ %.sroa.21.0204, %bb.u ], [ %.sroa.21.0204, %.split ] ; 26 uses
   %i.dh = add nuw i64 %.027205, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.dh, %i.k
   br i1 %exitcond.not, label %._crit_edge, label %bb.n, !llvm.loop !814
@@ -1425,7 +1426,7 @@ _ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EE9pus
   br label %.noexc45
 
 .noexc45:                                         ; preds = %.noexc45.lr.ph, %_ZN4absl12lts_202505126StatusD2Ev.exit
-  %.sroa.0125.0209 = phi ptr [ %.sroa.0132.1.a, %.noexc45.lr.ph ], [ %i.hb, %_ZN4absl12lts_202505126StatusD2Ev.exit ] ; 2 uses
+  %.sroa.0125.0209 = phi ptr [ %.sroa.21.1, %.noexc45.lr.ph ], [ %i.hb, %_ZN4absl12lts_202505126StatusD2Ev.exit ] ; 2 uses
   %i.dn = load ptr, ptr %.sroa.0125.0209, align 8, !tbaa !413 ; 7 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 8 ; 5 uses
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !243
@@ -1828,33 +1829,33 @@ _ZN4absl12lts_202505126StatusD2Ev.exit:           ; preds = %.thread258, %bb.bb,
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.bb, %.critedge37
-  %.sroa.0132.0.lcssa236246 = phi ptr [ %.sroa.0132.0.lcssa236247, %.critedge37 ], [ %.sroa.0132.1.a, %bb.bb ] ; 3 uses
-  %.sroa.21.0.lcssa238244 = phi ptr [ %.sroa.21.0.lcssa238245, %.critedge37 ], [ %.sroa.21.1, %bb.bb ]
-  %.not.i.i.i69 = icmp eq ptr %.sroa.0132.0.lcssa236246, null
+  %.sroa.0132.0.lcssa236246 = phi ptr [ %.sroa.0132.0.lcssa236247, %.critedge37 ], [ %.sroa.0132.1.a, %bb.bb ]
+  %.sroa.21.0.lcssa238244 = phi ptr [ %.sroa.21.0.lcssa238245, %.critedge37 ], [ %.sroa.21.1, %bb.bb ] ; 3 uses
+  %.not.i.i.i69 = icmp eq ptr %.sroa.21.0.lcssa238244, null
   br i1 %.not.i.i.i69, label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EED2Ev.exit, label %bb.bc
 
 bb.bc:                                            ; preds = %.critedge
-  %i.hc = ptrtoint ptr %.sroa.21.0.lcssa238244 to i64
-  %i.hd = ptrtoint ptr %.sroa.0132.0.lcssa236246 to i64
+  %i.hc = ptrtoint ptr %.sroa.0132.0.lcssa236246 to i64
+  %i.hd = ptrtoint ptr %.sroa.21.0.lcssa238244 to i64
   %i.he = sub i64 %i.hc, %i.hd
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0132.0.lcssa236246, i64 noundef %i.he) #30
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.21.0.lcssa238244, i64 noundef %i.he) #30
   br label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EED2Ev.exit
 
 _ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EED2Ev.exit: ; preds = %.critedge, %bb.bc
   ret void
 
 .body:                                            ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit, %.loopexit185, %.loopexit.split-lp186, %bb.ab, %bb.s
-  %.sroa.0132.0200 = phi ptr [ %.sroa.0132.0202, %.loopexit.split-lp186 ], [ %.sroa.0132.1.a, %bb.ab ], [ %.sroa.0132.0202, %bb.s ], [ %.sroa.0132.0202, %.loopexit185 ], [ %.sroa.0132.1.a, %.loopexit.split-lp.loopexit ], [ %.sroa.0132.1.a, %.loopexit.split-lp.loopexit.split-lp ], [ %.sroa.0132.1.a, %.loopexit ] ; 3 uses
-  %.sroa.21.0192 = phi ptr [ %.sroa.21.0204, %.loopexit.split-lp186 ], [ %.sroa.21.1, %bb.ab ], [ %.sroa.21.0204, %bb.s ], [ %.sroa.21.0204, %.loopexit185 ], [ %.sroa.21.1, %.loopexit.split-lp.loopexit ], [ %.sroa.21.1, %.loopexit.split-lp.loopexit.split-lp ], [ %.sroa.21.1, %.loopexit ]
+  %.sroa.0132.0200 = phi ptr [ %.sroa.13.0203, %.loopexit.split-lp186 ], [ %.sroa.0132.1.a, %bb.ab ], [ %.sroa.0132.0202, %bb.s ], [ %.sroa.21.0202.lcssa212, %.loopexit185 ], [ %.sroa.0132.1.a, %.loopexit.split-lp.loopexit ], [ %.sroa.0132.1.a, %.loopexit.split-lp.loopexit.split-lp ], [ %.sroa.0132.1.a, %.loopexit ]
+  %.sroa.21.0192 = phi ptr [ %.sroa.21.0204, %.loopexit.split-lp186 ], [ %.sroa.21.1, %bb.ab ], [ %.sroa.21.0204, %bb.s ], [ %.sroa.21.0204, %.loopexit185 ], [ %.sroa.21.1, %.loopexit.split-lp.loopexit ], [ %.sroa.21.1, %.loopexit.split-lp.loopexit.split-lp ], [ %.sroa.21.1, %.loopexit ] ; 3 uses
   %.pn34.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp186 ], [ %i.dx, %bb.ab ], [ %i.cq, %bb.s ], [ %lpad.loopexit187, %.loopexit185 ], [ %lpad.loopexit181, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp182, %.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit, %.loopexit ]
-  %.not.i.i.i70 = icmp eq ptr %.sroa.0132.0200, null
+  %.not.i.i.i70 = icmp eq ptr %.sroa.21.0192, null
   br i1 %.not.i.i.i70, label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EED2Ev.exit71, label %.body.thread172
 
 .body.thread172:                                  ; preds = %.body
-  %i.hf = ptrtoint ptr %.sroa.21.0192 to i64
-  %i.hg = ptrtoint ptr %.sroa.0132.0200 to i64
+  %i.hf = ptrtoint ptr %.sroa.0132.0200 to i64
+  %i.hg = ptrtoint ptr %.sroa.21.0192 to i64
   %i.hh = sub i64 %i.hf, %i.hg
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0132.0200, i64 noundef %i.hh) #30
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.21.0192, i64 noundef %i.hh) #30
   br label %_ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EED2Ev.exit71
 
 _ZNSt6vectorIPKN6google8protobuf13json_internal12ResolverPool5FieldESaIS6_EED2Ev.exit71: ; preds = %.body, %.body.thread172

@@ -202,30 +202,31 @@ bb.a:
   br label %bb.b, !dbg !6558
 
 bb.b:                                             ; preds = %.lr.ph302, %.backedge
-  %.sroa.0212.0300 = phi ptr [ %2, %.lr.ph302 ], [ %i.z, %.backedge ] ; 3 uses
-  %.sroa.8.0299 = phi i64 [ 0, %.lr.ph302 ], [ %i.aa, %.backedge ] ; 7 uses
-    #dbg_value(ptr %.sroa.0212.0300, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
-    #dbg_value(i64 %.sroa.8.0299, !6106, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !6535)
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0212.0300, i64 24, !dbg !6559 ; 2 uses
+  %.sroa.8.0300 = phi i64 [ 0, %.lr.ph302 ], [ %i.aa, %.backedge ] ; 7 uses
+  %.sroa.0212.0299 = phi ptr [ %2, %.lr.ph302 ], [ %i.z, %.backedge ] ; 3 uses
+    #dbg_value(i64 %.sroa.8.0300, !6106, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !6535)
+    #dbg_value(ptr %.sroa.0212.0299, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0212.0299, i64 24, !dbg !6559 ; 2 uses
     #dbg_value(ptr %i.z, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
-    #dbg_value(ptr %.sroa.0212.0300, !6341, !DIExpression(), !6560)
-    #dbg_value(i64 %.sroa.8.0299, !6347, !DIExpression(), !6561)
-  %i.aa = add i64 %.sroa.8.0299, 1, !dbg !6562    ; 2 uses
+    #dbg_value(ptr %.sroa.0212.0299, !6341, !DIExpression(), !6560)
+    #dbg_value(i64 %.sroa.8.0300, !6347, !DIExpression(), !6561)
+  %i.aa = add i64 %.sroa.8.0300, 1, !dbg !6562    ; 2 uses
     #dbg_value(i64 %i.aa, !6106, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !6535)
+    #dbg_value(ptr %i.z, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !6563
-    #dbg_value(i64 %.sroa.8.0299, !6127, !DIExpression(), !6564)
-    #dbg_value(i64 %.sroa.8.0299, !6457, !DIExpression(), !6565)
-    #dbg_value(i64 %.sroa.8.0299, !6432, !DIExpression(), !6566)
-    #dbg_value(i64 %.sroa.8.0299, !6427, !DIExpression(), !6567)
-    #dbg_value(i64 %.sroa.8.0299, !6568, !DIExpression(), !6574)
-  store i64 %.sroa.8.0299, ptr %i.f, align 8, !dbg !6563
-    #dbg_value(ptr %.sroa.0212.0300, !6129, !DIExpression(), !6564)
-  %exitcond = icmp eq i64 %.sroa.8.0299, 2147483647, !dbg !6576
+    #dbg_value(i64 %.sroa.8.0300, !6127, !DIExpression(), !6564)
+    #dbg_value(i64 %.sroa.8.0300, !6457, !DIExpression(), !6565)
+    #dbg_value(i64 %.sroa.8.0300, !6432, !DIExpression(), !6566)
+    #dbg_value(i64 %.sroa.8.0300, !6427, !DIExpression(), !6567)
+    #dbg_value(i64 %.sroa.8.0300, !6568, !DIExpression(), !6574)
+  store i64 %.sroa.8.0300, ptr %i.f, align 8, !dbg !6563
+    #dbg_value(ptr %.sroa.0212.0299, !6129, !DIExpression(), !6564)
+  %exitcond = icmp eq i64 %.sroa.8.0300, 2147483647, !dbg !6576
   br i1 %exitcond, label %bb.e, label %bb.d, !dbg !6576
 
 ._crit_edge303:                                   ; preds = %.backedge, %bb.a
-    #dbg_value(ptr poison, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
     #dbg_value(i64 poison, !6106, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !6535)
+    #dbg_value(ptr poison, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
   store i32 -1, ptr %0, align 8, !dbg !6577
   br label %bb.c, !dbg !6578
 
@@ -233,13 +234,13 @@ bb.c:                                             ; preds = %bb.au, %._crit_edge
   ret void, !dbg !6579
 
 bb.d:                                             ; preds = %bb.b
-  %i.ab = trunc nuw nsw i64 %.sroa.8.0299 to i32, !dbg !6580 ; 2 uses
+  %i.ab = trunc nuw nsw i64 %.sroa.8.0300 to i32, !dbg !6580 ; 2 uses
     #dbg_value(i32 %i.ab, !6130, !DIExpression(), !6581)
     #dbg_value(ptr undef, !6129, !DIExpression(DW_OP_deref), !6564)
     #dbg_value(ptr poison, !6582, !DIExpression(), !6589)
-  %i.ac = getelementptr i8, ptr %.sroa.0212.0300, i64 8, !dbg !6591
+  %i.ac = getelementptr i8, ptr %.sroa.0212.0299, i64 8, !dbg !6591
   %.val.i = load ptr, ptr %i.ac, align 8, !dbg !6591, !nonnull !65, !noundef !65 ; 3 uses
-  %i.ad = getelementptr i8, ptr %.sroa.0212.0300, i64 16, !dbg !6591
+  %i.ad = getelementptr i8, ptr %.sroa.0212.0299, i64 16, !dbg !6591
   %.val1.i = load i64, ptr %i.ad, align 8, !dbg !6591, !noundef !65 ; 8 uses
     #dbg_value(ptr %.val.i, !6136, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6592)
     #dbg_value(ptr %.val.i, !6593, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6598)
@@ -300,7 +301,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ai = icmp ult i64 %i.ah, 2305843009213693952, !dbg !6686
   tail call void @llvm.assume(i1 %i.ai), !dbg !6687
     #dbg_value(ptr %i.e, !6149, !DIExpression(), !6677)
-  %i.aj = icmp eq i64 %.sroa.8.0299, %i.ah, !dbg !6688
+  %i.aj = icmp eq i64 %.sroa.8.0300, %i.ah, !dbg !6688
   br i1 %i.aj, label %bb.i, label %bb.h, !dbg !6688, !prof !2202
 
 bb.g:                                             ; preds = %bb.d
@@ -346,7 +347,7 @@ bb.i:                                             ; preds = %bb.f
     #dbg_value(i64 %i.ah, !6734, !DIExpression(), !6740)
     #dbg_value(ptr %i.m, !6731, !DIExpression(), !6742)
   %i.al = load i64, ptr %i.m, align 16, !dbg !6743, !range !1927, !alias.scope !6744, !noundef !65
-  %i.am = icmp eq i64 %.sroa.8.0299, %i.al, !dbg !6747
+  %i.am = icmp eq i64 %.sroa.8.0300, %i.al, !dbg !6747
   br i1 %i.am, label %bb.j, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsl4b0cIVMtRE_12aho_corasick4util10primitives10SmallIndexE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit, !dbg !6747
 
 bb.j:                                             ; preds = %bb.i
@@ -356,7 +357,7 @@ bb.j:                                             ; preds = %bb.i
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsl4b0cIVMtRE_12aho_corasick4util10primitives10SmallIndexE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit: ; preds = %bb.i, %bb.j
   %i.an = load ptr, ptr %i.n, align 8, !dbg !6750, !alias.scope !6744, !nonnull !65, !noundef !65
     #dbg_value(ptr %i.an, !6739, !DIExpression(), !6740)
-  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %.sroa.8.0299, !dbg !6771
+  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %.sroa.8.0300, !dbg !6771
     #dbg_value(ptr %i.ao, !6710, !DIExpression(), !6772)
     #dbg_value(ptr %i.ao, !6773, !DIExpression(), !6779)
     #dbg_value(i32 %i.ak, !6778, !DIExpression(), !6779)
@@ -437,8 +438,8 @@ bb.n:                                             ; preds = %._crit_edge
 
 .backedge:                                        ; preds = %bb.q, %bb.p, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !6841
-    #dbg_value(ptr %i.z, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
     #dbg_value(i64 %i.aa, !6106, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !6535)
+    #dbg_value(ptr %i.z, !6106, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !6535)
     #dbg_value(ptr undef, !6340, !DIExpression(), !6350)
     #dbg_value(ptr undef, !6293, !DIExpression(), !6316)
     #dbg_value(i64 1, !6536, !DIExpression(), !6543)
@@ -669,9 +670,9 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.z
   %.sroa.55.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cx, i64 5, !dbg !7312
+    #dbg_value(i32 poison, !7200, !DIExpression(DW_OP_LLVM_fragment, 40, 32), !7313)
     #dbg_value(i32 poison, !7199, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !7245)
     #dbg_value(i32 poison, !7215, !DIExpression(), !7246)
-    #dbg_value(i32 poison, !7200, !DIExpression(DW_OP_LLVM_fragment, 40, 32), !7313)
   %.sroa.2.0.i = load i32, ptr %.sroa.55.0..sroa_idx.i, align 1, !dbg !7247, !noalias !7152 ; 2 uses
     #dbg_value(i32 %.sroa.2.0.i, !7215, !DIExpression(), !7246)
     #dbg_value(i32 %.sroa.2.0.i, !7199, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !7245)
@@ -1007,30 +1008,31 @@ bb.a:
   br label %bb.b, !dbg !7740
 
 bb.b:                                             ; preds = %.lr.ph302, %.backedge
-  %.sroa.0212.0300 = phi ptr [ %2, %.lr.ph302 ], [ %i.z, %.backedge ] ; 3 uses
-  %.sroa.8.0299 = phi i64 [ 0, %.lr.ph302 ], [ %i.aa, %.backedge ] ; 7 uses
-    #dbg_value(ptr %.sroa.0212.0300, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
-    #dbg_value(i64 %.sroa.8.0299, !7501, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7731)
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0212.0300, i64 32, !dbg !7741 ; 2 uses
+  %.sroa.8.0300 = phi i64 [ 0, %.lr.ph302 ], [ %i.aa, %.backedge ] ; 7 uses
+  %.sroa.0212.0299 = phi ptr [ %2, %.lr.ph302 ], [ %i.z, %.backedge ] ; 3 uses
+    #dbg_value(i64 %.sroa.8.0300, !7501, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7731)
+    #dbg_value(ptr %.sroa.0212.0299, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0212.0299, i64 32, !dbg !7741 ; 2 uses
     #dbg_value(ptr %i.z, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
-    #dbg_value(ptr %.sroa.0212.0300, !7623, !DIExpression(), !7742)
-    #dbg_value(i64 %.sroa.8.0299, !7629, !DIExpression(), !7743)
-  %i.aa = add i64 %.sroa.8.0299, 1, !dbg !7744    ; 2 uses
+    #dbg_value(ptr %.sroa.0212.0299, !7623, !DIExpression(), !7742)
+    #dbg_value(i64 %.sroa.8.0300, !7629, !DIExpression(), !7743)
+  %i.aa = add i64 %.sroa.8.0300, 1, !dbg !7744    ; 2 uses
     #dbg_value(i64 %i.aa, !7501, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7731)
+    #dbg_value(ptr %i.z, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !7745
-    #dbg_value(i64 %.sroa.8.0299, !7508, !DIExpression(), !7746)
-    #dbg_value(i64 %.sroa.8.0299, !7691, !DIExpression(), !7747)
-    #dbg_value(i64 %.sroa.8.0299, !7687, !DIExpression(), !7748)
-    #dbg_value(i64 %.sroa.8.0299, !7683, !DIExpression(), !7749)
-    #dbg_value(i64 %.sroa.8.0299, !7750, !DIExpression(), !7753)
-  store i64 %.sroa.8.0299, ptr %i.f, align 8, !dbg !7745
-    #dbg_value(ptr %.sroa.0212.0300, !7510, !DIExpression(), !7746)
-  %exitcond = icmp eq i64 %.sroa.8.0299, 2147483647, !dbg !7755
+    #dbg_value(i64 %.sroa.8.0300, !7508, !DIExpression(), !7746)
+    #dbg_value(i64 %.sroa.8.0300, !7691, !DIExpression(), !7747)
+    #dbg_value(i64 %.sroa.8.0300, !7687, !DIExpression(), !7748)
+    #dbg_value(i64 %.sroa.8.0300, !7683, !DIExpression(), !7749)
+    #dbg_value(i64 %.sroa.8.0300, !7750, !DIExpression(), !7753)
+  store i64 %.sroa.8.0300, ptr %i.f, align 8, !dbg !7745
+    #dbg_value(ptr %.sroa.0212.0299, !7510, !DIExpression(), !7746)
+  %exitcond = icmp eq i64 %.sroa.8.0300, 2147483647, !dbg !7755
   br i1 %exitcond, label %bb.e, label %bb.d, !dbg !7755
 
 ._crit_edge303:                                   ; preds = %.backedge, %bb.a
-    #dbg_value(ptr poison, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
     #dbg_value(i64 poison, !7501, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7731)
+    #dbg_value(ptr poison, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
   store i32 -1, ptr %0, align 8, !dbg !7756
   br label %bb.c, !dbg !7757
 
@@ -1038,13 +1040,13 @@ bb.c:                                             ; preds = %bb.au, %._crit_edge
   ret void, !dbg !7758
 
 bb.d:                                             ; preds = %bb.b
-  %i.ab = trunc nuw nsw i64 %.sroa.8.0299 to i32, !dbg !7759 ; 2 uses
+  %i.ab = trunc nuw nsw i64 %.sroa.8.0300 to i32, !dbg !7759 ; 2 uses
     #dbg_value(i32 %i.ab, !7511, !DIExpression(), !7760)
     #dbg_value(ptr undef, !7510, !DIExpression(DW_OP_deref), !7746)
     #dbg_value(ptr poison, !3878, !DIExpression(), !7761)
-  %i.ac = getelementptr i8, ptr %.sroa.0212.0300, i64 8, !dbg !7763
+  %i.ac = getelementptr i8, ptr %.sroa.0212.0299, i64 8, !dbg !7763
   %.val.i = load ptr, ptr %i.ac, align 8, !dbg !7763, !nonnull !65, !noundef !65 ; 3 uses
-  %i.ad = getelementptr i8, ptr %.sroa.0212.0300, i64 16, !dbg !7763
+  %i.ad = getelementptr i8, ptr %.sroa.0212.0299, i64 16, !dbg !7763
   %.val1.i = load i64, ptr %i.ad, align 8, !dbg !7763, !noundef !65 ; 8 uses
     #dbg_value(ptr %.val.i, !7517, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7764)
     #dbg_value(ptr %.val.i, !7765, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7768)
@@ -1105,7 +1107,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ai = icmp ult i64 %i.ah, 2305843009213693952, !dbg !7838
   tail call void @llvm.assume(i1 %i.ai), !dbg !7839
     #dbg_value(ptr %i.e, !7528, !DIExpression(), !7830)
-  %i.aj = icmp eq i64 %.sroa.8.0299, %i.ah, !dbg !7840
+  %i.aj = icmp eq i64 %.sroa.8.0300, %i.ah, !dbg !7840
   br i1 %i.aj, label %bb.i, label %bb.h, !dbg !7840, !prof !2202
 
 bb.g:                                             ; preds = %bb.d
@@ -1151,7 +1153,7 @@ bb.i:                                             ; preds = %bb.f
     #dbg_value(i64 %i.ah, !6734, !DIExpression(), !7860)
     #dbg_value(ptr %i.m, !6731, !DIExpression(), !7862)
   %i.al = load i64, ptr %i.m, align 16, !dbg !7863, !range !1927, !alias.scope !7864, !noundef !65
-  %i.am = icmp eq i64 %.sroa.8.0299, %i.al, !dbg !7867
+  %i.am = icmp eq i64 %.sroa.8.0300, %i.al, !dbg !7867
   br i1 %i.am, label %bb.j, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsl4b0cIVMtRE_12aho_corasick4util10primitives10SmallIndexE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit, !dbg !7867
 
 bb.j:                                             ; preds = %bb.i
@@ -1161,7 +1163,7 @@ bb.j:                                             ; preds = %bb.i
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsl4b0cIVMtRE_12aho_corasick4util10primitives10SmallIndexE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit: ; preds = %bb.i, %bb.j
   %i.an = load ptr, ptr %i.n, align 8, !dbg !7870, !alias.scope !7864, !nonnull !65, !noundef !65
     #dbg_value(ptr %i.an, !6739, !DIExpression(), !7860)
-  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %.sroa.8.0299, !dbg !7874
+  %i.ao = getelementptr inbounds nuw [4 x i8], ptr %i.an, i64 %.sroa.8.0300, !dbg !7874
     #dbg_value(ptr %i.ao, !6710, !DIExpression(), !7875)
     #dbg_value(ptr %i.ao, !6773, !DIExpression(), !7876)
     #dbg_value(i32 %i.ak, !6778, !DIExpression(), !7876)
@@ -1242,8 +1244,8 @@ bb.n:                                             ; preds = %._crit_edge
 
 .backedge:                                        ; preds = %bb.q, %bb.p, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !7920
-    #dbg_value(ptr %i.z, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
     #dbg_value(i64 %i.aa, !7501, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !7731)
+    #dbg_value(ptr %i.z, !7501, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !7731)
     #dbg_value(ptr undef, !7622, !DIExpression(), !7632)
     #dbg_value(ptr undef, !3659, !DIExpression(), !7598)
     #dbg_value(i64 1, !3686, !DIExpression(), !7732)
@@ -1474,9 +1476,9 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.z
   %.sroa.55.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cx, i64 5, !dbg !8115
+    #dbg_value(i32 poison, !7200, !DIExpression(DW_OP_LLVM_fragment, 40, 32), !8116)
     #dbg_value(i32 poison, !7199, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8092)
     #dbg_value(i32 poison, !7215, !DIExpression(), !8093)
-    #dbg_value(i32 poison, !7200, !DIExpression(DW_OP_LLVM_fragment, 40, 32), !8116)
   %.sroa.2.0.i = load i32, ptr %.sroa.55.0..sroa_idx.i, align 1, !dbg !8094, !noalias !8075 ; 2 uses
     #dbg_value(i32 %.sroa.2.0.i, !7215, !DIExpression(), !8093)
     #dbg_value(i32 %.sroa.2.0.i, !7199, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8092)
@@ -1812,30 +1814,31 @@ bb.a:
   br label %bb.b, !dbg !8484
 
 bb.b:                                             ; preds = %.lr.ph302, %.backedge
-  %.sroa.0212.0300 = phi ptr [ %2, %.lr.ph302 ], [ %i.z, %.backedge ] ; 3 uses
-  %.sroa.8.0299 = phi i64 [ 0, %.lr.ph302 ], [ %i.aa, %.backedge ] ; 7 uses
-    #dbg_value(ptr %.sroa.0212.0300, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
-    #dbg_value(i64 %.sroa.8.0299, !8245, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8475)
-  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0212.0300, i64 16, !dbg !8485 ; 2 uses
+  %.sroa.8.0300 = phi i64 [ 0, %.lr.ph302 ], [ %i.aa, %.backedge ] ; 7 uses
+  %.sroa.0212.0299 = phi ptr [ %2, %.lr.ph302 ], [ %i.z, %.backedge ] ; 3 uses
+    #dbg_value(i64 %.sroa.8.0300, !8245, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8475)
+    #dbg_value(ptr %.sroa.0212.0299, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
+  %i.z = getelementptr inbounds nuw i8, ptr %.sroa.0212.0299, i64 16, !dbg !8485 ; 2 uses
     #dbg_value(ptr %i.z, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
-    #dbg_value(ptr %.sroa.0212.0300, !8367, !DIExpression(), !8486)
-    #dbg_value(i64 %.sroa.8.0299, !8373, !DIExpression(), !8487)
-  %i.aa = add i64 %.sroa.8.0299, 1, !dbg !8488    ; 2 uses
+    #dbg_value(ptr %.sroa.0212.0299, !8367, !DIExpression(), !8486)
+    #dbg_value(i64 %.sroa.8.0300, !8373, !DIExpression(), !8487)
+  %i.aa = add i64 %.sroa.8.0300, 1, !dbg !8488    ; 2 uses
     #dbg_value(i64 %i.aa, !8245, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8475)
+    #dbg_value(ptr %i.z, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !8489
-    #dbg_value(i64 %.sroa.8.0299, !8252, !DIExpression(), !8490)
-    #dbg_value(i64 %.sroa.8.0299, !8435, !DIExpression(), !8491)
-    #dbg_value(i64 %.sroa.8.0299, !8431, !DIExpression(), !8492)
-    #dbg_value(i64 %.sroa.8.0299, !8427, !DIExpression(), !8493)
-    #dbg_value(i64 %.sroa.8.0299, !8494, !DIExpression(), !8497)
-  store i64 %.sroa.8.0299, ptr %i.f, align 8, !dbg !8489
-    #dbg_value(ptr %.sroa.0212.0300, !8254, !DIExpression(), !8490)
-  %exitcond = icmp eq i64 %.sroa.8.0299, 2147483647, !dbg !8499
+    #dbg_value(i64 %.sroa.8.0300, !8252, !DIExpression(), !8490)
+    #dbg_value(i64 %.sroa.8.0300, !8435, !DIExpression(), !8491)
+    #dbg_value(i64 %.sroa.8.0300, !8431, !DIExpression(), !8492)
+    #dbg_value(i64 %.sroa.8.0300, !8427, !DIExpression(), !8493)
+    #dbg_value(i64 %.sroa.8.0300, !8494, !DIExpression(), !8497)
+  store i64 %.sroa.8.0300, ptr %i.f, align 8, !dbg !8489
+    #dbg_value(ptr %.sroa.0212.0299, !8254, !DIExpression(), !8490)
+  %exitcond = icmp eq i64 %.sroa.8.0300, 2147483647, !dbg !8499
   br i1 %exitcond, label %bb.e, label %bb.d, !dbg !8499
 
 ._crit_edge303:                                   ; preds = %.backedge, %bb.a
-    #dbg_value(ptr poison, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
     #dbg_value(i64 poison, !8245, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8475)
+    #dbg_value(ptr poison, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
   store i32 -1, ptr %0, align 8, !dbg !8500
   br label %bb.c, !dbg !8501
 
@@ -1843,12 +1846,12 @@ bb.c:                                             ; preds = %bb.au, %._crit_edge
   ret void, !dbg !8502
 
 bb.d:                                             ; preds = %bb.b
-  %i.ab = trunc nuw nsw i64 %.sroa.8.0299 to i32, !dbg !8503 ; 2 uses
+  %i.ab = trunc nuw nsw i64 %.sroa.8.0300 to i32, !dbg !8503 ; 2 uses
     #dbg_value(i32 %i.ab, !8255, !DIExpression(), !8504)
     #dbg_value(ptr undef, !8254, !DIExpression(DW_OP_deref), !8490)
     #dbg_value(ptr poison, !4330, !DIExpression(), !8505)
-  %.val.i = load ptr, ptr %.sroa.0212.0300, align 8, !dbg !8507, !nonnull !65, !noundef !65 ; 3 uses
-  %i.ac = getelementptr i8, ptr %.sroa.0212.0300, i64 8, !dbg !8507
+  %.val.i = load ptr, ptr %.sroa.0212.0299, align 8, !dbg !8507, !nonnull !65, !noundef !65 ; 3 uses
+  %i.ac = getelementptr i8, ptr %.sroa.0212.0299, i64 8, !dbg !8507
   %.val1.i = load i64, ptr %i.ac, align 8, !dbg !8507, !noundef !65 ; 8 uses
     #dbg_value(ptr %.val.i, !8261, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8508)
     #dbg_value(ptr %.val.i, !8509, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8512)
@@ -1909,7 +1912,7 @@ bb.f:                                             ; preds = %bb.d
   %i.ah = icmp ult i64 %i.ag, 2305843009213693952, !dbg !8582
   tail call void @llvm.assume(i1 %i.ah), !dbg !8583
     #dbg_value(ptr %i.e, !8272, !DIExpression(), !8574)
-  %i.ai = icmp eq i64 %.sroa.8.0299, %i.ag, !dbg !8584
+  %i.ai = icmp eq i64 %.sroa.8.0300, %i.ag, !dbg !8584
   br i1 %i.ai, label %bb.i, label %bb.h, !dbg !8584, !prof !2202
 
 bb.g:                                             ; preds = %bb.d
@@ -1955,7 +1958,7 @@ bb.i:                                             ; preds = %bb.f
     #dbg_value(i64 %i.ag, !6734, !DIExpression(), !8604)
     #dbg_value(ptr %i.m, !6731, !DIExpression(), !8606)
   %i.ak = load i64, ptr %i.m, align 16, !dbg !8607, !range !1927, !alias.scope !8608, !noundef !65
-  %i.al = icmp eq i64 %.sroa.8.0299, %i.ak, !dbg !8611
+  %i.al = icmp eq i64 %.sroa.8.0300, %i.ak, !dbg !8611
   br i1 %i.al, label %bb.j, label %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsl4b0cIVMtRE_12aho_corasick4util10primitives10SmallIndexE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit, !dbg !8611
 
 bb.j:                                             ; preds = %bb.i
@@ -1965,7 +1968,7 @@ bb.j:                                             ; preds = %bb.i
 _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCsl4b0cIVMtRE_12aho_corasick4util10primitives10SmallIndexE8push_mutCs9GYDdpCSJ4S_14regex_automata.exit: ; preds = %bb.i, %bb.j
   %i.am = load ptr, ptr %i.n, align 8, !dbg !8614, !alias.scope !8608, !nonnull !65, !noundef !65
     #dbg_value(ptr %i.am, !6739, !DIExpression(), !8604)
-  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %.sroa.8.0299, !dbg !8618
+  %i.an = getelementptr inbounds nuw [4 x i8], ptr %i.am, i64 %.sroa.8.0300, !dbg !8618
     #dbg_value(ptr %i.an, !6710, !DIExpression(), !8619)
     #dbg_value(ptr %i.an, !6773, !DIExpression(), !8620)
     #dbg_value(i32 %i.aj, !6778, !DIExpression(), !8620)
@@ -2046,8 +2049,8 @@ bb.n:                                             ; preds = %._crit_edge
 
 .backedge:                                        ; preds = %bb.q, %bb.p, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !8664
-    #dbg_value(ptr %i.z, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
     #dbg_value(i64 %i.aa, !8245, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !8475)
+    #dbg_value(ptr %i.z, !8245, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !8475)
     #dbg_value(ptr undef, !8366, !DIExpression(), !8376)
     #dbg_value(ptr undef, !4134, !DIExpression(), !8342)
     #dbg_value(i64 1, !4159, !DIExpression(), !8476)
@@ -2278,9 +2281,9 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.z
   %.sroa.55.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cw, i64 5, !dbg !8859
+    #dbg_value(i32 poison, !7200, !DIExpression(DW_OP_LLVM_fragment, 40, 32), !8860)
     #dbg_value(i32 poison, !7199, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8836)
     #dbg_value(i32 poison, !7215, !DIExpression(), !8837)
-    #dbg_value(i32 poison, !7200, !DIExpression(DW_OP_LLVM_fragment, 40, 32), !8860)
   %.sroa.2.0.i = load i32, ptr %.sroa.55.0..sroa_idx.i, align 1, !dbg !8838, !noalias !8819 ; 2 uses
     #dbg_value(i32 %.sroa.2.0.i, !7215, !DIExpression(), !8837)
     #dbg_value(i32 %.sroa.2.0.i, !7199, !DIExpression(DW_OP_LLVM_fragment, 64, 32), !8836)
