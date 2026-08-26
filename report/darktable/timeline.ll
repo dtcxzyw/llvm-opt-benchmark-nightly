@@ -202,23 +202,19 @@ bb.cv:                                            ; preds = %.critedge.i
 
 .preheader129.i.i:                                ; preds = %.lr.ph238.i.i, %bb.cv
   %.promoted244.i.i = phi i32 [ %i.ji, %.lr.ph238.i.i ], [ %.promoted244.i.i.pre, %bb.cv ] ; 2 uses
-  %storemerge.lcssa235.i.i = phi i32 [ %i.jk, %.lr.ph238.i.i ], [ %i.jc, %bb.cv ] ; 6 uses
+  %storemerge.lcssa235.i.i = phi i32 [ %i.jk, %.lr.ph238.i.i ], [ %i.jc, %bb.cv ] ; 5 uses
   store i32 %storemerge.lcssa235.i.i, ptr %i.cw, align 4, !tbaa !81
   %i.jl = icmp slt i32 %storemerge.lcssa235.i.i, 1
   br i1 %i.jl, label %.lr.ph243.i.i, label %thread-pre-split127.i.i
 
 .lr.ph243.i.i:                                    ; preds = %.preheader129.i.i
   %smax296.i.i = call i32 @llvm.smax.i32(i32 %storemerge.lcssa235.i.i, i32 -11)
-  %12 = icmp slt i32 %storemerge.lcssa235.i.i, -11 ; 2 uses
-  %umin297.i.neg124.i = sext i1 %12 to i32
-  %umin297.i.i = zext i1 %12 to i32
   %.neg108.i = sub i32 %smax296.i.i, %storemerge.lcssa235.i.i
-  %i.jm = add i32 %.neg108.i, %umin297.i.neg124.i
-  %i.jn = udiv i32 %i.jm, 12
-  %13 = add nuw nsw i32 %i.jn, %umin297.i.i       ; 2 uses
-  %i.jo = xor i32 %13, -1
+  %i.jm = add i32 %.neg108.i, 11
+  %i.jn = udiv i32 %i.jm, 12                      ; 2 uses
+  %i.jo = xor i32 %i.jn, -1
   %i.jp = add i32 %.promoted244.i.i, %i.jo        ; 2 uses
-  %i.jq = mul i32 %13, 12
+  %i.jq = mul nuw i32 %i.jn, 12
   %i.jr = add nsw i32 %storemerge.lcssa235.i.i, 12
   %i.js = add i32 %i.jr, %i.jq
   store i32 %i.jp, ptr %5, align 8, !tbaa !80
@@ -329,24 +325,20 @@ _time_days_in_month.exit111.i.i:                  ; preds = %bb.db, %bb.da, %bb.
 
 .preheader136.i.i:                                ; preds = %.lr.ph153.preheader.i.i, %_time_days_in_month.exit111.i.i
   %.lcssa158165.i.i = phi i32 [ %i.kp, %.lr.ph153.preheader.i.i ], [ %.promoted185.i.i, %_time_days_in_month.exit111.i.i ] ; 2 uses
-  %storemerge.i112.lcssa151.i.i = phi i32 [ %i.kr, %.lr.ph153.preheader.i.i ], [ %i.kj, %_time_days_in_month.exit111.i.i ] ; 7 uses
+  %storemerge.i112.lcssa151.i.i = phi i32 [ %i.kr, %.lr.ph153.preheader.i.i ], [ %i.kj, %_time_days_in_month.exit111.i.i ] ; 6 uses
   store i32 %storemerge.i112.lcssa151.i.i, ptr %i.cw, align 4, !tbaa !81
   %i.ks = icmp slt i32 %storemerge.i112.lcssa151.i.i, 1
   br i1 %i.ks, label %.lr.ph156.preheader.i.i, label %bb.dc
 
 .lr.ph156.preheader.i.i:                          ; preds = %.preheader136.i.i
   %smax.i.i = call i32 @llvm.smax.i32(i32 %storemerge.i112.lcssa151.i.i, i32 -11)
-  %14 = icmp slt i32 %storemerge.i112.lcssa151.i.i, -11 ; 2 uses
-  %umin.i.neg123.i = sext i1 %14 to i32
-  %umin.i.i = zext i1 %14 to i32
   %.neg107.i = sub i32 %smax.i.i, %storemerge.i112.lcssa151.i.i
-  %i.kt = add i32 %.neg107.i, %umin.i.neg123.i
-  %i.ku = udiv i32 %i.kt, 12
-  %15 = add nuw nsw i32 %i.ku, %umin.i.i          ; 2 uses
-  %i.kv = xor i32 %15, -1
+  %i.kt = add i32 %.neg107.i, 11
+  %i.ku = udiv i32 %i.kt, 12                      ; 2 uses
+  %i.kv = xor i32 %i.ku, -1
   %i.kw = add i32 %.lcssa158165.i.i, %i.kv        ; 2 uses
   %i.kx = add nsw i32 %storemerge.i112.lcssa151.i.i, 12
-  %i.ky = mul i32 %15, 12
+  %i.ky = mul nuw i32 %i.ku, 12
   %i.kz = add i32 %i.kx, %i.ky
   store i32 %i.kw, ptr %5, align 8, !tbaa !80
   br label %.sink.split330.i.i
@@ -400,23 +392,19 @@ thread-pre-split122.i.i:                          ; preds = %_time_days_in_month
 
 .preheader134.i.i:                                ; preds = %.lr.ph171.preheader.i.i, %.lr.ph182.i.i
   %.lcssa180189.i.i = phi i32 [ %i.ll, %.lr.ph171.preheader.i.i ], [ %.lcssa180186.i.i, %.lr.ph182.i.i ] ; 2 uses
-  %storemerge.i114.lcssa168.i.i = phi i32 [ %i.ln, %.lr.ph171.preheader.i.i ], [ %i.le, %.lr.ph182.i.i ] ; 6 uses
+  %storemerge.i114.lcssa168.i.i = phi i32 [ %i.ln, %.lr.ph171.preheader.i.i ], [ %i.le, %.lr.ph182.i.i ] ; 5 uses
   %i.lo = icmp slt i32 %storemerge.i114.lcssa168.i.i, 1
   br i1 %i.lo, label %.lr.ph176.preheader.i.i, label %bb.de
 
 .lr.ph176.preheader.i.i:                          ; preds = %.preheader134.i.i
   %smax287.i.i = call i32 @llvm.smax.i32(i32 %storemerge.i114.lcssa168.i.i, i32 -11)
-  %16 = icmp slt i32 %storemerge.i114.lcssa168.i.i, -11 ; 2 uses
-  %umin288.i.neg122.i = sext i1 %16 to i32
-  %umin288.i.i = zext i1 %16 to i32
   %.neg106.i = sub i32 %smax287.i.i, %storemerge.i114.lcssa168.i.i
-  %i.lp = add i32 %.neg106.i, %umin288.i.neg122.i
-  %i.lq = udiv i32 %i.lp, 12
-  %17 = add nuw nsw i32 %i.lq, %umin288.i.i       ; 2 uses
-  %i.lr = xor i32 %17, -1
+  %i.lp = add i32 %.neg106.i, 11
+  %i.lq = udiv i32 %i.lp, 12                      ; 2 uses
+  %i.lr = xor i32 %i.lq, -1
   %i.ls = add i32 %.lcssa180189.i.i, %i.lr        ; 2 uses
   %i.lt = add nsw i32 %storemerge.i114.lcssa168.i.i, 12
-  %i.lu = mul i32 %17, 12
+  %i.lu = mul nuw i32 %i.lq, 12
   %i.lv = add i32 %i.lt, %i.lu
   store i32 %i.ls, ptr %5, align 8, !tbaa !80
   br label %bb.de
@@ -819,7 +807,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph250, %bb.c
-  %storemerge85.lcssa247 = phi i32 [ %i.n, %.lr.ph250 ], [ %i.f, %bb.c ] ; 6 uses
+  %storemerge85.lcssa247 = phi i32 [ %i.n, %.lr.ph250 ], [ %i.f, %bb.c ] ; 5 uses
   store i32 %storemerge85.lcssa247, ptr %i.d, align 4, !tbaa !81
   %i.o = icmp slt i32 %storemerge85.lcssa247, 1
   br i1 %i.o, label %.lr.ph255, label %thread-pre-split127
@@ -827,15 +815,12 @@ bb.c:                                             ; preds = %bb.a
 .lr.ph255:                                        ; preds = %.preheader
   %.promoted256 = load i32, ptr %0, align 4, !tbaa !80
   %smax299 = tail call i32 @llvm.smax.i32(i32 %storemerge85.lcssa247, i32 -11)
-  %3 = icmp slt i32 %storemerge85.lcssa247, -11
-  %umin300 = zext i1 %3 to i32                    ; 2 uses
-  %i.p = add nsw i32 %storemerge85.lcssa247, %umin300
-  %i.q = sub i32 %smax299, %i.p
-  %i.r = udiv i32 %i.q, 12
-  %4 = add nuw nsw i32 %i.r, %umin300             ; 2 uses
-  %i.s = xor i32 %4, -1
+  %i.p = add nsw i32 %smax299, 11
+  %i.q = sub i32 %i.p, %storemerge85.lcssa247
+  %i.r = udiv i32 %i.q, 12                        ; 2 uses
+  %i.s = xor i32 %i.r, -1
   %i.t = add i32 %.promoted256, %i.s
-  %i.u = mul i32 %4, 12
+  %i.u = mul nuw i32 %i.r, 12
   %i.v = add i32 %storemerge85.lcssa247, %i.u
   %i.w = add i32 %i.v, 12
   store i32 %i.t, ptr %0, align 4, !tbaa !80
@@ -863,7 +848,7 @@ bb.d:                                             ; preds = %bb.a
   br label %.preheader129
 
 .preheader129:                                    ; preds = %.lr.ph238, %bb.d
-  %storemerge.lcssa235 = phi i32 [ %i.ah, %.lr.ph238 ], [ %i.z, %bb.d ] ; 6 uses
+  %storemerge.lcssa235 = phi i32 [ %i.ah, %.lr.ph238 ], [ %i.z, %bb.d ] ; 5 uses
   store i32 %storemerge.lcssa235, ptr %i.x, align 4, !tbaa !81
   %i.ai = icmp slt i32 %storemerge.lcssa235, 1
   br i1 %i.ai, label %.lr.ph243, label %thread-pre-split127
@@ -871,15 +856,12 @@ bb.d:                                             ; preds = %bb.a
 .lr.ph243:                                        ; preds = %.preheader129
   %.promoted244 = load i32, ptr %0, align 4, !tbaa !80
   %smax296 = tail call i32 @llvm.smax.i32(i32 %storemerge.lcssa235, i32 -11)
-  %5 = icmp slt i32 %storemerge.lcssa235, -11
-  %umin297 = zext i1 %5 to i32                    ; 2 uses
-  %i.aj = add nsw i32 %storemerge.lcssa235, %umin297
-  %i.ak = sub i32 %smax296, %i.aj
-  %i.al = udiv i32 %i.ak, 12
-  %6 = add nuw nsw i32 %i.al, %umin297            ; 2 uses
-  %i.am = xor i32 %6, -1
+  %i.aj = add nsw i32 %smax296, 11
+  %i.ak = sub i32 %i.aj, %storemerge.lcssa235
+  %i.al = udiv i32 %i.ak, 12                      ; 2 uses
+  %i.am = xor i32 %i.al, -1
   %i.an = add i32 %.promoted244, %i.am
-  %i.ao = mul i32 %6, 12
+  %i.ao = mul nuw i32 %i.al, 12
   %i.ap = add i32 %storemerge.lcssa235, %i.ao
   %i.aq = add i32 %i.ap, 12
   store i32 %i.an, ptr %0, align 4, !tbaa !80
@@ -985,23 +967,20 @@ _time_days_in_month.exit91:                       ; preds = %bb.h, %bb.h, %bb.h,
 
 .preheader133:                                    ; preds = %.lr.ph193.preheader, %_time_days_in_month.exit91
   %.lcssa201208 = phi i32 [ %i.bq, %.lr.ph193.preheader ], [ %.promoted229, %_time_days_in_month.exit91 ] ; 2 uses
-  %storemerge.i.lcssa191 = phi i32 [ %i.bs, %.lr.ph193.preheader ], [ %i.bk, %_time_days_in_month.exit91 ] ; 7 uses
+  %storemerge.i.lcssa191 = phi i32 [ %i.bs, %.lr.ph193.preheader ], [ %i.bk, %_time_days_in_month.exit91 ] ; 6 uses
   store i32 %storemerge.i.lcssa191, ptr %i.av, align 4, !tbaa !81
   %i.bt = icmp slt i32 %storemerge.i.lcssa191, 1
   br i1 %i.bt, label %.lr.ph198.preheader, label %bb.j
 
 .lr.ph198.preheader:                              ; preds = %.preheader133
   %smax290 = tail call i32 @llvm.smax.i32(i32 %storemerge.i.lcssa191, i32 -11)
-  %7 = icmp slt i32 %storemerge.i.lcssa191, -11
-  %umin291 = zext i1 %7 to i32                    ; 2 uses
-  %i.bu = add nsw i32 %storemerge.i.lcssa191, %umin291
-  %i.bv = sub i32 %smax290, %i.bu
-  %i.bw = udiv i32 %i.bv, 12
-  %8 = add nuw nsw i32 %i.bw, %umin291            ; 2 uses
-  %i.bx = xor i32 %8, -1
+  %i.bu = add nsw i32 %smax290, 11
+  %i.bv = sub i32 %i.bu, %storemerge.i.lcssa191
+  %i.bw = udiv i32 %i.bv, 12                      ; 2 uses
+  %i.bx = xor i32 %i.bw, -1
   %i.by = add i32 %.lcssa201208, %i.bx            ; 2 uses
   %i.bz = add nsw i32 %storemerge.i.lcssa191, 12
-  %i.ca = mul i32 %8, 12
+  %i.ca = mul nuw i32 %i.bw, 12
   %i.cb = add i32 %i.bz, %i.ca                    ; 2 uses
   store i32 %i.by, ptr %0, align 4, !tbaa !80
   br label %.sink.split
@@ -1056,22 +1035,19 @@ thread-pre-split:                                 ; preds = %_time_days_in_month
 
 .preheader131:                                    ; preds = %.lr.ph215.preheader, %.lr.ph226
   %.lcssa224233 = phi i32 [ %i.cn, %.lr.ph215.preheader ], [ %.lcssa224230, %.lr.ph226 ] ; 2 uses
-  %storemerge.i92.lcssa212 = phi i32 [ %i.cp, %.lr.ph215.preheader ], [ %i.cg, %.lr.ph226 ] ; 6 uses
+  %storemerge.i92.lcssa212 = phi i32 [ %i.cp, %.lr.ph215.preheader ], [ %i.cg, %.lr.ph226 ] ; 5 uses
   %i.cq = icmp slt i32 %storemerge.i92.lcssa212, 1
   br i1 %i.cq, label %.lr.ph220.preheader, label %bb.l
 
 .lr.ph220.preheader:                              ; preds = %.preheader131
   %smax293 = tail call i32 @llvm.smax.i32(i32 %storemerge.i92.lcssa212, i32 -11)
-  %9 = icmp slt i32 %storemerge.i92.lcssa212, -11
-  %umin294 = zext i1 %9 to i32                    ; 2 uses
-  %i.cr = add nsw i32 %storemerge.i92.lcssa212, %umin294
-  %i.cs = sub i32 %smax293, %i.cr
-  %i.ct = udiv i32 %i.cs, 12
-  %10 = add nuw nsw i32 %i.ct, %umin294           ; 2 uses
-  %i.cu = xor i32 %10, -1
+  %i.cr = add nsw i32 %smax293, 11
+  %i.cs = sub i32 %i.cr, %storemerge.i92.lcssa212
+  %i.ct = udiv i32 %i.cs, 12                      ; 2 uses
+  %i.cu = xor i32 %i.ct, -1
   %i.cv = add i32 %.lcssa224233, %i.cu            ; 2 uses
   %i.cw = add nsw i32 %storemerge.i92.lcssa212, 12
-  %i.cx = mul i32 %10, 12
+  %i.cx = mul nuw i32 %i.ct, 12
   %i.cy = add i32 %i.cw, %i.cx
   store i32 %i.cv, ptr %0, align 4, !tbaa !80
   br label %bb.l
@@ -1218,23 +1194,20 @@ _time_days_in_month.exit111:                      ; preds = %bb.s, %bb.s, %bb.s,
 
 .preheader136:                                    ; preds = %.lr.ph153.preheader, %_time_days_in_month.exit111
   %.lcssa158165 = phi i32 [ %i.ef, %.lr.ph153.preheader ], [ %.promoted185, %_time_days_in_month.exit111 ] ; 2 uses
-  %storemerge.i112.lcssa151 = phi i32 [ %i.eh, %.lr.ph153.preheader ], [ %i.dz, %_time_days_in_month.exit111 ] ; 7 uses
+  %storemerge.i112.lcssa151 = phi i32 [ %i.eh, %.lr.ph153.preheader ], [ %i.dz, %_time_days_in_month.exit111 ] ; 6 uses
   store i32 %storemerge.i112.lcssa151, ptr %i.dk, align 4, !tbaa !81
   %i.ei = icmp slt i32 %storemerge.i112.lcssa151, 1
   br i1 %i.ei, label %.lr.ph156.preheader, label %bb.u
 
 .lr.ph156.preheader:                              ; preds = %.preheader136
   %smax = tail call i32 @llvm.smax.i32(i32 %storemerge.i112.lcssa151, i32 -11)
-  %11 = icmp slt i32 %storemerge.i112.lcssa151, -11
-  %umin = zext i1 %11 to i32                      ; 2 uses
-  %i.ej = add nsw i32 %storemerge.i112.lcssa151, %umin
-  %i.ek = sub i32 %smax, %i.ej
-  %i.el = udiv i32 %i.ek, 12
-  %12 = add nuw nsw i32 %i.el, %umin              ; 2 uses
-  %i.em = xor i32 %12, -1
+  %i.ej = add nsw i32 %smax, 11
+  %i.ek = sub i32 %i.ej, %storemerge.i112.lcssa151
+  %i.el = udiv i32 %i.ek, 12                      ; 2 uses
+  %i.em = xor i32 %i.el, -1
   %i.en = add i32 %.lcssa158165, %i.em            ; 2 uses
   %i.eo = add nsw i32 %storemerge.i112.lcssa151, 12
-  %i.ep = mul i32 %12, 12
+  %i.ep = mul nuw i32 %i.el, 12
   %i.eq = add i32 %i.eo, %i.ep                    ; 2 uses
   store i32 %i.en, ptr %0, align 4, !tbaa !80
   br label %.sink.split330
@@ -1289,22 +1262,19 @@ thread-pre-split122:                              ; preds = %_time_days_in_month
 
 .preheader134:                                    ; preds = %.lr.ph171.preheader, %.lr.ph182
   %.lcssa180189 = phi i32 [ %i.fc, %.lr.ph171.preheader ], [ %.lcssa180186, %.lr.ph182 ] ; 2 uses
-  %storemerge.i114.lcssa168 = phi i32 [ %i.fe, %.lr.ph171.preheader ], [ %i.ev, %.lr.ph182 ] ; 6 uses
+  %storemerge.i114.lcssa168 = phi i32 [ %i.fe, %.lr.ph171.preheader ], [ %i.ev, %.lr.ph182 ] ; 5 uses
   %i.ff = icmp slt i32 %storemerge.i114.lcssa168, 1
   br i1 %i.ff, label %.lr.ph176.preheader, label %bb.w
 
 .lr.ph176.preheader:                              ; preds = %.preheader134
   %smax287 = tail call i32 @llvm.smax.i32(i32 %storemerge.i114.lcssa168, i32 -11)
-  %13 = icmp slt i32 %storemerge.i114.lcssa168, -11
-  %umin288 = zext i1 %13 to i32                   ; 2 uses
-  %i.fg = add nsw i32 %storemerge.i114.lcssa168, %umin288
-  %i.fh = sub i32 %smax287, %i.fg
-  %i.fi = udiv i32 %i.fh, 12
-  %14 = add nuw nsw i32 %i.fi, %umin288           ; 2 uses
-  %i.fj = xor i32 %14, -1
+  %i.fg = add nsw i32 %smax287, 11
+  %i.fh = sub i32 %i.fg, %storemerge.i114.lcssa168
+  %i.fi = udiv i32 %i.fh, 12                      ; 2 uses
+  %i.fj = xor i32 %i.fi, -1
   %i.fk = add i32 %.lcssa180189, %i.fj            ; 2 uses
   %i.fl = add nsw i32 %storemerge.i114.lcssa168, 12
-  %i.fm = mul i32 %14, 12
+  %i.fm = mul nuw i32 %i.fi, 12
   %i.fn = add i32 %i.fl, %i.fm
   store i32 %i.fk, ptr %0, align 4, !tbaa !80
   br label %bb.w

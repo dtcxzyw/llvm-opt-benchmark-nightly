@@ -205,77 +205,19 @@ bb.a:
   %i.c = and i32 %i.a, 3
   %i.d = icmp ne i32 %i.c, 0
   %i.e = zext i1 %i.d to i32
-  %i.f = add nsw i32 %i.b, %i.e                   ; 8 uses
+  %i.f = add nsw i32 %i.b, %i.e                   ; 4 uses
   %i.g = icmp sgt i32 %i.f, 63
-  %3 = getelementptr i8, ptr %0, i64 116          ; 5 uses
-  %4 = add nsw i32 %i.f, -63                      ; 2 uses
-  %5 = and i32 %4, 63
-  %.not = icmp eq i32 %5, 0
-  %6 = select i1 %.not, i32 0, i32 64
-  %7 = add nuw nsw i32 %6, %4
-  %8 = or i32 %7, 63                              ; 7 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 14 uses
-  %i.i = getelementptr i8, ptr %0, i64 120        ; 7 uses
-  br i1 %i.g, label %tailrecurse.us, label %.split
-
-tailrecurse.us:                                   ; preds = %bb.a, %26
-  %.val.us = load i32, ptr %3, align 4, !tbaa !20 ; 3 uses
-  %9 = icmp eq i32 %.val.us, 0
-  br i1 %9, label %.split127.us, label %10
-
-10:                                               ; preds = %tailrecurse.us
-  %11 = load i32, ptr %i.h, align 8, !tbaa !49    ; 5 uses
-  %12 = add nsw i32 %11, %8
-  %13 = icmp sgt i32 %12, 4096
-  br i1 %13, label %.split127.us, label %14
-
-14:                                               ; preds = %10
-  %.val86.us = load ptr, ptr %i.i, align 8, !tbaa !22
-  %15 = sext i32 %.val.us to i64
-  %16 = getelementptr [8 x i8], ptr %.val86.us, i64 %15
-  %17 = getelementptr i8, ptr %16, i64 -8
-  %18 = load ptr, ptr %17, align 8, !tbaa !31     ; 3 uses
-  %19 = and i32 %11, 63                           ; 2 uses
-  %20 = icmp eq i32 %19, 0                        ; 2 uses
-  %21 = sub nuw nsw i32 64, %19
-  %22 = icmp sgt i32 %8, %21
-  %or.cond.us = select i1 %20, i1 true, i1 %22
-  br i1 %or.cond.us, label %23, label %.loopexit
-
-23:                                               ; preds = %14
-  br i1 %20, label %26, label %24
-
-24:                                               ; preds = %23
-  %reass.sub.us = and i32 %11, -64
-  %25 = add i32 %reass.sub.us, 64                 ; 2 uses
-  store i32 %25, ptr %i.h, align 8, !tbaa !49
-  br label %26
-
-26:                                               ; preds = %23, %24
-  %27 = phi i32 [ %25, %24 ], [ %11, %23 ]        ; 2 uses
-  %28 = sext i32 %27 to i64
-  %29 = getelementptr inbounds [16 x i8], ptr %18, i64 %28 ; 2 uses
-  store ptr %0, ptr %29, align 8, !tbaa !65
-  %30 = shl i32 %.val.us, 12
-  %31 = add i32 %30, -4096
-  %32 = and i32 %27, 4032
-  %33 = or disjoint i32 %32, %31
-  %34 = getelementptr inbounds nuw i8, ptr %29, i64 8
-  store i32 %33, ptr %34, align 8, !tbaa !47
-  %35 = load i32, ptr %i.h, align 8, !tbaa !49
-  %36 = add nsw i32 %35, 1                        ; 3 uses
-  store i32 %36, ptr %i.h, align 8, !tbaa !49
-  %.pre144 = add nsw i32 %36, %8
-  %37 = icmp sgt i32 %.pre144, 4096
-  br i1 %37, label %tailrecurse.us, label %.loopexit
-
-.split:                                           ; preds = %bb.a
-  %invariant.op = sub nsw i32 4096, %i.f          ; 2 uses
-  %invariant.op132 = sub nsw i32 64, %i.f
+  %3 = or i32 %i.f, 63
+  %spec.select = select i1 %i.g, i32 %3, i32 %i.f ; 5 uses
+  %4 = getelementptr i8, ptr %0, i64 116          ; 4 uses
+  %invariant.op = sub nsw i32 4096, %spec.select  ; 2 uses
+  %invariant.op125 = sub nsw i32 64, %spec.select
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 10 uses
+  %i.i = getelementptr i8, ptr %0, i64 120        ; 6 uses
   br label %tailrecurse
 
-tailrecurse:                                      ; preds = %bb.x, %.split
-  %.val = load i32, ptr %3, align 4, !tbaa !20    ; 3 uses
+tailrecurse:                                      ; preds = %bb.x, %bb.a
+  %.val = load i32, ptr %4, align 4, !tbaa !20    ; 3 uses
   %i.j = icmp eq i32 %.val, 0
   br i1 %i.j, label %.split127.us, label %bb.b
 
@@ -284,11 +226,10 @@ bb.b:                                             ; preds = %tailrecurse
   %i.l = icmp sgt i32 %i.k, %invariant.op
   br i1 %i.l, label %.split127.us, label %bb.t
 
-.split127.us:                                     ; preds = %tailrecurse, %bb.b, %tailrecurse.us, %10
-  %.us-phi = phi i32 [ %8, %tailrecurse.us ], [ %8, %10 ], [ %i.f, %bb.b ], [ %i.f, %tailrecurse ] ; 3 uses
+.split127.us:                                     ; preds = %bb.b, %tailrecurse
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %i.n = icmp sgt i32 %.us-phi, 4032              ; 2 uses
-  %i.o = add nuw nsw i32 %.us-phi, 64             ; 2 uses
+  %i.n = icmp sgt i32 %spec.select, 4032          ; 2 uses
+  %i.o = add nuw nsw i32 %spec.select, 64         ; 2 uses
   %narrow177 = select i1 %i.n, i32 %i.o, i32 4160
   %.sink = zext i32 %narrow177 to i64
   %.sink176 = select i1 %i.n, i32 %i.o, i32 4160
@@ -388,7 +329,7 @@ Vec_PtrPush.exit:                                 ; preds = %.split127.us, %bb.g
   %.2.idx = zext nneg i32 %narrow to i64
   %.2 = getelementptr inbounds nuw [16 x i8], ptr %.1, i64 %.2.idx ; 2 uses
   store i32 0, ptr %i.h, align 8, !tbaa !49
-  %i.be = load i32, ptr %3, align 4, !tbaa !20    ; 7 uses
+  %i.be = load i32, ptr %4, align 4, !tbaa !20    ; 7 uses
   %i.bf = load i32, ptr %i.m, align 8, !tbaa !21
   %i.bg = icmp eq i32 %i.be, %i.bf
   br i1 %i.bg, label %bb.l, label %Vec_PtrPush.exit.Vec_PtrPush.exit94_crit_edge
@@ -441,7 +382,7 @@ Vec_PtrGrow.exit12.sink.split.i90:                ; preds = %bb.r, %bb.s, %bb.n,
   %spec.select.sink.i91 = phi i32 [ 16, %bb.o ], [ 16, %bb.n ], [ %spec.select.i87, %bb.r ], [ %spec.select.i87, %bb.s ]
   store ptr %i.br, ptr %i.i, align 8, !tbaa !22
   store i32 %spec.select.sink.i91, ptr %i.m, align 8, !tbaa !21
-  %.pre139 = load i32, ptr %3, align 4, !tbaa !20
+  %.pre139 = load i32, ptr %4, align 4, !tbaa !20
   %.pre140 = load i32, ptr %i.h, align 8, !tbaa !49
   br label %Vec_PtrPush.exit94
 
@@ -450,7 +391,7 @@ Vec_PtrPush.exit94:                               ; preds = %Vec_PtrPush.exit.Ve
   %i.bt = phi i32 [ %i.be, %Vec_PtrPush.exit.Vec_PtrPush.exit94_crit_edge ], [ %i.be, %bb.p ], [ %.pre139, %Vec_PtrGrow.exit12.sink.split.i90 ] ; 2 uses
   %i.bu = phi ptr [ %.pre137.a, %Vec_PtrPush.exit.Vec_PtrPush.exit94_crit_edge ], [ %.pre138, %bb.p ], [ %i.br, %Vec_PtrGrow.exit12.sink.split.i90 ]
   %i.bv = add nsw i32 %i.bt, 1                    ; 3 uses
-  store i32 %i.bv, ptr %3, align 4, !tbaa !20
+  store i32 %i.bv, ptr %4, align 4, !tbaa !20
   %i.bw = sext i32 %i.bt to i64
   %i.bx = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %i.bw
   store ptr %.2, ptr %i.bx, align 8, !tbaa !31
@@ -481,7 +422,7 @@ bb.t:                                             ; preds = %bb.b
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !31 ; 2 uses
   %i.cp = and i32 %i.k, 63                        ; 2 uses
   %i.cq = icmp eq i32 %i.cp, 0                    ; 2 uses
-  %i.cr = icmp sgt i32 %i.cp, %invariant.op132
+  %i.cr = icmp sgt i32 %i.cp, %invariant.op125
   %or.cond = select i1 %i.cq, i1 true, i1 %i.cr
   br i1 %or.cond, label %bb.u, label %bb.x
 
@@ -515,11 +456,10 @@ bb.x:                                             ; preds = %bb.t, %bb.w
   %i.de = icmp sgt i32 %i.dd, %invariant.op
   br i1 %i.de, label %tailrecurse, label %.loopexit
 
-.loopexit:                                        ; preds = %bb.x, %14, %26, %Vec_PtrPush.exit94
-  %38 = phi i32 [ %i.ck, %Vec_PtrPush.exit94 ], [ %36, %26 ], [ %11, %14 ], [ %i.dd, %bb.x ]
-  %.069124 = phi i32 [ %.us-phi, %Vec_PtrPush.exit94 ], [ %8, %14 ], [ %8, %26 ], [ %i.f, %bb.x ]
-  %.3 = phi ptr [ %.2, %Vec_PtrPush.exit94 ], [ %18, %14 ], [ %18, %26 ], [ %i.co, %bb.x ]
-  %i.df = sext i32 %38 to i64
+.loopexit:                                        ; preds = %bb.x, %Vec_PtrPush.exit94
+  %5 = phi i32 [ %i.ck, %Vec_PtrPush.exit94 ], [ %i.dd, %bb.x ]
+  %.3 = phi ptr [ %.2, %Vec_PtrPush.exit94 ], [ %i.co, %bb.x ]
+  %i.df = sext i32 %5 to i64
   %i.dg = getelementptr inbounds [16 x i8], ptr %.3, i64 %i.df ; 10 uses
   %i.dh = load i64, ptr %i.dg, align 4
   %i.di = and i32 %1, 536870911
@@ -728,7 +668,7 @@ bb.as:                                            ; preds = %.loopexit._crit_edg
   %.pre-phi150 = phi i64 [ %.pre149, %.loopexit._crit_edge ], [ %i.fk, %Vec_IntPush.exit107 ], [ %i.ea, %Vec_IntPush.exit ]
   %.pre-phi146 = phi i64 [ %.pre145, %.loopexit._crit_edge ], [ %i.fi, %Vec_IntPush.exit107 ], [ %i.dy, %Vec_IntPush.exit ]
   %i.gp = load i32, ptr %i.h, align 8, !tbaa !49
-  %i.gq = add nsw i32 %i.gp, %.069124
+  %i.gq = add nsw i32 %i.gp, %spec.select
   store i32 %i.gq, ptr %i.h, align 8, !tbaa !49
   %i.gr = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.gs = load i32, ptr %i.gr, align 8, !tbaa !50

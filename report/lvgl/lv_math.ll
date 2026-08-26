@@ -27,13 +27,12 @@ target triple = "x86_64-pc-linux-gnu"
 define range(i32 -65535, 65536) i32 @lv_trigo_sin(i16 noundef signext %0) local_unnamed_addr #0 {
 .preheader.preheader:
   %smax = tail call i16 @llvm.smax.i16(i16 %0, i16 0)
-  %.lobit = lshr i16 %0, 15                       ; 2 uses
-  %i.a = add i16 %0, %.lobit
-  %i.b = sub i16 %smax, %i.a
-  %1 = udiv i16 %i.b, 360
-  %2 = add nuw nsw i16 %.lobit, %1
-  %3 = mul i16 %2, 360
-  %i.c = add i16 %0, %3                           ; 2 uses
+  %i.a = add nuw i16 %smax, 359
+  %i.b = sub i16 %i.a, %0                         ; 2 uses
+  %1 = urem i16 %i.b, 360
+  %2 = sub nuw i16 %i.b, %1
+  %.fr = freeze i16 %2
+  %i.c = add i16 %0, %.fr                         ; 2 uses
   %i.d = tail call i16 @llvm.umax.i16(i16 %i.c, i16 359) ; 2 uses
   %i.e = urem i16 %i.d, 360
   %.neg = sub i16 %i.e, %i.d
@@ -436,17 +435,13 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define range(i32 -65535, 65536) i32 @lv_trigo_cos(i16 noundef signext %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = add i16 %0, 90                           ; 4 uses
+  %i.a = add i16 %0, 90                           ; 2 uses
   %smax.i = tail call i16 @llvm.smax.i16(i16 %i.a, i16 0)
-  %.lobit.i.neg2 = ashr i16 %i.a, 15
-  %.lobit.i = lshr i16 %i.a, 15
-  %reass.sub = sub i16 %.lobit.i.neg2, %0
-  %.neg1 = add i16 %reass.sub, -90
-  %i.b = add i16 %.neg1, %smax.i
-  %1 = udiv i16 %i.b, 360
-  %2 = add nuw nsw i16 %1, %.lobit.i
-  %3 = mul i16 %2, 360
-  %i.c = add i16 %3, %i.a                         ; 2 uses
+  %reass.sub = sub i16 %smax.i, %0
+  %i.b = add i16 %reass.sub, 269                  ; 2 uses
+  %1 = urem i16 %i.b, 360
+  %2 = sub nuw i16 %i.b, %1
+  %i.c = add i16 %2, %i.a                         ; 2 uses
   %i.d = tail call i16 @llvm.umax.i16(i16 %i.c, i16 359) ; 2 uses
   %i.e = urem i16 %i.d, 360
   %.neg.i = sub i16 %i.e, %i.d

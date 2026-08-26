@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %._crit_edge71.i
 
 bb.g:                                             ; preds = %bb.f
   %i.ap = tail call nsz float @llvm.pow.f32(float %i.al, float f0x3ED55555)
-  %i.aq = tail call nsz float @llvm.fmuladd.f32(float %i.ap, float 1.055000e+00, float -5.500000e-02)
+  %i.aq = tail call nnan nsz float @llvm.fmuladd.f32(float %i.ap, float 1.055000e+00, float -5.500000e-02)
   br label %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i
 
 bb.h:                                             ; preds = %bb.f
@@ -218,7 +218,7 @@ _ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i: ; preds = %bb.h, %bb.g
 
 bb.i:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i
   %i.at = tail call nsz float @llvm.pow.f32(float %i.am, float f0x3ED55555)
-  %i.au = tail call nsz float @llvm.fmuladd.f32(float %i.at, float 1.055000e+00, float -5.500000e-02)
+  %i.au = tail call nnan nsz float @llvm.fmuladd.f32(float %i.at, float 1.055000e+00, float -5.500000e-02)
   br label %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i
 
 bb.j:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i
@@ -232,7 +232,7 @@ _ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i: ; preds = %bb.j, %bb.i
 
 bb.k:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i
   %i.ax = tail call nsz float @llvm.pow.f32(float %i.an, float f0x3ED55555)
-  %i.ay = tail call nsz float @llvm.fmuladd.f32(float %i.ax, float 1.055000e+00, float -5.500000e-02)
+  %i.ay = tail call nnan nsz float @llvm.fmuladd.f32(float %i.ax, float 1.055000e+00, float -5.500000e-02)
   br label %_ZN12_GLOBAL__N_114linear_to_srgbEN4core8vector3dIfEE.exit.i
 
 bb.l:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i
@@ -352,7 +352,7 @@ bb.q:                                             ; preds = %._crit_edge67.i
 
 bb.r:                                             ; preds = %bb.q
   %i.dh = tail call nsz float @llvm.pow.f32(float %i.dd, float f0x3ED55555)
-  %i.di = tail call nsz float @llvm.fmuladd.f32(float %i.dh, float 1.055000e+00, float -5.500000e-02)
+  %i.di = tail call nnan nsz float @llvm.fmuladd.f32(float %i.dh, float 1.055000e+00, float -5.500000e-02)
   br label %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i11
 
 bb.s:                                             ; preds = %bb.q
@@ -366,7 +366,7 @@ _ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i11: ; preds = %bb.s, %bb.r
 
 bb.t:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i11
   %i.dl = tail call nsz float @llvm.pow.f32(float %i.de, float f0x3ED55555)
-  %i.dm = tail call nsz float @llvm.fmuladd.f32(float %i.dl, float 1.055000e+00, float -5.500000e-02)
+  %i.dm = tail call nnan nsz float @llvm.fmuladd.f32(float %i.dl, float 1.055000e+00, float -5.500000e-02)
   br label %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i13
 
 bb.u:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit.i.i11
@@ -380,7 +380,7 @@ _ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i13: ; preds = %bb.u, %bb.
 
 bb.v:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i13
   %i.dp = tail call nsz float @llvm.pow.f32(float %i.df, float f0x3ED55555)
-  %i.dq = tail call nsz float @llvm.fmuladd.f32(float %i.dp, float 1.055000e+00, float -5.500000e-02)
+  %i.dq = tail call nnan nsz float @llvm.fmuladd.f32(float %i.dp, float 1.055000e+00, float -5.500000e-02)
   br label %_ZN12_GLOBAL__N_114linear_to_srgbEN4core8vector3dIfEE.exit.i15
 
 bb.w:                                             ; preds = %_ZN12_GLOBAL__N_124linear_to_srgb_componentEf.exit3.i.i13

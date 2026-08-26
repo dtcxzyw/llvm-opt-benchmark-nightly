@@ -17,23 +17,22 @@ bb.a:
   %i.a = srem i64 %0, 86400                       ; 2 uses
   %i.b = sdiv i64 %0, 86400                       ; 2 uses
   %i.c = sext i32 %1 to i64                       ; 2 uses
-  %i.d = add nsw i64 %i.a, %i.c                   ; 5 uses
+  %i.d = add nsw i64 %i.a, %i.c                   ; 4 uses
   %i.e = icmp slt i64 %i.d, 0
   br i1 %i.e, label %.lr.ph.preheader, label %.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.f = tail call i64 @llvm.umax.i64(i64 %i.d, i64 -86400)
-  %3 = icmp samesign ult i64 %i.d, -86400
-  %umin = zext i1 %3 to i64                       ; 2 uses
-  %4 = add nsw i64 %i.d, %umin
-  %5 = sub nsw i64 %i.f, %4
-  %6 = udiv i64 %5, 86400
-  %7 = add nuw nsw i64 %6, %umin                  ; 2 uses
-  %i.g = mul i64 %7, 86400
-  %i.h = add i64 %i.a, %i.g
-  %i.i = add i64 %i.h, %i.c
-  %i.j = add i64 %i.i, 86400
-  %i.k = xor i64 %7, -1
+  %3 = add nsw i64 %i.f, 86399
+  %4 = sub nsw i64 %3, %i.d
+  %.lhs.trunc75 = trunc i64 %4 to i32
+  %5 = udiv i32 %.lhs.trunc75, 86400
+  %.zext = zext nneg i32 %5 to i64                ; 2 uses
+  %i.g = mul nuw nsw i64 %.zext, 86400
+  %i.h = add nsw i64 %i.a, %i.g
+  %i.i = add nsw i64 %i.h, %i.c
+  %i.j = add nsw i64 %i.i, 86400
+  %i.k = xor i64 %.zext, -1
   %i.l = add nsw i64 %i.b, %i.k
   br label %.preheader
 
@@ -44,10 +43,10 @@ bb.a:
   br i1 %i.m, label %.lr.ph69.preheader, label %._crit_edge
 
 .lr.ph69.preheader:                               ; preds = %.preheader
-  %i.n = add i64 %.0.lcssa, -86400
-  %i.o = add i64 %.0.lcssa, 86399
+  %i.n = add nsw i64 %.0.lcssa, -86400
+  %i.o = add nsw i64 %.0.lcssa, 86399
   %smin = tail call i64 @llvm.smin.i64(i64 %.0.lcssa, i64 172799)
-  %i.p = sub i64 %i.o, %smin
+  %i.p = sub nsw i64 %i.o, %smin
   %i.q = udiv i64 %i.p, 86400                     ; 2 uses
   %.neg = mul i64 %i.q, -86400
   %i.r = add i64 %.neg, %i.n

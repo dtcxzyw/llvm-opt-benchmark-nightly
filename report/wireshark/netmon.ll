@@ -202,23 +202,20 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
   %i.ap = getelementptr i8, ptr %i.b, i64 8
   %i.aq = load i32, ptr %i.ap, align 8
   %i.ar = zext i32 %i.aq to i64                   ; 2 uses
-  %i.as = add i64 %.0126, %i.ar                   ; 5 uses
+  %i.as = add i64 %.0126, %i.ar                   ; 4 uses
   %i.at = icmp slt i64 %i.as, 0
   br i1 %i.at, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.m
   %i.au = call i64 @llvm.umax.i64(i64 %i.as, i64 -1000000000)
-  %8 = icmp samesign ult i64 %i.as, -1000000000
-  %umin = zext i1 %8 to i64                       ; 2 uses
-  %i.av = add nsw i64 %i.as, %umin
-  %i.aw = sub nsw i64 %i.au, %i.av
-  %i.ax = udiv i64 %i.aw, 1000000000
-  %9 = add nuw nsw i64 %i.ax, %umin               ; 2 uses
-  %i.ay = mul i64 %9, 1000000000
+  %i.av = add nsw i64 %i.au, 999999999
+  %i.aw = sub i64 %i.av, %i.as
+  %i.ax = udiv i64 %i.aw, 1000000000              ; 2 uses
+  %i.ay = mul nuw i64 %i.ax, 1000000000
   %i.az = add i64 %.0126, %i.ay
   %i.ba = add i64 %i.az, %i.ar
   %i.bb = add i64 %i.ba, 1000000000
-  %i.bc = xor i64 %9, -1
+  %i.bc = xor i64 %i.ax, -1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.m
@@ -621,26 +618,25 @@ bb.s:                                             ; preds = %._crit_edge111, %bb
   %i.au = load i64, ptr %i.at, align 8            ; 2 uses
   %i.av = sub i64 %i.au, %i.aq
   %i.aw = getelementptr i8, ptr %1, i64 24
-  %i.ax = load i32, ptr %i.aw, align 8            ; 4 uses
+  %i.ax = load i32, ptr %i.aw, align 8            ; 3 uses
   %i.ay = sub i32 %i.ax, %i.ap                    ; 3 uses
   %i.az = icmp slt i32 %i.ay, 0
   br i1 %i.az, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.s
   %i.ba = tail call i32 @llvm.umax.i32(i32 %i.ay, i32 -1000000000)
-  %i.bb = add i32 %i.ap, %i.ba                    ; 2 uses
-  %8 = icmp ne i32 %i.bb, %i.ax
-  %umin = zext i1 %8 to i32                       ; 2 uses
-  %i.bc = add i32 %i.ax, %umin
-  %i.bd = sub i32 %i.bb, %i.bc
-  %9 = udiv i32 %i.bd, 1000000000
-  %10 = add nuw nsw i32 %9, %umin                 ; 2 uses
-  %11 = mul i32 %10, 1000000000
-  %i.be = add i32 %i.ax, %11
+  %i.bb = add i32 %i.ap, %i.ba
+  %i.bc = add i32 %i.bb, 999999999
+  %i.bd = sub i32 %i.bc, %i.ax
+  %.fr123 = freeze i32 %i.bd                      ; 3 uses
+  %8 = urem i32 %.fr123, 1000000000
+  %9 = sub nuw i32 %.fr123, %8
+  %i.be = add i32 %i.ax, %9
   %i.bf = add i32 %i.be, 1000000000
   %i.bg = sub i32 %i.bf, %i.ap
   %i.bh = xor i64 %i.aq, -1
   %i.bi = add i64 %i.au, %i.bh
+  %10 = udiv i32 %.fr123, 1000000000
   %i.bj = zext nneg i32 %10 to i64
   %i.bk = sub i64 %i.bi, %i.bj
   br label %._crit_edge

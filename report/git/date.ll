@@ -204,7 +204,7 @@ update_tm.exit213.i.i:                            ; preds = %bb.cv, %bb.cu, %bb.
   store i64 %i.th, ptr %i.b, align 8, !tbaa !30
   %i.ti = call ptr @localtime_r(ptr noundef nonnull %i.b, ptr noundef nonnull %2) #19 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
-  %i.tj = load i32, ptr %i.s, align 8, !tbaa !17  ; 4 uses
+  %i.tj = load i32, ptr %i.s, align 8, !tbaa !17  ; 3 uses
   %i.tk = load i32, ptr %i.f, align 4, !tbaa !22  ; 3 uses
   %i.tl = sub nsw i32 %i.tj, %i.tk                ; 3 uses
   store i32 0, ptr %i.f, align 4, !tbaa !22
@@ -214,19 +214,15 @@ update_tm.exit213.i.i:                            ; preds = %bb.cv, %bb.cu, %bb.
 .lr.ph.i.i:                                       ; preds = %update_tm.exit213.i.i
   %.promoted.i.i = load i32, ptr %i.r, align 4, !tbaa !12
   %i.tn = call i32 @llvm.umax.i32(i32 %i.tl, i32 -12)
-  %5 = add i32 %i.tn, %i.tk                       ; 2 uses
-  %6 = icmp ne i32 %5, %i.tj                      ; 2 uses
-  %umin.i.neg70.i = sext i1 %6 to i32
-  %umin.i.i = zext i1 %6 to i32
-  %.neg8.i = sub i32 %5, %i.tj
-  %i.to = add i32 %.neg8.i, %umin.i.neg70.i
-  %7 = udiv i32 %i.to, 12
-  %8 = add nuw nsw i32 %7, %umin.i.i              ; 2 uses
-  %i.tp = mul i32 %8, 12
+  %.neg8.i = sub i32 %i.tk, %i.tj
+  %i.to = add i32 %.neg8.i, 11
+  %5 = add i32 %i.to, %i.tn
+  %6 = udiv i32 %5, 12                            ; 2 uses
+  %i.tp = mul nuw i32 %6, 12
   %i.tq = add i32 %i.tj, 12
   %i.tr = sub i32 %i.tq, %i.tk
   %i.ts = add i32 %i.tr, %i.tp
-  %i.tt = xor i32 %8, -1
+  %i.tt = xor i32 %6, -1
   %i.tu = add i32 %.promoted.i.i, %i.tt
   store i32 %i.tu, ptr %i.r, align 4, !tbaa !12
   br label %bb.cw

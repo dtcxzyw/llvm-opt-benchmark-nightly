@@ -205,7 +205,7 @@ _ZN4ncnn3MatD2Ev.exit36:                          ; preds = %_ZN4ncnn3MatD2Ev.ex
   %i.x = mul i32 %i.w, %i.t                       ; 23 uses
   %i.y = load i32, ptr %6, align 4, !tbaa !67
   %i.z = sub nsw i32 %i.y, %i.v
-  %.sroa.speculated64 = call i32 @llvm.smin.i32(i32 %i.u, i32 %i.z) ; 21 uses
+  %.sroa.speculated64 = call i32 @llvm.smin.i32(i32 %i.u, i32 %i.z) ; 17 uses
   %i.aa = load i32, ptr %7, align 4, !tbaa !67
   %i.ab = sub i32 %i.aa, %i.x
   %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.w, i32 %i.ab) ; 49 uses
@@ -263,14 +263,12 @@ bb.c:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
   ]
 
 .loopexit321.i.preheader.i:                       ; preds = %.lr.ph339.i.i
-  %16 = icmp samesign ugt i32 %.sroa.speculated64, 23
-  %umin84.i = zext i1 %16 to i64                  ; 2 uses
-  %i.bm = call i64 @llvm.usub.sat.i64(i64 %i.bl, i64 23)
-  %17 = sub nsw i64 %i.bm, %umin84.i
-  %18 = udiv i64 %17, 12
-  %19 = add nuw nsw i64 %18, %umin84.i
-  %20 = mul i64 %19, 12
-  %21 = add i64 %20, 12
+  %i.bm = call i64 @llvm.umax.i64(i64 %i.bl, i64 23) ; 2 uses
+  %16 = trunc nuw nsw i64 %i.bm to i32
+  %.lhs.trunc.i = add nsw i32 %16, -12
+  %17 = urem i32 %.lhs.trunc.i, 12
+  %.zext.i = zext nneg i32 %17 to i64
+  %18 = sub nuw nsw i64 %i.bm, %.zext.i
   br label %.preheader320.loopexit.i.i
 
 .lr.ph339.i.split.us.i:                           ; preds = %.lr.ph339.i.i
@@ -278,14 +276,12 @@ bb.c:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %i.bn, label %_ZN4ncnn3MatD2Ev.exit509.i.us.us.preheader.i, label %_ZN4ncnn3MatD2Ev.exit509.i.us.preheader.i
 
 _ZN4ncnn3MatD2Ev.exit509.i.us.preheader.i:        ; preds = %.lr.ph339.i.split.us.i
-  %22 = icmp samesign ugt i32 %.sroa.speculated64, 23
-  %umin82.i = zext i1 %22 to i64                  ; 2 uses
-  %i.bo = call i64 @llvm.usub.sat.i64(i64 %i.bl, i64 23)
-  %23 = sub nsw i64 %i.bo, %umin82.i
-  %24 = udiv i64 %23, 12
-  %25 = add nuw nsw i64 %24, %umin82.i
-  %26 = mul i64 %25, 12
-  %27 = add i64 %26, 12
+  %i.bo = call i64 @llvm.umax.i64(i64 %i.bl, i64 23) ; 2 uses
+  %19 = trunc nuw nsw i64 %i.bo to i32
+  %.lhs.trunc90.i = add nsw i32 %19, -12
+  %20 = urem i32 %.lhs.trunc90.i, 12
+  %.zext91.i = zext nneg i32 %20 to i64
+  %21 = sub nuw nsw i64 %i.bo, %.zext91.i
   br label %.preheader320.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit509.i.us.us.preheader.i:     ; preds = %.lr.ph339.i.split.us.i
@@ -411,14 +407,12 @@ _ZN4ncnn3MatD2Ev.exit509.i.us.us.i:               ; preds = %.loopexit321.i.loop
   br i1 %i.ev, label %_ZN4ncnn3MatD2Ev.exit508.i.us.us.preheader.i, label %_ZN4ncnn3MatD2Ev.exit508.i.us.preheader.i
 
 _ZN4ncnn3MatD2Ev.exit508.i.us.preheader.i:        ; preds = %.lr.ph339.i.split.us26.i
-  %28 = icmp samesign ugt i32 %.sroa.speculated64, 23
-  %umin80.i = zext i1 %28 to i64                  ; 2 uses
-  %i.ew = call i64 @llvm.usub.sat.i64(i64 %i.bl, i64 23)
-  %29 = sub nsw i64 %i.ew, %umin80.i
-  %30 = udiv i64 %29, 12
-  %31 = add nuw nsw i64 %30, %umin80.i
-  %32 = mul i64 %31, 12
-  %33 = add i64 %32, 12
+  %i.ew = call i64 @llvm.umax.i64(i64 %i.bl, i64 23) ; 2 uses
+  %22 = trunc nuw nsw i64 %i.ew to i32
+  %.lhs.trunc92.i = add nsw i32 %22, -12
+  %23 = urem i32 %.lhs.trunc92.i, 12
+  %.zext93.i = zext nneg i32 %23 to i64
+  %24 = sub nuw nsw i64 %i.ew, %.zext93.i
   br label %.preheader320.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit508.i.us.us.preheader.i:     ; preds = %.lr.ph339.i.split.us26.i
@@ -532,14 +526,12 @@ _ZN4ncnn3MatD2Ev.exit508.i.us.us.i:               ; preds = %.loopexit321.i.loop
   br i1 %i.hr, label %_ZN4ncnn3MatD2Ev.exit507.i.us.us.preheader.i, label %_ZN4ncnn3MatD2Ev.exit507.i.us.preheader.i
 
 _ZN4ncnn3MatD2Ev.exit507.i.us.preheader.i:        ; preds = %.lr.ph339.i.split.us36.i
-  %34 = icmp samesign ugt i32 %.sroa.speculated64, 23
-  %umin.i = zext i1 %34 to i64                    ; 2 uses
-  %i.hs = call i64 @llvm.usub.sat.i64(i64 %i.bl, i64 23)
-  %35 = sub nsw i64 %i.hs, %umin.i
-  %36 = udiv i64 %35, 12
-  %37 = add nuw nsw i64 %36, %umin.i
-  %38 = mul i64 %37, 12
-  %39 = add i64 %38, 12
+  %i.hs = call i64 @llvm.umax.i64(i64 %i.bl, i64 23) ; 2 uses
+  %25 = trunc nuw nsw i64 %i.hs to i32
+  %.lhs.trunc94.i = add nsw i32 %25, -12
+  %26 = urem i32 %.lhs.trunc94.i, 12
+  %.zext95.i = zext nneg i32 %26 to i64
+  %27 = sub nuw nsw i64 %i.hs, %.zext95.i
   br label %.preheader320.loopexit.i.i
 
 _ZN4ncnn3MatD2Ev.exit507.i.us.us.preheader.i:     ; preds = %.lr.ph339.i.split.us36.i
@@ -629,7 +621,7 @@ _ZN4ncnn3MatD2Ev.exit507.i.us.us.i:               ; preds = %.loopexit321.i.loop
 
 .preheader320.loopexit.i.i:                       ; preds = %.loopexit321.i.loopexit10.us.us.i, %.loopexit321.i.loopexit9.us.us.i, %.loopexit321.i.loopexit.us.us.i, %_ZN4ncnn3MatD2Ev.exit507.i.us.preheader.i, %_ZN4ncnn3MatD2Ev.exit508.i.us.preheader.i, %_ZN4ncnn3MatD2Ev.exit509.i.us.preheader.i, %.loopexit321.i.preheader.i
   %.us-phi.i = phi ptr [ %i.ao, %_ZN4ncnn3MatD2Ev.exit507.i.us.preheader.i ], [ %i.ao, %.loopexit321.i.preheader.i ], [ %i.ep, %.loopexit321.i.loopexit.us.us.i ], [ %i.ao, %_ZN4ncnn3MatD2Ev.exit509.i.us.preheader.i ], [ %i.hl, %.loopexit321.i.loopexit9.us.us.i ], [ %i.ao, %_ZN4ncnn3MatD2Ev.exit508.i.us.preheader.i ], [ %.lcssa188, %.loopexit321.i.loopexit10.us.us.i ]
-  %.us-phi25.i = phi i64 [ %39, %_ZN4ncnn3MatD2Ev.exit507.i.us.preheader.i ], [ %21, %.loopexit321.i.preheader.i ], [ %indvars.iv.next.i.us.us.i, %.loopexit321.i.loopexit.us.us.i ], [ %27, %_ZN4ncnn3MatD2Ev.exit509.i.us.preheader.i ], [ %indvars.iv.next.i.us31.us.i, %.loopexit321.i.loopexit9.us.us.i ], [ %33, %_ZN4ncnn3MatD2Ev.exit508.i.us.preheader.i ], [ %indvars.iv.next.i.us41.us.i, %.loopexit321.i.loopexit10.us.us.i ]
+  %.us-phi25.i = phi i64 [ %27, %_ZN4ncnn3MatD2Ev.exit507.i.us.preheader.i ], [ %18, %.loopexit321.i.preheader.i ], [ %indvars.iv.next.i.us.us.i, %.loopexit321.i.loopexit.us.us.i ], [ %21, %_ZN4ncnn3MatD2Ev.exit509.i.us.preheader.i ], [ %indvars.iv.next.i.us31.us.i, %.loopexit321.i.loopexit9.us.us.i ], [ %24, %_ZN4ncnn3MatD2Ev.exit508.i.us.preheader.i ], [ %indvars.iv.next.i.us41.us.i, %.loopexit321.i.loopexit10.us.us.i ]
   %i.jh = trunc nuw nsw i64 %.us-phi25.i to i32
   br label %.preheader320.i.i
 
@@ -1031,9 +1023,6 @@ declare i32 @llvm.umax.i32(i32, i32) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.minnum.f32(float, float) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #31

@@ -205,6 +205,11 @@ _ZN7lodepngL18decodeICC15Fixed16EPKhmPm.exit:     ; preds = %bb.a
 
 .lr.ph401:                                        ; preds = %.preheader
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %umax = tail call i64 @llvm.umax.i64(i64 %2, i64 144)
+  %3 = trunc nuw i64 %umax to i32
+  %.lhs.trunc = add i32 %3, -133
+  %4 = udiv i32 %.lhs.trunc, 12
+  %.zext = zext nneg i32 %4 to i64
   %i.dl = or disjoint i64 %i.cv, %i.cz
   %i.dm = or disjoint i64 %i.dl, %i.dd
   %i.dn = or disjoint i64 %i.dm, %i.dg
@@ -224,7 +229,7 @@ bb.b:                                             ; preds = %.critedge
   br i1 %exitcond.not.a, label %.critedge243, label %bb.c, !llvm.loop !91
 
 bb.c:                                             ; preds = %.lr.ph401, %bb.b
-  %.0212400 = phi i64 [ 0, %.lr.ph401 ], [ %i.dw, %bb.b ]
+  %.0212400 = phi i64 [ 0, %.lr.ph401 ], [ %i.dw, %bb.b ] ; 2 uses
   %.0363399 = phi i64 [ 132, %.lr.ph401 ], [ %i.ee, %bb.b ] ; 10 uses
   %i.dx = add nuw nsw i64 %.0363399, 8            ; 2 uses
   %i.dy = icmp samesign ugt i64 %i.dx, %2
@@ -240,7 +245,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN7lodepngL15decodeICCUint32EPKhmPm.exit257:     ; preds = %bb.c, %bb.d
   %.0.i256 = phi i64 [ %i.ed, %bb.d ], [ 0, %bb.c ] ; 34 uses
-  %i.ee = add nuw nsw i64 %.0363399, 12           ; 3 uses
+  %i.ee = add nuw nsw i64 %.0363399, 12           ; 2 uses
   %i.ef = icmp samesign ugt i64 %i.ee, %2
   br i1 %i.ef, label %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit259, label %bb.e
 
@@ -252,8 +257,8 @@ bb.e:                                             ; preds = %_ZN7lodepngL15decod
 
 _ZN7lodepngL15decodeICCUint32EPKhmPm.exit259:     ; preds = %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit257, %bb.e
   %.0.i258 = phi i32 [ %i.ei, %bb.e ], [ 0, %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit257 ] ; 2 uses
-  %.not226 = icmp samesign ult i64 %i.ee, %2
-  br i1 %.not226, label %bb.f, label %.critedge243
+  %exitcond.not = icmp eq i64 %.0212400, %.zext
+  br i1 %exitcond.not, label %.critedge243, label %bb.f
 
 bb.f:                                             ; preds = %_ZN7lodepngL15decodeICCUint32EPKhmPm.exit259
   %.not227 = icmp samesign uge i64 %.0.i256, %2

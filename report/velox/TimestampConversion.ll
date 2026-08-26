@@ -204,16 +204,15 @@ _ZN8facebook5velox4util11isValidDateEiii.exit:    ; preds = %_ZN8facebook5velox4
 
 .lr.ph.preheader:                                 ; preds = %.preheader47
   %i.p = tail call i32 @llvm.smax.i32(i32 %1, i32 1570)
-  %8 = icmp slt i32 %1, 1570
-  %umin = zext i1 %8 to i32                       ; 2 uses
-  %9 = add nsw i32 %1, %umin
-  %i.q = sub nsw i32 %i.p, %9
-  %10 = udiv i32 %i.q, 400
-  %i.r = add nuw nsw i32 %10, %umin               ; 2 uses
-  %11 = mul i32 %i.r, 400
-  %i.s = add i32 %1, %11
-  %12 = add i32 %i.s, 400
-  %i.t = zext nneg i32 %i.r to i64
+  %8 = add nuw nsw i32 %i.p, 399
+  %9 = sub nsw i32 %8, %1                         ; 3 uses
+  %10 = urem i32 %9, 400
+  %i.q = sub nuw nsw i32 %9, %10
+  %.fr64 = freeze i32 %i.q
+  %i.r = add i32 %1, %.fr64
+  %i.s = add i32 %i.r, 400
+  %11 = udiv i32 %9, 400
+  %i.t = zext nneg i32 %11 to i64
   %.neg = mul nsw i64 %i.t, -146097
   %i.u = add nsw i64 %.neg, -146097
   br label %.preheader
@@ -288,7 +287,7 @@ _ZN8facebook5velox6StatusD2Ev.exit20:             ; preds = %bb.e, %_ZNKSt7__cxx
   br label %bb.i
 
 .preheader:                                       ; preds = %.lr.ph.preheader, %.preheader47
-  %.039.lcssa = phi i32 [ %1, %.preheader47 ], [ %12, %.lr.ph.preheader ] ; 4 uses
+  %.039.lcssa = phi i32 [ %1, %.preheader47 ], [ %i.s, %.lr.ph.preheader ] ; 4 uses
   %.0.lcssa = phi i64 [ 0, %.preheader47 ], [ %i.u, %.lr.ph.preheader ] ; 2 uses
   %i.ap = icmp samesign ugt i32 %.039.lcssa, 2369
   br i1 %i.ap, label %.lr.ph53.preheader, label %._crit_edge

@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.v, %bb.ah
 
 bb.y:                                             ; preds = %bb.x
   %i.se = load float, ptr %i.em, align 4, !tbaa !43
-  %i.sf = fmul reassoc nsz arcp contract afn float %i.sc, 1.000000e+02
+  %i.sf = fmul reassoc nnan nsz arcp contract afn float %i.sc, 1.000000e+02
   %i.sg = fmul reassoc nsz arcp contract afn float %i.sf, %i.rh
   %i.sh = call reassoc nsz arcp contract afn float @llvm.log2.f32(float %i.sg)
   %i.si = fsub reassoc nsz arcp contract afn float %i.sh, %i.se
@@ -216,8 +216,8 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.sm, label %bb.z, label %.thread1213
 
 bb.z:                                             ; preds = %bb.y
-  %i.sn = fmul reassoc nsz arcp contract afn float %i.sc, 1.900000e+01
-  %i.so = fadd reassoc nsz arcp contract afn float %i.sn, 1.000000e+00
+  %i.sn = fmul reassoc nnan nsz arcp contract afn float %i.sc, 1.900000e+01
+  %i.so = fadd reassoc nnan nsz arcp contract afn float %i.sn, 1.000000e+00
   %i.sp = call reassoc nsz arcp contract afn float @llvm.log.f32(float %i.so)
   %i.sq = fmul reassoc nsz arcp contract afn float %i.sp, f0x3EAAE8E8
   br label %.thread1213

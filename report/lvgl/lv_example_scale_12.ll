@@ -198,14 +198,11 @@ bb.a:
   tail call void @lv_scale_set_rotation(ptr noundef %i.a, i32 noundef %i.b) #4
   %i.c = load ptr, ptr @label, align 8, !tbaa !8
   %smax.i = tail call i32 @llvm.smax.i32(i32 %1, i32 0)
-  %.lobit.i.neg4 = ashr i32 %1, 31
-  %.lobit.i = lshr i32 %1, 31
-  %.neg3 = sub i32 %.lobit.i.neg4, %1
-  %i.d = add i32 %.neg3, %smax.i
-  %2 = udiv i32 %i.d, 360
-  %3 = add nuw nsw i32 %2, %.lobit.i
-  %4 = mul i32 %3, 360
-  %i.e = add i32 %4, %1                           ; 2 uses
+  %.neg3 = sub i32 %smax.i, %1
+  %i.d = add i32 %.neg3, 359                      ; 2 uses
+  %2 = urem i32 %i.d, 360
+  %3 = sub nuw i32 %i.d, %2
+  %i.e = add i32 %3, %1                           ; 2 uses
   %i.f = tail call i32 @llvm.umax.i32(i32 %i.e, i32 359) ; 2 uses
   %i.g = urem i32 %i.f, 360
   %.neg.i = sub i32 %i.g, %i.f

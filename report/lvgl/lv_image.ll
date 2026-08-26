@@ -202,16 +202,13 @@ bb.b:                                             ; preds = %bb.a
   %i.g = sub nuw nsw i32 %i.e, %i.f               ; 3 uses
   %i.h = sub i32 %1, %i.g
   %smax = tail call i32 @llvm.smax.i32(i32 %i.h, i32 0)
-  %i.i = add nuw i32 %smax, %i.g                  ; 2 uses
-  %4 = icmp ne i32 %i.i, %1
-  %umin = zext i1 %4 to i32                       ; 2 uses
-  %i.j = add i32 %1, %umin
-  %i.k = sub i32 %i.i, %i.j
-  %5 = udiv i32 %i.k, 3600
-  %6 = add nuw nsw i32 %5, %umin
-  %7 = mul i32 %6, 3600
-  %i.l = add i32 %1, %7
-  %i.m = sub i32 %i.l, %i.g
+  %i.i = add nuw i32 %smax, %i.g
+  %.fr = freeze i32 %i.i
+  %i.j = add i32 %.fr, 3599                       ; 2 uses
+  %i.k = sub i32 %i.j, %1
+  %4 = urem i32 %i.k, 3600
+  %i.l = add nuw i32 %4, %i.g
+  %i.m = sub i32 %i.j, %i.l
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader40.preheader, %bb.b

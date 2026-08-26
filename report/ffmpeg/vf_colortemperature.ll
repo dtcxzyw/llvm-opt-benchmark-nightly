@@ -51,13 +51,13 @@ bb.c:                                             ; preds = %bb.a
   %i.l = fadd nsz float %i.h, -6.000000e+01
   %i.m = tail call nsz float @llvm.maxnum.f32(float %i.l, float 0.000000e+00) ; 2 uses
   %i.n = tail call nsz float @llvm.pow.f32(float %i.m, float f0xBE0866D4)
-  %i.o = fmul nsz float %i.n, f0x3FA57EEF         ; 2 uses
+  %i.o = fmul nnan nsz float %i.n, f0x3FA57EEF    ; 2 uses
   %i.p = fcmp nsz ogt float %i.o, 0.000000e+00
   %i.q = select nsz i1 %i.p, float %i.o, float 0.000000e+00 ; 2 uses
   %i.r = fcmp nsz ogt float %i.q, 1.000000e+00
   %..i.i16.i = select nsz i1 %i.r, float 1.000000e+00, float %i.q
   %i.s = tail call nsz float @llvm.pow.f32(float %i.m, float f0xBD9AA787)
-  %i.t = fmul nsz float %i.s, f0x3F90A044
+  %i.t = fmul nnan nsz float %i.s, f0x3F90A044
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

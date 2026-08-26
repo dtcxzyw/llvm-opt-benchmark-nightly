@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.r, align 8, !tbaa !3
   store i32 4, ptr %i.s, align 8, !tbaa !3
   %i.bv = sub i32 %i.bm, %i.bg                    ; 3 uses
-  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 3 uses
-  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 4 uses
+  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 4 uses
+  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 3 uses
   %i.bx = add i32 %i.bw, %i.bg                    ; 3 uses
   %i.by = add nsw i32 %i.bx, %i.bi
   %i.bz = srem i32 %i.by, 6                       ; 3 uses
@@ -216,6 +216,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cd = sub i32 2, %.01752.i.i.i
   %i.ce = sext i32 %spec.store.select.i.i.i.i to i64
   %i.cf = sub i32 -2, %i.bw
+  %7 = add i32 %i.bw, 7
   %smax130.i.i.i.i = call i32 @llvm.smax.i32(i32 %spec.store.select.i.i.i.i, i32 1)
   %wide.trip.count.i.i.i.i = zext nneg i32 %smax130.i.i.i.i to i64
   br label %.preheader90.i.i.i.i
@@ -602,17 +603,14 @@ _ZNSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIffLi6ELi5EXadsoA
 
 bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i.i.i.i
   %indvars.iv127.i.i.i.i = phi i64 [ 0, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next128.i.i.i.i, %bb.an ] ; 3 uses
-  %indvars.iv124.i.i.i.i = phi i32 [ %spec.store.select.i.i.i.i, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
+  %indvars.iv124.i.i.i.i = phi i32 [ %7, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
   %indvars.iv121.i.i.i.i = phi i32 [ %i.cf, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next122.i.i.i.i, %bb.an ] ; 3 uses
   %smax123.i.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv121.i.i.i.i, i32 0)
-  %i.hh = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i ; 2 uses
-  %7 = icmp ne i32 %i.hh, 0
-  %umin126.i.i.i.i = zext i1 %7 to i32            ; 2 uses
-  %i.hi = sub i32 %i.hh, %umin126.i.i.i.i
-  %8 = udiv i32 %i.hi, 6
-  %9 = add nuw nsw i32 %8, %umin126.i.i.i.i
-  %10 = mul i32 %9, 6
-  %i.hj = add i32 %10, %indvars.iv121.i.i.i.i     ; 3 uses
+  %i.hh = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
+  %.fr.i.i.i.i = freeze i32 %i.hh                 ; 2 uses
+  %8 = urem i32 %.fr.i.i.i.i, 6
+  %i.hi = sub nuw i32 %.fr.i.i.i.i, %8
+  %i.hj = add i32 %i.hi, %indvars.iv121.i.i.i.i   ; 3 uses
   %i.hk = add nsw i32 %i.hj, %spec.store.select.i.i.i.i ; 2 uses
   %i.hl = icmp slt i32 %i.hk, 5
   br i1 %i.hl, label %bb.ak, label %bb.al
@@ -1015,8 +1013,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.r, align 8, !tbaa !3
   store i32 4, ptr %i.s, align 8, !tbaa !3
   %i.bv = sub i32 %i.bm, %i.bg                    ; 3 uses
-  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 3 uses
-  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 4 uses
+  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 4 uses
+  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 3 uses
   %i.bx = add i32 %i.bw, %i.bg                    ; 3 uses
   %i.by = add nsw i32 %i.bx, %i.bi
   %i.bz = srem i32 %i.by, 6                       ; 3 uses
@@ -1026,6 +1024,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cd = sub i32 2, %.01752.i.i.i
   %i.ce = sext i32 %spec.store.select.i.i.i.i to i64
   %i.cf = sub i32 -2, %i.bw
+  %7 = add i32 %i.bw, 7
   %smax130.i.i.i.i = call i32 @llvm.smax.i32(i32 %spec.store.select.i.i.i.i, i32 1)
   %wide.trip.count.i.i.i.i = zext nneg i32 %smax130.i.i.i.i to i64
   br label %.preheader90.i.i.i.i
@@ -1414,17 +1413,14 @@ _ZNSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfhLi6ELi5EXadsoA
 
 bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i.i.i.i
   %indvars.iv127.i.i.i.i = phi i64 [ 0, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next128.i.i.i.i, %bb.an ] ; 3 uses
-  %indvars.iv124.i.i.i.i = phi i32 [ %spec.store.select.i.i.i.i, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
+  %indvars.iv124.i.i.i.i = phi i32 [ %7, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
   %indvars.iv121.i.i.i.i = phi i32 [ %i.cf, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next122.i.i.i.i, %bb.an ] ; 3 uses
   %smax123.i.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv121.i.i.i.i, i32 0)
-  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i ; 2 uses
-  %7 = icmp ne i32 %i.hj, 0
-  %umin126.i.i.i.i = zext i1 %7 to i32            ; 2 uses
-  %i.hk = sub i32 %i.hj, %umin126.i.i.i.i
-  %8 = udiv i32 %i.hk, 6
-  %9 = add nuw nsw i32 %8, %umin126.i.i.i.i
-  %10 = mul i32 %9, 6
-  %i.hl = add i32 %10, %indvars.iv121.i.i.i.i     ; 3 uses
+  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
+  %.fr.i.i.i.i = freeze i32 %i.hj                 ; 2 uses
+  %8 = urem i32 %.fr.i.i.i.i, 6
+  %i.hk = sub nuw i32 %.fr.i.i.i.i, %8
+  %i.hl = add i32 %i.hk, %indvars.iv121.i.i.i.i   ; 3 uses
   %i.hm = add nsw i32 %i.hl, %spec.store.select.i.i.i.i ; 2 uses
   %i.hn = icmp slt i32 %i.hm, 5
   br i1 %i.hn, label %bb.ak, label %bb.al
@@ -1827,8 +1823,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.r, align 8, !tbaa !3
   store i32 4, ptr %i.s, align 8, !tbaa !3
   %i.bv = sub i32 %i.bm, %i.bg                    ; 3 uses
-  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 3 uses
-  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 4 uses
+  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 4 uses
+  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 3 uses
   %i.bx = add i32 %i.bw, %i.bg                    ; 3 uses
   %i.by = add nsw i32 %i.bx, %i.bi
   %i.bz = srem i32 %i.by, 6                       ; 3 uses
@@ -1838,6 +1834,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cd = sub i32 2, %.01753.i.i.i
   %i.ce = sext i32 %spec.store.select.i.i.i.i to i64
   %i.cf = sub i32 -2, %i.bw
+  %7 = add i32 %i.bw, 7
   %smax130.i.i.i.i = call i32 @llvm.smax.i32(i32 %spec.store.select.i.i.i.i, i32 1)
   %wide.trip.count.i.i.i.i = zext nneg i32 %smax130.i.i.i.i to i64
   br label %.preheader90.i.i.i.i
@@ -2240,17 +2237,14 @@ _ZNSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIfN9Imath_3_14hal
 
 bb.ao:                                            ; preds = %bb.as, %.lr.ph104.i.i.i.i
   %indvars.iv127.i.i.i.i = phi i64 [ 0, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next128.i.i.i.i, %bb.as ] ; 3 uses
-  %indvars.iv124.i.i.i.i = phi i32 [ %spec.store.select.i.i.i.i, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.as ] ; 2 uses
+  %indvars.iv124.i.i.i.i = phi i32 [ %7, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.as ] ; 2 uses
   %indvars.iv121.i.i.i.i = phi i32 [ %i.cf, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next122.i.i.i.i, %bb.as ] ; 3 uses
   %smax123.i.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv121.i.i.i.i, i32 0)
-  %i.hy = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i ; 2 uses
-  %7 = icmp ne i32 %i.hy, 0
-  %umin126.i.i.i.i = zext i1 %7 to i32            ; 2 uses
-  %i.hz = sub i32 %i.hy, %umin126.i.i.i.i
-  %8 = udiv i32 %i.hz, 6
-  %9 = add nuw nsw i32 %8, %umin126.i.i.i.i
-  %10 = mul i32 %9, 6
-  %i.ia = add i32 %10, %indvars.iv121.i.i.i.i     ; 3 uses
+  %i.hy = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
+  %.fr.i.i.i.i = freeze i32 %i.hy                 ; 2 uses
+  %8 = urem i32 %.fr.i.i.i.i, 6
+  %i.hz = sub nuw i32 %.fr.i.i.i.i, %8
+  %i.ia = add i32 %i.hz, %indvars.iv121.i.i.i.i   ; 3 uses
   %i.ib = add nsw i32 %i.ia, %spec.store.select.i.i.i.i ; 2 uses
   %i.ic = icmp slt i32 %i.ib, 5
   br i1 %i.ic, label %bb.ap, label %bb.aq
@@ -2653,8 +2647,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.r, align 8, !tbaa !3
   store i32 4, ptr %i.s, align 8, !tbaa !3
   %i.bv = sub i32 %i.bm, %i.bg                    ; 3 uses
-  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 3 uses
-  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 4 uses
+  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 4 uses
+  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 3 uses
   %i.bx = add i32 %i.bw, %i.bg                    ; 3 uses
   %i.by = add nsw i32 %i.bx, %i.bi
   %i.bz = srem i32 %i.by, 6                       ; 3 uses
@@ -2664,6 +2658,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cd = sub i32 2, %.01752.i.i.i
   %i.ce = sext i32 %spec.store.select.i.i.i.i to i64
   %i.cf = sub i32 -2, %i.bw
+  %7 = add i32 %i.bw, 7
   %smax130.i.i.i.i = call i32 @llvm.smax.i32(i32 %spec.store.select.i.i.i.i, i32 1)
   %wide.trip.count.i.i.i.i = zext nneg i32 %smax130.i.i.i.i to i64
   br label %.preheader90.i.i.i.i
@@ -3052,17 +3047,14 @@ _ZNSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIftLi6ELi5EXadsoA
 
 bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i.i.i.i
   %indvars.iv127.i.i.i.i = phi i64 [ 0, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next128.i.i.i.i, %bb.an ] ; 3 uses
-  %indvars.iv124.i.i.i.i = phi i32 [ %spec.store.select.i.i.i.i, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
+  %indvars.iv124.i.i.i.i = phi i32 [ %7, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
   %indvars.iv121.i.i.i.i = phi i32 [ %i.cf, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next122.i.i.i.i, %bb.an ] ; 3 uses
   %smax123.i.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv121.i.i.i.i, i32 0)
-  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i ; 2 uses
-  %7 = icmp ne i32 %i.hj, 0
-  %umin126.i.i.i.i = zext i1 %7 to i32            ; 2 uses
-  %i.hk = sub i32 %i.hj, %umin126.i.i.i.i
-  %8 = udiv i32 %i.hk, 6
-  %9 = add nuw nsw i32 %8, %umin126.i.i.i.i
-  %10 = mul i32 %9, 6
-  %i.hl = add i32 %10, %indvars.iv121.i.i.i.i     ; 3 uses
+  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
+  %.fr.i.i.i.i = freeze i32 %i.hj                 ; 2 uses
+  %8 = urem i32 %.fr.i.i.i.i, 6
+  %i.hk = sub nuw i32 %.fr.i.i.i.i, %8
+  %i.hl = add i32 %i.hk, %indvars.iv121.i.i.i.i   ; 3 uses
   %i.hm = add nsw i32 %i.hl, %spec.store.select.i.i.i.i ; 2 uses
   %i.hn = icmp slt i32 %i.hm, 5
   br i1 %i.hn, label %bb.ak, label %bb.al
@@ -3465,8 +3457,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.r, align 8, !tbaa !3
   store i32 4, ptr %i.s, align 8, !tbaa !3
   %i.bv = sub i32 %i.bm, %i.bg                    ; 3 uses
-  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 3 uses
-  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 4 uses
+  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 4 uses
+  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 3 uses
   %i.bx = add i32 %i.bw, %i.bg                    ; 3 uses
   %i.by = add nsw i32 %i.bx, %i.bi
   %i.bz = srem i32 %i.by, 6                       ; 3 uses
@@ -3476,6 +3468,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cd = sub i32 2, %.01752.i.i.i
   %i.ce = sext i32 %spec.store.select.i.i.i.i to i64
   %i.cf = sub i32 -2, %i.bw
+  %7 = add i32 %i.bw, 7
   %smax130.i.i.i.i = call i32 @llvm.smax.i32(i32 %spec.store.select.i.i.i.i, i32 1)
   %wide.trip.count.i.i.i.i = zext nneg i32 %smax130.i.i.i.i to i64
   br label %.preheader90.i.i.i.i
@@ -3864,17 +3857,14 @@ _ZNSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIhhLi6ELi5EXadsoA
 
 bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i.i.i.i
   %indvars.iv127.i.i.i.i = phi i64 [ 0, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next128.i.i.i.i, %bb.an ] ; 3 uses
-  %indvars.iv124.i.i.i.i = phi i32 [ %spec.store.select.i.i.i.i, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
+  %indvars.iv124.i.i.i.i = phi i32 [ %7, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
   %indvars.iv121.i.i.i.i = phi i32 [ %i.cf, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next122.i.i.i.i, %bb.an ] ; 3 uses
   %smax123.i.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv121.i.i.i.i, i32 0)
-  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i ; 2 uses
-  %7 = icmp ne i32 %i.hj, 0
-  %umin126.i.i.i.i = zext i1 %7 to i32            ; 2 uses
-  %i.hk = sub i32 %i.hj, %umin126.i.i.i.i
-  %8 = udiv i32 %i.hk, 6
-  %9 = add nuw nsw i32 %8, %umin126.i.i.i.i
-  %10 = mul i32 %9, 6
-  %i.hl = add i32 %10, %indvars.iv121.i.i.i.i     ; 3 uses
+  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
+  %.fr.i.i.i.i = freeze i32 %i.hj                 ; 2 uses
+  %8 = urem i32 %.fr.i.i.i.i, 6
+  %i.hk = sub nuw i32 %.fr.i.i.i.i, %8
+  %i.hl = add i32 %i.hk, %indvars.iv121.i.i.i.i   ; 3 uses
   %i.hm = add nsw i32 %i.hl, %spec.store.select.i.i.i.i ; 2 uses
   %i.hn = icmp slt i32 %i.hm, 5
   br i1 %i.hn, label %bb.ak, label %bb.al
@@ -4277,8 +4267,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.r, align 8, !tbaa !3
   store i32 4, ptr %i.s, align 8, !tbaa !3
   %i.bv = sub i32 %i.bm, %i.bg                    ; 3 uses
-  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 3 uses
-  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 4 uses
+  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 4 uses
+  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 3 uses
   %i.bx = add i32 %i.bw, %i.bg                    ; 3 uses
   %i.by = add nsw i32 %i.bx, %i.bi
   %i.bz = srem i32 %i.by, 6                       ; 3 uses
@@ -4288,6 +4278,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cd = sub i32 2, %.01753.i.i.i
   %i.ce = sext i32 %spec.store.select.i.i.i.i to i64
   %i.cf = sub i32 -2, %i.bw
+  %7 = add i32 %i.bw, 7
   %smax130.i.i.i.i = call i32 @llvm.smax.i32(i32 %spec.store.select.i.i.i.i, i32 1)
   %wide.trip.count.i.i.i.i = zext nneg i32 %smax130.i.i.i.i to i64
   br label %.preheader90.i.i.i.i
@@ -4690,17 +4681,14 @@ _ZNSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIN9Imath_3_14half
 
 bb.ao:                                            ; preds = %bb.as, %.lr.ph104.i.i.i.i
   %indvars.iv127.i.i.i.i = phi i64 [ 0, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next128.i.i.i.i, %bb.as ] ; 3 uses
-  %indvars.iv124.i.i.i.i = phi i32 [ %spec.store.select.i.i.i.i, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.as ] ; 2 uses
+  %indvars.iv124.i.i.i.i = phi i32 [ %7, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.as ] ; 2 uses
   %indvars.iv121.i.i.i.i = phi i32 [ %i.cf, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next122.i.i.i.i, %bb.as ] ; 3 uses
   %smax123.i.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv121.i.i.i.i, i32 0)
-  %i.hy = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i ; 2 uses
-  %7 = icmp ne i32 %i.hy, 0
-  %umin126.i.i.i.i = zext i1 %7 to i32            ; 2 uses
-  %i.hz = sub i32 %i.hy, %umin126.i.i.i.i
-  %8 = udiv i32 %i.hz, 6
-  %9 = add nuw nsw i32 %8, %umin126.i.i.i.i
-  %10 = mul i32 %9, 6
-  %i.ia = add i32 %10, %indvars.iv121.i.i.i.i     ; 3 uses
+  %i.hy = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
+  %.fr.i.i.i.i = freeze i32 %i.hy                 ; 2 uses
+  %8 = urem i32 %.fr.i.i.i.i, 6
+  %i.hz = sub nuw i32 %.fr.i.i.i.i, %8
+  %i.ia = add i32 %i.hz, %indvars.iv121.i.i.i.i   ; 3 uses
   %i.ib = add nsw i32 %i.ia, %spec.store.select.i.i.i.i ; 2 uses
   %i.ic = icmp slt i32 %i.ib, 5
   br i1 %i.ic, label %bb.ap, label %bb.aq
@@ -5103,8 +5091,8 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   store <4 x i32> <i32 0, i32 1, i32 2, i32 3>, ptr %i.r, align 8, !tbaa !3
   store i32 4, ptr %i.s, align 8, !tbaa !3
   %i.bv = sub i32 %i.bm, %i.bg                    ; 3 uses
-  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 3 uses
-  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 4 uses
+  %i.bw = call i32 @llvm.smax.i32(i32 %i.bv, i32 -2) ; 4 uses
+  %spec.store.select.i.i.i.i = add i32 %i.bw, 2   ; 3 uses
   %i.bx = add i32 %i.bw, %i.bg                    ; 3 uses
   %i.by = add nsw i32 %i.bx, %i.bi
   %i.bz = srem i32 %i.by, 6                       ; 3 uses
@@ -5114,6 +5102,7 @@ bb.d:                                             ; preds = %_ZN11OpenImageIO4v3
   %i.cd = sub i32 2, %.01752.i.i.i
   %i.ce = sext i32 %spec.store.select.i.i.i.i to i64
   %i.cf = sub i32 -2, %i.bw
+  %7 = add i32 %i.bw, 7
   %smax130.i.i.i.i = call i32 @llvm.smax.i32(i32 %spec.store.select.i.i.i.i, i32 1)
   %wide.trip.count.i.i.i.i = zext nneg i32 %smax130.i.i.i.i to i64
   br label %.preheader90.i.i.i.i
@@ -5502,17 +5491,14 @@ _ZNSt6vectorIN11OpenImageIO4v3_112ImageBufAlgo15DemosaicingBaseIttLi6ELi5EXadsoA
 
 bb.aj:                                            ; preds = %bb.an, %.lr.ph104.i.i.i.i
   %indvars.iv127.i.i.i.i = phi i64 [ 0, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next128.i.i.i.i, %bb.an ] ; 3 uses
-  %indvars.iv124.i.i.i.i = phi i32 [ %spec.store.select.i.i.i.i, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
+  %indvars.iv124.i.i.i.i = phi i32 [ %7, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next125.i.i.i.i, %bb.an ] ; 2 uses
   %indvars.iv121.i.i.i.i = phi i32 [ %i.cf, %.lr.ph104.i.i.i.i ], [ %indvars.iv.next122.i.i.i.i, %bb.an ] ; 3 uses
   %smax123.i.i.i.i = call i32 @llvm.smax.i32(i32 %indvars.iv121.i.i.i.i, i32 0)
-  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i ; 2 uses
-  %7 = icmp ne i32 %i.hj, 0
-  %umin126.i.i.i.i = zext i1 %7 to i32            ; 2 uses
-  %i.hk = sub i32 %i.hj, %umin126.i.i.i.i
-  %8 = udiv i32 %i.hk, 6
-  %9 = add nuw nsw i32 %8, %umin126.i.i.i.i
-  %10 = mul i32 %9, 6
-  %i.hl = add i32 %10, %indvars.iv121.i.i.i.i     ; 3 uses
+  %i.hj = add i32 %smax123.i.i.i.i, %indvars.iv124.i.i.i.i
+  %.fr.i.i.i.i = freeze i32 %i.hj                 ; 2 uses
+  %8 = urem i32 %.fr.i.i.i.i, 6
+  %i.hk = sub nuw i32 %.fr.i.i.i.i, %8
+  %i.hl = add i32 %i.hk, %indvars.iv121.i.i.i.i   ; 3 uses
   %i.hm = add nsw i32 %i.hl, %spec.store.select.i.i.i.i ; 2 uses
   %i.hn = icmp slt i32 %i.hm, 5
   br i1 %i.hn, label %bb.ak, label %bb.al

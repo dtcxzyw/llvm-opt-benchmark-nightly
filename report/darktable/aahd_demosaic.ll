@@ -204,11 +204,11 @@ vector.body:                                      ; preds = %.preheader70, %vect
   %i.dy = fpext reassoc nsz arcp contract afn <8 x float> %i.dx to <8 x double>
   %i.dz = fcmp reassoc nsz arcp contract afn olt <8 x double> %i.dy, splat (double 1.810000e-02)
   %i.ea = tail call reassoc nsz arcp contract afn <8 x float> @llvm.pow.v8f32(<8 x float> %i.dx, <8 x float> splat (float 4.500000e-01))
-  %i.eb = fmul reassoc nsz arcp contract afn <8 x float> %i.ea, splat (float 1.099300e+00)
-  %i.ec = fadd reassoc nsz arcp contract afn <8 x float> %i.eb, splat (float f0xBDCB5DCC)
+  %i.eb = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.ea, splat (float 1.099300e+00)
+  %i.ec = fadd reassoc nnan nsz arcp contract afn <8 x float> %i.eb, splat (float f0xBDCB5DCC)
   %i.ed = fmul reassoc nnan nsz arcp contract afn <8 x float> %i.dw, splat (float f0x38900000)
   %predphi = select reassoc nsz arcp contract afn <8 x i1> %i.dz, <8 x float> %i.ed, <8 x float> %i.ec
-  %i.ee = fmul reassoc nsz arcp contract afn <8 x float> %predphi, splat (float 6.553600e+04)
+  %i.ee = fmul reassoc nnan nsz arcp contract afn <8 x float> %predphi, splat (float 6.553600e+04)
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr @_ZN4AAHD8gammaLUTE, i64 %index
   store <8 x float> %i.ee, ptr %i.ef, align 16, !tbaa !88
   %index.next = add nuw i64 %index, 8             ; 2 uses

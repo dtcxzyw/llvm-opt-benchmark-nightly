@@ -202,19 +202,16 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.sink = phi ptr [ %i.n, %bb.b ], [ %i.c, %bb.a ]
-  %i.o = phi ptr [ %i.l, %bb.b ], [ %i.e, %bb.a ]
+  %.sink = phi ptr [ %i.l, %bb.b ], [ %i.e, %bb.a ]
+  %i.o = phi ptr [ %i.n, %bb.b ], [ %i.c, %bb.a ]
   %.0 = phi ptr [ %i.m, %bb.b ], [ %i.b, %bb.a ]  ; 2 uses
-  %i.p = ptrtoint ptr %.sink to i64               ; 2 uses
-  %3 = and i64 %i.p, 7
-  %.not = icmp eq i64 %3, 0
-  %4 = select i1 %.not, i64 0, i64 8
-  %i.q = add i64 %4, %i.p
+  %i.p = ptrtoint ptr %i.o to i64
+  %i.q = add i64 %i.p, 7
   %storemerge.in = and i64 %i.q, -8
   %storemerge = inttoptr i64 %storemerge.in to ptr ; 3 uses
   store ptr %storemerge, ptr %i.a, align 8, !tbaa !15
   %i.r = getelementptr inbounds nuw i8, ptr %storemerge, i64 8 ; 2 uses
-  %i.s = icmp ugt ptr %i.r, %i.o
+  %i.s = icmp ugt ptr %i.r, %.sink
   %i.t = ptrtoint ptr %.0 to i64
   %i.u = zext i1 %2 to i64
   %i.v = or i64 %i.t, %i.u                        ; 2 uses
@@ -268,19 +265,16 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.sink.i = phi ptr [ %i.o, %bb.b ], [ %i.d, %bb.a ]
-  %i.p = phi ptr [ %i.m, %bb.b ], [ %i.f, %bb.a ]
+  %.sink.i = phi ptr [ %i.m, %bb.b ], [ %i.f, %bb.a ]
+  %i.p = phi ptr [ %i.o, %bb.b ], [ %i.d, %bb.a ]
   %.0.i = phi ptr [ %i.n, %bb.b ], [ %i.c, %bb.a ] ; 2 uses
-  %i.q = ptrtoint ptr %.sink.i to i64             ; 2 uses
-  %2 = and i64 %i.q, 7
-  %.not.i = icmp eq i64 %2, 0
-  %3 = select i1 %.not.i, i64 0, i64 8
-  %i.r = add i64 %3, %i.q
+  %i.q = ptrtoint ptr %i.p to i64
+  %i.r = add i64 %i.q, 7
   %storemerge.in.i = and i64 %i.r, -8
   %storemerge.i = inttoptr i64 %storemerge.in.i to ptr ; 3 uses
   store ptr %storemerge.i, ptr %i.b, align 8, !tbaa !15
   %i.s = getelementptr inbounds nuw i8, ptr %storemerge.i, i64 8 ; 2 uses
-  %i.t = icmp ugt ptr %i.s, %i.p
+  %i.t = icmp ugt ptr %i.s, %.sink.i
   %i.u = ptrtoint ptr %.0.i to i64
   %i.v = or i64 %i.u, 1                           ; 2 uses
   br i1 %i.t, label %bb.d, label %bb.e

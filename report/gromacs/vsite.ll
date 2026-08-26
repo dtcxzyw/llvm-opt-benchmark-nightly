@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.e
 .lr.ph106:                                        ; preds = %.lr.ph106.preheader, %.loopexit87
   %.060105 = phi i32 [ %.161.lcssa, %.loopexit87 ], [ 0, %.lr.ph106.preheader ] ; 3 uses
   %.promoted101104 = phi i32 [ %.promoted100113, %.loopexit87 ], [ %.promoted100112116, %.lr.ph106.preheader ]
-  %i.bs = sext i32 %.060105 to i64                ; 14 uses
+  %i.bs = sext i32 %.060105 to i64                ; 12 uses
   %i.bt = getelementptr [4 x i8], ptr %i.bi, i64 %i.bs ; 2 uses
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !88
   %i.bv = sext i32 %i.bu to i64
@@ -223,15 +223,11 @@ iter.check:                                       ; preds = %.lr.ph106
   %i.ce = sext i32 %i.cd to i64                   ; 3 uses
   %i.cf = add nsw i64 %i.bs, 3
   %smax189 = call i64 @llvm.smax.i64(i64 %i.cf, i64 %i.ce)
-  %9 = add i64 %smax189, -3                       ; 2 uses
-  %10 = icmp ne i64 %9, %i.bs                     ; 2 uses
-  %umin190.neg = sext i1 %10 to i64
-  %11 = select i1 %10, i64 2, i64 1
-  %i.cg = add i64 %9, %umin190.neg
-  %12 = sub i64 %i.cg, %i.bs
-  %i.ch = udiv i64 %12, 3
-  %i.ci = add nuw nsw i64 %11, %i.ch              ; 6 uses
-  %min.iters.check = icmp samesign ult i64 %i.ci, 9
+  %9 = xor i64 %i.bs, -1
+  %i.cg = add i64 %smax189, %9                    ; 3 uses
+  %i.ch = udiv i64 %i.cg, 3
+  %i.ci = add nuw nsw i64 %i.ch, 1                ; 4 uses
+  %min.iters.check = icmp ult i64 %i.cg, 24
   br i1 %min.iters.check, label %.lr.ph99.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -239,14 +235,10 @@ vector.memcheck:                                  ; preds = %iter.check
   %scevgep186 = getelementptr i8, ptr %scevgep185, i64 %i.cj
   %i.ck = add nsw i64 %i.bs, 3
   %smax = call i64 @llvm.smax.i64(i64 %i.ck, i64 %i.ce)
-  %13 = add i64 %smax, -3                         ; 2 uses
-  %14 = icmp ne i64 %13, %i.bs
-  %umin = zext i1 %14 to i64                      ; 2 uses
-  %i.cl = add nsw i64 %umin, %i.bs
-  %15 = sub i64 %13, %i.cl
-  %i.cm = udiv i64 %15, 3
-  %16 = add nuw nsw i64 %i.cm, %umin
-  %i.cn = mul i64 %16, 12
+  %10 = xor i64 %i.bs, -1
+  %i.cl = add i64 %smax, %10
+  %i.cm = udiv i64 %i.cl, 3
+  %i.cn = mul i64 %i.cm, 12
   %i.co = getelementptr i8, ptr %scevgep187, i64 %i.cn
   %scevgep188 = getelementptr i8, ptr %i.co, i64 %i.cj
   %bound0 = icmp ult ptr %i.c, %scevgep188
@@ -255,7 +247,7 @@ vector.memcheck:                                  ; preds = %iter.check
   br i1 %found.conflict, label %.lr.ph99.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck
-  %min.iters.check191 = icmp samesign ult i64 %i.ci, 33
+  %min.iters.check191 = icmp ult i64 %i.cg, 96
   br i1 %min.iters.check191, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
