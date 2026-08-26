@@ -205,7 +205,6 @@ bb.ba:                                            ; preds = %_RNvNtNtNtCscC7ZI6N
   unreachable
 
 bb.bb:                                            ; preds = %bb.az
-  %sext.i = shl i64 %i.ir, 48
   %i.iu = load atomic ptr, ptr @_RNvNtNtNtCs6JMX4GRUq9U_4core2io5error12os_functions12OS_FUNCTIONS monotonic, align 8, !noalias !224
   %.not.i.i = icmp eq ptr %i.iu, @13
   br i1 %.not.i.i, label %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i, label %bb.bc, !prof !104
@@ -215,9 +214,8 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i
 
 _RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i: ; preds = %bb.bc, %bb.bb
-  %1 = ashr exact i64 %sext.i, 16
-  %2 = sub nsw i64 0, %1                          ; 2 uses
-  %i.iv = lshr exact i64 %2, 32
+  %.neg.i = mul i64 %i.ir, -4294967296            ; 2 uses
+  %i.iv = lshr exact i64 %.neg.i, 32
   %i.iw = trunc nuw i64 %i.iv to i32
   %i.ix = call noundef nonnull align 8 ptr @_RNvNtNtNtCs6JMX4GRUq9U_4core2io5error12os_functions16get_os_functions() #20
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 8
@@ -363,7 +361,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs5RPjO8Kzn89_6
   br i1 %i.kh, label %.loopexit322.i, label %bb.az
 
 bb.bn:                                            ; preds = %_RNvMs1_NtNtCs6JMX4GRUq9U_4core2io5errorNtB5_5Error4kind.exit.i
-  %i.ki = or disjoint i64 %2, 2
+  %i.ki = or disjoint i64 %.neg.i, 2
   %i.kj = inttoptr i64 %i.ki to ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !224
   store ptr %i.kj, ptr %i.p, align 8, !noalias !224
@@ -766,7 +764,6 @@ bb.a:
 define internal { ptr, ptr } @_RNvXsc_NtNtCsgNwXemyrBWj_12clap_builder7builder12value_parserNtNtNtNtCsh036I4OHgIr_6uucore8features6parser21shortcut_value_parser19ShortcutValueParserNtB5_14AnyValueParser9clone_anyCs5RPjO8Kzn89_6uu_tee(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 5 uses
-  %.sroa.740.i.i.i = alloca [16 x i8], align 8    ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.b, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -793,16 +790,16 @@ bb.b:                                             ; preds = %_RNvXs_NtCs7tKScEop
 
 bb.c:                                             ; preds = %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i, %.lr.ph.i.i.i
   %.sroa.0.054.i.i.i = phi ptr [ %.val, %.lr.ph.i.i.i ], [ %i.l, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ] ; 8 uses
-  %.sroa.10.053.i.i.i = phi i64 [ %.val1, %.lr.ph.i.i.i ], [ %i.j, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ]
-  %.sroa.7.052.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.m, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ] ; 2 uses
-  %i.j = add nsw i64 %.sroa.10.053.i.i.i, -1      ; 2 uses
+  %.sroa.10.053.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %i.m, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ] ; 2 uses
+  %.sroa.7.052.i.i.i = phi i64 [ %.val1, %.lr.ph.i.i.i ], [ %i.j, %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i ]
+  %i.j = add nsw i64 %.sroa.7.052.i.i.i, -1       ; 2 uses
   %i.k = icmp eq ptr %.sroa.0.054.i.i.i, %i.h
   br i1 %i.k, label %_RNvXs1_NtNtNtCsh036I4OHgIr_6uucore8features6parser21shortcut_value_parserNtB5_19ShortcutValueParserNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.0.054.i.i.i, i64 72
-  %i.m = add nuw nsw i64 %.sroa.7.052.i.i.i, 1
-  %i.n = getelementptr inbounds nuw [72 x i8], ptr %i.f, i64 %.sroa.7.052.i.i.i ; 8 uses
+  %i.m = add nuw nsw i64 %.sroa.10.053.i.i.i, 1
+  %i.n = getelementptr inbounds nuw [72 x i8], ptr %i.f, i64 %.sroa.10.053.i.i.i ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !781)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !780
   %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0.054.i.i.i, i64 48
@@ -846,16 +843,16 @@ bb.g:                                             ; preds = %_RNvXs_NtCs7tKScEop
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.h, %.lr.ph.preheader.i.i.i.i.i.i
   %.sroa.0.022.i.i.i.i.i.i = phi ptr [ %i.ae, %bb.h ], [ %.val.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i ] ; 4 uses
-  %.sroa.10.021.i.i.i.i.i.i = phi i64 [ %i.ac, %bb.h ], [ %.val4.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i ]
-  %.sroa.7.020.i.i.i.i.i.i = phi i64 [ %i.ad, %bb.h ], [ 0, %.lr.ph.preheader.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.10.021.i.i.i.i.i.i = phi i64 [ %i.ad, %bb.h ], [ 0, %.lr.ph.preheader.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.7.020.i.i.i.i.i.i = phi i64 [ %i.ac, %bb.h ], [ %.val4.i.i.i.i, %.lr.ph.preheader.i.i.i.i.i.i ]
   %i.ab = icmp eq ptr %.sroa.0.022.i.i.i.i.i.i, %i.aa
   br i1 %i.ab, label %_RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleValueNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i.i.i.i.i.i
-  %i.ac = add nsw i64 %.sroa.10.021.i.i.i.i.i.i, -1 ; 2 uses
-  %i.ad = add nuw nsw i64 %.sroa.7.020.i.i.i.i.i.i, 1
+  %i.ac = add nsw i64 %.sroa.7.020.i.i.i.i.i.i, -1 ; 2 uses
+  %i.ad = add nuw nsw i64 %.sroa.10.021.i.i.i.i.i.i, 1
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 16
-  %i.af = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %.sroa.7.020.i.i.i.i.i.i ; 2 uses
+  %i.af = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %.sroa.10.021.i.i.i.i.i.i ; 2 uses
   %.val.i.i.i.i.i.i = load ptr, ptr %.sroa.0.022.i.i.i.i.i.i, align 8, !alias.scope !788, !noalias !798, !nonnull !5, !noundef !5
   %i.ag = getelementptr i8, ptr %.sroa.0.022.i.i.i.i.i.i, i64 8
   %.val13.i.i.i.i.i.i = load i64, ptr %i.ag, align 8, !alias.scope !788, !noalias !798, !noundef !5
@@ -869,8 +866,8 @@ _RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleV
   %.sroa.10.0.i31.i.i.i.i.i.i = phi ptr [ inttoptr (i64 8 to ptr), %bb.f ], [ %i.y, %.lr.ph.i.i.i.i.i.i ], [ %i.y, %bb.h ]
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.0.054.i.i.i, i64 64
   %i.ak = load i8, ptr %i.aj, align 8, !range !74, !alias.scope !784, !noalias !785, !noundef !5
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.740.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.740.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false), !noalias !780
+  %.sroa.740.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.740.0..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.i, i64 16, i1 false), !noalias !799
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !780
   store i64 %.val4.i.i.i.i, ptr %i.n, align 8, !noalias !799
   %.sroa.437.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 8
@@ -879,15 +876,12 @@ _RNvXs3_NtNtCsgNwXemyrBWj_12clap_builder7builder14possible_valueNtB5_13PossibleV
   store i64 %.val4.i.i.i.i, ptr %.sroa.538.0..sroa_idx.i.i.i, align 8, !noalias !799
   %.sroa.639.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   store i64 %.sroa.0.0.i13.i.i.i, ptr %.sroa.639.0..sroa_idx.i.i.i, align 8, !noalias !799
-  %.sroa.740.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.740.0..sroa_idx.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.740.i.i.i, i64 16, i1 false), !noalias !799
   %.sroa.841.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 48
   store ptr %i.p, ptr %.sroa.841.0..sroa_idx.i.i.i, align 8, !noalias !799
   %.sroa.942.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 56
   store i64 %i.r, ptr %.sroa.942.0..sroa_idx.i.i.i, align 8, !noalias !799
   %.sroa.1043.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 64
   store i8 %i.ak, ptr %.sroa.1043.0..sroa_idx.i.i.i, align 8, !noalias !799
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.740.i.i.i)
   %i.al = icmp eq i64 %i.j, 0
   br i1 %i.al, label %_RNvXs1_NtNtNtCsh036I4OHgIr_6uucore8features6parser21shortcut_value_parserNtB5_19ShortcutValueParserNtNtCs6JMX4GRUq9U_4core5clone5Clone5clone.exit, label %bb.c
 

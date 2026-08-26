@@ -202,7 +202,6 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef nonnull ptr @_RNvXsY_NtCs4wP2HXfJTCR_5alloc4syncINtB5_3ArcINtNtNtNtCsaKJjC64KgbL_3std4sync6poison5mutex5MutexINtNtNtCskruEhpekJ3V_5tokio4task8join_set7JoinSetuEEENtNtCsj6eKBz9Db1c_4core7default7Default7defaultCs5MfxasYgTEl_11hickory_net() unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.511 = alloca [24 x i8], align 8          ; 4 uses
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   tail call void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #13
   %i.b = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef 8) #13 ; 6 uses
@@ -219,15 +218,12 @@ _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
           to label %bb.c unwind label %bb.d
 
 bb.c:                                             ; preds = %_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.511)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.511, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
+  %.sroa.511.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.511.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   store i64 1, ptr %i.b, align 8
   %.sroa.410.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 1, ptr %.sroa.410.0..sroa_idx, align 8
-  %.sroa.511.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.511.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.511, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.511)
   ret ptr %i.b
 
 bb.d:                                             ; preds = %_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit

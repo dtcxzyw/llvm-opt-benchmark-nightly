@@ -204,7 +204,7 @@ lean_inc_ref.exit186:                             ; preds = %bb.x, %bb.y, %bb.z
   br i1 %i.ax, label %lean_dec.exit, label %.loopexit278, !llvm.loop !26
 
 .loopexit278:                                     ; preds = %lean_inc_ref.exit186, %lean_inc_ref.exit186.peel
-  %.lcssa276 = phi i8 [ %i.w, %lean_inc_ref.exit186.peel ], [ %i.aw, %lean_inc_ref.exit186 ] ; 11 uses
+  %.lcssa276 = phi i8 [ %i.w, %lean_inc_ref.exit186.peel ], [ %i.aw, %lean_inc_ref.exit186 ] ; 8 uses
   %.lcssa = phi ptr [ %i.l, %lean_inc_ref.exit186.peel ], [ %i.al, %lean_inc_ref.exit186 ] ; 4 uses
   %.not.i161.lcssa = phi i1 [ %.not.i161.peel, %lean_inc_ref.exit186.peel ], [ %.not.i161, %lean_inc_ref.exit186 ]
   %i.ay = load i32, ptr %0, align 4, !tbaa !11    ; 3 uses
@@ -607,7 +607,7 @@ bb.ef:                                            ; preds = %bb.ee
 
 lean_dec.exit.i249:                               ; preds = %bb.ef, %bb.ee, %bb.ed, %.preheader.i246
   tail call void @lean_free_object(ptr noundef nonnull %.0152) #5
-  br label %bb.ek
+  br label %lean_dec_ref_known.exit252
 
 bb.eg:                                            ; preds = %bb.eb
   %i.ik = icmp sgt i32 %.val.i244, 1
@@ -616,18 +616,24 @@ bb.eg:                                            ; preds = %bb.eb
 bb.eh:                                            ; preds = %bb.eg
   %i.il = add nsw i32 %.val.i244, -1
   store i32 %i.il, ptr %.0152, align 4, !tbaa !11
-  br label %bb.ek
+  br label %lean_dec_ref_known.exit252
 
 bb.ei:                                            ; preds = %bb.eg
   %.not.i8.i245 = icmp eq i32 %.val.i244, 0
-  br i1 %.not.i8.i245, label %bb.ek, label %bb.ej
+  br i1 %.not.i8.i245, label %lean_dec_ref_known.exit252, label %bb.ej
 
 bb.ej:                                            ; preds = %bb.ei
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %.0152) #5
+  br label %lean_dec_ref_known.exit252
+
+lean_dec_ref_known.exit252:                       ; preds = %lean_dec.exit.i249, %bb.eh, %bb.ei, %bb.ej
+  %6 = zext i8 %.lcssa276 to i64
+  %7 = shl nuw nsw i64 %6, 1
+  %8 = or disjoint i64 %7, 1
   br label %bb.ek
 
-bb.ek:                                            ; preds = %lean_obj_tag.exit243, %lean_dec.exit.i249, %bb.eh, %bb.ei, %bb.ej
-  %.1146.ph = phi i8 [ %.lcssa276, %bb.ej ], [ %.lcssa276, %bb.ei ], [ %.lcssa276, %bb.eh ], [ %.lcssa276, %lean_dec.exit.i249 ], [ 0, %lean_obj_tag.exit243 ]
+bb.ek:                                            ; preds = %lean_obj_tag.exit243, %lean_dec_ref_known.exit252
+  %.0148.ph = phi i64 [ %8, %lean_dec_ref_known.exit252 ], [ 1, %lean_obj_tag.exit243 ]
   tail call void @lean_inc_heartbeat() #5
   %i.im = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #5 ; 5 uses
   %i.in = icmp eq ptr %i.im, null
@@ -638,10 +644,7 @@ bb.el:                                            ; preds = %bb.ek
   unreachable
 
 lean_alloc_ctor.exit255:                          ; preds = %bb.ek
-  %6 = zext i8 %.1146.ph to i64
-  %7 = shl nuw nsw i64 %6, 1
-  %8 = or disjoint i64 %7, 1
-  %i.io = inttoptr i64 %8 to ptr
+  %i.io = inttoptr i64 %.0148.ph to ptr
   %i.ip = getelementptr inbounds nuw i8, ptr %i.im, i64 4
   store i32 1, ptr %i.im, align 4, !tbaa !11
   store i32 16842768, ptr %i.ip, align 4

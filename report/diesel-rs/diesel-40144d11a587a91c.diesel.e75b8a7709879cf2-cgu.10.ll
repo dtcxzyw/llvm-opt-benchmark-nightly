@@ -204,8 +204,8 @@ _RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.m
   br label %bb.am
 
 bb.o:                                             ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.z, %bb.v, %bb.q, %bb.l, %bb.i
-  %.sroa.080.0 = phi ptr [ null, %bb.l ], [ %i.ad, %bb.q ], [ null, %bb.v ], [ %i.ay, %bb.z ], [ null, %bb.ac ], [ null, %bb.ad ], [ null, %bb.ae ], [ null, %bb.i ] ; 4 uses
   %.sroa.883.0 = phi i64 [ undef, %bb.l ], [ %i.af, %bb.q ], [ undef, %bb.v ], [ %i.ba, %bb.z ], [ undef, %bb.ac ], [ undef, %bb.ad ], [ undef, %bb.ae ], [ undef, %bb.i ] ; 3 uses
+  %.sroa.080.0 = phi ptr [ null, %bb.l ], [ %i.ad, %bb.q ], [ null, %bb.v ], [ %i.ay, %bb.z ], [ null, %bb.ac ], [ null, %bb.ad ], [ null, %bb.ae ], [ null, %bb.i ] ; 4 uses
   %.sroa.0.0 = phi i32 [ %i.w, %bb.l ], [ %i.ai, %bb.q ], [ %i.at, %bb.v ], [ %i.bd, %bb.z ], [ %i.bi, %bb.ac ], [ %i.bl, %bb.ad ], [ %i.bm, %bb.ae ], [ %i.o, %bb.i ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.aa = tail call noundef ptr @sqlite3_db_handle(ptr noundef nonnull %.0.val) #25
@@ -448,7 +448,7 @@ bb.am:                                            ; preds = %_RNvNtNtNtCsjRvGck3
 bb.an:                                            ; preds = %_RNvNtNtNtCsjRvGck33osM_6diesel6sqlite10connection4stmt16ensure_sqlite_ok.exit
   %.not180 = icmp eq ptr %.sroa.080.0, null
   %i.by = icmp eq i64 %.sroa.883.0, 0
-  %or.cond = or i1 %.not180, %i.by
+  %or.cond = or i1 %i.by, %.not180
   br i1 %or.cond, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxShEECsjRvGck33osM_6diesel.exit210, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i209
 
 _RNvNtNtNtCsjRvGck33osM_6diesel6sqlite10connection4stmt16ensure_sqlite_ok.exit.thread: ; preds = %bb.o, %_RNvNtNtNtCsjRvGck33osM_6diesel6sqlite10connection4stmt16ensure_sqlite_ok.exit
@@ -851,7 +851,7 @@ bb.b:                                             ; preds = %.lr.ph
   store ptr %i.x, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !430, !noalias !433
   %.sroa.5.8.copyload = load i32, ptr %i.w, align 8, !noalias !430
   %.sroa.724.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %.sroa.724.8.copyload = load ptr, ptr %.sroa.724.8..sroa_idx, align 8, !noalias !430 ; 2 uses
+  %.sroa.724.8.copyload = load ptr, ptr %.sroa.724.8..sroa_idx, align 8, !noalias !430 ; 3 uses
   %.sroa.8.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %.sroa.8.8.copyload = load i64, ptr %.sroa.8.8..sroa_idx, align 8, !noalias !430 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -1007,6 +1007,7 @@ bb.r:                                             ; preds = %bb.m
   br i1 %or.cond, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxShEECsjRvGck33osM_6diesel.exit, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i23
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i23: ; preds = %bb.r
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.724.8.copyload) ]
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.724.8.copyload, i64 noundef %.sroa.8.8.copyload, i64 noundef 1) #25
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxShEECsjRvGck33osM_6diesel.exit
 

@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ring-rs/original/cc-76f3ccad368a22c6.cc.d9ca9ac6d52b51d2-cgu.7?download=true
+inline.NumInlined: 65
+inline.NumDeleted: 5
 begin_hunk_0_@_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultReNtNtNtB4_3str5error9Utf8ErrorE2okCsiHivYpkJ4Hu_2cc:bb.a
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -200,7 +202,6 @@ bb.c:                                             ; preds = %bb.a
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMNtNtCsiHivYpkJ4Hu_2cc6target6parserNtB2_21TargetInfoParserInner32from_cargo_environment_variables(ptr nofree writeonly sret([96 x i8]) align 8 captures(none) %0) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
-  %1 = alloca [32 x i8], align 8                  ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = alloca [24 x i8], align 8                ; 2 uses
   %i.c = alloca [32 x i8], align 8                ; 2 uses
@@ -222,6 +223,7 @@ bb.a:
   %i.s = alloca [32 x i8], align 8                ; 2 uses
   %i.t = alloca [32 x i8], align 8                ; 2 uses
   %i.u = alloca [40 x i8], align 8                ; 5 uses
+  %1 = alloca [32 x i8], align 8                  ; 3 uses
   %i.v = alloca [24 x i8], align 8                ; 12 uses
   call void @_RNvNtCsiHivYpkJ4Hu_2cc9utilities13cargo_env_var(ptr nonnull sret([32 x i8]) align 8 %1, ptr nonnull @22, i64 6)
   %i.w = load i64, ptr %1, align 8                ; 2 uses
@@ -230,10 +232,10 @@ bb.a:
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.w, ptr %i.y, align 8
-  %.sroa.2147.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2147.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.x, i64 24, i1 false)
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.x, i64 24, i1 false)
+  %.sroa.2147.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %i.w, ptr %.sroa.2147.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8
   br label %bb.bg
 
@@ -293,12 +295,10 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %.sroa.6.8..sroa_idx63 = getelementptr inbounds nuw i8, ptr %i.u, i64 24
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.259.8.copyload60, ptr %i.aj, align 8
-  %.sroa.2144.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.5.8.copyload62, ptr %.sroa.2144.0..sroa_idx, align 8
-  %.sroa.3145.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3145.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.8..sroa_idx63, i64 16, i1 false)
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.8..sroa_idx63, i64 16, i1 false)
+  %.sroa.2144.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %.sroa.259.8.copyload60, ptr %.sroa.2144.0..sroa_idx, align 8
   br label %.sink.split
 
 bb.n:                                             ; preds = %bb.l
@@ -357,8 +357,6 @@ bb.v:                                             ; preds = %bb.u
   store ptr %i.av, ptr %.sroa.2140.0..sroa_idx, align 8
   %.sroa.3141.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %i.ax, ptr %.sroa.3141.0..sroa_idx, align 8
-  %.sroa.4142.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.8.0.copyload77, ptr %.sroa.4142.0..sroa_idx, align 8
   br label %.sink.split
 
 bb.w:                                             ; preds = %bb.u
@@ -653,6 +651,10 @@ bb.bk:                                            ; preds = %bb.ab, %bb.bj
           to label %bb.bl unwind label %bb.e
 
 .sink.split:                                      ; preds = %bb.m, %bb.v
+  %.sink = phi i64 [ 32, %bb.v ], [ 16, %bb.m ]
+  %.sroa.8.0.copyload77.sink = phi i64 [ %.sroa.8.0.copyload77, %bb.v ], [ %.sroa.5.8.copyload62, %bb.m ]
+  %.sroa.4142.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 %.sink
+  store i64 %.sroa.8.0.copyload77.sink, ptr %.sroa.4142.0..sroa_idx, align 8
   store ptr null, ptr %0, align 8
   br label %bb.bl
 

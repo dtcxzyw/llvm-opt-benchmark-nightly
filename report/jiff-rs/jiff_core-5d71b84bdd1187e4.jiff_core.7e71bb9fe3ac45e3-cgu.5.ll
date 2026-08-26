@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jiff-rs/original/jiff_core-5d71b84bdd1187e4.jiff_core.7e71bb9fe3ac45e3-cgu.5?download=true
+inline.NumInlined: 119
+inline.NumDeleted: 24
 begin_hunk_0_@_RNCNvMs5_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB7_6Parser27parse_unquoted_abbreviation0Bb_:bb.a
 }
 
@@ -200,11 +202,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.r, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %bb.c
+  %.sroa.2.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.2.0..sroa_idx.a, ptr noundef nonnull align 4 dereferenceable(12) %i.d, i64 12, i1 false)
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.3.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %i.e, i64 12, i1 false)
   store ptr %i.h, ptr %0, align 8
-  %.sroa.2.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.2.0..sroa_idx.a, ptr noundef nonnull align 4 dereferenceable(12) %i.e, i64 12, i1 false)
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.3.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %i.d, i64 12, i1 false)
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.c
@@ -607,9 +609,9 @@ _RNvMs0_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_8TimeZone13dst_info_wall.exit.
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 32
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 20
   call fastcc void @_RNvMs1_NtNtCsaR3IayqLkK5_9jiff_core2tz5posixNtB5_7DayTime11to_datetime(ptr noalias align 4 %.sroa.3.0..sroa_idx.i, ptr nonnull align 4 %i.w, i16 %i.o, i32 0)
-  store ptr %i.t, ptr %i.k, align 8, !alias.scope !16
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.2.0..sroa_idx.i, ptr noundef nonnull align 4 dereferenceable(12) %i.a, i64 12, i1 false)
+  store ptr %i.t, ptr %i.k, align 8, !alias.scope !16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.b
 

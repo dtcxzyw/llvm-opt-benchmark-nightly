@@ -202,7 +202,7 @@ bb.s:                                             ; preds = %.loopexit339
   store i32 0, ptr %i.e, align 4, !tbaa !15
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !27
-  %i.by = call ptr @onas_get_opt_list(ptr noundef %i.bx, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #14 ; 7 uses
+  %i.by = call ptr @onas_get_opt_list(ptr noundef %i.bx, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #14 ; 8 uses
   %i.bz = icmp eq ptr %i.by, null
   br i1 %i.bz, label %bb.t, label %.preheader336
 
@@ -217,16 +217,18 @@ bb.t:                                             ; preds = %bb.s
   %i.cd = call i32 (i32, ptr, ...) @logg(i32 noundef 5, ptr noundef nonnull @.str.19, ptr noundef %i.cc) #14 ; 0 uses
   br label %bb.dr
 
-bb.u:                                             ; preds = %.lr.ph, %.backedge
-  %i.ce = phi ptr [ %8, %.lr.ph ], [ %i.cq, %.backedge ] ; 2 uses
+bb.u:                                             ; preds = %.lr.ph, %.outer
+  %indvars.iv = phi i64 [ %13, %.lr.ph ], [ %indvars.iv.next, %.outer ] ; 3 uses
+  %8 = phi ptr [ %11, %.lr.ph ], [ %i.dc, %.outer ] ; 2 uses
+  %i.ce = phi ptr [ %12, %.lr.ph ], [ %i.db, %.outer ] ; 3 uses
   %i.cf = load ptr, ptr @ddd_ht, align 8, !tbaa !29
-  %i.cg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.ce) #16
-  %i.ch = call i32 @onas_ht_get(ptr noundef %i.cf, ptr noundef nonnull %i.ce, i64 noundef %i.cg, ptr noundef null) #14
+  %i.cg = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #16
+  %i.ch = call i32 @onas_ht_get(ptr noundef %i.cf, ptr noundef nonnull %8, i64 noundef %i.cg, ptr noundef null) #14
   %.not287 = icmp eq i32 %i.ch, 0
   br i1 %.not287, label %.outer, label %sub_0326
 
 sub_0326:                                         ; preds = %bb.u
-  %i.ci = load ptr, ptr %9, align 8, !tbaa !9     ; 6 uses
+  %i.ci = load ptr, ptr %i.ce, align 8, !tbaa !9  ; 6 uses
   %i.cj = load i8, ptr %i.ci, align 1
   %.not377 = icmp eq i8 %i.cj, 47
   br i1 %.not377, label %.tail325, label %.tail325.thread
@@ -239,14 +241,25 @@ sub_0326:                                         ; preds = %bb.u
 
 bb.v:                                             ; preds = %.tail325
   %i.cn = call i32 (i32, ptr, ...) @logg(i32 noundef 5, ptr noundef nonnull @.str.12, ptr noundef nonnull %i.ci) #14 ; 0 uses
-  %i.co = load ptr, ptr %9, align 8, !tbaa !9
+  %i.co = load ptr, ptr %i.ce, align 8, !tbaa !9
   %i.cp = call i32 (i32, ptr, ...) @logg(i32 noundef 5, ptr noundef nonnull @.str.13, ptr noundef %i.co) #14 ; 0 uses
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.v, %bb.w
-  %i.cq = load ptr, ptr %9, align 8, !tbaa !9     ; 2 uses
+  %sext451 = shl i64 %indvars.iv, 32
+  %9 = ashr exact i64 %sext451, 29
+  %10 = getelementptr inbounds i8, ptr %i.by, i64 %9 ; 2 uses
+  %i.cq = load ptr, ptr %10, align 8, !tbaa !9    ; 2 uses
   %.not259.a = icmp eq ptr %i.cq, null
-  br i1 %.not259.a, label %.loopexit337, label %bb.u
+  br i1 %.not259.a, label %.loopexit337, label %.lr.ph
+
+.lr.ph:                                           ; preds = %.preheader336, %.backedge
+  %11 = phi ptr [ %i.cq, %.backedge ], [ %i.ca, %.preheader336 ]
+  %12 = phi ptr [ %10, %.backedge ], [ %i.by, %.preheader336 ]
+  %.0221.ph357 = phi i64 [ %indvars.iv, %.backedge ], [ 0, %.preheader336 ]
+  %sext471 = shl i64 %.0221.ph357, 32
+  %13 = ashr exact i64 %sext471, 32
+  br label %bb.u
 
 .tail325.thread:                                  ; preds = %sub_0326, %.tail325
   %i.cr = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.0222, ptr noundef nonnull dereferenceable(1) %i.ci) #16
@@ -263,7 +276,7 @@ bb.x:                                             ; preds = %.tail325.thread
   %i.cw = load ptr, ptr @ddd_ht, align 8, !tbaa !29
   %i.cx = call i32 @onas_ht_add_hierarchy(ptr noundef %i.cw, ptr noundef nonnull %i.ci) #14
   %.not289 = icmp eq i32 %i.cx, 0
-  %i.cy = load ptr, ptr %9, align 8, !tbaa !9     ; 2 uses
+  %i.cy = load ptr, ptr %i.ce, align 8, !tbaa !9  ; 2 uses
   br i1 %.not289, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -274,21 +287,15 @@ bb.z:                                             ; preds = %bb.x
   %i.da = call i32 (i32, ptr, ...) @logg(i32 noundef 0, ptr noundef nonnull @.str.18, ptr noundef %i.cy) #14 ; 0 uses
   br label %.outer
 
-.outer:                                           ; preds = %bb.u, %bb.z
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.db = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %indvars.iv.next
+.outer:                                           ; preds = %bb.z, %bb.u
+  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
+  %i.db = getelementptr inbounds [8 x i8], ptr %i.by, i64 %indvars.iv.next ; 2 uses
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !9  ; 2 uses
   %.not259350 = icmp eq ptr %i.dc, null
-  br i1 %.not259350, label %.loopexit337, label %.lr.ph
+  br i1 %.not259350, label %.loopexit337, label %bb.u
 
-.lr.ph:                                           ; preds = %.preheader336, %.outer
-  %indvars.iv = phi i64 [ %indvars.iv.next, %.outer ], [ 0, %.preheader336 ] ; 2 uses
-  %8 = phi ptr [ %i.dc, %.outer ], [ %i.ca, %.preheader336 ]
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.by, i64 %indvars.iv ; 4 uses
-  br label %bb.u
-
-.loopexit337:                                     ; preds = %.outer, %.backedge, %.preheader336, %.loopexit339
-  %.0227 = phi ptr [ null, %.loopexit339 ], [ %i.by, %.backedge ], [ %i.by, %.preheader336 ], [ %i.by, %.outer ] ; 4 uses
+.loopexit337:                                     ; preds = %.backedge, %.outer, %.preheader336, %.loopexit339
+  %.0227 = phi ptr [ null, %.loopexit339 ], [ %i.by, %.outer ], [ %i.by, %.preheader336 ], [ %i.by, %.backedge ] ; 4 uses
   %i.dd = load ptr, ptr %i.ah, align 1, !tbaa !26
   %i.de = call ptr @optget(ptr noundef %i.dd, ptr noundef nonnull @.str.20) #14 ; 4 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 32

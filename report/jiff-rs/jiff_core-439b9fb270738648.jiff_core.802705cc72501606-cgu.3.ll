@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jiff-rs/original/jiff_core-439b9fb270738648.jiff_core.802705cc72501606-cgu.3?download=true
+inline.NumInlined: 75
+inline.NumDeleted: 38
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -136,8 +140,8 @@ _RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Cl
   br label %bb.j
 
 bb.j:                                             ; preds = %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit, %bb.g, %bb.f
-  %.sroa.7.0 = phi ptr [ undef, %bb.f ], [ %i.m, %bb.g ], [ %.sroa.01.0.i.i.i, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ]
   %.sroa.9.0 = phi i64 [ undef, %bb.f ], [ %i.o, %bb.g ], [ %i.s, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ]
+  %.sroa.7.0 = phi ptr [ undef, %bb.f ], [ %i.m, %bb.g ], [ %.sroa.01.0.i.i.i, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ]
   %i.w = load i32, ptr %i.c, align 4, !noundef !4
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 6
   %i.y = load i8, ptr %i.x, align 2, !range !15, !noundef !4
@@ -343,8 +347,8 @@ _RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Cl
   br label %bb.u
 
 bb.u:                                             ; preds = %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit, %bb.r, %bb.q
-  %.sroa.7.0 = phi ptr [ undef, %bb.q ], [ %i.an, %bb.r ], [ %.sroa.01.0.i.i.i, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ] ; 3 uses
   %.sroa.9.0 = phi i64 [ undef, %bb.q ], [ %i.ap, %bb.r ], [ %i.at, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ] ; 3 uses
+  %.sroa.7.0 = phi ptr [ undef, %bb.q ], [ %i.an, %bb.r ], [ %.sroa.01.0.i.i.i, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ] ; 3 uses
   %i.ax = add i64 %i.w, 377705023201
   %or.cond.i = icmp ult i64 %i.ax, 631107230402
   br i1 %or.cond.i, label %bb.x, label %bb.v, !prof !35
@@ -706,8 +710,8 @@ _RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Cl
   br label %bb.v
 
 bb.v:                                             ; preds = %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit, %bb.s, %bb.r
-  %.sroa.7.0 = phi ptr [ undef, %bb.r ], [ %i.as, %bb.s ], [ %.sroa.01.0.i.i.i, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ] ; 3 uses
   %.sroa.9.0 = phi i64 [ undef, %bb.r ], [ %i.au, %bb.s ], [ %i.ay, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ] ; 3 uses
+  %.sroa.7.0 = phi ptr [ undef, %bb.r ], [ %i.as, %bb.s ], [ %.sroa.01.0.i.i.i, %_RNvXsf_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeENtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsb09rMIQFAXO_9jiff_core.exit ] ; 3 uses
   %i.bc = add i64 %i.ab, 377705023201
   %or.cond.i = icmp ult i64 %i.bc, 631107230402
   br i1 %or.cond.i, label %bb.y, label %bb.w, !prof !35

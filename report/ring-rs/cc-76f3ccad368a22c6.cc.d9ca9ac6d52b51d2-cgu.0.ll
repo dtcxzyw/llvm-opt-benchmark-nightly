@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ring-rs/original/cc-76f3ccad368a22c6.cc.d9ca9ac6d52b51d2-cgu.0?download=true
+inline.NumInlined: 82
+inline.NumDeleted: 28
 begin_hunk_0_@_RNvMs4_CsiHivYpkJ4Hu_2ccNtB5_5Build17add_default_flags:bb.a
   %i.t = alloca [16 x i8], align 8                ; 16 uses
   %i.u = alloca [24 x i8], align 8                ; 7 uses
@@ -200,7 +202,6 @@ begin_hunk_0_@_RNvMs4_CsiHivYpkJ4Hu_2ccNtB5_5Build17add_default_flags:bb.a
   %i.hh = alloca [24 x i8], align 8               ; 2 uses
   %i.hi = alloca [16 x i8], align 8               ; 2 uses
   %i.hj = alloca [16 x i8], align 8               ; 2 uses
-  %6 = alloca [24 x i8], align 8                  ; 2 uses
   %.sroa.0 = alloca [24 x i8], align 8            ; 2 uses
   %i.hk = alloca [24 x i8], align 8               ; 2 uses
   %i.hl = alloca [16 x i8], align 8               ; 2 uses
@@ -603,21 +604,20 @@ bb.cv:                                            ; preds = %bb.cu
 bb.cw:                                            ; preds = %bb.cv
   %i.lv = extractvalue { ptr, ptr } %i.lu, 0
   %i.lw = extractvalue { ptr, ptr } %i.lu, 1
-  invoke void @_RNvNtCs1xwejQucwHj_5alloc3fmt6formatCsiHivYpkJ4Hu_2cc(ptr nonnull sret([24 x i8]) align 8 %6, ptr %i.lv, ptr %i.lw)
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc3fmt6formatCsiHivYpkJ4Hu_2cc(ptr nonnull sret([24 x i8]) align 8 %.sroa.0, ptr %i.lv, ptr %i.lw)
           to label %bb.cx unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.cx:                                            ; preds = %bb.cw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ca)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cb)
   invoke void @_RNvXs1_NtCs3oUPovFnLWP_4core7convertNtNtCs1xwejQucwHj_5alloc6string6StringINtB5_4IntoINtNtBC_6borrow3CoweEE4intoCs93MrfdkTAtF_5shlex(ptr nonnull sret([24 x i8]) align 8 %i.cb, ptr nonnull align 8 %i.ca, ptr nonnull align 8 @1) #16
           to label %bb.cy unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.cy:                                            ; preds = %bb.cx
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %i.cb, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.cb, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ca)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cb)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 6, ptr %.sroa.2.0..sroa_idx, align 8
   br label %bb.cz
@@ -1020,7 +1020,6 @@ bb.a:
   %i.w = alloca [32 x i8], align 8                ; 4 uses
   %i.x = alloca [16 x i8], align 8                ; 2 uses
   %i.y = alloca [16 x i8], align 8                ; 2 uses
-  %6 = alloca [24 x i8], align 8                  ; 2 uses
   %.sroa.0 = alloca [24 x i8], align 8            ; 2 uses
   %i.z = alloca [16 x i8], align 8                ; 2 uses
   %i.aa = alloca [16 x i8], align 8               ; 2 uses
@@ -1423,22 +1422,21 @@ bb.br:                                            ; preds = %bb.bq
 bb.bs:                                            ; preds = %bb.br
   %i.ep = extractvalue { ptr, ptr } %i.eo, 0
   %i.eq = extractvalue { ptr, ptr } %i.eo, 1
-  invoke void @_RNvNtCs1xwejQucwHj_5alloc3fmt6formatCsiHivYpkJ4Hu_2cc(ptr nonnull sret([24 x i8]) align 8 %6, ptr %i.ep, ptr %i.eq)
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc3fmt6formatCsiHivYpkJ4Hu_2cc(ptr nonnull sret([24 x i8]) align 8 %.sroa.0, ptr %i.ep, ptr %i.eq)
           to label %bb.bt unwind label %bb.d
 
 bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   invoke void @_RNvXs1_NtCs3oUPovFnLWP_4core7convertNtNtCs1xwejQucwHj_5alloc6string6StringINtB5_4IntoINtNtBC_6borrow3CoweEE4intoCs93MrfdkTAtF_5shlex(ptr nonnull sret([24 x i8]) align 8 %i.c, ptr nonnull align 8 %i.b, ptr nonnull align 8 @1) #16
           to label %bb.bu unwind label %bb.d
 
 bb.bu:                                            ; preds = %bb.bt
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i8 6, ptr %.sroa.2.0..sroa_idx, align 8
   store i64 -1, ptr %0, align 8
@@ -1841,7 +1839,6 @@ bb.a:
   %i.c = alloca [32 x i8], align 8                ; 2 uses
   %i.d = alloca [16 x i8], align 8                ; 2 uses
   %i.e = alloca [16 x i8], align 8                ; 2 uses
-  %4 = alloca [24 x i8], align 8                  ; 2 uses
   %.sroa.0 = alloca [24 x i8], align 8            ; 2 uses
   %i.f = alloca [96 x i8], align 8                ; 2 uses
   %i.g = alloca [96 x i8], align 8                ; 4 uses
@@ -1921,21 +1918,20 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   %i.z = extractvalue { ptr, ptr } %i.y, 0
   %i.aa = extractvalue { ptr, ptr } %i.y, 1
-  invoke void @_RNvNtCs1xwejQucwHj_5alloc3fmt6formatCsiHivYpkJ4Hu_2cc(ptr nonnull sret([24 x i8]) align 8 %4, ptr %i.z, ptr %i.aa)
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc3fmt6formatCsiHivYpkJ4Hu_2cc(ptr nonnull sret([24 x i8]) align 8 %.sroa.0, ptr %i.z, ptr %i.aa)
           to label %bb.n unwind label %bb.h
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   invoke void @_RNvXs1_NtCs3oUPovFnLWP_4core7convertNtNtCs1xwejQucwHj_5alloc6string6StringINtB5_4IntoINtNtBC_6borrow3CoweEE4intoCs93MrfdkTAtF_5shlex(ptr nonnull sret([24 x i8]) align 8 %i.b, ptr nonnull align 8 %i.a, ptr nonnull align 8 @1) #16
           to label %bb.o unwind label %bb.h
 
 bb.o:                                             ; preds = %bb.n
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i8 1, ptr %.sroa.2.0..sroa_idx, align 8
   br label %bb.p

@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/elfshaker-rs/original/elfshaker.elfshaker.5892cc60208a05dd-cgu.02?download=true
+inline.NumInlined: 518
+inline.NumDeleted: 295
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvNtCs7BtpbLEd5q3_9elfshaker2gc3run:bb.a
   br i1 %i.bn, label %bb.x, label %bb.cw, !prof !590
 
@@ -200,8 +204,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_ite
   br label %bb.ab
 
 bb.am:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterAhj14_EECs7BtpbLEd5q3_9elfshaker.exit171, %bb.ab
-  %.sroa.020.2 = phi i64 [ %.sroa.020.3.lcssa, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterAhj14_EECs7BtpbLEd5q3_9elfshaker.exit171 ], [ %.sroa.020.0, %bb.ab ]
   %.sroa.074.2 = phi i8 [ 0, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterAhj14_EECs7BtpbLEd5q3_9elfshaker.exit171 ], [ 1, %bb.ab ] ; 5 uses
+  %.sroa.020.2 = phi i64 [ %.sroa.020.3.lcssa, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterAhj14_EECs7BtpbLEd5q3_9elfshaker.exit171 ], [ %.sroa.020.0, %bb.ab ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   invoke void @_RNvNtCs7BtpbLEd5q3_9elfshaker5utils11format_size(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.l, i64 noundef %.sroa.020.2)
           to label %bb.az unwind label %bb.ad

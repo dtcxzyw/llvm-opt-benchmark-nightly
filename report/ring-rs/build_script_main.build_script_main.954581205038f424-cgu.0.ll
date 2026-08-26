@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ring-rs/original/build_script_main.build_script_main.954581205038f424-cgu.0?download=true
+inline.NumInlined: 199
+inline.NumDeleted: 104
 begin_hunk_0_@_RNvMNtCs3oUPovFnLWP_4core5sliceSTRSReBx_E4iterCscOzg5arm0FQ_17build_script_main
 define hidden { ptr, ptr } @_RNvMNtCs3oUPovFnLWP_4core5sliceSTRSReBx_E4iterCscOzg5arm0FQ_17build_script_main(ptr align 8 %0, i64 %1) unnamed_addr #6 {
 bb.a:
@@ -200,6 +202,8 @@ bb.o:                                             ; preds = %_RNvNtNtNtCscOzg5ar
   unreachable
 
 bb.p:                                             ; preds = %_RNvNtNtNtCscOzg5arm0FQ_17build_script_main5build5cargo3env6var_os.exit
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ah, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
@@ -207,8 +211,6 @@ bb.p:                                             ; preds = %_RNvNtNtNtCscOzg5ar
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96
   store i8 %i.af, ptr %i.aj, align 8
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.c)
   ret void
 

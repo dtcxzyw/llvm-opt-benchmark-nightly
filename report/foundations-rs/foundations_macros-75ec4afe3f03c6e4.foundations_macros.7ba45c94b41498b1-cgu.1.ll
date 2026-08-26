@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/foundations-rs/original/foundations_macros-75ec4afe3f03c6e4.foundations_macros.7ba45c94b41498b1-cgu.1?download=true
+inline.NumInlined: 62
+inline.NumDeleted: 49
 begin_hunk_0_@_RNvXs8_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxINtNtCs6bAnw1I7Lci_3syn5drops6NoDropDINtNtBM_10punctuated9IterTraitNtNtCsaC8UfsfJL0H_18foundations_macros7metrics5FnArgEp4ItemRB1M_EL_EENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropB1Q_:bb.a
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -200,11 +202,11 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.i
 
 _RNvXsA_NtCse4VeaA6Ikg_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs3oUPovFnLWP_4core5clone5Clone5cloneCsaC8UfsfJL0H_18foundations_macros.exit.i: ; preds = %bb.c
-  %.sroa.0.i.sroa.0.0.copyload = load i64, ptr %i.a, align 8, !noalias !50
+  %.sroa.0.i.sroa.0.0.copyload = load i64, ptr %i.a, align 8
   %.sroa.0.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.0.i.sroa.4.0.copyload = load ptr, ptr %.sroa.0.i.sroa.4.0..sroa_idx, align 8, !noalias !50
+  %.sroa.0.i.sroa.4.0.copyload = load ptr, ptr %.sroa.0.i.sroa.4.0..sroa_idx, align 8
   %.sroa.0.i.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.0.i.sroa.5.0.copyload = load i64, ptr %.sroa.0.i.sroa.5.0..sroa_idx, align 8, !noalias !50
+  %.sroa.0.i.sroa.5.0.copyload = load i64, ptr %.sroa.0.i.sroa.5.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !50
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !50
   br label %bb.g

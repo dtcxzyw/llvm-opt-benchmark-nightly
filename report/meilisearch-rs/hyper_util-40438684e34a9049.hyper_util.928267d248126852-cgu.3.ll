@@ -202,9 +202,9 @@ bb.as:                                            ; preds = %bb.c
           to label %bb.au unwind label %bb.aq
 
 bb.at:                                            ; preds = %.noexc
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.n, i64 24, i1 false)
   %2 = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.n, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
@@ -607,7 +607,6 @@ bb.a:
   %i.i = alloca [32 x i8], align 8                ; 4 uses
   %i.j = alloca [24 x i8], align 8                ; 4 uses
   %i.k = alloca [24 x i8], align 8                ; 2 uses
-  %4 = alloca [32 x i8], align 8                  ; 2 uses
   %i.l = alloca [24 x i8], align 8                ; 2 uses
   %i.m = alloca [32 x i8], align 8                ; 3 uses
   %i.n = alloca [32 x i8], align 8                ; 2 uses
@@ -615,10 +614,8 @@ bb.a:
   %i.p = alloca [24 x i8], align 8                ; 3 uses
   %i.q = alloca [1 x i8], align 1                 ; 2 uses
   %i.r = alloca [24 x i8], align 8                ; 2 uses
-  %5 = alloca [32 x i8], align 8                  ; 2 uses
   %i.s = alloca [32 x i8], align 8                ; 3 uses
   %i.t = alloca [24 x i8], align 8                ; 2 uses
-  %6 = alloca [32 x i8], align 8                  ; 2 uses
   %i.u = alloca [32 x i8], align 8                ; 3 uses
   %.sroa.23.5.copyload = load i8, ptr %3, align 1
   %i.v = trunc i40 %2 to i1
@@ -661,16 +658,14 @@ bb.f:                                             ; preds = %.noexc
           to label %bb.g unwind label %bb.e
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 32, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.s, %bb.l, %bb.g
   %.sink = phi ptr [ %i.m, %bb.s ], [ %i.u, %bb.l ], [ %i.s, %bb.g ]
-  %.sink35 = phi ptr [ %4, %bb.s ], [ %6, %bb.l ], [ %5, %bb.g ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sink, i64 32, i1 false)
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %.sink35, i64 32, i1 false)
   ret void
 
 bb.i:                                             ; preds = %bb.u, %bb.t, %bb.r, %bb.j, %bb.e
@@ -705,7 +700,8 @@ bb.k:                                             ; preds = %.noexc15
           to label %bb.l unwind label %bb.j
 
 bb.l:                                             ; preds = %bb.k
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.h
 
@@ -750,7 +746,8 @@ bb.r:                                             ; preds = %bb.q
           to label %.thread unwind label %bb.i
 
 bb.s:                                             ; preds = %bb.q
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 32, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.h
 

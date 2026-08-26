@@ -22,14 +22,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = tail call noalias dereferenceable_or_null(40) ptr @g_malloc(i64 noundef 40) #6 ; 7 uses
+  %i.b = tail call noalias dereferenceable_or_null(40) ptr @g_malloc(i64 noundef 40) #6 ; 8 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 25
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.5.0..sroa_idx, i8 0, i64 7, i1 false)
   store ptr %0, ptr %i.b, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store ptr %1, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
+  store ptr null, ptr %.sroa.3.0..sroa_idx, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
+  store i8 0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.0..sroa_idx, i8 0, i64 16, i1 false)
   store ptr %3, ptr %.sroa.6.0..sroa_idx, align 8
   %i.c = tail call ptr @qemu_coroutine_create(ptr noundef nonnull @qemu_co_timeout_entry, ptr noundef nonnull %i.b) #5
   %i.d = tail call ptr @qemu_get_current_aio_context() #5

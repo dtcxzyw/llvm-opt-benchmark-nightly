@@ -202,7 +202,6 @@ _ZN7QStringD2Ev.exit169:                          ; preds = %bb.af, %_ZN17QArray
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.di, %_ZN7QStringD2Ev.exit169
-  %.sroa.513.0 = phi i64 [ undef, %_ZN7QStringD2Ev.exit169 ], [ %.sroa.513.1, %bb.di ] ; 2 uses
   %.093 = phi i32 [ 0, %_ZN7QStringD2Ev.exit169 ], [ %i.is, %bb.di ] ; 2 uses
   %i.ct = sext i32 %.093 to i64                   ; 2 uses
   %i.cu = invoke noundef i64 @_ZNK10QJsonArray4sizeEv(ptr noundef nonnull align 8 dereferenceable_or_null(8) %28)
@@ -605,9 +604,7 @@ bb.cc:                                            ; preds = %bb.bz, %_ZNK8QVaria
   %.fca.0.load.i.i = load i64, ptr %15, align 8
   %.fca.1.load.i.i = load i64, ptr %.fca.1.gep.i.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
-  %.sroa.22.8.insert.ext.i = and i64 %.fca.1.load.i.i, 281474976710655
-  %.sroa.513.8.insert.mask = and i64 %.sroa.513.0, -281474976710656
-  %.sroa.513.8.insert.insert = or disjoint i64 %.sroa.22.8.insert.ext.i, %.sroa.513.8.insert.mask ; 2 uses
+  %.sroa.513.8.insert.mask = and i64 %.fca.1.load.i.i, 281474976710655
   call void @_ZN8QVariantD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable_or_null(32) %37) #21
   %i.fw = load ptr, ptr %39, align 16             ; 2 uses
   %.not.i.i.i206 = icmp eq ptr %i.fw, null
@@ -840,7 +837,7 @@ _ZNK13QJsonValueRef8toStringERK7QString.exit249:  ; preds = %bb.cy
   store i64 %.fca.0.load.i.i221, ptr %52, align 8
   store i48 %.sroa.26.0.extract.trunc, ptr %.sroa.5.0..sroa_idx, align 8
   %i.hs = load ptr, ptr %i.cr, align 8
-  invoke void @_ZN16ColoringRuleItemC1Eb7QStringS0_6QColorS1_PS_(ptr noundef align 8 dereferenceable_or_null(128) %i.hb, i1 noundef zeroext %i.hh, ptr noundef nonnull align 8 %46, ptr noundef nonnull align 8 %49, i64 %.fca.0.load.i.i, i64 %.sroa.513.8.insert.insert, ptr noundef nonnull byval(%class.QColor) align 8 %52, ptr noundef %i.hs)
+  invoke void @_ZN16ColoringRuleItemC1Eb7QStringS0_6QColorS1_PS_(ptr noundef align 8 dereferenceable_or_null(128) %i.hb, i1 noundef zeroext %i.hh, ptr noundef nonnull align 8 %46, ptr noundef nonnull align 8 %49, i64 %.fca.0.load.i.i, i64 %.sroa.513.8.insert.mask, ptr noundef nonnull byval(%class.QColor) align 8 %52, ptr noundef %i.hs)
           to label %bb.cz unwind label %bb.ed
 
 bb.cz:                                            ; preds = %_ZNK13QJsonValueRef8toStringERK7QString.exit249
@@ -989,7 +986,6 @@ _ZN5QListI8QVariantE6appendEOS0_.exit:            ; preds = %_ZNK17QArrayDataPoi
   br label %bb.di
 
 bb.di:                                            ; preds = %_ZN7QStringD2Ev.exit188, %_ZN5QListI8QVariantE6appendEOS0_.exit
-  %.sroa.513.1 = phi i64 [ %.sroa.513.8.insert.insert, %_ZN5QListI8QVariantE6appendEOS0_.exit ], [ %.sroa.513.0, %_ZN7QStringD2Ev.exit188 ]
   call void @_ZN11QJsonObjectD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable_or_null(8) %32) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #21
   %i.is = add i32 %.093, 1
@@ -1392,7 +1388,7 @@ _ZNK17QArrayDataPointerI8QVariantE14freeSpaceAtEndEv.exit: ; preds = %bb.b
 bb.c:                                             ; preds = %_ZNK17QArrayDataPointerI8QVariantE14freeSpaceAtEndEv.exit
   %i.r = getelementptr [32 x i8], ptr %i.j, i64 %1
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) dereferenceable_or_null(32) %i.r, ptr noundef align 8 dereferenceable(32) %2, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i64 2, ptr %.sroa.4.0..sroa_idx.i, align 8
   %i.s = load i64, ptr %i.d, align 8
@@ -1417,7 +1413,7 @@ _ZNK17QArrayDataPointerI8QVariantE16freeSpaceAtBeginEv.exit: ; preds = %bb.d
 bb.e:                                             ; preds = %_ZNK17QArrayDataPointerI8QVariantE16freeSpaceAtBeginEv.exit
   %i.ab = getelementptr i8, ptr %i.w, i64 -32
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) dereferenceable_or_null(32) %i.ab, ptr noundef align 8 dereferenceable(32) %2, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
   %.sroa.4.0..sroa_idx.i17 = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i64 2, ptr %.sroa.4.0..sroa_idx.i17, align 8
   %i.ac = load ptr, ptr %i.v, align 8
@@ -1431,7 +1427,7 @@ bb.e:                                             ; preds = %_ZNK17QArrayDataPoi
 _ZNK17QArrayDataPointerI8QVariantE11needsDetachEv.exit.thread: ; preds = %bb.a, %bb.d, %_ZNK17QArrayDataPointerI8QVariantE16freeSpaceAtBeginEv.exit, %_ZNK17QArrayDataPointerI8QVariantE11needsDetachEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) dereferenceable_or_null(32) %3, ptr noundef align 8 dereferenceable(32) %2, i64 32, i1 false)
-  tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
   %.sroa.4.0..sroa_idx.i18 = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i64 2, ptr %.sroa.4.0..sroa_idx.i18, align 8
   %i.ag = getelementptr i8, ptr %0, i64 16        ; 4 uses
@@ -1834,7 +1830,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph.i34
   %.010.i36 = phi ptr [ %i.at, %.lr.ph.i34 ], [ %i.ba, %bb.l ] ; 4 uses
   %i.az = getelementptr [32 x i8], ptr %i.x, i64 %i.ay
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(32) dereferenceable_or_null(32) %i.az, ptr noundef align 8 dereferenceable(32) %.010.i36, i64 32, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(32) %.010.i36, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.010.i36, i8 0, i64 24, i1 false)
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.010.i36, i64 24
   store i64 2, ptr %.sroa.4.0..sroa_idx.i.i, align 8
   %i.ba = getelementptr i8, ptr %.010.i36, i64 32 ; 2 uses

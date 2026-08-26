@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader317, %select.unfold
-  %.sroa.0272.0 = phi ptr [ %.sroa.0272.2, %select.unfold ], [ null, %.preheader317 ] ; 37 uses
+  %.sroa.0272.0 = phi ptr [ %.sroa.0272.2, %select.unfold ], [ null, %.preheader317 ] ; 36 uses
   %.0123 = phi i32 [ %i.en, %select.unfold ], [ 0, %.preheader317 ] ; 2 uses
   %i.p = invoke noundef signext i8 @_ZNK6icu_7813ResourceTable14getKeyAndValueEiRPKcRNS_13ResourceValueE(ptr noundef nonnull align 8 dereferenceable(37) %5, i32 noundef %.0123, ptr noundef nonnull align 8 dereferenceable(8) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %2)
           to label %bb.d unwind label %bb.e
@@ -608,28 +608,29 @@ _ZN6icu_7812LocalPointerINS_7UVectorEE29adoptInsteadAndCheckErrorCodeEPS1_R10UEr
   %.not201377 = icmp sgt i32 %i.eo, 0
   br i1 %.not201377, label %.lr.ph.outer, label %.critedge
 
-.lr.ph.outer:                                     ; preds = %.critedge208, %.thread450
-  %10 = phi i1 [ false, %.thread450 ], [ true, %.critedge208 ]
-  %.0128378.ph = phi i32 [ %.0128378, %.thread450 ], [ 0, %.critedge208 ]
+.lr.ph.outer:                                     ; preds = %.critedge208, %bb.cl
+  %.0127379.ph = phi i32 [ %i.hi, %bb.cl ], [ 0, %.critedge208 ] ; 6 uses
+  %.0130378.ph = phi i8 [ %.0130378, %bb.cl ], [ 0, %.critedge208 ]
+  %10 = or disjoint i32 %.0127379.ph, 1           ; 3 uses
+  %11 = or disjoint i32 %.0127379.ph, 1           ; 2 uses
   br label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph.outer, %bb.cl
-  %.0128378 = phi i32 [ %i.hi, %bb.cl ], [ %.0128378.ph, %.lr.ph.outer ] ; 7 uses
-  %i.ep = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %.0128378)
-          to label %_ZNK6icu_787UVectorixEi.exit unwind label %12 ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.outer, %.thread450
+  %.0130378 = phi i8 [ 1, %.thread450 ], [ %.0130378.ph, %.lr.ph.outer ] ; 2 uses
+  %i.ep = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %.0127379.ph)
+          to label %_ZNK6icu_787UVectorixEi.exit unwind label %.loopexit458 ; 3 uses
 
 _ZNK6icu_787UVectorixEi.exit:                     ; preds = %.lr.ph
   %i.eq = load ptr, ptr %i.j, align 8, !tbaa !99
   %i.er = invoke noundef ptr @uhash_get_78(ptr noundef %i.eq, ptr noundef nonnull align 8 dereferenceable(64) %i.ep)
-          to label %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit229 unwind label %.loopexit458 ; 2 uses
+          to label %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit229 unwind label %.loopexit.split-lp459 ; 2 uses
 
 _ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit229: ; preds = %_ZNK6icu_787UVectorixEi.exit
   %.not177 = icmp eq ptr %i.er, null
   br i1 %.not177, label %bb.cc, label %bb.bn
 
 bb.bn:                                            ; preds = %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit229
-  %11 = add nsw i32 %.0128378, 1                  ; 3 uses
-  %i.es = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %11)
+  %i.es = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %10)
           to label %_ZNK6icu_787UVectorixEi.exit230 unwind label %bb.bs ; 3 uses
 
 _ZNK6icu_787UVectorixEi.exit230:                  ; preds = %bb.bn
@@ -744,17 +745,12 @@ _ZN6icu_7810LocalArrayINS_13UnicodeStringEEC2EPS1_R10UErrorCode.exit233.thread44
   %i.fv = icmp slt i32 %.pre415447, 1
   br i1 %i.fv, label %_ZL14uprv_arrayCopyPKN6icu_7813UnicodeStringEPS0_i.exit, label %bb.cb
 
-12:                                               ; preds = %.lr.ph
-  %13 = landingpad { ptr, i32 }
-          cleanup
-  br label %.body259
-
-.loopexit458:                                     ; preds = %_ZNK6icu_787UVectorixEi.exit, %bb.cc
+.loopexit458:                                     ; preds = %.lr.ph
   %lpad.loopexit460 = landingpad { ptr, i32 }
           cleanup
   br label %.body259
 
-.loopexit.split-lp459:                            ; preds = %bb.cj, %bb.ck
+.loopexit.split-lp459:                            ; preds = %bb.cc, %_ZNK6icu_787UVectorixEi.exit, %bb.ck, %bb.cj
   %lpad.loopexit.split-lp461 = landingpad { ptr, i32 }
           cleanup
   br label %.body259
@@ -884,15 +880,14 @@ _ZN6icu_789Hashtable4putiERKNS_13UnicodeStringEiR10UErrorCode.exit241._crit_edge
 bb.cc:                                            ; preds = %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit229
   %i.gu = load ptr, ptr %i.n, align 8, !tbaa !99
   %i.gv = invoke noundef ptr @uhash_get_78(ptr noundef %i.gu, ptr noundef nonnull align 8 dereferenceable(64) %i.ep)
-          to label %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit253 unwind label %.loopexit458 ; 2 uses
+          to label %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit253 unwind label %.loopexit.split-lp459 ; 2 uses
 
 _ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit253: ; preds = %bb.cc
   %.not178 = icmp eq ptr %i.gv, null
   br i1 %.not178, label %bb.cl, label %bb.cd
 
 bb.cd:                                            ; preds = %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit253
-  %14 = add nsw i32 %.0128378, 1                  ; 2 uses
-  %i.gw = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %14)
+  %i.gw = invoke noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %11)
           to label %_ZNK6icu_787UVectorixEi.exit255 unwind label %bb.ci ; 2 uses
 
 _ZNK6icu_787UVectorixEi.exit255:                  ; preds = %bb.cd
@@ -935,27 +930,28 @@ _ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit261: ; preds =
   br i1 %i.hh, label %bb.cj, label %.thread305
 
 bb.cj:                                            ; preds = %_ZN6icu_789Hashtable4putiERKNS_13UnicodeStringEiR10UErrorCode.exit241._crit_edge, %_ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit261, %.thread302
-  %.pre-phi = phi i32 [ %11, %_ZN6icu_789Hashtable4putiERKNS_13UnicodeStringEiR10UErrorCode.exit241._crit_edge ], [ %14, %_ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit261 ], [ %11, %.thread302 ]
+  %.pre-phi = phi i32 [ %10, %_ZN6icu_789Hashtable4putiERKNS_13UnicodeStringEiR10UErrorCode.exit241._crit_edge ], [ %11, %_ZN6icu_789Hashtable3putERKNS_13UnicodeStringEPvR10UErrorCode.exit261 ], [ %10, %.thread302 ]
   invoke void @_ZN6icu_787UVector15removeElementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %.pre-phi)
           to label %bb.ck unwind label %.loopexit.split-lp459
 
 bb.ck:                                            ; preds = %bb.cj
-  invoke void @_ZN6icu_787UVector15removeElementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %.0128378)
+  invoke void @_ZN6icu_787UVector15removeElementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.o, i32 noundef %.0127379.ph)
           to label %.thread450 unwind label %.loopexit.split-lp459
 
 bb.cl:                                            ; preds = %_ZNK6icu_789Hashtable3getERKNS_13UnicodeStringE.exit253
-  %i.hi = add nsw i32 %.0128378, 2                ; 2 uses
+  %i.hi = add nuw nsw i32 %.0127379.ph, 2         ; 2 uses
   %i.hj = load i32, ptr %i.q, align 8, !tbaa !268 ; 2 uses
   %.not201 = icmp slt i32 %i.hi, %i.hj
-  br i1 %.not201, label %.lr.ph, label %.thread299, !llvm.loop !281
+  br i1 %.not201, label %.lr.ph.outer, label %.thread299, !llvm.loop !281
 
 .thread450:                                       ; preds = %bb.ck
   %i.hk = load i32, ptr %i.q, align 8, !tbaa !268 ; 2 uses
-  %.not201453 = icmp slt i32 %.0128378, %i.hk
-  br i1 %.not201453, label %.lr.ph.outer, label %.thread299.thread455, !llvm.loop !281
+  %.not201453 = icmp slt i32 %.0127379.ph, %i.hk
+  br i1 %.not201453, label %.lr.ph, label %.thread299.thread455, !llvm.loop !281
 
 .thread299:                                       ; preds = %bb.cl
-  br i1 %10, label %.critedge, label %.thread299.thread455
+  %12 = icmp eq i8 %.0130378, 0
+  br i1 %12, label %.critedge, label %.thread299.thread455
 
 .thread299.thread455:                             ; preds = %.thread450, %.thread299
   %i.hl = phi i32 [ %i.hj, %.thread299 ], [ %i.hk, %.thread450 ] ; 2 uses
@@ -1006,9 +1002,9 @@ bb.co:                                            ; preds = %.thread305
 _ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit:  ; preds = %.thread305.thread, %bb.co, %.thread305, %.thread307, %bb.a
   ret void
 
-.body259:                                         ; preds = %.loopexit458, %.loopexit.split-lp459, %bb.ci, %bb.ch, %12, %bb.bs, %.body235, %bb.bt, %bb.e, %bb.bm
-  %.sroa.0272.7 = phi ptr [ %.sroa.0272.0, %bb.ch ], [ %.sroa.0272.0, %bb.ci ], [ %.sroa.0272.0, %.body235 ], [ %.sroa.0272.0, %bb.bt ], [ %.sroa.0272.0, %bb.bs ], [ %.sroa.0272.0, %12 ], [ %.sroa.0272.4, %bb.bm ], [ %.sroa.0272.0, %bb.e ], [ %.sroa.0272.0, %.loopexit458 ], [ %.sroa.0272.0, %.loopexit.split-lp459 ] ; 3 uses
-  %.pn197.pn.pn = phi { ptr, i32 } [ %i.he, %bb.ch ], [ %i.hf, %bb.ci ], [ %eh.lpad-body236, %.body235 ], [ %i.fx, %bb.bt ], [ %i.fw, %bb.bs ], [ %13, %12 ], [ %.pn171.pn.pn, %bb.bm ], [ %i.t, %bb.e ], [ %lpad.loopexit460, %.loopexit458 ], [ %lpad.loopexit.split-lp461, %.loopexit.split-lp459 ]
+.body259:                                         ; preds = %bb.ci, %bb.ch, %.loopexit458, %bb.bs, %.body235, %bb.bt, %.loopexit.split-lp459, %bb.e, %bb.bm
+  %.sroa.0272.7 = phi ptr [ %.sroa.0272.0, %.loopexit.split-lp459 ], [ %.sroa.0272.0, %bb.ci ], [ %.sroa.0272.0, %.body235 ], [ %.sroa.0272.0, %bb.bt ], [ %.sroa.0272.0, %bb.bs ], [ %.sroa.0272.0, %.loopexit458 ], [ %.sroa.0272.4, %bb.bm ], [ %.sroa.0272.0, %bb.e ], [ %.sroa.0272.0, %bb.ch ] ; 3 uses
+  %.pn197.pn.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp461, %.loopexit.split-lp459 ], [ %i.hf, %bb.ci ], [ %eh.lpad-body236, %.body235 ], [ %i.fx, %bb.bt ], [ %i.fw, %bb.bs ], [ %lpad.loopexit460, %.loopexit458 ], [ %.pn171.pn.pn, %bb.bm ], [ %i.t, %bb.e ], [ %i.he, %bb.ch ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   %i.hv = icmp eq ptr %.sroa.0272.7, null
   br i1 %i.hv, label %_ZN6icu_7812LocalPointerINS_7UVectorEED2Ev.exit262, label %bb.cp

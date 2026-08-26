@@ -202,7 +202,7 @@ file_end_write.exit:                              ; preds = %bb.r, %bb.q, %file_
 define dso_local i64 @vfs_write(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3) local_unnamed_addr #0 align 16 prefalign(16) {
 bb.a:
   %4 = alloca %struct.kiocb, align 8              ; 11 uses
-  %5 = alloca %struct.iov_iter, align 8           ; 10 uses
+  %5 = alloca %struct.iov_iter, align 8           ; 11 uses
   %i.a = getelementptr i8, ptr %0, i64 4          ; 2 uses
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   %i.c = and i32 %i.b, 2
@@ -419,15 +419,17 @@ bb.w:                                             ; preds = %init_sync_kiocb.exi
 bb.x:                                             ; preds = %bb.w, %init_sync_kiocb.exit.i
   %i.bu = phi i64 [ %i.bt, %bb.w ], [ 0, %init_sync_kiocb.exit.i ]
   store i64 %i.bu, ptr %.sroa.2.0..sroa_idx.i.i, align 8
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 3
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %.sroa.4.0..sroa_idx.i.i, i8 0, i64 5, i1 false)
   store i8 0, ptr %5, align 8
   %.sroa.2.0..sroa_idx.i12.i = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 0, ptr %.sroa.2.0..sroa_idx.i12.i, align 1
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 2
   store i8 1, ptr %.sroa.3.0..sroa_idx.i.i, align 2
-  %.sroa.4.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %5, i64 3
-  %.sroa.6.0..sroa_idx.i13.i = getelementptr inbounds nuw i8, ptr %5, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %.sroa.4.0..sroa_idx.i.i.a, i8 0, i64 13, i1 false)
-  store ptr %1, ptr %.sroa.6.0..sroa_idx.i13.i, align 8
+  %.sroa.4.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store i64 0, ptr %.sroa.4.0..sroa_idx.i.i.a, align 8
+  %.sroa.6.0..sroa_idx.i14.i = getelementptr inbounds nuw i8, ptr %5, i64 16
+  store ptr %1, ptr %.sroa.6.0..sroa_idx.i14.i, align 8
   %.sroa.7.0..sroa_idx.i14.i = getelementptr inbounds nuw i8, ptr %5, i64 24
   store i64 %spec.store.select, ptr %.sroa.7.0..sroa_idx.i14.i, align 8
   %.sroa.8.0..sroa_idx.i15.i = getelementptr inbounds nuw i8, ptr %5, i64 32

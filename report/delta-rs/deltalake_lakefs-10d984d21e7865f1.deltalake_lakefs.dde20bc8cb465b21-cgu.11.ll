@@ -204,8 +204,8 @@ bb.br:                                            ; preds = %.body.i
 _RINvXNvXNtNtCseqDwI8vvjGQ_10serde_json5value2deNtB8_5ValueNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_seqINtNtBa_2de9SeqAccessNtNtBa_4read7StrReadEECsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i, %bb.bq
   %.promoted.i.i4 = phi i64 [ %.promoted.i.i4.pre, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ %i.et, %bb.bq ] ; 2 uses
   %i.fy = phi i64 [ %.pre, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ %i.er, %bb.bq ] ; 4 uses
-  %.sroa.073.0 = phi i8 [ 6, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ 4, %bb.bq ]
   %.sroa.7.0 = phi ptr [ %.sroa.10.1.ph, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ %.sroa.080.0.copyload, %bb.bq ]
+  %.sroa.073.0 = phi i8 [ 6, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ 4, %bb.bq ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   %i.fz = load i8, ptr %i.cu, align 8, !alias.scope !206, !noalias !203, !noundef !3
   %i.ga = add i8 %i.fz, 1
@@ -608,8 +608,8 @@ bb.bo:                                            ; preds = %.body.i
   unreachable
 
 _RINvXNvXNtNtCseqDwI8vvjGQ_10serde_json5value2deNtB8_5ValueNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB3_12ValueVisitorNtBW_7Visitor9visit_seqINtNtBa_2de9SeqAccessNtNtBa_4read9SliceReadEECsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i, %bb.bn
-  %.sroa.054.0 = phi i8 [ 6, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ 4, %bb.bn ]
   %.sroa.7.0 = phi ptr [ %.sroa.10.1.ph, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ %.sroa.058.0.copyload, %bb.bn ]
+  %.sroa.054.0 = phi i8 [ 6, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i ], [ 4, %bb.bn ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !656
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
@@ -1012,8 +1012,8 @@ bb.dj:                                            ; preds = %bb.di
   unreachable
 
 _RINvXs0_NvXNvNCNvMs_NtCsj34PGqTgg0L_16deltalake_lakefs6clientNtBi_12LakeFSClient11has_changes01__NtBb_12DiffResponseNtNtCs1gOyXocuPRE_10serde_core2de11Deserialize11deserializeNtB6_9___VisitorNtB1S_7Visitor9visit_mapINtNtCseqDwI8vvjGQ_10serde_json2de9MapAccessNtNtB3w_4read9SliceReadEEBk_.exit: ; preds = %bb.da, %bb.de, %.loopexit115.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i45
-  %.sroa.056.0 = phi i64 [ -9223372036854775808, %.loopexit115.i ], [ -9223372036854775808, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i45 ], [ %i.dm, %bb.da ], [ %i.iz, %bb.de ]
   %.sroa.657.0 = phi ptr [ %.sroa.1194.1.ph.sink.i, %.loopexit115.i ], [ %.sroa.1194.1.ph.sink.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i45 ], [ %.sroa.336.0.copyload.i, %bb.da ], [ %i.jc, %bb.de ]
+  %.sroa.056.0 = phi i64 [ -9223372036854775808, %.loopexit115.i ], [ -9223372036854775808, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i45 ], [ %i.dm, %bb.da ], [ %i.iz, %bb.de ]
   %.sroa.858.0 = phi i64 [ undef, %.loopexit115.i ], [ undef, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCseqDwI8vvjGQ_10serde_json5value5ValueEECsj34PGqTgg0L_16deltalake_lakefs.exit.i45 ], [ %.sroa.4.0.copyload.i, %bb.da ], [ %.sroa.650.0.copyload.i, %bb.de ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !793
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
@@ -1416,7 +1416,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !noundef !3 ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
@@ -1437,7 +1436,6 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtC
   ret { ptr, ptr } %i.j
 
 bb.d:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1727
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1727
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1730
@@ -1478,10 +1476,8 @@ bb.g:                                             ; preds = %.noexc2.i, %bb.f, %
 
 _RINvNtNtNtCs6Po7BT7Nknu_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutNtNtB8_6string6StringNtNtCseqDwI8vvjGQ_10serde_json5value5ValueNtB1y_4LeafENtB1y_4EdgeETRB1R_RB2c_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0ECsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %.noexc2.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1727
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !1727
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1727
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.o = extractvalue { ptr, ptr } %i.m, 0
   %i.p = extractvalue { ptr, ptr } %i.m, 1
   br label %bb.c

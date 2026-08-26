@@ -205,20 +205,20 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %.sroa.0.0.copyload = load ptr, ptr %3, align 8, !tbaa !292 ; 2 uses
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 120 ; 3 uses
   %i.n = load i16, ptr %i.a, align 8, !tbaa !11   ; 2 uses
   %storemerge.i.i.i.i22 = or i16 %i.n, 32
   store i16 %storemerge.i.i.i.i22, ptr %i.a, align 8, !tbaa !11
   %i.o = and i16 %i.n, 32
   %.not.i.i.i = icmp eq i16 %i.o, 0
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 128 ; 2 uses
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 128
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.0..sroa_idx, i64 24, i1 false)
   br i1 %.not.i.i.i, label %bb.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %.sroa.011.0.copyload.i.i.i = load ptr, ptr %i.m, align 8, !tbaa !292 ; 4 uses
   store ptr %.sroa.0.0.copyload, ptr %i.m, align 8, !tbaa !292
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.0..sroa_idx, i64 24, i1 false)
   %i.p = icmp ugt ptr %.sroa.011.0.copyload.i.i.i, inttoptr (i64 1 to ptr)
   br i1 %i.p, label %bb.f, label %_ZN9grpc_core15metadata_detail5ValueINS_19GrpcMessageMetadataEvED2Ev.exit.i.i.i
 
@@ -242,7 +242,6 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.d
   store ptr %.sroa.0.0.copyload, ptr %i.m, align 8, !tbaa !292
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.9.0..sroa_idx, i64 24, i1 false)
   br label %_ZN9grpc_core15metadata_detail5ValueINS_19GrpcMessageMetadataEvED2Ev.exit.i.i.i
 
 bb.j:                                             ; preds = %bb.a

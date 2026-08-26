@@ -204,8 +204,6 @@ group_next.exit132:                               ; preds = %group_next.exit132.
   %.sroa.20.0 = phi i64 [ %.sroa.20.8, %group_init.exit79 ], [ %storemerge.i125, %group_next.exit132.loopexit ] ; 4 uses
   %.sroa.0148.0 = phi i64 [ 0, %group_init.exit79 ], [ %i.ip, %group_next.exit132.loopexit ]
   %.sroa.17.0 = phi i64 [ %.sroa.17.8, %group_init.exit79 ], [ %storemerge.i129, %group_next.exit132.loopexit ] ; 2 uses
-  %.sroa.4.0 = phi i32 [ undef, %group_init.exit79 ], [ %.sroa.4.4, %group_next.exit132.loopexit ] ; 7 uses
-  %.sroa.0147.0 = phi i32 [ undef, %group_init.exit79 ], [ %.sroa.0147.4, %group_next.exit132.loopexit ] ; 7 uses
   %i.ah = icmp eq i64 %.sroa.20.0, %.sroa.0170.0
   br i1 %i.ah, label %bb.as, label %.preheader268
 
@@ -486,8 +484,6 @@ bb.r:                                             ; preds = %bb.q
   br label %.lr.ph346
 
 .preheader:                                       ; preds = %bb.ak, %bb.r
-  %.sroa.4.1.lcssa = phi i32 [ %.sroa.4.0, %bb.r ], [ %.sroa.4.2, %bb.ak ] ; 2 uses
-  %.sroa.0147.1.lcssa = phi i32 [ %.sroa.0147.0, %bb.r ], [ %.sroa.0147.2, %bb.ak ] ; 2 uses
   %.037.lcssa = phi i64 [ -1, %bb.r ], [ %.1, %bb.ak ] ; 3 uses
   %i.ec = icmp sgt i64 %.sroa.20.3.lcssa, %.037.lcssa
   br i1 %i.ec, label %.lr.ph353, label %.loopexit265
@@ -495,8 +491,8 @@ bb.r:                                             ; preds = %bb.q
 .lr.ph346:                                        ; preds = %.lr.ph346.preheader, %bb.ak
   %.037345 = phi i64 [ %.1, %bb.ak ], [ -1, %.lr.ph346.preheader ] ; 2 uses
   %.2344 = phi i64 [ %i.gu, %bb.ak ], [ %.139, %.lr.ph346.preheader ] ; 5 uses
-  %.sroa.0147.1343 = phi i32 [ %.sroa.0147.2, %bb.ak ], [ %.sroa.0147.0, %.lr.ph346.preheader ] ; 2 uses
-  %.sroa.4.1342 = phi i32 [ %.sroa.4.2, %bb.ak ], [ %.sroa.4.0, %.lr.ph346.preheader ] ; 2 uses
+  %.sroa.0147.1343 = phi i32 [ %.sroa.0147.2, %bb.ak ], [ undef, %.lr.ph346.preheader ] ; 2 uses
+  %.sroa.4.1342 = phi i32 [ %.sroa.4.2, %bb.ak ], [ undef, %.lr.ph346.preheader ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   call fastcc void @measure_split(ptr noundef %0, i64 noundef %.2344, ptr noundef %3)
   %i.ed = load i32, ptr %i.v, align 4, !tbaa !68  ; 4 uses
@@ -668,8 +664,8 @@ bb.aj:                                            ; preds = %bb.ai, %score_add_s
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %.sroa.4.2 = phi i32 [ %.sroa.13.5, %bb.aj ], [ %.sroa.4.1342, %bb.ai ] ; 2 uses
-  %.sroa.0147.2 = phi i32 [ %.sroa.0.3, %bb.aj ], [ %.sroa.0147.1343, %bb.ai ] ; 2 uses
+  %.sroa.4.2 = phi i32 [ %.sroa.13.5, %bb.aj ], [ %.sroa.4.1342, %bb.ai ]
+  %.sroa.0147.2 = phi i32 [ %.sroa.0.3, %bb.aj ], [ %.sroa.0147.1343, %bb.ai ]
   %.1 = phi i64 [ %.2344, %bb.aj ], [ %.037345, %bb.ai ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
   %i.gu = add nsw i64 %.2344, 1
@@ -750,8 +746,6 @@ bb.ap:                                            ; preds = %.loopexit263
   %.sroa.20.6 = phi i64 [ %.sroa.20.2.lcssa, %bb.j ], [ %.sroa.20.3.lcssa, %bb.q ], [ %.037.lcssa, %group_previous.exit124 ], [ %.sroa.20.3.lcssa, %.preheader ], [ %.sroa.20.3.lcssa, %.preheader266 ], [ %i.dg, %group_previous.exit102 ] ; 4 uses
   %.sroa.0148.6 = phi i64 [ %.sroa.0148.3.lcssa, %bb.j ], [ %.sroa.0148.3.lcssa, %bb.q ], [ %storemerge.i121, %group_previous.exit124 ], [ %.sroa.0148.3.lcssa, %.preheader ], [ %.sroa.0148.3.lcssa, %.preheader266 ], [ %storemerge.i99, %group_previous.exit102 ] ; 3 uses
   %.sroa.17.6 = phi i64 [ %.sroa.17.3.lcssa, %bb.j ], [ %.sroa.17.3.lcssa, %bb.q ], [ %i.hp, %group_previous.exit124 ], [ %.sroa.17.3.lcssa, %.preheader ], [ %.sroa.17.3.lcssa, %.preheader266 ], [ %i.ds, %group_previous.exit102 ] ; 5 uses
-  %.sroa.4.3 = phi i32 [ %.sroa.4.0, %bb.j ], [ %.sroa.4.0, %bb.q ], [ %.sroa.4.1.lcssa, %group_previous.exit124 ], [ %.sroa.4.1.lcssa, %.preheader ], [ %.sroa.4.0, %.preheader266 ], [ %.sroa.4.0, %group_previous.exit102 ] ; 3 uses
-  %.sroa.0147.3 = phi i32 [ %.sroa.0147.0, %bb.j ], [ %.sroa.0147.0, %bb.q ], [ %.sroa.0147.1.lcssa, %group_previous.exit124 ], [ %.sroa.0147.1.lcssa, %.preheader ], [ %.sroa.0147.0, %.preheader266 ], [ %.sroa.0147.0, %group_previous.exit102 ] ; 3 uses
   %.not62 = icmp ne i64 %.sroa.17.6, %.sroa.0148.6
   %or.cond = and i1 %i.ab, %.not62
   br i1 %or.cond, label %bb.aq, label %bb.as
@@ -786,8 +780,6 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.aq, %.loopexit265, %bb.ar, %group_next.exit132
   %.sroa.20.7 = phi i64 [ %.sroa.0170.0, %group_next.exit132 ], [ %.sroa.20.0, %bb.aq ], [ %.sroa.20.6, %bb.ar ], [ %.sroa.20.6, %.loopexit265 ] ; 2 uses
   %.sroa.17.7 = phi i64 [ %.sroa.17.0, %group_next.exit132 ], [ %.sroa.17.6, %bb.aq ], [ %.sroa.17.6, %bb.ar ], [ %.sroa.17.6, %.loopexit265 ] ; 3 uses
-  %.sroa.4.4 = phi i32 [ %.sroa.4.0, %group_next.exit132 ], [ %.sroa.4.3, %bb.aq ], [ %.sroa.4.3, %bb.ar ], [ %.sroa.4.3, %.loopexit265 ]
-  %.sroa.0147.4 = phi i32 [ %.sroa.0147.0, %group_next.exit132 ], [ %.sroa.0147.3, %bb.aq ], [ %.sroa.0147.3, %bb.ar ], [ %.sroa.0147.3, %.loopexit265 ]
   %i.if = load i64, ptr %i.s, align 8, !tbaa !64
   %i.ig = icmp eq i64 %.sroa.20.7, %i.if
   br i1 %i.ig, label %group_next.exit128, label %bb.at
@@ -1110,10 +1102,10 @@ bb.a:
   br i1 %i.k, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a, %bb.f
-  %.03142 = phi ptr [ %.1, %bb.f ], [ null, %bb.a ] ; 4 uses
-  %.03241 = phi i64 [ %.pre-phi46, %bb.f ], [ %i.h, %bb.a ] ; 5 uses
-  %.03440 = phi i64 [ %.pre-phi, %bb.f ], [ %i.f, %bb.a ] ; 5 uses
-  %i.l = getelementptr i8, ptr %i.b, i64 %.03440
+  %.042 = phi i64 [ %.pre-phi46, %bb.f ], [ %i.h, %bb.a ] ; 5 uses
+  %.03241 = phi i64 [ %.pre-phi, %bb.f ], [ %i.f, %bb.a ] ; 5 uses
+  %.03440 = phi ptr [ %.135, %bb.f ], [ null, %bb.a ] ; 4 uses
+  %i.l = getelementptr i8, ptr %i.b, i64 %.03241
   %i.m = getelementptr i8, ptr %i.l, i64 -1
   %i.n = load i8, ptr %i.m, align 1, !tbaa !28, !range !57, !noundef !58
   %i.o = trunc nuw i8 %i.n to i1
@@ -1123,19 +1115,19 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.p = getelementptr i8, ptr %i.d, i64 %.03241
+  %i.p = getelementptr i8, ptr %i.d, i64 %.042
   %i.q = getelementptr i8, ptr %i.p, i64 -1
   %i.r = load i8, ptr %i.q, align 1, !tbaa !28, !range !57, !noundef !58
   %i.s = trunc nuw i8 %i.r to i1
   br i1 %i.s, label %.preheader52, label %._crit_edge44
 
 ._crit_edge44:                                    ; preds = %bb.b
-  %.pre = add nsw i64 %.03440, -1
-  %.pre45 = add nsw i64 %.03241, -1
+  %.pre = add nsw i64 %.03241, -1
+  %.pre45 = add nsw i64 %.042, -1
   br label %bb.f
 
 bb.c:                                             ; preds = %.preheader52, %bb.c
-  %.135.a = phi i64 [ %i.x, %bb.c ], [ %.03440, %.preheader52 ] ; 5 uses
+  %.135.a = phi i64 [ %i.x, %bb.c ], [ %.03241, %.preheader52 ] ; 5 uses
   %i.t = getelementptr i8, ptr %i.b, i64 %.135.a
   %i.u = getelementptr i8, ptr %i.t, i64 -1
   %i.v = load i8, ptr %i.u, align 1, !tbaa !28, !range !57, !noundef !58
@@ -1144,7 +1136,7 @@ bb.c:                                             ; preds = %.preheader52, %bb.c
   br i1 %i.w, label %bb.c, label %.preheader, !llvm.loop !91
 
 .preheader:                                       ; preds = %bb.c, %.preheader
-  %.133 = phi i64 [ %i.ac, %.preheader ], [ %.03241, %bb.c ] ; 5 uses
+  %.133 = phi i64 [ %i.ac, %.preheader ], [ %.042, %bb.c ] ; 5 uses
   %i.y = getelementptr i8, ptr %i.d, i64 %.133
   %i.z = getelementptr i8, ptr %i.y, i64 -1
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !28, !range !57, !noundef !58
@@ -1158,9 +1150,9 @@ bb.d:                                             ; preds = %.preheader
   br i1 %.not.i, label %bb.e, label %xdl_add_change.exit
 
 xdl_add_change.exit:                              ; preds = %bb.d
-  %i.ae = sub nsw i64 %.03241, %.133
-  %i.af = sub nsw i64 %.03440, %.135.a
-  store ptr %.03142, ptr %i.ad, align 8, !tbaa !93
+  %i.ae = sub nsw i64 %.042, %.133
+  %i.af = sub nsw i64 %.03241, %.135.a
+  store ptr %.03440, ptr %i.ad, align 8, !tbaa !93
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   store i64 %.135.a, ptr %i.ag, align 8, !tbaa !96
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
@@ -1174,11 +1166,11 @@ xdl_add_change.exit:                              ; preds = %bb.d
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %.not3.i = icmp eq ptr %.03142, null
+  %.not3.i = icmp eq ptr %.03440, null
   br i1 %.not3.i, label %xdl_free_script.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.i
-  %.04.i = phi ptr [ %i.al, %.lr.ph.i ], [ %.03142, %bb.e ] ; 2 uses
+  %.04.i = phi ptr [ %i.al, %.lr.ph.i ], [ %.03440, %bb.e ] ; 2 uses
   %i.al = load ptr, ptr %.04.i, align 8, !tbaa !93 ; 2 uses
   tail call void @free(ptr noundef nonnull %.04.i) #10
   %.not.i38 = icmp eq ptr %i.al, null
@@ -1187,16 +1179,16 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %._crit_edge44, %xdl_add_change.exit
   %.pre-phi46 = phi i64 [ %.pre45, %._crit_edge44 ], [ %i.ac, %xdl_add_change.exit ]
   %.pre-phi = phi i64 [ %.pre, %._crit_edge44 ], [ %i.x, %xdl_add_change.exit ]
-  %.236 = phi i64 [ %.03440, %._crit_edge44 ], [ %.135.a, %xdl_add_change.exit ]
-  %.2.a = phi i64 [ %.03241, %._crit_edge44 ], [ %.133, %xdl_add_change.exit ]
-  %.1 = phi ptr [ %.03142, %._crit_edge44 ], [ %i.ad, %xdl_add_change.exit ] ; 2 uses
-  %i.am = icmp sgt i64 %.236, 0
-  %i.an = icmp sgt i64 %.2.a, 0
+  %.135 = phi ptr [ %.03440, %._crit_edge44 ], [ %i.ad, %xdl_add_change.exit ] ; 2 uses
+  %.2.a = phi i64 [ %.03241, %._crit_edge44 ], [ %.135.a, %xdl_add_change.exit ]
+  %.2 = phi i64 [ %.042, %._crit_edge44 ], [ %.133, %xdl_add_change.exit ]
+  %i.am = icmp sgt i64 %.2.a, 0
+  %i.an = icmp sgt i64 %.2, 0
   %i.ao = select i1 %i.am, i1 true, i1 %i.an
   br i1 %i.ao, label %.lr.ph, label %._crit_edge, !llvm.loop !102
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
-  %.031.lcssa = phi ptr [ null, %bb.a ], [ %.1, %bb.f ]
+  %.031.lcssa = phi ptr [ null, %bb.a ], [ %.135, %bb.f ]
   store ptr %.031.lcssa, ptr %1, align 8, !tbaa !103
   br label %xdl_free_script.exit
 
@@ -1265,10 +1257,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.w, label %.lr.ph.i, label %.sink.split
 
 .lr.ph.i:                                         ; preds = %bb.d, %bb.i
-  %.03142.i = phi ptr [ %.1.i, %bb.i ], [ null, %bb.d ] ; 4 uses
-  %.03241.i = phi i64 [ %.pre-phi46.i, %bb.i ], [ %i.t, %bb.d ] ; 5 uses
-  %.03440.i = phi i64 [ %.pre-phi.i, %bb.i ], [ %i.r, %bb.d ] ; 5 uses
-  %i.x = getelementptr i8, ptr %i.n, i64 %.03440.i
+  %.042.i = phi i64 [ %.pre-phi46.i, %bb.i ], [ %i.t, %bb.d ] ; 5 uses
+  %.03241.i = phi i64 [ %.pre-phi.i, %bb.i ], [ %i.r, %bb.d ] ; 5 uses
+  %.03440.i = phi ptr [ %.135.i, %bb.i ], [ null, %bb.d ] ; 4 uses
+  %i.x = getelementptr i8, ptr %i.n, i64 %.03241.i
   %i.y = getelementptr i8, ptr %i.x, i64 -1
   %i.z = load i8, ptr %i.y, align 1, !tbaa !28, !range !57, !noundef !58
   %i.aa = trunc nuw i8 %i.z to i1
@@ -1278,19 +1270,19 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i
-  %i.ab = getelementptr i8, ptr %i.p, i64 %.03241.i
+  %i.ab = getelementptr i8, ptr %i.p, i64 %.042.i
   %i.ac = getelementptr i8, ptr %i.ab, i64 -1
   %i.ad = load i8, ptr %i.ac, align 1, !tbaa !28, !range !57, !noundef !58
   %i.ae = trunc nuw i8 %i.ad to i1
   br i1 %i.ae, label %.preheader86, label %._crit_edge44.i
 
 ._crit_edge44.i:                                  ; preds = %bb.e
-  %.pre.i = add nsw i64 %.03440.i, -1
-  %.pre45.i = add nsw i64 %.03241.i, -1
+  %.pre.i = add nsw i64 %.03241.i, -1
+  %.pre45.i = add nsw i64 %.042.i, -1
   br label %bb.i
 
 bb.f:                                             ; preds = %.preheader86, %bb.f
-  %.135.i.a = phi i64 [ %i.aj, %bb.f ], [ %.03440.i, %.preheader86 ] ; 5 uses
+  %.135.i.a = phi i64 [ %i.aj, %bb.f ], [ %.03241.i, %.preheader86 ] ; 5 uses
   %i.af = getelementptr i8, ptr %i.n, i64 %.135.i.a
   %i.ag = getelementptr i8, ptr %i.af, i64 -1
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !28, !range !57, !noundef !58
@@ -1299,7 +1291,7 @@ bb.f:                                             ; preds = %.preheader86, %bb.f
   br i1 %i.ai, label %bb.f, label %.preheader.i, !llvm.loop !91
 
 .preheader.i:                                     ; preds = %bb.f, %.preheader.i
-  %.133.i = phi i64 [ %i.ao, %.preheader.i ], [ %.03241.i, %bb.f ] ; 5 uses
+  %.133.i = phi i64 [ %i.ao, %.preheader.i ], [ %.042.i, %bb.f ] ; 5 uses
   %i.ak = getelementptr i8, ptr %i.p, i64 %.133.i
   %i.al = getelementptr i8, ptr %i.ak, i64 -1
   %i.am = load i8, ptr %i.al, align 1, !tbaa !28, !range !57, !noundef !58
@@ -1313,9 +1305,9 @@ bb.g:                                             ; preds = %.preheader.i
   br i1 %.not.i.i, label %bb.h, label %xdl_add_change.exit.i
 
 xdl_add_change.exit.i:                            ; preds = %bb.g
-  %i.aq = sub nsw i64 %.03241.i, %.133.i
-  %i.ar = sub nsw i64 %.03440.i, %.135.i.a
-  store ptr %.03142.i, ptr %i.ap, align 8, !tbaa !93
+  %i.aq = sub nsw i64 %.042.i, %.133.i
+  %i.ar = sub nsw i64 %.03241.i, %.135.i.a
+  store ptr %.03440.i, ptr %i.ap, align 8, !tbaa !93
   %i.as = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   store i64 %.135.i.a, ptr %i.as, align 8, !tbaa !96
   %i.at = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
@@ -1329,11 +1321,11 @@ xdl_add_change.exit.i:                            ; preds = %bb.g
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %.not3.i.i = icmp eq ptr %.03142.i, null
+  %.not3.i.i = icmp eq ptr %.03440.i, null
   br i1 %.not3.i.i, label %.sink.split, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.h, %.lr.ph.i.i
-  %.04.i.i = phi ptr [ %i.ax, %.lr.ph.i.i ], [ %.03142.i, %bb.h ] ; 2 uses
+  %.04.i.i = phi ptr [ %i.ax, %.lr.ph.i.i ], [ %.03440.i, %bb.h ] ; 2 uses
   %i.ax = load ptr, ptr %.04.i.i, align 8, !tbaa !93 ; 2 uses
   call void @free(ptr noundef nonnull %.04.i.i) #10
   %.not.i38.i = icmp eq ptr %i.ax, null
@@ -1342,16 +1334,16 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %xdl_add_change.exit.i, %._crit_edge44.i
   %.pre-phi46.i = phi i64 [ %.pre45.i, %._crit_edge44.i ], [ %i.ao, %xdl_add_change.exit.i ]
   %.pre-phi.i = phi i64 [ %.pre.i, %._crit_edge44.i ], [ %i.aj, %xdl_add_change.exit.i ]
-  %.236.i = phi i64 [ %.03440.i, %._crit_edge44.i ], [ %.135.i.a, %xdl_add_change.exit.i ]
-  %.2.i.a = phi i64 [ %.03241.i, %._crit_edge44.i ], [ %.133.i, %xdl_add_change.exit.i ]
-  %.1.i = phi ptr [ %.03142.i, %._crit_edge44.i ], [ %i.ap, %xdl_add_change.exit.i ] ; 7 uses
-  %i.ay = icmp sgt i64 %.236.i, 0
-  %i.az = icmp sgt i64 %.2.i.a, 0
+  %.135.i = phi ptr [ %.03440.i, %._crit_edge44.i ], [ %i.ap, %xdl_add_change.exit.i ] ; 7 uses
+  %.2.i.a = phi i64 [ %.03241.i, %._crit_edge44.i ], [ %.135.i.a, %xdl_add_change.exit.i ]
+  %.2.i = phi i64 [ %.042.i, %._crit_edge44.i ], [ %.133.i, %xdl_add_change.exit.i ]
+  %i.ay = icmp sgt i64 %.2.i.a, 0
+  %i.az = icmp sgt i64 %.2.i, 0
   %i.ba = select i1 %i.ay, i1 true, i1 %i.az
   br i1 %i.ba, label %.lr.ph.i, label %xdl_build_script.exit, !llvm.loop !102
 
 xdl_build_script.exit:                            ; preds = %bb.i
-  %.not14 = icmp eq ptr %.1.i, null
+  %.not14 = icmp eq ptr %.135.i, null
   br i1 %.not14, label %.sink.split, label %bb.j
 
 bb.j:                                             ; preds = %xdl_build_script.exit
@@ -1361,7 +1353,7 @@ bb.j:                                             ; preds = %xdl_build_script.ex
   br i1 %.not15, label %xdl_mark_ignorable_lines.exit, label %.preheader
 
 .preheader:                                       ; preds = %bb.j, %._crit_edge33.i
-  %.02835.i = phi ptr [ %i.co, %._crit_edge33.i ], [ %.1.i, %bb.j ] ; 6 uses
+  %.02835.i = phi ptr [ %i.co, %._crit_edge33.i ], [ %.135.i, %bb.j ] ; 6 uses
   %i.bd = load ptr, ptr %7, align 8, !tbaa !106
   %i.be = getelementptr inbounds nuw i8, ptr %.02835.i, i64 8
   %i.bf = load i64, ptr %i.be, align 8, !tbaa !96
@@ -1433,7 +1425,7 @@ xdl_mark_ignorable_lines.exit:                    ; preds = %._crit_edge33.i, %b
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.q, %.lr.ph43.i
-  %.02541.i = phi ptr [ %.1.i, %.lr.ph43.i ], [ %i.es, %bb.q ] ; 6 uses
+  %.02541.i = phi ptr [ %.135.i, %.lr.ph43.i ], [ %i.es, %bb.q ] ; 6 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %.02541.i, i64 40 ; 2 uses
   %i.cv = load i32, ptr %i.cu, align 8, !tbaa !100
   %.not26.i = icmp eq i32 %i.cv, 0
@@ -1574,19 +1566,19 @@ bb.q:                                             ; preds = %._crit_edge37.i, %b
   br i1 %.not.i19, label %xdl_mark_ignorable_regex.exit, label %bb.k, !llvm.loop !122
 
 xdl_mark_ignorable_regex.exit:                    ; preds = %bb.q, %xdl_mark_ignorable_lines.exit
-  %i.et = call i32 %i.c(ptr noundef nonnull %7, ptr noundef nonnull %.1.i, ptr noundef %4, ptr noundef %3) #10, !callees !123
+  %i.et = call i32 %i.c(ptr noundef nonnull %7, ptr noundef nonnull %.135.i, ptr noundef %4, ptr noundef %3) #10, !callees !123
   %i.eu = icmp slt i32 %i.et, 0
   br i1 %i.eu, label %.lr.ph.i25, label %.lr.ph.i29
 
 .lr.ph.i25:                                       ; preds = %xdl_mark_ignorable_regex.exit, %.lr.ph.i25
-  %.04.i = phi ptr [ %i.ev, %.lr.ph.i25 ], [ %.1.i, %xdl_mark_ignorable_regex.exit ] ; 2 uses
+  %.04.i = phi ptr [ %i.ev, %.lr.ph.i25 ], [ %.135.i, %xdl_mark_ignorable_regex.exit ] ; 2 uses
   %i.ev = load ptr, ptr %.04.i, align 8, !tbaa !93 ; 2 uses
   call void @free(ptr noundef nonnull %.04.i) #10
   %.not.i26 = icmp eq ptr %i.ev, null
   br i1 %.not.i26, label %.sink.split, label %.lr.ph.i25, !llvm.loop !101
 
 .lr.ph.i29:                                       ; preds = %xdl_mark_ignorable_regex.exit, %.lr.ph.i29
-  %.04.i30 = phi ptr [ %i.ew, %.lr.ph.i29 ], [ %.1.i, %xdl_mark_ignorable_regex.exit ] ; 2 uses
+  %.04.i30 = phi ptr [ %i.ew, %.lr.ph.i29 ], [ %.135.i, %xdl_mark_ignorable_regex.exit ] ; 2 uses
   %i.ew = load ptr, ptr %.04.i30, align 8, !tbaa !93 ; 2 uses
   call void @free(ptr noundef nonnull %.04.i30) #10
   %.not.i31 = icmp eq ptr %i.ew, null

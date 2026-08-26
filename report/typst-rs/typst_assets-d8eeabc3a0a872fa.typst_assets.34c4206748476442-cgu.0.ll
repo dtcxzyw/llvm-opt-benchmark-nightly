@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/typst-rs/original/typst_assets-d8eeabc3a0a872fa.typst_assets.34c4206748476442-cgu.0?download=true
+inline.NumInlined: 197
+inline.NumDeleted: 128
+loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 12
 begin_hunk_0
 @356 = private unnamed_addr constant <{ [1 x i8], [23 x i8], [1 x i8], [23 x i8], [1 x i8], [7 x i8], [16 x i8] }> <{ [1 x i8] c"\01", [23 x i8] undef, [1 x i8] c"\04", [23 x i8] undef, [1 x i8] c"\16", [7 x i8] undef, [16 x i8] c"\8B\00\00\00\00\00\00\00\8C\00\00\00\00\00\00\00" }>, align 8
 @357 = private unnamed_addr constant [7 x i8] c"preload", align 1
@@ -200,8 +205,8 @@ _RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit16.i.i.i.i.i, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit14.i.i.i.i.i, %bb.b, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit12.i.i.i.i.i
-  %i.an = phi ptr [ %i.u, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit14.i.i.i.i.i ], [ %i.ae, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit16.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit12.i.i.i.i.i ], [ %i.f, %bb.b ] ; 6 uses
-  %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.ab, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit14.i.i.i.i.i ], [ %i.am, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit16.i.i.i.i.i ], [ %i.q, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit12.i.i.i.i.i ], [ %i.s, %bb.b ] ; 8 uses
+  %i.an = phi ptr [ %i.f, %bb.b ], [ %i.ae, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit16.i.i.i.i.i ], [ %i.u, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit14.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit12.i.i.i.i.i ] ; 6 uses
+  %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.s, %bb.b ], [ %i.am, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit16.i.i.i.i.i ], [ %i.ab, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit14.i.i.i.i.i ], [ %i.q, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4wS76oGtFbW_12typst_assets.exit12.i.i.i.i.i ] ; 8 uses
   %i.ao = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i, 1114112
   tail call void @llvm.assume(i1 %i.ao)
   %i.ap = ptrtoint ptr %i.an to i64
@@ -604,8 +609,8 @@ bb.a:                                             ; preds = %.lr.ph.split.i.i.3.
   br i1 %i.o, label %_RINvNtCs6fhnmY1I3Kb_8bitflags6parser9to_writerNtNtCs4wS76oGtFbW_12typst_assets6mathml10PropertiesQNtNtCs3oUPovFnLWP_4core3fmt9FormatterEBM_.exit, label %.peel.newph
 
 .peel.newph:                                      ; preds = %bb.a, %bb.g
-  %.sroa.8.0.i = phi i64 [ %.lcssa, %bb.g ], [ %.lcssa.peel, %bb.a ] ; 6 uses
   %.sroa.14.0.i = phi i8 [ %i.aw, %bb.g ], [ %i.m, %bb.a ] ; 11 uses
+  %.sroa.8.0.i = phi i64 [ %.lcssa, %bb.g ], [ %.lcssa.peel, %bb.a ] ; 6 uses
   %i.p = icmp ult i64 %.sroa.8.0.i, 4
   br i1 %i.p, label %.lr.ph.i.i, label %.loopexit.i
 

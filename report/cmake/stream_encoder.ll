@@ -78,7 +78,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = tail call ptr @lzma_alloc(i64 noundef 1504, ptr noundef %1) #6 ; 10 uses
+  %i.f = tail call ptr @lzma_alloc(i64 noundef 1504, ptr noundef %1) #6 ; 11 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.k, label %bb.f
 
@@ -93,17 +93,19 @@ bb.f:                                             ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 296
   store i64 -1, ptr %i.k, align 8, !tbaa !27
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %.sroa.34.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.34.0..sroa_idx, i8 0, i64 64, i1 false)
   store ptr null, ptr %i.l, align 8, !tbaa !29
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store i64 -1, ptr %.sroa.23.0..sroa_idx, align 8, !tbaa !30
-  %.sroa.34.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.34.0..sroa_idx.a, i8 0, i64 64, i1 false)
-  %5 = getelementptr inbounds nuw i8, ptr %i.f, i64 376
-  store ptr null, ptr %5, align 8, !tbaa !29
+  %.sroa.34.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.f, i64 376
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 392
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.3.0..sroa_idx, i8 0, i64 64, i1 false)
+  store ptr null, ptr %.sroa.34.0..sroa_idx.a, align 8, !tbaa !29
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 384
   store i64 -1, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !30
-  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.f, i64 392
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.3.0..sroa_idx.a, i8 0, i64 72, i1 false)
+  %.sroa.3.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.f, i64 456
+  store ptr null, ptr %.sroa.3.0..sroa_idx.a, align 8, !tbaa !19
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge, %bb.f

@@ -205,9 +205,9 @@ bb.d:                                             ; preds = %.lr.ph, %bb.cf
   %.val372 = phi ptr [ %calloc, %.lr.ph ], [ %.val372857, %bb.cf ] ; 8 uses
   %.val371 = phi ptr [ %calloc, %.lr.ph ], [ %.val371855, %bb.cf ] ; 6 uses
   %indvars.iv839 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next840, %bb.cf ] ; 6 uses
-  %.0327827 = phi ptr [ null, %.lr.ph ], [ %.2, %bb.cf ] ; 2 uses
-  %.0328826 = phi i32 [ 0, %.lr.ph ], [ %.1329, %bb.cf ]
-  %.0334823 = phi i64 [ 0, %.lr.ph ], [ %.1335, %bb.cf ]
+  %.0328825 = phi i64 [ 0, %.lr.ph ], [ %.1335, %bb.cf ]
+  %.0328826 = phi i32 [ 0, %.lr.ph ], [ %.1331, %bb.cf ]
+  %.0332823 = phi ptr [ null, %.lr.ph ], [ %.2334, %bb.cf ] ; 2 uses
   %.val359 = load ptr, ptr %i.s, align 8, !tbaa !29
   %i.ae = getelementptr inbounds nuw [24 x i8], ptr %.val359, i64 %indvars.iv839 ; 111 uses
   %i.af = getelementptr i8, ptr %i.ae, i64 8      ; 12 uses
@@ -238,12 +238,13 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.val360 = phi i16 [ %.val360.pre, %bb.e ], [ %.val3.i, %bb.d ] ; 10 uses
   %i.au = phi i32 [ %.pre, %bb.e ], [ %.val2.i, %bb.d ] ; 5 uses
-  %.not349.a = icmp ne i32 %i.au, 0               ; 2 uses
-  %3 = icmp eq ptr %.0327827, null
-  %4 = zext i1 %.not349.a to i32
-  %.1329 = add nuw nsw i32 %.0328826, %4          ; 3 uses
-  %5 = select i1 %.not349.a, i1 %3, i1 false
-  %.2 = select i1 %5, ptr %i.ae, ptr %.0327827    ; 4 uses
+  %.not349 = icmp eq i32 %i.au, 0                 ; 2 uses
+  %.not349.a = icmp ne ptr %.0332823, null
+  %3 = select i1 %.not349, i1 true, i1 %.not349.a
+  %.2334 = select i1 %3, ptr %.0332823, ptr %i.ae ; 4 uses
+  %not..not349 = xor i1 %.not349, true
+  %4 = zext i1 %not..not349 to i32
+  %.1331 = add nuw nsw i32 %.0328826, %4          ; 3 uses
   %i.av = and i16 %.val360, 61
   %narrow.i.not = icmp eq i16 %i.av, 1
   br i1 %narrow.i.not, label %bb.h, label %bb.g
@@ -557,7 +558,7 @@ bb.u:                                             ; preds = %Wlc_ObjFaninId.exit
 
 bb.v:                                             ; preds = %Wlc_ObjFanin0.exit, %Wlc_ObjFanin0.exit575, %bb.u, %Wlc_ObjName.exit, %bb.h
   %i.gp = phi i16 [ %.val360, %bb.h ], [ %.val360, %Wlc_ObjFanin0.exit ], [ %.pre853, %Wlc_ObjName.exit ], [ %.val360, %Wlc_ObjFanin0.exit575 ], [ %.val360, %bb.u ]
-  %.1335 = phi i64 [ %i.bf, %bb.h ], [ %i.ck, %Wlc_ObjFanin0.exit ], [ %.0334823, %Wlc_ObjName.exit ], [ %i.dv, %Wlc_ObjFanin0.exit575 ], [ %i.go, %bb.u ] ; 3 uses
+  %.1335 = phi i64 [ %i.bf, %bb.h ], [ %i.ck, %Wlc_ObjFanin0.exit ], [ %.0328825, %Wlc_ObjName.exit ], [ %i.dv, %Wlc_ObjFanin0.exit575 ], [ %i.go, %bb.u ] ; 3 uses
   %i.gq = and i16 %i.gp, 63
   %i.gr = zext nneg i16 %i.gq to i64              ; 2 uses
   %i.gs = getelementptr inbounds nuw [8 x i8], ptr %calloc.i, i64 %i.gr
@@ -960,7 +961,7 @@ bb.cf:                                            ; preds = %Wlc_NtkPrintDistrib
   br i1 %i.asy, label %bb.d, label %.critedge, !llvm.loop !114
 
 .critedge:                                        ; preds = %bb.cf
-  %.not342 = icmp eq i32 %.1329, 0
+  %.not342 = icmp eq i32 %.1331, 0
   br i1 %.not342, label %.critedge.thread, label %bb.cg
 
 bb.cg:                                            ; preds = %.critedge
@@ -970,10 +971,10 @@ bb.cg:                                            ; preds = %.critedge
   br i1 %i.ata, label %bb.ch, label %.critedge.thread
 
 bb.ch:                                            ; preds = %bb.cg
-  %i.atb = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.5, i32 noundef %.1329) ; 0 uses
+  %i.atb = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.5, i32 noundef %.1331) ; 0 uses
   %i.atc = getelementptr i8, ptr %0, i64 640
   %.val357 = load ptr, ptr %i.atc, align 8, !tbaa !29
-  %i.atd = ptrtoint ptr %.2 to i64
+  %i.atd = ptrtoint ptr %.2334 to i64
   %i.ate = ptrtoint ptr %.val357 to i64
   %i.atf = sub i64 %i.atd, %i.ate
   %i.atg = sdiv exact i64 %i.atf, 24              ; 2 uses
@@ -987,9 +988,9 @@ bb.ch:                                            ; preds = %bb.cg
   %i.atm = getelementptr inbounds i8, ptr %.val361, i64 %i.atl
   %i.atn = load i32, ptr %i.atm, align 4, !tbaa !11
   %i.ato = tail call ptr @Abc_NamStr(ptr noundef %i.atj, i32 noundef %i.atn) #27
-  %i.atp = getelementptr i8, ptr %.2, i64 8
+  %i.atp = getelementptr i8, ptr %.2334, i64 8
   %.0327.val = load i32, ptr %i.atp, align 8, !tbaa !35 ; 2 uses
-  %i.atq = getelementptr i8, ptr %.2, i64 12
+  %i.atq = getelementptr i8, ptr %.2334, i64 12
   %.0327.val417 = load i32, ptr %i.atq, align 4, !tbaa !37 ; 2 uses
   %i.atr = sub nsw i32 %.0327.val, %.0327.val417
   %i.ats = tail call i32 @llvm.abs.i32(i32 %i.atr, i1 true)

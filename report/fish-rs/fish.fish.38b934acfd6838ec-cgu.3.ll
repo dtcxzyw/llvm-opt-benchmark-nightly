@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish.fish.38b934acfd6838ec-cgu.3?download=true
+inline.NumInlined: 77
+inline.NumDeleted: 38
 begin_hunk_0_@_RINvNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp10format_e_fNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs4RW8js5ES7g_4fish:bb.a
   br i1 %i.og, label %bb.bq, label %_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator8for_each4callcNCINvXs1V_NtCslLGyqsphxMB_10widestring9utfstringNtB1q_11Utf32StringINtNtBa_7collect6ExtendcE6extendNtNtNtBe_3str4iter5CharsE0E0Cs4RW8js5ES7g_4fish.exit.i.i.i.i.i77.i
 
@@ -200,14 +202,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %switch.lookup, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %. = select i1 %i.i, ptr @8, ptr inttoptr (i64 1 to ptr)
   %.mask = and i48 %.sroa.010.3.extract.shift, 1
   %.37.a = zext nneg i48 %.mask to i64
+  %.37 = select i1 %i.i, ptr @8, ptr inttoptr (i64 1 to ptr)
   br label %switch.lookup
 
 switch.lookup:                                    ; preds = %bb.b, %bb.c, %bb.a
-  %.sroa.011.0 = phi ptr [ @9, %bb.b ], [ %., %bb.c ], [ @10, %bb.a ] ; 5 uses
   %.sroa.5.0 = phi i64 [ 1, %bb.b ], [ %.37.a, %bb.c ], [ 1, %bb.a ] ; 8 uses
+  %.sroa.011.0 = phi ptr [ @9, %bb.b ], [ %.37, %bb.c ], [ @10, %bb.a ] ; 5 uses
   %i.k = trunc nuw i64 %4 to i1                   ; 4 uses
   %.38 = select i1 %i.k, i64 %5, i64 6            ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)

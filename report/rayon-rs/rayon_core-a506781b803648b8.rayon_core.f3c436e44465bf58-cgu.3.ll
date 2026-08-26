@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/rayon-rs/original/rayon_core-a506781b803648b8.rayon_core.f3c436e44465bf58-cgu.3?download=true
+inline.NumInlined: 163
+inline.NumDeleted: 97
 begin_hunk_0_@_RINvNtNtCsaL1QbXo9JQH_3std6thread9lifecycle15spawn_uncheckedNCNvXs0_NtCskVyUMSjkkSy_10rayon_core8registryNtB14_12DefaultSpawnNtB14_11ThreadSpawn5spawn0uEB16_:bb.a
   %i.ck = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store ptr %i.cb, ptr %i.ck, align 8
@@ -200,9 +202,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %.sroa.43.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store i8 %i.l, ptr %.sroa.43.0..sroa_idx.i, align 8, !noalias !228
   %i.o = getelementptr i8, ptr %i.n, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(14) %i.o, i8 0, i64 14, i1 false), !noalias !238
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(14) %i.o, i8 0, i64 14, i1 false), !noalias !238
   %i.p = getelementptr i8, ptr %i.n, i64 32
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %i.p, i8 0, i64 10, i1 false), !noalias !238
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(10) %i.p, i8 0, i64 10, i1 false), !noalias !238
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.n, i64 44
   store i32 0, ptr %.sroa.8.0..sroa_idx.i, align 4, !noalias !228
   %i.q = add i64 %i.h, 1                          ; 2 uses
@@ -605,8 +607,8 @@ bb.d:                                             ; preds = %bb.b
   unreachable
 
 _RNvMs8_NtCskVyUMSjkkSy_10rayon_core5latchNtB5_10CountLatch10with_count.exit: ; preds = %bb.a, %bb.c
-  %.sroa.03.0.i = phi ptr [ %i.e, %bb.c ], [ null, %bb.a ]
   %.sroa.7.0.i = phi i64 [ %i.g, %bb.c ], [ 0, %bb.a ]
+  %.sroa.03.0.i = phi ptr [ %i.e, %bb.c ], [ null, %bb.a ]
   store i64 1, ptr %0, align 8, !alias.scope !294
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.03.0.i, ptr %i.h, align 8, !alias.scope !294

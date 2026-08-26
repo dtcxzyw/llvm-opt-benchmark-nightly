@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stat-rs/original/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.06?download=true
+inline.NumInlined: 89
+inline.NumDeleted: 36
+loop-unroll.NumCompletelyUnrolled: 7
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_RINvNtNtNtNtCs3oUPovFnLWP_4core5slice4sort6shared9smallsort31small_sort_general_with_scratchdNCINvMNtCs1xwejQucwHj_5alloc5sliceSd7sort_byNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests7ks_test12ks_twosamples4_0E0EB2j_:bb.a
   %i.aj = and i64 %1, 1
   %i.ak = icmp eq i64 %i.aj, 0
@@ -200,16 +204,16 @@ bb.c:                                             ; preds = %bb.a
   %i.r = load i64, ptr %i.q, align 8, !alias.scope !160
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.t = load i64, ptr %i.s, align 8, !alias.scope !160
+  %.sroa.01.sroa.5.sroa.6.0.i = select i1 %.not.i, i64 %i.r, i64 undef ; 2 uses
   %.sroa.01.sroa.0.0.i = zext i1 %.not.i to i64   ; 2 uses
-  %.sroa.5.0.i = select i1 %.not.i, i64 %i.t, i64 0
-  %.sroa.01.sroa.5.sroa.6.0.i.a = select i1 %.not.i, i64 %i.r, i64 undef ; 2 uses
+  %.sroa.01.sroa.5.sroa.6.0.i.a = select i1 %.not.i, i64 %i.t, i64 0
   store i64 %.sroa.01.sroa.0.0.i, ptr %i.h, align 8, !noalias !160
   %.sroa.02.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr null, ptr %.sroa.02.sroa.4.0..sroa_idx.i, align 8, !noalias !160
   %.sroa.02.sroa.4.sroa.4.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store ptr %i.p, ptr %.sroa.02.sroa.4.sroa.4.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx.i, align 8, !noalias !160
   %.sroa.02.sroa.4.sroa.5.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  store i64 %.sroa.01.sroa.5.sroa.6.0.i.a, ptr %.sroa.02.sroa.4.sroa.5.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx.i, align 8, !noalias !160
+  store i64 %.sroa.01.sroa.5.sroa.6.0.i, ptr %.sroa.02.sroa.4.sroa.5.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx.i, align 8, !noalias !160
   %.sroa.02.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   store i64 %.sroa.01.sroa.0.0.i, ptr %.sroa.02.sroa.5.0..sroa_idx.i, align 8, !noalias !160
   %.sroa.02.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40
@@ -217,9 +221,9 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.02.sroa.6.sroa.4.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   store ptr %i.p, ptr %.sroa.02.sroa.6.sroa.4.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx.i, align 8, !noalias !160
   %.sroa.02.sroa.6.sroa.5.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 56
-  store i64 %.sroa.01.sroa.5.sroa.6.0.i.a, ptr %.sroa.02.sroa.6.sroa.5.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx.i, align 8, !noalias !160
+  store i64 %.sroa.01.sroa.5.sroa.6.0.i, ptr %.sroa.02.sroa.6.sroa.5.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx.i, align 8, !noalias !160
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.h, i64 64
-  store i64 %.sroa.5.0.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !160
+  store i64 %.sroa.01.sroa.5.sroa.6.0.i.a, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !160
   %i.u = call { ptr, ptr } @_RNvXsk_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_4IterINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.h), !noalias !160
   %i.v = extractvalue { ptr, ptr } %i.u, 0        ; 2 uses
   %.not34.i = icmp eq ptr %i.v, null
@@ -243,26 +247,26 @@ bb.e:                                             ; preds = %bb.b
   %i.z = load i64, ptr %i.y, align 8, !alias.scope !164
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ab = load i64, ptr %i.aa, align 8, !alias.scope !164
-  %.sroa.01.sroa.6.0.i = zext i1 %.not.i14 to i64 ; 2 uses
-  %.sroa.5.0.i15 = select i1 %.not.i14, i64 %i.ab, i64 0
-  %.sroa.01.sroa.5.sroa.6.0.i16 = select i1 %.not.i14, i64 %i.z, i64 undef ; 2 uses
-  store i64 %.sroa.01.sroa.6.0.i, ptr %i.g, align 8, !noalias !164
+  %.sroa.01.sroa.5.sroa.6.0.i15 = select i1 %.not.i14, i64 %i.z, i64 undef ; 2 uses
+  %.sroa.01.sroa.0.0.i16 = zext i1 %.not.i14 to i64 ; 2 uses
+  %.sroa.01.sroa.5.sroa.6.0.i16 = select i1 %.not.i14, i64 %i.ab, i64 0
+  store i64 %.sroa.01.sroa.0.0.i16, ptr %i.g, align 8, !noalias !164
   %.sroa.03.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   store ptr null, ptr %.sroa.03.sroa.4.0..sroa_idx.i, align 8, !noalias !164
   %.sroa.03.sroa.4.sroa.4.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   store ptr %i.x, ptr %.sroa.03.sroa.4.sroa.4.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx.i, align 8, !noalias !164
   %.sroa.03.sroa.4.sroa.5.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  store i64 %.sroa.01.sroa.5.sroa.6.0.i16, ptr %.sroa.03.sroa.4.sroa.5.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx.i, align 8, !noalias !164
+  store i64 %.sroa.01.sroa.5.sroa.6.0.i15, ptr %.sroa.03.sroa.4.sroa.5.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx.i, align 8, !noalias !164
   %.sroa.03.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  store i64 %.sroa.01.sroa.6.0.i, ptr %.sroa.03.sroa.5.0..sroa_idx.i, align 8, !noalias !164
+  store i64 %.sroa.01.sroa.0.0.i16, ptr %.sroa.03.sroa.5.0..sroa_idx.i, align 8, !noalias !164
   %.sroa.03.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   store ptr null, ptr %.sroa.03.sroa.6.0..sroa_idx.i, align 8, !noalias !164
   %.sroa.03.sroa.6.sroa.4.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 48
   store ptr %i.x, ptr %.sroa.03.sroa.6.sroa.4.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx.i, align 8, !noalias !164
   %.sroa.03.sroa.6.sroa.5.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 56
-  store i64 %.sroa.01.sroa.5.sroa.6.0.i16, ptr %.sroa.03.sroa.6.sroa.5.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx.i, align 8, !noalias !164
+  store i64 %.sroa.01.sroa.5.sroa.6.0.i15, ptr %.sroa.03.sroa.6.sroa.5.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx.i, align 8, !noalias !164
   %.sroa.44.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.g, i64 64
-  store i64 %.sroa.5.0.i15, ptr %.sroa.44.0..sroa_idx.i, align 8, !noalias !164
+  store i64 %.sroa.01.sroa.5.sroa.6.0.i16, ptr %.sroa.44.0..sroa_idx.i, align 8, !noalias !164
   %i.ac = call { ptr, ptr } @_RNvXsm_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_4IterINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyENtNtNtNtCs3oUPovFnLWP_4core4iter6traits12double_ended19DoubleEndedIterator9next_backB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.g), !noalias !164
   %i.ad = extractvalue { ptr, ptr } %i.ac, 0      ; 2 uses
   %.not36.i = icmp eq ptr %i.ad, null
@@ -665,26 +669,26 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load i64, ptr %i.e, align 8
-  %.sroa.01.sroa.6.0 = zext i1 %.not to i64       ; 2 uses
-  %.sroa.5.0 = select i1 %.not, i64 %i.f, i64 0
-  %.sroa.01.sroa.5.sroa.6.0.a = select i1 %.not, i64 %i.d, i64 undef ; 2 uses
-  store i64 %.sroa.01.sroa.6.0, ptr %i.a, align 8
+  %.sroa.01.sroa.5.sroa.6.0 = select i1 %.not, i64 %i.d, i64 undef ; 2 uses
+  %.sroa.01.sroa.0.0 = zext i1 %.not to i64       ; 2 uses
+  %.sroa.01.sroa.5.sroa.6.0.a = select i1 %.not, i64 %i.f, i64 0
+  store i64 %.sroa.01.sroa.0.0, ptr %i.a, align 8
   %.sroa.03.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr null, ptr %.sroa.03.sroa.4.0..sroa_idx, align 8
   %.sroa.03.sroa.4.sroa.4.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %i.b, ptr %.sroa.03.sroa.4.sroa.4.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.03.sroa.4.sroa.5.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i64 %.sroa.01.sroa.5.sroa.6.0.a, ptr %.sroa.03.sroa.4.sroa.5.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.01.sroa.5.sroa.6.0, ptr %.sroa.03.sroa.4.sroa.5.0..sroa.03.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.03.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 %.sroa.01.sroa.6.0, ptr %.sroa.03.sroa.5.0..sroa_idx, align 8
+  store i64 %.sroa.01.sroa.0.0, ptr %.sroa.03.sroa.5.0..sroa_idx, align 8
   %.sroa.03.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr null, ptr %.sroa.03.sroa.6.0..sroa_idx, align 8
   %.sroa.03.sroa.6.sroa.4.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr %i.b, ptr %.sroa.03.sroa.6.sroa.4.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx, align 8
   %.sroa.03.sroa.6.sroa.5.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store i64 %.sroa.01.sroa.5.sroa.6.0.a, ptr %.sroa.03.sroa.6.sroa.5.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.01.sroa.5.sroa.6.0, ptr %.sroa.03.sroa.6.sroa.5.0..sroa.03.sroa.6.0..sroa_idx.sroa_idx, align 8
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store i64 %.sroa.5.0, ptr %.sroa.44.0..sroa_idx, align 8
+  store i64 %.sroa.01.sroa.5.sroa.6.0.a, ptr %.sroa.44.0..sroa_idx, align 8
   %i.g = call { ptr, ptr } @_RNvXsm_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_4IterINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyENtNtNtNtCs3oUPovFnLWP_4core4iter6traits12double_ended19DoubleEndedIterator9next_backB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a)
   %i.h = extractvalue { ptr, ptr } %i.g, 0        ; 2 uses
   %.not36 = icmp eq ptr %i.h, null
@@ -722,16 +726,16 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load i64, ptr %i.e, align 8
+  %.sroa.01.sroa.5.sroa.6.0 = select i1 %.not, i64 %i.d, i64 undef ; 2 uses
   %.sroa.01.sroa.0.0 = zext i1 %.not to i64       ; 2 uses
-  %.sroa.5.0 = select i1 %.not, i64 %i.f, i64 0
-  %.sroa.01.sroa.5.sroa.6.0.a = select i1 %.not, i64 %i.d, i64 undef ; 2 uses
+  %.sroa.01.sroa.5.sroa.6.0.a = select i1 %.not, i64 %i.f, i64 0
   store i64 %.sroa.01.sroa.0.0, ptr %i.a, align 8
   %.sroa.02.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr null, ptr %.sroa.02.sroa.4.0..sroa_idx, align 8
   %.sroa.02.sroa.4.sroa.4.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %i.b, ptr %.sroa.02.sroa.4.sroa.4.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.02.sroa.4.sroa.5.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store i64 %.sroa.01.sroa.5.sroa.6.0.a, ptr %.sroa.02.sroa.4.sroa.5.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.01.sroa.5.sroa.6.0, ptr %.sroa.02.sroa.4.sroa.5.0..sroa.02.sroa.4.0..sroa_idx.sroa_idx, align 8
   %.sroa.02.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   store i64 %.sroa.01.sroa.0.0, ptr %.sroa.02.sroa.5.0..sroa_idx, align 8
   %.sroa.02.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
@@ -739,9 +743,9 @@ bb.a:
   %.sroa.02.sroa.6.sroa.4.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr %i.b, ptr %.sroa.02.sroa.6.sroa.4.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx, align 8
   %.sroa.02.sroa.6.sroa.5.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
-  store i64 %.sroa.01.sroa.5.sroa.6.0.a, ptr %.sroa.02.sroa.6.sroa.5.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx, align 8
+  store i64 %.sroa.01.sroa.5.sroa.6.0, ptr %.sroa.02.sroa.6.sroa.5.0..sroa.02.sroa.6.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  store i64 %.sroa.5.0, ptr %.sroa.4.0..sroa_idx, align 8
+  store i64 %.sroa.01.sroa.5.sroa.6.0.a, ptr %.sroa.4.0..sroa_idx, align 8
   %i.g = call { ptr, ptr } @_RNvXsk_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB5_4IterINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyENtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4nextB1c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a)
   %i.h = extractvalue { ptr, ptr } %i.g, 0        ; 2 uses
   %.not34 = icmp eq ptr %i.h, null

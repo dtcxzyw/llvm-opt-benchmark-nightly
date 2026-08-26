@@ -204,8 +204,8 @@ bb.r:                                             ; preds = %bb.p, %bb.j
   unreachable
 
 bb.s:                                             ; preds = %bb.q, %bb.n, %bb.m
-  %.sroa.5.sroa.0.0.i.i.i.i = phi ptr [ undef, %bb.m ], [ %i.ad, %bb.n ], [ %.sroa.520.0.copyload.i.i.i.i, %bb.q ]
   %.sroa.5.sroa.4.0.i.i.i.i = phi i64 [ undef, %bb.m ], [ %i.af, %bb.n ], [ %.sroa.7.0.copyload.i.i.i.i, %bb.q ]
+  %.sroa.5.sroa.0.0.i.i.i.i = phi ptr [ undef, %bb.m ], [ %i.ad, %bb.n ], [ %.sroa.520.0.copyload.i.i.i.i, %bb.q ]
   %.sroa.0.0.i.i.i.i = phi i64 [ %i.ab, %bb.m ], [ -1, %bb.n ], [ %.sroa.019.0.copyload.i.i.i.i, %bb.q ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !464
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.24..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !464
@@ -608,9 +608,9 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsloGAwzL3aMH_13tlsclient_mio.exit.i.i, %bb.c
   %.sroa.05.016.i.i = phi ptr [ %i.g, %bb.c ], [ %.sroa.05.1.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsloGAwzL3aMH_13tlsclient_mio.exit.i.i ] ; 2 uses
   %.sroa.6.015.i.i = phi ptr [ %i.i, %bb.c ], [ %.sroa.6.1.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsloGAwzL3aMH_13tlsclient_mio.exit.i.i ] ; 2 uses
-  %.sroa.107.014.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsloGAwzL3aMH_13tlsclient_mio.exit.i.i ]
-  %.sroa.86.013.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsloGAwzL3aMH_13tlsclient_mio.exit.i.i ] ; 2 uses
-  %.not11.i.i.i = icmp eq i16 %.sroa.86.013.i.i, 0
+  %.sroa.86.014.i.i = phi i16 [ %i.j, %bb.c ], [ %i.s, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsloGAwzL3aMH_13tlsclient_mio.exit.i.i ] ; 2 uses
+  %.sroa.107.013.i.i = phi i64 [ %i.e, %bb.c ], [ %i.v, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtBK_6hybrid2id11LazyStateIDEECsloGAwzL3aMH_13tlsclient_mio.exit.i.i ]
+  %.not11.i.i.i = icmp eq i16 %.sroa.86.014.i.i, 0
   br i1 %.not11.i.i.i, label %.lr.ph.i.i.i, label %_RINvMsi_NtCs37Y8JGf013z_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtB13_6hybrid2id11LazyStateIDEE9next_implKb0_ECsloGAwzL3aMH_13tlsclient_mio.exit.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.d, %.lr.ph.i.i.i
@@ -627,14 +627,14 @@ bb.d:                                             ; preds = %_RINvNtCsj6eKBz9Db1
 _RINvMsi_NtCs37Y8JGf013z_9hashbrown3rawINtB6_12RawIterRangeTNtNtNtNtCs93Qoaz1obbZ_14regex_automata4util11determinize5state5StateNtNtNtB13_6hybrid2id11LazyStateIDEE9next_implKb0_ECsloGAwzL3aMH_13tlsclient_mio.exit.i.i: ; preds = %.lr.ph.i.i.i, %bb.d
   %.sroa.6.1.i.i = phi ptr [ %.sroa.6.015.i.i, %bb.d ], [ %i.o, %.lr.ph.i.i.i ]
   %.sroa.05.1.i.i = phi ptr [ %.sroa.05.016.i.i, %bb.d ], [ %i.n, %.lr.ph.i.i.i ] ; 2 uses
-  %.lcssa.i.i.i = phi i16 [ %.sroa.86.013.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
+  %.lcssa.i.i.i = phi i16 [ %.sroa.86.014.i.i, %bb.d ], [ %.cast.i.i.i, %.lr.ph.i.i.i ] ; 3 uses
   %i.p = add i16 %.lcssa.i.i.i, -1
   %i.q = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
   %i.r = zext nneg i16 %i.q to i64
   %i.s = and i16 %i.p, %.lcssa.i.i.i
   %i.t = sub nsw i64 0, %i.r
   %i.u = getelementptr inbounds [24 x i8], ptr %.sroa.05.1.i.i, i64 %i.t
-  %i.v = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
+  %i.v = add i64 %.sroa.107.013.i.i, -1           ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %i.u, i64 -24 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !551)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !554)
@@ -684,7 +684,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !noundef !6 ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
@@ -745,11 +744,8 @@ bb.g:                                             ; preds = %.noexc2.i, %bb.f, %
 
 _RINvNtNtNtCs4wP2HXfJTCR_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutINtNtB8_3vec3VechENtNtNtCshVVPy9isBpn_6webpki3crl5types16OwnedRevokedCertNtB1y_4LeafENtB1y_4EdgeETRB1R_RB29_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0ECsloGAwzL3aMH_13tlsclient_mio.exit: ; preds = %.noexc2.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !565
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !565
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !565
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.o = extractvalue { ptr, ptr } %i.m, 0
   %i.p = extractvalue { ptr, ptr } %i.m, 1
   br label %bb.c

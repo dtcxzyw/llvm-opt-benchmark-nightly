@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/elfshaker-rs/original/elfshaker-6828a789a61900ca.elfshaker.eea5205138ee20d7-cgu.06?download=true
+inline.NumInlined: 448
+inline.NumDeleted: 246
 begin_hunk_0_@_RINvXs1o_NtNtNtCs1xwejQucwHj_5alloc11collections5btree3mapINtB7_8BTreeMapmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataEINtNtNtNtCs3oUPovFnLWP_4core4iter6traits7collect12FromIteratorTmB1a_EE9from_iterINtNtNtB28_8adapters3map3MapINtNtB3o_9enumerate9EnumerateINtNtNtBd_3vec9into_iter8IntoIterB1a_EENCINvXsf_B1c_NtB1c_14VisitPackIndexNtNtCs6LlcditsbhK_5serde2de7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB6c_10ReadReaderINtNtNtNtBd_2io8buffered9bufreader9BufReaderRShEENtNtB6e_6config13DefaultConfigEE0EEB1e_:bb.a
   call void @_RINvMNtNtNtCs1xwejQucwHj_5alloc11collections5btree6appendINtNtB5_4node7NodeRefNtNtBW_6marker5OwnedmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataNtB1g_14LeafOrInternalE9bulk_pushINtNtB5_17dedup_sorted_iter15DedupSortedItermB1z_INtNtNtB9_3vec9into_iter8IntoIterTmB1z_EEENtNtB9_5alloc6GlobalEB1D_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(64) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !609
@@ -200,7 +202,7 @@ bb.a:
   store <2 x i64> %i.f, ptr %.sroa.59.0..sroa_idx.i, align 16, !alias.scope !612
   store <2 x i64> %i.b, ptr %.sroa.711.0..sroa_idx.i, align 16, !alias.scope !612
   %.sroa.913.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 48 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.913.0..sroa_idx.i, i8 0, i64 24, i1 false), !alias.scope !612
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %.sroa.913.0..sroa_idx.i, i8 0, i64 24, i1 false), !alias.scope !612
   call void @_RINvXs9_NtCs3oUPovFnLWP_4core5arrayAhj14_NtNtB8_4hash4Hash4hashNtNtNtCsaL1QbXo9JQH_3std4hash6random13DefaultHasherECskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(20) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.a)
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.a, align 16, !alias.scope !615
   %.sroa.10.0.copyload.i.i = load i64, ptr %.sroa.48.0..sroa_idx.i, align 8, !alias.scope !615
@@ -603,7 +605,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !noundef !4 ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
@@ -664,11 +665,8 @@ bb.g:                                             ; preds = %.noexc2.i, %bb.f, %
 
 _RINvNtNtNtCs1xwejQucwHj_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutmNtNtCskuiImRAV2ip_9elfshaker7packidx14ObjectMetadataNtB1y_4LeafENtB1y_4EdgeETRmRB1S_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0EB1W_.exit: ; preds = %.noexc2.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !922
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !922
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !922
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.o = extractvalue { ptr, ptr } %i.m, 0
   %i.p = extractvalue { ptr, ptr } %i.m, 1
   br label %bb.c

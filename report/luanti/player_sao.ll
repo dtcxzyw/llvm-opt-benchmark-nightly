@@ -204,8 +204,7 @@ bb.ac:                                            ; preds = %.lr.ph, %_ZNSt7__cx
   %i.hx = extractelement <2 x float> %i.hw, i64 0
   %i.hy = fdiv nsz float %i.hx, 1.000000e+01
   %i.hz = fptosi float %i.hy to i16               ; 2 uses
-  %17 = shufflevector <2 x float> %i.hw, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %i.ia = insertelement <2 x float> %17, float %.sroa.22.0.copyload.i205, i64 1 ; 2 uses
+  %i.ia = insertelement <2 x float> %i.hw, float %.sroa.22.0.copyload.i205, i64 0 ; 2 uses
   %i.ib = fcmp nsz ogt <2 x float> %i.ia, zeroinitializer
   %i.ic = select <2 x i1> %i.ib, <2 x float> splat (float 5.000000e+00), <2 x float> splat (float -5.000000e+00)
   %i.id = fadd nsz <2 x float> %i.ia, %i.ic
@@ -216,12 +215,12 @@ bb.ac:                                            ; preds = %.lr.ph, %_ZNSt7__cx
           to label %bb.ad unwind label %bb.ai
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.ii = extractelement <2 x i16> %i.if, i64 1
+  %i.ii = extractelement <2 x i16> %i.if, i64 0
   %.sroa.3.0.insert.ext.i214 = zext i16 %i.ii to i48
   %.sroa.3.0.insert.shift.i215 = shl nuw i48 %.sroa.3.0.insert.ext.i214, 32
   %.sroa.0.0.insert.ext.i219 = zext i16 %i.hz to i48
   %i.ij = or disjoint i48 %.sroa.3.0.insert.shift.i215, %.sroa.0.0.insert.ext.i219
-  %i.ik = extractelement <2 x i16> %i.if, i64 0
+  %i.ik = extractelement <2 x i16> %i.if, i64 1
   %.sroa.2.0.insert.ext.i216 = zext i16 %i.ik to i48
   %.sroa.2.0.insert.shift.i217 = shl nuw nsw i48 %.sroa.2.0.insert.ext.i216, 16
   %.sroa.0.0.insert.insert.i220 = or disjoint i48 %i.ij, %.sroa.2.0.insert.shift.i217
@@ -310,8 +309,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %b
   %i.jz = fadd nsz float %.sroa.0305.0.vec.extract, %i.jy
   %i.ka = fdiv nsz float %i.jz, 1.000000e+01
   %i.kb = fptosi float %i.ka to i16               ; 2 uses
-  %i.kc = insertelement <2 x float> poison, float %i.jw, i64 0
-  %i.kd = insertelement <2 x float> %i.kc, float %.sroa.22.0.copyload.i, i64 1 ; 2 uses
+  %i.kc = insertelement <2 x float> poison, float %.sroa.22.0.copyload.i, i64 0
+  %i.kd = insertelement <2 x float> %i.kc, float %i.jw, i64 1 ; 2 uses
   %i.ke = fcmp nsz ogt <2 x float> %i.kd, zeroinitializer
   %i.kf = select <2 x i1> %i.ke, <2 x float> splat (float 5.000000e+00), <2 x float> splat (float -5.000000e+00)
   %i.kg = fadd nsz <2 x float> %i.kd, %i.kf
@@ -323,12 +322,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %b
           to label %bb.ak unwind label %bb.ap
 
 bb.ak:                                            ; preds = %._crit_edge
-  %i.km = extractelement <2 x i16> %i.ki, i64 1
+  %i.km = extractelement <2 x i16> %i.ki, i64 0
   %.sroa.3.0.insert.ext.i224 = zext i16 %i.km to i48
   %.sroa.3.0.insert.shift.i225 = shl nuw i48 %.sroa.3.0.insert.ext.i224, 32
   %.sroa.0.0.insert.ext.i229 = zext i16 %i.kb to i48
   %i.kn = or disjoint i48 %.sroa.3.0.insert.shift.i225, %.sroa.0.0.insert.ext.i229
-  %i.ko = extractelement <2 x i16> %i.ki, i64 0
+  %i.ko = extractelement <2 x i16> %i.ki, i64 1
   %.sroa.2.0.insert.ext.i226 = zext i16 %i.ko to i48
   %.sroa.2.0.insert.shift.i227 = shl nuw nsw i48 %.sroa.2.0.insert.ext.i226, 16
   %.sroa.0.0.insert.insert.i230 = or disjoint i48 %i.kn, %.sroa.2.0.insert.shift.i227
@@ -414,7 +413,7 @@ bb.as:                                            ; preds = %.thread325
 
 bb.at:                                            ; preds = %bb.as
   %i.lz = zext <2 x i16> %i.lu to <2 x i48>
-  %i.ma = shl nuw <2 x i48> %i.lz, <i48 16, i48 32>
+  %i.ma = shl nuw <2 x i48> %i.lz, <i48 32, i48 16>
   %.sroa.7315.0.insert.insert = call i48 @llvm.vector.reduce.or.v2i48(<2 x i48> %i.ma)
   %.sroa.0313.0.insert.ext = zext i16 %.sroa.0313.2331 to i48
   %.sroa.0313.0.insert.insert = or disjoint i48 %.sroa.7315.0.insert.insert, %.sroa.0313.0.insert.ext
@@ -817,10 +816,10 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
   br i1 %.not29, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit, %bb.h
-  %.031 = phi ptr [ %i.i, %bb.h ], [ %i.h, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
-  %.02530 = phi i64 [ %.1, %bb.h ], [ 0, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
-  %i.i = load ptr, ptr %.031, align 8, !tbaa !148 ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %.031, i64 48
+  %.031 = phi i64 [ %.1, %bb.h ], [ 0, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 2 uses
+  %.02530 = phi ptr [ %i.i, %bb.h ], [ %i.h, %_ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESaIS8_ENSt8__detail10_Select1stESt8equal_toIS5_ESt4hashIS5_ENSA_18_Mod_range_hashingENSA_20_Default_ranged_hashENSA_20_Prime_rehash_policyENSA_17_Hashtable_traitsILb1ELb0ELb1EEEE19_M_allocate_bucketsEm.exit ] ; 8 uses
+  %i.i = load ptr, ptr %.02530, align 8, !tbaa !148 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.02530, i64 48
   %i.k = load i64, ptr %i.j, align 8, !tbaa !504
   %i.l = urem i64 %i.k, %1                        ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %i.l ; 3 uses
@@ -830,27 +829,27 @@ _ZNSt10_HashtableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS
 
 bb.e:                                             ; preds = %.lr.ph
   %i.o = load ptr, ptr %i.g, align 8, !tbaa !156
-  store ptr %i.o, ptr %.031, align 8, !tbaa !148
-  store ptr %.031, ptr %i.g, align 8, !tbaa !156
+  store ptr %i.o, ptr %.02530, align 8, !tbaa !148
+  store ptr %.02530, ptr %i.g, align 8, !tbaa !156
   store ptr %i.g, ptr %i.m, align 8, !tbaa !503
-  %i.p = load ptr, ptr %.031, align 8, !tbaa !148
+  %i.p = load ptr, ptr %.02530, align 8, !tbaa !148
   %.not28 = icmp eq ptr %i.p, null
   br i1 %.not28, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.02530
-  store ptr %.031, ptr %i.q, align 8, !tbaa !503
+  %i.q = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %.031
+  store ptr %.02530, ptr %i.q, align 8, !tbaa !503
   br label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph
   %i.r = load ptr, ptr %i.n, align 8, !tbaa !148
-  store ptr %i.r, ptr %.031, align 8, !tbaa !148
+  store ptr %i.r, ptr %.02530, align 8, !tbaa !148
   %i.s = load ptr, ptr %i.m, align 8, !tbaa !503
-  store ptr %.031, ptr %i.s, align 8, !tbaa !148
+  store ptr %.02530, ptr %i.s, align 8, !tbaa !148
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.f, %bb.g
-  %.1 = phi i64 [ %.02530, %bb.g ], [ %i.l, %bb.f ], [ %i.l, %bb.e ]
+  %.1 = phi i64 [ %.031, %bb.g ], [ %i.l, %bb.f ], [ %i.l, %bb.e ]
   %.not = icmp eq ptr %i.i, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !596
 

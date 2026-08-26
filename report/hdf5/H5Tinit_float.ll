@@ -204,14 +204,14 @@ bb.ag:                                            ; preds = %bb.af
 
 .preheader.i249:                                  ; preds = %bb.ag, %.preheader.i249
   %.025.i = phi i32 [ %i.gg, %.preheader.i249 ], [ %i.fg, %bb.ag ] ; 2 uses
-  %.024.i = phi i32 [ %i.gf, %.preheader.i249 ], [ 0, %bb.ag ] ; 2 uses
-  %.023.i = phi i32 [ %i.gh, %.preheader.i249 ], [ %i.fd, %bb.ag ] ; 3 uses
+  %.024.i = phi i32 [ %i.gh, %.preheader.i249 ], [ %i.fd, %bb.ag ] ; 3 uses
+  %.023.i = phi i32 [ %i.gf, %.preheader.i249 ], [ 0, %bb.ag ] ; 2 uses
   %.0.i250 = phi i32 [ %i.ge, %.preheader.i249 ], [ 0, %bb.ag ]
-  %i.fp = and i32 %.023.i, 7                      ; 2 uses
+  %i.fp = and i32 %.024.i, 7                      ; 2 uses
   %i.fq = sub nuw nsw i32 8, %i.fp
   %i.fr = call i32 @llvm.umin.i32(i32 %.025.i, i32 %i.fq) ; 4 uses
   %notmask.i = shl nsw i32 -1, %i.fr
-  %i.fs = lshr i32 %.023.i, 3
+  %i.fs = lshr i32 %.024.i, 3
   %i.ft = zext nneg i32 %i.fs to i64
   %i.fu = getelementptr inbounds nuw [4 x i8], ptr %i.cb, i64 %i.ft
   %i.fv = load i32, ptr %i.fu, align 4, !tbaa !13
@@ -220,13 +220,14 @@ bb.ag:                                            ; preds = %bb.af
   %i.fy = load i8, ptr %i.fx, align 1, !tbaa !20
   %i.fz = zext i8 %i.fy to i32
   %i.ga = lshr i32 %i.fz, %i.fp
-  %i.gb = xor i32 %notmask.i, -1
+  %2 = and i32 %notmask.i, 254
+  %i.gb = xor i32 %2, 255
   %i.gc = and i32 %i.ga, %i.gb
-  %i.gd = shl i32 %i.gc, %.024.i
+  %i.gd = shl i32 %i.gc, %.023.i
   %i.ge = or i32 %i.gd, %.0.i250                  ; 2 uses
-  %i.gf = add i32 %i.fr, %.024.i
+  %i.gf = add i32 %i.fr, %.023.i
   %i.gg = sub i32 %.025.i, %i.fr                  ; 2 uses
-  %i.gh = add i32 %i.fr, %.023.i
+  %i.gh = add i32 %i.fr, %.024.i
   %.old1.not.i = icmp eq i32 %i.gg, 0
   br i1 %.old1.not.i, label %H5T__find_bias.exit.loopexit, label %.preheader.i249
 
@@ -629,14 +630,14 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a, %.preheader
   %.025 = phi i32 [ %i.y, %.preheader ], [ %1, %bb.a ] ; 2 uses
-  %.024 = phi i32 [ %i.x, %.preheader ], [ 0, %bb.a ] ; 2 uses
-  %.023 = phi i32 [ %i.z, %.preheader ], [ %0, %bb.a ] ; 3 uses
+  %.024 = phi i32 [ %i.z, %.preheader ], [ %0, %bb.a ] ; 3 uses
+  %.023 = phi i32 [ %i.x, %.preheader ], [ 0, %bb.a ] ; 2 uses
   %.0 = phi i32 [ %i.w, %.preheader ], [ 0, %bb.a ]
-  %i.h = and i32 %.023, 7                         ; 2 uses
+  %i.h = and i32 %.024, 7                         ; 2 uses
   %i.i = sub nuw nsw i32 8, %i.h
   %i.j = tail call i32 @llvm.umin.i32(i32 %.025, i32 %i.i) ; 4 uses
   %notmask = shl nsw i32 -1, %i.j
-  %i.k = lshr i32 %.023, 3
+  %i.k = lshr i32 %.024, 3
   %i.l = zext nneg i32 %i.k to i64
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !13
@@ -645,13 +646,14 @@ bb.a:
   %i.q = load i8, ptr %i.p, align 1, !tbaa !20
   %i.r = zext i8 %i.q to i32
   %i.s = lshr i32 %i.r, %i.h
-  %i.t = xor i32 %notmask, -1
+  %4 = and i32 %notmask, 254
+  %i.t = xor i32 %4, 255
   %i.u = and i32 %i.s, %i.t
-  %i.v = shl i32 %i.u, %.024
+  %i.v = shl i32 %i.u, %.023
   %i.w = or i32 %i.v, %.0                         ; 2 uses
-  %i.x = add i32 %i.j, %.024
+  %i.x = add i32 %i.j, %.023
   %i.y = sub i32 %.025, %i.j                      ; 2 uses
-  %i.z = add i32 %i.j, %.023
+  %i.z = add i32 %i.j, %.024
   %.old1.not = icmp eq i32 %i.y, 0
   br i1 %.old1.not, label %.loopexit, label %.preheader
 

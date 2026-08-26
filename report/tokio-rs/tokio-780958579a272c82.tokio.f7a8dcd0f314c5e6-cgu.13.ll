@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokio-rs/original/tokio-780958579a272c82.tokio.f7a8dcd0f314c5e6-cgu.13?download=true
+inline.NumInlined: 395
+inline.NumDeleted: 111
 begin_hunk_0_@_RNvMs0_NtNtNtCslghKHtsL3a4_5tokio7process3imp6orphanINtB5_15OrphanQueueImplNtNtCsaL1QbXo9JQH_3std7process5ChildE11push_orphanBb_:bb.a
 bb.f:                                             ; preds = %bb.d, %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -200,8 +202,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCslghKHtsL3
           to label %bb.z unwind label %bb.y
 
 bb.x:                                             ; preds = %bb.y, %.body
-  %.sroa.03.2 = phi i1 [ false, %bb.y ], [ true, %.body ]
   %.pn = phi { ptr, i32 } [ %i.as, %bb.y ], [ %eh.lpad-body, %.body ] ; 2 uses
+  %.sroa.03.2 = phi i1 [ false, %bb.y ], [ true, %.body ]
   %i.ar = load ptr, ptr %i.a, align 8, !noundef !12
   %.not8 = icmp eq ptr %i.ar, null
   br i1 %.not8, label %bb.ac, label %bb.n

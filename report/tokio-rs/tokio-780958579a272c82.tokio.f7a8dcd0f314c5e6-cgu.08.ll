@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tokio-rs/original/tokio-780958579a272c82.tokio.f7a8dcd0f314c5e6-cgu.08?download=true
+inline.NumInlined: 381
+inline.NumDeleted: 171
 begin_hunk_0_@_RINvMs0_NtNtNtCslghKHtsL3a4_5tokio7runtime2io12registrationNtB6_12Registration6try_iojNCNvMs4_NtNtNtBc_3net4unix4pipeNtB1u_8Receiver8try_read0EBc_:bb.a
   %i.am = icmp ult ptr %i.r, inttoptr (i64 188978561024 to ptr)
   %i.an = and i64 %i.v, 1095216660480
@@ -200,11 +202,11 @@ bb.k:                                             ; preds = %bb.g
   br label %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit
 
 bb.l:                                             ; preds = %bb.f, %bb.e
-  %.sroa.11.i.i.sroa.0.2 = phi ptr [ undef, %bb.e ], [ %.sroa.914.sroa.6.i.i.sroa.0.0.copyload, %bb.f ]
   %.sroa.21.1 = phi i16 [ undef, %bb.e ], [ %i.y, %bb.f ]
   %.sroa.20.1 = phi i32 [ undef, %bb.e ], [ %.sroa.45.sroa.4.0.copyload.i.i, %bb.f ]
   %.sroa.1938.1 = phi i32 [ undef, %bb.e ], [ %.sroa.07.4.extract.trunc.i.i, %bb.f ]
   %.sroa.19.1 = phi i32 [ undef, %bb.e ], [ %.sroa.914.sroa.6.i.i.sroa.4.0.copyload, %bb.f ]
+  %.sroa.12.0 = phi ptr [ undef, %bb.e ], [ %.sroa.914.sroa.6.i.i.sroa.0.0.copyload, %bb.f ]
   %.sroa.11.1 = phi i16 [ %i.x, %bb.e ], [ %.sroa.45.sroa.0.sroa.4.0.copyload.i.i, %bb.f ]
   %.sroa.10.1 = phi i32 [ %.sroa.07.4.extract.trunc13.i.i, %bb.e ], [ %.sroa.4.sroa.010.i.sroa.0.2.insert.shift.i.i, %bb.f ]
   %.sroa.035.0 = phi i16 [ 0, %bb.e ], [ 1, %bb.f ]
@@ -215,7 +217,7 @@ bb.l:                                             ; preds = %bb.f, %bb.e
   %.sroa.546.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i16 %.sroa.11.1, ptr %.sroa.546.0..sroa_idx, align 2
   %.sroa.647.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.11.i.i.sroa.0.2, ptr %.sroa.647.0..sroa_idx, align 8
+  store ptr %.sroa.12.0, ptr %.sroa.647.0..sroa_idx, align 8
   %.sroa.748.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %.sroa.19.1, ptr %.sroa.748.0..sroa_idx, align 8
   %.sroa.849.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20

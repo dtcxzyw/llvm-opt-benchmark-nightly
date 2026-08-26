@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/influxdb-rs/original/influxdb3_cache-873b4e3417b63821.influxdb3_cache.d4363e94e8c1e8df-cgu.07?download=true
+inline.NumInlined: 410
+inline.NumDeleted: 150
 begin_hunk_0_@_RNvXNvNtCs2AWtUsOyxgP_3std2io17default_write_fmtINtB2_7AdapterNtNtNtNtB6_3sys5stdio4unix6StderrENtNtCs4NRVxsYgnAr_4core3fmt5Write9write_strCsidB8gjke19X_15influxdb3_cache:bb.a
   br i1 %i.e, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtCs2AWtUsOyxgP_3std2io5error5ErrorEECsidB8gjke19X_15influxdb3_cache.exit, label %bb.c
 
@@ -200,9 +202,9 @@ bb.a:
   %i.k = trunc nuw i64 %i.h to i1                 ; 2 uses
   %i.l = add i64 %i.j, %i.d                       ; 2 uses
   %i.m = icmp uge i64 %i.l, %i.j
+  %.sroa.43.0 = select i1 %i.k, i64 %i.l, i64 undef
   %narrow = select i1 %i.k, i1 %i.m, i1 false
   %.sroa.02.0 = zext i1 %narrow to i64
-  %.sroa.43.0 = select i1 %i.k, i64 %i.l, i64 undef
   %i.n = call i64 @llvm.uadd.sat.i64(i64 %i.f, i64 %i.d)
   store i64 %i.n, ptr %0, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8

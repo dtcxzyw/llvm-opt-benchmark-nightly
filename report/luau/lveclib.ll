@@ -202,41 +202,35 @@ define internal noundef i32 @_ZL10vector_maxP9lua_State(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noundef i32 @_Z10lua_gettopP9lua_State(ptr noundef %0) ; 2 uses
   %i.b = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 2 uses
-  %i.c = load <2 x float>, ptr %i.b, align 4, !tbaa !9 ; 3 uses
+  %i.c = load <2 x float>, ptr %i.b, align 4, !tbaa !9 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.e = load float, ptr %i.d, align 4, !tbaa !9  ; 2 uses
   %.not22 = icmp slt i32 %i.a, 2
-  %1 = extractelement <2 x float> %i.c, i64 0
-  %2 = extractelement <2 x float> %i.c, i64 1
   br i1 %.not22, label %._crit_edge, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %3 = extractelement <2 x float> %i.j, i64 1
-  %4 = extractelement <2 x float> %i.j, i64 0
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.sroa.6.0.lcssa = phi float [ %2, %bb.a ], [ %3, %._crit_edge.loopexit ]
-  %.sroa.0.0.lcssa = phi float [ %1, %bb.a ], [ %4, %._crit_edge.loopexit ]
-  %.sroa.10.0.lcssa = phi float [ %i.e, %bb.a ], [ %.sroa.10.1, %._crit_edge.loopexit ]
-  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %.sroa.0.0.lcssa, float noundef %.sroa.6.0.lcssa, float noundef %.sroa.10.0.lcssa)
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.sroa.6.0.lcssa = phi float [ %i.e, %bb.a ], [ %.sroa.10.1, %.lr.ph ]
+  %1 = phi <2 x float> [ %i.c, %bb.a ], [ %i.j, %.lr.ph ] ; 2 uses
+  %2 = extractelement <2 x float> %1, i64 0
+  %3 = extractelement <2 x float> %1, i64 1
+  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %2, float noundef %3, float noundef %.sroa.6.0.lcssa)
   ret i32 1
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.sroa.10.026 = phi float [ %.sroa.10.1, %.lr.ph ], [ %i.e, %bb.a ] ; 2 uses
-  %.025 = phi i32 [ %i.n, %.lr.ph ], [ 2, %bb.a ] ; 3 uses
+  %.026 = phi i32 [ %i.n, %.lr.ph ], [ 2, %bb.a ] ; 3 uses
+  %.sroa.10.023 = phi float [ %.sroa.10.1, %.lr.ph ], [ %i.e, %bb.a ] ; 2 uses
   %i.f = phi <2 x float> [ %i.j, %.lr.ph ], [ %i.c, %bb.a ] ; 2 uses
-  %i.g = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef %.025) ; 2 uses
+  %i.g = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef %.026) ; 2 uses
   %i.h = load <2 x float>, ptr %i.g, align 4, !tbaa !9 ; 2 uses
   %i.i = fcmp ogt <2 x float> %i.h, %i.f
-  %i.j = select <2 x i1> %i.i, <2 x float> %i.h, <2 x float> %i.f ; 3 uses
+  %i.j = select <2 x i1> %i.i, <2 x float> %i.h, <2 x float> %i.f ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.l = load float, ptr %i.k, align 4, !tbaa !9  ; 2 uses
-  %i.m = fcmp ogt float %i.l, %.sroa.10.026
-  %.sroa.10.1 = select i1 %i.m, float %i.l, float %.sroa.10.026 ; 2 uses
-  %i.n = add nuw i32 %.025, 1
-  %exitcond.not = icmp eq i32 %.025, %i.a
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !11
+  %i.m = fcmp ogt float %i.l, %.sroa.10.023
+  %.sroa.10.1 = select i1 %i.m, float %i.l, float %.sroa.10.023 ; 2 uses
+  %i.n = add nuw i32 %.026, 1
+  %exitcond.not = icmp eq i32 %.026, %i.a
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !11
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -244,41 +238,35 @@ define internal noundef i32 @_ZL10vector_minP9lua_State(ptr noundef %0) #0 {
 bb.a:
   %i.a = tail call noundef i32 @_Z10lua_gettopP9lua_State(ptr noundef %0) ; 2 uses
   %i.b = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef 1) ; 2 uses
-  %i.c = load <2 x float>, ptr %i.b, align 4, !tbaa !9 ; 3 uses
+  %i.c = load <2 x float>, ptr %i.b, align 4, !tbaa !9 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.e = load float, ptr %i.d, align 4, !tbaa !9  ; 2 uses
   %.not22 = icmp slt i32 %i.a, 2
-  %1 = extractelement <2 x float> %i.c, i64 0
-  %2 = extractelement <2 x float> %i.c, i64 1
   br i1 %.not22, label %._crit_edge, label %.lr.ph
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %3 = extractelement <2 x float> %i.j, i64 1
-  %4 = extractelement <2 x float> %i.j, i64 0
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.a
-  %.sroa.6.0.lcssa = phi float [ %2, %bb.a ], [ %3, %._crit_edge.loopexit ]
-  %.sroa.0.0.lcssa = phi float [ %1, %bb.a ], [ %4, %._crit_edge.loopexit ]
-  %.sroa.10.0.lcssa = phi float [ %i.e, %bb.a ], [ %.sroa.10.1, %._crit_edge.loopexit ]
-  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %.sroa.0.0.lcssa, float noundef %.sroa.6.0.lcssa, float noundef %.sroa.10.0.lcssa)
+._crit_edge:                                      ; preds = %.lr.ph, %bb.a
+  %.sroa.6.0.lcssa = phi float [ %i.e, %bb.a ], [ %.sroa.10.1, %.lr.ph ]
+  %1 = phi <2 x float> [ %i.c, %bb.a ], [ %i.j, %.lr.ph ] ; 2 uses
+  %2 = extractelement <2 x float> %1, i64 0
+  %3 = extractelement <2 x float> %1, i64 1
+  tail call void @_Z14lua_pushvectorP9lua_Statefff(ptr noundef %0, float noundef %2, float noundef %3, float noundef %.sroa.6.0.lcssa)
   ret i32 1
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
-  %.sroa.10.026 = phi float [ %.sroa.10.1, %.lr.ph ], [ %i.e, %bb.a ] ; 2 uses
-  %.025 = phi i32 [ %i.n, %.lr.ph ], [ 2, %bb.a ] ; 3 uses
+  %.026 = phi i32 [ %i.n, %.lr.ph ], [ 2, %bb.a ] ; 3 uses
+  %.sroa.10.023 = phi float [ %.sroa.10.1, %.lr.ph ], [ %i.e, %bb.a ] ; 2 uses
   %i.f = phi <2 x float> [ %i.j, %.lr.ph ], [ %i.c, %bb.a ] ; 2 uses
-  %i.g = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef %.025) ; 2 uses
+  %i.g = tail call noundef ptr @_Z16luaL_checkvectorP9lua_Statei(ptr noundef %0, i32 noundef %.026) ; 2 uses
   %i.h = load <2 x float>, ptr %i.g, align 4, !tbaa !9 ; 2 uses
   %i.i = fcmp olt <2 x float> %i.h, %i.f
-  %i.j = select <2 x i1> %i.i, <2 x float> %i.h, <2 x float> %i.f ; 3 uses
+  %i.j = select <2 x i1> %i.i, <2 x float> %i.h, <2 x float> %i.f ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.l = load float, ptr %i.k, align 4, !tbaa !9  ; 2 uses
-  %i.m = fcmp olt float %i.l, %.sroa.10.026
-  %.sroa.10.1 = select i1 %i.m, float %i.l, float %.sroa.10.026 ; 2 uses
-  %i.n = add nuw i32 %.025, 1
-  %exitcond.not = icmp eq i32 %.025, %i.a
-  br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !13
+  %i.m = fcmp olt float %i.l, %.sroa.10.023
+  %.sroa.10.1 = select i1 %i.m, float %i.l, float %.sroa.10.023 ; 2 uses
+  %i.n = add nuw i32 %.026, 1
+  %exitcond.not = icmp eq i32 %.026, %i.a
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
 }
 
 ; Function Attrs: mustprogress uwtable

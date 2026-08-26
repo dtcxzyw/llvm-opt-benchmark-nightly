@@ -204,7 +204,6 @@ bb.a:
   %i.c = alloca [32 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
-  %2 = alloca [40 x i8], align 8                  ; 4 uses
   %i.f = alloca [40 x i8], align 8                ; 4 uses
   %i.g = alloca [24 x i8], align 8                ; 8 uses
   %i.h = alloca [24 x i8], align 8                ; 7 uses
@@ -309,8 +308,7 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultINtNtNtNtCsaKJjC64KgbL_3std4sync6p
   br i1 %.not.i, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultINtNtNtNtCsaKJjC64KgbL_3std4sync6poison5mutex10MutexGuardINtNtNtNtCs4okMlIQ9Z13_2h25proto7streams6buffer6BufferNtNtB1L_5frame5FrameEEINtBM_11PoisonErrorBH_EE6unwrapCsi17nFaBu4HY_10ech_client.exit.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2), !noalias !1664
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !1664
   %i.as = invoke noundef nonnull ptr @_RINvMNtNtCs4wP2HXfJTCR_5alloc2io5errorNtNtNtCsj6eKBz9Db1c_4core2io5error5Error3newReECsaKJjC64KgbL_3std(i8 noundef 11, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @25, i64 noundef 42)
           to label %bb.n unwind label %bb.m, !noalias !1664
 
@@ -321,14 +319,12 @@ bb.m:                                             ; preds = %bb.l, %bb.n, %bb.q,
           to label %.body unwind label %bb.ad
 
 bb.n:                                             ; preds = %bb.l
-  invoke void @_RNvXs2_NtNtCs4okMlIQ9Z13_2h25proto5errorNtB5_5ErrorINtNtCsj6eKBz9Db1c_4core7convert4FromNtNtNtBS_2io5error5ErrorE4from(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %2, ptr noundef nonnull %i.as)
+  invoke void @_RNvXs2_NtNtCs4okMlIQ9Z13_2h25proto5errorNtB5_5ErrorINtNtCsj6eKBz9Db1c_4core7convert4FromNtNtNtBS_2io5error5ErrorE4from(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.f, ptr noundef nonnull %i.as)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs4okMlIQ9Z13_2h25proto5error5ErrorEECsi17nFaBu4HY_10ech_client.exit.i unwind label %bb.m, !noalias !1664
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs4okMlIQ9Z13_2h25proto5error5ErrorEECsi17nFaBu4HY_10ech_client.exit.i: ; preds = %bb.n
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.f, ptr noundef nonnull align 8 dereferenceable(40) %2, i64 40, i1 false), !noalias !1664
-  call void @llvm.lifetime.end.p0(ptr nonnull %2), !noalias !1664
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.aq, ptr noundef nonnull align 8 dereferenceable(40) %i.f, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1664
   br label %bb.o
 
 bb.o:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs4okMlIQ9Z13_2h25proto5error5ErrorEECsi17nFaBu4HY_10ech_client.exit.i, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultINtNtNtNtCsaKJjC64KgbL_3std4sync6poison5mutex10MutexGuardINtNtNtNtCs4okMlIQ9Z13_2h25proto7streams6buffer6BufferNtNtB1L_5frame5FrameEEINtBM_11PoisonErrorBH_EE6unwrapCsi17nFaBu4HY_10ech_client.exit.i

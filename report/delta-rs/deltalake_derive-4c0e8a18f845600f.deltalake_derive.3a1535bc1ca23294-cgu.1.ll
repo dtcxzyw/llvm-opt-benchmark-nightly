@@ -202,7 +202,6 @@ define hidden void @_RNvXsz_NtCsbjGuDcEILED_11proc_macro23impNtB5_11TokenStreamN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
-  %.sroa.0 = alloca [24 x i8], align 8            ; 2 uses
   %i.c = load i64, ptr %1, align 8
   %i.d = icmp eq i64 %i.c, -9223372036854775808
   br i1 %i.d, label %bb.b, label %bb.c
@@ -240,10 +239,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.j
 
 _RNvXsA_NtCsbjGuDcEILED_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCs4ZaLwAtrTbk_16deltalake_derive.exit: ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.i, ptr %.sroa.2.0..sroa_idx, align 8
   br label %bb.g

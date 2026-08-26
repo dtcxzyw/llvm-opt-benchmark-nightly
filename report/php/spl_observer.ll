@@ -202,11 +202,11 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 zend_parse_arg_obj.exit:                          ; preds = %bb.c, %bb.b
+  %.048 = phi i32 [ 0, %bb.b ], [ 1, %bb.c ]
   %.048.a = phi ptr [ null, %bb.b ], [ %i.g, %bb.c ]
   %.047 = phi i32 [ 0, %bb.b ], [ 18, %bb.c ]
-  %.046 = phi i32 [ 0, %bb.b ], [ 1, %bb.c ]
   %.045 = phi i32 [ 1, %bb.b ], [ 9, %bb.c ]
-  tail call void @zend_wrong_parameter_error(i32 noundef %.045, i32 noundef %.046, ptr noundef null, i32 noundef %.047, ptr noundef %.048.a) #9
+  tail call void @zend_wrong_parameter_error(i32 noundef %.045, i32 noundef %.048, ptr noundef null, i32 noundef %.047, ptr noundef %.048.a) #9
   br label %bb.d
 
 bb.d:                                             ; preds = %zend_parse_arg_obj.exit, %.critedge
@@ -419,11 +419,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.i, label %.critedge, label %bb.d, !prof !14
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.038.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
+  %.038.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
   %.037.ph = phi ptr [ %i.f, %bb.c ], [ null, %bb.b ]
-  %.036.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
+  %.036.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
   %.035.ph = phi i32 [ 9, %bb.c ], [ 1, %bb.b ]
-  tail call void @zend_wrong_parameter_error(i32 noundef %.035.ph, i32 noundef %.036.ph, ptr noundef null, i32 noundef %.038.ph, ptr noundef %.037.ph) #9
+  tail call void @zend_wrong_parameter_error(i32 noundef %.035.ph, i32 noundef %.038.ph, ptr noundef null, i32 noundef %.036.ph, ptr noundef %.037.ph) #9
   br label %bb.l
 
 .critedge:                                        ; preds = %bb.c
@@ -503,11 +503,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.f, label %.critedge, label %bb.d, !prof !14
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.037.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
+  %.037.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
   %.036.ph = phi ptr [ %i.c, %bb.c ], [ null, %bb.b ]
-  %.035.ph = phi i32 [ 9, %bb.c ], [ 1, %bb.b ]
-  %.0.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
-  tail call void @zend_wrong_parameter_error(i32 noundef %.035.ph, i32 noundef %.0.ph, ptr noundef null, i32 noundef %.037.ph, ptr noundef %.036.ph) #9
+  %.035.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
+  %.0.ph = phi i32 [ 9, %bb.c ], [ 1, %bb.b ]
+  tail call void @zend_wrong_parameter_error(i32 noundef %.0.ph, i32 noundef %.037.ph, ptr noundef null, i32 noundef %.035.ph, ptr noundef %.036.ph) #9
   br label %bb.e
 
 .critedge:                                        ; preds = %bb.c
@@ -549,11 +549,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.i, label %.critedge, label %bb.d, !prof !14
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.055.ph = phi i32 [ 9, %bb.c ], [ 1, %bb.b ]
-  %.052.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
-  %.051.ph = phi ptr [ %i.f, %bb.c ], [ null, %bb.b ]
-  %.0.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
-  tail call void @zend_wrong_parameter_error(i32 noundef %.055.ph, i32 noundef %.0.ph, ptr noundef null, i32 noundef %.052.ph, ptr noundef %.051.ph) #9
+  %.055.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
+  %.054.ph = phi ptr [ %i.f, %bb.c ], [ null, %bb.b ]
+  %.053.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
+  %.0.ph = phi i32 [ 9, %bb.c ], [ 1, %bb.b ]
+  tail call void @zend_wrong_parameter_error(i32 noundef %.0.ph, i32 noundef %.055.ph, ptr noundef null, i32 noundef %.053.ph, ptr noundef %.054.ph) #9
   br label %bb.o
 
 .critedge:                                        ; preds = %bb.c
@@ -956,11 +956,11 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.i, label %.critedge, label %bb.d, !prof !14
 
 bb.d:                                             ; preds = %bb.b, %bb.c
-  %.036.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
+  %.036.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
   %.035.ph = phi ptr [ %i.f, %bb.c ], [ null, %bb.b ]
-  %.034.ph = phi i32 [ 1, %bb.c ], [ 0, %bb.b ]
+  %.034.ph = phi i32 [ 18, %bb.c ], [ 0, %bb.b ]
   %.033.ph = phi i32 [ 9, %bb.c ], [ 1, %bb.b ]
-  tail call void @zend_wrong_parameter_error(i32 noundef %.033.ph, i32 noundef %.034.ph, ptr noundef null, i32 noundef %.036.ph, ptr noundef %.035.ph) #9
+  tail call void @zend_wrong_parameter_error(i32 noundef %.033.ph, i32 noundef %.036.ph, ptr noundef null, i32 noundef %.034.ph, ptr noundef %.035.ph) #9
   br label %bb.j
 
 .critedge:                                        ; preds = %bb.c
@@ -1363,9 +1363,8 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %spl_object_storage_free_hash.exit.thread
-  %.in = phi i64 [ %i.ac, %.lr.ph ], [ %i.ak, %spl_object_storage_free_hash.exit.thread ] ; 2 uses
-  %.sroa.0.0117 = phi i64 [ undef, %.lr.ph ], [ %.sroa.0.2617183102, %spl_object_storage_free_hash.exit.thread ] ; 3 uses
-  %i.ak = add nsw i64 %.in, -1
+  %.sroa.0.0117 = phi i64 [ %i.ac, %.lr.ph ], [ %i.ak, %spl_object_storage_free_hash.exit.thread ] ; 2 uses
+  %i.ak = add nsw i64 %.sroa.0.0117, -1
   %i.al = call ptr @var_tmp_var(ptr noundef nonnull %i.d) #9 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   store i32 0, ptr %i.ae, align 8, !tbaa !12
@@ -1445,7 +1444,9 @@ bb.o:                                             ; preds = %bb.n
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   %i.bn = load i32, ptr %i.bm, align 8, !tbaa !33
   %i.bo = zext i32 %i.bn to i64
-  br label %8
+  %6 = call ptr @zend_hash_index_find(ptr noundef nonnull %i.g, i64 noundef %i.bo) #9 ; 2 uses
+  %.not.i7.i = icmp eq ptr %6, null
+  br i1 %.not.i7.i, label %spl_object_storage_free_hash.exit.thread, label %spl_object_storage_free_hash.exit.thread104
 
 .loopexit:                                        ; preds = %bb.n, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
@@ -1453,33 +1454,23 @@ bb.o:                                             ; preds = %bb.n
   br label %.thread112.sink.split
 
 bb.p:                                             ; preds = %bb.n
-  %i.bp = load ptr, ptr %3, align 8, !tbaa !12    ; 6 uses
+  %i.bp = load ptr, ptr %3, align 8, !tbaa !12, !nonnull !31, !noundef !31 ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #9
-  %.not.i53 = icmp eq ptr %i.bp, null
-  br i1 %.not.i53, label %8, label %6
-
-6:                                                ; preds = %bb.p
   %7 = call ptr @zend_hash_find(ptr noundef nonnull %i.g, ptr noundef nonnull %i.bp) #9 ; 2 uses
-  %.not.i.i = icmp eq ptr %7, null
-  br i1 %.not.i.i, label %spl_object_storage_get.exit.thread85, label %spl_object_storage_get.exit
+  %.not.i53 = icmp eq ptr %7, null
+  br i1 %.not.i53, label %spl_object_storage_get.exit.thread85, label %spl_object_storage_get.exit
 
-8:                                                ; preds = %.thread, %bb.p
-  %.sroa.0.26169 = phi i64 [ %i.bo, %.thread ], [ %.sroa.0.0117, %bb.p ] ; 3 uses
-  %9 = call ptr @zend_hash_index_find(ptr noundef nonnull %i.g, i64 noundef %.sroa.0.26169) #9 ; 2 uses
-  %.not.i7.i = icmp eq ptr %9, null
-  br i1 %.not.i7.i, label %spl_object_storage_free_hash.exit.thread, label %spl_object_storage_free_hash.exit.thread104
-
-spl_object_storage_free_hash.exit.thread104:      ; preds = %8
-  %i.bq = load ptr, ptr %9, align 8, !tbaa !12, !nonnull !31, !noundef !31
+spl_object_storage_free_hash.exit.thread104:      ; preds = %.thread
+  %i.bq = load ptr, ptr %6, align 8, !tbaa !12, !nonnull !31, !noundef !31
   br label %bb.s
 
-spl_object_storage_get.exit:                      ; preds = %6
+spl_object_storage_get.exit:                      ; preds = %bb.p
   %i.br = load ptr, ptr %7, align 8, !tbaa !12, !nonnull !31, !noundef !31
   br label %spl_object_storage_get.exit.thread85
 
-spl_object_storage_get.exit.thread85:             ; preds = %6, %spl_object_storage_get.exit
-  %.0.i5492 = phi ptr [ %i.br, %spl_object_storage_get.exit ], [ null, %6 ] ; 2 uses
+spl_object_storage_get.exit.thread85:             ; preds = %bb.p, %spl_object_storage_get.exit
+  %.0.i5492 = phi ptr [ %i.br, %spl_object_storage_get.exit ], [ null, %bb.p ] ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !12
   %i.bu = and i32 %i.bt, 64
@@ -1504,7 +1495,6 @@ spl_object_storage_free_hash.exit:                ; preds = %spl_object_storage_
   br i1 %.not49, label %spl_object_storage_free_hash.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %spl_object_storage_free_hash.exit.thread104, %spl_object_storage_free_hash.exit
-  %.sroa.0.2617183110 = phi i64 [ %.sroa.0.26169, %spl_object_storage_free_hash.exit.thread104 ], [ %.sroa.0.0117, %spl_object_storage_free_hash.exit ]
   %.0.i5484109 = phi ptr [ %i.bq, %spl_object_storage_free_hash.exit.thread104 ], [ %.0.i5492, %spl_object_storage_free_hash.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   %i.bz = getelementptr inbounds nuw i8, ptr %.0.i5484109, i64 16
@@ -1533,8 +1523,7 @@ bb.u:                                             ; preds = %bb.s, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   br label %bb.aa
 
-spl_object_storage_free_hash.exit.thread:         ; preds = %8, %spl_object_storage_free_hash.exit, %bb.u
-  %.sroa.0.2617183102 = phi i64 [ %.sroa.0.0117, %spl_object_storage_free_hash.exit ], [ %.sroa.0.2617183110, %bb.u ], [ %.sroa.0.26169, %8 ]
+spl_object_storage_free_hash.exit.thread:         ; preds = %.thread, %spl_object_storage_free_hash.exit, %bb.u
   %i.ce = load ptr, ptr %i.al, align 8, !tbaa !12
   %i.cf = load i8, ptr %i.ae, align 8, !tbaa !12
   %i.cg = icmp eq i8 %i.cf, 0
@@ -1544,7 +1533,7 @@ spl_object_storage_free_hash.exit.thread:         ; preds = %8, %spl_object_stor
   call void @var_replace(ptr noundef nonnull %i.d, ptr noundef nonnull %4, ptr noundef nonnull %i.ci) #9
   call void @zval_ptr_dtor(ptr noundef nonnull %4) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  %i.cj = icmp samesign ugt i64 %.in, 1
+  %i.cj = icmp samesign ugt i64 %.sroa.0.0117, 1
   br i1 %i.cj, label %bb.g, label %._crit_edge.loopexit
 
 ._crit_edge.loopexit:                             ; preds = %spl_object_storage_free_hash.exit.thread
@@ -1677,15 +1666,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.lr.ph, %bb.g
   %i.v = phi ptr [ %i.j, %.lr.ph ], [ %i.am, %bb.g ] ; 2 uses
-  %.039 = phi i32 [ %i.m, %.lr.ph ], [ %i.ao, %bb.g ]
-  %.03438 = phi ptr [ %i.t, %.lr.ph ], [ %i.an, %bb.g ] ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %.03438, i64 8
+  %.039 = phi ptr [ %i.t, %.lr.ph ], [ %i.an, %bb.g ] ; 3 uses
+  %.03438 = phi i32 [ %i.m, %.lr.ph ], [ %i.ao, %bb.g ]
+  %i.w = getelementptr inbounds nuw i8, ptr %.039, i64 8
   %i.x = load i8, ptr %i.w, align 8, !tbaa !12
   %i.y = icmp eq i8 %i.x, 0
   br i1 %i.y, label %bb.g, label %bb.d, !prof !15
 
 bb.d:                                             ; preds = %bb.c
-  %i.z = load ptr, ptr %.03438, align 8, !tbaa !12 ; 3 uses
+  %i.z = load ptr, ptr %.039, align 8, !tbaa !12  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !55  ; 3 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !30
@@ -1715,8 +1704,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.c, %bb.f
   %i.am = phi ptr [ %i.v, %bb.c ], [ %i.ak, %bb.f ]
-  %i.an = getelementptr inbounds nuw i8, ptr %.03438, i64 %i.r
-  %i.ao = add i32 %.039, -1                       ; 2 uses
+  %i.an = getelementptr inbounds nuw i8, ptr %.039, i64 %i.r
+  %i.ao = add i32 %.03438, -1                     ; 2 uses
   %.not35 = icmp eq i32 %i.ao, 0
   br i1 %.not35, label %._crit_edge, label %bb.c, !llvm.loop !81
 
@@ -1817,19 +1806,19 @@ bb.h:                                             ; preds = %bb.f
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.o
   %.042 = phi ptr [ %i.av, %bb.o ], [ %i.ai, %.lr.ph.preheader ] ; 5 uses
-  %.02841 = phi ptr [ %.1, %bb.o ], [ null, %.lr.ph.preheader ] ; 4 uses
-  %.02940 = phi i32 [ %i.aw, %bb.o ], [ %i.ab, %.lr.ph.preheader ]
+  %.02841 = phi i32 [ %i.aw, %bb.o ], [ %i.ab, %.lr.ph.preheader ]
+  %.03140 = phi ptr [ %.1, %bb.o ], [ null, %.lr.ph.preheader ] ; 4 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.042, i64 8
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !12  ; 2 uses
   %i.al = icmp eq i8 %i.ak, 0
   br i1 %i.al, label %bb.o, label %bb.i, !prof !15
 
 bb.i:                                             ; preds = %.lr.ph
-  %.not37 = icmp eq ptr %.02841, null
+  %.not37 = icmp eq ptr %.03140, null
   br i1 %.not37, label %bb.o, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.am = getelementptr inbounds nuw i8, ptr %.02841, i64 8
+  %i.am = getelementptr inbounds nuw i8, ptr %.03140, i64 8
   %i.an = load i8, ptr %i.am, align 8, !tbaa !12
   %.not38 = icmp eq i8 %i.an, 8
   br i1 %.not38, label %bb.l, label %bb.k
@@ -1850,14 +1839,14 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.030 = phi ptr [ %i.as, %bb.m ], [ %.042, %bb.l ]
-  %i.at = load ptr, ptr %.02841, align 8, !tbaa !12
+  %i.at = load ptr, ptr %.03140, align 8, !tbaa !12
   %i.au = call fastcc ptr @spl_object_storage_attach(ptr noundef nonnull %i.d, ptr noundef %i.at, ptr noundef nonnull %.030) ; 0 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.i, %bb.n, %.lr.ph
-  %.1 = phi ptr [ %.02841, %.lr.ph ], [ null, %bb.n ], [ %.042, %bb.i ]
+  %.1 = phi ptr [ %.03140, %.lr.ph ], [ null, %bb.n ], [ %.042, %bb.i ]
   %i.av = getelementptr inbounds nuw i8, ptr %.042, i64 %i.ag
-  %i.aw = add i32 %.02940, -1                     ; 2 uses
+  %i.aw = add i32 %.02841, -1                     ; 2 uses
   %.not36 = icmp eq i32 %i.aw, 0
   br i1 %.not36, label %.critedge, label %.lr.ph, !llvm.loop !83
 
@@ -1926,15 +1915,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %.lr.ph.i
-  %.036.i = phi i32 [ %i.q, %.lr.ph.i ], [ %i.aq, %bb.g ]
-  %.03235.i = phi ptr [ %i.x, %.lr.ph.i ], [ %i.ap, %bb.g ] ; 3 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %.03235.i, i64 8
+  %.036.i = phi ptr [ %i.x, %.lr.ph.i ], [ %i.ap, %bb.g ] ; 3 uses
+  %.03235.i = phi i32 [ %i.q, %.lr.ph.i ], [ %i.aq, %bb.g ]
+  %i.aa = getelementptr inbounds nuw i8, ptr %.036.i, i64 8
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !12
   %i.ac = icmp eq i8 %i.ab, 0
   br i1 %i.ac, label %bb.g, label %bb.d, !prof !15
 
 bb.d:                                             ; preds = %bb.c
-  %i.ad = load ptr, ptr %.03235.i, align 8, !tbaa !12 ; 3 uses
+  %i.ad = load ptr, ptr %.036.i, align 8, !tbaa !12 ; 3 uses
   %i.ae = call ptr @_zend_new_array_0() #9
   store ptr %i.ae, ptr %2, align 8, !tbaa !12
   store i32 775, ptr %i.y, align 8, !tbaa !12
@@ -1966,8 +1955,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
-  %i.ap = getelementptr inbounds nuw i8, ptr %.03235.i, i64 %i.v
-  %i.aq = add i32 %.036.i, -1                     ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %.036.i, i64 %i.v
+  %i.aq = add i32 %.03235.i, -1                   ; 2 uses
   %.not.i = icmp eq i32 %i.aq, 0
   br i1 %.not.i, label %spl_object_storage_debug_info.exit, label %bb.c, !llvm.loop !88
 
@@ -2144,12 +2133,12 @@ zend_parse_arg_str_or_long.exit:                  ; preds = %bb.h
   br i1 %cond.fr, label %.critedge, label %.thread107, !prof !93
 
 .thread107:                                       ; preds = %zend_parse_arg_str_or_long.exit, %bb.g, %bb.f, %bb.b
-  %.0120 = phi i32 [ 0, %bb.b ], [ 1, %bb.f ], [ 1, %bb.g ], [ 2, %zend_parse_arg_str_or_long.exit ]
-  %.062119 = phi ptr [ null, %bb.b ], [ %i.g, %bb.f ], [ %i.g, %bb.g ], [ %i.v, %zend_parse_arg_str_or_long.exit ]
+  %.0120 = phi i32 [ 1, %bb.b ], [ 9, %bb.f ], [ 3, %bb.g ], [ 9, %zend_parse_arg_str_or_long.exit ]
+  %.062119 = phi ptr [ null, %bb.b ], [ null, %bb.f ], [ %i.s, %bb.g ], [ null, %zend_parse_arg_str_or_long.exit ]
   %.063118 = phi i32 [ 0, %bb.b ], [ 18, %bb.f ], [ 0, %bb.g ], [ 29, %zend_parse_arg_str_or_long.exit ]
-  %.065117 = phi i32 [ 1, %bb.b ], [ 9, %bb.f ], [ 3, %bb.g ], [ 9, %zend_parse_arg_str_or_long.exit ]
-  %.066116 = phi ptr [ null, %bb.b ], [ null, %bb.f ], [ %i.s, %bb.g ], [ null, %zend_parse_arg_str_or_long.exit ]
-  call void @zend_wrong_parameter_error(i32 noundef %.065117, i32 noundef %.0120, ptr noundef %.066116, i32 noundef %.063118, ptr noundef %.062119) #9
+  %.065116 = phi ptr [ null, %bb.b ], [ %i.g, %bb.f ], [ %i.g, %bb.g ], [ %i.v, %zend_parse_arg_str_or_long.exit ]
+  %.066115 = phi i32 [ 0, %bb.b ], [ 1, %bb.f ], [ 1, %bb.g ], [ 2, %zend_parse_arg_str_or_long.exit ]
+  call void @zend_wrong_parameter_error(i32 noundef %.0120, i32 noundef %.066115, ptr noundef %.062119, i32 noundef %.063118, ptr noundef %.065116) #9
   br label %bb.n
 
 .critedge:                                        ; preds = %zend_parse_arg_str_or_long.exit

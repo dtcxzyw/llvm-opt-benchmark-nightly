@@ -204,12 +204,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.lr.ph.i
-  %.02647.i = phi i32 [ 1, %.lr.ph.i ], [ %.127.i, %bb.f ] ; 2 uses
-  %.02946.i = phi i32 [ 1, %.lr.ph.i ], [ %.130.i, %bb.f ] ; 2 uses
-  %.13445.i = phi i64 [ %spec.select.i, %.lr.ph.i ], [ %i.q, %bb.f ] ; 2 uses
+  %.147.i = phi i64 [ %spec.select.i, %.lr.ph.i ], [ %i.q, %bb.f ] ; 2 uses
+  %.02946.i = phi i32 [ 1, %.lr.ph.i ], [ %.128.i, %bb.f ] ; 2 uses
+  %.03045.i = phi i32 [ 1, %.lr.ph.i ], [ %.131.i, %bb.f ] ; 2 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !12
   %.not.i = icmp ne i32 %i.g, 17
-  %i.h = icmp slt i64 %.13445.i, 1
+  %i.h = icmp slt i64 %.147.i, 1
   %or.cond.i = select i1 %i.c, i1 %i.h, i1 false
   %or.cond39.i = select i1 %.not.i, i1 true, i1 %or.cond.i
   br i1 %or.cond39.i, label %lock_file_timeout.exit.thread13, label %bb.f
@@ -224,14 +224,14 @@ bb.f:                                             ; preds = %bb.e
   %i.o = sdiv i64 %i.n, 1000                      ; 2 uses
   %i.p = trunc i64 %i.o to i32
   tail call void @sleep_millisec(i32 noundef %i.p) #13
-  %i.q = sub nsw i64 %.13445.i, %i.o
-  %i.r = shl nuw nsw i32 %.02647.i, 1
-  %i.s = add nsw i32 %.02946.i, 1
+  %i.q = sub nsw i64 %.147.i, %i.o
+  %i.r = shl nuw nsw i32 %.03045.i, 1
+  %i.s = add i32 %.02946.i, 1
   %i.t = add i32 %i.s, %i.r                       ; 2 uses
-  %i.u = icmp slt i32 %i.t, 1001
-  %.130.i = tail call i32 @llvm.smin.i32(i32 %i.t, i32 1000)
+  %i.u = icmp slt i32 %i.t, 1001                  ; 2 uses
   %6 = zext i1 %i.u to i32
-  %.127.i = add nuw nsw i32 %.02647.i, %6
+  %.131.i = add nuw nsw i32 %.03045.i, %6
+  %.128.i = select i1 %i.u, i32 %i.t, i32 1000
   %i.v = tail call fastcc i32 @lock_file(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %4) ; 2 uses
   %i.w = icmp sgt i32 %i.v, -1
   br i1 %i.w, label %lock_file_timeout.exit.thread, label %bb.e
@@ -633,9 +633,6 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #12
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

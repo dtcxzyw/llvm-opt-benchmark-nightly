@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/elfshaker-rs/original/elfshaker.elfshaker.5892cc60208a05dd-cgu.05?download=true
+inline.NumInlined: 500
+inline.NumDeleted: 171
 begin_hunk_0_@_RNvNtCs7BtpbLEd5q3_9elfshaker5store3run:bb.a
   %.sroa.022.2.i = phi i1 [ false, %bb.ei ], [ false, %.body70.i ], [ %.sroa.022.3.i, %bb.eb ], [ false, %bb.ff ], [ false, %bb.fe ]
   %.pn59.i = phi { ptr, i32 } [ %i.km, %bb.ei ], [ %.pn.i, %.body70.i ], [ %i.kc, %bb.eb ], [ %i.lg, %bb.ff ], [ %i.lg, %bb.fe ] ; 2 uses
@@ -200,8 +202,8 @@ bb.fc:                                            ; preds = %bb.fb
           to label %bb.gc unwind label %bb.fx
 
 bb.fd:                                            ; preds = %bb.ep, %bb.fi, %bb.ez
-  %.sroa.0202.2 = phi i64 [ %i.lf, %bb.ez ], [ -9223372036854775805, %bb.fi ], [ -9223372036854775808, %bb.ep ]
   %.sroa.13.2 = phi ptr [ %.sroa.13.0.copyload205, %bb.ez ], [ %i.le, %bb.fi ], [ %i.kv, %bb.ep ]
+  %.sroa.0202.2 = phi i64 [ %i.lf, %bb.ez ], [ -9223372036854775805, %bb.fi ], [ -9223372036854775808, %bb.ep ]
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.o)
           to label %bb.fg unwind label %bb.fe, !noalias !1859
 
@@ -242,8 +244,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7B
   br label %bb.fk
 
 bb.fk:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit80.i, %bb.ef
-  %.sroa.0202.0 = phi i64 [ %.sroa.0202.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit80.i ], [ -9223372036854775805, %bb.ef ]
   %.sroa.13.0 = phi ptr [ %.sroa.13.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit80.i ], [ %i.kf, %bb.ef ]
+  %.sroa.0202.0 = phi i64 [ %.sroa.0202.2, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit80.i ], [ -9223372036854775805, %bb.ef ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCskuiImRAV2ip_9elfshaker7packidx9PackIndexECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef align 8 dereferenceable(264) %i.s)
           to label %bb.fl unwind label %.split.thread.i, !noalias !1859
 
@@ -252,8 +254,8 @@ bb.fl:                                            ; preds = %bb.fk
   br label %bb.fm
 
 bb.fm:                                            ; preds = %bb.fl, %bb.dv
-  %.sroa.0202.1 = phi i64 [ -9223372036854775808, %bb.dv ], [ %.sroa.0202.0, %bb.fl ]
   %.sroa.13.1 = phi ptr [ %i.jv, %bb.dv ], [ %.sroa.13.0, %bb.fl ]
+  %.sroa.0202.1 = phi i64 [ -9223372036854775808, %bb.dv ], [ %.sroa.0202.0, %bb.fl ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !1819
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VechENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.y)
           to label %bb.fp unwind label %bb.fn, !noalias !1859
@@ -339,8 +341,8 @@ bb.fx:                                            ; preds = %bb.fc, %_RINvNtNtCs
           to label %.body109 unwind label %bb.bm
 
 bb.fy:                                            ; preds = %_RINvNtNtCskuiImRAV2ip_9elfshaker4repo10repository15clean_file_listNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterB12_EECs7BtpbLEd5q3_9elfshaker.exit.thread.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit89.i, %bb.fv, %bb.fw
-  %.sroa.0202.3.ph = phi i64 [ -9223372036854775808, %bb.fw ], [ -9223372036854775808, %bb.fv ], [ %.sroa.0202.1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit89.i ], [ -9223372036854775808, %_RINvNtNtCskuiImRAV2ip_9elfshaker4repo10repository15clean_file_listNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterB12_EECs7BtpbLEd5q3_9elfshaker.exit.thread.i ]
   %.sroa.13.3.ph = phi ptr [ %i.is, %bb.fw ], [ %i.is, %bb.fv ], [ %.sroa.13.1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit89.i ], [ %i.hr, %_RINvNtNtCskuiImRAV2ip_9elfshaker4repo10repository15clean_file_listNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterB12_EECs7BtpbLEd5q3_9elfshaker.exit.thread.i ]
+  %.sroa.0202.3.ph = phi i64 [ -9223372036854775808, %bb.fw ], [ -9223372036854775808, %bb.fv ], [ %.sroa.0202.1, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs7BtpbLEd5q3_9elfshaker.exit89.i ], [ -9223372036854775808, %_RINvNtNtCskuiImRAV2ip_9elfshaker4repo10repository15clean_file_listNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtNtCs1xwejQucwHj_5alloc3vec9into_iter8IntoIterB12_EECs7BtpbLEd5q3_9elfshaker.exit.thread.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !1819
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ae)

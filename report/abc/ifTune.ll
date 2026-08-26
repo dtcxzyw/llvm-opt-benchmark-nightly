@@ -205,10 +205,10 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.b, %.preheader105
-  %.085108 = phi i32 [ 0, %.preheader105 ], [ %i.bd, %bb.b ] ; 5 uses
-  %.087107 = phi i32 [ 0, %.preheader105 ], [ %.188.1, %bb.b ]
+  %.085108 = phi i32 [ 0, %.preheader105 ], [ %.188.1, %bb.b ]
+  %.087107 = phi i32 [ 0, %.preheader105 ], [ %i.bd, %bb.b ] ; 5 uses
   %niter = phi i32 [ 0, %.preheader105 ], [ %niter.next.1, %bb.b ]
-  %i.ag = add nsw i32 %i.aa, %.085108             ; 2 uses
+  %i.ag = add nsw i32 %i.aa, %.087107             ; 2 uses
   %i.ah = ashr i32 %i.ag, 6
   %i.ai = sext i32 %i.ah to i64
   %i.aj = getelementptr inbounds [8 x i8], ptr %2, i64 %i.ai
@@ -218,10 +218,10 @@ bb.b:                                             ; preds = %bb.b, %.preheader10
   %i.an = shl nuw i64 1, %i.am
   %i.ao = and i64 %i.ak, %i.an
   %.not101 = icmp eq i64 %i.ao, 0
-  %i.ap = shl nuw i32 1, %.085108
+  %i.ap = shl nuw i32 1, %.087107
   %i.aq = select i1 %.not101, i32 0, i32 %i.ap
-  %.188 = or i32 %i.aq, %.087107
-  %i.ar = or disjoint i32 %.085108, 1
+  %.188 = or i32 %i.aq, %.085108
+  %i.ar = or disjoint i32 %.087107, 1
   %i.as = add nsw i32 %i.aa, %i.ar                ; 2 uses
   %i.at = ashr i32 %i.as, 6
   %i.au = sext i32 %i.at to i64
@@ -232,10 +232,10 @@ bb.b:                                             ; preds = %bb.b, %.preheader10
   %i.az = shl nuw i64 1, %i.ay
   %i.ba = and i64 %i.aw, %i.az
   %.not101.1 = icmp eq i64 %i.ba, 0
-  %i.bb = shl nuw i32 2, %.085108
+  %i.bb = shl nuw i32 2, %.087107
   %i.bc = select i1 %.not101.1, i32 0, i32 %i.bb
   %.188.1 = or i32 %i.bc, %.188                   ; 3 uses
-  %i.bd = add nuw i32 %.085108, 2                 ; 3 uses
+  %i.bd = add nuw i32 %.087107, 2                 ; 3 uses
   %niter.next.1 = add i32 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.b, !llvm.loop !141
@@ -638,7 +638,7 @@ bb.d:                                             ; preds = %.lr.ph
 
 .critedge:                                        ; preds = %.lr.ph, %bb.d, %Abc_UtilStrsav.exit251
   %i.as = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 7 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 4 ; 11 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 4 ; 10 uses
   store i32 0, ptr %i.at, align 4, !tbaa !85
   store i32 16, ptr %i.as, align 8, !tbaa !87
   %i.au = tail call noalias dereferenceable_or_null(64) ptr @malloc(i64 noundef 64) #28
@@ -668,7 +668,6 @@ bb.d:                                             ; preds = %.lr.ph
 
 bb.e:                                             ; preds = %.lr.ph395.a, %bb.fc
   %indvars.iv420 = phi i64 [ 0, %.lr.ph395.a ], [ %indvars.iv.next421, %bb.fc ] ; 7 uses
-  %.0394 = phi i32 [ undef, %.lr.ph395.a ], [ %.3, %bb.fc ] ; 7 uses
   %.0199391 = phi i32 [ 0, %.lr.ph395.a ], [ %.2201, %bb.fc ] ; 8 uses
   %.val231.a = load ptr, ptr %i.aa, align 8, !tbaa !86 ; 2 uses
   %i.bj = getelementptr inbounds nuw [12 x i8], ptr %.val231.a, i64 %indvars.iv420 ; 3 uses
@@ -1071,8 +1070,8 @@ bb.ex:                                            ; preds = %bb.ew
   %.val217 = load i32, ptr %i.ll, align 4, !tbaa !85
   %i.qk = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.l, ptr noundef nonnull %i.e, i32 noundef %.val217, ptr noundef nonnull %i.aw, ptr noundef nonnull %i.lk, i32 noundef 1) #26
   %i.ql = getelementptr inbounds nuw i8, ptr %i.ew, i64 9
-  %i.qm = load i8, ptr %i.ql, align 1, !tbaa !23  ; 3 uses
-  switch i8 %i.qm, label %1 [
+  %i.qm = load i8, ptr %i.ql, align 1, !tbaa !23  ; 2 uses
+  switch i8 %i.qm, label %bb.ez [
     i8 0, label %bb.fa
     i8 1, label %bb.ey
   ]
@@ -1080,14 +1079,7 @@ bb.ex:                                            ; preds = %bb.ew
 bb.ey:                                            ; preds = %bb.ex
   br label %bb.fa
 
-1:                                                ; preds = %bb.ex
-  %2 = zext i8 %i.qm to i32
-  %.val216 = load i32, ptr %i.at, align 4, !tbaa !85
-  %3 = add nsw i32 %.val216, 2
-  %4 = icmp sgt i32 %3, %2
-  br i1 %4, label %bb.ez, label %bb.fa
-
-bb.ez:                                            ; preds = %1
+bb.ez:                                            ; preds = %bb.ex
   %.val234 = load ptr, ptr %i.av, align 8, !tbaa !88
   %i.qn = zext i8 %i.qm to i64
   %i.qo = getelementptr [4 x i8], ptr %.val234, i64 %i.qn
@@ -1095,9 +1087,9 @@ bb.ez:                                            ; preds = %1
   %i.qq = load i32, ptr %i.qp, align 4, !tbaa !24
   br label %bb.fa
 
-bb.fa:                                            ; preds = %bb.ex, %bb.ey, %1, %bb.ez
-  %.1 = phi i32 [ %.0394, %1 ], [ 1, %bb.ey ], [ %i.qq, %bb.ez ], [ 0, %bb.ex ] ; 2 uses
-  %i.qr = call i32 @Gia_ManHashMux(ptr noundef nonnull %i.l, i32 noundef %.1, i32 noundef %i.qk, i32 noundef %i.ob) #26
+bb.fa:                                            ; preds = %bb.ex, %bb.ey, %bb.ez
+  %.0 = phi i32 [ 0, %bb.ex ], [ 1, %bb.ey ], [ %i.qq, %bb.ez ]
+  %i.qr = call i32 @Gia_ManHashMux(ptr noundef nonnull %i.l, i32 noundef %.0, i32 noundef %i.qk, i32 noundef %i.ob) #26
   %.val227 = load ptr, ptr %i.aa, align 8, !tbaa !86
   %i.qs = getelementptr inbounds nuw [12 x i8], ptr %.val227, i64 %indvars.iv420
   %i.qt = getelementptr inbounds nuw i8, ptr %i.qs, i64 8
@@ -1120,7 +1112,6 @@ Vec_IntFree.exit361:                              ; preds = %bb.fa, %bb.fb
 
 bb.fc:                                            ; preds = %bb.s, %Vec_IntFree.exit361, %Vec_IntFree.exit, %.critedge4, %bb.f, %bb.i, %bb.h
   %.2201 = phi i32 [ %.0199391, %bb.h ], [ %.0199391, %bb.f ], [ %.0199391, %bb.i ], [ %i.fl, %bb.s ], [ %i.lj, %Vec_IntFree.exit ], [ %i.qw, %Vec_IntFree.exit361 ], [ %.0199391, %.critedge4 ]
-  %.3 = phi i32 [ %.0394, %bb.h ], [ %.0394, %bb.f ], [ %.0394, %bb.i ], [ %.0394, %bb.s ], [ %.0394, %Vec_IntFree.exit ], [ %.1, %Vec_IntFree.exit361 ], [ %.0394, %.critedge4 ]
   %indvars.iv.next421 = add nuw nsw i64 %indvars.iv420, 1 ; 2 uses
   %i.qx = load i32, ptr %i.h, align 8, !tbaa !91
   %i.qy = sext i32 %i.qx to i64
@@ -1523,9 +1514,9 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph288
 
 .lr.ph288:                                        ; preds = %.lr.ph288.preheader, %bb.g
-  %indvars.iv341 = phi i64 [ 1, %.lr.ph288.preheader ], [ %indvars.iv.next342.a, %bb.g ] ; 2 uses
-  %indvars.iv339 = phi i64 [ 0, %.lr.ph288.preheader ], [ %indvars.iv.next340, %bb.g ] ; 2 uses
-  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %indvars.iv339
+  %indvars.iv341 = phi i64 [ 0, %.lr.ph288.preheader ], [ %indvars.iv.next340, %bb.g ] ; 2 uses
+  %indvars.iv339 = phi i64 [ 1, %.lr.ph288.preheader ], [ %indvars.iv.next342.a, %bb.g ] ; 2 uses
+  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %indvars.iv341
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !24
   %i.cu = sext i32 %i.ct to i64
   %i.cv = getelementptr inbounds [48 x i8], ptr %i.al, i64 %i.cu
@@ -1533,7 +1524,7 @@ bb.f:                                             ; preds = %bb.e
   %i.cx = lshr i32 %i.cw, 15                      ; 2 uses
   %i.cy = and i32 %i.cx, 131070
   %i.cz = or i32 %i.cx, 1
-  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv341
+  %i.da = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv339
   store i32 %i.cz, ptr %i.da, align 4, !tbaa !24
   %i.db = load i32, ptr %i.ck, align 8
   %i.dc = lshr i32 %i.db, 15
@@ -1545,8 +1536,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not222, label %.critedge228, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph288
-  %indvars.iv.next342.a = add nuw nsw i64 %indvars.iv341, 1 ; 2 uses
-  %indvars.iv.next340 = add nuw nsw i64 %indvars.iv339, 1 ; 2 uses
+  %indvars.iv.next342.a = add nuw nsw i64 %indvars.iv339, 1 ; 2 uses
+  %indvars.iv.next340 = add nuw nsw i64 %indvars.iv341, 1 ; 2 uses
   %exitcond347.not = icmp eq i64 %indvars.iv.next340, %wide.trip.count346
   br i1 %exitcond347.not, label %._crit_edge289, label %.lr.ph288, !llvm.loop !266
 
@@ -1849,25 +1840,25 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %.lr.ph270
 
 .lr.ph270:                                        ; preds = %.lr.ph270.preheader, %.lr.ph270
-  %indvars.iv324 = phi i64 [ %i.jb, %.lr.ph270.preheader ], [ %indvars.iv.next325, %.lr.ph270 ] ; 3 uses
-  %indvars.iv322 = phi i64 [ 0, %.lr.ph270.preheader ], [ %indvars.iv.next323.a, %.lr.ph270 ] ; 3 uses
-  %i.jc = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %indvars.iv322
+  %indvars.iv324 = phi i64 [ 0, %.lr.ph270.preheader ], [ %indvars.iv.next323.a, %.lr.ph270 ] ; 3 uses
+  %indvars.iv322 = phi i64 [ %i.jb, %.lr.ph270.preheader ], [ %indvars.iv.next325, %.lr.ph270 ] ; 3 uses
+  %i.jc = getelementptr inbounds nuw [4 x i8], ptr %i.co, i64 %indvars.iv324
   %i.jd = load i32, ptr %i.jc, align 4, !tbaa !24
   %i.je = sext i32 %i.jd to i64
   %i.jf = getelementptr inbounds [48 x i8], ptr %i.al, i64 %i.je
   %i.jg = load i32, ptr %i.jf, align 8
-  %i.jh = trunc nuw nsw i64 %indvars.iv322 to i32
+  %i.jh = trunc nuw nsw i64 %indvars.iv324 to i32
   %i.ji = lshr i32 %.3194274, %i.jh
   %i.jj = and i32 %i.ji, 1
   %i.jk = lshr i32 %i.jg, 15
   %i.jl = and i32 %i.jk, 131070
   %i.jm = or disjoint i32 %i.jl, %i.jj            ; 2 uses
-  %i.jn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv324
+  %i.jn = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv322
   store i32 %i.jm, ptr %i.jn, align 4, !tbaa !24
-  %i.jo = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv324
+  %i.jo = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv322
   store i32 %i.jm, ptr %i.jo, align 4, !tbaa !24
-  %indvars.iv.next323.a = add nuw nsw i64 %indvars.iv322, 1 ; 2 uses
-  %indvars.iv.next325 = add nuw nsw i64 %indvars.iv324, 1 ; 2 uses
+  %indvars.iv.next323.a = add nuw nsw i64 %indvars.iv324, 1 ; 2 uses
+  %indvars.iv.next325 = add nuw nsw i64 %indvars.iv322, 1 ; 2 uses
   %exitcond330.not = icmp eq i64 %indvars.iv.next323.a, %wide.trip.count329
   br i1 %exitcond330.not, label %._crit_edge271.loopexit, label %.lr.ph270, !llvm.loop !270
 
@@ -2270,11 +2261,14 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #22
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #23
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #24
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.ctlz.i32(i32, i1 immarg) #24
+declare i32 @llvm.ctlz.i32(i32, i1 immarg) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #23
@@ -2287,9 +2281,6 @@ declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #23
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #23
@@ -2318,8 +2309,8 @@ attributes #20 = { mustprogress nounwind willreturn allockind("realloc") allocsi
 attributes #21 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #22 = { nofree nounwind }
 attributes #23 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #24 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #25 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #24 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #25 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #26 = { nounwind }
 attributes #27 = { nounwind allocsize(0,1) }
 attributes #28 = { nounwind allocsize(0) }

@@ -23,17 +23,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call i32 @lzma_vli_size(i64 noundef %i.e) #5 ; 2 uses
-  %1 = icmp eq i32 %i.f, 0
-  %2 = icmp eq i64 %i.e, 0
-  %or.cond = or i1 %2, %1
-  br i1 %or.cond, label %.critedge, label %3
+  %1 = icmp ne i32 %i.f, 0
+  %2 = icmp ne i64 %i.e, 0                        ; 2 uses
+  %or.cond.not = and i1 %2, %1
+  %3 = add i32 %i.f, 6
+  %.035 = select i1 %2, i32 %3, i32 6
+  br i1 %or.cond.not, label %bb.d, label %.critedge
 
-3:                                                ; preds = %bb.c
-  %4 = add i32 %i.f, 6
-  br label %bb.d
-
-bb.d:                                             ; preds = %3, %bb.b
-  %.136 = phi i32 [ %4, %3 ], [ 6, %bb.b ]        ; 2 uses
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.136 = phi i32 [ %.035, %bb.c ], [ 6, %bb.b ]  ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = load i64, ptr %i.g, align 8, !tbaa !14   ; 2 uses
   %.not52 = icmp eq i64 %i.h, -1
@@ -129,8 +127,8 @@ bb.k:                                             ; preds = %.lr.ph.3
   store i32 %i.ao, ptr %i.ap, align 4, !tbaa !18
   br label %.critedge
 
-.critedge:                                        ; preds = %.lr.ph.preheader, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %bb.k, %._crit_edge, %bb.e, %bb.g, %bb.f, %bb.c, %bb.a
-  %.8 = phi i32 [ 8, %bb.a ], [ 11, %bb.f ], [ 0, %._crit_edge ], [ 11, %bb.c ], [ 11, %bb.e ], [ 11, %bb.g ], [ %i.ab, %.lr.ph.2 ], [ %i.p, %.lr.ph.preheader ], [ %i.ah, %.lr.ph.3 ], [ %i.v, %.lr.ph.1 ], [ 11, %bb.k ]
+.critedge:                                        ; preds = %.lr.ph.preheader, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %bb.k, %._crit_edge, %bb.e, %bb.c, %bb.g, %bb.f, %bb.a
+  %.8 = phi i32 [ 8, %bb.a ], [ 11, %bb.c ], [ 0, %._crit_edge ], [ 11, %bb.f ], [ 11, %bb.e ], [ 11, %bb.g ], [ %i.ab, %.lr.ph.2 ], [ %i.p, %.lr.ph.preheader ], [ %i.ah, %.lr.ph.3 ], [ %i.v, %.lr.ph.1 ], [ 11, %bb.k ]
   ret i32 %.8
 }
 

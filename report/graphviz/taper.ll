@@ -21,7 +21,7 @@ define { i64, ptr } @taper(ptr nofree noundef readonly captures(none) %0, ptr no
 bb.a:
   %3 = alloca [4 x %struct.pointf_s], align 16    ; 8 uses
   %4 = alloca %struct.stroke_t, align 8           ; 11 uses
-  %5 = alloca %struct.vararr_t, align 8           ; 12 uses
+  %5 = alloca %struct.vararr_t, align 8           ; 16 uses
   %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = alloca ptr, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
@@ -31,13 +31,22 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %5, i8 0, i64 40, i1 false), !alias.scope !16
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12, !noalias !16
+  %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 65 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
+  %.sroa.11.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 89 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.11.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 4 uses
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 48
   %i.e = load <2 x double>, ptr %.val, align 8, !noalias !16
   store <2 x double> %i.e, ptr %i.d, align 8, !tbaa !19, !alias.scope !16
-  %.sroa.5.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 2 uses
-  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.5.0..sroa_idx.i.i.a, i8 0, i64 48, i1 false), !alias.scope !16
+  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 56 ; 2 uses
+  store double 0.000000e+00, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
+  %.sroa.5.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %5, i64 64 ; 2 uses
+  store i8 0, ptr %.sroa.5.0..sroa_idx.i.i.a, align 8, !tbaa !20, !alias.scope !16
+  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 17, i1 false), !alias.scope !16
+  %.sroa.12.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 96 ; 2 uses
+  store double 0.000000e+00, ptr %.sroa.12.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
   %i.f = call i64 @gv_list_append_slot_(ptr noundef nonnull align 8 %5, i64 noundef 64) #12
   %i.g = load ptr, ptr %5, align 8, !tbaa !20, !alias.scope !16
   %i.h = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %i.f
@@ -73,22 +82,26 @@ bb.b:                                             ; preds = %.loopexit.i, %.lr.p
 
 bb.c:                                             ; preds = %bb.c, %bb.b
   %.05.i = phi i32 [ 1, %bb.b ], [ %i.ab, %bb.c ] ; 2 uses
-  %.14.i = phi double [ %.0227.i, %bb.b ], [ %i.x, %bb.c ]
+  %.14.i = phi double [ %.sroa.013.0.copyload.i, %bb.b ], [ %i.s, %bb.c ]
   %.sroa.5.03.i = phi double [ %.sroa.5.0.copyload.i, %bb.b ], [ %i.t, %bb.c ]
-  %.sroa.013.02.i = phi double [ %.sroa.013.0.copyload.i, %bb.b ], [ %i.s, %bb.c ]
+  %.sroa.013.02.i = phi double [ %.0227.i, %bb.b ], [ %i.x, %bb.c ]
   %i.p = uitofp nneg i32 %.05.i to double
   %i.q = fdiv double %i.p, 2.000000e+01
   %i.r = call { double, double } @Bezier(ptr noundef nonnull %3, double noundef %i.q, ptr noundef null, ptr noundef null) #12 ; 2 uses
   %i.s = extractvalue { double, double } %i.r, 0  ; 3 uses
   %i.t = extractvalue { double, double } %i.r, 1  ; 3 uses
-  %i.u = fsub double %.sroa.013.02.i, %i.s
+  %i.u = fsub double %.14.i, %i.s
   %i.v = fsub double %.sroa.5.03.i, %i.t
   %i.w = call double @hypot(double noundef %i.u, double noundef %i.v) #12
-  %i.x = fadd double %.14.i, %i.w                 ; 3 uses
+  %i.x = fadd double %.sroa.013.02.i, %i.w        ; 3 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.7.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.11.0..sroa_idx.i.i, i8 0, i64 7, i1 false), !alias.scope !16
   store double %i.s, ptr %i.d, align 8, !tbaa !19, !alias.scope !16
   store double %i.t, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
-  store double %i.x, ptr %.sroa.5.0..sroa_idx.i.i.a, align 8, !tbaa !19, !alias.scope !16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 40, i1 false), !alias.scope !16
+  store double %i.x, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
+  store i8 0, ptr %.sroa.5.0..sroa_idx.i.i.a, align 8, !tbaa !20, !alias.scope !16
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %.sroa.6.0..sroa_idx.i.i, i8 0, i64 17, i1 false), !alias.scope !16
+  store double 0.000000e+00, ptr %.sroa.12.0..sroa_idx.i.i, align 8, !tbaa !19, !alias.scope !16
   %i.y = call i64 @gv_list_append_slot_(ptr noundef nonnull align 8 %5, i64 noundef 64) #12
   %i.z = load ptr, ptr %5, align 8, !tbaa !20, !alias.scope !16
   %i.aa = getelementptr inbounds nuw [64 x i8], ptr %i.z, i64 %i.y
@@ -186,8 +199,8 @@ mymod.exit173.peel:                               ; preds = %bb.f, %myatan.exit.
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %mymod.exit173.peel
   %i.bq = phi ptr [ %i.be, %mymod.exit173.peel ], [ %i.es, %._crit_edge.loopexit ] ; 5 uses
   %i.br = phi i64 [ %.pre, %mymod.exit173.peel ], [ %i.dp, %._crit_edge.loopexit ]
-  %.2155.lcssa = phi double [ %i.bc, %mymod.exit173.peel ], [ %.2155, %._crit_edge.loopexit ]
-  %.2.lcssa = phi double [ %i.bd, %mymod.exit173.peel ], [ %.2, %._crit_edge.loopexit ]
+  %.2155.lcssa = phi double [ %i.bd, %mymod.exit173.peel ], [ %.2155, %._crit_edge.loopexit ]
+  %.2.lcssa = phi double [ %i.bc, %mymod.exit173.peel ], [ %.0148.a, %._crit_edge.loopexit ]
   %.sroa.084.0.copyload.lcssa = phi double [ %i.bm, %mymod.exit173.peel ], [ %i.bp, %._crit_edge.loopexit ]
   %.sroa.8.0.copyload.lcssa = phi double [ %i.bn, %mymod.exit173.peel ], [ %i.bo, %._crit_edge.loopexit ]
   %i.bs = icmp eq i64 %i.br, 0
@@ -345,10 +358,10 @@ bb.t:                                             ; preds = %bb.p
   br label %mymod.exit173
 
 mymod.exit173:                                    ; preds = %bb.s, %mymod.exit, %bb.o, %bb.t
-  %.2155 = phi double [ %.1154, %bb.t ], [ %i.do, %bb.s ], [ %i.do, %bb.o ], [ %i.do, %mymod.exit ] ; 2 uses
-  %.0150 = phi i8 [ 0, %bb.t ], [ 1, %bb.s ], [ 0, %bb.o ], [ 1, %mymod.exit ]
-  %.0148.a = phi double [ %i.er, %bb.t ], [ %i.eq, %bb.s ], [ %i.ds, %bb.o ], [ %i.eb, %mymod.exit ]
-  %.2 = phi double [ %i.er, %bb.t ], [ %.0.i170, %bb.s ], [ %i.ds, %bb.o ], [ %.0.i170, %mymod.exit ] ; 2 uses
+  %.2155 = phi double [ %i.er, %bb.t ], [ %i.ds, %bb.o ], [ %.0.i170, %bb.s ], [ %.0.i170, %mymod.exit ] ; 2 uses
+  %.0156 = phi double [ %i.er, %bb.t ], [ %i.ds, %bb.o ], [ %i.eq, %bb.s ], [ %i.eb, %mymod.exit ]
+  %.0148.a = phi double [ %.1154, %bb.t ], [ %i.do, %bb.o ], [ %i.do, %bb.s ], [ %i.do, %mymod.exit ] ; 2 uses
+  %.0148 = phi i8 [ 0, %bb.t ], [ 0, %bb.o ], [ 1, %bb.s ], [ 1, %mymod.exit ]
   %i.es = load ptr, ptr %i.b, align 8, !tbaa !28  ; 3 uses
   %i.et = getelementptr inbounds nuw [64 x i8], ptr %i.es, i64 %.0151174 ; 7 uses
   store <2 x double> %i.ct, ptr %i.et, align 8, !tbaa !19
@@ -357,13 +370,13 @@ mymod.exit173:                                    ; preds = %bb.s, %mymod.exit, 
   %i.ev = getelementptr inbounds nuw i8, ptr %i.et, i64 24
   store i8 108, ptr %i.ev, align 8, !tbaa !32
   %i.ew = getelementptr inbounds nuw i8, ptr %i.et, i64 32
-  store double %.2, ptr %i.ew, align 8, !tbaa !33
+  store double %.2155, ptr %i.ew, align 8, !tbaa !33
   %i.ex = getelementptr inbounds nuw i8, ptr %i.et, i64 40
-  store double %.2155, ptr %i.ex, align 8, !tbaa !34
+  store double %.0148.a, ptr %i.ex, align 8, !tbaa !34
   %i.ey = getelementptr inbounds nuw i8, ptr %i.et, i64 48
-  store i8 %.0150, ptr %i.ey, align 8, !tbaa !35
+  store i8 %.0148, ptr %i.ey, align 8, !tbaa !35
   %i.ez = getelementptr inbounds nuw i8, ptr %i.et, i64 56
-  store double %.0148.a, ptr %i.ez, align 8, !tbaa !36
+  store double %.0156, ptr %i.ez, align 8, !tbaa !36
   %i.fa = icmp ult i64 %i.cp, %i.dp
   br i1 %i.fa, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !37
 
@@ -373,15 +386,15 @@ mymod.exit173:                                    ; preds = %bb.s, %mymod.exit, 
   br label %._crit_edge181
 
 ._crit_edge181:                                   ; preds = %._crit_edge181.loopexit, %bb.i, %._crit_edge.thread, %._crit_edge
-  %.1160.lcssa = phi double [ %.sroa.8.0.copyload.lcssa, %._crit_edge ], [ 0.000000e+00, %._crit_edge.thread ], [ %i.cm, %bb.i ], [ %i.fb, %._crit_edge181.loopexit ]
+  %.1160.lcssa = phi double [ %.2155.lcssa, %._crit_edge ], [ 0.000000e+00, %._crit_edge.thread ], [ %.sroa.12103.0.copyload105.peel, %bb.i ], [ %.sroa.12103.0.copyload105, %._crit_edge181.loopexit ]
   %.1158.lcssa = phi double [ %.sroa.084.0.copyload.lcssa, %._crit_edge ], [ 0.000000e+00, %._crit_edge.thread ], [ %i.cl, %bb.i ], [ %i.fc, %._crit_edge181.loopexit ]
-  %.3156.lcssa = phi double [ %.2155.lcssa, %._crit_edge ], [ 0.000000e+00, %._crit_edge.thread ], [ %.sroa.14.0.copyload110.peel, %bb.i ], [ %.sroa.14.0.copyload110, %._crit_edge181.loopexit ] ; 2 uses
-  %.3.lcssa = phi double [ %.2.lcssa, %._crit_edge ], [ 0.000000e+00, %._crit_edge.thread ], [ %.sroa.12103.0.copyload105.peel, %bb.i ], [ %.sroa.12103.0.copyload105, %._crit_edge181.loopexit ]
-  %i.fd = fadd double %.3.lcssa, f0x400921FB54442D18 ; 2 uses
+  %.3156.lcssa = phi double [ %.sroa.8.0.copyload.lcssa, %._crit_edge ], [ 0.000000e+00, %._crit_edge.thread ], [ %i.cm, %bb.i ], [ %i.fb, %._crit_edge181.loopexit ]
+  %.3.lcssa = phi double [ %.2.lcssa, %._crit_edge ], [ 0.000000e+00, %._crit_edge.thread ], [ %.sroa.14.0.copyload110.peel, %bb.i ], [ %.sroa.14.0.copyload110, %._crit_edge181.loopexit ] ; 2 uses
+  %i.fd = fadd double %.1160.lcssa, f0x400921FB54442D18 ; 2 uses
   %i.fe = call double @cos(double noundef %i.fd) #12
-  %i.ff = call double @llvm.fmuladd.f64(double %i.fe, double %.3156.lcssa, double %.1158.lcssa)
+  %i.ff = call double @llvm.fmuladd.f64(double %i.fe, double %.3.lcssa, double %.1158.lcssa)
   %i.fg = call double @sin(double noundef %i.fd) #12
-  %i.fh = call double @llvm.fmuladd.f64(double %i.fg, double %.3156.lcssa, double %.1160.lcssa)
+  %i.fh = call double @llvm.fmuladd.f64(double %i.fg, double %.3.lcssa, double %.3156.lcssa)
   call fastcc void @addto(ptr noundef %4, double noundef %i.ff, double noundef %i.fh)
   %i.fi = load i64, ptr %i.a, align 8, !tbaa !29
   %i.fj = add i64 %i.fi, -2                       ; 2 uses

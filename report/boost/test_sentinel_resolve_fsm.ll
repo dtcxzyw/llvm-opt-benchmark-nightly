@@ -204,10 +204,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.l, %bb.a
   %.sroa.0.0 = phi ptr [ %4, %bb.a ], [ %i.by, %bb.l ] ; 3 uses
-  %.051 = phi i64 [ 0, %bb.a ], [ %11, %bb.l ]    ; 2 uses
   %.048 = phi i64 [ 0, %bb.a ], [ %i.ca, %bb.l ]  ; 6 uses
-  %.045 = phi i64 [ 0, %bb.a ], [ %10, %bb.l ]    ; 2 uses
   %.044 = phi ptr [ %6, %bb.a ], [ %i.bz, %bb.l ] ; 3 uses
+  %8 = phi <2 x i64> [ zeroinitializer, %bb.a ], [ %12, %bb.l ] ; 2 uses
   %.not8198 = icmp eq ptr %.sroa.0.0, %5
   %.not99 = icmp eq ptr %.044, %7
   %or.cond100 = select i1 %.not8198, i1 true, i1 %.not99
@@ -215,9 +214,8 @@ bb.b:                                             ; preds = %bb.l, %bb.a
 
 .lr.ph:                                           ; preds = %bb.b, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80
   %.1104 = phi ptr [ %i.v, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.044, %bb.b ] ; 11 uses
-  %.146103 = phi i64 [ %8, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.045, %bb.b ] ; 4 uses
-  %.152102 = phi i64 [ %9, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.051, %bb.b ] ; 3 uses
   %.sroa.0.1101 = phi ptr [ %i.u, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.sroa.0.0, %bb.b ] ; 11 uses
+  %9 = phi <2 x i64> [ %10, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %8, %bb.b ] ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.sroa.0.1101, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !20   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.1104, i64 8
@@ -260,8 +258,7 @@ _ZN5boost5rediseqERKNS0_7addressES3_.exit:        ; preds = %bb.d
 _ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80: ; preds = %bb.d, %_ZN5boost5rediseqERKNS0_7addressES3_.exit
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.1101, i64 64 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.1104, i64 64 ; 3 uses
-  %8 = add nsw i64 %.146103, 1                    ; 2 uses
-  %9 = add nsw i64 %.152102, 1                    ; 2 uses
+  %10 = add nsw <2 x i64> %9, splat (i64 1)       ; 2 uses
   %.not81 = icmp eq ptr %i.u, %5
   %.not = icmp eq ptr %i.v, %7
   %or.cond = select i1 %.not81, i1 true, i1 %.not
@@ -328,7 +325,8 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit60
   %i.ax = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.83, i64 noundef 2) ; 0 uses
-  %i.ay = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIlEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %.146103) ; 3 uses
+  %11 = extractelement <2 x i64> %9, i64 0
+  %i.ay = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIlEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %11) ; 3 uses
   %i.az = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ay, ptr noundef nonnull @.str.84, i64 noundef 3) ; 0 uses
   %i.ba = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ay, ptr noundef nonnull @.str.8, i64 noundef 15) ; 0 uses
   %i.bb = load ptr, ptr %.sroa.0.1101, align 8, !tbaa !17
@@ -356,28 +354,28 @@ bb.l:                                             ; preds = %bb.j, %_ZStlsISt11c
   %i.bx = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bv, ptr noundef nonnull @.str.77, i64 noundef 1) ; 0 uses
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.0.1101, i64 64 ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %.1104, i64 64 ; 2 uses
-  %10 = add nsw i64 %.146103, 1                   ; 2 uses
-  %11 = add nsw i64 %.152102, 1                   ; 2 uses
+  %12 = add nsw <2 x i64> %9, splat (i64 1)       ; 2 uses
   %i.ca = add nuw nsw i64 %.048, 1                ; 2 uses
   %.not82 = icmp eq ptr %i.by, %5
   br i1 %.not82, label %.critedge, label %bb.b, !llvm.loop !279
 
 .critedge:                                        ; preds = %bb.l, %bb.b, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80, %bb.k
   %.sroa.0.2 = phi ptr [ %.sroa.0.1101, %bb.k ], [ %i.u, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.sroa.0.0, %bb.b ], [ %5, %bb.l ]
-  %.253 = phi i64 [ %.152102, %bb.k ], [ %9, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.051, %bb.b ], [ %11, %bb.l ]
   %.149 = phi i64 [ %.048, %bb.k ], [ %.048, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.048, %bb.b ], [ %i.ca, %bb.l ] ; 3 uses
-  %.247 = phi i64 [ %.146103, %bb.k ], [ %8, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.045, %bb.b ], [ %10, %bb.l ]
   %.2 = phi ptr [ %.1104, %bb.k ], [ %i.v, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %.044, %bb.b ], [ %i.bz, %bb.l ]
+  %13 = phi <2 x i64> [ %9, %bb.k ], [ %10, %_ZN5boost5rediseqERKNS0_7addressES3_.exit.thread80 ], [ %8, %bb.b ], [ %12, %bb.l ] ; 2 uses
   %i.cb = ptrtoint ptr %5 to i64
   %i.cc = ptrtoint ptr %.sroa.0.2 to i64
   %i.cd = sub i64 %i.cb, %i.cc
   %i.ce = ashr exact i64 %i.cd, 6
-  %i.cf = add nsw i64 %.247, %i.ce                ; 2 uses
+  %14 = extractelement <2 x i64> %13, i64 0
+  %i.cf = add nsw i64 %i.ce, %14                  ; 2 uses
   %i.cg = ptrtoint ptr %7 to i64
   %i.ch = ptrtoint ptr %.2 to i64
   %i.ci = sub i64 %i.cg, %i.ch
   %i.cj = ashr exact i64 %i.ci, 6
-  %i.ck = add nsw i64 %i.cj, %.253                ; 2 uses
+  %15 = extractelement <2 x i64> %13, i64 1
+  %i.ck = add nsw i64 %i.cj, %15                  ; 2 uses
   %.not56 = icmp eq i64 %i.cf, %i.ck
   br i1 %.not56, label %bb.u, label %bb.m
 
