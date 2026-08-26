@@ -205,6 +205,7 @@ bb.a:
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit.us
   %.sroa.017.023.us = phi ptr [ %7, %_ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit.us ], [ %i.a, %.lr.ph ] ; 4 uses
   %i.f = tail call noundef i32 @_ZNK12lldb_private17SymbolContextList7GetSizeEv(ptr noundef nonnull align 8 dereferenceable(192) %5) #27 ; 0 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.sroa.017.023.us, i64 32 ; 2 uses
   %i.g = load ptr, ptr %0, align 8, !tbaa !25
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 96
   %i.i = load ptr, ptr %i.h, align 8
@@ -240,7 +241,6 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit.us
 
 _ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit.us: ; preds = %bb.d, %bb.c, %bb.b, %.lr.ph.split.us
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.017.023.us, i64 32 ; 2 uses
   %.not21.us = icmp eq ptr %7, %i.c
   br i1 %.not21.us, label %._crit_edge, label %.lr.ph.split.us
 
@@ -262,8 +262,10 @@ _ZNSt6vectorIN12lldb_private6Module10LookupInfoESaIS2_EED2Ev.exit: ; preds = %._
   ret void
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %bb.j
-  %.sroa.017.023 = phi ptr [ %8, %bb.j ], [ %i.a, %.lr.ph ] ; 5 uses
+  %.sroa.017.023 = phi ptr [ %9, %bb.j ], [ %i.a, %.lr.ph ] ; 5 uses
   %i.ad = tail call noundef i32 @_ZNK12lldb_private17SymbolContextList7GetSizeEv(ptr noundef nonnull align 8 dereferenceable(192) %5) #27 ; 2 uses
+  %8 = zext i32 %i.ad to i64
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.017.023, i64 32 ; 2 uses
   %i.ae = load ptr, ptr %0, align 8, !tbaa !25
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 96
   %i.ag = load ptr, ptr %i.af, align 8
@@ -299,18 +301,16 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit
 
 _ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit: ; preds = %bb.h, %bb.g, %bb.f, %.lr.ph.split
-  %8 = getelementptr inbounds nuw i8, ptr %.sroa.017.023, i64 32 ; 2 uses
   %i.aw = tail call noundef i32 @_ZNK12lldb_private17SymbolContextList7GetSizeEv(ptr noundef nonnull align 8 dereferenceable(192) %5) #27
   %i.ax = icmp ult i32 %i.ad, %i.aw
   br i1 %i.ax, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit
-  %9 = zext i32 %i.ad to i64
-  tail call void @_ZNK12lldb_private6Module10LookupInfo5PruneERNS_17SymbolContextListEm(ptr noundef nonnull align 8 dereferenceable(25) %.sroa.017.023, ptr noundef nonnull align 8 dereferenceable(192) %5, i64 noundef %9)
+  tail call void @_ZNK12lldb_private6Module10LookupInfo5PruneERNS_17SymbolContextListEm(ptr noundef nonnull align 8 dereferenceable(25) %.sroa.017.023, ptr noundef nonnull align 8 dereferenceable(192) %5, i64 noundef %8)
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN12lldb_private6Module13FindFunctionsEN4llvm8ArrayRefINS0_10LookupInfoEEERKNS_19CompilerDeclContextERKNS_27ModuleFunctionSearchOptionsERNS_17SymbolContextListE.exit, %bb.i
-  %.not21 = icmp eq ptr %8, %i.c
+  %.not21 = icmp eq ptr %9, %i.c
   br i1 %.not21, label %._crit_edge, label %.lr.ph.split
 }
 

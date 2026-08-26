@@ -204,6 +204,7 @@ _ZN17QArrayDataPointerI5QListIP16QCPLayoutElementEE6detachEPS4_.exit.i: ; preds 
   %i.d = getelementptr i8, ptr %0, i64 8          ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8
   %i.f = getelementptr [24 x i8], ptr %i.e, i64 %1 ; 5 uses
+  %2 = getelementptr i8, ptr %i.f, i64 24         ; 4 uses
   %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %_ZSt8_DestroyI5QListIP16QCPLayoutElementEEvPT_.exit.i.i.i.i.i, label %_ZN17QArrayDataPointerIP16QCPLayoutElementE5derefEv.exit.i.i.i.i.i.i.i.i
@@ -219,7 +220,6 @@ bb.b:                                             ; preds = %_ZN17QArrayDataPoin
   br label %_ZSt8_DestroyI5QListIP16QCPLayoutElementEEvPT_.exit.i.i.i.i.i
 
 _ZSt8_DestroyI5QListIP16QCPLayoutElementEEvPT_.exit.i.i.i.i.i: ; preds = %bb.b, %_ZN17QArrayDataPointerIP16QCPLayoutElementE5derefEv.exit.i.i.i.i.i.i.i.i, %_ZN17QArrayDataPointerI5QListIP16QCPLayoutElementEE6detachEPS4_.exit.i
-  %2 = getelementptr i8, ptr %i.f, i64 24         ; 4 uses
   %.pre.i = load ptr, ptr %i.d, align 8           ; 2 uses
   %i.j = icmp ne ptr %i.f, %.pre.i
   %i.k = getelementptr i8, ptr %0, i64 16         ; 3 uses

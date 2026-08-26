@@ -205,6 +205,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i, %.lr.ph.i.lr.ph.i.i.i
   %storemerge7.i.i.i = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i ], [ %1, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i ] ; 2 uses
   %.06.i.i.i = phi i64 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i ], [ %i.av, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i ]
+  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %storemerge7.i.i.i
   %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -232,7 +233,6 @@ bb.d:                                             ; preds = %_ZN6embree5Scene7ge
 
 _ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i: ; preds = %bb.d, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.i.i.i.i, %bb.c, %.lr.ph.i.i.i.i
   %.1.i.i.i.i = phi i64 [ %i.au, %bb.d ], [ 0, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
-  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.av = add i64 %.1.i.i.i.i, %.06.i.i.i         ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %1, %i.x
   br i1 %exitcond.not.i.i.i, label %_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImmZNS_15parallel_reduceImmZNS_4sse219BVHNBuilderTwoLevelILi4ENS_12TriangleMeshENS_9TriangleMILi4EEEE14resizeRefsListEvEUlRKNS_5rangeImEEE_St4plusImEEET0_T_SH_RKSG_RKT1_RKT2_EUlSA_E_SF_EESG_SH_SH_SH_SH_SJ_SM_SP_EUlmE_EEvSH_SJ_ENKUlSC_E_clESC_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !86
@@ -635,6 +635,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i, %.lr.ph.i.lr.ph.i.i.i
   %storemerge7.i.i.i = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i ], [ %1, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i ] ; 2 uses
   %.06.i.i.i = phi i64 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i ], [ %i.av, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i ]
+  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %storemerge7.i.i.i
   %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -662,7 +663,6 @@ bb.d:                                             ; preds = %_ZN6embree5Scene7ge
 
 _ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i: ; preds = %bb.d, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.i.i.i.i, %bb.c, %.lr.ph.i.i.i.i
   %.1.i.i.i.i = phi i64 [ %i.au, %bb.d ], [ 0, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
-  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.av = add i64 %.1.i.i.i.i, %.06.i.i.i         ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %1, %i.x
   br i1 %exitcond.not.i.i.i, label %_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImmZNS_15parallel_reduceImmZNS_4sse219BVHNBuilderTwoLevelILi4ENS_12TriangleMeshENS_10TriangleMvILi4EEEE14resizeRefsListEvEUlRKNS_5rangeImEEE_St4plusImEEET0_T_SH_RKSG_RKT1_RKT2_EUlSA_E_SF_EESG_SH_SH_SH_SH_SJ_SM_SP_EUlmE_EEvSH_SJ_ENKUlSC_E_clESC_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !1026
@@ -1065,6 +1065,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i, %.lr.ph.i.lr.ph.i.i.i
   %storemerge7.i.i.i = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i ], [ %1, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i ] ; 2 uses
   %.06.i.i.i = phi i64 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i ], [ %i.av, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i ]
+  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %storemerge7.i.i.i
   %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -1092,7 +1093,6 @@ bb.d:                                             ; preds = %_ZN6embree5Scene7ge
 
 _ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.thread.i.i.i.i: ; preds = %bb.d, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.i.i.i.i, %bb.c, %.lr.ph.i.i.i.i
   %.1.i.i.i.i = phi i64 [ %i.au, %bb.d ], [ 0, %_ZN6embree5Scene7getSafeINS_12TriangleMeshEEEPT_m.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
-  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.av = add i64 %.1.i.i.i.i, %.06.i.i.i         ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %1, %i.x
   br i1 %exitcond.not.i.i.i, label %_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImmZNS_15parallel_reduceImmZNS_4sse219BVHNBuilderTwoLevelILi4ENS_12TriangleMeshENS_10TriangleMiILi4EEEE14resizeRefsListEvEUlRKNS_5rangeImEEE_St4plusImEEET0_T_SH_RKSG_RKT1_RKT2_EUlSA_E_SF_EESG_SH_SH_SH_SH_SJ_SM_SP_EUlmE_EEvSH_SJ_ENKUlSC_E_clESC_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !1942
@@ -1495,6 +1495,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN6embree5Scene7getSafeINS_8QuadMeshEEEPT_m.exit.thread.i.i.i.i, %.lr.ph.i.lr.ph.i.i.i
   %storemerge7.i.i.i = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i ], [ %1, %_ZN6embree5Scene7getSafeINS_8QuadMeshEEEPT_m.exit.thread.i.i.i.i ] ; 2 uses
   %.06.i.i.i = phi i64 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i ], [ %i.av, %_ZN6embree5Scene7getSafeINS_8QuadMeshEEEPT_m.exit.thread.i.i.i.i ]
+  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %storemerge7.i.i.i
   %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -1522,7 +1523,6 @@ bb.d:                                             ; preds = %_ZN6embree5Scene7ge
 
 _ZN6embree5Scene7getSafeINS_8QuadMeshEEEPT_m.exit.thread.i.i.i.i: ; preds = %bb.d, %_ZN6embree5Scene7getSafeINS_8QuadMeshEEEPT_m.exit.i.i.i.i, %bb.c, %.lr.ph.i.i.i.i
   %.1.i.i.i.i = phi i64 [ %i.au, %bb.d ], [ 0, %_ZN6embree5Scene7getSafeINS_8QuadMeshEEEPT_m.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
-  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.av = add i64 %.1.i.i.i.i, %.06.i.i.i         ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %1, %i.x
   br i1 %exitcond.not.i.i.i, label %_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImmZNS_15parallel_reduceImmZNS_4sse219BVHNBuilderTwoLevelILi4ENS_8QuadMeshENS_6QuadMvILi4EEEE14resizeRefsListEvEUlRKNS_5rangeImEEE_St4plusImEEET0_T_SH_RKSG_RKT1_RKT2_EUlSA_E_SF_EESG_SH_SH_SH_SH_SJ_SM_SP_EUlmE_EEvSH_SJ_ENKUlSC_E_clESC_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !2842
@@ -1925,6 +1925,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN6embree5Scene7getSafeINS_12UserGeometryEEEPT_m.exit.thread.i.i.i.i, %.lr.ph.i.lr.ph.i.i.i
   %storemerge7.i.i.i = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i ], [ %1, %_ZN6embree5Scene7getSafeINS_12UserGeometryEEEPT_m.exit.thread.i.i.i.i ] ; 2 uses
   %.06.i.i.i = phi i64 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i ], [ %i.av, %_ZN6embree5Scene7getSafeINS_12UserGeometryEEEPT_m.exit.thread.i.i.i.i ]
+  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %storemerge7.i.i.i
   %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -1953,7 +1954,6 @@ bb.d:                                             ; preds = %_ZN6embree5Scene7ge
 
 _ZN6embree5Scene7getSafeINS_12UserGeometryEEEPT_m.exit.thread.i.i.i.i: ; preds = %bb.d, %_ZN6embree5Scene7getSafeINS_12UserGeometryEEEPT_m.exit.i.i.i.i, %bb.c, %.lr.ph.i.i.i.i
   %.1.i.i.i.i = phi i64 [ %spec.select.i.i.i.i, %bb.d ], [ 0, %_ZN6embree5Scene7getSafeINS_12UserGeometryEEEPT_m.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
-  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.av = add i64 %.1.i.i.i.i, %.06.i.i.i         ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %1, %i.x
   br i1 %exitcond.not.i.i.i, label %_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImmZNS_15parallel_reduceImmZNS_4sse219BVHNBuilderTwoLevelILi4ENS_12UserGeometryENS_6ObjectEE14resizeRefsListEvEUlRKNS_5rangeImEEE_St4plusImEEET0_T_SG_RKSF_RKT1_RKT2_EUlS9_E_SE_EESF_SG_SG_SG_SG_SI_SL_SO_EUlmE_EEvSG_SI_ENKUlSB_E_clESB_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !3771
@@ -2356,6 +2356,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN6embree5Scene7getSafeINS_8InstanceEEEPT_m.exit.thread.i.i.i.i, %.lr.ph.i.lr.ph.i.i.i
   %storemerge7.i.i.i = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i ], [ %1, %_ZN6embree5Scene7getSafeINS_8InstanceEEEPT_m.exit.thread.i.i.i.i ] ; 2 uses
   %.06.i.i.i = phi i64 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i ], [ %i.av, %_ZN6embree5Scene7getSafeINS_8InstanceEEEPT_m.exit.thread.i.i.i.i ]
+  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %storemerge7.i.i.i
   %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -2384,7 +2385,6 @@ bb.d:                                             ; preds = %_ZN6embree5Scene7ge
 
 _ZN6embree5Scene7getSafeINS_8InstanceEEEPT_m.exit.thread.i.i.i.i: ; preds = %bb.d, %_ZN6embree5Scene7getSafeINS_8InstanceEEEPT_m.exit.i.i.i.i, %bb.c, %.lr.ph.i.i.i.i
   %.1.i.i.i.i = phi i64 [ %spec.select.i.i.i.i, %bb.d ], [ 0, %_ZN6embree5Scene7getSafeINS_8InstanceEEEPT_m.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
-  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.av = add i64 %.1.i.i.i.i, %.06.i.i.i         ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %1, %i.x
   br i1 %exitcond.not.i.i.i, label %_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImmZNS_15parallel_reduceImmZNS_4sse219BVHNBuilderTwoLevelILi4ENS_8InstanceENS_17InstancePrimitiveEE14resizeRefsListEvEUlRKNS_5rangeImEEE_St4plusImEEET0_T_SG_RKSF_RKT1_RKT2_EUlS9_E_SE_EESF_SG_SG_SG_SG_SI_SL_SO_EUlmE_EEvSG_SI_ENKUlSB_E_clESB_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !4671
@@ -2787,6 +2787,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.i.i.i.i:                                   ; preds = %_ZN6embree5Scene7getSafeINS_13InstanceArrayEEEPT_m.exit.thread.i.i.i.i, %.lr.ph.i.lr.ph.i.i.i
   %storemerge7.i.i.i = phi i64 [ %i.t, %.lr.ph.i.lr.ph.i.i.i ], [ %1, %_ZN6embree5Scene7getSafeINS_13InstanceArrayEEEPT_m.exit.thread.i.i.i.i ] ; 2 uses
   %.06.i.i.i = phi i64 [ %i.ab, %.lr.ph.i.lr.ph.i.i.i ], [ %i.av, %_ZN6embree5Scene7getSafeINS_13InstanceArrayEEEPT_m.exit.thread.i.i.i.i ]
+  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.ak = getelementptr inbounds nuw [8 x i8], ptr %i.aj, i64 %storemerge7.i.i.i
   %i.al = load ptr, ptr %i.ak, align 8            ; 4 uses
   %i.am = icmp eq ptr %i.al, null
@@ -2815,7 +2816,6 @@ bb.d:                                             ; preds = %_ZN6embree5Scene7ge
 
 _ZN6embree5Scene7getSafeINS_13InstanceArrayEEEPT_m.exit.thread.i.i.i.i: ; preds = %bb.d, %_ZN6embree5Scene7getSafeINS_13InstanceArrayEEEPT_m.exit.i.i.i.i, %bb.c, %.lr.ph.i.i.i.i
   %.1.i.i.i.i = phi i64 [ %spec.select.i.i.i.i, %bb.d ], [ 0, %_ZN6embree5Scene7getSafeINS_13InstanceArrayEEEPT_m.exit.i.i.i.i ], [ 0, %.lr.ph.i.i.i.i ], [ 0, %bb.c ]
-  %1 = add nuw i64 %storemerge7.i.i.i, 1          ; 2 uses
   %i.av = add i64 %.1.i.i.i.i, %.06.i.i.i         ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %1, %i.x
   br i1 %exitcond.not.i.i.i, label %_ZZN6embree12parallel_forImZNS_24parallel_reduce_internalImmZNS_15parallel_reduceImmZNS_4sse219BVHNBuilderTwoLevelILi4ENS_13InstanceArrayENS_22InstanceArrayPrimitiveEE14resizeRefsListEvEUlRKNS_5rangeImEEE_St4plusImEEET0_T_SG_RKSF_RKT1_RKT2_EUlS9_E_SE_EESF_SG_SG_SG_SG_SI_SL_SO_EUlmE_EEvSG_SI_ENKUlSB_E_clESB_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !5571

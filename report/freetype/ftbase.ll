@@ -141,10 +141,10 @@ bb.k:                                             ; preds = %bb.j
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 %..i
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !40
   %i.aj = shl i64 %i.ai, %i.af
-  br label %ft_load_advances.exit.sink.split
+  br label %ft_load_advances.exit.sink.split, !llvm.loop !42
 
-ft_load_advances.exit.sink.split:                 ; preds = %ft_load_advances.exit.loopexit47, %bb.k
-  %.sink = phi i64 [ %i.aj, %bb.k ], [ %i.x, %ft_load_advances.exit.loopexit47 ]
+ft_load_advances.exit.sink.split:                 ; preds = %bb.k, %ft_load_advances.exit.loopexit47
+  %.sink = phi i64 [ %i.x, %ft_load_advances.exit.loopexit47 ], [ %i.aj, %bb.k ]
   store i64 %.sink, ptr %3, align 8, !tbaa !40
   br label %ft_load_advances.exit
 
@@ -198,7 +198,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <2 x i64> %i.k, ptr %i.e, align 8, !tbaa !40
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.l = icmp eq i64 %index.next, %n.vec
-  br i1 %i.l, label %middle.block, label %vector.body, !llvm.loop !42
+  br i1 %i.l, label %middle.block, label %vector.body, !llvm.loop !44
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -221,7 +221,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   store i64 %i.t, ptr %i.m, align 8, !tbaa !40
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %scalar.ph, !llvm.loop !46
+  br i1 %exitcond.not, label %.loopexit, label %scalar.ph, !llvm.loop !47
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block, %bb.b, %bb.a
   %.014 = phi i32 [ 0, %bb.a ], [ 36, %bb.b ], [ 0, %middle.block ], [ 0, %scalar.ph ]
@@ -323,7 +323,7 @@ bb.l:                                             ; preds = %bb.k
   store i64 %i.af, ptr %i.ag, align 8, !tbaa !40
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %ft_load_advances.exit, label %bb.k, !llvm.loop !47
+  br i1 %exitcond.not.i, label %ft_load_advances.exit, label %bb.k, !llvm.loop !42
 
 ft_load_advances.exit:                            ; preds = %bb.l, %bb.k, %.thread, %bb.i, %bb.d, %bb.c, %bb.b, %bb.a, %bb.h
   %.1 = phi i32 [ 6, %bb.b ], [ 16, %bb.c ], [ 0, %bb.d ], [ %i.r, %.thread ], [ %i.q, %bb.h ], [ 35, %bb.a ], [ 7, %bb.i ], [ 0, %bb.l ], [ %i.ad, %bb.k ]
@@ -726,12 +726,12 @@ attributes #32 = { noreturn nounwind }
 !39 = !{!9, !20, i64 160}
 !40 = !{!10, !10, i64 0}
 !41 = !{!9, !19, i64 152}
-!42 = distinct !{!42, !43, !44, !45}
+!42 = distinct !{!42, !43}
 !43 = !{!"llvm.loop.mustprogress"}
-!44 = !{!"llvm.loop.isvectorized", i32 1}
-!45 = !{!"llvm.loop.unroll.runtime.disable"}
-!46 = distinct !{!46, !43, !45, !44}
-!47 = distinct !{!47, !43}
+!44 = distinct !{!44, !43, !45, !46}
+!45 = !{!"llvm.loop.isvectorized", i32 1}
+!46 = !{!"llvm.loop.unroll.runtime.disable"}
+!47 = distinct !{!47, !43, !46, !45}
 !48 = !{!9, !10, i64 16}
 !49 = !{i64 0, i64 2, !50, i64 8, i64 8, !51, i64 16, i64 8, !51, i64 24, i64 2, !50, i64 32, i64 8, !51}
 !50 = !{!18, !18, i64 0}
@@ -988,8 +988,8 @@ attributes #32 = { noreturn nounwind }
 !301 = !{!302, !12, i64 88}
 !302 = !{!"FT_Renderer_Class_", !38, i64 0, !5, i64 72, !12, i64 80, !12, i64 88, !12, i64 96, !12, i64 104, !303, i64 112}
 !303 = !{!"p1 _ZTS16FT_Raster_Funcs_", !12, i64 0}
-!304 = distinct !{!304, !43, !44, !45}
-!305 = distinct !{!305, !43, !45, !44}
+!304 = distinct !{!304, !43, !45, !46}
+!305 = distinct !{!305, !43, !46, !45}
 !306 = !{!203, !5, i64 72}
 !307 = !{ptr @FT_Render_Glyph}
 !308 = !{!162, !10, i64 16}
@@ -999,8 +999,8 @@ attributes #32 = { noreturn nounwind }
 !312 = !{!162, !10, i64 32}
 !313 = !{!162, !10, i64 56}
 !314 = distinct !{!314, !43}
-!315 = distinct !{!315, !43, !44, !45}
-!316 = distinct !{!316, !43, !45, !44}
+!315 = distinct !{!315, !43, !45, !46}
+!316 = distinct !{!316, !43, !46, !45}
 !317 = !{!9, !21, i64 168}
 !318 = !{!319, !321, i64 16}
 !319 = !{!"FT_CMapRec_", !320, i64 0, !321, i64 16}

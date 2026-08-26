@@ -176,7 +176,7 @@ _ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7Segme
   store i64 %i.l, ptr %i.d, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(8192) %i.k, i8 0, i64 8192, i1 false)
   store atomic ptr %i.k, ptr %i.a monotonic, align 8
-  br label %_ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit
+  br label %_ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit, !llvm.loop !6
 
 _ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit: ; preds = %_ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7SegmentEJEEEPT_DpOT0_.exit.i, %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
@@ -579,7 +579,7 @@ _ZNK2v88internal4wasm17TypeCanonicalizer18FindCanonicalGroupERKNS2_14CanonicalGr
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.i
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !6
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !8
 
 .lr.ph57:                                         ; preds = %_ZNK2v88internal4wasm17TypeCanonicalizer18FindCanonicalGroupERKNS2_14CanonicalGroupE.exit
   call void @_ZNK2v88internal12ZoneSnapshot7RestoreEPNS0_4ZoneE(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull %i.w) #12
@@ -630,7 +630,7 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph57.new
   %indvars.iv.next66.3 = add nuw nsw i64 %indvars.iv65, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
-  br i1 %niter.ncmp.3, label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !8
+  br i1 %niter.ncmp.3, label %_ZN2v84base9LockGuardINS0_5MutexEED2Ev.exit.loopexit.unr-lcssa, label %bb.g, !llvm.loop !9
 
 .critedge:                                        ; preds = %._crit_edge, %_ZNK2v88internal4wasm17TypeCanonicalizer18FindCanonicalGroupERKNS2_14CanonicalGroupE.exit
   %i.bt = add i32 %2, %i.v                        ; 2 uses
@@ -696,7 +696,7 @@ _ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7Segme
   store atomic ptr %i.cp, ptr %i.ci monotonic, align 8
   %i.cr = add nsw i32 %.0.i, -1
   %i.cs = icmp eq i32 %.0.i, 0
-  br i1 %i.cs, label %.lr.ph59, label %bb.l, !llvm.loop !9
+  br i1 %i.cs, label %.lr.ph59, label %bb.l, !llvm.loop !6
 
 .lr.ph59:                                         ; preds = %_ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7SegmentEJEEEPT_DpOT0_.exit.i, %bb.l
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 176
@@ -935,7 +935,7 @@ _ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7Segme
   store atomic ptr %i.bp, ptr %i.bi monotonic, align 8
   %i.br = icmp eq i64 %indvars.iv, 0
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  br i1 %i.br, label %_ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit, label %bb.j, !llvm.loop !9
+  br i1 %i.br, label %_ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit, label %bb.j, !llvm.loop !6
 
 _ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit: ; preds = %bb.j, %_ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7SegmentEJEEEPT_DpOT0_.exit.i
   %i.bs = getelementptr inbounds nuw i8, ptr %.fca.0.extract, i64 8
@@ -1338,7 +1338,7 @@ _ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7Segme
   store atomic ptr %i.ds, ptr %i.dl monotonic, align 8
   %i.du = icmp eq i64 %indvars.iv, 0
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  br i1 %i.du, label %_ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit, label %bb.k, !llvm.loop !9
+  br i1 %i.du, label %_ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit, label %bb.k, !llvm.loop !6
 
 _ZN2v88internal4wasm17TypeCanonicalizer19CanonicalTypeVector7reserveEjPNS0_4ZoneE.exit: ; preds = %bb.k, %_ZN2v88internal4Zone3NewINS0_4wasm17TypeCanonicalizer19CanonicalTypeVector7SegmentEJEEEPT_DpOT0_.exit.i
   %i.dv = lshr i64 %i.g, 12

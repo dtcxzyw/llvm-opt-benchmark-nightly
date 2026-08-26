@@ -204,54 +204,46 @@ bb.cc:                                            ; preds = %bb.cb, %bb.bz
   %i.nd = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
   %i.ne = load i32, ptr %i.nd, align 8, !tbaa !46 ; 2 uses
   %i.nf = icmp sgt i32 %i.ne, 0
-  br i1 %i.nf, label %.preheader.us.preheader.i.i, label %.noexc285
+  br i1 %i.nf, label %.preheader.us.i.i.a, label %.noexc285
 
-.preheader.us.preheader.i.i:                      ; preds = %.noexc
-  %19 = zext nneg i32 %i.ne to i64                ; 2 uses
-  br label %.preheader.us.i.i.a
+.preheader.us.i.i.a:                              ; preds = %.noexc
+  %19 = zext nneg i32 %i.ne to i64
+  %.pre816 = load ptr, ptr %i.nc, align 8, !tbaa !11
+  br label %bb.cd
 
-.preheader.us.i.i.a:                              ; preds = %.critedge.us.i.i, %.preheader.us.preheader.i.i
-  %indvars.iv35.i.i = phi i64 [ 0, %.preheader.us.preheader.i.i ], [ %indvars.iv.next36.i.i, %.critedge.us.i.i ] ; 3 uses
-  %20 = icmp samesign ult i64 %indvars.iv35.i.i, %19
-  br i1 %20, label %bb.cd, label %.critedge.us.i.i
-
-bb.cd:                                            ; preds = %.preheader.us.i.i.a
-  %21 = load ptr, ptr %i.nc, align 8, !tbaa !11
-  %i.ng = getelementptr inbounds nuw [4 x i8], ptr %21, i64 %indvars.iv35.i.i
+bb.cd:                                            ; preds = %.critedge.us.i.i, %.preheader.us.i.i.a
+  %indvars.iv35.i.i = phi i64 [ 0, %.preheader.us.i.i.a ], [ %indvars.iv.next36.i.i, %.critedge.us.i.i ] ; 2 uses
+  %i.ng = getelementptr inbounds nuw [4 x i8], ptr %.pre816, i64 %indvars.iv35.i.i
   %i.nh = load i32, ptr %i.ng, align 4, !tbaa !48
   %.not.us.i.i = icmp eq i32 %i.nh, 42
   br i1 %.not.us.i.i, label %_ZN11CStringBaseIwED2Ev.exit302, label %.critedge.us.i.i
 
-.critedge.us.i.i:                                 ; preds = %bb.cd, %.preheader.us.i.i.a
+.critedge.us.i.i:                                 ; preds = %bb.cd
   %indvars.iv.next36.i.i = add nuw nsw i64 %indvars.iv35.i.i, 1 ; 2 uses
   %i.ni = icmp eq i64 %indvars.iv.next36.i.i, %19
-  br i1 %i.ni, label %.noexc285, label %.preheader.us.i.i.a, !llvm.loop !84
+  br i1 %i.ni, label %.noexc285, label %bb.cd, !llvm.loop !84
 
 .noexc285:                                        ; preds = %.critedge.us.i.i, %.noexc
   %i.nj = load i32, ptr %i.nd, align 8, !tbaa !46 ; 2 uses
   %i.nk = icmp sgt i32 %i.nj, 0
-  br i1 %i.nk, label %.preheader.us.preheader.i.i290, label %_ZL15AddNameToCensorRN9NWildcard7CCensorERK11CStringBaseIwEbN13NRecursedType5EEnumE.exit
+  br i1 %i.nk, label %.preheader.us.i.i292.a, label %_ZL15AddNameToCensorRN9NWildcard7CCensorERK11CStringBaseIwEbN13NRecursedType5EEnumE.exit
 
-.preheader.us.preheader.i.i290:                   ; preds = %.noexc285
-  %22 = zext nneg i32 %i.nj to i64                ; 2 uses
-  br label %.preheader.us.i.i292.a
+.preheader.us.i.i292.a:                           ; preds = %.noexc285
+  %20 = zext nneg i32 %i.nj to i64
+  %.pre817 = load ptr, ptr %i.nc, align 8, !tbaa !11
+  br label %bb.ce
 
-.preheader.us.i.i292.a:                           ; preds = %.critedge.us.i.i295, %.preheader.us.preheader.i.i290
-  %indvars.iv35.i.i293 = phi i64 [ 0, %.preheader.us.preheader.i.i290 ], [ %indvars.iv.next36.i.i296, %.critedge.us.i.i295 ] ; 3 uses
-  %23 = icmp samesign ult i64 %indvars.iv35.i.i293, %22
-  br i1 %23, label %bb.ce, label %.critedge.us.i.i295
-
-bb.ce:                                            ; preds = %.preheader.us.i.i292.a
-  %24 = load ptr, ptr %i.nc, align 8, !tbaa !11
-  %i.nl = getelementptr inbounds nuw [4 x i8], ptr %24, i64 %indvars.iv35.i.i293
+bb.ce:                                            ; preds = %.critedge.us.i.i295, %.preheader.us.i.i292.a
+  %indvars.iv35.i.i293 = phi i64 [ 0, %.preheader.us.i.i292.a ], [ %indvars.iv.next36.i.i296, %.critedge.us.i.i295 ] ; 2 uses
+  %i.nl = getelementptr inbounds nuw [4 x i8], ptr %.pre817, i64 %indvars.iv35.i.i293
   %i.nm = load i32, ptr %i.nl, align 4, !tbaa !48
   %.not.us.i.i297 = icmp eq i32 %i.nm, 63
   br i1 %.not.us.i.i297, label %_ZN11CStringBaseIwED2Ev.exit302, label %.critedge.us.i.i295
 
-.critedge.us.i.i295:                              ; preds = %bb.ce, %.preheader.us.i.i292.a
+.critedge.us.i.i295:                              ; preds = %bb.ce
   %indvars.iv.next36.i.i296 = add nuw nsw i64 %indvars.iv35.i.i293, 1 ; 2 uses
-  %i.nn = icmp eq i64 %indvars.iv.next36.i.i296, %22
-  br i1 %i.nn, label %_ZL15AddNameToCensorRN9NWildcard7CCensorERK11CStringBaseIwEbN13NRecursedType5EEnumE.exit, label %.preheader.us.i.i292.a, !llvm.loop !84
+  %i.nn = icmp eq i64 %indvars.iv.next36.i.i296, %20
+  br i1 %i.nn, label %_ZL15AddNameToCensorRN9NWildcard7CCensorERK11CStringBaseIwEbN13NRecursedType5EEnumE.exit, label %bb.ce, !llvm.loop !84
 
 _ZN11CStringBaseIwED2Ev.exit302:                  ; preds = %bb.cd, %bb.ce
   invoke void @_ZN9NWildcard7CCensor7AddItemEbRK11CStringBaseIwEb(ptr noundef nonnull align 8 dereferenceable(32) %9, i1 noundef zeroext true, ptr noundef nonnull align 8 dereferenceable(16) %i.nc, i1 noundef zeroext false)

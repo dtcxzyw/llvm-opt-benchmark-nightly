@@ -204,7 +204,7 @@ bb.bs:                                            ; preds = %.noexc30
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtCsac2KdDyt5gh_11typed_arena5ArenaINtNtCs87KLmgHaecV_28ra_ap_rustc_pattern_analysis3pat16DeconstructedPatNtNtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysis13MatchCheckCtxEEEB2s_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.an) #44
           to label %.body unwind label %bb.eh, !noalias !7852
 
-.loopexit.i.i:                                    ; preds = %bb.dw, %bb.du, %bb.dt, %bb.dp, %bb.df, %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i, %.lr.ph.i.preheader.i.i.i, %bb.cp, %bb.cn, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs87KLmgHaecV_28ra_ap_rustc_pattern_analysis3pat16DeconstructedPatNtNtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysis13MatchCheckCtxEEB1S_.exit.i.i.i, %bb.cd, %bb.cc, %bb.cb, %bb.ca
+.loopexit.i.i:                                    ; preds = %bb.dw, %bb.du, %bb.dt, %bb.dp, %bb.df, %.lr.ph.i.preheader.i.i.i, %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i, %bb.cp, %bb.cn, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs87KLmgHaecV_28ra_ap_rustc_pattern_analysis3pat16DeconstructedPatNtNtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysis13MatchCheckCtxEEB1S_.exit.i.i.i, %bb.cd, %bb.cc, %bb.cb, %bb.ca
   %lpad.loopexit.i.i = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i
@@ -456,30 +456,30 @@ bb.cp:                                            ; preds = %bb.co, %.noexc15.i.
   store ptr %.sroa.08.0.i.i.i, ptr %i.ac, align 8, !noalias !7872
   store i8 0, ptr %i.es, align 8, !noalias !7872
   %i.nk = invoke noundef zeroext i1 @_RNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver2tyNtB2_2Ty23references_non_lt_error(ptr noundef nonnull %i.ms)
-          to label %.noexc16.i.i.a unwind label %.loopexit.i.i, !noalias !7852
+          to label %.noexc16.i.i unwind label %.loopexit.i.i, !noalias !7852
 
-.noexc16.i.i.a:                                   ; preds = %bb.cp
+.noexc16.i.i:                                     ; preds = %bb.cp
   br i1 %i.nk, label %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.thread.i.i.i, label %.lr.ph.i.preheader.i.i.i
 
-.lr.ph.i.preheader.i.i.i:                         ; preds = %.noexc16.i.i.a
-  %i.nl = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i.i, i64 88
-  %i.nm = load ptr, ptr %i.nl, align 8, !noalias !7889, !nonnull !18, !noundef !18
-  %i.nn = invoke noundef zeroext i1 @_RNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver2tyNtB2_2Ty23references_non_lt_error(ptr noundef nonnull %i.nm)
-          to label %.noexc17.i.i unwind label %.loopexit.i.i, !noalias !7852
-
-.noexc17.i.i:                                     ; preds = %.lr.ph.i.preheader.i.i.i
-  br i1 %i.nn, label %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.thread.i.i.i, label %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i
-
-_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i: ; preds = %.noexc17.i.i
+_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i: ; preds = %.noexc18.i.i
   invoke void @_RINvNtCs87KLmgHaecV_28ra_ap_rustc_pattern_analysis10usefulness24compute_match_usefulnessNtNtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysis13MatchCheckCtxEB1w_(ptr noalias nofree noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.ad, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.am, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.ac, i64 noundef 1, ptr noundef nonnull %i.ms, i1 noundef zeroext false, i64 noundef 500000)
-          to label %.noexc18.i.i unwind label %.loopexit.i.i, !noalias !7852
+          to label %.noexc16.i.i.a unwind label %.loopexit.i.i, !noalias !7852
 
-.noexc18.i.i:                                     ; preds = %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i
+.noexc16.i.i.a:                                   ; preds = %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i
   %.pr.i.i.i = load i64, ptr %i.ad, align 8, !noalias !7872
   %5 = icmp eq i64 %.pr.i.i.i, -1
   br i1 %5, label %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.thread.i.i.i, label %bb.cq
 
-bb.cq:                                            ; preds = %.noexc18.i.i
+.lr.ph.i.preheader.i.i.i:                         ; preds = %.noexc16.i.i
+  %i.nl = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i.i, i64 88
+  %i.nm = load ptr, ptr %i.nl, align 8, !noalias !7889, !nonnull !18, !noundef !18
+  %i.nn = invoke noundef zeroext i1 @_RNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver2tyNtB2_2Ty23references_non_lt_error(ptr noundef nonnull %i.nm)
+          to label %.noexc18.i.i unwind label %.loopexit.i.i, !noalias !7852
+
+.noexc18.i.i:                                     ; preds = %.lr.ph.i.preheader.i.i.i
+  br i1 %i.nn, label %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.thread.i.i.i, label %_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.i.i.i
+
+bb.cq:                                            ; preds = %.noexc16.i.i.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.ae, ptr noundef nonnull align 8 dereferenceable(72) %i.ad, i64 72, i1 false), !noalias !7872
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !7872
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !7872
@@ -672,7 +672,7 @@ bb.dr:                                            ; preds = %.body60.i
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtNtCs6q8GQ6zN3Tv_17ra_ap_rustc_index7bit_set11DenseBitSetjEEECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef align 8 dereferenceable(24) %i.ev) #44
           to label %.body.i.i unwind label %bb.dh, !noalias !7874
 
-_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.thread.i.i.i: ; preds = %.noexc18.i.i, %.noexc17.i.i, %.noexc16.i.i.a
+_RNvMs0_NtNtNtCs8K4cjrcxBsw_6hir_ty11diagnostics11match_check12pat_analysisNtB5_13MatchCheckCtx24compute_match_usefulness.exit.thread.i.i.i: ; preds = %.noexc18.i.i, %.noexc16.i.i.a, %.noexc16.i.i
   %i.ol = load atomic i64, ptr @_RNvNtCsaMQbKjKCVRW_12tracing_core8metadata9MAX_LEVEL monotonic, align 8, !noalias !7872
   %i.om = icmp ult i64 %i.ol, 2
   br i1 %i.om, label %bb.ds, label %bb.dv

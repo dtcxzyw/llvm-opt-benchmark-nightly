@@ -204,7 +204,7 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
 
 ._crit_edge.us.i.unr-lcssa:                       ; preds = %bb.u
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIfffEEEclERKNS_5RangeE.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.us.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next.i.7, %._crit_edge.us.i.unr-lcssa ]
@@ -223,16 +223,11 @@ bb.v:                                             ; preds = %bb.v, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us.i, label %bb.v, !llvm.loop !1841
+  br i1 %epil.iter.cmp.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIfffEEEclERKNS_5RangeE.exit, label %bb.v, !llvm.loop !1841
 
-._crit_edge.us.i:                                 ; preds = %bb.v, %._crit_edge.us.i.unr-lcssa
-  %.lcssa = phi float [ %i.cp, %._crit_edge.us.i.unr-lcssa ], [ %i.cs, %bb.v ]
-  %20 = bitcast float %.lcssa to i32
-  br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIfffEEEclERKNS_5RangeE.exit
-
-_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIfffEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i32 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i32 %storemerge, ptr %i.bi, align 4
+_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIfffEEEclERKNS_5RangeE.exit: ; preds = %._crit_edge.us.i.unr-lcssa, %bb.v, %.preheader.lr.ph.i
+  %storemerge = phi float [ 0.000000e+00, %.preheader.lr.ph.i ], [ %i.cp, %._crit_edge.us.i.unr-lcssa ], [ %i.cs, %bb.v ]
+  store float %storemerge, ptr %i.bi, align 4
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.aq
@@ -635,7 +630,7 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
 
 ._crit_edge.us.i.unr-lcssa:                       ; preds = %bb.u
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IfffEEEclERKNS_5RangeE.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.us.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next.i.1, %._crit_edge.us.i.unr-lcssa ]
@@ -648,16 +643,11 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
   %i.cb = fneg float %i.bz
   %i.cc = select i1 %i.ca, float %i.cb, float %i.bz
   %i.cd = fadd float %.sroa.3.016.us.i.epil.init, %i.cc
-  br label %._crit_edge.us.i
-
-._crit_edge.us.i:                                 ; preds = %._crit_edge.us.i.unr-lcssa, %.epil.preheader
-  %.lcssa = phi float [ %i.bx, %._crit_edge.us.i.unr-lcssa ], [ %i.cd, %.epil.preheader ]
-  %20 = bitcast float %.lcssa to i32
   br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IfffEEEclERKNS_5RangeE.exit
 
-_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IfffEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i32 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i32 %storemerge, ptr %i.bi, align 4
+_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IfffEEEclERKNS_5RangeE.exit: ; preds = %.epil.preheader, %._crit_edge.us.i.unr-lcssa, %.preheader.lr.ph.i
+  %storemerge = phi float [ 0.000000e+00, %.preheader.lr.ph.i ], [ %i.bx, %._crit_edge.us.i.unr-lcssa ], [ %i.cd, %.epil.preheader ]
+  store float %storemerge, ptr %i.bi, align 4
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.ap
@@ -1060,12 +1050,11 @@ bb.v:                                             ; preds = %bb.v, %.epil.prehea
 ._crit_edge.us.i:                                 ; preds = %bb.v, %._crit_edge.us.i.unr-lcssa
   %.lcssa = phi float [ %i.bz, %._crit_edge.us.i.unr-lcssa ], [ %i.cc, %bb.v ]
   %i.cd = call noundef float @sqrtf(float noundef %.lcssa) #23
-  %20 = bitcast float %i.cd to i32
   br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL2IfffEEEclERKNS_5RangeE.exit
 
 _ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL2IfffEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i32 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i32 %storemerge, ptr %i.bi, align 4
+  %storemerge = phi float [ %i.cd, %._crit_edge.us.i ], [ 0.000000e+00, %.preheader.lr.ph.i ]
+  store float %storemerge, ptr %i.bi, align 4
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.aq
@@ -1468,7 +1457,7 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
 
 ._crit_edge.us.i.unr-lcssa:                       ; preds = %bb.u
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIfffEEEclERKNS_5RangeE.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.us.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next.i.3, %._crit_edge.us.i.unr-lcssa ]
@@ -1487,16 +1476,11 @@ bb.v:                                             ; preds = %bb.v, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us.i, label %bb.v, !llvm.loop !1908
+  br i1 %epil.iter.cmp.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIfffEEEclERKNS_5RangeE.exit, label %bb.v, !llvm.loop !1908
 
-._crit_edge.us.i:                                 ; preds = %bb.v, %._crit_edge.us.i.unr-lcssa
-  %.lcssa = phi float [ %i.bz, %._crit_edge.us.i.unr-lcssa ], [ %i.cc, %bb.v ]
-  %20 = bitcast float %.lcssa to i32
-  br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIfffEEEclERKNS_5RangeE.exit
-
-_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIfffEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i32 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i32 %storemerge, ptr %i.bi, align 4
+_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIfffEEEclERKNS_5RangeE.exit: ; preds = %._crit_edge.us.i.unr-lcssa, %bb.v, %.preheader.lr.ph.i
+  %storemerge = phi float [ 0.000000e+00, %.preheader.lr.ph.i ], [ %i.bz, %._crit_edge.us.i.unr-lcssa ], [ %i.cc, %bb.v ]
+  store float %storemerge, ptr %i.bi, align 4
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.aq
@@ -1899,7 +1883,7 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
 
 ._crit_edge.us.i.unr-lcssa:                       ; preds = %bb.u
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIdddEEEclERKNS_5RangeE.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.us.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next.i.7, %._crit_edge.us.i.unr-lcssa ]
@@ -1918,16 +1902,11 @@ bb.v:                                             ; preds = %bb.v, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us.i, label %bb.v, !llvm.loop !2261
+  br i1 %epil.iter.cmp.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIdddEEEclERKNS_5RangeE.exit, label %bb.v, !llvm.loop !2261
 
-._crit_edge.us.i:                                 ; preds = %bb.v, %._crit_edge.us.i.unr-lcssa
-  %.lcssa = phi double [ %i.cp, %._crit_edge.us.i.unr-lcssa ], [ %i.cs, %bb.v ]
-  %20 = bitcast double %.lcssa to i64
-  br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIdddEEEclERKNS_5RangeE.exit
-
-_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIdddEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i64 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i64 %storemerge, ptr %i.bi, align 8
+_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_9ReduceSumIdddEEEclERKNS_5RangeE.exit: ; preds = %._crit_edge.us.i.unr-lcssa, %bb.v, %.preheader.lr.ph.i
+  %storemerge = phi double [ 0.000000e+00, %.preheader.lr.ph.i ], [ %i.cp, %._crit_edge.us.i.unr-lcssa ], [ %i.cs, %bb.v ]
+  store double %storemerge, ptr %i.bi, align 8
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.aq
@@ -2330,7 +2309,7 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
 
 ._crit_edge.us.i.unr-lcssa:                       ; preds = %bb.u
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IdddEEEclERKNS_5RangeE.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.us.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next.i.1, %._crit_edge.us.i.unr-lcssa ]
@@ -2343,16 +2322,11 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
   %i.cb = fneg double %i.bz
   %i.cc = select i1 %i.ca, double %i.cb, double %i.bz
   %i.cd = fadd double %.sroa.3.016.us.i.epil.init, %i.cc
-  br label %._crit_edge.us.i
-
-._crit_edge.us.i:                                 ; preds = %._crit_edge.us.i.unr-lcssa, %.epil.preheader
-  %.lcssa = phi double [ %i.bx, %._crit_edge.us.i.unr-lcssa ], [ %i.cd, %.epil.preheader ]
-  %20 = bitcast double %.lcssa to i64
   br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IdddEEEclERKNS_5RangeE.exit
 
-_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IdddEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i64 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i64 %storemerge, ptr %i.bi, align 8
+_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL1IdddEEEclERKNS_5RangeE.exit: ; preds = %.epil.preheader, %._crit_edge.us.i.unr-lcssa, %.preheader.lr.ph.i
+  %storemerge = phi double [ 0.000000e+00, %.preheader.lr.ph.i ], [ %i.bx, %._crit_edge.us.i.unr-lcssa ], [ %i.cd, %.epil.preheader ]
+  store double %storemerge, ptr %i.bi, align 8
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.ap
@@ -2755,12 +2729,11 @@ bb.v:                                             ; preds = %bb.v, %.epil.prehea
 ._crit_edge.us.i:                                 ; preds = %bb.v, %._crit_edge.us.i.unr-lcssa
   %.lcssa = phi double [ %i.bz, %._crit_edge.us.i.unr-lcssa ], [ %i.cc, %bb.v ]
   %i.cd = call noundef double @sqrt(double noundef %.lcssa) #23
-  %20 = bitcast double %i.cd to i64
   br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL2IdddEEEclERKNS_5RangeE.exit
 
 _ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_8ReduceL2IdddEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i64 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i64 %storemerge, ptr %i.bi, align 8
+  %storemerge = phi double [ %i.cd, %._crit_edge.us.i ], [ 0.000000e+00, %.preheader.lr.ph.i ]
+  store double %storemerge, ptr %i.bi, align 8
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.aq
@@ -3163,7 +3136,7 @@ bb.u:                                             ; preds = %bb.u, %.preheader.u
 
 ._crit_edge.us.i.unr-lcssa:                       ; preds = %bb.u
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.us.i, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIdddEEEclERKNS_5RangeE.exit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge.us.i.unr-lcssa, %.preheader.us.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.preheader.us.preheader.i ], [ %indvars.iv.next.i.3, %._crit_edge.us.i.unr-lcssa ]
@@ -3182,16 +3155,11 @@ bb.v:                                             ; preds = %bb.v, %.epil.prehea
   %indvars.iv.next.i.epil = add nuw nsw i64 %indvars.iv.i.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
-  br i1 %epil.iter.cmp.not, label %._crit_edge.us.i, label %bb.v, !llvm.loop !2328
+  br i1 %epil.iter.cmp.not, label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIdddEEEclERKNS_5RangeE.exit, label %bb.v, !llvm.loop !2328
 
-._crit_edge.us.i:                                 ; preds = %bb.v, %._crit_edge.us.i.unr-lcssa
-  %.lcssa = phi double [ %i.bz, %._crit_edge.us.i.unr-lcssa ], [ %i.cc, %bb.v ]
-  %20 = bitcast double %.lcssa to i64
-  br label %_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIdddEEEclERKNS_5RangeE.exit
-
-_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIdddEEEclERKNS_5RangeE.exit: ; preds = %.preheader.lr.ph.i, %._crit_edge.us.i
-  %storemerge = phi i64 [ %20, %._crit_edge.us.i ], [ 0, %.preheader.lr.ph.i ]
-  store i64 %storemerge, ptr %i.bi, align 8
+_ZNK2cv3dnn16Reduce2LayerImpl16ReduceAllInvokerINS1_15ReduceSumSquareIdddEEEclERKNS_5RangeE.exit: ; preds = %._crit_edge.us.i.unr-lcssa, %bb.v, %.preheader.lr.ph.i
+  %storemerge = phi double [ 0.000000e+00, %.preheader.lr.ph.i ], [ %i.bz, %._crit_edge.us.i.unr-lcssa ], [ %i.cc, %bb.v ]
+  store double %storemerge, ptr %i.bi, align 8
   call void @_ZN2cv16ParallelLoopBodyD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %14) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23
   br label %bb.aq

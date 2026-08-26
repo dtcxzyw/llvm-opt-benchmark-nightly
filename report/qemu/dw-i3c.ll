@@ -204,7 +204,7 @@ dw_i3c_send.exit.i.i.i:                           ; preds = %bb.bk, %bb.bj, %bb.
   br i1 %.not45.i.i.i.i, label %bb.bl, label %dw_i3c_tx.exit.i.i
 
 bb.bl:                                            ; preds = %dw_i3c_send.exit.i.i.i
-  %i.jp = add i16 %.132.i.i.i, 1                  ; 3 uses
+  %i.jp = add nuw i16 %.132.i.i.i, 1              ; 3 uses
   %.not21.i.i.i = icmp ult i16 %i.jp, %.sroa.2.0.extract.trunc.i.i
   %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1
   %i.jq = icmp samesign ult i64 %indvars.iv.i.i.i, 3

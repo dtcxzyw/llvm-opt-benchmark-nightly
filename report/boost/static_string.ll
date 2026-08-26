@@ -1,10 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/static_string?download=true
 inline.NumInlined: 13637
 inline.NumDeleted: 1357
-loop-unroll.NumCompletelyUnrolled: 5361
+loop-unroll.NumCompletelyUnrolled: 5366
 loop-unroll.NumRuntimeUnrolled: 10
-loop-unroll.NumUnrolled: 5371
-loop-unroll.NumUnrolledNotLatch: 27
+loop-unroll.NumUnrolled: 5376
+loop-unroll.NumUnrolledNotLatch: 32
 begin_hunk_0_@_ZN5boost14static_strings8testFindEv:_ZNK5boost14static_strings19basic_static_stringILm5EcSt11char_traitsIcEE4findINS_17basic_string_viewIcS3_EEvEEmRKT_m.exit
 
 .lr.ph.i.i:                                       ; preds = %bb.bf, %bb.bd
@@ -206,7 +206,7 @@ _ZN5boost14static_strings6detail6searchIPKcS4_PDoFbRS3_S5_EEET_S8_S8_T0_S9_T1_.e
   %i.iv = icmp eq i64 %i.iu, -1
   br label %.loopexit66493
 
-.loopexit66493:                                   ; preds = %.lr.ph.i.i.i136, %_ZNK5boost14static_strings19basic_static_stringILm5EcSt11char_traitsIcEE4findEcm.exit, %_ZN5boost14static_strings6detail6searchIPKcS4_PDoFbRS3_S5_EEET_S8_S8_T0_S9_T1_.exit.i.i138
+.loopexit66493:                                   ; preds = %.lr.ph.i.i.i136, %_ZN5boost14static_strings6detail6searchIPKcS4_PDoFbRS3_S5_EEET_S8_S8_T0_S9_T1_.exit.i.i138, %_ZNK5boost14static_strings19basic_static_stringILm5EcSt11char_traitsIcEE4findEcm.exit
   %.0.i.i135 = phi i1 [ true, %_ZNK5boost14static_strings19basic_static_stringILm5EcSt11char_traitsIcEE4findEcm.exit ], [ %i.iv, %_ZN5boost14static_strings6detail6searchIPKcS4_PDoFbRS3_S5_EEET_S8_S8_T0_S9_T1_.exit.i.i138 ], [ true, %.lr.ph.i.i.i136 ]
   %i.iw = call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.1430, ptr noundef nonnull @.str.13, i32 noundef 4135, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost14static_strings8testFindEv, i1 noundef zeroext %.0.i.i135) ; 0 uses
   %i.ix = call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.1431, ptr noundef nonnull @.str.13, i32 noundef 4137, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost14static_strings8testFindEv, i1 noundef zeroext true) ; 0 uses
@@ -609,7 +609,7 @@ bb.ti:                                            ; preds = %bb.tg, %bb.tf, %bb.
   call void @__clang_call_terminate(ptr %i.bfw) #33
   unreachable
 
-_ZN5boost14static_stringsL10testAppendEv.exit:    ; preds = %bb.te, %bb.td
+_ZN5boost14static_stringsL10testAppendEv.exit:    ; preds = %bb.td, %bb.te
   call void @__cxa_end_catch()
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #32
   %i.bfx = call noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.6137, ptr noundef nonnull @.str.13, i32 noundef 2393, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN5boost14static_stringsL10testAppendEv, i1 noundef zeroext true) ; 0 uses

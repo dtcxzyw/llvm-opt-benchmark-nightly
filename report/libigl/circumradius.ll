@@ -205,7 +205,7 @@ bb.a:
   %8 = alloca %"class.Eigen::internal::generic_dense_assignment_kernel.3501", align 8 ; 7 uses
   %9 = alloca %"struct.Eigen::internal::assign_op", align 1 ; 3 uses
   %10 = alloca %"struct.Eigen::internal::assign_op", align 1 ; 3 uses
-  %11 = alloca %"class.Eigen::Matrix.320", align 16 ; 17 uses
+  %11 = alloca %"class.Eigen::Matrix.320", align 16 ; 16 uses
   %12 = alloca %"class.Eigen::Matrix.329", align 8 ; 15 uses
   %13 = alloca %"class.Eigen::CwiseBinaryOp.354", align 8 ; 7 uses
   %14 = alloca %"class.Eigen::Block.380", align 8 ; 10 uses
@@ -256,14 +256,13 @@ bb.a:
   %i.ah = getelementptr inbounds nuw i8, ptr %11, i64 80
   %i.ai = getelementptr inbounds nuw i8, ptr %18, i64 96
   %i.aj = getelementptr inbounds nuw i8, ptr %18, i64 112
-  %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 112
+  %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 112 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %17, i64 8
   %i.an = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %17, i64 24
-  %i.aq = getelementptr inbounds nuw i8, ptr %11, i64 112
+  %i.aq = getelementptr inbounds nuw i8, ptr %17, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %11, i64 56
   %i.as = getelementptr inbounds nuw i8, ptr %11, i64 88
   %i.at = getelementptr inbounds nuw i8, ptr %15, i64 16
@@ -606,7 +605,7 @@ bb.d:                                             ; preds = %thread-pre-split.i.
   store double 1.000000e+00, ptr %i.s, align 8, !tbaa !30
   store double 1.000000e+00, ptr %i.ar, align 8, !tbaa !30
   store double 1.000000e+00, ptr %i.as, align 8, !tbaa !30
-  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.aq, align 16, !tbaa !30
+  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.ak, align 16, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #20, !noalias !317
@@ -912,7 +911,7 @@ bb.i:                                             ; preds = %thread-pre-split.i.
   store double %i.ki, ptr %i.kg, align 8, !tbaa !30
   call void @free(ptr noundef %i.ka) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
-  %i.kj = load double, ptr %19, align 8, !tbaa !30
+  %i.kj = load double, ptr %i.aq, align 8, !tbaa !30
   %i.kk = load ptr, ptr %3, align 8, !tbaa !161, !noalias !387
   %i.kl = getelementptr inbounds nuw [8 x i8], ptr %i.kk, i64 %indvars.iv ; 3 uses
   %i.km = load i64, ptr %i.ap, align 8, !tbaa !166 ; 2 uses
@@ -1315,7 +1314,7 @@ define weak_odr dso_local void @_ZN3igl12circumradiusIN5Eigen6MatrixIdLin1ELin1E
 bb.a:
   %5 = alloca %"class.Eigen::Matrix.110", align 8 ; 8 uses
   %6 = alloca %"struct.Eigen::internal::assign_op", align 1 ; 3 uses
-  %7 = alloca %"class.Eigen::Matrix.320", align 16 ; 17 uses
+  %7 = alloca %"class.Eigen::Matrix.320", align 16 ; 16 uses
   %8 = alloca %"class.Eigen::Matrix.512", align 8 ; 14 uses
   %9 = alloca %"class.Eigen::CwiseBinaryOp.527", align 8 ; 7 uses
   %10 = alloca %"class.Eigen::Block.380", align 8 ; 10 uses
@@ -1362,14 +1361,13 @@ bb.a:
   %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 80
   %i.af = getelementptr inbounds nuw i8, ptr %13, i64 96
   %i.ag = getelementptr inbounds nuw i8, ptr %13, i64 112
-  %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 112
+  %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 112 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.ak = getelementptr inbounds nuw i8, ptr %12, i64 16
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  %i.an = getelementptr inbounds nuw i8, ptr %7, i64 112
+  %i.an = getelementptr inbounds nuw i8, ptr %12, i64 24
   %i.ao = getelementptr inbounds nuw i8, ptr %7, i64 56
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 88
   %i.aq = getelementptr inbounds nuw i8, ptr %11, i64 16
@@ -1592,7 +1590,7 @@ bb.d:                                             ; preds = %thread-pre-split.i.
   store double 1.000000e+00, ptr %i.s, align 8, !tbaa !30
   store double 1.000000e+00, ptr %i.ao, align 8, !tbaa !30
   store double 1.000000e+00, ptr %i.ap, align 8, !tbaa !30
-  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.an, align 16, !tbaa !30
+  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.ah, align 16, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #20
   %.pre.pre.i = load i64, ptr %i.j, align 8, !tbaa !477 ; 9 uses
   %i.dx = icmp eq i64 %.pre.pre.i, 0
@@ -1986,7 +1984,7 @@ bb.h:                                             ; preds = %thread-pre-split.i.
   store double %i.lj, ptr %i.lh, align 8, !tbaa !30
   call void @free(ptr noundef %i.ie) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
-  %i.lk = load double, ptr %14, align 8, !tbaa !30
+  %i.lk = load double, ptr %i.an, align 8, !tbaa !30
   %i.ll = load ptr, ptr %3, align 8, !tbaa !161, !noalias !528
   %i.lm = getelementptr inbounds nuw [8 x i8], ptr %i.ll, i64 %indvars.iv ; 3 uses
   %i.ln = load i64, ptr %i.am, align 8, !tbaa !166 ; 2 uses
@@ -2389,7 +2387,7 @@ _ZNK5Eigen9DenseBaseINS_5SolveINS_19ColPivHouseholderQRINS_6MatrixIdLi5ELi5ELi0E
 define weak_odr dso_local void @_ZN3igl12circumradiusIN5Eigen6MatrixIdLin1ELi3ELi0ELin1ELi3EEENS2_IiLin1ELi3ELi0ELin1ELi3EEENS2_IdLin1ELi1ELi0ELin1ELi1EEES3_S3_EEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EERNS1_15PlainObjectBaseIT1_EERNSF_IT2_EERNSF_IT3_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %4) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"struct.Eigen::internal::assign_op", align 1 ; 3 uses
-  %6 = alloca %"class.Eigen::Matrix.320", align 16 ; 16 uses
+  %6 = alloca %"class.Eigen::Matrix.320", align 16 ; 15 uses
   %7 = alloca %"class.Eigen::Matrix.821", align 16 ; 15 uses
   %8 = alloca %"class.Eigen::CwiseBinaryOp.838", align 8 ; 6 uses
   %9 = alloca %"class.Eigen::Block.380", align 8  ; 9 uses
@@ -2442,13 +2440,12 @@ bb.a:
   %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 80
   %i.al = getelementptr inbounds nuw i8, ptr %12, i64 96
   %i.am = getelementptr inbounds nuw i8, ptr %12, i64 112
-  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 112
+  %i.an = getelementptr inbounds nuw i8, ptr %6, i64 112 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.ar = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %13 = getelementptr inbounds nuw i8, ptr %11, i64 24
-  %i.as = getelementptr inbounds nuw i8, ptr %6, i64 112
+  %i.as = getelementptr inbounds nuw i8, ptr %11, i64 24
   %i.at = getelementptr inbounds nuw i8, ptr %6, i64 56
   %i.au = getelementptr inbounds nuw i8, ptr %6, i64 88
   %i.av = getelementptr inbounds nuw i8, ptr %10, i64 16
@@ -2524,7 +2521,7 @@ bb.a:
   store double 1.000000e+00, ptr %i.x, align 8, !tbaa !30
   store double 1.000000e+00, ptr %i.at, align 8, !tbaa !30
   store double 1.000000e+00, ptr %i.au, align 8, !tbaa !30
-  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.as, align 16, !tbaa !30
+  store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.an, align 16, !tbaa !30
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
   %i.cb = load <2 x double>, ptr %7, align 16, !tbaa !82, !noalias !670 ; 2 uses
   %i.cc = fmul <2 x double> %i.cb, %i.cb
@@ -2615,7 +2612,7 @@ bb.a:
   %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i74 = shl nsw i64 %i.ei, 4
   %i.ek = getelementptr inbounds i8, ptr %i.dh, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i.i74
   store double %i.eh, ptr %i.ek, align 8, !tbaa !30
-  %i.el = load double, ptr %13, align 8, !tbaa !30
+  %i.el = load double, ptr %i.as, align 8, !tbaa !30
   %i.em = load double, ptr %i.dh, align 8, !tbaa !30 ; 2 uses
   %i.en = fmul double %i.em, %i.em
   %i.eo = load double, ptr %i.ej, align 8, !tbaa !30 ; 2 uses

@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %_ZN4jiff6shared5pos
   br label %_ZN4jiff6shared5posix6Parser34parse_number_with_exactly_n_digits17h4811edfffdb31efdE.exit.thread
 
 _ZN4jiff6shared5posix6Parser34parse_number_with_exactly_n_digits17h4811edfffdb31efdE.exit.thread: ; preds = %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i, %bb.a, %bb.d
-  %.sroa.5.0 = phi i8 [ %., %bb.d ], [ 1, %bb.a ], [ 2, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i ]
-  %.sroa.0.0 = phi i1 [ %or.cond1, %bb.d ], [ true, %bb.a ], [ true, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i ]
+  %.sroa.5.0 = phi i8 [ 1, %bb.a ], [ %., %bb.d ], [ 2, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i ]
+  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ %or.cond1, %bb.d ], [ true, %_ZN4jiff6shared5posix6Parser4byte17hf1ea23c9fb732a42E.exit.i ]
   %i.k = insertvalue { i1, i8 } poison, i1 %.sroa.0.0, 0
   %i.l = insertvalue { i1, i8 } %i.k, i8 %.sroa.5.0, 1
   ret { i1, i8 } %i.l

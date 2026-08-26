@@ -205,8 +205,8 @@ declare void @_ZNK4llvm5APInt5truncEj(ptr dead_on_unwind writable sret(%"class.l
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_124ConstantAggregateBuilder3addEPN4llvm8ConstantEN5clang9CharUnitsEb(ptr noundef nonnull align 8 dereferenceable(561) %0, ptr noundef %1, i64 %2) unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = alloca [1 x ptr], align 8                ; 5 uses
-  %3 = alloca [1 x %"class.clang::CharUnits"], align 8 ; 5 uses
+  %i.a = alloca [1 x ptr], align 8                ; 6 uses
+  %3 = alloca [1 x %"class.clang::CharUnits"], align 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 552 ; 6 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !438
   %.not = icmp slt i64 %2, %i.c
@@ -396,7 +396,7 @@ _ZNK12_GLOBAL__N_129ConstantAggregateBuilderUtils7getSizeEPKN4llvm8ConstantE.exi
 
 bb.s:                                             ; preds = %bb.a
   %i.cc = tail call fastcc { i64, i8 } @_ZN12_GLOBAL__N_124ConstantAggregateBuilder7splitAtEN5clang9CharUnitsE(ptr noundef nonnull align 8 dereferenceable(561) %0, i64 %2) ; 2 uses
-  %i.cd = extractvalue { i64, i8 } %i.cc, 0       ; 2 uses
+  %i.cd = extractvalue { i64, i8 } %i.cc, 0
   %i.ce = extractvalue { i64, i8 } %i.cc, 1
   %i.cf = trunc nuw i8 %i.ce to i1
   br i1 %i.cf, label %bb.t, label %bb.ac
@@ -431,44 +431,28 @@ _ZNK12_GLOBAL__N_129ConstantAggregateBuilderUtils7getSizeEPKN4llvm8ConstantE.exi
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   store ptr %1, ptr %i.a, align 8, !tbaa !462
   %i.cr = load ptr, ptr %i.cq, align 8, !tbaa !442 ; 4 uses
-  %.idx = shl nuw nsw i64 %i.cd, 3                ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.cr, i64 %.idx ; 3 uses
+  %.idx = shl nuw nsw i64 %i.cd, 3                ; 3 uses
   %.idx4.i = shl nuw nsw i64 %i.cn, 3             ; 4 uses
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %.idx4.i ; 2 uses
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.cr, i64 %.idx4.i ; 3 uses
   %i.ct = icmp samesign eq i64 %.idx, %.idx4.i
-  br i1 %i.ct, label %12, label %._crit_edge.i.i.i
+  br i1 %i.ct, label %bb.ab, label %._crit_edge.i.i.i
 
 bb.v:                                             ; preds = %._crit_edge.i.i.i
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cw, ptr nonnull align 8 %i.cs, i64 %gepdiff.i, i1 false)
   %.pre.i.i.i.i = load ptr, ptr %i.cq, align 8, !tbaa !442
-  br label %_ZN4llvm15SmallVectorImplIPNS_8ConstantEE5eraseEPKS2_S5_.exit.i.i.i
+  br label %._crit_edge.i.i.i33
 
 bb.w:                                             ; preds = %._crit_edge.i.i.i
   %i.cu = icmp eq i64 %i.da, 1
-  br i1 %i.cu, label %bb.x, label %_ZN4llvm15SmallVectorImplIPNS_8ConstantEE5eraseEPKS2_S5_.exit.i.i.i
+  br i1 %i.cu, label %bb.x, label %._crit_edge.i.i.i33
 
 bb.x:                                             ; preds = %bb.w
   %i.cv = load ptr, ptr %i.cs, align 8, !tbaa !462
   store ptr %i.cv, ptr %i.cw, align 8, !tbaa !462
-  br label %_ZN4llvm15SmallVectorImplIPNS_8ConstantEE5eraseEPKS2_S5_.exit.i.i.i
-
-_ZN4llvm15SmallVectorImplIPNS_8ConstantEE5eraseEPKS2_S5_.exit.i.i.i: ; preds = %bb.x, %bb.w, %bb.v
-  %5 = phi ptr [ %.pre.i.i.i.i, %bb.v ], [ %i.cr, %bb.w ], [ %i.cr, %bb.x ]
-  %6 = getelementptr inbounds i8, ptr %i.cw, i64 %gepdiff.i
-  %7 = ptrtoint ptr %6 to i64
-  %8 = ptrtoint ptr %5 to i64
-  %9 = sub i64 %7, %8
-  %10 = lshr exact i64 %9, 3
-  %11 = trunc i64 %10 to i32
-  store i32 %11, ptr %i.cx, align 8, !tbaa !443
-  br label %_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEESt16initializer_listIS4_EEEvRT_mmT0_.exit
-
-12:                                               ; preds = %.lr.ph.i.i.i
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %14 = call noundef ptr @_ZN4llvm15SmallVectorImplIPNS_8ConstantEE6insertIPKS2_vEEPS2_S7_T_S8_(ptr noundef nonnull align 8 dereferenceable(272) %i.cq, ptr noundef %4, ptr noundef nonnull %i.a, ptr noundef nonnull %13) ; 0 uses
-  br label %_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEESt16initializer_listIS4_EEEvRT_mmT0_.exit
+  br label %._crit_edge.i.i.i33
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i
+  %4 = getelementptr inbounds nuw i8, ptr %i.cr, i64 %.idx ; 2 uses
   store ptr %1, ptr %4, align 8, !tbaa !462
   %i.cw = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -479,21 +463,9 @@ _ZN4llvm15SmallVectorImplIPNS_8ConstantEE5eraseEPKS2_S5_.exit.i.i.i: ; preds = %
   %i.db = icmp sgt i64 %i.da, 1
   br i1 %i.db, label %bb.v, label %bb.w, !prof !521
 
-_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEESt16initializer_listIS4_EEEvRT_mmT0_.exit: ; preds = %_ZN4llvm15SmallVectorImplIPNS_8ConstantEE5eraseEPKS2_S5_.exit.i.i.i, %12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
-  store i64 %2, ptr %3, align 8, !tbaa !411
-  %16 = load ptr, ptr %15, align 8, !tbaa !442    ; 4 uses
-  %.idx83 = shl nuw nsw i64 %i.cd, 3              ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 %.idx83 ; 3 uses
-  %18 = getelementptr inbounds nuw i8, ptr %16, i64 %.idx4.i ; 2 uses
-  %19 = icmp samesign eq i64 %.idx83, %.idx4.i
-  br i1 %19, label %bb.ab, label %._crit_edge.i.i.i33
-
 bb.y:                                             ; preds = %._crit_edge.i.i.i33
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dn, ptr nonnull align 8 %18, i64 %gepdiff.i34, i1 false)
-  %.pre.i.i.i.i35 = load ptr, ptr %15, align 8, !tbaa !442
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dn, ptr nonnull align 8 %19, i64 %gepdiff.i34, i1 false)
+  %.pre.i.i.i.i35 = load ptr, ptr %17, align 8, !tbaa !442
   br label %_ZN4llvm15SmallVectorImplIN5clang9CharUnitsEE5eraseEPKS2_S5_.exit.i.i.i
 
 bb.z:                                             ; preds = %._crit_edge.i.i.i33
@@ -501,12 +473,12 @@ bb.z:                                             ; preds = %._crit_edge.i.i.i33
   br i1 %i.dc, label %bb.aa, label %_ZN4llvm15SmallVectorImplIN5clang9CharUnitsEE5eraseEPKS2_S5_.exit.i.i.i
 
 bb.aa:                                            ; preds = %bb.z
-  %i.dd = load i64, ptr %18, align 8, !tbaa !411
+  %i.dd = load i64, ptr %19, align 8, !tbaa !411
   store i64 %i.dd, ptr %i.dn, align 8, !tbaa !411
   br label %_ZN4llvm15SmallVectorImplIN5clang9CharUnitsEE5eraseEPKS2_S5_.exit.i.i.i
 
 _ZN4llvm15SmallVectorImplIN5clang9CharUnitsEE5eraseEPKS2_S5_.exit.i.i.i: ; preds = %bb.aa, %bb.z, %bb.y
-  %i.de = phi ptr [ %.pre.i.i.i.i35, %bb.y ], [ %16, %bb.z ], [ %16, %bb.aa ]
+  %i.de = phi ptr [ %.pre.i.i.i.i35, %bb.y ], [ %18, %bb.z ], [ %18, %bb.aa ]
   %i.df = getelementptr inbounds i8, ptr %i.dn, i64 %gepdiff.i34
   %i.dg = ptrtoint ptr %i.df to i64
   %i.dh = ptrtoint ptr %i.de to i64
@@ -516,14 +488,36 @@ _ZN4llvm15SmallVectorImplIN5clang9CharUnitsEE5eraseEPKS2_S5_.exit.i.i.i: ; preds
   store i32 %i.dk, ptr %i.do, align 8, !tbaa !443
   br label %_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIN5clang9CharUnitsELj32EEESt16initializer_listIS4_EEEvRT_mmT0_.exit
 
-bb.ab:                                            ; preds = %_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEESt16initializer_listIS4_EEEvRT_mmT0_.exit
+bb.ab:                                            ; preds = %.lr.ph.i.i.i
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %6 = call noundef ptr @_ZN4llvm15SmallVectorImplIPNS_8ConstantEE6insertIPKS2_vEEPS2_S7_T_S8_(ptr noundef nonnull align 8 dereferenceable(272) %i.cq, ptr noundef %i.cs, ptr noundef nonnull %i.a, ptr noundef nonnull %5) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  store i64 %2, ptr %3, align 8, !tbaa !411
+  %8 = load ptr, ptr %7, align 8, !tbaa !442
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %.idx4.i
   %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.dm = call noundef ptr @_ZN4llvm15SmallVectorImplIN5clang9CharUnitsEE6insertIPKS2_vEEPS2_S7_T_S8_(ptr noundef nonnull align 8 dereferenceable(272) %15, ptr noundef %17, ptr noundef nonnull %3, ptr noundef nonnull %i.dl) ; 0 uses
+  %i.dm = call noundef ptr @_ZN4llvm15SmallVectorImplIN5clang9CharUnitsEE6insertIPKS2_vEEPS2_S7_T_S8_(ptr noundef nonnull align 8 dereferenceable(272) %7, ptr noundef %9, ptr noundef nonnull %3, ptr noundef nonnull %i.dl) ; 0 uses
   br label %_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIN5clang9CharUnitsELj32EEESt16initializer_listIS4_EEEvRT_mmT0_.exit
 
-._crit_edge.i.i.i33:                              ; preds = %_ZN12_GLOBAL__N_17replaceIN4llvm11SmallVectorIPNS1_8ConstantELj32EEESt16initializer_listIS4_EEEvRT_mmT0_.exit
-  store i64 %2, ptr %17, align 8, !tbaa !411
-  %i.dn = getelementptr inbounds nuw i8, ptr %17, i64 8 ; 3 uses
+._crit_edge.i.i.i33:                              ; preds = %bb.x, %bb.w, %bb.v
+  %10 = phi ptr [ %.pre.i.i.i.i, %bb.v ], [ %i.cr, %bb.w ], [ %i.cr, %bb.x ]
+  %11 = getelementptr inbounds i8, ptr %i.cw, i64 %gepdiff.i
+  %12 = ptrtoint ptr %11 to i64
+  %13 = ptrtoint ptr %10 to i64
+  %14 = sub i64 %12, %13
+  %15 = lshr exact i64 %14, 3
+  %16 = trunc i64 %15 to i32
+  store i32 %16, ptr %i.cx, align 8, !tbaa !443
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  %18 = load ptr, ptr %17, align 8, !tbaa !442    ; 4 uses
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 %.idx4.i ; 2 uses
+  %20 = getelementptr inbounds nuw i8, ptr %18, i64 %.idx ; 2 uses
+  store i64 %2, ptr %20, align 8, !tbaa !411
+  %i.dn = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !443
   %i.dq = zext i32 %i.dp to i64

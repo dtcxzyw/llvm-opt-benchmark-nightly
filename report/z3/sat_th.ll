@@ -205,18 +205,18 @@ define hidden noundef nonnull ptr @_ZN3euf10th_explain8conflictERNS_13th_euf_sol
   %i.s = load ptr, ptr %3, align 8, !tbaa !500
   %i.t = load i32, ptr %i.s, align 4, !tbaa !66
   %i.u = icmp ugt i32 %i.r, %i.t
-  br i1 %i.u, label %.lr.ph39.i.i.i.us.preheader, label %.lr.ph39.i.i.i.preheader
+  br i1 %i.u, label %.lr.ph39.i.i.i.preheader, label %.lr.ph39.i.i.i.us.preheader
 
 .lr.ph39.i.i.i.preheader:                         ; preds = %.lr.ph.i.i.i
-  store ptr %2, ptr %i.o, align 8, !tbaa !497
   %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 76
-  store ptr %3, ptr %5, align 8, !tbaa !499
+  store ptr %3, ptr %i.o, align 8, !tbaa !68
+  store ptr %2, ptr %5, align 8, !tbaa !68
   br label %_ZN3euf10th_explain8conflictERNS_13th_euf_solverEjPKN3sat7literalEjPKSt4pairIPNS_5enodeES9_EPKNS_13th_proof_hintE.exit
 
 .lr.ph39.i.i.i.us.preheader:                      ; preds = %.lr.ph.i.i.i
+  store ptr %2, ptr %i.o, align 8, !tbaa !497
   %6 = getelementptr inbounds nuw i8, ptr %i.g, i64 76
-  store ptr %3, ptr %i.o, align 8, !tbaa !68
-  store ptr %2, ptr %6, align 8, !tbaa !68
+  store ptr %3, ptr %6, align 8, !tbaa !499
   br label %_ZN3euf10th_explain8conflictERNS_13th_euf_solverEjPKN3sat7literalEjPKSt4pairIPNS_5enodeES9_EPKNS_13th_proof_hintE.exit
 
 _ZN3euf10th_explain8conflictERNS_13th_euf_solverEjPKN3sat7literalEjPKSt4pairIPNS_5enodeES9_EPKNS_13th_proof_hintE.exit: ; preds = %.lr.ph39.i.i.i.preheader, %.lr.ph39.i.i.i.us.preheader
@@ -254,18 +254,18 @@ bb.a:
   %i.r = load ptr, ptr %2, align 8, !tbaa !500
   %i.s = load i32, ptr %i.r, align 4, !tbaa !66
   %i.t = icmp ugt i32 %i.q, %i.s
-  br i1 %i.t, label %.lr.ph39.i.i.i.us.preheader, label %.lr.ph39.i.i.i.preheader
+  br i1 %i.t, label %.lr.ph39.i.i.i.preheader, label %.lr.ph39.i.i.i.us.preheader
 
 .lr.ph39.i.i.i.preheader:                         ; preds = %bb.a
-  store ptr %1, ptr %i.m, align 8, !tbaa !497
   %4 = getelementptr inbounds nuw i8, ptr %i.g, i64 72
-  store ptr %2, ptr %4, align 8, !tbaa !499
+  store ptr %2, ptr %i.m, align 8, !tbaa !68
+  store ptr %1, ptr %4, align 8, !tbaa !68
   br label %_ZN3euf10th_explain8conflictERNS_13th_euf_solverEjPKN3sat7literalEjPKSt4pairIPNS_5enodeES9_EPKNS_13th_proof_hintE.exit
 
 .lr.ph39.i.i.i.us.preheader:                      ; preds = %bb.a
+  store ptr %1, ptr %i.m, align 8, !tbaa !497
   %5 = getelementptr inbounds nuw i8, ptr %i.g, i64 72
-  store ptr %2, ptr %i.m, align 8, !tbaa !68
-  store ptr %1, ptr %5, align 8, !tbaa !68
+  store ptr %2, ptr %5, align 8, !tbaa !499
   br label %_ZN3euf10th_explain8conflictERNS_13th_euf_solverEjPKN3sat7literalEjPKSt4pairIPNS_5enodeES9_EPKNS_13th_proof_hintE.exit
 
 _ZN3euf10th_explain8conflictERNS_13th_euf_solverEjPKN3sat7literalEjPKSt4pairIPNS_5enodeES9_EPKNS_13th_proof_hintE.exit: ; preds = %.lr.ph39.i.i.i.preheader, %.lr.ph39.i.i.i.us.preheader

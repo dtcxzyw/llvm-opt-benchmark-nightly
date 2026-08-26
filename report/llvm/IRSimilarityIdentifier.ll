@@ -204,13 +204,7 @@ bb.bc:                                            ; preds = %.lr.ph.i.i155
   %.025.i.i156 = phi i32 [ %.0.i.i157, %bb.bc ], [ %.024.i.i144, %bb.bb ]
   %i.zm = load i32, ptr %i.zl, align 4, !tbaa !108, !noalias !1168
   %i.zn = icmp eq i32 %i.pe, %i.zm
-  br i1 %i.zn, label %.lr.ph.i.i.i.i29.i.preheader, label %bb.bc, !prof !73
-
-.lr.ph.i.i.i.i29.i.preheader:                     ; preds = %.lr.ph.i.i155
-  %22 = getelementptr inbounds nuw i8, ptr %i.yi, i64 116
-  %23 = load i32, ptr %22, align 4, !tbaa !825    ; 2 uses
-  %24 = icmp eq i32 %23, 0
-  br i1 %24, label %_ZN4llvm8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEED2Ev.exit.i102.i, label %bb.bf
+  br i1 %i.zn, label %.lr.ph.i.i.i.i29.i, label %bb.bc, !prof !73
 
 .loopexit.i145:                                   ; preds = %bb.bc, %bb.bb, %_ZN4llvm12IRSimilarity21IRSimilarityCandidate25createCanonicalMappingForERS1_.exit
   %.lcssa30.sink.i.ph.i146 = phi ptr [ %i.yv, %bb.bb ], [ null, %_ZN4llvm12IRSimilarity21IRSimilarityCandidate25createCanonicalMappingForERS1_.exit ], [ %i.ze, %bb.bc ]
@@ -290,7 +284,13 @@ _ZSt8_DestroyIPN4llvm12IRSimilarity21IRSimilarityCandidateEEvT_S4_.exit.i.i.i.th
   store ptr %i.yj, ptr %i.abl, align 8, !tbaa !1081, !noalias !1168
   br label %_ZNSt6vectorIN4llvm12IRSimilarity21IRSimilarityCandidateESaIS2_EED2Ev.exit.i
 
-bb.bf:                                            ; preds = %.lr.ph.i.i.i.i29.i.preheader
+.lr.ph.i.i.i.i29.i:                               ; preds = %.lr.ph.i.i155
+  %22 = getelementptr inbounds nuw i8, ptr %i.yi, i64 116
+  %23 = load i32, ptr %22, align 4, !tbaa !825    ; 2 uses
+  %24 = icmp eq i32 %23, 0
+  br i1 %24, label %_ZN4llvm8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEED2Ev.exit.i102.i, label %bb.bf
+
+bb.bf:                                            ; preds = %.lr.ph.i.i.i.i29.i
   %i.abm = load ptr, ptr %i.yn, align 8, !tbaa !814
   %i.abn = zext i32 %23 to i64                    ; 2 uses
   %i.abo = shl nuw nsw i64 %i.abn, 3
@@ -301,7 +301,7 @@ bb.bf:                                            ; preds = %.lr.ph.i.i.i.i29.i.
   call void @_ZN4llvm17deallocate_bufferEPvmm(ptr noundef %i.abm, i64 noundef %i.abs, i64 noundef 4) #26
   br label %_ZN4llvm8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEED2Ev.exit.i102.i
 
-_ZN4llvm8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEED2Ev.exit.i102.i: ; preds = %bb.bf, %.lr.ph.i.i.i.i29.i.preheader
+_ZN4llvm8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEED2Ev.exit.i102.i: ; preds = %bb.bf, %.lr.ph.i.i.i.i29.i
   %i.abt = getelementptr inbounds nuw i8, ptr %i.yi, i64 92
   %i.abu = load i32, ptr %i.abt, align 4, !tbaa !825 ; 2 uses
   %i.abv = icmp eq i32 %i.abu, 0

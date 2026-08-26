@@ -202,6 +202,8 @@ define internal void @_ZN12_GLOBAL__N_135TestPassStateExtensionCommunication14ru
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %.0.copyload.i.i.i.i.i = load i64, ptr %i.e, align 8
+  %11 = and i64 %.0.copyload.i.i.i.i.i, -8
+  %12 = inttoptr i64 %11 to ptr                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
@@ -279,8 +281,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZSt10_ConstructINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJRKS5_EEvPT_DpOT0_.exit.i.i.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  %11 = and i64 %.0.copyload.i.i.i.i.i, -8
-  %12 = inttoptr i64 %11 to ptr                   ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 4 uses

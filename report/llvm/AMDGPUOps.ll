@@ -205,6 +205,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.w
   %i.dx = trunc nuw i8 %i.dw to i1
   br i1 %i.dx, label %.critedge.i.i.preheader, label %.loopexit
 
+20:                                               ; preds = %.critedge.i.i.preheader
+  %21 = load i32, ptr %i.c, align 8, !tbaa !51
+  %.not.i89 = icmp eq i32 %21, 0
+  br i1 %.not.i89, label %bb.ad, label %bb.ac
+
 .critedge.i.i.preheader:                          ; preds = %bb.ab
   %i.dy = load ptr, ptr %0, align 8, !tbaa !83
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 760
@@ -212,11 +217,6 @@ bb.ab:                                            ; preds = %bb.aa, %bb.w
   %i.eb = call i8 %i.ea(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %7, ptr %i.du, ptr noundef nonnull align 8 dereferenceable(16) %i.dv) #25, !inline_history !514
   %i.ec = trunc nuw i8 %i.eb to i1
   br i1 %i.ec, label %20, label %.loopexit
-
-20:                                               ; preds = %.critedge.i.i.preheader
-  %21 = load i32, ptr %i.c, align 8, !tbaa !51
-  %.not.i89 = icmp eq i32 %21, 0
-  br i1 %.not.i89, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %20
   %i.ed = call i8 @_ZN4mlir11OpAsmParser15resolveOperandsIRN4llvm11SmallVectorINS0_17UnresolvedOperandELj4EEERNS3_INS_4TypeELj1EEEvEENS2_11ParseResultEOT_OT0_NS2_5SMLocERNS2_15SmallVectorImplINS_5ValueEEE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(144) %8, ptr noundef nonnull align 8 dereferenceable(24) %13, ptr %i.bg, ptr noundef nonnull align 8 dereferenceable(16) %i.dv)
@@ -620,7 +620,7 @@ bb.ad:                                            ; preds = %.critedge.i.i105
   br label %_ZN4mlir11OpAsmParser15resolveOperandsIRN4llvm11SmallVectorINS0_17UnresolvedOperandELj4EEEEENS2_11ParseResultEOT_NS_4TypeENS2_5SMLocERNS2_15SmallVectorImplINS_5ValueEEE.exit
 
 _ZN4mlir11OpAsmParser15resolveOperandsIRN4llvm11SmallVectorINS0_17UnresolvedOperandELj4EEEEENS2_11ParseResultEOT_NS_4TypeENS2_5SMLocERNS2_15SmallVectorImplINS_5ValueEEE.exit: ; preds = %bb.ad, %.critedge.i.i105, %_ZN4llvm4copyINS_8ArrayRefIiEEPiEET0_OT_S4_.exit, %.critedge.i.i97, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %.thread146, %bb.v, %.thread, %bb.t, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %.critedge94, %.critedge
-  %.sroa.0144.3 = phi i8 [ 0, %.critedge ], [ 0, %bb.aa ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.m ], [ 0, %.critedge94 ], [ 0, %bb.n ], [ 0, %.thread ], [ 0, %bb.t ], [ 0, %.thread146 ], [ 0, %bb.v ], [ 0, %bb.x ], [ 0, %bb.y ], [ 0, %_ZN4llvm4copyINS_8ArrayRefIiEEPiEET0_OT_S4_.exit ], [ 0, %.critedge.i.i97 ], [ 0, %bb.z ], [ 1, %bb.ab ], [ 1, %bb.ad ], [ 0, %.critedge.i.i105 ]
+  %.sroa.0144.3 = phi i8 [ 0, %.critedge ], [ 0, %bb.aa ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.m ], [ 0, %.critedge94 ], [ 0, %bb.n ], [ 0, %.thread ], [ 0, %bb.t ], [ 0, %.thread146 ], [ 0, %bb.v ], [ 0, %bb.x ], [ 0, %bb.y ], [ 0, %_ZN4llvm4copyINS_8ArrayRefIiEEPiEET0_OT_S4_.exit ], [ 0, %.critedge.i.i97 ], [ 0, %bb.z ], [ 1, %bb.ab ], [ 0, %.critedge.i.i105 ], [ 1, %bb.ad ]
   %i.fi = load ptr, ptr %11, align 8, !tbaa !48   ; 2 uses
   %i.fj = icmp eq ptr %i.fi, %i.i
   br i1 %i.fj, label %_ZN4llvm11SmallVectorIN4mlir4TypeELj1EED2Ev.exit, label %bb.ae

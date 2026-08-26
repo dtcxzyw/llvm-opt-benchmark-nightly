@@ -204,24 +204,24 @@ bb.p:                                             ; preds = %bb.c
   %i.as = and i32 %i.ar, 67108864
   %.not77 = icmp eq i32 %i.as, 0
   %i.at = tail call zeroext i1 @fifo8_is_full(ptr noundef nonnull %i.ap) #12 ; 2 uses
-  br i1 %.not77, label %.lr.ph.split.i46.preheader, label %.lr.ph.split.us.i50.preheader
-
-.lr.ph.split.us.i50.preheader:                    ; preds = %bb.p
-  br i1 %i.at, label %.critedge, label %bb.q
+  br i1 %.not77, label %.lr.ph.split.i46, label %.lr.ph.split.i46.preheader
 
 .lr.ph.split.i46.preheader:                       ; preds = %bb.p
-  br i1 %i.at, label %.critedge, label %bb.r
+  br i1 %i.at, label %.critedge, label %bb.q
 
-bb.q:                                             ; preds = %.lr.ph.split.us.i50.preheader
+bb.q:                                             ; preds = %.lr.ph.split.i46.preheader
   %i.au = lshr i64 %2, 24
   %i.av = trunc i64 %i.au to i8
   tail call void @fifo8_push(ptr noundef nonnull %i.ap, i8 noundef zeroext %i.av) #12
-  br label %.critedge
+  br label %.critedge, !llvm.loop !15
 
-bb.r:                                             ; preds = %.lr.ph.split.i46.preheader
+.lr.ph.split.i46:                                 ; preds = %bb.p
+  br i1 %i.at, label %.critedge, label %bb.r
+
+bb.r:                                             ; preds = %.lr.ph.split.i46
   %i.aw = trunc i64 %2 to i8
   tail call void @fifo8_push(ptr noundef nonnull %i.ap, i8 noundef zeroext %i.aw) #12
-  br label %.critedge
+  br label %.critedge, !llvm.loop !15
 
 bb.s:                                             ; preds = %bb.c
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1432 ; 7 uses
@@ -337,7 +337,7 @@ bb.y:                                             ; preds = %bb.c, %bb.c, %bb.c,
   store i32 %i.cp, ptr %i.cj, align 4
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.n, %.lr.ph.split.us.i, %bb.o, %.lr.ph.split.i, %.lr.ph.split.us.i70.preheader, %.lr.ph.split.us.i70.1, %.lr.ph.split.us.i70.2, %bb.w, %.lr.ph.split.i66.preheader, %.lr.ph.split.i66.1, %.lr.ph.split.i66.2, %bb.x, %.lr.ph.split.us.i60.preheader, %.lr.ph.split.us.i60.1, %bb.t, %.lr.ph.split.i56.preheader, %.lr.ph.split.i56.1, %bb.u, %.lr.ph.split.us.i50.preheader, %bb.q, %.lr.ph.split.i46.preheader, %bb.r, %bb.m, %bb.g, %bb.h, %bb.i, %.critedge44
+.critedge:                                        ; preds = %bb.n, %.lr.ph.split.us.i, %bb.o, %.lr.ph.split.i, %.lr.ph.split.us.i70.preheader, %.lr.ph.split.us.i70.1, %.lr.ph.split.us.i70.2, %bb.w, %.lr.ph.split.i66.preheader, %.lr.ph.split.i66.1, %.lr.ph.split.i66.2, %bb.x, %.lr.ph.split.us.i60.preheader, %.lr.ph.split.us.i60.1, %bb.t, %.lr.ph.split.i56.preheader, %.lr.ph.split.i56.1, %bb.u, %.lr.ph.split.i46.preheader, %bb.q, %.lr.ph.split.i46, %bb.r, %bb.m, %bb.g, %bb.h, %bb.i, %.critedge44
   tail call fastcc void @xilinx_spips_update_cs_lines(ptr noundef nonnull %0)
   tail call fastcc void @xilinx_spips_check_flush(ptr noundef nonnull %0)
   tail call fastcc void @xilinx_spips_update_cs_lines(ptr noundef nonnull %0)
@@ -740,7 +740,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %.lr.ph.split.i.preheader.i
   tail call void @fifo8_push(ptr noundef nonnull %i.j, i8 noundef zeroext 0) #12
-  br label %tx_data_bytes.exit.i
+  br label %tx_data_bytes.exit.i, !llvm.loop !15
 
 tx_data_bytes.exit.i:                             ; preds = %bb.o, %.lr.ph.split.i.preheader.i
   %i.bd = add nuw nsw i32 %.16375.i, 1            ; 2 uses
@@ -762,7 +762,7 @@ bb.q:                                             ; preds = %.lr.ph.i.i
   %i.bf = getelementptr inbounds nuw i8, ptr %i.l, i64 %indvars.iv35
   %i.bg = tail call zeroext i8 @fifo8_pop(ptr noundef nonnull %i.k) #12
   store i8 %i.bg, ptr %i.bf, align 1
-  br label %rx_data_bytes.exit.i
+  br label %rx_data_bytes.exit.i, !llvm.loop !14
 
 rx_data_bytes.exit.i:                             ; preds = %bb.q, %.lr.ph.i.i
   %exitcond81.not.i = icmp eq i64 %indvars.iv.next36, %indvars.iv.next

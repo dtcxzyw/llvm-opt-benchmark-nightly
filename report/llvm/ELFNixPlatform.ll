@@ -204,18 +204,18 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ev, i64 8
   store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !431
   store ptr %i.ex, ptr %i.ew, align 8, !tbaa !434, !alias.scope !431
-  %.pre = load ptr, ptr %i.k, align 8, !tbaa !69  ; 4 uses
   store ptr %i.ex, ptr %i.eu, align 8, !alias.scope !431
   store ptr %i.ev, ptr %28, align 8, !alias.scope !431
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #22
-  store ptr %.pre, ptr %30, align 8, !tbaa !69
-  %i.ey = ptrtoint ptr %.pre to i64
+  %39 = load ptr, ptr %i.k, align 8, !tbaa !69    ; 4 uses
+  store ptr %39, ptr %30, align 8, !tbaa !69
+  %i.ey = ptrtoint ptr %39 to i64
   %notsub.i.i.i46 = add i64 %i.ey, -1
   %i.ez = icmp ult i64 %notsub.i.i.i46, -32       ; 2 uses
   br i1 %i.ez, label %bb.j, label %_ZN4llvm3orc15SymbolStringPtrC2ERKS1_.exit
 
 bb.j:                                             ; preds = %_ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9push_backEOS6_.exit.i
-  %i.fa = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.fa = getelementptr inbounds nuw i8, ptr %39, i64 8
   %i.fb = atomicrmw add ptr %i.fa, i64 1 seq_cst, align 8 ; 0 uses
   br label %_ZN4llvm3orc15SymbolStringPtrC2ERKS1_.exit
 
@@ -618,7 +618,7 @@ _ZN4llvm3orc15SymbolStringPtrD2Ev.exit75.9:       ; preds = %bb.at, %_ZN4llvm3or
   br i1 %i.ez, label %bb.au, label %_ZN4llvm3orc15SymbolStringPtrD2Ev.exit75.10
 
 bb.au:                                            ; preds = %_ZN4llvm3orc15SymbolStringPtrD2Ev.exit75.9
-  %i.lo = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.lo = getelementptr inbounds nuw i8, ptr %39, i64 8
   %i.lp = atomicrmw sub ptr %i.lo, i64 1 seq_cst, align 8 ; 0 uses
   br label %_ZN4llvm3orc15SymbolStringPtrD2Ev.exit75.10
 
@@ -944,10 +944,10 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %.sroa.5.0..sroa_idx.i90 = getelementptr inbounds nuw i8, ptr %i.ph, i64 8
   store i32 1, ptr %.sroa.5.0..sroa_idx.i90, align 8, !noalias !499
   store ptr %i.pj, ptr %i.pi, align 8, !tbaa !434, !alias.scope !499
-  %.pre207 = load ptr, ptr %33, align 8, !tbaa !226
   store ptr %i.pj, ptr %i.pg, align 8, !alias.scope !499
   store ptr %i.ph, ptr %36, align 8, !alias.scope !499
-  store ptr %.pre207, ptr %37, align 8, !tbaa !226
+  %40 = load ptr, ptr %33, align 8, !tbaa !226
+  store ptr %40, ptr %37, align 8, !tbaa !226
   store ptr null, ptr %33, align 8, !tbaa !226
   call void @_ZN4llvm3orc16ExecutionSession6lookupERKSt6vectorISt4pairIPNS0_8JITDylibENS0_19JITDylibLookupFlagsEESaIS7_EENS0_15SymbolStringPtrENS0_11SymbolStateE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::Expected.170") align 8 %35, ptr noundef nonnull align 8 dereferenceable(392) %i.pf, ptr noundef nonnull align 8 dereferenceable(24) %36, ptr nofree noundef nonnull align 8 dereferenceable(8) %37, i8 noundef zeroext 63) #22
   %i.pk = getelementptr inbounds nuw i8, ptr %35, i64 16

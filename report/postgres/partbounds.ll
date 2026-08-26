@@ -205,11 +205,11 @@ find_value_in_new_partitions_list.exit.thread.i.i: ; preds = %bb.bw, %bb.bu, %bb
   br label %bb.bx
 
 bb.bx:                                            ; preds = %find_value_in_new_partitions_list.exit34.thread.i.i, %.lr.ph.i57.i
-  %indvars.iv.i138 = phi i64 [ %indvars.iv.next.i139, %find_value_in_new_partitions_list.exit34.thread.i.i ], [ 0, %.lr.ph.i57.i ] ; 3 uses
-  %4 = phi i32 [ %i.acb, %find_value_in_new_partitions_list.exit34.thread.i.i ], [ %i.aai, %.lr.ph.i57.i ]
+  %4 = phi i32 [ %i.aai, %.lr.ph.i57.i ], [ %i.acb, %find_value_in_new_partitions_list.exit34.thread.i.i ]
+  %indvars.iv.i58.i = phi i64 [ 0, %.lr.ph.i57.i ], [ %indvars.iv.next.i139, %find_value_in_new_partitions_list.exit34.thread.i.i ] ; 3 uses
   %i.aap = load ptr, ptr %i.aaj, align 8
   %i.aaq = load ptr, ptr %i.aak, align 8
-  %i.aar = getelementptr inbounds nuw [4 x i8], ptr %i.aaq, i64 %indvars.iv.i138
+  %i.aar = getelementptr inbounds nuw [4 x i8], ptr %i.aaq, i64 %indvars.iv.i58.i
   %i.aas = load i32, ptr %i.aar, align 4
   %i.aat = sext i32 %i.aas to i64
   %i.aau = getelementptr inbounds [4 x i8], ptr %i.aap, i64 %i.aat
@@ -219,7 +219,7 @@ bb.bx:                                            ; preds = %find_value_in_new_p
 
 bb.by:                                            ; preds = %bb.bx
   %i.aax = load ptr, ptr %i.aal, align 8
-  %i.aay = getelementptr inbounds nuw [8 x i8], ptr %i.aax, i64 %indvars.iv.i138
+  %i.aay = getelementptr inbounds nuw [8 x i8], ptr %i.aax, i64 %indvars.iv.i58.i
   %i.aaz = load ptr, ptr %i.aay, align 8
   %i.aba = load i64, ptr %i.aaz, align 8
   %i.abb = load ptr, ptr %i.aam, align 8
@@ -274,7 +274,7 @@ find_value_in_new_partitions_list.exit34.thread.loopexit.i.i: ; preds = %bb.bz
 
 find_value_in_new_partitions_list.exit34.thread.i.i: ; preds = %find_value_in_new_partitions_list.exit34.thread.loopexit.i.i, %bb.bx
   %i.acb = phi i32 [ %.pre.i.i140, %find_value_in_new_partitions_list.exit34.thread.loopexit.i.i ], [ %4, %bb.bx ] ; 2 uses
-  %indvars.iv.next.i139 = add nuw nsw i64 %indvars.iv.i138, 1 ; 2 uses
+  %indvars.iv.next.i139 = add nuw nsw i64 %indvars.iv.i58.i, 1 ; 2 uses
   %i.acc = sext i32 %i.acb to i64
   %.not27.not.i.i = icmp slt i64 %indvars.iv.next.i139, %i.acc
   br i1 %.not27.not.i.i, label %bb.bx, label %split_partition_values_contained_in_new_part.exit.i, !llvm.loop !114

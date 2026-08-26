@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.critedge26.thread
   %i.bg = load ptr, ptr %i.bf, align 8            ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bc, i64 304 ; 3 uses
   %.not10.i.i.i.i.i.i40 = icmp eq ptr %i.bg, null
-  br i1 %.not10.i.i.i.i.i.i40, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.i.i.i.i.i.i41
+  br i1 %.not10.i.i.i.i.i.i40, label %.lr.ph.split.i.i.preheader, label %.lr.ph.i.i.i.i.i.i41
 
 .lr.ph.i.i.i.i.i.i41:                             ; preds = %bb.g, %.lr.ph.i.i.i.i.i.i41
   %.012.i.i.i.i.i.i42 = phi ptr [ %.1.i.i.i.i.i.i47, %.lr.ph.i.i.i.i.i.i41 ], [ %i.bg, %bb.g ] ; 3 uses
@@ -222,7 +222,7 @@ bb.g:                                             ; preds = %.critedge26.thread
 
 _ZNSt8_Rb_treeIPN2v88internal6maglev9ValueNodeESt4pairIKS4_NS2_8NodeInfoEESt10_Select1stIS8_ESt4lessIS4_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPSt13_Rb_tree_nodeIS8_EPSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i41
   %i.bl = icmp eq ptr %.19.i.i.i.i.i.i44, %i.bh
-  br i1 %i.bl, label %.lr.ph.split.us.i.i.preheader, label %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i
+  br i1 %i.bl, label %.lr.ph.split.i.i.preheader, label %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i
 
 _ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i: ; preds = %_ZNSt8_Rb_treeIPN2v88internal6maglev9ValueNodeESt4pairIKS4_NS2_8NodeInfoEESt10_Select1stIS8_ESt4lessIS4_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPSt13_Rb_tree_nodeIS8_EPSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i.i
   %i.bm = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i.i44, i64 32
@@ -231,24 +231,24 @@ _ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i: ; p
   %.not26.fr.i.i = freeze i1 %i.bo                ; 2 uses
   %spec.select.i.i.i.i.i = select i1 %.not26.fr.i.i, ptr %i.bh, ptr %.19.i.i.i.i.i.i44
   %i.bp = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i.i, i64 40
-  br i1 %.not26.fr.i.i, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.split.i.i.preheader
+  br i1 %.not26.fr.i.i, label %.lr.ph.split.i.i.preheader, label %.lr.ph.split.us.i.i.preheader
 
-.lr.ph.split.i.i.preheader:                       ; preds = %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i
+.lr.ph.split.i.i.preheader:                       ; preds = %_ZNSt8_Rb_treeIPN2v88internal6maglev9ValueNodeESt4pairIKS4_NS2_8NodeInfoEESt10_Select1stIS8_ESt4lessIS4_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPSt13_Rb_tree_nodeIS8_EPSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i.i, %bb.g, %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i
   %i.bq = tail call noundef i32 @_ZN2v88internal6maglev9ValueNode13GetStaticTypeEPNS0_8compiler12JSHeapBrokerE(ptr noundef nonnull align 8 dereferenceable(20) %i.av, ptr noundef %i.be) #33
   %i.br = icmp ult i32 %i.bq, 2
-  br i1 %i.br, label %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit, label %bb.h
+  br i1 %i.br, label %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit, label %.critedge26
 
-.lr.ph.split.us.i.i.preheader:                    ; preds = %_ZNSt8_Rb_treeIPN2v88internal6maglev9ValueNodeESt4pairIKS4_NS2_8NodeInfoEESt10_Select1stIS8_ESt4lessIS4_ENS1_13ZoneAllocatorIS8_EEE14_M_lower_boundEPSt13_Rb_tree_nodeIS8_EPSt18_Rb_tree_node_baseRS6_.exit.i.i.i.i.i, %bb.g, %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i
+.lr.ph.split.us.i.i.preheader:                    ; preds = %_ZN2v88internal6maglev16KnownNodeAspects8FindInfoEPNS1_9ValueNodeE.exit.i.i
   %i.bs = tail call noundef i32 @_ZN2v88internal6maglev9ValueNode13GetStaticTypeEPNS0_8compiler12JSHeapBrokerE(ptr noundef nonnull align 8 dereferenceable(20) %i.av, ptr noundef %i.be) #33
   %i.bt = icmp ult i32 %i.bs, 2
-  br i1 %i.bt, label %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit, label %.critedge26
+  br i1 %i.bt, label %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit, label %bb.h
 
-bb.h:                                             ; preds = %.lr.ph.split.i.i.preheader
+bb.h:                                             ; preds = %.lr.ph.split.us.i.i.preheader
   %i.bu = load i32, ptr %i.bp, align 8
   %i.bv = icmp ult i32 %i.bu, 2
   br i1 %i.bv, label %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit, label %.critedge26
 
-_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit: ; preds = %.lr.ph.split.i.i.preheader, %bb.h, %.lr.ph.split.us.i.i.preheader
+_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit: ; preds = %.lr.ph.split.us.i.i.preheader, %bb.h, %.lr.ph.split.i.i.preheader
   %i.bw = ptrtoint ptr %i.av to i64
   br label %.critedge26
 
@@ -259,8 +259,8 @@ bb.i:                                             ; preds = %.critedge26.thread
 bb.j:                                             ; preds = %.critedge26.thread
   unreachable
 
-.critedge26:                                      ; preds = %.lr.ph.split.us.i.i.preheader, %bb.h, %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit, %bb.e, %bb.d, %.critedge26.thread, %.critedge26.thread, %_ZNK2v88internal6maglev13CallArgumentsixEm.exit32, %bb.f, %_ZN2v88internal6maglev18MaglevGraphBuilder15GetRootConstantENS0_9RootIndexE.exit
-  %.sroa.050.1 = phi i64 [ %i.ag, %_ZN2v88internal6maglev18MaglevGraphBuilder15GetRootConstantENS0_9RootIndexE.exit ], [ %i.ba, %bb.f ], [ 3, %bb.e ], [ 3, %.critedge26.thread ], [ %i.bw, %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit ], [ 3, %_ZNK2v88internal6maglev13CallArgumentsixEm.exit32 ], [ 3, %bb.d ], [ 3, %.critedge26.thread ], [ 3, %bb.h ], [ 3, %.lr.ph.split.us.i.i.preheader ]
+.critedge26:                                      ; preds = %.lr.ph.split.i.i.preheader, %bb.h, %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit, %bb.e, %bb.d, %.critedge26.thread, %.critedge26.thread, %_ZNK2v88internal6maglev13CallArgumentsixEm.exit32, %bb.f, %_ZN2v88internal6maglev18MaglevGraphBuilder15GetRootConstantENS0_9RootIndexE.exit
+  %.sroa.050.1 = phi i64 [ %i.ag, %_ZN2v88internal6maglev18MaglevGraphBuilder15GetRootConstantENS0_9RootIndexE.exit ], [ %i.ba, %bb.f ], [ 3, %bb.e ], [ 3, %.critedge26.thread ], [ %i.bw, %_ZN2v88internal6maglev18MaglevGraphBuilder10CheckTypesEPNS1_9ValueNodeESt16initializer_listINS1_8NodeTypeEE.exit ], [ 3, %_ZNK2v88internal6maglev13CallArgumentsixEm.exit32 ], [ 3, %bb.d ], [ 3, %.critedge26.thread ], [ 3, %bb.h ], [ 3, %.lr.ph.split.i.i.preheader ]
   ret i64 %.sroa.050.1
 }
 

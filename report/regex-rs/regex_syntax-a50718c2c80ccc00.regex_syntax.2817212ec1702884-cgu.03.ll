@@ -205,52 +205,52 @@ _RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit65: 
   %i.ja = getelementptr inbounds nuw i8, ptr %i.it, i64 16, !dbg !5752
   %i.jb = load i64, ptr %i.ja, align 8, !dbg !5752, !noalias !5754, !noundef !15 ; 2 uses
   %.not16.i.i = icmp ult i64 %.val, %i.jb, !dbg !5752 ; 2 uses
-  br i1 %i.iz, label %.lr.ph.i.i.preheader, label %.lr.ph.i5.i.preheader, !dbg !5757
-
-.lr.ph.i5.i.preheader:                            ; preds = %_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit65
-    #dbg_value(ptr %i.it, !2938, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !5758)
-    #dbg_value(ptr %i.it, !2939, !DIExpression(), !5760)
-    #dbg_value(ptr %i.it, !2947, !DIExpression(), !5761)
-    #dbg_value(ptr %i.it, !3021, !DIExpression(), !5763)
-    #dbg_value(ptr %i.it, !3026, !DIExpression(), !5765)
-    #dbg_value(ptr %i.it, !3031, !DIExpression(), !5767)
-    #dbg_value(ptr %i.it, !3036, !DIExpression(), !5769)
-    #dbg_value(ptr %i.it, !3041, !DIExpression(), !5771)
-  br i1 %.not16.i.i, label %bb.ck, label %_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit, !dbg !5773
+  br i1 %i.iz, label %.lr.ph.i.i.preheader, label %.lr.ph.i5.i, !dbg !5757
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit65
-    #dbg_value(ptr %i.it, !2753, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !5774)
-    #dbg_value(ptr %i.it, !2754, !DIExpression(), !5776)
-    #dbg_value(ptr %i.it, !2764, !DIExpression(), !5777)
-    #dbg_value(ptr %i.it, !2849, !DIExpression(), !5779)
-    #dbg_value(ptr %i.it, !2854, !DIExpression(), !5781)
-    #dbg_value(ptr %i.it, !2859, !DIExpression(), !5783)
-    #dbg_value(ptr %i.it, !2849, !DIExpression(), !5785)
-    #dbg_value(ptr %i.it, !2854, !DIExpression(), !5787)
-    #dbg_value(ptr %i.it, !2869, !DIExpression(), !5789)
-    #dbg_value(ptr %i.it, !2874, !DIExpression(), !5791)
-  br i1 %.not16.i.i, label %bb.cj, label %_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit, !dbg !5793
+    #dbg_value(ptr %i.it, !2753, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !5758)
+    #dbg_value(ptr %i.it, !2754, !DIExpression(), !5760)
+    #dbg_value(ptr %i.it, !2764, !DIExpression(), !5761)
+    #dbg_value(ptr %i.it, !2849, !DIExpression(), !5763)
+    #dbg_value(ptr %i.it, !2854, !DIExpression(), !5765)
+    #dbg_value(ptr %i.it, !2859, !DIExpression(), !5767)
+    #dbg_value(ptr %i.it, !2849, !DIExpression(), !5769)
+    #dbg_value(ptr %i.it, !2854, !DIExpression(), !5771)
+    #dbg_value(ptr %i.it, !2869, !DIExpression(), !5773)
+    #dbg_value(ptr %i.it, !2874, !DIExpression(), !5775)
+  br i1 %.not16.i.i, label %bb.cj, label %_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit, !dbg !5777
 
 bb.cj:                                            ; preds = %.lr.ph.i.i.preheader
-  %i.jc = getelementptr inbounds nuw i8, ptr %i.it, i64 24, !dbg !5794
-  store i8 0, ptr %i.jc, align 8, !dbg !5794, !noalias !5795
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !dbg !5798, !noalias !5795
-    #dbg_value(ptr %i.it, !2869, !DIExpression(), !5799)
-    #dbg_value(ptr %i.it, !2874, !DIExpression(), !5801)
-  %i.jd = sub nuw i64 %i.jb, %.val, !dbg !5803
+  %i.jc = getelementptr inbounds nuw i8, ptr %i.it, i64 24, !dbg !5778
+  store i8 0, ptr %i.jc, align 8, !dbg !5778, !noalias !5779
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !dbg !5782, !noalias !5779
+    #dbg_value(ptr %i.it, !2869, !DIExpression(), !5783)
+    #dbg_value(ptr %i.it, !2874, !DIExpression(), !5785)
+  %i.jd = sub nuw i64 %i.jb, %.val, !dbg !5787
   invoke void @_RINvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechE5drainINtNtNtCsj6eKBz9Db1c_4core3ops5range7RangeTojEECs3roNzt6HBWW_12regex_syntax(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.x, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.it, i64 noundef %i.jd)
-          to label %.noexc unwind label %.loopexit, !dbg !5804
+          to label %.noexc unwind label %.loopexit, !dbg !5788
 
 .noexc:                                           ; preds = %bb.cj
-    #dbg_value(ptr %i.x, !2891, !DIExpression(), !5805)
+    #dbg_value(ptr %i.x, !2891, !DIExpression(), !5789)
   invoke void @_RNvXs5_NtNtCs4wP2HXfJTCR_5alloc3vec5drainINtB5_5DrainhENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCs3roNzt6HBWW_12regex_syntax(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.x)
-          to label %.noexc66 unwind label %.loopexit, !dbg !5807
+          to label %.noexc66 unwind label %.loopexit, !dbg !5791
 
 .noexc66:                                         ; preds = %.noexc
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !dbg !5808, !noalias !5795
-  br label %_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit, !dbg !5809
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !dbg !5792, !noalias !5779
+  br label %_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit, !dbg !5793
 
-bb.ck:                                            ; preds = %.lr.ph.i5.i.preheader
+.lr.ph.i5.i:                                      ; preds = %_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit65
+    #dbg_value(ptr %i.it, !2938, !DIExpression(DW_OP_plus_uconst, 32, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !5794)
+    #dbg_value(ptr %i.it, !2939, !DIExpression(), !5796)
+    #dbg_value(ptr %i.it, !2947, !DIExpression(), !5797)
+    #dbg_value(ptr %i.it, !3021, !DIExpression(), !5799)
+    #dbg_value(ptr %i.it, !3026, !DIExpression(), !5801)
+    #dbg_value(ptr %i.it, !3031, !DIExpression(), !5803)
+    #dbg_value(ptr %i.it, !3036, !DIExpression(), !5805)
+    #dbg_value(ptr %i.it, !3041, !DIExpression(), !5807)
+  br i1 %.not16.i.i, label %bb.ck, label %_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit, !dbg !5809
+
+bb.ck:                                            ; preds = %.lr.ph.i5.i
   %i.je = getelementptr inbounds nuw i8, ptr %i.it, i64 24, !dbg !5810
   store i8 0, ptr %i.je, align 8, !dbg !5810, !noalias !5811
   invoke void @_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VechE8truncateCs3roNzt6HBWW_12regex_syntax(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.it, i64 noundef %.val)
@@ -281,7 +281,7 @@ bb.cm:                                            ; preds = %.loopexit.split-lp,
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs3roNzt6HBWW_12regex_syntax3hir7literal3SeqEBH_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.au) #16
           to label %common.resume unwind label %bb.cn, !dbg !5817
 
-_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit: ; preds = %.lr.ph.i5.i.preheader, %bb.ck, %.lr.ph.i.i.preheader, %.noexc66
+_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit: ; preds = %bb.ck, %.lr.ph.i5.i, %.noexc66, %.lr.ph.i.i.preheader
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.au, i64 24, i1 false), !dbg !5818
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au), !dbg !5817
   br label %_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19extract_class_bytes.exit, !dbg !5819
@@ -684,63 +684,63 @@ begin_hunk_1_@llvm.umin.i64
 !5755 = distinct !{!5755, !5756, !"_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len: argument 0"}
 !5756 = distinct !{!5756, !"_RNvMNtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len"}
 !5757 = !DILocation(line: 622, column: 9, scope: !2695, inlinedAt: !5751)
-!5758 = !DILocation(line: 0, scope: !2930, inlinedAt: !5759)
-!5759 = distinct !DILocation(line: 623, column: 40, scope: !2695, inlinedAt: !5751)
-!5760 = !DILocation(line: 0, scope: !2940, inlinedAt: !5759)
-!5761 = !DILocation(line: 0, scope: !2944, inlinedAt: !5762)
-!5762 = distinct !DILocation(line: 1492, column: 19, scope: !2940, inlinedAt: !5759)
-!5763 = !DILocation(line: 0, scope: !3022, inlinedAt: !5764)
-!5764 = distinct !DILocation(line: 2130, column: 24, scope: !2944, inlinedAt: !5762)
-!5765 = !DILocation(line: 0, scope: !3027, inlinedAt: !5766)
-!5766 = distinct !DILocation(line: 2084, column: 14, scope: !3022, inlinedAt: !5764)
-!5767 = !DILocation(line: 0, scope: !3032, inlinedAt: !5768)
-!5768 = distinct !DILocation(line: 2133, column: 14, scope: !2944, inlinedAt: !5762)
-!5769 = !DILocation(line: 3854, column: 14, scope: !3037, inlinedAt: !5770)
-!5770 = distinct !DILocation(line: 2070, column: 9, scope: !3027, inlinedAt: !5766)
-!5771 = !DILocation(line: 1848, column: 27, scope: !3042, inlinedAt: !5772)
-!5772 = distinct !DILocation(line: 3855, column: 14, scope: !3037, inlinedAt: !5770)
-!5773 = !DILocation(line: 2130, column: 12, scope: !2944, inlinedAt: !5762)
-!5774 = !DILocation(line: 0, scope: !2743, inlinedAt: !5775)
-!5775 = distinct !DILocation(line: 624, column: 40, scope: !2695, inlinedAt: !5751)
-!5776 = !DILocation(line: 0, scope: !2755, inlinedAt: !5775)
-!5777 = !DILocation(line: 0, scope: !2759, inlinedAt: !5778)
-!5778 = distinct !DILocation(line: 1520, column: 19, scope: !2755, inlinedAt: !5775)
-!5779 = !DILocation(line: 0, scope: !2850, inlinedAt: !5780)
-!5780 = distinct !DILocation(line: 2142, column: 24, scope: !2759, inlinedAt: !5778)
-!5781 = !DILocation(line: 0, scope: !2855, inlinedAt: !5782)
-!5782 = distinct !DILocation(line: 2084, column: 14, scope: !2850, inlinedAt: !5780)
-!5783 = !DILocation(line: 0, scope: !2860, inlinedAt: !5784)
-!5784 = distinct !DILocation(line: 2145, column: 14, scope: !2759, inlinedAt: !5778)
-!5785 = !DILocation(line: 0, scope: !2850, inlinedAt: !5786)
-!5786 = distinct !DILocation(line: 2146, column: 33, scope: !2759, inlinedAt: !5778)
-!5787 = !DILocation(line: 0, scope: !2855, inlinedAt: !5788)
-!5788 = distinct !DILocation(line: 2084, column: 14, scope: !2868, inlinedAt: !5786)
-!5789 = !DILocation(line: 3854, column: 14, scope: !2870, inlinedAt: !5790)
-!5790 = distinct !DILocation(line: 2070, column: 9, scope: !2855, inlinedAt: !5782)
-!5791 = !DILocation(line: 1848, column: 27, scope: !2875, inlinedAt: !5792)
-!5792 = distinct !DILocation(line: 3855, column: 14, scope: !2870, inlinedAt: !5790)
-!5793 = !DILocation(line: 2142, column: 12, scope: !2759, inlinedAt: !5778)
-!5794 = !DILocation(line: 2105, column: 9, scope: !2860, inlinedAt: !5784)
-!5795 = !{!5796, !5755}
-!5796 = distinct !{!5796, !5797, !"_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq15keep_last_bytes: argument 0"}
-!5797 = distinct !{!5797, !"_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq15keep_last_bytes"}
-!5798 = !DILocation(line: 2146, column: 9, scope: !2759, inlinedAt: !5778)
-!5799 = !DILocation(line: 3854, column: 14, scope: !2870, inlinedAt: !5800)
-!5800 = distinct !DILocation(line: 2070, column: 9, scope: !2885, inlinedAt: !5788)
-!5801 = !DILocation(line: 1848, column: 27, scope: !2875, inlinedAt: !5802)
-!5802 = distinct !DILocation(line: 3855, column: 14, scope: !2888, inlinedAt: !5800)
-!5803 = !DILocation(line: 2146, column: 28, scope: !2759, inlinedAt: !5778)
-!5804 = !DILocation(line: 2146, column: 20, scope: !2759, inlinedAt: !5778)
-!5805 = !DILocation(line: 0, scope: !2892, inlinedAt: !5806)
-!5806 = distinct !DILocation(line: 2146, column: 45, scope: !2759, inlinedAt: !5778)
-!5807 = !DILocation(line: 847, column: 1, scope: !2892, inlinedAt: !5806)
-!5808 = !DILocation(line: 2146, column: 45, scope: !2759, inlinedAt: !5778)
-!5809 = !DILocation(line: 2147, column: 6, scope: !2759, inlinedAt: !5778)
-!5810 = !DILocation(line: 2105, column: 9, scope: !3032, inlinedAt: !5768)
+!5758 = !DILocation(line: 0, scope: !2743, inlinedAt: !5759)
+!5759 = distinct !DILocation(line: 624, column: 40, scope: !2695, inlinedAt: !5751)
+!5760 = !DILocation(line: 0, scope: !2755, inlinedAt: !5759)
+!5761 = !DILocation(line: 0, scope: !2759, inlinedAt: !5762)
+!5762 = distinct !DILocation(line: 1520, column: 19, scope: !2755, inlinedAt: !5759)
+!5763 = !DILocation(line: 0, scope: !2850, inlinedAt: !5764)
+!5764 = distinct !DILocation(line: 2142, column: 24, scope: !2759, inlinedAt: !5762)
+!5765 = !DILocation(line: 0, scope: !2855, inlinedAt: !5766)
+!5766 = distinct !DILocation(line: 2084, column: 14, scope: !2850, inlinedAt: !5764)
+!5767 = !DILocation(line: 0, scope: !2860, inlinedAt: !5768)
+!5768 = distinct !DILocation(line: 2145, column: 14, scope: !2759, inlinedAt: !5762)
+!5769 = !DILocation(line: 0, scope: !2850, inlinedAt: !5770)
+!5770 = distinct !DILocation(line: 2146, column: 33, scope: !2759, inlinedAt: !5762)
+!5771 = !DILocation(line: 0, scope: !2855, inlinedAt: !5772)
+!5772 = distinct !DILocation(line: 2084, column: 14, scope: !2868, inlinedAt: !5770)
+!5773 = !DILocation(line: 3854, column: 14, scope: !2870, inlinedAt: !5774)
+!5774 = distinct !DILocation(line: 2070, column: 9, scope: !2855, inlinedAt: !5766)
+!5775 = !DILocation(line: 1848, column: 27, scope: !2875, inlinedAt: !5776)
+!5776 = distinct !DILocation(line: 3855, column: 14, scope: !2870, inlinedAt: !5774)
+!5777 = !DILocation(line: 2142, column: 12, scope: !2759, inlinedAt: !5762)
+!5778 = !DILocation(line: 2105, column: 9, scope: !2860, inlinedAt: !5768)
+!5779 = !{!5780, !5755}
+!5780 = distinct !{!5780, !5781, !"_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq15keep_last_bytes: argument 0"}
+!5781 = distinct !{!5781, !"_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq15keep_last_bytes"}
+!5782 = !DILocation(line: 2146, column: 9, scope: !2759, inlinedAt: !5762)
+!5783 = !DILocation(line: 3854, column: 14, scope: !2870, inlinedAt: !5784)
+!5784 = distinct !DILocation(line: 2070, column: 9, scope: !2885, inlinedAt: !5772)
+!5785 = !DILocation(line: 1848, column: 27, scope: !2875, inlinedAt: !5786)
+!5786 = distinct !DILocation(line: 3855, column: 14, scope: !2888, inlinedAt: !5784)
+!5787 = !DILocation(line: 2146, column: 28, scope: !2759, inlinedAt: !5762)
+!5788 = !DILocation(line: 2146, column: 20, scope: !2759, inlinedAt: !5762)
+!5789 = !DILocation(line: 0, scope: !2892, inlinedAt: !5790)
+!5790 = distinct !DILocation(line: 2146, column: 45, scope: !2759, inlinedAt: !5762)
+!5791 = !DILocation(line: 847, column: 1, scope: !2892, inlinedAt: !5790)
+!5792 = !DILocation(line: 2146, column: 45, scope: !2759, inlinedAt: !5762)
+!5793 = !DILocation(line: 2147, column: 6, scope: !2759, inlinedAt: !5762)
+!5794 = !DILocation(line: 0, scope: !2930, inlinedAt: !5795)
+!5795 = distinct !DILocation(line: 623, column: 40, scope: !2695, inlinedAt: !5751)
+!5796 = !DILocation(line: 0, scope: !2940, inlinedAt: !5795)
+!5797 = !DILocation(line: 0, scope: !2944, inlinedAt: !5798)
+!5798 = distinct !DILocation(line: 1492, column: 19, scope: !2940, inlinedAt: !5795)
+!5799 = !DILocation(line: 0, scope: !3022, inlinedAt: !5800)
+!5800 = distinct !DILocation(line: 2130, column: 24, scope: !2944, inlinedAt: !5798)
+!5801 = !DILocation(line: 0, scope: !3027, inlinedAt: !5802)
+!5802 = distinct !DILocation(line: 2084, column: 14, scope: !3022, inlinedAt: !5800)
+!5803 = !DILocation(line: 0, scope: !3032, inlinedAt: !5804)
+!5804 = distinct !DILocation(line: 2133, column: 14, scope: !2944, inlinedAt: !5798)
+!5805 = !DILocation(line: 3854, column: 14, scope: !3037, inlinedAt: !5806)
+!5806 = distinct !DILocation(line: 2070, column: 9, scope: !3027, inlinedAt: !5802)
+!5807 = !DILocation(line: 1848, column: 27, scope: !3042, inlinedAt: !5808)
+!5808 = distinct !DILocation(line: 3855, column: 14, scope: !3037, inlinedAt: !5806)
+!5809 = !DILocation(line: 2130, column: 12, scope: !2944, inlinedAt: !5798)
+!5810 = !DILocation(line: 2105, column: 9, scope: !3032, inlinedAt: !5804)
 !5811 = !{!5812, !5755}
 !5812 = distinct !{!5812, !5813, !"_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq16keep_first_bytes: argument 0"}
 !5813 = distinct !{!5813, !"_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3hir7literalNtB5_3Seq16keep_first_bytes"}
-!5814 = !DILocation(line: 2134, column: 20, scope: !2944, inlinedAt: !5762)
+!5814 = !DILocation(line: 2134, column: 20, scope: !2944, inlinedAt: !5798)
 !5815 = !DILocation(line: 573, column: 14, scope: !4591, inlinedAt: !4596)
 !5816 = !DILocation(line: 452, column: 17, scope: !4383, inlinedAt: !4385)
 !5817 = !DILocation(line: 181, column: 13, scope: !3834)

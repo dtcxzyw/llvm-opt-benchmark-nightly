@@ -205,7 +205,6 @@ _ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit.i: ; preds = %bb.g
 
 bb.h:                                             ; preds = %_ZN6hermes16isUnicodeIDStartEj.exit39
   %i.ad = load ptr, ptr %i.b, align 8, !tbaa !16  ; 5 uses
-  %scevgep.i = getelementptr i8, ptr %i.s, i64 2  ; 5 uses
   %i.ae = icmp eq ptr %i.s, %i.ad
   br i1 %i.ae, label %.thread.sink.split, label %bb.i
 
@@ -215,12 +214,13 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not15.i.i, label %bb.j, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i
 
 bb.j:                                             ; preds = %bb.i
-  store ptr %scevgep.i, ptr %i.a, align 8, !tbaa !15
-  %.not.i10.i = icmp eq ptr %scevgep.i, %i.ad
+  %2 = getelementptr inbounds nuw i8, ptr %i.s, i64 2 ; 5 uses
+  store ptr %2, ptr %i.a, align 8, !tbaa !15
+  %.not.i10.i = icmp eq ptr %2, %i.ad
   br i1 %.not.i10.i, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i, label %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i
 
 _ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i: ; preds = %bb.j
-  %i.ag = load i16, ptr %scevgep.i, align 2, !tbaa !31
+  %i.ag = load i16, ptr %2, align 2, !tbaa !31
   %i.ah = icmp eq i16 %i.ag, 117
   br i1 %i.ah, label %bb.k, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i
 
@@ -258,7 +258,7 @@ _ZN6hermes16isUnicodeIDStartEj.exit.thread:       ; preds = %bb.l, %bb.l, %_ZN6h
 
 _ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i: ; preds = %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i_crit_edge, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i, %bb.j, %bb.i
   %i.ao = phi ptr [ %.pre90, %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i_crit_edge ], [ %i.ad, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i ], [ %i.ad, %bb.j ], [ %i.ad, %bb.i ] ; 2 uses
-  %i.ap = phi ptr [ %.pre89.a, %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i_crit_edge ], [ %scevgep.i, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i ], [ %scevgep.i, %bb.j ], [ %i.s, %bb.i ] ; 9 uses
+  %i.ap = phi ptr [ %.pre89.a, %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i_crit_edge ], [ %2, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i ], [ %2, %bb.j ], [ %i.s, %bb.i ] ; 9 uses
   %.not.i.i33 = icmp eq ptr %i.ap, %i.ao
   br i1 %.not.i.i33, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE13consumeCharIfIFbjEEEN4llvh8OptionalIDsEERKT_.exit.i, label %bb.m
 
@@ -418,7 +418,6 @@ _ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit.i31: ; preds = %bb
 
 bb.x:                                             ; preds = %_ZN6hermes19isUnicodeIDContinueEj.exit59
   %i.cv = load ptr, ptr %i.b, align 8, !tbaa !16  ; 5 uses
-  %scevgep.i21 = getelementptr i8, ptr %i.ck, i64 2 ; 5 uses
   %i.cw = icmp eq ptr %i.ck, %i.cv
   br i1 %i.cw, label %.thread.sink.split, label %bb.y
 
@@ -428,12 +427,13 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not15.i.i22, label %bb.z, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23
 
 bb.z:                                             ; preds = %bb.y
-  store ptr %scevgep.i21, ptr %i.a, align 8, !tbaa !15
-  %.not.i10.i25 = icmp eq ptr %scevgep.i21, %i.cv
+  %3 = getelementptr inbounds nuw i8, ptr %i.ck, i64 2 ; 5 uses
+  store ptr %3, ptr %i.a, align 8, !tbaa !15
+  %.not.i10.i25 = icmp eq ptr %3, %i.cv
   br i1 %.not.i10.i25, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23, label %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i26
 
 _ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i26: ; preds = %bb.z
-  %i.cy = load i16, ptr %scevgep.i21, align 2, !tbaa !31
+  %i.cy = load i16, ptr %3, align 2, !tbaa !31
   %i.cz = icmp eq i16 %i.cy, 117
   br i1 %i.cz, label %bb.aa, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23
 
@@ -486,7 +486,7 @@ _ZN6hermes19isUnicodeIDContinueEj.exit.thread:    ; preds = %bb.ab, %bb.ab, %_ZN
 
 _ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23: ; preds = %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23_crit_edge, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i26, %bb.z, %bb.y
   %i.dl = phi ptr [ %.pre88, %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23_crit_edge ], [ %i.cv, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i26 ], [ %i.cv, %bb.z ], [ %i.cv, %bb.y ] ; 2 uses
-  %i.dm = phi ptr [ %.pre, %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23_crit_edge ], [ %scevgep.i21, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i26 ], [ %scevgep.i21, %bb.z ], [ %i.ck, %bb.y ] ; 9 uses
+  %i.dm = phi ptr [ %.pre, %._ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE10tryConsumeEPKc.exit.thread.i23_crit_edge ], [ %3, %_ZNK6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE5checkEDs.exit.i26 ], [ %3, %bb.z ], [ %i.ck, %bb.y ] ; 9 uses
   %.not.i.i40 = icmp eq ptr %i.dm, %i.dl
   br i1 %.not.i.i40, label %_ZN6hermes5regex6ParserINS0_5RegexINS0_16UTF16RegexTraitsEEEPKDsE13consumeCharIfIFbjEEEN4llvh8OptionalIDsEERKT_.exit.i41, label %bb.ae
 

@@ -203,9 +203,9 @@ bb.a:
   %i.f = getelementptr inbounds i8, ptr %i.a, i64 %i.e ; 4 uses
   %i.g = load i8, ptr %i.f, align 1, !tbaa !8     ; 2 uses
   %i.h = icmp eq i8 %i.g, 27
-  br i1 %i.h, label %.preheader70.us.i.a, label %bb.b
+  br i1 %i.h, label %.lr.ph.us.i.preheader, label %bb.b
 
-.lr.ph.us.i.1:                                    ; preds = %.lr.ph.us.i.preheader
+.lr.ph.us.i.1:                                    ; preds = %.preheader70.us.i.a
   %gep.i.1 = getelementptr i8, ptr %i.f, i64 2
   %i.i = load i8, ptr %gep.i.1, align 1, !tbaa !8
   %.not65.us.i.1 = icmp eq i8 %i.i, 41
@@ -217,12 +217,7 @@ bb.a:
   %.not65.us.i.2 = icmp eq i8 %i.j, 67
   br i1 %.not65.us.i.2, label %.thread.us.i, label %.loopexit.us.i
 
-.thread.us.i:                                     ; preds = %.lr.ph.us.i.2
-  %3 = add nsw i32 %.04877.us.i, 1
-  %4 = add i32 %.05475.us.i, 3
-  br label %bb.c
-
-.loopexit.us.i:                                   ; preds = %.lr.ph.us.i.preheader, %.lr.ph.us.i.1, %.lr.ph.us.i.2, %.preheader70.us.i.a
+.loopexit.us.i:                                   ; preds = %.preheader70.us.i.a, %.lr.ph.us.i.1, %.lr.ph.us.i.2, %.lr.ph.us.i.preheader
   %i.k = add nsw i32 %.04678.us.i, 1
   br label %bb.b
 
@@ -234,6 +229,11 @@ bb.b:                                             ; preds = %.loopexit.us.i, %.l
   %spec.select.us.i = add nsw i32 %.04579.us.i, %i.m
   br label %bb.c
 
+.thread.us.i:                                     ; preds = %.lr.ph.us.i.2
+  %3 = add nsw i32 %.04877.us.i, 1
+  %4 = add i32 %.05475.us.i, 3
+  br label %bb.c
+
 bb.c:                                             ; preds = %.thread.us.i, %bb.b
   %.458.us.i = phi i32 [ %4, %.thread.us.i ], [ %.05475.us.i, %bb.b ]
   %.4.us.i = phi i32 [ %3, %.thread.us.i ], [ %.04877.us.i, %bb.b ] ; 5 uses
@@ -243,16 +243,16 @@ bb.c:                                             ; preds = %.thread.us.i, %bb.b
   %i.o = icmp slt i32 %i.n, %i.c
   br i1 %i.o, label %.lr.ph81.split.us.i, label %._crit_edge82.i, !llvm.loop !11
 
-.preheader70.us.i.a:                              ; preds = %.lr.ph81.split.us.i
-  %5 = sub nsw i32 %i.c, %.05475.us.i
-  %.not.us.i = icmp slt i32 %5, 4
-  br i1 %.not.us.i, label %.loopexit.us.i, label %.lr.ph.us.i.preheader
-
-.lr.ph.us.i.preheader:                            ; preds = %.preheader70.us.i.a
+.preheader70.us.i.a:                              ; preds = %.lr.ph.us.i.preheader
   %gep.i = getelementptr i8, ptr %i.f, i64 1
-  %6 = load i8, ptr %gep.i, align 1, !tbaa !8
-  %.not65.us.i = icmp eq i8 %6, 36
+  %5 = load i8, ptr %gep.i, align 1, !tbaa !8
+  %.not65.us.i = icmp eq i8 %5, 36
   br i1 %.not65.us.i, label %.lr.ph.us.i.1, label %.loopexit.us.i
+
+.lr.ph.us.i.preheader:                            ; preds = %.lr.ph81.split.us.i
+  %6 = sub nsw i32 %i.c, %.05475.us.i
+  %.not.us.i = icmp slt i32 %6, 4
+  br i1 %.not.us.i, label %.loopexit.us.i, label %.preheader70.us.i.a
 
 ._crit_edge82.i:                                  ; preds = %bb.c
   %i.p = icmp eq i32 %.4.us.i, 0
