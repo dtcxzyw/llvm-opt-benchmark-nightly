@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stat-rs/original/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.14?download=true
+inline.NumInlined: 132
+inline.NumDeleted: 75
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -184,10 +188,10 @@ bb.b:                                             ; preds = %.lr.ph, %_RNCINvNtN
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 3 uses
   store ptr %i.i, ptr %i.f, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !8
   store ptr %1, ptr %i.c, align 8, !noalias !8
   store ptr %.sroa.4.015, ptr %i.g, align 8, !noalias !8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !11
   %i.j = icmp ult i64 %.sroa.5.0.copyload, 1152921504606846976
   call void @llvm.assume(i1 %i.j)
@@ -218,8 +222,8 @@ _RNCINvNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map12map_try_foldINtNtCs1xwejQucw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !11
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4.015, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !noalias !8
   %i.n = getelementptr inbounds nuw i8, ptr %.sroa.4.015, i64 24 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %.not = icmp eq ptr %i.i, %i.e
   br i1 %.not, label %._crit_edge, label %bb.b
 

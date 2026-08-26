@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/foundations-rs/original/foundations-0829c0e58918e871.foundations.822e5dc8be635b49-cgu.11?download=true
+inline.NumInlined: 1161
+inline.NumDeleted: 602
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -154,8 +158,8 @@ _RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %bb.c, !dbg !185
 
 bb.c:                                             ; preds = %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit16.i.i.i.i.i, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit14.i.i.i.i.i, %bb.b, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit12.i.i.i.i.i
-  %i.an = phi ptr [ %i.u, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit14.i.i.i.i.i ], [ %i.ae, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit16.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit12.i.i.i.i.i ], [ %i.f, %bb.b ], !dbg !186 ; 6 uses
-  %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.ab, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit14.i.i.i.i.i ], [ %i.am, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit16.i.i.i.i.i ], [ %i.q, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit12.i.i.i.i.i ], [ %i.s, %bb.b ] ; 8 uses
+  %i.an = phi ptr [ %i.f, %bb.b ], [ %i.ae, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit16.i.i.i.i.i ], [ %i.u, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit14.i.i.i.i.i ], [ %i.l, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit12.i.i.i.i.i ], !dbg !186 ; 6 uses
+  %.sroa.4.0.i.ph.i.i.i.i = phi i32 [ %i.s, %bb.b ], [ %i.am, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit16.i.i.i.i.i ], [ %i.ab, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit14.i.i.i.i.i ], [ %i.q, %_RNvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbaWXNhtWAp9_11foundations.exit12.i.i.i.i.i ] ; 8 uses
   %i.ao = icmp samesign ult i32 %.sroa.4.0.i.ph.i.i.i.i, 1114112, !dbg !188
   tail call void @llvm.assume(i1 %i.ao), !dbg !188
   %i.ap = ptrtoint ptr %i.an to i64, !dbg !208
@@ -558,7 +562,7 @@ bb.i:                                             ; preds = %bb.j, %_RINvNtCs3oU
 
 bb.j:                                             ; preds = %bb.e
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !dbg !23230
-  store atomic i8 1, ptr %i.l release, align 1, !dbg !23234
+  store atomic i8 1, ptr %i.l release, align 8, !dbg !23234
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 504, !dbg !23239
   %i.r = atomicrmw add ptr %i.q, i64 1 release, align 8, !dbg !23246 ; 0 uses
   br label %bb.i, !dbg !23228
@@ -643,7 +647,7 @@ bb.i:                                             ; preds = %bb.j, %_RINvNtCs3oU
 
 bb.j:                                             ; preds = %bb.e
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !dbg !23334
-  store atomic i8 1, ptr %i.l release, align 1, !dbg !23338
+  store atomic i8 1, ptr %i.l release, align 8, !dbg !23338
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 504, !dbg !23343
   %i.r = atomicrmw add ptr %i.q, i64 1 release, align 8, !dbg !23350 ; 0 uses
   br label %bb.i, !dbg !23332
@@ -728,7 +732,7 @@ bb.i:                                             ; preds = %bb.j, %_RINvNtCs3oU
 
 bb.j:                                             ; preds = %bb.e
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !dbg !23438
-  store atomic i8 1, ptr %i.l release, align 1, !dbg !23442
+  store atomic i8 1, ptr %i.l release, align 8, !dbg !23442
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 504, !dbg !23447
   %i.r = atomicrmw add ptr %i.q, i64 1 release, align 8, !dbg !23454 ; 0 uses
   br label %bb.i, !dbg !23436
@@ -1131,8 +1135,8 @@ attributes #30 = { inlinehint }
 !183 = !DILocation(line: 17, column: 17, scope: !147, inlinedAt: !182)
 !184 = !DILocation(line: 64, column: 13, scope: !180, inlinedAt: !73)
 !185 = !DILocation(line: 58, column: 9, scope: !169, inlinedAt: !73)
-!186 = !DILocation(line: 57, column: 51, scope: !110, inlinedAt: !187)
-!187 = distinct !DILocation(line: 697, column: 35, scope: !83, inlinedAt: !88)
+!186 = !DILocation(line: 185, column: 25, scope: !64, inlinedAt: !187)
+!187 = !DILocation(line: 0, scope: !70, inlinedAt: !73)
 !188 = !DILocation(line: 34, column: 9, scope: !189, inlinedAt: !193)
 !189 = distinct !DISubprogram(name: "from_u32_unchecked", linkageName: "_RNvNtNtCs3oUPovFnLWP_4core4char7convert18from_u32_unchecked", scope: !191, file: !190, line: 26, type: !13, scopeLine: 26, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !6, templateParams: !14)
 !190 = !DIFile(filename: "library/core/src/char/convert.rs", directory: "/rustc/787af2b8c80638c51a4fc8e44f84e6891f243ec7", checksumkind: CSK_MD5, checksum: "06f18dc36f52feefd195ff986dbdcce9")

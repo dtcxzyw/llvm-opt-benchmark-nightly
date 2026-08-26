@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/foundations-rs/original/foundations_macros-4ad57aac8b588e26.foundations_macros.5467af46aab99424-cgu.09?download=true
+inline.NumInlined: 679
+inline.NumDeleted: 222
 begin_hunk_0_@_RINvNtCs6bAnw1I7Lci_3syn11parse_quote5parseNtNtB4_4path4PathECs7fhJ7v7hOxk_18foundations_macros:bb.a
 bb.ai:                                            ; preds = %bb.g, %bb.d, %.body.i
   %i.bm = landingpad { ptr, i32 }
@@ -200,7 +202,7 @@ bb.e:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !9000
   %i.s = load ptr, ptr %i.r, align 8, !dbg !9000, !noalias !8922, !nonnull !13, !noundef !13
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.q, !dbg !9002
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.t, ptr noundef nonnull align 1 dereferenceable(24) %i.m, i64 24, i1 false), !dbg !9010, !noalias !8922
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(24) %i.t, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !dbg !9010, !noalias !8922
   %i.u = load <2 x i64>, ptr %i.b, align 8, !dbg !9013, !noalias !8922
   %i.v = add <2 x i64> %i.u, splat (i64 -1), !dbg !9019
   store <2 x i64> %i.v, ptr %i.b, align 8, !dbg !9020, !noalias !8922

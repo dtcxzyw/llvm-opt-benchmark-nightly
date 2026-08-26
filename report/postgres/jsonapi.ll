@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.thread, %bb.e
   %i.ah = load ptr, ptr %i.g, align 8             ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 21 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 16 ; 22 uses
-  %i.ak = load i32, ptr %i.aj, align 8            ; 8 uses
+  %i.ak = load i32, ptr %i.aj, align 8            ; 7 uses
   %.not = icmp eq i32 %i.ak, 0
   br i1 %.not, label %bb.as, label %bb.g
 
@@ -220,18 +220,13 @@ bb.g:                                             ; preds = %bb.f
   ]
 
 bb.h:                                             ; preds = %bb.g
-  %.0329399 = add i32 %i.ak, -1                   ; 2 uses
+  %.0329399 = add i32 %i.ak, -1                   ; 4 uses
   %i.ao = icmp sgt i32 %.0329399, 0
-  br i1 %i.ao, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.ao, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.h
-  %2 = trunc i32 %i.ak to i1
-  %3 = xor i1 %2, true
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.i
-  %.0329401 = phi i32 [ %.0329, %bb.i ], [ %.0329399, %.lr.ph.preheader ] ; 3 uses
-  %.0330400 = phi i1 [ %4, %bb.i ], [ false, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.h, %bb.i
+  %.0329401 = phi i32 [ %.0329, %bb.i ], [ %.0329399, %bb.h ] ; 2 uses
+  %.0319410 = phi i32 [ %2, %bb.i ], [ 0, %bb.h ] ; 2 uses
   %i.ap = zext nneg i32 %.0329401 to i64
   %i.aq = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ap
   %i.ar = load i8, ptr %i.aq, align 1
@@ -239,13 +234,13 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.as, label %bb.i, label %._crit_edge
 
 bb.i:                                             ; preds = %.lr.ph
-  %4 = xor i1 %.0330400, true
+  %2 = add nuw nsw i32 %.0319410, 1               ; 2 uses
   %.0329 = add nsw i32 %.0329401, -1
-  %5 = icmp sgt i32 %.0329401, 1
-  br i1 %5, label %.lr.ph, label %._crit_edge, !llvm.loop !13
+  %exitcond.not = icmp eq i32 %2, %.0329399
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
 
 ._crit_edge:                                      ; preds = %bb.i, %.lr.ph, %bb.h
-  %.0330.lcssa = phi i1 [ false, %bb.h ], [ %.0330400, %.lr.ph ], [ %3, %bb.i ]
+  %.0319.lcssa = phi i32 [ 0, %bb.h ], [ %.0319410, %.lr.ph ], [ %.0329399, %bb.i ]
   %i.at = load i64, ptr %i.c, align 8
   %.not452 = icmp eq i64 %i.at, 0
   br i1 %.not452, label %.loopexit397.thread, label %.lr.ph409
@@ -256,7 +251,7 @@ bb.i:                                             ; preds = %.lr.ph
 
 bb.j:                                             ; preds = %.lr.ph409, %bb.n
   %.0324407 = phi i64 [ 0, %.lr.ph409 ], [ %i.bj, %bb.n ] ; 2 uses
-  %.1331405 = phi i1 [ %.0330.lcssa, %.lr.ph409 ], [ %.2332, %bb.n ] ; 2 uses
+  %.1320415 = phi i32 [ %.0319.lcssa, %.lr.ph409 ], [ %.2321, %bb.n ] ; 2 uses
   %i.av = load ptr, ptr %0, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 %.0324407
   %i.ax = load i8, ptr %i.aw, align 1             ; 4 uses
@@ -285,18 +280,20 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.bj = add nuw i64 %.0324407, 1                ; 4 uses
-  %6 = icmp ne i8 %i.ax, 34
-  %or.cond374.not = select i1 %6, i1 true, i1 %.1331405
-  br i1 %or.cond374.not, label %bb.n, label %.loopexit397
+  %i.bj = add nuw i64 %.0324407, 1                ; 3 uses
+  %3 = icmp eq i8 %i.ax, 34
+  %4 = and i32 %.1320415, 1
+  %5 = icmp eq i32 %4, 0
+  %or.cond374.not = select i1 %3, i1 %5, i1 false
+  br i1 %or.cond374.not, label %.thread394.loopexit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bk = icmp eq i8 %i.ax, 92
-  %7 = xor i1 %.1331405, true
-  %.2332 = select i1 %i.bk, i1 %7, i1 false
+  %6 = add i32 %.1320415, 1
+  %.2321 = select i1 %i.bk, i32 %6, i32 0
   %i.bl = load i64, ptr %i.c, align 8
   %i.bm = icmp ult i64 %i.bj, %i.bl
-  br i1 %i.bm, label %bb.j, label %.loopexit397, !llvm.loop !14
+  br i1 %i.bm, label %bb.j, label %.loopexit397.thread, !llvm.loop !14
 
 bb.o:                                             ; preds = %bb.g
   %i.bn = add i8 %i.an, -48
@@ -652,7 +649,7 @@ bb.am:                                            ; preds = %bb.ak, %bb.al
   br i1 %i.gc, label %bb.ah, label %._crit_edge436, !llvm.loop !22
 
 ._crit_edge436:                                   ; preds = %bb.am, %bb.ai, %.loopexit
-  %i.gd = phi i64 [ %i.fe, %.loopexit ], [ %i.gb, %bb.am ], [ %i.fh, %bb.ai ] ; 2 uses
+  %i.gd = phi i64 [ %i.fe, %.loopexit ], [ %i.gb, %bb.am ], [ %i.fh, %bb.ai ] ; 3 uses
   %.5.lcssa = phi i64 [ %.4, %.loopexit ], [ %i.ga, %bb.am ], [ %.0306433, %bb.ai ] ; 2 uses
   %.5339 = phi i8 [ 0, %.loopexit ], [ 0, %bb.am ], [ 1, %bb.ai ] ; 2 uses
   %i.ge = icmp eq i64 %.5.lcssa, %i.gd
@@ -660,20 +657,21 @@ bb.am:                                            ; preds = %bb.ak, %bb.al
 
 ._crit_edge436.thread:                            ; preds = %._crit_edge420, %._crit_edge436
   %.5339501 = phi i8 [ %.5339, %._crit_edge436 ], [ 0, %._crit_edge420 ]
-  %i.gf = phi i64 [ %i.gd, %._crit_edge436 ], [ 0, %._crit_edge420 ]
+  %i.gf = phi i64 [ %i.gd, %._crit_edge436 ], [ 0, %._crit_edge420 ] ; 2 uses
   %i.gg = load ptr, ptr %i.g, align 8
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 1
   %i.gi = load i8, ptr %i.gh, align 1, !range !4, !noundef !5
   %spec.select378 = or i8 %i.gi, %.5339501
   br label %.loopexit397
 
-.loopexit397:                                     ; preds = %bb.n, %bb.m, %._crit_edge436.thread, %._crit_edge436
-  %.7341 = phi i8 [ %.5339, %._crit_edge436 ], [ %spec.select378, %._crit_edge436.thread ], [ 1, %bb.m ], [ 0, %bb.n ]
-  %.8 = phi i64 [ %.5.lcssa, %._crit_edge436 ], [ %i.gf, %._crit_edge436.thread ], [ %i.bj, %bb.m ], [ %i.bj, %bb.n ] ; 2 uses
-  %i.gj = trunc nuw i8 %.7341 to i1
+.loopexit397:                                     ; preds = %._crit_edge436.thread, %._crit_edge436
+  %7 = phi i64 [ %i.gd, %._crit_edge436 ], [ %i.gf, %._crit_edge436.thread ]
+  %.8 = phi i64 [ %.5.lcssa, %._crit_edge436 ], [ %i.gf, %._crit_edge436.thread ]
+  %.7 = phi i8 [ %.5339, %._crit_edge436 ], [ %spec.select378, %._crit_edge436.thread ]
+  %i.gj = trunc nuw i8 %.7 to i1
   br i1 %i.gj, label %bb.ao, label %.loopexit397.thread
 
-.loopexit397.thread:                              ; preds = %._crit_edge, %.loopexit397
+.loopexit397.thread:                              ; preds = %bb.n, %._crit_edge, %.loopexit397
   %i.gk = load ptr, ptr %i.g, align 8
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 1
   %i.gm = load i8, ptr %i.gl, align 1, !range !4, !noundef !5
@@ -690,12 +688,17 @@ bb.an:                                            ; preds = %.loopexit397.thread
   store ptr %i.gs, ptr %i.ag, align 8
   br label %bb.ar
 
-bb.ao:                                            ; preds = %.loopexit397
+.thread394.loopexit:                              ; preds = %bb.m
+  %.pre464 = load i64, ptr %i.c, align 8
+  br label %bb.ao
+
+bb.ao:                                            ; preds = %.thread394.loopexit, %.loopexit397
+  %8 = phi i64 [ %7, %.loopexit397 ], [ %.pre464, %.thread394.loopexit ]
+  %.8397 = phi i64 [ %.8, %.loopexit397 ], [ %i.bj, %.thread394.loopexit ] ; 2 uses
   %i.gt = load ptr, ptr %0, align 8
-  %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 %.8
+  %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 %.8397
   store ptr %i.gu, ptr %0, align 8
-  %8 = load i64, ptr %i.c, align 8
-  %i.gv = sub i64 %8, %.8
+  %i.gv = sub i64 %8, %.8397
   store i64 %i.gv, ptr %i.c, align 8
   %i.gw = load ptr, ptr %i.ai, align 8            ; 3 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %1, i64 72

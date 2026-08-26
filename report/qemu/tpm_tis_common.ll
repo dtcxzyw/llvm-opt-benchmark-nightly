@@ -204,8 +204,8 @@ tpm_tis_data_read.exit.us.3:                      ; preds = %tpm_tis_data_read.e
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.lr.ph.splitthread-pre-split
   %i.cj = phi i32 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 2, %.lr.ph.split.preheader ]
   %.195 = phi i32 [ %i.ds, %.lr.ph.splitthread-pre-split ], [ %spec.select89, %.lr.ph.split.preheader ]
-  %.06894 = phi i32 [ %i.ci, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ]
-  %.17293 = phi i32 [ %i.dr, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ]
+  %.06894 = phi i32 [ %i.dr, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ]
+  %.17293 = phi i32 [ %i.ci, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ]
   %cond = icmp eq i32 %i.cj, 2
   br i1 %cond, label %bb.o, label %tpm_tis_data_read.exit
 
@@ -297,9 +297,9 @@ bb.x:                                             ; preds = %bb.w
 
 tpm_tis_data_read.exit:                           ; preds = %bb.x, %bb.w, %bb.v, %tpm_tis_raise_irq.exit.i, %bb.o, %.lr.ph.split
   %.070 = phi i32 [ 255, %.lr.ph.split ], [ 255, %bb.o ], [ %i.cw, %tpm_tis_raise_irq.exit.i ], [ %i.cw, %bb.v ], [ %i.cw, %bb.w ], [ %i.cw, %bb.x ]
-  %i.dp = and i32 %.06894, 255                    ; 2 uses
+  %i.dp = and i32 %.17293, 255                    ; 2 uses
   %i.dq = shl i32 %.070, %i.dp
-  %i.dr = or i32 %i.dq, %.17293                   ; 2 uses
+  %i.dr = or i32 %i.dq, %.06894                   ; 2 uses
   %i.ds = add nsw i32 %.195, -1                   ; 2 uses
   %.not = icmp eq i32 %i.ds, 0
   br i1 %.not, label %.thread, label %.lr.ph.splitthread-pre-split, !llvm.loop !10
@@ -702,8 +702,8 @@ bb.bj:                                            ; preds = %trace_tpm_tis_mmio_
 
 bb.bk:                                            ; preds = %.lr.ph, %bb.bn
   %i.ht = phi i32 [ %i.hi, %.lr.ph ], [ %i.if, %bb.bn ]
-  %.2263 = phi i64 [ %i.aa, %.lr.ph ], [ %.3, %bb.bn ] ; 3 uses
-  %.1216262 = phi i32 [ %spec.select248, %.lr.ph ], [ %.2217, %bb.bn ] ; 2 uses
+  %.1212263 = phi i32 [ %spec.select248, %.lr.ph ], [ %.2213, %bb.bn ] ; 2 uses
+  %.2216262 = phi i64 [ %i.aa, %.lr.ph ], [ %.3217, %bb.bn ] ; 3 uses
   %i.hu = load i16, ptr %i.hq, align 16           ; 2 uses
   %i.hv = zext i16 %i.hu to i64                   ; 2 uses
   %i.hw = load i64, ptr %i.hr, align 8
@@ -711,13 +711,13 @@ bb.bk:                                            ; preds = %.lr.ph, %bb.bn
   br i1 %i.hx, label %bb.bl, label %bb.bm
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.hy = trunc i64 %.2263 to i8
+  %i.hy = trunc i64 %.2216262 to i8
   %i.hz = add i16 %i.hu, 1
   store i16 %i.hz, ptr %i.hq, align 16
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hs, i64 %i.hv
   store i8 %i.hy, ptr %i.ia, align 1
-  %i.ib = lshr i64 %.2263, 8
-  %i.ic = add nsw i32 %.1216262, -1
+  %i.ib = lshr i64 %.2216262, 8
+  %i.ic = add nsw i32 %.1212263, -1
   %.pre280 = load i32, ptr %i.hj, align 8
   br label %bb.bn
 
@@ -729,11 +729,11 @@ bb.bm:                                            ; preds = %bb.bk
 
 bb.bn:                                            ; preds = %bb.bm, %bb.bl
   %i.if = phi i32 [ %.pre280, %bb.bl ], [ %i.ie, %bb.bm ] ; 3 uses
-  %.2217 = phi i32 [ %i.ic, %bb.bl ], [ %.1216262, %bb.bm ] ; 2 uses
-  %.3 = phi i64 [ %i.ib, %bb.bl ], [ %.2263, %bb.bm ]
+  %.3217 = phi i64 [ %i.ib, %bb.bl ], [ %.2216262, %bb.bm ]
+  %.2213 = phi i32 [ %i.ic, %bb.bl ], [ %.1212263, %bb.bm ] ; 2 uses
   %i.ig = and i32 %i.if, 8
   %i.ih = icmp ne i32 %i.ig, 0                    ; 2 uses
-  %i.ii = icmp ne i32 %.2217, 0
+  %i.ii = icmp ne i32 %.2213, 0
   %i.ij = select i1 %i.ih, i1 %i.ii, i1 false
   br i1 %i.ij, label %bb.bk, label %._crit_edge, !llvm.loop !14
 
@@ -1136,14 +1136,16 @@ bb.a:
   %i.f = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %i.e
   store i32 3, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 4512 ; 2 uses
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4513
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.2.0..sroa_idx, i8 0, i64 7, i1 false)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4368
   %i.i = load i16, ptr %i.h, align 16
   %i.j = zext i16 %i.i to i32
   %i.k = load i64, ptr %i.b, align 8
   %i.l = trunc i64 %i.k to i32
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4549
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.9.0..sroa_idx, i8 0, i64 3, i1 false)
   store i8 %1, ptr %i.g, align 16
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4513
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.2.0..sroa_idx, i8 0, i64 7, i1 false)
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4520
   store ptr %i.a, ptr %.sroa.3.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4528
@@ -1155,8 +1157,8 @@ bb.a:
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4544
   store i32 %i.l, ptr %.sroa.7.0..sroa_idx, align 16
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4548
+  store i8 0, ptr %.sroa.8.0..sroa_idx, align 4
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 4552
-  store i32 0, ptr %.sroa.8.0..sroa_idx, align 4
   %i.m = load ptr, ptr %2, align 8
   tail call void @tpm_backend_deliver_request(ptr noundef %i.m, ptr noundef nonnull %i.g) #9
   ret void

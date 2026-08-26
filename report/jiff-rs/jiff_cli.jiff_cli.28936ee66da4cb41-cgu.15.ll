@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jiff-rs/original/jiff_cli.jiff_cli.28936ee66da4cb41-cgu.15?download=true
+inline.NumInlined: 101
+inline.NumDeleted: 57
 begin_hunk_0_@_RINvXNtCs8WPnInWCYsb_6anyhow7contextINtNtCs3oUPovFnLWP_4core6result6ResultNtNtCsaL1QbXo9JQH_3std7process10ExitStatusNtNtNtBD_2io5error5ErrorEINtB5_7ContextB1a_B1Q_E12with_contextNtNtCs1xwejQucwHj_5alloc6string6StringNCNvNtNtNtCs3tZ2SXJA1qv_8jiff_cli3cmd8generate8zoneinfo3runs2_0EB3C_:bb.a
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -200,8 +202,8 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.d unwind label %bb.e
 
 bb.c:                                             ; preds = %bb.a, %bb.d
-  %.sroa.03.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.a ]
   %.sroa.3.0 = phi ptr [ %i.g, %bb.d ], [ %1, %bb.a ]
+  %.sroa.03.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.a ]
   %i.e = insertvalue { i64, ptr } poison, i64 %.sroa.03.0, 0
   %i.f = insertvalue { i64, ptr } %i.e, ptr %.sroa.3.0, 1
   ret { i64, ptr } %i.f
@@ -342,8 +344,8 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.d unwind label %bb.f
 
 bb.c:                                             ; preds = %bb.a, %bb.d
-  %.sroa.02.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.a ]
   %.sroa.3.0.in = phi ptr [ %i.h, %bb.d ], [ %1, %bb.a ]
+  %.sroa.02.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.a ]
   %i.f = insertvalue { i64, ptr } poison, i64 %.sroa.02.0, 0
   %i.g = insertvalue { i64, ptr } %i.f, ptr %.sroa.3.0.in, 1
   ret { i64, ptr } %i.g
@@ -746,8 +748,8 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.d unwind label %bb.f
 
 bb.c:                                             ; preds = %bb.a, %bb.d
-  %.sroa.02.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.a ]
   %.sroa.3.0.in = phi ptr [ %i.o, %bb.d ], [ %1, %bb.a ]
+  %.sroa.02.0 = phi i64 [ 1, %bb.d ], [ 0, %bb.a ]
   %i.m = insertvalue { i64, ptr } poison, i64 %.sroa.02.0, 0
   %i.n = insertvalue { i64, ptr } %i.m, ptr %.sroa.3.0.in, 1
   ret { i64, ptr } %i.n

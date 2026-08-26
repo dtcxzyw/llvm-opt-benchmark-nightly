@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %_Py_LibHacl_Hacl_St
 ; Function Attrs: nounwind uwtable
 define hidden zeroext range(i8 0, 4) i8 @_Py_LibHacl_Hacl_Streaming_HMAC_update(ptr nofree noundef captures(none) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
-  %3 = alloca %struct.Hacl_Streaming_HMAC_Definitions_two_state_s, align 8 ; 2 uses
+  %3 = alloca %struct.Hacl_Streaming_HMAC_Definitions_two_state_s, align 8 ; 4 uses
   %4 = alloca %struct.Hacl_Streaming_HMAC_Definitions_two_state_s, align 8 ; 20 uses
   %.sroa.0158.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %.sroa.0158.sroa.5.0.copyload = load ptr, ptr %.sroa.0158.sroa.5.0..sroa_idx, align 8, !tbaa !25 ; 5 uses
@@ -326,6 +326,7 @@ block_len.exit231:                                ; preds = %block_len.exit219, 
   br i1 %.not, label %bb.h, label %switch.lookup953
 
 switch.lookup953:                                 ; preds = %block_len.exit231
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
   %.sroa.4119.0.copyload = load ptr, ptr %.sroa.0158.sroa.7.0..sroa_idx, align 8, !tbaa !19 ; 2 uses
   %i.n = zext nneg i8 %.val.i to i64
@@ -359,6 +360,7 @@ block_len.exit243:                                ; preds = %switch.lookup957, %
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
   store ptr %.sroa.4119.0.copyload, ptr %.sroa.0158.sroa.7.0..sroa_idx, align 8, !tbaa !19
   store i64 %i.t, ptr %.sroa.4159.0..sroa_idx, align 8, !tbaa !21
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.aj
 
 bb.h:                                             ; preds = %block_len.exit231

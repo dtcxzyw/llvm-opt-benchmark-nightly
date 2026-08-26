@@ -204,13 +204,13 @@ bb.a:
 ; Function Attrs: nofree nounwind uwtable
 define hidden zeroext range(i8 0, 4) i8 @_Py_LibHacl_Hacl_Hash_SHA3_update(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = alloca %struct.Hacl_Hash_SHA3_hash_buf_s, align 8 ; 2 uses
-  %.sroa.697 = alloca [7 x i8], align 1           ; 2 uses
+  %3 = alloca %struct.Hacl_Hash_SHA3_hash_buf_s, align 8 ; 4 uses
+  %.sroa.697 = alloca [7 x i8], align 1           ; 4 uses
   %4 = alloca %struct.Hacl_Hash_SHA3_hash_buf_s, align 8 ; 3 uses
   %.sroa.0159.0.copyload = load i8, ptr %0, align 8, !tbaa !18 ; 28 uses
   %.sroa.4160.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
-  %.sroa.5161.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %.sroa.5162.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %.sroa.5161.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
+  %.sroa.5162.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %.sroa.5162.0.copyload = load i64, ptr %.sroa.5162.0..sroa_idx, align 8, !tbaa !15 ; 13 uses
   %i.a = zext i32 %2 to i64                       ; 4 uses
   %i.b = xor i64 %.sroa.5162.0.copyload, -1
@@ -305,6 +305,7 @@ block_len.exit212:                                ; preds = %bb.d, %block_len.ex
   br i1 %.not, label %bb.i, label %switch.lookup403
 
 switch.lookup403:                                 ; preds = %block_len.exit212
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
   %.sroa.4119.0.copyload = load ptr, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21 ; 2 uses
   %i.p = zext nneg i8 %.sroa.0159.0.copyload to i64
@@ -338,13 +339,17 @@ block_len.exit216:                                ; preds = %switch.lookup408, %
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.v, ptr align 1 %1, i64 %i.a, i1 false)
   %i.w = add i64 %.sroa.5162.0.copyload, %i.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
-  br label %.sink.split
+  store ptr %.sroa.4119.0.copyload, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21
+  store i64 %i.w, ptr %.sroa.5162.0..sroa_idx, align 8, !tbaa !15
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  br label %bb.aa
 
 bb.i:                                             ; preds = %block_len.exit212
   %i.x = icmp eq i32 %.0194272, 0
   br i1 %i.x, label %switch.lookup418, label %bb.o
 
 switch.lookup418:                                 ; preds = %bb.i
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.697)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.697, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, i64 7, i1 false)
   %.sroa.5103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.sroa.5103.0.copyload = load ptr, ptr %.sroa.5103.0..sroa_idx, align 8, !tbaa !19 ; 3 uses
@@ -535,11 +540,14 @@ block_len.exit240:                                ; preds = %block_len.exit238.t
   tail call void @_Py_LibHacl_Hacl_Hash_SHA3_update_multi_sha3(i8 noundef zeroext %.sroa.0159.0.copyload, ptr noundef %.sroa.5103.0.copyload, ptr noundef %1, i32 noundef %i.bp)
   %i.bq = zext i32 %i.bo to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.6104.0.copyload, ptr align 1 %i.bm, i64 %i.bq, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.697, i64 7, i1 false)
   %i.br = add i64 %.sroa.5162.0.copyload, %i.a
   store i8 %.sroa.0159.0.copyload, ptr %0, align 8, !tbaa !18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.697, i64 7, i1 false)
   store ptr %.sroa.5103.0.copyload, ptr %.sroa.5103.0..sroa_idx, align 8, !tbaa !19
-  br label %.sink.split
+  store ptr %.sroa.6104.0.copyload, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21
+  store i64 %i.br, ptr %.sroa.5162.0..sroa_idx, align 8, !tbaa !15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.697)
+  br label %bb.aa
 
 bb.o:                                             ; preds = %bb.i
   %.sroa.454.0.copyload328 = load ptr, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21 ; 5 uses
@@ -831,21 +839,16 @@ switch.lookup470:                                 ; preds = %block_len.exit268
   tail call void @_Py_LibHacl_Hacl_Hash_SHA3_update_multi_sha3(i8 noundef zeroext %.sroa.0.0.copyload, ptr noundef %.sroa.5.0.copyload, ptr noundef %i.ch, i32 noundef %i.ei)
   %i.ej = zext i32 %i.eg to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.454.0.copyload328, ptr align 1 %i.ef, i64 %i.ej, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %i.cq, i64 7, i1 false)
   %i.ek = add i64 %i.cp, %i.dh
   store i8 %.sroa.0.0.copyload, ptr %0, align 8, !tbaa !18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %i.cq, i64 7, i1 false)
   store ptr %.sroa.5.0.copyload, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !19
-  br label %.sink.split
-
-.sink.split:                                      ; preds = %block_len.exit240, %switch.lookup470, %block_len.exit216
-  %.sroa.4119.0.copyload.sink = phi ptr [ %.sroa.4119.0.copyload, %block_len.exit216 ], [ %.sroa.454.0.copyload328, %switch.lookup470 ], [ %.sroa.6104.0.copyload, %block_len.exit240 ]
-  %.sink = phi i64 [ %i.w, %block_len.exit216 ], [ %i.ek, %switch.lookup470 ], [ %i.br, %block_len.exit240 ]
-  store ptr %.sroa.4119.0.copyload.sink, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21
-  store i64 %.sink, ptr %.sroa.5162.0..sroa_idx, align 8, !tbaa !15
+  store ptr %.sroa.454.0.copyload328, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21
+  store i64 %i.ek, ptr %.sroa.5162.0..sroa_idx, align 8, !tbaa !15
   br label %bb.aa
 
-bb.aa:                                            ; preds = %.sink.split, %bb.a
-  %.0 = phi i8 [ 3, %bb.a ], [ 0, %.sink.split ]
+bb.aa:                                            ; preds = %block_len.exit216, %switch.lookup470, %block_len.exit240, %bb.a
+  %.0 = phi i8 [ 3, %bb.a ], [ 0, %block_len.exit240 ], [ 0, %switch.lookup470 ], [ 0, %block_len.exit216 ]
   ret i8 %.0
 }
 

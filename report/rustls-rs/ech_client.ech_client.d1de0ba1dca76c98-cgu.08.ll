@@ -204,7 +204,7 @@ bb.a:
   %i.k = alloca [16 x i8], align 8                ; 6 uses
   %i.l = alloca [32 x i8], align 8                ; 8 uses
   %i.m = alloca [32 x i8], align 8                ; 8 uses
-  %i.n = alloca [176 x i8], align 8               ; 3 uses
+  %i.n = alloca [176 x i8], align 8               ; 7 uses
   %i.o = alloca [32 x i8], align 8                ; 9 uses
   %i.p = alloca [80 x i8], align 8                ; 5 uses
   %i.q = alloca [88 x i8], align 8                ; 7 uses
@@ -607,6 +607,7 @@ bb.cs:                                            ; preds = %.body212
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCsgO2xhGITpH9_12futures_util4lock5mutex10MutexGuardNtNtCs9RFwvXNxPyg_16hickory_resolver16name_server_pool24NameServerTransportStateEECsi17nFaBu4HY_10ech_client.exit224 unwind label %bb.u
 
 bb.ct:                                            ; preds = %bb.b, %bb.cp
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   %i.gy = getelementptr inbounds nuw i8, ptr %0, i64 280 ; 6 uses
   invoke void @_RNvXsb_NtCs5MfxasYgTEl_11hickory_net4xferINtB5_17FirstAnswerFutureINtNtB5_12dns_exchange15DnsExchangeSendNtNtNtB7_7runtime13tokio_runtime20TokioRuntimeProviderEENtNtNtCsj6eKBz9Db1c_4core6future6future6Future4pollCsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef nonnull sret([176 x i8]) align 8 captures(none) dereferenceable(176) %i.n, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %i.gy, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1)
           to label %bb.cv unwind label %bb.cu
@@ -614,6 +615,7 @@ bb.ct:                                            ; preds = %bb.b, %bb.cp
 bb.cu:                                            ; preds = %bb.ct
   %i.gz = landingpad { ptr, i32 }
           cleanup
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs5MfxasYgTEl_11hickory_net4xfer17FirstAnswerFutureINtNtBE_12dns_exchange15DnsExchangeSendNtNtNtBG_7runtime13tokio_runtime20TokioRuntimeProviderEEECsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef align 8 dereferenceable(104) %i.gy) #24
           to label %bb.cr unwind label %bb.u
 
@@ -623,12 +625,14 @@ bb.cv:                                            ; preds = %bb.ct
   br i1 %i.hb, label %bb.cw, label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cv
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   br label %common.ret
 
 bb.cx:                                            ; preds = %bb.cv
   %i.hc = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(176) %i.hc, ptr noundef nonnull align 8 dereferenceable(176) %i.n, i64 176, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs5MfxasYgTEl_11hickory_net4xfer17FirstAnswerFutureINtNtBE_12dns_exchange15DnsExchangeSendNtNtNtBG_7runtime13tokio_runtime20TokioRuntimeProviderEEECsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef align 8 dereferenceable(104) %i.gy)
           to label %bb.cz unwind label %bb.cy
 
@@ -1031,8 +1035,8 @@ bb.f:                                             ; preds = %switch.lookup, %bb.
   br label %_RNvMs7_NtNtNtCs7ZUl82OSlxp_6rustls6crypto9aws_lc_rs4hpkeINtB5_5DhKemKj20_E5encapCsi17nFaBu4HY_10ech_client.exit.i
 
 bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c, %bb.b
-  %.sroa.014.0.i.i.i = phi i64 [ 2, %bb.e ], [ 3, %bb.b ], [ 1, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.pn.i.i.i = phi { i64, ptr } [ %i.ae, %bb.e ], [ %i.aa, %bb.b ], [ %i.ae, %bb.d ], [ %i.ae, %bb.c ]
+  %.sroa.014.0.i.i.i = phi i64 [ 2, %bb.e ], [ 3, %bb.b ], [ 1, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i = extractvalue { i64, ptr } %.pn.i.i.i, 1 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2946)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !2942

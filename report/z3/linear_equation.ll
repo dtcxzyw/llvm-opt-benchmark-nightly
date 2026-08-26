@@ -42,21 +42,21 @@ $_ZN6vectorIjLb0EjE13expand_vectorEv = comdat any
 define hidden noundef i32 @_ZNK15linear_equation3posEj(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, i32 noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !tbaa !8
+  %2 = add i32 %i.a, -1
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !14
   br label %.outer
 
-.outer:                                           ; preds = %bb.e, %bb.a
-  %.020.ph.in = phi i32 [ %i.f, %bb.e ], [ %i.a, %bb.a ]
-  %.018.ph = phi i32 [ %.018, %bb.e ], [ 0, %bb.a ]
-  %.020.ph = add i32 %.020.ph.in, -1              ; 2 uses
+.outer:                                           ; preds = %bb.c, %bb.a
+  %.020.ph.in = phi i32 [ %i.k, %bb.c ], [ 0, %bb.a ] ; 2 uses
+  %.018.ph = phi i32 [ %.018, %bb.c ], [ %2, %bb.a ]
   br label %bb.b
 
-bb.b:                                             ; preds = %.outer, %bb.c
-  %.018 = phi i32 [ %i.k, %bb.c ], [ %.018.ph, %.outer ] ; 3 uses
-  %i.d = sub nsw i32 %.020.ph, %.018              ; 2 uses
+bb.b:                                             ; preds = %.outer, %bb.e
+  %.018 = phi i32 [ %3, %bb.e ], [ %.018.ph, %.outer ] ; 3 uses
+  %i.d = sub nsw i32 %.018, %.020.ph.in           ; 2 uses
   %i.e = sdiv i32 %i.d, 2
-  %i.f = add nsw i32 %i.e, %.018                  ; 5 uses
+  %i.f = add nsw i32 %i.e, %.020.ph.in            ; 5 uses
   %i.g = sext i32 %i.f to i64
   %i.h = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.g
   %i.i = load i32, ptr %i.h, align 4, !tbaa !15   ; 2 uses
@@ -65,19 +65,20 @@ bb.b:                                             ; preds = %.outer, %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.k = add nsw i32 %i.f, 1
-  %.not29 = icmp slt i32 %i.f, %.020.ph
-  br i1 %.not29, label %bb.b, label %.loopexit, !llvm.loop !16
+  %.not29 = icmp slt i32 %i.f, %.018
+  br i1 %.not29, label %.outer, label %.loopexit, !llvm.loop !16
 
 bb.d:                                             ; preds = %bb.b
   %i.l = icmp ult i32 %1, %i.i
   br i1 %i.l, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %bb.d
+  %3 = add nsw i32 %i.f, -1
   %.not = icmp sgt i32 %i.d, 1
-  br i1 %.not, label %.outer, label %.loopexit, !llvm.loop !16
+  br i1 %.not, label %bb.b, label %.loopexit, !llvm.loop !16
 
-.loopexit:                                        ; preds = %bb.e, %bb.d, %bb.c
-  %.1.ph = phi i32 [ -1, %bb.c ], [ -1, %bb.e ], [ %i.f, %bb.d ]
+.loopexit:                                        ; preds = %bb.c, %bb.e, %bb.d
+  %.1.ph = phi i32 [ %i.f, %bb.d ], [ -1, %bb.e ], [ -1, %bb.c ]
   ret i32 %.1.ph
 }
 
@@ -480,7 +481,7 @@ _ZN6vectorIjLb0EjE5resetEv.exit:                  ; preds = %_ZN14numeral_buffer
   br label %bb.k
 
 .preheader:                                       ; preds = %bb.au, %_ZN6vectorIjLb0EjE5resetEv.exit
-  %.054.lcssa = phi i32 [ 0, %_ZN6vectorIjLb0EjE5resetEv.exit ], [ %.256, %bb.au ] ; 2 uses
+  %.054.lcssa = phi i32 [ 0, %_ZN6vectorIjLb0EjE5resetEv.exit ], [ %.2, %bb.au ] ; 2 uses
   %i.ag = icmp ult i32 %.054.lcssa, %i.z
   br i1 %i.ag, label %.lr.ph137, label %.loopexit
 
@@ -609,17 +610,17 @@ _ZN6vectorIjLb0EjE9push_backEOj.exit:             ; preds = %bb.i, %bb.j
   br i1 %exitcond147.not, label %.loopexit, label %bb.c, !llvm.loop !69
 
 bb.k:                                             ; preds = %.lr.ph, %bb.au
-  %.053133 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.au ] ; 6 uses
-  %.054132 = phi i32 [ 0, %.lr.ph ], [ %.256, %bb.au ] ; 5 uses
-  %i.cr = icmp eq i32 %.054132, %i.z
+  %.053133 = phi i32 [ 0, %.lr.ph ], [ %.2, %bb.au ] ; 5 uses
+  %.054132 = phi i32 [ 0, %.lr.ph ], [ %.256, %bb.au ] ; 6 uses
+  %i.cr = icmp eq i32 %.053133, %i.z
   br i1 %i.cr, label %.preheader128, label %bb.t
 
 .preheader128:                                    ; preds = %bb.k
-  %i.cs = icmp ult i32 %.053133, %i.y
+  %i.cs = icmp ult i32 %.054132, %i.y
   br i1 %i.cs, label %.lr.ph135, label %.loopexit
 
 .lr.ph135:                                        ; preds = %.preheader128
-  %i.ct = zext i32 %.053133 to i64
+  %i.ct = zext i32 %.054132 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph135, %_ZN6vectorIjLb0EjE9push_backEOj.exit80
@@ -741,11 +742,11 @@ _ZN6vectorIjLb0EjE9push_backEOj.exit80:           ; preds = %bb.r, %bb.s
 
 bb.t:                                             ; preds = %bb.k
   %i.fa = load ptr, ptr %i.ab, align 8, !tbaa !14
-  %i.fb = zext i32 %.053133 to i64                ; 5 uses
+  %i.fb = zext i32 %.054132 to i64                ; 5 uses
   %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.fa, i64 %i.fb
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !15 ; 2 uses
   %i.fe = load ptr, ptr %i.ac, align 8, !tbaa !14
-  %i.ff = zext i32 %.054132 to i64                ; 4 uses
+  %i.ff = zext i32 %.053133 to i64                ; 4 uses
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.fe, i64 %i.ff
   %i.fh = load i32, ptr %i.fg, align 4, !tbaa !15 ; 2 uses
   %i.fi = icmp ult i32 %i.fd, %i.fh
@@ -862,7 +863,7 @@ _ZN6vectorIjLb0EjE9push_backEOj.exit95:           ; preds = %bb.aa, %bb.ab
   store i32 %i.hb, ptr %i.hn, align 4, !tbaa !15
   %i.ho = add i32 %i.hj, 1
   store i32 %i.ho, ptr %i.hl, align 4, !tbaa !15
-  %i.hp = add i32 %.053133, 1
+  %i.hp = add i32 %.054132, 1
   br label %bb.au
 
 bb.ac:                                            ; preds = %bb.t
@@ -980,7 +981,7 @@ _ZN6vectorIjLb0EjE9push_backEOj.exit110:          ; preds = %bb.aj, %bb.ak
   store i32 %i.jj, ptr %i.jv, align 4, !tbaa !15
   %i.jw = add i32 %i.jr, 1
   store i32 %i.jw, ptr %i.jt, align 4, !tbaa !15
-  %i.jx = add i32 %.054132, 1
+  %i.jx = add i32 %.053133, 1
   br label %bb.au
 
 bb.al:                                            ; preds = %bb.ac
@@ -1089,14 +1090,14 @@ _ZN6vectorIjLb0EjE9push_backEOj.exit119:          ; preds = %bb.ar, %bb.as
   br label %bb.at
 
 bb.at:                                            ; preds = %_ZN6vectorIjLb0EjE9push_backEOj.exit119, %bb.al
-  %i.lz = add i32 %.053133, 1
-  %i.ma = add i32 %.054132, 1
+  %i.lz = add i32 %.054132, 1
+  %i.ma = add i32 %.053133, 1
   br label %bb.au
 
 bb.au:                                            ; preds = %_ZN6vectorIjLb0EjE9push_backEOj.exit110, %bb.at, %_ZN6vectorIjLb0EjE9push_backEOj.exit95
-  %.256 = phi i32 [ %.054132, %_ZN6vectorIjLb0EjE9push_backEOj.exit95 ], [ %i.jx, %_ZN6vectorIjLb0EjE9push_backEOj.exit110 ], [ %i.ma, %bb.at ] ; 2 uses
-  %.2 = phi i32 [ %i.hp, %_ZN6vectorIjLb0EjE9push_backEOj.exit95 ], [ %.053133, %_ZN6vectorIjLb0EjE9push_backEOj.exit110 ], [ %i.lz, %bb.at ] ; 2 uses
-  %i.mb = icmp eq i32 %.2, %i.y
+  %.256 = phi i32 [ %i.hp, %_ZN6vectorIjLb0EjE9push_backEOj.exit95 ], [ %.054132, %_ZN6vectorIjLb0EjE9push_backEOj.exit110 ], [ %i.lz, %bb.at ] ; 2 uses
+  %.2 = phi i32 [ %.053133, %_ZN6vectorIjLb0EjE9push_backEOj.exit95 ], [ %i.jx, %_ZN6vectorIjLb0EjE9push_backEOj.exit110 ], [ %i.ma, %bb.at ] ; 2 uses
+  %i.mb = icmp eq i32 %.256, %i.y
   br i1 %i.mb, label %.preheader, label %bb.k, !llvm.loop !71
 
 .loopexit:                                        ; preds = %_ZN6vectorIjLb0EjE9push_backEOj.exit80, %_ZN6vectorIjLb0EjE9push_backEOj.exit, %.preheader128, %.preheader

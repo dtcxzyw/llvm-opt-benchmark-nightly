@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish_feature_flags-0c98e5a31d6f7a25.fish_feature_flags.88469887bbadd4b4-cgu.0?download=true
+inline.NumInlined: 72
+inline.NumDeleted: 55
+loop-unroll.NumCompletelyUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0
 @_RNvNCNKNvCsbHolxaesP1E_18fish_feature_flags20LOCAL_OVERRIDE_STACK0023___RUST_STD_INTERNAL_VAL = thread_local global <{ [33 x i8], [7 x i8] }> <{ [33 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01", [7 x i8] undef }>, align 8
 @32 = private unnamed_addr constant [29 x i8] c"crates/widestring/src/lib.rs\00", align 1
@@ -200,8 +204,8 @@ _RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widest
   %.sroa.3.0.i = phi i64 [ %i.ad, %_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt10slice_fromCsbHolxaesP1E_18fish_feature_flags.exit.i ], [ undef, %_RINvCskr4qsHYS30i_15fish_widestring18iter_prefixes_iterNtNtNtCs3oUPovFnLWP_4core3str4iter5CharsINtNtNtNtBX_4iter8adapters6copied6CopiedINtNtNtBX_5slice4iter4ItercEEECsbHolxaesP1E_18fish_feature_flags.exit.i ], [ undef, %.lr.ph117.2 ], [ undef, %.lr.ph117.1 ], [ undef, %.lr.ph117 ]
   %.sroa.0.0.i = phi ptr [ %i.ae, %_RNvYNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrNtCskr4qsHYS30i_15fish_widestring4WExt10slice_fromCsbHolxaesP1E_18fish_feature_flags.exit.i ], [ null, %_RINvCskr4qsHYS30i_15fish_widestring18iter_prefixes_iterNtNtNtCs3oUPovFnLWP_4core3str4iter5CharsINtNtNtNtBX_4iter8adapters6copied6CopiedINtNtNtBX_5slice4iter4ItercEEECsbHolxaesP1E_18fish_feature_flags.exit.i ], [ null, %.lr.ph117.2 ], [ null, %.lr.ph117.1 ], [ null, %.lr.ph117 ] ; 2 uses
   %.not21 = icmp eq ptr %.sroa.0.0.i, null        ; 4 uses
-  %.sroa.07.0 = select i1 %.not21, ptr %i.p, ptr %.sroa.0.0.i ; 42 uses
   %.sroa.510.0 = select i1 %.not21, i64 %i.q, i64 %.sroa.3.0.i ; 3 uses
+  %.sroa.07.0 = select i1 %.not21, ptr %i.p, ptr %.sroa.0.0.i ; 42 uses
   %i.af = shl nuw i64 %.sroa.510.0, 2             ; 10 uses
   switch i64 %.sroa.510.0, label %_RNCNvMCsbHolxaesP1E_18fish_feature_flagsNtB4_8Features15set_from_string0B4_.exit.thread.i.9 [
     i64 14, label %_RNCNvMCsbHolxaesP1E_18fish_feature_flagsNtB4_8Features15set_from_string0B4_.exit.i

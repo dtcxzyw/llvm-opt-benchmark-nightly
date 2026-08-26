@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/influxdb-rs/original/influxdb3_query_executor-4674f759d6ee6b99.influxdb3_query_executor.2f371c9a5b18ce51-cgu.09?download=true
+inline.NumInlined: 3950
+inline.NumDeleted: 1057
 begin_hunk_0_@_RNvXs_NtCs821PsJA4TYh_16cranelift_entity4iterINtB4_4IterNtNtCs3qFYL1dVk0u_16wasmtime_environ5types18DefinedGlobalIndexNtBU_9ConstExprENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCs43kcu4yvms7_24influxdb3_query_executor:bb.a
 }
 
@@ -200,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %.promoted18.i = load i64, ptr %i.d, align 8, !alias.scope !12494 ; 3 uses
   %i.e = mul i64 %i.c, 768614336404564651
   %i.f = mul i64 %.promoted.i8, -768614336404564651
-  %i.g = add i64 %i.e, %i.f
+  %i.g = add i64 %i.f, %i.e
   %i.h = lshr i64 %i.g, 4
   %i.i = add i64 %1, -1
   %i.j = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.i) ; 2 uses

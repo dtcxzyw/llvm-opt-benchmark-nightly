@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/jiff-rs/original/jiff-789e66dc7021757c.jiff.764126a7be50c476-cgu.04?download=true
+inline.NumInlined: 306
+inline.NumDeleted: 156
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_RNvMNtCsa9sSWSfjDbm_4jiff5errorNtB2_5Error9from_args:bb.a
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [24 x i8], align 8                ; 4 uses
@@ -200,8 +204,8 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 .body:                                            ; preds = %bb.m, %bb.h, %bb.d, %bb.r
-  %.sroa.03.0.ph = phi i1 [ false, %bb.r ], [ false, %bb.m ], [ true, %bb.d ], [ true, %bb.h ]
-  %.pn.pn.ph = phi { ptr, i32 } [ %i.an, %bb.r ], [ %i.v, %bb.m ], [ %i.i, %bb.d ], [ %i.n, %bb.h ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.an, %bb.r ], [ %i.v, %bb.m ], [ %i.n, %bb.h ], [ %i.i, %bb.d ]
+  %.sroa.03.0.ph = phi i1 [ false, %bb.r ], [ false, %bb.m ], [ true, %bb.h ], [ true, %bb.d ]
   %.pr = load ptr, ptr %i.c, align 8, !alias.scope !358 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !363)
   call void @llvm.experimental.noalias.scope.decl(metadata !364)

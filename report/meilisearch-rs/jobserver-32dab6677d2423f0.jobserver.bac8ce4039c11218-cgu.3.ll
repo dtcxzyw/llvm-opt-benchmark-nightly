@@ -204,17 +204,16 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.s, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.h, i64 32, i1 false)
+  %.sroa.33.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.33.0..sroa_idx.i, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.g, i64 24, i1 false)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.w, %bb.u, %bb.s, %bb.q, %bb.d
   %.sink34 = phi ptr [ %i.o, %bb.w ], [ %i.o, %bb.u ], [ %i.o, %bb.s ], [ %i.o, %bb.q ], [ inttoptr (i64 1 to ptr), %bb.d ]
   %.sink33 = phi i64 [ %i.q, %bb.w ], [ %i.q, %bb.u ], [ %i.q, %bb.s ], [ %i.q, %bb.q ], [ 0, %bb.d ]
-  %.sink = phi ptr [ %i.k, %bb.w ], [ %i.k, %bb.u ], [ %i.k, %bb.s ], [ %i.k, %bb.q ], [ %i.g, %bb.d ]
   store ptr %.sink34, ptr %0, align 8
   %.sroa.25.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sink33, ptr %.sroa.25.0..sroa_idx.i, align 8
-  %.sroa.36.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.36.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %.sink, i64 24, i1 false)
   ret void
 
 bb.f:                                             ; preds = %bb.y, %bb.x, %bb.g
@@ -347,10 +346,12 @@ bb.p:                                             ; preds = %bb.j
           to label %bb.q unwind label %bb.y
 
 bb.q:                                             ; preds = %bb.p
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 -9223372036854775806, ptr %i.au, align 8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false)
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.au, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false)
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  store i64 -9223372036854775806, ptr %2, align 8
   br label %bb.e
 
 _ZN9jobserver19find_jobserver_auth17hba55766094e526beE.exit: ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$8find_map17hecfca7193995ed1eE.exit.i"
@@ -364,6 +365,8 @@ bb.r:                                             ; preds = %_ZN9jobserver19find
           to label %bb.t unwind label %bb.y
 
 bb.s:                                             ; preds = %_ZN9jobserver19find_jobserver_auth17hba55766094e526beE.exit
+  %.sroa.33.0..sroa_idx.i24 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.33.0..sroa_idx.i24, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 -9223372036854775807, ptr %i.ax, align 8
   br label %bb.e
@@ -377,6 +380,8 @@ bb.t:                                             ; preds = %bb.r
 bb.u:                                             ; preds = %bb.t
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bb, ptr noundef nonnull align 8 dereferenceable(32) %i.ba, i64 32, i1 false)
+  %.sroa.33.0..sroa_idx.i26 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.33.0..sroa_idx.i26, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   br label %bb.e
 
 bb.v:                                             ; preds = %bb.t
@@ -385,6 +390,8 @@ bb.v:                                             ; preds = %bb.t
           to label %bb.w unwind label %bb.x
 
 bb.w:                                             ; preds = %bb.v
+  %.sroa.36.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.36.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 -9223372036854775800, ptr %i.bd, align 8, !alias.scope !8
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48

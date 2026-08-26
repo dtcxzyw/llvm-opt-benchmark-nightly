@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ring-rs/original/cc-76f3ccad368a22c6.cc.d9ca9ac6d52b51d2-cgu.2?download=true
+inline.NumInlined: 86
+inline.NumDeleted: 9
 begin_hunk_0_@_RNvMs1_NtCs1xwejQucwHj_5alloc5boxedINtB5_3BoxeE21try_clone_from_ref_inCsiHivYpkJ4Hu_2cc:bb.a
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNvMs1_NtCs1xwejQucwHj_5alloc5boxedINtB16_3BoxppE21try_clone_from_ref_in16DeallocDropGuardNtNtB18_5alloc6GlobalEEECsiHivYpkJ4Hu_2cc(ptr nonnull align 8 %i.b) #22
           to label %bb.g unwind label %bb.f
@@ -200,7 +202,7 @@ _RNvMsq_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcShE18allocate_for_sliceCsiHivYpkJ4H
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 1, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.n, ptr align 1 %0, i64 %1, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr align 1 %0, i64 %1, i1 false)
   ret { ptr, i64 } %i.l
 }
 
@@ -568,7 +570,7 @@ _RNvMsq_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcShE15copy_from_sliceCsiHivYpkJ4Hu_2
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 1, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
   %i.n = insertvalue { ptr, i64 } %i.i, i64 %1, 1
   ret { ptr, i64 } %i.n
 }
@@ -612,7 +614,7 @@ _RNvXs18_NtCs1xwejQucwHj_5alloc4syncINtB6_3ArceEINtNtCs3oUPovFnLWP_4core7convert
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 1, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
   %i.n = insertvalue { ptr, i64 } %i.i, i64 %1, 1
   ret { ptr, i64 } %i.n
 }
@@ -785,7 +787,7 @@ bb.e:                                             ; preds = %.noexc3
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   store i64 1, ptr %i.q, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.r, ptr readonly align 1 %i.c, i64 %i.e, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.r, ptr readonly align 1 %i.c, i64 %i.e, i1 false)
   %i.s = insertvalue { ptr, i64 } %i.m, i64 %i.e, 1
   tail call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs1xwejQucwHj_5alloc6string6StringECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %0)
   ret { ptr, i64 } %i.s
@@ -873,7 +875,7 @@ _RNvXsr_NtNtCsaL1QbXo9JQH_3std3ffi6os_strINtNtCs1xwejQucwHj_5alloc4sync3ArcNtB5_
   %i.t = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i64 1, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.u, ptr readonly align 1 %i.e, i64 %i.g, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.u, ptr readonly align 1 %i.e, i64 %i.g, i1 false)
   call void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsaL1QbXo9JQH_3std3ffi6os_str8OsStringECs3U9i7nQCKwt_15find_msvc_tools(ptr nonnull align 8 %i.b)
   br label %bb.k
 
@@ -910,7 +912,7 @@ _RNvXss_NtNtCsaL1QbXo9JQH_3std3ffi6os_strINtNtCs1xwejQucwHj_5alloc4sync3ArcNtB5_
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   store i64 1, ptr %i.aj, align 8
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ah, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ak, ptr readonly align 1 %i.w, i64 %i.y, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ak, ptr readonly align 1 %i.w, i64 %i.y, i1 false)
   br label %bb.k
 
 bb.k:                                             ; preds = %_RNvXss_NtNtCsaL1QbXo9JQH_3std3ffi6os_strINtNtCs1xwejQucwHj_5alloc4sync3ArcNtB5_5OsStrEINtNtCs3oUPovFnLWP_4core7convert4FromRB1a_E4fromCsiHivYpkJ4Hu_2cc.exit, %_RNvXsr_NtNtCsaL1QbXo9JQH_3std3ffi6os_strINtNtCs1xwejQucwHj_5alloc4sync3ArcNtB5_5OsStrEINtNtCs3oUPovFnLWP_4core7convert4FromNtB5_8OsStringE4fromCsiHivYpkJ4Hu_2cc.exit
@@ -1313,7 +1315,7 @@ _RNvXss_NtNtCsaL1QbXo9JQH_3std3ffi6os_strINtNtCs1xwejQucwHj_5alloc4sync3ArcNtB5_
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 1, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
   %i.n = insertvalue { ptr, i64 } %i.i, i64 %1, 1
   ret { ptr, i64 } %i.n
 }
@@ -1355,11 +1357,11 @@ bb.c:                                             ; preds = %_RNvNtCs1xwejQucwHj
           to label %bb.f unwind label %bb.e
 
 bb.d:                                             ; preds = %_RNvNtCs1xwejQucwHj_5alloc5boxed14box_new_uninitCsiHivYpkJ4Hu_2cc.exit
+  %.sroa.311.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(360) %.sroa.311.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(360) %i.a, i64 360, i1 false)
   store i64 1, ptr %i.d, align 8
-  %.sroa.210.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store i64 1, ptr %.sroa.210.0..sroa_idx, align 8
-  %.sroa.311.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(360) %.sroa.311.0..sroa_idx.a, ptr noundef nonnull align 8 dereferenceable(360) %i.a, i64 360, i1 false)
+  %.sroa.311.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  store i64 1, ptr %.sroa.311.0..sroa_idx.a, align 8
   ret ptr %i.d
 
 bb.e:                                             ; preds = %bb.c
@@ -1762,7 +1764,7 @@ _RNvMsq_NtCs1xwejQucwHj_5alloc4syncINtB5_3ArcShE15copy_from_sliceCsiHivYpkJ4Hu_2
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store i64 1, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr readonly align 1 %0, i64 %1, i1 false)
   %i.n = insertvalue { ptr, i64 } %i.i, i64 %1, 1
   ret { ptr, i64 } %i.n
 }

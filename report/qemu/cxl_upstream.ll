@@ -204,16 +204,18 @@ bb.i:                                             ; preds = %bb.h
   %i.t = shl i32 %.169, 3
   %i.u = add i32 %i.t, 16                         ; 2 uses
   %i.v = sext i32 %i.u to i64                     ; 2 uses
-  %i.w = tail call noalias ptr @g_malloc(i64 noundef %i.v) #10 ; 7 uses
+  %i.w = tail call noalias ptr @g_malloc(i64 noundef %i.v) #10 ; 8 uses
   %i.x = trunc i32 %i.u to i16                    ; 2 uses
+  %.sroa.523.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 5
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.523.0..sroa_idx, i8 0, i64 3, i1 false)
   store i8 5, ptr %i.w, align 8
   %.sroa.220.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 1
   store i8 0, ptr %.sroa.220.0..sroa_idx, align 1
   %.sroa.321.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 2
   store i16 %i.x, ptr %.sroa.321.0..sroa_idx, align 2
   %.sroa.422.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 4
+  store i8 0, ptr %.sroa.422.0..sroa_idx, align 4
   %.sroa.624.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  store i32 0, ptr %.sroa.422.0..sroa_idx, align 4
   store i64 10000, ptr %.sroa.624.0..sroa_idx, align 8
   %i.y = icmp sgt i32 %.169, 0                    ; 2 uses
   br i1 %i.y, label %.lr.ph, label %._crit_edge
@@ -285,15 +287,15 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.k, %bb.i
   %i.av = tail call noalias ptr @g_malloc(i64 noundef %i.v) #10 ; 8 uses
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 5
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.5.0..sroa_idx, i8 0, i64 3, i1 false)
   store i8 5, ptr %i.av, align 8
-  %.sroa.212.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 1
-  store i8 0, ptr %.sroa.212.0..sroa_idx, align 1
-  %.sroa.313.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.av, i64 2
-  store i16 %i.x, ptr %.sroa.313.0..sroa_idx.a, align 2
-  %.sroa.414.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.av, i64 4
-  store i8 3, ptr %.sroa.414.0..sroa_idx.a, align 4
-  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.av, i64 5
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.5.0..sroa_idx.a, i8 0, i64 3, i1 false)
+  %.sroa.313.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.av, i64 1
+  store i8 0, ptr %.sroa.313.0..sroa_idx.a, align 1
+  %.sroa.414.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.av, i64 2
+  store i16 %i.x, ptr %.sroa.414.0..sroa_idx.a, align 2
+  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.av, i64 4
+  store i8 3, ptr %.sroa.5.0..sroa_idx.a, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   store i64 1024, ptr %.sroa.6.0..sroa_idx, align 8
   br i1 %i.y, label %.lr.ph80, label %._crit_edge81

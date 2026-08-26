@@ -1,4 +1,10 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/typst-rs/original/typst_utils-4552b8f23364b7cd.typst_utils.4c29e00eb546305a-cgu.0?download=true
+inline.NumInlined: 302
+inline.NumDeleted: 146
+loop-unroll.NumCompletelyUnrolled: 6
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 11
+loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@_RINvMs1_NtCskt5MLIAl8nl_9hashbrown3mapINtB6_7HashMapReNtNtCs6xpQEr8gLsQ_11typst_utils4pico7PicoStrNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherE3geteEBU_:bb.a
 
 _RINvYNtCsiUdj97bPFdy_10rustc_hash13FxBuildHasherNtNtCs3oUPovFnLWP_4core4hash11BuildHasher8hash_oneReECs6xpQEr8gLsQ_11typst_utils.exit: ; preds = %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs6xpQEr8gLsQ_11typst_utils.exit72.i.i.i.i.i.i, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj8_NtNtB4_5array17TryFromSliceErrorE6unwrapCs6xpQEr8gLsQ_11typst_utils.exit.i.i.i.i.i.i, %bb.e, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultAhj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCs6xpQEr8gLsQ_11typst_utils.exit.i.i.i.i.i.i, %bb.f
@@ -200,8 +206,8 @@ _RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capac
 
 _RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit.thread: ; preds = %bb.j, %bb.k, %bb.l
   %.pn.i.pn = phi { i64, i64 } [ %i.am, %bb.l ], [ %i.ak, %bb.j ], [ %i.al, %bb.k ] ; 2 uses
-  %.sroa.7.030 = extractvalue { i64, i64 } %.pn.i.pn, 0
-  %.sroa.12.031 = extractvalue { i64, i64 } %.pn.i.pn, 1
+  %.sroa.12.030 = extractvalue { i64, i64 } %.pn.i.pn, 1
+  %.sroa.7.031 = extractvalue { i64, i64 } %.pn.i.pn, 0
   br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner17find_insert_index.exit
@@ -604,8 +610,8 @@ _RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   br label %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit
 
 _RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner20reserve_rehash_innerNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit: ; preds = %bb.m, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i, %._crit_edge49, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit.thread, %bb.c, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
-  %.sroa.4.0.i = phi i64 [ %i.n, %bb.c ], [ undef, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit ], [ %.sroa.12.031, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit.thread ], [ undef, %._crit_edge49 ], [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ undef, %bb.m ]
-  %.sroa.0.0.i = phi i64 [ %i.m, %bb.c ], [ -1, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit ], [ %.sroa.7.030, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit.thread ], [ -1, %._crit_edge49 ], [ -1, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ -1, %bb.m ]
+  %.sroa.4.0.i = phi i64 [ %i.n, %bb.c ], [ undef, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit ], [ %.sroa.12.030, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit.thread ], [ undef, %._crit_edge49 ], [ undef, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ undef, %bb.m ]
+  %.sroa.0.0.i = phi i64 [ %i.m, %bb.c ], [ -1, %_RNvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit ], [ %.sroa.7.031, %_RINvMsa_NtCskt5MLIAl8nl_9hashbrown3rawNtB6_13RawTableInner22fallible_with_capacityNtNtCs1xwejQucwHj_5alloc5alloc6GlobalECs6xpQEr8gLsQ_11typst_utils.exit.thread ], [ -1, %._crit_edge49 ], [ -1, %_RNvMs1_NtCskt5MLIAl8nl_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i ], [ -1, %bb.m ]
   %i.mf = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i, 0
   %i.mg = insertvalue { i64, i64 } %i.mf, i64 %.sroa.4.0.i, 1
   ret { i64, i64 } %i.mg
@@ -1008,8 +1014,8 @@ bb.s:                                             ; preds = %bb.p
   unreachable
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison6rwlock15RwLockReadGuardNtNtCs6xpQEr8gLsQ_11typst_utils4pico8InternerEEB1G_.exit: ; preds = %bb.o, %bb.n, %bb.m
-  %.sroa.01.0 = phi ptr [ %i.cg, %bb.m ], [ %i.cl, %bb.n ], [ %i.cl, %bb.o ]
   %.sroa.3.0 = phi i64 [ %i.ci, %bb.m ], [ %i.cn, %bb.n ], [ %i.cn, %bb.o ]
+  %.sroa.01.0 = phi ptr [ %i.cg, %bb.m ], [ %i.cl, %bb.n ], [ %i.cl, %bb.o ]
   store i8 1, ptr %0, align 8
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.01.0, ptr %.sroa.44.0..sroa_idx, align 8
@@ -1412,7 +1418,7 @@ bb.l:                                             ; preds = %bb.i, %bb.m
   %.sroa.012.0 = phi i64 [ %i.ah, %bb.m ], [ %i.x, %bb.i ]
   %i.ac = tail call i64 @llvm.scmp.i64.i64(i64 %i.v, i64 0)
   %i.ad = sub nuw nsw i64 10, %.sroa.012.0
-  %i.ae = mul nsw i64 %i.ad, %i.ac
+  %i.ae = mul nsw i64 %i.ac, %i.ad
   %i.af = tail call { i64, i1 } @llvm.sadd.with.overflow.i64(i64 %i.v, i64 %i.ae) ; 2 uses
   %i.ag = extractvalue { i64, i1 } %i.af, 1
   br i1 %i.ag, label %_RNvMs1_NtCs3oUPovFnLWP_4core3numx11checked_pow.exit.thread27, label %bb.o, !prof !4
@@ -1460,8 +1466,8 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.c, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  %.sroa.03.0 = phi ptr [ @105, %bb.a ], [ %0, %bb.c ], [ %0, %bb.b ]
   %.sroa.34.0 = phi i64 [ 14, %bb.a ], [ %..i, %bb.c ], [ %..i, %bb.b ]
+  %.sroa.03.0 = phi ptr [ @105, %bb.a ], [ %0, %bb.c ], [ %0, %bb.b ]
   %i.d = insertvalue { ptr, i64 } poison, ptr %.sroa.03.0, 0
   %i.e = insertvalue { ptr, i64 } %i.d, i64 %.sroa.34.0, 1
   ret { ptr, i64 } %i.e

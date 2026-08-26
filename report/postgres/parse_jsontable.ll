@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
   br label %list_length.exit
 
 list_length.exit:                                 ; preds = %bb.c, %bb.d
-  %i.w = phi i32 [ %i.v, %bb.d ], [ 0, %bb.c ]    ; 3 uses
+  %i.w = phi i32 [ %i.v, %bb.d ], [ 0, %bb.c ]    ; 4 uses
   %.not69 = icmp eq ptr %1, null                  ; 2 uses
   br i1 %.not69, label %.critedge, label %.lr.ph
 
@@ -241,6 +241,7 @@ list_length.exit:                                 ; preds = %bb.c, %bb.d
 
 list_length.exit75:                               ; preds = %.critedge
   %i.al = icmp eq i32 %i.w, 0
+  %spec.select = select i1 %i.al, i32 -1, i32 %i.w
   br label %list_length.exit78
 
 list_length.exit75.thread:                        ; preds = %.critedge
@@ -248,6 +249,7 @@ list_length.exit75.thread:                        ; preds = %.critedge
   %i.an = load i32, ptr %i.am, align 4            ; 2 uses
   %i.ao = icmp eq i32 %i.an, %i.w                 ; 2 uses
   %i.ap = add i32 %i.an, -1
+  %spec.select120 = select i1 %i.ao, i32 -1, i32 %i.w
   %spec.select120.a = select i1 %i.ao, i32 -1, i32 %i.ap
   br label %list_length.exit78
 
@@ -445,9 +447,9 @@ bb.q:                                             ; preds = %bb.e
 
 bb.r:                                             ; preds = %transformJsonTableColumn.exit, %bb.h
   %i.dv = phi i32 [ 23, %bb.h ], [ %.pre, %transformJsonTableColumn.exit ]
+  %.1 = phi i1 [ true, %bb.h ], [ %.06188126, %transformJsonTableColumn.exit ]
   %.063.a = phi i32 [ 0, %bb.h ], [ %i.dr, %transformJsonTableColumn.exit ]
   %.062.a = phi ptr [ null, %bb.h ], [ %i.do, %transformJsonTableColumn.exit ]
-  %.1 = phi i1 [ true, %bb.h ], [ %.06188126, %transformJsonTableColumn.exit ]
   %i.dw = load ptr, ptr %i.aa, align 8
   %i.dx = call ptr @lappend_oid(ptr noundef %i.dw, i32 noundef %i.dv) #6
   store ptr %i.dx, ptr %i.aa, align 8
@@ -474,7 +476,7 @@ bb.r:                                             ; preds = %transformJsonTableC
   br i1 %i.eh, label %.lr.ph127, label %.critedge.loopexit
 
 list_length.exit78:                               ; preds = %list_length.exit75.thread, %list_length.exit75
-  %.sink = phi i1 [ %i.ao, %list_length.exit75.thread ], [ %i.al, %list_length.exit75 ]
+  %.063 = phi i32 [ %spec.select120, %list_length.exit75.thread ], [ %spec.select, %list_length.exit75 ]
   %.065 = phi i32 [ %spec.select120.a, %list_length.exit75.thread ], [ -1, %list_length.exit75 ]
   %i.ei = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   br i1 %.not69, label %transformJsonTableNestedColumns.exit, label %.lr.ph93
@@ -550,7 +552,6 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %.lr.p
 
 transformJsonTableNestedColumns.exit:             ; preds = %bb.w, %.lr.ph93, %list_length.exit78
   %.0.i79.lcssa = phi ptr [ null, %list_length.exit78 ], [ null, %.lr.ph93 ], [ %.2.i, %bb.w ]
-  %spec.select121 = select i1 %.sink, i32 -1, i32 %i.w
   %i.fq = call noundef ptr @palloc0(i64 noundef 40) #6 ; 8 uses
   store i32 50, ptr %i.fq, align 4
   %i.fr = getelementptr inbounds nuw i8, ptr %3, i64 8
@@ -571,7 +572,7 @@ transformJsonTableNestedColumns.exit:             ; preds = %bb.w, %.lr.ph93, %l
   %i.gd = getelementptr inbounds nuw i8, ptr %i.fq, i64 24
   store ptr %.0.i79.lcssa, ptr %i.gd, align 8
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fq, i64 32
-  store i32 %spec.select121, ptr %i.ge, align 8
+  store i32 %.063, ptr %i.ge, align 8
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fq, i64 36
   store i32 %.065, ptr %i.gf, align 4
   ret ptr %i.fq

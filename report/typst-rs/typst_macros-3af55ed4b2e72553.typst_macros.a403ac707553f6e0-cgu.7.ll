@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/typst-rs/original/typst_macros-3af55ed4b2e72553.typst_macros.a403ac707553f6e0-cgu.7?download=true
+inline.NumInlined: 127
+inline.NumDeleted: 95
 begin_hunk_0_@_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtCscVvfRCjUNk2_11proc_macro211TokenStreamE4pushCse52LceO7DeS_12typst_macros:bb.a
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -200,7 +202,7 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsjMPGGl8VONr_3syn4attr9Attribute
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !noalias !49
   %i.e = getelementptr inbounds nuw [256 x i8], ptr %i.d, i64 %2 ; 4 uses
-  %.sroa.03.0.copyload = load i64, ptr %i.e, align 8, !noalias !49 ; 2 uses
+  %.sroa.03.0.copyload = load i64, ptr %i.e, align 8 ; 2 uses
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(248) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(248) %.sroa.44.0..sroa_idx, i64 248, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 256
@@ -220,7 +222,7 @@ bb.b:                                             ; preds = %_RNvMs_NtCs1xwejQuc
   ret void
 
 _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsjMPGGl8VONr_3syn4attr9AttributeE10try_removeCse52LceO7DeS_12typst_macros.exit.thread: ; preds = %bb.a, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsjMPGGl8VONr_3syn4attr9AttributeE10try_removeCse52LceO7DeS_12typst_macros.exit
-  %i.k = phi i64 [ %i.j, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsjMPGGl8VONr_3syn4attr9AttributeE10try_removeCse52LceO7DeS_12typst_macros.exit ], [ %i.b, %bb.a ]
+  %i.k = phi i64 [ %i.b, %bb.a ], [ %i.j, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecNtNtCsjMPGGl8VONr_3syn4attr9AttributeE10try_removeCse52LceO7DeS_12typst_macros.exit ]
   tail call void @_RNvNvMs_NtCs1xwejQucwHj_5alloc3vecINtB6_3VecppE6remove13assert_failed(i64 %2, i64 %i.k, ptr align 8 %3) #26
   unreachable
 }

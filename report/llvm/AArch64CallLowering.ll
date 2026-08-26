@@ -204,7 +204,7 @@ bb.t:                                             ; preds = %bb.s
   store i32 0, ptr %i.ex, align 8, !tbaa !237
   call void @_ZNK4llvm5DstOp11addDefToMIBERNS_19MachineRegisterInfoERNS_19MachineInstrBuilderE(ptr noundef nonnull align 8 dereferenceable(20) %20, ptr noundef nonnull align 8 dereferenceable(520) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %19)
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #18
-  %i.ey = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %i.ey = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !235
   %i.fa = load ptr, ptr %i.es, align 8, !tbaa !835
   %i.fb = load ptr, ptr %19, align 8, !tbaa !836
@@ -225,11 +225,12 @@ bb.t:                                             ; preds = %bb.s
   %i.fi = load ptr, ptr %i.fh, align 8, !tbaa !243
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 4
   %i.fk = load i32, ptr %i.fj, align 4, !tbaa !235
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ey, i8 0, i64 16, i1 false)
   store i32 0, ptr %i.ej, align 8, !tbaa !235
   %.sroa.4257.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
   store i32 %i.fk, ptr %.sroa.4257.0..sroa_idx, align 4, !tbaa !235
   %.sroa.5258.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5258.0..sroa_idx, i8 0, i64 24, i1 false)
+  store ptr null, ptr %.sroa.5258.0..sroa_idx, align 8, !tbaa !291
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #18
   br label %bb.u
 

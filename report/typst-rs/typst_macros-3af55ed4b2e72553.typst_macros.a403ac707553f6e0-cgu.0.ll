@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/typst-rs/original/typst_macros-3af55ed4b2e72553.typst_macros.a403ac707553f6e0-cgu.0?download=true
+inline.NumInlined: 49
+inline.NumDeleted: 27
 begin_hunk_0_@_RNvNtCse52LceO7DeS_12typst_macros4elem17create_field_impl:bb.a
           to label %bb.og unwind label %bb.ng
 
@@ -200,11 +202,11 @@ bb.l:                                             ; preds = %bb.k
           to label %bb.i unwind label %bb.n
 
 bb.m:                                             ; preds = %bb.k, %bb.ag
-  %.sink.a = phi ptr [ %i.a, %bb.ag ], [ %i.r, %bb.k ]
-  %.sink19 = phi ptr [ %i.l, %bb.ag ], [ %i.n, %bb.k ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sink.a, i64 32, i1 false)
+  %.sink.a = phi ptr [ %i.l, %bb.ag ], [ %i.n, %bb.k ]
+  %.sink19 = phi ptr [ %i.a, %bb.ag ], [ %i.r, %bb.k ]
   %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %.sink19, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %.sink.a, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sink19, i64 32, i1 false)
   ret void
 
 bb.n:                                             ; preds = %bb.bc, %bb.aw, %bb.at, %bb.an, %bb.ah, %bb.ad, %bb.x, %bb.l, %bb.i, %.loopexit

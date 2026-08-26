@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/foundations-rs/original/foundations_macros-4ad57aac8b588e26.foundations_macros.5467af46aab99424-cgu.12?download=true
+inline.NumInlined: 648
+inline.NumDeleted: 251
+loop-unroll.NumRuntimeUnrolled: 3
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCs6bAnw1I7Lci_3syn8generics9TypeParamECs7fhJ7v7hOxk_18foundations_macros:bb.a
   %i.x = icmp eq i64 %i.w, -1, !dbg !4789
   br i1 %i.x, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs6bAnw1I7Lci_3syn2ty4TypeEECs7fhJ7v7hOxk_18foundations_macros.exit, label %bb.o, !dbg !4789
@@ -200,8 +204,8 @@ bb.a:
   %i.e = load i64, ptr %i.d, align 8, !dbg !4964, !alias.scope !4959, !noalias !4962
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16, !dbg !4964
   %i.g = load i64, ptr %i.f, align 8, !dbg !4964, !alias.scope !4959, !noalias !4962
-  %.sroa.0.sroa.0.0.i = zext i1 %.not.i10 to i64, !dbg !4964 ; 2 uses
   %.sroa.0.sroa.5.sroa.6.0.i = select i1 %.not.i10, i64 %i.e, i64 undef, !dbg !4964 ; 2 uses
+  %.sroa.0.sroa.0.0.i = zext i1 %.not.i10 to i64, !dbg !4964 ; 2 uses
   %.sroa.5.0.i = select i1 %.not.i10, i64 %i.g, i64 0, !dbg !4964
   store i64 %.sroa.0.sroa.0.0.i, ptr %i.b, align 8, !dbg !4965
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8, !dbg !4965

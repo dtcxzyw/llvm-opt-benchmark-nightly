@@ -173,8 +173,9 @@ bb.j:                                             ; preds = %bb.g
   br label %bb.q
 
 bb.k:                                             ; preds = %bb.a, %bb.f, %bb.b, %bb.c, %bb.d
-  %.071.ph = phi i32 [ 1073741824, %bb.d ], [ 1073741824, %bb.c ], [ 0, %bb.b ], [ 536870912, %bb.f ], [ 0, %bb.a ]
-  %.070.ph = phi i1 [ true, %bb.d ], [ false, %bb.c ], [ true, %bb.b ], [ false, %bb.f ], [ false, %bb.a ] ; 2 uses
+  %.075.ph = phi i1 [ true, %bb.d ], [ false, %bb.c ], [ true, %bb.b ], [ false, %bb.f ], [ false, %bb.a ] ; 2 uses
+  %.071.ph = phi i32 [ 1073741824, %bb.d ], [ 1073741824, %bb.c ], [ 0, %bb.b ], [ 0, %bb.f ], [ 0, %bb.a ]
+  %.073.ph = phi i32 [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ], [ 536870912, %bb.f ], [ 0, %bb.a ]
   %i.ab = getelementptr i8, ptr %1, i64 280       ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef align 8 dereferenceable(16) %i.ab, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
@@ -199,11 +200,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.k
   %i.aj = getelementptr i8, ptr %1, i64 264
-  %i.ak = select i1 %.070.ph, i32 -2147483648, i32 0
-  %i.al = or disjoint i32 %.071.ph, %i.ak
+  %i.ak = select i1 %.075.ph, i32 -2147483648, i32 0
+  %8 = or disjoint i32 %.071.ph, %i.ak
+  %i.al = or disjoint i32 %8, %.073.ph
   %i.am = getelementptr i8, ptr %2, i64 16
   %i.an = load i32, ptr %i.am, align 8
-  %i.ao = select i1 %.070.ph, i32 536870911, i32 2047
+  %i.ao = select i1 %.075.ph, i32 536870911, i32 2047
   %i.ap = and i32 %i.an, %i.ao
   %i.aq = or disjoint i32 %i.al, %i.ap
   %i.ar = tail call i32 asm "bswapl $0", "=r,0,~{dirflag},~{fpsr},~{flags}"(i32 %i.aq) #10, !srcloc !11

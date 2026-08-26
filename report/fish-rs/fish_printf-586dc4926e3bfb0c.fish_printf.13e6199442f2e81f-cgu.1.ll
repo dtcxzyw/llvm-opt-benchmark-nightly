@@ -1,4 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/fish-rs/original/fish_printf-586dc4926e3bfb0c.fish_printf.13e6199442f2e81f-cgu.1?download=true
+inline.NumInlined: 102
+inline.NumDeleted: 71
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumRuntimeUnrolled: 1
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB5_12FormatString10advance_by:bb.a
   tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking9panic_fmt(ptr noundef nonnull @10, ptr noundef nonnull inttoptr (i64 89 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #18
   unreachable
@@ -200,7 +205,7 @@ _RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhile
   br i1 %.not.i.i.i.i14, label %_RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileNtNtNtBc_3str4iter5CharsNCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB1H_12FormatString12take_literals0_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B32_5count0EB1J_.exit, label %.lr.ph.i.i.i
 
 _RINvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtB6_9TakeWhileNtNtNtBc_3str4iter5CharsNCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB1H_12FormatString12take_literals0_0ENtNtNtBa_6traits8iterator8Iterator4foldjNCNvYBV_B32_5count0EB1J_.exit: ; preds = %bb.m, %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB2Y_12FormatString12take_literals0_0NCINvMB2a_B27_10wrap_mut_2jcNCNvYIB10_NtNtNtBg_3str4iter5CharsB2Q_EB1i_5count0E0E0B30_.exit.i.i.i, %bb.k
-  %.sroa.0.1.i.i13 = phi i64 [ 0, %bb.k ], [ %.sroa.01.020.i.i.i, %bb.m ], [ %i.cl, %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB2Y_12FormatString12take_literals0_0NCINvMB2a_B27_10wrap_mut_2jcNCNvYIB10_NtNtNtBg_3str4iter5CharsB2Q_EB1i_5count0E0E0B30_.exit.i.i.i ] ; 2 uses
+  %.sroa.0.1.i.i13 = phi i64 [ 0, %bb.k ], [ %i.cl, %_RNCINvNvXs0_NtNtNtCs3oUPovFnLWP_4core4iter8adapters10take_whileINtBa_9TakeWhileppENtNtNtBe_6traits8iterator8Iterator8try_fold5checkcjINtNtNtBg_3ops9try_trait17NeverShortCircuitjENCNvXs1_NtCs1HV6ixfL8cZ_11fish_printf11printf_implReNtB2Y_12FormatString12take_literals0_0NCINvMB2a_B27_10wrap_mut_2jcNCNvYIB10_NtNtNtBg_3str4iter5CharsB2Q_EB1i_5count0E0E0B30_.exit.i.i.i ], [ %.sroa.01.020.i.i.i, %bb.m ] ; 2 uses
   %i.cm = lshr i64 %.sroa.0.1.i.i13, 1            ; 3 uses
   %i.cn = and i64 %.sroa.0.1.i.i13, -2
   %i.co = add i64 %i.cn, %.sroa.01.0.i.i.i        ; 13 uses
