@@ -204,8 +204,7 @@ define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbP18ServerActiveO
 bb.a:
   %.val = load ptr, ptr %1, align 8, !tbaa !34
   %i.a = getelementptr i8, ptr %.val, i64 312
-  %.val.val = load <2 x float>, ptr %i.a, align 8
-  %.sroa.01.0.vec.extract.i.i.i = extractelement <2 x float> %.val.val, i64 0
+  %.sroa.01.0.vec.extract.i.i.i = load float, ptr %i.a, align 8
   %i.b = fcmp nsz une float %.sroa.01.0.vec.extract.i.i.i, 1.000000e+01
   ret i1 %i.b
 }

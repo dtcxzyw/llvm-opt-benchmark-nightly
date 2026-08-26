@@ -205,7 +205,7 @@ bb.a:
   %39 = alloca %class.btVector3, align 4          ; 5 uses
   %40 = alloca %class.btVector3, align 16         ; 7 uses
   %41 = alloca %class.btVector3, align 16         ; 6 uses
-  %42 = alloca %class.btVector3, align 16         ; 8 uses
+  %42 = alloca %class.btVector3, align 8          ; 7 uses
   %43 = alloca %class.btAlignedObjectArray.4, align 8 ; 8 uses
   %44 = alloca %class.btConvexHullComputer, align 8 ; 22 uses
   %45 = alloca %class.btVector3, align 8          ; 5 uses
@@ -286,7 +286,7 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph1366:                                       ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1760 ; 5 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %42, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %42, i64 8
   %i.h = getelementptr inbounds nuw i8, ptr %43, i64 24 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %43, i64 16 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %43, i64 4 ; 2 uses
@@ -323,34 +323,30 @@ bb.c:                                             ; preds = %.lr.ph1366, %bb.l
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #25
   %i.ai = call i32 @rand() #25
-  %103 = sitofp i32 %i.ai to float
   %i.aj = call i32 @rand() #25
   %i.ak = call i32 @rand() #25
-  %104 = insertelement <4 x i32> poison, i32 %i.aj, i64 0
-  %105 = insertelement <4 x i32> %104, i32 %i.ak, i64 1
-  %106 = insertelement <4 x float> <float poison, float poison, float poison, float 1.000000e+00>, float %103, i64 0
-  %107 = sitofp <4 x i32> %105 to <4 x float>
-  %108 = shufflevector <4 x float> %106, <4 x float> %107, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
-  %109 = fmul nnan <4 x float> %108, <float f0x30000000, float f0x30000000, float f0x30000000, float 0.000000e+00>
-  store <4 x float> %109, ptr %42, align 16, !tbaa !9
-  %.sroa.0.0.copyload3.i = load <2 x float>, ptr %42, align 16 ; 4 uses
-  %.sroa.8.0.copyload.i = load <2 x float>, ptr %i.g, align 8, !tbaa !38
-  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %.sroa.0.0.copyload3.i, i64 0 ; 2 uses
-  %foldExtExtBinop = fmul <2 x float> %.sroa.0.0.copyload3.i, %.sroa.0.0.copyload3.i
+  %103 = sitofp i32 %i.ak to float
+  %104 = fmul nnan float %103, f0x30000000        ; 3 uses
+  %105 = insertelement <2 x i32> poison, i32 %i.ai, i64 0
+  %106 = insertelement <2 x i32> %105, i32 %i.aj, i64 1
+  %107 = sitofp <2 x i32> %106 to <2 x float>
+  %108 = fmul nnan <2 x float> %107, splat (float f0x30000000) ; 5 uses
+  store <2 x float> %108, ptr %42, align 8, !tbaa !9
+  %.sroa.0.0.vec.extract.i = extractelement <2 x float> %108, i64 0 ; 2 uses
+  %foldExtExtBinop = fmul nnan <2 x float> %108, %108
   %i.al = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.am = call float @llvm.fmuladd.f32(float %.sroa.0.0.vec.extract.i, float %.sroa.0.0.vec.extract.i, float %i.al)
-  %.sroa.8.8.vec.extract.i = extractelement <2 x float> %.sroa.8.0.copyload.i, i64 0 ; 3 uses
-  %i.an = call noundef float @llvm.fmuladd.f32(float %.sroa.8.8.vec.extract.i, float %.sroa.8.8.vec.extract.i, float %i.am)
+  %i.an = call noundef float @llvm.fmuladd.f32(float %104, float %104, float %i.am)
   %sqrt.i.i.i = call noundef float @llvm.sqrt.f32(float %i.an)
   %i.ao = fdiv float 1.000000e+00, %sqrt.i.i.i    ; 2 uses
-  %i.ap = fmul float %.sroa.8.8.vec.extract.i, %i.ao
+  %i.ap = fmul float %104, %i.ao
   %i.aq = insertelement <2 x float> poison, float %i.ao, i64 0
   %i.ar = shufflevector <2 x float> %i.aq, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.as = fmul <2 x float> %.sroa.0.0.copyload3.i, %i.ar
+  %i.as = fmul <2 x float> %108, %i.ar
   %i.at = fmul <2 x float> %i.as, splat (float 7.500000e-01)
   %i.au = fmul float %i.ap, 7.500000e-01
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.au, i64 0
-  store <2 x float> %i.at, ptr %42, align 16
+  store <2 x float> %i.at, ptr %42, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i, ptr %i.g, align 8, !tbaa !38
   call void @llvm.lifetime.start.p0(ptr nonnull %43) #25
   store i8 1, ptr %i.h, align 8, !tbaa !39
