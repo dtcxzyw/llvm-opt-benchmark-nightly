@@ -205,7 +205,7 @@ bb.eq:                                            ; preds = %bb.cm
   store i32 %i.wm, ptr %i.by, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bw)
   %i.wn = trunc nuw i64 %3 to i1
-  %spec.select = select i1 %i.wn, i64 %4, i64 %.sroa.13.0.copyload ; 3 uses
+  %spec.select = select i1 %i.wn, i64 %4, i64 %.sroa.13.0.copyload ; 2 uses
   %i.wo = load ptr, ptr %i.og, align 8, !nonnull !16, !noundef !16 ; 4 uses
   %i.wp = load i64, ptr %i.cb, align 8, !range !79, !noundef !16 ; 4 uses
   %i.wq = getelementptr inbounds nuw [4 x i8], ptr %i.wo, i64 %i.oo ; 2 uses
@@ -265,16 +265,13 @@ bb.eq:                                            ; preds = %bb.cm
   %.sroa.616.sroa.4.0..sroa.616.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 65540 ; 3 uses
   %.sroa.616.sroa.5.0..sroa.616.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 65544
   %.sroa.616.sroa.6.0..sroa.616.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 65552
-  %10 = and i64 %spec.select, 4095
-  %.not37.not.i = icmp eq i64 %10, 0
-  %.sroa.034.057.i = select i1 %.not37.not.i, i64 0, i64 4096
-  %11 = add i64 %.sroa.034.057.i, %spec.select
-  %i.xo = and i64 %11, -4096
+  %10 = add i64 %spec.select, 4095
+  %11 = and i64 %10, -4096
+  %.sroa.034.057.i = select i1 %5, i64 %spec.select, i64 %11 ; 2 uses
+  %12 = lshr i64 %.sroa.034.057.i, 16             ; 2 uses
+  %i.xo = and i64 %.sroa.034.057.i, 65535
   %i.xp = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
   %i.xq = getelementptr inbounds nuw i8, ptr %i.ab, i64 8 ; 2 uses
-  %spec.select717 = select i1 %5, i64 %spec.select, i64 %i.xo ; 2 uses
-  %12 = lshr i64 %spec.select717, 16              ; 2 uses
-  %13 = and i64 %spec.select717, 65535
   %.sroa.16.i.308.i.308.i.308..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.16.i, i64 308
   %exitcond.not.i1069 = icmp eq i64 %12, 0
   br label %bb.er
@@ -500,7 +497,7 @@ bb.fm:                                            ; preds = %bb.fu
 
 ._crit_edge:                                      ; preds = %bb.fm, %bb.fl
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ab), !noalias !1299
-  call fastcc void @_RNvMs0_Cs4jkuqUqsG0h_8uu_shredNtB5_11BytesWriter14bytes_for_pass(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %i.ab, ptr noalias nofree noundef align 8 dereferenceable(65864) %i.ad, i64 noundef %13) #26, !noalias !1296
+  call fastcc void @_RNvMs0_Cs4jkuqUqsG0h_8uu_shredNtB5_11BytesWriter14bytes_for_pass(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %i.ab, ptr noalias nofree noundef align 8 dereferenceable(65864) %i.ad, i64 noundef %i.xo) #26, !noalias !1296
   %i.zo = load ptr, ptr %i.ab, align 8, !noalias !1299, !noundef !16 ; 2 uses
   %i.zp = icmp eq ptr %i.zo, null
   br i1 %i.zp, label %bb.fn, label %bb.fo

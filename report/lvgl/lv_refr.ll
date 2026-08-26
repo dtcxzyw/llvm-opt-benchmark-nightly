@@ -202,7 +202,7 @@ bb.x:                                             ; preds = %bb.w
   store i8 %i.d, ptr %i.be, align 8, !tbaa !112
   %i.dd = call ptr @lv_obj_get_style_prop(ptr noundef nonnull %1, i32 noundef 0, i8 noundef zeroext -100) #8
   %i.de = ptrtoint ptr %i.dd to i64
-  %.sroa.0.0.extract.trunc.i91 = trunc i64 %i.de to i32 ; 6 uses
+  %.sroa.0.0.extract.trunc.i91 = trunc i64 %i.de to i32 ; 5 uses
   %i.df = add i32 %.sroa.0.0.extract.trunc.i91, 3599
   %smin = call i32 @llvm.smin.i32(i32 %.sroa.0.0.extract.trunc.i91, i32 3600)
   %i.dg = sub i32 %i.df, %smin
@@ -215,15 +215,13 @@ bb.x:                                             ; preds = %bb.w
 
 .lr.ph.preheader:                                 ; preds = %.preheader107
   %i.dl = call i32 @llvm.umax.i32(i32 %i.dj, i32 -3600)
-  %i.dm = add i32 %i.dl, %i.di                    ; 2 uses
-  %11 = icmp ne i32 %i.dm, %.sroa.0.0.extract.trunc.i91
-  %umin = zext i1 %11 to i32                      ; 2 uses
-  %i.dn = add i32 %umin, %.sroa.0.0.extract.trunc.i91
-  %i.do = sub i32 %i.dm, %i.dn
-  %12 = udiv i32 %i.do, 3600
-  %13 = add nuw nsw i32 %12, %umin
-  %14 = mul i32 %13, 3600
-  %i.dp = add i32 %14, 3600
+  %i.dm = add nsw i32 %i.dl, 3599
+  %i.dn = add i32 %i.dm, %i.di
+  %i.do = sub i32 %i.dn, %.sroa.0.0.extract.trunc.i91
+  %.fr121 = freeze i32 %i.do                      ; 2 uses
+  %11 = urem i32 %.fr121, 3600
+  %12 = sub nuw i32 %.fr121, %11
+  %i.dp = add i32 %12, 3600
   %i.dq = add i32 %i.dp, %.sroa.0.0.extract.trunc.i91
   %i.dr = sub i32 %i.dq, %i.di
   br label %bb.y

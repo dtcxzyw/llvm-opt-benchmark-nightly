@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.f = load i32, ptr %i.e, align 1              ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 6 ; 2 uses
-  %i.h = lshr i64 %2, 4                           ; 16 uses
+  %i.h = lshr i64 %2, 4                           ; 17 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %i.i, i8 0, i64 6, i1 false)
   %i.j = load i8, ptr %i.d, align 1, !noundef !5
@@ -304,12 +304,11 @@ bb.e:                                             ; preds = %.preheader22, %.pre
   %.sink34 = phi i16 [ %i.bh, %.preheader22 ], [ %.sroa.08.0.2, %.preheader ]
   %i.br = trunc i16 %.sink34 to i8
   store i8 %i.br, ptr %.sink.sroa.phi, align 1
-  %i.bs = trunc nuw nsw i64 %2 to i8
-  %.lhs.trunc = add nsw i8 %i.bs, -3
+  %4 = add nuw nsw i64 %2, %i.h
+  %i.bs = trunc nuw i64 %4 to i8
+  %.lhs.trunc = add i8 %i.bs, -3
   %.rhs.trunc = trunc nuw nsw i64 %i.h to i8
-  %i.bt = udiv i8 %.lhs.trunc, %.rhs.trunc
-  %.zext = zext i8 %i.bt to i64
-  %4 = add nuw nsw i64 %.zext, 1                  ; 4 uses
+  %i.bt = udiv i8 %.lhs.trunc, %.rhs.trunc        ; 4 uses
   %i.bu = and i32 %i.f, 3
   %i.bv = zext nneg i32 %i.bu to i64
   %i.bw = getelementptr inbounds nuw [3 x i8], ptr %i.a, i64 %i.bv
@@ -392,7 +391,7 @@ bb.e:                                             ; preds = %.preheader22, %.pre
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ei, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.ej, i64 3, i1 false), !alias.scope !983, !noalias !987
   %i.ek = mul nuw nsw i64 %i.h, 12                ; 3 uses
   %i.el = or disjoint i64 %i.ek, 3
-  %exitcond.12 = icmp eq i64 %4, 12
+  %exitcond.12 = icmp eq i8 %i.bt, 12
   br i1 %exitcond.12, label %bb.d, label %bb.f, !prof !177
 
 bb.f:                                             ; preds = %bb.e
@@ -404,7 +403,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ep, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.eq, i64 3, i1 false), !alias.scope !983, !noalias !987
   %i.er = mul nuw nsw i64 %i.h, 13                ; 3 uses
   %i.es = add nuw nsw i64 %i.er, 3
-  %exitcond.13 = icmp eq i64 %4, 13
+  %exitcond.13 = icmp eq i8 %i.bt, 13
   br i1 %exitcond.13, label %bb.d, label %bb.g, !prof !177
 
 bb.g:                                             ; preds = %bb.f
@@ -416,7 +415,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ew, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.ex, i64 3, i1 false), !alias.scope !983, !noalias !987
   %i.ey = mul nuw nsw i64 %i.h, 14                ; 3 uses
   %i.ez = add nuw nsw i64 %i.ey, 3
-  %exitcond.14 = icmp eq i64 %4, 14
+  %exitcond.14 = icmp eq i8 %i.bt, 14
   br i1 %exitcond.14, label %bb.d, label %bb.h, !prof !177
 
 bb.h:                                             ; preds = %bb.g
@@ -428,7 +427,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.fd, ptr noundef nonnull readonly align 1 dereferenceable(3) %i.fe, i64 3, i1 false), !alias.scope !983, !noalias !987
   %i.ff = mul nuw nsw i64 %i.h, 15                ; 3 uses
   %i.fg = add nuw nsw i64 %i.ff, 3
-  %exitcond.15 = icmp eq i64 %4, 15
+  %exitcond.15 = icmp eq i8 %i.bt, 15
   br i1 %exitcond.15, label %bb.d, label %bb.i, !prof !177
 
 bb.i:                                             ; preds = %bb.h

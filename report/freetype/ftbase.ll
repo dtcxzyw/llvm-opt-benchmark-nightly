@@ -205,15 +205,12 @@ define range(i64 -11796479, 11796481) i64 @FT_Angle_Diff(i64 noundef %0, i64 nou
 .preheader.preheader:
   %i.a = sub i64 %1, %0
   %smax = tail call i64 @llvm.smax.i64(i64 %i.a, i64 -11796479)
-  %i.b = add i64 %0, %smax                        ; 2 uses
-  %2 = icmp ne i64 %i.b, %1
-  %umin = zext i1 %2 to i64                       ; 2 uses
-  %i.c = add i64 %1, %umin
-  %i.d = sub i64 %i.b, %i.c
-  %3 = udiv i64 %i.d, 23592960
-  %4 = add nuw nsw i64 %3, %umin
-  %5 = mul i64 %4, 23592960
-  %i.e = add i64 %1, %5                           ; 2 uses
+  %i.b = add i64 %0, %smax
+  %i.c = add i64 %i.b, 23592959
+  %i.d = sub i64 %i.c, %1                         ; 2 uses
+  %2 = urem i64 %i.d, 23592960
+  %3 = sub nuw i64 %i.d, %2
+  %i.e = add i64 %1, %3                           ; 2 uses
   %i.f = sub i64 %i.e, %0                         ; 2 uses
   %i.g = add i64 %i.e, 23592959
   %smin = tail call i64 @llvm.smin.i64(i64 %i.f, i64 11796480)

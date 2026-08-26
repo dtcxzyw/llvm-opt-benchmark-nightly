@@ -191,7 +191,7 @@ bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr i8, ptr %0, i64 112
   %i.u = load i32, ptr %i.t, align 8
   %i.v = add i32 %i.u, %i.f
-  %.fr.i = freeze i32 %i.v                        ; 9 uses
+  %.fr.i = freeze i32 %i.v                        ; 8 uses
   %i.w = icmp sgt i32 %.fr.i, 999999999
   br i1 %i.w, label %thread-pre-split.i.thread, label %thread-pre-split.i
 
@@ -211,23 +211,20 @@ thread-pre-split.i:                               ; preds = %bb.g
   br i1 %i.ac, label %.lr.ph12.i, label %pps_add_offset.exit
 
 .lr.ph12.i:                                       ; preds = %thread-pre-split.i
-  %4 = icmp samesign ult i32 %.fr.i, -1000000000  ; 2 uses
-  %umin.i.neg66 = sext i1 %4 to i32
-  %umin.i = zext i1 %4 to i32
   %.neg = tail call i32 @llvm.usub.sat.i32(i32 -1000000000, i32 %.fr.i)
-  %i.ad = add nsw i32 %.neg, %umin.i.neg66
-  %5 = udiv i32 %i.ad, 1000000000
-  %i.ae = add nuw nsw i32 %5, %umin.i             ; 2 uses
-  %6 = mul i32 %i.ae, 1000000000
-  %7 = add nsw i32 %.fr.i, 1000000000
-  %8 = add i32 %7, %6
-  %i.af = xor i32 %i.ae, -1
+  %i.ad = add nuw nsw i32 %.neg, 999999999        ; 3 uses
+  %4 = urem i32 %i.ad, 1000000000
+  %i.ae = add nsw i32 %.fr.i, 1000000000
+  %5 = add i32 %i.ae, %i.ad
+  %6 = sub i32 %5, %4
+  %7 = udiv i32 %i.ad, 1000000000
+  %i.af = xor i32 %7, -1
   %i.ag = sext i32 %i.af to i64
   %i.ah = add i64 %i.c, %i.ag
   br label %pps_add_offset.exit
 
 pps_add_offset.exit:                              ; preds = %thread-pre-split.i.thread, %thread-pre-split.i, %.lr.ph12.i
-  %.sroa.14.4 = phi i32 [ %8, %.lr.ph12.i ], [ %.fr.i, %thread-pre-split.i ], [ %i.y, %thread-pre-split.i.thread ]
+  %.sroa.14.4 = phi i32 [ %6, %.lr.ph12.i ], [ %.fr.i, %thread-pre-split.i ], [ %i.y, %thread-pre-split.i.thread ]
   %i.ai = phi i64 [ %i.ah, %.lr.ph12.i ], [ %i.c, %thread-pre-split.i ], [ %i.ab, %thread-pre-split.i.thread ]
   %i.aj = load i64, ptr %i.s, align 8
   %i.ak = add i64 %i.aj, %i.ai
@@ -267,7 +264,7 @@ bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr i8, ptr %0, i64 128
   %i.au = load i32, ptr %i.at, align 8
   %i.av = add i32 %i.au, %.sroa.14.176
-  %.fr.i35 = freeze i32 %i.av                     ; 9 uses
+  %.fr.i35 = freeze i32 %i.av                     ; 8 uses
   %i.aw = icmp sgt i32 %.fr.i35, 999999999
   br i1 %i.aw, label %thread-pre-split.i37.thread, label %thread-pre-split.i37
 
@@ -287,23 +284,20 @@ thread-pre-split.i37:                             ; preds = %bb.j
   br i1 %i.bc, label %.lr.ph12.i40, label %pps_add_offset.exit44
 
 .lr.ph12.i40:                                     ; preds = %thread-pre-split.i37
-  %9 = icmp samesign ult i32 %.fr.i35, -1000000000 ; 2 uses
-  %umin.i41.neg67 = sext i1 %9 to i32
-  %umin.i41 = zext i1 %9 to i32
   %.neg65 = tail call i32 @llvm.usub.sat.i32(i32 -1000000000, i32 %.fr.i35)
-  %i.bd = add nsw i32 %.neg65, %umin.i41.neg67
-  %10 = udiv i32 %i.bd, 1000000000
-  %i.be = add nuw nsw i32 %10, %umin.i41          ; 2 uses
-  %11 = mul i32 %i.be, 1000000000
-  %12 = add nsw i32 %.fr.i35, 1000000000
-  %13 = add i32 %12, %11
-  %i.bf = xor i32 %i.be, -1
+  %i.bd = add nuw nsw i32 %.neg65, 999999999      ; 3 uses
+  %8 = urem i32 %i.bd, 1000000000
+  %i.be = add nsw i32 %.fr.i35, 1000000000
+  %9 = add i32 %i.be, %i.bd
+  %10 = sub i32 %9, %8
+  %11 = udiv i32 %i.bd, 1000000000
+  %i.bf = xor i32 %11, -1
   %i.bg = sext i32 %i.bf to i64
   %i.bh = add i64 %.sroa.0.177, %i.bg
   br label %pps_add_offset.exit44
 
 pps_add_offset.exit44:                            ; preds = %thread-pre-split.i37.thread, %thread-pre-split.i37, %.lr.ph12.i40
-  %.sroa.14.6 = phi i32 [ %13, %.lr.ph12.i40 ], [ %.fr.i35, %thread-pre-split.i37 ], [ %i.ay, %thread-pre-split.i37.thread ]
+  %.sroa.14.6 = phi i32 [ %10, %.lr.ph12.i40 ], [ %.fr.i35, %thread-pre-split.i37 ], [ %i.ay, %thread-pre-split.i37.thread ]
   %i.bi = phi i64 [ %i.bh, %.lr.ph12.i40 ], [ %.sroa.0.177, %thread-pre-split.i37 ], [ %i.bb, %thread-pre-split.i37.thread ]
   %i.bj = load i64, ptr %i.as, align 8
   %i.bk = add i64 %i.bj, %i.bi

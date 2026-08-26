@@ -84,11 +84,8 @@ bb.a:
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = ptrtoint ptr %i.c to i64                 ; 2 uses
-  %2 = and i64 %i.g, 7
-  %.not13 = icmp eq i64 %2, 0
-  %3 = select i1 %.not13, i64 0, i64 8
-  %i.h = add i64 %3, %i.g
+  %i.g = ptrtoint ptr %i.c to i64
+  %i.h = add i64 %i.g, 7
   %i.i = and i64 %i.h, -8
   %i.j = inttoptr i64 %i.i to ptr
   store ptr %i.j, ptr %i.a, align 8, !tbaa !13
@@ -106,11 +103,8 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8184
   store ptr %i.o, ptr %i.d, align 8, !tbaa !14
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 %1
-  %i.q = ptrtoint ptr %i.p to i64                 ; 2 uses
-  %4 = and i64 %i.q, 7
-  %.not = icmp eq i64 %4, 0
-  %5 = select i1 %.not, i64 0, i64 8
-  %i.r = add i64 %5, %i.q
+  %i.q = ptrtoint ptr %i.p to i64
+  %i.r = add i64 %i.q, 7
   %i.s = and i64 %i.r, -8
   %i.t = inttoptr i64 %i.s to ptr
   store ptr %i.t, ptr %i.a, align 8, !tbaa !13
@@ -196,11 +190,8 @@ bb.b:                                             ; preds = %bb.a
 _ZnwmR6region.exit:                               ; preds = %bb.a, %bb.b
   %.sink = phi ptr [ %i.k, %bb.b ], [ %i.d, %bb.a ]
   %.0.i.i = phi ptr [ %i.i, %bb.b ], [ %i.c, %bb.a ] ; 4 uses
-  %i.l = ptrtoint ptr %.sink to i64               ; 2 uses
-  %1 = and i64 %i.l, 7
-  %.not13.i.i = icmp eq i64 %1, 0
-  %2 = select i1 %.not13.i.i, i64 0, i64 8
-  %i.m = add i64 %2, %i.l
+  %i.l = ptrtoint ptr %.sink to i64
+  %i.m = add i64 %i.l, 7
   %storemerge.in = and i64 %i.m, -8
   %storemerge = inttoptr i64 %storemerge.in to ptr
   store ptr %storemerge, ptr %i.b, align 8, !tbaa !13

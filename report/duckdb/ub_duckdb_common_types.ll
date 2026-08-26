@@ -205,16 +205,13 @@ bb.a:
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.b = tail call i32 @llvm.umax.i32(i32 %0, i32 -146097)
-  %4 = icmp samesign ult i32 %0, -146097
-  %umin = zext i1 %4 to i32                       ; 2 uses
-  %i.c = add nsw i32 %0, %umin
-  %i.d = sub nsw i32 %i.b, %i.c
-  %i.e = udiv i32 %i.d, 146097
-  %5 = add nuw nsw i32 %i.e, %umin                ; 2 uses
-  %i.f = mul i32 %5, 146097
+  %i.c = add nsw i32 %i.b, 146096
+  %i.d = sub i32 %i.c, %0
+  %i.e = udiv i32 %i.d, 146097                    ; 2 uses
+  %i.f = mul nuw i32 %i.e, 146097
   %i.g = add i32 %0, %i.f
   %i.h = add i32 %i.g, 146097
-  %.neg32 = mul nsw i32 %5, -400
+  %.neg32 = mul nsw i32 %i.e, -400
   %i.i = add nsw i32 %.neg32, 1570
   br label %._crit_edge.i
 
@@ -617,17 +614,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %.lr.ph.i.preheader.i, label %.preheader.i.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.b
-  %2 = icmp samesign ult i32 %1, -146097          ; 2 uses
-  %umin.i.neg39 = sext i1 %2 to i32
-  %umin.i = zext i1 %2 to i32
   %.neg36 = tail call i32 @llvm.usub.sat.i32(i32 -146097, i32 %1)
-  %i.i = add nsw i32 %.neg36, %umin.i.neg39
-  %i.j = udiv i32 %i.i, 146097
-  %3 = add nuw nsw i32 %i.j, %umin.i              ; 2 uses
-  %i.k = mul i32 %3, 146097
+  %i.i = add nuw nsw i32 %.neg36, 146096
+  %i.j = udiv i32 %i.i, 146097                    ; 2 uses
+  %i.k = mul nuw nsw i32 %i.j, 146097
   %i.l = add nsw i32 %1, 146097
   %i.m = add i32 %i.l, %i.k
-  %.neg32.i = mul nsw i32 %3, -400
+  %.neg32.i = mul nsw i32 %i.j, -400
   %i.n = add nsw i32 %.neg32.i, 1570
   br label %._crit_edge.i.i12
 
@@ -1030,16 +1023,13 @@ bb.a:
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.b = tail call i32 @llvm.umax.i32(i32 %0, i32 -146097)
-  %1 = icmp samesign ult i32 %0, -146097
-  %umin = zext i1 %1 to i32                       ; 2 uses
-  %i.c = add nsw i32 %0, %umin
-  %i.d = sub nsw i32 %i.b, %i.c
-  %i.e = udiv i32 %i.d, 146097
-  %2 = add nuw nsw i32 %i.e, %umin                ; 2 uses
-  %i.f = mul i32 %2, 146097
+  %i.c = add nsw i32 %i.b, 146096
+  %i.d = sub i32 %i.c, %0
+  %i.e = udiv i32 %i.d, 146097                    ; 2 uses
+  %i.f = mul nuw i32 %i.e, 146097
   %i.g = add i32 %0, %i.f
   %i.h = add i32 %i.g, 146097
-  %.neg19 = mul nsw i32 %2, -400
+  %.neg19 = mul nsw i32 %i.e, -400
   %i.i = add nsw i32 %.neg19, 1570
   br label %._crit_edge.i
 
@@ -1082,21 +1072,17 @@ _ZN6duckdb4Date17ExtractYearOffsetERiS1_S1_.exit: ; preds = %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef range(i32 -128, 128) i32 @_ZN6duckdb4Date12ExtractMonthENS_6date_tE(i32 %0) local_unnamed_addr #9 align 2 {
 bb.a:
-  %.fr = freeze i32 %0                            ; 8 uses
+  %.fr = freeze i32 %0                            ; 7 uses
   %i.a = icmp slt i32 %.fr, 0
   br i1 %i.a, label %.lr.ph.i.preheader.i, label %.preheader.i.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
-  %1 = icmp samesign ult i32 %.fr, -146097        ; 2 uses
-  %umin.i.neg6 = sext i1 %1 to i32
-  %umin.i = zext i1 %1 to i32
   %.neg4 = tail call i32 @llvm.usub.sat.i32(i32 -146097, i32 %.fr)
-  %i.b = add nsw i32 %.neg4, %umin.i.neg6
-  %2 = udiv i32 %i.b, 146097
-  %i.c = add nuw nsw i32 %2, %umin.i
-  %3 = mul i32 %i.c, 146097
-  %i.d = add nsw i32 %.fr, 146097
-  %4 = add i32 %i.d, %3
+  %i.b = add nuw nsw i32 %.neg4, 146096           ; 2 uses
+  %1 = urem i32 %i.b, 146097
+  %i.c = add nsw i32 %.fr, 146097
+  %i.d = add i32 %i.c, %i.b
+  %2 = sub i32 %i.d, %1
   br label %._crit_edge.i.i
 
 .preheader.i.i:                                   ; preds = %bb.a
@@ -1113,7 +1099,7 @@ bb.a:
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph17.i.preheader.i, %.preheader.i.i, %.lr.ph.i.preheader.i
-  %.1.i = phi i32 [ %4, %.lr.ph.i.preheader.i ], [ %.fr, %.preheader.i.i ], [ %i.k, %.lr.ph17.i.preheader.i ] ; 3 uses
+  %.1.i = phi i32 [ %2, %.lr.ph.i.preheader.i ], [ %.fr, %.preheader.i.i ], [ %i.k, %.lr.ph17.i.preheader.i ] ; 3 uses
   %i.l = udiv i32 %.1.i, 365
   %i.m = zext nneg i32 %i.l to i64
   br label %bb.b
@@ -1143,21 +1129,17 @@ _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef range(i32 -2147483647, -2147483648) i32 @_ZN6duckdb4Date10ExtractDayENS_6date_tE(i32 %0) local_unnamed_addr #9 align 2 {
 bb.a:
-  %.fr = freeze i32 %0                            ; 8 uses
+  %.fr = freeze i32 %0                            ; 7 uses
   %i.a = icmp slt i32 %.fr, 0
   br i1 %i.a, label %.lr.ph.i.preheader.i, label %.preheader.i.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
-  %1 = icmp samesign ult i32 %.fr, -146097        ; 2 uses
-  %umin.i.neg7 = sext i1 %1 to i32
-  %umin.i = zext i1 %1 to i32
   %.neg4 = tail call i32 @llvm.usub.sat.i32(i32 -146097, i32 %.fr)
-  %i.b = add nsw i32 %.neg4, %umin.i.neg7
-  %2 = udiv i32 %i.b, 146097
-  %i.c = add nuw nsw i32 %2, %umin.i
-  %3 = mul i32 %i.c, 146097
-  %i.d = add nsw i32 %.fr, 146097
-  %4 = add i32 %i.d, %3
+  %i.b = add nuw nsw i32 %.neg4, 146096           ; 2 uses
+  %1 = urem i32 %i.b, 146097
+  %i.c = add nsw i32 %.fr, 146097
+  %i.d = add i32 %i.c, %i.b
+  %2 = sub i32 %i.d, %1
   br label %._crit_edge.i.i
 
 .preheader.i.i:                                   ; preds = %bb.a
@@ -1174,7 +1156,7 @@ bb.a:
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph17.i.preheader.i, %.preheader.i.i, %.lr.ph.i.preheader.i
-  %.1.i = phi i32 [ %4, %.lr.ph.i.preheader.i ], [ %.fr, %.preheader.i.i ], [ %i.k, %.lr.ph17.i.preheader.i ] ; 3 uses
+  %.1.i = phi i32 [ %2, %.lr.ph.i.preheader.i ], [ %.fr, %.preheader.i.i ], [ %i.k, %.lr.ph17.i.preheader.i ] ; 3 uses
   %i.l = udiv i32 %.1.i, 365
   %i.m = zext nneg i32 %i.l to i64
   br label %bb.b
@@ -1210,20 +1192,17 @@ _ZN6duckdb4Date7ConvertENS_6date_tERiS2_S2_.exit: ; preds = %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef range(i32 -2147483646, -2147483648) i32 @_ZN6duckdb4Date19ExtractDayOfTheYearENS_6date_tE(i32 %0) local_unnamed_addr #9 align 2 {
 bb.a:
-  %.fr = freeze i32 %0                            ; 9 uses
+  %.fr = freeze i32 %0                            ; 8 uses
   %i.a = icmp slt i32 %.fr, 0
   br i1 %i.a, label %.lr.ph.i.preheader, label %.preheader.i
 
 .lr.ph.i.preheader:                               ; preds = %bb.a
   %i.b = tail call i32 @llvm.umax.i32(i32 %.fr, i32 -146097)
-  %1 = icmp samesign ult i32 %.fr, -146097
-  %umin = zext i1 %1 to i32                       ; 2 uses
-  %i.c = add nsw i32 %.fr, %umin
-  %i.d = sub nsw i32 %i.b, %i.c
-  %2 = udiv i32 %i.d, 146097
-  %3 = add nuw nsw i32 %2, %umin
-  %4 = mul i32 %3, 146097
-  %i.e = add i32 %.fr, %4
+  %i.c = add nsw i32 %i.b, 146096
+  %i.d = sub i32 %i.c, %.fr                       ; 2 uses
+  %1 = urem i32 %i.d, 146097
+  %2 = sub nuw i32 %i.d, %1
+  %i.e = add i32 %.fr, %2
   %i.f = add i32 %i.e, 146097
   br label %._crit_edge.i
 
@@ -1298,17 +1277,13 @@ bb.a:
   br i1 %i.a, label %.lr.ph.i.preheader.i.i, label %.preheader.i.i.i
 
 .lr.ph.i.preheader.i.i:                           ; preds = %bb.a
-  %3 = icmp samesign ult i32 %0, -146097          ; 2 uses
-  %umin.i.neg35.i = sext i1 %3 to i32
-  %umin.i.i = zext i1 %3 to i32
   %.neg34.i = tail call i32 @llvm.usub.sat.i32(i32 -146097, i32 %0)
-  %i.b = add nsw i32 %.neg34.i, %umin.i.neg35.i
-  %i.c = udiv i32 %i.b, 146097
-  %4 = add nuw nsw i32 %i.c, %umin.i.i            ; 2 uses
-  %i.d = mul i32 %4, 146097
+  %i.b = add nuw nsw i32 %.neg34.i, 146096
+  %i.c = udiv i32 %i.b, 146097                    ; 2 uses
+  %i.d = mul nuw nsw i32 %i.c, 146097
   %i.e = add nsw i32 %0, 146097
   %i.f = add i32 %i.e, %i.d
-  %.neg32.i.i = mul nsw i32 %4, -400
+  %.neg32.i.i = mul nsw i32 %i.c, -400
   %i.g = add nsw i32 %.neg32.i.i, 1570
   br label %._crit_edge.i.i.i
 
@@ -1488,17 +1463,13 @@ bb.a:
   br i1 %i.a, label %.lr.ph.i.preheader.i, label %.preheader.i.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
-  %2 = icmp samesign ult i32 %0, -146097          ; 2 uses
-  %umin.i.neg28 = sext i1 %2 to i32
-  %umin.i = zext i1 %2 to i32
   %.neg26 = tail call i32 @llvm.usub.sat.i32(i32 -146097, i32 %0)
-  %i.b = add nsw i32 %.neg26, %umin.i.neg28
-  %i.c = udiv i32 %i.b, 146097
-  %3 = add nuw nsw i32 %i.c, %umin.i              ; 2 uses
-  %i.d = mul i32 %3, 146097
+  %i.b = add nuw nsw i32 %.neg26, 146096
+  %i.c = udiv i32 %i.b, 146097                    ; 2 uses
+  %i.d = mul nuw nsw i32 %i.c, 146097
   %i.e = add nsw i32 %0, 146097
   %i.f = add i32 %i.e, %i.d
-  %.neg32.i = mul nsw i32 %3, -400
+  %.neg32.i = mul nsw i32 %i.c, -400
   %i.g = add nsw i32 %.neg32.i, 1570
   br label %._crit_edge.i.i
 
@@ -1901,7 +1872,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.049 = phi i32 [ %i.w, %bb.b ], [ %i.o, %bb.a ] ; 2 uses
-  %.046 = phi i32 [ %i.x, %bb.b ], [ %i.t, %bb.a ] ; 6 uses
+  %.046 = phi i32 [ %i.x, %bb.b ], [ %i.t, %bb.a ] ; 5 uses
   %.0 = phi i32 [ %i.u, %bb.b ], [ %i.c, %bb.a ]  ; 2 uses
   %i.y = phi <4 x i32> [ %i.v, %bb.b ], [ %i.j, %bb.a ] ; 10 uses
   %i.z = icmp slt i32 %.046, 0
@@ -1909,21 +1880,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.c
   %i.aa = tail call i32 @llvm.umax.i32(i32 %.046, i32 -1000000)
-  %3 = icmp samesign ult i32 %.046, -1000000
-  %umin = zext i1 %3 to i32                       ; 2 uses
-  %i.ab = add nsw i32 %.046, %umin
-  %i.ac = sub nsw i32 %i.aa, %i.ab
-  %i.ad = udiv i32 %i.ac, 1000000
-  %4 = add nuw nsw i32 %i.ad, %umin               ; 2 uses
-  %i.ae = mul i32 %4, 1000000
+  %i.ab = add nsw i32 %i.aa, 999999
+  %i.ac = sub i32 %i.ab, %.046
+  %i.ad = udiv i32 %i.ac, 1000000                 ; 2 uses
+  %i.ae = mul nuw i32 %i.ad, 1000000
   %i.af = add i32 %.046, %i.ae
   %i.ag = add i32 %i.af, 1000000
-  %i.ah = xor i32 %4, -1
+  %i.ah = xor i32 %i.ad, -1
   %i.ai = add i32 %.049, %i.ah
   br label %.preheader85
 
 .preheader85:                                     ; preds = %.lr.ph.preheader, %bb.c
-  %.150.lcssa = phi i32 [ %.049, %bb.c ], [ %i.ai, %.lr.ph.preheader ] ; 6 uses
+  %.150.lcssa = phi i32 [ %.049, %bb.c ], [ %i.ai, %.lr.ph.preheader ] ; 5 uses
   %.147.lcssa = phi i32 [ %.046, %bb.c ], [ %i.ag, %.lr.ph.preheader ] ; 2 uses
   %i.aj = icmp slt i32 %.150.lcssa, 0
   %i.ak = extractelement <4 x i32> %i.y, i64 3    ; 2 uses
@@ -1931,21 +1899,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .lr.ph91.preheader:                               ; preds = %.preheader85
   %i.al = tail call i32 @llvm.umax.i32(i32 %.150.lcssa, i32 -60)
-  %5 = icmp samesign ult i32 %.150.lcssa, -60
-  %umin145 = zext i1 %5 to i32                    ; 2 uses
-  %i.am = add nsw i32 %.150.lcssa, %umin145
-  %i.an = sub nsw i32 %i.al, %i.am
-  %i.ao = udiv i32 %i.an, 60
-  %6 = add nuw nsw i32 %i.ao, %umin145            ; 2 uses
-  %i.ap = mul i32 %6, 60
+  %i.am = add nsw i32 %i.al, 59
+  %i.an = sub i32 %i.am, %.150.lcssa
+  %i.ao = udiv i32 %i.an, 60                      ; 2 uses
+  %i.ap = mul nuw i32 %i.ao, 60
   %i.aq = add i32 %.150.lcssa, %i.ap
   %i.ar = add i32 %i.aq, 60
-  %i.as = xor i32 %6, -1
+  %i.as = xor i32 %i.ao, -1
   %i.at = add i32 %i.ak, %i.as
   br label %.preheader84
 
 .preheader84:                                     ; preds = %.lr.ph91.preheader, %.preheader85
-  %.153.lcssa = phi i32 [ %i.ak, %.preheader85 ], [ %i.at, %.lr.ph91.preheader ] ; 6 uses
+  %.153.lcssa = phi i32 [ %i.ak, %.preheader85 ], [ %i.at, %.lr.ph91.preheader ] ; 5 uses
   %.251.lcssa = phi i32 [ %.150.lcssa, %.preheader85 ], [ %i.ar, %.lr.ph91.preheader ] ; 2 uses
   %i.au = icmp slt i32 %.153.lcssa, 0
   %i.av = extractelement <4 x i32> %i.y, i64 2    ; 2 uses
@@ -1953,21 +1918,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .lr.ph96.preheader:                               ; preds = %.preheader84
   %i.aw = tail call i32 @llvm.umax.i32(i32 %.153.lcssa, i32 -60)
-  %7 = icmp samesign ult i32 %.153.lcssa, -60
-  %umin147 = zext i1 %7 to i32                    ; 2 uses
-  %i.ax = add nsw i32 %.153.lcssa, %umin147
-  %i.ay = sub nsw i32 %i.aw, %i.ax
-  %i.az = udiv i32 %i.ay, 60
-  %8 = add nuw nsw i32 %i.az, %umin147            ; 2 uses
-  %i.ba = mul i32 %8, 60
+  %i.ax = add nsw i32 %i.aw, 59
+  %i.ay = sub i32 %i.ax, %.153.lcssa
+  %i.az = udiv i32 %i.ay, 60                      ; 2 uses
+  %i.ba = mul nuw i32 %i.az, 60
   %i.bb = add i32 %.153.lcssa, %i.ba
   %i.bc = add i32 %i.bb, 60
-  %i.bd = xor i32 %8, -1
+  %i.bd = xor i32 %i.az, -1
   %i.be = add i32 %i.av, %i.bd
   br label %.preheader83
 
 .preheader83:                                     ; preds = %.lr.ph96.preheader, %.preheader84
-  %.157.lcssa = phi i32 [ %i.av, %.preheader84 ], [ %i.be, %.lr.ph96.preheader ] ; 6 uses
+  %.157.lcssa = phi i32 [ %i.av, %.preheader84 ], [ %i.be, %.lr.ph96.preheader ] ; 5 uses
   %.254.lcssa = phi i32 [ %.153.lcssa, %.preheader84 ], [ %i.bc, %.lr.ph96.preheader ] ; 2 uses
   %i.bf = icmp slt i32 %.157.lcssa, 0
   %i.bg = extractelement <4 x i32> %i.y, i64 1    ; 2 uses
@@ -1975,16 +1937,13 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .lr.ph101.preheader:                              ; preds = %.preheader83
   %i.bh = tail call i32 @llvm.umax.i32(i32 %.157.lcssa, i32 -24)
-  %9 = icmp samesign ult i32 %.157.lcssa, -24
-  %umin149 = zext i1 %9 to i32                    ; 2 uses
-  %i.bi = add nsw i32 %.157.lcssa, %umin149
-  %i.bj = sub nsw i32 %i.bh, %i.bi
-  %i.bk = udiv i32 %i.bj, 24
-  %10 = add nuw nsw i32 %i.bk, %umin149           ; 2 uses
-  %i.bl = mul i32 %10, 24
+  %i.bi = add nsw i32 %i.bh, 23
+  %i.bj = sub i32 %i.bi, %.157.lcssa
+  %i.bk = udiv i32 %i.bj, 24                      ; 2 uses
+  %i.bl = mul nuw i32 %i.bk, 24
   %i.bm = add i32 %.157.lcssa, %i.bl
   %i.bn = add i32 %i.bm, 24
-  %i.bo = xor i32 %10, -1
+  %i.bo = xor i32 %i.bk, -1
   %i.bp = add i32 %i.bg, %i.bo
   br label %.preheader82
 
@@ -2319,23 +2278,20 @@ _ZN6duckdb4Date10IsLeapYearEi.exit71.thread77.preheader: ; preds = %.lr.ph106.sp
   br label %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread77
 
 .preheader:                                       ; preds = %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread77, %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread.us, %_ZN6duckdb4Date10IsLeapYearEi.exit71.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread73.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.us.us.us, %middle.block, %middle.block172, %middle.block186, %middle.block200, %middle.block214, %middle.block228, %.preheader82
-  %.165.lcssa = phi i32 [ %i.br, %.preheader82 ], [ %.266.us115, %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread.us ], [ %.266.us115.us, %_ZN6duckdb4Date10IsLeapYearEi.exit71.us.us ], [ %.266.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread73.us ], [ %.266.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread.us.us ], [ %.266.us.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.us.us.us ], [ %i.ct, %middle.block228 ], [ %i.di, %middle.block214 ], [ %i.dx, %middle.block200 ], [ %i.eo, %middle.block186 ], [ %i.fd, %middle.block172 ], [ %i.fs, %middle.block ], [ %.266, %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread77 ] ; 6 uses
+  %.165.lcssa = phi i32 [ %i.br, %.preheader82 ], [ %.266.us115, %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread.us ], [ %.266.us115.us, %_ZN6duckdb4Date10IsLeapYearEi.exit71.us.us ], [ %.266.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread73.us ], [ %.266.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread.us.us ], [ %.266.us.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.us.us.us ], [ %i.ct, %middle.block228 ], [ %i.di, %middle.block214 ], [ %i.dx, %middle.block200 ], [ %i.eo, %middle.block186 ], [ %i.fd, %middle.block172 ], [ %i.fs, %middle.block ], [ %.266, %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread77 ] ; 5 uses
   %.262.lcssa = phi i32 [ %.161.lcssa, %.preheader82 ], [ %.363.us114, %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread.us ], [ %.363.us114.us, %_ZN6duckdb4Date10IsLeapYearEi.exit71.us.us ], [ %.363.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread73.us ], [ %.363.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.thread.us.us ], [ %.363.us.us.us, %_ZN6duckdb4Date10IsLeapYearEi.exit.us.us.us ], [ %i.co, %middle.block228 ], [ %i.dd, %middle.block214 ], [ %i.ds, %middle.block200 ], [ %i.ej, %middle.block186 ], [ %i.ey, %middle.block172 ], [ %i.fn, %middle.block ], [ %.363, %_ZN6duckdb4Date10IsLeapYearEi.exit71.thread77 ] ; 2 uses
   %i.ft = icmp slt i32 %.165.lcssa, 0
   br i1 %i.ft, label %.lr.ph128.preheader, label %._crit_edge
 
 .lr.ph128.preheader:                              ; preds = %.preheader
   %i.fu = tail call i32 @llvm.umax.i32(i32 %.165.lcssa, i32 -12)
-  %11 = icmp samesign ult i32 %.165.lcssa, -12
-  %umin151 = zext i1 %11 to i32                   ; 2 uses
-  %i.fv = add nsw i32 %.165.lcssa, %umin151
-  %i.fw = sub nsw i32 %i.fu, %i.fv
-  %i.fx = udiv i32 %i.fw, 12
-  %12 = add nuw nsw i32 %i.fx, %umin151           ; 2 uses
-  %i.fy = mul i32 %12, 12
+  %i.fv = add nsw i32 %i.fu, 11
+  %i.fw = sub i32 %i.fv, %.165.lcssa
+  %i.fx = udiv i32 %i.fw, 12                      ; 2 uses
+  %i.fy = mul nuw i32 %i.fx, 12
   %i.fz = add i32 %.165.lcssa, %i.fy
   %i.ga = add i32 %i.fz, 12
-  %i.gb = xor i32 %12, -1
+  %i.gb = xor i32 %i.fx, -1
   %i.gc = add i32 %.0, %i.gb
   br label %._crit_edge
 
@@ -2427,22 +2383,18 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #46
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #46
   call void @_ZN6duckdb9Timestamp7ConvertENS_11timestamp_tERNS_6date_tERNS_7dtime_tE(i64 %1, ptr noundef nonnull align 4 dereferenceable(4) %2, ptr noundef nonnull align 8 dereferenceable(8) %3)
-  %.sroa.01.0.copyload = load i32, ptr %2, align 4, !tbaa !3 ; 8 uses
+  %.sroa.01.0.copyload = load i32, ptr %2, align 4, !tbaa !3 ; 7 uses
   %i.a = icmp slt i32 %.sroa.01.0.copyload, 0
   br i1 %i.a, label %.lr.ph.i.preheader.i, label %.preheader.i.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
-  %4 = icmp samesign ult i32 %.sroa.01.0.copyload, -146097 ; 2 uses
-  %umin.i.neg7 = sext i1 %4 to i32
-  %umin.i = zext i1 %4 to i32
   %.neg = tail call i32 @llvm.usub.sat.i32(i32 -146097, i32 %.sroa.01.0.copyload)
-  %i.b = add nsw i32 %.neg, %umin.i.neg7
-  %i.c = udiv i32 %i.b, 146097
-  %5 = add nuw nsw i32 %i.c, %umin.i              ; 2 uses
-  %i.d = mul i32 %5, 146097
+  %i.b = add nuw nsw i32 %.neg, 146096
+  %i.c = udiv i32 %i.b, 146097                    ; 2 uses
+  %i.d = mul nuw nsw i32 %i.c, 146097
   %i.e = add nsw i32 %.sroa.01.0.copyload, 146097
   %i.f = add i32 %i.e, %i.d
-  %.neg32.i = mul nsw i32 %5, -400
+  %.neg32.i = mul nsw i32 %i.c, -400
   %i.g = add nsw i32 %.neg32.i, 1570
   br label %._crit_edge.i.i
 
@@ -2732,17 +2684,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.a, label %.lr.ph.i.preheader.i, label %.preheader.i.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.c
-  %10 = icmp samesign ult i32 %0, -146097         ; 2 uses
-  %umin.i.neg71 = sext i1 %10 to i32
-  %umin.i = zext i1 %10 to i32
   %.neg68 = tail call i32 @llvm.usub.sat.i32(i32 -146097, i32 %0)
-  %i.b = add nsw i32 %.neg68, %umin.i.neg71
-  %i.c = udiv i32 %i.b, 146097
-  %11 = add nuw nsw i32 %i.c, %umin.i             ; 2 uses
-  %i.d = mul i32 %11, 146097
+  %i.b = add nuw nsw i32 %.neg68, 146096
+  %i.c = udiv i32 %i.b, 146097                    ; 2 uses
+  %i.d = mul nuw nsw i32 %i.c, 146097
   %i.e = add nsw i32 %0, 146097
   %i.f = add i32 %i.e, %i.d
-  %.neg32.i = mul nsw i32 %11, -400
+  %.neg32.i = mul nsw i32 %i.c, -400
   %i.g = add nsw i32 %.neg32.i, 1570
   br label %._crit_edge.i.i
 

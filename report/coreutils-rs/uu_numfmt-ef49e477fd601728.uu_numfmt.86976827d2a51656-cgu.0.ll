@@ -204,8 +204,7 @@ bb.cz:                                            ; preds = %bb.cc
   %i.ox = fdiv double %i.lv, %i.ow                ; 2 uses
   %i.oy = uitofp i64 %.sroa.015.0.i.i to double
   %i.oz = tail call double @llvm.pow.f64(double 1.000000e+01, double %i.oy) ; 3 uses
-  %6 = tail call double @llvm.fabs.f64(double %i.oz)
-  %i.pa = fcmp ueq double %6, +inf
+  %i.pa = fcmp ueq double %i.oz, +inf
   br i1 %i.pa, label %_RNvNtCsbyqtxyC5WYI_9uu_numfmt6format9div_round.exit.i.i, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
@@ -350,8 +349,7 @@ bb.ds:                                            ; preds = %bb.dq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.au), !noalias !1928
   %i.pw = uitofp nneg i64 %.sroa.021.0 to double
   %i.px = tail call double @llvm.pow.f64(double 1.000000e+01, double %i.pw) ; 3 uses
-  %7 = tail call double @llvm.fabs.f64(double %i.px)
-  %i.py = fcmp ueq double %7, +inf
+  %i.py = fcmp ueq double %i.px, +inf
   br i1 %i.py, label %_RNvNtCsbyqtxyC5WYI_9uu_numfmt6format20round_with_precision.exit.i, label %bb.dt
 
 bb.dt:                                            ; preds = %.split.i

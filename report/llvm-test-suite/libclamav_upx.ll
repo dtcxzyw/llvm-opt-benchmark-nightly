@@ -204,10 +204,7 @@ bb.aa:                                            ; preds = %checkpe.exit319, %.
   br i1 %.not273, label %.thread355, label %bb.ad
 
 .thread355:                                       ; preds = %checkpe.exit319, %bb.aa
-  %9 = and i32 %8, 4095
-  %.not274 = icmp eq i32 %9, 0
-  %10 = select i1 %.not274, i32 0, i32 4096
-  %i.di = add i32 %10, %8
+  %i.di = add i32 %8, 4095
   %i.dj = and i32 %i.di, -4096                    ; 4 uses
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.4) #6
   %i.dk = or disjoint i32 %i.dj, 512              ; 2 uses
