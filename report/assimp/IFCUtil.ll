@@ -205,12 +205,12 @@ _ZN10aiVector3tIdE9NormalizeEv.exit9:             ; preds = %_ZN10aiVector3tIdE9
   %i.cs = extractelement <2 x double> %i.ck, i64 0 ; 2 uses
   %i.ct = tail call double @llvm.fmuladd.f64(double %i.bi, double %i.cs, double %i.cr)
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.sroa.7.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 96
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.cu, i8 0, i64 24, i1 false)
+  %.sroa.5.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 88
+  %.sroa.7.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %0, i64 96
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.7.0..sroa_idx.i.a, i8 0, i64 24, i1 false)
+  %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 120
   store double 1.000000e+00, ptr %.sroa.9.0..sroa_idx.i, align 8
   %.sroa.025.0..sroa.025.0..sroa.025.0..sroa.025.0. = load double, ptr %.sroa.025, align 8
@@ -220,7 +220,7 @@ _ZN10aiVector3tIdE9NormalizeEv.exit9:             ; preds = %_ZN10aiVector3tIdE9
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 56
   store double %.sroa.626.0..sroa.626.0..sroa.626.0..sroa.626.8., ptr %i.cw, align 8
   %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.16. = load double, ptr %.sroa.8, align 8
-  store double %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.16., ptr %.sroa.8.0..sroa_idx.i, align 8
+  store double %.sroa.8.0..sroa.8.0..sroa.8.0..sroa.8.16., ptr %.sroa.6.0..sroa_idx.i, align 8
   store double %i.cp, ptr %0, align 8
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store double %i.cs, ptr %i.cx, align 8
@@ -230,13 +230,13 @@ _ZN10aiVector3tIdE9NormalizeEv.exit9:             ; preds = %_ZN10aiVector3tIdE9
   %i.da = extractelement <2 x double> %i.co, i64 0
   store double %i.da, ptr %.sroa.4.0..sroa_idx.i, align 8
   %i.db = extractelement <2 x double> %i.co, i64 1
-  store double %i.db, ptr %.sroa.5.0..sroa_idx.i.a, align 8
+  store double %i.db, ptr %i.cu, align 8
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 72
   store double %i.ct, ptr %i.dc, align 8
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 16
   store double %i.bi, ptr %i.dd, align 8
-  store double %i.cl, ptr %.sroa.6.0..sroa_idx.i, align 8
-  store double %i.bn, ptr %.sroa.7.0..sroa_idx.i.a, align 8
+  store double %i.cl, ptr %.sroa.5.0..sroa_idx.i.a, align 8
+  store double %i.bn, ptr %.sroa.7.0..sroa_idx.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.025)
@@ -545,11 +545,11 @@ bb.e:                                             ; preds = %bb.d, %_ZN6Assimp3I
   %i.al = phi <2 x double> [ %i.aj, %bb.d ], [ <double 1.000000e+00, double 0.000000e+00>, %_ZN6Assimp3IFC21ConvertCartesianPointER10aiVector3tIdERKNS0_10Schema_2x317IfcCartesianPointE.exit ] ; 3 uses
   %i.am = extractelement <2 x double> %i.al, i64 0
   %i.an = fneg double %i.am
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 96
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ao, i8 0, i64 24, i1 false)
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 120
   store double 1.000000e+00, ptr %.sroa.9.0..sroa_idx.i, align 8
   %.sroa.08.0..sroa.08.0..sroa.08.0..sroa.08.0. = load double, ptr %.sroa.08, align 8

@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
   %i.bz = ptrtoint ptr %1 to i64
   store i64 %i.bz, ptr %9, align 8
   %.sroa.0.i.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store i64 0, ptr %.sroa.0.i.i.i.i.i.sroa.4.0..sroa_idx, align 8, !tbaa !10
+  store i64 0, ptr %.sroa.0.i.i.i.i.i.sroa.4.0..sroa_idx, align 8
   %i.ca = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
   store ptr @"_ZNSt17_Function_handlerIFmmEZN31buffer_test_append_partial_Test8TestBodyEvE3$_0E10_M_managerERSt9_Any_dataRKS4_St18_Manager_operation", ptr %i.ca, align 8, !tbaa !114
   %i.cb = getelementptr inbounds nuw i8, ptr %9, i64 24

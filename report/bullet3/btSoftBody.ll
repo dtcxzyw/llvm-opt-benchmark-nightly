@@ -205,9 +205,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.b, i8 0, i64 160, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN10btSoftBody6LJointE, i64 16), ptr %i.a, align 8, !tbaa !9
-  store ptr %2, ptr %scevgep.i.i, align 8, !tbaa !541
   %.sroa.458.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.458.0..sroa_idx, i8 0, i64 16, i1 false)
+  store ptr %2, ptr %scevgep.i.i, align 8, !tbaa !541
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !543
   %i.d = load atomic i8, ptr @_ZGVZNK10btSoftBody4Body5xformEvE8identity acquire, align 8
@@ -610,9 +610,9 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(168) %i.b, i8 0, i64 168, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN10btSoftBody6AJointE, i64 16), ptr %i.a, align 8, !tbaa !9
-  store ptr %2, ptr %scevgep.i.i, align 8, !tbaa !541
   %.sroa.460.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.460.0..sroa_idx, i8 0, i64 16, i1 false)
+  store ptr %2, ptr %scevgep.i.i, align 8, !tbaa !541
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !543
   %i.d = load atomic i8, ptr @_ZGVZNK10btSoftBody4Body5xformEvE8identity acquire, align 8

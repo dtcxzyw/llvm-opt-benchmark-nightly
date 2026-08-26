@@ -205,19 +205,19 @@ _ZNKSt6vectorIN7rocksdb13DataBlockIter15CachedPrevEntryESaIS2_EE12_M_check_lenEm
   %i.fr = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fq) #23 ; 5 uses
   %i.fs = getelementptr inbounds nuw i8, ptr %i.fr, i64 %i.fj ; 7 uses
   %i.ft = load i32, ptr %i.bi, align 8, !tbaa !53
+  %2 = getelementptr inbounds nuw i8, ptr %i.fs, i64 32
+  store ptr %.sroa.0.0.copyload.i, ptr %2, align 8
+  %i.fu = getelementptr inbounds nuw i8, ptr %i.fs, i64 40
+  store i64 %.sroa.2.0.copyload.i, ptr %i.fu, align 8
   store i32 %i.ft, ptr %i.fs, align 8, !tbaa !115
-  %i.fu = getelementptr inbounds nuw i8, ptr %i.fs, i64 4
-  store i32 %i.dc, ptr %i.fu, align 4, !tbaa !121
-  %2 = getelementptr inbounds nuw i8, ptr %i.fs, i64 8
-  store ptr %i.cv, ptr %2, align 8, !tbaa !117
-  %i.fv = getelementptr inbounds nuw i8, ptr %i.fs, i64 16
-  store i64 0, ptr %i.fv, align 8, !tbaa !119
-  %i.fw = getelementptr inbounds nuw i8, ptr %i.fs, i64 24
-  store i64 %i.cw, ptr %i.fw, align 8, !tbaa !118
-  %i.fx = getelementptr inbounds nuw i8, ptr %i.fs, i64 32
-  store ptr %.sroa.0.0.copyload.i, ptr %i.fx, align 8
-  %.sroa.5.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %i.fs, i64 40
-  store i64 %.sroa.2.0.copyload.i, ptr %.sroa.5.0..sroa_idx42, align 8
+  %i.fv = getelementptr inbounds nuw i8, ptr %i.fs, i64 4
+  store i32 %i.dc, ptr %i.fv, align 4, !tbaa !121
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.fs, i64 8
+  store ptr %i.cv, ptr %i.fw, align 8, !tbaa !117
+  %i.fx = getelementptr inbounds nuw i8, ptr %i.fs, i64 16
+  store i64 0, ptr %i.fx, align 8, !tbaa !119
+  %.sroa.5.0..sroa_idx42 = getelementptr inbounds nuw i8, ptr %i.fs, i64 24
+  store i64 %i.cw, ptr %.sroa.5.0..sroa_idx42, align 8, !tbaa !118
   %.not10.i.i.i.i = icmp eq ptr %i.fg, %i.ex
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN7rocksdb13DataBlockIter15CachedPrevEntryESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit37.i, label %.lr.ph.i.i.i.i
 
@@ -606,17 +606,17 @@ _ZNKSt6vectorIN7rocksdb13DataBlockIter15CachedPrevEntryESaIS2_EE12_M_check_lenEm
   %i.ad = load i32, ptr %2, align 4, !tbaa !53
   %i.ae = load i64, ptr %4, align 8, !tbaa !64
   %i.af = load i64, ptr %5, align 8, !tbaa !64
+  %8 = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false)
   store i32 %i.ac, ptr %i.ab, align 8, !tbaa !115
-  %8 = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
-  store i32 %i.ad, ptr %8, align 4, !tbaa !121
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
-  store ptr null, ptr %i.ag, align 8, !tbaa !117
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  store i64 %i.ae, ptr %i.ah, align 8, !tbaa !119
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
-  store i64 %i.af, ptr %i.ai, align 8, !tbaa !118
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false)
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
+  store i32 %i.ad, ptr %i.ag, align 4, !tbaa !121
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
+  store ptr null, ptr %i.ah, align 8, !tbaa !117
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
+  store i64 %i.ae, ptr %i.ai, align 8, !tbaa !119
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
+  store i64 %i.af, ptr %i.aj, align 8, !tbaa !118
   %.not10.i.i.i.i = icmp eq ptr %i.p, %i.b
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN7rocksdb13DataBlockIter15CachedPrevEntryESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit37.i, label %.lr.ph.i.i.i.i
 

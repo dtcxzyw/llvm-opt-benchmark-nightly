@@ -204,8 +204,8 @@ is_env_disabled.exit:                             ; preds = %is_env_enabled.exit
 
 bb.q:                                             ; preds = %is_env_disabled.exit
   %i.bp = getelementptr i8, ptr %1, i64 11896
-  %4 = getelementptr i8, ptr %1, i64 12024
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2432) %i.bp, i8 0, i64 2432, i1 false)
+  %4 = getelementptr i8, ptr %1, i64 12024
   %.sroa.2.0..sroa_idx = getelementptr i8, ptr %1, i64 14328
   store ptr %4, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !224
   br label %bb.r

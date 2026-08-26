@@ -204,10 +204,10 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1) ]
-  %.sroa.3.sroa.4.0..8.val.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
-  %.sroa.3.sroa.5.0..8.val.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.val, i64 9
-  %.sroa.3.sroa.7.0..8.val.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.val, i64 16
-  %.sroa.3.sroa.8.0..8.val.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.val, i64 24
+  %.sroa.3.sroa.4.0..8.val.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.val, i64 24
+  %.sroa.3.sroa.5.0..8.val.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.val, i64 8 ; 2 uses
+  %.sroa.3.sroa.7.0..8.val.sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %.val, i64 9
+  %.sroa.3.sroa.8.0..8.val.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.val, i64 16
   br label %bb.b
 
 .loopexit.i:                                      ; preds = %.preheader.i.i
@@ -230,12 +230,12 @@ bb.c:                                             ; preds = %bb.b
 
 _RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferINtBT_11ImageBufferINtNtB6_5color4LumahEINtNtCs4wP2HXfJTCR_5alloc3vec3VechEE14expand_palette0E0B6_.exit.i.i: ; preds = %bb.b
   %i.k = udiv i8 8, %i.i                          ; 2 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.sroa.4.0..8.val.sroa_idx.i.i.a, i8 0, i64 16, i1 false), !noalias !2797
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   store ptr %.val.i.i, ptr %.val, align 8, !alias.scope !2813, !noalias !2797
-  store i8 0, ptr %.sroa.3.sroa.4.0..8.val.sroa_idx.i.i.a, align 8, !alias.scope !2813, !noalias !2797
-  store i8 %i.k, ptr %.sroa.3.sroa.5.0..8.val.sroa_idx.i.i.a, align 1, !alias.scope !2813, !noalias !2797
-  store i64 %i.h, ptr %.sroa.3.sroa.7.0..8.val.sroa_idx.i.i.a, align 8, !alias.scope !2813, !noalias !2797
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.sroa.8.0..8.val.sroa_idx.i.i, i8 0, i64 16, i1 false), !noalias !2797
+  store i8 0, ptr %.sroa.3.sroa.5.0..8.val.sroa_idx.i.i.a, align 8, !alias.scope !2813, !noalias !2797
+  store i8 %i.k, ptr %.sroa.3.sroa.7.0..8.val.sroa_idx.i.i.a, align 1, !alias.scope !2813, !noalias !2797
+  store i64 %i.h, ptr %.sroa.3.sroa.8.0..8.val.sroa_idx.i.i, align 8, !alias.scope !2813, !noalias !2797
   %.not.i.i.i.i.i.i.i = icmp eq i64 %.sroa.01.09.i, 0
   br i1 %.not.i.i.i.i.i.i.i, label %.loopexit7.sink.split.i, label %.preheader.i.i
 
@@ -247,7 +247,7 @@ _RNCINvNtCsa5QsYiPB8Gl_5image5utils13expand_packedNCNvMsO_NtNtB6_6images6bufferI
 
 bb.d:                                             ; preds = %.preheader.i.i
   %i.m = add nuw nsw i8 %i.l, 1                   ; 2 uses
-  store i8 %i.m, ptr %.sroa.3.sroa.4.0..8.val.sroa_idx.i.i.a, align 8, !alias.scope !2817, !noalias !2838
+  store i8 %i.m, ptr %.sroa.3.sroa.5.0..8.val.sroa_idx.i.i.a, align 8, !alias.scope !2817, !noalias !2838
   %i.n = add i64 %.sroa.01.0.i.i.i.i.i.i.i.i, -1  ; 2 uses
   %i.o = icmp eq i64 %i.n, 0
   br i1 %i.o, label %.loopexit7.sink.split.i, label %.preheader.i.i

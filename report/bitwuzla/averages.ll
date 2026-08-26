@@ -13,9 +13,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN7CaDiCaL8Internal13init_averagesEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(7288) initializes((2240, 2520)) %0) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2240
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 2440
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2440
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 2240
   %.sroa.429.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2456
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2464
   %.sroa.631.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2472
@@ -55,11 +55,11 @@ bb.a:
   store double %i.q, ptr %.sroa.421.0..sroa_idx, align 8, !tbaa !9
   store double %i.r, ptr %.sroa.522.0..sroa_idx, align 8, !tbaa !9
   store double %i.t, ptr %.sroa.623.0..sroa_idx, align 8, !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, i8 0, i64 16, i1 false)
   %i.u = extractelement <4 x double> %i.h, i64 0  ; 2 uses
   %i.v = fsub double 1.000000e+00, %i.u           ; 2 uses
   %i.w = fcmp une double %i.v, 0.000000e+00
   %i.x = uitofp i1 %i.w to double
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %.sroa.417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2256
   store double %i.u, ptr %.sroa.417.0..sroa_idx, align 8, !tbaa !9
   %.sroa.518.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2264
@@ -70,17 +70,17 @@ bb.a:
   %i.z = load i32, ptr %i.y, align 8, !tbaa !11
   %i.aa = sitofp i32 %i.z to double
   %i.ab = fdiv double 1.000000e+00, %i.aa         ; 2 uses
-  %2 = fsub double 1.000000e+00, %i.ab            ; 2 uses
-  %3 = fcmp une double %2, 0.000000e+00
-  %4 = uitofp i1 %3 to double
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 2280
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 2280
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  %3 = fsub double 1.000000e+00, %i.ab            ; 2 uses
+  %4 = fcmp une double %3, 0.000000e+00
+  %5 = uitofp i1 %4 to double
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2296
   store double %i.ab, ptr %.sroa.413.0..sroa_idx, align 8, !tbaa !9
   %.sroa.514.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2304
-  store double %2, ptr %.sroa.514.0..sroa_idx, align 8, !tbaa !9
+  store double %3, ptr %.sroa.514.0..sroa_idx, align 8, !tbaa !9
   %.sroa.615.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2312
-  store double %4, ptr %.sroa.615.0..sroa_idx, align 8, !tbaa !9
+  store double %5, ptr %.sroa.615.0..sroa_idx, align 8, !tbaa !9
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 3480
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 2320
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, i8 0, i64 16, i1 false)
@@ -97,18 +97,18 @@ bb.a:
   store double %i.ah, ptr %.sroa.49.0..sroa_idx, align 8, !tbaa !9
   store double %i.ai, ptr %.sroa.510.0..sroa_idx, align 8, !tbaa !9
   store double %i.ak, ptr %.sroa.611.0..sroa_idx, align 8, !tbaa !9
-  %6 = extractelement <2 x double> %i.ag, i64 1   ; 2 uses
-  %7 = fsub double 1.000000e+00, %6               ; 2 uses
-  %8 = fcmp une double %7, 0.000000e+00
-  %9 = uitofp i1 %8 to double
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2360
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 2360
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
+  %7 = extractelement <2 x double> %i.ag, i64 1   ; 2 uses
+  %8 = fsub double 1.000000e+00, %7               ; 2 uses
+  %9 = fcmp une double %8, 0.000000e+00
+  %10 = uitofp i1 %9 to double
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2376
-  store double %6, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !9
+  store double %7, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !9
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2384
-  store double %7, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !9
+  store double %8, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !9
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2392
-  store double %9, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !9
+  store double %10, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !9
   ret void
 }
 
@@ -179,11 +179,11 @@ bb.b:                                             ; preds = %bb.a
   store double %i.u, ptr %.sroa.421.0..sroa_idx.i, align 8, !tbaa !9
   store double %i.v, ptr %.sroa.522.0..sroa_idx.i, align 8, !tbaa !9
   store double %i.x, ptr %.sroa.623.0..sroa_idx.i, align 8, !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   %i.y = extractelement <4 x double> %i.l, i64 0  ; 2 uses
   %i.z = fsub double 1.000000e+00, %i.y           ; 2 uses
   %i.aa = fcmp une double %i.z, 0.000000e+00
   %i.ab = uitofp i1 %i.aa to double
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, i8 0, i64 16, i1 false)
   %.sroa.417.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2256
   store double %i.y, ptr %.sroa.417.0..sroa_idx.i, align 8, !tbaa !9
   %.sroa.518.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2264
@@ -194,17 +194,17 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !11
   %i.ae = sitofp i32 %i.ad to double
   %i.af = fdiv double 1.000000e+00, %i.ae         ; 2 uses
-  %2 = fsub double 1.000000e+00, %i.af            ; 2 uses
-  %3 = fcmp une double %2, 0.000000e+00
-  %4 = uitofp i1 %3 to double
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 2280
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 2280
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
+  %3 = fsub double 1.000000e+00, %i.af            ; 2 uses
+  %4 = fcmp une double %3, 0.000000e+00
+  %5 = uitofp i1 %4 to double
   %.sroa.413.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2296
   store double %i.af, ptr %.sroa.413.0..sroa_idx.i, align 8, !tbaa !9
   %.sroa.514.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2304
-  store double %2, ptr %.sroa.514.0..sroa_idx.i, align 8, !tbaa !9
+  store double %3, ptr %.sroa.514.0..sroa_idx.i, align 8, !tbaa !9
   %.sroa.615.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2312
-  store double %4, ptr %.sroa.615.0..sroa_idx.i, align 8, !tbaa !9
+  store double %5, ptr %.sroa.615.0..sroa_idx.i, align 8, !tbaa !9
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 3480
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 2320
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, i8 0, i64 16, i1 false)
@@ -221,18 +221,18 @@ bb.b:                                             ; preds = %bb.a
   store double %i.al, ptr %.sroa.49.0..sroa_idx.i, align 8, !tbaa !9
   store double %i.am, ptr %.sroa.510.0..sroa_idx.i, align 8, !tbaa !9
   store double %i.ao, ptr %.sroa.611.0..sroa_idx.i, align 8, !tbaa !9
-  %6 = extractelement <2 x double> %i.ak, i64 1   ; 2 uses
-  %7 = fsub double 1.000000e+00, %6               ; 2 uses
-  %8 = fcmp une double %7, 0.000000e+00
-  %9 = uitofp i1 %8 to double
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2360
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 2360
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
+  %7 = extractelement <2 x double> %i.ak, i64 1   ; 2 uses
+  %8 = fsub double 1.000000e+00, %7               ; 2 uses
+  %9 = fcmp une double %8, 0.000000e+00
+  %10 = uitofp i1 %9 to double
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2376
-  store double %6, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !9
+  store double %7, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !9
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2384
-  store double %7, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !9
+  store double %8, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !9
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 2392
-  store double %9, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !9
+  store double %10, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b

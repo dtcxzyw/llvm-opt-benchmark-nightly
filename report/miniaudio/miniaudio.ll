@@ -205,16 +205,16 @@ ma_resampler_config_init_from_data_converter_config.exit: ; preds = %ma_data_con
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.ao = load i32, ptr %i.an, align 8, !tbaa !161, !noalias !1443 ; 2 uses
+  %.sroa.9.0..sroa_idx.i34 = getelementptr inbounds nuw i8, ptr %4, i64 20
+  store i32 0, ptr %.sroa.9.0..sroa_idx.i34, align 4, !alias.scope !1443
   store i32 %.0.i.i33, ptr %4, align 8, !tbaa !8, !alias.scope !1443
-  %.sroa.4.0..sroa_idx.i34 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i32 %..i, ptr %.sroa.4.0..sroa_idx.i34, align 4, !tbaa !8, !alias.scope !1443
-  %.sroa.5.0..sroa_idx.i35 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %.sroa.5.0..sroa_idx.i35 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.i35, align 4, !tbaa !8, !alias.scope !1443
+  %.sroa.5.0..sroa_idx.i36 = getelementptr inbounds nuw i8, ptr %4, i64 8
   %5 = load <2 x i32>, ptr %i.am, align 8, !tbaa !8, !noalias !1443
-  store <2 x i32> %5, ptr %.sroa.5.0..sroa_idx.i35, align 8, !tbaa !8, !alias.scope !1443
-  %.sroa.7.0..sroa_idx.i36 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store i32 %i.ao, ptr %.sroa.7.0..sroa_idx.i36, align 8, !tbaa !8, !alias.scope !1443
-  %.sroa.9.0..sroa_idx.i37 = getelementptr inbounds nuw i8, ptr %4, i64 20
-  store i32 0, ptr %.sroa.9.0..sroa_idx.i37, align 4, !alias.scope !1443
+  store <2 x i32> %5, ptr %.sroa.5.0..sroa_idx.i36, align 8, !tbaa !8, !alias.scope !1443
+  %.sroa.9.0..sroa_idx.i37 = getelementptr inbounds nuw i8, ptr %4, i64 16
+  store i32 %i.ao, ptr %.sroa.9.0..sroa_idx.i37, align 8, !tbaa !8, !alias.scope !1443
   %.sroa.913.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 40
   %.sroa.10.0..sroa_idx.i38 = getelementptr inbounds nuw i8, ptr %4, i64 44
   store i32 0, ptr %.sroa.10.0..sroa_idx.i38, align 4, !alias.scope !1443
@@ -480,17 +480,17 @@ ma_resampler_config_init_from_data_converter_config.exit: ; preds = %ma_data_con
   %i.bj = load i32, ptr %i.t, align 4, !tbaa !158, !noalias !1460 ; 2 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bl = load i32, ptr %i.bk, align 8, !tbaa !161, !noalias !1460 ; 2 uses
+  %.sroa.9.0..sroa_idx.i96 = getelementptr inbounds nuw i8, ptr %5, i64 20
+  store i32 0, ptr %.sroa.9.0..sroa_idx.i96, align 4, !alias.scope !1460
   store i32 %.0.i.i95, ptr %5, align 8, !tbaa !8, !alias.scope !1460
-  %.sroa.4.0..sroa_idx.i96 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  store i32 %..i, ptr %.sroa.4.0..sroa_idx.i96, align 4, !tbaa !8, !alias.scope !1460
-  %.sroa.5.0..sroa_idx.i97 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i32 %i.bi, ptr %.sroa.5.0..sroa_idx.i97, align 8, !tbaa !8, !alias.scope !1460
-  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %5, i64 12
-  store i32 %i.bj, ptr %.sroa.6.0..sroa_idx.i.a, align 4, !tbaa !8, !alias.scope !1460
-  %.sroa.7.0..sroa_idx.i98 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store i32 %i.bl, ptr %.sroa.7.0..sroa_idx.i98, align 8, !tbaa !8, !alias.scope !1460
-  %.sroa.9.0..sroa_idx.i99 = getelementptr inbounds nuw i8, ptr %5, i64 20
-  store i32 0, ptr %.sroa.9.0..sroa_idx.i99, align 4, !alias.scope !1460
+  %.sroa.5.0..sroa_idx.i97 = getelementptr inbounds nuw i8, ptr %5, i64 4
+  store i32 %..i, ptr %.sroa.5.0..sroa_idx.i97, align 4, !tbaa !8, !alias.scope !1460
+  %.sroa.6.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store i32 %i.bi, ptr %.sroa.6.0..sroa_idx.i.a, align 8, !tbaa !8, !alias.scope !1460
+  %.sroa.7.0..sroa_idx.i98 = getelementptr inbounds nuw i8, ptr %5, i64 12
+  store i32 %i.bj, ptr %.sroa.7.0..sroa_idx.i98, align 4, !tbaa !8, !alias.scope !1460
+  %.sroa.9.0..sroa_idx.i99 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  store i32 %i.bl, ptr %.sroa.9.0..sroa_idx.i99, align 8, !tbaa !8, !alias.scope !1460
   %.sroa.913.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 40
   %.sroa.10.0..sroa_idx.i100 = getelementptr inbounds nuw i8, ptr %5, i64 44
   store i32 0, ptr %.sroa.10.0..sroa_idx.i100, align 4, !alias.scope !1460

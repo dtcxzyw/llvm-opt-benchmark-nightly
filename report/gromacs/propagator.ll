@@ -205,11 +205,11 @@ _ZN3gmxL13getConnectionILNS_16IntegrationStageE1EEENS_20PropagatorConnectionEPNS
   %i.au = getelementptr inbounds nuw i8, ptr %10, i64 256
   %i.av = getelementptr inbounds nuw i8, ptr %10, i64 288
   %i.aw = ptrtoint ptr %i.i to i64                ; 6 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %11, i8 0, i64 192, i1 false), !alias.scope !923
   store i64 %i.aw, ptr %i.aq, align 8
-  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
-  store i64 0, ptr %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, i8 0, i64 192, i1 false), !alias.scope !923
   %i.ax = getelementptr inbounds nuw i8, ptr %10, i64 48
   store ptr @_ZNSt17_Function_handlerIFviN3gmx15ScaleVelocitiesEEZNS0_L13getConnectionILNS0_16IntegrationStageE1EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUliS1_E_E10_M_managerERSt9_Any_dataRKSE_St18_Manager_operation, ptr %i.ax, align 8, !tbaa !106, !alias.scope !923
   %i.ay = getelementptr inbounds nuw i8, ptr %10, i64 56
@@ -231,14 +231,14 @@ _ZN3gmxL13getConnectionILNS_16IntegrationStageE1EEENS_20PropagatorConnectionEPNS
   store ptr @_ZNSt17_Function_handlerIFN3gmx8ArrayRefIfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE1EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE1_E9_M_invokeERKSt9_Any_data, ptr %i.be, align 8, !tbaa !106, !alias.scope !923
   store i64 %i.aw, ptr %i.au, align 8
   %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 264
-  store i64 0, ptr %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  store i64 0, ptr %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %10, i64 272
   store ptr @_ZNSt17_Function_handlerIFPN3gmx14BasicMatrix3x3IfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE1EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE2_E10_M_managerERSt9_Any_dataRKSG_St18_Manager_operation, ptr %i.bf, align 8, !tbaa !106, !alias.scope !923
   %i.bg = getelementptr inbounds nuw i8, ptr %10, i64 280
   store ptr @_ZNSt17_Function_handlerIFPN3gmx14BasicMatrix3x3IfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE1EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE2_E9_M_invokeERKSt9_Any_data, ptr %i.bg, align 8, !tbaa !106, !alias.scope !923
   store i64 %i.aw, ptr %i.av, align 8
   %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 296
-  store i64 0, ptr %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  store i64 0, ptr %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %10, i64 304
   store ptr @_ZNSt17_Function_handlerIFSt8functionIFvlEEvEZN3gmxL13getConnectionILNS4_16IntegrationStageE1EEENS4_20PropagatorConnectionEPNS4_10PropagatorIXT_EEERKNS4_13PropagatorTagEEUlvE3_E10_M_managerERSt9_Any_dataRKSG_St18_Manager_operation, ptr %i.bh, align 8, !tbaa !106, !alias.scope !923
   %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 312
@@ -641,11 +641,11 @@ _ZN3gmxL13getConnectionILNS_16IntegrationStageE2EEENS_20PropagatorConnectionEPNS
   %i.au = getelementptr inbounds nuw i8, ptr %10, i64 256
   %i.av = getelementptr inbounds nuw i8, ptr %10, i64 288
   %i.aw = ptrtoint ptr %i.i to i64                ; 6 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %11, i8 0, i64 192, i1 false), !alias.scope !1358
   store i64 %i.aw, ptr %i.aq, align 8
-  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
-  store i64 0, ptr %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, i8 0, i64 192, i1 false), !alias.scope !1358
   %i.ax = getelementptr inbounds nuw i8, ptr %10, i64 48
   store ptr @_ZNSt17_Function_handlerIFviN3gmx15ScaleVelocitiesEEZNS0_L13getConnectionILNS0_16IntegrationStageE2EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUliS1_E_E10_M_managerERSt9_Any_dataRKSE_St18_Manager_operation, ptr %i.ax, align 8, !tbaa !106, !alias.scope !1358
   %i.ay = getelementptr inbounds nuw i8, ptr %10, i64 56
@@ -667,14 +667,14 @@ _ZN3gmxL13getConnectionILNS_16IntegrationStageE2EEENS_20PropagatorConnectionEPNS
   store ptr @_ZNSt17_Function_handlerIFN3gmx8ArrayRefIfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE2EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE1_E9_M_invokeERKSt9_Any_data, ptr %i.be, align 8, !tbaa !106, !alias.scope !1358
   store i64 %i.aw, ptr %i.au, align 8
   %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 264
-  store i64 0, ptr %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  store i64 0, ptr %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %10, i64 272
   store ptr @_ZNSt17_Function_handlerIFPN3gmx14BasicMatrix3x3IfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE2EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE2_E10_M_managerERSt9_Any_dataRKSG_St18_Manager_operation, ptr %i.bf, align 8, !tbaa !106, !alias.scope !1358
   %i.bg = getelementptr inbounds nuw i8, ptr %10, i64 280
   store ptr @_ZNSt17_Function_handlerIFPN3gmx14BasicMatrix3x3IfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE2EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE2_E9_M_invokeERKSt9_Any_data, ptr %i.bg, align 8, !tbaa !106, !alias.scope !1358
   store i64 %i.aw, ptr %i.av, align 8
   %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 296
-  store i64 0, ptr %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  store i64 0, ptr %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %10, i64 304
   store ptr @_ZNSt17_Function_handlerIFSt8functionIFvlEEvEZN3gmxL13getConnectionILNS4_16IntegrationStageE2EEENS4_20PropagatorConnectionEPNS4_10PropagatorIXT_EEERKNS4_13PropagatorTagEEUlvE3_E10_M_managerERSt9_Any_dataRKSG_St18_Manager_operation, ptr %i.bh, align 8, !tbaa !106, !alias.scope !1358
   %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 312
@@ -1077,11 +1077,11 @@ _ZN3gmxL13getConnectionILNS_16IntegrationStageE3EEENS_20PropagatorConnectionEPNS
   %i.au = getelementptr inbounds nuw i8, ptr %10, i64 256
   %i.av = getelementptr inbounds nuw i8, ptr %10, i64 288
   %i.aw = ptrtoint ptr %i.i to i64                ; 6 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %11, i8 0, i64 192, i1 false), !alias.scope !1791
   store i64 %i.aw, ptr %i.aq, align 8
-  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
-  store i64 0, ptr %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, i8 0, i64 192, i1 false), !alias.scope !1791
   %i.ax = getelementptr inbounds nuw i8, ptr %10, i64 48
   store ptr @_ZNSt17_Function_handlerIFviN3gmx15ScaleVelocitiesEEZNS0_L13getConnectionILNS0_16IntegrationStageE3EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUliS1_E_E10_M_managerERSt9_Any_dataRKSE_St18_Manager_operation, ptr %i.ax, align 8, !tbaa !106, !alias.scope !1791
   %i.ay = getelementptr inbounds nuw i8, ptr %10, i64 56
@@ -1103,14 +1103,14 @@ _ZN3gmxL13getConnectionILNS_16IntegrationStageE3EEENS_20PropagatorConnectionEPNS
   store ptr @_ZNSt17_Function_handlerIFN3gmx8ArrayRefIfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE3EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE1_E9_M_invokeERKSt9_Any_data, ptr %i.be, align 8, !tbaa !106, !alias.scope !1791
   store i64 %i.aw, ptr %i.au, align 8
   %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 264
-  store i64 0, ptr %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  store i64 0, ptr %.sroa.0.i.i.i19.i.sroa.4.0..sroa_idx, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %10, i64 272
   store ptr @_ZNSt17_Function_handlerIFPN3gmx14BasicMatrix3x3IfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE3EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE2_E10_M_managerERSt9_Any_dataRKSG_St18_Manager_operation, ptr %i.bf, align 8, !tbaa !106, !alias.scope !1791
   %i.bg = getelementptr inbounds nuw i8, ptr %10, i64 280
   store ptr @_ZNSt17_Function_handlerIFPN3gmx14BasicMatrix3x3IfEEvEZNS0_L13getConnectionILNS0_16IntegrationStageE3EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUlvE2_E9_M_invokeERKSt9_Any_data, ptr %i.bg, align 8, !tbaa !106, !alias.scope !1791
   store i64 %i.aw, ptr %i.av, align 8
   %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 296
-  store i64 0, ptr %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  store i64 0, ptr %.sroa.0.i.i.i21.i.sroa.4.0..sroa_idx, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %10, i64 304
   store ptr @_ZNSt17_Function_handlerIFSt8functionIFvlEEvEZN3gmxL13getConnectionILNS4_16IntegrationStageE3EEENS4_20PropagatorConnectionEPNS4_10PropagatorIXT_EEERKNS4_13PropagatorTagEEUlvE3_E10_M_managerERSt9_Any_dataRKSG_St18_Manager_operation, ptr %i.bh, align 8, !tbaa !106, !alias.scope !1791
   %i.bi = getelementptr inbounds nuw i8, ptr %10, i64 312
@@ -1513,11 +1513,11 @@ _ZN3gmxL13getConnectionILNS_16IntegrationStageE4EEENS_20PropagatorConnectionEPNS
   %i.as = getelementptr inbounds nuw i8, ptr %10, i64 96
   %i.at = getelementptr inbounds nuw i8, ptr %10, i64 192
   %i.au = ptrtoint ptr %i.j to i64                ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %11, i8 0, i64 256, i1 false), !alias.scope !1920
   store i64 %i.au, ptr %i.ar, align 8
-  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
-  store i64 0, ptr %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, align 8, !tbaa !445
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 40
+  store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 64
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %.sroa.0.i.i.i.i.sroa.4.0..sroa_idx, i8 0, i64 256, i1 false), !alias.scope !1920
   %i.av = getelementptr inbounds nuw i8, ptr %10, i64 48
   store ptr @_ZNSt17_Function_handlerIFviN3gmx15ScaleVelocitiesEEZNS0_L13getConnectionILNS0_16IntegrationStageE4EEENS0_20PropagatorConnectionEPNS0_10PropagatorIXT_EEERKNS0_13PropagatorTagEEUliS1_E_E10_M_managerERSt9_Any_dataRKSE_St18_Manager_operation, ptr %i.av, align 8, !tbaa !106, !alias.scope !1920
   %i.aw = getelementptr inbounds nuw i8, ptr %10, i64 56

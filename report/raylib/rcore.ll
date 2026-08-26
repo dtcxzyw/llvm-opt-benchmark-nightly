@@ -205,22 +205,22 @@ rlLoadShaderDefault.exit:                         ; preds = %bb.e, %bb.f
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.h
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 240), i8 0, i64 16, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 220), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 236), align 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 240), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 256), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 260), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 276), align 4
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 176), i8 0, i64 16, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 156), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 172), align 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 176), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 192), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 196), i8 0, i64 16, i1 false)
   store <2 x float> splat (float 1.000000e+00), ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 212), align 4
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 112), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 88), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 92), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 108), align 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 112), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 128), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @RLGL, i64 132), i8 0, i64 16, i1 false)
   store <2 x float> splat (float 1.000000e+00), ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 148), align 4
@@ -256,32 +256,32 @@ bb.g:                                             ; preds = %bb.h
 bb.h:                                             ; preds = %bb.h, %rlLoadShaderDefault.exit
   %indvars.iv = phi i64 [ 0, %rlLoadShaderDefault.exit ], [ %indvars.iv.next.1, %bb.h ] ; 3 uses
   %i.ba = getelementptr inbounds nuw [64 x i8], ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 284), i64 %indvars.iv ; 7 uses
-  store float 1.000000e+00, ptr %i.ba, align 4
   %.sroa.423.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.423.0..sroa_idx, i8 0, i64 16, i1 false)
-  %.sroa.524.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.ba, i64 20
-  store float 1.000000e+00, ptr %.sroa.524.0..sroa_idx.a, align 8
-  %.sroa.625.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.625.0..sroa_idx.a, i8 0, i64 16, i1 false)
-  %.sroa.626.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.ba, i64 40
-  store float 1.000000e+00, ptr %.sroa.626.0..sroa_idx.a, align 4
-  %.sroa.727.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 44
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.727.0..sroa_idx, i8 0, i64 16, i1 false)
+  %.sroa.524.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.ba, i64 44
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.524.0..sroa_idx.a, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.ba, align 4
+  %.sroa.625.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.ba, i64 20
+  store float 1.000000e+00, ptr %.sroa.625.0..sroa_idx.a, align 8
+  %.sroa.626.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.ba, i64 24
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.626.0..sroa_idx.a, i8 0, i64 16, i1 false)
+  %.sroa.727.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 40
+  store float 1.000000e+00, ptr %.sroa.727.0..sroa_idx, align 4
   %.sroa.728.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ba, i64 60
   store float 1.000000e+00, ptr %.sroa.728.0..sroa_idx, align 8
   %i.bb = getelementptr inbounds nuw [64 x i8], ptr getelementptr inbounds nuw (i8, ptr @RLGL, i64 284), i64 %indvars.iv ; 7 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 64
-  store float 1.000000e+00, ptr %i.bc, align 4
   %.sroa.423.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bb, i64 68
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.423.0..sroa_idx.1, i8 0, i64 16, i1 false)
-  %.sroa.524.0..sroa_idx.1.a = getelementptr inbounds nuw i8, ptr %i.bb, i64 84
-  store float 1.000000e+00, ptr %.sroa.524.0..sroa_idx.1.a, align 8
-  %.sroa.625.0..sroa_idx.1.a = getelementptr inbounds nuw i8, ptr %i.bb, i64 88
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.625.0..sroa_idx.1.a, i8 0, i64 16, i1 false)
-  %.sroa.626.0..sroa_idx.1.a = getelementptr inbounds nuw i8, ptr %i.bb, i64 104
-  store float 1.000000e+00, ptr %.sroa.626.0..sroa_idx.1.a, align 4
-  %.sroa.727.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bb, i64 108
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.727.0..sroa_idx.1, i8 0, i64 16, i1 false)
+  %.sroa.524.0..sroa_idx.1.a = getelementptr inbounds nuw i8, ptr %i.bb, i64 108
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.524.0..sroa_idx.1.a, i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr %i.bc, align 4
+  %.sroa.625.0..sroa_idx.1.a = getelementptr inbounds nuw i8, ptr %i.bb, i64 84
+  store float 1.000000e+00, ptr %.sroa.625.0..sroa_idx.1.a, align 8
+  %.sroa.626.0..sroa_idx.1.a = getelementptr inbounds nuw i8, ptr %i.bb, i64 88
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.626.0..sroa_idx.1.a, i8 0, i64 16, i1 false)
+  %.sroa.727.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bb, i64 104
+  store float 1.000000e+00, ptr %.sroa.727.0..sroa_idx.1, align 4
   %.sroa.728.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.bb, i64 124
   store float 1.000000e+00, ptr %.sroa.728.0..sroa_idx.1, align 8
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
@@ -684,12 +684,12 @@ GetWindowScaleDPI.exit:                           ; preds = %bb.ai, %bb.aj
   %i.cx = fmul <2 x float> %i.cu, %i.cw
   %i.cy = fptosi <2 x float> %i.cx to <2 x i32>
   store <2 x i32> %i.cy, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 60), align 4
-  store float %.sroa.0.0.vec.extract, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 104), i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
+  store float %.sroa.0.0.vec.extract, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   store float %.sroa.0.4.vec.extract, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 120), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 124), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 140), align 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 160), align 8
   %i.cz = call i32 @glfwGetPlatform() #56
   %i.da = icmp eq i32 %i.cz, 393219
@@ -1062,12 +1062,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 28), align 4
   store i32 %2, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 32), align 8
-  store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 104), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 120), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 124), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 140), align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 160), align 8
   store <2 x float> splat (float 1.000000e+00), ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 1876), align 4
   br label %bb.f
@@ -1093,12 +1093,12 @@ GetWindowScaleDPI.exit:                           ; preds = %bb.d
   %i.u = fdiv <2 x float> %i.t, %.pre.i
   %i.v = fptosi <2 x float> %i.u to <2 x i32>
   store <2 x i32> %i.v, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 28), align 4
-  store float %.sroa.0.0.vec.extract, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 104), i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
+  store float %.sroa.0.0.vec.extract, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   store float %.sroa.0.4.vec.extract, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 120), align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 124), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 140), align 4
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 160), align 8
   %i.w = fdiv <2 x float> splat (float 1.000000e+00), %.pre.i
   store <2 x float> %i.w, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 1876), align 4
@@ -1237,12 +1237,12 @@ bb.a:
   %i.f = fptosi <2 x float> %i.e to <2 x i32>     ; 2 uses
   store <2 x i32> %i.f, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 60), align 4
   store <2 x i32> %i.f, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 76), align 4
-  store float %1, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 104), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
+  store float %1, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   store float %2, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 120), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 124), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 140), align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 160), align 8
   %i.g = fdiv <2 x float> splat (float 1.000000e+00), %i.d
   store <2 x float> %i.g, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 1876), align 4
@@ -1520,12 +1520,12 @@ bb.a:
   store i32 %0, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 28), align 4
   store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 32), align 8
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 15), align 1
-  store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 104), i8 0, i64 16, i1 false)
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
+  store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 100), align 4
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 120), align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 124), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 140), align 4
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) getelementptr inbounds nuw (i8, ptr @CORE, i64 144), i8 0, i64 16, i1 false)
   store float 1.000000e+00, ptr getelementptr inbounds nuw (i8, ptr @CORE, i64 160), align 8
   %.not = icmp eq ptr %2, null
   br i1 %.not, label %bb.d, label %bb.b

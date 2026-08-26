@@ -205,13 +205,13 @@ rw_pixel_bits.exit.i:                             ; preds = %bb.af, %rw_data_pla
   %i.di = getelementptr inbounds nuw i8, ptr %i.ar, i64 704 ; 2 uses
   store i32 -1, ptr %i.di, align 8, !tbaa !84
   %i.dj = getelementptr inbounds nuw i8, ptr %i.ar, i64 88
-  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 156
-  %.sroa.2.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ar, i64 280
-  %6 = load <2 x i32>, ptr %i.bn, align 8, !tbaa !39
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(192) %i.dj, i8 0, i64 192, i1 false)
-  store <2 x i32> %6, ptr %.sroa.2.0..sroa_idx.i.a, align 8, !tbaa !39
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 288
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.4.0..sroa_idx.i, i8 0, i64 72, i1 false)
+  %.sroa.2.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.ar, i64 288
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.2.0..sroa_idx.i.a, i8 0, i64 72, i1 false)
+  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 156
+  %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 280
+  %6 = load <2 x i32>, ptr %i.bn, align 8, !tbaa !39
+  store <2 x i32> %6, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !39
   %i.dk = call ptr @ff_sws_op_list_input(ptr noundef nonnull %i.h) #10 ; 8 uses
   %.not228.i = icmp eq ptr %i.dk, null            ; 3 uses
   br i1 %.not228.i, label %rw_pixel_bits.exit._crit_edge.i, label %bb.ag
