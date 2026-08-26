@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %.lr.ph, %_get_segme
   %i.o = load ptr, ptr %i.l, align 8
   %i.p = getelementptr inbounds nuw [104 x i8], ptr %i.o, i64 %indvars.iv ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 80
-  %i.r = load i16, ptr %i.q, align 8              ; 4 uses
+  %i.r = load i16, ptr %i.q, align 8              ; 3 uses
   %.not.i = icmp eq i16 %i.r, 0
   br i1 %.not.i, label %_get_segment_start.exit, label %bb.e
 
@@ -215,7 +215,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not27.i, label %_get_segment_start.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = zext i16 %i.r to i64                     ; 2 uses
+  %i.w = zext i16 %i.r to i64                     ; 4 uses
   %i.x = getelementptr [4 x i8], ptr %i.s, i64 %i.w
   %i.y = getelementptr i8, ptr %i.x, i64 -4
   %i.z = load i32, ptr %i.y, align 4
@@ -227,28 +227,27 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %.lr.ph.i, label %_get_segment_start.exit
 
 .lr.ph.i:                                         ; preds = %bb.f, %bb.g
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.g ], [ 1, %bb.f ] ; 4 uses
+  %indvars.iv.i = phi i64 [ %indvars.iv.next42.i100, %bb.g ], [ 1, %bb.f ] ; 2 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.i
   %i.ae = load i32, ptr %i.ad, align 4
   %i.af = zext i32 %i.ae to i64
   %i.ag = tail call i32 @slurm_bit_test(ptr noundef nonnull %0, i64 noundef %i.af) #8
   %.not29.i = icmp eq i32 %i.ag, 0
+  %indvars.iv.next42.i100 = add nuw nsw i64 %indvars.iv.i, 1 ; 4 uses
   br i1 %.not29.i, label %.preheader.preheader.i, label %bb.g
 
 .preheader.preheader.i:                           ; preds = %.lr.ph.i
-  %4 = add i16 %i.r, -1
-  %wide.trip.count44.i = zext i16 %4 to i64       ; 2 uses
-  %exitcond45.not.i96 = icmp eq i64 %indvars.iv.i, %wide.trip.count44.i
-  br i1 %exitcond45.not.i96, label %_get_segment_start.exit, label %.lr.ph98
+  %4 = icmp samesign ult i64 %indvars.iv.next42.i100, %i.w
+  br i1 %4, label %.lr.ph98, label %_get_segment_start.exit
 
 .preheader.i:                                     ; preds = %.lr.ph98
-  %exitcond45.not.i = icmp eq i64 %indvars.iv.next42.i, %wide.trip.count44.i
-  br i1 %exitcond45.not.i, label %_get_segment_start.exit, label %.lr.ph98, !llvm.loop !16
+  %indvars.iv.next42.i = add nuw nsw i64 %indvars.iv41.i97, 1 ; 2 uses
+  %5 = icmp samesign ult i64 %indvars.iv.next42.i, %i.w
+  br i1 %5, label %.lr.ph98, label %_get_segment_start.exit, !llvm.loop !16
 
 .lr.ph98:                                         ; preds = %.preheader.preheader.i, %.preheader.i
-  %indvars.iv41.i97 = phi i64 [ %indvars.iv.next42.i, %.preheader.i ], [ %indvars.iv.i, %.preheader.preheader.i ]
-  %indvars.iv.next42.i = add nuw nsw i64 %indvars.iv41.i97, 1 ; 4 uses
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv.next42.i
+  %indvars.iv41.i97 = phi i64 [ %indvars.iv.next42.i, %.preheader.i ], [ %indvars.iv.next42.i100, %.preheader.preheader.i ] ; 3 uses
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %indvars.iv41.i97
   %i.ai = load i32, ptr %i.ah, align 4
   %i.aj = zext i32 %i.ai to i64
   %i.ak = tail call i32 @slurm_bit_test(ptr noundef nonnull %0, i64 noundef %i.aj) #8
@@ -256,12 +255,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not30.i, label %.preheader.i, label %.loopexit.loopexit.split.loop.exit48.i, !llvm.loop !16
 
 bb.g:                                             ; preds = %.lr.ph.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.w
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next42.i100, %i.w
   br i1 %exitcond.not.i, label %_get_segment_start.exit, label %.lr.ph.i, !llvm.loop !17
 
 .loopexit.loopexit.split.loop.exit48.i:           ; preds = %.lr.ph98
-  %i.al = trunc nuw i64 %indvars.iv.next42.i to i16
+  %i.al = trunc nuw i64 %indvars.iv41.i97 to i16
   br label %_get_segment_start.exit
 
 _get_segment_start.exit:                          ; preds = %bb.g, %.preheader.i, %.preheader.preheader.i, %bb.d, %bb.e, %bb.f, %.loopexit.loopexit.split.loop.exit48.i
