@@ -202,9 +202,9 @@ _RNvMNtCsbvkFyIu7lgC_4core6optionINtB2_6OptionRNtCsbjGuDcEILED_11proc_macro25Ide
 
 bb.c:                                             ; preds = %_RNvMNtCsbvkFyIu7lgC_4core6optionINtB2_6OptionRNtCsbjGuDcEILED_11proc_macro25IdentE6unwrapCs4ZaLwAtrTbk_16deltalake_derive.exit
   %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  store i64 -9223372036854775807, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.z, i64 24, i1 false)
+  store i64 -9223372036854775807, ptr %0, align 8
   br label %bb.z
 
 bb.d:                                             ; preds = %_RNvMNtCsbvkFyIu7lgC_4core6optionINtB2_6OptionRNtCsbjGuDcEILED_11proc_macro25IdentE6unwrapCs4ZaLwAtrTbk_16deltalake_derive.exit
@@ -212,16 +212,12 @@ bb.d:                                             ; preds = %_RNvMNtCsbvkFyIu7lg
   %i.aa = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   %i.ab = load i8, ptr %i.aa, align 8
   %i.ac = trunc nuw i8 %i.ab to i1
-  br i1 %i.ac, label %3, label %bb.e
+  br i1 %i.ac, label %bb.ad, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.ad = getelementptr inbounds nuw i8, ptr %i.m, i64 24 ; 2 uses
   %i.ae = invoke zeroext i1 @_RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtB6_6string6StringE8is_emptyCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.ad)
           to label %bb.h unwind label %bb.g
-
-3:                                                ; preds = %bb.h, %bb.d
-  store i64 -9223372036854775806, ptr %0, align 8
-  br label %bb.ad
 
 bb.f:                                             ; preds = %bb.m, %bb.g
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.m ], [ %i.af, %bb.g ]
@@ -234,7 +230,7 @@ bb.g:                                             ; preds = %bb.x, %bb.i, %bb.e
   br label %bb.f
 
 bb.h:                                             ; preds = %bb.e
-  br i1 %i.ae, label %3, label %bb.i
+  br i1 %i.ae, label %bb.ad, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.ag = load ptr, ptr %2, align 8
@@ -248,7 +244,6 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.aj = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store i64 -9223372036854775807, ptr %0, align 8
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.24.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i64 24, i1 false)
   br label %bb.ad
@@ -363,7 +358,9 @@ bb.ac:                                            ; preds = %bb.aa, %bb.s, %bb.m
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #7
   unreachable
 
-bb.ad:                                            ; preds = %bb.k, %3
+bb.ad:                                            ; preds = %bb.d, %bb.h, %bb.k
+  %.sink = phi i64 [ -9223372036854775807, %bb.k ], [ -9223372036854775806, %bb.h ], [ -9223372036854775806, %bb.d ]
+  store i64 %.sink, ptr %0, align 8
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs4ZaLwAtrTbk_16deltalake_derive15FieldAttributesEBI_(ptr nonnull align 8 %i.m)
   br label %bb.z
 
@@ -446,9 +443,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.ap = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  store i64 -9223372036854775807, ptr %0, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.2.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.ap, i64 24, i1 false)
+  store i64 -9223372036854775807, ptr %0, align 8
   br label %bb.cb
 
 bb.h:                                             ; preds = %bb.f
@@ -456,7 +453,7 @@ bb.h:                                             ; preds = %bb.f
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aa, i64 72
   %i.ar = load i8, ptr %i.aq, align 8
   %i.as = trunc nuw i8 %i.ar to i1
-  br i1 %i.as, label %3, label %bb.i
+  br i1 %i.as, label %bb.ck, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.at = load ptr, ptr %2, align 8
@@ -467,10 +464,6 @@ bb.i:                                             ; preds = %bb.h
   %i.au = landingpad { ptr, i32 }
           cleanup
   br label %bb.cm
-
-3:                                                ; preds = %bb.h
-  store i64 -9223372036854775806, ptr %0, align 8
-  br label %bb.ck
 
 bb.j:                                             ; preds = %bb.n
   br i1 %.sroa.011.2, label %bb.cm, label %bb.cl
@@ -487,7 +480,6 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.ay = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  store i64 -9223372036854775807, ptr %0, align 8
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.24.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.ay, i64 24, i1 false)
   br label %bb.ck
@@ -890,7 +882,9 @@ bb.cj:                                            ; preds = %bb.ci
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.p)
           to label %bb.x unwind label %bb.z
 
-bb.ck:                                            ; preds = %bb.l, %3
+bb.ck:                                            ; preds = %bb.h, %bb.l
+  %.sink56 = phi i64 [ -9223372036854775807, %bb.l ], [ -9223372036854775806, %bb.h ]
+  store i64 %.sink56, ptr %0, align 8
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs4ZaLwAtrTbk_16deltalake_derive15FieldAttributesEBI_(ptr nonnull align 8 %i.aa)
           to label %bb.cb unwind label %bb.d
 

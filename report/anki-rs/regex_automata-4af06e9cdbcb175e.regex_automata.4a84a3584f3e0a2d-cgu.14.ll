@@ -205,7 +205,7 @@ common.resume.sink.split:                         ; preds = %bb.ay, %bb.ba, %bb.
   br label %common.resume
 
 common.resume:                                    ; preds = %common.resume.sink.split, %.split.thread, %"_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38", %bb.aa, %bb.k
-  %common.resume.op = phi { ptr, i32 } [ %i.am, %bb.k ], [ %.pn, %bb.aa ], [ %.pn1248, %.split.thread ], [ %.pn1052, %"_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38" ], [ %common.resume.op.ph, %common.resume.sink.split ]
+  %common.resume.op = phi { ptr, i32 } [ %i.am, %bb.k ], [ %.pn, %bb.aa ], [ %.pn1248, %.split.thread ], [ %.pn1051, %"_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38" ], [ %common.resume.op.ph, %common.resume.sink.split ]
   resume { ptr, i32 } %common.resume.op
 
 "_ZN4core3ptr66drop_in_place$LT$alloc..vec..Vec$LT$regex_syntax..hir..Hir$GT$$GT$17h24107f1faccf2f1fE.exit": ; preds = %._crit_edge
@@ -358,8 +358,8 @@ bb.ad:                                            ; preds = %bb.ac
           to label %bb.ag unwind label %bb.af
 
 bb.ae:                                            ; preds = %bb.ah, %bb.af
-  %.sroa.01.2 = phi i1 [ %.sroa.01.3, %bb.ah ], [ true, %bb.af ]
   %.pn = phi { ptr, i32 } [ %i.bt, %bb.ah ], [ %i.bs, %bb.af ] ; 2 uses
+  %.sroa.01.2 = phi i1 [ %.sroa.01.3, %bb.ah ], [ true, %bb.af ]
   invoke fastcc void @"_ZN4core3ptr43drop_in_place$LT$regex_syntax..hir..Hir$GT$17hcf8b499f558b9139E"(ptr noalias noundef align 8 dereferenceable(48) %i.l) #29
           to label %bb.aa unwind label %bb.bf
 
@@ -561,8 +561,8 @@ bb.bf:                                            ; preds = %bb.bg, %.split.thre
   unreachable
 
 .body.thread:                                     ; preds = %bb.ab, %bb.ax, %bb.aa
-  %.pn1052 = phi { ptr, i32 } [ %.pn, %bb.aa ], [ %i.bk, %bb.ab ], [ %.pn.i19, %bb.ax ] ; 2 uses
-  %.sroa.03.251 = phi i1 [ false, %bb.aa ], [ true, %bb.ab ], [ false, %bb.ax ]
+  %.sroa.03.252 = phi i1 [ false, %bb.aa ], [ true, %bb.ab ], [ false, %bb.ax ]
+  %.pn1051 = phi { ptr, i32 } [ %.pn, %bb.aa ], [ %i.bk, %bb.ab ], [ %.pn.i19, %bb.ax ] ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !63)
   call void @llvm.experimental.noalias.scope.decl(metadata !66)
   call void @llvm.experimental.noalias.scope.decl(metadata !69)
@@ -577,10 +577,10 @@ bb.bg:                                            ; preds = %.body.thread
           to label %"_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38" unwind label %bb.bf
 
 "_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38": ; preds = %bb.bg, %.body.thread
-  br i1 %.sroa.03.251, label %.split.thread, label %common.resume
+  br i1 %.sroa.03.252, label %.split.thread, label %common.resume
 
 .split.thread:                                    ; preds = %.split.thread.loopexit, %.split.thread.loopexit.split-lp, %"_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38"
-  %.pn1248 = phi { ptr, i32 } [ %.pn1052, %"_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38" ], [ %lpad.loopexit, %.split.thread.loopexit ], [ %lpad.loopexit.split-lp, %.split.thread.loopexit.split-lp ]
+  %.pn1248 = phi { ptr, i32 } [ %.pn1051, %"_ZN4core3ptr63drop_in_place$LT$regex_automata..util..prefilter..Prefilter$GT$17h173a298fa4368a7bE.exit38" ], [ %lpad.loopexit, %.split.thread.loopexit ], [ %lpad.loopexit.split-lp, %.split.thread.loopexit.split-lp ]
   invoke fastcc void @"_ZN4core3ptr66drop_in_place$LT$alloc..vec..Vec$LT$regex_syntax..hir..Hir$GT$$GT$17h24107f1faccf2f1fE"(ptr noalias noundef align 8 dereferenceable(24) %i.o) #29
           to label %common.resume unwind label %bb.bf
 }
@@ -983,7 +983,6 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.bq, %bb.f
-  %.sroa.0153.0.i = phi i32 [ undef, %bb.f ], [ %.sroa.0153.1.i, %bb.bq ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6154.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i)
   call void @llvm.experimental.noalias.scope.decl(metadata !232)
@@ -1011,7 +1010,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %.noexc.i
-  %.sroa.0153.1.i = phi i32 [ %.sroa.0153.0.i, %.noexc.i ], [ %.sroa.0153.0.i, %bb.h ], [ %i.bb, %bb.i ] ; 2 uses
+  %.sroa.0153.1.i = phi i32 [ undef, %.noexc.i ], [ undef, %bb.h ], [ %i.bb, %bb.i ]
   %.sink20.i.sroa.phi.i = phi ptr [ %.sroa.6154.i, %.noexc.i ], [ %.sroa.6154.i, %bb.h ], [ %.sroa.10.i, %bb.i ]
   %.sink.i.i = phi ptr [ null, %.noexc.i ], [ null, %bb.h ], [ %i.bd, %bb.i ]
   store ptr %.sink.i.i, ptr %.sink20.i.sroa.phi.i, align 8, !alias.scope !232, !noalias !241

@@ -202,8 +202,8 @@ _ZN5arrow7compute6KernelC2ESt10shared_ptrINS0_15KernelSignatureEESt8functionIFNS
 
 _ZN5arrow7compute6KernelC2ESt10shared_ptrINS0_15KernelSignatureEESt8functionIFNS_6ResultISt10unique_ptrINS0_11KernelStateESt14default_deleteIS8_EEEEPNS0_13KernelContextERKNS0_14KernelInitArgsEEE.exit.i: ; preds = %_ZNSt15__new_allocatorIN5arrow7compute12VectorKernelEE9constructIS2_JSt10shared_ptrINS1_15KernelSignatureEERPFNS0_6StatusEPNS1_13KernelContextERKNS1_8ExecSpanEPNS1_10ExecResultEERSt8functionIFNS0_6ResultISt10unique_ptrINS1_11KernelStateESt14default_deleteISM_EEEESA_RKNS1_14KernelInitArgsEEEEEEvPT_DpOT0_.exit
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.x, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   store ptr %i.u, ptr %6, align 8, !tbaa !259
   br label %_ZNSt12__shared_ptrIN5arrow7compute15KernelSignatureELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
@@ -606,7 +606,7 @@ _ZNSt12_Vector_baseIN5arrow7compute12VectorKernelESaIS2_EE11_M_allocateEm.exit: 
   store ptr %i.v, ptr %i.t, align 8, !tbaa !38
   store ptr null, ptr %2, align 8, !tbaa !94
   %i.w = load ptr, ptr %3, align 8, !tbaa !39
-  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, i8 0, i64 32, i1 false)
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !259  ; 2 uses
@@ -656,10 +656,9 @@ _ZN5arrow7compute6KernelC2ESt10shared_ptrINS0_15KernelSignatureEESt8functionIFNS
   br label %bb.h
 
 _ZN5arrow7compute6KernelC2ESt10shared_ptrINS0_15KernelSignatureEESt8functionIFNS_6ResultISt10unique_ptrINS0_11KernelStateESt14default_deleteIS8_EEEEPNS0_13KernelContextERKNS0_14KernelInitArgsEEE.exit.i: ; preds = %_ZNSt15__new_allocatorIN5arrow7compute12VectorKernelEE9constructIS2_JSt10shared_ptrINS1_15KernelSignatureEERPFNS0_6StatusEPNS1_13KernelContextERKNS1_8ExecSpanEPNS1_10ExecResultEERSt8functionIFNS0_6ResultISt10unique_ptrINS1_11KernelStateESt14default_deleteISM_EEEESA_RKNS1_14KernelInitArgsEEEEEEvPT_DpOT0_.exit
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.x, i8 0, i64 16, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %7 = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false)
+  %7 = getelementptr inbounds nuw i8, ptr %i.r, i64 32
   store ptr %i.ak, ptr %7, align 8, !tbaa !259
   br label %bb.h
 

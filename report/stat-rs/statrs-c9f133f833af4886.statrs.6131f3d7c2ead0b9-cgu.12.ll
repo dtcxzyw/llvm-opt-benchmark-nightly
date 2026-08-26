@@ -1,4 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/stat-rs/original/statrs-c9f133f833af4886.statrs.6131f3d7c2ead0b9-cgu.12?download=true
+inline.NumInlined: 193
+inline.NumDeleted: 118
+loop-unroll.NumRuntimeUnrolled: 5
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@_RNvXs0_NtCs1xwejQucwHj_5alloc5sliceSINtNtB7_3vec3VecdEINtB5_6ConcatdE6concatCs8lmMd0ZksV9_6statrs:bb.a
   br label %.preheader
 
@@ -200,7 +204,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !138)
   %i.d = load ptr, ptr %0, align 8, !alias.scope !138, !noundef !4 ; 2 uses
   %.not.i = icmp eq ptr %i.d, null
@@ -269,11 +272,8 @@ _RINvNtNtNtCs1xwejQucwHj_5alloc11collections5btree3mem7replaceINtNtB4_4node6Hand
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.s) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.r) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !141
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !141
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !141
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   br label %_RINvMs3_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtB6_9LeafRangeNtNtNtB8_4node6marker5ImmutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyE20perform_next_checkedNCNvMs1_B6_BY_12next_checked0TRB1F_RyEEB1O_.exit
 
 bb.h:                                             ; preds = %bb.c
@@ -676,7 +676,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !noundef !4 ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
@@ -805,11 +804,8 @@ bb.h:                                             ; preds = %.noexc2.i, %bb.g, %
 
 _RINvNtNtNtCs1xwejQucwHj_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1y_4LeafENtB1y_4EdgeETRB1R_RyENCNvMsk_NtB4_8navigateBX_14next_unchecked0EB20_.exit: ; preds = %.noexc2.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !196
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !196
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !196
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.ai = extractvalue { ptr, ptr } %i.ag, 0
   %i.aj = extractvalue { ptr, ptr } %i.ag, 1
   br label %bb.e
@@ -825,7 +821,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !noundef !4 ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
@@ -1013,11 +1008,8 @@ bb.h:                                             ; preds = %.noexc2.i, %bb.g, %
 
 _RINvNtNtNtCs1xwejQucwHj_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyNtB1y_4LeafENtB1y_4EdgeETRB1R_RyENCNvMsk_NtB4_8navigateBX_19next_back_unchecked0EB20_.exit: ; preds = %.noexc2.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !210
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !210
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !210
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %i.cp = extractvalue { ptr, ptr } %i.cn, 0
   %i.cq = extractvalue { ptr, ptr } %i.cn, 1
   br label %bb.e

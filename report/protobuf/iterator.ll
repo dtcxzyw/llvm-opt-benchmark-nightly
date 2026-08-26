@@ -18,11 +18,9 @@ bb.a:
   br i1 %i.f, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.a, %bb.k
-  %5 = phi i64 [ %i.bg, %bb.k ], [ %i.e, %bb.a ]  ; 3 uses
-  %.sroa.10.062 = phi i64 [ %.sroa.10.1, %bb.k ], [ undef, %bb.a ] ; 3 uses
-  %.sroa.0.061 = phi ptr [ %.sroa.0.1, %bb.k ], [ undef, %bb.a ] ; 2 uses
+  %.sroa.10.062 = phi i64 [ %i.bg, %bb.k ], [ %i.e, %bb.a ] ; 3 uses
   %.val26 = load ptr, ptr %1, align 8, !tbaa !11
-  %i.g = getelementptr inbounds nuw [12 x i8], ptr %.val26, i64 %5 ; 6 uses
+  %i.g = getelementptr inbounds nuw [12 x i8], ptr %.val26, i64 %.sroa.10.062 ; 6 uses
   %i.h = getelementptr i8, ptr %i.g, i64 4
   %.val27 = load i16, ptr %i.h, align 4, !tbaa !14
   %i.i = zext i16 %.val27 to i64
@@ -39,20 +37,14 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.m = load i8, ptr %i.j, align 1               ; 2 uses
-  %6 = ptrtoint ptr %.sroa.0.061 to i64
   %.sroa.0.0.insert.ext41 = zext i8 %i.m to i64
-  %.sroa.0.0.insert.mask42 = and i64 %6, -256
-  %.sroa.0.0.insert.insert43 = or disjoint i64 %.sroa.0.0.insert.mask42, %.sroa.0.0.insert.ext41
-  %i.n = inttoptr i64 %.sroa.0.0.insert.insert43 to ptr
+  %i.n = inttoptr i64 %.sroa.0.0.insert.ext41 to ptr
   br label %_upb_MiniTableField_DataCopy_dont_copy_me__upb_internal_use_only.exit
 
 bb.c:                                             ; preds = %.lr.ph
   %i.o = load i32, ptr %i.j, align 1              ; 2 uses
-  %7 = ptrtoint ptr %.sroa.0.061 to i64
   %.sroa.0.0.insert.ext = zext i32 %i.o to i64
-  %.sroa.0.0.insert.mask = and i64 %7, -4294967296
-  %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.0.insert.mask, %.sroa.0.0.insert.ext
-  %i.p = inttoptr i64 %.sroa.0.0.insert.insert to ptr
+  %i.p = inttoptr i64 %.sroa.0.0.insert.ext to ptr
   %i.q = trunc i32 %i.o to i8
   br label %_upb_MiniTableField_DataCopy_dont_copy_me__upb_internal_use_only.exit
 
@@ -75,8 +67,8 @@ default.unreachable:                              ; preds = %bb.g, %.lr.ph
 
 _upb_MiniTableField_DataCopy_dont_copy_me__upb_internal_use_only.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e
   %lhsc.i.i = phi i8 [ %i.m, %bb.b ], [ %i.q, %bb.c ], [ %i.t, %bb.d ], [ %i.v, %bb.e ]
-  %.sroa.0.1 = phi ptr [ %i.n, %bb.b ], [ %i.p, %bb.c ], [ %i.s, %bb.d ], [ %.sroa.0.0.copyload37, %bb.e ] ; 4 uses
-  %.sroa.10.1 = phi i64 [ %.sroa.10.062, %bb.b ], [ %.sroa.10.062, %bb.c ], [ %.sroa.10.062, %bb.d ], [ %.sroa.10.0.copyload39, %bb.e ] ; 2 uses
+  %.sroa.0.1 = phi ptr [ %i.n, %bb.b ], [ %i.p, %bb.c ], [ %i.s, %bb.d ], [ %.sroa.0.0.copyload37, %bb.e ] ; 3 uses
+  %.sroa.10.1 = phi i64 [ undef, %bb.b ], [ undef, %bb.c ], [ undef, %bb.d ], [ %.sroa.10.0.copyload39, %bb.e ]
   %i.w = and i8 %.val28, 8
   %.not.i = icmp eq i8 %i.w, 0                    ; 2 uses
   br i1 %.not.i, label %upb_MiniTableField_HasPresence.exit, label %.split
@@ -187,11 +179,11 @@ bb.j:                                             ; preds = %bb.h
   store ptr %.sroa.0.1, ptr %3, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %.sroa.10.1, ptr %.sroa.10.0..sroa_idx, align 8, !tbaa !21
-  store i64 %5, ptr %4, align 8, !tbaa !9
+  store i64 %.sroa.10.062, ptr %4, align 8, !tbaa !9
   br label %.loopexit
 
 bb.k:                                             ; preds = %.split47, %.split46, %.split45, %.split44, %bb.j, %bb.i, %_upb_MiniTableField_DataIsZero_dont_copy_me__upb_internal_use_only.exit, %upb_Message_HasBaseField.exit
-  %i.bg = add nuw nsw i64 %5, 1                   ; 2 uses
+  %i.bg = add nuw nsw i64 %.sroa.10.062, 1        ; 2 uses
   %exitcond.not = icmp eq i64 %i.bg, %i.c
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph
 

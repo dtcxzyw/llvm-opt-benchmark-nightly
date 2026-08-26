@@ -205,7 +205,6 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
 
 bb.ak:                                            ; preds = %_ZNSt5dequeIPN4llvm10BasicBlockESaIS2_EE9push_backERKS2_.exit.i, %.lr.ph582.i
   %.sroa.0475.0580.i = phi ptr [ %i.wn, %.lr.ph582.i ], [ %i.xi, %_ZNSt5dequeIPN4llvm10BasicBlockESaIS2_EE9push_backERKS2_.exit.i ]
-  %.0503579.i = phi i32 [ undef, %.lr.ph582.i ], [ %.2505.lcssa.i, %_ZNSt5dequeIPN4llvm10BasicBlockESaIS2_EE9push_backERKS2_.exit.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #18
   %i.xi = getelementptr inbounds i8, ptr %.sroa.0475.0580.i, i64 -8 ; 3 uses
   %i.xj = load ptr, ptr %i.xi, align 8, !tbaa !280 ; 4 uses
@@ -220,7 +219,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %.1504.i = phi i32 [ %i.xn, %bb.al ], [ %.0503579.i, %bb.ak ] ; 2 uses
+  %.1504.i = phi i32 [ %i.xn, %bb.al ], [ undef, %bb.ak ] ; 2 uses
   %.0.i21 = phi i32 [ %i.xn, %bb.al ], [ -2147483648, %bb.ak ] ; 2 uses
   %i.xo = getelementptr inbounds nuw i8, ptr %i.xj, i64 56
   %i.xp = getelementptr inbounds nuw i8, ptr %i.xj, i64 48 ; 2 uses
@@ -229,7 +228,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   br i1 %.not532571.i, label %._crit_edge.i, label %.lr.ph.i22
 
 ._crit_edge.i:                                    ; preds = %_ZN4llvm8dyn_castINS_8CallBaseENS_11InstructionEEEDcPT0_.exit.thread.i, %bb.am
-  %.2505.lcssa.i = phi i32 [ %.1504.i, %bb.am ], [ %.3506.i, %_ZN4llvm8dyn_castINS_8CallBaseENS_11InstructionEEEDcPT0_.exit.thread.i ] ; 2 uses
+  %.2505.lcssa.i = phi i32 [ %.1504.i, %bb.am ], [ %.3506.i, %_ZN4llvm8dyn_castINS_8CallBaseENS_11InstructionEEEDcPT0_.exit.thread.i ]
   %.1.lcssa.i = phi i32 [ %.0.i21, %bb.am ], [ %.3.i, %_ZN4llvm8dyn_castINS_8CallBaseENS_11InstructionEEEDcPT0_.exit.thread.i ] ; 2 uses
   %i.xq = icmp eq i32 %.1.lcssa.i, -2147483648
   br i1 %i.xq, label %bb.bn, label %bb.bq

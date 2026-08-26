@@ -204,10 +204,9 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.backedge, %.lr.ph.lr.ph
-  %.02565 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.02565.be, %.lr.ph.backedge ] ; 4 uses
-  %.164 = phi i32 [ undef, %.lr.ph.lr.ph ], [ %.164.be, %.lr.ph.backedge ]
+  %.164 = phi i32 [ 0, %.lr.ph.lr.ph ], [ %.02565.be, %.lr.ph.backedge ] ; 4 uses
   %i.f = load ptr, ptr %i.a, align 8, !tbaa !26
-  %i.g = zext i32 %.02565 to i64                  ; 2 uses
+  %i.g = zext i32 %.164 to i64                    ; 2 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.g
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !29
   %i.j = load ptr, ptr %1, align 8, !tbaa !22
@@ -225,11 +224,11 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not2942.not.i, label %.thread49, label %.lr.ph.i.outer
 
 .lr.ph.i.outer:                                   ; preds = %bb.b, %.thread.i
-  %.3.ph = phi i32 [ %.430, %.thread.i ], [ %.164, %bb.b ] ; 3 uses
-  %.01944.i.ph = phi i32 [ %.22136.i, %.thread.i ], [ 0, %bb.b ] ; 2 uses
-  %.02543.i.ph = phi i32 [ %i.bn, %.thread.i ], [ 0, %bb.b ] ; 6 uses
-  %i.r = shl nuw i32 %.02543.i.ph, 1
-  %i.s = lshr i32 %.02543.i.ph, 4
+  %.3.ph = phi i32 [ %.430, %.thread.i ], [ undef, %bb.b ] ; 2 uses
+  %.01944.i.ph = phi i32 [ %i.bn, %.thread.i ], [ 0, %bb.b ] ; 6 uses
+  %.02543.i.ph = phi i32 [ %.22136.i, %.thread.i ], [ 0, %bb.b ] ; 2 uses
+  %i.r = shl nuw i32 %.01944.i.ph, 1
+  %i.s = lshr i32 %.01944.i.ph, 4
   %i.t = zext nneg i32 %i.s to i64                ; 2 uses
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %i.t
   %i.v = load i32, ptr %i.u, align 4, !tbaa !69   ; 2 uses
@@ -245,10 +244,10 @@ bb.b:                                             ; preds = %.lr.ph
   %i.ae = or disjoint i32 %i.z, %i.ad             ; 2 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.t
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !69 ; 2 uses
-  %i.ah = and i32 %i.x, %i.ag
+  %i.ah = and i32 %i.ag, %i.x
   %.not.i.i32.i.peel = icmp eq i32 %i.ah, 0
   %i.ai = select i1 %.not.i.i32.i.peel, i32 0, i32 2
-  %i.aj = and i32 %i.aa, %i.ag
+  %i.aj = and i32 %i.ag, %i.aa
   %i.ak = icmp ne i32 %i.aj, 0
   %i.al = zext i1 %i.ak to i32
   %i.am = or disjoint i32 %i.ai, %i.al            ; 2 uses
@@ -256,7 +255,7 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not.i.peel, label %.thread.i, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.outer
-  %i.an = icmp eq i32 %.01944.i.ph, 1
+  %i.an = icmp eq i32 %.02543.i.ph, 1
   br i1 %i.an, label %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -268,7 +267,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not28.i.peel, label %.thread.i.thread.peel, label %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread38
 
 .thread.i.thread.peel:                            ; preds = %bb.e
-  %i.ap = add nuw nsw i32 %.02543.i.ph, 1         ; 2 uses
+  %i.ap = add nuw nsw i32 %.01944.i.ph, 1         ; 2 uses
   %exitcond.not.i86.peel = icmp eq i32 %i.ap, %i.q
   br i1 %exitcond.not.i86.peel, label %.thread49, label %.lr.ph.i
 
@@ -291,10 +290,10 @@ bb.e:                                             ; preds = %bb.d
   %i.bd = or disjoint i32 %i.ay, %i.bc            ; 2 uses
   %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.as
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !69 ; 2 uses
-  %i.bg = and i32 %i.aw, %i.bf
+  %i.bg = and i32 %i.bf, %i.aw
   %.not.i.i32.i = icmp eq i32 %i.bg, 0
   %i.bh = select i1 %.not.i.i32.i, i32 0, i32 2
-  %i.bi = and i32 %i.az, %i.bf
+  %i.bi = and i32 %i.bf, %i.az
   %i.bj = icmp ne i32 %i.bi, 0
   %i.bk = zext i1 %i.bj to i32
   %i.bl = or disjoint i32 %i.bh, %i.bk            ; 2 uses
@@ -310,9 +309,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not28.i, label %.thread.i.thread, label %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread38
 
 .thread.i:                                        ; preds = %bb.f, %.lr.ph.i, %bb.d, %.lr.ph.i.outer
-  %.02543.i.lcssa = phi i32 [ %.02543.i.ph, %.lr.ph.i.outer ], [ %.02543.i.ph, %bb.d ], [ %.02543.i, %.lr.ph.i ], [ %.02543.i, %bb.f ]
-  %.430 = phi i32 [ %.3.ph, %.lr.ph.i.outer ], [ %.02543.i.ph, %bb.d ], [ %.02543.i, %bb.f ], [ %.3.ph, %.lr.ph.i ] ; 4 uses
-  %.22136.i = phi i32 [ %.01944.i.ph, %.lr.ph.i.outer ], [ 1, %bb.d ], [ 1, %bb.f ], [ 0, %.lr.ph.i ] ; 2 uses
+  %.02543.i.lcssa = phi i32 [ %.01944.i.ph, %.lr.ph.i.outer ], [ %.01944.i.ph, %bb.d ], [ %.02543.i, %.lr.ph.i ], [ %.02543.i, %bb.f ]
+  %.430 = phi i32 [ %.3.ph, %.lr.ph.i.outer ], [ %.01944.i.ph, %bb.d ], [ %.02543.i, %bb.f ], [ %.3.ph, %.lr.ph.i ] ; 3 uses
+  %.22136.i = phi i32 [ %.02543.i.ph, %.lr.ph.i.outer ], [ 1, %bb.d ], [ 1, %bb.f ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.bn = add nuw nsw i32 %.02543.i.lcssa, 1      ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.bn, %i.q
   br i1 %exitcond.not.i, label %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit, label %.lr.ph.i.outer, !llvm.loop !70
@@ -327,22 +326,21 @@ _ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit:   ; preds = %.thread.i
   br i1 %cond.not.not, label %.thread49, label %bb.h
 
 _ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread38: ; preds = %bb.e, %bb.g
-  tail call void @_ZN10union_bvecI11tbv_manager3tbvE5eraseERS0_j(ptr noundef nonnull align 8 dereferenceable(80) %i.a, ptr noundef nonnull align 8 dereferenceable(552) %0, i32 noundef %.02565)
+  tail call void @_ZN10union_bvecI11tbv_manager3tbvE5eraseERS0_j(ptr noundef nonnull align 8 dereferenceable(80) %i.a, ptr noundef nonnull align 8 dereferenceable(552) %0, i32 noundef %.164)
   br label %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread
 
 _ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread.loopexit: ; preds = %bb.c
-  %i.bp = add i32 %.02565, 1
+  %i.bp = add i32 %.164, 1
   br label %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread
 
 _ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread: ; preds = %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread.loopexit, %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread38
-  %.227.ph = phi i32 [ %.02565, %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread38 ], [ %i.bp, %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread.loopexit ] ; 2 uses
+  %.227.ph = phi i32 [ %.164, %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread38 ], [ %i.bp, %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread.loopexit ] ; 2 uses
   %i.bq = load i32, ptr %i.b, align 8, !tbaa !27
   %.not = icmp ult i32 %.227.ph, %i.bq
   br i1 %.not, label %.lr.ph.backedge, label %.thread49
 
 .lr.ph.backedge:                                  ; preds = %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread, %bb.h
   %.02565.be = phi i32 [ %.227.ph, %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread ], [ 0, %bb.h ]
-  %.164.be = phi i32 [ %.3.ph, %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit.thread ], [ %.430, %bb.h ]
   br label %.lr.ph, !llvm.loop !73
 
 bb.h:                                             ; preds = %_ZN11doc_manager11diff_by_012ERK3tbvS2_Rj.exit
@@ -472,10 +470,10 @@ bb.a:
   br i1 %.not2942.not, label %.thread38, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a, %.thread
-  %.01944 = phi i32 [ %.22136, %.thread ], [ 0, %bb.a ] ; 2 uses
-  %.02543 = phi i32 [ %i.ab, %.thread ], [ 0, %bb.a ] ; 4 uses
-  %i.d = shl nuw i32 %.02543, 1
-  %i.e = lshr i32 %.02543, 4
+  %.01944 = phi i32 [ %i.ab, %.thread ], [ 0, %bb.a ] ; 4 uses
+  %.02543 = phi i32 [ %.22136, %.thread ], [ 0, %bb.a ] ; 2 uses
+  %i.d = shl nuw i32 %.01944, 1
+  %i.e = lshr i32 %.01944, 4
   %i.f = zext nneg i32 %i.e to i64                ; 2 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.f
   %i.h = load i32, ptr %i.g, align 4, !tbaa !69   ; 2 uses
@@ -502,7 +500,7 @@ bb.a:
   br i1 %.not, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.z = icmp eq i32 %.01944, 1
+  %i.z = icmp eq i32 %.02543, 1
   br i1 %i.z, label %.thread38, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -510,7 +508,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.aa, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store i32 %.02543, ptr %3, align 4, !tbaa !69
+  store i32 %.01944, ptr %3, align 4, !tbaa !69
   br label %.thread
 
 bb.e:                                             ; preds = %bb.c
@@ -518,8 +516,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not28, label %.thread, label %.thread38
 
 .thread:                                          ; preds = %.lr.ph, %bb.d, %bb.e
-  %.22136 = phi i32 [ 0, %bb.e ], [ %.01944, %.lr.ph ], [ 1, %bb.d ] ; 2 uses
-  %i.ab = add nuw nsw i32 %.02543, 1              ; 2 uses
+  %.22136 = phi i32 [ 0, %bb.e ], [ %.02543, %.lr.ph ], [ 1, %bb.d ] ; 2 uses
+  %i.ab = add nuw nsw i32 %.01944, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.ab, %i.c
   br i1 %exitcond.not, label %.thread38, label %.lr.ph, !llvm.loop !70
 

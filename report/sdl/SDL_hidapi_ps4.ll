@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
 ; Function Attrs: nounwind uwtable
 define internal zeroext i1 @HIDAPI_DriverPS4_SetJoystickSensorsEnabled(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, i1 noundef zeroext %2) #0 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 58 uses
+  %i.a = alloca [64 x i8], align 16               ; 52 uses
   %3 = alloca %struct.DS4EffectsState_t, align 1  ; 11 uses
   %i.b = zext i1 %2 to i8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -567,34 +567,20 @@ bb.ae:                                            ; preds = %bb.ad, %.thread.i.i
   %i.dv = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   %i.dw = load i16, ptr %i.dv, align 1
   %i.dx = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %4 = load i16, ptr %i.dx, align 1
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  %6 = load i16, ptr %5, align 1
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  %8 = load i16, ptr %7, align 1
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
-  %10 = load i16, ptr %9, align 1
+  %4 = load <4 x i16>, ptr %i.dx, align 1
+  %5 = shufflevector <4 x i16> %4, <4 x i16> poison, <4 x i32> <i32 2, i32 0, i32 3, i32 1>
   br label %bb.ag
 
 bb.af:                                            ; preds = %bb.ad
   %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   %i.dz = load i16, ptr %i.dy, align 1
   %i.ea = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %11 = load i16, ptr %i.ea, align 1
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  %13 = load i16, ptr %12, align 1
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  %15 = load i16, ptr %14, align 1
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
-  %17 = load i16, ptr %16, align 1
+  %6 = load <4 x i16>, ptr %i.ea, align 1
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %bb.ae
-  %.097.i.i = phi i16 [ %6, %bb.ae ], [ %17, %bb.af ]
-  %.095.i.i = phi i16 [ %10, %bb.ae ], [ %15, %bb.af ]
-  %.094.i.i = phi i16 [ %4, %bb.ae ], [ %13, %bb.af ]
-  %.093.i.i = phi i16 [ %8, %bb.ae ], [ %11, %bb.af ]
-  %.092.i.i = phi i16 [ %i.dw, %bb.ae ], [ %i.dz, %bb.af ]
+  %.093.i.i = phi i16 [ %i.dw, %bb.ae ], [ %i.dz, %bb.af ]
+  %7 = phi <4 x i16> [ %5, %bb.ae ], [ %6, %bb.af ] ; 4 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.a, i64 17
   %i.ec = load i16, ptr %i.eb, align 1
   %i.ed = getelementptr inbounds nuw i8, ptr %i.a, i64 19
@@ -621,11 +607,12 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   %i.ey = fmul nnan float %i.ex, %i.et
   %i.ez = extractelement <2 x float> %i.ew, i64 0
   %i.fa = fdiv float %i.ey, %i.ez                 ; 3 uses
-  %i.fb = sext i16 %.092.i.i to i32
+  %i.fb = sext i16 %.093.i.i to i32
   %i.fc = sext i16 %i.dl to i32                   ; 2 uses
   %i.fd = sub nsw i32 %i.fb, %i.fc
   %i.fe = call i32 @SDL_abs_REAL(i32 noundef %i.fd) #8
-  %i.ff = sext i16 %.093.i.i to i32
+  %8 = extractelement <4 x i16> %7, i64 0
+  %i.ff = sext i16 %8 to i32
   %i.fg = sub nsw i32 %i.ff, %i.fc
   %i.fh = call i32 @SDL_abs_REAL(i32 noundef %i.fg) #8
   %i.fi = add nsw i32 %i.fh, %i.fe                ; 2 uses
@@ -642,11 +629,13 @@ bb.ah:                                            ; preds = %bb.ag
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  %i.fn = sext i16 %.094.i.i to i32
+  %9 = extractelement <4 x i16> %7, i64 1
+  %i.fn = sext i16 %9 to i32
   %i.fo = sext i16 %i.dn to i32                   ; 2 uses
   %i.fp = sub nsw i32 %i.fn, %i.fo
   %i.fq = call i32 @SDL_abs_REAL(i32 noundef %i.fp) #8
-  %i.fr = sext i16 %.095.i.i to i32
+  %10 = extractelement <4 x i16> %7, i64 2
+  %i.fr = sext i16 %10 to i32
   %i.fs = sub nsw i32 %i.fr, %i.fo
   %i.ft = call i32 @SDL_abs_REAL(i32 noundef %i.fs) #8
   %i.fu = add nsw i32 %i.ft, %i.fq                ; 2 uses
@@ -663,7 +652,8 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %i.fz = sext i16 %.097.i.i to i32
+  %11 = extractelement <4 x i16> %7, i64 3
+  %i.fz = sext i16 %11 to i32
   %i.ga = sext i16 %i.dp to i32                   ; 2 uses
   %i.gb = sub nsw i32 %i.fz, %i.ga
   %i.gc = call i32 @SDL_abs_REAL(i32 noundef %i.gb) #8
@@ -1066,8 +1056,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p
   %i.es = icmp eq i8 %i.eo, 11                    ; 2 uses
-  %. = select i1 %i.es, i8 100, i8 0
-  %.204 = select i1 %i.es, i32 4, i32 0
+  %. = select i1 %i.es, i32 4, i32 0
+  %.204 = select i1 %i.es, i8 100, i8 0
   br label %bb.t
 
 bb.s:                                             ; preds = %bb.o
@@ -1077,9 +1067,9 @@ bb.s:                                             ; preds = %bb.o
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.r, %bb.q, %bb.s
-  %.0183.shrunk = phi i8 [ %narrow201, %bb.q ], [ %., %bb.r ], [ %narrow199, %bb.s ]
-  %.0182 = phi i32 [ 3, %bb.q ], [ %.204, %bb.r ], [ 1, %bb.s ]
-  %.0183 = zext nneg i8 %.0183.shrunk to i32
+  %.0182 = phi i32 [ 3, %bb.q ], [ %., %bb.r ], [ 1, %bb.s ]
+  %.0181.shrunk = phi i8 [ %narrow201, %bb.q ], [ %.204, %bb.r ], [ %narrow199, %bb.s ]
+  %.0183 = zext nneg i8 %.0181.shrunk to i32
   tail call void @SDL_SendJoystickPowerInfo(ptr noundef nonnull %0, i32 noundef %.0182, i32 noundef %.0183) #8
   br label %bb.u
 

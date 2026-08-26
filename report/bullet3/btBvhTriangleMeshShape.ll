@@ -204,8 +204,8 @@ bb.a:
   %i.u = load i32, ptr %i.h, align 4, !tbaa !63   ; 5 uses
   %i.v = load i32, ptr %i.c, align 4, !tbaa !63
   %i.w = icmp eq i32 %i.v, 0
-  %i.x = load ptr, ptr %i.a, align 8              ; 9 uses
-  %i.y = load i32, ptr %i.d, align 4              ; 9 uses
+  %i.x = load ptr, ptr %i.a, align 8              ; 10 uses
+  %i.y = load i32, ptr %i.d, align 4              ; 8 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 16 ; 2 uses
   br i1 %i.w, label %.split.us.preheader, label %.split.preheader
 
@@ -241,7 +241,7 @@ bb.d:                                             ; preds = %.split.us.preheader
   br label %.split.us.1
 
 .split.us.1:                                      ; preds = %bb.d, %bb.c, %bb.b, %.split.us.preheader
-  %.1.us = phi i32 [ undef, %.split.us.preheader ], [ %i.ah, %bb.d ], [ %i.af, %bb.c ], [ %i.ac, %bb.b ] ; 3 uses
+  %.1.us = phi i32 [ undef, %.split.us.preheader ], [ %i.ah, %bb.d ], [ %i.af, %bb.c ], [ %i.ac, %bb.b ]
   %i.ai = mul nsw i32 %i.y, %.1.us
   %i.aj = sext i32 %i.ai to i64
   %i.ak = getelementptr inbounds i8, ptr %i.x, i64 %i.aj ; 2 uses
@@ -324,13 +324,10 @@ bb.d:                                             ; preds = %.split.us.preheader
   br label %.split43.us.loopexit
 
 .split.us.2:                                      ; preds = %.split.us.1
-  %4 = mul nsw i32 %i.y, %.1.us
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds i8, ptr %i.x, i64 %5 ; 2 uses
-  %i.cs = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !29
   %i.cu = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.cv = load <2 x float>, ptr %6, align 4, !tbaa !29
+  %i.cv = load <2 x float>, ptr %i.x, align 4, !tbaa !29
   %i.cw = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %i.ct, i64 2
   %i.cx = shufflevector <2 x float> %i.cv, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.cy = shufflevector <4 x float> %i.cx, <4 x float> %i.cw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
@@ -339,7 +336,7 @@ bb.d:                                             ; preds = %.split.us.preheader
   br label %.split43.us.loopexit
 
 .split43.us.loopexit:                             ; preds = %.split.us.2, %.split.us.2.thread, %.split.us.2.thread51, %.split.us.2.thread56
-  %.1.us.2 = phi i32 [ %.1.us, %.split.us.2 ], [ %i.cr, %.split.us.2.thread ], [ %i.cd, %.split.us.2.thread51 ], [ %i.bn, %.split.us.2.thread56 ]
+  %.1.us.2 = phi i32 [ undef, %.split.us.2 ], [ %i.cr, %.split.us.2.thread ], [ %i.cd, %.split.us.2.thread51 ], [ %i.bn, %.split.us.2.thread56 ]
   %i.da = mul nsw i32 %i.y, %.1.us.2
   %i.db = sext i32 %i.da to i64
   %i.dc = getelementptr inbounds i8, ptr %i.x, i64 %i.db ; 2 uses
@@ -398,7 +395,7 @@ bb.g:                                             ; preds = %.split.preheader
   br label %.split.1
 
 .split.1:                                         ; preds = %.split.preheader, %bb.g, %bb.f, %bb.e
-  %.1 = phi i32 [ undef, %.split.preheader ], [ %i.dt, %bb.e ], [ %i.dw, %bb.f ], [ %i.dz, %bb.g ] ; 2 uses
+  %.1 = phi i32 [ undef, %.split.preheader ], [ %i.dt, %bb.e ], [ %i.dw, %bb.f ], [ %i.dz, %bb.g ]
   %i.ea = mul nsw i32 %i.y, %.1
   %i.eb = sext i32 %i.ea to i64
   %i.ec = getelementptr inbounds i8, ptr %i.x, i64 %i.eb ; 2 uses
@@ -442,7 +439,7 @@ bb.j:                                             ; preds = %.split.1
   br label %.split.2
 
 .split.2:                                         ; preds = %bb.j, %bb.i, %bb.h, %.split.1
-  %.1.1 = phi i32 [ %.1, %.split.1 ], [ %i.ez, %bb.j ], [ %i.ex, %bb.i ], [ %i.eu, %bb.h ] ; 2 uses
+  %.1.1 = phi i32 [ undef, %.split.1 ], [ %i.ez, %bb.j ], [ %i.ex, %bb.i ], [ %i.eu, %bb.h ]
   %i.fa = mul nsw i32 %i.y, %.1.1
   %i.fb = sext i32 %i.fa to i64
   %i.fc = getelementptr inbounds i8, ptr %i.x, i64 %i.fb ; 2 uses
@@ -478,7 +475,7 @@ bb.m:                                             ; preds = %.split.2
   br label %.split43.us.loopexit44
 
 .split43.us.loopexit44:                           ; preds = %bb.m, %bb.l, %bb.k, %.split.2
-  %.1.2 = phi i32 [ %.1.1, %.split.2 ], [ %i.fr, %bb.m ], [ %i.fq, %bb.l ], [ %i.fo, %bb.k ]
+  %.1.2 = phi i32 [ undef, %.split.2 ], [ %i.fr, %bb.m ], [ %i.fq, %bb.l ], [ %i.fo, %bb.k ]
   %i.fs = mul nsw i32 %i.y, %.1.2
   %i.ft = sext i32 %i.fs to i64
   %i.fu = getelementptr inbounds i8, ptr %i.x, i64 %i.ft ; 2 uses
@@ -539,8 +536,8 @@ bb.a:
   %i.u = load i32, ptr %i.h, align 4, !tbaa !63   ; 5 uses
   %i.v = load i32, ptr %i.c, align 4, !tbaa !63
   %i.w = icmp eq i32 %i.v, 0
-  %i.x = load ptr, ptr %i.a, align 8              ; 9 uses
-  %i.y = load i32, ptr %i.d, align 4              ; 9 uses
+  %i.x = load ptr, ptr %i.a, align 8              ; 10 uses
+  %i.y = load i32, ptr %i.d, align 4              ; 8 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 16 ; 2 uses
   br i1 %i.w, label %.split.us.preheader, label %.split.preheader
 
@@ -576,7 +573,7 @@ bb.d:                                             ; preds = %.split.us.preheader
   br label %.split.us.1
 
 .split.us.1:                                      ; preds = %bb.d, %bb.c, %bb.b, %.split.us.preheader
-  %.1.us = phi i32 [ undef, %.split.us.preheader ], [ %i.ah, %bb.d ], [ %i.af, %bb.c ], [ %i.ac, %bb.b ] ; 3 uses
+  %.1.us = phi i32 [ undef, %.split.us.preheader ], [ %i.ah, %bb.d ], [ %i.af, %bb.c ], [ %i.ac, %bb.b ]
   %i.ai = mul nsw i32 %i.y, %.1.us
   %i.aj = sext i32 %i.ai to i64
   %i.ak = getelementptr inbounds i8, ptr %i.x, i64 %i.aj ; 2 uses
@@ -659,13 +656,10 @@ bb.d:                                             ; preds = %.split.us.preheader
   br label %.split43.us.loopexit
 
 .split.us.2:                                      ; preds = %.split.us.1
-  %4 = mul nsw i32 %i.y, %.1.us
-  %5 = sext i32 %4 to i64
-  %6 = getelementptr inbounds i8, ptr %i.x, i64 %5 ; 2 uses
-  %i.cs = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.ct = load float, ptr %i.cs, align 4, !tbaa !29
   %i.cu = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.cv = load <2 x float>, ptr %6, align 4, !tbaa !29
+  %i.cv = load <2 x float>, ptr %i.x, align 4, !tbaa !29
   %i.cw = insertelement <4 x float> <float poison, float poison, float poison, float 0.000000e+00>, float %i.ct, i64 2
   %i.cx = shufflevector <2 x float> %i.cv, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.cy = shufflevector <4 x float> %i.cx, <4 x float> %i.cw, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
@@ -674,7 +668,7 @@ bb.d:                                             ; preds = %.split.us.preheader
   br label %.split43.us.loopexit
 
 .split43.us.loopexit:                             ; preds = %.split.us.2, %.split.us.2.thread, %.split.us.2.thread51, %.split.us.2.thread56
-  %.1.us.2 = phi i32 [ %.1.us, %.split.us.2 ], [ %i.cr, %.split.us.2.thread ], [ %i.cd, %.split.us.2.thread51 ], [ %i.bn, %.split.us.2.thread56 ]
+  %.1.us.2 = phi i32 [ undef, %.split.us.2 ], [ %i.cr, %.split.us.2.thread ], [ %i.cd, %.split.us.2.thread51 ], [ %i.bn, %.split.us.2.thread56 ]
   %i.da = mul nsw i32 %i.y, %.1.us.2
   %i.db = sext i32 %i.da to i64
   %i.dc = getelementptr inbounds i8, ptr %i.x, i64 %i.db ; 2 uses
@@ -733,7 +727,7 @@ bb.g:                                             ; preds = %.split.preheader
   br label %.split.1
 
 .split.1:                                         ; preds = %.split.preheader, %bb.g, %bb.f, %bb.e
-  %.1 = phi i32 [ undef, %.split.preheader ], [ %i.dt, %bb.e ], [ %i.dw, %bb.f ], [ %i.dz, %bb.g ] ; 2 uses
+  %.1 = phi i32 [ undef, %.split.preheader ], [ %i.dt, %bb.e ], [ %i.dw, %bb.f ], [ %i.dz, %bb.g ]
   %i.ea = mul nsw i32 %i.y, %.1
   %i.eb = sext i32 %i.ea to i64
   %i.ec = getelementptr inbounds i8, ptr %i.x, i64 %i.eb ; 2 uses
@@ -777,7 +771,7 @@ bb.j:                                             ; preds = %.split.1
   br label %.split.2
 
 .split.2:                                         ; preds = %bb.j, %bb.i, %bb.h, %.split.1
-  %.1.1 = phi i32 [ %.1, %.split.1 ], [ %i.ez, %bb.j ], [ %i.ex, %bb.i ], [ %i.eu, %bb.h ] ; 2 uses
+  %.1.1 = phi i32 [ undef, %.split.1 ], [ %i.ez, %bb.j ], [ %i.ex, %bb.i ], [ %i.eu, %bb.h ]
   %i.fa = mul nsw i32 %i.y, %.1.1
   %i.fb = sext i32 %i.fa to i64
   %i.fc = getelementptr inbounds i8, ptr %i.x, i64 %i.fb ; 2 uses
@@ -813,7 +807,7 @@ bb.m:                                             ; preds = %.split.2
   br label %.split43.us.loopexit44
 
 .split43.us.loopexit44:                           ; preds = %bb.m, %bb.l, %bb.k, %.split.2
-  %.1.2 = phi i32 [ %.1.1, %.split.2 ], [ %i.fr, %bb.m ], [ %i.fq, %bb.l ], [ %i.fo, %bb.k ]
+  %.1.2 = phi i32 [ undef, %.split.2 ], [ %i.fr, %bb.m ], [ %i.fq, %bb.l ], [ %i.fo, %bb.k ]
   %i.fs = mul nsw i32 %i.y, %.1.2
   %i.ft = sext i32 %i.fs to i64
   %i.fu = getelementptr inbounds i8, ptr %i.x, i64 %i.ft ; 2 uses

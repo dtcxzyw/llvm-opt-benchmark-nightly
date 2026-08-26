@@ -204,15 +204,15 @@ _ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa: ; preds = %.preheader
 _ZNSt6vectorIxSaIxEED2Ev.exit:                    ; preds = %_ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa, %.preheader.epil, %.loopexit.us, %._crit_edge.thread, %._crit_edge
   %.sroa.0100.0115158177 = phi ptr [ null, %._crit_edge.thread ], [ %i.n, %.loopexit.us ], [ %i.n, %._crit_edge ], [ %i.n, %.preheader.epil ], [ %i.n, %_ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa ] ; 3 uses
   %.sroa.13106.0112160175 = phi ptr [ null, %._crit_edge.thread ], [ %i.o, %.loopexit.us ], [ %i.o, %._crit_edge ], [ %i.o, %.preheader.epil ], [ %i.o, %_ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa ]
-  %.sroa.14.0162174 = phi i64 [ 0, %._crit_edge.thread ], [ %i.r, %.loopexit.us ], [ %i.r, %._crit_edge ], [ %i.r, %.preheader.epil ], [ %i.r, %_ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa ]
-  %.sroa.090.0163172 = phi ptr [ null, %._crit_edge.thread ], [ %i.p, %.loopexit.us ], [ %i.p, %._crit_edge ], [ %i.p, %.preheader.epil ], [ %i.p, %_ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa ] ; 3 uses
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.090.0163172, i64 %i.d
+  %.sroa.090.0162174 = phi ptr [ null, %._crit_edge.thread ], [ %i.p, %.loopexit.us ], [ %i.p, %._crit_edge ], [ %i.p, %.preheader.epil ], [ %i.p, %_ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa ] ; 3 uses
+  %.sroa.14.0163172 = phi i64 [ 0, %._crit_edge.thread ], [ %i.r, %.loopexit.us ], [ %i.r, %._crit_edge ], [ %i.r, %.preheader.epil ], [ %i.r, %_ZNSt6vectorIxSaIxEED2Ev.exit.loopexit201.unr-lcssa ]
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %.sroa.090.0162174, i64 %i.d
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !58 ; 2 uses
   call void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %2) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
-  %i.bs = ptrtoint ptr %.sroa.090.0163172 to i64
-  %i.bt = sub i64 %.sroa.14.0162174, %i.bs
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.090.0163172, i64 noundef %i.bt) #22
+  %i.bs = ptrtoint ptr %.sroa.090.0162174 to i64
+  %i.bt = sub i64 %.sroa.14.0163172, %i.bs
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.090.0162174, i64 noundef %i.bt) #22
   %.not.i.i.i67 = icmp eq ptr %.sroa.0100.0115158177, null
   br i1 %.not.i.i.i67, label %_ZNSt6vectorIxSaIxEED2Ev.exit68, label %bb.f
 
@@ -615,7 +615,6 @@ bb.l:                                             ; preds = %_ZN6casadi7Options8
   br i1 %i.av, label %._crit_edge143.thread, label %bb.bn
 
 bb.m:                                             ; preds = %.lr.ph142, %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit90.a
-  %.0140 = phi i64 [ undef, %.lr.ph142 ], [ %.1, %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit90.a ]
   %.sroa.0102.0139 = phi ptr [ %i.an, %.lr.ph142 ], [ %i.et, %_ZN6casadi13GenericSharedINS_12SharedObjectENS_20SharedObjectInternalEED2Ev.exit90.a ] ; 5 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.0102.0139, i64 32 ; 6 uses
   %i.ax = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %i.aw, i8 noundef signext 46, i64 noundef 0) #21 ; 3 uses
@@ -623,10 +622,8 @@ bb.m:                                             ; preds = %.lr.ph142, %_ZN6cas
   br i1 %i.ay, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %bb.m
-  %i.az = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %i.aw, ptr noundef nonnull @.str.6, i64 noundef 0, i64 noundef 2) #21 ; 3 uses
-  %.not = icmp eq i64 %i.az, -1
+  %i.az = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm(ptr noundef nonnull align 8 dereferenceable(32) %i.aw, ptr noundef nonnull @.str.6, i64 noundef 0, i64 noundef 2) #21 ; 2 uses
   %i.ba = add i64 %i.az, 2
-  %spec.select69 = select i1 %.not, i64 %.0140, i64 %i.ba
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.m
@@ -635,7 +632,7 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.n, %bb.o
   %.031 = phi i64 [ %i.ax, %bb.o ], [ %i.az, %bb.n ] ; 4 uses
-  %.1 = phi i64 [ %i.bb, %bb.o ], [ %spec.select69, %bb.n ] ; 5 uses
+  %.1 = phi i64 [ %i.bb, %bb.o ], [ %i.ba, %bb.n ] ; 4 uses
   %i.bc = load i64, ptr %i.al, align 8, !tbaa !20 ; 3 uses
   %i.bd = icmp eq i64 %i.bc, 0
   br i1 %i.bd, label %bb.ad, label %bb.q
