@@ -205,6 +205,7 @@ bb.f:                                             ; preds = %ctr_BCC_blocks.exit
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.i
+  %.sroa.687.0 = phi <16 x i8> [ undef, %.lr.ph ], [ %.sroa.686.0, %bb.i ]
   %.363 = phi i64 [ %.2, %.lr.ph ], [ %i.al, %bb.i ]
   %.33562 = phi ptr [ %.234, %.lr.ph ], [ %i.ak, %bb.i ] ; 3 uses
   %.sroa.084.0.copyload = load <16 x i8>, ptr %.33562, align 1 ; 2 uses
@@ -217,7 +218,7 @@ bb.h:                                             ; preds = %bb.g
   br label %vector.ph74
 
 vector.ph74:                                      ; preds = %bb.h, %bb.g
-  %.sroa.686.0 = phi <16 x i8> [ undef, %bb.g ], [ %.sroa.686.32.copyload, %bb.h ]
+  %.sroa.686.0 = phi <16 x i8> [ %.sroa.687.0, %bb.g ], [ %.sroa.686.32.copyload, %bb.h ] ; 2 uses
   %.0.i47 = phi i32 [ 32, %bb.g ], [ 48, %bb.h ]  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store i32 16, ptr %i.a, align 4, !tbaa !26

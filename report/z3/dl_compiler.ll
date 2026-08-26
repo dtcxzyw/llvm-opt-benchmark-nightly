@@ -205,24 +205,24 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i.preheader.new
-  %.013.i.i = phi ptr [ %i.h, %.lr.ph.i.i.preheader.new ], [ %i.w, %bb.g ] ; 4 uses
-  %.0712.i.i = phi i32 [ 0, %.lr.ph.i.i.preheader.new ], [ %.1.i.i.1, %bb.g ] ; 2 uses
+  %.013.i.i = phi i32 [ 0, %.lr.ph.i.i.preheader.new ], [ %.1.i.i.1, %bb.g ] ; 2 uses
+  %.0712.i.i = phi ptr [ %i.h, %.lr.ph.i.i.preheader.new ], [ %i.w, %bb.g ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.i.i.preheader.new ], [ %niter.next.1, %bb.g ]
-  %i.p = load ptr, ptr %.013.i.i, align 8, !tbaa !14
+  %i.p = load ptr, ptr %.0712.i.i, align 8, !tbaa !14
   %i.q = icmp eq ptr %i.p, null
   br i1 %i.q, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i.i
-  store ptr null, ptr %.013.i.i, align 8, !tbaa !14
+  store ptr null, ptr %.0712.i.i, align 8, !tbaa !14
   br label %.lr.ph.i.i.1
 
 bb.d:                                             ; preds = %.lr.ph.i.i
-  %i.r = add i32 %.0712.i.i, 1
+  %i.r = add i32 %.013.i.i, 1
   br label %.lr.ph.i.i.1
 
 .lr.ph.i.i.1:                                     ; preds = %bb.d, %bb.c
-  %.1.i.i = phi i32 [ %i.r, %bb.d ], [ %.0712.i.i, %bb.c ] ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %.013.i.i, i64 16 ; 2 uses
+  %.1.i.i = phi i32 [ %i.r, %bb.d ], [ %.013.i.i, %bb.c ] ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %.0712.i.i, i64 16 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !14
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %bb.f, label %bb.e
@@ -237,7 +237,7 @@ bb.f:                                             ; preds = %.lr.ph.i.i.1
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.1.i.i.1 = phi i32 [ %i.v, %bb.f ], [ %.1.i.i, %bb.e ] ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %.013.i.i, i64 32 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.0712.i.i, i64 32 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.i.i.unr-lcssa, label %.lr.ph.i.i, !llvm.loop !18
@@ -248,24 +248,24 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %lcmp.mod.not.not, label %.lr.ph.i.i.epil.preheader, label %._crit_edge.i.i
 
 .lr.ph.i.i.epil.preheader:                        ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i.preheader
-  %.013.i.i.epil.init = phi ptr [ %i.h, %.lr.ph.i.i.preheader ], [ %i.w, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
-  %.0712.i.i.epil.init = phi i32 [ 0, %.lr.ph.i.i.preheader ], [ %.1.i.i.1, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
+  %.013.i.i.epil.init = phi i32 [ 0, %.lr.ph.i.i.preheader ], [ %.1.i.i.1, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
+  %.0712.i.i.epil.init = phi ptr [ %i.h, %.lr.ph.i.i.preheader ], [ %i.w, %._crit_edge.i.i.unr-lcssa ] ; 2 uses
   %lcmp.mod5 = trunc i64 %i.n to i1
   tail call void @llvm.assume(i1 %lcmp.mod5)
-  %i.y = load ptr, ptr %.013.i.i.epil.init, align 8, !tbaa !14
+  %i.y = load ptr, ptr %.0712.i.i.epil.init, align 8, !tbaa !14
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.i.i.epil.preheader
-  store ptr null, ptr %.013.i.i.epil.init, align 8, !tbaa !14
+  store ptr null, ptr %.0712.i.i.epil.init, align 8, !tbaa !14
   br label %._crit_edge.i.i
 
 bb.i:                                             ; preds = %.lr.ph.i.i.epil.preheader
-  %i.aa = add i32 %.0712.i.i.epil.init, 1
+  %i.aa = add i32 %.013.i.i.epil.init, 1
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %bb.h, %bb.i, %._crit_edge.i.i.unr-lcssa
-  %.1.i.i.lcssa = phi i32 [ %.1.i.i.1, %._crit_edge.i.i.unr-lcssa ], [ %i.aa, %bb.i ], [ %.0712.i.i.epil.init, %bb.h ]
+  %.1.i.i.lcssa = phi i32 [ %.1.i.i.1, %._crit_edge.i.i.unr-lcssa ], [ %i.aa, %bb.i ], [ %.013.i.i.epil.init, %bb.h ]
   %i.ab = shl i32 %.1.i.i.lcssa, 2
   %i.ac = icmp ugt i32 %i.j, 16
   %i.ad = mul i32 %i.j, 3
@@ -668,6 +668,7 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5emptyEv.exit
 bb.kk:                                            ; preds = %.lr.ph870, %bb.lf
   %i.atn = phi ptr [ null, %.lr.ph870 ], [ %i.awv, %bb.lf ] ; 3 uses
   %indvars.iv950 = phi i64 [ 0, %.lr.ph870 ], [ %indvars.iv.next951, %bb.lf ] ; 3 uses
+  %.sroa.8710.0869 = phi ptr [ undef, %.lr.ph870 ], [ %.sroa.8710.1, %bb.lf ] ; 2 uses
   %i.ato = load ptr, ptr %i.atk, align 8, !tbaa !28
   %i.atp = getelementptr inbounds nuw [8 x i8], ptr %i.ato, i64 %indvars.iv950
   %i.atq = load ptr, ptr %i.atp, align 8, !tbaa !250
@@ -771,8 +772,11 @@ _ZNK6vectorIjLb0EjE4sizeEv.exit580:               ; preds = %_ZNK9table2mapI17de
   %.0.i.i577 = phi i64 [ %i.avd, %bb.ks ], [ 4294967295, %_ZNK9table2mapI17default_map_entryIj7svectorIjjEE6u_hash4u_eqE9find_coreERKj.exit575._ZNK6vectorIjLb0EjE4sizeEv.exit580_crit_edge ]
   %i.avf = getelementptr inbounds nuw [4 x i8], ptr %i.auy, i64 %.0.i.i577
   %i.avg = load i32, ptr %i.avf, align 4, !tbaa !27
+  %43 = ptrtoint ptr %.sroa.8710.0869 to i64
   %.sroa.8710.16.insert.ext712 = zext i32 %i.avg to i64
-  %i.avh = inttoptr i64 %.sroa.8710.16.insert.ext712 to ptr ; 2 uses
+  %.sroa.8710.16.insert.mask713 = and i64 %43, -4294967296
+  %.sroa.8710.16.insert.insert714 = or disjoint i64 %.sroa.8710.16.insert.mask713, %.sroa.8710.16.insert.ext712
+  %i.avh = inttoptr i64 %.sroa.8710.16.insert.insert714 to ptr ; 2 uses
   %i.avi = icmp ugt i32 %i.ave, 1
   br i1 %i.avi, label %bb.kt, label %bb.lc
 
@@ -788,8 +792,11 @@ bb.ku:                                            ; preds = %bb.le, %bb.kv
   br label %bb.mh
 
 .loopexit:                                        ; preds = %.lr.ph.i.i566, %.lr.ph34.i.i572, %bb.kr, %.preheader.i.i570
+  %44 = ptrtoint ptr %.sroa.8710.0869 to i64
   %.sroa.8710.16.insert.ext = zext i32 %i.aty to i64
-  %i.avm = inttoptr i64 %.sroa.8710.16.insert.ext to ptr
+  %.sroa.8710.16.insert.mask = and i64 %44, -4294967296
+  %.sroa.8710.16.insert.insert = or disjoint i64 %.sroa.8710.16.insert.mask, %.sroa.8710.16.insert.ext
+  %i.avm = inttoptr i64 %.sroa.8710.16.insert.insert to ptr
   br label %bb.lc
 
 bb.kv:                                            ; preds = %bb.kk
@@ -878,7 +885,7 @@ bb.lb:                                            ; preds = %bb.kx
 
 bb.lc:                                            ; preds = %._crit_edge982, %.loopexit, %bb.kt, %_ZNK6vectorIjLb0EjE4sizeEv.exit580
   %i.awk = phi ptr [ %i.atn, %_ZNK6vectorIjLb0EjE4sizeEv.exit580 ], [ %i.atn, %.loopexit ], [ %i.atn, %bb.kt ], [ %.pre983, %._crit_edge982 ] ; 4 uses
-  %.sroa.8710.1 = phi ptr [ %i.avh, %_ZNK6vectorIjLb0EjE4sizeEv.exit580 ], [ %i.avm, %.loopexit ], [ %i.avh, %bb.kt ], [ %i.ats, %._crit_edge982 ]
+  %.sroa.8710.1 = phi ptr [ %i.avh, %_ZNK6vectorIjLb0EjE4sizeEv.exit580 ], [ %i.avm, %.loopexit ], [ %i.avh, %bb.kt ], [ %i.ats, %._crit_edge982 ] ; 2 uses
   %.sroa.5.1 = phi i32 [ 0, %_ZNK6vectorIjLb0EjE4sizeEv.exit580 ], [ 1, %.loopexit ], [ 0, %bb.kt ], [ 2, %._crit_edge982 ]
   %i.awl = icmp eq ptr %i.awk, null
   br i1 %i.awl, label %bb.le, label %bb.ld

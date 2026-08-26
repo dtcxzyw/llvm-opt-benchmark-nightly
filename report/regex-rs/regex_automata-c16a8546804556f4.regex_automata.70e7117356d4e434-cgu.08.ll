@@ -202,8 +202,8 @@ bb.f:                                             ; preds = %bb.e
   unreachable, !dbg !7393
 
 .body101:                                         ; preds = %bb.j, %bb.e, %.body
-  %.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.z, %bb.j ], [ %i.v, %bb.e ] ; 2 uses
   %.sroa.03.2 = phi i1 [ %.sroa.03.4.lpad-body, %.body ], [ false, %bb.j ], [ true, %bb.e ], !dbg !7394
+  %.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.z, %bb.j ], [ %i.v, %bb.e ] ; 2 uses
     #dbg_value(ptr %i.i, !3918, !DIExpression(), !7395)
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtNtCs9GYDdpCSJ4S_14regex_automata4util10primitives7StateIDENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropBL_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.i)
           to label %bb.h unwind label %bb.g, !dbg !7397
@@ -605,6 +605,7 @@ bb.e:                                             ; preds = %_RNvNtCs4wP2HXfJTCR
   %i.i = extractvalue { ptr, i1 } %i.g, 0, !dbg !9106
     #dbg_value(ptr %i.i, !8925, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !9107)
     #dbg_value(ptr %i.i, !8942, !DIExpression(), !9111)
+    #dbg_value(ptr %i.e, !9112, !DIExpression(), !9117)
     #dbg_value(ptr %i.e, !9112, !DIExpression(), !9117)
     #dbg_value(ptr undef, !9112, !DIExpression(DW_OP_deref), !9117)
     #dbg_value(ptr poison, !9119, !DIExpression(), !9125)
@@ -1008,6 +1009,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %i.b, !12564, !DIExpression(), !12569)
+    #dbg_value(ptr %i.b, !12564, !DIExpression(), !12569)
     #dbg_value(ptr undef, !12564, !DIExpression(DW_OP_deref), !12569)
     #dbg_value(ptr poison, !12571, !DIExpression(), !12577)
     #dbg_value(ptr poison, !12579, !DIExpression(), !12595)
@@ -1049,6 +1051,7 @@ bb.a:
   br i1 %i.c, label %bb.c, label %bb.b, !dbg !12651
 
 bb.b:                                             ; preds = %bb.a
+    #dbg_value(ptr %i.b, !12652, !DIExpression(), !12655)
     #dbg_value(ptr %i.b, !12652, !DIExpression(), !12655)
     #dbg_value(ptr undef, !12652, !DIExpression(DW_OP_deref), !12655)
     #dbg_value(ptr poison, !9119, !DIExpression(), !12657)

@@ -129,6 +129,7 @@ bb.f:                                             ; preds = %bb.e
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 36
   %i.ab = load i32, ptr %i.z, align 4
   %i.ac = icmp eq i32 %i.ab, 0                    ; 2 uses
+  %.070.i = select i1 %i.ac, i32 32, i32 64
   %.071.i = select i1 %i.ac, ptr %i.aa, ptr %i.z
   br label %bb.h
 
@@ -136,12 +137,13 @@ bb.g:                                             ; preds = %bb.e
   %i.ad = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.y, ptr noundef nonnull dereferenceable(11) @.str.18) #12
   %i.ae = icmp eq i32 %i.ad, 0                    ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.w, i64 36
+  %spec.select.i = select i1 %i.ae, i32 32, i32 64
   %spec.select.i.a = select i1 %i.ae, ptr %i.af, ptr %i.z
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sink.i = phi i1 [ %i.ae, %bb.g ], [ %i.ac, %bb.f ] ; 3 uses
-  %.172.i = phi ptr [ %spec.select.i.a, %bb.g ], [ %.071.i, %bb.f ] ; 15 uses
+  %.171.i = phi i32 [ %.070.i, %bb.f ], [ %spec.select.i, %bb.g ] ; 3 uses
+  %.172.i = phi ptr [ %.071.i, %bb.f ], [ %spec.select.i.a, %bb.g ] ; 15 uses
   %.172.i51 = ptrtoaddr ptr %.172.i to i64
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 2056 ; 3 uses
   %i.ah = load ptr, ptr %i.ag, align 8            ; 2 uses
@@ -165,9 +167,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ar = trunc i64 %i.aq to i32                  ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 2064 ; 4 uses
   store i32 %i.ar, ptr %i.as, align 8
-  %1 = select i1 %.sink.i, i32 5, i32 6
-  %2 = shl i32 %i.ar, %1
-  %i.at = ashr exact i32 %2, 3
+  %1 = mul i32 %.171.i, %i.ar
+  %i.at = ashr exact i32 %1, 3
   %narrow.i = add nsw i32 %i.at, 4092
   %i.au = ashr i32 %narrow.i, 12                  ; 5 uses
   %i.av = sext i32 %i.au to i64                   ; 3 uses
@@ -181,8 +182,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %i.bc, label %.lr.ph.i.i, label %xenfb_copy_mfns.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.j
+  %2 = icmp eq i32 %.171.i, 32
   %wide.trip.count17.i.i = zext nneg i32 %i.au to i64 ; 12 uses
-  br i1 %.sink.i, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.split.i.i.preheader
+  br i1 %2, label %.lr.ph.split.us.i.i.preheader, label %.lr.ph.split.i.i.preheader
 
 .lr.ph.split.i.i.preheader:                       ; preds = %.lr.ph.i.i
   %min.iters.check = icmp ult i32 %i.au, 8
@@ -374,8 +376,9 @@ bb.k:                                             ; preds = %qemu_xen_foreignmem
   br i1 %i.dn, label %.lr.ph.i80.i, label %xenfb_copy_mfns.exit90.i
 
 .lr.ph.i80.i:                                     ; preds = %bb.k
+  %3 = icmp eq i32 %.171.i, 32
   %wide.trip.count17.i81.i = zext nneg i32 %i.dm to i64 ; 12 uses
-  br i1 %.sink.i, label %.lr.ph.split.us.i86.i.preheader, label %.lr.ph.split.i82.i.preheader
+  br i1 %3, label %.lr.ph.split.us.i86.i.preheader, label %.lr.ph.split.i82.i.preheader
 
 .lr.ph.split.i82.i.preheader:                     ; preds = %.lr.ph.i80.i
   %min.iters.check70 = icmp ult i32 %i.dm, 8
@@ -778,10 +781,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph192, %bb.d
-  %.0148190 = phi i32 [ %1, %.lr.ph192 ], [ %i.bu, %bb.d ]
+  %.0139190 = phi ptr [ %i.ay, %.lr.ph192 ], [ %i.bq, %bb.d ] ; 2 uses
   %.0149189 = phi ptr [ %gep197, %.lr.ph192 ], [ %i.bt, %bb.d ] ; 2 uses
-  %.0150188 = phi ptr [ %i.ay, %.lr.ph192 ], [ %i.bq, %bb.d ] ; 2 uses
-  %i.bb = load i8, ptr %.0150188, align 1
+  %.0141188 = phi i32 [ %1, %.lr.ph192 ], [ %i.bu, %bb.d ]
+  %i.bb = load i8, ptr %.0139190, align 1
   %i.bc = zext i8 %i.bb to i16                    ; 3 uses
   %i.bd = shl nuw i16 %i.bc, 8
   %i.be = and i16 %i.bd, -8192
@@ -792,7 +795,7 @@ bb.d:                                             ; preds = %.lr.ph192, %bb.d
   %i.bj = and i16 %i.bi, 24
   %i.bk = or disjoint i16 %i.bh, %i.bj
   store i16 %i.bk, ptr %.0149189, align 2
-  %i.bl = ptrtoint ptr %.0150188 to i64
+  %i.bl = ptrtoint ptr %.0139190 to i64
   %i.bm = load i32, ptr %i.n, align 4             ; 2 uses
   %i.bn = sdiv i32 %i.bm, 8
   %i.bo = sext i32 %i.bn to i64
@@ -801,7 +804,7 @@ bb.d:                                             ; preds = %.lr.ph192, %bb.d
   %i.br = ptrtoint ptr %.0149189 to i64
   %i.bs = add i64 %i.br, 2
   %i.bt = inttoptr i64 %i.bs to ptr
-  %i.bu = add nsw i32 %.0148190, 1                ; 2 uses
+  %i.bu = add nsw i32 %.0141188, 1                ; 2 uses
   %exitcond215.not = icmp eq i32 %i.bu, %i.ai
   br i1 %exitcond215.not, label %._crit_edge193, label %bb.d, !llvm.loop !45
 
@@ -832,10 +835,10 @@ bb.d:                                             ; preds = %.lr.ph192, %bb.d
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph182, %bb.e
-  %.0145180 = phi i32 [ %1, %.lr.ph182 ], [ %i.de, %bb.e ]
+  %.0142180 = phi ptr [ %i.ci, %.lr.ph182 ], [ %i.da, %bb.e ] ; 2 uses
   %.0146179 = phi ptr [ %gep187, %.lr.ph182 ], [ %i.dd, %bb.e ] ; 2 uses
-  %.0147178 = phi ptr [ %i.ci, %.lr.ph182 ], [ %i.da, %bb.e ] ; 2 uses
-  %i.cl = load i8, ptr %.0147178, align 1
+  %.0144178 = phi i32 [ %1, %.lr.ph182 ], [ %i.de, %bb.e ]
+  %i.cl = load i8, ptr %.0142180, align 1
   %i.cm = zext i8 %i.cl to i32                    ; 3 uses
   %i.cn = shl nuw nsw i32 %i.cm, 16
   %i.co = and i32 %i.cn, 14680064
@@ -846,7 +849,7 @@ bb.e:                                             ; preds = %.lr.ph182, %bb.e
   %i.ct = and i32 %i.cs, 192
   %i.cu = or disjoint i32 %i.cr, %i.ct
   store i32 %i.cu, ptr %.0146179, align 4
-  %i.cv = ptrtoint ptr %.0147178 to i64
+  %i.cv = ptrtoint ptr %.0142180 to i64
   %i.cw = load i32, ptr %i.n, align 4             ; 2 uses
   %i.cx = sdiv i32 %i.cw, 8
   %i.cy = sext i32 %i.cx to i64
@@ -855,7 +858,7 @@ bb.e:                                             ; preds = %.lr.ph182, %bb.e
   %i.db = ptrtoint ptr %.0146179 to i64
   %i.dc = add i64 %i.db, 4
   %i.dd = inttoptr i64 %i.dc to ptr
-  %i.de = add nsw i32 %.0145180, 1                ; 2 uses
+  %i.de = add nsw i32 %.0144178, 1                ; 2 uses
   %exitcond209.not = icmp eq i32 %i.de, %i.x
   br i1 %exitcond209.not, label %._crit_edge183, label %bb.e, !llvm.loop !47
 
@@ -940,10 +943,10 @@ bb.f:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph172, %bb.g
-  %.0141170 = phi i32 [ %1, %.lr.ph172 ], [ %i.fm, %bb.g ]
+  %.0145170 = phi ptr [ %i.eq, %.lr.ph172 ], [ %i.fi, %bb.g ] ; 2 uses
   %.0142169 = phi ptr [ %gep177, %.lr.ph172 ], [ %i.fl, %bb.g ] ; 2 uses
-  %.0143168 = phi ptr [ %i.eq, %.lr.ph172 ], [ %i.fi, %bb.g ] ; 2 uses
-  %i.et = load i32, ptr %.0143168, align 4        ; 3 uses
+  %.0147168 = phi i32 [ %1, %.lr.ph172 ], [ %i.fm, %bb.g ]
+  %i.et = load i32, ptr %.0145170, align 4        ; 3 uses
   %i.eu = lshr i32 %i.et, 8
   %i.ev = and i32 %i.eu, 63488
   %i.ew = lshr i32 %i.et, 5
@@ -954,7 +957,7 @@ bb.g:                                             ; preds = %.lr.ph172, %bb.g
   %i.fb = or disjoint i32 %i.ey, %i.fa
   %i.fc = trunc nuw i32 %i.fb to i16
   store i16 %i.fc, ptr %.0142169, align 2
-  %i.fd = ptrtoint ptr %.0143168 to i64
+  %i.fd = ptrtoint ptr %.0145170 to i64
   %i.fe = load i32, ptr %i.n, align 4             ; 2 uses
   %i.ff = sdiv i32 %i.fe, 8
   %i.fg = sext i32 %i.ff to i64
@@ -963,7 +966,7 @@ bb.g:                                             ; preds = %.lr.ph172, %bb.g
   %i.fj = ptrtoint ptr %.0142169 to i64
   %i.fk = add i64 %i.fj, 2
   %i.fl = inttoptr i64 %i.fk to ptr
-  %i.fm = add nsw i32 %.0141170, 1                ; 2 uses
+  %i.fm = add nsw i32 %.0147168, 1                ; 2 uses
   %exitcond203.not = icmp eq i32 %i.fm, %i.ea
   br i1 %exitcond203.not, label %._crit_edge173, label %bb.g, !llvm.loop !49
 
@@ -1010,19 +1013,19 @@ bb.g:                                             ; preds = %.lr.ph172, %bb.g
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
   %.lcssa250.unr = phi i32 [ poison, %.lr.ph ], [ %i.gg, %.prol.loopexit.unr-lcssa ]
-  %.0165.unr = phi i32 [ %1, %.lr.ph ], [ %i.dq, %.prol.loopexit.unr-lcssa ]
+  %.0148165.unr = phi ptr [ %i.ga, %.lr.ph ], [ %i.gk, %.prol.loopexit.unr-lcssa ]
   %.0138164.unr = phi ptr [ %gep, %.lr.ph ], [ %i.gn, %.prol.loopexit.unr-lcssa ]
-  %.0139163.unr = phi ptr [ %i.ga, %.lr.ph ], [ %i.gk, %.prol.loopexit.unr-lcssa ]
+  %.0150163.unr = phi i32 [ %1, %.lr.ph ], [ %i.dq, %.prol.loopexit.unr-lcssa ]
   br i1 %i.dr, label %._crit_edge, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
-  %.0165 = phi i32 [ %i.hi, %.lr.ph.new ], [ %.0165.unr, %.prol.loopexit ]
+  %.0148165 = phi ptr [ %i.hf, %.lr.ph.new ], [ %.0148165.unr, %.prol.loopexit ] ; 2 uses
   %.0138164 = phi ptr [ %i.hh, %.lr.ph.new ], [ %.0138164.unr, %.prol.loopexit ] ; 2 uses
-  %.0139163 = phi ptr [ %i.hf, %.lr.ph.new ], [ %.0139163.unr, %.prol.loopexit ] ; 2 uses
-  %i.go = load i32, ptr %.0139163, align 4
+  %.0150163 = phi i32 [ %i.hi, %.lr.ph.new ], [ %.0150163.unr, %.prol.loopexit ]
+  %i.go = load i32, ptr %.0148165, align 4
   %i.gp = and i32 %i.go, 16777215
   store i32 %i.gp, ptr %.0138164, align 4
-  %i.gq = ptrtoint ptr %.0139163 to i64
+  %i.gq = ptrtoint ptr %.0148165 to i64
   %i.gr = load i32, ptr %i.n, align 4
   %i.gs = sdiv i32 %i.gr, 8
   %i.gt = sext i32 %i.gs to i64
@@ -1041,7 +1044,7 @@ bb.g:                                             ; preds = %.lr.ph172, %bb.g
   %i.hf = inttoptr i64 %i.he to ptr
   %i.hg = add i64 %i.gw, 8
   %i.hh = inttoptr i64 %i.hg to ptr
-  %i.hi = add nsw i32 %.0165, 2                   ; 2 uses
+  %i.hi = add nsw i32 %.0150163, 2                ; 2 uses
   %exitcond.not.1 = icmp eq i32 %i.hi, %i.dn
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.new, !llvm.loop !51
 

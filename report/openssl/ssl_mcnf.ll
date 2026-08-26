@@ -175,21 +175,22 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %.not68 = icmp eq i32 %i.au, 0
   %i.av = zext i1 %.not68 to i32
   %i.aw = or i32 %.052.lcssa, %i.av
-  %i.ax = icmp eq i32 %i.aw, 0
+  %.fr = freeze i32 %i.aw
+  %i.ax = icmp eq i32 %.fr, 0
   %i.ay = zext i1 %.not65 to i32
   br label %bb.q
 
 bb.q:                                             ; preds = %._crit_edge, %bb.l, %bb.j, %bb.k, %bb.e, %bb.b
-  %.057 = phi i32 [ %3, %bb.b ], [ %3, %bb.e ], [ 0, %bb.k ], [ %3, %._crit_edge ], [ 0, %bb.l ], [ 1, %bb.j ]
+  %.256 = phi i1 [ false, %bb.b ], [ false, %bb.e ], [ false, %bb.k ], [ %i.ax, %._crit_edge ], [ false, %bb.l ], [ false, %bb.j ]
+  %.057 = phi i32 [ 1, %bb.b ], [ 1, %bb.e ], [ 1, %bb.k ], [ %i.ay, %._crit_edge ], [ 1, %bb.l ], [ 1, %bb.j ]
   %.056 = phi ptr [ null, %bb.b ], [ null, %bb.e ], [ null, %bb.k ], [ %i.t, %._crit_edge ], [ null, %bb.l ], [ null, %bb.j ]
-  %.254 = phi i1 [ false, %bb.b ], [ false, %bb.e ], [ false, %bb.k ], [ %i.ax, %._crit_edge ], [ false, %bb.l ], [ false, %bb.j ]
-  %.050 = phi i32 [ 1, %bb.b ], [ 1, %bb.e ], [ 1, %bb.k ], [ %i.ay, %._crit_edge ], [ 1, %bb.l ], [ 1, %bb.j ]
-  %.0 = phi ptr [ null, %bb.b ], [ null, %bb.e ], [ null, %bb.k ], [ %i.ak, %._crit_edge ], [ null, %bb.l ], [ null, %bb.j ]
-  %i.az = call ptr @OSSL_LIB_CTX_set0_default(ptr noundef %.0) #4 ; 0 uses
+  %.048 = phi ptr [ null, %bb.b ], [ null, %bb.e ], [ null, %bb.k ], [ %i.ak, %._crit_edge ], [ null, %bb.l ], [ null, %bb.j ]
+  %.050 = phi i32 [ %3, %bb.b ], [ %3, %bb.e ], [ 0, %bb.k ], [ %3, %._crit_edge ], [ 0, %bb.l ], [ 1, %bb.j ]
+  %i.az = call ptr @OSSL_LIB_CTX_set0_default(ptr noundef %.048) #4 ; 0 uses
   call void @SSL_CONF_CTX_free(ptr noundef %.056) #4
-  %.not69 = icmp eq i32 %.057, 0
-  %spec.select81 = select i1 %.not69, i32 0, i32 %.050
-  %i.ba = select i1 %.254, i32 1, i32 %spec.select81
+  %.not69 = icmp eq i32 %.050, 0
+  %spec.select81 = select i1 %.not69, i32 0, i32 %.057
+  %i.ba = select i1 %.256, i32 1, i32 %spec.select81
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   ret i32 %i.ba

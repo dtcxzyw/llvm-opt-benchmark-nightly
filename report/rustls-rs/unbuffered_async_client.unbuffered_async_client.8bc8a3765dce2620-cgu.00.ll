@@ -202,6 +202,8 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.nk, %bb.d
+  %.sroa.6.0 = phi ptr [ undef, %bb.d ], [ %.sroa.8.0.a, %bb.nk ]
+  %.sroa.8.0 = phi ptr [ undef, %bb.d ], [ %.sroa.8.1, %bb.nk ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bd), !noalias !50
   %i.ef = load i8, ptr %i.bp, align 8, !range !10, !noundef !11
   %i.eg = icmp eq i8 %i.ef, 0
@@ -604,8 +606,8 @@ bb.mf:                                            ; preds = %bb.kn, %bb.kh, %bb.
   br label %bb.nf
 
 bb.mg:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit229.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit162.i.i.i, %bb.bb
-  %.sroa.16.0.i.i.a = phi ptr [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit.i.i.i ], [ %.sroa.16.1.pre-phi.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit229.i.i.i ], [ %i.gf, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit162.i.i.i ], [ %i.gd, %bb.bb ] ; 3 uses
-  %.sroa.1456.0.i.i = phi ptr [ null, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit.i.i.i ], [ %.sroa.031.1.pre-phi.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit229.i.i.i ], [ %i.ge, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit162.i.i.i ], [ %i.gc, %bb.bb ] ; 2 uses
+  %.sroa.16.0.i.i.a = phi ptr [ null, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit.i.i.i ], [ %.sroa.031.1.pre-phi.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit229.i.i.i ], [ %i.ge, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit162.i.i.i ], [ %i.gc, %bb.bb ] ; 2 uses
+  %.sroa.1456.0.i.i = phi ptr [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit.i.i.i ], [ %.sroa.16.1.pre-phi.i.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtNtCskruEhpekJ3V_5tokio3net3tcp6stream9TcpStreamECsc044841uM34_23unbuffered_async_client.exit229.i.i.i ], [ %i.gf, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit162.i.i.i ], [ %i.gd, %bb.bb ] ; 3 uses
   store i8 1, ptr %.phi.trans.insert.i.i, align 1, !noalias !81
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !56
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6258.i.i.i)
@@ -620,7 +622,7 @@ bb.mh:                                            ; preds = %bb.mg
   br label %bb.aa
 
 bb.mi:                                            ; preds = %bb.mg
-  %.not.i.i.i = icmp eq ptr %.sroa.1456.0.i.i, null
+  %.not.i.i.i = icmp eq ptr %.sroa.16.0.i.i.a, null
   br i1 %.not.i.i.i, label %bb.mj, label %bb.mr
 
 bb.mj:                                            ; preds = %bb.mi
@@ -677,14 +679,14 @@ bb.mq:                                            ; preds = %_RINvNtCsj6eKBz9Db1
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i unwind label %bb.r, !noalias !63
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i: ; preds = %bb.my, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit43.i.i, %bb.mq, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit31.i.i
-  %.sroa.3.0.i.i = phi ptr [ %.sroa.16.0.i.i.a, %bb.my ], [ %.sroa.16.0.i.i.a, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit43.i.i ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit31.i.i ], [ undef, %bb.mq ]
+  %.sroa.3.0.i.i = phi ptr [ %.sroa.1456.0.i.i, %bb.my ], [ %.sroa.1456.0.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit43.i.i ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsc044841uM34_23unbuffered_async_client.exit31.i.i ], [ undef, %bb.mq ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba), !noalias !56
   store i8 0, ptr %i.bv, align 8, !noalias !56
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bc), !noalias !56
   br label %bb.nf
 
 bb.mr:                                            ; preds = %bb.mi
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.16.0.i.i.a) ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.1456.0.i.i) ]
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsc044841uM34_23unbuffered_async_client(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bz)
           to label %bb.mt unwind label %bb.ms, !noalias !63
 
@@ -787,9 +789,9 @@ bb.ne:                                            ; preds = %.body17
           to label %.body unwind label %bb.nh
 
 bb.nf:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i, %bb.mf
-  %.sroa.8.0.a = phi ptr [ %.sroa.3.0.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i ], [ undef, %bb.mf ]
-  %.sroa.6.0 = phi ptr [ %.sroa.1456.0.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i ], [ undef, %bb.mf ]
+  %.sroa.8.0.a = phi ptr [ %.sroa.16.0.i.i.a, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i ], [ %.sroa.6.0, %bb.mf ] ; 2 uses
   %.sroa.043.0 = phi i1 [ false, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i ], [ true, %bb.mf ]
+  %.sroa.8.1 = phi ptr [ %.sroa.3.0.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i ], [ %.sroa.8.0, %bb.mf ] ; 2 uses
   %storemerge.i.i = phi i8 [ 1, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc4sync3ArcNtNtNtCs7ZUl82OSlxp_6rustls6client11client_conn12ClientConfigEECsc044841uM34_23unbuffered_async_client.exit45.i.i ], [ 3, %bb.mf ]
   store i8 %storemerge.i.i, ptr %i.br, align 1, !noalias !56
   %i.ts = load i8, ptr %i.bd, align 1, !range !10, !alias.scope !305, !noundef !11
@@ -826,9 +828,9 @@ bb.nk:                                            ; preds = %bb.nj
 
 bb.nl:                                            ; preds = %bb.nj
   %i.tv = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.6.0, ptr %i.tv, align 8
+  store ptr %.sroa.8.0.a, ptr %i.tv, align 8
   %i.tw = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.8.0.a, ptr %i.tw, align 8
+  store ptr %.sroa.8.1, ptr %i.tw, align 8
   store i64 0, ptr %0, align 8
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNCNvCsc044841uM34_23unbuffered_async_client4main0EBF_(ptr noundef nonnull align 8 %i.be)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_4task4wake5WakerECsc044841uM34_23unbuffered_async_client.exit27 unwind label %bb.nn
@@ -1231,13 +1233,13 @@ bb.q:                                             ; preds = %bb.o
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.u, %bb.q
-  %.sroa.3.0.a = phi ptr [ %i.ak, %bb.u ], [ undef, %bb.q ]
-  %.sroa.05.0 = phi ptr [ %i.aj, %bb.u ], [ null, %bb.q ]
+  %.sroa.3.0.a = phi ptr [ %i.aj, %bb.u ], [ null, %bb.q ]
+  %.sroa.05.0 = phi ptr [ %i.ak, %bb.u ], [ undef, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.05.0, ptr %i.ag, align 8
+  store ptr %.sroa.3.0.a, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.3.0.a, ptr %i.ah, align 8
+  store ptr %.sroa.05.0, ptr %i.ah, align 8
   store i64 0, ptr %0, align 8
   br label %common.ret
 
@@ -1368,12 +1370,12 @@ bb.o:                                             ; preds = %bb.m
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.s, %bb.o
-  %.sroa.3.0.a = phi ptr [ %i.aa, %bb.s ], [ undef, %bb.o ]
-  %.sroa.04.0 = phi ptr [ %i.z, %bb.s ], [ null, %bb.o ]
+  %.sroa.3.0.a = phi ptr [ %i.z, %bb.s ], [ null, %bb.o ]
+  %.sroa.04.0 = phi ptr [ %i.aa, %bb.s ], [ undef, %bb.o ]
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.04.0, ptr %i.w, align 8
+  store ptr %.sroa.3.0.a, ptr %i.w, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.sroa.3.0.a, ptr %i.x, align 8
+  store ptr %.sroa.04.0, ptr %i.x, align 8
   br label %common.ret
 
 bb.q:                                             ; preds = %bb.r, %bb.i, %bb.d, %bb.n

@@ -204,45 +204,47 @@ bb.a:
   br i1 %i.f, label %bb.f, label %_ZNSt8optionalIN4Luau24TypeFunctionTableIndexerEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit
 
 .lr.ph:                                           ; preds = %bb.a, %bb.e
-  %.sroa.039.043 = phi ptr [ %i.u, %bb.e ], [ %i.b, %bb.a ] ; 6 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.039.043, i64 32
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.039.043, i64 216
+  %.sroa.039.045 = phi ptr [ %i.u, %bb.e ], [ %i.b, %bb.a ] ; 6 uses
+  %.sroa.035.044 = phi ptr [ %.sroa.035.0, %bb.e ], [ undef, %bb.a ]
+  %.sroa.039.043 = phi ptr [ %.sroa.024.1, %bb.e ], [ undef, %bb.a ]
+  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.039.045, i64 32
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.039.045, i64 216
   %i.i = load i8, ptr %i.h, align 8, !tbaa !427, !range !76, !noundef !77
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.039.043, i64 208
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.039.045, i64 208
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !85
   %i.m = tail call noundef ptr @_ZN4Luau22TypeFunctionSerializer16shallowSerializeEPKNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(124) %0, ptr noundef %i.l)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %.sroa.035.0 = phi ptr [ %i.m, %bb.b ], [ undef, %.lr.ph ]
+  %.sroa.035.0 = phi ptr [ %i.m, %bb.b ], [ %.sroa.035.044, %.lr.ph ] ; 2 uses
   %.sroa.436.0 = phi i8 [ 1, %bb.b ], [ 0, %.lr.ph ]
-  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.039.043, i64 232
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.039.045, i64 232
   %i.o = load i8, ptr %i.n, align 8, !tbaa !427, !range !76, !noundef !77
   %i.p = trunc nuw i8 %i.o to i1
   br i1 %i.p, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.039.043, i64 224
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.039.045, i64 224
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !85
   %i.s = tail call noundef ptr @_ZN4Luau22TypeFunctionSerializer16shallowSerializeEPKNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(124) %0, ptr noundef %i.r)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
+  %.sroa.024.1 = phi ptr [ %i.s, %bb.d ], [ %.sroa.039.043, %bb.c ] ; 2 uses
   %.sroa.425.0 = phi i8 [ 1, %bb.d ], [ 0, %bb.c ]
-  %.sroa.024.0 = phi ptr [ %i.s, %bb.d ], [ undef, %bb.c ]
   %i.t = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau20TypeFunctionPropertyESt4lessIS5_ESaISt4pairIKS5_S7_EEEixERSB_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.g) ; 4 uses
   store ptr %.sroa.035.0, ptr %i.t, align 8
   %.sroa.027.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   store i8 %.sroa.436.0, ptr %.sroa.027.sroa.4.0..sroa_idx, align 8
   %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 16
-  store ptr %.sroa.024.0, ptr %.sroa.428.0..sroa_idx, align 8
+  store ptr %.sroa.024.1, ptr %.sroa.428.0..sroa_idx, align 8
   %.sroa.529.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   store i8 %.sroa.425.0, ptr %.sroa.529.0..sroa_idx, align 8
-  %i.u = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.039.043) #31 ; 2 uses
+  %i.u = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.039.045) #31 ; 2 uses
   %.not = icmp eq ptr %i.u, %i.c
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -645,35 +647,37 @@ bb.a:
   br i1 %i.f, label %bb.f, label %_ZNSt8optionalIN4Luau24TypeFunctionTableIndexerEEaSIS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES5_ISt6__and_IJSt9is_scalarIS1_ES6_IS1_NSt5decayIS9_E4typeEEEEESt16is_constructibleIS1_JS9_EESt13is_assignableIRS1_S9_EEERS2_E4typeEOS9_.exit
 
 .lr.ph:                                           ; preds = %bb.a, %bb.e
-  %.sroa.057.061 = phi ptr [ %i.u, %bb.e ], [ %i.b, %bb.a ] ; 6 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.057.061, i64 32
-  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.057.061, i64 216
+  %.sroa.057.063 = phi ptr [ %i.u, %bb.e ], [ %i.b, %bb.a ] ; 6 uses
+  %.sroa.053.062 = phi ptr [ %.sroa.053.0, %bb.e ], [ undef, %bb.a ]
+  %.sroa.057.061 = phi ptr [ %.sroa.042.0, %bb.e ], [ undef, %bb.a ]
+  %i.g = getelementptr inbounds nuw i8, ptr %.sroa.057.063, i64 32
+  %i.h = getelementptr inbounds nuw i8, ptr %.sroa.057.063, i64 216
   %i.i = load i8, ptr %i.h, align 8, !tbaa !427, !range !76, !noundef !77
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.lr.ph
-  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.057.061, i64 208
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.057.063, i64 208
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !85
   %i.m = tail call noundef ptr @_ZN4Luau22TypeFunctionSerializer16shallowSerializeEPKNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(124) %0, ptr noundef %i.l)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.lr.ph
-  %.sroa.053.0 = phi ptr [ %i.m, %bb.b ], [ undef, %.lr.ph ]
+  %.sroa.053.0 = phi ptr [ %i.m, %bb.b ], [ %.sroa.053.062, %.lr.ph ] ; 2 uses
   %.sroa.454.0 = phi i8 [ 1, %bb.b ], [ 0, %.lr.ph ]
-  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.057.061, i64 232
+  %i.n = getelementptr inbounds nuw i8, ptr %.sroa.057.063, i64 232
   %i.o = load i8, ptr %i.n, align 8, !tbaa !427, !range !76, !noundef !77
   %i.p = trunc nuw i8 %i.o to i1
   br i1 %i.p, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.057.061, i64 224
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.057.063, i64 224
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !85
   %i.s = tail call noundef ptr @_ZN4Luau22TypeFunctionSerializer16shallowSerializeEPKNS_4TypeE(ptr noundef nonnull align 8 dereferenceable(124) %0, ptr noundef %i.r)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.sroa.042.0 = phi ptr [ %i.s, %bb.d ], [ undef, %bb.c ]
+  %.sroa.042.0 = phi ptr [ %i.s, %bb.d ], [ %.sroa.057.061, %bb.c ] ; 2 uses
   %.sroa.443.0 = phi i8 [ 1, %bb.d ], [ 0, %bb.c ]
   %i.t = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau20TypeFunctionPropertyESt4lessIS5_ESaISt4pairIKS5_S7_EEEixERSB_(ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.g) ; 4 uses
   store ptr %.sroa.053.0, ptr %i.t, align 8
@@ -683,7 +687,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   store ptr %.sroa.042.0, ptr %.sroa.446.0..sroa_idx, align 8
   %.sroa.547.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   store i8 %.sroa.443.0, ptr %.sroa.547.0..sroa_idx, align 8
-  %i.u = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.057.061) #31 ; 2 uses
+  %i.u = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.057.063) #31 ; 2 uses
   %.not = icmp eq ptr %i.u, %i.c
   br i1 %.not, label %._crit_edge, label %.lr.ph
 

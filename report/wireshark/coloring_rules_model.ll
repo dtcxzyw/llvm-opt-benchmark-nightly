@@ -202,6 +202,7 @@ _ZN7QStringD2Ev.exit169:                          ; preds = %bb.af, %_ZN17QArray
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.di, %_ZN7QStringD2Ev.exit169
+  %.sroa.513.0 = phi i64 [ undef, %_ZN7QStringD2Ev.exit169 ], [ %.sroa.513.1, %bb.di ] ; 2 uses
   %.095 = phi i32 [ 0, %_ZN7QStringD2Ev.exit169 ], [ %i.is, %bb.di ] ; 2 uses
   %i.ct = sext i32 %.095 to i64                   ; 2 uses
   %i.cu = invoke noundef i64 @_ZNK10QJsonArray4sizeEv(ptr noundef nonnull align 8 dereferenceable_or_null(8) %28)
@@ -604,7 +605,9 @@ bb.cc:                                            ; preds = %bb.bz, %_ZNK8QVaria
   %.fca.0.load.i.i = load i64, ptr %15, align 8
   %.fca.1.load.i.i = load i64, ptr %.fca.1.gep.i.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %15)
-  %.sroa.22.8.insert.ext.i.a = and i64 %.fca.1.load.i.i, 281474976710655
+  %.sroa.22.8.insert.ext.i = and i64 %.fca.1.load.i.i, 281474976710655
+  %.sroa.22.8.insert.ext.i.a = and i64 %.sroa.513.0, -281474976710656
+  %.sroa.513.8.insert.insert = or disjoint i64 %.sroa.22.8.insert.ext.i, %.sroa.22.8.insert.ext.i.a ; 2 uses
   call void @_ZN8QVariantD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable_or_null(32) %37) #21
   %i.fw = load ptr, ptr %39, align 16             ; 2 uses
   %.not.i.i.i206 = icmp eq ptr %i.fw, null
@@ -837,7 +840,7 @@ _ZNK13QJsonValueRef8toStringERK7QString.exit249:  ; preds = %bb.cy
   store i64 %.fca.0.load.i.i221, ptr %52, align 8
   store i48 %.sroa.26.0.extract.trunc, ptr %.sroa.5.0..sroa_idx, align 8
   %i.hs = load ptr, ptr %i.cr, align 8
-  invoke void @_ZN16ColoringRuleItemC1Eb7QStringS0_6QColorS1_PS_(ptr noundef align 8 dereferenceable_or_null(128) %i.hb, i1 noundef zeroext %i.hh, ptr noundef nonnull align 8 %46, ptr noundef nonnull align 8 %49, i64 %.fca.0.load.i.i, i64 %.sroa.22.8.insert.ext.i.a, ptr noundef nonnull byval(%class.QColor) align 8 %52, ptr noundef %i.hs)
+  invoke void @_ZN16ColoringRuleItemC1Eb7QStringS0_6QColorS1_PS_(ptr noundef align 8 dereferenceable_or_null(128) %i.hb, i1 noundef zeroext %i.hh, ptr noundef nonnull align 8 %46, ptr noundef nonnull align 8 %49, i64 %.fca.0.load.i.i, i64 %.sroa.513.8.insert.insert, ptr noundef nonnull byval(%class.QColor) align 8 %52, ptr noundef %i.hs)
           to label %bb.cz unwind label %bb.ed
 
 bb.cz:                                            ; preds = %_ZNK13QJsonValueRef8toStringERK7QString.exit249
@@ -986,6 +989,7 @@ _ZN5QListI8QVariantE6appendEOS0_.exit:            ; preds = %_ZNK17QArrayDataPoi
   br label %bb.di
 
 bb.di:                                            ; preds = %_ZN7QStringD2Ev.exit188, %_ZN5QListI8QVariantE6appendEOS0_.exit
+  %.sroa.513.1 = phi i64 [ %.sroa.513.8.insert.insert, %_ZN5QListI8QVariantE6appendEOS0_.exit ], [ %.sroa.513.0, %_ZN7QStringD2Ev.exit188 ]
   call void @_ZN11QJsonObjectD1Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable_or_null(8) %32) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #21
   %i.is = add i32 %.095, 1

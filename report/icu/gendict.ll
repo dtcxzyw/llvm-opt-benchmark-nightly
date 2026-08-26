@@ -202,19 +202,23 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.dd = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   br label %.outer.outer
 
-.outer.outer:                                     ; preds = %bb.bv, %bb.aq
-  %.0150.ph.ph = phi i8 [ %.3153, %bb.bv ], [ 0, %bb.aq ] ; 2 uses
-  %.0146.ph.ph = phi i8 [ %.1147, %bb.bv ], [ 0, %bb.aq ] ; 2 uses
-  %.0145.ph.ph = phi i32 [ %i.ek, %bb.bv ], [ 0, %bb.aq ]
-  %.0139.ph.ph = phi i32 [ %.3142, %bb.bv ], [ 0, %bb.aq ] ; 2 uses
-  %.0132.ph.ph = phi i32 [ %.5137, %bb.bv ], [ 255, %bb.aq ] ; 3 uses
-  %.0126.ph.ph = phi i32 [ %.4130, %bb.bv ], [ 0, %bb.aq ] ; 3 uses
-  %.0124.ph.ph = phi i8 [ %.0124.ph, %bb.bv ], [ 1, %bb.aq ]
+.outer.outer:                                     ; preds = %.outer.outer.backedge, %bb.aq
+  %.not195 = phi i1 [ true, %bb.aq ], [ false, %.outer.outer.backedge ]
+  %.0162.ph.ph = phi i32 [ 0, %bb.aq ], [ %.0162.ph, %.outer.outer.backedge ]
+  %.0145.ph.ph = phi i32 [ 255, %bb.aq ], [ %.0154.ph, %.outer.outer.backedge ]
+  %.0139.ph.ph = phi i32 [ 0, %bb.aq ], [ %.0148.ph, %.outer.outer.backedge ]
+  %.0132.ph.ph = phi i32 [ 0, %bb.aq ], [ %i.ek, %.outer.outer.backedge ]
+  %.0143.ph.ph = phi i8 [ 0, %bb.aq ], [ %.0143.ph, %.outer.outer.backedge ]
+  %.0124.ph.ph = phi i8 [ 0, %bb.aq ], [ %.0124.ph, %.outer.outer.backedge ]
   br label %.outer
 
-.outer:                                           ; preds = %.outer.backedge, %.outer.outer
-  %.0145.ph = phi i32 [ %.0145.ph.ph, %.outer.outer ], [ %i.ek, %.outer.backedge ]
-  %.0124.ph = phi i8 [ %.0124.ph.ph, %.outer.outer ], [ 0, %.outer.backedge ] ; 2 uses
+.outer:                                           ; preds = %.outer.outer, %bb.bv
+  %.0162.ph = phi i32 [ %.4166, %bb.bv ], [ %.0162.ph.ph, %.outer.outer ] ; 4 uses
+  %.0154.ph = phi i32 [ %.5159, %bb.bv ], [ %.0145.ph.ph, %.outer.outer ] ; 4 uses
+  %.0148.ph = phi i32 [ %.3142, %bb.bv ], [ %.0139.ph.ph, %.outer.outer ] ; 3 uses
+  %.0145.ph = phi i32 [ %i.ek, %bb.bv ], [ %.0132.ph.ph, %.outer.outer ]
+  %.0143.ph = phi i8 [ %.1144, %bb.bv ], [ %.0143.ph.ph, %.outer.outer ] ; 3 uses
+  %.0124.ph = phi i8 [ %.3140, %bb.bv ], [ %.0124.ph.ph, %.outer.outer ] ; 3 uses
   br label %bb.ar
 
 bb.ar:                                            ; preds = %.outer, %bb.aw
@@ -407,7 +411,10 @@ _ZNK6icu_7813UnicodeStringixEi.exit246.preheader: ; preds = %.preheader
 .critedge.thread:                                 ; preds = %.preheader279, %.critedge
   %i.fv = load ptr, ptr @stderr, align 8, !tbaa !12
   %i.fw = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.fv, ptr noundef nonnull @.str.14, i32 noundef %i.ek) #14 ; 0 uses
-  br label %.outer.backedge
+  br label %.outer.outer.backedge
+
+.outer.outer.backedge:                            ; preds = %.critedge.thread, %bb.bn, %.thread262
+  br label %.outer.outer, !llvm.loop !43
 
 _ZNK6icu_7813UnicodeStringixEi.exit246:           ; preds = %_ZNK6icu_7813UnicodeStringixEi.exit246.preheader, %bb.bb
   %indvars.iv455 = phi i64 [ %i.fu, %_ZNK6icu_7813UnicodeStringixEi.exit246.preheader ], [ %indvars.iv.next456, %bb.bb ] ; 3 uses
@@ -473,7 +480,7 @@ bb.bc:                                            ; preds = %.critedge3
 .thread262:                                       ; preds = %bb.bc
   %i.gy = load ptr, ptr @stderr, align 8, !tbaa !12
   %i.gz = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.gy, ptr noundef nonnull @.str.15, i32 noundef %i.ek) #14 ; 0 uses
-  br label %.outer.backedge
+  br label %.outer.outer.backedge
 
 bb.bd:                                            ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
@@ -518,8 +525,8 @@ bb.bj:                                            ; preds = %bb.bi
 .thread269:                                       ; preds = %bb.bj
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %6) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
-  %spec.select = call i32 @llvm.smin.i32(i32 %.0123.lcssa478, i32 %.0132.ph.ph)
-  %.1127 = call i32 @llvm.smax.i32(i32 %.0123.lcssa478, i32 %.0126.ph.ph)
+  %spec.select = call i32 @llvm.smin.i32(i32 %.0123.lcssa478, i32 %.0154.ph)
+  %.1127 = call i32 @llvm.smax.i32(i32 %.0123.lcssa478, i32 %.0162.ph)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   br label %bb.bv
@@ -546,10 +553,7 @@ bb.bn:                                            ; preds = %bb.be, %bb.bf, %bb.
   %i.ho = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.hn, ptr noundef nonnull @.str.16, i32 noundef %i.ek) #14 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
-  br label %.outer.backedge
-
-.outer.backedge:                                  ; preds = %bb.bn, %.thread262, %.critedge.thread
-  br label %.outer, !llvm.loop !43
+  br label %.outer.outer.backedge
 
 bb.bo:                                            ; preds = %bb.bm, %bb.bh
   %.pn218.pn = phi { ptr, i32 } [ %.pn218, %bb.bm ], [ %i.hj, %bb.bh ]
@@ -568,8 +572,8 @@ bb.bq:                                            ; preds = %bb.bp
 bb.br:                                            ; preds = %bb.bq
   call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
-  %spec.select234 = call i32 @llvm.smin.i32(i32 %.0123.lcssa478, i32 %.0132.ph.ph)
-  %spec.select235 = call i32 @llvm.smax.i32(i32 %.0123.lcssa478, i32 %.0126.ph.ph)
+  %spec.select234 = call i32 @llvm.smin.i32(i32 %.0123.lcssa478, i32 %.0154.ph)
+  %spec.select235 = call i32 @llvm.smax.i32(i32 %.0123.lcssa478, i32 %.0162.ph)
   br label %bb.bv
 
 bb.bs:                                            ; preds = %bb.bp
@@ -589,14 +593,14 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   br label %.body242
 
 bb.bv:                                            ; preds = %bb.br, %.thread269
-  %.3153 = phi i8 [ 1, %.thread269 ], [ %.0150.ph.ph, %bb.br ]
-  %.1147 = phi i8 [ %.0146.ph.ph, %.thread269 ], [ 1, %bb.br ]
-  %.5137 = phi i32 [ %spec.select, %.thread269 ], [ %spec.select234, %bb.br ]
-  %.4130 = phi i32 [ %.1127, %.thread269 ], [ %spec.select235, %bb.br ]
-  %.3142 = add nuw nsw i32 %.0139.ph.ph, 1
+  %.4166 = phi i32 [ %.1127, %.thread269 ], [ %spec.select235, %bb.br ]
+  %.5159 = phi i32 [ %spec.select, %.thread269 ], [ %spec.select234, %bb.br ]
+  %.1144 = phi i8 [ %.0143.ph, %.thread269 ], [ 1, %bb.br ]
+  %.3140 = phi i8 [ 1, %.thread269 ], [ %.0124.ph, %bb.br ]
+  %.3142 = add nsw i32 %.0148.ph, 1
   %i.hr = load i32, ptr %i.bs, align 8, !tbaa !19
   %i.hs = icmp slt i32 %i.hr, 1
-  br i1 %i.hs, label %.outer.outer, label %bb.bw
+  br i1 %i.hs, label %.outer, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
   %i.ht = load ptr, ptr @stderr, align 8, !tbaa !12
@@ -618,13 +622,12 @@ bb.bz:                                            ; preds = %.noexc
   br i1 %.not189, label %bb.cb, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.hx = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.18, i32 noundef %.0145, i32 noundef %.0139.ph.ph, i32 noundef %.0132.ph.ph, i32 noundef %.0126.ph.ph) ; 0 uses
+  %i.hx = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.18, i32 noundef %.0145, i32 noundef %.0148.ph, i32 noundef %.0154.ph, i32 noundef %.0162.ph) ; 0 uses
   %.pre = load i32, ptr %i.bs, align 8
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %bb.bz
   %i.hy = phi i32 [ %.pre, %bb.ca ], [ %i.dg, %bb.bz ]
-  %.not195 = icmp ne i8 %.0124.ph, 0
   %i.hz = icmp sgt i32 %i.hy, 0
   %or.cond278 = select i1 %.not195, i1 true, i1 %i.hz
   br i1 %or.cond278, label %bb.cd, label %bb.cc
@@ -634,8 +637,8 @@ bb.cc:                                            ; preds = %bb.cb
   br label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc, %bb.cb
-  %i.ia = icmp ne i8 %.0150.ph.ph, 0              ; 3 uses
-  %i.ib = icmp ne i8 %.0146.ph.ph, 0
+  %i.ia = icmp ne i8 %.0124.ph, 0                 ; 3 uses
+  %i.ib = icmp ne i8 %.0143.ph, 0
   %or.cond7 = select i1 %i.ia, i1 %i.ib, i1 false
   br i1 %or.cond7, label %bb.ce, label %bb.cf
 
