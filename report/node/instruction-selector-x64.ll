@@ -204,7 +204,6 @@ define internal fastcc void @"_ZZN2v88internal8compiler56TryMatchBaseWithScaledI
 bb.a:
   %3 = alloca %"struct.v8::internal::compiler::BaseWithScaledIndexAndDisplacementMatch", align 8 ; 11 uses
   %4 = alloca %"struct.v8::internal::compiler::BaseWithScaledIndexAndDisplacementMatch", align 8 ; 11 uses
-  %.sroa.0 = alloca %"struct.v8::internal::compiler::BaseWithScaledIndexAndDisplacementMatch", align 8 ; 5 uses
   %i.a = ptrtoint ptr %.0.val.0.val.0.val.8.val to i64
   %i.b = zext i32 %1 to i64
   %i.c = add i64 %i.b, %i.a
@@ -309,7 +308,6 @@ bb.j:                                             ; preds = %bb.h, %bb.g
 bb.k:                                             ; preds = %bb.c
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25, !noalias !8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #25, !noalias !11
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 3 uses
   store i32 -1, ptr %i.ap, align 4, !noalias !11
@@ -383,16 +381,13 @@ bb.r:                                             ; preds = %bb.p, %bb.o
   br label %"_ZZN2v88internal8compiler56TryMatchBaseWithScaledIndexAndDisplacement64ForWordBinopEPNS1_19InstructionSelectorENS1_10turboshaft7OpIndexES5_bENK3$_2clES5_S5_S5_S5_.exit39.thread"
 
 "_ZZN2v88internal8compiler56TryMatchBaseWithScaledIndexAndDisplacement64ForWordBinopEPNS1_19InstructionSelectorENS1_10turboshaft7OpIndexES5_bENK3$_2clES5_S5_S5_S5_.exit39.thread": ; preds = %bb.n, %bb.q, %bb.r
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25, !noalias !11
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0, i64 32, i1 false)
   store i8 1, ptr %i.ao, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.s
 
 "_ZZN2v88internal8compiler56TryMatchBaseWithScaledIndexAndDisplacement64ForWordBinopEPNS1_19InstructionSelectorENS1_10turboshaft7OpIndexES5_bENK3$_2clES5_S5_S5_S5_.exit39": ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25, !noalias !11
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %.critedge
 
 .critedge:                                        ; preds = %"_ZZN2v88internal8compiler56TryMatchBaseWithScaledIndexAndDisplacement64ForWordBinopEPNS1_19InstructionSelectorENS1_10turboshaft7OpIndexES5_bENK3$_2clES5_S5_S5_S5_.exit39", %bb.b, %bb.a

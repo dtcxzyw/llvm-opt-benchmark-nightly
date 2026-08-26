@@ -25,7 +25,6 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local range(i32 -2147483648, 2) i32 @zsetscreen(ptr noundef %0) #0 {
 bb.a:
   %1 = alloca %struct.gs_point_s, align 4         ; 5 uses
-  %2 = alloca %struct.ref_s, align 8              ; 4 uses
   %i.a = alloca [2 x float], align 8              ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.b = getelementptr inbounds i8, ptr %0, i64 -16 ; 4 uses
@@ -98,7 +97,6 @@ bb.h:                                             ; preds = %bb.g
   %i.ah = getelementptr inbounds i8, ptr %0, i64 -48
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #3
   %i.ai = call i32 @gs_screen_currentpoint(ptr noundef nonnull %i.k, ptr noundef nonnull %1) #3, !inline_history !22 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.aj = icmp slt i32 %i.ai, 0
   br i1 %i.aj, label %screen_sample.exit, label %bb.i
 
@@ -137,21 +135,19 @@ bb.m:                                             ; preds = %bb.k
   store i16 44, ptr %i.au, align 8, !tbaa !8
   %i.av = load ptr, ptr @esp, align 8, !tbaa !16  ; 5 uses
   %i.aw = getelementptr inbounds i8, ptr %i.av, i64 -16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false), !tbaa.struct !19
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 16
-  store ptr @set_screen_continue, ptr %i.ax, align 8, !tbaa !18
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 24
-  store i16 37, ptr %i.ay, align 8, !tbaa !8
-  %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 26
-  store i16 0, ptr %i.az, align 2, !tbaa !21
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 32 ; 2 uses
-  store ptr %i.ba, ptr @esp, align 8, !tbaa !16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ba, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !19
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.av, i64 32 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i64 16, i1 false)
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 16
+  store ptr @set_screen_continue, ptr %i.ay, align 8, !tbaa !18
+  %i.az = getelementptr inbounds nuw i8, ptr %i.av, i64 24
+  store i16 37, ptr %i.az, align 8, !tbaa !8
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 26
+  store i16 0, ptr %i.ba, align 2, !tbaa !21
+  store ptr %i.ax, ptr @esp, align 8, !tbaa !16
   br label %screen_sample.exit
 
 screen_sample.exit:                               ; preds = %bb.h, %bb.j, %bb.l, %bb.m
   %.0.i = phi i32 [ 1, %bb.m ], [ 1, %bb.j ], [ -16, %bb.l ], [ %i.ai, %bb.h ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #3
   br label %bb.n
 
@@ -179,12 +175,10 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define dso_local range(i32 -2147483648, 2) i32 @screen_sample(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.gs_point_s, align 4         ; 5 uses
-  %2 = alloca %struct.ref_s, align 8              ; 4 uses
   %i.a = load ptr, ptr @esp, align 8, !tbaa !16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #3
   %i.c = call i32 @gs_screen_currentpoint(ptr noundef %i.b, ptr noundef nonnull %1) #3 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.d = icmp slt i32 %i.c, 0
   br i1 %i.d, label %bb.g, label %bb.b
 
@@ -224,21 +218,19 @@ bb.f:                                             ; preds = %bb.d
   store i16 44, ptr %i.p, align 8, !tbaa !8
   %i.q = load ptr, ptr @esp, align 8, !tbaa !16   ; 5 uses
   %i.r = getelementptr inbounds i8, ptr %i.q, i64 -16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.r, i64 16, i1 false), !tbaa.struct !19
-  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 16
-  store ptr @set_screen_continue, ptr %i.s, align 8, !tbaa !18
-  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 24
-  store i16 37, ptr %i.t, align 8, !tbaa !8
-  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 26
-  store i16 0, ptr %i.u, align 2, !tbaa !21
-  %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 2 uses
-  store ptr %i.v, ptr @esp, align 8, !tbaa !16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !19
+  %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 32 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, ptr noundef nonnull align 8 dereferenceable(16) %i.r, i64 16, i1 false)
+  %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 16
+  store ptr @set_screen_continue, ptr %i.t, align 8, !tbaa !18
+  %i.u = getelementptr inbounds nuw i8, ptr %i.q, i64 24
+  store i16 37, ptr %i.u, align 8, !tbaa !8
+  %i.v = getelementptr inbounds nuw i8, ptr %i.q, i64 26
+  store i16 0, ptr %i.v, align 2, !tbaa !21
+  store ptr %i.s, ptr @esp, align 8, !tbaa !16
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e, %bb.c
   %.0 = phi i32 [ 1, %bb.f ], [ 1, %bb.c ], [ -16, %bb.e ], [ %i.c, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #3
   ret i32 %.0
 }
@@ -252,7 +244,6 @@ declare i32 @gs_screen_currentpoint(ptr noundef, ptr noundef) local_unnamed_addr
 define dso_local range(i32 -2147483648, 2) i32 @set_screen_continue(ptr noundef %0) #0 {
 bb.a:
   %1 = alloca %struct.gs_point_s, align 4         ; 5 uses
-  %2 = alloca %struct.ref_s, align 8              ; 4 uses
   %i.a = alloca float, align 4                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.b = call i32 @num_params(ptr noundef %0, i32 noundef 1, ptr noundef nonnull %i.a) #3 ; 2 uses
@@ -277,7 +268,6 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !18
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #3
   %i.o = call i32 @gs_screen_currentpoint(ptr noundef %i.n, ptr noundef nonnull %1) #3, !inline_history !22 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.p = icmp slt i32 %i.o, 0
   br i1 %i.p, label %screen_sample.exit, label %bb.d
 
@@ -316,21 +306,19 @@ bb.h:                                             ; preds = %bb.f
   store i16 44, ptr %i.aa, align 8, !tbaa !8
   %i.ab = load ptr, ptr @esp, align 8, !tbaa !16  ; 5 uses
   %i.ac = getelementptr inbounds i8, ptr %i.ab, i64 -16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !19
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
-  store ptr @set_screen_continue, ptr %i.ad, align 8, !tbaa !18
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
-  store i16 37, ptr %i.ae, align 8, !tbaa !8
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 26
-  store i16 0, ptr %i.af, align 2, !tbaa !21
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 32 ; 2 uses
-  store ptr %i.ag, ptr @esp, align 8, !tbaa !16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !19
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 32 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false)
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
+  store ptr @set_screen_continue, ptr %i.ae, align 8, !tbaa !18
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 24
+  store i16 37, ptr %i.af, align 8, !tbaa !8
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 26
+  store i16 0, ptr %i.ag, align 2, !tbaa !21
+  store ptr %i.ad, ptr @esp, align 8, !tbaa !16
   br label %screen_sample.exit
 
 screen_sample.exit:                               ; preds = %bb.c, %bb.e, %bb.g, %bb.h
   %.0.i = phi i32 [ 1, %bb.h ], [ 1, %bb.e ], [ -16, %bb.g ], [ %i.o, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #3
   br label %bb.i
 

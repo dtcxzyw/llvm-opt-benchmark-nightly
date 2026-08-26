@@ -205,8 +205,8 @@ define internal fastcc void @"_ZN4time7parsing6parsed141_$LT$impl$u20$time..pars
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 7 uses
   %i.b = alloca [64 x i8], align 16               ; 6 uses
-  %.sroa.8 = alloca [16 x i8], align 8            ; 2 uses
   %5 = alloca [24 x i8], align 8                  ; 4 uses
+  %.sroa.8 = alloca [16 x i8], align 8            ; 5 uses
   %i.c = alloca [24 x i8], align 8                ; 3 uses
   %i.d = load i16, ptr %1, align 8, !range !196, !noundef !3
   switch i16 %i.d, label %default.unreachable52 [
@@ -290,7 +290,7 @@ bb.g:                                             ; preds = %bb.e
 ._crit_edge40:                                    ; preds = %bb.g, %bb.d
   %.sroa.4.0.i.lcssa = phi i64 [ %4, %bb.d ], [ %i.v, %bb.g ]
   %.sroa.0.0.i25.lcssa = phi ptr [ %3, %bb.d ], [ %i.u, %bb.g ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %2, ptr noundef nonnull align 16 dereferenceable(64) %i.b, i64 64, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %2, ptr noundef nonnull align 16 dereferenceable(64) %i.b, i64 64, i1 false), !noalias !1662
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.0.0.i25.lcssa, ptr %i.x, align 8, !alias.scope !1655, !noalias !1665
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -308,6 +308,7 @@ bb.h:                                             ; preds = %bb.a
   br i1 %.not23, label %bb.l, label %bb.k
 
 bb.i:                                             ; preds = %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8, !nonnull !3, !align !105, !noundef !3 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -365,6 +366,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   br label %_ZN4time7parsing6parsed6Parsed11parse_items17h0e0d843507cb17cbE.exit
 
 bb.p:                                             ; preds = %bb.n
@@ -391,6 +393,7 @@ bb.r:                                             ; preds = %bb.i
 bb.s:                                             ; preds = %bb.r, %._crit_edge
   %.sroa.01.0.lcssa.sink = phi i64 [ 3, %bb.r ], [ %.sroa.01.1, %._crit_edge ]
   store i64 %.sroa.01.0.lcssa.sink, ptr %0, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   br label %_ZN4time7parsing6parsed6Parsed11parse_items17h0e0d843507cb17cbE.exit
 }
 
@@ -793,7 +796,6 @@ define void @_ZN6cookie6Cookie12make_removal17h331ba5ad5fc108a8E(ptr noalias nof
 bb.a:
   %i.a = alloca [16 x i8], align 4                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
-  %.sroa.012 = alloca [7 x i8], align 4           ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2240)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
@@ -885,7 +887,6 @@ _ZN6cookie10expiration10Expiration3map17h03d683e9edbcb503E.exit: ; preds = %_ZN4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(3) %.sroa.522.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(3) %i.bb, i64 3, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.012)
   %.sroa.0.0.insert.insert.i.i.i.i = and i64 %.sroa.09.0.copyload.i, 8795265167261695
   store i64 %.sroa.0.0.insert.insert.i.i.i.i, ptr %i.b, align 8
   %.sroa.421.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
@@ -907,17 +908,15 @@ _ZN6cookie10expiration10Expiration3map17h03d683e9edbcb503E.exit: ; preds = %_ZN4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2249
   %i.bn = icmp sgt i128 %i.bm, 188882502916980284006778392 ; 2 uses
   %..i.i.i = select i1 %i.bn, ptr @_ZN6cookie6Cookie11set_expires12MAX_DATETIME17he34828a6b79e6fddE, ptr %i.b
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(7) %.sroa.012, ptr noundef nonnull align 4 dereferenceable(7) %..i.i.i, i64 7, i1 false)
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 136
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %1, ptr noundef nonnull align 4 dereferenceable(7) %..i.i.i, i64 7, i1 false)
   %.sroa.gep15.val = load i64, ptr %.sroa.421.0..sroa_idx, align 8
   %.sroa.510.0.copyload11 = select i1 %i.bn, i64 10239341, i64 %.sroa.gep15.val
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %1, ptr noundef nonnull align 4 dereferenceable(7) %.sroa.012, i64 7, i1 false)
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 143
   store i8 0, ptr %.sroa.413.0..sroa_idx, align 1
   %.sroa.514.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i64 %.sroa.510.0.copyload11, ptr %.sroa.514.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.012)
   ret void
 }
 
@@ -1320,7 +1319,6 @@ define void @_ZN6cookie6Cookie14make_permanent17h89e8ca7f55dfbdaeE(ptr noalias n
 bb.a:
   %i.a = alloca [16 x i8], align 4                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
-  %.sroa.012 = alloca [7 x i8], align 4           ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120
   store i64 630720000, ptr %i.d, align 8
@@ -1399,7 +1397,6 @@ _ZN6cookie10expiration10Expiration3map17h03d683e9edbcb503E.exit: ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(3) %.sroa.522.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(3) %i.az, i64 3, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.012)
   %.sroa.0.0.insert.insert.i.i.i.i = and i64 %.sroa.09.0.copyload.i, 8795265167261695
   store i64 %.sroa.0.0.insert.insert.i.i.i.i, ptr %i.b, align 8
   %.sroa.421.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
@@ -1421,17 +1418,15 @@ _ZN6cookie10expiration10Expiration3map17h03d683e9edbcb503E.exit: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2349
   %i.bl = icmp sgt i128 %i.bk, 188882502916980284006778392 ; 2 uses
   %..i.i.i = select i1 %i.bl, ptr @_ZN6cookie6Cookie11set_expires12MAX_DATETIME17he34828a6b79e6fddE, ptr %i.b
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(7) %.sroa.012, ptr noundef nonnull align 4 dereferenceable(7) %..i.i.i, i64 7, i1 false)
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 136
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %1, ptr noundef nonnull align 4 dereferenceable(7) %..i.i.i, i64 7, i1 false)
   %.sroa.gep15.val = load i64, ptr %.sroa.421.0..sroa_idx, align 8
   %.sroa.510.0.copyload11 = select i1 %i.bl, i64 10239341, i64 %.sroa.gep15.val
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %1, ptr noundef nonnull align 4 dereferenceable(7) %.sroa.012, i64 7, i1 false)
   %.sroa.413.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 143
   store i8 0, ptr %.sroa.413.0..sroa_idx, align 1
   %.sroa.514.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 144
   store i64 %.sroa.510.0.copyload11, ptr %.sroa.514.0..sroa_idx, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.012)
   ret void
 }
 

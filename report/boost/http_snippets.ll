@@ -205,7 +205,6 @@ bb.a:
 define linkonce_odr hidden void @_ZN5boost5beast4http6parserILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEES6_E17on_body_init_implERKNS_8optionalImEERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
-  %.sroa.0.i = alloca %"struct.boost::system::error_code::data", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.b = load i8, ptr %1, align 8, !tbaa !639, !range !190, !noundef !35
   %i.c = trunc nuw i8 %i.b to i1
@@ -218,7 +217,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
   invoke void @_ZN5boost5beast4http15make_error_codeENS1_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %3, i32 noundef 7)
           to label %_ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i unwind label %bb.d
@@ -231,7 +229,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i: ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !518
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !15 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
@@ -239,10 +237,8 @@ _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is
   %i.i = and i64 %.sroa.5.0.copyload.i, 1
   %i.j = or disjoint i64 %i.i, ptrtoint (ptr @_ZZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader4initERKNS_8optionalImEERNS_6system10error_codeEE7loc_bb_ to i64)
   %.sroa.5.0.i.i = select i1 %switch.i.i.i, i64 %.sroa.5.0.copyload.i, i64 %i.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i64 %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %_ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader4initERKNS_8optionalImEERNS_6system10error_codeE.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -264,7 +260,6 @@ _ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader4initERK
 define linkonce_odr hidden noundef i64 @_ZN5boost5beast4http6parserILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEES6_E12on_body_implENS_4core17basic_string_viewIcEERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr %1, i64 %2, ptr noundef nonnull align 8 dereferenceable(24) %3) unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
-  %.sroa.024.i = alloca %"struct.boost::system::error_code::data", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !640, !nonnull !35, !align !36 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -274,7 +269,6 @@ bb.a:
   br i1 %i.f, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.024.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #32
   invoke void @_ZN5boost5beast4http15make_error_codeENS1_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %4, i32 noundef 7)
           to label %_ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i unwind label %bb.c
@@ -287,7 +281,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i: ; preds = %bb.b
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !518
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !15 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32
@@ -295,10 +289,8 @@ _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is
   %i.i = and i64 %.sroa.5.0.copyload.i, 1
   %i.j = or disjoint i64 %i.i, ptrtoint (ptr @_ZZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeEE7loc_bb_ to i64)
   %.sroa.5.0.i.i = select i1 %switch.i.i.i, i64 %.sroa.5.0.copyload.i, i64 %i.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.024.i)
   br label %_ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeE.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -353,7 +345,6 @@ bb.b:                                             ; preds = %_ZNKSt8functionIFvm
 define linkonce_odr hidden noundef i64 @_ZN5boost5beast4http6parserILb0ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEES6_E18on_chunk_body_implEmNS_4core17basic_string_viewIcEERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(280) %0, i64 noundef %1, ptr %2, i64 %3, ptr noundef nonnull align 8 dereferenceable(24) %4) unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
-  %.sroa.024.i = alloca %"struct.boost::system::error_code::data", align 8 ; 4 uses
   %6 = alloca %"class.boost::core::basic_string_view", align 8 ; 5 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 264
@@ -386,7 +377,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.024.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
   invoke void @_ZN5boost5beast4http15make_error_codeENS1_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %5, i32 noundef 7)
           to label %_ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i unwind label %bb.d
@@ -399,7 +389,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i: ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !518
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 16
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !15 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
@@ -407,10 +397,8 @@ _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is
   %i.q = and i64 %.sroa.5.0.copyload.i, 1
   %i.r = or disjoint i64 %i.q, ptrtoint (ptr @_ZZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeEE7loc_bb_ to i64)
   %.sroa.5.0.i.i = select i1 %switch.i.i.i, i64 %.sroa.5.0.copyload.i, i64 %i.r
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.024.i)
   br label %_ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeE.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -813,7 +801,6 @@ bb.a:
 define linkonce_odr hidden void @_ZN5boost5beast4http6parserILb1ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEES6_E17on_body_init_implERKNS_8optionalImEERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
-  %.sroa.0.i = alloca %"struct.boost::system::error_code::data", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.b = load i8, ptr %1, align 8, !tbaa !639, !range !190, !noundef !35
   %i.c = trunc nuw i8 %i.b to i1
@@ -826,7 +813,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #32
   invoke void @_ZN5boost5beast4http15make_error_codeENS1_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %3, i32 noundef 7)
           to label %_ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i unwind label %bb.d
@@ -839,7 +825,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i: ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !518
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 16
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !15 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #32
@@ -847,10 +833,8 @@ _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is
   %i.i = and i64 %.sroa.5.0.copyload.i, 1
   %i.j = or disjoint i64 %i.i, ptrtoint (ptr @_ZZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader4initERKNS_8optionalImEERNS_6system10error_codeEE7loc_bb_ to i64)
   %.sroa.5.0.i.i = select i1 %switch.i.i.i, i64 %.sroa.5.0.copyload.i, i64 %i.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i64 %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %_ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader4initERKNS_8optionalImEERNS_6system10error_codeE.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -872,7 +856,6 @@ _ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader4initERK
 define linkonce_odr hidden noundef i64 @_ZN5boost5beast4http6parserILb1ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEES6_E12on_body_implENS_4core17basic_string_viewIcEERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(280) %0, ptr %1, i64 %2, ptr noundef nonnull align 8 dereferenceable(24) %3) unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
-  %.sroa.024.i = alloca %"struct.boost::system::error_code::data", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !640, !nonnull !35, !align !36 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -882,7 +865,6 @@ bb.a:
   br i1 %i.f, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.024.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #32
   invoke void @_ZN5boost5beast4http15make_error_codeENS1_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %4, i32 noundef 7)
           to label %_ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i unwind label %bb.c
@@ -895,7 +877,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i: ; preds = %bb.b
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !518
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !15 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #32
@@ -903,10 +885,8 @@ _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is
   %i.i = and i64 %.sroa.5.0.copyload.i, 1
   %i.j = or disjoint i64 %i.i, ptrtoint (ptr @_ZZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeEE7loc_bb_ to i64)
   %.sroa.5.0.i.i = select i1 %switch.i.i.i, i64 %.sroa.5.0.copyload.i, i64 %i.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16
   store i64 %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.024.i)
   br label %_ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeE.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -961,7 +941,6 @@ bb.b:                                             ; preds = %_ZNKSt8functionIFvm
 define linkonce_odr hidden noundef i64 @_ZN5boost5beast4http6parserILb1ENS1_17basic_string_bodyIcSt11char_traitsIcESaIcEEES6_E18on_chunk_body_implEmNS_4core17basic_string_viewIcEERNS_6system10error_codeE(ptr noundef nonnull align 8 dereferenceable(280) %0, i64 noundef %1, ptr %2, i64 %3, ptr noundef nonnull align 8 dereferenceable(24) %4) unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %5 = alloca %"class.boost::system::error_code", align 8 ; 5 uses
-  %.sroa.024.i = alloca %"struct.boost::system::error_code::data", align 8 ; 4 uses
   %6 = alloca %"class.boost::core::basic_string_view", align 8 ; 5 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 264
@@ -994,7 +973,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.024.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #32
   invoke void @_ZN5boost5beast4http15make_error_codeENS1_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %5, i32 noundef 7)
           to label %_ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i unwind label %bb.d
@@ -1007,7 +985,7 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS6_EE5valuesr3std18is_error_code_enumIS6_EE5valueEvE4typeE.exit.i: ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !518
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 16
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !15 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #32
@@ -1015,10 +993,8 @@ _ZN5boost6system10error_codeC2INS_5beast4http5errorEEET_PNSt9enable_ifIXoosr18is
   %i.q = and i64 %.sroa.5.0.copyload.i, 1
   %i.r = or disjoint i64 %i.q, ptrtoint (ptr @_ZZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeEE7loc_bb_ to i64)
   %.sroa.5.0.i.i = select i1 %switch.i.i.i, i64 %.sroa.5.0.copyload.i, i64 %i.r
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.024.i, i64 16, i1 false)
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i64 %.sroa.5.0.i.i, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.024.i)
   br label %_ZN5boost5beast4http17basic_string_bodyIcSt11char_traitsIcESaIcEE6reader3putINS_4asio12const_bufferEEEmRKT_RNS_6system10error_codeE.exit
 
 bb.e:                                             ; preds = %bb.b

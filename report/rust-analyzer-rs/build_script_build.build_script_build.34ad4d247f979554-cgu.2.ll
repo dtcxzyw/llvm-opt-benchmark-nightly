@@ -61,7 +61,6 @@ bb.a:
   %i.e = alloca [24 x i8], align 8                ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [104 x i8], align 8               ; 2 uses
-  %7 = alloca [24 x i8], align 8                  ; 2 uses
   %i.h = alloca [104 x i8], align 8               ; 5 uses
   %i.i = alloca [24 x i8], align 8                ; 10 uses
   %.fr = freeze i64 %6                            ; 7 uses
@@ -268,13 +267,11 @@ common.resume:                                    ; preds = %bb.m, %bb.g
 _RNvXs_NtNtCsbSS6DM8SDEO_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCshzWfHUSfYae_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvNtB8_3str13replace_ascii0EE9from_iterCs4woGJmGIndg_18build_script_build.exit: ; preds = %.preheader.i.prol.loopexit, %.preheader.i, %middle.block, %vec.epilog.middle.block, %.noexc.i
   %storemerge.i.i.i.i.i = phi i64 [ %i.ac, %.noexc.i ], [ %i.as, %vec.epilog.middle.block ], [ %i.ah, %middle.block ], [ %.lcssa.unr, %.preheader.i.prol.loopexit ], [ %i.bn, %.preheader.i ]
   store i64 %storemerge.i.i.i.i.i, ptr %i.z, align 8, !noalias !5
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.w, %_RNvXs_NtNtCsbSS6DM8SDEO_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCshzWfHUSfYae_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvNtB8_3str13replace_ascii0EE9from_iterCs4woGJmGIndg_18build_script_build.exit
-  %.sink = phi ptr [ %i.i, %bb.w ], [ %7, %_RNvXs_NtNtCsbSS6DM8SDEO_5alloc3vec21spec_from_iter_nestedINtB6_3VechEINtB4_18SpecFromIterNestedhINtNtNtNtCshzWfHUSfYae_4core4iter8adapters3map3MapINtNtNtB1F_5slice4iter4IterhENCNvNtB8_3str13replace_ascii0EE9from_iterCs4woGJmGIndg_18build_script_build.exit ]
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sink, i64 24, i1 false)
   ret void
 
 .thread53:                                        ; preds = %bb.c, %bb.d, %bb.l, %bb.k, %.thread49
@@ -427,6 +424,7 @@ bb.w:                                             ; preds = %bb.v, %.noexc
   %i.cz = load i64, ptr %.sroa.313.0..sroa_idx, align 8
   %i.da = add i64 %i.cz, %gepdiff
   store i64 %i.da, ptr %.sroa.313.0..sroa_idx, align 8
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   br label %bb.i
 
 bb.x:                                             ; preds = %bb.u

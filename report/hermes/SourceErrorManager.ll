@@ -205,7 +205,6 @@ bb.a:
 define hidden noundef zeroext i1 @_ZN6hermes18SourceErrorManager20findBufferLineAndLocEN4llvh5SMLocERNS0_12SourceCoordsE(ptr noundef nonnull align 8 dereferenceable(464) %0, ptr %1, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(12) %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %3 = alloca %"struct.std::pair", align 8        ; 5 uses
-  %.sroa.7 = alloca [16 x i8], align 8            ; 4 uses
   %.not43 = icmp eq ptr %1, null
   br i1 %.not43, label %bb.b, label %bb.c
 
@@ -349,27 +348,25 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.c, %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   %i.bg = tail call noundef i32 @_ZNK4llvh9SourceMgr23FindBufferContainingLocENS_5SMLocE(ptr noundef nonnull align 8 dereferenceable(464) %0, ptr nonnull %1) #24, !noalias !204 ; 4 uses
-  %.not.i27 = icmp ne i32 %i.bg, 0                ; 2 uses
-  br i1 %.not.i27, label %bb.j, label %_ZNK6hermes18SourceErrorManager17findBufferAndLineEN4llvh5SMLocE.exit
+  %.not.i27.not = icmp eq i32 %i.bg, 0
+  br i1 %.not.i27.not, label %_ZNK6hermes18SourceErrorManager17findBufferAndLineEN4llvh5SMLocE.exit, label %bb.j
 
 _ZNK6hermes18SourceErrorManager17findBufferAndLineEN4llvh5SMLocE.exit: ; preds = %bb.i
   store i32 0, ptr %2, align 4, !tbaa !183
-  br label %5
+  br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24, !noalias !204
   call void @_ZNK4llvh9SourceMgr8FindLineENS_5SMLocEj(ptr dead_on_unwind nonnull writable sret(%"struct.std::pair") align 8 %3, ptr noundef nonnull align 8 dereferenceable(464) %0, ptr nonnull %1, i32 noundef %i.bg) #24, !noalias !204
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.bi = load i32, ptr %i.bh, align 8, !tbaa !162, !noalias !204 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24, !noalias !204
   store i32 %i.bg, ptr %i.a, align 8, !tbaa !197
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 156
   store i32 %i.bi, ptr %i.bj, align 4, !tbaa !203
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, i64 16, i1 false), !tbaa.struct !179
   %i.bk = add i32 %i.bi, 1
   %i.bl = call { ptr, i64 } @_ZNK4llvh9SourceMgr10getLineRefEjj(ptr noundef nonnull align 8 dereferenceable(120) %0, i32 noundef %i.bk, i32 noundef %i.bg) #24 ; 2 uses
   %i.bm = extractvalue { ptr, i64 } %i.bl, 0
@@ -420,14 +417,10 @@ _ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12So
   %i.ch = add i32 %i.cg, 1
   %i.ci = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i32 %i.ch, ptr %i.ci, align 4, !tbaa !186
-  br label %5
-
-5:                                                ; preds = %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit35, %_ZNK6hermes18SourceErrorManager17findBufferAndLineEN4llvh5SMLocE.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   br label %bb.k
 
-bb.k:                                             ; preds = %5, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit26, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit, %bb.b
-  %.1 = phi i1 [ true, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit ], [ true, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit26 ], [ %.not.i27, %5 ], [ false, %bb.b ]
+bb.k:                                             ; preds = %_ZNK6hermes18SourceErrorManager17findBufferAndLineEN4llvh5SMLocE.exit, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit35, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit26, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit, %bb.b
+  %.1 = phi i1 [ true, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit ], [ true, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit26 ], [ false, %bb.b ], [ true, %_ZN6hermes18SourceErrorManager13FindLineCache10fillCoordsEN4llvh5SMLocERNS0_12SourceCoordsE.exit35 ], [ false, %_ZNK6hermes18SourceErrorManager17findBufferAndLineEN4llvh5SMLocE.exit ]
   ret i1 %.1
 }
 

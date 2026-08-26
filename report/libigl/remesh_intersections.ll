@@ -205,8 +205,6 @@ bb.a:
   %14 = alloca %"class.CGAL::Vector_3.933", align 16 ; 6 uses
   %15 = alloca %"class.CGAL::Vector_3.933", align 16 ; 6 uses
   %16 = alloca %"class.CGAL::Vector_3.933", align 16 ; 6 uses
-  %.sroa.0 = alloca [2 x %"class.CGAL::Interval_nt"], align 16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.a = load ptr, ptr %3, align 8, !tbaa !101
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.c = load atomic ptr, ptr %i.b acquire, align 8 ; 7 uses
@@ -296,19 +294,17 @@ bb.a:
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #23, !noalias !8157
   %.sroa.03.16..sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.03.i.i.i.i.i.i.i, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.03.16..sroa_idx.i.i.i.i.i.i.i, ptr noundef nonnull align 16 dereferenceable(16) %11, i64 16, i1 false), !noalias !8187
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %.sroa.0, ptr noundef nonnull align 16 dereferenceable(32) %.sroa.03.i.i.i.i.i.i.i, i64 32, i1 false)
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %17, ptr noundef nonnull align 16 dereferenceable(32) %.sroa.03.i.i.i.i.i.i.i, i64 32, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.03.i.i.i.i.i.i.i), !noalias !8157
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #23, !noalias !8157
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23, !noalias !8157
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 1, ptr %i.ai, align 8, !tbaa !350
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %17, ptr noundef nonnull align 16 dereferenceable(32) %.sroa.0, i64 32, i1 false)
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr null, ptr %i.aj, align 16, !tbaa !8190
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 56
   store i32 0, ptr %i.ak, align 8, !tbaa !355
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_7Point_2INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS1_INS2_IN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEEEENS_20CommonKernelFunctors30Construct_projected_xy_point_2IS5_EENSN_ISK_EENS_19Cartesian_converterISK_S5_NS_12NT_converterISJ_S4_EEEELb0EJNS_7Plane_3INS_5EpeckEEENS_7Point_3ISV_EEEEE, i64 16), ptr %0, align 16, !tbaa !67
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.am = load ptr, ptr %4, align 8, !tbaa !101   ; 2 uses
@@ -711,7 +707,6 @@ bb.a:
   %10 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
   %11 = alloca %"class.CGAL::Interval_nt", align 16 ; 4 uses
   %12 = alloca %"class.CGAL::PlaneC3.1223", align 16 ; 7 uses
-  %.sroa.0.i = alloca [4 x %"class.CGAL::Interval_nt"], align 16 ; 4 uses
   %i.e = alloca i32, align 4                      ; 4 uses
   %i.f = alloca i32, align 4                      ; 4 uses
   %i.g = alloca i32, align 4                      ; 4 uses
@@ -735,7 +730,6 @@ bb.a:
           to label %bb.b unwind label %bb.e       ; 8 uses
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
   %i.n = load ptr, ptr %2, align 8, !tbaa !101
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 160
   %i.p = load atomic ptr, ptr %i.o acquire, align 8 ; 9 uses
@@ -764,17 +758,15 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23, !noalias !10287
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #23, !noalias !10287
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #23, !noalias !10287
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %.sroa.0.i, ptr noundef nonnull align 16 dereferenceable(64) %12, i64 64, i1 false)
+  %14 = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %14, ptr noundef nonnull align 16 dereferenceable(64) %12, i64 64, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #23, !noalias !10280
   %i.ab = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  store i32 1, ptr %i.ab, align 4, !tbaa !350
-  %14 = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %14, ptr noundef nonnull align 16 dereferenceable(64) %.sroa.0.i, i64 64, i1 false)
+  store i32 1, ptr %i.ab, align 8, !tbaa !350
   %i.ac = getelementptr inbounds nuw i8, ptr %i.m, i64 80
   store ptr %14, ptr %i.ac, align 16, !tbaa !10290
   %i.ad = getelementptr inbounds nuw i8, ptr %i.m, i64 88
   store i32 0, ptr %i.ad, align 8, !tbaa !355
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN4CGAL10Lazy_rep_nINS_7Plane_3INS_16Simple_cartesianINS_11Interval_ntILb0EEEEEEENS1_INS2_IN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEEEENS_20CommonKernelFunctors28Construct_supporting_plane_3IS5_EENSN_ISK_EENS_19Cartesian_converterISK_S5_NS_12NT_converterISJ_S4_EEEELb0EJNS_10Triangle_3INS_5EpeckEEEEEE, i64 16), ptr %i.m, align 16, !tbaa !67
   %i.ae = getelementptr inbounds nuw i8, ptr %i.m, i64 96
   %i.af = load ptr, ptr %2, align 8, !tbaa !101   ; 2 uses

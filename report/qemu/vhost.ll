@@ -204,19 +204,17 @@ bb.ac:                                            ; preds = %vhost_virtqueue_ini
   %.sroa.20.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 152
   store ptr @.str.16, ptr %.sroa.20.0..sroa_idx, align 8
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 200
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.21.0..sroa_idx, i8 0, i64 40, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cs, i8 0, i64 16, i1 false)
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
-  store ptr @vhost_iommu_region_add, ptr %.sroa.2.0..sroa_idx, align 8
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store ptr @vhost_iommu_region_del, ptr %.sroa.3.0..sroa_idx, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 232
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %.sroa.4.0..sroa_idx, i8 0, i64 112, i1 false)
-  %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344
-  store ptr @.str.17, ptr %.sroa.41.0..sroa_idx, align 8
+  %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 232
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(112) %i.cs, i8 0, i64 112, i1 false)
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 352
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.5.0..sroa_idx, i8 0, i64 40, i1 false)
+  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.21.0..sroa_idx, i8 0, i64 56, i1 false)
+  store ptr @vhost_iommu_region_add, ptr %.sroa.2.0..sroa_idx, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
+  store ptr @vhost_iommu_region_del, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.41.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 344
+  store ptr @.str.17, ptr %.sroa.41.0..sroa_idx, align 8
   %i.ct = load ptr, ptr %i.f, align 8
   %i.cu = icmp eq ptr %i.ct, null
   br i1 %i.cu, label %bb.ad, label %.thread

@@ -204,7 +204,6 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [40 x i8], align 8                ; 4 uses
-  %1 = alloca [24 x i8], align 8                  ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 64, !dbg !1984 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !dbg !1984, !noundef !13 ; 2 uses
   %i.f = icmp eq i64 %i.e, 0, !dbg !1984
@@ -225,7 +224,6 @@ bb.c:                                             ; preds = %bb.a, %_RINvNtNtNtC
   ret { ptr, ptr } %i.j, !dbg !1997
 
 bb.d:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %1), !dbg !1998
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !1998, !noalias !2009
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !2012, !noalias !2009
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !2012, !noalias !2017
@@ -266,24 +264,22 @@ bb.g:                                             ; preds = %.noexc2.i, %bb.f, %
 
 _RINvNtNtNtCsgZ49sUHp3tW_5alloc11collections5btree3mem7replaceINtNtB4_4node6HandleINtB10_7NodeRefNtNtB10_6marker5ImmutNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB1R_NtB1y_4LeafENtB1y_4EdgeETRB1R_B39_ENCNvMsk_NtB4_8navigateBX_14next_unchecked0ECs80wj1cxFixi_12polars_dtype.exit: ; preds = %.noexc2.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !2045, !noalias !2009
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !dbg !2046, !noalias !2009
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !dbg !2046
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !2047, !noalias !2009
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.h, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !dbg !2048
-  call void @llvm.lifetime.end.p0(ptr nonnull %1), !dbg !2052
-  %i.o = extractvalue { ptr, ptr } %i.m, 0, !dbg !2053
-  %i.p = extractvalue { ptr, ptr } %i.m, 1, !dbg !2053
-  br label %bb.c, !dbg !2054
+  %i.o = extractvalue { ptr, ptr } %i.m, 0, !dbg !2048
+  %i.p = extractvalue { ptr, ptr } %i.m, 1, !dbg !2048
+  br label %bb.c, !dbg !2049
 
 bb.h:                                             ; preds = %bb.b
-  tail call void @_RNvNtCscgRAwXFJnXP_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #24, !dbg !2055
-  unreachable, !dbg !2055
+  tail call void @_RNvNtCscgRAwXFJnXP_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #24, !dbg !2050
+  unreachable, !dbg !2050
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvYNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCscgRAwXFJnXP_4core3fmt5Write9write_fmtCs80wj1cxFixi_12polars_dtype(ptr noalias noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #1 !dbg !2056 {
+define hidden noundef zeroext i1 @_RNvYNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCscgRAwXFJnXP_4core3fmt5Write9write_fmtCs80wj1cxFixi_12polars_dtype(ptr noalias noundef align 8 dereferenceable(24) %0, ptr noundef nonnull %1, ptr noundef nonnull %2) unnamed_addr #1 !dbg !2051 {
 _RNvXs_NvNtNtCscgRAwXFJnXP_4core3fmt5Write9write_fmtQNtNtCsgZ49sUHp3tW_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCs80wj1cxFixi_12polars_dtype.exit:
-  %i.a = tail call noundef zeroext i1 @_RNvNtCscgRAwXFJnXP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @9, ptr noundef nonnull %1, ptr noundef nonnull %2), !dbg !2058, !inline_history !2063
-  ret i1 %i.a, !dbg !2064
+  %i.a = tail call noundef zeroext i1 @_RNvNtCscgRAwXFJnXP_4core3fmt5write(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @9, ptr noundef nonnull %1, ptr noundef nonnull %2), !dbg !2053, !inline_history !2058
+  ret i1 %i.a, !dbg !2059
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -686,21 +682,16 @@ begin_hunk_1_@llvm.umin.i8
 !2045 = !DILocation(line: 536, column: 10, scope: !2013, inlinedAt: !2016)
 !2046 = !DILocation(line: 27, column: 10, scope: !1999, inlinedAt: !2004)
 !2047 = !DILocation(line: 27, column: 41, scope: !1999, inlinedAt: !2004)
-!2048 = !DILocation(line: 1921, column: 41, scope: !2049, inlinedAt: !2050)
-!2049 = distinct !DISubprogram(name: "write<alloc::collections::btree::node::Handle<alloc::collections::btree::node::NodeRef<alloc::collections::btree::node::marker::Immut, polars_utils::pl_str::PlSmallStr, polars_utils::pl_str::PlSmallStr, alloc::collections::btree::node::marker::Leaf>, alloc::collections::btree::node::marker::Edge>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr5writeINtNtNtNtCsgZ49sUHp3tW_5alloc11collections5btree4node6HandleINtBA_7NodeRefNtNtBA_6marker5ImmutNtNtCs2mZqlW55729_12polars_utils6pl_str10PlSmallStrB23_NtB1L_4LeafENtB1L_4EdgeEECs80wj1cxFixi_12polars_dtype", scope: !19, file: !75, line: 1898, type: !12, scopeLine: 1898, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
-!2050 = distinct !DILocation(line: 29, column: 9, scope: !2051, inlinedAt: !2004)
-!2051 = distinct !DILexicalBlock(scope: !1999, file: !2000, line: 27, column: 5)
-!2052 = !DILocation(line: 33, column: 2, scope: !2002, inlinedAt: !2004)
-!2053 = !DILocation(line: 533, column: 9, scope: !2005, inlinedAt: !2008)
-!2054 = !DILocation(line: 1717, column: 9, scope: !1982)
-!2055 = !DILocation(line: 1016, column: 21, scope: !1993, inlinedAt: !1994)
-!2056 = distinct !DISubprogram(name: "write_fmt<alloc::string::String>", linkageName: "_RNvYNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCscgRAwXFJnXP_4core3fmt5Write9write_fmtCs80wj1cxFixi_12polars_dtype", scope: !2057, file: !1400, line: 212, type: !12, scopeLine: 212, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
-!2057 = !DINamespace(name: "Write", scope: !1402)
-!2058 = !DILocation(line: 236, column: 21, scope: !2059, inlinedAt: !2062)
-!2059 = distinct !DISubprogram(name: "spec_write_fmt<alloc::string::String>", linkageName: "_RNvXs_NvNtNtCscgRAwXFJnXP_4core3fmt5Write9write_fmtQNtNtCsgZ49sUHp3tW_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCs80wj1cxFixi_12polars_dtype", scope: !2060, file: !1400, line: 232, type: !12, scopeLine: 232, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
-!2060 = !DINamespace(name: "{impl#1}", scope: !2061)
-!2061 = !DINamespace(name: "write_fmt", scope: !2057)
-!2062 = distinct !DILocation(line: 241, column: 14, scope: !2056)
-!2063 = distinct !{null}
-!2064 = !DILocation(line: 242, column: 6, scope: !2056)
+!2048 = !DILocation(line: 533, column: 9, scope: !2005, inlinedAt: !2008)
+!2049 = !DILocation(line: 1717, column: 9, scope: !1982)
+!2050 = !DILocation(line: 1016, column: 21, scope: !1993, inlinedAt: !1994)
+!2051 = distinct !DISubprogram(name: "write_fmt<alloc::string::String>", linkageName: "_RNvYNtNtCsgZ49sUHp3tW_5alloc6string6StringNtNtCscgRAwXFJnXP_4core3fmt5Write9write_fmtCs80wj1cxFixi_12polars_dtype", scope: !2052, file: !1400, line: 212, type: !12, scopeLine: 212, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
+!2052 = !DINamespace(name: "Write", scope: !1402)
+!2053 = !DILocation(line: 236, column: 21, scope: !2054, inlinedAt: !2057)
+!2054 = distinct !DISubprogram(name: "spec_write_fmt<alloc::string::String>", linkageName: "_RNvXs_NvNtNtCscgRAwXFJnXP_4core3fmt5Write9write_fmtQNtNtCsgZ49sUHp3tW_5alloc6string6StringNtB4_12SpecWriteFmt14spec_write_fmtCs80wj1cxFixi_12polars_dtype", scope: !2055, file: !1400, line: 232, type: !12, scopeLine: 232, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !13)
+!2055 = !DINamespace(name: "{impl#1}", scope: !2056)
+!2056 = !DINamespace(name: "write_fmt", scope: !2052)
+!2057 = distinct !DILocation(line: 241, column: 14, scope: !2051)
+!2058 = distinct !{null}
+!2059 = !DILocation(line: 242, column: 6, scope: !2051)
 end_hunk_1

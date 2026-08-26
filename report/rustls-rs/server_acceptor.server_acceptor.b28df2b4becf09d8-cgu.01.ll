@@ -202,8 +202,7 @@ bb.a:
   %i.j = alloca [24 x i8], align 8                ; 13 uses
   %i.k = alloca [16 x i8], align 8                ; 6 uses
   %i.l = alloca [4 x i8], align 4                 ; 6 uses
-  %1 = alloca [24 x i8], align 8                  ; 12 uses
-  %i.m = alloca [24 x i8], align 8                ; 4 uses
+  %i.m = alloca [24 x i8], align 8                ; 12 uses
   %i.n = alloca [24 x i8], align 8                ; 9 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -314,7 +313,7 @@ bb.l:                                             ; preds = %bb.i, %bb.n
   store ptr %storemerge79, ptr %i.q, align 8
   store i64 %storemerge, ptr %i.r, align 8
   %i.ak = xor i1 %.sroa.0.0, true
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   invoke void @_RNvXsb_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtCsj6eKBz9Db1c_4core5clone5Clone5cloneCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %0)
           to label %bb.p unwind label %.body47.thread57
@@ -325,7 +324,6 @@ bb.l:                                             ; preds = %bb.i, %bb.n
   br label %bb.bg
 
 _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.j
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.am = load ptr, ptr %i.s, align 8, !nonnull !29, !noundef !29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 360
@@ -339,10 +337,8 @@ bb.m:                                             ; preds = %_RNvNtCs4wP2HXfJTCR
   br label %.body47.thread
 
 bb.n:                                             ; preds = %_RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   br label %bb.l
 
 bb.o:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECsfkrmtM4W2FM_15server_acceptor.exit.i
@@ -354,21 +350,21 @@ bb.o:                                             ; preds = %_RINvNtCsj6eKBz9Db1
   br label %.body47.thread
 
 bb.p:                                             ; preds = %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.m, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %i.aq = invoke noundef zeroext i1 @_RINvMsr_NtCsaKJjC64KgbL_3std4pathNtB6_7PathBuf13set_extensionReECsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @49, i64 noundef 3)
+  %i.aq = invoke noundef zeroext i1 @_RINvMsr_NtCsaKJjC64KgbL_3std4pathNtB6_7PathBuf13set_extensionReECsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @49, i64 noundef 3)
           to label %bb.t unwind label %bb.s       ; 0 uses
 
 .body:                                            ; preds = %bb.s, %bb.ab, %.body11
   %.pn6 = phi { ptr, i32 } [ %.pn, %.body11 ], [ %i.at, %bb.s ], [ %i.ay, %bb.ab ] ; 2 uses
   %.sroa.03.3 = phi i1 [ false, %.body11 ], [ true, %bb.s ], [ true, %bb.ab ]
-  invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECsfkrmtM4W2FM_15server_acceptor.exit.i unwind label %bb.q
 
 bb.q:                                             ; preds = %.body
   %i.ar = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
           to label %.body19 unwind label %bb.r
 
 bb.r:                                             ; preds = %bb.q
@@ -378,7 +374,7 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECsfkrmtM4W2FM_15server_acceptor.exit.i: ; preds = %.body
-  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
           to label %bb.o unwind label %bb.bf
 
 bb.s:                                             ; preds = %bb.t, %bb.p
@@ -389,7 +385,7 @@ bb.s:                                             ; preds = %bb.t, %bb.p
 bb.t:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
-  invoke void @_RINvMs2_NtCsaKJjC64KgbL_3std2fsNtB6_4File6createRNtNtB8_4path7PathBufECsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.k, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1)
+  invoke void @_RINvMs2_NtCsaKJjC64KgbL_3std2fsNtB6_4File6createRNtNtB8_4path7PathBufECsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.k, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.m)
           to label %bb.u unwind label %bb.s
 
 bb.u:                                             ; preds = %bb.t
@@ -598,7 +594,7 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsfk
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types28CertificateRevocationListDerECsfkrmtM4W2FM_15server_acceptor.exit40: ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultuNtNtNtB4_2io5error5ErrorE6unwrapCsfkrmtM4W2FM_15server_acceptor.exit16, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VechEECsfkrmtM4W2FM_15server_acceptor.exit.i.i.i36
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
-  %i.cg = invoke noundef ptr @_RINvNtCsaKJjC64KgbL_3std2fs6renameRNtNtB4_4path7PathBufBw_ECsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %0)
+  %i.cg = invoke noundef ptr @_RINvNtCsaKJjC64KgbL_3std2fs6renameRNtNtB4_4path7PathBufBw_ECsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.m, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %0)
           to label %bb.au unwind label %bb.ad     ; 2 uses
 
 bb.au:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtCseO5Jl7W60Eg_16rustls_pki_types28CertificateRevocationListDerECsfkrmtM4W2FM_15server_acceptor.exit40
@@ -660,13 +656,13 @@ bb.bc:                                            ; preds = %bb.au
   %.val = load i32, ptr %i.l, align 4, !range !735, !noundef !29
   %i.cq = call noundef i32 @close(i32 noundef %.val) #22 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l)
-  invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECsfkrmtM4W2FM_15server_acceptor.exit.i46 unwind label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   %i.cr = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
           to label %.body47.thread unwind label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
@@ -676,11 +672,11 @@ bb.be:                                            ; preds = %bb.bd
   unreachable
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECsfkrmtM4W2FM_15server_acceptor.exit.i46: ; preds = %bb.bc
-  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
+  invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsfkrmtM4W2FM_15server_acceptor(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.m)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsaKJjC64KgbL_3std4path7PathBufECsfkrmtM4W2FM_15server_acceptor.exit50 unwind label %.body47
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsaKJjC64KgbL_3std4path7PathBufECsfkrmtM4W2FM_15server_acceptor.exit50: ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsaKJjC64KgbL_3std3ffi6os_str8OsStringECsfkrmtM4W2FM_15server_acceptor.exit.i46
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br label %bb.b
 

@@ -204,8 +204,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 define void @_ZN9grpc_core29RegionalAccessBoundaryFetcher14OnFetchSuccessENS_5SliceE(ptr noundef nonnull align 16 dereferenceable(416) %0, ptr nofree noundef align 8 captures(none) %1) local_unnamed_addr #11 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %struct.grpc_slice, align 8         ; 4 uses
-  %3 = alloca %struct.grpc_slice, align 8         ; 4 uses
-  %4 = alloca %"struct.grpc_core::RegionalAccessBoundaryFetcher::RegionalAccessBoundary", align 8 ; 10 uses
+  %3 = alloca %"struct.grpc_core::RegionalAccessBoundaryFetcher::RegionalAccessBoundary", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 3 uses
   tail call void @_ZN4absl12lts_202505125Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8) %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 408
@@ -214,10 +213,10 @@ bb.a:
   br i1 %i.d, label %_ZNSt10unique_ptrIN9grpc_core29RegionalAccessBoundaryFetcher7RequestENS0_16OrphanableDeleteEE5resetEPS2_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #30
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, i8 0, i64 32, i1 false), !noalias !123
-  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 32
   %.not.i.i = icmp eq ptr @_ZTHN9grpc_core9Timestamp25thread_local_time_source_E, null
   br i1 %.not.i.i, label %_ZTWN9grpc_core9Timestamp25thread_local_time_source_E.exit.i, label %bb.c
 
@@ -246,22 +245,19 @@ _ZN9grpc_core9Timestamp3NowEv.exit:               ; preds = %_ZTWN9grpc_core9Tim
   br i1 %i.n, label %_ZNSt8optionalIN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit, label %_ZNSt8optionalIN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit.thread
 
 _ZNSt8optionalIN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit.thread: ; preds = %_ZN9grpc_core9Timestamp3NowEv.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 32, i1 false), !tbaa.struct !129
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.k, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !129
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.k, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 32, i1 false)
   store i8 1, ptr %i.l, align 8, !tbaa !44
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 304
   store i64 %.0.i.i, ptr %i.o, align 16, !tbaa !51
   br label %_ZN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryD2Ev.exit
 
 _ZNSt8optionalIN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit: ; preds = %_ZN9grpc_core9Timestamp3NowEv.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 16 dereferenceable(48) %i.k, i64 32, i1 false), !tbaa.struct !129
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.k, ptr noundef nonnull align 8 dereferenceable(40) %4, i64 32, i1 false), !tbaa.struct !129
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !129
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %.pr = load ptr, ptr %4, align 8, !tbaa !112    ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 16 dereferenceable(48) %i.k, i64 32, i1 false), !tbaa.struct !129
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.k, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 32, i1 false), !tbaa.struct !129
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %3, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !129
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  %.pr = load ptr, ptr %3, align 8, !tbaa !112    ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 304
   store i64 %.0.i.i, ptr %i.p, align 16, !tbaa !51
   %i.q = icmp ugt ptr %.pr, inttoptr (i64 1 to ptr)
@@ -286,7 +282,7 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryD2Ev.exit: ; preds = %_ZNSt8optionalIN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit.thread, %_ZNSt8optionalIN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryEEaSIS2_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS3_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES6_ISt6__and_IJSt9is_scalarIS2_ES7_IS2_NSt5decayISA_E4typeEEEEESt16is_constructibleIS2_JSA_EESt13is_assignableIRS2_SA_EEERS3_E4typeEOSA_.exit, %bb.d, %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #30
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 336
   invoke void @_ZN9grpc_core7BackOff5ResetEv(ptr noundef nonnull align 16 dereferenceable(64) %i.x)
           to label %bb.g unwind label %bb.n
@@ -346,8 +342,8 @@ _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %_ZNSt10unique_ptrIN
 bb.m:                                             ; preds = %_ZTWN9grpc_core9Timestamp25thread_local_time_source_E.exit.i, %bb.c
   %i.al = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN9grpc_core5SliceD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %4) #30
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
+  call void @_ZN9grpc_core5SliceD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %3) #30
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #30
   br label %bb.o
 
 bb.n:                                             ; preds = %_ZN9grpc_core29RegionalAccessBoundaryFetcher22RegionalAccessBoundaryD2Ev.exit

@@ -204,15 +204,14 @@ bb.a:
   %4 = alloca %"class.boost::system::error_code", align 8 ; 4 uses
   %5 = alloca %"class.boost::system::error_code", align 8 ; 4 uses
   %6 = alloca %"class.boost::system::error_code", align 8 ; 4 uses
-  %7 = alloca %"class.boost::system::error_code", align 8 ; 4 uses
   %i.a = load i32, ptr %2, align 8, !tbaa !75
   %switch.i = icmp ult i32 %i.a, 5
   br i1 %switch.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
-  invoke void @_ZN5boost5redis15make_error_codeENS0_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %6, i32 noundef 6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
+  invoke void @_ZN5boost5redis15make_error_codeENS0_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %5, i32 noundef 6)
           to label %_ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit unwind label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -223,10 +222,10 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit: ; preds = %bb.b
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false), !tbaa.struct !92
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %7, i64 24, i1 false), !tbaa.struct !92
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false), !tbaa.struct !92
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %6, i64 24, i1 false), !tbaa.struct !92
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   br label %_ZN5boost5redis7adapter6detail21boost_redis_from_bulkIiSt17basic_string_viewIcSt11char_traitsIcEEEEvRT_RKNS0_5resp310basic_nodeIT0_EERNS_6system10error_codeE.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -323,7 +322,6 @@ _ZSt10from_charsIiENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_
   br label %_ZN5boost5redis7adapter6detail21boost_redis_from_bulkIiSt17basic_string_viewIcSt11char_traitsIcEEEEvRT_RKNS0_5resp310basic_nodeIT0_EERNS_6system10error_codeE.exit
 
 _ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.thread.i.i.i.i: ; preds = %.split.i.i.i.i.i, %bb.j, %bb.k, %_ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.i.i.i.i, %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   invoke void @_ZN5boost5redis15make_error_codeENS0_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %4, i32 noundef 2)
           to label %_ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit.i.i.i unwind label %bb.l
@@ -336,10 +334,8 @@ bb.l:                                             ; preds = %_ZNSt8__detail22__f
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit.i.i.i: ; preds = %_ZNSt8__detail22__from_chars_pow2_baseILb1EjEEbRPKcS2_RT0_i.exit.thread.i.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !92
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %5, i64 24, i1 false), !tbaa.struct !92
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   br label %_ZN5boost5redis7adapter6detail21boost_redis_from_bulkIiSt17basic_string_viewIcSt11char_traitsIcEEEEvRT_RKNS0_5resp310basic_nodeIT0_EERNS_6system10error_codeE.exit
 
 _ZN5boost5redis7adapter6detail21boost_redis_from_bulkIiSt17basic_string_viewIcSt11char_traitsIcEEEEvRT_RKNS0_5resp310basic_nodeIT0_EERNS_6system10error_codeE.exit: ; preds = %_ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit.i.i.i, %_ZSt10from_charsIiENSt9enable_ifIXsr5__or_ISt5__or_IJSt7is_sameINSt9remove_cvIT_E4typeEaES2_IS6_sES2_IS6_iES2_IS6_lES2_IS6_xES2_IS6_nEEES1_IJS2_IS6_hES2_IS6_tES2_IS6_jES2_IS6_mES2_IS6_yES2_IS6_oEEES2_IcS6_EEE5valueESt17from_chars_resultE4typeEPKcSQ_RS4_i.exit.i.i.i, %_ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit
@@ -742,8 +738,7 @@ _ZSt5visitIZN5boost5redis7adapter6detail14static_adapterISt5tupleIJNS0_6system6r
 define linkonce_odr hidden void @_ZN5boost5redis7adapter6detail7wrapperINS_6system6resultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_5errorEEEE7on_nodeISt17basic_string_viewIcS9_EEEvRKNS0_5resp310basic_nodeIT_EERNS4_10error_codeE(ptr noundef nonnull align 8 dereferenceable(10) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #14 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.boost::system::error_code", align 8 ; 4 uses
-  %4 = alloca %"class.boost::system::error_code", align 8 ; 4 uses
-  %5 = alloca %"struct.boost::source_location", align 8 ; 7 uses
+  %4 = alloca %"struct.boost::source_location", align 8 ; 7 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !154    ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.c = load i8, ptr %i.b, align 8, !tbaa !17    ; 2 uses
@@ -770,19 +765,19 @@ bb.c:                                             ; preds = %bb.b
 .critedge:                                        ; preds = %..critedge_crit_edge, %bb.b
   %i.i = phi i8 [ %.pre4, %..critedge_crit_edge ], [ %i.c, %bb.b ]
   %i.j = phi ptr [ %.pre, %..critedge_crit_edge ], [ %i.a, %bb.b ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
-  store ptr @.str.8, ptr %5, align 8, !tbaa !130
-  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
+  store ptr @.str.8, ptr %4, align 8, !tbaa !130
+  %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr @.str.9, ptr %i.k, align 8, !tbaa !132
-  %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16
   store i32 608, ptr %i.l, align 8, !tbaa !128
-  %i.m = getelementptr inbounds nuw i8, ptr %5, i64 20
+  %i.m = getelementptr inbounds nuw i8, ptr %4, i64 20
   store i32 30, ptr %i.m, align 4, !tbaa !131
   %i.n = icmp eq i8 %i.i, 1
   br i1 %i.n, label %_ZNR5boost6system6resultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  call void @_ZN5boost5redis7adapter26throw_exception_from_errorERKNS1_5errorERKNS_15source_locationE(ptr noundef nonnull align 8 dereferenceable(48) %i.j, ptr noundef nonnull align 8 dereferenceable(24) %5) #27
+  call void @_ZN5boost5redis7adapter26throw_exception_from_errorERKNS1_5errorERKNS_15source_locationE(ptr noundef nonnull align 8 dereferenceable(48) %i.j, ptr noundef nonnull align 8 dereferenceable(24) %4) #27
   unreachable
 
 _ZNR5boost6system6resultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit: ; preds = %.critedge
@@ -791,7 +786,6 @@ _ZNR5boost6system6resultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_
   br i1 %switch.i.i, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %_ZNR5boost6system6resultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   invoke void @_ZN5boost5redis15make_error_codeENS0_5errorE(ptr dead_on_unwind nonnull writable sret(%"class.boost::system::error_code") align 8 %3, i32 noundef 6)
           to label %_ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit.i unwind label %bb.f
@@ -804,10 +798,8 @@ bb.f:                                             ; preds = %bb.e
   unreachable
 
 _ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit.i: ; preds = %bb.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false), !tbaa.struct !92
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !92
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   br label %_ZN5boost5redis7adapter6detail11simple_implINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7on_nodeISt17basic_string_viewIcS7_EEEvRS9_RKNS0_5resp310basic_nodeIT_EERNS_6system10error_codeE.exit
 
 bb.g:                                             ; preds = %_ZNR5boost6system6resultINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_5redis7adapter5errorEE5valueERKNS_15source_locationE.exit
@@ -830,7 +822,7 @@ _ZN5boost5redis7adapter6detail21boost_redis_from_bulkINSt7__cxx1112basic_stringI
   br label %_ZN5boost5redis7adapter6detail11simple_implINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7on_nodeISt17basic_string_viewIcS7_EEEvRS9_RKNS0_5resp310basic_nodeIT_EERNS_6system10error_codeE.exit
 
 _ZN5boost5redis7adapter6detail11simple_implINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7on_nodeISt17basic_string_viewIcS7_EEEvRS9_RKNS0_5resp310basic_nodeIT_EERNS_6system10error_codeE.exit: ; preds = %_ZN5boost6system10error_codeC2INS_5redis5errorEEET_PNSt9enable_ifIXoosr18is_error_code_enumIS5_EE5valuesr3std18is_error_code_enumIS5_EE5valueEvE4typeE.exit.i, %_ZN5boost5redis7adapter6detail21boost_redis_from_bulkINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS7_EEEvRT_RKNS0_5resp310basic_nodeIT0_EERNS_6system10error_codeE.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.c, %bb.a, %_ZN5boost5redis7adapter6detail11simple_implINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE7on_nodeISt17basic_string_viewIcS7_EEEvRS9_RKNS0_5resp310basic_nodeIT_EERNS_6system10error_codeE.exit

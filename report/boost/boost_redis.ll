@@ -205,12 +205,11 @@ _ZN5boost5redis11any_adapterC2ESt8functionIFvNS1_11parse_eventERKNS0_5resp310bas
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 249
   store i8 0, ptr %i.m, align 1, !tbaa !380
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 256
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.n, i8 0, i64 56, i1 false)
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 336
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.n, i8 0, i64 72, i1 false)
   store ptr @_ZNSt17_Function_handlerIFvN5boost5redis11any_adapter11parse_eventERKNS1_5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEERNS0_6system10error_codeEEZNS2_C1ESt8functionISG_EEd_UlS3_SC_SF_E_E9_M_invokeERKSt9_Any_dataOS3_SC_SF_, ptr %i.p, align 8, !tbaa !148
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 328 ; 2 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.o, i8 0, i64 16, i1 false)
   store ptr @_ZNSt17_Function_handlerIFvN5boost5redis11any_adapter11parse_eventERKNS1_5resp310basic_nodeISt17basic_string_viewIcSt11char_traitsIcEEEERNS0_6system10error_codeEEZNS2_C1ESt8functionISG_EEd_UlS3_SC_SF_E_E10_M_managerERSt9_Any_dataRKSL_St18_Manager_operation, ptr %i.q, align 8, !tbaa !71
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 344
   store i64 4096, ptr %i.r, align 8, !tbaa !280
