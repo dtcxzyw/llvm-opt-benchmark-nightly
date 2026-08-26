@@ -3,6 +3,7 @@
 
 from dataclasses import dataclass
 import bisect
+import csv
 import heapq
 import os
 import argparse
@@ -1519,7 +1520,7 @@ def commit_grouped_diff_changes(kept_files: List[KeptDiff]):
 
 def generate_diff_report(
     rendered_files: List[RenderedDiff],
-) -> Tuple[str, List[KeptDiff]]:
+) -> Tuple[str, List[KeptDiff], List[Tuple[int, int, str, str]]]:
     MAX_DIFF_TOTAL = 15000
     MAX_FILE_TOTAL = 200
     TRIVIAL_PENALTY = 200
@@ -1530,6 +1531,7 @@ def generate_diff_report(
 
     total_added = 0
     total_removed = 0
+    full_diff_rows: List[Tuple[int, int, str, str]] = []
     for order_key, rendered_file in enumerate(rendered_files):
         ref_ir = rendered_file.report_ref_ir
         new_ir = rendered_file.report_new_ir
@@ -1561,6 +1563,12 @@ def generate_diff_report(
         )
         if number_of_added_lines == 0 and number_of_removed_lines == 0:
             continue
+        name = _report_file_name_from_ir_path(ref_ir)
+        pos = name.index("-s-")
+        file_name = name[pos + 3 :].removesuffix(".ll")
+        full_diff_rows.append(
+            (number_of_added_lines, number_of_removed_lines, proj, file_name)
+        )
         total_added += number_of_added_lines
         total_removed += number_of_removed_lines
 
@@ -1660,7 +1668,24 @@ def generate_diff_report(
             f"[{path}](NUMBER_PLACEHOLDER/files#diff-{diff_url}) |\n"
         )
 
-    return report, kept_files
+    return report, kept_files, full_diff_rows
+
+
+def write_full_diff_csv(rows: List[Tuple[int, int, str, str]]):
+    rows.sort(key=lambda r: (r[0] - r[1], -(r[0] + r[1])), reverse=True)
+    csv_path = os.path.join(REPORT_DIR, "z_fulldiff.csv")
+    with open(csv_path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Delta", "Added Lines", "Removed Lines", "Download URL"])
+        for add, sub, proj, file_name in rows:
+            writer.writerow(
+                [
+                    add - sub,
+                    add,
+                    sub,
+                    make_dataset_download_link(proj, file_name + ".bc"),
+                ]
+            )
 
 
 def update():
@@ -1685,7 +1710,7 @@ def update():
         stats_cmp = compare_stats(stats_baseline, stats, by_project=False, avg=False)
 
     should_report = stats_cmp != "No significant changes.\n" or len(rendered_files) > 0
-    report, kept_files = generate_diff_report(rendered_files)
+    report, kept_files, full_diff_rows = generate_diff_report(rendered_files)
     artifact_pairs = stage_artifact_diffs(kept_files)
     emit_artifact_outputs(artifact_pairs > 0)
     if should_report:
@@ -1753,6 +1778,7 @@ def update():
             stats,
             trailing_newline=True,
         )
+        write_full_diff_csv(full_diff_rows)
         commit_report_if_changed("report: metadata")
         push_branch(change_branch_name)
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
@@ -2028,9 +2054,10 @@ def test(user: str, comment_body: str, issue_url: str):
         pr_body += f"{stats_cmp}\n"
 
     kept_files = None
+    full_diff_rows = None
     artifact_pairs = 0
     if not config.comptime and not config.stats:
-        report, kept_files = generate_diff_report(rendered_files)
+        report, kept_files, full_diff_rows = generate_diff_report(rendered_files)
         pr_body += f"## Diff report\n{report}\n"
         artifact_pairs = stage_artifact_diffs(kept_files)
         emit_artifact_outputs(artifact_pairs > 0)
@@ -2061,6 +2088,8 @@ def test(user: str, comment_body: str, issue_url: str):
         )
     if os.path.exists(PATCH_FILE):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "z_patch.diff"))
+    if full_diff_rows is not None:
+        write_full_diff_csv(full_diff_rows)
     commit_report_if_changed("report: metadata")
     push_branch(change_branch_name)
 
