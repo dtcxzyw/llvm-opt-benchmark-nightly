@@ -204,8 +204,8 @@ _ZN7rocksdb23BlockBasedTableIterator23DoesContainBlockHandlesEv.exit.thread: ; p
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN7rocksdb23BlockBasedTableIterator23DoesContainBlockHandlesEv.exit.thread, %bb.d
-  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload, %bb.d ], [ %.sroa.8.0.copyload24, %_ZN7rocksdb23BlockBasedTableIterator23DoesContainBlockHandlesEv.exit.thread ] ; 2 uses
   %.sroa.020.0 = phi ptr [ %.sroa.020.0.copyload, %bb.d ], [ %.sroa.020.0.copyload22, %_ZN7rocksdb23BlockBasedTableIterator23DoesContainBlockHandlesEv.exit.thread ] ; 2 uses
+  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload, %bb.d ], [ %.sroa.8.0.copyload24, %_ZN7rocksdb23BlockBasedTableIterator23DoesContainBlockHandlesEv.exit.thread ] ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 196
   %i.z = load i32, ptr %i.y, align 4, !tbaa !151
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -608,28 +608,28 @@ _ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator1
   br i1 %i.gz, label %.critedge4, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit
-  %.sroa.048.091 = phi ptr [ %i.hp, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %i.fh, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ] ; 6 uses
-  %.sroa.10.090 = phi ptr [ %.sroa.10.1, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %i.fj, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ] ; 4 uses
-  %.sroa.20.089 = phi ptr [ %.sroa.20.1.a, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %i.fl, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ] ; 6 uses
-  %i.ha = icmp eq ptr %.sroa.048.091, %.sroa.10.090
+  %.sroa.048.091 = phi ptr [ %.sroa.10.1, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %i.fl, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ] ; 6 uses
+  %.sroa.10.090 = phi ptr [ %.sroa.20.1.a, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %i.fj, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ] ; 6 uses
+  %.sroa.20.089 = phi ptr [ %i.hp, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %i.fh, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ] ; 8 uses
+  %i.ha = icmp eq ptr %.sroa.20.089, %.sroa.10.090
   br i1 %i.ha, label %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit, label %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread
 
 _ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit: ; preds = %.lr.ph
-  %i.hb = getelementptr inbounds i8, ptr %.sroa.20.089, i64 -8 ; 2 uses
+  %i.hb = getelementptr inbounds i8, ptr %.sroa.048.091, i64 -8 ; 2 uses
   %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !227 ; 4 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hc, i64 416
   %i.he = load i8, ptr %i.hd, align 8, !tbaa !192, !range !44, !noundef !45
   %i.hf = trunc nuw i8 %i.he to i1
-  br i1 %i.hf, label %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread, label %.critedge4.thread
+  br i1 %i.hf, label %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread, label %.critedge4
 
 _ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread: ; preds = %.lr.ph
-  %i.hg = getelementptr inbounds i8, ptr %.sroa.048.091, i64 -64
+  %i.hg = getelementptr inbounds i8, ptr %.sroa.20.089, i64 -64
   %i.hh = load i8, ptr %i.hg, align 8, !tbaa !192, !range !44, !noundef !45
   %i.hi = trunc nuw i8 %i.hh to i1
   br i1 %i.hi, label %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39, label %.critedge4
 
 _ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39: ; preds = %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread
-  %i.hj = getelementptr inbounds i8, ptr %.sroa.048.091, i64 -80
+  %i.hj = getelementptr inbounds i8, ptr %.sroa.20.089, i64 -80
   %i.hk = load i64, ptr %i.hj, align 8, !tbaa !154
   %.not28 = icmp eq i64 %i.fc, %i.hk
   br i1 %.not28, label %.critedge4, label %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit
@@ -638,24 +638,24 @@ _ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator1
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hc, i64 400
   %i.hm = load i64, ptr %i.hl, align 8, !tbaa !154
   %.not2866 = icmp eq i64 %i.fc, %i.hm
-  br i1 %.not2866, label %.critedge4.thread, label %bb.ar
+  br i1 %.not2866, label %.critedge4, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hc, i64 480
   br label %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit
 
 _ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit: ; preds = %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39, %bb.ar
-  %.sroa.20.1.a = phi ptr [ %i.hb, %bb.ar ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ] ; 2 uses
-  %.sroa.10.1 = phi ptr [ %i.hc, %bb.ar ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ] ; 2 uses
-  %i.ho = phi ptr [ %i.hn, %bb.ar ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ]
+  %.sroa.20.1.a = phi ptr [ %i.hc, %bb.ar ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ] ; 2 uses
+  %.sroa.10.1 = phi ptr [ %i.hb, %bb.ar ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ] ; 2 uses
+  %i.ho = phi ptr [ %i.hn, %bb.ar ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ]
   %i.hp = getelementptr inbounds i8, ptr %i.ho, i64 -80 ; 3 uses
   %i.hq = icmp eq ptr %i.hp, %storemerge.i.i.i.i
   br i1 %i.hq, label %.critedge4, label %.lr.ph, !llvm.loop !338
 
-.critedge4:                                       ; preds = %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit
-  %.sroa.20.0.lcssa = phi ptr [ %i.fl, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread ], [ %.sroa.20.1.a, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ]
-  %.sroa.10.0.lcssa = phi ptr [ %i.fj, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread ], [ %.sroa.10.1, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ]
-  %.sroa.048.0.lcssa = phi ptr [ %i.fh, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread ], [ %i.hp, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ] ; 3 uses
+.critedge4:                                       ; preds = %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit
+  %.sroa.048.0.lcssa = phi ptr [ %i.fh, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit ], [ %i.hp, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ] ; 3 uses
+  %.sroa.10.0.lcssa = phi ptr [ %i.fj, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit ], [ %.sroa.20.1.a, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %.sroa.10.090, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ]
+  %.sroa.20.0.lcssa = phi ptr [ %i.fl, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEplEl.exit ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit.thread ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit ], [ %.sroa.10.1, %_ZNSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEppEi.exit ], [ %.sroa.048.091, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39 ]
   %i.hr = icmp eq ptr %.sroa.048.0.lcssa, %.sroa.10.0.lcssa
   br i1 %i.hr, label %.critedge4.thread, label %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit40
 
@@ -663,9 +663,8 @@ _ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator1
   %i.hs = getelementptr inbounds i8, ptr %.sroa.048.0.lcssa, i64 -80
   br label %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit41
 
-.critedge4.thread:                                ; preds = %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit, %.critedge4
-  %.sroa.20.0.lcssa152 = phi ptr [ %.sroa.20.0.lcssa, %.critedge4 ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit ], [ %.sroa.20.089, %_ZNKSt16reverse_iteratorISt15_Deque_iteratorIN7rocksdb23BlockBasedTableIterator15BlockHandleInfoERS3_PS3_EEdeEv.exit39.thread ]
-  %i.ht = getelementptr inbounds i8, ptr %.sroa.20.0.lcssa152, i64 -8
+.critedge4.thread:                                ; preds = %.critedge4
+  %i.ht = getelementptr inbounds i8, ptr %.sroa.20.0.lcssa, i64 -8
   %i.hu = load ptr, ptr %i.ht, align 8, !tbaa !227 ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 400
   %i.hw = getelementptr inbounds nuw i8, ptr %i.hu, i64 480
@@ -1068,8 +1067,8 @@ _ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i:
   br label %_ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EED2Ev.exit116
 
 _ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EE6assignIN9__gnu_cxx17__normal_iteratorIPS1_S3_EEvEEvT_S9_.exit: ; preds = %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i, %.loopexit
-  %.sroa.0126.0.a = phi ptr [ null, %.loopexit ], [ %i.gc, %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i ] ; 4 uses
-  %.sroa.18.0 = phi ptr [ null, %.loopexit ], [ %i.ge, %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i ] ; 3 uses
+  %.sroa.0126.0.a = phi ptr [ null, %.loopexit ], [ %i.ge, %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i ] ; 3 uses
+  %.sroa.18.0 = phi ptr [ null, %.loopexit ], [ %i.gc, %_ZNSt12_Vector_baseIN7rocksdb11BlockHandleESaIS1_EE13_M_deallocateEPS1_m.exit.i ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #23
   call void @llvm.experimental.noalias.scope.decl(metadata !517)
   %i.gg = getelementptr inbounds nuw i8, ptr %13, i64 8 ; 2 uses
@@ -1114,9 +1113,9 @@ _ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EEaSEOS3_.exit: ; preds = %_ZNSt6vecto
   store ptr %i.gx, ptr %i.gy, align 8, !tbaa !528
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gh, i64 24
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gh, i64 32
-  store ptr %.sroa.0126.0.a, ptr %i.gk, align 8, !tbaa !513
-  store ptr %.sroa.18.0, ptr %i.gz, align 8, !tbaa !512
-  store ptr %.sroa.18.0, ptr %i.ha, align 8, !tbaa !531
+  store ptr %.sroa.18.0, ptr %i.gk, align 8, !tbaa !513
+  store ptr %.sroa.0126.0.a, ptr %i.gz, align 8, !tbaa !512
+  store ptr %.sroa.0126.0.a, ptr %i.ha, align 8, !tbaa !531
   %i.hb = load ptr, ptr %i.a, align 8, !tbaa !349
   %i.hc = load i64, ptr %i.hb, align 8, !tbaa !532
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gh, i64 48
@@ -1519,14 +1518,14 @@ bb.de:                                            ; preds = %_ZNSt6vectorIN7rock
   %i.qs = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #23
-  %.not.i.i.i115 = icmp eq ptr %.sroa.0126.0.a, null
+  %.not.i.i.i115 = icmp eq ptr %.sroa.18.0, null
   br i1 %.not.i.i.i115, label %_ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EED2Ev.exit116, label %bb.df
 
 bb.df:                                            ; preds = %bb.de
-  %i.qt = ptrtoint ptr %.sroa.18.0 to i64
-  %i.qu = ptrtoint ptr %.sroa.0126.0.a to i64
+  %i.qt = ptrtoint ptr %.sroa.0126.0.a to i64
+  %i.qu = ptrtoint ptr %.sroa.18.0 to i64
   %i.qv = sub i64 %i.qt, %i.qu
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.0126.0.a, i64 noundef %i.qv) #24
+  call void @_ZdlPvm(ptr noundef nonnull %.sroa.18.0, i64 noundef %i.qv) #24
   br label %_ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EED2Ev.exit116
 
 _ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EED2Ev.exit116: ; preds = %.thread154, %.thread, %bb.de, %bb.df
@@ -1929,8 +1928,8 @@ bb.m:                                             ; preds = %bb.l
           to label %_ZN7rocksdb9StopWatchC2EPNS_11SystemClockEPNS_10StatisticsEjjPmbb.exit unwind label %.loopexit.split-lp166.loopexit.split-lp, !inline_history !508
 
 _ZN7rocksdb9StopWatchC2EPNS_11SystemClockEPNS_10StatisticsEjjPmbb.exit: ; preds = %.noexc48, %.thread21.i, %bb.l
-  %.sroa.23.0 = phi i1 [ true, %.thread21.i ], [ false, %.noexc48 ], [ false, %bb.l ]
   %.sroa.8136.1 = phi i32 [ 61, %.thread21.i ], [ %spec.select.i.mux, %.noexc48 ], [ 80, %bb.l ] ; 2 uses
+  %.sroa.23.0 = phi i1 [ true, %.thread21.i ], [ false, %.noexc48 ], [ false, %bb.l ]
   %i.by = phi i64 [ %i.bx, %.thread21.i ], [ 0, %.noexc48 ], [ 0, %bb.l ]
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
   %i.bz = load ptr, ptr %i.e, align 8, !tbaa !691 ; 2 uses
@@ -2010,10 +2009,10 @@ _ZNSt6vectorIPvSaIS0_EED2Ev.exit:                 ; preds = %._crit_edge180, %bb
   br label %bb.y
 
 .lr.ph179:                                        ; preds = %.lr.ph179.preheader, %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58
-  %.sroa.0119.0178 = phi ptr [ %.sroa.0119.1, %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58 ], [ %i.cp, %.lr.ph179.preheader ] ; 3 uses
+  %.sroa.0119.0178 = phi ptr [ %.sroa.0119.1, %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58 ], [ %i.cs, %.lr.ph179.preheader ] ; 2 uses
   %.sroa.10123.0177 = phi ptr [ %.sroa.10123.1, %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58 ], [ %i.ct, %.lr.ph179.preheader ] ; 2 uses
-  %.sroa.13124.0176 = phi ptr [ %.sroa.13124.1.a, %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58 ], [ %i.cs, %.lr.ph179.preheader ] ; 2 uses
-  %i.da = load ptr, ptr %.sroa.0119.0178, align 8, !tbaa !702 ; 6 uses
+  %.sroa.13124.0176 = phi ptr [ %.sroa.13124.1.a, %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58 ], [ %i.cp, %.lr.ph179.preheader ] ; 3 uses
+  %i.da = load ptr, ptr %.sroa.13124.0176, align 8, !tbaa !702 ; 6 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 96 ; 2 uses
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !715 ; 2 uses
   %.not43 = icmp eq ptr %i.dc, null
@@ -2059,7 +2058,7 @@ bb.u:                                             ; preds = %bb.s
 bb.v:                                             ; preds = %bb.t, %.noexc57, %bb.r
   %i.dm = getelementptr inbounds nuw i8, ptr %i.da, i64 88
   store i8 0, ptr %i.dm, align 8, !tbaa !703
-  %i.dn = load ptr, ptr %.sroa.0119.0178, align 8, !tbaa !702 ; 4 uses
+  %i.dn = load ptr, ptr %.sroa.13124.0176, align 8, !tbaa !702 ; 4 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 56
   store i64 0, ptr %i.do, align 8, !tbaa !731
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dn, i64 136
@@ -2072,21 +2071,21 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph179
   %i.dr = phi ptr [ %i.dn, %bb.v ], [ %i.da, %.lr.ph179 ]
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 88
   store i8 0, ptr %i.ds, align 8, !tbaa !703
-  %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.0119.0178, i64 8 ; 2 uses
+  %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.13124.0176, i64 8 ; 2 uses
   %i.du = icmp eq ptr %i.dt, %.sroa.10123.0177
   br i1 %i.du, label %bb.x, label %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58
 
 bb.x:                                             ; preds = %bb.w
-  %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.13124.0176, i64 8 ; 2 uses
+  %i.dv = getelementptr inbounds nuw i8, ptr %.sroa.0119.0178, i64 8 ; 2 uses
   %i.dw = load ptr, ptr %i.dv, align 8, !tbaa !720 ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 512
   br label %_ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58
 
 _ZNSt15_Deque_iteratorIPN7rocksdb10BufferInfoERS2_PS2_EppEv.exit58: ; preds = %bb.w, %bb.x
-  %.sroa.13124.1.a = phi ptr [ %i.dv, %bb.x ], [ %.sroa.13124.0176, %bb.w ]
+  %.sroa.13124.1.a = phi ptr [ %i.dw, %bb.x ], [ %i.dt, %bb.w ] ; 2 uses
   %.sroa.10123.1 = phi ptr [ %i.dx, %bb.x ], [ %.sroa.10123.0177, %bb.w ]
-  %.sroa.0119.1 = phi ptr [ %i.dw, %bb.x ], [ %i.dt, %bb.w ] ; 2 uses
-  %i.dy = icmp eq ptr %.sroa.0119.1, %i.cq
+  %.sroa.0119.1 = phi ptr [ %i.dv, %bb.x ], [ %.sroa.0119.0178, %bb.w ]
+  %i.dy = icmp eq ptr %.sroa.13124.1.a, %i.cq
   br i1 %i.dy, label %._crit_edge180, label %.lr.ph179
 
 bb.y:                                             ; preds = %_ZNSt6vectorIPvSaIS0_EED2Ev.exit, %bb.a
@@ -2489,35 +2488,35 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i:
   br label %bb.i
 
 .lr.ph.i.i:                                       ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i, %bb.f
-  %.030.i.i = phi i32 [ %i.p, %bb.f ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i ] ; 4 uses
-  %.02329.i.i = phi i32 [ %i.o, %bb.f ], [ %i.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i ] ; 5 uses
-  %i.i = icmp ult i32 %.02329.i.i, 100
+  %.030.i.i = phi i32 [ %i.o, %bb.f ], [ %i.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i ] ; 5 uses
+  %.02329.i.i = phi i32 [ %i.p, %bb.f ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i ] ; 4 uses
+  %i.i = icmp ult i32 %.030.i.i, 100
   br i1 %i.i, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph.i.i
-  %i.j = add i32 %.030.i.i, 1
+  %i.j = add i32 %.02329.i.i, 1
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i
-  %i.k = icmp ult i32 %.02329.i.i, 1000
+  %i.k = icmp ult i32 %.030.i.i, 1000
   br i1 %i.k, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.l = add i32 %.030.i.i, 2
+  %i.l = add i32 %.02329.i.i, 2
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.m = icmp ult i32 %.02329.i.i, 10000
+  %i.m = icmp ult i32 %.030.i.i, 10000
   br i1 %i.m, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.n = add i32 %.030.i.i, 3
+  %i.n = add i32 %.02329.i.i, 3
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i
 
 bb.f:                                             ; preds = %bb.d
-  %i.o = udiv i32 %.02329.i.i, 10000
-  %i.p = add i32 %.030.i.i, 4                     ; 2 uses
-  %i.q = icmp ult i32 %.02329.i.i, 100000
+  %i.o = udiv i32 %.030.i.i, 10000
+  %i.p = add i32 %.02329.i.i, 4                   ; 2 uses
+  %i.q = icmp ult i32 %.030.i.i, 100000
   br i1 %i.q, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i, label %.lr.ph.i.i, !llvm.loop !797
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i:    ; preds = %bb.f, %bb.e, %bb.c, %bb.a
@@ -2842,35 +2841,35 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40: ; preds = %_ZN
   br i1 %i.dt, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i44, label %.lr.ph.i.i41
 
 .lr.ph.i.i41:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40, %bb.ah
-  %.030.i.i42 = phi i32 [ %i.eb, %bb.ah ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40 ] ; 4 uses
-  %.02329.i.i43 = phi i32 [ %i.ea, %bb.ah ], [ %i.ds, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40 ] ; 5 uses
-  %i.du = icmp ult i32 %.02329.i.i43, 100
+  %.030.i.i42 = phi i32 [ %i.ea, %bb.ah ], [ %i.ds, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40 ] ; 5 uses
+  %.02329.i.i43 = phi i32 [ %i.eb, %bb.ah ], [ 1, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40 ] ; 4 uses
+  %i.du = icmp ult i32 %.030.i.i42, 100
   br i1 %i.du, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph.i.i41
-  %i.dv = add i32 %.030.i.i42, 1
+  %i.dv = add i32 %.02329.i.i43, 1
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i44
 
 bb.ad:                                            ; preds = %.lr.ph.i.i41
-  %i.dw = icmp ult i32 %.02329.i.i43, 1000
+  %i.dw = icmp ult i32 %.030.i.i42, 1000
   br i1 %i.dw, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.dx = add i32 %.030.i.i42, 2
+  %i.dx = add i32 %.02329.i.i43, 2
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i44
 
 bb.af:                                            ; preds = %bb.ad
-  %i.dy = icmp ult i32 %.02329.i.i43, 10000
+  %i.dy = icmp ult i32 %.030.i.i42, 10000
   br i1 %i.dy, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
-  %i.dz = add i32 %.030.i.i42, 3
+  %i.dz = add i32 %.02329.i.i43, 3
   br label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i44
 
 bb.ah:                                            ; preds = %bb.af
-  %i.ea = udiv i32 %.02329.i.i43, 10000
-  %i.eb = add i32 %.030.i.i42, 4                  ; 2 uses
-  %i.ec = icmp ult i32 %.02329.i.i43, 100000
+  %i.ea = udiv i32 %.030.i.i42, 10000
+  %i.eb = add i32 %.02329.i.i43, 4                ; 2 uses
+  %i.ec = icmp ult i32 %.030.i.i42, 100000
   br i1 %i.ec, label %_ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i44, label %.lr.ph.i.i41, !llvm.loop !797
 
 _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i44:  ; preds = %bb.ah, %bb.ag, %bb.ae, %bb.ac, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit40

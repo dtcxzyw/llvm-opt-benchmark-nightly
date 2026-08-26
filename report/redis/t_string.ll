@@ -202,19 +202,19 @@ bb.as:                                            ; preds = %bb.ar
   br label %bb.at
 
 bb.at:                                            ; preds = %.lr.ph367, %.thread325
-  %.0205366 = phi i32 [ 0, %.lr.ph367 ], [ %.2207, %.thread325 ] ; 5 uses
-  %.0208365 = phi i32 [ %i.cg, %.lr.ph367 ], [ %.2210324, %.thread325 ] ; 4 uses
-  %.0211364 = phi i32 [ 0, %.lr.ph367 ], [ %.2213322, %.thread325 ] ; 5 uses
-  %.0214363 = phi i32 [ 0, %.lr.ph367 ], [ %.2216320, %.thread325 ] ; 7 uses
+  %.0205366 = phi i32 [ %i.cg, %.lr.ph367 ], [ %.2210324, %.thread325 ] ; 4 uses
+  %.0208365 = phi i32 [ %i.cu, %.lr.ph367 ], [ %.2213322, %.thread325 ] ; 4 uses
+  %.0211364 = phi i32 [ 0, %.lr.ph367 ], [ %.2207, %.thread325 ] ; 5 uses
+  %.0214363 = phi i32 [ 0, %.lr.ph367 ], [ %.2216320, %.thread325 ] ; 5 uses
   %.0217362 = phi i32 [ 0, %.lr.ph367 ], [ %.2219318, %.thread325 ] ; 6 uses
-  %.0220361 = phi i32 [ %i.cg, %.lr.ph367 ], [ %.3223, %.thread325 ] ; 8 uses
-  %.0227360 = phi i32 [ %i.dv, %.lr.ph367 ], [ %.1228315, %.thread325 ] ; 3 uses
-  %.3232359 = phi i32 [ %i.cu, %.lr.ph367 ], [ %.5313, %.thread325 ] ; 4 uses
-  %i.ff = add i32 %.0208365, -1                   ; 11 uses
+  %.0220361 = phi i32 [ 0, %.lr.ph367 ], [ %.1228315, %.thread325 ] ; 6 uses
+  %.0227360 = phi i32 [ %i.cg, %.lr.ph367 ], [ %.3223, %.thread325 ] ; 8 uses
+  %.3232359 = phi i32 [ %i.dv, %.lr.ph367 ], [ %.5313, %.thread325 ] ; 3 uses
+  %i.ff = add i32 %.0205366, -1                   ; 11 uses
   %i.fg = zext i32 %i.ff to i64
   %i.fh = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.fg
   %i.fi = load i8, ptr %i.fh, align 1, !tbaa !84  ; 2 uses
-  %i.fj = add i32 %.3232359, -1                   ; 9 uses
+  %i.fj = add i32 %.0208365, -1                   ; 11 uses
   %i.fk = zext i32 %i.fj to i64
   %i.fl = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.fk
   %i.fm = load i8, ptr %i.fl, align 1, !tbaa !84
@@ -222,79 +222,74 @@ bb.at:                                            ; preds = %.lr.ph367, %.thread
   br i1 %i.fn, label %bb.au, label %bb.ax
 
 bb.au:                                            ; preds = %bb.at
-  %i.fo = add i32 %.0227360, -1                   ; 5 uses
+  %i.fo = add i32 %.3232359, -1                   ; 5 uses
   %i.fp = zext i32 %i.fo to i64
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ex, i64 %i.fp
   store i8 %i.fi, ptr %i.fq, align 1, !tbaa !84
-  %i.fr = icmp eq i32 %.0220361, %i.cg
+  %i.fr = icmp eq i32 %.0227360, %i.cg
   br i1 %i.fr, label %bb.aw, label %bb.av
 
 bb.av:                                            ; preds = %bb.au
-  %i.fs = icmp eq i32 %.0220361, %.0208365
-  %i.ft = icmp eq i32 %.0214363, %.3232359
+  %i.fs = icmp eq i32 %.0227360, %.0205366
+  %i.ft = icmp eq i32 %.0217362, %.0208365
   %or.cond272 = select i1 %i.fs, i1 %i.ft, i1 false
-  br i1 %or.cond272, label %1, label %.thread
+  br i1 %or.cond272, label %bb.aw, label %.thread
 
-1:                                                ; preds = %bb.av
-  %2 = add i32 %.0214363, -1
-  br label %bb.aw
-
-bb.aw:                                            ; preds = %bb.au, %1
-  %.1218 = phi i32 [ %i.ff, %bb.au ], [ %.0217362, %1 ] ; 2 uses
-  %.1215 = phi i32 [ %i.fj, %bb.au ], [ %2, %1 ]  ; 3 uses
-  %.1212 = phi i32 [ %i.fj, %bb.au ], [ %.0211364, %1 ] ; 2 uses
+bb.aw:                                            ; preds = %bb.av, %bb.au
+  %.1215 = phi i32 [ %i.ff, %bb.au ], [ %.0220361, %bb.av ] ; 2 uses
+  %.1212 = phi i32 [ %i.fj, %bb.au ], [ %.0214363, %bb.av ] ; 2 uses
   %i.fu = icmp eq i32 %i.ff, 0
-  %i.fv = icmp eq i32 %.1215, 0
-  %or.cond9 = select i1 %i.fu, i1 true, i1 %i.fv
+  %i.fv = icmp eq i32 %i.fj, 0
+  %or.cond9 = or i1 %i.fu, %i.fv
   br i1 %or.cond9, label %.thread302, label %.thread325
 
 .thread:                                          ; preds = %bb.av
-  %i.fw = icmp eq i32 %.0220361, 0
-  %i.fx = icmp eq i32 %.0214363, 0
+  %i.fw = icmp eq i32 %.0227360, 0
+  %i.fx = icmp eq i32 %.0217362, 0
   %or.cond9413 = select i1 %i.fw, i1 true, i1 %i.fx
   br i1 %or.cond9413, label %.thread302, label %.thread419
 
 .thread419:                                       ; preds = %.thread
-  %i.fy = sub i32 %.0217362, %.0220361
+  %i.fy = sub i32 %.0220361, %.0227360
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.at
   %i.fz = mul i32 %i.ff, %i.cx
-  %i.ga = add i32 %i.fz, %.3232359
+  %i.ga = add i32 %i.fz, %.0208365
   %i.gb = zext i32 %i.ga to i64
   %i.gc = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %i.gb
   %i.gd = load i32, ptr %i.gc, align 4, !tbaa !9
-  %i.ge = mul i32 %.0208365, %i.cx
+  %i.ge = mul i32 %.0205366, %i.cx
   %i.gf = add i32 %i.ge, %i.fj
   %i.gg = zext i32 %i.gf to i64
   %i.gh = getelementptr inbounds nuw [4 x i8], ptr %i.df, i64 %i.gg
   %i.gi = load i32, ptr %i.gh, align 4, !tbaa !9
   %i.gj = icmp ugt i32 %i.gd, %i.gi               ; 2 uses
-  %.4 = select i1 %i.gj, i32 %.3232359, i32 %i.fj ; 2 uses
-  %.1209 = select i1 %i.gj, i32 %i.ff, i32 %.0208365 ; 2 uses
-  %.not262 = icmp eq i32 %.0220361, %i.cg
+  %.4 = select i1 %i.gj, i32 %.0208365, i32 %i.fj ; 2 uses
+  %.1209 = select i1 %i.gj, i32 %i.ff, i32 %.0205366 ; 2 uses
+  %.not262 = icmp eq i32 %.0227360, %i.cg
   br i1 %.not262, label %.thread325, label %.thread302
 
 .thread302:                                       ; preds = %.thread, %bb.ax, %bb.aw
-  %.5.ph.a = phi i32 [ %.4, %bb.ax ], [ %i.fj, %bb.aw ], [ %i.fj, %.thread ]
-  %.1228.ph = phi i32 [ %.0227360, %bb.ax ], [ %i.fo, %bb.aw ], [ %i.fo, %.thread ]
-  %.2222.ph = phi i32 [ %.0220361, %bb.ax ], [ %i.ff, %bb.aw ], [ %.0220361, %.thread ] ; 2 uses
-  %.2219.ph = phi i32 [ %.0217362, %bb.ax ], [ %.1218, %bb.aw ], [ %.0217362, %.thread ] ; 2 uses
-  %.2216.ph = phi i32 [ %.0214363, %bb.ax ], [ %.1215, %bb.aw ], [ %.0214363, %.thread ]
-  %.2213.ph = phi i32 [ %.0211364, %bb.ax ], [ %.1212, %bb.aw ], [ %.0211364, %.thread ]
+  %.5.ph.a = phi i32 [ %.3232359, %bb.ax ], [ %i.fo, %bb.aw ], [ %i.fo, %.thread ]
+  %.1228.ph = phi i32 [ %.0227360, %bb.ax ], [ %i.ff, %bb.aw ], [ %.0227360, %.thread ] ; 2 uses
+  %.2222.ph = phi i32 [ %.0220361, %bb.ax ], [ %.1215, %bb.aw ], [ %.0220361, %.thread ] ; 2 uses
+  %.2219.ph = phi i32 [ %.0217362, %bb.ax ], [ %i.fj, %bb.aw ], [ %.0217362, %.thread ]
+  %.2216.ph = phi i32 [ %.0214363, %bb.ax ], [ %.1212, %bb.aw ], [ %.0214363, %.thread ]
+  %.2213.ph = phi i32 [ %.4, %bb.ax ], [ %i.fj, %bb.aw ], [ %i.fj, %.thread ]
   %.2210.ph = phi i32 [ %.1209, %bb.ax ], [ %i.ff, %bb.aw ], [ %i.ff, %.thread ]
-  %i.gk = sub i32 %.2219.ph, %.2222.ph
+  %i.gk = sub i32 %.2222.ph, %.1228.ph
   br label %bb.ay
 
 bb.ay:                                            ; preds = %.thread419, %.thread302
   %.in = phi i32 [ %i.gk, %.thread302 ], [ %i.fy, %.thread419 ]
   %.2210323 = phi i32 [ %.2210.ph, %.thread302 ], [ %i.ff, %.thread419 ] ; 3 uses
-  %.2213321 = phi i32 [ %.2213.ph, %.thread302 ], [ %.0211364, %.thread419 ] ; 4 uses
+  %.2213321 = phi i32 [ %.2213.ph, %.thread302 ], [ %i.fj, %.thread419 ] ; 3 uses
   %.2216319 = phi i32 [ %.2216.ph, %.thread302 ], [ %.0214363, %.thread419 ] ; 4 uses
   %.2219317 = phi i32 [ %.2219.ph, %.thread302 ], [ %.0217362, %.thread419 ] ; 4 uses
-  %.2222316 = phi i32 [ %.2222.ph, %.thread302 ], [ %.0220361, %.thread419 ]
-  %.1228314 = phi i32 [ %.1228.ph, %.thread302 ], [ %i.fo, %.thread419 ] ; 3 uses
-  %.5312 = phi i32 [ %.5.ph.a, %.thread302 ], [ %i.fj, %.thread419 ] ; 3 uses
+  %.2222316 = phi i32 [ %.2222.ph, %.thread302 ], [ %.0220361, %.thread419 ] ; 4 uses
+  %.1228314 = phi i32 [ %.1228.ph, %.thread302 ], [ %.0227360, %.thread419 ]
+  %.5312 = phi i32 [ %.5.ph.a, %.thread302 ], [ %i.fo, %.thread419 ] ; 3 uses
   %i.gl = add i32 %.in, 1                         ; 2 uses
   %i.gm = load i64, ptr %i.a, align 8, !tbaa !13  ; 2 uses
   %i.gn = icmp eq i64 %i.gm, 0
@@ -312,14 +307,14 @@ bb.ba:                                            ; preds = %bb.ay
 bb.bb:                                            ; preds = %bb.az, %bb.ba
   call void @addReplyArrayLen(ptr noundef %0, i64 noundef %i.fe) #10
   call void @addReplyArrayLen(ptr noundef %0, i64 noundef 2) #10
-  %i.gq = zext i32 %.2222316 to i64
+  %i.gq = zext i32 %.1228314 to i64
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.gq) #10
-  %i.gr = zext i32 %.2219317 to i64
+  %i.gr = zext i32 %.2222316 to i64
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.gr) #10
   call void @addReplyArrayLen(ptr noundef %0, i64 noundef 2) #10
-  %i.gs = zext i32 %.2216319 to i64
+  %i.gs = zext i32 %.2219317 to i64
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.gs) #10
-  %i.gt = zext i32 %.2213321 to i64
+  %i.gt = zext i32 %.2216319 to i64
   call void @addReplyLongLong(ptr noundef %0, i64 noundef %i.gt) #10
   br i1 %.not264, label %bb.bd, label %bb.bc
 
@@ -329,20 +324,20 @@ bb.bc:                                            ; preds = %bb.bb
   br label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc, %bb.bb
-  %i.gv = add i32 %.0205366, 1
+  %i.gv = add i32 %.0211364, 1
   br label %.thread325
 
 .thread325:                                       ; preds = %bb.aw, %bb.ax, %bb.az, %bb.bd, %bb.ba
   %.2210324 = phi i32 [ %.1209, %bb.ax ], [ %.2210323, %bb.ba ], [ %.2210323, %bb.bd ], [ %.2210323, %bb.az ], [ %i.ff, %bb.aw ] ; 2 uses
-  %.2213322 = phi i32 [ %.0211364, %bb.ax ], [ %.2213321, %bb.ba ], [ %.2213321, %bb.bd ], [ %.2213321, %bb.az ], [ %.1212, %bb.aw ]
-  %.2216320 = phi i32 [ %.0214363, %bb.ax ], [ %.2216319, %bb.ba ], [ %.2216319, %bb.bd ], [ %.2216319, %bb.az ], [ %.1215, %bb.aw ]
-  %.2219318 = phi i32 [ %.0217362, %bb.ax ], [ %.2219317, %bb.ba ], [ %.2219317, %bb.bd ], [ %.2219317, %bb.az ], [ %.1218, %bb.aw ]
-  %.1228315 = phi i32 [ %.0227360, %bb.ax ], [ %.1228314, %bb.ba ], [ %.1228314, %bb.bd ], [ %.1228314, %bb.az ], [ %i.fo, %bb.aw ]
-  %.5313 = phi i32 [ %.4, %bb.ax ], [ %.5312, %bb.ba ], [ %.5312, %bb.bd ], [ %.5312, %bb.az ], [ %i.fj, %bb.aw ] ; 2 uses
+  %.2213322 = phi i32 [ %.4, %bb.ax ], [ %.2213321, %bb.ba ], [ %.2213321, %bb.bd ], [ %.2213321, %bb.az ], [ %i.fj, %bb.aw ] ; 2 uses
+  %.2216320 = phi i32 [ %.0214363, %bb.ax ], [ %.2216319, %bb.ba ], [ %.2216319, %bb.bd ], [ %.2216319, %bb.az ], [ %.1212, %bb.aw ]
+  %.2219318 = phi i32 [ %.0217362, %bb.ax ], [ %.2219317, %bb.ba ], [ %.2219317, %bb.bd ], [ %.2219317, %bb.az ], [ %i.fj, %bb.aw ]
+  %.1228315 = phi i32 [ %.0220361, %bb.ax ], [ %.2222316, %bb.ba ], [ %.2222316, %bb.bd ], [ %.2222316, %bb.az ], [ %.1215, %bb.aw ]
+  %.5313 = phi i32 [ %.3232359, %bb.ax ], [ %.5312, %bb.ba ], [ %.5312, %bb.bd ], [ %.5312, %bb.az ], [ %i.fo, %bb.aw ]
   %.3223 = phi i32 [ %i.cg, %bb.ax ], [ %i.cg, %bb.ba ], [ %i.cg, %bb.bd ], [ %i.cg, %bb.az ], [ %i.ff, %bb.aw ]
-  %.2207 = phi i32 [ %.0205366, %bb.ax ], [ %.0205366, %bb.ba ], [ %i.gv, %bb.bd ], [ %.0205366, %bb.az ], [ %.0205366, %bb.aw ] ; 2 uses
+  %.2207 = phi i32 [ %.0211364, %bb.ax ], [ %.0211364, %bb.ba ], [ %i.gv, %bb.bd ], [ %.0211364, %bb.az ], [ %.0211364, %bb.aw ] ; 2 uses
   %i.gw = icmp ne i32 %.2210324, 0
-  %i.gx = icmp ne i32 %.5313, 0
+  %i.gx = icmp ne i32 %.2213322, 0
   %i.gy = select i1 %i.gw, i1 %i.gx, i1 false
   br i1 %i.gy, label %bb.at, label %._crit_edge368.loopexit, !llvm.loop !123
 

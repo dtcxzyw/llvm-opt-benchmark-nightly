@@ -205,7 +205,7 @@ bb.a:
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit.thread
-  br i1 %.372, label %bb.i, label %._crit_edge.thread
+  br i1 %.275, label %bb.i, label %._crit_edge.thread
 
 bb.b:                                             ; preds = %.lr.ph, %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit.thread
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit.thread ] ; 3 uses
@@ -247,11 +247,11 @@ _ZNK9subpaving9context_tINS_11config_mpffEE7is_zeroEjPNS2_4nodeE.exit: ; preds =
   %.fr105 = freeze i32 %i.af
   %i.ag = and i32 %.fr105, 1073741824
   %.not12.i = icmp eq i32 %i.ag, 0
-  %spec.select = select i1 %.not12.i, i1 true, i1 %.069111
+  %spec.select = select i1 %.not12.i, i1 true, i1 %.073110
   br label %_ZNK9subpaving9context_tINS_11config_mpffEE7is_zeroEjPNS2_4nodeE.exit.thread
 
 _ZNK9subpaving9context_tINS_11config_mpffEE7is_zeroEjPNS2_4nodeE.exit.thread: ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE7is_zeroEjPNS2_4nodeE.exit, %bb.b, %bb.c, %bb.d, %bb.e
-  %i.ah = phi i1 [ %.069111, %bb.b ], [ %spec.select, %_ZNK9subpaving9context_tINS_11config_mpffEE7is_zeroEjPNS2_4nodeE.exit ], [ %.069111, %bb.e ], [ %.069111, %bb.d ], [ %.069111, %bb.c ] ; 5 uses
+  %i.ah = phi i1 [ %.073110, %bb.b ], [ %spec.select, %_ZNK9subpaving9context_tINS_11config_mpffEE7is_zeroEjPNS2_4nodeE.exit ], [ %.073110, %bb.e ], [ %.073110, %bb.d ], [ %.073110, %bb.c ] ; 5 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %indvars.iv
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %i.ak = load i32, ptr %i.aj, align 4, !tbaa !119
@@ -292,12 +292,12 @@ _ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit: ; p
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !48
   %.fr = freeze ptr %i.ba
   %i.bb = icmp eq ptr %.fr, null
-  %spec.select102 = select i1 %i.bb, i1 true, i1 %.073110
+  %spec.select102 = select i1 %i.bb, i1 true, i1 %.069111
   br label %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit.thread
 
 _ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit.thread: ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit, %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit, %bb.h, %bb.f, %bb.g
-  %.275 = phi i1 [ %.073110, %bb.h ], [ %.073110, %bb.f ], [ %.073110, %bb.g ], [ %.073110, %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit ], [ %spec.select102, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit ] ; 2 uses
-  %.372 = phi i1 [ %i.ah, %bb.h ], [ %i.ah, %bb.f ], [ %i.ah, %bb.g ], [ %spec.select101, %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit ], [ %i.ah, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit ] ; 2 uses
+  %.275 = phi i1 [ %i.ah, %bb.g ], [ %i.ah, %bb.h ], [ %spec.select101, %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit ], [ %i.ah, %bb.f ], [ %i.ah, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit ] ; 2 uses
+  %.372 = phi i1 [ %.069111, %bb.g ], [ %.069111, %bb.h ], [ %.069111, %_ZNK9subpaving9context_tINS_11config_mpffEE13is_upper_zeroEjPNS2_4nodeE.exit ], [ %.069111, %bb.f ], [ %spec.select102, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !240
@@ -421,7 +421,7 @@ _ZN9subpaving9context_tINS_11config_mpffEE15propagate_boundEjRK4mpffbbPNS2_4node
   br label %.critedge
 
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
-  %.073.lcssa145 = phi i1 [ %.275, %._crit_edge ], [ false, %bb.a ]
+  %.073.lcssa145 = phi i1 [ %.372, %._crit_edge ], [ false, %bb.a ]
   %i.de = load ptr, ptr %2, align 8, !tbaa !47, !nonnull !45, !align !46
   %i.df = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dg = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpffEE18bound_array_configEE3getERKNS5_3refEj(ptr noundef nonnull align 8 dereferenceable(32) %i.de, ptr noundef nonnull align 8 dereferenceable(12) %i.df, i32 noundef %1)
@@ -824,7 +824,7 @@ _ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit.thre
 
 bb.b:                                             ; preds = %.lr.ph, %.thread58
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.thread58 ] ; 2 uses
-  %.13867 = phi i32 [ %i.x, %.lr.ph ], [ %6, %.thread58 ] ; 3 uses
+  %.13867 = phi i32 [ %i.x, %.lr.ph ], [ %3, %.thread58 ] ; 3 uses
   %i.aa = load ptr, ptr %i.y, align 8, !tbaa !126
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %indvars.iv
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !35 ; 3 uses
@@ -839,22 +839,21 @@ _ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit45: ;
   %i.ai = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK14parray_managerIN9subpaving9context_tINS0_11config_mpffEE18bound_array_configEE3getERKNS5_3refEj(ptr noundef nonnull align 8 dereferenceable(32) %i.ah, ptr noundef nonnull align 8 dereferenceable(12) %i.z, i32 noundef %i.ac)
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !48
   %.fr62 = freeze ptr %i.aj
-  %3 = icmp ne ptr %.fr62, null                   ; 2 uses
-  %.not.a = icmp eq i32 %.13867, -1               ; 2 uses
-  %brmerge = select i1 %3, i1 true, i1 %.not.a
-  %4 = xor i1 %.not.a, true
-  %5 = select i1 %3, i1 true, i1 %4
-  %.138.mux = select i1 %5, i32 %.13867, i32 %i.ac
-  br i1 %brmerge, label %.thread58, label %.critedge
+  %.not.a = icmp eq ptr %.fr62, null
+  br i1 %.not.a, label %.split59, label %.thread58
 
-.thread58:                                        ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit45, %bb.b
-  %6 = phi i32 [ %.138.mux, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit45 ], [ %.13867, %bb.b ] ; 3 uses
+.split59:                                         ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit45
+  %.not = icmp eq i32 %.13867, -1
+  br i1 %.not, label %.thread58, label %.critedge
+
+.thread58:                                        ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit45, %bb.b, %.split59
+  %3 = phi i32 [ %i.ac, %.split59 ], [ %.13867, %bb.b ], [ %.13867, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit45 ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !247
 
 ._crit_edge:                                      ; preds = %.thread58
-  %.not41 = icmp eq i32 %6, -1
+  %.not41 = icmp eq i32 %3, -1
   br i1 %.not41, label %.lr.ph72, label %.critedge.sink.split
 
 .lr.ph72:                                         ; preds = %._crit_edge
@@ -880,11 +879,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %exitcond80.not, label %.critedge, label %bb.c, !llvm.loop !248
 
 .critedge.sink.split:                             ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit.thread, %._crit_edge, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit.thread.thread
-  %.sink = phi i32 [ %6, %._crit_edge ], [ %1, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit.thread.thread ], [ %1, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit.thread ]
+  %.sink = phi i32 [ %3, %._crit_edge ], [ %1, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit.thread.thread ], [ %1, %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit.thread ]
   tail call void @_ZN9subpaving9context_tINS_11config_mpffEE20propagate_polynomialEjPNS2_4nodeEj(ptr noundef nonnull align 8 dereferenceable(784) %0, i32 noundef %1, ptr noundef nonnull %2, i32 noundef %.sink)
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZNK9subpaving9context_tINS_11config_mpffEE12is_unboundedEjPNS2_4nodeE.exit45, %bb.c, %bb.d, %.critedge.sink.split
+.critedge:                                        ; preds = %.split59, %bb.c, %bb.d, %.critedge.sink.split
   ret void
 }
 
@@ -1287,8 +1286,8 @@ select.unfold.i.i:                                ; preds = %.lr.ph.i.i
   br i1 %i.k, label %_ZNSt17_Temporary_bufferIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_EC2ES6_l.exit, label %.lr.ph.i.i, !llvm.loop !353
 
 _ZNSt17_Temporary_bufferIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_EC2ES6_l.exit: ; preds = %.lr.ph.i.i, %select.unfold.i.i, %bb.b
-  %.sroa.5.0 = phi i64 [ 0, %bb.b ], [ %.010.i.i, %.lr.ph.i.i ], [ 0, %select.unfold.i.i ] ; 4 uses
   %.sroa.12.0 = phi ptr [ null, %bb.b ], [ %i.j, %.lr.ph.i.i ], [ null, %select.unfold.i.i ] ; 5 uses
+  %.sroa.5.0 = phi i64 [ 0, %bb.b ], [ %.010.i.i, %.lr.ph.i.i ], [ 0, %select.unfold.i.i ] ; 4 uses
   %i.n = icmp eq i64 %i.g, %.sroa.5.0
   br i1 %i.n, label %bb.c, label %bb.e, !prof !334
 
@@ -1691,28 +1690,28 @@ _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26ran
   br label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i
 
 _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i
-  %.017.i = phi i64 [ %i.p, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.1.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
-  %.01116.i = phi ptr [ %.tr6573, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.112.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
-  %i.t = lshr i64 %.017.i, 1                      ; 3 uses
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %.01116.i, i64 %i.t ; 2 uses
+  %.017.i = phi ptr [ %.tr6573, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.1.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
+  %.01116.i = phi i64 [ %i.p, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.112.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
+  %i.t = lshr i64 %.01116.i, 1                    ; 3 uses
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %.017.i, i64 %i.t ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !81
   %i.w = load i32, ptr %i.v, align 4, !tbaa !8
   %i.x = icmp ult i32 %i.w, %i.s                  ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.z = xor i64 %i.t, -1
-  %i.aa = add nsw i64 %.017.i, %i.z
-  %.112.i = select i1 %i.x, ptr %i.y, ptr %.01116.i ; 3 uses
-  %.1.i = select i1 %i.x, i64 %i.aa, i64 %i.t     ; 2 uses
-  %i.ab = icmp sgt i64 %.1.i, 0
+  %i.aa = add nsw i64 %.01116.i, %i.z
+  %.112.i = select i1 %i.x, i64 %i.aa, i64 %i.t   ; 2 uses
+  %.1.i = select i1 %i.x, ptr %i.y, ptr %.017.i   ; 3 uses
+  %i.ab = icmp sgt i64 %.112.i, 0
   br i1 %i.ab, label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, !llvm.loop !363
 
 _ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i
-  %.pre = ptrtoint ptr %.112.i to i64
+  %.pre = ptrtoint ptr %.1.i to i64
   br label %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit
 
 _ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit: ; preds = %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit
   %.pre-phi = phi i64 [ %.pre, %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %i.l, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit ]
-  %.011.lcssa.i = phi ptr [ %.112.i, %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr6573, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit ]
+  %.011.lcssa.i = phi ptr [ %.1.i, %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr6573, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit ]
   %i.ac = sub i64 %.pre-phi, %i.l
   %i.ad = ashr exact i64 %i.ac, 3
   br label %tailrecurse
@@ -1732,28 +1731,28 @@ _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26ran
   br label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45
 
 _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i44
-  %.017.i46 = phi i64 [ %i.ai, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i44 ], [ %.1.i51, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45 ] ; 2 uses
-  %.01116.i47 = phi ptr [ %.tr72, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i44 ], [ %.112.i50, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45 ] ; 2 uses
-  %i.am = lshr i64 %.017.i46, 1                   ; 3 uses
-  %i.an = getelementptr inbounds nuw [8 x i8], ptr %.01116.i47, i64 %i.am ; 2 uses
+  %.017.i46 = phi ptr [ %.tr72, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i44 ], [ %.1.i51, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45 ] ; 2 uses
+  %.01116.i47 = phi i64 [ %i.ai, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i44 ], [ %.112.i50, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45 ] ; 2 uses
+  %i.am = lshr i64 %.01116.i47, 1                 ; 3 uses
+  %i.an = getelementptr inbounds nuw [8 x i8], ptr %.017.i46, i64 %i.am ; 2 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !81
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !8
   %i.aq = icmp ult i32 %i.al, %i.ap               ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.as = xor i64 %i.am, -1
-  %i.at = add nsw i64 %.017.i46, %i.as
-  %.112.i50 = select i1 %i.aq, ptr %.01116.i47, ptr %i.ar ; 3 uses
-  %.1.i51 = select i1 %i.aq, i64 %i.am, i64 %i.at ; 2 uses
-  %i.au = icmp sgt i64 %.1.i51, 0
+  %i.at = add nsw i64 %.01116.i47, %i.as
+  %.112.i50 = select i1 %i.aq, i64 %i.am, i64 %i.at ; 2 uses
+  %.1.i51 = select i1 %i.aq, ptr %.017.i46, ptr %i.ar ; 3 uses
+  %i.au = icmp sgt i64 %.112.i50, 0
   br i1 %i.au, label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45, label %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, !llvm.loop !364
 
 _ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i45
-  %.pre79 = ptrtoint ptr %.112.i50 to i64
+  %.pre79 = ptrtoint ptr %.1.i51 to i64
   br label %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit
 
 _ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit: ; preds = %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit42
   %.pre-phi80 = phi i64 [ %.pre79, %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %i.ag, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit42 ]
-  %.011.lcssa.i43 = phi ptr [ %.112.i50, %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr72, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit42 ]
+  %.011.lcssa.i43 = phi ptr [ %.1.i51, %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr72, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit42 ]
   %i.av = sub i64 %.pre-phi80, %i.ag
   %i.aw = ashr exact i64 %i.av, 3
   br label %tailrecurse
@@ -2156,28 +2155,28 @@ _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26ran
   br label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i
 
 _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i
-  %.017.i = phi i64 [ %i.g, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.1.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
-  %.01116.i = phi ptr [ %.tr8393, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.112.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
-  %i.k = lshr i64 %.017.i, 1                      ; 3 uses
-  %i.l = getelementptr inbounds nuw [8 x i8], ptr %.01116.i, i64 %i.k ; 2 uses
+  %.017.i = phi ptr [ %.tr8393, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.1.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
+  %.01116.i = phi i64 [ %i.g, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i ], [ %.112.i, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i ] ; 2 uses
+  %i.k = lshr i64 %.01116.i, 1                    ; 3 uses
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr %.017.i, i64 %i.k ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !81
   %i.n = load i32, ptr %i.m, align 4, !tbaa !8
   %i.o = icmp ult i32 %i.n, %i.j                  ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.q = xor i64 %i.k, -1
-  %i.r = add nsw i64 %.017.i, %i.q
-  %.112.i = select i1 %i.o, ptr %i.p, ptr %.01116.i ; 3 uses
-  %.1.i = select i1 %i.o, i64 %i.r, i64 %i.k      ; 2 uses
-  %i.s = icmp sgt i64 %.1.i, 0
+  %i.r = add nsw i64 %.01116.i, %i.q
+  %.112.i = select i1 %i.o, i64 %i.r, i64 %i.k    ; 2 uses
+  %.1.i = select i1 %i.o, ptr %i.p, ptr %.017.i   ; 3 uses
+  %i.s = icmp sgt i64 %.112.i, 0
   br i1 %i.s, label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i, label %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, !llvm.loop !363
 
 _ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i
-  %.pre = ptrtoint ptr %.112.i to i64
+  %.pre = ptrtoint ptr %.1.i to i64
   br label %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit
 
 _ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit: ; preds = %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit
   %.pre-phi = phi i64 [ %.pre, %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %i.c, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit ]
-  %.011.lcssa.i = phi ptr [ %.112.i, %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr8393, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit ]
+  %.011.lcssa.i = phi ptr [ %.1.i, %_ZSt13__lower_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Iter_comp_valINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr8393, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit ]
   %i.t = sub i64 %.pre-phi, %i.c
   %i.u = ashr exact i64 %i.t, 3
   br label %tailrecurse
@@ -2197,28 +2196,28 @@ _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26ran
   br label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63
 
 _ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i62
-  %.017.i64 = phi i64 [ %i.z, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i62 ], [ %.1.i69, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63 ] ; 2 uses
-  %.01116.i65 = phi ptr [ %.tr92, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i62 ], [ %.112.i68, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63 ] ; 2 uses
-  %i.ad = lshr i64 %.017.i64, 1                   ; 3 uses
-  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %.01116.i65, i64 %i.ad ; 2 uses
+  %.017.i64 = phi ptr [ %.tr92, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i62 ], [ %.1.i69, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63 ] ; 2 uses
+  %.01116.i65 = phi i64 [ %i.z, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.lr.ph.i62 ], [ %.112.i68, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63 ] ; 2 uses
+  %i.ad = lshr i64 %.01116.i65, 1                 ; 3 uses
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %.017.i64, i64 %i.ad ; 2 uses
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !81
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !8
   %i.ah = icmp ult i32 %i.ac, %i.ag               ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.aj = xor i64 %i.ad, -1
-  %i.ak = add nsw i64 %.017.i64, %i.aj
-  %.112.i68 = select i1 %i.ah, ptr %.01116.i65, ptr %i.ai ; 3 uses
-  %.1.i69 = select i1 %i.ah, i64 %i.ad, i64 %i.ak ; 2 uses
-  %i.al = icmp sgt i64 %.1.i69, 0
+  %i.ak = add nsw i64 %.01116.i65, %i.aj
+  %.112.i68 = select i1 %i.ah, i64 %i.ad, i64 %i.ak ; 2 uses
+  %.1.i69 = select i1 %i.ah, ptr %.017.i64, ptr %i.ai ; 3 uses
+  %i.al = icmp sgt i64 %.112.i68, 0
   br i1 %i.al, label %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63, label %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, !llvm.loop !364
 
 _ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit: ; preds = %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit.i63
-  %.pre101 = ptrtoint ptr %.112.i68 to i64
+  %.pre101 = ptrtoint ptr %.1.i69 to i64
   br label %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit
 
 _ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit: ; preds = %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit60
   %.pre-phi102 = phi i64 [ %.pre101, %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %i.x, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit60 ]
-  %.011.lcssa.i61 = phi ptr [ %.112.i68, %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr92, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit60 ]
+  %.011.lcssa.i61 = phi ptr [ %.1.i69, %_ZSt13__upper_boundIPPN9subpaving9context_tINS0_11config_mpffEE4ineqES5_N9__gnu_cxx5__ops14_Val_comp_iterINS4_11lt_var_procEEEET_SC_SC_RKT0_T1_.exit.loopexit ], [ %.tr92, %_ZSt9__advanceIPPN9subpaving9context_tINS0_11config_mpffEE4ineqElEvRT_T0_St26random_access_iterator_tag.exit60 ]
   %i.am = sub i64 %.pre-phi102, %i.x
   %i.an = ashr exact i64 %i.am, 3
   br label %tailrecurse

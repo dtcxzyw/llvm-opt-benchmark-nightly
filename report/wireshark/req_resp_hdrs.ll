@@ -99,29 +99,28 @@ bb.h:                                             ; preds = %.thread
   %i.x = getelementptr i8, ptr %2, i64 416
   br i1 %4, label %.outer.us.outer.a, label %.preheader.split
 
-.outer.us.outer.a:                                ; preds = %.preheader, %bb.p
-  %.0199.ph.us.ph.a = phi i1 [ %spec.select231.us, %bb.p ], [ false, %.preheader ] ; 3 uses
-  %.0194.ph.us.ph = phi i1 [ %.0194.ph.us.ph501, %bb.p ], [ false, %.preheader ]
-  %.0188.ph.us.ph = phi i8 [ %.0188.ph.us.ph506, %bb.p ], [ 0, %.preheader ]
-  %.0182.ph.us.ph = phi ptr [ %.0182.ph.us.ph503, %bb.p ], [ null, %.preheader ]
-  %.0177.ph.us.ph = phi ptr [ %.0177.ph.us.ph504.ph, %bb.p ], [ null, %.preheader ]
+.outer.us.outer.a:                                ; preds = %.preheader, %bb.o
+  %.0199.ph.us.ph.a = phi i1 [ true, %bb.o ], [ false, %.preheader ]
+  %.0199.ph.us.ph.ph = phi i8 [ %.0188.ph.us.ph502, %bb.o ], [ 0, %.preheader ]
+  %.0194.ph.us.ph.ph = phi i1 [ %.0194.ph.us.ph507, %bb.o ], [ false, %.preheader ]
+  %.0182.ph.us.ph = phi ptr [ %.1183.us, %bb.o ], [ null, %.preheader ]
+  %.0177.ph.us.ph = phi ptr [ %i.aq, %bb.o ], [ null, %.preheader ] ; 2 uses
   br label %.outer.us.outer500.outer
 
-.outer.us.outer500.outer:                         ; preds = %bb.o, %.outer.us.outer.a
-  %.0194.ph.us.ph501.ph = phi i1 [ true, %bb.o ], [ %.0194.ph.us.ph, %.outer.us.outer.a ]
-  %.0188.ph.us.ph502.ph = phi i8 [ %.0188.ph.us.ph506, %bb.o ], [ %.0188.ph.us.ph, %.outer.us.outer.a ]
-  %.0182.ph.us.ph503.ph = phi ptr [ %.1183.us, %bb.o ], [ %.0182.ph.us.ph, %.outer.us.outer.a ]
-  %.0177.ph.us.ph504.ph = phi ptr [ %i.aq, %bb.o ], [ %.0177.ph.us.ph, %.outer.us.outer.a ] ; 3 uses
+.outer.us.outer500.outer:                         ; preds = %.outer.us.outer.a, %bb.n
+  %.0194.ph.us.ph501.ph = phi i1 [ true, %bb.n ], [ %.0199.ph.us.ph.a, %.outer.us.outer.a ] ; 2 uses
+  %.0188.ph.us.ph502.ph = phi i8 [ %.0188.ph.us.ph502, %bb.n ], [ %.0199.ph.us.ph.ph, %.outer.us.outer.a ]
+  %.0194.ph.us.ph = phi i1 [ %.0194.ph.us.ph507, %bb.n ], [ %.0194.ph.us.ph.ph, %.outer.us.outer.a ]
+  %.0177.ph.us.ph504.ph = phi ptr [ %.1183.us, %bb.n ], [ %.0182.ph.us.ph, %.outer.us.outer.a ] ; 2 uses
   br label %.outer.us.outer500
 
-.outer.us.outer500:                               ; preds = %.outer.us.outer500.outer, %bb.n
-  %.0194.ph.us.ph501 = phi i1 [ true, %bb.n ], [ %.0194.ph.us.ph501.ph, %.outer.us.outer500.outer ] ; 3 uses
-  %.0188.ph.us.ph502 = phi i8 [ %.0188.ph.us.ph506, %bb.n ], [ %.0188.ph.us.ph502.ph, %.outer.us.outer500.outer ]
-  %.0182.ph.us.ph503 = phi ptr [ %.1183.us, %bb.n ], [ %.0182.ph.us.ph503.ph, %.outer.us.outer500.outer ] ; 3 uses
+.outer.us.outer500:                               ; preds = %.outer.us.outer500.outer, %.critedge.us.thread
+  %.0188.ph.us.ph502 = phi i8 [ %.0188.ph.us.ph502.ph, %.outer.us.outer500.outer ], [ %spec.select232.us, %.critedge.us.thread ] ; 5 uses
+  %.0194.ph.us.ph502 = phi i1 [ %.0194.ph.us.ph, %.outer.us.outer500.outer ], [ %.0194.ph.us.ph507, %.critedge.us.thread ]
   br label %.outer.us.outer505
 
-.outer.us.outer505:                               ; preds = %.outer.us.outer500, %.critedge.us.thread
-  %.0188.ph.us.ph506 = phi i8 [ %.0188.ph.us.ph502, %.outer.us.outer500 ], [ %spec.select232.us, %.critedge.us.thread ] ; 6 uses
+.outer.us.outer505:                               ; preds = %.outer.us.outer500, %bb.p
+  %.0194.ph.us.ph507 = phi i1 [ %.0194.ph.us.ph502, %.outer.us.outer500 ], [ %spec.select231.us, %bb.p ] ; 6 uses
   br label %.outer.us
 
 .outer.us:                                        ; preds = %.outer.us.backedge, %.outer.us.outer505
@@ -170,8 +169,8 @@ bb.k:                                             ; preds = %bb.j
   %.0170.lcssa.us399 = phi ptr [ %i.af, %.critedge22.us ], [ %.0170.lcssa.us, %.critedge.us ]
   %i.aj = call i32 @g_ascii_strncasecmp(ptr noundef %.0170.lcssa.us399, ptr noundef nonnull @.str.7, i64 noundef 7)
   %i.ak = icmp eq i32 %i.aj, 0
-  %spec.select232.us = select i1 %i.ak, i8 1, i8 %.0188.ph.us.ph506
-  br label %.outer.us.outer505
+  %spec.select232.us = select i1 %i.ak, i8 1, i8 %.0188.ph.us.ph502
+  br label %.outer.us.outer500
 
 bb.l:                                             ; preds = %bb.i
   %i.al = getelementptr i8, ptr %i.bj, i64 13
@@ -186,11 +185,11 @@ bb.m:                                             ; preds = %bb.m, %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ap = call ptr @g_strchomp(ptr noundef %.1183.us) ; 0 uses
-  br i1 %i.i, label %bb.o, label %.outer.us.outer500
+  br i1 %i.i, label %bb.o, label %.outer.us.outer500.outer
 
 bb.o:                                             ; preds = %bb.n
   %i.aq = call ptr @dissector_get_string_handle(ptr noundef nonnull %7, ptr noundef %.1183.us)
-  br label %.outer.us.outer500.outer
+  br label %.outer.us.outer.a
 
 bb.p:                                             ; preds = %.split334.us.us
   %i.ar = getelementptr i8, ptr %i.bj, i64 15
@@ -200,8 +199,8 @@ bb.p:                                             ; preds = %.split334.us.us
   %i.av = load i32, ptr %i.e, align 4
   %i.aw = icmp sgt i32 %i.av, -1
   %or.cond20.us = select i1 %i.au, i1 %i.aw, i1 false
-  %spec.select231.us = select i1 %or.cond20.us, i1 true, i1 %.0199.ph.us.ph.a
-  br label %.outer.us.outer.a
+  %spec.select231.us = select i1 %or.cond20.us, i1 true, i1 %.0194.ph.us.ph507
+  br label %.outer.us.outer505
 
 bb.q:                                             ; preds = %bb.t, %.outer.us
   %i.ax = load i32, ptr %i.c, align 4             ; 3 uses
@@ -282,21 +281,21 @@ bb.t:                                             ; preds = %bb.s
   br i1 %i.cc, label %.thread269, label %.outer
 
 .split328.us:                                     ; preds = %bb.s
-  %i.cd = trunc nuw i8 %.0188.ph.us.ph506 to i1
-  %i.ce = icmp ne ptr %.0177.ph.us.ph504.ph, null
+  %i.cd = trunc nuw i8 %.0188.ph.us.ph502 to i1
+  %i.ce = icmp ne ptr %.0177.ph.us.ph, null
   %or.cond26 = select i1 %i.cd, i1 %i.ce, i1 false
   %or.cond28 = and i1 %i.j, %or.cond26
   br i1 %or.cond28, label %bb.u, label %.thread269
 
 bb.u:                                             ; preds = %.split328.us
-  store ptr %.0177.ph.us.ph504.ph, ptr %8, align 8
+  store ptr %.0177.ph.us.ph, ptr %8, align 8
   br label %.thread269
 
 .thread269:                                       ; preds = %.thread245.loopexit, %bb.h, %.thread, %.split328.us, %bb.u
-  %.5187267 = phi ptr [ %.0182.ph.us.ph503, %.split328.us ], [ %.0182.ph.us.ph503, %bb.u ], [ null, %bb.h ], [ null, %.thread ], [ null, %.thread245.loopexit ]
-  %.4198264 = phi i1 [ %.0194.ph.us.ph501, %.split328.us ], [ %.0194.ph.us.ph501, %bb.u ], [ false, %bb.h ], [ false, %.thread ], [ false, %.thread245.loopexit ]
-  %.4203262 = phi i1 [ %.0199.ph.us.ph.a, %.split328.us ], [ %.0199.ph.us.ph.a, %bb.u ], [ false, %bb.h ], [ false, %.thread ], [ false, %.thread245.loopexit ]
-  %.6.a = phi i8 [ %.0188.ph.us.ph506, %.split328.us ], [ 1, %bb.u ], [ 0, %bb.h ], [ 0, %.thread ], [ 0, %.thread245.loopexit ]
+  %.5187267 = phi ptr [ %.0177.ph.us.ph504.ph, %.split328.us ], [ %.0177.ph.us.ph504.ph, %bb.u ], [ null, %bb.h ], [ null, %.thread ], [ null, %.thread245.loopexit ]
+  %.4198264 = phi i1 [ %.0194.ph.us.ph507, %.split328.us ], [ %.0194.ph.us.ph507, %bb.u ], [ false, %bb.h ], [ false, %.thread ], [ false, %.thread245.loopexit ]
+  %.4203262 = phi i1 [ %.0194.ph.us.ph501.ph, %.split328.us ], [ %.0194.ph.us.ph501.ph, %bb.u ], [ false, %bb.h ], [ false, %.thread ], [ false, %.thread245.loopexit ]
+  %.6.a = phi i8 [ %.0188.ph.us.ph502, %.split328.us ], [ 1, %bb.u ], [ 0, %bb.h ], [ 0, %.thread ], [ 0, %.thread245.loopexit ]
   %.1176 = phi i1 [ false, %.split328.us ], [ true, %bb.u ], [ false, %bb.h ], [ false, %.thread ], [ false, %.thread245.loopexit ]
   br i1 %4, label %bb.v, label %.thread296
 
@@ -436,7 +435,7 @@ bb.ak:                                            ; preds = %bb.ag
   br i1 %or.cond30, label %.thread287, label %.lr.ph489, !llvm.loop !9
 
 bb.al:                                            ; preds = %bb.v
-  br i1 %.4203262, label %bb.am, label %bb.at
+  br i1 %.4198264, label %bb.am, label %bb.at
 
 bb.am:                                            ; preds = %bb.al
   %i.dl = load i32, ptr %i.e, align 4             ; 2 uses
@@ -444,7 +443,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.dm, label %bb.an, label %.critedge236
 
 bb.an:                                            ; preds = %bb.am
-  br i1 %.4198264, label %bb.ao, label %bb.ap
+  br i1 %.4203262, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
   %i.dn = call i32 @strncmp(ptr noundef %.5187267, ptr noundef nonnull dereferenceable(16) @.str.8, i64 noundef 15) #7
