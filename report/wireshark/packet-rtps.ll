@@ -204,7 +204,7 @@ bb.bj:                                            ; preds = %bb.bi
 
 .loopexit849.loopexit:                            ; preds = %bb.bj
   %i.gk = load i32, ptr @hf_rtps_instance_state_data_response_key_hash, align 4
-  %i.gl = call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.gk, ptr noundef %1, i32 noundef %.2778, i32 noundef 16, i32 noundef 0) ; 20 uses
+  %i.gl = call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.gk, ptr noundef %1, i32 noundef %.2778, i32 noundef 16, i32 noundef 0) ; 17 uses
   call void (ptr, ptr, ...) @proto_item_set_text(ptr noundef %i.gl, ptr noundef nonnull @.str.1621, ptr noundef %8)
   %i.gm = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %.2778)
   %i.gn = zext i8 %i.gm to i32
@@ -221,7 +221,6 @@ bb.bj:                                            ; preds = %bb.bi
   %i.gv = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.gu)
   %i.gw = zext i8 %i.gv to i32
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.gl, ptr noundef nonnull @.str.1429, i32 noundef %i.gw)
-  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.gl, ptr noundef nonnull @.str.1528)
   %i.gx = add i32 %.2778, 4
   %i.gy = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.gx)
   %i.gz = zext i8 %i.gy to i32
@@ -238,7 +237,6 @@ bb.bj:                                            ; preds = %bb.bi
   %i.hh = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.hg)
   %i.hi = zext i8 %i.hh to i32
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.gl, ptr noundef nonnull @.str.1429, i32 noundef %i.hi)
-  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.gl, ptr noundef nonnull @.str.1528)
   %i.hj = add i32 %.2778, 8
   %i.hk = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.hj)
   %i.hl = zext i8 %i.hk to i32
@@ -255,7 +253,6 @@ bb.bj:                                            ; preds = %bb.bi
   %i.ht = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.hs)
   %i.hu = zext i8 %i.ht to i32
   call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.gl, ptr noundef nonnull @.str.1429, i32 noundef %i.hu)
-  call void (ptr, ptr, ...) @proto_item_append_text(ptr noundef %i.gl, ptr noundef nonnull @.str.1528)
   %i.hv = add i32 %.2778, 12
   %i.hw = call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.hv)
   %i.hx = zext i8 %i.hw to i32

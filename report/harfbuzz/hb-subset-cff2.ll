@@ -205,21 +205,19 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph207.n
   %i.es = getelementptr inbounds nuw [4 x i8], ptr %i.er, i64 %indvars.iv225
   %i.et = load i32, ptr %i.es, align 4, !tbaa !59
   %i.eu = trunc i32 %i.et to i16
-  %4 = add nuw i64 %indvars.iv225, 3
-  %5 = and i64 %4, 4294967295
-  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.ej, i64 %5
+  %4 = getelementptr inbounds nuw [2 x i8], ptr %i.ej, i64 %indvars.iv225
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 6
   %i.ev = tail call i16 @llvm.bswap.i16(i16 %i.eu)
-  store i16 %i.ev, ptr %6, align 1, !tbaa !187
+  store i16 %i.ev, ptr %5, align 1, !tbaa !187
   %i.ew = load ptr, ptr %i.ep, align 8, !tbaa !501
   %i.ex = getelementptr inbounds nuw [4 x i8], ptr %i.ew, i64 %indvars.iv225
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 4
   %i.ez = load i32, ptr %i.ey, align 4, !tbaa !59
   %i.fa = trunc i32 %i.ez to i16
-  %7 = add nuw i64 %indvars.iv225, 4
-  %8 = and i64 %7, 4294967294
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %i.ej, i64 %8
+  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.ej, i64 %indvars.iv225
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.fb = tail call i16 @llvm.bswap.i16(i16 %i.fa)
-  store i16 %i.fb, ptr %9, align 1, !tbaa !187
+  store i16 %i.fb, ptr %7, align 1, !tbaa !187
   %indvars.iv.next226.1 = add nuw nsw i64 %indvars.iv225, 2 ; 2 uses
   %niter.next.1 = add nuw i64 %niter, 2           ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

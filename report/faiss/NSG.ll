@@ -204,7 +204,11 @@ bb.aj:                                            ; preds = %bb.ai
 
 .preheader.i:                                     ; preds = %.lr.ph.i
   %.not197 = icmp eq i32 %.063..i, 0
-  br i1 %.not197, label %._crit_edge.i, label %.lr.ph74.i
+  br i1 %.not197, label %._crit_edge.i, label %.lr.ph74.preheader.i
+
+.lr.ph74.preheader.i:                             ; preds = %.preheader.i
+  %9 = zext nneg i32 %.063..i to i64
+  br label %.lr.ph74.i
 
 .lr.ph.i:                                         ; preds = %.preheader68.i, %.lr.ph.i
   %.071.i = phi i32 [ %..0.i, %.lr.ph.i ], [ %i.co, %.preheader68.i ] ; 2 uses
@@ -217,19 +221,18 @@ bb.aj:                                            ; preds = %bb.ai
   %i.el = load float, ptr %i.ek, align 4, !tbaa !60
   %i.em = fcmp ogt float %i.el, %i.du             ; 2 uses
   %.063..i = select i1 %i.em, i32 %.06370.i, i32 %i.eh ; 4 uses
-  %..0.i = select i1 %i.em, i32 %i.eh, i32 %.071.i ; 4 uses
+  %..0.i = select i1 %i.em, i32 %i.eh, i32 %.071.i ; 5 uses
   %i.en = add nsw i32 %..0.i, -1
   %i.eo = icmp slt i32 %.063..i, %i.en
   br i1 %i.eo, label %.lr.ph.i, label %.preheader.i, !llvm.loop !78
 
-.lr.ph74.i:                                       ; preds = %.preheader.i, %bb.al
-  %.273.i = phi i32 [ %10, %bb.al ], [ %.063..i, %.preheader.i ] ; 4 uses
-  %9 = zext nneg i32 %.273.i to i64
-  %i.ep = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %9 ; 2 uses
+.lr.ph74.i:                                       ; preds = %bb.al, %.lr.ph74.preheader.i
+  %indvars.iv.i = phi i64 [ %9, %.lr.ph74.preheader.i ], [ %indvars.iv.next.i, %bb.al ] ; 4 uses
+  %i.ep = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %indvars.iv.i ; 2 uses
   %i.eq = getelementptr inbounds nuw i8, ptr %i.ep, i64 4
   %i.er = load float, ptr %i.eq, align 4, !tbaa !60
   %i.es = fcmp olt float %i.er, %i.du
-  br i1 %i.es, label %._crit_edge.i.loopexit, label %bb.ak
+  br i1 %i.es, label %._crit_edge.i, label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph74.i
   %i.et = load i32, ptr %i.ep, align 4, !tbaa !57
@@ -237,25 +240,20 @@ bb.ak:                                            ; preds = %.lr.ph74.i
   br i1 %i.eu, label %_ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %10 = add nsw i32 %.273.i, -1
-  %i.ev = icmp sgt i32 %.273.i, 1
-  br i1 %i.ev, label %.lr.ph74.i, label %._crit_edge.i.loopexit, !llvm.loop !79
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ev = icmp sgt i64 %indvars.iv.i, 1
+  br i1 %i.ev, label %.lr.ph74.i, label %._crit_edge.i, !llvm.loop !79
 
-._crit_edge.i.loopexit:                           ; preds = %.lr.ph74.i, %bb.al
-  %.2.lcssa.i.ph = phi i32 [ 0, %bb.al ], [ %.273.i, %.lr.ph74.i ]
-  %11 = sext i32 %.2.lcssa.i.ph to i64
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %.preheader.i, %.preheader68.i
-  %.0.lcssa80.i = phi i32 [ %..0.i, %.preheader.i ], [ %i.co, %.preheader68.i ], [ %..0.i, %._crit_edge.i.loopexit ] ; 3 uses
-  %.2.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.preheader68.i ], [ %11, %._crit_edge.i.loopexit ]
+._crit_edge.i:                                    ; preds = %bb.al, %.lr.ph74.i, %.preheader.i, %.preheader68.i
+  %.0.lcssa81.i = phi i32 [ %..0.i, %.preheader.i ], [ %i.co, %.preheader68.i ], [ %..0.i, %.lr.ph74.i ], [ %..0.i, %bb.al ] ; 3 uses
+  %.2.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.preheader68.i ], [ 0, %bb.al ], [ %indvars.iv.i, %.lr.ph74.i ]
   %i.ew = getelementptr inbounds [12 x i8], ptr %i.dv, i64 %.2.lcssa.i
   %i.ex = load i32, ptr %i.ew, align 4, !tbaa !57
   %i.ey = icmp eq i32 %i.ex, %i.df
   br i1 %i.ey, label %_ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit, label %bb.am
 
 bb.am:                                            ; preds = %._crit_edge.i
-  %i.ez = zext nneg i32 %.0.lcssa80.i to i64
+  %i.ez = zext nneg i32 %.0.lcssa81.i to i64
   %i.fa = getelementptr inbounds nuw [12 x i8], ptr %i.dv, i64 %i.ez ; 5 uses
   %i.fb = load i32, ptr %i.fa, align 4, !tbaa !57
   %i.fc = icmp eq i32 %i.fb, %i.df
@@ -263,7 +261,7 @@ bb.am:                                            ; preds = %._crit_edge.i
 
 bb.an:                                            ; preds = %bb.am
   %i.fd = getelementptr i8, ptr %i.fa, i64 12
-  %i.fe = sub nsw i32 %5, %.0.lcssa80.i
+  %i.fe = sub nsw i32 %5, %.0.lcssa81.i
   %i.ff = sext i32 %i.fe to i64
   %i.fg = mul nsw i64 %i.ff, 12
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.fd, ptr nonnull align 4 %i.fa, i64 %i.fg, i1 false)
@@ -272,7 +270,7 @@ bb.an:                                            ; preds = %bb.am
 
 _ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit.sink.split: ; preds = %bb.an, %bb.aj
   %.sink = phi ptr [ %i.dv, %bb.aj ], [ %i.fa, %bb.an ]
-  %.065.i.ph = phi i32 [ 0, %bb.aj ], [ %.0.lcssa80.i, %bb.an ]
+  %.065.i.ph = phi i32 [ 0, %bb.aj ], [ %.0.lcssa81.i, %bb.an ]
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sink, i64 8
   store i8 1, ptr %.sroa.12.0..sroa_idx.i, align 4, !tbaa !75
   br label %_ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit
@@ -675,7 +673,11 @@ bb.aj:                                            ; preds = %bb.ai
 
 .preheader.i:                                     ; preds = %.lr.ph.i
   %.not193 = icmp eq i32 %.063..i, 0
-  br i1 %.not193, label %._crit_edge.i, label %.lr.ph74.i
+  br i1 %.not193, label %._crit_edge.i, label %.lr.ph74.preheader.i
+
+.lr.ph74.preheader.i:                             ; preds = %.preheader.i
+  %9 = zext nneg i32 %.063..i to i64
+  br label %.lr.ph74.i
 
 .lr.ph.i:                                         ; preds = %.preheader68.i, %.lr.ph.i
   %.071.i = phi i32 [ %..0.i, %.lr.ph.i ], [ %i.cp, %.preheader68.i ] ; 2 uses
@@ -688,19 +690,18 @@ bb.aj:                                            ; preds = %bb.ai
   %i.en = load float, ptr %i.em, align 4, !tbaa !60
   %i.eo = fcmp ogt float %i.en, %i.dw             ; 2 uses
   %.063..i = select i1 %i.eo, i32 %.06370.i, i32 %i.ej ; 4 uses
-  %..0.i = select i1 %i.eo, i32 %i.ej, i32 %.071.i ; 4 uses
+  %..0.i = select i1 %i.eo, i32 %i.ej, i32 %.071.i ; 5 uses
   %i.ep = add nsw i32 %..0.i, -1
   %i.eq = icmp slt i32 %.063..i, %i.ep
   br i1 %i.eq, label %.lr.ph.i, label %.preheader.i, !llvm.loop !78
 
-.lr.ph74.i:                                       ; preds = %.preheader.i, %bb.al
-  %.273.i = phi i32 [ %10, %bb.al ], [ %.063..i, %.preheader.i ] ; 4 uses
-  %9 = zext nneg i32 %.273.i to i64
-  %i.er = getelementptr inbounds nuw [12 x i8], ptr %i.dx, i64 %9 ; 2 uses
+.lr.ph74.i:                                       ; preds = %bb.al, %.lr.ph74.preheader.i
+  %indvars.iv.i = phi i64 [ %9, %.lr.ph74.preheader.i ], [ %indvars.iv.next.i, %bb.al ] ; 4 uses
+  %i.er = getelementptr inbounds nuw [12 x i8], ptr %i.dx, i64 %indvars.iv.i ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 4
   %i.et = load float, ptr %i.es, align 4, !tbaa !60
   %i.eu = fcmp olt float %i.et, %i.dw
-  br i1 %i.eu, label %._crit_edge.i.loopexit, label %bb.ak
+  br i1 %i.eu, label %._crit_edge.i, label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph74.i
   %i.ev = load i32, ptr %i.er, align 4, !tbaa !57
@@ -708,25 +709,20 @@ bb.ak:                                            ; preds = %.lr.ph74.i
   br i1 %i.ew, label %_ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %10 = add nsw i32 %.273.i, -1
-  %i.ex = icmp sgt i32 %.273.i, 1
-  br i1 %i.ex, label %.lr.ph74.i, label %._crit_edge.i.loopexit, !llvm.loop !79
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
+  %i.ex = icmp sgt i64 %indvars.iv.i, 1
+  br i1 %i.ex, label %.lr.ph74.i, label %._crit_edge.i, !llvm.loop !79
 
-._crit_edge.i.loopexit:                           ; preds = %.lr.ph74.i, %bb.al
-  %.2.lcssa.i.ph = phi i32 [ 0, %bb.al ], [ %.273.i, %.lr.ph74.i ]
-  %11 = sext i32 %.2.lcssa.i.ph to i64
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %.preheader.i, %.preheader68.i
-  %.0.lcssa80.i = phi i32 [ %..0.i, %.preheader.i ], [ %i.cp, %.preheader68.i ], [ %..0.i, %._crit_edge.i.loopexit ] ; 3 uses
-  %.2.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.preheader68.i ], [ %11, %._crit_edge.i.loopexit ]
+._crit_edge.i:                                    ; preds = %bb.al, %.lr.ph74.i, %.preheader.i, %.preheader68.i
+  %.0.lcssa81.i = phi i32 [ %..0.i, %.preheader.i ], [ %i.cp, %.preheader68.i ], [ %..0.i, %.lr.ph74.i ], [ %..0.i, %bb.al ] ; 3 uses
+  %.2.lcssa.i = phi i64 [ 0, %.preheader.i ], [ 0, %.preheader68.i ], [ 0, %bb.al ], [ %indvars.iv.i, %.lr.ph74.i ]
   %i.ey = getelementptr inbounds [12 x i8], ptr %i.dx, i64 %.2.lcssa.i
   %i.ez = load i32, ptr %i.ey, align 4, !tbaa !57
   %i.fa = icmp eq i32 %i.ez, %i.dh
   br i1 %i.fa, label %_ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit, label %bb.am
 
 bb.am:                                            ; preds = %._crit_edge.i
-  %i.fb = zext nneg i32 %.0.lcssa80.i to i64
+  %i.fb = zext nneg i32 %.0.lcssa81.i to i64
   %i.fc = getelementptr inbounds nuw [12 x i8], ptr %i.dx, i64 %i.fb ; 5 uses
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !57
   %i.fe = icmp eq i32 %i.fd, %i.dh
@@ -734,7 +730,7 @@ bb.am:                                            ; preds = %._crit_edge.i
 
 bb.an:                                            ; preds = %bb.am
   %i.ff = getelementptr i8, ptr %i.fc, i64 12
-  %i.fg = sub nsw i32 %5, %.0.lcssa80.i
+  %i.fg = sub nsw i32 %5, %.0.lcssa81.i
   %i.fh = sext i32 %i.fg to i64
   %i.fi = mul nsw i64 %i.fh, 12
   call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ff, ptr nonnull align 4 %i.fc, i64 %i.fi, i1 false)
@@ -743,7 +739,7 @@ bb.an:                                            ; preds = %bb.am
 
 _ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit.sink.split: ; preds = %bb.an, %bb.aj
   %.sink = phi ptr [ %i.dx, %bb.aj ], [ %i.fc, %bb.an ]
-  %.065.i.ph = phi i32 [ 0, %bb.aj ], [ %.0.lcssa80.i, %bb.an ]
+  %.065.i.ph = phi i32 [ 0, %bb.aj ], [ %.0.lcssa81.i, %bb.an ]
   %.sroa.12.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sink, i64 8
   store i8 1, ptr %.sroa.12.0..sroa_idx.i, align 4, !tbaa !75
   br label %_ZN5faiss3nsg16insert_into_poolEPNS0_8NeighborEiS1_.exit
@@ -1146,7 +1142,7 @@ bb.at:                                            ; preds = %bb.as
   %i.gs = icmp slt i32 %.063..i, %i.gr
   br i1 %i.gs, label %.lr.ph.i, label %.preheader.i, !llvm.loop !78
 
-.lr.ph74.i:                                       ; preds = %.lr.ph74.i.preheader, %bb.av
+.lr.ph74.i:                                       ; preds = %bb.av, %.lr.ph74.i.preheader
   %indvars.iv = phi i64 [ %i.gj, %.lr.ph74.i.preheader ], [ %indvars.iv.next, %bb.av ] ; 4 uses
   %i.gt = getelementptr inbounds nuw [12 x i8], ptr %i.fy, i64 %indvars.iv ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 4
@@ -1549,7 +1545,7 @@ bb.at:                                            ; preds = %bb.as
   %i.gq = icmp slt i32 %.063..i, %i.gp
   br i1 %i.gq, label %.lr.ph.i, label %.preheader.i, !llvm.loop !78
 
-.lr.ph74.i:                                       ; preds = %.lr.ph74.i.preheader, %bb.av
+.lr.ph74.i:                                       ; preds = %bb.av, %.lr.ph74.i.preheader
   %indvars.iv = phi i64 [ %i.gh, %.lr.ph74.i.preheader ], [ %indvars.iv.next, %bb.av ] ; 4 uses
   %i.gr = getelementptr inbounds nuw [12 x i8], ptr %i.fw, i64 %indvars.iv ; 2 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 4

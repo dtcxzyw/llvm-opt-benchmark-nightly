@@ -205,10 +205,9 @@ bb.q:                                             ; preds = %.thread116
   br i1 %.not48, label %.lr.ph.1, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph
-  %2 = add nuw i64 %indvars.iv62, 4
-  %3 = and i64 %2, 4294967294
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %3
-  %i.if = load i32, ptr %4, align 8, !tbaa !96    ; 2 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv62
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %i.if = load i32, ptr %3, align 8, !tbaa !96    ; 2 uses
   %.not49 = icmp eq i32 %i.if, 0
   br i1 %.not49, label %.lr.ph.1, label %bb.s
 
@@ -234,10 +233,9 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not48.1, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph.1
-  %5 = add nuw i64 %indvars.iv62, 5
-  %6 = and i64 %5, 4294967295
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %6
-  %i.is = load i32, ptr %7, align 4, !tbaa !96    ; 2 uses
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv62
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 20
+  %i.is = load i32, ptr %5, align 4, !tbaa !96    ; 2 uses
   %.not49.1 = icmp eq i32 %i.is, 0
   br i1 %.not49.1, label %bb.v, label %bb.u
 

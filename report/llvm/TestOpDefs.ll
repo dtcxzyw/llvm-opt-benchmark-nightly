@@ -205,9 +205,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds i8, ptr %i.o, i64 -96
-  %5 = add i64 %.010, 4294967291
-  %6 = and i64 %5, 4294967295
-  %i.v = sub nsw i64 0, %6
+  %i.v = sub i64 -4294967291, %.010
   %i.w = getelementptr inbounds [24 x i8], ptr %i.u, i64 %i.v
   br label %_ZN4mlir7OpTrait6detail20MultiResultTraitBaseIN4test22StringAttrPrettyNameOpENS0_15VariadicResultsEE9getResultEj.exit
 
@@ -280,9 +278,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.u = getelementptr inbounds i8, ptr %i.o, i64 -96
-  %5 = add i64 %.09, 4294967291
-  %6 = and i64 %5, 4294967295
-  %i.v = sub nsw i64 0, %6
+  %i.v = sub i64 -4294967291, %.09
   %i.w = getelementptr inbounds [24 x i8], ptr %i.u, i64 %i.v
   br label %_ZN4mlir7OpTrait6detail20MultiResultTraitBaseIN4test19CustomResultsNameOpENS0_15VariadicResultsEE9getResultEj.exit
 

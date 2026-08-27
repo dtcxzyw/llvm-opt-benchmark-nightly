@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %i.h = tail call i32 @tvb_reported_length(ptr noundef %0) ; 3 uses
   %i.i = icmp ugt i32 %i.h, 2                     ; 2 uses
   %i.j = add i32 %i.h, -3                         ; 5 uses
-  %.0539 = select i1 %i.i, i32 %i.j, i32 0        ; 24 uses
+  %.0539 = select i1 %i.i, i32 %i.j, i32 0        ; 25 uses
   %i.k = tail call i32 @tvb_captured_length(ptr noundef %0)
   %i.l = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef 0) ; 4 uses
   %i.m = zext i8 %i.l to i32
@@ -379,23 +379,20 @@ bb.n:                                             ; preds = %bb.g
   br i1 %i.dp, label %bb.o, label %.loopexit576
 
 bb.o:                                             ; preds = %.thread
-  %i.dq = add i32 %.0539, -3                      ; 4 uses
+  %i.dq = add i32 %.0539, -3                      ; 3 uses
   %i.dr = load i32, ptr @ett_llcgprs_sframe, align 4
   %i.ds = tail call ptr (ptr, ptr, i32, i32, i32, ptr, ptr, ...) @proto_tree_add_subtree_format(ptr noundef %.0542, ptr noundef %0, i32 noundef 3, i32 noundef %i.dq, i32 noundef %i.dr, ptr noundef null, ptr noundef nonnull @.str.195, i32 noundef %i.dq)
   %.not611 = icmp eq i32 %i.dq, 0
   br i1 %.not611, label %.loopexit576, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.o, %.lr.ph
-  %.0532578 = phi i16 [ %5, %.lr.ph ], [ 3, %bb.o ] ; 2 uses
-  %.0533577 = phi i32 [ %i.dx, %.lr.ph ], [ 0, %bb.o ]
-  %4 = zext i16 %.0532578 to i32                  ; 2 uses
-  %i.dt = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %4)
+  %.0533577 = phi i32 [ %i.dx, %.lr.ph ], [ 3, %bb.o ] ; 3 uses
+  %i.dt = tail call zeroext i8 @tvb_get_uint8(ptr noundef %0, i32 noundef %.0533577)
   %i.du = load i32, ptr @hf_llcgprs_rbyte, align 4
   %i.dv = zext i8 %i.dt to i32
-  %i.dw = tail call ptr @proto_tree_add_uint(ptr noundef %i.ds, i32 noundef %i.du, ptr noundef %0, i32 noundef %4, i32 noundef 1, i32 noundef %i.dv) ; 0 uses
-  %5 = add i16 %.0532578, 1
-  %i.dx = add nuw i32 %.0533577, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.dx, %i.dq
+  %i.dw = tail call ptr @proto_tree_add_uint(ptr noundef %i.ds, i32 noundef %i.du, ptr noundef %0, i32 noundef %.0533577, i32 noundef 1, i32 noundef %i.dv) ; 0 uses
+  %i.dx = add i32 %.0533577, 1                    ; 2 uses
+  %exitcond.not = icmp eq i32 %i.dx, %.0539
   br i1 %exitcond.not, label %.loopexit576, label %.lr.ph, !llvm.loop !8
 
 bb.p:                                             ; preds = %bb.g

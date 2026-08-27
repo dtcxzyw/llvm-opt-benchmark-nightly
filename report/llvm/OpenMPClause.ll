@@ -205,8 +205,7 @@ bb.k:                                             ; preds = %"_ZZN4llvm10interle
 _ZNK4llvm15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS5_8PrefViewEEdeEv.exit6.i.i.i: ; preds = %bb.k, %"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i"
   %i.bq = phi i32 [ %i.bp, %bb.k ], [ 0, %"_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_0NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i" ] ; 2 uses
   %i.br = add i64 %storemerge3.i.i.i, 1           ; 3 uses
-  %7 = and i64 %i.br, 4294967295
-  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %7
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.br
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !17, !noalias !791
   store ptr %i.bt, ptr %5, align 8, !tbaa !770, !alias.scope !791
   %i.bu = load i32, ptr %i.m, align 8, !tbaa !146, !noalias !791
@@ -282,8 +281,7 @@ bb.p:                                             ; preds = %bb.n
 
 "_ZZN4llvm10interleaveINS_14iterator_rangeINS_15mapped_iteratorINS_6detail15SafeIntIteratorIjLb0EEEZNK5clang13OMPInitClause5prefsEvEUljE_NS7_8PrefViewEEEEEZNS6_16OMPClausePrinter18VisitOMPInitClauseEPS7_E3$_1NS_11raw_ostreamES9_EEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i": ; preds = %bb.p, %bb.o
   %i.cu = add i64 %storemerge8.i.i, 1             ; 3 uses
-  %8 = and i64 %i.cu, 4294967295
-  %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %8
+  %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.cu
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !17, !noalias !806 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %.not.i9.i.i = icmp eq ptr %i.cw, null

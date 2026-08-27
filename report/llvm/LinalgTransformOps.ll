@@ -205,9 +205,7 @@ bb.eh:                                            ; preds = %.lr.ph56.i.i
 
 bb.ei:                                            ; preds = %.lr.ph56.i.i
   %i.asn = getelementptr inbounds i8, ptr %i.asg, i64 -96
-  %112 = add nuw i64 %.sroa.9.055.i.i, 4294967291
-  %113 = and i64 %112, 4294967295
-  %i.aso = sub nsw i64 0, %113
+  %i.aso = sub i64 -4294967291, %.sroa.9.055.i.i
   %i.asp = getelementptr inbounds [24 x i8], ptr %i.asn, i64 %i.aso
   %.pre65.i.i = add nuw i64 %.sroa.9.055.i.i, 1
   br label %_ZN4mlir9Operation9getResultEj.exit120.i.i

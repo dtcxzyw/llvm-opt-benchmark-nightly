@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %.sroa.03.0123.us.us
   %i.as = shl i64 %i.ao, 37
-  %12 = and i64 %i.z, 4294967295
-  %i.at = or disjoint i64 %i.as, %12
+  %i.at = or disjoint i64 %i.as, %i.z
   store i64 %i.at, ptr %i.ar, align 8
   %i.au = add nuw i64 %.sroa.03.0123.us.us, 1
   br label %bb.h
