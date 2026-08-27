@@ -202,8 +202,7 @@ define internal fastcc noundef i32 @_ZN4absl12_GLOBAL__N_113ConsumeDigitsILi16Em
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64
   %i.b = ptrtoaddr ptr %1 to i64                  ; 2 uses
-  %5 = shl nsw i32 %2, 2
-  %i.c = icmp samesign ult i32 %5, 65
+  %i.c = icmp samesign ult i32 %2, 17
   br i1 %i.c, label %.preheader, label %bb.b
 
 .preheader:                                       ; preds = %bb.a

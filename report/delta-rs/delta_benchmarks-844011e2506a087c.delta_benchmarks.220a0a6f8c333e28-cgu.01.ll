@@ -205,7 +205,7 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtNtCs4lawaffTVVK_9sqlparser3ast5qu
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 640
   %i.h = xor i64 %2, -1
   %i.i = add nsw i64 %i.b, %i.h
-  %i.j = mul nsw i64 %i.i, 640
+  %i.j = mul nuw nsw i64 %i.i, 640
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !noalias !9446
   %i.k = add nsw i64 %i.b, -1                     ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !alias.scope !9441, !noalias !9444
@@ -248,7 +248,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.k = xor i64 %1, -1
   %i.l = add nsw i64 %i.b, %i.k
-  %i.m = shl nsw i64 %i.l, 4
+  %i.m = shl nuw nsw i64 %i.l, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.j, i64 %i.m, i1 false), !noalias !9448
   %i.n = add nsw i64 %i.b, -1
   store i64 %i.n, ptr %i.a, align 8, !alias.scope !9448
@@ -284,7 +284,7 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtNtNtCs4s1dLWtJWRF_12clap_builder6
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 104
   %i.h = xor i64 %2, -1
   %i.i = add nsw i64 %i.b, %i.h
-  %i.j = mul nsw i64 %i.i, 104
+  %i.j = mul nuw nsw i64 %i.i, 104
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !noalias !9456
   %i.k = add nsw i64 %i.b, -1                     ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !alias.scope !9451, !noalias !9454

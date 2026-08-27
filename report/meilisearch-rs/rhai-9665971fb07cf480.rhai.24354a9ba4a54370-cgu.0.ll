@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ab = xor i64 %.sroa.4.0.i.ph.i, -1
   %i.ac = add nsw i64 %i.q, %i.ab
-  %i.ad = shl nsw i64 %i.ac, 4
+  %i.ad = shl nuw nsw i64 %i.ac, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.z, ptr nonnull align 8 %i.aa, i64 %i.ad, i1 false), !noalias !2358
   %i.ae = add nsw i64 %i.q, -1
   store i64 %i.ae, ptr %i.p, align 8, !alias.scope !2354, !noalias !2355
@@ -608,7 +608,7 @@ bb.s:                                             ; preds = %bb.q
   %i.bc = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.bd = xor i64 %.sroa.03.043, -1
   %i.be = add nsw i64 %i.u, %i.bd
-  %i.bf = shl nsw i64 %i.be, 4
+  %i.bf = shl nuw nsw i64 %i.be, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.w, ptr nonnull align 8 %i.bc, i64 %i.bf, i1 false), !noalias !44654
   %i.bg = add nsw i64 %i.u, -1                    ; 2 uses
   store i64 %i.bg, ptr %i.g, align 8, !alias.scope !44649, !noalias !44656
@@ -1011,7 +1011,7 @@ bb.h:                                             ; preds = %bb.g
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %i.m = xor i64 %.sroa.4.0.i.ph, -1
   %i.n = add nsw i64 %i.b, %i.m
-  %i.o = shl nsw i64 %i.n, 4
+  %i.o = shl nuw nsw i64 %i.n, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.k, ptr nonnull align 8 %i.l, i64 %i.o, i1 false), !noalias !44779
   %i.p = add nsw i64 %i.b, -1
   store i64 %i.p, ptr %i.a, align 8, !alias.scope !44771, !noalias !44776
@@ -1210,7 +1210,7 @@ bb.p:                                             ; preds = %bb.n
   %i.ar = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %i.as = xor i64 %.sroa.03.039, -1
   %i.at = add nsw i64 %i.q, %i.as
-  %i.au = shl nsw i64 %i.at, 4
+  %i.au = shl nuw nsw i64 %i.at, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.ar, i64 %i.au, i1 false), !noalias !44794
   %i.av = add nsw i64 %i.q, -1                    ; 2 uses
   store i64 %i.av, ptr %i.g, align 8, !alias.scope !44789, !noalias !44796

@@ -202,12 +202,12 @@ bb.i:                                             ; preds = %_ZN5boost9gregorian
   br label %_ZN5boost10posix_time13time_durationC2Ellll.exit
 
 bb.j:                                             ; preds = %_ZN5boost9gregorian8greg_dayC2Et.exit
-  %i.al = mul nsw i64 %i.z, 3600
-  %i.am = mul nsw i64 %i.ac, 60
+  %i.al = mul nuw nsw i64 %i.z, 3600
+  %i.am = mul nuw nsw i64 %i.ac, 60
   %i.an = add nuw nsw i64 %i.am, %i.al
   %i.ao = add nuw nsw i64 %i.an, %i.ae
-  %i.ap = mul nsw i64 %i.ao, 1000000
-  %i.aq = add nsw i64 %i.ap, %i.af
+  %i.ap = mul nuw nsw i64 %i.ao, 1000000
+  %i.aq = add nuw nsw i64 %i.ap, %i.af
   br label %_ZN5boost10posix_time13time_durationC2Ellll.exit
 
 _ZN5boost10posix_time13time_durationC2Ellll.exit: ; preds = %bb.i, %bb.j

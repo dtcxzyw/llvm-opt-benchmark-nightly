@@ -204,7 +204,7 @@ vec.epilog.scalar.ph909.preheader:                ; preds = %iter.check908, %vec
 
 .preheader1.us.i:                                 ; preds = %._crit_edge20.us.i, %.preheader1.lr.ph.split.us.i
   %indvars.iv99.i = phi i64 [ %indvars.iv.next100.i, %._crit_edge20.us.i ], [ %i.ef, %.preheader1.lr.ph.split.us.i ] ; 3 uses
-  %i.fs = mul nsw i64 %indvars.iv99.i, %i.cz      ; 2 uses
+  %i.fs = mul nuw nsw i64 %indvars.iv99.i, %i.cz  ; 2 uses
   br i1 %i.du, label %iter.check791, label %iter.check767
 
 vec.epilog.scalar.ph792:                          ; preds = %vec.epilog.scalar.ph792.preheader, %vec.epilog.scalar.ph792
@@ -217,7 +217,7 @@ vec.epilog.scalar.ph792:                          ; preds = %vec.epilog.scalar.p
 
 iter.check767:                                    ; preds = %vec.epilog.scalar.ph792, %middle.block788, %vec.epilog.middle.block800, %.preheader1.us.i
   %i.fu = sub nsw i64 %indvars.iv99.i, %i.dy
-  %i.fv = mul nsw i64 %i.fu, %i.dz
+  %i.fv = mul nuw nsw i64 %i.fu, %i.dz
   %invariant.op.us.i = sub i64 %i.fv, %i.ea
   %i.fw = getelementptr [4 x i8], ptr %i.dc, i64 %i.fs ; 14 uses
   %i.fx = getelementptr [4 x i8], ptr %i.ec, i64 %invariant.op.us.i ; 11 uses
@@ -519,7 +519,7 @@ vec.epilog.middle.block745:                       ; preds = %vec.epilog.vector.b
 
 iter.check838:                                    ; preds = %._crit_edge20.us31.us.i, %.preheader1.us24.us.preheader.i
   %indvars.iv79.i = phi i64 [ %i.iv, %.preheader1.us24.us.preheader.i ], [ %indvars.iv.next80.i, %._crit_edge20.us31.us.i ] ; 2 uses
-  %i.jb = mul nsw i64 %indvars.iv79.i, %i.cz
+  %i.jb = mul nuw nsw i64 %indvars.iv79.i, %i.cz
   %i.jc = getelementptr [4 x i8], ptr %i.dc, i64 %i.jb ; 6 uses
   br i1 %min.iters.check827, label %vec.epilog.scalar.ph839.preheader, label %vector.main.loop.iter.check828
 
@@ -638,7 +638,7 @@ vec.epilog.middle.block824:                       ; preds = %vec.epilog.vector.b
 
 iter.check861:                                    ; preds = %._crit_edge10.us29.i, %.preheader1.us24.preheader.i
   %indvars.iv64.i = phi i64 [ %i.is, %.preheader1.us24.preheader.i ], [ %indvars.iv.next65.i, %._crit_edge10.us29.i ] ; 2 uses
-  %i.jr = mul nsw i64 %indvars.iv64.i, %i.cz
+  %i.jr = mul nuw nsw i64 %indvars.iv64.i, %i.cz
   %i.js = getelementptr [4 x i8], ptr %i.dc, i64 %i.jr ; 3 uses
   br i1 %min.iters.check850, label %vec.epilog.scalar.ph862.preheader, label %vector.main.loop.iter.check851
 
@@ -733,7 +733,7 @@ vec.epilog.scalar.ph909:                          ; preds = %vec.epilog.scalar.p
 
 iter.check885:                                    ; preds = %._crit_edge20.i, %.preheader1.preheader.i
   %indvars.iv54.i = phi i64 [ %i.kc, %.preheader1.preheader.i ], [ %indvars.iv.next55.i, %._crit_edge20.i ] ; 2 uses
-  %i.ki = mul nsw i64 %indvars.iv54.i, %i.cz
+  %i.ki = mul nuw nsw i64 %indvars.iv54.i, %i.cz
   %i.kj = getelementptr [4 x i8], ptr %i.dc, i64 %i.ki ; 3 uses
   br i1 %min.iters.check873, label %vec.epilog.scalar.ph886.preheader, label %vector.main.loop.iter.check874
 
@@ -1136,7 +1136,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.sn = load ptr, ptr %i.ru, align 8, !tbaa !124
-  %i.so = mul nsw i32 %i.sl, %.reass532
+  %i.so = mul nuw nsw i32 %i.sl, %.reass532
   %i.sp = add nuw i32 %.reass527, %i.so
   %i.sq = sext i32 %i.sp to i64
   %i.sr = getelementptr inbounds [4 x i8], ptr %i.sn, i64 %i.sq
@@ -1539,7 +1539,7 @@ bb.af:                                            ; preds = %.lr.ph554.split.us.
 
 bb.ag:                                            ; preds = %bb.af
   %i.acx = load ptr, ptr %i.yw, align 8, !tbaa !124
-  %i.acy = mul nsw i32 %i.acv, %.reass562
+  %i.acy = mul nuw nsw i32 %i.acv, %.reass562
   %i.acz = add nuw i32 %.reass557, %i.acy
   %i.ada = sext i32 %i.acz to i64
   %i.adb = getelementptr inbounds [4 x i8], ptr %i.acx, i64 %i.ada
@@ -1564,7 +1564,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   %i.adh = load ptr, ptr %i.yw, align 8, !tbaa !124
-  %i.adi = mul nsw i32 %i.adf, %.reass562
+  %i.adi = mul nuw nsw i32 %i.adf, %.reass562
   %i.adj = add nuw i32 %.reass557.1, %i.adi
   %i.adk = sext i32 %i.adj to i64
   %i.adl = getelementptr inbounds [4 x i8], ptr %i.adh, i64 %i.adk
@@ -1607,7 +1607,7 @@ bb.al:                                            ; preds = %.epil.preheader
 
 bb.am:                                            ; preds = %bb.al
   %i.adr = load ptr, ptr %i.yw, align 8, !tbaa !124
-  %i.ads = mul nsw i32 %i.adp, %.reass562
+  %i.ads = mul nuw nsw i32 %i.adp, %.reass562
   %i.adt = add nuw i32 %.reass557.epil, %i.ads
   %i.adu = sext i32 %i.adt to i64
   %i.adv = getelementptr inbounds [4 x i8], ptr %i.adr, i64 %i.adu

@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !63
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !180
   br label %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
@@ -608,7 +608,7 @@ _ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE11
 
 bb.j:                                             ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i, %bb.d
   %.not.i = phi i1 [ %i.u, %bb.d ], [ %i.ao, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i ]
-  %i.ap = shl nsw i32 %i.i, 1
+  %i.ap = shl nuw nsw i32 %i.i, 1
   %i.aq = zext i1 %.not.i to i32
   %i.ar = or disjoint i32 %i.ap, %i.aq
   store i32 %i.ar, ptr %i.h, align 4, !tbaa !80
@@ -1011,7 +1011,7 @@ bb.g:                                             ; preds = %_ZNK7xgboost6common
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.not.i = phi i1 [ %i.al, %bb.f ], [ %i.ao, %bb.g ]
-  %i.ap = shl nsw i32 %i.z, 1
+  %i.ap = shl nuw nsw i32 %i.z, 1
   %i.aq = zext i1 %.not.i to i32
   %i.ar = or disjoint i32 %i.ap, %i.aq
   store i32 %i.ar, ptr %i.y, align 4, !tbaa !80
@@ -1306,7 +1306,7 @@ bb.k:                                             ; preds = %_ZNK7xgboost6common
   br label %bb.m
 
 bb.l:                                             ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i
-  %i.cx = shl nsw i64 %i.cm, 2
+  %i.cx = shl nuw nsw i64 %i.cm, 2
   %i.cy = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.cx
   %i.cz = load float, ptr %i.cy, align 4, !tbaa !64
   %i.da = fcmp uge float %i.cs, %i.cz
@@ -1314,7 +1314,7 @@ bb.l:                                             ; preds = %_ZNK7xgboost6common
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.not.i = phi i1 [ %i.cw, %bb.k ], [ %i.da, %bb.l ]
-  %i.db = shl nsw i32 %i.ck, 1
+  %i.db = shl nuw nsw i32 %i.ck, 1
   %i.dc = zext i1 %.not.i to i32
   %i.dd = or disjoint i32 %i.db, %i.dc
   store i32 %i.dd, ptr %i.cj, align 4, !tbaa !80
@@ -1717,7 +1717,7 @@ _ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeVie
 
 bb.j:                                             ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i, %bb.d
   %.not.i = phi i1 [ %i.u, %bb.d ], [ %i.ao, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i ]
-  %i.ap = shl nsw i32 %i.i, 1
+  %i.ap = shl nuw nsw i32 %i.i, 1
   %i.aq = zext i1 %.not.i to i32
   %i.ar = or disjoint i32 %i.ap, %i.aq
   store i32 %i.ar, ptr %i.h, align 4, !tbaa !80
@@ -2120,7 +2120,7 @@ bb.g:                                             ; preds = %_ZNK7xgboost6common
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.not.i = phi i1 [ %i.aq, %bb.f ], [ %i.at, %bb.g ]
-  %i.au = shl nsw i32 %i.ae, 1
+  %i.au = shl nuw nsw i32 %i.ae, 1
   %i.av = zext i1 %.not.i to i32
   %i.aw = or disjoint i32 %i.au, %i.av
   store i32 %i.aw, ptr %i.ad, align 4, !tbaa !80
@@ -2293,7 +2293,7 @@ bb.f:                                             ; preds = %_ZNK7xgboost6common
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i
-  %i.aq = shl nsw i64 %i.af, 2
+  %i.aq = shl nuw nsw i64 %i.af, 2
   %i.ar = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.aq
   %i.as = load float, ptr %i.ar, align 4, !tbaa !64
   %i.at = fcmp uge float %i.al, %i.as
@@ -2301,7 +2301,7 @@ bb.g:                                             ; preds = %_ZNK7xgboost6common
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.not.i = phi i1 [ %i.ap, %bb.f ], [ %i.at, %bb.g ]
-  %i.au = shl nsw i32 %i.ad, 1
+  %i.au = shl nuw nsw i32 %i.ad, 1
   %i.av = zext i1 %.not.i to i32
   %i.aw = or disjoint i32 %i.au, %i.av
   store i32 %i.aw, ptr %i.ac, align 4, !tbaa !80
@@ -2704,8 +2704,8 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.cf = load ptr, ptr %i.ca, align 8, !tbaa !59
   %i.cg = getelementptr inbounds nuw [4 x i8], ptr %i.cf, i64 %i.ce
   %i.ch = load float, ptr %i.cg, align 4, !tbaa !64
-  %i.ci = shl nsw i32 %i.bz, 1
-  %i.cj = shl nsw i64 %i.cb, 2
+  %i.ci = shl nuw nsw i32 %i.bz, 1
+  %i.cj = shl nuw nsw i64 %i.cb, 2
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.cj
   %i.cl = load float, ptr %i.ck, align 4, !tbaa !64
   %i.cm = fcmp uge float %i.ch, %i.cl
@@ -3108,8 +3108,8 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.cd = load ptr, ptr %i.by, align 8, !tbaa !59
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.cd, i64 %i.cc
   %i.cf = load float, ptr %i.ce, align 4, !tbaa !64
-  %i.cg = shl nsw i32 %i.bx, 1
-  %i.ch = shl nsw i64 %i.bz, 2
+  %i.cg = shl nuw nsw i32 %i.bx, 1
+  %i.ch = shl nuw nsw i64 %i.bz, 2
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.ch
   %i.cj = load float, ptr %i.ci, align 4, !tbaa !64
   %i.ck = fcmp uge float %i.cf, %i.cj

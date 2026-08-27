@@ -205,10 +205,10 @@ begin_hunk_0_@_ZNK4ncnn17Interp_x86_avx5127forwardERKSt6vectorINS_3MatESaIS2_EER
   br label %._crit_edge150
 
 iter.check:                                       ; preds = %.preheader
-  %i.ef = shl nsw i32 %i.ed, 1
+  %i.ef = shl nuw nsw i32 %i.ed, 1
   %i.eg = sext i32 %.2.lcssa to i64               ; 7 uses
   %i.eh = sext i32 %i.ed to i64                   ; 11 uses
-  %9 = sext i32 %i.ef to i64                      ; 2 uses
+  %9 = zext nneg i32 %i.ef to i64                 ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %i.at, i64 %i.eh ; 3 uses
   %invariant.gep201 = getelementptr [4 x i8], ptr %i.at, i64 %9 ; 3 uses
   %i.ei = sub nsw i64 %i.eh, %i.eg                ; 7 uses
@@ -611,10 +611,10 @@ bb.d:                                             ; preds = %.lr.ph158, %bb.d
   br label %._crit_edge
 
 iter.check:                                       ; preds = %.preheader
-  %i.gn = shl nsw i32 %i.gl, 1
+  %i.gn = shl nuw nsw i32 %i.gl, 1
   %i.go = sext i32 %.2.lcssa to i64               ; 7 uses
   %i.gp = sext i32 %i.gl to i64                   ; 11 uses
-  %9 = sext i32 %i.gn to i64                      ; 2 uses
+  %9 = zext nneg i32 %i.gn to i64                 ; 2 uses
   %invariant.gep = getelementptr [2 x i8], ptr %i.at, i64 %i.gp ; 3 uses
   %invariant.gep217 = getelementptr [2 x i8], ptr %i.at, i64 %9 ; 3 uses
   %i.gq = sub nsw i64 %i.gp, %i.go                ; 7 uses

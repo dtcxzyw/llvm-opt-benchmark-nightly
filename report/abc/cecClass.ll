@@ -189,7 +189,7 @@ bb.d:                                             ; preds = %.lr.ph29
   %.lcssa.sink = phi i32 [ %i.f, %bb.b ], [ %i.h, %.lr.ph29 ]
   %.sink50.in.in = phi i64 [ %indvars.iv, %bb.b ], [ %indvars.iv37, %.lr.ph29 ]
   %.sink50.in = trunc i64 %.sink50.in.in to i32
-  %.sink50 = shl nsw i32 %.sink50.in, 5
+  %.sink50 = shl nuw nsw i32 %.sink50.in, 5
   %i.i = tail call fastcc i32 @Gia_WordFindFirstBit(i32 noundef %.lcssa.sink)
   %i.j = add nsw i32 %i.i, %.sink50
   br label %.loopexit
@@ -432,7 +432,7 @@ bb.e:                                             ; preds = %.lr.ph
   %.sink73 = phi i32 [ %i.q, %bb.d ], [ %i.k, %bb.b ]
   %.sink72.in.in = phi i64 [ %indvars.iv, %bb.d ], [ %indvars.iv53, %bb.b ]
   %.sink72.in = trunc i64 %.sink72.in.in to i32
-  %.sink72 = shl nsw i32 %.sink72.in, 5
+  %.sink72 = shl nuw nsw i32 %.sink72.in, 5
   %i.r = tail call fastcc i32 @Gia_WordFindFirstBit(i32 noundef %.sink73)
   %i.s = add nsw i32 %i.r, %.sink72
   br label %.loopexit
@@ -473,9 +473,8 @@ bb.a:
   br i1 %.not30, label %.loopexit35, label %.preheader34
 
 .preheader34:                                     ; preds = %.lr.ph
-  %i.f = shl i64 %indvars.iv45, 5
-  %3 = and i64 %i.f, 4294967264
-  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %3 ; 2 uses
+  %i.f = shl nuw nsw i64 %indvars.iv45, 7
+  %invariant.gep = getelementptr inbounds nuw i8, ptr %2, i64 %i.f ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.preheader34
@@ -528,9 +527,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not28, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph42
-  %i.u = shl i64 %indvars.iv53, 5
-  %4 = and i64 %i.u, 4294967264
-  %invariant.gep59 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %4 ; 2 uses
+  %i.u = shl nuw nsw i64 %indvars.iv53, 7
+  %invariant.gep60 = getelementptr inbounds nuw i8, ptr %2, i64 %i.u ; 2 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %.preheader
@@ -543,7 +541,7 @@ bb.g:                                             ; preds = %bb.k, %.preheader
   br i1 %.not29, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %gep60 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep59, i64 %indvars.iv49 ; 2 uses
+  %gep60 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep60, i64 %indvars.iv49 ; 2 uses
   %i.z = load i32, ptr %gep60, align 4, !tbaa !8
   %i.aa = add nsw i32 %i.z, 1
   store i32 %i.aa, ptr %gep60, align 4, !tbaa !8
@@ -559,7 +557,7 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %.not29.1, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %gep60.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep59, i64 %indvars.iv.next50 ; 2 uses
+  %gep60.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep60, i64 %indvars.iv.next50 ; 2 uses
   %i.af = load i32, ptr %gep60.1, align 4, !tbaa !8
   %i.ag = add nsw i32 %i.af, 1
   store i32 %i.ag, ptr %gep60.1, align 4, !tbaa !8
@@ -614,9 +612,8 @@ bb.a:
   br i1 %.not38, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph50
-  %i.k = shl i64 %indvars.iv61, 5
-  %4 = and i64 %i.k, 4294967264
-  %invariant.gep67 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %4 ; 2 uses
+  %i.k = shl nuw nsw i64 %indvars.iv61, 7
+  %invariant.gep68 = getelementptr inbounds nuw i8, ptr %3, i64 %i.k ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.f, %.preheader
@@ -631,7 +628,7 @@ bb.b:                                             ; preds = %bb.f, %.preheader
   br i1 %.not39, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %gep68 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep67, i64 %indvars.iv57 ; 2 uses
+  %gep68 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep68, i64 %indvars.iv57 ; 2 uses
   %i.r = load i32, ptr %gep68, align 4, !tbaa !8
   %i.s = add nsw i32 %i.r, 1
   store i32 %i.s, ptr %gep68, align 4, !tbaa !8
@@ -649,7 +646,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
   br i1 %.not39.1, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %gep68.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep67, i64 %indvars.iv.next58 ; 2 uses
+  %gep68.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep68, i64 %indvars.iv.next58 ; 2 uses
   %i.z = load i32, ptr %gep68.1, align 4, !tbaa !8
   %i.aa = add nsw i32 %i.z, 1
   store i32 %i.aa, ptr %gep68.1, align 4, !tbaa !8
@@ -676,9 +673,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not, label %.loopexit43, label %.preheader42
 
 .preheader42:                                     ; preds = %.lr.ph
-  %i.ag = shl i64 %indvars.iv53, 5
-  %5 = and i64 %i.ag, 4294967264
-  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %5 ; 2 uses
+  %i.ag = shl nuw nsw i64 %indvars.iv53, 7
+  %invariant.gep = getelementptr inbounds nuw i8, ptr %3, i64 %i.ag ; 2 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %.preheader42
@@ -1081,9 +1077,8 @@ bb.ae:                                            ; preds = %Vec_IntPush.exit58
   br i1 %.not38.i, label %.loopexit.i, label %.preheader.i66
 
 .preheader.i66:                                   ; preds = %.lr.ph50.i
-  %i.ee = shl nuw nsw i64 %indvars.iv61.i, 5
-  %2 = and i64 %i.ee, 4294967264
-  %invariant.gep67.i = getelementptr inbounds nuw [4 x i8], ptr %i.dt, i64 %2 ; 2 uses
+  %i.ee = shl nuw nsw i64 %indvars.iv61.i, 7
+  %invariant.gep68.i = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.ee ; 2 uses
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.aj, %.preheader.i66
@@ -1098,7 +1093,7 @@ bb.af:                                            ; preds = %bb.aj, %.preheader.
   br i1 %.not39.i, label %bb.ah, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %gep68.i = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep67.i, i64 %indvars.iv57.i ; 2 uses
+  %gep68.i = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep68.i, i64 %indvars.iv57.i ; 2 uses
   %i.el = load i32, ptr %gep68.i, align 4, !tbaa !8
   %i.em = add nsw i32 %i.el, 1
   store i32 %i.em, ptr %gep68.i, align 4, !tbaa !8
@@ -1116,7 +1111,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   br i1 %.not39.i.1, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %gep68.i.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep67.i, i64 %indvars.iv.next58.i ; 2 uses
+  %gep68.i.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep68.i, i64 %indvars.iv.next58.i ; 2 uses
   %i.et = load i32, ptr %gep68.i.1, align 4, !tbaa !8
   %i.eu = add nsw i32 %i.et, 1
   store i32 %i.eu, ptr %gep68.i.1, align 4, !tbaa !8
@@ -1143,9 +1138,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   br i1 %.not.i62, label %.loopexit43.i, label %.preheader42.i
 
 .preheader42.i:                                   ; preds = %.lr.ph.i61
-  %i.fa = shl nuw nsw i64 %indvars.iv53.i, 5
-  %3 = and i64 %i.fa, 4294967264
-  %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %i.dt, i64 %3 ; 2 uses
+  %i.fa = shl nuw nsw i64 %indvars.iv53.i, 7
+  %invariant.gep.i = getelementptr inbounds nuw i8, ptr %i.dt, i64 %i.fa ; 2 uses
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.ao, %.preheader42.i
@@ -1548,7 +1542,7 @@ bb.j:                                             ; preds = %.lr.ph.i65
   %.sink73.i = phi i32 [ %i.bt, %bb.i ], [ %i.bn, %bb.g ]
   %.sink72.in.in.i = phi i64 [ %indvars.iv.i66, %bb.i ], [ %indvars.iv53.i, %bb.g ]
   %.sink72.in.i = trunc i64 %.sink72.in.in.i to i32
-  %.sink72.i = shl nsw i32 %.sink72.in.i, 5
+  %.sink72.i = shl nuw nsw i32 %.sink72.in.i, 5
   %i.bu = tail call fastcc i32 @Gia_WordFindFirstBit(i32 noundef %.sink73.i)
   %i.bv = add nsw i32 %.sink72.i, %i.bu
   br label %Cec_ManSimCompareEqualFirstBit.exit
@@ -1756,7 +1750,7 @@ bb.w:                                             ; preds = %.lr.ph29.i
   %.lcssa.sink.i = phi i32 [ %i.es, %bb.u ], [ %i.eu, %.lr.ph29.i ]
   %.sink50.in.in.i = phi i64 [ %indvars.iv.i87, %bb.u ], [ %indvars.iv37.i, %.lr.ph29.i ]
   %.sink50.in.i = trunc i64 %.sink50.in.in.i to i32
-  %.sink50.i = shl nsw i32 %.sink50.in.i, 5
+  %.sink50.i = shl nuw nsw i32 %.sink50.in.i, 5
   %i.ev = tail call fastcc i32 @Gia_WordFindFirstBit(i32 noundef %.lcssa.sink.i)
   %i.ew = add nsw i32 %.sink50.i, %i.ev
   br label %Cec_ManSimCompareConstFirstBit.exit
@@ -2159,9 +2153,8 @@ bb.al:                                            ; preds = %Vec_IntPush.exit
   br i1 %.not30.i, label %.loopexit35.i, label %.preheader34.i
 
 .preheader34.i:                                   ; preds = %.lr.ph.i263
-  %i.iw = shl nuw nsw i64 %indvars.iv45.i, 5
-  %4 = and i64 %i.iw, 4294967264
-  %invariant.gep.i = getelementptr inbounds nuw [4 x i8], ptr %i.iq, i64 %4 ; 2 uses
+  %i.iw = shl nuw nsw i64 %indvars.iv45.i, 7
+  %invariant.gep.i = getelementptr inbounds nuw i8, ptr %i.iq, i64 %i.iw ; 2 uses
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.aq, %.preheader34.i
@@ -2214,9 +2207,8 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   br i1 %.not28.i, label %.loopexit.i, label %.preheader.i267
 
 .preheader.i267:                                  ; preds = %.lr.ph42.i
-  %i.jl = shl nuw nsw i64 %indvars.iv53.i, 5
-  %5 = and i64 %i.jl, 4294967264
-  %invariant.gep59.i = getelementptr inbounds nuw [4 x i8], ptr %i.iq, i64 %5 ; 2 uses
+  %i.jl = shl nuw nsw i64 %indvars.iv53.i, 7
+  %invariant.gep60.i = getelementptr inbounds nuw i8, ptr %i.iq, i64 %i.jl ; 2 uses
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.av, %.preheader.i267
@@ -2229,7 +2221,7 @@ bb.ar:                                            ; preds = %bb.av, %.preheader.
   br i1 %.not29.i, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %gep60.i = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep59.i, i64 %indvars.iv49.i ; 2 uses
+  %gep60.i = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep60.i, i64 %indvars.iv49.i ; 2 uses
   %i.jq = load i32, ptr %gep60.i, align 4, !tbaa !8
   %i.jr = add nsw i32 %i.jq, 1
   store i32 %i.jr, ptr %gep60.i, align 4, !tbaa !8
@@ -2245,7 +2237,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br i1 %.not29.i.1, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  %gep60.i.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep59.i, i64 %indvars.iv.next50.i ; 2 uses
+  %gep60.i.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep60.i, i64 %indvars.iv.next50.i ; 2 uses
   %i.jw = load i32, ptr %gep60.i.1, align 4, !tbaa !8
   %i.jx = add nsw i32 %i.jw, 1
   store i32 %i.jx, ptr %gep60.i.1, align 4, !tbaa !8
@@ -2648,7 +2640,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !30 ; 2 uses
   %.not9.i23.i.i.i.i = icmp eq ptr %i.bz, null
   %i.ca = sext i32 %spec.select.i.i.i.i to i64
-  %i.cb = shl nsw i64 %i.ca, 2                    ; 2 uses
+  %i.cb = shl nuw nsw i64 %i.ca, 2                ; 2 uses
   br i1 %.not9.i23.i.i.i.i, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o

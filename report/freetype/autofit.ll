@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.cf = sub nsw i64 %i.br, %i.db
-  %i.cg = shl nsw i64 %i.cf, 10
+  %i.cg = shl nuw nsw i64 %i.cf, 10
   %i.ch = sdiv i64 %i.cg, %.081                   ; 3 uses
   %i.ci = add nsw i64 %i.ch, -1024                ; 2 uses
   %i.cj = icmp sgt i64 %i.ch, 11024
@@ -608,8 +608,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bt, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
-  %i.bu = mul nsw i64 %i.br, 7
-  %2 = icmp slt i64 %i.bq, %i.bu
+  %i.bu = mul nuw nsw i64 %i.br, 7
+  %2 = icmp samesign ult i64 %i.bq, %i.bu
   br i1 %2, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -631,8 +631,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.j
   br i1 %i.ca, label %bb.o, label %bb.r
 
 bb.o:                                             ; preds = %bb.n
-  %i.cb = mul nsw i64 %i.by, 7
-  %3 = icmp slt i64 %i.bq, %i.cb
+  %i.cb = mul nuw nsw i64 %i.by, 7
+  %3 = icmp samesign ult i64 %i.bq, %i.cb
   br i1 %3, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o

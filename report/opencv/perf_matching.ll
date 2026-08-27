@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.b
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.f
   %indvars.iv57 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next58, %bb.f ] ; 4 uses
   %indvars.iv.next58 = add nuw nsw i64 %indvars.iv57, 1 ; 3 uses
-  %i.w = shl i64 %indvars.iv57, 2
-  %13 = and i64 %i.w, 4294967292
+  %i.w = shl nuw nsw i64 %indvars.iv57, 2
   %i.x = trunc nuw nsw i64 %indvars.iv57 to i32
   %i.y = trunc nuw nsw i64 %indvars.iv.next58 to i32
   br label %bb.g
@@ -507,7 +506,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit47.i:                ; preds = %bb.x, %bb.w
   %i.dl = sub i64 %i.dk, %i.cg
   call void @_ZdlPvm(ptr noundef nonnull %.pre72.i, i64 noundef %i.dl) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
-  %i.dm = add nuw nsw i64 %indvars.iv, %13
+  %i.dm = add nuw nsw i64 %indvars.iv, %i.w
   %i.dn = load i32, ptr %i.t, align 4, !tbaa !89
   %i.do = icmp slt i32 %i.dn, 2
   %i.dp = load ptr, ptr %i.u, align 8, !tbaa !90

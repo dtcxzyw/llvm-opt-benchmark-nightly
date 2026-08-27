@@ -202,7 +202,7 @@ _ZN2v88internal12StdoutStreamD1Ev.exit4:          ; preds = %bb.e, %bb.f
 define hidden ptr @_ZN2v88internal13DependentCode14InsertWeakCodeEPNS0_7IsolateENS0_6HandleIS1_EENS_4base5FlagsINS1_15DependencyGroupEjjEENS0_12DirectHandleINS0_4CodeEEE(ptr noundef %0, ptr %1, i32 %2, ptr nofree readonly captures(none) %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.35", align 8 ; 4 uses
-  %i.a = load i64, ptr %1, align 8                ; 4 uses
+  %i.a = load i64, ptr %1, align 8                ; 5 uses
   %i.b = add i64 %i.a, 15
   %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
   %i.d = load i64, ptr %i.c, align 8
@@ -226,7 +226,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %.lr.ph.i.preheader, label %._crit_edge.i
 
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
-  %i.n = add i64 %i.a, 23                         ; 2 uses
+  %i.n = add i64 %i.a, 23
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.e
@@ -234,7 +234,9 @@ bb.b:                                             ; preds = %bb.a
   %.012.i = phi i32 [ %.2.i, %bb.e ], [ %i.f, %.lr.ph.i.preheader ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -2 ; 3 uses
   %i.o = shl nsw i64 %indvars.iv.next.i, 3
-  %i.p = add i64 %i.n, %i.o
+  %narrow.i = add nsw i64 %i.o, 23
+  %5 = and i64 %narrow.i, 4294967295
+  %i.p = add i64 %5, %i.a
   %i.q = inttoptr i64 %i.p to ptr
   %i.r = load atomic volatile i64, ptr %i.q monotonic, align 8 ; 2 uses
   %i.s = and i64 %i.r, 4294967295
@@ -361,9 +363,10 @@ bb.a:
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %"_ZZN2v88internal13DependentCode25MarkCodeForDeoptimizationEPNS0_7IsolateENS_4base5FlagsINS1_15DependencyGroupEjjEEENK3$_0clENS0_6TaggedINS0_4CodeEEES7_.exit.i" ], [ %i.d, %.preheader.i ] ; 3 uses
   %.031.i = phi i32 [ %.2.i, %"_ZZN2v88internal13DependentCode25MarkCodeForDeoptimizationEPNS0_7IsolateENS_4base5FlagsINS1_15DependencyGroupEjjEEENK3$_0clENS0_6TaggedINS0_4CodeEEES7_.exit.i" ], [ %i.f, %.preheader.i ] ; 2 uses
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -2 ; 3 uses
-  %i.h = shl nsw i64 %indvars.iv.next.i, 3
   %.sroa.0.0.copyload.i.i.i.i = load i64, ptr %0, align 8
-  %4 = add nuw nsw i64 %i.h, 23
+  %i.h = shl nsw i64 %indvars.iv.next.i, 3
+  %narrow.i = add nsw i64 %i.h, 23
+  %4 = and i64 %narrow.i, 4294967295
   %i.i = add i64 %4, %.sroa.0.0.copyload.i.i.i.i
   %i.j = inttoptr i64 %i.i to ptr
   %i.k = load atomic volatile i64, ptr %i.j monotonic, align 8 ; 2 uses

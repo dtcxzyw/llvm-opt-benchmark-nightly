@@ -205,7 +205,7 @@ _ZN4ncnn3MatD2Ev.exit260:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %i.eq, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph449
-  %i.ev = mul nsw i32 %i.ee, %i.eb
+  %i.ev = mul nuw nsw i32 %i.ee, %i.eb
   %i.ew = add nsw i32 %i.ev, %i.dz
   %i.ex = load i32, ptr %i.p, align 8, !tbaa !13
   %i.ey = mul nsw i32 %i.ex, %i.ew
@@ -454,7 +454,7 @@ bb.j:                                             ; preds = %.lr.ph438, %bb.r
   br i1 %i.lk, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.lp = mul nsw i32 %i.ky, %i.kv
+  %i.lp = mul nuw nsw i32 %i.ky, %i.kv
   %i.lq = add nsw i32 %i.lp, %i.kt
   %i.lr = load i32, ptr %i.gs, align 8, !tbaa !13
   %i.ls = mul nsw i32 %i.lr, %i.lq
@@ -713,7 +713,7 @@ _ZN4ncnn3MatD2Ev.exit260:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %i.es, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph449
-  %i.ex = mul nsw i32 %i.eg, %i.ed
+  %i.ex = mul nuw nsw i32 %i.eg, %i.ed
   %i.ey = add nsw i32 %i.ex, %i.eb
   %i.ez = load i32, ptr %i.p, align 8, !tbaa !13
   %i.fa = mul nsw i32 %i.ez, %i.ey
@@ -964,7 +964,7 @@ bb.j:                                             ; preds = %.lr.ph438, %bb.r
   br i1 %i.lo, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.lt = mul nsw i32 %i.lc, %i.kz
+  %i.lt = mul nuw nsw i32 %i.lc, %i.kz
   %i.lu = add nsw i32 %i.lt, %i.kx
   %i.lv = load i32, ptr %i.gu, align 8, !tbaa !13
   %i.lw = mul nsw i32 %i.lv, %i.lu
@@ -1230,7 +1230,7 @@ _ZN4ncnn3MatD2Ev.exit260:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %i.ez, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph455
-  %i.fe = mul nsw i32 %i.en, %i.ek
+  %i.fe = mul nuw nsw i32 %i.en, %i.ek
   %i.ff = add nsw i32 %i.fe, %i.ei
   %i.fg = load i32, ptr %i.p, align 8, !tbaa !13
   %i.fh = mul nsw i32 %i.fg, %i.ff
@@ -1488,7 +1488,7 @@ bb.j:                                             ; preds = %.lr.ph444, %bb.r
   br i1 %i.mc, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.mh = mul nsw i32 %i.lq, %i.ln
+  %i.mh = mul nuw nsw i32 %i.lq, %i.ln
   %i.mi = add nsw i32 %i.mh, %i.ll
   %i.mj = load i32, ptr %i.hb, align 8, !tbaa !13
   %i.mk = mul nsw i32 %i.mj, %i.mi
@@ -1755,7 +1755,7 @@ _ZN4ncnn3MatD2Ev.exit260:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %i.fa, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph455
-  %i.ff = mul nsw i32 %i.eo, %i.el
+  %i.ff = mul nuw nsw i32 %i.eo, %i.el
   %i.fg = add nsw i32 %i.ff, %i.ej
   %i.fh = load i32, ptr %i.p, align 8, !tbaa !13
   %i.fi = mul nsw i32 %i.fh, %i.fg
@@ -2014,7 +2014,7 @@ bb.j:                                             ; preds = %.lr.ph444, %bb.r
   br i1 %i.me, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.mj = mul nsw i32 %i.ls, %i.lp
+  %i.mj = mul nuw nsw i32 %i.ls, %i.lp
   %i.mk = add nsw i32 %i.mj, %i.ln
   %i.ml = load i32, ptr %i.hc, align 8, !tbaa !13
   %i.mm = mul nsw i32 %i.ml, %i.mk
@@ -2296,7 +2296,7 @@ _ZN4ncnn3MatD2Ev.exit260:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %i.fp, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph462
-  %i.fu = mul nsw i32 %i.fd, %i.fa
+  %i.fu = mul nuw nsw i32 %i.fd, %i.fa
   %i.fv = add nsw i32 %i.fu, %i.ey
   %i.fw = load i32, ptr %i.p, align 8, !tbaa !13
   %i.fx = mul nsw i32 %i.fw, %i.fv
@@ -2570,7 +2570,7 @@ bb.j:                                             ; preds = %.lr.ph451, %bb.r
   br i1 %i.ni, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.nn = mul nsw i32 %i.mw, %i.mt
+  %i.nn = mul nuw nsw i32 %i.mw, %i.mt
   %i.no = add nsw i32 %i.nn, %i.mr
   %i.np = load i32, ptr %i.hr, align 8, !tbaa !13
   %i.nq = mul nsw i32 %i.np, %i.no
@@ -2845,7 +2845,7 @@ _ZN4ncnn3MatD2Ev.exit260:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
   br i1 %i.fi, label %bb.a, label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph455
-  %i.fn = mul nsw i32 %i.ew, %i.et
+  %i.fn = mul nuw nsw i32 %i.ew, %i.et
   %i.fo = add nsw i32 %i.fn, %i.er
   %i.fp = load i32, ptr %i.p, align 8, !tbaa !13
   %i.fq = mul nsw i32 %i.fp, %i.fo
@@ -3112,7 +3112,7 @@ bb.j:                                             ; preds = %.lr.ph444, %bb.r
   br i1 %i.mu, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.mz = mul nsw i32 %i.mi, %i.mf
+  %i.mz = mul nuw nsw i32 %i.mi, %i.mf
   %i.na = add nsw i32 %i.mz, %i.md
   %i.nb = load i32, ptr %i.hk, align 8, !tbaa !13
   %i.nc = mul nsw i32 %i.nb, %i.na
@@ -3298,7 +3298,7 @@ bb.a:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.b:                                             ; preds = %.lr.ph252.us
   %i.cj = extractelement <2 x i32> %i.bt, i64 0
-  %i.ck = mul nsw i32 %i.cj, %i.cb
+  %i.ck = mul nuw nsw i32 %i.cj, %i.cb
   %i.cl = add nsw i32 %i.ck, %i.ca
   %i.cm = load i32, ptr %i.p, align 8, !tbaa !13
   %i.cn = mul nsw i32 %i.cm, %i.cl
@@ -3367,7 +3367,7 @@ bb.d:                                             ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.e:                                             ; preds = %bb.d
   %i.dq = extractelement <2 x i32> %i.da, i64 0
-  %i.dr = mul nsw i32 %i.dq, %i.di
+  %i.dr = mul nuw nsw i32 %i.dq, %i.di
   %i.ds = add nsw i32 %i.dr, %i.dh
   %i.dt = load i32, ptr %i.p, align 8, !tbaa !13
   %i.du = mul nsw i32 %i.dt, %i.ds
@@ -3502,7 +3502,7 @@ bb.h:                                             ; preds = %.lr.ph241, %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.hc = extractelement <2 x i32> %i.gk, i64 0
-  %i.hd = mul nsw i32 %i.hc, %i.gu
+  %i.hd = mul nuw nsw i32 %i.hc, %i.gu
   %i.he = add nsw i32 %i.hd, %i.gt
   %i.hf = load i32, ptr %i.er, align 8, !tbaa !13
   %i.hg = mul nsw i32 %i.hf, %i.he
@@ -3650,7 +3650,7 @@ _ZN4ncnn3MatD2Ev.exit122:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.a:                                             ; preds = %.lr.ph252
   %i.cn = extractelement <2 x i32> %i.bv, i64 0
-  %i.co = mul nsw i32 %i.cn, %i.cf
+  %i.co = mul nuw nsw i32 %i.cn, %i.cf
   %i.cp = add nsw i32 %i.co, %i.ce
   %i.cq = load i32, ptr %i.p, align 8, !tbaa !13
   %i.cr = mul nsw i32 %i.cq, %i.cp
@@ -3790,7 +3790,7 @@ bb.d:                                             ; preds = %.lr.ph241, %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.gd = extractelement <2 x i32> %i.fj, i64 0
-  %i.ge = mul nsw i32 %i.gd, %i.fv
+  %i.ge = mul nuw nsw i32 %i.gd, %i.fv
   %i.gf = add nsw i32 %i.ge, %i.fu
   %i.gg = load i32, ptr %i.do, align 8, !tbaa !13
   %i.gh = mul nsw i32 %i.gg, %i.gf
@@ -3945,7 +3945,7 @@ _ZN4ncnn3MatD2Ev.exit122:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.a:                                             ; preds = %.lr.ph258
   %i.cu = extractelement <2 x i32> %i.bz, i64 0
-  %i.cv = mul nsw i32 %i.cu, %i.cm
+  %i.cv = mul nuw nsw i32 %i.cu, %i.cm
   %i.cw = add nsw i32 %i.cv, %i.cl
   %i.cx = load i32, ptr %i.p, align 8, !tbaa !13
   %i.cy = mul nsw i32 %i.cx, %i.cw
@@ -4092,7 +4092,7 @@ bb.d:                                             ; preds = %.lr.ph247, %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.gr = extractelement <2 x i32> %i.fu, i64 0
-  %i.gs = mul nsw i32 %i.gr, %i.gj
+  %i.gs = mul nuw nsw i32 %i.gr, %i.gj
   %i.gt = add nsw i32 %i.gs, %i.gi
   %i.gu = load i32, ptr %i.dv, align 8, !tbaa !13
   %i.gv = mul nsw i32 %i.gu, %i.gt
@@ -4248,7 +4248,7 @@ _ZN4ncnn3MatD2Ev.exit122:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.a:                                             ; preds = %.lr.ph258
   %i.cv = extractelement <2 x i32> %i.bz, i64 0
-  %i.cw = mul nsw i32 %i.cv, %i.cn
+  %i.cw = mul nuw nsw i32 %i.cv, %i.cn
   %i.cx = add nsw i32 %i.cw, %i.cm
   %i.cy = load i32, ptr %i.p, align 8, !tbaa !13
   %i.cz = mul nsw i32 %i.cy, %i.cx
@@ -4396,7 +4396,7 @@ bb.d:                                             ; preds = %.lr.ph247, %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.gt = extractelement <2 x i32> %i.fv, i64 0
-  %i.gu = mul nsw i32 %i.gt, %i.gl
+  %i.gu = mul nuw nsw i32 %i.gt, %i.gl
   %i.gv = add nsw i32 %i.gu, %i.gk
   %i.gw = load i32, ptr %i.dw, align 8, !tbaa !13
   %i.gx = mul nsw i32 %i.gw, %i.gv
@@ -4567,7 +4567,7 @@ _ZN4ncnn3MatD2Ev.exit122:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.a:                                             ; preds = %.lr.ph265
   %i.dk = extractelement <2 x i32> %i.cl, i64 0
-  %i.dl = mul nsw i32 %i.dk, %i.dc
+  %i.dl = mul nuw nsw i32 %i.dk, %i.dc
   %i.dm = add nsw i32 %i.dl, %i.db
   %i.dn = load i32, ptr %i.p, align 8, !tbaa !13
   %i.do = mul nsw i32 %i.dn, %i.dm
@@ -4730,7 +4730,7 @@ bb.d:                                             ; preds = %.lr.ph254, %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.hx = extractelement <2 x i32> %i.gw, i64 0
-  %i.hy = mul nsw i32 %i.hx, %i.hp
+  %i.hy = mul nuw nsw i32 %i.hx, %i.hp
   %i.hz = add nsw i32 %i.hy, %i.ho
   %i.ia = load i32, ptr %i.el, align 8, !tbaa !13
   %i.ib = mul nsw i32 %i.ia, %i.hz
@@ -4894,7 +4894,7 @@ _ZN4ncnn3MatD2Ev.exit122:                         ; preds = %_ZN4ncnn3MatD2Ev.ex
 
 bb.a:                                             ; preds = %.lr.ph261
   %i.dd = extractelement <2 x i32> %i.cd, i64 0
-  %i.de = mul nsw i32 %i.dd, %i.cv
+  %i.de = mul nuw nsw i32 %i.dd, %i.cv
   %i.df = add nsw i32 %i.de, %i.cu
   %i.dg = load i32, ptr %i.p, align 8, !tbaa !13
   %i.dh = mul nsw i32 %i.dg, %i.df
@@ -5050,7 +5050,7 @@ bb.d:                                             ; preds = %.lr.ph250, %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.hj = extractelement <2 x i32> %i.gh, i64 0
-  %i.hk = mul nsw i32 %i.hj, %i.hb
+  %i.hk = mul nuw nsw i32 %i.hj, %i.hb
   %i.hl = add nsw i32 %i.hk, %i.ha
   %i.hm = load i32, ptr %i.ee, align 8, !tbaa !13
   %i.hn = mul nsw i32 %i.hm, %i.hl

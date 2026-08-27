@@ -204,8 +204,8 @@ bb.g:                                             ; preds = %_ZSt13__adjust_heap
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.g, %.lr.ph.i.i.i.i
   %.030.i.i.i.i = phi i64 [ %spec.select.i.i.i.i, %.lr.ph.i.i.i.i ], [ %.014.i.i.i, %bb.g ] ; 2 uses
-  %i.bv = shl nsw i64 %.030.i.i.i.i, 1            ; 3 uses
-  %i.bw = add i64 %i.bv, 2                        ; 2 uses
+  %i.bv = shl nuw nsw i64 %.030.i.i.i.i, 1        ; 3 uses
+  %i.bw = add nuw i64 %i.bv, 2                    ; 2 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.bw
   %i.by = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.bv
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 8
@@ -362,8 +362,8 @@ bb.p:                                             ; preds = %.loopexit.i, %.lr.p
 
 .lr.ph.i.i.i75.i:                                 ; preds = %bb.p, %.lr.ph.i.i.i75.i
   %.030.i.i.i76.i = phi i64 [ %spec.select.i.i.i79.i, %.lr.ph.i.i.i75.i ], [ 0, %bb.p ] ; 2 uses
-  %i.ei = shl nsw i64 %.030.i.i.i76.i, 1          ; 3 uses
-  %i.ej = add i64 %i.ei, 2                        ; 2 uses
+  %i.ei = shl nuw nsw i64 %.030.i.i.i76.i, 1      ; 3 uses
+  %i.ej = add nuw i64 %i.ei, 2                    ; 2 uses
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.ej
   %i.el = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.ei
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 8
@@ -463,8 +463,8 @@ bb.u:                                             ; preds = %_ZSt10__pop_heapIPP
 
 .lr.ph.i.i.i93.i:                                 ; preds = %bb.u, %.lr.ph.i.i.i93.i
   %.030.i.i.i94.i = phi i64 [ %spec.select.i.i.i97.i, %.lr.ph.i.i.i93.i ], [ 0, %bb.u ] ; 2 uses
-  %i.gh = shl nsw i64 %.030.i.i.i94.i, 1          ; 3 uses
-  %i.gi = add i64 %i.gh, 2                        ; 2 uses
+  %i.gh = shl nuw nsw i64 %.030.i.i.i94.i, 1      ; 3 uses
+  %i.gi = add nuw i64 %i.gh, 2                    ; 2 uses
   %i.gj = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.gi
   %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.an, i64 %i.gh
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 8

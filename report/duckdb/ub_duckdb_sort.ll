@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE1EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.f
   %.sroa.010.0.copyload = load i64, ptr %.059, align 8
   %i.ai = getelementptr inbounds nuw i8, ptr %.059, i64 8
-  %.idx99 = shl nsw i64 %.088, 3                  ; 2 uses
-  %i.aj = getelementptr inbounds i8, ptr %.059, i64 %.idx99
+  %.idx99 = shl nuw nsw i64 %.088, 3              ; 2 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %.059, i64 %.idx99
   %gepdiff = add nsw i64 %.idx99, -8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.059, ptr nonnull align 8 %i.ai, i64 %gepdiff, i1 false)
   %i.ak = getelementptr inbounds i8, ptr %i.aj, i64 -8
@@ -348,7 +348,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.bw = getelementptr inbounds i8, ptr %i.bv, i64 -8 ; 2 uses
   %.sroa.0.0.copyload = load i64, ptr %i.bw, align 8
-  %.idx = shl nsw i64 %.088, 3
+  %.idx = shl nuw nsw i64 %.088, 3
   %i.bx = add nsw i64 %.idx, -8                   ; 3 uses
   %i.by = ashr exact i64 %i.bx, 3                 ; 2 uses
   %i.bz = icmp sgt i64 %i.by, 1
@@ -751,8 +751,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE2EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.f
   %.sroa.0149.0.copyload = load <2 x i64>, ptr %.053, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 16
-  %.idx96 = shl nsw i64 %.085, 4                  ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = shl nuw nsw i64 %.085, 4              ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -16
@@ -825,7 +825,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [16 x i8], ptr %.053, i64 %.085 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -16 ; 2 uses
   %.sroa.0.0.copyload = load <2 x i64>, ptr %i.ah, align 8
-  %.idx = shl nsw i64 %.085, 4
+  %.idx = shl nuw nsw i64 %.085, 4
   %i.ai = add nsw i64 %.idx, -16                  ; 3 uses
   %i.aj = ashr exact i64 %i.ai, 4                 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, 1
@@ -1228,8 +1228,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE3EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.f
   %.sroa.0148.0.copyload = load <3 x i64>, ptr %.053, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 24
-  %.idx96 = mul nsw i64 %.085, 24                 ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = mul nuw nsw i64 %.085, 24             ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -24
@@ -1302,7 +1302,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [24 x i8], ptr %.053, i64 %.085
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -24 ; 2 uses
   %.sroa.0.0.copyload = load <3 x i64>, ptr %i.ah, align 8
-  %.idx = mul nsw i64 %.085, 24
+  %.idx = mul nuw nsw i64 %.085, 24
   %i.ai = add nsw i64 %.idx, -24                  ; 2 uses
   %i.aj = icmp sgt i64 %.085, 2
   br i1 %i.aj, label %bb.k, label %bb.l, !prof !337
@@ -1705,8 +1705,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE4EEES4_ET0_T_S6_S5_.exit: ; preds = %bb.f
   %.sroa.0149.0.copyload = load <4 x i64>, ptr %.053, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 32
-  %.idx96 = shl nsw i64 %.085, 5                  ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = shl nuw nsw i64 %.085, 5              ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -32
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -32
@@ -1779,7 +1779,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [32 x i8], ptr %.053, i64 %.085 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -32 ; 2 uses
   %.sroa.0.0.copyload = load <4 x i64>, ptr %i.ah, align 8
-  %.idx = shl nsw i64 %.085, 5
+  %.idx = shl nuw nsw i64 %.085, 5
   %i.ai = add nsw i64 %.idx, -32                  ; 3 uses
   %i.aj = ashr exact i64 %i.ai, 5                 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, 1
@@ -2182,8 +2182,8 @@ _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE5EEES4_ET0_T_S6_S5_.exit: ; preds
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %.053, i64 32, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 32
-  %.idx96 = shl nsw i64 %.085, 5                  ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = shl nuw nsw i64 %.085, 5              ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -32
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -32
@@ -2264,7 +2264,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [32 x i8], ptr %.053, i64 %.085 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %i.ah, i64 32, i1 false)
-  %.idx = shl nsw i64 %.085, 5
+  %.idx = shl nuw nsw i64 %.085, 5
   %i.ai = add nsw i64 %.idx, -32                  ; 3 uses
   %i.aj = ashr exact i64 %i.ai, 5                 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, 1
@@ -2667,8 +2667,8 @@ _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE6EEES4_ET0_T_S6_S5_.exit: ; preds
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.053, i64 16, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 16
-  %.idx96 = shl nsw i64 %.085, 4                  ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = shl nuw nsw i64 %.085, 4              ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -16
@@ -2749,7 +2749,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [16 x i8], ptr %.053, i64 %.085 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.ah, i64 16, i1 false)
-  %.idx = shl nsw i64 %.085, 4
+  %.idx = shl nuw nsw i64 %.085, 4
   %i.ai = add nsw i64 %.idx, -16                  ; 3 uses
   %i.aj = ashr exact i64 %i.ai, 4                 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, 1
@@ -3152,8 +3152,8 @@ _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE7EEES4_ET0_T_S6_S5_.exit: ; preds
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr noundef nonnull align 8 dereferenceable(24) %.053, i64 24, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 24
-  %.idx96 = mul nsw i64 %.085, 24                 ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = mul nuw nsw i64 %.085, 24             ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -24
@@ -3234,7 +3234,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [24 x i8], ptr %.053, i64 %.085
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -24 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, ptr noundef nonnull align 8 dereferenceable(24) %i.ah, i64 24, i1 false)
-  %.idx = mul nsw i64 %.085, 24
+  %.idx = mul nuw nsw i64 %.085, 24
   %i.ai = add nsw i64 %.idx, -24                  ; 2 uses
   %i.aj = icmp sgt i64 %.085, 2
   br i1 %i.aj, label %bb.k, label %bb.l, !prof !337
@@ -3637,8 +3637,8 @@ _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE8EEES4_ET0_T_S6_S5_.exit: ; preds
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %.053, i64 32, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 32
-  %.idx96 = shl nsw i64 %.085, 5                  ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = shl nuw nsw i64 %.085, 5              ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -32
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -32
@@ -3719,7 +3719,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [32 x i8], ptr %.053, i64 %.085 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %i.ah, i64 32, i1 false)
-  %.idx = shl nsw i64 %.085, 5
+  %.idx = shl nuw nsw i64 %.085, 5
   %i.ai = add nsw i64 %.idx, -32                  ; 3 uses
   %i.aj = ashr exact i64 %i.ai, 5                 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, 1
@@ -4122,8 +4122,8 @@ _ZSt4moveIPN6duckdb7SortKeyILNS0_11SortKeyTypeE9EEES4_ET0_T_S6_S5_.exit: ; preds
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %.053, i64 32, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.053, i64 32
-  %.idx96 = shl nsw i64 %.085, 5                  ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.053, i64 %.idx96
+  %.idx96 = shl nuw nsw i64 %.085, 5              ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.053, i64 %.idx96
   %gepdiff = add nsw i64 %.idx96, -32
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.053, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -32
@@ -4204,7 +4204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [32 x i8], ptr %.053, i64 %.085 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -32 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %i.ah, i64 32, i1 false)
-  %.idx = shl nsw i64 %.085, 5
+  %.idx = shl nuw nsw i64 %.085, 5
   %i.ai = add nsw i64 %.idx, -32                  ; 3 uses
   %i.aj = ashr exact i64 %i.ai, 5                 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, 1

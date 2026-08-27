@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not382, label %.thread431, label %.preheader442
 
 .preheader442:                                    ; preds = %bb.y
-  %i.fj = shl nsw i32 %i.dr, 2                    ; 3 uses
+  %i.fj = shl nuw nsw i32 %i.dr, 2                ; 3 uses
   %i.fk = or disjoint i32 %i.fj, 1                ; 3 uses
   br label %bb.z
 
@@ -608,6 +608,7 @@ bb.bl:                                            ; preds = %ir_hint_conflict.ex
 
 bb.bm:                                            ; preds = %bb.bl
   %i.me = shl nuw nsw i64 %indvars.iv550, 2       ; 2 uses
+  %1 = or disjoint i64 %i.me, 1                   ; 2 uses
   %i.mf = zext i32 %i.md to i64
   %i.mg = getelementptr inbounds nuw [8 x i8], ptr %i.jp, i64 %i.mf
   %i.mh = load ptr, ptr %i.mg, align 8, !tbaa !79 ; 4 uses
@@ -627,20 +628,19 @@ bb.bn:                                            ; preds = %bb.bm
   br i1 %i.mq, label %ir_try_swap_operands.exit, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn, %bb.bm
-  %1 = trunc i64 %i.me to i32
-  %2 = or disjoint i32 %1, 1
   br label %bb.bp
 
-bb.bp:                                            ; preds = %bb.cc, %bb.bo
-  %.061135.i = phi ptr [ %i.mi, %bb.bo ], [ %i.pb, %bb.cc ] ; 4 uses
+bb.bp:                                            ; preds = %bb.bo, %bb.cc
+  %.061135.i = phi ptr [ %i.pb, %bb.cc ], [ %i.mi, %bb.bo ] ; 4 uses
   %i.mr = getelementptr inbounds nuw i8, ptr %.061135.i, i64 4
-  %i.ms = load i32, ptr %i.mr, align 4, !tbaa !119 ; 3 uses
-  %i.mt = icmp eq i32 %i.ms, %2
+  %i.ms = load i32, ptr %i.mr, align 4, !tbaa !119
+  %2 = zext i32 %i.ms to i64
+  %i.mt = icmp eq i64 %1, %2
   br i1 %i.mt, label %bb.bq, label %bb.cc
 
 bb.bq:                                            ; preds = %bb.bp
   %i.mu = getelementptr inbounds nuw i8, ptr %.061135.i, i64 4 ; 2 uses
-  %i.mv = trunc nsw i64 %i.me to i32              ; 2 uses
+  %i.mv = trunc nuw i64 %i.me to i32              ; 2 uses
   store i32 %i.mv, ptr %i.mu, align 4, !tbaa !119
   %i.mw = getelementptr inbounds nuw i8, ptr %.061135.i, i64 8
   %i.mx = load ptr, ptr %i.mw, align 8, !tbaa !117
@@ -777,12 +777,13 @@ ir_hint_conflict.exit111.thread.i:                ; preds = %bb.bz, %ir_hint_con
   br label %ir_try_swap_operands.exit
 
 bb.ca:                                            ; preds = %ir_hint_conflict.exit111.i, %ir_vregs_overlap.exit89.i
-  store i32 %i.ms, ptr %i.mu, align 4, !tbaa !119
+  %3 = trunc nuw i64 %1 to i32                    ; 2 uses
+  store i32 %3, ptr %i.mu, align 4, !tbaa !119
   br i1 %.not74.i, label %bb.cb, label %ir_try_swap_operands.exit
 
 bb.cb:                                            ; preds = %bb.ca
   %i.oz = getelementptr inbounds nuw i8, ptr %i.mh, i64 12
-  store i32 %i.ms, ptr %i.oz, align 4, !tbaa !109
+  store i32 %3, ptr %i.oz, align 4, !tbaa !109
   br label %ir_try_swap_operands.exit
 
 bb.cc:                                            ; preds = %bb.bp

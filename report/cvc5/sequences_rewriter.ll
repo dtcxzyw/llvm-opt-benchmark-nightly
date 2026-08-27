@@ -204,7 +204,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i: ; preds = %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247
   %.0139925 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %.6145, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572 ] ; 4 uses
-  %.0157924 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %i.auu, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572 ] ; 9 uses
+  %.0157924 = phi i64 [ 0, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit247 ], [ %i.auu, %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572 ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %39) #23
   %i.hg = load ptr, ptr %33, align 8, !tbaa !100  ; 2 uses
   %.idx653 = shl nuw nsw i64 %.0157924, 3         ; 3 uses
@@ -607,7 +607,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit278: ; preds = %_ZN4cvc58internal1
 bb.cw:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit278
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #23
   %i.nt = load ptr, ptr %33, align 8, !tbaa !100
-  %i.nu = getelementptr inbounds nuw [8 x i8], ptr %i.nt, i64 %.0157924 ; 3 uses
+  %i.nu = getelementptr inbounds [8 x i8], ptr %i.nt, i64 %.0157924 ; 3 uses
   %i.nv = load ptr, ptr %i.fy, align 8, !tbaa !100 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %49, i8 0, i64 24, i1 false)
   %i.nw = ptrtoint ptr %i.nv to i64
@@ -1010,7 +1010,7 @@ bb.gm:                                            ; preds = %bb.gl
 bb.gn:                                            ; preds = %bb.gm
   call void @llvm.lifetime.start.p0(ptr nonnull %60) #23
   %i.xj = load ptr, ptr %33, align 8, !tbaa !100
-  %i.xk = getelementptr inbounds nuw [8 x i8], ptr %i.xj, i64 %.0157924 ; 3 uses
+  %i.xk = getelementptr inbounds [8 x i8], ptr %i.xj, i64 %.0157924 ; 3 uses
   %i.xl = load ptr, ptr %i.fy, align 8, !tbaa !100 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %60, i8 0, i64 24, i1 false)
   %i.xm = ptrtoint ptr %i.xl to i64
@@ -1413,7 +1413,7 @@ bb.kr:                                            ; preds = %bb.kq
 bb.ks:                                            ; preds = %bb.kr
   %i.aiq = load ptr, ptr %i.gl, align 8, !tbaa !100
   %i.air = load ptr, ptr %33, align 8, !tbaa !100
-  %i.ais = getelementptr inbounds nuw [8 x i8], ptr %i.air, i64 %.0157924
+  %i.ais = getelementptr inbounds [8 x i8], ptr %i.air, i64 %.0157924
   %i.ait = load ptr, ptr %i.fy, align 8, !tbaa !100
   %i.aiu = load ptr, ptr %71, align 8, !tbaa !100 ; 2 uses
   %i.aiv = ptrtoint ptr %i.aiq to i64
@@ -1816,9 +1816,9 @@ bb.pb:                                            ; preds = %_ZSt8_DestroyIPN4cv
 
 _ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EED2Ev.exit572: ; preds = %_ZSt8_DestroyIPN4cvc58internal12NodeTemplateILb1EEES3_EvT_S5_RSaIT0_E.exit.i569, %bb.pb
   call void @llvm.lifetime.end.p0(ptr nonnull %39) #23
-  %i.auu = add nuw nsw i64 %.0157924, 1
-  %.not175.not = icmp ult i64 %.0157924, %i.ge
-  %or.cond1063 = select i1 %.3161, i1 %.not175.not, i1 false
+  %i.auu = add i64 %.0157924, 1                   ; 2 uses
+  %.not175 = icmp ule i64 %i.auu, %i.ge
+  %or.cond1063 = select i1 %.3161, i1 %.not175, i1 false
   br i1 %or.cond1063, label %_ZNSt6vectorIN4cvc58internal12NodeTemplateILb1EEESaIS3_EE17_S_check_init_lenEmRKS4_.exit.i.i, label %bb.pd, !llvm.loop !455
 
 bb.pc:                                            ; preds = %.body257, %bb.be, %bb.bd
@@ -2221,7 +2221,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !52
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 3
+  %.idx.neg = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr nonnull align 8 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !971
   br label %_ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit
