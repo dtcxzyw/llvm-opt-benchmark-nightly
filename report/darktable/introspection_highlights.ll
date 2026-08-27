@@ -205,7 +205,7 @@ bb.bh:                                            ; preds = %bb.bg
   %i.om = add nsw i32 %i.nj, -1                   ; 3 uses
   %i.on = sub nsw i64 0, %i.ol                    ; 4 uses
   %i.oo = sext i32 %i.om to i64
-  %i.op = mul nsw i64 %i.ol, %i.oo                ; 2 uses
+  %i.op = mul nuw nsw i64 %i.ol, %i.oo            ; 2 uses
   %invariant.gep = getelementptr [4 x i8], ptr %2, i64 %i.op
   br i1 %.not141182.i315, label %.loopexit380, label %.lr.ph.i316.preheader
 
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %.lr.ph.split
   %i.ig = add i32 %i.if, 602
   %i.ih = srem i32 %i.ig, 6
   %i.ii = sext i32 %i.ih to i64                   ; 3 uses
-  %i.ij = mul nsw i64 %indvars.iv681, %i.hq
+  %i.ij = mul nuw nsw i64 %indvars.iv681, %i.hq
   %i.ik = getelementptr [4 x i8], ptr %7, i64 %i.ij ; 5 uses
   br i1 %.not453, label %fcol.exit.us.preheader, label %fcol.exit.preheader
 
@@ -696,7 +696,7 @@ fcol.exit.us.preheader:                           ; preds = %bb.j
   %i.kr = load float, ptr %i.kq, align 4, !tbaa !11
   %i.ks = fadd reassoc nsz arcp contract afn float %i.kr, 1.000000e+00
   store float %i.ks, ptr %i.kq, align 4, !tbaa !11
-  %i.kt = mul nsw i64 %indvars.iv.next684, %i.hq
+  %i.kt = mul nuw nsw i64 %indvars.iv.next684, %i.hq
   %i.ku = getelementptr [4 x i8], ptr %7, i64 %i.kt ; 5 uses
   br i1 %.not453, label %fcol.exit.us.preheader.1, label %fcol.exit.preheader.1
 
@@ -784,7 +784,7 @@ fcol.exit.us.preheader.1:                         ; preds = %.split602.us
   %i.nb = load float, ptr %i.na, align 4, !tbaa !11
   %i.nc = fadd reassoc nsz arcp contract afn float %i.nb, 1.000000e+00
   store float %i.nc, ptr %i.na, align 4, !tbaa !11
-  %i.nd = mul nsw i64 %indvars.iv.next684.1, %i.hq
+  %i.nd = mul nuw nsw i64 %indvars.iv.next684.1, %i.hq
   %i.ne = getelementptr [4 x i8], ptr %7, i64 %i.nd ; 5 uses
   br i1 %.not453, label %fcol.exit.us.preheader.2, label %fcol.exit.preheader.2
 
@@ -1187,11 +1187,11 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i
   %i.fm = trunc i64 %.03643.i to i32              ; 2 uses
   %i.fn = sub nsw i32 %i.fm, %i.ax
   %i.fo = call i32 @llvm.smax.i32(i32 %i.fn, i32 0)
-  %i.fp = shl nsw i32 %i.fo, 2
+  %i.fp = shl nuw nsw i32 %i.fo, 2
   %i.fq = zext nneg i32 %i.fp to i64
   %i.fr = sub nsw i32 %i.fm, %i.av
   %i.fs = call i32 @llvm.smax.i32(i32 %i.fr, i32 0)
-  %i.ft = shl nsw i32 %i.fs, 2
+  %i.ft = shl nuw nsw i32 %i.fs, 2
   %i.fu = zext nneg i32 %i.ft to i64
   %i.fv = add nuw nsw i64 %.03643.i, %i.ay
   %..i41.i = call i64 @llvm.umin.i64(i64 %i.fv, i64 %i.n)

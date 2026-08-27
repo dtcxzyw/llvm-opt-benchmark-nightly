@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEES6_ET0_T_S8_S7_.exit: ; preds = %bb.f
   %i.aj = load i64, ptr %.sroa.042.0, align 8, !tbaa !98
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.042.0, i64 8
-  %.idx87 = shl nsw i64 %.0, 3                    ; 2 uses
-  %i.al = getelementptr inbounds i8, ptr %.sroa.042.0, i64 %.idx87
+  %.idx87 = shl nuw nsw i64 %.0, 3                ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.sroa.042.0, i64 %.idx87
   %gepdiff = add nsw i64 %.idx87, -8
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.042.0, ptr nonnull align 8 %i.ak, i64 %gepdiff, i1 false)
   %i.am = getelementptr inbounds i8, ptr %i.al, i64 -8
@@ -348,7 +348,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 -8 ; 2 uses
   %i.ce = load i64, ptr %i.cd, align 8, !tbaa !98
-  %.idx = shl nsw i64 %.0, 3
+  %.idx = shl nuw nsw i64 %.0, 3
   %i.cf = add nsw i64 %.idx, -8                   ; 3 uses
   %i.cg = ashr exact i64 %i.cf, 3                 ; 2 uses
   %i.ch = icmp sgt i64 %i.cg, 1
@@ -751,7 +751,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !137
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !284
   br label %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit
@@ -1154,7 +1154,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !137
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 3
+  %.idx.neg = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr nonnull align 8 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !116
   br label %_ZSt22__uninitialized_move_aIPmS0_SaImEET0_T_S3_S2_RT1_.exit

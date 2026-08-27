@@ -204,7 +204,7 @@ style_init_reset.exit1131:                        ; preds = %bb.ej, %lv_theme_de
   br i1 %i.ww, label %bb.ek, label %bb.el
 
 bb.ek:                                            ; preds = %style_init_reset.exit1131
-  %i.wx = shl nsw i32 %i.wv, 2
+  %i.wx = shl nuw nsw i32 %i.wv, 2
   %i.wy = add nuw nsw i32 %i.wx, 80
   %.neg1219 = udiv i32 %i.wy, 160
   %.neg1219.neg = sub nsw i32 0, %.neg1219
@@ -328,7 +328,7 @@ bb.eu:                                            ; preds = %bb.es, %bb.et
   br i1 %i.yl, label %bb.ev, label %bb.ew
 
 bb.ev:                                            ; preds = %bb.eu
-  %i.ym = shl nsw i32 %i.yk, 3
+  %i.ym = shl nuw nsw i32 %i.yk, 3
   %i.yn = add nuw nsw i32 %i.ym, 80
   %i.yo = udiv i32 %i.yn, 160
   br label %bb.ew
@@ -731,7 +731,7 @@ bb.hn:                                            ; preds = %style_init_reset.ex
   br i1 %i.alk, label %bb.ho, label %bb.hr
 
 bb.ho:                                            ; preds = %bb.hn
-  %i.all = shl nsw i32 %i.alj, 3
+  %i.all = shl nuw nsw i32 %i.alj, 3
   %i.alm = add nuw nsw i32 %i.all, 80
   %i.aln = udiv i32 %i.alm, 160
   %i.alo = lshr i32 %i.aln, 1

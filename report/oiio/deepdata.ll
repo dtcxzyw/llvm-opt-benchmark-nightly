@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !140
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !91
   br label %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
@@ -573,7 +573,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !140
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !82
   br label %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit
@@ -976,8 +976,8 @@ bb.f:                                             ; preds = %bb.e
 _ZSt4moveIPiS0_ET0_T_S2_S1_.exit:                 ; preds = %bb.f
   %i.aj = load i32, ptr %.058, align 4, !tbaa !3
   %i.ak = getelementptr inbounds nuw i8, ptr %.058, i64 4
-  %.idx97 = shl nsw i64 %.086, 2                  ; 2 uses
-  %i.al = getelementptr inbounds i8, ptr %.058, i64 %.idx97
+  %.idx97 = shl nuw nsw i64 %.086, 2              ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %.058, i64 %.idx97
   %gepdiff = add nsw i64 %.idx97, -4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %.058, ptr nonnull align 4 %i.ak, i64 %gepdiff, i1 false)
   %i.am = getelementptr inbounds i8, ptr %i.al, i64 -4
@@ -1119,7 +1119,7 @@ bb.i:                                             ; preds = %bb.e
 bb.j:                                             ; preds = %bb.i
   %i.cd = getelementptr inbounds i8, ptr %i.cc, i64 -4 ; 2 uses
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !3
-  %.idx = shl nsw i64 %.086, 2
+  %.idx = shl nuw nsw i64 %.086, 2
   %i.cf = add nsw i64 %.idx, -4                   ; 3 uses
   %i.cg = ashr exact i64 %i.cf, 2                 ; 2 uses
   %i.ch = icmp sgt i64 %i.cg, 1

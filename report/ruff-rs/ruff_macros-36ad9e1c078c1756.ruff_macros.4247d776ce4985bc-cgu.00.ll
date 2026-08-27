@@ -204,7 +204,7 @@ bb.ba:                                            ; preds = %.thread.i.i30, %.lo
 bb.bb:                                            ; preds = %.loopexit47.i
   %i.gv = getelementptr inbounds nuw [24 x i8], ptr %i.gs, i64 %i.gt
   %i.gw = sub nsw i64 %i.gq, %.sroa.5.0.i28
-  %i.gx = mul nsw i64 %i.gw, 24                   ; 2 uses
+  %i.gx = mul nuw nsw i64 %i.gw, 24               ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gv, ptr nonnull align 8 %i.gu, i64 %i.gx, i1 false), !noalias !21
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gu, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.k, i64 24, i1 false), !noalias !21
   %i.gy = getelementptr inbounds nuw i8, ptr %spec.select.i32, i64 272 ; 2 uses
@@ -607,7 +607,7 @@ bb.ba:                                            ; preds = %.thread.i.i30, %.lo
 bb.bb:                                            ; preds = %.loopexit47.i
   %i.gv = getelementptr inbounds nuw [24 x i8], ptr %i.gs, i64 %i.gt
   %i.gw = sub nsw i64 %i.gq, %.sroa.5.0.i28
-  %i.gx = mul nsw i64 %i.gw, 24                   ; 2 uses
+  %i.gx = mul nuw nsw i64 %i.gw, 24               ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gv, ptr nonnull align 8 %i.gu, i64 %i.gx, i1 false), !noalias !49
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gu, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.k, i64 24, i1 false), !noalias !49
   %i.gy = getelementptr inbounds nuw i8, ptr %spec.select.i32, i64 272 ; 2 uses
@@ -1010,7 +1010,7 @@ bb.ba:                                            ; preds = %.thread.i.i30, %.lo
 bb.bb:                                            ; preds = %.loopexit47.i
   %i.gv = getelementptr inbounds nuw [24 x i8], ptr %i.gs, i64 %i.gt
   %i.gw = sub nsw i64 %i.gq, %.sroa.5.0.i28
-  %i.gx = mul nsw i64 %i.gw, 24                   ; 2 uses
+  %i.gx = mul nuw nsw i64 %i.gw, 24               ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gv, ptr nonnull align 8 %i.gu, i64 %i.gx, i1 false), !noalias !77
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gu, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.k, i64 24, i1 false), !noalias !77
   %i.gy = getelementptr inbounds nuw i8, ptr %spec.select.i32, i64 272 ; 2 uses
@@ -1413,7 +1413,7 @@ bb.ax:                                            ; preds = %.loopexit45.i
   %i.fw = getelementptr inbounds nuw [24 x i8], ptr %i.fu, i64 %.sroa.5.0.i26
   %i.fx = getelementptr inbounds nuw [24 x i8], ptr %i.fu, i64 %i.fv
   %i.fy = sub nsw i64 %i.fs, %.sroa.5.0.i26
-  %i.fz = mul nsw i64 %i.fy, 24
+  %i.fz = mul nuw nsw i64 %i.fy, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.fx, ptr nonnull align 8 %i.fw, i64 %i.fz, i1 false), !noalias !106
   br label %_RINvNtNtNtCscdodAO9FK5_5alloc11collections5btree4node12slice_insertNtNtB8_6string6StringECs5GOeAjNCyUy_11ruff_macros.exit.i.i31
 
@@ -1816,13 +1816,13 @@ bb.ba:                                            ; preds = %.thread.i.i30, %.lo
 bb.bb:                                            ; preds = %.loopexit47.i
   %i.gu = getelementptr inbounds nuw [24 x i8], ptr %i.gr, i64 %i.gs
   %i.gv = sub nsw i64 %i.gp, %.sroa.5.0.i28       ; 2 uses
-  %i.gw = mul nsw i64 %i.gv, 24
+  %i.gw = mul nuw nsw i64 %i.gv, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gu, ptr nonnull align 8 %i.gt, i64 %i.gw, i1 false), !noalias !134
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gt, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.k, i64 24, i1 false), !noalias !134
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(128) %i.j, i64 128, i1 false), !noalias !134
   %i.gx = getelementptr inbounds nuw [128 x i8], ptr %spec.select.i32, i64 %.sroa.5.0.i28
   %i.gy = getelementptr inbounds nuw [128 x i8], ptr %spec.select.i32, i64 %i.gs
-  %i.gz = shl nsw i64 %i.gv, 7
+  %i.gz = shl nuw nsw i64 %i.gv, 7
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.gy, ptr align 8 %i.gx, i64 %i.gz, i1 false), !noalias !134
   br label %bb.bc
 
@@ -2225,12 +2225,12 @@ _RINvNtNtNtCscdodAO9FK5_5alloc11collections5btree4node12slice_insertNtNtB8_6stri
 bb.av:                                            ; preds = %.loopexit44.i
   %i.gu = getelementptr inbounds nuw [24 x i8], ptr %i.gr, i64 %i.gs
   %i.gv = sub nsw i64 %i.gp, %.sroa.5.0.i23       ; 2 uses
-  %i.gw = mul nsw i64 %i.gv, 24
+  %i.gw = mul nuw nsw i64 %i.gv, 24
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.gu, ptr nonnull align 8 %i.gt, i64 %i.gw, i1 false), !noalias !162
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.gt, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.h, i64 24, i1 false), !noalias !162
   %i.gx = getelementptr inbounds nuw [16 x i8], ptr %spec.select.i27, i64 %.sroa.5.0.i23
   %i.gy = getelementptr inbounds nuw [16 x i8], ptr %spec.select.i27, i64 %i.gs
-  %i.gz = shl nsw i64 %i.gv, 4
+  %i.gz = shl nuw nsw i64 %i.gv, 4
   call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.gy, ptr align 8 %i.gx, i64 %i.gz, i1 false), !noalias !162
   br label %_RINvNtNtNtCscdodAO9FK5_5alloc11collections5btree4node12slice_insertRSNtNtCsfq6Q4Do6HaX_3syn4attr9AttributeECs5GOeAjNCyUy_11ruff_macros.exit.i.i
 

@@ -206,7 +206,7 @@ bb.k:                                             ; preds = %bb.j, %bb.m
 bb.l:                                             ; preds = %bb.k
   %i.y = sub nsw i32 %.06581, %.082
   %i.z = sext i32 %i.y to i64
-  %i.aa = mul nsw i64 %i.z, 24
+  %i.aa = mul nuw nsw i64 %i.z, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.u, ptr align 4 %i.v, i64 %i.aa, i1 false)
   %i.ab = add nsw i32 %.082, -1
   %i.ac = add nsw i32 %.06581, -1

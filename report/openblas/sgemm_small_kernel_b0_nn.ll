@@ -202,8 +202,8 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
   %invariant.gep2911 = getelementptr inbounds nuw i8, ptr %i.asm, i64 %.idx2610
   %.idx2611 = mul nuw nsw i64 %2, 20
   %invariant.gep2913 = getelementptr inbounds nuw i8, ptr %i.asm, i64 %.idx2611
-  %.idx2612 = shl nsw i64 %2, 4
-  %invariant.gep2915 = getelementptr i8, ptr %i.asm, i64 %.idx2612
+  %.idx2612 = shl nuw nsw i64 %2, 4
+  %invariant.gep2915 = getelementptr inbounds nuw i8, ptr %i.asm, i64 %.idx2612
   %.idx2613 = mul nuw nsw i64 %2, 12
   %invariant.gep2917 = getelementptr inbounds nuw i8, ptr %i.asm, i64 %.idx2613
   %.idx2614 = shl nuw nsw i64 %2, 3
@@ -313,7 +313,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %bb.m
-  %gep2916 = getelementptr [4 x i8], ptr %invariant.gep2915, i64 %.1224072905
+  %gep2916 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep2915, i64 %.1224072905
   store <8 x float> %i.auy, ptr %gep2916, align 1, !tbaa !8
   br label %bb.r
 

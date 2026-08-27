@@ -204,9 +204,9 @@ scalar.ph91:                                      ; preds = %scalar.ph91.prehead
   %i.eu = getelementptr inbounds [8 x i8], ptr %i.ac, i64 %i.et
   %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !56
   tail call void @N_VScale(double noundef 1.000000e+00, ptr noundef %i.ev, ptr noundef %2) #15
-  %i.ew = mul nsw i32 %i.br, %i.r
+  %i.ew = mul nuw nsw i32 %i.br, %i.r
   %i.ex = zext nneg i32 %i.ew to i64
-  %invariant.gep138.i = getelementptr [8 x i8], ptr %i.am, i64 %i.ex
+  %invariant.gep138.i = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.ex
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %._crit_edge21.split.i
@@ -214,7 +214,7 @@ bb.q:                                             ; preds = %bb.q, %._crit_edge2
   %i.ey = getelementptr inbounds nuw [8 x i8], ptr %i.ag, i64 %indvars.iv78.i ; 2 uses
   %i.ez = load ptr, ptr %i.ey, align 8, !tbaa !56
   %i.fa = tail call double @N_VDotProd(ptr noundef %i.ez, ptr noundef %2) #15 ; 2 uses
-  %gep139.i = getelementptr [8 x i8], ptr %invariant.gep138.i, i64 %indvars.iv78.i
+  %gep139.i = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep138.i, i64 %indvars.iv78.i
   store double %i.fa, ptr %gep139.i, align 8, !tbaa !57
   %i.fb = fneg double %i.fa
   %i.fc = load ptr, ptr %i.ey, align 8, !tbaa !56
@@ -378,7 +378,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph38.i
-  %i.gn = mul nsw i64 %indvars.iv100.in.i, %i.gj
+  %i.gn = mul nuw nsw i64 %indvars.iv100.in.i, %i.gj
   %gep141.i.prol = getelementptr [8 x i8], ptr %invariant.gep140.i, i64 %i.gn
   %i.go = load double, ptr %gep141.i.prol, align 8, !tbaa !57
   %i.gp = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv100.in.i
@@ -399,7 +399,7 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph38.i.new:                                   ; preds = %.prol.loopexit, %.lr.ph38.i.new
   %indvars.iv97.i = phi i64 [ %indvars.iv.next98.i.1, %.lr.ph38.i.new ], [ %indvars.iv97.i.unr, %.prol.loopexit ] ; 4 uses
   %i.gu = phi double [ %i.hg, %.lr.ph38.i.new ], [ %.unr, %.prol.loopexit ]
-  %i.gv = mul nsw i64 %indvars.iv97.i, %i.gj
+  %i.gv = mul nuw nsw i64 %indvars.iv97.i, %i.gj
   %gep141.i = getelementptr [8 x i8], ptr %invariant.gep140.i, i64 %i.gv
   %i.gw = load double, ptr %gep141.i, align 8, !tbaa !57
   %i.gx = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv97.i
@@ -408,7 +408,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ha = tail call double @llvm.fmuladd.f64(double %i.gz, double %i.gy, double %i.gu) ; 2 uses
   store double %i.ha, ptr %i.gm, align 8, !tbaa !57
   %indvars.iv.next98.i = add nsw i64 %indvars.iv97.i, 1 ; 2 uses
-  %i.hb = mul nsw i64 %indvars.iv.next98.i, %i.gj
+  %i.hb = mul nuw nsw i64 %indvars.iv.next98.i, %i.gj
   %gep141.i.1 = getelementptr [8 x i8], ptr %invariant.gep140.i, i64 %i.hb
   %i.hc = load double, ptr %gep141.i.1, align 8, !tbaa !57
   %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next98.i

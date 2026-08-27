@@ -202,7 +202,7 @@ _ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i157: ; preds = %bb.j, %_ZNS
   br label %_ZNSt6vectorIiSaIiEE7reserveEm.exit158
 
 _ZNSt6vectorIiSaIiEE7reserveEm.exit158:           ; preds = %_ZNSt6vectorIiSaIiEE7reserveEm.exit, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i157
-  %i.do = shl nsw i32 %i.e, 2
+  %i.do = shl nuw nsw i32 %i.e, 2
   %i.dp = zext nneg i32 %i.do to i64              ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 15 uses
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !50
@@ -605,7 +605,7 @@ _ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i136: ; preds = %bb.j, %_ZNS
   br label %_ZNSt6vectorIiSaIiEE7reserveEm.exit137
 
 _ZNSt6vectorIiSaIiEE7reserveEm.exit137:           ; preds = %_ZNSt6vectorIiSaIiEE7reserveEm.exit, %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit.i136
-  %i.dk = shl nsw i32 %i.e, 2
+  %i.dk = shl nuw nsw i32 %i.e, 2
   %i.dl = zext nneg i32 %i.dk to i64              ; 3 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 12 uses
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !50
@@ -1008,7 +1008,7 @@ bb.bu:                                            ; preds = %._crit_edge910
   %i.ow = load i32, ptr %i.ov, align 8, !tbaa !35 ; 2 uses
   %.not222 = icmp eq i32 %i.ow, 0
   %i.ox = select i1 %.not222, i32 0, i32 2
-  %i.oy = mul nsw i32 %i.ox, %i.g
+  %i.oy = mul nuw nsw i32 %i.ox, %i.g
   %i.oz = add nsw i32 %i.oy, %i.ou                ; 2 uses
   %i.pa = sext i32 %i.oz to i64                   ; 3 uses
   %i.pb = icmp slt i32 %i.oz, 0
@@ -1082,7 +1082,7 @@ _ZNSt6vectorIiSaIiEE7reserveEm.exit355:           ; preds = %_ZNSt12_Vector_base
   %i.qk = add nsw i32 %i.qj, -1
   %.not224 = icmp eq i32 %i.qb, %i.qk
   %i.ql = select i1 %.not224, i32 0, i32 2
-  %i.qm = mul nsw i32 %i.ql, %i.g
+  %i.qm = mul nuw nsw i32 %i.ql, %i.g
   %i.qn = add nsw i32 %i.qm, %i.qh                ; 2 uses
   %i.qo = add nsw i32 %i.qn, 2
   %i.qp = sext i32 %i.qo to i64                   ; 3 uses

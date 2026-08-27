@@ -205,7 +205,7 @@ _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds 
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !397
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = sub i64 %i.x, %i.r
-  %i.z = shl nsw i64 %i.k, 6
+  %i.z = shl nuw nsw i64 %i.k, 6
   %i.aa = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #32 ; 5 uses
   %i.ab = load ptr, ptr %4, align 8, !tbaa !337   ; 5 uses
   %i.ac = load ptr, ptr %i.v, align 8, !tbaa !397 ; 2 uses
@@ -608,7 +608,7 @@ _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i348: ; pre
   %i.og = load ptr, ptr %i.of, align 8, !tbaa !397
   %i.oh = ptrtoint ptr %i.og to i64
   %i.oi = sub i64 %i.oh, %i.ob
-  %i.oj = mul nsw i64 %i.nu, 144
+  %i.oj = mul nuw nsw i64 %i.nu, 144
   %i.ok = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.oj) #32 ; 5 uses
   %i.ol = load ptr, ptr %4, align 8, !tbaa !337   ; 5 uses
   %i.om = load ptr, ptr %i.of, align 8, !tbaa !397 ; 2 uses
@@ -1011,14 +1011,14 @@ _ZN5Eigen9DenseBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE7setZeroEv.exit: ; pred
   %.idx237 = shl i64 %i.v, 5
   %.idx238 = mul i64 %i.v, 40
   %i.y = mul nuw nsw i32 %i.e, 3
-  %i.z = shl nsw i32 %i.e, 2
+  %i.z = shl nuw nsw i32 %i.e, 2
   %i.aa = mul nuw nsw i32 %i.e, 5
   %.idx239 = mul i64 %i.v, 48
   %.idx240 = mul i64 %i.v, 56
   %.idx241 = shl i64 %i.v, 6
   %i.ab = mul nuw nsw i32 %i.e, 6
   %i.ac = mul nuw nsw i32 %i.e, 7
-  %i.ad = shl nsw i32 %i.e, 3
+  %i.ad = shl nuw nsw i32 %i.e, 3
   %i.ae = zext nneg i32 %i.e to i64               ; 2 uses
   %i.af = zext nneg i32 %i.x to i64
   %i.ag = zext nneg i32 %i.y to i64

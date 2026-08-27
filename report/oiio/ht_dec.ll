@@ -205,10 +205,10 @@ bb.au:                                            ; preds = %bb.at
   %i.ho = sext i32 %i.ek to i64                   ; 13 uses
   %i.hp = add i32 %i.fq, -2                       ; 2 uses
   %i.hq = shl nuw i32 1, %i.hp                    ; 4 uses
-  %i.hr = shl nsw i32 %i.ek, 1
-  %13 = sext i32 %i.hr to i64                     ; 2 uses
-  %i.hs = mul nsw i32 %i.ek, 3
-  %14 = sext i32 %i.hs to i64                     ; 2 uses
+  %i.hr = shl nuw nsw i32 %i.ek, 1
+  %13 = zext nneg i32 %i.hr to i64                ; 2 uses
+  %i.hs = mul nuw nsw i32 %i.ek, 3
+  %14 = zext nneg i32 %i.hs to i64                ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 2 uses
   %i.hv = shl i32 3, %i.hp                        ; 4 uses
@@ -611,7 +611,7 @@ bb.fc:                                            ; preds = %bb.fb, %.lr.ph1908
 
 .lr.ph1941:                                       ; preds = %._crit_edge1909
   %i.apo = add nsw i64 %indvars.iv2043, -6
-  %i.app = mul nsw i64 %i.apo, %i.ho
+  %i.app = mul nuw nsw i64 %i.apo, %i.ho
   %i.apq = getelementptr inbounds [4 x i8], ptr %i.dq, i64 %i.app
   br label %bb.fd
 
@@ -683,7 +683,7 @@ bb.fg:                                            ; preds = %bb.ff
 
 bb.fh:                                            ; preds = %bb.fg
   %i.aqp = or i32 %i.aqm, %.114601911
-  %i.aqq = shl nsw i32 %.014561913, 2
+  %i.aqq = shl nuw nsw i32 %.014561913, 2
   %i.aqr = shl i32 50, %i.aqq
   %i.aqs = and i32 %i.aqr, %i.aqb
   %i.aqt = or i32 %i.aqs, %.114721910
@@ -713,7 +713,7 @@ bb.fk:                                            ; preds = %bb.fj
 
 bb.fl:                                            ; preds = %bb.fk
   %i.aqz = or i32 %.31462, %i.aqw
-  %i.ara = shl nsw i32 %.014561913, 2
+  %i.ara = shl nuw nsw i32 %.014561913, 2
   %i.arb = shl i32 116, %i.ara
   %i.arc = and i32 %i.arb, %i.aqb
   %i.ard = or i32 %.31474, %i.arc
@@ -743,7 +743,7 @@ bb.fo:                                            ; preds = %bb.fn
 
 bb.fp:                                            ; preds = %bb.fo
   %i.arj = or i32 %.51464, %i.arg
-  %i.ark = shl nsw i32 %.014561913, 2
+  %i.ark = shl nuw nsw i32 %.014561913, 2
   %i.arl = shl i32 232, %i.ark
   %i.arm = and i32 %i.arl, %i.aqb
   %i.arn = or i32 %.51476, %i.arm
@@ -773,7 +773,7 @@ bb.fs:                                            ; preds = %bb.fr
 
 bb.ft:                                            ; preds = %bb.fs
   %i.art = or i32 %.71466, %i.arq
-  %i.aru = shl nsw i32 %.014561913, 2
+  %i.aru = shl nuw nsw i32 %.014561913, 2
   %i.arv = shl i32 192, %i.aru
   %i.arw = and i32 %i.arv, %i.aqb
   %i.arx = or i32 %.71478, %i.arw
@@ -1176,10 +1176,10 @@ middle.block2268:                                 ; preds = %vector.body2260
   %i.baz = add i32 %i.fq, -2
   %i.bba = shl i32 3, %i.baz                      ; 4 uses
   %i.bbb = sext i32 %i.ek to i64                  ; 2 uses
-  %i.bbc = shl nsw i32 %i.ek, 1
-  %15 = sext i32 %i.bbc to i64
-  %i.bbd = mul nsw i32 %i.ek, 3
-  %16 = sext i32 %i.bbd to i64
+  %i.bbc = shl nuw nsw i32 %i.ek, 1
+  %15 = zext nneg i32 %i.bbc to i64
+  %i.bbd = mul nuw nsw i32 %i.ek, 3
+  %16 = zext nneg i32 %i.bbd to i64
   %i.bbe = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
   %i.bbf = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 2 uses
   %i.bbg = sext i32 %i.bax to i64
@@ -1495,7 +1495,7 @@ bb.hb:                                            ; preds = %bb.ha
 
 bb.hc:                                            ; preds = %bb.hb
   %i.bgc = or i32 %i.bfz, %.113771970
-  %i.bgd = shl nsw i32 %.013731972, 2
+  %i.bgd = shl nuw nsw i32 %.013731972, 2
   %i.bge = shl i32 50, %i.bgd
   %i.bgf = and i32 %i.bge, %i.bfo
   %i.bgg = or i32 %i.bgf, %.113891969
@@ -1525,7 +1525,7 @@ bb.hf:                                            ; preds = %bb.he
 
 bb.hg:                                            ; preds = %bb.hf
   %i.bgm = or i32 %.31379, %i.bgj
-  %i.bgn = shl nsw i32 %.013731972, 2
+  %i.bgn = shl nuw nsw i32 %.013731972, 2
   %i.bgo = shl i32 116, %i.bgn
   %i.bgp = and i32 %i.bgo, %i.bfo
   %i.bgq = or i32 %.31391, %i.bgp
@@ -1555,7 +1555,7 @@ bb.hj:                                            ; preds = %bb.hi
 
 bb.hk:                                            ; preds = %bb.hj
   %i.bgw = or i32 %.51381, %i.bgt
-  %i.bgx = shl nsw i32 %.013731972, 2
+  %i.bgx = shl nuw nsw i32 %.013731972, 2
   %i.bgy = shl i32 232, %i.bgx
   %i.bgz = and i32 %i.bgy, %i.bfo
   %i.bha = or i32 %.51393, %i.bgz
@@ -1585,7 +1585,7 @@ bb.hn:                                            ; preds = %bb.hm
 
 bb.ho:                                            ; preds = %bb.hn
   %i.bhg = or i32 %.71383, %i.bhd
-  %i.bhh = shl nsw i32 %.013731972, 2
+  %i.bhh = shl nuw nsw i32 %.013731972, 2
   %i.bhi = shl i32 192, %i.bhh
   %i.bhj = and i32 %i.bhi, %i.bfo
   %i.bhk = or i32 %.71395, %i.bhj

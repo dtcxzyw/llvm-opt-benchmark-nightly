@@ -205,8 +205,8 @@ _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6Assimp4D3DS10aiFloatKeyESt6vectorIS4
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.040.0, i64 16, i1 false)
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 16
-  %.idx85 = shl nsw i64 %.0, 4                    ; 2 uses
-  %i.t = getelementptr inbounds i8, ptr %.sroa.040.0, i64 %.idx85
+  %.idx85 = shl nuw nsw i64 %.0, 4                ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.sroa.040.0, i64 %.idx85
   %gepdiff = add nsw i64 %.idx85, -16
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sroa.040.0, ptr nonnull align 8 %i.s, i64 %gepdiff, i1 false)
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -16
@@ -287,7 +287,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds [16 x i8], ptr %.sroa.040.0, i64 %.0 ; 2 uses
   %i.ah = getelementptr inbounds i8, ptr %i.ag, i64 -16 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %i.ah, i64 16, i1 false)
-  %.idx = shl nsw i64 %.0, 4
+  %.idx = shl nuw nsw i64 %.0, 4
   %i.ai = add nsw i64 %.idx, -16                  ; 3 uses
   %i.aj = ashr exact i64 %i.ai, 4                 ; 2 uses
   %i.ak = icmp sgt i64 %i.aj, 1
@@ -690,7 +690,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !149
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   br label %_ZSt22__uninitialized_move_aIPjS0_SaIjEET0_T_S3_S2_RT1_.exit
 

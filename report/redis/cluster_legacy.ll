@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %bb.f
   %i.y = zext nneg i32 %i.t to i64
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.y
   %i.aa = sext i32 %i.x to i64
-  %i.ab = shl nsw i64 %i.aa, 3
+  %i.ab = shl nuw nsw i64 %i.aa, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.v, ptr nonnull align 8 %i.z, i64 %i.ab, i1 false)
   %.pre.i.i = load i32, ptr %i.k, align 8, !tbaa !47
   br label %bb.h
@@ -450,7 +450,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = zext nneg i32 %i.o to i64
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.t
   %i.v = sext i32 %i.s to i64
-  %i.w = shl nsw i64 %i.v, 3
+  %i.w = shl nuw nsw i64 %i.v, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.q, ptr nonnull align 8 %i.u, i64 %i.w, i1 false)
   %.pre.i = load i32, ptr %i.f, align 8, !tbaa !47
   br label %bb.g
@@ -853,7 +853,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bh = zext nneg i32 %i.bc to i64
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.bh
   %i.bj = sext i32 %i.bg to i64
-  %i.bk = shl nsw i64 %i.bj, 3
+  %i.bk = shl nuw nsw i64 %i.bj, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.be, ptr nonnull align 8 %i.bi, i64 %i.bk, i1 false)
   %.pre.i = load i32, ptr %i.at, align 8, !tbaa !47
   br label %bb.i
@@ -1256,7 +1256,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ad = zext nneg i32 %i.y to i64
   %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %i.ad
   %i.af = sext i32 %i.ac to i64
-  %i.ag = shl nsw i64 %i.af, 3
+  %i.ag = shl nuw nsw i64 %i.af, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.aa, ptr nonnull align 8 %i.ae, i64 %i.ag, i1 false)
   %.pre.i = load i32, ptr %i.p, align 8, !tbaa !47
   br label %bb.l
@@ -1659,7 +1659,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = zext nneg i32 %i.q to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %i.v
   %i.x = sext i32 %i.u to i64
-  %i.y = shl nsw i64 %i.x, 3
+  %i.y = shl nuw nsw i64 %i.x, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.s, ptr nonnull align 8 %i.w, i64 %i.y, i1 false)
   %.pre.i.i = load i32, ptr %i.h, align 8, !tbaa !47
   br label %bb.f
