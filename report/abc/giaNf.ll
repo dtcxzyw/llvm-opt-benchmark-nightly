@@ -205,7 +205,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.in = load ptr, ptr %i.im, align 8, !tbaa !27 ; 2 uses
   %.not9.i23.i.i.i = icmp eq ptr %i.in, null
   %i.io = sext i32 %spec.select.i.i.i to i64
-  %i.ip = shl nsw i64 %i.io, 2                    ; 2 uses
+  %i.ip = shl nuw nsw i64 %i.io, 2                ; 2 uses
   br i1 %.not9.i23.i.i.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -608,8 +608,9 @@ bb.b:                                             ; preds = %.lr.ph.split
   br i1 %or.cond.not.i, label %bb.c, label %.preheader
 
 .preheader:                                       ; preds = %bb.b
-  %i.ag = shl nsw i64 %indvars.iv.next, 1         ; 2 uses
-  %i.ah = getelementptr inbounds [4 x i8], ptr %.val77, i64 %i.ag
+  %i.ag = shl i64 %indvars.iv.next, 1
+  %1 = and i64 %i.ag, 4294967294                  ; 2 uses
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %.val77, i64 %1
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !15
   %.not63 = icmp eq i32 %i.ai, 0
   br i1 %.not63, label %bb.g, label %Nf_ObjMatchBest.exit
@@ -696,8 +697,8 @@ bb.g:                                             ; preds = %.preheader, %bb.f, 
   %i.bz = phi i64 [ %i.t, %.preheader ], [ %i.bx, %bb.f ], [ %i.az, %bb.e ] ; 3 uses
   %i.ca = phi i64 [ %i.u, %.preheader ], [ %i.bw, %bb.f ], [ %i.ay, %bb.e ] ; 3 uses
   %i.cb = phi float [ %i.v, %.preheader ], [ %i.bt, %bb.f ], [ %i.ax, %bb.e ] ; 3 uses
-  %i.cc = getelementptr [4 x i8], ptr %.val77, i64 %i.ag
-  %i.cd = getelementptr i8, ptr %i.cc, i64 4
+  %i.cc = getelementptr inbounds nuw [4 x i8], ptr %.val77, i64 %1
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 4
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !15
   %.not63.1 = icmp eq i32 %i.ce, 0
   br i1 %.not63.1, label %.loopexit, label %Nf_ObjMatchBest.exit.1

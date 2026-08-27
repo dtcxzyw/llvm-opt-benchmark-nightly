@@ -204,7 +204,7 @@ _RNvMs_NtCs6Po7BT7Nknu_5alloc3vecINtB4_3VecNtNtCshhQzAC5dGUF_17crossbeam_channel
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.h = xor i64 %2, -1
   %i.i = add nsw i64 %i.b, %i.h
-  %i.j = mul nsw i64 %i.i, 24
+  %i.j = mul nuw nsw i64 %i.i, 24
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !noalias !1710
   %i.k = add nsw i64 %i.b, -1                     ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !alias.scope !1705, !noalias !1708
@@ -393,13 +393,13 @@ bb.k:                                             ; preds = %bb.l, %_RINvCs3fLsj
   br label %_RINvCs3fLsjMQPbhe_8smallvec10infallibleuECsgO8S5jLFugx_23deltalake_catalog_unity.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.y = shl i64 %i.q, 5
+  %i.y = shl nuw i64 %i.q, 5
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %.sink11.i.i, i64 %i.y, i1 false)
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
   store i64 0, ptr %0, align 8, !alias.scope !1718
-  %i.z = shl i64 %i.q, 5
+  %i.z = shl nuw i64 %i.q, 5
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink11.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !1718
   %or.cond.i.i = icmp ult i64 %.sink.i.i, 288230376151711744

@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.pq = load i16, ptr %i.pp, align 2
   store i16 %i.pq, ptr %i.pm, align 1
   %i.pr = getelementptr inbounds nuw i8, ptr %i.nu, i64 14
-  %i.ps = shl i32 %i.pl, 1
+  %i.ps = shl nuw i32 %i.pl, 1
   %i.pt = zext i32 %i.ps to i64
   %i.pu = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.pt
   %i.pv = load i16, ptr %i.pu, align 2
@@ -253,7 +253,7 @@ bb.an:                                            ; preds = %bb.am
   %i.qx = load i16, ptr %i.qw, align 2
   store i16 %i.qx, ptr %i.qt, align 1
   %i.qy = getelementptr inbounds nuw i8, ptr %i.nu, i64 6
-  %i.qz = shl i32 %i.qs, 1
+  %i.qz = shl nuw i32 %i.qs, 1
   %i.ra = zext i32 %i.qz to i64
   %i.rb = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.ra
   %i.rc = load i16, ptr %i.rb, align 2
@@ -404,7 +404,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.va = load i16, ptr %i.uz, align 2
   store i16 %i.va, ptr %i.uw, align 1
   %i.vb = getelementptr inbounds nuw i8, ptr %.ptr217, i64 14
-  %i.vc = shl i32 %i.uv, 1
+  %i.vc = shl nuw i32 %i.uv, 1
   %i.vd = zext i32 %i.vc to i64
   %i.ve = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.vd
   %i.vf = load i16, ptr %i.ve, align 2
@@ -456,7 +456,7 @@ bb.au:                                            ; preds = %bb.at
   %i.wh = load i16, ptr %i.wg, align 2
   store i16 %i.wh, ptr %i.wd, align 1
   %i.wi = getelementptr inbounds nuw i8, ptr %.ptr217, i64 6
-  %i.wj = shl i32 %i.wc, 1
+  %i.wj = shl nuw i32 %i.wc, 1
   %i.wk = zext i32 %i.wj to i64
   %i.wl = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.wk
   %i.wm = load i16, ptr %i.wl, align 2
@@ -859,7 +859,7 @@ bb.bk:                                            ; preds = %bb.bj
   %i.aee = load i16, ptr %i.aed, align 2
   store i16 %i.aee, ptr %i.aea, align 1
   %i.aef = getelementptr inbounds nuw i8, ptr %.ptr209, i64 14
-  %i.aeg = shl i32 %i.adz, 1
+  %i.aeg = shl nuw i32 %i.adz, 1
   %i.aeh = zext i32 %i.aeg to i64
   %i.aei = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.aeh
   %i.aej = load i16, ptr %i.aei, align 2
@@ -911,7 +911,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.afl = load i16, ptr %i.afk, align 2
   store i16 %i.afl, ptr %i.afh, align 1
   %i.afm = getelementptr inbounds nuw i8, ptr %.ptr209, i64 6
-  %i.afn = shl i32 %i.afg, 1
+  %i.afn = shl nuw i32 %i.afg, 1
   %i.afo = zext i32 %i.afn to i64
   %i.afp = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.afo
   %i.afq = load i16, ptr %i.afp, align 2
@@ -1314,7 +1314,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.jm = load i16, ptr %i.jl, align 2
   store i16 %i.jm, ptr %i.ji, align 1
   %i.jn = getelementptr inbounds nuw i8, ptr %i.iz, i64 6
-  %i.jo = shl i32 %i.jh, 1
+  %i.jo = shl nuw i32 %i.jh, 1
   %i.jp = zext i32 %i.jo to i64
   %i.jq = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.jp
   %i.jr = load i16, ptr %i.jq, align 2
@@ -1425,7 +1425,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.mi = load i16, ptr %i.mh, align 2
   store i16 %i.mi, ptr %i.me, align 1
   %i.mj = getelementptr inbounds nuw i8, ptr %.ptr181, i64 6
-  %i.mk = shl i32 %i.md, 1
+  %i.mk = shl nuw i32 %i.md, 1
   %i.ml = zext i32 %i.mk to i64
   %i.mm = getelementptr inbounds nuw i8, ptr @digit_table, i64 %i.ml
   %i.mn = load i16, ptr %i.mm, align 2

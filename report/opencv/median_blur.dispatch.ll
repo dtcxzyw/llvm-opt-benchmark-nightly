@@ -205,7 +205,7 @@ _ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i: ; preds = %bb.of
   br i1 %.not.i.i.i.i.i, label %_ZNSt6vectorItSaItEEC2EmRKS0_.exit.i, label %bb.oh
 
 bb.oh:                                            ; preds = %_ZNSt6vectorItSaItEE17_S_check_init_lenEmRKS0_.exit.i.i
-  %i.kmo = shl nsw i64 %i.kmm, 1                  ; 2 uses
+  %i.kmo = shl nuw nsw i64 %i.kmm, 1              ; 2 uses
   %i.kmp = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kmo) #18
           to label %.noexc360.i unwind label %bb.on ; 4 uses
 
@@ -355,7 +355,7 @@ bb.op:                                            ; preds = %._crit_edge498.i, %
   %i.kow = trunc nsw i64 %indvars.iv570.i to i32
   %i.kox = sub nsw i32 %i.kov, %i.kow
   %.sroa.speculated411.i = call i32 @llvm.smin.i32(i32 %.sroa.speculated433.i, i32 %i.kox)
-  %i.koy = add nsw i32 %.sroa.speculated411.i, %i.kmh ; 13 uses
+  %i.koy = add nsw i32 %.sroa.speculated411.i, %i.kmh ; 12 uses
   %i.koz = load ptr, ptr %i.knl, align 8, !tbaa !17
   %i.kpa = mul nsw i64 %indvars.iv570.i, %i.knz
   %i.kpb = getelementptr inbounds i8, ptr %i.koz, i64 %i.kpa ; 3 uses
@@ -395,15 +395,11 @@ bb.op:                                            ; preds = %._crit_edge498.i, %
 
 .preheader451.i:                                  ; preds = %bb.op, %._crit_edge463.split.i.loopexit
   %indvars.iv514.i = phi i64 [ %indvars.iv.next515.i, %._crit_edge463.split.i.loopexit ], [ 0, %bb.op ] ; 4 uses
-  %i.kpw = mul nuw nsw i64 %indvars.iv514.i, %i.kpm
+  %i.kpw = mul nuw nsw i64 %indvars.iv514.i, %i.kpm ; 2 uses
   %invariant.gep670.i = getelementptr inbounds nuw i8, ptr %i.kpb, i64 %indvars.iv514.i ; 2 uses
-  %indvars.iv514.tr.i = trunc i64 %indvars.iv514.i to i32 ; 2 uses
+  %indvars.iv514.tr.i = trunc i64 %indvars.iv514.i to i32
   %i.kpx = shl i32 %indvars.iv514.tr.i, 4         ; 2 uses
   br label %bb.oq
-
-.lr.ph460.preheader.i:                            ; preds = %bb.oq
-  %38 = mul i32 %i.koy, %indvars.iv514.tr.i
-  br label %.lr.ph460.i
 
 bb.oq:                                            ; preds = %bb.oq, %.preheader451.i
   %indvars.iv.i562 = phi i64 [ 0, %.preheader451.i ], [ %indvars.iv.next.i563, %bb.oq ] ; 4 uses
@@ -430,17 +426,17 @@ bb.oq:                                            ; preds = %bb.oq, %.preheader4
   %i.kqp = shl nsw i32 %i.kqo, 4
   %i.kqq = and i32 %i.kqj, 15
   %i.kqr = or disjoint i32 %i.kqp, %i.kqq
-  %39 = sext i32 %i.kqr to i64
-  %i.kqs = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %39 ; 2 uses
+  %38 = zext nneg i32 %i.kqr to i64
+  %i.kqs = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %38 ; 2 uses
   %i.kqt = load i16, ptr %i.kqs, align 2, !tbaa !46
   %i.kqu = add i16 %i.kqt, %i.knp
   store i16 %i.kqu, ptr %i.kqs, align 2, !tbaa !46
   %indvars.iv.next.i563 = add nuw nsw i64 %indvars.iv.i562, 1 ; 2 uses
   %i.kqv = icmp slt i64 %indvars.iv.next.i563, %i.kpl
-  br i1 %i.kqv, label %bb.oq, label %.lr.ph460.preheader.i, !llvm.loop !114
+  br i1 %i.kqv, label %bb.oq, label %.lr.ph460.i, !llvm.loop !114
 
-.lr.ph460.i:                                      ; preds = %._crit_edge.i564, %.lr.ph460.preheader.i
-  %storemerge356461.i = phi i32 [ %i.krr, %._crit_edge.i564 ], [ 1, %.lr.ph460.preheader.i ] ; 2 uses
+.lr.ph460.i:                                      ; preds = %bb.oq, %._crit_edge.i564
+  %storemerge356461.i = phi i32 [ %i.krr, %._crit_edge.i564 ], [ 1, %bb.oq ] ; 2 uses
   %.sroa.speculated407.i = call i32 @llvm.smin.i32(i32 %i.knq, i32 %storemerge356461.i)
   %i.kqw = sext i32 %.sroa.speculated407.i to i64
   %i.kqx = mul i64 %i.kmb, %i.kqw
@@ -448,18 +444,17 @@ bb.oq:                                            ; preds = %bb.oq, %.preheader4
   br label %bb.or
 
 bb.or:                                            ; preds = %bb.or, %.lr.ph460.i
-  %indvars.iv511.i = phi i64 [ 0, %.lr.ph460.i ], [ %indvars.iv.next512.i, %bb.or ] ; 3 uses
-  %40 = trunc i64 %indvars.iv511.i to i32         ; 2 uses
-  %41 = add i32 %38, %40
-  %42 = shl nsw i32 %41, 4
+  %indvars.iv511.i = phi i64 [ 0, %.lr.ph460.i ], [ %indvars.iv.next512.i, %bb.or ] ; 4 uses
+  %39 = add nuw nsw i64 %indvars.iv511.i, %i.kpw
+  %40 = shl nuw nsw i64 %39, 4
   %i.kqy = mul nuw nsw i64 %indvars.iv511.i, %i.knz
   %gep673.i = getelementptr inbounds nuw i8, ptr %gep675.i, i64 %i.kqy ; 2 uses
   %i.kqz = load i8, ptr %gep673.i, align 1, !tbaa !28
   %i.kra = lshr i8 %i.kqz, 4
-  %43 = zext nneg i8 %i.kra to i32
-  %44 = or disjoint i32 %42, %43
-  %45 = zext nneg i32 %44 to i64
-  %i.krb = getelementptr inbounds nuw [2 x i8], ptr %i.kne, i64 %45 ; 2 uses
+  %41 = zext nneg i8 %i.kra to i64
+  %.masked664.i = and i64 %40, 4294967280
+  %42 = getelementptr inbounds nuw [2 x i8], ptr %i.kne, i64 %.masked664.i
+  %i.krb = getelementptr inbounds nuw [2 x i8], ptr %42, i64 %41 ; 2 uses
   %i.krc = load i16, ptr %i.krb, align 2, !tbaa !46
   %i.krd = add i16 %i.krc, 1
   store i16 %i.krd, ptr %i.krb, align 2, !tbaa !46
@@ -468,12 +463,13 @@ bb.or:                                            ; preds = %bb.or, %.lr.ph460.i
   %i.krg = lshr i32 %i.krf, 4
   %i.krh = or disjoint i32 %i.krg, %i.kpx
   %i.kri = mul nuw nsw i32 %i.krh, %i.koy
-  %i.krj = add nuw nsw i32 %i.kri, %40
+  %43 = trunc nuw nsw i64 %indvars.iv511.i to i32
+  %i.krj = add nuw nsw i32 %i.kri, %43
   %i.krk = shl nsw i32 %i.krj, 4
   %i.krl = and i32 %i.krf, 15
   %i.krm = or disjoint i32 %i.krk, %i.krl
-  %46 = sext i32 %i.krm to i64
-  %i.krn = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %46 ; 2 uses
+  %44 = zext nneg i32 %i.krm to i64
+  %i.krn = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %44 ; 2 uses
   %i.kro = load i16, ptr %i.krn, align 2, !tbaa !46
   %i.krp = add i16 %i.kro, 1
   store i16 %i.krp, ptr %i.krn, align 2, !tbaa !46
@@ -579,8 +575,8 @@ bb.ou:                                            ; preds = %bb.ou, %.lr.ph468.i
   %i.ktb = shl nsw i32 %i.kta, 4
   %i.ktc = and i32 %i.ksw, 15
   %i.ktd = or disjoint i32 %i.ktb, %i.ktc
-  %47 = sext i32 %i.ktd to i64
-  %i.kte = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %47 ; 2 uses
+  %45 = zext nneg i32 %i.ktd to i64
+  %i.kte = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %45 ; 2 uses
   %i.ktf = load i16, ptr %i.kte, align 2, !tbaa !46
   %i.ktg = add i16 %i.ktf, -1
   store i16 %i.ktg, ptr %i.kte, align 2, !tbaa !46
@@ -603,8 +599,8 @@ bb.ou:                                            ; preds = %bb.ou, %.lr.ph468.i
   %i.ktw = shl nsw i32 %i.ktv, 4
   %i.ktx = and i32 %i.ktr, 15
   %i.kty = or disjoint i32 %i.ktw, %i.ktx
-  %48 = sext i32 %i.kty to i64
-  %i.ktz = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %48 ; 2 uses
+  %46 = zext nneg i32 %i.kty to i64
+  %i.ktz = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %46 ; 2 uses
   %i.kua = load i16, ptr %i.ktz, align 2, !tbaa !46
   %i.kub = add i16 %i.kua, 1
   store i16 %i.kub, ptr %i.ktz, align 2, !tbaa !46

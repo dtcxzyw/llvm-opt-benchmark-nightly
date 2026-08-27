@@ -204,7 +204,7 @@ bb.a:
 define hidden noundef zeroext i1 @_ZN2v88internal13WeakArrayList9RemoveOneENS0_23MaybeObjectDirectHandleE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0, i32 %1, ptr %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %.fr = freeze ptr %2                            ; 3 uses
-  %.sroa.0.0.copyload.i = load i64, ptr %0, align 8 ; 5 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %0, align 8 ; 4 uses
   %i.a = add i64 %.sroa.0.0.copyload.i, 15
   %i.b = inttoptr i64 %i.a to ptr
   %i.c = load i64, ptr %i.b, align 8
@@ -218,11 +218,11 @@ bb.a:
   %.fr59 = freeze i32 %1
   %i.h = icmp eq i32 %.fr59, 0
   %i.i = icmp eq ptr %.fr, null                   ; 2 uses
-  %i.j = shl nsw i32 %i.f, 3                      ; 2 uses
+  %i.j = shl nuw nsw i32 %i.f, 3
   %narrow.us.us = add nuw i32 %i.j, 23
-  %i.k = zext i32 %narrow.us.us to i64            ; 3 uses
+  %i.k = zext i32 %narrow.us.us to i64            ; 4 uses
   %i.l = add i64 %.sroa.0.0.copyload.i, %i.k
-  %i.m = inttoptr i64 %i.l to ptr                 ; 3 uses
+  %i.m = inttoptr i64 %i.l to ptr                 ; 4 uses
   %i.n = load atomic volatile i64, ptr %i.m monotonic, align 8 ; 2 uses
   br i1 %i.h, label %.lr.ph.split.us, label %.lr.ph.split
 
@@ -249,7 +249,7 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit3.i.us.lr.ph: ; preds = 
 
 _ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit3.i.us: ; preds = %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit3.i.us.lr.ph, %.lr.ph55
   %i.r = phi i32 [ %i.q, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit3.i.us.lr.ph ], [ %i.x, %.lr.ph55 ] ; 3 uses
-  %i.s = shl nsw i32 %i.r, 3
+  %i.s = shl nuw nsw i32 %i.r, 3
   %narrow.us = add nuw i32 %i.s, 23
   %i.t = zext i32 %narrow.us to i64               ; 2 uses
   %i.u = add i64 %.sroa.0.0.copyload.i, %i.t
@@ -290,7 +290,7 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i.lr.ph: ; preds = %.lr
 
 _ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i: ; preds = %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i.lr.ph, %.lr.ph48
   %i.ad = phi i32 [ %i.aa, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i.lr.ph ], [ %i.ab, %.lr.ph48 ] ; 3 uses
-  %i.ae = shl nsw i32 %i.ad, 3
+  %i.ae = shl nuw nsw i32 %i.ad, 3
   %narrow = add nuw i32 %i.ae, 23
   %i.af = zext i32 %narrow to i64                 ; 2 uses
   %i.ag = add i64 %.sroa.0.0.copyload.i, %i.af
@@ -302,11 +302,7 @@ _ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i: ; preds = %_ZNK2v88i
 .split38.us:                                      ; preds = %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit3.i.us, %.lr.ph.split.split, %.lr.ph.split.us.split
   %.us-phi39 = phi i64 [ %i.t, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit3.i.us ], [ %i.k, %.lr.ph.split.us.split ], [ %i.k, %.lr.ph.split.split ], [ %i.af, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i ]
   %.us-phi40 = phi ptr [ %i.v, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit3.i.us ], [ %i.m, %.lr.ph.split.us.split ], [ %i.m, %.lr.ph.split.split ], [ %i.ah, %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit.i ]
-  %3 = sext i32 %i.j to i64
-  %4 = add nsw i64 %3, 23                         ; 2 uses
-  %5 = add i64 %4, %.sroa.0.0.copyload.i
-  %6 = inttoptr i64 %5 to ptr
-  %i.aj = load atomic volatile i64, ptr %6 monotonic, align 8 ; 5 uses
+  %i.aj = load atomic volatile i64, ptr %i.m monotonic, align 8 ; 5 uses
   store atomic volatile i64 %i.aj, ptr %.us-phi40 monotonic, align 8
   %.sroa.02.0.copyload.i.i = load i64, ptr %0, align 8 ; 4 uses
   %i.ak = add i64 %.sroa.02.0.copyload.i.i, %.us-phi39 ; 2 uses
@@ -348,12 +344,12 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN2v88internal13WeakArrayList3SetEiNS0_6TaggedINS0_9MaybeWeakINS0_6ObjectEEEEENS0_16WriteBarrierModeE.exit23: ; preds = %bb.f, %bb.e, %.split38.us
   %.sroa.04.0.copyload.i.i17 = load i64, ptr %0, align 8
-  %i.ay = add i64 %.sroa.04.0.copyload.i.i17, %4
+  %i.ay = add i64 %.sroa.04.0.copyload.i.i17, %i.k
   %i.az = inttoptr i64 %i.ay to ptr
   store atomic volatile i64 3, ptr %i.az monotonic, align 8
   %.sroa.02.0.copyload.i = load i64, ptr %0, align 8
   %i.ba = sext i32 %i.f to i64
-  %i.bb = shl nsw i64 %i.ba, 32
+  %i.bb = shl nuw nsw i64 %i.ba, 32
   %i.bc = add i64 %.sroa.02.0.copyload.i, 15
   %i.bd = inttoptr i64 %i.bc to ptr
   store atomic volatile i64 %i.bb, ptr %i.bd monotonic, align 8

@@ -205,11 +205,11 @@ bb.f:                                             ; preds = %bb.e
   %i.an = phi <8 x i64> [ %.promoted21, %.preheader85.preheader.new ], [ %i.bq, %.preheader85 ]
   %.0.i39.i918 = phi i64 [ 0, %.preheader85.preheader.new ], [ %i.br, %.preheader85 ] ; 4 uses
   %niter = phi i64 [ 0, %.preheader85.preheader.new ], [ %niter.next.1, %.preheader85 ]
-  %i.ao = shl i64 %.0.i39.i918, 6
+  %i.ao = shl nuw nsw i64 %.0.i39.i918, 6
   %i.ap = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ao ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.aq, i32 0, i32 3, i32 1)
-  %i.ar = shl i64 %.0.i39.i918, 3
+  %i.ar = shl nuw nsw i64 %.0.i39.i918, 3
   %i.as = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ar
   %i.at = load <8 x i64>, ptr %i.ap, align 64, !tbaa !15 ; 2 uses
   %i.au = load <8 x i64>, ptr %i.as, align 1, !tbaa !15
@@ -222,11 +222,11 @@ bb.f:                                             ; preds = %bb.e
   %i.bb = add <8 x i64> %i.ba, %i.ay              ; 2 uses
   store <8 x i64> %i.bb, ptr %0, align 64, !tbaa !15
   %i.bc = or disjoint i64 %.0.i39.i918, 1         ; 2 uses
-  %i.bd = shl i64 %i.bc, 6
+  %i.bd = shl nuw nsw i64 %i.bc, 6
   %i.be = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.bd ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.bf, i32 0, i32 3, i32 1)
-  %i.bg = shl i64 %i.bc, 3
+  %i.bg = shl nuw nsw i64 %i.bc, 3
   %i.bh = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.bg
   %i.bi = load <8 x i64>, ptr %i.be, align 64, !tbaa !15 ; 2 uses
   %i.bj = load <8 x i64>, ptr %i.bh, align 1, !tbaa !15
@@ -252,11 +252,11 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i10.unr-lcssa: ; preds = %.preheader
   %.0.i39.i918.epil.init = phi i64 [ 0, %.preheader85.preheader ], [ %i.br, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i10.unr-lcssa ] ; 2 uses
   %lcmp.mod104 = trunc i64 %i.aj to i1
   tail call void @llvm.assume(i1 %lcmp.mod104)
-  %i.bs = shl i64 %.0.i39.i918.epil.init, 6
+  %i.bs = shl nuw nsw i64 %.0.i39.i918.epil.init, 6
   %i.bt = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.bs ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.bu, i32 0, i32 3, i32 1)
-  %i.bv = shl i64 %.0.i39.i918.epil.init, 3
+  %i.bv = shl nuw nsw i64 %.0.i39.i918.epil.init, 3
   %i.bw = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.bv
   %i.bx = load <8 x i64>, ptr %i.bt, align 64, !tbaa !15 ; 2 uses
   %i.by = load <8 x i64>, ptr %i.bw, align 1, !tbaa !15
@@ -308,11 +308,11 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %i.cy = phi <8 x i64> [ %i.ct, %.lr.ph.new ], [ %i.eb, %bb.g ]
   %.0.i37.i1119 = phi i64 [ 0, %.lr.ph.new ], [ %i.ec, %bb.g ] ; 4 uses
   %niter111 = phi i64 [ 0, %.lr.ph.new ], [ %niter111.next.1, %bb.g ]
-  %i.cz = shl i64 %.0.i37.i1119, 6
+  %i.cz = shl nuw nsw i64 %.0.i37.i1119, 6
   %i.da = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.cz ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.db, i32 0, i32 3, i32 1)
-  %i.dc = shl i64 %.0.i37.i1119, 3
+  %i.dc = shl nuw nsw i64 %.0.i37.i1119, 3
   %i.dd = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.dc
   %i.de = load <8 x i64>, ptr %i.da, align 64, !tbaa !15 ; 2 uses
   %i.df = load <8 x i64>, ptr %i.dd, align 1, !tbaa !15
@@ -325,11 +325,11 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %i.dm = add <8 x i64> %i.dl, %i.dj              ; 2 uses
   store <8 x i64> %i.dm, ptr %0, align 64, !tbaa !15
   %i.dn = or disjoint i64 %.0.i37.i1119, 1        ; 2 uses
-  %i.do = shl i64 %i.dn, 6
+  %i.do = shl nuw nsw i64 %i.dn, 6
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.do ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.dq, i32 0, i32 3, i32 1)
-  %i.dr = shl i64 %i.dn, 3
+  %i.dr = shl nuw nsw i64 %i.dn, 3
   %i.ds = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.dr
   %i.dt = load <8 x i64>, ptr %i.dp, align 64, !tbaa !15 ; 2 uses
   %i.du = load <8 x i64>, ptr %i.ds, align 1, !tbaa !15
@@ -413,11 +413,11 @@ _ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit16.loopexit.unr-
   %.0.i37.i1119.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ec, %_ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit16.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod109 = trunc i64 %i.cg to i1
   tail call void @llvm.assume(i1 %lcmp.mod109)
-  %i.fy = shl i64 %.0.i37.i1119.epil.init, 6
+  %i.fy = shl nuw nsw i64 %.0.i37.i1119.epil.init, 6
   %i.fz = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.fy ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ga, i32 0, i32 3, i32 1)
-  %i.gb = shl i64 %.0.i37.i1119.epil.init, 3
+  %i.gb = shl nuw nsw i64 %.0.i37.i1119.epil.init, 3
   %i.gc = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.gb
   %i.gd = load <8 x i64>, ptr %i.fz, align 64, !tbaa !15 ; 2 uses
   %i.ge = load <8 x i64>, ptr %i.gc, align 1, !tbaa !15
@@ -820,11 +820,11 @@ bb.n:                                             ; preds = %_ZL19XXH3_consumeSt
   %i.oo = phi <8 x i64> [ %.promoted28, %.preheader84.preheader.new ], [ %i.pr, %.preheader84 ]
   %.0.i39.i23 = phi i64 [ 0, %.preheader84.preheader.new ], [ %i.ps, %.preheader84 ] ; 4 uses
   %niter119 = phi i64 [ 0, %.preheader84.preheader.new ], [ %niter119.next.1, %.preheader84 ]
-  %i.op = shl i64 %.0.i39.i23, 6
+  %i.op = shl nuw nsw i64 %.0.i39.i23, 6
   %i.oq = getelementptr inbounds nuw i8, ptr %.2.i, i64 %i.op ; 2 uses
   %i.or = getelementptr inbounds nuw i8, ptr %i.oq, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.or, i32 0, i32 3, i32 1)
-  %i.os = shl i64 %.0.i39.i23, 3
+  %i.os = shl nuw nsw i64 %.0.i39.i23, 3
   %i.ot = getelementptr inbounds nuw i8, ptr %i.om, i64 %i.os
   %i.ou = load <8 x i64>, ptr %i.oq, align 1, !tbaa !15 ; 2 uses
   %i.ov = load <8 x i64>, ptr %i.ot, align 1, !tbaa !15
@@ -837,11 +837,11 @@ bb.n:                                             ; preds = %_ZL19XXH3_consumeSt
   %i.pc = add <8 x i64> %i.pb, %i.oz              ; 2 uses
   store <8 x i64> %i.pc, ptr %0, align 64, !tbaa !15
   %i.pd = or disjoint i64 %.0.i39.i23, 1          ; 2 uses
-  %i.pe = shl i64 %i.pd, 6
+  %i.pe = shl nuw nsw i64 %i.pd, 6
   %i.pf = getelementptr inbounds nuw i8, ptr %.2.i, i64 %i.pe ; 2 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %i.pf, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.pg, i32 0, i32 3, i32 1)
-  %i.ph = shl i64 %i.pd, 3
+  %i.ph = shl nuw nsw i64 %i.pd, 3
   %i.pi = getelementptr inbounds nuw i8, ptr %i.om, i64 %i.ph
   %i.pj = load <8 x i64>, ptr %i.pf, align 1, !tbaa !15 ; 2 uses
   %i.pk = load <8 x i64>, ptr %i.pi, align 1, !tbaa !15
@@ -867,11 +867,11 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i.unr-lcssa: ; preds = %.preheader84
   %.0.i39.i23.epil.init = phi i64 [ 0, %.preheader84.preheader ], [ %i.ps, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i.unr-lcssa ] ; 2 uses
   %lcmp.mod117 = trunc i64 %i.ok to i1
   tail call void @llvm.assume(i1 %lcmp.mod117)
-  %i.pt = shl i64 %.0.i39.i23.epil.init, 6
+  %i.pt = shl nuw nsw i64 %.0.i39.i23.epil.init, 6
   %i.pu = getelementptr inbounds nuw i8, ptr %.2.i, i64 %i.pt ; 2 uses
   %i.pv = getelementptr inbounds nuw i8, ptr %i.pu, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.pv, i32 0, i32 3, i32 1)
-  %i.pw = shl i64 %.0.i39.i23.epil.init, 3
+  %i.pw = shl nuw nsw i64 %.0.i39.i23.epil.init, 3
   %i.px = getelementptr inbounds nuw i8, ptr %i.om, i64 %i.pw
   %i.py = load <8 x i64>, ptr %i.pu, align 1, !tbaa !15 ; 2 uses
   %i.pz = load <8 x i64>, ptr %i.px, align 1, !tbaa !15
@@ -922,11 +922,11 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph26.new
   %i.qx = phi <8 x i64> [ %i.qt, %.lr.ph26.new ], [ %i.sa, %bb.o ]
   %.0.i37.i25 = phi i64 [ 0, %.lr.ph26.new ], [ %i.sb, %bb.o ] ; 4 uses
   %niter127 = phi i64 [ 0, %.lr.ph26.new ], [ %niter127.next.1, %bb.o ]
-  %i.qy = shl i64 %.0.i37.i25, 6
+  %i.qy = shl nuw nsw i64 %.0.i37.i25, 6
   %i.qz = getelementptr inbounds nuw i8, ptr %i.qv, i64 %i.qy ; 2 uses
   %i.ra = getelementptr inbounds nuw i8, ptr %i.qz, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ra, i32 0, i32 3, i32 1)
-  %i.rb = shl i64 %.0.i37.i25, 3
+  %i.rb = shl nuw nsw i64 %.0.i37.i25, 3
   %i.rc = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.rb
   %i.rd = load <8 x i64>, ptr %i.qz, align 1, !tbaa !15 ; 2 uses
   %i.re = load <8 x i64>, ptr %i.rc, align 1, !tbaa !15
@@ -939,11 +939,11 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph26.new
   %i.rl = add <8 x i64> %i.rk, %i.ri              ; 2 uses
   store <8 x i64> %i.rl, ptr %0, align 64, !tbaa !15
   %i.rm = or disjoint i64 %.0.i37.i25, 1          ; 2 uses
-  %i.rn = shl i64 %i.rm, 6
+  %i.rn = shl nuw nsw i64 %i.rm, 6
   %i.ro = getelementptr inbounds nuw i8, ptr %i.qv, i64 %i.rn ; 2 uses
   %i.rp = getelementptr inbounds nuw i8, ptr %i.ro, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.rp, i32 0, i32 3, i32 1)
-  %i.rq = shl i64 %i.rm, 3
+  %i.rq = shl nuw nsw i64 %i.rm, 3
   %i.rr = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.rq
   %i.rs = load <8 x i64>, ptr %i.ro, align 1, !tbaa !15 ; 2 uses
   %i.rt = load <8 x i64>, ptr %i.rr, align 1, !tbaa !15
@@ -1027,11 +1027,11 @@ _ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit.loopexit.unr-lc
   %.0.i37.i25.epil.init = phi i64 [ 0, %.lr.ph26 ], [ %i.sb, %_ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod125 = trunc i64 %i.qh to i1
   tail call void @llvm.assume(i1 %lcmp.mod125)
-  %i.tx = shl i64 %.0.i37.i25.epil.init, 6
+  %i.tx = shl nuw nsw i64 %.0.i37.i25.epil.init, 6
   %i.ty = getelementptr inbounds nuw i8, ptr %i.qv, i64 %i.tx ; 2 uses
   %i.tz = getelementptr inbounds nuw i8, ptr %i.ty, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.tz, i32 0, i32 3, i32 1)
-  %i.ua = shl i64 %.0.i37.i25.epil.init, 3
+  %i.ua = shl nuw nsw i64 %.0.i37.i25.epil.init, 3
   %i.ub = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ua
   %i.uc = load <8 x i64>, ptr %i.ty, align 1, !tbaa !15 ; 2 uses
   %i.ud = load <8 x i64>, ptr %i.ub, align 1, !tbaa !15
@@ -1434,11 +1434,11 @@ bb.f:                                             ; preds = %bb.e
   %i.an = phi <8 x i64> [ %.promoted21, %.preheader85.preheader.new ], [ %i.bq, %.preheader85 ]
   %.0.i39.i918 = phi i64 [ 0, %.preheader85.preheader.new ], [ %i.br, %.preheader85 ] ; 4 uses
   %niter = phi i64 [ 0, %.preheader85.preheader.new ], [ %niter.next.1, %.preheader85 ]
-  %i.ao = shl i64 %.0.i39.i918, 6
+  %i.ao = shl nuw nsw i64 %.0.i39.i918, 6
   %i.ap = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.ao ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.aq, i32 0, i32 3, i32 1)
-  %i.ar = shl i64 %.0.i39.i918, 3
+  %i.ar = shl nuw nsw i64 %.0.i39.i918, 3
   %i.as = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.ar
   %i.at = load <8 x i64>, ptr %i.ap, align 64, !tbaa !15 ; 2 uses
   %i.au = load <8 x i64>, ptr %i.as, align 1, !tbaa !15
@@ -1451,11 +1451,11 @@ bb.f:                                             ; preds = %bb.e
   %i.bb = add <8 x i64> %i.ba, %i.ay              ; 2 uses
   store <8 x i64> %i.bb, ptr %0, align 64, !tbaa !15
   %i.bc = or disjoint i64 %.0.i39.i918, 1         ; 2 uses
-  %i.bd = shl i64 %i.bc, 6
+  %i.bd = shl nuw nsw i64 %i.bc, 6
   %i.be = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.bd ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.bf, i32 0, i32 3, i32 1)
-  %i.bg = shl i64 %i.bc, 3
+  %i.bg = shl nuw nsw i64 %i.bc, 3
   %i.bh = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.bg
   %i.bi = load <8 x i64>, ptr %i.be, align 64, !tbaa !15 ; 2 uses
   %i.bj = load <8 x i64>, ptr %i.bh, align 1, !tbaa !15
@@ -1481,11 +1481,11 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i10.unr-lcssa: ; preds = %.preheader
   %.0.i39.i918.epil.init = phi i64 [ 0, %.preheader85.preheader ], [ %i.br, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i10.unr-lcssa ] ; 2 uses
   %lcmp.mod104 = trunc i64 %i.aj to i1
   tail call void @llvm.assume(i1 %lcmp.mod104)
-  %i.bs = shl i64 %.0.i39.i918.epil.init, 6
+  %i.bs = shl nuw nsw i64 %.0.i39.i918.epil.init, 6
   %i.bt = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.bs ; 2 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.bu, i32 0, i32 3, i32 1)
-  %i.bv = shl i64 %.0.i39.i918.epil.init, 3
+  %i.bv = shl nuw nsw i64 %.0.i39.i918.epil.init, 3
   %i.bw = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.bv
   %i.bx = load <8 x i64>, ptr %i.bt, align 64, !tbaa !15 ; 2 uses
   %i.by = load <8 x i64>, ptr %i.bw, align 1, !tbaa !15
@@ -1537,11 +1537,11 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %i.cy = phi <8 x i64> [ %i.ct, %.lr.ph.new ], [ %i.eb, %bb.g ]
   %.0.i37.i1119 = phi i64 [ 0, %.lr.ph.new ], [ %i.ec, %bb.g ] ; 4 uses
   %niter111 = phi i64 [ 0, %.lr.ph.new ], [ %niter111.next.1, %bb.g ]
-  %i.cz = shl i64 %.0.i37.i1119, 6
+  %i.cz = shl nuw nsw i64 %.0.i37.i1119, 6
   %i.da = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.cz ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.db, i32 0, i32 3, i32 1)
-  %i.dc = shl i64 %.0.i37.i1119, 3
+  %i.dc = shl nuw nsw i64 %.0.i37.i1119, 3
   %i.dd = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.dc
   %i.de = load <8 x i64>, ptr %i.da, align 64, !tbaa !15 ; 2 uses
   %i.df = load <8 x i64>, ptr %i.dd, align 1, !tbaa !15
@@ -1554,11 +1554,11 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   %i.dm = add <8 x i64> %i.dl, %i.dj              ; 2 uses
   store <8 x i64> %i.dm, ptr %0, align 64, !tbaa !15
   %i.dn = or disjoint i64 %.0.i37.i1119, 1        ; 2 uses
-  %i.do = shl i64 %i.dn, 6
+  %i.do = shl nuw nsw i64 %i.dn, 6
   %i.dp = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.do ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.dq, i32 0, i32 3, i32 1)
-  %i.dr = shl i64 %i.dn, 3
+  %i.dr = shl nuw nsw i64 %i.dn, 3
   %i.ds = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.dr
   %i.dt = load <8 x i64>, ptr %i.dp, align 64, !tbaa !15 ; 2 uses
   %i.du = load <8 x i64>, ptr %i.ds, align 1, !tbaa !15
@@ -1642,11 +1642,11 @@ _ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit16.loopexit.unr-
   %.0.i37.i1119.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ec, %_ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit16.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod109 = trunc i64 %i.cg to i1
   tail call void @llvm.assume(i1 %lcmp.mod109)
-  %i.fy = shl i64 %.0.i37.i1119.epil.init, 6
+  %i.fy = shl nuw nsw i64 %.0.i37.i1119.epil.init, 6
   %i.fz = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.fy ; 2 uses
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ga, i32 0, i32 3, i32 1)
-  %i.gb = shl i64 %.0.i37.i1119.epil.init, 3
+  %i.gb = shl nuw nsw i64 %.0.i37.i1119.epil.init, 3
   %i.gc = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.gb
   %i.gd = load <8 x i64>, ptr %i.fz, align 64, !tbaa !15 ; 2 uses
   %i.ge = load <8 x i64>, ptr %i.gc, align 1, !tbaa !15
@@ -2049,11 +2049,11 @@ bb.n:                                             ; preds = %_ZL19XXH3_consumeSt
   %i.oo = phi <8 x i64> [ %.promoted28, %.preheader84.preheader.new ], [ %i.pr, %.preheader84 ]
   %.0.i39.i23 = phi i64 [ 0, %.preheader84.preheader.new ], [ %i.ps, %.preheader84 ] ; 4 uses
   %niter119 = phi i64 [ 0, %.preheader84.preheader.new ], [ %niter119.next.1, %.preheader84 ]
-  %i.op = shl i64 %.0.i39.i23, 6
+  %i.op = shl nuw nsw i64 %.0.i39.i23, 6
   %i.oq = getelementptr inbounds nuw i8, ptr %.2.i, i64 %i.op ; 2 uses
   %i.or = getelementptr inbounds nuw i8, ptr %i.oq, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.or, i32 0, i32 3, i32 1)
-  %i.os = shl i64 %.0.i39.i23, 3
+  %i.os = shl nuw nsw i64 %.0.i39.i23, 3
   %i.ot = getelementptr inbounds nuw i8, ptr %i.om, i64 %i.os
   %i.ou = load <8 x i64>, ptr %i.oq, align 1, !tbaa !15 ; 2 uses
   %i.ov = load <8 x i64>, ptr %i.ot, align 1, !tbaa !15
@@ -2066,11 +2066,11 @@ bb.n:                                             ; preds = %_ZL19XXH3_consumeSt
   %i.pc = add <8 x i64> %i.pb, %i.oz              ; 2 uses
   store <8 x i64> %i.pc, ptr %0, align 64, !tbaa !15
   %i.pd = or disjoint i64 %.0.i39.i23, 1          ; 2 uses
-  %i.pe = shl i64 %i.pd, 6
+  %i.pe = shl nuw nsw i64 %i.pd, 6
   %i.pf = getelementptr inbounds nuw i8, ptr %.2.i, i64 %i.pe ; 2 uses
   %i.pg = getelementptr inbounds nuw i8, ptr %i.pf, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.pg, i32 0, i32 3, i32 1)
-  %i.ph = shl i64 %i.pd, 3
+  %i.ph = shl nuw nsw i64 %i.pd, 3
   %i.pi = getelementptr inbounds nuw i8, ptr %i.om, i64 %i.ph
   %i.pj = load <8 x i64>, ptr %i.pf, align 1, !tbaa !15 ; 2 uses
   %i.pk = load <8 x i64>, ptr %i.pi, align 1, !tbaa !15
@@ -2096,11 +2096,11 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i.unr-lcssa: ; preds = %.preheader84
   %.0.i39.i23.epil.init = phi i64 [ 0, %.preheader84.preheader ], [ %i.ps, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit40.i.unr-lcssa ] ; 2 uses
   %lcmp.mod117 = trunc i64 %i.ok to i1
   tail call void @llvm.assume(i1 %lcmp.mod117)
-  %i.pt = shl i64 %.0.i39.i23.epil.init, 6
+  %i.pt = shl nuw nsw i64 %.0.i39.i23.epil.init, 6
   %i.pu = getelementptr inbounds nuw i8, ptr %.2.i, i64 %i.pt ; 2 uses
   %i.pv = getelementptr inbounds nuw i8, ptr %i.pu, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.pv, i32 0, i32 3, i32 1)
-  %i.pw = shl i64 %.0.i39.i23.epil.init, 3
+  %i.pw = shl nuw nsw i64 %.0.i39.i23.epil.init, 3
   %i.px = getelementptr inbounds nuw i8, ptr %i.om, i64 %i.pw
   %i.py = load <8 x i64>, ptr %i.pu, align 1, !tbaa !15 ; 2 uses
   %i.pz = load <8 x i64>, ptr %i.px, align 1, !tbaa !15
@@ -2151,11 +2151,11 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph26.new
   %i.qx = phi <8 x i64> [ %i.qt, %.lr.ph26.new ], [ %i.sa, %bb.o ]
   %.0.i37.i25 = phi i64 [ 0, %.lr.ph26.new ], [ %i.sb, %bb.o ] ; 4 uses
   %niter127 = phi i64 [ 0, %.lr.ph26.new ], [ %niter127.next.1, %bb.o ]
-  %i.qy = shl i64 %.0.i37.i25, 6
+  %i.qy = shl nuw nsw i64 %.0.i37.i25, 6
   %i.qz = getelementptr inbounds nuw i8, ptr %i.qv, i64 %i.qy ; 2 uses
   %i.ra = getelementptr inbounds nuw i8, ptr %i.qz, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ra, i32 0, i32 3, i32 1)
-  %i.rb = shl i64 %.0.i37.i25, 3
+  %i.rb = shl nuw nsw i64 %.0.i37.i25, 3
   %i.rc = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.rb
   %i.rd = load <8 x i64>, ptr %i.qz, align 1, !tbaa !15 ; 2 uses
   %i.re = load <8 x i64>, ptr %i.rc, align 1, !tbaa !15
@@ -2168,11 +2168,11 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph26.new
   %i.rl = add <8 x i64> %i.rk, %i.ri              ; 2 uses
   store <8 x i64> %i.rl, ptr %0, align 64, !tbaa !15
   %i.rm = or disjoint i64 %.0.i37.i25, 1          ; 2 uses
-  %i.rn = shl i64 %i.rm, 6
+  %i.rn = shl nuw nsw i64 %i.rm, 6
   %i.ro = getelementptr inbounds nuw i8, ptr %i.qv, i64 %i.rn ; 2 uses
   %i.rp = getelementptr inbounds nuw i8, ptr %i.ro, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.rp, i32 0, i32 3, i32 1)
-  %i.rq = shl i64 %i.rm, 3
+  %i.rq = shl nuw nsw i64 %i.rm, 3
   %i.rr = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.rq
   %i.rs = load <8 x i64>, ptr %i.ro, align 1, !tbaa !15 ; 2 uses
   %i.rt = load <8 x i64>, ptr %i.rr, align 1, !tbaa !15
@@ -2256,11 +2256,11 @@ _ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit.loopexit.unr-lc
   %.0.i37.i25.epil.init = phi i64 [ 0, %.lr.ph26 ], [ %i.sb, %_ZL19XXH3_consumeStripesPmS_mPKhmS1_mPFvS_S1_S1_mEPFvPvPKvE.exit.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod125 = trunc i64 %i.qh to i1
   tail call void @llvm.assume(i1 %lcmp.mod125)
-  %i.tx = shl i64 %.0.i37.i25.epil.init, 6
+  %i.tx = shl nuw nsw i64 %.0.i37.i25.epil.init, 6
   %i.ty = getelementptr inbounds nuw i8, ptr %i.qv, i64 %i.tx ; 2 uses
   %i.tz = getelementptr inbounds nuw i8, ptr %i.ty, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.tz, i32 0, i32 3, i32 1)
-  %i.ua = shl i64 %.0.i37.i25.epil.init, 3
+  %i.ua = shl nuw nsw i64 %.0.i37.i25.epil.init, 3
   %i.ub = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.ua
   %i.uc = load <8 x i64>, ptr %i.ty, align 1, !tbaa !15 ; 2 uses
   %i.ud = load <8 x i64>, ptr %i.ub, align 1, !tbaa !15

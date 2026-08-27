@@ -205,12 +205,11 @@ bb.w:                                             ; preds = %.lr.ph127, %bb.w
   store i16 %.059.i, ptr %i.cp, align 2, !tbaa !207
   %i.cq = getelementptr inbounds nuw [2 x i8], ptr %i.bg, i64 %indvars.iv141
   store i16 %.058.i, ptr %i.cq, align 2, !tbaa !207
-  %i.cr = shl i64 %indvars.iv141, 2
-  %16 = and i64 %i.cr, 4294967292
-  %17 = getelementptr inbounds nuw [2 x i8], ptr %i.bd, i64 %16
+  %i.cr = shl nuw nsw i64 %indvars.iv141, 3
+  %16 = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.cr
   %i.cs = insertelement <4 x i16> poison, i16 %.059.i, i64 0
   %i.ct = shufflevector <4 x i16> %i.cs, <4 x i16> poison, <4 x i32> zeroinitializer
-  store <4 x i16> %i.ct, ptr %17, align 2, !tbaa !207
+  store <4 x i16> %i.ct, ptr %16, align 2, !tbaa !207
   %indvars.iv.next142 = add nuw nsw i64 %indvars.iv141, 1 ; 2 uses
   %exitcond145.not = icmp eq i64 %indvars.iv.next142, %wide.trip.count144
   br i1 %exitcond145.not, label %.preheader, label %bb.w, !llvm.loop !222
@@ -488,12 +487,11 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ah, %.lr
   store float %.058.i49, ptr %i.hj, align 4, !tbaa !215
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr %i.ff, i64 %indvars.iv
   store i32 %.057.i50, ptr %i.hk, align 4, !tbaa !49
-  %i.hl = shl i64 %indvars.iv, 2
-  %18 = and i64 %i.hl, 4294967292
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %i.fc, i64 %18
+  %i.hl = shl nuw nsw i64 %indvars.iv, 4
+  %17 = getelementptr inbounds nuw i8, ptr %i.fc, i64 %i.hl
   %i.hm = insertelement <4 x float> poison, float %.058.i49, i64 0
   %i.hn = shufflevector <4 x float> %i.hm, <4 x float> poison, <4 x i32> zeroinitializer
-  store <4 x float> %i.hn, ptr %19, align 4, !tbaa !215
+  store <4 x float> %i.hn, ptr %17, align 4, !tbaa !215
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.preheader120, label %.lr.ph, !llvm.loop !234

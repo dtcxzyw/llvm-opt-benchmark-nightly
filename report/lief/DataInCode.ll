@@ -205,8 +205,8 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZN3fmt3v126detail9allocatorIjE8allocateEm.exit.i1131: ; preds = %bb.ad
-  %i.kt = shl i64 %i.jn, 2
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.kr, ptr nonnull align 4 %i.js, i64 %i.kt, i1 false)
+  %i.kt = shl nuw nsw i64 %i.jn, 2
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.kr, ptr noundef nonnull align 4 dereferenceable(1) %i.js, i64 %i.kt, i1 false)
   store ptr %i.kr, ptr %10, align 8, !tbaa !354
   store i64 %.0.i1129, ptr %i.a, align 8, !tbaa !355
   %.not.i1132 = icmp eq ptr %i.js, %i.d

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.t = xor i64 %i.h, -1                         ; 2 uses
   %i.u = add nsw i64 %i.d, %i.t
-  %i.v = shl nsw i64 %i.u, 4
+  %i.v = shl nuw nsw i64 %i.u, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.s, i64 %i.v, i1 false), !noalias !175
   %i.w = add nsw i64 %i.d, -1
   store i64 %i.w, ptr %i.c, align 8, !alias.scope !175
@@ -229,7 +229,7 @@ bb.d:                                             ; preds = %"_ZN5alloc3vec16Vec
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(104) %i.ac, i64 104, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 104
   %i.ae = add nsw i64 %i.y, %i.t
-  %i.af = mul nsw i64 %i.ae, 104
+  %i.af = mul nuw nsw i64 %i.ae, 104
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ac, ptr nonnull align 8 %i.ad, i64 %i.af, i1 false), !noalias !184
   %i.ag = add nsw i64 %i.y, -1
   store i64 %i.ag, ptr %i.x, align 8, !alias.scope !179, !noalias !182
@@ -632,7 +632,7 @@ bb.et:                                            ; preds = %"_ZN4core3str6trait
   %i.up = getelementptr inbounds nuw i8, ptr %i.ul, i64 16
   %i.uq = xor i64 %i.tv, -1                       ; 2 uses
   %i.ur = add nsw i64 %i.tr, %i.uq
-  %i.us = shl nsw i64 %i.ur, 4
+  %i.us = shl nuw nsw i64 %i.ur, 4
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ul, ptr nonnull align 8 %i.up, i64 %i.us, i1 false), !noalias !2352
   %i.ut = add nsw i64 %i.tr, -1
   store i64 %i.ut, ptr %i.tq, align 8, !alias.scope !2353, !noalias !2340
@@ -662,7 +662,7 @@ bb.et:                                            ; preds = %"_ZN4core3str6trait
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11.i.i, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11.16..sroa_idx143.i.i, i64 96, i1 false), !noalias !2360
   %i.vc = getelementptr inbounds nuw i8, ptr %i.vb, i64 104
   %i.vd = add nsw i64 %i.uv, %i.uq
-  %i.ve = mul nsw i64 %i.vd, 104
+  %i.ve = mul nuw nsw i64 %i.vd, 104
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.vb, ptr nonnull align 8 %i.vc, i64 %i.ve, i1 false), !noalias !2361
   %i.vf = add nsw i64 %i.uv, -1
   store i64 %i.vf, ptr %i.uu, align 8, !alias.scope !2357, !noalias !2358

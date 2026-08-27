@@ -205,10 +205,11 @@ bb.i:                                             ; preds = %.lr.ph, %bb.i
   %i.ew = getelementptr inbounds nuw [35552 x i8], ptr %i.ev, i64 %indvars.iv ; 5 uses
   store ptr %0, ptr %i.ew, align 16, !tbaa !138
   %i.ex = load ptr, ptr %i.ep, align 8, !tbaa !145
-  %1 = shl nuw nsw i64 %indvars.iv, 4
-  %2 = load i32, ptr %i.eq, align 4, !tbaa !146
-  %3 = sext i32 %2 to i64
-  %4 = mul nsw i64 %1, %3                         ; 3 uses
+  %1 = load i32, ptr %i.eq, align 4, !tbaa !146
+  %indvars.iv.tr = trunc i64 %indvars.iv to i32
+  %2 = shl i32 %indvars.iv.tr, 4
+  %3 = mul nsw i32 %2, %1
+  %4 = sext i32 %3 to i64                         ; 3 uses
   %i.ey = getelementptr inbounds i8, ptr %i.ex, i64 %4
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ew, i64 20912
   store ptr %i.ey, ptr %i.ez, align 16, !tbaa !147

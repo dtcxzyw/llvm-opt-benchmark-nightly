@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h
 
 _ZNSt6vectorIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEE6resizeEm.exit123: ; preds = %bb.i, %bb.h, %bb.g, %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
-  %i.t = shl nsw i32 %1, 2
+  %i.t = shl nuw nsw i32 %1, 2
   %i.u = zext nneg i32 %i.t to i64                ; 4 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !18   ; 4 uses
@@ -242,7 +242,7 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph:                                           ; preds = %bb.k, %bb.l, %bb.m, %._ZNSt6vectorIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEE6resizeEm.exit126_crit_edge
   %i.ag = phi ptr [ %.pre159, %._ZNSt6vectorIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEE6resizeEm.exit126_crit_edge ], [ %i.af, %bb.m ], [ %i.w, %bb.l ], [ %i.w, %bb.k ]
-  %i.ah = phi ptr [ %.pre, %._ZNSt6vectorIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEE6resizeEm.exit126_crit_edge ], [ %i.x, %bb.m ], [ %i.x, %bb.l ], [ %i.x, %bb.k ] ; 12 uses
+  %i.ah = phi ptr [ %.pre, %._ZNSt6vectorIfN3gmx9AllocatorIfNS0_23AlignedAllocationPolicyEEEE6resizeEm.exit126_crit_edge ], [ %i.x, %bb.m ], [ %i.x, %bb.l ], [ %i.x, %bb.k ] ; 11 uses
   %i.ai = load ptr, ptr %i.d, align 8, !tbaa !19  ; 23 uses
   %i.aj = load ptr, ptr %i.g, align 8, !tbaa !19  ; 11 uses
   %i.ak = add nsw i32 %1, -1                      ; 6 uses
@@ -603,18 +603,16 @@ middle.block:                                     ; preds = %vector.body
   %i.hb = zext nneg i32 %i.ak to i64              ; 2 uses
   %i.hc = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %i.hb
   %i.hd = load float, ptr %i.hc, align 4, !tbaa !20 ; 2 uses
-  %i.he = shl nsw i32 %i.ak, 2                    ; 2 uses
+  %i.he = shl nuw nsw i32 %i.ak, 2
   %i.hf = zext nneg i32 %i.he to i64
-  %i.hg = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.hf
+  %i.hg = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.hf ; 3 uses
   store float %i.hd, ptr %i.hg, align 4, !tbaa !20
   %i.hh = fneg float %i.hd
-  %6 = zext nneg i32 %i.he to i64
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %6 ; 2 uses
-  %i.hi = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.hi = getelementptr inbounds nuw i8, ptr %i.hg, i64 4
   store float %i.hh, ptr %i.hi, align 4, !tbaa !20
   %i.hj = getelementptr inbounds nuw [4 x i8], ptr %i.aj, i64 %i.hb
   %i.hk = load float, ptr %i.hj, align 4, !tbaa !20
-  %i.hl = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.hl = getelementptr inbounds nuw i8, ptr %i.hg, i64 8
   %i.hm = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.hk, i64 0
   store <2 x float> %i.hm, ptr %i.hl, align 4, !tbaa !20
   br label %bb.ab

@@ -205,23 +205,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.loop
   %i.hd = getelementptr inbounds nuw i8, ptr %7, i64 31
   store i8 0, ptr %i.hd, align 1, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
-  %i.he = shl nsw i64 %i.bl, 1                    ; 7 uses
-  %13 = icmp ugt i64 %i.he, 192153584101141162
-  br i1 %13, label %14, label %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-
-14:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.128) #23
-          to label %.noexc221 unwind label %bb.u
-
-.noexc221:                                        ; preds = %14
-  unreachable
-
-_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %i.he = shl nsw i64 %i.bl, 1                    ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i171, label %.loopexit413, label %_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i
 
-_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i: ; preds = %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-  %i.hf = mul nsw i64 %i.bl, 96
+_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %i.hf = mul nuw nsw i64 %i.bl, 96
   %i.hg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hf) #24
           to label %.noexc222 unwind label %bb.u  ; 4 uses
 
@@ -302,8 +291,8 @@ _ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i: ; preds = 
   %.not.i.i.i.i.i219.3 = icmp eq i64 %i.ij, 0
   br i1 %.not.i.i.i.i.i219.3, label %.loopexit413, label %.lr.ph.i.i.i.i.i216, !llvm.loop !55
 
-.loopexit413:                                     ; preds = %.lr.ph.i.i.i.i.i216.prol.loopexit, %.lr.ph.i.i.i.i.i216, %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-  %.0.lcssa.i.i.i.i.i220 = phi ptr [ null, %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ], [ %.lcssa594.unr, %.lr.ph.i.i.i.i.i216.prol.loopexit ], [ %i.ik, %.lr.ph.i.i.i.i.i216 ]
+.loopexit413:                                     ; preds = %.lr.ph.i.i.i.i.i216.prol.loopexit, %.lr.ph.i.i.i.i.i216, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %.0.lcssa.i.i.i.i.i220 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.lcssa594.unr, %.lr.ph.i.i.i.i.i216.prol.loopexit ], [ %i.ik, %.lr.ph.i.i.i.i.i216 ]
   %i.il = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   store ptr %.0.lcssa.i.i.i.i.i220, ptr %i.il, align 8, !tbaa !56
   br i1 %.not449, label %_ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit, label %bb.s
@@ -343,7 +332,7 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i: ; 
   invoke void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %i.he, i64 noundef %i.bl, i64 noundef 2)
           to label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit unwind label %bb.ax
 
-bb.u:                                             ; preds = %_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i, %14
+bb.u:                                             ; preds = %_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i
   %i.iv = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EED2Ev.exit315
@@ -746,7 +735,7 @@ bb.ax:                                            ; preds = %_ZN5Eigen8internal2
 
 .lr.ph448:                                        ; preds = %_ZN5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantERKi.exit, %bb.az
   %.0447 = phi i64 [ %i.rs, %bb.az ], [ 0, %_ZN5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantERKi.exit ] ; 2 uses
-  %i.rq = shl i64 %.0447, 1                       ; 2 uses
+  %i.rq = shl nuw nsw i64 %.0447, 1               ; 2 uses
   invoke void @_ZZN3igl8copyleft4cgal30extract_cells_single_componentIN5Eigen6MatrixIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEELin1ELin1ELi1ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELi1ELi0ELin1ELi1EEESM_SN_SN_SM_EEiRKNS3_10MatrixBaseIT_EERKNSO_IT0_EERKNSO_IT1_EERKNSO_IT2_EERKNSO_IT3_EERKNSO_IT4_EERNS3_15PlainObjectBaseIT5_EEENKUlmE0_clEm(ptr noundef nonnull align 8 dereferenceable(24) %11, i64 noundef %i.rq)
           to label %bb.ay unwind label %bb.ba
 
@@ -1149,23 +1138,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %.loop
   %i.hd = getelementptr inbounds nuw i8, ptr %7, i64 31
   store i8 0, ptr %i.hd, align 1, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #26
-  %i.he = shl nsw i64 %i.bl, 1                    ; 7 uses
-  %13 = icmp ugt i64 %i.he, 192153584101141162
-  br i1 %13, label %14, label %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-
-14:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.128) #23
-          to label %.noexc221 unwind label %bb.u
-
-.noexc221:                                        ; preds = %14
-  unreachable
-
-_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %i.he = shl nsw i64 %i.bl, 1                    ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %8, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i171, label %.loopexit413, label %_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i
 
-_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i: ; preds = %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-  %i.hf = mul nsw i64 %i.bl, 96
+_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %i.hf = mul nuw nsw i64 %i.bl, 96
   %i.hg = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hf) #24
           to label %.noexc222 unwind label %bb.u  ; 4 uses
 
@@ -1246,8 +1224,8 @@ _ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i: ; preds = 
   %.not.i.i.i.i.i219.3 = icmp eq i64 %i.ij, 0
   br i1 %.not.i.i.i.i.i219.3, label %.loopexit413, label %.lr.ph.i.i.i.i.i216, !llvm.loop !55
 
-.loopexit413:                                     ; preds = %.lr.ph.i.i.i.i.i216.prol.loopexit, %.lr.ph.i.i.i.i.i216, %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i
-  %.0.lcssa.i.i.i.i.i220 = phi ptr [ null, %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EE17_S_check_init_lenEmRKS5_.exit.i ], [ %.lcssa594.unr, %.lr.ph.i.i.i.i.i216.prol.loopexit ], [ %i.ik, %.lr.ph.i.i.i.i.i216 ]
+.loopexit413:                                     ; preds = %.lr.ph.i.i.i.i.i216.prol.loopexit, %.lr.ph.i.i.i.i.i216, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %.0.lcssa.i.i.i.i.i220 = phi ptr [ null, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.lcssa594.unr, %.lr.ph.i.i.i.i.i216.prol.loopexit ], [ %i.ik, %.lr.ph.i.i.i.i.i216 ]
   %i.il = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
   store ptr %.0.lcssa.i.i.i.i.i220, ptr %i.il, align 8, !tbaa !56
   br i1 %.not449, label %_ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit, label %bb.s
@@ -1287,7 +1265,7 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i: ; 
   invoke void @_ZN5Eigen12DenseStorageIiLin1ELin1ELin1ELi0EE6resizeElll(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %i.he, i64 noundef %i.bl, i64 noundef 2)
           to label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit unwind label %bb.ax
 
-bb.u:                                             ; preds = %_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i, %14
+bb.u:                                             ; preds = %_ZNSt12_Vector_baseISt3setImSt4lessImESaImEESaIS4_EEC2EmRKS5_.exit.i
   %i.iv = landingpad { ptr, i32 }
           cleanup
   br label %_ZNSt6vectorISt3setImSt4lessImESaImEESaIS4_EED2Ev.exit315
@@ -1690,7 +1668,7 @@ bb.ax:                                            ; preds = %_ZN5Eigen8internal2
 
 .lr.ph448:                                        ; preds = %_ZN5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantERKi.exit, %bb.az
   %.0447 = phi i64 [ %i.rs, %bb.az ], [ 0, %_ZN5Eigen9DenseBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE11setConstantERKi.exit ] ; 2 uses
-  %i.rq = shl i64 %.0447, 1                       ; 2 uses
+  %i.rq = shl nuw nsw i64 %.0447, 1               ; 2 uses
   invoke void @_ZZN3igl8copyleft4cgal30extract_cells_single_componentIN5Eigen6MatrixIN4CGAL13Lazy_exact_ntIN5boost14multiprecision6numberINS8_8backends16rational_adaptorINSA_15cpp_int_backendILm0ELm0ELNS8_16cpp_integer_typeE1ELNS8_18cpp_int_check_typeE0ESaIyEEEEELNS8_26expression_template_optionE1EEEEELin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELin1ELi0ELin1ELin1EEENS4_IiLin1ELi1ELi0ELin1ELi1EEESM_SN_SN_SM_EEiRKNS3_10MatrixBaseIT_EERKNSO_IT0_EERKNSO_IT1_EERKNSO_IT2_EERKNSO_IT3_EERKNSO_IT4_EERNS3_15PlainObjectBaseIT5_EEENKUlmE0_clEm(ptr noundef nonnull align 8 dereferenceable(24) %11, i64 noundef %i.rq)
           to label %bb.ay unwind label %bb.ba
 

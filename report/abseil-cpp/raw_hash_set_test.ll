@@ -205,7 +205,8 @@ bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i64, ptr %i.e, align 8, !noalias !15118
   %isneg.i.i.i.i.i.i.i = icmp slt i32 %i.p, 0
   %.sroa.0.4.insert.ext.i.i.i.i.i.i.i = select i1 %isneg.i.i.i.i.i.i.i, i64 281470681743360, i64 0
-  %.sroa.0.4.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i.i.i.i, %.039230
+  %19 = and i64 %.039230, 9223090566173032447
+  %.sroa.0.4.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i.i.i.i, %19
   %i.t = icmp eq i64 %.val8.i.i.i, %.sroa.0.4.insert.insert.i.i.i.i.i.i.i
   br i1 %i.t, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
@@ -231,7 +232,8 @@ bb.f:                                             ; preds = %.lr.ph
   %i.y = and i64 %i.x, 255
   %isneg.i.i.i.i = icmp slt i32 %i.p, 0
   %.sroa.0.4.insert.ext.i.i.i.i = select i1 %isneg.i.i.i.i, i64 281470681743360, i64 0
-  %.sroa.0.4.insert.insert.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i, %.039230 ; 2 uses
+  %20 = and i64 %.039230, 9223090566173032447
+  %.sroa.0.4.insert.insert.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i, %20 ; 2 uses
   %i.z = xor i64 %i.y, %.sroa.0.4.insert.insert.i.i.i.i
   %i.aa = zext nneg i64 %i.z to i128
   %i.ab = mul nuw nsw i128 %i.aa, 8779197792823184629 ; 2 uses
@@ -634,7 +636,8 @@ bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i64, ptr %i.e, align 8, !noalias !15154
   %isneg.i.i.i.i.i.i.i = icmp slt i32 %i.p, 0
   %.sroa.0.4.insert.ext.i.i.i.i.i.i.i = select i1 %isneg.i.i.i.i.i.i.i, i64 281470681743360, i64 0
-  %.sroa.0.4.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i.i.i.i, %.039229
+  %19 = and i64 %.039229, 9223090566173032447
+  %.sroa.0.4.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i.i.i.i, %19
   %i.t = icmp eq i64 %.val8.i.i.i, %.sroa.0.4.insert.insert.i.i.i.i.i.i.i
   br i1 %i.t, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
@@ -660,7 +663,8 @@ bb.f:                                             ; preds = %.lr.ph
   %i.y = and i64 %i.x, 255
   %isneg.i.i.i.i = icmp slt i32 %i.p, 0
   %.sroa.0.4.insert.ext.i.i.i.i = select i1 %isneg.i.i.i.i, i64 281470681743360, i64 0
-  %.sroa.0.4.insert.insert.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i, %.039229 ; 2 uses
+  %20 = and i64 %.039229, 9223090566173032447
+  %.sroa.0.4.insert.insert.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i, %20 ; 2 uses
   %i.z = xor i64 %i.y, %.sroa.0.4.insert.insert.i.i.i.i
   %i.aa = zext nneg i64 %i.z to i128
   %i.ab = mul nuw nsw i128 %i.aa, 8779197792823184629 ; 2 uses

@@ -205,7 +205,7 @@ middle.block3428:                                 ; preds = %vector.body3420
   %indvars.iv109.i.i = phi i64 [ %indvars.iv.next110.i.i, %.lr.ph96.i.i ], [ %i.bdt, %.preheader.i.i ] ; 2 uses
   %indvars.iv.next110.i.i = add nsw i64 %indvars.iv109.i.i, -1 ; 3 uses
   %i.beo = getelementptr inbounds nuw i8, ptr %.16097.i.i, i64 %indvars.iv.next110.i.i
-  %i.bep = shl nsw i64 %indvars.iv.next110.i.i, 3
+  %i.bep = shl nuw nsw i64 %indvars.iv.next110.i.i, 3
   %i.beq = getelementptr i8, ptr %.05899.i.i, i64 %i.bep
   %i.ber = load i8, ptr %i.beo, align 1, !tbaa !80
   %i.bes = insertelement <8 x i8> poison, i8 %i.ber, i64 0
@@ -222,7 +222,7 @@ middle.block3428:                                 ; preds = %vector.body3420
   %i.bex = getelementptr inbounds nuw i8, ptr %.16097.i.i, i64 %indvars.iv.next107.i.i
   %i.bey = load i8, ptr %i.bex, align 1, !tbaa !80 ; 4 uses
   %i.bez = and i8 %i.bey, 3
-  %i.bfa = shl nsw i64 %indvars.iv.next107.i.i, 2
+  %i.bfa = shl nuw nsw i64 %indvars.iv.next107.i.i, 2
   %i.bfb = getelementptr i8, ptr %.05899.i.i, i64 %i.bfa ; 4 uses
   %i.bfc = getelementptr i8, ptr %i.bfb, i64 3
   store i8 %i.bez, ptr %i.bfc, align 1, !tbaa !80
@@ -505,7 +505,7 @@ middle.block3451:                                 ; preds = %vector.body3443
   %indvars.iv110.i.i = phi i64 [ %indvars.iv.next111.i.i, %.lr.ph97.i.i ], [ %i.bht, %.preheader.i397.i ] ; 2 uses
   %indvars.iv.next111.i.i = add nsw i64 %indvars.iv110.i.i, -1 ; 3 uses
   %i.bio = getelementptr inbounds nuw i8, ptr %.16098.i.i, i64 %indvars.iv.next111.i.i
-  %i.bip = shl nsw i64 %indvars.iv.next111.i.i, 3
+  %i.bip = shl nuw nsw i64 %indvars.iv.next111.i.i, 3
   %i.biq = getelementptr i8, ptr %.058100.i.i, i64 %i.bip
   %i.bir = load i8, ptr %i.bio, align 1, !tbaa !80
   %i.bis = insertelement <8 x i8> poison, i8 %i.bir, i64 0
@@ -522,7 +522,7 @@ middle.block3451:                                 ; preds = %vector.body3443
   %i.bix = getelementptr inbounds nuw i8, ptr %.16098.i.i, i64 %indvars.iv.next108.i.i
   %i.biy = load i8, ptr %i.bix, align 1, !tbaa !80 ; 4 uses
   %i.biz = and i8 %i.biy, 3
-  %i.bja = shl nsw i64 %indvars.iv.next108.i.i, 2
+  %i.bja = shl nuw nsw i64 %indvars.iv.next108.i.i, 2
   %i.bjb = getelementptr i8, ptr %.058100.i.i, i64 %i.bja ; 4 uses
   %i.bjc = getelementptr i8, ptr %i.bjb, i64 3
   store i8 %i.biz, ptr %i.bjc, align 1, !tbaa !80
@@ -762,40 +762,37 @@ bb.of:                                            ; preds = %bb.oe
 .lr.ph529.i:                                      ; preds = %.preheader511.i, %.lr.ph529.i
   %indvars.iv617.i = phi i64 [ %indvars.iv.next618.i, %.lr.ph529.i ], [ %i.blp, %.preheader511.i ] ; 2 uses
   %indvars.iv.next618.i = add nsw i64 %indvars.iv617.i, -1 ; 3 uses
-  %i.bmk = getelementptr inbounds nuw i8, ptr %.3300530.i, i64 %indvars.iv.next618.i ; 8 uses
+  %i.bmk = getelementptr inbounds nuw i8, ptr %.3300530.i, i64 %indvars.iv.next618.i ; 5 uses
   %i.bml = load i8, ptr %i.bmk, align 1, !tbaa !80
   %i.bmm = and i8 %i.bml, 1
-  %i.bmn = shl nsw i64 %indvars.iv.next618.i, 3
+  %i.bmn = shl nuw nsw i64 %indvars.iv.next618.i, 3
   %i.bmo = getelementptr i8, ptr %.3300530.i, i64 %i.bmn ; 8 uses
   %i.bmp = getelementptr i8, ptr %i.bmo, i64 7
   store i8 %i.bmm, ptr %i.bmp, align 1, !tbaa !80
-  %i.bmq = load i8, ptr %i.bmk, align 1, !tbaa !80
+  %i.bmq = load i8, ptr %i.bmk, align 1, !tbaa !80 ; 2 uses
   %i.bmr = lshr i8 %i.bmq, 1
   %i.bms = and i8 %i.bmr, 1
   %i.bmt = getelementptr i8, ptr %i.bmo, i64 6
   store i8 %i.bms, ptr %i.bmt, align 1, !tbaa !80
-  %9 = load i8, ptr %i.bmk, align 1, !tbaa !80
-  %i.bmu = lshr i8 %9, 2
+  %i.bmu = lshr i8 %i.bmq, 2
   %i.bmv = and i8 %i.bmu, 1
   %i.bmw = getelementptr i8, ptr %i.bmo, i64 5
   store i8 %i.bmv, ptr %i.bmw, align 1, !tbaa !80
-  %i.bmx = load i8, ptr %i.bmk, align 1, !tbaa !80
+  %i.bmx = load i8, ptr %i.bmk, align 1, !tbaa !80 ; 2 uses
   %i.bmy = lshr i8 %i.bmx, 3
   %i.bmz = and i8 %i.bmy, 1
   %i.bna = getelementptr i8, ptr %i.bmo, i64 4
   store i8 %i.bmz, ptr %i.bna, align 1, !tbaa !80
-  %10 = load i8, ptr %i.bmk, align 1, !tbaa !80
-  %i.bnb = lshr i8 %10, 4
+  %i.bnb = lshr i8 %i.bmx, 4
   %i.bnc = and i8 %i.bnb, 1
   %i.bnd = getelementptr i8, ptr %i.bmo, i64 3
   store i8 %i.bnc, ptr %i.bnd, align 1, !tbaa !80
-  %i.bne = load i8, ptr %i.bmk, align 1, !tbaa !80
+  %i.bne = load i8, ptr %i.bmk, align 1, !tbaa !80 ; 2 uses
   %i.bnf = lshr i8 %i.bne, 5
   %i.bng = and i8 %i.bnf, 1
   %i.bnh = getelementptr i8, ptr %i.bmo, i64 2
   store i8 %i.bng, ptr %i.bnh, align 1, !tbaa !80
-  %11 = load i8, ptr %i.bmk, align 1, !tbaa !80
-  %i.bni = lshr i8 %11, 6
+  %i.bni = lshr i8 %i.bne, 6
   %i.bnj = and i8 %i.bni, 1
   %i.bnk = getelementptr i8, ptr %i.bmo, i64 1
   store i8 %i.bnj, ptr %i.bnk, align 1, !tbaa !80
@@ -808,20 +805,19 @@ bb.of:                                            ; preds = %bb.oe
 .lr.ph527.i:                                      ; preds = %.preheader512.i, %.lr.ph527.i
   %indvars.iv614.i = phi i64 [ %indvars.iv.next615.i, %.lr.ph527.i ], [ %i.blp, %.preheader512.i ] ; 2 uses
   %indvars.iv.next615.i = add nsw i64 %indvars.iv614.i, -1 ; 3 uses
-  %i.bno = getelementptr inbounds nuw i8, ptr %.3300530.i, i64 %indvars.iv.next615.i ; 4 uses
+  %i.bno = getelementptr inbounds nuw i8, ptr %.3300530.i, i64 %indvars.iv.next615.i ; 3 uses
   %i.bnp = load i8, ptr %i.bno, align 1, !tbaa !80
   %i.bnq = and i8 %i.bnp, 3
-  %i.bnr = shl nsw i64 %indvars.iv.next615.i, 2
+  %i.bnr = shl nuw nsw i64 %indvars.iv.next615.i, 2
   %i.bns = getelementptr i8, ptr %.3300530.i, i64 %i.bnr ; 4 uses
   %i.bnt = getelementptr i8, ptr %i.bns, i64 3
   store i8 %i.bnq, ptr %i.bnt, align 1, !tbaa !80
-  %i.bnu = load i8, ptr %i.bno, align 1, !tbaa !80
+  %i.bnu = load i8, ptr %i.bno, align 1, !tbaa !80 ; 2 uses
   %i.bnv = lshr i8 %i.bnu, 2
   %i.bnw = and i8 %i.bnv, 3
   %i.bnx = getelementptr i8, ptr %i.bns, i64 2
   store i8 %i.bnw, ptr %i.bnx, align 1, !tbaa !80
-  %12 = load i8, ptr %i.bno, align 1, !tbaa !80
-  %i.bny = lshr i8 %12, 4
+  %i.bny = lshr i8 %i.bnu, 4
   %i.bnz = and i8 %i.bny, 3
   %i.boa = getelementptr i8, ptr %i.bns, i64 1
   store i8 %i.bnz, ptr %i.boa, align 1, !tbaa !80
@@ -1121,40 +1117,37 @@ bb.oq:                                            ; preds = %horizontal_fill.exi
 .lr.ph45.i.i:                                     ; preds = %.preheader.i427.i, %.lr.ph45.i.i
   %indvars.iv60.i.i = phi i64 [ %indvars.iv.next61.i.i, %.lr.ph45.i.i ], [ %i.bsq, %.preheader.i427.i ] ; 2 uses
   %indvars.iv.next61.i.i = add nsw i64 %indvars.iv60.i.i, -1 ; 3 uses
-  %i.btb = getelementptr inbounds nuw i8, ptr %.02846.i.i, i64 %indvars.iv.next61.i.i ; 8 uses
+  %i.btb = getelementptr inbounds nuw i8, ptr %.02846.i.i, i64 %indvars.iv.next61.i.i ; 5 uses
   %i.btc = load i8, ptr %i.btb, align 1, !tbaa !80
   %i.btd = and i8 %i.btc, 1
-  %i.bte = shl nsw i64 %indvars.iv.next61.i.i, 3
+  %i.bte = shl nuw nsw i64 %indvars.iv.next61.i.i, 3
   %i.btf = getelementptr i8, ptr %.02846.i.i, i64 %i.bte ; 8 uses
   %i.btg = getelementptr i8, ptr %i.btf, i64 7
   store i8 %i.btd, ptr %i.btg, align 1, !tbaa !80
-  %i.bth = load i8, ptr %i.btb, align 1, !tbaa !80
+  %i.bth = load i8, ptr %i.btb, align 1, !tbaa !80 ; 2 uses
   %i.bti = lshr i8 %i.bth, 1
   %i.btj = and i8 %i.bti, 1
   %i.btk = getelementptr i8, ptr %i.btf, i64 6
   store i8 %i.btj, ptr %i.btk, align 1, !tbaa !80
-  %13 = load i8, ptr %i.btb, align 1, !tbaa !80
-  %i.btl = lshr i8 %13, 2
+  %i.btl = lshr i8 %i.bth, 2
   %i.btm = and i8 %i.btl, 1
   %i.btn = getelementptr i8, ptr %i.btf, i64 5
   store i8 %i.btm, ptr %i.btn, align 1, !tbaa !80
-  %i.bto = load i8, ptr %i.btb, align 1, !tbaa !80
+  %i.bto = load i8, ptr %i.btb, align 1, !tbaa !80 ; 2 uses
   %i.btp = lshr i8 %i.bto, 3
   %i.btq = and i8 %i.btp, 1
   %i.btr = getelementptr i8, ptr %i.btf, i64 4
   store i8 %i.btq, ptr %i.btr, align 1, !tbaa !80
-  %14 = load i8, ptr %i.btb, align 1, !tbaa !80
-  %i.bts = lshr i8 %14, 4
+  %i.bts = lshr i8 %i.bto, 4
   %i.btt = and i8 %i.bts, 1
   %i.btu = getelementptr i8, ptr %i.btf, i64 3
   store i8 %i.btt, ptr %i.btu, align 1, !tbaa !80
-  %i.btv = load i8, ptr %i.btb, align 1, !tbaa !80
+  %i.btv = load i8, ptr %i.btb, align 1, !tbaa !80 ; 2 uses
   %i.btw = lshr i8 %i.btv, 5
   %i.btx = and i8 %i.btw, 1
   %i.bty = getelementptr i8, ptr %i.btf, i64 2
   store i8 %i.btx, ptr %i.bty, align 1, !tbaa !80
-  %15 = load i8, ptr %i.btb, align 1, !tbaa !80
-  %i.btz = lshr i8 %15, 6
+  %i.btz = lshr i8 %i.btv, 6
   %i.bua = and i8 %i.btz, 1
   %i.bub = getelementptr i8, ptr %i.btf, i64 1
   store i8 %i.bua, ptr %i.bub, align 1, !tbaa !80
@@ -1167,20 +1160,19 @@ bb.oq:                                            ; preds = %horizontal_fill.exi
 .lr.ph43.i.i:                                     ; preds = %.preheader32.i.i, %.lr.ph43.i.i
   %indvars.iv57.i.i = phi i64 [ %indvars.iv.next58.i.i, %.lr.ph43.i.i ], [ %i.bsq, %.preheader32.i.i ] ; 2 uses
   %indvars.iv.next58.i.i = add nsw i64 %indvars.iv57.i.i, -1 ; 3 uses
-  %i.buf = getelementptr inbounds nuw i8, ptr %.02846.i.i, i64 %indvars.iv.next58.i.i ; 4 uses
+  %i.buf = getelementptr inbounds nuw i8, ptr %.02846.i.i, i64 %indvars.iv.next58.i.i ; 3 uses
   %i.bug = load i8, ptr %i.buf, align 1, !tbaa !80
   %i.buh = and i8 %i.bug, 3
-  %i.bui = shl nsw i64 %indvars.iv.next58.i.i, 2
+  %i.bui = shl nuw nsw i64 %indvars.iv.next58.i.i, 2
   %i.buj = getelementptr i8, ptr %.02846.i.i, i64 %i.bui ; 4 uses
   %i.buk = getelementptr i8, ptr %i.buj, i64 3
   store i8 %i.buh, ptr %i.buk, align 1, !tbaa !80
-  %i.bul = load i8, ptr %i.buf, align 1, !tbaa !80
+  %i.bul = load i8, ptr %i.buf, align 1, !tbaa !80 ; 2 uses
   %i.bum = lshr i8 %i.bul, 2
   %i.bun = and i8 %i.bum, 3
   %i.buo = getelementptr i8, ptr %i.buj, i64 2
   store i8 %i.bun, ptr %i.buo, align 1, !tbaa !80
-  %16 = load i8, ptr %i.buf, align 1, !tbaa !80
-  %i.bup = lshr i8 %16, 4
+  %i.bup = lshr i8 %i.bul, 4
   %i.buq = and i8 %i.bup, 3
   %i.bur = getelementptr i8, ptr %i.buj, i64 1
   store i8 %i.buq, ptr %i.bur, align 1, !tbaa !80
@@ -1550,7 +1542,7 @@ middle.block3337:                                 ; preds = %vector.body3329
   %i.cag = getelementptr inbounds nuw i8, ptr %.1305576.i, i64 %indvars.iv.next663.i ; 8 uses
   %i.cah = load i8, ptr %i.cag, align 1, !tbaa !80
   %i.cai = and i8 %i.cah, 1
-  %i.caj = shl nsw i64 %indvars.iv.next663.i, 3
+  %i.caj = shl nuw nsw i64 %indvars.iv.next663.i, 3
   %i.cak = getelementptr i8, ptr %.4578.i, i64 %i.caj ; 8 uses
   %i.cal = getelementptr i8, ptr %i.cak, i64 7
   store i8 %i.cai, ptr %i.cal, align 1, !tbaa !80
@@ -1596,7 +1588,7 @@ middle.block3337:                                 ; preds = %vector.body3329
   %i.cbn = getelementptr inbounds nuw i8, ptr %.1305576.i, i64 %indvars.iv.next660.i ; 4 uses
   %i.cbo = load i8, ptr %i.cbn, align 1, !tbaa !80
   %i.cbp = and i8 %i.cbo, 3
-  %i.cbq = shl nsw i64 %indvars.iv.next660.i, 2
+  %i.cbq = shl nuw nsw i64 %indvars.iv.next660.i, 2
   %i.cbr = getelementptr i8, ptr %.4578.i, i64 %i.cbq ; 4 uses
   %i.cbs = getelementptr i8, ptr %i.cbr, i64 3
   store i8 %i.cbp, ptr %i.cbs, align 1, !tbaa !80
@@ -1999,7 +1991,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %i.ar = tail call i32 @llvm.smin.i32(i32 %i.ak, i32 %i.aq)
   %i.as = load i32, ptr %i.l, align 8, !tbaa !29
   %i.at = mul nsw i32 %i.ar, %i.as
-  %i.au = mul nsw i32 %i.al, %.07097
+  %i.au = mul nuw nsw i32 %i.al, %.07097
   %i.av = add nsw i32 %i.au, %.06690
   %i.aw = load i32, ptr %i.a, align 8, !tbaa !78
   %i.ax = add nsw i32 %i.aw, -1
@@ -2074,7 +2066,7 @@ bb.e:                                             ; preds = %.lr.ph103, %bb.e
   %i.cb = load ptr, ptr %1, align 8, !tbaa !101
   %i.cc = load i32, ptr %i.l, align 8, !tbaa !29
   %i.cd = mul nsw i32 %i.cc, %i.bx
-  %i.ce = mul nsw i32 %i.by, %.171113
+  %i.ce = mul nuw nsw i32 %i.by, %.171113
   %i.cf = add i32 %i.ce, %.167102
   %i.cg = add i32 %i.cf, %i.cd
   %i.ch = sext i32 %i.cg to i64

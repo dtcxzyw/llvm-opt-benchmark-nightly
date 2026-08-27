@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !63
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !180
   br label %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
@@ -608,7 +608,7 @@ _ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE11
 
 bb.j:                                             ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i, %bb.d
   %.not.i = phi i1 [ %i.u, %bb.d ], [ %i.ao, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree14ScalarTreeViewEE11GetDecisionEfi.exit.i ]
-  %i.ap = shl nsw i32 %i.i, 1
+  %i.ap = shl nuw nsw i32 %i.i, 1
   %i.aq = zext i1 %.not.i to i32
   %i.ar = or disjoint i32 %i.ap, %i.aq
   store i32 %i.ar, ptr %i.h, align 4, !tbaa !80
@@ -1011,7 +1011,7 @@ bb.g:                                             ; preds = %_ZNK7xgboost6common
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.not.i = phi i1 [ %i.al, %bb.f ], [ %i.ao, %bb.g ]
-  %i.ap = shl nsw i32 %i.z, 1
+  %i.ap = shl nuw nsw i32 %i.z, 1
   %i.aq = zext i1 %.not.i to i32
   %i.ar = or disjoint i32 %i.ap, %i.aq
   store i32 %i.ar, ptr %i.y, align 4, !tbaa !80
@@ -1254,9 +1254,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb1ELi2ENS_4tree14ScalarTreeViewEE8Po
   br i1 %i.bx, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i
-  %sext.1.i = shl i64 %i.bq, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.by = getelementptr inbounds nuw i8, ptr %i.bj, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.bq, 2
+  %i.by = getelementptr inbounds nuw i8, ptr %i.bj, i64 %sext.1.i
   %i.bz = load float, ptr %i.by, align 4, !tbaa !64
   %i.ca = fcmp uge float %i.bw, %i.bz
   br label %bb.j
@@ -1307,7 +1306,7 @@ bb.k:                                             ; preds = %_ZNK7xgboost6common
   br label %bb.m
 
 bb.l:                                             ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i
-  %i.cw = shl nsw i64 %i.cl, 2
+  %i.cw = shl nuw nsw i64 %i.cl, 2
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.cw
   %i.cy = load float, ptr %i.cx, align 4, !tbaa !64
   %i.cz = fcmp uge float %i.cr, %i.cy
@@ -1315,7 +1314,7 @@ bb.l:                                             ; preds = %_ZNK7xgboost6common
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.not.i = phi i1 [ %i.cv, %bb.k ], [ %i.cz, %bb.l ]
-  %i.da = shl nsw i32 %i.cj, 1
+  %i.da = shl nuw nsw i32 %i.cj, 1
   %i.db = zext i1 %.not.i to i32
   %i.dc = or disjoint i32 %i.da, %i.db
   store i32 %i.dc, ptr %i.ci, align 4, !tbaa !80
@@ -1718,7 +1717,7 @@ _ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeVie
 
 bb.j:                                             ; preds = %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i, %bb.d
   %.not.i = phi i1 [ %i.u, %bb.d ], [ %i.ao, %_ZNK7xgboost9predictor15ArrayTreeLayoutILb1ELb1ELi1ENS_4tree19MultiTargetTreeViewEE11GetDecisionEfi.exit.i ]
-  %i.ap = shl nsw i32 %i.i, 1
+  %i.ap = shl nuw nsw i32 %i.i, 1
   %i.aq = zext i1 %.not.i to i32
   %i.ar = or disjoint i32 %i.ap, %i.aq
   store i32 %i.ar, ptr %i.h, align 4, !tbaa !80
@@ -2121,7 +2120,7 @@ bb.g:                                             ; preds = %_ZNK7xgboost6common
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.not.i = phi i1 [ %i.aq, %bb.f ], [ %i.at, %bb.g ]
-  %i.au = shl nsw i32 %i.ae, 1
+  %i.au = shl nuw nsw i32 %i.ae, 1
   %i.av = zext i1 %.not.i to i32
   %i.aw = or disjoint i32 %i.au, %i.av
   store i32 %i.aw, ptr %i.ad, align 4, !tbaa !80
@@ -2242,9 +2241,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.q, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i
-  %sext.1.i = shl i64 %i.j, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.j, 2
+  %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 %sext.1.i
   %i.s = load float, ptr %i.r, align 4, !tbaa !64
   %i.t = fcmp uge float %i.p, %i.s
   br label %bb.e
@@ -2295,7 +2293,7 @@ bb.f:                                             ; preds = %_ZNK7xgboost6common
   br label %bb.h
 
 bb.g:                                             ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i
-  %i.ap = shl nsw i64 %i.ae, 2
+  %i.ap = shl nuw nsw i64 %i.ae, 2
   %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.ap
   %i.ar = load float, ptr %i.aq, align 4, !tbaa !64
   %i.as = fcmp uge float %i.ak, %i.ar
@@ -2303,7 +2301,7 @@ bb.g:                                             ; preds = %_ZNK7xgboost6common
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.not.i = phi i1 [ %i.ao, %bb.f ], [ %i.as, %bb.g ]
-  %i.at = shl nsw i32 %i.ac, 1
+  %i.at = shl nuw nsw i32 %i.ac, 1
   %i.au = zext i1 %.not.i to i32
   %i.av = or disjoint i32 %i.at, %i.au
   store i32 %i.av, ptr %i.ab, align 4, !tbaa !80
@@ -2706,7 +2704,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i:
   %i.ae = load ptr, ptr %i.z, align 8, !tbaa !59
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.ad
   %i.ag = load float, ptr %i.af, align 4, !tbaa !64
-  %i.ah = shl nsw i32 %i.y, 1
+  %i.ah = shl nuw nsw i32 %i.y, 1
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %i.aa
   %i.aj = load float, ptr %i.ai, align 4, !tbaa !64
   %i.ak = fcmp uge float %i.ag, %i.aj
@@ -2956,7 +2954,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !59
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.n
   %i.q = load float, ptr %i.p, align 4, !tbaa !64 ; 5 uses
-  %i.r = shl nsw i32 %i.i, 1
+  %i.r = shl nuw nsw i32 %i.i, 1
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.k
   %i.t = load i8, ptr %i.s, align 1, !tbaa !26
   %.not.i.i = icmp eq i8 %i.t, 0
@@ -3359,9 +3357,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi2ENS_4tree14ScalarTreeViewEE8Po
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %i.bm
   %i.bp = load float, ptr %i.bo, align 4, !tbaa !64
   %i.bq = shl nsw i32 %i.bg, 1
-  %sext.1.i = shl i64 %i.bj, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.br = getelementptr inbounds nuw i8, ptr %i.bc, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.bj, 2
+  %i.br = getelementptr inbounds nuw i8, ptr %i.bc, i64 %sext.1.i
   %i.bs = load float, ptr %i.br, align 4, !tbaa !64
   %i.bt = fcmp uge float %i.bp, %i.bs
   %i.bu = zext i1 %i.bt to i32
@@ -3391,8 +3388,8 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.ce = load ptr, ptr %i.bz, align 8, !tbaa !59
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.ce, i64 %i.cd
   %i.cg = load float, ptr %i.cf, align 4, !tbaa !64
-  %i.ch = shl nsw i32 %i.by, 1
-  %i.ci = shl nsw i64 %i.ca, 2
+  %i.ch = shl nuw nsw i32 %i.by, 1
+  %i.ci = shl nuw nsw i64 %i.ca, 2
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.ci
   %i.ck = load float, ptr %i.cj, align 4, !tbaa !64
   %i.cl = fcmp uge float %i.cg, %i.ck
@@ -3795,7 +3792,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.o = load ptr, ptr %i.j, align 8, !tbaa !59
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.n
   %i.q = load float, ptr %i.p, align 4, !tbaa !64 ; 5 uses
-  %i.r = shl nsw i32 %i.i, 1
+  %i.r = shl nuw nsw i32 %i.i, 1
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.k
   %i.t = load i8, ptr %i.s, align 1, !tbaa !26
   %.not.i.i = icmp eq i8 %i.t, 0
@@ -4198,7 +4195,7 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.af = load ptr, ptr %i.aa, align 8, !tbaa !59
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ae
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !64
-  %i.ai = shl nsw i32 %i.z, 1
+  %i.ai = shl nuw nsw i32 %i.z, 1
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.ab
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !64
   %i.al = fcmp uge float %i.ah, %i.ak
@@ -4426,9 +4423,8 @@ _ZN7xgboost9predictor15ArrayTreeLayoutILb0ELb0ELi2ENS_4tree19MultiTargetTreeView
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %i.bk
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !64
   %i.bo = shl nsw i32 %i.be, 1
-  %sext.1.i = shl i64 %i.bh, 32
-  %7 = ashr exact i64 %sext.1.i, 30
-  %i.bp = getelementptr inbounds nuw i8, ptr %i.ba, i64 %7
+  %sext.1.i = shl nuw nsw i64 %i.bh, 2
+  %i.bp = getelementptr inbounds nuw i8, ptr %i.ba, i64 %sext.1.i
   %i.bq = load float, ptr %i.bp, align 4, !tbaa !64
   %i.br = fcmp uge float %i.bn, %i.bq
   %i.bs = zext i1 %i.br to i32
@@ -4458,8 +4454,8 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i: ;
   %i.cc = load ptr, ptr %i.bx, align 8, !tbaa !59
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.cc, i64 %i.cb
   %i.ce = load float, ptr %i.cd, align 4, !tbaa !64
-  %i.cf = shl nsw i32 %i.bw, 1
-  %i.cg = shl nsw i64 %i.by, 2
+  %i.cf = shl nuw nsw i32 %i.bw, 1
+  %i.cg = shl nuw nsw i64 %i.by, 2
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.cg
   %i.ci = load float, ptr %i.ch, align 4, !tbaa !64
   %i.cj = fcmp uge float %i.ce, %i.ci

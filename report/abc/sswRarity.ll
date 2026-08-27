@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
 
 .split.loop.exit33:                               ; preds = %bb.f, %.split.loop.exit
   %.0.lcssa = phi i32 [ %i.s, %.split.loop.exit ], [ 64, %bb.f ]
-  %i.t = shl nsw i32 %i.j, 6
+  %i.t = shl nuw nsw i32 %i.j, 6
   %i.u = add nuw nsw i32 %.0.lcssa, %i.t
   br label %.loopexit
 
@@ -366,7 +366,7 @@ bb.k:                                             ; preds = %bb.j
 
 .split.loop.exit33.i:                             ; preds = %bb.k, %.split.loop.exit.i
   %.0.lcssa.i = phi i32 [ %i.as, %.split.loop.exit.i ], [ 64, %bb.k ]
-  %i.at = shl nsw i32 %i.aj, 6
+  %i.at = shl nuw nsw i32 %i.aj, 6
   %i.au = add nuw nsw i32 %.0.lcssa.i, %i.at
   br label %Ssw_RarManObjWhichOne.exit
 
@@ -417,7 +417,7 @@ Vec_PtrStart.exit:                                ; preds = %bb.n, %bb.o
   store ptr %i.bf, ptr %i.bh, align 8, !tbaa !39
   store i32 %.val5879, ptr %i.bg, align 4, !tbaa !109
   %i.bi = sext i32 %.val5879 to i64
-  %i.bj = shl nsw i64 %i.bi, 3
+  %i.bj = shl nuw nsw i64 %i.bi, 3
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.bf, i8 0, i64 %i.bj, i1 false)
   store ptr %i.ba, ptr %i.g, align 8, !tbaa !105
   br label %bb.p
@@ -820,20 +820,20 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 .preheader:                                       ; preds = %.preheader.lr.ph, %Vec_IntPush.exit80
   %i.cy = phi i32 [ %i.m, %.preheader.lr.ph ], [ %i.gd, %Vec_IntPush.exit80 ] ; 2 uses
   %.261107 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.ga, %Vec_IntPush.exit80 ]
-  %2 = icmp sgt i32 %i.cy, 0
+  %.not = icmp eq i32 %i.cy, 0
   %.pre129 = load ptr, ptr %i.cs, align 8, !tbaa !156 ; 4 uses
-  br i1 %2, label %.lr.ph99, label %._crit_edge100
+  br i1 %.not, label %._crit_edge100, label %.lr.ph99
 
 .lr.ph99:                                         ; preds = %.preheader
-  %i.cz = shl i32 %i.cy, 6
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.cz, i32 1) ; 3 uses
-  %wide.trip.count127 = zext nneg i32 %smax to i64 ; 2 uses
+  %i.cz = shl i32 %i.cy, 6                        ; 2 uses
+  %smax = tail call i32 @llvm.umax.i32(i32 %i.cz, i32 1) ; 2 uses
+  %wide.trip.count127 = zext i32 %smax to i64     ; 2 uses
   %xtraiter163 = and i64 %wide.trip.count127, 1
-  %i.da = icmp eq i32 %smax, 1
+  %i.da = icmp eq i32 %i.cz, 0
   br i1 %i.da, label %.epil.preheader162, label %.lr.ph99.new
 
 .lr.ph99.new:                                     ; preds = %.lr.ph99
-  %unroll_iter167 = and i64 %wide.trip.count127, 2147483584
+  %unroll_iter167 = and i64 %wide.trip.count127, 4294967232
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %.lr.ph99.new
@@ -1234,6 +1234,9 @@ declare i32 @llvm.smax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #20

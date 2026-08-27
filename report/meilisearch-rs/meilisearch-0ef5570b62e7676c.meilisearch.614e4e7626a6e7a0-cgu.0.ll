@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bb
 bb.bd:                                            ; preds = %bb.bd, %bb.bc
   %.sroa.0101.1.i.i = phi i64 [ %spec.select.i168.i, %bb.bc ], [ %i.lo, %bb.bd ] ; 9 uses
   %i.ln = icmp ult i64 %.sroa.0101.1.i.i, %.sroa.0.0.i.i
-  %i.lo = shl i64 %.sroa.0101.1.i.i, 1
+  %i.lo = shl nuw nsw i64 %.sroa.0101.1.i.i, 1
   br i1 %i.ln, label %bb.bd, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
@@ -251,7 +251,7 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bi, %bb.bh
   %.sroa.0104.1.i.i = phi i64 [ %spec.select247.i.i, %bb.bh ], [ %i.lx, %bb.bi ] ; 8 uses
   %i.lw = icmp ult i64 %.sroa.0104.1.i.i, %.sroa.0.0.i.i
-  %i.lx = shl i64 %.sroa.0104.1.i.i, 1
+  %i.lx = shl nuw nsw i64 %.sroa.0104.1.i.i, 1
   br i1 %i.lw, label %bb.bi, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -654,7 +654,7 @@ bb.is:                                            ; preds = %bb.ir
 bb.it:                                            ; preds = %bb.it, %bb.is
   %.sroa.0101.1.i.i368 = phi i64 [ %spec.select.i170.i, %bb.is ], [ %i.bdy, %bb.it ] ; 9 uses
   %i.bdx = icmp ult i64 %.sroa.0101.1.i.i368, %.sroa.0.0.i.i204
-  %i.bdy = shl i64 %.sroa.0101.1.i.i368, 1
+  %i.bdy = shl nuw nsw i64 %.sroa.0101.1.i.i368, 1
   br i1 %i.bdx, label %bb.it, label %bb.iu
 
 bb.iu:                                            ; preds = %bb.it
@@ -700,7 +700,7 @@ bb.ix:                                            ; preds = %bb.iw
 bb.iy:                                            ; preds = %bb.iy, %bb.ix
   %.sroa.0104.1.i.i363 = phi i64 [ %spec.select247.i.i362, %bb.ix ], [ %i.beh, %bb.iy ] ; 8 uses
   %i.beg = icmp ult i64 %.sroa.0104.1.i.i363, %.sroa.0.0.i.i204
-  %i.beh = shl i64 %.sroa.0104.1.i.i363, 1
+  %i.beh = shl nuw nsw i64 %.sroa.0104.1.i.i363, 1
   br i1 %i.beg, label %bb.iy, label %bb.iz
 
 bb.iz:                                            ; preds = %bb.iy
@@ -1103,7 +1103,7 @@ bb.qp:                                            ; preds = %bb.qo
 bb.qq:                                            ; preds = %bb.qq, %bb.qp
   %.sroa.0101.1.i.i909 = phi i64 [ %spec.select.i170.i908, %bb.qp ], [ %i.cux, %bb.qq ] ; 9 uses
   %i.cuw = icmp ult i64 %.sroa.0101.1.i.i909, %.sroa.0.0.i.i634
-  %i.cux = shl i64 %.sroa.0101.1.i.i909, 1
+  %i.cux = shl nuw nsw i64 %.sroa.0101.1.i.i909, 1
   br i1 %i.cuw, label %bb.qq, label %bb.qr
 
 bb.qr:                                            ; preds = %bb.qq
@@ -1149,7 +1149,7 @@ bb.qu:                                            ; preds = %bb.qt
 bb.qv:                                            ; preds = %bb.qv, %bb.qu
   %.sroa.0104.1.i.i901 = phi i64 [ %spec.select247.i.i900, %bb.qu ], [ %i.cvg, %bb.qv ] ; 8 uses
   %i.cvf = icmp ult i64 %.sroa.0104.1.i.i901, %.sroa.0.0.i.i634
-  %i.cvg = shl i64 %.sroa.0104.1.i.i901, 1
+  %i.cvg = shl nuw nsw i64 %.sroa.0104.1.i.i901, 1
   br i1 %i.cvf, label %bb.qv, label %bb.qw
 
 bb.qw:                                            ; preds = %bb.qv
@@ -1552,7 +1552,7 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.m
 
 bb.o:                                             ; preds = %bb.g
-  %i.aa = mul i64 %i.g, 56
+  %i.aa = mul nuw i64 %i.g, 56
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(456) %0, ptr nonnull align 8 %i.e, i64 %i.aa, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !40643
   %i.ab = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sink.i.i, i64 56) ; 2 uses
@@ -1716,7 +1716,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.u = mul i64 %.val, 40
+  %i.u = mul nuw i64 %.val, 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.u, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.v = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sink.i, i64 40) ; 2 uses
@@ -1824,7 +1824,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 4
+  %i.s = shl nuw i64 %.val, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = icmp ugt i64 %i.c, 1152921504606846975

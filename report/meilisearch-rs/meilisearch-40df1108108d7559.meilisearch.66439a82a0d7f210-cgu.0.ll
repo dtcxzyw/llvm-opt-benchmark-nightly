@@ -206,7 +206,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.if = getelementptr inbounds nuw i8, ptr %i.hi, i64 32
   %i.ig = xor i64 %.sroa.05.0.lcssa.i.i.i.i.i.i.i.i.i.i.i, -1
   %i.ih = add nsw i64 %i.hg, %i.ig
-  %i.ii = shl nsw i64 %i.ih, 5
+  %i.ii = shl nuw nsw i64 %i.ih, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.hi, ptr nonnull align 8 %i.if, i64 %i.ii, i1 false), !noalias !34130
   %i.ij = add nsw i64 %i.hg, -1
   store i64 %i.ij, ptr %i.hf, align 8, !alias.scope !34132, !noalias !34133
@@ -609,7 +609,7 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.t = xor i64 %i.h, -1                         ; 2 uses
   %i.u = add nsw i64 %i.d, %i.t
-  %i.v = shl nsw i64 %i.u, 4
+  %i.v = shl nuw nsw i64 %i.u, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.s, i64 %i.v, i1 false), !noalias !183715
   %i.w = add nsw i64 %i.d, -1
   store i64 %i.w, ptr %i.c, align 8, !alias.scope !183715
@@ -633,7 +633,7 @@ bb.d:                                             ; preds = %"_ZN5alloc3vec16Vec
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(104) %i.ac, i64 104, i1 false)
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 104
   %i.ae = add nsw i64 %i.y, %i.t
-  %i.af = mul nsw i64 %i.ae, 104
+  %i.af = mul nuw nsw i64 %i.ae, 104
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ac, ptr nonnull align 8 %i.ad, i64 %i.af, i1 false), !noalias !183723
   %i.ag = add nsw i64 %i.y, -1
   store i64 %i.ag, ptr %i.x, align 8, !alias.scope !183718, !noalias !183721
@@ -1036,8 +1036,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ah, label %bb.i, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.ai = mul nuw i64 %i.z, 11
-  %i.aj = icmp ult i64 %i.ac, %i.ai
+  %i.ai = mul nuw nsw i64 %i.z, 11
+  %i.aj = icmp samesign ult i64 %i.ac, %i.ai
   br i1 %i.aj, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.split.i
@@ -1440,7 +1440,7 @@ bb.x:                                             ; preds = %bb.s
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
   %i.dn = xor i64 %i.ch, -1
   %i.do = add nsw i64 %i.bt, %i.dn
-  %i.dp = shl nsw i64 %i.do, 2
+  %i.dp = shl nuw nsw i64 %i.do, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.cj, ptr nonnull align 2 %i.dm, i64 %i.dp, i1 false), !noalias !428018
   %i.dq = add nsw i64 %i.bt, -1
   store i64 %i.dq, ptr %i.bs, align 8, !alias.scope !428018
@@ -1843,7 +1843,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 3
+  %i.s = shl nuw i64 %.val, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = shl nuw i64 %.sink.i, 3                  ; 2 uses
@@ -1948,7 +1948,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 5
+  %i.s = shl nuw i64 %.val, 5
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = shl nuw i64 %.sink.i, 5                  ; 2 uses
@@ -2053,7 +2053,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 4
+  %i.s = shl nuw i64 %.val, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = shl nuw i64 %.sink.i, 4                  ; 2 uses
@@ -2160,7 +2160,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.u = mul i64 %.val, 40
+  %i.u = mul nuw i64 %.val, 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.u, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.v = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sink.i, i64 40) ; 2 uses
@@ -2264,12 +2264,12 @@ bb.k:                                             ; preds = %_ZN8smallvec12layou
   br label %_ZN8smallvec12layout_array17hcbf17bfe2feb7d75E.exit55.thread
 
 bb.l:                                             ; preds = %bb.j
-  %i.q = shl i64 %i.g, 3
+  %i.q = shl nuw i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.e, i64 %i.q, i1 false)
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.r = shl i64 %i.g, 3
+  %i.r = shl nuw i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.e, ptr nonnull align 8 %i.f, i64 %i.r, i1 false)
   store i64 %i.g, ptr %0, align 8
   %i.s = shl nuw i64 %.sink.i, 3                  ; 2 uses
@@ -2374,7 +2374,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 4
+  %i.s = shl nuw i64 %.val, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = shl nuw i64 %.sink.i, 4                  ; 2 uses
@@ -2479,7 +2479,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 5
+  %i.s = shl nuw i64 %.val, 5
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = shl nuw i64 %.sink.i, 5                  ; 2 uses
@@ -2587,7 +2587,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.t = mul i64 %i.g, 24
+  %i.t = mul nuw i64 %i.g, 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.e, ptr nonnull align 8 %i.f, i64 %i.t, i1 false)
   store i64 %i.g, ptr %0, align 8
   %i.u = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sink.i, i64 24) ; 2 uses
@@ -2695,7 +2695,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 5
+  %i.s = shl nuw i64 %.val, 5
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = shl nuw i64 %.sink.i, 5                  ; 2 uses
@@ -2800,7 +2800,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.s = shl i64 %.val, 4
+  %i.s = shl nuw i64 %.val, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.s, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.t = shl nuw i64 %.sink.i, 4                  ; 2 uses
@@ -2907,7 +2907,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.u = mul i64 %.val, 56
+  %i.u = mul nuw i64 %.val, 56
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.u, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.v = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sink.i, i64 56) ; 2 uses

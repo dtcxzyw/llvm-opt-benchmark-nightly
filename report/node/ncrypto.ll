@@ -205,27 +205,25 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; pre
 
 .lr.ph:                                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit, %bb.i
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit ] ; 4 uses
-  %4 = trunc nuw i64 %indvars.iv to i32
-  %5 = mul i32 %4, 3                              ; 3 uses
+  %4 = mul nuw nsw i64 %indvars.iv, 3             ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv ; 2 uses
   %i.v = load i8, ptr %i.u, align 1
   %i.w = lshr i8 %i.v, 4
   %i.x = zext nneg i8 %i.w to i64
   %i.y = getelementptr inbounds nuw i8, ptr @_ZZNK7ncrypto8X509View14getFingerprintB5cxx11ERKNS_6DigestEE3hex, i64 %i.x
   %i.z = load i8, ptr %i.y, align 1
-  %6 = zext i32 %5 to i64
   %i.aa = load ptr, ptr %3, align 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %6
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %4
   store i8 %i.z, ptr %i.ab, align 1
   %i.ac = load i8, ptr %i.u, align 1
   %i.ad = and i8 %i.ac, 15
   %i.ae = zext nneg i8 %i.ad to i64
   %i.af = getelementptr inbounds nuw i8, ptr @_ZZNK7ncrypto8X509View14getFingerprintB5cxx11ERKNS_6DigestEE3hex, i64 %i.ae
   %i.ag = load i8, ptr %i.af, align 1
-  %7 = add i32 %5, 1
-  %8 = zext i32 %7 to i64
+  %5 = add nuw nsw i64 %4, 1
+  %6 = and i64 %5, 4294967295
   %i.ah = load ptr, ptr %3, align 8
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %8
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 %6
   store i8 %i.ag, ptr %i.ai, align 1
   %i.aj = load i32, ptr %i.a, align 4
   %i.ak = add i32 %i.aj, -1
@@ -234,10 +232,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit: ; pre
   br i1 %.not12, label %.critedge, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph
-  %9 = add i32 %5, 2
-  %10 = zext i32 %9 to i64
+  %7 = add nuw nsw i64 %4, 2
+  %8 = and i64 %7, 4294967295
   %i.am = load ptr, ptr %3, align 8
-  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %10
+  %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 %8
   store i8 58, ptr %i.an, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ao = load i32, ptr %i.a, align 4

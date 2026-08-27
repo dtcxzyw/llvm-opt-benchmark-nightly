@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %.lr.ph61, %._crit_e
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.w
   %i.y = sext i32 %i.p to i64                     ; 2 uses
   %.idx = shl nsw i64 %i.y, 2                     ; 2 uses
-  %i.z = getelementptr inbounds i8, ptr %i.t, i64 %.idx
+  %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 %.idx
   %or.cond.i.i = icmp ult i32 %i.p, 2
   br i1 %or.cond.i.i, label %_ZSt11min_elementIPfET_S1_S1_.exit, label %.lr.ph.preheader.i.i
 

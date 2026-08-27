@@ -205,7 +205,7 @@ heap_adjust.exit217:                              ; preds = %bb.m, %bb.l, %.lr.p
   %i.ds = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ci
   %i.dt = load i64, ptr %i.ds, align 8, !tbaa !11
   %i.du = add i64 %i.dt, %i.dr
-  %i.dv = add i64 %.2178258, 255                  ; 4 uses
+  %i.dv = add i64 %.2178258, 255                  ; 5 uses
   %i.dw = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.dv
   store i64 %i.du, ptr %i.dw, align 8, !tbaa !11
   %i.dx = trunc i64 %i.dv to i32
@@ -216,12 +216,11 @@ heap_adjust.exit217:                              ; preds = %bb.m, %bb.l, %.lr.p
   %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.dp
   store i32 %i.ea, ptr %i.eb, align 4, !tbaa !4
   store i64 %i.dv, ptr %i.b, align 16, !tbaa !11
-  %.pre34.i219 = shl i64 %i.dv, 32                ; 2 uses
   br i1 %.not30.i207, label %heap_adjust.exit228, label %.lr.ph.i220
 
 .lr.ph.i220:                                      ; preds = %heap_adjust.exit217
-  %2 = ashr exact i64 %.pre34.i219, 29
-  %i.ec = getelementptr inbounds i8, ptr %i.a, i64 %2
+  %2 = shl nuw nsw i64 %i.dv, 3
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.a, i64 %2
   %i.ed = load i64, ptr %i.ec, align 8, !tbaa !11
   br label %bb.n
 
@@ -267,10 +266,9 @@ bb.q:                                             ; preds = %bb.p
 
 heap_adjust.exit228:                              ; preds = %bb.q, %bb.p, %heap_adjust.exit217
   %.pre-phi.i224 = phi i64 [ 1, %heap_adjust.exit217 ], [ %i.er, %bb.q ], [ %.pre35.i226, %bb.p ]
-  %3 = ashr exact i64 %.pre34.i219, 32
   %i.fa = getelementptr [8 x i8], ptr %i.b, i64 %.pre-phi.i224
   %i.fb = getelementptr i8, ptr %i.fa, i64 -8
-  store i64 %3, ptr %i.fb, align 8, !tbaa !11
+  store i64 %i.dv, ptr %i.fb, align 8, !tbaa !11
   %i.fc = icmp ugt i64 %i.ch, 1
   br i1 %i.fc, label %.lr.ph259, label %._crit_edge, !llvm.loop !19
 

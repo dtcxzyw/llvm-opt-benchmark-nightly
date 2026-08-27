@@ -205,7 +205,7 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.k
   br i1 %.not.i.i.i.i, label %.thread, label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.ao = shl i64 %1, 3                           ; 3 uses
+  %i.ao = shl nuw nsw i64 %1, 3                   ; 3 uses
   %i.ap = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ao) #29
           to label %bb.n unwind label %bb.p       ; 9 uses
 
@@ -216,7 +216,7 @@ bb.n:                                             ; preds = %bb.m
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !66
   store float 0.000000e+00, ptr %i.ap, align 4, !tbaa !67
   %i.as = getelementptr i8, ptr %i.ap, i64 4
-  %.idx.i.i.i.i.i.i.i = add i64 %i.ao, -4
+  %.idx.i.i.i.i.i.i.i = add nsw i64 %i.ao, -4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.as, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !67
   %i.at = getelementptr i8, ptr %i.ap, i64 %i.ao
   %i.au = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -619,7 +619,7 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.k
   br i1 %.not.i.i.i.i, label %.thread, label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.ao = shl i64 %1, 3                           ; 3 uses
+  %i.ao = shl nuw nsw i64 %1, 3                   ; 3 uses
   %i.ap = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ao) #29
           to label %bb.n unwind label %bb.p       ; 9 uses
 
@@ -630,7 +630,7 @@ bb.n:                                             ; preds = %bb.m
   store ptr %i.aq, ptr %i.ar, align 8, !tbaa !66
   store float 0.000000e+00, ptr %i.ap, align 4, !tbaa !67
   %i.as = getelementptr i8, ptr %i.ap, i64 4
-  %.idx.i.i.i.i.i.i.i = add i64 %i.ao, -4
+  %.idx.i.i.i.i.i.i.i = add nsw i64 %i.ao, -4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.as, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !67
   %i.at = getelementptr i8, ptr %i.ap, i64 %i.ao
   %i.au = getelementptr inbounds nuw i8, ptr %9, i64 8

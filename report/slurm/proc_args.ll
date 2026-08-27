@@ -202,7 +202,7 @@ bb.j:                                             ; preds = %bb.i, %bb.i
   br i1 %i.z, label %bb.k, label %_end_on_byte.exit22
 
 bb.k:                                             ; preds = %bb.i, %bb.j
-  %i.aa = shl nsw i64 %i.c, 10
+  %i.aa = shl nuw nsw i64 %i.c, 10
   br label %_end_on_byte.exit20.thread
 
 _end_on_byte.exit22:                              ; preds = %bb.j, %bb.i
@@ -225,7 +225,7 @@ bb.m:                                             ; preds = %bb.l, %bb.l
   br i1 %i.af, label %bb.n, label %_end_on_byte.exit20.thread
 
 bb.n:                                             ; preds = %bb.l, %bb.m
-  %i.ag = shl nsw i64 %i.c, 20
+  %i.ag = shl nuw nsw i64 %i.c, 20
   br label %_end_on_byte.exit20.thread
 
 _end_on_byte.exit20.thread.fold.split:            ; preds = %_end_on_byte.exit22, %bb.c
