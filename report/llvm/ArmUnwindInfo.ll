@@ -204,11 +204,11 @@ bb.f:                                             ; preds = %.lr.ph.i.i.i.i11
 
 _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEElS4_NS0_5__ops15_Iter_less_iterEEvT_T0_SD_T1_T2_.exit.i.i: ; preds = %bb.f, %.lr.ph.i.i.i.i11, %bb.e
   %.0.lcssa.i.i.i.i10 = phi i64 [ %.1.i.i.i, %bb.e ], [ %.0919.i.i.i.i, %bb.f ], [ %.018.i.i.i.i, %.lr.ph.i.i.i.i11 ]
-  %.sroa.5.sroa.0.0.extract.trunc.i.i.i = trunc i64 %.sroa.517.0.copyload.i.i to i32
   %i.ar = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i10 ; 2 uses
   store <2 x i64> %i.u, ptr %i.ar, align 8
   %.sroa.5.0..sroa_idx37.i.i.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i.i, ptr %.sroa.5.0..sroa_idx37.i.i.i, align 8, !tbaa !37
+  %.sroa.5.0.extract.trunc.i.i.i = trunc i64 %.sroa.517.0.copyload.i.i to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i.i, ptr %.sroa.5.0..sroa_idx37.i.i.i, align 8, !tbaa !37
   %.not.i.i = icmp eq i64 %.07.i.i, 0
   %i.as = add nsw i64 %.07.i.i, -1
   br i1 %.not.i.i, label %.lr.ph.i.i, label %bb.c, !llvm.loop !213
@@ -295,11 +295,11 @@ bb.i:                                             ; preds = %.lr.ph.i.i.i.i.i
 
 _ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_RT0_.exit.i.i: ; preds = %bb.i, %.lr.ph.i.i.i.i.i, %bb.h
   %.0.lcssa.i.i.i.i.i = phi i64 [ 0, %bb.h ], [ %.018.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ 0, %bb.i ]
-  %.sroa.5.sroa.0.0.extract.trunc.i.i.i.i = trunc i64 %.sroa.59.0.copyload.i.i.i to i32
   %i.cc = getelementptr inbounds [24 x i8], ptr %0, i64 %.0.lcssa.i.i.i.i.i ; 2 uses
   store <2 x i64> %i.au, ptr %i.cc, align 8
   %.sroa.5.0..sroa_idx37.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i.i.i, ptr %.sroa.5.0..sroa_idx37.i.i.i.i, align 8, !tbaa !37
+  %.sroa.5.0.extract.trunc.i.i.i.i = trunc i64 %.sroa.59.0.copyload.i.i.i to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i.i.i, ptr %.sroa.5.0..sroa_idx37.i.i.i.i, align 8, !tbaa !37
   %i.cd = icmp sgt i64 %i.aw, 24
   br i1 %i.cd, label %.lr.ph.i.i, label %_ZSt14__partial_sortIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_T0_.exit, !llvm.loop !214
 
@@ -498,12 +498,12 @@ bb.f:                                             ; preds = %bb.b
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i: ; preds = %.lr.ph.i.i, %bb.f
   %.sroa.07.0.lcssa.i.i = phi ptr [ %.sroa.0.018.i.ptr, %bb.f ], [ %.sroa.0.0.i.i, %.lr.ph.i.i ] ; 3 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i = trunc i64 %i.m to i32
   store i64 %i.l, ptr %.sroa.07.0.lcssa.i.i, align 8
   %.sroa.4.0..sroa_idx4.i.i = getelementptr inbounds nuw i8, ptr %.sroa.07.0.lcssa.i.i, i64 8
   store i64 %i.g, ptr %.sroa.4.0..sroa_idx4.i.i, align 8, !tbaa !39
   %.sroa.5.0..sroa_idx6.i.i = getelementptr inbounds nuw i8, ptr %.sroa.07.0.lcssa.i.i, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i, ptr %.sroa.5.0..sroa_idx6.i.i, align 8, !tbaa !37
+  %.sroa.5.0.extract.trunc.i.i = trunc i64 %i.m to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i, ptr %.sroa.5.0..sroa_idx6.i.i, align 8, !tbaa !37
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i
@@ -539,10 +539,10 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwin
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i8: ; preds = %.lr.ph.i.i14, %.lr.ph.i6
   %.sroa.07.0.lcssa.i.i9 = phi ptr [ %.sroa.0.05.i, %.lr.ph.i6 ], [ %.sroa.0.0.i.i16, %.lr.ph.i.i14 ] ; 2 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i10 = trunc i64 %i.v to i32
   store <2 x i64> %i.u, ptr %.sroa.07.0.lcssa.i.i9, align 8
-  %.sroa.5.0..sroa_idx6.i.i12 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.lcssa.i.i9, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i10, ptr %.sroa.5.0..sroa_idx6.i.i12, align 8, !tbaa !37
+  %.sroa.5.0..sroa_idx7.i.i13 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.lcssa.i.i9, i64 16
+  %.sroa.5.0.extract.trunc.i.i14 = trunc i64 %i.v to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i14, ptr %.sroa.5.0..sroa_idx7.i.i13, align 8, !tbaa !37
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i, i64 24 ; 2 uses
   %.not.i13 = icmp eq ptr %i.ac, %1
   br i1 %.not.i13, label %_ZSt26__unguarded_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_.exit, label %.lr.ph.i6, !llvm.loop !221
@@ -619,12 +619,12 @@ bb.n:                                             ; preds = %bb.i
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i24: ; preds = %.lr.ph.i.i31, %bb.n
   %.sroa.07.0.lcssa.i.i25 = phi ptr [ %.sroa.0.018.i21, %bb.n ], [ %.sroa.0.0.i.i33, %.lr.ph.i.i31 ] ; 3 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i26 = trunc i64 %i.ar to i32
   store i64 %i.aq, ptr %.sroa.07.0.lcssa.i.i25, align 8
   %.sroa.4.0..sroa_idx4.i.i27 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.lcssa.i.i25, i64 8
   store i64 %i.ag, ptr %.sroa.4.0..sroa_idx4.i.i27, align 8, !tbaa !39
   %.sroa.5.0..sroa_idx6.i.i28 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.lcssa.i.i25, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i26, ptr %.sroa.5.0..sroa_idx6.i.i28, align 8, !tbaa !37
+  %.sroa.5.0.extract.trunc.i.i32 = trunc i64 %i.ar to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i32, ptr %.sroa.5.0..sroa_idx6.i.i28, align 8, !tbaa !37
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i24, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN12lldb_private13ArmUnwindInfo13ArmExidxEntryESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i34

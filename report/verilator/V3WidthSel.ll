@@ -202,7 +202,6 @@ bb.en:                                            ; preds = %.thread, %_ZNSt7__c
   %.sroa.18.0.copyload = load i32, ptr %.sroa.18.0..sroa_idx, align 4, !tbaa !26 ; 14 uses
   %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %42, i64 24
   %i.so = load i32, ptr %.sroa.31.0..sroa_idx, align 8
-  %.sroa.31.sroa.0.0.extract.trunc = trunc i32 %i.so to i8
   %.not.i454 = icmp eq ptr %i.sm, null
   br i1 %.not.i454, label %_ZN7AstNode2isI21AstNodeUOrStructDType12AstNodeDTypeEEbPKT0_.exit.thread, label %_ZN7AstNode2isI19AstUnpackArrayDType12AstNodeDTypeEEbPKT0_.exit
 
@@ -605,7 +604,8 @@ _ZN6AstSelC2EP8FileLineP11AstNodeExprS3_i.exit:   ; preds = %bb.fx, %.noexc511
   %.sroa.18.0..sroa_idx702 = getelementptr inbounds nuw i8, ptr %i.xf, i64 164
   store i32 %.sroa.18.0.copyload, ptr %.sroa.18.0..sroa_idx702, align 4, !tbaa !26
   %.sroa.31.0..sroa_idx716 = getelementptr inbounds nuw i8, ptr %i.xf, i64 168
-  store i8 %.sroa.31.sroa.0.0.extract.trunc, ptr %.sroa.31.0..sroa_idx716, align 8, !tbaa !92
+  %.sroa.31.0.extract.trunc = trunc i32 %i.so to i8
+  store i8 %.sroa.31.0.extract.trunc, ptr %.sroa.31.0..sroa_idx716, align 8, !tbaa !92
   store i32 %.0103, ptr %i.xk, align 4, !tbaa !105
   %i.xr = call noundef i32 @_ZL5debugv()
   %i.xs = icmp sgt i32 %i.xr, 5

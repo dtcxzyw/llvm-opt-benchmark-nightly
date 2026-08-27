@@ -202,11 +202,11 @@ bb.b:                                             ; preds = %._crit_edge
   br i1 %i.r, label %._crit_edge129, label %bb.c, !llvm.loop !40
 
 bb.c:                                             ; preds = %.lr.ph128, %bb.b
+  %.sroa.9.0127154 = phi i64 [ %i.d, %.lr.ph128 ], [ %.sroa.9.sroa.0.3, %bb.b ] ; 2 uses
   %.sroa.5.0123147 = phi ptr [ %.sroa.5.0.copyload, %.lr.ph128 ], [ %.sroa.5.1.lcssa, %bb.b ] ; 2 uses
   %.076124146 = phi float [ %4, %.lr.ph128 ], [ %.1.lcssa, %bb.b ] ; 2 uses
   %.0125145 = phi i32 [ 0, %.lr.ph128 ], [ %i.o, %bb.b ]
   %.075126144 = phi ptr [ %.075119, %.lr.ph128 ], [ %.075, %bb.b ] ; 4 uses
-  %.sroa.9.sroa.0.0143 = phi i64 [ %i.d, %.lr.ph128 ], [ %.sroa.9.sroa.0.3, %bb.b ] ; 2 uses
   %i.s = phi <2 x float> [ %i.e, %.lr.ph128 ], [ %i.ec, %bb.b ] ; 2 uses
   store ptr %.075126144, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !31
   %i.t = getelementptr inbounds nuw i8, ptr %.075126144, i64 4 ; 2 uses
@@ -219,17 +219,17 @@ bb.c:                                             ; preds = %.lr.ph128, %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %Map_MatchCompare.exit.thread
-  %.sroa.9.sroa.0.1 = phi i64 [ %.sroa.9.sroa.0.0143, %.lr.ph ], [ %.sroa.9.sroa.0.2, %Map_MatchCompare.exit.thread ] ; 12 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %Map_MatchCompare.exit.thread ] ; 2 uses
-  %.1114 = phi float [ %.076124146, %.lr.ph ], [ %.2, %Map_MatchCompare.exit.thread ] ; 17 uses
-  %.sroa.5.1113 = phi ptr [ %.sroa.5.0123147, %.lr.ph ], [ %.sroa.5.2, %Map_MatchCompare.exit.thread ] ; 16 uses
+  %.sroa.9.sroa.0.1 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %Map_MatchCompare.exit.thread ] ; 2 uses
+  %.1117 = phi float [ %.076124146, %.lr.ph ], [ %.2, %Map_MatchCompare.exit.thread ] ; 17 uses
+  %.sroa.5.1116 = phi ptr [ %.sroa.5.0123147, %.lr.ph ], [ %.sroa.5.2, %Map_MatchCompare.exit.thread ] ; 16 uses
+  %.sroa.9.1115 = phi i64 [ %.sroa.9.0127154, %.lr.ph ], [ %.sroa.9.sroa.0.2, %Map_MatchCompare.exit.thread ] ; 12 uses
   %i.w = phi <2 x float> [ %i.s, %.lr.ph ], [ %i.dx, %Map_MatchCompare.exit.thread ] ; 15 uses
   %i.x = extractelement <2 x float> %i.w, i64 1   ; 5 uses
   %i.y = load i32, ptr %i.g, align 8, !tbaa !42
   %i.z = add nsw i32 %i.y, 1
   store i32 %i.z, ptr %i.g, align 8, !tbaa !42
   %i.aa = load i32, ptr %i.h, align 8, !tbaa !43
-  %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 %indvars.iv
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.v, i64 %.sroa.9.sroa.0.1
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !44
   %i.ad = zext i8 %i.ac to i32
   %i.ae = xor i32 %i.aa, %i.ad
@@ -243,10 +243,10 @@ bb.d:                                             ; preds = %.lr.ph, %Map_MatchC
   ]
 
 bb.e:                                             ; preds = %bb.d
-  %i.ag = tail call float @Map_TimeCutComputeArrival(ptr noundef %1, ptr noundef nonnull %2, i32 noundef %3, float noundef %.1114) #10 ; 0 uses
+  %i.ag = tail call float @Map_TimeCutComputeArrival(ptr noundef %1, ptr noundef nonnull %2, i32 noundef %3, float noundef %.1117) #10 ; 0 uses
   %i.ah = load float, ptr %.sroa.990.0..sroa_idx, align 8, !tbaa !26
   %i.ai = load float, ptr %i.k, align 4, !tbaa !10
-  %i.aj = fadd float %.1114, %i.ai
+  %i.aj = fadd float %.1117, %i.ai
   %i.ak = fcmp ogt float %i.ah, %i.aj
   br i1 %i.ak, label %Map_MatchCompare.exit.thread, label %bb.f
 
@@ -277,10 +277,10 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
   br i1 %i.ar, label %Map_MatchCompare.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.as = tail call float @Map_TimeCutComputeArrival(ptr noundef %1, ptr noundef nonnull %2, i32 noundef %3, float noundef %.1114) #10 ; 0 uses
+  %i.as = tail call float @Map_TimeCutComputeArrival(ptr noundef %1, ptr noundef nonnull %2, i32 noundef %3, float noundef %.1117) #10 ; 0 uses
   %i.at = load float, ptr %.sroa.990.0..sroa_idx, align 8, !tbaa !26
   %i.au = load float, ptr %i.k, align 4, !tbaa !10 ; 2 uses
-  %i.av = fadd float %.1114, %i.au
+  %i.av = fadd float %.1117, %i.au
   %i.aw = fcmp ogt float %i.at, %i.av
   br i1 %i.aw, label %Map_MatchCompare.exit.thread, label %bb.l
 
@@ -314,7 +314,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bj, label %Map_MatchCompare.exit.thread107, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.5.1113, i64 4
+  %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.5.1116, i64 4
   %i.bl = load i32, ptr %i.bk, align 4            ; 2 uses
   %i.bm = lshr i32 %i.bl, 8
   %i.bn = and i32 %i.bm, 15                       ; 2 uses
@@ -344,12 +344,12 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.ca = load i32, ptr %i.l, align 8, !tbaa !32
   %.not71.i = icmp eq i32 %i.ca, 0
-  %.not72.i = icmp eq ptr %.sroa.5.1113, null
+  %.not72.i = icmp eq ptr %.sroa.5.1116, null
   %or.cond = select i1 %.not71.i, i1 true, i1 %.not72.i
   br i1 %or.cond, label %.thread.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.5.1113, i64 64 ; 2 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.5.1116, i64 64 ; 2 uses
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !33
   %i.cd = tail call i32 @Mio_GateReadProfile(ptr noundef %i.cc) #10 ; 2 uses
   %i.ce = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !31
@@ -391,7 +391,7 @@ bb.x:                                             ; preds = %.thread.i
   br i1 %i.cy, label %Map_MatchCompare.exit.thread107, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.5.1113, i64 4
+  %i.cz = getelementptr inbounds nuw i8, ptr %.sroa.5.1116, i64 4
   %i.da = load i32, ptr %i.cz, align 4            ; 2 uses
   %i.db = lshr i32 %i.da, 8
   %i.dc = and i32 %i.db, 15                       ; 2 uses
@@ -437,11 +437,11 @@ bb.aa:                                            ; preds = %Map_MatchCompare.ex
   br label %Map_MatchCompare.exit.thread
 
 Map_MatchCompare.exit.thread:                     ; preds = %.split, %bb.q, %bb.o, %bb.m, %bb.y, %.thread.i, %bb.s, %bb.v, %Map_MatchCompare.exit, %bb.aa, %Map_MatchCompare.exit.thread107, %bb.k, %bb.j, %bb.e
-  %.sroa.9.sroa.0.2 = phi i64 [ %.sroa.9.sroa.0.1, %bb.j ], [ %.sroa.9.sroa.0.1, %bb.k ], [ %.sroa.9.sroa.0.1, %bb.m ], [ %i.ds, %bb.aa ], [ %i.ds, %Map_MatchCompare.exit.thread107 ], [ %.sroa.9.sroa.0.1, %bb.o ], [ %.sroa.9.sroa.0.1, %bb.q ], [ %.sroa.9.sroa.0.1, %Map_MatchCompare.exit ], [ %.sroa.9.sroa.0.1, %bb.s ], [ %.sroa.9.sroa.0.1, %.thread.i ], [ %.sroa.9.sroa.0.1, %bb.y ], [ %.sroa.9.sroa.0.1, %bb.v ], [ %.sroa.9.sroa.0.1, %bb.e ], [ %.sroa.9.sroa.0.1, %.split ] ; 2 uses
-  %.sroa.5.2 = phi ptr [ %.sroa.5.1113, %bb.j ], [ %.sroa.5.1113, %bb.k ], [ %.sroa.5.1113, %bb.m ], [ %.sroa.5.0.copyload82, %bb.aa ], [ %.sroa.5.0.copyload82, %Map_MatchCompare.exit.thread107 ], [ %.sroa.5.1113, %bb.o ], [ %.sroa.5.1113, %bb.q ], [ %.sroa.5.1113, %Map_MatchCompare.exit ], [ %.sroa.5.1113, %bb.s ], [ %.sroa.5.1113, %.thread.i ], [ %.sroa.5.1113, %bb.y ], [ %.sroa.5.1113, %bb.v ], [ %.sroa.5.1113, %bb.e ], [ %.sroa.5.1113, %.split ] ; 2 uses
-  %.2 = phi float [ %.1114, %bb.j ], [ %.1114, %bb.k ], [ %.1114, %bb.m ], [ %i.dw, %bb.aa ], [ %.1114, %Map_MatchCompare.exit.thread107 ], [ %.1114, %bb.o ], [ %.1114, %bb.q ], [ %.1114, %Map_MatchCompare.exit ], [ %.1114, %bb.s ], [ %.1114, %.thread.i ], [ %.1114, %bb.y ], [ %.1114, %bb.v ], [ %.1114, %bb.e ], [ %.1114, %.split ] ; 2 uses
-  %i.dx = phi <2 x float> [ %i.w, %bb.j ], [ %i.w, %bb.k ], [ %i.w, %bb.m ], [ %i.dt, %bb.aa ], [ %i.dt, %Map_MatchCompare.exit.thread107 ], [ %i.w, %bb.o ], [ %i.w, %bb.q ], [ %i.w, %Map_MatchCompare.exit ], [ %i.w, %bb.s ], [ %i.w, %.thread.i ], [ %i.w, %bb.y ], [ %i.w, %bb.v ], [ %i.w, %bb.e ], [ %i.w, %.split ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.sroa.9.sroa.0.2 = phi i64 [ %.sroa.9.1115, %bb.j ], [ %.sroa.9.1115, %bb.k ], [ %.sroa.9.1115, %Map_MatchCompare.exit ], [ %i.ds, %bb.aa ], [ %i.ds, %Map_MatchCompare.exit.thread107 ], [ %.sroa.9.1115, %bb.e ], [ %.sroa.9.1115, %bb.v ], [ %.sroa.9.1115, %bb.s ], [ %.sroa.9.1115, %.thread.i ], [ %.sroa.9.1115, %bb.y ], [ %.sroa.9.1115, %bb.m ], [ %.sroa.9.1115, %bb.o ], [ %.sroa.9.1115, %bb.q ], [ %.sroa.9.1115, %.split ] ; 2 uses
+  %.sroa.5.2 = phi ptr [ %.sroa.5.1116, %bb.j ], [ %.sroa.5.1116, %bb.k ], [ %.sroa.5.1116, %Map_MatchCompare.exit ], [ %.sroa.5.0.copyload82, %bb.aa ], [ %.sroa.5.0.copyload82, %Map_MatchCompare.exit.thread107 ], [ %.sroa.5.1116, %bb.e ], [ %.sroa.5.1116, %bb.v ], [ %.sroa.5.1116, %bb.s ], [ %.sroa.5.1116, %.thread.i ], [ %.sroa.5.1116, %bb.y ], [ %.sroa.5.1116, %bb.m ], [ %.sroa.5.1116, %bb.o ], [ %.sroa.5.1116, %bb.q ], [ %.sroa.5.1116, %.split ] ; 2 uses
+  %.2 = phi float [ %.1117, %bb.j ], [ %.1117, %bb.k ], [ %.1117, %Map_MatchCompare.exit ], [ %i.dw, %bb.aa ], [ %.1117, %Map_MatchCompare.exit.thread107 ], [ %.1117, %bb.e ], [ %.1117, %bb.v ], [ %.1117, %bb.s ], [ %.1117, %.thread.i ], [ %.1117, %bb.y ], [ %.1117, %bb.m ], [ %.1117, %bb.o ], [ %.1117, %bb.q ], [ %.1117, %.split ] ; 2 uses
+  %i.dx = phi <2 x float> [ %i.w, %bb.j ], [ %i.w, %bb.k ], [ %i.w, %Map_MatchCompare.exit ], [ %i.dt, %bb.aa ], [ %i.dt, %Map_MatchCompare.exit.thread107 ], [ %i.w, %bb.e ], [ %i.w, %bb.v ], [ %i.w, %bb.s ], [ %i.w, %.thread.i ], [ %i.w, %bb.y ], [ %i.w, %bb.m ], [ %i.w, %bb.o ], [ %i.w, %bb.q ], [ %i.w, %.split ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %.sroa.9.sroa.0.1, 1 ; 2 uses
   %i.dy = load i32, ptr %i.t, align 4
   %i.dz = lshr i32 %i.dy, 28
   %i.ea = zext nneg i32 %i.dz to i64
@@ -449,7 +449,7 @@ Map_MatchCompare.exit.thread:                     ; preds = %.split, %bb.q, %bb.
   br i1 %i.eb, label %bb.d, label %._crit_edge, !llvm.loop !47
 
 ._crit_edge:                                      ; preds = %Map_MatchCompare.exit.thread, %bb.c
-  %.sroa.9.sroa.0.3 = phi i64 [ %.sroa.9.sroa.0.0143, %bb.c ], [ %.sroa.9.sroa.0.2, %Map_MatchCompare.exit.thread ] ; 3 uses
+  %.sroa.9.sroa.0.3 = phi i64 [ %.sroa.9.0127154, %bb.c ], [ %.sroa.9.sroa.0.2, %Map_MatchCompare.exit.thread ] ; 3 uses
   %.sroa.5.1.lcssa = phi ptr [ %.sroa.5.0123147, %bb.c ], [ %.sroa.5.2, %Map_MatchCompare.exit.thread ] ; 3 uses
   %.1.lcssa = phi float [ %.076124146, %bb.c ], [ %.2, %Map_MatchCompare.exit.thread ]
   %i.ec = phi <2 x float> [ %i.s, %bb.c ], [ %i.dx, %Map_MatchCompare.exit.thread ] ; 3 uses

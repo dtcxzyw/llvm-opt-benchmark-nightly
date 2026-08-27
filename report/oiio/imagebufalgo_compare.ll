@@ -205,7 +205,7 @@ _ZNSt6vectorIfSaIfEED2Ev.exit119.loopexit:        ; preds = %._crit_edge57.i
   store i32 %i.bl, ptr %.sroa.10.0..sroa_idx.i, align 4
   br label %_ZNSt6vectorIfSaIfEED2Ev.exit119
 
-_ZNSt6vectorIfSaIfEED2Ev.exit119:                 ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit119.loopexit, %.lr.ph61.i, %bb.g, %bb.ar, %_ZNSt6vectorIfSaIfEED2Ev.exit
+_ZNSt6vectorIfSaIfEED2Ev.exit119:                 ; preds = %_ZNSt6vectorIfSaIfEED2Ev.exit119.loopexit, %bb.ar, %_ZNSt6vectorIfSaIfEED2Ev.exit, %.lr.ph61.i, %bb.g
   call void @_ZN11OpenImageIO4v3_13pvt11LoggedTimerD2Ev(ptr noundef nonnull align 8 dead_on_return(68) dereferenceable(68) %4) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #29
   ret void

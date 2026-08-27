@@ -205,7 +205,7 @@ bb.bx:                                            ; preds = %_ZN10fast_float19pa
   br i1 %i.nh, label %bb.by, label %bb.cc
 
 .thread606:                                       ; preds = %bb.bv, %bb.br, %.critedge133.i, %bb.ap, %bb.ao, %bb.ak, %bb.ag, %._crit_edge459, %bb.q, %.critedge.i, %bb.d, %bb.c
-  %.ph = phi ptr [ %i.gg, %bb.ao ], [ %.2266303, %bb.ak ], [ %.2284, %.critedge133.i ], [ %i.gg, %bb.ap ], [ %.4286, %bb.br ], [ %i.f, %bb.c ], [ %.10.lcssa, %._crit_edge459 ], [ %i.f, %bb.d ], [ %.1265, %.critedge.i ], [ %.0264, %bb.q ], [ %.4268, %bb.ag ], [ %.2284, %bb.bv ] ; 2 uses
+  %.ph = phi ptr [ %.4268, %bb.ag ], [ %.0264, %bb.q ], [ %.1265, %.critedge.i ], [ %i.f, %bb.d ], [ %.10.lcssa, %._crit_edge459 ], [ %i.gg, %bb.ao ], [ %i.f, %bb.c ], [ %.4286, %bb.br ], [ %i.gg, %bb.ap ], [ %.2284, %.critedge133.i ], [ %.2266303, %bb.ak ], [ %.2284, %bb.bv ] ; 2 uses
   %i.ni = load volatile float, ptr @_ZZN10fast_float6detail17rounds_to_nearestEvE4fmin, align 4, !tbaa !29 ; 2 uses
   %i.nj = fadd float %i.ni, 1.000000e+00
   %i.nk = fsub float 1.000000e+00, %i.ni
@@ -608,7 +608,7 @@ bb.bx:                                            ; preds = %_ZN10fast_float19pa
   br i1 %i.nh, label %bb.by, label %bb.cc
 
 .thread598:                                       ; preds = %bb.bv, %bb.br, %.critedge133.i, %bb.ap, %bb.ao, %bb.ak, %bb.ag, %._crit_edge451, %bb.q, %.critedge.i, %bb.d, %bb.c
-  %.ph = phi ptr [ %i.gg, %bb.ao ], [ %.2258295, %bb.ak ], [ %.2276, %.critedge133.i ], [ %i.gg, %bb.ap ], [ %.4278, %bb.br ], [ %i.f, %bb.c ], [ %.10.lcssa, %._crit_edge451 ], [ %i.f, %bb.d ], [ %.1257, %.critedge.i ], [ %.0256, %bb.q ], [ %.4260, %bb.ag ], [ %.2276, %bb.bv ] ; 2 uses
+  %.ph = phi ptr [ %.4260, %bb.ag ], [ %.0256, %bb.q ], [ %.1257, %.critedge.i ], [ %i.f, %bb.d ], [ %.10.lcssa, %._crit_edge451 ], [ %i.gg, %bb.ao ], [ %i.f, %bb.c ], [ %.4278, %bb.br ], [ %i.gg, %bb.ap ], [ %.2276, %.critedge133.i ], [ %.2258295, %bb.ak ], [ %.2276, %bb.bv ] ; 2 uses
   %i.ni = load volatile float, ptr @_ZZN10fast_float6detail17rounds_to_nearestEvE4fmin, align 4, !tbaa !29 ; 2 uses
   %i.nj = fadd float %i.ni, 1.000000e+00
   %i.nk = fsub float 1.000000e+00, %i.ni

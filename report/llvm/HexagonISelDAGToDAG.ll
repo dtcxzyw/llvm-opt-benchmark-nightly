@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %_ZNK4llvm14Constant
   call void @_ZN4llvm16SelectionDAGISel11ReplaceNodeEPNS_6SDNodeES2_(ptr noundef nonnull align 8 dereferenceable(952) %0, ptr noundef nonnull %1, ptr noundef %i.dg)
   br label %.critedge60
 
-_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit73.thread: ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit81, %bb.n, %bb.j, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit
+_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit73.thread: ; preds = %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit81, %bb.n, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, %bb.j
   tail call void @_ZN4llvm16SelectionDAGISel16SelectCodeCommonEPNS_6SDNodeEPKhjS4_(ptr noundef nonnull align 8 dereferenceable(1216) %0, ptr noundef nonnull %1, ptr noundef nonnull @_ZZN4llvm19HexagonDAGToDAGISel10SelectCodeEPNS_6SDNodeEE12MatcherTable, i32 noundef 136152, ptr noundef nonnull @_ZZN4llvm19HexagonDAGToDAGISel10SelectCodeEPNS_6SDNodeEE12OperandLists) #20
   br label %.critedge60
 
@@ -608,7 +608,7 @@ bb.h:                                             ; preds = %_ZN4llvm8dyn_castIN
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   br label %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.thread
 
-_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.thread: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit52, %bb.h, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit, %bb.f, %bb.g, %bb.c, %bb.d, %bb.e, %bb.b
+_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.thread: ; preds = %bb.g, %bb.f, %bb.c, %bb.e, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit, %bb.h, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit52, %bb.d, %bb.b
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.073.080, i64 8 ; 2 uses
   %.not78 = icmp eq ptr %i.bp, %i.e
   br i1 %.not78, label %._crit_edge, label %bb.b
@@ -789,7 +789,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   br label %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.thread
 
-_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.thread: ; preds = %bb.d, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit, %bb.i, %bb.h, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit83, %bb.e, %bb.f, %bb.g, %bb.c, %bb.b
+_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.thread: ; preds = %bb.g, %bb.f, %bb.c, %bb.e, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit83, %bb.h, %bb.i, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit, %bb.d, %bb.b
   %i.bz = getelementptr inbounds nuw i8, ptr %.sroa.099.0106, i64 8 ; 2 uses
   %.not104 = icmp eq ptr %i.bz, %i.e
   br i1 %.not104, label %._crit_edge, label %bb.b
@@ -979,7 +979,7 @@ _ZNK4llvm9MemSDNode10getBasePtrEv.exit15.i:       ; preds = %bb.i
   %i.bq = select i1 %i.bo, i1 %i.bp, i1 false
   br i1 %i.bq, label %.critedge3, label %bb.j
 
-bb.j:                                             ; preds = %bb.h, %bb.i, %_ZNK4llvm9MemSDNode10getBasePtrEv.exit15.i, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i, %_ZNK4llvm3EVT10isVectorOfES0_.exit.thread, %bb.f, %bb.g
+bb.j:                                             ; preds = %bb.h, %bb.i, %_ZNK4llvm9MemSDNode10getBasePtrEv.exit15.i, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i, %bb.f, %bb.g, %_ZNK4llvm3EVT10isVectorOfES0_.exit.thread
   %i.br = load ptr, ptr %i.y, align 8, !tbaa !493
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 40
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !358
@@ -1382,7 +1382,7 @@ _ZN4llvm11SmallVectorIPNS_6SDNodeELj4EED2Ev.exit: ; preds = %bb.aa, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   br label %_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_6SDNodeEiLj4ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_iEEEES3_iS5_S8_E5countEPKS2_.exit
 
-_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_6SDNodeEiLj4ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_iEEEES3_iS5_S8_E5countEPKS2_.exit: ; preds = %.lr.ph.i.i.i, %_ZN4llvm11SmallVectorIPNS_6SDNodeELj4EED2Ev.exit, %_ZNK4llvm9MemSDNode10getBasePtrEv.exit, %bb.k
+_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_6SDNodeEiLj4ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_iEEEES3_iS5_S8_E5countEPKS2_.exit: ; preds = %.lr.ph.i.i.i, %bb.k, %_ZN4llvm11SmallVectorIPNS_6SDNodeELj4EED2Ev.exit, %_ZNK4llvm9MemSDNode10getBasePtrEv.exit
   %.not = icmp eq ptr %i.ce, %i.h
   br i1 %.not, label %._crit_edge73.loopexit, label %bb.k
 }
@@ -1785,7 +1785,7 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.thread
 
 _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.thread: ; preds = %bb.d, %bb.b, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit, %bb.c, %bb.a, %bb.j, %bb.k, %bb.i
-  %.4 = phi i1 [ false, %bb.j ], [ true, %bb.k ], [ false, %bb.a ], [ %i.bb, %bb.i ], [ false, %bb.c ], [ false, %bb.b ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit ], [ true, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit ], [ false, %bb.d ]
+  %.4 = phi i1 [ false, %bb.j ], [ true, %bb.k ], [ false, %bb.a ], [ %i.bb, %bb.i ], [ false, %bb.d ], [ false, %bb.b ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit ], [ true, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit ], [ false, %bb.c ]
   ret i1 %.4
 }
 

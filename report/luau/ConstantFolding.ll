@@ -204,12 +204,12 @@ bb.w:                                             ; preds = %bb.v
 
 .lr.ph:                                           ; preds = %bb.w, %bb.y
   %i.bp = phi ptr [ %i.bx, %bb.y ], [ %i.bm, %bb.w ]
-  %.0162338 = phi i64 [ %i.bw, %bb.y ], [ 0, %bb.w ] ; 2 uses
-  %.0163337 = phi i1 [ %.1164, %bb.y ], [ true, %bb.w ]
+  %.0161338 = phi i1 [ %.1164, %bb.y ], [ true, %bb.w ]
+  %.0164337 = phi i64 [ %i.bw, %bb.y ], [ 0, %bb.w ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 56
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !222
-  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %.0162338
+  %i.bs = getelementptr inbounds nuw [8 x i8], ptr %i.br, i64 %.0164337
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !42
   call void @_ZN4Luau7Compile15ConstantVisitor7analyzeEPNS_7AstExprE(ptr dead_on_unwind nonnull writable sret(%"struct.Luau::Compile::Constant") align 8 %4, ptr noundef nonnull align 8 dereferenceable(184) %1, ptr noundef %i.bt)
   %i.bu = load i32, ptr %4, align 8, !tbaa !76
@@ -222,9 +222,9 @@ bb.x:                                             ; preds = %.lr.ph
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph, %bb.x
-  %.1164 = phi i1 [ %.0163337, %bb.x ], [ false, %.lr.ph ] ; 2 uses
+  %.1164 = phi i1 [ %.0161338, %bb.x ], [ false, %.lr.ph ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
-  %i.bw = add nuw i64 %.0162338, 1                ; 2 uses
+  %i.bw = add nuw i64 %.0164337, 1                ; 2 uses
   %i.bx = load ptr, ptr %i.a, align 8, !tbaa !218 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 64
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !221 ; 2 uses

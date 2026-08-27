@@ -204,14 +204,14 @@ bb.a:
   br i1 %i.f, label %.preheader.us, label %.preheader
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %._crit_edge.split.us.us
-  %.031.us = phi i32 [ %.1.lcssa.us, %._crit_edge.split.us.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %.02529.us = phi i32 [ %i.k, %._crit_edge.split.us.us ], [ 0, %.preheader.lr.ph ] ; 3 uses
+  %.031.us = phi i32 [ %i.k, %._crit_edge.split.us.us ], [ 0, %.preheader.lr.ph ] ; 3 uses
+  %.02529.us = phi i32 [ %.1.lcssa.us, %._crit_edge.split.us.us ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %i.g = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart10numYLevelsEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph.us.preheader, label %._crit_edge.split.us.us
 
 .lr.ph.us.preheader:                              ; preds = %.preheader.us
-  %i.i = sext i32 %.031.us to i64
+  %i.i = sext i32 %.02529.us to i64
   br label %.lr.ph.us
 
 ._crit_edge.split.us.us.loopexit:                 ; preds = %.lr.ph.us
@@ -219,8 +219,8 @@ bb.a:
   br label %._crit_edge.split.us.us
 
 ._crit_edge.split.us.us:                          ; preds = %._crit_edge.split.us.us.loopexit, %.preheader.us
-  %.1.lcssa.us = phi i32 [ %.031.us, %.preheader.us ], [ %i.j, %._crit_edge.split.us.us.loopexit ]
-  %i.k = add nuw nsw i32 %.02529.us, 1            ; 2 uses
+  %.1.lcssa.us = phi i32 [ %.02529.us, %.preheader.us ], [ %i.j, %._crit_edge.split.us.us.loopexit ]
+  %i.k = add nuw nsw i32 %.031.us, 1              ; 2 uses
   %i.l = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart10numXLevelsEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.m = icmp slt i32 %i.k, %i.l
   br i1 %i.m, label %.preheader.us, label %._crit_edge32, !llvm.loop !95
@@ -231,11 +231,11 @@ bb.a:
   %i.n = load ptr, ptr %1, align 8, !tbaa !71
   %i.o = getelementptr inbounds nuw [48 x i8], ptr %i.n, i64 %indvars.iv
   tail call void @_ZN7Imf_3_414TiledInputPart14setFrameBufferERKNS_11FrameBufferE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.o)
-  %i.p = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart9numXTilesEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.02529.us)
+  %i.p = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart9numXTilesEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.031.us)
   %i.q = add nsw i32 %i.p, -1
   %i.r = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart9numYTilesEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.02427.us.us)
   %i.s = add nsw i32 %i.r, -1
-  tail call void @_ZN7Imf_3_414TiledInputPart9readTilesEiiiiii(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef 0, i32 noundef %i.q, i32 noundef 0, i32 noundef %i.s, i32 noundef %.02529.us, i32 noundef %.02427.us.us)
+  tail call void @_ZN7Imf_3_414TiledInputPart9readTilesEiiiiii(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef 0, i32 noundef %i.q, i32 noundef 0, i32 noundef %i.s, i32 noundef %.031.us, i32 noundef %.02427.us.us)
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
   %i.t = add nuw nsw i32 %.02427.us.us, 1         ; 2 uses
   %i.u = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart10numYLevelsEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
@@ -243,8 +243,8 @@ bb.a:
   br i1 %i.v, label %.lr.ph.us, label %._crit_edge.split.us.us.loopexit, !llvm.loop !96
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %._crit_edge.split
-  %.031 = phi i32 [ %.1.lcssa, %._crit_edge.split ], [ 0, %.preheader.lr.ph ] ; 2 uses
-  %.02529 = phi i32 [ %i.ba, %._crit_edge.split ], [ 0, %.preheader.lr.ph ] ; 6 uses
+  %.031 = phi i32 [ %i.ba, %._crit_edge.split ], [ 0, %.preheader.lr.ph ] ; 6 uses
+  %.02529 = phi i32 [ %.1.lcssa, %._crit_edge.split ], [ 0, %.preheader.lr.ph ] ; 2 uses
   %i.w = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart10numYLevelsEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.x = icmp sgt i32 %i.w, 0
   br i1 %i.x, label %.lr.ph, label %._crit_edge.split
@@ -322,34 +322,34 @@ _ZNSt6vectorIdSaIdEE9push_backEOd.exit:           ; preds = %bb.b, %_ZNSt6vector
   ret void
 
 ._crit_edge.split:                                ; preds = %bb.h, %.preheader
-  %.1.lcssa = phi i32 [ %.031, %.preheader ], [ %.2, %bb.h ]
-  %i.ba = add nuw nsw i32 %.02529, 1              ; 2 uses
+  %.1.lcssa = phi i32 [ %.02529, %.preheader ], [ %.2, %bb.h ]
+  %i.ba = add nuw nsw i32 %.031, 1                ; 2 uses
   %i.bb = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart10numXLevelsEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.bc = icmp slt i32 %i.ba, %i.bb
   br i1 %i.bc, label %.preheader, label %._crit_edge32, !llvm.loop !95
 
 .lr.ph:                                           ; preds = %.preheader, %bb.h
-  %.128 = phi i32 [ %.2, %bb.h ], [ %.031, %.preheader ] ; 3 uses
-  %.02427 = phi i32 [ %i.bm, %bb.h ], [ 0, %.preheader ] ; 2 uses
-  %i.bd = icmp eq i32 %.02529, %.02427
+  %.128 = phi i32 [ %i.bm, %bb.h ], [ 0, %.preheader ] ; 2 uses
+  %.02427 = phi i32 [ %.2, %bb.h ], [ %.02529, %.preheader ] ; 3 uses
+  %i.bd = icmp eq i32 %.031, %.128
   br i1 %i.bd, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.be = sext i32 %.128 to i64
+  %i.be = sext i32 %.02427 to i64
   %i.bf = load ptr, ptr %1, align 8, !tbaa !71
   %i.bg = getelementptr inbounds nuw [48 x i8], ptr %i.bf, i64 %i.be
   tail call void @_ZN7Imf_3_414TiledInputPart14setFrameBufferERKNS_11FrameBufferE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(48) %i.bg)
-  %i.bh = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart9numXTilesEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.02529)
+  %i.bh = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart9numXTilesEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.031)
   %i.bi = add nsw i32 %i.bh, -1
-  %i.bj = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart9numYTilesEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.02529)
+  %i.bj = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart9numYTilesEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %.031)
   %i.bk = add nsw i32 %i.bj, -1
-  tail call void @_ZN7Imf_3_414TiledInputPart9readTilesEiiiiii(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef 0, i32 noundef %i.bi, i32 noundef 0, i32 noundef %i.bk, i32 noundef %.02529, i32 noundef %.02529)
-  %i.bl = add nsw i32 %.128, 1
+  tail call void @_ZN7Imf_3_414TiledInputPart9readTilesEiiiiii(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef 0, i32 noundef %i.bi, i32 noundef 0, i32 noundef %i.bk, i32 noundef %.031, i32 noundef %.031)
+  %i.bl = add nsw i32 %.02427, 1
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %bb.g
-  %.2 = phi i32 [ %i.bl, %bb.g ], [ %.128, %.lr.ph ] ; 2 uses
-  %i.bm = add nuw nsw i32 %.02427, 1              ; 2 uses
+  %.2 = phi i32 [ %i.bl, %bb.g ], [ %.02427, %.lr.ph ] ; 2 uses
+  %i.bm = add nuw nsw i32 %.128, 1                ; 2 uses
   %i.bn = tail call noundef i32 @_ZNK7Imf_3_414TiledInputPart10numYLevelsEv(ptr noundef nonnull align 8 dereferenceable(8) %0)
   %i.bo = icmp slt i32 %i.bm, %i.bn
   br i1 %i.bo, label %.lr.ph, label %._crit_edge.split, !llvm.loop !96

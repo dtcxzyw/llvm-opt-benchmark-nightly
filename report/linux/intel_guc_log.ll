@@ -204,7 +204,7 @@ intel_guc_check_log_buf_overflow.exit.i:          ; preds = %bb.r, %bb.q, %intel
   store i64 %.sroa.0.0.copyload.i, ptr %.018.i.i.i, align 1
   %.sroa.5.0..sroa_idx22.i = getelementptr inbounds nuw i8, ptr %.018.i.i.i, i64 8
   store i32 %.sroa.5.0.copyload.i, ptr %.sroa.5.0..sroa_idx22.i, align 1
-  %.sroa.6.0..sroa_idx24.i = getelementptr i8, ptr %.018.i.i.i, i64 12 ; 2 uses
+  %.sroa.6.0..sroa_idx24.i = getelementptr inbounds nuw i8, ptr %.018.i.i.i, i64 12 ; 2 uses
   store i64 %i.bl, ptr %.sroa.6.0..sroa_idx24.i, align 1
   %.sroa.625.0..sroa_idx26.i = getelementptr inbounds nuw i8, ptr %.018.i.i.i, i64 20
   store i32 %.sroa.625.0.copyload.i, ptr %.sroa.625.0..sroa_idx26.i, align 1

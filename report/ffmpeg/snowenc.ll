@@ -205,9 +205,9 @@ bb.bb:                                            ; preds = %check_block_inter.e
 
 bb.bc:                                            ; preds = %.lr.ph710.us.us.us.i, %bb.cm
   %indvars.iv918.i = phi i64 [ 0, %.lr.ph710.us.us.us.i ], [ %indvars.iv.next919.i, %bb.cm ] ; 4 uses
-  %.sroa.5.0708.us.us.us.i = phi i8 [ %.sroa.5.0.copyload.us.us.us.i, %.lr.ph710.us.us.us.i ], [ %.sroa.5.2.us.us.us.i, %bb.cm ] ; 3 uses
-  %.0434707.us.us.us.i = phi i32 [ %.0590.us.us.us.i, %.lr.ph710.us.us.us.i ], [ %.2436.us.us.us.i, %bb.cm ] ; 3 uses
-  %.sroa.0.sroa.0.0705.us.us.us.i = phi i32 [ %i.aro, %.lr.ph710.us.us.us.i ], [ %.sroa.0.sroa.0.1.us.us.us.i, %bb.cm ] ; 2 uses
+  %.sroa.0.0710.us.us.us.i = phi i32 [ %i.aro, %.lr.ph710.us.us.us.i ], [ %.sroa.0.2.us.us.us.i, %bb.cm ] ; 2 uses
+  %.sroa.5.0709.us.us.us.i = phi i8 [ %.sroa.5.0.copyload.us.us.us.i, %.lr.ph710.us.us.us.i ], [ %.sroa.5.2.us.us.us.i, %bb.cm ] ; 3 uses
+  %.sroa.0.sroa.0.0705.us.us.us.i = phi i32 [ %.0590.us.us.us.i, %.lr.ph710.us.us.us.i ], [ %.sroa.0.sroa.0.1.us.us.us.i, %bb.cm ] ; 3 uses
   %i.arr = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %indvars.iv918.i
   %i.ars = load ptr, ptr %i.arr, align 8, !tbaa !117
   %i.art = getelementptr inbounds nuw [4 x i8], ptr %i.ars, i64 %i.ca ; 9 uses
@@ -215,7 +215,7 @@ bb.bc:                                            ; preds = %.lr.ph710.us.us.us.
   %i.arv = load ptr, ptr %i.aru, align 8, !tbaa !118
   %i.arw = getelementptr inbounds nuw [4 x i8], ptr %i.arv, i64 %i.ca
   %i.arx = load i32, ptr %i.arw, align 4, !tbaa !84
-  %i.ary = zext i8 %.sroa.5.0708.us.us.us.i to i64
+  %i.ary = zext i8 %.sroa.5.0709.us.us.us.i to i64
   %i.arz = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %i.ary
   %i.asa = load ptr, ptr %i.arz, align 8, !tbaa !118
   %i.asb = getelementptr inbounds nuw [4 x i8], ptr %i.asa, i64 %i.ca
@@ -618,7 +618,7 @@ bb.ck:                                            ; preds = %bb.cj
   store i16 %i.bhx, ptr %i.art, align 2, !tbaa !182
   %i.bhy = load i16, ptr %.sroa.4567.0..sroa_idx.us.us.us.i, align 2, !tbaa !220
   store i16 %i.bhy, ptr %i.asj, align 2, !tbaa !182
-  %i.bhz = icmp sgt i32 %.0434707.us.us.us.i, %.11.us.us.us.i
+  %i.bhz = icmp sgt i32 %.sroa.0.sroa.0.0705.us.us.us.i, %.11.us.us.us.i
   br i1 %i.bhz, label %bb.cl, label %bb.cm
 
 bb.cl:                                            ; preds = %bb.ck
@@ -628,9 +628,9 @@ bb.cl:                                            ; preds = %bb.ck
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl, %bb.ck, %bb.bc
-  %.sroa.0.sroa.0.1.us.us.us.i = phi i32 [ %.sroa.0.sroa.0.0705.us.us.us.i, %bb.bc ], [ %i.bia, %bb.cl ], [ %.sroa.0.sroa.0.0705.us.us.us.i, %bb.ck ] ; 2 uses
-  %.2436.us.us.us.i = phi i32 [ %.0434707.us.us.us.i, %bb.bc ], [ %.11.us.us.us.i, %bb.cl ], [ %.0434707.us.us.us.i, %bb.ck ] ; 2 uses
-  %.sroa.5.2.us.us.us.i = phi i8 [ %.sroa.5.0708.us.us.us.i, %bb.bc ], [ %.sroa.5.0.copyload202.us.us.us.i, %bb.cl ], [ %.sroa.5.0708.us.us.us.i, %bb.ck ] ; 2 uses
+  %.sroa.0.sroa.0.1.us.us.us.i = phi i32 [ %.sroa.0.sroa.0.0705.us.us.us.i, %bb.bc ], [ %.11.us.us.us.i, %bb.cl ], [ %.sroa.0.sroa.0.0705.us.us.us.i, %bb.ck ] ; 2 uses
+  %.sroa.5.2.us.us.us.i = phi i8 [ %.sroa.5.0709.us.us.us.i, %bb.bc ], [ %.sroa.5.0.copyload202.us.us.us.i, %bb.cl ], [ %.sroa.5.0709.us.us.us.i, %bb.ck ] ; 2 uses
+  %.sroa.0.2.us.us.us.i = phi i32 [ %.sroa.0.0710.us.us.us.i, %bb.bc ], [ %i.bia, %bb.cl ], [ %.sroa.0.0710.us.us.us.i, %bb.ck ] ; 2 uses
   %indvars.iv.next919.i = add nuw nsw i64 %indvars.iv918.i, 1 ; 2 uses
   %i.bib = load i32, ptr %i.ba, align 8, !tbaa !489
   %i.bic = sext i32 %i.bib to i64
@@ -639,10 +639,10 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck, %bb.
 
 ._crit_edge711.us.us.us.i:                        ; preds = %bb.cm, %.._crit_edge711.us.us.us.i_crit_edge
   %.pre-phi = phi i32 [ %.pre, %.._crit_edge711.us.us.us.i_crit_edge ], [ %i.buq, %bb.cm ]
-  %.sroa.0.sroa.0.0.lcssa.us.us.us.i = phi i32 [ %i.aro, %.._crit_edge711.us.us.us.i_crit_edge ], [ %.sroa.0.sroa.0.1.us.us.us.i, %bb.cm ]
-  %.0434.lcssa.us.us.us.i = phi i32 [ %.0590.us.us.us.i, %.._crit_edge711.us.us.us.i_crit_edge ], [ %.2436.us.us.us.i, %bb.cm ]
+  %.sroa.0.sroa.0.0.lcssa.us.us.us.i = phi i32 [ %.0590.us.us.us.i, %.._crit_edge711.us.us.us.i_crit_edge ], [ %.sroa.0.sroa.0.1.us.us.us.i, %bb.cm ]
   %.sroa.5.0.lcssa.us.us.us.i = phi i8 [ %.sroa.5.0.copyload.us.us.us.i, %.._crit_edge711.us.us.us.i_crit_edge ], [ %.sroa.5.2.us.us.us.i, %bb.cm ]
-  store i32 %.sroa.0.sroa.0.0.lcssa.us.us.us.i, ptr %i.cc, align 2
+  %.sroa.0.0.lcssa.us.us.us.i = phi i32 [ %i.aro, %.._crit_edge711.us.us.us.i_crit_edge ], [ %.sroa.0.2.us.us.us.i, %bb.cm ]
+  store i32 %.sroa.0.0.lcssa.us.us.us.i, ptr %i.cc, align 2
   store i8 %.sroa.5.0.lcssa.us.us.us.i, ptr %.sroa.5.0..sroa_idx.us.us.us.i, align 2, !tbaa !83
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %.sroa.6569.0..sroa_idx.us.us.us.i, ptr noundef nonnull align 8 dereferenceable(5) %.sroa.6.i, i64 5, i1 false), !tbaa.struct !488
   %i.bie = load i32, ptr %i.e, align 16, !tbaa !115
@@ -674,7 +674,7 @@ bb.cm:                                            ; preds = %bb.cl, %bb.ck, %bb.
   %i.biy = call fastcc i32 @get_block_rd(ptr noundef nonnull %0, i32 noundef %.pre-phi, i32 noundef %i.bw, ptr noundef nonnull %i.c)
   %i.biz = load i32, ptr %i.az, align 8, !tbaa !487
   %i.bja = add nsw i32 %i.biz, %i.biy
-  %i.bjb = icmp slt i32 %i.bja, %.0434.lcssa.us.us.us.i
+  %i.bjb = icmp slt i32 %i.bja, %.sroa.0.sroa.0.0.lcssa.us.us.us.i
   br i1 %i.bjb, label %check_block_intra.exit.us.us.us.i, label %bb.cn
 
 bb.cn:                                            ; preds = %._crit_edge711.us.us.us.i

@@ -205,8 +205,8 @@ _ZN2cv5utils5trace7details6RegionD2Ev.exit:       ; preds = %_ZNSt6vectorI10neig
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   ret void
 
-bb.cz:                                            ; preds = %bb.bx, %bb.ce, %bb.cd, %bb.bu, %bb.cp, %bb.bo
-  %.pn155.pn = phi { ptr, i32 } [ %i.ja, %bb.bx ], [ %i.ld, %bb.cd ], [ %i.mm, %bb.cp ], [ %i.ei, %bb.bo ], [ %i.ir, %bb.bu ], [ %i.le, %bb.ce ] ; 2 uses
+bb.cz:                                            ; preds = %bb.cd, %bb.ce, %bb.bu, %bb.bx, %bb.cp, %bb.bo
+  %.pn155.pn = phi { ptr, i32 } [ %i.ir, %bb.bu ], [ %i.ja, %bb.bx ], [ %i.mm, %bb.cp ], [ %i.ei, %bb.bo ], [ %i.ld, %bb.cd ], [ %i.le, %bb.ce ] ; 2 uses
   %i.od = load ptr, ptr %22, align 8, !tbaa !97   ; 3 uses
   %.not.i.i.i.i204 = icmp eq ptr %i.od, null
   br i1 %.not.i.i.i.i204, label %_ZNSt14priority_queueI7changesSt6vectorIS0_SaIS0_EESt7greaterIS0_EED2Ev.exit205, label %bb.da

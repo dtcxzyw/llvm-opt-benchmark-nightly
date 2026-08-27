@@ -205,7 +205,7 @@ _ZNK4llvm15DWARFDebugNames14NameTableEntry10sameNameAsENS_9StringRefE.exit35: ; 
   %i.dr = icmp eq i32 %i.dq, 0
   br i1 %i.dr, label %.critedge27.loopexit79.split.loop.exit85, label %.thread66
 
-.thread66:                                        ; preds = %bb.j, %bb.k, %_ZNK4llvm15DWARFDebugNames14NameTableEntry10sameNameAsENS_9StringRefE.exit35, %bb.i
+.thread66:                                        ; preds = %bb.j, %bb.k, %bb.i, %_ZNK4llvm15DWARFDebugNames14NameTableEntry10sameNameAsENS_9StringRefE.exit35
   %i.ds = add i32 %.090, 1                        ; 2 uses
   %i.dt = load i32, ptr %i.br, align 4, !tbaa !433
   %.not = icmp ugt i32 %i.ds, %i.dt
@@ -219,9 +219,9 @@ _ZNK4llvm15DWARFDebugNames14NameTableEntry10sameNameAsENS_9StringRefE.exit35: ; 
   %i.dv = add i64 %i.dg, %i.de
   br label %.critedge27
 
-.critedge27:                                      ; preds = %.thread66, %bb.h, %.critedge, %.critedge27.loopexit79.split.loop.exit85, %.preheader, %.critedge27.loopexit.split.loop.exit92, %bb.b, %bb.g
-  %.sroa.062.4 = phi i64 [ undef, %.preheader ], [ undef, %bb.g ], [ %i.du, %.critedge27.loopexit.split.loop.exit92 ], [ undef, %bb.b ], [ %i.dv, %.critedge27.loopexit79.split.loop.exit85 ], [ undef, %.critedge ], [ undef, %bb.h ], [ undef, %.thread66 ]
-  %.sroa.3.3 = phi i8 [ 0, %.preheader ], [ 0, %bb.g ], [ 1, %.critedge27.loopexit.split.loop.exit92 ], [ 0, %bb.b ], [ 1, %.critedge27.loopexit79.split.loop.exit85 ], [ 0, %.critedge ], [ 0, %bb.h ], [ 0, %.thread66 ]
+.critedge27:                                      ; preds = %bb.h, %.thread66, %.critedge, %.critedge27.loopexit79.split.loop.exit85, %.preheader, %.critedge27.loopexit.split.loop.exit92, %bb.b, %bb.g
+  %.sroa.062.4 = phi i64 [ undef, %bb.g ], [ undef, %.preheader ], [ %i.du, %.critedge27.loopexit.split.loop.exit92 ], [ undef, %bb.b ], [ %i.dv, %.critedge27.loopexit79.split.loop.exit85 ], [ undef, %.critedge ], [ undef, %.thread66 ], [ undef, %bb.h ]
+  %.sroa.3.3 = phi i8 [ 0, %bb.g ], [ 0, %.preheader ], [ 1, %.critedge27.loopexit.split.loop.exit92 ], [ 0, %bb.b ], [ 1, %.critedge27.loopexit79.split.loop.exit85 ], [ 0, %.critedge ], [ 0, %.thread66 ], [ 0, %bb.h ]
   %.fca.0.insert = insertvalue { i64, i8 } poison, i64 %.sroa.062.4, 0
   %.fca.1.insert = insertvalue { i64, i8 } %.fca.0.insert, i8 %.sroa.3.3, 1
   ret { i64, i8 } %.fca.1.insert

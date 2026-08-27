@@ -202,13 +202,13 @@ bb.a:
   %i.cb = phi i16 [ %i.bx, %.lr.ph153.split ], [ %.pre157, %._crit_edge145.loopexit ] ; 2 uses
   %i.cc = phi i16 [ %i.by, %.lr.ph153.split ], [ %i.jw, %._crit_edge145.loopexit ]
   %.192.lcssa = phi i32 [ %.091150, %.lr.ph153.split ], [ %i.jv, %._crit_edge145.loopexit ]
-  %.1.lcssa = phi i16 [ %.0151, %.lr.ph153.split ], [ %.2.lcssa, %._crit_edge145.loopexit ] ; 2 uses
+  %.1.lcssa = phi i16 [ %.0151, %.lr.ph153.split ], [ %.088.lcssa.a, %._crit_edge145.loopexit ] ; 2 uses
   %i.cd = add i16 %.093149, 1                     ; 2 uses
   %.not = icmp sgt i16 %i.cd, %i.cb
   br i1 %.not, label %._crit_edge154.loopexit156, label %.lr.ph153.split, !llvm.loop !150
 
 .lr.ph144:                                        ; preds = %.lr.ph153.split, %bb.y
-  %.1142 = phi i16 [ %.2.lcssa, %bb.y ], [ %.0151, %.lr.ph153.split ] ; 2 uses
+  %.1142 = phi i16 [ %.088.lcssa.a, %bb.y ], [ %.0151, %.lr.ph153.split ] ; 2 uses
   %.192141 = phi i32 [ %i.jv, %bb.y ], [ %.091150, %.lr.ph153.split ] ; 2 uses
   %.098140 = phi i16 [ %i.ju, %bb.y ], [ %i.ca, %.lr.ph153.split ] ; 2 uses
   %i.ce = sext i16 %.098140 to i32                ; 2 uses
@@ -371,18 +371,18 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.c
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.h
   %i.gw = phi i32 [ %i.ej, %bb.h ], [ %.pre, %._crit_edge.loopexit ] ; 3 uses
-  %.088.lcssa.a = phi i16 [ %i.fk, %bb.h ], [ %.290, %._crit_edge.loopexit ] ; 3 uses
-  %.2.lcssa = phi i16 [ %.1142, %bb.h ], [ %.5, %._crit_edge.loopexit ] ; 2 uses
+  %.088.lcssa.a = phi i16 [ %.1142, %bb.h ], [ %.290, %._crit_edge.loopexit ] ; 2 uses
+  %.2.lcssa = phi i16 [ %i.fk, %bb.h ], [ %.5, %._crit_edge.loopexit ] ; 3 uses
   %i.gx = and i32 %i.gw, 2
   %.not112.a = icmp eq i32 %i.gx, 0
   br i1 %.not112.a, label %bb.s, label %bb.r
 
 bb.i:                                             ; preds = %.lr.ph, %bb.q
   %i.gy = phi i32 [ %i.fn, %.lr.ph ], [ %i.hw, %bb.q ]
-  %.2137 = phi i16 [ %.1142, %.lr.ph ], [ %.5, %bb.q ] ; 5 uses
-  %.086136 = phi i16 [ %i.fm, %.lr.ph ], [ %i.hv, %bb.q ] ; 5 uses
-  %.087135 = phi i32 [ %i.gu, %.lr.ph ], [ %i.hu, %bb.q ] ; 2 uses
-  %.088134 = phi i16 [ %i.fk, %.lr.ph ], [ %.290, %bb.q ] ; 5 uses
+  %.2137 = phi i16 [ %i.fm, %.lr.ph ], [ %i.hv, %bb.q ] ; 5 uses
+  %.087137 = phi i32 [ %i.gu, %.lr.ph ], [ %i.hu, %bb.q ] ; 2 uses
+  %.088136 = phi i16 [ %i.fk, %.lr.ph ], [ %.5, %bb.q ] ; 5 uses
+  %.088134 = phi i16 [ %.1142, %.lr.ph ], [ %.290, %bb.q ] ; 5 uses
   %.0129133 = phi i32 [ %i.gl, %.lr.ph ], [ %i.hs, %bb.q ] ; 2 uses
   %i.gz = load ptr, ptr %i.bd, align 8, !tbaa !124
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 32
@@ -397,10 +397,10 @@ bb.j:                                             ; preds = %bb.i
   %i.hg = load ptr, ptr %i.ar, align 8, !tbaa !80
   %i.hh = getelementptr inbounds nuw i8, ptr %i.hg, i64 80
   %i.hi = load ptr, ptr %i.hh, align 8, !tbaa !152
-  %i.hj = zext i32 %.087135 to i64
+  %i.hj = zext i32 %.087137 to i64
   %i.hk = getelementptr inbounds nuw [4 x i8], ptr %i.hi, i64 %i.hj
   %i.hl = load float, ptr %i.hk, align 4, !tbaa !67
-  %i.hm = sitofp nsz i16 %.086136 to float
+  %i.hm = sitofp nsz i16 %.2137 to float
   %i.hn = fsub nsz float %.097.a, %i.hm
   %i.ho = tail call nsz float @llvm.fmuladd.f32(float %.096, float %i.hl, float %i.hn)
   %i.hp = fcmp nsz ogt float %i.ho, 0.000000e+00
@@ -408,8 +408,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   store i32 %.sroa.0123.0.insert.ext, ptr %i.hd, align 4
-  %spec.select = tail call i16 @llvm.smax.i16(i16 %.086136, i16 %.2137)
-  %spec.select117 = tail call i16 @llvm.smax.i16(i16 %.086136, i16 %.088134)
+  %spec.select = tail call i16 @llvm.smax.i16(i16 %.2137, i16 %.088134)
+  %spec.select117 = tail call i16 @llvm.smax.i16(i16 %.2137, i16 %.088136)
   br label %bb.q
 
 bb.l:                                             ; preds = %bb.j
@@ -422,7 +422,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.q
 
 bb.n:                                             ; preds = %bb.l
-  %.not116 = icmp sgt i16 %.086136, %i.gv
+  %.not116 = icmp sgt i16 %.2137, %i.gv
   br i1 %.not116, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -434,13 +434,13 @@ bb.p:                                             ; preds = %bb.n
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.k, %bb.o, %bb.p, %bb.m, %bb.i
-  %.290 = phi i16 [ %.088134, %bb.i ], [ %.088134, %bb.p ], [ %spec.select117, %bb.k ], [ %.088134, %bb.m ], [ %.088134, %bb.o ] ; 2 uses
-  %.5 = phi i16 [ %.2137, %bb.i ], [ %.2137, %bb.p ], [ %spec.select, %bb.k ], [ %.2137, %bb.m ], [ %.2137, %bb.o ] ; 2 uses
+  %.290 = phi i16 [ %.088134, %bb.i ], [ %.088134, %bb.p ], [ %spec.select, %bb.k ], [ %.088134, %bb.m ], [ %.088134, %bb.o ] ; 2 uses
+  %.5 = phi i16 [ %.088136, %bb.i ], [ %.088136, %bb.p ], [ %spec.select117, %bb.k ], [ %.088136, %bb.m ], [ %.088136, %bb.o ] ; 2 uses
   %i.hr = load i32, ptr %i.bf, align 4, !tbaa !176
   %i.hs = add i32 %i.hr, %.0129133
   %i.ht = load i32, ptr %i.bs, align 4, !tbaa !177
-  %i.hu = add i32 %i.ht, %.087135
-  %i.hv = add i16 %.086136, 1                     ; 2 uses
+  %i.hu = add i32 %i.ht, %.087137
+  %i.hv = add i16 %.2137, 1                       ; 2 uses
   %i.hw = sext i16 %i.hv to i32                   ; 2 uses
   %i.hx = load i16, ptr %i.br, align 8, !tbaa !162
   %i.hy = sext i16 %i.hx to i32
@@ -455,7 +455,7 @@ bb.r:                                             ; preds = %._crit_edge
   %i.id = getelementptr inbounds nuw [4 x i8], ptr %i.ic, i64 %i.ci ; 2 uses
   %i.ie = load float, ptr %i.id, align 4, !tbaa !67
   %i.if = fmul nsz float %i.ie, 8.000000e-01
-  %i.ig = sitofp nsz i16 %.088.lcssa.a to float
+  %i.ig = sitofp nsz i16 %.2.lcssa to float
   %i.ih = tail call nsz noundef float @llvm.maxnum.f32(float %i.dg, float %i.ig)
   %i.ii = fsub nsz float %i.ih, %i.dg
   %i.ij = fmul nsz float %i.ii, 2.500000e-01
@@ -473,7 +473,7 @@ bb.s:                                             ; preds = %bb.r, %._crit_edge
   br i1 %.not113, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.io = sitofp nsz i16 %.088.lcssa.a to float
+  %i.io = sitofp nsz i16 %.2.lcssa to float
   %i.ip = tail call nsz noundef float @llvm.maxnum.f32(float %i.dg, float %i.io) ; 2 uses
   %i.iq = load i32, ptr %i.bm, align 4, !tbaa !139
   %i.ir = sitofp nsz i32 %i.iq to float           ; 2 uses
@@ -507,7 +507,7 @@ bb.w:                                             ; preds = %bb.v
   %i.ji = load float, ptr %i.jh, align 4, !tbaa !67
   %i.jj = fadd nsz float %i.ji, 5.000000e+00      ; 2 uses
   store float %i.jj, ptr %i.jh, align 4, !tbaa !67
-  %i.jk = sitofp nsz i16 %.088.lcssa.a to float
+  %i.jk = sitofp nsz i16 %.2.lcssa to float
   %i.jl = tail call nsz noundef float @llvm.maxnum.f32(float %i.dg, float %i.jk) ; 2 uses
   %i.jm = load i32, ptr %i.bm, align 4, !tbaa !139
   %i.jn = sitofp nsz i32 %i.jm to float           ; 2 uses

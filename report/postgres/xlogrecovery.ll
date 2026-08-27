@@ -202,9 +202,9 @@ bb.dh:                                            ; preds = %bb.dg
 
 bb.di:                                            ; preds = %bb.df, %bb.dg, %.critedge
   %.1184186 = phi i1 [ %or.cond32.i, %.critedge ], [ false, %bb.dg ], [ false, %bb.df ]
-  %.sroa.34.sroa.0.0 = phi i64 [ %i.gq, %.critedge ], [ %i.mw, %bb.dg ], [ %i.mw, %bb.df ]
   %.0149.in.in = phi i8 [ %i.gs, %.critedge ], [ %i.my, %bb.dg ], [ %i.my, %bb.df ]
   %.1 = phi i8 [ %i.kw, %.critedge ], [ 0, %bb.dg ], [ 0, %bb.df ]
+  %.sroa.34.0 = phi i64 [ %i.gq, %.critedge ], [ %i.mw, %bb.dg ], [ %i.mw, %bb.df ]
   %.sroa.33.0 = phi i32 [ %.sroa.33.0.copyload, %.critedge ], [ %.sroa.33.0.copyload83, %bb.dg ], [ %.sroa.33.0.copyload83, %bb.df ] ; 2 uses
   %.sroa.3277.0 = phi i32 [ %.sroa.3277.0.copyload, %.critedge ], [ %.sroa.3277.0.copyload79, %bb.dg ], [ %.sroa.3277.0.copyload79, %bb.df ] ; 2 uses
   %.sroa.32.0 = phi i64 [ %.sroa.32.0.copyload, %.critedge ], [ %.sroa.32.0.copyload74, %bb.dg ], [ %.sroa.32.0.copyload74, %bb.df ]
@@ -525,7 +525,7 @@ bb.ff:                                            ; preds = %bb.fc, %bb.fe, %bb.
   %.sroa.33.0..sroa_idx84 = getelementptr inbounds nuw i8, ptr %0, i64 124
   store i32 %.sroa.33.0, ptr %.sroa.33.0..sroa_idx84, align 4
   %.sroa.34.0..sroa_idx87 = getelementptr inbounds nuw i8, ptr %0, i64 128
-  store i64 %.sroa.34.sroa.0.0, ptr %.sroa.34.0..sroa_idx87, align 8
+  store i64 %.sroa.34.0, ptr %.sroa.34.0..sroa_idx87, align 8
   %i.rk = load i8, ptr @InArchiveRecovery, align 1, !range !5, !noundef !6 ; 4 uses
   %i.rl = trunc nuw i8 %i.rk to i1
   br i1 %i.rl, label %bb.fg, label %bb.fi

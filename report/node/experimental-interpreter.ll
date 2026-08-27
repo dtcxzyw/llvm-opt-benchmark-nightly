@@ -202,8 +202,8 @@ _ZN2v88internal12_GLOBAL__N_114NfaInterpreterIhE15MarkPcProcessedEiNS3_17Interpr
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.at
   %i.bd = load i64, ptr %i.bc, align 4            ; 7 uses
   %.sroa.0257.0.extract.trunc.i = trunc i64 %i.bd to i32
-  %.sroa.4258.0.extract.shift.i = lshr i64 %i.bd, 32 ; 4 uses
-  %.sroa.4258.0.extract.trunc.i = trunc nuw i64 %.sroa.4258.0.extract.shift.i to i32 ; 7 uses
+  %.sroa.4258.0.extract.shift.i = lshr i64 %i.bd, 32 ; 5 uses
+  %.sroa.4258.0.extract.trunc.i = trunc nuw i64 %.sroa.4258.0.extract.shift.i to i32 ; 6 uses
   switch i32 %.sroa.0257.0.extract.trunc.i, label %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i [
     i32 3, label %bb.h
     i32 4, label %bb.h
@@ -606,7 +606,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterIhE17InterpreterThrea
   store i32 %i.lm, ptr %i.b, align 4
   %i.ln = sext i32 %.sink522.i to i64
   %i.lo = getelementptr inbounds [56 x i8], ptr %.sink519.i, i64 %i.ln ; 7 uses
-  store i32 %.sroa.4258.0.extract.trunc.i, ptr %i.lo, align 8
+  store i64 %.sroa.4258.0.extract.shift.i, ptr %i.lo, align 8
   %.sroa.11228.0..sroa_idx229.i = getelementptr inbounds nuw i8, ptr %i.lo, i64 8
   store ptr %.sroa.11228.0.i, ptr %.sroa.11228.0..sroa_idx229.i, align 8
   %.sroa.14.0..sroa_idx235.i = getelementptr inbounds nuw i8, ptr %i.lo, i64 16
@@ -1009,8 +1009,8 @@ _ZN2v88internal12_GLOBAL__N_114NfaInterpreterItE15MarkPcProcessedEiNS3_17Interpr
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.bb, i64 %i.at
   %i.bd = load i64, ptr %i.bc, align 4            ; 7 uses
   %.sroa.0257.0.extract.trunc.i = trunc i64 %i.bd to i32
-  %.sroa.4258.0.extract.shift.i = lshr i64 %i.bd, 32 ; 4 uses
-  %.sroa.4258.0.extract.trunc.i = trunc nuw i64 %.sroa.4258.0.extract.shift.i to i32 ; 7 uses
+  %.sroa.4258.0.extract.shift.i = lshr i64 %i.bd, 32 ; 5 uses
+  %.sroa.4258.0.extract.trunc.i = trunc nuw i64 %.sroa.4258.0.extract.shift.i to i32 ; 6 uses
   switch i32 %.sroa.0257.0.extract.trunc.i, label %_ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThreadEE3AddERKS5_PNS0_4ZoneE.exit.i [
     i32 3, label %bb.h
     i32 4, label %bb.h
@@ -1413,7 +1413,7 @@ _ZN2v88internal8ZoneListINS0_12_GLOBAL__N_114NfaInterpreterItE17InterpreterThrea
   store i32 %i.lk, ptr %i.b, align 4
   %i.ll = sext i32 %.sink522.i to i64
   %i.lm = getelementptr inbounds [56 x i8], ptr %.sink519.i, i64 %i.ll ; 7 uses
-  store i32 %.sroa.4258.0.extract.trunc.i, ptr %i.lm, align 8
+  store i64 %.sroa.4258.0.extract.shift.i, ptr %i.lm, align 8
   %.sroa.11228.0..sroa_idx229.i = getelementptr inbounds nuw i8, ptr %i.lm, i64 8
   store ptr %.sroa.11228.0.i, ptr %.sroa.11228.0..sroa_idx229.i, align 8
   %.sroa.14.0..sroa_idx235.i = getelementptr inbounds nuw i8, ptr %i.lm, i64 16

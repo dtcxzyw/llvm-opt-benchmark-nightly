@@ -205,7 +205,6 @@ bb.ag:                                            ; preds = %bb.af
   %.sroa.8.0.copyload.peel = load <2 x float>, ptr %.sroa.8.0..sroa_idx.peel, align 8 ; 7 uses
   %.sroa.11.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %i.jp, i64 24
   %i.jq = load i64, ptr %.sroa.11.0..sroa_idx.peel, align 8
-  %.sroa.11.sroa.0.0.extract.trunc153 = trunc i64 %i.jq to i32
   %i.jr = load ptr, ptr %i.cb, align 8
   %i.js = getelementptr inbounds nuw i8, ptr %i.jr, i64 184
   %i.jt = load i32, ptr %i.js, align 8
@@ -244,7 +243,8 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit.peel:      ; preds = %bb.ai, %bb.ah, %.lr
   %.sroa.8.0..sroa_idx82.peel = getelementptr inbounds nuw i8, ptr %i.ie, i64 16
   store <2 x float> %.sroa.8.0.peel, ptr %.sroa.8.0..sroa_idx82.peel, align 8
   %.sroa.11.0..sroa_idx85.peel = getelementptr inbounds nuw i8, ptr %i.ie, i64 24
-  store i32 %.sroa.11.sroa.0.0.extract.trunc153, ptr %.sroa.11.0..sroa_idx85.peel, align 8
+  %.sroa.11.0.extract.trunc.peel = trunc i64 %i.jq to i32
+  store i32 %.sroa.11.0.extract.trunc.peel, ptr %.sroa.11.0..sroa_idx85.peel, align 8
   %i.kf = extractelement <2 x float> %.sroa.4.0.peel, i64 0
   %i.kg = fneg float %i.kf
   store float %i.kg, ptr %.sroa.4.0..sroa_idx79.peel, align 8
@@ -264,7 +264,6 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit.peel:      ; preds = %bb.ai, %bb.ah, %.lr
   %.sroa.8.0.copyload = load <2 x float>, ptr %.sroa.8.0..sroa_idx, align 8 ; 6 uses
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ki, i64 24
   %i.kj = load i64, ptr %.sroa.11.0..sroa_idx, align 8
-  %.sroa.11.sroa.0.0.extract.trunc = trunc i64 %i.kj to i32
   %i.kk = load ptr, ptr %i.cb, align 8
   %i.kl = getelementptr inbounds nuw i8, ptr %i.kk, i64 184
   %i.km = load i32, ptr %i.kl, align 8
@@ -329,7 +328,8 @@ _ZN13aiQuaterniontIfE9NormalizeEv.exit:           ; preds = %bb.ak, %bb.aj, %.lr
   %.sroa.8.0..sroa_idx82 = getelementptr inbounds nuw i8, ptr %i.lz, i64 16
   store <2 x float> %.sroa.8.0, ptr %.sroa.8.0..sroa_idx82, align 8
   %.sroa.11.0..sroa_idx85 = getelementptr inbounds nuw i8, ptr %i.lz, i64 24
-  store i32 %.sroa.11.sroa.0.0.extract.trunc, ptr %.sroa.11.0..sroa_idx85, align 8
+  %.sroa.11.0.extract.trunc = trunc i64 %i.kj to i32
+  store i32 %.sroa.11.0.extract.trunc, ptr %.sroa.11.0..sroa_idx85, align 8
   %i.ma = load ptr, ptr %i.gf, align 8
   %i.mb = getelementptr inbounds nuw [32 x i8], ptr %i.ma, i64 %indvars.iv
   %i.mc = getelementptr inbounds nuw i8, ptr %i.mb, i64 8 ; 2 uses

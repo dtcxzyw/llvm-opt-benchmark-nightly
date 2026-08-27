@@ -205,8 +205,8 @@ bb.gl:                                            ; preds = %bb.gj
 
 bb.gm:                                            ; preds = %bb.gi, %bb.gk, %bb.ge
   %.sroa.02330.1.in = phi i64 [ %spec.select2507, %bb.gi ], [ %spec.select2507, %bb.gk ], [ %.sroa.0.0.copyload.i, %bb.ge ] ; 7 uses
-  %.sroa.17.sroa.0.1.in = lshr i64 %.sroa.02330.1.in, 16 ; 3 uses
-  %.sroa.172377.1.in = lshr i64 %.sroa.02330.1.in, 32 ; 2 uses
+  %.sroa.17.sroa.0.1.in = lshr i64 %.sroa.02330.1.in, 32 ; 2 uses
+  %.sroa.172377.1.in = lshr i64 %.sroa.02330.1.in, 16 ; 3 uses
   store ptr @.str.74, ptr %109, align 8, !tbaa !7
   %i.zn = getelementptr inbounds nuw i8, ptr %109, i64 8
   store i64 20, ptr %i.zn, align 8, !tbaa !12
@@ -609,7 +609,7 @@ bb.xe:                                            ; preds = %bb.xa, %bb.wz, %bb.
   br label %bb.atd
 
 bb.xf:                                            ; preds = %bb.wx
-  %i.cel = icmp eq i64 %.sroa.172377.1.in, 0      ; 2 uses
+  %i.cel = icmp eq i64 %.sroa.17.sroa.0.1.in, 0   ; 2 uses
   %i.cem = and i64 %.sroa.02330.1.in, 65534
   %or.cond2462.not3300 = icmp eq i64 %i.cem, 266
   %or.cond3295 = and i1 %or.cond2462.not3300, %i.cel
@@ -620,14 +620,14 @@ _ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread: ; preds 
   %or.cond.i1447 = icmp eq i64 %i.cen, 268
   %or.cond2464.not = and i1 %or.cond.i1447, %i.cel ; 2 uses
   %spec.select = select i1 %or.cond2464.not, i64 12, i64 11
-  %spec.select2469 = select i1 %or.cond2464.not, i64 %.sroa.17.sroa.0.1.in, i64 0
+  %spec.select2469 = select i1 %or.cond2464.not, i64 %.sroa.172377.1.in, i64 0
   br label %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1448.thread
 
 _ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1448.thread: ; preds = %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread, %bb.xf, %bb.wv
   %.sroa.02330.2 = phi i64 [ %.sroa.02330.1.in, %bb.wv ], [ %spec.select, %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread ], [ %.sroa.02330.1.in, %bb.xf ]
   %.sroa.14.2 = phi i64 [ %.sroa.02330.1.in, %bb.wv ], [ 256, %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread ], [ 256, %bb.xf ]
-  %.sroa.172377.2.a = phi i64 [ %.sroa.172377.1.in, %bb.wv ], [ 0, %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread ], [ 0, %bb.xf ]
-  %.sroa.17.sroa.0.2 = phi i64 [ %.sroa.17.sroa.0.1.in, %bb.wv ], [ %spec.select2469, %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread ], [ %.sroa.17.sroa.0.1.in, %bb.xf ]
+  %.sroa.172377.2.a = phi i64 [ %.sroa.172377.1.in, %bb.wv ], [ %spec.select2469, %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread ], [ %.sroa.172377.1.in, %bb.xf ]
+  %.sroa.17.sroa.0.2 = phi i64 [ %.sroa.17.sroa.0.1.in, %bb.wv ], [ 0, %_ZN11OpenImageIO4v3_1neERKNS0_8TypeDescENS1_8BASETYPEE.exit1444.thread ], [ 0, %bb.xf ]
   store ptr @.str.120, ptr %211, align 8, !tbaa !7
   %i.ceo = getelementptr inbounds nuw i8, ptr %211, i64 8
   store i64 25, ptr %i.ceo, align 8, !tbaa !12
@@ -1030,10 +1030,10 @@ bb.aqg:                                           ; preds = %bb.aqf, %bb.aqe, %.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #30
   %.not789 = icmp eq i32 %i.ehh, 0
   %i.ehu = load ptr, ptr %102, align 8, !tbaa !113
-  %.sroa.172377.0.insert.shift = shl nuw i64 %.sroa.172377.2.a, 32
-  %.sroa.17.0.insert.ext = shl nuw i64 %.sroa.17.sroa.0.2, 16
+  %.sroa.172377.0.insert.shift = shl nuw i64 %.sroa.17.sroa.0.2, 32
+  %.sroa.17.0.insert.ext = shl nuw i64 %.sroa.172377.2.a, 16
   %.sroa.17.0.insert.shift = and i64 %.sroa.17.0.insert.ext, 4294901760
-  %.sroa.17.0.insert.insert = or disjoint i64 %.sroa.17.0.insert.shift, %.sroa.172377.0.insert.shift
+  %.sroa.17.0.insert.insert = or disjoint i64 %.sroa.172377.0.insert.shift, %.sroa.17.0.insert.shift
   %.sroa.14.0.insert.ext = and i64 %.sroa.14.2, 65280
   %.sroa.14.0.insert.insert = or disjoint i64 %.sroa.17.0.insert.insert, %.sroa.14.0.insert.ext
   %.sroa.02330.0.insert.ext = and i64 %.sroa.02330.2, 255

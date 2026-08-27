@@ -97,7 +97,7 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i32 } @_ZNK6icu_786number18ScientificNotation21withMinExponentDigitsEi(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, i32 noundef %1) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.09 = alloca %"class.icu_78::number::Notation", align 8 ; 4 uses
+  %.sroa.010 = alloca %"class.icu_78::number::Notation", align 8 ; 4 uses
   %i.a = add i32 %1, -1
   %or.cond = icmp ult i32 %i.a, 999
   br i1 %or.cond, label %bb.b, label %bb.c
@@ -114,20 +114,20 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.4.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.shift, %.sroa.4.0.insert.shift
   %.sroa.0.0.insert.ext = zext i16 %i.c to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert, %.sroa.0.0.insert.ext
-  %.sroa.09.4..sroa_idx16 = getelementptr inbounds nuw i8, ptr %.sroa.09, i64 4
+  %.sroa.09.4..sroa_idx16 = getelementptr inbounds nuw i8, ptr %.sroa.010, i64 4
   store i64 %.sroa.0.0.insert.insert, ptr %.sroa.09.4..sroa_idx16, align 4, !tbaa !11
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %.sroa.09.4..sroa_idx17 = getelementptr inbounds nuw i8, ptr %.sroa.09, i64 4
+  %.sroa.09.4..sroa_idx17 = getelementptr inbounds nuw i8, ptr %.sroa.010, i64 4
   store i32 65810, ptr %.sroa.09.4..sroa_idx17, align 4, !tbaa !11
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.09.8..sroa.09.8..sroa.09.8..sroa.2.0.copyload = phi i32 [ %.sroa.5.0.copyload, %bb.b ], [ undef, %bb.c ]
   %.sink = phi i32 [ 0, %bb.b ], [ 3, %bb.c ]
-  store i32 %.sink, ptr %.sroa.09, align 8, !tbaa !8
-  %.sroa.09.0..sroa.09.0..sroa.09.0..sroa.09.0..sroa.0.0.copyload = load i64, ptr %.sroa.09, align 8
+  store i32 %.sink, ptr %.sroa.010, align 8, !tbaa !8
+  %.sroa.09.0..sroa.09.0..sroa.09.0..sroa.09.0..sroa.0.0.copyload = load i64, ptr %.sroa.010, align 8
   %.fca.0.insert = insertvalue { i64, i32 } poison, i64 %.sroa.09.0..sroa.09.0..sroa.09.0..sroa.09.0..sroa.0.0.copyload, 0
   %.fca.1.insert = insertvalue { i64, i32 } %.fca.0.insert, i32 %.sroa.09.8..sroa.09.8..sroa.09.8..sroa.2.0.copyload, 1
   ret { i64, i32 } %.fca.1.insert
@@ -136,17 +136,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i32 } @_ZNK6icu_786number18ScientificNotation23withExponentSignDisplayE18UNumberSignDisplay(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, i32 noundef %1) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.04 = alloca %"class.icu_78::number::Notation", align 8 ; 3 uses
+  %.sroa.05 = alloca %"class.icu_78::number::Notation", align 8 ; 3 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4
-  store i32 0, ptr %.sroa.04, align 8, !tbaa !8
+  store i32 0, ptr %.sroa.05, align 8, !tbaa !8
   %.sroa.4.0.insert.ext = zext i32 %1 to i64
   %.sroa.4.0.insert.shift = shl nuw i64 %.sroa.4.0.insert.ext, 32
   %.sroa.0.0.insert.ext = zext i32 %i.b to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
-  %.sroa.04.4..sroa_idx7 = getelementptr inbounds nuw i8, ptr %.sroa.04, i64 4
+  %.sroa.04.4..sroa_idx7 = getelementptr inbounds nuw i8, ptr %.sroa.05, i64 4
   store i64 %.sroa.0.0.insert.insert, ptr %.sroa.04.4..sroa_idx7, align 4, !tbaa !11
-  %.sroa.04.0..sroa.04.0..sroa.04.0..sroa.04.0..sroa.0.0.copyload = load i64, ptr %.sroa.04, align 8
+  %.sroa.04.0..sroa.04.0..sroa.04.0..sroa.04.0..sroa.0.0.copyload = load i64, ptr %.sroa.05, align 8
   %.fca.0.insert = insertvalue { i64, i32 } poison, i64 %.sroa.04.0..sroa.04.0..sroa.04.0..sroa.04.0..sroa.0.0.copyload, 0
   %.fca.1.insert = insertvalue { i64, i32 } %.fca.0.insert, i32 %1, 1
   ret { i64, i32 } %.fca.1.insert

@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %bb.d
   %i.q = load i64, ptr %.sroa.283.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %12)
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
-  %.sroa.580.sroa.0.0.extract.trunc = trunc i64 %i.q to i32
   store i16 249, ptr %12, align 8, !tbaa !212
   %i.r = getelementptr inbounds nuw i8, ptr %12, i64 8
   store ptr null, ptr %i.r, align 8, !tbaa !598
@@ -226,7 +225,8 @@ bb.e:                                             ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %13, i64 32
   store ptr %i.p, ptr %i.x, align 16, !tbaa !597
   %.sroa.580.0..sroa_idx81 = getelementptr inbounds nuw i8, ptr %13, i64 40
-  store i32 %.sroa.580.sroa.0.0.extract.trunc, ptr %.sroa.580.0..sroa_idx81, align 8, !tbaa !158
+  %.sroa.580.0.extract.trunc = trunc i64 %i.q to i32
+  store i32 %.sroa.580.0.extract.trunc, ptr %.sroa.580.0..sroa_idx81, align 8, !tbaa !158
   store ptr %13, ptr %14, align 8, !tbaa !600
   %i.y = getelementptr inbounds nuw i8, ptr %14, i64 8
   store i64 3, ptr %i.y, align 8, !tbaa !603
@@ -629,12 +629,12 @@ bb.u:                                             ; preds = %.lr.ph412, %bb.w
 bb.v:                                             ; preds = %bb.u
   %.sroa.6308.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
   %i.cv = load i64, ptr %.sroa.6308.0..sroa_idx, align 8
-  %.sroa.6308.sroa.0.0.extract.trunc = trunc i64 %i.cv to i32
   %i.cw = add i32 %.0273411, 1
   %i.cx = getelementptr inbounds nuw [16 x i8], ptr %i.co, i64 %indvars.iv ; 2 uses
   store ptr %.sroa.0305.0.copyload, ptr %i.cx, align 8, !tbaa !597
   %.sroa.6308.0..sroa_idx309 = getelementptr inbounds nuw i8, ptr %i.cx, i64 8
-  store i32 %.sroa.6308.sroa.0.0.extract.trunc, ptr %.sroa.6308.0..sroa_idx309, align 8, !tbaa !158
+  %.sroa.6308.0.extract.trunc = trunc i64 %i.cv to i32
+  store i32 %.sroa.6308.0.extract.trunc, ptr %.sroa.6308.0..sroa_idx309, align 8, !tbaa !158
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cp, i64 %indvars.iv
   store i8 1, ptr %i.cy, align 1, !tbaa !546
   br label %bb.w
@@ -1037,7 +1037,7 @@ bb.z:                                             ; preds = %.split, %.split70
   %.fca.1.extract = extractvalue { ptr, i32 } %i.dl, 1
   br label %.thread110
 
-.thread110:                                       ; preds = %bb.y, %.thread, %_ZNK4llvm19ShuffleVectorSDNode7isSplatEv.exit, %bb.z, %bb.q
+.thread110:                                       ; preds = %bb.y, %_ZNK4llvm19ShuffleVectorSDNode7isSplatEv.exit, %.thread, %bb.z, %bb.q
   %.sroa.068.7 = phi ptr [ %.sroa.068.1, %bb.q ], [ %.fca.0.extract, %bb.z ], [ %1, %.thread ], [ %1, %_ZNK4llvm19ShuffleVectorSDNode7isSplatEv.exit ], [ %1, %bb.y ]
   %.sroa.569.7 = phi i32 [ %.sroa.569.1, %bb.q ], [ %.fca.1.extract, %bb.z ], [ %2, %.thread ], [ %2, %_ZNK4llvm19ShuffleVectorSDNode7isSplatEv.exit ], [ %2, %bb.y ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #27
@@ -1440,7 +1440,7 @@ _ZN4llvm25SystemZVectorConstantInfoD2Ev.exit:     ; preds = %_ZN4llvm5APIntD2Ev.
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #27
   br label %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread
 
-_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread: ; preds = %bb.c, %_ZN4llvm25SystemZVectorConstantInfoD2Ev.exit, %bb.f, %bb.b, %bb.a
+_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit.thread: ; preds = %bb.c, %bb.b, %bb.f, %_ZN4llvm25SystemZVectorConstantInfoD2Ev.exit, %bb.a
   ret void
 }
 
@@ -1843,9 +1843,9 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.16.0.copyload = load i32, ptr %.sroa.16.0..sroa_idx, align 8, !tbaa !158
   br label %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37.thread
 
-_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37.thread: ; preds = %bb.o, %bb.e, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit44, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit52, %bb.l, %bb.n, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit42, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit50, %bb.k, %bb.j, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37
-  %.sroa.070.1 = phi ptr [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37 ], [ %.sroa.070.0.copyload, %bb.o ], [ null, %bb.n ], [ null, %bb.j ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit52 ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit44 ], [ null, %bb.e ], [ null, %bb.k ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit42 ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit50 ], [ null, %bb.l ]
-  %.sroa.16.1 = phi i32 [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37 ], [ %.sroa.16.0.copyload, %bb.o ], [ 0, %bb.n ], [ 0, %bb.j ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit52 ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit44 ], [ 0, %bb.e ], [ 0, %bb.k ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit42 ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit50 ], [ 0, %bb.l ]
+_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37.thread: ; preds = %bb.j, %bb.k, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit50, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit42, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %bb.o, %bb.e, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit44, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit52, %bb.l, %bb.n, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37
+  %.sroa.070.1 = phi ptr [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37 ], [ null, %bb.k ], [ %.sroa.070.0.copyload, %bb.o ], [ null, %bb.n ], [ null, %bb.j ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit52 ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit44 ], [ null, %bb.e ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit42 ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit50 ], [ null, %bb.l ]
+  %.sroa.16.1 = phi i32 [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit37 ], [ 0, %bb.k ], [ %.sroa.16.0.copyload, %bb.o ], [ 0, %bb.n ], [ 0, %bb.j ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit52 ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit44 ], [ 0, %bb.e ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit42 ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit50 ], [ 0, %bb.l ]
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.070.1, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.16.1, 1
   ret { ptr, i32 } %.fca.1.insert
@@ -2248,7 +2248,7 @@ bb.ao:                                            ; preds = %bb.am, %bb.al, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #27
   br label %bb.ap
 
-bb.ap:                                            ; preds = %bb.c, %.thread, %bb.e, %bb.f, %bb.b, %bb.a
+bb.ap:                                            ; preds = %bb.f, %bb.c, %.thread, %bb.e, %bb.b, %bb.a
   %.sroa.30.9 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.e ], [ %.sroa.30.5, %.thread ], [ 0, %bb.f ]
   %.sroa.0181.9 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.e ], [ %.sroa.0181.5, %.thread ], [ null, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #27
