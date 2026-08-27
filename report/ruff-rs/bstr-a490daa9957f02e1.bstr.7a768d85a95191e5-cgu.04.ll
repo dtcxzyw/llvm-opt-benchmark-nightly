@@ -6,25 +6,26 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-unknown-linux-gnu"
 
 @0 = private unnamed_addr constant [93 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bstr-1.13.0/src/utf8.rs\00", align 1
-@1 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"\\\00\00\00\00\00\00\00\03\03\00\00#\00\00\00" }>, align 8
-@2 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs98D8VPWzHuM_14regex_automata4util6search10MatchErrorECsavRPklju9Q7_4bstr, [16 x i8] c"\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs19_NtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB6_10MatchErrorNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt }>, align 8
-@3 = private unnamed_addr constant [43 x i8] c"called `Result::unwrap()` on an `Err` value", align 1
-@4 = private unnamed_addr constant [256 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\08\08\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\0A\03\03\03\03\03\03\03\03\03\03\03\03\04\03\03\0B\06\06\06\05\08\08\08\08\08\08\08\08\08\08\08", align 1
-@5 = private unnamed_addr constant [108 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\0C\00\18$<`T\00\00\000H\00\0C\00\00\00\00\00\0C\00\0C\00\00\00\18\00\00\00\00\00\18\00\18\00\00\00\00\00\00\00\00\00\18\00\00\00\00\00\18\00\00\00\00\00\00\00\18\00\00\00\00\00\00\00\00\00$\00$\00\00\00$\00\00\00\00\00$\00$\00\00\00$\00\00\00\00\00\00\00\00\00\00", align 1
-@6 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"\\\00\00\00\00\00\00\00O\03\00\00\0E\00\00\00" }>, align 8
-@7 = private unnamed_addr constant [105 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bstr-1.13.0/src/unicode/grapheme.rs\00", align 1
+@1 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"\\\00\00\00\00\00\00\00\00\03\00\00=\00\00\00" }>, align 8
+@2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"\\\00\00\00\00\00\00\00\03\03\00\00#\00\00\00" }>, align 8
+@3 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs98D8VPWzHuM_14regex_automata4util6search10MatchErrorECsavRPklju9Q7_4bstr, [16 x i8] c"\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs19_NtNtCs98D8VPWzHuM_14regex_automata4util6searchNtB6_10MatchErrorNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt }>, align 8
+@4 = private unnamed_addr constant [43 x i8] c"called `Result::unwrap()` on an `Err` value", align 1
+@5 = private unnamed_addr constant [256 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\01\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\09\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\07\08\08\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\02\0A\03\03\03\03\03\03\03\03\03\03\03\03\04\03\03\0B\06\06\06\05\08\08\08\08\08\08\08\08\08\08\08", align 1
+@6 = private unnamed_addr constant [108 x i8] c"\00\00\00\00\00\00\00\00\00\00\00\00\0C\00\18$<`T\00\00\000H\00\0C\00\00\00\00\00\0C\00\0C\00\00\00\18\00\00\00\00\00\18\00\18\00\00\00\00\00\00\00\00\00\18\00\00\00\00\00\18\00\00\00\00\00\00\00\18\00\00\00\00\00\00\00\00\00$\00$\00\00\00$\00\00\00\00\00$\00$\00\00\00$\00\00\00\00\00\00\00\00\00\00", align 1
+@7 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"\\\00\00\00\00\00\00\00O\03\00\00\0E\00\00\00" }>, align 8
+@8 = private unnamed_addr constant [105 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bstr-1.13.0/src/unicode/grapheme.rs\00", align 1
 @_RNvNtNtNtCsavRPklju9Q7_4bstr7unicode3fsm18grapheme_break_fwd18GRAPHEME_BREAK_FWD = external hidden global { { ptr, { { { ptr } } }, {} } }
-@8 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @7, [16 x i8] c"h\00\00\00\00\00\00\00\D8\00\00\003\00\00\00" }>, align 8
-@9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @7, [16 x i8] c"h\00\00\00\00\00\00\00\DB\00\00\00#\00\00\00" }>, align 8
-@10 = private unnamed_addr constant [3 x i8] c"\EF\BF\BD", align 1
+@9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"h\00\00\00\00\00\00\00\D8\00\00\003\00\00\00" }>, align 8
+@10 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"h\00\00\00\00\00\00\00\DB\00\00\00#\00\00\00" }>, align 8
+@11 = private unnamed_addr constant [3 x i8] c"\EF\BF\BD", align 1
 @_RNvNtNtNtCsavRPklju9Q7_4bstr7unicode3fsm18grapheme_break_rev18GRAPHEME_BREAK_REV = external hidden global { { ptr, { { { ptr } } }, {} } }
-@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @7, [16 x i8] c"h\00\00\00\00\00\00\00\EA\00\00\003\00\00\00" }>, align 8
-@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @7, [16 x i8] c"h\00\00\00\00\00\00\00\EE\00\00\00#\00\00\00" }>, align 8
+@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"h\00\00\00\00\00\00\00\EA\00\00\003\00\00\00" }>, align 8
+@13 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"h\00\00\00\00\00\00\00\EE\00\00\00#\00\00\00" }>, align 8
 @_RNvNtNtNtCsavRPklju9Q7_4bstr7unicode3fsm22regional_indicator_rev22REGIONAL_INDICATOR_REV = external hidden global { { ptr, { { { ptr } } }, {} } }
-@13 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @7, [16 x i8] c"h\00\00\00\00\00\00\00\15\01\00\007\00\00\00" }>, align 8
-@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @7, [16 x i8] c"h\00\00\00\00\00\00\00\17\01\00\00\11\00\00\00" }>, align 8
-@15 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs98D8VPWzHuM_14regex_automata4util6search14MatchErrorKindENtB6_5Debug3fmtCsavRPklju9Q7_4bstr }>, align 8
-@16 = private unnamed_addr constant [10 x i8] c"MatchError", align 1
+@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"h\00\00\00\00\00\00\00\15\01\00\007\00\00\00" }>, align 8
+@15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"h\00\00\00\00\00\00\00\17\01\00\00\11\00\00\00" }>, align 8
+@16 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCs4NRVxsYgnAr_4core3fmtRINtNtCscdodAO9FK5_5alloc5boxed3BoxNtNtNtCs98D8VPWzHuM_14regex_automata4util6search14MatchErrorKindENtB6_5Debug3fmtCsavRPklju9Q7_4bstr }>, align 8
+@17 = private unnamed_addr constant [10 x i8] c"MatchError", align 1
 
 ; Function Attrs: nounwind nonlazybind uwtable
 define internal void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs98D8VPWzHuM_14regex_automata4util6search10MatchErrorECsavRPklju9Q7_4bstr(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -135,7 +136,7 @@ bb.h:                                             ; preds = %_RNvYINtNtNtCs98D8V
   %i.s = phi ptr [ %.pre, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa6sparse3DFARShENtNtB7_9automaton9Automaton14try_search_fwdCsavRPklju9Q7_4bstr.exit._crit_edge ], [ %i.o, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa6sparse3DFARShENtNtB7_9automaton9Automaton14try_search_fwdCsavRPklju9Q7_4bstr.exit.thread6 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !24
   store ptr %i.s, ptr %i.c, align 8, !noalias !24
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 43, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @8) #13
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 43, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #13
           to label %bb.i unwind label %bb.j, !noalias !25
 
 bb.i:                                             ; preds = %bb.h
@@ -204,7 +205,7 @@ bb.o:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.03.0.i48
   %i.af = load i8, ptr %i.ae, align 1, !alias.scope !32, !noundef !3 ; 2 uses
   %i.ag = zext i8 %i.af to i64
-  %i.ah = getelementptr inbounds nuw i8, ptr @4, i64 %i.ag
+  %i.ah = getelementptr inbounds nuw i8, ptr @5, i64 %i.ag
   %i.ai = load i8, ptr %i.ah, align 1, !noalias !35, !noundef !3 ; 2 uses
   %i.aj = zext i8 %i.af to i32                    ; 2 uses
   %i.ak = icmp eq i64 %.sroa.015.0.i46, 12
@@ -231,11 +232,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.au, label %_RNvNtCsavRPklju9Q7_4bstr4utf811decode_step.exit.i, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.at, i64 noundef 108, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #13, !noalias !35
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.at, i64 noundef 108, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #13, !noalias !35
   unreachable
 
 _RNvNtCsavRPklju9Q7_4bstr4utf811decode_step.exit.i: ; preds = %bb.r
-  %i.av = getelementptr inbounds nuw i8, ptr @5, i64 %i.at
+  %i.av = getelementptr inbounds nuw i8, ptr @6, i64 %i.at
   %i.aw = load i8, ptr %i.av, align 1, !noalias !35, !noundef !3 ; 2 uses
   %i.ax = add nuw i64 %.sroa.03.0.i48, 1          ; 3 uses
   switch i8 %i.aw, label %.preheader.i [
@@ -249,7 +250,7 @@ bb.t:                                             ; preds = %_RNvNtCsavRPklju9Q7
 
 _RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShEB4_.exit: ; preds = %.preheader.i, %_RNvNtCsavRPklju9Q7_4bstr4utf811decode_step.exit.i, %.preheader.i.preheader, %bb.o, %bb.t
   %.sroa.6.1.i = phi i64 [ 1, %bb.o ], [ %.sroa.0.0.i.i, %bb.t ], [ %2, %.preheader.i.preheader ], [ %2, %.preheader.i ], [ %i.ax, %_RNvNtCsavRPklju9Q7_4bstr4utf811decode_step.exit.i ]
-  store ptr @10, ptr %0, align 8
+  store ptr @11, ptr %0, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 3, ptr %i.ay, align 8
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -257,7 +258,7 @@ _RINvNtCsavRPklju9Q7_4bstr4utf86decodeRShEB4_.exit: ; preds = %.preheader.i, %_R
   br label %bb.c
 
 bb.u:                                             ; preds = %bb.n
-  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.4.0.copyload, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #13
+  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.4.0.copyload, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #13
   unreachable
 
 bb.v:                                             ; preds = %bb.n
@@ -374,7 +375,7 @@ bb.f:                                             ; preds = %_RNvYINtNtNtCs98D8V
   %i.w = phi ptr [ %.pre, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa6sparse3DFARShENtNtB7_9automaton9Automaton14try_search_revCsavRPklju9Q7_4bstr.exit._crit_edge ], [ %i.s, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa6sparse3DFARShENtNtB7_9automaton9Automaton14try_search_revCsavRPklju9Q7_4bstr.exit.thread8 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !55
   store ptr %i.w, ptr %i.f, align 8, !noalias !55
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 43, ptr noundef nonnull %i.f, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #13
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 43, ptr noundef nonnull %i.f, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #13
           to label %bb.g unwind label %bb.h, !noalias !56
 
 bb.g:                                             ; preds = %bb.f
@@ -487,7 +488,7 @@ _RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFARSmENtNtB7_9automaton9Au
   %i.ap = phi ptr [ %.pre.i, %.loopexit.loopexit.i ], [ %i.al, %_RNvYINtNtNtCs98D8VPWzHuM_14regex_automata3dfa5dense3DFARSmENtNtB7_9automaton9Automaton14try_search_revCsavRPklju9Q7_4bstr.exit.thread14.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !79
   store ptr %i.ap, ptr %i.b, align 8, !noalias !79
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @3, i64 noundef 43, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #13
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 43, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #13
           to label %bb.n unwind label %bb.o, !noalias !80
 
 bb.n:                                             ; preds = %.loopexit.i
@@ -522,7 +523,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.k
 
 bb.r:                                             ; preds = %bb.p
-  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.5.0.copyload36.i, i64 noundef %.sroa.7.0.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #13
+  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %.sroa.5.0.copyload36.i, i64 noundef %.sroa.7.0.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #13
   unreachable
 
 _RNvNtNtCsavRPklju9Q7_4bstr7unicode8grapheme33adjust_rev_for_regional_indicator.exit: ; preds = %bb.j, %.loopexit39.i
@@ -537,24 +538,32 @@ bb.s:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
   %umin.i = call i64 @llvm.umin.i64(i64 %i.ax, i64 %i.ay) ; 2 uses
   %.sroa.03.0.i109 = add nsw i64 %2, -1           ; 2 uses
   %i.az = icmp ugt i64 %.sroa.03.0.i109, %i.ax
-  br i1 %i.az, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.az, label %.lr.ph, label %._crit_edge
 
 bb.t:                                             ; preds = %.lr.ph.a
-  %.sroa.03.0.i = add nsw i64 %.sroa.03.0.i110, -1 ; 2 uses
+  %.sroa.03.0.i = add nsw i64 %.sroa.03.0.i114, -1 ; 2 uses
   %i.ba = icmp ugt i64 %.sroa.03.0.i, %i.ax
-  br i1 %i.ba, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.ba, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %bb.s, %bb.t
+  %.sroa.03.0.i114 = phi i64 [ %.sroa.03.0.i, %bb.t ], [ %.sroa.03.0.i109, %bb.s ] ; 5 uses
+  %3 = icmp ult i64 %.sroa.03.0.i114, %2
+  br i1 %3, label %.lr.ph.a, label %4
 
 ._crit_edge:                                      ; preds = %bb.t, %.lr.ph.a, %bb.s
-  %.sroa.03.0.lcssa.i = phi i64 [ %umin.i, %bb.s ], [ %umin.i, %bb.t ], [ %.sroa.03.0.i110, %.lr.ph.a ] ; 5 uses
+  %.sroa.03.0.lcssa.i = phi i64 [ %umin.i, %bb.s ], [ %umin.i, %bb.t ], [ %.sroa.03.0.i114, %.lr.ph.a ] ; 5 uses
   %i.bb = icmp ugt i64 %.sroa.03.0.lcssa.i, %2
   br i1 %i.bb, label %bb.ab, label %bb.u, !prof !14
 
-.lr.ph.a:                                         ; preds = %bb.s, %bb.t
-  %.sroa.03.0.i110 = phi i64 [ %.sroa.03.0.i, %bb.t ], [ %.sroa.03.0.i109, %bb.s ] ; 3 uses
-  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.03.0.i110
+.lr.ph.a:                                         ; preds = %.lr.ph
+  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.03.0.i114
   %i.bd = load i8, ptr %i.bc, align 1, !alias.scope !82, !noundef !3
   %i.be = icmp slt i8 %i.bd, -64
   br i1 %i.be, label %bb.t, label %._crit_edge
+
+4:                                                ; preds = %.lr.ph
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %.sroa.03.0.i114, i64 noundef range(i64 1, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #13, !noalias !82
+  unreachable
 
 bb.u:                                             ; preds = %._crit_edge
   %i.bf = sub nuw nsw i64 %2, %.sroa.03.0.lcssa.i ; 3 uses
@@ -580,7 +589,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.sroa.03.0.i.i115
   %i.bl = load i8, ptr %i.bk, align 1, !alias.scope !88, !noundef !3 ; 2 uses
   %i.bm = zext i8 %i.bl to i64
-  %i.bn = getelementptr inbounds nuw i8, ptr @4, i64 %i.bm
+  %i.bn = getelementptr inbounds nuw i8, ptr @5, i64 %i.bm
   %i.bo = load i8, ptr %i.bn, align 1, !noalias !89, !noundef !3 ; 2 uses
   %i.bp = zext i8 %i.bl to i32                    ; 2 uses
   %i.bq = icmp eq i64 %.sroa.015.0.i.i113, 12
@@ -607,11 +616,11 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %i.ca, label %_RNvNtCsavRPklju9Q7_4bstr4utf811decode_step.exit.i.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.bz, i64 noundef 108, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #13, !noalias !89
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.bz, i64 noundef 108, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #13, !noalias !89
   unreachable
 
 _RNvNtCsavRPklju9Q7_4bstr4utf811decode_step.exit.i.i: ; preds = %bb.y
-  %i.cb = getelementptr inbounds nuw i8, ptr @5, i64 %i.bz
+  %i.cb = getelementptr inbounds nuw i8, ptr @6, i64 %i.bz
   %i.cc = load i8, ptr %i.cb, align 1, !noalias !89, !noundef !3 ; 2 uses
   %i.cd = add nuw i64 %.sroa.03.0.i.i115, 1       ; 3 uses
   switch i8 %i.cc, label %.preheader.i.i [
@@ -624,7 +633,7 @@ bb.aa:                                            ; preds = %_RNvNtCsavRPklju9Q7
   br label %_RINvNtCsavRPklju9Q7_4bstr4utf811decode_lastRShEB4_.exit
 
 bb.ab:                                            ; preds = %._crit_edge
-  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.03.0.lcssa.i, i64 noundef range(i64 1, -9223372036854775808) %2, i64 noundef range(i64 1, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #13, !noalias !82
+  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.03.0.lcssa.i, i64 noundef range(i64 1, -9223372036854775808) %2, i64 noundef range(i64 1, -9223372036854775808) %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #13, !noalias !82
   unreachable
 
 _RINvNtCsavRPklju9Q7_4bstr4utf811decode_lastRShEB4_.exit: ; preds = %.preheader.i.i, %_RNvNtCsavRPklju9Q7_4bstr4utf811decode_step.exit.i.i, %bb.v, %bb.u, %bb.aa
@@ -632,7 +641,7 @@ _RINvNtCsavRPklju9Q7_4bstr4utf811decode_lastRShEB4_.exit: ; preds = %.preheader.
   %i.ce = add i64 %.sroa.6.1.i.i, %.sroa.03.0.lcssa.i
   %.not.i6 = icmp eq i64 %i.ce, %2
   %spec.select.i7 = select i1 %.not.i6, i64 %.sroa.6.1.i.i, i64 1
-  store ptr @10, ptr %0, align 8
+  store ptr @11, ptr %0, align 8
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 3, ptr %i.cf, align 8
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -650,7 +659,7 @@ bb.ac:                                            ; preds = %_RNvNtNtCsavRPklju9
   br label %bb.i
 
 bb.ad:                                            ; preds = %_RNvNtNtCsavRPklju9Q7_4bstr7unicode8grapheme33adjust_rev_for_regional_indicator.exit
-  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.09.0.i, i64 noundef %2, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #13
+  call void @_RNvNtNtCs4NRVxsYgnAr_4core5slice5index16slice_index_fail(i64 noundef %.sroa.09.0.i, i64 noundef %2, i64 noundef %2, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #13
   unreachable
 }
 
@@ -660,7 +669,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
-  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 10, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15)
+  %i.b = call noundef zeroext i1 @_RNvMsa_NtCs4NRVxsYgnAr_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 10, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @16)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.b
 }

@@ -204,7 +204,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPmSt6vectorImSaImEEEEEvT_S7_.exit: ; pr
   %.sroa.13.2254 = phi ptr [ %.sroa.13.1, %.noexc65 ], [ %.sroa.13.1, %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKN9EmitGroup17FilenameWithScoreESt6vectorIS3_SaIS3_EEEESt20back_insert_iteratorIS6_ImSaImEEEZNS2_21dumpLogScoreHistogramERSoEUlRS4_E_ET0_T_SI_SH_T1_.exit ], [ %.sroa.13.0, %bb.d ] ; 2 uses
   %.sroa.22.5251 = phi ptr [ %.sroa.22.4, %.noexc65 ], [ %.sroa.22.4, %_ZSt9transformIN9__gnu_cxx17__normal_iteratorIPKN9EmitGroup17FilenameWithScoreESt6vectorIS3_SaIS3_EEEESt20back_insert_iteratorIS6_ImSaImEEEZNS2_21dumpLogScoreHistogramERSoEUlRS4_E_ET0_T_SI_SH_T1_.exit ], [ %.sroa.22.2, %bb.d ] ; 5 uses
   %i.au = getelementptr inbounds i8, ptr %.sroa.13.2254, i64 -8
-  %i.av = load i64, ptr %i.au, align 8, !tbaa !78 ; 6 uses
+  %i.av = load i64, ptr %i.au, align 8, !tbaa !78 ; 5 uses
   %i.aw = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.556, i64 noundef 11)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit unwind label %bb.x ; 0 uses
 
@@ -356,7 +356,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
-  %i.dd = add nsw i64 %i.av, 1                    ; 7 uses
+  %i.dd = add nsw i64 %i.av, 1                    ; 8 uses
   %.sroa.speculated155 = call i64 @llvm.smin.i64(i64 %i.dd, i64 60) ; 7 uses
   %i.de = icmp ne i64 %i.dd, 0
   call void @llvm.assume(i1 %i.de)
@@ -383,10 +383,9 @@ _ZNKSt6vectorIZN9EmitGroup21dumpLogScoreHistogramERSoE8IntervalSaIS2_EE12_M_chec
   br i1 %i.dj, label %.lr.ph.preheader, label %.preheader186
 
 .lr.ph.preheader:                                 ; preds = %.noexc74
-  %umax = call i64 @llvm.umax.i64(i64 %.sroa.speculated155, i64 2)
-  %i.dk = add nsw i64 %umax, -1                   ; 3 uses
+  %i.dk = add nsw i64 %.sroa.speculated155, -1    ; 3 uses
   %xtraiter = and i64 %i.dk, 1
-  %i.dl = icmp eq i64 %i.av, 1
+  %i.dl = icmp eq i64 %i.dd, 2
   br i1 %i.dl, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader

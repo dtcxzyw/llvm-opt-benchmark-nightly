@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 5464
 inline.NumDeleted: 2791
 loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumRuntimeUnrolled: 3
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_RNvXNtNtNtCshzWfHUSfYae_4core3ops8function5implsRNCNvMNtNtCs6u1mgJOKDyY_13rust_analyzer3cli9run_testsNtNtBS_5flags8RunTests3runs2_0INtB4_2FnTNtCs4sl5YdnrCxp_3vfs6FileIdNtNtCsuAhG64lL82_9text_size5range9TextRangeEE4callBU_:bb.a
   store ptr %i.c, ptr %i.b, align 8, !noalias !12519
   %i.ao = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -205,7 +205,7 @@ default.unreachable156:                           ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
-  %i.k = load i64, ptr %i.j, align 8, !noundef !4 ; 15 uses
+  %i.k = load i64, ptr %i.j, align 8, !noundef !4 ; 13 uses
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %bb.j, label %bb.i
 
@@ -385,65 +385,39 @@ bb.r:                                             ; preds = %_RINvNtCshzWfHUSfYa
   tail call void @llvm.experimental.noalias.scope.decl(metadata !12582)
   %i.bl = mul nuw nsw i64 %i.k, 24                ; 2 uses
   tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #42, !noalias !12585
-  %i.bm = tail call noundef align 8 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.bl, i64 noundef range(i64 1, -9223372036854775807) 8) #42, !noalias !12585 ; 5 uses
+  %i.bm = tail call noundef align 8 ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.bl, i64 noundef range(i64 1, -9223372036854775807) 8) #42, !noalias !12585 ; 3 uses
   %i.bn = icmp eq ptr %i.bm, null
-  br i1 %i.bn, label %3, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader
+  br i1 %i.bn, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new
 
 _RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader: ; preds = %bb.r
-  %xtraiter = and i64 %i.k, 1
-  %2 = icmp eq i64 %i.k, 1
-  br i1 %2, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new
-
-_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new: ; preds = %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader
-  %unroll_iter = and i64 %i.k, -2
-  br label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i
-
-3:                                                ; preds = %bb.r
   tail call void @_RNvNtCsbSS6DM8SDEO_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.bl) #43, !noalias !12589
   unreachable
 
-_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i: ; preds = %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new
-  %.sroa.012.033.i = phi ptr [ %i.bk, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new ], [ %9, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i ] ; 5 uses
-  %.sroa.7.032.i = phi i64 [ 0, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new ], [ %8, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i ] ; 3 uses
-  %niter = phi i64 [ 0, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new ], [ %niter.next.1, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i ]
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.012.033.i, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.012.033.i, i64 8
-  %6 = load ptr, ptr %.sroa.012.033.i, align 8, !alias.scope !12590, !noalias !12593, !nonnull !4, !noundef !4
-  %7 = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %.sroa.7.032.i ; 2 uses
-  store ptr %6, ptr %7, align 8, !noalias !12589
-  %.sroa.423.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %7, i64 8
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.423.0..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(12) %5, i64 12, i1 false), !noalias !12595
-  %8 = add nuw nsw i64 %.sroa.7.032.i, 2          ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.012.033.i, i64 48 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.012.033.i, i64 32
-  %11 = load ptr, ptr %4, align 8, !alias.scope !12590, !noalias !12593, !nonnull !4, !noundef !4
-  %12 = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %.sroa.7.032.i ; 2 uses
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store ptr %11, ptr %13, align 8, !noalias !12589
-  %.sroa.423.0..sroa_idx.i.1 = getelementptr inbounds nuw i8, ptr %12, i64 32
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.423.0..sroa_idx.i.1, ptr noundef nonnull align 8 dereferenceable(12) %10, i64 12, i1 false), !noalias !12595
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit.unr-lcssa, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i
+_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new: ; preds = %bb.r
+  %2 = getelementptr inbounds nuw [24 x i8], ptr %i.bk, i64 %i.k
+  br label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i
 
-_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit.unr-lcssa: ; preds = %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader
+_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i: ; preds = %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new
+  %.sroa.012.033.i = phi ptr [ %i.bk, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new ], [ %5, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader ] ; 4 uses
+  %.sroa.7.032.i = phi i64 [ 0, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new ], [ %4, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader ] ; 2 uses
+  %niter = phi i64 [ %i.k, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader.new ], [ %3, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader ]
+  %niter.ncmp.1 = icmp eq ptr %.sroa.012.033.i, %2
+  br i1 %niter.ncmp.1, label %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader
 
-_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader: ; preds = %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit.unr-lcssa, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader
-  %.sroa.012.033.i.epil.init = phi ptr [ %i.bk, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader ], [ %9, %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit.unr-lcssa ] ; 2 uses
-  %.sroa.7.032.i.epil.init = phi i64 [ 0, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.preheader ], [ %8, %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit.unr-lcssa ]
-  %lcmp.mod159 = trunc i64 %i.k to i1
-  tail call void @llvm.assume(i1 %lcmp.mod159)
-  %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.012.033.i.epil.init, i64 8
-  %i.bp = load ptr, ptr %.sroa.012.033.i.epil.init, align 8, !alias.scope !12590, !noalias !12593, !nonnull !4, !noundef !4
-  %i.bq = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %.sroa.7.032.i.epil.init ; 2 uses
+_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader: ; preds = %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i
+  %3 = add nsw i64 %niter, -1                     ; 2 uses
+  %4 = add nuw nsw i64 %.sroa.7.032.i, 1
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.012.033.i, i64 24
+  %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.012.033.i, i64 8
+  %i.bp = load ptr, ptr %.sroa.012.033.i, align 8, !alias.scope !12590, !noalias !12593, !nonnull !4, !noundef !4
+  %i.bq = getelementptr inbounds nuw [24 x i8], ptr %i.bm, i64 %.sroa.7.032.i ; 2 uses
   store ptr %i.bp, ptr %i.bq, align 8, !noalias !12589
   %.sroa.423.0..sroa_idx.i.epil = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.423.0..sroa_idx.i.epil, ptr noundef nonnull align 8 dereferenceable(12) %i.bo, i64 12, i1 false), !noalias !12595
-  br label %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit
+  %6 = icmp eq i64 %3, 0
+  br i1 %6, label %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i
 
-_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit: ; preds = %_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit.unr-lcssa, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader
+_RINvXNvMNtCsbSS6DM8SDEO_5alloc5sliceSp9to_vec_inNtCs8Xq8PKFYOms_3hir4TypeNtB3_10ConvertVec6to_vecNtNtB8_5alloc6GlobalECs6u1mgJOKDyY_13rust_analyzer.exit: ; preds = %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i, %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCs6u1mgJOKDyY_13rust_analyzer.exit.i.epil.preheader
   store i64 %i.k, ptr %0, align 8
   %.sroa.4132.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.bm, ptr %.sroa.4132.0..sroa_idx, align 8

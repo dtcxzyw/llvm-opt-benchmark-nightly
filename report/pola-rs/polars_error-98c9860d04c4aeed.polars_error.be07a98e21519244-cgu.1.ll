@@ -12,22 +12,23 @@ target triple = "x86_64-unknown-linux-gnu"
 @2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00\E5\05\00\00!\00\00\00" }>, align 8
 @3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00\D9\05\00\00!\00\00\00" }>, align 8
 @4 = private unnamed_addr constant [40 x i8] c"internal error: entered unreachable code", align 1
-@5 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsgjwxzEoLG5s_12polars_error, [16 x i8] c"\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXNtNtCsh8eZTKRCwoO_3std2io5errorNtB2_5ErrorNtNtCscgRAwXFJnXP_4core3fmt5Debug3fmt }>, align 8
-@6 = private unnamed_addr constant [43 x i8] c"called `Result::unwrap()` on an `Err` value", align 1
+@5 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00\13\07\00\00I\00\00\00" }>, align 8
+@6 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECsgjwxzEoLG5s_12polars_error, [16 x i8] c"\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXNtNtCsh8eZTKRCwoO_3std2io5errorNtB2_5ErrorNtNtCscgRAwXFJnXP_4core3fmt5Debug3fmt }>, align 8
+@7 = private unnamed_addr constant [43 x i8] c"called `Result::unwrap()` on an `Err` value", align 1
 @_RNvNtCsgjwxzEoLG5s_12polars_error5abort11ABORT_STATE = global [8 x i8] zeroinitializer, align 8
-@7 = private unnamed_addr constant [15 x i8] c"__POLARS_ABORT_", align 1
-@8 = private unnamed_addr constant [33 x i8] c"crates/polars-error/src/abort.rs\00", align 1
-@9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c" \00\00\00\00\00\00\00/\00\00\00\09\00\00\00" }>, align 8
-@10 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c" \00\00\00\00\00\00\00\94\00\00\00\0D\00\00\00" }>, align 8
-@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c" \00\00\00\00\00\00\00u\00\00\00\09\00\00\00" }>, align 8
-@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c" \00\00\00\00\00\00\00s\00\00\00\09\00\00\00" }>, align 8
-@13 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c" \00\00\00\00\00\00\00q\00\00\00\09\00\00\00" }>, align 8
-@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c" \00\00\00\00\00\00\00a\00\00\00\05\00\00\00" }>, align 8
-@15 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0EBM_, [16 x i8] c"\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNSNvYNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0INtNtNtCscgRAwXFJnXP_4core3ops8function6FnOnceTRNtNtCsh8eZTKRCwoO_3std5panic13PanicHookInfoEE9call_once6vtableBa_, ptr @_RNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0B5_, ptr @_RNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0B5_ }>, align 8
-@16 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c" \00\00\00\00\00\00\00Q\00\00\00\0A\00\00\00" }>, align 8
-@17 = private unnamed_addr constant [30 x i8] c"__POLARS_ABORT_OOC_OUT_OF_DISK", align 1
-@18 = private unnamed_addr constant [33 x i8] c"__POLARS_ABORT_KEYBOARD_INTERRUPT", align 1
-@19 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00i\04\00\00$\00\00\00" }>, align 8
+@8 = private unnamed_addr constant [15 x i8] c"__POLARS_ABORT_", align 1
+@9 = private unnamed_addr constant [33 x i8] c"crates/polars-error/src/abort.rs\00", align 1
+@10 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c" \00\00\00\00\00\00\00/\00\00\00\09\00\00\00" }>, align 8
+@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c" \00\00\00\00\00\00\00\94\00\00\00\0D\00\00\00" }>, align 8
+@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c" \00\00\00\00\00\00\00u\00\00\00\09\00\00\00" }>, align 8
+@13 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c" \00\00\00\00\00\00\00s\00\00\00\09\00\00\00" }>, align 8
+@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c" \00\00\00\00\00\00\00q\00\00\00\09\00\00\00" }>, align 8
+@15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c" \00\00\00\00\00\00\00a\00\00\00\05\00\00\00" }>, align 8
+@16 = private unnamed_addr constant <{ ptr, [16 x i8], ptr, ptr, ptr }> <{ ptr @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0EBM_, [16 x i8] c"\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNSNvYNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0INtNtNtCscgRAwXFJnXP_4core3ops8function6FnOnceTRNtNtCsh8eZTKRCwoO_3std5panic13PanicHookInfoEE9call_once6vtableBa_, ptr @_RNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0B5_, ptr @_RNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanism0B5_ }>, align 8
+@17 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @9, [16 x i8] c" \00\00\00\00\00\00\00Q\00\00\00\0A\00\00\00" }>, align 8
+@18 = private unnamed_addr constant [30 x i8] c"__POLARS_ABORT_OOC_OUT_OF_DISK", align 1
+@19 = private unnamed_addr constant [33 x i8] c"__POLARS_ABORT_KEYBOARD_INTERRUPT", align 1
+@20 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00i\04\00\00$\00\00\00" }>, align 8
 
 ; Function Attrs: inlinehint norecurse nounwind nonlazybind uwtable
 define internal fastcc void @_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvNtCsgjwxzEoLG5s_12polars_error5abort28polars_abort_ooc_out_of_disk0EB1d_() unnamed_addr #0 personality ptr @rust_eh_personality !dbg !7 {
@@ -430,11 +431,11 @@ bb.d:                                             ; preds = %bb.a, %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 %.sink, !dbg !548
   %.sroa.03.0 = load ptr, ptr %.sroa.03.0.in, align 8, !dbg !548, !nonnull !14, !noundef !14 ; 3 uses
   %.sroa.5.0 = load i64, ptr %i.j, align 8, !dbg !548, !noundef !14 ; 3 uses
-  %i.k = call fastcc noundef zeroext i1 @_RNvXst_NtNtCscgRAwXFJnXP_4core3str7patternReNtB5_7Pattern15is_contained_in(ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 15, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.03.0, i64 noundef %.sroa.5.0) #20, !dbg !549
+  %i.k = call fastcc noundef zeroext i1 @_RNvXst_NtNtCscgRAwXFJnXP_4core3str7patternReNtB5_7Pattern15is_contained_in(ptr noalias noundef nonnull readonly captures(address, read_provenance) @8, i64 noundef 15, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.03.0, i64 noundef %.sroa.5.0) #20, !dbg !549
   br i1 %i.k, label %bb.e, label %bb.f, !dbg !555
 
 bb.e:                                             ; preds = %bb.d
-  %i.l = call fastcc noundef zeroext i1 @_RNvXst_NtNtCscgRAwXFJnXP_4core3str7patternReNtB5_7Pattern15is_contained_in(ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 33, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.03.0, i64 noundef %.sroa.5.0) #20, !dbg !556
+  %i.l = call fastcc noundef zeroext i1 @_RNvXst_NtNtCscgRAwXFJnXP_4core3str7patternReNtB5_7Pattern15is_contained_in(ptr noalias noundef nonnull readonly captures(address, read_provenance) @19, i64 noundef 33, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.03.0, i64 noundef %.sroa.5.0) #20, !dbg !556
   br i1 %i.l, label %bb.f, label %bb.g, !dbg !558
 
 bb.f:                                             ; preds = %bb.g, %bb.e, %bb.d, %bb.b
@@ -442,11 +443,11 @@ bb.f:                                             ; preds = %bb.g, %bb.e, %bb.d,
   ret i8 %.sroa.0.0, !dbg !559
 
 bb.g:                                             ; preds = %bb.e
-  %i.m = call fastcc noundef zeroext i1 @_RNvXst_NtNtCscgRAwXFJnXP_4core3str7patternReNtB5_7Pattern15is_contained_in(ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 30, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.03.0, i64 noundef %.sroa.5.0) #20, !dbg !560
+  %i.m = call fastcc noundef zeroext i1 @_RNvXst_NtNtCscgRAwXFJnXP_4core3str7patternReNtB5_7Pattern15is_contained_in(ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 30, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.03.0, i64 noundef %.sroa.5.0) #20, !dbg !560
   br i1 %i.m, label %bb.f, label %bb.h, !dbg !562, !prof !563
 
 bb.h:                                             ; preds = %bb.g
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #23, !dbg !564
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #23, !dbg !564
   unreachable, !dbg !564
 }
 
@@ -487,7 +488,7 @@ bb.e:                                             ; preds = %_RNvNtCsgjwxzEoLG5s
   br i1 %i.k, label %bb.f, label %bb.d, !dbg !591, !prof !592
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #23, !dbg !593
+  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #23, !dbg !593
   unreachable, !dbg !593
 }
 
@@ -505,15 +506,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.d, label %bb.e, !dbg !601
 
 bb.c:                                             ; preds = %bb.a
-  tail call void @_RINvNtCsh8eZTKRCwoO_3std9panicking11begin_panicReEB4_(ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 33, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #23, !dbg !602
+  tail call void @_RINvNtCsh8eZTKRCwoO_3std9panicking11begin_panicReEB4_(ptr noalias noundef nonnull readonly captures(address, read_provenance) @19, i64 noundef 33, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #23, !dbg !602
   unreachable, !dbg !602
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #23, !dbg !605
+  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @4, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #23, !dbg !605
   unreachable, !dbg !605
 
 bb.e:                                             ; preds = %bb.b
-  tail call void @_RINvNtCsh8eZTKRCwoO_3std9panicking11begin_panicReEB4_(ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 30, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #23, !dbg !606
+  tail call void @_RINvNtCsh8eZTKRCwoO_3std9panicking11begin_panicReEB4_(ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 30, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #23, !dbg !606
   unreachable, !dbg !606
 }
 
@@ -521,7 +522,7 @@ bb.e:                                             ; preds = %bb.b
 define void @_RNvNtCsgjwxzEoLG5s_12polars_error5abort28polars_abort_ooc_out_of_disk() unnamed_addr #6 !dbg !608 {
 bb.a:
   tail call fastcc void @_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvNtCsgjwxzEoLG5s_12polars_error5abort28polars_abort_ooc_out_of_disk0EB1d_() #20, !dbg !609
-  tail call void @_RINvNtCsh8eZTKRCwoO_3std9panicking11begin_panicReEB4_(ptr noalias noundef nonnull readonly captures(address, read_provenance) @17, i64 noundef 30, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #23, !dbg !612
+  tail call void @_RINvNtCsh8eZTKRCwoO_3std9panicking11begin_panicReEB4_(ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 30, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #23, !dbg !612
   unreachable, !dbg !612
 }
 
@@ -571,7 +572,7 @@ _RNvMNtCsgZ49sUHp3tW_5alloc5boxedINtB2_3BoxNCNvNtCsgjwxzEoLG5s_12polars_error5ab
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 8, !dbg !643
   store ptr %i.f, ptr %i.l, align 8, !dbg !643
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !645
-  tail call void @_RNvNtCsh8eZTKRCwoO_3std9panicking8set_hook(ptr noundef nonnull %i.h, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @15), !dbg !646
+  tail call void @_RNvNtCsh8eZTKRCwoO_3std9panicking8set_hook(ptr noundef nonnull %i.h, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) @16), !dbg !646
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !647
   call void @_RINvCs8kXw7nnhjzR_20signal_hook_registry8registerNCNvNtCsgjwxzEoLG5s_12polars_error5abort31register_polars_abort_mechanisms_0EBR_(ptr noalias noundef nonnull sret([48 x i8]) align 16 captures(address) dereferenceable(48) %i.c, i32 noundef 2), !dbg !647
   call void @llvm.experimental.noalias.scope.decl(metadata !648), !dbg !651
@@ -584,7 +585,7 @@ bb.e:                                             ; preds = %_RNvMNtCsgZ49sUHp3t
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !662
   %i.p = load ptr, ptr %i.o, align 8, !dbg !662, !alias.scope !648, !noalias !659, !nonnull !14, !noundef !14
   store ptr %i.p, ptr %i.b, align 8, !dbg !662, !noalias !663
-  invoke void @_RNvNtCscgRAwXFJnXP_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @6, i64 noundef 43, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @16) #24
+  invoke void @_RNvNtCscgRAwXFJnXP_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 43, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @6, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @17) #24
           to label %bb.g unwind label %bb.f, !dbg !664, !noalias !663
 
 bb.f:                                             ; preds = %bb.e
@@ -628,7 +629,7 @@ bb.c:                                             ; preds = %bb.a
   %i.f = icmp samesign ult i64 %1, 33, !dbg !696
   br i1 %i.f, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i.lr.ph, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit, !dbg !696
 
-_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit: ; preds = %bb.ar, %bb.c
+_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit: ; preds = %4, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !697
   call void @_RNvMsu_NtNtCscgRAwXFJnXP_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.b, ptr noalias noundef nonnull readonly captures(address, read_provenance) %2, i64 noundef %3, ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1), !dbg !698
   tail call void @llvm.experimental.noalias.scope.decl(metadata !701), !dbg !704
@@ -816,7 +817,7 @@ _RNvXs2J_NtNtCscgRAwXFJnXP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 
 .loopexit:                                        ; preds = %bb.p, %.split.i.i.i, %bb.e, %.split.i.i.i.peel
   %.lcssa143 = phi i64 [ %.promoted.i, %.split.i.i.i.peel ], [ %.promoted.i, %bb.e ], [ %i.ca, %.split.i.i.i ], [ %i.ca, %bb.p ]
-  tail call void @_RNvNtCscgRAwXFJnXP_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef %i.q, i64 noundef %.lcssa143, i64 noundef %i.q, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @19) #23, !dbg !883, !noalias !881
+  tail call void @_RNvNtCscgRAwXFJnXP_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef %i.q, i64 noundef %.lcssa143, i64 noundef %i.q, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #23, !dbg !883, !noalias !881
   unreachable, !dbg !883
 
 bb.s:                                             ; preds = %bb.m
@@ -1063,224 +1064,232 @@ _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedItera
   %i.ft = load i8, ptr %0, align 1, !dbg !1038, !alias.scope !1031, !noalias !1036, !noundef !14 ; 2 uses
   %i.fu = add nsw i64 %1, -1, !dbg !1043          ; 2 uses
   %i.fv = add nsw i64 %1, -4, !dbg !1045
-  br label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i, !dbg !1049
+  br label %bb.ar, !dbg !1049
 
-bb.ar:                                            ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i
-  %i.fw = icmp ult i64 %i.fv, %5, !dbg !1063
-  br i1 %i.fw, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit, !dbg !1049
+4:                                                ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i
+  %5 = icmp ult i64 %i.fv, %7, !dbg !1063
+  br i1 %5, label %bb.ar, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit, !dbg !1049
 
-_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i: ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i.lr.ph, %bb.ar
-  %4 = phi i64 [ %1, %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i.lr.ph ], [ %5, %bb.ar ]
-  %5 = add nsw i64 %4, -1, !dbg !1066             ; 9 uses
-  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 %5, !dbg !1071
-  %i.fy = load i8, ptr %i.fx, align 1, !dbg !1071, !alias.scope !1031, !noalias !1079, !noundef !14 ; 2 uses
+bb.ar:                                            ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i.lr.ph, %4
+  %6 = phi i64 [ %1, %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i.lr.ph ], [ %7, %4 ]
+  %7 = add nsw i64 %6, -1, !dbg !1066             ; 11 uses
+  %i.fw = icmp ult i64 %7, %1, !dbg !1071
+  br i1 %i.fw, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i, label %8, !dbg !1071
+
+8:                                                ; preds = %bb.ar
+  tail call void @_RNvNtCscgRAwXFJnXP_4core9panicking18panic_bounds_check(i64 noundef %7, i64 noundef range(i64 15, 33) %1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #23, !dbg !1071, !noalias !1079
+  unreachable, !dbg !1071
+
+_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i: ; preds = %bb.ar
+  %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 %7, !dbg !1071
+  %i.fy = load i8, ptr %i.fx, align 1, !dbg !1071, !alias.scope !1031, !noalias !1087, !noundef !14 ; 2 uses
   %.not.i.not.i.i = icmp eq i8 %i.fy, %i.ft, !dbg !1071
-  br i1 %.not.i.not.i.i, label %bb.ar, label %bb.as, !dbg !1087
+  br i1 %.not.i.not.i.i, label %4, label %bb.as, !dbg !1088
 
 bb.as:                                            ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error.exit.i.i
-  %i.fz = add nuw nsw i64 %1, 15, !dbg !1088      ; 3 uses
-  %i.ga = icmp ult i64 %3, %i.fz, !dbg !1090
-  br i1 %i.ga, label %.lr.ph.split.us.i.i, label %bb.at, !dbg !1090
+  %i.fz = add nuw nsw i64 %1, 15, !dbg !1089      ; 3 uses
+  %i.ga = icmp ult i64 %3, %i.fz, !dbg !1091
+  br i1 %i.ga, label %.lr.ph.split.us.i.i, label %bb.at, !dbg !1091
 
 .lr.ph.split.us.i.i:                              ; preds = %bb.as
-  %bcmp.i.i.us23.i.i = tail call i32 @bcmp(ptr noundef nonnull readonly dereferenceable(1) %2, ptr noundef nonnull readonly dereferenceable(1) %0, i64 range(i64 15, 33) %1), !dbg !1091, !alias.scope !1113, !noalias !1114
-  %i.gb = icmp eq i32 %bcmp.i.i.us23.i.i, 0, !dbg !1091
-  br i1 %i.gb, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i.preheader, !dbg !1118
+  %bcmp.i.i.us23.i.i = tail call i32 @bcmp(ptr noundef nonnull readonly dereferenceable(1) %2, ptr noundef nonnull readonly dereferenceable(1) %0, i64 range(i64 15, 33) %1), !dbg !1092, !alias.scope !1114, !noalias !1115
+  %i.gb = icmp eq i32 %bcmp.i.i.us23.i.i, 0, !dbg !1092
+  br i1 %i.gb, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i.preheader, !dbg !1119
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i.preheader: ; preds = %.lr.ph.split.us.i.i
-  %i.gc = add nsw i64 %3, -1, !dbg !1119          ; 2 uses
-  %.not28.i.i268 = icmp ugt i64 %1, %i.gc, !dbg !1131
-  br i1 %.not28.i.i268, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i, !dbg !1131
+  %i.gc = add nsw i64 %3, -1, !dbg !1120          ; 2 uses
+  %.not28.i.i268 = icmp ugt i64 %1, %i.gc, !dbg !1132
+  br i1 %.not28.i.i268, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i, !dbg !1132
 
 .split.us.i.i:                                    ; preds = %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i.preheader, %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i
   %i.gd = phi i64 [ %i.gg, %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i ], [ %i.gc, %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i.preheader ]
   %.pn.i269 = phi ptr [ %i.ge, %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i ], [ %2, %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i.preheader ]
-  %i.ge = getelementptr inbounds nuw i8, ptr %.pn.i269, i64 1, !dbg !1132 ; 2 uses
-  %bcmp.i.i.us.i.i = tail call i32 @bcmp(ptr noundef nonnull readonly dereferenceable(1) %i.ge, ptr noundef nonnull readonly dereferenceable(1) %0, i64 range(i64 15, 33) %1), !dbg !1091, !alias.scope !1113, !noalias !1114
-  %i.gf = icmp eq i32 %bcmp.i.i.us.i.i, 0, !dbg !1091
-  br i1 %i.gf, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i, !dbg !1118
+  %i.ge = getelementptr inbounds nuw i8, ptr %.pn.i269, i64 1, !dbg !1133 ; 2 uses
+  %bcmp.i.i.us.i.i = tail call i32 @bcmp(ptr noundef nonnull readonly dereferenceable(1) %i.ge, ptr noundef nonnull readonly dereferenceable(1) %0, i64 range(i64 15, 33) %1), !dbg !1092, !alias.scope !1114, !noalias !1115
+  %i.gf = icmp eq i32 %bcmp.i.i.us.i.i, 0, !dbg !1092
+  br i1 %i.gf, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i, !dbg !1119
 
 _RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error.exit.backedge.us.i.i: ; preds = %.split.us.i.i
-  %i.gg = add nsw i64 %i.gd, -1, !dbg !1119       ; 2 uses
-  %.not28.i.i = icmp ugt i64 %1, %i.gg, !dbg !1131
-  br i1 %.not28.i.i, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i, !dbg !1131
+  %i.gg = add nsw i64 %i.gd, -1, !dbg !1120       ; 2 uses
+  %.not28.i.i = icmp ugt i64 %1, %i.gg, !dbg !1132
+  br i1 %.not28.i.i, label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, label %.split.us.i.i, !dbg !1132
 
 bb.at:                                            ; preds = %bb.as
-  %i.gh = insertelement <16 x i8> poison, i8 %i.ft, i64 0, !dbg !1137
-  %i.gi = shufflevector <16 x i8> %i.gh, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !1137 ; 6 uses
-  %i.gj = insertelement <16 x i8> poison, i8 %i.fy, i64 0, !dbg !1144
-  %i.gk = shufflevector <16 x i8> %i.gj, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !1144 ; 6 uses
-  %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !1147
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !1157, !noalias !1113
-  store ptr %2, ptr %i.a, align 8, !dbg !1159, !noalias !1113
-  %i.gm = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !1159
-  store i64 %3, ptr %i.gm, align 8, !dbg !1159, !noalias !1113
-  %i.gn = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !1159
-  store ptr %i.gl, ptr %i.gn, align 8, !dbg !1159, !noalias !1113
-  %i.go = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !1159
-  store i64 %i.fu, ptr %i.go, align 8, !dbg !1159, !noalias !1113
+  %i.gh = insertelement <16 x i8> poison, i8 %i.ft, i64 0, !dbg !1138
+  %i.gi = shufflevector <16 x i8> %i.gh, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !1138 ; 6 uses
+  %i.gj = insertelement <16 x i8> poison, i8 %i.fy, i64 0, !dbg !1145
+  %i.gk = shufflevector <16 x i8> %i.gj, <16 x i8> poison, <16 x i32> zeroinitializer, !dbg !1145 ; 6 uses
+  %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !1148
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !dbg !1158, !noalias !1114
+  store ptr %2, ptr %i.a, align 8, !dbg !1160, !noalias !1114
+  %i.gm = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !1160
+  store i64 %3, ptr %i.gm, align 8, !dbg !1160, !noalias !1114
+  %i.gn = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !1160
+  store ptr %i.gl, ptr %i.gn, align 8, !dbg !1160, !noalias !1114
+  %i.go = getelementptr inbounds nuw i8, ptr %i.a, i64 24, !dbg !1160
+  store i64 %i.fu, ptr %i.go, align 8, !dbg !1160, !noalias !1114
   %i.gp = add nuw nsw i64 %1, 63                  ; 2 uses
-  %.not.i = icmp ult i64 %i.gp, %3, !dbg !1160
-  br i1 %.not.i, label %.lr.ph.i5, label %.preheader.i4, !dbg !1160
+  %.not.i = icmp ult i64 %i.gp, %3, !dbg !1161
+  br i1 %.not.i, label %.lr.ph.i5, label %.preheader.i4, !dbg !1161
 
 .preheader.i4:                                    ; preds = %bb.ax, %bb.at
-  %.sroa.014.0.lcssa.i = phi i8 [ 0, %bb.at ], [ %.sroa.014.2.3.i, %bb.ax ], !dbg !1165 ; 2 uses
-  %.sroa.06.0.lcssa.i = phi i64 [ 0, %bb.at ], [ %i.ik, %bb.ax ], !dbg !1166 ; 2 uses
-  %i.gq = add i64 %.sroa.06.0.lcssa.i, %i.fz, !dbg !1167
-  %i.gr = icmp uge i64 %i.gq, %3, !dbg !1167
+  %.sroa.014.0.lcssa.i = phi i8 [ 0, %bb.at ], [ %.sroa.014.2.3.i, %bb.ax ], !dbg !1166 ; 2 uses
+  %.sroa.06.0.lcssa.i = phi i64 [ 0, %bb.at ], [ %i.ik, %bb.ax ], !dbg !1167 ; 2 uses
+  %i.gq = add i64 %.sroa.06.0.lcssa.i, %i.fz, !dbg !1168
+  %i.gr = icmp uge i64 %i.gq, %3, !dbg !1168
   %i.gs = trunc nuw i8 %.sroa.014.0.lcssa.i to i1 ; 2 uses
-  %or.cond3100.i = select i1 %i.gr, i1 true, i1 %i.gs, !dbg !1167
-  br i1 %or.cond3100.i, label %._crit_edge.i, label %.lr.ph102.i, !dbg !1167
+  %or.cond3100.i = select i1 %i.gr, i1 true, i1 %i.gs, !dbg !1168
+  br i1 %or.cond3100.i, label %._crit_edge.i, label %.lr.ph102.i, !dbg !1168
 
 .lr.ph.i5:                                        ; preds = %bb.at, %bb.ax
   %.sroa.06.098.i = phi i64 [ %i.ik, %bb.ax ], [ 0, %bb.at ] ; 6 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.06.098.i ; 5 uses
-  %.sroa.0.0.copyload.i.i = load <16 x i8>, ptr %i.gt, align 1, !dbg !1168, !alias.scope !1036, !noalias !1181
-  %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 %5, !dbg !1184
-  %.sroa.02.0.copyload.i.i = load <16 x i8>, ptr %i.gu, align 1, !dbg !1188, !alias.scope !1036, !noalias !1181
-  %i.gv = icmp eq <16 x i8> %.sroa.0.0.copyload.i.i, %i.gi, !dbg !1195
-  %i.gw = icmp eq <16 x i8> %.sroa.02.0.copyload.i.i, %i.gk, !dbg !1204
-  %i.gx = and <16 x i1> %i.gv, %i.gw, !dbg !1207
-  %i.gy = bitcast <16 x i1> %i.gx to i16, !dbg !1214 ; 2 uses
-  %i.gz = getelementptr inbounds nuw i8, ptr %i.gt, i64 16, !dbg !1215 ; 2 uses
-  %.sroa.0.0.copyload.i.1.i = load <16 x i8>, ptr %i.gz, align 1, !dbg !1168, !alias.scope !1036, !noalias !1181
-  %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 %5, !dbg !1184
-  %.sroa.02.0.copyload.i.1.i = load <16 x i8>, ptr %i.ha, align 1, !dbg !1188, !alias.scope !1036, !noalias !1181
-  %i.hb = icmp eq <16 x i8> %.sroa.0.0.copyload.i.1.i, %i.gi, !dbg !1195
-  %i.hc = icmp eq <16 x i8> %.sroa.02.0.copyload.i.1.i, %i.gk, !dbg !1204
-  %i.hd = and <16 x i1> %i.hb, %i.hc, !dbg !1207
-  %i.he = bitcast <16 x i1> %i.hd to i16, !dbg !1214 ; 2 uses
-  %i.hf = getelementptr inbounds nuw i8, ptr %i.gt, i64 32, !dbg !1215 ; 2 uses
-  %.sroa.0.0.copyload.i.2.i = load <16 x i8>, ptr %i.hf, align 1, !dbg !1168, !alias.scope !1036, !noalias !1181
-  %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 %5, !dbg !1184
-  %.sroa.02.0.copyload.i.2.i = load <16 x i8>, ptr %i.hg, align 1, !dbg !1188, !alias.scope !1036, !noalias !1181
-  %i.hh = icmp eq <16 x i8> %.sroa.0.0.copyload.i.2.i, %i.gi, !dbg !1195
-  %i.hi = icmp eq <16 x i8> %.sroa.02.0.copyload.i.2.i, %i.gk, !dbg !1204
-  %i.hj = and <16 x i1> %i.hh, %i.hi, !dbg !1207
-  %i.hk = bitcast <16 x i1> %i.hj to i16, !dbg !1214 ; 2 uses
-  %i.hl = getelementptr inbounds nuw i8, ptr %i.gt, i64 48, !dbg !1215 ; 2 uses
-  %.sroa.0.0.copyload.i.3.i = load <16 x i8>, ptr %i.hl, align 1, !dbg !1168, !alias.scope !1036, !noalias !1181
-  %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 %5, !dbg !1184
-  %.sroa.02.0.copyload.i.3.i = load <16 x i8>, ptr %i.hm, align 1, !dbg !1188, !alias.scope !1036, !noalias !1181
-  %i.hn = icmp eq <16 x i8> %.sroa.0.0.copyload.i.3.i, %i.gi, !dbg !1195
-  %i.ho = icmp eq <16 x i8> %.sroa.02.0.copyload.i.3.i, %i.gk, !dbg !1204
-  %i.hp = and <16 x i1> %i.hn, %i.ho, !dbg !1207
-  %i.hq = bitcast <16 x i1> %i.hp to i16, !dbg !1214 ; 2 uses
-  %i.hr = icmp eq i16 %i.gy, 0, !dbg !1217
-  br i1 %i.hr, label %.preheader91.1.i, label %bb.ay, !dbg !1217
+  %.sroa.0.0.copyload.i.i = load <16 x i8>, ptr %i.gt, align 1, !dbg !1169, !alias.scope !1036, !noalias !1182
+  %i.gu = getelementptr inbounds nuw i8, ptr %i.gt, i64 %7, !dbg !1185
+  %.sroa.02.0.copyload.i.i = load <16 x i8>, ptr %i.gu, align 1, !dbg !1189, !alias.scope !1036, !noalias !1182
+  %i.gv = icmp eq <16 x i8> %.sroa.0.0.copyload.i.i, %i.gi, !dbg !1196
+  %i.gw = icmp eq <16 x i8> %.sroa.02.0.copyload.i.i, %i.gk, !dbg !1205
+  %i.gx = and <16 x i1> %i.gv, %i.gw, !dbg !1208
+  %i.gy = bitcast <16 x i1> %i.gx to i16, !dbg !1215 ; 2 uses
+  %i.gz = getelementptr inbounds nuw i8, ptr %i.gt, i64 16, !dbg !1216 ; 2 uses
+  %.sroa.0.0.copyload.i.1.i = load <16 x i8>, ptr %i.gz, align 1, !dbg !1169, !alias.scope !1036, !noalias !1182
+  %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 %7, !dbg !1185
+  %.sroa.02.0.copyload.i.1.i = load <16 x i8>, ptr %i.ha, align 1, !dbg !1189, !alias.scope !1036, !noalias !1182
+  %i.hb = icmp eq <16 x i8> %.sroa.0.0.copyload.i.1.i, %i.gi, !dbg !1196
+  %i.hc = icmp eq <16 x i8> %.sroa.02.0.copyload.i.1.i, %i.gk, !dbg !1205
+  %i.hd = and <16 x i1> %i.hb, %i.hc, !dbg !1208
+  %i.he = bitcast <16 x i1> %i.hd to i16, !dbg !1215 ; 2 uses
+  %i.hf = getelementptr inbounds nuw i8, ptr %i.gt, i64 32, !dbg !1216 ; 2 uses
+  %.sroa.0.0.copyload.i.2.i = load <16 x i8>, ptr %i.hf, align 1, !dbg !1169, !alias.scope !1036, !noalias !1182
+  %i.hg = getelementptr inbounds nuw i8, ptr %i.hf, i64 %7, !dbg !1185
+  %.sroa.02.0.copyload.i.2.i = load <16 x i8>, ptr %i.hg, align 1, !dbg !1189, !alias.scope !1036, !noalias !1182
+  %i.hh = icmp eq <16 x i8> %.sroa.0.0.copyload.i.2.i, %i.gi, !dbg !1196
+  %i.hi = icmp eq <16 x i8> %.sroa.02.0.copyload.i.2.i, %i.gk, !dbg !1205
+  %i.hj = and <16 x i1> %i.hh, %i.hi, !dbg !1208
+  %i.hk = bitcast <16 x i1> %i.hj to i16, !dbg !1215 ; 2 uses
+  %i.hl = getelementptr inbounds nuw i8, ptr %i.gt, i64 48, !dbg !1216 ; 2 uses
+  %.sroa.0.0.copyload.i.3.i = load <16 x i8>, ptr %i.hl, align 1, !dbg !1169, !alias.scope !1036, !noalias !1182
+  %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 %7, !dbg !1185
+  %.sroa.02.0.copyload.i.3.i = load <16 x i8>, ptr %i.hm, align 1, !dbg !1189, !alias.scope !1036, !noalias !1182
+  %i.hn = icmp eq <16 x i8> %.sroa.0.0.copyload.i.3.i, %i.gi, !dbg !1196
+  %i.ho = icmp eq <16 x i8> %.sroa.02.0.copyload.i.3.i, %i.gk, !dbg !1205
+  %i.hp = and <16 x i1> %i.hn, %i.ho, !dbg !1208
+  %i.hq = bitcast <16 x i1> %i.hp to i16, !dbg !1215 ; 2 uses
+  %i.hr = icmp eq i16 %i.gy, 0, !dbg !1218
+  br i1 %i.hr, label %.preheader91.1.i, label %bb.ay, !dbg !1218
 
 .preheader91.1.i:                                 ; preds = %bb.ay, %.lr.ph.i5
-  %.sroa.014.2.i = phi i8 [ 0, %.lr.ph.i5 ], [ %i.ip, %bb.ay ], !dbg !1221 ; 3 uses
-  %i.hs = icmp eq i16 %i.he, 0, !dbg !1217
-  br i1 %i.hs, label %.preheader91.2.i, label %bb.au, !dbg !1217
+  %.sroa.014.2.i = phi i8 [ 0, %.lr.ph.i5 ], [ %i.ip, %bb.ay ], !dbg !1222 ; 3 uses
+  %i.hs = icmp eq i16 %i.he, 0, !dbg !1218
+  br i1 %i.hs, label %.preheader91.2.i, label %bb.au, !dbg !1218
 
 bb.au:                                            ; preds = %.preheader91.1.i
-  %i.ht = or disjoint i64 %.sroa.06.098.i, 16, !dbg !1222
-  %i.hu = trunc nuw i8 %.sroa.014.2.i to i1, !dbg !1223
-  %i.hv = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.ht, i16 noundef %i.he, i1 noundef zeroext %i.hu) #20, !dbg !1224
-  %i.hw = zext i1 %i.hv to i8, !dbg !1225
-  %i.hx = or i8 %.sroa.014.2.i, %i.hw, !dbg !1225
-  br label %.preheader91.2.i, !dbg !1226
+  %i.ht = or disjoint i64 %.sroa.06.098.i, 16, !dbg !1223
+  %i.hu = trunc nuw i8 %.sroa.014.2.i to i1, !dbg !1224
+  %i.hv = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.ht, i16 noundef %i.he, i1 noundef zeroext %i.hu) #20, !dbg !1225
+  %i.hw = zext i1 %i.hv to i8, !dbg !1226
+  %i.hx = or i8 %.sroa.014.2.i, %i.hw, !dbg !1226
+  br label %.preheader91.2.i, !dbg !1227
 
 .preheader91.2.i:                                 ; preds = %bb.au, %.preheader91.1.i
-  %.sroa.014.2.1.i = phi i8 [ %.sroa.014.2.i, %.preheader91.1.i ], [ %i.hx, %bb.au ], !dbg !1221 ; 3 uses
-  %i.hy = icmp eq i16 %i.hk, 0, !dbg !1217
-  br i1 %i.hy, label %.preheader91.3.i, label %bb.av, !dbg !1217
+  %.sroa.014.2.1.i = phi i8 [ %.sroa.014.2.i, %.preheader91.1.i ], [ %i.hx, %bb.au ], !dbg !1222 ; 3 uses
+  %i.hy = icmp eq i16 %i.hk, 0, !dbg !1218
+  br i1 %i.hy, label %.preheader91.3.i, label %bb.av, !dbg !1218
 
 bb.av:                                            ; preds = %.preheader91.2.i
-  %i.hz = or disjoint i64 %.sroa.06.098.i, 32, !dbg !1222
-  %i.ia = trunc nuw i8 %.sroa.014.2.1.i to i1, !dbg !1223
-  %i.ib = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.hz, i16 noundef %i.hk, i1 noundef zeroext %i.ia) #20, !dbg !1224
-  %i.ic = zext i1 %i.ib to i8, !dbg !1225
-  %i.id = or i8 %.sroa.014.2.1.i, %i.ic, !dbg !1225
-  br label %.preheader91.3.i, !dbg !1226
+  %i.hz = or disjoint i64 %.sroa.06.098.i, 32, !dbg !1223
+  %i.ia = trunc nuw i8 %.sroa.014.2.1.i to i1, !dbg !1224
+  %i.ib = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.hz, i16 noundef %i.hk, i1 noundef zeroext %i.ia) #20, !dbg !1225
+  %i.ic = zext i1 %i.ib to i8, !dbg !1226
+  %i.id = or i8 %.sroa.014.2.1.i, %i.ic, !dbg !1226
+  br label %.preheader91.3.i, !dbg !1227
 
 .preheader91.3.i:                                 ; preds = %bb.av, %.preheader91.2.i
-  %.sroa.014.2.2.i = phi i8 [ %.sroa.014.2.1.i, %.preheader91.2.i ], [ %i.id, %bb.av ], !dbg !1221 ; 3 uses
-  %i.ie = icmp eq i16 %i.hq, 0, !dbg !1217
-  br i1 %i.ie, label %bb.ax, label %bb.aw, !dbg !1217
+  %.sroa.014.2.2.i = phi i8 [ %.sroa.014.2.1.i, %.preheader91.2.i ], [ %i.id, %bb.av ], !dbg !1222 ; 3 uses
+  %i.ie = icmp eq i16 %i.hq, 0, !dbg !1218
+  br i1 %i.ie, label %bb.ax, label %bb.aw, !dbg !1218
 
 bb.aw:                                            ; preds = %.preheader91.3.i
-  %i.if = or disjoint i64 %.sroa.06.098.i, 48, !dbg !1222
-  %i.ig = trunc nuw i8 %.sroa.014.2.2.i to i1, !dbg !1223
-  %i.ih = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.if, i16 noundef %i.hq, i1 noundef zeroext %i.ig) #20, !dbg !1224
-  %i.ii = zext i1 %i.ih to i8, !dbg !1225
-  %i.ij = or i8 %.sroa.014.2.2.i, %i.ii, !dbg !1225
-  br label %bb.ax, !dbg !1226
+  %i.if = or disjoint i64 %.sroa.06.098.i, 48, !dbg !1223
+  %i.ig = trunc nuw i8 %.sroa.014.2.2.i to i1, !dbg !1224
+  %i.ih = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.if, i16 noundef %i.hq, i1 noundef zeroext %i.ig) #20, !dbg !1225
+  %i.ii = zext i1 %i.ih to i8, !dbg !1226
+  %i.ij = or i8 %.sroa.014.2.2.i, %i.ii, !dbg !1226
+  br label %bb.ax, !dbg !1227
 
 bb.ax:                                            ; preds = %bb.aw, %.preheader91.3.i
-  %.sroa.014.2.3.i = phi i8 [ %.sroa.014.2.2.i, %.preheader91.3.i ], [ %i.ij, %bb.aw ], !dbg !1221 ; 2 uses
-  %i.ik = add i64 %.sroa.06.098.i, 64, !dbg !1227 ; 3 uses
-  %i.il = add i64 %i.ik, %i.gp, !dbg !1160
-  %i.im = icmp uge i64 %i.il, %3, !dbg !1160
+  %.sroa.014.2.3.i = phi i8 [ %.sroa.014.2.2.i, %.preheader91.3.i ], [ %i.ij, %bb.aw ], !dbg !1222 ; 2 uses
+  %i.ik = add i64 %.sroa.06.098.i, 64, !dbg !1228 ; 3 uses
+  %i.il = add i64 %i.ik, %i.gp, !dbg !1161
+  %i.im = icmp uge i64 %i.il, %3, !dbg !1161
   %i.in = trunc nuw i8 %.sroa.014.2.3.i to i1
-  %or.cond.i = select i1 %i.im, i1 true, i1 %i.in, !dbg !1160
-  br i1 %or.cond.i, label %.preheader.i4, label %.lr.ph.i5, !dbg !1160
+  %or.cond.i = select i1 %i.im, i1 true, i1 %i.in, !dbg !1161
+  br i1 %or.cond.i, label %.preheader.i4, label %.lr.ph.i5, !dbg !1161
 
 bb.ay:                                            ; preds = %.lr.ph.i5
-  %i.io = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.098.i, i16 noundef %i.gy, i1 noundef zeroext false) #20, !dbg !1224
-  %i.ip = zext i1 %i.io to i8, !dbg !1225
-  br label %.preheader91.1.i, !dbg !1226
+  %i.io = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.098.i, i16 noundef %i.gy, i1 noundef zeroext false) #20, !dbg !1225
+  %i.ip = zext i1 %i.io to i8, !dbg !1226
+  br label %.preheader91.1.i, !dbg !1227
 
 ._crit_edge.i:                                    ; preds = %bb.az, %.preheader.i4
-  %.sroa.014.3.lcssa.i = phi i8 [ %.sroa.014.0.lcssa.i, %.preheader.i4 ], [ %.sroa.014.4.i, %bb.az ], !dbg !1165 ; 2 uses
+  %.sroa.014.3.lcssa.i = phi i8 [ %.sroa.014.0.lcssa.i, %.preheader.i4 ], [ %.sroa.014.4.i, %bb.az ], !dbg !1166 ; 2 uses
   %.lcssa.i = phi i1 [ %i.gs, %.preheader.i4 ], [ %i.jj, %bb.az ]
-  %i.iq = sub nuw i64 %3, %i.fu, !dbg !1228
-  %i.ir = add i64 %i.iq, -16, !dbg !1228          ; 2 uses
-  %i.is = getelementptr inbounds nuw i8, ptr %2, i64 %i.ir, !dbg !1229 ; 2 uses
-  %.sroa.0.0.copyload.i58.i = load <16 x i8>, ptr %i.is, align 1, !dbg !1233, !alias.scope !1036, !noalias !1237
-  %i.it = getelementptr inbounds nuw i8, ptr %i.is, i64 %5, !dbg !1240
-  %.sroa.02.0.copyload.i59.i = load <16 x i8>, ptr %i.it, align 1, !dbg !1242, !alias.scope !1036, !noalias !1237
-  %i.iu = icmp eq <16 x i8> %.sroa.0.0.copyload.i58.i, %i.gi, !dbg !1246
-  %i.iv = icmp eq <16 x i8> %.sroa.02.0.copyload.i59.i, %i.gk, !dbg !1248
-  %i.iw = and <16 x i1> %i.iu, %i.iv, !dbg !1250
-  %i.ix = bitcast <16 x i1> %i.iw to i16, !dbg !1252 ; 2 uses
-  %i.iy = icmp eq i16 %i.ix, 0, !dbg !1262
-  br i1 %i.iy, label %bb.bb, label %bb.bc, !dbg !1262
+  %i.iq = sub nuw i64 %3, %i.fu, !dbg !1229
+  %i.ir = add i64 %i.iq, -16, !dbg !1229          ; 2 uses
+  %i.is = getelementptr inbounds nuw i8, ptr %2, i64 %i.ir, !dbg !1230 ; 2 uses
+  %.sroa.0.0.copyload.i58.i = load <16 x i8>, ptr %i.is, align 1, !dbg !1234, !alias.scope !1036, !noalias !1238
+  %i.it = getelementptr inbounds nuw i8, ptr %i.is, i64 %7, !dbg !1241
+  %.sroa.02.0.copyload.i59.i = load <16 x i8>, ptr %i.it, align 1, !dbg !1243, !alias.scope !1036, !noalias !1238
+  %i.iu = icmp eq <16 x i8> %.sroa.0.0.copyload.i58.i, %i.gi, !dbg !1247
+  %i.iv = icmp eq <16 x i8> %.sroa.02.0.copyload.i59.i, %i.gk, !dbg !1249
+  %i.iw = and <16 x i1> %i.iu, %i.iv, !dbg !1251
+  %i.ix = bitcast <16 x i1> %i.iw to i16, !dbg !1253 ; 2 uses
+  %i.iy = icmp eq i16 %i.ix, 0, !dbg !1263
+  br i1 %i.iy, label %bb.bb, label %bb.bc, !dbg !1263
 
 .lr.ph102.i:                                      ; preds = %.preheader.i4, %bb.az
   %.sroa.06.1101.i = phi i64 [ %i.jg, %bb.az ], [ %.sroa.06.0.lcssa.i, %.preheader.i4 ] ; 3 uses
-  %i.iz = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.06.1101.i, !dbg !1264 ; 2 uses
-  %.sroa.0.0.copyload.i60.i = load <16 x i8>, ptr %i.iz, align 1, !dbg !1267, !alias.scope !1036, !noalias !1271
-  %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 %5, !dbg !1274
-  %.sroa.02.0.copyload.i61.i = load <16 x i8>, ptr %i.ja, align 1, !dbg !1276, !alias.scope !1036, !noalias !1271
-  %i.jb = icmp eq <16 x i8> %.sroa.0.0.copyload.i60.i, %i.gi, !dbg !1280
-  %i.jc = icmp eq <16 x i8> %.sroa.02.0.copyload.i61.i, %i.gk, !dbg !1282
-  %i.jd = and <16 x i1> %i.jb, %i.jc, !dbg !1284
-  %i.je = bitcast <16 x i1> %i.jd to i16, !dbg !1286 ; 2 uses
-  %i.jf = icmp eq i16 %i.je, 0, !dbg !1289
-  br i1 %i.jf, label %bb.az, label %bb.ba, !dbg !1289
+  %i.iz = getelementptr inbounds nuw i8, ptr %2, i64 %.sroa.06.1101.i, !dbg !1265 ; 2 uses
+  %.sroa.0.0.copyload.i60.i = load <16 x i8>, ptr %i.iz, align 1, !dbg !1268, !alias.scope !1036, !noalias !1272
+  %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 %7, !dbg !1275
+  %.sroa.02.0.copyload.i61.i = load <16 x i8>, ptr %i.ja, align 1, !dbg !1277, !alias.scope !1036, !noalias !1272
+  %i.jb = icmp eq <16 x i8> %.sroa.0.0.copyload.i60.i, %i.gi, !dbg !1281
+  %i.jc = icmp eq <16 x i8> %.sroa.02.0.copyload.i61.i, %i.gk, !dbg !1283
+  %i.jd = and <16 x i1> %i.jb, %i.jc, !dbg !1285
+  %i.je = bitcast <16 x i1> %i.jd to i16, !dbg !1287 ; 2 uses
+  %i.jf = icmp eq i16 %i.je, 0, !dbg !1290
+  br i1 %i.jf, label %bb.az, label %bb.ba, !dbg !1290
 
 bb.az:                                            ; preds = %bb.ba, %.lr.ph102.i
-  %.sroa.014.4.i = phi i8 [ 0, %.lr.ph102.i ], [ %i.jl, %bb.ba ], !dbg !1221 ; 2 uses
-  %i.jg = add i64 %.sroa.06.1101.i, 16, !dbg !1291 ; 2 uses
-  %i.jh = add i64 %i.jg, %i.fz, !dbg !1167
-  %i.ji = icmp uge i64 %i.jh, %3, !dbg !1167
+  %.sroa.014.4.i = phi i8 [ 0, %.lr.ph102.i ], [ %i.jl, %bb.ba ], !dbg !1222 ; 2 uses
+  %i.jg = add i64 %.sroa.06.1101.i, 16, !dbg !1292 ; 2 uses
+  %i.jh = add i64 %i.jg, %i.fz, !dbg !1168
+  %i.ji = icmp uge i64 %i.jh, %3, !dbg !1168
   %i.jj = trunc nuw i8 %.sroa.014.4.i to i1       ; 2 uses
-  %or.cond3.i = or i1 %i.ji, %i.jj, !dbg !1167
-  br i1 %or.cond3.i, label %._crit_edge.i, label %.lr.ph102.i, !dbg !1167
+  %or.cond3.i = or i1 %i.ji, %i.jj, !dbg !1168
+  br i1 %or.cond3.i, label %._crit_edge.i, label %.lr.ph102.i, !dbg !1168
 
 bb.ba:                                            ; preds = %.lr.ph102.i
-  %i.jk = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.1101.i, i16 noundef %i.je, i1 noundef zeroext false) #20, !dbg !1292
-  %i.jl = zext i1 %i.jk to i8, !dbg !1293
-  br label %bb.az, !dbg !1294
+  %i.jk = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %.sroa.06.1101.i, i16 noundef %i.je, i1 noundef zeroext false) #20, !dbg !1293
+  %i.jl = zext i1 %i.jk to i8, !dbg !1294
+  br label %bb.az, !dbg !1295
 
 bb.bb:                                            ; preds = %bb.bc, %._crit_edge.i
-  %.sroa.014.5.i = phi i8 [ %.sroa.014.3.lcssa.i, %._crit_edge.i ], [ %i.jo, %bb.bc ], !dbg !1221
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !1295, !noalias !1113
-  br label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, !dbg !1296
+  %.sroa.014.5.i = phi i8 [ %.sroa.014.3.lcssa.i, %._crit_edge.i ], [ %i.jo, %bb.bc ], !dbg !1222
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !1296, !noalias !1114
+  br label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, !dbg !1297
 
 bb.bc:                                            ; preds = %._crit_edge.i
-  %i.jm = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.ir, i16 noundef %i.ix, i1 noundef zeroext %.lcssa.i) #20, !dbg !1297
-  %i.jn = zext i1 %i.jm to i8, !dbg !1298
-  %i.jo = or i8 %.sroa.014.3.lcssa.i, %i.jn, !dbg !1298
-  br label %bb.bb, !dbg !1299
+  %i.jm = call fastcc noundef zeroext i1 @_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss0_0CsgjwxzEoLG5s_12polars_error(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a, i64 noundef %i.ir, i16 noundef %i.ix, i1 noundef zeroext %.lcssa.i) #20, !dbg !1298
+  %i.jn = zext i1 %i.jm to i8, !dbg !1299
+  %i.jo = or i8 %.sroa.014.3.lcssa.i, %i.jn, !dbg !1299
+  br label %bb.bb, !dbg !1300
 
 bb.bd:                                            ; preds = %bb.b
-  %bcmp = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %2, i64 %1), !dbg !1300
-  %i.jp = icmp eq i32 %bcmp, 0, !dbg !1300
-  %i.jq = zext i1 %i.jp to i8, !dbg !1300
-  br label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, !dbg !1304
+  %bcmp = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %2, i64 %1), !dbg !1301
+  %i.jp = icmp eq i32 %bcmp, 0, !dbg !1301
+  %i.jq = zext i1 %i.jp to i8, !dbg !1301
+  br label %_RNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains.exit.thread, !dbg !1305
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -1683,7 +1692,7 @@ begin_hunk_2_@llvm.umax.i64
 !1076 = !DINamespace(name: "check", scope: !1077)
 !1077 = !DINamespace(name: "rfind", scope: !1058)
 !1078 = distinct !DILocation(line: 238, column: 21, scope: !1054, inlinedAt: !1060)
-!1079 = !{!1080, !1082, !1084, !1086, !1037}
+!1079 = !{!1080, !1082, !1084, !1086, !1032, !1037}
 !1080 = distinct !{!1080, !1081, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains0CsgjwxzEoLG5s_12polars_error: argument 0"}
 !1081 = distinct !{!1081, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_contains0CsgjwxzEoLG5s_12polars_error"}
 !1082 = distinct !{!1082, !1083, !"_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsgjwxzEoLG5s_12polars_error: argument 0"}
@@ -1691,222 +1700,223 @@ begin_hunk_2_@llvm.umax.i64
 !1084 = distinct !{!1084, !1085, !"_RINvYINtNtNtCscgRAwXFJnXP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECsgjwxzEoLG5s_12polars_error: argument 0"}
 !1085 = distinct !{!1085, !"_RINvYINtNtNtCscgRAwXFJnXP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECsgjwxzEoLG5s_12polars_error"}
 !1086 = distinct !{!1086, !1085, !"_RINvYINtNtNtCscgRAwXFJnXP_4core3ops5range5RangejENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNvBL_5rfind5checkjNCNvNtNtBa_3str7pattern13simd_contains0E0INtNtB8_12control_flow11ControlFlowjEECsgjwxzEoLG5s_12polars_error: argument 1"}
-!1087 = !DILocation(line: 238, column: 21, scope: !1054, inlinedAt: !1060)
-!1088 = !DILocation(line: 1821, column: 25, scope: !1089, inlinedAt: !1042)
-!1089 = distinct !DILexicalBlock(scope: !1048, file: !240, line: 1804, column: 5)
-!1090 = !DILocation(line: 1821, column: 8, scope: !1089, inlinedAt: !1042)
-!1091 = !DILocation(line: 158, column: 13, scope: !1092, inlinedAt: !1095)
-!1092 = distinct !DILexicalBlock(scope: !1093, file: !677, line: 157, column: 13)
-!1093 = distinct !DISubprogram(name: "equal_same_length<u8, u8>", linkageName: "_RNvXs3_NtNtCscgRAwXFJnXP_4core5slice3cmphINtB5_14SlicePartialEqhE17equal_same_lengthCsgjwxzEoLG5s_12polars_error", scope: !1094, file: !677, line: 152, type: !19, scopeLine: 152, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1094 = !DINamespace(name: "{impl#5}", scope: !680)
-!1095 = distinct !DILocation(line: 25, column: 22, scope: !1096, inlinedAt: !1098)
-!1096 = distinct !DILexicalBlock(scope: !1097, file: !677, line: 21, column: 9)
-!1097 = distinct !DISubprogram(name: "eq<u8, u8>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice3cmpShNtNtB6_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error", scope: !679, file: !677, line: 20, type: !19, scopeLine: 20, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1098 = distinct !DILocation(line: 2124, column: 13, scope: !1099, inlinedAt: !1100)
-!1099 = distinct !DISubprogram(name: "eq<[u8], [u8]>", linkageName: "_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRShNtB7_9PartialEq2eqCsgjwxzEoLG5s_12polars_error", scope: !685, file: !683, line: 2123, type: !19, scopeLine: 2123, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1100 = distinct !DILocation(line: 1822, column: 60, scope: !1101, inlinedAt: !1102)
-!1101 = distinct !DISubprogram(name: "{closure#1}", linkageName: "_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss_0CsgjwxzEoLG5s_12polars_error", scope: !241, file: !240, line: 1822, type: !13, scopeLine: 1822, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1102 = distinct !DILocation(line: 2911, column: 20, scope: !1103, inlinedAt: !1106)
-!1103 = distinct !DISubprogram(name: "{closure#0}<&[u8], core::str::pattern::simd_contains::{closure_env#1}>", linkageName: "_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error", scope: !1104, file: !293, line: 2910, type: !13, scopeLine: 2910, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1104 = !DINamespace(name: "check", scope: !1105)
-!1105 = !DINamespace(name: "any", scope: !294)
-!1106 = distinct !DILocation(line: 2509, column: 21, scope: !1107, inlinedAt: !1110)
-!1107 = distinct !DILexicalBlock(scope: !1108, file: !293, line: 2508, column: 41)
-!1108 = distinct !DILexicalBlock(scope: !1109, file: !293, line: 2507, column: 9)
-!1109 = distinct !DISubprogram(name: "try_fold<core::slice::iter::Windows<u8>, (), core::iter::traits::iterator::Iterator::any::check::{closure_env#0}<&[u8], core::str::pattern::simd_contains::{closure_env#1}>, core::ops::control_flow::ControlFlow<(), ()>>", linkageName: "_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error", scope: !294, file: !293, line: 2501, type: !19, scopeLine: 2501, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1110 = distinct !DILocation(line: 2915, column: 14, scope: !1111, inlinedAt: !1112)
-!1111 = distinct !DISubprogram(name: "any<core::slice::iter::Windows<u8>, core::str::pattern::simd_contains::{closure_env#1}>", linkageName: "_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator3anyNCNvNtNtBa_3str7pattern13simd_containss_0ECsgjwxzEoLG5s_12polars_error", scope: !294, file: !293, line: 2903, type: !19, scopeLine: 2903, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1112 = distinct !DILocation(line: 1822, column: 52, scope: !1089, inlinedAt: !1042)
-!1113 = !{!1032, !1037}
-!1114 = !{!1115, !1117}
-!1115 = distinct !{!1115, !1116, !"_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error: argument 0"}
-!1116 = distinct !{!1116, !"_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error"}
-!1117 = distinct !{!1117, !1116, !"_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error: argument 1"}
-!1118 = !DILocation(line: 2509, column: 21, scope: !1107, inlinedAt: !1110)
-!1119 = !DILocation(line: 573, column: 27, scope: !1120, inlinedAt: !1121)
-!1120 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs5_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgjwxzEoLG5s_12polars_error", scope: !266, file: !256, line: 567, type: !19, scopeLine: 567, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1121 = distinct !DILocation(line: 19, column: 15, scope: !1122, inlinedAt: !1125)
-!1122 = !DILexicalBlockFile(scope: !1123, file: !256, discriminator: 2)
-!1123 = distinct !DISubprogram(name: "index<u8, core::ops::range::RangeFrom<usize>>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice5indexShINtNtNtB6_3ops5index5IndexINtNtBI_5range9RangeFromjEE5indexCsgjwxzEoLG5s_12polars_error", scope: !1124, file: !256, line: 18, type: !19, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1124 = !DINamespace(name: "{impl#0}", scope: !258)
-!1125 = distinct !DILocation(line: 1361, column: 29, scope: !1126, inlinedAt: !1130)
-!1126 = distinct !DILexicalBlock(scope: !1128, file: !1127, line: 1360, column: 13)
-!1127 = !DIFile(filename: "library/core/src/slice/iter.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "f33ab2e22fe09095bf73c41c52bd166c")
-!1128 = distinct !DISubprogram(name: "next<u8>", linkageName: "_RNvXsY_NtNtCscgRAwXFJnXP_4core5slice4iterINtB5_7WindowshENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsgjwxzEoLG5s_12polars_error", scope: !1129, file: !1127, line: 1356, type: !19, scopeLine: 1356, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1129 = !DINamespace(name: "{impl#62}", scope: !320)
-!1130 = distinct !DILocation(line: 2508, column: 34, scope: !1107, inlinedAt: !1110)
-!1131 = !DILocation(line: 1357, column: 12, scope: !1128, inlinedAt: !1130)
-!1132 = !DILocation(line: 89, column: 24, scope: !1133, inlinedAt: !1135)
-!1133 = distinct !DILexicalBlock(scope: !1134, file: !256, line: 87, column: 5)
-!1134 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubcheckhECsgjwxzEoLG5s_12polars_error", scope: !258, file: !256, line: 82, type: !19, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1135 = distinct !DILocation(line: 574, column: 15, scope: !1136, inlinedAt: !1121)
-!1136 = distinct !DILexicalBlock(scope: !1120, file: !256, line: 573, column: 13)
-!1137 = !DILocation(line: 153, column: 18, scope: !1138, inlinedAt: !1143)
-!1138 = distinct !DISubprogram(name: "splat<u8, 16>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core9core_simd6vectorINtB2_4SimdhKj10_E5splatCsgjwxzEoLG5s_12polars_error", scope: !1140, file: !1139, line: 151, type: !19, scopeLine: 151, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1139 = !DIFile(filename: "library/core/src/../../portable-simd/crates/core_simd/src/vector.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "e9007a8fc0e081f1d4ddc6b9e6405748")
-!1140 = !DINamespace(name: "Simd", scope: !1141)
-!1141 = !DINamespace(name: "vector", scope: !1142)
-!1142 = !DINamespace(name: "core_simd", scope: !12)
-!1143 = distinct !DILocation(line: 1825, column: 30, scope: !1089, inlinedAt: !1042)
-!1144 = !DILocation(line: 153, column: 18, scope: !1138, inlinedAt: !1145)
-!1145 = distinct !DILocation(line: 1826, column: 31, scope: !1146, inlinedAt: !1042)
-!1146 = distinct !DILexicalBlock(scope: !1089, file: !240, line: 1825, column: 5)
-!1147 = !DILocation(line: 89, column: 24, scope: !1148, inlinedAt: !1150)
-!1148 = distinct !DILexicalBlock(scope: !1149, file: !256, line: 87, column: 5)
-!1149 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubcheckhECsgjwxzEoLG5s_12polars_error", scope: !258, file: !256, line: 82, type: !19, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1150 = distinct !DILocation(line: 574, column: 15, scope: !1151, inlinedAt: !1153)
-!1151 = distinct !DILexicalBlock(scope: !1152, file: !256, line: 573, column: 13)
-!1152 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs5_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgjwxzEoLG5s_12polars_error", scope: !266, file: !256, line: 567, type: !19, scopeLine: 567, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1153 = distinct !DILocation(line: 19, column: 15, scope: !1154, inlinedAt: !1155)
-!1154 = distinct !DISubprogram(name: "index<u8, core::ops::range::RangeFrom<usize>>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice5indexShINtNtNtB6_3ops5index5IndexINtNtBI_5range9RangeFromjEE5indexCsgjwxzEoLG5s_12polars_error", scope: !1124, file: !256, line: 18, type: !19, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1155 = distinct !DILocation(line: 1829, column: 33, scope: !1156, inlinedAt: !1042)
-!1156 = distinct !DILexicalBlock(scope: !1146, file: !240, line: 1826, column: 5)
-!1157 = !DILocation(line: 1832, column: 9, scope: !1158, inlinedAt: !1042)
-!1158 = distinct !DILexicalBlock(scope: !1156, file: !240, line: 1829, column: 5)
-!1159 = !DILocation(line: 1833, column: 5, scope: !1158, inlinedAt: !1042)
-!1160 = !DILocation(line: 1878, column: 11, scope: !1161, inlinedAt: !1042)
-!1161 = distinct !DILexicalBlock(scope: !1162, file: !240, line: 1874, column: 5)
-!1162 = distinct !DILexicalBlock(scope: !1163, file: !240, line: 1873, column: 5)
-!1163 = distinct !DILexicalBlock(scope: !1164, file: !240, line: 1857, column: 5)
-!1164 = distinct !DILexicalBlock(scope: !1158, file: !240, line: 1832, column: 5)
-!1165 = !DILocation(line: 1874, column: 22, scope: !1162, inlinedAt: !1042)
-!1166 = !DILocation(line: 0, scope: !1163, inlinedAt: !1042)
-!1167 = !DILocation(line: 1891, column: 11, scope: !1161, inlinedAt: !1042)
-!1168 = !DILocation(line: 552, column: 14, scope: !1169, inlinedAt: !1170)
-!1169 = distinct !DISubprogram(name: "copy_nonoverlapping<u8>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr19copy_nonoverlappinghECsgjwxzEoLG5s_12polars_error", scope: !44, file: !43, line: 531, type: !19, scopeLine: 531, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1170 = distinct !DILocation(line: 1809, column: 9, scope: !1171, inlinedAt: !1173)
-!1171 = distinct !DILexicalBlock(scope: !1172, file: !43, line: 1801, column: 5)
-!1172 = distinct !DISubprogram(name: "read_unaligned<core::core_simd::vector::Simd<u8, 16>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr14read_unalignedINtNtNtB4_9core_simd6vector4SimdhKj10_EECsgjwxzEoLG5s_12polars_error", scope: !44, file: !43, line: 1800, type: !19, scopeLine: 1800, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1173 = distinct !DILocation(line: 1212, column: 18, scope: !1174, inlinedAt: !1175)
-!1174 = distinct !DISubprogram(name: "read_unaligned<core::core_simd::vector::Simd<u8, 16>>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr9const_ptrPINtNtNtB6_9core_simd6vector4SimdhKj10_E14read_unalignedCsgjwxzEoLG5s_12polars_error", scope: !335, file: !334, line: 1207, type: !19, scopeLine: 1207, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1175 = distinct !DILocation(line: 1860, column: 76, scope: !1176, inlinedAt: !1177)
-!1176 = distinct !DISubprogram(name: "{closure#3}", linkageName: "_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error", scope: !241, file: !240, line: 1857, type: !19, scopeLine: 1857, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1177 = distinct !DILocation(line: 1881, column: 24, scope: !1178, inlinedAt: !1042)
-!1178 = distinct !DILexicalBlock(scope: !1179, file: !240, line: 1880, column: 9)
+!1087 = !{!1080, !1082, !1084, !1086, !1037}
+!1088 = !DILocation(line: 238, column: 21, scope: !1054, inlinedAt: !1060)
+!1089 = !DILocation(line: 1821, column: 25, scope: !1090, inlinedAt: !1042)
+!1090 = distinct !DILexicalBlock(scope: !1048, file: !240, line: 1804, column: 5)
+!1091 = !DILocation(line: 1821, column: 8, scope: !1090, inlinedAt: !1042)
+!1092 = !DILocation(line: 158, column: 13, scope: !1093, inlinedAt: !1096)
+!1093 = distinct !DILexicalBlock(scope: !1094, file: !677, line: 157, column: 13)
+!1094 = distinct !DISubprogram(name: "equal_same_length<u8, u8>", linkageName: "_RNvXs3_NtNtCscgRAwXFJnXP_4core5slice3cmphINtB5_14SlicePartialEqhE17equal_same_lengthCsgjwxzEoLG5s_12polars_error", scope: !1095, file: !677, line: 152, type: !19, scopeLine: 152, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1095 = !DINamespace(name: "{impl#5}", scope: !680)
+!1096 = distinct !DILocation(line: 25, column: 22, scope: !1097, inlinedAt: !1099)
+!1097 = distinct !DILexicalBlock(scope: !1098, file: !677, line: 21, column: 9)
+!1098 = distinct !DISubprogram(name: "eq<u8, u8>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice3cmpShNtNtB6_3cmp9PartialEq2eqCsgjwxzEoLG5s_12polars_error", scope: !679, file: !677, line: 20, type: !19, scopeLine: 20, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1099 = distinct !DILocation(line: 2124, column: 13, scope: !1100, inlinedAt: !1101)
+!1100 = distinct !DISubprogram(name: "eq<[u8], [u8]>", linkageName: "_RNvXs7_NtNtCscgRAwXFJnXP_4core3cmp5implsRShNtB7_9PartialEq2eqCsgjwxzEoLG5s_12polars_error", scope: !685, file: !683, line: 2123, type: !19, scopeLine: 2123, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1101 = distinct !DILocation(line: 1822, column: 60, scope: !1102, inlinedAt: !1103)
+!1102 = distinct !DISubprogram(name: "{closure#1}", linkageName: "_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss_0CsgjwxzEoLG5s_12polars_error", scope: !241, file: !240, line: 1822, type: !13, scopeLine: 1822, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1103 = distinct !DILocation(line: 2911, column: 20, scope: !1104, inlinedAt: !1107)
+!1104 = distinct !DISubprogram(name: "{closure#0}<&[u8], core::str::pattern::simd_contains::{closure_env#1}>", linkageName: "_RNCINvNvNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator3any5checkRShNCNvNtNtBe_3str7pattern13simd_containss_0E0CsgjwxzEoLG5s_12polars_error", scope: !1105, file: !293, line: 2910, type: !13, scopeLine: 2910, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1105 = !DINamespace(name: "check", scope: !1106)
+!1106 = !DINamespace(name: "any", scope: !294)
+!1107 = distinct !DILocation(line: 2509, column: 21, scope: !1108, inlinedAt: !1111)
+!1108 = distinct !DILexicalBlock(scope: !1109, file: !293, line: 2508, column: 41)
+!1109 = distinct !DILexicalBlock(scope: !1110, file: !293, line: 2507, column: 9)
+!1110 = distinct !DISubprogram(name: "try_fold<core::slice::iter::Windows<u8>, (), core::iter::traits::iterator::Iterator::any::check::{closure_env#0}<&[u8], core::str::pattern::simd_contains::{closure_env#1}>, core::ops::control_flow::ControlFlow<(), ()>>", linkageName: "_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error", scope: !294, file: !293, line: 2501, type: !19, scopeLine: 2501, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1111 = distinct !DILocation(line: 2915, column: 14, scope: !1112, inlinedAt: !1113)
+!1112 = distinct !DISubprogram(name: "any<core::slice::iter::Windows<u8>, core::str::pattern::simd_contains::{closure_env#1}>", linkageName: "_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator3anyNCNvNtNtBa_3str7pattern13simd_containss_0ECsgjwxzEoLG5s_12polars_error", scope: !294, file: !293, line: 2903, type: !19, scopeLine: 2903, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1113 = distinct !DILocation(line: 1822, column: 52, scope: !1090, inlinedAt: !1042)
+!1114 = !{!1032, !1037}
+!1115 = !{!1116, !1118}
+!1116 = distinct !{!1116, !1117, !"_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error: argument 0"}
+!1117 = distinct !{!1117, !"_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error"}
+!1118 = distinct !{!1118, !1117, !"_RINvYINtNtNtCscgRAwXFJnXP_4core5slice4iter7WindowshENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNvBO_3any5checkRShNCNvNtNtBa_3str7pattern13simd_containss_0E0INtNtNtBa_3ops12control_flow11ControlFlowuEECsgjwxzEoLG5s_12polars_error: argument 1"}
+!1119 = !DILocation(line: 2509, column: 21, scope: !1108, inlinedAt: !1111)
+!1120 = !DILocation(line: 573, column: 27, scope: !1121, inlinedAt: !1122)
+!1121 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs5_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgjwxzEoLG5s_12polars_error", scope: !266, file: !256, line: 567, type: !19, scopeLine: 567, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1122 = distinct !DILocation(line: 19, column: 15, scope: !1123, inlinedAt: !1126)
+!1123 = !DILexicalBlockFile(scope: !1124, file: !256, discriminator: 2)
+!1124 = distinct !DISubprogram(name: "index<u8, core::ops::range::RangeFrom<usize>>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice5indexShINtNtNtB6_3ops5index5IndexINtNtBI_5range9RangeFromjEE5indexCsgjwxzEoLG5s_12polars_error", scope: !1125, file: !256, line: 18, type: !19, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1125 = !DINamespace(name: "{impl#0}", scope: !258)
+!1126 = distinct !DILocation(line: 1361, column: 29, scope: !1127, inlinedAt: !1131)
+!1127 = distinct !DILexicalBlock(scope: !1129, file: !1128, line: 1360, column: 13)
+!1128 = !DIFile(filename: "library/core/src/slice/iter.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "f33ab2e22fe09095bf73c41c52bd166c")
+!1129 = distinct !DISubprogram(name: "next<u8>", linkageName: "_RNvXsY_NtNtCscgRAwXFJnXP_4core5slice4iterINtB5_7WindowshENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCsgjwxzEoLG5s_12polars_error", scope: !1130, file: !1128, line: 1356, type: !19, scopeLine: 1356, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1130 = !DINamespace(name: "{impl#62}", scope: !320)
+!1131 = distinct !DILocation(line: 2508, column: 34, scope: !1108, inlinedAt: !1111)
+!1132 = !DILocation(line: 1357, column: 12, scope: !1129, inlinedAt: !1131)
+!1133 = !DILocation(line: 89, column: 24, scope: !1134, inlinedAt: !1136)
+!1134 = distinct !DILexicalBlock(scope: !1135, file: !256, line: 87, column: 5)
+!1135 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubcheckhECsgjwxzEoLG5s_12polars_error", scope: !258, file: !256, line: 82, type: !19, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1136 = distinct !DILocation(line: 574, column: 15, scope: !1137, inlinedAt: !1122)
+!1137 = distinct !DILexicalBlock(scope: !1121, file: !256, line: 573, column: 13)
+!1138 = !DILocation(line: 153, column: 18, scope: !1139, inlinedAt: !1144)
+!1139 = distinct !DISubprogram(name: "splat<u8, 16>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core9core_simd6vectorINtB2_4SimdhKj10_E5splatCsgjwxzEoLG5s_12polars_error", scope: !1141, file: !1140, line: 151, type: !19, scopeLine: 151, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1140 = !DIFile(filename: "library/core/src/../../portable-simd/crates/core_simd/src/vector.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "e9007a8fc0e081f1d4ddc6b9e6405748")
+!1141 = !DINamespace(name: "Simd", scope: !1142)
+!1142 = !DINamespace(name: "vector", scope: !1143)
+!1143 = !DINamespace(name: "core_simd", scope: !12)
+!1144 = distinct !DILocation(line: 1825, column: 30, scope: !1090, inlinedAt: !1042)
+!1145 = !DILocation(line: 153, column: 18, scope: !1139, inlinedAt: !1146)
+!1146 = distinct !DILocation(line: 1826, column: 31, scope: !1147, inlinedAt: !1042)
+!1147 = distinct !DILexicalBlock(scope: !1090, file: !240, line: 1825, column: 5)
+!1148 = !DILocation(line: 89, column: 24, scope: !1149, inlinedAt: !1151)
+!1149 = distinct !DILexicalBlock(scope: !1150, file: !256, line: 87, column: 5)
+!1150 = distinct !DISubprogram(name: "get_offset_len_noubcheck<u8>", linkageName: "_RINvNtNtCscgRAwXFJnXP_4core5slice5index24get_offset_len_noubcheckhECsgjwxzEoLG5s_12polars_error", scope: !258, file: !256, line: 82, type: !19, scopeLine: 82, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1151 = distinct !DILocation(line: 574, column: 15, scope: !1152, inlinedAt: !1154)
+!1152 = distinct !DILexicalBlock(scope: !1153, file: !256, line: 573, column: 13)
+!1153 = distinct !DISubprogram(name: "index<u8>", linkageName: "_RNvXs5_NtNtCscgRAwXFJnXP_4core5slice5indexINtNtNtB9_3ops5range9RangeFromjEINtB5_10SliceIndexShE5indexCsgjwxzEoLG5s_12polars_error", scope: !266, file: !256, line: 567, type: !19, scopeLine: 567, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1154 = distinct !DILocation(line: 19, column: 15, scope: !1155, inlinedAt: !1156)
+!1155 = distinct !DISubprogram(name: "index<u8, core::ops::range::RangeFrom<usize>>", linkageName: "_RNvXNtNtCscgRAwXFJnXP_4core5slice5indexShINtNtNtB6_3ops5index5IndexINtNtBI_5range9RangeFromjEE5indexCsgjwxzEoLG5s_12polars_error", scope: !1125, file: !256, line: 18, type: !19, scopeLine: 18, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1156 = distinct !DILocation(line: 1829, column: 33, scope: !1157, inlinedAt: !1042)
+!1157 = distinct !DILexicalBlock(scope: !1147, file: !240, line: 1826, column: 5)
+!1158 = !DILocation(line: 1832, column: 9, scope: !1159, inlinedAt: !1042)
+!1159 = distinct !DILexicalBlock(scope: !1157, file: !240, line: 1829, column: 5)
+!1160 = !DILocation(line: 1833, column: 5, scope: !1159, inlinedAt: !1042)
+!1161 = !DILocation(line: 1878, column: 11, scope: !1162, inlinedAt: !1042)
+!1162 = distinct !DILexicalBlock(scope: !1163, file: !240, line: 1874, column: 5)
+!1163 = distinct !DILexicalBlock(scope: !1164, file: !240, line: 1873, column: 5)
+!1164 = distinct !DILexicalBlock(scope: !1165, file: !240, line: 1857, column: 5)
+!1165 = distinct !DILexicalBlock(scope: !1159, file: !240, line: 1832, column: 5)
+!1166 = !DILocation(line: 1874, column: 22, scope: !1163, inlinedAt: !1042)
+!1167 = !DILocation(line: 0, scope: !1164, inlinedAt: !1042)
+!1168 = !DILocation(line: 1891, column: 11, scope: !1162, inlinedAt: !1042)
+!1169 = !DILocation(line: 552, column: 14, scope: !1170, inlinedAt: !1171)
+!1170 = distinct !DISubprogram(name: "copy_nonoverlapping<u8>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr19copy_nonoverlappinghECsgjwxzEoLG5s_12polars_error", scope: !44, file: !43, line: 531, type: !19, scopeLine: 531, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1171 = distinct !DILocation(line: 1809, column: 9, scope: !1172, inlinedAt: !1174)
+!1172 = distinct !DILexicalBlock(scope: !1173, file: !43, line: 1801, column: 5)
+!1173 = distinct !DISubprogram(name: "read_unaligned<core::core_simd::vector::Simd<u8, 16>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr14read_unalignedINtNtNtB4_9core_simd6vector4SimdhKj10_EECsgjwxzEoLG5s_12polars_error", scope: !44, file: !43, line: 1800, type: !19, scopeLine: 1800, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1174 = distinct !DILocation(line: 1212, column: 18, scope: !1175, inlinedAt: !1176)
+!1175 = distinct !DISubprogram(name: "read_unaligned<core::core_simd::vector::Simd<u8, 16>>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr9const_ptrPINtNtNtB6_9core_simd6vector4SimdhKj10_E14read_unalignedCsgjwxzEoLG5s_12polars_error", scope: !335, file: !334, line: 1207, type: !19, scopeLine: 1207, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1176 = distinct !DILocation(line: 1860, column: 76, scope: !1177, inlinedAt: !1178)
+!1177 = distinct !DISubprogram(name: "{closure#3}", linkageName: "_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error", scope: !241, file: !240, line: 1857, type: !19, scopeLine: 1857, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1178 = distinct !DILocation(line: 1881, column: 24, scope: !1179, inlinedAt: !1042)
 !1179 = distinct !DILexicalBlock(scope: !1180, file: !240, line: 1880, column: 9)
-!1180 = distinct !DILexicalBlock(scope: !1161, file: !240, line: 1879, column: 9)
-!1181 = !{!1182, !1032}
-!1182 = distinct !{!1182, !1183, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error: argument 0"}
-!1183 = distinct !{!1183, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error"}
-!1184 = !DILocation(line: 863, column: 18, scope: !1185, inlinedAt: !1186)
-!1185 = distinct !DISubprogram(name: "add<u8>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr9const_ptrPh3addCsgjwxzEoLG5s_12polars_error", scope: !335, file: !334, line: 829, type: !19, scopeLine: 829, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1186 = distinct !DILocation(line: 1863, column: 40, scope: !1187, inlinedAt: !1177)
-!1187 = distinct !DILexicalBlock(scope: !1176, file: !240, line: 1860, column: 9)
-!1188 = !DILocation(line: 552, column: 14, scope: !1169, inlinedAt: !1189)
-!1189 = distinct !DILocation(line: 1809, column: 9, scope: !1190, inlinedAt: !1192)
-!1190 = !DILexicalBlockFile(scope: !1191, file: !43, discriminator: 2)
-!1191 = distinct !DILexicalBlock(scope: !1172, file: !43, line: 1801, column: 5)
-!1192 = distinct !DILocation(line: 1212, column: 18, scope: !1193, inlinedAt: !1194)
-!1193 = !DILexicalBlockFile(scope: !1174, file: !334, discriminator: 2)
-!1194 = distinct !DILocation(line: 1863, column: 81, scope: !1187, inlinedAt: !1177)
-!1195 = !DILocation(line: 31, column: 52, scope: !1196, inlinedAt: !1202)
-!1196 = distinct !DISubprogram(name: "simd_eq<16>", linkageName: "_RNvXs2_NtNtNtNtCscgRAwXFJnXP_4core9core_simd4simd3cmp2eqINtNtBb_6vector4SimdhKj10_ENtB5_13SimdPartialEq7simd_eqCsgjwxzEoLG5s_12polars_error", scope: !1198, file: !1197, line: 28, type: !19, scopeLine: 28, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1197 = !DIFile(filename: "library/core/src/../../portable-simd/crates/core_simd/src/simd/cmp/eq.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "7685cb03cbca8e20bb043063063cbb87")
-!1198 = !DINamespace(name: "{impl#4}", scope: !1199)
-!1199 = !DINamespace(name: "eq", scope: !1200)
-!1200 = !DINamespace(name: "cmp", scope: !1201)
-!1201 = !DINamespace(name: "simd", scope: !1142)
-!1202 = distinct !DILocation(line: 1865, column: 32, scope: !1203, inlinedAt: !1177)
-!1203 = distinct !DILexicalBlock(scope: !1187, file: !240, line: 1862, column: 9)
-!1204 = !DILocation(line: 31, column: 52, scope: !1196, inlinedAt: !1205)
-!1205 = distinct !DILocation(line: 1866, column: 31, scope: !1206, inlinedAt: !1177)
-!1206 = distinct !DILexicalBlock(scope: !1203, file: !240, line: 1865, column: 9)
-!1207 = !DILocation(line: 481, column: 23, scope: !1208, inlinedAt: !1212)
-!1208 = distinct !DISubprogram(name: "bitand<i8, 16>", linkageName: "_RNvXs7_NtNtCscgRAwXFJnXP_4core9core_simd5masksINtB5_4MaskaKj10_ENtNtNtB9_3ops3bit6BitAnd6bitandCsgjwxzEoLG5s_12polars_error", scope: !1210, file: !1209, line: 479, type: !19, scopeLine: 479, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1209 = !DIFile(filename: "library/core/src/../../portable-simd/crates/core_simd/src/masks.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "9d00f8d04957d898984aa5da18e7e089")
-!1210 = !DINamespace(name: "{impl#9}", scope: !1211)
-!1211 = !DINamespace(name: "masks", scope: !1142)
-!1212 = distinct !DILocation(line: 1867, column: 29, scope: !1213, inlinedAt: !1177)
-!1213 = distinct !DILexicalBlock(scope: !1206, file: !240, line: 1866, column: 9)
-!1214 = !DILocation(line: 1881, column: 13, scope: !1178, inlinedAt: !1042)
-!1215 = !DILocation(line: 863, column: 18, scope: !1185, inlinedAt: !1216)
-!1216 = distinct !DILocation(line: 1860, column: 51, scope: !1176, inlinedAt: !1177)
-!1217 = !DILocation(line: 1885, column: 16, scope: !1218, inlinedAt: !1042)
-!1218 = distinct !DILexicalBlock(scope: !1219, file: !240, line: 1884, column: 13)
-!1219 = distinct !DILexicalBlock(scope: !1220, file: !240, line: 1883, column: 9)
-!1220 = distinct !DILexicalBlock(scope: !1180, file: !240, line: 1883, column: 9)
-!1221 = !DILocation(line: 0, scope: !1162, inlinedAt: !1042)
-!1222 = !DILocation(line: 1886, column: 38, scope: !1218, inlinedAt: !1042)
-!1223 = !DILocation(line: 1886, column: 64, scope: !1218, inlinedAt: !1042)
-!1224 = !DILocation(line: 1886, column: 27, scope: !1218, inlinedAt: !1042)
-!1225 = !DILocation(line: 1886, column: 17, scope: !1218, inlinedAt: !1042)
-!1226 = !DILocation(line: 1885, column: 13, scope: !1218, inlinedAt: !1042)
-!1227 = !DILocation(line: 1889, column: 9, scope: !1180, inlinedAt: !1042)
-!1228 = !DILocation(line: 1903, column: 13, scope: !1161, inlinedAt: !1042)
-!1229 = !DILocation(line: 863, column: 18, scope: !1185, inlinedAt: !1230)
-!1230 = distinct !DILocation(line: 1860, column: 51, scope: !1176, inlinedAt: !1231)
-!1231 = distinct !DILocation(line: 1904, column: 16, scope: !1232, inlinedAt: !1042)
-!1232 = distinct !DILexicalBlock(scope: !1161, file: !240, line: 1903, column: 5)
-!1233 = !DILocation(line: 552, column: 14, scope: !1169, inlinedAt: !1234)
-!1234 = distinct !DILocation(line: 1809, column: 9, scope: !1171, inlinedAt: !1235)
-!1235 = distinct !DILocation(line: 1212, column: 18, scope: !1174, inlinedAt: !1236)
-!1236 = distinct !DILocation(line: 1860, column: 76, scope: !1176, inlinedAt: !1231)
-!1237 = !{!1238, !1032}
-!1238 = distinct !{!1238, !1239, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error: argument 0"}
-!1239 = distinct !{!1239, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error"}
-!1240 = !DILocation(line: 863, column: 18, scope: !1185, inlinedAt: !1241)
-!1241 = distinct !DILocation(line: 1863, column: 40, scope: !1187, inlinedAt: !1231)
-!1242 = !DILocation(line: 552, column: 14, scope: !1169, inlinedAt: !1243)
-!1243 = distinct !DILocation(line: 1809, column: 9, scope: !1190, inlinedAt: !1244)
-!1244 = distinct !DILocation(line: 1212, column: 18, scope: !1193, inlinedAt: !1245)
-!1245 = distinct !DILocation(line: 1863, column: 81, scope: !1187, inlinedAt: !1231)
-!1246 = !DILocation(line: 31, column: 52, scope: !1196, inlinedAt: !1247)
-!1247 = distinct !DILocation(line: 1865, column: 32, scope: !1203, inlinedAt: !1231)
-!1248 = !DILocation(line: 31, column: 52, scope: !1196, inlinedAt: !1249)
-!1249 = distinct !DILocation(line: 1866, column: 31, scope: !1206, inlinedAt: !1231)
-!1250 = !DILocation(line: 481, column: 23, scope: !1208, inlinedAt: !1251)
-!1251 = distinct !DILocation(line: 1867, column: 29, scope: !1213, inlinedAt: !1231)
-!1252 = !DILocation(line: 314, column: 39, scope: !1253, inlinedAt: !1257)
-!1253 = distinct !DILexicalBlock(scope: !1254, file: !1209, line: 311, column: 13)
-!1254 = distinct !DISubprogram(name: "to_bitmask_impl<i8, u16, 16, 16>", linkageName: "_RINvNvMs0_NtNtCscgRAwXFJnXP_4core9core_simd5masksINtB8_4MaskpKpE10to_bitmask15to_bitmask_implatKj10_KB1w_ECsgjwxzEoLG5s_12polars_error", scope: !1255, file: !1209, line: 305, type: !19, scopeLine: 305, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1255 = !DINamespace(name: "to_bitmask", scope: !1256)
-!1256 = !DINamespace(name: "{impl#2}", scope: !1211)
-!1257 = distinct !DILocation(line: 326, column: 22, scope: !1258, inlinedAt: !1260)
-!1258 = distinct !DISubprogram(name: "to_bitmask<i8, 16>", linkageName: "_RNvMs0_NtNtCscgRAwXFJnXP_4core9core_simd5masksINtB5_4MaskaKj10_E10to_bitmaskCsgjwxzEoLG5s_12polars_error", scope: !1259, file: !1209, line: 299, type: !13, scopeLine: 299, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1259 = !DINamespace(name: "Mask", scope: !1211)
-!1260 = distinct !DILocation(line: 1868, column: 25, scope: !1261, inlinedAt: !1231)
-!1261 = distinct !DILexicalBlock(scope: !1213, file: !240, line: 1867, column: 9)
-!1262 = !DILocation(line: 1905, column: 8, scope: !1263, inlinedAt: !1042)
-!1263 = distinct !DILexicalBlock(scope: !1232, file: !240, line: 1904, column: 5)
-!1264 = !DILocation(line: 863, column: 18, scope: !1185, inlinedAt: !1265)
-!1265 = distinct !DILocation(line: 1860, column: 51, scope: !1176, inlinedAt: !1266)
-!1266 = distinct !DILocation(line: 1892, column: 20, scope: !1161, inlinedAt: !1042)
-!1267 = !DILocation(line: 552, column: 14, scope: !1169, inlinedAt: !1268)
-!1268 = distinct !DILocation(line: 1809, column: 9, scope: !1171, inlinedAt: !1269)
-!1269 = distinct !DILocation(line: 1212, column: 18, scope: !1174, inlinedAt: !1270)
-!1270 = distinct !DILocation(line: 1860, column: 76, scope: !1176, inlinedAt: !1266)
-!1271 = !{!1272, !1032}
-!1272 = distinct !{!1272, !1273, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error: argument 0"}
-!1273 = distinct !{!1273, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error"}
-!1274 = !DILocation(line: 863, column: 18, scope: !1185, inlinedAt: !1275)
-!1275 = distinct !DILocation(line: 1863, column: 40, scope: !1187, inlinedAt: !1266)
-!1276 = !DILocation(line: 552, column: 14, scope: !1169, inlinedAt: !1277)
-!1277 = distinct !DILocation(line: 1809, column: 9, scope: !1190, inlinedAt: !1278)
-!1278 = distinct !DILocation(line: 1212, column: 18, scope: !1193, inlinedAt: !1279)
-!1279 = distinct !DILocation(line: 1863, column: 81, scope: !1187, inlinedAt: !1266)
-!1280 = !DILocation(line: 31, column: 52, scope: !1196, inlinedAt: !1281)
-!1281 = distinct !DILocation(line: 1865, column: 32, scope: !1203, inlinedAt: !1266)
-!1282 = !DILocation(line: 31, column: 52, scope: !1196, inlinedAt: !1283)
-!1283 = distinct !DILocation(line: 1866, column: 31, scope: !1206, inlinedAt: !1266)
-!1284 = !DILocation(line: 481, column: 23, scope: !1208, inlinedAt: !1285)
-!1285 = distinct !DILocation(line: 1867, column: 29, scope: !1213, inlinedAt: !1266)
-!1286 = !DILocation(line: 314, column: 39, scope: !1253, inlinedAt: !1287)
-!1287 = distinct !DILocation(line: 326, column: 22, scope: !1258, inlinedAt: !1288)
-!1288 = distinct !DILocation(line: 1868, column: 25, scope: !1261, inlinedAt: !1266)
-!1289 = !DILocation(line: 1893, column: 12, scope: !1290, inlinedAt: !1042)
-!1290 = distinct !DILexicalBlock(scope: !1161, file: !240, line: 1892, column: 9)
-!1291 = !DILocation(line: 1896, column: 9, scope: !1290, inlinedAt: !1042)
-!1292 = !DILocation(line: 1894, column: 23, scope: !1290, inlinedAt: !1042)
-!1293 = !DILocation(line: 1894, column: 13, scope: !1290, inlinedAt: !1042)
-!1294 = !DILocation(line: 1893, column: 9, scope: !1290, inlinedAt: !1042)
-!1295 = !DILocation(line: 1910, column: 1, scope: !1158, inlinedAt: !1042)
-!1296 = !DILocation(line: 1910, column: 2, scope: !1041, inlinedAt: !1042)
-!1297 = !DILocation(line: 1906, column: 19, scope: !1263, inlinedAt: !1042)
-!1298 = !DILocation(line: 1906, column: 9, scope: !1263, inlinedAt: !1042)
-!1299 = !DILocation(line: 1905, column: 5, scope: !1263, inlinedAt: !1042)
-!1300 = !DILocation(line: 158, column: 13, scope: !1301, inlinedAt: !1303)
-!1301 = distinct !DILexicalBlock(scope: !1302, file: !677, line: 157, column: 13)
-!1302 = distinct !DISubprogram(name: "equal_same_length<u8, u8>", linkageName: "_RNvXs3_NtNtCscgRAwXFJnXP_4core5slice3cmphINtB5_14SlicePartialEqhE17equal_same_lengthCsgjwxzEoLG5s_12polars_error", scope: !1094, file: !677, line: 152, type: !19, scopeLine: 152, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!1303 = !DILocation(line: 25, column: 22, scope: !676, inlinedAt: !681)
-!1304 = !DILocation(line: 22, column: 9, scope: !676, inlinedAt: !681)
+!1180 = distinct !DILexicalBlock(scope: !1181, file: !240, line: 1880, column: 9)
+!1181 = distinct !DILexicalBlock(scope: !1162, file: !240, line: 1879, column: 9)
+!1182 = !{!1183, !1032}
+!1183 = distinct !{!1183, !1184, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error: argument 0"}
+!1184 = distinct !{!1184, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error"}
+!1185 = !DILocation(line: 863, column: 18, scope: !1186, inlinedAt: !1187)
+!1186 = distinct !DISubprogram(name: "add<u8>", linkageName: "_RNvMNtNtCscgRAwXFJnXP_4core3ptr9const_ptrPh3addCsgjwxzEoLG5s_12polars_error", scope: !335, file: !334, line: 829, type: !19, scopeLine: 829, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1187 = distinct !DILocation(line: 1863, column: 40, scope: !1188, inlinedAt: !1178)
+!1188 = distinct !DILexicalBlock(scope: !1177, file: !240, line: 1860, column: 9)
+!1189 = !DILocation(line: 552, column: 14, scope: !1170, inlinedAt: !1190)
+!1190 = distinct !DILocation(line: 1809, column: 9, scope: !1191, inlinedAt: !1193)
+!1191 = !DILexicalBlockFile(scope: !1192, file: !43, discriminator: 2)
+!1192 = distinct !DILexicalBlock(scope: !1173, file: !43, line: 1801, column: 5)
+!1193 = distinct !DILocation(line: 1212, column: 18, scope: !1194, inlinedAt: !1195)
+!1194 = !DILexicalBlockFile(scope: !1175, file: !334, discriminator: 2)
+!1195 = distinct !DILocation(line: 1863, column: 81, scope: !1188, inlinedAt: !1178)
+!1196 = !DILocation(line: 31, column: 52, scope: !1197, inlinedAt: !1203)
+!1197 = distinct !DISubprogram(name: "simd_eq<16>", linkageName: "_RNvXs2_NtNtNtNtCscgRAwXFJnXP_4core9core_simd4simd3cmp2eqINtNtBb_6vector4SimdhKj10_ENtB5_13SimdPartialEq7simd_eqCsgjwxzEoLG5s_12polars_error", scope: !1199, file: !1198, line: 28, type: !19, scopeLine: 28, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1198 = !DIFile(filename: "library/core/src/../../portable-simd/crates/core_simd/src/simd/cmp/eq.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "7685cb03cbca8e20bb043063063cbb87")
+!1199 = !DINamespace(name: "{impl#4}", scope: !1200)
+!1200 = !DINamespace(name: "eq", scope: !1201)
+!1201 = !DINamespace(name: "cmp", scope: !1202)
+!1202 = !DINamespace(name: "simd", scope: !1143)
+!1203 = distinct !DILocation(line: 1865, column: 32, scope: !1204, inlinedAt: !1178)
+!1204 = distinct !DILexicalBlock(scope: !1188, file: !240, line: 1862, column: 9)
+!1205 = !DILocation(line: 31, column: 52, scope: !1197, inlinedAt: !1206)
+!1206 = distinct !DILocation(line: 1866, column: 31, scope: !1207, inlinedAt: !1178)
+!1207 = distinct !DILexicalBlock(scope: !1204, file: !240, line: 1865, column: 9)
+!1208 = !DILocation(line: 481, column: 23, scope: !1209, inlinedAt: !1213)
+!1209 = distinct !DISubprogram(name: "bitand<i8, 16>", linkageName: "_RNvXs7_NtNtCscgRAwXFJnXP_4core9core_simd5masksINtB5_4MaskaKj10_ENtNtNtB9_3ops3bit6BitAnd6bitandCsgjwxzEoLG5s_12polars_error", scope: !1211, file: !1210, line: 479, type: !19, scopeLine: 479, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1210 = !DIFile(filename: "library/core/src/../../portable-simd/crates/core_simd/src/masks.rs", directory: "/rustc/48cc71ee88cd0f11217eced958b9930970da998b", checksumkind: CSK_MD5, checksum: "9d00f8d04957d898984aa5da18e7e089")
+!1211 = !DINamespace(name: "{impl#9}", scope: !1212)
+!1212 = !DINamespace(name: "masks", scope: !1143)
+!1213 = distinct !DILocation(line: 1867, column: 29, scope: !1214, inlinedAt: !1178)
+!1214 = distinct !DILexicalBlock(scope: !1207, file: !240, line: 1866, column: 9)
+!1215 = !DILocation(line: 1881, column: 13, scope: !1179, inlinedAt: !1042)
+!1216 = !DILocation(line: 863, column: 18, scope: !1186, inlinedAt: !1217)
+!1217 = distinct !DILocation(line: 1860, column: 51, scope: !1177, inlinedAt: !1178)
+!1218 = !DILocation(line: 1885, column: 16, scope: !1219, inlinedAt: !1042)
+!1219 = distinct !DILexicalBlock(scope: !1220, file: !240, line: 1884, column: 13)
+!1220 = distinct !DILexicalBlock(scope: !1221, file: !240, line: 1883, column: 9)
+!1221 = distinct !DILexicalBlock(scope: !1181, file: !240, line: 1883, column: 9)
+!1222 = !DILocation(line: 0, scope: !1163, inlinedAt: !1042)
+!1223 = !DILocation(line: 1886, column: 38, scope: !1219, inlinedAt: !1042)
+!1224 = !DILocation(line: 1886, column: 64, scope: !1219, inlinedAt: !1042)
+!1225 = !DILocation(line: 1886, column: 27, scope: !1219, inlinedAt: !1042)
+!1226 = !DILocation(line: 1886, column: 17, scope: !1219, inlinedAt: !1042)
+!1227 = !DILocation(line: 1885, column: 13, scope: !1219, inlinedAt: !1042)
+!1228 = !DILocation(line: 1889, column: 9, scope: !1181, inlinedAt: !1042)
+!1229 = !DILocation(line: 1903, column: 13, scope: !1162, inlinedAt: !1042)
+!1230 = !DILocation(line: 863, column: 18, scope: !1186, inlinedAt: !1231)
+!1231 = distinct !DILocation(line: 1860, column: 51, scope: !1177, inlinedAt: !1232)
+!1232 = distinct !DILocation(line: 1904, column: 16, scope: !1233, inlinedAt: !1042)
+!1233 = distinct !DILexicalBlock(scope: !1162, file: !240, line: 1903, column: 5)
+!1234 = !DILocation(line: 552, column: 14, scope: !1170, inlinedAt: !1235)
+!1235 = distinct !DILocation(line: 1809, column: 9, scope: !1172, inlinedAt: !1236)
+!1236 = distinct !DILocation(line: 1212, column: 18, scope: !1175, inlinedAt: !1237)
+!1237 = distinct !DILocation(line: 1860, column: 76, scope: !1177, inlinedAt: !1232)
+!1238 = !{!1239, !1032}
+!1239 = distinct !{!1239, !1240, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error: argument 0"}
+!1240 = distinct !{!1240, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error"}
+!1241 = !DILocation(line: 863, column: 18, scope: !1186, inlinedAt: !1242)
+!1242 = distinct !DILocation(line: 1863, column: 40, scope: !1188, inlinedAt: !1232)
+!1243 = !DILocation(line: 552, column: 14, scope: !1170, inlinedAt: !1244)
+!1244 = distinct !DILocation(line: 1809, column: 9, scope: !1191, inlinedAt: !1245)
+!1245 = distinct !DILocation(line: 1212, column: 18, scope: !1194, inlinedAt: !1246)
+!1246 = distinct !DILocation(line: 1863, column: 81, scope: !1188, inlinedAt: !1232)
+!1247 = !DILocation(line: 31, column: 52, scope: !1197, inlinedAt: !1248)
+!1248 = distinct !DILocation(line: 1865, column: 32, scope: !1204, inlinedAt: !1232)
+!1249 = !DILocation(line: 31, column: 52, scope: !1197, inlinedAt: !1250)
+!1250 = distinct !DILocation(line: 1866, column: 31, scope: !1207, inlinedAt: !1232)
+!1251 = !DILocation(line: 481, column: 23, scope: !1209, inlinedAt: !1252)
+!1252 = distinct !DILocation(line: 1867, column: 29, scope: !1214, inlinedAt: !1232)
+!1253 = !DILocation(line: 314, column: 39, scope: !1254, inlinedAt: !1258)
+!1254 = distinct !DILexicalBlock(scope: !1255, file: !1210, line: 311, column: 13)
+!1255 = distinct !DISubprogram(name: "to_bitmask_impl<i8, u16, 16, 16>", linkageName: "_RINvNvMs0_NtNtCscgRAwXFJnXP_4core9core_simd5masksINtB8_4MaskpKpE10to_bitmask15to_bitmask_implatKj10_KB1w_ECsgjwxzEoLG5s_12polars_error", scope: !1256, file: !1210, line: 305, type: !19, scopeLine: 305, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1256 = !DINamespace(name: "to_bitmask", scope: !1257)
+!1257 = !DINamespace(name: "{impl#2}", scope: !1212)
+!1258 = distinct !DILocation(line: 326, column: 22, scope: !1259, inlinedAt: !1261)
+!1259 = distinct !DISubprogram(name: "to_bitmask<i8, 16>", linkageName: "_RNvMs0_NtNtCscgRAwXFJnXP_4core9core_simd5masksINtB5_4MaskaKj10_E10to_bitmaskCsgjwxzEoLG5s_12polars_error", scope: !1260, file: !1210, line: 299, type: !13, scopeLine: 299, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1260 = !DINamespace(name: "Mask", scope: !1212)
+!1261 = distinct !DILocation(line: 1868, column: 25, scope: !1262, inlinedAt: !1232)
+!1262 = distinct !DILexicalBlock(scope: !1214, file: !240, line: 1867, column: 9)
+!1263 = !DILocation(line: 1905, column: 8, scope: !1264, inlinedAt: !1042)
+!1264 = distinct !DILexicalBlock(scope: !1233, file: !240, line: 1904, column: 5)
+!1265 = !DILocation(line: 863, column: 18, scope: !1186, inlinedAt: !1266)
+!1266 = distinct !DILocation(line: 1860, column: 51, scope: !1177, inlinedAt: !1267)
+!1267 = distinct !DILocation(line: 1892, column: 20, scope: !1162, inlinedAt: !1042)
+!1268 = !DILocation(line: 552, column: 14, scope: !1170, inlinedAt: !1269)
+!1269 = distinct !DILocation(line: 1809, column: 9, scope: !1172, inlinedAt: !1270)
+!1270 = distinct !DILocation(line: 1212, column: 18, scope: !1175, inlinedAt: !1271)
+!1271 = distinct !DILocation(line: 1860, column: 76, scope: !1177, inlinedAt: !1267)
+!1272 = !{!1273, !1032}
+!1273 = distinct !{!1273, !1274, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error: argument 0"}
+!1274 = distinct !{!1274, !"_RNCNvNtNtCscgRAwXFJnXP_4core3str7pattern13simd_containss1_0CsgjwxzEoLG5s_12polars_error"}
+!1275 = !DILocation(line: 863, column: 18, scope: !1186, inlinedAt: !1276)
+!1276 = distinct !DILocation(line: 1863, column: 40, scope: !1188, inlinedAt: !1267)
+!1277 = !DILocation(line: 552, column: 14, scope: !1170, inlinedAt: !1278)
+!1278 = distinct !DILocation(line: 1809, column: 9, scope: !1191, inlinedAt: !1279)
+!1279 = distinct !DILocation(line: 1212, column: 18, scope: !1194, inlinedAt: !1280)
+!1280 = distinct !DILocation(line: 1863, column: 81, scope: !1188, inlinedAt: !1267)
+!1281 = !DILocation(line: 31, column: 52, scope: !1197, inlinedAt: !1282)
+!1282 = distinct !DILocation(line: 1865, column: 32, scope: !1204, inlinedAt: !1267)
+!1283 = !DILocation(line: 31, column: 52, scope: !1197, inlinedAt: !1284)
+!1284 = distinct !DILocation(line: 1866, column: 31, scope: !1207, inlinedAt: !1267)
+!1285 = !DILocation(line: 481, column: 23, scope: !1209, inlinedAt: !1286)
+!1286 = distinct !DILocation(line: 1867, column: 29, scope: !1214, inlinedAt: !1267)
+!1287 = !DILocation(line: 314, column: 39, scope: !1254, inlinedAt: !1288)
+!1288 = distinct !DILocation(line: 326, column: 22, scope: !1259, inlinedAt: !1289)
+!1289 = distinct !DILocation(line: 1868, column: 25, scope: !1262, inlinedAt: !1267)
+!1290 = !DILocation(line: 1893, column: 12, scope: !1291, inlinedAt: !1042)
+!1291 = distinct !DILexicalBlock(scope: !1162, file: !240, line: 1892, column: 9)
+!1292 = !DILocation(line: 1896, column: 9, scope: !1291, inlinedAt: !1042)
+!1293 = !DILocation(line: 1894, column: 23, scope: !1291, inlinedAt: !1042)
+!1294 = !DILocation(line: 1894, column: 13, scope: !1291, inlinedAt: !1042)
+!1295 = !DILocation(line: 1893, column: 9, scope: !1291, inlinedAt: !1042)
+!1296 = !DILocation(line: 1910, column: 1, scope: !1159, inlinedAt: !1042)
+!1297 = !DILocation(line: 1910, column: 2, scope: !1041, inlinedAt: !1042)
+!1298 = !DILocation(line: 1906, column: 19, scope: !1264, inlinedAt: !1042)
+!1299 = !DILocation(line: 1906, column: 9, scope: !1264, inlinedAt: !1042)
+!1300 = !DILocation(line: 1905, column: 5, scope: !1264, inlinedAt: !1042)
+!1301 = !DILocation(line: 158, column: 13, scope: !1302, inlinedAt: !1304)
+!1302 = distinct !DILexicalBlock(scope: !1303, file: !677, line: 157, column: 13)
+!1303 = distinct !DISubprogram(name: "equal_same_length<u8, u8>", linkageName: "_RNvXs3_NtNtCscgRAwXFJnXP_4core5slice3cmphINtB5_14SlicePartialEqhE17equal_same_lengthCsgjwxzEoLG5s_12polars_error", scope: !1095, file: !677, line: 152, type: !19, scopeLine: 152, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!1304 = !DILocation(line: 25, column: 22, scope: !676, inlinedAt: !681)
+!1305 = !DILocation(line: 22, column: 9, scope: !676, inlinedAt: !681)
 end_hunk_2

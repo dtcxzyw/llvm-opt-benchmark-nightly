@@ -205,7 +205,7 @@ bb.a:
   %.sroa.speculated109 = tail call i32 @llvm.smin.i32(i32 %i.l, i32 %i.n) ; 2 uses
   %.not61140 = icmp sgt i32 %.sroa.speculated114, %.sroa.speculated109
   %i.o = tail call i32 @llvm.smax.i32(i32 %i.h, i32 2) ; 2 uses
-  %i.p = add nsw i32 %i.h, 2
+  %i.p = add i32 %i.h, 2
   %.sroa.speculated = tail call i32 @llvm.smin.i32(i32 %i.l, i32 %i.p) ; 2 uses
   %i.q = sext i32 %i.k to i64                     ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -221,30 +221,33 @@ bb.a:
   %i.u = zext nneg i32 %i.o to i64
   %i.v = add nsw i64 %i.u, -2
   %i.w = zext i32 %i.h to i64
-  %6 = zext nneg i32 %.sroa.speculated to i64
+  %6 = add nuw nsw i32 %.sroa.speculated, 1
   %i.x = zext nneg i32 %i.m to i64
   %i.y = add nsw i64 %i.x, -2
   %i.z = zext i32 %i.f to i64
-  %7 = zext nneg i32 %.sroa.speculated109 to i64
+  %7 = add nuw nsw i32 %.sroa.speculated109, 1
   %i.aa = zext nneg i32 %i.i to i64
   %i.ab = add nsw i64 %i.aa, -2
   %i.ac = zext i32 %i.d to i64
-  %i.ad = zext nneg i32 %.sroa.speculated119 to i64
+  %8 = add nuw nsw i32 %.sroa.speculated119, 1
+  %wide.trip.count169 = zext nneg i32 %8 to i64
+  %wide.trip.count164 = zext nneg i32 %7 to i64
+  %i.ad = zext nneg i32 %6 to i64
   br label %.lr.ph142
 
 .lr.ph142:                                        ; preds = %.lr.ph142.preheader, %..critedge72_crit_edge
-  %indvars.iv164 = phi i64 [ %i.ab, %.lr.ph142.preheader ], [ %indvars.iv.next165, %..critedge72_crit_edge ] ; 4 uses
+  %indvars.iv164 = phi i64 [ %i.ab, %.lr.ph142.preheader ], [ %indvars.iv.next165, %..critedge72_crit_edge ] ; 3 uses
   %.not63 = icmp eq i64 %indvars.iv164, %i.ac
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph142, %..critedge70_crit_edge
-  %indvars.iv161 = phi i64 [ %i.y, %.lr.ph142 ], [ %indvars.iv.next162, %..critedge70_crit_edge ] ; 4 uses
+  %indvars.iv161 = phi i64 [ %i.y, %.lr.ph142 ], [ %indvars.iv.next162, %..critedge70_crit_edge ] ; 3 uses
   %.not64 = icmp eq i64 %indvars.iv161, %i.z
   %or.cond = select i1 %.not63, i1 %.not64, i1 false
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.critedge68
-  %indvars.iv = phi i64 [ %i.v, %.lr.ph ], [ %indvars.iv.next, %.critedge68 ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.v, %.lr.ph ], [ %indvars.iv.next, %.critedge68 ] ; 3 uses
   %.not65 = icmp eq i64 %indvars.iv, %i.w
   %or.cond66 = select i1 %or.cond, i1 %.not65, i1 false
   br i1 %or.cond66, label %.critedge68, label %bb.c
@@ -338,19 +341,19 @@ bb.i:                                             ; preds = %_ZNKSt13unordered_m
   br i1 %i.bu, label %.critedge68, label %.critedge74
 
 .critedge68:                                      ; preds = %.lr.ph.i.i.i.i, %.preheader, %_ZNKSt13unordered_mapIliSt4hashIlESt8equal_toIlESaISt4pairIKliEEE4findERS5_.exit, %bb.i, %..loopexit_crit_edge21.i.i.i.i, %bb.e, %bb.b
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %.not62.not = icmp slt i64 %indvars.iv, %6
-  br i1 %.not62.not, label %bb.b, label %..critedge70_crit_edge, !llvm.loop !274
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ad
+  br i1 %exitcond.not, label %..critedge70_crit_edge, label %bb.b, !llvm.loop !274
 
 ..critedge70_crit_edge:                           ; preds = %.critedge68
-  %indvars.iv.next162 = add nuw nsw i64 %indvars.iv161, 1
-  %.not61.not = icmp slt i64 %indvars.iv161, %7
-  br i1 %.not61.not, label %.lr.ph, label %..critedge72_crit_edge, !llvm.loop !275
+  %indvars.iv.next162 = add nuw nsw i64 %indvars.iv161, 1 ; 2 uses
+  %exitcond165.not = icmp eq i64 %indvars.iv.next162, %wide.trip.count164
+  br i1 %exitcond165.not, label %..critedge72_crit_edge, label %.lr.ph, !llvm.loop !275
 
 ..critedge72_crit_edge:                           ; preds = %..critedge70_crit_edge
-  %indvars.iv.next165 = add nuw nsw i64 %indvars.iv164, 1
-  %.not.not = icmp slt i64 %indvars.iv164, %i.ad
-  br i1 %.not.not, label %.lr.ph142, label %.critedge74, !llvm.loop !276
+  %indvars.iv.next165 = add nuw nsw i64 %indvars.iv164, 1 ; 2 uses
+  %exitcond170.not = icmp eq i64 %indvars.iv.next165, %wide.trip.count169
+  br i1 %exitcond170.not, label %.critedge74, label %.lr.ph142, !llvm.loop !276
 
 .critedge74:                                      ; preds = %..critedge72_crit_edge, %bb.i, %.lr.ph146, %bb.a
   %.not137 = phi i1 [ true, %.lr.ph146 ], [ true, %bb.a ], [ false, %bb.i ], [ true, %..critedge72_crit_edge ]

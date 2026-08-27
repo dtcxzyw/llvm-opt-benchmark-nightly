@@ -205,15 +205,15 @@ bb.ad:                                            ; preds = %bb.ac
   %.sroa.speculated72.i.i.i = call i64 @llvm.umin.i64(i64 %i.ij, i64 %i.ih) ; 2 uses
   %i.ik = add nsw i64 %i.gd, 1
   %i.il = sub i64 %i.ik, %.074121.i.i
-  %i.im = call i64 @llvm.usub.sat.i64(i64 %i.ia, i64 %i.il) ; 2 uses
-  %i.in = call i64 @llvm.usub.sat.i64(i64 %i.id, i64 %i.im) ; 2 uses
-  %i.io = call i64 @llvm.usub.sat.i64(i64 %i.ig, i64 %i.im)
-  %.sroa.speculated.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.speculated72.i.i.i, i64 %i.io) ; 4 uses
-  %.not99.i.i.i = icmp samesign ult i64 %i.in, %.sroa.speculated.i.i.i
+  %39 = call i64 @llvm.usub.sat.i64(i64 %i.ia, i64 %i.il) ; 2 uses
+  %i.im = call i64 @llvm.usub.sat.i64(i64 %i.id, i64 %39) ; 2 uses
+  %i.in = call i64 @llvm.umin.i64(i64 %.sroa.speculated72.i.i.i, i64 %i.im) ; 2 uses
+  %i.io = call i64 @llvm.usub.sat.i64(i64 %i.ig, i64 %39)
+  %.sroa.speculated.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.speculated72.i.i.i, i64 %i.io) ; 3 uses
+  %.not99.i.i.i = icmp samesign ult i64 %i.im, %.sroa.speculated.i.i.i
   br i1 %.not99.i.i.i, label %.thread.i.i.i, label %.preheader.lr.ph.i.i.i
 
 .preheader.lr.ph.i.i.i:                           ; preds = %bb.ad
-  %.sroa.speculated52.i.i.i = call i64 @llvm.umin.i64(i64 %.sroa.speculated72.i.i.i, i64 %i.in)
   %i.ip = getelementptr inbounds nuw [40 x i8], ptr %.val.i49.i.i, i64 %i.gd
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ip, i64 16
   %i.ir = load i64, ptr %i.iq, align 8, !tbaa !253
@@ -224,7 +224,6 @@ bb.ad:                                            ; preds = %bb.ac
   %i.iw = mul i64 %i.ir, %i.iu
   %i.ix = mul i64 %.0119.i.i, 9
   %i.iy = udiv i64 %i.ix, 10
-  %umax.i.i = call i64 @llvm.umax.i64(i64 %.sroa.speculated.i.i.i, i64 %.sroa.speculated52.i.i.i) ; 2 uses
   %i.iz = add nsw i64 %.sroa.speculated.i.i.i, -1
   %invariant.gep = getelementptr [40 x i8], ptr %.val.i49.i.i, i64 %.074121.i.i
   %invariant.gep1027 = getelementptr [40 x i8], ptr %.val.i49.i.i, i64 %.074121.i.i
@@ -234,7 +233,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %._crit_edge.i.i.i
   %i.ja = add i64 %.036102.i.i.i, 1
-  %exitcond.not.i.i = icmp eq i64 %.036102.i.i.i, %umax.i.i
+  %exitcond.not.i.i = icmp eq i64 %.036102.i.i.i, %i.in
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond.not.i.i, label %.thread.i.i.i, label %.preheader.i.i.i, !llvm.loop !266
 
@@ -342,7 +341,7 @@ _ZNKSt6vectorIN7rocksdb12_GLOBAL__N_126UniversalCompactionBuilder9SortedRunESaIS
   br i1 %exitcond.not.i.i.i, label %._crit_edge.i.i.i, label %scalar.ph, !llvm.loop !270
 
 .thread.i.i.i:                                    ; preds = %._crit_edge.i.i.i, %bb.ae, %bb.ad
-  %.038.lcssa.i.i.i = phi i64 [ 0, %bb.ad ], [ %umax.i.i, %bb.ae ], [ %.038100.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
+  %.038.lcssa.i.i.i = phi i64 [ 0, %bb.ad ], [ %i.in, %bb.ae ], [ %.038100.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
   %.037.lcssa.i.i.i = phi i64 [ %.0119.i.i, %bb.ad ], [ %.034.lcssa.i.i.i, %bb.ae ], [ %.037101.i.i.i, %._crit_edge.i.i.i ]
   %i.ko = add i64 %.038.lcssa.i.i.i, %.074121.i.i
   br label %_ZNK7rocksdb12_GLOBAL__N_126UniversalCompactionBuilder35MightExcludeNewL0sToReduceWriteStopEmmRmS2_.exit.i.i

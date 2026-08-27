@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %bb.a
   %invariant.gep202.i = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.z ; 4 uses
   %i.ab = zext nneg i32 %2 to i64
   %invariant.op.i = add nsw i32 %0, -2            ; 2 uses
-  %invariant.op212.i = add nsw i64 %i.x, -3
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 3 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.e, i64 2 ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.e, i64 1 ; 2 uses
   br i1 %or.cond.i, label %.split.us, label %.preheader131.i.preheader
 
 .preheader131.i.preheader:                        ; preds = %bb.b
+  %4 = add nsw i64 %i.x, -3
   %i.af = sub nsw i64 %i.y, %i.x                  ; 2 uses
   %i.ag = sub nsw i64 %i.z, %i.x                  ; 2 uses
   %i.ah = sub nsw i64 %i.z, %i.y                  ; 2 uses
@@ -590,11 +590,10 @@ bb.i:                                             ; preds = %bb.n, %.split.us.i
   br i1 %i.gk, label %.lr.ph.preheader.i, label %._crit_edge.i
 
 .lr.ph.preheader.i:                               ; preds = %.preheader129.i
-  %i.gl = sext i32 %.2152.i to i64                ; 4 uses
+  %i.gl = sext i32 %.2152.i to i64                ; 3 uses
   %i.gm = add nsw i64 %i.gl, 2
   %.phi.trans.insert.i = getelementptr inbounds i8, ptr %i.gj, i64 %i.gl
   %.pre.i = load i8, ptr %.phi.trans.insert.i, align 1, !tbaa !26
-  %smax = call i64 @llvm.smax.i64(i64 %invariant.op212.i, i64 %i.gl)
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.k, %.lr.ph.preheader.i
@@ -615,7 +614,7 @@ bb.j:                                             ; preds = %.lr.ph.i
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i
   %indvars.iv.next169.i = add nsw i64 %indvars.iv168.i, 1
-  %exitcond.not = icmp eq i64 %indvars.iv170.i, %smax
+  %exitcond.not = icmp eq i64 %indvars.iv170.i, %4
   br i1 %exitcond.not, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !530
 
 ._crit_edge.loopexit.split.loop.exit.i:           ; preds = %bb.j
@@ -1016,9 +1015,6 @@ declare i32 @llvm.umin.i32(i32, i32) #27
 
 ; Function Attrs: nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @calloc(i64 noundef, i64 noundef) local_unnamed_addr #34
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i4 @llvm.bitreverse.i4(i4) #27
