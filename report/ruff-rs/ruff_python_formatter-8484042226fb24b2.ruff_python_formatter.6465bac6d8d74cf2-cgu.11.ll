@@ -204,8 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.f = trunc i64 %i.e to i32                    ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.h = load i8, ptr %i.g, align 1, !range !96, !noundef !3
-  %2 = zext nneg i8 %i.h to i64
-  %i.i = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 11)
+  %i.i = tail call i8 @llvm.ucmp.i8.i8(i8 %i.h, i8 11)
   switch i8 %i.i, label %bb.b [
     i8 -1, label %bb.ac
     i8 0, label %bb.ad
@@ -224,9 +223,7 @@ switch.lookup:                                    ; preds = %bb.a
   %switch.load = load i8, ptr %switch.gep, align 1 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.n = load i8, ptr %i.m, align 1, !range !96, !noundef !3
-  %3 = zext nneg i8 %i.n to i64
-  %4 = zext nneg i8 %switch.load to i64
-  %i.o = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.o = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %switch.load)
   switch i8 %i.o, label %bb.b [
     i8 -1, label %bb.ae
     i8 0, label %bb.af
@@ -247,8 +244,7 @@ bb.f:                                             ; preds = %bb.a, %bb.a, %bb.a,
 bb.g:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.v = load i8, ptr %i.u, align 1, !range !96, !noundef !3
-  %5 = zext nneg i8 %i.v to i64
-  %i.w = tail call i8 @llvm.scmp.i8.i64(i64 %5, i64 12)
+  %i.w = tail call i8 @llvm.ucmp.i8.i8(i8 %i.v, i8 12)
   switch i8 %i.w, label %bb.b [
     i8 -1, label %bb.al
     i8 0, label %bb.am
@@ -272,8 +268,7 @@ bb.j:                                             ; preds = %bb.a
   %i.ad = trunc i64 %i.ac to i32                  ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.af = load i8, ptr %i.ae, align 1, !range !96, !noundef !3
-  %6 = zext nneg i8 %i.af to i64
-  %i.ag = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 10)
+  %i.ag = tail call i8 @llvm.ucmp.i8.i8(i8 %i.af, i8 10)
   switch i8 %i.ag, label %bb.b [
     i8 -1, label %bb.ao
     i8 0, label %bb.ap
@@ -446,8 +441,7 @@ bb.af:                                            ; preds = %switch.lookup
 bb.ag:                                            ; preds = %bb.e
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.co = load i8, ptr %i.cn, align 1, !range !96, !noundef !3
-  %7 = zext nneg i8 %i.co to i64
-  %i.cp = tail call i8 @llvm.scmp.i8.i64(i64 %7, i64 3)
+  %i.cp = tail call i8 @llvm.ucmp.i8.i8(i8 %i.co, i8 3)
   switch i8 %i.cp, label %bb.b [
     i8 -1, label %bb.ah
     i8 0, label %bb.ai
@@ -510,8 +504,7 @@ bb.ap:                                            ; preds = %bb.j
 _RNvNtCs8CpBcHC8tKo_21ruff_python_formatter10expression15has_parentheses.exit.thread: ; preds = %bb.v, %_RNvXs5_NtCs8CpBcHC8tKo_21ruff_python_formatter10expressionNtB5_33CanOmitOptionalParenthesesVisitorNtNtNtCskLngH8kgpZI_15ruff_python_ast7visitor12source_order18SourceOrderVisitor10visit_expr.exit3
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 37 ; 2 uses
   %i.dg = load i8, ptr %i.df, align 1, !range !96, !noundef !3
-  %8 = zext nneg i8 %i.dg to i64
-  %i.dh = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 1)
+  %i.dh = tail call i8 @llvm.ucmp.i8.i8(i8 %i.dg, i8 1)
   switch i8 %i.dh, label %bb.b [
     i8 -1, label %bb.aq
     i8 0, label %bb.ar
@@ -914,9 +907,6 @@ declare hidden void @_RNvMsi_NtCsgQfI1edjipl_9hashbrown3rawINtB5_12RawIterRangeT
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #16
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64, i64) #16
-
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvNtNtCskLngH8kgpZI_15ruff_python_ast7visitor12source_order9walk_exprNtNtCs8CpBcHC8tKo_21ruff_python_formatter10expression33CanOmitOptionalParenthesesVisitorEB1b_(ptr noalias noundef align 8 dereferenceable(40), ptr noundef nonnull align 8) unnamed_addr #0
 
@@ -1318,6 +1308,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #20

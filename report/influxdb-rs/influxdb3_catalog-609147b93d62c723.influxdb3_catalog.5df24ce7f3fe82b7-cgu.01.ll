@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !3
   %.val = load i8, ptr %1, align 1
-  %2 = zext nneg i8 %.val to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -229,8 +228,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i26 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i25 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i = load i8, ptr %.sroa.0.03.i.i26, align 1, !range !46, !noalias !43, !noundef !3
-  %3 = zext nneg i8 %.val6.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %.val, i8 %.val6.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %_RINvMs_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBX_6marker5ImmutNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v38NodeModeNtNtB7_7set_val9SetValZSTNtB1h_14LeafOrInternalE11search_treeB1z_EB1H_.exit
@@ -274,7 +272,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !3
   %.val = load i8, ptr %1, align 1
-  %2 = zext nneg i8 %.val to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -298,8 +295,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i26 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i25 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i = load i8, ptr %.sroa.0.03.i.i26, align 1, !range !46, !noalias !47, !noundef !3
-  %3 = zext nneg i8 %.val6.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %.val, i8 %.val6.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %_RINvMs_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBX_6marker5ImmutNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog3log8versions2v48NodeModeNtNtB7_7set_val9SetValZSTNtB1h_14LeafOrInternalE11search_treeB1z_EB1H_.exit
@@ -343,7 +339,6 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !noundef !3
   %.val = load i8, ptr %1, align 1
-  %2 = zext nneg i8 %.val to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -367,8 +362,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i26 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i25 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i = load i8, ptr %.sroa.0.03.i.i26, align 1, !range !46, !noalias !50, !noundef !3
-  %3 = zext nneg i8 %.val6.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %.val, i8 %.val6.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %_RINvMs_NtNtNtCscdodAO9FK5_5alloc11collections5btree6searchINtNtB7_4node7NodeRefNtNtBX_6marker5ImmutNtNtNtNtNtNtCs844E4pPEVZX_17influxdb3_catalog7catalog8versions2v36schema4node8NodeModeNtNtB7_7set_val9SetValZSTNtB1h_14LeafOrInternalE11search_treeB1z_EB1L_.exit
@@ -771,7 +765,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !3291, !noalias !3294, !noundef !3 ; 3 uses
-  %2 = zext nneg i8 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -795,8 +788,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i.i293 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i292 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i.i = load i8, ptr %.sroa.0.03.i.i.i293, align 1, !range !46, !noalias !3296, !noundef !3
-  %3 = zext nneg i8 %.val6.i.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 6) %1, i8 %.val6.i.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %.loopexit
@@ -1199,7 +1191,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !3401, !noalias !3404, !noundef !3 ; 3 uses
-  %2 = zext nneg i8 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -1223,8 +1214,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i.i293 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i292 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i.i = load i8, ptr %.sroa.0.03.i.i.i293, align 1, !range !46, !noalias !3406, !noundef !3
-  %3 = zext nneg i8 %.val6.i.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 6) %1, i8 %.val6.i.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %.loopexit
@@ -1627,7 +1617,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !alias.scope !3511, !noalias !3514, !noundef !3 ; 3 uses
-  %2 = zext nneg i8 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -1651,8 +1640,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.0.03.i.i.i293 = phi ptr [ %i.j, %bb.d ], [ %i.d, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i292 = phi i64 [ %i.k, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %.val6.i.i.i = load i8, ptr %.sroa.0.03.i.i.i293, align 1, !range !46, !noalias !3516, !noundef !3
-  %3 = zext nneg i8 %.val6.i.i.i to i64
-  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.m = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 6) %1, i8 %.val6.i.i.i)
   switch i8 %i.m, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %.loopexit

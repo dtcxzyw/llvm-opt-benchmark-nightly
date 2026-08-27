@@ -205,11 +205,9 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   tail call void @llvm.assume(i1 %i.u)
   %i.ak = load i8, ptr %i.x, align 8, !range !2466, !alias.scope !2458, !noalias !2463, !noundef !12
-  %6 = zext nneg i8 %i.ak to i64
   %i.al = getelementptr inbounds nuw i8, ptr %.val11.i, i64 8
   %i.am = load i8, ptr %i.al, align 8, !range !2466, !alias.scope !2461, !noalias !2464, !noundef !12
-  %7 = zext nneg i8 %i.am to i64
-  %i.an = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.an = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ak, i8 %i.am)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit.i: ; preds = %bb.n, %bb.m, %bb.k
@@ -270,11 +268,9 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   tail call void @llvm.assume(i1 %i.aw)
   %i.bm = load i8, ptr %i.az, align 8, !range !2466, !alias.scope !2467, !noalias !2472, !noundef !12
-  %8 = zext nneg i8 %i.bm to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %.val9.i, i64 8
   %i.bo = load i8, ptr %i.bn, align 8, !range !2466, !alias.scope !2470, !noalias !2473, !noundef !12
-  %9 = zext nneg i8 %i.bo to i64
-  %i.bp = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.bp = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bm, i8 %i.bo)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit17.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit17.i: ; preds = %bb.q, %bb.p, %.lr.ph.i
@@ -333,11 +329,9 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.s
   tail call void @llvm.assume(i1 %i.bz)
   %i.cp = load i8, ptr %i.cc, align 8, !range !2466, !alias.scope !2475, !noalias !2480, !noundef !12
-  %10 = zext nneg i8 %i.cp to i64
   %i.cq = getelementptr inbounds nuw i8, ptr %.val7.i, i64 8
   %i.cr = load i8, ptr %i.cq, align 8, !range !2466, !alias.scope !2478, !noalias !2481, !noundef !12
-  %11 = zext nneg i8 %i.cr to i64
-  %i.cs = tail call i8 @llvm.scmp.i8.i64(i64 %10, i64 %11)
+  %i.cs = tail call i8 @llvm.ucmp.i8.i8(i8 %i.cp, i8 %i.cr)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit23.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit23.i: ; preds = %bb.u, %bb.t, %.lr.ph39.i
@@ -740,11 +734,9 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   tail call void @llvm.assume(i1 %i.u)
   %i.ak = load i8, ptr %i.x, align 8, !range !2466, !alias.scope !2923, !noalias !2928, !noundef !12
-  %6 = zext nneg i8 %i.ak to i64
   %i.al = getelementptr inbounds nuw i8, ptr %.val11.i, i64 8
   %i.am = load i8, ptr %i.al, align 8, !range !2466, !alias.scope !2926, !noalias !2929, !noundef !12
-  %7 = zext nneg i8 %i.am to i64
-  %i.an = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.an = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ak, i8 %i.am)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit.i: ; preds = %bb.n, %bb.m, %bb.k
@@ -805,11 +797,9 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   tail call void @llvm.assume(i1 %i.aw)
   %i.bm = load i8, ptr %i.az, align 8, !range !2466, !alias.scope !2931, !noalias !2936, !noundef !12
-  %8 = zext nneg i8 %i.bm to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %.val9.i, i64 8
   %i.bo = load i8, ptr %i.bn, align 8, !range !2466, !alias.scope !2934, !noalias !2937, !noundef !12
-  %9 = zext nneg i8 %i.bo to i64
-  %i.bp = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.bp = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bm, i8 %i.bo)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit17.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit17.i: ; preds = %bb.q, %bb.p, %.lr.ph.i
@@ -868,11 +858,9 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.s
   tail call void @llvm.assume(i1 %i.bz)
   %i.cp = load i8, ptr %i.cc, align 8, !range !2466, !alias.scope !2939, !noalias !2944, !noundef !12
-  %10 = zext nneg i8 %i.cp to i64
   %i.cq = getelementptr inbounds nuw i8, ptr %.val7.i, i64 8
   %i.cr = load i8, ptr %i.cq, align 8, !range !2466, !alias.scope !2942, !noalias !2945, !noundef !12
-  %11 = zext nneg i8 %i.cr to i64
-  %i.cs = tail call i8 @llvm.scmp.i8.i64(i64 %10, i64 %11)
+  %i.cs = tail call i8 @llvm.ucmp.i8.i8(i8 %i.cp, i8 %i.cr)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit23.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit23.i: ; preds = %bb.u, %bb.t, %.lr.ph39.i
@@ -1188,11 +1176,9 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   tail call void @llvm.assume(i1 %i.u)
   %i.ak = load i8, ptr %i.x, align 8, !range !2466, !alias.scope !2965, !noalias !2970, !noundef !12
-  %6 = zext nneg i8 %i.ak to i64
   %i.al = getelementptr inbounds nuw i8, ptr %.val11.i, i64 8
   %i.am = load i8, ptr %i.al, align 8, !range !2466, !alias.scope !2968, !noalias !2971, !noundef !12
-  %7 = zext nneg i8 %i.am to i64
-  %i.an = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.an = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ak, i8 %i.am)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit.i: ; preds = %bb.n, %bb.m, %bb.k
@@ -1253,11 +1239,9 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   tail call void @llvm.assume(i1 %i.aw)
   %i.bm = load i8, ptr %i.az, align 8, !range !2466, !alias.scope !2973, !noalias !2978, !noundef !12
-  %8 = zext nneg i8 %i.bm to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %.val9.i, i64 8
   %i.bo = load i8, ptr %i.bn, align 8, !range !2466, !alias.scope !2976, !noalias !2979, !noundef !12
-  %9 = zext nneg i8 %i.bo to i64
-  %i.bp = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.bp = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bm, i8 %i.bo)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit17.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit17.i: ; preds = %bb.q, %bb.p, %.lr.ph.i
@@ -1316,11 +1300,9 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.s
   tail call void @llvm.assume(i1 %i.bz)
   %i.cp = load i8, ptr %i.cc, align 8, !range !2466, !alias.scope !2981, !noalias !2986, !noundef !12
-  %10 = zext nneg i8 %i.cp to i64
   %i.cq = getelementptr inbounds nuw i8, ptr %.val7.i, i64 8
   %i.cr = load i8, ptr %i.cq, align 8, !range !2466, !alias.scope !2984, !noalias !2987, !noundef !12
-  %11 = zext nneg i8 %i.cr to i64
-  %i.cs = tail call i8 @llvm.scmp.i8.i64(i64 %10, i64 %11)
+  %i.cs = tail call i8 @llvm.ucmp.i8.i8(i8 %i.cp, i8 %i.cr)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit23.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit23.i: ; preds = %bb.u, %bb.t, %.lr.ph39.i
@@ -1722,6 +1704,9 @@ declare hidden void @_RINvMs8_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_11
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvMs8_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_11LintContext17report_diagnosticNtNtNtNtNtBa_5rules19flake8_pytest_style5rules5warns19PytestWarnsTooBroadEBa_(ptr dead_on_unwind noalias noundef writable sret([48 x i8]) align 8 captures(none) dereferenceable(48), ptr noundef nonnull align 8, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(24), i32 noundef, i32 noundef) unnamed_addr #0
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #29
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef range(i8 -1, 3) i8 @_RNvMs2_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB5_7Checker19lazy_import_context(ptr noundef nonnull align 8) unnamed_addr #0

@@ -204,8 +204,7 @@ loadbb3:                                          ; preds = %loadbb
 
 endblock:                                         ; preds = %res_block, %loadbb3
   %phi.res = phi i32 [ 0, %loadbb3 ], [ %i.g, %res_block ]
-  %2 = sext i32 %phi.res to i64
-  %i.o = tail call range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.o = tail call i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   ret i8 %i.o
 }
 
@@ -608,8 +607,7 @@ loadbb1:                                          ; preds = %loadbb
 
 endblock:                                         ; preds = %res_block, %loadbb1
   %phi.res = phi i32 [ 0, %loadbb1 ], [ %i.j, %res_block ]
-  %2 = sext i32 %phi.res to i64
-  %i.r = tail call range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.r = tail call range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   ret i8 %i.r
 }
 
@@ -1012,8 +1010,7 @@ loadbb1:                                          ; preds = %loadbb
 
 endblock:                                         ; preds = %res_block, %loadbb1
   %phi.res = phi i32 [ 0, %loadbb1 ], [ %i.j, %res_block ]
-  %2 = sext i32 %phi.res to i64
-  %i.r = tail call range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.r = tail call range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   ret i8 %i.r
 }
 
@@ -1414,6 +1411,9 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.bswap.i64(i64) #17

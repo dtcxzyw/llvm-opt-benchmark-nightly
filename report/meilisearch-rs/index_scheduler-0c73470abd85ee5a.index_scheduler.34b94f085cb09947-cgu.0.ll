@@ -206,8 +206,7 @@ bb.g:                                             ; preds = %.lr.ph
   %.sroa.03.0.i.i.i.i.i.i.i.i.i112 = phi ptr [ %i.cj, %bb.g ], [ %i.cd, %bb.f ] ; 2 uses
   %.sroa.8.0.i.i.i.i.i.i.i.i.i111 = phi i64 [ %i.ck, %bb.g ], [ 0, %bb.f ] ; 3 uses
   %.val6.i.i.i.i.i.i.i.i.i = load i8, ptr %.sroa.03.0.i.i.i.i.i.i.i.i.i112, align 1, !range !1330, !noalias !4535, !noundef !14
-  %2 = zext nneg i8 %.val6.i.i.i.i.i.i.i.i.i to i64
-  %i.cm = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 1, i64 %2)
+  %i.cm = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 1, i8 %.val6.i.i.i.i.i.i.i.i.i)
   switch i8 %i.cm, label %bb.h [
     i8 -1, label %._crit_edge
     i8 0, label %bb.l
@@ -297,7 +296,6 @@ bb.m:                                             ; preds = %bb.k, %bb.j
 
 bb.n:                                             ; preds = %.noexc7.i.i.i.i.i
   %i.di = load i64, ptr %i.bm, align 8, !alias.scope !4554, !noalias !4555, !noundef !14
-  %3 = zext nneg i8 %switch.load132 to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.r, %bb.n
@@ -321,8 +319,7 @@ bb.p:                                             ; preds = %.lr.ph118
   %.sroa.03.0.i.i.i23.i.i.i.i.i.i116 = phi ptr [ %i.dp, %bb.p ], [ %i.dj, %bb.o ] ; 2 uses
   %.sroa.8.0.i.i.i22.i.i.i.i.i.i115 = phi i64 [ %i.dq, %bb.p ], [ 0, %bb.o ] ; 3 uses
   %.val6.i.i.i24.i.i.i.i.i.i = load i8, ptr %.sroa.03.0.i.i.i23.i.i.i.i.i.i116, align 1, !range !4559, !noalias !4556, !noundef !14
-  %4 = zext nneg i8 %.val6.i.i.i24.i.i.i.i.i.i to i64
-  %i.ds = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.ds = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %switch.load132, i8 %.val6.i.i.i24.i.i.i.i.i.i)
   switch i8 %i.ds, label %bb.q [
     i8 -1, label %._crit_edge119
     i8 0, label %bb.u
@@ -725,7 +722,7 @@ bb.cr:                                            ; preds = %bb.h
   store i64 %i.dg, ptr %i.be, align 8
   %i.iy = load i8, ptr %i.cb, align 4, !range !1330, !noundef !14 ; 6 uses
   %.not.i297 = icmp eq ptr %i.dc, null
-  br i1 %.not.i297, label %.thread825, label %3
+  br i1 %.not.i297, label %.thread825, label %bb.cs
 
 .thread825:                                       ; preds = %bb.cr
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !noalias !33505
@@ -737,13 +734,9 @@ bb.cr:                                            ; preds = %bb.h
   %i.ja = icmp eq ptr %i.iz, null
   br i1 %i.ja, label %bb.cz, label %bb.da, !prof !121
 
-3:                                                ; preds = %bb.cr
-  %4 = zext nneg i8 %i.iy to i64
-  br label %bb.cs
-
-bb.cs:                                            ; preds = %bb.cv, %3
-  %.sroa.3.0.i.i = phi i64 [ %i.db, %3 ], [ %i.jq, %bb.cv ] ; 2 uses
-  %.sroa.0.0.i.i = phi ptr [ %i.dc, %3 ], [ %i.jp, %bb.cv ] ; 9 uses
+bb.cs:                                            ; preds = %bb.cr, %bb.cv
+  %.sroa.3.0.i.i = phi i64 [ %i.jq, %bb.cv ], [ %i.db, %bb.cr ] ; 2 uses
+  %.sroa.0.0.i.i = phi ptr [ %i.jp, %bb.cv ], [ %i.dc, %bb.cr ] ; 9 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 276 ; 4 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 274
   %i.jd = load i16, ptr %i.jc, align 2, !noalias !33516, !noundef !14 ; 2 uses
@@ -762,8 +755,7 @@ bb.ct:                                            ; preds = %.lr.ph
   %.sroa.03.0.i.i.i2391 = phi ptr [ %i.jh, %bb.ct ], [ %i.jb, %bb.cs ] ; 2 uses
   %.sroa.8.0.i.i.i2390 = phi i64 [ %i.ji, %bb.ct ], [ 0, %bb.cs ] ; 3 uses
   %.val7.i.i.i = load i8, ptr %.sroa.03.0.i.i.i2391, align 1, !range !1330, !noalias !33516, !noundef !14
-  %5 = zext nneg i8 %.val7.i.i.i to i64
-  %i.jk = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.jk = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 5) %i.iy, i8 %.val7.i.i.i)
   switch i8 %i.jk, label %bb.cu [
     i8 -1, label %._crit_edge
     i8 0, label %bb.cx
@@ -1166,7 +1158,7 @@ switch.lookup:                                    ; preds = %"_ZN5alloc11collect
   %switch.gep = getelementptr inbounds i8, ptr @switch.table._ZN15index_scheduler9scheduler25process_snapshot_creation12remove_tasks17h1f4bc260c6e716ddE.9061, i64 %i.tc
   %switch.load = load i8, ptr %switch.gep, align 1 ; 6 uses
   %.not.i307 = icmp eq ptr %i.cz, null
-  br i1 %.not.i307, label %.thread842, label %6
+  br i1 %.not.i307, label %.thread842, label %bb.er
 
 .thread842:                                       ; preds = %switch.lookup
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !33671
@@ -1178,13 +1170,9 @@ switch.lookup:                                    ; preds = %"_ZN5alloc11collect
   %i.te = icmp eq ptr %i.td, null
   br i1 %i.te, label %bb.ex, label %bb.ey, !prof !121
 
-6:                                                ; preds = %switch.lookup
-  %7 = zext nneg i8 %switch.load to i64
-  br label %bb.er
-
-bb.er:                                            ; preds = %bb.eu, %6
-  %.sroa.3.0.i.i308 = phi i64 [ %i.cy, %6 ], [ %i.tu, %bb.eu ] ; 2 uses
-  %.sroa.0.0.i.i309 = phi ptr [ %i.cz, %6 ], [ %i.tt, %bb.eu ] ; 9 uses
+bb.er:                                            ; preds = %switch.lookup, %bb.eu
+  %.sroa.3.0.i.i308 = phi i64 [ %i.tu, %bb.eu ], [ %i.cy, %switch.lookup ] ; 2 uses
+  %.sroa.0.0.i.i309 = phi ptr [ %i.tt, %bb.eu ], [ %i.cz, %switch.lookup ] ; 9 uses
   %i.tf = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i309, i64 276 ; 4 uses
   %i.tg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i309, i64 274
   %i.th = load i16, ptr %i.tg, align 2, !noalias !33682, !noundef !14 ; 2 uses
@@ -1203,8 +1191,7 @@ bb.es:                                            ; preds = %.lr.ph2397
   %.sroa.03.0.i.i.i3112395 = phi ptr [ %i.tl, %bb.es ], [ %i.tf, %bb.er ] ; 2 uses
   %.sroa.8.0.i.i.i3102394 = phi i64 [ %i.tm, %bb.es ], [ 0, %bb.er ] ; 3 uses
   %.val7.i.i.i312 = load i8, ptr %.sroa.03.0.i.i.i3112395, align 1, !range !4559, !noalias !33682, !noundef !14
-  %8 = zext nneg i8 %.val7.i.i.i312 to i64
-  %i.to = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.to = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %switch.load, i8 %.val7.i.i.i312)
   switch i8 %i.to, label %bb.et [
     i8 -1, label %._crit_edge2398
     i8 0, label %bb.ev
@@ -1607,8 +1594,7 @@ loadbb72:                                         ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb72
   %phi.res = phi i32 [ 0, %loadbb72 ], [ %i.ej, %res_block ]
-  %3 = sext i32 %phi.res to i64
-  %i.er = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 0)
+  %i.er = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.er, label %bb.f [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h4bd0b063e4af41a0E.exit.i.i.i.i._crit_edge"
     i8 0, label %bb.h
@@ -1866,8 +1852,7 @@ loadbb142:                                        ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb142
   %phi.res = phi i32 [ 0, %loadbb142 ], [ %i.aq, %res_block ]
-  %9 = sext i32 %phi.res to i64
-  %i.ay = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %9, i64 0)
+  %i.ay = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.ay, label %bb.c [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h4bd0b063e4af41a0E.exit.i.i.i.i._crit_edge"
     i8 0, label %bb.e
@@ -2270,8 +2255,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.03.0.i.i.i225 = phi ptr [ %i.bj, %bb.d ], [ %i.bd, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i224 = phi i64 [ %i.bk, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %.val6.i.i.i = load i8, ptr %.sroa.03.0.i.i.i225, align 1, !range !1330, !noalias !54269, !noundef !14
-  %2 = zext nneg i8 %.val6.i.i.i to i64
-  %i.bm = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 1, i64 %2)
+  %i.bm = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 1, i8 %.val6.i.i.i)
   switch i8 %i.bm, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %bb.i
@@ -2466,7 +2450,6 @@ _ZN17meilisearch_types5tasks15KindWithContent7as_kind17h9b9fea13e1db2d99E.exit18
 
 bb.m:                                             ; preds = %_ZN17meilisearch_types5tasks15KindWithContent7as_kind17h9b9fea13e1db2d99E.exit18
   %i.cg = load i64, ptr %i.x, align 8, !alias.scope !54284, !noalias !54281, !noundef !14
-  %3 = zext nneg i8 %.sroa.0.0.i17 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.q, %bb.m
@@ -2490,8 +2473,7 @@ bb.o:                                             ; preds = %.lr.ph231
   %.sroa.03.0.i.i.i23229 = phi ptr [ %i.cn, %bb.o ], [ %i.ch, %bb.n ] ; 2 uses
   %.sroa.8.0.i.i.i22228 = phi i64 [ %i.co, %bb.o ], [ 0, %bb.n ] ; 3 uses
   %.val6.i.i.i24 = load i8, ptr %.sroa.03.0.i.i.i23229, align 1, !range !4559, !noalias !54286, !noundef !14
-  %4 = zext nneg i8 %.val6.i.i.i24 to i64
-  %i.cq = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.cq = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %.sroa.0.0.i17, i8 %.val6.i.i.i24)
   switch i8 %i.cq, label %bb.p [
     i8 -1, label %._crit_edge232
     i8 0, label %bb.t
@@ -2894,8 +2876,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.03.0.i.i.i151 = phi ptr [ %i.bm, %bb.d ], [ %i.bg, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i150 = phi i64 [ %i.bn, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %.val6.i.i.i = load i8, ptr %.sroa.03.0.i.i.i151, align 1, !range !1330, !noalias !54417, !noundef !14
-  %1 = zext nneg i8 %.val6.i.i.i to i64
-  %i.bp = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 1, i64 %1)
+  %i.bp = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 1, i8 %.val6.i.i.i)
   switch i8 %i.bp, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %bb.i
@@ -2980,7 +2961,6 @@ bb.j:                                             ; preds = %bb.h, %bb.g
 
 bb.k:                                             ; preds = %"_ZN5alloc11collections5btree3map5entry22Entry$LT$K$C$V$C$A$GT$10or_default17h4fb7017955c6b46cE.exit"
   %i.cm = load i64, ptr %i.aa, align 8, !alias.scope !54432, !noalias !54429, !noundef !14
-  %2 = zext nneg i8 %switch.load172 to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.o, %bb.k
@@ -3004,8 +2984,7 @@ bb.m:                                             ; preds = %.lr.ph157
   %.sroa.03.0.i.i.i26155 = phi ptr [ %i.ct, %bb.m ], [ %i.cn, %bb.l ] ; 2 uses
   %.sroa.8.0.i.i.i25154 = phi i64 [ %i.cu, %bb.m ], [ 0, %bb.l ] ; 3 uses
   %.val6.i.i.i27 = load i8, ptr %.sroa.03.0.i.i.i26155, align 1, !range !4559, !noalias !54434, !noundef !14
-  %3 = zext nneg i8 %.val6.i.i.i27 to i64
-  %i.cw = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.cw = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %switch.load172, i8 %.val6.i.i.i27)
   switch i8 %i.cw, label %bb.n [
     i8 -1, label %._crit_edge158
     i8 0, label %bb.r
@@ -3408,8 +3387,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.03.0.i.i.i213 = phi ptr [ %i.bq, %bb.d ], [ %i.bk, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i212 = phi i64 [ %i.br, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %.val6.i.i.i = load i8, ptr %.sroa.03.0.i.i.i213, align 1, !range !1330, !noalias !54565, !noundef !14
-  %2 = zext nneg i8 %.val6.i.i.i to i64
-  %i.bt = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 1, i64 %2)
+  %i.bt = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 1, i8 %.val6.i.i.i)
   switch i8 %i.bt, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %bb.i
@@ -3496,7 +3474,6 @@ bb.i:                                             ; preds = %.lr.ph
 
 bb.j:                                             ; preds = %"_ZN5alloc11collections5btree3map5entry22Entry$LT$K$C$V$C$A$GT$10or_default17h4fb7017955c6b46cE.exit"
   %i.cp = load i64, ptr %i.y, align 8, !alias.scope !54580, !noalias !54577, !noundef !14
-  %3 = zext nneg i8 %switch.load233 to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.n, %bb.j
@@ -3520,8 +3497,7 @@ bb.l:                                             ; preds = %.lr.ph219
   %.sroa.03.0.i.i.i32217 = phi ptr [ %i.cw, %bb.l ], [ %i.cq, %bb.k ] ; 2 uses
   %.sroa.8.0.i.i.i31216 = phi i64 [ %i.cx, %bb.l ], [ 0, %bb.k ] ; 3 uses
   %.val6.i.i.i33 = load i8, ptr %.sroa.03.0.i.i.i32217, align 1, !range !4559, !noalias !54582, !noundef !14
-  %4 = zext nneg i8 %.val6.i.i.i33 to i64
-  %i.cz = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.cz = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %switch.load233, i8 %.val6.i.i.i33)
   switch i8 %i.cz, label %bb.m [
     i8 -1, label %._crit_edge220
     i8 0, label %bb.q
@@ -3924,7 +3900,6 @@ bb.c:                                             ; preds = %bb.x, %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1088
   %i.s = load i64, ptr %i.r, align 8, !alias.scope !55076, !noalias !55073, !noundef !14
-  %2 = zext nneg i8 %i.j to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.h, %bb.d
@@ -3948,8 +3923,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.sroa.03.0.i.i.i140 = phi ptr [ %i.z, %bb.f ], [ %i.t, %bb.e ] ; 2 uses
   %.sroa.8.0.i.i.i139 = phi i64 [ %i.aa, %bb.f ], [ 0, %bb.e ] ; 3 uses
   %.val6.i.i.i = load i8, ptr %.sroa.03.0.i.i.i140, align 1, !range !1330, !noalias !55078, !noundef !14
-  %3 = zext nneg i8 %.val6.i.i.i to i64
-  %i.ac = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.ac = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 5) %i.j, i8 %.val6.i.i.i)
   switch i8 %i.ac, label %bb.g [
     i8 -1, label %._crit_edge
     i8 0, label %bb.k
@@ -4033,7 +4007,6 @@ bb.l:                                             ; preds = %bb.j, %bb.i
 bb.m:                                             ; preds = %"_ZN5alloc11collections5btree3map5entry22Entry$LT$K$C$V$C$A$GT$10or_default17h4fb7017955c6b46cE.exit"
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1112
   %i.ay = load i64, ptr %i.ax, align 8, !alias.scope !55093, !noalias !55090, !noundef !14
-  %4 = zext nneg i8 %switch.load to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.q, %bb.m
@@ -4057,8 +4030,7 @@ bb.o:                                             ; preds = %.lr.ph146
   %.sroa.03.0.i.i.i10144 = phi ptr [ %i.bf, %bb.o ], [ %i.az, %bb.n ] ; 2 uses
   %.sroa.8.0.i.i.i9143 = phi i64 [ %i.bg, %bb.o ], [ 0, %bb.n ] ; 3 uses
   %.val6.i.i.i11 = load i8, ptr %.sroa.03.0.i.i.i10144, align 1, !range !4559, !noalias !55095, !noundef !14
-  %5 = zext nneg i8 %.val6.i.i.i11 to i64
-  %i.bi = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %4, i64 %5)
+  %i.bi = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %switch.load, i8 %.val6.i.i.i11)
   switch i8 %i.bi, label %bb.p [
     i8 -1, label %._crit_edge147
     i8 0, label %bb.t
@@ -4461,7 +4433,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i64, ptr %i.d, align 8, !alias.scope !145658, !noalias !145661, !noundef !14
-  %3 = zext nneg i8 %1 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.f, %bb.b
@@ -4485,8 +4456,7 @@ bb.d:                                             ; preds = %.lr.ph
   %.sroa.03.0.i.i.i6 = phi ptr [ %i.l, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
   %.sroa.8.0.i.i.i5 = phi i64 [ %i.m, %bb.d ], [ 0, %bb.c ] ; 3 uses
   %.val6.i.i.i = load i8, ptr %.sroa.03.0.i.i.i6, align 1, !range !1330, !noalias !145663, !noundef !14
-  %4 = zext nneg i8 %.val6.i.i.i to i64
-  %i.o = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.o = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 5) %1, i8 %.val6.i.i.i)
   switch i8 %i.o, label %bb.e [
     i8 -1, label %._crit_edge
     i8 0, label %bb.h
@@ -4889,8 +4859,7 @@ loadbb331:                                        ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb331
   %phi.res = phi i32 [ 0, %loadbb331 ], [ %i.ab, %res_block ]
-  %4 = sext i32 %phi.res to i64
-  %i.aj = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %4, i64 0)
+  %i.aj = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.aj, label %bb.e [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h4bd0b063e4af41a0E.exit.i.i.i._crit_edge"
     i8 0, label %bb.bt
@@ -5293,8 +5262,7 @@ loadbb79:                                         ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb79
   %phi.res = phi i32 [ 0, %loadbb79 ], [ %i.y, %res_block ]
-  %3 = sext i32 %phi.res to i64
-  %i.ag = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 0)
+  %i.ag = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.ag, label %bb.e [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h4bd0b063e4af41a0E.exit.i.i.i._crit_edge"
     i8 0, label %"_ZN5alloc11collections5btree6search142_$LT$impl$u20$alloc..collections..btree..node..NodeRef$LT$BorrowType$C$K$C$V$C$alloc..collections..btree..node..marker..LeafOrInternal$GT$$GT$11search_tree17h08ec211979fd0a1aE.exit.i"
@@ -5697,7 +5665,6 @@ bb.t:                                             ; preds = %.noexc8.i.i.i
 
 bb.u:                                             ; preds = %bb.t
   %i.bz = load i64, ptr %i.ar, align 8, !alias.scope !193995, !noalias !193996, !noundef !14
-  %2 = zext nneg i8 %i.bd to i64
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.y, %bb.u
@@ -5721,8 +5688,7 @@ bb.w:                                             ; preds = %.lr.ph
   %.sroa.03.0.i.i.i.i.i.i.i63 = phi ptr [ %i.cg, %bb.w ], [ %i.ca, %bb.v ] ; 2 uses
   %.sroa.8.0.i.i.i.i.i.i.i62 = phi i64 [ %i.ch, %bb.w ], [ 0, %bb.v ] ; 3 uses
   %.val6.i.i.i.i.i.i.i = load i8, ptr %.sroa.03.0.i.i.i.i.i.i.i63, align 1, !range !1330, !noalias !193998, !noundef !14
-  %3 = zext nneg i8 %.val6.i.i.i.i.i.i.i to i64
-  %i.cj = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.cj = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 5) %i.bd, i8 %.val6.i.i.i.i.i.i.i)
   switch i8 %i.cj, label %bb.x [
     i8 -1, label %._crit_edge
     i8 0, label %bb.aa
@@ -6125,7 +6091,6 @@ bb.cf:                                            ; preds = %.noexc26.i.i.i
 
 bb.cg:                                            ; preds = %bb.cf
   %i.fm = load i64, ptr %i.bi, align 8, !alias.scope !194311, !noalias !194312, !noundef !14
-  %2 = zext nneg i8 %.sroa.10.020.i.i.i.i.i to i64
   br label %bb.ch
 
 bb.ch:                                            ; preds = %bb.ck, %bb.cg
@@ -6149,8 +6114,7 @@ bb.ci:                                            ; preds = %.lr.ph
   %.sroa.03.0.i.i.i.i.i.i.i235 = phi ptr [ %i.ft, %bb.ci ], [ %i.fn, %bb.ch ] ; 2 uses
   %.sroa.8.0.i.i.i.i.i.i.i234 = phi i64 [ %i.fu, %bb.ci ], [ 0, %bb.ch ] ; 3 uses
   %.val6.i.i.i.i.i.i.i = load i8, ptr %.sroa.03.0.i.i.i.i.i.i.i235, align 1, !range !4559, !noalias !194314, !noundef !14
-  %3 = zext nneg i8 %.val6.i.i.i.i.i.i.i to i64
-  %i.fw = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.fw = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 range(i8 0, 18) %.sroa.10.020.i.i.i.i.i, i8 %.val6.i.i.i.i.i.i.i)
   switch i8 %i.fw, label %bb.cj [
     i8 -1, label %._crit_edge
     i8 0, label %bb.cm
@@ -6553,8 +6517,7 @@ loadbb2261:                                       ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb2261
   %phi.res = phi i32 [ 0, %loadbb2261 ], [ %i.pe, %res_block ]
-  %2 = sext i32 %phi.res to i64
-  %i.pm = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.pm = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.pm, label %bb.dv [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h4bd0b063e4af41a0E.exit.i.i.i.i.i.i.i.i._crit_edge"
     i8 0, label %"_ZN5alloc11collections5btree3map25BTreeMap$LT$K$C$V$C$A$GT$6insert17hc6d58f6d8d2c15afE.exit.i.i.i.i"
@@ -6957,6 +6920,9 @@ declare noundef range(i8 0, 6) i8 @"_ZN17meilisearch_types5tasks1_86_$LT$impl$u2
 ; Function Attrs: nonlazybind uwtable
 declare noundef range(i8 0, 19) i8 @"_ZN17meilisearch_types5tasks1_84_$LT$impl$u20$enum_iterator..Sequence$u20$for$u20$meilisearch_types..tasks..Kind$GT$4next17hfeb1f1a1f4d93de9E"(ptr noalias noundef readonly align 1 captures(address, read_provenance) dereferenceable(1)) unnamed_addr #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #64
+
 ; Function Attrs: nonlazybind uwtable
 declare noundef zeroext i1 @"_ZN65_$LT$rustls..msgs..enums..HpkeKdf$u20$as$u20$core..fmt..Debug$GT$3fmt17h00ba56db68fc4090E"(ptr noalias noundef readonly align 2 captures(address, read_provenance) dereferenceable(4), ptr noalias noundef align 8 dereferenceable(24)) unnamed_addr #1
 
@@ -7190,6 +7156,9 @@ declare i64 @llvm.umax.i64(i64, i64) #64
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #64
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #64
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #78

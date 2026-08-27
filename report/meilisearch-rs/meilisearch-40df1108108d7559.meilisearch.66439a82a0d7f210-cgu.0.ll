@@ -206,9 +206,7 @@ bb.s:                                             ; preds = %.noexc20.i
   br label %bb.y
 
 bb.t:                                             ; preds = %bb.o
-  %2 = zext i8 %.sroa.0.0.i.i.i to i64
-  %3 = zext i8 %.sroa.034.0.i.i.i to i64
-  %i.ar = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.ar = tail call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %.sroa.0.0.i.i.i, i8 %.sroa.034.0.i.i.i)
   switch i8 %i.ar, label %bb.u [
     i8 -1, label %.sink.split.i.i.i
     i8 0, label %bb.y
@@ -611,8 +609,7 @@ loadbb308:                                        ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb308
   %phi.res = phi i32 [ 0, %loadbb308 ], [ %i.z, %res_block ]
-  %4 = sext i32 %phi.res to i64
-  %i.ah = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %4, i64 0)
+  %i.ah = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.ah, label %bb.e [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb6848cddca5109a8E.exit.i.i.i._crit_edge"
     i8 0, label %bb.bj
@@ -1015,8 +1012,7 @@ loadbb81:                                         ; preds = %"_ZN110_$LT$core..i
 
 endblock:                                         ; preds = %res_block, %loadbb81
   %phi.res = phi i32 [ 0, %loadbb81 ], [ %i.x, %res_block ]
-  %3 = sext i32 %phi.res to i64
-  %i.af = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %3, i64 0)
+  %i.af = tail call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   switch i8 %i.af, label %bb.e [
     i8 -1, label %"_ZN110_$LT$core..iter..adapters..enumerate..Enumerate$LT$I$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17hb6848cddca5109a8E.exit.i.i.i._crit_edge"
     i8 0, label %"_ZN5alloc11collections5btree6search142_$LT$impl$u20$alloc..collections..btree..node..NodeRef$LT$BorrowType$C$K$C$V$C$alloc..collections..btree..node..marker..LeafOrInternal$GT$$GT$11search_tree17h94f74fefb4eebc89E.exit.i"
@@ -1419,6 +1415,9 @@ declare noundef zeroext i1 @"_ZN50_$LT$std..fs..File$u20$as$u20$core..fmt..Debug
 ; Function Attrs: nonlazybind uwtable
 declare noundef nonnull align 8 ptr @_ZN10serde_json5error10make_error17h0aca2ec88570a3b5E(ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(24)) unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.scmp.i8.i32(i32, i32) #70
+
 ; Function Attrs: nonlazybind uwtable
 declare void @"_ZN94_$LT$tracing_subscriber..fmt..format..DefaultVisitor$u20$as$u20$tracing_core..field..Visit$GT$10record_str17h6d205ef19a572cacE"(ptr noalias noundef align 8 dereferenceable(32), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(40), ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance), i64 noundef) unnamed_addr #2
 
@@ -1820,6 +1819,9 @@ declare i64 @llvm.umax.i64(i64, i64) #70
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #70
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #70
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #84

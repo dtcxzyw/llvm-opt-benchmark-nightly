@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
   %i.w = sub i64 %i.l, %i.s
   %spec.select.i.i = select i1 %i.v, i64 %i.w, i64 %i.u ; 2 uses
   %i.x = icmp eq i64 %spec.select.i.i, 0
-  %3 = icmp slt i64 %spec.select.i.i, 0
-  %4 = icmp samesign ult i8 %.val10, %.val12
-  %spec.select.i = select i1 %i.x, i1 %4, i1 %3   ; 2 uses
+  %3 = icmp samesign ult i8 %.val10, %.val12
+  %4 = icmp slt i64 %spec.select.i.i, 0
+  %spec.select.i = select i1 %i.x, i1 %3, i1 %4   ; 2 uses
   %.not33 = icmp eq i64 %1, 2                     ; 2 uses
   br i1 %spec.select.i, label %.preheader, label %.preheader23
 
@@ -248,9 +248,9 @@ bb.b:                                             ; preds = %bb.a
   %i.as = sub i64 %i.ah, %i.ao
   %spec.select.i.i14 = select i1 %i.ar, i64 %i.as, i64 %i.aq ; 2 uses
   %i.at = icmp eq i64 %spec.select.i.i14, 0
-  %5 = icmp slt i64 %spec.select.i.i14, 0
-  %6 = icmp samesign ult i8 %.val6, %.val8
-  %spec.select.i15 = select i1 %i.at, i1 %6, i1 %5
+  %5 = icmp samesign ult i8 %.val6, %.val8
+  %6 = icmp slt i64 %spec.select.i.i14, 0
+  %spec.select.i15 = select i1 %i.at, i1 %5, i1 %6
   br i1 %spec.select.i15, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCs33K2ylI4knu_10hir_expand10proc_macro9ProcMacroNCINvMB6_SB12_16sort_unstable_byNCNvMs0_B14_NtB14_17ProcMacrosBuilder6insert0E0EB16_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
@@ -290,9 +290,9 @@ bb.c:                                             ; preds = %.lr.ph
   %i.bp = sub i64 %i.be, %i.bl
   %spec.select.i.i17 = select i1 %i.bo, i64 %i.bp, i64 %i.bn ; 2 uses
   %i.bq = icmp eq i64 %spec.select.i.i17, 0
-  %7 = icmp slt i64 %spec.select.i.i17, 0
-  %8 = icmp samesign ult i8 %.val2, %.val4
-  %spec.select.i18 = select i1 %i.bq, i1 %8, i1 %7
+  %7 = icmp samesign ult i8 %.val2, %.val4
+  %8 = icmp slt i64 %spec.select.i.i17, 0
+  %spec.select.i18 = select i1 %i.bq, i1 %7, i1 %8
   br i1 %spec.select.i18, label %bb.d, label %_RINvNtNtNtCshzWfHUSfYae_4core5slice4sort6shared17find_existing_runNtNtCs33K2ylI4knu_10hir_expand10proc_macro9ProcMacroNCINvMB6_SB12_16sort_unstable_byNCNvMs0_B14_NtB14_17ProcMacrosBuilder6insert0E0EB16_.exit
 
 bb.d:                                             ; preds = %.lr.ph29
@@ -552,9 +552,9 @@ bb.c:                                             ; preds = %.lr.ph139
   %i.ag = sub i64 %i.v, %i.ac
   %spec.select.i.i.i = select i1 %i.af, i64 %i.ag, i64 %i.ae ; 2 uses
   %i.ah = icmp eq i64 %spec.select.i.i.i, 0
-  %5 = icmp slt i64 %spec.select.i.i.i, 0
-  %6 = icmp samesign ult i8 %.val11.i, %.val13.i
-  %spec.select.i.i.a = select i1 %i.ah, i1 %6, i1 %5 ; 2 uses
+  %5 = icmp samesign ult i8 %.val11.i, %.val13.i
+  %6 = icmp slt i64 %spec.select.i.i.i, 0
+  %spec.select.i.i.a = select i1 %i.ah, i1 %5, i1 %6 ; 2 uses
   %i.ai = getelementptr i8, ptr %i.i, i64 16
   %.val8.i = load ptr, ptr %i.ai, align 8, !alias.scope !1377, !noalias !1380, !nonnull !4, !noundef !4 ; 2 uses
   %i.aj = getelementptr i8, ptr %i.i, i64 24
@@ -574,9 +574,9 @@ bb.c:                                             ; preds = %.lr.ph139
   %i.au = sub i64 %i.v, %i.aq
   %spec.select.i.i15.i = select i1 %i.at, i64 %i.au, i64 %i.as ; 2 uses
   %i.av = icmp eq i64 %spec.select.i.i15.i, 0
-  %7 = icmp slt i64 %spec.select.i.i15.i, 0
-  %8 = icmp samesign ult i8 %.val11.i, %.val9.i
-  %spec.select.i16.i = select i1 %i.av, i1 %8, i1 %7
+  %7 = icmp samesign ult i8 %.val11.i, %.val9.i
+  %8 = icmp slt i64 %spec.select.i.i15.i, 0
+  %spec.select.i16.i = select i1 %i.av, i1 %7, i1 %8
   %i.aw = xor i1 %spec.select.i.i.a, %spec.select.i16.i
   br i1 %i.aw, label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared5pivot12choose_pivotNtNtCs33K2ylI4knu_10hir_expand10proc_macro9ProcMacroNCINvMB8_SB15_16sort_unstable_byNCNvMs0_B17_NtB17_17ProcMacrosBuilder6insert0E0EB19_.exit, label %bb.d
 
@@ -588,9 +588,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ba = sub i64 %i.ac, %i.aq
   %spec.select.i.i18.i = select i1 %i.az, i64 %i.ba, i64 %i.ay ; 2 uses
   %i.bb = icmp eq i64 %spec.select.i.i18.i, 0
-  %9 = icmp slt i64 %spec.select.i.i18.i, 0
-  %10 = icmp samesign ult i8 %.val13.i, %.val9.i
-  %spec.select.i19.i = select i1 %i.bb, i1 %10, i1 %9
+  %9 = icmp samesign ult i8 %.val13.i, %.val9.i
+  %10 = icmp slt i64 %spec.select.i.i18.i, 0
+  %spec.select.i19.i = select i1 %i.bb, i1 %9, i1 %10
   %i.bc = xor i1 %spec.select.i.i.a, %spec.select.i19.i
   %..i.i = select i1 %i.bc, ptr %i.i, ptr %i.h
   br label %_RINvNtNtNtNtCshzWfHUSfYae_4core5slice4sort6shared5pivot12choose_pivotNtNtCs33K2ylI4knu_10hir_expand10proc_macro9ProcMacroNCINvMB8_SB15_16sort_unstable_byNCNvMs0_B17_NtB17_17ProcMacrosBuilder6insert0E0EB19_.exit
@@ -663,9 +663,9 @@ bb.e:                                             ; preds = %.lr.ph._crit_edge, 
   %i.cb = sub i64 %i.bv, %i.bx
   %spec.select.i.i.i.i.i = select i1 %i.ca, i64 %i.cb, i64 %i.bz ; 2 uses
   %i.cc = icmp eq i64 %spec.select.i.i.i.i.i, 0
-  %11 = icmp slt i64 %spec.select.i.i.i.i.i, 0
-  %12 = icmp samesign ult i8 %.val1.i.i.i, %.val3.i.pre.i.i
-  %spec.select.i.i.i.i = select i1 %i.cc, i1 %12, i1 %11
+  %11 = icmp samesign ult i8 %.val1.i.i.i, %.val3.i.pre.i.i
+  %12 = icmp slt i64 %spec.select.i.i.i.i.i, 0
+  %spec.select.i.i.i.i = select i1 %i.cc, i1 %11, i1 %12
   %i.cd = getelementptr inbounds nuw [32 x i8], ptr %i.bh, i64 %.sroa.19.1.i.i ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.016.1.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.cd, i64 32, i1 false), !alias.scope !1400, !noalias !1396
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cd, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.01.0.i.i, i64 32, i1 false), !noalias !1396
@@ -697,9 +697,9 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i.i
   %i.cs = sub i64 %i.co, %i.bn
   %spec.select.i.i.i14.i.i = select i1 %i.cr, i64 %i.cs, i64 %i.cq ; 2 uses
   %i.ct = icmp eq i64 %spec.select.i.i.i14.i.i, 0
-  %13 = icmp slt i64 %spec.select.i.i.i14.i.i, 0
-  %14 = icmp samesign ult i8 %.val1.i10.i.i, %.val3.i.pre.i.i
-  %spec.select.i.i15.i.i = select i1 %i.ct, i1 %14, i1 %13
+  %13 = icmp samesign ult i8 %.val1.i10.i.i, %.val3.i.pre.i.i
+  %14 = icmp slt i64 %spec.select.i.i.i14.i.i, 0
+  %spec.select.i.i15.i.i = select i1 %i.ct, i1 %13, i1 %14
   %i.cu = getelementptr inbounds nuw [32 x i8], ptr %i.bh, i64 %.sroa.19.034.i.i ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.016.035.i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.cu, i64 32, i1 false), !alias.scope !1400, !noalias !1401
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cu, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.11.036.i.i, i64 32, i1 false), !alias.scope !1400, !noalias !1401
@@ -760,9 +760,9 @@ bb.h:                                             ; preds = %_RINvNtNtNtNtCshzWf
   %i.dy = sub i64 %i.dn, %i.du
   %spec.select.i.i42 = select i1 %i.dx, i64 %i.dy, i64 %i.dw ; 2 uses
   %i.dz = icmp eq i64 %spec.select.i.i42, 0
-  %15 = icmp slt i64 %spec.select.i.i42, 0
-  %16 = icmp samesign ult i8 %.sroa.023.0.val34, %.val35
-  %spec.select.i = select i1 %i.dz, i1 %16, i1 %15
+  %15 = icmp samesign ult i8 %.sroa.023.0.val34, %.val35
+  %16 = icmp slt i64 %spec.select.i.i42, 0
+  %spec.select.i = select i1 %i.dz, i1 %15, i1 %16
   br i1 %spec.select.i, label %.lr.ph.i.i, label %.lr.ph.i.i44
 
 .lr.ph.i.i44:                                     ; preds = %bb.h
@@ -819,9 +819,9 @@ bb.h:                                             ; preds = %_RINvNtNtNtNtCshzWf
   %i.eu = sub i64 %i.ej, %i.eq
   %spec.select.i.i.i.i.i.i = select i1 %i.et, i64 %i.eu, i64 %i.es ; 2 uses
   %i.ev = icmp eq i64 %spec.select.i.i.i.i.i.i, 0
-  %17 = icmp sgt i64 %spec.select.i.i.i.i.i.i, -1
-  %18 = icmp samesign uge i8 %.val3.i.pre.i.i49, %.val1.i.i.i69
-  %spec.select.i.i.i.i.i70 = select i1 %i.ev, i1 %18, i1 %17
+  %17 = icmp samesign uge i8 %.val3.i.pre.i.i49, %.val1.i.i.i69
+  %18 = icmp sgt i64 %spec.select.i.i.i.i.i.i, -1
+  %spec.select.i.i.i.i.i70 = select i1 %i.ev, i1 %17, i1 %18
   %i.ew = getelementptr inbounds nuw [32 x i8], ptr %i.ea, i64 %.sroa.19.1.i.i60 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.016.1.i.i62, ptr noundef nonnull align 8 dereferenceable(32) %i.ew, i64 32, i1 false), !alias.scope !1419, !noalias !1415
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ew, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.01.0.i.i63, i64 32, i1 false), !noalias !1415
@@ -853,9 +853,9 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i44
   %i.fl = sub i64 %i.eg, %i.fh
   %spec.select.i.i.i.i14.i.i = select i1 %i.fk, i64 %i.fl, i64 %i.fj ; 2 uses
   %i.fm = icmp eq i64 %spec.select.i.i.i.i14.i.i, 0
-  %19 = icmp sgt i64 %spec.select.i.i.i.i14.i.i, -1
-  %20 = icmp samesign uge i8 %.val3.i.pre.i.i49, %.val1.i10.i.i57
-  %spec.select.i.i.i15.i.i = select i1 %i.fm, i1 %20, i1 %19
+  %19 = icmp samesign uge i8 %.val3.i.pre.i.i49, %.val1.i10.i.i57
+  %20 = icmp sgt i64 %spec.select.i.i.i.i14.i.i, -1
+  %spec.select.i.i.i15.i.i = select i1 %i.fm, i1 %19, i1 %20
   %i.fn = getelementptr inbounds nuw [32 x i8], ptr %i.ea, i64 %.sroa.19.034.i.i55 ; 2 uses
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.016.035.i.i54, ptr noundef nonnull align 8 dereferenceable(32) %i.fn, i64 32, i1 false), !alias.scope !1419, !noalias !1420
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.fn, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.11.036.i.i53, i64 32, i1 false), !alias.scope !1419, !noalias !1420
