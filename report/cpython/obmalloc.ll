@@ -206,7 +206,7 @@ mi_segment_ensure_committed.exit.thread:          ; preds = %mi_commit_mask_is_e
   %niter = phi i64 [ 0, %.lr.ph.preheader.new ], [ %niter.next.3, %.lr.ph ]
   %.048 = getelementptr i8, ptr %.pn5, i64 80
   %i.hq = trunc i64 %.0476 to i32
-  %i.hr = mul i32 %i.hq, 80
+  %i.hr = mul nsw i32 %i.hq, 80
   %i.hs = getelementptr i8, ptr %.pn5, i64 84
   store i32 %i.hr, ptr %i.hs, align 4, !tbaa !59
   store i32 0, ptr %.048, align 8, !tbaa !52

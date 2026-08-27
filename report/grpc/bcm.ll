@@ -205,12 +205,11 @@ iter.check:                                       ; preds = %bb.j
   %i.eu = tail call noundef i32 @llvm.bswap.i32(i32 %i.et)
   store i32 %i.eu, ptr %i.ds, align 4
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
-  %5 = add i64 %.395, -4294967297
-  %or.cond192 = icmp ult i64 %5, -4294967293
+  %or.cond192 = icmp ult i64 %.395, 4
   br i1 %or.cond192, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.ew = add nuw nsw i64 %.395, %i.ef            ; 2 uses
+  %i.ew = add i64 %.395, %i.ef                    ; 2 uses
   %scevgep = getelementptr i8, ptr %.298.lcssa, i64 %i.ew ; 2 uses
   %i.ex = getelementptr i8, ptr %1, i64 %.395
   %scevgep169 = getelementptr i8, ptr %i.ex, i64 64 ; 2 uses
@@ -234,7 +233,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.ey = and i64 %.395, 12
-  %n.vec = and i64 %.395, 8589934576              ; 4 uses
+  %n.vec = and i64 %.395, -16                     ; 4 uses
   %i.ez = trunc i64 %n.vec to i32                 ; 2 uses
   %i.fa = and i64 %.395, 15
   br label %vector.body
@@ -267,7 +266,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec182 = and i64 %.395, 8589934588           ; 3 uses
+  %n.vec182 = and i64 %.395, -4                   ; 3 uses
   %i.fj = trunc i64 %n.vec182 to i32              ; 2 uses
   %i.fk = and i64 %.395, 3
   br label %vec.epilog.vector.body
@@ -303,7 +302,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %i
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.ft = add nsw i64 %.4134.ph, -1
-  %i.fu = zext i32 %.2135.ph to i64               ; 4 uses
+  %i.fu = zext nneg i32 %.2135.ph to i64          ; 4 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %.3103, i64 %i.fu
   %i.fw = load i8, ptr %i.fv, align 1, !tbaa !13
   %i.fx = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.fu
@@ -315,7 +314,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !13
   %i.gd = xor i8 %i.gc, %i.fz
   store i8 %i.gd, ptr %i.gb, align 1, !tbaa !13
-  %i.ge = add i32 %.2135.ph, 1                    ; 2 uses
+  %i.ge = add nuw nsw i32 %.2135.ph, 1            ; 2 uses
   br label %vec.epilog.scalar.ph.prol.loopexit
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
@@ -328,7 +327,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %.2135 = phi i32 [ %i.hc, %vec.epilog.scalar.ph ], [ %.2135.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 3 uses
   %.4134 = phi i64 [ %i.gr, %vec.epilog.scalar.ph ], [ %.4134.unr, %vec.epilog.scalar.ph.prol.loopexit ]
-  %i.gg = zext i32 %.2135 to i64                  ; 4 uses
+  %i.gg = zext nneg i32 %.2135 to i64             ; 4 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %.3103, i64 %i.gg
   %i.gi = load i8, ptr %i.gh, align 1, !tbaa !13
   %i.gj = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.gg
@@ -340,9 +339,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.go = load i8, ptr %i.gn, align 1, !tbaa !13
   %i.gp = xor i8 %i.go, %i.gl
   store i8 %i.gp, ptr %i.gn, align 1, !tbaa !13
-  %i.gq = add i32 %.2135, 1
+  %i.gq = add nuw nsw i32 %.2135, 1
   %i.gr = add i64 %.4134, -2                      ; 2 uses
-  %i.gs = zext i32 %i.gq to i64                   ; 4 uses
+  %i.gs = zext nneg i32 %i.gq to i64              ; 4 uses
   %i.gt = getelementptr inbounds nuw i8, ptr %.3103, i64 %i.gs
   %i.gu = load i8, ptr %i.gt, align 1, !tbaa !13
   %i.gv = getelementptr inbounds nuw i8, ptr %i.er, i64 %i.gs
@@ -354,7 +353,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.ha = load i8, ptr %i.gz, align 1, !tbaa !13
   %i.hb = xor i8 %i.ha, %i.gx
   store i8 %i.hb, ptr %i.gz, align 1, !tbaa !13
-  %i.hc = add i32 %.2135, 2                       ; 2 uses
+  %i.hc = add nuw nsw i32 %.2135, 2               ; 2 uses
   %.not111.1 = icmp eq i64 %i.gr, 0
   br i1 %.not111.1, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !138
 
@@ -648,14 +647,13 @@ iter.check:                                       ; preds = %bb.j
   %i.eu = tail call noundef i32 @llvm.bswap.i32(i32 %i.et)
   store i32 %i.eu, ptr %i.ds, align 4
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 5 uses
-  %5 = add i64 %.3107, -4294967297
-  %or.cond199 = icmp ult i64 %5, -4294967293
+  %or.cond199 = icmp ult i64 %.3107, 4
   br i1 %or.cond199, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
   %i.ew = getelementptr i8, ptr %1, i64 %.3107
   %scevgep = getelementptr i8, ptr %i.ew, i64 64  ; 2 uses
-  %i.ex = add nuw nsw i64 %.3107, %i.ef           ; 2 uses
+  %i.ex = add i64 %.3107, %i.ef                   ; 2 uses
   %scevgep173 = getelementptr i8, ptr %.298.lcssa, i64 %i.ex ; 2 uses
   %scevgep174 = getelementptr i8, ptr %.2.lcssa, i64 %i.ex ; 2 uses
   %bound0 = icmp ult ptr %i.er, %scevgep173
@@ -677,7 +675,7 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.ey = and i64 %.3107, 28
-  %n.vec = and i64 %.3107, 8589934560             ; 4 uses
+  %n.vec = and i64 %.3107, -32                    ; 4 uses
   %i.ez = trunc i64 %n.vec to i32                 ; 2 uses
   %i.fa = and i64 %.3107, 31
   br label %vector.body
@@ -721,7 +719,7 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec189 = and i64 %.3107, 8589934588          ; 3 uses
+  %n.vec189 = and i64 %.3107, -4                  ; 3 uses
   %i.fp = trunc i64 %n.vec189 to i32              ; 2 uses
   %i.fq = and i64 %.3107, 3
   br label %vec.epilog.vector.body
@@ -757,7 +755,7 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck, %i
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.fz = add nsw i64 %.4138.ph, -1
-  %i.ga = zext i32 %.2102139.ph to i64            ; 4 uses
+  %i.ga = zext nneg i32 %.2102139.ph to i64       ; 4 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %.3, i64 %i.ga
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !13  ; 2 uses
   %i.gd = getelementptr inbounds nuw i8, ptr %i.ev, i64 %i.ga ; 2 uses
@@ -769,7 +767,7 @@ vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.p
   %i.gi = xor i8 %i.gh, %i.gc
   %i.gj = getelementptr inbounds nuw i8, ptr %.399, i64 %i.ga
   store i8 %i.gi, ptr %i.gj, align 1, !tbaa !13
-  %i.gk = add i32 %.2102139.ph, 1                 ; 2 uses
+  %i.gk = add nuw nsw i32 %.2102139.ph, 1         ; 2 uses
   br label %vec.epilog.scalar.ph.prol.loopexit
 
 vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.ph.prol, %vec.epilog.scalar.ph.preheader
@@ -782,7 +780,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
   %.2102139 = phi i32 [ %i.hi, %vec.epilog.scalar.ph ], [ %.2102139.unr, %vec.epilog.scalar.ph.prol.loopexit ] ; 3 uses
   %.4138 = phi i64 [ %i.gx, %vec.epilog.scalar.ph ], [ %.4138.unr, %vec.epilog.scalar.ph.prol.loopexit ]
-  %i.gm = zext i32 %.2102139 to i64               ; 4 uses
+  %i.gm = zext nneg i32 %.2102139 to i64          ; 4 uses
   %i.gn = getelementptr inbounds nuw i8, ptr %.3, i64 %i.gm
   %i.go = load i8, ptr %i.gn, align 1, !tbaa !13  ; 2 uses
   %i.gp = getelementptr inbounds nuw i8, ptr %i.ev, i64 %i.gm ; 2 uses
@@ -794,9 +792,9 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.gu = xor i8 %i.gt, %i.go
   %i.gv = getelementptr inbounds nuw i8, ptr %.399, i64 %i.gm
   store i8 %i.gu, ptr %i.gv, align 1, !tbaa !13
-  %i.gw = add i32 %.2102139, 1
+  %i.gw = add nuw nsw i32 %.2102139, 1
   %i.gx = add i64 %.4138, -2                      ; 2 uses
-  %i.gy = zext i32 %i.gw to i64                   ; 4 uses
+  %i.gy = zext nneg i32 %i.gw to i64              ; 4 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %.3, i64 %i.gy
   %i.ha = load i8, ptr %i.gz, align 1, !tbaa !13  ; 2 uses
   %i.hb = getelementptr inbounds nuw i8, ptr %i.ev, i64 %i.gy ; 2 uses
@@ -808,7 +806,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.hg = xor i8 %i.hf, %i.ha
   %i.hh = getelementptr inbounds nuw i8, ptr %.399, i64 %i.gy
   store i8 %i.hg, ptr %i.hh, align 1, !tbaa !13
-  %i.hi = add i32 %.2102139, 2                    ; 2 uses
+  %i.hi = add nuw nsw i32 %.2102139, 2            ; 2 uses
   %.not115.1 = icmp eq i64 %i.gx, 0
   br i1 %.not115.1, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !151
 

@@ -74,34 +74,33 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.e
-  %6 = add i32 %.028.i.i.i117, 7
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i118, 7
   %i.r = icmp eq ptr %i.aa, %i.q
   br i1 %i.r, label %"_ZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_.exit", label %bb.c, !prof !24, !llvm.loop !25
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
-  %.028.i.i.i117 = phi i32 [ 0, %.lr.ph ], [ %6, %bb.b ] ; 5 uses
-  %.029.i.i.i116 = phi i64 [ 0, %.lr.ph ], [ %.130.i.i.i, %bb.b ]
-  %.031.i.i.i115 = phi ptr [ %.sroa.0.059.i.a, %.lr.ph ], [ %i.aa, %bb.b ] ; 2 uses
-  %i.s = load i8, ptr %.031.i.i.i115, align 1, !tbaa !27 ; 2 uses
+  %.029.i.i.i120 = phi i64 [ 0, %.lr.ph ], [ %.130.i.i.i, %bb.b ]
+  %.031.i.i.i119 = phi ptr [ %.sroa.0.059.i.a, %.lr.ph ], [ %i.aa, %bb.b ] ; 2 uses
+  %indvars.iv.i.i118 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.i.i, %bb.b ] ; 5 uses
+  %i.s = load i8, ptr %.031.i.i.i119, align 1, !tbaa !27 ; 2 uses
   %i.t = and i8 %i.s, 127                         ; 3 uses
   %i.u = zext nneg i8 %i.t to i64
-  %i.v = icmp ugt i32 %.028.i.i.i117, 62
+  %i.v = icmp samesign ugt i64 %indvars.iv.i.i118, 62
   br i1 %i.v, label %bb.d, label %bb.e, !prof !28
 
 bb.d:                                             ; preds = %bb.c
-  %.not44.i.i.i = icmp eq i32 %.028.i.i.i117, 63
+  %.not44.i.i.i = icmp eq i64 %indvars.iv.i.i118, 63
   %.not.i.i.i = icmp samesign ugt i8 %i.t, 1
   %i.w = icmp ne i8 %i.t, 0
   %or.cond43.i.i.i = select i1 %.not44.i.i.i, i1 %.not.i.i.i, i1 %i.w
   br i1 %or.cond43.i.i.i, label %"_ZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_.exit", label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.x = icmp ult i32 %.028.i.i.i117, 64
-  %7 = zext nneg i32 %.028.i.i.i117 to i64
-  %i.y = shl i64 %i.u, %7
+  %i.x = icmp samesign ult i64 %indvars.iv.i.i118, 64
+  %i.y = shl i64 %i.u, %indvars.iv.i.i118
   %i.z = select i1 %i.x, i64 %i.y, i64 0, !prof !29
-  %.130.i.i.i = add i64 %i.z, %.029.i.i.i116      ; 4 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %.031.i.i.i115, i64 1 ; 3 uses
+  %.130.i.i.i = add i64 %i.z, %.029.i.i.i120      ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %.031.i.i.i119, i64 1 ; 3 uses
   %i.ab = icmp slt i8 %i.s, 0
   br i1 %i.ab, label %bb.b, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit.i", !llvm.loop !25
 
@@ -119,39 +118,38 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.ai, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i", label %.lr.ph125, !prof !30
 
 .preheader67:                                     ; preds = %bb.g
-  %8 = add i32 %.028.i.i19.i124, 7
+  %indvars.iv.next.i21.i = add nuw nsw i64 %indvars.iv.i17.i125, 7
   %i.aj = icmp eq ptr %i.as, %i.q
   br i1 %i.aj, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i", label %.lr.ph125, !prof !24, !llvm.loop !25
 
 .lr.ph125:                                        ; preds = %.preheader67.preheader, %.preheader67
-  %.028.i.i19.i124 = phi i32 [ %8, %.preheader67 ], [ 0, %.preheader67.preheader ] ; 5 uses
-  %.029.i.i18.i123 = phi i64 [ %.130.i.i20.i, %.preheader67 ], [ 0, %.preheader67.preheader ]
-  %.031.i.i17.i122 = phi ptr [ %i.as, %.preheader67 ], [ %i.ag, %.preheader67.preheader ] ; 3 uses
-  %i.ak = load i8, ptr %.031.i.i17.i122, align 1, !tbaa !27 ; 2 uses
+  %.029.i.i19.i127 = phi i64 [ %.130.i.i20.i, %.preheader67 ], [ 0, %.preheader67.preheader ]
+  %.031.i.i18.i126 = phi ptr [ %i.as, %.preheader67 ], [ %i.ag, %.preheader67.preheader ] ; 3 uses
+  %indvars.iv.i17.i125 = phi i64 [ %indvars.iv.next.i21.i, %.preheader67 ], [ 0, %.preheader67.preheader ] ; 5 uses
+  %i.ak = load i8, ptr %.031.i.i18.i126, align 1, !tbaa !27 ; 2 uses
   %i.al = and i8 %i.ak, 127                       ; 3 uses
   %i.am = zext nneg i8 %i.al to i64
-  %i.an = icmp ugt i32 %.028.i.i19.i124, 62
+  %i.an = icmp samesign ugt i64 %indvars.iv.i17.i125, 62
   br i1 %i.an, label %bb.f, label %bb.g, !prof !28
 
 bb.f:                                             ; preds = %.lr.ph125
-  %.not44.i.i23.i = icmp eq i32 %.028.i.i19.i124, 63
+  %.not44.i.i23.i = icmp eq i64 %indvars.iv.i17.i125, 63
   %.not.i.i24.i = icmp samesign ugt i8 %i.al, 1
   %i.ao = icmp ne i8 %i.al, 0
   %or.cond43.i.i25.i = select i1 %.not44.i.i23.i, i1 %.not.i.i24.i, i1 %i.ao
   br i1 %or.cond43.i.i25.i, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i", label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph125
-  %i.ap = icmp ult i32 %.028.i.i19.i124, 64
-  %9 = zext nneg i32 %.028.i.i19.i124 to i64
-  %i.aq = shl i64 %i.am, %9
+  %i.ap = icmp samesign ult i64 %indvars.iv.i17.i125, 64
+  %i.aq = shl i64 %i.am, %indvars.iv.i17.i125
   %i.ar = select i1 %i.ap, i64 %i.aq, i64 0, !prof !29
-  %.130.i.i20.i = add i64 %i.ar, %.029.i.i18.i123 ; 4 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %.031.i.i17.i122, i64 1 ; 3 uses
+  %.130.i.i20.i = add i64 %i.ar, %.029.i.i19.i127 ; 4 uses
+  %i.as = getelementptr inbounds nuw i8, ptr %.031.i.i18.i126, i64 1 ; 3 uses
   %i.at = icmp slt i8 %i.ak, 0
   br i1 %i.at, label %.preheader67, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.i", !llvm.loop !25
 
 "_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i": ; preds = %.preheader67, %bb.f, %.preheader67.preheader
-  %.132.i.i21.ph.i = phi ptr [ %i.q, %.preheader67.preheader ], [ %i.q, %.preheader67 ], [ %.031.i.i17.i122, %bb.f ]
+  %.132.i.i21.ph.i = phi ptr [ %i.q, %.preheader67.preheader ], [ %i.q, %.preheader67 ], [ %.031.i.i18.i126, %bb.f ]
   %i.au = ptrtoint ptr %.132.i.i21.ph.i to i64
   %i.av = ptrtoint ptr %i.ag to i64
   %i.aw = sub i64 %i.au, %i.av
@@ -185,34 +183,33 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph125
   br i1 %i.bk, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", label %.lr.ph131, !prof !30
 
 bb.h:                                             ; preds = %bb.j
-  %10 = add i32 %.028.i.i29.i130, 7
+  %indvars.iv.next.i32.i = add nuw nsw i64 %indvars.iv.i28.i131, 7
   %i.bl = icmp eq ptr %i.bu, %i.bj
   br i1 %i.bl, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", label %.lr.ph131, !prof !24, !llvm.loop !25
 
 .lr.ph131:                                        ; preds = %.lr.ph.i, %bb.h
-  %.028.i.i29.i130 = phi i32 [ %10, %bb.h ], [ 0, %.lr.ph.i ] ; 5 uses
-  %.029.i.i28.i129 = phi i64 [ %.130.i.i30.i, %bb.h ], [ 0, %.lr.ph.i ]
-  %.031.i.i27.i128 = phi ptr [ %i.bu, %bb.h ], [ %.sroa.0.155.i.a, %.lr.ph.i ] ; 3 uses
-  %i.bm = load i8, ptr %.031.i.i27.i128, align 1, !tbaa !27 ; 2 uses
+  %.029.i.i30.i133 = phi i64 [ %.130.i.i30.i, %bb.h ], [ 0, %.lr.ph.i ]
+  %.031.i.i29.i132 = phi ptr [ %i.bu, %bb.h ], [ %.sroa.0.155.i.a, %.lr.ph.i ] ; 3 uses
+  %indvars.iv.i28.i131 = phi i64 [ %indvars.iv.next.i32.i, %bb.h ], [ 0, %.lr.ph.i ] ; 5 uses
+  %i.bm = load i8, ptr %.031.i.i29.i132, align 1, !tbaa !27 ; 2 uses
   %i.bn = and i8 %i.bm, 127                       ; 3 uses
   %i.bo = zext nneg i8 %i.bn to i64
-  %i.bp = icmp ugt i32 %.028.i.i29.i130, 62
+  %i.bp = icmp samesign ugt i64 %indvars.iv.i28.i131, 62
   br i1 %i.bp, label %bb.i, label %bb.j, !prof !28
 
 bb.i:                                             ; preds = %.lr.ph131
-  %.not44.i.i33.i = icmp eq i32 %.028.i.i29.i130, 63
+  %.not44.i.i33.i = icmp eq i64 %indvars.iv.i28.i131, 63
   %.not.i.i34.i = icmp samesign ugt i8 %i.bn, 1
   %i.bq = icmp ne i8 %i.bn, 0
   %or.cond43.i.i35.i = select i1 %.not44.i.i33.i, i1 %.not.i.i34.i, i1 %i.bq
   br i1 %or.cond43.i.i35.i, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph131
-  %i.br = icmp ult i32 %.028.i.i29.i130, 64
-  %11 = zext nneg i32 %.028.i.i29.i130 to i64
-  %i.bs = shl i64 %i.bo, %11
+  %i.br = icmp samesign ult i64 %indvars.iv.i28.i131, 64
+  %i.bs = shl i64 %i.bo, %indvars.iv.i28.i131
   %i.bt = select i1 %i.br, i64 %i.bs, i64 0, !prof !29
-  %.130.i.i30.i = add i64 %i.bt, %.029.i.i28.i129 ; 2 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %.031.i.i27.i128, i64 1 ; 3 uses
+  %.130.i.i30.i = add i64 %i.bt, %.029.i.i30.i133 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %.031.i.i29.i132, i64 1 ; 3 uses
   %i.bv = icmp slt i8 %i.bm, 0
   br i1 %i.bv, label %bb.h, label %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge", !llvm.loop !25
 
@@ -220,7 +217,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph131
   br label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", !llvm.loop !25
 
 "_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i": ; preds = %bb.h, %bb.i, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge", %.lr.ph.i
-  %.132.i.i31.i = phi ptr [ %i.bu, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge" ], [ %i.bj, %.lr.ph.i ], [ %i.bj, %bb.h ], [ %.031.i.i27.i128, %bb.i ]
+  %.132.i.i31.i = phi ptr [ %i.bu, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge" ], [ %i.bj, %.lr.ph.i ], [ %i.bj, %bb.h ], [ %.031.i.i29.i132, %bb.i ]
   %.3.i.i32.i = phi i64 [ %.130.i.i30.i, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_2EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge" ], [ 0, %.lr.ph.i ], [ 0, %bb.i ], [ 0, %bb.h ]
   %i.bw = ptrtoint ptr %.132.i.i31.i to i64
   %i.bx = ptrtoint ptr %.sroa.0.155.i.a to i64
@@ -573,34 +570,33 @@ bb.av:                                            ; preds = %bb.au
   br label %bb.ax
 
 bb.aw:                                            ; preds = %bb.az
-  %12 = add i32 %.028.i.i.i7142, 7
+  %indvars.iv.next.i.i9 = add nuw nsw i64 %indvars.iv.i.i5143, 7
   %i.ie = icmp eq ptr %i.in, %i.id
   br i1 %i.ie, label %"_ZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_.exit", label %bb.ax, !prof !24, !llvm.loop !25
 
 bb.ax:                                            ; preds = %.lr.ph143, %bb.aw
-  %.028.i.i.i7142 = phi i32 [ 0, %.lr.ph143 ], [ %12, %bb.aw ] ; 5 uses
-  %.029.i.i.i6141 = phi i64 [ 0, %.lr.ph143 ], [ %.130.i.i.i8, %bb.aw ]
-  %.031.i.i.i5140 = phi ptr [ %.sroa.0.057.i, %.lr.ph143 ], [ %i.in, %bb.aw ] ; 2 uses
-  %i.if = load i8, ptr %.031.i.i.i5140, align 1, !tbaa !27 ; 2 uses
+  %.029.i.i.i7145 = phi i64 [ 0, %.lr.ph143 ], [ %.130.i.i.i8, %bb.aw ]
+  %.031.i.i.i6144 = phi ptr [ %.sroa.0.057.i, %.lr.ph143 ], [ %i.in, %bb.aw ] ; 2 uses
+  %indvars.iv.i.i5143 = phi i64 [ 0, %.lr.ph143 ], [ %indvars.iv.next.i.i9, %bb.aw ] ; 5 uses
+  %i.if = load i8, ptr %.031.i.i.i6144, align 1, !tbaa !27 ; 2 uses
   %i.ig = and i8 %i.if, 127                       ; 3 uses
   %i.ih = zext nneg i8 %i.ig to i64
-  %i.ii = icmp ugt i32 %.028.i.i.i7142, 62
+  %i.ii = icmp samesign ugt i64 %indvars.iv.i.i5143, 62
   br i1 %i.ii, label %bb.ay, label %bb.az, !prof !28
 
 bb.ay:                                            ; preds = %bb.ax
-  %.not44.i.i.i35 = icmp eq i32 %.028.i.i.i7142, 63
+  %.not44.i.i.i35 = icmp eq i64 %indvars.iv.i.i5143, 63
   %.not.i.i.i36 = icmp samesign ugt i8 %i.ig, 1
   %i.ij = icmp ne i8 %i.ig, 0
   %or.cond43.i.i.i37 = select i1 %.not44.i.i.i35, i1 %.not.i.i.i36, i1 %i.ij
   br i1 %or.cond43.i.i.i37, label %"_ZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_.exit", label %bb.az
 
 bb.az:                                            ; preds = %bb.ay, %bb.ax
-  %i.ik = icmp ult i32 %.028.i.i.i7142, 64
-  %13 = zext nneg i32 %.028.i.i.i7142 to i64
-  %i.il = shl i64 %i.ih, %13
+  %i.ik = icmp samesign ult i64 %indvars.iv.i.i5143, 64
+  %i.il = shl i64 %i.ih, %indvars.iv.i.i5143
   %i.im = select i1 %i.ik, i64 %i.il, i64 0, !prof !29
-  %.130.i.i.i8 = add i64 %i.im, %.029.i.i.i6141   ; 3 uses
-  %i.in = getelementptr inbounds nuw i8, ptr %.031.i.i.i5140, i64 1 ; 3 uses
+  %.130.i.i.i8 = add i64 %i.im, %.029.i.i.i7145   ; 3 uses
+  %i.in = getelementptr inbounds nuw i8, ptr %.031.i.i.i6144, i64 1 ; 3 uses
   %i.io = icmp slt i8 %i.if, 0
   br i1 %i.io, label %bb.aw, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit.i", !llvm.loop !25
 
@@ -618,39 +614,38 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
   br i1 %i.iv, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i", label %.lr.ph149, !prof !30
 
 .preheader:                                       ; preds = %bb.bb
-  %14 = add i32 %.028.i.i19.i11148, 7
+  %indvars.iv.next.i21.i14 = add nuw nsw i64 %indvars.iv.i17.i10149, 7
   %i.iw = icmp eq ptr %i.jf, %i.id
   br i1 %i.iw, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i", label %.lr.ph149, !prof !24, !llvm.loop !25
 
 .lr.ph149:                                        ; preds = %.preheader.preheader, %.preheader
-  %.028.i.i19.i11148 = phi i32 [ %14, %.preheader ], [ 0, %.preheader.preheader ] ; 5 uses
-  %.029.i.i18.i10147 = phi i64 [ %.130.i.i20.i12, %.preheader ], [ 0, %.preheader.preheader ]
-  %.031.i.i17.i9146 = phi ptr [ %i.jf, %.preheader ], [ %i.it, %.preheader.preheader ] ; 3 uses
-  %i.ix = load i8, ptr %.031.i.i17.i9146, align 1, !tbaa !27 ; 2 uses
+  %.029.i.i19.i12151 = phi i64 [ %.130.i.i20.i12, %.preheader ], [ 0, %.preheader.preheader ]
+  %.031.i.i18.i11150 = phi ptr [ %i.jf, %.preheader ], [ %i.it, %.preheader.preheader ] ; 3 uses
+  %indvars.iv.i17.i10149 = phi i64 [ %indvars.iv.next.i21.i14, %.preheader ], [ 0, %.preheader.preheader ] ; 5 uses
+  %i.ix = load i8, ptr %.031.i.i18.i11150, align 1, !tbaa !27 ; 2 uses
   %i.iy = and i8 %i.ix, 127                       ; 3 uses
   %i.iz = zext nneg i8 %i.iy to i64
-  %i.ja = icmp ugt i32 %.028.i.i19.i11148, 62
+  %i.ja = icmp samesign ugt i64 %indvars.iv.i17.i10149, 62
   br i1 %i.ja, label %bb.ba, label %bb.bb, !prof !28
 
 bb.ba:                                            ; preds = %.lr.ph149
-  %.not44.i.i23.i31 = icmp eq i32 %.028.i.i19.i11148, 63
+  %.not44.i.i23.i31 = icmp eq i64 %indvars.iv.i17.i10149, 63
   %.not.i.i24.i32 = icmp samesign ugt i8 %i.iy, 1
   %i.jb = icmp ne i8 %i.iy, 0
   %or.cond43.i.i25.i33 = select i1 %.not44.i.i23.i31, i1 %.not.i.i24.i32, i1 %i.jb
   br i1 %or.cond43.i.i25.i33, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i", label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %.lr.ph149
-  %i.jc = icmp ult i32 %.028.i.i19.i11148, 64
-  %15 = zext nneg i32 %.028.i.i19.i11148 to i64
-  %i.jd = shl i64 %i.iz, %15
+  %i.jc = icmp samesign ult i64 %indvars.iv.i17.i10149, 64
+  %i.jd = shl i64 %i.iz, %indvars.iv.i17.i10149
   %i.je = select i1 %i.jc, i64 %i.jd, i64 0, !prof !29
-  %.130.i.i20.i12 = add i64 %i.je, %.029.i.i18.i10147 ; 4 uses
-  %i.jf = getelementptr inbounds nuw i8, ptr %.031.i.i17.i9146, i64 1 ; 3 uses
+  %.130.i.i20.i12 = add i64 %i.je, %.029.i.i19.i12151 ; 4 uses
+  %i.jf = getelementptr inbounds nuw i8, ptr %.031.i.i18.i11150, i64 1 ; 3 uses
   %i.jg = icmp slt i8 %i.ix, 0
   br i1 %i.jg, label %.preheader, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.i", !llvm.loop !25
 
 "_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit26.thread.i": ; preds = %.preheader, %bb.ba, %.preheader.preheader
-  %.132.i.i21.ph.i34 = phi ptr [ %i.id, %.preheader.preheader ], [ %i.id, %.preheader ], [ %.031.i.i17.i9146, %bb.ba ]
+  %.132.i.i21.ph.i34 = phi ptr [ %i.id, %.preheader.preheader ], [ %i.id, %.preheader ], [ %.031.i.i18.i11150, %bb.ba ]
   %i.jh = ptrtoint ptr %.132.i.i21.ph.i34 to i64
   %i.ji = ptrtoint ptr %i.it to i64
   %i.jj = sub i64 %i.jh, %i.ji
@@ -692,34 +687,33 @@ bb.bb:                                            ; preds = %bb.ba, %.lr.ph149
   br i1 %i.jx, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", label %.lr.ph155, !prof !30
 
 bb.bc:                                            ; preds = %bb.be
-  %16 = add i32 %.028.i.i29.i18154, 7
+  %indvars.iv.next.i32.i22 = add nuw nsw i64 %indvars.iv.i28.i18155, 7
   %i.jy = icmp eq ptr %i.kh, %i.jw
   br i1 %i.jy, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", label %.lr.ph155, !prof !24, !llvm.loop !25
 
 .lr.ph155:                                        ; preds = %.lr.ph.i14, %bb.bc
-  %.028.i.i29.i18154 = phi i32 [ %16, %bb.bc ], [ 0, %.lr.ph.i14 ] ; 5 uses
-  %.029.i.i28.i17153 = phi i64 [ %.130.i.i30.i19, %bb.bc ], [ 0, %.lr.ph.i14 ]
-  %.031.i.i27.i16152 = phi ptr [ %i.kh, %bb.bc ], [ %.sroa.0.153.i, %.lr.ph.i14 ] ; 3 uses
-  %i.jz = load i8, ptr %.031.i.i27.i16152, align 1, !tbaa !27 ; 2 uses
+  %.029.i.i30.i20157 = phi i64 [ %.130.i.i30.i19, %bb.bc ], [ 0, %.lr.ph.i14 ]
+  %.031.i.i29.i19156 = phi ptr [ %i.kh, %bb.bc ], [ %.sroa.0.153.i, %.lr.ph.i14 ] ; 3 uses
+  %indvars.iv.i28.i18155 = phi i64 [ %indvars.iv.next.i32.i22, %bb.bc ], [ 0, %.lr.ph.i14 ] ; 5 uses
+  %i.jz = load i8, ptr %.031.i.i29.i19156, align 1, !tbaa !27 ; 2 uses
   %i.ka = and i8 %i.jz, 127                       ; 3 uses
   %i.kb = zext nneg i8 %i.ka to i64
-  %i.kc = icmp ugt i32 %.028.i.i29.i18154, 62
+  %i.kc = icmp samesign ugt i64 %indvars.iv.i28.i18155, 62
   br i1 %i.kc, label %bb.bd, label %bb.be, !prof !28
 
 bb.bd:                                            ; preds = %.lr.ph155
-  %.not44.i.i33.i28 = icmp eq i32 %.028.i.i29.i18154, 63
+  %.not44.i.i33.i28 = icmp eq i64 %indvars.iv.i28.i18155, 63
   %.not.i.i34.i29 = icmp samesign ugt i8 %i.ka, 1
   %i.kd = icmp ne i8 %i.ka, 0
   %or.cond43.i.i35.i30 = select i1 %.not44.i.i33.i28, i1 %.not.i.i34.i29, i1 %i.kd
   br i1 %or.cond43.i.i35.i30, label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %.lr.ph155
-  %i.ke = icmp ult i32 %.028.i.i29.i18154, 64
-  %17 = zext nneg i32 %.028.i.i29.i18154 to i64
-  %i.kf = shl i64 %i.kb, %17
+  %i.ke = icmp samesign ult i64 %indvars.iv.i28.i18155, 64
+  %i.kf = shl i64 %i.kb, %indvars.iv.i28.i18155
   %i.kg = select i1 %i.ke, i64 %i.kf, i64 0, !prof !29
-  %.130.i.i30.i19 = add i64 %i.kg, %.029.i.i28.i17153 ; 2 uses
-  %i.kh = getelementptr inbounds nuw i8, ptr %.031.i.i27.i16152, i64 1 ; 3 uses
+  %.130.i.i30.i19 = add i64 %i.kg, %.029.i.i30.i20157 ; 2 uses
+  %i.kh = getelementptr inbounds nuw i8, ptr %.031.i.i29.i19156, i64 1 ; 3 uses
   %i.ki = icmp slt i8 %i.jz, 0
   br i1 %i.ki, label %bb.bc, label %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge", !llvm.loop !25
 
@@ -727,7 +721,7 @@ bb.be:                                            ; preds = %bb.bd, %.lr.ph155
   br label %"_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i", !llvm.loop !25
 
 "_ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i": ; preds = %bb.bc, %bb.bd, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge", %.lr.ph.i14
-  %.132.i.i31.i20 = phi ptr [ %i.kh, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge" ], [ %i.jw, %.lr.ph.i14 ], [ %i.jw, %bb.bc ], [ %.031.i.i27.i16152, %bb.bd ]
+  %.132.i.i31.i20 = phi ptr [ %i.kh, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge" ], [ %i.jw, %.lr.ph.i14 ], [ %i.jw, %bb.bc ], [ %.031.i.i29.i19156, %bb.bd ]
   %.3.i.i32.i21 = phi i64 [ %.130.i.i30.i19, %"._ZZL11forEachHintIZN3lld5macho22applyOptimizationHintsEPhRKNS1_7ObjFileEE3$_3EvN4llvm8ArrayRefIhEET_ENKUlvE_clEv.exit36.i_crit_edge" ], [ 0, %.lr.ph.i14 ], [ 0, %bb.bd ], [ 0, %bb.bc ]
   %i.kj = ptrtoint ptr %.132.i.i31.i20 to i64
   %i.kk = ptrtoint ptr %.sroa.0.153.i to i64

@@ -205,7 +205,7 @@ par_shapes_translate.exit:                        ; preds = %.lr.ph.i.epil.prehe
   %i.ek = trunc i32 %i.ej to i16                  ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.05174, i64 16
   store i16 %i.ek, ptr %i.ei, align 2
-  %i.em = add i16 %i.ek, 1
+  %i.em = add nsw i16 %i.ek, 1
   %i.en = getelementptr inbounds nuw i8, ptr %.05174, i64 18
   store i16 %i.em, ptr %i.el, align 2
   %i.eo = getelementptr inbounds nuw i8, ptr %.05174, i64 20
@@ -608,7 +608,7 @@ bb.i:                                             ; preds = %.critedge.thread.i
   br i1 %i.ae, label %.preheader134.i.epil.preheader, label %.preheader134.i.preheader.new
 
 .preheader134.i.preheader.new:                    ; preds = %.preheader134.i.preheader
-  %unroll_iter = and i32 %.195151.i, -8
+  %unroll_iter = and i32 %.195151.i, 2147483640
   br label %.preheader134.i
 
 .preheader134.i:                                  ; preds = %.preheader134.i, %.preheader134.i.preheader.new
@@ -648,7 +648,7 @@ bb.i:                                             ; preds = %.critedge.thread.i
   %.lcssa97 = phi double [ %i.am, %.unr-lcssa ], [ %i.an, %.preheader134.i.epil ]
   %i.ao = uitofp nneg i32 %i.ac to double
   %i.ap = tail call double @llvm.fmuladd.f64(double %i.ao, double %.lcssa97, double %.1107150.i) ; 2 uses
-  %i.aq = add nuw i32 %.195151.i, 1
+  %i.aq = add nuw nsw i32 %.195151.i, 1
   %.299.i = getelementptr inbounds nuw i8, ptr %.299152.i, i64 1 ; 2 uses
   %.193.in.not.i = icmp eq ptr %.299.i, %i.j
   %indvar.next = add i32 %indvar, 1

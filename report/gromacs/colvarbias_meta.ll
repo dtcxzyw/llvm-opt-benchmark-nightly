@@ -204,7 +204,7 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.bh, ptr %i.bi, align 8, !tbaa !295, !alias.scope !293
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bg, i8 0, i64 %i.bf, i1 false), !tbaa !250, !noalias !293
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bf
-  %.pre.i = load i64, ptr %i.bc, align 8, !tbaa !291, !noalias !285 ; 6 uses
+  %.pre.i = load i64, ptr %i.bc, align 8, !tbaa !291, !noalias !285 ; 5 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.bj, ptr %i.bk, align 8, !tbaa !296, !alias.scope !293
   %.not.i = icmp eq i64 %.pre.i, 0
@@ -216,13 +216,11 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !297, !noalias !285 ; 3 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bb, i64 424
   %i.bp = load ptr, ptr %i.bo, align 8, !tbaa !95, !noalias !285 ; 2 uses
-  %min.iters.check = icmp ne i64 %.pre.i, 1
-  %.not350 = icmp ult i64 %.pre.i, 2147483649
-  %or.cond = and i1 %min.iters.check, %.not350
-  br i1 %or.cond, label %vector.ph, label %scalar.ph.preheader
+  %min.iters.check = icmp eq i64 %.pre.i, 1
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %.pre.i, 4294967294            ; 3 uses
+  %n.vec = and i64 %.pre.i, -2                    ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -625,7 +623,7 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   store ptr %i.bi, ptr %i.bj, align 8, !tbaa !295, !alias.scope !326
   tail call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.bh, i8 0, i64 %i.bg, i1 false), !tbaa !250, !noalias !326
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bg
-  %.pre.i = load i64, ptr %i.bd, align 8, !tbaa !291, !noalias !320 ; 6 uses
+  %.pre.i = load i64, ptr %i.bd, align 8, !tbaa !291, !noalias !320 ; 5 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %i.bk, ptr %i.bl, align 8, !tbaa !296, !alias.scope !326
   %.not.i = icmp eq i64 %.pre.i, 0
@@ -637,13 +635,11 @@ _ZNK11colvar_gridIdE9new_indexEv.exit.i:          ; preds = %_ZNSt6vectorIiSaIiE
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !297, !noalias !320 ; 3 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bc, i64 424
   %i.bq = load ptr, ptr %i.bp, align 8, !tbaa !95, !noalias !320 ; 2 uses
-  %min.iters.check = icmp ne i64 %.pre.i, 1
-  %.not302 = icmp ult i64 %.pre.i, 2147483649
-  %or.cond = and i1 %min.iters.check, %.not302
-  br i1 %or.cond, label %vector.ph, label %scalar.ph.preheader
+  %min.iters.check = icmp eq i64 %.pre.i, 1
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %n.vec = and i64 %.pre.i, 4294967294            ; 3 uses
+  %n.vec = and i64 %.pre.i, -2                    ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -1046,7 +1042,7 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !299 = distinct !{!299, !182, !300, !301}
 !300 = !{!"llvm.loop.isvectorized", i32 1}
 !301 = !{!"llvm.loop.unroll.runtime.disable"}
-!302 = distinct !{!302, !182, !300}
+!302 = distinct !{!302, !182, !301, !300}
 !303 = !{!304}
 !304 = distinct !{!304, !305, !"_ZNK11colvar_gridIdE17get_colvars_indexEv: argument 0"}
 !305 = distinct !{!305, !"_ZNK11colvar_gridIdE17get_colvars_indexEv"}
@@ -1072,7 +1068,7 @@ begin_hunk_2_@llvm.fmuladd.v2f64
 !325 = distinct !{!325, !"_ZNK11colvar_gridIdE9new_indexEv"}
 !326 = !{!324, !321}
 !327 = distinct !{!327, !182, !300, !301}
-!328 = distinct !{!328, !182, !300}
+!328 = distinct !{!328, !182, !301, !300}
 !329 = !{!330}
 !330 = distinct !{!330, !331, !"_ZNK11colvar_gridIdE17get_colvars_indexEv: argument 0"}
 !331 = distinct !{!331, !"_ZNK11colvar_gridIdE17get_colvars_indexEv"}

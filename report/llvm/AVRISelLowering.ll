@@ -205,7 +205,7 @@ bb.a:
   %62 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
   %63 = alloca %"class.llvm::MIMetadata", align 8 ; 9 uses
   %64 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
-  %65 = alloca %"struct.std::array.471", align 8  ; 49 uses
+  %65 = alloca %"struct.std::array.471", align 8  ; 47 uses
   %66 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
   %67 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
   %68 = alloca %"class.llvm::MIMetadata", align 8 ; 5 uses
@@ -241,9 +241,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 100
   %i.p = load i32, ptr %i.o, align 4, !tbaa !131  ; 2 uses
   store i32 %i.p, ptr %65, align 8, !tbaa !48
-  %i.q = getelementptr inbounds nuw i8, ptr %65, i64 4 ; 8 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %65, i64 4 ; 7 uses
   store i32 1, ptr %i.q, align 4, !tbaa !712
-  %i.r = getelementptr inbounds nuw i8, ptr %65, i64 8 ; 9 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %65, i64 8 ; 8 uses
   store i32 %i.p, ptr %i.r, align 8, !tbaa !48
   %i.s = getelementptr inbounds nuw i8, ptr %65, i64 12 ; 3 uses
   store i32 2, ptr %i.s, align 4, !tbaa !712
@@ -306,7 +306,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.bd, label %bb.f, label %bb.al
 
 bb.f:                                             ; preds = %bb.e
-  %i.be = sub nsw i64 4, %i.bc                    ; 4 uses
+  %i.be = sub nsw i64 4, %i.bc                    ; 3 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %65, i64 %i.bc ; 6 uses
   call fastcc void @_ZN4llvmL20insertMultibyteShiftERNS_12MachineInstrEPNS_17MachineBasicBlockENS_15MutableArrayRefISt4pairINS_8RegisterEiEEENS_3ISD8NodeTypeEl.specialized.2(ptr noundef nonnull align 8 dereferenceable(80) %1, ptr noundef nonnull %2, ptr nonnull %i.bf, i64 %i.be)
   %i.bg = call i32 @_ZN4llvm19MachineRegisterInfo21createVirtualRegisterEPKNS_15MCRegisterClassENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(520) %i.al, ptr noundef nonnull @_ZN4llvm25AVRMCRegisterClassStorageE, ptr nonnull @.str.1, i64 0) #21 ; 3 uses
@@ -362,48 +362,30 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.0511.0.i = phi i32 [ %i.br, %bb.g ], [ %i.bg, %bb.f ] ; 4 uses
-  %zext = and i64 %i.be, 4294967295               ; 4 uses
-  %sext142 = shl i64 %i.be, 32                    ; 3 uses
+  %sext142 = shl i64 %i.be, 32                    ; 5 uses
   %sext = ashr exact i64 %sext142, 32             ; 2 uses
   %i.cb = icmp sgt i64 %sext, 1
-  br i1 %i.cb, label %bb.i, label %70
+  br i1 %i.cb, label %bb.i, label %.thread.thread
 
-70:                                               ; preds = %bb.h
-  %71 = icmp eq i64 %zext, 1
-  br i1 %71, label %.thread.thread, label %73
-
-.thread.thread:                                   ; preds = %70
-  store i32 %.sroa.0511.0.i, ptr %65, align 8, !tbaa !48
+.thread.thread:                                   ; preds = %bb.h
+  %70 = icmp eq i64 %sext142, 4294967296
+  %.sroa.0511.0.i. = select i1 %70, i32 %.sroa.0511.0.i, i32 %i.am
+  store i32 %.sroa.0511.0.i., ptr %65, align 8, !tbaa !48
   store i32 0, ptr %i.q, align 4, !tbaa !712
-  %72 = getelementptr inbounds nuw i8, ptr %65, i64 12
-  br label %76
-
-73:                                               ; preds = %70
-  store i32 %i.am, ptr %65, align 8, !tbaa !48
-  store i32 0, ptr %i.q, align 4, !tbaa !712
-  br label %.thread
+  br label %.thread144.thread
 
 bb.i:                                             ; preds = %bb.h
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   %i.cd = load <2 x i32>, ptr %i.cc, align 8, !tbaa !48
   store <2 x i32> %i.cd, ptr %65, align 8, !tbaa !48
   %.not159 = icmp eq i64 %sext142, 8589934592
-  br i1 %.not159, label %.thread, label %bb.j
+  br i1 %.not159, label %.thread144.thread, label %bb.j
 
-.thread:                                          ; preds = %73, %bb.i
-  %74 = icmp eq i64 %zext, 2
-  %75 = getelementptr inbounds nuw i8, ptr %65, i64 12 ; 2 uses
-  br i1 %74, label %.thread144.thread, label %76
-
-76:                                               ; preds = %.thread.thread, %.thread
-  %77 = phi ptr [ %72, %.thread.thread ], [ %75, %.thread ]
-  store i32 %i.am, ptr %i.r, align 8, !tbaa !48
-  store i32 0, ptr %77, align 4, !tbaa !712
-  br label %.thread144
-
-.thread144.thread:                                ; preds = %.thread
-  store i32 %.sroa.0511.0.i, ptr %i.r, align 8, !tbaa !48
-  store i32 0, ptr %75, align 4, !tbaa !712
+.thread144.thread:                                ; preds = %bb.i, %.thread.thread
+  %.sink173 = phi i32 [ %i.am, %.thread.thread ], [ %.sroa.0511.0.i, %bb.i ]
+  %71 = getelementptr inbounds nuw i8, ptr %65, i64 12
+  store i32 %.sink173, ptr %i.r, align 8, !tbaa !48
+  store i32 0, ptr %71, align 4, !tbaa !712
   %i.ce = getelementptr inbounds nuw i8, ptr %65, i64 20
   br label %bb.k
 
@@ -414,8 +396,8 @@ bb.j:                                             ; preds = %bb.i
   %i.ch = icmp samesign ugt i64 %sext, 3
   br i1 %i.ch, label %bb.l, label %.thread144
 
-.thread144:                                       ; preds = %76, %bb.j
-  %i.ci = icmp eq i64 %zext, 3
+.thread144:                                       ; preds = %bb.j
+  %i.ci = icmp eq i64 %sext142, 12884901888
   %i.cj = getelementptr inbounds nuw i8, ptr %65, i64 20 ; 2 uses
   br i1 %i.ci, label %.thread146.thread, label %bb.k
 
@@ -423,12 +405,11 @@ bb.k:                                             ; preds = %.thread144.thread, 
   %i.ck = phi ptr [ %i.ce, %.thread144.thread ], [ %i.cj, %.thread144 ]
   store i32 %i.am, ptr %i.t, align 8, !tbaa !48
   store i32 0, ptr %i.ck, align 4, !tbaa !712
-  br label %.thread146
+  br label %bb.m
 
 .thread146.thread:                                ; preds = %.thread144
   store i32 %.sroa.0511.0.i, ptr %i.t, align 8, !tbaa !48
   store i32 0, ptr %i.cj, align 4, !tbaa !712
-  %78 = getelementptr inbounds nuw i8, ptr %65, i64 28
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
@@ -436,22 +417,18 @@ bb.l:                                             ; preds = %bb.j
   %i.cm = load <2 x i32>, ptr %i.cl, align 8, !tbaa !48
   store <2 x i32> %i.cm, ptr %i.t, align 8, !tbaa !48
   %.not160 = icmp eq i64 %sext142, 17179869184
-  br i1 %.not160, label %.thread146, label %bb.o
+  br i1 %.not160, label %bb.n, label %bb.o
 
-.thread146:                                       ; preds = %bb.k, %bb.l
-  %79 = icmp eq i64 %zext, 4
-  %80 = getelementptr inbounds nuw i8, ptr %65, i64 28 ; 2 uses
-  br i1 %79, label %bb.n, label %bb.m
-
-bb.m:                                             ; preds = %.thread146.thread, %.thread146
-  %81 = phi ptr [ %78, %.thread146.thread ], [ %80, %.thread146 ]
+bb.m:                                             ; preds = %.thread146.thread, %bb.k
+  %72 = getelementptr inbounds nuw i8, ptr %65, i64 28
   store i32 %i.am, ptr %i.x, align 8, !tbaa !48
-  store i32 0, ptr %81, align 4, !tbaa !712
+  store i32 0, ptr %72, align 4, !tbaa !712
   br label %_ZN4llvmL20insertMultibyteShiftERNS_12MachineInstrEPNS_17MachineBasicBlockENS_15MutableArrayRefISt4pairINS_8RegisterEiEEENS_3ISD8NodeTypeEl.exit._crit_edge
 
-bb.n:                                             ; preds = %.thread146
+bb.n:                                             ; preds = %bb.l
+  %73 = getelementptr inbounds nuw i8, ptr %65, i64 28
   store i32 %.sroa.0511.0.i, ptr %i.x, align 8, !tbaa !48
-  store i32 0, ptr %80, align 4, !tbaa !712
+  store i32 0, ptr %73, align 4, !tbaa !712
   br label %_ZN4llvmL20insertMultibyteShiftERNS_12MachineInstrEPNS_17MachineBasicBlockENS_15MutableArrayRefISt4pairINS_8RegisterEiEEENS_3ISD8NodeTypeEl.exit._crit_edge
 
 bb.o:                                             ; preds = %bb.l

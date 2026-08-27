@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = mul i64 %.02330.us, 10
   %i.w = add i64 %i.v, %i.q                       ; 2 uses
   %i.x = add i64 %.02231.us, 1                    ; 2 uses
-  %i.y = add i32 %.032.us, 1
+  %i.y = add nuw nsw i32 %.032.us, 1
   %exitcond77.not = icmp eq i64 %i.x, %2
   br i1 %exitcond77.not, label %PyUnicode_READ.exit._crit_edge, label %PyUnicode_READ.exit.us, !llvm.loop !56
 
@@ -230,7 +230,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ai = mul i64 %.02330.us47, 10
   %i.aj = add i64 %i.ai, %i.ad                    ; 2 uses
   %i.ak = add i64 %.02231.us46, 1                 ; 2 uses
-  %i.al = add i32 %.032.us45, 1
+  %i.al = add nuw nsw i32 %.032.us45, 1
   %exitcond.not = icmp eq i64 %i.ak, %2
   br i1 %exitcond.not, label %PyUnicode_READ.exit._crit_edge, label %PyUnicode_READ.exit.us48, !llvm.loop !56
 
@@ -262,7 +262,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = mul i64 %.02330, 10
   %i.ax = add i64 %i.aw, %i.ap                    ; 2 uses
   %i.ay = add i64 %.02231, 1                      ; 2 uses
-  %i.az = add i32 %.032, 1
+  %i.az = add nuw nsw i32 %.032, 1
   %exitcond78.not = icmp eq i64 %i.ay, %2
   br i1 %exitcond78.not, label %PyUnicode_READ.exit._crit_edge, label %PyUnicode_READ.exit, !llvm.loop !56
 

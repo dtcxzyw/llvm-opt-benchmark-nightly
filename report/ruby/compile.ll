@@ -205,7 +205,7 @@ bb.bp:                                            ; preds = %bb.bo
   br label %bb.bq
 
 ._crit_edge:                                      ; preds = %bb.ca
-  %indvars.le = trunc i64 %i.kq to i32
+  %indvars.le = trunc nsw i64 %i.kq to i32
   %i.jd = trunc i64 %i.kr to i32
   %i.je = getelementptr i8, ptr %i.f, i64 16      ; 2 uses
   %i.jf = getelementptr i8, ptr %i.f, i64 24
@@ -216,7 +216,7 @@ bb.bp:                                            ; preds = %bb.bo
   br label %bb.cb
 
 bb.bq:                                            ; preds = %.lr.ph146, %bb.ca
-  %.0839144 = phi i64 [ 0, %.lr.ph146 ], [ %i.kq, %bb.ca ] ; 5 uses
+  %.0839144 = phi i64 [ 0, %.lr.ph146 ], [ %i.kq, %bb.ca ] ; 7 uses
   %i.ji = load ptr, ptr %i.iz, align 8, !tbaa !564
   %i.jj = getelementptr [8 x i8], ptr %i.ji, i64 %.0839144
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !511 ; 3 uses
@@ -227,10 +227,8 @@ bb.bq:                                            ; preds = %.lr.ph146, %bb.ca
   ]
 
 bb.br:                                            ; preds = %bb.bq
-  %sext431 = shl i64 %.0839144, 32
-  %12 = ashr exact i64 %sext431, 32               ; 2 uses
-  %i.jm = call i64 @rb_make_temporary_id(i64 noundef %12) #37
-  %i.jn = getelementptr [8 x i8], ptr %i.jc, i64 %12
+  %i.jm = call i64 @rb_make_temporary_id(i64 noundef %.0839144) #37
+  %i.jn = getelementptr [8 x i8], ptr %i.jc, i64 %.0839144
   store i64 %i.jm, ptr %i.jn, align 8, !tbaa !36
   br label %bb.ca
 
@@ -264,10 +262,8 @@ pm_constant_id_lookup.exit:                       ; preds = %bb.bu
   %i.ka = zext i32 %i.jz to i64
   %i.kb = getelementptr [8 x i8], ptr %i.jy, i64 %i.ka
   %i.kc = load i64, ptr %i.kb, align 8, !tbaa !36
-  %sext = shl i64 %.0839144, 32
-  %13 = ashr exact i64 %sext, 29
-  %14 = getelementptr i8, ptr %i.jc, i64 %13
-  store i64 %i.kc, ptr %14, align 8, !tbaa !36
+  %12 = getelementptr [8 x i8], ptr %i.jc, i64 %.0839144
+  store i64 %i.kc, ptr %12, align 8, !tbaa !36
   br label %bb.ca
 
 bb.bw:                                            ; preds = %bb.bs
@@ -290,12 +286,10 @@ pm_insert_local_index.exit:                       ; preds = %bb.bx
   %i.kj = zext i32 %i.ki to i64
   %i.kk = getelementptr [8 x i8], ptr %i.kh, i64 %i.kj
   %i.kl = load i64, ptr %i.kk, align 8, !tbaa !36
-  %sext430 = shl i64 %.0839144, 32
-  %15 = ashr exact i64 %sext430, 32               ; 2 uses
-  %i.km = getelementptr [8 x i8], ptr %i.jc, i64 %15
+  %i.km = getelementptr [8 x i8], ptr %i.jc, i64 %.0839144
   store i64 %i.kl, ptr %i.km, align 8, !tbaa !36
   %i.kn = zext i32 %i.js to i64
-  %i.ko = call i32 @rb_st_insert(ptr noundef %i.bz, i64 noundef %i.kn, i64 noundef %15) #37 ; 0 uses
+  %i.ko = call i32 @rb_st_insert(ptr noundef %i.bz, i64 noundef %i.kn, i64 noundef %.0839144) #37 ; 0 uses
   br label %bb.ca
 
 bb.bz:                                            ; preds = %bb.bq

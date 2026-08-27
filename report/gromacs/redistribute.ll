@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.w, %.lr.ph.i.i.n
 
 bb.p:                                             ; preds = %bb.o
   %indvars.iv.tr31.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.dc = shl i32 %indvars.iv.tr31.i.i, 1         ; 2 uses
+  %i.dc = shl nsw i32 %indvars.iv.tr31.i.i, 1     ; 2 uses
   %i.dd = shl nuw i32 65536, %i.dc
   %i.de = or i32 %i.dd, %.02226.i.i
   %i.df = icmp eq i32 %.02127.i.i, -1
@@ -214,7 +214,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.dg = shl i32 %indvars.iv.tr.i.i, 1           ; 2 uses
+  %i.dg = shl nsw i32 %indvars.iv.tr.i.i, 1       ; 2 uses
   %i.dh = shl nuw i32 131072, %i.dg
   %i.di = or i32 %i.dh, %.02226.i.i               ; 2 uses
   %i.dj = icmp eq i32 %.02127.i.i, -1
@@ -244,7 +244,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p,
 
 bb.t:                                             ; preds = %bb.s
   %indvars.iv.tr.i.i.1 = trunc i64 %indvars.iv.next.i.i to i32
-  %i.dt = shl i32 %indvars.iv.tr.i.i.1, 1         ; 2 uses
+  %i.dt = shl nsw i32 %indvars.iv.tr.i.i.1, 1     ; 2 uses
   %i.du = shl nuw i32 131072, %i.dt
   %i.dv = or i32 %i.du, %.123.i.i                 ; 2 uses
   %i.dw = icmp eq i32 %.1.i.i, -1
@@ -260,7 +260,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.s
   %indvars.iv.tr31.i.i.1 = trunc i64 %indvars.iv.next.i.i to i32
-  %i.eb = shl i32 %indvars.iv.tr31.i.i.1, 1       ; 2 uses
+  %i.eb = shl nsw i32 %indvars.iv.tr31.i.i.1, 1   ; 2 uses
   %i.ec = shl nuw i32 65536, %i.eb
   %i.ed = or i32 %i.ec, %.123.i.i
   %i.ee = icmp eq i32 %.1.i.i, -1
@@ -663,7 +663,7 @@ bb.be:                                            ; preds = %bb.bm, %.lr.ph.i.i4
 
 bb.bf:                                            ; preds = %bb.be
   %indvars.iv.tr31.i.i59 = trunc i64 %indvars.iv.i.i49 to i32
-  %i.pc = shl i32 %indvars.iv.tr31.i.i59, 1       ; 2 uses
+  %i.pc = shl nsw i32 %indvars.iv.tr31.i.i59, 1   ; 2 uses
   %i.pd = shl nuw i32 65536, %i.pc
   %i.pe = or i32 %i.pd, %.02226.i.i51
   %i.pf = icmp eq i32 %.02127.i.i50, -1
@@ -672,7 +672,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.be
   %indvars.iv.tr.i.i52 = trunc i64 %indvars.iv.i.i49 to i32
-  %i.pg = shl i32 %indvars.iv.tr.i.i52, 1         ; 2 uses
+  %i.pg = shl nsw i32 %indvars.iv.tr.i.i52, 1     ; 2 uses
   %i.ph = shl nuw i32 131072, %i.pg
   %i.pi = or i32 %i.ph, %.02226.i.i51             ; 2 uses
   %i.pj = icmp eq i32 %.02127.i.i50, -1
@@ -702,7 +702,7 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg, %bb.
 
 bb.bj:                                            ; preds = %bb.bi
   %indvars.iv.tr.i.i52.1 = trunc i64 %indvars.iv.next.i.i55 to i32
-  %i.pt = shl i32 %indvars.iv.tr.i.i52.1, 1       ; 2 uses
+  %i.pt = shl nsw i32 %indvars.iv.tr.i.i52.1, 1   ; 2 uses
   %i.pu = shl nuw i32 131072, %i.pt
   %i.pv = or i32 %i.pu, %.123.i.i53               ; 2 uses
   %i.pw = icmp eq i32 %.1.i.i54, -1
@@ -718,7 +718,7 @@ bb.bk:                                            ; preds = %bb.bj
 
 bb.bl:                                            ; preds = %bb.bi
   %indvars.iv.tr31.i.i59.1 = trunc i64 %indvars.iv.next.i.i55 to i32
-  %i.qb = shl i32 %indvars.iv.tr31.i.i59.1, 1     ; 2 uses
+  %i.qb = shl nsw i32 %indvars.iv.tr31.i.i59.1, 1 ; 2 uses
   %i.qc = shl nuw i32 65536, %i.qb
   %i.qd = or i32 %i.qc, %.123.i.i53
   %i.qe = icmp eq i32 %.1.i.i54, -1

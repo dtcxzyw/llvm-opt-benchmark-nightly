@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.cs, label %bb.f, label %.critedge2.loopexit.i
 
 bb.f:                                             ; preds = %.lr.ph.i64
-  %i.ct = add i32 %.06881.i, 1
+  %i.ct = add nuw nsw i32 %.06881.i, 1
   %i.cu = add i64 %.282.i, 1                      ; 2 uses
   %exitcond101.not.i = icmp eq i64 %i.cu, %3
   br i1 %exitcond101.not.i, label %.critedge2.loopexit.i, label %.lr.ph.i64, !llvm.loop !487
@@ -241,20 +241,20 @@ bb.f:                                             ; preds = %.lr.ph.i64
 bb.g:                                             ; preds = %.loopexit.i, %.critedge2.thread.i
   %.071 = phi i64 [ 0, %.critedge2.thread.i ], [ %.172, %.loopexit.i ]
   %i.dg = phi i64 [ 0, %.critedge2.thread.i ], [ %i.ei, %.loopexit.i ] ; 5 uses
-  %.399.i = phi i64 [ 0, %.critedge2.thread.i ], [ %.4.i, %.loopexit.i ] ; 5 uses
+  %.399.i = phi i64 [ 0, %.critedge2.thread.i ], [ %.4.i, %.loopexit.i ] ; 6 uses
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %.399.i
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !3, !alias.scope !480, !noalias !483 ; 2 uses
   %.not73.i = icmp eq i32 %i.di, 0
   br i1 %.not73.i, label %.preheader.i62, label %bb.h
 
 .preheader.i62:                                   ; preds = %bb.g
-  %.06589.i = add nuw i64 %.399.i, 1              ; 3 uses
+  %.06589.i = add nuw i64 %.399.i, 1              ; 2 uses
   %i.dj = icmp ult i64 %.06589.i, %3
-  br i1 %i.dj, label %.lr.ph92.preheader.i, label %.lr.ph98.preheader.i
+  br i1 %i.dj, label %.lr.ph92.preheader.i, label %.critedge4.thread.i
 
 .lr.ph92.preheader.i:                             ; preds = %.preheader.i62
   %i.dk = trunc i64 %.399.i to i32
-  %i.dl = sub i32 %i.ci, %i.dk
+  %i.dl = sub i32 %i.ci, %i.dk                    ; 3 uses
   br label %.lr.ph92.i
 
 bb.h:                                             ; preds = %bb.g
@@ -270,24 +270,29 @@ bb.h:                                             ; preds = %bb.g
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %.06591.i
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !3, !alias.scope !480, !noalias !483
   %i.dr = icmp eq i32 %i.dq, 0
-  br i1 %i.dr, label %bb.i, label %.critedge4.i
+  br i1 %i.dr, label %bb.i, label %.critedge4.thread.i
 
 bb.i:                                             ; preds = %.lr.ph92.i
-  %i.ds = add i32 %.06690.i, 1
+  %i.ds = add nuw nsw i32 %.06690.i, 1
   %.065.i = add i64 %.06591.i, 1                  ; 2 uses
   %exitcond102.not.i = icmp eq i64 %.065.i, %3
   br i1 %exitcond102.not.i, label %.critedge4.i, label %.lr.ph92.i, !llvm.loop !489
 
-.critedge4.i:                                     ; preds = %bb.i, %.lr.ph92.i
-  %.066.lcssa.i = phi i32 [ %i.dl, %bb.i ], [ %.06690.i, %.lr.ph92.i ] ; 3 uses
-  %i.dt = zext i32 %.066.lcssa.i to i64
+.critedge4.thread.i:                              ; preds = %.lr.ph92.i, %.preheader.i62
+  %.066.lcssa.ph.i = phi i32 [ 1, %.preheader.i62 ], [ %.06690.i, %.lr.ph92.i ] ; 2 uses
+  %8 = zext nneg i32 %.066.lcssa.ph.i to i64
+  %9 = add i64 %.399.i, %8
+  br label %.lr.ph98.preheader.i
+
+.critedge4.i:                                     ; preds = %bb.i
+  %i.dt = zext i32 %i.dl to i64
   %i.du = add i64 %.399.i, %i.dt                  ; 2 uses
-  %.not7496.i = icmp eq i32 %.066.lcssa.i, 0
+  %.not7496.i = icmp eq i32 %i.dl, 0
   br i1 %.not7496.i, label %.loopexit.i, label %.lr.ph98.preheader.i
 
-.lr.ph98.preheader.i:                             ; preds = %.preheader.i62, %.critedge4.i
-  %i.dv = phi i64 [ %i.du, %.critedge4.i ], [ %.06589.i, %.preheader.i62 ]
-  %.066.lcssa114.i = phi i32 [ %.066.lcssa.i, %.critedge4.i ], [ 1, %.preheader.i62 ] ; 3 uses
+.lr.ph98.preheader.i:                             ; preds = %.critedge4.i, %.critedge4.thread.i
+  %i.dv = phi i64 [ %9, %.critedge4.thread.i ], [ %i.du, %.critedge4.i ]
+  %.066.lcssa114.i = phi i32 [ %.066.lcssa.ph.i, %.critedge4.thread.i ], [ %i.dl, %.critedge4.i ] ; 3 uses
   %i.dw = icmp ult i32 %.066.lcssa114.i, %i.dc
   br i1 %i.dw, label %.lr.ph98.i._crit_edge, label %.lr.ph98.i
 

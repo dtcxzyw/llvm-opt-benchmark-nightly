@@ -205,7 +205,6 @@ _ZN4llvm11raw_ostreamlsEPKc.exit:                 ; preds = %bb.b, %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 20
   %.sroa.0.0.copyload.i = load i64, ptr %i.m, align 4
   %.sroa.0.0.copyload.i.fr = freeze i64 %.sroa.0.0.copyload.i ; 3 uses
-  %.sroa.014.0.extract.trunc = trunc i64 %.sroa.0.0.copyload.i.fr to i32
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.o = load i32, ptr %i.n, align 8, !tbaa !52   ; 3 uses
   %i.p = zext i32 %i.o to i64                     ; 2 uses
@@ -264,7 +263,12 @@ bb.h:                                             ; preds = %bb.d
   %i.al = getelementptr inbounds nuw i8, ptr %i.r, i64 32 ; 6 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  br i1 %.not, label %.lr.ph.i.i.i.split.us, label %.lr.ph.i.i.i.split
+  br i1 %.not, label %.lr.ph.i.i.i.split.us, label %.lr.ph.i.i.i.split.preheader
+
+.lr.ph.i.i.i.split.preheader:                     ; preds = %.lr.ph.i.i.i
+  %sext24 = shl i64 %.sroa.0.0.copyload.i.fr, 32
+  %sext = ashr exact i64 %sext24, 32
+  br label %.lr.ph.i.i.i.split
 
 .lr.ph.i.i.i.split.us:                            ; preds = %.lr.ph.i.i.i, %"_ZZN4llvm10interleaveINS_10iota_rangeIjEEZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS3_15OMPCountsClauseEE3$_0NS_11raw_ostreamEjEEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i.us"
   %.sroa.06.014.i.i.i.us = phi i64 [ %.sroa.06.0.i.i.i.us, %"_ZZN4llvm10interleaveINS_10iota_rangeIjEEZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS3_15OMPCountsClauseEE3$_0NS_11raw_ostreamEjEEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i.us" ], [ 1, %.lr.ph.i.i.i ] ; 2 uses
@@ -302,8 +306,8 @@ bb.j:                                             ; preds = %.lr.ph.i.i.i.split.
   %.not.i.i.i.us = icmp eq i64 %.sroa.06.0.i.i.i.us, %i.p
   br i1 %.not.i.i.i.us, label %"_ZN4llvm15interleaveCommaINS_10iota_rangeIjEEZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS3_15OMPCountsClauseEE3$_0NS_11raw_ostreamEjEEvRKT_RT1_T0_.exit", label %.lr.ph.i.i.i.split.us, !llvm.loop !677
 
-.lr.ph.i.i.i.split:                               ; preds = %.lr.ph.i.i.i, %"_ZZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS_15OMPCountsClauseEENK3$_0clEj.exit3.i.i.i"
-  %.sroa.06.014.i.i.i = phi i64 [ %.sroa.06.0.i.i.i, %"_ZZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS_15OMPCountsClauseEENK3$_0clEj.exit3.i.i.i" ], [ 1, %.lr.ph.i.i.i ] ; 3 uses
+.lr.ph.i.i.i.split:                               ; preds = %.lr.ph.i.i.i.split.preheader, %"_ZZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS_15OMPCountsClauseEENK3$_0clEj.exit3.i.i.i"
+  %.sroa.06.014.i.i.i = phi i64 [ %.sroa.06.0.i.i.i, %"_ZZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS_15OMPCountsClauseEENK3$_0clEj.exit3.i.i.i" ], [ 1, %.lr.ph.i.i.i.split.preheader ] ; 3 uses
   %i.bc = load ptr, ptr %i.ak, align 8, !tbaa !652
   %i.bd = load ptr, ptr %i.al, align 8, !tbaa !656 ; 2 uses
   %i.be = ptrtoint ptr %i.bc to i64
@@ -325,8 +329,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i.split
 
 "_ZZN4llvm10interleaveINS_10iota_rangeIjEEZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS3_15OMPCountsClauseEE3$_0NS_11raw_ostreamEjEEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i": ; preds = %bb.l, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  %4 = trunc i64 %.sroa.06.014.i.i.i to i32
-  %i.bl = icmp eq i32 %.sroa.014.0.extract.trunc, %4
+  %i.bl = icmp eq i64 %.sroa.06.014.i.i.i, %sext
   br i1 %i.bl, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %"_ZZN4llvm10interleaveINS_10iota_rangeIjEEZN5clang16OMPClausePrinter20VisitOMPCountsClauseEPNS3_15OMPCountsClauseEE3$_0NS_11raw_ostreamEjEEvRKT_RT1_T0_RKNS_9StringRefEENKUlvE_clEv.exit.i.i.i"

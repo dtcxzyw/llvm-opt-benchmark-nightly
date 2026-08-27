@@ -205,34 +205,33 @@ bb.a:
   br i1 %.not, label %.lr.ph, label %._crit_edge, !prof !448
 
 bb.b:                                             ; preds = %bb.d
-  %5 = add i32 %.028.i25, 7
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv24, 7
   %i.i = icmp eq ptr %i.r, %i.h
   br i1 %i.i, label %._crit_edge, label %.lr.ph, !prof !449, !llvm.loop !450
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.028.i25 = phi i32 [ %5, %bb.b ], [ 0, %bb.a ] ; 5 uses
-  %.029.i24 = phi i64 [ %.130.i, %bb.b ], [ 0, %bb.a ]
-  %.031.i23 = phi ptr [ %i.r, %bb.b ], [ %i.g, %bb.a ] ; 2 uses
-  %i.j = load i8, ptr %.031.i23, align 1, !tbaa !73 ; 2 uses
+  %.029.i26 = phi i64 [ %.130.i, %bb.b ], [ 0, %bb.a ]
+  %.031.i25 = phi ptr [ %i.r, %bb.b ], [ %i.g, %bb.a ] ; 2 uses
+  %indvars.iv24 = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %bb.a ] ; 5 uses
+  %i.j = load i8, ptr %.031.i25, align 1, !tbaa !73 ; 2 uses
   %i.k = and i8 %i.j, 127                         ; 3 uses
   %i.l = zext nneg i8 %i.k to i64
-  %i.m = icmp ugt i32 %.028.i25, 62
+  %i.m = icmp samesign ugt i64 %indvars.iv24, 62
   br i1 %i.m, label %bb.c, label %bb.d, !prof !384
 
 bb.c:                                             ; preds = %.lr.ph
-  %.not44.i = icmp eq i32 %.028.i25, 63
+  %.not44.i = icmp eq i64 %indvars.iv24, 63
   %.not.i = icmp samesign ugt i8 %i.k, 1
   %i.n = icmp ne i8 %i.k, 0
   %or.cond43.i = select i1 %.not44.i, i1 %.not.i, i1 %i.n
   br i1 %or.cond43.i, label %._crit_edge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph
-  %i.o = icmp ult i32 %.028.i25, 64
-  %6 = zext nneg i32 %.028.i25 to i64
-  %i.p = shl i64 %i.l, %6
+  %i.o = icmp samesign ult i64 %indvars.iv24, 64
+  %i.p = shl i64 %i.l, %indvars.iv24
   %i.q = select i1 %i.o, i64 %i.p, i64 0, !prof !122
-  %.130.i = add i64 %i.q, %.029.i24               ; 3 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %.031.i23, i64 1 ; 3 uses
+  %.130.i = add i64 %i.q, %.029.i26               ; 3 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.031.i25, i64 1 ; 3 uses
   %i.s = icmp slt i8 %i.j, 0
   br i1 %i.s, label %bb.b, label %bb.i, !llvm.loop !450
 
@@ -635,21 +634,22 @@ bb.hk:                                            ; preds = %bb.hj
   br i1 %.not177, label %.lr.ph, label %.critedge66.i.i.i.i.i.i.i.i.i._crit_edge, !prof !448
 
 bb.hl:                                            ; preds = %bb.hn
+  %indvars.iv.next.i.i.i.i.i.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i.i.i.i.i.i172, 7
   %i.asn = icmp eq ptr %i.asy, %i.asm
   br i1 %i.asn, label %.critedge66.i.i.i.i.i.i.i.i.i._crit_edge, label %.lr.ph, !prof !449, !llvm.loop !3404
 
 .lr.ph:                                           ; preds = %bb.hk, %bb.hl
-  %.044.i.i.i.i.i.i.i.i.i174 = phi i32 [ %153, %bb.hl ], [ 0, %bb.hk ] ; 5 uses
-  %.045.i.i.i.i.i.i.i.i.i173 = phi i64 [ %.146.i.i.i.i.i.i.i.i.i, %bb.hl ], [ 0, %bb.hk ] ; 2 uses
-  %.050.i.i.i.i.i.i.i.i.i172 = phi ptr [ %i.asy, %bb.hl ], [ %i.asl, %bb.hk ] ; 2 uses
-  %i.aso = load i8, ptr %.050.i.i.i.i.i.i.i.i.i172, align 1, !tbaa !73, !noalias !3403 ; 4 uses
+  %.045.i.i.i.i.i.i.i.i.i174 = phi i64 [ %.146.i.i.i.i.i.i.i.i.i, %bb.hl ], [ 0, %bb.hk ] ; 2 uses
+  %.050.i.i.i.i.i.i.i.i.i173 = phi ptr [ %i.asy, %bb.hl ], [ %i.asl, %bb.hk ] ; 2 uses
+  %indvars.iv.i.i.i.i.i.i.i.i172 = phi i64 [ %indvars.iv.next.i.i.i.i.i.i.i.i, %bb.hl ], [ 0, %bb.hk ] ; 7 uses
+  %i.aso = load i8, ptr %.050.i.i.i.i.i.i.i.i.i173, align 1, !tbaa !73, !noalias !3403 ; 4 uses
   %i.asp = and i8 %i.aso, 127
   %i.asq = zext nneg i8 %i.asp to i64             ; 2 uses
-  %i.asr = icmp ugt i32 %.044.i.i.i.i.i.i.i.i.i174, 62
+  %i.asr = icmp samesign ugt i64 %indvars.iv.i.i.i.i.i.i.i.i172, 62
   br i1 %i.asr, label %bb.hm, label %bb.hn, !prof !384
 
 bb.hm:                                            ; preds = %.lr.ph
-  %i.ass = icmp eq i32 %.044.i.i.i.i.i.i.i.i.i174, 63
+  %i.ass = icmp eq i64 %indvars.iv.i.i.i.i.i.i.i.i172, 63
   br i1 %i.ass, label %switch.early.test.i.i.i.i.i.i.i.i.i, label %.critedge66.i.i.i.i.i.i.i.i.i
 
 switch.early.test.i.i.i.i.i.i.i.i.i:              ; preds = %bb.hm
@@ -661,19 +661,17 @@ switch.early.test.i.i.i.i.i.i.i.i.i:              ; preds = %bb.hm
   ]
 
 .critedge66.i.i.i.i.i.i.i.i.i:                    ; preds = %bb.hm
-  %i.ast = icmp slt i64 %.045.i.i.i.i.i.i.i.i.i173, 0
+  %i.ast = icmp slt i64 %.045.i.i.i.i.i.i.i.i.i174, 0
   %i.asu = select i1 %i.ast, i64 127, i64 0
   %.not58.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.asu, %i.asq
   br i1 %.not58.i.i.i.i.i.i.i.i.i, label %bb.hn, label %.critedge66.i.i.i.i.i.i.i.i.i._crit_edge
 
 bb.hn:                                            ; preds = %.critedge66.i.i.i.i.i.i.i.i.i, %switch.early.test.i.i.i.i.i.i.i.i.i, %switch.early.test.i.i.i.i.i.i.i.i.i, %switch.early.test.i.i.i.i.i.i.i.i.i, %switch.early.test.i.i.i.i.i.i.i.i.i, %.lr.ph
-  %i.asv = icmp ult i32 %.044.i.i.i.i.i.i.i.i.i174, 64
-  %152 = zext nneg i32 %.044.i.i.i.i.i.i.i.i.i174 to i64
-  %i.asw = shl i64 %i.asq, %152
+  %i.asv = icmp samesign ult i64 %indvars.iv.i.i.i.i.i.i.i.i172, 64
+  %i.asw = shl i64 %i.asq, %indvars.iv.i.i.i.i.i.i.i.i172
   %i.asx = select i1 %i.asv, i64 %i.asw, i64 0, !prof !122
-  %.146.i.i.i.i.i.i.i.i.i = or i64 %i.asx, %.045.i.i.i.i.i.i.i.i.i173 ; 2 uses
-  %153 = add i32 %.044.i.i.i.i.i.i.i.i.i174, 7    ; 3 uses
-  %i.asy = getelementptr inbounds nuw i8, ptr %.050.i.i.i.i.i.i.i.i.i172, i64 1 ; 3 uses
+  %.146.i.i.i.i.i.i.i.i.i = or i64 %i.asx, %.045.i.i.i.i.i.i.i.i.i174 ; 2 uses
+  %i.asy = getelementptr inbounds nuw i8, ptr %.050.i.i.i.i.i.i.i.i.i173, i64 1 ; 3 uses
   %i.asz = icmp slt i8 %i.aso, 0
   br i1 %i.asz, label %bb.hl, label %bb.hs, !llvm.loop !3404
 
@@ -728,11 +726,10 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit.i.i.i.i.i.i.i.i: ; preds = %bb.hr, %bb.hq
   br label %_ZN12_GLOBAL__N_110ParserHead12parseLiteralIiEEN4llvm9FailureOrIT_EEv.exit.thread.i.i.i.i.i.i.i
 
 bb.hs:                                            ; preds = %bb.hn
-  %i.atn = icmp ugt i32 %153, 63
+  %i.atn = icmp samesign ugt i64 %indvars.iv.i.i.i.i.i.i.i.i172, 56
   %.not61.i.i.i.i.i.i.i.i.i = icmp samesign ult i8 %i.aso, 64
   %or.cond.i.i.i.i.i.i.i.i.i = select i1 %i.atn, i1 true, i1 %.not61.i.i.i.i.i.i.i.i.i
-  %154 = zext nneg i32 %153 to i64
-  %i.ato = shl nsw i64 -1, %154
+  %i.ato = shl nsw i64 -128, %indvars.iv.i.i.i.i.i.i.i.i172
   %i.atp = select i1 %or.cond.i.i.i.i.i.i.i.i.i, i64 0, i64 %i.ato
   %.3.i.i.i.i.i.i.i.i.i = or i64 %.146.i.i.i.i.i.i.i.i.i, %i.atp ; 2 uses
   %i.atq = add i64 %.3.i.i.i.i.i.i.i.i.i, -2147483648
@@ -1073,21 +1070,22 @@ bb.a:
   br i1 %.not, label %.lr.ph, label %switch.early.test.i._crit_edge, !prof !448
 
 bb.b:                                             ; preds = %bb.d
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv24, 7
   %i.i = icmp eq ptr %i.t, %i.h
   br i1 %i.i, label %switch.early.test.i._crit_edge, label %.lr.ph, !prof !449, !llvm.loop !3404
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
-  %.044.i23 = phi i32 [ %4, %bb.b ], [ 0, %bb.a ] ; 5 uses
-  %.045.i22 = phi i64 [ %.146.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
-  %.050.i21 = phi ptr [ %i.t, %bb.b ], [ %i.g, %bb.a ] ; 2 uses
-  %i.j = load i8, ptr %.050.i21, align 1, !tbaa !73 ; 4 uses
+  %.045.i26 = phi i64 [ %.146.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
+  %.050.i25 = phi ptr [ %i.t, %bb.b ], [ %i.g, %bb.a ] ; 2 uses
+  %indvars.iv24 = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %bb.a ] ; 7 uses
+  %i.j = load i8, ptr %.050.i25, align 1, !tbaa !73 ; 4 uses
   %i.k = and i8 %i.j, 127
   %i.l = zext nneg i8 %i.k to i64                 ; 2 uses
-  %i.m = icmp ugt i32 %.044.i23, 62
+  %i.m = icmp samesign ugt i64 %indvars.iv24, 62
   br i1 %i.m, label %bb.c, label %bb.d, !prof !384
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.n = icmp eq i32 %.044.i23, 63
+  %i.n = icmp eq i64 %indvars.iv24, 63
   br i1 %i.n, label %switch.early.test.i, label %.critedge66.i
 
 switch.early.test.i:                              ; preds = %bb.c
@@ -1099,19 +1097,17 @@ switch.early.test.i:                              ; preds = %bb.c
   ]
 
 .critedge66.i:                                    ; preds = %bb.c
-  %i.o = icmp slt i64 %.045.i22, 0
+  %i.o = icmp slt i64 %.045.i26, 0
   %i.p = select i1 %i.o, i64 127, i64 0
   %.not58.i = icmp eq i64 %i.p, %i.l
   br i1 %.not58.i, label %bb.d, label %switch.early.test.i._crit_edge
 
 bb.d:                                             ; preds = %.critedge66.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %.lr.ph
-  %i.q = icmp ult i32 %.044.i23, 64
-  %3 = zext nneg i32 %.044.i23 to i64
-  %i.r = shl i64 %i.l, %3
+  %i.q = icmp samesign ult i64 %indvars.iv24, 64
+  %i.r = shl i64 %i.l, %indvars.iv24
   %i.s = select i1 %i.q, i64 %i.r, i64 0, !prof !122
-  %.146.i = or i64 %i.s, %.045.i22                ; 2 uses
-  %4 = add i32 %.044.i23, 7                       ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %.050.i21, i64 1 ; 3 uses
+  %.146.i = or i64 %i.s, %.045.i26                ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %.050.i25, i64 1 ; 3 uses
   %i.u = icmp slt i8 %i.j, 0
   br i1 %i.u, label %bb.b, label %bb.i, !llvm.loop !3404
 
@@ -1166,11 +1162,10 @@ _ZN4mlir18InFlightDiagnosticD2Ev.exit:            ; preds = %bb.g, %bb.h
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.d
-  %i.ai = icmp ugt i32 %4, 63
+  %i.ai = icmp samesign ugt i64 %indvars.iv24, 56
   %.not61.i = icmp samesign ult i8 %i.j, 64
   %or.cond.i = select i1 %i.ai, i1 true, i1 %.not61.i
-  %5 = zext nneg i32 %4 to i64
-  %i.aj = shl nsw i64 -1, %5
+  %i.aj = shl nsw i64 -128, %indvars.iv24
   %i.ak = select i1 %or.cond.i, i64 0, i64 %i.aj
   %.3.i = or i64 %.146.i, %i.ak
   %i.al = ptrtoint ptr %i.t to i64

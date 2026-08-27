@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.lr.ph.i97.i.1
   %i.da = zext nneg i32 %i.cu to i64
   %i.db = shl i64 %i.cz, %i.da
   %i.dc = or i64 %i.db, %i.cy                     ; 3 uses
-  %i.dd = add i32 %.03346.i99.i, 8                ; 2 uses
+  %i.dd = add nuw nsw i32 %.03346.i99.i, 8        ; 2 uses
   %indvars.iv.next260.i.1 = add nuw nsw i64 %indvars.iv259.i, 2 ; 2 uses
   %niter3967.next.1 = add i64 %niter3967, 2       ; 2 uses
   %niter3967.ncmp.1 = icmp eq i64 %niter3967.next.1, %unroll_iter3966
@@ -361,7 +361,7 @@ bb.ad:                                            ; preds = %.lr.ph.i111.i.1
   %i.fc = zext nneg i32 %i.ew to i64
   %i.fd = shl i64 %i.fb, %i.fc
   %i.fe = or i64 %i.fd, %i.fa                     ; 3 uses
-  %i.ff = add i32 %.03346.i113.i, 8               ; 2 uses
+  %i.ff = add nuw nsw i32 %.03346.i113.i, 8       ; 2 uses
   %indvars.iv.next263.i.1 = add nuw nsw i64 %indvars.iv262.i, 2 ; 2 uses
   %niter3973.next.1 = add i64 %niter3973, 2       ; 2 uses
   %niter3973.ncmp.1 = icmp eq i64 %niter3973.next.1, %unroll_iter3972
@@ -492,7 +492,7 @@ bb.aj:                                            ; preds = %.lr.ph.i124.i.1
   %i.gv = zext nneg i32 %i.gp to i64
   %i.gw = shl i64 %i.gu, %i.gv
   %i.gx = or i64 %i.gw, %i.gt                     ; 3 uses
-  %i.gy = add i32 %.03346.i126.i, 8               ; 2 uses
+  %i.gy = add nuw nsw i32 %.03346.i126.i, 8       ; 2 uses
   %indvars.iv.next266.i.1 = add nuw nsw i64 %indvars.iv265.i, 2 ; 2 uses
   %niter3979.next.1 = add i64 %niter3979, 2       ; 2 uses
   %niter3979.ncmp.1 = icmp eq i64 %niter3979.next.1, %unroll_iter3978
@@ -623,7 +623,7 @@ bb.ap:                                            ; preds = %.lr.ph.i137.i.1
   %i.io = zext nneg i32 %i.ii to i64
   %i.ip = shl i64 %i.in, %i.io
   %i.iq = or i64 %i.ip, %i.im                     ; 3 uses
-  %i.ir = add i32 %.03346.i139.i, 8               ; 2 uses
+  %i.ir = add nuw nsw i32 %.03346.i139.i, 8       ; 2 uses
   %indvars.iv.next269.i.1 = add nuw nsw i64 %indvars.iv268.i, 2 ; 2 uses
   %niter3985.next.1 = add i64 %niter3985, 2       ; 2 uses
   %niter3985.ncmp.1 = icmp eq i64 %niter3985.next.1, %unroll_iter3984
@@ -754,7 +754,7 @@ bb.av:                                            ; preds = %.lr.ph.i150.i.1
   %i.kh = zext nneg i32 %i.kb to i64
   %i.ki = shl i64 %i.kg, %i.kh
   %i.kj = or i64 %i.ki, %i.kf                     ; 3 uses
-  %i.kk = add i32 %.03346.i152.i, 8               ; 2 uses
+  %i.kk = add nuw nsw i32 %.03346.i152.i, 8       ; 2 uses
   %indvars.iv.next272.i.1 = add nuw nsw i64 %indvars.iv271.i, 2 ; 2 uses
   %niter3991.next.1 = add i64 %niter3991, 2       ; 2 uses
   %niter3991.ncmp.1 = icmp eq i64 %niter3991.next.1, %unroll_iter3990
@@ -904,7 +904,7 @@ bb.be:                                            ; preds = %.lr.ph.i163.i.1
   %i.me = zext nneg i32 %i.ly to i64
   %i.mf = shl i64 %i.md, %i.me
   %i.mg = or i64 %i.mf, %i.mc                     ; 3 uses
-  %i.mh = add i32 %.03346.i165.i, 8               ; 2 uses
+  %i.mh = add nuw nsw i32 %.03346.i165.i, 8       ; 2 uses
   %indvars.iv.next275.i.1 = add nuw nsw i64 %indvars.iv274.i, 2 ; 2 uses
   %niter3997.next.1 = add i64 %niter3997, 2       ; 2 uses
   %niter3997.ncmp.1 = icmp eq i64 %niter3997.next.1, %unroll_iter3996
@@ -1064,7 +1064,7 @@ bb.bl:                                            ; preds = %.lr.ph.i180.i.1
   %i.oj = zext nneg i32 %i.od to i64
   %i.ok = shl i64 %i.oi, %i.oj
   %i.ol = or i64 %i.ok, %i.oh                     ; 3 uses
-  %i.om = add i32 %.03346.i182.i, 8               ; 2 uses
+  %i.om = add nuw nsw i32 %.03346.i182.i, 8       ; 2 uses
   %indvars.iv.next278.i.1 = add nuw nsw i64 %indvars.iv277.i, 2 ; 2 uses
   %niter4003.next.1 = add i64 %niter4003, 2       ; 2 uses
   %niter4003.ncmp.1 = icmp eq i64 %niter4003.next.1, %unroll_iter4002
@@ -1182,7 +1182,7 @@ bb.bq:                                            ; preds = %.lr.ph.i193.i.1
   %i.qc = zext nneg i32 %i.pw to i64
   %i.qd = shl i64 %i.qb, %i.qc
   %i.qe = or i64 %i.qd, %i.qa                     ; 3 uses
-  %i.qf = add i32 %.03346.i195.i, 8               ; 2 uses
+  %i.qf = add nuw nsw i32 %.03346.i195.i, 8       ; 2 uses
   %indvars.iv.next281.i.1 = add nuw nsw i64 %indvars.iv280.i, 2 ; 2 uses
   %niter4009.next.1 = add i64 %niter4009, 2       ; 2 uses
   %niter4009.ncmp.1 = icmp eq i64 %niter4009.next.1, %unroll_iter4008
@@ -1585,7 +1585,7 @@ bb.dk:                                            ; preds = %.lr.ph.i102.i.1
   %i.ya = zext nneg i32 %i.xu to i64
   %i.yb = shl i64 %i.xz, %i.ya
   %i.yc = or i64 %i.yb, %i.xy                     ; 3 uses
-  %i.yd = add i32 %.03346.i.i, 8                  ; 2 uses
+  %i.yd = add nuw nsw i32 %.03346.i.i, 8          ; 2 uses
   %indvars.iv.next.i150.1 = add nuw nsw i64 %indvars.iv.i147, 2 ; 2 uses
   %niter4015.next.1 = add i64 %niter4015, 2       ; 2 uses
   %niter4015.ncmp.1 = icmp eq i64 %niter4015.next.1, %unroll_iter4014
@@ -1706,11 +1706,11 @@ bb.dv:                                            ; preds = %bb.du
   br label %readNumber.exit.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.dw, %.lr.ph.i.preheader.i.i.new
-  %indvars.iv.i106.i.a = phi i64 [ %i.zg, %.lr.ph.i.preheader.i.i.new ], [ %indvars.iv.next.i107.i.1, %bb.dw ] ; 3 uses
-  %.03346.i.i.i = phi i32 [ 0, %.lr.ph.i.preheader.i.i.new ], [ %8, %bb.dw ] ; 3 uses
+  %indvars.iv.i106.i.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i.new ], [ %indvars.iv.next1911.1, %bb.dw ] ; 3 uses
+  %indvars.iv.i106.i = phi i64 [ %i.zg, %.lr.ph.i.preheader.i.i.new ], [ %indvars.iv.next.i107.i.1, %bb.dw ] ; 3 uses
   %.03545.i.i.i = phi i64 [ 0, %.lr.ph.i.preheader.i.i.new ], [ %i.zy, %bb.dw ]
   %niter4025 = phi i64 [ 0, %.lr.ph.i.preheader.i.i.new ], [ %niter4025.next.1, %bb.dw ]
-  %i.zj = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i106.i.a
+  %i.zj = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i106.i
   %i.zk = load i8, ptr %i.zj, align 1, !tbaa !123 ; 2 uses
   %i.zl = zext i8 %i.zk to i64                    ; 2 uses
   %i.zm = and i64 %i.zl, 240
@@ -1725,7 +1725,7 @@ bb.dv:                                            ; preds = %bb.du
   br label %readNumber.exit.i.i
 
 .lr.ph.i.i.i.1:                                   ; preds = %.lr.ph.i.i.i
-  %i.zo = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i106.i.a
+  %i.zo = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i106.i
   %i.zp = getelementptr inbounds nuw i8, ptr %i.zo, i64 1
   %i.zq = load i8, ptr %i.zp, align 1, !tbaa !123 ; 2 uses
   %i.zr = zext i8 %i.zq to i64                    ; 2 uses
@@ -1734,17 +1734,15 @@ bb.dv:                                            ; preds = %bb.du
   br i1 %.not.i.i.i.1, label %bb.dw, label %.thread.i.i.i, !prof !134
 
 bb.dw:                                            ; preds = %.lr.ph.i.i.i.1
-  %5 = or disjoint i32 %.03346.i.i.i, 4
+  %indvars.iv.next1911 = or disjoint i64 %indvars.iv.i106.i.a, 4
   %i.zt = and i64 %i.zl, 15
-  %6 = zext nneg i32 %.03346.i.i.i to i64
-  %i.zu = shl i64 %i.zt, %6
+  %i.zu = shl i64 %i.zt, %indvars.iv.i106.i.a
   %i.zv = or i64 %i.zu, %.03545.i.i.i
   %i.zw = and i64 %i.zr, 15
-  %7 = zext nneg i32 %5 to i64
-  %i.zx = shl i64 %i.zw, %7
+  %i.zx = shl i64 %i.zw, %indvars.iv.next1911
   %i.zy = or i64 %i.zx, %i.zv                     ; 3 uses
-  %8 = add i32 %.03346.i.i.i, 8                   ; 2 uses
-  %indvars.iv.next.i107.i.1 = add nuw nsw i64 %indvars.iv.i106.i.a, 2 ; 2 uses
+  %indvars.iv.next1911.1 = add nuw nsw i64 %indvars.iv.i106.i.a, 8 ; 2 uses
+  %indvars.iv.next.i107.i.1 = add nuw nsw i64 %indvars.iv.i106.i, 2 ; 2 uses
   %niter4025.next.1 = add i64 %niter4025, 2       ; 2 uses
   %niter4025.ncmp.1 = icmp eq i64 %niter4025.next.1, %unroll_iter4024
   br i1 %niter4025.ncmp.1, label %._crit_edge.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i
@@ -1754,12 +1752,12 @@ bb.dw:                                            ; preds = %.lr.ph.i.i.i.1
   br i1 %lcmp.mod4021.not, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.epil.preheader
 
 .lr.ph.i.i.i.epil.preheader:                      ; preds = %._crit_edge.i.i.i.loopexit.unr-lcssa, %.lr.ph.i.preheader.i.i
-  %indvars.iv.i106.i.epil.init.a = phi i64 [ %i.zg, %.lr.ph.i.preheader.i.i ], [ %indvars.iv.next.i107.i.1, %._crit_edge.i.i.i.loopexit.unr-lcssa ]
-  %.03346.i.i.i.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i.i ], [ %8, %._crit_edge.i.i.i.loopexit.unr-lcssa ]
+  %indvars.iv.i106.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i ], [ %indvars.iv.next1911.1, %._crit_edge.i.i.i.loopexit.unr-lcssa ]
+  %indvars.iv.i106.i.epil.init = phi i64 [ %i.zg, %.lr.ph.i.preheader.i.i ], [ %indvars.iv.next.i107.i.1, %._crit_edge.i.i.i.loopexit.unr-lcssa ]
   %.03545.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i.i ], [ %i.zy, %._crit_edge.i.i.i.loopexit.unr-lcssa ]
   %lcmp.mod4023 = trunc i8 %.fr4240 to i1
   call void @llvm.assume(i1 %lcmp.mod4023)
-  %i.zz = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i106.i.epil.init.a
+  %i.zz = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i106.i.epil.init
   %i.aaa = load i8, ptr %i.zz, align 1, !tbaa !123 ; 2 uses
   %i.aab = zext i8 %i.aaa to i64                  ; 2 uses
   %i.aac = and i64 %i.aab, 240
@@ -1768,8 +1766,7 @@ bb.dw:                                            ; preds = %.lr.ph.i.i.i.1
 
 ._crit_edge.i.i.i.loopexit.epilog-lcssa:          ; preds = %.lr.ph.i.i.i.epil.preheader
   %i.aad = and i64 %i.aab, 15
-  %9 = zext nneg i32 %.03346.i.i.i.epil.init to i64
-  %i.aae = shl i64 %i.aad, %9
+  %i.aae = shl i64 %i.aad, %indvars.iv.i106.i.epil.init.a
   %i.aaf = or i64 %i.aae, %.03545.i.i.i.epil.init
   br label %._crit_edge.i.i.i
 
@@ -2114,7 +2111,7 @@ bb.et:                                            ; preds = %.lr.ph.i69.i.1
   %i.afh = zext nneg i32 %i.afb to i64
   %i.afi = shl i64 %i.afg, %i.afh
   %i.afj = or i64 %i.afi, %i.aff                  ; 3 uses
-  %i.afk = add i32 %.03346.i71.i, 8               ; 2 uses
+  %i.afk = add nuw nsw i32 %.03346.i71.i, 8       ; 2 uses
   %indvars.iv.next124.i.1 = add nuw nsw i64 %indvars.iv123.i, 2 ; 2 uses
   %niter4037.next.1 = add i64 %niter4037, 2       ; 2 uses
   %niter4037.ncmp.1 = icmp eq i64 %niter4037.next.1, %unroll_iter4036
@@ -2272,7 +2269,7 @@ bb.fe:                                            ; preds = %.lr.ph.i82.i.1
   %i.ahc = zext nneg i32 %i.agw to i64
   %i.ahd = shl i64 %i.ahb, %i.ahc
   %i.ahe = or i64 %i.ahd, %i.aha                  ; 3 uses
-  %i.ahf = add i32 %.03346.i84.i, 8               ; 2 uses
+  %i.ahf = add nuw nsw i32 %.03346.i84.i, 8       ; 2 uses
   %indvars.iv.next127.i.1 = add nuw nsw i64 %indvars.iv126.i, 2 ; 2 uses
   %niter4043.next.1 = add i64 %niter4043, 2       ; 2 uses
   %niter4043.ncmp.1 = icmp eq i64 %niter4043.next.1, %unroll_iter4042
@@ -2364,11 +2361,11 @@ bb.fj:                                            ; preds = %bb.fi
   br label %readNumber.exit.i.i169
 
 .lr.ph.i.i.i178:                                  ; preds = %bb.fk, %.lr.ph.i.preheader.i.i177.new
-  %indvars.iv.i.i.a = phi i64 [ %i.aib, %.lr.ph.i.preheader.i.i177.new ], [ %indvars.iv.next.i.i.1, %bb.fk ] ; 3 uses
-  %.03346.i.i.i179 = phi i32 [ 0, %.lr.ph.i.preheader.i.i177.new ], [ %13, %bb.fk ] ; 3 uses
+  %indvars.iv.i.i.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i177.new ], [ %indvars.iv.next1908.1, %bb.fk ] ; 3 uses
+  %indvars.iv.i.i = phi i64 [ %i.aib, %.lr.ph.i.preheader.i.i177.new ], [ %indvars.iv.next.i.i.1, %bb.fk ] ; 3 uses
   %.03545.i.i.i180 = phi i64 [ 0, %.lr.ph.i.preheader.i.i177.new ], [ %i.ait, %bb.fk ]
   %niter4049 = phi i64 [ 0, %.lr.ph.i.preheader.i.i177.new ], [ %niter4049.next.1, %bb.fk ]
-  %i.aie = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i.a
+  %i.aie = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i
   %i.aif = load i8, ptr %i.aie, align 1, !tbaa !123 ; 2 uses
   %i.aig = zext i8 %i.aif to i64                  ; 2 uses
   %i.aih = and i64 %i.aig, 240
@@ -2383,7 +2380,7 @@ bb.fj:                                            ; preds = %bb.fi
   br label %readNumber.exit.i.i169
 
 .lr.ph.i.i.i178.1:                                ; preds = %.lr.ph.i.i.i178
-  %i.aij = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i.a
+  %i.aij = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i
   %i.aik = getelementptr inbounds nuw i8, ptr %i.aij, i64 1
   %i.ail = load i8, ptr %i.aik, align 1, !tbaa !123 ; 2 uses
   %i.aim = zext i8 %i.ail to i64                  ; 2 uses
@@ -2392,17 +2389,15 @@ bb.fj:                                            ; preds = %bb.fi
   br i1 %.not.i.i.i181.1, label %bb.fk, label %.thread.i.i.i182, !prof !134
 
 bb.fk:                                            ; preds = %.lr.ph.i.i.i178.1
-  %10 = or disjoint i32 %.03346.i.i.i179, 4
+  %indvars.iv.next1908 = or disjoint i64 %indvars.iv.i.i.a, 4
   %i.aio = and i64 %i.aig, 15
-  %11 = zext nneg i32 %.03346.i.i.i179 to i64
-  %i.aip = shl i64 %i.aio, %11
+  %i.aip = shl i64 %i.aio, %indvars.iv.i.i.a
   %i.aiq = or i64 %i.aip, %.03545.i.i.i180
   %i.air = and i64 %i.aim, 15
-  %12 = zext nneg i32 %10 to i64
-  %i.ais = shl i64 %i.air, %12
+  %i.ais = shl i64 %i.air, %indvars.iv.next1908
   %i.ait = or i64 %i.ais, %i.aiq                  ; 3 uses
-  %13 = add i32 %.03346.i.i.i179, 8               ; 2 uses
-  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i.a, 2 ; 2 uses
+  %indvars.iv.next1908.1 = add nuw nsw i64 %indvars.iv.i.i.a, 8 ; 2 uses
+  %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
   %niter4049.next.1 = add i64 %niter4049, 2       ; 2 uses
   %niter4049.ncmp.1 = icmp eq i64 %niter4049.next.1, %unroll_iter4048
   br i1 %niter4049.ncmp.1, label %._crit_edge.i.i.i167.loopexit.unr-lcssa, label %.lr.ph.i.i.i178
@@ -2412,12 +2407,12 @@ bb.fk:                                            ; preds = %.lr.ph.i.i.i178.1
   br i1 %lcmp.mod4045.not, label %._crit_edge.i.i.i167, label %.lr.ph.i.i.i178.epil.preheader
 
 .lr.ph.i.i.i178.epil.preheader:                   ; preds = %._crit_edge.i.i.i167.loopexit.unr-lcssa, %.lr.ph.i.preheader.i.i177
-  %indvars.iv.i.i.epil.init.a = phi i64 [ %i.aib, %.lr.ph.i.preheader.i.i177 ], [ %indvars.iv.next.i.i.1, %._crit_edge.i.i.i167.loopexit.unr-lcssa ]
-  %.03346.i.i.i179.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i.i177 ], [ %13, %._crit_edge.i.i.i167.loopexit.unr-lcssa ]
+  %indvars.iv.i.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i177 ], [ %indvars.iv.next1908.1, %._crit_edge.i.i.i167.loopexit.unr-lcssa ]
+  %indvars.iv.i.i.epil.init = phi i64 [ %i.aib, %.lr.ph.i.preheader.i.i177 ], [ %indvars.iv.next.i.i.1, %._crit_edge.i.i.i167.loopexit.unr-lcssa ]
   %.03545.i.i.i180.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i.i177 ], [ %i.ait, %._crit_edge.i.i.i167.loopexit.unr-lcssa ]
   %lcmp.mod4047 = trunc i8 %.fr4249 to i1
   call void @llvm.assume(i1 %lcmp.mod4047)
-  %i.aiu = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i.epil.init.a
+  %i.aiu = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i.epil.init
   %i.aiv = load i8, ptr %i.aiu, align 1, !tbaa !123 ; 2 uses
   %i.aiw = zext i8 %i.aiv to i64                  ; 2 uses
   %i.aix = and i64 %i.aiw, 240
@@ -2426,8 +2421,7 @@ bb.fk:                                            ; preds = %.lr.ph.i.i.i178.1
 
 ._crit_edge.i.i.i167.loopexit.epilog-lcssa:       ; preds = %.lr.ph.i.i.i178.epil.preheader
   %i.aiy = and i64 %i.aiw, 15
-  %14 = zext nneg i32 %.03346.i.i.i179.epil.init to i64
-  %i.aiz = shl i64 %i.aiy, %14
+  %i.aiz = shl i64 %i.aiy, %indvars.iv.i.i.epil.init.a
   %i.aja = or i64 %i.aiz, %.03545.i.i.i180.epil.init
   br label %._crit_edge.i.i.i167
 
@@ -2759,7 +2753,7 @@ bb.gi:                                            ; preds = %.lr.ph.i58.i.1
   %i.amx = zext nneg i32 %i.amr to i64
   %i.amy = shl i64 %i.amw, %i.amx
   %i.amz = or i64 %i.amy, %i.amv                  ; 3 uses
-  %i.ana = add i32 %.03346.i60.i, 8               ; 2 uses
+  %i.ana = add nuw nsw i32 %.03346.i60.i, 8       ; 2 uses
   %indvars.iv.next142.i.1 = add nuw nsw i64 %indvars.iv141.i, 2 ; 2 uses
   %niter4061.next.1 = add i64 %niter4061, 2       ; 2 uses
   %niter4061.ncmp.1 = icmp eq i64 %niter4061.next.1, %unroll_iter4060
@@ -2870,11 +2864,11 @@ bb.gq:                                            ; preds = %bb.go
   br label %.lr.ph.i.i.i202
 
 .lr.ph.i.i.i202:                                  ; preds = %bb.gr, %.lr.ph.i.preheader.i.i201.new
-  %indvars.iv.i.i203.a = phi i64 [ %i.anz, %.lr.ph.i.preheader.i.i201.new ], [ %indvars.iv.next.i.i208.1, %bb.gr ] ; 3 uses
-  %.03346.i.i.i204 = phi i32 [ 0, %.lr.ph.i.preheader.i.i201.new ], [ %18, %bb.gr ] ; 3 uses
+  %indvars.iv.i.i203.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i201.new ], [ %indvars.iv.next1902.1, %bb.gr ] ; 3 uses
+  %indvars.iv.i.i203 = phi i64 [ %i.anz, %.lr.ph.i.preheader.i.i201.new ], [ %indvars.iv.next.i.i208.1, %bb.gr ] ; 3 uses
   %.03545.i.i.i205 = phi i64 [ 0, %.lr.ph.i.preheader.i.i201.new ], [ %i.aor, %bb.gr ]
   %niter4067 = phi i64 [ 0, %.lr.ph.i.preheader.i.i201.new ], [ %niter4067.next.1, %bb.gr ]
-  %i.aoc = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i203.a
+  %i.aoc = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i203
   %i.aod = load i8, ptr %i.aoc, align 1, !tbaa !123 ; 2 uses
   %i.aoe = zext i8 %i.aod to i64                  ; 2 uses
   %i.aof = and i64 %i.aoe, 240
@@ -2888,7 +2882,7 @@ bb.gq:                                            ; preds = %bb.go
   br label %readNumber.exit.i.sink.split.i
 
 .lr.ph.i.i.i202.1:                                ; preds = %.lr.ph.i.i.i202
-  %i.aoh = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i203.a
+  %i.aoh = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i203
   %i.aoi = getelementptr inbounds nuw i8, ptr %i.aoh, i64 1
   %i.aoj = load i8, ptr %i.aoi, align 1, !tbaa !123 ; 2 uses
   %i.aok = zext i8 %i.aoj to i64                  ; 2 uses
@@ -2897,17 +2891,15 @@ bb.gq:                                            ; preds = %bb.go
   br i1 %.not.i.i.i206.1, label %bb.gr, label %.thread.i.i.i207, !prof !134
 
 bb.gr:                                            ; preds = %.lr.ph.i.i.i202.1
-  %15 = or disjoint i32 %.03346.i.i.i204, 4
+  %indvars.iv.next1902 = or disjoint i64 %indvars.iv.i.i203.a, 4
   %i.aom = and i64 %i.aoe, 15
-  %16 = zext nneg i32 %.03346.i.i.i204 to i64
-  %i.aon = shl i64 %i.aom, %16
+  %i.aon = shl i64 %i.aom, %indvars.iv.i.i203.a
   %i.aoo = or i64 %i.aon, %.03545.i.i.i205
   %i.aop = and i64 %i.aok, 15
-  %17 = zext nneg i32 %15 to i64
-  %i.aoq = shl i64 %i.aop, %17
+  %i.aoq = shl i64 %i.aop, %indvars.iv.next1902
   %i.aor = or i64 %i.aoq, %i.aoo                  ; 3 uses
-  %18 = add i32 %.03346.i.i.i204, 8               ; 2 uses
-  %indvars.iv.next.i.i208.1 = add nuw nsw i64 %indvars.iv.i.i203.a, 2 ; 2 uses
+  %indvars.iv.next1902.1 = add nuw nsw i64 %indvars.iv.i.i203.a, 8 ; 2 uses
+  %indvars.iv.next.i.i208.1 = add nuw nsw i64 %indvars.iv.i.i203, 2 ; 2 uses
   %niter4067.next.1 = add i64 %niter4067, 2       ; 2 uses
   %niter4067.ncmp.1 = icmp eq i64 %niter4067.next.1, %unroll_iter4066
   br i1 %niter4067.ncmp.1, label %readNumber.exit.i.i195.loopexit.unr-lcssa, label %.lr.ph.i.i.i202
@@ -2921,12 +2913,12 @@ readNumber.exit.i.i195.loopexit.unr-lcssa:        ; preds = %bb.gr
   br i1 %lcmp.mod4063.not, label %readNumber.exit.i.i195, label %.lr.ph.i.i.i202.epil.preheader
 
 .lr.ph.i.i.i202.epil.preheader:                   ; preds = %readNumber.exit.i.i195.loopexit.unr-lcssa, %.lr.ph.i.preheader.i.i201
-  %indvars.iv.i.i203.epil.init.a = phi i64 [ %i.anz, %.lr.ph.i.preheader.i.i201 ], [ %indvars.iv.next.i.i208.1, %readNumber.exit.i.i195.loopexit.unr-lcssa ]
-  %.03346.i.i.i204.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i.i201 ], [ %18, %readNumber.exit.i.i195.loopexit.unr-lcssa ]
+  %indvars.iv.i.i203.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i201 ], [ %indvars.iv.next1902.1, %readNumber.exit.i.i195.loopexit.unr-lcssa ]
+  %indvars.iv.i.i203.epil.init = phi i64 [ %i.anz, %.lr.ph.i.preheader.i.i201 ], [ %indvars.iv.next.i.i208.1, %readNumber.exit.i.i195.loopexit.unr-lcssa ]
   %.03545.i.i.i205.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i.i201 ], [ %i.aor, %readNumber.exit.i.i195.loopexit.unr-lcssa ]
   %lcmp.mod4065 = trunc i8 %.fr4257 to i1
   call void @llvm.assume(i1 %lcmp.mod4065)
-  %i.aos = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i203.epil.init.a
+  %i.aos = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i.i203.epil.init
   %i.aot = load i8, ptr %i.aos, align 1, !tbaa !123 ; 2 uses
   %i.aou = zext i8 %i.aot to i64                  ; 2 uses
   %i.aov = and i64 %i.aou, 240
@@ -2935,8 +2927,7 @@ readNumber.exit.i.i195.loopexit.unr-lcssa:        ; preds = %bb.gr
 
 readNumber.exit.i.i195.loopexit.epilog-lcssa:     ; preds = %.lr.ph.i.i.i202.epil.preheader
   %i.aow = and i64 %i.aou, 15
-  %19 = zext nneg i32 %.03346.i.i.i204.epil.init to i64
-  %i.aox = shl i64 %i.aow, %19
+  %i.aox = shl i64 %i.aow, %indvars.iv.i.i203.epil.init.a
   %i.aoy = or i64 %i.aox, %.03545.i.i.i205.epil.init
   br label %readNumber.exit.i.i195
 
@@ -3056,11 +3047,11 @@ bb.ha:                                            ; preds = %bb.gy
   br label %.lr.ph.i.i77.i
 
 .lr.ph.i.i77.i:                                   ; preds = %bb.hb, %.lr.ph.i.preheader.i76.i.new
-  %indvars.iv.i78.i.a = phi i64 [ %i.aqj, %.lr.ph.i.preheader.i76.i.new ], [ %indvars.iv.next.i83.i.1, %bb.hb ] ; 3 uses
-  %.03346.i.i79.i = phi i32 [ 0, %.lr.ph.i.preheader.i76.i.new ], [ %23, %bb.hb ] ; 3 uses
+  %indvars.iv.i78.i.a = phi i64 [ 0, %.lr.ph.i.preheader.i76.i.new ], [ %indvars.iv.next1905.1, %bb.hb ] ; 3 uses
+  %indvars.iv.i78.i = phi i64 [ %i.aqj, %.lr.ph.i.preheader.i76.i.new ], [ %indvars.iv.next.i83.i.1, %bb.hb ] ; 3 uses
   %.03545.i.i80.i = phi i64 [ 0, %.lr.ph.i.preheader.i76.i.new ], [ %i.ard, %bb.hb ]
   %niter4073 = phi i64 [ 0, %.lr.ph.i.preheader.i76.i.new ], [ %niter4073.next.1, %bb.hb ]
-  %i.aqo = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i78.i.a
+  %i.aqo = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i78.i
   %i.aqp = load i8, ptr %i.aqo, align 1, !tbaa !123 ; 2 uses
   %i.aqq = zext i8 %i.aqp to i64                  ; 2 uses
   %i.aqr = and i64 %i.aqq, 240
@@ -3074,7 +3065,7 @@ bb.ha:                                            ; preds = %bb.gy
   br label %.critedge.thread.i.loopexit.i
 
 .lr.ph.i.i77.i.1:                                 ; preds = %.lr.ph.i.i77.i
-  %i.aqt = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i78.i.a
+  %i.aqt = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i78.i
   %i.aqu = getelementptr inbounds nuw i8, ptr %i.aqt, i64 1
   %i.aqv = load i8, ptr %i.aqu, align 1, !tbaa !123 ; 2 uses
   %i.aqw = zext i8 %i.aqv to i64                  ; 2 uses
@@ -3083,17 +3074,15 @@ bb.ha:                                            ; preds = %bb.gy
   br i1 %.not.i.i81.i.1, label %bb.hb, label %.thread.i.i82.i, !prof !134
 
 bb.hb:                                            ; preds = %.lr.ph.i.i77.i.1
-  %20 = or disjoint i32 %.03346.i.i79.i, 4
+  %indvars.iv.next1905 = or disjoint i64 %indvars.iv.i78.i.a, 4
   %i.aqy = and i64 %i.aqq, 15
-  %21 = zext nneg i32 %.03346.i.i79.i to i64
-  %i.aqz = shl i64 %i.aqy, %21
+  %i.aqz = shl i64 %i.aqy, %indvars.iv.i78.i.a
   %i.ara = or i64 %i.aqz, %.03545.i.i80.i
   %i.arb = and i64 %i.aqw, 15
-  %22 = zext nneg i32 %20 to i64
-  %i.arc = shl i64 %i.arb, %22
+  %i.arc = shl i64 %i.arb, %indvars.iv.next1905
   %i.ard = or i64 %i.arc, %i.ara                  ; 3 uses
-  %23 = add i32 %.03346.i.i79.i, 8                ; 2 uses
-  %indvars.iv.next.i83.i.1 = add nuw nsw i64 %indvars.iv.i78.i.a, 2 ; 2 uses
+  %indvars.iv.next1905.1 = add nuw nsw i64 %indvars.iv.i78.i.a, 8 ; 2 uses
+  %indvars.iv.next.i83.i.1 = add nuw nsw i64 %indvars.iv.i78.i, 2 ; 2 uses
   %niter4073.next.1 = add i64 %niter4073, 2       ; 2 uses
   %niter4073.ncmp.1 = icmp eq i64 %niter4073.next.1, %unroll_iter4072
   br i1 %niter4073.ncmp.1, label %readNumber.exit.i74.i.loopexit.unr-lcssa, label %.lr.ph.i.i77.i
@@ -3103,12 +3092,12 @@ readNumber.exit.i74.i.loopexit.unr-lcssa:         ; preds = %bb.hb
   br i1 %lcmp.mod4069.not, label %readNumber.exit.i74.i, label %.lr.ph.i.i77.i.epil.preheader
 
 .lr.ph.i.i77.i.epil.preheader:                    ; preds = %readNumber.exit.i74.i.loopexit.unr-lcssa, %.lr.ph.i.preheader.i76.i
-  %indvars.iv.i78.i.epil.init.a = phi i64 [ %i.aqj, %.lr.ph.i.preheader.i76.i ], [ %indvars.iv.next.i83.i.1, %readNumber.exit.i74.i.loopexit.unr-lcssa ]
-  %.03346.i.i79.i.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i76.i ], [ %23, %readNumber.exit.i74.i.loopexit.unr-lcssa ]
+  %indvars.iv.i78.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i76.i ], [ %indvars.iv.next1905.1, %readNumber.exit.i74.i.loopexit.unr-lcssa ]
+  %indvars.iv.i78.i.epil.init = phi i64 [ %i.aqj, %.lr.ph.i.preheader.i76.i ], [ %indvars.iv.next.i83.i.1, %readNumber.exit.i74.i.loopexit.unr-lcssa ]
   %.03545.i.i80.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i76.i ], [ %i.ard, %readNumber.exit.i74.i.loopexit.unr-lcssa ]
   %lcmp.mod4071 = trunc i64 %i.aqm to i1
   call void @llvm.assume(i1 %lcmp.mod4071)
-  %i.are = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i78.i.epil.init.a
+  %i.are = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i78.i.epil.init
   %i.arf = load i8, ptr %i.are, align 1, !tbaa !123 ; 2 uses
   %i.arg = zext i8 %i.arf to i64                  ; 2 uses
   %i.arh = and i64 %i.arg, 240
@@ -3117,8 +3106,7 @@ readNumber.exit.i74.i.loopexit.unr-lcssa:         ; preds = %bb.hb
 
 readNumber.exit.i74.i.loopexit.epilog-lcssa:      ; preds = %.lr.ph.i.i77.i.epil.preheader
   %i.ari = and i64 %i.arg, 15
-  %24 = zext nneg i32 %.03346.i.i79.i.epil.init to i64
-  %i.arj = shl i64 %i.ari, %24
+  %i.arj = shl i64 %i.ari, %indvars.iv.i78.i.epil.init.a
   %i.ark = or i64 %i.arj, %.03545.i.i80.i.epil.init
   br label %readNumber.exit.i74.i
 
@@ -3434,7 +3422,7 @@ bb.hr:                                            ; preds = %.lr.ph.i62.i.1
   %i.aux = zext nneg i32 %i.aur to i64
   %i.auy = shl i64 %i.auw, %i.aux
   %i.auz = or i64 %i.auy, %i.auv                  ; 3 uses
-  %i.ava = add i32 %.03346.i64.i, 8               ; 2 uses
+  %i.ava = add nuw nsw i32 %.03346.i64.i, 8       ; 2 uses
   %indvars.iv.next155.i.1 = add nuw nsw i64 %indvars.iv154.i, 2 ; 2 uses
   %niter4092.next.1 = add i64 %niter4092, 2       ; 2 uses
   %niter4092.ncmp.1 = icmp eq i64 %niter4092.next.1, %unroll_iter4091
@@ -3585,7 +3573,7 @@ bb.hz:                                            ; preds = %.lr.ph.i75.i.1
   %i.axg = zext nneg i32 %i.axa to i64
   %i.axh = shl i64 %i.axf, %i.axg
   %i.axi = or i64 %i.axh, %i.axe                  ; 3 uses
-  %i.axj = add i32 %.03346.i77.i, 8               ; 2 uses
+  %i.axj = add nuw nsw i32 %.03346.i77.i, 8       ; 2 uses
   %indvars.iv.next158.i.1 = add nuw nsw i64 %indvars.iv157.i, 2 ; 2 uses
   %niter4101.next.1 = add i64 %niter4101, 2       ; 2 uses
   %niter4101.ncmp.1 = icmp eq i64 %niter4101.next.1, %unroll_iter4100
@@ -3707,7 +3695,7 @@ bb.if:                                            ; preds = %.lr.ph.i88.i.1
   %i.aza = zext nneg i32 %i.ayu to i64
   %i.azb = shl i64 %i.ayz, %i.aza
   %i.azc = or i64 %i.azb, %i.ayy                  ; 3 uses
-  %i.azd = add i32 %.03346.i90.i, 8               ; 2 uses
+  %i.azd = add nuw nsw i32 %.03346.i90.i, 8       ; 2 uses
   %indvars.iv.next161.i.1 = add nuw nsw i64 %indvars.iv160.i, 2 ; 2 uses
   %niter4112.next.1 = add i64 %niter4112, 2       ; 2 uses
   %niter4112.ncmp.1 = icmp eq i64 %niter4112.next.1, %unroll_iter4111
@@ -3798,7 +3786,7 @@ bb.ik:                                            ; preds = %.lr.ph.i101.i.1
   %i.bal = zext nneg i32 %i.baf to i64
   %i.bam = shl i64 %i.bak, %i.bal
   %i.ban = or i64 %i.bam, %i.baj                  ; 3 uses
-  %i.bao = add i32 %.03346.i103.i, 8              ; 2 uses
+  %i.bao = add nuw nsw i32 %.03346.i103.i, 8      ; 2 uses
   %indvars.iv.next164.i.1 = add nuw nsw i64 %indvars.iv163.i, 2 ; 2 uses
   %niter4122.next.1 = add i64 %niter4122, 2       ; 2 uses
   %niter4122.ncmp.1 = icmp eq i64 %niter4122.next.1, %unroll_iter4121
@@ -4008,11 +3996,11 @@ bb.iv:                                            ; preds = %bb.it
   br label %.lr.ph.i.i.i239
 
 .lr.ph.i.i.i239:                                  ; preds = %bb.iw, %.lr.ph.i.preheader.i.i238.new
-  %indvars.iv.i74.i.a = phi i64 [ %i.bcl, %.lr.ph.i.preheader.i.i238.new ], [ %indvars.iv.next.i75.i.1, %bb.iw ] ; 3 uses
-  %.03346.i.i.i240 = phi i32 [ 0, %.lr.ph.i.preheader.i.i238.new ], [ %28, %bb.iw ] ; 3 uses
+  %indvars.iv.i74.i.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i238.new ], [ %indvars.iv.next1899.1, %bb.iw ] ; 3 uses
+  %indvars.iv.i74.i = phi i64 [ %i.bcl, %.lr.ph.i.preheader.i.i238.new ], [ %indvars.iv.next.i75.i.1, %bb.iw ] ; 3 uses
   %.03545.i.i.i241 = phi i64 [ 0, %.lr.ph.i.preheader.i.i238.new ], [ %i.bdg, %bb.iw ]
   %niter4132 = phi i64 [ 0, %.lr.ph.i.preheader.i.i238.new ], [ %niter4132.next.1, %bb.iw ]
-  %i.bcr = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i74.i.a
+  %i.bcr = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i74.i
   %i.bcs = load i8, ptr %i.bcr, align 1, !tbaa !123 ; 2 uses
   %i.bct = zext i8 %i.bcs to i64                  ; 2 uses
   %i.bcu = and i64 %i.bct, 240
@@ -4026,7 +4014,7 @@ bb.iv:                                            ; preds = %bb.it
   br label %readNumber.exit.i.i244
 
 .lr.ph.i.i.i239.1:                                ; preds = %.lr.ph.i.i.i239
-  %i.bcw = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i74.i.a
+  %i.bcw = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i74.i
   %i.bcx = getelementptr inbounds nuw i8, ptr %i.bcw, i64 1
   %i.bcy = load i8, ptr %i.bcx, align 1, !tbaa !123 ; 2 uses
   %i.bcz = zext i8 %i.bcy to i64                  ; 2 uses
@@ -4035,17 +4023,15 @@ bb.iv:                                            ; preds = %bb.it
   br i1 %.not.i.i.i242.1, label %bb.iw, label %.thread.i.i.i243, !prof !134
 
 bb.iw:                                            ; preds = %.lr.ph.i.i.i239.1
-  %25 = or disjoint i32 %.03346.i.i.i240, 4
+  %indvars.iv.next1899 = or disjoint i64 %indvars.iv.i74.i.a, 4
   %i.bdb = and i64 %i.bct, 15
-  %26 = zext nneg i32 %.03346.i.i.i240 to i64
-  %i.bdc = shl i64 %i.bdb, %26
+  %i.bdc = shl i64 %i.bdb, %indvars.iv.i74.i.a
   %i.bdd = or i64 %i.bdc, %.03545.i.i.i241
   %i.bde = and i64 %i.bcz, 15
-  %27 = zext nneg i32 %25 to i64
-  %i.bdf = shl i64 %i.bde, %27
+  %i.bdf = shl i64 %i.bde, %indvars.iv.next1899
   %i.bdg = or i64 %i.bdf, %i.bdd                  ; 3 uses
-  %28 = add i32 %.03346.i.i.i240, 8               ; 2 uses
-  %indvars.iv.next.i75.i.1 = add nuw nsw i64 %indvars.iv.i74.i.a, 2 ; 2 uses
+  %indvars.iv.next1899.1 = add nuw nsw i64 %indvars.iv.i74.i.a, 8 ; 2 uses
+  %indvars.iv.next.i75.i.1 = add nuw nsw i64 %indvars.iv.i74.i, 2 ; 2 uses
   %niter4132.next.1 = add i64 %niter4132, 2       ; 2 uses
   %niter4132.ncmp.1 = icmp eq i64 %niter4132.next.1, %unroll_iter4131
   br i1 %niter4132.ncmp.1, label %readNumber.exit.i.i244.loopexit.unr-lcssa, label %.lr.ph.i.i.i239
@@ -4055,12 +4041,12 @@ readNumber.exit.i.i244.loopexit.unr-lcssa:        ; preds = %bb.iw
   br i1 %lcmp.mod4128.not, label %readNumber.exit.i.i244, label %.lr.ph.i.i.i239.epil.preheader
 
 .lr.ph.i.i.i239.epil.preheader:                   ; preds = %readNumber.exit.i.i244.loopexit.unr-lcssa, %.lr.ph.i.preheader.i.i238
-  %indvars.iv.i74.i.epil.init.a = phi i64 [ %i.bcl, %.lr.ph.i.preheader.i.i238 ], [ %indvars.iv.next.i75.i.1, %readNumber.exit.i.i244.loopexit.unr-lcssa ]
-  %.03346.i.i.i240.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i.i238 ], [ %28, %readNumber.exit.i.i244.loopexit.unr-lcssa ]
+  %indvars.iv.i74.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i238 ], [ %indvars.iv.next1899.1, %readNumber.exit.i.i244.loopexit.unr-lcssa ]
+  %indvars.iv.i74.i.epil.init = phi i64 [ %i.bcl, %.lr.ph.i.preheader.i.i238 ], [ %indvars.iv.next.i75.i.1, %readNumber.exit.i.i244.loopexit.unr-lcssa ]
   %.03545.i.i.i241.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i.i238 ], [ %i.bdg, %readNumber.exit.i.i244.loopexit.unr-lcssa ]
   %lcmp.mod4130 = trunc i64 %i.bcp to i1
   call void @llvm.assume(i1 %lcmp.mod4130)
-  %i.bdh = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i74.i.epil.init.a
+  %i.bdh = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i74.i.epil.init
   %i.bdi = load i8, ptr %i.bdh, align 1, !tbaa !123 ; 2 uses
   %i.bdj = zext i8 %i.bdi to i64                  ; 2 uses
   %i.bdk = and i64 %i.bdj, 240
@@ -4069,8 +4055,7 @@ readNumber.exit.i.i244.loopexit.unr-lcssa:        ; preds = %bb.iw
 
 readNumber.exit.i.i244.loopexit.epilog-lcssa:     ; preds = %.lr.ph.i.i.i239.epil.preheader
   %i.bdl = and i64 %i.bdj, 15
-  %29 = zext nneg i32 %.03346.i.i.i240.epil.init to i64
-  %i.bdm = shl i64 %i.bdl, %29
+  %i.bdm = shl i64 %i.bdl, %indvars.iv.i74.i.epil.init.a
   %i.bdn = or i64 %i.bdm, %.03545.i.i.i241.epil.init
   br label %readNumber.exit.i.i244
 
@@ -4197,7 +4182,7 @@ bb.jf:                                            ; preds = %.lr.ph.i79.i.1
   %i.bfj = zext nneg i32 %i.bfd to i64
   %i.bfk = shl i64 %i.bfi, %i.bfj
   %i.bfl = or i64 %i.bfk, %i.bfh                  ; 3 uses
-  %i.bfm = add i32 %.03346.i.i250, 8              ; 2 uses
+  %i.bfm = add nuw nsw i32 %.03346.i.i250, 8      ; 2 uses
   %indvars.iv.next.i254.1 = add nuw nsw i64 %indvars.iv.i249, 2 ; 2 uses
   %niter4138.next.1 = add i64 %niter4138, 2       ; 2 uses
   %niter4138.ncmp.1 = icmp eq i64 %niter4138.next.1, %unroll_iter4137
@@ -4353,7 +4338,7 @@ bb.jn:                                            ; preds = %.lr.ph.i86.i.1
   %i.bho = zext nneg i32 %i.bhi to i64
   %i.bhp = shl i64 %i.bhn, %i.bho
   %i.bhq = or i64 %i.bhp, %i.bhm                  ; 3 uses
-  %i.bhr = add i32 %.03346.i88.i, 8               ; 2 uses
+  %i.bhr = add nuw nsw i32 %.03346.i88.i, 8       ; 2 uses
   %indvars.iv.next153.i.1 = add nuw nsw i64 %indvars.iv152.i, 2 ; 2 uses
   %niter4148.next.1 = add i64 %niter4148, 2       ; 2 uses
   %niter4148.ncmp.1 = icmp eq i64 %niter4148.next.1, %unroll_iter4147
@@ -4670,7 +4655,7 @@ bb.kp:                                            ; preds = %.lr.ph.i.i289.1
   %i.blv = zext nneg i32 %i.blp to i64
   %i.blw = shl i64 %i.blu, %i.blv
   %i.blx = or i64 %i.blw, %i.blt                  ; 3 uses
-  %i.bly = add i32 %.03346.i.i291, 8              ; 2 uses
+  %i.bly = add nuw nsw i32 %.03346.i.i291, 8      ; 2 uses
   %indvars.iv.next.i295.1 = add nuw nsw i64 %indvars.iv.i290, 2 ; 2 uses
   %niter4154.next.1 = add i64 %niter4154, 2       ; 2 uses
   %niter4154.ncmp.1 = icmp eq i64 %niter4154.next.1, %unroll_iter4153
@@ -4794,7 +4779,7 @@ bb.ku:                                            ; preds = %.lr.ph.i350.i.1
   %i.bno = zext nneg i32 %i.bni to i64
   %i.bnp = shl i64 %i.bnn, %i.bno
   %i.bnq = or i64 %i.bnp, %i.bnm                  ; 3 uses
-  %i.bnr = add i32 %.03346.i352.i, 8              ; 2 uses
+  %i.bnr = add nuw nsw i32 %.03346.i352.i, 8      ; 2 uses
   %indvars.iv.next631.i.1 = add nuw nsw i64 %indvars.iv630.i, 2 ; 2 uses
   %niter4160.next.1 = add i64 %niter4160, 2       ; 2 uses
   %niter4160.ncmp.1 = icmp eq i64 %niter4160.next.1, %unroll_iter4159
@@ -4971,11 +4956,11 @@ bb.lf:                                            ; preds = %bb.le
   br label %.thread.i365.i
 
 .lr.ph.i.i.i281:                                  ; preds = %bb.lg, %.lr.ph.i.preheader.i.i280.new
-  %indvars.iv.i366.i.a = phi i64 [ %i.bpf, %.lr.ph.i.preheader.i.i280.new ], [ %indvars.iv.next.i367.i.1, %bb.lg ] ; 3 uses
-  %.03346.i.i.i282 = phi i32 [ 0, %.lr.ph.i.preheader.i.i280.new ], [ %33, %bb.lg ] ; 3 uses
+  %indvars.iv.i366.i.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i280.new ], [ %indvars.iv.next1896.1, %bb.lg ] ; 3 uses
+  %indvars.iv.i366.i = phi i64 [ %i.bpf, %.lr.ph.i.preheader.i.i280.new ], [ %indvars.iv.next.i367.i.1, %bb.lg ] ; 3 uses
   %.03545.i.i.i283 = phi i64 [ 0, %.lr.ph.i.preheader.i.i280.new ], [ %i.bpx, %bb.lg ]
   %niter4196 = phi i64 [ 0, %.lr.ph.i.preheader.i.i280.new ], [ %niter4196.next.1, %bb.lg ]
-  %i.bpi = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i366.i.a
+  %i.bpi = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i366.i
   %i.bpj = load i8, ptr %i.bpi, align 1, !tbaa !123 ; 2 uses
   %i.bpk = zext i8 %i.bpj to i64                  ; 2 uses
   %i.bpl = and i64 %i.bpk, 240
@@ -4989,7 +4974,7 @@ bb.lf:                                            ; preds = %bb.le
   br label %.thread.i365.i
 
 .lr.ph.i.i.i281.1:                                ; preds = %.lr.ph.i.i.i281
-  %i.bpn = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i366.i.a
+  %i.bpn = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i366.i
   %i.bpo = getelementptr inbounds nuw i8, ptr %i.bpn, i64 1
   %i.bpp = load i8, ptr %i.bpo, align 1, !tbaa !123 ; 2 uses
   %i.bpq = zext i8 %i.bpp to i64                  ; 2 uses
@@ -4998,17 +4983,15 @@ bb.lf:                                            ; preds = %bb.le
   br i1 %.not.i.i.i284.1, label %bb.lg, label %.thread.i.i.i285, !prof !134
 
 bb.lg:                                            ; preds = %.lr.ph.i.i.i281.1
-  %30 = or disjoint i32 %.03346.i.i.i282, 4
+  %indvars.iv.next1896 = or disjoint i64 %indvars.iv.i366.i.a, 4
   %i.bps = and i64 %i.bpk, 15
-  %31 = zext nneg i32 %.03346.i.i.i282 to i64
-  %i.bpt = shl i64 %i.bps, %31
+  %i.bpt = shl i64 %i.bps, %indvars.iv.i366.i.a
   %i.bpu = or i64 %i.bpt, %.03545.i.i.i283
   %i.bpv = and i64 %i.bpq, 15
-  %32 = zext nneg i32 %30 to i64
-  %i.bpw = shl i64 %i.bpv, %32
+  %i.bpw = shl i64 %i.bpv, %indvars.iv.next1896
   %i.bpx = or i64 %i.bpw, %i.bpu                  ; 3 uses
-  %33 = add i32 %.03346.i.i.i282, 8               ; 2 uses
-  %indvars.iv.next.i367.i.1 = add nuw nsw i64 %indvars.iv.i366.i.a, 2 ; 2 uses
+  %indvars.iv.next1896.1 = add nuw nsw i64 %indvars.iv.i366.i.a, 8 ; 2 uses
+  %indvars.iv.next.i367.i.1 = add nuw nsw i64 %indvars.iv.i366.i, 2 ; 2 uses
   %niter4196.next.1 = add i64 %niter4196, 2       ; 2 uses
   %niter4196.ncmp.1 = icmp eq i64 %niter4196.next.1, %unroll_iter4195
   br i1 %niter4196.ncmp.1, label %readNumber.exit.i.i287.unr-lcssa, label %.lr.ph.i.i.i281
@@ -5018,12 +5001,12 @@ readNumber.exit.i.i287.unr-lcssa:                 ; preds = %bb.lg
   br i1 %lcmp.mod4192.not, label %readNumber.exit.i.i287, label %.lr.ph.i.i.i281.epil.preheader
 
 .lr.ph.i.i.i281.epil.preheader:                   ; preds = %readNumber.exit.i.i287.unr-lcssa, %.lr.ph.i.preheader.i.i280
-  %indvars.iv.i366.i.epil.init.a = phi i64 [ %i.bpf, %.lr.ph.i.preheader.i.i280 ], [ %indvars.iv.next.i367.i.1, %readNumber.exit.i.i287.unr-lcssa ]
-  %.03346.i.i.i282.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i.i280 ], [ %33, %readNumber.exit.i.i287.unr-lcssa ]
+  %indvars.iv.i366.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i.i280 ], [ %indvars.iv.next1896.1, %readNumber.exit.i.i287.unr-lcssa ]
+  %indvars.iv.i366.i.epil.init = phi i64 [ %i.bpf, %.lr.ph.i.preheader.i.i280 ], [ %indvars.iv.next.i367.i.1, %readNumber.exit.i.i287.unr-lcssa ]
   %.03545.i.i.i283.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i.i280 ], [ %i.bpx, %readNumber.exit.i.i287.unr-lcssa ]
   %lcmp.mod4194 = trunc i8 %.fr4292 to i1
   call void @llvm.assume(i1 %lcmp.mod4194)
-  %i.bpy = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i366.i.epil.init.a
+  %i.bpy = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i366.i.epil.init
   %i.bpz = load i8, ptr %i.bpy, align 1, !tbaa !123 ; 2 uses
   %i.bqa = zext i8 %i.bpz to i64                  ; 2 uses
   %i.bqb = and i64 %i.bqa, 240
@@ -5032,8 +5015,7 @@ readNumber.exit.i.i287.unr-lcssa:                 ; preds = %bb.lg
 
 readNumber.exit.i.i287.epilog-lcssa:              ; preds = %.lr.ph.i.i.i281.epil.preheader
   %i.bqc = and i64 %i.bqa, 15
-  %34 = zext nneg i32 %.03346.i.i.i282.epil.init to i64
-  %i.bqd = shl i64 %i.bqc, %34
+  %i.bqd = shl i64 %i.bqc, %indvars.iv.i366.i.epil.init.a
   %i.bqe = or i64 %i.bqd, %.03545.i.i.i283.epil.init
   br label %readNumber.exit.i.i287
 
@@ -5152,7 +5134,7 @@ bb.lp:                                            ; preds = %.lr.ph.i373.i.1
   %i.brp = zext nneg i32 %i.brj to i64
   %i.brq = shl i64 %i.bro, %i.brp
   %i.brr = or i64 %i.brq, %i.brn                  ; 3 uses
-  %i.brs = add i32 %.03346.i375.i, 8              ; 2 uses
+  %i.brs = add nuw nsw i32 %.03346.i375.i, 8      ; 2 uses
   %indvars.iv.next648.i.1 = add nuw nsw i64 %indvars.iv647.i, 2 ; 2 uses
   %niter4190.next.1 = add i64 %niter4190, 2       ; 2 uses
   %niter4190.ncmp.1 = icmp eq i64 %niter4190.next.1, %unroll_iter4189
@@ -5255,11 +5237,11 @@ bb.lv:                                            ; preds = %bb.lu
   br label %.thread.i384.i
 
 .lr.ph.i.i386.i:                                  ; preds = %bb.lw, %.lr.ph.i.preheader.i385.i.new
-  %indvars.iv.i387.i.a = phi i64 [ %i.bsr, %.lr.ph.i.preheader.i385.i.new ], [ %indvars.iv.next.i392.i.1, %bb.lw ] ; 3 uses
-  %.03346.i.i388.i = phi i32 [ 0, %.lr.ph.i.preheader.i385.i.new ], [ %38, %bb.lw ] ; 3 uses
+  %indvars.iv.i387.i.a = phi i64 [ 0, %.lr.ph.i.preheader.i385.i.new ], [ %indvars.iv.next.1, %bb.lw ] ; 3 uses
+  %indvars.iv.i387.i = phi i64 [ %i.bsr, %.lr.ph.i.preheader.i385.i.new ], [ %indvars.iv.next.i392.i.1, %bb.lw ] ; 3 uses
   %.03545.i.i389.i = phi i64 [ 0, %.lr.ph.i.preheader.i385.i.new ], [ %i.btl, %bb.lw ]
   %niter4178 = phi i64 [ 0, %.lr.ph.i.preheader.i385.i.new ], [ %niter4178.next.1, %bb.lw ]
-  %i.bsw = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i387.i.a
+  %i.bsw = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i387.i
   %i.bsx = load i8, ptr %i.bsw, align 1, !tbaa !123 ; 2 uses
   %i.bsy = zext i8 %i.bsx to i64                  ; 2 uses
   %i.bsz = and i64 %i.bsy, 240
@@ -5273,7 +5255,7 @@ bb.lv:                                            ; preds = %bb.lu
   br label %.thread.i384.i
 
 .lr.ph.i.i386.i.1:                                ; preds = %.lr.ph.i.i386.i
-  %i.btb = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i387.i.a
+  %i.btb = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i387.i
   %i.btc = getelementptr inbounds nuw i8, ptr %i.btb, i64 1
   %i.btd = load i8, ptr %i.btc, align 1, !tbaa !123 ; 2 uses
   %i.bte = zext i8 %i.btd to i64                  ; 2 uses
@@ -5282,17 +5264,15 @@ bb.lv:                                            ; preds = %bb.lu
   br i1 %.not.i.i390.i.1, label %bb.lw, label %.thread.i.i391.i, !prof !134
 
 bb.lw:                                            ; preds = %.lr.ph.i.i386.i.1
-  %35 = or disjoint i32 %.03346.i.i388.i, 4
+  %indvars.iv.next = or disjoint i64 %indvars.iv.i387.i.a, 4
   %i.btg = and i64 %i.bsy, 15
-  %36 = zext nneg i32 %.03346.i.i388.i to i64
-  %i.bth = shl i64 %i.btg, %36
+  %i.bth = shl i64 %i.btg, %indvars.iv.i387.i.a
   %i.bti = or i64 %i.bth, %.03545.i.i389.i
   %i.btj = and i64 %i.bte, 15
-  %37 = zext nneg i32 %35 to i64
-  %i.btk = shl i64 %i.btj, %37
+  %i.btk = shl i64 %i.btj, %indvars.iv.next
   %i.btl = or i64 %i.btk, %i.bti                  ; 3 uses
-  %38 = add i32 %.03346.i.i388.i, 8               ; 2 uses
-  %indvars.iv.next.i392.i.1 = add nuw nsw i64 %indvars.iv.i387.i.a, 2 ; 2 uses
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.i387.i.a, 8 ; 2 uses
+  %indvars.iv.next.i392.i.1 = add nuw nsw i64 %indvars.iv.i387.i, 2 ; 2 uses
   %niter4178.next.1 = add i64 %niter4178, 2       ; 2 uses
   %niter4178.ncmp.1 = icmp eq i64 %niter4178.next.1, %unroll_iter4177
   br i1 %niter4178.ncmp.1, label %readNumber.exit.i394.i.unr-lcssa, label %.lr.ph.i.i386.i
@@ -5302,12 +5282,12 @@ readNumber.exit.i394.i.unr-lcssa:                 ; preds = %bb.lw
   br i1 %lcmp.mod4174.not, label %readNumber.exit.i394.i, label %.lr.ph.i.i386.i.epil.preheader
 
 .lr.ph.i.i386.i.epil.preheader:                   ; preds = %readNumber.exit.i394.i.unr-lcssa, %.lr.ph.i.preheader.i385.i
-  %indvars.iv.i387.i.epil.init.a = phi i64 [ %i.bsr, %.lr.ph.i.preheader.i385.i ], [ %indvars.iv.next.i392.i.1, %readNumber.exit.i394.i.unr-lcssa ]
-  %.03346.i.i388.i.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i385.i ], [ %38, %readNumber.exit.i394.i.unr-lcssa ]
+  %indvars.iv.i387.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i385.i ], [ %indvars.iv.next.1, %readNumber.exit.i394.i.unr-lcssa ]
+  %indvars.iv.i387.i.epil.init = phi i64 [ %i.bsr, %.lr.ph.i.preheader.i385.i ], [ %indvars.iv.next.i392.i.1, %readNumber.exit.i394.i.unr-lcssa ]
   %.03545.i.i389.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i385.i ], [ %i.btl, %readNumber.exit.i394.i.unr-lcssa ]
   %lcmp.mod4176 = trunc i64 %i.bsu to i1
   call void @llvm.assume(i1 %lcmp.mod4176)
-  %i.btm = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i387.i.epil.init.a
+  %i.btm = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i387.i.epil.init
   %i.btn = load i8, ptr %i.btm, align 1, !tbaa !123 ; 2 uses
   %i.bto = zext i8 %i.btn to i64                  ; 2 uses
   %i.btp = and i64 %i.bto, 240
@@ -5316,8 +5296,7 @@ readNumber.exit.i394.i.unr-lcssa:                 ; preds = %bb.lw
 
 readNumber.exit.i394.i.epilog-lcssa:              ; preds = %.lr.ph.i.i386.i.epil.preheader
   %i.btq = and i64 %i.bto, 15
-  %39 = zext nneg i32 %.03346.i.i388.i.epil.init to i64
-  %i.btr = shl i64 %i.btq, %39
+  %i.btr = shl i64 %i.btq, %indvars.iv.i387.i.epil.init.a
   %i.bts = or i64 %i.btr, %.03545.i.i389.i.epil.init
   br label %readNumber.exit.i394.i
 
@@ -5407,11 +5386,11 @@ bb.md:                                            ; preds = %bb.mc
   br label %.thread.i403.i
 
 .lr.ph.i.i405.i:                                  ; preds = %bb.me, %.lr.ph.i.preheader.i404.i.new
-  %indvars.iv.i406.i.a = phi i64 [ %i.bun, %.lr.ph.i.preheader.i404.i.new ], [ %indvars.iv.next.i411.i.1, %bb.me ] ; 3 uses
-  %.03346.i.i407.i = phi i32 [ 0, %.lr.ph.i.preheader.i404.i.new ], [ %43, %bb.me ] ; 3 uses
+  %indvars.iv.i406.i.a = phi i64 [ 0, %.lr.ph.i.preheader.i404.i.new ], [ %indvars.iv.next1893.1, %bb.me ] ; 3 uses
+  %indvars.iv.i406.i = phi i64 [ %i.bun, %.lr.ph.i.preheader.i404.i.new ], [ %indvars.iv.next.i411.i.1, %bb.me ] ; 3 uses
   %.03545.i.i408.i = phi i64 [ 0, %.lr.ph.i.preheader.i404.i.new ], [ %i.bvf, %bb.me ]
   %niter4184 = phi i64 [ 0, %.lr.ph.i.preheader.i404.i.new ], [ %niter4184.next.1, %bb.me ]
-  %i.buq = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i406.i.a
+  %i.buq = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i406.i
   %i.bur = load i8, ptr %i.buq, align 1, !tbaa !123 ; 2 uses
   %i.bus = zext i8 %i.bur to i64                  ; 2 uses
   %i.but = and i64 %i.bus, 240
@@ -5425,7 +5404,7 @@ bb.md:                                            ; preds = %bb.mc
   br label %.thread.i403.i
 
 .lr.ph.i.i405.i.1:                                ; preds = %.lr.ph.i.i405.i
-  %i.buv = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i406.i.a
+  %i.buv = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i406.i
   %i.buw = getelementptr inbounds nuw i8, ptr %i.buv, i64 1
   %i.bux = load i8, ptr %i.buw, align 1, !tbaa !123 ; 2 uses
   %i.buy = zext i8 %i.bux to i64                  ; 2 uses
@@ -5434,17 +5413,15 @@ bb.md:                                            ; preds = %bb.mc
   br i1 %.not.i.i409.i.1, label %bb.me, label %.thread.i.i410.i, !prof !134
 
 bb.me:                                            ; preds = %.lr.ph.i.i405.i.1
-  %40 = or disjoint i32 %.03346.i.i407.i, 4
+  %indvars.iv.next1893 = or disjoint i64 %indvars.iv.i406.i.a, 4
   %i.bva = and i64 %i.bus, 15
-  %41 = zext nneg i32 %.03346.i.i407.i to i64
-  %i.bvb = shl i64 %i.bva, %41
+  %i.bvb = shl i64 %i.bva, %indvars.iv.i406.i.a
   %i.bvc = or i64 %i.bvb, %.03545.i.i408.i
   %i.bvd = and i64 %i.buy, 15
-  %42 = zext nneg i32 %40 to i64
-  %i.bve = shl i64 %i.bvd, %42
+  %i.bve = shl i64 %i.bvd, %indvars.iv.next1893
   %i.bvf = or i64 %i.bve, %i.bvc                  ; 3 uses
-  %43 = add i32 %.03346.i.i407.i, 8               ; 2 uses
-  %indvars.iv.next.i411.i.1 = add nuw nsw i64 %indvars.iv.i406.i.a, 2 ; 2 uses
+  %indvars.iv.next1893.1 = add nuw nsw i64 %indvars.iv.i406.i.a, 8 ; 2 uses
+  %indvars.iv.next.i411.i.1 = add nuw nsw i64 %indvars.iv.i406.i, 2 ; 2 uses
   %niter4184.next.1 = add i64 %niter4184, 2       ; 2 uses
   %niter4184.ncmp.1 = icmp eq i64 %niter4184.next.1, %unroll_iter4183
   br i1 %niter4184.ncmp.1, label %readNumber.exit.i413.i.unr-lcssa, label %.lr.ph.i.i405.i
@@ -5454,12 +5431,12 @@ readNumber.exit.i413.i.unr-lcssa:                 ; preds = %bb.me
   br i1 %lcmp.mod4180.not, label %readNumber.exit.i413.i, label %.lr.ph.i.i405.i.epil.preheader
 
 .lr.ph.i.i405.i.epil.preheader:                   ; preds = %readNumber.exit.i413.i.unr-lcssa, %.lr.ph.i.preheader.i404.i
-  %indvars.iv.i406.i.epil.init.a = phi i64 [ %i.bun, %.lr.ph.i.preheader.i404.i ], [ %indvars.iv.next.i411.i.1, %readNumber.exit.i413.i.unr-lcssa ]
-  %.03346.i.i407.i.epil.init = phi i32 [ 0, %.lr.ph.i.preheader.i404.i ], [ %43, %readNumber.exit.i413.i.unr-lcssa ]
+  %indvars.iv.i406.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.preheader.i404.i ], [ %indvars.iv.next1893.1, %readNumber.exit.i413.i.unr-lcssa ]
+  %indvars.iv.i406.i.epil.init = phi i64 [ %i.bun, %.lr.ph.i.preheader.i404.i ], [ %indvars.iv.next.i411.i.1, %readNumber.exit.i413.i.unr-lcssa ]
   %.03545.i.i408.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader.i404.i ], [ %i.bvf, %readNumber.exit.i413.i.unr-lcssa ]
   %lcmp.mod4182 = trunc i8 %.fr4286 to i1
   call void @llvm.assume(i1 %lcmp.mod4182)
-  %i.bvg = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i406.i.epil.init.a
+  %i.bvg = getelementptr inbounds nuw i8, ptr %i.sj, i64 %indvars.iv.i406.i.epil.init
   %i.bvh = load i8, ptr %i.bvg, align 1, !tbaa !123 ; 2 uses
   %i.bvi = zext i8 %i.bvh to i64                  ; 2 uses
   %i.bvj = and i64 %i.bvi, 240
@@ -5468,8 +5445,7 @@ readNumber.exit.i413.i.unr-lcssa:                 ; preds = %bb.me
 
 readNumber.exit.i413.i.epilog-lcssa:              ; preds = %.lr.ph.i.i405.i.epil.preheader
   %i.bvk = and i64 %i.bvi, 15
-  %44 = zext nneg i32 %.03346.i.i407.i.epil.init to i64
-  %i.bvl = shl i64 %i.bvk, %44
+  %i.bvl = shl i64 %i.bvk, %indvars.iv.i406.i.epil.init.a
   %i.bvm = or i64 %i.bvl, %.03545.i.i408.i.epil.init
   br label %readNumber.exit.i413.i
 
@@ -5727,7 +5703,7 @@ bb.nh:                                            ; preds = %.lr.ph.i438.i.1
   %i.byd = zext nneg i32 %i.bxx to i64
   %i.bye = shl i64 %i.byc, %i.byd
   %i.byf = or i64 %i.bye, %i.byb                  ; 3 uses
-  %i.byg = add i32 %.03346.i440.i, 8              ; 2 uses
+  %i.byg = add nuw nsw i32 %.03346.i440.i, 8      ; 2 uses
   %indvars.iv.next640.i.1 = add nuw nsw i64 %indvars.iv639.i, 2 ; 2 uses
   %niter4172.next.1 = add i64 %niter4172, 2       ; 2 uses
   %niter4172.ncmp.1 = icmp eq i64 %niter4172.next.1, %unroll_iter4171
@@ -5978,7 +5954,7 @@ bb.nw:                                            ; preds = %.lr.ph.i469.i.1
   %i.cbm = zext nneg i32 %i.cbg to i64
   %i.cbn = shl i64 %i.cbl, %i.cbm
   %i.cbo = or i64 %i.cbn, %i.cbk                  ; 3 uses
-  %i.cbp = add i32 %.03346.i471.i, 8              ; 2 uses
+  %i.cbp = add nuw nsw i32 %.03346.i471.i, 8      ; 2 uses
   %indvars.iv.next634.i.1 = add nuw nsw i64 %indvars.iv633.i, 2 ; 2 uses
   %niter4166.next.1 = add i64 %niter4166, 2       ; 2 uses
   %niter4166.ncmp.1 = icmp eq i64 %niter4166.next.1, %unroll_iter4165
@@ -6285,7 +6261,7 @@ bb.pa:                                            ; preds = %.lr.ph.i482.i.1
   %i.cff = zext nneg i32 %i.cez to i64
   %i.cfg = shl i64 %i.cfe, %i.cff
   %i.cfh = or i64 %i.cfg, %i.cfd                  ; 3 uses
-  %i.cfi = add i32 %.03346.i484.i, 8              ; 2 uses
+  %i.cfi = add nuw nsw i32 %.03346.i484.i, 8      ; 2 uses
   %indvars.iv.next651.i.1 = add nuw nsw i64 %indvars.iv650.i, 2 ; 2 uses
   %niter4202.next.1 = add i64 %niter4202, 2       ; 2 uses
   %niter4202.ncmp.1 = icmp eq i64 %niter4202.next.1, %unroll_iter4201
@@ -6448,7 +6424,7 @@ bb.pj:                                            ; preds = %.lr.ph.i495.i.1
   %i.chj = zext nneg i32 %i.chd to i64
   %i.chk = shl i64 %i.chi, %i.chj
   %i.chl = or i64 %i.chk, %i.chh                  ; 3 uses
-  %i.chm = add i32 %.03346.i497.i, 8              ; 2 uses
+  %i.chm = add nuw nsw i32 %.03346.i497.i, 8      ; 2 uses
   %indvars.iv.next654.i.1 = add nuw nsw i64 %indvars.iv653.i, 2 ; 2 uses
   %niter4211.next.1 = add i64 %niter4211, 2       ; 2 uses
   %niter4211.ncmp.1 = icmp eq i64 %niter4211.next.1, %unroll_iter4210
@@ -6851,7 +6827,7 @@ bb.i:                                             ; preds = %.lr.ph.i.1
   %i.ak = zext nneg i32 %i.ae to i64
   %i.al = shl i64 %i.aj, %i.ak
   %i.am = or i64 %i.al, %i.ai                     ; 3 uses
-  %i.an = add i32 %.03346.i, 8                    ; 2 uses
+  %i.an = add nuw nsw i32 %.03346.i, 8            ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -7056,7 +7032,7 @@ bb.g:                                             ; preds = %.lr.ph.i.1
   %i.af = zext nneg i32 %i.z to i64
   %i.ag = shl i64 %i.ae, %i.af
   %i.ah = or i64 %i.ag, %i.ad                     ; 3 uses
-  %i.ai = add i32 %.03346.i, 8                    ; 2 uses
+  %i.ai = add nuw nsw i32 %.03346.i, 8            ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -7231,7 +7207,7 @@ bb.g:                                             ; preds = %.lr.ph.i.1
   %i.af = zext nneg i32 %i.z to i64
   %i.ag = shl i64 %i.ae, %i.af
   %i.ah = or i64 %i.ag, %i.ad                     ; 3 uses
-  %i.ai = add i32 %.03346.i, 8                    ; 2 uses
+  %i.ai = add nuw nsw i32 %.03346.i, 8            ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -7585,7 +7561,7 @@ bb.j:                                             ; preds = %.lr.ph.i.1
   %i.at = zext nneg i32 %i.an to i64
   %i.au = shl i64 %i.as, %i.at
   %i.av = or i64 %i.au, %i.ar                     ; 3 uses
-  %i.aw = add i32 %.03346.i, 8                    ; 2 uses
+  %i.aw = add nuw nsw i32 %.03346.i, 8            ; 2 uses
   %indvars.iv.next99.1 = add nuw nsw i64 %indvars.iv98, 2 ; 2 uses
   %niter131.next.1 = add i64 %niter131, 2         ; 2 uses
   %niter131.ncmp.1 = icmp eq i64 %niter131.next.1, %unroll_iter130
@@ -7799,7 +7775,7 @@ bb.aa:                                            ; preds = %.lr.ph.i64.1
   %i.dh = zext nneg i32 %i.db to i64
   %i.di = shl i64 %i.dg, %i.dh
   %i.dj = or i64 %i.di, %i.df                     ; 3 uses
-  %i.dk = add i32 %.03346.i66, 8                  ; 2 uses
+  %i.dk = add nuw nsw i32 %.03346.i66, 8          ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -7948,7 +7924,7 @@ bb.g:                                             ; preds = %.lr.ph.i.1
   %i.af = zext nneg i32 %i.z to i64
   %i.ag = shl i64 %i.ae, %i.af
   %i.ah = or i64 %i.ag, %i.ad                     ; 3 uses
-  %i.ai = add i32 %.03346.i, 8                    ; 2 uses
+  %i.ai = add nuw nsw i32 %.03346.i, 8            ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -8102,7 +8078,7 @@ bb.g:                                             ; preds = %.lr.ph.i.1
   %i.af = zext nneg i32 %i.z to i64
   %i.ag = shl i64 %i.ae, %i.af
   %i.ah = or i64 %i.ag, %i.ad                     ; 3 uses
-  %i.ai = add i32 %.03346.i, 8                    ; 2 uses
+  %i.ai = add nuw nsw i32 %.03346.i, 8            ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

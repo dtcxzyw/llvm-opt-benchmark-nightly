@@ -205,7 +205,7 @@ bb.z:                                             ; preds = %bb.y
   store ptr %i.co, ptr %i.k, align 8, !tbaa !43
   %i.cp = load i8, ptr %i.cn, align 1, !tbaa !44
   %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.cq = shl i32 %indvars.iv.tr.i, 2
+  %i.cq = shl nsw i32 %indvars.iv.tr.i, 2
   %i.cr = sext i32 %i.cq to i64
   %i.cs = getelementptr i8, ptr %i.ch, i64 %i.cr
   %i.ct = getelementptr i8, ptr %i.cs, i64 2
@@ -262,7 +262,7 @@ bb.z:                                             ; preds = %bb.y
   store ptr %i.dk, ptr %i.k, align 8, !tbaa !43
   %i.dl = load i8, ptr %i.dj, align 1, !tbaa !44
   %indvars.iv.1.tr.i = trunc i64 %indvars.iv.1.i to i32
-  %i.dm = shl i32 %indvars.iv.1.tr.i, 2
+  %i.dm = shl nsw i32 %indvars.iv.1.tr.i, 2
   %i.dn = sext i32 %i.dm to i64
   %i.do = getelementptr i8, ptr %i.ch, i64 %i.dn
   %i.dp = getelementptr i8, ptr %i.do, i64 1
@@ -319,7 +319,7 @@ bb.z:                                             ; preds = %bb.y
   store ptr %i.eg, ptr %i.k, align 8, !tbaa !43
   %i.eh = load i8, ptr %i.ef, align 1, !tbaa !44
   %indvars.iv.2.tr.i = trunc i64 %indvars.iv.2.i to i32
-  %i.ei = shl i32 %indvars.iv.2.tr.i, 2
+  %i.ei = shl nsw i32 %indvars.iv.2.tr.i, 2
   %i.ej = sext i32 %i.ei to i64
   %i.ek = getelementptr inbounds i8, ptr %i.ch, i64 %i.ej
   store i8 %i.eh, ptr %i.ek, align 1, !tbaa !44

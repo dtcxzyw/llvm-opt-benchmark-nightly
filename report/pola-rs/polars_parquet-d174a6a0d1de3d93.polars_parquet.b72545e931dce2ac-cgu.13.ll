@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %.lr.ph, %_RINvNtNtN
   %i.am = or i64 %i.al, %.sroa.0.011.i.i.i, !dbg !269 ; 3 uses
   %i.an = icmp sgt i8 %i.ag, -1, !dbg !270
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i.i, i64 1 ; 2 uses
-  %i.ap = add i32 %.sroa.02.010.i.i.i, 7
+  %i.ap = add nuw nsw i32 %.sroa.02.010.i.i.i, 7
   %i.aq = icmp eq ptr %i.ao, %i.ad
   %or.cond.i.i.i = select i1 %i.an, i1 true, i1 %i.aq, !dbg !270
   br i1 %or.cond.i.i.i, label %_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding13zigzag_leb1286decode.exit.i, label %.lr.ph.i.i.i, !dbg !270
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %_RINvNtNtNtNtCsfISx
   %i.ao = or i64 %i.an, %.sroa.0.011.i.i.i.i, !dbg !2158 ; 3 uses
   %i.ap = icmp sgt i8 %i.ai, -1, !dbg !2159
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i.i.i, i64 1 ; 2 uses
-  %i.ar = add i32 %.sroa.02.010.i.i.i.i, 7
+  %i.ar = add nuw nsw i32 %.sroa.02.010.i.i.i.i, 7
   %i.as = icmp eq ptr %i.aq, %i.af
   %or.cond.i.i.i.i = select i1 %i.ap, i1 true, i1 %i.as, !dbg !2159
   br i1 %or.cond.i.i.i.i, label %_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding13zigzag_leb1286decode.exit.i.i, label %.lr.ph.i.i.i.i, !dbg !2159
@@ -1011,7 +1011,7 @@ bb.d:                                             ; preds = %bb.b
   %i.aa = or i64 %i.z, %.sroa.0.011.i.i, !dbg !16722 ; 2 uses
   %i.ab = icmp sgt i8 %i.u, -1, !dbg !16723
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 1 ; 2 uses
-  %i.ad = add i32 %.sroa.02.010.i.i, 7
+  %i.ad = add nuw nsw i32 %.sroa.02.010.i.i, 7
   %i.ae = icmp eq ptr %i.ac, %i.r
   %or.cond.i.i = select i1 %i.ab, i1 true, i1 %i.ae, !dbg !16723
   br i1 %or.cond.i.i, label %_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding13zigzag_leb1286decode.exit, label %.lr.ph.i.i, !dbg !16723
@@ -1256,7 +1256,7 @@ bb.e:                                             ; preds = %bb.b
   %i.ay = or i64 %i.ax, %.sroa.0.011.i370, !dbg !16971 ; 9 uses
   %i.az = icmp sgt i8 %i.as, -1, !dbg !16972
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i373, i64 1 ; 2 uses
-  %i.bb = add i32 %.sroa.02.010.i371, 7
+  %i.bb = add nuw nsw i32 %.sroa.02.010.i371, 7
   %i.bc = icmp eq ptr %i.ba, %i.n
   %or.cond.i374 = select i1 %i.az, i1 true, i1 %i.bc, !dbg !16972
   br i1 %or.cond.i374, label %_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286decode.exit377, label %.lr.ph.i369, !dbg !16972
@@ -1291,7 +1291,7 @@ _RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286decode.exit377
   %i.bo = or i64 %i.bn, %.sroa.0.011.i379, !dbg !17011 ; 3 uses
   %i.bp = icmp sgt i8 %i.bi, -1, !dbg !17012
   %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i382, i64 1 ; 2 uses
-  %i.br = add i32 %.sroa.02.010.i380, 7
+  %i.br = add nuw nsw i32 %.sroa.02.010.i380, 7
   %i.bs = icmp eq ptr %i.bq, %i.bf
   %or.cond.i383 = select i1 %i.bp, i1 true, i1 %i.bs, !dbg !17012
   br i1 %or.cond.i383, label %_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286decode.exit386, label %.lr.ph.i378, !dbg !17012
@@ -1355,7 +1355,7 @@ _RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding7uleb1286decode.exit386
   %i.co = or i64 %i.cn, %.sroa.0.011.i.i, !dbg !17089 ; 3 uses
   %i.cp = icmp sgt i8 %i.ci, -1, !dbg !17090
   %i.cq = getelementptr inbounds nuw i8, ptr %.sroa.06.08.i.i, i64 1 ; 2 uses
-  %i.cr = add i32 %.sroa.02.010.i.i, 7
+  %i.cr = add nuw nsw i32 %.sroa.02.010.i.i, 7
   %i.cs = icmp eq ptr %i.cq, %i.bf
   %or.cond.i.i = select i1 %i.cp, i1 true, i1 %i.cs, !dbg !17090
   br i1 %or.cond.i.i, label %_RNvNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding13zigzag_leb1286decode.exit, label %.lr.ph.i.i, !dbg !17090

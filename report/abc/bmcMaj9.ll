@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %._crit_edge175.i, %
   %storemerge188.i = phi ptr [ %storemerge189.i, %._crit_edge175.i ], [ %i.jc, %.lr.ph177.i ] ; 6 uses
   %spec.select.sink.i183.i = phi i32 [ %spec.select.sink.i182.i, %._crit_edge175.i ], [ 16, %.lr.ph177.i ] ; 4 uses
   %indvars108 = trunc i64 %indvars.iv214.i to i32
-  %smin105 = tail call i32 @llvm.smin.i32(i32 %.val, i32 %indvars.iv221.i) ; 3 uses
+  %smin105 = tail call i32 @llvm.smin.i32(i32 %.val, i32 %indvars.iv221.i) ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %smin105, i32 %indvars108)
   %i.jm = add i32 %smax, %indvars.iv102
   %i.jn = zext i32 %i.jm to i64
@@ -349,10 +349,14 @@ bb.bp:                                            ; preds = %Exa9_KissatAddClaus
 
 .critedge.i57:                                    ; preds = %Exa9_KissatAddClause.exit124.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  br i1 %i.ko, label %.lr.ph169.i, label %._crit_edge175.i
+  br i1 %i.ko, label %.lr.ph169.i.preheader, label %._crit_edge175.i
 
-.lr.ph169.i:                                      ; preds = %.critedge.i57, %.critedge99.i
-  %indvars.iv211.i = phi i64 [ %indvars.iv.next212.i, %.critedge99.i ], [ %indvars.iv204.i, %.critedge.i57 ] ; 2 uses
+.lr.ph169.i.preheader:                            ; preds = %.critedge.i57
+  %sext = sext i32 %smin.i55 to i64               ; 2 uses
+  br label %.lr.ph169.i
+
+.lr.ph169.i:                                      ; preds = %.lr.ph169.i.preheader, %.critedge99.i
+  %indvars.iv211.i = phi i64 [ %indvars.iv.next212.i, %.critedge99.i ], [ %indvars.iv204.i, %.lr.ph169.i.preheader ] ; 2 uses
   %i.li = getelementptr inbounds nuw [4 x i8], ptr %.val106.i, i64 %indvars.iv211.i
   %i.lj = load i32, ptr %i.li, align 4, !tbaa !81 ; 2 uses
   %i.lk = load ptr, ptr %i.id, align 8, !tbaa !63
@@ -417,9 +421,8 @@ Vec_IntFree.exit136.i:                            ; preds = %bb.bv, %bb.bu
 
 .critedge99.i:                                    ; preds = %Exa9_KissatAddClause.exit134.i
   %indvars.iv.next212.i = add nuw nsw i64 %indvars.iv211.i, 1 ; 2 uses
-  %3 = trunc nuw i64 %indvars.iv.next212.i to i32
-  %4 = icmp sgt i32 %smin.i55, %3
-  br i1 %4, label %.lr.ph169.i, label %.lr.ph174.i.preheader, !llvm.loop !133
+  %3 = icmp slt i64 %indvars.iv.next212.i, %sext
+  br i1 %3, label %.lr.ph169.i, label %.lr.ph174.i.preheader, !llvm.loop !133
 
 .lr.ph174.i.preheader:                            ; preds = %.critedge99.i
   %indvars.iv.next225.i82 = or disjoint i64 %indvars.iv204.i, 1 ; 2 uses
@@ -428,10 +431,9 @@ Vec_IntFree.exit136.i:                            ; preds = %bb.bv, %bb.bu
   br i1 %i.md, label %.lr.ph172.i, label %._crit_edge175.i
 
 .loopexit.i60:                                    ; preds = %.critedge101.i
-  %indvars.iv.next225.i = add nuw i64 %indvars.iv.next225.i85, 1 ; 2 uses
-  %lftr.wideiv106 = trunc i64 %indvars.iv.next225.i to i32
-  %exitcond107.not = icmp eq i32 %smin105, %lftr.wideiv106
-  br i1 %exitcond107.not, label %._crit_edge175.i, label %.lr.ph172.i
+  %indvars.iv.next225.i = add nuw nsw i64 %indvars.iv.next225.i85, 1 ; 2 uses
+  %4 = icmp slt i64 %indvars.iv.next225.i, %sext
+  br i1 %4, label %.lr.ph172.i, label %._crit_edge175.i
 
 .lr.ph172.i:                                      ; preds = %.lr.ph174.i.preheader, %.loopexit.i60
   %indvars.iv.next225.i85 = phi i64 [ %indvars.iv.next225.i, %.loopexit.i60 ], [ %indvars.iv.next225.i82, %.lr.ph174.i.preheader ] ; 3 uses
@@ -517,8 +519,8 @@ Vec_IntFree.exit148.i:                            ; preds = %bb.cb, %bb.ca
 
 ._crit_edge175.i:                                 ; preds = %.loopexit.i60, %.lr.ph174.i.preheader, %.critedge.i57
   %indvars.iv.next205.i = add nuw nsw i64 %indvars.iv204.i, 4
-  %indvars.iv.next215.i = add nuw i64 %indvars.iv214.i, 4
-  %indvars.iv.next222.i = add i32 %indvars.iv221.i, 4
+  %indvars.iv.next215.i = add nuw nsw i64 %indvars.iv214.i, 4
+  %indvars.iv.next222.i = add nuw nsw i32 %indvars.iv221.i, 4
   %exitcond232.not.i = icmp eq i64 %indvars.iv.next228.i, %wide.trip.count.i54
   %indvars.iv.next103 = add i32 %indvars.iv102, -4
   br i1 %exitcond232.not.i, label %.lr.ph5.i.i, label %bb.bb, !llvm.loop !135

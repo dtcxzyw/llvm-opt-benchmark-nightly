@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 declare void @dissector_add_string(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal noundef i32 @dissect_bitcoin_msg_addr(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
+define internal range(i32 30, 10) i32 @dissect_bitcoin_msg_addr(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = load i32, ptr @hf_bitcoin_msg_addr, align 4
   %i.b = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.a, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0)
@@ -255,21 +255,21 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %.02443 = phi i64 [ %i.al, %.lr.ph ], [ %.sink.i31, %add_varint_item.exit ]
   %i.u = load i32, ptr @hf_msg_addr_address, align 4
   %i.v = tail call ptr @proto_tree_add_item(ptr noundef %i.d, i32 noundef %i.u, ptr noundef %0, i32 noundef %.044, i32 noundef 30, i32 noundef 0)
-  %i.w = add i32 %.044, 4
+  %i.w = add nuw nsw i32 %.044, 4
   %i.x = load i32, ptr @ett_address, align 4
   %i.y = tail call ptr @proto_item_add_subtree(ptr noundef %i.v, i32 noundef %i.x) ; 4 uses
   %i.z = load i32, ptr @hf_address_services, align 4
   %i.aa = load i32, ptr @ett_services, align 4
   %i.ab = tail call ptr @proto_tree_add_bitmask(ptr noundef %i.y, ptr noundef %0, i32 noundef %i.w, i32 noundef %i.z, i32 noundef %i.aa, ptr noundef nonnull @services_hf_flags, i32 noundef -2147483648) ; 0 uses
-  %i.ac = add i32 %.044, 12
+  %i.ac = add nuw nsw i32 %.044, 12
   %i.ad = load i32, ptr @hf_address_address, align 4
   %i.ae = tail call ptr @proto_tree_add_item(ptr noundef %i.y, i32 noundef %i.ad, ptr noundef %0, i32 noundef %i.ac, i32 noundef 16, i32 noundef 0) ; 0 uses
-  %i.af = add i32 %.044, 28
+  %i.af = add nuw nsw i32 %.044, 28
   %i.ag = load i32, ptr @hf_address_port, align 4
   %i.ah = tail call ptr @proto_tree_add_item(ptr noundef %i.y, i32 noundef %i.ag, ptr noundef %0, i32 noundef %i.af, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.ai = load i32, ptr @hf_msg_addr_timestamp, align 4
   %i.aj = tail call ptr @proto_tree_add_item(ptr noundef %i.y, i32 noundef %i.ai, ptr noundef %0, i32 noundef %.044, i32 noundef 4, i32 noundef -2147483630) ; 0 uses
-  %i.ak = add i32 %.044, 30                       ; 2 uses
+  %i.ak = add nuw nsw i32 %.044, 30               ; 2 uses
   %i.al = add i64 %.02443, -1                     ; 2 uses
   %.not = icmp eq i64 %i.al, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !8
@@ -463,7 +463,7 @@ bb.v:                                             ; preds = %bb.s, %bb.t, %bb.q,
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal noundef i32 @dissect_bitcoin_msg_inv(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
+define internal range(i32 36, 10) i32 @dissect_bitcoin_msg_inv(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = load i32, ptr @hf_bitcoin_msg_inv, align 4
   %i.b = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.a, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0)
@@ -518,10 +518,10 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %i.v = tail call ptr @proto_tree_add_subtree(ptr noundef %i.d, ptr noundef %0, i32 noundef %.044, i32 noundef 36, i32 noundef %i.u, ptr noundef null, ptr noundef nonnull @.str.320) ; 2 uses
   %i.w = load i32, ptr @hf_msg_inv_type, align 4
   %i.x = tail call ptr @proto_tree_add_item(ptr noundef %i.v, i32 noundef %i.w, ptr noundef %0, i32 noundef %.044, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
-  %i.y = add i32 %.044, 4
+  %i.y = add nuw nsw i32 %.044, 4
   %i.z = load i32, ptr @hf_msg_inv_hash, align 4
   %i.aa = tail call ptr @proto_tree_add_item(ptr noundef %i.v, i32 noundef %i.z, ptr noundef %0, i32 noundef %i.y, i32 noundef 32, i32 noundef 0) ; 0 uses
-  %i.ab = add i32 %.044, 36                       ; 2 uses
+  %i.ab = add nuw nsw i32 %.044, 36               ; 2 uses
   %i.ac = add i64 %.02443, -1                     ; 2 uses
   %.not = icmp eq i64 %i.ac, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !11
@@ -532,7 +532,7 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal noundef i32 @dissect_bitcoin_msg_getdata(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
+define internal range(i32 36, 10) i32 @dissect_bitcoin_msg_getdata(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = load i32, ptr @hf_bitcoin_msg_getdata, align 4
   %i.b = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.a, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0)
@@ -587,10 +587,10 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %i.v = tail call ptr @proto_tree_add_subtree(ptr noundef %i.d, ptr noundef %0, i32 noundef %.044, i32 noundef 36, i32 noundef %i.u, ptr noundef null, ptr noundef nonnull @.str.320) ; 2 uses
   %i.w = load i32, ptr @hf_msg_getdata_type, align 4
   %i.x = tail call ptr @proto_tree_add_item(ptr noundef %i.v, i32 noundef %i.w, ptr noundef %0, i32 noundef %.044, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
-  %i.y = add i32 %.044, 4
+  %i.y = add nuw nsw i32 %.044, 4
   %i.z = load i32, ptr @hf_msg_getdata_hash, align 4
   %i.aa = tail call ptr @proto_tree_add_item(ptr noundef %i.v, i32 noundef %i.z, ptr noundef %0, i32 noundef %i.y, i32 noundef 32, i32 noundef 0) ; 0 uses
-  %i.ab = add i32 %.044, 36                       ; 2 uses
+  %i.ab = add nuw nsw i32 %.044, 36               ; 2 uses
   %i.ac = add i64 %.02443, -1                     ; 2 uses
   %.not = icmp eq i64 %i.ac, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !12
@@ -601,7 +601,7 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal noundef i32 @dissect_bitcoin_msg_getblocks(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
+define internal range(i32 64, 46) i32 @dissect_bitcoin_msg_getblocks(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = load i32, ptr @hf_bitcoin_msg_getblocks, align 4
   %i.b = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.a, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0)
@@ -656,7 +656,7 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %.02544 = phi i64 [ %i.z, %.lr.ph ], [ %.sink.i32, %add_varint_item.exit ]
   %i.w = load i32, ptr @hf_msg_getblocks_start, align 4
   %i.x = tail call ptr @proto_tree_add_item(ptr noundef %i.d, i32 noundef %i.w, ptr noundef %0, i32 noundef %.045, i32 noundef 32, i32 noundef 0) ; 0 uses
-  %i.y = add i32 %.045, 32                        ; 2 uses
+  %i.y = add nuw nsw i32 %.045, 32                ; 2 uses
   %i.z = add i64 %.02544, -1                      ; 2 uses
   %.not = icmp eq i64 %i.z, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
@@ -670,7 +670,7 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal noundef i32 @dissect_bitcoin_msg_getheaders(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
+define internal range(i32 64, 46) i32 @dissect_bitcoin_msg_getheaders(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = load i32, ptr @hf_bitcoin_msg_getheaders, align 4
   %i.b = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.a, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0)
@@ -725,7 +725,7 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %.02544 = phi i64 [ %i.z, %.lr.ph ], [ %.sink.i32, %add_varint_item.exit ]
   %i.w = load i32, ptr @hf_msg_getheaders_start, align 4
   %i.x = tail call ptr @proto_tree_add_item(ptr noundef %i.d, i32 noundef %i.w, ptr noundef %0, i32 noundef %.045, i32 noundef 32, i32 noundef 0) ; 0 uses
-  %i.y = add i32 %.045, 32                        ; 2 uses
+  %i.y = add nuw nsw i32 %.045, 32                ; 2 uses
   %i.z = add i64 %.02544, -1                      ; 2 uses
   %.not = icmp eq i64 %i.z, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !14
@@ -810,7 +810,7 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %.065 = phi i32 [ %i.ah, %.lr.ph ], [ %.04650, %add_varint_item.exit ]
   %.04164 = phi i32 [ %i.ag, %.lr.ph ], [ 0, %add_varint_item.exit ]
   %.04563 = phi i64 [ %i.ai, %.lr.ph ], [ %.sink.i52, %add_varint_item.exit ]
-  %i.ag = add i32 %.04164, 1                      ; 2 uses
+  %i.ag = add nuw nsw i32 %.04164, 1              ; 2 uses
   %i.ah = tail call fastcc i32 @dissect_bitcoin_msg_tx_common(ptr noundef %0, i32 noundef %.065, ptr noundef %1, ptr noundef %i.d, i32 noundef %i.ag) ; 3 uses
   %i.ai = add i64 %.04563, -1                     ; 2 uses
   %i.aj = icmp ne i64 %i.ai, 0
@@ -848,7 +848,7 @@ bb.a:
 }
 
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
-define internal noundef i32 @dissect_bitcoin_msg_notfound(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
+define internal range(i32 36, 10) i32 @dissect_bitcoin_msg_notfound(ptr noundef %0, ptr nofree readnone captures(none) %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = load i32, ptr @hf_bitcoin_msg_notfound, align 4
   %i.b = tail call ptr @proto_tree_add_item(ptr noundef %2, i32 noundef %i.a, ptr noundef %0, i32 noundef 0, i32 noundef -1, i32 noundef 0)
@@ -903,10 +903,10 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %i.v = tail call ptr @proto_tree_add_subtree(ptr noundef %i.d, ptr noundef %0, i32 noundef %.044, i32 noundef 36, i32 noundef %i.u, ptr noundef null, ptr noundef nonnull @.str.320) ; 2 uses
   %i.w = load i32, ptr @hf_msg_notfound_type, align 4
   %i.x = tail call ptr @proto_tree_add_item(ptr noundef %i.v, i32 noundef %i.w, ptr noundef %0, i32 noundef %.044, i32 noundef 4, i32 noundef -2147483648) ; 0 uses
-  %i.y = add i32 %.044, 4
+  %i.y = add nuw nsw i32 %.044, 4
   %i.z = load i32, ptr @hf_msg_notfound_hash, align 4
   %i.aa = tail call ptr @proto_tree_add_item(ptr noundef %i.v, i32 noundef %i.z, ptr noundef %0, i32 noundef %i.y, i32 noundef 32, i32 noundef 0) ; 0 uses
-  %i.ab = add i32 %.044, 36                       ; 2 uses
+  %i.ab = add nuw nsw i32 %.044, 36               ; 2 uses
   %i.ac = add i64 %.02443, -1                     ; 2 uses
   %.not = icmp eq i64 %i.ac, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !16
@@ -1197,7 +1197,7 @@ add_varint_item.exit:                             ; preds = %bb.c, %bb.d, %bb.e,
   %.06786 = phi i64 [ %i.au, %.lr.ph ], [ %.sink.i74, %add_varint_item.exit ]
   %i.ar = load i32, ptr @hf_msg_merkleblock_hashes_hash, align 4
   %i.as = tail call ptr @proto_tree_add_item(ptr noundef %i.aq, i32 noundef %i.ar, ptr noundef %0, i32 noundef %.087, i32 noundef 32, i32 noundef 0) ; 0 uses
-  %i.at = add i32 %.087, 32                       ; 2 uses
+  %i.at = add nuw nsw i32 %.087, 32               ; 2 uses
   %i.au = add i64 %.06786, -1                     ; 2 uses
   %.not = icmp eq i64 %i.au, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !18

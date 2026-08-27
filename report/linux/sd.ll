@@ -204,21 +204,21 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.e ] ; 3 uses
   %.03744 = phi i32 [ 8, %.lr.ph.new ], [ %i.ad, %bb.e ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.e ]
-  %2 = sext i32 %.03744 to i64
+  %2 = zext nneg i32 %.03744 to i64
   %i.w = getelementptr i8, ptr %i.l, i64 %2
   %.val42 = load i64, ptr %i.w, align 8
   %i.x = tail call i64 @llvm.bswap.i64(i64 %.val42)
   %i.y = getelementptr [8 x i8], ptr %i.u, i64 %indvars.iv
   store i64 %i.x, ptr %i.y, align 8
-  %3 = add i32 %.03744, 8
-  %4 = sext i32 %3 to i64
-  %i.z = getelementptr i8, ptr %i.l, i64 %4
+  %3 = zext nneg i32 %.03744 to i64
+  %4 = getelementptr i8, ptr %i.l, i64 %3
+  %i.z = getelementptr i8, ptr %4, i64 8
   %.val42.1 = load i64, ptr %i.z, align 8
   %i.aa = tail call i64 @llvm.bswap.i64(i64 %.val42.1)
   %i.ab = getelementptr [8 x i8], ptr %i.u, i64 %indvars.iv
   %i.ac = getelementptr i8, ptr %i.ab, i64 8
   store i64 %i.aa, ptr %i.ac, align 8
-  %i.ad = add i32 %.03744, 16                     ; 2 uses
+  %i.ad = add nuw nsw i32 %.03744, 16             ; 2 uses
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

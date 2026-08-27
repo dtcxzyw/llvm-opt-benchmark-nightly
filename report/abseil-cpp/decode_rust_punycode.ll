@@ -183,7 +183,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bk = sub nsw i32 36, %.0.i
   %i.bl = zext i32 %i.bk to i64
   %i.bm = mul i64 %.02649.i, %i.bl
-  %i.bn = add i32 %.02550.i, 36
+  %i.bn = add nuw nsw i32 %.02550.i, 36
   %.not.not.i = icmp eq ptr %i.aw, %i.c
   br i1 %.not.not.i, label %.critedge, label %bb.i, !llvm.loop !22
 

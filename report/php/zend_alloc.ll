@@ -204,33 +204,33 @@ bb.c:                                             ; preds = %bb.c, %.preheader.n
   %indvars.iv = phi i64 [ 1, %.preheader.new ], [ %indvars.iv.next.3, %bb.c ] ; 5 uses
   %niter = phi i64 [ 0, %.preheader.new ], [ %niter.next.3, %bb.c ]
   %i.u = trunc nuw i64 %indvars.iv to i32         ; 2 uses
-  %i.v = shl i32 %i.u, 16
+  %i.v = shl nsw i32 %i.u, 16
   %.reass = or i32 %i.v, %invariant.op
-  %i.w = add i32 %i.k, %i.u
+  %i.w = add nsw i32 %i.k, %i.u
   %i.x = zext i32 %i.w to i64
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.x
   store i32 %.reass, ptr %i.y, align 4, !tbaa !27
   %i.z = trunc i64 %indvars.iv to i32
   %i.aa = add i32 %i.z, 1                         ; 2 uses
-  %i.ab = shl i32 %i.aa, 16
+  %i.ab = shl nsw i32 %i.aa, 16
   %.reass.1 = or i32 %i.ab, %invariant.op
-  %i.ac = add i32 %i.k, %i.aa
+  %i.ac = add nsw i32 %i.k, %i.aa
   %i.ad = zext i32 %i.ac to i64
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ad
   store i32 %.reass.1, ptr %i.ae, align 4, !tbaa !27
   %i.af = trunc i64 %indvars.iv to i32
   %i.ag = add i32 %i.af, 2                        ; 2 uses
-  %i.ah = shl i32 %i.ag, 16
+  %i.ah = shl nsw i32 %i.ag, 16
   %.reass.2 = or i32 %i.ah, %invariant.op
-  %i.ai = add i32 %i.k, %i.ag
+  %i.ai = add nsw i32 %i.k, %i.ag
   %i.aj = zext i32 %i.ai to i64
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.aj
   store i32 %.reass.2, ptr %i.ak, align 4, !tbaa !27
   %i.al = trunc i64 %indvars.iv to i32
   %i.am = add i32 %i.al, 3                        ; 2 uses
-  %i.an = shl i32 %i.am, 16
+  %i.an = shl nsw i32 %i.am, 16
   %.reass.3 = or i32 %i.an, %invariant.op
-  %i.ao = add i32 %i.k, %i.am
+  %i.ao = add nsw i32 %i.k, %i.am
   %i.ap = zext i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ap
   store i32 %.reass.3, ptr %i.aq, align 4, !tbaa !27

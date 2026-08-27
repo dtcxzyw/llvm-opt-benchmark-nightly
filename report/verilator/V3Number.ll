@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.c
   %i.u = getelementptr i8, ptr %i.o, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1, !tbaa !23    ; 2 uses
   %i.w = zext i8 %i.v to i64                      ; 7 uses
-  %i.x = shl i64 %.044.us, 3                      ; 8 uses
+  %i.x = shl nuw i64 %.044.us, 3                  ; 8 uses
   %i.y = trunc i64 %i.x to i32                    ; 3 uses
   %.not.i.us.us = icmp sgt i32 %.fr47, %i.y
   br i1 %.not.i.us.us, label %bb.f, label %_ZN8V3Number6setBitEic.exit.us.us
@@ -586,7 +586,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNKS
   %i.fz = getelementptr i8, ptr %i.o, i64 %i.fy
   %i.ga = load i8, ptr %i.fz, align 1, !tbaa !23  ; 2 uses
   %i.gb = zext i8 %i.ga to i64                    ; 7 uses
-  %i.gc = shl i64 %.044, 3                        ; 8 uses
+  %i.gc = shl nuw i64 %.044, 3                    ; 8 uses
   %i.gd = trunc i64 %i.gc to i32                  ; 3 uses
   %.not.i = icmp sgt i32 %.fr47, %i.gd
   br i1 %.not.i, label %bb.ad, label %_ZN8V3Number6setBitEic.exit

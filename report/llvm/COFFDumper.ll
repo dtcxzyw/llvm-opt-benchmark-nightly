@@ -205,34 +205,33 @@ _ZN4llvm8ExpectedINS_9StringRefEED2Ev.exit35:     ; preds = %.thread
   br i1 %i.bv, label %.preheader._crit_edge, label %.lr.ph115, !prof !358
 
 bb.g:                                             ; preds = %bb.i
-  %10 = add i32 %.028.i114, 7
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv113, 7
   %i.bw = icmp eq ptr %i.cf, %i.bu
   br i1 %i.bw, label %.preheader._crit_edge, label %.lr.ph115, !prof !359, !llvm.loop !360
 
 .lr.ph115:                                        ; preds = %.preheader, %bb.g
-  %.028.i114 = phi i32 [ %10, %bb.g ], [ 0, %.preheader ] ; 5 uses
-  %.029.i113 = phi i64 [ %.130.i, %bb.g ], [ 0, %.preheader ]
-  %.031.i112 = phi ptr [ %i.cf, %bb.g ], [ %.01899, %.preheader ] ; 2 uses
-  %i.bx = load i8, ptr %.031.i112, align 1, !tbaa !128 ; 2 uses
+  %.029.i115 = phi i64 [ %.130.i, %bb.g ], [ 0, %.preheader ]
+  %.031.i114 = phi ptr [ %i.cf, %bb.g ], [ %.01899, %.preheader ] ; 2 uses
+  %indvars.iv113 = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %.preheader ] ; 5 uses
+  %i.bx = load i8, ptr %.031.i114, align 1, !tbaa !128 ; 2 uses
   %i.by = and i8 %i.bx, 127                       ; 3 uses
   %i.bz = zext nneg i8 %i.by to i64
-  %i.ca = icmp ugt i32 %.028.i114, 62
+  %i.ca = icmp samesign ugt i64 %indvars.iv113, 62
   br i1 %i.ca, label %bb.h, label %bb.i, !prof !130
 
 bb.h:                                             ; preds = %.lr.ph115
-  %.not44.i = icmp eq i32 %.028.i114, 63
+  %.not44.i = icmp eq i64 %indvars.iv113, 63
   %.not.i36 = icmp samesign ugt i8 %i.by, 1
   %i.cb = icmp ne i8 %i.by, 0
   %or.cond43.i = select i1 %.not44.i, i1 %.not.i36, i1 %i.cb
   br i1 %or.cond43.i, label %.preheader._crit_edge, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.lr.ph115
-  %i.cc = icmp ult i32 %.028.i114, 64
-  %11 = zext nneg i32 %.028.i114 to i64
-  %i.cd = shl i64 %i.bz, %11
+  %i.cc = icmp samesign ult i64 %indvars.iv113, 64
+  %i.cd = shl i64 %i.bz, %indvars.iv113
   %i.ce = select i1 %i.cc, i64 %i.cd, i64 0, !prof !361
-  %.130.i = add i64 %i.ce, %.029.i113             ; 3 uses
-  %i.cf = getelementptr inbounds nuw i8, ptr %.031.i112, i64 1 ; 3 uses
+  %.130.i = add i64 %i.ce, %.029.i115             ; 3 uses
+  %i.cf = getelementptr inbounds nuw i8, ptr %.031.i114, i64 1 ; 3 uses
   %i.cg = icmp slt i8 %i.bx, 0
   br i1 %i.cg, label %bb.g, label %bb.k, !llvm.loop !360
 

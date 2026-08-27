@@ -204,18 +204,17 @@ bb.rr:                                            ; preds = %.critedge.thread.i.
   br i1 %.not233.i.i, label %._crit_edge.i.i.i.i.i176.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %bb.rr, %bb.sh
-  %.3.i.i = phi i32 [ %233, %bb.sh ], [ 0, %bb.rr ] ; 4 uses
+  %indvars.iv284.i.i = phi i64 [ %indvars.iv.next285.i.i, %bb.sh ], [ 0, %bb.rr ] ; 4 uses
   %.045.i.i.i.i.i.i.i = phi i64 [ %i.eet, %bb.sh ], [ %i.dpp, %bb.rr ] ; 2 uses
   %.02944.i.i.i.i.i.i.i = phi ptr [ %i.ees, %bb.sh ], [ %.sroa.0146.0.lcssa.i, %bb.rr ] ; 6 uses
   %.val41.val.i.i.i.i.i.i.i = load ptr, ptr %i.dtq, align 8, !tbaa !176
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #27, !noalias !1091
-  %224 = or disjoint i32 %.3.i.i, 1
   call void @llvm.experimental.noalias.scope.decl(metadata !1181)
-  %225 = zext i32 %224 to i64
-  %226 = getelementptr inbounds nuw [56 x i8], ptr %.val41.val.i.i.i.i.i.i.i, i64 %225 ; 3 uses
+  %224 = getelementptr inbounds nuw [56 x i8], ptr %.val41.val.i.i.i.i.i.i.i, i64 %indvars.iv284.i.i ; 3 uses
+  %225 = getelementptr inbounds nuw i8, ptr %224, i64 56
   store ptr %i.dpq, ptr %16, align 8, !tbaa !16, !alias.scope !1181, !noalias !1091
-  %i.eby = load ptr, ptr %226, align 8, !tbaa !22, !noalias !1181 ; 2 uses
-  %i.ebz = getelementptr inbounds nuw i8, ptr %226, i64 8
+  %i.eby = load ptr, ptr %225, align 8, !tbaa !22, !noalias !1181 ; 2 uses
+  %i.ebz = getelementptr inbounds nuw i8, ptr %224, i64 64
   %i.eca = load i64, ptr %i.ebz, align 8, !tbaa !18, !noalias !1181 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #27, !noalias !1184
   store i64 %i.eca, ptr %i.j, align 8, !tbaa !56, !noalias !1184
@@ -252,7 +251,7 @@ _ZNK12_GLOBAL__N_19Intrinsic12getParamTypeEj.exit.i.i204.i.i: ; preds = %bb.ru, 
   %i.eci = getelementptr inbounds nuw i8, ptr %i.ech, i64 %i.ecg
   store i8 0, ptr %i.eci, align 1, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #27, !noalias !1184
-  %i.ecj = getelementptr inbounds nuw i8, ptr %226, i64 32
+  %i.ecj = getelementptr inbounds nuw i8, ptr %224, i64 88
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dps, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.ecj, i64 24, i1 false)
   %i.eck = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14TypeeqERKS0_(ptr noundef nonnull readonly align 8 dereferenceable(56) %.02944.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(56) %16), !inline_history !1094
   %i.ecl = load ptr, ptr %16, align 8, !tbaa !22, !noalias !1091 ; 2 uses
@@ -273,13 +272,12 @@ bb.rv:                                            ; preds = %"_ZN9__gnu_cxx5__op
   %i.ecp = getelementptr inbounds nuw i8, ptr %.02944.i.i.i.i.i.i.i, i64 56 ; 2 uses
   %.val39.val.i.i.i.i.i.i.i = load ptr, ptr %i.dtq, align 8, !tbaa !176
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #27, !noalias !1091
-  %227 = or disjoint i32 %.3.i.i, 2
   call void @llvm.experimental.noalias.scope.decl(metadata !1185)
-  %228 = zext i32 %227 to i64
-  %229 = getelementptr inbounds nuw [56 x i8], ptr %.val39.val.i.i.i.i.i.i.i, i64 %228 ; 3 uses
+  %226 = getelementptr inbounds nuw [56 x i8], ptr %.val39.val.i.i.i.i.i.i.i, i64 %indvars.iv284.i.i ; 3 uses
+  %227 = getelementptr inbounds nuw i8, ptr %226, i64 112
   store ptr %i.dpt, ptr %17, align 8, !tbaa !16, !alias.scope !1185, !noalias !1091
-  %i.ecq = load ptr, ptr %229, align 8, !tbaa !22, !noalias !1185 ; 2 uses
-  %i.ecr = getelementptr inbounds nuw i8, ptr %229, i64 8
+  %i.ecq = load ptr, ptr %227, align 8, !tbaa !22, !noalias !1185 ; 2 uses
+  %i.ecr = getelementptr inbounds nuw i8, ptr %226, i64 120
   %i.ecs = load i64, ptr %i.ecr, align 8, !tbaa !18, !noalias !1185 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #27, !noalias !1188
   store i64 %i.ecs, ptr %i.k, align 8, !tbaa !56, !noalias !1188
@@ -316,7 +314,7 @@ _ZNK12_GLOBAL__N_19Intrinsic12getParamTypeEj.exit.i.i199.i.i: ; preds = %bb.ry, 
   %i.eda = getelementptr inbounds nuw i8, ptr %i.ecz, i64 %i.ecy
   store i8 0, ptr %i.eda, align 1, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #27, !noalias !1188
-  %i.edb = getelementptr inbounds nuw i8, ptr %229, i64 32
+  %i.edb = getelementptr inbounds nuw i8, ptr %226, i64 144
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dpv, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.edb, i64 24, i1 false)
   %i.edc = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14TypeeqERKS0_(ptr noundef nonnull readonly align 8 dereferenceable(56) %i.ecp, ptr noundef nonnull align 8 dereferenceable(56) %17), !inline_history !1094
   %i.edd = load ptr, ptr %17, align 8, !tbaa !22, !noalias !1091 ; 2 uses
@@ -337,13 +335,12 @@ bb.rz:                                            ; preds = %"_ZN9__gnu_cxx5__op
   %i.edh = getelementptr inbounds nuw i8, ptr %.02944.i.i.i.i.i.i.i, i64 112 ; 2 uses
   %.val37.val.i.i.i.i.i.i.i = load ptr, ptr %i.dtq, align 8, !tbaa !176
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #27, !noalias !1091
-  %230 = or disjoint i32 %.3.i.i, 3
   call void @llvm.experimental.noalias.scope.decl(metadata !1189)
-  %231 = zext i32 %230 to i64
-  %232 = getelementptr inbounds nuw [56 x i8], ptr %.val37.val.i.i.i.i.i.i.i, i64 %231 ; 3 uses
+  %228 = getelementptr inbounds nuw [56 x i8], ptr %.val37.val.i.i.i.i.i.i.i, i64 %indvars.iv284.i.i ; 3 uses
+  %229 = getelementptr inbounds nuw i8, ptr %228, i64 168
   store ptr %i.dpw, ptr %18, align 8, !tbaa !16, !alias.scope !1189, !noalias !1091
-  %i.edi = load ptr, ptr %232, align 8, !tbaa !22, !noalias !1189 ; 2 uses
-  %i.edj = getelementptr inbounds nuw i8, ptr %232, i64 8
+  %i.edi = load ptr, ptr %229, align 8, !tbaa !22, !noalias !1189 ; 2 uses
+  %i.edj = getelementptr inbounds nuw i8, ptr %228, i64 176
   %i.edk = load i64, ptr %i.edj, align 8, !tbaa !18, !noalias !1189 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #27, !noalias !1192
   store i64 %i.edk, ptr %i.l, align 8, !tbaa !56, !noalias !1192
@@ -380,7 +377,7 @@ _ZNK12_GLOBAL__N_19Intrinsic12getParamTypeEj.exit.i.i194.i.i: ; preds = %bb.sc, 
   %i.eds = getelementptr inbounds nuw i8, ptr %i.edr, i64 %i.edq
   store i8 0, ptr %i.eds, align 1, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #27, !noalias !1192
-  %i.edt = getelementptr inbounds nuw i8, ptr %232, i64 32
+  %i.edt = getelementptr inbounds nuw i8, ptr %228, i64 200
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.dpy, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.edt, i64 24, i1 false)
   %i.edu = call fastcc noundef zeroext i1 @_ZNK12_GLOBAL__N_14TypeeqERKS0_(ptr noundef nonnull readonly align 8 dereferenceable(56) %i.edh, ptr noundef nonnull align 8 dereferenceable(56) %18), !inline_history !1094
   %i.edv = load ptr, ptr %18, align 8, !tbaa !22, !noalias !1091 ; 2 uses
@@ -401,10 +398,10 @@ bb.sd:                                            ; preds = %"_ZN9__gnu_cxx5__op
   %i.edz = getelementptr inbounds nuw i8, ptr %.02944.i.i.i.i.i.i.i, i64 168 ; 2 uses
   %.val35.val.i.i.i.i.i.i.i = load ptr, ptr %i.dtq, align 8, !tbaa !176
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #27, !noalias !1091
-  %233 = add i32 %.3.i.i, 4                       ; 3 uses
+  %indvars.iv.next285.i.i = add nuw nsw i64 %indvars.iv284.i.i, 4 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1193)
-  %234 = zext i32 %233 to i64
-  %i.eea = getelementptr inbounds nuw [56 x i8], ptr %.val35.val.i.i.i.i.i.i.i, i64 %234 ; 3 uses
+  %230 = and i64 %indvars.iv.next285.i.i, 4294967292
+  %i.eea = getelementptr inbounds nuw [56 x i8], ptr %.val35.val.i.i.i.i.i.i.i, i64 %230 ; 3 uses
   store ptr %i.dpz, ptr %19, align 8, !tbaa !16, !alias.scope !1193, !noalias !1091
   %i.eeb = load ptr, ptr %i.eea, align 8, !tbaa !22, !noalias !1193 ; 2 uses
   %i.eec = getelementptr inbounds nuw i8, ptr %i.eea, i64 8
@@ -468,13 +465,14 @@ bb.sh:                                            ; preds = %"_ZN9__gnu_cxx5__op
   br i1 %i.eeu, label %.lr.ph.i.i.i.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i.i.i.i, !llvm.loop !1197
 
 ._crit_edge.loopexit.i.i.i.i.i.i.i:               ; preds = %bb.sh
+  %indvars.le.i.i = trunc i64 %indvars.iv.next285.i.i to i32
   %.pre.i.i.i.i.i.i74.i = ptrtoint ptr %i.ees to i64
   %.pre46.i.i.i.i.i.i.i = sub i64 %i.djk, %.pre.i.i.i.i.i.i74.i
   %i.eev = sdiv exact i64 %.pre46.i.i.i.i.i.i.i, 56
   br label %._crit_edge.i.i.i.i.i176.i.i
 
 ._crit_edge.i.i.i.i.i176.i.i:                     ; preds = %._crit_edge.loopexit.i.i.i.i.i.i.i, %bb.rr
-  %.0228.i.i = phi i32 [ %233, %._crit_edge.loopexit.i.i.i.i.i.i.i ], [ 0, %bb.rr ] ; 3 uses
+  %.0228.i.i = phi i32 [ %indvars.le.i.i, %._crit_edge.loopexit.i.i.i.i.i.i.i ], [ 0, %bb.rr ] ; 3 uses
   %.pre-phi47.i.i.i.i.i.i.i = phi i64 [ %i.eev, %._crit_edge.loopexit.i.i.i.i.i.i.i ], [ %i.djn, %bb.rr ]
   %.029.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.ees, %._crit_edge.loopexit.i.i.i.i.i.i.i ], [ %.sroa.0146.0.lcssa.i, %bb.rr ] ; 5 uses
   switch i64 %.pre-phi47.i.i.i.i.i.i.i, label %"_ZN4llvm6all_ofIRNS_8ArrayRefIN12_GLOBAL__N_14TypeEEEZNS2_11NeonEmitter12getIntrinsicENS_9StringRefES4_St8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE3$_0EEbOT_T0_.exit.thread.i.i" [

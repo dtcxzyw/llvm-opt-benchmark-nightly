@@ -202,29 +202,28 @@ bb.f:                                             ; preds = %_ZN4llvm11raw_ostre
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread
 
 .preheader75:                                     ; preds = %_ZN4llvm11raw_ostreamlsEc.exit, %bb.h
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i, %bb.h ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
   %.031.i.i.i = phi ptr [ %i.am, %bb.h ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
   %.029.i.i.i = phi i64 [ %.130.i.i.i, %bb.h ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
-  %.028.i.i.i = phi i32 [ %6, %bb.h ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
   %i.ae = load i8, ptr %.031.i.i.i, align 1, !tbaa !34 ; 2 uses
   %i.af = and i8 %i.ae, 127                       ; 3 uses
   %i.ag = zext nneg i8 %i.af to i64
-  %i.ah = icmp ugt i32 %.028.i.i.i, 62
+  %i.ah = icmp samesign ugt i64 %indvars.iv.i.i, 62
   br i1 %i.ah, label %bb.g, label %bb.h, !prof !44
 
 bb.g:                                             ; preds = %.preheader75
-  %.not44.i.i.i = icmp eq i32 %.028.i.i.i, 63
+  %.not44.i.i.i = icmp eq i64 %indvars.iv.i.i, 63
   %.not.i.i.i = icmp samesign ugt i8 %i.af, 1
   %i.ai = icmp ne i8 %i.af, 0
   %or.cond43.i.i.i = select i1 %.not44.i.i.i, i1 %.not.i.i.i, i1 %i.ai
   br i1 %or.cond43.i.i.i, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.preheader75
-  %i.aj = icmp ult i32 %.028.i.i.i, 64
-  %5 = zext nneg i32 %.028.i.i.i to i64
-  %i.ak = shl i64 %i.ag, %5
+  %i.aj = icmp samesign ult i64 %indvars.iv.i.i, 64
+  %i.ak = shl i64 %i.ag, %indvars.iv.i.i
   %i.al = select i1 %i.aj, i64 %i.ak, i64 0, !prof !45
   %.130.i.i.i = add i64 %i.al, %.029.i.i.i        ; 2 uses
-  %6 = add i32 %.028.i.i.i, 7
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 7
   %i.am = getelementptr inbounds nuw i8, ptr %.031.i.i.i, i64 1 ; 2 uses
   %i.an = icmp slt i8 %i.ae, 0
   br i1 %i.an, label %.preheader75, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit, !llvm.loop !46
@@ -259,35 +258,34 @@ bb.j:                                             ; preds = %_ZN4llvm25decodeULE
   br label %_ZN4llvm11raw_ostreamlsEc.exit.backedge
 
 .preheader76:                                     ; preds = %_ZN4llvm11raw_ostreamlsEc.exit, %bb.l
-  %.031.i.i.i57 = phi ptr [ %i.bk, %bb.l ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
-  %.029.i.i.i58 = phi i64 [ %.130.i.i.i60, %bb.l ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
-  %.028.i.i.i59 = phi i32 [ %8, %bb.l ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
-  %i.bc = load i8, ptr %.031.i.i.i57, align 1, !tbaa !34 ; 2 uses
+  %indvars.iv.i.i57 = phi i64 [ %indvars.iv.next.i.i61, %bb.l ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
+  %.031.i.i.i58 = phi ptr [ %i.bk, %bb.l ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
+  %.029.i.i.i59 = phi i64 [ %.130.i.i.i60, %bb.l ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
+  %i.bc = load i8, ptr %.031.i.i.i58, align 1, !tbaa !34 ; 2 uses
   %i.bd = and i8 %i.bc, 127                       ; 3 uses
   %i.be = zext nneg i8 %i.bd to i64
-  %i.bf = icmp ugt i32 %.028.i.i.i59, 62
+  %i.bf = icmp samesign ugt i64 %indvars.iv.i.i57, 62
   br i1 %i.bf, label %bb.k, label %bb.l, !prof !44
 
 bb.k:                                             ; preds = %.preheader76
-  %.not44.i.i.i63 = icmp eq i32 %.028.i.i.i59, 63
+  %.not44.i.i.i63 = icmp eq i64 %indvars.iv.i.i57, 63
   %.not.i.i.i64 = icmp samesign ugt i8 %i.bd, 1
   %i.bg = icmp ne i8 %i.bd, 0
   %or.cond43.i.i.i65 = select i1 %.not44.i.i.i63, i1 %.not.i.i.i64, i1 %i.bg
   br i1 %or.cond43.i.i.i65, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit66, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %.preheader76
-  %i.bh = icmp ult i32 %.028.i.i.i59, 64
-  %7 = zext nneg i32 %.028.i.i.i59 to i64
-  %i.bi = shl i64 %i.be, %7
+  %i.bh = icmp samesign ult i64 %indvars.iv.i.i57, 64
+  %i.bi = shl i64 %i.be, %indvars.iv.i.i57
   %i.bj = select i1 %i.bh, i64 %i.bi, i64 0, !prof !45
-  %.130.i.i.i60 = add i64 %i.bj, %.029.i.i.i58    ; 2 uses
-  %8 = add i32 %.028.i.i.i59, 7
-  %i.bk = getelementptr inbounds nuw i8, ptr %.031.i.i.i57, i64 1 ; 2 uses
+  %.130.i.i.i60 = add i64 %i.bj, %.029.i.i.i59    ; 2 uses
+  %indvars.iv.next.i.i61 = add nuw nsw i64 %indvars.iv.i.i57, 7
+  %i.bk = getelementptr inbounds nuw i8, ptr %.031.i.i.i58, i64 1 ; 2 uses
   %i.bl = icmp slt i8 %i.bc, 0
   br i1 %i.bl, label %.preheader76, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit66, !llvm.loop !46
 
 _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit66:  ; preds = %bb.k, %bb.l
-  %.132.i.i.i61 = phi ptr [ %i.bk, %bb.l ], [ %.031.i.i.i57, %bb.k ]
+  %.132.i.i.i61 = phi ptr [ %i.bk, %bb.l ], [ %.031.i.i.i58, %bb.k ]
   %.3.i.i.i62 = phi i64 [ %.130.i.i.i60, %bb.l ], [ 0, %bb.k ]
   %i.bm = ptrtoint ptr %.132.i.i.i61 to i64
   %i.bn = ptrtoint ptr %i.e to i64
@@ -312,35 +310,34 @@ bb.m:                                             ; preds = %bb.u, %_ZN4llvm25de
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.p, %bb.m
-  %.031.i.i.i69 = phi ptr [ %.1, %bb.m ], [ %i.cj, %bb.p ] ; 3 uses
-  %.029.i.i.i70 = phi i64 [ 0, %bb.m ], [ %.130.i.i.i72, %bb.p ]
-  %.028.i.i.i71 = phi i32 [ 0, %bb.m ], [ %10, %bb.p ] ; 5 uses
-  %i.cb = load i8, ptr %.031.i.i.i69, align 1, !tbaa !34 ; 2 uses
+  %indvars.iv.i.i70 = phi i64 [ %indvars.iv.next.i.i74, %bb.p ], [ 0, %bb.m ] ; 5 uses
+  %.031.i.i.i71 = phi ptr [ %i.cj, %bb.p ], [ %.1, %bb.m ] ; 3 uses
+  %.029.i.i.i72 = phi i64 [ %.130.i.i.i72, %bb.p ], [ 0, %bb.m ]
+  %i.cb = load i8, ptr %.031.i.i.i71, align 1, !tbaa !34 ; 2 uses
   %i.cc = and i8 %i.cb, 127                       ; 3 uses
   %i.cd = zext nneg i8 %i.cc to i64
-  %i.ce = icmp ugt i32 %.028.i.i.i71, 62
+  %i.ce = icmp samesign ugt i64 %indvars.iv.i.i70, 62
   br i1 %i.ce, label %bb.o, label %bb.p, !prof !44
 
 bb.o:                                             ; preds = %bb.n
-  %.not44.i.i.i75 = icmp eq i32 %.028.i.i.i71, 63
+  %.not44.i.i.i75 = icmp eq i64 %indvars.iv.i.i70, 63
   %.not.i.i.i76 = icmp samesign ugt i8 %i.cc, 1
   %i.cf = icmp ne i8 %i.cc, 0
   %or.cond43.i.i.i77 = select i1 %.not44.i.i.i75, i1 %.not.i.i.i76, i1 %i.cf
   br i1 %or.cond43.i.i.i77, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78, label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.cg = icmp ult i32 %.028.i.i.i71, 64
-  %9 = zext nneg i32 %.028.i.i.i71 to i64
-  %i.ch = shl i64 %i.cd, %9
+  %i.cg = icmp samesign ult i64 %indvars.iv.i.i70, 64
+  %i.ch = shl i64 %i.cd, %indvars.iv.i.i70
   %i.ci = select i1 %i.cg, i64 %i.ch, i64 0, !prof !45
-  %.130.i.i.i72 = add i64 %i.ci, %.029.i.i.i70    ; 2 uses
-  %10 = add i32 %.028.i.i.i71, 7
-  %i.cj = getelementptr inbounds nuw i8, ptr %.031.i.i.i69, i64 1 ; 2 uses
+  %.130.i.i.i72 = add i64 %i.ci, %.029.i.i.i72    ; 2 uses
+  %indvars.iv.next.i.i74 = add nuw nsw i64 %indvars.iv.i.i70, 7
+  %i.cj = getelementptr inbounds nuw i8, ptr %.031.i.i.i71, i64 1 ; 2 uses
   %i.ck = icmp slt i8 %i.cb, 0
   br i1 %i.ck, label %bb.n, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78, !llvm.loop !46
 
 _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78:  ; preds = %bb.o, %bb.p
-  %.132.i.i.i73 = phi ptr [ %i.cj, %bb.p ], [ %.031.i.i.i69, %bb.o ]
+  %.132.i.i.i73 = phi ptr [ %i.cj, %bb.p ], [ %.031.i.i.i71, %bb.o ]
   %.3.i.i.i74 = phi i64 [ %.130.i.i.i72, %bb.p ], [ 0, %bb.o ] ; 2 uses
   %i.cl = ptrtoint ptr %.132.i.i.i73 to i64
   %i.cm = ptrtoint ptr %.1 to i64
@@ -350,38 +347,37 @@ _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78:  ; preds = %bb.o, %bb.p
   br label %bb.r
 
 bb.q:                                             ; preds = %bb.t
-  %11 = add i32 %.028.i.i.i8227, 7
+  %indvars.iv.next.i.i86 = add nuw nsw i64 %indvars.iv.i.i8225, 7
   br label %bb.r, !llvm.loop !46
 
 bb.r:                                             ; preds = %bb.q, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78
-  %.028.i.i.i8227 = phi i32 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78 ], [ %11, %bb.q ] ; 5 uses
-  %.029.i.i.i8126 = phi i64 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78 ], [ %.130.i.i.i83, %bb.q ]
-  %.031.i.i.i8025 = phi ptr [ %i.cp, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78 ], [ %i.cy, %bb.q ] ; 3 uses
-  %i.cq = load i8, ptr %.031.i.i.i8025, align 1, !tbaa !34 ; 2 uses
+  %.029.i.i.i8427 = phi i64 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78 ], [ %.130.i.i.i83, %bb.q ]
+  %.031.i.i.i8326 = phi ptr [ %i.cp, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78 ], [ %i.cy, %bb.q ] ; 3 uses
+  %indvars.iv.i.i8225 = phi i64 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit78 ], [ %indvars.iv.next.i.i86, %bb.q ] ; 5 uses
+  %i.cq = load i8, ptr %.031.i.i.i8326, align 1, !tbaa !34 ; 2 uses
   %i.cr = and i8 %i.cq, 127                       ; 3 uses
   %i.cs = zext nneg i8 %i.cr to i64
-  %i.ct = icmp ugt i32 %.028.i.i.i8227, 62
+  %i.ct = icmp samesign ugt i64 %indvars.iv.i.i8225, 62
   br i1 %i.ct, label %bb.s, label %bb.t, !prof !44
 
 bb.s:                                             ; preds = %bb.r
-  %.not44.i.i.i86 = icmp eq i32 %.028.i.i.i8227, 63
+  %.not44.i.i.i86 = icmp eq i64 %indvars.iv.i.i8225, 63
   %.not.i.i.i87 = icmp samesign ugt i8 %i.cr, 1
   %i.cu = icmp ne i8 %i.cr, 0
   %or.cond43.i.i.i88 = select i1 %.not44.i.i.i86, i1 %.not.i.i.i87, i1 %i.cu
   br i1 %or.cond43.i.i.i88, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit89.thread.loopexit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %i.cv = icmp ult i32 %.028.i.i.i8227, 64
-  %12 = zext nneg i32 %.028.i.i.i8227 to i64
-  %i.cw = shl i64 %i.cs, %12
+  %i.cv = icmp samesign ult i64 %indvars.iv.i.i8225, 64
+  %i.cw = shl i64 %i.cs, %indvars.iv.i.i8225
   %i.cx = select i1 %i.cv, i64 %i.cw, i64 0, !prof !45
-  %.130.i.i.i83 = add i64 %i.cx, %.029.i.i.i8126  ; 2 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %.031.i.i.i8025, i64 1 ; 2 uses
+  %.130.i.i.i83 = add i64 %i.cx, %.029.i.i.i8427  ; 2 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %.031.i.i.i8326, i64 1 ; 2 uses
   %i.cz = icmp slt i8 %i.cq, 0
   br i1 %i.cz, label %bb.q, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit89, !llvm.loop !46
 
 _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit89.thread.loopexit: ; preds = %bb.s
-  %i.da = ptrtoint ptr %.031.i.i.i8025 to i64
+  %i.da = ptrtoint ptr %.031.i.i.i8326 to i64
   %i.db = ptrtoint ptr %i.cp to i64
   %i.dc = sub i64 %i.da, %i.db
   %i.dd = and i64 %i.dc, 4294967295
@@ -410,35 +406,34 @@ bb.u:                                             ; preds = %_ZN4llvm25decodeULE
   br i1 %.not, label %_ZN4llvm11raw_ostreamlsEc.exit.backedge, label %.thread
 
 .preheader77:                                     ; preds = %_ZN4llvm11raw_ostreamlsEc.exit, %bb.w
-  %.031.i.i.i91 = phi ptr [ %i.dx, %bb.w ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
-  %.029.i.i.i92 = phi i64 [ %.130.i.i.i94, %bb.w ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
-  %.028.i.i.i93 = phi i32 [ %14, %bb.w ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
-  %i.dp = load i8, ptr %.031.i.i.i91, align 1, !tbaa !34 ; 2 uses
+  %indvars.iv.i.i94 = phi i64 [ %indvars.iv.next.i.i98, %bb.w ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
+  %.031.i.i.i95 = phi ptr [ %i.dx, %bb.w ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
+  %.029.i.i.i96 = phi i64 [ %.130.i.i.i94, %bb.w ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
+  %i.dp = load i8, ptr %.031.i.i.i95, align 1, !tbaa !34 ; 2 uses
   %i.dq = and i8 %i.dp, 127                       ; 3 uses
   %i.dr = zext nneg i8 %i.dq to i64
-  %i.ds = icmp ugt i32 %.028.i.i.i93, 62
+  %i.ds = icmp samesign ugt i64 %indvars.iv.i.i94, 62
   br i1 %i.ds, label %bb.v, label %bb.w, !prof !44
 
 bb.v:                                             ; preds = %.preheader77
-  %.not44.i.i.i97 = icmp eq i32 %.028.i.i.i93, 63
+  %.not44.i.i.i97 = icmp eq i64 %indvars.iv.i.i94, 63
   %.not.i.i.i98 = icmp samesign ugt i8 %i.dq, 1
   %i.dt = icmp ne i8 %i.dq, 0
   %or.cond43.i.i.i99 = select i1 %.not44.i.i.i97, i1 %.not.i.i.i98, i1 %i.dt
   br i1 %or.cond43.i.i.i99, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100, label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %.preheader77
-  %i.du = icmp ult i32 %.028.i.i.i93, 64
-  %13 = zext nneg i32 %.028.i.i.i93 to i64
-  %i.dv = shl i64 %i.dr, %13
+  %i.du = icmp samesign ult i64 %indvars.iv.i.i94, 64
+  %i.dv = shl i64 %i.dr, %indvars.iv.i.i94
   %i.dw = select i1 %i.du, i64 %i.dv, i64 0, !prof !45
-  %.130.i.i.i94 = add i64 %i.dw, %.029.i.i.i92    ; 2 uses
-  %14 = add i32 %.028.i.i.i93, 7
-  %i.dx = getelementptr inbounds nuw i8, ptr %.031.i.i.i91, i64 1 ; 2 uses
+  %.130.i.i.i94 = add i64 %i.dw, %.029.i.i.i96    ; 2 uses
+  %indvars.iv.next.i.i98 = add nuw nsw i64 %indvars.iv.i.i94, 7
+  %i.dx = getelementptr inbounds nuw i8, ptr %.031.i.i.i95, i64 1 ; 2 uses
   %i.dy = icmp slt i8 %i.dp, 0
   br i1 %i.dy, label %.preheader77, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100, !llvm.loop !46
 
 _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100: ; preds = %bb.v, %bb.w
-  %.132.i.i.i95 = phi ptr [ %i.dx, %bb.w ], [ %.031.i.i.i91, %bb.v ]
+  %.132.i.i.i95 = phi ptr [ %i.dx, %bb.w ], [ %.031.i.i.i95, %bb.v ]
   %.3.i.i.i96 = phi i64 [ %.130.i.i.i94, %bb.w ], [ 0, %bb.v ]
   %i.dz = ptrtoint ptr %.132.i.i.i95 to i64
   %i.ea = ptrtoint ptr %i.e to i64
@@ -459,29 +454,28 @@ _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100: ; preds = %bb.v, %bb.w
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.z, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100
-  %.031.i = phi ptr [ %i.en, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100 ], [ %i.ew, %bb.z ] ; 3 uses
-  %.029.i = phi i64 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100 ], [ %.130.i, %bb.z ]
-  %.028.i = phi i32 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100 ], [ %16, %bb.z ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.z ], [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100 ] ; 5 uses
+  %.031.i = phi ptr [ %i.ew, %bb.z ], [ %i.en, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100 ] ; 3 uses
+  %.029.i = phi i64 [ %.130.i, %bb.z ], [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit100 ]
   %i.eo = load i8, ptr %.031.i, align 1, !tbaa !34 ; 2 uses
   %i.ep = and i8 %i.eo, 127                       ; 3 uses
   %i.eq = zext nneg i8 %i.ep to i64
-  %i.er = icmp ugt i32 %.028.i, 62
+  %i.er = icmp samesign ugt i64 %indvars.iv, 62
   br i1 %i.er, label %bb.y, label %bb.z, !prof !44
 
 bb.y:                                             ; preds = %bb.x
-  %.not44.i = icmp eq i32 %.028.i, 63
+  %.not44.i = icmp eq i64 %indvars.iv, 63
   %.not.i102 = icmp samesign ugt i8 %i.ep, 1
   %i.es = icmp ne i8 %i.ep, 0
   %or.cond43.i = select i1 %.not44.i, i1 %.not.i102, i1 %i.es
   br i1 %or.cond43.i, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %i.et = icmp ult i32 %.028.i, 64
-  %15 = zext nneg i32 %.028.i to i64
-  %i.eu = shl i64 %i.eq, %15
+  %i.et = icmp samesign ult i64 %indvars.iv, 64
+  %i.eu = shl i64 %i.eq, %indvars.iv
   %i.ev = select i1 %i.et, i64 %i.eu, i64 0, !prof !45
   %.130.i = add i64 %i.ev, %.029.i                ; 2 uses
-  %16 = add i32 %.028.i, 7
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 7
   %i.ew = getelementptr inbounds nuw i8, ptr %.031.i, i64 1 ; 2 uses
   %i.ex = icmp slt i8 %i.eo, 0
   br i1 %i.ex, label %bb.x, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, !llvm.loop !46
@@ -498,24 +492,24 @@ _ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit:        ; preds = %bb.y, %bb.z
   br i1 %.not.not, label %_ZN4llvm11raw_ostreamlsEc.exit.backedge, label %.thread
 
 .preheader78:                                     ; preds = %_ZN4llvm11raw_ostreamlsEc.exit, %bb.ab
-  %.031.i.i.i104 = phi ptr [ %i.fq, %bb.ab ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
-  %.029.i.i.i105 = phi i64 [ %.130.i.i.i107, %bb.ab ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
-  %.028.i.i.i106 = phi i32 [ %18, %bb.ab ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
-  %i.fd = load i8, ptr %.031.i.i.i104, align 1, !tbaa !34 ; 2 uses
+  %indvars.iv.i.i108 = phi i64 [ %indvars.iv.next.i.i112, %bb.ab ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
+  %.031.i.i.i109 = phi ptr [ %i.fq, %bb.ab ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
+  %.029.i.i.i110 = phi i64 [ %.130.i.i.i107, %bb.ab ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
+  %i.fd = load i8, ptr %.031.i.i.i109, align 1, !tbaa !34 ; 2 uses
   %i.fe = and i8 %i.fd, 127                       ; 3 uses
   %i.ff = zext nneg i8 %i.fe to i64
-  %i.fg = icmp ugt i32 %.028.i.i.i106, 62
+  %i.fg = icmp samesign ugt i64 %indvars.iv.i.i108, 62
   br i1 %i.fg, label %bb.aa, label %bb.ab, !prof !44
 
 bb.aa:                                            ; preds = %.preheader78
-  %.not44.i.i.i110 = icmp eq i32 %.028.i.i.i106, 63
+  %.not44.i.i.i110 = icmp eq i64 %indvars.iv.i.i108, 63
   %.not.i.i.i111 = icmp samesign ugt i8 %i.fe, 1
   %i.fh = icmp ne i8 %i.fe, 0
   %or.cond43.i.i.i112 = select i1 %.not44.i.i.i110, i1 %.not.i.i.i111, i1 %i.fh
   br i1 %or.cond43.i.i.i112, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit113.thread, label %bb.ab
 
 _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit113.thread: ; preds = %bb.aa
-  %i.fi = ptrtoint ptr %.031.i.i.i104 to i64
+  %i.fi = ptrtoint ptr %.031.i.i.i109 to i64
   %i.fj = ptrtoint ptr %i.e to i64
   %i.fk = sub i64 %i.fi, %i.fj
   %i.fl = and i64 %i.fk, 4294967295
@@ -524,13 +518,12 @@ _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit113.thread: ; preds = %bb.aa
   br label %.split
 
 bb.ab:                                            ; preds = %bb.aa, %.preheader78
-  %i.fn = icmp ult i32 %.028.i.i.i106, 64
-  %17 = zext nneg i32 %.028.i.i.i106 to i64
-  %i.fo = shl i64 %i.ff, %17
+  %i.fn = icmp samesign ult i64 %indvars.iv.i.i108, 64
+  %i.fo = shl i64 %i.ff, %indvars.iv.i.i108
   %i.fp = select i1 %i.fn, i64 %i.fo, i64 0, !prof !45
-  %.130.i.i.i107 = add i64 %i.fp, %.029.i.i.i105  ; 2 uses
-  %18 = add i32 %.028.i.i.i106, 7
-  %i.fq = getelementptr inbounds nuw i8, ptr %.031.i.i.i104, i64 1 ; 2 uses
+  %.130.i.i.i107 = add i64 %i.fp, %.029.i.i.i110  ; 2 uses
+  %indvars.iv.next.i.i112 = add nuw nsw i64 %indvars.iv.i.i108, 7
+  %i.fq = getelementptr inbounds nuw i8, ptr %.031.i.i.i109, i64 1 ; 2 uses
   %i.fr = icmp slt i8 %i.fd, 0
   br i1 %i.fr, label %.preheader78, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit113, !llvm.loop !46
 
@@ -663,35 +656,34 @@ _ZN12_GLOBAL__N_121checkDecoderPredicateEjRKN4llvm13FeatureBitsetE.exit: ; preds
   br i1 %.not73, label %.thread, label %_ZN4llvm11raw_ostreamlsEc.exit.backedge
 
 .preheader:                                       ; preds = %_ZN4llvm11raw_ostreamlsEc.exit, %bb.ag
-  %.031.i.i.i117 = phi ptr [ %i.gz, %bb.ag ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
-  %.029.i.i.i118 = phi i64 [ %.130.i.i.i120, %bb.ag ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
-  %.028.i.i.i119 = phi i32 [ %20, %bb.ag ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
-  %i.gr = load i8, ptr %.031.i.i.i117, align 1, !tbaa !34 ; 2 uses
+  %indvars.iv.i.i122 = phi i64 [ %indvars.iv.next.i.i126, %bb.ag ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 5 uses
+  %.031.i.i.i123 = phi ptr [ %i.gz, %bb.ag ], [ %i.e, %_ZN4llvm11raw_ostreamlsEc.exit ] ; 3 uses
+  %.029.i.i.i124 = phi i64 [ %.130.i.i.i120, %bb.ag ], [ 0, %_ZN4llvm11raw_ostreamlsEc.exit ]
+  %i.gr = load i8, ptr %.031.i.i.i123, align 1, !tbaa !34 ; 2 uses
   %i.gs = and i8 %i.gr, 127                       ; 3 uses
   %i.gt = zext nneg i8 %i.gs to i64
-  %i.gu = icmp ugt i32 %.028.i.i.i119, 62
+  %i.gu = icmp samesign ugt i64 %indvars.iv.i.i122, 62
   br i1 %i.gu, label %bb.af, label %bb.ag, !prof !44
 
 bb.af:                                            ; preds = %.preheader
-  %.not44.i.i.i123 = icmp eq i32 %.028.i.i.i119, 63
+  %.not44.i.i.i123 = icmp eq i64 %indvars.iv.i.i122, 63
   %.not.i.i.i124 = icmp samesign ugt i8 %i.gs, 1
   %i.gv = icmp ne i8 %i.gs, 0
   %or.cond43.i.i.i125 = select i1 %.not44.i.i.i123, i1 %.not.i.i.i124, i1 %i.gv
   br i1 %or.cond43.i.i.i125, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af, %.preheader
-  %i.gw = icmp ult i32 %.028.i.i.i119, 64
-  %19 = zext nneg i32 %.028.i.i.i119 to i64
-  %i.gx = shl i64 %i.gt, %19
+  %i.gw = icmp samesign ult i64 %indvars.iv.i.i122, 64
+  %i.gx = shl i64 %i.gt, %indvars.iv.i.i122
   %i.gy = select i1 %i.gw, i64 %i.gx, i64 0, !prof !45
-  %.130.i.i.i120 = add i64 %i.gy, %.029.i.i.i118  ; 2 uses
-  %20 = add i32 %.028.i.i.i119, 7
-  %i.gz = getelementptr inbounds nuw i8, ptr %.031.i.i.i117, i64 1 ; 2 uses
+  %.130.i.i.i120 = add i64 %i.gy, %.029.i.i.i124  ; 2 uses
+  %indvars.iv.next.i.i126 = add nuw nsw i64 %indvars.iv.i.i122, 7
+  %i.gz = getelementptr inbounds nuw i8, ptr %.031.i.i.i123, i64 1 ; 2 uses
   %i.ha = icmp slt i8 %i.gr, 0
   br i1 %i.ha, label %.preheader, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126, !llvm.loop !46
 
 _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126: ; preds = %bb.af, %bb.ag
-  %.132.i.i.i121 = phi ptr [ %i.gz, %bb.ag ], [ %.031.i.i.i117, %bb.af ]
+  %.132.i.i.i121 = phi ptr [ %i.gz, %bb.ag ], [ %.031.i.i.i123, %bb.af ]
   %.3.i.i.i122 = phi i64 [ %.130.i.i.i120, %bb.ag ], [ 0, %bb.af ]
   %i.hb = ptrtoint ptr %.132.i.i.i121 to i64
   %i.hc = ptrtoint ptr %i.e to i64
@@ -702,17 +694,17 @@ _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126: ; preds = %bb.af, %bb.ag
   br label %bb.ah
 
 bb.ah:                                            ; preds = %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126, %bb.aj
-  %.031.i.i.i128 = phi ptr [ %i.hf, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126 ], [ %i.hq, %bb.aj ] ; 2 uses
-  %.029.i.i.i129 = phi i64 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126 ], [ %.130.i.i.i131, %bb.aj ]
-  %.028.i.i.i130 = phi i32 [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126 ], [ %22, %bb.aj ] ; 5 uses
-  %i.hh = load i8, ptr %.031.i.i.i128, align 1, !tbaa !34 ; 2 uses
+  %indvars.iv.i.i134 = phi i64 [ %indvars.iv.next.i.i138, %bb.aj ], [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126 ] ; 5 uses
+  %.031.i.i.i135 = phi ptr [ %i.hq, %bb.aj ], [ %i.hf, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126 ] ; 2 uses
+  %.029.i.i.i136 = phi i64 [ %.130.i.i.i131, %bb.aj ], [ 0, %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit126 ]
+  %i.hh = load i8, ptr %.031.i.i.i135, align 1, !tbaa !34 ; 2 uses
   %i.hi = and i8 %i.hh, 127                       ; 3 uses
   %i.hj = zext nneg i8 %i.hi to i64
-  %i.hk = icmp ugt i32 %.028.i.i.i130, 62
+  %i.hk = icmp samesign ugt i64 %indvars.iv.i.i134, 62
   br i1 %i.hk, label %bb.ai, label %bb.aj, !prof !44
 
 bb.ai:                                            ; preds = %bb.ah
-  %.not44.i.i.i134 = icmp eq i32 %.028.i.i.i130, 63
+  %.not44.i.i.i134 = icmp eq i64 %indvars.iv.i.i134, 63
   %.not.i.i.i135 = icmp samesign ugt i8 %i.hi, 1
   %i.hl = icmp ne i8 %i.hi, 0
   %or.cond43.i.i.i136 = select i1 %.not44.i.i.i134, i1 %.not.i.i.i135, i1 %i.hl
@@ -725,13 +717,12 @@ _ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit137.thread: ; preds = %bb.ai
   br label %_ZN4llvm11raw_ostreamlsEc.exit.thread
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
-  %i.hn = icmp ult i32 %.028.i.i.i130, 64
-  %21 = zext nneg i32 %.028.i.i.i130 to i64
-  %i.ho = shl i64 %i.hj, %21
+  %i.hn = icmp samesign ult i64 %indvars.iv.i.i134, 64
+  %i.ho = shl i64 %i.hj, %indvars.iv.i.i134
   %i.hp = select i1 %i.hn, i64 %i.ho, i64 0, !prof !45
-  %.130.i.i.i131 = add i64 %i.hp, %.029.i.i.i129  ; 2 uses
-  %22 = add i32 %.028.i.i.i130, 7
-  %i.hq = getelementptr inbounds nuw i8, ptr %.031.i.i.i128, i64 1
+  %.130.i.i.i131 = add i64 %i.hp, %.029.i.i.i136  ; 2 uses
+  %indvars.iv.next.i.i138 = add nuw nsw i64 %indvars.iv.i.i134, 7
+  %i.hq = getelementptr inbounds nuw i8, ptr %.031.i.i.i135, i64 1
   %i.hr = icmp slt i8 %i.hh, 0
   br i1 %i.hr, label %bb.ah, label %_ZN4llvm25decodeULEB128AndIncUnsafeERPKh.exit137, !llvm.loop !46
 

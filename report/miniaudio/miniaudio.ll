@@ -205,7 +205,8 @@ bb.j:                                             ; preds = %ma_dr_wav_get_bytes
   %i.ak = zext nneg i32 %i.af to i64              ; 4 uses
   %i.al = icmp samesign ugt i32 %i.af, 8
   %i.am = shl nuw nsw i32 %i.af, 3
-  %i.an = sub nuw nsw i32 64, %i.am               ; 2 uses
+  %i.an = sub nsw i32 64, %i.am
+  %3 = zext i32 %i.an to i64                      ; 2 uses
   %xtraiter264 = and i64 %i.ak, 3                 ; 3 uses
   %i.ao = add nsw i32 %i.af, -1
   %i.ap = icmp ult i32 %i.ao, 3
@@ -515,42 +516,38 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ap, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i, %.lr.ph.i.i.new
-  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i.3, %.lr.ph.i.i.new ], [ 0, %.lr.ph.i.i ] ; 5 uses
-  %.03456.i.i = phi i32 [ %10, %.lr.ph.i.i.new ], [ %i.an, %.lr.ph.i.i ] ; 5 uses
+  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.3, %.lr.ph.i.i.new ], [ %3, %.lr.ph.i.i ] ; 5 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i.3, %.lr.ph.i.i.new ], [ 0, %.lr.ph.i.i ] ; 5 uses
   %.03555.i.i = phi i64 [ %i.ga, %.lr.ph.i.i.new ], [ 0, %.lr.ph.i.i ]
   %niter270 = phi i64 [ %niter270.next.3, %.lr.ph.i.i.new ], [ 0, %.lr.ph.i.i ]
-  %i.fe = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i.a
+  %i.fe = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i
   %i.ff = load i8, ptr %i.fe, align 1, !tbaa !9
-  %3 = zext i8 %i.ff to i64
-  %i.fg = zext nneg i32 %.03456.i.i to i64
-  %i.fh = shl i64 %3, %i.fg
+  %i.fg = zext i8 %i.ff to i64
+  %i.fh = shl i64 %i.fg, %indvars.iv.i.i.a
   %i.fi = or i64 %i.fh, %.03555.i.i
-  %4 = add i32 %.03456.i.i, 8
-  %i.fj = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i.a
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.i.i.a, 8
+  %i.fj = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 1
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !9
-  %5 = zext i8 %i.fl to i64
-  %i.fm = zext nneg i32 %4 to i64
-  %i.fn = shl i64 %5, %i.fm
+  %i.fm = zext i8 %i.fl to i64
+  %i.fn = shl i64 %i.fm, %indvars.iv.next
   %i.fo = or i64 %i.fn, %i.fi
-  %6 = add i32 %.03456.i.i, 16
-  %i.fp = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i.a
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.i.i.a, 16
+  %i.fp = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 2
   %i.fr = load i8, ptr %i.fq, align 1, !tbaa !9
-  %7 = zext i8 %i.fr to i64
-  %i.fs = zext nneg i32 %6 to i64
-  %i.ft = shl i64 %7, %i.fs
+  %i.fs = zext i8 %i.fr to i64
+  %i.ft = shl i64 %i.fs, %indvars.iv.next.1
   %i.fu = or i64 %i.ft, %i.fo
-  %8 = add i32 %.03456.i.i, 24
-  %i.fv = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i.a
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.i.i.a, 24
+  %i.fv = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 3
   %i.fx = load i8, ptr %i.fw, align 1, !tbaa !9
-  %9 = zext i8 %i.fx to i64
-  %i.fy = zext nneg i32 %8 to i64
-  %i.fz = shl i64 %9, %i.fy
+  %i.fy = zext i8 %i.fx to i64
+  %i.fz = shl i64 %i.fy, %indvars.iv.next.2
   %i.ga = or i64 %i.fz, %i.fu                     ; 3 uses
-  %10 = add i32 %.03456.i.i, 32                   ; 2 uses
-  %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i.a, 4 ; 2 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv.i.i.a, 32 ; 2 uses
+  %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
   %niter270.next.3 = add i64 %niter270, 4         ; 2 uses
   %niter270.ncmp.3 = icmp eq i64 %niter270.next.3, %unroll_iter269
   br i1 %niter270.ncmp.3, label %.unr-lcssa, label %.lr.ph.i.i.new, !llvm.loop !1645
@@ -559,25 +556,24 @@ bb.s:                                             ; preds = %bb.r
   br i1 %lcmp.mod266.not, label %.epilog-lcssa, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.lr.ph.i.i
-  %indvars.iv.i.i.epil.init.a = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i.3, %.unr-lcssa ]
-  %.03456.i.i.epil.init = phi i32 [ %i.an, %.lr.ph.i.i ], [ %10, %.unr-lcssa ]
+  %indvars.iv.i.i.epil.init.a = phi i64 [ %3, %.lr.ph.i.i ], [ %indvars.iv.next.3, %.unr-lcssa ]
+  %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i.3, %.unr-lcssa ]
   %.03555.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ga, %.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod268)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.epil.preheader
-  %indvars.iv.i.i.epil.a = phi i64 [ %indvars.iv.i.i.epil.init.a, %.epil.preheader ], [ %indvars.iv.next.i.i.epil, %bb.t ] ; 2 uses
-  %.03456.i.i.epil = phi i32 [ %.03456.i.i.epil.init, %.epil.preheader ], [ %12, %bb.t ] ; 2 uses
-  %.03555.i.i.epil = phi i64 [ %.03555.i.i.epil.init, %.epil.preheader ], [ %i.gf, %bb.t ]
-  %epil.iter265 = phi i64 [ 0, %.epil.preheader ], [ %epil.iter265.next, %bb.t ]
-  %i.gb = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i.epil.a
+  %indvars.iv.i.i.epil.a = phi i64 [ %indvars.iv.next.epil, %bb.t ], [ %indvars.iv.i.i.epil.init.a, %.epil.preheader ] ; 2 uses
+  %indvars.iv.i.i.epil = phi i64 [ %indvars.iv.next.i.i.epil, %bb.t ], [ %indvars.iv.i.i.epil.init, %.epil.preheader ] ; 2 uses
+  %.03555.i.i.epil = phi i64 [ %i.gf, %bb.t ], [ %.03555.i.i.epil.init, %.epil.preheader ]
+  %epil.iter265 = phi i64 [ %epil.iter265.next, %bb.t ], [ 0, %.epil.preheader ]
+  %i.gb = getelementptr inbounds nuw i8, ptr %.03858.i.i, i64 %indvars.iv.i.i.epil
   %i.gc = load i8, ptr %i.gb, align 1, !tbaa !9
-  %11 = zext i8 %i.gc to i64
-  %i.gd = zext nneg i32 %.03456.i.i.epil to i64
-  %i.ge = shl i64 %11, %i.gd
+  %i.gd = zext i8 %i.gc to i64
+  %i.ge = shl i64 %i.gd, %indvars.iv.i.i.epil.a
   %i.gf = or i64 %i.ge, %.03555.i.i.epil          ; 2 uses
-  %12 = add i32 %.03456.i.i.epil, 8
-  %indvars.iv.next.i.i.epil = add nuw nsw i64 %indvars.iv.i.i.epil.a, 1
+  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.i.i.epil.a, 8
+  %indvars.iv.next.i.i.epil = add nuw nsw i64 %indvars.iv.i.i.epil, 1
   %epil.iter265.next = add i64 %epil.iter265, 1   ; 2 uses
   %epil.iter265.cmp.not = icmp eq i64 %epil.iter265.next, %xtraiter264
   br i1 %epil.iter265.cmp.not, label %.epilog-lcssa, label %bb.t, !llvm.loop !1646
@@ -980,7 +976,8 @@ bb.j:                                             ; preds = %ma_dr_wav_get_bytes
   %i.al = zext nneg i32 %i.ag to i64              ; 4 uses
   %i.am = icmp samesign ugt i32 %i.ag, 8
   %i.an = shl nuw nsw i32 %i.ag, 3
-  %i.ao = sub nuw nsw i32 64, %i.an               ; 2 uses
+  %i.ao = sub nsw i32 64, %i.an
+  %3 = zext i32 %i.ao to i64                      ; 2 uses
   %xtraiter208 = and i64 %i.al, 3                 ; 3 uses
   %i.ap = add nsw i32 %i.ag, -1
   %i.aq = icmp ult i32 %i.ap, 3
@@ -1257,42 +1254,38 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.aq, label %.epil.preheader, label %.lr.ph63.i.i.new
 
 .lr.ph63.i.i.new:                                 ; preds = %.lr.ph63.i.i, %.lr.ph63.i.i.new
-  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.i.i.3, %.lr.ph63.i.i.new ], [ 0, %.lr.ph63.i.i ] ; 5 uses
-  %.03758.i.i = phi i32 [ %10, %.lr.ph63.i.i.new ], [ %i.ao, %.lr.ph63.i.i ] ; 5 uses
+  %indvars.iv.i.i.a = phi i64 [ %indvars.iv.next.3, %.lr.ph63.i.i.new ], [ %3, %.lr.ph63.i.i ] ; 5 uses
+  %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i.3, %.lr.ph63.i.i.new ], [ 0, %.lr.ph63.i.i ] ; 5 uses
   %.03857.i.i = phi i64 [ %i.fh, %.lr.ph63.i.i.new ], [ 0, %.lr.ph63.i.i ]
   %niter214 = phi i64 [ %niter214.next.3, %.lr.ph63.i.i.new ], [ 0, %.lr.ph63.i.i ]
-  %i.el = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i.a
+  %i.el = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i
   %i.em = load i8, ptr %i.el, align 1, !tbaa !9
-  %3 = zext i8 %i.em to i64
-  %i.en = zext nneg i32 %.03758.i.i to i64
-  %i.eo = shl i64 %3, %i.en
+  %i.en = zext i8 %i.em to i64
+  %i.eo = shl i64 %i.en, %indvars.iv.i.i.a
   %i.ep = or i64 %i.eo, %.03857.i.i
-  %4 = add i32 %.03758.i.i, 8
-  %i.eq = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i.a
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.i.i.a, 8
+  %i.eq = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 1
   %i.es = load i8, ptr %i.er, align 1, !tbaa !9
-  %5 = zext i8 %i.es to i64
-  %i.et = zext nneg i32 %4 to i64
-  %i.eu = shl i64 %5, %i.et
+  %i.et = zext i8 %i.es to i64
+  %i.eu = shl i64 %i.et, %indvars.iv.next
   %i.ev = or i64 %i.eu, %i.ep
-  %6 = add i32 %.03758.i.i, 16
-  %i.ew = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i.a
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv.i.i.a, 16
+  %i.ew = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 2
   %i.ey = load i8, ptr %i.ex, align 1, !tbaa !9
-  %7 = zext i8 %i.ey to i64
-  %i.ez = zext nneg i32 %6 to i64
-  %i.fa = shl i64 %7, %i.ez
+  %i.ez = zext i8 %i.ey to i64
+  %i.fa = shl i64 %i.ez, %indvars.iv.next.1
   %i.fb = or i64 %i.fa, %i.ev
-  %8 = add i32 %.03758.i.i, 24
-  %i.fc = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i.a
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv.i.i.a, 24
+  %i.fc = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 3
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !9
-  %9 = zext i8 %i.fe to i64
-  %i.ff = zext nneg i32 %8 to i64
-  %i.fg = shl i64 %9, %i.ff
+  %i.ff = zext i8 %i.fe to i64
+  %i.fg = shl i64 %i.ff, %indvars.iv.next.2
   %i.fh = or i64 %i.fg, %i.fb                     ; 3 uses
-  %10 = add i32 %.03758.i.i, 32                   ; 2 uses
-  %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i.a, 4 ; 2 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv.i.i.a, 32 ; 2 uses
+  %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
   %niter214.next.3 = add i64 %niter214, 4         ; 2 uses
   %niter214.ncmp.3 = icmp eq i64 %niter214.next.3, %unroll_iter213
   br i1 %niter214.ncmp.3, label %.unr-lcssa, label %.lr.ph63.i.i.new, !llvm.loop !1665
@@ -1301,25 +1294,24 @@ bb.r:                                             ; preds = %bb.q
   br i1 %lcmp.mod210.not, label %.epilog-lcssa, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.lr.ph63.i.i
-  %indvars.iv.i.i.epil.init.a = phi i64 [ 0, %.lr.ph63.i.i ], [ %indvars.iv.next.i.i.3, %.unr-lcssa ]
-  %.03758.i.i.epil.init = phi i32 [ %i.ao, %.lr.ph63.i.i ], [ %10, %.unr-lcssa ]
+  %indvars.iv.i.i.epil.init.a = phi i64 [ %3, %.lr.ph63.i.i ], [ %indvars.iv.next.3, %.unr-lcssa ]
+  %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph63.i.i ], [ %indvars.iv.next.i.i.3, %.unr-lcssa ]
   %.03857.i.i.epil.init = phi i64 [ 0, %.lr.ph63.i.i ], [ %i.fh, %.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod212)
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.s, %.epil.preheader
-  %indvars.iv.i.i.epil.a = phi i64 [ %indvars.iv.i.i.epil.init.a, %.epil.preheader ], [ %indvars.iv.next.i.i.epil, %bb.s ] ; 2 uses
-  %.03758.i.i.epil = phi i32 [ %.03758.i.i.epil.init, %.epil.preheader ], [ %12, %bb.s ] ; 2 uses
-  %.03857.i.i.epil = phi i64 [ %.03857.i.i.epil.init, %.epil.preheader ], [ %i.fm, %bb.s ]
-  %epil.iter209 = phi i64 [ 0, %.epil.preheader ], [ %epil.iter209.next, %bb.s ]
-  %i.fi = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i.epil.a
+  %indvars.iv.i.i.epil.a = phi i64 [ %indvars.iv.next.epil, %bb.s ], [ %indvars.iv.i.i.epil.init.a, %.epil.preheader ] ; 2 uses
+  %indvars.iv.i.i.epil = phi i64 [ %indvars.iv.next.i.i.epil, %bb.s ], [ %indvars.iv.i.i.epil.init, %.epil.preheader ] ; 2 uses
+  %.03857.i.i.epil = phi i64 [ %i.fm, %bb.s ], [ %.03857.i.i.epil.init, %.epil.preheader ]
+  %epil.iter209 = phi i64 [ %epil.iter209.next, %bb.s ], [ 0, %.epil.preheader ]
+  %i.fi = getelementptr inbounds nuw i8, ptr %.04260.i.i, i64 %indvars.iv.i.i.epil
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !9
-  %11 = zext i8 %i.fj to i64
-  %i.fk = zext nneg i32 %.03758.i.i.epil to i64
-  %i.fl = shl i64 %11, %i.fk
+  %i.fk = zext i8 %i.fj to i64
+  %i.fl = shl i64 %i.fk, %indvars.iv.i.i.epil.a
   %i.fm = or i64 %i.fl, %.03857.i.i.epil          ; 2 uses
-  %12 = add i32 %.03758.i.i.epil, 8
-  %indvars.iv.next.i.i.epil = add nuw nsw i64 %indvars.iv.i.i.epil.a, 1
+  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv.i.i.epil.a, 8
+  %indvars.iv.next.i.i.epil = add nuw nsw i64 %indvars.iv.i.i.epil, 1
   %epil.iter209.next = add i64 %epil.iter209, 1   ; 2 uses
   %epil.iter209.cmp.not = icmp eq i64 %epil.iter209.next, %xtraiter208
   br i1 %epil.iter209.cmp.not, label %.epilog-lcssa, label %bb.s, !llvm.loop !1666
@@ -1722,7 +1714,8 @@ bb.k:                                             ; preds = %ma_dr_wav_get_bytes
   %i.am = zext nneg i32 %i.ah to i64              ; 4 uses
   %i.an = icmp samesign ugt i32 %i.ah, 8
   %i.ao = shl nuw nsw i32 %i.ah, 3
-  %i.ap = sub nuw nsw i32 64, %i.ao               ; 2 uses
+  %i.ap = sub nsw i32 64, %i.ao
+  %3 = zext i32 %i.ap to i64                      ; 2 uses
   %xtraiter265 = and i64 %i.am, 3                 ; 3 uses
   %i.aq = add nsw i32 %i.ah, -1
   %i.ar = icmp ult i32 %i.aq, 3
@@ -2033,42 +2026,38 @@ bb.s:                                             ; preds = %bb.r
   br i1 %i.ar, label %.epil.preheader, label %.lr.ph66.i.i.new
 
 .lr.ph66.i.i.new:                                 ; preds = %.lr.ph66.i.i, %.lr.ph66.i.i.new
-  %indvars.iv75.i.i.a = phi i64 [ %indvars.iv.next76.i.i.3, %.lr.ph66.i.i.new ], [ 0, %.lr.ph66.i.i ] ; 5 uses
-  %.03761.i.i = phi i32 [ %10, %.lr.ph66.i.i.new ], [ %i.ap, %.lr.ph66.i.i ] ; 5 uses
+  %indvars.iv75.i.i.a = phi i64 [ %indvars.iv.next.3, %.lr.ph66.i.i.new ], [ %3, %.lr.ph66.i.i ] ; 5 uses
+  %indvars.iv75.i.i = phi i64 [ %indvars.iv.next76.i.i.3, %.lr.ph66.i.i.new ], [ 0, %.lr.ph66.i.i ] ; 5 uses
   %.03860.i.i = phi i64 [ %i.fy, %.lr.ph66.i.i.new ], [ 0, %.lr.ph66.i.i ]
   %niter271 = phi i64 [ %niter271.next.3, %.lr.ph66.i.i.new ], [ 0, %.lr.ph66.i.i ]
-  %i.fc = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i.a
+  %i.fc = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !9
-  %3 = zext i8 %i.fd to i64
-  %i.fe = zext nneg i32 %.03761.i.i to i64
-  %i.ff = shl i64 %3, %i.fe
+  %i.fe = zext i8 %i.fd to i64
+  %i.ff = shl i64 %i.fe, %indvars.iv75.i.i.a
   %i.fg = or i64 %i.ff, %.03860.i.i
-  %4 = add i32 %.03761.i.i, 8
-  %i.fh = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i.a
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv75.i.i.a, 8
+  %i.fh = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i
   %i.fi = getelementptr inbounds nuw i8, ptr %i.fh, i64 1
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !9
-  %5 = zext i8 %i.fj to i64
-  %i.fk = zext nneg i32 %4 to i64
-  %i.fl = shl i64 %5, %i.fk
+  %i.fk = zext i8 %i.fj to i64
+  %i.fl = shl i64 %i.fk, %indvars.iv.next
   %i.fm = or i64 %i.fl, %i.fg
-  %6 = add i32 %.03761.i.i, 16
-  %i.fn = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i.a
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv75.i.i.a, 16
+  %i.fn = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 2
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !9
-  %7 = zext i8 %i.fp to i64
-  %i.fq = zext nneg i32 %6 to i64
-  %i.fr = shl i64 %7, %i.fq
+  %i.fq = zext i8 %i.fp to i64
+  %i.fr = shl i64 %i.fq, %indvars.iv.next.1
   %i.fs = or i64 %i.fr, %i.fm
-  %8 = add i32 %.03761.i.i, 24
-  %i.ft = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i.a
+  %indvars.iv.next.2 = add nuw nsw i64 %indvars.iv75.i.i.a, 24
+  %i.ft = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 3
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !9
-  %9 = zext i8 %i.fv to i64
-  %i.fw = zext nneg i32 %8 to i64
-  %i.fx = shl i64 %9, %i.fw
+  %i.fw = zext i8 %i.fv to i64
+  %i.fx = shl i64 %i.fw, %indvars.iv.next.2
   %i.fy = or i64 %i.fx, %i.fs                     ; 3 uses
-  %10 = add i32 %.03761.i.i, 32                   ; 2 uses
-  %indvars.iv.next76.i.i.3 = add nuw nsw i64 %indvars.iv75.i.i.a, 4 ; 2 uses
+  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv75.i.i.a, 32 ; 2 uses
+  %indvars.iv.next76.i.i.3 = add nuw nsw i64 %indvars.iv75.i.i, 4 ; 2 uses
   %niter271.next.3 = add i64 %niter271, 4         ; 2 uses
   %niter271.ncmp.3 = icmp eq i64 %niter271.next.3, %unroll_iter270
   br i1 %niter271.ncmp.3, label %.unr-lcssa, label %.lr.ph66.i.i.new, !llvm.loop !1683
@@ -2077,25 +2066,24 @@ bb.s:                                             ; preds = %bb.r
   br i1 %lcmp.mod267.not, label %.epilog-lcssa, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %.lr.ph66.i.i
-  %indvars.iv75.i.i.epil.init.a = phi i64 [ 0, %.lr.ph66.i.i ], [ %indvars.iv.next76.i.i.3, %.unr-lcssa ]
-  %.03761.i.i.epil.init = phi i32 [ %i.ap, %.lr.ph66.i.i ], [ %10, %.unr-lcssa ]
+  %indvars.iv75.i.i.epil.init.a = phi i64 [ %3, %.lr.ph66.i.i ], [ %indvars.iv.next.3, %.unr-lcssa ]
+  %indvars.iv75.i.i.epil.init = phi i64 [ 0, %.lr.ph66.i.i ], [ %indvars.iv.next76.i.i.3, %.unr-lcssa ]
   %.03860.i.i.epil.init = phi i64 [ 0, %.lr.ph66.i.i ], [ %i.fy, %.unr-lcssa ]
   call void @llvm.assume(i1 %lcmp.mod269)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.t, %.epil.preheader
-  %indvars.iv75.i.i.epil.a = phi i64 [ %indvars.iv75.i.i.epil.init.a, %.epil.preheader ], [ %indvars.iv.next76.i.i.epil, %bb.t ] ; 2 uses
-  %.03761.i.i.epil = phi i32 [ %.03761.i.i.epil.init, %.epil.preheader ], [ %12, %bb.t ] ; 2 uses
-  %.03860.i.i.epil = phi i64 [ %.03860.i.i.epil.init, %.epil.preheader ], [ %i.gd, %bb.t ]
-  %epil.iter266 = phi i64 [ 0, %.epil.preheader ], [ %epil.iter266.next, %bb.t ]
-  %i.fz = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i.epil.a
+  %indvars.iv75.i.i.epil.a = phi i64 [ %indvars.iv.next.epil, %bb.t ], [ %indvars.iv75.i.i.epil.init.a, %.epil.preheader ] ; 2 uses
+  %indvars.iv75.i.i.epil = phi i64 [ %indvars.iv.next76.i.i.epil, %bb.t ], [ %indvars.iv75.i.i.epil.init, %.epil.preheader ] ; 2 uses
+  %.03860.i.i.epil = phi i64 [ %i.gd, %bb.t ], [ %.03860.i.i.epil.init, %.epil.preheader ]
+  %epil.iter266 = phi i64 [ %epil.iter266.next, %bb.t ], [ 0, %.epil.preheader ]
+  %i.fz = getelementptr inbounds nuw i8, ptr %.04263.i.i, i64 %indvars.iv75.i.i.epil
   %i.ga = load i8, ptr %i.fz, align 1, !tbaa !9
-  %11 = zext i8 %i.ga to i64
-  %i.gb = zext nneg i32 %.03761.i.i.epil to i64
-  %i.gc = shl i64 %11, %i.gb
+  %i.gb = zext i8 %i.ga to i64
+  %i.gc = shl i64 %i.gb, %indvars.iv75.i.i.epil.a
   %i.gd = or i64 %i.gc, %.03860.i.i.epil          ; 2 uses
-  %12 = add i32 %.03761.i.i.epil, 8
-  %indvars.iv.next76.i.i.epil = add nuw nsw i64 %indvars.iv75.i.i.epil.a, 1
+  %indvars.iv.next.epil = add nuw nsw i64 %indvars.iv75.i.i.epil.a, 8
+  %indvars.iv.next76.i.i.epil = add nuw nsw i64 %indvars.iv75.i.i.epil, 1
   %epil.iter266.next = add i64 %epil.iter266, 1   ; 2 uses
   %epil.iter266.cmp.not = icmp eq i64 %epil.iter266.next, %xtraiter265
   br i1 %epil.iter266.cmp.not, label %.epilog-lcssa, label %bb.t, !llvm.loop !1684
@@ -2498,11 +2486,12 @@ bb.m:                                             ; preds = %bb.a
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 6148 ; 2 uses
   %i.ct = add nsw i32 %2, -4                      ; 2 uses
   %i.cu = zext nneg i32 %2 to i64
-  %wide.trip.count.i.a = zext nneg i32 %i.ct to i64
+  %wide.trip.count.i = zext nneg i32 %i.ct to i64
+  %wide.trip.count.i.a = zext nneg i32 %i.ct to i64 ; 2 uses
   br label %.lr.ph125.i
 
 .lr.ph125.i:                                      ; preds = %ma_dr_mp3_hdr_valid.exit.thread.i, %.lr.ph125.preheader.i
-  %indvars.iv140.i = phi i64 [ 0, %.lr.ph125.preheader.i ], [ %indvars.iv.next141.i, %ma_dr_mp3_hdr_valid.exit.thread.i ] ; 6 uses
+  %indvars.iv140.i = phi i64 [ 0, %.lr.ph125.preheader.i ], [ %indvars.iv.next141.i, %ma_dr_mp3_hdr_valid.exit.thread.i ] ; 7 uses
   %.063121.i = phi ptr [ %1, %.lr.ph125.preheader.i ], [ %i.ke, %ma_dr_mp3_hdr_valid.exit.thread.i ] ; 6 uses
   %i.cv = load i8, ptr %.063121.i, align 1, !tbaa !9
   %i.cw = icmp eq i8 %i.cv, -1
@@ -2576,26 +2565,28 @@ ma_dr_mp3_hdr_padding.exit.i:                     ; preds = %bb.o
   %.not.i76.i = icmp eq i8 %i.es, 0
   %i.et = select i1 %i.eq, i32 4, i32 1
   %spec.select.i141 = select i1 %.not.i76.i, i32 0, i32 %i.et
-  %i.eu = add nuw nsw i32 %spec.select.i.i, %spec.select.i141 ; 2 uses
+  %i.eu = add nuw nsw i32 %spec.select.i.i, %spec.select.i141 ; 3 uses
   %i.ev = icmp eq i32 %spec.select.i.i, 0
   %i.ew = trunc nuw nsw i64 %indvars.iv140.i to i32 ; 3 uses
   br i1 %i.ev, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %ma_dr_mp3_hdr_padding.exit.i
   %i.ex = add nuw nsw i64 %indvars.iv140.i, 4
-  br label %bb.p
-
-bb.p:                                             ; preds = %ma_dr_mp3_hdr_compare.exit.thread.i, %.lr.ph.i
-  %indvars.iv.i = phi i64 [ 4, %.lr.ph.i ], [ %indvars.iv.next.i, %ma_dr_mp3_hdr_compare.exit.thread.i ] ; 6 uses
-  %.054118.i = phi i32 [ %i.eu, %.lr.ph.i ], [ %.2.i, %ma_dr_mp3_hdr_compare.exit.thread.i ] ; 12 uses
-  %i.ey = shl nuw nsw i64 %indvars.iv.i, 1
-  %i.ez = add nuw nsw i64 %i.ey, %indvars.iv140.i
-  %7 = trunc nuw i64 %i.ez to i32
-  %8 = icmp sgt i32 %i.ct, %7
+  %7 = add nuw nsw i64 %indvars.iv140.i, 8
+  %8 = icmp samesign ult i64 %7, %wide.trip.count.i.a
   br i1 %8, label %bb.q, label %.critedge.thread.i
 
-bb.q:                                             ; preds = %bb.p
-  %i.fa = getelementptr inbounds nuw i8, ptr %.063121.i, i64 %indvars.iv.i ; 4 uses
+bb.p:                                             ; preds = %ma_dr_mp3_hdr_compare.exit.thread.i
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i641, 1 ; 2 uses
+  %i.ey = shl nuw nsw i64 %indvars.iv.next.i, 1
+  %i.ez = add nuw nsw i64 %i.ey, %indvars.iv140.i
+  %9 = icmp samesign ult i64 %i.ez, %wide.trip.count.i.a
+  br i1 %9, label %bb.q, label %.critedge.thread.i, !llvm.loop !2871
+
+bb.q:                                             ; preds = %.lr.ph.i, %bb.p
+  %.054118.i642 = phi i32 [ %.2.i, %bb.p ], [ %i.eu, %.lr.ph.i ] ; 11 uses
+  %indvars.iv.i641 = phi i64 [ %indvars.iv.next.i, %bb.p ], [ 4, %.lr.ph.i ] ; 5 uses
+  %i.fa = getelementptr inbounds nuw i8, ptr %.063121.i, i64 %indvars.iv.i641 ; 4 uses
   %i.fb = load i8, ptr %i.fa, align 1, !tbaa !9
   %i.fc = icmp eq i8 %i.fb, -1
   br i1 %i.fc, label %bb.r, label %ma_dr_mp3_hdr_compare.exit.thread.i
@@ -2651,7 +2642,7 @@ ma_dr_mp3_hdr_padding.exit78.i:                   ; preds = %ma_dr_mp3_hdr_compa
   %i.ga = icmp eq i8 %i.fz, 6
   %.neg.i = select i1 %i.ga, i32 -4, i32 -1
   %.neg106.i = select i1 %.not.i77.i, i32 0, i32 %.neg.i
-  %i.gb = trunc nuw nsw i64 %indvars.iv.i to i32  ; 2 uses
+  %i.gb = trunc nuw nsw i64 %indvars.iv.i641 to i32 ; 2 uses
   %i.gc = add nsw i32 %.neg106.i, %i.gb           ; 3 uses
   %i.gd = and i8 %i.fm, 2
   %.not.i79.i = icmp eq i8 %i.gd, 0
@@ -2659,7 +2650,7 @@ ma_dr_mp3_hdr_padding.exit78.i:                   ; preds = %ma_dr_mp3_hdr_compa
   %i.gf = select i1 %i.ge, i32 4, i32 1
   %i.gg = select i1 %.not.i79.i, i32 0, i32 %i.gf
   %i.gh = add nsw i32 %i.gc, %i.gg                ; 2 uses
-  %i.gi = add nuw nsw i64 %i.ex, %indvars.iv.i
+  %i.gi = add nuw nsw i64 %i.ex, %indvars.iv.i641
   %i.gj = trunc nuw i64 %i.gi to i32
   %i.gk = add i32 %i.gh, %i.gj
   %i.gl = icmp sgt i32 %i.gk, %2
@@ -2715,10 +2706,9 @@ bb.z:                                             ; preds = %bb.y
 
 ma_dr_mp3_hdr_compare.exit.thread.i:              ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %ma_dr_mp3_hdr_padding.exit78.i, %ma_dr_mp3_hdr_compare.exit.i, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q
   %.257.i = phi i32 [ 0, %ma_dr_mp3_hdr_compare.exit.i ], [ %i.gc, %bb.z ], [ 0, %bb.x ], [ 0, %ma_dr_mp3_hdr_padding.exit78.i ], [ 0, %bb.r ], [ 0, %bb.u ], [ 0, %bb.t ], [ 0, %bb.q ], [ 0, %bb.s ], [ 0, %bb.y ], [ 0, %bb.w ], [ 0, %bb.v ] ; 2 uses
-  %.2.i = phi i32 [ %.054118.i, %ma_dr_mp3_hdr_compare.exit.i ], [ %i.gb, %bb.z ], [ %.054118.i, %bb.x ], [ %.054118.i, %ma_dr_mp3_hdr_padding.exit78.i ], [ %.054118.i, %bb.r ], [ %.054118.i, %bb.u ], [ %.054118.i, %bb.t ], [ %.054118.i, %bb.q ], [ %.054118.i, %bb.s ], [ %.054118.i, %bb.y ], [ %.054118.i, %bb.w ], [ %.054118.i, %bb.v ] ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %.2.i = phi i32 [ %.054118.i642, %ma_dr_mp3_hdr_compare.exit.i ], [ %i.gb, %bb.z ], [ %.054118.i642, %bb.x ], [ %.054118.i642, %ma_dr_mp3_hdr_padding.exit78.i ], [ %.054118.i642, %bb.r ], [ %.054118.i642, %bb.u ], [ %.054118.i642, %bb.t ], [ %.054118.i642, %bb.q ], [ %.054118.i642, %bb.s ], [ %.054118.i642, %bb.y ], [ %.054118.i642, %bb.w ], [ %.054118.i642, %bb.v ] ; 3 uses
   %i.hi = icmp eq i32 %.257.i, 0                  ; 2 uses
-  %i.hj = icmp samesign ult i64 %indvars.iv.i, 2303
+  %i.hj = icmp samesign ult i64 %indvars.iv.i641, 2303
   %or.cond.i143 = select i1 %i.hi, i1 %i.hj, i1 false
   br i1 %or.cond.i143, label %bb.p, label %.critedge.i, !llvm.loop !2871
 
@@ -2849,8 +2839,8 @@ ma_dr_mp3d_match_frame.exit.i:                    ; preds = %ma_dr_mp3_hdr_paddi
   %.not.i142 = icmp eq i32 %.021.i.i, 0
   br i1 %.not.i142, label %.critedge.thread.i, label %ma_dr_mp3d_find_frame.exit.loopexit332
 
-.critedge.thread.i:                               ; preds = %bb.p, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %ma_dr_mp3d_match_frame.exit.i, %.critedge.i
-  %.054112.i = phi i32 [ %.054.lcssa.i, %bb.ae ], [ %.054.lcssa.i, %.critedge.i ], [ %.054.lcssa.i, %ma_dr_mp3d_match_frame.exit.i ], [ %.054.lcssa.i, %bb.ab ], [ %.054.lcssa.i, %bb.ac ], [ %.054.lcssa.i, %bb.ad ], [ %.054118.i, %bb.p ]
+.critedge.thread.i:                               ; preds = %bb.p, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %.lr.ph.i, %ma_dr_mp3d_match_frame.exit.i, %.critedge.i
+  %.054112.i = phi i32 [ %i.eu, %.lr.ph.i ], [ %.054.lcssa.i, %.critedge.i ], [ %.054.lcssa.i, %ma_dr_mp3d_match_frame.exit.i ], [ %.054.lcssa.i, %bb.ae ], [ %.054.lcssa.i, %bb.ab ], [ %.054.lcssa.i, %bb.ac ], [ %.054.lcssa.i, %bb.ad ], [ %.2.i, %bb.p ]
   %.not69.i = icmp eq i64 %indvars.iv140.i, 0
   %i.kd = icmp eq i32 %.054112.i, %2
   %or.cond73.i = select i1 %.not69.i, i1 %i.kd, i1 false
@@ -2863,7 +2853,7 @@ ma_dr_mp3d_match_frame.exit.i:                    ; preds = %ma_dr_mp3_hdr_paddi
 ma_dr_mp3_hdr_valid.exit.thread.i:                ; preds = %.thread.i, %bb.o, %bb.n, %.lr.ph125.i
   %indvars.iv.next141.i = add nuw nsw i64 %indvars.iv140.i, 1 ; 2 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %.063121.i, i64 1
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next141.i, %wide.trip.count.i.a
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next141.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %ma_dr_mp3d_find_frame.exit.thread, label %.lr.ph125.i, !llvm.loop !2873
 
 ma_dr_mp3d_find_frame.exit.loopexit332:           ; preds = %ma_dr_mp3d_match_frame.exit.i, %.critedge.thread.i

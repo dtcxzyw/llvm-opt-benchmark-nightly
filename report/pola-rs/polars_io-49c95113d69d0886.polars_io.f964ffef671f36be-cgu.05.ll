@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %or.cond.i.i, label %bb.o, label %bb.n, !dbg !28384
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.ax = add i32 %.sroa.09.052.i.i, 1, !dbg !28387
+  %i.ax = add nuw nsw i32 %.sroa.09.052.i.i, 1, !dbg !28387
   %i.ay = icmp eq ptr %i.ar, %i.af, !dbg !28388
   br i1 %i.ay, label %.thread.i.i, label %bb.l, !dbg !28330
 
@@ -212,7 +212,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.aw, label %bb.p, label %bb.q, !dbg !28391
 
 bb.p:                                             ; preds = %bb.o
-  %i.az = zext i32 %.sroa.09.052.i.i to i64, !dbg !28392
+  %i.az = zext nneg i32 %.sroa.09.052.i.i to i64, !dbg !28392
   store i8 1, ptr %i.g, align 1, !dbg !28393, !alias.scope !28257, !noalias !28258
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNCNvNtB12_16schema_inference13infer_headers0ENtNtNtB9_6traits8iterator8Iterator4nextB16_.exit, !dbg !28395
 
@@ -225,7 +225,7 @@ bb.q:                                             ; preds = %bb.o
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNCNvNtB12_16schema_inference13infer_headers0ENtNtNtB9_6traits8iterator8Iterator4nextB16_.exit, !dbg !28395
 
 bb.r:                                             ; preds = %bb.q
-  %i.bb = zext i32 %.sroa.09.052.i.i to i64, !dbg !28400
+  %i.bb = zext nneg i32 %.sroa.09.052.i.i to i64, !dbg !28400
   br label %bb.k, !dbg !28401
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNCNvNtB12_16schema_inference13infer_headers0ENtNtNtB9_6traits8iterator8Iterator4nextB16_.exit: ; preds = %bb.c, %bb.i, %bb.j, %bb.k, %bb.p, %.thread.i.i
@@ -396,7 +396,7 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %or.cond.i.i.i.i, label %bb.ai, label %bb.ah, !dbg !28538
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %i.cs = add i32 %.sroa.09.052.i.i.i.i, 1, !dbg !28540
+  %i.cs = add nuw nsw i32 %.sroa.09.052.i.i.i.i, 1, !dbg !28540
   %i.ct = icmp eq ptr %i.cm, %i.ce, !dbg !28541
   br i1 %i.ct, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNCNvNtB12_16schema_inference13infer_headers0ENtNtNtB9_6traits8iterator8Iterator4nextB16_.exit.i.i, label %bb.af, !dbg !28515
 
@@ -404,7 +404,7 @@ bb.ai:                                            ; preds = %bb.ag
   br i1 %i.cr, label %bb.aj, label %bb.ak, !dbg !28543
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.cu = zext i32 %.sroa.09.052.i.i.i.i to i64, !dbg !28544
+  %i.cu = zext nneg i32 %.sroa.09.052.i.i.i.i to i64, !dbg !28544
   br label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNCNvNtB12_16schema_inference13infer_headers0ENtNtNtB9_6traits8iterator8Iterator4nextB16_.exit.i.i, !dbg !28545
 
 bb.ak:                                            ; preds = %bb.ai
@@ -412,7 +412,7 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %i.cv, label %_RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNCNvNtB12_16schema_inference13infer_headers0ENtNtNtB9_6traits8iterator8Iterator4nextB16_.exit.i.i, label %bb.al, !dbg !28546
 
 bb.al:                                            ; preds = %bb.ak
-  %i.cw = zext i32 %.sroa.09.052.i.i.i.i to i64, !dbg !28547
+  %i.cw = zext nneg i32 %.sroa.09.052.i.i.i.i to i64, !dbg !28547
   br label %bb.ae, !dbg !28548
 
 _RNvXs0_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3mapINtB5_3MapNtNtNtNtNtCslpwjCj2YNBy_9polars_io3csv4read11splitfields5inner11SplitFieldsNCNvNtB12_16schema_inference13infer_headers0ENtNtNtB9_6traits8iterator8Iterator4nextB16_.exit.i.i: ; preds = %bb.ab, %bb.ah, %bb.ak, %bb.aj, %bb.ae, %bb.ad, %bb.y

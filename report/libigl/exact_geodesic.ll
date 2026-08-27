@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.new
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
   %i.az = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   store i32 %i.az, ptr %i.ay, align 4, !tbaa !27
-  %i.ba = mul i32 %i.az, 3                        ; 3 uses
+  %i.ba = mul nsw i32 %i.az, 3                    ; 3 uses
   %i.bb = zext i32 %i.ba to i64
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.bb
   %i.bd = load double, ptr %i.bc, align 8, !tbaa !79
@@ -217,7 +217,7 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.new
   %i.bi = load double, ptr %i.bh, align 8, !tbaa !79
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ax, i64 64
   store double %i.bi, ptr %i.bj, align 8, !tbaa !79
-  %i.bk = add i32 %i.ba, 2
+  %i.bk = add nsw i32 %i.ba, 2
   %i.bl = zext i32 %i.bk to i64
   %i.bm = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.bl
   %i.bn = load double, ptr %i.bm, align 8, !tbaa !79
@@ -228,19 +228,19 @@ bb.h:                                             ; preds = %bb.h, %.lr.ph.new
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 48
   %i.br = trunc nuw i64 %indvars.iv.next to i32   ; 2 uses
   store i32 %i.br, ptr %i.bq, align 4, !tbaa !27
-  %i.bs = mul i32 %i.br, 3                        ; 3 uses
+  %i.bs = mul nsw i32 %i.br, 3                    ; 3 uses
   %i.bt = zext i32 %i.bs to i64
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.bt
   %i.bv = load double, ptr %i.bu, align 8, !tbaa !79
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bp, i64 56
   store double %i.bv, ptr %i.bw, align 8, !tbaa !79
-  %i.bx = add i32 %i.bs, 1
+  %i.bx = add nsw i32 %i.bs, 1
   %i.by = zext i32 %i.bx to i64
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.by
   %i.ca = load double, ptr %i.bz, align 8, !tbaa !79
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bp, i64 64
   store double %i.ca, ptr %i.cb, align 8, !tbaa !79
-  %i.cc = add i32 %i.bs, 2
+  %i.cc = add nsw i32 %i.bs, 2
   %i.cd = zext i32 %i.cc to i64
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.cd
   %i.cf = load double, ptr %i.ce, align 8, !tbaa !79

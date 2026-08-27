@@ -202,6 +202,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKfSt6vectorIS3_SaIS3_EEEEN2cv14greate
   %i.fp = getelementptr inbounds nuw i8, ptr %19, i64 24
   %i.fq = getelementptr inbounds nuw i8, ptr %19, i64 128
   %i.fr = icmp sgt i32 %2, 0
+  %sext808 = zext nneg i32 %2 to i64              ; 2 uses
   br label %bb.cn
 
 bb.bp:                                            ; preds = %_ZSt4sortIN9__gnu_cxx17__normal_iteratorIPPKfSt6vectorIS3_SaIS3_EEEEN2cv14greaterThanPtrEEvT_SB_T0_.exit
@@ -604,9 +605,8 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit324: ; preds = %_ZNSt6ve
   %.sroa.22.10 = phi ptr [ %i.pa, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i321 ], [ %.sroa.22.5695, %bb.ct ] ; 3 uses
   %.sroa.0396.10 = phi ptr [ %i.oi, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i321 ], [ %.sroa.0396.5699, %bb.ct ] ; 3 uses
   %.sroa.12402.6 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i319.pn, i64 8 ; 3 uses
-  %i.pb = add nuw i64 %.4156701, 1                ; 4 uses
-  %39 = trunc i64 %i.pb to i32
-  %i.pc = icmp eq i32 %2, %39
+  %i.pb = add nuw i64 %.4156701, 1                ; 3 uses
+  %i.pc = icmp eq i64 %i.pb, %sext808
   %or.cond252 = select i1 %i.fr, i1 %i.pc, i1 false
   br i1 %or.cond252, label %.loopexit, label %bb.cm
 
@@ -627,7 +627,7 @@ _ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit324: ; preds = %_ZNSt6ve
   %.sroa.12.4 = phi ptr [ %.sroa.12.2.ph, %_ZNSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EED2Ev.exit ], [ %.sroa.12.6, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit324 ], [ %.sroa.12.6, %bb.cm ] ; 2 uses
   %.sroa.20.7 = phi ptr [ %.sroa.20.4.ph, %_ZNSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EED2Ev.exit ], [ %.sroa.20.11, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit324 ], [ %.sroa.20.11, %bb.cm ] ; 4 uses
   %.sroa.0396.6 = phi ptr [ %.sroa.0396.3.ph, %_ZNSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EED2Ev.exit ], [ %.sroa.0396.10, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit324 ], [ %.sroa.0396.10, %bb.cm ] ; 10 uses
-  %.5157 = phi i64 [ %.3155.ph, %_ZNSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EED2Ev.exit ], [ %i.fd, %bb.cm ], [ %i.pb, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit324 ]
+  %.5157 = phi i64 [ %.3155.ph, %_ZNSt6vectorIS_IN2cv6Point_IfEESaIS2_EESaIS4_EED2Ev.exit ], [ %i.fd, %bb.cm ], [ %sext808, %_ZNSt6vectorIN2cv6Point_IfEESaIS2_EE9push_backEOS2_.exit324 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #20
   store i32 1124024357, ptr %36, align 8, !tbaa !94

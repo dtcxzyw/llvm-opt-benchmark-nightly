@@ -206,46 +206,23 @@ bb.b:                                             ; preds = %"_ZN10serde_json2de
 bb.c:                                             ; preds = %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17ha5bb36df9391e54eE.exit"
   %i.n = add nuw i64 %i.j, 1                      ; 3 uses
   store i64 %i.n, ptr %i.c, align 8, !alias.scope !49035
-  %i.o = add i32 %.sroa.0.015, 1                  ; 2 uses
+  %i.o = add nuw nsw i32 %.sroa.0.015, 1          ; 2 uses
   %i.p = icmp ult i64 %i.n, %i.e
   br i1 %i.p, label %"_ZN10serde_json2de21Deserializer$LT$R$GT$12peek_or_null17ha5bb36df9391e54eE.exit", label %.thread
 
 .thread:                                          ; preds = %bb.c, %bb.a, %bb.b
-  %.sroa.0.013 = phi i32 [ %.sroa.0.015, %bb.b ], [ 0, %bb.a ], [ %i.o, %bb.c ] ; 3 uses
+  %.sroa.0.013 = phi i32 [ %.sroa.0.015, %bb.b ], [ 0, %bb.a ], [ %i.o, %bb.c ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49038)
   %i.q = uitofp i64 %3 to double                  ; 2 uses
   %.sroa.012.021.i = tail call i32 @llvm.abs.i32(i32 %.sroa.0.013, i1 false) ; 2 uses
   %i.r = icmp ult i32 %.sroa.012.021.i, 309
-  br i1 %i.r, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %i.r, label %bb.f, label %bb.d
 
-.lr.ph.i:                                         ; preds = %.thread, %bb.d
-  %.sroa.0.023.i = phi i32 [ %12, %bb.d ], [ %.sroa.0.013, %.thread ] ; 2 uses
-  %.sroa.04.022.i = phi double [ %11, %bb.d ], [ %i.q, %.thread ] ; 3 uses
-  %4 = fcmp oeq double %.sroa.04.022.i, 0.000000e+00
-  br i1 %4, label %.loopexit.i, label %9
+bb.d:                                             ; preds = %.thread
+  %4 = icmp eq i64 %3, 0
+  br i1 %4, label %.loopexit.i, label %bb.e
 
-._crit_edge.i:                                    ; preds = %bb.d, %.thread
-  %.sroa.04.0.lcssa.i = phi double [ %i.q, %.thread ], [ %11, %bb.d ] ; 2 uses
-  %.sroa.0.0.lcssa.i = phi i32 [ %.sroa.0.013, %.thread ], [ %12, %bb.d ]
-  %.sroa.012.0.lcssa.i = phi i32 [ %.sroa.012.021.i, %.thread ], [ %.sroa.012.0.i, %bb.d ]
-  %5 = zext nneg i32 %.sroa.012.0.lcssa.i to i64
-  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZN10serde_json2de5POW1017h13e2d2d3887eda26E, i64 %5
-  %7 = load double, ptr %6, align 8, !noalias !49041, !noundef !10 ; 2 uses
-  %8 = icmp sgt i32 %.sroa.0.0.lcssa.i, -1
-  br i1 %8, label %bb.f, label %14
-
-9:                                                ; preds = %.lr.ph.i
-  %10 = icmp sgt i32 %.sroa.0.023.i, -1
-  br i1 %10, label %bb.e, label %bb.d, !prof !59
-
-bb.d:                                             ; preds = %9
-  %11 = fdiv double %.sroa.04.022.i, 1.000000e+308 ; 2 uses
-  %12 = add nsw i32 %.sroa.0.023.i, 308           ; 3 uses
-  %.sroa.012.0.i = tail call i32 @llvm.abs.i32(i32 %12, i1 true) ; 2 uses
-  %13 = icmp samesign ult i32 %.sroa.012.0.i, 309
-  br i1 %13, label %._crit_edge.i, label %.lr.ph.i
-
-bb.e:                                             ; preds = %9
+bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !49041
   store i64 14, ptr %i.a, align 8, !noalias !49041
   %i.s = call fastcc noundef nonnull align 8 ptr @"_ZN10serde_json2de21Deserializer$LT$R$GT$5error17h10b3cd5e983b9291E"(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %1, ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.a), !noalias !49038
@@ -254,20 +231,19 @@ bb.e:                                             ; preds = %9
   store ptr %i.s, ptr %i.t, align 8, !alias.scope !49038, !noalias !49043
   br label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14f64_from_parts17he1dc722be7297f7eE.exit"
 
-.loopexit.i:                                      ; preds = %.lr.ph.i, %bb.f, %14
-  %.sroa.04.1.i = phi double [ %i.w, %bb.f ], [ %15, %14 ], [ %.sroa.04.022.i, %.lr.ph.i ] ; 2 uses
+.loopexit.i:                                      ; preds = %bb.d, %bb.f
+  %.sroa.04.1.i = phi double [ %i.w, %bb.f ], [ %i.q, %bb.d ] ; 2 uses
   %i.u = fneg double %.sroa.04.1.i
   %.sroa.013.0.i = select i1 %2, double %.sroa.04.1.i, double %i.u
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
   store double %.sroa.013.0.i, ptr %i.v, align 8, !alias.scope !49038, !noalias !49043
   br label %"_ZN10serde_json2de21Deserializer$LT$R$GT$14f64_from_parts17he1dc722be7297f7eE.exit"
 
-14:                                               ; preds = %._crit_edge.i
-  %15 = fdiv double %.sroa.04.0.lcssa.i, %7
-  br label %.loopexit.i
-
-bb.f:                                             ; preds = %._crit_edge.i
-  %i.w = fmul double %.sroa.04.0.lcssa.i, %7      ; 2 uses
+bb.f:                                             ; preds = %.thread
+  %5 = zext nneg i32 %.sroa.012.021.i to i64
+  %6 = getelementptr inbounds nuw [8 x i8], ptr @_ZN10serde_json2de5POW1017h13e2d2d3887eda26E, i64 %5
+  %7 = load double, ptr %6, align 8, !noalias !49041, !noundef !10
+  %i.w = fmul double %7, %i.q                     ; 2 uses
   %i.x = tail call double @llvm.fabs.f64(double %i.w)
   %i.y = fcmp oeq double %i.x, +inf
   br i1 %i.y, label %bb.g, label %.loopexit.i, !prof !59
