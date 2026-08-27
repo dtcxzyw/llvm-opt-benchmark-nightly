@@ -202,10 +202,10 @@ bb.a:
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit
   %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %.loopexit ] ; 10 uses
-  %2 = sub nsw i64 %wide.trip.count22, %indvars.iv ; 3 uses
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 5 uses
-  %4 = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %indvars.iv ; 4 uses
-  %min.iters.check = icmp ult i64 %2, 4
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 5 uses
+  %3 = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %indvars.iv ; 4 uses
+  %4 = sub nsw i64 %wide.trip.count22, %indvars.iv ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader
@@ -214,7 +214,7 @@ vector.memcheck:                                  ; preds = %.preheader
   %i.h = mul nuw nsw i64 %indvars.iv, 296
   %scevgep = getelementptr i8, ptr %0, i64 %i.h   ; 2 uses
   %bound0 = icmp ult ptr %scevgep, %scevgep25
-  %bound1 = icmp ult ptr %3, %scevgep24
+  %bound1 = icmp ult ptr %2, %scevgep24
   %found.conflict = and i1 %bound0, %bound1
   %bound026 = icmp ult ptr %scevgep, %scevgep25
   %bound127 = icmp ult ptr %1, %scevgep24
@@ -223,9 +223,9 @@ vector.memcheck:                                  ; preds = %.preheader
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %2, -4                         ; 3 uses
+  %n.vec = and i64 %4, -4                         ; 3 uses
   %i.i = add i64 %indvars.iv, %n.vec
-  %i.j = load double, ptr %3, align 8, !tbaa !12, !alias.scope !32
+  %i.j = load double, ptr %2, align 8, !tbaa !12, !alias.scope !32
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.j, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -237,7 +237,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %wide.load = load <2 x double>, ptr %i.l, align 8, !tbaa !12, !alias.scope !35
   %wide.load29 = load <2 x double>, ptr %i.m, align 8, !tbaa !12, !alias.scope !35
-  %i.n = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.k ; 3 uses
+  %i.n = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.k ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 16 ; 2 uses
   %wide.load30 = load <2 x double>, ptr %i.n, align 8, !tbaa !12, !alias.scope !37, !noalias !39
   %wide.load31 = load <2 x double>, ptr %i.o, align 8, !tbaa !12, !alias.scope !37, !noalias !39
@@ -250,7 +250,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.r, label %middle.block, label %vector.body, !llvm.loop !40
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %2, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader, %middle.block
@@ -261,10 +261,10 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
-  %i.t = load double, ptr %3, align 8, !tbaa !12
+  %i.t = load double, ptr %2, align 8, !tbaa !12
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv18.ph
   %i.v = load double, ptr %i.u, align 8, !tbaa !12
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv18.ph ; 2 uses
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv18.ph ; 2 uses
   %i.x = load double, ptr %i.w, align 8, !tbaa !12
   %i.y = tail call nsz double @llvm.fmuladd.f64(double %i.t, double %i.v, double %i.x)
   store double %i.y, ptr %i.w, align 8, !tbaa !12
@@ -278,18 +278,18 @@ scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %sc
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv18 = phi i64 [ %indvars.iv.next19.1, %scalar.ph ], [ %indvars.iv18.unr, %scalar.ph.prol.loopexit ] ; 4 uses
-  %i.aa = load double, ptr %3, align 8, !tbaa !12
+  %i.aa = load double, ptr %2, align 8, !tbaa !12
   %i.ab = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv18
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !12
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv18 ; 2 uses
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv18 ; 2 uses
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !12
   %i.af = tail call nsz double @llvm.fmuladd.f64(double %i.aa, double %i.ac, double %i.ae)
   store double %i.af, ptr %i.ad, align 8, !tbaa !12
   %indvars.iv.next19 = add nuw nsw i64 %indvars.iv18, 1 ; 2 uses
-  %i.ag = load double, ptr %3, align 8, !tbaa !12
+  %i.ag = load double, ptr %2, align 8, !tbaa !12
   %i.ah = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.next19
   %i.ai = load double, ptr %i.ah, align 8, !tbaa !12
-  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next19 ; 2 uses
+  %i.aj = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next19 ; 2 uses
   %i.ak = load double, ptr %i.aj, align 8, !tbaa !12
   %i.al = tail call nsz double @llvm.fmuladd.f64(double %i.ag, double %i.ai, double %i.ak)
   store double %i.al, ptr %i.aj, align 8, !tbaa !12

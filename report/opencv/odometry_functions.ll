@@ -205,10 +205,10 @@ bb.y:                                             ; preds = %bb.s
 
 bb.z:                                             ; preds = %_ZN2cvL14rgbdCoeffsFuncENS_21OdometryTransformTypeEPdddRKNS_7Point3_IdEEdd.exit, %.loopexit203
   %indvars.iv = phi i64 [ 0, %_ZN2cvL14rgbdCoeffsFuncENS_21OdometryTransformTypeEPdddRKNS_7Point3_IdEEdd.exit ], [ %indvars.iv.next, %.loopexit203 ] ; 11 uses
-  %25 = sub nsw i64 %i.aa, %indvars.iv            ; 3 uses
   %i.gg = mul i64 %i.bd, %indvars.iv
   %i.gh = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.gg ; 4 uses
   %i.gi = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv ; 6 uses
+  %25 = sub nsw i64 %i.aa, %indvars.iv            ; 3 uses
   %min.iters.check = icmp ult i64 %25, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -611,10 +611,10 @@ bb.ab:                                            ; preds = %bb.u
 
 bb.ac:                                            ; preds = %bb.z, %.loopexit325
   %indvars.iv246 = phi i64 [ 0, %bb.z ], [ %indvars.iv.next247, %.loopexit325 ] ; 11 uses
-  %20 = sub nsw i64 %i.cg, %indvars.iv246         ; 3 uses
   %i.ik = mul i64 %i.fi, %indvars.iv246
   %i.il = getelementptr inbounds nuw i8, ptr %i.fh, i64 %i.ik ; 4 uses
   %i.im = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv246 ; 6 uses
+  %20 = sub nsw i64 %i.cg, %indvars.iv246         ; 3 uses
   %min.iters.check = icmp ult i64 %20, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
