@@ -204,7 +204,7 @@ vector.ph:                                        ; preds = %.preheader.us.us.pr
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i32> [ <i32 0, i32 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %i.ah = shl <2 x i32> %vec.ind, splat (i32 1)
+  %i.ah = shl nuw <2 x i32> %vec.ind, splat (i32 1)
   %i.ai = uitofp <2 x i32> %i.ah to <2 x double>
   %i.aj = fdiv <2 x double> %i.ai, %broadcast.splat
   %i.ak = fadd <2 x double> %i.aj, splat (double -1.000000e+00)
@@ -228,8 +228,8 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader.us.us:                                 ; preds = %.preheader.us.us.preheader134, %.preheader.us.us
   %indvars.iv94 = phi i64 [ %indvars.iv.next95, %.preheader.us.us ], [ %indvars.iv94.ph, %.preheader.us.us.preheader134 ] ; 3 uses
-  %indvars.iv94.tr = trunc i64 %indvars.iv94 to i32
-  %i.ap = shl i32 %indvars.iv94.tr, 1
+  %indvars.iv94.tr = trunc nuw i64 %indvars.iv94 to i32
+  %i.ap = shl nuw i32 %indvars.iv94.tr, 1
   %i.aq = uitofp i32 %i.ap to double
   %i.ar = fdiv double %i.aq, %i.ae
   %i.as = fadd double %i.ar, -1.000000e+00
@@ -376,8 +376,8 @@ middle.block130:                                  ; preds = %vector.body125
   br i1 %exitcond78.not.3, label %._crit_edge59, label %.lr.ph58, !llvm.loop !218
 
 ._crit_edge59:                                    ; preds = %.lr.ph58.prol.loopexit, %.lr.ph58, %middle.block130
-  %indvars.iv79.tr = trunc i64 %indvars.iv79 to i32
-  %i.cq = shl i32 %indvars.iv79.tr, 1
+  %indvars.iv79.tr = trunc nuw i64 %indvars.iv79 to i32
+  %i.cq = shl nuw i32 %indvars.iv79.tr, 1
   %i.cr = uitofp i32 %i.cq to double
   %i.cs = fdiv double %i.cr, %i.ae
   %i.ct = fadd double %i.cs, -1.000000e+00

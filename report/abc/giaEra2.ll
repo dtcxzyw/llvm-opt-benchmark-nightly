@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.e
   %i.ar = icmp samesign ult i64 %indvars.iv19.i, 1073741823
-  %i.as = shl i32 %spec.select.sink.i15.i, 1
+  %i.as = shl nsw i32 %spec.select.sink.i15.i, 1
   %spec.select.i.i = select i1 %i.ar, i32 %i.as, i32 2147483647 ; 4 uses
   %i.at = sext i32 %spec.select.i.i to i64
   %.not.i10.i.i = icmp samesign ult i64 %indvars.iv19.i, %i.at
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %bb.y
 Gia_WordFindFirstBit.exit.i:                      ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l
   %.06.i.i = phi i32 [ 0, %bb.l ], [ 12, %bb.x ], [ 11, %bb.w ], [ 8, %bb.t ], [ 1, %bb.m ], [ 10, %bb.v ], [ 7, %bb.s ], [ 6, %bb.r ], [ 2, %bb.n ], [ 4, %bb.p ], [ 9, %bb.u ], [ %i.cm, %bb.z ], [ 3, %bb.o ], [ 5, %bb.q ], [ 13, %bb.y ]
   %indvars.iv.tr.i = trunc i64 %indvars.iv.i72 to i32
-  %i.cn = shl i32 %indvars.iv.tr.i, 4
+  %i.cn = shl nsw i32 %indvars.iv.tr.i, 4
   %i.co = or disjoint i32 %.06.i.i, %i.cn
   br label %bb.aa
 
@@ -1011,7 +1011,7 @@ bb.z:                                             ; preds = %bb.y
 Gia_WordFindFirstBit.exit.i:                      ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l
   %.06.i.i = phi i32 [ 0, %bb.l ], [ 12, %bb.x ], [ 11, %bb.w ], [ 8, %bb.t ], [ 1, %bb.m ], [ 10, %bb.v ], [ 7, %bb.s ], [ 6, %bb.r ], [ 2, %bb.n ], [ 4, %bb.p ], [ 9, %bb.u ], [ %i.di, %bb.z ], [ 3, %bb.o ], [ 5, %bb.q ], [ 13, %bb.y ]
   %indvars.iv.tr.i = trunc i64 %indvars.iv.i112 to i32
-  %i.dj = shl i32 %indvars.iv.tr.i, 4
+  %i.dj = shl nsw i32 %indvars.iv.tr.i, 4
   %i.dk = or disjoint i32 %.06.i.i, %i.dj
   br label %bb.aa
 
@@ -1290,7 +1290,7 @@ bb.az:                                            ; preds = %bb.ay
 Gia_WordFindFirstBit.exit.i149:                   ; preds = %bb.az, %bb.ay, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.at, %bb.as, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an, %bb.am, %bb.al
   %.06.i.i150 = phi i32 [ 0, %bb.al ], [ 12, %bb.ax ], [ 11, %bb.aw ], [ 8, %bb.at ], [ 1, %bb.am ], [ 10, %bb.av ], [ 7, %bb.as ], [ 6, %bb.ar ], [ 2, %bb.an ], [ 4, %bb.ap ], [ 9, %bb.au ], [ %i.hp, %bb.az ], [ 3, %bb.ao ], [ 5, %bb.aq ], [ 13, %bb.ay ]
   %indvars.iv.tr.i151 = trunc i64 %indvars.iv.i145 to i32
-  %i.hq = shl i32 %indvars.iv.tr.i151, 4
+  %i.hq = shl nsw i32 %indvars.iv.tr.i151, 4
   %i.hr = or disjoint i32 %.06.i.i150, %i.hq
   br label %bb.ba
 
@@ -1693,8 +1693,8 @@ Gia_ManAppendCi.exit:                             ; preds = %Gia_ManAppendObj.ex
   %i.fp = load i32, ptr %i.fo, align 4, !tbaa !8
   %i.fq = sext i32 %i.fp to i64
   %i.fr = getelementptr inbounds [12 x i8], ptr %.val91, i64 %i.fq ; 2 uses
-  %indvars.iv121.tr = trunc i64 %indvars.iv121 to i32
-  %i.fs = shl i32 %indvars.iv121.tr, 1            ; 2 uses
+  %indvars.iv121.tr = trunc nuw i64 %indvars.iv121 to i32
+  %i.fs = shl nuw i32 %indvars.iv121.tr, 1        ; 2 uses
   %i.ft = ashr i32 %i.fs, 5
   %i.fu = sext i32 %i.ft to i64
   %i.fv = getelementptr inbounds [4 x i8], ptr %i.fl, i64 %i.fu

@@ -205,7 +205,7 @@ bb.as:                                            ; preds = %bb.ap
 
 bb.at:                                            ; preds = %bb.at, %.lr.ph193.i
   %indvars.iv206.i = phi i64 [ 0, %.lr.ph193.i ], [ %indvars.iv.next207.i, %bb.at ] ; 4 uses
-  %i.jg = trunc i64 %indvars.iv206.i to i32       ; 2 uses
+  %i.jg = trunc nuw i64 %indvars.iv206.i to i32   ; 2 uses
   %i.jh = shl i32 %i.jg, %i.jb                    ; 2 uses
   %i.ji = lshr i32 %i.jh, %i.ht
   %i.jj = or i32 %i.ji, %i.jh                     ; 3 uses
@@ -213,7 +213,7 @@ bb.at:                                            ; preds = %bb.at, %.lr.ph193.i
   %.idx227.i = shl nuw nsw i64 %i.jk, 3
   %i.jl = getelementptr inbounds nuw i8, ptr %i.hr, i64 %.idx227.i ; 2 uses
   store i32 -16711681, ptr %i.jl, align 4, !tbaa !55
-  %i.jm = shl i32 %i.jg, 1
+  %i.jm = shl nuw i32 %i.jg, 1
   %i.jn = add i32 %i.jm, %i.ix
   %i.jo = sext i32 %i.jn to i64
   %i.jp = getelementptr inbounds [4 x i8], ptr %i.hr, i64 %i.jo ; 2 uses
@@ -616,7 +616,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %indvars.iv = phi i64 [ %i.aj, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.e ] ; 3 uses
   %niter = phi i32 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.e ]
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.al = shl i32 %indvars.iv.tr, 2
+  %i.al = shl nsw i32 %indvars.iv.tr, 2
   %i.am = add i32 %i.ai, %i.al
   %i.an = sext i32 %i.am to i64
   %i.ao = getelementptr inbounds i8, ptr %0, i64 %i.an
@@ -641,7 +641,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   %lcmp.mod98 = trunc i32 %i.af to i1
   tail call void @llvm.assume(i1 %lcmp.mod98)
   %indvars.iv.tr.epil = trunc i64 %indvars.iv.epil.init to i32
-  %i.as = shl i32 %indvars.iv.tr.epil, 2
+  %i.as = shl nsw i32 %indvars.iv.tr.epil, 2
   %i.at = add i32 %i.ai, %i.as
   %i.au = sext i32 %i.at to i64
   %i.av = getelementptr inbounds i8, ptr %0, i64 %i.au

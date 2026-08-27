@@ -15,7 +15,7 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge.loopexit.i.1, %bb.a
   %indvars.iv = phi i64 [ 1, %bb.a ], [ %indvars.iv.next.1, %._crit_edge.loopexit.i.1 ] ; 4 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
   %i.a = shl nuw nsw i32 %indvars.iv.tr, 13
   br label %.lr.ph.i
 
@@ -39,7 +39,7 @@ bb.b:                                             ; preds = %._crit_edge.loopexi
   br i1 %exitcond.not, label %vector.body, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.loopexit.i
-  %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
+  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
   %i.i = shl nuw nsw i32 %indvars.iv.tr.1, 13
   br label %.lr.ph.i.1
 

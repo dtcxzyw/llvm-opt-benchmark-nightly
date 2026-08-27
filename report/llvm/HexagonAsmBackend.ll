@@ -202,7 +202,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <16 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %i.bi = shl <16 x i32> %vec.ind, splat (i32 3)  ; 2 uses
+  %i.bi = shl nuw <16 x i32> %vec.ind, splat (i32 3) ; 2 uses
   %i.bj = lshr <16 x i32> %broadcast.splat, %i.bi
   %i.bk = getelementptr inbounds nuw i8, ptr %4, i64 %index ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.bk, align 1, !tbaa !92
@@ -226,7 +226,7 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index97 = phi i64 [ 0, %vec.epilog.ph ], [ %index.next100, %vec.epilog.vector.body ] ; 2 uses
   %vec.ind98 = phi <8 x i32> [ <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>, %vec.epilog.ph ], [ %vec.ind.next101, %vec.epilog.vector.body ] ; 2 uses
-  %i.bq = shl <8 x i32> %vec.ind98, splat (i32 3) ; 2 uses
+  %i.bq = shl nuw <8 x i32> %vec.ind98, splat (i32 3) ; 2 uses
   %i.br = lshr <8 x i32> %broadcast.splat92, %i.bq
   %i.bs = getelementptr inbounds nuw i8, ptr %4, i64 %index97 ; 2 uses
   %wide.load99 = load <8 x i8>, ptr %i.bs, align 1, !tbaa !92
@@ -242,8 +242,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
 
 .lr.ph:                                           ; preds = %iter.check, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %iter.check ] ; 3 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.by = shl i32 %indvars.iv.tr, 3               ; 2 uses
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.by = shl nuw i32 %indvars.iv.tr, 3           ; 2 uses
   %i.bz = lshr i32 %i.bh, %i.by
   %i.ca = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv ; 2 uses
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !92
@@ -646,8 +646,8 @@ _ZN4llvm6MCInst10addOperandENS_9MCOperandE.exit:  ; preds = %bb.t, %bb.u
   br i1 %.not11.i2.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph7.i.i.i
-  %indvars.iv.tr.i.i.i = trunc i64 %indvars.iv.i.i.i to i32
-  %i.jh = shl i32 %indvars.iv.tr.i.i.i, 5
+  %indvars.iv.tr.i.i.i = trunc nuw i64 %indvars.iv.i.i.i to i32
+  %i.jh = shl nuw i32 %indvars.iv.tr.i.i.i, 5
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.v, %.lr.ph.i.i.i

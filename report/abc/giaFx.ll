@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.j
   %i.eg = icmp samesign ult i64 %indvars.iv86, 1073741823
   %indvars.iv86.tr = trunc i64 %indvars.iv86 to i32
-  %i.eh = shl i32 %indvars.iv86.tr, 1
+  %i.eh = shl nsw i32 %indvars.iv86.tr, 1
   %spec.select.i65 = select i1 %i.eg, i32 %i.eh, i32 2147483647 ; 4 uses
   %i.ei = sext i32 %spec.select.i65 to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv86, %i.ei
@@ -607,7 +607,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.gf = shl nsw i64 %indvars.iv149, 4
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ge, i8 0, i64 %i.gf, i1 false)
   %indvars.iv149.tr = trunc i64 %indvars.iv149 to i32
-  %i.gg = shl i32 %indvars.iv149.tr, 1
+  %i.gg = shl nsw i32 %indvars.iv149.tr, 1
   br label %Vec_WecPushLevel.exit102.sink.split
 
 Vec_WecPushLevel.exit102.sink.split:              ; preds = %bb.ap, %Vec_WecGrow.exit.i101
@@ -704,8 +704,8 @@ Vec_IntPush.exit110:                              ; preds = %Vec_WecPushLevel.ex
   %i.hm = phi ptr [ %i.ji, %bb.br ], [ %i.hh, %Vec_IntPush.exit110 ] ; 7 uses
   %i.hn = phi ptr [ %i.jj, %bb.br ], [ %i.hh, %Vec_IntPush.exit110 ] ; 5 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.br ], [ 0, %Vec_IntPush.exit110 ] ; 4 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.ho = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.ho = shl nuw i32 %indvars.iv.tr, 1
   %i.hp = ashr i32 %i.fp, %i.ho
   %i.hq = and i32 %i.hp, 3
   switch i32 %i.hq, label %bb.br [
@@ -1108,7 +1108,7 @@ bb.ba:                                            ; preds = %bb.ay
 bb.bb:                                            ; preds = %bb.ax
   %i.ht = icmp samesign ult i64 %indvars.iv402, 1073741823
   %indvars.iv402.tr = trunc i64 %indvars.iv402 to i32
-  %i.hu = shl i32 %indvars.iv402.tr, 1
+  %i.hu = shl nsw i32 %indvars.iv402.tr, 1
   %spec.select.i267 = select i1 %i.ht, i32 %i.hu, i32 2147483647 ; 4 uses
   %i.hv = sext i32 %spec.select.i267 to i64
   %.not.i9.i268 = icmp samesign ult i64 %indvars.iv402, %i.hv

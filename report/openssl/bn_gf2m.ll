@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.loopexit.i, %.lr.p
 
 .preheader.i:                                     ; preds = %bb.c
   %indvars.iv.next.tr.i = trunc i64 %indvars.iv.next.i to i32
-  %i.j = shl i32 %indvars.iv.next.tr.i, 6
+  %i.j = shl nsw i32 %indvars.iv.next.tr.i, 6
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.h, %.preheader.i
@@ -307,7 +307,7 @@ bb.c:                                             ; preds = %.lr.ph, %.loopexit
 
 .preheader:                                       ; preds = %bb.c
   %indvars.iv.next.tr = trunc i64 %indvars.iv.next to i32
-  %i.i = shl i32 %indvars.iv.next.tr, 6
+  %i.i = shl nsw i32 %indvars.iv.next.tr, 6
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %bb.h
@@ -710,7 +710,7 @@ bb.d:                                             ; preds = %.loopexit.i, %.lr.p
 
 .preheader.i:                                     ; preds = %bb.d
   %indvars.iv.next.tr.i = trunc i64 %indvars.iv.next.i to i32
-  %i.n = shl i32 %indvars.iv.next.tr.i, 6
+  %i.n = shl nsw i32 %indvars.iv.next.tr.i, 6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.preheader.i
@@ -838,7 +838,7 @@ bb.d:                                             ; preds = %.loopexit.i, %.lr.p
 
 .preheader.i:                                     ; preds = %bb.d
   %indvars.iv.next.tr.i = trunc i64 %indvars.iv.next.i to i32
-  %i.n = shl i32 %indvars.iv.next.tr.i, 6
+  %i.n = shl nsw i32 %indvars.iv.next.tr.i, 6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.preheader.i
@@ -1241,7 +1241,7 @@ bb.d:                                             ; preds = %.loopexit.i, %.lr.p
 
 .preheader.i:                                     ; preds = %bb.d
   %indvars.iv.next.tr.i = trunc i64 %indvars.iv.next.i to i32
-  %i.n = shl i32 %indvars.iv.next.tr.i, 6
+  %i.n = shl nsw i32 %indvars.iv.next.tr.i, 6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.preheader.i
@@ -1403,7 +1403,7 @@ bb.d:                                             ; preds = %.loopexit.i, %.lr.p
 
 .preheader.i:                                     ; preds = %bb.d
   %indvars.iv.next.tr.i = trunc i64 %indvars.iv.next.i to i32
-  %i.n = shl i32 %indvars.iv.next.tr.i, 6
+  %i.n = shl nsw i32 %indvars.iv.next.tr.i, 6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.preheader.i
@@ -1806,7 +1806,7 @@ bb.d:                                             ; preds = %.loopexit.i, %.lr.p
 
 .preheader.i:                                     ; preds = %bb.d
   %indvars.iv.next.tr.i = trunc i64 %indvars.iv.next.i to i32
-  %i.n = shl i32 %indvars.iv.next.tr.i, 6
+  %i.n = shl nsw i32 %indvars.iv.next.tr.i, 6
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.i, %.preheader.i

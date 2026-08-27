@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %.lr.ph39, %bb.c
   %indvars.iv41 = phi i64 [ 0, %.lr.ph39 ], [ %indvars.iv.next42, %bb.c ] ; 3 uses
   %.13437 = phi i32 [ 0, %.lr.ph39 ], [ %i.av, %bb.c ]
   %i.aj = or disjoint i64 %indvars.iv41, 1        ; 2 uses
-  %.tr = trunc i64 %i.aj to i32
-  %i.ak = shl i32 %.tr, 1
+  %.tr = trunc nuw i64 %i.aj to i32
+  %i.ak = shl nuw nsw i32 %.tr, 1
   %i.al = uitofp nneg i32 %i.ak to double
   %i.am = fmul nnan double %i.al, f0x400921FB54442D18
   %i.an = fdiv double %i.am, %i.h                 ; 2 uses
@@ -609,8 +609,8 @@ bb.o:                                             ; preds = %bb.o, %.lr.ph39.i
   %indvars.iv41.i = phi i64 [ 0, %.lr.ph39.i ], [ %indvars.iv.next42.i, %bb.o ] ; 3 uses
   %.13437.i = phi i32 [ 0, %.lr.ph39.i ], [ %i.da, %bb.o ]
   %i.co = or disjoint i64 %indvars.iv41.i, 1      ; 2 uses
-  %.tr.i = trunc i64 %i.co to i32
-  %i.cp = shl i32 %.tr.i, 1
+  %.tr.i = trunc nuw i64 %i.co to i32
+  %i.cp = shl nuw nsw i32 %.tr.i, 1
   %i.cq = uitofp nneg i32 %i.cp to double
   %i.cr = fmul nnan double %i.cq, f0x400921FB54442D18
   %i.cs = fdiv double %i.cr, %i.bm                ; 2 uses
@@ -1013,8 +1013,8 @@ scalar.ph138.preheader:                           ; preds = %.lr.ph76.us, %middl
   br i1 %i.db, label %.lr.ph80.us.preheader, label %._crit_edge.us
 
 .lr.ph80.us.preheader:                            ; preds = %..preheader71_crit_edge.us
-  %indvars.iv109.tr = trunc i64 %indvars.iv109 to i32
-  %i.dc = shl i32 %indvars.iv109.tr, 1
+  %indvars.iv109.tr = trunc nuw i64 %indvars.iv109 to i32
+  %i.dc = shl nuw i32 %indvars.iv109.tr, 1
   %i.dd = sext i32 %i.dc to i64
   %i.de = zext nneg i32 %i.da to i64              ; 3 uses
   %invariant.gep120 = getelementptr [2 x i8], ptr %0, i64 %i.dd ; 2 uses
@@ -1079,8 +1079,8 @@ middle.block135:                                  ; preds = %vector.body130
   br i1 %i.ea, label %.lr.ph80.preheader, label %._crit_edge
 
 .lr.ph80.preheader:                               ; preds = %.preheader71
-  %indvars.iv91.tr = trunc i64 %indvars.iv91 to i32
-  %i.eb = shl i32 %indvars.iv91.tr, 1
+  %indvars.iv91.tr = trunc nuw i64 %indvars.iv91 to i32
+  %i.eb = shl nuw i32 %indvars.iv91.tr, 1
   %i.ec = sext i32 %i.eb to i64
   %i.ed = zext nneg i32 %i.dz to i64              ; 3 uses
   %invariant.gep = getelementptr [2 x i8], ptr %0, i64 %i.ec ; 2 uses
@@ -1483,7 +1483,7 @@ scalar.ph86:                                      ; preds = %scalar.ph86.prehead
   br i1 %i.di, label %.lr.ph80.us.preheader.i.us.us, label %._crit_edge.us.i39.us.us
 
 .lr.ph80.us.preheader.i.us.us:                    ; preds = %..preheader71_crit_edge.us.i.us.us
-  %i.dj = shl i32 %indvars66, 1
+  %i.dj = shl nuw i32 %indvars66, 1
   %i.dk = sext i32 %i.dj to i64
   %invariant.gep120.i.us.us = getelementptr [2 x i8], ptr %.031, i64 %i.dk ; 2 uses
   %i.dl = shl i32 %i.af, 1                        ; 2 uses
@@ -1576,7 +1576,7 @@ compute_stereo_samples.exit.loopexit.us.us:       ; preds = %._crit_edge.us.i39.
   br i1 %i.ep, label %.lr.ph80.preheader.i.us, label %._crit_edge.i.us
 
 .lr.ph80.preheader.i.us:                          ; preds = %.preheader71.i.us
-  %i.eq = shl i32 %indvars55, 1
+  %i.eq = shl nuw i32 %indvars55, 1
   %i.er = sext i32 %i.eq to i64
   %invariant.gep.i.us = getelementptr [2 x i8], ptr %.031, i64 %i.er ; 2 uses
   %smin = call i32 @llvm.smin.i32(i32 %i.el, i32 %spec.select)
@@ -1667,7 +1667,7 @@ compute_stereo_samples.exit.loopexit43.us:        ; preds = %._crit_edge.i.us
   br i1 %i.fw, label %.lr.ph80.preheader.i.us.1, label %._crit_edge.i.us.1
 
 .lr.ph80.preheader.i.us.1:                        ; preds = %.preheader71.i.us.1
-  %i.fx = shl i32 %indvars55.1, 1
+  %i.fx = shl nuw i32 %indvars55.1, 1
   %i.fy = sext i32 %i.fx to i64
   %invariant.gep.i.us.1 = getelementptr [2 x i8], ptr %.031, i64 %i.fy ; 2 uses
   %smin.1 = call i32 @llvm.smin.i32(i32 %i.fs, i32 %spec.select)

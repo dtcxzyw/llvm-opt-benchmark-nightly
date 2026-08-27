@@ -205,8 +205,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.m = lshr i32 %i.l, 19
   %i.n = and i32 %i.m, 192
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %indvars.iv.next.tr = trunc i64 %indvars.iv.next to i32
-  %i.o = shl i32 %indvars.iv.next.tr, 1
+  %indvars.iv.next.tr = trunc nuw i64 %indvars.iv.next to i32
+  %i.o = shl nuw nsw i32 %indvars.iv.next.tr, 1
   %i.p = shl nuw i32 %i.n, %i.o
   %i.q = or i32 %i.p, %i.i                        ; 2 uses
   store i32 %i.q, ptr %0, align 8, !tbaa !57
@@ -216,8 +216,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.u = lshr i32 %i.t, 19
   %i.v = and i32 %i.u, 192
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
-  %indvars.iv.next.tr.1 = trunc i64 %indvars.iv.next.1 to i32
-  %i.w = shl i32 %indvars.iv.next.tr.1, 1
+  %indvars.iv.next.tr.1 = trunc nuw i64 %indvars.iv.next.1 to i32
+  %i.w = shl nuw nsw i32 %indvars.iv.next.tr.1, 1
   %i.x = shl nuw i32 %i.v, %i.w
   %i.y = or i32 %i.x, %i.q                        ; 3 uses
   store i32 %i.y, ptr %0, align 8, !tbaa !57
@@ -620,8 +620,8 @@ bb.gq:                                            ; preds = %bb.gq, %.lr.ph.i217
   %i.aha = lshr i32 %i.agz, 19
   %i.ahb = and i32 %i.aha, 192
   %indvars.iv.next.i219 = or disjoint i64 %indvars.iv.i218, 1 ; 2 uses
-  %indvars.iv.next.tr.i = trunc i64 %indvars.iv.next.i219 to i32
-  %i.ahc = shl i32 %indvars.iv.next.tr.i, 1
+  %indvars.iv.next.tr.i = trunc nuw i64 %indvars.iv.next.i219 to i32
+  %i.ahc = shl nuw nsw i32 %indvars.iv.next.tr.i, 1
   %i.ahd = shl nuw i32 %i.ahb, %i.ahc
   %i.ahe = or i32 %i.ahd, %i.agw                  ; 2 uses
   store i32 %i.ahe, ptr %i.uc, align 8, !tbaa !57
@@ -631,8 +631,8 @@ bb.gq:                                            ; preds = %bb.gq, %.lr.ph.i217
   %i.ahi = lshr i32 %i.ahh, 19
   %i.ahj = and i32 %i.ahi, 192
   %indvars.iv.next.i219.1 = add nuw nsw i64 %indvars.iv.i218, 2 ; 3 uses
-  %indvars.iv.next.tr.i.1 = trunc i64 %indvars.iv.next.i219.1 to i32
-  %i.ahk = shl i32 %indvars.iv.next.tr.i.1, 1
+  %indvars.iv.next.tr.i.1 = trunc nuw i64 %indvars.iv.next.i219.1 to i32
+  %i.ahk = shl nuw nsw i32 %indvars.iv.next.tr.i.1, 1
   %i.ahl = shl nuw i32 %i.ahj, %i.ahk
   %i.ahm = or i32 %i.ahl, %i.ahe                  ; 3 uses
   store i32 %i.ahm, ptr %i.uc, align 8, !tbaa !57

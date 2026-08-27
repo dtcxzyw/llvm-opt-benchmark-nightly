@@ -67,7 +67,7 @@ bb.f:                                             ; preds = %bb.e
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 254, %bb.f ] ; 4 uses
   %indvars112.i = trunc i64 %indvars.iv.i to i32  ; 2 uses
   %i.t = add nuw nsw i32 %indvars112.i, 1
-  %i.u = shl i32 %indvars112.i, 8                 ; 3 uses
+  %i.u = shl nuw nsw i32 %indvars112.i, 8         ; 3 uses
   %i.v = or i32 %i.u, %i.t
   %i.w = sext i32 %i.v to i64
   %i.x = getelementptr inbounds [4 x i8], ptr %i.n, i64 %i.w
@@ -132,15 +132,15 @@ bb.k:                                             ; preds = %bb.j
   %i.ax = lshr exact i64 %i.aw, 2
   %i.ay = trunc i64 %i.ax to i32
   %i.az = or i32 %.0101.i, %i.u
-  %4 = sext i32 %i.az to i64
-  %i.ba = getelementptr inbounds [4 x i8], ptr %i.n, i64 %4
+  %4 = zext nneg i32 %i.az to i64
+  %i.ba = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %4
   store i32 %i.ay, ptr %i.ba, align 4, !tbaa !8
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bb = or disjoint i32 %i.u, %i.an
-  %5 = sext i32 %i.bb to i64
-  %i.bc = getelementptr inbounds [4 x i8], ptr %i.n, i64 %5
+  %5 = zext nneg i32 %i.bb to i64
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %5
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !8
   %i.be = sext i32 %i.bd to i64
   %i.bf = getelementptr inbounds [4 x i8], ptr %1, i64 %i.be
@@ -543,9 +543,9 @@ bb.ki:                                            ; preds = %.lr.ph452
   %i.bvd = load i32, ptr %i.bvc, align 4, !tbaa !8
   %i.bve = add nsw i32 %i.bvd, -1
   %invariant.gep918 = getelementptr [4 x i8], ptr %3, i64 %indvars.iv611
-  %indvars.iv611.tr = trunc i64 %indvars.iv611 to i32
-  %i.bvf = shl i32 %indvars.iv611.tr, 8           ; 2 uses
-  %6 = sext i32 %i.bvf to i64
+  %indvars.iv611.tr = trunc nuw i64 %indvars.iv611 to i32
+  %i.bvf = shl nuw nsw i32 %indvars.iv611.tr, 8   ; 2 uses
+  %6 = zext nneg i32 %i.bvf to i64
   br label %bb.kj
 
 bb.kj:                                            ; preds = %.lr.ph473, %._crit_edge466
@@ -726,7 +726,7 @@ bb.i:                                             ; preds = %bb.h
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %._crit_edge.i ], [ 254, %bb.i ] ; 4 uses
   %indvars131.i = trunc i64 %indvars.iv.i to i32  ; 2 uses
   %i.v = add nuw nsw i32 %indvars131.i, 1
-  %i.w = shl i32 %indvars131.i, 8                 ; 3 uses
+  %i.w = shl nuw nsw i32 %indvars131.i, 8         ; 3 uses
   %i.x = or i32 %i.w, %i.v
   %i.y = sext i32 %i.x to i64
   %i.z = getelementptr inbounds [4 x i8], ptr %i.m, i64 %i.y
@@ -791,15 +791,15 @@ bb.n:                                             ; preds = %bb.m
   %i.az = lshr exact i64 %i.ay, 2
   %i.ba = trunc i64 %i.az to i32
   %i.bb = or i32 %.0119.i, %i.w
-  %7 = sext i32 %i.bb to i64
-  %i.bc = getelementptr inbounds [4 x i8], ptr %i.m, i64 %7
+  %7 = zext nneg i32 %i.bb to i64
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %7
   store i32 %i.ba, ptr %i.bc, align 4, !tbaa !8
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.bd = or disjoint i32 %i.w, %i.ao
-  %8 = sext i32 %i.bd to i64
-  %i.be = getelementptr inbounds [4 x i8], ptr %i.m, i64 %8
+  %8 = zext nneg i32 %i.bd to i64
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %8
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !8
   %i.bg = sext i32 %i.bf to i64
   %i.bh = getelementptr inbounds [4 x i8], ptr %.070, i64 %i.bg
@@ -963,7 +963,7 @@ bb.ae:                                            ; preds = %._crit_edge.i87, %.
   %indvars.iv.i84 = phi i64 [ 254, %.preheader.i83 ], [ %indvars.iv.next.i88, %._crit_edge.i87 ] ; 4 uses
   %indvars172.i = trunc i64 %indvars.iv.i84 to i32 ; 2 uses
   %i.dz = add nuw nsw i32 %indvars172.i, 1
-  %i.ea = shl i32 %indvars172.i, 8                ; 3 uses
+  %i.ea = shl nuw nsw i32 %indvars172.i, 8        ; 3 uses
   %i.eb = or i32 %i.ea, %i.dz
   %i.ec = sext i32 %i.eb to i64
   %i.ed = getelementptr inbounds [4 x i8], ptr %i.m, i64 %i.ec
@@ -1045,15 +1045,15 @@ bb.al:                                            ; preds = %bb.ak
   %i.fn = lshr exact i64 %i.fm, 2
   %i.fo = trunc i64 %i.fn to i32
   %i.fp = or i32 %.0160.i, %i.ea
-  %9 = sext i32 %i.fp to i64
-  %i.fq = getelementptr inbounds [4 x i8], ptr %i.m, i64 %9
+  %9 = zext nneg i32 %i.fp to i64
+  %i.fq = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %9
   store i32 %i.fo, ptr %i.fq, align 4, !tbaa !8
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.fr = or disjoint i32 %i.ea, %i.fc
-  %10 = sext i32 %i.fr to i64
-  %i.fs = getelementptr inbounds [4 x i8], ptr %i.m, i64 %10
+  %10 = zext nneg i32 %i.fr to i64
+  %i.fs = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %10
   %i.ft = load i32, ptr %i.fs, align 4, !tbaa !8
   %i.fu = sext i32 %i.ft to i64
   %i.fv = getelementptr inbounds [4 x i8], ptr %.070, i64 %i.fu

@@ -204,8 +204,8 @@ bb.q:                                             ; preds = %._crit_edge.thread
   %i.dj = shl nuw nsw i64 %indvars.iv510, 2       ; 10 uses
   %i.dk = shl nuw nsw i32 %indvars512, 2
   %i.dl = add nuw nsw i64 %i.dj, 8
-  %indvars.iv510.tr = trunc i64 %indvars.iv510 to i32
-  %i.dm = shl i32 %indvars.iv510.tr, 3
+  %indvars.iv510.tr = trunc nuw i64 %indvars.iv510 to i32
+  %i.dm = shl nuw nsw i32 %indvars.iv510.tr, 3
   %i.dn = trunc nuw nsw i64 %i.dj to i32
   %i.do = or disjoint i64 %i.dj, 1                ; 2 uses
   %i.dp = trunc nuw nsw i64 %i.do to i32
@@ -226,8 +226,8 @@ bb.q:                                             ; preds = %._crit_edge.thread
 .preheader:                                       ; preds = %.preheader.lr.ph, %.thread361
   %indvars.iv507 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next508, %.thread361 ] ; 3 uses
   %i.ec = shl nuw nsw i64 %indvars.iv507, 3       ; 9 uses
-  %indvars.iv507.tr = trunc i64 %indvars.iv507 to i32
-  %i.ed = shl i32 %indvars.iv507.tr, 4
+  %indvars.iv507.tr = trunc nuw i64 %indvars.iv507 to i32
+  %i.ed = shl nuw nsw i32 %indvars.iv507.tr, 4
   br label %bb.r
 
 bb.r:                                             ; preds = %.preheader, %bb.ad
@@ -242,7 +242,7 @@ bb.r:                                             ; preds = %.preheader, %bb.ad
 .thread:                                          ; preds = %bb.r
   %i.ej = shl nuw nsw i32 %.0283479, 3
   %i.ek = or disjoint i32 %i.ej, %i.ed
-  %5 = sext i32 %i.ek to i64
+  %5 = zext nneg i32 %i.ek to i64
   br label %.thread364
 
 bb.s:                                             ; preds = %bb.r
@@ -398,7 +398,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   %i.ik = mul nsw i32 %i.ij, %.0281360
   %i.il = sext i32 %i.ik to i64
   %i.im = getelementptr inbounds i8, ptr %i.ih, i64 %i.il
-  %i.in = getelementptr inbounds i8, ptr %i.im, i64 %.0282359
+  %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 %.0282359
   %i.io = call fastcc i32 @decode_block(ptr noundef nonnull %i.g, ptr noundef %4, ptr noundef nonnull %i.ef, i32 noundef %i.eg, ptr noundef nonnull %i.eh, ptr noundef %i.if, ptr noundef %i.d, ptr noundef %i.in, i32 noundef %i.ij) ; 2 uses
   %i.ip = icmp sgt i32 %i.io, -1
   br i1 %i.ip, label %bb.ad, label %.thread368
