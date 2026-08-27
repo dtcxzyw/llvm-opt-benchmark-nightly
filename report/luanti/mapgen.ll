@@ -205,7 +205,7 @@ bb.a:
   call void @_ZNSt11_Deque_baseISt4pairIN4core8vector3dIsEEhESaIS4_EE17_M_initialize_mapEm(ptr noundef nonnull align 8 dereferenceable(80) %3, i64 noundef 0)
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 2
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.sroa.13.0.copyload = load i16, ptr %.sroa.13.0..sroa_idx, align 2, !tbaa !154 ; 5 uses
+  %.sroa.13.0.copyload = load i16, ptr %.sroa.13.0..sroa_idx, align 2, !tbaa !154 ; 4 uses
   %.sroa.22.6..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.b = load <2 x i16>, ptr %1, align 2, !tbaa !154
   %.sroa.9.0.copyload = load i16, ptr %.sroa.9.0..sroa_idx, align 2, !tbaa !154 ; 3 uses
@@ -215,10 +215,11 @@ bb.a:
   %.sroa.17.6.copyload = load i16, ptr %2, align 2, !tbaa !154 ; 3 uses
   %.sroa.26.6..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
   %.sroa.26.6.copyload = load i16, ptr %.sroa.26.6..sroa_idx, align 2, !tbaa !154 ; 4 uses
-  %i.d = sext i16 %.sroa.17.6.copyload to i32
-  %i.e = sext i16 %.sroa.0108.0.copyload to i32   ; 2 uses
-  %i.f = sext i16 %.sroa.22.6.copyload to i32
-  %i.g = sext i16 %.sroa.9.0.copyload to i32
+  %5 = sext i16 %.sroa.17.6.copyload to i32
+  %i.d = sext i16 %.sroa.0108.0.copyload to i32   ; 2 uses
+  %i.e = sext i16 %.sroa.22.6.copyload to i32
+  %i.f = sext i16 %.sroa.9.0.copyload to i32
+  %i.g = sext i16 %.sroa.26.6.copyload to i32
   %.not144 = icmp sgt i16 %.sroa.13.0.copyload, %.sroa.26.6.copyload
   br i1 %.not144, label %.preheader133, label %.preheader135.lr.ph
 
@@ -241,8 +242,6 @@ bb.a:
 
 .preheader135.preheader:                          ; preds = %.preheader135.lr.ph
   %i.s = sext i16 %.sroa.13.0.copyload to i32
-  %5 = call i16 @llvm.smax.i16(i16 %.sroa.13.0.copyload, i16 %.sroa.26.6.copyload)
-  %smax155 = sext i16 %5 to i32
   br label %.preheader135
 
 .preheader135:                                    ; preds = %.preheader135.preheader, %._crit_edge143
@@ -270,11 +269,11 @@ bb.a:
 
 ._crit_edge143:                                   ; preds = %._crit_edge
   %i.ag = add nsw i32 %.043145, 1
-  %exitcond156.not = icmp eq i32 %.043145, %smax155
+  %exitcond156.not = icmp eq i32 %.043145, %i.g
   br i1 %exitcond156.not, label %.preheader133, label %.preheader135, !llvm.loop !225
 
 .lr.ph:                                           ; preds = %.preheader135, %._crit_edge
-  %.042141 = phi i32 [ %i.g, %.preheader135 ], [ %i.bd, %._crit_edge ] ; 4 uses
+  %.042141 = phi i32 [ %i.f, %.preheader135 ], [ %i.bd, %._crit_edge ] ; 4 uses
   %i.ah = load ptr, ptr %i.h, align 8, !tbaa !98  ; 5 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   %i.aj = trunc nsw i32 %.042141 to i16
@@ -295,17 +294,17 @@ bb.a:
   %i.ay = mul i32 %i.ax, %i.as
   %i.az = load i16, ptr %i.ai, align 4, !tbaa !102
   %i.ba = sext i16 %i.az to i32
-  %i.bb = sub nsw i32 %i.e, %i.ba
+  %i.bb = sub nsw i32 %i.d, %i.ba
   %i.bc = add nsw i32 %i.bb, %i.ay
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %.loopexit.split
   %i.bd = add nsw i32 %.042141, 1
-  %exitcond154.not = icmp eq i32 %.042141, %i.f
+  %exitcond154.not = icmp eq i32 %.042141, %i.e
   br i1 %exitcond154.not, label %._crit_edge143, label %.lr.ph, !llvm.loop !226
 
 bb.b:                                             ; preds = %.lr.ph, %.loopexit.split
-  %.040139 = phi i32 [ %i.e, %.lr.ph ], [ %i.hu, %.loopexit.split ] ; 3 uses
+  %.040139 = phi i32 [ %i.d, %.lr.ph ], [ %i.hu, %.loopexit.split ] ; 3 uses
   %.041138 = phi i32 [ %i.bc, %.lr.ph ], [ %i.hv, %.loopexit.split ] ; 2 uses
   %i.be = load ptr, ptr %i.h, align 8, !tbaa !98
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 32
@@ -689,7 +688,7 @@ _ZN6Mapgen11lightSpreadER9VoxelAreaRSt5queueISt4pairIN4core8vector3dIsEEhESt5deq
 .loopexit.split:                                  ; preds = %_ZN6Mapgen11lightSpreadER9VoxelAreaRSt5queueISt4pairIN4core8vector3dIsEEhESt5dequeIS7_SaIS7_EEERKS6_h.exit, %bb.f, %bb.c, %bb.e, %bb.b
   %i.hu = add nsw i32 %.040139, 1
   %i.hv = add i32 %.041138, 1
-  %exitcond.not = icmp eq i32 %.040139, %i.d
+  %exitcond.not = icmp eq i32 %.040139, %5
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !235
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %_ZNSt5queueISt4pairIN4core8vector3dIsEEhESt5dequeIS4_SaIS4_EEE3popEv.exit

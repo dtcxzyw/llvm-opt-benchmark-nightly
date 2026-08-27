@@ -202,9 +202,10 @@ _ZL9checkAreaRK9VoxelArea.exit:                   ; preds = %_ZN9VoxelArea7addAr
   %i.cl = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ci) #22 ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.cl, i8 1, i64 %i.ci, i1 false)
   %i.cm = load i32, ptr %.sroa.20.0..sroa_idx, align 4, !tbaa !24 ; 2 uses
-  %i.cn = load i16, ptr %.sroa.11.0..sroa_idx, align 4, !tbaa !54 ; 3 uses
+  %i.cn = load i16, ptr %.sroa.11.0..sroa_idx, align 4, !tbaa !54 ; 2 uses
   %i.co = sext i16 %i.cn to i32                   ; 2 uses
   %i.cp = load i16, ptr %.sroa.18.0..sroa_idx, align 2, !tbaa !55 ; 2 uses
+  %4 = sext i16 %i.cp to i32
   %.not96 = icmp sgt i16 %i.cn, %i.cp
   br i1 %.not96, label %._crit_edge99.split, label %.lr.ph98
 
@@ -233,8 +234,6 @@ _ZL9checkAreaRK9VoxelArea.exit:                   ; preds = %_ZN9VoxelArea7addAr
   %invariant.op94 = sub nsw i32 %i.dg, %i.dd
   %i.dh = load ptr, ptr %i.db, align 8, !tbaa !14
   %i.di = load ptr, ptr %i.da, align 8, !tbaa !22
-  %4 = tail call i16 @llvm.smax.i16(i16 %i.cn, i16 %i.cp)
-  %smax102 = sext i16 %4 to i32
   br label %.lr.ph
 
 ._crit_edge99.split:                              ; preds = %._crit_edge, %.lr.ph98, %_ZL9checkAreaRK9VoxelArea.exit
@@ -263,7 +262,7 @@ _ZL9checkAreaRK9VoxelArea.exit:                   ; preds = %_ZN9VoxelArea7addAr
 
 ._crit_edge:                                      ; preds = %bb.n
   %i.dt = add nsw i32 %.02797, 1
-  %exitcond103.not = icmp eq i32 %.02797, %smax102
+  %exitcond103.not = icmp eq i32 %.02797, %4
   br i1 %exitcond103.not, label %._crit_edge99.split, label %.lr.ph, !llvm.loop !124
 
 bb.n:                                             ; preds = %.lr.ph, %bb.n

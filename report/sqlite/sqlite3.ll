@@ -206,7 +206,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt, %bb.
 
 bb.bw:                                            ; preds = %bb.bv, %bb.bq
   %.1536.i = phi i32 [ %.0535.i, %bb.bv ], [ 0, %bb.bq ] ; 5 uses
-  %.0499.i = phi i32 [ %i.ux, %bb.bv ], [ %i.uq, %bb.bq ] ; 6 uses
+  %.0499.i = phi i32 [ %i.ux, %bb.bv ], [ %i.uq, %bb.bq ] ; 5 uses
   %i.uy = add nuw nsw i32 %.0499.i, 1             ; 5 uses
   %i.uz = sub nsw i32 %.1536.i, %i.um
   %i.va = add nsw i32 %i.uz, %.0499.i             ; 2 uses
@@ -458,7 +458,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.aba = getelementptr inbounds nuw i8, ptr %i.aas, i64 80 ; 2 uses
   %i.abb = icmp ne i8 %i.aay, 0
   %i.abc = zext nneg i16 %i.aaw to i64
-  %wide.trip.count940.i = zext nneg i32 %i.uy to i64 ; 2 uses
+  %wide.trip.count940.i = zext nneg i32 %i.uy to i64 ; 3 uses
   %i.abd = add i64 %i.aap, -40
   br label %bb.co
 
@@ -861,7 +861,7 @@ bb.dz:                                            ; preds = %bb.dy
 
 bb.ea:                                            ; preds = %._crit_edge1065.i, %._crit_edge801.i
   %indvars.iv.next953.pre-phi.i = phi i64 [ %.pre1066.i, %._crit_edge1065.i ], [ %i.alk, %._crit_edge801.i ] ; 2 uses
-  %.8545.ph.i = phi i32 [ %.5542.lcssa.i, %._crit_edge1065.i ], [ %i.all, %._crit_edge801.i ] ; 9 uses
+  %.8545.ph.i = phi i32 [ %.5542.lcssa.i, %._crit_edge1065.i ], [ %i.all, %._crit_edge801.i ] ; 8 uses
   %i.alp = sext i32 %.8545.ph.i to i64
   %i.alq = icmp slt i64 %indvars.iv.next953.pre-phi.i, %i.alp
   br i1 %i.alq, label %.preheader724.i, label %bb.eb, !llvm.loop !2846
@@ -1264,9 +1264,6 @@ freePage.exit.i:                                  ; preds = %freePage.exit.loope
 
 .lr.ph867.preheader.i:                            ; preds = %freePage.exit.i
   %i.bdx = zext nneg i32 %.0496.lcssa11251127.i to i64
-  %smax.i = call i32 @llvm.smax.i32(i32 %.8545.ph.i, i32 %.0499.i)
-  %6 = add nuw i32 %smax.i, 1
-  %wide.trip.count1034.i = zext i32 %6 to i64
   br label %.lr.ph867.i
 
 .lr.ph867.i:                                      ; preds = %freePage.exit658.i, %.lr.ph867.preheader.i
@@ -1288,7 +1285,7 @@ bb.gy:                                            ; preds = %.lr.ph867.i
 freePage.exit658.i:                               ; preds = %bb.gy, %.lr.ph867.i
   %i.beh = phi i32 [ %i.bdy, %.lr.ph867.i ], [ %i.beg, %bb.gy ] ; 2 uses
   %indvars.iv.next1030.i = add nuw nsw i64 %indvars.iv1029.i, 1 ; 2 uses
-  %exitcond1035.not.i = icmp eq i64 %indvars.iv.next1030.i, %wide.trip.count1034.i
+  %exitcond1035.not.i = icmp eq i64 %indvars.iv.next1030.i, %wide.trip.count940.i
   br i1 %exitcond1035.not.i, label %.thread705.i, label %.lr.ph867.i, !llvm.loop !2865
 
 .thread705.i:                                     ; preds = %bb.ft, %bb.gk, %bb.gr, %freePage.exit658.i, %freePage.exit.i, %bb.gj, %.thread692.i, %bb.el, %bb.dz, %bb.dn, %bb.cs, %bb.cp, %bb.cc, %.thread.i87

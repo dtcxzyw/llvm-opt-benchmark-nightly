@@ -204,7 +204,7 @@ gv_calloc.exit:                                   ; preds = %.thread.i, %bb.f
   ret ptr %i.w
 
 .lr.ph49:                                         ; preds = %gv_calloc.exit, %.loopexit
-  %.promoted = phi i32 [ %.promoted52, %.loopexit ], [ 0, %gv_calloc.exit ] ; 4 uses
+  %.promoted = phi i32 [ %.promoted52, %.loopexit ], [ 0, %gv_calloc.exit ] ; 3 uses
   %.03548 = phi i64 [ %i.bj, %.loopexit ], [ 0, %gv_calloc.exit ] ; 2 uses
   %.03747 = phi ptr [ %.2, %.loopexit ], [ %i.w, %gv_calloc.exit ] ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr @lab_gamut_data, i64 %.03548 ; 4 uses
@@ -220,12 +220,12 @@ bb.h:                                             ; preds = %.lr.ph49
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !41  ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 3
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !41  ; 2 uses
+  %2 = sext i8 %i.ae to i32                       ; 4 uses
   %.not4244 = icmp sgt i8 %i.ac, %i.ae
   br i1 %.not4244, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h
-  %2 = sext i8 %i.ae to i32                       ; 3 uses
-  %i.af = sext i8 %i.ac to i32                    ; 4 uses
+  %i.af = sext i8 %i.ac to i32                    ; 5 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 1
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !41
   %i.ai = insertelement <2 x i8> poison, i8 %i.z, i64 0
@@ -239,7 +239,6 @@ bb.h:                                             ; preds = %.lr.ph49
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %.lr.ph, %.prol.preheader
-  %3 = phi i32 [ %4, %.prol.preheader ], [ %.promoted, %.lr.ph ]
   %.046.prol = phi i32 [ %i.ar, %.prol.preheader ], [ %i.af, %.lr.ph ] ; 2 uses
   %.145.prol = phi ptr [ %i.aq, %.prol.preheader ], [ %.03747, %.lr.ph ] ; 3 uses
   %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph ]
@@ -248,7 +247,6 @@ bb.h:                                             ; preds = %.lr.ph49
   %i.ap = getelementptr inbounds nuw i8, ptr %.145.prol, i64 16
   store double %i.ao, ptr %i.ap, align 8, !tbaa !21
   %i.aq = getelementptr inbounds nuw i8, ptr %.145.prol, i64 24 ; 3 uses
-  %4 = add nsw i32 %3, 1                          ; 3 uses
   %i.ar = add nsw i32 %.046.prol, 1               ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
@@ -256,15 +254,12 @@ bb.h:                                             ; preds = %.lr.ph49
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph
   %.lcssa60.unr = phi ptr [ poison, %.lr.ph ], [ %i.aq, %.prol.preheader ]
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph ], [ %4, %.prol.preheader ]
-  %.unr = phi i32 [ %.promoted, %.lr.ph ], [ %4, %.prol.preheader ]
   %.046.unr = phi i32 [ %i.af, %.lr.ph ], [ %i.ar, %.prol.preheader ]
   %.145.unr = phi ptr [ %.03747, %.lr.ph ], [ %i.aq, %.prol.preheader ]
   %i.as = icmp ult i32 %i.an, 3
   br i1 %i.as, label %..loopexit_crit_edge, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
-  %5 = phi i32 [ %6, %.lr.ph.new ], [ %.unr, %.prol.loopexit ]
   %.046 = phi i32 [ %i.bi, %.lr.ph.new ], [ %.046.unr, %.prol.loopexit ] ; 5 uses
   %.145 = phi ptr [ %i.bh, %.lr.ph.new ], [ %.145.unr, %.prol.loopexit ] ; 9 uses
   store <2 x double> %i.ak, ptr %.145, align 8, !tbaa !21
@@ -290,19 +285,20 @@ bb.h:                                             ; preds = %.lr.ph49
   %i.bg = getelementptr inbounds nuw i8, ptr %.145, i64 88
   store double %i.bf, ptr %i.bg, align 8, !tbaa !21
   %i.bh = getelementptr inbounds nuw i8, ptr %.145, i64 96 ; 2 uses
-  %6 = add nsw i32 %5, 4                          ; 2 uses
   %i.bi = add nsw i32 %.046, 4
   %exitcond.not.3 = icmp eq i32 %i.be, %2
   br i1 %exitcond.not.3, label %..loopexit_crit_edge, label %.lr.ph.new, !llvm.loop !49
 
 ..loopexit_crit_edge:                             ; preds = %.lr.ph.new, %.prol.loopexit
   %.lcssa60 = phi ptr [ %.lcssa60.unr, %.prol.loopexit ], [ %i.bh, %.lr.ph.new ]
-  %.lcssa = phi i32 [ %.lcssa.unr, %.prol.loopexit ], [ %6, %.lr.ph.new ] ; 2 uses
-  store i32 %.lcssa, ptr %1, align 4, !tbaa !40
+  %3 = add i32 %.promoted, 1
+  %4 = add i32 %3, %2
+  %5 = sub i32 %4, %i.af                          ; 2 uses
+  store i32 %5, ptr %1, align 4, !tbaa !40
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.h, %..loopexit_crit_edge, %.lr.ph49
-  %.promoted52 = phi i32 [ %.promoted, %.lr.ph49 ], [ %.lcssa, %..loopexit_crit_edge ], [ %.promoted, %bb.h ]
+  %.promoted52 = phi i32 [ %.promoted, %.lr.ph49 ], [ %5, %..loopexit_crit_edge ], [ %.promoted, %bb.h ]
   %.2 = phi ptr [ %.03747, %.lr.ph49 ], [ %.lcssa60, %..loopexit_crit_edge ], [ %.03747, %bb.h ]
   %i.bj = add nuw i64 %.03548, 4                  ; 2 uses
   %i.bk = icmp ult i64 %i.bj, %i.x
