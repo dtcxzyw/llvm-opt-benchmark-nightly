@@ -204,8 +204,8 @@ switch.lookup:                                    ; preds = %bb.f
   br label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser34parse_number_with_exactly_n_digits.exit.thread
 
 _RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser34parse_number_with_exactly_n_digits.exit.thread: ; preds = %bb.f, %switch.lookup, %bb.c, %bb.e, %bb.a
-  %.sroa.5.1 = phi i8 [ 2, %bb.c ], [ %switch.masked, %switch.lookup ], [ 1, %bb.a ], [ 2, %bb.e ], [ -1, %bb.f ]
-  %.sroa.0.1 = phi i1 [ true, %bb.c ], [ false, %switch.lookup ], [ true, %bb.a ], [ true, %bb.e ], [ true, %bb.f ]
+  %.sroa.5.1 = phi i8 [ 1, %bb.a ], [ %switch.masked, %switch.lookup ], [ 2, %bb.c ], [ 2, %bb.e ], [ -1, %bb.f ]
+  %.sroa.0.1 = phi i1 [ true, %bb.a ], [ false, %switch.lookup ], [ true, %bb.c ], [ true, %bb.e ], [ true, %bb.f ]
   %i.n = insertvalue { i1, i8 } poison, i1 %.sroa.0.1, 0
   %i.o = insertvalue { i1, i8 } %i.n, i8 %.sroa.5.1, 1
   ret { i1, i8 } %i.o
@@ -608,8 +608,8 @@ _RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_mont
   br i1 %i.bx, label %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.thread.i, label %bb.y
 
 _RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.thread.i: ; preds = %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.i, %bb.x, %bb.v, %bb.u, %bb.t, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser10parse_week.exit.i.i, %bb.s, %bb.r, %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i, %bb.q, %bb.p, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser11parse_month.exit.i.i, %bb.l
-  %.sroa.0.0.i72127.i = phi i8 [ %.sroa.014.028.i.i.i.i, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.i ], [ 5, %bb.s ], [ 5, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser10parse_week.exit.i.i ], [ 4, %bb.l ], [ 5, %bb.r ], [ 2, %bb.t ], [ 1, %bb.p ], [ 2, %bb.u ], [ 0, %bb.v ], [ 6, %bb.x ], [ 3, %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i ], [ 4, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser11parse_month.exit.i.i ], [ 1, %bb.q ]
-  %.sroa.9.0.i126.i = phi i8 [ %i.bk, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.i ], [ 2, %bb.s ], [ -1, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser10parse_week.exit.i.i ], [ 0, %bb.l ], [ 2, %bb.r ], [ undef, %bb.t ], [ undef, %bb.p ], [ undef, %bb.u ], [ undef, %bb.v ], [ %i.bu, %bb.x ], [ undef, %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i ], [ -1, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser11parse_month.exit.i.i ], [ undef, %bb.q ]
+  %.sroa.0.0.i72127.i = phi i8 [ %.sroa.014.028.i.i.i.i, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.i ], [ 5, %bb.s ], [ 5, %bb.r ], [ 4, %bb.l ], [ 5, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser10parse_week.exit.i.i ], [ 2, %bb.t ], [ 1, %bb.p ], [ 2, %bb.u ], [ 0, %bb.v ], [ 6, %bb.x ], [ 3, %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i ], [ 4, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser11parse_month.exit.i.i ], [ 1, %bb.q ]
+  %.sroa.9.0.i126.i = phi i8 [ %i.bk, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser22parse_weekday_of_month.exit.i ], [ 2, %bb.s ], [ 2, %bb.r ], [ 0, %bb.l ], [ -1, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser10parse_week.exit.i.i ], [ undef, %bb.t ], [ undef, %bb.p ], [ undef, %bb.u ], [ undef, %bb.v ], [ %i.bu, %bb.x ], [ undef, %_RNvMs6_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser4bump.exit.i.i ], [ -1, %_RNvMs5_NtNtCsb09rMIQFAXO_9jiff_core2tz5posixNtB5_6Parser11parse_month.exit.i.i ], [ undef, %bb.q ]
   %.sroa.0.0.insert.ext.i.i = zext nneg i8 %.sroa.0.0.i72127.i to i16
   %.sroa.064.1.extract.trunc.i = zext i8 %.sroa.9.0.i126.i to i16
   %.sroa.460.0.insert.shift.i = shl nuw i16 %.sroa.064.1.extract.trunc.i, 8

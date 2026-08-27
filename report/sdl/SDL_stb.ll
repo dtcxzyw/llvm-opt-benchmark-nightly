@@ -205,11 +205,7 @@ bb.h:                                             ; preds = %.epil.preheader189
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(2048) %i.a, i8 0, i64 2048, i1 false)
   %.not.i = icmp eq i32 %.1.lcssa, 0
-  br i1 %.not.i, label %.critedge.preheader.split55.i.preheader, label %.lr.ph.preheader.i
-
-.critedge.preheader.split55.i.preheader:          ; preds = %.epilog-lcssa
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
-  br label %bb.j
+  br i1 %.not.i, label %.critedge.preheader.split55.i, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %.epilog-lcssa
   %wide.trip.count.i = zext i32 %.1.lcssa to i64  ; 7 uses
@@ -411,14 +407,18 @@ bb.i:                                             ; preds = %bb.i, %.critedge.pr
   %exitcond74.not.i = icmp eq i64 %indvars.iv.next71.i, %spec.select.i
   br i1 %exitcond74.not.i, label %tdefl_radix_sort_syms.exit, label %.critedge.preheader.split55.us.i, !llvm.loop !328
 
+.critedge.preheader.split55.i:                    ; preds = %.epilog-lcssa
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+  br label %bb.j
+
 tdefl_radix_sort_syms.exit.thread:                ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %tdefl_huffman_enforce_max_code_size.exit
 
-bb.j:                                             ; preds = %bb.j, %.critedge.preheader.split55.i.preheader
-  %indvars.iv75.i = phi i64 [ 0, %.critedge.preheader.split55.i.preheader ], [ %indvars.iv.next76.i.3, %bb.j ] ; 6 uses
-  %.03748.i = phi i32 [ 0, %.critedge.preheader.split55.i.preheader ], [ %i.fu, %bb.j ] ; 2 uses
+bb.j:                                             ; preds = %bb.j, %.critedge.preheader.split55.i
+  %indvars.iv75.i = phi i64 [ 0, %.critedge.preheader.split55.i ], [ %indvars.iv.next76.i.3, %bb.j ] ; 6 uses
+  %.03748.i = phi i32 [ 0, %.critedge.preheader.split55.i ], [ %i.fu, %bb.j ] ; 2 uses
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv75.i
   store i32 %.03748.i, ptr %i.ff, align 16
   %i.fg = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv75.i

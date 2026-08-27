@@ -204,6 +204,12 @@ _ZNSt6vectorIiSaIiEED2Ev.exit4.i:                 ; preds = %bb.d, %_ZNSt6vector
   call void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(136) %1) #23
   br label %common.resume
 
+._crit_edge.i:                                    ; preds = %_ZN3re211StringPieceC2EPKc.exit.i.preheader
+  call void @llvm.lifetime.end.p0(ptr nonnull %0) #23
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
+  invoke void @_ZN3re211FilteredRE27CompileEPSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EE(ptr noundef nonnull align 8 dereferenceable(40) %i.j, ptr noundef nonnull %1)
+          to label %_ZN3re220AddRegexpsAndCompileEPPKcmPNS_14FilterTestVarsE.exit unwind label %.loopexit.split-lp
+
 _ZN3re211StringPieceC2EPKc.exit.i.preheader:      ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
@@ -212,12 +218,6 @@ _ZN3re211StringPieceC2EPKc.exit.i.preheader:      ; preds = %bb.a
   store i64 19, ptr %i.y, align 8, !tbaa !31
   %i.z = invoke noundef i32 @_ZN3re211FilteredRE23AddERKNS_11StringPieceERKNS_3RE27OptionsEPi(ptr noundef nonnull align 8 dereferenceable(40) %i.j, ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull %i.a)
           to label %._crit_edge.i unwind label %.loopexit.split ; 0 uses
-
-._crit_edge.i:                                    ; preds = %_ZN3re211StringPieceC2EPKc.exit.i.preheader
-  call void @llvm.lifetime.end.p0(ptr nonnull %0) #23
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
-  invoke void @_ZN3re211FilteredRE27CompileEPSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EE(ptr noundef nonnull align 8 dereferenceable(40) %i.j, ptr noundef nonnull %1)
-          to label %_ZN3re220AddRegexpsAndCompileEPPKcmPNS_14FilterTestVarsE.exit unwind label %.loopexit.split-lp
 
 _ZN3re220AddRegexpsAndCompileEPPKcmPNS_14FilterTestVarsE.exit: ; preds = %._crit_edge.i
   %i.aa = invoke noundef zeroext i1 @_ZN3re218CheckExpectedAtomsEPPKcmS1_PNS_14FilterTestVarsE(ptr noundef nonnull @__const._ZN3re240FilteredRE2TestEmptyStringInStringSetBugEv.atoms, i64 noundef 4, ptr noundef nonnull @.str.87, ptr noundef nonnull %1)

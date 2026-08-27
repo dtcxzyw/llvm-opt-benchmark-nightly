@@ -205,19 +205,6 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !12624
   br label %7
 
-7:                                                ; preds = %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17hc36ef08927265b6aE.exit.thread.i", %bb.e
-  %.pre10.i70 = phi i8 [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17hc36ef08927265b6aE.exit.thread.i" ], [ %i.v, %bb.e ]
-  %.pre.i69 = phi i8 [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17hc36ef08927265b6aE.exit.thread.i" ], [ %i.w, %bb.e ] ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !12625)
-  %8 = and i8 %.pre.i69, 7
-  %9 = shl nuw i8 1, %8
-  %10 = or i8 %9, %.pre10.i70                     ; 7 uses
-  store i8 %10, ptr %i.q, align 8, !alias.scope !12625
-  %11 = add i8 %.pre.i69, 1                       ; 2 uses
-  store i8 %11, ptr %i.p, align 1, !alias.scope !12625
-  %12 = icmp eq i8 %11, 8
-  br i1 %12, label %bb.u, label %bb.v
-
 bb.g:                                             ; preds = %bb.p, %bb.d
   %.sroa.014.0 = phi double [ %i.g, %bb.d ], [ %i.aq, %bb.p ] ; 2 uses
   %.sroa.01.0 = phi i1 [ false, %bb.d ], [ true, %bb.p ]
@@ -338,6 +325,19 @@ bb.t:                                             ; preds = %bb.n, %.loopexit.sp
 "_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$8add_bits17h8b2ccadb579d4727E.exit": ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !12624
   br label %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$8add_bits17h8b2ccadb579d4727E.exit88"
+
+7:                                                ; preds = %bb.e, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17hc36ef08927265b6aE.exit.thread.i"
+  %.pre10.i70 = phi i8 [ %i.v, %bb.e ], [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17hc36ef08927265b6aE.exit.thread.i" ]
+  %.pre.i69 = phi i8 [ %i.w, %bb.e ], [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17hc36ef08927265b6aE.exit.thread.i" ] ; 4 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !12625)
+  %8 = and i8 %.pre.i69, 7
+  %9 = shl nuw i8 1, %8
+  %10 = or i8 %9, %.pre10.i70                     ; 7 uses
+  store i8 %10, ptr %i.q, align 8, !alias.scope !12625
+  %11 = add i8 %.pre.i69, 1                       ; 2 uses
+  store i8 %11, ptr %i.p, align 1, !alias.scope !12625
+  %12 = icmp eq i8 %11, 8
+  br i1 %12, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %7
   call void @llvm.experimental.noalias.scope.decl(metadata !12628)
@@ -713,19 +713,6 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !12668
   br label %7
 
-7:                                                ; preds = %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17h319d487be9541224E.exit.thread.i", %bb.e
-  %.pre10.i70 = phi i8 [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17h319d487be9541224E.exit.thread.i" ], [ %i.v, %bb.e ]
-  %.pre.i69 = phi i8 [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17h319d487be9541224E.exit.thread.i" ], [ %i.w, %bb.e ] ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !12669)
-  %8 = and i8 %.pre.i69, 7
-  %9 = shl nuw i8 1, %8
-  %10 = or i8 %9, %.pre10.i70                     ; 7 uses
-  store i8 %10, ptr %i.q, align 8, !alias.scope !12669
-  %11 = add i8 %.pre.i69, 1                       ; 2 uses
-  store i8 %11, ptr %i.p, align 1, !alias.scope !12669
-  %12 = icmp eq i8 %11, 8
-  br i1 %12, label %bb.u, label %bb.v
-
 bb.g:                                             ; preds = %bb.p, %bb.d
   %.sroa.014.0 = phi double [ %i.g, %bb.d ], [ %i.aq, %bb.p ] ; 2 uses
   %.sroa.01.0 = phi i1 [ false, %bb.d ], [ true, %bb.p ]
@@ -846,6 +833,19 @@ bb.t:                                             ; preds = %bb.n, %.loopexit.sp
 "_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$8add_bits17hdb2f654b56b6c494E.exit": ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !12668
   br label %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$8add_bits17hdb2f654b56b6c494E.exit88"
+
+7:                                                ; preds = %bb.e, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17h319d487be9541224E.exit.thread.i"
+  %.pre10.i70 = phi i8 [ %i.v, %bb.e ], [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17h319d487be9541224E.exit.thread.i" ]
+  %.pre.i69 = phi i8 [ %i.w, %bb.e ], [ 0, %"_ZN6zopfli7deflate22BitwiseWriter$LT$W$GT$19finish_partial_bits17h319d487be9541224E.exit.thread.i" ] ; 4 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !12669)
+  %8 = and i8 %.pre.i69, 7
+  %9 = shl nuw i8 1, %8
+  %10 = or i8 %9, %.pre10.i70                     ; 7 uses
+  store i8 %10, ptr %i.q, align 8, !alias.scope !12669
+  %11 = add i8 %.pre.i69, 1                       ; 2 uses
+  store i8 %11, ptr %i.p, align 1, !alias.scope !12669
+  %12 = icmp eq i8 %11, 8
+  br i1 %12, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %7
   call void @llvm.experimental.noalias.scope.decl(metadata !12672)

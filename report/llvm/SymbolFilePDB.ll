@@ -204,6 +204,7 @@ bb.p:                                             ; preds = %_ZNSt12__shared_ptr
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 592
   %i.bs = load ptr, ptr %i.br, align 8
   %i.bt = call noundef i32 %i.bs(ptr noundef nonnull align 8 dereferenceable(8) %i.bp) #26, !inline_history !337
+  %16 = zext i32 %i.bt to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
   call void @_ZN13SymbolFilePDB20GetMangledForPDBFuncERKN4llvm3pdb13PDBSymbolFuncE(ptr dead_on_unwind nonnull writable sret(%"class.lldb_private::Mangled") align 8 %11, ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull align 8 dereferenceable(32) %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #26
@@ -240,7 +241,6 @@ _ZSt10_ConstructIN12lldb_private12AddressRangeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i
   %i.cg = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.ch = load <2 x i64>, ptr %i.cg, align 16, !tbaa !40
   store <2 x i64> %i.ch, ptr %i.cf, align 8, !tbaa !40
-  %16 = zext i32 %i.bt to i64
   call void @llvm.experimental.noalias.scope.decl(metadata !338)
   %i.ci = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 2 uses
   %i.cj = call noalias noundef nonnull dereferenceable(352) ptr @_Znwm(i64 noundef 352) #28, !noalias !341 ; 5 uses

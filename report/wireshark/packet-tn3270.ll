@@ -204,9 +204,9 @@ tn3270_add_hf_items.exit61.i:                     ; preds = %tn3270_add_hf_items
   br i1 %.not45.i, label %tn3270_add_hf_items.exit66.i, label %tn3270_add_hf_items.exit66.loopexit.i
 
 tn3270_add_hf_items.exit66.loopexit.i:            ; preds = %tn3270_add_hf_items.exit61.i
-  %7 = add i32 %.2.i, 4
   %i.ie = load i32, ptr @hf_tn3270_ccsgid, align 4
   %i.if = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.ie, ptr noundef %1, i32 noundef %.2.i, i32 noundef 4, i32 noundef 0) ; 0 uses
+  %7 = add i32 %.2.i, 4
   br label %tn3270_add_hf_items.exit66.i
 
 tn3270_add_hf_items.exit66.i:                     ; preds = %tn3270_add_hf_items.exit66.loopexit.i, %tn3270_add_hf_items.exit61.i
@@ -214,9 +214,9 @@ tn3270_add_hf_items.exit66.i:                     ; preds = %tn3270_add_hf_items
   br i1 %.not46.i, label %tn3270_add_hf_items.exit71.i, label %tn3270_add_hf_items.exit71.loopexit.i
 
 tn3270_add_hf_items.exit71.loopexit.i:            ; preds = %tn3270_add_hf_items.exit66.i
-  %8 = add i32 %.3.i, 2
   %i.ig = load i32, ptr @hf_tn3270_ccsid, align 4
   %i.ih = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.ig, ptr noundef %1, i32 noundef %.3.i, i32 noundef 2, i32 noundef 0) ; 0 uses
+  %8 = add i32 %.3.i, 2
   br label %tn3270_add_hf_items.exit71.i
 
 tn3270_add_hf_items.exit71.i:                     ; preds = %tn3270_add_hf_items.exit71.loopexit.i, %tn3270_add_hf_items.exit66.i
@@ -400,9 +400,9 @@ dissect_query_reply_data_streams.exit:            ; preds = %bb.x, %._crit_edge.
   br label %dissect_query_reply_modes.exit
 
 bb.z:                                             ; preds = %bb.a
-  %9 = add i32 %2, 1                              ; 3 uses
   %i.ll = load i32, ptr @hf_tn3270_resbyte, align 4
   %i.lm = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.ll, ptr noundef %1, i32 noundef %2, i32 noundef 1, i32 noundef 0) ; 0 uses
+  %9 = add i32 %2, 1                              ; 3 uses
   %i.ln = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %9)
   %.not.i21.i = icmp eq i8 %i.ln, 3
   br i1 %.not.i21.i, label %bb.ac, label %dissect_query_reply_dbcs_asia_sd_parms.exit.i
@@ -659,16 +659,16 @@ dissect_query_reply_usable_area.exit:             ; preds = %tn3270_add_hf_items
 
 bb.ao:                                            ; preds = %bb.a
   %i.oy = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %2) ; 2 uses
-  %10 = add i32 %2, 1                             ; 2 uses
+  %10 = zext i8 %i.oy to i32
   %i.oz = load i32, ptr @hf_tn3270_h_np, align 4
   %i.pa = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.oz, ptr noundef %1, i32 noundef %2, i32 noundef 1, i32 noundef 0) ; 0 uses
-  %11 = zext i8 %i.oy to i32
+  %11 = add i32 %2, 1                             ; 2 uses
   %.not.i273 = icmp eq i8 %i.oy, 0
   br i1 %.not.i273, label %tn3270_add_hf_items.exit._crit_edge.i278, label %tn3270_add_hf_items.exit.i274
 
 tn3270_add_hf_items.exit.i274:                    ; preds = %bb.ao, %tn3270_add_hf_items.exit.i274
   %.033.i = phi i32 [ %i.pn, %tn3270_add_hf_items.exit.i274 ], [ 0, %bb.ao ]
-  %.03132.i = phi i32 [ %i.pm, %tn3270_add_hf_items.exit.i274 ], [ %10, %bb.ao ] ; 2 uses
+  %.03132.i = phi i32 [ %i.pm, %tn3270_add_hf_items.exit.i274 ], [ %11, %bb.ao ] ; 2 uses
   %i.pb = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %.03132.i)
   %i.pc = icmp eq i8 %i.pb, -1
   %i.pd = zext i1 %i.pc to i32
@@ -684,11 +684,11 @@ tn3270_add_hf_items.exit.i274:                    ; preds = %bb.ao, %tn3270_add_
   %i.pl = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.pk, ptr noundef %1, i32 noundef %.2.i276, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.pm = add i32 %.2.i276, 1                     ; 2 uses
   %i.pn = add nuw nsw i32 %.033.i, 1              ; 2 uses
-  %exitcond.not.i277 = icmp eq i32 %i.pn, %11
+  %exitcond.not.i277 = icmp eq i32 %i.pn, %10
   br i1 %exitcond.not.i277, label %tn3270_add_hf_items.exit._crit_edge.i278, label %tn3270_add_hf_items.exit.i274, !llvm.loop !20
 
 tn3270_add_hf_items.exit._crit_edge.i278:         ; preds = %tn3270_add_hf_items.exit.i274, %bb.ao
-  %.031.lcssa.i = phi i32 [ %10, %bb.ao ], [ %i.pm, %tn3270_add_hf_items.exit.i274 ] ; 3 uses
+  %.031.lcssa.i = phi i32 [ %11, %bb.ao ], [ %i.pm, %tn3270_add_hf_items.exit.i274 ] ; 3 uses
   %.neg.i.i279 = sub i32 %2, %.031.lcssa.i
   %i.po = add i32 %.neg.i.i279, %5                ; 3 uses
   %i.pp = icmp sgt i32 %i.po, 0
@@ -1091,9 +1091,9 @@ dissect_query_reply_save_or_restore_format.exit:  ; preds = %bb.di, %bb.dj
   br label %dissect_query_reply_modes.exit
 
 bb.dk:                                            ; preds = %bb.a
-  %12 = add i32 %2, 2                             ; 2 uses
   %i.aiq = load i32, ptr @hf_tn3270_resbytes, align 4
   %i.air = tail call ptr @proto_tree_add_item(ptr noundef %0, i32 noundef %i.aiq, ptr noundef %1, i32 noundef %2, i32 noundef 2, i32 noundef 0) ; 0 uses
+  %12 = add i32 %2, 2                             ; 2 uses
   %i.ais = add i32 %2, 3                          ; 2 uses
   %i.ait = tail call zeroext i8 @tvb_get_uint8(ptr noundef %1, i32 noundef %i.ais)
   %i.aiu = icmp eq i8 %i.ait, 1

@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %._crit_edge34.i.i, 
   store ptr %i.ci, ptr %i.t, align 8, !tbaa !47
   %i.cj = load i8, ptr %i.ch, align 1, !tbaa !36
   store i8 %i.cj, ptr %i.d, align 1, !tbaa !36
-  br label %_ZN9CInBuffer9ReadBytesEPhj.exit.i
+  br label %_ZN9CInBuffer9ReadBytesEPhj.exit.i, !llvm.loop !51
 
 bb.z:                                             ; preds = %bb.x
   %i.ck = landingpad { ptr, i32 }
@@ -233,8 +233,8 @@ bb.ab:                                            ; preds = %.lr.ph
   br label %_ZN9CInBuffer9ReadBytesEPhj.exit.i
 
 _ZN9CInBuffer9ReadBytesEPhj.exit.i:               ; preds = %.noexc.i, %bb.y, %.noexc92, %.lr.ph.i.i.preheader
-  %.pre.i = phi i64 [ %.pre.pre.i, %.noexc92 ], [ 1, %.lr.ph.i.i.preheader ], [ 1, %bb.y ], [ 0, %.noexc.i ] ; 2 uses
-  %.013.i = phi i32 [ %i.cs, %.noexc92 ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %bb.y ], [ 0, %.noexc.i ]
+  %.pre.i = phi i64 [ %.pre.pre.i, %.noexc92 ], [ 1, %.lr.ph.i.i.preheader ], [ 0, %.noexc.i ], [ 1, %bb.y ] ; 2 uses
+  %.013.i = phi i32 [ %i.cs, %.noexc92 ], [ 0, %.lr.ph.i.i.preheader ], [ 0, %.noexc.i ], [ 0, %bb.y ]
   %i.ct = load i64, ptr %i.v, align 8, !tbaa !29
   %i.cu = add i64 %i.ct, %.pre.i
   store i64 %i.cu, ptr %i.v, align 8, !tbaa !29

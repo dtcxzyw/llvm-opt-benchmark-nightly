@@ -205,11 +205,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -219,9 +219,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_andiENS0_8RegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -251,7 +251,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_andiENS0_8RegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler13emit_i32_andiENS0_8RegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.443.0.copyload.i to i64
   tail call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(1284) %i.u, i8 noundef zeroext 4, i8 %.sroa.010.2.i.i5, i64 %.sroa.0.0.insert.ext.i.i, i32 noundef 4) #24
@@ -404,11 +404,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -418,9 +418,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler12emit_i32_oriENS0_8RegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -450,7 +450,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler12emit_i32_oriENS0_8RegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler12emit_i32_oriENS0_8RegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.443.0.copyload.i to i64
   tail call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(1284) %i.u, i8 noundef zeroext 1, i8 %.sroa.010.2.i.i5, i64 %.sroa.0.0.insert.ext.i.i, i32 noundef 4) #24
@@ -603,11 +603,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -617,9 +617,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_xoriENS0_8RegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -649,7 +649,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_xoriENS0_8RegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler13emit_i32_xoriENS0_8RegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.443.0.copyload.i to i64
   tail call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(1284) %i.u, i8 noundef zeroext 6, i8 %.sroa.010.2.i.i5, i64 %.sroa.0.0.insert.ext.i.i, i32 noundef 4) #24
@@ -802,11 +802,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -816,9 +816,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_shliENS0_8RegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -848,7 +848,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_shliENS0_8RegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler13emit_i32_shliENS0_8RegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %i.bc = and i32 %.sroa.443.0.copyload.i, 31
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.bc to i64
@@ -1002,11 +1002,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -1016,9 +1016,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_sariENS0_8RegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -1048,7 +1048,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_sariENS0_8RegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler13emit_i32_sariENS0_8RegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %i.bc = and i32 %.sroa.443.0.copyload.i, 31
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.bc to i64
@@ -1202,11 +1202,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -1216,9 +1216,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_shriENS0_8RegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -1248,7 +1248,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i32_shriENS0_8RegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler13emit_i32_shriENS0_8RegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %i.bc = and i32 %.sroa.443.0.copyload.i, 31
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.bc to i64
@@ -1651,11 +1651,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -1665,9 +1665,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i64_andiENS1_15LiftoffRegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -1697,7 +1697,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i64_andiENS1_15LiftoffRegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler13emit_i64_andiENS1_15LiftoffRegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.443.0.copyload.i to i64
   tail call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(1284) %i.u, i8 noundef zeroext 4, i8 %.sroa.010.2.i.i5, i64 %.sroa.0.0.insert.ext.i.i, i32 noundef 8) #24
@@ -1850,11 +1850,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -1864,9 +1864,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler12emit_i64_oriENS1_15LiftoffRegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -1896,7 +1896,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler12emit_i64_oriENS1_15LiftoffRegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler12emit_i64_oriENS1_15LiftoffRegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.443.0.copyload.i to i64
   tail call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(1284) %i.u, i8 noundef zeroext 1, i8 %.sroa.010.2.i.i5, i64 %.sroa.0.0.insert.ext.i.i, i32 noundef 8) #24
@@ -2049,11 +2049,11 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.d
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.g
   %.sroa.07.0.i.i = phi i8 [ %.sroa.046.4.extract.trunc.i, %bb.g ], [ %i.aq, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 7 uses
-  %2 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %3 = shl nuw i32 1, %2                          ; 4 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 840 ; 3 uses
-  %4 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.ar = and i32 %3, %4
+  %2 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %4 = shl nuw i32 1, %3                          ; 4 uses
+  %i.ar = and i32 %4, %2
   %.not.i.i.i = icmp eq i32 %i.ar, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, label %._crit_edge.i.i
 
@@ -2063,9 +2063,9 @@ _ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16init
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i64_xoriENS1_15LiftoffRegisterES3_i.exit
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.at = and i32 %3, 37839
+  %i.at = and i32 %4, 37839
   %i.au = xor i32 %i.at, 37839                    ; 2 uses
-  %i.av = xor i32 %4, -1
+  %i.av = xor i32 %2, -1
   %i.aw = and i32 %i.au, %i.av                    ; 2 uses
   %.not.i.i.i.i2 = icmp eq i32 %i.aw, 0
   br i1 %.not.i.i.i.i2, label %bb.i, label %bb.h, !prof !7
@@ -2095,7 +2095,7 @@ bb.j:                                             ; preds = %_ZN2v88internal4was
   br label %_ZN2v88internal4wasm16LiftoffAssembler13emit_i64_xoriENS1_15LiftoffRegisterES3_i.exit
 
 _ZN2v88internal4wasm16LiftoffAssembler13emit_i64_xoriENS1_15LiftoffRegisterES3_i.exit: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, %bb.j
-  %.pre-phi7 = phi i32 [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %3, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
+  %.pre-phi7 = phi i32 [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %4, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.pre6, %bb.j ]
   %.sroa.010.2.i.i5 = phi i8 [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i.thread ], [ %.sroa.07.0.i.i, %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i ], [ %.sroa.010.2.i.i, %bb.j ] ; 3 uses
   %.sroa.0.0.insert.ext.i.i = zext i32 %.sroa.443.0.copyload.i to i64
   tail call void @_ZN2v88internal9Assembler23immediate_arithmetic_opEhNS0_8RegisterENS0_9ImmediateEi(ptr noundef nonnull align 8 dereferenceable(1284) %i.u, i8 noundef zeroext 6, i8 %.sroa.010.2.i.i5, i64 %.sroa.0.0.insert.ext.i.i, i32 noundef 8) #24
@@ -2498,18 +2498,18 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit: ; preds = %bb.b
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit: ; preds = %bb.e, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit
   %.sroa.07.0.i = phi i8 [ %.sroa.046.4.extract.trunc, %bb.e ], [ %i.v, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit ] ; 4 uses
-  %3 = zext nneg i8 %.sroa.07.0.i to i32
-  %4 = shl nuw i32 1, %3                          ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 3 uses
-  %5 = load i32, ptr %.phi.trans.insert.i, align 8 ; 2 uses
-  %i.w = and i32 %4, %5
+  %3 = load i32, ptr %.phi.trans.insert.i, align 8 ; 2 uses
+  %4 = zext nneg i8 %.sroa.07.0.i to i32
+  %5 = shl nuw i32 1, %4                          ; 2 uses
+  %i.w = and i32 %5, %3
   %.not.i.i = icmp eq i32 %i.w, 0
   br i1 %.not.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit
-  %i.x = and i32 %4, 37839
+  %i.x = and i32 %5, 37839
   %i.y = xor i32 %i.x, 37839                      ; 2 uses
-  %i.z = xor i32 %5, -1
+  %i.z = xor i32 %3, -1
   %i.aa = and i32 %i.y, %i.z                      ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.aa, 0
   br i1 %.not.i.i.i, label %bb.g, label %bb.f, !prof !7
@@ -2912,18 +2912,18 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit: ; preds = %bb.b
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit: ; preds = %bb.e, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit
   %.sroa.07.0.i = phi i8 [ %.sroa.045.4.extract.trunc, %bb.e ], [ %i.v, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit ] ; 3 uses
-  %1 = zext nneg i8 %.sroa.07.0.i to i32
-  %2 = shl nuw i32 1, %1                          ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 3 uses
-  %3 = load i32, ptr %.phi.trans.insert.i, align 8 ; 2 uses
-  %i.w = and i32 %2, %3
+  %1 = load i32, ptr %.phi.trans.insert.i, align 8 ; 2 uses
+  %2 = zext nneg i8 %.sroa.07.0.i to i32
+  %3 = shl nuw i32 1, %2                          ; 2 uses
+  %i.w = and i32 %3, %1
   %.not.i.i = icmp eq i32 %i.w, 0
   br i1 %.not.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit
-  %i.x = and i32 %2, 37839
+  %i.x = and i32 %3, 37839
   %i.y = xor i32 %i.x, 37839                      ; 2 uses
-  %i.z = xor i32 %3, -1
+  %i.z = xor i32 %1, -1
   %i.aa = and i32 %i.y, %i.z                      ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.aa, 0
   br i1 %.not.i.i.i, label %bb.g, label %bb.f, !prof !7
@@ -3326,18 +3326,18 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit: ; preds = %bb.b
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit: ; preds = %bb.e, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit
   %.sroa.07.0.i = phi i8 [ %.sroa.046.4.extract.trunc, %bb.e ], [ %i.v, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit ] ; 3 uses
-  %3 = zext nneg i8 %.sroa.07.0.i to i32
-  %4 = shl nuw i32 1, %3                          ; 2 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 3 uses
-  %5 = load i32, ptr %.phi.trans.insert.i, align 8 ; 2 uses
-  %i.w = and i32 %4, %5
+  %3 = load i32, ptr %.phi.trans.insert.i, align 8 ; 2 uses
+  %4 = zext nneg i8 %.sroa.07.0.i to i32
+  %5 = shl nuw i32 1, %4                          ; 2 uses
+  %i.w = and i32 %5, %3
   %.not.i.i = icmp eq i32 %i.w, 0
   br i1 %.not.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit
-  %i.x = and i32 %4, 37839
+  %i.x = and i32 %5, 37839
   %i.y = xor i32 %i.x, 37839                      ; 2 uses
-  %i.z = xor i32 %5, -1
+  %i.z = xor i32 %3, -1
   %i.aa = and i32 %i.y, %i.z                      ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.aa, 0
   br i1 %.not.i.i.i, label %bb.g, label %bb.f, !prof !7
@@ -3740,18 +3740,18 @@ _ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i: ; preds = %bb.b
 
 _ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i: ; preds = %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i, %bb.e
   %.sroa.07.0.i.i = phi i8 [ %.sroa.033.4.extract.trunc.i, %bb.e ], [ %i.v, %_ZN2v88internal4wasm16LiftoffAssembler11PopVarStateEv.exit.i ] ; 3 uses
-  %3 = zext nneg i8 %.sroa.07.0.i.i to i32
-  %4 = shl nuw i32 1, %3                          ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 3 uses
-  %5 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
-  %i.w = and i32 %4, %5
+  %3 = load i32, ptr %.phi.trans.insert.i.i, align 8 ; 2 uses
+  %4 = zext nneg i8 %.sroa.07.0.i.i to i32
+  %5 = shl nuw i32 1, %4                          ; 2 uses
+  %i.w = and i32 %5, %3
   %.not.i.i.i = icmp eq i32 %i.w, 0
   br i1 %.not.i.i.i, label %_ZN2v88internal4wasm16LiftoffAssembler17GetUnusedRegisterENS1_8RegClassESt16initializer_listINS1_15LiftoffRegisterEENS1_14LiftoffRegListE.exit.i, label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %_ZN2v88internal4wasm16LiftoffAssembler14LoadToRegisterENS1_15LiftoffVarStateENS1_14LiftoffRegListE.exit.i
-  %i.x = and i32 %4, 37839
+  %i.x = and i32 %5, 37839
   %i.y = xor i32 %i.x, 37839                      ; 2 uses
-  %i.z = xor i32 %5, -1
+  %i.z = xor i32 %3, -1
   %i.aa = and i32 %i.y, %i.z                      ; 2 uses
   %.not.i.i.i.i = icmp eq i32 %i.aa, 0
   br i1 %.not.i.i.i.i, label %bb.g, label %bb.f, !prof !7

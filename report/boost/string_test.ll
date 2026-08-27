@@ -205,85 +205,85 @@ _ZN5boost9container12basic_stringIcSt11char_traitsIcEvvEC2EPKc.exit: ; preds = %
   %.sroa.sel280.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep, ptr %.sroa.gep279.sroa.gep ; 3 uses
   %i.av = load i8, ptr %.sroa.sel280.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.aw = icmp eq i8 %i.av, 99
-  br i1 %i.aw, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.aw, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a: ; preds = %.lr.ph.i.i.i
-  %.sroa.gep278.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.gep279.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 7
-  %.sroa.sel280.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep, ptr %.sroa.gep279.sroa.gep.sroa.gep ; 3 uses
-  %1 = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
-  %i.ax = icmp eq i8 %1, 99
-  br i1 %i.ax, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a: ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a, %.lr.ph.i.i.i
+  %.lcssa244 = phi ptr [ %.sroa.sel280, %.lr.ph.i.i.i ], [ %.sroa.sel280.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i ]
+  %.lcssa242 = phi ptr [ %.sroa.sel280.sroa.sel, %.lr.ph.i.i.i ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a ], [ %.sroa.sel248.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i ]
+  %i.ax = icmp eq ptr %.lcssa244, %i.au
+  br i1 %i.ax, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit, label %bb.f
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
-  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 7
-  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 6
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a: ; preds = %.lr.ph.i.i.i
+  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 7
   %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep, ptr %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep ; 3 uses
   %i.ay = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.az = icmp eq i8 %i.ay, 99
-  br i1 %i.az, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.az, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a
-  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 5
+  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 6
   %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep ; 3 uses
   %i.ba = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.bb = icmp eq i8 %i.ba, 99
-  br i1 %i.bb, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.bb, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a
-  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 4
+  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 6
+  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 5
   %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep ; 3 uses
   %i.bc = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.bd = icmp eq i8 %i.bc, 99
-  br i1 %i.bd, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.bd, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a
-  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 3
+  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 4
   %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep ; 3 uses
   %i.be = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.bf = icmp eq i8 %i.be, 99
-  br i1 %i.bf, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.bf, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a
-  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 2
+  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 3
   %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep ; 3 uses
   %i.bg = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.bh = icmp eq i8 %i.bg, 99
-  br i1 %i.bh, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.bh, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a
-  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 1
+  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 2
   %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %.sroa.gep279.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep ; 3 uses
   %i.bi = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.bj = icmp eq i8 %i.bi, 99
-  br i1 %i.bj, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.bj, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a
-  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %i.at ; 2 uses
+  %.sroa.gep246.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr i8, ptr %i.at, i64 1
+  %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep246.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %.sroa.gep278.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep ; 3 uses
   %i.bk = load i8, ptr %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
   %i.bl = icmp eq i8 %i.bk, 99
-  br i1 %i.bl, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
+  br i1 %i.bl, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
-_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a, %.lr.ph.i.i.i
-  %.lcssa276 = phi ptr [ %.sroa.sel280, %.lr.ph.i.i.i ], [ %.sroa.sel280.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a ], [ %.sroa.sel280.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a ]
-  %.lcssa274 = phi ptr [ %.sroa.sel280.sroa.sel, %.lr.ph.i.i.i ], [ %.sroa.sel280.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.1.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.2.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.3.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.4.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.5.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.6.a ], [ %.sroa.sel280.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a ]
-  %.not.i.i = icmp eq ptr %.lcssa276, %i.au
-  br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit, label %bb.f
+_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a
+  %.sroa.gep246.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %.sroa.sel248.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel = select i1 %i.as, ptr %.sroa.gep246.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep.sroa.gep, ptr %i.at ; 2 uses
+  %1 = load i8, ptr %.sroa.sel248.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel.sroa.sel, align 1, !tbaa !35, !noalias !207
+  %.not.i.i = icmp eq i8 %1, 99
+  br i1 %.not.i.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
 
-bb.f:                                             ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
-  %i.bm = ptrtoint ptr %.lcssa274 to i64
+bb.f:                                             ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
+  %i.bm = ptrtoint ptr %.lcssa242 to i64
   %i.bn = ptrtoint ptr %i.au to i64
   %i.bo = sub i64 %i.bm, %i.bn
   br label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a, %bb.f, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i
-  %.0.i.i = phi i64 [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i ], [ %i.bo, %bb.f ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.7.a ]
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit: ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i, %bb.f, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a
+  %.0.i.i = phi i64 [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i.a ], [ %i.bo, %bb.f ], [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i ]
   store i64 %.0.i.i, ptr %i.a, align 8, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #27
   store i32 5, ptr %i.b, align 4, !tbaa !43
@@ -413,72 +413,72 @@ bb.k:                                             ; preds = %_ZNK5boost9containe
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 1
   %i.dr = load i8, ptr %i.dp, align 1, !tbaa !35, !noalias !217
   %i.ds = icmp eq i8 %i.dr, 99
-  br i1 %i.ds, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
+  br i1 %i.ds, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a, label %.lr.ph.i.i.preheader.i.i.i48.1.a
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56: ; preds = %.lr.ph.i.i.i46
-  %.not.i.i.i57 = icmp eq i64 %i.do, 0
-  br i1 %.not.i.i.i57, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %.lr.ph.i.i.preheader.i.i.i48.1.a
+.lr.ph.i.i.preheader.i.i.i48.1.a:                 ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52, %.lr.ph.i.i.preheader.i.i.i48.5.a, %.lr.ph.i.i.preheader.i.i.i48.4.a, %.lr.ph.i.i.preheader.i.i.i48.3.a, %.lr.ph.i.i.preheader.i.i.i48.2.a, %.lr.ph.i.i.i46
+  %.lcssa232 = phi ptr [ %i.dq, %.lr.ph.i.i.i46 ], [ %i.dp, %.lr.ph.i.i.preheader.i.i.i48.2.a ], [ %i.du, %.lr.ph.i.i.preheader.i.i.i48.3.a ], [ %i.dx, %.lr.ph.i.i.preheader.i.i.i48.4.a ], [ %i.ea, %.lr.ph.i.i.preheader.i.i.i48.5.a ], [ %i.ed, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52 ]
+  %.lcssa230 = phi ptr [ %i.dp, %.lr.ph.i.i.i46 ], [ %i.du, %.lr.ph.i.i.preheader.i.i.i48.2.a ], [ %i.dx, %.lr.ph.i.i.preheader.i.i.i48.3.a ], [ %i.ea, %.lr.ph.i.i.preheader.i.i.i48.4.a ], [ %i.ed, %.lr.ph.i.i.preheader.i.i.i48.5.a ], [ %2, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52 ]
+  %i.dt = icmp eq ptr %.lcssa232, %i.dn
+  br i1 %i.dt, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %bb.l
 
-.lr.ph.i.i.preheader.i.i.i48.1.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56
-  %2 = getelementptr inbounds i8, ptr %i.dp, i64 -1 ; 3 uses
-  %3 = load i8, ptr %2, align 1, !tbaa !35, !noalias !217
-  %i.dt = icmp eq i8 %3, 99
-  br i1 %i.dt, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
-
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a: ; preds = %.lr.ph.i.i.preheader.i.i.i48.1.a
-  %.not.i.i.i57.1.a = icmp eq i64 %i.do, 1
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a: ; preds = %.lr.ph.i.i.i46
+  %.not.i.i.i57.1.a = icmp eq i64 %i.do, 0
   br i1 %.not.i.i.i57.1.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %.lr.ph.i.i.preheader.i.i.i48.2.a
 
 .lr.ph.i.i.preheader.i.i.i48.2.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a
-  %i.du = getelementptr inbounds i8, ptr %i.dp, i64 -2 ; 3 uses
+  %i.du = getelementptr inbounds i8, ptr %i.dp, i64 -1 ; 3 uses
   %i.dv = load i8, ptr %i.du, align 1, !tbaa !35, !noalias !217
   %i.dw = icmp eq i8 %i.dv, 99
-  br i1 %i.dw, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
+  br i1 %i.dw, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a, label %.lr.ph.i.i.preheader.i.i.i48.1.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a: ; preds = %.lr.ph.i.i.preheader.i.i.i48.2.a
-  %.not.i.i.i57.2.a = icmp eq i64 %i.do, 2
+  %.not.i.i.i57.2.a = icmp eq i64 %i.do, 1
   br i1 %.not.i.i.i57.2.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %.lr.ph.i.i.preheader.i.i.i48.3.a
 
 .lr.ph.i.i.preheader.i.i.i48.3.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a
-  %i.dx = getelementptr inbounds i8, ptr %i.dp, i64 -3 ; 3 uses
+  %i.dx = getelementptr inbounds i8, ptr %i.dp, i64 -2 ; 3 uses
   %i.dy = load i8, ptr %i.dx, align 1, !tbaa !35, !noalias !217
   %i.dz = icmp eq i8 %i.dy, 99
-  br i1 %i.dz, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
+  br i1 %i.dz, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a, label %.lr.ph.i.i.preheader.i.i.i48.1.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a: ; preds = %.lr.ph.i.i.preheader.i.i.i48.3.a
-  %.not.i.i.i57.3.a = icmp eq i64 %i.do, 3
+  %.not.i.i.i57.3.a = icmp eq i64 %i.do, 2
   br i1 %.not.i.i.i57.3.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %.lr.ph.i.i.preheader.i.i.i48.4.a
 
 .lr.ph.i.i.preheader.i.i.i48.4.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a
-  %i.ea = getelementptr inbounds i8, ptr %i.dp, i64 -4 ; 3 uses
+  %i.ea = getelementptr inbounds i8, ptr %i.dp, i64 -3 ; 3 uses
   %i.eb = load i8, ptr %i.ea, align 1, !tbaa !35, !noalias !217
   %i.ec = icmp eq i8 %i.eb, 99
-  br i1 %i.ec, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
+  br i1 %i.ec, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a, label %.lr.ph.i.i.preheader.i.i.i48.1.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a: ; preds = %.lr.ph.i.i.preheader.i.i.i48.4.a
-  %.not.i.i.i57.4.a = icmp eq i64 %i.do, 4
+  %.not.i.i.i57.4.a = icmp eq i64 %i.do, 3
   br i1 %.not.i.i.i57.4.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %.lr.ph.i.i.preheader.i.i.i48.5.a
 
 .lr.ph.i.i.preheader.i.i.i48.5.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a
-  %i.ed = getelementptr inbounds i8, ptr %i.dp, i64 -5 ; 2 uses
+  %i.ed = getelementptr inbounds i8, ptr %i.dp, i64 -4 ; 3 uses
   %i.ee = load i8, ptr %i.ed, align 1, !tbaa !35, !noalias !217
   %i.ef = icmp eq i8 %i.ee, 99
-  br i1 %i.ef, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
+  br i1 %i.ef, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4, label %.lr.ph.i.i.preheader.i.i.i48.1.a
 
-_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52: ; preds = %.lr.ph.i.i.preheader.i.i.i48.5.a, %.lr.ph.i.i.preheader.i.i.i48.4.a, %.lr.ph.i.i.preheader.i.i.i48.3.a, %.lr.ph.i.i.preheader.i.i.i48.2.a, %.lr.ph.i.i.preheader.i.i.i48.1.a, %.lr.ph.i.i.i46
-  %.lcssa264 = phi ptr [ %i.dq, %.lr.ph.i.i.i46 ], [ %i.dp, %.lr.ph.i.i.preheader.i.i.i48.1.a ], [ %2, %.lr.ph.i.i.preheader.i.i.i48.2.a ], [ %i.du, %.lr.ph.i.i.preheader.i.i.i48.3.a ], [ %i.dx, %.lr.ph.i.i.preheader.i.i.i48.4.a ], [ %i.ea, %.lr.ph.i.i.preheader.i.i.i48.5.a ]
-  %.lcssa262 = phi ptr [ %i.dp, %.lr.ph.i.i.i46 ], [ %2, %.lr.ph.i.i.preheader.i.i.i48.1.a ], [ %i.du, %.lr.ph.i.i.preheader.i.i.i48.2.a ], [ %i.dx, %.lr.ph.i.i.preheader.i.i.i48.3.a ], [ %i.ea, %.lr.ph.i.i.preheader.i.i.i48.4.a ], [ %i.ed, %.lr.ph.i.i.preheader.i.i.i48.5.a ]
-  %.not.i.i54 = icmp eq ptr %.lcssa264, %i.dn
-  br i1 %.not.i.i54, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %bb.l
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4: ; preds = %.lr.ph.i.i.preheader.i.i.i48.5.a
+  %.not.i.i.i57.4 = icmp eq i64 %i.do, 4
+  br i1 %.not.i.i.i57.4, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
 
-bb.l:                                             ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52
-  %i.eg = ptrtoint ptr %.lcssa262 to i64
+_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4
+  %2 = getelementptr inbounds i8, ptr %i.dp, i64 -5 ; 2 uses
+  %3 = load i8, ptr %2, align 1, !tbaa !35, !noalias !217
+  %.not.i.i54 = icmp eq i8 %3, 99
+  br i1 %.not.i.i54, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58, label %.lr.ph.i.i.preheader.i.i.i48.1.a
+
+bb.l:                                             ; preds = %.lr.ph.i.i.preheader.i.i.i48.1.a
+  %i.eg = ptrtoint ptr %.lcssa230 to i64
   %i.eh = ptrtoint ptr %i.dn to i64
   %i.ei = sub i64 %i.eg, %i.eh
   br label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a, %.lr.ph.i.i.preheader.i.i.i48.5.a, %bb.l, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52, %bb.k
-  %.0.i.i55 = phi i64 [ -1, %bb.k ], [ %i.ei, %bb.l ], [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52 ], [ -1, %.lr.ph.i.i.preheader.i.i.i48.5.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56 ]
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit58: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52, %bb.l, %.lr.ph.i.i.preheader.i.i.i48.1.a, %bb.k
+  %.0.i.i55 = phi i64 [ -1, %bb.k ], [ %i.ei, %bb.l ], [ -1, %.lr.ph.i.i.preheader.i.i.i48.1.a ], [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i52 ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4 ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.4.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.3.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.2.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i56.1.a ]
   store i64 %.0.i.i55, ptr %i.f, align 8, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #27
   store i32 5, ptr %i.g, align 4, !tbaa !43
@@ -509,72 +509,72 @@ bb.m:                                             ; preds = %_ZNK5boost9containe
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ew, i64 1
   %i.ey = load i8, ptr %i.ew, align 1, !tbaa !35, !noalias !220
   %i.ez = icmp eq i8 %i.ey, 98
-  br i1 %i.ez, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
+  br i1 %i.ez, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a, label %.lr.ph.i.i.preheader.i.i.i62.1.a
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70: ; preds = %.lr.ph.i.i.i59
-  %.not.i.i.i71 = icmp eq i64 %i.ev, 0
-  br i1 %.not.i.i.i71, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %.lr.ph.i.i.preheader.i.i.i62.1.a
+.lr.ph.i.i.preheader.i.i.i62.1.a:                 ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66, %.lr.ph.i.i.preheader.i.i.i62.5.a, %.lr.ph.i.i.preheader.i.i.i62.4.a, %.lr.ph.i.i.preheader.i.i.i62.3.a, %.lr.ph.i.i.preheader.i.i.i62.2.a, %.lr.ph.i.i.i59
+  %.lcssa228 = phi ptr [ %i.ex, %.lr.ph.i.i.i59 ], [ %i.ew, %.lr.ph.i.i.preheader.i.i.i62.2.a ], [ %i.fb, %.lr.ph.i.i.preheader.i.i.i62.3.a ], [ %i.fe, %.lr.ph.i.i.preheader.i.i.i62.4.a ], [ %i.fh, %.lr.ph.i.i.preheader.i.i.i62.5.a ], [ %i.fk, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66 ]
+  %.lcssa226 = phi ptr [ %i.ew, %.lr.ph.i.i.i59 ], [ %i.fb, %.lr.ph.i.i.preheader.i.i.i62.2.a ], [ %i.fe, %.lr.ph.i.i.preheader.i.i.i62.3.a ], [ %i.fh, %.lr.ph.i.i.preheader.i.i.i62.4.a ], [ %i.fk, %.lr.ph.i.i.preheader.i.i.i62.5.a ], [ %4, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66 ]
+  %i.fa = icmp eq ptr %.lcssa228, %i.eu
+  br i1 %i.fa, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %bb.n
 
-.lr.ph.i.i.preheader.i.i.i62.1.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70
-  %4 = getelementptr inbounds i8, ptr %i.ew, i64 -1 ; 3 uses
-  %5 = load i8, ptr %4, align 1, !tbaa !35, !noalias !220
-  %i.fa = icmp eq i8 %5, 98
-  br i1 %i.fa, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
-
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a: ; preds = %.lr.ph.i.i.preheader.i.i.i62.1.a
-  %.not.i.i.i71.1.a = icmp eq i64 %i.ev, 1
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a: ; preds = %.lr.ph.i.i.i59
+  %.not.i.i.i71.1.a = icmp eq i64 %i.ev, 0
   br i1 %.not.i.i.i71.1.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %.lr.ph.i.i.preheader.i.i.i62.2.a
 
 .lr.ph.i.i.preheader.i.i.i62.2.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a
-  %i.fb = getelementptr inbounds i8, ptr %i.ew, i64 -2 ; 3 uses
+  %i.fb = getelementptr inbounds i8, ptr %i.ew, i64 -1 ; 3 uses
   %i.fc = load i8, ptr %i.fb, align 1, !tbaa !35, !noalias !220
   %i.fd = icmp eq i8 %i.fc, 98
-  br i1 %i.fd, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
+  br i1 %i.fd, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a, label %.lr.ph.i.i.preheader.i.i.i62.1.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a: ; preds = %.lr.ph.i.i.preheader.i.i.i62.2.a
-  %.not.i.i.i71.2.a = icmp eq i64 %i.ev, 2
+  %.not.i.i.i71.2.a = icmp eq i64 %i.ev, 1
   br i1 %.not.i.i.i71.2.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %.lr.ph.i.i.preheader.i.i.i62.3.a
 
 .lr.ph.i.i.preheader.i.i.i62.3.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a
-  %i.fe = getelementptr inbounds i8, ptr %i.ew, i64 -3 ; 3 uses
+  %i.fe = getelementptr inbounds i8, ptr %i.ew, i64 -2 ; 3 uses
   %i.ff = load i8, ptr %i.fe, align 1, !tbaa !35, !noalias !220
   %i.fg = icmp eq i8 %i.ff, 98
-  br i1 %i.fg, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
+  br i1 %i.fg, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a, label %.lr.ph.i.i.preheader.i.i.i62.1.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a: ; preds = %.lr.ph.i.i.preheader.i.i.i62.3.a
-  %.not.i.i.i71.3.a = icmp eq i64 %i.ev, 3
+  %.not.i.i.i71.3.a = icmp eq i64 %i.ev, 2
   br i1 %.not.i.i.i71.3.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %.lr.ph.i.i.preheader.i.i.i62.4.a
 
 .lr.ph.i.i.preheader.i.i.i62.4.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a
-  %i.fh = getelementptr inbounds i8, ptr %i.ew, i64 -4 ; 3 uses
+  %i.fh = getelementptr inbounds i8, ptr %i.ew, i64 -3 ; 3 uses
   %i.fi = load i8, ptr %i.fh, align 1, !tbaa !35, !noalias !220
   %i.fj = icmp eq i8 %i.fi, 98
-  br i1 %i.fj, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
+  br i1 %i.fj, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a, label %.lr.ph.i.i.preheader.i.i.i62.1.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a: ; preds = %.lr.ph.i.i.preheader.i.i.i62.4.a
-  %.not.i.i.i71.4.a = icmp eq i64 %i.ev, 4
+  %.not.i.i.i71.4.a = icmp eq i64 %i.ev, 3
   br i1 %.not.i.i.i71.4.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %.lr.ph.i.i.preheader.i.i.i62.5.a
 
 .lr.ph.i.i.preheader.i.i.i62.5.a:                 ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a
-  %i.fk = getelementptr inbounds i8, ptr %i.ew, i64 -5 ; 2 uses
+  %i.fk = getelementptr inbounds i8, ptr %i.ew, i64 -4 ; 3 uses
   %i.fl = load i8, ptr %i.fk, align 1, !tbaa !35, !noalias !220
   %i.fm = icmp eq i8 %i.fl, 98
-  br i1 %i.fm, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
+  br i1 %i.fm, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4, label %.lr.ph.i.i.preheader.i.i.i62.1.a
 
-_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66: ; preds = %.lr.ph.i.i.preheader.i.i.i62.5.a, %.lr.ph.i.i.preheader.i.i.i62.4.a, %.lr.ph.i.i.preheader.i.i.i62.3.a, %.lr.ph.i.i.preheader.i.i.i62.2.a, %.lr.ph.i.i.preheader.i.i.i62.1.a, %.lr.ph.i.i.i59
-  %.lcssa260 = phi ptr [ %i.ex, %.lr.ph.i.i.i59 ], [ %i.ew, %.lr.ph.i.i.preheader.i.i.i62.1.a ], [ %4, %.lr.ph.i.i.preheader.i.i.i62.2.a ], [ %i.fb, %.lr.ph.i.i.preheader.i.i.i62.3.a ], [ %i.fe, %.lr.ph.i.i.preheader.i.i.i62.4.a ], [ %i.fh, %.lr.ph.i.i.preheader.i.i.i62.5.a ]
-  %.lcssa258 = phi ptr [ %i.ew, %.lr.ph.i.i.i59 ], [ %4, %.lr.ph.i.i.preheader.i.i.i62.1.a ], [ %i.fb, %.lr.ph.i.i.preheader.i.i.i62.2.a ], [ %i.fe, %.lr.ph.i.i.preheader.i.i.i62.3.a ], [ %i.fh, %.lr.ph.i.i.preheader.i.i.i62.4.a ], [ %i.fk, %.lr.ph.i.i.preheader.i.i.i62.5.a ]
-  %.not.i.i68 = icmp eq ptr %.lcssa260, %i.eu
-  br i1 %.not.i.i68, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %bb.n
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4: ; preds = %.lr.ph.i.i.preheader.i.i.i62.5.a
+  %.not.i.i.i71.4 = icmp eq i64 %i.ev, 4
+  br i1 %.not.i.i.i71.4, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
 
-bb.n:                                             ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66
-  %i.fn = ptrtoint ptr %.lcssa258 to i64
+_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4
+  %4 = getelementptr inbounds i8, ptr %i.ew, i64 -5 ; 2 uses
+  %5 = load i8, ptr %4, align 1, !tbaa !35, !noalias !220
+  %.not.i.i68 = icmp eq i8 %5, 98
+  br i1 %.not.i.i68, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72, label %.lr.ph.i.i.preheader.i.i.i62.1.a
+
+bb.n:                                             ; preds = %.lr.ph.i.i.preheader.i.i.i62.1.a
+  %i.fn = ptrtoint ptr %.lcssa226 to i64
   %i.fo = ptrtoint ptr %i.eu to i64
   %i.fp = sub i64 %i.fn, %i.fo
   br label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a, %.lr.ph.i.i.preheader.i.i.i62.5.a, %bb.n, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66, %bb.m
-  %.0.i.i69 = phi i64 [ -1, %bb.m ], [ %i.fp, %bb.n ], [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66 ], [ -1, %.lr.ph.i.i.preheader.i.i.i62.5.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70 ]
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcm.exit72: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66, %bb.n, %.lr.ph.i.i.preheader.i.i.i62.1.a, %bb.m
+  %.0.i.i69 = phi i64 [ -1, %bb.m ], [ %i.fp, %bb.n ], [ -1, %.lr.ph.i.i.preheader.i.i.i62.1.a ], [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i.i66 ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4 ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.4.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.3.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.2.a ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.i70.1.a ]
   store i64 %.0.i.i69, ptr %i.h, align 8, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #27
   store i32 2, ptr %i.i, align 4, !tbaa !43
@@ -602,29 +602,29 @@ bb.o:                                             ; preds = %_ZNK5boost9containe
   %i.gc = getelementptr i8, ptr %i.gb, i64 %i.fx
   br label %.lr.ph.i.i.preheader.i.i
 
-.lr.ph.i.i.preheader.i.i:                         ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a, %.lr.ph.i.i
-  %i.gd = phi ptr [ %i.ge, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a ], [ %i.gc, %.lr.ph.i.i ] ; 2 uses
+.lr.ph.i.i.preheader.i.i:                         ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i, %.lr.ph.i.i
+  %i.gd = phi ptr [ %i.ge, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i ], [ %i.gc, %.lr.ph.i.i ] ; 2 uses
   %i.ge = getelementptr inbounds i8, ptr %i.gd, i64 -1 ; 4 uses
   %i.gf = load i8, ptr %i.ge, align 1, !tbaa !35, !noalias !223
   %i.gg = icmp eq i8 %i.gf, 97
-  br i1 %i.gg, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i
+  br i1 %i.gg, label %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a
 
 _ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a: ; preds = %.lr.ph.i.i.preheader.i.i
-  %.not.i.i73.a = icmp eq ptr %i.ge, %i.gb
-  br i1 %.not.i.i73.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !213
+  %.not.i.i73.a = icmp eq ptr %i.gd, %i.gb
+  br i1 %.not.i.i73.a, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %bb.p
 
 _ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i: ; preds = %.lr.ph.i.i.preheader.i.i
-  %.not.i = icmp eq ptr %i.gd, %i.gb
-  br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %bb.p
+  %.not.i = icmp eq ptr %i.ge, %i.gb
+  br i1 %.not.i, label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit, label %.lr.ph.i.i.preheader.i.i, !llvm.loop !213
 
-bb.p:                                             ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i
+bb.p:                                             ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a
   %i.gh = ptrtoint ptr %i.ge to i64
   %i.gi = ptrtoint ptr %i.gb to i64
   %i.gj = sub i64 %i.gh, %i.gi
   br label %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit
 
-_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit: ; preds = %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a, %bb.p, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i, %bb.o
-  %.0.i = phi i64 [ -1, %bb.o ], [ %i.gj, %bb.p ], [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a ]
+_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE16find_last_not_ofEPKcmm.exit: ; preds = %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i, %bb.p, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a, %bb.o
+  %.0.i = phi i64 [ -1, %bb.o ], [ %i.gj, %bb.p ], [ -1, %_ZNK5boost9container12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS3_EclERKc.exit.i.i.a ], [ -1, %_ZN5boost9container7find_ifINS_7movelib16reverse_iteratorIPKcEENS0_12basic_stringIcSt11char_traitsIcEvvE17Not_within_traitsIS9_EEEET_SD_SD_T0_.exit.i ]
   store i64 %.0.i, ptr %i.j, align 8, !tbaa !41
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #27
   store i32 8, ptr %i.k, align 4, !tbaa !43

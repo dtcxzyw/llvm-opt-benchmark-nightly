@@ -204,21 +204,21 @@ bb.b:                                             ; preds = %bb.d, %bb.a
   store i8 0, ptr %i.a, align 1, !annotation !17
   %i.i = call i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 704, ptr noundef nonnull %i.a, i64 noundef 1) #17 ; 2 uses
   %i.j = icmp sgt i64 %i.i, -1
-  br i1 %i.j, label %bb.c, label %.lr.ph.i.preheader.i.i
+  br i1 %i.j, label %.lr.ph.i.preheader.i.i, label %bb.c
 
 .lr.ph.i.preheader.i.i:                           ; preds = %bb.b
-  %2 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 704, ptr noundef nonnull %i.a, i64 noundef 1) #17
-  %spec.select5.i.i = call i64 @llvm.smin.i64(i64 %2, i64 0)
-  %spec.select.i.i = trunc nsw i64 %spec.select5.i.i to i32
+  %2 = icmp eq i64 %i.i, 0
+  %..i.i.i = select i1 %2, i32 -71, i32 0
   br label %read_payload_update_status.exit
 
 bb.c:                                             ; preds = %bb.b
-  %3 = icmp eq i64 %i.i, 0
-  %..i.i.i = select i1 %3, i32 -71, i32 0
+  %3 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 704, ptr noundef nonnull %i.a, i64 noundef 1) #17
+  %spec.select4.i.i = call i64 @llvm.smin.i64(i64 %3, i64 0)
+  %spec.select.i.i = trunc nsw i64 %spec.select4.i.i to i32
   br label %read_payload_update_status.exit
 
 read_payload_update_status.exit:                  ; preds = %.lr.ph.i.preheader.i.i, %bb.c
-  %.018.i.i.i = phi i32 [ %..i.i.i, %bb.c ], [ %spec.select.i.i, %.lr.ph.i.preheader.i.i ] ; 4 uses
+  %.018.i.i.i = phi i32 [ %..i.i.i, %.lr.ph.i.preheader.i.i ], [ %spec.select.i.i, %bb.c ] ; 4 uses
   %i.k = icmp slt i32 %.018.i.i.i, 0              ; 3 uses
   %i.l = load i8, ptr %i.a, align 1
   %i.m = zext i8 %i.l to i32                      ; 2 uses
@@ -621,18 +621,18 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
   call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.34, ptr noundef nonnull %i.a) #19
   %i.s = call i64 @drm_dp_dpcd_read(ptr noundef %4, i32 noundef 1289, ptr noundef nonnull %i.b, i64 noundef 1) #17 ; 2 uses
   %i.t = icmp sgt i64 %i.s, -1
-  br i1 %i.t, label %bb.l, label %.lr.ph.i.preheader
+  br i1 %i.t, label %.lr.ph.i.preheader, label %bb.l
 
 .lr.ph.i.preheader:                               ; preds = %bb.k
-  %5 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %4, i32 noundef 1289, ptr noundef nonnull %i.b, i64 noundef 1) #17
-  %6 = icmp slt i64 %5, 0
-  br i1 %6, label %drm_dp_dpcd_read_data.exit, label %.loopexit103
+  %5 = icmp eq i64 %i.s, 0
+  br i1 %5, label %drm_dp_dpcd_read_data.exit, label %.loopexit103
 
 bb.l:                                             ; preds = %bb.k
-  %7 = icmp eq i64 %i.s, 0
+  %6 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %4, i32 noundef 1289, ptr noundef nonnull %i.b, i64 noundef 1) #17
+  %7 = icmp slt i64 %6, 0
   br i1 %7, label %drm_dp_dpcd_read_data.exit, label %.loopexit103
 
-.loopexit103:                                     ; preds = %.lr.ph.i.preheader, %bb.l
+.loopexit103:                                     ; preds = %bb.l, %.lr.ph.i.preheader
   %i.u = load i8, ptr %i.b, align 2
   %i.v = zext i8 %i.u to i32                      ; 2 uses
   %i.w = lshr i32 %i.v, 4
@@ -640,7 +640,7 @@ bb.l:                                             ; preds = %bb.k
   call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.35, i32 noundef %i.w, i32 noundef %i.x) #19
   br label %drm_dp_dpcd_read_data.exit
 
-drm_dp_dpcd_read_data.exit:                       ; preds = %.lr.ph.i.preheader, %bb.l, %.loopexit103
+drm_dp_dpcd_read_data.exit:                       ; preds = %bb.l, %.lr.ph.i.preheader, %.loopexit103
   %i.y = call i64 @drm_dp_dpcd_read(ptr noundef %4, i32 noundef 1290, ptr noundef nonnull %i.b, i64 noundef 2) #17 ; 2 uses
   %i.z = icmp sgt i64 %i.y, -1
   br i1 %i.z, label %bb.m, label %.lr.ph.i56.preheader
@@ -1043,19 +1043,19 @@ bb.a:
   store i8 0, ptr %i.a, align 1, !annotation !17
   %i.b = call i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 12347, ptr noundef nonnull %i.a, i64 noundef 1) #17 ; 2 uses
   %i.c = icmp sgt i64 %i.b, -1
-  br i1 %i.c, label %bb.b, label %.lr.ph.i.preheader.i
+  br i1 %i.c, label %.lr.ph.i.preheader.i, label %bb.b
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
-  %1 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 12347, ptr noundef nonnull %i.a, i64 noundef 1) #17
-  %2 = icmp slt i64 %1, 0
+  %1 = icmp eq i64 %i.b, 0
   br label %drm_dp_dpcd_read_byte.exit
 
 bb.b:                                             ; preds = %bb.a
-  %3 = icmp eq i64 %i.b, 0
+  %2 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 12347, ptr noundef nonnull %i.a, i64 noundef 1) #17
+  %3 = icmp slt i64 %2, 0
   br label %drm_dp_dpcd_read_byte.exit
 
 drm_dp_dpcd_read_byte.exit:                       ; preds = %.lr.ph.i.preheader.i, %bb.b
-  %.018.i.i = phi i1 [ %3, %bb.b ], [ %2, %.lr.ph.i.preheader.i ]
+  %.018.i.i = phi i1 [ %1, %.lr.ph.i.preheader.i ], [ %3, %bb.b ]
   %i.d = load i8, ptr %i.a, align 1
   %i.e = and i8 %i.d, 2
   %.not = icmp ne i8 %i.e, 0
@@ -1256,19 +1256,19 @@ bb.a:
   store i8 0, ptr %i.a, align 1, !annotation !17
   %i.b = call i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 12347, ptr noundef nonnull %i.a, i64 noundef 1) #17 ; 2 uses
   %i.c = icmp sgt i64 %i.b, -1
-  br i1 %i.c, label %bb.b, label %.lr.ph.i.preheader.i
+  br i1 %i.c, label %.lr.ph.i.preheader.i, label %bb.b
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.a
-  %1 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 12347, ptr noundef nonnull %i.a, i64 noundef 1) #17
-  %2 = icmp slt i64 %1, 0
+  %1 = icmp eq i64 %i.b, 0
   br label %drm_dp_dpcd_read_byte.exit
 
 bb.b:                                             ; preds = %bb.a
-  %3 = icmp eq i64 %i.b, 0
+  %2 = call range(i64 -2147483648, 2147483648) i64 @drm_dp_dpcd_read(ptr noundef %0, i32 noundef 12347, ptr noundef nonnull %i.a, i64 noundef 1) #17
+  %3 = icmp slt i64 %2, 0
   br label %drm_dp_dpcd_read_byte.exit
 
 drm_dp_dpcd_read_byte.exit:                       ; preds = %.lr.ph.i.preheader.i, %bb.b
-  %.018.i.i = phi i1 [ %3, %bb.b ], [ %2, %.lr.ph.i.preheader.i ]
+  %.018.i.i = phi i1 [ %1, %.lr.ph.i.preheader.i ], [ %3, %bb.b ]
   %i.d = load i8, ptr %i.a, align 1
   %i.e = trunc i8 %i.d to i1
   %not..018.i.i = xor i1 %.018.i.i, true

@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.j, ptr %i.b, align 8
   %i.k = getelementptr i8, ptr %i.b, i64 8
   store i64 %i.g, ptr %i.k, align 8
-  br label %.thread.i.i
+  br label %.thread.i.i, !llvm.loop !150
 
 .thread.i.i:                                      ; preds = %bb.f, %bb.e, %bb.d, %user_access_begin.exit.i.i
   %.2.i.i = phi i32 [ 0, %bb.f ], [ -22, %bb.e ], [ -14, %user_access_begin.exit.i.i ], [ -14, %bb.d ]

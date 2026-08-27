@@ -205,11 +205,7 @@ bb.k:                                             ; preds = %_RNvMsc_NtCs6ZvMrL6
   %i.aj = and i32 %i.o, 127
   %.not12.i = icmp eq i32 %i.aj, 0
   %i.ak = zext nneg i64 %i.p to i128
-  br i1 %.not12.i, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i.preheader
-
-.lr.ph.split.i.preheader:                         ; preds = %bb.k
-  %.not11.i = icmp ult i32 %i.o, 128
-  br i1 %.not11.i, label %bb.m, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156
+  br i1 %.not12.i, label %.lr.ph.split.us.i.preheader, label %.lr.ph.split.i
 
 .lr.ph.split.us.i.preheader:                      ; preds = %bb.k
   store i128 0, ptr %0, align 16, !alias.scope !10367, !noalias !10370
@@ -219,13 +215,17 @@ bb.l:                                             ; preds = %_RNvMsc_NtCs6ZvMrL6
   tail call void @_RNvNtCshzWfHUSfYae_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @84) #31, !noalias !10378
   unreachable
 
-bb.m:                                             ; preds = %.lr.ph.split.i.preheader
+.lr.ph.split.i:                                   ; preds = %bb.k
+  %.not11.i = icmp ult i32 %i.o, 128
+  br i1 %.not11.i, label %bb.m, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156
+
+bb.m:                                             ; preds = %.lr.ph.split.i
   %i.al = load i128, ptr %0, align 16, !alias.scope !10367, !noalias !10370, !noundef !5
   %i.am = lshr i128 %i.al, %i.ak
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156: ; preds = %bb.m, %.lr.ph.split.i.preheader
-  %.sroa.02.0.i = phi i128 [ 0, %.lr.ph.split.i.preheader ], [ %i.am, %bb.m ]
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156: ; preds = %bb.m, %.lr.ph.split.i
+  %.sroa.02.0.i = phi i128 [ 0, %.lr.ph.split.i ], [ %i.am, %bb.m ]
   store i128 %.sroa.02.0.i, ptr %0, align 16, !alias.scope !10367, !noalias !10370
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit
 
@@ -285,28 +285,28 @@ _RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.
   %i.bd = and i64 %i.an, 127                      ; 2 uses
   %.not12.i23 = icmp eq i64 %i.bd, 0
   %i.be = zext nneg i64 %i.bd to i128
-  br i1 %.not12.i23, label %.lr.ph.split.us.i30.preheader, label %.lr.ph.split.i24.preheader
+  br i1 %.not12.i23, label %.lr.ph.split.i24.preheader, label %.lr.ph.split.us.i30.preheader
 
 .lr.ph.split.i24.preheader:                       ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i21
-  %.not11.i26 = icmp ult i32 %i.i, 128
-  br i1 %.not11.i26, label %bb.t, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154
-
-.lr.ph.split.us.i30.preheader:                    ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i21
   store i128 0, ptr %3, align 16, !alias.scope !10389, !noalias !10384
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit
 
-bb.t:                                             ; preds = %.lr.ph.split.i24.preheader
+.lr.ph.split.us.i30.preheader:                    ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i21
+  %.not11.i26 = icmp ult i32 %i.i, 128
+  br i1 %.not11.i26, label %bb.t, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154
+
+bb.t:                                             ; preds = %.lr.ph.split.us.i30.preheader
   %i.bf = load i128, ptr %3, align 16, !alias.scope !10389, !noalias !10384, !noundef !5
   %i.bg = lshr i128 %i.bf, %i.be
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154: ; preds = %bb.t, %.lr.ph.split.i24.preheader
-  %.sroa.02.0.i27 = phi i128 [ 0, %.lr.ph.split.i24.preheader ], [ %i.bg, %bb.t ]
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154: ; preds = %bb.t, %.lr.ph.split.us.i30.preheader
+  %.sroa.02.0.i27 = phi i128 [ 0, %.lr.ph.split.us.i30.preheader ], [ %i.bg, %bb.t ]
   store i128 %.sroa.02.0.i27, ptr %3, align 16, !alias.scope !10389, !noalias !10384
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit: ; preds = %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156, %.lr.ph.split.us.i.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154, %.lr.ph.split.us.i30.preheader, %bb.d
-  %.sroa.0.0 = phi i8 [ %.sroa.09.0.i17.i, %.lr.ph.split.us.i.preheader ], [ 0, %bb.d ], [ %.sroa.09.0.i17.i22, %.lr.ph.split.us.i30.preheader ], [ %.sroa.09.0.i17.i22, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154 ], [ %.sroa.09.0.i17.i, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156 ]
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit: ; preds = %.lr.ph.split.us.i.preheader, %.lr.ph.split.i24.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154, %bb.d
+  %.sroa.0.0 = phi i8 [ %.sroa.09.0.i17.i22, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit154 ], [ 0, %bb.d ], [ %.sroa.09.0.i17.i22, %.lr.ph.split.i24.preheader ], [ %.sroa.09.0.i17.i, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit156 ], [ %.sroa.09.0.i17.i, %.lr.ph.split.us.i.preheader ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -381,9 +381,9 @@ bb.x:                                             ; preds = %bb.c
   %i.ca = icmp eq i32 %i.i, -1
   br i1 %i.ca, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65, label %bb.z
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65: ; preds = %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153, %.lr.ph.split.us.i56.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151, %.lr.ph.split.us.i86.preheader, %.split.i66, %.lr.ph.split.i41.preheader, %bb.c
-  %.sroa.013.0 = phi i1 [ false, %bb.c ], [ true, %.lr.ph.split.us.i86.preheader ], [ false, %.lr.ph.split.i41.preheader ], [ false, %.lr.ph.split.us.i56.preheader ], [ true, %.split.i66 ], [ true, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151 ], [ false, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153 ] ; 3 uses
-  %.sroa.0.2 = phi i8 [ 0, %bb.c ], [ %.sroa.09.0.i17.i78, %.lr.ph.split.us.i86.preheader ], [ 0, %.lr.ph.split.i41.preheader ], [ %.sroa.09.0.i17.i48, %.lr.ph.split.us.i56.preheader ], [ 0, %.split.i66 ], [ %.sroa.09.0.i17.i78, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151 ], [ %.sroa.09.0.i17.i48, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153 ] ; 11 uses
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65: ; preds = %.lr.ph.split.us.i56.preheader, %.lr.ph.split.i80.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151, %.split.i66, %.lr.ph.split.i41.preheader, %bb.c
+  %.sroa.013.0 = phi i1 [ false, %bb.c ], [ true, %.lr.ph.split.i80.preheader ], [ false, %.lr.ph.split.i41.preheader ], [ true, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151 ], [ true, %.split.i66 ], [ false, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153 ], [ false, %.lr.ph.split.us.i56.preheader ] ; 3 uses
+  %.sroa.0.2 = phi i8 [ 0, %bb.c ], [ %.sroa.09.0.i17.i78, %.lr.ph.split.i80.preheader ], [ 0, %.lr.ph.split.i41.preheader ], [ %.sroa.09.0.i17.i78, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151 ], [ 0, %.split.i66 ], [ %.sroa.09.0.i17.i48, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153 ], [ %.sroa.09.0.i17.i48, %.lr.ph.split.us.i56.preheader ] ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !10404
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
@@ -488,11 +488,7 @@ bb.af:                                            ; preds = %_RNvMsc_NtCs6ZvMrL6
   %i.de = and i64 %i.bz, 127                      ; 2 uses
   %.not12.i49 = icmp eq i64 %i.de, 0
   %i.df = zext nneg i64 %i.de to i128
-  br i1 %.not12.i49, label %.lr.ph.split.us.i56.preheader, label %.lr.ph.split.i50.preheader
-
-.lr.ph.split.i50.preheader:                       ; preds = %bb.af
-  %.not11.i52 = icmp ugt i32 %i.i, -129
-  br i1 %.not11.i52, label %bb.ah, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153
+  br i1 %.not12.i49, label %.lr.ph.split.us.i56.preheader, label %.lr.ph.split.i50
 
 .lr.ph.split.us.i56.preheader:                    ; preds = %bb.af
   store i128 0, ptr %0, align 16, !alias.scope !10399, !noalias !10402
@@ -502,13 +498,17 @@ bb.ag:                                            ; preds = %_RNvMsc_NtCs6ZvMrL6
   tail call void @_RNvNtCshzWfHUSfYae_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @84) #31, !noalias !10414
   unreachable
 
-bb.ah:                                            ; preds = %.lr.ph.split.i50.preheader
+.lr.ph.split.i50:                                 ; preds = %bb.af
+  %.not11.i52 = icmp ugt i32 %i.i, -129
+  br i1 %.not11.i52, label %bb.ah, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153
+
+bb.ah:                                            ; preds = %.lr.ph.split.i50
   %i.dg = load i128, ptr %0, align 16, !alias.scope !10399, !noalias !10402, !noundef !5
   %i.dh = lshr i128 %i.dg, %i.df
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153: ; preds = %bb.ah, %.lr.ph.split.i50.preheader
-  %.sroa.02.0.i53 = phi i128 [ 0, %.lr.ph.split.i50.preheader ], [ %i.dh, %bb.ah ]
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit153: ; preds = %bb.ah, %.lr.ph.split.i50
+  %.sroa.02.0.i53 = phi i128 [ 0, %.lr.ph.split.i50 ], [ %i.dh, %bb.ah ]
   store i128 %.sroa.02.0.i53, ptr %0, align 16, !alias.scope !10399, !noalias !10402
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65
 
@@ -589,23 +589,23 @@ _RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.
   %i.ef = and i64 %i.do, 127                      ; 2 uses
   %.not12.i79 = icmp eq i64 %i.ef, 0
   %i.eg = zext nneg i64 %i.ef to i128
-  br i1 %.not12.i79, label %.lr.ph.split.us.i86.preheader, label %.lr.ph.split.i80.preheader
+  br i1 %.not12.i79, label %.lr.ph.split.i80.preheader, label %.lr.ph.split.us.i86.preheader
 
 .lr.ph.split.i80.preheader:                       ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i77
-  %.not11.i82 = icmp ult i32 %i.i, 129
-  br i1 %.not11.i82, label %bb.aq, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151
-
-.lr.ph.split.us.i86.preheader:                    ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i77
   store i128 0, ptr %3, align 16, !alias.scope !10431, !noalias !10426
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65
 
-bb.aq:                                            ; preds = %.lr.ph.split.i80.preheader
+.lr.ph.split.us.i86.preheader:                    ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i77
+  %.not11.i82 = icmp ult i32 %i.i, 129
+  br i1 %.not11.i82, label %bb.aq, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151
+
+bb.aq:                                            ; preds = %.lr.ph.split.us.i86.preheader
   %i.eh = load i128, ptr %3, align 16, !alias.scope !10431, !noalias !10426, !noundef !5
   %i.ei = lshr i128 %i.eh, %i.eg
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151: ; preds = %bb.aq, %.lr.ph.split.i80.preheader
-  %.sroa.02.0.i83 = phi i128 [ 0, %.lr.ph.split.i80.preheader ], [ %i.ei, %bb.aq ]
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65.loopexit151: ; preds = %bb.aq, %.lr.ph.split.us.i86.preheader
+  %.sroa.02.0.i83 = phi i128 [ 0, %.lr.ph.split.us.i86.preheader ], [ %i.ei, %bb.aq ]
   store i128 %.sroa.02.0.i83, ptr %3, align 16, !alias.scope !10431, !noalias !10426
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit65
 
@@ -1004,28 +1004,28 @@ _RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.
   %i.ca = and i64 %.sroa.0.0.i62259, 127          ; 2 uses
   %.not12.i = icmp eq i64 %i.ca, 0
   %i.cb = zext nneg i64 %i.ca to i128
-  br i1 %.not12.i, label %.lr.ph.split.us.i84.preheader, label %.lr.ph.split.i82.preheader
+  br i1 %.not12.i, label %.lr.ph.split.i82.preheader, label %.lr.ph.split.us.i84.preheader
 
 .lr.ph.split.i82.preheader:                       ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i
-  %.not11.i = icmp ult i64 %.sroa.0.0.i62259, 128
-  br i1 %.not11.i, label %bb.n, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313
-
-.lr.ph.split.us.i84.preheader:                    ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i
   store i128 0, ptr %3, align 16, !alias.scope !10475, !noalias !10478
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit
 
-bb.n:                                             ; preds = %.lr.ph.split.i82.preheader
+.lr.ph.split.us.i84.preheader:                    ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i
+  %.not11.i = icmp ult i64 %.sroa.0.0.i62259, 128
+  br i1 %.not11.i, label %bb.n, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313
+
+bb.n:                                             ; preds = %.lr.ph.split.us.i84.preheader
   %i.cc = load i128, ptr %3, align 16, !alias.scope !10475, !noalias !10478, !noundef !5
   %i.cd = lshr i128 %i.cc, %i.cb
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313: ; preds = %bb.n, %.lr.ph.split.i82.preheader
-  %.sroa.02.0.i83 = phi i128 [ 0, %.lr.ph.split.i82.preheader ], [ %i.cd, %bb.n ] ; 2 uses
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313: ; preds = %bb.n, %.lr.ph.split.us.i84.preheader
+  %.sroa.02.0.i83 = phi i128 [ 0, %.lr.ph.split.us.i84.preheader ], [ %i.cd, %bb.n ] ; 2 uses
   store i128 %.sroa.02.0.i83, ptr %3, align 16, !alias.scope !10475, !noalias !10478
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit: ; preds = %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit_crit_edge, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313, %.lr.ph.split.us.i84.preheader
-  %i.ce = phi i128 [ %.pre335, %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit_crit_edge ], [ %.sroa.02.0.i83, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313 ], [ 0, %.lr.ph.split.us.i84.preheader ] ; 2 uses
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit: ; preds = %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit_crit_edge, %.lr.ph.split.i82.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313
+  %i.ce = phi i128 [ %.pre335, %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit_crit_edge ], [ 0, %.lr.ph.split.i82.preheader ], [ %.sroa.02.0.i83, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit.loopexit313 ] ; 2 uses
   %i.cf = trunc i128 %i.ce to i32
   %i.cg = and i32 %i.cf, 65535                    ; 17 uses
   %i.ch = load i128, ptr %2, align 16, !noundef !5 ; 9 uses
@@ -1258,28 +1258,28 @@ _RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.
   %i.fq = and i64 %.sroa.0.0.i62259, 127          ; 2 uses
   %.not12.i107 = icmp eq i64 %i.fq, 0
   %i.fr = zext nneg i64 %i.fq to i128
-  br i1 %.not12.i107, label %.lr.ph.split.us.i114.preheader, label %.lr.ph.split.i108.preheader
+  br i1 %.not12.i107, label %.lr.ph.split.i108.preheader, label %.lr.ph.split.us.i114.preheader
 
 .lr.ph.split.i108.preheader:                      ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i105
-  %.not11.i110 = icmp ult i64 %.sroa.0.0.i62259, 128
-  br i1 %.not11.i110, label %bb.u, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314
-
-.lr.ph.split.us.i114.preheader:                   ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i105
   store i128 0, ptr %3, align 16, !alias.scope !10499, !noalias !10502
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123
 
-bb.u:                                             ; preds = %.lr.ph.split.i108.preheader
+.lr.ph.split.us.i114.preheader:                   ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i105
+  %.not11.i110 = icmp ult i64 %.sroa.0.0.i62259, 128
+  br i1 %.not11.i110, label %bb.u, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314
+
+bb.u:                                             ; preds = %.lr.ph.split.us.i114.preheader
   %i.fs = load i128, ptr %3, align 16, !alias.scope !10499, !noalias !10502, !noundef !5
   %i.ft = lshr i128 %i.fs, %i.fr
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314: ; preds = %bb.u, %.lr.ph.split.i108.preheader
-  %.sroa.02.0.i111 = phi i128 [ 0, %.lr.ph.split.i108.preheader ], [ %i.ft, %bb.u ] ; 2 uses
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314: ; preds = %bb.u, %.lr.ph.split.us.i114.preheader
+  %.sroa.02.0.i111 = phi i128 [ 0, %.lr.ph.split.us.i114.preheader ], [ %i.ft, %bb.u ] ; 2 uses
   store i128 %.sroa.02.0.i111, ptr %3, align 16, !alias.scope !10499, !noalias !10502
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123: ; preds = %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123_crit_edge, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314, %.lr.ph.split.us.i114.preheader
-  %i.fu = phi i128 [ %.pre334, %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123_crit_edge ], [ %.sroa.02.0.i111, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314 ], [ 0, %.lr.ph.split.us.i114.preheader ] ; 2 uses
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123: ; preds = %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123_crit_edge, %.lr.ph.split.i108.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314
+  %i.fu = phi i128 [ %.pre334, %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123_crit_edge ], [ 0, %.lr.ph.split.i108.preheader ], [ %.sroa.02.0.i111, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit123.loopexit314 ] ; 2 uses
   %i.fv = trunc i128 %i.fu to i64
   %i.fw = and i64 %i.fv, 4294967295               ; 9 uses
   %i.fx = load i128, ptr %2, align 16, !noundef !5 ; 5 uses
@@ -1442,28 +1442,28 @@ _RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.
   %i.hz = and i64 %.sroa.0.0.i62259, 127          ; 2 uses
   %.not12.i162 = icmp eq i64 %i.hz, 0
   %i.ia = zext nneg i64 %i.hz to i128
-  br i1 %.not12.i162, label %.lr.ph.split.us.i169.preheader, label %.lr.ph.split.i163.preheader
+  br i1 %.not12.i162, label %.lr.ph.split.i163.preheader, label %.lr.ph.split.us.i169.preheader
 
 .lr.ph.split.i163.preheader:                      ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i160
-  %.not11.i165 = icmp ult i64 %.sroa.0.0.i62259, 128
-  br i1 %.not11.i165, label %bb.aa, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315
-
-.lr.ph.split.us.i169.preheader:                   ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i160
   store i128 0, ptr %3, align 16, !alias.scope !10523, !noalias !10526
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178
 
-bb.aa:                                            ; preds = %.lr.ph.split.i163.preheader
+.lr.ph.split.us.i169.preheader:                   ; preds = %_RNvMsc_NtCs6ZvMrL6DPuG_13rustc_apfloat4ieeeNtB5_4Loss18through_truncation.exit.thread15.i160
+  %.not11.i165 = icmp ult i64 %.sroa.0.0.i62259, 128
+  br i1 %.not11.i165, label %bb.aa, label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315
+
+bb.aa:                                            ; preds = %.lr.ph.split.us.i169.preheader
   %i.ib = load i128, ptr %3, align 16, !alias.scope !10523, !noalias !10526, !noundef !5
   %i.ic = lshr i128 %i.ib, %i.ia
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315: ; preds = %bb.aa, %.lr.ph.split.i163.preheader
-  %.sroa.02.0.i166 = phi i128 [ 0, %.lr.ph.split.i163.preheader ], [ %i.ic, %bb.aa ] ; 2 uses
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315: ; preds = %bb.aa, %.lr.ph.split.us.i169.preheader
+  %.sroa.02.0.i166 = phi i128 [ 0, %.lr.ph.split.us.i169.preheader ], [ %i.ic, %bb.aa ] ; 2 uses
   store i128 %.sroa.02.0.i166, ptr %3, align 16, !alias.scope !10523, !noalias !10526
   br label %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178
 
-_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178: ; preds = %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178_crit_edge, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315, %.lr.ph.split.us.i169.preheader
-  %i.id = phi i128 [ %.pre, %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178_crit_edge ], [ %.sroa.02.0.i166, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315 ], [ 0, %.lr.ph.split.us.i169.preheader ]
+_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178: ; preds = %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178_crit_edge, %.lr.ph.split.i163.preheader, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315
+  %i.id = phi i128 [ %.pre, %._RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178_crit_edge ], [ 0, %.lr.ph.split.i163.preheader ], [ %.sroa.02.0.i166, %_RNvNtNtCs6ZvMrL6DPuG_13rustc_apfloat4ieee3sig11shift_right.exit178.loopexit315 ]
   %i.ie = and i128 %i.id, 18446744073709551615    ; 4 uses
   %i.if = load i128, ptr %2, align 16, !noundef !5 ; 3 uses
   %i.ig = add nsw i64 %i.bv, -1                   ; 3 uses

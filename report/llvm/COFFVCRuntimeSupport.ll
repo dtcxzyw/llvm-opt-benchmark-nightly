@@ -204,11 +204,11 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !160
   store ptr %i.e, ptr %i.d, align 8, !tbaa !163, !alias.scope !160
-  %.pre = load ptr, ptr %1, align 8, !tbaa !159
   store ptr %i.e, ptr %i.b, align 8, !alias.scope !160
   store ptr %i.c, ptr %12, align 8, !alias.scope !160
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #18
-  %i.f = getelementptr inbounds nuw i8, ptr %.pre, i64 48
+  %25 = load ptr, ptr %1, align 8, !tbaa !159, !nonnull !101, !align !102
+  %i.f = getelementptr inbounds nuw i8, ptr %25, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !164, !noalias !166
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !169, !noalias !174

@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNK5clang4Sema24in
   %i.ak = trunc nuw i8 %i.aj to i1
   br i1 %i.ak, label %_ZNK5clang4Sema30inParameterMappingSubstitutionEv.exit.i, label %_ZN12_GLOBAL__N_120TemplateInstantiator23TryExpandParameterPacksEN5clang14SourceLocationENS1_11SourceRangeEN4llvm8ArrayRefISt4pairINS4_12PointerUnionIJPKNS1_20TemplateTypeParmTypeEPNS1_9NamedDeclEPKNS1_26TemplateSpecializationTypeEPKNS1_28SubstBuiltinTemplatePackTypeEEEES2_EEEbRbSM_RNS1_16OptionalUnsignedIjEE.exit
 
-_ZNK5clang4Sema30inParameterMappingSubstitutionEv.exit.i: ; preds = %bb.g, %_ZNK5clang4Sema24inConstraintSubstitutionEv.exit.i
+_ZNK5clang4Sema30inParameterMappingSubstitutionEv.exit.i: ; preds = %_ZNK5clang4Sema24inConstraintSubstitutionEv.exit.i, %bb.g
   %i.al = and i64 %i.t, 6
   %i.am = icmp ne i64 %i.al, 2
   %i.an = and i64 %i.s, -7                        ; 2 uses
@@ -608,7 +608,7 @@ bb.be:                                            ; preds = %_ZNK5clang4Sema24in
   %i.ml = trunc nuw i8 %i.mk to i1
   br i1 %i.ml, label %_ZNK5clang4Sema30inParameterMappingSubstitutionEv.exit.i560, label %_ZN12_GLOBAL__N_120TemplateInstantiator23TryExpandParameterPacksEN5clang14SourceLocationENS1_11SourceRangeEN4llvm8ArrayRefISt4pairINS4_12PointerUnionIJPKNS1_20TemplateTypeParmTypeEPNS1_9NamedDeclEPKNS1_26TemplateSpecializationTypeEPKNS1_28SubstBuiltinTemplatePackTypeEEEES2_EEEbRbSM_RNS1_16OptionalUnsignedIjEE.exit571
 
-_ZNK5clang4Sema30inParameterMappingSubstitutionEv.exit.i560: ; preds = %bb.be, %_ZNK5clang4Sema24inConstraintSubstitutionEv.exit.i555
+_ZNK5clang4Sema30inParameterMappingSubstitutionEv.exit.i560: ; preds = %_ZNK5clang4Sema24inConstraintSubstitutionEv.exit.i555, %bb.be
   %i.mm = inttoptr i64 %i.lu to ptr               ; 2 uses
   %.not.i40.i564 = icmp eq i64 %i.lu, 0
   br i1 %.not.i40.i564, label %_ZN12_GLOBAL__N_120TemplateInstantiator23TryExpandParameterPacksEN5clang14SourceLocationENS1_11SourceRangeEN4llvm8ArrayRefISt4pairINS4_12PointerUnionIJPKNS1_20TemplateTypeParmTypeEPNS1_9NamedDeclEPKNS1_26TemplateSpecializationTypeEPKNS1_28SubstBuiltinTemplatePackTypeEEEES2_EEEbRbSM_RNS1_16OptionalUnsignedIjEE.exit571, label %bb.bf

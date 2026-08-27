@@ -205,24 +205,24 @@ drm_dp_dpcd_read_data.exit:                       ; preds = %.lr.ph.i.1, %bb.y
   %i.ed = call i64 @drm_dp_dpcd_read(ptr noundef %i.ec, i32 noundef 273, ptr noundef nonnull %i.b, i64 noundef 1) #23 ; 2 uses
   %i.ee = and i64 %i.ed, 2147483648
   %i.ef = icmp eq i64 %i.ee, 0
-  br i1 %i.ef, label %bb.z, label %.lr.ph.i79.preheader
+  br i1 %i.ef, label %.lr.ph.i79.preheader, label %bb.z
 
 .lr.ph.i79.preheader:                             ; preds = %drm_dp_dpcd_read_data.exit
-  %2 = call i64 @drm_dp_dpcd_read(ptr noundef %i.ec, i32 noundef 273, ptr noundef nonnull %i.b, i64 noundef 1) #23
-  %i.eg = and i64 %2, 2147483648
+  %i.eg = and i64 %i.ed, 2147483647
   %.not102.a = icmp eq i64 %i.eg, 0
-  br i1 %.not102.a, label %drm_dp_dpcd_read_data.exit84, label %select.unfold97
+  br i1 %.not102.a, label %select.unfold97, label %drm_dp_dpcd_read_data.exit84
 
 bb.z:                                             ; preds = %drm_dp_dpcd_read_data.exit
-  %i.eh = and i64 %i.ed, 2147483647
+  %2 = call i64 @drm_dp_dpcd_read(ptr noundef %i.ec, i32 noundef 273, ptr noundef nonnull %i.b, i64 noundef 1) #23
+  %i.eh = and i64 %2, 2147483648
   %i.ei = icmp eq i64 %i.eh, 0
-  br i1 %i.ei, label %select.unfold97, label %drm_dp_dpcd_read_data.exit84
+  br i1 %i.ei, label %drm_dp_dpcd_read_data.exit84, label %select.unfold97
 
-select.unfold97:                                  ; preds = %.lr.ph.i79.preheader, %bb.z
+select.unfold97:                                  ; preds = %bb.z, %.lr.ph.i79.preheader
   call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.57) #23
   br label %dump_dp_payload_table.exit.thread
 
-drm_dp_dpcd_read_data.exit84:                     ; preds = %.lr.ph.i79.preheader, %bb.z
+drm_dp_dpcd_read_data.exit84:                     ; preds = %bb.z, %.lr.ph.i79.preheader
   call void (ptr, ptr, ...) @seq_printf(ptr noundef %0, ptr noundef nonnull @.str.58, i32 noundef 1, ptr noundef nonnull %i.b) #23
   %i.ej = load ptr, ptr %i.dn, align 8            ; 13 uses
   %i.ek = call i64 @drm_dp_dpcd_read(ptr noundef %i.ej, i32 noundef 1280, ptr noundef nonnull %i.b, i64 noundef 12) #23 ; 2 uses
@@ -625,55 +625,55 @@ drm_dp_mst_is_virtual_dpcd.exit59.thread:         ; preds = %bb.p, %bb.m, %drm_d
   %i.ci = call i64 @drm_dp_dpcd_read(ptr noundef %i.ch, i32 noundef 96, ptr noundef nonnull %i.c, i64 noundef 1) #23 ; 2 uses
   %i.cj = and i64 %i.ci, 2147483648
   %i.ck = icmp eq i64 %i.cj, 0
-  br i1 %i.ck, label %bb.w, label %.lr.ph.i60.preheader
+  br i1 %i.ck, label %.lr.ph.i60.preheader, label %bb.w
 
 .lr.ph.i60.preheader:                             ; preds = %drm_dp_mst_is_virtual_dpcd.exit59.thread
-  %2 = call i64 @drm_dp_dpcd_read(ptr noundef %i.ch, i32 noundef 96, ptr noundef nonnull %i.c, i64 noundef 1) #23
-  %i.cl = and i64 %2, 2147483648
+  %i.cl = and i64 %i.ci, 2147483647
   %.not123.a = icmp eq i64 %i.cl, 0
-  br i1 %.not123.a, label %drm_dp_dpcd_read_data.exit, label %drm_dp_dpcd_read_data.exit.thread
+  br i1 %.not123.a, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit
 
 bb.w:                                             ; preds = %drm_dp_mst_is_virtual_dpcd.exit59.thread
-  %i.cm = and i64 %i.ci, 2147483647
+  %2 = call i64 @drm_dp_dpcd_read(ptr noundef %i.ch, i32 noundef 96, ptr noundef nonnull %i.c, i64 noundef 1) #23
+  %i.cm = and i64 %2, 2147483648
   %i.cn = icmp eq i64 %i.cm, 0
-  br i1 %i.cn, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit
+  br i1 %i.cn, label %drm_dp_dpcd_read_data.exit, label %drm_dp_dpcd_read_data.exit.thread
 
-drm_dp_dpcd_read_data.exit:                       ; preds = %.lr.ph.i60.preheader, %bb.w
+drm_dp_dpcd_read_data.exit:                       ; preds = %bb.w, %.lr.ph.i60.preheader
   %i.co = call i64 @drm_dp_dpcd_read(ptr noundef %i.ch, i32 noundef 144, ptr noundef nonnull %i.b, i64 noundef 1) #23 ; 2 uses
   %i.cp = and i64 %i.co, 2147483648
   %i.cq = icmp eq i64 %i.cp, 0
-  br i1 %i.cq, label %bb.x, label %.lr.ph.i62.preheader
+  br i1 %i.cq, label %.lr.ph.i62.preheader, label %bb.x
 
 .lr.ph.i62.preheader:                             ; preds = %drm_dp_dpcd_read_data.exit
-  %3 = call i64 @drm_dp_dpcd_read(ptr noundef %i.ch, i32 noundef 144, ptr noundef nonnull %i.b, i64 noundef 1) #23
-  %i.cr = and i64 %3, 2147483648
+  %i.cr = and i64 %i.co, 2147483647
   %.not124.a = icmp eq i64 %i.cr, 0
-  br i1 %.not124.a, label %drm_dp_dpcd_read_data.exit67, label %drm_dp_dpcd_read_data.exit.thread
+  br i1 %.not124.a, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit67
 
 bb.x:                                             ; preds = %drm_dp_dpcd_read_data.exit
-  %i.cs = and i64 %i.co, 2147483647
+  %3 = call i64 @drm_dp_dpcd_read(ptr noundef %i.ch, i32 noundef 144, ptr noundef nonnull %i.b, i64 noundef 1) #23
+  %i.cs = and i64 %3, 2147483648
   %i.ct = icmp eq i64 %i.cs, 0
-  br i1 %i.ct, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit67
+  br i1 %i.ct, label %drm_dp_dpcd_read_data.exit67, label %drm_dp_dpcd_read_data.exit.thread
 
-drm_dp_dpcd_read_data.exit67:                     ; preds = %.lr.ph.i62.preheader, %bb.x
+drm_dp_dpcd_read_data.exit67:                     ; preds = %bb.x, %.lr.ph.i62.preheader
   %i.cu = getelementptr i8, ptr %i.h, i64 48      ; 6 uses
   %i.cv = call i64 @drm_dp_dpcd_read(ptr noundef %i.cu, i32 noundef 96, ptr noundef nonnull %i.a, i64 noundef 1) #23 ; 2 uses
   %i.cw = and i64 %i.cv, 2147483648
   %i.cx = icmp eq i64 %i.cw, 0
-  br i1 %i.cx, label %bb.y, label %.lr.ph.i69.preheader
+  br i1 %i.cx, label %.lr.ph.i69.preheader, label %bb.y
 
 .lr.ph.i69.preheader:                             ; preds = %drm_dp_dpcd_read_data.exit67
-  %4 = call i64 @drm_dp_dpcd_read(ptr noundef %i.cu, i32 noundef 96, ptr noundef nonnull %i.a, i64 noundef 1) #23
-  %i.cy = and i64 %4, 2147483648
+  %i.cy = and i64 %i.cv, 2147483647
   %.not125.a = icmp eq i64 %i.cy, 0
-  br i1 %.not125.a, label %drm_dp_dpcd_read_data.exit74, label %drm_dp_dpcd_read_data.exit.thread
+  br i1 %.not125.a, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit74
 
 bb.y:                                             ; preds = %drm_dp_dpcd_read_data.exit67
-  %i.cz = and i64 %i.cv, 2147483647
+  %4 = call i64 @drm_dp_dpcd_read(ptr noundef %i.cu, i32 noundef 96, ptr noundef nonnull %i.a, i64 noundef 1) #23
+  %i.cz = and i64 %4, 2147483648
   %i.da = icmp eq i64 %i.cz, 0
-  br i1 %i.da, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit74
+  br i1 %i.da, label %drm_dp_dpcd_read_data.exit74, label %drm_dp_dpcd_read_data.exit.thread
 
-drm_dp_dpcd_read_data.exit74:                     ; preds = %.lr.ph.i69.preheader, %bb.y
+drm_dp_dpcd_read_data.exit74:                     ; preds = %bb.y, %.lr.ph.i69.preheader
   %i.db = load i8, ptr %i.c, align 1
   %i.dc = and i8 %i.db, 1
   %.not44 = icmp eq i8 %i.dc, 0
@@ -862,20 +862,20 @@ bb.aw:                                            ; preds = %bb.av, %bb.ap
   %i.fo = call i64 @drm_dp_dpcd_read(ptr noundef %i.fn, i32 noundef 96, ptr noundef nonnull %i.c, i64 noundef 1) #23 ; 2 uses
   %i.fp = and i64 %i.fo, 2147483648
   %i.fq = icmp eq i64 %i.fp, 0
-  br i1 %i.fq, label %bb.ax, label %.lr.ph.i89.preheader
+  br i1 %i.fq, label %.lr.ph.i89.preheader, label %bb.ax
 
 .lr.ph.i89.preheader:                             ; preds = %bb.aw
-  %5 = call i64 @drm_dp_dpcd_read(ptr noundef %i.fn, i32 noundef 96, ptr noundef nonnull %i.c, i64 noundef 1) #23
-  %i.fr = and i64 %5, 2147483648
+  %i.fr = and i64 %i.fo, 2147483647
   %.not127.a = icmp eq i64 %i.fr, 0
-  br i1 %.not127.a, label %drm_dp_dpcd_read_data.exit94, label %drm_dp_dpcd_read_data.exit.thread
+  br i1 %.not127.a, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit94
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.fs = and i64 %i.fo, 2147483647
+  %5 = call i64 @drm_dp_dpcd_read(ptr noundef %i.fn, i32 noundef 96, ptr noundef nonnull %i.c, i64 noundef 1) #23
+  %i.fs = and i64 %5, 2147483648
   %i.ft = icmp eq i64 %i.fs, 0
-  br i1 %i.ft, label %drm_dp_dpcd_read_data.exit.thread, label %drm_dp_dpcd_read_data.exit94
+  br i1 %i.ft, label %drm_dp_dpcd_read_data.exit94, label %drm_dp_dpcd_read_data.exit.thread
 
-drm_dp_dpcd_read_data.exit94:                     ; preds = %.lr.ph.i89.preheader, %bb.ax
+drm_dp_dpcd_read_data.exit94:                     ; preds = %bb.ax, %.lr.ph.i89.preheader
   %i.fu = call fastcc i32 @drm_dp_dpcd_read_data(ptr noundef %i.fn, i32 noundef 144, ptr noundef nonnull %i.b, i64 noundef 1) #24, !srcloc !125
   %i.fv = icmp slt i32 %i.fu, 0
   br i1 %i.fv, label %drm_dp_dpcd_read_data.exit.thread, label %bb.ay
@@ -895,8 +895,8 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %bb.az, %bb.ay
   br label %drm_dp_dpcd_read_data.exit.thread
 
-drm_dp_dpcd_read_data.exit.thread:                ; preds = %drm_dp_mst_is_virtual_dpcd.exit.thread96, %.lr.ph.i60.preheader, %.lr.ph.i62.preheader, %.lr.ph.i69.preheader, %.lr.ph.i89.preheader, %bb.ax, %bb.y, %bb.x, %bb.w, %.thread, %bb.az, %drm_dp_dpcd_read_data.exit94, %bb.ao, %drm_dp_dpcd_read_data.exit74, %bb.z, %bb.aa, %bb.a, %bb.ba, %drm_dp_mst_is_virtual_dpcd.exit87.thread, %bb.ab
-  %.1 = phi ptr [ null, %bb.a ], [ null, %.lr.ph.i89.preheader ], [ %i.fn, %bb.az ], [ null, %bb.w ], [ %i.ch, %bb.ab ], [ null, %bb.x ], [ %i.er, %drm_dp_mst_is_virtual_dpcd.exit87.thread ], [ %i.cu, %drm_dp_dpcd_read_data.exit74 ], [ null, %bb.ao ], [ null, %bb.y ], [ null, %drm_dp_dpcd_read_data.exit94 ], [ null, %bb.ba ], [ %.032.ph, %.thread ], [ %i.cu, %bb.aa ], [ %i.cu, %bb.z ], [ null, %.lr.ph.i60.preheader ], [ null, %.lr.ph.i62.preheader ], [ null, %.lr.ph.i69.preheader ], [ null, %bb.ax ], [ null, %drm_dp_mst_is_virtual_dpcd.exit.thread96 ]
+drm_dp_dpcd_read_data.exit.thread:                ; preds = %drm_dp_mst_is_virtual_dpcd.exit.thread96, %bb.w, %bb.x, %bb.y, %bb.ax, %.lr.ph.i89.preheader, %.lr.ph.i69.preheader, %.lr.ph.i62.preheader, %.lr.ph.i60.preheader, %.thread, %bb.az, %drm_dp_dpcd_read_data.exit94, %bb.ao, %drm_dp_dpcd_read_data.exit74, %bb.z, %bb.aa, %bb.a, %bb.ba, %drm_dp_mst_is_virtual_dpcd.exit87.thread, %bb.ab
+  %.1 = phi ptr [ null, %bb.a ], [ null, %bb.x ], [ %i.fn, %bb.az ], [ null, %.lr.ph.i60.preheader ], [ %i.ch, %bb.ab ], [ null, %.lr.ph.i62.preheader ], [ %i.er, %drm_dp_mst_is_virtual_dpcd.exit87.thread ], [ %i.cu, %drm_dp_dpcd_read_data.exit74 ], [ null, %bb.ao ], [ null, %.lr.ph.i69.preheader ], [ null, %drm_dp_dpcd_read_data.exit94 ], [ null, %bb.ba ], [ %.032.ph, %.thread ], [ %i.cu, %bb.aa ], [ %i.cu, %bb.z ], [ null, %bb.y ], [ null, %bb.ax ], [ null, %bb.w ], [ null, %.lr.ph.i89.preheader ], [ null, %drm_dp_mst_is_virtual_dpcd.exit.thread96 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21

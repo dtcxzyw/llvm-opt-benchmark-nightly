@@ -206,7 +206,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ek = call i8 %i.ej(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %6, ptr %.sroa.08.0.copyload, ptr noundef nonnull align 8 dereferenceable(16) %i.dq) #25, !inline_history !392
   br label %.critedge89
 
-.critedge89:                                      ; preds = %.critedge.i.i98, %.critedge.i.i, %.critedge, %.critedge91, %.loopexit, %.thread133, %bb.l, %.thread, %bb.j, %bb.g, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.i
+.critedge89:                                      ; preds = %.critedge.i.i, %.critedge.i.i98, %.critedge, %.critedge91, %.loopexit, %.thread133, %bb.l, %.thread, %bb.j, %bb.g, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.i
   %.sroa.0132.3 = phi i8 [ %i.dp, %.loopexit ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ %i.bj, %bb.i ], [ 0, %.critedge ], [ 0, %bb.g ], [ 0, %.thread ], [ 0, %bb.j ], [ 0, %.thread133 ], [ 0, %bb.l ], [ %i.ek, %.critedge.i.i98 ], [ 0, %.critedge91 ], [ 0, %.critedge.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
@@ -609,7 +609,7 @@ bb.q:                                             ; preds = %bb.p
   %i.em = call i8 %i.el(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %6, ptr %.sroa.07.0.copyload, ptr noundef nonnull align 8 dereferenceable(16) %i.ds) #25, !inline_history !392
   br label %.critedge87
 
-.critedge87:                                      ; preds = %.critedge.i.i96, %.critedge.i.i, %.critedge, %.critedge89, %.loopexit, %.thread, %bb.l, %bb.k, %bb.j, %bb.g, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.i
+.critedge87:                                      ; preds = %.critedge.i.i, %.critedge.i.i96, %.critedge, %.critedge89, %.loopexit, %.thread, %bb.l, %bb.k, %bb.j, %bb.g, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.i
   %.sroa.0130.2 = phi i8 [ %i.dr, %.loopexit ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ %i.bj, %bb.i ], [ 0, %.critedge ], [ 0, %bb.g ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %.thread ], [ 0, %bb.l ], [ %i.em, %.critedge.i.i96 ], [ 0, %.critedge89 ], [ 0, %.critedge.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
