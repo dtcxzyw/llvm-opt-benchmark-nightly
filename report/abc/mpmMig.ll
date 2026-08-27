@@ -204,7 +204,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 88 ; 2 uses
   %i.k = add nuw nsw i32 %i.c, 1                  ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 92 ; 3 uses
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !39   ; 4 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !39   ; 3 uses
   %.not.i.not.i.i = icmp slt i32 %i.c, %i.m
   br i1 %.not.i.not.i.i, label %Mig_ObjIsTravIdCurrent.exit, label %bb.b
 
@@ -212,13 +212,9 @@ bb.b:                                             ; preds = %.lr.ph
   %i.n = load i32, ptr %i.j, align 8, !tbaa !12   ; 4 uses
   %i.o = shl nsw i32 %i.n, 1                      ; 2 uses
   %.not.i.i = icmp slt i32 %i.c, %i.o
-  %.not.i.i.not.i.i = icmp sgt i32 %i.n, %i.c     ; 2 uses
-  br i1 %.not.i.i, label %bb.g, label %1
+  br i1 %.not.i.i, label %bb.g, label %bb.c
 
-1:                                                ; preds = %bb.b
-  br i1 %.not.i.i.not.i.i, label %Vec_IntGrow.exit.i.i.i, label %bb.c
-
-bb.c:                                             ; preds = %1
+bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 96 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !8    ; 2 uses
   %.not9.i.i.i.i = icmp eq ptr %i.q, null
@@ -240,6 +236,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br label %Vec_IntGrow.exit.sink.split.i.i.i
 
 bb.g:                                             ; preds = %bb.b
+  %.not.i.i.not.i.i = icmp sgt i32 %i.n, %i.c
   br i1 %.not.i.i.not.i.i, label %Vec_IntGrow.exit.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -275,18 +272,18 @@ Vec_IntGrow.exit.sink.split.i.i.i:                ; preds = %bb.l, %bb.f
   %.pre.i.i = load i32, ptr %i.l, align 4, !tbaa !39
   br label %Vec_IntGrow.exit.i.i.i
 
-Vec_IntGrow.exit.i.i.i:                           ; preds = %Vec_IntGrow.exit.sink.split.i.i.i, %bb.h, %bb.g, %1
-  %2 = phi i32 [ %.pre.i.i, %Vec_IntGrow.exit.sink.split.i.i.i ], [ %i.m, %bb.h ], [ %i.m, %bb.g ], [ %i.m, %1 ] ; 3 uses
-  %.not3.i.i = icmp sgt i32 %2, %i.c
+Vec_IntGrow.exit.i.i.i:                           ; preds = %Vec_IntGrow.exit.sink.split.i.i.i, %bb.h, %bb.g
+  %1 = phi i32 [ %.pre.i.i, %Vec_IntGrow.exit.sink.split.i.i.i ], [ %i.m, %bb.h ], [ %i.m, %bb.g ] ; 3 uses
+  %.not3.i.i = icmp sgt i32 %1, %i.c
   br i1 %.not3.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %Vec_IntGrow.exit.i.i.i
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 96
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !8
-  %i.ag = sext i32 %2 to i64
+  %i.ag = sext i32 %1 to i64
   %i.ah = shl nsw i64 %i.ag, 2
   %scevgep.i.i.i = getelementptr i8, ptr %i.af, i64 %i.ah
-  %i.ai = sub i32 %i.c, %2
+  %i.ai = sub i32 %i.c, %1
   %i.aj = zext i32 %i.ai to i64
   %i.ak = shl nuw nsw i64 %i.aj, 2
   %i.al = add nuw nsw i64 %i.ak, 4
@@ -331,7 +328,7 @@ bb.m:                                             ; preds = %Mig_ObjIsTravIdCurr
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !44
   %i.bd = add nuw nsw i32 %i.at, 1                ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.az, i64 92 ; 3 uses
-  %i.bf = load i32, ptr %i.be, align 4, !tbaa !39 ; 4 uses
+  %i.bf = load i32, ptr %i.be, align 4, !tbaa !39 ; 3 uses
   %.not.i.not.i.i10 = icmp slt i32 %i.at, %i.bf
   br i1 %.not.i.not.i.i10, label %Mig_ObjSetTravIdCurrent.exit, label %bb.n
 
@@ -339,13 +336,9 @@ bb.n:                                             ; preds = %bb.m
   %i.bg = load i32, ptr %i.ba, align 8, !tbaa !12 ; 4 uses
   %i.bh = shl nsw i32 %i.bg, 1                    ; 2 uses
   %.not.i.i11 = icmp slt i32 %i.at, %i.bh
-  %.not.i.i.not.i.i12 = icmp sgt i32 %i.bg, %i.at ; 2 uses
-  br i1 %.not.i.i11, label %bb.s, label %3
+  br i1 %.not.i.i11, label %bb.s, label %bb.o
 
-3:                                                ; preds = %bb.n
-  br i1 %.not.i.i.not.i.i12, label %Vec_IntGrow.exit.i.i.i17, label %bb.o
-
-bb.o:                                             ; preds = %3
+bb.o:                                             ; preds = %bb.n
   %i.bi = getelementptr inbounds nuw i8, ptr %i.az, i64 96 ; 2 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !8  ; 2 uses
   %.not9.i.i.i.i13 = icmp eq ptr %i.bj, null
@@ -367,7 +360,8 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br label %Vec_IntGrow.exit.sink.split.i.i.i14
 
 bb.s:                                             ; preds = %bb.n
-  br i1 %.not.i.i.not.i.i12, label %Vec_IntGrow.exit.i.i.i17, label %bb.t
+  %.not.i.i.not.i.i20 = icmp sgt i32 %i.bg, %i.at
+  br i1 %.not.i.i.not.i.i20, label %Vec_IntGrow.exit.i.i.i17, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.bp = icmp slt i32 %i.bg, 1073741823
@@ -402,18 +396,18 @@ Vec_IntGrow.exit.sink.split.i.i.i14:              ; preds = %bb.x, %bb.r
   %.pre.i.i16 = load i32, ptr %i.be, align 4, !tbaa !39
   br label %Vec_IntGrow.exit.i.i.i17
 
-Vec_IntGrow.exit.i.i.i17:                         ; preds = %Vec_IntGrow.exit.sink.split.i.i.i14, %bb.t, %bb.s, %3
-  %4 = phi i32 [ %.pre.i.i16, %Vec_IntGrow.exit.sink.split.i.i.i14 ], [ %i.bf, %bb.t ], [ %i.bf, %bb.s ], [ %i.bf, %3 ] ; 3 uses
-  %.not4.i.i = icmp sgt i32 %4, %i.at
+Vec_IntGrow.exit.i.i.i17:                         ; preds = %Vec_IntGrow.exit.sink.split.i.i.i14, %bb.t, %bb.s
+  %2 = phi i32 [ %.pre.i.i16, %Vec_IntGrow.exit.sink.split.i.i.i14 ], [ %i.bf, %bb.t ], [ %i.bf, %bb.s ] ; 3 uses
+  %.not4.i.i = icmp sgt i32 %2, %i.at
   br i1 %.not4.i.i, label %._crit_edge.i.i.i20, label %.lr.ph.i.i.i18
 
 .lr.ph.i.i.i18:                                   ; preds = %Vec_IntGrow.exit.i.i.i17
   %i.bx = getelementptr inbounds nuw i8, ptr %i.az, i64 96
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !8
-  %i.bz = sext i32 %4 to i64
+  %i.bz = sext i32 %2 to i64
   %i.ca = shl nsw i64 %i.bz, 2
   %scevgep.i.i.i19 = getelementptr i8, ptr %i.by, i64 %i.ca
-  %i.cb = sub i32 %i.at, %4
+  %i.cb = sub i32 %i.at, %2
   %i.cc = zext i32 %i.cb to i64
   %i.cd = shl nuw nsw i64 %i.cc, 2
   %i.ce = add nuw nsw i64 %i.cd, 4
