@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/pg_crc32c_sse42?download=true
 inline.NumInlined: 4
 inline.NumDeleted: 1
-loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -129,13 +128,13 @@ bb.a:
   %i.b = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.c = and i64 %i.b, 7
   %.not84 = icmp eq i64 %i.c, 0
-  br i1 %.not84, label %.preheader, label %.lr.ph
+  br i1 %.not84, label %.preheader, label %.lr.ph.6
 
-.preheader:                                       ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %.preheader62
-  %.pre-phi = phi i64 [ %i.b, %.preheader62 ], [ %8, %.lr.ph ], [ %17, %.lr.ph.1 ], [ %26, %.lr.ph.2 ], [ %35, %.lr.ph.3 ], [ %44, %.lr.ph.4 ], [ %53, %.lr.ph.5 ], [ %i.n, %.lr.ph.6 ], [ %61, %.lr.ph.7 ]
-  %.056.lcssa = phi i64 [ %2, %.preheader62 ], [ %6, %.lr.ph ], [ %15, %.lr.ph.1 ], [ %24, %.lr.ph.2 ], [ %33, %.lr.ph.3 ], [ %42, %.lr.ph.4 ], [ %51, %.lr.ph.5 ], [ %i.l, %.lr.ph.6 ], [ %60, %.lr.ph.7 ] ; 3 uses
-  %.052.lcssa = phi i32 [ %0, %.preheader62 ], [ %5, %.lr.ph ], [ %14, %.lr.ph.1 ], [ %23, %.lr.ph.2 ], [ %32, %.lr.ph.3 ], [ %41, %.lr.ph.4 ], [ %50, %.lr.ph.5 ], [ %i.k, %.lr.ph.6 ], [ %59, %.lr.ph.7 ] ; 2 uses
-  %.051.lcssa = phi ptr [ %1, %.preheader62 ], [ %3, %.lr.ph ], [ %12, %.lr.ph.1 ], [ %21, %.lr.ph.2 ], [ %30, %.lr.ph.3 ], [ %39, %.lr.ph.4 ], [ %48, %.lr.ph.5 ], [ %i.i, %.lr.ph.6 ], [ %57, %.lr.ph.7 ] ; 2 uses
+.preheader:                                       ; preds = %.lr.ph.6, %.preheader62
+  %.pre-phi = phi i64 [ %i.b, %.preheader62 ], [ %i.n, %.lr.ph.6 ]
+  %.056.lcssa = phi i64 [ %2, %.preheader62 ], [ %i.l, %.lr.ph.6 ] ; 3 uses
+  %.052.lcssa = phi i32 [ %0, %.preheader62 ], [ %i.k, %.lr.ph.6 ] ; 2 uses
+  %.051.lcssa = phi ptr [ %1, %.preheader62 ], [ %i.i, %.lr.ph.6 ] ; 2 uses
   %i.d = and i64 %.pre-phi, 56
   %i.e = icmp ne i64 %i.d, 0
   %i.f = icmp ugt i64 %.056.lcssa, 7
@@ -146,97 +145,20 @@ bb.a:
   %i.h = zext i32 %.052.lcssa to i64
   br label %.lr.ph73
 
-.lr.ph:                                           ; preds = %.preheader62
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
-  %4 = load i8, ptr %1, align 1
-  %5 = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %0, i8 %4) ; 2 uses
-  %6 = add i64 %2, -1                             ; 2 uses
-  %7 = icmp ne i64 %6, 0
-  %8 = ptrtoint ptr %3 to i64                     ; 2 uses
-  %9 = and i64 %8, 7
-  %10 = icmp ne i64 %9, 0
-  %11 = select i1 %7, i1 %10, i1 false
-  br i1 %11, label %.lr.ph.1, label %.preheader
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
-  %13 = load i8, ptr %3, align 1
-  %14 = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %5, i8 %13) ; 2 uses
-  %15 = add i64 %2, -2                            ; 2 uses
-  %16 = icmp ne i64 %15, 0
-  %17 = ptrtoint ptr %12 to i64                   ; 2 uses
-  %18 = and i64 %17, 7
-  %19 = icmp ne i64 %18, 0
-  %20 = select i1 %16, i1 %19, i1 false
-  br i1 %20, label %.lr.ph.2, label %.preheader
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %21 = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 3 uses
-  %22 = load i8, ptr %12, align 1
-  %23 = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %14, i8 %22) ; 2 uses
-  %24 = add i64 %2, -3                            ; 2 uses
-  %25 = icmp ne i64 %24, 0
-  %26 = ptrtoint ptr %21 to i64                   ; 2 uses
-  %27 = and i64 %26, 7
-  %28 = icmp ne i64 %27, 0
-  %29 = select i1 %25, i1 %28, i1 false
-  br i1 %29, label %.lr.ph.3, label %.preheader
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %30 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
-  %31 = load i8, ptr %21, align 1
-  %32 = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %23, i8 %31) ; 2 uses
-  %33 = add i64 %2, -4                            ; 2 uses
-  %34 = icmp ne i64 %33, 0
-  %35 = ptrtoint ptr %30 to i64                   ; 2 uses
-  %36 = and i64 %35, 7
-  %37 = icmp ne i64 %36, 0
-  %38 = select i1 %34, i1 %37, i1 false
-  br i1 %38, label %.lr.ph.4, label %.preheader
-
-.lr.ph.4:                                         ; preds = %.lr.ph.3
-  %39 = getelementptr inbounds nuw i8, ptr %1, i64 5 ; 3 uses
-  %40 = load i8, ptr %30, align 1
-  %41 = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %32, i8 %40) ; 2 uses
-  %42 = add i64 %2, -5                            ; 2 uses
-  %43 = icmp ne i64 %42, 0
-  %44 = ptrtoint ptr %39 to i64                   ; 2 uses
-  %45 = and i64 %44, 7
-  %46 = icmp ne i64 %45, 0
-  %47 = select i1 %43, i1 %46, i1 false
-  br i1 %47, label %.lr.ph.5, label %.preheader
-
-.lr.ph.5:                                         ; preds = %.lr.ph.4
-  %48 = getelementptr inbounds nuw i8, ptr %1, i64 6 ; 3 uses
-  %49 = load i8, ptr %39, align 1
-  %50 = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %41, i8 %49) ; 2 uses
-  %51 = add i64 %2, -6                            ; 2 uses
-  %52 = icmp ne i64 %51, 0
-  %53 = ptrtoint ptr %48 to i64                   ; 2 uses
-  %54 = and i64 %53, 7
-  %55 = icmp ne i64 %54, 0
-  %56 = select i1 %52, i1 %55, i1 false
-  br i1 %56, label %.lr.ph.6, label %.preheader
-
-.lr.ph.6:                                         ; preds = %.lr.ph.5
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 7 ; 3 uses
-  %i.j = load i8, ptr %48, align 1
-  %i.k = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %50, i8 %i.j) ; 2 uses
-  %i.l = add i64 %2, -7                           ; 2 uses
+.lr.ph.6:                                         ; preds = %.preheader62, %.lr.ph.6
+  %.05167 = phi ptr [ %i.i, %.lr.ph.6 ], [ %1, %.preheader62 ] ; 2 uses
+  %.05266 = phi i32 [ %i.k, %.lr.ph.6 ], [ %0, %.preheader62 ]
+  %.05665 = phi i64 [ %i.l, %.lr.ph.6 ], [ %2, %.preheader62 ]
+  %i.i = getelementptr inbounds nuw i8, ptr %.05167, i64 1 ; 3 uses
+  %i.j = load i8, ptr %.05167, align 1
+  %i.k = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %.05266, i8 %i.j) ; 2 uses
+  %i.l = add i64 %.05665, -1                      ; 3 uses
   %i.m = icmp ne i64 %i.l, 0
   %i.n = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.o = and i64 %i.n, 7
   %i.p = icmp ne i64 %i.o, 0
   %i.q = select i1 %i.m, i1 %i.p, i1 false
-  br i1 %i.q, label %.lr.ph.7, label %.preheader
-
-.lr.ph.7:                                         ; preds = %.lr.ph.6
-  %57 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %58 = load i8, ptr %i.i, align 1
-  %59 = tail call i32 @llvm.x86.sse42.crc32.32.8(i32 %i.k, i8 %58)
-  %60 = add i64 %2, -8
-  %61 = ptrtoint ptr %57 to i64
-  br label %.preheader
+  br i1 %i.q, label %.lr.ph.6, label %.preheader, !llvm.loop !9
 
 .lr.ph73:                                         ; preds = %.lr.ph73.preheader, %.lr.ph73
   %.172 = phi ptr [ %i.t, %.lr.ph73 ], [ %.051.lcssa, %.lr.ph73.preheader ] ; 2 uses
@@ -251,7 +173,7 @@ bb.a:
   %i.x = icmp ne i64 %i.w, 0
   %i.y = icmp ugt i64 %i.u, 7
   %i.z = select i1 %i.x, i1 %i.y, i1 false
-  br i1 %i.z, label %.lr.ph73, label %.loopexit.loopexit, !llvm.loop !9
+  br i1 %i.z, label %.lr.ph73, label %.loopexit.loopexit, !llvm.loop !10
 
 .loopexit.loopexit:                               ; preds = %.lr.ph73
   %i.aa = trunc nuw i64 %i.s to i32
@@ -285,7 +207,7 @@ bb.b:                                             ; preds = %.loopexit
   %i.am = tail call <8 x i64> @llvm.x86.avx512.pternlog.q.512(<8 x i64> %i.ak, <8 x i64> %i.aj, <8 x i64> %i.al, i32 150) ; 2 uses
   %.3 = getelementptr inbounds nuw i8, ptr %.380, i64 64 ; 3 uses
   %.not = icmp ugt ptr %.3, %i.ad
-  br i1 %.not, label %._crit_edge, label %.lr.ph81, !llvm.loop !10
+  br i1 %.not, label %._crit_edge, label %.lr.ph81, !llvm.loop !11
 
 ._crit_edge:                                      ; preds = %.lr.ph81, %bb.b
   %.0.lcssa = phi <8 x i64> [ %i.ai, %bb.b ], [ %i.am, %.lr.ph81 ] ; 3 uses
@@ -373,7 +295,7 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.bv = getelementptr inbounds nuw i8, ptr %.230.i.prol, i64 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph32.i.prol.loopexit, label %.lr.ph32.i.prol, !llvm.loop !11
+  br i1 %prol.iter.cmp.not, label %.lr.ph32.i.prol.loopexit, label %.lr.ph32.i.prol, !llvm.loop !12
 
 .lr.ph32.i.prol.loopexit:                         ; preds = %.lr.ph32.i.prol, %.lr.ph32.preheader.i
   %.lcssa.unr = phi i32 [ poison, %.lr.ph32.preheader.i ], [ %i.bu, %.lr.ph32.i.prol ]
@@ -431,7 +353,7 @@ declare <2 x i64> @llvm.x86.avx512.pternlog.q.128(<2 x i64>, <2 x i64>, <2 x i64
 define internal i32 @pg_comp_crc32c_choose(i32 noundef %0, ptr noundef %1, i64 noundef %2) #3 {
 bb.a:
   store ptr @pg_comp_crc32c_sb8, ptr @pg_comp_crc32c, align 8
-  %i.a = load i8, ptr @X86Features, align 1, !range !12, !noundef !13
+  %i.a = load i8, ptr @X86Features, align 1, !range !13, !noundef !14
   %i.b = icmp eq i8 %i.a, 0
   br i1 %i.b, label %bb.b, label %x86_feature_available.exit
 
@@ -440,7 +362,7 @@ bb.b:                                             ; preds = %bb.a
   br label %x86_feature_available.exit
 
 x86_feature_available.exit:                       ; preds = %bb.a, %bb.b
-  %i.c = load i8, ptr getelementptr inbounds nuw (i8, ptr @X86Features, i64 1), align 1, !range !12, !noundef !13
+  %i.c = load i8, ptr getelementptr inbounds nuw (i8, ptr @X86Features, i64 1), align 1, !range !13, !noundef !14
   %i.d = trunc nuw i8 %i.c to i1
   br i1 %i.d, label %bb.c, label %bb.d
 
@@ -449,7 +371,7 @@ bb.c:                                             ; preds = %x86_feature_availab
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %x86_feature_available.exit
-  %i.e = load i8, ptr @X86Features, align 1, !range !12, !noundef !13
+  %i.e = load i8, ptr @X86Features, align 1, !range !13, !noundef !14
   %i.f = icmp eq i8 %i.e, 0
   br i1 %i.f, label %bb.e, label %x86_feature_available.exit2
 
@@ -458,12 +380,12 @@ bb.e:                                             ; preds = %bb.d
   br label %x86_feature_available.exit2
 
 x86_feature_available.exit2:                      ; preds = %bb.d, %bb.e
-  %i.g = load i8, ptr getelementptr inbounds nuw (i8, ptr @X86Features, i64 5), align 1, !range !12, !noundef !13
+  %i.g = load i8, ptr getelementptr inbounds nuw (i8, ptr @X86Features, i64 5), align 1, !range !13, !noundef !14
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %x86_feature_available.exit2
-  %i.i = load i8, ptr @X86Features, align 1, !range !12, !noundef !13
+  %i.i = load i8, ptr @X86Features, align 1, !range !13, !noundef !14
   %i.j = icmp eq i8 %i.i, 0
   br i1 %i.j, label %bb.g, label %x86_feature_available.exit3
 
@@ -472,7 +394,7 @@ bb.g:                                             ; preds = %bb.f
   br label %x86_feature_available.exit3
 
 x86_feature_available.exit3:                      ; preds = %bb.f, %bb.g
-  %i.k = load i8, ptr getelementptr inbounds nuw (i8, ptr @X86Features, i64 6), align 1, !range !12, !noundef !13
+  %i.k = load i8, ptr getelementptr inbounds nuw (i8, ptr @X86Features, i64 6), align 1, !range !13, !noundef !14
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %bb.h, label %bb.i
 
@@ -520,7 +442,8 @@ attributes #5 = { nounwind }
 !8 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !9 = distinct !{!9, !4}
 !10 = distinct !{!10, !4}
-!11 = distinct !{!11, !6}
-!12 = !{i8 0, i8 2}
-!13 = !{}
+!11 = distinct !{!11, !4}
+!12 = distinct !{!12, !6}
+!13 = !{i8 0, i8 2}
+!14 = !{}
 end_hunk_0

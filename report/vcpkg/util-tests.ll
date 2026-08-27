@@ -204,16 +204,14 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %33) #20
   %i.as = load ptr, ptr %i.k, align 8, !tbaa !39, !noalias !73 ; 5 uses
   %i.at = load ptr, ptr %20, align 8, !tbaa !39, !noalias !76 ; 3 uses
-  %i.au = ptrtoint ptr %i.as to i64               ; 4 uses
+  %i.au = ptrtoint ptr %i.as to i64               ; 3 uses
   %i.av = ptrtoint ptr %i.at to i64               ; 4 uses
-  %i.aw = sub i64 %i.au, %i.av                    ; 3 uses
+  %i.aw = sub i64 %i.au, %i.av                    ; 2 uses
   %i.ax = ashr i64 %i.aw, 4                       ; 3 uses
   %i.ay = icmp sgt i64 %i.ax, 0
   br i1 %i.ay, label %.lr.ph.i.i.i.i112, label %._crit_edge.i.i.i.i104
 
 .lr.ph.i.i.i.i112:                                ; preds = %bb.k
-  %77 = and i64 %i.aw, -16
-  %78 = sub i64 %i.au, %77                        ; 2 uses
   %i.az = mul nsw i64 %i.ax, -16
   %scevgep.i.i.i113 = getelementptr i8, ptr %i.as, i64 %i.az
   br label %bb.l
@@ -264,16 +262,16 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.bs = add nsw i64 %.031.i.i.i.i114, -1
   %i.bt = icmp sgt i64 %.031.i.i.i.i114, 1
-  %i.bu = ptrtoint ptr %i.bo to i64
+  %i.bu = ptrtoint ptr %i.bo to i64               ; 3 uses
   br i1 %i.bt, label %bb.l, label %._crit_edge.loopexit.i.i.i.i115, !llvm.loop !88
 
 ._crit_edge.loopexit.i.i.i.i115:                  ; preds = %bb.s
-  %.pre51.i.i.i.i116 = sub i64 %78, %i.av
+  %.pre51.i.i.i.i116 = sub i64 %i.bu, %i.av
   br label %._crit_edge.i.i.i.i104
 
 ._crit_edge.i.i.i.i104:                           ; preds = %._crit_edge.loopexit.i.i.i.i115, %bb.k
   %.pre-phi52.i.i.i.i105 = phi i64 [ %.pre51.i.i.i.i116, %._crit_edge.loopexit.i.i.i.i115 ], [ %i.aw, %bb.k ]
-  %i.bv = phi i64 [ %78, %._crit_edge.loopexit.i.i.i.i115 ], [ %i.au, %bb.k ] ; 4 uses
+  %i.bv = phi i64 [ %i.bu, %._crit_edge.loopexit.i.i.i.i115 ], [ %i.au, %bb.k ] ; 4 uses
   %i.bw = phi ptr [ %scevgep.i.i.i113, %._crit_edge.loopexit.i.i.i.i115 ], [ %i.as, %bb.k ] ; 2 uses
   %i.bx = ashr exact i64 %.pre-phi52.i.i.i.i105, 2
   switch i64 %i.bx, label %.noexc62 [
@@ -460,16 +458,14 @@ bb.aj:                                            ; preds = %_ZN5Catch16Assertio
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #20
   %i.ea = load ptr, ptr %i.k, align 8, !tbaa !39, !noalias !92 ; 5 uses
   %i.eb = load ptr, ptr %20, align 8, !tbaa !39, !noalias !95 ; 3 uses
-  %i.ec = ptrtoint ptr %i.ea to i64               ; 4 uses
+  %i.ec = ptrtoint ptr %i.ea to i64               ; 3 uses
   %i.ed = ptrtoint ptr %i.eb to i64               ; 4 uses
-  %i.ee = sub i64 %i.ec, %i.ed                    ; 3 uses
+  %i.ee = sub i64 %i.ec, %i.ed                    ; 2 uses
   %i.ef = ashr i64 %i.ee, 4                       ; 3 uses
   %i.eg = icmp sgt i64 %i.ef, 0
   br i1 %i.eg, label %.lr.ph.i.i.i.i129, label %._crit_edge.i.i.i.i121
 
 .lr.ph.i.i.i.i129:                                ; preds = %bb.aj
-  %79 = and i64 %i.ee, -16
-  %80 = sub i64 %i.ec, %79                        ; 2 uses
   %i.eh = mul nsw i64 %i.ef, -16
   %scevgep.i.i.i130 = getelementptr i8, ptr %i.ea, i64 %i.eh
   br label %bb.ak
@@ -520,16 +516,16 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %bb.ap
   %i.fa = add nsw i64 %.031.i.i.i.i131, -1
   %i.fb = icmp sgt i64 %.031.i.i.i.i131, 1
-  %i.fc = ptrtoint ptr %i.ew to i64
+  %i.fc = ptrtoint ptr %i.ew to i64               ; 3 uses
   br i1 %i.fb, label %bb.ak, label %._crit_edge.loopexit.i.i.i.i132, !llvm.loop !88
 
 ._crit_edge.loopexit.i.i.i.i132:                  ; preds = %bb.ar
-  %.pre51.i.i.i.i133 = sub i64 %80, %i.ed
+  %.pre51.i.i.i.i133 = sub i64 %i.fc, %i.ed
   br label %._crit_edge.i.i.i.i121
 
 ._crit_edge.i.i.i.i121:                           ; preds = %._crit_edge.loopexit.i.i.i.i132, %bb.aj
   %.pre-phi52.i.i.i.i122 = phi i64 [ %.pre51.i.i.i.i133, %._crit_edge.loopexit.i.i.i.i132 ], [ %i.ee, %bb.aj ]
-  %i.fd = phi i64 [ %80, %._crit_edge.loopexit.i.i.i.i132 ], [ %i.ec, %bb.aj ] ; 4 uses
+  %i.fd = phi i64 [ %i.fc, %._crit_edge.loopexit.i.i.i.i132 ], [ %i.ec, %bb.aj ] ; 4 uses
   %i.fe = phi ptr [ %scevgep.i.i.i130, %._crit_edge.loopexit.i.i.i.i132 ], [ %i.ea, %bb.aj ] ; 2 uses
   %i.ff = ashr exact i64 %.pre-phi52.i.i.i.i122, 2
   switch i64 %i.ff, label %.noexc68 [
@@ -710,16 +706,14 @@ bb.bh:                                            ; preds = %_ZN5Catch16Assertio
   call void @llvm.lifetime.start.p0(ptr nonnull %47) #20
   %i.hh = load ptr, ptr %i.k, align 8, !tbaa !39, !noalias !110 ; 7 uses
   %i.hi = load ptr, ptr %20, align 8, !tbaa !39, !noalias !113 ; 2 uses
-  %i.hj = ptrtoint ptr %i.hh to i64               ; 4 uses
+  %i.hj = ptrtoint ptr %i.hh to i64               ; 3 uses
   %i.hk = ptrtoint ptr %i.hi to i64               ; 4 uses
-  %i.hl = sub i64 %i.hj, %i.hk                    ; 3 uses
+  %i.hl = sub i64 %i.hj, %i.hk                    ; 2 uses
   %i.hm = ashr i64 %i.hl, 4                       ; 3 uses
   %i.hn = icmp sgt i64 %i.hm, 0
   br i1 %i.hn, label %.lr.ph.i.i.i.i146, label %._crit_edge.i.i.i.i138
 
 .lr.ph.i.i.i.i146:                                ; preds = %bb.bh
-  %81 = and i64 %i.hl, -16
-  %82 = sub i64 %i.hj, %81                        ; 2 uses
   %i.ho = mul nsw i64 %i.hm, -16
   %scevgep.i.i.i147 = getelementptr i8, ptr %i.hh, i64 %i.ho
   br label %bb.bi
@@ -770,16 +764,16 @@ bb.bo:                                            ; preds = %bb.bn
 bb.bp:                                            ; preds = %bb.bn
   %i.ih = add nsw i64 %.031.i.i.i.i148, -1
   %i.ii = icmp sgt i64 %.031.i.i.i.i148, 1
-  %i.ij = ptrtoint ptr %i.id to i64
+  %i.ij = ptrtoint ptr %i.id to i64               ; 3 uses
   br i1 %i.ii, label %bb.bi, label %._crit_edge.loopexit.i.i.i.i149, !llvm.loop !88
 
 ._crit_edge.loopexit.i.i.i.i149:                  ; preds = %bb.bp
-  %.pre51.i.i.i.i150 = sub i64 %82, %i.hk
+  %.pre51.i.i.i.i150 = sub i64 %i.ij, %i.hk
   br label %._crit_edge.i.i.i.i138
 
 ._crit_edge.i.i.i.i138:                           ; preds = %._crit_edge.loopexit.i.i.i.i149, %bb.bh
   %.pre-phi52.i.i.i.i139 = phi i64 [ %.pre51.i.i.i.i150, %._crit_edge.loopexit.i.i.i.i149 ], [ %i.hl, %bb.bh ]
-  %i.ik = phi i64 [ %82, %._crit_edge.loopexit.i.i.i.i149 ], [ %i.hj, %bb.bh ] ; 4 uses
+  %i.ik = phi i64 [ %i.ij, %._crit_edge.loopexit.i.i.i.i149 ], [ %i.hj, %bb.bh ] ; 4 uses
   %i.il = phi ptr [ %scevgep.i.i.i147, %._crit_edge.loopexit.i.i.i.i149 ], [ %i.hh, %bb.bh ] ; 2 uses
   %i.im = ashr exact i64 %.pre-phi52.i.i.i.i139, 2
   switch i64 %i.im, label %.noexc74 [
@@ -1182,18 +1176,16 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #12
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN5vcpkg4Util8find_nthISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEiEEDaT_SB_RKT0_m(ptr dead_on_unwind noalias writable sret(%"class.std::reverse_iterator") align 8 %0, ptr noundef align 8 dead_on_return %1, ptr noundef align 8 dead_on_return %2, ptr noundef nonnull align 4 dereferenceable(4) %3, i64 noundef %4) local_unnamed_addr #1 comdat {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !tbaa !39     ; 5 uses
+  %i.a = load i64, ptr %1, align 8, !tbaa !39     ; 4 uses
   %i.b = load i64, ptr %2, align 8, !tbaa !39     ; 4 uses
   %i.c = inttoptr i64 %i.a to ptr                 ; 3 uses
-  %i.d = sub i64 %i.a, %i.b                       ; 3 uses
+  %i.d = sub i64 %i.a, %i.b                       ; 2 uses
   %i.e = ashr i64 %i.d, 4                         ; 3 uses
   %i.f = icmp sgt i64 %i.e, 0
   br i1 %i.f, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a
   %i.g = load i32, ptr %3, align 4, !tbaa !43, !noalias !240 ; 4 uses
-  %5 = and i64 %i.d, -16
-  %6 = sub i64 %i.a, %5                           ; 2 uses
   %i.h = mul nsw i64 %i.e, -16
   %scevgep.i.i = getelementptr i8, ptr %i.c, i64 %i.h
   br label %bb.b
@@ -1244,16 +1236,16 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.aa = add nsw i64 %.031.i.i.i, -1
   %i.ab = icmp sgt i64 %.031.i.i.i, 1
-  %i.ac = ptrtoint ptr %i.w to i64
+  %i.ac = ptrtoint ptr %i.w to i64                ; 3 uses
   br i1 %i.ab, label %bb.b, label %._crit_edge.loopexit.i.i.i, !llvm.loop !88
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.i
-  %.pre51.i.i.i = sub i64 %6, %i.b
+  %.pre51.i.i.i = sub i64 %i.ac, %i.b
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.a
   %.pre-phi52.i.i.i = phi i64 [ %.pre51.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.d, %bb.a ]
-  %i.ad = phi i64 [ %6, %._crit_edge.loopexit.i.i.i ], [ %i.a, %bb.a ] ; 4 uses
+  %i.ad = phi i64 [ %i.ac, %._crit_edge.loopexit.i.i.i ], [ %i.a, %bb.a ] ; 4 uses
   %i.ae = phi ptr [ %scevgep.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.c, %bb.a ] ; 2 uses
   %i.af = ashr exact i64 %.pre-phi52.i.i.i, 2
   switch i64 %i.af, label %_ZSt4findISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEiET_S9_S9_RKT0_.exit [
@@ -1330,17 +1322,15 @@ _ZSt4findISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiE
 bb.o:                                             ; preds = %.lr.ph
   %i.be = getelementptr inbounds i8, ptr %.sroa.0.0.copyload.i.i.i, i64 -4 ; 5 uses
   store ptr %i.be, ptr %1, align 8, !tbaa !247
-  %.cast = ptrtoint ptr %i.be to i64              ; 4 uses
+  %.cast = ptrtoint ptr %i.be to i64              ; 3 uses
   %i.bf = load i64, ptr %2, align 8, !tbaa !39    ; 4 uses
-  %i.bg = sub i64 %.cast, %i.bf                   ; 3 uses
+  %i.bg = sub i64 %.cast, %i.bf                   ; 2 uses
   %i.bh = ashr i64 %i.bg, 4                       ; 3 uses
   %i.bi = icmp sgt i64 %i.bh, 0
   br i1 %i.bi, label %.lr.ph.i.i.i12, label %._crit_edge.i.i.i4
 
 .lr.ph.i.i.i12:                                   ; preds = %bb.o
   %i.bj = load i32, ptr %3, align 4, !tbaa !43, !noalias !249 ; 4 uses
-  %7 = and i64 %i.bg, -16
-  %8 = sub i64 %.cast, %7                         ; 2 uses
   %i.bk = mul nsw i64 %i.bh, -16
   %scevgep.i.i13 = getelementptr i8, ptr %i.be, i64 %i.bk
   br label %bb.p
@@ -1391,16 +1381,16 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.u
   %i.cd = add nsw i64 %.031.i.i.i14, -1
   %i.ce = icmp sgt i64 %.031.i.i.i14, 1
-  %i.cf = ptrtoint ptr %i.bz to i64
+  %i.cf = ptrtoint ptr %i.bz to i64               ; 3 uses
   br i1 %i.ce, label %bb.p, label %._crit_edge.loopexit.i.i.i15, !llvm.loop !88
 
 ._crit_edge.loopexit.i.i.i15:                     ; preds = %bb.w
-  %.pre51.i.i.i16 = sub i64 %8, %i.bf
+  %.pre51.i.i.i16 = sub i64 %i.cf, %i.bf
   br label %._crit_edge.i.i.i4
 
 ._crit_edge.i.i.i4:                               ; preds = %._crit_edge.loopexit.i.i.i15, %bb.o
   %.pre-phi52.i.i.i5 = phi i64 [ %.pre51.i.i.i16, %._crit_edge.loopexit.i.i.i15 ], [ %i.bg, %bb.o ]
-  %i.cg = phi i64 [ %8, %._crit_edge.loopexit.i.i.i15 ], [ %.cast, %bb.o ] ; 4 uses
+  %i.cg = phi i64 [ %i.cf, %._crit_edge.loopexit.i.i.i15 ], [ %.cast, %bb.o ] ; 4 uses
   %i.ch = phi ptr [ %scevgep.i.i13, %._crit_edge.loopexit.i.i.i15 ], [ %i.be, %bb.o ] ; 2 uses
   %i.ci = ashr exact i64 %.pre-phi52.i.i.i5, 2
   switch i64 %i.ci, label %_ZSt4findISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEEEiET_S9_S9_RKT0_.exit20 [

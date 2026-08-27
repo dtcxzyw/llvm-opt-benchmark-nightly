@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/mccdec?download=true
 inline.NumInlined: 17
 inline.NumDeleted: 8
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -165,7 +165,7 @@ time_tracker_init.exit:                           ; preds = %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 20 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 368
-  %i.ac = ptrtoint ptr %i.ab to i64               ; 7 uses
+  %i.ac = ptrtoint ptr %i.ab to i64               ; 4 uses
   %i.ad = ptrtoint ptr %i.aa to i64               ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 8 uses
@@ -568,7 +568,7 @@ bytestream2_put_byte.exit120.thread187.thread:    ; preds = %bb.ah, %bytestream2
   %i.ip = icmp slt i32 %i.in, 0
   %.0.i121 = select i1 %i.ip, i32 %..i, i32 %i.in
   %i.iq = sext i32 %.0.i121 to i64
-  %i.ir = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa375, i64 %i.iq ; 7 uses
+  %i.ir = getelementptr inbounds i8, ptr %.sroa.0.0.lcssa375, i64 %i.iq ; 3 uses
   %i.is = ptrtoint ptr %i.ir to i64
   %i.it = sub i64 %i.is, %i.ad                    ; 2 uses
   %i.iu = trunc i64 %i.it to i16
@@ -576,77 +576,42 @@ bytestream2_put_byte.exit120.thread187.thread:    ; preds = %bb.ah, %bytestream2
   %i.iv = and i64 %i.it, 65535
   %i.iw = icmp ne i64 %i.iv, 0
   %or.cond286 = select i1 %i.iw, i1 %i.im, i1 false
-  br i1 %or.cond286, label %.lr.ph280, label %.outer.backedge, !llvm.loop !52
+  br i1 %or.cond286, label %bytestream2_put_byte.exit.a, label %.outer.backedge, !llvm.loop !52
 
-.lr.ph280:                                        ; preds = %bytestream2_put_byte.exit120.thread187.thread
-  %7 = ptrtoint ptr %i.ir to i64                  ; 3 uses
-  %8 = and i64 %7, 3
-  %.not112510 = icmp eq i64 %8, 0
-  br i1 %.not112510, label %.lr.ph280._crit_edge, label %.lr.ph512
-
-.lr.ph512:                                        ; preds = %.lr.ph280
-  %9 = sub i64 %i.ac, %7
-  %10 = icmp sgt i64 %9, 0
-  br i1 %10, label %bytestream2_put_byte.exit.a, label %.outer.backedge, !llvm.loop !52
-
-bytestream2_put_byte.exit.a:                      ; preds = %.lr.ph512
-  store i8 0, ptr %i.ir, align 1, !tbaa !54
-  %11 = getelementptr inbounds nuw i8, ptr %i.ir, i64 1 ; 2 uses
-  %i.ix = ptrtoint ptr %11 to i64                 ; 3 uses
+bytestream2_put_byte.exit.a:                      ; preds = %bytestream2_put_byte.exit120.thread187.thread
+  %i.ix = ptrtoint ptr %i.ir to i64               ; 3 uses
   %i.iy = and i64 %i.ix, 3
   %.not112.a = icmp eq i64 %i.iy, 0
-  br i1 %.not112.a, label %.lr.ph280._crit_edge, label %.lr.ph512.1
+  br i1 %.not112.a, label %.lr.ph280._crit_edge, label %bytestream2_put_byte.exit.1
 
-.lr.ph512.1:                                      ; preds = %bytestream2_put_byte.exit.a
-  %12 = sub i64 %i.ac, %i.ix
-  %13 = icmp sgt i64 %12, 0
-  br i1 %13, label %bytestream2_put_byte.exit.1, label %.outer.backedge, !llvm.loop !52
+bytestream2_put_byte.exit.1:                      ; preds = %bytestream2_put_byte.exit.a, %bytestream2_put_byte.exit.2
+  %7 = phi i64 [ %i.ja, %bytestream2_put_byte.exit.2 ], [ %i.ix, %bytestream2_put_byte.exit.a ]
+  %.sroa.0.5279511 = phi ptr [ %i.iz, %bytestream2_put_byte.exit.2 ], [ %i.ir, %bytestream2_put_byte.exit.a ] ; 2 uses
+  %8 = sub i64 %i.ac, %7
+  %9 = icmp sgt i64 %8, 0
+  br i1 %9, label %bytestream2_put_byte.exit.2, label %.outer.backedge, !llvm.loop !52
 
-bytestream2_put_byte.exit.1:                      ; preds = %.lr.ph512.1
-  store i8 0, ptr %11, align 1, !tbaa !54
-  %14 = getelementptr inbounds nuw i8, ptr %i.ir, i64 2 ; 2 uses
-  %15 = ptrtoint ptr %14 to i64                   ; 3 uses
-  %16 = and i64 %15, 3
-  %.not112.1 = icmp eq i64 %16, 0
-  br i1 %.not112.1, label %.lr.ph280._crit_edge, label %.lr.ph512.2
-
-.lr.ph512.2:                                      ; preds = %bytestream2_put_byte.exit.1
-  %17 = sub i64 %i.ac, %15
-  %18 = icmp sgt i64 %17, 0
-  br i1 %18, label %bytestream2_put_byte.exit.2, label %.outer.backedge, !llvm.loop !52
-
-bytestream2_put_byte.exit.2:                      ; preds = %.lr.ph512.2
-  store i8 0, ptr %14, align 1, !tbaa !54
-  %i.iz = getelementptr inbounds nuw i8, ptr %i.ir, i64 3 ; 2 uses
+bytestream2_put_byte.exit.2:                      ; preds = %bytestream2_put_byte.exit.1
+  store i8 0, ptr %.sroa.0.5279511, align 1, !tbaa !54
+  %i.iz = getelementptr inbounds nuw i8, ptr %.sroa.0.5279511, i64 1 ; 2 uses
   %i.ja = ptrtoint ptr %i.iz to i64               ; 3 uses
   %i.jb = and i64 %i.ja, 3
   %.not112.2 = icmp eq i64 %i.jb, 0
-  br i1 %.not112.2, label %.lr.ph280._crit_edge, label %.lr.ph512.3
+  br i1 %.not112.2, label %.lr.ph280._crit_edge, label %bytestream2_put_byte.exit.1, !llvm.loop !68
 
-.lr.ph512.3:                                      ; preds = %bytestream2_put_byte.exit.2
-  %19 = sub i64 %i.ac, %i.ja
-  %20 = icmp sgt i64 %19, 0
-  br i1 %20, label %bytestream2_put_byte.exit.3, label %.outer.backedge, !llvm.loop !52
-
-bytestream2_put_byte.exit.3:                      ; preds = %.lr.ph512.3
-  store i8 0, ptr %i.iz, align 1, !tbaa !54
-  %21 = getelementptr inbounds nuw i8, ptr %i.ir, i64 4
-  %22 = ptrtoint ptr %21 to i64
-  br label %.lr.ph280._crit_edge
-
-.lr.ph280._crit_edge:                             ; preds = %bytestream2_put_byte.exit.a, %bytestream2_put_byte.exit.1, %bytestream2_put_byte.exit.2, %bytestream2_put_byte.exit.3, %.lr.ph280
-  %.lcssa490 = phi i64 [ %7, %.lr.ph280 ], [ %i.ix, %bytestream2_put_byte.exit.a ], [ %15, %bytestream2_put_byte.exit.1 ], [ %i.ja, %bytestream2_put_byte.exit.2 ], [ %22, %bytestream2_put_byte.exit.3 ]
+.lr.ph280._crit_edge:                             ; preds = %bytestream2_put_byte.exit.2, %bytestream2_put_byte.exit.a
+  %.lcssa490 = phi i64 [ %i.ix, %bytestream2_put_byte.exit.a ], [ %i.ja, %bytestream2_put_byte.exit.2 ]
   %i.jc = icmp eq i64 %i.gp, %i.hb                ; 2 uses
   %i.jd = sub i64 %.lcssa490, %i.ad
   %i.je = trunc i64 %i.jd to i32
-  store i32 %i.je, ptr %i.ag, align 4, !tbaa !68
+  store i32 %i.je, ptr %i.ag, align 4, !tbaa !69
   %i.jf = load i32, ptr %i.i, align 8, !tbaa !32
   %.not114 = icmp eq i32 %i.jf, 0
   br i1 %.not114, label %bb.aq, label %bb.an
 
 bb.an:                                            ; preds = %.lr.ph280._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
-  %i.jg = load i32, ptr %i.f, align 4, !tbaa !69
+  %i.jg = load i32, ptr %i.f, align 4, !tbaa !70
   %i.jh = load i16, ptr %i.ae, align 4, !tbaa !67
   %i.ji = call i32 @av_smpte_291m_anc_8bit_decode(ptr noundef nonnull %6, i32 noundef %i.jg, i16 noundef zeroext %i.jh, ptr noundef nonnull %i.aa, ptr noundef nonnull %0) #6
   %i.jj = icmp slt i32 %i.ji, 0
@@ -681,12 +646,12 @@ bb.ar:                                            ; preds = %bb.aq
   %.176 = phi i32 [ %i.js, %bb.ar ], [ 0, %bb.ap ]
   %.2 = phi ptr [ %i.jr, %bb.ar ], [ %i.jp, %bb.ap ] ; 3 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %.2, i64 72
-  store i64 %i.aj, ptr %i.ju, align 8, !tbaa !70
+  store i64 %i.aj, ptr %i.ju, align 8, !tbaa !71
   %i.jv = load i64, ptr %5, align 8, !tbaa !57
   %i.jw = getelementptr inbounds nuw i8, ptr %.2, i64 8
-  store i64 %i.jv, ptr %i.jw, align 8, !tbaa !71
+  store i64 %i.jv, ptr %i.jw, align 8, !tbaa !72
   %i.jx = getelementptr inbounds nuw i8, ptr %.2, i64 64
-  store i64 1, ptr %i.jx, align 8, !tbaa !72
+  store i64 1, ptr %i.jx, align 8, !tbaa !73
   br label %.outer.outer.backedge
 
 .split196:                                        ; preds = %bb.ao, %bb.an
@@ -699,8 +664,8 @@ bb.ar:                                            ; preds = %bb.aq
   %.not97264282 = icmp eq i32 %i.jy, 0
   br i1 %.not97264282, label %.lr.ph.backedge, label %.outer._crit_edge
 
-.outer.backedge:                                  ; preds = %bb.s, %.lr.ph512, %.lr.ph512.1, %.lr.ph512.2, %.lr.ph512.3, %bytestream2_put_byte.exit120.thread187, %bytestream2_put_byte.exit120.thread187.thread, %parse_time_code_rate.exit, %.split, %time_tracker_set_time.exit
-  %.075.ph.be = phi i32 [ 0, %parse_time_code_rate.exit ], [ %i.gq, %time_tracker_set_time.exit ], [ -1094995529, %.split ], [ 0, %.lr.ph512 ], [ 0, %bytestream2_put_byte.exit120.thread187 ], [ 0, %bytestream2_put_byte.exit120.thread187.thread ], [ 0, %.lr.ph512.3 ], [ 0, %.lr.ph512.2 ], [ 0, %.lr.ph512.1 ], [ %.075.ph283, %bb.s ] ; 2 uses
+.outer.backedge:                                  ; preds = %bb.s, %bytestream2_put_byte.exit.1, %bytestream2_put_byte.exit120.thread187, %bytestream2_put_byte.exit120.thread187.thread, %parse_time_code_rate.exit, %.split, %time_tracker_set_time.exit
+  %.075.ph.be = phi i32 [ 0, %parse_time_code_rate.exit ], [ %i.gq, %time_tracker_set_time.exit ], [ -1094995529, %.split ], [ 0, %bytestream2_put_byte.exit.1 ], [ 0, %bytestream2_put_byte.exit120.thread187 ], [ 0, %bytestream2_put_byte.exit120.thread187.thread ], [ %.075.ph283, %bb.s ] ; 2 uses
   %i.jz = call i32 @ff_text_eof(ptr noundef nonnull %4) #6
   %.not97264 = icmp eq i32 %i.jz, 0
   br i1 %.not97264, label %.lr.ph.backedge, label %.outer._crit_edge
@@ -907,9 +872,10 @@ attributes #7 = { nounwind willreturn memory(read) }
 !65 = !{!"alias", !7, i64 0, !6, i64 4, !11, i64 8}
 !66 = !{!65, !11, i64 8}
 !67 = !{!61, !62, i64 12}
-!68 = !{!61, !6, i64 16}
-!69 = !{!61, !6, i64 8}
-!70 = !{!40, !26, i64 72}
-!71 = !{!40, !26, i64 8}
-!72 = !{!40, !26, i64 64}
+!68 = distinct !{!68, !15}
+!69 = !{!61, !6, i64 16}
+!70 = !{!61, !6, i64 8}
+!71 = !{!40, !26, i64 72}
+!72 = !{!40, !26, i64 8}
+!73 = !{!40, !26, i64 64}
 end_hunk_1

@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/llvm-test-suite/original/7zCrcOpt?download=true
 inline.NumInlined: 1
-loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -14,81 +14,35 @@ bb.a:
   %i.c = and i64 %i.b, 3
   %i.d = icmp ne i64 %i.c, 0
   %i.e = and i1 %i.a, %i.d
-  br i1 %i.e, label %.lr.ph, label %.preheader36
+  br i1 %i.e, label %.lr.ph.2, label %.preheader36
 
-.preheader36:                                     ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %bb.a
-  %.032.lcssa = phi i64 [ %2, %bb.a ], [ %10, %.lr.ph ], [ %23, %.lr.ph.1 ], [ %i.m, %.lr.ph.2 ], [ %36, %.lr.ph.3 ] ; 3 uses
-  %.029.lcssa = phi i32 [ %0, %bb.a ], [ %9, %.lr.ph ], [ %22, %.lr.ph.1 ], [ %i.l, %.lr.ph.2 ], [ %35, %.lr.ph.3 ] ; 2 uses
-  %.0.lcssa = phi ptr [ %1, %bb.a ], [ %11, %.lr.ph ], [ %24, %.lr.ph.1 ], [ %i.n, %.lr.ph.2 ], [ %37, %.lr.ph.3 ] ; 2 uses
+.preheader36:                                     ; preds = %.lr.ph.2, %bb.a
+  %.032.lcssa = phi i64 [ %2, %bb.a ], [ %i.m, %.lr.ph.2 ] ; 3 uses
+  %.029.lcssa = phi i32 [ %0, %bb.a ], [ %i.l, %.lr.ph.2 ] ; 2 uses
+  %.0.lcssa = phi ptr [ %1, %bb.a ], [ %i.n, %.lr.ph.2 ] ; 2 uses
   %i.f = icmp ugt i64 %.032.lcssa, 3
   br i1 %i.f, label %.lr.ph45, label %.preheader
 
-.lr.ph:                                           ; preds = %bb.a
-  %4 = load i8, ptr %1, align 1, !tbaa !8
-  %.029.tr = trunc i32 %0 to i8
-  %.narrow35 = xor i8 %4, %.029.tr
-  %5 = zext i8 %.narrow35 to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %5
-  %7 = load i32, ptr %6, align 4, !tbaa !4
-  %8 = lshr i32 %0, 8
-  %9 = xor i32 %7, %8                             ; 3 uses
-  %10 = add i64 %2, -1                            ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
-  %12 = icmp ne i64 %10, 0
-  %13 = ptrtoint ptr %11 to i64
-  %14 = and i64 %13, 3
-  %15 = icmp ne i64 %14, 0
-  %16 = select i1 %12, i1 %15, i1 false
-  br i1 %16, label %.lr.ph.1, label %.preheader36
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %17 = load i8, ptr %11, align 1, !tbaa !8
-  %.029.tr.1 = trunc i32 %9 to i8
-  %.narrow35.1 = xor i8 %17, %.029.tr.1
-  %18 = zext i8 %.narrow35.1 to i64
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %18
-  %20 = load i32, ptr %19, align 4, !tbaa !4
-  %21 = lshr i32 %9, 8
-  %22 = xor i32 %20, %21                          ; 3 uses
-  %23 = add i64 %2, -2                            ; 2 uses
-  %24 = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
-  %25 = icmp ne i64 %23, 0
-  %26 = ptrtoint ptr %24 to i64
-  %27 = and i64 %26, 3
-  %28 = icmp ne i64 %27, 0
-  %29 = select i1 %25, i1 %28, i1 false
-  br i1 %29, label %.lr.ph.2, label %.preheader36
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %i.g = load i8, ptr %24, align 1, !tbaa !8
-  %.029.tr.2 = trunc i32 %22 to i8
+.lr.ph.2:                                         ; preds = %bb.a, %.lr.ph.2
+  %.039 = phi ptr [ %i.n, %.lr.ph.2 ], [ %1, %bb.a ] ; 2 uses
+  %.02938 = phi i32 [ %i.l, %.lr.ph.2 ], [ %0, %bb.a ] ; 2 uses
+  %.03237 = phi i64 [ %i.m, %.lr.ph.2 ], [ %2, %bb.a ]
+  %i.g = load i8, ptr %.039, align 1, !tbaa !8
+  %.029.tr.2 = trunc i32 %.02938 to i8
   %.narrow35.2 = xor i8 %i.g, %.029.tr.2
   %i.h = zext i8 %.narrow35.2 to i64
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.h
   %i.j = load i32, ptr %i.i, align 4, !tbaa !4
-  %i.k = lshr i32 %22, 8
-  %i.l = xor i32 %i.j, %i.k                       ; 3 uses
-  %i.m = add i64 %2, -3                           ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 3 uses
+  %i.k = lshr i32 %.02938, 8
+  %i.l = xor i32 %i.j, %i.k                       ; 2 uses
+  %i.m = add i64 %.03237, -1                      ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.039, i64 1 ; 3 uses
   %i.o = icmp ne i64 %i.m, 0
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = and i64 %i.p, 3
   %i.r = icmp ne i64 %i.q, 0
   %i.s = select i1 %i.o, i1 %i.r, i1 false
-  br i1 %i.s, label %.lr.ph.3, label %.preheader36
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %30 = load i8, ptr %i.n, align 1, !tbaa !8
-  %.029.tr.3 = trunc i32 %i.l to i8
-  %.narrow35.3 = xor i8 %30, %.029.tr.3
-  %31 = zext i8 %.narrow35.3 to i64
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %31
-  %33 = load i32, ptr %32, align 4, !tbaa !4
-  %34 = lshr i32 %i.l, 8
-  %35 = xor i32 %33, %34
-  %36 = add i64 %2, -4
-  %37 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  br label %.preheader36
+  br i1 %i.s, label %.lr.ph.2, label %.preheader36, !llvm.loop !9
 
 .preheader:                                       ; preds = %.lr.ph45, %.preheader36
   %.133.lcssa = phi i64 [ %.032.lcssa, %.preheader36 ], [ %i.at, %.lr.ph45 ] ; 3 uses
@@ -130,7 +84,7 @@ bb.a:
   %i.at = add i64 %.13342, -4                     ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.144, i64 4 ; 2 uses
   %i.av = icmp ugt i64 %i.at, 3
-  br i1 %i.av, label %.lr.ph45, label %.preheader, !llvm.loop !9
+  br i1 %i.av, label %.lr.ph45, label %.preheader, !llvm.loop !11
 
 .lr.ph53:                                         ; preds = %.preheader
   %i.aw = load i8, ptr %.1.lcssa, align 1, !tbaa !8
@@ -182,81 +136,35 @@ bb.a:
   %i.c = and i64 %i.b, 3
   %i.d = icmp ne i64 %i.c, 0
   %i.e = and i1 %i.a, %i.d
-  br i1 %i.e, label %.lr.ph.i, label %.preheader36.i
+  br i1 %i.e, label %.lr.ph.i.2, label %.preheader36.i
 
-.preheader36.i:                                   ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %bb.a
-  %.032.lcssa.i = phi i64 [ %2, %bb.a ], [ %10, %.lr.ph.i ], [ %23, %.lr.ph.i.1 ], [ %i.m, %.lr.ph.i.2 ], [ %36, %.lr.ph.i.3 ] ; 3 uses
-  %.029.lcssa.i = phi i32 [ %0, %bb.a ], [ %9, %.lr.ph.i ], [ %22, %.lr.ph.i.1 ], [ %i.l, %.lr.ph.i.2 ], [ %35, %.lr.ph.i.3 ] ; 2 uses
-  %.0.lcssa.i = phi ptr [ %1, %bb.a ], [ %11, %.lr.ph.i ], [ %24, %.lr.ph.i.1 ], [ %i.n, %.lr.ph.i.2 ], [ %37, %.lr.ph.i.3 ] ; 2 uses
+.preheader36.i:                                   ; preds = %.lr.ph.i.2, %bb.a
+  %.032.lcssa.i = phi i64 [ %2, %bb.a ], [ %i.m, %.lr.ph.i.2 ] ; 3 uses
+  %.029.lcssa.i = phi i32 [ %0, %bb.a ], [ %i.l, %.lr.ph.i.2 ] ; 2 uses
+  %.0.lcssa.i = phi ptr [ %1, %bb.a ], [ %i.n, %.lr.ph.i.2 ] ; 2 uses
   %i.f = icmp ugt i64 %.032.lcssa.i, 3
   br i1 %i.f, label %.lr.ph45.i, label %.preheader.i
 
-.lr.ph.i:                                         ; preds = %bb.a
-  %4 = load i8, ptr %1, align 1, !tbaa !8
-  %.029.tr.i = trunc i32 %0 to i8
-  %.narrow35.i = xor i8 %4, %.029.tr.i
-  %5 = zext i8 %.narrow35.i to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %5
-  %7 = load i32, ptr %6, align 4, !tbaa !4
-  %8 = lshr i32 %0, 8
-  %9 = xor i32 %7, %8                             ; 3 uses
-  %10 = add i64 %2, -1                            ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
-  %12 = icmp ne i64 %10, 0
-  %13 = ptrtoint ptr %11 to i64
-  %14 = and i64 %13, 3
-  %15 = icmp ne i64 %14, 0
-  %16 = select i1 %12, i1 %15, i1 false
-  br i1 %16, label %.lr.ph.i.1, label %.preheader36.i
-
-.lr.ph.i.1:                                       ; preds = %.lr.ph.i
-  %17 = load i8, ptr %11, align 1, !tbaa !8
-  %.029.tr.i.1 = trunc i32 %9 to i8
-  %.narrow35.i.1 = xor i8 %17, %.029.tr.i.1
-  %18 = zext i8 %.narrow35.i.1 to i64
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %18
-  %20 = load i32, ptr %19, align 4, !tbaa !4
-  %21 = lshr i32 %9, 8
-  %22 = xor i32 %20, %21                          ; 3 uses
-  %23 = add i64 %2, -2                            ; 2 uses
-  %24 = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
-  %25 = icmp ne i64 %23, 0
-  %26 = ptrtoint ptr %24 to i64
-  %27 = and i64 %26, 3
-  %28 = icmp ne i64 %27, 0
-  %29 = select i1 %25, i1 %28, i1 false
-  br i1 %29, label %.lr.ph.i.2, label %.preheader36.i
-
-.lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
-  %i.g = load i8, ptr %24, align 1, !tbaa !8
-  %.029.tr.i.2 = trunc i32 %22 to i8
+.lr.ph.i.2:                                       ; preds = %bb.a, %.lr.ph.i.2
+  %.039.i = phi ptr [ %i.n, %.lr.ph.i.2 ], [ %1, %bb.a ] ; 2 uses
+  %.02938.i = phi i32 [ %i.l, %.lr.ph.i.2 ], [ %0, %bb.a ] ; 2 uses
+  %.03237.i = phi i64 [ %i.m, %.lr.ph.i.2 ], [ %2, %bb.a ]
+  %i.g = load i8, ptr %.039.i, align 1, !tbaa !8
+  %.029.tr.i.2 = trunc i32 %.02938.i to i8
   %.narrow35.i.2 = xor i8 %i.g, %.029.tr.i.2
   %i.h = zext i8 %.narrow35.i.2 to i64
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.h
   %i.j = load i32, ptr %i.i, align 4, !tbaa !4
-  %i.k = lshr i32 %22, 8
-  %i.l = xor i32 %i.j, %i.k                       ; 3 uses
-  %i.m = add i64 %2, -3                           ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 3 uses
+  %i.k = lshr i32 %.02938.i, 8
+  %i.l = xor i32 %i.j, %i.k                       ; 2 uses
+  %i.m = add i64 %.03237.i, -1                    ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.039.i, i64 1 ; 3 uses
   %i.o = icmp ne i64 %i.m, 0
   %i.p = ptrtoint ptr %i.n to i64
   %i.q = and i64 %i.p, 3
   %i.r = icmp ne i64 %i.q, 0
   %i.s = select i1 %i.o, i1 %i.r, i1 false
-  br i1 %i.s, label %.lr.ph.i.3, label %.preheader36.i
-
-.lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
-  %30 = load i8, ptr %i.n, align 1, !tbaa !8
-  %.029.tr.i.3 = trunc i32 %i.l to i8
-  %.narrow35.i.3 = xor i8 %30, %.029.tr.i.3
-  %31 = zext i8 %.narrow35.i.3 to i64
-  %32 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %31
-  %33 = load i32, ptr %32, align 4, !tbaa !4
-  %34 = lshr i32 %i.l, 8
-  %35 = xor i32 %33, %34
-  %36 = add i64 %2, -4
-  %37 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  br label %.preheader36.i
+  br i1 %i.s, label %.lr.ph.i.2, label %.preheader36.i, !llvm.loop !9
 
 .preheader.i:                                     ; preds = %.lr.ph45.i, %.preheader36.i
   %.133.lcssa.i = phi i64 [ %.032.lcssa.i, %.preheader36.i ], [ %i.at, %.lr.ph45.i ] ; 3 uses
@@ -298,7 +206,7 @@ bb.a:
   %i.at = add i64 %.13342.i, -4                   ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.144.i, i64 4 ; 2 uses
   %i.av = icmp ugt i64 %i.at, 3
-  br i1 %i.av, label %.lr.ph45.i, label %.preheader.i, !llvm.loop !9
+  br i1 %i.av, label %.lr.ph45.i, label %.preheader.i, !llvm.loop !11
 
 .lr.ph53.i:                                       ; preds = %.preheader.i
   %i.aw = load i8, ptr %.1.lcssa.i, align 1, !tbaa !8
@@ -359,4 +267,5 @@ attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable 
 !8 = !{!6, !6, i64 0}
 !9 = distinct !{!9, !10}
 !10 = !{!"llvm.loop.mustprogress"}
+!11 = distinct !{!11, !10}
 end_hunk_0

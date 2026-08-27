@@ -204,8 +204,8 @@ bb.a:
 .lr.ph53.outer:                                   ; preds = %.lr.ph53.lr.ph, %bb.aj
   %.151.ph = phi ptr [ %i.g, %.lr.ph53.lr.ph ], [ %.5, %bb.aj ]
   %.124550.ph = phi ptr [ %i.d, %.lr.ph53.lr.ph ], [ %.12, %bb.aj ] ; 13 uses
-  %.125149.ph = phi ptr [ %0, %.lr.ph53.lr.ph ], [ %.5, %bb.aj ] ; 5 uses
-  %.125748.ph = phi i64 [ %i.c, %.lr.ph53.lr.ph ], [ 0, %bb.aj ] ; 4 uses
+  %.125149.ph = phi ptr [ %0, %.lr.ph53.lr.ph ], [ %.5, %bb.aj ] ; 3 uses
+  %.125748.ph = phi i64 [ %i.c, %.lr.ph53.lr.ph ], [ 0, %bb.aj ] ; 2 uses
   %.126047.ph = phi ptr [ null, %.lr.ph53.lr.ph ], [ %.2261, %bb.aj ]
   %i.j = ptrtoint ptr %.125149.ph to i64
   br label %.lr.ph53
@@ -227,7 +227,6 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.i
 
 bb.b:                                             ; preds = %.lr.ph53
-  %.12514988.le60 = ptrtoaddr ptr %.125149.ph to i64
   %i.p = getelementptr i8, ptr %.151, i64 4
   %i.q = getelementptr i8, ptr %.151, i64 2052    ; 2 uses
   %i.r = icmp ult ptr %i.b, %i.q
@@ -313,20 +312,15 @@ bb.i:                                             ; preds = %.lr.ph53
   store i16 %i.aw, ptr %i.aq, align 2
   %.val = load i32, ptr %i.at, align 1
   %.not291 = icmp eq i32 %.1.val, %.val
-  br i1 %.not291, label %.loopexit16, label %.loopexit5, !prof !21
+  br i1 %.not291, label %bb.j, label %.loopexit5, !prof !21
 
-.loopexit16:                                      ; preds = %bb.i
-  %.12514988.le = ptrtoaddr ptr %.125149.ph to i64
-  br label %bb.j
-
-bb.j:                                             ; preds = %.loopexit16, %.critedge
-  %.1251498841 = phi i64 [ %.12514988.le60, %.critedge ], [ %.12514988.le, %.loopexit16 ] ; 2 uses
-  %.pre-phi = phi i64 [ %i.ak, %.critedge ], [ %i.au, %.loopexit16 ] ; 4 uses
-  %.2273 = phi i32 [ %spec.store.select, %.critedge ], [ 0, %.loopexit16 ] ; 3 uses
-  %.2261 = phi ptr [ %.126047, %.critedge ], [ %i.at, %.loopexit16 ] ; 4 uses
+bb.j:                                             ; preds = %bb.i, %.critedge
+  %.pre-phi = phi i64 [ %i.ak, %.critedge ], [ %i.au, %bb.i ] ; 4 uses
+  %.2273 = phi i32 [ %spec.store.select, %.critedge ], [ 0, %bb.i ] ; 3 uses
+  %.2261 = phi ptr [ %.126047, %.critedge ], [ %i.at, %bb.i ] ; 4 uses
   %i.ax = sub i64 0, %.125748.ph
   %i.ay = getelementptr i8, ptr %.125149.ph, i64 %i.ax ; 5 uses
-  %i.az = ptrtoint ptr %i.ay to i64
+  %i.az = ptrtoint ptr %i.ay to i64               ; 3 uses
   %i.ba = sub i64 %.pre-phi, %i.az                ; 11 uses
   %.not296 = icmp eq i64 %i.ba, 0
   br i1 %.not296, label %.loopexit3, label %bb.k
@@ -384,16 +378,14 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.bv, label %.lr.ph24.preheader, label %._crit_edge, !prof !22
 
 .lr.ph24.preheader:                               ; preds = %bb.q
-  %7 = add i64 %.125748.ph, -274
-  %i.bw = add i64 %7, %.pre-phi
-  %i.bx = sub i64 %i.bw, %.1251498841
+  %i.bw = add i64 %.pre-phi, -274
+  %i.bx = sub i64 %i.bw, %i.az
   %i.by = udiv i64 %i.bx, 255                     ; 4 uses
   %i.bz = add nuw nsw i64 %i.by, 1
   tail call void @llvm.memset.p0.i64(ptr noundef align 1 %i.br, i8 0, i64 %i.bz, i1 false)
   %scevgep89.a = getelementptr i8, ptr %i.br, i64 %i.by
-  %8 = add i64 %.125748.ph, -273
-  %i.ca = add i64 %8, %.pre-phi
-  %i.cb = sub i64 %i.ca, %.1251498841
+  %i.ca = add i64 %.pre-phi, -273
+  %i.cb = sub i64 %i.ca, %i.az
   %.neg = mul i64 %i.by, -255
   %i.cc = add i64 %.neg, %i.cb
   %scevgep90.a = getelementptr i8, ptr %.124550.ph, i64 2

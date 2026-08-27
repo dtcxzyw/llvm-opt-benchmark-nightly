@@ -204,21 +204,21 @@ declare noundef i32 @gettimeofday(ptr noundef captures(none), ptr noundef captur
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #3
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc void @elf_init_ehframe(ptr nofree noundef nonnull captures(none) initializes((16, 32)) %0) unnamed_addr #6 {
+; Function Attrs: nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define internal fastcc void @elf_init_ehframe(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #6 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !39     ; 10 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !39     ; 8 uses
   %i.b = getelementptr i8, ptr %i.a, i64 4
   store i32 0, ptr %i.b, align 4, !tbaa !7
   %i.c = getelementptr i8, ptr %i.a, i64 8
   %i.d = getelementptr i8, ptr %0, i64 8
-  %i.e = getelementptr i8, ptr %i.a, i64 12
+  %i.e = getelementptr i8, ptr %i.a, i64 12       ; 2 uses
   store <4 x i8> <i8 1, i8 122, i8 82, i8 0>, ptr %i.c, align 4, !tbaa !225
-  %1 = getelementptr i8, ptr %i.a, i64 13         ; 2 uses
-  store i8 1, ptr %i.e, align 4, !tbaa !225
-  store ptr %1, ptr %0, align 8, !tbaa !39
+  store ptr %i.e, ptr %0, align 8, !tbaa !39
+  %1 = getelementptr i8, ptr %i.a, i64 20
+  store <8 x i8> <i8 1, i8 120, i8 16, i8 1, i8 27, i8 12, i8 7, i8 8>, ptr %i.e, align 4, !tbaa !225
   %i.f = getelementptr i8, ptr %i.a, i64 21
-  store <8 x i8> <i8 120, i8 16, i8 1, i8 27, i8 12, i8 7, i8 8, i8 -112>, ptr %1, align 1, !tbaa !225
+  store i8 -112, ptr %1, align 4, !tbaa !225
   %i.g = getelementptr i8, ptr %i.a, i64 22       ; 3 uses
   store i8 1, ptr %i.f, align 1, !tbaa !225
   %i.h = ptrtoint ptr %i.g to i64                 ; 2 uses
@@ -226,21 +226,18 @@ bb.a:
   %.not109 = icmp eq i64 %i.i, 0
   br i1 %.not109, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %2 = ptrtoaddr ptr %i.a to i64                  ; 2 uses
-  %3 = sub i64 1, %2
-  %4 = and i64 %3, 7                              ; 3 uses
-  %5 = add nuw nsw i64 %4, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %i.g, i8 0, i64 %5, i1 false), !tbaa !225
-  %6 = getelementptr i8, ptr %i.a, i64 %4
-  %scevgep = getelementptr i8, ptr %6, i64 23
-  %7 = add i64 %4, %2
-  %8 = add i64 %7, 23
-  br label %._crit_edge
+.lr.ph.preheader:                                 ; preds = %bb.a, %.lr.ph.preheader
+  %.0110 = phi ptr [ %2, %.lr.ph.preheader ], [ %i.g, %bb.a ] ; 2 uses
+  %2 = getelementptr i8, ptr %.0110, i64 1        ; 3 uses
+  store i8 0, ptr %.0110, align 1, !tbaa !225
+  %3 = ptrtoint ptr %2 to i64                     ; 2 uses
+  %4 = and i64 %3, 7
+  %.not = icmp eq i64 %4, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader, !llvm.loop !243
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.a
-  %.0.lcssa = phi ptr [ %i.g, %bb.a ], [ %scevgep, %.lr.ph.preheader ] ; 15 uses
-  %.lcssa108 = phi i64 [ %i.h, %bb.a ], [ %8, %.lr.ph.preheader ] ; 2 uses
+  %.0.lcssa = phi ptr [ %i.g, %bb.a ], [ %2, %.lr.ph.preheader ] ; 9 uses
+  %.lcssa108 = phi i64 [ %i.h, %bb.a ], [ %3, %.lr.ph.preheader ] ; 2 uses
   %i.j = ptrtoint ptr %i.a to i64                 ; 2 uses
   %i.k = sub i64 %.lcssa108, %i.j
   %i.l = trunc i64 %i.k to i32
@@ -261,20 +258,12 @@ bb.a:
   %i.v = getelementptr i8, ptr %0, i64 32         ; 2 uses
   %i.w = load i32, ptr %i.v, align 8, !tbaa !36
   store i32 %i.w, ptr %i.u, align 4, !tbaa !7
-  %9 = getelementptr i8, ptr %.0.lcssa, i64 16
-  %10 = getelementptr i8, ptr %.0.lcssa, i64 20
-  store <4 x i8> <i8 0, i8 65, i8 14, i8 16>, ptr %9, align 4, !tbaa !225
-  %11 = getelementptr i8, ptr %.0.lcssa, i64 21
-  store i8 -122, ptr %10, align 4, !tbaa !225
-  %i.x = getelementptr i8, ptr %.0.lcssa, i64 22  ; 2 uses
-  store i8 2, ptr %11, align 1, !tbaa !225
-  store ptr %i.x, ptr %0, align 8, !tbaa !39
-  %i.y = getelementptr i8, ptr %.0.lcssa, i64 26
-  store <4 x i8> <i8 67, i8 13, i8 6, i8 67>, ptr %i.x, align 2, !tbaa !225
-  %12 = getelementptr i8, ptr %.0.lcssa, i64 27
-  store i8 12, ptr %i.y, align 2, !tbaa !225
+  %i.x = getelementptr i8, ptr %.0.lcssa, i64 16
+  %i.y = getelementptr i8, ptr %.0.lcssa, i64 20  ; 2 uses
+  store <4 x i8> <i8 0, i8 65, i8 14, i8 16>, ptr %i.x, align 4, !tbaa !225
+  store ptr %i.y, ptr %0, align 8, !tbaa !39
   %i.z = getelementptr i8, ptr %.0.lcssa, i64 28
-  store i8 7, ptr %12, align 1, !tbaa !225
+  store <8 x i8> <i8 -122, i8 2, i8 67, i8 13, i8 6, i8 67, i8 12, i8 7>, ptr %i.y, align 4, !tbaa !225
   %i.aa = getelementptr i8, ptr %.0.lcssa, i64 29 ; 3 uses
   store i8 8, ptr %i.z, align 4, !tbaa !225
   %i.ab = ptrtoint ptr %i.aa to i64               ; 2 uses
@@ -282,21 +271,18 @@ bb.a:
   %.not102112 = icmp eq i64 %i.ac, 0
   br i1 %.not102112, label %._crit_edge116, label %.lr.ph115.preheader
 
-.lr.ph115.preheader:                              ; preds = %._crit_edge
-  %.0.lcssa124 = ptrtoaddr ptr %.0.lcssa to i64   ; 2 uses
-  %13 = sub i64 2, %.0.lcssa124
-  %14 = and i64 %13, 7                            ; 3 uses
-  %15 = add nuw nsw i64 %14, 1
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.aa, i8 0, i64 %15, i1 false), !tbaa !225
-  %16 = getelementptr i8, ptr %.0.lcssa, i64 %14
-  %scevgep125 = getelementptr i8, ptr %16, i64 30
-  %17 = add i64 %14, %.0.lcssa124
-  %18 = add i64 %17, 30
-  br label %._crit_edge116
+.lr.ph115.preheader:                              ; preds = %._crit_edge, %.lr.ph115.preheader
+  %.1113 = phi ptr [ %5, %.lr.ph115.preheader ], [ %i.aa, %._crit_edge ] ; 2 uses
+  %5 = getelementptr i8, ptr %.1113, i64 1        ; 3 uses
+  store i8 0, ptr %.1113, align 1, !tbaa !225
+  %6 = ptrtoint ptr %5 to i64                     ; 2 uses
+  %7 = and i64 %6, 7
+  %.not102 = icmp eq i64 %7, 0
+  br i1 %.not102, label %._crit_edge116, label %.lr.ph115.preheader, !llvm.loop !244
 
 ._crit_edge116:                                   ; preds = %.lr.ph115.preheader, %._crit_edge
-  %.1.lcssa = phi ptr [ %i.aa, %._crit_edge ], [ %scevgep125, %.lr.ph115.preheader ]
-  %.lcssa = phi i64 [ %i.ab, %._crit_edge ], [ %18, %.lr.ph115.preheader ]
+  %.1.lcssa = phi ptr [ %i.aa, %._crit_edge ], [ %5, %.lr.ph115.preheader ]
+  %.lcssa = phi i64 [ %i.ab, %._crit_edge ], [ %6, %.lr.ph115.preheader ]
   %i.ad = sub i64 %.lcssa, %.lcssa108
   %i.ae = trunc i64 %i.ad to i32
   %i.af = add i32 %i.ae, -4
@@ -362,7 +348,7 @@ attributes #2 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-siz
 attributes #3 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nofree "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
@@ -616,4 +602,6 @@ attributes #11 = { nounwind willreturn memory(read) }
 !240 = !{!233, !15, i64 40}
 !241 = !{!233, !15, i64 48}
 !242 = !{!43, !14, i64 2848}
+!243 = distinct !{!243, !33}
+!244 = distinct !{!244, !33}
 end_hunk_0

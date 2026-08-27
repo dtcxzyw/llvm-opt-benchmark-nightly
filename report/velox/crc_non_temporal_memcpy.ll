@@ -32,30 +32,27 @@ $_ZTSN4absl12lts_2024011612crc_internal15CrcMemcpyEngineE = comdat any
 define i32 @_ZNK4absl12lts_2024011612crc_internal26CrcNonTemporalMemcpyEngine7ComputeEPvPKvmNS0_8crc32c_tE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noalias noundef %1, ptr noalias noundef %2, i64 noundef %3, i32 %4) unnamed_addr #0 align 2 {
 bb.a:
   %i.a = icmp ugt i64 %3, 8192
-  br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.a, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %5 = ptrtoaddr ptr %1 to i64
-  %6 = and i64 %5, 63                             ; 3 uses
-  %.not.i = icmp eq i64 %6, 0
-  %7 = sub nuw nsw i64 64, %6                     ; 3 uses
-  %8 = or disjoint i64 %6, 8128
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit
-  %i.b = phi i64 [ %i.ba, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit ], [ 8192, %.lr.ph.preheader ] ; 3 uses
-  %.sroa.026.046 = phi i32 [ %i.d, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit ], [ %4, %.lr.ph.preheader ]
-  %.045 = phi i64 [ %i.b, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit ], [ 0, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit
+  %i.b = phi i64 [ %i.ba, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit ], [ 8192, %bb.a ] ; 3 uses
+  %.sroa.026.046 = phi i32 [ %i.d, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit ], [ %4, %bb.a ]
+  %.045 = phi i64 [ %i.b, %_ZN4absl12lts_2024011612crc_internal25non_temporal_store_memcpyEPvPKvm.exit ], [ 0, %bb.a ] ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 %.045 ; 4 uses
   %i.d = tail call i32 @_ZN4absl12lts_2024011612crc_internal20ExtendCrc32cInternalENS0_8crc32c_tESt17basic_string_viewIcSt11char_traitsIcEE(i32 %.sroa.026.046, i64 8192, ptr %i.c) ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.045 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.045 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8)
+  %5 = ptrtoint ptr %i.e to i64
+  %6 = and i64 %5, 63                             ; 3 uses
+  %.not.i = icmp eq i64 %6, 0
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
+  %7 = sub nuw nsw i64 64, %6                     ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.e, ptr noundef nonnull align 1 dereferenceable(1) %i.c, i64 %7, i1 false), !alias.scope !11
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %7
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 %7
+  %8 = or disjoint i64 %6, 8128
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
@@ -293,30 +290,27 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define i32 @_ZNK4absl12lts_2024011612crc_internal29CrcNonTemporalMemcpyAVXEngine7ComputeEPvPKvmNS0_8crc32c_tE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noalias noundef %1, ptr noalias noundef %2, i64 noundef %3, i32 %4) unnamed_addr #2 align 2 {
 bb.a:
   %i.a = icmp ugt i64 %3, 8192
-  br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
+  br i1 %i.a, label %.lr.ph, label %._crit_edge
 
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %5 = ptrtoaddr ptr %1 to i64
-  %6 = and i64 %5, 63                             ; 3 uses
-  %.not.i = icmp eq i64 %6, 0
-  %7 = sub nuw nsw i64 64, %6                     ; 3 uses
-  %8 = or disjoint i64 %6, 8128
-  br label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit
-  %i.b = phi i64 [ %i.av, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit ], [ 8192, %.lr.ph.preheader ] ; 3 uses
-  %.sroa.026.046 = phi i32 [ %i.d, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit ], [ %4, %.lr.ph.preheader ]
-  %.045 = phi i64 [ %i.b, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit ], [ 0, %.lr.ph.preheader ] ; 2 uses
+.lr.ph:                                           ; preds = %bb.a, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit
+  %i.b = phi i64 [ %i.av, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit ], [ 8192, %bb.a ] ; 3 uses
+  %.sroa.026.046 = phi i32 [ %i.d, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit ], [ %4, %bb.a ]
+  %.045 = phi i64 [ %i.b, %_ZN4absl12lts_2024011612crc_internal29non_temporal_store_memcpy_avxEPvPKvm.exit ], [ 0, %bb.a ] ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 %.045 ; 4 uses
   %i.d = tail call i32 @_ZN4absl12lts_2024011612crc_internal20ExtendCrc32cInternalENS0_8crc32c_tESt17basic_string_viewIcSt11char_traitsIcEE(i32 %.sroa.026.046, i64 8192, ptr %i.c) ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.045 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 %.045 ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !25)
+  %5 = ptrtoint ptr %i.e to i64
+  %6 = and i64 %5, 63                             ; 3 uses
+  %.not.i = icmp eq i64 %6, 0
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
+  %7 = sub nuw nsw i64 64, %6                     ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.e, ptr noundef nonnull align 1 dereferenceable(1) %i.c, i64 %7, i1 false), !alias.scope !28
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %7
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 %7
+  %8 = or disjoint i64 %6, 8128
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b

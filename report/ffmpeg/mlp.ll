@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/mlp?download=true
 inline.NumInlined: 1
 inline.NumDeleted: 1
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -184,23 +184,17 @@ declare ptr @av_crc_get_table(i32 noundef) local_unnamed_addr #1
 define zeroext i8 @ff_mlp_calculate_parity(ptr noundef %0, i32 noundef %1) local_unnamed_addr #5 {
 bb.a:
   %i.a = zext i32 %1 to i64                       ; 3 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %i.a ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %i.a ; 3 uses
   %i.c = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.d = and i64 %i.c, 3
   %i.e = icmp ne i64 %i.d, 0
   %i.f = icmp ne i32 %1, 0
   %i.g = and i1 %i.e, %i.f
-  br i1 %i.g, label %.lr.ph, label %.preheader
+  br i1 %i.g, label %.lr.ph.2, label %.preheader
 
-.preheader.loopexit:                              ; preds = %.lr.ph.3, %.lr.ph.2, %.lr.ph.1, %.lr.ph
-  %.lcssa78.in = phi i8 [ %2, %.lr.ph ], [ %10, %.lr.ph.1 ], [ %17, %.lr.ph.2 ], [ %21, %.lr.ph.3 ]
-  %.lcssa77 = phi ptr [ %3, %.lr.ph ], [ %11, %.lr.ph.1 ], [ %i.ac, %.lr.ph.2 ], [ %22, %.lr.ph.3 ]
-  %.lcssa78 = zext i8 %.lcssa78.in to i32
-  br label %.preheader
-
-.preheader:                                       ; preds = %.preheader.loopexit, %bb.a
-  %.019.lcssa = phi ptr [ %0, %bb.a ], [ %.lcssa77, %.preheader.loopexit ] ; 6 uses
-  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %.lcssa78, %.preheader.loopexit ] ; 3 uses
+.preheader:                                       ; preds = %.lr.ph.2, %bb.a
+  %.019.lcssa = phi ptr [ %0, %bb.a ], [ %i.ac, %.lr.ph.2 ] ; 6 uses
+  %.0.lcssa = phi i32 [ 0, %bb.a ], [ %3, %.lr.ph.2 ] ; 3 uses
   %i.h = getelementptr inbounds i8, ptr %i.b, i64 -3 ; 2 uses
   %i.i = icmp ult ptr %.019.lcssa, %i.h
   br i1 %i.i, label %.lr.ph27.preheader, label %._crit_edge
@@ -251,43 +245,19 @@ middle.block:                                     ; preds = %vector.body
   %.12025.ph = phi ptr [ %.019.lcssa, %.lr.ph27.preheader ], [ %i.t, %middle.block ]
   br label %.lr.ph27
 
-.lr.ph:                                           ; preds = %bb.a
-  %2 = load i8, ptr %0, align 1, !tbaa !9         ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
-  %4 = ptrtoint ptr %3 to i64
-  %5 = and i64 %4, 3
-  %6 = icmp ne i64 %5, 0
-  %7 = icmp ugt i32 %1, 1
-  %8 = and i1 %6, %7
-  br i1 %8, label %.lr.ph.1, label %.preheader.loopexit
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %9 = load i8, ptr %3, align 1, !tbaa !9
-  %10 = xor i8 %2, %9                             ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
-  %12 = ptrtoint ptr %11 to i64
-  %13 = and i64 %12, 3
-  %14 = icmp ne i64 %13, 0
-  %15 = icmp ugt i32 %1, 2
-  %16 = and i1 %14, %15
-  br i1 %16, label %.lr.ph.2, label %.preheader.loopexit
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %i.ab = load i8, ptr %11, align 1, !tbaa !9
-  %17 = xor i8 %10, %i.ab                         ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
+.lr.ph.2:                                         ; preds = %bb.a, %.lr.ph.2
+  %.023 = phi i32 [ %3, %.lr.ph.2 ], [ 0, %bb.a ]
+  %.01922 = phi ptr [ %i.ac, %.lr.ph.2 ], [ %0, %bb.a ] ; 2 uses
+  %i.ab = load i8, ptr %.01922, align 1, !tbaa !9
+  %2 = zext i8 %i.ab to i32
+  %3 = xor i32 %.023, %2                          ; 2 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %.01922, i64 1 ; 4 uses
   %i.ad = ptrtoint ptr %i.ac to i64
   %i.ae = and i64 %i.ad, 3
   %i.af = icmp ne i64 %i.ae, 0
-  %18 = icmp ugt i32 %1, 3
-  %19 = and i1 %i.af, %18
-  br i1 %19, label %.lr.ph.3, label %.preheader.loopexit
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %20 = load i8, ptr %i.ac, align 1, !tbaa !9
-  %21 = xor i8 %17, %20
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  br label %.preheader.loopexit
+  %4 = icmp ult ptr %i.ac, %i.b
+  %5 = select i1 %i.af, i1 %4, i1 false
+  br i1 %5, label %.lr.ph.2, label %.preheader, !llvm.loop !15
 
 .lr.ph27:                                         ; preds = %.lr.ph27.preheader72, %.lr.ph27
   %.126 = phi i32 [ %i.ah, %.lr.ph27 ], [ %.126.ph, %.lr.ph27.preheader72 ]
@@ -296,7 +266,7 @@ middle.block:                                     ; preds = %vector.body
   %i.ah = xor i32 %i.ag, %.126                    ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %.12025, i64 4 ; 3 uses
   %i.aj = icmp ult ptr %i.ai, %i.h
-  br i1 %i.aj, label %.lr.ph27, label %._crit_edge, !llvm.loop !15
+  br i1 %i.aj, label %.lr.ph27, label %._crit_edge, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %.lr.ph27, %middle.block, %.preheader
   %.120.lcssa = phi ptr [ %.019.lcssa, %.preheader ], [ %i.t, %middle.block ], [ %i.ai, %.lr.ph27 ] ; 6 uses
@@ -336,7 +306,7 @@ vector.body56:                                    ; preds = %vector.body56, %vec
   %i.ax = xor <4 x i32> %vec.phi59, %i.av         ; 2 uses
   %index.next63 = add nuw i64 %index57, 8         ; 2 uses
   %i.ay = icmp eq i64 %index.next63, %n.vec55
-  br i1 %i.ay, label %middle.block64, label %vector.body56, !llvm.loop !16
+  br i1 %i.ay, label %middle.block64, label %vector.body56, !llvm.loop !17
 
 middle.block64:                                   ; preds = %vector.body56
   %bin.rdx65 = xor <4 x i32> %i.ax, %i.aw
@@ -357,7 +327,7 @@ middle.block64:                                   ; preds = %vector.body56
   %i.bc = xor i32 %.231, %i.bb                    ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %.22130, i64 1 ; 2 uses
   %exitcond.not = icmp eq ptr %i.bd, %scevgep
-  br i1 %exitcond.not, label %._crit_edge34, label %.lr.ph33, !llvm.loop !17
+  br i1 %exitcond.not, label %._crit_edge34, label %.lr.ph33, !llvm.loop !18
 
 ._crit_edge34:                                    ; preds = %.lr.ph33, %middle.block64, %._crit_edge
   %.2.lcssa = phi i32 [ %i.an, %._crit_edge ], [ %i.az, %middle.block64 ], [ %i.bc, %.lr.ph33 ]
@@ -402,7 +372,8 @@ attributes #8 = { nounwind willreturn memory(read) }
 !12 = !{!"llvm.loop.mustprogress"}
 !13 = !{!"llvm.loop.isvectorized", i32 1}
 !14 = !{!"llvm.loop.unroll.runtime.disable"}
-!15 = distinct !{!15, !12, !14, !13}
-!16 = distinct !{!16, !12, !13, !14}
-!17 = distinct !{!17, !12, !14, !13}
+!15 = distinct !{!15, !12}
+!16 = distinct !{!16, !12, !14, !13}
+!17 = distinct !{!17, !12, !13, !14}
+!18 = distinct !{!18, !12, !14, !13}
 end_hunk_0

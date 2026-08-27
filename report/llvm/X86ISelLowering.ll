@@ -205,7 +205,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %21, i64 8
   store i32 %5, ptr %i.a, align 8
   %i.b = trunc i64 %2 to i32                      ; 19 uses
-  %.idx.i = shl i64 %2, 2                         ; 3 uses
+  %.idx.i = shl i64 %2, 2                         ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 %.idx.i ; 4 uses
   %.not7.i.i.i = icmp eq i64 %2, 0                ; 2 uses
   %.0334.idx573590.sroa.gep798 = getelementptr inbounds nuw i8, ptr %27, i64 16
@@ -608,14 +608,13 @@ bb.ah:                                            ; preds = %bb.ag
   br label %_ZNK4llvm6SDNode9hasOneUseEv.exit.thread
 
 _ZNK4llvm6SDNode9hasOneUseEv.exit.thread:         ; preds = %bb.ae, %bb.ah, %_ZNK4llvm6SDNode9hasOneUseEv.exit, %bb.ad, %.split576
-  %i.kj = ptrtoint ptr %1 to i64                  ; 4 uses
+  %i.kj = ptrtoint ptr %1 to i64                  ; 3 uses
   br i1 %.not7.i.i.i, label %"_ZN4llvm6all_ofINS_6detail5zippyINS1_14zip_enumeratorEJNS1_12index_streamERNS_8ArrayRefIiEEEEEZL16lower1BitShuffleRKNS_5SDLocES6_NS_3MVTENS_7SDValueESD_RKNS_5APIntERKNS_12X86SubtargetERNS_12SelectionDAGEE3$_1EEbOT_T0_.exit", label %.lr.ph.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i:                                 ; preds = %_ZNK4llvm6SDNode9hasOneUseEv.exit.thread
   %i.kk = load i32, ptr %i.aj, align 8, !tbaa !645, !noalias !4171
   %.fr4.i.i.i.i.i = freeze i32 %i.kk
   %i.kl = icmp ult i32 %.fr4.i.i.i.i.i, 65
-  %47 = add i64 %.idx.i, %i.kj                    ; 2 uses
   br i1 %i.kl, label %.lr.ph.split.us.i.preheader.i.i.i.i, label %.lr.ph.split.i.preheader.i.i.i.i
 
 .lr.ph.split.i.preheader.i.i.i.i:                 ; preds = %.lr.ph.i.i.i.i.i
@@ -646,7 +645,7 @@ _ZNK4llvm6SDNode9hasOneUseEv.exit.thread:         ; preds = %bb.ae, %bb.ah, %_ZN
   %i.kv = add nuw nsw i64 %.sroa.2.0.copyload.us.i.i.i.i.i, 1
   %i.kw = getelementptr inbounds nuw i8, ptr %i.kp, i64 4 ; 3 uses
   %.not.us.i.i.i.i.i = icmp eq ptr %i.kw, %i.c
-  %i.kx = ptrtoint ptr %i.kw to i64
+  %i.kx = ptrtoint ptr %i.kw to i64               ; 2 uses
   br i1 %.not.us.i.i.i.i.i, label %"_ZN4llvm6all_ofINS_6detail5zippyINS1_14zip_enumeratorEJNS1_12index_streamERNS_8ArrayRefIiEEEEEZL16lower1BitShuffleRKNS_5SDLocES6_NS_3MVTENS_7SDValueESD_RKNS_5APIntERKNS_12X86SubtargetERNS_12SelectionDAGEE3$_1EEbOT_T0_.exit", label %.lr.ph.split.us.i.i.i.i.i, !llvm.loop !4178
 
 .lr.ph.split.i.i.i.i.i:                           ; preds = %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.thread.i.i.i.i.i", %.lr.ph.split.i.preheader.i.i.i.i
@@ -673,11 +672,11 @@ _ZNK4llvm6SDNode9hasOneUseEv.exit.thread:         ; preds = %bb.ae, %bb.ah, %_ZN
   %i.lj = add nuw nsw i64 %.sroa.2.0.copyload.i.i.i.i.i, 1
   %i.lk = getelementptr inbounds nuw i8, ptr %i.kz, i64 4 ; 3 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.lk, %i.c
-  %i.ll = ptrtoint ptr %i.lk to i64
+  %i.ll = ptrtoint ptr %i.lk to i64               ; 2 uses
   br i1 %.not.i.i.i.i.i, label %"_ZN4llvm6all_ofINS_6detail5zippyINS1_14zip_enumeratorEJNS1_12index_streamERNS_8ArrayRefIiEEEEEZL16lower1BitShuffleRKNS_5SDLocES6_NS_3MVTENS_7SDValueESD_RKNS_5APIntERKNS_12X86SubtargetERNS_12SelectionDAGEE3$_1EEbOT_T0_.exit", label %.lr.ph.split.i.i.i.i.i, !llvm.loop !4178
 
 "_ZN4llvm6all_ofINS_6detail5zippyINS1_14zip_enumeratorEJNS1_12index_streamERNS_8ArrayRefIiEEEEEZL16lower1BitShuffleRKNS_5SDLocES6_NS_3MVTENS_7SDValueESD_RKNS_5APIntERKNS_12X86SubtargetERNS_12SelectionDAGEE3$_1EEbOT_T0_.exit": ; preds = %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.thread.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.us.i.i.i.i.i", %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.thread.us.i.i.i.i.i", %_ZNK4llvm6SDNode9hasOneUseEv.exit.thread
-  %i.lm = phi i64 [ %i.kj, %_ZNK4llvm6SDNode9hasOneUseEv.exit.thread ], [ %i.ko, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.us.i.i.i.i.i" ], [ %47, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.thread.us.i.i.i.i.i" ], [ %47, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.thread.i.i.i.i.i" ], [ %i.ky, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.i.i.i.i.i" ]
+  %i.lm = phi i64 [ %i.kj, %_ZNK4llvm6SDNode9hasOneUseEv.exit.thread ], [ %i.ko, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.us.i.i.i.i.i" ], [ %i.kx, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.thread.us.i.i.i.i.i" ], [ %i.ll, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.thread.i.i.i.i.i" ], [ %i.ky, %"_ZN9__gnu_cxx5__ops12_Iter_negateIZL16lower1BitShuffleRKN4llvm5SDLocENS2_8ArrayRefIiEENS2_3MVTENS2_7SDValueES9_RKNS2_5APIntERKNS2_12X86SubtargetERNS2_12SelectionDAGEE3$_1EclINS2_6detail14zip_enumeratorIJNSL_14index_iteratorEPKiEEEEEbT_.exit.i.i.i.i.i" ]
   %i.ln = inttoptr i64 %i.lm to ptr
   %i.lo = icmp eq ptr %i.c, %i.ln
   br i1 %i.lo, label %bb.ai, label %bb.ar

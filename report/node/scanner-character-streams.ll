@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/scanner-character-streams?download=true
 inline.NumInlined: 1075
 inline.NumDeleted: 584
-loop-unroll.NumCompletelyUnrolled: 16
+loop-unroll.NumCompletelyUnrolled: 15
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 17
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@_ZN2v88internal27Utf8ExternalStreamingStream26FillBufferFromCurrentChunkEv:bb.a
   %i.o = ptrtoint ptr %i.l to i64
   %i.p = ptrtoint ptr %i.n to i64
@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread
   %.5 = phi ptr [ %i.bv, %_ZN7unibrow4Utf818ValueOfIncrementalEPPKhPN14Utf8DfaDecoder5StateEPj.exit.thread ], [ %i.de, %bb.r ] ; 3 uses
-  %i.df = load ptr, ptr %i.c, align 8             ; 14 uses
+  %i.df = load ptr, ptr %i.c, align 8             ; 7 uses
   %i.dg = ptrtoint ptr %i.df to i64               ; 6 uses
   %i.dh = sub i64 %i.bs, %i.dg
   %i.di = ptrtoint ptr %.5 to i64
@@ -216,112 +216,37 @@ bb.s:                                             ; preds = %bb.r, %_ZN7unibrow4
   %i.dm = getelementptr inbounds nuw i8, ptr %i.df, i64 %i.dl ; 2 uses
   %i.dn = and i64 %.sroa.speculated, 4294967288
   %.not69 = icmp eq i64 %i.dn, 0
-  br i1 %.not69, label %.thread.i, label %.preheader30.i
+  br i1 %.not69, label %.thread.i, label %.lr.ph.3
 
-.preheader30.i:                                   ; preds = %bb.s
-  %1 = and i64 %i.dg, 7
-  %2 = icmp eq i64 %1, 0
-  br i1 %2, label %.preheader.i.preheader, label %.lr.ph.i.preheader
-
-.preheader.i.preheader:                           ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.preheader, %.preheader30.i
-  %.126.i.ph = phi ptr [ %5, %.lr.ph.preheader ], [ %i.df, %.preheader30.i ], [ %11, %.lr.ph ], [ %17, %.lr.ph.1 ], [ %23, %.lr.ph.2 ], [ %29, %.lr.ph.3 ], [ %31, %.lr.ph.4 ], [ %i.du, %.lr.ph.5 ], [ %37, %.lr.ph.6 ]
-  br label %.preheader.i
-
-.lr.ph.i.preheader:                               ; preds = %.preheader30.i
-  %3 = load i8, ptr %i.df, align 1
-  %4 = icmp slt i8 %3, 0
-  br i1 %4, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %.lr.ph.i.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %i.df, i64 1 ; 3 uses
-  %6 = ptrtoint ptr %5 to i64                     ; 2 uses
-  %7 = and i64 %6, 7
-  %8 = icmp eq i64 %7, 0
-  br i1 %8, label %.preheader.i.preheader, label %.lr.ph.i.lr.ph, !llvm.loop !11
-
-.lr.ph.i.lr.ph:                                   ; preds = %.lr.ph.preheader
-  %9 = load i8, ptr %5, align 1
-  %10 = icmp slt i8 %9, 0
-  br i1 %10, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph, !llvm.loop !11
-
-.lr.ph:                                           ; preds = %.lr.ph.i.lr.ph
-  %11 = getelementptr inbounds nuw i8, ptr %i.df, i64 2 ; 3 uses
-  %12 = ptrtoint ptr %11 to i64                   ; 2 uses
-  %13 = and i64 %12, 7
-  %14 = icmp eq i64 %13, 0
-  br i1 %14, label %.preheader.i.preheader, label %.lr.ph.i.1, !llvm.loop !11
-
-.lr.ph.i.1:                                       ; preds = %.lr.ph
-  %15 = load i8, ptr %11, align 1
-  %16 = icmp slt i8 %15, 0
-  br i1 %16, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.1, !llvm.loop !11
-
-.lr.ph.1:                                         ; preds = %.lr.ph.i.1
-  %17 = getelementptr inbounds nuw i8, ptr %i.df, i64 3 ; 3 uses
-  %18 = ptrtoint ptr %17 to i64                   ; 2 uses
-  %19 = and i64 %18, 7
-  %20 = icmp eq i64 %19, 0
-  br i1 %20, label %.preheader.i.preheader, label %.lr.ph.i.2, !llvm.loop !11
-
-.lr.ph.i.2:                                       ; preds = %.lr.ph.1
-  %21 = load i8, ptr %17, align 1
-  %22 = icmp slt i8 %21, 0
-  br i1 %22, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.2, !llvm.loop !11
-
-.lr.ph.2:                                         ; preds = %.lr.ph.i.2
-  %23 = getelementptr inbounds nuw i8, ptr %i.df, i64 4 ; 3 uses
-  %24 = ptrtoint ptr %23 to i64                   ; 2 uses
-  %25 = and i64 %24, 7
-  %26 = icmp eq i64 %25, 0
-  br i1 %26, label %.preheader.i.preheader, label %.lr.ph.i.3, !llvm.loop !11
-
-.lr.ph.i.3:                                       ; preds = %.lr.ph.2
-  %27 = load i8, ptr %23, align 1
-  %28 = icmp slt i8 %27, 0
-  br i1 %28, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.3, !llvm.loop !11
-
-.lr.ph.3:                                         ; preds = %.lr.ph.i.3
-  %29 = getelementptr inbounds nuw i8, ptr %i.df, i64 5 ; 3 uses
-  %30 = ptrtoint ptr %29 to i64                   ; 2 uses
-  %i.do = and i64 %30, 7
+.lr.ph.3:                                         ; preds = %bb.s
+  %i.do = and i64 %i.dg, 7
   %i.dp = icmp eq i64 %i.do, 0
-  br i1 %i.dp, label %.preheader.i.preheader, label %.lr.ph.i.4, !llvm.loop !11
+  br i1 %i.dp, label %.lr.ph.6, label %.lr.ph.i.4
 
 .lr.ph.i.4:                                       ; preds = %.lr.ph.3
-  %i.dq = load i8, ptr %29, align 1
+  %i.dq = load i8, ptr %i.df, align 1
   %i.dr = icmp slt i8 %i.dq, 0
-  br i1 %i.dr, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.4, !llvm.loop !11
+  br i1 %i.dr, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.5
 
-.lr.ph.4:                                         ; preds = %.lr.ph.i.4
-  %31 = getelementptr inbounds nuw i8, ptr %i.df, i64 6 ; 3 uses
-  %32 = ptrtoint ptr %31 to i64                   ; 2 uses
-  %33 = and i64 %32, 7
-  %34 = icmp eq i64 %33, 0
-  br i1 %34, label %.preheader.i.preheader, label %.lr.ph.i.5, !llvm.loop !11
-
-.lr.ph.i.5:                                       ; preds = %.lr.ph.4
-  %i.ds = load i8, ptr %31, align 1
+.lr.ph.i.5:                                       ; preds = %.lr.ph.5
+  %i.ds = load i8, ptr %i.du, align 1
   %i.dt = icmp slt i8 %i.ds, 0
   br i1 %i.dt, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.5, !llvm.loop !11
 
-.lr.ph.5:                                         ; preds = %.lr.ph.i.5
-  %i.du = getelementptr inbounds nuw i8, ptr %i.df, i64 7 ; 3 uses
+.lr.ph.5:                                         ; preds = %.lr.ph.i.4, %.lr.ph.i.5
+  %.02535.i77 = phi ptr [ %i.du, %.lr.ph.i.5 ], [ %i.df, %.lr.ph.i.4 ]
+  %i.du = getelementptr inbounds nuw i8, ptr %.02535.i77, i64 1 ; 4 uses
   %i.dv = ptrtoint ptr %i.du to i64               ; 2 uses
   %i.dw = and i64 %i.dv, 7
   %i.dx = icmp eq i64 %i.dw, 0
-  br i1 %i.dx, label %.preheader.i.preheader, label %.lr.ph.i.6, !llvm.loop !11
+  br i1 %i.dx, label %.lr.ph.6, label %.lr.ph.i.5, !llvm.loop !11
 
-.lr.ph.i.6:                                       ; preds = %.lr.ph.5
-  %35 = load i8, ptr %i.du, align 1
-  %36 = icmp slt i8 %35, 0
-  br i1 %36, label %_ZN2v88internal13NonAsciiStartEPKhj.exit, label %.lr.ph.6, !llvm.loop !11
+.lr.ph.6:                                         ; preds = %.lr.ph.5, %.lr.ph.3
+  %.126.i.ph = phi ptr [ %i.df, %.lr.ph.3 ], [ %i.du, %.lr.ph.5 ]
+  br label %.preheader.i
 
-.lr.ph.6:                                         ; preds = %.lr.ph.i.6
-  %37 = getelementptr inbounds nuw i8, ptr %i.df, i64 8
-  br label %.preheader.i.preheader, !llvm.loop !11
-
-.preheader.i:                                     ; preds = %.preheader.i.preheader, %bb.t
-  %.126.i = phi ptr [ %i.dy, %bb.t ], [ %.126.i.ph, %.preheader.i.preheader ] ; 5 uses
+.preheader.i:                                     ; preds = %.lr.ph.6, %bb.t
+  %.126.i = phi ptr [ %i.dy, %bb.t ], [ %.126.i.ph, %.lr.ph.6 ] ; 5 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %.126.i, i64 8 ; 2 uses
   %.not.i = icmp ugt ptr %i.dy, %i.dm
   br i1 %.not.i, label %.thread.loopexit.i, label %bb.t
@@ -372,8 +297,8 @@ bb.w:                                             ; preds = %.lr.ph37.i
   %i.ej = ptrtoint ptr %.3.lcssa.i to i64
   br label %_ZN2v88internal13NonAsciiStartEPKhj.exit
 
-_ZN2v88internal13NonAsciiStartEPKhj.exit:         ; preds = %.lr.ph.i.lr.ph, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.lr.ph.i.4, %.lr.ph.i.5, %.lr.ph.i.6, %.lr.ph.i.preheader, %bb.u, %bb.v, %._crit_edge.i
-  %.pn = phi i64 [ %i.eb, %bb.u ], [ %i.eh, %bb.v ], [ %i.ej, %._crit_edge.i ], [ %i.dg, %.lr.ph.i.preheader ], [ %6, %.lr.ph.i.lr.ph ], [ %12, %.lr.ph.i.1 ], [ %18, %.lr.ph.i.2 ], [ %24, %.lr.ph.i.3 ], [ %30, %.lr.ph.i.4 ], [ %32, %.lr.ph.i.5 ], [ %i.dv, %.lr.ph.i.6 ]
+_ZN2v88internal13NonAsciiStartEPKhj.exit:         ; preds = %.lr.ph.i.5, %.lr.ph.i.4, %bb.u, %bb.v, %._crit_edge.i
+  %.pn = phi i64 [ %i.eb, %bb.u ], [ %i.eh, %bb.v ], [ %i.ej, %._crit_edge.i ], [ %i.dg, %.lr.ph.i.4 ], [ %i.dv, %.lr.ph.i.5 ]
   %.1.in.i = sub i64 %.pn, %i.dg
   %sext = shl i64 %.1.in.i, 32
   %i.ek = ashr exact i64 %sext, 32                ; 3 uses

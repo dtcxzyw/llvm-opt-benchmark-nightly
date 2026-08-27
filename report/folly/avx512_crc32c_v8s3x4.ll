@@ -1,9 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/folly/original/avx512_crc32c_v8s3x4?download=true
 inline.NumInlined: 3
 inline.NumDeleted: 1
-loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolled: 5
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -16,105 +15,28 @@ bb.a:
   %i.c = and i64 %i.b, 7
   %i.d = icmp ne i64 %i.c, 0
   %i.e = and i1 %i.a, %i.d
-  br i1 %i.e, label %.lr.ph, label %._crit_edge
+  br i1 %i.e, label %.lr.ph.6, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
-  %4 = load i8, ptr %0, align 1, !tbaa !12
-  %5 = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %2, i8 %4) ; 2 uses
-  %6 = add i64 %1, -1                             ; 2 uses
-  %7 = icmp ne i64 %6, 0
-  %8 = ptrtoint ptr %3 to i64                     ; 2 uses
-  %9 = and i64 %8, 7
-  %10 = icmp ne i64 %9, 0
-  %11 = select i1 %7, i1 %10, i1 false
-  br i1 %11, label %.lr.ph.1, label %._crit_edge
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
-  %13 = load i8, ptr %3, align 1, !tbaa !12
-  %14 = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %5, i8 %13) ; 2 uses
-  %15 = add i64 %1, -2                            ; 2 uses
-  %16 = icmp ne i64 %15, 0
-  %17 = ptrtoint ptr %12 to i64                   ; 2 uses
-  %18 = and i64 %17, 7
-  %19 = icmp ne i64 %18, 0
-  %20 = select i1 %16, i1 %19, i1 false
-  br i1 %20, label %.lr.ph.2, label %._crit_edge
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
-  %22 = load i8, ptr %12, align 1, !tbaa !12
-  %23 = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %14, i8 %22) ; 2 uses
-  %24 = add i64 %1, -3                            ; 2 uses
-  %25 = icmp ne i64 %24, 0
-  %26 = ptrtoint ptr %21 to i64                   ; 2 uses
-  %27 = and i64 %26, 7
-  %28 = icmp ne i64 %27, 0
-  %29 = select i1 %25, i1 %28, i1 false
-  br i1 %29, label %.lr.ph.3, label %._crit_edge
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %30 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %31 = load i8, ptr %21, align 1, !tbaa !12
-  %32 = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %23, i8 %31) ; 2 uses
-  %33 = add i64 %1, -4                            ; 2 uses
-  %34 = icmp ne i64 %33, 0
-  %35 = ptrtoint ptr %30 to i64                   ; 2 uses
-  %36 = and i64 %35, 7
-  %37 = icmp ne i64 %36, 0
-  %38 = select i1 %34, i1 %37, i1 false
-  br i1 %38, label %.lr.ph.4, label %._crit_edge
-
-.lr.ph.4:                                         ; preds = %.lr.ph.3
-  %39 = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 3 uses
-  %40 = load i8, ptr %30, align 1, !tbaa !12
-  %41 = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %32, i8 %40) ; 2 uses
-  %42 = add i64 %1, -5                            ; 2 uses
-  %43 = icmp ne i64 %42, 0
-  %44 = ptrtoint ptr %39 to i64                   ; 2 uses
-  %45 = and i64 %44, 7
-  %46 = icmp ne i64 %45, 0
-  %47 = select i1 %43, i1 %46, i1 false
-  br i1 %47, label %.lr.ph.5, label %._crit_edge
-
-.lr.ph.5:                                         ; preds = %.lr.ph.4
-  %48 = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
-  %49 = load i8, ptr %39, align 1, !tbaa !12
-  %50 = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %41, i8 %49) ; 2 uses
-  %51 = add i64 %1, -6                            ; 2 uses
-  %52 = icmp ne i64 %51, 0
-  %53 = ptrtoint ptr %48 to i64                   ; 2 uses
-  %54 = and i64 %53, 7
-  %55 = icmp ne i64 %54, 0
-  %56 = select i1 %52, i1 %55, i1 false
-  br i1 %56, label %.lr.ph.6, label %._crit_edge
-
-.lr.ph.6:                                         ; preds = %.lr.ph.5
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 7 ; 3 uses
-  %i.g = load i8, ptr %48, align 1, !tbaa !12
-  %i.h = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %50, i8 %i.g) ; 2 uses
-  %i.i = add i64 %1, -7                           ; 2 uses
+.lr.ph.6:                                         ; preds = %bb.a, %.lr.ph.6
+  %.0235304 = phi i32 [ %i.h, %.lr.ph.6 ], [ %2, %bb.a ]
+  %.0236303 = phi i64 [ %i.i, %.lr.ph.6 ], [ %1, %bb.a ]
+  %.0242302 = phi ptr [ %i.f, %.lr.ph.6 ], [ %0, %bb.a ] ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %.0242302, i64 1 ; 3 uses
+  %i.g = load i8, ptr %.0242302, align 1, !tbaa !12
+  %i.h = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %.0235304, i8 %i.g) ; 2 uses
+  %i.i = add i64 %.0236303, -1                    ; 3 uses
   %i.j = icmp ne i64 %i.i, 0
   %i.k = ptrtoint ptr %i.f to i64                 ; 2 uses
   %i.l = and i64 %i.k, 7
   %i.m = icmp ne i64 %i.l, 0
   %i.n = select i1 %i.j, i1 %i.m, i1 false
-  br i1 %i.n, label %.lr.ph.7, label %._crit_edge
+  br i1 %i.n, label %.lr.ph.6, label %._crit_edge, !llvm.loop !13
 
-.lr.ph.7:                                         ; preds = %.lr.ph.6
-  %57 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %58 = load i8, ptr %i.f, align 1, !tbaa !12
-  %59 = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %i.h, i8 %58)
-  %60 = add i64 %1, -8
-  %61 = ptrtoint ptr %57 to i64
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %bb.a
-  %.0242.lcssa = phi ptr [ %0, %bb.a ], [ %3, %.lr.ph ], [ %12, %.lr.ph.1 ], [ %21, %.lr.ph.2 ], [ %30, %.lr.ph.3 ], [ %39, %.lr.ph.4 ], [ %48, %.lr.ph.5 ], [ %i.f, %.lr.ph.6 ], [ %57, %.lr.ph.7 ] ; 3 uses
-  %.0236.lcssa = phi i64 [ %1, %bb.a ], [ %6, %.lr.ph ], [ %15, %.lr.ph.1 ], [ %24, %.lr.ph.2 ], [ %33, %.lr.ph.3 ], [ %42, %.lr.ph.4 ], [ %51, %.lr.ph.5 ], [ %i.i, %.lr.ph.6 ], [ %60, %.lr.ph.7 ] ; 3 uses
-  %.0235.lcssa = phi i32 [ %2, %bb.a ], [ %5, %.lr.ph ], [ %14, %.lr.ph.1 ], [ %23, %.lr.ph.2 ], [ %32, %.lr.ph.3 ], [ %41, %.lr.ph.4 ], [ %50, %.lr.ph.5 ], [ %i.h, %.lr.ph.6 ], [ %59, %.lr.ph.7 ] ; 2 uses
-  %.lcssa301 = phi i64 [ %i.b, %bb.a ], [ %8, %.lr.ph ], [ %17, %.lr.ph.1 ], [ %26, %.lr.ph.2 ], [ %35, %.lr.ph.3 ], [ %44, %.lr.ph.4 ], [ %53, %.lr.ph.5 ], [ %i.k, %.lr.ph.6 ], [ %61, %.lr.ph.7 ]
+._crit_edge:                                      ; preds = %.lr.ph.6, %bb.a
+  %.0242.lcssa = phi ptr [ %0, %bb.a ], [ %i.f, %.lr.ph.6 ] ; 3 uses
+  %.0236.lcssa = phi i64 [ %1, %bb.a ], [ %i.i, %.lr.ph.6 ] ; 3 uses
+  %.0235.lcssa = phi i32 [ %2, %bb.a ], [ %i.h, %.lr.ph.6 ] ; 2 uses
+  %.lcssa301 = phi i64 [ %i.b, %bb.a ], [ %i.k, %.lr.ph.6 ]
   %i.o = and i64 %.lcssa301, 8
   %i.p = icmp ne i64 %i.o, 0
   %i.q = icmp ugt i64 %.0236.lcssa, 7
@@ -123,7 +45,7 @@ bb.a:
 
 bb.b:                                             ; preds = %._crit_edge
   %i.r = zext i32 %.0235.lcssa to i64
-  %i.s = load i64, ptr %.0242.lcssa, align 8, !tbaa !13
+  %i.s = load i64, ptr %.0242.lcssa, align 8, !tbaa !15
   %i.t = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.r, i64 %i.s)
   %i.u = trunc nuw i64 %i.t to i32
   %i.v = getelementptr inbounds nuw i8, ptr %.0242.lcssa, i64 8
@@ -219,46 +141,46 @@ bb.d:                                             ; preds = %bb.c
   %i.ce = getelementptr inbounds nuw i8, ptr %.pn312, i64 240
   %i.cf = load <2 x i64>, ptr %i.ce, align 1, !tbaa !12
   %i.cg = tail call <2 x i64> @llvm.x86.avx512.pternlog.q.128(<2 x i64> %i.bj, <2 x i64> %i.bi, <2 x i64> %i.cf, i32 150) ; 2 uses
-  %i.ch = load i64, ptr %.2244310, align 8, !tbaa !13
+  %i.ch = load i64, ptr %.2244310, align 8, !tbaa !15
   %i.ci = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.2311, i64 %i.ch)
   %i.cj = getelementptr inbounds nuw i8, ptr %.2244310, i64 %i.z ; 4 uses
-  %i.ck = load i64, ptr %i.cj, align 8, !tbaa !13
+  %i.ck = load i64, ptr %i.cj, align 8, !tbaa !15
   %i.cl = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.0233313, i64 %i.ck)
   %i.cm = getelementptr inbounds nuw i8, ptr %.2244310, i64 %i.as ; 4 uses
-  %i.cn = load i64, ptr %i.cm, align 8, !tbaa !13
+  %i.cn = load i64, ptr %i.cm, align 8, !tbaa !15
   %i.co = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.0232314, i64 %i.cn)
   %i.cp = getelementptr inbounds nuw i8, ptr %.2244310, i64 8
-  %i.cq = load i64, ptr %i.cp, align 8, !tbaa !13
+  %i.cq = load i64, ptr %i.cp, align 8, !tbaa !15
   %i.cr = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ci, i64 %i.cq)
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
-  %i.ct = load i64, ptr %i.cs, align 8, !tbaa !13
+  %i.ct = load i64, ptr %i.cs, align 8, !tbaa !15
   %i.cu = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.cl, i64 %i.ct)
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cm, i64 8
-  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !13
+  %i.cw = load i64, ptr %i.cv, align 8, !tbaa !15
   %i.cx = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.co, i64 %i.cw)
   %i.cy = getelementptr inbounds nuw i8, ptr %.2244310, i64 16
-  %i.cz = load i64, ptr %i.cy, align 8, !tbaa !13
+  %i.cz = load i64, ptr %i.cy, align 8, !tbaa !15
   %i.da = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.cr, i64 %i.cz)
   %i.db = getelementptr inbounds nuw i8, ptr %i.cj, i64 16
-  %i.dc = load i64, ptr %i.db, align 8, !tbaa !13
+  %i.dc = load i64, ptr %i.db, align 8, !tbaa !15
   %i.dd = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.cu, i64 %i.dc)
   %i.de = getelementptr inbounds nuw i8, ptr %i.cm, i64 16
-  %i.df = load i64, ptr %i.de, align 8, !tbaa !13
+  %i.df = load i64, ptr %i.de, align 8, !tbaa !15
   %i.dg = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.cx, i64 %i.df)
   %i.dh = getelementptr inbounds nuw i8, ptr %.2244310, i64 24
-  %i.di = load i64, ptr %i.dh, align 8, !tbaa !13
+  %i.di = load i64, ptr %i.dh, align 8, !tbaa !15
   %i.dj = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.da, i64 %i.di) ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cj, i64 24
-  %i.dl = load i64, ptr %i.dk, align 8, !tbaa !13
+  %i.dl = load i64, ptr %i.dk, align 8, !tbaa !15
   %i.dm = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.dd, i64 %i.dl) ; 2 uses
   %i.dn = getelementptr inbounds nuw i8, ptr %i.cm, i64 24
-  %i.do = load i64, ptr %i.dn, align 8, !tbaa !13
+  %i.do = load i64, ptr %i.dn, align 8, !tbaa !15
   %i.dp = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.dg, i64 %i.do) ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.2244310, i64 32 ; 2 uses
   %.2238 = add i64 %.2238323, -224                ; 3 uses
   %.0234 = getelementptr inbounds nuw i8, ptr %.0234324, i64 128 ; 2 uses
   %i.dr = icmp ugt i64 %.2238, 223
-  br i1 %i.dr, label %.lr.ph326, label %._crit_edge327, !llvm.loop !15
+  br i1 %i.dr, label %.lr.ph326, label %._crit_edge327, !llvm.loop !17
 
 ._crit_edge327:                                   ; preds = %.lr.ph326, %bb.d
   %.2244.lcssa = phi ptr [ %.1243, %bb.d ], [ %i.dq, %.lr.ph326 ] ; 6 uses
@@ -275,29 +197,29 @@ bb.d:                                             ; preds = %bb.c
   %.0.lcssa = phi <2 x i64> [ %i.aq, %bb.d ], [ %i.cg, %.lr.ph326 ]
   %.2238.lcssa = phi i64 [ %.2238308, %bb.d ], [ %.2238, %.lr.ph326 ]
   %.0234.lcssa = phi ptr [ %.0234309, %bb.d ], [ %.0234, %.lr.ph326 ]
-  %i.ds = load i64, ptr %.2244.lcssa, align 8, !tbaa !13
+  %i.ds = load i64, ptr %.2244.lcssa, align 8, !tbaa !15
   %i.dt = getelementptr inbounds nuw i8, ptr %.2244.lcssa, i64 %i.z ; 4 uses
-  %i.du = load i64, ptr %i.dt, align 8, !tbaa !13
+  %i.du = load i64, ptr %i.dt, align 8, !tbaa !15
   %i.dv = getelementptr inbounds nuw i8, ptr %.2244.lcssa, i64 %i.as ; 4 uses
-  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !13
+  %i.dw = load i64, ptr %i.dv, align 8, !tbaa !15
   %i.dx = getelementptr inbounds nuw i8, ptr %.2244.lcssa, i64 8
-  %i.dy = load i64, ptr %i.dx, align 8, !tbaa !13
+  %i.dy = load i64, ptr %i.dx, align 8, !tbaa !15
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
-  %i.ea = load i64, ptr %i.dz, align 8, !tbaa !13
+  %i.ea = load i64, ptr %i.dz, align 8, !tbaa !15
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dv, i64 8
-  %i.ec = load i64, ptr %i.eb, align 8, !tbaa !13
+  %i.ec = load i64, ptr %i.eb, align 8, !tbaa !15
   %i.ed = getelementptr inbounds nuw i8, ptr %.2244.lcssa, i64 16
-  %i.ee = load i64, ptr %i.ed, align 8, !tbaa !13
+  %i.ee = load i64, ptr %i.ed, align 8, !tbaa !15
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dt, i64 16
-  %i.eg = load i64, ptr %i.ef, align 8, !tbaa !13
+  %i.eg = load i64, ptr %i.ef, align 8, !tbaa !15
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dv, i64 16
-  %i.ei = load i64, ptr %i.eh, align 8, !tbaa !13
+  %i.ei = load i64, ptr %i.eh, align 8, !tbaa !15
   %i.ej = getelementptr inbounds nuw i8, ptr %.2244.lcssa, i64 24
-  %i.ek = load i64, ptr %i.ej, align 8, !tbaa !13
+  %i.ek = load i64, ptr %i.ej, align 8, !tbaa !15
   %i.el = getelementptr inbounds nuw i8, ptr %i.dt, i64 24
-  %i.em = load i64, ptr %i.el, align 8, !tbaa !13
+  %i.em = load i64, ptr %i.el, align 8, !tbaa !15
   %i.en = getelementptr inbounds nuw i8, ptr %i.dv, i64 24
-  %i.eo = load i64, ptr %i.en, align 8, !tbaa !13
+  %i.eo = load i64, ptr %i.en, align 8, !tbaa !15
   %i.ep = mul i64 %i.y, 1536
   %i.eq = add i64 %i.ep, -33
   br label %.lr.ph.i
@@ -311,7 +233,7 @@ bb.d:                                             ; preds = %bb.c
   %i.eu = lshr i64 %.025.i, 1
   %i.ev = add nsw i64 %i.eu, -16                  ; 4 uses
   %i.ew = icmp ugt i64 %.025.i, 415
-  br i1 %i.ew, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !17
+  br i1 %i.ew, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !18
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
   %i.ex = tail call <2 x i64> @llvm.x86.pclmulqdq(<2 x i64> %.0231.lcssa, <2 x i64> <i64 4060876286, i64 poison>, i8 0)
@@ -372,7 +294,7 @@ bb.d:                                             ; preds = %bb.c
   %i.go = add nsw i64 %.129.i.prol, -1            ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph31.i.prol.loopexit, label %.lr.ph31.i.prol, !llvm.loop !18
+  br i1 %prol.iter.cmp.not, label %.lr.ph31.i.prol.loopexit, label %.lr.ph31.i.prol, !llvm.loop !19
 
 .lr.ph31.i.prol.loopexit:                         ; preds = %.lr.ph31.i.prol, %.lr.ph31.i.preheader
   %.lcssa476.unr = phi i32 [ poison, %.lr.ph31.i.preheader ], [ %i.gn, %.lr.ph31.i.prol ]
@@ -400,7 +322,7 @@ bb.d:                                             ; preds = %bb.c
   %i.gy = tail call noundef i32 @llvm.x86.sse42.crc32.32.32(i32 %i.gx, i32 0) ; 2 uses
   %i.gz = add nsw i64 %.129.i, -8                 ; 2 uses
   %.not.i.7 = icmp eq i64 %i.gz, 0
-  br i1 %.not.i.7, label %.preheader.i, label %.lr.ph31.i, !llvm.loop !20
+  br i1 %.not.i.7, label %.preheader.i, label %.lr.ph31.i, !llvm.loop !21
 
 .lr.ph36.i:                                       ; preds = %.preheader.i, %.lr.ph36.i
   %i.ha = phi i64 [ %i.hj, %.lr.ph36.i ], [ %i.gq, %.preheader.i ] ; 2 uses
@@ -416,7 +338,7 @@ bb.d:                                             ; preds = %bb.c
   %i.hi = trunc nuw i64 %i.hh to i32              ; 2 uses
   %i.hj = lshr i64 %i.ha, 1                       ; 2 uses
   %.not23.i = icmp eq i64 %i.hj, 0
-  br i1 %.not23.i, label %_ZN5folly6detailL6xnmodpEm.exit, label %.lr.ph36.i, !llvm.loop !21
+  br i1 %.not23.i, label %_ZN5folly6detailL6xnmodpEm.exit, label %.lr.ph36.i, !llvm.loop !22
 
 _ZN5folly6detailL6xnmodpEm.exit:                  ; preds = %.lr.ph36.i, %.preheader.i
   %.121.lcssa.i = phi i32 [ %.020.lcssa.i, %.preheader.i ], [ %i.hi, %.lr.ph36.i ]
@@ -433,7 +355,7 @@ _ZN5folly6detailL6xnmodpEm.exit:                  ; preds = %.lr.ph36.i, %.prehe
   %i.hp = lshr i64 %.025.i265, 1
   %i.hq = add nsw i64 %i.hp, -16                  ; 4 uses
   %i.hr = icmp ugt i64 %.025.i265, 415
-  br i1 %i.hr, label %.lr.ph.i264, label %._crit_edge.loopexit.i267, !llvm.loop !17
+  br i1 %i.hr, label %.lr.ph.i264, label %._crit_edge.loopexit.i267, !llvm.loop !18
 
 ._crit_edge.loopexit.i267:                        ; preds = %.lr.ph.i264
   %i.hs = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %i.gc, i64 0
@@ -462,7 +384,7 @@ _ZN5folly6detailL6xnmodpEm.exit:                  ; preds = %.lr.ph36.i, %.prehe
   %i.id = add nsw i64 %.129.i253.prol, -1         ; 2 uses
   %prol.iter499.next = add i64 %prol.iter499, 1   ; 2 uses
   %prol.iter499.cmp.not = icmp eq i64 %prol.iter499.next, %xtraiter497
-  br i1 %prol.iter499.cmp.not, label %.lr.ph31.i252.prol.loopexit, label %.lr.ph31.i252.prol, !llvm.loop !22
+  br i1 %prol.iter499.cmp.not, label %.lr.ph31.i252.prol.loopexit, label %.lr.ph31.i252.prol, !llvm.loop !23
 
 .lr.ph31.i252.prol.loopexit:                      ; preds = %.lr.ph31.i252.prol, %.lr.ph31.i252.preheader
   %.lcssa472.unr = phi i32 [ poison, %.lr.ph31.i252.preheader ], [ %i.ic, %.lr.ph31.i252.prol ]
@@ -490,7 +412,7 @@ _ZN5folly6detailL6xnmodpEm.exit:                  ; preds = %.lr.ph36.i, %.prehe
   %i.in = tail call noundef i32 @llvm.x86.sse42.crc32.32.32(i32 %i.im, i32 0) ; 2 uses
   %i.io = add nsw i64 %.129.i253, -8              ; 2 uses
   %.not.i255.7 = icmp eq i64 %i.io, 0
-  br i1 %.not.i255.7, label %.preheader.i256, label %.lr.ph31.i252, !llvm.loop !20
+  br i1 %.not.i255.7, label %.preheader.i256, label %.lr.ph31.i252, !llvm.loop !21
 
 .lr.ph36.i259:                                    ; preds = %.preheader.i256, %.lr.ph36.i259
   %i.ip = phi i64 [ %i.iy, %.lr.ph36.i259 ], [ %i.if, %.preheader.i256 ] ; 2 uses
@@ -506,7 +428,7 @@ _ZN5folly6detailL6xnmodpEm.exit:                  ; preds = %.lr.ph36.i, %.prehe
   %i.ix = trunc nuw i64 %i.iw to i32              ; 2 uses
   %i.iy = lshr i64 %i.ip, 1                       ; 2 uses
   %.not23.i262 = icmp eq i64 %i.iy, 0
-  br i1 %.not23.i262, label %_ZN5folly6detailL6xnmodpEm.exit268, label %.lr.ph36.i259, !llvm.loop !21
+  br i1 %.not23.i262, label %_ZN5folly6detailL6xnmodpEm.exit268, label %.lr.ph36.i259, !llvm.loop !22
 
 _ZN5folly6detailL6xnmodpEm.exit268:               ; preds = %.lr.ph36.i259, %.preheader.i256
   %.121.lcssa.i263 = phi i32 [ %.020.lcssa.i257, %.preheader.i256 ], [ %i.ix, %.lr.ph36.i259 ]
@@ -522,7 +444,7 @@ _ZN5folly6detailL6xnmodpEm.exit268:               ; preds = %.lr.ph36.i259, %.pr
   %i.jd = lshr i64 %.025.i286, 1
   %i.je = add nsw i64 %i.jd, -16                  ; 4 uses
   %i.jf = icmp ugt i64 %.025.i286, 415
-  br i1 %i.jf, label %.lr.ph.i285, label %._crit_edge.loopexit.i288, !llvm.loop !17
+  br i1 %i.jf, label %.lr.ph.i285, label %._crit_edge.loopexit.i288, !llvm.loop !18
 
 ._crit_edge.loopexit.i288:                        ; preds = %.lr.ph.i285
   %i.jg = insertelement <4 x i32> <i32 poison, i32 0, i32 poison, i32 poison>, i32 %i.ge, i64 0
@@ -551,7 +473,7 @@ _ZN5folly6detailL6xnmodpEm.exit268:               ; preds = %.lr.ph36.i259, %.pr
   %i.jr = add nsw i64 %.129.i274.prol, -1         ; 2 uses
   %prol.iter502.next = add i64 %prol.iter502, 1   ; 2 uses
   %prol.iter502.cmp.not = icmp eq i64 %prol.iter502.next, %xtraiter500
-  br i1 %prol.iter502.cmp.not, label %.lr.ph31.i273.prol.loopexit, label %.lr.ph31.i273.prol, !llvm.loop !23
+  br i1 %prol.iter502.cmp.not, label %.lr.ph31.i273.prol.loopexit, label %.lr.ph31.i273.prol, !llvm.loop !24
 
 .lr.ph31.i273.prol.loopexit:                      ; preds = %.lr.ph31.i273.prol, %.lr.ph31.i273.preheader
   %.lcssa468.unr = phi i32 [ poison, %.lr.ph31.i273.preheader ], [ %i.jq, %.lr.ph31.i273.prol ]
@@ -579,7 +501,7 @@ _ZN5folly6detailL6xnmodpEm.exit268:               ; preds = %.lr.ph36.i259, %.pr
   %i.kb = tail call noundef i32 @llvm.x86.sse42.crc32.32.32(i32 %i.ka, i32 0) ; 2 uses
   %i.kc = add nsw i64 %.129.i274, -8              ; 2 uses
   %.not.i276.7 = icmp eq i64 %i.kc, 0
-  br i1 %.not.i276.7, label %.preheader.i277, label %.lr.ph31.i273, !llvm.loop !20
+  br i1 %.not.i276.7, label %.preheader.i277, label %.lr.ph31.i273, !llvm.loop !21
 
 .lr.ph36.i280:                                    ; preds = %.preheader.i277, %.lr.ph36.i280
   %i.kd = phi i64 [ %i.km, %.lr.ph36.i280 ], [ %i.jt, %.preheader.i277 ] ; 2 uses
@@ -595,7 +517,7 @@ _ZN5folly6detailL6xnmodpEm.exit268:               ; preds = %.lr.ph36.i259, %.pr
   %i.kl = trunc nuw i64 %i.kk to i32              ; 2 uses
   %i.km = lshr i64 %i.kd, 1                       ; 2 uses
   %.not23.i283 = icmp eq i64 %i.km, 0
-  br i1 %.not23.i283, label %_ZN5folly6detailL6xnmodpEm.exit289, label %.lr.ph36.i280, !llvm.loop !21
+  br i1 %.not23.i283, label %_ZN5folly6detailL6xnmodpEm.exit289, label %.lr.ph36.i280, !llvm.loop !22
 
 _ZN5folly6detailL6xnmodpEm.exit289:               ; preds = %.lr.ph36.i280, %.preheader.i277
   %.121.lcssa.i284 = phi i32 [ %.020.lcssa.i278, %.preheader.i277 ], [ %i.kl, %.lr.ph36.i280 ]
@@ -635,13 +557,13 @@ bb.e:                                             ; preds = %_ZN5folly6detailL6x
   %.4240343.prol = phi i64 [ %i.lg, %.lr.ph346.prol ], [ %.3239, %.lr.ph346.preheader ]
   %.4246342.prol = phi ptr [ %i.lf, %.lr.ph346.prol ], [ %.3245, %.lr.ph346.preheader ] ; 2 uses
   %prol.iter505 = phi i64 [ %prol.iter505.next, %.lr.ph346.prol ], [ 0, %.lr.ph346.preheader ]
-  %i.ld = load i64, ptr %.4246342.prol, align 8, !tbaa !13
+  %i.ld = load i64, ptr %.4246342.prol, align 8, !tbaa !15
   %i.le = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.4344.prol, i64 %i.ld) ; 3 uses
   %i.lf = getelementptr inbounds nuw i8, ptr %.4246342.prol, i64 8 ; 3 uses
   %i.lg = add nsw i64 %.4240343.prol, -8          ; 3 uses
   %prol.iter505.next = add i64 %prol.iter505, 1   ; 2 uses
   %prol.iter505.cmp.not = icmp eq i64 %prol.iter505.next, %xtraiter503
-  br i1 %prol.iter505.cmp.not, label %.lr.ph346.prol.loopexit, label %.lr.ph346.prol, !llvm.loop !24
+  br i1 %prol.iter505.cmp.not, label %.lr.ph346.prol.loopexit, label %.lr.ph346.prol, !llvm.loop !25
 
 .lr.ph346.prol.loopexit:                          ; preds = %.lr.ph346.prol, %.lr.ph346.preheader
   %.4344.unr = phi i64 [ %i.kz, %.lr.ph346.preheader ], [ %i.le, %.lr.ph346.prol ]
@@ -683,7 +605,7 @@ bb.e:                                             ; preds = %_ZN5folly6detailL6x
   %i.lm = add nsw i64 %.5241352.prol, -1          ; 2 uses
   %prol.iter508.next = add i64 %prol.iter508, 1   ; 2 uses
   %prol.iter508.cmp.not = icmp eq i64 %prol.iter508.next, %xtraiter506
-  br i1 %prol.iter508.cmp.not, label %.lr.ph354.prol.loopexit, label %.lr.ph354.prol, !llvm.loop !25
+  br i1 %prol.iter508.cmp.not, label %.lr.ph354.prol.loopexit, label %.lr.ph354.prol, !llvm.loop !26
 
 .lr.ph354.prol.loopexit:                          ; preds = %.lr.ph354.prol, %.lr.ph354.preheader
   %.lcssa.unr = phi i32 [ poison, %.lr.ph354.preheader ], [ %i.ll, %.lr.ph354.prol ]
@@ -697,33 +619,33 @@ bb.e:                                             ; preds = %_ZN5folly6detailL6x
   %.4344 = phi i64 [ %i.mk, %.lr.ph346 ], [ %.4344.unr, %.lr.ph346.prol.loopexit ]
   %.4240343 = phi i64 [ %i.mm, %.lr.ph346 ], [ %.4240343.unr, %.lr.ph346.prol.loopexit ]
   %.4246342 = phi ptr [ %i.ml, %.lr.ph346 ], [ %.4246342.unr, %.lr.ph346.prol.loopexit ] ; 9 uses
-  %i.lo = load i64, ptr %.4246342, align 8, !tbaa !13
+  %i.lo = load i64, ptr %.4246342, align 8, !tbaa !15
   %i.lp = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %.4344, i64 %i.lo)
   %i.lq = getelementptr inbounds nuw i8, ptr %.4246342, i64 8
-  %i.lr = load i64, ptr %i.lq, align 8, !tbaa !13
+  %i.lr = load i64, ptr %i.lq, align 8, !tbaa !15
   %i.ls = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.lp, i64 %i.lr)
   %i.lt = getelementptr inbounds nuw i8, ptr %.4246342, i64 16
-  %i.lu = load i64, ptr %i.lt, align 8, !tbaa !13
+  %i.lu = load i64, ptr %i.lt, align 8, !tbaa !15
   %i.lv = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ls, i64 %i.lu)
   %i.lw = getelementptr inbounds nuw i8, ptr %.4246342, i64 24
-  %i.lx = load i64, ptr %i.lw, align 8, !tbaa !13
+  %i.lx = load i64, ptr %i.lw, align 8, !tbaa !15
   %i.ly = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.lv, i64 %i.lx)
   %i.lz = getelementptr inbounds nuw i8, ptr %.4246342, i64 32
-  %i.ma = load i64, ptr %i.lz, align 8, !tbaa !13
+  %i.ma = load i64, ptr %i.lz, align 8, !tbaa !15
   %i.mb = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.ly, i64 %i.ma)
   %i.mc = getelementptr inbounds nuw i8, ptr %.4246342, i64 40
-  %i.md = load i64, ptr %i.mc, align 8, !tbaa !13
+  %i.md = load i64, ptr %i.mc, align 8, !tbaa !15
   %i.me = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.mb, i64 %i.md)
   %i.mf = getelementptr inbounds nuw i8, ptr %.4246342, i64 48
-  %i.mg = load i64, ptr %i.mf, align 8, !tbaa !13
+  %i.mg = load i64, ptr %i.mf, align 8, !tbaa !15
   %i.mh = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.me, i64 %i.mg)
   %i.mi = getelementptr inbounds nuw i8, ptr %.4246342, i64 56
-  %i.mj = load i64, ptr %i.mi, align 8, !tbaa !13
+  %i.mj = load i64, ptr %i.mi, align 8, !tbaa !15
   %i.mk = tail call noundef i64 @llvm.x86.sse42.crc32.64.64(i64 range(i64 0, 4294967296) %i.mh, i64 %i.mj) ; 2 uses
   %i.ml = getelementptr inbounds nuw i8, ptr %.4246342, i64 64 ; 2 uses
   %i.mm = add nsw i64 %.4240343, -64              ; 3 uses
   %i.mn = icmp ugt i64 %i.mm, 7
-  br i1 %i.mn, label %.lr.ph346, label %.preheader.loopexit, !llvm.loop !26
+  br i1 %i.mn, label %.lr.ph346, label %.preheader.loopexit, !llvm.loop !27
 
 .lr.ph354:                                        ; preds = %.lr.ph354.prol.loopexit, %.lr.ph354
   %.5353 = phi i32 [ %i.nl, %.lr.ph354 ], [ %.5353.unr, %.lr.ph354.prol.loopexit ]
@@ -755,7 +677,7 @@ bb.e:                                             ; preds = %_ZN5folly6detailL6x
   %i.nl = tail call noundef i32 @llvm.x86.sse42.crc32.32.8(i32 %i.ni, i8 %i.nk) ; 2 uses
   %i.nm = add nsw i64 %.5241352, -8               ; 2 uses
   %.not.7 = icmp eq i64 %i.nm, 0
-  br i1 %.not.7, label %._crit_edge355, label %.lr.ph354, !llvm.loop !27
+  br i1 %.not.7, label %._crit_edge355, label %.lr.ph354, !llvm.loop !28
 
 ._crit_edge355:                                   ; preds = %.lr.ph354.prol.loopexit, %.lr.ph354, %.preheader
   %.5.lcssa = phi i32 [ %.4.lcssa, %.preheader ], [ %.lcssa.unr, %.lr.ph354.prol.loopexit ], [ %i.nl, %.lr.ph354 ]
@@ -797,19 +719,20 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(none) }
 !10 = !{!"omnipotent char", !11, i64 0}
 !11 = !{!"Simple C++ TBAA"}
 !12 = !{!10, !10, i64 0}
-!13 = !{!14, !14, i64 0}
-!14 = !{!"long", !10, i64 0}
-!15 = distinct !{!15, !16}
-!16 = !{!"llvm.loop.mustprogress"}
-!17 = distinct !{!17, !16}
-!18 = distinct !{!18, !19}
-!19 = !{!"llvm.loop.unroll.disable"}
-!20 = distinct !{!20, !16}
-!21 = distinct !{!21, !16}
-!22 = distinct !{!22, !19}
-!23 = distinct !{!23, !19}
-!24 = distinct !{!24, !19}
-!25 = distinct !{!25, !19}
-!26 = distinct !{!26, !16}
-!27 = distinct !{!27, !16}
+!13 = distinct !{!13, !14}
+!14 = !{!"llvm.loop.mustprogress"}
+!15 = !{!16, !16, i64 0}
+!16 = !{!"long", !10, i64 0}
+!17 = distinct !{!17, !14}
+!18 = distinct !{!18, !14}
+!19 = distinct !{!19, !20}
+!20 = !{!"llvm.loop.unroll.disable"}
+!21 = distinct !{!21, !14}
+!22 = distinct !{!22, !14}
+!23 = distinct !{!23, !20}
+!24 = distinct !{!24, !20}
+!25 = distinct !{!25, !20}
+!26 = distinct !{!26, !20}
+!27 = distinct !{!27, !14}
+!28 = distinct !{!28, !14}
 end_hunk_0

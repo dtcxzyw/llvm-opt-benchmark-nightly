@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/ffmpeg/original/crc?download=true
 inline.NumInlined: 6
-loop-unroll.NumCompletelyUnrolled: 4
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumUnrolled: 4
 begin_hunk_0_@AV_CRC_24_IEEE_init_table_once:vector.ph
   %i.g = icmp slt <4 x i32> %i.e, zeroinitializer
   %i.h = select <4 x i1> %i.g, <4 x i32> splat (i32 -2041775360), <4 x i32> zeroinitializer
@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
 define i32 @av_crc(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #4 {
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 %3 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1024
   %i.d = load i32, ptr %i.c, align 4, !tbaa !9
   %.not = icmp eq i32 %i.d, 0
@@ -216,81 +216,34 @@ bb.a:
   %i.g = icmp ne i64 %i.f, 0
   %i.h = icmp ne i64 %3, 0
   %i.i = and i1 %i.g, %i.h
-  br i1 %i.i, label %.lr.ph, label %.preheader
+  br i1 %i.i, label %.lr.ph.2, label %.preheader
 
-.preheader:                                       ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.preheader34
-  %.030.lcssa = phi ptr [ %2, %.preheader34 ], [ %5, %.lr.ph ], [ %20, %.lr.ph.1 ], [ %i.m, %.lr.ph.2 ], [ %36, %.lr.ph.3 ] ; 3 uses
-  %.0.lcssa = phi i32 [ %1, %.preheader34 ], [ %13, %.lr.ph ], [ %28, %.lr.ph.1 ], [ %i.u, %.lr.ph.2 ], [ %44, %.lr.ph.3 ] ; 2 uses
+.preheader:                                       ; preds = %.lr.ph.2, %.preheader34
+  %.030.lcssa = phi ptr [ %2, %.preheader34 ], [ %i.m, %.lr.ph.2 ] ; 3 uses
+  %.0.lcssa = phi i32 [ %1, %.preheader34 ], [ %i.u, %.lr.ph.2 ] ; 2 uses
   %i.j = getelementptr inbounds i8, ptr %i.b, i64 -3 ; 2 uses
   %i.k = icmp ult ptr %.030.lcssa, %i.j
   br i1 %i.k, label %.lr.ph40, label %.loopexit
 
-.lr.ph:                                           ; preds = %.preheader34
-  %4 = and i32 %1, 255
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 3 uses
-  %6 = load i8, ptr %2, align 1, !tbaa !22
-  %7 = zext i8 %6 to i32
-  %8 = xor i32 %4, %7
-  %9 = zext nneg i32 %8 to i64
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %9
-  %11 = load i32, ptr %10, align 4, !tbaa !9
-  %12 = lshr i32 %1, 8
-  %13 = xor i32 %11, %12                          ; 3 uses
-  %14 = ptrtoint ptr %5 to i64
-  %15 = and i64 %14, 3
-  %16 = icmp ne i64 %15, 0
-  %17 = icmp samesign ugt i64 %3, 1
-  %18 = select i1 %16, i1 %17, i1 false
-  br i1 %18, label %.lr.ph.1, label %.preheader
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %19 = and i32 %13, 255
-  %20 = getelementptr inbounds nuw i8, ptr %2, i64 2 ; 3 uses
-  %21 = load i8, ptr %5, align 1, !tbaa !22
-  %22 = zext i8 %21 to i32
-  %23 = xor i32 %19, %22
-  %24 = zext nneg i32 %23 to i64
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %24
-  %26 = load i32, ptr %25, align 4, !tbaa !9
-  %27 = lshr i32 %13, 8
-  %28 = xor i32 %26, %27                          ; 3 uses
-  %29 = ptrtoint ptr %20 to i64
-  %30 = and i64 %29, 3
-  %31 = icmp ne i64 %30, 0
-  %32 = icmp samesign ugt i64 %3, 2
-  %33 = select i1 %31, i1 %32, i1 false
-  br i1 %33, label %.lr.ph.2, label %.preheader
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %i.l = and i32 %28, 255
-  %i.m = getelementptr inbounds nuw i8, ptr %2, i64 3 ; 3 uses
-  %i.n = load i8, ptr %20, align 1, !tbaa !22
+.lr.ph.2:                                         ; preds = %.preheader34, %.lr.ph.2
+  %.036 = phi i32 [ %i.u, %.lr.ph.2 ], [ %1, %.preheader34 ] ; 2 uses
+  %.03035 = phi ptr [ %i.m, %.lr.ph.2 ], [ %2, %.preheader34 ] ; 2 uses
+  %i.l = and i32 %.036, 255
+  %i.m = getelementptr inbounds nuw i8, ptr %.03035, i64 1 ; 4 uses
+  %i.n = load i8, ptr %.03035, align 1, !tbaa !22
   %i.o = zext i8 %i.n to i32
   %i.p = xor i32 %i.l, %i.o
   %i.q = zext nneg i32 %i.p to i64
   %i.r = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.q
   %i.s = load i32, ptr %i.r, align 4, !tbaa !9
-  %i.t = lshr i32 %28, 8
-  %i.u = xor i32 %i.s, %i.t                       ; 3 uses
+  %i.t = lshr i32 %.036, 8
+  %i.u = xor i32 %i.s, %i.t                       ; 2 uses
   %i.v = ptrtoint ptr %i.m to i64
   %i.w = and i64 %i.v, 3
   %i.x = icmp ne i64 %i.w, 0
-  %34 = icmp samesign ugt i64 %3, 3
-  %i.y = select i1 %i.x, i1 %34, i1 false
-  br i1 %i.y, label %.lr.ph.3, label %.preheader
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %35 = and i32 %i.u, 255
-  %36 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %37 = load i8, ptr %i.m, align 1, !tbaa !22
-  %38 = zext i8 %37 to i32
-  %39 = xor i32 %35, %38
-  %40 = zext nneg i32 %39 to i64
-  %41 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %40
-  %42 = load i32, ptr %41, align 4, !tbaa !9
-  %43 = lshr i32 %i.u, 8
-  %44 = xor i32 %42, %43
-  br label %.preheader
+  %4 = icmp ult ptr %i.m, %i.b
+  %i.y = select i1 %i.x, i1 %4, i1 false
+  br i1 %i.y, label %.lr.ph.2, label %.preheader, !llvm.loop !23
 
 .lr.ph40:                                         ; preds = %.preheader, %.lr.ph40
   %.139 = phi i32 [ %i.az, %.lr.ph40 ], [ %.0.lcssa, %.preheader ]
@@ -323,7 +276,7 @@ bb.a:
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !9
   %i.az = xor i32 %i.au, %i.ay                    ; 2 uses
   %i.ba = icmp ult ptr %i.ab, %i.j
-  br i1 %i.ba, label %.lr.ph40, label %.loopexit, !llvm.loop !23
+  br i1 %i.ba, label %.lr.ph40, label %.loopexit, !llvm.loop !24
 
 .loopexit:                                        ; preds = %.lr.ph40, %.preheader, %bb.a
   %.232 = phi ptr [ %2, %bb.a ], [ %.030.lcssa, %.preheader ], [ %i.ab, %.lr.ph40 ] ; 5 uses
@@ -356,7 +309,7 @@ bb.a:
   %i.bn = xor i32 %i.bl, %i.bm                    ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.lr.ph45.prol.loopexit, label %.lr.ph45.prol, !llvm.loop !24
+  br i1 %prol.iter.cmp.not, label %.lr.ph45.prol.loopexit, label %.lr.ph45.prol, !llvm.loop !25
 
 .lr.ph45.prol.loopexit:                           ; preds = %.lr.ph45.prol, %.lr.ph45.preheader
   %.lcssa.unr = phi i32 [ poison, %.lr.ph45.preheader ], [ %i.bn, %.lr.ph45.prol ]
@@ -410,7 +363,7 @@ bb.a:
   %i.dc = lshr i32 %i.ct, 8
   %i.dd = xor i32 %i.db, %i.dc                    ; 2 uses
   %exitcond.not.3 = icmp eq ptr %i.cv, %scevgep
-  br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph45, !llvm.loop !26
+  br i1 %exitcond.not.3, label %._crit_edge, label %.lr.ph45, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %.lr.ph45.prol.loopexit, %.lr.ph45, %.loopexit
   %.3.lcssa = phi i32 [ %.2, %.loopexit ], [ %.lcssa.unr, %.lr.ph45.prol.loopexit ], [ %i.dd, %.lr.ph45 ]
@@ -463,7 +416,8 @@ attributes #8 = { noreturn nounwind }
 !21 = distinct !{!21, !11, !12, !13}
 !22 = !{!7, !7, i64 0}
 !23 = distinct !{!23, !11}
-!24 = distinct !{!24, !25}
-!25 = !{!"llvm.loop.unroll.disable"}
-!26 = distinct !{!26, !11}
+!24 = distinct !{!24, !11}
+!25 = distinct !{!25, !26}
+!26 = !{!"llvm.loop.unroll.disable"}
+!27 = distinct !{!27, !11}
 end_hunk_0

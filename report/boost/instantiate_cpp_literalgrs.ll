@@ -205,12 +205,11 @@ _ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22Al
 bb.p:                                             ; preds = %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit58, %_ZSt10__distanceIN5boost9iterators15filter_iteratorIZNS0_4wave8grammars18intlit_grammar_genINS3_8cpplexer9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEE8evaluateERKSL_RbEUlcE_PKcEEENSt15iterator_traitsIT_E15difference_typeESV_SV_St18input_iterator_tag.exit
   %.pre-phi = phi i64 [ %.pre145, %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit58 ], [ %i.bj, %_ZSt10__distanceIN5boost9iterators15filter_iteratorIZNS0_4wave8grammars18intlit_grammar_genINS3_8cpplexer9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEE8evaluateERKSL_RbEUlcE_PKcEEENSt15iterator_traitsIT_E15difference_typeESV_SV_St18input_iterator_tag.exit ] ; 2 uses
   %i.cr = phi ptr [ %.pre, %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit58 ], [ %i.bi, %_ZSt10__distanceIN5boost9iterators15filter_iteratorIZNS0_4wave8grammars18intlit_grammar_genINS3_8cpplexer9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEE8evaluateERKSL_RbEUlcE_PKcEEENSt15iterator_traitsIT_E15difference_typeESV_SV_St18input_iterator_tag.exit ] ; 2 uses
-  %i.cs = phi ptr [ %i.co, %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit58 ], [ %i.at, %_ZSt10__distanceIN5boost9iterators15filter_iteratorIZNS0_4wave8grammars18intlit_grammar_genINS3_8cpplexer9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEE8evaluateERKSL_RbEUlcE_PKcEEENSt15iterator_traitsIT_E15difference_typeESV_SV_St18input_iterator_tag.exit ] ; 2 uses
+  %i.cs = phi ptr [ %i.co, %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit58 ], [ %i.at, %_ZSt10__distanceIN5boost9iterators15filter_iteratorIZNS0_4wave8grammars18intlit_grammar_genINS3_8cpplexer9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEE8evaluateERKSL_RbEUlcE_PKcEEENSt15iterator_traitsIT_E15difference_typeESV_SV_St18input_iterator_tag.exit ]
   %.0 = phi ptr [ %i.cq, %_ZN5boost4wave4util11flex_stringIcSt11char_traitsIcESaIcENS1_9CowStringINS1_22AllocatorStringStorageIcS5_EEPcEEE5beginEv.exit58 ], [ %1, %_ZSt10__distanceIN5boost9iterators15filter_iteratorIZNS0_4wave8grammars18intlit_grammar_genINS3_8cpplexer9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEE8evaluateERKSL_RbEUlcE_PKcEEENSt15iterator_traitsIT_E15difference_typeESV_SV_St18input_iterator_tag.exit ] ; 3 uses
-  %8 = ptrtoaddr ptr %i.cs to i64
   %i.ct = add i64 %i.ba, %i.be
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 16 ; 5 uses
-  %i.cv = ptrtoint ptr %i.cu to i64
+  %i.cv = ptrtoint ptr %i.cu to i64               ; 2 uses
   %i.cw = xor i64 %i.cv, -1
   %i.cx = add i64 %.pre-phi, %i.cw                ; 3 uses
   %.not = icmp ugt i64 %i.ct, %i.cx
@@ -465,8 +464,8 @@ bb.w:                                             ; preds = %bb.p
 
 .preheader.i.preheader:                           ; preds = %bb.w
   %i.gj = add i64 %.pre-phi, %i.au
-  %9 = xor i64 %8, -1
-  %i.gk = add i64 %i.gj, %9
+  %8 = add i64 %i.gj, 15
+  %i.gk = add i64 %i.cv, %i.bc
   %xtraiter = and i64 %i.gh, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.preheader.i.prol.loopexit, label %.preheader.i.prol
@@ -499,7 +498,7 @@ bb.x:                                             ; preds = %.lr.ph.i.i.i.i.i70.
   %.lcssa.unr = phi ptr [ poison, %.preheader.i.preheader ], [ %i.gm, %.preheader.i.prol ], [ %.sroa.0.0.prol, %.lr.ph.i.i.i.i.i70.prol ], [ %scevgep142.prol, %bb.x ]
   %.012.i.unr = phi i64 [ %i.gh, %.preheader.i.preheader ], [ %i.gl, %.lr.ph.i.i.i.i.i70.prol ], [ %i.gl, %bb.x ], [ %i.gl, %.preheader.i.prol ]
   %.unr = phi ptr [ %2, %.preheader.i.preheader ], [ %i.gm, %.preheader.i.prol ], [ %.sroa.0.0.prol, %.lr.ph.i.i.i.i.i70.prol ], [ %scevgep142.prol, %bb.x ]
-  %i.gr = icmp eq i64 %i.gk, %i.bc
+  %i.gr = icmp eq i64 %8, %i.gk
   br i1 %i.gr, label %_ZSt9__advanceIN5boost9iterators15filter_iteratorIZNS0_4wave8grammars18intlit_grammar_genINS3_8cpplexer9lex_tokenINS3_4util13file_positionINS8_11flex_stringIcSt11char_traitsIcESaIcENS8_9CowStringINS8_22AllocatorStringStorageIcSD_EEPcEEEEEEEEE8evaluateERKSL_RbEUlcE_PKcEElEvRT_T0_St26bidirectional_iterator_tag.exit, label %.preheader.i
 
 .preheader7.i:                                    ; preds = %bb.w

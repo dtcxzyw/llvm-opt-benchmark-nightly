@@ -1,7 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/bufpage?download=true
 inline.NumInlined: 49
 inline.NumDeleted: 13
-loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
 loop-unroll.NumUnrolled: 2
 begin_hunk_0
@@ -176,96 +175,72 @@ bb.j:                                             ; preds = %bb.i
   %.139 = phi i8 [ 0, %bb.c ], [ %.038, %bb.j ], [ %.038, %bb.h ], [ %.038, %bb.g ], [ %.038, %bb.i ]
   %.137 = phi i1 [ false, %bb.c ], [ %i.w, %bb.j ], [ false, %bb.h ], [ false, %bb.g ], [ false, %bb.i ]
   %.1 = phi i16 [ 0, %bb.c ], [ %.0, %bb.j ], [ %.0, %bb.h ], [ %.0, %bb.g ], [ %.0, %bb.i ]
-  %4 = ptrtoaddr ptr %0 to i64
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8192
   %i.z = ptrtoint ptr %i.y to i64
   %i.aa = and i64 %i.z, -8
   %i.ab = inttoptr i64 %i.aa to ptr               ; 3 uses
-  %5 = sub i64 0, %4
-  %6 = and i64 %5, 7                              ; 10 uses
-  %exitcond.i80 = icmp eq i64 %6, 0
-  br i1 %exitcond.i80, label %.preheader53.i, label %.lr.ph.a
+  br label %.lr.ph.1
 
-7:                                                ; preds = %.lr.ph.a
-  %exitcond.i = icmp eq i64 %6, 1
-  br i1 %exitcond.i, label %.preheader53.i, label %.lr.ph.1
+.lr.ph.1:                                         ; preds = %.lr.ph.a, %.thread
+  %.4.idx.i = phi i64 [ 0, %.thread ], [ %.4.add.i.2, %.lr.ph.a ] ; 5 uses
+  %.4.ptr.i.1.a = getelementptr inbounds nuw i8, ptr %0, i64 %.4.idx.i ; 3 uses
+  %4 = ptrtoint ptr %.4.ptr.i.1.a to i64
+  %5 = and i64 %4, 7
+  %.not50.i.1.a = icmp eq i64 %5, 0
+  br i1 %.not50.i.1.a, label %.lr.ph.2, label %.lr.ph.3
 
-.lr.ph.1:                                         ; preds = %7
-  %.4.ptr.i.1.a = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %8 = load i8, ptr %.4.ptr.i.1.a, align 1
-  %.not50.i.1.a = icmp eq i8 %8, 0
-  br i1 %.not50.i.1.a, label %9, label %.loopexit, !llvm.loop !4
+.lr.ph.2:                                         ; preds = %.lr.ph.6, %.lr.ph.4, %.lr.ph.1
+  %.4.idx.i.lcssa = phi i64 [ %.4.idx.i, %.lr.ph.1 ], [ %.4.add.i, %.lr.ph.4 ], [ %.4.add.i.1, %.lr.ph.6 ] ; 2 uses
+  %.4.ptr.i.lcssa = phi ptr [ %.4.ptr.i.1.a, %.lr.ph.1 ], [ %.4.ptr.i.4, %.lr.ph.4 ], [ %.4.ptr.i.6, %.lr.ph.6 ] ; 2 uses
+  %6 = getelementptr inbounds i8, ptr %i.ab, i64 -56 ; 2 uses
+  %7 = icmp ult ptr %.4.ptr.i.lcssa, %6
+  br i1 %7, label %.lr.ph.i, label %.preheader51.i
 
-9:                                                ; preds = %.lr.ph.1
-  %exitcond.i.1 = icmp eq i64 %6, 2
-  br i1 %exitcond.i.1, label %.preheader53.i, label %.lr.ph.2
-
-.lr.ph.2:                                         ; preds = %9
-  %.4.ptr.i.2 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %10 = load i8, ptr %.4.ptr.i.2, align 2
-  %.not50.i.2 = icmp eq i8 %10, 0
-  br i1 %.not50.i.2, label %11, label %.loopexit, !llvm.loop !4
-
-11:                                               ; preds = %.lr.ph.2
-  %exitcond.i.2 = icmp eq i64 %6, 3
-  br i1 %exitcond.i.2, label %.preheader53.i, label %.lr.ph.3
-
-.lr.ph.3:                                         ; preds = %11
-  %.4.ptr.i.3 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.ac = load i8, ptr %.4.ptr.i.3, align 1
+.lr.ph.3:                                         ; preds = %.lr.ph.1
+  %i.ac = load i8, ptr %.4.ptr.i.1.a, align 1
   %.not50.i.3 = icmp eq i8 %i.ac, 0
-  br i1 %.not50.i.3, label %12, label %.loopexit, !llvm.loop !4
+  br i1 %.not50.i.3, label %.lr.ph.4, label %.loopexit
 
-12:                                               ; preds = %.lr.ph.3
-  %exitcond.i.3 = icmp eq i64 %6, 4
-  br i1 %exitcond.i.3, label %.preheader53.i, label %.lr.ph.4
+.lr.ph.4:                                         ; preds = %.lr.ph.3
+  %.4.add.i = add nuw nsw i64 %.4.idx.i, 1        ; 2 uses
+  %.4.ptr.i.4 = getelementptr inbounds nuw i8, ptr %0, i64 %.4.add.i ; 3 uses
+  %8 = ptrtoint ptr %.4.ptr.i.4 to i64
+  %9 = and i64 %8, 7
+  %.not50.i.4 = icmp eq i64 %9, 0
+  br i1 %.not50.i.4, label %.lr.ph.2, label %.lr.ph.5
 
-.lr.ph.4:                                         ; preds = %12
-  %.4.ptr.i.4 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %13 = load i8, ptr %.4.ptr.i.4, align 2
-  %.not50.i.4 = icmp eq i8 %13, 0
-  br i1 %.not50.i.4, label %14, label %.loopexit, !llvm.loop !4
-
-14:                                               ; preds = %.lr.ph.4
-  %exitcond.i.4 = icmp eq i64 %6, 5
-  br i1 %exitcond.i.4, label %.preheader53.i, label %.lr.ph.5
-
-.lr.ph.5:                                         ; preds = %14
-  %.4.ptr.i.5 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  %i.ad = load i8, ptr %.4.ptr.i.5, align 1
+.lr.ph.5:                                         ; preds = %.lr.ph.4
+  %.4.add.i.1 = add nuw nsw i64 %.4.idx.i, 2      ; 3 uses
+  %i.ad = load i8, ptr %.4.ptr.i.4, align 1
   %.not50.i.5 = icmp eq i8 %i.ad, 0
-  br i1 %.not50.i.5, label %15, label %.loopexit, !llvm.loop !4
+  br i1 %.not50.i.5, label %.lr.ph.6, label %.loopexit
 
-15:                                               ; preds = %.lr.ph.5
-  %exitcond.i.5 = icmp eq i64 %6, 6
-  br i1 %exitcond.i.5, label %.preheader53.i, label %.lr.ph.6
+.lr.ph.6:                                         ; preds = %.lr.ph.5
+  %.4.ptr.i.6 = getelementptr inbounds nuw i8, ptr %0, i64 %.4.add.i.1 ; 3 uses
+  %10 = ptrtoint ptr %.4.ptr.i.6 to i64
+  %11 = and i64 %10, 7
+  %.not50.i.6 = icmp eq i64 %11, 0
+  br i1 %.not50.i.6, label %.lr.ph.2, label %.preheader53.i
 
-.lr.ph.6:                                         ; preds = %15
-  %.4.ptr.i.6 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  %16 = load i8, ptr %.4.ptr.i.6, align 2
-  %.not50.i.6 = icmp eq i8 %16, 0
-  br i1 %.not50.i.6, label %.preheader53.i, label %.loopexit, !llvm.loop !4
+.preheader53.i:                                   ; preds = %.lr.ph.6
+  %12 = icmp samesign eq i64 %.4.add.i.1, 8192
+  br i1 %12, label %pg_memory_is_all_zeros.exit, label %.lr.ph.a
 
-.preheader53.i:                                   ; preds = %7, %9, %11, %12, %14, %15, %.lr.ph.6, %.thread
-  %17 = getelementptr inbounds i8, ptr %i.ab, i64 -56 ; 2 uses
-  %.5.ptr60.i = getelementptr inbounds nuw i8, ptr %0, i64 %6 ; 2 uses
-  %18 = icmp ult ptr %.5.ptr60.i, %17
-  br i1 %18, label %.lr.ph.i, label %.preheader51.i
-
-.lr.ph.a:                                         ; preds = %.thread
-  %i.ae = load i8, ptr %0, align 2
+.lr.ph.a:                                         ; preds = %.preheader53.i
+  %.4.add.i.2 = add nuw nsw i64 %.4.idx.i, 3
+  %i.ae = load i8, ptr %.4.ptr.i.6, align 1
   %.not50.i = icmp eq i8 %i.ae, 0
-  br i1 %.not50.i, label %7, label %.loopexit, !llvm.loop !4
+  br i1 %.not50.i, label %.lr.ph.1, label %.loopexit, !llvm.loop !4
 
-.preheader51.i:                                   ; preds = %bb.k, %.preheader53.i
-  %.5.idx.lcssa.i = phi i64 [ %6, %.preheader53.i ], [ %.5.add.i, %bb.k ] ; 3 uses
+.preheader51.i:                                   ; preds = %bb.k, %.lr.ph.2
+  %.5.idx.lcssa.i = phi i64 [ %.4.idx.i.lcssa, %.lr.ph.2 ], [ %.5.add.i, %bb.k ] ; 3 uses
   %.6.ptr63.i = getelementptr inbounds nuw i8, ptr %0, i64 %.5.idx.lcssa.i ; 2 uses
   %i.af = icmp ult ptr %.6.ptr63.i, %i.ab
   br i1 %i.af, label %.lr.ph66.i, label %.preheader.i
 
-.lr.ph.i:                                         ; preds = %.preheader53.i, %bb.k
-  %.5.ptr62.i = phi ptr [ %.5.ptr.i, %bb.k ], [ %.5.ptr60.i, %.preheader53.i ]
-  %.5.idx61.i = phi i64 [ %.5.add.i, %bb.k ], [ %6, %.preheader53.i ]
+.lr.ph.i:                                         ; preds = %.lr.ph.2, %bb.k
+  %.5.ptr62.i = phi ptr [ %.5.ptr.i, %bb.k ], [ %.4.ptr.i.lcssa, %.lr.ph.2 ]
+  %.5.idx61.i = phi i64 [ %.5.add.i, %bb.k ], [ %.4.idx.i.lcssa, %.lr.ph.2 ]
   %i.ag = load <8 x i64>, ptr %.5.ptr62.i, align 8
   %i.ah = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> %i.ag)
   %.not49.i = icmp eq i64 %i.ah, 0
@@ -274,7 +249,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %.lr.ph.i
   %.5.add.i = add nuw nsw i64 %.5.idx61.i, 64     ; 3 uses
   %.5.ptr.i = getelementptr inbounds nuw i8, ptr %0, i64 %.5.add.i ; 2 uses
-  %i.ai = icmp ult ptr %.5.ptr.i, %17
+  %i.ai = icmp ult ptr %.5.ptr.i, %6
   br i1 %i.ai, label %.lr.ph.i, label %.preheader51.i, !llvm.loop !6
 
 .preheader.i:                                     ; preds = %bb.l, %.preheader51.i
@@ -308,7 +283,7 @@ bb.m:                                             ; preds = %.lr.ph84
   %.not47.i = icmp eq i8 %i.al, 0
   br i1 %.not47.i, label %bb.m, label %.loopexit, !llvm.loop !8
 
-.loopexit:                                        ; preds = %.lr.ph.a, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.i, %.lr.ph66.i, %.lr.ph84
+.loopexit:                                        ; preds = %.lr.ph.3, %.lr.ph.5, %.lr.ph.a, %.lr.ph.i, %.lr.ph66.i, %.lr.ph84
   %i.am = trunc nuw i8 %.139 to i1
   br i1 %i.am, label %bb.n, label %bb.r
 
@@ -346,8 +321,8 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
 bb.r:                                             ; preds = %bb.q, %.loopexit
   br label %pg_memory_is_all_zeros.exit
 
-pg_memory_is_all_zeros.exit:                      ; preds = %bb.m, %.preheader.i, %bb.q, %bb.j, %bb.r
-  %.040 = phi i1 [ true, %bb.j ], [ true, %bb.q ], [ false, %bb.r ], [ true, %.preheader.i ], [ true, %bb.m ]
+pg_memory_is_all_zeros.exit:                      ; preds = %.preheader53.i, %bb.m, %.preheader.i, %bb.q, %bb.j, %bb.r
+  %.040 = phi i1 [ true, %bb.j ], [ true, %bb.q ], [ false, %bb.r ], [ true, %.preheader.i ], [ true, %bb.m ], [ true, %.preheader53.i ]
   ret i1 %.040
 }
 

@@ -52,7 +52,6 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @LZ4_compress_fast_extState(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #1 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64                    ; 4 uses
   %i.a = icmp ne ptr %0, null
   %i.b = ptrtoint ptr %0 to i64
   %i.c = and i64 %i.b, 7
@@ -105,7 +104,7 @@ bb.h:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds i8, ptr %1, i64 %i.n ; 4 uses
   %.in513.i = getelementptr inbounds nuw i8, ptr %.0.i369, i64 16408 ; 2 uses
   %i.p = load i32, ptr %.in513.i, align 8, !tbaa !14
-  %i.q = zext nneg i32 %3 to i64                  ; 2 uses
+  %i.q = zext nneg i32 %3 to i64
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %i.q ; 6 uses
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 -11 ; 2 uses
   %i.t = getelementptr inbounds i8, ptr %i.r, i64 -5
@@ -508,7 +507,7 @@ bb.ad:                                            ; preds = %bb.ac
 .thread403:                                       ; preds = %bb.i, %bb.ab, %bb.h
   %.3478.i = phi ptr [ %1, %bb.h ], [ %i.fp, %bb.ab ], [ %.0475.i, %bb.i ] ; 2 uses
   %.12.i = phi ptr [ %2, %bb.h ], [ %.8471.i, %bb.ab ], [ %.0463.i, %bb.i ] ; 5 uses
-  %i.gk = ptrtoint ptr %i.r to i64
+  %i.gk = ptrtoint ptr %i.r to i64                ; 2 uses
   %i.gl = ptrtoint ptr %.3478.i to i64            ; 2 uses
   %i.gm = sub i64 %i.gk, %i.gl                    ; 5 uses
   %i.gn = icmp ugt i64 %i.gm, 14
@@ -522,8 +521,7 @@ bb.ae:                                            ; preds = %.thread403
   br i1 %i.gp, label %.lr.ph727.preheader, label %._crit_edge728
 
 .lr.ph727.preheader:                              ; preds = %bb.ae
-  %7 = add i64 %6, %i.q
-  %i.gq = add i64 %7, -270
+  %i.gq = add i64 %i.gk, -270
   %i.gr = sub i64 %i.gq, %i.gl                    ; 2 uses
   %i.gs = udiv i64 %i.gr, 255                     ; 3 uses
   %i.gt = add nuw nsw i64 %i.gs, 1
@@ -569,7 +567,7 @@ bb.ag:                                            ; preds = %bb.d
   %i.hh = getelementptr inbounds i8, ptr %1, i64 %i.hg ; 4 uses
   %.in513.i40 = getelementptr inbounds nuw i8, ptr %.0.i369, i64 16408 ; 2 uses
   %i.hi = load i32, ptr %.in513.i40, align 8, !tbaa !14
-  %i.hj = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.hj = zext nneg i32 %3 to i64
   %i.hk = getelementptr inbounds nuw i8, ptr %1, i64 %i.hj ; 6 uses
   %i.hl = getelementptr inbounds i8, ptr %i.hk, i64 -11 ; 3 uses
   %i.hm = getelementptr inbounds i8, ptr %i.hk, i64 -5
@@ -972,7 +970,7 @@ bb.bf:                                            ; preds = %bb.bd, %bb.bc
 .loopexit593:                                     ; preds = %bb.bf, %bb.aj, %bb.bb
   %.2477.i62.ph = phi ptr [ %.0475.i44687, %bb.aj ], [ %i.nm, %bb.bb ], [ %i.nm, %bb.bf ] ; 2 uses
   %.11474.i63.ph = phi ptr [ %.0463.i45688, %bb.aj ], [ %.8471.i91, %bb.bb ], [ %.8471.i91, %bb.bf ] ; 5 uses
-  %i.oi = ptrtoint ptr %i.hk to i64
+  %i.oi = ptrtoint ptr %i.hk to i64               ; 2 uses
   %i.oj = ptrtoint ptr %.2477.i62.ph to i64       ; 2 uses
   %i.ok = sub i64 %i.oi, %i.oj                    ; 5 uses
   %i.ol = icmp ugt i64 %i.ok, 14
@@ -986,8 +984,7 @@ bb.bg:                                            ; preds = %.loopexit593
   br i1 %i.on, label %.lr.ph697.preheader, label %._crit_edge698
 
 .lr.ph697.preheader:                              ; preds = %bb.bg
-  %8 = add i64 %6, %i.hj
-  %i.oo = add i64 %8, -270
+  %i.oo = add i64 %i.oi, -270
   %i.op = sub i64 %i.oo, %i.oj                    ; 2 uses
   %i.oq = udiv i64 %i.op, 255                     ; 3 uses
   %i.or = add nuw nsw i64 %i.oq, 1
@@ -1048,7 +1045,7 @@ bb.bn:                                            ; preds = %bb.bk
   %i.ph = getelementptr inbounds i8, ptr %1, i64 %i.pg ; 4 uses
   %.in513.i106 = getelementptr inbounds nuw i8, ptr %.0.i369, i64 16408 ; 2 uses
   %i.pi = load i32, ptr %.in513.i106, align 8, !tbaa !14
-  %i.pj = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.pj = zext nneg i32 %3 to i64
   %i.pk = getelementptr inbounds nuw i8, ptr %1, i64 %i.pj ; 6 uses
   %i.pl = getelementptr inbounds i8, ptr %i.pk, i64 -11 ; 2 uses
   %i.pm = getelementptr inbounds i8, ptr %i.pk, i64 -5
@@ -1451,7 +1448,7 @@ bb.cn:                                            ; preds = %bb.cm
 .thread503:                                       ; preds = %bb.bo, %bb.cl, %bb.bn
   %.3478.i134 = phi ptr [ %1, %bb.bn ], [ %i.uw, %bb.cl ], [ %.0475.i110, %bb.bo ] ; 2 uses
   %.12.i135 = phi ptr [ %2, %bb.bn ], [ %.8471.i157.ph, %bb.cl ], [ %.0463.i111, %bb.bo ] ; 6 uses
-  %i.wq = ptrtoint ptr %i.pk to i64
+  %i.wq = ptrtoint ptr %i.pk to i64               ; 2 uses
   %i.wr = ptrtoint ptr %.3478.i134 to i64         ; 2 uses
   %i.ws = sub i64 %i.wq, %i.wr                    ; 7 uses
   %i.wt = getelementptr inbounds nuw i8, ptr %.12.i135, i64 %i.ws
@@ -1474,8 +1471,7 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %i.xb, label %.lr.ph803.preheader, label %._crit_edge804
 
 .lr.ph803.preheader:                              ; preds = %bb.cp
-  %9 = add i64 %6, %i.pj
-  %i.xc = add i64 %9, -270
+  %i.xc = add i64 %i.wq, -270
   %i.xd = sub i64 %i.xc, %i.wr                    ; 2 uses
   %i.xe = udiv i64 %i.xd, 255                     ; 3 uses
   %i.xf = add nuw nsw i64 %i.xe, 1
@@ -1521,7 +1517,7 @@ bb.cs:                                            ; preds = %bb.bi
   %i.xt = getelementptr inbounds i8, ptr %1, i64 %i.xs ; 4 uses
   %.in513.i172 = getelementptr inbounds nuw i8, ptr %.0.i369, i64 16408 ; 2 uses
   %i.xu = load i32, ptr %.in513.i172, align 8, !tbaa !14
-  %i.xv = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.xv = zext nneg i32 %3 to i64
   %i.xw = getelementptr inbounds nuw i8, ptr %1, i64 %i.xv ; 6 uses
   %i.xx = getelementptr inbounds i8, ptr %i.xw, i64 -11 ; 3 uses
   %i.xy = getelementptr inbounds i8, ptr %i.xw, i64 -5
@@ -1924,7 +1920,7 @@ bb.dv:                                            ; preds = %bb.dt, %bb.ds
 .loopexit586:                                     ; preds = %bb.dv, %bb.cv, %bb.dr
   %.2477.i194.ph = phi ptr [ %.0475.i176763, %bb.cv ], [ %i.adm, %bb.dr ], [ %i.adm, %bb.dv ] ; 2 uses
   %.11474.i195.ph = phi ptr [ %.0463.i177764, %bb.cv ], [ %.8471.i226.ph, %bb.dr ], [ %.8471.i226.ph, %bb.dv ] ; 6 uses
-  %i.afh = ptrtoint ptr %i.xw to i64
+  %i.afh = ptrtoint ptr %i.xw to i64              ; 2 uses
   %i.afi = ptrtoint ptr %.2477.i194.ph to i64     ; 2 uses
   %i.afj = sub i64 %i.afh, %i.afi                 ; 7 uses
   %i.afk = getelementptr inbounds nuw i8, ptr %.11474.i195.ph, i64 %i.afj
@@ -1947,8 +1943,7 @@ bb.dx:                                            ; preds = %bb.dw
   br i1 %i.afs, label %.lr.ph773.preheader, label %._crit_edge774
 
 .lr.ph773.preheader:                              ; preds = %bb.dx
-  %10 = add i64 %6, %i.xv
-  %i.aft = add i64 %10, -270
+  %i.aft = add i64 %i.afh, -270
   %i.afu = sub i64 %i.aft, %i.afi                 ; 2 uses
   %i.afv = udiv i64 %i.afu, 255                   ; 3 uses
   %i.afw = add nuw nsw i64 %i.afv, 1
@@ -2018,7 +2013,6 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @LZ4_compress_fast_extState_fastReset(ptr nofree noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #1 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64                    ; 6 uses
   %spec.store.select = tail call i32 @llvm.smax.i32(i32 %5, i32 1)
   %spec.store.select1 = tail call i32 @llvm.umin.i32(i32 %spec.store.select, i32 65537) ; 10 uses
   %i.a = icmp ugt i32 %3, 2113929216              ; 7 uses
@@ -2092,7 +2086,7 @@ bb.i:                                             ; preds = %bb.g
   %i.t = zext i32 %i.o to i64                     ; 3 uses
   %i.u = sub nsw i64 0, %i.t
   %i.v = getelementptr inbounds i8, ptr %1, i64 %i.u ; 4 uses
-  %i.w = zext nneg i32 %3 to i64                  ; 2 uses
+  %i.w = zext nneg i32 %3 to i64
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 6 uses
   %i.y = getelementptr inbounds i8, ptr %i.x, i64 -11 ; 3 uses
   %i.z = getelementptr inbounds i8, ptr %i.x, i64 -5
@@ -2495,7 +2489,7 @@ bb.ah:                                            ; preds = %bb.ae, %bb.af
 .thread659:                                       ; preds = %bb.ah, %bb.l, %bb.ad, %bb.i
   %.3478.i = phi ptr [ %1, %bb.i ], [ %.0475.i1139, %bb.l ], [ %i.gb, %bb.ad ], [ %i.gb, %bb.ah ] ; 2 uses
   %.12.i = phi ptr [ %2, %bb.i ], [ %.0463.i1140, %bb.l ], [ %.8471.i, %bb.ad ], [ %.8471.i, %bb.ah ] ; 5 uses
-  %i.gz = ptrtoint ptr %i.x to i64
+  %i.gz = ptrtoint ptr %i.x to i64                ; 2 uses
   %i.ha = ptrtoint ptr %.3478.i to i64            ; 2 uses
   %i.hb = sub i64 %i.gz, %i.ha                    ; 5 uses
   %i.hc = icmp ugt i64 %i.hb, 14
@@ -2509,8 +2503,7 @@ bb.ai:                                            ; preds = %.thread659
   br i1 %i.he, label %.lr.ph1149.preheader, label %._crit_edge1150
 
 .lr.ph1149.preheader:                             ; preds = %bb.ai
-  %7 = add i64 %6, %i.w
-  %i.hf = add i64 %7, -270
+  %i.hf = add i64 %i.gz, -270
   %i.hg = sub i64 %i.hf, %i.ha                    ; 2 uses
   %i.hh = udiv i64 %i.hg, 255                     ; 3 uses
   %i.hi = add nuw nsw i64 %i.hh, 1
@@ -2559,7 +2552,7 @@ bb.am:                                            ; preds = %bb.al
   br label %LZ4_compress_generic.exit66
 
 bb.an:                                            ; preds = %bb.al
-  %i.hv = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.hv = zext nneg i32 %3 to i64
   %i.hw = getelementptr inbounds nuw i8, ptr %1, i64 %i.hv ; 6 uses
   %i.hx = getelementptr inbounds i8, ptr %i.hw, i64 -11 ; 2 uses
   %i.hy = getelementptr inbounds i8, ptr %i.hw, i64 -5
@@ -2962,7 +2955,7 @@ bb.bj:                                            ; preds = %bb.bi
 .thread700:                                       ; preds = %bb.ao, %bb.bh, %bb.an
   %.3478.i108 = phi ptr [ %1, %bb.an ], [ %i.np, %bb.bh ], [ %.0475.i84, %bb.ao ] ; 2 uses
   %.12.i109 = phi ptr [ %2, %bb.an ], [ %.8471.i131, %bb.bh ], [ %.0463.i85, %bb.ao ] ; 5 uses
-  %i.ok = ptrtoint ptr %i.hw to i64
+  %i.ok = ptrtoint ptr %i.hw to i64               ; 2 uses
   %i.ol = ptrtoint ptr %.3478.i108 to i64         ; 2 uses
   %i.om = sub i64 %i.ok, %i.ol                    ; 5 uses
   %i.on = icmp ugt i64 %i.om, 14
@@ -2976,8 +2969,7 @@ bb.bk:                                            ; preds = %.thread700
   br i1 %i.op, label %.lr.ph1179.preheader, label %._crit_edge1180
 
 .lr.ph1179.preheader:                             ; preds = %bb.bk
-  %8 = add i64 %6, %i.hv
-  %i.oq = add i64 %8, -270
+  %i.oq = add i64 %i.ok, -270
   %i.or = sub i64 %i.oq, %i.ol                    ; 2 uses
   %i.os = udiv i64 %i.or, 255                     ; 3 uses
   %i.ot = add nuw nsw i64 %i.os, 1
@@ -3049,7 +3041,7 @@ LZ4_prepareTable.exit73:                          ; preds = %.thread, %bb.bn, %b
   %i.pl = zext i32 %i.pi to i64                   ; 2 uses
   %i.pm = sub nsw i64 0, %i.pl
   %i.pn = getelementptr inbounds i8, ptr %1, i64 %i.pm ; 4 uses
-  %i.po = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.po = zext nneg i32 %3 to i64
   %i.pp = getelementptr inbounds nuw i8, ptr %1, i64 %i.po ; 6 uses
   %i.pq = getelementptr inbounds i8, ptr %i.pp, i64 -11 ; 3 uses
   %i.pr = getelementptr inbounds i8, ptr %i.pp, i64 -5
@@ -3452,7 +3444,7 @@ bb.cn:                                            ; preds = %bb.cl, %bb.ck
 .loopexit966:                                     ; preds = %bb.cn, %bb.br, %bb.cj
   %.2477.i168.ph = phi ptr [ %.0475.i1501093, %bb.br ], [ %i.vp, %bb.cj ], [ %i.vp, %bb.cn ] ; 2 uses
   %.11474.i169.ph = phi ptr [ %.0463.i1511094, %bb.br ], [ %.8471.i197, %bb.cj ], [ %.8471.i197, %bb.cn ] ; 5 uses
-  %i.wl = ptrtoint ptr %i.pp to i64
+  %i.wl = ptrtoint ptr %i.pp to i64               ; 2 uses
   %i.wm = ptrtoint ptr %.2477.i168.ph to i64      ; 2 uses
   %i.wn = sub i64 %i.wl, %i.wm                    ; 5 uses
   %i.wo = icmp ugt i64 %i.wn, 14
@@ -3466,8 +3458,7 @@ bb.co:                                            ; preds = %.loopexit966
   br i1 %i.wq, label %.lr.ph1103.preheader, label %._crit_edge1104
 
 .lr.ph1103.preheader:                             ; preds = %bb.co
-  %9 = add i64 %6, %i.po
-  %i.wr = add i64 %9, -270
+  %i.wr = add i64 %i.wl, -270
   %i.ws = sub i64 %i.wr, %i.wm                    ; 2 uses
   %i.wt = udiv i64 %i.ws, 255                     ; 3 uses
   %i.wu = add nuw nsw i64 %i.wt, 1
@@ -3560,7 +3551,7 @@ bb.cx:                                            ; preds = %bb.cu
   %i.xq = zext i32 %i.xk to i64                   ; 3 uses
   %i.xr = sub nsw i64 0, %i.xq
   %i.xs = getelementptr inbounds i8, ptr %1, i64 %i.xr ; 4 uses
-  %i.xt = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.xt = zext nneg i32 %3 to i64
   %i.xu = getelementptr inbounds nuw i8, ptr %1, i64 %i.xt ; 6 uses
   %i.xv = getelementptr inbounds i8, ptr %i.xu, i64 -11 ; 3 uses
   %i.xw = getelementptr inbounds i8, ptr %i.xu, i64 -5
@@ -3963,7 +3954,7 @@ bb.ea:                                            ; preds = %bb.dx, %bb.dy
 .thread802:                                       ; preds = %bb.ea, %bb.da, %bb.dw, %bb.cx
   %.3478.i241 = phi ptr [ %1, %bb.cx ], [ %.0475.i2171261, %bb.da ], [ %i.adm, %bb.dw ], [ %i.adm, %bb.ea ] ; 2 uses
   %.12.i242 = phi ptr [ %2, %bb.cx ], [ %.0463.i2181262, %bb.da ], [ %.8471.i264.ph, %bb.dw ], [ %.8471.i264.ph, %bb.ea ] ; 6 uses
-  %i.afj = ptrtoint ptr %i.xu to i64
+  %i.afj = ptrtoint ptr %i.xu to i64              ; 2 uses
   %i.afk = ptrtoint ptr %.3478.i241 to i64        ; 2 uses
   %i.afl = sub i64 %i.afj, %i.afk                 ; 7 uses
   %i.afm = getelementptr inbounds nuw i8, ptr %.12.i242, i64 %i.afl
@@ -3986,8 +3977,7 @@ bb.ec:                                            ; preds = %bb.eb
   br i1 %i.afu, label %.lr.ph1271.preheader, label %._crit_edge1272
 
 .lr.ph1271.preheader:                             ; preds = %bb.ec
-  %10 = add i64 %6, %i.xt
-  %i.afv = add i64 %10, -270
+  %i.afv = add i64 %i.afj, -270
   %i.afw = sub i64 %i.afv, %i.afk                 ; 2 uses
   %i.afx = udiv i64 %i.afw, 255                   ; 3 uses
   %i.afy = add nuw nsw i64 %i.afx, 1
@@ -4040,7 +4030,7 @@ bb.ei:                                            ; preds = %bb.eh
   br label %LZ4_compress_generic.exit66
 
 bb.ej:                                            ; preds = %bb.eg
-  %i.agm = zext nneg i32 %3 to i64                ; 2 uses
+  %i.agm = zext nneg i32 %3 to i64
   %i.agn = getelementptr inbounds nuw i8, ptr %1, i64 %i.agm ; 6 uses
   %i.ago = getelementptr inbounds i8, ptr %i.agn, i64 -11 ; 2 uses
   %i.agp = getelementptr inbounds i8, ptr %i.agn, i64 -5
@@ -4443,7 +4433,7 @@ bb.fj:                                            ; preds = %bb.fi
 .thread856:                                       ; preds = %bb.ek, %bb.fh, %bb.ej
   %.3478.i308 = phi ptr [ %1, %bb.ej ], [ %i.alu, %bb.fh ], [ %.0475.i284, %bb.ek ] ; 2 uses
   %.12.i309 = phi ptr [ %2, %bb.ej ], [ %.8471.i334.ph, %bb.fh ], [ %.0463.i285, %bb.ek ] ; 6 uses
-  %i.ano = ptrtoint ptr %i.agn to i64
+  %i.ano = ptrtoint ptr %i.agn to i64             ; 2 uses
   %i.anp = ptrtoint ptr %.3478.i308 to i64        ; 2 uses
   %i.anq = sub i64 %i.ano, %i.anp                 ; 7 uses
   %i.anr = getelementptr inbounds nuw i8, ptr %.12.i309, i64 %i.anq
@@ -4466,8 +4456,7 @@ bb.fl:                                            ; preds = %bb.fk
   br i1 %i.anz, label %.lr.ph1301.preheader, label %._crit_edge1302
 
 .lr.ph1301.preheader:                             ; preds = %bb.fl
-  %11 = add i64 %6, %i.agm
-  %i.aoa = add i64 %11, -270
+  %i.aoa = add i64 %i.ano, -270
   %i.aob = sub i64 %i.aoa, %i.anp                 ; 2 uses
   %i.aoc = udiv i64 %i.aob, 255                   ; 3 uses
   %i.aod = add nuw nsw i64 %i.aoc, 1
@@ -4539,7 +4528,7 @@ LZ4_prepareTable.exit:                            ; preds = %.thread1668, %bb.fp
   %i.aov = zext i32 %i.aos to i64                 ; 2 uses
   %i.aow = sub nsw i64 0, %i.aov
   %i.aox = getelementptr inbounds i8, ptr %1, i64 %i.aow ; 4 uses
-  %i.aoy = zext nneg i32 %3 to i64                ; 2 uses
+  %i.aoy = zext nneg i32 %3 to i64
   %i.aoz = getelementptr inbounds nuw i8, ptr %1, i64 %i.aoy ; 6 uses
   %i.apa = getelementptr inbounds i8, ptr %i.aoz, i64 -11 ; 3 uses
   %i.apb = getelementptr inbounds i8, ptr %i.aoz, i64 -5
@@ -4942,7 +4931,7 @@ bb.gt:                                            ; preds = %bb.gr, %bb.gq
 .loopexit957:                                     ; preds = %bb.gt, %bb.ft, %bb.gp
   %.2477.i373.ph = phi ptr [ %.0475.i3551215, %bb.ft ], [ %i.aun, %bb.gp ], [ %i.aun, %bb.gt ] ; 2 uses
   %.11474.i374.ph = phi ptr [ %.0463.i3561216, %bb.ft ], [ %.8471.i405.ph, %bb.gp ], [ %.8471.i405.ph, %bb.gt ] ; 6 uses
-  %i.awi = ptrtoint ptr %i.aoz to i64
+  %i.awi = ptrtoint ptr %i.aoz to i64             ; 2 uses
   %i.awj = ptrtoint ptr %.2477.i373.ph to i64     ; 2 uses
   %i.awk = sub i64 %i.awi, %i.awj                 ; 7 uses
   %i.awl = getelementptr inbounds nuw i8, ptr %.11474.i374.ph, i64 %i.awk
@@ -4965,8 +4954,7 @@ bb.gv:                                            ; preds = %bb.gu
   br i1 %i.awt, label %.lr.ph1225.preheader, label %._crit_edge1226
 
 .lr.ph1225.preheader:                             ; preds = %bb.gv
-  %12 = add i64 %6, %i.aoy
-  %i.awu = add i64 %12, -270
+  %i.awu = add i64 %i.awi, -270
   %i.awv = sub i64 %i.awu, %i.awj                 ; 2 uses
   %i.aww = udiv i64 %i.awv, 255                   ; 3 uses
   %i.awx = add nuw nsw i64 %i.aww, 1
@@ -5369,7 +5357,6 @@ bb.e:                                             ; preds = %bb.d, %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @LZ4_compress_fast_continue(ptr nofree noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #1 {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64                    ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16408 ; 13 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !14   ; 4 uses
   %.not = icmp eq i32 %i.b, 0
@@ -5519,7 +5506,7 @@ bb.q:                                             ; preds = %bb.n
   %i.bj = getelementptr inbounds i8, ptr %1, i64 %i.bi ; 4 uses
   %i.bk = sub i32 %i.ab, %i.ba                    ; 2 uses
   %i.bl = zext nneg i32 %i.ba to i64              ; 2 uses
-  %i.bm = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.bm = zext nneg i32 %3 to i64
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 %i.bm ; 6 uses
   %i.bo = getelementptr inbounds i8, ptr %i.bn, i64 -11 ; 3 uses
   %i.bp = getelementptr inbounds i8, ptr %i.bn, i64 -5
@@ -5922,7 +5909,7 @@ bb.at:                                            ; preds = %bb.ar, %bb.aq
 .thread940:                                       ; preds = %bb.at, %bb.t, %bb.ap, %bb.q
   %.3478.i = phi ptr [ %1, %bb.q ], [ %.0475.i1875, %bb.t ], [ %i.hi, %bb.ap ], [ %i.hi, %bb.at ] ; 2 uses
   %.12.i = phi ptr [ %2, %bb.q ], [ %.0463.i1876, %bb.t ], [ %.8471.i.ph, %bb.ap ], [ %.8471.i.ph, %bb.at ] ; 6 uses
-  %i.jd = ptrtoint ptr %i.bn to i64
+  %i.jd = ptrtoint ptr %i.bn to i64               ; 2 uses
   %i.je = ptrtoint ptr %.3478.i to i64            ; 2 uses
   %i.jf = sub i64 %i.jd, %i.je                    ; 7 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %.12.i, i64 %i.jf
@@ -5945,8 +5932,7 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.jo, label %.lr.ph1885.preheader, label %._crit_edge1886
 
 .lr.ph1885.preheader:                             ; preds = %bb.av
-  %7 = add i64 %6, %i.bm
-  %i.jp = add i64 %7, -270
+  %i.jp = add i64 %i.jd, -270
   %i.jq = sub i64 %i.jp, %i.je                    ; 2 uses
   %i.jr = udiv i64 %i.jq, 255                     ; 3 uses
   %i.js = add nuw nsw i64 %i.jr, 1
@@ -6001,7 +5987,7 @@ bb.bc:                                            ; preds = %bb.az
   %i.kf = sub nsw i64 0, %i.ke
   %i.kg = getelementptr inbounds i8, ptr %1, i64 %i.kf ; 4 uses
   %i.kh = zext i32 %i.ba to i64                   ; 2 uses
-  %i.ki = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.ki = zext nneg i32 %3 to i64
   %i.kj = getelementptr inbounds nuw i8, ptr %1, i64 %i.ki ; 6 uses
   %i.kk = getelementptr inbounds i8, ptr %i.kj, i64 -11 ; 3 uses
   %i.kl = getelementptr inbounds i8, ptr %i.kj, i64 -5
@@ -6404,7 +6390,7 @@ bb.cf:                                            ; preds = %bb.cd, %bb.cc
 .thread996:                                       ; preds = %bb.cf, %bb.bf, %bb.cb, %bb.bc
   %.3478.i142 = phi ptr [ %1, %bb.bc ], [ %.0475.i1181828, %bb.bf ], [ %i.qd, %bb.cb ], [ %i.qd, %bb.cf ] ; 2 uses
   %.12.i143 = phi ptr [ %2, %bb.bc ], [ %.0463.i1191829, %bb.bf ], [ %.8471.i168.ph, %bb.cb ], [ %.8471.i168.ph, %bb.cf ] ; 6 uses
-  %i.ry = ptrtoint ptr %i.kj to i64
+  %i.ry = ptrtoint ptr %i.kj to i64               ; 2 uses
   %i.rz = ptrtoint ptr %.3478.i142 to i64         ; 2 uses
   %i.sa = sub i64 %i.ry, %i.rz                    ; 7 uses
   %i.sb = getelementptr inbounds nuw i8, ptr %.12.i143, i64 %i.sa
@@ -6427,8 +6413,7 @@ bb.ch:                                            ; preds = %bb.cg
   br i1 %i.sj, label %.lr.ph1838.preheader, label %._crit_edge1839
 
 .lr.ph1838.preheader:                             ; preds = %bb.ch
-  %8 = add i64 %6, %i.ki
-  %i.sk = add i64 %8, -270
+  %i.sk = add i64 %i.ry, -270
   %i.sl = sub i64 %i.sk, %i.rz                    ; 2 uses
   %i.sm = udiv i64 %i.sl, 255                     ; 3 uses
   %i.sn = add nuw nsw i64 %i.sm, 1
@@ -6488,7 +6473,7 @@ bb.cm:                                            ; preds = %bb.cl
   %.not515.i185 = icmp eq ptr %i.tf, null         ; 2 uses
   %i.th = zext i32 %i.tg to i64
   %i.ti = getelementptr inbounds nuw i8, ptr %i.tf, i64 %i.th ; 2 uses
-  %i.tj = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.tj = zext nneg i32 %3 to i64
   %i.tk = getelementptr inbounds nuw i8, ptr %1, i64 %i.tj ; 6 uses
   %i.tl = getelementptr inbounds i8, ptr %i.tk, i64 -11 ; 3 uses
   %i.tm = getelementptr inbounds i8, ptr %i.tk, i64 -5 ; 4 uses
@@ -6891,7 +6876,7 @@ bb.er:                                            ; preds = %bb.ep, %bb.eo
 .loopexit:                                        ; preds = %bb.er, %bb.cp, %bb.en
   %.2477.i206.ph = phi ptr [ %.0475.i1881657, %bb.cp ], [ %.6410.i, %bb.en ], [ %.6410.i, %bb.er ] ; 2 uses
   %.11474.i207.ph = phi ptr [ %.0463.i1891658, %bb.cp ], [ %.8471.i238.ph, %bb.en ], [ %.8471.i238.ph, %bb.er ] ; 6 uses
-  %i.ael = ptrtoint ptr %i.tk to i64
+  %i.ael = ptrtoint ptr %i.tk to i64              ; 2 uses
   %i.aem = ptrtoint ptr %.2477.i206.ph to i64     ; 2 uses
   %i.aen = sub i64 %i.ael, %i.aem                 ; 7 uses
   %i.aeo = getelementptr inbounds nuw i8, ptr %.11474.i207.ph, i64 %i.aen
@@ -6914,8 +6899,7 @@ bb.et:                                            ; preds = %bb.es
   br i1 %i.aew, label %.lr.ph1666.preheader, label %._crit_edge1667
 
 .lr.ph1666.preheader:                             ; preds = %bb.et
-  %9 = add i64 %6, %i.tj
-  %i.aex = add i64 %9, -270
+  %i.aex = add i64 %i.ael, -270
   %i.aey = sub i64 %i.aex, %i.aem                 ; 2 uses
   %i.aez = udiv i64 %i.aey, 255                   ; 3 uses
   %i.afa = add nuw nsw i64 %i.aez, 1
@@ -6980,7 +6964,7 @@ bb.fa:                                            ; preds = %bb.ex
   %.not515.i255 = icmp eq ptr %i.afq, null        ; 2 uses
   %i.afv = zext i32 %i.afr to i64
   %i.afw = getelementptr inbounds nuw i8, ptr %i.afq, i64 %i.afv ; 2 uses
-  %i.afx = zext nneg i32 %3 to i64                ; 2 uses
+  %i.afx = zext nneg i32 %3 to i64
   %i.afy = getelementptr inbounds nuw i8, ptr %1, i64 %i.afx ; 6 uses
   %i.afz = getelementptr inbounds i8, ptr %i.afy, i64 -11 ; 3 uses
   %i.aga = getelementptr inbounds i8, ptr %i.afy, i64 -5 ; 4 uses
@@ -7383,7 +7367,7 @@ bb.hl:                                            ; preds = %bb.hj, %bb.hi
 .thread1178:                                      ; preds = %bb.hl, %bb.fg, %bb.he, %bb.fa
   %.3478.i286 = phi ptr [ %1, %bb.fa ], [ %.0475.i2581593, %bb.fg ], [ %.6410.i313, %bb.he ], [ %.6410.i313, %bb.hl ] ; 2 uses
   %.12.i287 = phi ptr [ %2, %bb.fa ], [ %.0463.i2591594, %bb.fg ], [ %.8471.i314.ph, %bb.he ], [ %.8471.i314.ph, %bb.hl ] ; 6 uses
-  %i.aro = ptrtoint ptr %i.afy to i64
+  %i.aro = ptrtoint ptr %i.afy to i64             ; 2 uses
   %i.arp = ptrtoint ptr %.3478.i286 to i64        ; 2 uses
   %i.arq = sub i64 %i.aro, %i.arp                 ; 7 uses
   %i.arr = getelementptr inbounds nuw i8, ptr %.12.i287, i64 %i.arq
@@ -7406,8 +7390,7 @@ bb.hn:                                            ; preds = %bb.hm
   br i1 %i.arz, label %.lr.ph1603.preheader, label %._crit_edge1604
 
 .lr.ph1603.preheader:                             ; preds = %bb.hn
-  %10 = add i64 %6, %i.afx
-  %i.asa = add i64 %10, -270
+  %i.asa = add i64 %i.aro, -270
   %i.asb = sub i64 %i.asa, %i.arp                 ; 2 uses
   %i.asc = udiv i64 %i.asb, 255                   ; 3 uses
   %i.asd = add nuw nsw i64 %i.asc, 1
@@ -7472,7 +7455,7 @@ bb.hv:                                            ; preds = %bb.hs
   %.not515.i335 = icmp eq ptr %i.az, null         ; 2 uses
   %i.asw = zext nneg i32 %i.ba to i64
   %i.asx = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.asw ; 2 uses
-  %i.asy = zext nneg i32 %3 to i64                ; 2 uses
+  %i.asy = zext nneg i32 %3 to i64
   %i.asz = getelementptr inbounds nuw i8, ptr %1, i64 %i.asy ; 6 uses
   %i.ata = getelementptr inbounds i8, ptr %i.asz, i64 -11 ; 3 uses
   %i.atb = getelementptr inbounds i8, ptr %i.asz, i64 -5 ; 4 uses
@@ -7875,7 +7858,7 @@ bb.ka:                                            ; preds = %bb.jy, %bb.jx
 .thread1268:                                      ; preds = %bb.ka, %bb.hy, %bb.jw, %bb.hv
   %.3478.i367 = phi ptr [ %1, %bb.hv ], [ %.0475.i3381783, %bb.hy ], [ %.6410.i394, %bb.jw ], [ %.6410.i394, %bb.ka ] ; 2 uses
   %.12.i368 = phi ptr [ %2, %bb.hv ], [ %.0463.i3391784, %bb.hy ], [ %.8471.i395.ph, %bb.jw ], [ %.8471.i395.ph, %bb.ka ] ; 6 uses
-  %i.bec = ptrtoint ptr %i.asz to i64
+  %i.bec = ptrtoint ptr %i.asz to i64             ; 2 uses
   %i.bed = ptrtoint ptr %.3478.i367 to i64        ; 2 uses
   %i.bee = sub i64 %i.bec, %i.bed                 ; 7 uses
   %i.bef = getelementptr inbounds nuw i8, ptr %.12.i368, i64 %i.bee
@@ -7898,8 +7881,7 @@ bb.kc:                                            ; preds = %bb.kb
   br i1 %i.ben, label %.lr.ph1792.preheader, label %._crit_edge1793
 
 .lr.ph1792.preheader:                             ; preds = %bb.kc
-  %11 = add i64 %6, %i.asy
-  %i.beo = add i64 %11, -270
+  %i.beo = add i64 %i.bec, -270
   %i.bep = sub i64 %i.beo, %i.bed                 ; 2 uses
   %i.beq = udiv i64 %i.bep, 255                   ; 3 uses
   %i.ber = add nuw nsw i64 %i.beq, 1
@@ -7956,7 +7938,7 @@ bb.kj:                                            ; preds = %bb.kg
   %.not515.i417 = icmp eq ptr %i.az, null         ; 2 uses
   %i.bfg = zext i32 %i.ba to i64
   %i.bfh = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.bfg ; 2 uses
-  %i.bfi = zext nneg i32 %3 to i64                ; 2 uses
+  %i.bfi = zext nneg i32 %3 to i64
   %i.bfj = getelementptr inbounds nuw i8, ptr %1, i64 %i.bfi ; 6 uses
   %i.bfk = getelementptr inbounds i8, ptr %i.bfj, i64 -11 ; 3 uses
   %i.bfl = getelementptr inbounds i8, ptr %i.bfj, i64 -5 ; 4 uses
@@ -8359,7 +8341,7 @@ bb.mo:                                            ; preds = %bb.mm, %bb.ml
 .thread1358:                                      ; preds = %bb.mo, %bb.km, %bb.mk, %bb.kj
   %.3478.i449 = phi ptr [ %1, %bb.kj ], [ %.0475.i4201720, %bb.km ], [ %.6410.i476, %bb.mk ], [ %.6410.i476, %bb.mo ] ; 2 uses
   %.12.i450 = phi ptr [ %2, %bb.kj ], [ %.0463.i4211721, %bb.km ], [ %.8471.i477.ph, %bb.mk ], [ %.8471.i477.ph, %bb.mo ] ; 6 uses
-  %i.bql = ptrtoint ptr %i.bfj to i64
+  %i.bql = ptrtoint ptr %i.bfj to i64             ; 2 uses
   %i.bqm = ptrtoint ptr %.3478.i449 to i64        ; 2 uses
   %i.bqn = sub i64 %i.bql, %i.bqm                 ; 7 uses
   %i.bqo = getelementptr inbounds nuw i8, ptr %.12.i450, i64 %i.bqn
@@ -8382,8 +8364,7 @@ bb.mq:                                            ; preds = %bb.mp
   br i1 %i.bqw, label %.lr.ph1729.preheader, label %._crit_edge1730
 
 .lr.ph1729.preheader:                             ; preds = %bb.mq
-  %12 = add i64 %6, %i.bfi
-  %i.bqx = add i64 %12, -270
+  %i.bqx = add i64 %i.bql, -270
   %i.bqy = sub i64 %i.bqx, %i.bqm                 ; 2 uses
   %i.bqz = udiv i64 %i.bqy, 255                   ; 3 uses
   %i.bra = add nuw nsw i64 %i.bqz, 1
@@ -8435,7 +8416,6 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define i32 @LZ4_compress_forceExtDict(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %4 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16400 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !9    ; 3 uses
   %i.c = add i32 %i.b, %3
@@ -8514,7 +8494,7 @@ bb.e:                                             ; preds = %bb.c
   %.not515.i = icmp eq ptr %i.ae, null            ; 2 uses
   %i.ag = zext nneg i32 %i.v to i64
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ag ; 2 uses
-  %i.ai = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.ai = zext nneg i32 %3 to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 %i.ai ; 6 uses
   %i.ak = getelementptr inbounds i8, ptr %i.aj, i64 -11 ; 3 uses
   %i.al = getelementptr inbounds i8, ptr %i.aj, i64 -5 ; 4 uses
@@ -8917,7 +8897,7 @@ bb.bh:                                            ; preds = %bb.bf, %bb.be
 .thread308:                                       ; preds = %bb.bh, %bb.h, %bb.bd, %bb.e
   %.3478.i = phi ptr [ %1, %bb.e ], [ %.0475.i545, %bb.h ], [ %.6410.i, %bb.bd ], [ %.6410.i, %bb.bh ] ; 2 uses
   %.12.i = phi ptr [ %2, %bb.e ], [ %.0463.i546, %bb.h ], [ %.8471.i, %bb.bd ], [ %.8471.i, %bb.bh ] ; 5 uses
-  %i.kw = ptrtoint ptr %i.aj to i64
+  %i.kw = ptrtoint ptr %i.aj to i64               ; 2 uses
   %i.kx = ptrtoint ptr %.3478.i to i64            ; 2 uses
   %i.ky = sub i64 %i.kw, %i.kx                    ; 5 uses
   %i.kz = icmp ugt i64 %i.ky, 14
@@ -8931,8 +8911,7 @@ bb.bi:                                            ; preds = %.thread308
   br i1 %i.lb, label %.lr.ph554.preheader, label %._crit_edge555
 
 .lr.ph554.preheader:                              ; preds = %bb.bi
-  %5 = add i64 %4, %i.ai
-  %i.lc = add i64 %5, -270
+  %i.lc = add i64 %i.kw, -270
   %i.ld = sub i64 %i.lc, %i.kx                    ; 2 uses
   %i.le = udiv i64 %i.ld, 255                     ; 3 uses
   %i.lf = add nuw nsw i64 %i.le, 1
@@ -8987,7 +8966,7 @@ bb.bn:                                            ; preds = %bb.bl
   %.not515.i24 = icmp eq ptr %i.lt, null          ; 2 uses
   %i.lu = zext i32 %i.v to i64
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lt, i64 %i.lu ; 2 uses
-  %i.lw = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.lw = zext nneg i32 %3 to i64
   %i.lx = getelementptr inbounds nuw i8, ptr %1, i64 %i.lw ; 6 uses
   %i.ly = getelementptr inbounds i8, ptr %i.lx, i64 -11 ; 3 uses
   %i.lz = getelementptr inbounds i8, ptr %i.lx, i64 -5 ; 4 uses
@@ -9390,7 +9369,7 @@ bb.dq:                                            ; preds = %bb.do, %bb.dn
 .thread381:                                       ; preds = %bb.dq, %bb.bq, %bb.dm, %bb.bn
   %.3478.i55 = phi ptr [ %1, %bb.bn ], [ %.0475.i27482, %bb.bq ], [ %.6410.i79, %bb.dm ], [ %.6410.i79, %bb.dq ] ; 2 uses
   %.12.i56 = phi ptr [ %2, %bb.bn ], [ %.0463.i28483, %bb.bq ], [ %.8471.i80, %bb.dm ], [ %.8471.i80, %bb.dq ] ; 5 uses
-  %i.wj = ptrtoint ptr %i.lx to i64
+  %i.wj = ptrtoint ptr %i.lx to i64               ; 2 uses
   %i.wk = ptrtoint ptr %.3478.i55 to i64          ; 2 uses
   %i.wl = sub i64 %i.wj, %i.wk                    ; 5 uses
   %i.wm = icmp ugt i64 %i.wl, 14
@@ -9404,8 +9383,7 @@ bb.dr:                                            ; preds = %.thread381
   br i1 %i.wo, label %.lr.ph491.preheader, label %._crit_edge492
 
 .lr.ph491.preheader:                              ; preds = %bb.dr
-  %6 = add i64 %4, %i.lw
-  %i.wp = add i64 %6, -270
+  %i.wp = add i64 %i.wj, -270
   %i.wq = sub i64 %i.wp, %i.wk                    ; 2 uses
   %i.wr = udiv i64 %i.wq, 255                     ; 3 uses
   %i.ws = add nuw nsw i64 %i.wr, 1

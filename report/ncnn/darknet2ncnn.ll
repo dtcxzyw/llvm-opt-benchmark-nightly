@@ -204,17 +204,15 @@ bb.k:                                             ; preds = %_ZSt7find_ifIN9__gn
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit: ; preds = %_ZSt7find_ifIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEZL4trimRS8_EUliE_ET_SC_SC_T0_.exit.thread, %bb.k
   %i.at = load ptr, ptr %0, align 8, !tbaa !34    ; 3 uses
-  %i.au = load i64, ptr %i.b, align 8, !tbaa !15, !noalias !119 ; 3 uses
+  %i.au = load i64, ptr %i.b, align 8, !tbaa !15, !noalias !119 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.au ; 4 uses
-  %i.aw = ptrtoint ptr %i.av to i64               ; 3 uses
+  %i.aw = ptrtoint ptr %i.av to i64               ; 2 uses
   %i.ax = ptrtoint ptr %i.at to i64               ; 4 uses
   %i.ay = ashr i64 %i.au, 2                       ; 3 uses
   %i.az = icmp sgt i64 %i.ay, 0
   br i1 %i.az, label %.lr.ph.i.preheader.i.i, label %._crit_edge.i.i.i13
 
 .lr.ph.i.preheader.i.i:                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit
-  %1 = and i64 %i.au, -4
-  %2 = sub i64 %i.aw, %1
   %i.ba = mul nsw i64 %i.ay, -4
   %scevgep.i.i = getelementptr i8, ptr %i.av, i64 %i.ba
   br label %.lr.ph.i.i.i14
@@ -273,11 +271,11 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
   %i.bx = add nsw i64 %.036.i.i.i, -1
   %i.by = icmp sgt i64 %.036.i.i.i, 1
-  %i.bz = ptrtoint ptr %i.bs to i64
+  %i.bz = ptrtoint ptr %i.bs to i64               ; 2 uses
   br i1 %i.by, label %.lr.ph.i.i.i14, label %._crit_edge.i.i.i13, !llvm.loop !129
 
 ._crit_edge.i.i.i13:                              ; preds = %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit
-  %i.ca = phi i64 [ %i.aw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit ], [ %2, %bb.r ] ; 5 uses
+  %i.ca = phi i64 [ %i.aw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit ], [ %i.bz, %bb.r ] ; 5 uses
   %i.cb = phi ptr [ %i.av, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit ], [ %scevgep.i.i, %bb.r ] ; 2 uses
   %i.cc = sub i64 %i.ca, %i.ax
   switch i64 %i.cc, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_.exit16 [

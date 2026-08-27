@@ -205,9 +205,6 @@ bb.a:
   br i1 %.not, label %.preheader, label %.lr.ph225.preheader
 
 .lr.ph225.preheader:                              ; preds = %bb.a
-  %6 = ptrtoaddr ptr %4 to i64
-  %7 = and i64 %6, 7
-  %.not.i.i = icmp eq i64 %7, 0
   %i.c = insertelement <2 x double> poison, double %5, i64 0
   %i.d = shufflevector <2 x double> %i.c, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.lr.ph225
@@ -251,13 +248,15 @@ bb.a:
   %i.af = insertelement <2 x double> poison, double %i.ae, i64 0
   %i.ag = shufflevector <2 x double> %i.af, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ah = add nuw nsw i64 %.0145223, 2            ; 6 uses
+  %6 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ah
   %i.ai = sub nsw i64 %0, %i.ah                   ; 2 uses
+  %7 = ptrtoint ptr %6 to i64                     ; 2 uses
+  %8 = and i64 %7, 7
+  %.not.i.i = icmp eq i64 %8, 0
   br i1 %.not.i.i, label %bb.b, label %_ZN5Eigen8internal21first_default_alignedIdlEET0_PKT_S2_.exit
 
 bb.b:                                             ; preds = %.lr.ph225
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.ah
-  %9 = ptrtoint ptr %8 to i64
-  %i.aj = lshr exact i64 %9, 3
+  %i.aj = lshr exact i64 %7, 3
   %i.ak = and i64 %i.aj, 1
   %i.al = tail call i64 @llvm.smin.i64(i64 %i.ak, i64 %i.ai)
   br label %_ZN5Eigen8internal21first_default_alignedIdlEET0_PKT_S2_.exit

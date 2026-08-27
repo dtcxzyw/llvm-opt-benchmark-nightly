@@ -205,8 +205,7 @@ bb.bh:                                            ; preds = %.invoke1869
   br label %.body
 
 _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IllEERKT_RKT0_.exit: ; preds = %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i399, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i278
-  %.sroa.01038.0 = phi ptr [ null, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i278 ], [ %i.td, %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i399 ] ; 10 uses
-  %.sroa.01038.01601 = ptrtoaddr ptr %.sroa.01038.0 to i64
+  %.sroa.01038.0 = phi ptr [ null, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i278 ], [ %i.td, %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i399 ] ; 9 uses
   br i1 %or.cond.i.i.i.i277, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i283, label %bb.bi
 
 bb.bi:                                            ; preds = %_ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IllEERKT_RKT0_.exit
@@ -609,9 +608,6 @@ bb.cq:                                            ; preds = %.loopexit1129, %.lo
 
 .lr.ph1436:                                       ; preds = %.preheader
   %i.alh = icmp sgt i64 %i.ss, 1
-  %26 = and i64 %.sroa.01038.01601, 7             ; 2 uses
-  %.not.i.i.i.i.i.i.i = icmp eq i64 %26, 0
-  %.not.i.i.i.i.i.i.i353 = icmp eq i64 %26, 0
   %i.ali = add i64 %i.ss, -1                      ; 2 uses
   %i.alj = add i64 %i.ss, -2
   %xtraiter2294 = and i64 %i.ali, 7               ; 3 uses
@@ -687,10 +683,12 @@ bb.cy:                                            ; preds = %.lr.ph1436, %_ZN5Ei
   %indvars.iv1602 = phi i64 [ 0, %.lr.ph1436 ], [ %indvars.iv.next1603, %_ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEEdVERKd.exit ] ; 2 uses
   %i.ami = mul nsw i64 %indvars.iv1602, %i.ss
   %i.amj = getelementptr inbounds [8 x i8], ptr %.sroa.01038.0, i64 %i.ami ; 30 uses
-  %.pre1629.a = ptrtoint ptr %i.amj to i64        ; 2 uses
+  %.pre1629.a = ptrtoint ptr %i.amj to i64        ; 3 uses
+  %.pre1629 = and i64 %.pre1629.a, 7              ; 2 uses
   br i1 %i.sv, label %.loopexit, label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy
+  %.not.i.i.i.i.i.i.i = icmp eq i64 %.pre1629, 0
   br i1 %.not.i.i.i.i.i.i.i, label %bb.da, label %_ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEEElRKNS_9DenseBaseIT_EE.exit.i.i.i
 
 bb.da:                                            ; preds = %bb.cz
@@ -922,6 +920,7 @@ bb.df:                                            ; preds = %_ZN5Eigen8internalL
 
 .loopexit:                                        ; preds = %.lr.ph88.i.i.i, %.loopexit.loopexit.unr-lcssa, %.lr.ph93.i.i.i.epil, %bb.cy, %.preheader.i.i.i, %bb.df
   %.0.i = phi double [ %i.aqp, %.lr.ph93.i.i.i.epil ], [ 0.000000e+00, %bb.cy ], [ %i.apg, %bb.df ], [ %.069.lcssa.i.i.i, %.preheader.i.i.i ], [ %i.aql, %.loopexit.loopexit.unr-lcssa ], [ %i.apd, %.lr.ph88.i.i.i ] ; 5 uses
+  %.not.i.i.i.i.i.i.i353 = icmp eq i64 %.pre1629, 0
   br i1 %.not.i.i.i.i.i.i.i353, label %bb.dg, label %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i
 
 bb.dg:                                            ; preds = %.loopexit

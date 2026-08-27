@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.ak = load ptr, ptr %i.e, align 8, !tbaa !772, !noalias !1040 ; 4 uses
   %i.al = load ptr, ptr %i.c, align 8, !tbaa !772, !noalias !1049
-  %i.am = ptrtoint ptr %i.ak to i64               ; 4 uses
+  %i.am = ptrtoint ptr %i.ak to i64               ; 3 uses
   %i.an = ptrtoint ptr %i.al to i64               ; 4 uses
   %i.ao = sub i64 %i.am, %i.an                    ; 2 uses
   %i.ap = sdiv exact i64 %i.ao, 12
@@ -211,8 +211,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.ar, label %.lr.ph.i.preheader.i.i.i, label %._crit_edge.i.i.i.i
 
 .lr.ph.i.preheader.i.i.i:                         ; preds = %bb.c
-  %.neg.i.i.i = mul nsw i64 %i.aq, -48            ; 2 uses
-  %6 = add i64 %.neg.i.i.i, %i.am                 ; 2 uses
+  %.neg.i.i.i = mul nsw i64 %i.aq, -48
   %scevgep.i.i.i = getelementptr i8, ptr %i.ak, i64 %.neg.i.i.i
   br label %.lr.ph.i.i.i.i
 
@@ -262,16 +261,16 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.bg = add nsw i64 %.036.i.i.i.i, -1
   %i.bh = icmp sgt i64 %.036.i.i.i.i, 1
-  %i.bi = ptrtoint ptr %i.bd to i64
+  %i.bi = ptrtoint ptr %i.bd to i64               ; 3 uses
   br i1 %i.bh, label %.lr.ph.i.i.i.i, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !1065
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.j
-  %.pre53.i.i.i.i = sub i64 %6, %i.an
+  %.pre53.i.i.i.i = sub i64 %i.bi, %i.an
   br label %._crit_edge.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %._crit_edge.loopexit.i.i.i.i, %bb.c
   %.pre-phi54.i.i.i.i = phi i64 [ %.pre53.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.ao, %bb.c ]
-  %i.bj = phi i64 [ %6, %._crit_edge.loopexit.i.i.i.i ], [ %i.am, %bb.c ] ; 4 uses
+  %i.bj = phi i64 [ %i.bi, %._crit_edge.loopexit.i.i.i.i ], [ %i.am, %bb.c ] ; 4 uses
   %i.bk = phi ptr [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.ak, %bb.c ] ; 2 uses
   %i.bl = sdiv exact i64 %.pre-phi54.i.i.i.i, 12
   switch i64 %i.bl, label %"_ZN4llvm7find_ifINS_14iterator_rangeISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKNS_15CalleeSavedInfoESt6vectorIS5_SaIS5_EEEEEEEZNKS_22AArch64PrologueEmitter27emitCalleeSavedSVELocationsENS_26MachineInstrBundleIteratorINS_12MachineInstrELb0EEEE3$_0EEDaOT_T0_.exit" [

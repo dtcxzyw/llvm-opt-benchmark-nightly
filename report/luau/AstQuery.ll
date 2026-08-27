@@ -202,17 +202,15 @@ _ZNK4Luau8LocationeqERKS0_.exit.thread.i:         ; preds = %_ZNK4Luau8Locatione
 .noexc:                                           ; preds = %_ZNK4Luau8LocationeqERKS0_.exit.thread.i
   %i.bt = load ptr, ptr %i.as, align 8, !tbaa !82, !noalias !131 ; 4 uses
   %i.bu = load ptr, ptr %4, align 8, !tbaa !82, !noalias !134 ; 4 uses
-  %i.bv = ptrtoint ptr %i.bt to i64               ; 4 uses
+  %i.bv = ptrtoint ptr %i.bt to i64               ; 3 uses
   %i.bw = ptrtoint ptr %i.bu to i64               ; 5 uses
-  %i.bx = sub i64 %i.bv, %i.bw                    ; 3 uses
+  %i.bx = sub i64 %i.bv, %i.bw                    ; 2 uses
   %i.by = ashr i64 %i.bx, 5                       ; 3 uses
   %i.bz = icmp sgt i64 %i.by, 0
   br i1 %i.bz, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.noexc
   %i.ca = load i32, ptr @_ZN4Luau7AstRttiINS_12AstStatLocalEE5valueE, align 4, !tbaa !9, !noalias !137 ; 4 uses
-  %9 = and i64 %i.bx, -32
-  %10 = sub i64 %i.bv, %9                         ; 2 uses
   %i.cb = mul nsw i64 %i.by, -32
   %scevgep.i.i.i = getelementptr i8, ptr %i.bt, i64 %i.cb
   br label %bb.m
@@ -271,16 +269,16 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   %i.cy = add nsw i64 %.036.i.i.i.i, -1
   %i.cz = icmp sgt i64 %.036.i.i.i.i, 1
-  %i.da = ptrtoint ptr %i.ct to i64
+  %i.da = ptrtoint ptr %i.ct to i64               ; 3 uses
   br i1 %i.cz, label %bb.m, label %._crit_edge.loopexit.i.i.i.i, !llvm.loop !144
 
 ._crit_edge.loopexit.i.i.i.i:                     ; preds = %bb.t
-  %.pre56.i.i.i.i = sub i64 %10, %i.bw
+  %.pre56.i.i.i.i = sub i64 %i.da, %i.bw
   br label %._crit_edge.i.i.i.i
 
 ._crit_edge.i.i.i.i:                              ; preds = %._crit_edge.loopexit.i.i.i.i, %.noexc
   %.pre-phi57.i.i.i.i = phi i64 [ %.pre56.i.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.bx, %.noexc ]
-  %i.db = phi i64 [ %10, %._crit_edge.loopexit.i.i.i.i ], [ %i.bv, %.noexc ] ; 4 uses
+  %i.db = phi i64 [ %i.da, %._crit_edge.loopexit.i.i.i.i ], [ %i.bv, %.noexc ] ; 4 uses
   %i.dc = phi ptr [ %scevgep.i.i.i, %._crit_edge.loopexit.i.i.i.i ], [ %i.bt, %.noexc ] ; 2 uses
   %i.dd = ashr exact i64 %.pre-phi57.i.i.i.i, 3
   switch i64 %i.dd, label %.loopexit.i [
