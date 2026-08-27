@@ -204,7 +204,7 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %9 = alloca %"class.llvm::orc::SymbolStringPtr", align 8 ; 6 uses
   %10 = alloca %"class.llvm::orc::EPCGenericDylibManager", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !55, !nonnull !34, !align !35 ; 3 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !55, !nonnull !34, !align !35 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
@@ -218,16 +218,15 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !90
   store ptr %i.f, ptr %i.e, align 8, !tbaa !93, !alias.scope !90
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !22, !noalias !94
   store ptr %i.f, ptr %i.c, align 8, !alias.scope !90
   store ptr %i.d, ptr %5, align 8, !alias.scope !90
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
   %.sroa.03.0.copyload = load ptr, ptr %2, align 8, !tbaa !11
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.24.0.copyload = load i64, ptr %.sroa.24.0..sroa_idx, align 8, !tbaa !24
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 3 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 4 uses
+  %11 = load ptr, ptr %i.g, align 8, !tbaa !22, !noalias !94
+  %i.h = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !97, !noalias !102
   call void @_ZN4llvm3orc16SymbolStringPool6internENS_9StringRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::orc::SymbolStringPtr") align 8 %7, ptr noundef nonnull align 8 dereferenceable(64) %i.i, ptr %.sroa.03.0.copyload, i64 %.sroa.24.0.copyload)
   %i.j = load ptr, ptr %7, align 8, !tbaa !105    ; 4 uses

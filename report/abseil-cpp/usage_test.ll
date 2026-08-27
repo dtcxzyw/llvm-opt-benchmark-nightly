@@ -202,8 +202,6 @@ $_ZTS3UDT = comdat any
 @_ZTSN12_GLOBAL__N_118UsageReportingTestE = internal constant [37 x i8] c"N12_GLOBAL__N_118UsageReportingTestE\00", align 1
 @_ZTIN7testing4TestE = external constant ptr
 @_ZTVN12_GLOBAL__N_118UsageReportingTestE = internal constant { [8 x ptr] } { [8 x ptr] [ptr null, ptr @_ZTIN12_GLOBAL__N_118UsageReportingTestE, ptr @_ZN12_GLOBAL__N_118UsageReportingTestD2Ev, ptr @_ZN12_GLOBAL__N_118UsageReportingTestD0Ev, ptr @_ZN12_GLOBAL__N_118UsageReportingTest5SetUpEv, ptr @_ZN7testing4Test8TearDownEv, ptr @__cxa_pure_virtual, ptr @_ZN7testing4Test5SetupEv] }, align 8
-@.str.59 = private unnamed_addr constant [26 x i8] c"basic_string_view::substr\00", align 1
-@.str.60 = private unnamed_addr constant [49 x i8] c"%s: __pos (which is %zu) > __size (which is %zu)\00", align 1
 @.str.61 = private unnamed_addr constant [50 x i8] c"basic_string: construction from null is not valid\00", align 1
 @_ZTIPFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS2_EE = linkonce_odr dso_local constant { ptr, ptr, i32, ptr } { ptr getelementptr inbounds (ptr, ptr @_ZTVN10__cxxabiv119__pointer_type_infoE, i64 2), ptr @_ZTSPFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS2_EE, i32 0, ptr @_ZTIFNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS2_EE }, comdat, align 8
 @_ZTVN10__cxxabiv119__pointer_type_infoE = external global [0 x ptr]
@@ -606,7 +604,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.b, %bb.c
-  %.013.i.i = phi i64 [ %i.n, %bb.c ], [ %i.b, %bb.b ] ; 6 uses
+  %.013.i.i = phi i64 [ %i.n, %bb.c ], [ %i.b, %bb.b ] ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 %.013.i.i ; 3 uses
   %i.d = load i32, ptr %i.c, align 1
   %i.e = xor i32 %i.d, 1819501153
@@ -618,22 +616,14 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.b, %bb.c
   %i.k = icmp ne i32 %i.j, 0
   %i.l = zext i1 %i.k to i32
   %i.m = icmp eq i32 %i.l, 0
-  br i1 %i.m, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEPKcm.exit, label %bb.c
+  br i1 %i.m, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   %i.n = add i64 %.013.i.i, -1
   %.not6.i.i = icmp eq i64 %.013.i.i, 0
   br i1 %.not6.i.i, label %.loopexit, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, !llvm.loop !98
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEPKcm.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
-  %3 = icmp ugt i64 %.013.i.i, %1
-  br i1 %3, label %4, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
-
-4:                                                ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEPKcm.exit
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.60, ptr noundef nonnull @.str.59, i64 noundef %.013.i.i, i64 noundef %1) #29
-  unreachable
-
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEPKcm.exit
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   %i.o = sub nuw i64 %1, %.013.i.i
   br label %.loopexit
 
@@ -1034,9 +1024,6 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #16
-
-; Function Attrs: noreturn
-declare void @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef, ...) local_unnamed_addr #17
 
 ; Function Attrs: noreturn
 declare void @_ZSt19__throw_logic_errorPKc(ptr noundef) local_unnamed_addr #17

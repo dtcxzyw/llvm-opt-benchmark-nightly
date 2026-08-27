@@ -206,16 +206,16 @@ bb.hd:                                            ; preds = %.thread264, %bb.hc
   br label %.thread257
 
 .thread257:                                       ; preds = %bb.hd, %bb.hc, %.thread254
-  %i.aiu = phi i32 [ %i.aiq, %.thread254 ], [ %.pr272.pre426, %bb.hc ], [ %.pr272.pre, %bb.hd ] ; 5 uses
+  %i.aiu = phi i32 [ %i.aiq, %.thread254 ], [ %.pr272.pre426, %bb.hc ], [ %.pr272.pre, %bb.hd ] ; 4 uses
   %.not120263 = phi i1 [ true, %.thread254 ], [ true, %bb.hc ], [ false, %bb.hd ]
   %.1262 = phi i32 [ %i.aip, %.thread254 ], [ %.090357, %bb.hc ], [ %.1269, %bb.hd ] ; 3 uses
   %.399261 = phi i32 [ %.298, %.thread254 ], [ %.298, %bb.hc ], [ %.399268, %bb.hd ] ; 3 uses
   br label %bb.he
 
 bb.he:                                            ; preds = %bb.hq, %.thread257
-  %.04486.i = phi i32 [ 15, %.thread257 ], [ %i.aki, %bb.hq ] ; 5 uses
+  %.04486.i = phi i32 [ 15, %.thread257 ], [ %i.aki, %bb.hq ] ; 4 uses
   %i.aiv = zext nneg i32 %.04486.i to i64         ; 2 uses
-  %i.aiw = getelementptr inbounds nuw [40 x i8], ptr %i.bj, i64 %i.aiv ; 5 uses
+  %i.aiw = getelementptr inbounds nuw [40 x i8], ptr %i.bj, i64 %i.aiv ; 4 uses
   %i.aix = getelementptr inbounds nuw i8, ptr %i.aiw, i64 32
   %i.aiy = load i32, ptr %i.aix, align 8, !tbaa !6050
   %i.aiz = icmp sgt i32 %i.aiy, 0
@@ -322,7 +322,7 @@ bb.hq:                                            ; preds = %bb.hp, %bb.ho, %sql
 
 sqlite3_free.exit51.i:                            ; preds = %bb.he
   %i.akj = icmp eq i32 %.04486.i, 0
-  br i1 %i.akj, label %bb.hr, label %blobGrowBuffer.exit.thread.i
+  br i1 %i.akj, label %bb.hr, label %.lr.ph.preheader.i
 
 bb.hr:                                            ; preds = %sqlite3_free.exit51.i
   %i.akk = icmp eq i32 %i.aiu, 0
@@ -378,14 +378,10 @@ sqlite3Fts3PutVarint.exit.i:                      ; preds = %bb.hv
   store i32 %i.alb, ptr %i.cy, align 8, !tbaa !5996
   br label %.lr.ph.preheader.i
 
-blobGrowBuffer.exit.thread.i:                     ; preds = %sqlite3_free.exit51.i
-  %6 = icmp sgt i32 %.04486.i, 0
-  br i1 %6, label %.lr.ph.preheader.i, label %._crit_edge.i198
-
-.lr.ph.preheader.i:                               ; preds = %bb.hr, %bb.ht, %sqlite3_realloc64.exit.i.i208, %sqlite3Fts3PutVarint.exit.i, %blobGrowBuffer.exit.thread.i
-  %i.alc = phi ptr [ %i.aiw, %blobGrowBuffer.exit.thread.i ], [ %i.bk, %sqlite3Fts3PutVarint.exit.i ], [ %i.bk, %sqlite3_realloc64.exit.i.i208 ], [ %i.bk, %bb.ht ], [ %i.bk, %bb.hr ]
-  %i.ald = phi i64 [ %i.aiv, %blobGrowBuffer.exit.thread.i ], [ 1, %sqlite3Fts3PutVarint.exit.i ], [ 1, %sqlite3_realloc64.exit.i.i208 ], [ 1, %bb.ht ], [ 1, %bb.hr ]
-  %.079114.i = phi i32 [ %i.aiu, %blobGrowBuffer.exit.thread.i ], [ 0, %sqlite3Fts3PutVarint.exit.i ], [ 7, %sqlite3_realloc64.exit.i.i208 ], [ 7, %bb.ht ], [ %i.aiu, %bb.hr ]
+.lr.ph.preheader.i:                               ; preds = %sqlite3_free.exit51.i, %bb.hr, %bb.ht, %sqlite3_realloc64.exit.i.i208, %sqlite3Fts3PutVarint.exit.i
+  %i.alc = phi ptr [ %i.bk, %bb.hr ], [ %i.bk, %sqlite3Fts3PutVarint.exit.i ], [ %i.bk, %sqlite3_realloc64.exit.i.i208 ], [ %i.bk, %bb.ht ], [ %i.aiw, %sqlite3_free.exit51.i ] ; 4 uses
+  %i.ald = phi i64 [ 1, %bb.hr ], [ 1, %sqlite3Fts3PutVarint.exit.i ], [ 1, %sqlite3_realloc64.exit.i.i208 ], [ 1, %bb.ht ], [ %i.aiv, %sqlite3_free.exit51.i ]
+  %.079114.i = phi i32 [ %i.aiu, %bb.hr ], [ 0, %sqlite3Fts3PutVarint.exit.i ], [ 7, %sqlite3_realloc64.exit.i.i208 ], [ 7, %bb.ht ], [ %i.aiu, %sqlite3_free.exit51.i ]
   br label %.lr.ph.i201
 
 .lr.ph.i201:                                      ; preds = %sqlite3_free.exit64.i, %.lr.ph.preheader.i
@@ -407,7 +403,7 @@ bb.hw:                                            ; preds = %.lr.ph.i201
   br label %bb.hx
 
 bb.hx:                                            ; preds = %bb.hw, %.lr.ph.i201
-  %.2.i = phi i32 [ %i.alm, %bb.hw ], [ %.18087.i, %.lr.ph.i201 ] ; 2 uses
+  %.2.i = phi i32 [ %i.alm, %bb.hw ], [ %.18087.i, %.lr.ph.i201 ] ; 3 uses
   %i.aln = load ptr, ptr %i.alf, align 8, !tbaa !6051 ; 4 uses
   %i.alo = icmp eq ptr %i.aln, null
   br i1 %i.alo, label %sqlite3_free.exit59.i, label %bb.hy
@@ -505,10 +501,8 @@ sqlite3_free.exit64.i:                            ; preds = %bb.ih, %bb.ig, %sql
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i204, %i.ald
   br i1 %exitcond.not.i, label %._crit_edge.i198, label %.lr.ph.i201, !llvm.loop !6073
 
-._crit_edge.i198:                                 ; preds = %sqlite3_free.exit64.i, %blobGrowBuffer.exit.thread.i
-  %7 = phi ptr [ %i.aiw, %blobGrowBuffer.exit.thread.i ], [ %i.alc, %sqlite3_free.exit64.i ] ; 4 uses
-  %.180.lcssa.i = phi i32 [ %i.aiu, %blobGrowBuffer.exit.thread.i ], [ %.2.i, %sqlite3_free.exit64.i ] ; 2 uses
-  %i.amu = icmp eq i32 %.180.lcssa.i, 0
+._crit_edge.i198:                                 ; preds = %sqlite3_free.exit64.i
+  %i.amu = icmp eq i32 %.2.i, 0
   br i1 %i.amu, label %bb.ii, label %bb.il
 
 bb.ii:                                            ; preds = %._crit_edge.i198
@@ -528,16 +522,16 @@ bb.ij:                                            ; preds = %bb.ii
 
 bb.ik:                                            ; preds = %bb.ij, %bb.ii
   %i.ane = phi i64 [ %i.and, %bb.ij ], [ 0, %bb.ii ]
-  %i.anf = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.anf = getelementptr inbounds nuw i8, ptr %i.alc, i64 24
   %i.ang = load ptr, ptr %i.anf, align 8, !tbaa !6051
-  %i.anh = getelementptr inbounds nuw i8, ptr %7, i64 32
+  %i.anh = getelementptr inbounds nuw i8, ptr %i.alc, i64 32
   %i.ani = load i32, ptr %i.anh, align 8, !tbaa !6050
   %i.anj = call fastcc i32 @fts3WriteSegdir(ptr noundef %0, i64 noundef %i.amw, i32 noundef %i.amx, i64 noundef %i.amy, i64 noundef %i.amz, i64 noundef %i.ana, i64 noundef %i.ane, ptr noundef %i.ang, i32 noundef %i.ani), !inline_history !6072
   br label %bb.il
 
 bb.il:                                            ; preds = %bb.ik, %._crit_edge.i198
-  %.3.i199 = phi i32 [ %i.anj, %bb.ik ], [ %.180.lcssa.i, %._crit_edge.i198 ] ; 2 uses
-  %i.ank = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %.3.i199 = phi i32 [ %i.anj, %bb.ik ], [ %.2.i, %._crit_edge.i198 ] ; 2 uses
+  %i.ank = getelementptr inbounds nuw i8, ptr %i.alc, i64 24
   %i.anl = load ptr, ptr %i.ank, align 8, !tbaa !6051 ; 4 uses
   %i.anm = icmp eq ptr %i.anl, null
   br i1 %i.anm, label %sqlite3_free.exit69.i, label %bb.im
@@ -584,7 +578,7 @@ bb.iq:                                            ; preds = %bb.im
   br label %sqlite3_free.exit69.i
 
 sqlite3_free.exit69.i:                            ; preds = %bb.iq, %bb.ip, %sqlite3_mutex_enter.exit.i67.i, %bb.il
-  %i.aob = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.aob = getelementptr inbounds nuw i8, ptr %i.alc, i64 8
   %i.aoc = load ptr, ptr %i.aob, align 8, !tbaa !6053 ; 4 uses
   %i.aod = icmp eq ptr %i.aoc, null
   br i1 %i.aod, label %sqlite3_free.exit74.i, label %bb.ir
