@@ -50,7 +50,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 %spec.select38
-  %i.n = sub i64 %2, %spec.select38
+  %i.n = sub nuw i64 %2, %spec.select38
   tail call fastcc void @blk_SHA256_Transform(ptr noundef nonnull %0, ptr noundef nonnull %i.h)
   br label %bb.d
 
@@ -453,7 +453,7 @@ begin_hunk_1_@blk_SHA256_Transform:.preheader214.preheader
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @blk_SHA256_Final(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #1 {
+define dso_local void @blk_SHA256_Final(ptr nofree noundef writeonly captures(none) initializes((0, 32)) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca [2 x i32], align 4                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
@@ -469,7 +469,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 %i.h, ptr %i.i, align 4, !tbaa !16
   %i.j = sub i64 55, %i.c
-  %i.k = and i64 %i.j, 63
+  %i.k = and i64 %i.j, 63                         ; 2 uses
   %i.l = add nuw nsw i64 %i.k, 1                  ; 4 uses
   %i.m = and i32 %.tr, 63                         ; 2 uses
   %i.n = add i64 %i.l, %i.c
@@ -489,41 +489,31 @@ bb.b:                                             ; preds = %bb.a
   %i.t = add i32 %spec.select.i, %.tr
   %i.u = and i32 %i.t, 63
   %.not36.i = icmp eq i32 %i.u, 0
-  br i1 %.not36.i, label %2, label %blk_SHA256_Update.exit
+  br i1 %.not36.i, label %._crit_edge.i, label %blk_SHA256_Update.exit
 
-2:                                                ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr @blk_SHA256_Final.pad, i64 %spec.select38.i
-  %4 = sub nsw i64 %i.l, %spec.select38.i
-  tail call fastcc void @blk_SHA256_Transform(ptr noundef nonnull %1, ptr noundef nonnull %i.q)
-  br label %bb.c
+bb.c:                                             ; preds = %bb.a
+  %2 = icmp eq i64 %i.k, 63
+  br i1 %2, label %.lr.ph.i, label %bb.d
 
-bb.c:                                             ; preds = %2, %bb.a
-  %.032.i = phi ptr [ %3, %2 ], [ @blk_SHA256_Final.pad, %bb.a ] ; 2 uses
-  %.031.i = phi i64 [ %4, %2 ], [ %i.l, %bb.a ]   ; 3 uses
-  %5 = icmp ugt i64 %.031.i, 63
-  br i1 %5, label %.lr.ph.i, label %._crit_edge.i
-
-.lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.i
-  %.140.i = phi i64 [ %7, %.lr.ph.i ], [ %.031.i, %bb.c ]
-  %.13339.i = phi ptr [ %6, %.lr.ph.i ], [ %.032.i, %bb.c ] ; 2 uses
-  tail call fastcc void @blk_SHA256_Transform(ptr noundef nonnull %1, ptr noundef %.13339.i)
-  %6 = getelementptr inbounds nuw i8, ptr %.13339.i, i64 64 ; 2 uses
-  %7 = add i64 %.140.i, -64                       ; 3 uses
-  %8 = icmp ugt i64 %7, 63
-  br i1 %8, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !17
-
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.c
-  %.133.lcssa.i = phi ptr [ %.032.i, %bb.c ], [ %6, %.lr.ph.i ]
-  %.1.lcssa.i = phi i64 [ %.031.i, %bb.c ], [ %7, %.lr.ph.i ] ; 2 uses
-  %.not37.i = icmp eq i64 %.1.lcssa.i, 0
-  br i1 %.not37.i, label %blk_SHA256_Update.exit, label %bb.d
-
-bb.d:                                             ; preds = %._crit_edge.i
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 44
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.v, ptr align 1 %.133.lcssa.i, i64 %.1.lcssa.i, i1 false)
+.lr.ph.i:                                         ; preds = %bb.c
+  tail call fastcc void @blk_SHA256_Transform(ptr noundef nonnull %1, ptr noundef nonnull @blk_SHA256_Final.pad)
   br label %blk_SHA256_Update.exit
 
-blk_SHA256_Update.exit:                           ; preds = %bb.b, %._crit_edge.i, %bb.d
+._crit_edge.i:                                    ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr @blk_SHA256_Final.pad, i64 %spec.select38.i
+  %4 = sub nuw nsw i64 %i.l, %spec.select38.i     ; 2 uses
+  tail call fastcc void @blk_SHA256_Transform(ptr noundef nonnull %1, ptr noundef nonnull %i.q)
+  %.not37.i = icmp eq i64 %4, 0
+  br i1 %.not37.i, label %blk_SHA256_Update.exit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %._crit_edge.i
+  %.1.lcssa.i32 = phi i64 [ %4, %._crit_edge.i ], [ %i.l, %bb.c ]
+  %.133.lcssa.i31 = phi ptr [ %3, %._crit_edge.i ], [ @blk_SHA256_Final.pad, %bb.c ]
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 44
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.v, ptr noundef nonnull align 1 dereferenceable(1) %.133.lcssa.i31, i64 %.1.lcssa.i32, i1 false)
+  br label %blk_SHA256_Update.exit
+
+blk_SHA256_Update.exit:                           ; preds = %.lr.ph.i, %bb.b, %._crit_edge.i, %bb.d
   %i.w = load i64, ptr %i.b, align 8, !tbaa !15   ; 3 uses
   %i.x = trunc i64 %i.w to i32                    ; 2 uses
   %i.y = and i32 %i.x, 63                         ; 3 uses

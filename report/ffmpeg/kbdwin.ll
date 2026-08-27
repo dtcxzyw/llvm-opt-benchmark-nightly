@@ -84,8 +84,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph74:                                         ; preds = %.preheader
   %.not57 = icmp eq ptr %0, null
   %i.ac = zext nneg i32 %.150.lcssa to i64
-  %4 = sext i32 %3 to i64
-  %wide.trip.count87 = zext i32 %3 to i64
+  %wide.trip.count87 = zext i32 %3 to i64         ; 2 uses
   br label %bb.g
 
 bb.c:                                             ; preds = %.lr.ph69, %bb.f
@@ -120,7 +119,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 bb.g:                                             ; preds = %.lr.ph74, %bb.j
   %indvars.iv84 = phi i64 [ %i.ac, %.lr.ph74 ], [ %indvars.iv.next85, %bb.j ] ; 4 uses
   %.173 = phi double [ %.048.lcssa, %.lr.ph74 ], [ %i.ar, %bb.j ]
-  %i.ao = sub nsw i64 %4, %indvars.iv84
+  %i.ao = sub nuw nsw i64 %wide.trip.count87, %indvars.iv84
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ao
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !9
   %i.ar = fadd nsz double %.173, %i.aq            ; 2 uses

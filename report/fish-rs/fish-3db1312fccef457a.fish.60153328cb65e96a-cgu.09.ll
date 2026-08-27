@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %bb.d, label %bb.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = sub i64 %2, %1
+  %i.f = sub nuw i64 %2, %1                       ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.g = getelementptr inbounds nuw i8, ptr %.val2, i64 8 ; 3 uses
   %i.h = load i64, ptr %i.g, align 8, !noalias !486, !noundef !13 ; 4 uses
@@ -230,8 +230,7 @@ bb.d:                                             ; preds = %bb.c
   %i.x = tail call noundef i64 @llvm.fshl.i64(i64 %i.t, i64 %i.t, i64 45) ; 3 uses
   store i64 %i.x, ptr %i.i, align 8, !noalias !486
   %i.y = lshr i64 %i.m, 32
-  %4 = and i64 %i.f, 4294967295                   ; 2 uses
-  %i.z = mul nuw i64 %i.y, %4                     ; 2 uses
+  %i.z = mul nuw i64 %i.y, %i.f                   ; 2 uses
   %i.aa = lshr i64 %i.z, 32                       ; 2 uses
   %i.ab = trunc i64 %i.z to i32                   ; 2 uses
   %i.ac = sub i32 %i.c, %i.d
@@ -254,7 +253,7 @@ bb.e:                                             ; preds = %bb.d
   %i.an = tail call noundef i64 @llvm.fshl.i64(i64 %i.aj, i64 %i.aj, i64 45)
   store i64 %i.an, ptr %i.i, align 8, !alias.scope !491, !noalias !486
   %i.ao = lshr i64 %i.ag, 32
-  %i.ap = mul nuw i64 %i.ao, %4
+  %i.ap = mul nuw i64 %i.ao, %i.f
   %i.aq = lshr i64 %i.ap, 32
   %i.ar = trunc nuw i64 %i.aq to i32
   %i.as = xor i32 %i.ab, -1
@@ -657,7 +656,7 @@ bb.b:                                             ; preds = %.noexc4, %.lr.ph.i
   %.sroa.01.020.i = phi i64 [ %i.e, %.lr.ph.i ], [ %i.v, %.noexc4 ] ; 2 uses
   %.sroa.05.019.i = phi i64 [ 0, %.lr.ph.i ], [ %i.u, %.noexc4 ] ; 2 uses
   %i.m = lshr i64 %.sroa.01.020.i, 1              ; 2 uses
-  %i.n = add nuw i64 %i.m, %.sroa.05.019.i        ; 3 uses
+  %i.n = add nuw nsw i64 %i.m, %.sroa.05.019.i    ; 3 uses
   %i.o = icmp ult i64 %i.n, %i.e
   tail call void @llvm.assume(i1 %i.o)
   %i.p = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %i.n ; 2 uses
@@ -671,7 +670,7 @@ bb.b:                                             ; preds = %.noexc4, %.lr.ph.i
 .noexc4:                                          ; preds = %bb.b
   %i.t = icmp eq i8 %i.s, 1
   %i.u = select i1 %i.t, i64 %.sroa.05.019.i, i64 %i.n, !unpredictable !13 ; 2 uses
-  %i.v = sub i64 %.sroa.01.020.i, %i.m            ; 2 uses
+  %i.v = sub nuw nsw i64 %.sroa.01.020.i, %i.m    ; 2 uses
   %i.w = icmp ugt i64 %i.v, 1
   br i1 %i.w, label %bb.b, label %._crit_edge.i
 
@@ -840,7 +839,7 @@ _RNCNvMs3_NtCs8frGy5WneL6_4fish6screenNtB7_11LayoutCache16find_escape_code0B9_.e
   %.sroa.01.036.i = phi i64 [ %i.ab, %_RNCNvMs3_NtCs8frGy5WneL6_4fish6screenNtB7_11LayoutCache16find_escape_code0B9_.exit29.i ], [ %i.d, %bb.a ] ; 2 uses
   %.sroa.05.035.i = phi i64 [ %i.aa, %_RNCNvMs3_NtCs8frGy5WneL6_4fish6screenNtB7_11LayoutCache16find_escape_code0B9_.exit29.i ], [ 0, %bb.a ] ; 2 uses
   %i.o = lshr i64 %.sroa.01.036.i, 1              ; 2 uses
-  %i.p = add nuw i64 %i.o, %.sroa.05.035.i        ; 3 uses
+  %i.p = add nuw nsw i64 %i.o, %.sroa.05.035.i    ; 3 uses
   %i.q = icmp ult i64 %i.p, %i.d
   tail call void @llvm.assume(i1 %i.q)
   %i.r = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %i.p ; 2 uses
@@ -879,7 +878,7 @@ bb.c:                                             ; preds = %.lr.ph.i.i21.i
 _RNCNvMs3_NtCs8frGy5WneL6_4fish6screenNtB7_11LayoutCache16find_escape_code0B9_.exit29.i: ; preds = %.loopexit.i.i25.i, %._crit_edge.i.i28.i
   %.sroa.0.0.i.i26.i = phi i1 [ %i.v, %._crit_edge.i.i28.i ], [ %i.w, %.loopexit.i.i25.i ]
   %i.aa = select i1 %.sroa.0.0.i.i26.i, i64 %.sroa.05.035.i, i64 %i.p, !unpredictable !13 ; 2 uses
-  %i.ab = sub i64 %.sroa.01.036.i, %i.o           ; 2 uses
+  %i.ab = sub nuw nsw i64 %.sroa.01.036.i, %i.o   ; 2 uses
   %i.ac = icmp ugt i64 %i.ab, 1
   br i1 %i.ac, label %.lr.ph.i, label %._crit_edge.i
 
@@ -1282,14 +1281,14 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6p
   %.sroa.01.017.i.i = phi i64 [ %i.ao, %.lr.ph.i.i ], [ %i.af, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs8frGy5WneL6_4fish9job_group5JobIdEEINtBM_11PoisonErrorBH_EE6expectB2d_.exit.i ] ; 2 uses
   %.sroa.05.016.i.i = phi i64 [ %i.an, %.lr.ph.i.i ], [ 0, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtNtCsaL1QbXo9JQH_3std4sync6poison5mutex10MutexGuardINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCs8frGy5WneL6_4fish9job_group5JobIdEEINtBM_11PoisonErrorBH_EE6expectB2d_.exit.i ] ; 2 uses
   %i.ai = lshr i64 %.sroa.01.017.i.i, 1           ; 2 uses
-  %i.aj = add nuw i64 %i.ai, %.sroa.05.016.i.i    ; 3 uses
+  %i.aj = add nuw nsw i64 %i.ai, %.sroa.05.016.i.i ; 3 uses
   %i.ak = icmp ult i64 %i.aj, %i.af
   tail call void @llvm.assume(i1 %i.ak)
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %i.ad, i64 %i.aj
   %.val12.i.i = load i32, ptr %i.al, align 4, !range !1026, !alias.scope !4124, !noalias !4127, !noundef !13
   %i.am = icmp ugt i32 %.val12.i.i, %i.e
   %i.an = select i1 %i.am, i64 %.sroa.05.016.i.i, i64 %i.aj, !unpredictable !13 ; 2 uses
-  %i.ao = sub i64 %.sroa.01.017.i.i, %i.ai        ; 2 uses
+  %i.ao = sub nuw nsw i64 %.sroa.01.017.i.i, %i.ai ; 2 uses
   %i.ap = icmp ugt i64 %i.ao, 1
   br i1 %i.ap, label %.lr.ph.i.i, label %._crit_edge.i.i
 

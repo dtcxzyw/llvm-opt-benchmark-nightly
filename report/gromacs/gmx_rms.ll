@@ -205,12 +205,11 @@ _ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit1007.preheader: ; preds = %bb.iz
 
 .lr.ph1672:                                       ; preds = %_ZL13gmx_snew_implIfEvPKcS1_iRPT_m.exit1007.preheader
   %i.bnx = add nsw i32 %.1673, -1
-  %i.bny = lshr i32 %.1673, 1                     ; 2 uses
+  %i.bny = lshr i32 %.1673, 1
   %i.bnz = load i8, ptr @_ZZ7gmx_rmsiPPcE9bDeltaLog, align 1, !range !36
   %.fr1716 = freeze i8 %i.bnz
   %i.boa = trunc i8 %.fr1716 to i1
-  %55 = zext nneg i32 %i.bny to i64
-  %i.bob = zext nneg i32 %i.bny to i64
+  %i.bob = zext nneg i32 %i.bny to i64            ; 2 uses
   %wide.trip.count1912 = zext nneg i32 %i.bnx to i64
   %wide.trip.count1900 = zext nneg i32 %.1673 to i64
   %wide.trip.count1907 = zext nneg i32 %.1673 to i64
@@ -286,7 +285,7 @@ bb.jc:                                            ; preds = %bb.jb, %bb.ja, %.lr
 .lr.ph1670.split:                                 ; preds = %.lr.ph1670, %bb.jf
   %indvars.iv1895 = phi i64 [ %indvars.iv.next1896, %bb.jf ], [ %indvars.iv1893, %.lr.ph1670 ] ; 3 uses
   %i.bph = sub nuw nsw i64 %indvars.iv1895, %indvars.iv1909 ; 3 uses
-  %i.bpi = icmp samesign ult i64 %i.bph, %55
+  %i.bpi = icmp samesign ult i64 %i.bph, %i.bob
   br i1 %i.bpi, label %bb.jd, label %bb.jf
 
 bb.jd:                                            ; preds = %.lr.ph1670.split

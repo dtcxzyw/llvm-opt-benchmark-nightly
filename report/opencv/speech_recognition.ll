@@ -204,15 +204,14 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8, !tbaa !155  ; 2 uses
-  %i.c = sdiv i32 %i.b, 2                         ; 3 uses
+  %i.c = sdiv i32 %i.b, 2                         ; 2 uses
   %i.d = icmp sgt i32 %i.b, 1
   br i1 %i.d, label %.lr.ph, label %.preheader174
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  %12 = zext nneg i32 %i.c to i64
-  %wide.trip.count = zext nneg i32 %i.c to i64
+  %wide.trip.count = zext nneg i32 %i.c to i64    ; 2 uses
   br label %bb.b
 
 .preheader174:                                    ; preds = %_ZNSt6vectorIdSaIdEE9push_backERKd.exit, %bb.a
@@ -235,7 +234,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.p = phi ptr [ null, %.lr.ph ], [ %i.aq, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
   %i.q = phi ptr [ null, %.lr.ph ], [ %i.ar, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNSt6vectorIdSaIdEE9push_backERKd.exit ] ; 2 uses
-  %i.r = sub nsw i64 %12, %indvars.iv
+  %i.r = sub nuw nsw i64 %wide.trip.count, %indvars.iv
   %i.s = load ptr, ptr %2, align 8, !tbaa !62
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.r ; 2 uses
   %.not.i = icmp eq ptr %i.q, %i.p

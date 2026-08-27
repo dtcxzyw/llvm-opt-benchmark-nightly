@@ -205,7 +205,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.jl = getelementptr inbounds nuw i8, ptr %i.jk, i64 %.066247
   %i.jm = getelementptr inbounds nuw [16 x i8], ptr %4, i64 %.065248
   store ptr %i.jl, ptr %i.jm, align 16, !tbaa !26
-  %i.jn = sub i64 %i.ji, %.066247
+  %i.jn = sub nuw i64 %i.ji, %.066247
   br label %bb.cb
 
 bb.ca:                                            ; preds = %bb.by
@@ -608,17 +608,15 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %._cri
   store i8 0, ptr %i.bf, align 1, !tbaa !149
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #39, !noalias !557
   %i.bg = load ptr, ptr %4, align 8, !tbaa !153, !noalias !560 ; 3 uses
-  %i.bh = load i64, ptr %i.bd, align 8, !tbaa !147, !noalias !560 ; 3 uses
+  %i.bh = load i64, ptr %i.bd, align 8, !tbaa !147, !noalias !560 ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bg, i64 %i.bh ; 4 uses
-  %i.bj = ptrtoint ptr %i.bi to i64               ; 3 uses
+  %i.bj = ptrtoint ptr %i.bi to i64               ; 2 uses
   %i.bk = ptrtoint ptr %i.bg to i64               ; 4 uses
   %i.bl = ashr i64 %i.bh, 2                       ; 3 uses
   %i.bm = icmp sgt i64 %i.bl, 0
   br i1 %i.bm, label %.lr.ph.i.preheader.i.i.i, label %._crit_edge.i.i.i.i
 
 .lr.ph.i.preheader.i.i.i:                         ; preds = %bb.r
-  %5 = and i64 %i.bh, -4
-  %6 = sub i64 %i.bj, %5
   %i.bn = mul nsw i64 %i.bl, -4
   %scevgep.i.i.i = getelementptr i8, ptr %i.bi, i64 %i.bn
   br label %.lr.ph.i.i.i.i
@@ -677,11 +675,11 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.w
   %i.ck = add nsw i64 %.036.i.i.i.i, -1
   %i.cl = icmp sgt i64 %.036.i.i.i.i, 1
-  %i.cm = ptrtoint ptr %i.cf to i64
+  %i.cm = ptrtoint ptr %i.cf to i64               ; 2 uses
   br i1 %i.cl, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !570
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.y, %bb.r
-  %i.cn = phi i64 [ %i.bj, %bb.r ], [ %6, %bb.y ] ; 5 uses
+  %i.cn = phi i64 [ %i.bj, %bb.r ], [ %i.cm, %bb.y ] ; 5 uses
   %i.co = phi ptr [ %i.bi, %bb.r ], [ %scevgep.i.i.i, %bb.y ] ; 2 uses
   %i.cp = sub i64 %i.cn, %i.bk
   switch i64 %i.cp, label %.loopexit [

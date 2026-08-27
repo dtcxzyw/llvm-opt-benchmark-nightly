@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/cmake/original/crc64_fast?download=true
 inline.NumInlined: 2
 inline.NumDeleted: 2
-loop-unroll.NumCompletelyUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -12,7 +12,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local i64 @lzma_crc64(ptr noundef %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = xor i64 %2, -1                           ; 4 uses
+  %i.a = xor i64 %2, -1                           ; 3 uses
   %i.b = icmp ugt i64 %1, 4
   br i1 %i.b, label %.preheader.i, label %.loopexit.i
 
@@ -20,73 +20,31 @@ bb.a:
   %i.c = ptrtoint ptr %0 to i64
   %i.d = and i64 %i.c, 3
   %.not34.i = icmp eq i64 %i.d, 0
-  br i1 %.not34.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not34.i, label %._crit_edge.i, label %.lr.ph.i.2
 
-.lr.ph.i:                                         ; preds = %.preheader.i
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
-  %4 = load i8, ptr %0, align 1, !tbaa !9
-  %5 = zext i8 %4 to i64
-  %6 = and i64 %i.a, 255
-  %7 = xor i64 %6, %5
-  %8 = getelementptr inbounds nuw [8 x i8], ptr @lzma_crc64_table, i64 %7
-  %9 = load i64, ptr %8, align 8, !tbaa !10
-  %10 = lshr i64 %i.a, 8
-  %11 = xor i64 %9, %10                           ; 3 uses
-  %12 = add i64 %1, -1
-  %13 = ptrtoint ptr %3 to i64
-  %14 = and i64 %13, 3
-  %.not.i = icmp eq i64 %14, 0
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i.1
-
-.lr.ph.i.1:                                       ; preds = %.lr.ph.i
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
-  %16 = load i8, ptr %3, align 1, !tbaa !9
-  %17 = zext i8 %16 to i64
-  %18 = and i64 %11, 255
-  %19 = xor i64 %18, %17
-  %20 = getelementptr inbounds nuw [8 x i8], ptr @lzma_crc64_table, i64 %19
-  %21 = load i64, ptr %20, align 8, !tbaa !10
-  %22 = lshr i64 %11, 8
-  %23 = xor i64 %21, %22                          ; 3 uses
-  %24 = add i64 %1, -2
-  %25 = ptrtoint ptr %15 to i64
-  %26 = and i64 %25, 3
-  %.not.i.1 = icmp eq i64 %26, 0
-  br i1 %.not.i.1, label %._crit_edge.i, label %.lr.ph.i.2
-
-.lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
-  %i.f = load i8, ptr %15, align 1, !tbaa !9
+.lr.ph.i.2:                                       ; preds = %.preheader.i, %.lr.ph.i.2
+  %.037.i = phi ptr [ %i.e, %.lr.ph.i.2 ], [ %0, %.preheader.i ] ; 2 uses
+  %.02436.i = phi i64 [ %i.m, %.lr.ph.i.2 ], [ %i.a, %.preheader.i ] ; 2 uses
+  %.02835.i = phi i64 [ %i.n, %.lr.ph.i.2 ], [ %1, %.preheader.i ]
+  %i.e = getelementptr inbounds nuw i8, ptr %.037.i, i64 1 ; 3 uses
+  %i.f = load i8, ptr %.037.i, align 1, !tbaa !9
   %i.g = zext i8 %i.f to i64
-  %i.h = and i64 %23, 255
+  %i.h = and i64 %.02436.i, 255
   %i.i = xor i64 %i.h, %i.g
   %i.j = getelementptr inbounds nuw [8 x i8], ptr @lzma_crc64_table, i64 %i.i
   %i.k = load i64, ptr %i.j, align 8, !tbaa !10
-  %i.l = lshr i64 %23, 8
-  %i.m = xor i64 %i.k, %i.l                       ; 3 uses
-  %i.n = add i64 %1, -3
+  %i.l = lshr i64 %.02436.i, 8
+  %i.m = xor i64 %i.k, %i.l                       ; 2 uses
+  %i.n = add i64 %.02835.i, -1                    ; 2 uses
   %i.o = ptrtoint ptr %i.e to i64
   %i.p = and i64 %i.o, 3
   %.not.i.2 = icmp eq i64 %i.p, 0
-  br i1 %.not.i.2, label %._crit_edge.i, label %.lr.ph.i.3
+  br i1 %.not.i.2, label %._crit_edge.i, label %.lr.ph.i.2, !llvm.loop !12
 
-.lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %28 = load i8, ptr %i.e, align 1, !tbaa !9
-  %29 = zext i8 %28 to i64
-  %30 = and i64 %i.m, 255
-  %31 = xor i64 %30, %29
-  %32 = getelementptr inbounds nuw [8 x i8], ptr @lzma_crc64_table, i64 %31
-  %33 = load i64, ptr %32, align 8, !tbaa !10
-  %34 = lshr i64 %i.m, 8
-  %35 = xor i64 %33, %34
-  %36 = add i64 %1, -4
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %.preheader.i
-  %.028.lcssa.i = phi i64 [ %1, %.preheader.i ], [ %12, %.lr.ph.i ], [ %24, %.lr.ph.i.1 ], [ %i.n, %.lr.ph.i.2 ], [ %36, %.lr.ph.i.3 ] ; 2 uses
-  %.024.lcssa.i = phi i64 [ %i.a, %.preheader.i ], [ %11, %.lr.ph.i ], [ %23, %.lr.ph.i.1 ], [ %i.m, %.lr.ph.i.2 ], [ %35, %.lr.ph.i.3 ] ; 2 uses
-  %.0.lcssa.i = phi ptr [ %0, %.preheader.i ], [ %3, %.lr.ph.i ], [ %15, %.lr.ph.i.1 ], [ %i.e, %.lr.ph.i.2 ], [ %27, %.lr.ph.i.3 ] ; 3 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i.2, %.preheader.i
+  %.028.lcssa.i = phi i64 [ %1, %.preheader.i ], [ %i.n, %.lr.ph.i.2 ] ; 2 uses
+  %.024.lcssa.i = phi i64 [ %i.a, %.preheader.i ], [ %i.m, %.lr.ph.i.2 ] ; 2 uses
+  %.0.lcssa.i = phi ptr [ %0, %.preheader.i ], [ %i.e, %.lr.ph.i.2 ] ; 3 uses
   %i.q = and i64 %.028.lcssa.i, -4                ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.0.lcssa.i, i64 %i.q
   %i.s = and i64 %.028.lcssa.i, 3                 ; 2 uses
@@ -124,7 +82,7 @@ bb.a:
   %i.ar = xor i64 %i.aq, %i.ak
   %i.as = xor i64 %i.ar, %i.ao                    ; 2 uses
   %i.at = icmp ult ptr %i.v, %i.r
-  br i1 %i.at, label %.lr.ph43.i, label %.loopexit.i, !llvm.loop !12
+  br i1 %i.at, label %.lr.ph43.i, label %.loopexit.i, !llvm.loop !14
 
 .loopexit.i:                                      ; preds = %.lr.ph43.i, %._crit_edge.i, %bb.a
   %.129.i = phi i64 [ %1, %bb.a ], [ %i.s, %._crit_edge.i ], [ %i.s, %.lr.ph43.i ] ; 7 uses
@@ -248,4 +206,5 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !11 = !{!"long", !7, i64 0}
 !12 = distinct !{!12, !13}
 !13 = !{!"llvm.loop.mustprogress"}
+!14 = distinct !{!14, !13}
 end_hunk_0

@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   br i1 %.not6494, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.k
-  %i.aw = sub nsw i64 %indvars.iv107, %indvars.iv100
-  %i.ax = trunc nsw i64 %i.aw to i32
+  %i.aw = sub nuw nsw i64 %indvars.iv107, %indvars.iv100
+  %i.ax = trunc nuw i64 %i.aw to i32
   %i.ay = shl i32 %i.ax, %.09.i
   %i.az = sext i32 %i.av to i64
   %i.ba = sext i32 %i.aq to i64
@@ -609,9 +609,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.ab = add nsw i32 %1, -1
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.ad = zext nneg i32 %1 to i64
-  %2 = zext nneg i32 %i.ab to i64
-  %wide.trip.count = zext nneg i32 %1 to i64
+  %i.ad = zext nneg i32 %1 to i64                 ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.ab to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph108, %.loopexit
@@ -620,9 +619,9 @@ bb.c:                                             ; preds = %.lr.ph108, %.loopex
   %i.ae = load ptr, ptr %i.u, align 8, !tbaa !65  ; 2 uses
   %i.af = getelementptr i8, ptr %i.ae, i64 4
   %.val61 = load i32, ptr %i.af, align 4, !tbaa !33
-  %i.ag = sub nsw i64 %i.ad, %indvars.iv110       ; 2 uses
-  %3 = sext i32 %.val61 to i64
-  %.not56 = icmp slt i64 %i.ag, %3
+  %i.ag = sub nuw nsw i64 %i.ad, %indvars.iv110   ; 2 uses
+  %2 = trunc nuw nsw i64 %i.ag to i32
+  %.not56 = icmp sgt i32 %.val61, %2
   br i1 %.not56, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c
@@ -637,7 +636,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph104:                                        ; preds = %bb.d
   %i.an = icmp eq i64 %indvars.iv110, 0
-  %i.ao = icmp eq i64 %indvars.iv110, %2
+  %i.ao = icmp eq i64 %indvars.iv110, %wide.trip.count
   %i.ap = sext i32 %i.ak to i64
   %i.aq = trunc nuw nsw i64 %indvars.iv110 to i32
   br label %bb.e
@@ -995,7 +994,7 @@ Gia_ObjUnrWrite.exit:                             ; preds = %Gia_ObjUnrReadCi.ex
 .loopexit:                                        ; preds = %Gia_ObjUnrWrite.exit, %bb.d, %bb.c
   %.3 = phi i32 [ %.0107, %bb.c ], [ %.0107, %bb.d ], [ %.2, %Gia_ObjUnrWrite.exit ]
   %indvars.iv.next111 = add nuw nsw i64 %indvars.iv110, 1 ; 2 uses
-  %exitcond113.not = icmp eq i64 %indvars.iv.next111, %wide.trip.count
+  %exitcond113.not = icmp eq i64 %indvars.iv.next111, %i.ad
   br i1 %exitcond113.not, label %._crit_edge, label %bb.c, !llvm.loop !93
 
 ._crit_edge:                                      ; preds = %.loopexit, %.loopexit96

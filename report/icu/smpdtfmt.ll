@@ -2,8 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 596
 inline.NumDeleted: 118
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZNK6icu_7816SimpleDateFormat14checkIntSuffixERKNS_13UnicodeStringEiia:bb.a
   %i.ak = load i32, ptr %i.aj, align 4
   %i.al = select i1 %i.ag, i32 %i.ak, i32 %i.ai
@@ -205,7 +204,7 @@ bb.g:                                             ; preds = %bb.d
   %.sroa.0.0 = phi ptr [ %i.h, %bb.e ], [ null, %bb.a ] ; 5 uses
   %.033 = phi ptr [ %i.h, %bb.e ], [ %6, %bb.a ]  ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !195  ; 3 uses
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !195  ; 2 uses
   %i.s = load ptr, ptr %.033, align 8, !tbaa !37
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 160
   %i.u = load ptr, ptr %i.t, align 8
@@ -217,7 +216,7 @@ bb.h:                                             ; preds = %.thread
   br i1 %i.v, label %bb.i, label %bb.m
 
 bb.i:                                             ; preds = %bb.h
-  %i.w = load i32, ptr %i.q, align 8, !tbaa !195  ; 2 uses
+  %i.w = load i32, ptr %i.q, align 8, !tbaa !195
   %i.x = sub nsw i32 %i.w, %i.r                   ; 2 uses
   %i.y = icmp sgt i32 %i.x, %3
   br i1 %i.y, label %bb.j, label %bb.m
@@ -225,37 +224,17 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !44
-  %i.ab = trunc i64 %i.aa to i32                  ; 3 uses
-  %i.ac = sub nsw i32 %i.x, %3                    ; 4 uses
-  %10 = icmp sgt i32 %i.ac, 0
-  br i1 %10, label %.lr.ph.preheader, label %._crit_edge
+  %i.ab = trunc i64 %i.aa to i32
+  %i.ac = sub nuw nsw i32 %i.x, %3
+  br label %.lr.ph
 
-.lr.ph.preheader:                                 ; preds = %bb.j
-  %11 = xor i32 %i.r, -1
-  %12 = add i32 %i.w, %11
-  %xtraiter = and i32 %i.ac, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
-
-.lr.ph.prol:                                      ; preds = %.lr.ph.preheader
-  %13 = sdiv i32 %i.ab, 10                        ; 2 uses
-  %14 = add nsw i32 %i.ac, -1
-  br label %.lr.ph.prol.loopexit
-
-.lr.ph.prol.loopexit:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
-  %.055.unr = phi i32 [ %i.ab, %.lr.ph.preheader ], [ %13, %.lr.ph.prol ]
-  %.02754.unr = phi i32 [ %i.ac, %.lr.ph.preheader ], [ %14, %.lr.ph.prol ]
-  %.lcssa.unr = phi i32 [ poison, %.lr.ph.preheader ], [ %13, %.lr.ph.prol ]
-  %15 = icmp eq i32 %12, %3
-  br i1 %15, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
-  %.055 = phi i32 [ %i.ad, %.lr.ph ], [ %.055.unr, %.lr.ph.prol.loopexit ]
-  %.02754 = phi i32 [ %i.ae, %.lr.ph ], [ %.02754.unr, %.lr.ph.prol.loopexit ] ; 2 uses
-  %i.ad = sdiv i32 %.055, 100                     ; 2 uses
-  %i.ae = add nsw i32 %.02754, -2
-  %16 = icmp sgt i32 %.02754, 2
-  br i1 %16, label %.lr.ph, label %._crit_edge, !llvm.loop !226
+.lr.ph:                                           ; preds = %bb.j, %.lr.ph
+  %.055 = phi i32 [ %i.ad, %.lr.ph ], [ %i.ab, %bb.j ]
+  %.02754 = phi i32 [ %i.ae, %.lr.ph ], [ %i.ac, %bb.j ] ; 2 uses
+  %i.ad = sdiv i32 %.055, 10                      ; 2 uses
+  %i.ae = add nsw i32 %.02754, -1
+  %10 = icmp samesign ugt i32 %.02754, 1
+  br i1 %10, label %.lr.ph, label %._crit_edge, !llvm.loop !226
 
 bb.k:                                             ; preds = %.thread
   %i.af = landingpad { ptr, i32 }
@@ -267,11 +246,10 @@ bb.l:                                             ; preds = %._crit_edge
           cleanup
   br label %bb.o
 
-._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.j
-  %.0.lcssa = phi i32 [ %i.ab, %bb.j ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ad, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph
   %i.ah = add nsw i32 %i.r, %3
   store i32 %i.ah, ptr %i.q, align 8, !tbaa !195
-  invoke void @_ZN6icu_7811Formattable7setLongEi(ptr noundef nonnull align 8 dereferenceable(112) %2, i32 noundef %.0.lcssa)
+  invoke void @_ZN6icu_7811Formattable7setLongEi(ptr noundef nonnull align 8 dereferenceable(112) %2, i32 noundef %i.ad)
           to label %bb.m unwind label %bb.l
 
 bb.m:                                             ; preds = %bb.h, %._crit_edge, %bb.i

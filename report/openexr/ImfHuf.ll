@@ -204,10 +204,10 @@ bb.aa:                                            ; preds = %bb.x
   br i1 %i.bd, label %.lr.ph.i.i, label %_ZN7Imf_3_412_GLOBAL__N_17getBitsEiRmRiRPKc.exit.i, !llvm.loop !38
 
 _ZN7Imf_3_412_GLOBAL__N_17getBitsEiRmRiRPKc.exit.i: ; preds = %.lr.ph.i.i, %bb.aa
-  %.255.i = phi ptr [ %.05373.i, %bb.aa ], [ %i.ay, %.lr.ph.i.i ] ; 5 uses
+  %.255.i = phi ptr [ %.05373.i, %bb.aa ], [ %i.ay, %.lr.ph.i.i ] ; 6 uses
   %.251.i = phi i64 [ %.04974.i, %bb.aa ], [ %i.bb, %.lr.ph.i.i ] ; 5 uses
-  %.lcssa.i.i = phi i32 [ %.04775.i, %bb.aa ], [ %i.bc, %.lr.ph.i.i ] ; 2 uses
-  %i.be = add nsw i32 %.lcssa.i.i, -6             ; 5 uses
+  %.lcssa.i.i = phi i32 [ %.04775.i, %bb.aa ], [ %i.bc, %.lr.ph.i.i ] ; 3 uses
+  %i.be = add nsw i32 %.lcssa.i.i, -6             ; 4 uses
   %i.bf = zext nneg i32 %i.be to i64
   %i.bg = lshr i64 %.251.i, %i.bf
   %i.bh = and i64 %i.bg, 63                       ; 4 uses
@@ -237,23 +237,19 @@ bb.ae:                                            ; preds = %bb.ab
   %i.bq = icmp samesign ult i32 %.lcssa.i.i, 14
   br i1 %i.bq, label %.lr.ph.i38.i, label %_ZN7Imf_3_412_GLOBAL__N_17getBitsEiRmRiRPKc.exit40.i
 
-.lr.ph.i38.i:                                     ; preds = %bb.ae, %.lr.ph.i38.i
-  %5 = phi ptr [ %i.bs, %.lr.ph.i38.i ], [ %.255.i, %bb.ae ] ; 2 uses
-  %6 = phi i64 [ %i.bv, %.lr.ph.i38.i ], [ %.251.i, %bb.ae ]
-  %7 = phi i32 [ %i.bw, %.lr.ph.i38.i ], [ %i.be, %bb.ae ] ; 2 uses
-  %i.br = shl i64 %6, 8
-  %i.bs = getelementptr inbounds nuw i8, ptr %5, i64 1 ; 2 uses
-  %i.bt = load i8, ptr %5, align 1, !tbaa !31
+.lr.ph.i38.i:                                     ; preds = %bb.ae
+  %i.br = shl i64 %.251.i, 8
+  %i.bs = getelementptr inbounds nuw i8, ptr %.255.i, i64 1
+  %i.bt = load i8, ptr %.255.i, align 1, !tbaa !31
   %i.bu = zext i8 %i.bt to i64
-  %i.bv = or disjoint i64 %i.br, %i.bu            ; 2 uses
-  %i.bw = add nsw i32 %7, 8                       ; 2 uses
-  %8 = icmp slt i32 %7, 0
-  br i1 %8, label %.lr.ph.i38.i, label %_ZN7Imf_3_412_GLOBAL__N_17getBitsEiRmRiRPKc.exit40.i, !llvm.loop !38
+  %i.bv = or disjoint i64 %i.br, %i.bu
+  %i.bw = add nuw nsw i32 %.lcssa.i.i, 2
+  br label %_ZN7Imf_3_412_GLOBAL__N_17getBitsEiRmRiRPKc.exit40.i, !llvm.loop !38
 
 _ZN7Imf_3_412_GLOBAL__N_17getBitsEiRmRiRPKc.exit40.i: ; preds = %.lr.ph.i38.i, %bb.ae
-  %.356.i = phi ptr [ %.255.i, %bb.ae ], [ %i.bs, %.lr.ph.i38.i ]
-  %.352.i = phi i64 [ %.251.i, %bb.ae ], [ %i.bv, %.lr.ph.i38.i ] ; 2 uses
-  %.lcssa.i37.i = phi i32 [ %i.be, %bb.ae ], [ %i.bw, %.lr.ph.i38.i ]
+  %.356.i = phi ptr [ %i.bs, %.lr.ph.i38.i ], [ %.255.i, %bb.ae ]
+  %.352.i = phi i64 [ %i.bv, %.lr.ph.i38.i ], [ %.251.i, %bb.ae ] ; 2 uses
+  %.lcssa.i37.i = phi i32 [ %i.bw, %.lr.ph.i38.i ], [ %i.be, %bb.ae ]
   %i.bx = add nsw i32 %.lcssa.i37.i, -8           ; 2 uses
   %i.by = zext nneg i32 %i.bx to i64
   %i.bz = lshr i64 %.352.i, %i.by                 ; 2 uses

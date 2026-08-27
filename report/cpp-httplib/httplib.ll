@@ -205,26 +205,25 @@ bb.e:                                             ; preds = %bb.d
 
 .critedge2:                                       ; preds = %bb.d, %bb.e
   %.2.lcssa = phi i64 [ %.280, %bb.d ], [ %umax, %bb.e ] ; 4 uses
-  %1 = sub i64 %.2.lcssa, %.13987
-  %i.m = sub nuw i64 %i.b, %.13987
-  %spec.select.i.i = tail call noundef i64 @llvm.umin.i64(i64 %1, i64 %i.m) ; 4 uses
-  %cond = icmp eq i64 %spec.select.i.i, 0
+  %1 = tail call i64 @llvm.umin.i64(i64 %.2.lcssa, i64 %i.b) ; 2 uses
+  %i.m = sub nuw i64 %1, %.13987                  ; 3 uses
+  %cond = icmp eq i64 %1, %.13987
   br i1 %cond, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit61.thread, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i:     ; preds = %.critedge2
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 %.13987
   %lhsc = load i8, ptr %i.n, align 1
   %.not.i = icmp eq i8 %lhsc, 46
-  %.not48 = icmp eq i64 %spec.select.i.i, 1
+  %.not48 = icmp eq i64 %i.m, 1
   %or.cond = and i1 %.not48, %.not.i
   br i1 %or.cond, label %bb.h, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i51
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i51: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i
-  %.sroa.speculated.i53 = tail call i64 @llvm.umin.i64(i64 %spec.select.i.i, i64 2)
+  %.sroa.speculated.i53 = tail call i64 @llvm.umin.i64(i64 %i.m, i64 2)
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 %.13987
   %bcmp = tail call i32 @bcmp(ptr %i.o, ptr nonnull @.str.28, i64 %.sroa.speculated.i53)
   %.not.i55 = icmp eq i32 %bcmp, 0
-  %.not49 = icmp eq i64 %spec.select.i.i, 2
+  %.not49 = icmp eq i64 %i.m, 2
   %or.cond66 = and i1 %.not49, %.not.i55
   br i1 %or.cond66, label %bb.f, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit61.thread
 
@@ -627,7 +626,7 @@ bb.c:                                             ; preds = %select.unfold._crit
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aq, ptr align 1 %.0114.i.i.i, i64 %.sroa.speculated.i.i.i, i1 false)
   %i.ar = add i64 %.sroa.speculated.i.i.i, %.155113.i.i.i ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.0114.i.i.i, i64 %.sroa.speculated.i.i.i
-  %i.at = sub i64 %.089112.i.i.i, %.sroa.speculated.i.i.i ; 2 uses
+  %i.at = sub nuw i64 %.089112.i.i.i, %.sroa.speculated.i.i.i ; 2 uses
   %i.au = sub i64 %.1111.i.i.i, %.sroa.speculated.i.i.i ; 2 uses
   %i.av = icmp eq i64 %i.ar, %i.k
   br i1 %i.av, label %bb.d, label %select.unfold.backedge.i.i.i
@@ -1030,7 +1029,7 @@ bb.i:                                             ; preds = %.preheader.i
 
 bb.j:                                             ; preds = %.preheader.i
   %i.fa = getelementptr inbounds nuw i8, ptr %i.en, i64 %.01633.i
-  %i.fb = sub i64 %i.ej, %.01633.i
+  %i.fb = sub nuw i64 %i.ej, %.01633.i
   %i.fc = icmp ugt i64 %.fr40.i, %i.fb
   br i1 %i.fc, label %_ZNK7httplib6detail14FormDataParser14buf_start_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit291, label %.lr.ph.i.i
 
@@ -1158,7 +1157,7 @@ bb.o:                                             ; preds = %.preheader.i93
 
 bb.p:                                             ; preds = %.preheader.i93
   %i.gv = getelementptr inbounds nuw i8, ptr %i.gi, i64 %.01633.i95
-  %i.gw = sub i64 %i.gd, %.01633.i95
+  %i.gw = sub nuw i64 %i.gd, %.01633.i95
   %i.gx = icmp ugt i64 %.fr40.i92, %i.gw
   br i1 %i.gx, label %_ZNK7httplib6detail14FormDataParser8buf_findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit103, label %.lr.ph.i.i96
 
@@ -1561,7 +1560,7 @@ bb.cl:                                            ; preds = %.preheader.i242
 
 bb.cm:                                            ; preds = %.preheader.i242
   %i.sa = getelementptr inbounds nuw i8, ptr %i.ro, i64 %.01633.i244
-  %i.sb = sub i64 %i.rm, %.01633.i244
+  %i.sb = sub nuw i64 %i.rm, %.01633.i244
   %i.sc = icmp ugt i64 %.fr40.i241, %i.sb
   br i1 %i.sc, label %_ZNK7httplib6detail14FormDataParser8buf_findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit252, label %.lr.ph.i.i245
 
@@ -1681,7 +1680,7 @@ bb.cu:                                            ; preds = %.preheader.i264
 
 bb.cv:                                            ; preds = %.preheader.i264
   %i.tm = getelementptr inbounds nuw i8, ptr %i.ta, i64 %.01633.i266
-  %i.tn = sub i64 %i.ss, %.01633.i266
+  %i.tn = sub nuw i64 %i.ss, %.01633.i266
   %i.to = icmp ugt i64 %.fr40.i263, %i.tn
   br i1 %i.to, label %_ZNK7httplib6detail14FormDataParser8buf_findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit274, label %.lr.ph.i.i267
 
@@ -1737,7 +1736,7 @@ bb.da:                                            ; preds = %_ZNKSt8functionIFbP
   br label %_ZNK7httplib6detail14FormDataParser14buf_start_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit291
 
 bb.db:                                            ; preds = %_ZNK7httplib6detail14FormDataParser8buf_findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit274
-  %i.ub = sub i64 %i.st, %.fr40.i263              ; 2 uses
+  %i.ub = sub nuw i64 %i.st, %.fr40.i263          ; 2 uses
   %.not71 = icmp eq i64 %i.st, %.fr40.i263
   br i1 %.not71, label %_ZNK7httplib6detail14FormDataParser14buf_start_withERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit291, label %bb.dc
 

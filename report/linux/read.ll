@@ -202,9 +202,8 @@ page_size.exit32.i.i:                             ; preds = %page_size.exit.i.i
 
 bb.h:                                             ; preds = %page_size.exit32.i.i
   %i.ao = getelementptr i8, ptr %i.af, i64 %i.p
-  %i.ap = sub nsw i64 %i.t, %i.p
-  %1 = and i64 %i.ap, 4294967295
-  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ao, i8 0, i64 %1, i1 false)
+  %i.ap = sub nuw nsw i64 %i.t, %i.p
+  tail call void @llvm.memset.p0.i64(ptr align 1 %i.ao, i8 0, i64 %i.ap, i1 false)
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %page_size.exit32.i.i
