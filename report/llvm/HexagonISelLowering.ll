@@ -205,7 +205,6 @@ bb.a:
   %i.an = load i64, ptr %.sroa.4.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
-  %.sroa.573.sroa.0.0.extract.trunc = trunc i64 %i.an to i32
   store i16 249, ptr %9, align 8, !tbaa !427
   %i.ao = getelementptr inbounds nuw i8, ptr %9, i64 8
   store ptr null, ptr %i.ao, align 8, !tbaa !428
@@ -226,7 +225,8 @@ bb.a:
   %i.au = getelementptr inbounds nuw i8, ptr %10, i64 32
   store ptr %.fca.0.extract8, ptr %i.au, align 16, !tbaa !414
   %.sroa.573.0..sroa_idx74 = getelementptr inbounds nuw i8, ptr %10, i64 40
-  store i32 %.sroa.573.sroa.0.0.extract.trunc, ptr %.sroa.573.0..sroa_idx74, align 8, !tbaa !150
+  %.sroa.573.0.extract.trunc = trunc i64 %i.an to i32
+  store i32 %.sroa.573.0.extract.trunc, ptr %.sroa.573.0..sroa_idx74, align 8, !tbaa !150
   %.not.i = icmp eq ptr %.fca.0.extract8, null
   %i.av = select i1 %.not.i, i64 2, i64 3
   store ptr %10, ptr %11, align 8, !tbaa !416
@@ -629,8 +629,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %.sroa.0135.0.copyload = load ptr, ptr %i.c, align 8, !tbaa !414 ; 4 uses
   %.sroa.6.0..sroa_idx138 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %i.d = load i64, ptr %.sroa.6.0..sroa_idx138, align 8
-  %.sroa.6.sroa.0.0.extract.trunc = trunc i64 %i.d to i32 ; 2 uses
+  %i.d = load i64, ptr %.sroa.6.0..sroa_idx138, align 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.sroa.0135.0.copyload, i64 24
   %i.f = load i32, ptr %i.e, align 8, !tbaa !463
   switch i32 %i.f, label %bb.c [
@@ -678,7 +677,8 @@ _ZN4llvm12SelectionDAG8getSetCCERKNS_5SDLocENS_3EVTENS_7SDValueES5_NS_3ISD8CondC
   %i.w = getelementptr inbounds nuw i8, ptr %12, i64 16
   store ptr %.sroa.0135.0.copyload, ptr %i.w, align 8, !tbaa !414
   %.sroa.6.0..sroa_idx139 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.6.0..sroa_idx139, align 8, !tbaa !150
+  %.sroa.6.0.extract.trunc = trunc i64 %i.d to i32
+  store i32 %.sroa.6.0.extract.trunc, ptr %.sroa.6.0..sroa_idx139, align 8, !tbaa !150
   store ptr %12, ptr %11, align 8, !tbaa !416
   %i.x = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 2, ptr %i.x, align 8, !tbaa !419
@@ -738,7 +738,8 @@ _ZN4llvm12SelectionDAG8getSetCCERKNS_5SDLocENS_3EVTENS_7SDValueES5_NS_3ISD8CondC
   %i.ai = getelementptr inbounds nuw i8, ptr %15, i64 16
   store ptr %.sroa.0135.0.copyload, ptr %i.ai, align 8, !tbaa !414
   %.sroa.6.0..sroa_idx140 = getelementptr inbounds nuw i8, ptr %15, i64 24
-  store i32 %.sroa.6.sroa.0.0.extract.trunc, ptr %.sroa.6.0..sroa_idx140, align 8, !tbaa !150
+  %.sroa.6.0.extract.trunc142 = trunc i64 %i.d to i32
+  store i32 %.sroa.6.0.extract.trunc142, ptr %.sroa.6.0..sroa_idx140, align 8, !tbaa !150
   store ptr %15, ptr %14, align 8, !tbaa !416
   %i.aj = getelementptr inbounds nuw i8, ptr %14, i64 8
   store i64 2, ptr %i.aj, align 8, !tbaa !419
@@ -1141,7 +1142,7 @@ bb.u:                                             ; preds = %bb.m, %_ZNK4llvm3EV
   br i1 %i.bt, label %.critedge133, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  switch i32 %i.g, label %9 [
+  switch i32 %i.g, label %.critedge137 [
     i32 581, label %bb.w
     i32 230, label %bb.z
     i32 194, label %bb.ad
@@ -1153,7 +1154,7 @@ bb.w:                                             ; preds = %bb.v
   %.sroa.0170.0.copyload = load ptr, ptr %i.bv, align 8, !tbaa !414
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.0170.0.copyload, i64 24
   %i.bx = load i32, ptr %i.bw, align 8, !tbaa !463
-  switch i32 %i.bx, label %9 [
+  switch i32 %i.bx, label %.critedge137 [
     i32 557, label %bb.x
     i32 556, label %bb.y
   ]
@@ -1163,16 +1164,20 @@ bb.x:                                             ; preds = %bb.w
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !415
   %.sroa.0.0.copyload.i.i.i152 = load i16, ptr %i.ca, align 8, !tbaa !23
-  %i.cb = call { ptr, i32 } @_ZN4llvm12SelectionDAG18getAllOnesConstantERKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.by, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 %.sroa.0.0.copyload.i.i.i152, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #25
-  br label %.critedge137
+  %i.cb = call { ptr, i32 } @_ZN4llvm12SelectionDAG18getAllOnesConstantERKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.by, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 %.sroa.0.0.copyload.i.i.i152, ptr null, i1 noundef zeroext false, i1 noundef zeroext false) #25 ; 2 uses
+  %.fca.0.extract45 = extractvalue { ptr, i32 } %i.cb, 0
+  %.fca.1.extract46 = extractvalue { ptr, i32 } %i.cb, 1
+  br label %.critedge133
 
 bb.y:                                             ; preds = %bb.w
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !415
   %.sroa.0.0.copyload.i.i.i153 = load i16, ptr %i.cd, align 8, !tbaa !23
   %i.ce = load ptr, ptr %i.aj, align 8, !tbaa !917, !nonnull !19, !align !64
-  %i.cf = call { ptr, i32 } @_ZNK4llvm21HexagonTargetLowering7getZeroERKNS_5SDLocENS_3MVTERNS_12SelectionDAGE(ptr noundef nonnull align 8 dereferenceable(518456) %0, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 %.sroa.0.0.copyload.i.i.i153, ptr noundef nonnull align 8 dereferenceable(920) %i.ce)
-  br label %.critedge137
+  %i.cf = call { ptr, i32 } @_ZNK4llvm21HexagonTargetLowering7getZeroERKNS_5SDLocENS_3MVTERNS_12SelectionDAGE(ptr noundef nonnull align 8 dereferenceable(518456) %0, ptr noundef nonnull align 8 dereferenceable(12) %4, i16 %.sroa.0.0.copyload.i.i.i153, ptr noundef nonnull align 8 dereferenceable(920) %i.ce) ; 2 uses
+  %.fca.0.extract37 = extractvalue { ptr, i32 } %i.cf, 0
+  %.fca.1.extract38 = extractvalue { ptr, i32 } %i.cf, 1
+  br label %.critedge133
 
 bb.z:                                             ; preds = %bb.v
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -1181,7 +1186,7 @@ bb.z:                                             ; preds = %bb.v
   %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.0166.0.copyload, i64 24
   %i.cj = load i32, ptr %i.ci, align 8, !tbaa !463
   %i.ck = icmp eq i32 %i.cj, 57
-  br i1 %i.ck, label %bb.aa, label %9
+  br i1 %i.ck, label %bb.aa, label %.critedge137
 
 bb.aa:                                            ; preds = %bb.z
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -1220,7 +1225,7 @@ bb.ab:                                            ; preds = %bb.aa
   %.not7.i.i.i158 = xor i1 %i.dc, true
   %not.or.cond.i.i.i159 = select i1 %i.db, i1 true, i1 %.not7.i.i.i158
   %.0.i.i.i160 = select i1 %not.or.cond.i.i.i159, i1 %i.dd, i1 false
-  br i1 %.0.i.i.i160, label %bb.ac, label %9
+  br i1 %.0.i.i.i160, label %bb.ac, label %.critedge137
 
 bb.ac:                                            ; preds = %bb.ab
   %i.de = load ptr, ptr %i.aj, align 8, !tbaa !917, !nonnull !19, !align !64
@@ -1244,20 +1249,14 @@ bb.ad:                                            ; preds = %bb.v
   %.fca.1.extract = extractvalue { ptr, i32 } %i.di, 1
   %.not225 = icmp eq ptr %.fca.0.extract, null
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
-  br i1 %.not225, label %9, label %.critedge133
+  br i1 %.not225, label %.critedge137, label %.critedge133
 
-9:                                                ; preds = %bb.z, %bb.ab, %bb.w, %bb.ad, %bb.v
+.critedge137:                                     ; preds = %bb.z, %bb.ab, %bb.w, %bb.ad, %bb.v
   br label %.critedge133
 
-.critedge137:                                     ; preds = %bb.x, %bb.y
-  %.pn = phi { ptr, i32 } [ %i.cb, %bb.x ], [ %i.cf, %bb.y ] ; 2 uses
-  %.sroa.0211.3 = extractvalue { ptr, i32 } %.pn, 0
-  %.sroa.30.3 = extractvalue { ptr, i32 } %.pn, 1
-  br label %.critedge133
-
-.critedge133:                                     ; preds = %bb.h, %bb.ac, %bb.aa, %bb.t, %bb.n, %bb.i, %bb.g, %bb.k, %bb.e, %bb.d, %bb.u, %.critedge137, %bb.c, %bb.ad, %9
-  %.sroa.30.4 = phi i32 [ %spec.select218, %bb.e ], [ %spec.select, %bb.d ], [ 0, %bb.g ], [ 0, %bb.u ], [ 0, %9 ], [ %.sroa.30.3, %.critedge137 ], [ %.sroa.8.0.copyload, %bb.n ], [ %.fca.1.extract, %bb.ad ], [ %.fca.1.extract97, %bb.c ], [ %spec.select220, %bb.k ], [ %.fca.1.extract75, %bb.i ], [ %.sroa.7.0.copyload, %bb.aa ], [ %.fca.1.extract54, %bb.t ], [ %.fca.1.extract11, %bb.ac ], [ 0, %bb.h ]
-  %.sroa.0211.4 = phi ptr [ %.fca.0.extract82, %bb.e ], [ %.fca.0.extract86, %bb.d ], [ null, %bb.g ], [ null, %bb.u ], [ null, %9 ], [ %.sroa.0211.3, %.critedge137 ], [ %.sroa.0173.0.copyload, %bb.n ], [ %.fca.0.extract, %bb.ad ], [ %.fca.0.extract96, %bb.c ], [ %.fca.0.extract70, %bb.k ], [ %.fca.0.extract74, %bb.i ], [ %.sroa.022.0.copyload, %bb.aa ], [ %.fca.0.extract53, %bb.t ], [ %.fca.0.extract10, %bb.ac ], [ null, %bb.h ]
+.critedge133:                                     ; preds = %bb.h, %bb.k, %bb.e, %bb.d, %bb.y, %bb.x, %bb.ac, %bb.aa, %bb.u, %bb.t, %bb.n, %bb.i, %bb.g, %bb.c, %bb.ad, %.critedge137
+  %.sroa.30.4 = phi i32 [ %.fca.1.extract11, %bb.ac ], [ %.fca.1.extract46, %bb.x ], [ 0, %bb.g ], [ %.sroa.8.0.copyload, %bb.n ], [ 0, %.critedge137 ], [ %.sroa.7.0.copyload, %bb.aa ], [ 0, %bb.u ], [ %.fca.1.extract, %bb.ad ], [ %.fca.1.extract97, %bb.c ], [ %spec.select220, %bb.k ], [ %.fca.1.extract38, %bb.y ], [ %spec.select218, %bb.e ], [ %spec.select, %bb.d ], [ %.fca.1.extract75, %bb.i ], [ %.fca.1.extract54, %bb.t ], [ 0, %bb.h ]
+  %.sroa.0211.4 = phi ptr [ %.fca.0.extract10, %bb.ac ], [ %.fca.0.extract45, %bb.x ], [ null, %bb.g ], [ %.sroa.0173.0.copyload, %bb.n ], [ null, %.critedge137 ], [ %.sroa.022.0.copyload, %bb.aa ], [ null, %bb.u ], [ %.fca.0.extract, %bb.ad ], [ %.fca.0.extract96, %bb.c ], [ %.fca.0.extract70, %bb.k ], [ %.fca.0.extract37, %bb.y ], [ %.fca.0.extract82, %bb.e ], [ %.fca.0.extract86, %bb.d ], [ %.fca.0.extract74, %bb.i ], [ %.fca.0.extract53, %bb.t ], [ null, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.0211.4, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.30.4, 1

@@ -6,14 +6,12 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 %struct.macho_hdr = type { i32, i32, i32, i32, i32, i32, i32 }
-%struct.macho_load_cmd = type { i32, i32 }
 %struct.macho_segment_cmd = type { [16 x i8], i32, i32, i32, i32, i32, i32, i32, i32 }
 %struct.macho_segment_cmd64 = type { [16 x i8], i64, i64, i64, i64, i32, i32, i32, i32 }
 %struct.macho_section = type { [16 x i8], [16 x i8], i32, i32, i32, i32, i32, i32, i32, i32, i32 }
 %struct.macho_section64 = type { [16 x i8], [16 x i8], i64, i64, i32, i32, i32, i32, i32, i32, i32 }
 %struct.macho_thread_state_ppc = type { i32, i32, [32 x i32], i32, i32, i32, i32, i32, i32 }
 %struct.macho_thread_state_ppc64 = type { i64, i64, [32 x i64], i32, i64, i64, i64, i32 }
-%struct.macho_fat_header = type { i32, i32 }
 %struct.macho_fat_arch = type { i32, i32, i32, i32, i32 }
 
 @.str = private unnamed_addr constant [59 x i8] c"cli_scanmacho: Assumption Violated: fileinfo->offset != 0\0A\00", align 1
@@ -80,20 +78,20 @@ target triple = "x86_64-pc-linux-gnu"
 define range(i32 0, 27) i32 @cli_scanmacho(ptr noundef %0, ptr nofree noundef captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.macho_hdr, align 4          ; 12 uses
-  %3 = alloca %struct.macho_load_cmd, align 4     ; 6 uses
-  %4 = alloca %struct.macho_segment_cmd, align 4  ; 5 uses
-  %5 = alloca %struct.macho_segment_cmd64, align 8 ; 5 uses
-  %6 = alloca %struct.macho_section, align 4      ; 8 uses
-  %7 = alloca %struct.macho_section64, align 8    ; 8 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
+  %3 = alloca %struct.macho_segment_cmd, align 4  ; 5 uses
+  %4 = alloca %struct.macho_segment_cmd64, align 8 ; 5 uses
+  %5 = alloca %struct.macho_section, align 4      ; 8 uses
+  %6 = alloca %struct.macho_section64, align 8    ; 8 uses
   %i.a = alloca [16 x i8], align 16               ; 7 uses
-  %8 = alloca %struct.macho_thread_state_ppc, align 4 ; 5 uses
-  %9 = alloca %struct.macho_thread_state_ppc64, align 8 ; 5 uses
+  %7 = alloca %struct.macho_thread_state_ppc, align 4 ; 5 uses
+  %8 = alloca %struct.macho_thread_state_ppc64, align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !8    ; 11 uses
@@ -317,18 +315,18 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.
 
 .lr.ph:                                           ; preds = %.critedge
   %spec.select = select i1 %i.o, i64 32, i64 28
-  %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 15 ; 2 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 56
-  %i.ad = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 36
-  %i.af = getelementptr inbounds nuw i8, ptr %6, i64 40
-  %i.ag = getelementptr inbounds nuw i8, ptr %6, i64 44 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %7, i64 32
-  %i.ai = getelementptr inbounds nuw i8, ptr %7, i64 40
-  %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 48
-  %i.ak = getelementptr inbounds nuw i8, ptr %7, i64 52 ; 2 uses
-  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 56
+  %i.ad = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 36
+  %i.af = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 44 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.ai = getelementptr inbounds nuw i8, ptr %6, i64 40
+  %i.aj = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %i.ak = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
+  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   %.16..16..16..sroa_idx602 = getelementptr inbounds nuw i8, ptr %2, i64 16
   br label %bb.ao
 
@@ -366,7 +364,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %.not26.i251, label %fmap_readn.exit253.thread, label %fmap_readn.exit253
 
 fmap_readn.exit253:                               ; preds = %bb.ap
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %3, ptr nonnull align 1 %i.av, i64 %spec.select.i250, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0, ptr nonnull align 1 %i.av, i64 %spec.select.i250, i1 false)
   %.not224 = icmp ugt i64 %i.at, 7
   br i1 %.not224, label %bb.ar, label %fmap_readn.exit253.thread
 
@@ -388,10 +386,10 @@ bb.aq:                                            ; preds = %fmap_readn.exit253.
 
 bb.ar:                                            ; preds = %fmap_readn.exit253
   %i.bd = add i64 %.1190461, 8                    ; 6 uses
-  %.0..0..0.294 = load i32, ptr %3, align 4       ; 2 uses
+  %.0..0..0.294 = load i32, ptr %.sroa.0, align 8 ; 2 uses
   %i.be = call i32 @llvm.bswap.i32(i32 %.0..0..0.294)
   %i.bf = select i1 %.not221334, i32 %.0..0..0.294, i32 %i.be ; 4 uses
-  store i32 %i.bf, ptr %3, align 4, !tbaa !43
+  store i32 %i.bf, ptr %.sroa.0, align 8, !tbaa !43
   %i.bg = icmp eq i32 %i.bf, 25
   %or.cond7 = select i1 %i.o, i1 %i.bg, i1 false
   %i.bh = icmp eq i32 %i.bf, 1
@@ -416,7 +414,7 @@ bb.au:                                            ; preds = %bb.at
   br i1 %.not26.i256, label %fmap_readn.exit258.thread, label %fmap_readn.exit258
 
 fmap_readn.exit258:                               ; preds = %bb.au
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %5, ptr nonnull align 1 %i.bl, i64 %spec.select.i255, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %4, ptr nonnull align 1 %i.bl, i64 %spec.select.i255, i1 false)
   %.not234 = icmp ugt i64 %i.bj, 63
   br i1 %.not234, label %bb.aw, label %fmap_readn.exit258.thread
 
@@ -453,7 +451,7 @@ bb.ay:                                            ; preds = %bb.ax
   br i1 %.not26.i261, label %fmap_readn.exit263.thread, label %fmap_readn.exit263
 
 fmap_readn.exit263:                               ; preds = %bb.ay
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %4, ptr nonnull align 1 %i.bx, i64 %spec.select.i260, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %3, ptr nonnull align 1 %i.bx, i64 %spec.select.i260, i1 false)
   %.not232 = icmp ugt i64 %i.bv, 47
   br i1 %.not232, label %bb.ba, label %fmap_readn.exit263.thread
 
@@ -480,7 +478,7 @@ bb.ba:                                            ; preds = %fmap_readn.exit263
 
 bb.bb:                                            ; preds = %bb.ba, %bb.aw
   %.sink544 = phi i32 [ %i.cg, %bb.ba ], [ %i.bu, %bb.aw ] ; 2 uses
-  %.sink = phi ptr [ %4, %bb.ba ], [ %5, %bb.aw ]
+  %.sink = phi ptr [ %3, %bb.ba ], [ %4, %bb.aw ]
   %.2191 = phi i64 [ %i.cf, %bb.ba ], [ %i.bt, %bb.aw ] ; 3 uses
   %i.ch = call i32 @llvm.bswap.i32(i32 %.sink544)
   %i.ci = select i1 %.not221334, i32 %.sink544, i32 %i.ch ; 4 uses
@@ -555,7 +553,7 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %.not26.i266, label %fmap_readn.exit268.thread, label %fmap_readn.exit268
 
 fmap_readn.exit268:                               ; preds = %bb.bm
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %7, ptr nonnull align 1 %i.cz, i64 %spec.select.i265, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %6, ptr nonnull align 1 %i.cz, i64 %spec.select.i265, i1 false)
   %.not240 = icmp ugt i64 %i.cx, 79
   br i1 %.not240, label %bb.bo, label %fmap_readn.exit268.thread
 
@@ -614,7 +612,7 @@ bb.bq:                                            ; preds = %bb.bp
   br i1 %.not26.i271, label %fmap_readn.exit273.thread, label %fmap_readn.exit273
 
 fmap_readn.exit273:                               ; preds = %bb.bq
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %6, ptr nonnull align 1 %i.ed, i64 %spec.select.i270, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %5, ptr nonnull align 1 %i.ed, i64 %spec.select.i270, i1 false)
   %.not237 = icmp ugt i64 %i.eb, 67
   br i1 %.not237, label %bb.bs, label %fmap_readn.exit273.thread
 
@@ -683,7 +681,7 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bo
   %.sink557 = phi i32 [ %i.fk, %bb.bv ], [ %i.ea, %bb.bo ] ; 2 uses
   %.sink556 = phi i32 [ %i.es, %bb.bv ], [ %i.dr, %bb.bo ] ; 2 uses
   %i.fl = phi i64 [ %i.eo, %bb.bv ], [ %i.dm, %bb.bo ]
-  %.sink545 = phi ptr [ %6, %bb.bv ], [ %7, %bb.bo ]
+  %.sink545 = phi ptr [ %5, %bb.bv ], [ %6, %bb.bo ]
   %.4 = phi i64 [ %i.fj, %bb.bv ], [ %i.dh, %bb.bo ] ; 3 uses
   %i.fm = getelementptr inbounds nuw [36 x i8], ptr %i.cv, i64 %i.fl
   %i.fn = add i32 %.sink557, -1                   ; 2 uses
@@ -790,7 +788,7 @@ bb.ch:                                            ; preds = %bb.ce
   br label %.thread521
 
 bb.ci:                                            ; preds = %bb.cc
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
+  call void @llvm.lifetime.start.p0(ptr nonnull %7)
   %i.gt = load i64, ptr %i.f, align 8, !tbaa !33  ; 2 uses
   %or.cond398.not = icmp ult i64 %i.gg, %i.gt
   br i1 %or.cond398.not, label %bb.cj, label %fmap_readn.exit283.thread
@@ -804,7 +802,7 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %.not26.i281, label %fmap_readn.exit283.thread, label %fmap_readn.exit283
 
 fmap_readn.exit283:                               ; preds = %bb.cj
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %8, ptr nonnull align 1 %i.gw, i64 %spec.select.i280, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %7, ptr nonnull align 1 %i.gw, i64 %spec.select.i280, i1 false)
   %.not228 = icmp ugt i64 %i.gu, 159
   br i1 %.not228, label %bb.cm, label %fmap_readn.exit283.thread
 
@@ -829,19 +827,19 @@ bb.cl:                                            ; preds = %bb.ck, %fmap_readn.
 
 .thread369:                                       ; preds = %bb.cl, %bb.ck
   %.2211.ph = phi i32 [ 1, %bb.ck ], [ 26, %bb.cl ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %.thread360
 
 bb.cm:                                            ; preds = %fmap_readn.exit283
   %i.he = add i64 %.1190461, 176
-  %.0..0..0.292 = load i32, ptr %8, align 4       ; 2 uses
+  %.0..0..0.292 = load i32, ptr %7, align 4       ; 2 uses
   %i.hf = call i32 @llvm.bswap.i32(i32 %.0..0..0.292)
   %i.hg = select i1 %.not221334, i32 %.0..0..0.292, i32 %i.hf
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %7)
   br label %.thread521
 
 bb.cn:                                            ; preds = %bb.cc
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
+  call void @llvm.lifetime.start.p0(ptr nonnull %8)
   %i.hh = load i64, ptr %i.f, align 8, !tbaa !33  ; 2 uses
   %or.cond399.not = icmp ult i64 %i.gg, %i.hh
   br i1 %or.cond399.not, label %bb.co, label %fmap_readn.exit288.thread
@@ -855,7 +853,7 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %.not26.i286, label %fmap_readn.exit288.thread, label %fmap_readn.exit288
 
 fmap_readn.exit288:                               ; preds = %bb.co
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %9, ptr nonnull align 1 %i.hk, i64 %spec.select.i285, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %8, ptr nonnull align 1 %i.hk, i64 %spec.select.i285, i1 false)
   %.not226 = icmp ugt i64 %i.hi, 311
   br i1 %.not226, label %bb.cr, label %fmap_readn.exit288.thread
 
@@ -880,16 +878,16 @@ bb.cq:                                            ; preds = %bb.cp, %fmap_readn.
 
 .thread379:                                       ; preds = %bb.cq, %bb.cp
   %.3212.ph = phi i32 [ 1, %bb.cp ], [ 26, %bb.cq ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  call void @llvm.lifetime.end.p0(ptr nonnull %8)
   br label %.thread360
 
 bb.cr:                                            ; preds = %fmap_readn.exit288
   %i.hs = add i64 %.1190461, 328
-  %.0..0..0. = load i64, ptr %9, align 8          ; 2 uses
+  %.0..0..0. = load i64, ptr %8, align 8          ; 2 uses
   %i.ht = call i64 @llvm.bswap.i64(i64 %.0..0..0.)
   %i.hu = select i1 %.not221334, i64 %.0..0..0., i64 %i.ht
   %i.hv = trunc i64 %i.hu to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  call void @llvm.lifetime.end.p0(ptr nonnull %8)
   br label %.thread521
 
 default.unreachable:                              ; preds = %bb.cc
@@ -996,11 +994,11 @@ bb.dc:                                            ; preds = %.thread387, %bb.db
 .thread360:                                       ; preds = %bb.cf, %bb.cg, %.thread379, %.thread369, %.thread389, %bb.dc, %bb.bu, %bb.br, %bb.bn, %bb.bf, %bb.az, %bb.av, %bb.aq, %bb.an, %.loopexit, %bb.bk, %bb.i, %fmap_readn.exit.thread
   %.5214 = phi i32 [ 26, %fmap_readn.exit.thread ], [ 1, %bb.bu ], [ 26, %bb.cg ], [ 1, %bb.an ], [ 1, %bb.cf ], [ 1, %bb.aq ], [ 0, %bb.dc ], [ 1, %bb.az ], [ %.3212.ph, %.thread379 ], [ 1, %bb.bf ], [ %.2211.ph, %.thread369 ], [ 1, %bb.bn ], [ 0, %.thread389 ], [ 1, %bb.br ], [ 26, %bb.i ], [ 20, %bb.bk ], [ 1, %bb.av ], [ 26, %.loopexit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   ret i32 %.5214
 }
@@ -1035,10 +1033,10 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define i32 @cli_scanmacho_unibin(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca %struct.macho_fat_header, align 4   ; 6 uses
-  %2 = alloca %struct.macho_fat_arch, align 4     ; 7 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
+  %1 = alloca %struct.macho_fat_arch, align 4     ; 7 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 2 uses
@@ -1055,7 +1053,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not26.i, label %fmap_readn.exit.thread, label %fmap_readn.exit
 
 fmap_readn.exit:                                  ; preds = %bb.b
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %1, ptr nonnull align 1 %i.g, i64 %spec.select.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0, ptr nonnull align 1 %i.g, i64 %spec.select.i, i1 false)
   %.not = icmp ugt i64 %i.d, 7
   br i1 %.not, label %bb.c, label %fmap_readn.exit.thread
 
@@ -1064,7 +1062,7 @@ fmap_readn.exit.thread:                           ; preds = %bb.b, %bb.a, %fmap_
   br label %.loopexit
 
 bb.c:                                             ; preds = %fmap_readn.exit
-  %.0..0..0. = load i32, ptr %1, align 4, !tbaa !58 ; 2 uses
+  %.0..0..0. = load i32, ptr %.sroa.0, align 8, !tbaa !58 ; 2 uses
   %i.h = icmp eq i32 %.0..0..0., -889275714       ; 3 uses
   br i1 %i.h, label %.critedge, label %bb.d
 
@@ -1077,13 +1075,13 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.d
-  %.4..4..4..sroa_idx85 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %.4..4..4..sroa_idx85 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   %.4..4..4.55 = load i32, ptr %.4..4..4..sroa_idx85, align 4, !tbaa !60
   %i.j = tail call i32 @llvm.bswap.i32(i32 %.4..4..4.55)
   br label %bb.g
 
 .critedge:                                        ; preds = %bb.c
-  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   %.4..4..4. = load i32, ptr %.4..4..4..sroa_idx, align 4, !tbaa !60
   br label %bb.g
 
@@ -1107,10 +1105,10 @@ bb.j:                                             ; preds = %bb.h
   br i1 %exitcond.not77, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %.8..8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.8..8..8..sroa_idx83 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.12..12..12..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %.12..12..12..sroa_idx84 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %.8..8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.8..8..8..sroa_idx83 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %.12..12..12..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %.12..12..12..sroa_idx84 = getelementptr inbounds nuw i8, ptr %1, i64 12
   br label %.lr.ph
 
 bb.k:                                             ; preds = %bb.r
@@ -1133,7 +1131,7 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %.not26.i37, label %fmap_readn.exit39.thread, label %fmap_readn.exit39
 
 fmap_readn.exit39:                                ; preds = %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %2, ptr nonnull align 1 %i.r, i64 %spec.select.i36, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %1, ptr nonnull align 1 %i.r, i64 %spec.select.i36, i1 false)
   %.not31 = icmp ugt i64 %i.p, 19
   br i1 %.not31, label %bb.n, label %fmap_readn.exit39.thread
 
@@ -1196,8 +1194,8 @@ bb.r:                                             ; preds = %bb.n
 
 .loopexit:                                        ; preds = %bb.r, %bb.k, %bb.j, %bb.p, %bb.m, %bb.g, %bb.q, %bb.i, %bb.e, %fmap_readn.exit.thread
   %.023 = phi i32 [ 26, %fmap_readn.exit.thread ], [ 26, %bb.e ], [ 26, %bb.i ], [ 0, %bb.g ], [ 1, %bb.p ], [ 1, %bb.m ], [ 26, %bb.q ], [ 0, %bb.j ], [ 0, %bb.k ], [ %i.ap, %bb.r ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i32 %.023
 }
 

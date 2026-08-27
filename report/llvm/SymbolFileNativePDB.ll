@@ -205,12 +205,6 @@ begin_hunk_0
 %"struct.std::_Vector_base.689" = type { %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl" }
 %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl" = type { %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl_data" }
 %"struct.std::_Vector_base<unsigned char, std::allocator<unsigned char>>::_Vector_impl_data" = type { ptr, ptr, ptr }
-%"struct.std::_Optional_payload.76" = type { %"struct.std::_Optional_payload_base.base.78", [3 x i8] }
-%"struct.std::_Optional_payload_base.base.78" = type <{ %"union.std::_Optional_payload_base<unsigned int>::_Storage", i8 }>
-%"union.std::_Optional_payload_base<unsigned int>::_Storage" = type { i32 }
-%"struct.std::_Optional_payload.706" = type { %"struct.std::_Optional_payload_base.base.708", [3 x i8] }
-%"struct.std::_Optional_payload_base.base.708" = type <{ %"union.std::_Optional_payload_base<int>::_Storage", i8 }>
-%"union.std::_Optional_payload_base<int>::_Storage" = type { i32 }
 %"struct.llvm::codeview::BinaryAnnotationIterator" = type { %"class.std::optional.716", %"class.llvm::ArrayRef.313", %"class.llvm::ArrayRef.313" }
 %"class.std::optional.716" = type { %"struct.std::_Optional_base.717" }
 %"struct.std::_Optional_base.717" = type { %"struct.std::_Optional_payload.719" }
@@ -613,10 +607,10 @@ bb.a:
   %17 = alloca %"class.lldb_private::FileSpec", align 8 ; 5 uses
   %18 = alloca %"class.llvm::Expected.661", align 8 ; 10 uses
   %19 = alloca %"class.llvm::Error", align 8      ; 3 uses
-  %.sroa.0455 = alloca %"struct.std::_Optional_payload.76", align 8 ; 19 uses
-  %.sroa.0 = alloca %"struct.std::_Optional_payload.76", align 8 ; 13 uses
-  %.sroa.0434 = alloca %"struct.std::_Optional_payload.706", align 8 ; 9 uses
-  %.sroa.0428 = alloca %"struct.std::_Optional_payload.706", align 8 ; 8 uses
+  %.sroa.0455 = alloca i64, align 8               ; 19 uses
+  %.sroa.0 = alloca i64, align 8                  ; 13 uses
+  %.sroa.0434 = alloca i64, align 8               ; 9 uses
+  %.sroa.0428 = alloca i64, align 8               ; 8 uses
   %20 = alloca %"struct.llvm::codeview::BinaryAnnotationIterator", align 8 ; 12 uses
   %21 = alloca %"struct.lldb_private::RangeData", align 4 ; 7 uses
   %22 = alloca %"class.lldb_private::Address", align 8 ; 3 uses

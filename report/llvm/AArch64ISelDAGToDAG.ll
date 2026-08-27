@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %.critedge.i
   br label %_ZN12_GLOBAL__N_119AArch64DAGToDAGISel20tryFoldCselToFMaxMinERN4llvm6SDNodeE.exit
 
 _ZN12_GLOBAL__N_119AArch64DAGToDAGISel20tryFoldCselToFMaxMinERN4llvm6SDNodeE.exit: ; preds = %.split.i, %_ZNK4llvm3EVT15isFloatingPointEv.exit.i, %_ZNK4llvm3EVT8isVectorEv.exit.i, %bb.u, %bb.v, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i, %bb.w, %bb.x, %bb.y, %bb.z, %bb.ae, %select.unfold.i, %_ZN4llvm8dyn_castINS_16ConstantFPSDNodeENS_7SDValueEEEDcRT0_.exit.i, %bb.af, %.critedge.i, %bb.ag
-  %.sroa.074.2.i = phi ptr [ null, %_ZNK4llvm3EVT8isVectorEv.exit.i ], [ null, %_ZNK4llvm3EVT15isFloatingPointEv.exit.i ], [ null, %.split.i ], [ null, %bb.u ], [ null, %bb.v ], [ null, %bb.y ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i ], [ null, %bb.ae ], [ %i.gp, %bb.ag ], [ null, %bb.af ], [ null, %_ZN4llvm8dyn_castINS_16ConstantFPSDNodeENS_7SDValueEEEDcRT0_.exit.i ], [ null, %bb.w ], [ null, %bb.x ], [ null, %bb.z ], [ null, %.critedge.i ], [ null, %select.unfold.i ]
+  %.sroa.074.2.i = phi ptr [ null, %_ZNK4llvm3EVT15isFloatingPointEv.exit.i ], [ null, %select.unfold.i ], [ null, %.split.i ], [ null, %_ZNK4llvm3EVT8isVectorEv.exit.i ], [ null, %bb.u ], [ null, %bb.v ], [ null, %bb.y ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i ], [ null, %bb.ae ], [ %i.gp, %bb.ag ], [ null, %bb.af ], [ null, %_ZN4llvm8dyn_castINS_16ConstantFPSDNodeENS_7SDValueEEEDcRT0_.exit.i ], [ null, %bb.w ], [ null, %bb.x ], [ null, %bb.z ], [ null, %.critedge.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
@@ -608,11 +608,11 @@ bb.p:                                             ; preds = %bb.o
   %.sroa.046.0.copyload.i.i = load ptr, ptr %i.bt, align 8, !tbaa !421
   %.sroa.8.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.bs, i64 48
   %i.bu = load i64, ptr %.sroa.8.0..sroa_idx.i.i, align 8
-  %.sroa.8.sroa.0.0.extract.trunc.i.i = trunc i64 %i.bu to i32
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.bq, ptr noundef nonnull align 8 dereferenceable(12) %i.bs, i64 12, i1 false)
   store ptr %.sroa.046.0.copyload.i.i, ptr %i.bp, align 8, !tbaa !421
   %.sroa.8.0..sroa_idx51.i.i = getelementptr inbounds nuw i8, ptr %i.bp, i64 8
-  store i32 %.sroa.8.sroa.0.0.extract.trunc.i.i, ptr %.sroa.8.0..sroa_idx51.i.i, align 8, !tbaa !201
+  %.sroa.8.0.extract.trunc.i.i = trunc i64 %i.bu to i32
+  store i32 %.sroa.8.0.extract.trunc.i.i, ptr %.sroa.8.0..sroa_idx51.i.i, align 8, !tbaa !201
   br label %_ZN12_GLOBAL__N_119AArch64DAGToDAGISel23SelectSVERegRegAddrModeILj0EEEbN4llvm7SDValueERS3_S4_.exit
 
 bb.q:                                             ; preds = %bb.a
@@ -1015,7 +1015,7 @@ _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.d, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br label %_ZL21isOpcWithIntImmediatePKN4llvm6SDNodeEjRm.exit.thread
 
-_ZL21isOpcWithIntImmediatePKN4llvm6SDNodeEjRm.exit.thread: ; preds = %_ZNK4llvm8TypeSizecvmEv.exit, %bb.c, %bb.d, %bb.a, %bb.b
+_ZL21isOpcWithIntImmediatePKN4llvm6SDNodeEjRm.exit.thread: ; preds = %bb.d, %bb.c, %_ZNK4llvm8TypeSizecvmEv.exit, %bb.a, %bb.b
   %.1 = phi i1 [ false, %bb.a ], [ false, %bb.b ], [ true, %_ZNK4llvm8TypeSizecvmEv.exit ], [ false, %bb.c ], [ false, %bb.d ]
   ret i1 %.1
 }
@@ -1418,9 +1418,7 @@ _ZL13isShiftedMaskmN4llvm3EVTE.exit225.thread.i:  ; preds = %bb.dk, %_ZL13isShif
   %i.uz = load ptr, ptr %i.uy, align 8, !tbaa !337 ; 2 uses
   %.sroa.0241.0.copyload.i = load ptr, ptr %i.uz, align 8, !tbaa !421 ; 8 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.uz, i64 8
-  %i.va = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8 ; 2 uses
-  %.sroa.8.sroa.0.0.extract.trunc.i = trunc i64 %i.va to i32 ; 5 uses
-  %.sroa.8.sroa.5.0.extract.shift.i = and i64 %i.va, -4294967296
+  %i.va = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %42)
   %i.vb = getelementptr inbounds nuw i8, ptr %.sroa.0258.0.i, i64 40
   %i.vc = load ptr, ptr %i.vb, align 8, !tbaa !337
@@ -1516,17 +1514,18 @@ bb.dq:                                            ; preds = %bb.dp
   %.sroa.0241.0.copyload245.i = load ptr, ptr %i.wa, align 8, !tbaa !421
   %.sroa.8.0..sroa_idx247.i = getelementptr inbounds nuw i8, ptr %i.wa, i64 8
   %i.wp = load i32, ptr %.sroa.8.0..sroa_idx247.i, align 8, !tbaa !201
+  %.sroa.8.0.insert.ext.i = zext i32 %i.wp to i64
+  %.sroa.8.0.insert.mask.i = and i64 %i.va, -4294967296
+  %.sroa.8.0.insert.insert.i = or disjoint i64 %.sroa.8.0.insert.mask.i, %.sroa.8.0.insert.ext.i
   br label %_ZNK4llvm6SDNode9hasOneUseEv.exit.thread.i
 
 _ZNK4llvm6SDNode9hasOneUseEv.exit.thread.i:       ; preds = %bb.dq, %bb.dp, %bb.do, %bb.dn, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i, %_ZN4llvm5APIntD2Ev.exit228.i
-  %.sroa.8.sroa.0.0.i = phi i32 [ %.sroa.8.sroa.0.0.extract.trunc.i, %_ZN4llvm5APIntD2Ev.exit228.i ], [ %.sroa.8.sroa.0.0.extract.trunc.i, %bb.do ], [ %i.wp, %bb.dq ], [ %.sroa.8.sroa.0.0.extract.trunc.i, %bb.dp ], [ %.sroa.8.sroa.0.0.extract.trunc.i, %bb.dn ], [ %.sroa.8.sroa.0.0.extract.trunc.i, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i ]
-  %.sroa.0241.0.i = phi ptr [ %.sroa.0241.0.copyload.i, %_ZN4llvm5APIntD2Ev.exit228.i ], [ %.sroa.0241.0.copyload.i, %bb.do ], [ %.sroa.0241.0.copyload245.i, %bb.dq ], [ %.sroa.0241.0.copyload.i, %bb.dp ], [ %.sroa.0241.0.copyload.i, %bb.dn ], [ %.sroa.0241.0.copyload.i, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i ]
-  %.0.i = phi i64 [ %i.vd, %_ZN4llvm5APIntD2Ev.exit228.i ], [ %i.vd, %bb.do ], [ %i.wm, %bb.dq ], [ %.0.i.i.i.i.i233.i, %bb.dp ], [ %i.vd, %bb.dn ], [ %i.vd, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i ]
+  %.sroa.8.0.i = phi i64 [ %.sroa.8.0.insert.insert.i, %bb.dq ], [ %i.va, %bb.dp ], [ %i.va, %_ZN4llvm5APIntD2Ev.exit228.i ], [ %i.va, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i ], [ %i.va, %bb.dn ], [ %i.va, %bb.do ]
+  %.sroa.0241.0.i = phi ptr [ %.sroa.0241.0.copyload245.i, %bb.dq ], [ %.sroa.0241.0.copyload.i, %bb.dp ], [ %.sroa.0241.0.copyload.i, %_ZN4llvm5APIntD2Ev.exit228.i ], [ %.sroa.0241.0.copyload.i, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i ], [ %.sroa.0241.0.copyload.i, %bb.dn ], [ %.sroa.0241.0.copyload.i, %bb.do ]
+  %.0.i = phi i64 [ %i.wm, %bb.dq ], [ %.0.i.i.i.i.i233.i, %bb.dp ], [ %i.vd, %_ZN4llvm5APIntD2Ev.exit228.i ], [ %i.vd, %_ZNK4llvm6SDNode9hasOneUseEv.exit.i ], [ %i.vd, %bb.dn ], [ %i.vd, %bb.do ]
   store ptr %.sroa.0241.0.i, ptr %45, align 8, !tbaa !421
   %.sroa.8.0..sroa_idx246.i = getelementptr inbounds nuw i8, ptr %45, i64 8
-  %.sroa.8.sroa.0.0.insert.ext.i = zext i32 %.sroa.8.sroa.0.0.i to i64
-  %.sroa.8.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.8.sroa.5.0.extract.shift.i, %.sroa.8.sroa.0.0.insert.ext.i
-  store i64 %.sroa.8.sroa.0.0.insert.insert.i, ptr %.sroa.8.0..sroa_idx246.i, align 8
+  store i64 %.sroa.8.0.i, ptr %.sroa.8.0..sroa_idx246.i, align 8
   %i.wq = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.u, i64 noundef %.0.i, ptr noundef nonnull align 8 dereferenceable(12) %44, i16 %.sroa.0.0.copyload.i.i, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #22 ; 2 uses
   %.fca.0.extract24.i = extractvalue { ptr, i32 } %i.wq, 0
   %.fca.1.extract25.i = extractvalue { ptr, i32 } %i.wq, 1
@@ -1929,9 +1928,9 @@ bb.o:                                             ; preds = %bb.n, %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.k
-  %.057.i = phi i64 [ %.0.i.i.i.i.i32.i, %bb.k ], [ %.0.i.i.i.i.i35.i, %bb.o ] ; 2 uses
   %.sroa.645.0.i = phi i32 [ %.sroa.645.0.copyload.i, %bb.k ], [ %.fca.1.extract10.i, %bb.o ]
   %.sroa.044.0.i = phi ptr [ %.sroa.044.0.copyload.i, %bb.k ], [ %.fca.0.extract9.i, %bb.o ]
+  %.057.i = phi i64 [ %.0.i.i.i.i.i32.i, %bb.k ], [ %.0.i.i.i.i.i35.i, %bb.o ] ; 2 uses
   br i1 %3, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -2334,8 +2333,8 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.k, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83, %bb.q, %_ZNK4llvm3EVT13getSizeInBitsEv.exit, %bb.e, %bb.b, %bb.d, %bb.c
-  %.6 = phi i1 [ false, %bb.b ], [ true, %bb.c ], [ false, %bb.d ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83 ], [ true, %bb.q ], [ false, %bb.k ], [ false, %_ZNK4llvm3EVT13getSizeInBitsEv.exit ], [ false, %bb.e ]
+.critedge:                                        ; preds = %bb.e, %bb.b, %bb.k, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83, %bb.q, %_ZNK4llvm3EVT13getSizeInBitsEv.exit, %bb.d, %bb.c
+  %.6 = phi i1 [ false, %bb.e ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.b ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83 ], [ true, %bb.q ], [ false, %bb.k ], [ false, %_ZNK4llvm3EVT13getSizeInBitsEv.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   ret i1 %.6
 }
@@ -2362,11 +2361,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   %i.g = load i64, ptr %.sroa.8.0..sroa_idx, align 8
-  %.sroa.8.sroa.0.0.extract.trunc = trunc i64 %i.g to i32
   tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %3, ptr noundef nonnull align 8 dereferenceable(12) %i.d, i64 12, i1 false)
   store ptr %.sroa.046.0.copyload, ptr %4, align 8, !tbaa !421
   %.sroa.8.0..sroa_idx51 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %.sroa.8.sroa.0.0.extract.trunc, ptr %.sroa.8.0..sroa_idx51, align 8, !tbaa !201
+  %.sroa.8.0.extract.trunc = trunc i64 %i.g to i32
+  store i32 %.sroa.8.0.extract.trunc, ptr %.sroa.8.0..sroa_idx51, align 8, !tbaa !201
   br label %.thread
 
 bb.d:                                             ; preds = %bb.b
@@ -2476,8 +2475,8 @@ bb.i:                                             ; preds = %_ZN4llvm8dyn_castIN
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %4, ptr noundef nonnull align 8 dereferenceable(12) %i.bc, i64 12, i1 false), !tbaa.struct !458
   br label %.thread
 
-.thread:                                          ; preds = %bb.c, %bb.g, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, %bb.h, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit39, %bb.i, %bb.d, %bb.a
-  %.5 = phi i1 [ false, %bb.a ], [ true, %bb.c ], [ false, %bb.d ], [ true, %bb.g ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit ], [ true, %bb.i ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit39 ], [ false, %bb.h ]
+.thread:                                          ; preds = %bb.c, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit39, %bb.i, %bb.g, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, %bb.h, %bb.d, %bb.a
+  %.5 = phi i1 [ false, %bb.a ], [ true, %bb.c ], [ true, %bb.g ], [ false, %bb.d ], [ true, %bb.i ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit39 ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit ], [ false, %bb.h ]
   ret i1 %.5
 }
 
@@ -2880,8 +2879,8 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.k, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83, %bb.q, %_ZNK4llvm3EVT13getSizeInBitsEv.exit, %bb.e, %bb.b, %bb.d, %bb.c
-  %.6 = phi i1 [ false, %bb.b ], [ true, %bb.c ], [ false, %bb.d ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83 ], [ true, %bb.q ], [ false, %bb.k ], [ false, %_ZNK4llvm3EVT13getSizeInBitsEv.exit ], [ false, %bb.e ]
+.critedge:                                        ; preds = %bb.e, %bb.b, %bb.k, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83, %bb.q, %_ZNK4llvm3EVT13getSizeInBitsEv.exit, %bb.d, %bb.c
+  %.6 = phi i1 [ false, %bb.e ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.b ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83 ], [ true, %bb.q ], [ false, %bb.k ], [ false, %_ZNK4llvm3EVT13getSizeInBitsEv.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   ret i1 %.6
 }
@@ -3284,8 +3283,8 @@ _ZNK4llvm7SDValue9hasOneUseEv.exit.i:             ; preds = %bb.t
 _ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i:      ; preds = %.lr.ph.i.i.i, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i, %bb.s
   br label %.critedge65
 
-.critedge65:                                      ; preds = %bb.p, %_ZNK4llvm3EVT19isFixedLengthVectorEv.exit, %.split, %bb.b, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i, %_ZL14narrowIfNeededPN4llvm12SelectionDAGENS_7SDValueE.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %bb.c, %bb.e
-  %.4 = phi i1 [ true, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i ], [ false, %bb.e ], [ false, %bb.b ], [ false, %_ZNK4llvm3EVT19isFixedLengthVectorEv.exit ], [ false, %bb.c ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit ], [ false, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i ], [ true, %_ZL14narrowIfNeededPN4llvm12SelectionDAGENS_7SDValueE.exit ], [ false, %.split ], [ false, %bb.p ]
+.critedge65:                                      ; preds = %bb.p, %bb.b, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i, %_ZL14narrowIfNeededPN4llvm12SelectionDAGENS_7SDValueE.exit, %_ZNK4llvm3EVT19isFixedLengthVectorEv.exit, %.split, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %bb.c, %bb.e
+  %.4 = phi i1 [ false, %_ZNK4llvm3EVT19isFixedLengthVectorEv.exit ], [ false, %bb.e ], [ true, %_ZNK4llvm7SDValue9hasOneUseEv.exit.i ], [ false, %bb.b ], [ false, %bb.c ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit ], [ false, %.split ], [ false, %_ZNK4llvm7SDValue9hasOneUseEv.exit.thread.i ], [ true, %_ZL14narrowIfNeededPN4llvm12SelectionDAGENS_7SDValueE.exit ], [ false, %bb.p ]
   ret i1 %.4
 }
 
@@ -3688,8 +3687,8 @@ bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.k, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83, %bb.q, %_ZNK4llvm3EVT13getSizeInBitsEv.exit, %bb.e, %bb.b, %bb.d, %bb.c
-  %.6 = phi i1 [ false, %bb.b ], [ true, %bb.c ], [ false, %bb.d ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83 ], [ true, %bb.q ], [ false, %bb.k ], [ false, %_ZNK4llvm3EVT13getSizeInBitsEv.exit ], [ false, %bb.e ]
+.critedge:                                        ; preds = %bb.e, %bb.b, %bb.k, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83, %bb.q, %_ZNK4llvm3EVT13getSizeInBitsEv.exit, %bb.d, %bb.c
+  %.6 = phi i1 [ false, %bb.e ], [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.b ], [ false, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit83 ], [ true, %bb.q ], [ false, %bb.k ], [ false, %_ZNK4llvm3EVT13getSizeInBitsEv.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   ret i1 %.6
 }

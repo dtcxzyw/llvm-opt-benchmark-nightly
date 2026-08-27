@@ -47,9 +47,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::pair.120" = type <{ ptr, i32, [4 x i8] }>
 %class.anon.1584 = type { i8 }
 %class.anon.1574 = type { i8 }
-%"struct.std::_Optional_payload.115" = type { %"struct.std::_Optional_payload_base.base.117", [3 x i8] }
-%"struct.std::_Optional_payload_base.base.117" = type <{ %"union.std::_Optional_payload_base<clang::ento::bugreporter::TrackingKind>::_Storage", i8 }>
-%"union.std::_Optional_payload_base<clang::ento::bugreporter::TrackingKind>::_Storage" = type { i32 }
 %"class.clang::ento::PathPieces" = type { %"class.std::__cxx11::list" }
 %"class.std::__cxx11::list" = type { %"class.std::__cxx11::_List_base" }
 %"class.std::__cxx11::_List_base" = type { %"struct.std::__cxx11::_List_base<std::shared_ptr<clang::ento::PathDiagnosticPiece>, std::allocator<std::shared_ptr<clang::ento::PathDiagnosticPiece>>>::_List_impl" }
@@ -452,8 +449,8 @@ _ZN4llvm15SmallPtrSetImplIPKN5clang10StackFrameEE6insertES4_.exit: ; preds = %.l
 define dso_local i64 @_ZNK5clang4ento22PathSensitiveBugReport22getInterestingnessKindENS0_4SValE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1000) %0, ptr %1, i8 %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %3 = alloca %"class.clang::ento::SVal", align 8 ; 4 uses
-  %.sroa.05 = alloca %"struct.std::_Optional_payload.115", align 8 ; 5 uses
-  %.sroa.0 = alloca %"struct.std::_Optional_payload.115", align 8 ; 5 uses
+  %.sroa.05 = alloca i64, align 8                 ; 5 uses
+  %.sroa.0 = alloca i64, align 8                  ; 5 uses
   store ptr %1, ptr %3, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i8 %2, ptr %i.a, align 8
@@ -856,9 +853,9 @@ declare void @_ZN5clang4ento18BugReporterVisitor17getDefaultEndPathERKNS0_18BugR
 define internal fastcc void @_ZNK12_GLOBAL__N_121PathDiagnosticBuilder30generatePathDiagnosticsForNodeERNS_23PathDiagnosticConstructERN5clang4ento22PathDiagnosticLocationE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(168) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(60) %2) unnamed_addr #3 align 2 {
 bb.a:
   %.sroa.8508 = alloca [28 x i8], align 4         ; 3 uses
-  %.sroa.9517 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
+  %.sroa.9527 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
   %.sroa.8477 = alloca [28 x i8], align 4         ; 3 uses
-  %.sroa.9486 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
+  %.sroa.9494 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
   %3 = alloca %"class.clang::ento::PathDiagnosticLocationPair", align 8 ; 5 uses
   %4 = alloca %"class.clang::ento::PathDiagnosticLocationPair", align 8 ; 5 uses
   %5 = alloca %"class.clang::ento::PathDiagnosticLocationPair", align 8 ; 5 uses
@@ -923,9 +920,9 @@ bb.a:
   %56 = alloca %"class.std::shared_ptr", align 16 ; 5 uses
   %57 = alloca %"class.std::shared_ptr.1341", align 16 ; 7 uses
   %.sroa.8440 = alloca [28 x i8], align 4         ; 3 uses
-  %.sroa.9455 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
+  %.sroa.9461 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
   %.sroa.8404 = alloca [28 x i8], align 4         ; 2 uses
-  %.sroa.9418 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
+  %.sroa.9422 = alloca %"class.clang::ento::PathDiagnosticLocation", align 8 ; 4 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
@@ -1328,8 +1325,8 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5clang4ento30PathDiagnosticControlFlowPieceE, i64 16), ptr %i.fe, align 8, !tbaa !8, !noalias !1866
   %i.ff = getelementptr inbounds nuw i8, ptr %i.fb, i64 144 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ff, i8 0, i64 24, i1 false), !noalias !1866
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9418)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9418, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1866
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9422)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9422, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1866
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fb, i64 152
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fb, i64 160
   %i.fi = call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #32, !noalias !1866 ; 8 uses
@@ -1343,12 +1340,12 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   %.sroa.8417.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fi, i64 36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8417.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8404, i64 28, i1 false)
   %.sroa.9418.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fi, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9418.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9418, i64 64, i1 false), !noalias !1866
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9418.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9422, i64 64, i1 false), !noalias !1866
   %i.fj = getelementptr inbounds nuw i8, ptr %i.fi, i64 128 ; 2 uses
   store ptr %i.fi, ptr %i.ff, align 8, !tbaa !1392, !noalias !1866
   store ptr %i.fj, ptr %i.fg, align 8, !tbaa !1395, !noalias !1866
   store ptr %i.fj, ptr %i.fh, align 8, !tbaa !1396, !noalias !1866
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9418)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9422)
   %i.fk = load ptr, ptr %.0.i.i171, align 8, !tbaa !1050
   %i.fl = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #32 ; 3 uses
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 16
@@ -1637,8 +1634,8 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5clang4ento30PathDiagnosticControlFlowPieceE, i64 16), ptr %i.ju, align 8, !tbaa !8, !noalias !1873
   %i.jv = getelementptr inbounds nuw i8, ptr %i.jr, i64 144 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.jv, i8 0, i64 24, i1 false), !noalias !1873
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9455)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9455, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1873
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9461)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9461, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1873
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jr, i64 152
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jr, i64 160
   %i.jy = call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #32, !noalias !1873 ; 9 uses
@@ -1654,12 +1651,12 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   %.sroa.8454.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jy, i64 36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8454.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8440, i64 28, i1 false)
   %.sroa.9455.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jy, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9455.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9455, i64 64, i1 false), !noalias !1873
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9455.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9461, i64 64, i1 false), !noalias !1873
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jy, i64 128 ; 2 uses
   store ptr %i.jy, ptr %i.jv, align 8, !tbaa !1392, !noalias !1873
   store ptr %i.jz, ptr %i.jw, align 8, !tbaa !1395, !noalias !1873
   store ptr %i.jz, ptr %i.jx, align 8, !tbaa !1396, !noalias !1873
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9455)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9461)
   %i.ka = load ptr, ptr %.0.i.i202, align 8, !tbaa !1050
   %i.kb = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #32 ; 3 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %i.kb, i64 16
@@ -2062,8 +2059,8 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5clang4ento30PathDiagnosticControlFlowPieceE, i64 16), ptr %i.apt, align 8, !tbaa !8, !noalias !1981
   %i.apu = getelementptr inbounds nuw i8, ptr %i.apq, i64 144 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.apu, i8 0, i64 24, i1 false), !noalias !1981
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9486)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9486, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1981
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9494)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9494, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1981
   %i.apv = getelementptr inbounds nuw i8, ptr %i.apq, i64 152
   %i.apw = getelementptr inbounds nuw i8, ptr %i.apq, i64 160
   %i.apx = call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #32, !noalias !1981 ; 9 uses
@@ -2079,12 +2076,12 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   %.sroa.8485.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.apx, i64 36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8485.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8477, i64 28, i1 false)
   %.sroa.9486.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.apx, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9486.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9486, i64 64, i1 false), !noalias !1981
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9486.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9494, i64 64, i1 false), !noalias !1981
   %i.apy = getelementptr inbounds nuw i8, ptr %i.apx, i64 128 ; 2 uses
   store ptr %i.apx, ptr %i.apu, align 8, !tbaa !1392, !noalias !1981
   store ptr %i.apy, ptr %i.apv, align 8, !tbaa !1395, !noalias !1981
   store ptr %i.apy, ptr %i.apw, align 8, !tbaa !1396, !noalias !1981
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9486)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9494)
   %i.apz = load ptr, ptr %.0.i.i234, align 8, !tbaa !1050
   %i.aqa = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #32 ; 3 uses
   %i.aqb = getelementptr inbounds nuw i8, ptr %i.aqa, i64 16
@@ -2242,8 +2239,8 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN5clang4ento30PathDiagnosticControlFlowPieceE, i64 16), ptr %i.asd, align 8, !tbaa !8, !noalias !1987
   %i.ase = getelementptr inbounds nuw i8, ptr %i.asa, i64 144 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ase, i8 0, i64 24, i1 false), !noalias !1987
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9517)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9517, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1987
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9527)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9527, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 64, i1 false), !noalias !1987
   %i.asf = getelementptr inbounds nuw i8, ptr %i.asa, i64 152
   %i.asg = getelementptr inbounds nuw i8, ptr %i.asa, i64 160
   %i.ash = call noalias noundef nonnull dereferenceable(128) ptr @_Znwm(i64 noundef 128) #32, !noalias !1987 ; 9 uses
@@ -2259,12 +2256,12 @@ _ZNSt12__shared_ptrIN5clang4ento30PathDiagnosticControlFlowPieceELN9__gnu_cxx12_
   %.sroa.8516.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ash, i64 36
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8516.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(28) %.sroa.8508, i64 28, i1 false)
   %.sroa.9517.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ash, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9517.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9517, i64 64, i1 false), !noalias !1987
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9517.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.9527, i64 64, i1 false), !noalias !1987
   %i.asi = getelementptr inbounds nuw i8, ptr %i.ash, i64 128 ; 2 uses
   store ptr %i.ash, ptr %i.ase, align 8, !tbaa !1392, !noalias !1987
   store ptr %i.asi, ptr %i.asf, align 8, !tbaa !1395, !noalias !1987
   store ptr %i.asi, ptr %i.asg, align 8, !tbaa !1396, !noalias !1987
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9517)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9527)
   %i.asj = load ptr, ptr %.0.i.i260, align 8, !tbaa !1050
   %i.ask = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #32 ; 3 uses
   %i.asl = getelementptr inbounds nuw i8, ptr %i.ask, i64 16

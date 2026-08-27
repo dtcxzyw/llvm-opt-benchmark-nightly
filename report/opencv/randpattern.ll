@@ -204,8 +204,8 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #17
   %i.t = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
-  %i.u = load ptr, ptr %i.t, align 8, !tbaa !149  ; 2 uses
-  %i.v = load ptr, ptr %6, align 8, !tbaa !152    ; 3 uses
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !149
+  %i.v = load ptr, ptr %6, align 8, !tbaa !152    ; 2 uses
   %.not78 = icmp eq ptr %i.u, %i.v
   br i1 %.not78, label %._crit_edge77, label %.preheader.lr.ph
 
@@ -214,11 +214,9 @@ bb.f:                                             ; preds = %bb.e
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit
-  %.pre8687 = phi ptr [ %i.v, %.preheader.lr.ph ], [ %.pre8688, %.loopexit ] ; 3 uses
-  %12 = phi ptr [ %i.v, %.preheader.lr.ph ], [ %13, %.loopexit ] ; 3 uses
-  %i.x = phi ptr [ %i.u, %.preheader.lr.ph ], [ %14, %.loopexit ] ; 2 uses
-  %.02976 = phi i64 [ 0, %.preheader.lr.ph ], [ %15, %.loopexit ] ; 2 uses
-  %i.y = getelementptr inbounds nuw [24 x i8], ptr %12, i64 %.02976 ; 2 uses
+  %i.x = phi ptr [ %i.v, %.preheader.lr.ph ], [ %12, %.loopexit ] ; 4 uses
+  %.02976 = phi i64 [ 0, %.preheader.lr.ph ], [ %13, %.loopexit ] ; 2 uses
+  %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.x, i64 %.02976 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !78  ; 2 uses
   %i.ab = load ptr, ptr %i.y, align 8, !tbaa !81  ; 3 uses
@@ -392,7 +390,7 @@ bb.p:                                             ; preds = %bb.o
   %i.cd = load ptr, ptr %i.b, align 8, !tbaa !78
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   store ptr %i.ce, ptr %i.b, align 8, !tbaa !78
-  br label %.thread
+  br label %.loopexit
 
 bb.q:                                             ; preds = %bb.o
   %i.cf = load ptr, ptr %4, align 8, !tbaa !81    ; 5 uses
@@ -460,7 +458,7 @@ _ZNSt6vectorIN2cv6DMatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__no
   %i.cy = getelementptr inbounds nuw [16 x i8], ptr %i.cq, i64 %i.co
   store ptr %i.cy, ptr %i.w, align 8, !tbaa !83
   %.pre86.pre = load ptr, ptr %6, align 8, !tbaa !152
-  br label %.thread
+  br label %.loopexit
 
 .loopexit70:                                      ; preds = %_ZNKSt6vectorIN2cv6DMatchESaIS1_EE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -472,26 +470,20 @@ _ZNSt6vectorIN2cv6DMatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__no
           cleanup
   br label %bb.t
 
-.thread:                                          ; preds = %bb.p, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
-  %.pre86 = phi ptr [ %.pre8687, %bb.p ], [ %.pre86.pre, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 2 uses
-  %.pre = load ptr, ptr %i.t, align 8, !tbaa !149
-  br label %.loopexit
-
 ._crit_edge:                                      ; preds = %bb.n, %bb.m
   %i.cz = add nuw i64 %.02575, 1                  ; 2 uses
   %exitcond84.not = icmp eq i64 %i.cz, %i.af
   br i1 %exitcond84.not, label %.loopexit, label %bb.m, !llvm.loop !161
 
-.loopexit:                                        ; preds = %._crit_edge, %.preheader, %.thread
-  %.pre8688 = phi ptr [ %.pre86, %.thread ], [ %.pre8687, %.preheader ], [ %.pre8687, %._crit_edge ]
-  %13 = phi ptr [ %.pre86, %.thread ], [ %12, %.preheader ], [ %12, %._crit_edge ] ; 2 uses
-  %14 = phi ptr [ %.pre, %.thread ], [ %i.x, %.preheader ], [ %i.x, %._crit_edge ] ; 2 uses
-  %15 = add nuw i64 %.02976, 1                    ; 2 uses
+.loopexit:                                        ; preds = %._crit_edge, %.preheader, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i, %bb.p
+  %12 = phi ptr [ %i.x, %bb.p ], [ %i.x, %.preheader ], [ %.pre86.pre, %_ZNSt6vectorIN2cv6DMatchESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ], [ %i.x, %._crit_edge ] ; 2 uses
+  %13 = add nuw i64 %.02976, 1                    ; 2 uses
+  %14 = load ptr, ptr %i.t, align 8, !tbaa !149
   %i.da = ptrtoint ptr %14 to i64
-  %i.db = ptrtoint ptr %13 to i64
+  %i.db = ptrtoint ptr %12 to i64
   %i.dc = sub i64 %i.da, %i.db
   %i.dd = sdiv exact i64 %i.dc, 24
-  %i.de = icmp ult i64 %15, %i.dd
+  %i.de = icmp ult i64 %13, %i.dd
   br i1 %i.de, label %.preheader, label %._crit_edge77, !llvm.loop !162
 
 bb.t:                                             ; preds = %.loopexit70, %.loopexit.split-lp, %bb.l, %bb.k

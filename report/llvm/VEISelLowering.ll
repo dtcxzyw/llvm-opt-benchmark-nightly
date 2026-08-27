@@ -205,8 +205,10 @@ bb.c:                                             ; preds = %.split, %_ZNK4llvm3
   br i1 %i.j, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = call { ptr, i32 } @_ZNK4llvm16VETargetLowering10lowerToVVPENS_7SDValueERNS_12SelectionDAGE(ptr noundef nonnull align 8 dereferenceable(518448) %0, ptr nonnull %1, i32 %2, ptr noundef nonnull align 8 dereferenceable(920) %3) #25
-  br label %36
+  %i.k = call { ptr, i32 } @_ZNK4llvm16VETargetLowering10lowerToVVPENS_7SDValueERNS_12SelectionDAGE(ptr noundef nonnull align 8 dereferenceable(518448) %0, ptr nonnull %1, i32 %2, ptr noundef nonnull align 8 dereferenceable(920) %3) #25 ; 2 uses
+  %.fca.0.extract13 = extractvalue { ptr, i32 } %i.k, 0
+  %.fca.1.extract14 = extractvalue { ptr, i32 } %i.k, 1
+  br label %bb.m
 
 bb.e:                                             ; preds = %.split, %bb.c, %_ZNK4llvm3EVT8isVectorEv.exit, %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -609,17 +611,13 @@ _ZL12lowerStoreI1N4llvm7SDValueERNS_12SelectionDAGE.exit: ; preds = %.preheader.
   call void @llvm.lifetime.end.p0(ptr nonnull %22)
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.e, %bb.e, %bb.h, %_ZL12lowerStoreI1N4llvm7SDValueERNS_12SelectionDAGE.exit, %bb.g
-  %.sroa.7.0 = phi i32 [ %2, %bb.e ], [ %.fca.1.extract7, %bb.g ], [ %.sroa.5.0.i, %_ZL12lowerStoreI1N4llvm7SDValueERNS_12SelectionDAGE.exit ], [ 0, %bb.h ], [ %2, %bb.e ]
-  %.sroa.051.0 = phi ptr [ %1, %bb.e ], [ %.fca.0.extract6, %bb.g ], [ %.sroa.0164.0.i, %_ZL12lowerStoreI1N4llvm7SDValueERNS_12SelectionDAGE.exit ], [ null, %bb.h ], [ %1, %bb.e ]
-  %i.fp = insertvalue { ptr, i32 } poison, ptr %.sroa.051.0, 0
-  %i.fq = insertvalue { ptr, i32 } %i.fp, i32 %.sroa.7.0, 1
-  br label %36
-
-36:                                               ; preds = %bb.m, %bb.d
-  %.fca.1.insert.merged = phi { ptr, i32 } [ %i.fq, %bb.m ], [ %i.k, %bb.d ]
+bb.m:                                             ; preds = %bb.e, %bb.e, %bb.g, %_ZL12lowerStoreI1N4llvm7SDValueERNS_12SelectionDAGE.exit, %bb.h, %bb.d
+  %.sroa.7.1 = phi i32 [ %.fca.1.extract14, %bb.d ], [ %2, %bb.e ], [ %.fca.1.extract7, %bb.g ], [ %.sroa.5.0.i, %_ZL12lowerStoreI1N4llvm7SDValueERNS_12SelectionDAGE.exit ], [ 0, %bb.h ], [ %2, %bb.e ]
+  %.sroa.051.1 = phi ptr [ %.fca.0.extract13, %bb.d ], [ %1, %bb.e ], [ %.fca.0.extract6, %bb.g ], [ %.sroa.0164.0.i, %_ZL12lowerStoreI1N4llvm7SDValueERNS_12SelectionDAGE.exit ], [ null, %bb.h ], [ %1, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #25
-  ret { ptr, i32 } %.fca.1.insert.merged
+  %i.fp = insertvalue { ptr, i32 } poison, ptr %.sroa.051.1, 0
+  %i.fq = insertvalue { ptr, i32 } %i.fp, i32 %.sroa.7.1, 1
+  ret { ptr, i32 } %i.fq
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
