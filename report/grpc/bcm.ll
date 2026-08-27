@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.u
   br i1 %i.bk, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
-  %i.bl = shl nsw i32 %i.c, 2
+  %i.bl = shl nuw nsw i32 %i.c, 2
   %i.bm = zext nneg i32 %i.bl to i64
   %i.bn = tail call i32 @bn_wexpand(ptr noundef nonnull %i.ah, i64 noundef %i.bm)
   %.not57 = icmp eq i32 %i.bn, 0
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.e
   br label %.preheader42.i
 
 _ZL14OPENSSL_memsetPvim.exit190:                  ; preds = %_ZL21bn_abs_sub_part_wordsPmPKmS1_iiS_.exit188
-  %i.dm = shl nsw i32 %3, 2
+  %i.dm = shl nuw nsw i32 %3, 2
   %i.dn = zext nneg i32 %i.dm to i64
   %i.do = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %i.dn ; 4 uses
   tail call fastcc void @_ZL16bn_mul_recursivePmPKmS1_iiiS_(ptr noundef nonnull %i.u, ptr noundef nonnull %6, ptr noundef nonnull %i.ax, i32 noundef %3, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.do)
@@ -755,8 +755,8 @@ bb.k:                                             ; preds = %bb.j
 
 .preheader42.i191:                                ; preds = %.lr.ph59.i, %.preheader.i
   %.032.i = phi i64 [ %i.fy, %.preheader.i ], [ %i.gn, %.lr.ph59.i ] ; 2 uses
-  %i.gs = shl i32 %3, 2                           ; 3 uses
-  %i.gt = zext i32 %i.gs to i64                   ; 2 uses
+  %i.gs = shl i32 %3, 2                           ; 2 uses
+  %i.gt = zext i32 %i.gs to i64                   ; 4 uses
   %i.gu = getelementptr [8 x i8], ptr %6, i64 %i.gt ; 5 uses
   br label %.lr.ph.i193
 
@@ -1123,14 +1123,14 @@ scalar.ph413:                                     ; preds = %scalar.ph413, %scal
 bn_add_words.exit269:                             ; preds = %.lr.ph59.i261, %.preheader.i253
   %.032.i268 = phi i64 [ %i.oz, %.preheader.i253 ], [ %i.pm, %.lr.ph59.i261 ]
   %i.pq = mul nuw nsw i32 %3, 3                   ; 2 uses
-  %7 = icmp slt i32 %i.pq, %i.gs
+  %7 = icmp samesign ult i32 %i.pq, %i.gs
   br i1 %7, label %.lr.ph.preheader, label %_ZL14OPENSSL_memsetPvim.exit
 
 .lr.ph.preheader:                                 ; preds = %bn_add_words.exit269
   %i.pr = add i64 %i.nf, %.032.i268               ; 2 uses
-  %i.ps = zext nneg i32 %i.pq to i64              ; 3 uses
-  %xtraiter454 = and i32 %3, 1
-  %lcmp.mod455.not = icmp eq i32 %xtraiter454, 0
+  %i.ps = zext nneg i32 %i.pq to i64              ; 5 uses
+  %xtraiter453 = and i64 %i.ps, 1
+  %lcmp.mod455.not = icmp eq i64 %xtraiter453, 0
   br i1 %lcmp.mod455.not, label %.lr.ph.preheader.new, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader
@@ -1143,14 +1143,16 @@ bn_add_words.exit269:                             ; preds = %.lr.ph59.i261, %.pr
   %indvars.iv.next.prol = add nuw nsw i64 %i.ps, 1
   br label %.lr.ph.preheader.new
 
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader, %.lr.ph.prol
+.lr.ph.preheader.new:                             ; preds = %.lr.ph.prol, %.lr.ph.preheader
   %indvars.iv.unr = phi i64 [ %i.ps, %.lr.ph.preheader ], [ %indvars.iv.next.prol, %.lr.ph.prol ]
   %.0174295.unr = phi i64 [ %i.pr, %.lr.ph.preheader ], [ %i.px, %.lr.ph.prol ]
-  br label %.lr.ph
+  %8 = add nsw i64 %i.gt, -1
+  %9 = icmp eq i64 %8, %i.ps
+  br i1 %9, label %_ZL14OPENSSL_memsetPvim.exit, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
-  %indvars.iv = phi i64 [ %indvars.iv.unr, %.lr.ph.preheader.new ], [ %indvars.iv.next.1, %.lr.ph ] ; 3 uses
-  %.0174295 = phi i64 [ %.0174295.unr, %.lr.ph.preheader.new ], [ %i.qi, %.lr.ph ]
+.lr.ph:                                           ; preds = %.lr.ph.preheader.new, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.preheader.new ] ; 3 uses
+  %.0174295 = phi i64 [ %i.qi, %.lr.ph ], [ %.0174295.unr, %.lr.ph.preheader.new ]
   %i.py = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.pz = load i64, ptr %i.py, align 8, !tbaa !94 ; 2 uses
   %i.qa = add i64 %i.pz, %.0174295                ; 2 uses
@@ -1165,11 +1167,10 @@ bn_add_words.exit269:                             ; preds = %.lr.ph59.i261, %.pr
   %i.qh = icmp ult i64 %i.qg, %i.qf
   %i.qi = zext i1 %i.qh to i64
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
-  %8 = trunc nuw i64 %indvars.iv.next.1 to i32
-  %9 = icmp sgt i32 %i.gs, %8
-  br i1 %9, label %.lr.ph, label %_ZL14OPENSSL_memsetPvim.exit, !llvm.loop !1463
+  %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %i.gt
+  br i1 %exitcond.not.1, label %_ZL14OPENSSL_memsetPvim.exit, label %.lr.ph, !llvm.loop !1463
 
-_ZL14OPENSSL_memsetPvim.exit:                     ; preds = %.lr.ph, %bn_add_words.exit269, %bb.c, %bb.b
+_ZL14OPENSSL_memsetPvim.exit:                     ; preds = %.lr.ph.preheader.new, %.lr.ph, %bn_add_words.exit269, %bb.c, %bb.b
   ret void
 }
 
