@@ -1650,6 +1650,9 @@ def generate_diff_report(
     )
     report += f"| Kept | {len(kept_files)} | {kept_added} | {kept_removed} |\n\n"
 
+    if full_diff_rows:
+        report += "FULLDIFF_LINK_PLACEHOLDER\n\n"
+
     # Sort kept_files_sorted by add - sub.
     kept_files_sorted.sort(key=lambda x: (x[1] - x[2], -(x[1] + x[2])), reverse=True)
     if len(kept_files_sorted) > 200:
@@ -1686,6 +1689,21 @@ def write_full_diff_csv(rows: List[Tuple[int, int, str, str]]):
                     make_dataset_download_link(proj, file_name + ".bc"),
                 ]
             )
+
+
+def build_full_diff_link(has_rows: bool, metadata_committed: bool) -> str:
+    if not has_rows or not metadata_committed:
+        return ""
+    commit_hash = (
+        subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT_DIR)
+        .decode()
+        .strip()
+    )
+    return (
+        "Download the full diff list: "
+        "[z_fulldiff.csv]"
+        f"(https://raw.githubusercontent.com/dtcxzyw/llvm-opt-benchmark-nightly/{commit_hash}/report/z_fulldiff.csv)\n"
+    )
 
 
 def update():
@@ -1779,7 +1797,11 @@ def update():
             trailing_newline=True,
         )
         write_full_diff_csv(full_diff_rows)
-        commit_report_if_changed("report: metadata")
+        metadata_committed = commit_report_if_changed("report: metadata")
+        pr_body = pr_body.replace(
+            "FULLDIFF_LINK_PLACEHOLDER",
+            build_full_diff_link(bool(full_diff_rows), metadata_committed),
+        )
         push_branch(change_branch_name)
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
 
@@ -2090,7 +2112,13 @@ def test(user: str, comment_body: str, issue_url: str):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "z_patch.diff"))
     if full_diff_rows is not None:
         write_full_diff_csv(full_diff_rows)
-    commit_report_if_changed("report: metadata")
+    metadata_committed = commit_report_if_changed("report: metadata")
+    pr_body = pr_body.replace(
+        "FULLDIFF_LINK_PLACEHOLDER",
+        build_full_diff_link(
+            full_diff_rows is not None and len(full_diff_rows) > 0, metadata_committed
+        ),
+    )
     push_branch(change_branch_name)
 
     try:
