@@ -204,11 +204,6 @@ bb.bg:                                            ; preds = %bb.bf, %._crit_edge
   tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.19, i32 noundef %.098.lcssa144.i, i32 noundef %.pre146.i) #9
   br label %decode_picture_header.exit.thread
 
-decode_picture_header.exit.thread:                ; preds = %bb.as, %bb.au, %bb.bb, %bb.bd, %bb.bg, %bb.aw, %bb.ap, %bb.an, %._crit_edge
-  %.2108.i75 = phi i32 [ -1094995529, %bb.ap ], [ -1094995529, %bb.bb ], [ -1094995529, %bb.bd ], [ -1094995529, %bb.an ], [ -1094995529, %._crit_edge ], [ -1094995529, %bb.bg ], [ -1094995529, %bb.aw ], [ -12, %bb.as ], [ -22, %bb.au ]
-  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.6) #9
-  br label %decode_frame_header.exit.thread
-
 decode_picture_header.exit:                       ; preds = %bb.bf
   %i.gt = load ptr, ptr %i.a, align 8, !tbaa !9   ; 3 uses
   %i.gu = load ptr, ptr %i.dv, align 8, !tbaa !76
@@ -220,6 +215,11 @@ decode_picture_header.exit:                       ; preds = %bb.bf
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gt, i64 272
   %i.hb = load ptr, ptr %i.ha, align 8, !tbaa !66 ; 10 uses
   br i1 %i.gz, label %.lr.ph.i66, label %decode_picture.exit
+
+decode_picture_header.exit.thread:                ; preds = %bb.as, %bb.au, %bb.bb, %bb.bd, %bb.bg, %bb.aw, %bb.ap, %bb.an, %._crit_edge
+  %.2108.i75 = phi i32 [ -1094995529, %bb.ap ], [ -1094995529, %bb.bb ], [ -1094995529, %bb.bd ], [ -1094995529, %bb.an ], [ -1094995529, %._crit_edge ], [ -1094995529, %bb.bg ], [ -1094995529, %bb.aw ], [ -22, %bb.au ], [ -12, %bb.as ]
+  tail call void (ptr, i32, ptr, ...) @av_log(ptr noundef %0, i32 noundef 16, ptr noundef nonnull @.str.6) #9
+  br label %decode_frame_header.exit.thread
 
 .lr.ph.i66:                                       ; preds = %decode_picture_header.exit
   %wide.trip.count.i67 = zext nneg i32 %i.gy to i64 ; 3 uses
