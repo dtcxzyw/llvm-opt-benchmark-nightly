@@ -204,7 +204,7 @@ declare ptr @__memcpy_chk(ptr noalias noundef writeonly, ptr noalias noundef rea
 ; Function Attrs: null_pointer_is_valid sspstrong uwtable
 define internal fastcc void @json_write_field_hex_value(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [512 x i8], align 16              ; 9 uses
+  %i.a = alloca [512 x i8], align 16              ; 6 uses
   %i.b = load ptr, ptr %1, align 8
   %i.c = getelementptr i8, ptr %i.b, i64 32
   %i.d = load i64, ptr %i.c, align 8
@@ -392,18 +392,14 @@ bb.q:                                             ; preds = %get_field_data_cach
   %i.bo = zext nneg i32 %i.bn to i64
   %i.bp = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1
-  %2 = trunc nuw i64 %indvars.iv64 to i32
-  %3 = shl nuw i32 %2, 1                          ; 2 uses
-  %4 = zext i32 %3 to i64
-  %i.br = getelementptr i8, ptr %i.a, i64 %4
+  %2 = shl nuw nsw i64 %indvars.iv64, 1
+  %i.br = getelementptr i8, ptr %i.a, i64 %2      ; 2 uses
   store i8 %i.bq, ptr %i.br, align 4
   %i.bs = and i32 %i.bm, 15
   %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.bt
   %i.bv = load i8, ptr %i.bu, align 1
-  %5 = or disjoint i32 %3, 1
-  %6 = zext i32 %5 to i64
-  %i.bw = getelementptr i8, ptr %i.a, i64 %6
+  %i.bw = getelementptr i8, ptr %i.br, i64 1
   store i8 %i.bv, ptr %i.bw, align 1
   %indvars.iv.next65 = or disjoint i64 %indvars.iv64, 1 ; 2 uses
   %i.bx = getelementptr i8, ptr %i.bg, i64 %indvars.iv.next65
@@ -413,21 +409,17 @@ bb.q:                                             ; preds = %get_field_data_cach
   %i.cb = zext nneg i32 %i.ca to i64
   %i.cc = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.cb
   %i.cd = load i8, ptr %i.cc, align 1
-  %7 = trunc nuw i64 %indvars.iv.next65 to i32
-  %8 = shl nuw i32 %7, 1                          ; 2 uses
-  %9 = zext i32 %8 to i64
-  %i.ce = getelementptr i8, ptr %i.a, i64 %9
+  %3 = shl nuw nsw i64 %indvars.iv.next65, 1
+  %i.ce = getelementptr i8, ptr %i.a, i64 %3      ; 2 uses
   store i8 %i.cd, ptr %i.ce, align 2
   %i.cf = and i32 %i.bz, 15
   %i.cg = zext nneg i32 %i.cf to i64
   %i.ch = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.cg
   %i.ci = load i8, ptr %i.ch, align 1
-  %10 = or disjoint i32 %8, 1
-  %11 = zext i32 %10 to i64
-  %i.cj = getelementptr i8, ptr %i.a, i64 %11
+  %i.cj = getelementptr i8, ptr %i.ce, i64 1
   store i8 %i.ci, ptr %i.cj, align 1
   %indvars.iv.next65.1 = add nuw nsw i64 %indvars.iv64, 2 ; 2 uses
-  %niter87.next.1 = add nuw i64 %niter87, 2       ; 2 uses
+  %niter87.next.1 = add i64 %niter87, 2           ; 2 uses
   %niter87.ncmp.1 = icmp eq i64 %niter87.next.1, %unroll_iter86
   br i1 %niter87.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !68
 
@@ -446,18 +438,14 @@ bb.q:                                             ; preds = %get_field_data_cach
   %i.co = zext nneg i32 %i.cn to i64
   %i.cp = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.co
   %i.cq = load i8, ptr %i.cp, align 1
-  %12 = trunc nuw i64 %indvars.iv64.epil.init to i32
-  %13 = shl i32 %12, 1                            ; 2 uses
-  %14 = zext i32 %13 to i64
-  %i.cr = getelementptr i8, ptr %i.a, i64 %14
+  %4 = shl nuw nsw i64 %indvars.iv64.epil.init, 1
+  %i.cr = getelementptr i8, ptr %i.a, i64 %4      ; 2 uses
   store i8 %i.cq, ptr %i.cr, align 2
   %i.cs = and i32 %i.cm, 15
   %i.ct = zext nneg i32 %i.cs to i64
   %i.cu = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.ct
   %i.cv = load i8, ptr %i.cu, align 1
-  %15 = or disjoint i32 %13, 1
-  %16 = zext i32 %15 to i64
-  %i.cw = getelementptr i8, ptr %i.a, i64 %16
+  %i.cw = getelementptr i8, ptr %i.cr, i64 1
   store i8 %i.cv, ptr %i.cw, align 1
   br label %._crit_edge
 

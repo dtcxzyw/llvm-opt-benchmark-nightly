@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.an
 .lr.ph.i:                                         ; preds = %.lr.ph.i.i, %bb.m
   %.0225280.i32.i = phi i32 [ %.1226.i.i, %bb.m ], [ 1, %.lr.ph.i.i ] ; 4 uses
   %i.dz = phi i32 [ %i.qj, %bb.m ], [ %i.ds, %.lr.ph.i.i ]
-  %indvars.iv.i31.i = phi i64 [ %indvars.iv.next.i.i, %bb.m ], [ 0, %.lr.ph.i.i ] ; 6 uses
+  %indvars.iv.i31.i = phi i64 [ %indvars.iv.next.i.i, %bb.m ], [ 0, %.lr.ph.i.i ] ; 8 uses
   %i.ea = load i32, ptr %i.ae, align 8, !tbaa !182
   %i.eb = shl i32 %i.cz, %i.ea
   %i.ec = load ptr, ptr %i.bt, align 8, !tbaa !194
@@ -607,8 +607,6 @@ bb.an:                                            ; preds = %par_level_flag_ts_d
   br label %.critedge.i.i, !llvm.loop !203
 
 .critedge.i.i:                                    ; preds = %bb.m, %..critedge.i_crit_edge.i
-  %sext.i.i = shl i64 %indvars.iv.i31.i, 32
-  %4 = ashr exact i64 %sext.i.i, 32               ; 3 uses
   %i.qm = icmp sgt i32 %i.qj, 0
   br i1 %i.qm, label %.lr.ph290.i.i, label %residual_ts_coding_subblock.exit.i
 
@@ -1011,7 +1009,7 @@ abs_level_gtx_flag_ts_decode.exit.i.3.i:          ; preds = %bb.bb, %bb.ba, %bb.
 .critedge5.i.i:                                   ; preds = %bb.ao, %.critedge7.i..critedge5.i_crit_edge.i, %.lr.ph290.i.i, %.lr.ph290.i.thread.i
   %.pre4976.i = phi ptr [ %.pre49.i, %.lr.ph290.i.i ], [ %.pre49.i, %.critedge7.i..critedge5.i_crit_edge.i ], [ %.pre4974.i, %.lr.ph290.i.thread.i ], [ %.pre49.i, %bb.ao ]
   %.pre75.i = phi ptr [ %.pre.i, %.lr.ph290.i.i ], [ %.pre.i, %.critedge7.i..critedge5.i_crit_edge.i ], [ %.pre73.i, %.lr.ph290.i.thread.i ], [ %.pre.i, %bb.ao ]
-  %i.adr = phi i64 [ %4, %.lr.ph290.i.i ], [ %4, %.critedge7.i..critedge5.i_crit_edge.i ], [ -1, %.lr.ph290.i.thread.i ], [ %4, %bb.ao ] ; 3 uses
+  %i.adr = phi i64 [ %indvars.iv.i31.i, %.lr.ph290.i.i ], [ %indvars.iv.i31.i, %.critedge7.i..critedge5.i_crit_edge.i ], [ -1, %.lr.ph290.i.thread.i ], [ %indvars.iv.i31.i, %bb.ao ] ; 3 uses
   %.0223.lcssa.ph.i.i = phi i64 [ -1, %.lr.ph290.i.i ], [ %i.adq, %.critedge7.i..critedge5.i_crit_edge.i ], [ -1, %.lr.ph290.i.thread.i ], [ %indvars.iv300.i37.i, %bb.ao ] ; 2 uses
   %.not245.i.i = icmp ne i32 %i.cv, 0
   %i.ads = getelementptr inbounds nuw i8, ptr %i.cp, i64 64 ; 2 uses

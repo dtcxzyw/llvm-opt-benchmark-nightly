@@ -205,24 +205,20 @@ bb.c:                                             ; preds = %bb.b
 _ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i: ; preds = %.thread.i
   %i.g = shl nuw i32 %i.d, 2
   %i.h = zext i32 %i.g to i64
-  %i.i = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.h) #10 ; 4 uses
+  %i.i = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.h) #10 ; 3 uses
   %.not22.i = icmp eq ptr %i.i, null
-  br i1 %.not22.i, label %_ZN11hb_vector_tIiLb0EED2Ev.exit, label %4, !prof !129
+  br i1 %.not22.i, label %_ZN11hb_vector_tIiLb0EED2Ev.exit, label %bb.d, !prof !129
 
-4:                                                ; preds = %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i
-  %5 = shl i32 %2, 2                              ; 2 uses
-  %.not.i.i.i.i = icmp eq i32 %5, 0
-  br i1 %.not.i.i.i.i, label %_ZN11hb_vector_tIiLb0EE6resizeEi.exit.thread, label %bb.d, !prof !21
-
-bb.d:                                             ; preds = %4
-  %i.j = zext i32 %5 to i64
+bb.d:                                             ; preds = %_ZN11hb_vector_tIiLb0EE14realloc_vectorIiTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPij11hb_priorityILj0EE.exit.i
+  %4 = shl nuw i32 %2, 2
+  %i.j = zext i32 %4 to i64
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.i, i8 0, i64 %i.j, i1 false)
   br label %_ZN11hb_vector_tIiLb0EE6resizeEi.exit.thread
 
-_ZN11hb_vector_tIiLb0EE6resizeEi.exit.thread:     ; preds = %4, %bb.d, %bb.c, %bb.a
-  %.sroa.14.0 = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ %i.i, %4 ], [ %i.i, %bb.d ] ; 4 uses
-  %.sroa.7.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %2, %4 ], [ %2, %bb.d ] ; 3 uses
-  %.not134 = phi i1 [ true, %bb.a ], [ true, %bb.c ], [ false, %4 ], [ false, %bb.d ]
+_ZN11hb_vector_tIiLb0EE6resizeEi.exit.thread:     ; preds = %bb.d, %bb.c, %bb.a
+  %.sroa.14.0 = phi ptr [ null, %bb.a ], [ null, %bb.c ], [ %i.i, %bb.d ] ; 4 uses
+  %.sroa.7.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.c ], [ %2, %bb.d ] ; 3 uses
+  %.sroa.0.0 = phi i1 [ false, %bb.a ], [ false, %bb.c ], [ true, %bb.d ]
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
   %.val40 = load i16, ptr %i.k, align 1, !tbaa !53
   %i.l = tail call noundef i16 @llvm.bswap.i16(i16 %.val40)
@@ -613,7 +609,7 @@ _ZNK2OT18ItemVariationStore9get_deltaEjPKijPNS_17hb_scalar_cache_tE.exit: ; pred
   br i1 %exitcond127.not, label %._crit_edge117, label %bb.o, !llvm.loop !186
 
 _ZN11hb_vector_tIiLb0EE6resizeEi.exit:            ; preds = %bb.n, %._crit_edge117, %._crit_edge, %bb.j
-  br i1 %.not134, label %_ZN11hb_vector_tIiLb0EED2Ev.exit, label %bb.s
+  br i1 %.sroa.0.0, label %bb.s, label %_ZN11hb_vector_tIiLb0EED2Ev.exit
 
 bb.s:                                             ; preds = %_ZN11hb_vector_tIiLb0EE6resizeEi.exit
   tail call void @hb_free(ptr noundef %.sroa.14.0) #10
