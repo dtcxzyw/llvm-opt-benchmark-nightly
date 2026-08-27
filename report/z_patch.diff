@@ -1,0 +1,13 @@
+diff --git a/llvm/lib/CodeGen/CodeGenPrepare.cpp b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+index 5903c97bfbd6a..62b8528ed9334 100644
+--- a/llvm/lib/CodeGen/CodeGenPrepare.cpp
++++ b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+@@ -7363,7 +7363,7 @@ bool CodeGenPrepare::optimizeExtUses(Instruction *I) {
+   DenseMap<BasicBlock *, Instruction *> InsertedTruncs;
+ 
+   bool MadeChange = false;
+-  for (Use &U : Src->uses()) {
++  for (Use &U : make_early_inc_range(Src->uses())) {
+     Instruction *User = cast<Instruction>(U.getUser());
+ 
+     // Figure out which BB this ext is used in.
