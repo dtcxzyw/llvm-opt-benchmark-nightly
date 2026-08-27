@@ -1,0 +1,632 @@
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index 56ff0a543ae93..d9797934049c7 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1294,32 +1294,108 @@ static bool getConstraintFromMemoryAccess(GetElementPtrInst &GEP,
+ /// Returns true if \p I is a candidate whose poison-generating flags may be
+ /// strengthened using the constraint systems.
+ static bool canStrengthenFlags(Instruction *I) {
+-  switch (I->getOpcode()) {
++  auto *BO = dyn_cast<BinaryOperator>(I);
++  if (!BO || !BO->getType()->isIntegerTy())
++    return false;
++
++  switch (BO->getOpcode()) {
+   case Instruction::Sub:
+     // A - B does not wrap unsigned, if A >=u B. Subs with constant operands get
+     // canonicalized to Add.
+-    return I->getType()->isIntegerTy() && !I->hasNoUnsignedWrap() &&
+-           !isa<Constant>(I->getOperand(1));
++    return !BO->hasNoUnsignedWrap() && !isa<Constant>(BO->getOperand(1));
++  case Instruction::Mul:
++  case Instruction::Shl:
++    if (BO->hasNoUnsignedWrap() && BO->hasNoSignedWrap())
++      return false;
++    // With a constant second operand, we can use bounds on the first operand to
++    // refine no-wrap flags. Independently of that, nuw can be added for nsw if
++    // the operands are non-negative.
++    return isa<ConstantInt>(BO->getOperand(1)) || BO->hasNoSignedWrap();
+   default:
+     return false;
+   }
+ }
+ 
++/// Returns true if \p Info implies that \p Op is in \p R, interpreting \p R as
++/// a signed range if \p Signed is set and as an unsigned range otherwise.
++static bool doesHoldInRange(const ConstraintInfo &Info, Value *Op,
++                            const ConstantRange &R, bool Signed) {
++  if (R.isFullSet() || R.isEmptySet() ||
++      (Signed ? R.isSignWrappedSet() : R.isWrappedSet()))
++    return false;
++
++  unsigned BitWidth = R.getBitWidth();
++  APInt Min = Signed ? R.getSignedMin() : R.getUnsignedMin();
++  APInt Max = Signed ? R.getSignedMax() : R.getUnsignedMax();
++  APInt MinVal = Signed ? APInt::getSignedMinValue(BitWidth)
++                        : APInt::getMinValue(BitWidth);
++  APInt MaxVal = Signed ? APInt::getSignedMaxValue(BitWidth)
++                        : APInt::getMaxValue(BitWidth);
++  Type *Ty = Op->getType();
++  if (Min != MinVal &&
++      !Info.doesHold(Signed ? CmpInst::ICMP_SGE : CmpInst::ICMP_UGE, Op,
++                     ConstantInt::get(Ty, Min)))
++    return false;
++  if (Max != MaxVal &&
++      !Info.doesHold(Signed ? CmpInst::ICMP_SLE : CmpInst::ICMP_ULE, Op,
++                     ConstantInt::get(Ty, Max)))
++    return false;
++  return true;
++}
++
+ /// Try to strengthen \p I's poison generating flags using \p Info. Returns
+ /// true if \p I was modified.
+ static bool tryToStrengthenFlags(Instruction *I, ConstraintInfo &Info,
+                                  SmallVectorImpl<Instruction *> &ToRemove) {
+   assert(canStrengthenFlags(I) && "not a candidate for flag strengthening");
+ 
++  using OBO = OverflowingBinaryOperator;
++  Value *Op0 = I->getOperand(0), *Op1 = I->getOperand(1);
+   switch (I->getOpcode()) {
+   case Instruction::Sub: {
+     // Op0 - Op1 does not wrap unsigned, if Op0 >=u Op1.
+-    if (!Info.doesHold(CmpInst::ICMP_UGE, I->getOperand(0), I->getOperand(1)))
++    if (!Info.doesHold(CmpInst::ICMP_UGE, Op0, Op1))
+       return false;
+     LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
+     I->setHasNoUnsignedWrap();
+     return true;
+   }
++  case Instruction::Mul:
++  case Instruction::Shl: {
++    auto Opcode = static_cast<Instruction::BinaryOps>(I->getOpcode());
++    bool Changed = false;
++    // For a constant Op1, the ranges of Op0 for which the operation does not
++    // wrap are known exactly; check if the systems imply one of them.
++    if (auto *C = dyn_cast<ConstantInt>(Op1)) {
++      ConstantRange Other(C->getValue());
++      if (!I->hasNoUnsignedWrap() &&
++          doesHoldInRange(Info, Op0,
++                          ConstantRange::makeGuaranteedNoWrapRegion(
++                              Opcode, Other, OBO::NoUnsignedWrap),
++                          /*Signed=*/false)) {
++        LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
++        I->setHasNoUnsignedWrap();
++        Changed = true;
++      }
++      if (!I->hasNoSignedWrap() &&
++          doesHoldInRange(Info, Op0,
++                          ConstantRange::makeGuaranteedNoWrapRegion(
++                              Opcode, Other, OBO::NoSignedWrap),
++                          /*Signed=*/true)) {
++        LLVM_DEBUG(dbgs() << "Adding nsw to " << *I << "\n");
++        I->setHasNoSignedWrap();
++        Changed = true;
++      }
++    }
++    if (!I->hasNoUnsignedWrap() && I->hasNoSignedWrap() &&
++        Info.isKnownNonNegative(Op0) &&
++        (Opcode == Instruction::Shl || Info.isKnownNonNegative(Op1))) {
++      LLVM_DEBUG(dbgs() << "Adding nuw to " << *I << "\n");
++      I->setHasNoUnsignedWrap();
++      Changed = true;
++    }
++    return Changed;
++  }
+   default:
+     return false;
+   }
+diff --git a/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll b/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll
+index bf2e4a933cf6d..41756fd4b16e3 100644
+--- a/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll
++++ b/llvm/test/Transforms/ConstraintElimination/constraint-overflow.ll
+@@ -88,7 +88,7 @@ define i1 @fm_overflow_recovery(i64 %n, i64 %i, i64 %lim) {
+ ; CHECK-NEXT:    [[N4M4:%.*]] = add i64 [[N4]], -4
+ ; CHECK-NEXT:    [[F2:%.*]] = icmp ult i64 [[N4M4]], [[LIM]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[F2]])
+-; CHECK-NEXT:    [[I4:%.*]] = shl nuw i64 [[I]], 2
++; CHECK-NEXT:    [[I4:%.*]] = shl nuw nsw i64 [[I]], 2
+ ; CHECK-NEXT:    ret i1 true
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
+index fe67e0a822d9a..47d8ec22dda42 100644
+--- a/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
++++ b/llvm/test/Transforms/ConstraintElimination/gep-arithmetic-different-types.ll
+@@ -123,11 +123,11 @@ define i1 @gep_shl_nsw_positive_index(ptr %A, ptr %upper, i8 %idx) {
+ ; CHECK-LABEL: @gep_shl_nsw_positive_index(
+ ; CHECK-NEXT:    [[IDX_POS:%.*]] = icmp sge i8 [[IDX:%.*]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[IDX_POS]])
+-; CHECK-NEXT:    [[IDX_2:%.*]] = shl nsw i8 [[IDX]], 2
++; CHECK-NEXT:    [[IDX_2:%.*]] = shl nuw nsw i8 [[IDX]], 2
+ ; CHECK-NEXT:    [[ADD_I8_IDX_2:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i8 [[IDX_2]]
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult ptr [[ADD_I8_IDX_2]], [[UPPER:%.*]]
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
+-; CHECK-NEXT:    [[IDX_1:%.*]] = shl nsw i8 [[IDX]], 1
++; CHECK-NEXT:    [[IDX_1:%.*]] = shl nuw nsw i8 [[IDX]], 1
+ ; CHECK-NEXT:    [[ADD_I32_IDX_1:%.*]] = getelementptr inbounds i32, ptr [[A]], i8 [[IDX_1]]
+ ; CHECK-NEXT:    [[C_1:%.*]] = icmp ult ptr [[ADD_I32_IDX_1]], [[UPPER]]
+ ; CHECK-NEXT:    [[ADD_I8_IDX_1:%.*]] = getelementptr inbounds i8, ptr [[A]], i8 [[IDX_1]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/geps-unsigned-predicates.ll b/llvm/test/Transforms/ConstraintElimination/geps-unsigned-predicates.ll
+index 612bf2f0a8337..a7210b3a80121 100644
+--- a/llvm/test/Transforms/ConstraintElimination/geps-unsigned-predicates.ll
++++ b/llvm/test/Transforms/ConstraintElimination/geps-unsigned-predicates.ll
+@@ -490,15 +490,14 @@ define void @test.ult.gep.shl(ptr readonly %src, ptr readnone %max, i8 %idx) {
+ ; CHECK-NEXT:    [[IDX_SHL_1:%.*]] = shl nuw nsw i8 [[IDX]], 1
+ ; CHECK-NEXT:    [[ADD_PTR_SHL_1:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i8 [[IDX_SHL_1]]
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[IDX_SHL_2:%.*]] = shl nuw i8 [[IDX]], 2
++; CHECK-NEXT:    [[IDX_SHL_2:%.*]] = shl nuw nsw i8 [[IDX]], 2
+ ; CHECK-NEXT:    [[ADD_PTR_SHL_2:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i8 [[IDX_SHL_2]]
+ ; CHECK-NEXT:    [[C_MAX_1:%.*]] = icmp ult ptr [[ADD_PTR_SHL_2]], [[MAX]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_MAX_1]])
+-; CHECK-NEXT:    [[IDX_SHL_NOT_NUW:%.*]] = shl i8 [[IDX]], 1
++; CHECK-NEXT:    [[IDX_SHL_NOT_NUW:%.*]] = shl nuw nsw i8 [[IDX]], 1
+ ; CHECK-NEXT:    [[ADD_PTR_SHL_NOT_NUW:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i8 [[IDX_SHL_NOT_NUW]]
+-; CHECK-NEXT:    [[C_MAX_2:%.*]] = icmp ult ptr [[ADD_PTR_SHL_NOT_NUW]], [[MAX]]
+-; CHECK-NEXT:    call void @use(i1 [[C_MAX_2]])
+-; CHECK-NEXT:    [[IDX_SHL_3:%.*]] = shl nuw i8 [[IDX]], 3
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[IDX_SHL_3:%.*]] = shl nuw nsw i8 [[IDX]], 3
+ ; CHECK-NEXT:    [[ADD_PTR_SHL_3:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i8 [[IDX_SHL_3]]
+ ; CHECK-NEXT:    [[C_MAX_3:%.*]] = icmp ult ptr [[ADD_PTR_SHL_3]], [[MAX]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_MAX_3]])
+@@ -549,16 +548,15 @@ define void @test.ult.gep.shl.zext(ptr readonly %src, ptr readnone %max, i32 %id
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[IDX:%.*]], 5
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[CHECK_MAX:%.*]], label [[TRAP]]
+ ; CHECK:       check.max:
+-; CHECK-NEXT:    [[IDX_SHL:%.*]] = shl nuw i32 [[IDX]], 1
++; CHECK-NEXT:    [[IDX_SHL:%.*]] = shl nuw nsw i32 [[IDX]], 1
+ ; CHECK-NEXT:    [[EXT_1:%.*]] = zext i32 [[IDX_SHL]] to i64
+ ; CHECK-NEXT:    [[ADD_PTR_SHL:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i64 [[EXT_1]]
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[IDX_SHL_NOT_NUW:%.*]] = shl i32 [[IDX]], 1
++; CHECK-NEXT:    [[IDX_SHL_NOT_NUW:%.*]] = shl nuw nsw i32 [[IDX]], 1
+ ; CHECK-NEXT:    [[EXT_2:%.*]] = zext i32 [[IDX_SHL_NOT_NUW]] to i64
+ ; CHECK-NEXT:    [[ADD_PTR_SHL_NOT_NUW:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i64 [[EXT_2]]
+-; CHECK-NEXT:    [[C_MAX_1:%.*]] = icmp ult ptr [[ADD_PTR_SHL_NOT_NUW]], [[MAX]]
+-; CHECK-NEXT:    call void @use(i1 [[C_MAX_1]])
+-; CHECK-NEXT:    [[IDX_SHL_3:%.*]] = shl nuw i32 [[IDX]], 2
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[IDX_SHL_3:%.*]] = shl nuw nsw i32 [[IDX]], 2
+ ; CHECK-NEXT:    [[EXT_3:%.*]] = zext i32 [[IDX_SHL_3]] to i64
+ ; CHECK-NEXT:    [[ADD_PTR_SHL_3:%.*]] = getelementptr inbounds i32, ptr [[SRC]], i64 [[EXT_3]]
+ ; CHECK-NEXT:    [[C_MAX_2:%.*]] = icmp ult ptr [[ADD_PTR_SHL_3]], [[MAX]]
+diff --git a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+index d27ff1b5e3068..ef858b2252639 100644
+--- a/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
++++ b/llvm/test/Transforms/ConstraintElimination/materialize-flags.ll
+@@ -455,3 +455,187 @@ bb.2:
+ exit:
+   ret ptr null
+ }
++
++; %x <u %n <u 1024, hence %x * 3 fits an i64 unsigned and signed.
++define i64 @mul_from_transitive_unsigned_bound(i64 %x, i64 %n) {
++; CHECK-LABEL: define i64 @mul_from_transitive_unsigned_bound(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp ult i64 [[N]], 1024
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i64 [[X]], [[N]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[MUL:%.*]] = mul nuw nsw i64 [[X]], 3
++; CHECK-NEXT:    ret i64 [[MUL]]
++;
++entry:
++  %c.0 = icmp ult i64 %n, 1024
++  call void @llvm.assume(i1 %c.0)
++  %c.1 = icmp ult i64 %x, %n
++  call void @llvm.assume(i1 %c.1)
++  %mul = mul i64 %x, 3
++  ret i64 %mul
++}
++
++; Same as above, but there is no upper bound for %n.
++define i64 @mul_no_flags_unbounded_transitive_operand(i64 %x, i64 %n) {
++; CHECK-LABEL: define i64 @mul_no_flags_unbounded_transitive_operand(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[N:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = icmp ult i64 [[X]], [[N]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[MUL:%.*]] = mul i64 [[X]], 3
++; CHECK-NEXT:    ret i64 [[MUL]]
++;
++entry:
++  %c.1 = icmp ult i64 %x, %n
++  call void @llvm.assume(i1 %c.1)
++  %mul = mul i64 %x, 3
++  ret i64 %mul
++}
++
++; %x <=u %x + %y <u 1024 due to the nuw add, hence %x << 3 fits an i64 unsigned.
++define i64 @shl_nuw_from_sum_bound(i64 %x, i64 %y) {
++; CHECK-LABEL: define i64 @shl_nuw_from_sum_bound(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[Y:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[S:%.*]] = add nuw i64 [[X]], [[Y]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp ult i64 [[S]], 1024
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[SHL:%.*]] = shl nuw i64 [[X]], 3
++; CHECK-NEXT:    ret i64 [[SHL]]
++;
++entry:
++  %s = add nuw i64 %x, %y
++  %c.0 = icmp ult i64 %s, 1024
++  call void @llvm.assume(i1 %c.0)
++  %shl = shl i64 %x, 3
++  ret i64 %shl
++}
++
++; The bound on %x is one too weak for %x << 3 to fit an i64 unsigned.
++define i64 @shl_no_nuw_bound_too_weak(i64 %x) {
++; CHECK-LABEL: define i64 @shl_no_nuw_bound_too_weak(
++; CHECK-SAME: i64 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp ult i64 [[X]], 2305843009213693953
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[SHL:%.*]] = shl i64 [[X]], 3
++; CHECK-NEXT:    ret i64 [[SHL]]
++;
++entry:
++  %c.0 = icmp ult i64 %x, 2305843009213693953
++  call void @llvm.assume(i1 %c.0)
++  %shl = shl i64 %x, 3
++  ret i64 %shl
++}
++
++; %x >=s %z >=s 0 and %y >=s 0, hence the nsw product also fits unsigned.
++define i64 @mul_nuw_from_nsw_and_non_negative(i64 %x, i64 %y, i64 %z) {
++; CHECK-LABEL: define i64 @mul_nuw_from_nsw_and_non_negative(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[Y:%.*]], i64 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sge i64 [[X]], [[Z]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i64 [[Z]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[C_2:%.*]] = icmp sge i64 [[Y]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_2]])
++; CHECK-NEXT:    [[MUL:%.*]] = mul nuw nsw i64 [[X]], [[Y]]
++; CHECK-NEXT:    ret i64 [[MUL]]
++;
++entry:
++  %c.0 = icmp sge i64 %x, %z
++  call void @llvm.assume(i1 %c.0)
++  %c.1 = icmp sge i64 %z, 0
++  call void @llvm.assume(i1 %c.1)
++  %c.2 = icmp sge i64 %y, 0
++  call void @llvm.assume(i1 %c.2)
++  %mul = mul nsw i64 %x, %y
++  ret i64 %mul
++}
++
++; Same as above, but %y may be negative.
++define i64 @mul_no_nuw_from_nsw_second_operand_may_be_negative(i64 %x, i64 %y, i64 %z) {
++; CHECK-LABEL: define i64 @mul_no_nuw_from_nsw_second_operand_may_be_negative(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[Y:%.*]], i64 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sge i64 [[X]], [[Z]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i64 [[Z]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[MUL:%.*]] = mul nsw i64 [[X]], [[Y]]
++; CHECK-NEXT:    ret i64 [[MUL]]
++;
++entry:
++  %c.0 = icmp sge i64 %x, %z
++  call void @llvm.assume(i1 %c.0)
++  %c.1 = icmp sge i64 %z, 0
++  call void @llvm.assume(i1 %c.1)
++  %mul = mul nsw i64 %x, %y
++  ret i64 %mul
++}
++
++; %x >=s %z >=s 0, hence the nsw shift also fits unsigned, for any shift amount.
++define i64 @shl_nuw_from_nsw_and_non_negative(i64 %x, i64 %s, i64 %z) {
++; CHECK-LABEL: define i64 @shl_nuw_from_nsw_and_non_negative(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[S:%.*]], i64 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sge i64 [[X]], [[Z]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i64 [[Z]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[SHL:%.*]] = shl nuw nsw i64 [[X]], [[S]]
++; CHECK-NEXT:    ret i64 [[SHL]]
++;
++entry:
++  %c.0 = icmp sge i64 %x, %z
++  call void @llvm.assume(i1 %c.0)
++  %c.1 = icmp sge i64 %z, 0
++  call void @llvm.assume(i1 %c.1)
++  %shl = shl nsw i64 %x, %s
++  ret i64 %shl
++}
++
++; Same as above, but the shift does not have nsw.
++define i64 @shl_no_nuw_non_negative_without_nsw(i64 %x, i64 %s, i64 %z) {
++; CHECK-LABEL: define i64 @shl_no_nuw_non_negative_without_nsw(
++; CHECK-SAME: i64 [[X:%.*]], i64 [[S:%.*]], i64 [[Z:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sge i64 [[X]], [[Z]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i64 [[Z]], 0
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[SHL:%.*]] = shl i64 [[X]], [[S]]
++; CHECK-NEXT:    ret i64 [[SHL]]
++;
++entry:
++  %c.0 = icmp sge i64 %x, %z
++  call void @llvm.assume(i1 %c.0)
++  %c.1 = icmp sge i64 %z, 0
++  call void @llvm.assume(i1 %c.1)
++  %shl = shl i64 %x, %s
++  ret i64 %shl
++}
++
++; -8 <=s %x <=s 7 implies %x * 16 does not wrap signed, but it may wrap
++; unsigned.
++define i8 @mul_nsw_only_from_signed_bounds(i8 %x) {
++; CHECK-LABEL: define i8 @mul_nsw_only_from_signed_bounds(
++; CHECK-SAME: i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_0:%.*]] = icmp sle i8 [[X]], 7
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_0]])
++; CHECK-NEXT:    [[C_1:%.*]] = icmp sge i8 [[X]], -8
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    [[MUL:%.*]] = mul nsw i8 [[X]], 16
++; CHECK-NEXT:    ret i8 [[MUL]]
++;
++entry:
++  %c.0 = icmp sle i8 %x, 7
++  call void @llvm.assume(i1 %c.0)
++  %c.1 = icmp sge i8 %x, -8
++  call void @llvm.assume(i1 %c.1)
++  %mul = mul i8 %x, 16
++  ret i8 %mul
++}
+diff --git a/llvm/test/Transforms/ConstraintElimination/mul-nsw.ll b/llvm/test/Transforms/ConstraintElimination/mul-nsw.ll
+index f2f6a91ebc9e8..8e6eb5c46f5cc 100644
+--- a/llvm/test/Transforms/ConstraintElimination/mul-nsw.ll
++++ b/llvm/test/Transforms/ConstraintElimination/mul-nsw.ll
+@@ -14,13 +14,13 @@ define void @slt_mul_nsw_3_known_positive_1(i8 %start, i8 %high) {
+ ; CHECK-NEXT:    br i1 [[AND]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_1:%.*]] = mul nsw i8 [[START]], 1
++; CHECK-NEXT:    [[START_1:%.*]] = mul nuw nsw i8 [[START]], 1
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_2:%.*]] = mul nsw i8 [[START]], 2
++; CHECK-NEXT:    [[START_2:%.*]] = mul nuw nsw i8 [[START]], 2
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_3:%.*]] = mul nsw i8 [[START]], 3
++; CHECK-NEXT:    [[START_3:%.*]] = mul nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_4:%.*]] = mul nsw i8 [[START]], 4
++; CHECK-NEXT:    [[START_4:%.*]] = mul nuw nsw i8 [[START]], 4
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp slt i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_3]])
+ ; CHECK-NEXT:    ret void
+@@ -121,16 +121,16 @@ define void @slt_mul_no_nsw_3_known_positive_1(i8 %start, i8 %high) {
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp slt i8 [[START]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_3]])
+-; CHECK-NEXT:    [[START_1:%.*]] = mul nsw i8 [[START]], 1
++; CHECK-NEXT:    [[START_1:%.*]] = mul nuw nsw i8 [[START]], 1
+ ; CHECK-NEXT:    [[C_4:%.*]] = icmp slt i8 [[START_1]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_4]])
+-; CHECK-NEXT:    [[START_2:%.*]] = mul nsw i8 [[START]], 2
++; CHECK-NEXT:    [[START_2:%.*]] = mul nuw nsw i8 [[START]], 2
+ ; CHECK-NEXT:    [[C_5:%.*]] = icmp slt i8 [[START_2]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_5]])
+-; CHECK-NEXT:    [[START_3:%.*]] = mul nsw i8 [[START]], 3
++; CHECK-NEXT:    [[START_3:%.*]] = mul nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[C_6:%.*]] = icmp slt i8 [[START_3]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_6]])
+-; CHECK-NEXT:    [[START_4:%.*]] = mul nsw i8 [[START]], 4
++; CHECK-NEXT:    [[START_4:%.*]] = mul nuw nsw i8 [[START]], 4
+ ; CHECK-NEXT:    [[C_7:%.*]] = icmp slt i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_7]])
+ ; CHECK-NEXT:    ret void
+@@ -654,13 +654,13 @@ define void @slt_mul_nsw_3_known_nonnegative_1(i8 %start, i8 %high) {
+ ; CHECK-NEXT:    br i1 [[AND]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_1:%.*]] = mul nsw i8 [[START]], 1
++; CHECK-NEXT:    [[START_1:%.*]] = mul nuw nsw i8 [[START]], 1
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_2:%.*]] = mul nsw i8 [[START]], 2
++; CHECK-NEXT:    [[START_2:%.*]] = mul nuw nsw i8 [[START]], 2
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_3:%.*]] = mul nsw i8 [[START]], 3
++; CHECK-NEXT:    [[START_3:%.*]] = mul nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    call void @use(i1 true)
+-; CHECK-NEXT:    [[START_4:%.*]] = mul nsw i8 [[START]], 4
++; CHECK-NEXT:    [[START_4:%.*]] = mul nuw nsw i8 [[START]], 4
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp slt i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_3]])
+ ; CHECK-NEXT:    ret void
+@@ -765,16 +765,16 @@ define void @slt_mul_nsw_both_var_non_negative_1(i8 %start, i8 %scale, i8 %high)
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[T_0:%.*]] = icmp slt i8 [[START]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[T_0]])
+-; CHECK-NEXT:    [[START_1:%.*]] = mul nsw i8 [[START]], 1
++; CHECK-NEXT:    [[START_1:%.*]] = mul nuw nsw i8 [[START]], 1
+ ; CHECK-NEXT:    [[T_1:%.*]] = icmp slt i8 [[START_1]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[T_1]])
+-; CHECK-NEXT:    [[START_2:%.*]] = mul nsw i8 [[START]], 2
++; CHECK-NEXT:    [[START_2:%.*]] = mul nuw nsw i8 [[START]], 2
+ ; CHECK-NEXT:    [[T_2:%.*]] = icmp slt i8 [[START_2]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[T_2]])
+-; CHECK-NEXT:    [[START_3:%.*]] = mul nsw i8 [[START]], 3
++; CHECK-NEXT:    [[START_3:%.*]] = mul nuw nsw i8 [[START]], 3
+ ; CHECK-NEXT:    [[T_3:%.*]] = icmp slt i8 [[START_3]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[T_3]])
+-; CHECK-NEXT:    [[START_4:%.*]] = mul nsw i8 [[START]], 4
++; CHECK-NEXT:    [[START_4:%.*]] = mul nuw nsw i8 [[START]], 4
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp slt i8 [[START_4]], [[HIGH]]
+ ; CHECK-NEXT:    call void @use(i1 [[C_3]])
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/ConstraintElimination/shl.ll b/llvm/test/Transforms/ConstraintElimination/shl.ll
+index 3affdd2a5291f..a6d5ff396e94e 100644
+--- a/llvm/test/Transforms/ConstraintElimination/shl.ll
++++ b/llvm/test/Transforms/ConstraintElimination/shl.ll
+@@ -1399,9 +1399,8 @@ define i1 @shl_nuw_signed_bounded(i64 %c) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[BND]])
+ ; CHECK-NEXT:    [[NN:%.*]] = icmp sge i64 [[C]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[NN]])
+-; CHECK-NEXT:    [[M:%.*]] = shl nuw i64 [[C]], 2
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i64 [[M]], 0
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    [[M:%.*]] = shl nuw nsw i64 [[C]], 2
++; CHECK-NEXT:    ret i1 false
+ ;
+ entry:
+   %bnd = icmp slt i64 %c, 2305843009213693952
+@@ -1419,9 +1418,8 @@ define i1 @shl_nuw_signed_tight_bound(i8 %x) {
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[B]])
+ ; CHECK-NEXT:    [[NN:%.*]] = icmp sge i8 [[X]], 0
+ ; CHECK-NEXT:    call void @llvm.assume(i1 [[NN]])
+-; CHECK-NEXT:    [[M:%.*]] = shl nuw i8 [[X]], 2
+-; CHECK-NEXT:    [[T:%.*]] = icmp slt i8 [[M]], 0
+-; CHECK-NEXT:    ret i1 [[T]]
++; CHECK-NEXT:    [[M:%.*]] = shl nuw nsw i8 [[X]], 2
++; CHECK-NEXT:    ret i1 false
+ ;
+   %b = icmp slt i8 %x, 32
+   call void @llvm.assume(i1 %b)
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll
+index 8f106d720f758..3d404c53d5623 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/loopflatten.ll
+@@ -1,6 +1,12 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
+ ; RUN: opt -passes="default<O3>" -enable-loop-flatten -loop-flatten-cost-threshold=3 -S %s | FileCheck %s
+ 
++; TODO: @_Z3fooPiii is no longer flattened. ConstraintElimination infers nuw for
++; the i32 i*M multiply, so IndVarSimplify widens it and leaves a
++; sext(trunc nuw <wide>) pair behind. That pair both costs an extra instruction
++; in LoopFlatten's estimate of the repeated outer-loop instructions and defeats
++; its linear i*M+j matcher. The pair itself is cleaned up later in the pipeline.
++
+ target datalayout = "e-m:e-i8:8:32-i16:16:32-i64:64-i128:128-n32:64-S128"
+ target triple = "aarch64"
+ 
+@@ -14,18 +20,28 @@ define dso_local void @_Z3fooPiii(ptr %A, i32 %N, i32 %M) #0 {
+ ; CHECK:       for.cond1.preheader.lr.ph.split:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i32 [[M]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i32 [[N]] to i64
+-; CHECK-NEXT:    [[FLATTEN_TRIPCOUNT:%.*]] = mul nuw nsw i64 [[TMP0]], [[TMP1]]
+ ; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER_US:%.*]]
+ ; CHECK:       for.cond1.preheader:
+-; CHECK-NEXT:    [[INDVAR6:%.*]] = phi i64 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US]] ], [ [[INDVAR_NEXT7:%.*]], [[FOR_COND1_PREHEADER_US]] ]
+-; CHECK-NEXT:    [[ARRAYIDX_US:%.*]] = getelementptr inbounds nuw [4 x i8], ptr [[A:%.*]], i64 [[INDVAR6]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[ARRAYIDX_US]], align 4
+-; CHECK-NEXT:    tail call void @_Z1fi(i32 [[TMP2]])
+-; CHECK-NEXT:    [[INDVAR_NEXT7]] = add nuw i64 [[INDVAR6]], 1
+-; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INDVAR_NEXT7]], [[FLATTEN_TRIPCOUNT]]
+-; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[FOR_COND_CLEANUP]], label [[FOR_COND1_PREHEADER_US]]
++; CHECK-NEXT:    [[INDVAR6:%.*]] = phi i64 [ 0, [[FOR_COND1_PREHEADER_LR_PH_SPLIT_US]] ], [ [[INDVAR_NEXT7:%.*]], [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE:%.*]] ]
++; CHECK-NEXT:    [[TMP5:%.*]] = trunc i64 [[INDVAR6]] to i32
++; CHECK-NEXT:    [[TMP3:%.*]] = mul i32 [[M]], [[TMP5]]
++; CHECK-NEXT:    [[TMP4:%.*]] = sext i32 [[TMP3]] to i64
++; CHECK-NEXT:    [[INVARIANT_GEP:%.*]] = getelementptr [4 x i8], ptr [[A:%.*]], i64 [[TMP4]]
++; CHECK-NEXT:    br label [[FOR_BODY4:%.*]]
+ ; CHECK:       for.cond.cleanup:
+ ; CHECK-NEXT:    ret void
++; CHECK:       for.cond1.for.cond.cleanup3_crit_edge:
++; CHECK-NEXT:    [[INDVAR_NEXT7]] = add nuw nsw i64 [[INDVAR6]], 1
++; CHECK-NEXT:    [[EXITCOND9_NOT:%.*]] = icmp eq i64 [[INDVAR_NEXT7]], [[TMP1]]
++; CHECK-NEXT:    br i1 [[EXITCOND9_NOT]], label [[FOR_COND_CLEANUP]], label [[FOR_COND1_PREHEADER_US]]
++; CHECK:       for.body4:
++; CHECK-NEXT:    [[INDVAR:%.*]] = phi i64 [ 0, [[FOR_COND1_PREHEADER_US]] ], [ [[INDVAR_NEXT:%.*]], [[FOR_BODY4]] ]
++; CHECK-NEXT:    [[ARRAYIDX_US:%.*]] = getelementptr [4 x i8], ptr [[INVARIANT_GEP]], i64 [[INDVAR]]
++; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[ARRAYIDX_US]], align 4
++; CHECK-NEXT:    tail call void @_Z1fi(i32 [[TMP2]])
++; CHECK-NEXT:    [[INDVAR_NEXT]] = add nuw nsw i64 [[INDVAR]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INDVAR_NEXT]], [[TMP0]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE]], label [[FOR_BODY4]]
+ ;
+ entry:
+   br label %for.cond
+@@ -62,3 +78,82 @@ for.body4:
+ }
+ 
+ declare dso_local void @_Z1fi(i32) #2
++
++; Same nest, but with i64 induction variables, so IndVarSimplify has nothing to
++; widen and the i*M multiply keeps its narrow form. This one still gets
++; flattened.
++define dso_local void @_Z3fooPill(ptr %A, i64 %N, i64 %M) #0 {
++; CHECK-LABEL: @_Z3fooPill(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP3:%.*]] = icmp sgt i64 [[N:%.*]], 0
++; CHECK-NEXT:    [[CMP21:%.*]] = icmp sgt i64 [[M:%.*]], 0
++; CHECK-NEXT:    [[OR_COND:%.*]] = select i1 [[CMP3]], i1 [[CMP21]], i1 false
++; CHECK-NEXT:    br i1 [[OR_COND]], label [[FOR_COND1_PREHEADER_LVER_CHECK:%.*]], label [[FOR_COND_CLEANUP:%.*]]
++; CHECK:       for.cond1.preheader.lver.check:
++; CHECK-NEXT:    [[FLATTEN_MUL:%.*]] = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 [[N]], i64 [[M]])
++; CHECK-NEXT:    [[FLATTEN_OVERFLOW:%.*]] = extractvalue { i64, i1 } [[FLATTEN_MUL]], 1
++; CHECK-NEXT:    br i1 [[FLATTEN_OVERFLOW]], label [[FOR_COND1_PREHEADER_LVER_ORIG:%.*]], label [[FOR_COND1_PREHEADER_PREHEADER:%.*]]
++; CHECK:       for.cond1.preheader.preheader:
++; CHECK-NEXT:    [[FLATTEN_TRIPCOUNT:%.*]] = extractvalue { i64, i1 } [[FLATTEN_MUL]], 0
++; CHECK-NEXT:    [[SMAX:%.*]] = tail call i64 @llvm.smax.i64(i64 [[FLATTEN_TRIPCOUNT]], i64 1)
++; CHECK-NEXT:    br label [[FOR_COND1_PREHEADER:%.*]]
++; CHECK:       for.cond1.preheader.lver.orig:
++; CHECK-NEXT:    [[I_04_LVER_ORIG:%.*]] = phi i64 [ [[INC6_LVER_ORIG:%.*]], [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_LVER_ORIG:%.*]] ], [ 0, [[FOR_COND1_PREHEADER_LVER_CHECK]] ]
++; CHECK-NEXT:    [[MUL_LVER_ORIG:%.*]] = mul nuw nsw i64 [[I_04_LVER_ORIG]], [[M]]
++; CHECK-NEXT:    [[TMP0:%.*]] = getelementptr [4 x i8], ptr [[A:%.*]], i64 [[MUL_LVER_ORIG]]
++; CHECK-NEXT:    br label [[FOR_BODY4_LVER_ORIG:%.*]]
++; CHECK:       for.body4.lver.orig:
++; CHECK-NEXT:    [[J_02_LVER_ORIG:%.*]] = phi i64 [ 0, [[FOR_COND1_PREHEADER_LVER_ORIG]] ], [ [[INC_LVER_ORIG:%.*]], [[FOR_BODY4_LVER_ORIG]] ]
++; CHECK-NEXT:    [[ARRAYIDX_LVER_ORIG:%.*]] = getelementptr [4 x i8], ptr [[TMP0]], i64 [[J_02_LVER_ORIG]]
++; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[ARRAYIDX_LVER_ORIG]], align 4
++; CHECK-NEXT:    tail call void @_Z1fi(i32 [[TMP1]])
++; CHECK-NEXT:    [[INC_LVER_ORIG]] = add nuw nsw i64 [[J_02_LVER_ORIG]], 1
++; CHECK-NEXT:    [[EXITCOND7_NOT:%.*]] = icmp eq i64 [[INC_LVER_ORIG]], [[M]]
++; CHECK-NEXT:    br i1 [[EXITCOND7_NOT]], label [[FOR_COND1_FOR_COND_CLEANUP3_CRIT_EDGE_LVER_ORIG]], label [[FOR_BODY4_LVER_ORIG]]
++; CHECK:       for.cond1.for.cond.cleanup3_crit_edge.lver.orig:
++; CHECK-NEXT:    [[INC6_LVER_ORIG]] = add nuw nsw i64 [[I_04_LVER_ORIG]], 1
++; CHECK-NEXT:    [[EXITCOND8_NOT:%.*]] = icmp eq i64 [[INC6_LVER_ORIG]], [[N]]
++; CHECK-NEXT:    br i1 [[EXITCOND8_NOT]], label [[FOR_COND_CLEANUP]], label [[FOR_COND1_PREHEADER_LVER_ORIG]]
++; CHECK:       for.cond1.preheader:
++; CHECK-NEXT:    [[I_04:%.*]] = phi i64 [ [[INC6:%.*]], [[FOR_COND1_PREHEADER]] ], [ 0, [[FOR_COND1_PREHEADER_PREHEADER]] ]
++; CHECK-NEXT:    [[FLATTEN_ARRAYIDX:%.*]] = getelementptr [4 x i8], ptr [[A]], i64 [[I_04]]
++; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[FLATTEN_ARRAYIDX]], align 4
++; CHECK-NEXT:    tail call void @_Z1fi(i32 [[TMP2]])
++; CHECK-NEXT:    [[INC6]] = add nuw nsw i64 [[I_04]], 1
++; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INC6]], [[SMAX]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[FOR_COND_CLEANUP]], label [[FOR_COND1_PREHEADER]]
++; CHECK:       for.cond.cleanup:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br label %for.cond
++
++for.cond:
++  %i.0 = phi i64 [ 0, %entry ], [ %inc6, %for.cond.cleanup3 ]
++  %cmp = icmp slt i64 %i.0, %N
++  br i1 %cmp, label %for.body, label %for.cond.cleanup
++
++for.cond.cleanup:
++  ret void
++
++for.body:
++  br label %for.cond1
++
++for.cond1:
++  %j.0 = phi i64 [ 0, %for.body ], [ %inc, %for.body4 ]
++  %cmp2 = icmp slt i64 %j.0, %M
++  br i1 %cmp2, label %for.body4, label %for.cond.cleanup3
++
++for.cond.cleanup3:
++  %inc6 = add nsw i64 %i.0, 1
++  br label %for.cond
++
++for.body4:
++  %mul = mul nsw i64 %i.0, %M
++  %add = add nsw i64 %mul, %j.0
++  %arrayidx = getelementptr inbounds i32, ptr %A, i64 %add
++  %0 = load i32, ptr %arrayidx, align 4
++  call void @_Z1fi(i32 %0)
++  %inc = add nsw i64 %j.0, 1
++  br label %for.cond1
++}
