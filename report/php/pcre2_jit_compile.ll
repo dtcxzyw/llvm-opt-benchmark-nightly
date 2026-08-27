@@ -205,9 +205,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l,
   %.253.i = phi i32 [ %i.ce, %bb.n ], [ %.15276.i, %bb.k ], [ %.15276.i, %.lr.ph.i ], [ %.15276.i, %bb.m ], [ %.15276.i, %bb.l ] ; 2 uses
   %.2.i = phi i32 [ %i.by, %bb.n ], [ %.177.i, %bb.k ], [ %.177.i, %.lr.ph.i ], [ %.177.i, %bb.m ], [ %.177.i, %bb.l ] ; 2 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %sext.i = shl i64 %indvars.iv.next.i, 32
-  %2 = ashr exact i64 %sext.i, 32
-  %i.cf = icmp slt i64 %2, %indvars.iv.next92.i
+  %i.cf = icmp slt i64 %indvars.iv.next.i, %indvars.iv.next92.i
   br i1 %i.cf, label %.lr.ph.i, label %.loopexit.i, !llvm.loop !440
 
 .loopexit.i:                                      ; preds = %bb.o, %bb.j, %.lr.ph86.i
@@ -610,7 +608,7 @@ bb.zw:                                            ; preds = %bb.zu
   br i1 %.not.i.i292, label %bb.zx, label %sljit_emit_op1.exit.i293, !prof !128
 
 bb.zx:                                            ; preds = %bb.zw
-  %i.cru = shl nsw i32 %i.crs, 3
+  %i.cru = shl nuw nsw i32 %i.crs, 3
   %i.crv = zext nneg i32 %i.cru to i64
   %i.crw = getelementptr inbounds nuw i8, ptr %i.crn, i64 144
   store i32 0, ptr %i.crw, align 8, !tbaa !130

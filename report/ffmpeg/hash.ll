@@ -203,16 +203,15 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
-  %3 = trunc nuw i64 %indvars.iv to i32
-  %4 = shl i32 %3, 1                              ; 2 uses
-  %5 = zext i32 %4 to i64
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 %5
-  %i.i = sub i32 %2, %4
+  %3 = shl nuw nsw i64 %indvars.iv, 1             ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %3
+  %5 = trunc nuw i64 %3 to i32
+  %i.i = sub i32 %2, %5
   %i.j = zext i32 %i.i to i64
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.l = load i8, ptr %i.k, align 1, !tbaa !20
   %i.m = zext i8 %i.l to i32
-  %i.n = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %6, i64 noundef %i.j, ptr noundef nonnull @.str, i32 noundef %i.m) #9 ; 0 uses
+  %i.n = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %4, i64 noundef %i.j, ptr noundef nonnull @.str, i32 noundef %i.m) #9 ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !21

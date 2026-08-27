@@ -206,7 +206,7 @@ bb.v:                                             ; preds = %bb.l
 
 bb.w:                                             ; preds = %bb.v
   %i.go = sext i16 %i.ev to i64
-  %i.gp = mul nsw i64 %i.go, 56                   ; 3 uses
+  %i.gp = mul nuw nsw i64 %i.go, 56               ; 3 uses
   %.not.i.i = icmp eq ptr %0, null
   br i1 %.not.i.i, label %bb.y, label %bb.x
 
@@ -609,7 +609,7 @@ bb.c:                                             ; preds = %bb.a
 
 walEncodeFrame.exit:                              ; preds = %walChecksumBytes.exit.i, %bb.c
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.by = load i64, ptr %i.bx, align 8, !tbaa !2316 ; 3 uses
+  %i.by = load i64, ptr %i.bx, align 8, !tbaa !2316 ; 4 uses
   %i.bz = icmp sge i64 %2, %i.by
   %i.ca = add i64 %2, 24                          ; 7 uses
   %.not.i = icmp slt i64 %i.ca, %i.by
@@ -629,11 +629,8 @@ bb.d:                                             ; preds = %walEncodeFrame.exit
   br i1 %.not43.i, label %bb.e, label %walWriteToLog.exit24
 
 bb.e:                                             ; preds = %bb.d
-  %sext.i = shl i64 %i.cb, 32
-  %3 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  %4 = add nsw i64 %3, %2
   %i.cj = sub nsw i32 24, %i.cc
-  %i.ck = getelementptr inbounds i8, ptr %i.a, i64 %3
+  %i.ck = getelementptr inbounds i8, ptr %i.a, i64 %i.cb
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cm = load i32, ptr %i.cl, align 8, !tbaa !2317
   %i.cn = and i32 %i.cm, 3                        ; 2 uses
@@ -658,7 +655,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g, %walEncodeFrame.exit
   %.135.i = phi ptr [ %i.ck, %bb.g ], [ %i.a, %walEncodeFrame.exit ]
   %.133.i = phi i32 [ %i.cj, %bb.g ], [ 24, %walEncodeFrame.exit ]
-  %.1.i = phi i64 [ %4, %bb.g ], [ %2, %walEncodeFrame.exit ]
+  %.1.i = phi i64 [ %i.by, %bb.g ], [ %2, %walEncodeFrame.exit ]
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !2315 ; 2 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !475
@@ -1061,7 +1058,7 @@ sqlite3LogEst.exit.i:                             ; preds = %.loopexit.i.i, %bb.
 
 bb.bi:                                            ; preds = %sqlite3LogEst.exit.i
   %i.iz = sub nuw nsw i32 %.0298, %i.hs
-  %i.ja = mul nsw i32 %i.iz, 100
+  %i.ja = mul nuw nsw i32 %i.iz, 100
   %i.jb = sdiv i32 %i.ja, %.0298                  ; 4 uses
   %i.jc = sext i32 %i.jb to i64                   ; 3 uses
   %i.jd = icmp ult i32 %i.jb, 8
@@ -1464,7 +1461,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 fts5AllocateSegid.exit.i:                         ; preds = %.preheader.i.i
   %i.bb = trunc nuw nsw i64 %indvars.iv41.i.i to i32
-  %i.bc = shl nsw i32 %i.bb, 5
+  %i.bc = shl nuw nsw i32 %i.bb, 5
   %i.bd = or disjoint i32 %i.bc, 1
   %i.be = add nuw nsw i32 %i.bd, %.028.i.i        ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #59
@@ -1867,7 +1864,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %.preheader.i
   %i.bf = trunc nuw nsw i64 %indvars.iv41.i to i32
-  %i.bg = shl nsw i32 %i.bf, 5
+  %i.bg = shl nuw nsw i32 %i.bf, 5
   %i.bh = or disjoint i32 %i.bg, 1
   %i.bi = add nuw nsw i32 %i.bh, %.028.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #59
@@ -2270,12 +2267,12 @@ bb.a:
   br i1 %.not, label %sqlite3_free.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !8099 ; 6 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !8099 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 1
+  %3 = add i32 %i.c, -1                           ; 4 uses
   br i1 %i.d, label %.lr.ph.i, label %geopolyArea.exit
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %3 = add nsw i32 %i.c, -1                       ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 5 uses
   %wide.trip.count.i = zext nneg i32 %3 to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
@@ -2356,8 +2353,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.new
   br label %geopolyArea.exit
 
 geopolyArea.exit:                                 ; preds = %bb.b, %._crit_edge.loopexit.i
-  %.019.lcssa.i = phi double [ 0.000000e+00, %bb.b ], [ %.lcssa, %._crit_edge.loopexit.i ]
-  %.0.lcssa.i = phi i64 [ 0, %bb.b ], [ %i.at, %._crit_edge.loopexit.i ]
+  %.019.lcssa.i = phi double [ %.lcssa, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.b ]
+  %.0.lcssa.i = phi i64 [ %i.at, %._crit_edge.loopexit.i ], [ 0, %bb.b ]
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.0.lcssa.i ; 2 uses
   %i.aw = load float, ptr %i.av, align 4, !tbaa !8101
@@ -2377,17 +2374,16 @@ geopolyArea.exit:                                 ; preds = %bb.b, %._crit_edge.
   br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %geopolyArea.exit
-  %i.bj = zext nneg i32 %i.c to i64
-  %4 = add nsw i64 %i.bj, -1
+  %i.bj = zext i32 %3 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv35 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next36, %.lr.ph ] ; 2 uses
-  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.bj, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %.idx = shl nuw nsw i64 %indvars.iv35, 3
   %i.bk = getelementptr inbounds nuw i8, ptr %i.au, i64 %.idx ; 2 uses
-  %.idx43 = shl nsw i64 %indvars.iv, 3
-  %i.bl = getelementptr inbounds i8, ptr %i.au, i64 %.idx43 ; 2 uses
+  %.idx43 = shl nuw nsw i64 %indvars.iv, 3
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.au, i64 %.idx43 ; 2 uses
   %i.bm = load <2 x float>, ptr %i.bk, align 4, !tbaa !8101
   %i.bn = load <2 x float>, ptr %i.bl, align 4, !tbaa !8101
   store <2 x float> %i.bn, ptr %i.bk, align 4, !tbaa !8101
@@ -2790,8 +2786,8 @@ sqlite3_malloc64.exit:                            ; preds = %bb.u
   %i.bv = shl nuw nsw i32 %i.bp, 1
   %i.bw = add nsw i32 %i.bv, -2
   %i.bx = sext i32 %i.bw to i64
-  %i.by = shl nsw i64 %i.bx, 2
-  %i.bz = add nsw i64 %i.by, 40
+  %i.by = shl nuw nsw i64 %i.bx, 2
+  %i.bz = add nuw nsw i64 %i.by, 40
   %i.ca = tail call fastcc ptr @sqlite3Malloc(i64 noundef %i.bz), !inline_history !398 ; 6 uses
   %i.cb = icmp eq ptr %i.ca, null
   br i1 %i.cb, label %sqlite3_malloc64.exit.thread, label %bb.y

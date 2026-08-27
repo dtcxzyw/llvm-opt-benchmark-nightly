@@ -205,7 +205,7 @@ prof_grad_filter_12.exit69:                       ; preds = %._crit_edge.i67, %b
   br i1 %i.d, label %.preheader.lr.ph, label %._crit_edge86.split
 
 .preheader.lr.ph:                                 ; preds = %prof_grad_filter_12.exit69
-  %.idx = shl nsw i64 %i.c, 3
+  %.idx = shl nuw nsw i64 %i.c, 3
   br i1 %i.e, label %.preheader.preheader, label %._crit_edge86.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
@@ -223,11 +223,10 @@ prof_grad_filter_12.exit69:                       ; preds = %._crit_edge.i67, %b
   %i.cd = shl nuw nsw i64 %indvars.iv92, 7        ; 2 uses
   %i.ce = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.cd
   %i.cf = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %i.cd
-  %.not45 = icmp eq i64 %indvars.iv92, 0
+  %6 = shl nuw nsw i64 %indvars.iv92, 4
+  %i.cg = icmp eq i64 %indvars.iv92, 0
   %indvars.iv.next93 = add nuw nsw i64 %indvars.iv92, 4 ; 3 uses
-  %i.cg = icmp eq i64 %indvars.iv.next93, %i.bz
-  %6 = shl i64 %indvars.iv92, 4
-  %7 = and i64 %6, 4294967232
+  %7 = icmp eq i64 %indvars.iv.next93, %i.bz
   br label %bb.b
 
 ._crit_edge86.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %prof_grad_filter_12.exit69
@@ -244,7 +243,7 @@ bb.b:                                             ; preds = %.preheader, %apply_
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %apply_bdof_min_block_12.exit ] ; 6 uses
   %i.cj = getelementptr inbounds nuw [2 x i8], ptr %i.ce, i64 %indvars.iv ; 2 uses
   %i.ck = getelementptr inbounds nuw [2 x i8], ptr %i.cf, i64 %indvars.iv ; 2 uses
-  %i.cl = add nuw nsw i64 %indvars.iv, %7         ; 4 uses
+  %i.cl = add nuw nsw i64 %indvars.iv, %6         ; 4 uses
   %i.cm = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.cl ; 7 uses
   %i.cn = getelementptr inbounds nuw [2 x i8], ptr %i.cc, i64 %i.cl ; 7 uses
   %i.co = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.cl ; 7 uses
@@ -271,11 +270,11 @@ bb.d:                                             ; preds = %bb.d, %bb.b
   %.06712.i = phi i32 [ 0, %bb.b ], [ %op.rdx138, %bb.d ]
   %.06911.i = phi i32 [ 0, %bb.b ], [ %op.rdx141, %bb.d ]
   %i.cx = icmp slt i32 %.06116.i, 0
-  %i.cy = and i1 %.not45, %i.cx
+  %i.cy = and i1 %i.cg, %i.cx
   %i.cz = zext i1 %i.cy to i32
   %i.da = add nsw i32 %.06116.i, %i.cz
   %i.db = icmp eq i32 %.06116.i, 4
-  %i.dc = and i1 %i.cg, %i.db
+  %i.dc = and i1 %7, %i.db
   %.neg.i = sext i1 %i.dc to i32
   %i.dd = add nsw i32 %i.da, %.neg.i              ; 2 uses
   %i.de = shl nsw i32 %i.dd, 7
@@ -678,7 +677,7 @@ prof_grad_filter_10.exit69:                       ; preds = %._crit_edge.i67, %b
   br i1 %i.d, label %.preheader.lr.ph, label %._crit_edge86.split
 
 .preheader.lr.ph:                                 ; preds = %prof_grad_filter_10.exit69
-  %.idx = shl nsw i64 %i.c, 3
+  %.idx = shl nuw nsw i64 %i.c, 3
   br i1 %i.e, label %.preheader.preheader, label %._crit_edge86.split
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
@@ -696,11 +695,10 @@ prof_grad_filter_10.exit69:                       ; preds = %._crit_edge.i67, %b
   %i.cd = shl nuw nsw i64 %indvars.iv92, 7        ; 2 uses
   %i.ce = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.cd
   %i.cf = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %i.cd
-  %.not45 = icmp eq i64 %indvars.iv92, 0
+  %6 = shl nuw nsw i64 %indvars.iv92, 4
+  %i.cg = icmp eq i64 %indvars.iv92, 0
   %indvars.iv.next93 = add nuw nsw i64 %indvars.iv92, 4 ; 3 uses
-  %i.cg = icmp eq i64 %indvars.iv.next93, %i.bz
-  %6 = shl i64 %indvars.iv92, 4
-  %7 = and i64 %6, 4294967232
+  %7 = icmp eq i64 %indvars.iv.next93, %i.bz
   br label %bb.b
 
 ._crit_edge86.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %prof_grad_filter_10.exit69
@@ -717,7 +715,7 @@ bb.b:                                             ; preds = %.preheader, %apply_
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %apply_bdof_min_block_10.exit ] ; 6 uses
   %i.cj = getelementptr inbounds nuw [2 x i8], ptr %i.ce, i64 %indvars.iv ; 2 uses
   %i.ck = getelementptr inbounds nuw [2 x i8], ptr %i.cf, i64 %indvars.iv ; 2 uses
-  %i.cl = add nuw nsw i64 %indvars.iv, %7         ; 4 uses
+  %i.cl = add nuw nsw i64 %indvars.iv, %6         ; 4 uses
   %i.cm = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.cl ; 7 uses
   %i.cn = getelementptr inbounds nuw [2 x i8], ptr %i.cc, i64 %i.cl ; 7 uses
   %i.co = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.cl ; 7 uses
@@ -744,11 +742,11 @@ bb.d:                                             ; preds = %bb.d, %bb.b
   %.06712.i = phi i32 [ 0, %bb.b ], [ %op.rdx138, %bb.d ]
   %.06911.i = phi i32 [ 0, %bb.b ], [ %op.rdx141, %bb.d ]
   %i.cx = icmp slt i32 %.06116.i, 0
-  %i.cy = and i1 %.not45, %i.cx
+  %i.cy = and i1 %i.cg, %i.cx
   %i.cz = zext i1 %i.cy to i32
   %i.da = add nsw i32 %.06116.i, %i.cz
   %i.db = icmp eq i32 %.06116.i, 4
-  %i.dc = and i1 %i.cg, %i.db
+  %i.dc = and i1 %7, %i.db
   %.neg.i = sext i1 %i.dc to i32
   %i.dd = add nsw i32 %i.da, %.neg.i              ; 2 uses
   %i.de = shl nsw i32 %i.dd, 7
@@ -1151,11 +1149,10 @@ prof_grad_filter_8.exit69:                        ; preds = %._crit_edge.i67, %b
   %i.cd = shl nuw nsw i64 %indvars.iv94, 7        ; 2 uses
   %i.ce = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.cd
   %i.cf = getelementptr inbounds nuw [2 x i8], ptr %3, i64 %i.cd
-  %.not45 = icmp eq i64 %indvars.iv94, 0
+  %6 = shl nuw nsw i64 %indvars.iv94, 4
+  %i.cg = icmp eq i64 %indvars.iv94, 0
   %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94, 4 ; 3 uses
-  %i.cg = icmp eq i64 %indvars.iv.next95, %i.bz
-  %6 = shl i64 %indvars.iv94, 4
-  %7 = and i64 %6, 4294967232
+  %7 = icmp eq i64 %indvars.iv.next95, %i.bz
   br label %bb.b
 
 ._crit_edge88.split:                              ; preds = %._crit_edge, %.preheader.lr.ph, %prof_grad_filter_8.exit69
@@ -1172,7 +1169,7 @@ bb.b:                                             ; preds = %.preheader, %derive
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %derive_bdof_vx_vy_8.exit ] ; 6 uses
   %i.cj = getelementptr inbounds nuw [2 x i8], ptr %i.ce, i64 %indvars.iv ; 17 uses
   %i.ck = getelementptr inbounds nuw [2 x i8], ptr %i.cf, i64 %indvars.iv ; 17 uses
-  %i.cl = add nuw nsw i64 %indvars.iv, %7         ; 4 uses
+  %i.cl = add nuw nsw i64 %indvars.iv, %6         ; 4 uses
   %i.cm = getelementptr inbounds nuw [2 x i8], ptr %i.a, i64 %i.cl ; 19 uses
   %i.cn = getelementptr inbounds nuw [2 x i8], ptr %i.cc, i64 %i.cl ; 19 uses
   %i.co = getelementptr inbounds nuw [2 x i8], ptr %i.b, i64 %i.cl ; 19 uses
@@ -1199,11 +1196,11 @@ bb.d:                                             ; preds = %bb.d, %bb.b
   %.06712.i = phi i32 [ 0, %bb.b ], [ %op.rdx140, %bb.d ]
   %.06911.i = phi i32 [ 0, %bb.b ], [ %op.rdx143, %bb.d ]
   %i.cx = icmp slt i32 %.06116.i, 0
-  %i.cy = and i1 %.not45, %i.cx
+  %i.cy = and i1 %i.cg, %i.cx
   %i.cz = zext i1 %i.cy to i32
   %i.da = add nsw i32 %.06116.i, %i.cz
   %i.db = icmp eq i32 %.06116.i, 4
-  %i.dc = and i1 %i.cg, %i.db
+  %i.dc = and i1 %7, %i.db
   %.neg.i = sext i1 %i.dc to i32
   %i.dd = add nsw i32 %i.da, %.neg.i              ; 2 uses
   %i.de = shl nsw i32 %i.dd, 7

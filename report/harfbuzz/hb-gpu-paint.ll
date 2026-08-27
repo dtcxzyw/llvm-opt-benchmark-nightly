@@ -204,17 +204,7 @@ _ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_triviall
   %i.bb = zext i32 %i.ba to i64
   %i.bc = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.bb) #13 ; 4 uses
   %.not22.i = icmp eq ptr %i.bc, null
-  br i1 %.not22.i, label %bb.n, label %2, !prof !85
-
-2:                                                ; preds = %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i
-  %3 = shl i32 %i.at, 2                           ; 2 uses
-  %.not.i.i.i.i = icmp eq i32 %3, 0
-  br i1 %.not.i.i.i.i, label %_ZN11hb_vector_tIjLb0EEixEi.exit.lr.ph, label %4, !prof !8
-
-4:                                                ; preds = %2
-  %5 = zext i32 %3 to i64
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bc, i8 0, i64 %5, i1 false)
-  br label %_ZN11hb_vector_tIjLb0EEixEi.exit.lr.ph
+  br i1 %.not22.i, label %bb.n, label %_ZN11hb_vector_tIjLb0EEixEi.exit.lr.ph, !prof !85
 
 bb.n:                                             ; preds = %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i, %.thread.i, %_ZN9hb_blob_t15recycle_acquireEPS_jPjPPc.exit.thread
   %.sroa.0.0 = phi i32 [ 0, %_ZN9hb_blob_t15recycle_acquireEPS_jPjPPc.exit.thread ], [ -1, %.thread.i ], [ -1, %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i ] ; 2 uses
@@ -239,7 +229,10 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n
   tail call void @hb_free(ptr noundef nonnull %.3.i189) #13
   br label %_ZN9hb_blob_t13recycle_abortEPcPS_.exit
 
-_ZN11hb_vector_tIjLb0EEixEi.exit.lr.ph:           ; preds = %4, %2
+_ZN11hb_vector_tIjLb0EEixEi.exit.lr.ph:           ; preds = %_ZN11hb_vector_tIjLb0EE14realloc_vectorIjTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPjj11hb_priorityILj0EE.exit.i
+  %2 = shl nuw i32 %i.at, 2
+  %3 = zext i32 %2 to i64
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.bc, i8 0, i64 %3, i1 false)
   %i.bk = add nuw nsw i32 %i.j, 3
   %i.bl = load i64, ptr @_hb_NullPool, align 16   ; 2 uses
   %wide.trip.count = zext nneg i32 %i.at to i64

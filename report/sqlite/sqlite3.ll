@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.a
 
 walEncodeFrame.exit:                              ; preds = %walChecksumBytes.exit.i, %bb.c
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.by = load i64, ptr %i.bx, align 8, !tbaa !1937 ; 3 uses
+  %i.by = load i64, ptr %i.bx, align 8, !tbaa !1937 ; 4 uses
   %i.bz = icmp sge i64 %2, %i.by
   %i.ca = add i64 %2, 24                          ; 7 uses
   %.not.i = icmp slt i64 %i.ca, %i.by
@@ -226,11 +226,8 @@ bb.d:                                             ; preds = %walEncodeFrame.exit
   br i1 %.not43.i, label %bb.e, label %walWriteToLog.exit24
 
 bb.e:                                             ; preds = %bb.d
-  %sext.i = shl i64 %i.cb, 32
-  %3 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  %4 = add nsw i64 %3, %2
   %i.cj = sub nsw i32 24, %i.cc
-  %i.ck = getelementptr inbounds i8, ptr %i.a, i64 %3
+  %i.ck = getelementptr inbounds i8, ptr %i.a, i64 %i.cb
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cm = load i32, ptr %i.cl, align 8, !tbaa !1938
   %i.cn = and i32 %i.cm, 3                        ; 2 uses
@@ -255,7 +252,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g, %walEncodeFrame.exit
   %.135.i = phi ptr [ %i.ck, %bb.g ], [ %i.a, %walEncodeFrame.exit ]
   %.133.i = phi i32 [ %i.cj, %bb.g ], [ 24, %walEncodeFrame.exit ]
-  %.1.i = phi i64 [ %4, %bb.g ], [ %2, %walEncodeFrame.exit ]
+  %.1.i = phi i64 [ %i.by, %bb.g ], [ %2, %walEncodeFrame.exit ]
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !1936 ; 2 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !483
@@ -658,7 +655,7 @@ sqlite3LogEst.exit.i:                             ; preds = %.loopexit.i.i, %bb.
 
 bb.bi:                                            ; preds = %sqlite3LogEst.exit.i
   %i.iz = sub nuw nsw i32 %.0298, %i.hs
-  %i.ja = mul nsw i32 %i.iz, 100
+  %i.ja = mul nuw nsw i32 %i.iz, 100
   %i.jb = sdiv i32 %i.ja, %.0298                  ; 4 uses
   %i.jc = sext i32 %i.jb to i64                   ; 3 uses
   %i.jd = icmp ult i32 %i.jb, 8

@@ -205,8 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %Vec_IntPus
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %Vec_IntPushUniqueOrder.exit ]
   %i.m = phi i64 [ 0, %.lr.ph ], [ %i.bf, %Vec_IntPushUniqueOrder.exit ]
   %.val14 = load ptr, ptr %i.h, align 8, !tbaa !31
-  %2 = and i64 %i.m, 4294967292
-  %i.n = getelementptr inbounds nuw [4 x i8], ptr %.val14, i64 %2
+  %i.n = getelementptr inbounds nuw [4 x i8], ptr %.val14, i64 %i.m
   %i.o = load i32, ptr %i.n, align 4, !tbaa !32   ; 5 uses
   %i.p = ashr i32 %i.o, 5
   %i.q = sext i32 %i.p to i64
@@ -339,10 +338,10 @@ Vec_IntPushUniqueOrder.exit:                      ; preds = %bb.e, %Vec_IntPushO
   %i.bd = phi ptr [ %i.k, %bb.b ], [ %i.az, %Vec_IntPushOrder.exit.i ], [ %i.k, %bb.e ]
   %i.be = phi ptr [ %i.l, %bb.b ], [ %i.az, %Vec_IntPushOrder.exit.i ], [ %i.l, %bb.e ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.bf = shl nsw i64 %indvars.iv.next, 2         ; 2 uses
-  %3 = sext i32 %.val to i64
-  %4 = icmp slt i64 %i.bf, %3
-  br i1 %4, label %bb.b, label %._crit_edge, !llvm.loop !53
+  %i.bf = shl nuw nsw i64 %indvars.iv.next, 2     ; 2 uses
+  %2 = trunc nuw i64 %i.bf to i32
+  %3 = icmp sgt i32 %.val, %2
+  br i1 %3, label %bb.b, label %._crit_edge, !llvm.loop !53
 
 ._crit_edge:                                      ; preds = %Vec_IntPushUniqueOrder.exit, %bb.a
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -745,10 +744,9 @@ Vec_WecStart.exit66:                              ; preds = %Vec_WecStart.exit, 
 bb.l:                                             ; preds = %.lr.ph, %.loopexit
   %.val82 = phi i32 [ %.val11.i, %.lr.ph ], [ %.val, %.loopexit ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.loopexit ]
-  %i.bq = phi i64 [ 0, %.lr.ph ], [ %i.dy, %.loopexit ]
+  %i.bq = phi i64 [ 0, %.lr.ph ], [ %i.dy, %.loopexit ] ; 4 uses
   %.val53 = load ptr, ptr %i.bo, align 8, !tbaa !31 ; 2 uses
-  %6 = and i64 %i.bq, 4294967292                  ; 4 uses
-  %i.br = getelementptr inbounds nuw [4 x i8], ptr %.val53, i64 %6
+  %i.br = getelementptr inbounds nuw [4 x i8], ptr %.val53, i64 %i.bq
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !32
   %.val52 = load ptr, ptr %i.bp, align 8, !tbaa !31
   %i.bt = sext i32 %i.bs to i64                   ; 3 uses
@@ -759,7 +757,7 @@ bb.l:                                             ; preds = %.lr.ph, %.loopexit
 
 .preheader:                                       ; preds = %bb.l
   %i.bx = add nsw i32 %i.bv, -1                   ; 3 uses
-  %i.by = getelementptr inbounds nuw [4 x i8], ptr %.val53, i64 %6
+  %i.by = getelementptr inbounds nuw [4 x i8], ptr %.val53, i64 %i.bq
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 4
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !32 ; 5 uses
   %i.cb = icmp eq i32 %i.ca, 0
@@ -797,7 +795,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.o, %bb.q, %bb.p, %bb.m, %.preheader
   %.val51.1 = load ptr, ptr %i.bo, align 8, !tbaa !31
-  %i.co = getelementptr inbounds nuw [4 x i8], ptr %.val51.1, i64 %6
+  %i.co = getelementptr inbounds nuw [4 x i8], ptr %.val51.1, i64 %i.bq
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 8
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !32 ; 5 uses
   %i.cr = icmp eq i32 %i.cq, 0
@@ -838,7 +836,7 @@ bb.w:                                             ; preds = %bb.t
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.s, %bb.r
   %.val51.2 = load ptr, ptr %i.bo, align 8, !tbaa !31
-  %i.dg = getelementptr inbounds nuw [4 x i8], ptr %.val51.2, i64 %6
+  %i.dg = getelementptr inbounds nuw [4 x i8], ptr %.val51.2, i64 %i.bq
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 12
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !32 ; 5 uses
   %i.dj = icmp eq i32 %i.di, 0
@@ -884,10 +882,10 @@ bb.ac:                                            ; preds = %bb.z
 .loopexit:                                        ; preds = %.loopexit.loopexit, %bb.l
   %.val = phi i32 [ %.val.pre, %.loopexit.loopexit ], [ %.val82, %bb.l ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %i.dy = shl nsw i64 %indvars.iv.next, 2         ; 2 uses
-  %7 = sext i32 %.val to i64
-  %8 = icmp slt i64 %i.dy, %7
-  br i1 %8, label %bb.l, label %._crit_edge, !llvm.loop !65
+  %i.dy = shl nuw nsw i64 %indvars.iv.next, 2     ; 2 uses
+  %6 = trunc nuw i64 %i.dy to i32
+  %7 = icmp sgt i32 %.val, %6
+  br i1 %7, label %bb.l, label %._crit_edge, !llvm.loop !65
 
 ._crit_edge:                                      ; preds = %.loopexit, %Vec_WecStart.exit66
   %.not.i67 = icmp eq ptr %i.j, null

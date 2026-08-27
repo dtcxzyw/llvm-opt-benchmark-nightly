@@ -204,18 +204,15 @@ bb.y:                                             ; preds = %bb.v
   %i.au = zext nneg i32 %i.at to i64
   %i.av = getelementptr inbounds nuw i8, ptr @_ZZL7SumFilePNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPK9env_md_stRK6SourceE9kHextable, i64 %i.au
   %i.aw = load i8, ptr %i.av, align 1, !tbaa !21
-  %7 = trunc nuw i64 %indvars.iv.epil.init to i32
-  %8 = shl i32 %7, 1                              ; 2 uses
-  %9 = zext i32 %8 to i64
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.e, i64 %9
+  %7 = shl nuw nsw i64 %indvars.iv.epil.init, 1   ; 2 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.e, i64 %7
   store i8 %i.aw, ptr %i.ax, align 2, !tbaa !21
   %i.ay = and i32 %i.as, 15
   %i.az = zext nneg i32 %i.ay to i64
   %i.ba = getelementptr inbounds nuw i8, ptr @_ZZL7SumFilePNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPK9env_md_stRK6SourceE9kHextable, i64 %i.az
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !21
-  %10 = or disjoint i32 %8, 1
-  %11 = zext i32 %10 to i64
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.e, i64 %11
+  %8 = getelementptr inbounds nuw i8, ptr %i.e, i64 %7
+  %i.bc = getelementptr inbounds nuw i8, ptr %8, i64 1
   store i8 %i.bb, ptr %i.bc, align 1, !tbaa !21
   br label %._crit_edge
 
@@ -261,18 +258,15 @@ bb.z:                                             ; preds = %._crit_edge.i.i.thr
   %i.bo = zext nneg i32 %i.bn to i64
   %i.bp = getelementptr inbounds nuw i8, ptr @_ZZL7SumFilePNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPK9env_md_stRK6SourceE9kHextable, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !21
-  %12 = trunc nuw i64 %indvars.iv to i32
-  %13 = shl i32 %12, 1                            ; 2 uses
-  %14 = zext i32 %13 to i64
-  %i.br = getelementptr inbounds nuw i8, ptr %i.e, i64 %14
+  %9 = shl nuw nsw i64 %indvars.iv, 1             ; 2 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %i.e, i64 %9
   store i8 %i.bq, ptr %i.br, align 4, !tbaa !21
   %i.bs = and i32 %i.bm, 15
   %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = getelementptr inbounds nuw i8, ptr @_ZZL7SumFilePNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPK9env_md_stRK6SourceE9kHextable, i64 %i.bt
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !21
-  %15 = or disjoint i32 %13, 1
-  %16 = zext i32 %15 to i64
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.e, i64 %16
+  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 %9
+  %i.bw = getelementptr inbounds nuw i8, ptr %10, i64 1
   store i8 %i.bv, ptr %i.bw, align 1, !tbaa !21
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv.next
@@ -282,18 +276,15 @@ bb.z:                                             ; preds = %._crit_edge.i.i.thr
   %i.cb = zext nneg i32 %i.ca to i64
   %i.cc = getelementptr inbounds nuw i8, ptr @_ZZL7SumFilePNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPK9env_md_stRK6SourceE9kHextable, i64 %i.cb
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !21
-  %17 = trunc nuw i64 %indvars.iv.next to i32
-  %18 = shl i32 %17, 1                            ; 2 uses
-  %19 = zext i32 %18 to i64
-  %i.ce = getelementptr inbounds nuw i8, ptr %i.e, i64 %19
+  %11 = shl nuw nsw i64 %indvars.iv.next, 1       ; 2 uses
+  %i.ce = getelementptr inbounds nuw i8, ptr %i.e, i64 %11
   store i8 %i.cd, ptr %i.ce, align 2, !tbaa !21
   %i.cf = and i32 %i.bz, 15
   %i.cg = zext nneg i32 %i.cf to i64
   %i.ch = getelementptr inbounds nuw i8, ptr @_ZZL7SumFilePNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPK9env_md_stRK6SourceE9kHextable, i64 %i.cg
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !21
-  %20 = or disjoint i32 %18, 1
-  %21 = zext i32 %20 to i64
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.e, i64 %21
+  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 %11
+  %i.cj = getelementptr inbounds nuw i8, ptr %12, i64 1
   store i8 %i.ci, ptr %i.cj, align 1, !tbaa !21
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
