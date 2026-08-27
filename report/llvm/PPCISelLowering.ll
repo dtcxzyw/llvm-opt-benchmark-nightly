@@ -205,7 +205,7 @@ define dso_local noundef zeroext i1 @_ZN4llvm3PPC18isXXBRQShuffleMaskEPNS_19Shuf
   %spec.select = and i1 %.not30.us53.i.i.14, %.not.i
   br label %_ZL23isXXBRShuffleMaskHelperPN4llvm19ShuffleVectorSDNodeEi.exit
 
-_ZL23isXXBRShuffleMaskHelperPN4llvm19ShuffleVectorSDNodeEi.exit: ; preds = %.preheader64.i.i.14, %.lr.ph.split.us48.i.i, %.preheader64.i.i.preheader, %.preheader64.i.i.1, %.preheader64.i.i.2, %.preheader64.i.i.3, %.preheader64.i.i.4, %.preheader64.i.i.5, %.preheader64.i.i.6, %.preheader64.i.i.7, %.preheader64.i.i.8, %.preheader64.i.i.9, %.preheader64.i.i.10, %.preheader64.i.i.11, %.preheader64.i.i.12, %.preheader64.i.i.13
+_ZL23isXXBRShuffleMaskHelperPN4llvm19ShuffleVectorSDNodeEi.exit: ; preds = %.preheader64.i.i.14, %.preheader64.i.i.preheader, %.preheader64.i.i.1, %.preheader64.i.i.2, %.preheader64.i.i.3, %.preheader64.i.i.4, %.preheader64.i.i.5, %.preheader64.i.i.6, %.preheader64.i.i.7, %.preheader64.i.i.8, %.preheader64.i.i.9, %.preheader64.i.i.10, %.preheader64.i.i.11, %.preheader64.i.i.12, %.preheader64.i.i.13, %.lr.ph.split.us48.i.i
   %.1.i = phi i1 [ false, %.preheader64.i.i.preheader ], [ false, %.lr.ph.split.us48.i.i ], [ false, %.preheader64.i.i.1 ], [ %spec.select, %.preheader64.i.i.14 ], [ false, %.preheader64.i.i.13 ], [ false, %.preheader64.i.i.12 ], [ false, %.preheader64.i.i.11 ], [ false, %.preheader64.i.i.10 ], [ false, %.preheader64.i.i.9 ], [ false, %.preheader64.i.i.8 ], [ false, %.preheader64.i.i.7 ], [ false, %.preheader64.i.i.6 ], [ false, %.preheader64.i.i.5 ], [ false, %.preheader64.i.i.4 ], [ false, %.preheader64.i.i.3 ], [ false, %.preheader64.i.i.2 ]
   ret i1 %.1.i
 }

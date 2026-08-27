@@ -205,10 +205,7 @@ _RNvMs2_NtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit17: 
   %i.ja = getelementptr inbounds nuw i8, ptr %i.it, i64 16
   %i.jb = load i64, ptr %i.ja, align 8, !noalias !237, !noundef !7 ; 2 uses
   %.not2.i.i = icmp ult i64 %.val, %i.jb          ; 2 uses
-  br i1 %i.iz, label %.lr.ph.i.i.preheader, label %.lr.ph.i3.i.preheader
-
-.lr.ph.i3.i.preheader:                            ; preds = %_RNvMs2_NtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit17
-  br i1 %.not2.i.i, label %bb.ck, label %_RNvMNtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit
+  br i1 %i.iz, label %.lr.ph.i.i.preheader, label %.lr.ph.i3.i
 
 .lr.ph.i.i.preheader:                             ; preds = %_RNvMs2_NtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit17
   br i1 %.not2.i.i, label %bb.cj, label %_RNvMNtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit
@@ -229,7 +226,10 @@ bb.cj:                                            ; preds = %.lr.ph.i.i.preheade
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !240
   br label %_RNvMNtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit
 
-bb.ck:                                            ; preds = %.lr.ph.i3.i.preheader
+.lr.ph.i3.i:                                      ; preds = %_RNvMs2_NtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB5_3Seq9singleton.exit17
+  br i1 %.not2.i.i, label %bb.ck, label %_RNvMNtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit
+
+bb.ck:                                            ; preds = %.lr.ph.i3.i
   %i.je = getelementptr inbounds nuw i8, ptr %i.it, i64 24
   store i8 0, ptr %i.je, align 8, !noalias !243
   invoke void @_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VechE8truncateCs79ICTHwG85D_12regex_syntax(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.it, i64 noundef %.val)
@@ -254,7 +254,7 @@ bb.cm:                                            ; preds = %.loopexit.split-lp,
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs79ICTHwG85D_12regex_syntax3hir7literal3SeqEBH_(ptr noalias noundef align 8 dereferenceable(24) %i.au) #16
           to label %common.resume unwind label %bb.cn
 
-_RNvMNtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit: ; preds = %.lr.ph.i3.i.preheader, %bb.ck, %.lr.ph.i.i.preheader, %.noexc18
+_RNvMNtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB2_9Extractor19enforce_literal_len.exit: ; preds = %bb.ck, %.lr.ph.i3.i, %.noexc18, %.lr.ph.i.i.preheader
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.au, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au)
   br label %_RNvMNtNtCs79ICTHwG85D_12regex_syntax3hir7literalNtB2_9Extractor19extract_class_bytes.exit

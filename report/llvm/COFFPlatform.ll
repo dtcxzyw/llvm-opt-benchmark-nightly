@@ -205,11 +205,11 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !552
   store ptr %i.g, ptr %i.f, align 8, !tbaa !555, !alias.scope !552
-  %.pre = load ptr, ptr %i.b, align 8, !tbaa !333
   store ptr %i.g, ptr %i.d, align 8, !alias.scope !552
   store ptr %i.e, ptr %9, align 8, !alias.scope !552
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
-  %i.h = getelementptr inbounds nuw i8, ptr %.pre, i64 48
+  %19 = load ptr, ptr %i.b, align 8, !tbaa !333, !nonnull !15, !align !16
+  %i.h = getelementptr inbounds nuw i8, ptr %19, i64 48
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !17, !noalias !556
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !182, !noalias !559
@@ -612,15 +612,15 @@ _ZNSt6vectorISt4pairIPN4llvm3orc8JITDylibENS2_19JITDylibLookupFlagsEESaIS6_EE9pu
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i32 0, ptr %.sroa.5.0..sroa_idx.i, align 8, !noalias !924
   store ptr %i.f, ptr %i.e, align 8, !tbaa !555, !alias.scope !924
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !333
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 48
-  %.pre37 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !17, !noalias !927
-  %.phi.trans.insert38 = getelementptr inbounds nuw i8, ptr %.pre37, i64 8
-  %.pre39 = load ptr, ptr %.phi.trans.insert38, align 8, !tbaa !182, !noalias !930
   store ptr %i.f, ptr %i.c, align 8, !alias.scope !924
   store ptr %i.d, ptr %10, align 8, !alias.scope !924
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
-  call void @_ZN4llvm3orc16SymbolStringPool6internENS_9StringRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::orc::SymbolStringPtr") align 8 %12, ptr noundef nonnull align 8 dereferenceable(64) %.pre39, ptr %3, i64 %4)
+  %.pre37 = load ptr, ptr %i.a, align 8, !tbaa !333, !nonnull !15, !align !16
+  %.phi.trans.insert38 = getelementptr inbounds nuw i8, ptr %.pre37, i64 48
+  %.pre39 = load ptr, ptr %.phi.trans.insert38, align 8, !tbaa !17, !noalias !927
+  %14 = getelementptr inbounds nuw i8, ptr %.pre39, i64 8
+  %15 = load ptr, ptr %14, align 8, !tbaa !182, !noalias !930
+  call void @_ZN4llvm3orc16SymbolStringPool6internENS_9StringRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::orc::SymbolStringPtr") align 8 %12, ptr noundef nonnull align 8 dereferenceable(64) %15, ptr %3, i64 %4)
   %i.g = load ptr, ptr %12, align 8, !tbaa !302   ; 4 uses
   store ptr null, ptr %12, align 8, !tbaa !302
   %i.h = getelementptr inbounds nuw i8, ptr %11, i64 8

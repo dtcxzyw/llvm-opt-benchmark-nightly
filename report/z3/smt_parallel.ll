@@ -205,15 +205,14 @@ bb.bb:                                            ; preds = %_ZN7obj_refI4expr11
           to label %_ZN6vectorIN3smt8parallel10node_leaseELb1EjE9push_backERKS2_.exit.i unwind label %bb.bj
 
 _ZN6vectorIN3smt8parallel10node_leaseELb1EjE9push_backERKS2_.exit.i: ; preds = %.loopexit195
-  %.pre.i.i109 = load ptr, ptr %11, align 8, !tbaa !762 ; 3 uses
-  %.phi.trans.insert.i.i110 = getelementptr inbounds i8, ptr %.pre.i.i109, i64 -4
+  %.pre.i.i109 = load ptr, ptr %11, align 8, !tbaa !762 ; 2 uses
+  %.phi.trans.insert.i.i110 = getelementptr inbounds i8, ptr %.pre.i.i109, i64 -4 ; 2 uses
   %.pre2.i.i111 = load i32, ptr %.phi.trans.insert.i.i110, align 4, !tbaa !141 ; 2 uses
   %i.dv = zext i32 %.pre2.i.i111 to i64
   %i.dw = getelementptr inbounds nuw [16 x i8], ptr %.pre.i.i109, i64 %i.dv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dw, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false), !tbaa.struct !771
-  %14 = getelementptr inbounds i8, ptr %.pre.i.i109, i64 -4
   %i.dx = add i32 %.pre2.i.i111, 1
-  store i32 %i.dx, ptr %14, align 4, !tbaa !141
+  store i32 %i.dx, ptr %.phi.trans.insert.i.i110, align 4, !tbaa !141
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   invoke void @_ZN3smt8parallel13batch_manager18backtrack_unlockedER15ast_translationjRK10ref_vectorI4expr11ast_managerEPNS0_10node_leaseEPK6vectorISA_Lb1EjE(ptr noundef nonnull align 8 dereferenceable(426) %0, ptr noundef nonnull align 8 dereferenceable(84) %1, i32 noundef -1, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef null, ptr noundef nonnull %11)
           to label %bb.bc unwind label %bb.bk

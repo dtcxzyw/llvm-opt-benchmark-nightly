@@ -204,7 +204,7 @@ bb.xm:                                            ; preds = %Vec_StrPush.exit.i3
   %i.bfu = add nuw nsw i32 %i.bfp, %.0158749
   br label %.lr.ph.i386
 
-.lr.ph.i386:                                      ; preds = %bb.xl, %bb.xm, %Vec_StrPush.exit.i373
+.lr.ph.i386:                                      ; preds = %Vec_StrPush.exit.i373, %bb.xm, %bb.xl
   %.1161 = phi i32 [ %i.bfs, %bb.xl ], [ %.0160748, %bb.xm ], [ %.0160748, %Vec_StrPush.exit.i373 ]
   %.1159 = phi i32 [ %.0158749, %bb.xl ], [ %i.bfu, %bb.xm ], [ %.0158749, %Vec_StrPush.exit.i373 ]
   %i.bfv = load i32, ptr %i.h, align 4, !tbaa !45 ; 7 uses
@@ -607,7 +607,7 @@ Vec_StrPrintStr.exit288:                          ; preds = %Vec_StrPrintStr.exi
   %exitcond482.not = icmp eq i32 %i.ka, %lftr.wideiv
   br i1 %exitcond482.not, label %.backedge, label %Vec_StrPrintStr.exit288, !llvm.loop !71
 
-.backedge:                                        ; preds = %Vec_StrPrintStr.exit288, %Vec_StrPrintStr.exit267, %Vec_StrPush.exit.i311, %Bac_ManFindRealIndex.exit, %Bac_ManFindRealIndex.exit402, %Bac_ObjGetRange.exit, %Vec_StrPush.exit.i256.1, %Vec_StrPush.exit.i277.1, %bb.df
+.backedge:                                        ; preds = %Vec_StrPrintStr.exit288, %Vec_StrPrintStr.exit267, %Bac_ManFindRealIndex.exit, %Bac_ManFindRealIndex.exit402, %Bac_ObjGetRange.exit, %Vec_StrPush.exit.i256.1, %Vec_StrPush.exit.i277.1, %Vec_StrPush.exit.i311, %bb.df
   %.0144.be = phi i32 [ %i.ke, %Bac_ManFindRealIndex.exit ], [ %.1143.lcssa, %Vec_StrPush.exit.i311 ], [ %i.ke, %bb.df ], [ %.0142.lcssa, %Vec_StrPush.exit.i277.1 ], [ %.0142.lcssa, %Vec_StrPrintStr.exit267 ], [ %.0142.lcssa, %Vec_StrPush.exit.i256.1 ], [ %.2.lcssa, %Bac_ObjGetRange.exit ], [ %.2.lcssa, %Bac_ManFindRealIndex.exit402 ], [ %.0142.lcssa, %Vec_StrPrintStr.exit288 ] ; 2 uses
   %.not153 = icmp sgt i32 %.0144.be, %1
   br i1 %.not153, label %.lr.ph.i403, label %bb.ai, !llvm.loop !72

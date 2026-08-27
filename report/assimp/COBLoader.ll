@@ -204,25 +204,25 @@ _ZN6Assimp12LineSplitter11match_startEPKc.exit184.thread: ; preds = %_ZN6Assimp1
 bb.by:                                            ; preds = %bb.ca, %_ZN6Assimp12LineSplitter11match_startEPKc.exit184.thread
   %.0.i.i.i186 = phi ptr [ %i.js, %_ZN6Assimp12LineSplitter11match_startEPKc.exit184.thread ], [ %i.kh, %bb.ca ] ; 4 uses
   %i.kg = load i8, ptr %.0.i.i.i186, align 1
-  switch i8 %i.kg, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader [
-    i8 32, label %bb.bz
-    i8 9, label %bb.bz
+  switch i8 %i.kg, label %bb.bz [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader: ; preds = %bb.bz, %bb.by
-  %.1.i193.ph = phi ptr [ %scevgep.i.i.i185, %bb.bz ], [ %.0.i.i.i186, %bb.by ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader: ; preds = %bb.by, %bb.by
+  %.not.i.i.i187 = icmp eq ptr %.0.i.i.i186, %i.kc
+  br i1 %.not.i.i.i187, label %bb.bz, label %bb.ca
+
+bb.bz:                                            ; preds = %bb.by, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader
+  %.1.i193.ph = phi ptr [ %scevgep.i.i.i185, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader ], [ %.0.i.i.i186, %bb.by ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188
 
-bb.bz:                                            ; preds = %bb.by, %bb.by
-  %.not.i.i.i187 = icmp eq ptr %.0.i.i.i186, %i.kc
-  br i1 %.not.i.i.i187, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader, label %bb.ca
-
-bb.ca:                                            ; preds = %bb.bz
+bb.ca:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader
   %i.kh = getelementptr inbounds nuw i8, ptr %.0.i.i.i186, i64 1
   br label %bb.by, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188:    ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i201
-  %.1.i193 = phi ptr [ %i.kl, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i201 ], [ %.1.i193.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i188:    ; preds = %bb.bz, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i201
+  %.1.i193 = phi ptr [ %i.kl, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i201 ], [ %.1.i193.ph, %bb.bz ] ; 5 uses
   %i.ki = load i8, ptr %.1.i193, align 1          ; 2 uses
   switch i8 %i.ki, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i201 [
     i8 32, label %bb.ce
@@ -625,25 +625,25 @@ _ZN6Assimp12LineSplitter11match_startEPKc.exit348.thread: ; preds = %_ZN6Assimp1
 bb.ge:                                            ; preds = %bb.gg, %_ZN6Assimp12LineSplitter11match_startEPKc.exit348.thread
   %.0.i.i.i350 = phi ptr [ %i.wj, %_ZN6Assimp12LineSplitter11match_startEPKc.exit348.thread ], [ %i.wy, %bb.gg ] ; 4 uses
   %i.wx = load i8, ptr %.0.i.i.i350, align 1
-  switch i8 %i.wx, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader [
-    i8 32, label %bb.gf
-    i8 9, label %bb.gf
+  switch i8 %i.wx, label %bb.gf [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader: ; preds = %bb.gf, %bb.ge
-  %.1.i357.ph = phi ptr [ %scevgep.i.i.i349, %bb.gf ], [ %.0.i.i.i350, %bb.ge ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader: ; preds = %bb.ge, %bb.ge
+  %.not.i.i.i351 = icmp eq ptr %.0.i.i.i350, %i.wt
+  br i1 %.not.i.i.i351, label %bb.gf, label %bb.gg
+
+bb.gf:                                            ; preds = %bb.ge, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader
+  %.1.i357.ph = phi ptr [ %scevgep.i.i.i349, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader ], [ %.0.i.i.i350, %bb.ge ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352
 
-bb.gf:                                            ; preds = %bb.ge, %bb.ge
-  %.not.i.i.i351 = icmp eq ptr %.0.i.i.i350, %i.wt
-  br i1 %.not.i.i.i351, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader, label %bb.gg
-
-bb.gg:                                            ; preds = %bb.gf
+bb.gg:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader
   %i.wy = getelementptr inbounds nuw i8, ptr %.0.i.i.i350, i64 1
   br label %bb.ge, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352:    ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i365
-  %.1.i357 = phi ptr [ %i.xc, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i365 ], [ %.1.i357.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i352:    ; preds = %bb.gf, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i365
+  %.1.i357 = phi ptr [ %i.xc, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i365 ], [ %.1.i357.ph, %bb.gf ] ; 5 uses
   %i.wz = load i8, ptr %.1.i357, align 1          ; 2 uses
   switch i8 %i.wz, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i365 [
     i8 32, label %bb.gk
@@ -772,25 +772,25 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.f, %bb.c
   %.0.i.i.i = phi ptr [ %i.f, %bb.c ], [ %i.m, %bb.f ] ; 4 uses
   %i.l = load i8, ptr %.0.i.i.i, align 1
-  switch i8 %i.l, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader [
-    i8 32, label %bb.e
-    i8 9, label %bb.e
+  switch i8 %i.l, label %bb.e [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.e, %bb.d
-  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %bb.e ], [ %.0.i.i.i, %bb.d ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.d, %bb.d
+  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.h
+  br i1 %.not.i.i.i, label %bb.e, label %bb.f
+
+bb.e:                                             ; preds = %bb.d, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ], [ %.0.i.i.i, %bb.d ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i
 
-bb.e:                                             ; preds = %bb.d, %bb.d
-  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.h
-  br i1 %.not.i.i.i, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, label %bb.f
-
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   %i.m = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
   br label %bb.d, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
-  %.1.i = phi ptr [ %i.q, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %bb.e, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
+  %.1.i = phi ptr [ %i.q, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %bb.e ] ; 5 uses
   %i.n = load i8, ptr %.1.i, align 1              ; 2 uses
   switch i8 %i.n, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i [
     i8 32, label %bb.j
@@ -986,25 +986,25 @@ _ZNSt6vectorIN6Assimp3COB8MaterialESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit: ; 
 bb.f:                                             ; preds = %bb.h, %_ZNSt6vectorIN6Assimp3COB8MaterialESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit
   %.0.i.i.i = phi ptr [ %i.au, %_ZNSt6vectorIN6Assimp3COB8MaterialESaIS2_EE12emplace_backIJEEERS2_DpOT_.exit ], [ %i.bb, %bb.h ] ; 4 uses
   %i.ba = load i8, ptr %.0.i.i.i, align 1
-  switch i8 %i.ba, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader [
-    i8 32, label %bb.g
-    i8 9, label %bb.g
+  switch i8 %i.ba, label %bb.g [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.g, %bb.f
-  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %bb.g ], [ %.0.i.i.i, %bb.f ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.f, %bb.f
+  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.aw
+  br i1 %.not.i.i.i, label %bb.g, label %bb.h
+
+bb.g:                                             ; preds = %bb.f, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ], [ %.0.i.i.i, %bb.f ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i
 
-bb.g:                                             ; preds = %bb.f, %bb.f
-  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.aw
-  br i1 %.not.i.i.i, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, label %bb.h
-
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   %i.bb = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
   br label %bb.f, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
-  %.1.i = phi ptr [ %i.bf, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %bb.g, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
+  %.1.i = phi ptr [ %i.bf, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %bb.g ] ; 5 uses
   %i.bc = load i8, ptr %.1.i, align 1             ; 2 uses
   switch i8 %i.bc, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i [
     i8 32, label %bb.l
@@ -1120,25 +1120,25 @@ _ZN6Assimp12LineSplitter11match_startEPKc.exit48.thread: ; preds = %_ZN6Assimp12
 bb.p:                                             ; preds = %bb.r, %_ZN6Assimp12LineSplitter11match_startEPKc.exit48.thread
   %.0.i.i.i50 = phi ptr [ %i.bw, %_ZN6Assimp12LineSplitter11match_startEPKc.exit48.thread ], [ %i.cg, %bb.r ] ; 4 uses
   %i.cf = load i8, ptr %.0.i.i.i50, align 1
-  switch i8 %i.cf, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader [
-    i8 32, label %bb.q
-    i8 9, label %bb.q
+  switch i8 %i.cf, label %bb.q [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader: ; preds = %bb.q, %bb.p
-  %.1.i57.ph = phi ptr [ %scevgep.i.i.i49, %bb.q ], [ %.0.i.i.i50, %bb.p ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader: ; preds = %bb.p, %bb.p
+  %.not.i.i.i51 = icmp eq ptr %.0.i.i.i50, %i.cb
+  br i1 %.not.i.i.i51, label %bb.q, label %bb.r
+
+bb.q:                                             ; preds = %bb.p, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader
+  %.1.i57.ph = phi ptr [ %scevgep.i.i.i49, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader ], [ %.0.i.i.i50, %bb.p ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52
 
-bb.q:                                             ; preds = %bb.p, %bb.p
-  %.not.i.i.i51 = icmp eq ptr %.0.i.i.i50, %i.cb
-  br i1 %.not.i.i.i51, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader, label %bb.r
-
-bb.r:                                             ; preds = %bb.q
+bb.r:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader
   %i.cg = getelementptr inbounds nuw i8, ptr %.0.i.i.i50, i64 1
   br label %bb.p, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52:     ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i65
-  %.1.i57 = phi ptr [ %i.ck, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i65 ], [ %.1.i57.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i52:     ; preds = %bb.q, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i65
+  %.1.i57 = phi ptr [ %i.ck, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i65 ], [ %.1.i57.ph, %bb.q ] ; 5 uses
   %i.ch = load i8, ptr %.1.i57, align 1           ; 2 uses
   switch i8 %i.ch, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i65 [
     i8 32, label %bb.v
@@ -1492,25 +1492,25 @@ _ZN6Assimp12LineSplitter11match_startEPKc.exit77.thread: ; preds = %._ZN6Assimp1
 bb.as:                                            ; preds = %bb.au, %_ZN6Assimp12LineSplitter11match_startEPKc.exit77.thread
   %.0.i.i.i79 = phi ptr [ %i.fs, %_ZN6Assimp12LineSplitter11match_startEPKc.exit77.thread ], [ %i.fy, %bb.au ] ; 4 uses
   %i.fx = load i8, ptr %.0.i.i.i79, align 1
-  switch i8 %i.fx, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader [
-    i8 32, label %bb.at
-    i8 9, label %bb.at
+  switch i8 %i.fx, label %bb.at [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader: ; preds = %bb.at, %bb.as
-  %.1.i86.ph = phi ptr [ %scevgep.i.i.i78, %bb.at ], [ %.0.i.i.i79, %bb.as ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader: ; preds = %bb.as, %bb.as
+  %.not.i.i.i80 = icmp eq ptr %.0.i.i.i79, %i.ft
+  br i1 %.not.i.i.i80, label %bb.at, label %bb.au
+
+bb.at:                                            ; preds = %bb.as, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader
+  %.1.i86.ph = phi ptr [ %scevgep.i.i.i78, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader ], [ %.0.i.i.i79, %bb.as ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81
 
-bb.at:                                            ; preds = %bb.as, %bb.as
-  %.not.i.i.i80 = icmp eq ptr %.0.i.i.i79, %i.ft
-  br i1 %.not.i.i.i80, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader, label %bb.au
-
-bb.au:                                            ; preds = %bb.at
+bb.au:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader
   %i.fy = getelementptr inbounds nuw i8, ptr %.0.i.i.i79, i64 1
   br label %bb.as, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81:     ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i94
-  %.1.i86 = phi ptr [ %i.gc, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i94 ], [ %.1.i86.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i81:     ; preds = %bb.at, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i94
+  %.1.i86 = phi ptr [ %i.gc, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i94 ], [ %.1.i86.ph, %bb.at ] ; 5 uses
   %i.fz = load i8, ptr %.1.i86, align 1           ; 2 uses
   switch i8 %i.fz, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i94 [
     i8 32, label %bb.ay
@@ -1913,25 +1913,25 @@ _ZN6Assimp12LineSplitter11match_startEPKc.exit64.thread: ; preds = %_ZN6Assimp12
 bb.ae:                                            ; preds = %bb.ag, %_ZN6Assimp12LineSplitter11match_startEPKc.exit64.thread
   %.0.i.i.i = phi ptr [ %i.fj, %_ZN6Assimp12LineSplitter11match_startEPKc.exit64.thread ], [ %i.fq, %bb.ag ] ; 4 uses
   %i.fp = load i8, ptr %.0.i.i.i, align 1
-  switch i8 %i.fp, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader [
-    i8 32, label %bb.af
-    i8 9, label %bb.af
+  switch i8 %i.fp, label %bb.af [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.af, %bb.ae
-  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %bb.af ], [ %.0.i.i.i, %bb.ae ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.ae, %bb.ae
+  %.not.i.i.i65 = icmp eq ptr %.0.i.i.i, %i.fl
+  br i1 %.not.i.i.i65, label %bb.af, label %bb.ag
+
+bb.af:                                            ; preds = %bb.ae, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ], [ %.0.i.i.i, %bb.ae ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i
 
-bb.af:                                            ; preds = %bb.ae, %bb.ae
-  %.not.i.i.i65 = icmp eq ptr %.0.i.i.i, %i.fl
-  br i1 %.not.i.i.i65, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, label %bb.ag
-
-bb.ag:                                            ; preds = %bb.af
+bb.ag:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   %i.fq = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
   br label %bb.ae, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
-  %.1.i = phi ptr [ %i.fu, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %bb.af, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
+  %.1.i = phi ptr [ %i.fu, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %bb.af ] ; 5 uses
   %i.fr = load i8, ptr %.1.i, align 1             ; 2 uses
   switch i8 %i.fr, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i [
     i8 32, label %bb.ak
@@ -2334,25 +2334,25 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.h, %bb.e
   %.0.i.i.i = phi ptr [ %i.i, %bb.e ], [ %i.an, %bb.h ] ; 4 uses
   %i.am = load i8, ptr %.0.i.i.i, align 1
-  switch i8 %i.am, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader [
-    i8 32, label %bb.g
-    i8 9, label %bb.g
+  switch i8 %i.am, label %bb.g [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.g, %bb.f
-  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %bb.g ], [ %.0.i.i.i, %bb.f ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.f, %bb.f
+  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.ai
+  br i1 %.not.i.i.i, label %bb.g, label %bb.h
+
+bb.g:                                             ; preds = %bb.f, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ], [ %.0.i.i.i, %bb.f ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i
 
-bb.g:                                             ; preds = %bb.f, %bb.f
-  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.ai
-  br i1 %.not.i.i.i, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, label %bb.h
-
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   %i.an = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
   br label %bb.f, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
-  %.1.i = phi ptr [ %i.ar, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %bb.g, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
+  %.1.i = phi ptr [ %i.ar, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %bb.g ] ; 5 uses
   %i.ao = load i8, ptr %.1.i, align 1             ; 2 uses
   switch i8 %i.ao, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i [
     i8 32, label %bb.l
@@ -2755,25 +2755,25 @@ _ZN6Assimp12LineSplitter11match_startEPKc.exit.thread: ; preds = %_ZN6Assimp12Li
 bb.c:                                             ; preds = %bb.e, %_ZN6Assimp12LineSplitter11match_startEPKc.exit.thread
   %.0.i.i.i = phi ptr [ %i.v, %_ZN6Assimp12LineSplitter11match_startEPKc.exit.thread ], [ %i.ae, %bb.e ] ; 4 uses
   %i.ad = load i8, ptr %.0.i.i.i, align 1
-  switch i8 %i.ad, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader [
-    i8 32, label %bb.d
-    i8 9, label %bb.d
+  switch i8 %i.ad, label %bb.d [
+    i8 32, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+    i8 9, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   ]
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.d, %bb.c
-  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %bb.d ], [ %.0.i.i.i, %bb.c ]
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader: ; preds = %bb.c, %bb.c
+  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.z
+  br i1 %.not.i.i.i, label %bb.d, label %bb.e
+
+bb.d:                                             ; preds = %bb.c, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
+  %.1.i.ph = phi ptr [ %scevgep.i.i.i, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ], [ %.0.i.i.i, %bb.c ]
   br label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i
 
-bb.d:                                             ; preds = %bb.c, %bb.c
-  %.not.i.i.i = icmp eq ptr %.0.i.i.i, %i.z
-  br i1 %.not.i.i.i, label %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, label %bb.e
-
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader
   %i.ae = getelementptr inbounds nuw i8, ptr %.0.i.i.i, i64 1
   br label %bb.c, !llvm.loop !91
 
-_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
-  %.1.i = phi ptr [ %i.ai, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i.preheader ] ; 5 uses
+_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit.i:       ; preds = %bb.d, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i
+  %.1.i = phi ptr [ %i.ai, %_ZN6Assimp9IsLineEndIcEEbT_.exit.i ], [ %.1.i.ph, %bb.d ] ; 5 uses
   %i.af = load i8, ptr %.1.i, align 1             ; 2 uses
   switch i8 %i.af, label %_ZN6Assimp9IsLineEndIcEEbT_.exit.i [
     i8 32, label %bb.h

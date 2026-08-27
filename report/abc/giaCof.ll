@@ -205,13 +205,13 @@ Cof_ObjLevel.exit:                                ; preds = %bb.a, %._crit_edge.
   %i.av = load i32, ptr %i.au, align 8, !tbaa !58
   %i.aw = add nsw i32 %i.av, 1
   store i32 %i.aw, ptr %i.au, align 8, !tbaa !58
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %.val.i = load i32, ptr %1, align 4
   %i.ax = and i32 %.val.i, 241
   %narrow.i.not.i = icmp eq i32 %i.ax, 17
   br i1 %narrow.i.not.i, label %bb.n, label %Cof_ManSuppSize.exit
 
 bb.n:                                             ; preds = %Cof_ObjLevel.exit
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ay = load i32, ptr %2, align 4
   %i.az = and i32 %i.ay, 2147483647
   %i.ba = zext nneg i32 %i.az to i64
@@ -232,7 +232,8 @@ Cof_ManSuppSize.exit:                             ; preds = %bb.n, %Cof_ObjLevel
   br i1 %narrow.i.not.i14, label %bb.o, label %Cof_ManTfiSize.exit
 
 bb.o:                                             ; preds = %Cof_ManSuppSize.exit
-  %i.bi = load i32, ptr %2, align 4
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.bi = load i32, ptr %3, align 4
   %i.bj = and i32 %i.bi, 2147483647
   %i.bk = zext nneg i32 %i.bj to i64
   %i.bl = sub nsw i64 0, %i.bk

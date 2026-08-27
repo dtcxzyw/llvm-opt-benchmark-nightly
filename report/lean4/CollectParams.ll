@@ -204,7 +204,7 @@ lean_dec_ref.exit29:                              ; preds = %bb.s, %bb.t, %bb.u
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__1(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readnone captures(none) %6) local_unnamed_addr #0 {
+define noundef ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__1(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readnone captures(none) %6) local_unnamed_addr #0 {
 bb.a:
   %.not173 = icmp ult i64 %2, %1
   br i1 %.not173, label %.lr.ph, label %._crit_edge
@@ -352,9 +352,9 @@ lean_dec.exit115.peel:                            ; preds = %bb.w, %bb.v, %bb.u,
 
 lean_dec.exit111.peel:                            ; preds = %lean_dec.exit115.peel, %bb.n, %bb.m, %bb.l, %bb.j
   %i.al = tail call ptr @l___private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect(ptr noundef %i.n, ptr noundef %4, ptr noundef %5, ptr noundef %6) ; 8 uses
-  %i.am = ptrtoint ptr %i.al to i64               ; 2 uses
+  %i.am = ptrtoint ptr %i.al to i64               ; 3 uses
   %i.an = and i64 %i.am, 1
-  %.not.i139.peel = icmp eq i64 %i.an, 0          ; 2 uses
+  %.not.i139.peel = icmp eq i64 %i.an, 0
   br i1 %.not.i139.peel, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %lean_dec.exit111.peel
@@ -430,8 +430,8 @@ lean_dec.exit.peel:                               ; preds = %lean_dec.exit.i.pee
   %exitcond.not.peel = icmp eq i64 %i.bd, %1
   br i1 %exitcond.not.peel, label %._crit_edge, label %.lr.ph.peel.newph
 
-._crit_edge:                                      ; preds = %lean_dec.exit.peel, %lean_dec.exit, %bb.a
-  %.084.lcssa = phi ptr [ %3, %bb.a ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit.peel ]
+._crit_edge:                                      ; preds = %lean_dec.exit, %lean_dec.exit.peel, %bb.a
+  %.084.lcssa = phi ptr [ %3, %bb.a ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit.peel ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit ]
   tail call void @lean_inc_heartbeat() #4
   %i.be = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #4 ; 2 uses
   %i.bf = icmp eq ptr %i.be, null
@@ -548,7 +548,7 @@ bb.aw:                                            ; preds = %bb.av
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %.lcssa239) #4
   br label %lean_dec.exit119
 
-lean_dec.exit119:                                 ; preds = %lean_inc.exit106.thread.peel, %lean_inc.exit106.thread, %bb.aw, %bb.av, %bb.au
+lean_dec.exit119:                                 ; preds = %lean_inc.exit106.thread, %lean_inc.exit106.thread.peel, %bb.aw, %bb.av, %bb.au
   %i.ci = phi ptr [ %.lcssa244, %bb.au ], [ %.lcssa244, %bb.aw ], [ %.lcssa244, %bb.av ], [ %i.n, %lean_inc.exit106.thread.peel ], [ %i.br, %lean_inc.exit106.thread ] ; 4 uses
   %i.cj = ptrtoint ptr %i.ci to i64
   %i.ck = and i64 %i.cj, 1
@@ -666,9 +666,9 @@ bb.bp:                                            ; preds = %bb.bo
 
 lean_dec.exit111:                                 ; preds = %bb.bl, %bb.bn, %bb.bo, %bb.bp, %lean_dec.exit115
   %i.dh = tail call ptr @l___private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect(ptr noundef %i.br, ptr noundef %4, ptr noundef %5, ptr noundef %6) ; 8 uses
-  %i.di = ptrtoint ptr %i.dh to i64               ; 2 uses
+  %i.di = ptrtoint ptr %i.dh to i64               ; 3 uses
   %i.dj = and i64 %i.di, 1
-  %.not.i139 = icmp eq i64 %i.dj, 0               ; 2 uses
+  %.not.i139 = icmp eq i64 %i.dj, 0
   br i1 %.not.i139, label %bb.br, label %bb.bq
 
 bb.bq:                                            ; preds = %lean_dec.exit111
@@ -741,7 +741,7 @@ bb.ca:                                            ; preds = %bb.bz
 
 .loopexit254:                                     ; preds = %lean_obj_tag.exit, %lean_obj_tag.exit.peel
   %.lcssa249 = phi ptr [ %i.al, %lean_obj_tag.exit.peel ], [ %i.dh, %lean_obj_tag.exit ] ; 6 uses
-  %.not.i139.lcssa = phi i1 [ %.not.i139.peel, %lean_obj_tag.exit.peel ], [ %.not.i139, %lean_obj_tag.exit ]
+  %.lcssa185 = phi i64 [ %i.am, %lean_obj_tag.exit.peel ], [ %i.di, %lean_obj_tag.exit ]
   %i.dz = getelementptr inbounds nuw i8, ptr %.lcssa249, i64 8
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !9  ; 5 uses
   %.val = load i32, ptr %.lcssa249, align 8, !tbaa !11
@@ -773,7 +773,9 @@ bb.cf:                                            ; preds = %bb.ce
   br label %lean_inc.exit
 
 lean_inc.exit:                                    ; preds = %bb.cf, %bb.ce, %bb.cd, %bb.cb
-  br i1 %.not.i139.lcssa, label %bb.cg, label %bb.ck
+  %7 = and i64 %.lcssa185, 1
+  %.not.i109 = icmp eq i64 %7, 0
+  br i1 %.not.i109, label %bb.cg, label %bb.ck
 
 bb.cg:                                            ; preds = %lean_inc.exit
   %i.eh = load i32, ptr %.lcssa249, align 8, !tbaa !11 ; 3 uses
@@ -1176,7 +1178,7 @@ bb.nz:                                            ; preds = %lean_alloc_ctor.exi
 declare ptr @l_Lean_Syntax_getArgs(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readnone captures(none) %6) local_unnamed_addr #0 {
+define noundef ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0(ptr nofree noundef readonly captures(none) %0, i64 noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef %4, ptr nofree noundef readonly captures(none) %5, ptr nofree noundef readnone captures(none) %6) local_unnamed_addr #0 {
 bb.a:
   %.not173 = icmp ult i64 %2, %1
   br i1 %.not173, label %.lr.ph, label %._crit_edge
@@ -1324,9 +1326,9 @@ lean_dec.exit115.peel:                            ; preds = %bb.w, %bb.v, %bb.u,
 
 lean_dec.exit111.peel:                            ; preds = %lean_dec.exit115.peel, %bb.n, %bb.m, %bb.l, %bb.j
   %i.al = tail call ptr @l___private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect(ptr noundef %i.n, ptr noundef %4, ptr noundef %5, ptr noundef %6) ; 8 uses
-  %i.am = ptrtoint ptr %i.al to i64               ; 2 uses
+  %i.am = ptrtoint ptr %i.al to i64               ; 3 uses
   %i.an = and i64 %i.am, 1
-  %.not.i139.peel = icmp eq i64 %i.an, 0          ; 2 uses
+  %.not.i139.peel = icmp eq i64 %i.an, 0
   br i1 %.not.i139.peel, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %lean_dec.exit111.peel
@@ -1402,8 +1404,8 @@ lean_dec.exit.peel:                               ; preds = %lean_dec.exit.i.pee
   %exitcond.not.peel = icmp eq i64 %i.bd, %1
   br i1 %exitcond.not.peel, label %._crit_edge, label %.lr.ph.peel.newph
 
-._crit_edge:                                      ; preds = %lean_dec.exit.peel, %lean_dec.exit, %bb.a
-  %.084.lcssa = phi ptr [ %3, %bb.a ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit.peel ]
+._crit_edge:                                      ; preds = %lean_dec.exit, %lean_dec.exit.peel, %bb.a
+  %.084.lcssa = phi ptr [ %3, %bb.a ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit.peel ], [ @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___closed__4_value, %lean_dec.exit ]
   tail call void @lean_inc_heartbeat() #4
   %i.be = tail call noalias ptr @mi_malloc_small(i64 noundef 16) #4 ; 2 uses
   %i.bf = icmp eq ptr %i.be, null
@@ -1520,7 +1522,7 @@ bb.aw:                                            ; preds = %bb.av
   tail call void @lean_dec_ref_cold(ptr noundef nonnull %.lcssa239) #4
   br label %lean_dec.exit119
 
-lean_dec.exit119:                                 ; preds = %lean_inc.exit106.thread.peel, %lean_inc.exit106.thread, %bb.aw, %bb.av, %bb.au
+lean_dec.exit119:                                 ; preds = %lean_inc.exit106.thread, %lean_inc.exit106.thread.peel, %bb.aw, %bb.av, %bb.au
   %i.ci = phi ptr [ %.lcssa244, %bb.au ], [ %.lcssa244, %bb.aw ], [ %.lcssa244, %bb.av ], [ %i.n, %lean_inc.exit106.thread.peel ], [ %i.br, %lean_inc.exit106.thread ] ; 4 uses
   %i.cj = ptrtoint ptr %i.ci to i64
   %i.ck = and i64 %i.cj, 1
@@ -1638,9 +1640,9 @@ bb.bp:                                            ; preds = %bb.bo
 
 lean_dec.exit111:                                 ; preds = %bb.bl, %bb.bn, %bb.bo, %bb.bp, %lean_dec.exit115
   %i.dh = tail call ptr @l___private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect(ptr noundef %i.br, ptr noundef %4, ptr noundef %5, ptr noundef %6) ; 8 uses
-  %i.di = ptrtoint ptr %i.dh to i64               ; 2 uses
+  %i.di = ptrtoint ptr %i.dh to i64               ; 3 uses
   %i.dj = and i64 %i.di, 1
-  %.not.i139 = icmp eq i64 %i.dj, 0               ; 2 uses
+  %.not.i139 = icmp eq i64 %i.dj, 0
   br i1 %.not.i139, label %bb.br, label %bb.bq
 
 bb.bq:                                            ; preds = %lean_dec.exit111
@@ -1713,7 +1715,7 @@ bb.ca:                                            ; preds = %bb.bz
 
 .loopexit254:                                     ; preds = %lean_obj_tag.exit, %lean_obj_tag.exit.peel
   %.lcssa249 = phi ptr [ %i.al, %lean_obj_tag.exit.peel ], [ %i.dh, %lean_obj_tag.exit ] ; 6 uses
-  %.not.i139.lcssa = phi i1 [ %.not.i139.peel, %lean_obj_tag.exit.peel ], [ %.not.i139, %lean_obj_tag.exit ]
+  %.lcssa185 = phi i64 [ %i.am, %lean_obj_tag.exit.peel ], [ %i.di, %lean_obj_tag.exit ]
   %i.dz = getelementptr inbounds nuw i8, ptr %.lcssa249, i64 8
   %i.ea = load ptr, ptr %i.dz, align 8, !tbaa !9  ; 5 uses
   %.val = load i32, ptr %.lcssa249, align 8, !tbaa !11
@@ -1745,7 +1747,9 @@ bb.cf:                                            ; preds = %bb.ce
   br label %lean_inc.exit
 
 lean_inc.exit:                                    ; preds = %bb.cf, %bb.ce, %bb.cd, %bb.cb
-  br i1 %.not.i139.lcssa, label %bb.cg, label %bb.ck
+  %7 = and i64 %.lcssa185, 1
+  %.not.i109 = icmp eq i64 %7, 0
+  br i1 %.not.i109, label %bb.cg, label %bb.ck
 
 bb.cg:                                            ; preds = %lean_inc.exit
   %i.eh = load i32, ptr %.lcssa249, align 8, !tbaa !11 ; 3 uses
@@ -1797,7 +1801,7 @@ lean_dec.exit:                                    ; preds = %bb.ca, %bb.bz, %bb.
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef readnone captures(none) %7) local_unnamed_addr #0 {
+define noundef ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__0___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef readnone captures(none) %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %.val32 = load i64, ptr %i.a, align 8, !tbaa !14
@@ -1928,7 +1932,7 @@ lean_dec_ref.exit29:                              ; preds = %bb.s, %bb.t, %bb.u
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__1___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef readnone captures(none) %7) local_unnamed_addr #0 {
+define noundef ptr @l___private_Init_Data_Array_Basic_0__Array_forIn_x27Unsafe_loop___at___00__private_Lean_Meta_Tactic_Grind_CollectParams_0__Lean_Meta_Grind_Collector_collect_spec__1___boxed(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef readnone captures(none) %7) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %.val32 = load i64, ptr %i.a, align 8, !tbaa !14

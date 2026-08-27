@@ -205,7 +205,7 @@ bb.bl:                                            ; preds = %.noexc12.i281
   call void @_ZN4absl12lts_2026052612log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %9) #35
   unreachable
 
-_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterISaIN12_GLOBAL__N_110RefCountedEELb0EE15DestroyElementsERS5_PS4_m.exit.i279: ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN12_GLOBAL__N_110RefCountedEEE8AllocateEm.exit.i.i.i._crit_edge, %.noexc.i280
+_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterISaIN12_GLOBAL__N_110RefCountedEELb0EE15DestroyElementsERS5_PS4_m.exit.i279: ; preds = %.noexc.i280, %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN12_GLOBAL__N_110RefCountedEEE8AllocateEm.exit.i.i.i._crit_edge
   %i.gl = landingpad { ptr, i32 }
           catch ptr null
   %i.gm = extractvalue { ptr, i32 } %i.gl, 0
@@ -218,16 +218,6 @@ bb.bm:                                            ; preds = %_ZN4absl12lts_20260
           cleanup
   invoke void @__cxa_end_catch()
           to label %_ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIN12_GLOBAL__N_110RefCountedEEED2Ev.exit97.thread.i.i.i unwind label %54
-
-54:                                               ; preds = %bb.bm
-  %55 = landingpad { ptr, i32 }
-          catch ptr null
-  %56 = extractvalue { ptr, i32 } %55, 0
-  call void @__clang_call_terminate(ptr %56) #35
-  unreachable
-
-57:                                               ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterISaIN12_GLOBAL__N_110RefCountedEELb0EE15DestroyElementsERS5_PS4_m.exit.i279
-  unreachable
 
 _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIN12_GLOBAL__N_110RefCountedEEE9ConstructINS1_20IteratorValueAdapterIS5_St13move_iteratorIPS4_EEEEEvSA_RT_m.exit.i.i.i: ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal21AllocationTransactionISaIN12_GLOBAL__N_110RefCountedEEE8AllocateEm.exit.i.i.i
   %i.gp = load i32, ptr %.val4.i.i272554, align 4, !tbaa !132
@@ -245,6 +235,16 @@ _ZN4absl12lts_2026052623inlined_vector_internal23ConstructionTransactionISaIN12_
 .lr.ph.i249.preheader.new:                        ; preds = %.lr.ph.i249.preheader
   %unroll_iter = and i64 %storemerge31595, -2
   br label %.lr.ph.i249
+
+54:                                               ; preds = %bb.bm
+  %55 = landingpad { ptr, i32 }
+          catch ptr null
+  %56 = extractvalue { ptr, i32 } %55, 0
+  call void @__clang_call_terminate(ptr %56) #35
+  unreachable
+
+57:                                               ; preds = %_ZN4absl12lts_2026052623inlined_vector_internal14DestroyAdapterISaIN12_GLOBAL__N_110RefCountedEELb0EE15DestroyElementsERS5_PS4_m.exit.i279
+  unreachable
 
 .lr.ph.i249:                                      ; preds = %bb.bs, %.lr.ph.i249.preheader.new
   %.val.i.i250 = phi ptr [ %i.fv, %.lr.ph.i249.preheader.new ], [ %i.if, %bb.bs ] ; 5 uses
@@ -648,12 +648,12 @@ bb.a:
   store i32 0, ptr %i.c, align 8, !tbaa !2646
   %i.d = getelementptr inbounds nuw i8, ptr %19, i64 12
   store i8 1, ptr %i.d, align 4, !tbaa !2648
-  %i.e = add nsw i32 %i.b, 2
-  store i32 %i.e, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance19num_live_instances_E, align 4, !tbaa !132
-  %22 = add i32 %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E.promoted, 1
-  %i.f = add i32 %i.a, 2
-  store i32 %i.f, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, align 4, !tbaa !132
-  store i32 %22, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, align 4, !tbaa !132
+  %i.e = add nsw i32 %i.a, 2
+  %22 = add nsw i32 %i.b, 2
+  store i32 %22, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance19num_live_instances_E, align 4, !tbaa !132
+  %i.f = add nsw i32 %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E.promoted, 1
+  store i32 %i.e, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, align 4, !tbaa !132
+  store i32 %i.f, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance11num_copies_E, align 4, !tbaa !132
   store i64 2, ptr %19, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #36, !noalias !4034
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4037)

@@ -205,7 +205,7 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_4TypeELb1EE9push_backES2_.exit.i: ; preds 
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !539
   store ptr %i.dp, ptr %i.dl, align 8
   store i32 1, ptr %i.dm, align 8, !tbaa !427
-  %.pre347.a = load ptr, ptr %i.au, align 8, !tbaa !543
+  %.pre347.a = load ptr, ptr %i.au, align 8, !tbaa !543, !nonnull !386, !align !387
   %i.dq = call noundef ptr @_ZN4llvm4Type9getVoidTyERNS_11LLVMContextE(ptr noundef nonnull align 8 dereferenceable(8) %.pre347.a) #24
   %i.dr = load ptr, ptr %7, align 8, !tbaa !424
   %i.ds = load i32, ptr %i.dm, align 8, !tbaa !427

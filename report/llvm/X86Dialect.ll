@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %bb.r
   %i.fb = call i8 %i.fa(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %6, ptr %i.dw, ptr noundef nonnull align 8 dereferenceable(16) %i.dx) #26, !inline_history !185
   br label %.critedge
 
-.critedge:                                        ; preds = %.critedge.i.i128, %.critedge.i.i121, %.critedge92, %.critedge.i.i106.preheader, %.critedge.i.i113, %bb.j, %.loopexit, %.thread, %bb.k, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.sroa.0174.2 = phi i8 [ %i.dr, %.loopexit ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %.thread ], [ 0, %bb.k ], [ 0, %.critedge.i.i106.preheader ], [ 0, %.critedge.i.i113 ], [ 0, %.critedge92 ], [ 0, %.critedge.i.i121 ], [ %i.fb, %.critedge.i.i128 ]
+.critedge:                                        ; preds = %.critedge.i.i121, %.critedge.i.i128, %.critedge92, %.critedge.i.i106.preheader, %.critedge.i.i113, %bb.j, %.loopexit, %.thread, %bb.k, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.sroa.0174.2 = phi i8 [ %i.dr, %.loopexit ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %.thread ], [ 0, %bb.k ], [ 0, %.critedge.i.i113 ], [ 0, %.critedge92 ], [ %i.fb, %.critedge.i.i128 ], [ 0, %.critedge.i.i106.preheader ], [ 0, %.critedge.i.i121 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
@@ -609,8 +609,8 @@ bb.s:                                             ; preds = %bb.r
   %i.fb = call i8 %i.fa(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %6, ptr %i.dw, ptr noundef nonnull align 8 dereferenceable(16) %i.dx) #26, !inline_history !185
   br label %.critedge
 
-.critedge:                                        ; preds = %.critedge.i.i128, %.critedge.i.i121, %.critedge92, %.critedge.i.i106, %.critedge.i.i113, %bb.j, %.loopexit, %.thread, %bb.k, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
-  %.sroa.0175.2 = phi i8 [ %i.dr, %.loopexit ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %.thread ], [ 0, %bb.k ], [ 0, %.critedge.i.i106 ], [ 0, %.critedge.i.i113 ], [ 0, %.critedge92 ], [ 0, %.critedge.i.i121 ], [ %i.fb, %.critedge.i.i128 ]
+.critedge:                                        ; preds = %.critedge.i.i121, %.critedge.i.i128, %.critedge92, %.critedge.i.i106, %.critedge.i.i113, %bb.j, %.loopexit, %.thread, %bb.k, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a
+  %.sroa.0175.2 = phi i8 [ %i.dr, %.loopexit ], [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.g ], [ 0, %bb.h ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %.thread ], [ 0, %bb.k ], [ 0, %.critedge.i.i113 ], [ 0, %.critedge92 ], [ %i.fb, %.critedge.i.i128 ], [ 0, %.critedge.i.i106 ], [ 0, %.critedge.i.i121 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26

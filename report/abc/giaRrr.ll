@@ -205,10 +205,10 @@ define void @_ZN3rrr10AndNetwork9PropagateEi(ptr noundef nonnull align 8 derefer
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 5 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.c, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.c, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.f, align 8      ; 2 uses
-  %i.g = add nuw i32 %.promoted8.i, 1
-  %i.h = icmp eq i32 %.promoted8.i, -1
+  %i.g = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.h = icmp eq i32 %i.g, 0
   br i1 %i.h, label %bb.a, label %.lr.ph.us.i.split
 
 bb.a:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -611,10 +611,10 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 5 uses
   %i.l = load ptr, ptr %i.k, align 8              ; 9 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.j, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.j, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.m, align 8      ; 2 uses
-  %i.n = add nuw i32 %.promoted8.i, 1
-  %i.o = icmp eq i32 %.promoted8.i, -1
+  %i.n = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.b, label %.lr.ph.us.i.split
 
 bb.b:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -1017,10 +1017,10 @@ define linkonce_odr void @_ZN3rrr10AndNetwork12GetNeighborsEibi(ptr dead_on_unwi
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 184 ; 8 uses
   %i.g = load ptr, ptr %i.f, align 8              ; 9 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.e, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.e, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.h, align 8      ; 2 uses
-  %i.i = add nuw i32 %.promoted8.i, 1
-  %i.j = icmp eq i32 %.promoted8.i, -1
+  %i.i = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %bb.a, label %.lr.ph.us.i.split
 
 bb.a:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -1423,10 +1423,10 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 5 uses
   %i.l = load ptr, ptr %i.k, align 8              ; 9 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.j, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.j, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.m, align 8      ; 2 uses
-  %i.n = add nuw i32 %.promoted8.i, 1
-  %i.o = icmp eq i32 %.promoted8.i, -1
+  %i.n = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.b, label %.lr.ph.us.i.split
 
 bb.b:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -1829,10 +1829,10 @@ bb.a:
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
   %i.ah = load ptr, ptr %i.ag, align 8            ; 6 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.af, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.af, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.ai, align 8     ; 2 uses
-  %i.aj = add nuw i32 %.promoted8.i, 1
-  %i.ak = icmp eq i32 %.promoted8.i, -1
+  %i.aj = add i32 %.promoted8.i, 1                ; 2 uses
+  %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %bb.b, label %.lr.ph.us.i.split
 
 bb.b:                                             ; preds = %._crit_edge
@@ -2235,10 +2235,10 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 7 uses
   %i.l = load ptr, ptr %i.k, align 8              ; 9 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.j, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.j, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.m, align 8      ; 2 uses
-  %i.n = add nuw i32 %.promoted8.i, 1
-  %i.o = icmp eq i32 %.promoted8.i, -1
+  %i.n = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.b, label %.lr.ph.us.i.split
 
 bb.b:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -2641,10 +2641,10 @@ define linkonce_odr void @_ZN3rrr10AndNetwork17ForEachTfosUpdateITtTpTyESt3setJi
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 7 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 9 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.f, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.f, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.i, align 8      ; 2 uses
-  %i.j = add nuw i32 %.promoted8.i, 1
-  %i.k = icmp eq i32 %.promoted8.i, -1
+  %i.j = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.a, label %.lr.ph.us.i.split
 
 bb.a:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -3047,10 +3047,10 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 6 uses
   %i.p = load ptr, ptr %i.o, align 8              ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.n, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.n, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.q, align 8      ; 2 uses
-  %i.r = add nuw i32 %.promoted8.i, 1
-  %i.s = icmp eq i32 %.promoted8.i, -1
+  %i.r = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %bb.b, label %.lr.ph.us.i.split
 
 bb.b:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -3289,10 +3289,10 @@ define linkonce_odr void @_ZN3rrr10AndNetwork17ForEachTfosUpdateITtTpTyESt6vecto
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 7 uses
   %i.h = load ptr, ptr %i.g, align 8              ; 9 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.f, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.f, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.i, align 8      ; 2 uses
-  %i.j = add nuw i32 %.promoted8.i, 1
-  %i.k = icmp eq i32 %.promoted8.i, -1
+  %i.j = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.k = icmp eq i32 %i.j, 0
   br i1 %i.k, label %bb.a, label %.lr.ph.us.i.split
 
 bb.a:                                             ; preds = %.lr.ph.us.i.peel.begin
@@ -3581,10 +3581,10 @@ define linkonce_odr void @_ZN3rrr10AndNetwork17ForEachTfisUpdateITtTpTyESt6vecto
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 6 uses
   %i.f = load ptr, ptr %i.e, align 8              ; 9 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %.promoted8.i = load i32, ptr %i.d, align 4, !tbaa !53 ; 2 uses
+  %.promoted8.i = load i32, ptr %i.d, align 4, !tbaa !53
   %.promoted.i = load ptr, ptr %i.g, align 8      ; 2 uses
-  %i.h = add nuw i32 %.promoted8.i, 1
-  %i.i = icmp eq i32 %.promoted8.i, -1
+  %i.h = add i32 %.promoted8.i, 1                 ; 2 uses
+  %i.i = icmp eq i32 %i.h, 0
   br i1 %i.i, label %bb.a, label %.lr.ph.us.i.split
 
 bb.a:                                             ; preds = %.lr.ph.us.i.peel.begin

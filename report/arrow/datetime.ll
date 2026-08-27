@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %4 = alloca %"class.std::allocator", align 1    ; 5 uses
-  %i.a = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #30 ; 6 uses
+  %i.a = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #30 ; 5 uses
   store i64 %i.a, ptr %1, align 8, !tbaa !212
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   store ptr %0, ptr %i.b, align 8, !tbaa !214
@@ -216,13 +216,13 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.c, %bb.b
-  %.013.i.i = phi i64 [ %i.i, %bb.c ], [ %i.c, %bb.b ] ; 5 uses
+  %.013.i.i = phi i64 [ %i.i, %bb.c ], [ %i.c, %bb.b ] ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 %.013.i.i ; 2 uses
   %i.e = load i64, ptr %i.d, align 1
   %i.f = icmp ne i64 %i.e, 8027224784786845562
   %i.g = zext i1 %i.f to i32
   %i.h = icmp eq i32 %i.g, 0
-  br i1 %i.h, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindES2_m.exit, label %bb.c
+  br i1 %i.h, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   %i.i = add i64 %.013.i.i, -1
@@ -320,25 +320,15 @@ bb.i:                                             ; preds = %_ZNKSt7__cxx1112bas
   %.pn.pn20 = phi { ptr, i32 } [ %.pn.pn21, %bb.h ], [ %i.l, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit16 ], [ %i.l, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i14 ]
   resume { ptr, i32 } %.pn.pn20
 
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindES2_m.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
-  %5 = icmp ult i64 %.013.i.i, %i.a
-  br i1 %5, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit
-
-_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindES2_m.exit
-  %6 = sub nuw i64 %i.a, %.013.i.i
-  %7 = tail call ptr @memchr(ptr noundef nonnull %i.d, i32 noundef 47, i64 noundef %6) #30 ; 2 uses
-  %.not.i = icmp eq ptr %7, null
-  br i1 %.not.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit, label %8
-
-8:                                                ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
-  %9 = ptrtoint ptr %7 to i64
-  %10 = ptrtoint ptr %0 to i64
-  %reass.sub = sub i64 %9, %10
-  %11 = add i64 %reass.sub, 1
-  br label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit
-
-_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindES2_m.exit, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %8
-  %.1.i = phi i64 [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindES2_m.exit ], [ %11, %8 ], [ 0, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i ] ; 2 uses
+_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+  %5 = sub nuw i64 %i.a, %.013.i.i
+  %6 = tail call ptr @memchr(ptr noundef nonnull %i.d, i32 noundef 47, i64 noundef %5) #30 ; 2 uses
+  %.not.i = icmp eq ptr %6, null
+  %7 = ptrtoint ptr %6 to i64
+  %8 = ptrtoint ptr %0 to i64
+  %reass.sub = sub i64 %7, %8
+  %9 = add i64 %reass.sub, 1
+  %.1.i = select i1 %.not.i, i64 0, i64 %9        ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 %.1.i
   %i.ad = sub i64 %i.a, %.1.i
   %.fca.0.insert = insertvalue { i64, ptr } poison, i64 %i.ad, 0

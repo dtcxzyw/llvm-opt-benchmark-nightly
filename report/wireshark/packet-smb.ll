@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %.lr.ph.split.i.us.p
   %i.k = load i32, ptr %i.a, align 4
   %i.l = load i32, ptr %i.c, align 4
   %i.m = call ptr @proto_tree_add_string(ptr noundef %2, i32 noundef %3, ptr noundef %0, i32 noundef %i.k, i32 noundef %i.l, ptr noundef nonnull %i.i) ; 0 uses
-  br label %dissect_dfs_referral_strings.exit
+  br label %dissect_dfs_referral_strings.exit, !llvm.loop !18
 
 .lr.ph.split.i.preheader9:                        ; preds = %.lr.ph.split.i.preheader
   br i1 %i.j, label %dissect_dfs_referral_strings.exit, label %bb.d
@@ -215,13 +215,13 @@ bb.d:                                             ; preds = %.lr.ph.split.i.preh
   %i.r = add i32 %i.q, %i.n                       ; 2 uses
   %i.s = load i32, ptr %9, align 4
   %i.t = icmp slt i32 %i.s, %i.r
-  br i1 %i.t, label %bb.e, label %dissect_dfs_referral_strings.exit
+  br i1 %i.t, label %bb.e, label %dissect_dfs_referral_strings.exit, !llvm.loop !18
 
 bb.e:                                             ; preds = %bb.d
   store i32 %i.r, ptr %9, align 4
-  br label %dissect_dfs_referral_strings.exit
+  br label %dissect_dfs_referral_strings.exit, !llvm.loop !18
 
-dissect_dfs_referral_strings.exit:                ; preds = %.lr.ph.split.i.preheader9, %bb.e, %bb.d, %.lr.ph.split.i.us.preheader, %bb.c, %bb.a, %bb.b
+dissect_dfs_referral_strings.exit:                ; preds = %bb.d, %bb.e, %bb.c, %.lr.ph.split.i.us.preheader, %.lr.ph.split.i.preheader9, %bb.a, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)

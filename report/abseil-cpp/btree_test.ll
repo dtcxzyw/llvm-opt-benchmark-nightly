@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
 
 .loopexit.loopexit:                               ; preds = %bb.c
   %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E.promoted.i.i.pre = load i32, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, align 4
-  %i.bk = add i32 %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E.promoted.i.i.pre, -1
+  %i.bk = add nsw i32 %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E.promoted.i.i.pre, -1
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS0_13test_internal19MovableOnlyInstanceEJEEEE10transfer_nEmmmPS7_PSaIS5_E.exit..loopexit_crit_edge, %.loopexit.loopexit
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %bb.b, %bb.c
 
 .loopexit.loopexit:                               ; preds = %bb.c
   %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E.promoted.i.i.pre = load i32, ptr @_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E, align 4
-  %i.bk = add i32 %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E.promoted.i.i.pre, -1
+  %i.bk = add nsw i32 %_ZN4absl12lts_2026052613test_internal19BaseCountedInstance14num_instances_E.promoted.i.i.pre, -1
   br label %.loopexit
 
 .loopexit:                                        ; preds = %_ZN4absl12lts_2026052618container_internal10btree_nodeINS1_15set_params_implINS0_13test_internal19MovableOnlyInstanceEJSt4lessIS5_ESaIS5_ESt17integral_constantIiLi256EES9_IbLb1EEEEEE10transfer_nEmmmPSD_PS8_.exit..loopexit_crit_edge, %.loopexit.loopexit

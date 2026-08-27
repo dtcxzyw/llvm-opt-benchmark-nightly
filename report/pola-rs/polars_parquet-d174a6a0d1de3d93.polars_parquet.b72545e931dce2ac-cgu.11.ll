@@ -205,7 +205,7 @@ bb.a:
   invoke void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE13with_capacityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull sret([160 x i8]) align 8 captures(none) dereferenceable(160) %i.b, i64 noundef 1)
           to label %.noexc unwind label %bb.b, !dbg !24
 
-bb.b:                                             ; preds = %bb.a, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a
+bb.b:                                             ; preds = %bb.a, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i
   %i.d = landingpad { ptr, i32 }
           cleanup
   br label %.body, !dbg !25
@@ -314,7 +314,7 @@ _RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22Mutable
   %i.aq = add i64 %i.al, 1, !dbg !247
   store i64 %i.aq, ptr %i.j, align 8, !dbg !247, !alias.scope !217, !noalias !220
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !248, !noalias !202
-  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, !dbg !84
+  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !84
 
 bb.i:                                             ; preds = %.noexc.i
   %i.ar = load i64, ptr %i.j, align 8, !dbg !249, !alias.scope !255, !noalias !258, !noundef !14 ; 3 uses
@@ -334,7 +334,7 @@ _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow
   store i64 %i.aw, ptr %i.j, align 8, !dbg !272, !alias.scope !255, !noalias !258
   %i.ax = load i64, ptr %i.e, align 8, !dbg !275, !range !66, !alias.scope !276, !noalias !94, !noundef !14 ; 2 uses
   %.not2.i.i.i = icmp eq i64 %i.ax, -9223372036854775808, !dbg !275
-  br i1 %.not2.i.i.i, label %2, label %bb.k, !dbg !277
+  br i1 %.not2.i.i.i, label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, label %bb.k, !dbg !277
 
 bb.k:                                             ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewE8push_mutCsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
   %i.ay = load i64, ptr %i.f, align 8, !dbg !278, !alias.scope !281, !noalias !94, !noundef !14 ; 2 uses
@@ -379,19 +379,13 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   %i.br = load i64, ptr %i.f, align 8, !dbg !325, !alias.scope !281, !noalias !94, !noundef !14
   %i.bs = add i64 %i.br, 1, !dbg !325
   store i64 %i.bs, ptr %i.f, align 8, !dbg !325, !alias.scope !281, !noalias !94
-  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, !dbg !326
+  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !326
 
-2:                                                ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewE8push_mutCsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
+_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a: ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewE8push_mutCsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
   invoke void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE13init_validityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(160) %i.b, i1 noundef zeroext true)
-          to label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a unwind label %.loopexit.i, !dbg !327, !noalias !21
+          to label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i unwind label %.loopexit.i, !dbg !327, !noalias !21
 
-_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a: ; preds = %2, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i.i, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE10push_valueRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.c, ptr noundef nonnull align 8 dereferenceable(160) %i.b, i64 160, i1 false), !dbg !328
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !329, !noalias !21
-  invoke void @_RNvXs1_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB7_22BinaryViewArrayGenericShEINtNtCscgRAwXFJnXP_4core7convert4FromINtB5_22MutableBinaryViewArrayB1t_EE4fromCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull sret([128 x i8]) align 8 captures(none) dereferenceable(128) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(160) %i.c)
-          to label %bb.p unwind label %bb.b, !dbg !330
-
-.loopexit.i:                                      ; preds = %2, %bb.m, %bb.j, %bb.h, %bb.g, %bb.f
+.loopexit.i:                                      ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, %bb.m, %bb.j, %bb.h, %bb.g, %bb.f
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.n
@@ -404,15 +398,21 @@ _RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22Mutable
 bb.n:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
   %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEECsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef align 8 dereferenceable(160) %i.b) #32
-          to label %.body unwind label %bb.o, !dbg !329, !noalias !21
+          to label %.body unwind label %bb.o, !dbg !328, !noalias !21
 
 bb.o:                                             ; preds = %bb.n
   %i.bt = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #33, !dbg !335, !noalias !21
-  unreachable, !dbg !335
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #33, !dbg !329, !noalias !21
+  unreachable, !dbg !329
 
-bb.p:                                             ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a
+_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE10push_valueRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i.i, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.c, ptr noundef nonnull align 8 dereferenceable(160) %i.b, i64 160, i1 false), !dbg !330
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !328, !noalias !21
+  invoke void @_RNvXs1_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB7_22BinaryViewArrayGenericShEINtNtCscgRAwXFJnXP_4core7convert4FromINtB5_22MutableBinaryViewArrayB1t_EE4fromCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull sret([128 x i8]) align 8 captures(none) dereferenceable(128) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(160) %i.c)
+          to label %bb.p unwind label %bb.b, !dbg !331
+
+bb.p:                                             ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayShE4pushRINtNtCsgZ49sUHp3tW_5alloc3vec3VechEECsfISxE4fmY1Y_14polars_parquet.exit.i.i
   %i.bu = load i64, ptr %1, align 8, !dbg !336, !range !66, !alias.scope !341, !noundef !14
   %i.bv = icmp eq i64 %i.bu, -9223372036854775808
   br i1 %i.bv, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeAINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VechEEj1_ECsfISxE4fmY1Y_14polars_parquet.exit, label %bb.q
@@ -461,7 +461,7 @@ bb.a:
   invoke void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayeE13with_capacityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull sret([160 x i8]) align 8 captures(none) dereferenceable(160) %i.b, i64 noundef 1)
           to label %.noexc unwind label %bb.b, !dbg !364
 
-bb.b:                                             ; preds = %bb.a, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a
+bb.b:                                             ; preds = %bb.a, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i
   %i.d = landingpad { ptr, i32 }
           cleanup
   br label %.body, !dbg !365
@@ -570,7 +570,7 @@ _RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22Mutable
   %i.aq = add i64 %i.al, 1, !dbg !503
   store i64 %i.aq, ptr %i.j, align 8, !dbg !503, !alias.scope !484, !noalias !487
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !504, !noalias !470
-  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, !dbg !406
+  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !406
 
 bb.i:                                             ; preds = %.noexc.i
   %i.ar = load i64, ptr %i.j, align 8, !dbg !505, !alias.scope !511, !noalias !514, !noundef !14 ; 3 uses
@@ -590,7 +590,7 @@ _RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow
   store i64 %i.aw, ptr %i.j, align 8, !dbg !528, !alias.scope !511, !noalias !514
   %i.ax = load i64, ptr %i.e, align 8, !dbg !531, !range !66, !alias.scope !532, !noalias !416, !noundef !14 ; 2 uses
   %.not2.i.i.i = icmp eq i64 %i.ax, -9223372036854775808, !dbg !531
-  br i1 %.not2.i.i.i, label %2, label %bb.k, !dbg !533
+  br i1 %.not2.i.i.i, label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, label %bb.k, !dbg !533
 
 bb.k:                                             ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewE8push_mutCsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
   %i.ay = load i64, ptr %i.f, align 8, !dbg !534, !alias.scope !537, !noalias !416, !noundef !14 ; 2 uses
@@ -635,19 +635,13 @@ _RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push
   %i.br = load i64, ptr %i.f, align 8, !dbg !581, !alias.scope !537, !noalias !416, !noundef !14
   %i.bs = add i64 %i.br, 1, !dbg !581
   store i64 %i.bs, ptr %i.f, align 8, !dbg !581, !alias.scope !537, !noalias !416
-  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, !dbg !582
+  br label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i, !dbg !582
 
-2:                                                ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewE8push_mutCsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
+_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a: ; preds = %_RNvMsF_NtCsgZ49sUHp3tW_5alloc3vecINtB5_3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewE8push_mutCsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
   invoke void @_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayeE13init_validityCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull align 8 dereferenceable(160) %i.b, i1 noundef zeroext true)
-          to label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a unwind label %.loopexit.i, !dbg !583, !noalias !361
+          to label %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i unwind label %.loopexit.i, !dbg !583, !noalias !361
 
-_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a: ; preds = %2, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i.i, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE10push_valueRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.c, ptr noundef nonnull align 8 dereferenceable(160) %i.b, i64 160, i1 false), !dbg !584
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !585, !noalias !361
-  invoke void @_RNvXs1_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB7_22BinaryViewArrayGenericeEINtNtCscgRAwXFJnXP_4core7convert4FromINtB5_22MutableBinaryViewArrayeEE4fromCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull sret([128 x i8]) align 8 captures(none) dereferenceable(128) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(160) %i.c)
-          to label %bb.p unwind label %bb.b, !dbg !586
-
-.loopexit.i:                                      ; preds = %2, %bb.m, %bb.j, %bb.h, %bb.g, %bb.f
+.loopexit.i:                                      ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a, %bb.m, %bb.j, %bb.h, %bb.g, %bb.f
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.n
@@ -660,15 +654,21 @@ _RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22Mutable
 bb.n:                                             ; preds = %.loopexit.split-lp.i, %.loopexit.i
   %lpad.phi.i = phi { ptr, i32 } [ %lpad.loopexit.i, %.loopexit.i ], [ %lpad.loopexit.split-lp.i, %.loopexit.split-lp.i ]
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayeEECsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef align 8 dereferenceable(160) %i.b) #32
-          to label %.body unwind label %bb.o, !dbg !585, !noalias !361
+          to label %.body unwind label %bb.o, !dbg !584, !noalias !361
 
 bb.o:                                             ; preds = %bb.n
   %i.bt = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #33, !dbg !590, !noalias !361
-  unreachable, !dbg !590
+  call void @_RNvNtCscgRAwXFJnXP_4core9panicking16panic_in_cleanup() #33, !dbg !585, !noalias !361
+  unreachable, !dbg !585
 
-bb.p:                                             ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a
+_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i: ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE10push_valueRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.i, %_RNvMs0_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtB5_13MutableBitmap4push.exit.i.i.i, %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i.a
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %i.c, ptr noundef nonnull align 8 dereferenceable(160) %i.b, i64 160, i1 false), !dbg !586
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !584, !noalias !361
+  invoke void @_RNvXs1_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB7_22BinaryViewArrayGenericeEINtNtCscgRAwXFJnXP_4core7convert4FromINtB5_22MutableBinaryViewArrayeEE4fromCsfISxE4fmY1Y_14polars_parquet(ptr noalias noundef nonnull sret([128 x i8]) align 8 captures(none) dereferenceable(128) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(160) %i.c)
+          to label %bb.p unwind label %bb.b, !dbg !587
+
+bb.p:                                             ; preds = %_RINvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB6_22MutableBinaryViewArrayeE4pushRNtNtCsgZ49sUHp3tW_5alloc6string6StringECsfISxE4fmY1Y_14polars_parquet.exit.i.i
   %i.bu = load i64, ptr %1, align 8, !dbg !591, !range !66, !alias.scope !596, !noundef !14
   %i.bv = icmp eq i64 %i.bu, -9223372036854775808
   br i1 %i.bv, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeAINtNtB4_6option6OptionNtNtCsgZ49sUHp3tW_5alloc6string6StringEj1_ECsfISxE4fmY1Y_14polars_parquet.exit, label %bb.q
@@ -1071,14 +1071,14 @@ begin_hunk_1_@llvm.memmove.p0.p0.i64
 !325 = !DILocation(line: 124, column: 9, scope: !154, inlinedAt: !279)
 !326 = !DILocation(line: 294, column: 40, scope: !280, inlinedAt: !254)
 !327 = !DILocation(line: 295, column: 26, scope: !253, inlinedAt: !254)
-!328 = !DILocation(line: 496, column: 9, scope: !30, inlinedAt: !20)
-!329 = !DILocation(line: 497, column: 5, scope: !16, inlinedAt: !20)
-!330 = !DILocation(line: 778, column: 9, scope: !331, inlinedAt: !333)
-!331 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!332 = !DINamespace(name: "{impl#3}", scope: !198)
-!333 = !DILocation(line: 496, column: 17, scope: !334)
-!334 = distinct !DILexicalBlock(scope: !7, file: !8, line: 493, column: 9)
-!335 = !DILocation(line: 489, column: 5, scope: !16, inlinedAt: !20)
+!328 = !DILocation(line: 497, column: 5, scope: !16, inlinedAt: !20)
+!329 = !DILocation(line: 489, column: 5, scope: !16, inlinedAt: !20)
+!330 = !DILocation(line: 496, column: 9, scope: !30, inlinedAt: !20)
+!331 = !DILocation(line: 778, column: 9, scope: !332, inlinedAt: !334)
+!332 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!333 = !DINamespace(name: "{impl#3}", scope: !198)
+!334 = !DILocation(line: 496, column: 17, scope: !335)
+!335 = distinct !DILexicalBlock(scope: !7, file: !8, line: 493, column: 9)
 !336 = !DILocation(line: 810, column: 1, scope: !337, inlinedAt: !338)
 !337 = distinct !DISubprogram(name: "drop_in_place<core::option::Option<alloc::vec::Vec<u8, alloc::alloc::Global>>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsgZ49sUHp3tW_5alloc3vec3VechEEECsfISxE4fmY1Y_14polars_parquet", scope: !145, file: !149, line: 810, type: !13, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !338 = distinct !DILocation(line: 810, column: 1, scope: !339, inlinedAt: !340)
@@ -1327,13 +1327,13 @@ begin_hunk_1_@llvm.memmove.p0.p0.i64
 !581 = !DILocation(line: 124, column: 9, scope: !154, inlinedAt: !535)
 !582 = !DILocation(line: 294, column: 40, scope: !536, inlinedAt: !510)
 !583 = !DILocation(line: 295, column: 26, scope: !509, inlinedAt: !510)
-!584 = !DILocation(line: 496, column: 9, scope: !370, inlinedAt: !360)
-!585 = !DILocation(line: 497, column: 5, scope: !359, inlinedAt: !360)
-!586 = !DILocation(line: 778, column: 9, scope: !587, inlinedAt: !588)
-!587 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<str>, polars_arrow::array::binview::BinaryViewArrayGeneric<str>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayeEINtB5_4IntoINtBD_22BinaryViewArrayGenericeEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
-!588 = !DILocation(line: 496, column: 17, scope: !589)
-!589 = distinct !DILexicalBlock(scope: !357, file: !8, line: 493, column: 9)
-!590 = !DILocation(line: 489, column: 5, scope: !359, inlinedAt: !360)
+!584 = !DILocation(line: 497, column: 5, scope: !359, inlinedAt: !360)
+!585 = !DILocation(line: 489, column: 5, scope: !359, inlinedAt: !360)
+!586 = !DILocation(line: 496, column: 9, scope: !370, inlinedAt: !360)
+!587 = !DILocation(line: 778, column: 9, scope: !588, inlinedAt: !589)
+!588 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<str>, polars_arrow::array::binview::BinaryViewArrayGeneric<str>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayeEINtB5_4IntoINtBD_22BinaryViewArrayGenericeEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!589 = !DILocation(line: 496, column: 17, scope: !590)
+!590 = distinct !DILexicalBlock(scope: !357, file: !8, line: 493, column: 9)
 !591 = !DILocation(line: 810, column: 1, scope: !592, inlinedAt: !593)
 !592 = distinct !DISubprogram(name: "drop_in_place<core::option::Option<alloc::string::String>>", linkageName: "_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCsgZ49sUHp3tW_5alloc6string6StringEECsfISxE4fmY1Y_14polars_parquet", scope: !145, file: !149, line: 810, type: !13, scopeLine: 810, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !593 = distinct !DILocation(line: 810, column: 1, scope: !594, inlinedAt: !595)
@@ -1736,7 +1736,7 @@ begin_hunk_2_@llvm.memmove.p0.p0.i64
 !3994 = distinct !DISubprogram(name: "from<u8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferhEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VechEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !3995 = !DINamespace(name: "{impl#12}", scope: !3991)
 !3996 = !DILocation(line: 778, column: 9, scope: !3997, inlinedAt: !3998)
-!3997 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!3997 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !3998 = !DILocation(line: 478, column: 31, scope: !3696)
 !3999 = !DILocation(line: 117, column: 9, scope: !3988, inlinedAt: !3993)
 !4000 = !DILocation(line: 478, column: 36, scope: !3696)
@@ -2139,7 +2139,7 @@ begin_hunk_3_@llvm.memmove.p0.p0.i64
 !4563 = !DILocation(line: 400, column: 9, scope: !4564, inlinedAt: !4565)
 !4564 = distinct !DISubprogram(name: "from<u8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferhEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VechEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !4565 = !DILocation(line: 778, column: 9, scope: !4566, inlinedAt: !4567)
-!4566 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!4566 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !4567 = !DILocation(line: 478, column: 31, scope: !4364)
 !4568 = !DILocation(line: 117, column: 9, scope: !4562, inlinedAt: !4563)
 !4569 = !DILocation(line: 478, column: 36, scope: !4364)
@@ -2542,7 +2542,7 @@ begin_hunk_4_@llvm.memmove.p0.p0.i64
 !5116 = !DILocation(line: 400, column: 9, scope: !5117, inlinedAt: !5118)
 !5117 = distinct !DISubprogram(name: "from<u8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferhEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VechEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !5118 = !DILocation(line: 778, column: 9, scope: !5119, inlinedAt: !5120)
-!5119 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!5119 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !5120 = !DILocation(line: 478, column: 31, scope: !4893)
 !5121 = !DILocation(line: 117, column: 9, scope: !5115, inlinedAt: !5116)
 !5122 = !DILocation(line: 478, column: 36, scope: !4893)
@@ -2945,7 +2945,7 @@ begin_hunk_5_@llvm.memmove.p0.p0.i64
 !18160 = !DINamespace(name: "{impl#48}", scope: !18161)
 !18161 = !DINamespace(name: "string", scope: !119)
 !18162 = !DILocation(line: 778, column: 9, scope: !18163, inlinedAt: !18164)
-!18163 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!18163 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !18164 = !DILocation(line: 39, column: 33, scope: !18165, inlinedAt: !18169)
 !18165 = distinct !DISubprogram(name: "oos<&str>", linkageName: "_RINvMNtNtCsfISxE4fmY1Y_14polars_parquet7parquet5errorNtB3_12ParquetError3oosReEB7_", scope: !18167, file: !18166, line: 38, type: !13, scopeLine: 38, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !18166 = !DIFile(filename: "crates/polars-parquet/src/parquet/error.rs", directory: "/opt-bench/work/pola-rs/polars", checksumkind: CSK_MD5, checksum: "c2d2db08a050fbec7ac290b43b9565ec")
@@ -2995,7 +2995,7 @@ begin_hunk_5_@llvm.memmove.p0.p0.i64
 !18210 = !DILocation(line: 3114, column: 11, scope: !18211, inlinedAt: !18212)
 !18211 = distinct !DISubprogram(name: "from", linkageName: "_RNvXsK_NtCsgZ49sUHp3tW_5alloc6stringNtB5_6StringINtNtCscgRAwXFJnXP_4core7convert4FromReE4from", scope: !18160, file: !18159, line: 3113, type: !13, scopeLine: 3113, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !18212 = !DILocation(line: 778, column: 9, scope: !18213, inlinedAt: !18214)
-!18213 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!18213 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !18214 = !DILocation(line: 39, column: 33, scope: !18215, inlinedAt: !18216)
 !18215 = distinct !DISubprogram(name: "oos<&str>", linkageName: "_RINvMNtNtCsfISxE4fmY1Y_14polars_parquet7parquet5errorNtB3_12ParquetError3oosReEB7_", scope: !18167, file: !18166, line: 38, type: !13, scopeLine: 38, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !18216 = !DILocation(line: 320, column: 5, scope: !18192)
@@ -3272,7 +3272,7 @@ begin_hunk_5_@llvm.memmove.p0.p0.i64
 !18487 = distinct !DILocation(line: 400, column: 9, scope: !18488, inlinedAt: !18489)
 !18488 = distinct !DISubprogram(name: "from<u8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferhEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VechEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !18489 = distinct !DILocation(line: 778, column: 9, scope: !18490, inlinedAt: !18491)
-!18490 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!18490 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !18491 = distinct !DILocation(line: 478, column: 31, scope: !18314, inlinedAt: !18258)
 !18492 = !DILocation(line: 117, column: 9, scope: !18486, inlinedAt: !18487)
 !18493 = !DILocation(line: 478, column: 36, scope: !18314, inlinedAt: !18258)
@@ -3675,7 +3675,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !21668 = !DILocation(line: 3114, column: 11, scope: !21669, inlinedAt: !21670)
 !21669 = distinct !DISubprogram(name: "from", linkageName: "_RNvXsK_NtCsgZ49sUHp3tW_5alloc6stringNtB5_6StringINtNtCscgRAwXFJnXP_4core7convert4FromReE4from", scope: !18160, file: !18159, line: 3113, type: !13, scopeLine: 3113, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !21670 = !DILocation(line: 778, column: 9, scope: !21671, inlinedAt: !21672)
-!21671 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!21671 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !21672 = !DILocation(line: 44, column: 43, scope: !21673, inlinedAt: !21674)
 !21673 = distinct !DISubprogram(name: "not_supported<&str>", linkageName: "_RINvMNtNtCsfISxE4fmY1Y_14polars_parquet7parquet5errorNtB3_12ParquetError13not_supportedReEB7_", scope: !18167, file: !18166, line: 43, type: !13, scopeLine: 43, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !21674 = !DILocation(line: 180, column: 13, scope: !21650)
@@ -3812,7 +3812,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !21805 = !DINamespace(name: "{impl#3}", scope: !21806)
 !21806 = !DINamespace(name: "datatypes", scope: !12)
 !21807 = distinct !DILocation(line: 778, column: 9, scope: !21808, inlinedAt: !21809)
-!21808 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!21808 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !21809 = !DILocation(line: 135, column: 53, scope: !21800)
 !21810 = !{!21811}
 !21811 = distinct !{!21811, !21812, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -3823,7 +3823,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !21816 = !DILocation(line: 400, column: 9, scope: !21817, inlinedAt: !21818)
 !21817 = distinct !DISubprogram(name: "from<u8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferhEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VechEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !21818 = !DILocation(line: 778, column: 9, scope: !21819, inlinedAt: !21820)
-!21819 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!21819 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !21820 = !DILocation(line: 135, column: 68, scope: !21800)
 !21821 = !DILocation(line: 135, column: 84, scope: !21800)
 !21822 = !DILocation(line: 117, column: 9, scope: !21815, inlinedAt: !21816)
@@ -4119,7 +4119,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22112 = !DILocation(line: 144, column: 28, scope: !21901)
 !22113 = !DILocation(line: 145, column: 13, scope: !21901)
 !22114 = !DILocation(line: 778, column: 9, scope: !22115, inlinedAt: !22116)
-!22115 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22115 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22116 = !DILocation(line: 525, column: 14, scope: !22117, inlinedAt: !22118)
 !22117 = distinct !DISubprogram(name: "freeze<[u8]>", linkageName: "_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE6freezeCsfISxE4fmY1Y_14polars_parquet", scope: !18, file: !17, line: 524, type: !13, scopeLine: 524, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22118 = !DILocation(line: 145, column: 35, scope: !21901)
@@ -4247,7 +4247,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22240 = !DILocation(line: 3114, column: 11, scope: !22241, inlinedAt: !22242)
 !22241 = distinct !DISubprogram(name: "from", linkageName: "_RNvXsK_NtCsgZ49sUHp3tW_5alloc6stringNtB5_6StringINtNtCscgRAwXFJnXP_4core7convert4FromReE4from", scope: !18160, file: !18159, line: 3113, type: !13, scopeLine: 3113, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22242 = !DILocation(line: 778, column: 9, scope: !22243, inlinedAt: !22244)
-!22243 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22243 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22244 = !DILocation(line: 44, column: 43, scope: !22245, inlinedAt: !22246)
 !22245 = distinct !DISubprogram(name: "not_supported<&str>", linkageName: "_RINvMNtNtCsfISxE4fmY1Y_14polars_parquet7parquet5errorNtB3_12ParquetError13not_supportedReEB7_", scope: !18167, file: !18166, line: 43, type: !13, scopeLine: 43, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22246 = !DILocation(line: 180, column: 13, scope: !22222)
@@ -4379,7 +4379,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22372 = !DILocation(line: 135, column: 40, scope: !22371)
 !22373 = !DILocation(line: 0, scope: !21803, inlinedAt: !22374)
 !22374 = distinct !DILocation(line: 778, column: 9, scope: !22375, inlinedAt: !22376)
-!22375 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22375 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22376 = !DILocation(line: 135, column: 53, scope: !22371)
 !22377 = !{!22378}
 !22378 = distinct !{!22378, !22379, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -4390,7 +4390,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22383 = !DILocation(line: 400, column: 9, scope: !22384, inlinedAt: !22385)
 !22384 = distinct !DISubprogram(name: "from<u32>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffermEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22385 = !DILocation(line: 778, column: 9, scope: !22386, inlinedAt: !22387)
-!22386 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22386 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22387 = !DILocation(line: 135, column: 68, scope: !22371)
 !22388 = !DILocation(line: 135, column: 84, scope: !22371)
 !22389 = !DILocation(line: 117, column: 9, scope: !22382, inlinedAt: !22383)
@@ -4660,7 +4660,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22653 = !DILocation(line: 144, column: 28, scope: !22455)
 !22654 = !DILocation(line: 145, column: 13, scope: !22455)
 !22655 = !DILocation(line: 778, column: 9, scope: !22656, inlinedAt: !22657)
-!22656 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22656 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22657 = !DILocation(line: 525, column: 14, scope: !22658, inlinedAt: !22659)
 !22658 = distinct !DISubprogram(name: "freeze<[u8]>", linkageName: "_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE6freezeCsfISxE4fmY1Y_14polars_parquet", scope: !18, file: !17, line: 524, type: !13, scopeLine: 524, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22659 = !DILocation(line: 145, column: 35, scope: !22455)
@@ -4786,7 +4786,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22779 = !DILocation(line: 3114, column: 11, scope: !22780, inlinedAt: !22781)
 !22780 = distinct !DISubprogram(name: "from", linkageName: "_RNvXsK_NtCsgZ49sUHp3tW_5alloc6stringNtB5_6StringINtNtCscgRAwXFJnXP_4core7convert4FromReE4from", scope: !18160, file: !18159, line: 3113, type: !13, scopeLine: 3113, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22781 = !DILocation(line: 778, column: 9, scope: !22782, inlinedAt: !22783)
-!22782 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22782 = distinct !DISubprogram(name: "into<&str, alloc::string::String>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertReINtB5_4IntoNtNtCsgZ49sUHp3tW_5alloc6string6StringE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22783 = !DILocation(line: 44, column: 43, scope: !22784, inlinedAt: !22785)
 !22784 = distinct !DISubprogram(name: "not_supported<&str>", linkageName: "_RINvMNtNtCsfISxE4fmY1Y_14polars_parquet7parquet5errorNtB3_12ParquetError13not_supportedReEB7_", scope: !18167, file: !18166, line: 43, type: !13, scopeLine: 43, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22785 = !DILocation(line: 180, column: 13, scope: !22761)
@@ -4918,7 +4918,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22911 = !DILocation(line: 135, column: 40, scope: !22910)
 !22912 = !DILocation(line: 0, scope: !21803, inlinedAt: !22913)
 !22913 = distinct !DILocation(line: 778, column: 9, scope: !22914, inlinedAt: !22915)
-!22914 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22914 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22915 = !DILocation(line: 135, column: 53, scope: !22910)
 !22916 = !{!22917}
 !22917 = distinct !{!22917, !22918, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -4929,7 +4929,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !22922 = !DILocation(line: 400, column: 9, scope: !22923, inlinedAt: !22924)
 !22923 = distinct !DISubprogram(name: "from<u16>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffertEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VectEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22924 = !DILocation(line: 778, column: 9, scope: !22925, inlinedAt: !22926)
-!22925 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VectEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffertEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!22925 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VectEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffertEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !22926 = !DILocation(line: 135, column: 68, scope: !22910)
 !22927 = !DILocation(line: 135, column: 84, scope: !22910)
 !22928 = !DILocation(line: 117, column: 9, scope: !22921, inlinedAt: !22922)
@@ -5199,7 +5199,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !23192 = !DILocation(line: 144, column: 28, scope: !22994)
 !23193 = !DILocation(line: 145, column: 13, scope: !22994)
 !23194 = !DILocation(line: 778, column: 9, scope: !23195, inlinedAt: !23196)
-!23195 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!23195 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23196 = !DILocation(line: 525, column: 14, scope: !23197, inlinedAt: !23198)
 !23197 = distinct !DISubprogram(name: "freeze<[u8]>", linkageName: "_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE6freezeCsfISxE4fmY1Y_14polars_parquet", scope: !18, file: !17, line: 524, type: !13, scopeLine: 524, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23198 = !DILocation(line: 145, column: 35, scope: !22994)
@@ -5475,7 +5475,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !23468 = !DILocation(line: 400, column: 9, scope: !23469, inlinedAt: !23470)
 !23469 = distinct !DISubprogram(name: "from<polars_arrow::array::binview::view::View>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecBU_EE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23470 = !DILocation(line: 778, column: 9, scope: !23471, inlinedAt: !23472)
-!23471 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::array::binview::view::View, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::array::binview::view::View>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!23471 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::array::binview::view::View, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::array::binview::view::View>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23472 = !DILocation(line: 74, column: 29, scope: !23461)
 !23473 = !DILocation(line: 0, scope: !23461)
 !23474 = !DILocation(line: 79, column: 13, scope: !23461)
@@ -5504,7 +5504,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !23497 = !DINamespace(name: "{impl#3}", scope: !100)
 !23498 = !DILocation(line: 778, column: 9, scope: !23499, inlinedAt: !23501)
 !23499 = !DILexicalBlockFile(scope: !23500, file: !196, discriminator: 2)
-!23500 = distinct !DISubprogram(name: "into<polars_arrow::bitmap::mutable::MutableBitmap, polars_arrow::bitmap::immutable::Bitmap>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutable13MutableBitmapINtB5_4IntoNtNtBC_9immutable6BitmapE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!23500 = distinct !DISubprogram(name: "into<polars_arrow::bitmap::mutable::MutableBitmap, polars_arrow::bitmap::immutable::Bitmap>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutable13MutableBitmapINtB5_4IntoNtNtBC_9immutable6BitmapE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23501 = !DILocation(line: 76, column: 42, scope: !23502, inlinedAt: !23504)
 !23502 = distinct !DISubprogram(name: "{closure#0}<[u8]>", linkageName: "_RNCNvXs1_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB9_22BinaryViewArrayGenericShEINtNtCscgRAwXFJnXP_4core7convert4FromINtB7_22MutableBinaryViewArrayB1v_EE4from0CsfISxE4fmY1Y_14polars_parquet", scope: !23503, file: !17, line: 76, type: !13, scopeLine: 76, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23503 = !DINamespace(name: "from", scope: !23462)
@@ -5570,7 +5570,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !23563 = !DILocation(line: 400, column: 9, scope: !23564, inlinedAt: !23565)
 !23564 = distinct !DISubprogram(name: "from<polars_arrow::array::binview::view::View>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecBU_EE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23565 = !DILocation(line: 778, column: 9, scope: !23566, inlinedAt: !23567)
-!23566 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::array::binview::view::View, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::array::binview::view::View>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!23566 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::array::binview::view::View, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::array::binview::view::View>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview4view4ViewEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23567 = !DILocation(line: 74, column: 29, scope: !23557)
 !23568 = !DILocation(line: 0, scope: !23557)
 !23569 = !DILocation(line: 79, column: 13, scope: !23557)
@@ -5598,7 +5598,7 @@ begin_hunk_6_@llvm.memmove.p0.p0.i64
 !23591 = distinct !DISubprogram(name: "from", linkageName: "_RNvXs1_NtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutableNtNtB7_9immutable6BitmapINtNtCscgRAwXFJnXP_4core7convert4FromNtB5_13MutableBitmapE4from", scope: !23497, file: !98, line: 428, type: !13, scopeLine: 428, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23592 = !DILocation(line: 778, column: 9, scope: !23593, inlinedAt: !23595)
 !23593 = !DILexicalBlockFile(scope: !23594, file: !196, discriminator: 2)
-!23594 = distinct !DISubprogram(name: "into<polars_arrow::bitmap::mutable::MutableBitmap, polars_arrow::bitmap::immutable::Bitmap>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutable13MutableBitmapINtB5_4IntoNtNtBC_9immutable6BitmapE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!23594 = distinct !DISubprogram(name: "into<polars_arrow::bitmap::mutable::MutableBitmap, polars_arrow::bitmap::immutable::Bitmap>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtNtCs8774dFTUdNv_12polars_arrow6bitmap7mutable13MutableBitmapINtB5_4IntoNtNtBC_9immutable6BitmapE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23595 = !DILocation(line: 76, column: 42, scope: !23596, inlinedAt: !23597)
 !23596 = distinct !DISubprogram(name: "{closure#0}<str>", linkageName: "_RNCNvXs1_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB9_22BinaryViewArrayGenericeEINtNtCscgRAwXFJnXP_4core7convert4FromINtB7_22MutableBinaryViewArrayeEE4from0CsfISxE4fmY1Y_14polars_parquet", scope: !23503, file: !17, line: 76, type: !13, scopeLine: 76, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !23597 = !DILocation(line: 1165, column: 29, scope: !23598, inlinedAt: !23587)
@@ -6001,7 +6001,7 @@ begin_hunk_7_@llvm.memmove.p0.p0.i64
 !24099 = !DILocation(line: 622, column: 77, scope: !24080)
 !24100 = !DILocation(line: 624, column: 12, scope: !24080)
 !24101 = !DILocation(line: 778, column: 9, scope: !24102, inlinedAt: !24103)
-!24102 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!24102 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !24103 = !DILocation(line: 525, column: 14, scope: !24104, inlinedAt: !24105)
 !24104 = distinct !DISubprogram(name: "freeze<[u8]>", linkageName: "_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE6freezeCsfISxE4fmY1Y_14polars_parquet", scope: !18, file: !17, line: 524, type: !13, scopeLine: 524, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !24105 = !DILocation(line: 624, column: 16, scope: !24080)
@@ -6404,7 +6404,7 @@ begin_hunk_8_@llvm.memmove.p0.p0.i64
 !25115 = !DILocation(line: 814, column: 13, scope: !25114)
 !25116 = !DILocation(line: 814, column: 42, scope: !25114)
 !25117 = !DILocation(line: 778, column: 9, scope: !25118, inlinedAt: !25119)
-!25118 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!25118 = distinct !DISubprogram(name: "into<polars_arrow::array::binview::mutable::MutableBinaryViewArray<[u8]>, polars_arrow::array::binview::BinaryViewArrayGeneric<[u8]>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutable22MutableBinaryViewArrayShEINtB5_4IntoINtBD_22BinaryViewArrayGenericB1T_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !25119 = !DILocation(line: 525, column: 14, scope: !25120, inlinedAt: !25121)
 !25120 = distinct !DISubprogram(name: "freeze<[u8]>", linkageName: "_RNvMs2_NtNtNtCs8774dFTUdNv_12polars_arrow5array7binview7mutableINtB5_22MutableBinaryViewArrayShE6freezeCsfISxE4fmY1Y_14polars_parquet", scope: !18, file: !17, line: 524, type: !13, scopeLine: 524, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !25121 = !DILocation(line: 814, column: 56, scope: !25114)
@@ -6807,7 +6807,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !26312 = !DILocation(line: 187, column: 13, scope: !26276)
 !26313 = !DILocation(line: 569, column: 38, scope: !21803, inlinedAt: !26314)
 !26314 = distinct !DILocation(line: 778, column: 9, scope: !26315, inlinedAt: !26316)
-!26315 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!26315 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26316 = !DILocation(line: 187, column: 26, scope: !26276)
 !26317 = !{!26318}
 !26318 = distinct !{!26318, !26319, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -6819,7 +6819,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !26324 = !DILocation(line: 400, column: 9, scope: !26325, inlinedAt: !26326)
 !26325 = distinct !DISubprogram(name: "from<polars_arrow::types::native::i256>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecBU_EE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26326 = !DILocation(line: 778, column: 9, scope: !26327, inlinedAt: !26328)
-!26327 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!26327 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26328 = !DILocation(line: 188, column: 20, scope: !26276)
 !26329 = !DILocation(line: 190, column: 9, scope: !26276)
 !26330 = !DILocation(line: 117, column: 9, scope: !26323, inlinedAt: !26324)
@@ -7124,7 +7124,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !26629 = !DILocation(line: 400, column: 9, scope: !26630, inlinedAt: !26631)
 !26630 = distinct !DISubprogram(name: "from<polars_arrow::types::native::i256>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecBU_EE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26631 = !DILocation(line: 778, column: 9, scope: !26632, inlinedAt: !26633)
-!26632 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!26632 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26633 = !DILocation(line: 301, column: 50, scope: !26624)
 !26634 = !DILocation(line: 301, column: 66, scope: !26624)
 !26635 = !DILocation(line: 117, column: 9, scope: !26628, inlinedAt: !26629)
@@ -7294,7 +7294,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !26799 = !DILocation(line: 187, column: 13, scope: !26764)
 !26800 = !DILocation(line: 0, scope: !21803, inlinedAt: !26801)
 !26801 = distinct !DILocation(line: 778, column: 9, scope: !26802, inlinedAt: !26803)
-!26802 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!26802 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26803 = !DILocation(line: 187, column: 26, scope: !26764)
 !26804 = !{!26805}
 !26805 = distinct !{!26805, !26806, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -7305,7 +7305,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !26810 = !DILocation(line: 400, column: 9, scope: !26811, inlinedAt: !26812)
 !26811 = distinct !DISubprogram(name: "from<i8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferaEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecaEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26812 = !DILocation(line: 778, column: 9, scope: !26813, inlinedAt: !26814)
-!26813 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecaEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferaEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!26813 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecaEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferaEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !26814 = !DILocation(line: 188, column: 20, scope: !26764)
 !26815 = !DILocation(line: 190, column: 9, scope: !26764)
 !26816 = !DILocation(line: 117, column: 9, scope: !26809, inlinedAt: !26810)
@@ -7604,7 +7604,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !27109 = !DILocation(line: 400, column: 9, scope: !27110, inlinedAt: !27111)
 !27110 = distinct !DISubprogram(name: "from<i8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferaEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecaEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27111 = !DILocation(line: 778, column: 9, scope: !27112, inlinedAt: !27113)
-!27112 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecaEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferaEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!27112 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecaEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferaEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27113 = !DILocation(line: 301, column: 50, scope: !27104)
 !27114 = !DILocation(line: 301, column: 66, scope: !27104)
 !27115 = !DILocation(line: 117, column: 9, scope: !27108, inlinedAt: !27109)
@@ -7774,7 +7774,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !27279 = !DILocation(line: 187, column: 13, scope: !27244)
 !27280 = !DILocation(line: 0, scope: !21803, inlinedAt: !27281)
 !27281 = distinct !DILocation(line: 778, column: 9, scope: !27282, inlinedAt: !27283)
-!27282 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!27282 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27283 = !DILocation(line: 187, column: 26, scope: !27244)
 !27284 = !{!27285}
 !27285 = distinct !{!27285, !27286, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -7785,7 +7785,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !27290 = !DILocation(line: 400, column: 9, scope: !27291, inlinedAt: !27292)
 !27291 = distinct !DISubprogram(name: "from<u8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferhEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VechEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27292 = !DILocation(line: 778, column: 9, scope: !27293, inlinedAt: !27294)
-!27293 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!27293 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27294 = !DILocation(line: 188, column: 20, scope: !27244)
 !27295 = !DILocation(line: 190, column: 9, scope: !27244)
 !27296 = !DILocation(line: 117, column: 9, scope: !27289, inlinedAt: !27290)
@@ -8082,7 +8082,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !27587 = !DILocation(line: 400, column: 9, scope: !27588, inlinedAt: !27589)
 !27588 = distinct !DISubprogram(name: "from<u8>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferhEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VechEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27589 = !DILocation(line: 778, column: 9, scope: !27590, inlinedAt: !27591)
-!27590 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!27590 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u8, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u8>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VechEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferhEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27591 = !DILocation(line: 301, column: 50, scope: !27582)
 !27592 = !DILocation(line: 301, column: 66, scope: !27582)
 !27593 = !DILocation(line: 117, column: 9, scope: !27586, inlinedAt: !27587)
@@ -8252,7 +8252,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !27757 = !DILocation(line: 187, column: 13, scope: !27722)
 !27758 = !DILocation(line: 0, scope: !21803, inlinedAt: !27759)
 !27759 = distinct !DILocation(line: 778, column: 9, scope: !27760, inlinedAt: !27761)
-!27760 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!27760 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27761 = !DILocation(line: 187, column: 26, scope: !27722)
 !27762 = !{!27763}
 !27763 = distinct !{!27763, !27764, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -8263,7 +8263,7 @@ begin_hunk_9_@llvm.memmove.p0.p0.i64
 !27768 = !DILocation(line: 400, column: 9, scope: !27769, inlinedAt: !27770)
 !27769 = distinct !DISubprogram(name: "from<i32>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferlEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VeclEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27770 = !DILocation(line: 778, column: 9, scope: !27771, inlinedAt: !27772)
-!27771 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VeclEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferlEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!27771 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VeclEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferlEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !27772 = !DILocation(line: 188, column: 20, scope: !27722)
 !27773 = !DILocation(line: 190, column: 9, scope: !27722)
 !27774 = !DILocation(line: 117, column: 9, scope: !27767, inlinedAt: !27768)
@@ -8666,7 +8666,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !28177 = !DILocation(line: 400, column: 9, scope: !28178, inlinedAt: !28179)
 !28178 = distinct !DISubprogram(name: "from<i32>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferlEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VeclEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28179 = !DILocation(line: 778, column: 9, scope: !28180, inlinedAt: !28181)
-!28180 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VeclEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferlEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!28180 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VeclEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferlEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28181 = !DILocation(line: 301, column: 50, scope: !28172)
 !28182 = !DILocation(line: 301, column: 66, scope: !28172)
 !28183 = !DILocation(line: 117, column: 9, scope: !28176, inlinedAt: !28177)
@@ -8836,7 +8836,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !28347 = !DILocation(line: 187, column: 13, scope: !28312)
 !28348 = !DILocation(line: 0, scope: !21803, inlinedAt: !28349)
 !28349 = distinct !DILocation(line: 778, column: 9, scope: !28350, inlinedAt: !28351)
-!28350 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!28350 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28351 = !DILocation(line: 187, column: 26, scope: !28312)
 !28352 = !{!28353}
 !28353 = distinct !{!28353, !28354, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -8847,7 +8847,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !28358 = !DILocation(line: 400, column: 9, scope: !28359, inlinedAt: !28360)
 !28359 = distinct !DISubprogram(name: "from<u32>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffermEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28360 = !DILocation(line: 778, column: 9, scope: !28361, inlinedAt: !28362)
-!28361 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!28361 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28362 = !DILocation(line: 188, column: 20, scope: !28312)
 !28363 = !DILocation(line: 190, column: 9, scope: !28312)
 !28364 = !DILocation(line: 117, column: 9, scope: !28357, inlinedAt: !28358)
@@ -9245,7 +9245,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !28756 = !DILocation(line: 400, column: 9, scope: !28757, inlinedAt: !28758)
 !28757 = distinct !DISubprogram(name: "from<u32>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffermEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28758 = !DILocation(line: 778, column: 9, scope: !28759, inlinedAt: !28760)
-!28759 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!28759 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28760 = !DILocation(line: 301, column: 50, scope: !28751)
 !28761 = !DILocation(line: 301, column: 66, scope: !28751)
 !28762 = !DILocation(line: 117, column: 9, scope: !28755, inlinedAt: !28756)
@@ -9415,7 +9415,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !28926 = !DILocation(line: 187, column: 13, scope: !28891)
 !28927 = !DILocation(line: 0, scope: !21803, inlinedAt: !28928)
 !28928 = distinct !DILocation(line: 778, column: 9, scope: !28929, inlinedAt: !28930)
-!28929 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!28929 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28930 = !DILocation(line: 187, column: 26, scope: !28891)
 !28931 = !{!28932}
 !28932 = distinct !{!28932, !28933, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -9426,7 +9426,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !28937 = !DILocation(line: 400, column: 9, scope: !28938, inlinedAt: !28939)
 !28938 = distinct !DISubprogram(name: "from<i128>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffernEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28939 = !DILocation(line: 778, column: 9, scope: !28940, inlinedAt: !28941)
-!28940 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!28940 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !28941 = !DILocation(line: 188, column: 20, scope: !28891)
 !28942 = !DILocation(line: 190, column: 9, scope: !28891)
 !28943 = !DILocation(line: 117, column: 9, scope: !28936, inlinedAt: !28937)
@@ -9725,7 +9725,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !29236 = !DILocation(line: 400, column: 9, scope: !29237, inlinedAt: !29238)
 !29237 = distinct !DISubprogram(name: "from<i128>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffernEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29238 = !DILocation(line: 778, column: 9, scope: !29239, inlinedAt: !29240)
-!29239 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!29239 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29240 = !DILocation(line: 301, column: 50, scope: !29231)
 !29241 = !DILocation(line: 301, column: 66, scope: !29231)
 !29242 = !DILocation(line: 117, column: 9, scope: !29235, inlinedAt: !29236)
@@ -9895,7 +9895,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !29406 = !DILocation(line: 187, column: 13, scope: !29371)
 !29407 = !DILocation(line: 0, scope: !21803, inlinedAt: !29408)
 !29408 = distinct !DILocation(line: 778, column: 9, scope: !29409, inlinedAt: !29410)
-!29409 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!29409 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29410 = !DILocation(line: 187, column: 26, scope: !29371)
 !29411 = !{!29412}
 !29412 = distinct !{!29412, !29413, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -9906,7 +9906,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !29417 = !DILocation(line: 400, column: 9, scope: !29418, inlinedAt: !29419)
 !29418 = distinct !DISubprogram(name: "from<i16>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffersEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecsEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29419 = !DILocation(line: 778, column: 9, scope: !29420, inlinedAt: !29421)
-!29420 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecsEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffersEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!29420 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecsEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffersEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29421 = !DILocation(line: 188, column: 20, scope: !29371)
 !29422 = !DILocation(line: 190, column: 9, scope: !29371)
 !29423 = !DILocation(line: 117, column: 9, scope: !29416, inlinedAt: !29417)
@@ -10205,7 +10205,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !29716 = !DILocation(line: 400, column: 9, scope: !29717, inlinedAt: !29718)
 !29717 = distinct !DISubprogram(name: "from<i16>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffersEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecsEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29718 = !DILocation(line: 778, column: 9, scope: !29719, inlinedAt: !29720)
-!29719 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecsEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffersEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!29719 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecsEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffersEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29720 = !DILocation(line: 301, column: 50, scope: !29711)
 !29721 = !DILocation(line: 301, column: 66, scope: !29711)
 !29722 = !DILocation(line: 117, column: 9, scope: !29715, inlinedAt: !29716)
@@ -10375,7 +10375,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !29886 = !DILocation(line: 187, column: 13, scope: !29851)
 !29887 = !DILocation(line: 0, scope: !21803, inlinedAt: !29888)
 !29888 = distinct !DILocation(line: 778, column: 9, scope: !29889, inlinedAt: !29890)
-!29889 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!29889 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29890 = !DILocation(line: 187, column: 26, scope: !29851)
 !29891 = !{!29892}
 !29892 = distinct !{!29892, !29893, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -10386,7 +10386,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !29897 = !DILocation(line: 400, column: 9, scope: !29898, inlinedAt: !29899)
 !29898 = distinct !DISubprogram(name: "from<u16>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffertEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VectEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29899 = !DILocation(line: 778, column: 9, scope: !29900, inlinedAt: !29901)
-!29900 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VectEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffertEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!29900 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VectEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffertEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !29901 = !DILocation(line: 188, column: 20, scope: !29851)
 !29902 = !DILocation(line: 190, column: 9, scope: !29851)
 !29903 = !DILocation(line: 117, column: 9, scope: !29896, inlinedAt: !29897)
@@ -10683,7 +10683,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !30194 = !DILocation(line: 400, column: 9, scope: !30195, inlinedAt: !30196)
 !30195 = distinct !DISubprogram(name: "from<u16>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffertEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VectEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30196 = !DILocation(line: 778, column: 9, scope: !30197, inlinedAt: !30198)
-!30197 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VectEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffertEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!30197 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u16, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u16>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VectEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffertEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30198 = !DILocation(line: 301, column: 50, scope: !30189)
 !30199 = !DILocation(line: 301, column: 66, scope: !30189)
 !30200 = !DILocation(line: 117, column: 9, scope: !30193, inlinedAt: !30194)
@@ -10853,7 +10853,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !30364 = !DILocation(line: 187, column: 13, scope: !30329)
 !30365 = !DILocation(line: 0, scope: !21803, inlinedAt: !30366)
 !30366 = distinct !DILocation(line: 778, column: 9, scope: !30367, inlinedAt: !30368)
-!30367 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!30367 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30368 = !DILocation(line: 187, column: 26, scope: !30329)
 !30369 = !{!30370}
 !30370 = distinct !{!30370, !30371, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -10864,7 +10864,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !30375 = !DILocation(line: 400, column: 9, scope: !30376, inlinedAt: !30377)
 !30376 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30377 = !DILocation(line: 778, column: 9, scope: !30378, inlinedAt: !30379)
-!30378 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!30378 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30379 = !DILocation(line: 188, column: 20, scope: !30329)
 !30380 = !DILocation(line: 190, column: 9, scope: !30329)
 !30381 = !DILocation(line: 117, column: 9, scope: !30374, inlinedAt: !30375)
@@ -11163,7 +11163,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !30674 = !DILocation(line: 400, column: 9, scope: !30675, inlinedAt: !30676)
 !30675 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30676 = !DILocation(line: 778, column: 9, scope: !30677, inlinedAt: !30678)
-!30677 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!30677 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30678 = !DILocation(line: 301, column: 50, scope: !30669)
 !30679 = !DILocation(line: 301, column: 66, scope: !30669)
 !30680 = !DILocation(line: 117, column: 9, scope: !30673, inlinedAt: !30674)
@@ -11333,7 +11333,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !30844 = !DILocation(line: 187, column: 13, scope: !30809)
 !30845 = !DILocation(line: 569, column: 38, scope: !21803, inlinedAt: !30846)
 !30846 = distinct !DILocation(line: 778, column: 9, scope: !30847, inlinedAt: !30848)
-!30847 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!30847 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30848 = !DILocation(line: 187, column: 26, scope: !30809)
 !30849 = !{!30850}
 !30850 = distinct !{!30850, !30851, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -11345,7 +11345,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !30856 = !DILocation(line: 400, column: 9, scope: !30857, inlinedAt: !30858)
 !30857 = distinct !DISubprogram(name: "from<polars_arrow::types::native::i256>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecBU_EE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30858 = !DILocation(line: 778, column: 9, scope: !30859, inlinedAt: !30860)
-!30859 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!30859 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !30860 = !DILocation(line: 188, column: 20, scope: !30809)
 !30861 = !DILocation(line: 190, column: 9, scope: !30809)
 !30862 = !DILocation(line: 117, column: 9, scope: !30855, inlinedAt: !30856)
@@ -11642,7 +11642,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !31153 = !DILocation(line: 400, column: 9, scope: !31154, inlinedAt: !31155)
 !31154 = distinct !DISubprogram(name: "from<polars_arrow::types::native::i256>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecBU_EE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31155 = !DILocation(line: 778, column: 9, scope: !31156, inlinedAt: !31157)
-!31156 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!31156 = distinct !DISubprogram(name: "into<alloc::vec::Vec<polars_arrow::types::native::i256, alloc::alloc::Global>, polars_buffer::buffer::Buffer<polars_arrow::types::native::i256>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtNtNtCs8774dFTUdNv_12polars_arrow5types6native4i256EINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferB15_EE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31157 = !DILocation(line: 301, column: 50, scope: !31148)
 !31158 = !DILocation(line: 301, column: 66, scope: !31148)
 !31159 = !DILocation(line: 117, column: 9, scope: !31152, inlinedAt: !31153)
@@ -11812,7 +11812,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !31323 = !DILocation(line: 187, column: 13, scope: !31288)
 !31324 = !DILocation(line: 0, scope: !21803, inlinedAt: !31325)
 !31325 = distinct !DILocation(line: 778, column: 9, scope: !31326, inlinedAt: !31327)
-!31326 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!31326 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31327 = !DILocation(line: 187, column: 26, scope: !31288)
 !31328 = !{!31329}
 !31329 = distinct !{!31329, !31330, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -11823,7 +11823,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !31334 = !DILocation(line: 400, column: 9, scope: !31335, inlinedAt: !31336)
 !31335 = distinct !DISubprogram(name: "from<u32>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffermEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31336 = !DILocation(line: 778, column: 9, scope: !31337, inlinedAt: !31338)
-!31337 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!31337 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31338 = !DILocation(line: 188, column: 20, scope: !31288)
 !31339 = !DILocation(line: 190, column: 9, scope: !31288)
 !31340 = !DILocation(line: 117, column: 9, scope: !31333, inlinedAt: !31334)
@@ -12120,7 +12120,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !31631 = !DILocation(line: 400, column: 9, scope: !31632, inlinedAt: !31633)
 !31632 = distinct !DISubprogram(name: "from<u32>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffermEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31633 = !DILocation(line: 778, column: 9, scope: !31634, inlinedAt: !31635)
-!31634 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!31634 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u32, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u32>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecmEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffermEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31635 = !DILocation(line: 301, column: 50, scope: !31626)
 !31636 = !DILocation(line: 301, column: 66, scope: !31626)
 !31637 = !DILocation(line: 117, column: 9, scope: !31630, inlinedAt: !31631)
@@ -12290,7 +12290,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !31801 = !DILocation(line: 187, column: 13, scope: !31766)
 !31802 = !DILocation(line: 0, scope: !21803, inlinedAt: !31803)
 !31803 = distinct !DILocation(line: 778, column: 9, scope: !31804, inlinedAt: !31805)
-!31804 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!31804 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31805 = !DILocation(line: 187, column: 26, scope: !31766)
 !31806 = !{!31807}
 !31807 = distinct !{!31807, !31808, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -12301,7 +12301,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !31812 = !DILocation(line: 400, column: 9, scope: !31813, inlinedAt: !31814)
 !31813 = distinct !DISubprogram(name: "from<i128>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffernEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31814 = !DILocation(line: 778, column: 9, scope: !31815, inlinedAt: !31816)
-!31815 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!31815 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !31816 = !DILocation(line: 188, column: 20, scope: !31766)
 !31817 = !DILocation(line: 190, column: 9, scope: !31766)
 !31818 = !DILocation(line: 117, column: 9, scope: !31811, inlinedAt: !31812)
@@ -12598,7 +12598,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !32109 = !DILocation(line: 400, column: 9, scope: !32110, inlinedAt: !32111)
 !32110 = distinct !DISubprogram(name: "from<i128>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BuffernEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32111 = !DILocation(line: 778, column: 9, scope: !32112, inlinedAt: !32113)
-!32112 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!32112 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i128, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i128>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecnEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BuffernEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32113 = !DILocation(line: 301, column: 50, scope: !32104)
 !32114 = !DILocation(line: 301, column: 66, scope: !32104)
 !32115 = !DILocation(line: 117, column: 9, scope: !32108, inlinedAt: !32109)
@@ -12768,7 +12768,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !32279 = !DILocation(line: 187, column: 13, scope: !32244)
 !32280 = !DILocation(line: 0, scope: !21803, inlinedAt: !32281)
 !32281 = distinct !DILocation(line: 778, column: 9, scope: !32282, inlinedAt: !32283)
-!32282 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!32282 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32283 = !DILocation(line: 187, column: 26, scope: !32244)
 !32284 = !{!32285}
 !32285 = distinct !{!32285, !32286, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -12779,7 +12779,7 @@ begin_hunk_10_@llvm.memmove.p0.p0.i64
 !32290 = !DILocation(line: 400, column: 9, scope: !32291, inlinedAt: !32292)
 !32291 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32292 = !DILocation(line: 778, column: 9, scope: !32293, inlinedAt: !32294)
-!32293 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!32293 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32294 = !DILocation(line: 188, column: 20, scope: !32244)
 !32295 = !DILocation(line: 190, column: 9, scope: !32244)
 !32296 = !DILocation(line: 117, column: 9, scope: !32289, inlinedAt: !32290)
@@ -13182,7 +13182,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !32700 = !DILocation(line: 400, column: 9, scope: !32701, inlinedAt: !32702)
 !32701 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32702 = !DILocation(line: 778, column: 9, scope: !32703, inlinedAt: !32704)
-!32703 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!32703 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32704 = !DILocation(line: 301, column: 50, scope: !32695)
 !32705 = !DILocation(line: 301, column: 66, scope: !32695)
 !32706 = !DILocation(line: 117, column: 9, scope: !32699, inlinedAt: !32700)
@@ -13353,7 +13353,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !32871 = !DILocation(line: 187, column: 13, scope: !32835)
 !32872 = !DILocation(line: 0, scope: !21803, inlinedAt: !32873)
 !32873 = distinct !DILocation(line: 778, column: 9, scope: !32874, inlinedAt: !32875)
-!32874 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!32874 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32875 = !DILocation(line: 187, column: 26, scope: !32835)
 !32876 = !{!32877}
 !32877 = distinct !{!32877, !32878, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -13364,7 +13364,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !32882 = !DILocation(line: 400, column: 9, scope: !32883, inlinedAt: !32884)
 !32883 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32884 = !DILocation(line: 778, column: 9, scope: !32885, inlinedAt: !32886)
-!32885 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!32885 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !32886 = !DILocation(line: 188, column: 20, scope: !32835)
 !32887 = !DILocation(line: 190, column: 9, scope: !32835)
 !32888 = !DILocation(line: 117, column: 9, scope: !32881, inlinedAt: !32882)
@@ -13662,7 +13662,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !33180 = !DILocation(line: 400, column: 9, scope: !33181, inlinedAt: !33182)
 !33181 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33182 = !DILocation(line: 778, column: 9, scope: !33183, inlinedAt: !33184)
-!33183 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!33183 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33184 = !DILocation(line: 301, column: 50, scope: !33175)
 !33185 = !DILocation(line: 301, column: 66, scope: !33175)
 !33186 = !DILocation(line: 117, column: 9, scope: !33179, inlinedAt: !33180)
@@ -13833,7 +13833,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !33351 = !DILocation(line: 187, column: 13, scope: !33315)
 !33352 = !DILocation(line: 0, scope: !21803, inlinedAt: !33353)
 !33353 = distinct !DILocation(line: 778, column: 9, scope: !33354, inlinedAt: !33355)
-!33354 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!33354 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33355 = !DILocation(line: 187, column: 26, scope: !33315)
 !33356 = !{!33357}
 !33357 = distinct !{!33357, !33358, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -13844,7 +13844,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !33362 = !DILocation(line: 400, column: 9, scope: !33363, inlinedAt: !33364)
 !33363 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33364 = !DILocation(line: 778, column: 9, scope: !33365, inlinedAt: !33366)
-!33365 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!33365 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33366 = !DILocation(line: 188, column: 20, scope: !33315)
 !33367 = !DILocation(line: 190, column: 9, scope: !33315)
 !33368 = !DILocation(line: 117, column: 9, scope: !33361, inlinedAt: !33362)
@@ -14142,7 +14142,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !33660 = !DILocation(line: 400, column: 9, scope: !33661, inlinedAt: !33662)
 !33661 = distinct !DISubprogram(name: "from<i64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferxEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33662 = !DILocation(line: 778, column: 9, scope: !33663, inlinedAt: !33664)
-!33663 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!33663 = distinct !DISubprogram(name: "into<alloc::vec::Vec<i64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<i64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecxEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferxEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33664 = !DILocation(line: 301, column: 50, scope: !33655)
 !33665 = !DILocation(line: 301, column: 66, scope: !33655)
 !33666 = !DILocation(line: 117, column: 9, scope: !33659, inlinedAt: !33660)
@@ -14312,7 +14312,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !33830 = !DILocation(line: 187, column: 13, scope: !33795)
 !33831 = !DILocation(line: 0, scope: !21803, inlinedAt: !33832)
 !33832 = distinct !DILocation(line: 778, column: 9, scope: !33833, inlinedAt: !33834)
-!33833 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!33833 = distinct !DISubprogram(name: "into<polars_arrow::types::PrimitiveType, polars_arrow::datatypes::ArrowDataType>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertNtNtCs8774dFTUdNv_12polars_arrow5types13PrimitiveTypeINtB5_4IntoNtNtBC_9datatypes13ArrowDataTypeE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33834 = !DILocation(line: 187, column: 26, scope: !33795)
 !33835 = !{!33836}
 !33836 = distinct !{!33836, !33837, !"_RNvXs1_NtCs8774dFTUdNv_12polars_arrow9datatypesNtB5_13ArrowDataTypeINtNtCscgRAwXFJnXP_4core7convert4FromNtNtB7_5types13PrimitiveTypeE4from: argument 0"}
@@ -14323,7 +14323,7 @@ begin_hunk_11_@llvm.memmove.p0.p0.i64
 !33841 = !DILocation(line: 400, column: 9, scope: !33842, inlinedAt: !33843)
 !33842 = distinct !DISubprogram(name: "from<u64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferyEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecyEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33843 = !DILocation(line: 778, column: 9, scope: !33844, inlinedAt: !33845)
-!33844 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecyEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferyEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!33844 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecyEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferyEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !33845 = !DILocation(line: 188, column: 20, scope: !33795)
 !33846 = !DILocation(line: 190, column: 9, scope: !33795)
 !33847 = !DILocation(line: 117, column: 9, scope: !33840, inlinedAt: !33841)
@@ -14726,7 +14726,7 @@ begin_hunk_12_@llvm.memmove.p0.p0.i64
 !34249 = !DILocation(line: 400, column: 9, scope: !34250, inlinedAt: !34251)
 !34250 = distinct !DISubprogram(name: "from<u64>", linkageName: "_RNvXsa_NtCsknLZRuU4977_13polars_buffer6bufferINtB5_6BufferyEINtNtCscgRAwXFJnXP_4core7convert4FromINtNtCsgZ49sUHp3tW_5alloc3vec3VecyEE4fromCsfISxE4fmY1Y_14polars_parquet", scope: !3995, file: !3989, line: 399, type: !13, scopeLine: 399, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !34251 = !DILocation(line: 778, column: 9, scope: !34252, inlinedAt: !34253)
-!34252 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecyEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferyEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !332, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
+!34252 = distinct !DISubprogram(name: "into<alloc::vec::Vec<u64, alloc::alloc::Global>, polars_buffer::buffer::Buffer<u64>>", linkageName: "_RNvXs1_NtCscgRAwXFJnXP_4core7convertINtNtCsgZ49sUHp3tW_5alloc3vec3VecyEINtB5_4IntoINtNtCsknLZRuU4977_13polars_buffer6buffer6BufferyEE4intoCsfISxE4fmY1Y_14polars_parquet", scope: !333, file: !196, line: 777, type: !13, scopeLine: 777, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !5, templateParams: !14)
 !34253 = !DILocation(line: 301, column: 50, scope: !34244)
 !34254 = !DILocation(line: 301, column: 66, scope: !34244)
 !34255 = !DILocation(line: 117, column: 9, scope: !34248, inlinedAt: !34249)

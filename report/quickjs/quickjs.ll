@@ -205,21 +205,21 @@ JS_NewObjectProtoClass.exit.i:                    ; preds = %bb.ah, %.loopexit.i
   %i.kf = tail call fastcc ptr @js_new_shape2(ptr noundef nonnull %i.l, ptr noundef %.0.i.i82.i, i32 noundef range(i32 1, 5) 1) ; 2 uses
   store ptr %i.kf, ptr %i.b, align 8, !tbaa !252
   %.not.i.i83.i = icmp eq ptr %i.kf, null
-  br i1 %.not.i.i83.i, label %js_new_shape_with.exit.thread.i, label %.preheader.i.i.preheader.i
+  br i1 %.not.i.i83.i, label %js_new_shape_with.exit.thread.i, label %js_new_shape_with.exit.i
 
-.preheader.i.i.preheader.i:                       ; preds = %JS_NewObjectProtoClass.exit.i
-  %6 = call fastcc i32 @add_shape_property(ptr noundef nonnull %i.l, ptr noundef nonnull %i.b, ptr noundef null, i32 noundef 51, i32 noundef 10)
-  %.not13.i.i.i.a = icmp eq i32 %6, 0
-  br i1 %.not13.i.i.i.a, label %js_new_shape_with.exit.i, label %bb.ai
-
-js_new_shape_with.exit.i:                         ; preds = %.preheader.i.i.preheader.i
+.preheader.i.i.preheader.i:                       ; preds = %js_new_shape_with.exit.i
   %.pre.i.i.i = load ptr, ptr %i.b, align 8, !tbaa !252 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #49
   store ptr %.pre.i.i.i, ptr %i.jw, align 8, !tbaa !252
-  %.not.i.not.i = icmp eq ptr %.pre.i.i.i, null
-  br i1 %.not.i.not.i, label %JS_AddIntrinsicBasicObjects.exit.thread, label %bb.ak
+  %.not13.i.i.i.a = icmp eq ptr %.pre.i.i.i, null
+  br i1 %.not13.i.i.i.a, label %JS_AddIntrinsicBasicObjects.exit.thread, label %bb.ak
 
-bb.ai:                                            ; preds = %.preheader.i.i.preheader.i
+js_new_shape_with.exit.i:                         ; preds = %JS_NewObjectProtoClass.exit.i
+  %6 = call fastcc i32 @add_shape_property(ptr noundef nonnull %i.l, ptr noundef nonnull %i.b, ptr noundef null, i32 noundef 51, i32 noundef 10)
+  %.not.i.not.i = icmp eq i32 %6, 0
+  br i1 %.not.i.not.i, label %.preheader.i.i.preheader.i, label %bb.ai
+
+bb.ai:                                            ; preds = %js_new_shape_with.exit.i
   %i.kg = load ptr, ptr %i.br, align 8, !tbaa !50
   %i.kh = load ptr, ptr %i.b, align 8, !tbaa !252 ; 2 uses
   %i.ki = getelementptr inbounds i8, ptr %i.kh, i64 -4 ; 2 uses
@@ -238,7 +238,7 @@ js_new_shape_with.exit.thread.i:                  ; preds = %bb.aj, %bb.ai, %JS_
   store ptr null, ptr %i.jw, align 8, !tbaa !252
   br label %JS_AddIntrinsicBasicObjects.exit.thread
 
-bb.ak:                                            ; preds = %js_new_shape_with.exit.i
+bb.ak:                                            ; preds = %.preheader.i.i.preheader.i
   %i.km = getelementptr inbounds nuw i8, ptr %i.l, i64 56 ; 2 uses
   %i.kn = load ptr, ptr %i.bq, align 8, !tbaa !230 ; 2 uses
   %i.ko = getelementptr inbounds nuw i8, ptr %i.kn, i64 16
@@ -307,7 +307,7 @@ JS_AddIntrinsicBasicObjects.exit:                 ; preds = %js_new_shape_with.e
   %.not71.i.not = icmp eq i32 %i.ll, 0
   br i1 %.not71.i.not, label %js_mallocz_rt.exit.thread, label %JS_AddIntrinsicBasicObjects.exit.thread
 
-JS_AddIntrinsicBasicObjects.exit.thread:          ; preds = %js_new_shape_with.exit97.thread.i, %js_new_shape_with.exit.thread.i, %js_new_shape_with.exit.i, %bb.s, %js_dup.exit.i, %bb.p, %._crit_edge, %js_new_shape_with.exit97.i, %JS_AddIntrinsicBasicObjects.exit
+JS_AddIntrinsicBasicObjects.exit.thread:          ; preds = %js_new_shape_with.exit97.thread.i, %js_new_shape_with.exit.thread.i, %.preheader.i.i.preheader.i, %bb.s, %js_dup.exit.i, %bb.p, %._crit_edge, %js_new_shape_with.exit97.i, %JS_AddIntrinsicBasicObjects.exit
   tail call void @JS_FreeContext(ptr noundef nonnull %i.l)
   br label %js_mallocz_rt.exit.thread
 
@@ -710,21 +710,21 @@ bb.f:                                             ; preds = %js_dup.exit
   %i.ab = tail call fastcc ptr @js_new_shape2(ptr noundef nonnull %0, ptr noundef %.0.i.i, i32 noundef range(i32 1, 5) 1) ; 2 uses
   store ptr %i.ab, ptr %i.a, align 8, !tbaa !252
   %.not.i.i = icmp eq ptr %i.ab, null
-  br i1 %.not.i.i, label %js_new_shape_with.exit.thread, label %.preheader.i.i.preheader
+  br i1 %.not.i.i, label %js_new_shape_with.exit.thread, label %js_new_shape_with.exit
 
-.preheader.i.i.preheader:                         ; preds = %bb.f
-  %1 = call fastcc i32 @add_shape_property(ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef null, i32 noundef 93, i32 noundef 2)
-  %.not13.i.i.a = icmp eq i32 %1, 0
-  br i1 %.not13.i.i.a, label %js_new_shape_with.exit, label %bb.g
-
-js_new_shape_with.exit:                           ; preds = %.preheader.i.i.preheader
+.preheader.i.i.preheader:                         ; preds = %js_new_shape_with.exit
   %.pre.i.i = load ptr, ptr %i.a, align 8, !tbaa !252 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #49
   store ptr %.pre.i.i, ptr %i.y, align 8, !tbaa !252
-  %.not.i.not = icmp eq ptr %.pre.i.i, null
-  br i1 %.not.i.not, label %bb.m, label %bb.i
+  %.not13.i.i.a = icmp eq ptr %.pre.i.i, null
+  br i1 %.not13.i.i.a, label %bb.m, label %bb.i
 
-bb.g:                                             ; preds = %.preheader.i.i.preheader
+js_new_shape_with.exit:                           ; preds = %bb.f
+  %1 = call fastcc i32 @add_shape_property(ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef null, i32 noundef 93, i32 noundef 2)
+  %.not.i.not = icmp eq i32 %1, 0
+  br i1 %.not.i.not, label %.preheader.i.i.preheader, label %bb.g
+
+bb.g:                                             ; preds = %js_new_shape_with.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !50
   %i.ae = load ptr, ptr %i.a, align 8, !tbaa !252 ; 2 uses
@@ -744,7 +744,7 @@ js_new_shape_with.exit.thread:                    ; preds = %bb.h, %bb.g, %bb.f
   store ptr null, ptr %i.y, align 8, !tbaa !252
   br label %bb.m
 
-bb.i:                                             ; preds = %js_new_shape_with.exit
+bb.i:                                             ; preds = %.preheader.i.i.preheader
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.ak = load ptr, ptr %i.b, align 8, !tbaa !230 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
@@ -787,8 +787,8 @@ bb.l:                                             ; preds = %bb.k
   store ptr @js_compile_regexp, ptr %i.bh, align 8, !tbaa !274
   br label %bb.m
 
-bb.m:                                             ; preds = %js_new_shape_with.exit.thread, %bb.k, %bb.j, %bb.i, %js_new_shape_with.exit, %js_dup.exit, %bb.c, %bb.b, %bb.a, %bb.l
-  %.0 = phi i32 [ 0, %bb.l ], [ -1, %bb.a ], [ -1, %bb.b ], [ -1, %bb.c ], [ -1, %js_dup.exit ], [ -1, %js_new_shape_with.exit ], [ -1, %bb.i ], [ -1, %bb.j ], [ -1, %bb.k ], [ -1, %js_new_shape_with.exit.thread ]
+bb.m:                                             ; preds = %js_new_shape_with.exit.thread, %bb.k, %bb.j, %bb.i, %.preheader.i.i.preheader, %js_dup.exit, %bb.c, %bb.b, %bb.a, %bb.l
+  %.0 = phi i32 [ 0, %bb.l ], [ -1, %bb.a ], [ -1, %bb.b ], [ -1, %bb.c ], [ -1, %js_dup.exit ], [ -1, %.preheader.i.i.preheader ], [ -1, %bb.i ], [ -1, %bb.j ], [ -1, %bb.k ], [ -1, %js_new_shape_with.exit.thread ]
   ret i32 %.0
 }
 

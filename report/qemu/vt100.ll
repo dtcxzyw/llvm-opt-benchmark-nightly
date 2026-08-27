@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.r = icmp slt i32 %i.q, 0
   %spec.select39.i = select i1 %i.r, i32 %i.p, i32 %i.q
   store i32 %spec.select39.i, ptr %i.n, align 4
-  br label %vt100_scroll.exit
+  br label %vt100_scroll.exit, !llvm.loop !39
 
 vt100_scroll.exit:                                ; preds = %bb.c, %bb.b
   tail call void @vt100_refresh(ptr noundef nonnull %0)
@@ -226,7 +226,7 @@ bb.e:                                             ; preds = %bb.d
   %i.z = icmp eq i32 %i.x, %i.y
   %spec.store.select.i = select i1 %i.z, i32 0, i32 %i.x
   store i32 %spec.store.select.i, ptr %i.s, align 4
-  br label %vt100_scroll.exit41
+  br label %vt100_scroll.exit41, !llvm.loop !40
 
 vt100_scroll.exit41:                              ; preds = %bb.e, %bb.d
   tail call void @vt100_refresh(ptr noundef nonnull %0)
@@ -537,7 +537,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @vt100_update_cursor() local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i8, ptr @cursor_visible_phase, align 1, !range !13, !noundef !39
+  %i.a = load i8, ptr @cursor_visible_phase, align 1, !range !13, !noundef !41
   %i.b = xor i8 %i.a, 1
   store i8 %i.b, ptr @cursor_visible_phase, align 1
   %i.c = load ptr, ptr @vt100s, align 8           ; 2 uses
@@ -550,7 +550,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.04, i64 176
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
   %.not = icmp eq ptr %i.f, null
-  br i1 %.not, label %bb.b, label %.preheader, !llvm.loop !40
+  br i1 %.not, label %bb.b, label %.preheader, !llvm.loop !42
 
 bb.b:                                             ; preds = %.preheader
   %i.g = load ptr, ptr @cursor_timer, align 8
@@ -618,7 +618,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @cursor_timer_cb(ptr nofree readnone captures(none) %0) #0 {
 bb.a:
-  %i.a = load i8, ptr @cursor_visible_phase, align 1, !range !13, !noundef !39
+  %i.a = load i8, ptr @cursor_visible_phase, align 1, !range !13, !noundef !41
   %i.b = xor i8 %i.a, 1
   store i8 %i.b, ptr @cursor_visible_phase, align 1
   %i.c = load ptr, ptr @vt100s, align 8           ; 2 uses
@@ -631,7 +631,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %.04.i, i64 176
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
   %.not.i = icmp eq ptr %i.f, null
-  br i1 %.not.i, label %bb.b, label %.preheader.i, !llvm.loop !40
+  br i1 %.not.i, label %bb.b, label %.preheader.i, !llvm.loop !42
 
 bb.b:                                             ; preds = %.preheader.i
   %i.g = load ptr, ptr @cursor_timer, align 8
@@ -782,7 +782,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.aj = add nuw nsw i32 %.06068, 1              ; 2 uses
   %i.ak = load i32, ptr %i.x, align 4             ; 2 uses
   %i.al = icmp slt i32 %i.aj, %i.ak
-  br i1 %i.al, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !41
+  br i1 %i.al, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !43
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph
   %.pre72 = load i32, ptr %i.g, align 4
@@ -1099,7 +1099,9 @@ attributes #14 = { nounwind allocsize(0) }
 !36 = distinct !{!36, !9}
 !37 = distinct !{!37, !9}
 !38 = distinct !{!38, !9}
-!39 = !{}
+!39 = distinct !{!39, !9}
 !40 = distinct !{!40, !9}
-!41 = distinct !{!41, !9}
+!41 = !{}
+!42 = distinct !{!42, !9}
+!43 = distinct !{!43, !9}
 end_hunk_0

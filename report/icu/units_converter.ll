@@ -204,13 +204,13 @@ bb.a:
   %i.c = alloca i32, align 4                      ; 4 uses
   %8 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
   %9 = alloca %"class.icu_78::StringPiece", align 8 ; 6 uses
-  %10 = alloca %"class.icu_78::StringPiece", align 8 ; 9 uses
+  %10 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
   %11 = alloca %"class.icu_78::StringPiece", align 8 ; 9 uses
-  %12 = alloca %"class.icu_78::StringPiece", align 8 ; 8 uses
+  %12 = alloca %"class.icu_78::StringPiece", align 8 ; 7 uses
   %13 = alloca %"class.icu_78::StringPiece", align 8 ; 6 uses
   %14 = alloca %"class.icu_78::StringPiece", align 8 ; 6 uses
   %15 = alloca %"struct.icu_78::SingleUnitImpl", align 4 ; 7 uses
-  %16 = alloca %"struct.icu_78::units::Factor", align 16 ; 30 uses
+  %16 = alloca %"struct.icu_78::units::Factor", align 16 ; 29 uses
   %17 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store <2 x double> splat (double 1.000000e+00), ptr %0, align 8, !tbaa !8
@@ -235,7 +235,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %13, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %12, i64 8
   %.fca.1.gep.i.i.i = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
-  %.fca.1.gep.i36.i.i = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
+  %.fca.1.gep.i36.i.i = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -335,7 +335,7 @@ bb.d:                                             ; preds = %bb.c
   %spec.select.i.i = select i1 %i.cj, ptr @.str.20, ptr %i.ci
   call void @_ZN6icu_7811StringPieceC1EPKc(ptr noundef nonnull align 8 dereferenceable(12) %13, ptr noundef nonnull %spec.select.i.i), !noalias !85
   %i.ck = load ptr, ptr %13, align 8, !noalias !85 ; 3 uses
-  %i.cl = load i32, ptr %i.o, align 8, !noalias !85 ; 7 uses
+  %i.cl = load i32, ptr %i.o, align 8, !noalias !85 ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !88)
   call void @llvm.lifetime.start.p0(ptr nonnull %12), !noalias !85
   store ptr %i.ck, ptr %12, align 8, !noalias !91
@@ -349,7 +349,7 @@ bb.d:                                             ; preds = %bb.c
 
 .lr.ph.i.i:                                       ; preds = %bb.d
   %i.cn = add nsw i32 %i.cl, -1
-  %i.co = zext nneg i32 %i.cn to i64              ; 2 uses
+  %i.co = zext nneg i32 %i.cn to i64
   %.not.i = icmp eq i32 %i.cl, 1
   br i1 %.not.i, label %_ZN6icu_785units12_GLOBAL__N_124extractFactorConversionsENS_11StringPieceER10UErrorCode.exit.loopexit.peel.begin.i, label %.lr.ph.i.split.i
 
@@ -359,12 +359,12 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %.lr.ph.i.split.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.split.i ], [ %indvars.iv.next.i.i, %bb.g ] ; 5 uses
-  %.041.i.i = phi i32 [ 1, %.lr.ph.i.split.i ], [ %spec.select.i18.i, %bb.g ] ; 3 uses
-  %.03039.i.i = phi i32 [ 0, %.lr.ph.i.split.i ], [ %.131.i.i, %bb.g ] ; 5 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.split.i ], [ %indvars.iv.next.i.i, %bb.g ] ; 4 uses
+  %.041.i.i = phi i32 [ 1, %.lr.ph.i.split.i ], [ %spec.select.i18.i, %bb.g ] ; 2 uses
+  %.03039.i.i = phi i32 [ 0, %.lr.ph.i.split.i ], [ %.131.i.i, %bb.g ] ; 3 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.ck, i64 %indvars.iv.i.i ; 2 uses
-  %i.cr = load i8, ptr %i.cq, align 1, !tbaa !80, !noalias !91
-  switch i8 %i.cr, label %18 [
+  %i.cr = load i8, ptr %i.cq, align 1, !tbaa !80, !noalias !91 ; 2 uses
+  switch i8 %i.cr, label %bb.g [
     i8 42, label %bb.f
     i8 47, label %bb.f
   ]
@@ -379,25 +379,13 @@ bb.f:                                             ; preds = %bb.e, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %11), !noalias !91
   call fastcc void @_ZN6icu_785units12_GLOBAL__N_116addFactorElementERNS0_6FactorENS_11StringPieceENS0_6SignumER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(88) %16, ptr %.fca.0.load.i.i.i, i32 %.fca.1.load.i.i.i, i32 noundef %.041.i.i, ptr noundef nonnull align 4 dereferenceable(4) %3)
   %i.cu = add nuw nsw i32 %i.cs, 1
+  %.pre = load i8, ptr %i.cq, align 1, !tbaa !80, !noalias !91
   br label %bb.g
 
-18:                                               ; preds = %bb.e
-  %19 = icmp eq i64 %indvars.iv.i.i, %i.co
-  br i1 %19, label %20, label %bb.g
-
-20:                                               ; preds = %18
-  call void @llvm.lifetime.start.p0(ptr nonnull %10), !noalias !91
-  call void @_ZN6icu_7811StringPieceC1ERKS0_ii(ptr noundef nonnull align 8 dereferenceable(12) %10, ptr noundef nonnull align 8 dereferenceable(12) %12, i32 noundef %.03039.i.i, i32 noundef %i.cl), !noalias !91
-  %.fca.0.load.i34.i.i = load ptr, ptr %10, align 8, !noalias !91
-  %.fca.1.load.i37.i.i = load i32, ptr %.fca.1.gep.i36.i.i, align 8, !noalias !91
-  call void @llvm.lifetime.end.p0(ptr nonnull %10), !noalias !91
-  call fastcc void @_ZN6icu_785units12_GLOBAL__N_116addFactorElementERNS0_6FactorENS_11StringPieceENS0_6SignumER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(88) %16, ptr %.fca.0.load.i34.i.i, i32 %.fca.1.load.i37.i.i, i32 noundef %.041.i.i, ptr noundef nonnull align 4 dereferenceable(4) %3)
-  br label %bb.g
-
-bb.g:                                             ; preds = %20, %18, %bb.f
-  %.131.i.i = phi i32 [ %i.cu, %bb.f ], [ %.03039.i.i, %20 ], [ %.03039.i.i, %18 ] ; 2 uses
-  %21 = load i8, ptr %i.cq, align 1, !tbaa !80, !noalias !91
-  %i.cv = icmp eq i8 %21, 47
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %18 = phi i8 [ %.pre, %bb.f ], [ %i.cr, %bb.e ]
+  %.131.i.i = phi i32 [ %i.cu, %bb.f ], [ %.03039.i.i, %bb.e ] ; 2 uses
+  %i.cv = icmp eq i8 %18, 47
   %spec.select.i18.i = select i1 %i.cv, i32 -1, i32 %.041.i.i ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.i.i, %i.cp

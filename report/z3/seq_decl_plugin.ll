@@ -205,7 +205,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i:        ; preds = %.noexc94
   store i32 %i.aw, ptr %i.au, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i, %.noexc94
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i: ; preds = %.noexc94, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.g, null    ; 5 uses
   br i1 %.not.i.i.i.i.i.i.i, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i, label %bb.j
 
@@ -221,15 +221,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i unwind label %bb.k
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i
-  %.pre.i.i.i.i.i = load ptr, ptr %i.ar, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i, i64 -4
+  %.pre.i.i.i.i.i = load ptr, ptr %i.ar, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i = load i32, ptr %.phi.trans.insert.i.i.i.i.i, align 4, !tbaa !31 ; 2 uses
-  %7 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i, i64 -4
   %i.ba = zext i32 %.pre2.i.i.i.i.i to i64
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i, i64 %i.ba
   store ptr %i.g, ptr %i.bb, align 8, !tbaa !42
   %i.bc = add i32 %.pre2.i.i.i.i.i, 1
-  store i32 %i.bc, ptr %7, align 4, !tbaa !31
+  store i32 %i.bc, ptr %.phi.trans.insert.i.i.i.i.i, align 4, !tbaa !31
   %i.bd = load ptr, ptr %i.y, align 8, !tbaa !30
   store ptr %i.an, ptr %i.bd, align 8, !tbaa !37
   %i.be = invoke noalias noundef ptr @_ZN6memory8allocateEm(i64 noundef 48)
@@ -632,7 +631,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i293:     ; preds = %.noexc304
   store i32 %i.rx, ptr %i.rv, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i294
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i294: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i293, %.noexc304
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i294: ; preds = %.noexc304, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i293
   br i1 %.not.i.i.i, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i298, label %bb.cb
 
 bb.cb:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i294
@@ -647,15 +646,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i299 unwind label %bb.cc
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i299: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i298
-  %.pre.i.i.i.i.i301 = load ptr, ptr %i.rs, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i302 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i301, i64 -4
+  %.pre.i.i.i.i.i301 = load ptr, ptr %i.rs, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i302 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i301, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i303 = load i32, ptr %.phi.trans.insert.i.i.i.i.i302, align 4, !tbaa !31 ; 2 uses
-  %8 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i301, i64 -4
   %i.sb = zext i32 %.pre2.i.i.i.i.i303 to i64
   %i.sc = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i301, i64 %i.sb
   store ptr %i.n, ptr %i.sc, align 8, !tbaa !42
   %i.sd = add i32 %.pre2.i.i.i.i.i303, 1
-  store i32 %i.sd, ptr %8, align 4, !tbaa !31
+  store i32 %i.sd, ptr %.phi.trans.insert.i.i.i.i.i302, align 4, !tbaa !31
   %i.se = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.sf = getelementptr inbounds nuw i8, ptr %i.se, i64 96
   store ptr %i.ro, ptr %i.sf, align 8, !tbaa !37
@@ -700,15 +698,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i315 unwind label %bb.cf
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i315: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i314
-  %.pre.i.i.i.i.i317 = load ptr, ptr %i.sk, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i318 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i317, i64 -4
+  %.pre.i.i.i.i.i317 = load ptr, ptr %i.sk, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i318 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i317, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i319 = load i32, ptr %.phi.trans.insert.i.i.i.i.i318, align 4, !tbaa !31 ; 2 uses
-  %9 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i317, i64 -4
   %i.sr = zext i32 %.pre2.i.i.i.i.i319 to i64
   %i.ss = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i317, i64 %i.sr
   store ptr %i.q, ptr %i.ss, align 8, !tbaa !42
   %i.st = add i32 %.pre2.i.i.i.i.i319, 1
-  store i32 %i.st, ptr %9, align 4, !tbaa !31
+  store i32 %i.st, ptr %.phi.trans.insert.i.i.i.i.i318, align 4, !tbaa !31
   %i.su = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.sv = getelementptr inbounds nuw i8, ptr %i.su, i64 192
   store ptr %i.sg, ptr %i.sv, align 8, !tbaa !37
@@ -752,15 +749,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i331 unwind label %bb.ci
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i331: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i330
-  %.pre.i.i.i.i.i333 = load ptr, ptr %i.ta, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i334 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i333, i64 -4
+  %.pre.i.i.i.i.i333 = load ptr, ptr %i.ta, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i334 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i333, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i335 = load i32, ptr %.phi.trans.insert.i.i.i.i.i334, align 4, !tbaa !31 ; 2 uses
-  %10 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i333, i64 -4
   %i.th = zext i32 %.pre2.i.i.i.i.i335 to i64
   %i.ti = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i333, i64 %i.th
   store ptr %i.q, ptr %i.ti, align 8, !tbaa !42
   %i.tj = add i32 %.pre2.i.i.i.i.i335, 1
-  store i32 %i.tj, ptr %10, align 4, !tbaa !31
+  store i32 %i.tj, ptr %.phi.trans.insert.i.i.i.i.i334, align 4, !tbaa !31
   %i.tk = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.tl = getelementptr inbounds nuw i8, ptr %i.tk, i64 200
   store ptr %i.sw, ptr %i.tl, align 8, !tbaa !37
@@ -804,15 +800,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i347 unwind label %bb.cl
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i347: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i346
-  %.pre.i.i.i.i.i349 = load ptr, ptr %i.tq, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i350 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i349, i64 -4
+  %.pre.i.i.i.i.i349 = load ptr, ptr %i.tq, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i350 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i349, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i351 = load i32, ptr %.phi.trans.insert.i.i.i.i.i350, align 4, !tbaa !31 ; 2 uses
-  %11 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i349, i64 -4
   %i.tx = zext i32 %.pre2.i.i.i.i.i351 to i64
   %i.ty = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i349, i64 %i.tx
   store ptr %i.q, ptr %i.ty, align 8, !tbaa !42
   %i.tz = add i32 %.pre2.i.i.i.i.i351, 1
-  store i32 %i.tz, ptr %11, align 4, !tbaa !31
+  store i32 %i.tz, ptr %.phi.trans.insert.i.i.i.i.i350, align 4, !tbaa !31
   %i.ua = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.ub = getelementptr inbounds nuw i8, ptr %i.ua, i64 208
   store ptr %i.tm, ptr %i.ub, align 8, !tbaa !37
@@ -1215,15 +1210,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i459 unwind label %bb.ds
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i459: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i458
-  %.pre.i.i.i.i.i461 = load ptr, ptr %i.abg, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i462 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i461, i64 -4
+  %.pre.i.i.i.i.i461 = load ptr, ptr %i.abg, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i462 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i461, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i463 = load i32, ptr %.phi.trans.insert.i.i.i.i.i462, align 4, !tbaa !31 ; 2 uses
-  %12 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i461, i64 -4
   %i.abn = zext i32 %.pre2.i.i.i.i.i463 to i64
   %i.abo = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i461, i64 %i.abn
   store ptr %i.q, ptr %i.abo, align 8, !tbaa !42
   %i.abp = add i32 %.pre2.i.i.i.i.i463, 1
-  store i32 %i.abp, ptr %12, align 4, !tbaa !31
+  store i32 %i.abp, ptr %.phi.trans.insert.i.i.i.i.i462, align 4, !tbaa !31
   %i.abq = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.abr = getelementptr inbounds nuw i8, ptr %i.abq, i64 264
   store ptr %i.abc, ptr %i.abr, align 8, !tbaa !37
@@ -1267,15 +1261,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i475 unwind label %bb.dv
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i475: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i474
-  %.pre.i.i.i.i.i477 = load ptr, ptr %i.abw, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i478 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i477, i64 -4
+  %.pre.i.i.i.i.i477 = load ptr, ptr %i.abw, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i478 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i477, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i479 = load i32, ptr %.phi.trans.insert.i.i.i.i.i478, align 4, !tbaa !31 ; 2 uses
-  %13 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i477, i64 -4
   %i.acd = zext i32 %.pre2.i.i.i.i.i479 to i64
   %i.ace = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i477, i64 %i.acd
   store ptr %i.q, ptr %i.ace, align 8, !tbaa !42
   %i.acf = add i32 %.pre2.i.i.i.i.i479, 1
-  store i32 %i.acf, ptr %13, align 4, !tbaa !31
+  store i32 %i.acf, ptr %.phi.trans.insert.i.i.i.i.i478, align 4, !tbaa !31
   %i.acg = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.ach = getelementptr inbounds nuw i8, ptr %i.acg, i64 272
   store ptr %i.abs, ptr %i.ach, align 8, !tbaa !37
@@ -1319,15 +1312,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i491 unwind label %bb.dy
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i491: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i490
-  %.pre.i.i.i.i.i493 = load ptr, ptr %i.acm, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i494 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i493, i64 -4
+  %.pre.i.i.i.i.i493 = load ptr, ptr %i.acm, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i494 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i493, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i495 = load i32, ptr %.phi.trans.insert.i.i.i.i.i494, align 4, !tbaa !31 ; 2 uses
-  %14 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i493, i64 -4
   %i.act = zext i32 %.pre2.i.i.i.i.i495 to i64
   %i.acu = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i493, i64 %i.act
   store ptr %i.q, ptr %i.acu, align 8, !tbaa !42
   %i.acv = add i32 %.pre2.i.i.i.i.i495, 1
-  store i32 %i.acv, ptr %14, align 4, !tbaa !31
+  store i32 %i.acv, ptr %.phi.trans.insert.i.i.i.i.i494, align 4, !tbaa !31
   %i.acw = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.acx = getelementptr inbounds nuw i8, ptr %i.acw, i64 280
   store ptr %i.aci, ptr %i.acx, align 8, !tbaa !37
@@ -1458,7 +1450,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i516:     ; preds = %.noexc527
   store i32 %i.aeo, ptr %i.aem, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i517
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i517: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i516, %.noexc527
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i517: ; preds = %.noexc527, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i516
   %.not.i.i.i.i.i.i.i520 = icmp eq ptr %i.x, null
   br i1 %.not.i.i.i.i.i.i.i520, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i521, label %bb.ed
 
@@ -1474,15 +1466,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i522 unwind label %bb.ee
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i522: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i521
-  %.pre.i.i.i.i.i524 = load ptr, ptr %i.aej, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i525 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i524, i64 -4
+  %.pre.i.i.i.i.i524 = load ptr, ptr %i.aej, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i525 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i524, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i526 = load i32, ptr %.phi.trans.insert.i.i.i.i.i525, align 4, !tbaa !31 ; 2 uses
-  %15 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i524, i64 -4
   %i.aes = zext i32 %.pre2.i.i.i.i.i526 to i64
   %i.aet = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i524, i64 %i.aes
   store ptr %i.x, ptr %i.aet, align 8, !tbaa !42
   %i.aeu = add i32 %.pre2.i.i.i.i.i526, 1
-  store i32 %i.aeu, ptr %15, align 4, !tbaa !31
+  store i32 %i.aeu, ptr %.phi.trans.insert.i.i.i.i.i525, align 4, !tbaa !31
   %i.aev = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.aew = getelementptr inbounds nuw i8, ptr %i.aev, i64 312
   store ptr %i.aeg, ptr %i.aew, align 8, !tbaa !37
@@ -1526,15 +1517,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i538 unwind label %bb.eh
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i538: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i537
-  %.pre.i.i.i.i.i540 = load ptr, ptr %i.afb, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i541 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i540, i64 -4
+  %.pre.i.i.i.i.i540 = load ptr, ptr %i.afb, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i541 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i540, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i542 = load i32, ptr %.phi.trans.insert.i.i.i.i.i541, align 4, !tbaa !31 ; 2 uses
-  %16 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i540, i64 -4
   %i.afi = zext i32 %.pre2.i.i.i.i.i542 to i64
   %i.afj = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i540, i64 %i.afi
   store ptr %i.q, ptr %i.afj, align 8, !tbaa !42
   %i.afk = add i32 %.pre2.i.i.i.i.i542, 1
-  store i32 %i.afk, ptr %16, align 4, !tbaa !31
+  store i32 %i.afk, ptr %.phi.trans.insert.i.i.i.i.i541, align 4, !tbaa !31
   %i.afl = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.afm = getelementptr inbounds nuw i8, ptr %i.afl, i64 320
   store ptr %i.aex, ptr %i.afm, align 8, !tbaa !37
@@ -1668,7 +1658,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i564:     ; preds = %.noexc575
   store i32 %i.ahc, ptr %i.aha, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i565
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i565: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i564, %.noexc575
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i565: ; preds = %.noexc575, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i564
   br i1 %.not.i.i.i, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i569, label %bb.eo
 
 bb.eo:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i565
@@ -1683,15 +1673,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i570 unwind label %bb.ep
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i570: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i569
-  %.pre.i.i.i.i.i572 = load ptr, ptr %i.agx, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i573 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i572, i64 -4
+  %.pre.i.i.i.i.i572 = load ptr, ptr %i.agx, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i573 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i572, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i574 = load i32, ptr %.phi.trans.insert.i.i.i.i.i573, align 4, !tbaa !31 ; 2 uses
-  %17 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i572, i64 -4
   %i.ahg = zext i32 %.pre2.i.i.i.i.i574 to i64
   %i.ahh = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i572, i64 %i.ahg
   store ptr %i.n, ptr %i.ahh, align 8, !tbaa !42
   %i.ahi = add i32 %.pre2.i.i.i.i.i574, 1
-  store i32 %i.ahi, ptr %17, align 4, !tbaa !31
+  store i32 %i.ahi, ptr %.phi.trans.insert.i.i.i.i.i573, align 4, !tbaa !31
   %i.ahj = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.ahk = getelementptr inbounds nuw i8, ptr %i.ahj, i64 120
   store ptr %i.agt, ptr %i.ahk, align 8, !tbaa !37
@@ -2094,7 +2083,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i681:     ; preds = %.noexc692
   store i32 %i.arv, ptr %i.art, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i682
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i682: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i681, %.noexc692
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i682: ; preds = %.noexc692, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i681
   br i1 %.not.i.i.i.i.i.i.i169.1, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i686, label %bb.gg
 
 bb.gg:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i682
@@ -2109,15 +2098,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i687 unwind label %bb.gh
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i687: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i686
-  %.pre.i.i.i.i.i689 = load ptr, ptr %i.arq, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i690 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i689, i64 -4
+  %.pre.i.i.i.i.i689 = load ptr, ptr %i.arq, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i690 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i689, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i691 = load i32, ptr %.phi.trans.insert.i.i.i.i.i690, align 4, !tbaa !31 ; 2 uses
-  %18 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i689, i64 -4
   %i.arz = zext i32 %.pre2.i.i.i.i.i691 to i64
   %i.asa = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i689, i64 %i.arz
   store ptr %i.w, ptr %i.asa, align 8, !tbaa !42
   %i.asb = add i32 %.pre2.i.i.i.i.i691, 1
-  store i32 %i.asb, ptr %18, align 4, !tbaa !31
+  store i32 %i.asb, ptr %.phi.trans.insert.i.i.i.i.i690, align 4, !tbaa !31
   %i.asc = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.asd = getelementptr inbounds nuw i8, ptr %i.asc, i64 344
   store ptr %i.arn, ptr %i.asd, align 8, !tbaa !37
@@ -2155,7 +2143,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i697:     ; preds = %.noexc708
   store i32 %i.asn, ptr %i.asl, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i698
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i698: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i697, %.noexc708
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i698: ; preds = %.noexc708, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i697
   br i1 %.not.i.i.i.i.i.i.i648, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i702, label %bb.gj
 
 bb.gj:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i698
@@ -2170,15 +2158,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i703 unwind label %bb.gk
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i703: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i702
-  %.pre.i.i.i.i.i705 = load ptr, ptr %i.asi, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i706 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i705, i64 -4
+  %.pre.i.i.i.i.i705 = load ptr, ptr %i.asi, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i706 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i705, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i707 = load i32, ptr %.phi.trans.insert.i.i.i.i.i706, align 4, !tbaa !31 ; 2 uses
-  %19 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i705, i64 -4
   %i.asr = zext i32 %.pre2.i.i.i.i.i707 to i64
   %i.ass = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i705, i64 %i.asr
   store ptr %i.i, ptr %i.ass, align 8, !tbaa !42
   %i.ast = add i32 %.pre2.i.i.i.i.i707, 1
-  store i32 %i.ast, ptr %19, align 4, !tbaa !31
+  store i32 %i.ast, ptr %.phi.trans.insert.i.i.i.i.i706, align 4, !tbaa !31
   %i.asu = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.asv = getelementptr inbounds nuw i8, ptr %i.asu, i64 352
   store ptr %i.ase, ptr %i.asv, align 8, !tbaa !37
@@ -2408,7 +2395,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i745:     ; preds = %.noexc756
   store i32 %i.avr, ptr %i.avp, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i746
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i746: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i745, %.noexc756
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i746: ; preds = %.noexc756, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i745
   br i1 %.not.i.i.i.i.i.i.i648, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i750, label %bb.gw
 
 bb.gw:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i746
@@ -2423,15 +2410,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i751 unwind label %bb.gx
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i751: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i750
-  %.pre.i.i.i.i.i753 = load ptr, ptr %i.avm, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i754 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i753, i64 -4
+  %.pre.i.i.i.i.i753 = load ptr, ptr %i.avm, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i754 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i753, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i755 = load i32, ptr %.phi.trans.insert.i.i.i.i.i754, align 4, !tbaa !31 ; 2 uses
-  %20 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i753, i64 -4
   %i.avv = zext i32 %.pre2.i.i.i.i.i755 to i64
   %i.avw = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i753, i64 %i.avv
   store ptr %i.i, ptr %i.avw, align 8, !tbaa !42
   %i.avx = add i32 %.pre2.i.i.i.i.i755, 1
-  store i32 %i.avx, ptr %20, align 4, !tbaa !31
+  store i32 %i.avx, ptr %.phi.trans.insert.i.i.i.i.i754, align 4, !tbaa !31
   %i.avy = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.avz = getelementptr inbounds nuw i8, ptr %i.avy, i64 392
   store ptr %i.avi, ptr %i.avz, align 8, !tbaa !37
@@ -2469,7 +2455,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i761:     ; preds = %.noexc772
   store i32 %i.awj, ptr %i.awh, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i762
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i762: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i761, %.noexc772
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i762: ; preds = %.noexc772, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i761
   br i1 %.not.i.i.i.i.i.i.i648, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i766, label %bb.gz
 
 bb.gz:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i762
@@ -2484,15 +2470,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i767 unwind label %bb.ha
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i767: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i766
-  %.pre.i.i.i.i.i769 = load ptr, ptr %i.awe, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i770 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i769, i64 -4
+  %.pre.i.i.i.i.i769 = load ptr, ptr %i.awe, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i770 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i769, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i771 = load i32, ptr %.phi.trans.insert.i.i.i.i.i770, align 4, !tbaa !31 ; 2 uses
-  %21 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i769, i64 -4
   %i.awn = zext i32 %.pre2.i.i.i.i.i771 to i64
   %i.awo = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i769, i64 %i.awn
   store ptr %i.i, ptr %i.awo, align 8, !tbaa !42
   %i.awp = add i32 %.pre2.i.i.i.i.i771, 1
-  store i32 %i.awp, ptr %21, align 4, !tbaa !31
+  store i32 %i.awp, ptr %.phi.trans.insert.i.i.i.i.i770, align 4, !tbaa !31
   %i.awq = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.awr = getelementptr inbounds nuw i8, ptr %i.awq, i64 400
   store ptr %i.awa, ptr %i.awr, align 8, !tbaa !37
@@ -2530,7 +2515,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i777:     ; preds = %.noexc788
   store i32 %i.axb, ptr %i.awz, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i778
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i778: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i777, %.noexc788
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i778: ; preds = %.noexc788, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i777
   br i1 %.not.i.i.i.i.i.i.i169.1, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i782, label %bb.hc
 
 bb.hc:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i778
@@ -2545,15 +2530,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i783 unwind label %bb.hd
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i783: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i782
-  %.pre.i.i.i.i.i785 = load ptr, ptr %i.aww, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i786 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i785, i64 -4
+  %.pre.i.i.i.i.i785 = load ptr, ptr %i.aww, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i786 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i785, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i787 = load i32, ptr %.phi.trans.insert.i.i.i.i.i786, align 4, !tbaa !31 ; 2 uses
-  %22 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i785, i64 -4
   %i.axf = zext i32 %.pre2.i.i.i.i.i787 to i64
   %i.axg = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i785, i64 %i.axf
   store ptr %i.w, ptr %i.axg, align 8, !tbaa !42
   %i.axh = add i32 %.pre2.i.i.i.i.i787, 1
-  store i32 %i.axh, ptr %22, align 4, !tbaa !31
+  store i32 %i.axh, ptr %.phi.trans.insert.i.i.i.i.i786, align 4, !tbaa !31
   %i.axi = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.axj = getelementptr inbounds nuw i8, ptr %i.axi, i64 408
   store ptr %i.aws, ptr %i.axj, align 8, !tbaa !37
@@ -2678,7 +2662,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i809:     ; preds = %.noexc820
   store i32 %i.ayx, ptr %i.ayv, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i810
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i810: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i809, %.noexc820
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i810: ; preds = %.noexc820, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i809
   br i1 %.not.i.i.i.i.i.i.i648, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i814, label %bb.hk
 
 bb.hk:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i810
@@ -2693,15 +2677,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i815 unwind label %bb.hl
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i815: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i814
-  %.pre.i.i.i.i.i817 = load ptr, ptr %i.ays, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i818 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i817, i64 -4
+  %.pre.i.i.i.i.i817 = load ptr, ptr %i.ays, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i818 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i817, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i819 = load i32, ptr %.phi.trans.insert.i.i.i.i.i818, align 4, !tbaa !31 ; 2 uses
-  %23 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i817, i64 -4
   %i.azb = zext i32 %.pre2.i.i.i.i.i819 to i64
   %i.azc = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i817, i64 %i.azb
   store ptr %i.i, ptr %i.azc, align 8, !tbaa !42
   %i.azd = add i32 %.pre2.i.i.i.i.i819, 1
-  store i32 %i.azd, ptr %23, align 4, !tbaa !31
+  store i32 %i.azd, ptr %.phi.trans.insert.i.i.i.i.i818, align 4, !tbaa !31
   %i.aze = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.azf = getelementptr inbounds nuw i8, ptr %i.aze, i64 440
   store ptr %i.ayo, ptr %i.azf, align 8, !tbaa !37
@@ -3104,7 +3087,7 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i.i905:     ; preds = %.noexc916
   store i32 %i.bfr, ptr %i.bfp, align 4, !tbaa !33
   br label %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i906
 
-_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i906: ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i905, %.noexc916
+_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i906: ; preds = %.noexc916, %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i905
   br i1 %.not.i.i.i.i.i.i.i648, label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i910, label %bb.im
 
 bb.im:                                            ; preds = %_ZN7obj_refI4sort11ast_managerEC2EPS0_RS1_.exit.i906
@@ -3119,15 +3102,14 @@ _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.
           to label %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i911 unwind label %bb.in
 
 _ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.i.i.i911: ; preds = %_ZN15ref_vector_coreI4sort19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i.i.i.i910
-  %.pre.i.i.i.i.i913 = load ptr, ptr %i.bfm, align 8, !tbaa !29 ; 3 uses
-  %.phi.trans.insert.i.i.i.i.i914 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i913, i64 -4
+  %.pre.i.i.i.i.i913 = load ptr, ptr %i.bfm, align 8, !tbaa !29 ; 2 uses
+  %.phi.trans.insert.i.i.i.i.i914 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i913, i64 -4 ; 2 uses
   %.pre2.i.i.i.i.i915 = load i32, ptr %.phi.trans.insert.i.i.i.i.i914, align 4, !tbaa !31 ; 2 uses
-  %24 = getelementptr inbounds i8, ptr %.pre.i.i.i.i.i913, i64 -4
   %i.bfv = zext i32 %.pre2.i.i.i.i.i915 to i64
   %i.bfw = getelementptr inbounds nuw [8 x i8], ptr %.pre.i.i.i.i.i913, i64 %i.bfv
   store ptr %i.i, ptr %i.bfw, align 8, !tbaa !42
   %i.bfx = add i32 %.pre2.i.i.i.i.i915, 1
-  store i32 %i.bfx, ptr %24, align 4, !tbaa !31
+  store i32 %i.bfx, ptr %.phi.trans.insert.i.i.i.i.i914, align 4, !tbaa !31
   %i.bfy = load ptr, ptr %i.y, align 8, !tbaa !30
   %i.bfz = getelementptr inbounds nuw i8, ptr %i.bfy, i64 480
   store ptr %i.bfi, ptr %i.bfz, align 8, !tbaa !37

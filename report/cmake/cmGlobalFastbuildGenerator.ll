@@ -204,7 +204,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit161: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #26
   br label %.loopexit.split-lp
 
-bb.t:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit152, %bb.o
+bb.t:                                             ; preds = %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit152
   %i.gl = load ptr, ptr %i.k, align 8, !tbaa !145
   %i.gm = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.gl, ptr noundef nonnull @.str.93, i64 noundef 2)
           to label %.noexc164 unwind label %.loopexit ; 0 uses
