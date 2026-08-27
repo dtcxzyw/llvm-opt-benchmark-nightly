@@ -202,7 +202,7 @@ list_length.exit:                                 ; preds = %bb.a, %bb.b
   %i.f = phi i32 [ %i.e, %bb.b ], [ 0, %bb.a ]    ; 3 uses
   %i.g = sext i32 %i.f to i64                     ; 2 uses
   %i.h = mul nsw i64 %i.g, 72
-  %i.i = tail call ptr @palloc(i64 noundef %i.h) #7 ; 4 uses
+  %i.i = tail call ptr @palloc(i64 noundef %i.h) #7 ; 3 uses
   %i.j = load ptr, ptr %6, align 8                ; 3 uses
   %i.k = load i32, ptr %7, align 4                ; 4 uses
   %i.l = mul nsw i64 %i.g, 40
@@ -210,15 +210,12 @@ list_length.exit:                                 ; preds = %bb.a, %bb.b
   br i1 %.not.i, label %.critedge365.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %list_length.exit
-  %10 = ptrtoaddr ptr %i.i to i64
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 328
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 360 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 352 ; 2 uses
   %spec.select = select i1 %3, i32 256, i32 0     ; 2 uses
-  %11 = and i64 %10, 7
-  %12 = icmp eq i64 %11, 0
   %i.s = load i32, ptr %i.n, align 4
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.lr.ph646, label %.critedge365
@@ -233,7 +230,7 @@ list_length.exit:                                 ; preds = %bb.a, %bb.b
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv641
   %i.w = load ptr, ptr %i.v, align 8              ; 18 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv641, 1 ; 2 uses
-  %i.x = getelementptr [72 x i8], ptr %i.i, i64 %indvars.iv641 ; 12 uses
+  %i.x = getelementptr [72 x i8], ptr %i.i, i64 %indvars.iv641 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #7
@@ -515,6 +512,9 @@ bb.af:                                            ; preds = %bb.ac, %bb.ad, %bb.
   %i.ev = load i32, ptr %i.eu, align 8
   %i.ew = or i32 %i.ev, 16
   store i32 %i.ew, ptr %i.eu, align 8
+  %10 = ptrtoint ptr %i.x to i64
+  %11 = and i64 %10, 7
+  %12 = icmp eq i64 %11, 0
   br i1 %12, label %.preheader.preheader, label %bb.bb
 
 .preheader.preheader:                             ; preds = %.critedge

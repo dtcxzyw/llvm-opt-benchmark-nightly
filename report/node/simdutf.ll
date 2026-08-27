@@ -205,46 +205,39 @@ _ZN7simdutf6scalar12_GLOBAL__N_16base6420is_base64_or_paddingIDsEEbT_NS_14base64
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef i64 @_ZN7simdutf23atomic_binary_to_base64EPKcmPcNS_14base64_optionsE(ptr nofree noundef captures(address) %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #1 {
+define hidden noundef i64 @_ZN7simdutf23atomic_binary_to_base64EPKcmPcNS_14base64_optionsE(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #1 {
 bb.a:
   %4 = alloca %"struct.std::array", align 1       ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #47
   %.not = icmp eq i64 %1, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
-
-.lr.ph.preheader:                                 ; preds = %bb.a
-  %5 = ptrtoaddr ptr %0 to i64
-  %6 = and i64 %5, 7                              ; 2 uses
-  %.not.i = icmp eq i64 %6, 0
-  %7 = sub nuw nsw i64 8, %6                      ; 2 uses
-  br label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit, %bb.a
   %.0.lcssa = phi i64 [ 0, %bb.a ], [ %i.cs, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #47
   ret i64 %.0.lcssa
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit
-  %indvar = phi i64 [ 0, %.lr.ph.preheader ], [ %indvar.next, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit ] ; 2 uses
-  %.022 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.cs, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit ] ; 2 uses
-  %.01421 = phi i64 [ 0, %.lr.ph.preheader ], [ %i.ct, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit ] ; 3 uses
+.lr.ph:                                           ; preds = %bb.a, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit
+  %.022 = phi i64 [ %i.cs, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit ], [ 0, %bb.a ] ; 2 uses
+  %.01421 = phi i64 [ %i.ct, %_ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit ], [ 0, %bb.a ] ; 3 uses
   %i.a = sub nuw i64 %1, %.01421
   %.sroa.speculated = call i64 @llvm.umin.i64(i64 %i.a, i64 3072) ; 4 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.01421 ; 7 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %.01421 ; 8 uses
+  %5 = ptrtoint ptr %i.b to i64
+  %6 = and i64 %5, 7                              ; 2 uses
+  %.not.i = icmp eq i64 %6, 0
   br i1 %.not.i, label %bb.b, label %.lr.ph.i.i.preheader
 
 .lr.ph.i.i.preheader:                             ; preds = %.lr.ph
-  %8 = mul i64 %indvar, -3072
-  %9 = add i64 %1, %8
-  %umin = call i64 @llvm.umin.i64(i64 %9, i64 %7)
+  %7 = sub nuw nsw i64 8, %6
+  %umin = call i64 @llvm.umin.i64(i64 %7, i64 %.sroa.speculated) ; 6 uses
   %i.c = add nsw i64 %umin, -1
-  %.sroa.speculated.i = call i64 @llvm.umin.i64(i64 %7, i64 %.sroa.speculated) ; 5 uses
-  %xtraiter = and i64 %.sroa.speculated.i, 3      ; 3 uses
+  %xtraiter = and i64 %umin, 3                    ; 3 uses
   %i.d = icmp ult i64 %i.c, 3
   br i1 %i.d, label %.lr.ph.i.i.epil.preheader, label %.lr.ph.i.i.preheader.new
 
 .lr.ph.i.i.preheader.new:                         ; preds = %.lr.ph.i.i.preheader
-  %unroll_iter = and i64 %.sroa.speculated.i, 12
+  %unroll_iter = and i64 %umin, 12
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader.new
@@ -297,9 +290,9 @@ _ZZN7simdutf6scalar18memcpy_atomic_readEPcPKcmENKUlS1_S3_mE_clES1_S3_m.exit.i.lo
   br i1 %epil.iter.cmp.not, label %_ZZN7simdutf6scalar18memcpy_atomic_readEPcPKcmENKUlS1_S3_mE_clES1_S3_m.exit.i.loopexit, label %.lr.ph.i.i.epil, !llvm.loop !60
 
 _ZZN7simdutf6scalar18memcpy_atomic_readEPcPKcmENKUlS1_S3_mE_clES1_S3_m.exit.i.loopexit: ; preds = %.lr.ph.i.i.epil, %_ZZN7simdutf6scalar18memcpy_atomic_readEPcPKcmENKUlS1_S3_mE_clES1_S3_m.exit.i.loopexit.unr-lcssa
-  %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 %.sroa.speculated.i
-  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.speculated.i
-  %i.aa = sub nsw i64 %.sroa.speculated, %.sroa.speculated.i
+  %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 %umin
+  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 %umin
+  %i.aa = sub nsw i64 %.sroa.speculated, %umin
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZZN7simdutf6scalar18memcpy_atomic_readEPcPKcmENKUlS1_S3_mE_clES1_S3_m.exit.i.loopexit, %.lr.ph
@@ -489,7 +482,6 @@ _ZN7simdutf16binary_to_base64EPKcmPcNS_14base64_optionsE.exit: ; preds = %bb.e, 
   %i.cs = add i64 %i.cr, %.022                    ; 2 uses
   %i.ct = add i64 %.01421, 3072                   ; 2 uses
   %i.cu = icmp ult i64 %i.ct, %1
-  %indvar.next = add i64 %indvar, 1
   br i1 %i.cu, label %.lr.ph, label %._crit_edge, !llvm.loop !65
 }
 

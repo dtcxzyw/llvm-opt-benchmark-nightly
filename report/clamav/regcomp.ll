@@ -205,7 +205,7 @@ seterr.exit80.i:                                  ; preds = %bb.an, %bb.am
 bb.ao:                                            ; preds = %seterr.exit80.i, %bb.al
   %i.ga = phi ptr [ %i.fv, %bb.al ], [ @nuls, %seterr.exit80.i ] ; 2 uses
   %i.gb = phi ptr [ %i.fw, %bb.al ], [ @nuls, %seterr.exit80.i ] ; 17 uses
-  %i.gc = ptrtoint ptr %i.ga to i64               ; 5 uses
+  %i.gc = ptrtoint ptr %i.ga to i64               ; 3 uses
   %i.gd = ptrtoint ptr %i.gb to i64               ; 4 uses
   %i.ge = sub i64 %i.gc, %i.gd
   %i.gf = icmp sgt i64 %i.ge, 0
@@ -225,7 +225,7 @@ bb.ao:                                            ; preds = %seterr.exit80.i, %b
 .lr.ph.i112.preheader:                            ; preds = %.lr.ph.i.i
   %i.gn = getelementptr inbounds nuw i8, ptr %i.gb, i64 1 ; 4 uses
   store ptr %i.gn, ptr %0, align 8, !tbaa !19
-  %i.go = ptrtoint ptr %i.gn to i64               ; 2 uses
+  %i.go = ptrtoint ptr %i.gn to i64               ; 3 uses
   %i.gp = sub i64 %i.gc, %i.go
   %i.gq = icmp sgt i64 %i.gp, 0
   br i1 %i.gq, label %.lr.ph301, label %.critedge.i.i
@@ -244,14 +244,14 @@ bb.ao:                                            ; preds = %seterr.exit80.i, %b
 .lr.ph.i112:                                      ; preds = %.lr.ph301
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gs, i64 1 ; 4 uses
   store ptr %i.gy, ptr %0, align 8, !tbaa !19
-  %i.gz = ptrtoint ptr %i.gy to i64               ; 2 uses
+  %i.gz = ptrtoint ptr %i.gy to i64               ; 3 uses
   %i.ha = sub i64 %i.gc, %i.gz
   %i.hb = icmp sgt i64 %i.ha, 0
   br i1 %i.hb, label %.lr.ph301, label %.critedge.i.i
 
 .critedge.i.i:                                    ; preds = %.lr.ph301, %.lr.ph.i112, %.lr.ph.i112.preheader, %.lr.ph.i.i, %bb.ao
   %i.hc = phi ptr [ %i.gb, %bb.ao ], [ %i.gb, %.lr.ph.i.i ], [ %i.gn, %.lr.ph.i112.preheader ], [ %i.gy, %.lr.ph.i112 ], [ %i.gs, %.lr.ph301 ]
-  %.lcssa.i.i = phi i64 [ %i.gd, %bb.ao ], [ %i.gd, %.lr.ph.i.i ], [ %i.gc, %.lr.ph.i112.preheader ], [ %i.gc, %.lr.ph.i112 ], [ %i.gr, %.lr.ph301 ]
+  %.lcssa.i.i = phi i64 [ %i.gd, %bb.ao ], [ %i.gd, %.lr.ph.i.i ], [ %i.go, %.lr.ph.i112.preheader ], [ %i.gz, %.lr.ph.i112 ], [ %i.gr, %.lr.ph301 ]
   %i.hd = sub i64 %.lcssa.i.i, %i.gd              ; 14 uses
   %i.he = tail call i32 @strncmp(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.gb, i64 noundef %i.hd) #11
   %i.hf = icmp eq i32 %i.he, 0

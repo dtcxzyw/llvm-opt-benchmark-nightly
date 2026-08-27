@@ -205,7 +205,7 @@ seterr.exit83.i:                                  ; preds = %bb.aq, %bb.ap
 bb.ar:                                            ; preds = %seterr.exit83.i, %bb.ao
   %i.gf = phi ptr [ %i.ga, %bb.ao ], [ @nuls, %seterr.exit83.i ]
   %i.gg = phi ptr [ %i.gb, %bb.ao ], [ @nuls, %seterr.exit83.i ] ; 15 uses
-  %i.gh = ptrtoint ptr %i.gf to i64               ; 4 uses
+  %i.gh = ptrtoint ptr %i.gf to i64               ; 3 uses
   %i.gi = ptrtoint ptr %i.gg to i64               ; 4 uses
   %i.gj = sub i64 %i.gh, %i.gi
   %i.gk = icmp sgt i64 %i.gj, 0
@@ -225,7 +225,7 @@ bb.ar:                                            ; preds = %seterr.exit83.i, %b
 .lr.ph.i135.preheader:                            ; preds = %.lr.ph.i.i
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gg, i64 1 ; 3 uses
   store ptr %i.gs, ptr %0, align 8, !tbaa !19
-  %i.gt = ptrtoint ptr %i.gs to i64               ; 2 uses
+  %i.gt = ptrtoint ptr %i.gs to i64               ; 3 uses
   %i.gu = sub i64 %i.gh, %i.gt
   %i.gv = icmp sgt i64 %i.gu, 0
   br i1 %i.gv, label %.lr.ph327, label %..critedge.i.loopexit_crit_edge103.i, !llvm.loop !80
@@ -247,7 +247,7 @@ bb.as:                                            ; preds = %.lr.ph327, %.lr.ph.
 .lr.ph.i135:                                      ; preds = %bb.as
   %i.hd = getelementptr inbounds nuw i8, ptr %i.gx, i64 1 ; 3 uses
   store ptr %i.hd, ptr %0, align 8, !tbaa !19
-  %i.he = ptrtoint ptr %i.hd to i64               ; 2 uses
+  %i.he = ptrtoint ptr %i.hd to i64               ; 3 uses
   %i.hf = sub i64 %i.gh, %i.he
   %i.hg = icmp sgt i64 %i.hf, 0
   br i1 %i.hg, label %bb.as, label %.lr.ph.i135...critedge.i.loopexit_crit_edge103.i_crit_edge, !llvm.loop !80
@@ -256,10 +256,11 @@ bb.as:                                            ; preds = %.lr.ph327, %.lr.ph.
   br label %..critedge.i.loopexit_crit_edge103.i, !llvm.loop !80
 
 ..critedge.i.loopexit_crit_edge103.i:             ; preds = %.lr.ph.i135...critedge.i.loopexit_crit_edge103.i_crit_edge, %.lr.ph.i135.preheader
+  %.lcssa323 = phi i64 [ %i.he, %.lr.ph.i135...critedge.i.loopexit_crit_edge103.i_crit_edge ], [ %i.gt, %.lr.ph.i135.preheader ]
   br label %.critedge.i.i, !llvm.loop !80
 
 .critedge.i.i:                                    ; preds = %bb.as, %..critedge.i.loopexit_crit_edge103.i, %.lr.ph.i.i, %bb.ar
-  %.lcssa.i.i = phi i64 [ %i.gi, %bb.ar ], [ %i.gi, %.lr.ph.i.i ], [ %i.gh, %..critedge.i.loopexit_crit_edge103.i ], [ %i.gw, %bb.as ]
+  %.lcssa.i.i = phi i64 [ %i.gi, %bb.ar ], [ %i.gi, %.lr.ph.i.i ], [ %.lcssa323, %..critedge.i.loopexit_crit_edge103.i ], [ %i.gw, %bb.as ]
   %i.hh = sub i64 %.lcssa.i.i, %i.gi              ; 14 uses
   %i.hi = tail call i32 @strncmp(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.gg, i64 noundef %i.hh) #15
   %i.hj = icmp eq i32 %i.hi, 0

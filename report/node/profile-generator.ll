@@ -204,16 +204,14 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 4 uses
   %i.d = load ptr, ptr %i.c, align 8, !noalias !166 ; 4 uses
   %i.e = load ptr, ptr %i.b, align 8, !noalias !169 ; 2 uses
-  %i.f = ptrtoint ptr %i.d to i64                 ; 4 uses
+  %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = ptrtoint ptr %i.e to i64                 ; 4 uses
-  %i.h = sub i64 %i.f, %i.g                       ; 3 uses
+  %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = ashr i64 %i.h, 5                         ; 3 uses
   %i.j = icmp sgt i64 %i.i, 0
   br i1 %i.j, label %.lr.ph.i.preheader.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.preheader.i.i:                           ; preds = %bb.a
-  %2 = and i64 %i.h, -32
-  %3 = sub i64 %i.f, %2                           ; 2 uses
   %i.k = mul nsw i64 %i.i, -32
   %scevgep.i.i = getelementptr i8, ptr %i.d, i64 %i.k
   br label %.lr.ph.i.i.i
@@ -272,16 +270,16 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.ad = add nsw i64 %.056.i.i.i, -1
   %i.ae = icmp sgt i64 %.056.i.i.i, 1
-  %i.af = ptrtoint ptr %i.z to i64
+  %i.af = ptrtoint ptr %i.z to i64                ; 3 uses
   br i1 %i.ae, label %.lr.ph.i.i.i, label %._crit_edge.loopexit.i.i.i, !llvm.loop !179
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %bb.h
-  %.pre73.i.i.i = sub i64 %3, %i.g
+  %.pre73.i.i.i = sub i64 %i.af, %i.g
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.a
   %.pre-phi74.i.i.i = phi i64 [ %.pre73.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.h, %bb.a ]
-  %i.ag = phi i64 [ %3, %._crit_edge.loopexit.i.i.i ], [ %i.f, %bb.a ] ; 4 uses
+  %i.ag = phi i64 [ %i.af, %._crit_edge.loopexit.i.i.i ], [ %i.f, %bb.a ] ; 4 uses
   %i.ah = phi ptr [ %scevgep.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.d, %bb.a ] ; 2 uses
   %i.ai = ashr exact i64 %.pre-phi74.i.i.i, 3
   switch i64 %i.ai, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection13StopProfilingEjE3$_0ET_SI_SI_T0_.exit" [
@@ -439,11 +437,11 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN2v84base14RecursiveMutex4LockEv(ptr noundef nonnull align 8 dereferenceable(16) %i.d) #30
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %i.g = load ptr, ptr %i.f, align 8, !noalias !181 ; 6 uses
+  %i.g = load ptr, ptr %i.f, align 8, !noalias !181 ; 5 uses
   %i.h = load ptr, ptr %i.e, align 8, !noalias !184 ; 2 uses
-  %i.i = ptrtoint ptr %i.g to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.g to i64
   %i.j = ptrtoint ptr %i.h to i64                 ; 2 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 3 uses
+  %i.k = sub i64 %i.i, %i.j                       ; 2 uses
   %i.l = ashr i64 %i.k, 5                         ; 3 uses
   %i.m = icmp sgt i64 %i.l, 0
   br i1 %i.m, label %.lr.ph.i.preheader.i.i, label %._crit_edge.i.i.i
@@ -452,10 +450,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %.lr.ph.i.preheader25.i.i
 
 .lr.ph.i.preheader25.i.i:                         ; preds = %.lr.ph.i.preheader.i.i
-  %2 = and i64 %i.k, -32
-  %3 = sub i64 %i.i, %2                           ; 2 uses
   %i.n = mul nsw i64 %i.l, -32
-  %scevgep.i.i = getelementptr i8, ptr %i.g, i64 %i.n
+  %scevgep.i.i = getelementptr i8, ptr %i.g, i64 %i.n ; 2 uses
   br label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit30.thread52.i.i.i", %.lr.ph.i.preheader25.i.i
@@ -514,14 +510,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ag, label %.lr.ph.i.i.i, label %._crit_edge.loopexit.i.i.i, !llvm.loop !194
 
 ._crit_edge.loopexit.i.i.i:                       ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit30.thread52.i.i.i"
-  %.pre87.i.i.i = sub i64 %3, %i.j
-  %4 = inttoptr i64 %3 to ptr
+  %2 = ptrtoint ptr %scevgep.i.i to i64
+  %.pre87.i.i.i = sub i64 %2, %i.j
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %._crit_edge.loopexit.i.i.i, %bb.b
   %.pre-phi88.i.i.i = phi i64 [ %.pre87.i.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.k, %bb.b ]
-  %5 = phi ptr [ %4, %._crit_edge.loopexit.i.i.i ], [ %i.g, %bb.b ] ; 7 uses
-  %i.ah = phi ptr [ %scevgep.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.g, %bb.b ] ; 2 uses
+  %i.ah = phi ptr [ %scevgep.i.i, %._crit_edge.loopexit.i.i.i ], [ %i.g, %bb.b ] ; 7 uses
   %i.ai = ashr exact i64 %.pre-phi88.i.i.i, 3
   switch i64 %i.ai, label %_ZN2v84base9LockGuardINS0_14RecursiveMutexEED2Ev.exit [
     i64 3, label %bb.c
@@ -533,47 +528,38 @@ bb.c:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.c, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.aj = getelementptr inbounds i8, ptr %5, i64 -8
+  %i.aj = getelementptr inbounds i8, ptr %i.ah, i64 -8 ; 3 uses
   %.val2.i33.i.i.i = load ptr, ptr %i.aj, align 8, !noalias !187
   %i.ak = load ptr, ptr %.val2.i33.i.i.i, align 8, !noalias !187 ; 2 uses
   %.not.i.i34.i.i.i = icmp eq ptr %i.ak, null
-  br i1 %.not.i.i34.i.i.i, label %.thread.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i"
+  br i1 %.not.i.i34.i.i.i, label %bb.f, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i": ; preds = %bb.d
   %i.al = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.ak, ptr noundef nonnull dereferenceable(1) %1) #31, !noalias !187
   %i.am = icmp eq i32 %i.al, 0
-  br i1 %i.am, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %.thread.i.i
-
-.thread.i.i:                                      ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i", %bb.d
-  %6 = getelementptr inbounds i8, ptr %i.ah, i64 -8 ; 2 uses
-  br label %bb.f
+  br i1 %i.am, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %bb.f
 
 bb.e:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.c, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %.thread.i.i
-  %.ptr18 = phi ptr [ %6, %.thread.i.i ], [ %5, %bb.e ] ; 2 uses
-  %7 = phi ptr [ %6, %.thread.i.i ], [ %i.ah, %bb.e ]
-  %i.an = getelementptr inbounds i8, ptr %.ptr18, i64 -8
+bb.f:                                             ; preds = %bb.d, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i", %bb.e
+  %.ptr18 = phi ptr [ %i.ah, %bb.e ], [ %i.aj, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i" ], [ %i.aj, %bb.d ] ; 2 uses
+  %i.an = getelementptr inbounds i8, ptr %.ptr18, i64 -8 ; 3 uses
   %.val2.i36.i.i.i = load ptr, ptr %i.an, align 8, !noalias !187
   %i.ao = load ptr, ptr %.val2.i36.i.i.i, align 8, !noalias !187 ; 2 uses
   %.not.i.i37.i.i.i = icmp eq ptr %i.ao, null
-  br i1 %.not.i.i37.i.i.i, label %.thread49.i.i, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i"
+  br i1 %.not.i.i37.i.i.i, label %bb.h, label %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i"
 
 "_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i": ; preds = %bb.f
   %i.ap = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.ao, ptr noundef nonnull dereferenceable(1) %1) #31, !noalias !187
   %i.aq = icmp eq i32 %i.ap, 0
-  br i1 %i.aq, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %.thread49.i.i
-
-.thread49.i.i:                                    ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i", %bb.f
-  %8 = getelementptr inbounds i8, ptr %7, i64 -8
-  br label %bb.h
+  br i1 %i.aq, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %bb.h
 
 bb.g:                                             ; preds = %._crit_edge.i.i.i
   br i1 %i.c, label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit", label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %.thread49.i.i
-  %.ptr17 = phi ptr [ %8, %.thread49.i.i ], [ %5, %bb.g ] ; 2 uses
+bb.h:                                             ; preds = %bb.f, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i", %bb.g
+  %.ptr17 = phi ptr [ %i.ah, %bb.g ], [ %i.an, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i" ], [ %i.an, %bb.f ] ; 2 uses
   %i.ar = getelementptr inbounds i8, ptr %.ptr17, i64 -8
   %.val2.i39.i.i.i = load ptr, ptr %i.ar, align 8, !noalias !187
   %i.as = load ptr, ptr %.val2.i39.i.i.i, align 8, !noalias !187 ; 2 uses
@@ -598,7 +584,7 @@ bb.h:                                             ; preds = %bb.g, %.thread49.i.
   br label %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit"
 
 "_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit": ; preds = %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit.i.i.i", %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit", %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit40", %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit42", %.lr.ph.i.preheader.i.i, %bb.c, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i", %bb.e, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i", %bb.g, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit41.i.i.i"
-  %.sink.i.i.i.ptr = phi ptr [ %.ptr17, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit41.i.i.i" ], [ %.ptr18, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i" ], [ %5, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i" ], [ %5, %bb.e ], [ %5, %bb.g ], [ %i.g, %.lr.ph.i.preheader.i.i ], [ %5, %bb.c ], [ %i.av, %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit" ], [ %i.ax, %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit42" ], [ %i.aw, %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit40" ], [ %i.o, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit.i.i.i" ] ; 2 uses
+  %.sink.i.i.i.ptr = phi ptr [ %.ptr17, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit41.i.i.i" ], [ %.ptr18, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit38.i.i.i" ], [ %i.ah, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit35.i.i.i" ], [ %i.ah, %bb.e ], [ %i.ah, %bb.g ], [ %i.g, %.lr.ph.i.preheader.i.i ], [ %i.ah, %bb.c ], [ %i.av, %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit" ], [ %i.ax, %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit42" ], [ %i.aw, %"_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPSt10unique_ptrIN2v88internal10CpuProfileESt14default_deleteIS6_EESt6vectorIS9_SaIS9_EEEEEZNS5_21CpuProfilesCollection6LookupEPKcE3$_0ET_SK_SK_T0_.exit.loopexit.split.loop.exit40" ], [ %i.o, %"_ZN9__gnu_cxx5__ops10_Iter_predIZN2v88internal21CpuProfilesCollection6LookupEPKcE3$_0EclISt16reverse_iteratorINS_17__normal_iteratorIPSt10unique_ptrINS3_10CpuProfileESt14default_deleteISD_EESt6vectorISG_SaISG_EEEEEEEbT_.exit.i.i.i" ] ; 2 uses
   %i.ay = icmp eq ptr %.sink.i.i.i.ptr, %i.h
   br i1 %i.ay, label %_ZN2v84base9LockGuardINS0_14RecursiveMutexEED2Ev.exit, label %bb.i
 

@@ -60,9 +60,8 @@ declare void @ossl_gcm_init_4bit(ptr noundef, ptr noundef) local_unnamed_addr #2
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind uwtable
-define void @ossl_polyval_ghash_hash(ptr noundef %0, ptr noundef %1, ptr nofree noundef readonly captures(address) %2, i64 noundef %3) local_unnamed_addr #0 {
+define void @ossl_polyval_ghash_hash(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %4 = ptrtoaddr ptr %2 to i64
   %i.a = alloca [2 x i64], align 16               ; 9 uses
   %i.b = alloca [2 x i64], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
@@ -95,13 +94,14 @@ byte_reverse16.exit:                              ; preds = %.preheader.preheade
 
 .lr.ph:                                           ; preds = %byte_reverse16.exit
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %5 = and i64 %4, 7
-  %or.cond.i7 = icmp eq i64 %5, 0
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %byte_reverse16.exit9
   %.013 = phi i64 [ 0, %.lr.ph ], [ %i.v, %byte_reverse16.exit9 ] ; 2 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %.013 ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %.013 ; 4 uses
+  %4 = ptrtoint ptr %i.n to i64
+  %5 = and i64 %4, 7
+  %or.cond.i7 = icmp eq i64 %5, 0
   br i1 %or.cond.i7, label %bb.d, label %.preheader.preheader.i8
 
 .preheader.preheader.i8:                          ; preds = %bb.c

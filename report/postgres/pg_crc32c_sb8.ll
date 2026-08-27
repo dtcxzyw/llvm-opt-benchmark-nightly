@@ -1,7 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/postgres/original/pg_crc32c_sb8?download=true
-loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 1
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -16,81 +15,35 @@ bb.a:
   %i.c = and i64 %i.b, 3
   %i.d = icmp ne i64 %i.c, 0
   %i.e = and i1 %i.a, %i.d
-  br i1 %i.e, label %.lr.ph, label %.preheader42
+  br i1 %i.e, label %.lr.ph.2, label %.preheader42
 
-.preheader42:                                     ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %bb.a
-  %.038.lcssa = phi ptr [ %1, %bb.a ], [ %3, %.lr.ph ], [ %16, %.lr.ph.1 ], [ %i.g, %.lr.ph.2 ], [ %29, %.lr.ph.3 ] ; 2 uses
-  %.035.lcssa = phi i64 [ %2, %bb.a ], [ %10, %.lr.ph ], [ %23, %.lr.ph.1 ], [ %i.n, %.lr.ph.2 ], [ %36, %.lr.ph.3 ] ; 3 uses
-  %.0.lcssa = phi i32 [ %0, %bb.a ], [ %9, %.lr.ph ], [ %22, %.lr.ph.1 ], [ %i.m, %.lr.ph.2 ], [ %35, %.lr.ph.3 ] ; 2 uses
+.preheader42:                                     ; preds = %.lr.ph.2, %bb.a
+  %.038.lcssa = phi ptr [ %1, %bb.a ], [ %i.g, %.lr.ph.2 ] ; 2 uses
+  %.035.lcssa = phi i64 [ %2, %bb.a ], [ %i.n, %.lr.ph.2 ] ; 3 uses
+  %.0.lcssa = phi i32 [ %0, %bb.a ], [ %i.m, %.lr.ph.2 ] ; 2 uses
   %i.f = icmp ugt i64 %.035.lcssa, 7
   br i1 %i.f, label %.lr.ph51, label %.preheader
 
-.lr.ph:                                           ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
-  %4 = load i8, ptr %1, align 1
-  %.0.tr = trunc i32 %0 to i8
-  %.narrow41 = xor i8 %4, %.0.tr
-  %5 = zext i8 %.narrow41 to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %5
-  %7 = load i32, ptr %6, align 4
-  %8 = lshr i32 %0, 8
-  %9 = xor i32 %7, %8                             ; 3 uses
-  %10 = add i64 %2, -1                            ; 2 uses
-  %11 = icmp ne i64 %10, 0
-  %12 = ptrtoint ptr %3 to i64
-  %13 = and i64 %12, 3
-  %14 = icmp ne i64 %13, 0
-  %15 = select i1 %11, i1 %14, i1 false
-  br i1 %15, label %.lr.ph.1, label %.preheader42
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
-  %17 = load i8, ptr %3, align 1
-  %.0.tr.1 = trunc i32 %9 to i8
-  %.narrow41.1 = xor i8 %17, %.0.tr.1
-  %18 = zext i8 %.narrow41.1 to i64
-  %19 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %18
-  %20 = load i32, ptr %19, align 4
-  %21 = lshr i32 %9, 8
-  %22 = xor i32 %20, %21                          ; 3 uses
-  %23 = add i64 %2, -2                            ; 2 uses
-  %24 = icmp ne i64 %23, 0
-  %25 = ptrtoint ptr %16 to i64
-  %26 = and i64 %25, 3
-  %27 = icmp ne i64 %26, 0
-  %28 = select i1 %24, i1 %27, i1 false
-  br i1 %28, label %.lr.ph.2, label %.preheader42
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 3 uses
-  %i.h = load i8, ptr %16, align 1
-  %.0.tr.2 = trunc i32 %22 to i8
+.lr.ph.2:                                         ; preds = %bb.a, %.lr.ph.2
+  %.045 = phi i32 [ %i.m, %.lr.ph.2 ], [ %0, %bb.a ] ; 2 uses
+  %.03544 = phi i64 [ %i.n, %.lr.ph.2 ], [ %2, %bb.a ]
+  %.03843 = phi ptr [ %i.g, %.lr.ph.2 ], [ %1, %bb.a ] ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %.03843, i64 1 ; 3 uses
+  %i.h = load i8, ptr %.03843, align 1
+  %.0.tr.2 = trunc i32 %.045 to i8
   %.narrow41.2 = xor i8 %i.h, %.0.tr.2
   %i.i = zext i8 %.narrow41.2 to i64
   %i.j = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %i.i
   %i.k = load i32, ptr %i.j, align 4
-  %i.l = lshr i32 %22, 8
-  %i.m = xor i32 %i.k, %i.l                       ; 3 uses
-  %i.n = add i64 %2, -3                           ; 2 uses
+  %i.l = lshr i32 %.045, 8
+  %i.m = xor i32 %i.k, %i.l                       ; 2 uses
+  %i.n = add i64 %.03544, -1                      ; 3 uses
   %i.o = icmp ne i64 %i.n, 0
   %i.p = ptrtoint ptr %i.g to i64
   %i.q = and i64 %i.p, 3
   %i.r = icmp ne i64 %i.q, 0
   %i.s = select i1 %i.o, i1 %i.r, i1 false
-  br i1 %i.s, label %.lr.ph.3, label %.preheader42
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %29 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %30 = load i8, ptr %i.g, align 1
-  %.0.tr.3 = trunc i32 %i.m to i8
-  %.narrow41.3 = xor i8 %30, %.0.tr.3
-  %31 = zext i8 %.narrow41.3 to i64
-  %32 = getelementptr inbounds nuw [4 x i8], ptr @pg_crc32c_table, i64 %31
-  %33 = load i32, ptr %32, align 4
-  %34 = lshr i32 %i.m, 8
-  %35 = xor i32 %33, %34
-  %36 = add i64 %2, -4
-  br label %.preheader42
+  br i1 %i.s, label %.lr.ph.2, label %.preheader42, !llvm.loop !4
 
 .preheader:                                       ; preds = %.lr.ph51, %.preheader42
   %.040.lcssa = phi ptr [ %.038.lcssa, %.preheader42 ], [ %i.af, %.lr.ph51 ] ; 3 uses
@@ -179,7 +132,7 @@ bb.a:
   %i.bx = xor i32 %i.bs, %i.bw                    ; 2 uses
   %i.by = add i64 %.13649, -8                     ; 3 uses
   %i.bz = icmp ugt i64 %i.by, 7
-  br i1 %i.bz, label %.lr.ph51, label %.preheader, !llvm.loop !4
+  br i1 %i.bz, label %.lr.ph51, label %.preheader, !llvm.loop !6
 
 .lr.ph59:                                         ; preds = %.lr.ph59.prol.loopexit, %.lr.ph59
   %.258 = phi i32 [ %i.cn, %.lr.ph59 ], [ %.258.unr, %.lr.ph59.prol.loopexit ] ; 2 uses
@@ -205,7 +158,7 @@ bb.a:
   %i.cn = xor i32 %i.cl, %i.cm                    ; 2 uses
   %i.co = add nsw i64 %.23757, -2                 ; 2 uses
   %.not.1 = icmp eq i64 %i.co, 0
-  br i1 %.not.1, label %._crit_edge, label %.lr.ph59, !llvm.loop !6
+  br i1 %.not.1, label %._crit_edge, label %.lr.ph59, !llvm.loop !7
 
 ._crit_edge:                                      ; preds = %.lr.ph59.prol.loopexit, %.lr.ph59, %.preheader
   %.2.lcssa = phi i32 [ %.1.lcssa, %.preheader ], [ %.lcssa.unr, %.lr.ph59.prol.loopexit ], [ %i.cn, %.lr.ph59 ]
@@ -224,4 +177,5 @@ attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable 
 !4 = distinct !{!4, !5}
 !5 = !{!"llvm.loop.mustprogress"}
 !6 = distinct !{!6, !5}
+!7 = distinct !{!7, !5}
 end_hunk_0

@@ -205,9 +205,6 @@ bb.a:
   br i1 %.not, label %.preheader, label %.lr.ph225.preheader
 
 .lr.ph225.preheader:                              ; preds = %bb.a
-  %6 = ptrtoaddr ptr %4 to i64
-  %7 = and i64 %6, 3
-  %.not.i.i = icmp eq i64 %7, 0
   %i.c = insertelement <2 x float> poison, float %5, i64 0
   %i.d = shufflevector <2 x float> %i.c, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.lr.ph225
@@ -251,13 +248,15 @@ bb.a:
   %i.af = insertelement <4 x float> poison, float %i.ae, i64 0
   %i.ag = shufflevector <4 x float> %i.af, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ah = add nuw nsw i64 %.0145223, 2            ; 6 uses
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ah
   %i.ai = sub nsw i64 %0, %i.ah                   ; 2 uses
+  %7 = ptrtoint ptr %6 to i64                     ; 2 uses
+  %8 = and i64 %7, 3
+  %.not.i.i = icmp eq i64 %8, 0
   br i1 %.not.i.i, label %bb.b, label %_ZN5Eigen8internal21first_default_alignedIflEET0_PKT_S2_.exit
 
 bb.b:                                             ; preds = %.lr.ph225
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ah
-  %9 = ptrtoint ptr %8 to i64
-  %i.aj = lshr exact i64 %9, 2
+  %i.aj = lshr exact i64 %7, 2
   %i.ak = sub nsw i64 0, %i.aj
   %i.al = and i64 %i.ak, 3
   %i.am = tail call i64 @llvm.smin.i64(i64 %i.al, i64 %i.ai)
@@ -500,10 +499,7 @@ bb.a:
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %5 = ptrtoaddr ptr %0 to i64
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %6 = and i64 %5, 3
-  %.not.i.i.i.i.i.i.i = icmp eq i64 %6, 0
   %i.e = shl i64 %i.b, 2
   %i.f = shl i64 %1, 2
   %i.g = getelementptr i8, ptr %0, i64 %i.e
@@ -534,14 +530,16 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5Eigen1
   %i.x = load i64, ptr %i.a, align 8, !tbaa !81, !noalias !135 ; 2 uses
   %i.y = sub i64 %i.x, %i.p                       ; 3 uses
   %i.z = getelementptr [4 x i8], ptr %i.l, i64 %i.y ; 10 uses
-  %i.aa = mul i64 %.062, %1
-  %i.ab = getelementptr [4 x i8], ptr %0, i64 %i.aa
-  %i.ac = getelementptr [4 x i8], ptr %i.ab, i64 %.062 ; 14 uses
+  %i.aa = mul nsw i64 %.062, %1
+  %i.ab = getelementptr inbounds [4 x i8], ptr %0, i64 %i.aa
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %.062 ; 14 uses
+  %5 = ptrtoint ptr %i.ac to i64                  ; 2 uses
+  %6 = and i64 %5, 3
+  %.not.i.i.i.i.i.i.i = icmp eq i64 %6, 0
   br i1 %.not.i.i.i.i.i.i.i, label %bb.c, label %_ZN5Eigen8internal13first_alignedILi16EflEET1_PKT0_S2_.exit.i.i.i.i.i.i
 
 bb.c:                                             ; preds = %bb.b
-  %7 = ptrtoint ptr %i.ac to i64
-  %i.ad = lshr exact i64 %7, 2
+  %i.ad = lshr exact i64 %5, 2
   %i.ae = sub nsw i64 0, %i.ad
   %i.af = and i64 %i.ae, 3
   %i.ag = tail call i64 @llvm.smin.i64(i64 %i.af, i64 %i.p)

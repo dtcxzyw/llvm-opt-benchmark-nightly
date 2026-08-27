@@ -205,6 +205,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nounwind uwtable
 define internal fastcc i64 @ZSTD_decompressBlock(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4) unnamed_addr #3 {
 bb.a:
+  %5 = ptrtoaddr ptr %1 to i64
   %i.a = alloca [256 x i16], align 16             ; 6 uses
   %i.b = alloca i32, align 4                      ; 7 uses
   %i.c = alloca i32, align 4                      ; 7 uses
@@ -381,7 +382,7 @@ ZSTD_decodeLiteralsBlock.exit.thread:             ; preds = %bb.o, %bb.l, %bb.m,
   %.2.i19 = phi i64 [ %i.w, %ZSTD_decodeLiteralsBlock.exit ], [ 4, %bb.o ], [ %i.bk, %bb.l ], [ %i.bo, %bb.m ] ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 %.2.i19 ; 8 uses
   %i.ci = sub i64 %4, %.2.i19                     ; 5 uses
-  %i.cj = getelementptr i8, ptr %1, i64 %2        ; 5 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 5 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.cf ; 4 uses
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 6152 ; 4 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 4100 ; 4 uses
@@ -784,12 +785,14 @@ FSE_initDState.exit94.i:                          ; preds = %bb.by
   %.sroa.0.5254.i = phi i64 [ %.val30.i.sink.i92263.i, %FSE_initDState.exit94.thread257.i ], [ %.val30.i.sink.i92.i, %FSE_initDState.exit94.i ], [ %.sroa.0.4.i, %bb.by ]
   %i.tc = getelementptr inbounds nuw i8, ptr %0, i64 6156
   %i.td = getelementptr inbounds i8, ptr %i.dr, i64 -1 ; 2 uses
-  %i.te = getelementptr i8, ptr %i.cj, i64 -8     ; 5 uses
+  %i.te = getelementptr inbounds i8, ptr %i.cj, i64 -8 ; 5 uses
   %i.tf = ptrtoint ptr %i.cj to i64
   %i.tg = ptrtoint ptr %i.ck to i64               ; 2 uses
   %i.th = ptrtoint ptr %i.co to i64
   %i.ti = getelementptr inbounds i8, ptr %i.cj, i64 -12
-  %i.tj = ptrtoint ptr %i.te to i64               ; 4 uses
+  %i.tj = ptrtoint ptr %i.te to i64
+  %6 = add i64 %2, %5
+  %7 = add i64 %6, -8                             ; 3 uses
   br label %bb.bz
 
 bb.bz:                                            ; preds = %ZSTD_execSequence.exit.i, %.lr.ph.i
@@ -912,7 +915,7 @@ bb.ci:                                            ; preds = %bb.ch, %bb.cg, %.th
   br label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci, %bb.cd
-  %.162.i.i = phi i64 [ %.061.shrunk.i.i, %bb.ci ], [ %i.us, %bb.cd ] ; 14 uses
+  %.162.i.i = phi i64 [ %.061.shrunk.i.i, %bb.ci ], [ %i.us, %bb.cd ] ; 15 uses
   %.3.i.i = phi ptr [ %spec.select.i.i, %bb.ci ], [ %.sroa.81.0195.i, %bb.cd ] ; 7 uses
   %i.vf = getelementptr inbounds nuw [4 x i8], ptr %i.sb, i64 %.sroa.68.0197.i ; 3 uses
   %.sroa.0.0.copyload.i85.i.i = load i16, ptr %i.vf, align 2, !tbaa !39
@@ -1019,7 +1022,7 @@ ZSTD_decodeSequence.exit.i:                       ; preds = %bb.co, %bb.cj
   %i.xk = getelementptr i8, ptr %i.xj, i64 %i.xi  ; 5 uses
   %i.xl = getelementptr inbounds nuw i8, ptr %.0137188.i, i64 %.162.i.i ; 2 uses
   %i.xm = add nuw nsw i64 %i.xi, %.162.i.i        ; 2 uses
-  %i.xn = ptrtoint ptr %.057199.i to i64          ; 14 uses
+  %i.xn = ptrtoint ptr %.057199.i to i64          ; 15 uses
   %i.xo = sub i64 %i.tf, %i.xn
   %i.xp = icmp ugt i64 %i.xm, %i.xo
   br i1 %i.xp, label %ZSTD_decompressSequences.exit, label %bb.cp
@@ -1035,7 +1038,7 @@ bb.cq:                                            ; preds = %bb.cp
   br i1 %i.xt, label %ZSTD_decompressSequences.exit, label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq
-  %i.xu = ptrtoint ptr %i.xj to i64               ; 3 uses
+  %i.xu = ptrtoint ptr %i.xj to i64               ; 2 uses
   %i.xv = sub i64 %i.xu, %i.th
   %i.xw = and i64 %i.xv, 4294967295
   %i.xx = icmp ugt i64 %.060.i.i, %i.xw
@@ -1050,8 +1053,9 @@ bb.ct:                                            ; preds = %bb.cs
   br i1 %i.xz, label %ZSTD_decompressSequences.exit, label %.preheader.i.i.preheader
 
 .preheader.i.i.preheader:                         ; preds = %bb.ct
+  %8 = add i64 %.162.i.i, %i.xn
   %i.ya = add i64 %i.xn, 8
-  %i.yb = tail call i64 @llvm.umax.i64(i64 %i.xu, i64 %i.ya)
+  %i.yb = tail call i64 @llvm.umax.i64(i64 %8, i64 %i.ya)
   %i.yc = xor i64 %i.xn, -1
   %i.yd = add i64 %i.yb, %i.yc                    ; 2 uses
   %i.ye = lshr i64 %i.yd, 3
@@ -1216,7 +1220,7 @@ bb.cy:                                            ; preds = %bb.cx
 .preheader.i.preheader:                           ; preds = %bb.cy
   %i.aao = add i64 %.162.i.i, %i.xn
   %i.aap = add i64 %i.aao, 16
-  %i.aaq = tail call i64 @llvm.umax.i64(i64 %i.tj, i64 %i.aap)
+  %i.aaq = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.aap)
   %i.aar = add i64 %i.aaq, -9
   %i.aas = add i64 %.162.i.i, %i.xn
   %i.aat = sub i64 %i.aar, %i.aas                 ; 2 uses
@@ -1291,7 +1295,7 @@ iter.check:                                       ; preds = %bb.cz
   %i.abo = add i64 %i.abn, %i.xn
   %i.abp = add nsw i64 %.162.i.i, 8
   %i.abq = add i64 %i.abp, %i.xn
-  %umax102 = tail call i64 @llvm.umax.i64(i64 %i.tj, i64 %i.abq)
+  %umax102 = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.abq)
   %i.abr = sub i64 %i.abo, %umax102               ; 7 uses
   %min.iters.check = icmp ult i64 %i.abr, 4
   br i1 %min.iters.check, label %.lr.ph.i.i.preheader, label %vector.memcheck
@@ -1299,7 +1303,7 @@ iter.check:                                       ; preds = %bb.cz
 vector.memcheck:                                  ; preds = %iter.check
   %i.abs = add nsw i64 %.162.i.i, 8
   %i.abt = add i64 %i.abs, %i.xn
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.tj, i64 %i.abt)
+  %umax = tail call i64 @llvm.umax.i64(i64 %7, i64 %i.abt)
   %i.abu = sub i64 %.166.i.i101, %umax
   %diff.check = icmp ugt i64 %i.abu, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check

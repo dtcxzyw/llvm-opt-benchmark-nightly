@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/builtins-arraybuffer?download=true
 inline.NumInlined: 1050
 inline.NumDeleted: 477
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZN2v88internalL11SliceHelperENS0_16BuiltinArgumentsEPNS0_7IsolateEPKcb:bb.a
   %i.hk = icmp eq i64 %i.hf, %i.hj
   br i1 %i.hk, label %bb.ay, label %.critedge11
@@ -205,111 +205,28 @@ bb.a:
   %i.b = and i64 %i.a, 7
   %i.c = icmp eq i64 %i.b, 0
   %or.cond3034 = or i1 %.not33, %i.c
-  br i1 %or.cond3034, label %.critedge, label %.lr.ph
+  br i1 %or.cond3034, label %.critedge, label %.lr.ph.6
 
-.lr.ph:                                           ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
-  %5 = load atomic volatile i8, ptr %1 monotonic, align 1
-  store atomic volatile i8 %5, ptr %0 monotonic, align 1
-  %6 = add i64 %2, -1                             ; 2 uses
-  %.not = icmp eq i64 %6, 0
-  %7 = ptrtoint ptr %3 to i64
-  %8 = and i64 %7, 7
-  %9 = icmp eq i64 %8, 0
-  %or.cond30 = select i1 %.not, i1 true, i1 %9
-  br i1 %or.cond30, label %.critedge, label %.lr.ph.1
-
-.lr.ph.1:                                         ; preds = %.lr.ph
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 2 uses
-  %12 = load atomic volatile i8, ptr %4 monotonic, align 1
-  store atomic volatile i8 %12, ptr %3 monotonic, align 1
-  %13 = add i64 %2, -2                            ; 2 uses
-  %.not.1 = icmp eq i64 %13, 0
-  %14 = ptrtoint ptr %10 to i64
-  %15 = and i64 %14, 7
-  %16 = icmp eq i64 %15, 0
-  %or.cond30.1 = select i1 %.not.1, i1 true, i1 %16
-  br i1 %or.cond30.1, label %.critedge, label %.lr.ph.2
-
-.lr.ph.2:                                         ; preds = %.lr.ph.1
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 2 uses
-  %19 = load atomic volatile i8, ptr %11 monotonic, align 1
-  store atomic volatile i8 %19, ptr %10 monotonic, align 1
-  %20 = add i64 %2, -3                            ; 2 uses
-  %.not.2 = icmp eq i64 %20, 0
-  %21 = ptrtoint ptr %17 to i64
-  %22 = and i64 %21, 7
-  %23 = icmp eq i64 %22, 0
-  %or.cond30.2 = select i1 %.not.2, i1 true, i1 %23
-  br i1 %or.cond30.2, label %.critedge, label %.lr.ph.3
-
-.lr.ph.3:                                         ; preds = %.lr.ph.2
-  %24 = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
-  %25 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %26 = load atomic volatile i8, ptr %18 monotonic, align 1
-  store atomic volatile i8 %26, ptr %17 monotonic, align 1
-  %27 = add i64 %2, -4                            ; 2 uses
-  %.not.3 = icmp eq i64 %27, 0
-  %28 = ptrtoint ptr %24 to i64
-  %29 = and i64 %28, 7
-  %30 = icmp eq i64 %29, 0
-  %or.cond30.3 = select i1 %.not.3, i1 true, i1 %30
-  br i1 %or.cond30.3, label %.critedge, label %.lr.ph.4
-
-.lr.ph.4:                                         ; preds = %.lr.ph.3
-  %31 = getelementptr inbounds nuw i8, ptr %0, i64 5 ; 3 uses
-  %32 = getelementptr inbounds nuw i8, ptr %1, i64 5 ; 2 uses
-  %33 = load atomic volatile i8, ptr %25 monotonic, align 1
-  store atomic volatile i8 %33, ptr %24 monotonic, align 1
-  %34 = add i64 %2, -5                            ; 2 uses
-  %.not.4 = icmp eq i64 %34, 0
-  %35 = ptrtoint ptr %31 to i64
-  %36 = and i64 %35, 7
-  %37 = icmp eq i64 %36, 0
-  %or.cond30.4 = select i1 %.not.4, i1 true, i1 %37
-  br i1 %or.cond30.4, label %.critedge, label %.lr.ph.5
-
-.lr.ph.5:                                         ; preds = %.lr.ph.4
-  %38 = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
-  %39 = getelementptr inbounds nuw i8, ptr %1, i64 6 ; 2 uses
-  %40 = load atomic volatile i8, ptr %32 monotonic, align 1
-  store atomic volatile i8 %40, ptr %31 monotonic, align 1
-  %41 = add i64 %2, -6                            ; 2 uses
-  %.not.5 = icmp eq i64 %41, 0
-  %42 = ptrtoint ptr %38 to i64
-  %43 = and i64 %42, 7
-  %44 = icmp eq i64 %43, 0
-  %or.cond30.5 = select i1 %.not.5, i1 true, i1 %44
-  br i1 %or.cond30.5, label %.critedge, label %.lr.ph.6
-
-.lr.ph.6:                                         ; preds = %.lr.ph.5
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 7 ; 3 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 7 ; 2 uses
-  %i.f = load atomic volatile i8, ptr %39 monotonic, align 1
-  store atomic volatile i8 %i.f, ptr %38 monotonic, align 1
-  %i.g = add i64 %2, -7                           ; 2 uses
+.lr.ph.6:                                         ; preds = %bb.a, %.lr.ph.6
+  %.037 = phi i64 [ %i.g, %.lr.ph.6 ], [ %2, %bb.a ]
+  %.01836 = phi ptr [ %i.e, %.lr.ph.6 ], [ %1, %bb.a ] ; 2 uses
+  %.02235 = phi ptr [ %i.d, %.lr.ph.6 ], [ %0, %bb.a ] ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %.02235, i64 1 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %.01836, i64 1 ; 2 uses
+  %i.f = load atomic volatile i8, ptr %.01836 monotonic, align 1
+  store atomic volatile i8 %i.f, ptr %.02235 monotonic, align 1
+  %i.g = add i64 %.037, -1                        ; 3 uses
   %.not.6 = icmp eq i64 %i.g, 0
   %i.h = ptrtoint ptr %i.d to i64
   %i.i = and i64 %i.h, 7
   %i.j = icmp eq i64 %i.i, 0
   %or.cond30.6 = select i1 %.not.6, i1 true, i1 %i.j
-  br i1 %or.cond30.6, label %.critedge, label %.lr.ph.7
+  br i1 %or.cond30.6, label %.critedge, label %.lr.ph.6, !llvm.loop !17
 
-.lr.ph.7:                                         ; preds = %.lr.ph.6
-  %45 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %46 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %47 = load atomic volatile i8, ptr %i.e monotonic, align 1
-  store atomic volatile i8 %47, ptr %i.d monotonic, align 1
-  %48 = add i64 %2, -8
-  br label %.critedge
-
-.critedge:                                        ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %.lr.ph.7, %bb.a
-  %.022.lcssa = phi ptr [ %0, %bb.a ], [ %3, %.lr.ph ], [ %10, %.lr.ph.1 ], [ %17, %.lr.ph.2 ], [ %24, %.lr.ph.3 ], [ %31, %.lr.ph.4 ], [ %38, %.lr.ph.5 ], [ %i.d, %.lr.ph.6 ], [ %45, %.lr.ph.7 ] ; 5 uses
-  %.018.lcssa = phi ptr [ %1, %bb.a ], [ %4, %.lr.ph ], [ %11, %.lr.ph.1 ], [ %18, %.lr.ph.2 ], [ %25, %.lr.ph.3 ], [ %32, %.lr.ph.4 ], [ %39, %.lr.ph.5 ], [ %i.e, %.lr.ph.6 ], [ %46, %.lr.ph.7 ] ; 5 uses
-  %.0.lcssa = phi i64 [ %2, %bb.a ], [ %6, %.lr.ph ], [ %13, %.lr.ph.1 ], [ %20, %.lr.ph.2 ], [ %27, %.lr.ph.3 ], [ %34, %.lr.ph.4 ], [ %41, %.lr.ph.5 ], [ %i.g, %.lr.ph.6 ], [ %48, %.lr.ph.7 ] ; 6 uses
+.critedge:                                        ; preds = %.lr.ph.6, %bb.a
+  %.022.lcssa = phi ptr [ %0, %bb.a ], [ %i.d, %.lr.ph.6 ] ; 5 uses
+  %.018.lcssa = phi ptr [ %1, %bb.a ], [ %i.e, %.lr.ph.6 ] ; 5 uses
+  %.0.lcssa = phi i64 [ %2, %bb.a ], [ %i.g, %.lr.ph.6 ] ; 6 uses
   %i.k = ptrtoint ptr %.018.lcssa to i64
   %i.l = and i64 %i.k, 7
   %i.m = icmp eq i64 %i.l, 0
@@ -343,7 +260,7 @@ bb.b:                                             ; preds = %.critedge
   %i.x = add i64 %.1.prol, -8                     ; 3 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !17
+  br i1 %prol.iter.cmp.not, label %.preheader.prol.loopexit, label %.preheader.prol, !llvm.loop !19
 
 .preheader.prol.loopexit:                         ; preds = %.preheader.prol, %.preheader.preheader
   %.123.unr = phi ptr [ %.022.lcssa, %.preheader.preheader ], [ %i.v, %.preheader.prol ]
@@ -353,7 +270,7 @@ bb.b:                                             ; preds = %.critedge
   %.lcssa61.unr = phi ptr [ poison, %.preheader.preheader ], [ %i.w, %.preheader.prol ]
   %.lcssa.unr = phi i64 [ poison, %.preheader.preheader ], [ %i.x, %.preheader.prol ]
   %i.y = icmp ult i64 %i.r, 56
-  br i1 %i.y, label %.loopexit.loopexit, label %.preheader
+  br i1 %i.y, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %.preheader.prol.loopexit, %.preheader
   %.123 = phi ptr [ %i.av, %.preheader ], [ %.123.unr, %.preheader.prol.loopexit ] ; 9 uses
@@ -393,29 +310,23 @@ bb.b:                                             ; preds = %.critedge
   %i.aw = getelementptr inbounds nuw i8, ptr %.119, i64 64 ; 2 uses
   %i.ax = add i64 %.1, -64                        ; 3 uses
   %.old1.7 = icmp ugt i64 %i.ax, 7
-  br i1 %.old1.7, label %.preheader, label %.loopexit.loopexit
+  br i1 %.old1.7, label %.preheader, label %.loopexit
 
-.loopexit.loopexit:                               ; preds = %.preheader, %.preheader.prol.loopexit
-  %.lcssa62 = phi ptr [ %.lcssa62.unr, %.preheader.prol.loopexit ], [ %i.av, %.preheader ]
-  %.lcssa61 = phi ptr [ %.lcssa61.unr, %.preheader.prol.loopexit ], [ %i.aw, %.preheader ]
-  %.lcssa = phi i64 [ %.lcssa.unr, %.preheader.prol.loopexit ], [ %i.ax, %.preheader ]
-  %49 = freeze i64 %.lcssa
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.b, %.critedge
-  %.224 = phi ptr [ %.022.lcssa, %.critedge ], [ %.022.lcssa, %bb.b ], [ %.lcssa62, %.loopexit.loopexit ] ; 2 uses
-  %.220 = phi ptr [ %.018.lcssa, %.critedge ], [ %.018.lcssa, %bb.b ], [ %.lcssa61, %.loopexit.loopexit ] ; 2 uses
-  %.2 = phi i64 [ %.0.lcssa, %.critedge ], [ %.0.lcssa, %bb.b ], [ %49, %.loopexit.loopexit ] ; 5 uses
-  %.not2740 = icmp eq i64 %.2, 0
+.loopexit:                                        ; preds = %.preheader.prol.loopexit, %.preheader, %bb.b, %.critedge
+  %.224 = phi ptr [ %.022.lcssa, %.critedge ], [ %.022.lcssa, %bb.b ], [ %.lcssa62.unr, %.preheader.prol.loopexit ], [ %i.av, %.preheader ] ; 2 uses
+  %.220 = phi ptr [ %.018.lcssa, %.critedge ], [ %.018.lcssa, %bb.b ], [ %.lcssa61.unr, %.preheader.prol.loopexit ], [ %i.aw, %.preheader ] ; 2 uses
+  %.2 = phi i64 [ %.0.lcssa, %.critedge ], [ %.0.lcssa, %bb.b ], [ %.lcssa.unr, %.preheader.prol.loopexit ], [ %i.ax, %.preheader ]
+  %3 = freeze i64 %.2                             ; 5 uses
+  %.not2740 = icmp eq i64 %3, 0
   br i1 %.not2740, label %._crit_edge, label %.lr.ph44.preheader
 
 .lr.ph44.preheader:                               ; preds = %.loopexit
-  %xtraiter66 = and i64 %.2, 7                    ; 2 uses
+  %xtraiter66 = and i64 %3, 7                     ; 2 uses
   %lcmp.mod67.not = icmp eq i64 %xtraiter66, 0
   br i1 %lcmp.mod67.not, label %.lr.ph44.prol.loopexit, label %.lr.ph44.prol
 
 .lr.ph44.prol:                                    ; preds = %.lr.ph44.preheader, %.lr.ph44.prol
-  %.343.prol = phi i64 [ %i.bb, %.lr.ph44.prol ], [ %.2, %.lr.ph44.preheader ]
+  %.343.prol = phi i64 [ %i.bb, %.lr.ph44.prol ], [ %3, %.lr.ph44.preheader ]
   %.32142.prol = phi ptr [ %i.az, %.lr.ph44.prol ], [ %.220, %.lr.ph44.preheader ] ; 2 uses
   %.32541.prol = phi ptr [ %i.ay, %.lr.ph44.prol ], [ %.224, %.lr.ph44.preheader ] ; 2 uses
   %prol.iter68 = phi i64 [ %prol.iter68.next, %.lr.ph44.prol ], [ 0, %.lr.ph44.preheader ]
@@ -426,13 +337,13 @@ bb.b:                                             ; preds = %.critedge
   %i.bb = add i64 %.343.prol, -1                  ; 2 uses
   %prol.iter68.next = add i64 %prol.iter68, 1     ; 2 uses
   %prol.iter68.cmp.not = icmp eq i64 %prol.iter68.next, %xtraiter66
-  br i1 %prol.iter68.cmp.not, label %.lr.ph44.prol.loopexit, label %.lr.ph44.prol, !llvm.loop !19
+  br i1 %prol.iter68.cmp.not, label %.lr.ph44.prol.loopexit, label %.lr.ph44.prol, !llvm.loop !21
 
 .lr.ph44.prol.loopexit:                           ; preds = %.lr.ph44.prol, %.lr.ph44.preheader
-  %.343.unr = phi i64 [ %.2, %.lr.ph44.preheader ], [ %i.bb, %.lr.ph44.prol ]
+  %.343.unr = phi i64 [ %3, %.lr.ph44.preheader ], [ %i.bb, %.lr.ph44.prol ]
   %.32142.unr = phi ptr [ %.220, %.lr.ph44.preheader ], [ %i.az, %.lr.ph44.prol ]
   %.32541.unr = phi ptr [ %.224, %.lr.ph44.preheader ], [ %i.ay, %.lr.ph44.prol ]
-  %i.bc = icmp ult i64 %.2, 8
+  %i.bc = icmp ult i64 %3, 8
   br i1 %i.bc, label %._crit_edge, label %.lr.ph44
 
 .lr.ph44:                                         ; preds = %.lr.ph44.prol.loopexit, %.lr.ph44
@@ -473,7 +384,7 @@ bb.b:                                             ; preds = %.critedge
   store atomic volatile i8 %i.ca, ptr %i.bv monotonic, align 1
   %i.cb = add i64 %.343, -8                       ; 2 uses
   %.not27.7 = icmp eq i64 %i.cb, 0
-  br i1 %.not27.7, label %._crit_edge, label %.lr.ph44, !llvm.loop !20
+  br i1 %.not27.7, label %._crit_edge, label %.lr.ph44, !llvm.loop !22
 
 ._crit_edge:                                      ; preds = %.lr.ph44.prol.loopexit, %.lr.ph44, %.loopexit
   ret void
@@ -625,28 +536,28 @@ bb.c:                                             ; preds = %bb.a
   %i.g = inttoptr i64 %i.f to ptr
   %i.h = load atomic volatile i64, ptr %i.g acquire, align 8
   %i.i = inttoptr i64 %i.h to ptr                 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !22)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !23)
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.k = load ptr, ptr %i.j, align 8, !noalias !22 ; 2 uses
-  %i.l = load <2 x ptr>, ptr %i.i, align 8, !noalias !22
-  store <2 x ptr> %i.l, ptr %0, align 8, !alias.scope !22
+  %i.k = load ptr, ptr %i.j, align 8, !noalias !23 ; 2 uses
+  %i.l = load <2 x ptr>, ptr %i.i, align 8, !noalias !23
+  store <2 x ptr> %i.l, ptr %0, align 8, !alias.scope !23
   %.not.i.i.i.i = icmp eq ptr %i.k, null
   br i1 %.not.i.i.i.i, label %_ZN2v88internal20ArrayBufferExtension13backing_storeEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 3 uses
-  %i.n = load i8, ptr @__libc_single_threaded, align 1, !noalias !22
+  %i.n = load i8, ptr @__libc_single_threaded, align 1, !noalias !23
   %.not.i.i.i.i.i = icmp eq i8 %i.n, 0
   br i1 %.not.i.i.i.i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = load i32, ptr %i.m, align 4, !noalias !22
+  %i.o = load i32, ptr %i.m, align 4, !noalias !23
   %i.p = add nsw i32 %i.o, 1
-  store i32 %i.p, ptr %i.m, align 4, !noalias !22
+  store i32 %i.p, ptr %i.m, align 4, !noalias !23
   br label %_ZN2v88internal20ArrayBufferExtension13backing_storeEv.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.q = atomicrmw volatile add ptr %i.m, i32 1 acq_rel, align 4, !noalias !22 ; 0 uses
+  %i.q = atomicrmw volatile add ptr %i.m, i32 1 acq_rel, align 4, !noalias !23 ; 0 uses
   br label %_ZN2v88internal20ArrayBufferExtension13backing_storeEv.exit
 
 _ZN2v88internal20ArrayBufferExtension13backing_storeEv.exit: ; preds = %bb.f, %bb.e, %bb.c, %bb.b
@@ -989,7 +900,7 @@ bb.ab:                                            ; preds = %bb.aa
 _ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit: ; preds = %bb.aa
   %i.dm = load i64, ptr %i.dk, align 8            ; 2 uses
   %i.dn = trunc i64 %i.dm to i1
-  br i1 %i.dn, label %_ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit, label %_ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread, !prof !25
+  br i1 %i.dn, label %_ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit, label %_ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread, !prof !26
 
 _ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit
   %i.do = add nsw i64 %i.dm, -1
@@ -999,7 +910,7 @@ _ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %
   %i.ds = inttoptr i64 %i.dr to ptr
   %i.dt = load atomic volatile i16, ptr %i.ds monotonic, align 2
   %i.du = icmp eq i16 %i.dt, 2153
-  br i1 %i.du, label %bb.ac, label %_ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread, !prof !26
+  br i1 %i.du, label %bb.ac, label %_ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread, !prof !27
 
 _ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE5CheckEv.exit, %_ZN2v88internal18IsWasmMemoryObjectENS0_6TaggedINS0_6ObjectEEE.exit
   call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.9) #15
@@ -1402,7 +1313,7 @@ _ZNK2v88internal11MaybeHandleINS0_13JSArrayBufferEE5CheckEv.exit: ; preds = %_ZN
 bb.aa:                                            ; preds = %bb.w
   %i.cr = add i64 %i.bh, 63
   %i.cs = inttoptr i64 %i.cr to ptr               ; 2 uses
-  %i.ct = load atomic volatile i64, ptr %i.cs acquire, align 8, !noalias !27
+  %i.ct = load atomic volatile i64, ptr %i.cs acquire, align 8, !noalias !28
   %.not.i120 = icmp eq i64 %i.ct, 0
   br i1 %.not.i120, label %_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv.exit.thread, label %bb.ab
 
@@ -1411,28 +1322,28 @@ _ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv.exit.thread: ; preds = %bb.aa
   br label %.critedge6
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.cu = load atomic volatile i64, ptr %i.cs acquire, align 8, !noalias !27
+  %i.cu = load atomic volatile i64, ptr %i.cs acquire, align 8, !noalias !28
   %i.cv = inttoptr i64 %i.cu to ptr               ; 2 uses
-  %i.cw = load ptr, ptr %i.cv, align 8, !noalias !30 ; 3 uses
+  %i.cw = load ptr, ptr %i.cv, align 8, !noalias !31 ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cv, i64 8
-  %i.cy = load ptr, ptr %i.cx, align 8, !noalias !30 ; 6 uses
+  %i.cy = load ptr, ptr %i.cx, align 8, !noalias !31 ; 6 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.cy, null
   br i1 %.not.i.i.i.i.i, label %_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 8 ; 3 uses
-  %i.da = load i8, ptr @__libc_single_threaded, align 1, !noalias !30
+  %i.da = load i8, ptr @__libc_single_threaded, align 1, !noalias !31
   %.not.i.i.i.i.i.i = icmp eq i8 %i.da, 0
   br i1 %.not.i.i.i.i.i.i, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.db = load i32, ptr %i.cz, align 4, !noalias !30
+  %i.db = load i32, ptr %i.cz, align 4, !noalias !31
   %i.dc = add nsw i32 %i.db, 1
-  store i32 %i.dc, ptr %i.cz, align 4, !noalias !30
+  store i32 %i.dc, ptr %i.cz, align 4, !noalias !31
   br label %_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv.exit
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.dd = atomicrmw volatile add ptr %i.cz, i32 1 acq_rel, align 4, !noalias !30 ; 0 uses
+  %i.dd = atomicrmw volatile add ptr %i.cz, i32 1 acq_rel, align 4, !noalias !31 ; 0 uses
   br label %_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv.exit
 
 _ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv.exit: ; preds = %bb.ab, %bb.ad, %bb.ae
@@ -1657,19 +1568,20 @@ attributes #20 = { noreturn }
 !15 = distinct !{null, null}
 !16 = distinct !{null}
 !17 = distinct !{!17, !18}
-!18 = !{!"llvm.loop.unroll.disable"}
-!19 = distinct !{!19, !18}
-!20 = distinct !{!20, !21}
-!21 = !{!"llvm.loop.mustprogress"}
-!22 = !{!23}
-!23 = distinct !{!23, !24, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv: argument 0"}
-!24 = distinct !{!24, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv"}
-!25 = !{!"branch_weights", i32 2146410443, i32 1073205}
-!26 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
-!27 = !{!28}
-!28 = distinct !{!28, !29, !"_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv: argument 0"}
-!29 = distinct !{!29, !"_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv"}
-!30 = !{!31, !28}
-!31 = distinct !{!31, !32, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv: argument 0"}
-!32 = distinct !{!32, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv"}
+!18 = !{!"llvm.loop.mustprogress"}
+!19 = distinct !{!19, !20}
+!20 = !{!"llvm.loop.unroll.disable"}
+!21 = distinct !{!21, !20}
+!22 = distinct !{!22, !18}
+!23 = !{!24}
+!24 = distinct !{!24, !25, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv: argument 0"}
+!25 = distinct !{!25, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv"}
+!26 = !{!"branch_weights", i32 2146410443, i32 1073205}
+!27 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!28 = !{!29}
+!29 = distinct !{!29, !30, !"_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv: argument 0"}
+!30 = distinct !{!30, !"_ZNK2v88internal13JSArrayBuffer15GetBackingStoreEv"}
+!31 = !{!32, !29}
+!32 = distinct !{!32, !33, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv: argument 0"}
+!33 = distinct !{!33, !"_ZN2v88internal20ArrayBufferExtension13backing_storeEv"}
 end_hunk_1

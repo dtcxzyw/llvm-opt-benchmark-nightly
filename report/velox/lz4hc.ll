@@ -205,7 +205,7 @@ LZ4_wildCopy8.exit105.i:                          ; preds = %scalar.ph1118, %mid
   %i.bpi = trunc i32 %.sroa.0162.sroa.0.2.i.ph.i to i16
   store i16 %i.bpi, ptr %i.bon, align 1, !tbaa !27
   %i.bpj = getelementptr i8, ptr %i.bon, i64 2    ; 4 uses
-  %i.bpk = sext i32 %.sroa.0162.sroa.14.3.i.i to i64 ; 4 uses
+  %i.bpk = sext i32 %.sroa.0162.sroa.14.3.i.i to i64 ; 7 uses
   %i.bpl = add nsw i64 %i.bpk, -4                 ; 3 uses
   %i.bpm = udiv i64 %i.bpl, 255
   %i.bpn = getelementptr inbounds nuw i8, ptr %i.bpj, i64 %i.bpm
@@ -269,10 +269,9 @@ bb.ly:                                            ; preds = %bb.lu
 
 bb.lz:                                            ; preds = %bb.ly, %bb.lx
   %.25.i = phi ptr [ %i.bqf, %bb.lx ], [ %i.bpj, %bb.ly ] ; 10 uses
-  %i.bqj = getelementptr i8, ptr %.4991.ph.i, i64 %i.bpk ; 6 uses
+  %i.bqj = getelementptr inbounds i8, ptr %.4991.ph.i, i64 %i.bpk ; 7 uses
   %i.bqk = getelementptr i8, ptr %.25.i, i64 1    ; 4 uses
-  %i.bql = ptrtoint ptr %i.bqj to i64             ; 5 uses
-  %7 = sub i64 0, %i.bql
+  %i.bql = ptrtoint ptr %i.bqj to i64             ; 2 uses
   %i.bqm = sub i64 %i.bns, %i.bql                 ; 6 uses
   %i.bqn = udiv i64 %i.bqm, 255
   %i.bqo = getelementptr inbounds nuw i8, ptr %i.bqk, i64 %i.bqn
@@ -319,25 +318,29 @@ bb.mc:                                            ; preds = %bb.ma
   br label %bb.md
 
 bb.md:                                            ; preds = %bb.mc, %._crit_edge1783.i
-  %.18.i = phi ptr [ %i.brb, %._crit_edge1783.i ], [ %i.bqk, %bb.mc ] ; 6 uses
+  %.18.i = phi ptr [ %i.brb, %._crit_edge1783.i ], [ %i.bqk, %bb.mc ] ; 7 uses
   %.18.i1110 = ptrtoaddr ptr %.18.i to i64        ; 4 uses
   %i.brd = getelementptr inbounds nuw i8, ptr %.18.i, i64 %i.bqm ; 3 uses
   %i.bre = ptrtoaddr ptr %.5.i.i to i64
+  %7 = add i64 %i.byz, %i.bpk
   %i.brf = add i64 %i.bre, %.18.i1110
-  %i.brg = sub i64 %i.brf, %i.bql
+  %i.brg = sub i64 %i.brf, %7
   %i.brh = add nuw i64 %.18.i1110, 8
   %i.bri = tail call i64 @llvm.umax.i64(i64 %i.brg, i64 %i.brh)
   %i.brj = xor i64 %.18.i1110, -1
   %i.brk = add i64 %i.bri, %i.brj                 ; 2 uses
   %i.brl = lshr i64 %i.brk, 3
   %i.brm = add nuw nsw i64 %i.brl, 1              ; 2 uses
-  %min.iters.check = icmp ult i64 %i.brk, 24
-  %8 = sub i64 %i.bql, %.18.i1110
-  %diff.check = icmp ugt i64 %8, -32
-  %or.cond1212 = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond1212, label %scalar.ph.preheader, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.brk, 56
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.ph:                                        ; preds = %bb.md
+vector.memcheck:                                  ; preds = %bb.md
+  %8 = add i64 %i.bpk, %i.byz
+  %9 = sub i64 %8, %.18.i1110
+  %diff.check = icmp ugt i64 %9, -32
+  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.brm, 4611686018427387900    ; 3 uses
   %i.brn = shl i64 %n.vec, 3                      ; 2 uses
   %i.bro = getelementptr i8, ptr %.18.i, i64 %i.brn
@@ -363,9 +366,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.brm, %n.vec
   br i1 %cmp.n, label %LZ4_wildCopy8.exit108.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %bb.md, %middle.block
-  %.09.i106.i.ph = phi ptr [ %.18.i, %bb.md ], [ %i.bro, %middle.block ]
-  %.0.i107.i.ph = phi ptr [ %i.bqj, %bb.md ], [ %i.brp, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.md, %middle.block
+  %.09.i106.i.ph = phi ptr [ %.18.i, %vector.memcheck ], [ %.18.i, %bb.md ], [ %i.bro, %middle.block ]
+  %.0.i107.i.ph = phi ptr [ %i.bqj, %vector.memcheck ], [ %i.bqj, %bb.md ], [ %i.brp, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -409,7 +412,9 @@ bb.mf:                                            ; preds = %bb.me
   %i.bsn = add nuw nsw i64 %i.bsm, 2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.brz, i8 -1, i64 %i.bsn, i1 false), !tbaa !29
   %scevgep2187.i = getelementptr i8, ptr %.18.i, i64 4
-  %scevgep2188.i = getelementptr i8, ptr %scevgep2187.i, i64 %7
+  %10 = add i64 %i.byz, %i.bpk
+  %11 = sub i64 0, %10
+  %scevgep2188.i = getelementptr i8, ptr %scevgep2187.i, i64 %11
   %i.bso = getelementptr i8, ptr %scevgep2188.i, i64 %i.bsm
   %scevgep2193.i = getelementptr i8, ptr %i.bso, i64 %.5.i.lcssa21892192.i
   %.neg2459.i = mul i64 %i.bsl, -510
@@ -812,7 +817,7 @@ bb.nm:                                            ; preds = %bb.nl, %bb.nk
   %.2340.i.ph.i = phi ptr [ %.1339.i.ph.i, %.preheader1355.i ], [ %.3341.i.i, %bb.nm ]
   %.3.i.ph.i = phi ptr [ %.2.i.i, %.preheader1355.i ], [ %.3341.i.i, %bb.nm ]
   %.4981.ph.i1116 = ptrtoaddr ptr %.4981.ph.i to i64 ; 4 uses
-  %i.byz = ptrtoint ptr %.4991.ph.i to i64        ; 14 uses
+  %i.byz = ptrtoint ptr %.4991.ph.i to i64        ; 17 uses
   %spec.store.select.i.i = tail call i32 @llvm.smin.i32(i32 %.sroa.0162.sroa.14.2.i.ph.i, i32 18) ; 3 uses
   %i.bza = sext i32 %spec.store.select.i.i to i64
   %i.bzb = getelementptr inbounds i8, ptr %.4991.ph.i, i64 %i.bza ; 2 uses
@@ -1215,7 +1220,7 @@ LZ4_wildCopy8.exit73:                             ; preds = %scalar.ph2544, %mid
   %i.bak = trunc i32 %.sroa.0162.sroa.0.2.i.ph to i16
   store i16 %i.bak, ptr %i.azp, align 1, !tbaa !27
   %i.bal = getelementptr i8, ptr %i.azp, i64 2    ; 4 uses
-  %i.bam = sext i32 %.sroa.0162.sroa.14.3.i to i64 ; 4 uses
+  %i.bam = sext i32 %.sroa.0162.sroa.14.3.i to i64 ; 7 uses
   %i.ban = add nsw i64 %i.bam, -4                 ; 3 uses
   %i.bao = udiv i64 %i.ban, 255
   %i.bap = getelementptr inbounds nuw i8, ptr %i.bal, i64 %i.bao
@@ -1279,9 +1284,9 @@ bb.jl:                                            ; preds = %bb.jh
 
 bb.jm:                                            ; preds = %bb.jl, %bb.jk
   %.25 = phi ptr [ %i.bbh, %bb.jk ], [ %i.bal, %bb.jl ] ; 10 uses
-  %i.bbl = getelementptr i8, ptr %.4858.ph, i64 %i.bam ; 6 uses
+  %i.bbl = getelementptr inbounds i8, ptr %.4858.ph, i64 %i.bam ; 7 uses
   %i.bbm = getelementptr i8, ptr %.25, i64 1      ; 4 uses
-  %i.bbn = ptrtoint ptr %i.bbl to i64             ; 5 uses
+  %i.bbn = ptrtoint ptr %i.bbl to i64             ; 2 uses
   %i.bbo = sub i64 %i.ayu, %i.bbn                 ; 6 uses
   %i.bbp = udiv i64 %i.bbo, 255
   %i.bbq = getelementptr inbounds nuw i8, ptr %i.bbm, i64 %i.bbp
@@ -1328,25 +1333,29 @@ bb.jp:                                            ; preds = %bb.jn
   br label %bb.jq
 
 bb.jq:                                            ; preds = %bb.jp, %._crit_edge1520
-  %.18 = phi ptr [ %i.bcd, %._crit_edge1520 ], [ %i.bbm, %bb.jp ] ; 6 uses
+  %.18 = phi ptr [ %i.bcd, %._crit_edge1520 ], [ %i.bbm, %bb.jp ] ; 7 uses
   %.182536 = ptrtoaddr ptr %.18 to i64            ; 4 uses
   %i.bcf = getelementptr inbounds nuw i8, ptr %.18, i64 %i.bbo ; 3 uses
   %i.bcg = ptrtoaddr ptr %.5.i to i64
+  %7 = add i64 %i.bkd, %i.bam
   %i.bch = add i64 %i.bcg, %.182536
-  %i.bci = sub i64 %i.bch, %i.bbn
+  %i.bci = sub i64 %i.bch, %7
   %i.bcj = add nuw i64 %.182536, 8
   %i.bck = tail call i64 @llvm.umax.i64(i64 %i.bci, i64 %i.bcj)
   %i.bcl = xor i64 %.182536, -1
   %i.bcm = add i64 %i.bck, %i.bcl                 ; 2 uses
   %i.bcn = lshr i64 %i.bcm, 3
   %i.bco = add nuw nsw i64 %i.bcn, 1              ; 2 uses
-  %min.iters.check = icmp ult i64 %i.bcm, 24
-  %7 = sub i64 %i.bbn, %.182536
-  %diff.check = icmp ugt i64 %7, -32
-  %or.cond2634 = select i1 %min.iters.check, i1 true, i1 %diff.check
-  br i1 %or.cond2634, label %scalar.ph.preheader, label %vector.ph
+  %min.iters.check = icmp ult i64 %i.bcm, 56
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.ph:                                        ; preds = %bb.jq
+vector.memcheck:                                  ; preds = %bb.jq
+  %8 = add i64 %i.bam, %i.bkd
+  %9 = sub i64 %8, %.182536
+  %diff.check = icmp ugt i64 %9, -32
+  br i1 %diff.check, label %scalar.ph.preheader, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.bco, 4611686018427387900    ; 3 uses
   %i.bcp = shl i64 %n.vec, 3                      ; 2 uses
   %i.bcq = getelementptr i8, ptr %.18, i64 %i.bcp
@@ -1372,9 +1381,9 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %i.bco, %n.vec
   br i1 %cmp.n, label %LZ4_wildCopy8.exit76, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %bb.jq, %middle.block
-  %.09.i74.ph = phi ptr [ %.18, %bb.jq ], [ %i.bcq, %middle.block ]
-  %.0.i75.ph = phi ptr [ %i.bbl, %bb.jq ], [ %i.bcr, %middle.block ]
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.jq, %middle.block
+  %.09.i74.ph = phi ptr [ %.18, %vector.memcheck ], [ %.18, %bb.jq ], [ %i.bcq, %middle.block ]
+  %.0.i75.ph = phi ptr [ %i.bbl, %vector.memcheck ], [ %i.bbl, %bb.jq ], [ %i.bcr, %middle.block ]
   br label %scalar.ph
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -1418,7 +1427,8 @@ bb.js:                                            ; preds = %bb.jr
   %i.bdp = add nuw nsw i64 %i.bdo, 2
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bdb, i8 -1, i64 %i.bdp, i1 false), !tbaa !29
   %scevgep1887 = getelementptr i8, ptr %.18, i64 4
-  %i.bdq = sub i64 0, %i.bbn
+  %10 = add i64 %i.bam, %i.bkd
+  %i.bdq = sub i64 0, %10
   %scevgep1888 = getelementptr i8, ptr %scevgep1887, i64 %i.bdq
   %i.bdr = getelementptr i8, ptr %scevgep1888, i64 %i.bdo
   %scevgep1893 = getelementptr i8, ptr %i.bdr, i64 %.5.i.lcssa18891892
@@ -1821,7 +1831,7 @@ bb.kz:                                            ; preds = %bb.ky, %bb.kx
   %.2340.i.ph = phi ptr [ %.1339.i.ph, %.preheader1179 ], [ %.3341.i, %bb.kz ]
   %.3.i.ph = phi ptr [ %.2.i, %.preheader1179 ], [ %.3341.i, %bb.kz ]
   %.4848.ph2542 = ptrtoaddr ptr %.4848.ph to i64  ; 4 uses
-  %i.bkd = ptrtoint ptr %.4858.ph to i64          ; 17 uses
+  %i.bkd = ptrtoint ptr %.4858.ph to i64          ; 20 uses
   %spec.store.select.i = tail call i32 @llvm.smin.i32(i32 %.sroa.0162.sroa.14.2.i.ph, i32 18) ; 3 uses
   %i.bke = sext i32 %spec.store.select.i to i64
   %i.bkf = getelementptr inbounds i8, ptr %.4858.ph, i64 %i.bke ; 2 uses

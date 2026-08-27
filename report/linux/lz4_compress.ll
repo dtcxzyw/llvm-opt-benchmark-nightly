@@ -50,14 +50,14 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.e = phi i32 [ %i.d, %bb.b ], [ 0, %bb.a ]
   %.not = icmp slt i32 %4, %i.e
   %i.f = icmp slt i32 %3, 65547                   ; 2 uses
-  %i.g = ptrtoint ptr %1 to i64                   ; 16 uses
+  %i.g = ptrtoint ptr %1 to i64                   ; 12 uses
   br i1 %.not, label %bb.bh, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   br i1 %i.f, label %bb.e, label %bb.ag
 
 bb.e:                                             ; preds = %bb.d
-  %i.h = sext i32 %3 to i64                       ; 2 uses
+  %i.h = sext i32 %3 to i64
   %i.i = getelementptr i8, ptr %1, i64 %i.h       ; 5 uses
   %i.j = getelementptr i8, ptr %i.i, i64 -12      ; 4 uses
   %i.k = getelementptr i8, ptr %i.i, i64 -5
@@ -401,7 +401,7 @@ bb.ac:                                            ; preds = %bb.ab
 .thread398:                                       ; preds = %bb.i, %bb.z, %bb.f
   %.3271.i190 = phi ptr [ %1, %bb.f ], [ %i.cy, %bb.z ], [ %.0268.i163, %bb.i ] ; 2 uses
   %.9.i191 = phi ptr [ %2, %bb.f ], [ %.7267.i213, %bb.z ], [ %.0260.i164, %bb.i ] ; 5 uses
-  %i.en = ptrtoint ptr %i.i to i64
+  %i.en = ptrtoint ptr %i.i to i64                ; 2 uses
   %i.eo = ptrtoint ptr %.3271.i190 to i64         ; 2 uses
   %i.ep = sub i64 %i.en, %i.eo                    ; 5 uses
   %i.eq = icmp ugt i64 %i.ep, 14
@@ -415,8 +415,7 @@ bb.ad:                                            ; preds = %.thread398
   br i1 %i.es, label %.lr.ph651.preheader, label %._crit_edge652
 
 .lr.ph651.preheader:                              ; preds = %bb.ad
-  %6 = add i64 %i.g, %i.h
-  %i.et = add i64 %6, -270
+  %i.et = add i64 %i.en, -270
   %i.eu = sub i64 %i.et, %i.eo                    ; 2 uses
   %i.ev = udiv i64 %i.eu, 255                     ; 3 uses
   %i.ew = add nuw nsw i64 %i.ev, 1
@@ -452,7 +451,7 @@ bb.af:                                            ; preds = %bb.ae, %._crit_edge
   br label %LZ4_compress_generic.exit224
 
 bb.ag:                                            ; preds = %bb.d
-  %i.fg = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.fg = zext nneg i32 %3 to i64
   %i.fh = getelementptr i8, ptr %1, i64 %i.fg     ; 5 uses
   %i.fi = getelementptr i8, ptr %i.fh, i64 -12    ; 6 uses
   %i.fj = getelementptr i8, ptr %i.fh, i64 -5
@@ -803,7 +802,7 @@ bb.bd:                                            ; preds = %bb.ba, %bb.bb
 .thread410:                                       ; preds = %bb.bd, %.critedge.i159.backedge, %bb.az, %bb.ah
   %.2270.i121.ph = phi ptr [ %.0268.i99604, %.critedge.i159.backedge ], [ %i.jd, %bb.az ], [ %1, %bb.ah ], [ %i.jd, %bb.bd ] ; 2 uses
   %.8.i122.ph = phi ptr [ %.0260.i100605, %.critedge.i159.backedge ], [ %.7267.i149, %bb.az ], [ %2, %bb.ah ], [ %.7267.i149, %bb.bd ] ; 5 uses
-  %i.kr = ptrtoint ptr %i.fh to i64
+  %i.kr = ptrtoint ptr %i.fh to i64               ; 2 uses
   %i.ks = ptrtoint ptr %.2270.i121.ph to i64      ; 2 uses
   %i.kt = sub i64 %i.kr, %i.ks                    ; 5 uses
   %i.ku = icmp ugt i64 %i.kt, 14
@@ -817,8 +816,7 @@ bb.be:                                            ; preds = %.thread410
   br i1 %i.kw, label %.lr.ph614.preheader, label %._crit_edge615
 
 .lr.ph614.preheader:                              ; preds = %bb.be
-  %7 = add i64 %i.g, %i.fg
-  %i.kx = add i64 %7, -270
+  %i.kx = add i64 %i.kr, -270
   %i.ky = sub i64 %i.kx, %i.ks                    ; 2 uses
   %i.kz = udiv i64 %i.ky, 255                     ; 3 uses
   %i.la = add nuw nsw i64 %i.kz, 1
@@ -859,7 +857,7 @@ bb.bh:                                            ; preds = %bb.c
   br i1 %i.f, label %bb.bi, label %bb.cn
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.lm = sext i32 %3 to i64                      ; 2 uses
+  %i.lm = sext i32 %3 to i64
   %i.ln = getelementptr i8, ptr %1, i64 %i.lm     ; 5 uses
   %i.lo = getelementptr i8, ptr %i.ln, i64 -12    ; 4 uses
   %i.lp = getelementptr i8, ptr %i.ln, i64 -5
@@ -1220,7 +1218,7 @@ bb.ci:                                            ; preds = %bb.ch
 .thread459:                                       ; preds = %bb.bm, %bb.cf, %bb.bj
   %.3271.i62 = phi ptr [ %1, %bb.bj ], [ %i.pj, %bb.cf ], [ %.0268.i35, %bb.bm ] ; 2 uses
   %.9.i63 = phi ptr [ %2, %bb.bj ], [ %.7267.i85.ph, %bb.cf ], [ %.0260.i36, %bb.bm ] ; 6 uses
-  %i.rd = ptrtoint ptr %i.ln to i64
+  %i.rd = ptrtoint ptr %i.ln to i64               ; 2 uses
   %i.re = ptrtoint ptr %.3271.i62 to i64          ; 2 uses
   %i.rf = sub i64 %i.rd, %i.re                    ; 7 uses
   %i.rg = ptrtoint ptr %.9.i63 to i64
@@ -1247,8 +1245,7 @@ bb.ck:                                            ; preds = %bb.cj
   br i1 %i.rr, label %.lr.ph742.preheader, label %._crit_edge743
 
 .lr.ph742.preheader:                              ; preds = %bb.ck
-  %8 = add i64 %i.g, %i.lm
-  %i.rs = add i64 %8, -270
+  %i.rs = add i64 %i.rd, -270
   %i.rt = sub i64 %i.rs, %i.re                    ; 2 uses
   %i.ru = udiv i64 %i.rt, 255                     ; 3 uses
   %i.rv = add nuw nsw i64 %i.ru, 1
@@ -1283,7 +1280,7 @@ bb.cm:                                            ; preds = %bb.cl, %._crit_edge
   br label %LZ4_compress_generic.exit224
 
 bb.cn:                                            ; preds = %bb.bh
-  %i.se = zext nneg i32 %3 to i64                 ; 2 uses
+  %i.se = zext nneg i32 %3 to i64
   %i.sf = getelementptr i8, ptr %1, i64 %i.se     ; 5 uses
   %i.sg = getelementptr i8, ptr %i.sf, i64 -12    ; 6 uses
   %i.sh = getelementptr i8, ptr %i.sf, i64 -5
@@ -1651,7 +1648,7 @@ bb.dm:                                            ; preds = %bb.dj, %bb.dk
 .thread471:                                       ; preds = %bb.dm, %.critedge.i.backedge, %bb.di, %bb.co
   %.2270.i.ph = phi ptr [ %.0268.i695, %.critedge.i.backedge ], [ %i.wh, %bb.di ], [ %1, %bb.co ], [ %i.wh, %bb.dm ] ; 2 uses
   %.8.i.ph = phi ptr [ %.0260.i696, %.critedge.i.backedge ], [ %.7267.i.ph, %bb.di ], [ %2, %bb.co ], [ %.7267.i.ph, %bb.dm ] ; 6 uses
-  %i.ya = ptrtoint ptr %i.sf to i64
+  %i.ya = ptrtoint ptr %i.sf to i64               ; 2 uses
   %i.yb = ptrtoint ptr %.2270.i.ph to i64         ; 2 uses
   %i.yc = sub i64 %i.ya, %i.yb                    ; 7 uses
   %i.yd = ptrtoint ptr %.8.i.ph to i64
@@ -1678,8 +1675,7 @@ bb.do:                                            ; preds = %bb.dn
   br i1 %i.yo, label %.lr.ph705.preheader, label %._crit_edge706
 
 .lr.ph705.preheader:                              ; preds = %bb.do
-  %9 = add i64 %i.g, %i.se
-  %i.yp = add i64 %9, -270
+  %i.yp = add i64 %i.ya, -270
   %i.yq = sub i64 %i.yp, %i.yb                    ; 2 uses
   %i.yr = udiv i64 %i.yq, 255                     ; 3 uses
   %i.ys = add nuw nsw i64 %i.yr, 1
@@ -1879,7 +1875,6 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong memory(readwrite, inaccessiblemem: none, target_mem: none)
 define dso_local i32 @LZ4_compress_fast_continue(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) #0 align 16 prefalign(16) {
 bb.a:
-  %6 = ptrtoaddr ptr %1 to i64                    ; 2 uses
   %i.a = getelementptr i8, ptr %0, i64 16392      ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr i8, ptr %0, i64 16408      ; 6 uses
@@ -1947,7 +1942,7 @@ LZ4_renormDictT.exit:                             ; preds = %bb.b, %bb.g
   %i.ac = phi i32 [ %i.d, %bb.b ], [ %i.x, %bb.g ]
   %i.ad = phi ptr [ %i.b, %bb.b ], [ %i.aa, %bb.g ] ; 2 uses
   %spec.store.select = tail call i32 @llvm.smax.i32(i32 %5, i32 1) ; 8 uses
-  %i.ae = sext i32 %3 to i64                      ; 5 uses
+  %i.ae = sext i32 %3 to i64
   %i.af = getelementptr i8, ptr %1, i64 %i.ae     ; 21 uses
   %i.ag = icmp ugt ptr %i.af, %i.ad
   %i.ah = icmp ult ptr %i.af, %i.f
@@ -2350,7 +2345,7 @@ bb.ak:                                            ; preds = %bb.ah, %bb.ai
 .thread569:                                       ; preds = %bb.ak, %.critedge.i291.backedge, %bb.ag, %bb.m, %bb.l
   %.3271.i254 = phi ptr [ %1, %bb.l ], [ %.0268.i2251037, %.critedge.i291.backedge ], [ %i.fi, %bb.ag ], [ %1, %bb.m ], [ %i.fi, %bb.ak ] ; 2 uses
   %.9.i255 = phi ptr [ %2, %bb.l ], [ %.0260.i2261038, %.critedge.i291.backedge ], [ %.7267.i279.ph, %bb.ag ], [ %2, %bb.m ], [ %.7267.i279.ph, %bb.ak ] ; 6 uses
-  %i.hb = ptrtoint ptr %i.af to i64
+  %i.hb = ptrtoint ptr %i.af to i64               ; 2 uses
   %i.hc = ptrtoint ptr %.3271.i254 to i64         ; 2 uses
   %i.hd = sub i64 %i.hb, %i.hc                    ; 7 uses
   %i.he = ptrtoint ptr %.9.i255 to i64
@@ -2377,8 +2372,7 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.hp, label %.lr.ph1047.preheader, label %._crit_edge1048
 
 .lr.ph1047.preheader:                             ; preds = %bb.am
-  %7 = add i64 %6, %i.ae
-  %i.hq = add i64 %7, -270
+  %i.hq = add i64 %i.hb, -270
   %i.hr = sub i64 %i.hq, %i.hc                    ; 2 uses
   %i.hs = udiv i64 %i.hr, 255                     ; 3 uses
   %i.ht = add nuw nsw i64 %i.hs, 1
@@ -2781,7 +2775,7 @@ bb.bp:                                            ; preds = %bb.bm, %bb.bn
 .thread605:                                       ; preds = %bb.bp, %.critedge.i221.backedge, %bb.bl, %bb.ar, %bb.aq
   %.3271.i184 = phi ptr [ %1, %bb.aq ], [ %.0268.i155983, %.critedge.i221.backedge ], [ %i.mg, %bb.bl ], [ %1, %bb.ar ], [ %i.mg, %bb.bp ] ; 2 uses
   %.9.i185 = phi ptr [ %2, %bb.aq ], [ %.0260.i156984, %.critedge.i221.backedge ], [ %.7267.i209.ph, %bb.bl ], [ %2, %bb.ar ], [ %.7267.i209.ph, %bb.bp ] ; 6 uses
-  %i.nz = ptrtoint ptr %i.af to i64
+  %i.nz = ptrtoint ptr %i.af to i64               ; 2 uses
   %i.oa = ptrtoint ptr %.3271.i184 to i64         ; 2 uses
   %i.ob = sub i64 %i.nz, %i.oa                    ; 7 uses
   %i.oc = ptrtoint ptr %.9.i185 to i64
@@ -2808,8 +2802,7 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.on, label %.lr.ph993.preheader, label %._crit_edge994
 
 .lr.ph993.preheader:                              ; preds = %bb.br
-  %8 = add i64 %6, %i.ae
-  %i.oo = add i64 %8, -270
+  %i.oo = add i64 %i.nz, -270
   %i.op = sub i64 %i.oo, %i.oa                    ; 2 uses
   %i.oq = udiv i64 %i.op, 255                     ; 3 uses
   %i.or = add nuw nsw i64 %i.oq, 1
@@ -2857,7 +2850,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.pd = getelementptr i8, ptr %1, i64 %i.pc     ; 2 uses
   %i.pe = getelementptr i8, ptr %i.aq, i64 %i.av
   %i.pf = ptrtoint ptr %i.pe to i64               ; 2 uses
-  %i.pg = ptrtoint ptr %1 to i64                  ; 2 uses
+  %i.pg = ptrtoint ptr %1 to i64
   %i.ph = sub i64 %i.pf, %i.pg                    ; 2 uses
   %i.pi = getelementptr i8, ptr %i.af, i64 -12    ; 8 uses
   %i.pj = getelementptr i8, ptr %i.af, i64 -5     ; 4 uses
@@ -3260,7 +3253,7 @@ bb.do:                                            ; preds = %bb.dl, %bb.dm
 .thread657:                                       ; preds = %bb.do, %.critedge.i151.backedge, %bb.dk, %bb.bx, %bb.bw
   %.3271.i115 = phi ptr [ %1, %bb.bw ], [ %.0268.i86929, %.critedge.i151.backedge ], [ %.4285.i138, %bb.dk ], [ %1, %bb.bx ], [ %.4285.i138, %bb.do ] ; 2 uses
   %.9.i116 = phi ptr [ %2, %bb.bw ], [ %.0260.i87930, %.critedge.i151.backedge ], [ %.7267.i140.ph, %bb.dk ], [ %2, %bb.bx ], [ %.7267.i140.ph, %bb.do ] ; 6 uses
-  %i.yh = ptrtoint ptr %i.af to i64
+  %i.yh = ptrtoint ptr %i.af to i64               ; 2 uses
   %i.yi = ptrtoint ptr %.3271.i115 to i64         ; 2 uses
   %i.yj = sub i64 %i.yh, %i.yi                    ; 7 uses
   %i.yk = ptrtoint ptr %.9.i116 to i64
@@ -3287,8 +3280,7 @@ bb.dq:                                            ; preds = %bb.dp
   br i1 %i.yv, label %.lr.ph939.preheader, label %._crit_edge940
 
 .lr.ph939.preheader:                              ; preds = %bb.dq
-  %9 = add i64 %i.pg, %i.ae
-  %i.yw = add i64 %9, -270
+  %i.yw = add i64 %i.yh, -270
   %i.yx = sub i64 %i.yw, %i.yi                    ; 2 uses
   %i.yy = udiv i64 %i.yx, 255                     ; 3 uses
   %i.yz = add nuw nsw i64 %i.yy, 1
@@ -3325,7 +3317,7 @@ bb.ds:                                            ; preds = %bb.dr, %._crit_edge
 bb.dt:                                            ; preds = %bb.bu
   %i.zi = getelementptr i8, ptr %i.aq, i64 %i.av
   %i.zj = ptrtoint ptr %i.zi to i64               ; 2 uses
-  %i.zk = ptrtoint ptr %1 to i64                  ; 2 uses
+  %i.zk = ptrtoint ptr %1 to i64
   %i.zl = sub i64 %i.zj, %i.zk                    ; 2 uses
   %i.zm = getelementptr i8, ptr %i.af, i64 -12    ; 8 uses
   %i.zn = getelementptr i8, ptr %i.af, i64 -5     ; 4 uses
@@ -3728,7 +3720,7 @@ bb.fm:                                            ; preds = %bb.fj, %bb.fk
 .thread711:                                       ; preds = %bb.fm, %.critedge.i.backedge, %bb.fi, %bb.dv, %bb.du
   %.3271.i = phi ptr [ %1, %bb.du ], [ %.0268.i860, %.critedge.i.backedge ], [ %.4285.i, %bb.fi ], [ %1, %bb.dv ], [ %.4285.i, %bb.fm ] ; 2 uses
   %.9.i = phi ptr [ %2, %bb.du ], [ %.0260.i861, %.critedge.i.backedge ], [ %.7267.i.ph, %bb.fi ], [ %2, %bb.dv ], [ %.7267.i.ph, %bb.fm ] ; 6 uses
-  %i.aik = ptrtoint ptr %i.af to i64
+  %i.aik = ptrtoint ptr %i.af to i64              ; 2 uses
   %i.ail = ptrtoint ptr %.3271.i to i64           ; 2 uses
   %i.aim = sub i64 %i.aik, %i.ail                 ; 7 uses
   %i.ain = ptrtoint ptr %.9.i to i64
@@ -3755,8 +3747,7 @@ bb.fo:                                            ; preds = %bb.fn
   br i1 %i.aiy, label %.lr.ph870.preheader, label %._crit_edge871
 
 .lr.ph870.preheader:                              ; preds = %bb.fo
-  %10 = add i64 %i.zk, %i.ae
-  %i.aiz = add i64 %10, -270
+  %i.aiz = add i64 %i.aik, -270
   %i.aja = sub i64 %i.aiz, %i.ail                 ; 2 uses
   %i.ajb = udiv i64 %i.aja, 255                   ; 3 uses
   %i.ajc = add nuw nsw i64 %i.ajb, 1

@@ -202,7 +202,7 @@ bb.m:                                             ; preds = %switch.early.test
   %i.aw = icmp ne i32 %i.ag, 0
   %i.ax = ptrtoint ptr %i.av to i64
   %i.ay = sub i64 %i.ax, %i.h
-  %4 = icmp samesign ult i64 %i.ay, 8
+  %4 = icmp slt i64 %i.ay, 8
   %i.az = select i1 %i.aw, i1 %4, i1 false
   br i1 %i.az, label %.peel.next, label %._crit_edge.loopexit, !llvm.loop !19
 

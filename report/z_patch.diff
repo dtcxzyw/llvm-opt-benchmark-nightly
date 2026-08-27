@@ -1,0 +1,438 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 6b0951491a88a..ba15210a3b456 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -8244,21 +8244,10 @@ const SCEV *ScalarEvolution::createSCEV(Value *V) {
+     return IntOp;
+   }
+ 
+-  case Instruction::PtrToInt: {
+-    // Keep ptrtoint as SCEVUnknown, except when the pointer operand has SCEV
+-    // structure (e.g. a pointer add-rec or an offset from a known base). In
+-    // that case model it via ptrtoaddr to preserve the integer structure
+-    // (induction, constant folding). A bare SCEVUnknown pointer gains no
+-    // structure from wrapping it in ptrtoaddr, so leave it opaque.
+-    const SCEV *PtrSCEV = getSCEV(U->getOperand(0));
+-    if (!isa<SCEVUnknown>(PtrSCEV)) {
+-      const SCEV *Addr = getPtrToAddrExpr(PtrSCEV);
+-      if (!isa<SCEVCouldNotCompute>(Addr) &&
+-          getTypeSizeInBits(V->getType()) <= getTypeSizeInBits(Addr->getType()))
+-        return getTruncateOrNoop(Addr, V->getType());
+-    }
++  case Instruction::PtrToInt:
++    // SCEV only models ptrtoaddr.
+     return getUnknown(V);
+-  }
++
+   case Instruction::IntToPtr:
+     // Just don't deal with inttoptr casts.
+     return getUnknown(V);
+diff --git a/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp b/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
+index 9e0bbe9cf3b62..38b9a5b09d32b 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
+@@ -959,7 +959,7 @@ void SimplifyIndvar::simplifyUsers(PHINode *CurrIV, IVVisitor *V) {
+ 
+     // Go further for the bitcast 'prtoint ptr to i64' or if the cast is done
+     // by truncation
+-    if ((isa<PtrToIntInst>(UseInst)) || (isa<TruncInst>(UseInst)))
++    if (isa<PtrToIntInst, PtrToAddrInst, TruncInst>(UseInst))
+       for (Use &U : UseInst->uses()) {
+         Instruction *User = cast<Instruction>(U.getUser());
+         if (replaceIVUserWithLoopInvariant(User))
+diff --git a/llvm/test/Analysis/ScalarEvolution/ptrtoint-special-pointers.ll b/llvm/test/Analysis/ScalarEvolution/ptrtoint-special-pointers.ll
+index b9877f46189d8..b603e97011a7c 100644
+--- a/llvm/test/Analysis/ScalarEvolution/ptrtoint-special-pointers.ll
++++ b/llvm/test/Analysis/ScalarEvolution/ptrtoint-special-pointers.ll
+@@ -91,7 +91,7 @@ define void @ptrtoint_addrec_fat_to_addrwidth(ptr addrspace(1) %in) {
+ ; CHECK-NEXT:    %iv = phi ptr addrspace(1) [ %in, %entry ], [ %iv.next, %loop ]
+ ; CHECK-NEXT:    --> {%in,+,4}<nuw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %iv.int = ptrtoint ptr addrspace(1) %iv to i64
+-; CHECK-NEXT:    --> {(ptrtoaddr ptr addrspace(1) %in to i64),+,4}<nuw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    --> %iv.int U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; CHECK-NEXT:    %iv.next = getelementptr inbounds i32, ptr addrspace(1) %iv, i64 1
+ ; CHECK-NEXT:    --> {(4 + %in),+,4}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; CHECK-NEXT:    %c = call i1 @cond()
+diff --git a/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll b/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll
+index 1589e7cd540b5..4963ec17b74d1 100644
+--- a/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll
++++ b/llvm/test/Analysis/ScalarEvolution/ptrtoint.ll
+@@ -188,7 +188,7 @@ define void @ptrtoint_of_gep(ptr %in, ptr %out0) {
+ ; X64-NEXT:    %in_adj = getelementptr inbounds i8, ptr %in, i64 42
+ ; X64-NEXT:    --> (42 + %in) U: full-set S: full-set
+ ; X64-NEXT:    %p0 = ptrtoint ptr %in_adj to i64
+-; X64-NEXT:    --> (42 + (ptrtoaddr ptr %in to i64)) U: full-set S: full-set
++; X64-NEXT:    --> %p0 U: full-set S: full-set
+ ; X64-NEXT:  Determining loop execution counts for: @ptrtoint_of_gep
+ ;
+ ; X32-LABEL: 'ptrtoint_of_gep'
+@@ -218,7 +218,7 @@ define void @ptrtoint_of_addrec(ptr %in, i32 %count) {
+ ; X64-NEXT:    %i7 = getelementptr inbounds i32, ptr %in, i64 %i6
+ ; X64-NEXT:    --> {%in,+,4}<%loop> U: full-set S: full-set Exits: (-4 + (4 * (zext i32 %count to i64))<nuw><nsw> + %in) LoopDispositions: { %loop: Computable }
+ ; X64-NEXT:    %i8 = ptrtoint ptr %i7 to i64
+-; X64-NEXT:    --> {(ptrtoaddr ptr %in to i64),+,4}<%loop> U: full-set S: full-set Exits: (-4 + (4 * (zext i32 %count to i64))<nuw><nsw> + (ptrtoaddr ptr %in to i64)) LoopDispositions: { %loop: Computable }
++; X64-NEXT:    --> %i8 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; X64-NEXT:    %i9 = add nuw nsw i64 %i6, 1
+ ; X64-NEXT:    --> {1,+,1}<nuw><%loop> U: [1,0) S: [1,0) Exits: (zext i32 %count to i64) LoopDispositions: { %loop: Computable }
+ ; X64-NEXT:  Determining loop execution counts for: @ptrtoint_of_addrec
+@@ -270,7 +270,7 @@ define void @ptrtoint_of_umax(ptr %in0, ptr %in1, ptr %out0) {
+ ; X64-NEXT:    %s = select i1 %c, ptr %in0, ptr %in1
+ ; X64-NEXT:    --> (%in0 umax %in1) U: full-set S: full-set
+ ; X64-NEXT:    %p0 = ptrtoint ptr %s to i64
+-; X64-NEXT:    --> ((ptrtoaddr ptr %in0 to i64) umax (ptrtoaddr ptr %in1 to i64)) U: full-set S: full-set
++; X64-NEXT:    --> %p0 U: full-set S: full-set
+ ; X64-NEXT:  Determining loop execution counts for: @ptrtoint_of_umax
+ ;
+ ; X32-LABEL: 'ptrtoint_of_umax'
+@@ -294,7 +294,7 @@ define void @ptrtoint_of_smax(ptr %in0, ptr %in1, ptr %out0) {
+ ; X64-NEXT:    %s = select i1 %c, ptr %in0, ptr %in1
+ ; X64-NEXT:    --> (%in0 smax %in1) U: full-set S: full-set
+ ; X64-NEXT:    %p0 = ptrtoint ptr %s to i64
+-; X64-NEXT:    --> ((ptrtoaddr ptr %in0 to i64) smax (ptrtoaddr ptr %in1 to i64)) U: full-set S: full-set
++; X64-NEXT:    --> %p0 U: full-set S: full-set
+ ; X64-NEXT:  Determining loop execution counts for: @ptrtoint_of_smax
+ ;
+ ; X32-LABEL: 'ptrtoint_of_smax'
+@@ -318,7 +318,7 @@ define void @ptrtoint_of_umin(ptr %in0, ptr %in1, ptr %out0) {
+ ; X64-NEXT:    %s = select i1 %c, ptr %in0, ptr %in1
+ ; X64-NEXT:    --> (%in0 umin %in1) U: full-set S: full-set
+ ; X64-NEXT:    %p0 = ptrtoint ptr %s to i64
+-; X64-NEXT:    --> ((ptrtoaddr ptr %in0 to i64) umin (ptrtoaddr ptr %in1 to i64)) U: full-set S: full-set
++; X64-NEXT:    --> %p0 U: full-set S: full-set
+ ; X64-NEXT:  Determining loop execution counts for: @ptrtoint_of_umin
+ ;
+ ; X32-LABEL: 'ptrtoint_of_umin'
+@@ -342,7 +342,7 @@ define void @ptrtoint_of_smin(ptr %in0, ptr %in1, ptr %out0) {
+ ; X64-NEXT:    %s = select i1 %c, ptr %in0, ptr %in1
+ ; X64-NEXT:    --> (%in0 smin %in1) U: full-set S: full-set
+ ; X64-NEXT:    %p0 = ptrtoint ptr %s to i64
+-; X64-NEXT:    --> ((ptrtoaddr ptr %in0 to i64) smin (ptrtoaddr ptr %in1 to i64)) U: full-set S: full-set
++; X64-NEXT:    --> %p0 U: full-set S: full-set
+ ; X64-NEXT:  Determining loop execution counts for: @ptrtoint_of_smin
+ ;
+ ; X32-LABEL: 'ptrtoint_of_smin'
+@@ -374,7 +374,7 @@ define void @pr46786_c26_char(ptr %arg, ptr %arg1, ptr %arg2) {
+ ; X64-NEXT:    %i8 = load i8, ptr %i7, align 1
+ ; X64-NEXT:    --> %i8 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb6: Variant }
+ ; X64-NEXT:    %i9 = ptrtoint ptr %i7 to i64
+-; X64-NEXT:    --> {(ptrtoaddr ptr %arg to i64),+,1}<nuw><%bb6> U: full-set S: full-set Exits: (-1 + (ptrtoaddr ptr %arg1 to i64)) LoopDispositions: { %bb6: Computable }
++; X64-NEXT:    --> %i9 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb6: Variant }
+ ; X64-NEXT:    %i10 = sub i64 %i9, %i4
+ ; X64-NEXT:    --> {0,+,1}<nuw><%bb6> U: [0,-1) S: [0,-1) Exits: (-1 + (-1 * (ptrtoaddr ptr %arg to i64)) + (ptrtoaddr ptr %arg1 to i64)) LoopDispositions: { %bb6: Computable }
+ ; X64-NEXT:    %i11 = getelementptr inbounds i8, ptr %arg2, i64 %i10
+@@ -451,7 +451,7 @@ define void @pr46786_c26_char_cmp_ops_swapped(ptr %arg, ptr %arg1, ptr %arg2) {
+ ; X64-NEXT:    %i8 = load i8, ptr %i7, align 1
+ ; X64-NEXT:    --> %i8 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb6: Variant }
+ ; X64-NEXT:    %i9 = ptrtoint ptr %i7 to i64
+-; X64-NEXT:    --> {(ptrtoaddr ptr %arg to i64),+,1}<nuw><%bb6> U: full-set S: full-set Exits: (-1 + (ptrtoaddr ptr %arg1 to i64)) LoopDispositions: { %bb6: Computable }
++; X64-NEXT:    --> %i9 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb6: Variant }
+ ; X64-NEXT:    %i10 = sub i64 %i9, %i4
+ ; X64-NEXT:    --> {0,+,1}<nuw><%bb6> U: [0,-1) S: [0,-1) Exits: (-1 + (-1 * (ptrtoaddr ptr %arg to i64)) + (ptrtoaddr ptr %arg1 to i64)) LoopDispositions: { %bb6: Computable }
+ ; X64-NEXT:    %i11 = getelementptr inbounds i8, ptr %arg2, i64 %i10
+@@ -535,7 +535,7 @@ define void @pr46786_c26_int(ptr %arg, ptr %arg1, ptr %arg2) {
+ ; X64-NEXT:    %i8 = load i32, ptr %i7, align 4
+ ; X64-NEXT:    --> %i8 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb6: Variant }
+ ; X64-NEXT:    %i9 = ptrtoint ptr %i7 to i64
+-; X64-NEXT:    --> {(ptrtoaddr ptr %arg to i64),+,4}<nuw><%bb6> U: full-set S: full-set Exits: ((4 * ((-4 + (-1 * (ptrtoaddr ptr %arg to i64)) + (ptrtoaddr ptr %arg1 to i64)) /u 4))<nuw> + (ptrtoaddr ptr %arg to i64)) LoopDispositions: { %bb6: Computable }
++; X64-NEXT:    --> %i9 U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %bb6: Variant }
+ ; X64-NEXT:    %i10 = sub i64 %i9, %i4
+ ; X64-NEXT:    --> {0,+,4}<nuw><%bb6> U: [0,-3) S: [-9223372036854775808,9223372036854775805) Exits: (4 * ((-4 + (-1 * (ptrtoaddr ptr %arg to i64)) + (ptrtoaddr ptr %arg1 to i64)) /u 4))<nuw> LoopDispositions: { %bb6: Computable }
+ ; X64-NEXT:    %i11 = ashr exact i64 %i10, 2
+@@ -711,7 +711,7 @@ define void @ptrtoint_iv_start(ptr %arg, ptr %dst) {
+ ; X64-NEXT:    %pi = phi i64 [ %start, %entry ], [ %pi.next, %loop ]
+ ; X64-NEXT:    --> {%start,+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
+ ; X64-NEXT:    %cur = ptrtoint ptr %p to i64
+-; X64-NEXT:    --> {(ptrtoaddr ptr %arg to i64),+,8}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; X64-NEXT:    --> %cur U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Variant }
+ ; X64-NEXT:    %off = sub i64 %cur, %pi
+ ; X64-NEXT:    --> ((-1 * %start) + (ptrtoaddr ptr %arg to i64)) U: full-set S: full-set Exits: ((-1 * %start) + (ptrtoaddr ptr %arg to i64)) LoopDispositions: { %loop: Invariant }
+ ; X64-NEXT:    %p.next = getelementptr i8, ptr %p, i64 8
+diff --git a/llvm/test/CodeGen/Thumb2/LowOverheadLoops/while-loops.ll b/llvm/test/CodeGen/Thumb2/LowOverheadLoops/while-loops.ll
+index cbcbf1f392ce8..a637fe0ca446b 100644
+--- a/llvm/test/CodeGen/Thumb2/LowOverheadLoops/while-loops.ll
++++ b/llvm/test/CodeGen/Thumb2/LowOverheadLoops/while-loops.ll
+@@ -161,81 +161,76 @@ define dso_local i32 @b(ptr %c, i32 %d, i32 %e, ptr %n) "frame-pointer"="all" {
+ ; CHECK-NEXT:    add r7, sp, #12
+ ; CHECK-NEXT:    .save {r8, r9, r10, r11}
+ ; CHECK-NEXT:    push.w {r8, r9, r10, r11}
+-; CHECK-NEXT:    .pad #16
+-; CHECK-NEXT:    sub sp, #16
++; CHECK-NEXT:    .pad #12
++; CHECK-NEXT:    sub sp, #12
+ ; CHECK-NEXT:    wls lr, r1, .LBB2_3
+ ; CHECK-NEXT:  @ %bb.1: @ %while.body.preheader
+-; CHECK-NEXT:    adds r6, r3, #4
+-; CHECK-NEXT:    adds r1, r0, #4
+-; CHECK-NEXT:    mvn r8, #1
+-; CHECK-NEXT:    @ implicit-def: $r9
+-; CHECK-NEXT:    @ implicit-def: $r4
++; CHECK-NEXT:    mvn r10, #1
++; CHECK-NEXT:    @ implicit-def: $r1
++; CHECK-NEXT:    @ implicit-def: $r12
++; CHECK-NEXT:    mov r4, r0
++; CHECK-NEXT:    mov r9, r3
+ ; CHECK-NEXT:    str r2, [sp] @ 4-byte Spill
+ ; CHECK-NEXT:  .LBB2_2: @ %while.body
+ ; CHECK-NEXT:    @ =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    str r1, [sp, #12] @ 4-byte Spill
+-; CHECK-NEXT:    asrs r2, r4, #31
+-; CHECK-NEXT:    ldr r1, [sp, #12] @ 4-byte Reload
+-; CHECK-NEXT:    ldr r1, [r1]
+-; CHECK-NEXT:    muls r1, r3, r1
+-; CHECK-NEXT:    adds r4, r4, r1
+-; CHECK-NEXT:    adc.w r1, r2, r1, asr #31
+-; CHECK-NEXT:    adds.w r2, r4, #-2147483648
+-; CHECK-NEXT:    ldrd r2, r4, [r8]
+-; CHECK-NEXT:    adc r5, r1, #0
+-; CHECK-NEXT:    str r2, [sp, #4] @ 4-byte Spill
+-; CHECK-NEXT:    smull r4, r2, r4, r9
+-; CHECK-NEXT:    asrs r1, r5, #31
+-; CHECK-NEXT:    str r5, [sp, #8] @ 4-byte Spill
+-; CHECK-NEXT:    subs r4, r5, r4
+-; CHECK-NEXT:    sbcs r1, r2
+-; CHECK-NEXT:    ldr r2, [sp, #12] @ 4-byte Reload
+-; CHECK-NEXT:    adds.w r10, r4, #-2147483648
+-; CHECK-NEXT:    adc r1, r1, #0
+-; CHECK-NEXT:    ldr r4, [r2, #-4]
++; CHECK-NEXT:    strd r3, r4, [sp, #4] @ 8-byte Folded Spill
++; CHECK-NEXT:    asr.w r5, r12, #31
++; CHECK-NEXT:    ldr r2, [sp, #8] @ 4-byte Reload
++; CHECK-NEXT:    ldr r4, [r2, #4]!
++; CHECK-NEXT:    str r2, [sp, #8] @ 4-byte Spill
+ ; CHECK-NEXT:    muls r4, r3, r4
+-; CHECK-NEXT:    adds r3, #4
+-; CHECK-NEXT:    adds.w r12, r4, #-2147483648
+-; CHECK-NEXT:    asr.w r5, r4, #31
+-; CHECK-NEXT:    ldr r4, [r6]
+-; CHECK-NEXT:    adc r5, r5, #0
+-; CHECK-NEXT:    mul r2, r4, r0
+-; CHECK-NEXT:    adds r0, #4
+-; CHECK-NEXT:    add.w r2, r2, #-2147483648
+-; CHECK-NEXT:    asrl r12, r5, r2
+-; CHECK-NEXT:    smull r2, r5, r4, r12
+-; CHECK-NEXT:    lsll r2, r5, #30
+-; CHECK-NEXT:    ldr r2, [sp, #4] @ 4-byte Reload
+-; CHECK-NEXT:    asr.w r11, r5, #31
+-; CHECK-NEXT:    mov r12, r5
+-; CHECK-NEXT:    lsll r12, r11, r4
+-; CHECK-NEXT:    mul r2, r2, r9
+-; CHECK-NEXT:    lsrl r12, r11, #2
++; CHECK-NEXT:    adds.w r6, r12, r4
++; CHECK-NEXT:    adc.w r5, r5, r4, asr #31
++; CHECK-NEXT:    adds.w r6, r6, #-2147483648
++; CHECK-NEXT:    adc r12, r5, #0
++; CHECK-NEXT:    ldrd r2, r5, [r10]
++; CHECK-NEXT:    smull r5, r6, r5, r1
++; CHECK-NEXT:    asr.w r4, r12, #31
++; CHECK-NEXT:    muls r2, r1, r2
++; CHECK-NEXT:    ldr r1, [sp, #4] @ 4-byte Reload
++; CHECK-NEXT:    subs.w r5, r12, r5
++; CHECK-NEXT:    sbcs r4, r6
++; CHECK-NEXT:    adds.w r6, r5, #-2147483648
++; CHECK-NEXT:    adc r5, r4, #0
++; CHECK-NEXT:    ldr r4, [r0]
+ ; CHECK-NEXT:    adds r2, #2
+-; CHECK-NEXT:    lsll r12, r11, r2
++; CHECK-NEXT:    muls r4, r3, r4
++; CHECK-NEXT:    adds.w r8, r4, #-2147483648
++; CHECK-NEXT:    asr.w r3, r4, #31
++; CHECK-NEXT:    ldr r4, [r9, #4]!
++; CHECK-NEXT:    adc r3, r3, #0
++; CHECK-NEXT:    muls r0, r4, r0
++; CHECK-NEXT:    add.w r0, r0, #-2147483648
++; CHECK-NEXT:    asrl r8, r3, r0
++; CHECK-NEXT:    smull r0, r3, r4, r8
++; CHECK-NEXT:    lsll r0, r3, #30
++; CHECK-NEXT:    asr.w r11, r3, #31
++; CHECK-NEXT:    mov r0, r3
++; CHECK-NEXT:    lsll r0, r11, r4
++; CHECK-NEXT:    lsrl r0, r11, #2
++; CHECK-NEXT:    lsll r0, r11, r2
++; CHECK-NEXT:    add.w r0, r0, #-2147483648
++; CHECK-NEXT:    asrl r6, r5, r0
++; CHECK-NEXT:    movs r0, #2
++; CHECK-NEXT:    lsrl r6, r5, #2
++; CHECK-NEXT:    str r6, [r0]
++; CHECK-NEXT:    ldr r0, [r10], #-4
++; CHECK-NEXT:    mls r0, r0, r4, r12
++; CHECK-NEXT:    ldr r4, [sp, #8] @ 4-byte Reload
++; CHECK-NEXT:    adds.w r12, r0, #-2147483648
++; CHECK-NEXT:    asr.w r2, r0, #31
++; CHECK-NEXT:    adc r3, r2, #0
+ ; CHECK-NEXT:    ldr r2, [sp] @ 4-byte Reload
+-; CHECK-NEXT:    add.w r5, r12, #-2147483648
+-; CHECK-NEXT:    asrl r10, r1, r5
+-; CHECK-NEXT:    ldr r5, [sp, #8] @ 4-byte Reload
+-; CHECK-NEXT:    lsrl r10, r1, #2
+-; CHECK-NEXT:    movs r1, #2
+-; CHECK-NEXT:    mov r9, r10
+-; CHECK-NEXT:    str.w r10, [r1]
+-; CHECK-NEXT:    ldr r1, [r8], #-4
+-; CHECK-NEXT:    mls r5, r1, r4, r5
+-; CHECK-NEXT:    adds.w r4, r5, #-2147483648
+-; CHECK-NEXT:    asr.w r1, r5, #31
+-; CHECK-NEXT:    adc r1, r1, #0
+-; CHECK-NEXT:    lsrl r4, r1, #2
+-; CHECK-NEXT:    rsbs r1, r4, #0
+-; CHECK-NEXT:    str r1, [r2]
+-; CHECK-NEXT:    str r1, [r6, #-4]
+-; CHECK-NEXT:    adds r6, #4
+-; CHECK-NEXT:    ldr r1, [sp, #12] @ 4-byte Reload
+-; CHECK-NEXT:    adds r1, #4
++; CHECK-NEXT:    lsrl r12, r3, #2
++; CHECK-NEXT:    rsb.w r0, r12, #0
++; CHECK-NEXT:    mov r3, r9
++; CHECK-NEXT:    str r0, [r2]
++; CHECK-NEXT:    str r0, [r1]
++; CHECK-NEXT:    mov r0, r4
++; CHECK-NEXT:    mov r1, r6
+ ; CHECK-NEXT:    le lr, .LBB2_2
+ ; CHECK-NEXT:  .LBB2_3: @ %while.end
+-; CHECK-NEXT:    add sp, #16
++; CHECK-NEXT:    add sp, #12
+ ; CHECK-NEXT:    pop.w {r8, r9, r10, r11}
+ ; CHECK-NEXT:    pop {r4, r5, r6, r7, pc}
+ entry:
+diff --git a/llvm/test/Other/constant-fold-gep.ll b/llvm/test/Other/constant-fold-gep.ll
+index 46bf49d8d5a4a..0e33441c46bca 100644
+--- a/llvm/test/Other/constant-fold-gep.ll
++++ b/llvm/test/Other/constant-fold-gep.ll
+@@ -10,10 +10,6 @@
+ ; folding in the optimizers.
+ ; RUN: opt -S -o - -passes='function(instcombine),globalopt' -data-layout="e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64" < %s | FileCheck --check-prefix=TO %s
+ 
+-; "SCEV" - ScalarEvolution with default target layout
+-; RUN: opt -passes='print<scalar-evolution>' < %s -disable-output 2>&1 | FileCheck --check-prefix=SCEV %s
+-
+-
+ ; The automatic constant folder in opt does not have targetdata access, so
+ ; it can't fold gep arithmetic, in general. However, the constant folder run
+ ; from instcombine and global opt can use targetdata.
+@@ -296,30 +292,6 @@ define ptr @hoo1() nounwind {
+ ; TO: define i64 @fi() local_unnamed_addr #0 {
+ ; TO:   ret i64 8
+ ; TO: }
+-; SCEV-LABEL: Classifying expressions for: @fb
+-; SCEV:  %t = bitcast i64 ptrtoint (ptr getelementptr ({ i1, [13 x double] }, ptr null, i64 0, i32 1) to i64) to i64
+-; SCEV:   -->  8
+-; SCEV-LABEL: Classifying expressions for: @fc
+-; SCEV:  %t = bitcast i64 ptrtoint (ptr getelementptr ({ double, double, double, double }, ptr null, i64 0, i32 2) to i64) to i64
+-; SCEV:   -->  16
+-; SCEV-LABEL: Classifying expressions for: @fd
+-; SCEV:   %t = bitcast i64 ptrtoint (ptr getelementptr ([13 x double], ptr null, i64 0, i32 11) to i64) to i64
+-; SCEV:   -->  88
+-; SCEV-LABEL: Classifying expressions for: @fe
+-; SCEV:   %t = bitcast i64 ptrtoint (ptr getelementptr ({ double, float, double, double }, ptr null, i64 0, i32 2) to i64) to i64
+-; SCEV:   -->  16
+-; SCEV-LABEL: Classifying expressions for: @ff
+-; SCEV:   %t = bitcast i64 ptrtoint (ptr getelementptr ({ i1, <{ i16, i128 }> }, ptr null, i64 0, i32 1) to i64) to i64
+-; SCEV:   -->  1
+-; SCEV-LABEL: Classifying expressions for: @fg
+-; SCEV:   %t = bitcast i64 ptrtoint (ptr getelementptr ({ i1, { double, double } }, ptr null, i64 0, i32 1) to i64) to i64
+-; SCEV:   -->  8
+-; SCEV-LABEL: Classifying expressions for: @fh
+-; SCEV:   %t = bitcast i64 ptrtoint (ptr getelementptr (ptr, ptr null, i32 1) to i64) to i64
+-; SCEV:   --> 8
+-; SCEV-LABEL: Classifying expressions for: @fi
+-; SCEV:   %t = bitcast i64 ptrtoint (ptr getelementptr ({ i1, ptr }, ptr null, i64 0, i32 1) to i64) to i64
+-; SCEV:   --> 8
+ 
+ define i64 @fb() nounwind {
+   %t = bitcast i64 ptrtoint (ptr getelementptr ({i1, [13 x double]}, ptr null, i64 0, i32 1) to i64) to i64
+diff --git a/llvm/test/Transforms/IndVarSimplify/pr59633.ll b/llvm/test/Transforms/IndVarSimplify/pr59633.ll
+index 1a47995884af8..83b248a19eb48 100644
+--- a/llvm/test/Transforms/IndVarSimplify/pr59633.ll
++++ b/llvm/test/Transforms/IndVarSimplify/pr59633.ll
+@@ -20,7 +20,7 @@ entry:
+ 
+ while.body:                                       ; preds = %entry, %while.body
+   %ptr.addr.0 = phi ptr [ %ptr, %entry ], [ %add.ptr, %while.body ]
+-  %0 = ptrtoint ptr %ptr.addr.0 to i64
++  %0 = ptrtoaddr ptr %ptr.addr.0 to i64
+   %and = and i64 %0, 15                           ; loop invariant
+   tail call void @foo(i64 noundef %and)
+   %add.ptr = getelementptr inbounds i8, ptr %ptr.addr.0, i64 16
+diff --git a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+index 05ef5d111fe55..5011d21d7a044 100644
+--- a/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopIdiom/reuse-lcssa-phi-scev-expansion.ll
+@@ -223,8 +223,8 @@ exit:
+   ret void
+ }
+ 
+-define void @expand_truncated_ptrtoint(ptr %A, ptr %B) {
+-; CHECK-LABEL: define void @expand_truncated_ptrtoint(
++define void @expand_truncated_ptrtoaddr(ptr %A, ptr %B) {
++; CHECK-LABEL: define void @expand_truncated_ptrtoaddr(
+ ; CHECK-SAME: ptr [[A:%.*]], ptr [[B:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    [[A1:%.*]] = ptrtoaddr ptr [[A]] to i64
+@@ -239,17 +239,17 @@ define void @expand_truncated_ptrtoint(ptr %A, ptr %B) {
+ ; CHECK:       [[MIDDLE]]:
+ ; CHECK-NEXT:    [[INDVAR_LCSSA:%.*]] = phi i32 [ [[INDVAR]], %[[LOOP_1]] ]
+ ; CHECK-NEXT:    [[P_0_LCSSA:%.*]] = phi ptr [ [[P_0]], %[[LOOP_1]] ]
+-; CHECK-NEXT:    [[P_0_TO_INT:%.*]] = ptrtoint ptr [[P_0_LCSSA]] to i64
++; CHECK-NEXT:    [[P_0_TO_INT:%.*]] = ptrtoaddr ptr [[P_0_LCSSA]] to i64
+ ; CHECK-NEXT:    [[TRUNC:%.*]] = trunc i64 [[P_0_TO_INT]] to i32
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[TRUNC]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul nsw i64 [[TMP0]], -1
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP1]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = trunc i64 [[A1]] to i32
+ ; CHECK-NEXT:    [[TMP3:%.*]] = add i32 [[TMP2]], 1
+-; CHECK-NEXT:    [[TMP6:%.*]] = mul i32 [[INDVAR_LCSSA]], -1
+-; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[TMP6]], [[TMP3]]
+-; CHECK-NEXT:    [[TMP4:%.*]] = zext i32 [[TMP5]] to i64
+-; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[SCEVGEP]], i8 0, i64 [[TMP4]], i1 false)
++; CHECK-NEXT:    [[TMP4:%.*]] = mul i32 [[INDVAR_LCSSA]], -1
++; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], [[TMP3]]
++; CHECK-NEXT:    [[TMP6:%.*]] = zext i32 [[TMP5]] to i64
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[SCEVGEP]], i8 0, i64 [[TMP6]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP_2:.*]]
+ ; CHECK:       [[LOOP_2]]:
+ ; CHECK-NEXT:    [[P_1:%.*]] = phi ptr [ [[B]], %[[MIDDLE]] ], [ [[P_1_NEXT:%.*]], %[[LOOP_2]] ]
+@@ -271,7 +271,7 @@ loop.1:
+   br i1 false, label %middle, label %loop.1
+ 
+ middle:
+-  %p.0.to.int = ptrtoint ptr %p.0 to i64
++  %p.0.to.int = ptrtoaddr ptr %p.0 to i64
+   %trunc = trunc i64 %p.0.to.int to i32
+   br label %loop.2
+ 
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll
+index bb759aefcdf44..63a2e2c14138a 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll
+@@ -55,7 +55,7 @@ loop.2.ph:
+ loop.2.header:
+   %iv2 = phi ptr [ %iv2.next, %loop.2.latch ], [ %iv.next, %loop.2.ph ]
+   %tmp7 = getelementptr inbounds %struct.hoge, ptr %iv2, i64 0, i32 3
+-  %tmp8 = ptrtoint ptr %tmp7 to i64
++  %tmp8 = ptrtoaddr ptr %tmp7 to i64
+   call void @use.i64(i64 %tmp8)
+   %tmp9 = getelementptr inbounds %struct.hoge, ptr %iv2, i64 0, i32 2
+   store i32 10, ptr %tmp9, align 8
+@@ -67,7 +67,7 @@ loop.2.latch:
+   br label %loop.2.header
+ 
+ loop.2.exit:                                             ; preds = %bb6
+-  %iv2.cast = ptrtoint ptr %iv2 to i64
++  %iv2.cast = ptrtoaddr ptr %iv2 to i64
+   ret i64 %iv2.cast
+ }
+ 
+diff --git a/llvm/test/Transforms/LoopVectorize/induction-ptrcasts.ll b/llvm/test/Transforms/LoopVectorize/induction-ptrcasts.ll
+index 3faf077880178..300059f2391f4 100644
+--- a/llvm/test/Transforms/LoopVectorize/induction-ptrcasts.ll
++++ b/llvm/test/Transforms/LoopVectorize/induction-ptrcasts.ll
+@@ -76,8 +76,8 @@ loop:
+   %iv.ptr.next = getelementptr inbounds i32, ptr %iv.ptr, i64 1
+   %gep.A = getelementptr inbounds i8, ptr %A, i64 %iv.int
+   store i8 0, ptr %gep.A
+-  %iv.int.next = ptrtoint ptr %iv.ptr.next to i64
+-  %sub.ptr.sub = sub i64 ptrtoint (ptr @f to i64), %iv.int.next
++  %iv.int.next = ptrtoaddr ptr %iv.ptr.next to i64
++  %sub.ptr.sub = sub i64 ptrtoaddr (ptr @f to i64), %iv.int.next
+   %cmp = icmp sgt i64 %sub.ptr.sub, 0
+   br i1 %cmp, label %loop, label %exit
+ 

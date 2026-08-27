@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/gromacs/original/crc32?download=true
 inline.NumInlined: 8
 inline.NumDeleted: 3
-loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -23,87 +23,41 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = trunc i64 %0 to i32
-  %i.c = xor i32 %i.b, -1                         ; 3 uses
+  %i.c = xor i32 %i.b, -1                         ; 2 uses
   %i.d = icmp ne i32 %2, 0
   %i.e = ptrtoint ptr %1 to i64
   %i.f = and i64 %i.e, 3
   %i.g = icmp ne i64 %i.f, 0
   %i.h = and i1 %i.d, %i.g
-  br i1 %i.h, label %.lr.ph.i, label %.preheader85.i
+  br i1 %i.h, label %.lr.ph.i.2, label %.preheader85.i
 
-.preheader85.i:                                   ; preds = %.lr.ph.i, %.lr.ph.i.1, %.lr.ph.i.2, %.lr.ph.i.3, %bb.b
-  %.080.lcssa.i = phi ptr [ %1, %bb.b ], [ %3, %.lr.ph.i ], [ %16, %.lr.ph.i.1 ], [ %i.j, %.lr.ph.i.2 ], [ %29, %.lr.ph.i.3 ] ; 2 uses
-  %.076.lcssa.i = phi i32 [ %2, %bb.b ], [ %10, %.lr.ph.i ], [ %23, %.lr.ph.i.1 ], [ %i.q, %.lr.ph.i.2 ], [ %36, %.lr.ph.i.3 ] ; 3 uses
-  %.074.lcssa.i = phi i32 [ %i.c, %bb.b ], [ %9, %.lr.ph.i ], [ %22, %.lr.ph.i.1 ], [ %i.p, %.lr.ph.i.2 ], [ %35, %.lr.ph.i.3 ] ; 2 uses
+.preheader85.i:                                   ; preds = %.lr.ph.i.2, %bb.b
+  %.080.lcssa.i = phi ptr [ %1, %bb.b ], [ %i.j, %.lr.ph.i.2 ] ; 2 uses
+  %.076.lcssa.i = phi i32 [ %2, %bb.b ], [ %i.q, %.lr.ph.i.2 ] ; 3 uses
+  %.074.lcssa.i = phi i32 [ %i.c, %bb.b ], [ %i.p, %.lr.ph.i.2 ] ; 2 uses
   %i.i = icmp ugt i32 %.076.lcssa.i, 31
   br i1 %i.i, label %.lr.ph94.i, label %.preheader84.i
 
-.lr.ph.i:                                         ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 3 uses
-  %4 = load i8, ptr %1, align 1, !tbaa !8
-  %.074.tr.i = trunc i32 %i.c to i8
-  %.narrow83.i = xor i8 %4, %.074.tr.i
-  %5 = zext i8 %.narrow83.i to i64
-  %6 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %5
-  %7 = load i32, ptr %6, align 4, !tbaa !9
-  %8 = lshr i32 %i.c, 8
-  %9 = xor i32 %7, %8                             ; 3 uses
-  %10 = add i32 %2, -1                            ; 2 uses
-  %11 = icmp ne i32 %10, 0
-  %12 = ptrtoint ptr %3 to i64
-  %13 = and i64 %12, 3
-  %14 = icmp ne i64 %13, 0
-  %15 = select i1 %11, i1 %14, i1 false
-  br i1 %15, label %.lr.ph.i.1, label %.preheader85.i
-
-.lr.ph.i.1:                                       ; preds = %.lr.ph.i
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 2 ; 3 uses
-  %17 = load i8, ptr %3, align 1, !tbaa !8
-  %.074.tr.i.1 = trunc i32 %9 to i8
-  %.narrow83.i.1 = xor i8 %17, %.074.tr.i.1
-  %18 = zext i8 %.narrow83.i.1 to i64
-  %19 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %18
-  %20 = load i32, ptr %19, align 4, !tbaa !9
-  %21 = lshr i32 %9, 8
-  %22 = xor i32 %20, %21                          ; 3 uses
-  %23 = add i32 %2, -2                            ; 2 uses
-  %24 = icmp ne i32 %23, 0
-  %25 = ptrtoint ptr %16 to i64
-  %26 = and i64 %25, 3
-  %27 = icmp ne i64 %26, 0
-  %28 = select i1 %24, i1 %27, i1 false
-  br i1 %28, label %.lr.ph.i.2, label %.preheader85.i
-
-.lr.ph.i.2:                                       ; preds = %.lr.ph.i.1
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 3 uses
-  %i.k = load i8, ptr %16, align 1, !tbaa !8
-  %.074.tr.i.2 = trunc i32 %22 to i8
+.lr.ph.i.2:                                       ; preds = %bb.b, %.lr.ph.i.2
+  %.07488.i = phi i32 [ %i.p, %.lr.ph.i.2 ], [ %i.c, %bb.b ] ; 2 uses
+  %.07687.i = phi i32 [ %i.q, %.lr.ph.i.2 ], [ %2, %bb.b ]
+  %.08086.i = phi ptr [ %i.j, %.lr.ph.i.2 ], [ %1, %bb.b ] ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %.08086.i, i64 1 ; 3 uses
+  %i.k = load i8, ptr %.08086.i, align 1, !tbaa !8
+  %.074.tr.i.2 = trunc i32 %.07488.i to i8
   %.narrow83.i.2 = xor i8 %i.k, %.074.tr.i.2
   %i.l = zext i8 %.narrow83.i.2 to i64
   %i.m = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !9
-  %i.o = lshr i32 %22, 8
-  %i.p = xor i32 %i.n, %i.o                       ; 3 uses
-  %i.q = add i32 %2, -3                           ; 2 uses
+  %i.o = lshr i32 %.07488.i, 8
+  %i.p = xor i32 %i.n, %i.o                       ; 2 uses
+  %i.q = add i32 %.07687.i, -1                    ; 3 uses
   %i.r = icmp ne i32 %i.q, 0
   %i.s = ptrtoint ptr %i.j to i64
   %i.t = and i64 %i.s, 3
   %i.u = icmp ne i64 %i.t, 0
   %i.v = select i1 %i.r, i1 %i.u, i1 false
-  br i1 %i.v, label %.lr.ph.i.3, label %.preheader85.i
-
-.lr.ph.i.3:                                       ; preds = %.lr.ph.i.2
-  %29 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %30 = load i8, ptr %i.j, align 1, !tbaa !8
-  %.074.tr.i.3 = trunc i32 %i.p to i8
-  %.narrow83.i.3 = xor i8 %30, %.074.tr.i.3
-  %31 = zext i8 %.narrow83.i.3 to i64
-  %32 = getelementptr inbounds nuw [4 x i8], ptr @crc_table, i64 %31
-  %33 = load i32, ptr %32, align 4, !tbaa !9
-  %34 = lshr i32 %i.p, 8
-  %35 = xor i32 %33, %34
-  %36 = add i32 %2, -4
-  br label %.preheader85.i
+  br i1 %i.v, label %.lr.ph.i.2, label %.preheader85.i, !llvm.loop !10
 
 .preheader84.i:                                   ; preds = %.lr.ph94.i, %.preheader85.i
   %.177.lcssa.i = phi i32 [ %.076.lcssa.i, %.preheader85.i ], [ %i.hh, %.lr.ph94.i ] ; 3 uses
@@ -310,7 +264,7 @@ bb.b:                                             ; preds = %bb.a
   %i.hg = xor i32 %i.hb, %i.hf                    ; 2 uses
   %i.hh = add i32 %.17791.i, -32                  ; 3 uses
   %i.hi = icmp ugt i32 %i.hh, 31
-  br i1 %i.hi, label %.lr.ph94.i, label %.preheader84.i, !llvm.loop !10
+  br i1 %i.hi, label %.lr.ph94.i, label %.preheader84.i, !llvm.loop !12
 
 .lr.ph101.i:                                      ; preds = %.preheader84.i, %.lr.ph101.i
   %.1100.i = phi ptr [ %i.hj, %.lr.ph101.i ], [ %.0.lcssa.i, %.preheader84.i ] ; 2 uses
@@ -342,7 +296,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ig = xor i32 %i.ib, %i.if                    ; 2 uses
   %i.ih = add nsw i32 %.27898.i, -4               ; 3 uses
   %i.ii = icmp ugt i32 %i.ih, 3
-  br i1 %i.ii, label %.lr.ph101.i, label %._crit_edge.i, !llvm.loop !12
+  br i1 %i.ii, label %.lr.ph101.i, label %._crit_edge.i, !llvm.loop !13
 
 ._crit_edge.i:                                    ; preds = %.lr.ph101.i, %.preheader84.i
   %.278.lcssa.i = phi i32 [ %.177.lcssa.i, %.preheader84.i ], [ %i.ih, %.lr.ph101.i ] ; 3 uses
@@ -423,75 +377,75 @@ bb.a:
   br i1 %i.c, label %bb.r, label %.preheader80.preheader
 
 .preheader80.preheader:                           ; preds = %bb.a
-  store i64 3988292384, ptr %i.b, align 16, !tbaa !13
+  store i64 3988292384, ptr %i.b, align 16, !tbaa !14
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i64 1, ptr %i.d, align 8, !tbaa !13
+  store i64 1, ptr %i.d, align 8, !tbaa !14
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 2, ptr %i.e, align 16, !tbaa !13
+  store i64 2, ptr %i.e, align 16, !tbaa !14
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  store i64 4, ptr %i.f, align 8, !tbaa !13
+  store i64 4, ptr %i.f, align 8, !tbaa !14
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  store i64 8, ptr %i.g, align 16, !tbaa !13
+  store i64 8, ptr %i.g, align 16, !tbaa !14
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  store i64 16, ptr %i.h, align 8, !tbaa !13
+  store i64 16, ptr %i.h, align 8, !tbaa !14
   %i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  store i64 32, ptr %i.i, align 16, !tbaa !13
+  store i64 32, ptr %i.i, align 16, !tbaa !14
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 56
-  store i64 64, ptr %i.j, align 8, !tbaa !13
+  store i64 64, ptr %i.j, align 8, !tbaa !14
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  store i64 128, ptr %i.k, align 16, !tbaa !13
+  store i64 128, ptr %i.k, align 16, !tbaa !14
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  store i64 256, ptr %i.l, align 8, !tbaa !13
+  store i64 256, ptr %i.l, align 8, !tbaa !14
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  store i64 512, ptr %i.m, align 16, !tbaa !13
+  store i64 512, ptr %i.m, align 16, !tbaa !14
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  store i64 1024, ptr %i.n, align 8, !tbaa !13
+  store i64 1024, ptr %i.n, align 8, !tbaa !14
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 96
-  store i64 2048, ptr %i.o, align 16, !tbaa !13
+  store i64 2048, ptr %i.o, align 16, !tbaa !14
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  store i64 4096, ptr %i.p, align 8, !tbaa !13
+  store i64 4096, ptr %i.p, align 8, !tbaa !14
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 112
-  store i64 8192, ptr %i.q, align 16, !tbaa !13
+  store i64 8192, ptr %i.q, align 16, !tbaa !14
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 120
-  store i64 16384, ptr %i.r, align 8, !tbaa !13
+  store i64 16384, ptr %i.r, align 8, !tbaa !14
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 128
-  store i64 32768, ptr %i.s, align 16, !tbaa !13
+  store i64 32768, ptr %i.s, align 16, !tbaa !14
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 136
-  store i64 65536, ptr %i.t, align 8, !tbaa !13
+  store i64 65536, ptr %i.t, align 8, !tbaa !14
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  store i64 131072, ptr %i.u, align 16, !tbaa !13
+  store i64 131072, ptr %i.u, align 16, !tbaa !14
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 152
-  store i64 262144, ptr %i.v, align 8, !tbaa !13
+  store i64 262144, ptr %i.v, align 8, !tbaa !14
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 160
-  store i64 524288, ptr %i.w, align 16, !tbaa !13
+  store i64 524288, ptr %i.w, align 16, !tbaa !14
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 168
-  store i64 1048576, ptr %i.x, align 8, !tbaa !13
+  store i64 1048576, ptr %i.x, align 8, !tbaa !14
   %i.y = getelementptr inbounds nuw i8, ptr %i.b, i64 176
-  store i64 2097152, ptr %i.y, align 16, !tbaa !13
+  store i64 2097152, ptr %i.y, align 16, !tbaa !14
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 184
-  store i64 4194304, ptr %i.z, align 8, !tbaa !13
+  store i64 4194304, ptr %i.z, align 8, !tbaa !14
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 192
-  store i64 8388608, ptr %i.aa, align 16, !tbaa !13
+  store i64 8388608, ptr %i.aa, align 16, !tbaa !14
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 200
-  store i64 16777216, ptr %i.ab, align 8, !tbaa !13
+  store i64 16777216, ptr %i.ab, align 8, !tbaa !14
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 208
-  store i64 33554432, ptr %i.ac, align 16, !tbaa !13
+  store i64 33554432, ptr %i.ac, align 16, !tbaa !14
   %i.ad = getelementptr inbounds nuw i8, ptr %i.b, i64 216
-  store i64 67108864, ptr %i.ad, align 8, !tbaa !13
+  store i64 67108864, ptr %i.ad, align 8, !tbaa !14
   %i.ae = getelementptr inbounds nuw i8, ptr %i.b, i64 224
-  store i64 134217728, ptr %i.ae, align 16, !tbaa !13
+  store i64 134217728, ptr %i.ae, align 16, !tbaa !14
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 232
-  store i64 268435456, ptr %i.af, align 8, !tbaa !13
+  store i64 268435456, ptr %i.af, align 8, !tbaa !14
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 240
-  store i64 536870912, ptr %i.ag, align 16, !tbaa !13
+  store i64 536870912, ptr %i.ag, align 16, !tbaa !14
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 248
-  store i64 1073741824, ptr %i.ah, align 8, !tbaa !13
+  store i64 1073741824, ptr %i.ah, align 8, !tbaa !14
   br label %.preheader80
 
 .preheader80:                                     ; preds = %.preheader80.preheader, %gf2_matrix_times.exit.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %gf2_matrix_times.exit.i ], [ 0, %.preheader80.preheader ] ; 3 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i
-  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !13 ; 2 uses
+  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !14 ; 2 uses
   %.not9.i.i = icmp eq i64 %i.aj, 0
   br i1 %.not9.i.i, label %gf2_matrix_times.exit.i, label %.lr.ph.i.i
 
@@ -504,7 +458,7 @@ bb.a:
   br i1 %.not8.i.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i
-  %i.al = load i64, ptr %.0710.i.i, align 8, !tbaa !13
+  %i.al = load i64, ptr %.0710.i.i, align 8, !tbaa !14
   %i.am = xor i64 %i.al, %.012.i.i
   br label %bb.c
 
@@ -513,20 +467,20 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
   %i.an = lshr i64 %.0611.i.i, 1                  ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.0710.i.i, i64 8
   %.not.i.i = icmp eq i64 %i.an, 0
-  br i1 %.not.i.i, label %gf2_matrix_times.exit.i, label %.lr.ph.i.i, !llvm.loop !15
+  br i1 %.not.i.i, label %gf2_matrix_times.exit.i, label %.lr.ph.i.i, !llvm.loop !16
 
 gf2_matrix_times.exit.i:                          ; preds = %bb.c, %.preheader80
   %.0.lcssa.i.i = phi i64 [ 0, %.preheader80 ], [ %.1.i.i, %bb.c ]
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i
-  store i64 %.0.lcssa.i.i, ptr %i.ap, align 8, !tbaa !13
+  store i64 %.0.lcssa.i.i, ptr %i.ap, align 8, !tbaa !14
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, 32
-  br i1 %exitcond.not.i, label %gf2_matrix_square.exit, label %.preheader80, !llvm.loop !16
+  br i1 %exitcond.not.i, label %gf2_matrix_square.exit, label %.preheader80, !llvm.loop !17
 
 gf2_matrix_square.exit:                           ; preds = %gf2_matrix_times.exit.i, %gf2_matrix_times.exit.i37
   %indvars.iv.i28 = phi i64 [ %indvars.iv.next.i39, %gf2_matrix_times.exit.i37 ], [ 0, %gf2_matrix_times.exit.i ] ; 3 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i28
-  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !13 ; 2 uses
+  %i.ar = load i64, ptr %i.aq, align 8, !tbaa !14 ; 2 uses
   %.not9.i.i29 = icmp eq i64 %i.ar, 0
   br i1 %.not9.i.i29, label %gf2_matrix_times.exit.i37, label %.lr.ph.i.i30
 
@@ -539,7 +493,7 @@ gf2_matrix_square.exit:                           ; preds = %gf2_matrix_times.ex
   br i1 %.not8.i.i34, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i30
-  %i.at = load i64, ptr %.0710.i.i33, align 8, !tbaa !13
+  %i.at = load i64, ptr %.0710.i.i33, align 8, !tbaa !14
   %i.au = xor i64 %i.at, %.012.i.i31
   br label %bb.e
 
@@ -548,15 +502,15 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.i30
   %i.av = lshr i64 %.0611.i.i32, 1                ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.0710.i.i33, i64 8
   %.not.i.i36 = icmp eq i64 %i.av, 0
-  br i1 %.not.i.i36, label %gf2_matrix_times.exit.i37, label %.lr.ph.i.i30, !llvm.loop !15
+  br i1 %.not.i.i36, label %gf2_matrix_times.exit.i37, label %.lr.ph.i.i30, !llvm.loop !16
 
 gf2_matrix_times.exit.i37:                        ; preds = %bb.e, %gf2_matrix_square.exit
   %.0.lcssa.i.i38 = phi i64 [ 0, %gf2_matrix_square.exit ], [ %.1.i.i35, %bb.e ]
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i28
-  store i64 %.0.lcssa.i.i38, ptr %i.ax, align 8, !tbaa !13
+  store i64 %.0.lcssa.i.i38, ptr %i.ax, align 8, !tbaa !14
   %indvars.iv.next.i39 = add nuw nsw i64 %indvars.iv.i28, 1 ; 2 uses
   %exitcond.not.i40 = icmp eq i64 %indvars.iv.next.i39, 32
-  br i1 %exitcond.not.i40, label %gf2_matrix_square.exit41, label %gf2_matrix_square.exit, !llvm.loop !16
+  br i1 %exitcond.not.i40, label %gf2_matrix_square.exit41, label %gf2_matrix_square.exit, !llvm.loop !17
 
 gf2_matrix_square.exit41:                         ; preds = %gf2_matrix_times.exit.i37, %gf2_matrix_times.exit79
   %.022 = phi i64 [ %.2, %gf2_matrix_times.exit79 ], [ %0, %gf2_matrix_times.exit.i37 ] ; 3 uses
@@ -566,7 +520,7 @@ gf2_matrix_square.exit41:                         ; preds = %gf2_matrix_times.ex
 bb.f:                                             ; preds = %gf2_matrix_times.exit.i51, %gf2_matrix_square.exit41
   %indvars.iv.i42 = phi i64 [ 0, %gf2_matrix_square.exit41 ], [ %indvars.iv.next.i53, %gf2_matrix_times.exit.i51 ] ; 3 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i42
-  %i.az = load i64, ptr %i.ay, align 8, !tbaa !13 ; 2 uses
+  %i.az = load i64, ptr %i.ay, align 8, !tbaa !14 ; 2 uses
   %.not9.i.i43 = icmp eq i64 %i.az, 0
   br i1 %.not9.i.i43, label %gf2_matrix_times.exit.i51, label %.lr.ph.i.i44
 
@@ -579,7 +533,7 @@ bb.f:                                             ; preds = %gf2_matrix_times.ex
   br i1 %.not8.i.i48, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph.i.i44
-  %i.bb = load i64, ptr %.0710.i.i47, align 8, !tbaa !13
+  %i.bb = load i64, ptr %.0710.i.i47, align 8, !tbaa !14
   %i.bc = xor i64 %i.bb, %.012.i.i45
   br label %bb.h
 
@@ -588,15 +542,15 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.i.i44
   %i.bd = lshr i64 %.0611.i.i46, 1                ; 2 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.0710.i.i47, i64 8
   %.not.i.i50 = icmp eq i64 %i.bd, 0
-  br i1 %.not.i.i50, label %gf2_matrix_times.exit.i51, label %.lr.ph.i.i44, !llvm.loop !15
+  br i1 %.not.i.i50, label %gf2_matrix_times.exit.i51, label %.lr.ph.i.i44, !llvm.loop !16
 
 gf2_matrix_times.exit.i51:                        ; preds = %bb.h, %bb.f
   %.0.lcssa.i.i52 = phi i64 [ 0, %bb.f ], [ %.1.i.i49, %bb.h ]
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i42
-  store i64 %.0.lcssa.i.i52, ptr %i.bf, align 8, !tbaa !13
+  store i64 %.0.lcssa.i.i52, ptr %i.bf, align 8, !tbaa !14
   %indvars.iv.next.i53 = add nuw nsw i64 %indvars.iv.i42, 1 ; 2 uses
   %exitcond.not.i54 = icmp eq i64 %indvars.iv.next.i53, 32
-  br i1 %exitcond.not.i54, label %gf2_matrix_square.exit55, label %bb.f, !llvm.loop !16
+  br i1 %exitcond.not.i54, label %gf2_matrix_square.exit55, label %bb.f, !llvm.loop !17
 
 gf2_matrix_square.exit55:                         ; preds = %gf2_matrix_times.exit.i51
   %i.bg = and i64 %.020, 1
@@ -616,7 +570,7 @@ bb.i:                                             ; preds = %gf2_matrix_square.e
   br i1 %.not8.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i
-  %i.bi = load i64, ptr %.0710.i, align 8, !tbaa !13
+  %i.bi = load i64, ptr %.0710.i, align 8, !tbaa !14
   %i.bj = xor i64 %i.bi, %.012.i
   br label %bb.k
 
@@ -625,7 +579,7 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph.i
   %i.bk = lshr i64 %.0611.i, 1                    ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %.0710.i, i64 8
   %.not.i = icmp eq i64 %i.bk, 0
-  br i1 %.not.i, label %gf2_matrix_times.exit, label %.lr.ph.i, !llvm.loop !15
+  br i1 %.not.i, label %gf2_matrix_times.exit, label %.lr.ph.i, !llvm.loop !16
 
 gf2_matrix_times.exit:                            ; preds = %bb.k, %bb.i, %gf2_matrix_square.exit55
   %.1 = phi i64 [ %.022, %gf2_matrix_square.exit55 ], [ 0, %bb.i ], [ %.1.i, %bb.k ] ; 4 uses
@@ -635,7 +589,7 @@ gf2_matrix_times.exit:                            ; preds = %bb.k, %bb.i, %gf2_m
 .preheader:                                       ; preds = %gf2_matrix_times.exit, %gf2_matrix_times.exit.i65
   %indvars.iv.i56 = phi i64 [ %indvars.iv.next.i67, %gf2_matrix_times.exit.i65 ], [ 0, %gf2_matrix_times.exit ] ; 3 uses
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.i56
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !13 ; 2 uses
+  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !14 ; 2 uses
   %.not9.i.i57 = icmp eq i64 %i.bo, 0
   br i1 %.not9.i.i57, label %gf2_matrix_times.exit.i65, label %.lr.ph.i.i58
 
@@ -648,7 +602,7 @@ gf2_matrix_times.exit:                            ; preds = %bb.k, %bb.i, %gf2_m
   br i1 %.not8.i.i62, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i.i58
-  %i.bq = load i64, ptr %.0710.i.i61, align 8, !tbaa !13
+  %i.bq = load i64, ptr %.0710.i.i61, align 8, !tbaa !14
   %i.br = xor i64 %i.bq, %.012.i.i59
   br label %bb.m
 
@@ -657,15 +611,15 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph.i.i58
   %i.bs = lshr i64 %.0611.i.i60, 1                ; 2 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %.0710.i.i61, i64 8
   %.not.i.i64 = icmp eq i64 %i.bs, 0
-  br i1 %.not.i.i64, label %gf2_matrix_times.exit.i65, label %.lr.ph.i.i58, !llvm.loop !15
+  br i1 %.not.i.i64, label %gf2_matrix_times.exit.i65, label %.lr.ph.i.i58, !llvm.loop !16
 
 gf2_matrix_times.exit.i65:                        ; preds = %bb.m, %.preheader
   %.0.lcssa.i.i66 = phi i64 [ 0, %.preheader ], [ %.1.i.i63, %bb.m ]
   %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i56
-  store i64 %.0.lcssa.i.i66, ptr %i.bu, align 8, !tbaa !13
+  store i64 %.0.lcssa.i.i66, ptr %i.bu, align 8, !tbaa !14
   %indvars.iv.next.i67 = add nuw nsw i64 %indvars.iv.i56, 1 ; 2 uses
   %exitcond.not.i68 = icmp eq i64 %indvars.iv.next.i67, 32
-  br i1 %exitcond.not.i68, label %gf2_matrix_square.exit69, label %.preheader, !llvm.loop !16
+  br i1 %exitcond.not.i68, label %gf2_matrix_square.exit69, label %.preheader, !llvm.loop !17
 
 gf2_matrix_square.exit69:                         ; preds = %gf2_matrix_times.exit.i65
   %i.bv = and i64 %.020, 2
@@ -685,7 +639,7 @@ bb.n:                                             ; preds = %gf2_matrix_square.e
   br i1 %.not8.i75, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph.i71
-  %i.bx = load i64, ptr %.0710.i74, align 8, !tbaa !13
+  %i.bx = load i64, ptr %.0710.i74, align 8, !tbaa !14
   %i.by = xor i64 %i.bx, %.012.i72
   br label %bb.p
 
@@ -694,13 +648,13 @@ bb.p:                                             ; preds = %bb.o, %.lr.ph.i71
   %i.bz = lshr i64 %.0611.i73, 1                  ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %.0710.i74, i64 8
   %.not.i77 = icmp eq i64 %i.bz, 0
-  br i1 %.not.i77, label %gf2_matrix_times.exit79, label %.lr.ph.i71, !llvm.loop !15
+  br i1 %.not.i77, label %gf2_matrix_times.exit79, label %.lr.ph.i71, !llvm.loop !16
 
 gf2_matrix_times.exit79:                          ; preds = %bb.p, %bb.n, %gf2_matrix_square.exit69
   %.2 = phi i64 [ %.1, %gf2_matrix_square.exit69 ], [ 0, %bb.n ], [ %.1.i76, %bb.p ] ; 2 uses
   %i.cb = lshr i64 %.020, 2                       ; 2 uses
   %.not27 = icmp eq i64 %i.cb, 0
-  br i1 %.not27, label %bb.q, label %gf2_matrix_square.exit41, !llvm.loop !17
+  br i1 %.not27, label %bb.q, label %gf2_matrix_square.exit41, !llvm.loop !18
 
 bb.q:                                             ; preds = %gf2_matrix_times.exit, %gf2_matrix_times.exit79
   %.3 = phi i64 [ %.1, %gf2_matrix_times.exit ], [ %.2, %gf2_matrix_times.exit79 ]
@@ -744,9 +698,10 @@ attributes #4 = { nounwind }
 !10 = distinct !{!10, !11}
 !11 = !{!"llvm.loop.mustprogress"}
 !12 = distinct !{!12, !11}
-!13 = !{!14, !14, i64 0}
-!14 = !{!"long", !6, i64 0}
-!15 = distinct !{!15, !11}
+!13 = distinct !{!13, !11}
+!14 = !{!15, !15, i64 0}
+!15 = !{!"long", !6, i64 0}
 !16 = distinct !{!16, !11}
 !17 = distinct !{!17, !11}
+!18 = distinct !{!18, !11}
 end_hunk_0

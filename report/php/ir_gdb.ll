@@ -204,46 +204,60 @@ bb.f:                                             ; preds = %ir_gdbjit_sleb128.e
   store i64 %i.fx, ptr %i.fy, align 8, !tbaa !46
   %i.fz = add i64 %i.fr, 7
   %i.ga = and i64 %i.fz, -8                       ; 4 uses
-  %i.gb = inttoptr i64 %i.ga to ptr               ; 16 uses
-  store ptr %i.gb, ptr %5, align 8, !tbaa !40
+  %i.gb = inttoptr i64 %i.ga to ptr               ; 8 uses
   store ptr %i.gb, ptr %i.k, align 8, !tbaa !37
   %i.gc = sub i64 %i.ga, %i.bw
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 272
-  store i64 %i.gc, ptr %6, align 8, !tbaa !38
-  %7 = getelementptr inbounds nuw i8, ptr %i.gb, i64 4
-  store i32 0, ptr %7, align 4, !tbaa !58
-  %8 = getelementptr inbounds nuw i8, ptr %i.gb, i64 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.gb, i64 16
-  store <8 x i8> <i8 1, i8 122, i8 82, i8 0, i8 1, i8 120, i8 16, i8 1>, ptr %8, align 8, !tbaa !25
-  %i.gd = getelementptr inbounds nuw i8, ptr %i.gb, i64 20
-  store <4 x i8> <i8 35, i8 12, i8 7, i8 8>, ptr %9, align 8, !tbaa !25
-  %i.ge = getelementptr inbounds nuw i8, ptr %i.gb, i64 21
-  store i8 -112, ptr %i.gd, align 4, !tbaa !25
-  %i.gf = getelementptr inbounds nuw i8, ptr %i.gb, i64 22
-  store i8 1, ptr %i.ge, align 1, !tbaa !25
-  store i16 0, ptr %i.gf, align 2
-  store i32 20, ptr %i.gb, align 8, !tbaa !58
-  %i.gg = getelementptr i8, ptr %i.gb, i64 28     ; 2 uses
-  %10 = ptrtoint ptr %i.gg to i64
-  %11 = sub i64 %10, %i.ga
-  %12 = trunc i64 %11 to i32
-  store i32 %12, ptr %i.gg, align 4, !tbaa !58
-  %i.gh = getelementptr i8, ptr %i.gb, i64 32
-  store i32 0, ptr %i.gh, align 8, !tbaa !58
-  %i.gi = getelementptr i8, ptr %i.gb, i64 36
-  %13 = load i32, ptr %i.d, align 8, !tbaa !33
-  store i32 %13, ptr %i.gi, align 4, !tbaa !58
-  %14 = getelementptr i8, ptr %i.gb, i64 40
-  %i.gj = getelementptr i8, ptr %i.gb, i64 41
-  store i8 0, ptr %14, align 8, !tbaa !25
-  %15 = getelementptr i8, ptr %i.gb, i64 42       ; 2 uses
-  store i8 14, ptr %i.gj, align 1, !tbaa !25
-  %16 = icmp ugt i32 %3, 127
-  br i1 %16, label %.lr.ph.i.i36.i, label %ir_gdbjit_uleb128.exit.i.i
+  %i.gd = getelementptr inbounds nuw i8, ptr %5, i64 272
+  store i64 %i.gc, ptr %i.gd, align 8, !tbaa !38
+  %i.ge = getelementptr inbounds nuw i8, ptr %i.gb, i64 4
+  store i32 0, ptr %i.ge, align 4, !tbaa !58
+  %i.gf = getelementptr inbounds nuw i8, ptr %i.gb, i64 8
+  %i.gg = getelementptr inbounds nuw i8, ptr %i.gb, i64 16
+  store <8 x i8> <i8 1, i8 122, i8 82, i8 0, i8 1, i8 120, i8 16, i8 1>, ptr %i.gf, align 8, !tbaa !25
+  %i.gh = getelementptr inbounds nuw i8, ptr %i.gb, i64 20
+  store <4 x i8> <i8 35, i8 12, i8 7, i8 8>, ptr %i.gg, align 8, !tbaa !25
+  %i.gi = getelementptr inbounds nuw i8, ptr %i.gb, i64 21
+  store i8 -112, ptr %i.gh, align 4, !tbaa !25
+  %i.gj = getelementptr inbounds nuw i8, ptr %i.gb, i64 22 ; 2 uses
+  store i8 1, ptr %i.gi, align 1, !tbaa !25
+  store ptr %i.gj, ptr %5, align 8, !tbaa !40
+  br label %.lr.ph.i.i
 
-.lr.ph.i.i36.i:                                   ; preds = %._crit_edge.i.i.a, %.lr.ph.i.i36.i
-  %.010.i.i37.i = phi ptr [ %i.gm, %.lr.ph.i.i36.i ], [ %15, %._crit_edge.i.i.a ] ; 2 uses
-  %.089.i.i38.i = phi i32 [ %i.gn, %.lr.ph.i.i36.i ], [ %3, %._crit_edge.i.i.a ] ; 3 uses
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %._crit_edge.i.i.a
+  %.091.i.i = phi ptr [ %6, %.lr.ph.i.i ], [ %i.gj, %._crit_edge.i.i.a ] ; 8 uses
+  %6 = getelementptr inbounds nuw i8, ptr %.091.i.i, i64 1 ; 3 uses
+  store i8 0, ptr %.091.i.i, align 1, !tbaa !25
+  %7 = ptrtoint ptr %6 to i64                     ; 3 uses
+  %8 = and i64 %7, 7
+  %.not.i34.i = icmp eq i64 %8, 0
+  br i1 %.not.i34.i, label %._crit_edge.i.i, label %.lr.ph.i.i, !llvm.loop !62
+
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
+  %9 = sub i64 %7, %i.ga
+  %10 = trunc i64 %9 to i32
+  %11 = add i32 %10, -4
+  store i32 %11, ptr %i.gb, align 8, !tbaa !58
+  %12 = getelementptr inbounds nuw i8, ptr %.091.i.i, i64 5 ; 2 uses
+  %13 = ptrtoint ptr %12 to i64
+  %14 = sub i64 %13, %i.ga
+  %15 = trunc i64 %14 to i32
+  store i32 %15, ptr %12, align 1, !tbaa !58
+  %16 = getelementptr inbounds nuw i8, ptr %.091.i.i, i64 9
+  store i32 0, ptr %16, align 1, !tbaa !58
+  %17 = getelementptr inbounds nuw i8, ptr %.091.i.i, i64 13
+  %18 = load i32, ptr %i.d, align 8, !tbaa !33
+  store i32 %18, ptr %17, align 1, !tbaa !58
+  %19 = getelementptr inbounds nuw i8, ptr %.091.i.i, i64 17
+  %20 = getelementptr inbounds nuw i8, ptr %.091.i.i, i64 18
+  store i8 0, ptr %19, align 1, !tbaa !25
+  %21 = getelementptr inbounds nuw i8, ptr %.091.i.i, i64 19 ; 2 uses
+  store i8 14, ptr %20, align 1, !tbaa !25
+  %22 = icmp ugt i32 %3, 127
+  br i1 %22, label %.lr.ph.i.i36.i, label %ir_gdbjit_uleb128.exit.i.i
+
+.lr.ph.i.i36.i:                                   ; preds = %._crit_edge.i.i, %.lr.ph.i.i36.i
+  %.010.i.i37.i = phi ptr [ %i.gm, %.lr.ph.i.i36.i ], [ %21, %._crit_edge.i.i ] ; 2 uses
+  %.089.i.i38.i = phi i32 [ %i.gn, %.lr.ph.i.i36.i ], [ %3, %._crit_edge.i.i ] ; 3 uses
   %i.gk = trunc i32 %.089.i.i38.i to i8
   %i.gl = or i8 %i.gk, -128
   %i.gm = getelementptr inbounds nuw i8, ptr %.010.i.i37.i, i64 1 ; 2 uses
@@ -252,9 +266,9 @@ bb.f:                                             ; preds = %ir_gdbjit_sleb128.e
   %i.go = icmp ugt i32 %.089.i.i38.i, 16383
   br i1 %i.go, label %.lr.ph.i.i36.i, label %ir_gdbjit_uleb128.exit.i.i, !llvm.loop !61
 
-ir_gdbjit_uleb128.exit.i.i:                       ; preds = %.lr.ph.i.i36.i, %._crit_edge.i.i.a
-  %.08.lcssa.i.i34.i = phi i32 [ %3, %._crit_edge.i.i.a ], [ %i.gn, %.lr.ph.i.i36.i ]
-  %.0.lcssa.i.i35.i = phi ptr [ %15, %._crit_edge.i.i.a ], [ %i.gm, %.lr.ph.i.i36.i ] ; 4 uses
+ir_gdbjit_uleb128.exit.i.i:                       ; preds = %.lr.ph.i.i36.i, %._crit_edge.i.i
+  %.08.lcssa.i.i34.i = phi i32 [ %3, %._crit_edge.i.i ], [ %i.gn, %.lr.ph.i.i36.i ]
+  %.0.lcssa.i.i35.i = phi ptr [ %21, %._crit_edge.i.i ], [ %i.gm, %.lr.ph.i.i36.i ] ; 4 uses
   %i.gp = trunc nuw nsw i32 %.08.lcssa.i.i34.i to i8
   %i.gq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i35.i, i64 1 ; 2 uses
   store i8 %i.gp, ptr %.0.lcssa.i.i35.i, align 1, !tbaa !25
@@ -289,30 +303,28 @@ ir_gdbjit_uleb128.exit83.i.i:                     ; preds = %.lr.ph.i80.i.i, %bb
   br label %bb.h
 
 bb.h:                                             ; preds = %ir_gdbjit_uleb128.exit83.i.i, %ir_gdbjit_uleb128.exit.i.i
-  %.1.i.i = phi ptr [ %i.hb, %ir_gdbjit_uleb128.exit83.i.i ], [ %i.gq, %ir_gdbjit_uleb128.exit.i.i ] ; 4 uses
-  %i.hc = ptrtoint ptr %.1.i.i to i64             ; 4 uses
-  %i.hd = and i64 %i.hc, 7                        ; 2 uses
+  %.1.i.i = phi ptr [ %i.hb, %ir_gdbjit_uleb128.exit83.i.i ], [ %i.gq, %ir_gdbjit_uleb128.exit.i.i ] ; 3 uses
+  %i.hc = ptrtoint ptr %.1.i.i to i64             ; 2 uses
+  %i.hd = and i64 %i.hc, 7
   %.not7793.i.i = icmp eq i64 %i.hd, 0
   br i1 %.not7793.i.i, label %ir_gdbjit_buildobj.exit, label %.lr.ph96.preheader.i.i
 
-.lr.ph96.preheader.i.i:                           ; preds = %bb.h
-  %17 = sub nuw nsw i64 8, %i.hd                  ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.1.i.i, i8 0, i64 %17, i1 false), !tbaa !25
-  %scevgep109.i.i = getelementptr i8, ptr %.1.i.i, i64 %17 ; 2 uses
-  %18 = or i64 %i.hc, 7
-  %19 = add i64 %18, 1
-  %.pre.i = ptrtoint ptr %scevgep109.i.i to i64
-  br label %ir_gdbjit_buildobj.exit
+.lr.ph96.preheader.i.i:                           ; preds = %bb.h, %.lr.ph96.preheader.i.i
+  %.294.i.i = phi ptr [ %23, %.lr.ph96.preheader.i.i ], [ %.1.i.i, %bb.h ] ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %.294.i.i, i64 1 ; 3 uses
+  store i8 0, ptr %.294.i.i, align 1, !tbaa !25
+  %24 = ptrtoint ptr %23 to i64                   ; 2 uses
+  %25 = and i64 %24, 7
+  %.not77.i.i = icmp eq i64 %25, 0
+  br i1 %.not77.i.i, label %ir_gdbjit_buildobj.exit, label %.lr.ph96.preheader.i.i, !llvm.loop !63
 
-ir_gdbjit_buildobj.exit:                          ; preds = %bb.h, %.lr.ph96.preheader.i.i
-  %.pre-phi.i = phi i64 [ %i.hc, %bb.h ], [ %.pre.i, %.lr.ph96.preheader.i.i ] ; 2 uses
-  %.2.lcssa.i.i = phi ptr [ %.1.i.i, %bb.h ], [ %scevgep109.i.i, %.lr.ph96.preheader.i.i ]
-  %.lcssa.i.i = phi i64 [ %i.hc, %bb.h ], [ %19, %.lr.ph96.preheader.i.i ]
-  %scevgep.i.i = getelementptr i8, ptr %i.gb, i64 24
-  %reass.sub.i = sub i64 %.lcssa.i.i, %i.ga
+ir_gdbjit_buildobj.exit:                          ; preds = %.lr.ph96.preheader.i.i, %bb.h
+  %.pre-phi.i = phi i64 [ %i.hc, %bb.h ], [ %24, %.lr.ph96.preheader.i.i ] ; 3 uses
+  %.2.lcssa.i.i = phi ptr [ %.1.i.i, %bb.h ], [ %23, %.lr.ph96.preheader.i.i ]
+  %reass.sub.i = sub i64 %.pre-phi.i, %7
   %i.he = trunc i64 %reass.sub.i to i32
-  %i.hf = add i32 %i.he, -28
-  store i32 %i.hf, ptr %scevgep.i.i, align 8, !tbaa !58
+  %i.hf = add i32 %i.he, -4
+  store i32 %i.hf, ptr %6, align 1, !tbaa !58
   store ptr %.2.lcssa.i.i, ptr %5, align 8, !tbaa !40
   %i.hg = load ptr, ptr %i.k, align 8, !tbaa !37
   %i.hh = ptrtoint ptr %i.hg to i64
@@ -321,7 +333,7 @@ ir_gdbjit_buildobj.exit:                          ; preds = %bb.h, %.lr.ph96.pre
   store i64 %i.hi, ptr %i.hj, align 8, !tbaa !46
   %i.hk = sub i64 %.pre-phi.i, %i.bw              ; 4 uses
   %i.hl = getelementptr inbounds nuw i8, ptr %5, i64 48
-  store i64 %i.hk, ptr %i.hl, align 8, !tbaa !62
+  store i64 %i.hk, ptr %i.hl, align 8, !tbaa !64
   %i.hm = add i64 %i.hk, 32
   %i.hn = call noalias ptr @malloc(i64 noundef %i.hm) #12 ; 12 uses
   %i.ho = icmp ne ptr %i.hn, null                 ; 2 uses
@@ -330,18 +342,18 @@ ir_gdbjit_buildobj.exit:                          ; preds = %bb.h, %.lr.ph96.pre
 bb.i:                                             ; preds = %ir_gdbjit_buildobj.exit
   %i.hp = getelementptr inbounds nuw i8, ptr %i.hn, i64 32 ; 4 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hn, i64 16
-  store ptr %i.hp, ptr %i.hq, align 8, !tbaa !63
+  store ptr %i.hp, ptr %i.hq, align 8, !tbaa !65
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hn, i64 24
-  store i64 %i.hk, ptr %i.hr, align 8, !tbaa !64
+  store i64 %i.hk, ptr %i.hr, align 8, !tbaa !66
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.hp, ptr nonnull readonly align 8 %i.h, i64 %i.hk, i1 false)
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hn, i64 72
-  %i.ht = load i64, ptr %i.hs, align 8, !tbaa !65
+  %i.ht = load i64, ptr %i.hs, align 8, !tbaa !67
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hp, i64 %i.ht ; 2 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hn, i64 90
-  %i.hw = load i16, ptr %i.hv, align 2, !tbaa !66
+  %i.hw = load i16, ptr %i.hv, align 2, !tbaa !68
   %i.hx = zext i16 %i.hw to i64                   ; 2 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hn, i64 92
-  %i.hz = load i16, ptr %i.hy, align 4, !tbaa !67
+  %i.hz = load i16, ptr %i.hy, align 4, !tbaa !69
   %i.ia = zext i16 %i.hz to i64
   %i.ib = mul nuw nsw i64 %i.ia, %i.hx            ; 2 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %i.hu, i64 %i.ib
@@ -373,7 +385,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j, %.lr.ph.i
   %i.in = getelementptr inbounds nuw i8, ptr %.035.i, i64 %i.hx ; 2 uses
   %i.io = icmp ult ptr %i.in, %i.ic
-  br i1 %i.io, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !68
+  br i1 %i.io, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !70
 
 ._crit_edge.i:                                    ; preds = %bb.l, %bb.i
   %i.ip = getelementptr inbounds nuw i8, ptr %i.hn, i64 8
@@ -500,11 +512,13 @@ attributes #12 = { nounwind allocsize(0) }
 !59 = !{!20, !20, i64 0}
 !60 = distinct !{!60, !24}
 !61 = distinct !{!61, !24}
-!62 = !{!29, !20, i64 48}
-!63 = !{!18, !19, i64 16}
-!64 = !{!18, !20, i64 24}
-!65 = !{!31, !20, i64 40}
-!66 = !{!31, !32, i64 58}
-!67 = !{!31, !32, i64 60}
-!68 = distinct !{!68, !24}
+!62 = distinct !{!62, !24}
+!63 = distinct !{!63, !24}
+!64 = !{!29, !20, i64 48}
+!65 = !{!18, !19, i64 16}
+!66 = !{!18, !20, i64 24}
+!67 = !{!31, !20, i64 40}
+!68 = !{!31, !32, i64 58}
+!69 = !{!31, !32, i64 60}
+!70 = distinct !{!70, !24}
 end_hunk_0

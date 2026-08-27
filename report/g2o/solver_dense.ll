@@ -205,11 +205,8 @@ bb.a:
   br i1 %i.a, label %.lr.ph90, label %._crit_edge91
 
 .lr.ph90:                                         ; preds = %bb.a
-  %6 = ptrtoaddr ptr %3 to i64
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %7 = and i64 %6, 7
-  %.not.i.i.i.i.i.i.i = icmp eq i64 %7, 0
   %i.d = shl i64 %2, 6
   %i.e = add i64 %i.d, 64
   %i.f = shl i64 %2, 3
@@ -265,13 +262,15 @@ bb.c:                                             ; preds = %.lr.ph
   br i1 %i.aa, label %_ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i, label %_ZN5Eigen10MatrixBaseINS_3MapINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEELi0ENS_6StrideILi0ELi0EEEEEEmIINS_13CwiseBinaryOpINS_8internal17scalar_product_opIddEEKNS_14CwiseNullaryOpINSA_18scalar_constant_opIdEEKS3_EEKNS_5BlockIKNSJ_IKNS1_IKNS2_IdLin1ELin1ELi0ELin1ELin1EEELi0ENS_11OuterStrideILin1EEEEELin1ELi1ELb1EEELin1ELi1ELb0EEEEEEERS6_RKNS0_IT_EE.exit
 
 _ZN5Eigen8internal13first_alignedILi16EdlEET1_PKT0_S2_.exit.i.i.i.i.i.i: ; preds = %bb.c
-  %i.ab = add nuw i64 %i.u, 1                     ; 2 uses
+  %i.ab = add nuw nsw i64 %i.u, 1                 ; 2 uses
   %i.ac = mul i64 %i.u, %2
   %i.ad = getelementptr [8 x i8], ptr %1, i64 %i.ac
   %i.ae = getelementptr [8 x i8], ptr %i.ad, i64 %i.ab ; 12 uses
-  %i.af = getelementptr [8 x i8], ptr %3, i64 %i.ab ; 13 uses
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %i.ab ; 13 uses
   %.sroa.3.8.vec.insert.i.i.i.i.i = insertelement <2 x double> poison, double %i.w, i64 0
-  %i.ag = ptrtoint ptr %i.af to i64
+  %i.ag = ptrtoint ptr %i.af to i64               ; 2 uses
+  %6 = and i64 %i.ag, 7
+  %.not.i.i.i.i.i.i.i = icmp eq i64 %6, 0
   %i.ah = lshr exact i64 %i.ag, 3
   %i.ai = and i64 %i.ah, 1
   %.0.i.i.i.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i, i64 %i.ai, i64 %i.z ; 13 uses

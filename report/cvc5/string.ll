@@ -202,7 +202,7 @@ bb.a:
   %.sroa.0.0.copyload.i.i = load ptr, ptr %1, align 8 ; 5 uses
   %.sroa.0.0.copyload.i2.i = load ptr, ptr %2, align 8 ; 2 uses
   %i.a = icmp eq ptr %.sroa.0.0.copyload.i.i, %.sroa.0.0.copyload.i2.i
-  %i.b = ptrtoint ptr %.sroa.0.0.copyload.i.i to i64 ; 7 uses
+  %i.b = ptrtoint ptr %.sroa.0.0.copyload.i.i to i64 ; 6 uses
   %i.c = ptrtoint ptr %.sroa.0.0.copyload.i2.i to i64 ; 5 uses
   br i1 %i.a, label %.critedge, label %bb.b
 
@@ -222,15 +222,13 @@ bb.c:                                             ; preds = %bb.b
   br label %.preheader47
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = sub i64 %i.b, %i.c                       ; 3 uses
+  %i.h = sub i64 %i.b, %i.c                       ; 2 uses
   %i.i = ashr i64 %i.h, 4                         ; 3 uses
   %i.j = icmp sgt i64 %i.i, 0
   br i1 %i.j, label %.lr.ph.i.preheader.i, label %._crit_edge.i.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.d
   %i.k = load i32, ptr %i.e, align 4, !tbaa !20, !noalias !146 ; 4 uses
-  %5 = and i64 %i.h, -16
-  %6 = sub i64 %i.b, %5                           ; 2 uses
   %i.l = mul nsw i64 %i.i, -16
   %scevgep.i = getelementptr i8, ptr %.sroa.0.0.copyload.i.i, i64 %i.l
   br label %.lr.ph.i.i
@@ -281,16 +279,16 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.ae = add nsw i64 %.024.i.i, -1
   %i.af = icmp sgt i64 %.024.i.i, 1
-  %i.ag = ptrtoint ptr %i.aa to i64
+  %i.ag = ptrtoint ptr %i.aa to i64               ; 3 uses
   br i1 %i.af, label %.lr.ph.i.i, label %._crit_edge.loopexit.i.i, !llvm.loop !151
 
 ._crit_edge.loopexit.i.i:                         ; preds = %bb.k
-  %.pre41.i.i = sub i64 %6, %i.c
+  %.pre41.i.i = sub i64 %i.ag, %i.c
   br label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.loopexit.i.i, %bb.d
   %.pre-phi42.i.i = phi i64 [ %.pre41.i.i, %._crit_edge.loopexit.i.i ], [ %i.h, %bb.d ]
-  %i.ah = phi i64 [ %6, %._crit_edge.loopexit.i.i ], [ %i.b, %bb.d ] ; 4 uses
+  %i.ah = phi i64 [ %i.ag, %._crit_edge.loopexit.i.i ], [ %i.b, %bb.d ] ; 4 uses
   %i.ai = phi ptr [ %scevgep.i, %._crit_edge.loopexit.i.i ], [ %.sroa.0.0.copyload.i.i, %bb.d ] ; 2 uses
   %i.aj = ashr exact i64 %.pre-phi42.i.i, 2
   switch i64 %i.aj, label %.critedge [
@@ -348,9 +346,9 @@ bb.n:                                             ; preds = %._crit_edge.i._crit
 .preheader47:                                     ; preds = %.preheader47.preheader, %bb.ag
   %i.bg = phi i64 [ %.pre110, %bb.ag ], [ %i.g, %.preheader47.preheader ] ; 4 uses
   %i.bh = phi i64 [ %.pre, %bb.ag ], [ %i.c, %.preheader47.preheader ] ; 4 uses
-  %i.bi = phi i64 [ %i.eb, %bb.ag ], [ %i.b, %.preheader47.preheader ] ; 5 uses
+  %i.bi = phi i64 [ %i.eb, %bb.ag ], [ %i.b, %.preheader47.preheader ] ; 4 uses
   %i.bj = inttoptr i64 %i.bi to ptr               ; 3 uses
-  %i.bk = sub i64 %i.bi, %i.bh                    ; 3 uses
+  %i.bk = sub i64 %i.bi, %i.bh                    ; 2 uses
   %i.bl = ashr i64 %i.bk, 4                       ; 3 uses
   %i.bm = icmp sgt i64 %i.bl, 0
   br i1 %i.bm, label %.lr.ph.i.preheader.i15, label %._crit_edge.i.i5
@@ -359,8 +357,6 @@ bb.n:                                             ; preds = %._crit_edge.i._crit
   %i.bn = inttoptr i64 %i.bg to ptr
   %i.bo = getelementptr inbounds i8, ptr %i.bn, i64 -4
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !20, !noalias !152 ; 4 uses
-  %7 = and i64 %i.bk, -16
-  %8 = sub i64 %i.bi, %7                          ; 2 uses
   %i.bq = mul nsw i64 %i.bl, -16
   %scevgep.i16 = getelementptr i8, ptr %i.bj, i64 %i.bq
   br label %.lr.ph.i.i17
@@ -411,16 +407,16 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.s
   %i.cj = add nsw i64 %.024.i.i18, -1
   %i.ck = icmp sgt i64 %.024.i.i18, 1
-  %i.cl = ptrtoint ptr %i.cf to i64
+  %i.cl = ptrtoint ptr %i.cf to i64               ; 3 uses
   br i1 %i.ck, label %.lr.ph.i.i17, label %._crit_edge.loopexit.i.i19, !llvm.loop !151
 
 ._crit_edge.loopexit.i.i19:                       ; preds = %bb.u
-  %.pre41.i.i20 = sub i64 %8, %i.bh
+  %.pre41.i.i20 = sub i64 %i.cl, %i.bh
   br label %._crit_edge.i.i5
 
 ._crit_edge.i.i5:                                 ; preds = %._crit_edge.loopexit.i.i19, %.preheader47
   %.pre-phi42.i.i6 = phi i64 [ %.pre41.i.i20, %._crit_edge.loopexit.i.i19 ], [ %i.bk, %.preheader47 ]
-  %i.cm = phi i64 [ %8, %._crit_edge.loopexit.i.i19 ], [ %i.bi, %.preheader47 ] ; 4 uses
+  %i.cm = phi i64 [ %i.cl, %._crit_edge.loopexit.i.i19 ], [ %i.bi, %.preheader47 ] ; 4 uses
   %i.cn = phi ptr [ %scevgep.i16, %._crit_edge.loopexit.i.i19 ], [ %i.bj, %.preheader47 ] ; 2 uses
   %i.co = ashr exact i64 %.pre-phi42.i.i6, 2
   switch i64 %i.co, label %_ZSt9__find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKjSt6vectorIjSaIjEEEEENS1_5__ops17_Iter_equals_iterIS9_EEET_SD_SD_T0_.exit24 [
