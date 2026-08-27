@@ -205,7 +205,7 @@ bb.bi:                                            ; preds = %_ZN12_GLOBAL__N_123
   %indvars.iv820.i = phi i64 [ 0, %.lr.ph769.i ], [ %indvars.iv.next821.pre-phi.i, %_ZN12_GLOBAL__N_123HexagonLoopRescheduling10InstrGroupD2Ev.exit.i ] ; 3 uses
   %indvars.iv.i = phi i64 [ 1, %.lr.ph769.i ], [ %indvars.iv.next.i, %_ZN12_GLOBAL__N_123HexagonLoopRescheduling10InstrGroupD2Ev.exit.i ] ; 3 uses
   %.sroa.14.0767.i = phi ptr [ null, %.lr.ph769.i ], [ %.sroa.14.3.i, %_ZN12_GLOBAL__N_123HexagonLoopRescheduling10InstrGroupD2Ev.exit.i ] ; 8 uses
-  %.sroa.8.0765.i = phi ptr [ null, %.lr.ph769.i ], [ %.sroa.8.3.i, %_ZN12_GLOBAL__N_123HexagonLoopRescheduling10InstrGroupD2Ev.exit.i ] ; 14 uses
+  %.sroa.8.0765.i = phi ptr [ null, %.lr.ph769.i ], [ %.sroa.8.3.i, %_ZN12_GLOBAL__N_123HexagonLoopRescheduling10InstrGroupD2Ev.exit.i ] ; 13 uses
   %.sroa.0498.0764.i = phi ptr [ null, %.lr.ph769.i ], [ %.sroa.0498.3.i, %_ZN12_GLOBAL__N_123HexagonLoopRescheduling10InstrGroupD2Ev.exit.i ] ; 9 uses
   %i.sm = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0521.0.lcssa.i, i64 %indvars.iv820.i
   %i.sn = load ptr, ptr %i.sm, align 8, !tbaa !311 ; 5 uses
@@ -608,9 +608,8 @@ _ZNK12_GLOBAL__N_111RegisterSet10find_firstEv.exit289.i: ; preds = %bb.ed, %_ZNK
   br i1 %.not.i290.i, label %bb.ek, label %bb.ee
 
 bb.ee:                                            ; preds = %_ZNK12_GLOBAL__N_111RegisterSet10find_firstEv.exit289.i
-  store i32 %.0.i279.i, ptr %.sroa.8.0765.i, align 8
-  %.sroa.7462.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.8.0765.i, i64 4
-  store i32 0, ptr %.sroa.7462.0..sroa_idx.i, align 4
+  %.sroa.0459.sroa.0.0.insert.ext485.i = zext i32 %.0.i279.i to i64
+  store i64 %.sroa.0459.sroa.0.0.insert.ext485.i, ptr %.sroa.8.0765.i, align 8
   %.sroa.7466.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.8.0765.i, i64 8
   store i32 %i.sr, ptr %.sroa.7466.0..sroa_idx.i, align 8
   %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.8.0765.i, i64 12
@@ -690,10 +689,9 @@ _ZNKSt6vectorIN12_GLOBAL__N_123HexagonLoopRescheduling10InstrGroupESaIS2_EE12_M_
   call void @llvm.assume(i1 %.not.i.i.i295.i)
   %i.ahx = mul nuw nsw i64 %i.ahw, 40
   %i.ahy = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ahx) #22 ; 5 uses
-  %i.ahz = getelementptr inbounds nuw i8, ptr %i.ahy, i64 %i.ahp ; 8 uses
-  store i32 %.0.i279.i, ptr %i.ahz, align 8
-  %.sroa.7462.0..sroa_idx463.i = getelementptr inbounds nuw i8, ptr %i.ahz, i64 4
-  store i32 0, ptr %.sroa.7462.0..sroa_idx463.i, align 4
+  %i.ahz = getelementptr inbounds nuw i8, ptr %i.ahy, i64 %i.ahp ; 7 uses
+  %.sroa.0459.sroa.0.0.insert.ext488.i = zext i32 %.0.i279.i to i64
+  store i64 %.sroa.0459.sroa.0.0.insert.ext488.i, ptr %i.ahz, align 8
   %.sroa.7466.0..sroa_idx467.i = getelementptr inbounds nuw i8, ptr %i.ahz, i64 8
   store i32 %i.sr, ptr %.sroa.7466.0..sroa_idx467.i, align 8
   %.sroa.9.0..sroa_idx469.i = getelementptr inbounds nuw i8, ptr %i.ahz, i64 12
@@ -1096,7 +1094,7 @@ bb.hk:                                            ; preds = %.critedge.i
   br label %_ZNK12_GLOBAL__N_123HexagonLoopRescheduling11isShuffleOfEjj.exit.thread.i
 
 _ZNK12_GLOBAL__N_123HexagonLoopRescheduling11isShuffleOfEjj.exit.thread.i: ; preds = %bb.fb, %bb.hk, %.critedge.i, %_ZNK4llvm10BitTracker3hasEj.exit30.i.i, %_ZNSt8_Rb_treeIjSt4pairIKjN4llvm10BitTracker12RegisterCellEESt10_Select1stIS5_ESt4lessIjESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i28.i336.i, %_ZNK4llvm10BitTracker3hasEj.exit.i326.i, %_ZNSt8_Rb_treeIjSt4pairIKjN4llvm10BitTracker12RegisterCellEESt10_Select1stIS5_ESt4lessIjESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i325.i, %.lr.ph776.split.i
-  %.3113.i = phi i1 [ %.2112.i, %bb.hk ], [ %.0110775.i, %_ZNK4llvm10BitTracker3hasEj.exit.i326.i ], [ %.0110775.i, %_ZNK4llvm10BitTracker3hasEj.exit30.i.i ], [ %.0110775.i, %_ZNSt8_Rb_treeIjSt4pairIKjN4llvm10BitTracker12RegisterCellEESt10_Select1stIS5_ESt4lessIjESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i325.i ], [ %.0110775.i, %.lr.ph776.split.i ], [ %.0110775.i, %_ZNSt8_Rb_treeIjSt4pairIKjN4llvm10BitTracker12RegisterCellEESt10_Select1stIS5_ESt4lessIjESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i28.i336.i ], [ %.2112.i, %.critedge.i ], [ %.0110775.i, %bb.fb ] ; 2 uses
+  %.3113.i = phi i1 [ %.2112.i, %bb.hk ], [ %.2112.i, %.critedge.i ], [ %.0110775.i, %_ZNK4llvm10BitTracker3hasEj.exit.i326.i ], [ %.0110775.i, %_ZNK4llvm10BitTracker3hasEj.exit30.i.i ], [ %.0110775.i, %_ZNSt8_Rb_treeIjSt4pairIKjN4llvm10BitTracker12RegisterCellEESt10_Select1stIS5_ESt4lessIjESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i325.i ], [ %.0110775.i, %.lr.ph776.split.i ], [ %.0110775.i, %_ZNSt8_Rb_treeIjSt4pairIKjN4llvm10BitTracker12RegisterCellEESt10_Select1stIS5_ESt4lessIjESaIS5_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS5_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i28.i336.i ], [ %.0110775.i, %bb.fb ] ; 2 uses
   %i.ayy = getelementptr inbounds nuw i8, ptr %.sroa.0439.0774.i, i64 40 ; 2 uses
   %.not618.i = icmp eq ptr %i.ayy, %.sroa.8.3.i
   br i1 %.not618.i, label %.lr.ph.i.i.i.preheader.i, label %.lr.ph776.split.i, !llvm.loop !452
@@ -1499,8 +1497,8 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define internal noundef zeroext i1 @_ZN12_GLOBAL__N_115CopyPropagation12processBlockERN4llvm17MachineBasicBlockERKNS_11RegisterSetE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0, ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(360) %1, ptr nofree nonnull readnone align 8 captures(none) %2) unnamed_addr #3 align 2 {
 bb.a:
-  %3 = alloca %"struct.llvm::BitTracker::RegisterRef", align 4 ; 8 uses
-  %4 = alloca %"struct.llvm::BitTracker::RegisterRef", align 4 ; 8 uses
+  %.sroa.070.i = alloca i64, align 8              ; 8 uses
+  %.sroa.065.i = alloca i64, align 8              ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
   %.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.a, align 8
   %i.b = and i64 %.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i, -8
@@ -1542,10 +1540,10 @@ _ZN4llvm7reverseIRNS_17MachineBasicBlockEEEDaOT_.exit: ; preds = %_ZNK4llvm14ili
 .lr.ph54:                                         ; preds = %.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 11 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
-  %.4..4..4..4..4..sroa_idx88 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %.4..4..4..4..4..sroa_idx89 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %.4..4..4..4..4..sroa_idx87 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %.4..4..4..4..4..sroa_idx88 = getelementptr inbounds nuw i8, ptr %.sroa.070.i, i64 4
+  %.4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.065.i, i64 4
+  %.4..4..4..4..4..sroa_idx89 = getelementptr inbounds nuw i8, ptr %.sroa.070.i, i64 4
+  %.4..4..4..4..4..sroa_idx87 = getelementptr inbounds nuw i8, ptr %.sroa.065.i, i64 4
   br label %bb.h
 
 .lr.ph:                                           ; preds = %_ZN4llvm7reverseIRNS_17MachineBasicBlockEEEDaOT_.exit, %_ZN4llvm26MachineInstrBundleIteratorINS_12MachineInstrELb1EEppEv.exit
@@ -1834,11 +1832,11 @@ _ZN4llvm19MachineRegisterInfo20defusechain_iteratorILb1ELb0ELb0ELb1ELb0EEppEv.ex
   br label %.lr.ph.i.preheader.i.i, !llvm.loop !424
 
 bb.s:                                             ; preds = %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store i32 0, ptr %3, align 4, !tbaa !254
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.070.i)
+  store i32 0, ptr %.sroa.070.i, align 8, !tbaa !254
   store i32 0, ptr %.4..4..4..4..4..sroa_idx88, align 4, !tbaa !828
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  store i32 0, ptr %4, align 4, !tbaa !254
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.065.i)
+  store i32 0, ptr %.sroa.065.i, align 8, !tbaa !254
   store i32 0, ptr %.4..4..4..4..4..sroa_idx, align 4, !tbaa !828
   %i.da = load ptr, ptr %i.n, align 8, !tbaa !899, !nonnull !19, !align !162 ; 2 uses
   %.val54.i = load ptr, ptr %i.da, align 8, !tbaa !902
@@ -1876,8 +1874,8 @@ bb.t:                                             ; preds = %bb.s
   br i1 %or.cond25.i.i, label %bb.u, label %_ZN12_GLOBAL__N_118HexagonBitSimplify16parseRegSequenceERKN4llvm12MachineInstrERNS1_10BitTracker11RegisterRefES7_RKNS1_19MachineRegisterInfoE.exit.i
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %.sink15.i.i = phi ptr [ %3, %bb.s ], [ %4, %bb.t ]
-  %.sink.i.i = phi ptr [ %4, %bb.s ], [ %3, %bb.t ]
+  %.sink15.i.i = phi ptr [ %.sroa.070.i, %bb.s ], [ %.sroa.065.i, %bb.t ]
+  %.sink.i.i = phi ptr [ %.sroa.065.i, %bb.s ], [ %.sroa.070.i, %bb.t ]
   %i.dy = load ptr, ptr %i.at, align 8, !tbaa !271 ; 4 uses
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dy, i64 32
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dy, i64 36
@@ -1889,7 +1887,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.sroa.42.0.insert.shift.i.i = shl nuw nsw i64 %.sroa.42.0.insert.ext.i.i, 32
   %.sroa.01.0.insert.ext.i.i = zext i32 %i.eb to i64
   %.sroa.01.0.insert.insert.i.i = or disjoint i64 %.sroa.42.0.insert.shift.i.i, %.sroa.01.0.insert.ext.i.i
-  store i64 %.sroa.01.0.insert.insert.i.i, ptr %.sink15.i.i, align 4
+  store i64 %.sroa.01.0.insert.insert.i.i, ptr %.sink15.i.i, align 8
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dy, i64 96
   %i.eg = getelementptr inbounds nuw i8, ptr %i.dy, i64 100
   %i.eh = load i32, ptr %i.eg, align 4, !tbaa !265
@@ -1900,7 +1898,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %.sroa.4.0.insert.shift.i.i = shl nuw nsw i64 %.sroa.4.0.insert.ext.i.i, 32
   %.sroa.0.0.insert.ext.i.i = zext i32 %i.eh to i64
   %.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i, %.sroa.0.0.insert.ext.i.i
-  store i64 %.sroa.0.0.insert.insert.i.i, ptr %.sink.i.i, align 4
+  store i64 %.sroa.0.0.insert.insert.i.i, ptr %.sink.i.i, align 8
   %i.el = load ptr, ptr %i.n, align 8, !tbaa !899, !nonnull !19, !align !162
   %i.em = getelementptr inbounds nuw i8, ptr %i.el, i64 48
   %i.en = load ptr, ptr %i.em, align 8, !tbaa !21
@@ -1912,13 +1910,13 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.es = tail call noundef i32 @_ZNK4llvm19HexagonRegisterInfo21getHexagonSubRegIndexERKNS_15MCRegisterClassEj(ptr noundef nonnull align 8 dereferenceable(316) %i.er, ptr noundef nonnull align 8 dereferenceable(62) %i.eq, i32 noundef 0) #20
   %i.et = load ptr, ptr %i.o, align 8, !tbaa !968, !nonnull !19, !align !162
   %i.eu = tail call noundef i32 @_ZNK4llvm19HexagonRegisterInfo21getHexagonSubRegIndexERKNS_15MCRegisterClassEj(ptr noundef nonnull align 8 dereferenceable(316) %i.et, ptr noundef nonnull align 8 dereferenceable(62) %i.eq, i32 noundef 1) #20
-  %.0..0..0..0..0..sroa.013.0.copyload.i = load i32, ptr %3, align 4, !tbaa !254
+  %.0..0..0..0..0..sroa.013.0.copyload.i = load i32, ptr %.sroa.070.i, align 8, !tbaa !254
   %.4..4..4..4..4.68.i = load i32, ptr %.4..4..4..4..4..sroa_idx89, align 4, !tbaa !828
   %i.ev = load ptr, ptr %i.n, align 8, !tbaa !899, !nonnull !19, !align !162
   %i.ew = getelementptr i8, ptr %i.ev, i64 48
   %.val50.i = load ptr, ptr %i.ew, align 8
   %i.ex = tail call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_118HexagonBitSimplify17replaceSubWithSubEN4llvm8RegisterEjS2_jRNS1_19MachineRegisterInfoE(i32 %i.aw, i32 noundef %i.es, i32 %.0..0..0..0..0..sroa.013.0.copyload.i, i32 noundef %.4..4..4..4..4.68.i, ptr %.val50.i)
-  %.0..0..0..0..0..sroa.011.0.copyload.i = load i32, ptr %4, align 4, !tbaa !254
+  %.0..0..0..0..0..sroa.011.0.copyload.i = load i32, ptr %.sroa.065.i, align 8, !tbaa !254
   %.4..4..4..4..4..i = load i32, ptr %.4..4..4..4..4..sroa_idx87, align 4, !tbaa !828
   %i.ey = load ptr, ptr %i.n, align 8, !tbaa !899, !nonnull !19, !align !162
   %i.ez = getelementptr i8, ptr %i.ey, i64 48
@@ -1929,8 +1927,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 _ZN12_GLOBAL__N_118HexagonBitSimplify16parseRegSequenceERKN4llvm12MachineInstrERNS1_10BitTracker11RegisterRefES7_RKNS1_19MachineRegisterInfoE.exit.i: ; preds = %bb.u, %bb.t
   %.2.i = phi i1 [ %i.fb, %bb.u ], [ false, %bb.t ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.065.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.070.i)
   br label %_ZN12_GLOBAL__N_115CopyPropagation16propagateRegCopyERN4llvm12MachineInstrE.exit
 
 bb.v:                                             ; preds = %bb.i, %bb.i

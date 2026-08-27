@@ -202,7 +202,7 @@ bb.am:                                            ; preds = %bb.al
   %i.lp = load i16, ptr %i.lo, align 8, !tbaa !463
   %i.lq = zext i16 %i.lp to i32                   ; 2 uses
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.lk, i64 48
-  %.sroa.5.sroa.0.0.copyload.i.i = load i32, ptr %.sroa.5.0..sroa_idx.i.i, align 8, !tbaa !338 ; 2 uses
+  %.sroa.5.0.copyload.i.i = load i64, ptr %.sroa.5.0..sroa_idx.i.i, align 8 ; 2 uses
   %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.lk, i64 8
   %.sroa.7.0.copyload.i.i = load i32, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !tbaa !338
   %.sroa.077.0.copyload.i.i = load ptr, ptr %i.lk, align 8, !tbaa !337
@@ -242,9 +242,10 @@ bb.am:                                            ; preds = %bb.al
   %.sroa.214.0..sroa_idx.i.i38.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i32 %.sroa.7.0.copyload.i.i, ptr %.sroa.214.0..sroa_idx.i.i38.i, align 8, !tbaa !338
   %i.mm = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %.sroa.585.8.extract.trunc.i.i = trunc i64 %.sroa.5.0.copyload.i.i to i32
   %i.mn = getelementptr inbounds nuw i8, ptr %.sroa.072.0.copyload.i.i, i64 48
   %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !346
-  %51 = zext i32 %.sroa.5.sroa.0.0.copyload.i.i to i64
+  %51 = and i64 %.sroa.5.0.copyload.i.i, 4294967295
   %i.mp = getelementptr inbounds nuw [16 x i8], ptr %i.mo, i64 %51 ; 2 uses
   %.sroa.0.0.copyload.i.i.i.i39.i = load i16, ptr %i.mp, align 8, !tbaa !347
   %.sroa.21.0..sroa_idx.i.i.i.i40.i = getelementptr inbounds nuw i8, ptr %i.mp, i64 8
@@ -258,7 +259,7 @@ bb.am:                                            ; preds = %bb.al
   %i.mr = getelementptr inbounds nuw i8, ptr %2, i64 32
   store ptr %.sroa.072.0.copyload.i.i, ptr %i.mr, align 16, !tbaa !337
   %.sroa.584.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 40
-  store i32 %.sroa.5.sroa.0.0.copyload.i.i, ptr %.sroa.584.0..sroa_idx.i.i, align 8, !tbaa !338
+  store i32 %.sroa.585.8.extract.trunc.i.i, ptr %.sroa.584.0..sroa_idx.i.i, align 8, !tbaa !338
   %i.ms = getelementptr inbounds nuw i8, ptr %2, i64 48
   store ptr null, ptr %i.ms, align 16, !tbaa !337
   %.sroa.5.0..sroa_idx87.i.i = getelementptr inbounds nuw i8, ptr %2, i64 56

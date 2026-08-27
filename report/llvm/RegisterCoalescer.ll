@@ -204,7 +204,7 @@ _ZN12_GLOBAL__N_117RegisterCoalescer13joinIntervalsERN4llvm13CoalescerPairE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #22
   br i1 %.0.i.i272, label %bb.hq, label %_ZN12_GLOBAL__N_117RegisterCoalescer13joinIntervalsERN4llvm13CoalescerPairE.exit.thread
 
-_ZN12_GLOBAL__N_117RegisterCoalescer13joinIntervalsERN4llvm13CoalescerPairE.exit.thread: ; preds = %_ZNK4llvm9LiveRange8overlapsERKS0_.exit.i.i, %bb.do, %bb.dn, %.lr.ph208.i.i, %bb.dz, %bb.ea, %_ZN4llvm9BitVectorD2Ev.exit81.i.i, %_ZN12_GLOBAL__N_117RegisterCoalescer13joinIntervalsERN4llvm13CoalescerPairE.exit
+_ZN12_GLOBAL__N_117RegisterCoalescer13joinIntervalsERN4llvm13CoalescerPairE.exit.thread: ; preds = %_ZNK4llvm9LiveRange8overlapsERKS0_.exit.i.i, %bb.do, %bb.dn, %.lr.ph208.i.i, %bb.dz, %_ZN4llvm9BitVectorD2Ev.exit81.i.i, %bb.ea, %_ZN12_GLOBAL__N_117RegisterCoalescer13joinIntervalsERN4llvm13CoalescerPairE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
   %i.can = call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_117RegisterCoalescer16reMaterializeDefERKN4llvm13CoalescerPairEPNS1_12MachineInstrERb(ptr noundef nonnull align 8 dereferenceable(896) %0, ptr noundef nonnull align 8 dereferenceable(40) %18, ptr noundef %1, ptr noundef nonnull align 1 dereferenceable(1) %i.b)
   br i1 %i.can, label %bb.hp, label %bb.hi
@@ -607,7 +607,7 @@ _ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit: ; preds = %_ZN4llvm11SmallVec
   br label %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit.thread
 
 _ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit.thread: ; preds = %_ZN4llvm12is_containedINS_14iterator_rangeINS_17MCRegUnitIteratorEEENS_9MCRegUnitEEEbOT_RKT0_.exit.thread, %bb.q, %bb.y, %bb.z, %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit, %_ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit, %bb.o, %bb.p, %_ZNK4llvm15TargetInstrInfo18isReMaterializableERKNS_12MachineInstrE.exit.thread
-  %.10 = phi i1 [ false, %_ZNK4llvm15TargetInstrInfo18isReMaterializableERKNS_12MachineInstrE.exit.thread ], [ false, %bb.p ], [ false, %bb.o ], [ false, %bb.q ], [ false, %bb.y ], [ true, %_ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit ], [ false, %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit ], [ false, %bb.z ], [ false, %_ZN4llvm12is_containedINS_14iterator_rangeINS_17MCRegUnitIteratorEEENS_9MCRegUnitEEEbOT_RKT0_.exit.thread ]
+  %.10 = phi i1 [ false, %_ZNK4llvm15TargetInstrInfo18isReMaterializableERKNS_12MachineInstrE.exit.thread ], [ false, %bb.p ], [ false, %bb.o ], [ false, %bb.q ], [ false, %bb.z ], [ true, %_ZN4llvm11SmallVectorINS_8RegisterELj8EED2Ev.exit ], [ false, %_ZNK4llvm15MCRegisterClass8containsENS_10MCRegisterE.exit ], [ false, %bb.y ], [ false, %_ZN4llvm12is_containedINS_14iterator_rangeINS_17MCRegUnitIteratorEEENS_9MCRegUnitEEEbOT_RKT0_.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
   br label %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit.thread
 
@@ -1010,8 +1010,8 @@ _ZN4llvm11SmallVectorINS_9SlotIndexELj8EED2Ev.exit: ; preds = %bb.aa, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
   br label %_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit.thread
 
-_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit.thread: ; preds = %bb.l, %bb.j, %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit
-  %.sroa.082.099 = phi ptr [ %.026.i, %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit ], [ %.026.i, %bb.l ], [ %i.bb, %bb.j ]
+_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit.thread: ; preds = %bb.j, %bb.l, %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit
+  %.sroa.082.099 = phi ptr [ %.026.i, %bb.l ], [ %.026.i, %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit ], [ %i.bb, %bb.j ]
   %.not51 = icmp eq ptr %.sroa.082.099, null
   br i1 %.not51, label %_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit.thread, label %.thread.thread
 
@@ -1047,8 +1047,8 @@ _ZL13isLiveThroughN4llvm15LiveQueryResultE.exit:  ; preds = %bb.ad
   store i64 %i.dy, ptr %2, align 8, !tbaa !824
   br label %_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit.thread
 
-_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit.thread: ; preds = %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit.thread, %bb.g, %bb.ac, %bb.ad, %_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit, %.thread.thread, %_ZN4llvm11SmallVectorINS_9SlotIndexELj8EED2Ev.exit
-  %.2 = phi i1 [ true, %_ZN4llvm11SmallVectorINS_9SlotIndexELj8EED2Ev.exit ], [ %.1137, %.thread.thread ], [ %.1137, %_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit ], [ %.1137, %bb.ac ], [ %.1137, %bb.ad ], [ %.1137, %bb.g ], [ %.1137, %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit.thread ] ; 2 uses
+_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit.thread: ; preds = %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit.thread, %bb.ac, %bb.g, %bb.ad, %_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit, %.thread.thread, %_ZN4llvm11SmallVectorINS_9SlotIndexELj8EED2Ev.exit
+  %.2 = phi i1 [ true, %_ZN4llvm11SmallVectorINS_9SlotIndexELj8EED2Ev.exit ], [ %.1137, %.thread.thread ], [ %.1137, %_ZL13isLiveThroughN4llvm15LiveQueryResultE.exit ], [ %.1137, %bb.ac ], [ %.1137, %bb.g ], [ %.1137, %bb.ad ], [ %.1137, %_ZNK4llvm9LiveRange5QueryENS_9SlotIndexE.exit.thread ] ; 2 uses
   %.sroa.088.0.in = getelementptr inbounds nuw i8, ptr %.sroa.088.0138, i64 104
   %.sroa.088.0 = load ptr, ptr %.sroa.088.0.in, align 8, !tbaa !835 ; 2 uses
   %.not132 = icmp eq ptr %.sroa.088.0, null

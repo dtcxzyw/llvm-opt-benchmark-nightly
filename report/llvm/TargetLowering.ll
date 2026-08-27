@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
   %.not36 = icmp eq i32 %i.ac, %.sroa.0.0.copyload.i
   br i1 %.not36, label %.thread, label %.thread34
 
-.thread:                                          ; preds = %bb.e, %_ZNK4llvm11CCValAssign9getLocRegEv.exit, %.lr.ph
+.thread:                                          ; preds = %.lr.ph, %_ZNK4llvm11CCValAssign9getLocRegEv.exit, %bb.e
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not = icmp eq i64 %indvars.iv.next, %i.c
   br i1 %.not, label %.thread34, label %.lr.ph, !llvm.loop !250
@@ -608,7 +608,7 @@ bb.ik:                                            ; preds = %bb.ij
   %i.att = getelementptr inbounds nuw i8, ptr %i.ats, i64 24
   %i.atu = load i32, ptr %i.att, align 8, !tbaa !247
   %i.atv = icmp eq i32 %i.atu, 222
-  br i1 %i.atv, label %bb.il, label %.critedge2382
+  br i1 %i.atv, label %bb.il, label %.critedge78.a
 
 bb.il:                                            ; preds = %bb.ik
   %i.atw = getelementptr inbounds nuw i8, ptr %i.atr, i64 40
@@ -616,7 +616,7 @@ bb.il:                                            ; preds = %bb.ik
   %i.aty = getelementptr inbounds nuw i8, ptr %i.atx, i64 24
   %i.atz = load i32, ptr %i.aty, align 8, !tbaa !247
   %i.aua = icmp eq i32 %i.atz, 222
-  br i1 %i.aua, label %bb.im, label %.critedge2382
+  br i1 %i.aua, label %bb.im, label %.critedge78.a
 
 bb.im:                                            ; preds = %bb.il
   %.sroa.63269.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.atr, i64 8
@@ -685,12 +685,12 @@ bb.io:                                            ; preds = %bb.in
   %.fca.1.extract1236 = extractvalue { ptr, i32 } %i.avg, 1
   br label %.critedge2359
 
-.critedge78.a:                                    ; preds = %bb.in, %bb.io
+.critedge78.a:                                    ; preds = %bb.ik, %bb.il, %bb.in, %bb.io
   %.pr3506.pre = load i32, ptr %i.ato, align 8, !tbaa !247
   br label %thread-pre-split3505
 
 thread-pre-split3505:                             ; preds = %.critedge78.a, %bb.ij
-  %i.avh = phi i32 [ %i.atn, %bb.ij ], [ %.pr3506.pre, %.critedge78.a ] ; 2 uses
+  %i.avh = phi i32 [ %.pr3506.pre, %.critedge78.a ], [ %i.atn, %bb.ij ] ; 2 uses
   %i.avi = icmp eq i32 %i.avh, 193
   br i1 %i.avi, label %bb.ip, label %bb.iv
 
@@ -859,7 +859,7 @@ bb.ix:                                            ; preds = %bb.iw
   %.fca.1.extract1147 = extractvalue { ptr, i32 } %i.axe, 1
   br label %.critedge2359
 
-.critedge2382:                                    ; preds = %bb.fs, %bb.ik, %bb.il, %bb.fz, %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i, %bb.iw, %bb.iv, %.split3504, %.split3500, %bb.gb, %bb.ga, %_ZNK4llvm18TargetLoweringBase16isOperationLegalEjNS_3EVTE.exit, %_ZN4llvm5APIntD2Ev.exit2731, %bb.hc, %thread-pre-split, %_ZNK4llvm14ConstantSDNode5isOneEv.exit2738, %_ZNK4llvm14ConstantSDNode5isOneEv.exit
+.critedge2382:                                    ; preds = %bb.fs, %bb.fz, %_ZNK4llvm18TargetLoweringBase11isTypeLegalENS_3EVTE.exit.i, %bb.iw, %bb.iv, %.split3504, %.split3500, %bb.gb, %bb.ga, %_ZNK4llvm18TargetLoweringBase16isOperationLegalEjNS_3EVTE.exit, %_ZN4llvm5APIntD2Ev.exit2731, %bb.hc, %thread-pre-split, %_ZNK4llvm14ConstantSDNode5isOneEv.exit2738, %_ZNK4llvm14ConstantSDNode5isOneEv.exit
   %i.axf = load ptr, ptr %61, align 8, !tbaa !249 ; 2 uses
   %i.axg = getelementptr inbounds nuw i8, ptr %i.axf, i64 24
   %i.axh = load i32, ptr %i.axg, align 8, !tbaa !247
@@ -1262,15 +1262,15 @@ bb.i:                                             ; preds = %_ZN4llvm8dyn_castIN
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !294
   br label %.critedge38.sink.split
 
-.critedge38.sink.split:                           ; preds = %bb.d, %bb.e, %bb.h, %bb.i, %_ZN4llvm8dyn_castINS_19GlobalAddressSDNodeENS_6SDNodeEEEDcPT0_.exit
+.critedge38.sink.split:                           ; preds = %bb.i, %bb.h, %bb.e, %bb.d, %_ZN4llvm8dyn_castINS_19GlobalAddressSDNodeENS_6SDNodeEEEDcPT0_.exit
   %.sink63 = phi i64 [ %i.j, %_ZN4llvm8dyn_castINS_19GlobalAddressSDNodeENS_6SDNodeEEEDcPT0_.exit ], [ %i.ag, %bb.e ], [ %.0.i.i.i.i, %bb.d ], [ %.0.i.i.i.i47, %bb.h ], [ %i.ba, %bb.i ]
   %i.bb = load i64, ptr %3, align 8, !tbaa !294
   %i.bc = add nsw i64 %i.bb, %.sink63
   store i64 %i.bc, ptr %3, align 8, !tbaa !294
   br label %.critedge38
 
-.critedge38:                                      ; preds = %.critedge38.sink.split, %bb.f, %bb.c, %bb.g, %bb.a
-  %.5 = phi i1 [ false, %bb.c ], [ false, %bb.f ], [ false, %bb.a ], [ false, %bb.g ], [ true, %.critedge38.sink.split ]
+.critedge38:                                      ; preds = %.critedge38.sink.split, %bb.a, %bb.g, %bb.c, %bb.f
+  %.5 = phi i1 [ false, %bb.g ], [ false, %bb.f ], [ false, %bb.a ], [ false, %bb.c ], [ true, %.critedge38.sink.split ]
   ret i1 %.5
 }
 
@@ -1673,7 +1673,6 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not.i389, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %.sroa.5502.sroa.0.0.extract.trunc = trunc i64 %i.ev to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #28
   store i16 %i.ab, ptr %20, align 8, !tbaa !343
   %.sroa.434.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %20, i64 8
@@ -1685,7 +1684,8 @@ bb.ae:                                            ; preds = %bb.ad
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #28
   store ptr %.sroa.0504.0.copyload, ptr %22, align 8, !tbaa !246
   %.sroa.5502.0..sroa_idx503 = getelementptr inbounds nuw i8, ptr %22, i64 8
-  store i32 %.sroa.5502.sroa.0.0.extract.trunc, ptr %.sroa.5502.0..sroa_idx503, align 8, !tbaa !245
+  %.sroa.5502.0.extract.trunc = trunc i64 %i.ev to i32
+  store i32 %.sroa.5502.0.extract.trunc, ptr %.sroa.5502.0..sroa_idx503, align 8, !tbaa !245
   %i.ey = getelementptr inbounds nuw i8, ptr %22, i64 16
   store ptr %.sroa.0471.0.copyload, ptr %i.ey, align 8, !tbaa !246
   %.sroa.3.0..sroa_idx30.i = getelementptr inbounds nuw i8, ptr %22, i64 24

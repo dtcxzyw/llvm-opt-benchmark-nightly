@@ -205,7 +205,7 @@ _ZN4Luau10TempVectorINS_6Parser7BindingEED2Ev.exit: ; preds = %_ZN4Luau10TempVec
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   br label %bb.ca
 
-.loopexit.split-lp:                               ; preds = %.loopexit160, %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit, %.loopexit164, %.loopexit.split-lp165, %bb.bo, %bb.br, %bb.bv, %bb.bs
+.loopexit.split-lp:                               ; preds = %.loopexit160, %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit, %.loopexit164, %.loopexit.split-lp165, %bb.bs, %bb.bv, %bb.br, %bb.bo
   %.pn38 = phi { ptr, i32 } [ %i.px, %bb.bs ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp165 ], [ %i.pu, %bb.bo ], [ %.pn30, %bb.br ], [ %.pn32, %bb.bv ], [ %lpad.loopexit166, %.loopexit164 ], [ %lpad.loopexit, %.loopexit160 ], [ %lpad.loopexit161, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp162, %.loopexit.split-lp.loopexit.split-lp ] ; 2 uses
   %i.qv = load ptr, ptr %i.gj, align 8, !tbaa !224
   %i.qw = getelementptr inbounds i8, ptr %i.qv, i64 %i.gp ; 2 uses
@@ -608,14 +608,15 @@ bb.be:                                            ; preds = %_ZN4Luau10TempVecto
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef ptr @_ZN4Luau6Parser11parseReturnEv(ptr noundef nonnull align 8 dereferenceable(1232) %0) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"class.Luau::TempVector.197", align 8 ; 11 uses
+  %1 = alloca %"class.Luau::TempVector.197", align 8 ; 10 uses
   %2 = alloca %"class.Luau::TempVector.198", align 8 ; 10 uses
   %3 = alloca %"struct.Luau::Location", align 16  ; 8 uses
   %4 = alloca %"struct.Luau::AstArray", align 8   ; 7 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 132
-  %.sroa.0.0.copyload.a = load <2 x i64>, ptr %i.c, align 4 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
+  %.sroa.0.0.copyload.a = load <2 x i64>, ptr %i.c, align 4
+  %.sroa.0.0.copyload = load i64, ptr %i.c, align 4
   tail call void @_ZN4Luau6Parser10nextLexemeEv(ptr noundef nonnull align 8 dereferenceable(1232) %0)
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #34
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 656 ; 2 uses
@@ -673,7 +674,7 @@ _ZN4Luau6Parser11blockFollowERKNS_6LexemeE.exit.thread: ; preds = %bb.b
   %i.ac = icmp eq i64 %.pre, 0
   br i1 %i.ac, label %.thread, label %.lr.ph.preheader.i.i
 
-.thread:                                          ; preds = %_ZN4Luau6Parser11blockFollowERKNS_6LexemeE.exit.thread, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a
+.thread:                                          ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %_ZN4Luau6Parser11blockFollowERKNS_6LexemeE.exit.thread
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !373, !nonnull !53, !align !374
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
@@ -682,7 +683,7 @@ _ZN4Luau6Parser11blockFollowERKNS_6LexemeE.exit.thread: ; preds = %bb.b
   br label %.loopexit31
 
 .lr.ph.preheader.i.i:                             ; preds = %_ZN4Luau6Parser11blockFollowERKNS_6LexemeE.exit.thread
-  %i.af = load ptr, ptr %1, align 8, !tbaa !431, !nonnull !53, !align !374
+  %i.af = load ptr, ptr %1, align 8, !tbaa !431, !nonnull !53, !align !374 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !440
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 -8
@@ -692,14 +693,12 @@ _ZN4Luau6Parser11blockFollowERKNS_6LexemeE.exit.thread: ; preds = %bb.b
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 4 uses
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !373, !nonnull !53, !align !374 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
-  %.sroa.0.0.vec.extract = extractelement <2 x i64> %.sroa.0.0.copyload.a, i64 0
-  store i64 %.sroa.0.0.vec.extract, ptr %3, align 16
+  store i64 %.sroa.0.0.copyload, ptr %3, align 16
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %.sroa.4.0.copyload, ptr %i.am, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #34
-  %5 = load ptr, ptr %1, align 8, !tbaa !431, !nonnull !53, !align !374
   %i.an = load i64, ptr %i.e, align 8, !tbaa !417 ; 2 uses
-  %i.ao = load ptr, ptr %5, align 8, !tbaa !184   ; 2 uses
+  %i.ao = load ptr, ptr %i.af, align 8, !tbaa !184 ; 2 uses
   %i.ap = ptrtoaddr ptr %i.ao to i64
   %i.aq = getelementptr [8 x i8], ptr %i.ao, i64 %i.an ; 6 uses
   %i.ar = shl i64 %.pre, 3
@@ -790,13 +789,13 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i.i.3, label %.loopexit31, label %.lr.ph.i.i, !llvm.loop !473
 
 .loopexit31:                                      ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %middle.block, %.thread
+  %5 = phi i64 [ 0, %.thread ], [ %.pre, %middle.block ], [ %.pre, %.lr.ph.i.i ], [ %.pre, %.lr.ph.i.i.prol.loopexit ]
   %i.by = phi ptr [ %i.ae, %.thread ], [ %i.al, %middle.block ], [ %i.al, %.lr.ph.i.i ], [ %i.al, %.lr.ph.i.i.prol.loopexit ]
   %i.bz = phi ptr [ %i.ad, %.thread ], [ %i.ak, %middle.block ], [ %i.ak, %.lr.ph.i.i ], [ %i.ak, %.lr.ph.i.i.prol.loopexit ]
-  %6 = phi i64 [ 0, %.thread ], [ %.pre, %middle.block ], [ %.pre, %.lr.ph.i.i ], [ %.pre, %.lr.ph.i.i.prol.loopexit ]
   %i.ca = phi ptr [ null, %.thread ], [ %i.as, %middle.block ], [ %i.as, %.lr.ph.i.i ], [ %i.as, %.lr.ph.i.i.prol.loopexit ]
   store ptr %i.ca, ptr %4, align 8
   %i.cb = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 %6, ptr %i.cb, align 8
+  store i64 %5, ptr %i.cb, align 8
   %i.cc = invoke noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.by, i64 noundef 48)
           to label %.noexc12 unwind label %bb.f   ; 4 uses
 
@@ -1199,8 +1198,8 @@ _ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i144: ; preds = %_Z
   store ptr %i.hy, ptr %i.bl, align 8, !tbaa !583
   br label %_ZN4Luau10TempVectorIPNS_7AstTypeEED2Ev.exit145
 
-_ZN4Luau10TempVectorIPNS_7AstTypeEED2Ev.exit145:  ; preds = %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i144, %_ZN4Luau10TempVectorISt4pairINS_7AstNameENS_8LocationEEED2Ev.exit142, %bb.m, %bb.n, %bb.t, %bb.s
-  %.pn104.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bi, %bb.s ], [ %i.ar, %bb.n ], [ %i.aq, %bb.m ], [ %i.bj, %bb.t ], [ %.pn104.pn, %_ZN4Luau10TempVectorISt4pairINS_7AstNameENS_8LocationEEED2Ev.exit142 ], [ %.pn104.pn, %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i144 ]
+_ZN4Luau10TempVectorIPNS_7AstTypeEED2Ev.exit145:  ; preds = %bb.m, %bb.n, %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i144, %_ZN4Luau10TempVectorISt4pairINS_7AstNameENS_8LocationEEED2Ev.exit142, %bb.t, %bb.s
+  %.pn104.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn104.pn, %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i144 ], [ %i.ar, %bb.n ], [ %i.aq, %bb.m ], [ %i.bi, %bb.s ], [ %i.bj, %bb.t ], [ %.pn104.pn, %_ZN4Luau10TempVectorISt4pairINS_7AstNameENS_8LocationEEED2Ev.exit142 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #34
   %i.ia = load ptr, ptr %12, align 8, !tbaa !426, !nonnull !53, !align !374 ; 2 uses
   %i.ib = load ptr, ptr %i.ia, align 8, !tbaa !441
@@ -1603,7 +1602,7 @@ bb.f:                                             ; preds = %bb.e, %bb.e, %bb.e
   br label %.invoke
 
 .invoke:                                          ; preds = %bb.e, %bb.f
-  %storemerge = phi i64 [ -1, %bb.f ], [ %i.ag, %bb.e ]
+  %storemerge = phi i64 [ %i.ag, %bb.e ], [ -1, %bb.f ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   store ptr %i.o, ptr %5, align 8, !tbaa !420
   %i.ah = load ptr, ptr %i.q, align 8, !tbaa !422
@@ -2006,7 +2005,7 @@ _ZN4Luau10TempVectorINS_6Parser7BindingEED2Ev.exit: ; preds = %bb.bb, %_ZSt8_Des
   %.fca.1.insert = insertvalue { ptr, ptr } %.fca.0.insert, ptr %.0, 1
   ret { ptr, ptr } %.fca.1.insert
 
-.loopexit.split-lp:                               ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit, %bb.ax, %bb.ba, %bb.az, %bb.ay, %bb.aw
+.loopexit.split-lp:                               ; preds = %.loopexit, %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit, %bb.ay, %bb.az, %bb.ba, %bb.ax, %bb.aw
   %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.iy, %bb.aw ], [ %i.ja, %bb.ay ], [ %i.iz, %bb.ax ], [ %i.jc, %bb.ba ], [ %i.jb, %bb.az ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit122, %.loopexit.split-lp.loopexit ], [ %lpad.loopexit.split-lp123, %.loopexit.split-lp.loopexit.split-lp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #34
   br label %bb.bc
@@ -2409,8 +2408,8 @@ _ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i70: ; preds = %_ZN
   store ptr %i.iv, ptr %i.ar, align 8, !tbaa !583
   br label %_ZN4Luau10TempVectorIPNS_7AstTypeEED2Ev.exit71
 
-_ZN4Luau10TempVectorIPNS_7AstTypeEED2Ev.exit71:   ; preds = %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i70, %_ZN4Luau10TempVectorISt8optionalISt4pairINS_7AstNameENS_8LocationEEEED2Ev.exit68, %bb.h, %bb.i, %bb.o, %bb.n
-  %.pn25.pn.pn.pn = phi { ptr, i32 } [ %i.ao, %bb.n ], [ %i.y, %bb.i ], [ %i.x, %bb.h ], [ %i.ap, %bb.o ], [ %.pn25, %_ZN4Luau10TempVectorISt8optionalISt4pairINS_7AstNameENS_8LocationEEEED2Ev.exit68 ], [ %.pn25, %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i70 ]
+_ZN4Luau10TempVectorIPNS_7AstTypeEED2Ev.exit71:   ; preds = %bb.h, %bb.i, %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i70, %_ZN4Luau10TempVectorISt8optionalISt4pairINS_7AstNameENS_8LocationEEEED2Ev.exit68, %bb.o, %bb.n
+  %.pn25.pn.pn.pn = phi { ptr, i32 } [ %.pn25, %_ZSt8_DestroyIPPN4Luau7AstTypeES2_EvT_S4_RSaIT0_E.exit.i.i.i.i70 ], [ %i.y, %bb.i ], [ %i.x, %bb.h ], [ %i.ao, %bb.n ], [ %i.ap, %bb.o ], [ %.pn25, %_ZN4Luau10TempVectorISt8optionalISt4pairINS_7AstNameENS_8LocationEEEED2Ev.exit68 ]
   %i.ix = load ptr, ptr %7, align 8, !tbaa !426, !nonnull !53, !align !374 ; 2 uses
   %i.iy = load ptr, ptr %i.ix, align 8, !tbaa !441
   %i.iz = load i64, ptr %i.n, align 8, !tbaa !408
@@ -2813,22 +2812,22 @@ bb.a:
   %5 = alloca %"struct.Luau::Location", align 4   ; 4 uses
   %6 = alloca %"struct.Luau::Location", align 4   ; 4 uses
   %7 = alloca %"struct.Luau::Parser::MatchLexeme", align 4 ; 6 uses
-  %.sroa.0362 = alloca %"struct.Luau::Location", align 8 ; 9 uses
+  %.sroa.0364 = alloca %"struct.Luau::Location", align 8 ; 9 uses
   %8 = alloca %"struct.Luau::Lexeme", align 8     ; 6 uses
   %9 = alloca %"struct.Luau::Lexeme", align 8     ; 8 uses
   %10 = alloca %"struct.Luau::Lexeme", align 8    ; 6 uses
   %11 = alloca %"struct.Luau::AstArray.6", align 8 ; 7 uses
   %12 = alloca %"class.std::optional.280", align 8 ; 7 uses
   %13 = alloca %"struct.Luau::Parser::MatchLexeme", align 4 ; 7 uses
-  %.sroa.6346 = alloca %"struct.Luau::Location", align 8 ; 6 uses
+  %.sroa.6349 = alloca %"struct.Luau::Location", align 8 ; 6 uses
   %14 = alloca %"struct.Luau::Parser::TableIndexerResult", align 8 ; 5 uses
   %15 = alloca %"class.std::optional.182", align 8 ; 3 uses
   %16 = alloca %"struct.Luau::Parser::TableIndexerResult", align 8 ; 8 uses
   %17 = alloca %"class.std::optional.182", align 8 ; 3 uses
   %18 = alloca %"struct.Luau::Lexeme", align 8    ; 7 uses
   %19 = alloca %"struct.Luau::Location", align 8  ; 7 uses
-  %.sroa.6292 = alloca %"struct.Luau::Location", align 8 ; 5 uses
-  %.sroa.5287 = alloca %"struct.Luau::Location", align 8 ; 3 uses
+  %.sroa.6295 = alloca %"struct.Luau::Location", align 8 ; 5 uses
+  %.sroa.5290 = alloca %"struct.Luau::Location", align 8 ; 3 uses
   %20 = alloca %"struct.Luau::Location", align 8  ; 6 uses
   %21 = alloca %"struct.Luau::AstArray.303", align 8 ; 6 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
@@ -2935,7 +2934,7 @@ _ZNK4Luau7AstNameeqEPKc.exit:                     ; preds = %bb.h
   br i1 %i.au, label %_ZNSt8optionalIN4Luau8LocationEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit, label %_ZNK4Luau7AstNameeqEPKc.exit119
 
 _ZNSt8optionalIN4Luau8LocationEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit: ; preds = %_ZNK4Luau7AstNameeqEPKc.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, ptr noundef nonnull align 4 dereferenceable(16) %i.x, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, ptr noundef nonnull align 4 dereferenceable(16) %i.x, i64 16, i1 false)
   %i.av = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZN4Luau5Lexer4nextEv(ptr noundef nonnull align 8 dereferenceable(120) %i.v)
           to label %_ZNK4Luau7AstNameeqEPKc.exit119.thread unwind label %bb.j ; 0 uses
 
@@ -2961,7 +2960,7 @@ _ZNK4Luau7AstNameeqEPKc.exit119:                  ; preds = %_ZNK4Luau7AstNameeq
   br i1 %i.ba, label %_ZNSt8optionalIN4Luau8LocationEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit120, label %_ZNK4Luau7AstNameeqEPKc.exit119.thread
 
 _ZNSt8optionalIN4Luau8LocationEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit120: ; preds = %_ZNK4Luau7AstNameeqEPKc.exit119
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, ptr noundef nonnull align 4 dereferenceable(16) %i.x, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, ptr noundef nonnull align 4 dereferenceable(16) %i.x, i64 16, i1 false)
   %i.bb = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZN4Luau5Lexer4nextEv(ptr noundef nonnull align 8 dereferenceable(120) %i.v)
           to label %_ZNK4Luau7AstNameeqEPKc.exit119.thread unwind label %bb.j ; 0 uses
 
@@ -3159,8 +3158,8 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %.not, label %bb.aj, label %.thread419
 
 bb.aj:                                            ; preds = %bb.ai
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6346)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6346, ptr noundef nonnull align 4 dereferenceable(16) %i.al, i64 16, i1 false), !tbaa.struct !36
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6349)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6349, ptr noundef nonnull align 4 dereferenceable(16) %i.al, i64 16, i1 false), !tbaa.struct !36
   %i.cp = load ptr, ptr %i.i, align 8, !tbaa !970 ; 10 uses
   %i.cq = load ptr, ptr %i.ae, align 8, !tbaa !174
   %.not.i.i135 = icmp eq ptr %i.cp, %i.cq
@@ -3169,13 +3168,13 @@ bb.aj:                                            ; preds = %bb.ai
 bb.ak:                                            ; preds = %bb.aj
   store ptr %i.cm, ptr %i.cp, align 8
   %.sroa.6346.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6346.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6346, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6346.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6349, i64 16, i1 false)
   %.sroa.7348.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 24
   store ptr %i.cj, ptr %.sroa.7348.0..sroa_idx, align 8
   %.sroa.8351.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 32
   store i32 %.041, ptr %.sroa.8351.0..sroa_idx, align 8
   %.sroa.9354.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9354.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9354.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, i64 16, i1 false)
   %.sroa.9354.sroa.6.0..sroa.9354.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.cp, i64 52
   store i8 %.sroa.10363.0, ptr %.sroa.9354.sroa.6.0..sroa.9354.0..sroa_idx.sroa_idx, align 4
   %i.cr = load ptr, ptr %i.i, align 8, !tbaa !970
@@ -3215,13 +3214,13 @@ _ZNKSt6vectorIN4Luau12AstTablePropESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; pre
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.cw ; 6 uses
   store ptr %i.cm, ptr %i.df, align 8
   %.sroa.6346.0..sroa_idx347 = getelementptr inbounds nuw i8, ptr %i.df, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6346.0..sroa_idx347, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6346, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6346.0..sroa_idx347, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6349, i64 16, i1 false)
   %.sroa.7348.0..sroa_idx349 = getelementptr inbounds nuw i8, ptr %i.df, i64 24
   store ptr %i.cj, ptr %.sroa.7348.0..sroa_idx349, align 8
   %.sroa.8351.0..sroa_idx352 = getelementptr inbounds nuw i8, ptr %i.df, i64 32
   store i32 %.041, ptr %.sroa.8351.0..sroa_idx352, align 8
   %.sroa.9354.0..sroa_idx355 = getelementptr inbounds nuw i8, ptr %i.df, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9354.0..sroa_idx355, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9354.0..sroa_idx355, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, i64 16, i1 false)
   %.sroa.9354.sroa.6.0..sroa.9354.0..sroa_idx355.sroa_idx = getelementptr inbounds nuw i8, ptr %i.df, i64 52
   store i8 %.sroa.10363.0, ptr %.sroa.9354.sroa.6.0..sroa.9354.0..sroa_idx355.sroa_idx, align 4
   %.not10.i.i.i.i.i.i = icmp eq ptr %i.ct, %i.cp
@@ -3258,7 +3257,7 @@ _ZNSt6vectorIN4Luau12AstTablePropESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_
 
 bb.ao:                                            ; preds = %_ZNSt6vectorIN4Luau12AstTablePropESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, %bb.ak
   %i.dn = add i64 %.sroa.13406.0625, 1            ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6346)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6349)
   %i.do = load i8, ptr %i.af, align 8, !tbaa !393, !range !52, !noundef !53
   %i.dp = trunc nuw i8 %i.do to i1
   br i1 %i.dp, label %bb.ap, label %bb.bd
@@ -3430,7 +3429,7 @@ bb.ba:                                            ; preds = %bb.ag, %bb.af
 
 bb.bb:                                            ; preds = %.loopexit.split-lp457, %.loopexit456
   %lpad.phi460 = phi { ptr, i32 } [ %lpad.loopexit458, %.loopexit456 ], [ %lpad.loopexit.split-lp459, %.loopexit.split-lp457 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6346)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6349)
   br label %bb.be
 
 .loopexit461:                                     ; preds = %bb.ar, %.noexc139, %_ZNKSt6vectorIN4Luau12CstTypeTable4ItemESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i
@@ -3475,7 +3474,7 @@ bb.bf:                                            ; preds = %.critedge2, %bb.o
 
 bb.bg:                                            ; preds = %bb.bf
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #34
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, i64 16, i1 false)
   store i8 %.sroa.10363.0, ptr %.sroa.10363.0..sroa_idx, align 8
   invoke void @_ZN4Luau6Parser17parseTableIndexerENS_14AstTableAccessESt8optionalINS_8LocationEENS_6LexemeE(ptr dead_on_unwind nonnull writable sret(%"struct.Luau::Parser::TableIndexerResult") align 8 %14, ptr noundef nonnull align 8 dereferenceable(1232) %0, i32 noundef %.041, ptr noundef nonnull byval(%"class.std::optional.182") align 8 %15, ptr noundef nonnull byval(%"struct.Luau::Lexeme") align 8 %9)
           to label %bb.bh unwind label %bb.bi
@@ -3500,7 +3499,7 @@ bb.bj:                                            ; preds = %bb.bh
 
 bb.bk:                                            ; preds = %bb.bf
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #34
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, i64 16, i1 false)
   store i8 %.sroa.10363.0, ptr %.sroa.10363.0..sroa_idx364, align 8
   invoke void @_ZN4Luau6Parser17parseTableIndexerENS_14AstTableAccessESt8optionalINS_8LocationEENS_6LexemeE(ptr dead_on_unwind nonnull writable sret(%"struct.Luau::Parser::TableIndexerResult") align 8 %16, ptr noundef nonnull align 8 dereferenceable(1232) %0, i32 noundef %.041, ptr noundef nonnull byval(%"class.std::optional.182") align 8 %17, ptr noundef nonnull byval(%"struct.Luau::Lexeme") align 8 %9)
           to label %bb.bl unwind label %bb.bu
@@ -3745,9 +3744,9 @@ bb.cg:                                            ; preds = %.noexc176
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.hd = load ptr, ptr %i.ao, align 8, !tbaa !373, !nonnull !53, !align !374
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6292)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6295)
   %i.he = getelementptr inbounds nuw i8, ptr %i.gx, i64 12
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6292, ptr noundef nonnull align 4 dereferenceable(16) %i.he, i64 16, i1 false), !tbaa.struct !36
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6295, ptr noundef nonnull align 4 dereferenceable(16) %i.he, i64 16, i1 false), !tbaa.struct !36
   %i.hf = invoke noundef ptr @_ZN4Luau9Allocator8allocateEm(ptr noundef nonnull align 8 dereferenceable(16) %i.hd, i64 noundef 56)
           to label %bb.ch unwind label %bb.cl     ; 7 uses
 
@@ -3756,14 +3755,14 @@ bb.ch:                                            ; preds = %bb.cg
   %.sroa.5291.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hf, i64 8
   store ptr %i.gx, ptr %.sroa.5291.0..sroa_idx, align 8
   %.sroa.6292.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hf, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6292.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6292, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6292.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6295, i64 16, i1 false)
   %.sroa.7293.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hf, i64 32
   store i32 %.041, ptr %.sroa.7293.0..sroa_idx, align 8
   %.sroa.8294.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hf, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.8294.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.8294.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, i64 16, i1 false)
   %.sroa.8294.sroa.5.0..sroa.8294.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.hf, i64 52
   store i8 %.sroa.10363.0, ptr %.sroa.8294.sroa.5.0..sroa.8294.0..sroa_idx.sroa_idx, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6292)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6295)
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #34
   br label %.loopexit438
 
@@ -3786,7 +3785,7 @@ bb.ck:                                            ; preds = %.noexc176, %bb.cf
 bb.cl:                                            ; preds = %bb.cg
   %i.hj = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6292)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6295)
   br label %bb.cm
 
 bb.cm:                                            ; preds = %bb.ck, %bb.cl
@@ -3810,7 +3809,7 @@ bb.co:                                            ; preds = %bb.cn
 bb.cp:                                            ; preds = %bb.cn
   %i.hl = load ptr, ptr %i.ac, align 8, !tbaa !22, !noalias !993
   %i.hm = ptrtoint ptr %i.hl to i64               ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5287, ptr noundef nonnull align 4 dereferenceable(16) %i.x, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5290, ptr noundef nonnull align 4 dereferenceable(16) %i.x, i64 16, i1 false)
   invoke void @_ZN4Luau6Parser10nextLexemeEv(ptr noundef nonnull align 8 dereferenceable(1232) %0)
           to label %bb.cq unwind label %.loopexit440.a
 
@@ -3877,13 +3876,13 @@ bb.cw:                                            ; preds = %bb.cv
 bb.cx:                                            ; preds = %bb.cw
   store i64 %i.hm, ptr %i.hu, align 8
   %.sroa.6276.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6276.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5287, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6276.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5290, i64 16, i1 false)
   %.sroa.7278.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 24
   store ptr %i.ht, ptr %.sroa.7278.0..sroa_idx, align 8
   %.sroa.8281.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 32
   store i32 %.041, ptr %.sroa.8281.0..sroa_idx, align 8
   %.sroa.9284.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9284.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9284.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, i64 16, i1 false)
   %.sroa.9284.sroa.6.0..sroa.9284.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.hu, i64 52
   store i8 %.sroa.10363.0, ptr %.sroa.9284.sroa.6.0..sroa.9284.0..sroa_idx.sroa_idx, align 4
   %i.hw = load ptr, ptr %i.i, align 8, !tbaa !970
@@ -3923,13 +3922,13 @@ _ZNKSt6vectorIN4Luau12AstTablePropESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i191: ; 
   %i.ik = getelementptr inbounds nuw i8, ptr %i.ij, i64 %i.ib ; 6 uses
   store i64 %i.hm, ptr %i.ik, align 8
   %.sroa.6276.0..sroa_idx277 = getelementptr inbounds nuw i8, ptr %i.ik, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6276.0..sroa_idx277, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5287, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6276.0..sroa_idx277, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5290, i64 16, i1 false)
   %.sroa.7278.0..sroa_idx279 = getelementptr inbounds nuw i8, ptr %i.ik, i64 24
   store ptr %i.ht, ptr %.sroa.7278.0..sroa_idx279, align 8
   %.sroa.8281.0..sroa_idx282 = getelementptr inbounds nuw i8, ptr %i.ik, i64 32
   store i32 %.041, ptr %.sroa.8281.0..sroa_idx282, align 8
   %.sroa.9284.0..sroa_idx285 = getelementptr inbounds nuw i8, ptr %i.ik, i64 36
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9284.0..sroa_idx285, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0362, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.9284.0..sroa_idx285, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0364, i64 16, i1 false)
   %.sroa.9284.sroa.6.0..sroa.9284.0..sroa_idx285.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ik, i64 52
   store i8 %.sroa.10363.0, ptr %.sroa.9284.sroa.6.0..sroa.9284.0..sroa_idx285.sroa_idx, align 4
   %.not10.i.i.i.i.i.i194 = icmp eq ptr %i.hy, %i.hu
@@ -4332,7 +4331,7 @@ _ZSt8_DestroyIPN4Luau12AstTablePropES1_EvT_S3_RSaIT0_E.exit.i.i.i.i: ; preds = %
 _ZN4Luau10TempVectorINS_12AstTablePropEED2Ev.exit: ; preds = %_ZN4Luau10TempVectorINS_12CstTypeTable4ItemEED2Ev.exit, %_ZSt8_DestroyIPN4Luau12AstTablePropES1_EvT_S3_RSaIT0_E.exit.i.i.i.i
   ret ptr %i.kx
 
-bb.dy:                                            ; preds = %bb.j, %bb.k, %bb.by, %bb.ci, %bb.cm, %bb.cj, %.loopexit441, %.loopexit.split-lp442, %.loopexit446, %.loopexit.split-lp447, %.loopexit440.a, %.loopexit.split-lp, %bb.dk, %bb.dl, %bb.dr, %bb.du, %bb.dw, %bb.dv, %bb.i
+bb.dy:                                            ; preds = %bb.j, %bb.k, %bb.by, %bb.ci, %bb.cm, %bb.cj, %.loopexit441, %.loopexit.split-lp442, %.loopexit446, %.loopexit.split-lp447, %.loopexit440.a, %.loopexit.split-lp, %bb.dk, %bb.dl, %bb.dv, %bb.dw, %bb.du, %bb.dr, %bb.i
   %.pn109.pn.pn.pn.pn = phi { ptr, i32 } [ %i.aw, %bb.i ], [ %i.lv, %bb.dv ], [ %i.kd, %bb.dr ], [ %i.lu, %bb.du ], [ %i.lw, %bb.dw ], [ %i.ax, %bb.j ], [ %.pn96.pn.pn.pn.pn.pn.pn.pn.pn, %bb.by ], [ %i.hh, %bb.cj ], [ %i.ay, %bb.k ], [ %i.hg, %bb.ci ], [ %.pn.pn, %bb.cm ], [ %lpad.loopexit.split-lp449, %.loopexit.split-lp447 ], [ %i.jy, %bb.dk ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %i.jz, %bb.dl ], [ %lpad.loopexit, %.loopexit440.a ], [ %lpad.loopexit448, %.loopexit446 ], [ %lpad.loopexit443, %.loopexit441 ], [ %lpad.loopexit.split-lp444, %.loopexit.split-lp442 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #34
   %i.md = load ptr, ptr %i.o, align 8, !tbaa !1006
@@ -4735,7 +4734,7 @@ _ZN4Luau10TempVectorINS_8PositionEED2Ev.exit:     ; preds = %bb.as, %_ZSt8_Destr
   br label %bb.au
 
 bb.at:                                            ; preds = %bb.aq, %bb.ar, %bb.ap, %bb.ak, %bb.ai
-  %.pn.pn.pn = phi { ptr, i32 } [ %i.ef, %bb.ak ], [ %i.ed, %bb.ai ], [ %i.gj, %bb.ap ], [ %i.gl, %bb.ar ], [ %i.gk, %bb.aq ]
+  %.pn.pn.pn = phi { ptr, i32 } [ %i.gj, %bb.ap ], [ %i.ed, %bb.ai ], [ %i.ef, %bb.ak ], [ %i.gl, %bb.ar ], [ %i.gk, %bb.aq ]
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #34
   %i.gs = load ptr, ptr %20, align 8, !tbaa !435, !nonnull !53, !align !374 ; 2 uses
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !439
@@ -5138,7 +5137,7 @@ _ZN4Luau10TempVectorINS_12AstExprTable4ItemEED2Ev.exit: ; preds = %_ZN4Luau10Tem
   ret ptr %i.iw
 
 bb.cw:                                            ; preds = %.loopexit294, %.loopexit.split-lp295, %.loopexit289, %.loopexit.split-lp290, %.loopexit309, %.loopexit.split-lp310, %bb.co, %bb.cu, %bb.cr, %bb.ch, %bb.bq, %bb.au, %bb.ai
-  %.pn68 = phi { ptr, i32 } [ %i.jt, %bb.cr ], [ %lpad.loopexit.split-lp292, %.loopexit.split-lp290 ], [ %.pn54.pn.pn.pn.pn.pn.pn.pn, %bb.ai ], [ %.pn47.pn.pn.pn.pn, %bb.bq ], [ %i.dq, %bb.au ], [ %i.ia, %bb.ch ], [ %lpad.loopexit.split-lp312, %.loopexit.split-lp310 ], [ %i.id, %bb.co ], [ %.pn64, %bb.cu ], [ %lpad.loopexit311, %.loopexit309 ], [ %lpad.loopexit291, %.loopexit289 ], [ %lpad.loopexit296, %.loopexit294 ], [ %lpad.loopexit.split-lp297, %.loopexit.split-lp295 ]
+  %.pn68 = phi { ptr, i32 } [ %.pn64, %bb.cu ], [ %i.jt, %bb.cr ], [ %.pn54.pn.pn.pn.pn.pn.pn.pn, %bb.ai ], [ %.pn47.pn.pn.pn.pn, %bb.bq ], [ %i.dq, %bb.au ], [ %i.ia, %bb.ch ], [ %lpad.loopexit.split-lp312, %.loopexit.split-lp310 ], [ %lpad.loopexit.split-lp292, %.loopexit.split-lp290 ], [ %i.id, %bb.co ], [ %lpad.loopexit311, %.loopexit309 ], [ %lpad.loopexit291, %.loopexit289 ], [ %lpad.loopexit296, %.loopexit294 ], [ %lpad.loopexit.split-lp297, %.loopexit.split-lp295 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #34
   %i.kc = load ptr, ptr %i.i, align 8, !tbaa !1168
   %i.kd = getelementptr inbounds i8, ptr %i.kc, i64 %i.o ; 2 uses

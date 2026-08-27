@@ -205,9 +205,7 @@ bb.ah:                                            ; preds = %bb.a
   %i.hu = getelementptr inbounds nuw i8, ptr %i.ht, i64 80
   %.sroa.04528.0.copyload = load ptr, ptr %i.hu, align 8, !tbaa !184 ; 4 uses
   %.sroa.84533.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ht, i64 88
-  %i.hv = load i64, ptr %.sroa.84533.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.84533.sroa.0.0.extract.trunc = trunc i64 %i.hv to i32 ; 2 uses
-  %.sroa.84533.sroa.5.0.extract.shift = and i64 %i.hv, -4294967296
+  %i.hv = load i64, ptr %.sroa.84533.0..sroa_idx, align 8 ; 3 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %.sroa.04528.0.copyload, i64 24
   %i.hx = load i32, ptr %i.hw, align 8, !tbaa !157
   %i.hy = icmp eq i32 %i.hx, 236
@@ -235,11 +233,14 @@ bb.aj:                                            ; preds = %bb.ai
   %.sroa.04528.0.copyload4532 = load ptr, ptr %i.ia, align 8, !tbaa !184
   %.sroa.84533.0..sroa_idx4535 = getelementptr inbounds nuw i8, ptr %i.ia, i64 8
   %i.ig = load i32, ptr %.sroa.84533.0..sroa_idx4535, align 8, !tbaa !172
+  %.sroa.84533.0.insert.ext = zext i32 %i.ig to i64
+  %.sroa.84533.0.insert.mask = and i64 %i.hv, -4294967296
+  %.sroa.84533.0.insert.insert = or disjoint i64 %.sroa.84533.0.insert.mask, %.sroa.84533.0.insert.ext
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.ah, %bb.aj, %bb.ai
-  %.sroa.84533.sroa.0.0 = phi i32 [ %i.ig, %bb.aj ], [ %.sroa.84533.sroa.0.0.extract.trunc, %bb.ai ], [ %.sroa.84533.sroa.0.0.extract.trunc, %bb.ah ]
   %.sroa.04528.0 = phi ptr [ %.sroa.04528.0.copyload4532, %bb.aj ], [ %.sroa.04528.0.copyload, %bb.ai ], [ %.sroa.04528.0.copyload, %bb.ah ]
+  %.sroa.84533.0 = phi i64 [ %.sroa.84533.0.insert.insert, %bb.aj ], [ %i.hv, %bb.ai ], [ %i.hv, %bb.ah ]
   %i.ih = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ii = load ptr, ptr %i.ih, align 8, !tbaa !158, !nonnull !132, !align !133 ; 2 uses
   %i.ij = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.ii, i64 noundef 0, ptr noundef nonnull align 8 dereferenceable(12) %40, i16 %.sroa.0.0.copyload.i3300, ptr %.sroa.21.0.copyload.i3302, i1 noundef zeroext false, i1 noundef zeroext false) #18 ; 2 uses
@@ -250,9 +251,7 @@ bb.aj:                                            ; preds = %bb.ai
   store i32 %.fca.1.extract2428, ptr %.sroa.22430.0..sroa_idx, align 8
   store ptr %.sroa.04528.0, ptr %42, align 8, !tbaa !184
   %.sroa.84533.0..sroa_idx4534 = getelementptr inbounds nuw i8, ptr %42, i64 8
-  %.sroa.84533.sroa.0.0.insert.ext = zext i32 %.sroa.84533.sroa.0.0 to i64
-  %.sroa.84533.sroa.0.0.insert.insert = or disjoint i64 %.sroa.84533.sroa.5.0.extract.shift, %.sroa.84533.sroa.0.0.insert.ext
-  store i64 %.sroa.84533.sroa.0.0.insert.insert, ptr %.sroa.84533.0..sroa_idx4534, align 8
+  store i64 %.sroa.84533.0, ptr %.sroa.84533.0..sroa_idx4534, align 8
   %i.ik = call { ptr, i32 } @_ZN4llvm12SelectionDAG7getNodeEjRKNS_5SDLocENS_3EVTENS_7SDValueES5_(ptr noundef nonnull align 8 dereferenceable(920) %i.ii, i32 noundef 60, ptr noundef nonnull align 8 dereferenceable(12) %40, i16 %.sroa.0.0.copyload.i3300, ptr %.sroa.21.0.copyload.i3302, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %41, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %42) #18 ; 2 uses
   %.fca.0.extract2423 = extractvalue { ptr, i32 } %i.ik, 0
   %.fca.1.extract2424 = extractvalue { ptr, i32 } %i.ik, 1
@@ -655,7 +654,6 @@ bb.bt:                                            ; preds = %bb.g
   %.sroa.02604.0.copyload = load ptr, ptr %i.py, align 8, !tbaa !184 ; 2 uses
   %.sroa.52606.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.px, i64 168
   %i.pz = load i64, ptr %.sroa.52606.0..sroa_idx, align 8
-  %.sroa.52606.sroa.0.0.extract.trunc = trunc i64 %i.pz to i32
   %i.qa = getelementptr inbounds nuw i8, ptr %.sroa.02604.0.copyload, i64 88
   %i.qb = load i32, ptr %i.qa, align 8, !tbaa !169 ; 2 uses
   %i.qc = load ptr, ptr %i.f, align 8, !tbaa !159
@@ -745,7 +743,8 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu
   %i.rp = getelementptr inbounds nuw i8, ptr %53, i64 64
   store ptr %.sroa.02604.0.copyload, ptr %i.rp, align 8, !tbaa !184
   %.sroa.52606.0..sroa_idx2607 = getelementptr inbounds nuw i8, ptr %53, i64 72
-  store i32 %.sroa.52606.sroa.0.0.extract.trunc, ptr %.sroa.52606.0..sroa_idx2607, align 8, !tbaa !172
+  %.sroa.52606.0.extract.trunc = trunc i64 %i.pz to i32
+  store i32 %.sroa.52606.0.extract.trunc, ptr %.sroa.52606.0..sroa_idx2607, align 8, !tbaa !172
   store ptr %53, ptr %52, align 8, !tbaa !236
   %i.rq = getelementptr inbounds nuw i8, ptr %52, i64 8
   store i64 5, ptr %i.rq, align 8, !tbaa !238

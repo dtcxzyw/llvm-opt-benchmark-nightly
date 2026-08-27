@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7: ; preds = %bb.c
 define linkonce_odr hidden { <2 x float>, float } @_ZNK6Assimp3FBX5Light5ColorEv(ptr noundef nonnull align 8 dereferenceable(72) %0) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %.sroa.0 = alloca { float, float }, align 8     ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %.sroa.6 = alloca float, align 4                ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.b = load ptr, ptr %i.a, align 8
@@ -219,7 +219,7 @@ define linkonce_odr hidden { <2 x float>, float } @_ZNK6Assimp3FBX5Light5ColorEv
   store i8 0, ptr %i.e, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.0, align 8
+  store i64 4575657222473777152, ptr %.sroa.0, align 8
   store float 1.000000e+00, ptr %.sroa.6, align 4
   %i.f = invoke noundef ptr @_ZNK6Assimp3FBX13PropertyTable3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(136) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %1)
           to label %.noexc8 unwind label %bb.c    ; 2 uses
@@ -622,15 +622,15 @@ bb.a:
   %16 = alloca %"class.std::vector.582", align 16 ; 10 uses
   %17 = alloca %class.aiVector3t, align 8         ; 9 uses
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %.sroa.0606 = alloca { float, float }, align 8  ; 6 uses
+  %.sroa.0606 = alloca i64, align 8               ; 6 uses
   %.sroa.6607 = alloca float, align 4             ; 5 uses
   %19 = alloca %class.aiVector3t, align 8         ; 7 uses
   %20 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %.sroa.0603 = alloca { float, float }, align 8  ; 6 uses
+  %.sroa.0603 = alloca i64, align 8               ; 6 uses
   %.sroa.6604 = alloca float, align 4             ; 5 uses
   %21 = alloca %class.aiVector3t, align 8         ; 9 uses
   %22 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %.sroa.0 = alloca { float, float }, align 8     ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %.sroa.6 = alloca float, align 4                ; 5 uses
   %23 = alloca %class.aiVector3t, align 8         ; 6 uses
   %24 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -992,7 +992,7 @@ bb.aa:                                            ; preds = %.noexc, %bb.u
   store i8 0, ptr %i.dv, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0606)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6607)
-  store <2 x float> zeroinitializer, ptr %.sroa.0606, align 8
+  store i64 0, ptr %.sroa.0606, align 8
   store float 0.000000e+00, ptr %.sroa.6607, align 4
   %i.dw = invoke noundef ptr @_ZNK6Assimp3FBX13PropertyTable3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(136) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %18)
           to label %.noexc224 unwind label %bb.ar ; 2 uses
@@ -1043,7 +1043,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.ac
   store i8 0, ptr %i.eh, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0603)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6604)
-  store <2 x float> zeroinitializer, ptr %.sroa.0603, align 8
+  store i64 0, ptr %.sroa.0603, align 8
   store float 0.000000e+00, ptr %.sroa.6604, align 4
   %i.ei = invoke noundef ptr @_ZNK6Assimp3FBX13PropertyTable3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(136) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %20)
           to label %.noexc236 unwind label %bb.as ; 2 uses
@@ -1094,7 +1094,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit240: ; preds = %bb
   store i8 0, ptr %i.et, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store <2 x float> splat (float 1.000000e+00), ptr %.sroa.0, align 8
+  store i64 4575657222473777152, ptr %.sroa.0, align 8
   store float 1.000000e+00, ptr %.sroa.6, align 4
   %i.eu = invoke noundef ptr @_ZNK6Assimp3FBX13PropertyTable3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(136) %i.m, ptr noundef nonnull align 8 dereferenceable(32) %22)
           to label %.noexc252 unwind label %bb.at ; 2 uses
@@ -1497,7 +1497,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit7: ; preds = %bb.c
 define linkonce_odr hidden { <2 x float>, float } @_ZNK6Assimp3FBX18FileGlobalSettings12AmbientColorEv(ptr noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #5 comdat align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %.sroa.0 = alloca { float, float }, align 8     ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %.sroa.6 = alloca float, align 4                ; 5 uses
   %i.a = load ptr, ptr %0, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #27
@@ -1510,7 +1510,7 @@ define linkonce_odr hidden { <2 x float>, float } @_ZNK6Assimp3FBX18FileGlobalSe
   store i8 0, ptr %i.d, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store <2 x float> zeroinitializer, ptr %.sroa.0, align 8
+  store i64 0, ptr %.sroa.0, align 8
   store float 0.000000e+00, ptr %.sroa.6, align 4
   %i.e = invoke noundef ptr @_ZNK6Assimp3FBX13PropertyTable3GetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(136) %i.a, ptr noundef nonnull align 8 dereferenceable(32) %1)
           to label %.noexc8 unwind label %bb.c    ; 2 uses

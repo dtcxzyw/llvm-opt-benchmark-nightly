@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af, %bb.
   store i32 %i.hb, ptr %i.gz, align 8, !tbaa !440
   %i.hc = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.hd = load i32, ptr %i.hc, align 8, !tbaa !429
-  %i.he = add i32 %i.hd, %i.cm                    ; 4 uses
+  %i.he = add i32 %i.hd, %i.cm                    ; 3 uses
   %i.hf = load i16, ptr %i.db, align 8, !tbaa !114 ; 7 uses
   %i.hg = icmp eq i16 %i.hf, -31132
   %i.hh = icmp eq i16 %i.da, 4
@@ -284,22 +284,22 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
 
 bb.as:                                            ; preds = %bb.ar
   %i.ih = getelementptr inbounds nuw i8, ptr %i.av, i64 96 ; 4 uses
-  %i.ii = getelementptr inbounds nuw i8, ptr %i.av, i64 104 ; 5 uses
-  %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !339 ; 9 uses
-  %i.ik = getelementptr inbounds nuw i8, ptr %i.av, i64 112 ; 5 uses
-  %i.il = load ptr, ptr %i.ik, align 8, !tbaa !387 ; 2 uses
+  %i.ii = getelementptr inbounds nuw i8, ptr %i.av, i64 104 ; 7 uses
+  %i.ij = load ptr, ptr %i.ii, align 8, !tbaa !339 ; 7 uses
+  %i.ik = getelementptr inbounds nuw i8, ptr %i.av, i64 112 ; 6 uses
+  %i.il = load ptr, ptr %i.ik, align 8, !tbaa !387
   %.not.i208 = icmp eq ptr %i.ij, %i.il
   br i1 %.not.i208, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  store i32 %i.he, ptr %i.ij, align 8, !tbaa !264
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ij, i64 4
-  store i32 0, ptr %.sroa.8.0..sroa_idx, align 4, !tbaa !264
+  %.sroa.0231.sroa.0.0.insert.ext243 = zext i32 %i.he to i64
+  store i64 %.sroa.0231.sroa.0.0.insert.ext243, ptr %i.ij, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ij, i64 8
   store i16 %i.da, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !326
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ij, i64 16
   store ptr %.sroa.17.1, ptr %.sroa.17.0..sroa_idx, align 8, !tbaa !186
-  %i.im = getelementptr inbounds nuw i8, ptr %i.ij, i64 24 ; 2 uses
+  %12 = load ptr, ptr %i.ii, align 8, !tbaa !339
+  %i.im = getelementptr inbounds nuw i8, ptr %12, i64 24 ; 2 uses
   store ptr %i.im, ptr %i.ii, align 8, !tbaa !339
   br label %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE9push_backERKS1_.exit
 
@@ -327,10 +327,9 @@ _ZNKSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.assume(i1 %.not.i.i.i)
   %i.ix = mul nuw nsw i64 %i.iw, 24
   %i.iy = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ix) #23 ; 5 uses
-  %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 %i.ip ; 4 uses
-  store i32 %i.he, ptr %i.iz, align 8, !tbaa !264
-  %.sroa.8.0..sroa_idx232 = getelementptr inbounds nuw i8, ptr %i.iz, i64 4
-  store i32 0, ptr %.sroa.8.0..sroa_idx232, align 4, !tbaa !264
+  %i.iz = getelementptr inbounds nuw i8, ptr %i.iy, i64 %i.ip ; 3 uses
+  %.sroa.0231.sroa.0.0.insert.ext246 = zext i32 %i.he to i64
+  store i64 %.sroa.0231.sroa.0.0.insert.ext246, ptr %i.iz, align 8
   %.sroa.9.0..sroa_idx235 = getelementptr inbounds nuw i8, ptr %i.iz, i64 8
   store i16 %i.da, ptr %.sroa.9.0..sroa_idx235, align 8, !tbaa !326
   %.sroa.17.0..sroa_idx242 = getelementptr inbounds nuw i8, ptr %i.iz, i64 16
@@ -362,13 +361,12 @@ bb.aw:                                            ; preds = %_ZNSt6vectorIN12_GL
 _ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.aw, %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit26.i.i
   store ptr %i.iy, ptr %i.ih, align 8, !tbaa !338
   store ptr %i.jc, ptr %i.ii, align 8, !tbaa !339
-  %i.jg = getelementptr inbounds nuw [24 x i8], ptr %i.iy, i64 %i.iw ; 2 uses
+  %i.jg = getelementptr inbounds nuw [24 x i8], ptr %i.iy, i64 %i.iw
   store ptr %i.jg, ptr %i.ik, align 8, !tbaa !387
   br label %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE9push_backERKS1_.exit
 
 _ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE9push_backERKS1_.exit: ; preds = %bb.at, %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i
-  %12 = phi ptr [ %i.il, %bb.at ], [ %i.jg, %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 4 uses
-  %i.jh = phi ptr [ %i.im, %bb.at ], [ %i.jc, %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 6 uses
+  %i.jh = phi ptr [ %i.im, %bb.at ], [ %i.jc, %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i ] ; 7 uses
   %i.ji = load i16, ptr %i.db, align 8, !tbaa !114
   %i.jj = icmp eq i16 %i.ji, 358
   br i1 %i.jj, label %bb.ax, label %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE9push_backERKS1_.exit222
@@ -380,24 +378,25 @@ bb.ax:                                            ; preds = %_ZNSt6vectorIN12_GL
   ]
 
 bb.ay:                                            ; preds = %bb.ax, %bb.ax
-  %.not.i209 = icmp eq ptr %i.jh, %12
+  %.sroa.0231.sroa.0.0.insert.ext = zext i32 %i.he to i64 ; 2 uses
+  %13 = load ptr, ptr %i.ik, align 8, !tbaa !387
+  %.not.i209 = icmp eq ptr %i.jh, %13
   br i1 %.not.i209, label %bb.ba, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  store i32 %i.he, ptr %i.jh, align 8, !tbaa !264
-  %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jh, i64 4
-  store i32 0, ptr %.sroa.0.sroa.5.0..sroa_idx, align 4, !tbaa !264
-  %.sroa.5.0..sroa_idx223 = getelementptr inbounds nuw i8, ptr %i.jh, i64 8
-  store i16 37, ptr %.sroa.5.0..sroa_idx223, align 8, !tbaa !326
-  %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx227.sroa_idx = getelementptr inbounds nuw i8, ptr %i.jh, i64 16
-  store ptr %.sroa.17.1, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx227.sroa_idx, align 8, !tbaa !186
-  %i.jk = getelementptr inbounds nuw i8, ptr %i.jh, i64 24
+  store i64 %.sroa.0231.sroa.0.0.insert.ext, ptr %i.jh, align 8
+  %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jh, i64 8
+  store i16 37, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8, !tbaa !326
+  %.sroa.5.0..sroa_idx223 = getelementptr inbounds nuw i8, ptr %i.jh, i64 16
+  store ptr %.sroa.17.1, ptr %.sroa.5.0..sroa_idx223, align 8, !tbaa !186
+  %14 = load ptr, ptr %i.ii, align 8, !tbaa !339
+  %i.jk = getelementptr inbounds nuw i8, ptr %14, i64 24
   store ptr %i.jk, ptr %i.ii, align 8, !tbaa !339
   br label %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE9push_backERKS1_.exit222
 
 bb.ba:                                            ; preds = %bb.ay
   %.val16.i.i210 = load ptr, ptr %i.ih, align 8, !tbaa !338 ; 5 uses
-  %i.jl = ptrtoint ptr %12 to i64
+  %i.jl = ptrtoint ptr %i.jh to i64
   %i.jm = ptrtoint ptr %.val16.i.i210 to i64      ; 2 uses
   %i.jn = sub i64 %i.jl, %i.jm                    ; 3 uses
   %i.jo = icmp eq i64 %i.jn, 9223372036854775800
@@ -409,7 +408,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 _ZNKSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE12_M_check_lenEmPKc.exit.i.i211: ; preds = %bb.ba
   %i.jp = sdiv exact i64 %i.jn, 24                ; 3 uses
-  %i.jq = icmp eq ptr %12, %.val16.i.i210         ; 2 uses
+  %i.jq = icmp eq ptr %i.jh, %.val16.i.i210       ; 2 uses
   %.sroa.speculated.i.i.i212 = select i1 %i.jq, i64 1, i64 %i.jp
   %i.jr = add nsw i64 %.sroa.speculated.i.i.i212, %i.jp ; 2 uses
   %i.js = icmp ult i64 %i.jr, %i.jp
@@ -419,13 +418,11 @@ _ZNKSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.assume(i1 %.not.i.i.i213)
   %i.jv = mul nuw nsw i64 %i.ju, 24
   %i.jw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jv) #23 ; 5 uses
-  %13 = getelementptr inbounds nuw i8, ptr %i.jw, i64 %i.jn ; 4 uses
-  store i32 %i.he, ptr %13, align 8, !tbaa !264
-  %.sroa.0.sroa.5.0..sroa_idx246 = getelementptr inbounds nuw i8, ptr %13, i64 4
-  store i32 0, ptr %.sroa.0.sroa.5.0..sroa_idx246, align 4, !tbaa !264
-  %.sroa.5.0..sroa_idx225 = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %.sroa.0.sroa.5.0..sroa_idx246 = getelementptr inbounds nuw i8, ptr %i.jw, i64 %i.jn ; 3 uses
+  store i64 %.sroa.0231.sroa.0.0.insert.ext, ptr %.sroa.0.sroa.5.0..sroa_idx246, align 8
+  %.sroa.5.0..sroa_idx225 = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.5.0..sroa_idx246, i64 8
   store i16 37, ptr %.sroa.5.0..sroa_idx225, align 8, !tbaa !326
-  %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx228.sroa_idx = getelementptr inbounds nuw i8, ptr %13, i64 16
+  %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx228.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.5.0..sroa_idx246, i64 16
   store ptr %.sroa.17.1, ptr %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx228.sroa_idx, align 8, !tbaa !186
   br i1 %i.jq, label %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit26.i.i218, label %.lr.ph.i.i.i.i.i214
 
@@ -435,7 +432,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE12_M_check_lenEmPKc.exit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.03.i.i.i.i.i215, ptr noundef nonnull readonly align 8 dereferenceable(24) %.092.i.i.i.i.i216, i64 24, i1 false), !tbaa.struct !442, !alias.scope !448
   %i.jx = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i216, i64 24 ; 2 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i215, i64 24 ; 2 uses
-  %.not.i.i.i.i.i217 = icmp eq ptr %i.jx, %12
+  %.not.i.i.i.i.i217 = icmp eq ptr %i.jx, %i.jh
   br i1 %.not.i.i.i.i.i217, label %_ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit26.i.i218, label %.lr.ph.i.i.i.i.i214, !llvm.loop !447
 
 _ZNSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit26.i.i218: ; preds = %.lr.ph.i.i.i.i.i214, %_ZNKSt6vectorIN12_GLOBAL__N_114COFFRelocationESaIS1_EE12_M_check_lenEmPKc.exit.i.i211

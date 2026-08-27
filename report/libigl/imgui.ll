@@ -205,7 +205,7 @@ bb.gv:                                            ; preds = %bb.gu
   br label %bb.gw
 
 bb.gw:                                            ; preds = %bb.gs, %bb.gv, %bb.gu, %bb.gt
-  %i.akv = getelementptr inbounds nuw i8, ptr %.01057, i64 16 ; 22 uses
+  %i.akv = getelementptr inbounds nuw i8, ptr %.01057, i64 16 ; 21 uses
   %i.akw = getelementptr i8, ptr %.01057, i64 20  ; 6 uses
   %i.akx = load <2 x float>, ptr %i.akv, align 8, !tbaa !9
   %i.aky = fptosi <2 x float> %i.akx to <2 x i32>
@@ -608,7 +608,6 @@ bb.ii:                                            ; preds = %bb.ig
 .thread82.thread.i:                               ; preds = %bb.ii, %.thread83.i, %bb.ih, %.thread79.i, %bb.ig
   %i.axj = phi <2 x float> [ splat (float f0xFF7FFFFF), %bb.ii ], [ splat (float f0xFF7FFFFF), %bb.ig ], [ splat (float f0xFF7FFFFF), %.thread83.i ], [ %i.anv, %bb.ih ], [ %i.anw, %.thread79.i ] ; 2 uses
   %i.axk = phi <2 x float> [ %i.anx, %bb.ii ], [ splat (float f0x7F7FFFFF), %bb.ig ], [ %i.any, %.thread83.i ], [ splat (float f0x7F7FFFFF), %bb.ih ], [ splat (float f0x7F7FFFFF), %.thread79.i ] ; 2 uses
-  %28 = load <2 x float>, ptr %i.akv, align 8     ; 2 uses
   %i.axl = zext i1 %i.auk to i64                  ; 2 uses
   %i.axm = getelementptr inbounds nuw [4 x i8], ptr %i.ang, i64 %i.axl
   %i.axn = load float, ptr %i.axm, align 4, !tbaa !9
@@ -618,24 +617,24 @@ bb.ii:                                            ; preds = %bb.ig
   %i.axr = fadd float %i.axq, 4.000000e+00        ; 2 uses
   %i.axs = getelementptr inbounds nuw i8, ptr %i.auj, i64 8
   %i.axt = getelementptr inbounds nuw i8, ptr %i.auj, i64 16
-  %i.axu = load <2 x float>, ptr %i.akv, align 8  ; 2 uses
+  %i.axu = load <2 x float>, ptr %i.akv, align 8  ; 4 uses
   %i.axv = insertelement <2 x i1> poison, i1 %i.auk, i64 0
   %i.axw = shufflevector <2 x i1> %i.axv, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.axx = insertelement <2 x float> %i.axu, float %i.axr, i64 1
   %i.axy = insertelement <2 x float> %i.axu, float %i.axr, i64 0
   %i.axz = select <2 x i1> %i.axw, <2 x float> %i.axx, <2 x float> %i.axy ; 3 uses
-  %29 = fcmp olt <2 x float> %i.axz, %i.axj
-  %30 = fcmp ogt <2 x float> %i.axz, %i.axk
-  %i.aya = select <2 x i1> %30, <2 x float> %i.axk, <2 x float> %i.axz
-  %i.ayb = select <2 x i1> %29, <2 x float> %i.axj, <2 x float> %i.aya ; 3 uses
+  %28 = fcmp ogt <2 x float> %i.axj, %i.axz
+  %29 = fcmp olt <2 x float> %i.axk, %i.axz
+  %i.aya = select <2 x i1> %29, <2 x float> %i.axk, <2 x float> %i.axz
+  %i.ayb = select <2 x i1> %28, <2 x float> %i.axj, <2 x float> %i.aya ; 3 uses
   %i.ayc = load <2 x float>, ptr %i.axs, align 4, !tbaa !9 ; 2 uses
   %i.ayd = load <2 x float>, ptr %i.axt, align 4, !tbaa !9 ; 2 uses
   %i.aye = fcmp olt <2 x float> %i.ayc, %i.ayd
   %i.ayf = select <2 x i1> %i.aye, <2 x float> %i.ayc, <2 x float> %i.ayd ; 4 uses
-  %i.ayg = fsub <2 x float> %28, %i.ayb
+  %i.ayg = fsub <2 x float> %i.axu, %i.ayb
   %i.ayh = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ayg, <2 x float> %i.ayf, <2 x float> %i.ayb) ; 5 uses
   %i.ayi = load <2 x float>, ptr %i.aet, align 8, !tbaa !9
-  %i.ayj = fadd <2 x float> %i.ayi, %28           ; 2 uses
+  %i.ayj = fadd <2 x float> %i.axu, %i.ayi        ; 2 uses
   %i.ayk = fsub <2 x float> %i.ayb, %i.ayj
   %i.ayl = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ayk, <2 x float> %i.ayf, <2 x float> %i.ayj)
   %i.aym = fsub <2 x float> %i.ayl, %i.ayh        ; 3 uses
@@ -657,10 +656,10 @@ bb.ij:                                            ; preds = %.thread82.thread.i
   %.sroa.054.4.vec.insert66.i = shufflevector <2 x float> %.sroa.054.5.i.a, <2 x float> %foldExtExtBinop1335, <2 x i32> <i32 0, i32 3>
   br label %.thread117.i
 
-.thread117.i:                                     ; preds = %.thread82.thread.i, %bb.ij, %bb.if, %bb.ie, %bb.id
-  %.21060 = phi i32 [ %.11059, %bb.ie ], [ %.11059, %bb.if ], [ %.11059, %bb.id ], [ %i.auo, %bb.ij ], [ %i.auo, %.thread82.thread.i ] ; 2 uses
-  %.sroa.051.3.i = phi <2 x float> [ %.sroa.051.293.i, %bb.ie ], [ %.sroa.051.293.i, %bb.if ], [ %.sroa.051.293.i, %bb.id ], [ %i.ayo, %bb.ij ], [ %i.ayo, %.thread82.thread.i ] ; 2 uses
-  %.sroa.054.7.i = phi <2 x float> [ %.sroa.054.494.i, %bb.ie ], [ %.sroa.054.494.i, %bb.if ], [ %.sroa.054.494.i, %bb.id ], [ %.sroa.054.4.vec.insert66.i, %bb.ij ], [ %.sroa.054.5.i.a, %.thread82.thread.i ] ; 2 uses
+.thread117.i:                                     ; preds = %bb.ij, %.thread82.thread.i, %bb.if, %bb.ie, %bb.id
+  %.21060 = phi i32 [ %i.auo, %bb.ij ], [ %i.auo, %.thread82.thread.i ], [ %.11059, %bb.if ], [ %.11059, %bb.id ], [ %.11059, %bb.ie ] ; 2 uses
+  %.sroa.051.3.i = phi <2 x float> [ %i.ayo, %bb.ij ], [ %i.ayo, %.thread82.thread.i ], [ %.sroa.051.293.i, %bb.if ], [ %.sroa.051.293.i, %bb.id ], [ %.sroa.051.293.i, %bb.ie ] ; 2 uses
+  %.sroa.054.7.i = phi <2 x float> [ %.sroa.054.4.vec.insert66.i, %bb.ij ], [ %.sroa.054.5.i.a, %.thread82.thread.i ], [ %.sroa.054.494.i, %bb.if ], [ %.sroa.054.494.i, %bb.id ], [ %.sroa.054.494.i, %bb.ie ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #39
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #39
@@ -1063,36 +1062,36 @@ _ZN11ImGuiWindow5GetIDEPKcS1_.exit:               ; preds = %_ZN5ImGui11KeepAliv
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN5ImGui11OpenPopupExEji(i32 noundef %0, i32 noundef %1) local_unnamed_addr #10 {
 bb.a:
-  %.sroa.12 = alloca %struct.ImVec2, align 8      ; 5 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !49 ; 15 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 7656
-  %2 = load i32, ptr %i.b, align 8, !tbaa !614    ; 11 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 7184
+  %2 = load ptr, ptr %i.b, align 8, !tbaa !208    ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 7656
+  %.pre.a = load i32, ptr %.phi.trans.insert, align 8, !tbaa !614 ; 11 uses
   %3 = and i32 %1, 32
-  %.not = icmp ne i32 %3, 0
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 7640
-  %.pre.a = load i32, ptr %.phi.trans.insert, align 8, !tbaa !602 ; 8 uses
-  %4 = icmp sgt i32 %.pre.a, %2
-  %or.cond = select i1 %.not, i1 %4, i1 false
-  br i1 %or.cond, label %bb.z, label %._crit_edge
+  %.not = icmp eq i32 %3, 0
+  br i1 %.not, label %._crit_edge, label %4
 
-._crit_edge:                                      ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 7184
-  %6 = load ptr, ptr %5, align 8, !tbaa !208      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.12)
+4:                                                ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 7640
+  %6 = load i32, ptr %5, align 8, !tbaa !602
+  %7 = icmp sgt i32 %6, %.pre.a
+  br i1 %7, label %bb.z, label %._crit_edge
+
+._crit_edge:                                      ; preds = %4, %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 7688
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !425  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 7056
   %i.f = load i32, ptr %i.e, align 8, !tbaa !464  ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %6, i64 200
-  %i.h = getelementptr inbounds nuw i8, ptr %6, i64 208
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 200
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 208
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !329
   %i.j = load i32, ptr %i.g, align 8, !tbaa !327
   %i.k = sext i32 %i.j to i64
   %i.l = getelementptr [4 x i8], ptr %i.i, i64 %i.k
   %i.m = getelementptr i8, ptr %i.l, i64 -4
   %i.n = load i32, ptr %i.m, align 4, !tbaa !34   ; 2 uses
-  %i.o = tail call fastcc <2 x float> @_ZN5ImGuiL22NavCalcPreferredRefPosEv() ; 2 uses
-  store <2 x float> %i.o, ptr %.sroa.12, align 8
+  %i.o = tail call fastcc <2 x float> @_ZN5ImGuiL22NavCalcPreferredRefPosEv() ; 3 uses
+  %8 = bitcast <2 x float> %i.o to i64
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 296 ; 2 uses
   %.sroa.0.0.copyload.i = load float, ptr %i.p, align 8, !tbaa !9
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 300
@@ -1100,16 +1099,23 @@ bb.a:
   %i.q = fcmp oge float %.sroa.0.0.copyload.i, -2.560000e+05
   %i.r = fcmp oge float %.sroa.4.0.copyload.i, -2.560000e+05
   %i.s = select i1 %i.q, i1 %i.r, i1 false
-  %7 = select i1 %i.s, ptr %i.p, ptr %.sroa.12
-  %8 = load i64, ptr %7, align 8                  ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 7640 ; 10 uses
-  %.not21 = icmp sgt i32 %.pre.a, %2
+  br i1 %i.s, label %.then, label %.cont
+
+.then:                                            ; preds = %._crit_edge
+  %.then.val = load i64, ptr %i.p, align 8
+  br label %.cont
+
+.cont:                                            ; preds = %._crit_edge, %.then
+  %9 = phi i64 [ %.then.val, %.then ], [ %8, %._crit_edge ] ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 7640 ; 11 uses
+  %11 = load i32, ptr %10, align 8, !tbaa !602    ; 7 uses
+  %.not21 = icmp sgt i32 %11, %.pre.a
   br i1 %.not21, label %bb.i, label %bb.b
 
-bb.b:                                             ; preds = %._crit_edge
+bb.b:                                             ; preds = %.cont
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 7644 ; 2 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !546
-  %i.v = icmp eq i32 %.pre.a, %i.u
+  %i.v = icmp eq i32 %11, %i.u
   br i1 %i.v, label %bb.c, label %._ZN8ImVectorI14ImGuiPopupDataE7reserveEi.exit_crit_edge.i
 
 ._ZN8ImVectorI14ImGuiPopupDataE7reserveEi.exit_crit_edge.i: ; preds = %bb.b
@@ -1118,13 +1124,13 @@ bb.b:                                             ; preds = %._crit_edge
   br label %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.w = add nsw i32 %.pre.a, 1
-  %.not.i.i = icmp eq i32 %.pre.a, 0
+  %i.w = add nsw i32 %11, 1
+  %.not.i.i = icmp eq i32 %11, 0
   br i1 %.not.i.i, label %_ZN5ImGui8MemAllocEm.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.x = sdiv i32 %.pre.a, 2
-  %i.y = add nsw i32 %i.x, %.pre.a
+  %i.x = sdiv i32 %11, 2
+  %i.y = add nsw i32 %i.x, %11
   br label %_ZN5ImGui8MemAllocEm.exit.i.i
 
 _ZN5ImGui8MemAllocEm.exit.i.i:                    ; preds = %bb.d, %bb.c
@@ -1145,7 +1151,7 @@ _ZN5ImGui8MemAllocEm.exit.i.i:                    ; preds = %bb.d, %bb.c
   br i1 %.not6.i.i, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %_ZN5ImGui8MemAllocEm.exit.i.i
-  %i.al = load i32, ptr %9, align 8, !tbaa !547
+  %i.al = load i32, ptr %10, align 8, !tbaa !547
   %i.am = sext i32 %i.al to i64
   %i.an = mul nsw i64 %i.am, 48
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.ai, ptr nonnull align 8 %i.ak, i64 %i.an, i1 false)
@@ -1174,11 +1180,11 @@ _ZN5ImGui7MemFreeEPv.exit.i.i:                    ; preds = %bb.g, %bb.f, %bb.e
 bb.h:                                             ; preds = %_ZN5ImGui7MemFreeEPv.exit.i.i, %_ZN5ImGui8MemAllocEm.exit.i.i
   store ptr %i.ai, ptr %i.aj, align 8, !tbaa !545
   store i32 %i.aa, ptr %i.t, align 4, !tbaa !546
-  %.pre3.i = load i32, ptr %9, align 8, !tbaa !547
+  %.pre3.i = load i32, ptr %10, align 8, !tbaa !547
   br label %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit
 
 _ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit: ; preds = %._ZN8ImVectorI14ImGuiPopupDataE7reserveEi.exit_crit_edge.i, %bb.h
-  %i.av = phi i32 [ %.pre.a, %._ZN8ImVectorI14ImGuiPopupDataE7reserveEi.exit_crit_edge.i ], [ %.pre3.i, %bb.h ]
+  %i.av = phi i32 [ %11, %._ZN8ImVectorI14ImGuiPopupDataE7reserveEi.exit_crit_edge.i ], [ %.pre3.i, %bb.h ]
   %i.aw = phi ptr [ %.pre.i, %._ZN8ImVectorI14ImGuiPopupDataE7reserveEi.exit_crit_edge.i ], [ %i.ai, %bb.h ]
   %i.ax = sext i32 %i.av to i64
   %i.ay = getelementptr inbounds [48 x i8], ptr %i.aw, i64 %i.ax ; 8 uses
@@ -1196,16 +1202,16 @@ _ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit: ; preds = %._ZN8ImVectorI14
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
   store <2 x float> %i.o, ptr %.sroa.12.0..sroa_idx, align 8
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ay, i64 40
-  store i64 %8, ptr %.sroa.14.0..sroa_idx, align 8
-  %i.az = load i32, ptr %9, align 8, !tbaa !547
+  store i64 %9, ptr %.sroa.14.0..sroa_idx, align 8
+  %i.az = load i32, ptr %10, align 8, !tbaa !547
   %i.ba = add nsw i32 %i.az, 1
-  store i32 %i.ba, ptr %9, align 8, !tbaa !547
-  br label %10
+  store i32 %i.ba, ptr %10, align 8, !tbaa !547
+  br label %bb.z
 
-bb.i:                                             ; preds = %._crit_edge
+bb.i:                                             ; preds = %.cont
   %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 7648 ; 7 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !545 ; 2 uses
-  %i.bd = sext i32 %2 to i64                      ; 2 uses
+  %i.bd = sext i32 %.pre.a to i64                 ; 2 uses
   %i.be = getelementptr inbounds [48 x i8], ptr %i.bc, i64 %i.bd ; 2 uses
   %i.bf = load i32, ptr %i.be, align 8, !tbaa !604
   %i.bg = icmp eq i32 %i.bf, %0
@@ -1220,12 +1226,12 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   store i32 %i.f, ptr %i.bh, align 8, !tbaa !1085
-  br label %10
+  br label %bb.z
 
 bb.l:                                             ; preds = %bb.j, %bb.i
   %i.bl = getelementptr inbounds nuw i8, ptr %i.a, i64 7644 ; 3 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !546 ; 5 uses
-  %i.bn = icmp sgt i32 %2, %i.bm
+  %i.bn = icmp sgt i32 %.pre.a, %i.bm
   br i1 %i.bn, label %bb.m, label %_ZN5ImGui17ClosePopupToLevelEib.exit
 
 bb.m:                                             ; preds = %bb.l
@@ -1239,7 +1245,7 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN5ImGui8MemAllocEm.exit.i.i.i:                  ; preds = %bb.n, %bb.m
   %i.bq = phi i32 [ %i.bp, %bb.n ], [ 8, %bb.m ]
-  %i.br = tail call noundef i32 @llvm.smax.i32(i32 %i.bq, i32 %2) ; 3 uses
+  %i.br = tail call noundef i32 @llvm.smax.i32(i32 %i.bq, i32 %.pre.a) ; 3 uses
   %i.bs = sext i32 %i.br to i64
   %i.bt = mul nsw i64 %i.bs, 48
   %i.bu = getelementptr inbounds nuw i8, ptr %i.a, i64 944 ; 2 uses
@@ -1254,7 +1260,7 @@ _ZN5ImGui8MemAllocEm.exit.i.i.i:                  ; preds = %bb.n, %bb.m
   br i1 %.not6.i.i.i, label %bb.r, label %bb.o
 
 bb.o:                                             ; preds = %_ZN5ImGui8MemAllocEm.exit.i.i.i
-  %i.cb = load i32, ptr %9, align 8, !tbaa !547
+  %i.cb = load i32, ptr %10, align 8, !tbaa !547
   %i.cc = sext i32 %i.cb to i64
   %i.cd = mul nsw i64 %i.cc, 48
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.bz, ptr nonnull align 8 %i.ca, i64 %i.cd, i1 false)
@@ -1288,18 +1294,18 @@ bb.r:                                             ; preds = %_ZN5ImGui7MemFreeEP
 _ZN5ImGui17ClosePopupToLevelEib.exit:             ; preds = %bb.l, %bb.r
   %.pre.i25 = phi ptr [ %i.bc, %bb.l ], [ %i.bz, %bb.r ]
   %i.cl = phi i32 [ %i.bm, %bb.l ], [ %i.br, %bb.r ]
-  store i32 %2, ptr %9, align 8, !tbaa !547
-  %i.cm = icmp eq i32 %2, %i.cl
+  store i32 %.pre.a, ptr %10, align 8, !tbaa !547
+  %i.cm = icmp eq i32 %.pre.a, %i.cl
   br i1 %i.cm, label %bb.s, label %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35
 
 bb.s:                                             ; preds = %_ZN5ImGui17ClosePopupToLevelEib.exit
-  %i.cn = add nsw i32 %2, 1
-  %.not.i.i26 = icmp eq i32 %2, 0
+  %i.cn = add nsw i32 %.pre.a, 1
+  %.not.i.i26 = icmp eq i32 %.pre.a, 0
   br i1 %.not.i.i26, label %_ZNK8ImVectorI14ImGuiPopupDataE14_grow_capacityEi.exit.i27, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.co = sdiv i32 %2, 2
-  %i.cp = add nsw i32 %i.co, %2
+  %i.co = sdiv i32 %.pre.a, 2
+  %i.cp = add nsw i32 %i.co, %.pre.a
   br label %_ZNK8ImVectorI14ImGuiPopupDataE14_grow_capacityEi.exit.i27
 
 _ZNK8ImVectorI14ImGuiPopupDataE14_grow_capacityEi.exit.i27: ; preds = %bb.t, %bb.s
@@ -1327,7 +1333,7 @@ _ZN5ImGui8MemAllocEm.exit.i.i29:                  ; preds = %bb.u, %_ZNK8ImVecto
   br i1 %.not6.i.i30, label %bb.y, label %bb.v
 
 bb.v:                                             ; preds = %_ZN5ImGui8MemAllocEm.exit.i.i29
-  %i.dc = load i32, ptr %9, align 8, !tbaa !547
+  %i.dc = load i32, ptr %10, align 8, !tbaa !547
   %i.dd = sext i32 %i.dc to i64
   %i.de = mul nsw i64 %i.dd, 48
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 8 %i.da, ptr nonnull align 8 %i.db, i64 %i.de, i1 false)
@@ -1356,7 +1362,7 @@ _ZN5ImGui7MemFreeEPv.exit.i.i33:                  ; preds = %bb.x, %bb.w, %bb.v
 bb.y:                                             ; preds = %_ZN5ImGui7MemFreeEPv.exit.i.i33, %_ZN5ImGui8MemAllocEm.exit.i.i29
   store ptr %i.da, ptr %i.bb, align 8, !tbaa !545
   store i32 %i.cr, ptr %i.bl, align 4, !tbaa !546
-  %.pre3.i34 = load i32, ptr %9, align 8, !tbaa !547
+  %.pre3.i34 = load i32, ptr %10, align 8, !tbaa !547
   %.pre58 = sext i32 %.pre3.i34 to i64
   br label %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35
 
@@ -1376,20 +1382,15 @@ _ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35: ; preds = %_ZN5ImGui17Clo
   %.sroa.11.0..sroa_idx46 = getelementptr inbounds nuw i8, ptr %i.dn, i64 28
   store i32 %i.n, ptr %.sroa.11.0..sroa_idx46, align 4
   %.sroa.12.0..sroa_idx48 = getelementptr inbounds nuw i8, ptr %i.dn, i64 32
-  %.sroa.12.0..sroa.12.0.56 = load i64, ptr %.sroa.12, align 8
-  store i64 %.sroa.12.0..sroa.12.0.56, ptr %.sroa.12.0..sroa_idx48, align 8
+  store <2 x float> %i.o, ptr %.sroa.12.0..sroa_idx48, align 8
   %.sroa.14.0..sroa_idx49 = getelementptr inbounds nuw i8, ptr %i.dn, i64 40
-  store i64 %8, ptr %.sroa.14.0..sroa_idx49, align 8
-  %i.do = load i32, ptr %9, align 8, !tbaa !547
+  store i64 %9, ptr %.sroa.14.0..sroa_idx49, align 8
+  %i.do = load i32, ptr %10, align 8, !tbaa !547
   %i.dp = add nsw i32 %i.do, 1
-  store i32 %i.dp, ptr %9, align 8, !tbaa !547
-  br label %10
-
-10:                                               ; preds = %bb.k, %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35, %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12)
+  store i32 %i.dp, ptr %10, align 8, !tbaa !547
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.a, %10
+bb.z:                                             ; preds = %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit, %_ZN8ImVectorI14ImGuiPopupDataE9push_backERKS0_.exit35, %bb.k, %4
   ret void
 }
 

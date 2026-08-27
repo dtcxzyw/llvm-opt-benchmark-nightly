@@ -205,7 +205,6 @@ _ZNK4llvm11CCValAssign9getLocRegEv.exit209:       ; preds = %bb.v
   %i.ei = load i64, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   call void @llvm.lifetime.start.p0(ptr nonnull %19)
-  %.sroa.5315.sroa.0.0.extract.trunc = trunc i64 %i.ei to i32
   store i16 249, ptr %17, align 8, !tbaa !610
   store ptr null, ptr %i.ag, align 8, !tbaa !652
   %i.ej = call { ptr, i32 } @_ZN4llvm12SelectionDAG9getVTListENS_3EVTES1_S1_(ptr noundef nonnull align 8 dereferenceable(920) %9, i16 %.sroa.0302.0, ptr null, i16 1, ptr null, ptr noundef nonnull byval(%"struct.llvm::EVT") align 8 %17) #24 ; 2 uses
@@ -220,7 +219,8 @@ _ZNK4llvm11CCValAssign9getLocRegEv.exit209:       ; preds = %bb.v
   store ptr %.fca.0.extract3.i, ptr %i.ah, align 16
   store i32 %.fca.1.extract4.i, ptr %.sroa.26.0..sroa_idx.i, align 8
   store ptr %.sroa.0317.0.copyload, ptr %i.ai, align 16, !tbaa !648
-  store i32 %.sroa.5315.sroa.0.0.extract.trunc, ptr %.sroa.5315.0..sroa_idx316, align 8, !tbaa !178
+  %.sroa.5315.0.extract.trunc = trunc i64 %i.ei to i32
+  store i32 %.sroa.5315.0.extract.trunc, ptr %.sroa.5315.0..sroa_idx316, align 8, !tbaa !178
   %.not.i210 = icmp eq ptr %.sroa.0317.0.copyload, null
   %i.en = select i1 %.not.i210, i64 2, i64 3
   store ptr %18, ptr %19, align 8, !tbaa !674
@@ -251,7 +251,6 @@ bb.x:                                             ; preds = %.thread388
   %i.eq = load i64, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   call void @llvm.lifetime.start.p0(ptr nonnull %16)
-  %.sroa.5324.sroa.0.0.extract.trunc = trunc i64 %i.eq to i32
   store i16 249, ptr %14, align 8, !tbaa !610
   store ptr null, ptr %i.ac, align 8, !tbaa !652
   %i.er = call { ptr, i32 } @_ZN4llvm12SelectionDAG9getVTListENS_3EVTES1_S1_(ptr noundef nonnull align 8 dereferenceable(920) %9, i16 %.sroa.0.0.copyload.i, ptr null, i16 1, ptr null, ptr noundef nonnull byval(%"struct.llvm::EVT") align 8 %14) #24 ; 2 uses
@@ -266,7 +265,8 @@ bb.x:                                             ; preds = %.thread388
   store ptr %.fca.0.extract3.i214, ptr %i.ad, align 16
   store i32 %.fca.1.extract4.i215, ptr %.sroa.26.0..sroa_idx.i216, align 8
   store ptr %.sroa.0326.0.copyload, ptr %i.ae, align 16, !tbaa !648
-  store i32 %.sroa.5324.sroa.0.0.extract.trunc, ptr %.sroa.5324.0..sroa_idx325, align 8, !tbaa !178
+  %.sroa.5324.0.extract.trunc = trunc i64 %i.eq to i32
+  store i32 %.sroa.5324.0.extract.trunc, ptr %.sroa.5324.0..sroa_idx325, align 8, !tbaa !178
   %.not.i217 = icmp eq ptr %.sroa.0326.0.copyload, null
   %i.ev = select i1 %.not.i217, i64 2, i64 3
   store ptr %15, ptr %16, align 8, !tbaa !674
@@ -555,7 +555,6 @@ _ZNK4llvm11CCValAssign9getLocRegEv.exit124:       ; preds = %bb.e
   %i.v = load i64, ptr %.sroa.243.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
-  %.sroa.540.sroa.0.0.extract.trunc = trunc i64 %i.v to i32
   store i16 249, ptr %8, align 8, !tbaa !610
   %i.w = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr null, ptr %i.w, align 8, !tbaa !652
@@ -576,7 +575,8 @@ _ZNK4llvm11CCValAssign9getLocRegEv.exit124:       ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %9, i64 32
   store ptr %.sroa.042.0.copyload, ptr %i.ac, align 16, !tbaa !648
   %.sroa.540.0..sroa_idx41 = getelementptr inbounds nuw i8, ptr %9, i64 40
-  store i32 %.sroa.540.sroa.0.0.extract.trunc, ptr %.sroa.540.0..sroa_idx41, align 8, !tbaa !178
+  %.sroa.540.0.extract.trunc = trunc i64 %i.v to i32
+  store i32 %.sroa.540.0.extract.trunc, ptr %.sroa.540.0..sroa_idx41, align 8, !tbaa !178
   %.not.i = icmp eq ptr %.sroa.042.0.copyload, null
   %i.ad = select i1 %.not.i, i64 2, i64 3
   store ptr %9, ptr %10, align 8, !tbaa !674
@@ -605,7 +605,6 @@ _ZNK4llvm11CCValAssign9getLocRegEv.exit134:       ; preds = %_ZNK4llvm11CCValAss
   %i.ai = load i64, ptr %.sroa.243.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  %.sroa.549.sroa.0.0.extract.trunc = trunc i64 %i.ai to i32
   store i16 249, ptr %5, align 8, !tbaa !610
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr null, ptr %i.aj, align 8, !tbaa !652
@@ -626,7 +625,8 @@ _ZNK4llvm11CCValAssign9getLocRegEv.exit134:       ; preds = %_ZNK4llvm11CCValAss
   %i.ap = getelementptr inbounds nuw i8, ptr %6, i64 32
   store ptr %.fca.0.extract36, ptr %i.ap, align 16, !tbaa !648
   %.sroa.549.0..sroa_idx50 = getelementptr inbounds nuw i8, ptr %6, i64 40
-  store i32 %.sroa.549.sroa.0.0.extract.trunc, ptr %.sroa.549.0..sroa_idx50, align 8, !tbaa !178
+  %.sroa.549.0.extract.trunc = trunc i64 %i.ai to i32
+  store i32 %.sroa.549.0.extract.trunc, ptr %.sroa.549.0..sroa_idx50, align 8, !tbaa !178
   %.not.i142 = icmp eq ptr %.fca.0.extract36, null
   %i.aq = select i1 %.not.i142, i64 2, i64 3
   store ptr %6, ptr %7, align 8, !tbaa !674
@@ -1029,8 +1029,8 @@ bb.ac:                                            ; preds = %bb.ab, %_ZNK4llvm7S
   %i.dk = icmp eq i64 %i.dj, %i.dh
   br label %.critedge84
 
-.critedge84:                                      ; preds = %.thread160, %bb.q, %bb.w, %bb.n, %bb.m, %bb.i, %bb.j, %bb.l, %bb.r, %bb.p, %bb.aa, %bb.ab, %_ZNK4llvm16MachineFrameInfo22isImmutableObjectIndexEi.exit, %bb.u, %bb.t, %bb.ac
-  %.7 = phi i1 [ false, %bb.t ], [ false, %_ZNK4llvm16MachineFrameInfo22isImmutableObjectIndexEi.exit ], [ %i.dk, %bb.ac ], [ false, %bb.u ], [ false, %bb.aa ], [ false, %bb.n ], [ false, %bb.ab ], [ false, %bb.w ], [ false, %bb.p ], [ false, %bb.m ], [ false, %bb.r ], [ false, %bb.i ], [ false, %bb.l ], [ false, %bb.j ], [ false, %bb.q ], [ false, %.thread160 ]
+.critedge84:                                      ; preds = %.thread160, %bb.w, %bb.n, %bb.m, %bb.i, %bb.j, %bb.l, %bb.q, %bb.r, %bb.p, %bb.aa, %bb.ab, %_ZNK4llvm16MachineFrameInfo22isImmutableObjectIndexEi.exit, %bb.u, %bb.t, %bb.ac
+  %.7 = phi i1 [ false, %bb.t ], [ false, %_ZNK4llvm16MachineFrameInfo22isImmutableObjectIndexEi.exit ], [ %i.dk, %bb.ac ], [ false, %bb.u ], [ false, %bb.aa ], [ false, %bb.n ], [ false, %bb.ab ], [ false, %bb.w ], [ false, %bb.p ], [ false, %bb.r ], [ false, %bb.q ], [ false, %bb.i ], [ false, %bb.l ], [ false, %bb.j ], [ false, %bb.m ], [ false, %.thread160 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   ret i1 %.7
 }

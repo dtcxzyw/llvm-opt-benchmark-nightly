@@ -18,7 +18,6 @@ target triple = "x86_64-pc-linux-gnu"
 %union.anon = type { %struct.pe_image_optional_hdr64 }
 %struct.vinfo_list = type { [16 x i32], i32 }
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
-%struct.pe_certificate_hdr = type { i32, i16, i16 }
 
 @.str = private unnamed_addr constant [81 x i8] c"findres: Assumption Violated: Looking for version info when peinfo->offset != 0\0A\00", align 1
 @.str.1 = private unnamed_addr constant [25 x i8] c"cli_scanpe: ctx == NULL\0A\00", align 1
@@ -421,14 +420,14 @@ declare ptr @cli_str2hex(ptr noundef, i32 noundef) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define i32 @cli_check_auth_header(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %2 = alloca %struct.pe_certificate_hdr, align 4 ; 6 uses
+  %.sroa.0 = alloca i64, align 8                  ; 6 uses
   %i.a = alloca [32 x i8], align 16               ; 6 uses
-  %3 = alloca %struct.cli_exe_info, align 8       ; 7 uses
+  %2 = alloca %struct.cli_exe_info, align 8       ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !56   ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !60
   %i.f = load i32, ptr %i.e, align 4, !tbaa !61
@@ -450,13 +449,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.m, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  call void @cli_exe_info_init(ptr noundef nonnull %3, i32 noundef 0) #22
-  %i.n = call i32 @cli_peheader(ptr noundef nonnull %0, ptr noundef nonnull %3, i32 noundef 0)
+  call void @cli_exe_info_init(ptr noundef nonnull %2, i32 noundef 0) #22
+  %i.n = call i32 @cli_peheader(ptr noundef nonnull %0, ptr noundef nonnull %2, i32 noundef 0)
   %.not180 = icmp eq i32 %i.n, 0
   br i1 %.not180, label %bb.e, label %.sink.split
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0145 = phi ptr [ %3, %bb.d ], [ %1, %bb.c ]   ; 7 uses
+  %.0145 = phi ptr [ %2, %bb.d ], [ %1, %bb.c ]   ; 7 uses
   %.0145.sroa.phi299 = getelementptr inbounds nuw i8, ptr %.0145, i64 284
   %.0145.sroa.phi296 = getelementptr inbounds nuw i8, ptr %.0145, i64 280
   %.0145.sroa.phi = getelementptr inbounds nuw i8, ptr %.0145, i64 24
@@ -561,12 +560,12 @@ bb.r:                                             ; preds = %bb.q
   br i1 %.not.i, label %.thread216.thread, label %fmap_readn.exit
 
 fmap_readn.exit:                                  ; preds = %bb.r
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %2, ptr nonnull align 1 %i.bc, i64 %spec.select.i, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0, ptr nonnull align 1 %i.bc, i64 %spec.select.i, i1 false)
   %.not185 = icmp samesign ugt i64 %i.az, 7
   br i1 %.not185, label %bb.s, label %.thread216.thread
 
 bb.s:                                             ; preds = %fmap_readn.exit
-  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
   %.4..4..4. = load i16, ptr %.4..4..4..sroa_idx, align 4, !tbaa !36
   %.not186 = icmp eq i16 %.4..4..4., 512
   br i1 %.not186, label %bb.u, label %bb.t
@@ -576,7 +575,7 @@ bb.t:                                             ; preds = %bb.s
   br label %.thread216.thread
 
 bb.u:                                             ; preds = %bb.s
-  %.6..6..6..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 6
+  %.6..6..6..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 6
   %.6..6..6. = load i16, ptr %.6..6..6..sroa_idx, align 2, !tbaa !36
   %.not187 = icmp eq i16 %.6..6..6., 2
   br i1 %.not187, label %bb.w, label %bb.v
@@ -586,7 +585,7 @@ bb.v:                                             ; preds = %bb.u
   br label %.thread216.thread
 
 bb.w:                                             ; preds = %bb.u
-  %.0..0..0. = load i32, ptr %2, align 4, !tbaa !36
+  %.0..0..0. = load i32, ptr %.sroa.0, align 8, !tbaa !36
   %.not188 = icmp eq i32 %.0..0..0., %i.p
   br i1 %.not188, label %bb.y, label %bb.x
 
@@ -767,20 +766,20 @@ bb.ap:                                            ; preds = %bb.am
 
 .thread216.thread235:                             ; preds = %bb.g, %bb.h, %.thread216.thread
   %.3135222231 = phi i32 [ %.3135222230, %.thread216.thread ], [ 20, %bb.h ], [ 22, %bb.g ] ; 2 uses
-  %i.ds = icmp eq ptr %3, %.0145
+  %i.ds = icmp eq ptr %2, %.0145
   br i1 %i.ds, label %.sink.split, label %bb.aq
 
 .sink.split:                                      ; preds = %.thread216.thread235, %bb.d
-  %.0145.sink = phi ptr [ %3, %bb.d ], [ %.0145, %.thread216.thread235 ]
+  %.0145.sink = phi ptr [ %2, %bb.d ], [ %.0145, %.thread216.thread235 ]
   %.0146.ph = phi i32 [ 26, %bb.d ], [ %.3135222231, %.thread216.thread235 ]
   call void @cli_exe_info_destroy(ptr noundef nonnull %.0145.sink) #22
   br label %bb.aq
 
 bb.aq:                                            ; preds = %.sink.split, %.thread216.thread235, %bb.b, %bb.a
   %.0146 = phi i32 [ 6, %bb.a ], [ %.3135222231, %.thread216.thread235 ], [ 6, %bb.b ], [ %.0146.ph, %.sink.split ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret i32 %.0146
 }
 

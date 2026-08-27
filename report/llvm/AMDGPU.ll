@@ -204,8 +204,8 @@ _ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTarget
 _ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23.thread: ; preds = %bb.f, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23, %bb.e, %bb.a, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23.thread, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit
-  %.sroa.020.2 = phi i16 [ 0, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23.thread ], [ %spec.select, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit ], [ 0, %bb.a ], [ 257, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23 ], [ 257, %bb.e ]
+.critedge:                                        ; preds = %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23, %bb.e, %bb.a, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23.thread
+  %.sroa.020.2 = phi i16 [ 0, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23.thread ], [ 0, %bb.a ], [ %spec.select, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit ], [ 257, %_ZN5clang6driver10toolchains15AMDGPUToolChain33getDefaultDenormsAreZeroForTargetEN4llvm6AMDGPU7GPUKindE.exit23 ], [ 257, %bb.e ]
   ret i16 %.sroa.020.2
 }
 

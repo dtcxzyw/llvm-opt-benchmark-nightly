@@ -205,6 +205,7 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168: ; preds = %b
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !252 ; 4 uses
   %.sroa.0229.0.copyload = load ptr, ptr %i.bu, align 8, !tbaa !375 ; 3 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
+  %.sroa.8.0.copyload = load i32, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !230
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 40
   %.sroa.0224.0.copyload = load ptr, ptr %i.bv, align 8, !tbaa !375 ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.sroa.0229.0.copyload, i64 24
@@ -216,13 +217,14 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168: ; preds = %b
 
 bb.n:                                             ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 48
+  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8
+  %.sroa.7.0.extract.trunc = trunc i64 %.sroa.7.0.copyload to i32
   br label %bb.o
 
 bb.o:                                             ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168, %bb.n
   %.sroa.0224.0 = phi ptr [ %.sroa.0229.0.copyload, %bb.n ], [ %.sroa.0224.0.copyload, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168 ] ; 2 uses
   %.sroa.0229.0 = phi ptr [ %.sroa.0224.0.copyload, %bb.n ], [ %.sroa.0229.0.copyload, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168 ]
-  %.sroa.8.0.in = phi ptr [ %.sroa.7.0..sroa_idx, %bb.n ], [ %.sroa.8.0..sroa_idx, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168 ]
-  %.sroa.8.0 = load i32, ptr %.sroa.8.0.in, align 8, !tbaa !230
+  %.sroa.8.0 = phi i32 [ %.sroa.7.0.extract.trunc, %bb.n ], [ %.sroa.8.0.copyload, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit168 ]
   %i.by = getelementptr inbounds nuw i8, ptr %.sroa.0224.0, i64 24
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !240
   switch i32 %i.bz, label %.critedge [
@@ -449,7 +451,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit180, %bb.u, %_ZNK4llvm8TypeSizecvmEv.exit187, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit184, %bb.f, %bb.l, %bb.a, %bb.p, %bb.o, %bb.m, %bb.g, %bb.e, %_ZN4llvm16isShiftedMask_64Em.exit, %bb.q, %_ZNK4llvm8TypeSizecvmEv.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit, %bb.ae, %bb.ac
+.critedge:                                        ; preds = %bb.f, %bb.l, %bb.a, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit180, %bb.u, %_ZNK4llvm8TypeSizecvmEv.exit187, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit184, %bb.p, %bb.o, %bb.m, %bb.g, %bb.e, %_ZN4llvm16isShiftedMask_64Em.exit, %bb.q, %_ZNK4llvm8TypeSizecvmEv.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit, %bb.ae, %bb.ac
   %.12 = phi i1 [ false, %bb.a ], [ false, %_ZNK4llvm8TypeSizecvmEv.exit ], [ false, %bb.g ], [ false, %bb.p ], [ false, %_ZN4llvm16isShiftedMask_64Em.exit ], [ false, %bb.l ], [ false, %bb.ac ], [ true, %bb.ae ], [ false, %bb.f ], [ false, %bb.e ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit ], [ false, %bb.o ], [ false, %bb.m ], [ false, %bb.q ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit184 ], [ false, %_ZNK4llvm8TypeSizecvmEv.exit187 ], [ false, %bb.u ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit180 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #26

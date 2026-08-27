@@ -202,12 +202,12 @@ bb.k:                                             ; preds = %bb.j
   tail call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str.3, i32 noundef 671, ptr noundef nonnull @__func__.parts64_mul, ptr noundef nonnull @.str.5) #15
   unreachable
 
-bb.l:                                             ; preds = %bb.j, %record_denormals_used.exit38, %bb.g, %bb.e, %record_denormals_used.exit
-  %.sroa.039.sroa.0.0 = phi i64 [ 2, %record_denormals_used.exit ], [ %i.an, %bb.e ], [ 4, %record_denormals_used.exit38 ], [ %i.ar, %bb.g ], [ 1, %bb.j ]
-  %.sroa.039.sroa.7.0 = phi i8 [ %i.m, %record_denormals_used.exit ], [ %.sroa.039.sroa.7.0.extract.trunc, %bb.e ], [ %i.m, %record_denormals_used.exit38 ], [ %.sroa.039.sroa.7.0.extract.trunc53, %bb.g ], [ %i.m, %bb.j ]
-  %.sroa.039.sroa.10.0 = phi i64 [ 0, %record_denormals_used.exit ], [ %i.an, %bb.e ], [ 0, %record_denormals_used.exit38 ], [ %i.ar, %bb.g ], [ 0, %bb.j ]
-  %.sroa.039.sroa.13.1 = phi i64 [ %i.ai, %record_denormals_used.exit ], [ %.sroa.039.sroa.13.0.extract.shift, %bb.e ], [ 0, %record_denormals_used.exit38 ], [ %.sroa.039.sroa.13.0.extract.shift56, %bb.g ], [ 0, %bb.j ]
-  %.sroa.18.1 = phi i64 [ %.sroa.18.0, %record_denormals_used.exit ], [ %i.ao, %bb.e ], [ 0, %record_denormals_used.exit38 ], [ %i.as, %bb.g ], [ 0, %bb.j ]
+bb.l:                                             ; preds = %record_denormals_used.exit, %bb.j, %record_denormals_used.exit38, %bb.g, %bb.e
+  %.sroa.039.sroa.0.0 = phi i64 [ %i.ar, %bb.g ], [ %i.an, %bb.e ], [ 4, %record_denormals_used.exit38 ], [ 2, %record_denormals_used.exit ], [ 1, %bb.j ]
+  %.sroa.039.sroa.7.0 = phi i8 [ %.sroa.039.sroa.7.0.extract.trunc53, %bb.g ], [ %.sroa.039.sroa.7.0.extract.trunc, %bb.e ], [ %i.m, %record_denormals_used.exit38 ], [ %i.m, %record_denormals_used.exit ], [ %i.m, %bb.j ]
+  %.sroa.039.sroa.10.0 = phi i64 [ %i.ar, %bb.g ], [ %i.an, %bb.e ], [ 0, %record_denormals_used.exit38 ], [ 0, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.039.sroa.13.1 = phi i64 [ %.sroa.039.sroa.13.0.extract.shift56, %bb.g ], [ %.sroa.039.sroa.13.0.extract.shift, %bb.e ], [ 0, %record_denormals_used.exit38 ], [ %i.ai, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.18.1 = phi i64 [ %i.as, %bb.g ], [ %i.ao, %bb.e ], [ 0, %record_denormals_used.exit38 ], [ %.sroa.18.0, %record_denormals_used.exit ], [ 0, %bb.j ]
   %.sroa.039.sroa.13.0.insert.shift = shl nuw i64 %.sroa.039.sroa.13.1, 32
   %.sroa.039.sroa.10.0.insert.ext = and i64 %.sroa.039.sroa.10.0, 4294901760
   %.sroa.039.sroa.10.0.insert.insert = or disjoint i64 %.sroa.039.sroa.13.0.insert.shift, %.sroa.039.sroa.10.0.insert.ext
@@ -610,11 +610,12 @@ bb.a:
   %i.w = zext i1 %i.v to i8                       ; 3 uses
   %i.x = and i32 %i.q, -13
   %.not.i22 = icmp eq i32 %i.x, 0
-  %8 = lshr i64 %.fca.0.load.i10, 32
-  %9 = lshr i64 %.fca.0.load.i18, 32
   br i1 %.not.i22, label %bb.b, label %bb.d, !prof !24
 
 bb.b:                                             ; preds = %bb.a
+  %8 = lshr i64 %.fca.0.load.i18, 32
+  %9 = lshr i64 %.fca.0.load.i10, 32
+  %10 = add nuw nsw i64 %8, %9
   %.not.i23 = icmp samesign ult i32 %i.q, 8
   br i1 %.not.i23, label %record_denormals_used.exit, label %bb.c, !prof !24
 
@@ -637,8 +638,7 @@ record_denormals_used.exit:                       ; preds = %bb.b, %bb.c
   %.not30.i = icmp sgt i128 %i.ac, -1
   %.lobit = lshr i128 %i.ac, 127
   %i.aj = trunc nuw nsw i128 %.lobit to i64
-  %10 = add nuw nsw i64 %8, %i.aj
-  %.sroa.026.sroa.15.0 = add nuw nsw i64 %10, %9
+  %.sroa.026.sroa.15.0 = add nuw nsw i64 %10, %i.aj
   %i.ak = zext i1 %.not30.i to i64
   %.sroa.20.0 = shl nuw i64 %i.ai, %i.ak
   %i.al = and i64 %.sroa.026.sroa.15.0, 4294967295
@@ -699,12 +699,12 @@ bb.k:                                             ; preds = %bb.j
   tail call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str.3, i32 noundef 671, ptr noundef nonnull @__func__.parts64_mul, ptr noundef nonnull @.str.5) #15
   unreachable
 
-parts64_mul.exit:                                 ; preds = %bb.j, %record_denormals_used.exit25, %record_denormals_used.exit, %bb.e, %bb.g
-  %.sroa.026.sroa.0.0 = phi i64 [ 2, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit25 ], [ %i.au, %bb.g ], [ 1, %bb.j ]
-  %.sroa.026.sroa.9.0 = phi i8 [ %i.w, %record_denormals_used.exit ], [ %.sroa.026.sroa.9.0.extract.trunc40, %bb.e ], [ %i.w, %record_denormals_used.exit25 ], [ %.sroa.026.sroa.9.0.extract.trunc, %bb.g ], [ %i.w, %bb.j ]
-  %.sroa.026.sroa.12.0 = phi i64 [ 0, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit25 ], [ %i.au, %bb.g ], [ 0, %bb.j ]
-  %.sroa.026.sroa.15.1 = phi i64 [ %i.al, %record_denormals_used.exit ], [ %.sroa.026.sroa.15.0.extract.shift43, %bb.e ], [ 0, %record_denormals_used.exit25 ], [ %.sroa.026.sroa.15.0.extract.shift, %bb.g ], [ 0, %bb.j ]
-  %.sroa.20.1 = phi i64 [ %.sroa.20.0, %record_denormals_used.exit ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit25 ], [ %i.av, %bb.g ], [ 0, %bb.j ]
+parts64_mul.exit:                                 ; preds = %record_denormals_used.exit, %bb.j, %record_denormals_used.exit25, %bb.e, %bb.g
+  %.sroa.026.sroa.0.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit25 ], [ 2, %record_denormals_used.exit ], [ 1, %bb.j ]
+  %.sroa.026.sroa.9.0 = phi i8 [ %.sroa.026.sroa.9.0.extract.trunc, %bb.g ], [ %.sroa.026.sroa.9.0.extract.trunc40, %bb.e ], [ %i.w, %record_denormals_used.exit25 ], [ %i.w, %record_denormals_used.exit ], [ %i.w, %bb.j ]
+  %.sroa.026.sroa.12.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit25 ], [ 0, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.026.sroa.15.1 = phi i64 [ %.sroa.026.sroa.15.0.extract.shift, %bb.g ], [ %.sroa.026.sroa.15.0.extract.shift43, %bb.e ], [ 0, %record_denormals_used.exit25 ], [ %i.al, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.20.1 = phi i64 [ %i.av, %bb.g ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit25 ], [ %.sroa.20.0, %record_denormals_used.exit ], [ 0, %bb.j ]
   %.sroa.026.sroa.15.0.insert.shift = shl nuw i64 %.sroa.026.sroa.15.1, 32
   %.sroa.026.sroa.12.0.insert.ext = and i64 %.sroa.026.sroa.12.0, 4294901760
   %.sroa.026.sroa.12.0.insert.insert = or disjoint i64 %.sroa.026.sroa.15.0.insert.shift, %.sroa.026.sroa.12.0.insert.ext
@@ -908,11 +908,12 @@ bb.a:
   %i.w = zext i1 %i.v to i8                       ; 3 uses
   %i.x = and i32 %i.q, -13
   %.not.i24 = icmp eq i32 %i.x, 0
-  %8 = lshr i64 %.fca.0.load.i15, 32
-  %9 = lshr i64 %.fca.0.load.i5, 32
   br i1 %.not.i24, label %bb.b, label %bb.d, !prof !24
 
 bb.b:                                             ; preds = %bb.a
+  %8 = lshr i64 %.fca.0.load.i5, 32
+  %9 = lshr i64 %.fca.0.load.i15, 32
+  %10 = add nuw nsw i64 %8, %9
   %.not.i25 = icmp samesign ult i32 %i.q, 8
   br i1 %.not.i25, label %record_denormals_used.exit, label %bb.c, !prof !24
 
@@ -935,8 +936,7 @@ record_denormals_used.exit:                       ; preds = %bb.b, %bb.c
   %.not30.i = icmp sgt i128 %i.ac, -1
   %.lobit = lshr i128 %i.ac, 127
   %i.aj = trunc nuw nsw i128 %.lobit to i64
-  %10 = add nuw nsw i64 %8, %i.aj
-  %.sroa.028.sroa.15.0 = add nuw nsw i64 %10, %9
+  %.sroa.028.sroa.15.0 = add nuw nsw i64 %10, %i.aj
   %i.ak = zext i1 %.not30.i to i64
   %.sroa.20.0 = shl nuw i64 %i.ai, %i.ak
   %i.al = and i64 %.sroa.028.sroa.15.0, 4294967295
@@ -997,12 +997,12 @@ bb.k:                                             ; preds = %bb.j
   tail call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str.3, i32 noundef 671, ptr noundef nonnull @__func__.parts64_mul, ptr noundef nonnull @.str.5) #15
   unreachable
 
-parts64_mul.exit:                                 ; preds = %bb.j, %record_denormals_used.exit27, %record_denormals_used.exit, %bb.e, %bb.g
-  %.sroa.028.sroa.0.0 = phi i64 [ 2, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit27 ], [ %i.au, %bb.g ], [ 1, %bb.j ]
-  %.sroa.028.sroa.9.0 = phi i8 [ %i.w, %record_denormals_used.exit ], [ %.sroa.028.sroa.9.0.extract.trunc42, %bb.e ], [ %i.w, %record_denormals_used.exit27 ], [ %.sroa.028.sroa.9.0.extract.trunc, %bb.g ], [ %i.w, %bb.j ]
-  %.sroa.028.sroa.12.0 = phi i64 [ 0, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.au, %bb.g ], [ 0, %bb.j ]
-  %.sroa.028.sroa.15.1 = phi i64 [ %i.al, %record_denormals_used.exit ], [ %.sroa.028.sroa.15.0.extract.shift45, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %.sroa.028.sroa.15.0.extract.shift, %bb.g ], [ 0, %bb.j ]
-  %.sroa.20.1 = phi i64 [ %.sroa.20.0, %record_denormals_used.exit ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.av, %bb.g ], [ 0, %bb.j ]
+parts64_mul.exit:                                 ; preds = %record_denormals_used.exit, %bb.j, %record_denormals_used.exit27, %bb.e, %bb.g
+  %.sroa.028.sroa.0.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit27 ], [ 2, %record_denormals_used.exit ], [ 1, %bb.j ]
+  %.sroa.028.sroa.9.0 = phi i8 [ %.sroa.028.sroa.9.0.extract.trunc, %bb.g ], [ %.sroa.028.sroa.9.0.extract.trunc42, %bb.e ], [ %i.w, %record_denormals_used.exit27 ], [ %i.w, %record_denormals_used.exit ], [ %i.w, %bb.j ]
+  %.sroa.028.sroa.12.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ 0, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.028.sroa.15.1 = phi i64 [ %.sroa.028.sroa.15.0.extract.shift, %bb.g ], [ %.sroa.028.sroa.15.0.extract.shift45, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.al, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.20.1 = phi i64 [ %i.av, %bb.g ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %.sroa.20.0, %record_denormals_used.exit ], [ 0, %bb.j ]
   %.sroa.028.sroa.15.0.insert.shift = shl nuw i64 %.sroa.028.sroa.15.1, 32
   %.sroa.028.sroa.12.0.insert.ext = and i64 %.sroa.028.sroa.12.0, 4294901760
   %.sroa.028.sroa.12.0.insert.insert = or disjoint i64 %.sroa.028.sroa.15.0.insert.shift, %.sroa.028.sroa.12.0.insert.ext
@@ -1209,11 +1209,12 @@ bb.a:
   %i.w = zext i1 %i.v to i8                       ; 3 uses
   %i.x = and i32 %i.q, -13
   %.not.i24 = icmp eq i32 %i.x, 0
-  %8 = lshr i64 %.fca.0.load.i15, 32
-  %9 = lshr i64 %.fca.0.load.i5, 32
   br i1 %.not.i24, label %bb.b, label %bb.d, !prof !24
 
 bb.b:                                             ; preds = %bb.a
+  %8 = lshr i64 %.fca.0.load.i5, 32
+  %9 = lshr i64 %.fca.0.load.i15, 32
+  %10 = add nuw nsw i64 %8, %9
   %.not.i25 = icmp samesign ult i32 %i.q, 8
   br i1 %.not.i25, label %record_denormals_used.exit, label %bb.c, !prof !24
 
@@ -1236,8 +1237,7 @@ record_denormals_used.exit:                       ; preds = %bb.b, %bb.c
   %.not30.i = icmp sgt i128 %i.ac, -1
   %.lobit = lshr i128 %i.ac, 127
   %i.aj = trunc nuw nsw i128 %.lobit to i64
-  %10 = add nuw nsw i64 %8, %i.aj
-  %.sroa.028.sroa.15.0 = add nuw nsw i64 %10, %9
+  %.sroa.028.sroa.15.0 = add nuw nsw i64 %10, %i.aj
   %i.ak = zext i1 %.not30.i to i64
   %.sroa.20.0 = shl nuw i64 %i.ai, %i.ak
   %i.al = and i64 %.sroa.028.sroa.15.0, 4294967295
@@ -1298,12 +1298,12 @@ bb.k:                                             ; preds = %bb.j
   tail call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str.3, i32 noundef 671, ptr noundef nonnull @__func__.parts64_mul, ptr noundef nonnull @.str.5) #15
   unreachable
 
-parts64_mul.exit:                                 ; preds = %bb.j, %record_denormals_used.exit27, %record_denormals_used.exit, %bb.e, %bb.g
-  %.sroa.028.sroa.0.0 = phi i64 [ 2, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit27 ], [ %i.au, %bb.g ], [ 1, %bb.j ]
-  %.sroa.028.sroa.9.0 = phi i8 [ %i.w, %record_denormals_used.exit ], [ %.sroa.028.sroa.9.0.extract.trunc42, %bb.e ], [ %i.w, %record_denormals_used.exit27 ], [ %.sroa.028.sroa.9.0.extract.trunc, %bb.g ], [ %i.w, %bb.j ]
-  %.sroa.028.sroa.12.0 = phi i64 [ 0, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.au, %bb.g ], [ 0, %bb.j ]
-  %.sroa.028.sroa.15.1 = phi i64 [ %i.al, %record_denormals_used.exit ], [ %.sroa.028.sroa.15.0.extract.shift45, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %.sroa.028.sroa.15.0.extract.shift, %bb.g ], [ 0, %bb.j ]
-  %.sroa.20.1 = phi i64 [ %.sroa.20.0, %record_denormals_used.exit ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.av, %bb.g ], [ 0, %bb.j ]
+parts64_mul.exit:                                 ; preds = %record_denormals_used.exit, %bb.j, %record_denormals_used.exit27, %bb.e, %bb.g
+  %.sroa.028.sroa.0.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit27 ], [ 2, %record_denormals_used.exit ], [ 1, %bb.j ]
+  %.sroa.028.sroa.9.0 = phi i8 [ %.sroa.028.sroa.9.0.extract.trunc, %bb.g ], [ %.sroa.028.sroa.9.0.extract.trunc42, %bb.e ], [ %i.w, %record_denormals_used.exit27 ], [ %i.w, %record_denormals_used.exit ], [ %i.w, %bb.j ]
+  %.sroa.028.sroa.12.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ 0, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.028.sroa.15.1 = phi i64 [ %.sroa.028.sroa.15.0.extract.shift, %bb.g ], [ %.sroa.028.sroa.15.0.extract.shift45, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.al, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.20.1 = phi i64 [ %i.av, %bb.g ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %.sroa.20.0, %record_denormals_used.exit ], [ 0, %bb.j ]
   %.sroa.028.sroa.15.0.insert.shift = shl nuw i64 %.sroa.028.sroa.15.1, 32
   %.sroa.028.sroa.12.0.insert.ext = and i64 %.sroa.028.sroa.12.0, 4294901760
   %.sroa.028.sroa.12.0.insert.insert = or disjoint i64 %.sroa.028.sroa.15.0.insert.shift, %.sroa.028.sroa.12.0.insert.ext
@@ -1535,11 +1535,12 @@ bb.a:
   %i.w = zext i1 %i.v to i8                       ; 3 uses
   %i.x = and i32 %i.q, -13
   %.not.i24 = icmp eq i32 %i.x, 0
-  %8 = lshr i64 %.fca.0.load.i15, 32
-  %9 = lshr i64 %.fca.0.load.i5, 32
   br i1 %.not.i24, label %bb.b, label %bb.d, !prof !24
 
 bb.b:                                             ; preds = %bb.a
+  %8 = lshr i64 %.fca.0.load.i5, 32
+  %9 = lshr i64 %.fca.0.load.i15, 32
+  %10 = add nuw nsw i64 %8, %9
   %.not.i25 = icmp samesign ult i32 %i.q, 8
   br i1 %.not.i25, label %record_denormals_used.exit, label %bb.c, !prof !24
 
@@ -1562,8 +1563,7 @@ record_denormals_used.exit:                       ; preds = %bb.b, %bb.c
   %.not30.i = icmp sgt i128 %i.ac, -1
   %.lobit = lshr i128 %i.ac, 127
   %i.aj = trunc nuw nsw i128 %.lobit to i64
-  %10 = add nuw nsw i64 %8, %i.aj
-  %.sroa.028.sroa.15.0 = add nuw nsw i64 %10, %9
+  %.sroa.028.sroa.15.0 = add nuw nsw i64 %10, %i.aj
   %i.ak = zext i1 %.not30.i to i64
   %.sroa.20.0 = shl nuw i64 %i.ai, %i.ak
   %i.al = and i64 %.sroa.028.sroa.15.0, 4294967295
@@ -1624,12 +1624,12 @@ bb.k:                                             ; preds = %bb.j
   tail call void @g_assertion_message_expr(ptr noundef null, ptr noundef nonnull @.str.3, i32 noundef 671, ptr noundef nonnull @__func__.parts64_mul, ptr noundef nonnull @.str.5) #15
   unreachable
 
-parts64_mul.exit:                                 ; preds = %bb.j, %record_denormals_used.exit27, %record_denormals_used.exit, %bb.e, %bb.g
-  %.sroa.028.sroa.0.0 = phi i64 [ 2, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit27 ], [ %i.au, %bb.g ], [ 1, %bb.j ]
-  %.sroa.028.sroa.9.0 = phi i8 [ %i.w, %record_denormals_used.exit ], [ %.sroa.028.sroa.9.0.extract.trunc42, %bb.e ], [ %i.w, %record_denormals_used.exit27 ], [ %.sroa.028.sroa.9.0.extract.trunc, %bb.g ], [ %i.w, %bb.j ]
-  %.sroa.028.sroa.12.0 = phi i64 [ 0, %record_denormals_used.exit ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.au, %bb.g ], [ 0, %bb.j ]
-  %.sroa.028.sroa.15.1 = phi i64 [ %i.al, %record_denormals_used.exit ], [ %.sroa.028.sroa.15.0.extract.shift45, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %.sroa.028.sroa.15.0.extract.shift, %bb.g ], [ 0, %bb.j ]
-  %.sroa.20.1 = phi i64 [ %.sroa.20.0, %record_denormals_used.exit ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.av, %bb.g ], [ 0, %bb.j ]
+parts64_mul.exit:                                 ; preds = %record_denormals_used.exit, %bb.j, %record_denormals_used.exit27, %bb.e, %bb.g
+  %.sroa.028.sroa.0.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 4, %record_denormals_used.exit27 ], [ 2, %record_denormals_used.exit ], [ 1, %bb.j ]
+  %.sroa.028.sroa.9.0 = phi i8 [ %.sroa.028.sroa.9.0.extract.trunc, %bb.g ], [ %.sroa.028.sroa.9.0.extract.trunc42, %bb.e ], [ %i.w, %record_denormals_used.exit27 ], [ %i.w, %record_denormals_used.exit ], [ %i.w, %bb.j ]
+  %.sroa.028.sroa.12.0 = phi i64 [ %i.au, %bb.g ], [ %i.aq, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ 0, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.028.sroa.15.1 = phi i64 [ %.sroa.028.sroa.15.0.extract.shift, %bb.g ], [ %.sroa.028.sroa.15.0.extract.shift45, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %i.al, %record_denormals_used.exit ], [ 0, %bb.j ]
+  %.sroa.20.1 = phi i64 [ %i.av, %bb.g ], [ %i.ar, %bb.e ], [ 0, %record_denormals_used.exit27 ], [ %.sroa.20.0, %record_denormals_used.exit ], [ 0, %bb.j ]
   %.sroa.028.sroa.15.0.insert.shift = shl nuw i64 %.sroa.028.sroa.15.1, 32
   %.sroa.028.sroa.12.0.insert.ext = and i64 %.sroa.028.sroa.12.0, 4294901760
   %.sroa.028.sroa.12.0.insert.insert = or disjoint i64 %.sroa.028.sroa.15.0.insert.shift, %.sroa.028.sroa.12.0.insert.ext
@@ -1873,7 +1873,7 @@ bb.n:                                             ; preds = %bb.l
   store i8 %i.ac, ptr %i.dc, align 1, !alias.scope !77
   br label %parts128_mul.exit
 
-parts128_mul.exitthread-pre-split:                ; preds = %record_denormals_used.exit, %bb.d, %bb.h, %bb.f
+parts128_mul.exitthread-pre-split:                ; preds = %bb.h, %bb.f, %bb.d, %record_denormals_used.exit
   %.pr = load i8, ptr %7, align 8
   br label %parts128_mul.exit
 

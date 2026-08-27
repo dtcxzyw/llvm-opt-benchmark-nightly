@@ -204,7 +204,7 @@ bb.bd:                                            ; preds = %.thread402, %bb.g
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.h, %bb.f, %bb.e, %bb.c, %bb.d, %bb.bd
-  %.2 = phi i32 [ -1, %bb.f ], [ 0, %bb.bd ], [ -1, %bb.e ], [ -1, %bb.c ], [ -1, %bb.d ], [ -1, %bb.h ]
+  %.2 = phi i32 [ -1, %bb.c ], [ 0, %bb.bd ], [ -1, %bb.f ], [ -1, %bb.e ], [ -1, %bb.d ], [ -1, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %.2
 }

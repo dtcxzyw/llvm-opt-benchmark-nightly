@@ -205,14 +205,14 @@ bb.f:                                             ; preds = %.lr.ph360.i.i.prol
   br label %bb.g
 
 bb.g:                                             ; preds = %.backedge, %.preheader323.i.i
-  %.0296.i.i = phi i64 [ 0, %.preheader323.i.i ], [ %.0296.i.i.be, %.backedge ] ; 7 uses
-  %.0292.i.i = phi i64 [ %i.ai, %.preheader323.i.i ], [ %.0292.i.i.be, %.backedge ] ; 6 uses
-  %i.ax = sub i64 %.0292.i.i, %.0296.i.i
+  %.0296.i.i = phi i64 [ %i.ai, %.preheader323.i.i ], [ %.0296.i.i.be, %.backedge ] ; 6 uses
+  %.0292.i.i = phi i64 [ 0, %.preheader323.i.i ], [ %.0292.i.i.be, %.backedge ] ; 7 uses
+  %i.ax = sub i64 %.0296.i.i, %.0292.i.i
   %i.ay = lshr i64 %i.ax, 1
-  %i.az = getelementptr [8 x i8], ptr %i.ac, i64 %.0296.i.i ; 6 uses
+  %i.az = getelementptr [8 x i8], ptr %i.ac, i64 %.0292.i.i ; 6 uses
   %i.ba = getelementptr [8 x i8], ptr %i.az, i64 %i.ay ; 2 uses
   %i.bb = load i64, ptr %i.ba, align 4            ; 3 uses
-  %i.bc = add i64 %.0292.i.i, -1                  ; 2 uses
+  %i.bc = add i64 %.0296.i.i, -1                  ; 2 uses
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %i.bc ; 8 uses
   %i.be = load i64, ptr %i.bd, align 4
   store i64 %i.be, ptr %i.ba, align 4
@@ -237,7 +237,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.sroa.3.0.copyload378.i.i = phi i32 [ %i.bh, %bb.g ], [ %i.bn, %bb.h ]
   %i.bo = phi i32 [ %i.bj, %bb.g ], [ %.pre.i.i, %bb.h ]
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %.0292.i.i ; 5 uses
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %.0296.i.i ; 5 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 4
   %i.br = load i32, ptr %i.bq, align 4, !tbaa !84 ; 2 uses
   %i.bs = icmp ult i32 %i.br, %i.bo
@@ -270,11 +270,11 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.sroa.3.0.copyload.i.i = phi i32 [ %i.cc, %bb.l ], [ %.sroa.3.0.copyload377.i.i, %bb.k ] ; 2 uses
-  %i.cd = add i64 %.0296.i.i, 2
+  %i.cd = add i64 %.0292.i.i, 2
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.q, %bb.m
-  %.0290.i.i = phi i64 [ %.0296.i.i, %bb.m ], [ %i.ce, %bb.q ]
+  %.0290.i.i = phi i64 [ %.0292.i.i, %bb.m ], [ %i.ce, %bb.q ]
   %.0288.i.i = phi i64 [ %i.bc, %bb.m ], [ %i.cj, %bb.q ]
   br label %bb.o
 
@@ -313,15 +313,15 @@ bb.r:                                             ; preds = %bb.p
   %i.cr = load i64, ptr %i.bd, align 4
   store i64 %i.cr, ptr %i.cf, align 4
   store i64 %i.cp, ptr %i.bd, align 4
-  %i.cs = sub i64 %i.ce, %.0296.i.i
-  %i.ct = sub i64 %.0292.i.i, %i.ce
+  %i.cs = sub i64 %i.ce, %.0292.i.i
+  %i.ct = sub i64 %.0296.i.i, %i.ce
   %i.cu = icmp ult i64 %i.cs, %i.ct               ; 4 uses
   %i.cv = add i64 %.1291.i.i, 2                   ; 2 uses
-  %.0296..i.i = select i1 %i.cu, i64 %.0296.i.i, i64 %i.cv ; 2 uses
-  %.1291..0292.i.i = select i1 %i.cu, i64 %.1291.i.i, i64 %.0292.i.i ; 2 uses
-  %..0296.i.i = select i1 %i.cu, i64 %i.cv, i64 %.0296.i.i ; 3 uses
-  %.0292..1291.i.i = select i1 %i.cu, i64 %.0292.i.i, i64 %.1291.i.i ; 3 uses
-  %i.cw = sub i64 %.1291..0292.i.i, %.0296..i.i
+  %.0296..i.i = select i1 %i.cu, i64 %.1291.i.i, i64 %.0296.i.i ; 2 uses
+  %.1291..0292.i.i = select i1 %i.cu, i64 %.0292.i.i, i64 %i.cv ; 2 uses
+  %..0296.i.i = select i1 %i.cu, i64 %i.cv, i64 %.0292.i.i ; 3 uses
+  %.0292..1291.i.i = select i1 %i.cu, i64 %.0296.i.i, i64 %.1291.i.i ; 3 uses
+  %i.cw = sub i64 %.0296..i.i, %.1291..0292.i.i
   %i.cx = icmp ugt i64 %i.cw, 10
   br i1 %i.cx, label %bb.s, label %bb.x
 
@@ -378,8 +378,8 @@ bb.z:                                             ; preds = %bb.y
   br label %.backedge
 
 .backedge:                                        ; preds = %bb.z, %bb.x, %bb.w
-  %.0296.i.i.be = phi i64 [ %..0296.i.i, %bb.x ], [ %.0296..i.i, %bb.w ], [ %i.dp, %bb.z ]
-  %.0292.i.i.be = phi i64 [ %.0292..1291.i.i, %bb.x ], [ %.1291..0292.i.i, %bb.w ], [ %i.dn, %bb.z ]
+  %.0296.i.i.be = phi i64 [ %.0292..1291.i.i, %bb.x ], [ %.0296..i.i, %bb.w ], [ %i.dn, %bb.z ]
+  %.0292.i.i.be = phi i64 [ %..0296.i.i, %bb.x ], [ %.1291..0292.i.i, %bb.w ], [ %i.dp, %bb.z ]
   br label %bb.g
 
 .preheader.i.i:                                   ; preds = %bb.ac

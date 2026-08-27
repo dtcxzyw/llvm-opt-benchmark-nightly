@@ -204,12 +204,12 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNSt6vectorIN4llvm8minidump9DirectoryESaIS2_EE9push_backERKS2_.exit
 
 bb.e:                                             ; preds = %bb.c
+  %.sroa.0.0.insert.ext = and i64 %3, 4294967295
   %i.t = tail call noundef i64 @_ZNK12lldb_private14DataBufferHeap11GetByteSizeEv(ptr noundef nonnull align 8 dereferenceable(32) %i.a) #17
   %i.u = load i64, ptr %i.c, align 8, !tbaa !8
   %i.v = add i64 %i.u, %i.t
   %.sroa.4.0.insert.ext = shl i64 %i.v, 32
-  %.sroa.011.0.insert.ext = and i64 %3, 4294967295
-  %.sroa.011.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.ext, %.sroa.011.0.insert.ext ; 2 uses
+  %.sroa.011.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.ext, %.sroa.0.0.insert.ext ; 2 uses
   %i.w = load ptr, ptr %i.h, align 8, !tbaa !128  ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !130
@@ -612,8 +612,11 @@ _ZNSt10shared_ptrIN12lldb_private6ModuleEEC2ERKS2_.exit: ; preds = %bb.aj, %bb.a
   %i.hd = getelementptr inbounds nuw i8, ptr %i.hb, i64 8
   %i.he = load i64, ptr %i.hd, align 8, !tbaa !145 ; 2 uses
   %i.hf = add i64 %i.he, 4
+  %.sroa.0.0.insert.ext = and i64 %i.hf, 4294967295
   %i.hg = call noundef i64 @_ZNK12lldb_private14DataBufferHeap11GetByteSizeEv(ptr noundef nonnull align 8 dereferenceable(32) %7) #17
   %i.hh = add i64 %i.hg, %i.gg
+  %.sroa.0.4.insert.ext = shl i64 %i.hh, 32
+  %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.4.insert.ext, %.sroa.0.0.insert.ext
   call void @_ZN12lldb_private14DataBufferHeap10AppendDataEPKvm(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull %15, i64 noundef 4) #17
   call void @_ZN12lldb_private14DataBufferHeap10AppendDataEPKvm(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef %i.hc, i64 noundef %i.he) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #17
@@ -673,11 +676,8 @@ _ZN12lldb_private7AddressD2Ev.exit:               ; preds = %_ZNSt10shared_ptrIN
   %i.ie = add i64 %i.id, %i.gg
   %i.if = trunc i64 %i.ie to i32
   store i32 %i.if, ptr %i.gl, align 4, !tbaa !88
-  %.sroa.4.0.insert.ext = shl i64 %i.hh, 32
-  %.sroa.087.0.insert.ext = and i64 %i.hf, 4294967295
-  %.sroa.087.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.ext, %.sroa.087.0.insert.ext
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(52) %i.gm, i8 0, i64 52, i1 false)
-  store i64 %.sroa.087.0.insert.insert, ptr %i.gn, align 4
+  store i64 %.sroa.0.4.insert.insert, ptr %i.gn, align 4
   store i64 0, ptr %i.go, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #17
   call void @_Z11WriteStringRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN12lldb_private14DataBufferHeapE(ptr dead_on_unwind nonnull writable sret(%"class.lldb_private::Status") align 8 %18, ptr noundef nonnull align 8 dereferenceable(32) %14, ptr noundef nonnull %7)
@@ -1080,15 +1080,15 @@ bb.af:                                            ; preds = %bb.y, %bb.x
   %.sroa.065.0.insert.ext = select i1 %switch.selectcmp1.i, i64 736, i64 %i.fp
   %i.fq = call noundef i64 @_ZNK12lldb_private14DataBufferHeap11GetByteSizeEv(ptr noundef nonnull align 8 dereferenceable(32) %8) #17
   %i.fr = add i64 %i.bn, %i.fq
+  %.sroa.0.4.insert.ext = shl i64 %i.fr, 32
+  %.sroa.0.4.insert.insert = or disjoint i64 %.sroa.0.4.insert.ext, %.sroa.065.0.insert.ext ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   %i.fs = load ptr, ptr %.sroa.081.090, align 8, !tbaa !105
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 40
   %i.fu = load i64, ptr %i.ft, align 8, !tbaa !330
   store i64 %i.fu, ptr %i.b, align 8, !tbaa !138
   %i.fv = call noundef nonnull align 1 dereferenceable(8) ptr @_ZNSt8__detail9_Map_baseImSt4pairIKmN4llvm8minidump18LocationDescriptorEESaIS6_ENS_10_Select1stESt8equal_toImESt4hashImENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb0ELb0ELb1EEELb1EEixEOm(ptr noundef nonnull align 8 dereferenceable(56) %i.bo, ptr noundef nonnull align 8 dereferenceable(8) %i.b)
-  %.sroa.5.0.insert.ext = shl i64 %i.fr, 32
-  %.sroa.065.0.insert.insert = or disjoint i64 %.sroa.5.0.insert.ext, %.sroa.065.0.insert.ext ; 2 uses
-  store i64 %.sroa.065.0.insert.insert, ptr %i.fv, align 1
+  store i64 %.sroa.0.4.insert.insert, ptr %i.fv, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   br i1 %.not, label %bb.ah, label %bb.ag
 
@@ -1122,7 +1122,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.gh = zext i1 %i.gg to i32
   store i32 %i.gh, ptr %i.bp, align 4, !tbaa !88
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.bq, i8 0, i64 32, i1 false)
-  store i64 %.sroa.065.0.insert.insert, ptr %i.br, align 4
+  store i64 %.sroa.0.4.insert.insert, ptr %i.br, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
   %i.gi = load i64, ptr %14, align 8, !tbaa !331
   %i.gj = load i64, ptr %i.bt, align 8, !tbaa !332

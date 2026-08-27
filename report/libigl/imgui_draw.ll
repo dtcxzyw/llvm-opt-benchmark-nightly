@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %_ZL14stb_decompress
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %.sroa.10.sroa.0.0 = phi i64 [ 0, %bb.ag ], [ %i.vf, %bb.af ]
   %.sroa.922.0 = phi float [ f0x7F7FFFFF, %bb.ag ], [ %.sroa.922.0.copyload, %bb.af ]
+  %.sroa.10.0 = phi i64 [ 0, %bb.ag ], [ %i.vf, %bb.af ]
   %.sroa.1026.0 = phi float [ 1.000000e+00, %bb.ag ], [ %.sroa.1026.0.copyload, %bb.af ]
   %.sroa.11.0 = phi i16 [ -1, %bb.ag ], [ %.sroa.11.0.copyload, %bb.af ]
   %i.vg = phi <2 x i32> [ <i32 3, i32 1>, %bb.ag ], [ %i.ve, %bb.af ]
@@ -222,7 +222,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %.sroa.922.0..sroa_idx23 = getelementptr inbounds nuw i8, ptr %6, i64 68
   store float %.sroa.922.0, ptr %.sroa.922.0..sroa_idx23, align 4, !tbaa !9
   %.sroa.10.0..sroa_idx25 = getelementptr inbounds nuw i8, ptr %6, i64 72
-  store i64 %.sroa.10.sroa.0.0, ptr %.sroa.10.0..sroa_idx25, align 8
+  store i64 %.sroa.10.0, ptr %.sroa.10.0..sroa_idx25, align 8
   %.sroa.1026.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %6, i64 80
   store float %.sroa.1026.0, ptr %.sroa.1026.0..sroa_idx27, align 8, !tbaa !9
   %.sroa.11.0..sroa_idx29 = getelementptr inbounds nuw i8, ptr %6, i64 84
@@ -625,16 +625,13 @@ define internal fastcc noundef range(i32 0, 2) i32 @_ZL21stbtt__run_charstringPK
 bb.a:
   %i.a = alloca [48 x float], align 16            ; 47 uses
   %3 = alloca [10 x %struct.stbtt__buf], align 16 ; 4 uses
-  %.sroa.5 = alloca { i32, i32 }, align 8         ; 5 uses
   %4 = alloca %struct.stbtt__buf, align 8         ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #40
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112
   %.sroa.073.0.copyload = load ptr, ptr %i.b, align 8, !tbaa !234
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.c = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  store i64 %i.c, ptr %.sroa.5, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #40
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.sroa.065.0.copyload = load ptr, ptr %i.d, align 8, !tbaa !234
@@ -694,6 +691,7 @@ _ZL15stbtt__buf_get8P10stbtt__buf.exit:           ; preds = %_ZL15stbtt__buf_get
   %.0237363 = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.lr.ph ], [ %.2239338, %.thread ] ; 26 uses
   %.0240362 = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.lr.ph ], [ %.1241337, %.thread ] ; 28 uses
   %.0243359 = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.lr.ph ], [ %i.up, %.thread ] ; 45 uses
+  %.sroa.5.0365 = phi i64 [ %i.c, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.lr.ph ], [ %.sroa.5.3342, %.thread ] ; 27 uses
   %.sroa.073.0358 = phi ptr [ %.sroa.073.0.copyload, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.lr.ph ], [ %.sroa.073.3336, %.thread ] ; 27 uses
   %.0254357 = phi i32 [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit.lr.ph ], [ %.2256335, %.thread ] ; 26 uses
   %i.ak = load ptr, ptr %4, align 8, !tbaa !325   ; 6 uses
@@ -1096,12 +1094,12 @@ _ZL26stbtt__cid_get_glyph_subrsPK14stbtt_fontinfoi.exit: ; preds = %_ZL14stbtt__
   %i.ox = tail call fastcc { ptr, i64 } @_ZL16stbtt__get_subrs10stbtt__bufS_(ptr %i.ou, i64 %i.ot, ptr %i.ov, i64 %i.ow) ; 2 uses
   %i.oy = extractvalue { ptr, i64 } %i.ox, 0
   %i.oz = extractvalue { ptr, i64 } %i.ox, 1
-  store i64 %i.oz, ptr %.sroa.5, align 8
   br label %bb.dh
 
 bb.dh:                                            ; preds = %_ZL15stbtt__buf_get8P10stbtt__buf.exit, %bb.cx, %_ZL26stbtt__cid_get_glyph_subrsPK14stbtt_fontinfoi.exit, %bb.cw
   %.1255 = phi i32 [ 1, %bb.cw ], [ %.0254357, %_ZL15stbtt__buf_get8P10stbtt__buf.exit ], [ 1, %_ZL26stbtt__cid_get_glyph_subrsPK14stbtt_fontinfoi.exit ], [ 1, %bb.cx ]
   %.sroa.073.2 = phi ptr [ %.sroa.073.0358, %bb.cw ], [ %.sroa.073.0358, %_ZL15stbtt__buf_get8P10stbtt__buf.exit ], [ %i.oy, %_ZL26stbtt__cid_get_glyph_subrsPK14stbtt_fontinfoi.exit ], [ %.sroa.073.0358, %bb.cx ] ; 2 uses
+  %.sroa.5.2 = phi i64 [ %.sroa.5.0365, %bb.cw ], [ %.sroa.5.0365, %_ZL15stbtt__buf_get8P10stbtt__buf.exit ], [ %i.oz, %_ZL26stbtt__cid_get_glyph_subrsPK14stbtt_fontinfoi.exit ], [ %.sroa.5.0365, %bb.cx ] ; 2 uses
   %i.pa = icmp slt i32 %.0243359, 1
   br i1 %i.pa, label %.critedge, label %bb.di
 
@@ -1124,12 +1122,12 @@ bb.dj:                                            ; preds = %bb.di
 
 .else:                                            ; preds = %bb.dj
   %.sroa.0.0.copyload.else.val = load ptr, ptr %i.aa, align 8, !tbaa !234
+  %.sroa.2.0.copyload.else.val = load i64, ptr %.sroa.gep72, align 8
   br label %.cont
 
 .cont:                                            ; preds = %bb.dj, %.else
-  %.sroa.sel = phi ptr [ %.sroa.5, %bb.dj ], [ %.sroa.gep72, %.else ]
-  %.sroa.0.0.copyload = phi ptr [ %.sroa.073.2, %bb.dj ], [ %.sroa.0.0.copyload.else.val, %.else ] ; 3 uses
-  %.sroa.2.0.copyload = load i64, ptr %.sroa.sel, align 8 ; 2 uses
+  %.sroa.0.0.copyload = phi ptr [ %.sroa.0.0.copyload.else.val, %.else ], [ %.sroa.073.2, %bb.dj ] ; 3 uses
+  %.sroa.2.0.copyload = phi i64 [ %.sroa.2.0.copyload.else.val, %.else ], [ %.sroa.5.2, %bb.dj ] ; 2 uses
   %.sroa.9.8.extract.shift.i = lshr i64 %.sroa.2.0.copyload, 32
   %.sroa.9.8.extract.trunc.i = trunc nuw i64 %.sroa.9.8.extract.shift.i to i32 ; 3 uses
   %i.pl = tail call i32 @llvm.smin.i32(i32 %.sroa.9.8.extract.trunc.i, i32 0) ; 2 uses
@@ -1423,6 +1421,7 @@ bb.ej:                                            ; preds = %bb.ei
   %.1236339 = phi i32 [ %.0235364, %bb.dp ], [ %.0235364, %bb.ej ], [ %.0235364, %bb.dn ], [ %.0235364, %bb.dz ], [ %.0235364, %bb.dx ], [ %.0235364, %bb.dv ], [ %.0235364, %bb.dt ], [ %.0235364, %bb.cv ], [ %.0235364, %bb.ct ], [ %.0235364, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit304 ], [ %.0235364, %.lr.ph.split.us.preheader ], [ %.0235364, %bb.bh ], [ %.0235364, %bb.bl ], [ %.0235364, %bb.ab ], [ %.0235364, %bb.aq ], [ 0, %bb.d ], [ 0, %bb.k ], [ 0, %bb.i ], [ 0, %bb.g ], [ %.0235364, %bb.e ], [ %.0235364, %.lr.ph.split.preheader ], [ %.0235364, %.preheader340 ], [ %.0235364, %.lr.ph.split.us ], [ %.0235364, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit ], [ %.0235364, %.lr.ph.split ]
   %.2239338 = phi i32 [ %.0237363, %bb.dp ], [ %.0237363, %bb.ej ], [ %.0237363, %bb.dn ], [ %.0237363, %bb.dz ], [ %.0237363, %bb.dx ], [ %.0237363, %bb.dv ], [ %.0237363, %bb.dt ], [ %.0237363, %bb.cv ], [ %.0237363, %bb.ct ], [ %.0237363, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit304 ], [ %.0237363, %.lr.ph.split.us.preheader ], [ %.0237363, %bb.bh ], [ %.0237363, %bb.bl ], [ %.0237363, %bb.ab ], [ %.0237363, %bb.aq ], [ %.1238, %bb.d ], [ %.0237363, %bb.k ], [ %.0237363, %bb.i ], [ %.0237363, %bb.g ], [ %i.ax, %bb.e ], [ %.0237363, %.lr.ph.split.preheader ], [ %.0237363, %.preheader340 ], [ %.0237363, %.lr.ph.split.us ], [ %.0237363, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit ], [ %.0237363, %.lr.ph.split ]
   %.1241337 = phi i32 [ %i.qg, %bb.dp ], [ %.0240362, %bb.ej ], [ %i.ph, %bb.dn ], [ %.0240362, %bb.dz ], [ %.0240362, %bb.dx ], [ %.0240362, %bb.dv ], [ %.0240362, %bb.dt ], [ %.0240362, %bb.cv ], [ %.0240362, %bb.ct ], [ %.0240362, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit304 ], [ %.0240362, %.lr.ph.split.us.preheader ], [ %.0240362, %bb.bh ], [ %.0240362, %bb.bl ], [ %.0240362, %bb.ab ], [ %.0240362, %bb.aq ], [ %.0240362, %bb.d ], [ %.0240362, %bb.k ], [ %.0240362, %bb.i ], [ %.0240362, %bb.g ], [ %.0240362, %bb.e ], [ %.0240362, %.lr.ph.split.preheader ], [ %.0240362, %.preheader340 ], [ %.0240362, %.lr.ph.split.us ], [ %.0240362, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit ], [ %.0240362, %.lr.ph.split ]
+  %.sroa.5.3342 = phi i64 [ %.sroa.5.0365, %bb.dp ], [ %.sroa.5.0365, %bb.ej ], [ %.sroa.5.2, %bb.dn ], [ %.sroa.5.0365, %bb.dz ], [ %.sroa.5.0365, %bb.dx ], [ %.sroa.5.0365, %bb.dv ], [ %.sroa.5.0365, %bb.dt ], [ %.sroa.5.0365, %bb.cv ], [ %.sroa.5.0365, %bb.ct ], [ %.sroa.5.0365, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit304 ], [ %.sroa.5.0365, %.lr.ph.split.us.preheader ], [ %.sroa.5.0365, %bb.bh ], [ %.sroa.5.0365, %bb.bl ], [ %.sroa.5.0365, %bb.ab ], [ %.sroa.5.0365, %bb.aq ], [ %.sroa.5.0365, %bb.d ], [ %.sroa.5.0365, %bb.k ], [ %.sroa.5.0365, %bb.i ], [ %.sroa.5.0365, %bb.g ], [ %.sroa.5.0365, %bb.e ], [ %.sroa.5.0365, %.lr.ph.split.preheader ], [ %.sroa.5.0365, %.preheader340 ], [ %.sroa.5.0365, %.lr.ph.split.us ], [ %.sroa.5.0365, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit ], [ %.sroa.5.0365, %.lr.ph.split ]
   %.sroa.073.3336 = phi ptr [ %.sroa.073.0358, %bb.dp ], [ %.sroa.073.0358, %bb.ej ], [ %.sroa.073.2, %bb.dn ], [ %.sroa.073.0358, %bb.dz ], [ %.sroa.073.0358, %bb.dx ], [ %.sroa.073.0358, %bb.dv ], [ %.sroa.073.0358, %bb.dt ], [ %.sroa.073.0358, %bb.cv ], [ %.sroa.073.0358, %bb.ct ], [ %.sroa.073.0358, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit304 ], [ %.sroa.073.0358, %.lr.ph.split.us.preheader ], [ %.sroa.073.0358, %bb.bh ], [ %.sroa.073.0358, %bb.bl ], [ %.sroa.073.0358, %bb.ab ], [ %.sroa.073.0358, %bb.aq ], [ %.sroa.073.0358, %bb.d ], [ %.sroa.073.0358, %bb.k ], [ %.sroa.073.0358, %bb.i ], [ %.sroa.073.0358, %bb.g ], [ %.sroa.073.0358, %bb.e ], [ %.sroa.073.0358, %.lr.ph.split.preheader ], [ %.sroa.073.0358, %.preheader340 ], [ %.sroa.073.0358, %.lr.ph.split.us ], [ %.sroa.073.0358, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit ], [ %.sroa.073.0358, %.lr.ph.split ]
   %.2256335 = phi i32 [ %.0254357, %bb.dp ], [ %.0254357, %bb.ej ], [ %.1255, %bb.dn ], [ %.0254357, %bb.dz ], [ %.0254357, %bb.dx ], [ %.0254357, %bb.dv ], [ %.0254357, %bb.dt ], [ %.0254357, %bb.cv ], [ %.0254357, %bb.ct ], [ %.0254357, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit304 ], [ %.0254357, %.lr.ph.split.us.preheader ], [ %.0254357, %bb.bh ], [ %.0254357, %bb.bl ], [ %.0254357, %bb.ab ], [ %.0254357, %bb.aq ], [ %.0254357, %bb.d ], [ %.0254357, %bb.k ], [ %.0254357, %bb.i ], [ %.0254357, %bb.g ], [ %.0254357, %bb.e ], [ %.0254357, %.lr.ph.split.preheader ], [ %.0254357, %.preheader340 ], [ %.0254357, %.lr.ph.split.us ], [ %.0254357, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit ], [ %.0254357, %.lr.ph.split ]
   %i.up = phi i32 [ %.0243359, %bb.dp ], [ %i.um, %bb.ej ], [ %i.pb, %bb.dn ], [ 0, %bb.dz ], [ 0, %bb.dx ], [ 0, %bb.dv ], [ 0, %bb.dt ], [ 0, %bb.cv ], [ 0, %bb.ct ], [ 0, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit304 ], [ 0, %.lr.ph.split.us.preheader ], [ 0, %bb.bh ], [ 0, %bb.bl ], [ 0, %bb.ab ], [ 0, %bb.aq ], [ 0, %bb.d ], [ 0, %bb.k ], [ 0, %bb.i ], [ 0, %bb.g ], [ 0, %bb.e ], [ 0, %.lr.ph.split.preheader ], [ 0, %.preheader340 ], [ 0, %.lr.ph.split.us ], [ 0, %_ZL21stbtt__csctx_rline_toP12stbtt__csctxff.exit ], [ 0, %.lr.ph.split ]
@@ -1434,7 +1433,6 @@ bb.ej:                                            ; preds = %bb.ei
 .critedge:                                        ; preds = %bb.f, %bb.h, %bb.j, %bb.l, %bb.z, %bb.aa, %bb.bf, %bb.bg, %bb.bp, %bb.bq, %._crit_edge352, %bb.cf, %._crit_edge, %bb.cu, %bb.dh, %bb.di, %_ZL15stbtt__get_subr10stbtt__bufi.exit, %bb.do, %bb.ea, %bb.ei, %.thread, %bb.du, %bb.ds, %_ZL15stbtt__buf_get8P10stbtt__buf.exit321, %bb.dw, %bb.dy, %bb.dr, %bb.a, %bb.dq
   %.3 = phi i32 [ 1, %bb.dq ], [ 0, %bb.a ], [ 0, %bb.dr ], [ 0, %bb.dy ], [ 0, %bb.dw ], [ 0, %_ZL15stbtt__buf_get8P10stbtt__buf.exit321 ], [ 0, %bb.ds ], [ 0, %bb.du ], [ 0, %.thread ], [ 0, %bb.ei ], [ 0, %bb.ea ], [ 0, %bb.do ], [ 0, %_ZL15stbtt__get_subr10stbtt__bufi.exit ], [ 0, %bb.di ], [ 0, %bb.dh ], [ 0, %bb.cu ], [ 0, %._crit_edge ], [ 0, %bb.cf ], [ 0, %._crit_edge352 ], [ 0, %bb.bq ], [ 0, %bb.bp ], [ 0, %bb.bg ], [ 0, %bb.bf ], [ 0, %bb.aa ], [ 0, %bb.z ], [ 0, %bb.l ], [ 0, %bb.j ], [ 0, %bb.h ], [ 0, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #40
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #40
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
   ret i32 %.3

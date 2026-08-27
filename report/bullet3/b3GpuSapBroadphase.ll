@@ -205,8 +205,8 @@ bb.du:                                            ; preds = %bb.dt
   br i1 %or.cond7, label %bb.ek, label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du
-  %spec.select694 = call i32 @llvm.smin.i32(i32 %i.tw, i32 %i.abe)
-  %spec.select695 = call i32 @llvm.smax.i32(i32 %i.tw, i32 %i.abe)
+  %spec.select694 = call i32 @llvm.smax.i32(i32 %i.tw, i32 %i.abe)
+  %spec.select695 = call i32 @llvm.smin.i32(i32 %i.tw, i32 %i.abe)
   %i.aef = load i32, ptr getelementptr inbounds nuw (i8, ptr @addedHostPairs, i64 4), align 4, !tbaa !151 ; 6 uses
   %i.aeg = load i32, ptr getelementptr inbounds nuw (i8, ptr @addedHostPairs, i64 8), align 8, !tbaa !152
   %i.aeh = icmp eq i32 %i.aef, %i.aeg
@@ -317,9 +317,9 @@ bb.ea:                                            ; preds = %_ZN20b3AlignedObjec
   %i.aff = load ptr, ptr getelementptr inbounds nuw (i8, ptr @addedHostPairs, i64 16), align 8, !tbaa !147
   %i.afg = sext i32 %i.afe to i64
   %i.afh = getelementptr inbounds [16 x i8], ptr %i.aff, i64 %i.afg ; 2 uses
-  store i32 %spec.select694, ptr %i.afh, align 16
+  store i32 %spec.select695, ptr %i.afh, align 16
   %.sroa.6654.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.afh, i64 4
-  store i32 %spec.select695, ptr %.sroa.6654.0..sroa_idx, align 4
+  store i32 %spec.select694, ptr %.sroa.6654.0..sroa_idx, align 4
   %i.afi = load i32, ptr getelementptr inbounds nuw (i8, ptr @addedHostPairs, i64 4), align 4, !tbaa !151
   %i.afj = add nsw i32 %i.afi, 1
   store i32 %i.afj, ptr getelementptr inbounds nuw (i8, ptr @addedHostPairs, i64 4), align 4, !tbaa !151
@@ -722,8 +722,8 @@ _ZN13b3ProfileZoneC2EPKc.exit548.preheader:       ; preds = %bb.fw
   %i.aok = zext nneg i32 %i.aqo to i64
   br label %.lr.ph768
 
-bb.fx:                                            ; preds = %bb.fu, %bb.ft, %bb.fn
-  %.pn297.pn = phi { ptr, i32 } [ %i.aku, %bb.fn ], [ %i.aoa, %bb.fu ], [ %i.anz, %bb.ft ]
+bb.fx:                                            ; preds = %bb.fn, %bb.fu, %bb.ft
+  %.pn297.pn = phi { ptr, i32 } [ %i.anz, %bb.ft ], [ %i.aoa, %bb.fu ], [ %i.aku, %bb.fn ]
   invoke void @b3LeaveProfileZone()
           to label %_ZN13b3ProfileZoneD2Ev.exit549 unwind label %bb.fy
 
@@ -1126,8 +1126,8 @@ bb.ha:                                            ; preds = %bb.gz
 _ZN13b3ProfileZoneD2Ev.exit629:                   ; preds = %bb.gz
   ret void
 
-bb.hb:                                            ; preds = %bb.gl, %bb.gg
-  %.pn289.pn = phi { ptr, i32 } [ %i.apm, %bb.gg ], [ %i.aqv, %bb.gl ]
+bb.hb:                                            ; preds = %bb.gg, %bb.gl
+  %.pn289.pn = phi { ptr, i32 } [ %i.aqv, %bb.gl ], [ %i.apm, %bb.gg ]
   invoke void @b3LeaveProfileZone()
           to label %_ZN13b3ProfileZoneD2Ev.exit630 unwind label %bb.hc
 

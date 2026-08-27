@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %bb.d
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i: ; preds = %.lr.ph.i.i4, %bb.h
   %.sroa.06.0.lcssa.i.i = phi ptr [ %.sroa.0.018.i.ptr, %bb.h ], [ %.sroa.0.011.i.i, %.lr.ph.i.i4 ] ; 2 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i = trunc i64 %i.v to i32
   store ptr %.sroa.03.0.copyload.i.i, ptr %.sroa.06.0.lcssa.i.i, align 8, !tbaa !8
   %.sroa.5.0..sroa_idx5.i.i = getelementptr inbounds nuw i8, ptr %.sroa.06.0.lcssa.i.i, i64 8
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i, ptr %.sroa.5.0..sroa_idx5.i.i, align 8, !tbaa !100
+  %.sroa.5.0.extract.trunc.i.i = trunc i64 %i.v to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i, ptr %.sroa.5.0..sroa_idx5.i.i, align 8, !tbaa !100
   br label %bb.i
 
 bb.i:                                             ; preds = %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i
@@ -258,10 +258,10 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChained
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.i: ; preds = %.lr.ph.i.i.i, %.lr.ph.i.i
   %.sroa.06.0.lcssa.i.i.i = phi ptr [ %.sroa.0.05.i.i, %.lr.ph.i.i ], [ %.sroa.0.011.i.i.i, %.lr.ph.i.i.i ] ; 2 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i.i = trunc i64 %i.ar to i32
   store ptr %.sroa.03.0.copyload.i.i.i, ptr %.sroa.06.0.lcssa.i.i.i, align 8, !tbaa !8
   %.sroa.5.0..sroa_idx5.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.06.0.lcssa.i.i.i, i64 8
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i.i, ptr %.sroa.5.0..sroa_idx5.i.i.i, align 8, !tbaa !100
+  %.sroa.5.0.extract.trunc.i.i.i = trunc i64 %i.ar to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i.i, ptr %.sroa.5.0..sroa_idx5.i.i.i, align 8, !tbaa !100
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i, i64 16 ; 2 uses
   %.not.i.i = icmp eq ptr %i.bm, %1
   br i1 %.not.i.i, label %_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_.exit, label %.lr.ph.i.i, !llvm.loop !999
@@ -664,10 +664,10 @@ bb.g:                                             ; preds = %bb.b
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit: ; preds = %.lr.ph.i, %bb.g
   %.sroa.06.0.lcssa.i = phi ptr [ %.sroa.0.018, %bb.g ], [ %.sroa.0.011.i, %.lr.ph.i ] ; 2 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i = trunc i64 %i.w to i32
   store ptr %.sroa.03.0.copyload.i, ptr %.sroa.06.0.lcssa.i, align 8, !tbaa !8
   %.sroa.5.0..sroa_idx5.i = getelementptr inbounds nuw i8, ptr %.sroa.06.0.lcssa.i, i64 8
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i, ptr %.sroa.5.0..sroa_idx5.i, align 8, !tbaa !100
+  %.sroa.5.0.extract.trunc.i = trunc i64 %i.w to i32
+  store i32 %.sroa.5.0.extract.trunc.i, ptr %.sroa.5.0..sroa_idx5.i, align 8, !tbaa !100
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN4LIEF5MachO24DyldChainedFixupsCreator16binding_rebase_tESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit

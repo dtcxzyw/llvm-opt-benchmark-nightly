@@ -205,14 +205,15 @@ bb.x:                                             ; preds = %bb.w
   %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.04.0.copyload.i, i64 40
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !236 ; 3 uses
   %.sroa.0.0.copyload1.i = load ptr, ptr %i.do, align 8, !tbaa !238 ; 3 uses
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.do, i64 8
-  %.sroa.5.sroa.0.0.copyload.i = load i32, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !151 ; 2 uses
   %.not24.i = icmp eq ptr %.sroa.07.022.i, null
   %.not25.i = icmp eq ptr %.sroa.0.0.copyload1.i, %.sroa.07.022.i
   %or.cond.i = select i1 %.not24.i, i1 true, i1 %.not25.i
   br i1 %or.cond.i, label %bb.y, label %"_ZZNK4llvm21HexagonTargetLowering17buildHvxVectorRegENS_8ArrayRefINS_7SDValueEEERKNS_5SDLocENS_3MVTERNS_12SelectionDAGEENK3$_1clERS2_RNS_15SmallVectorImplIiEE.exit.thread"
 
 bb.y:                                             ; preds = %bb.x
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.do, i64 8
+  %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8
+  %.sroa.5.0.extract.trunc.i = trunc i64 %.sroa.5.0.copyload.i to i32 ; 2 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %i.do, i64 40
   %i.dq = load ptr, ptr %i.dp, align 8, !tbaa !232 ; 2 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 24
@@ -269,7 +270,7 @@ bb.ac:                                            ; preds = %_ZNK4llvm14Constant
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.v, %bb.u
-  %.sroa.79.2.ph.i = phi i32 [ %.sroa.5.sroa.0.0.copyload.i, %bb.ac ], [ %.sroa.5.sroa.0.0.copyload.i, %bb.ab ], [ %.sroa.79.021.i, %bb.u ], [ %.sroa.79.021.i, %bb.v ] ; 3 uses
+  %.sroa.79.2.ph.i = phi i32 [ %.sroa.5.0.extract.trunc.i, %bb.ac ], [ %.sroa.5.0.extract.trunc.i, %bb.ab ], [ %.sroa.79.021.i, %bb.u ], [ %.sroa.79.021.i, %bb.v ] ; 3 uses
   %.sroa.07.2.ph.i = phi ptr [ %.sroa.0.0.copyload1.i, %bb.ac ], [ %.sroa.0.0.copyload1.i, %bb.ab ], [ %.sroa.07.022.i, %bb.u ], [ %.sroa.07.022.i, %bb.v ] ; 3 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.01723.i, i64 16 ; 2 uses
   %.not.i518 = icmp eq ptr %i.ep, %i.dc

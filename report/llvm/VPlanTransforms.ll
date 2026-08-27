@@ -205,10 +205,10 @@ bb.bw:                                            ; preds = %"_ZN4llvm6any_ofINS
   br i1 %.sroa.10.0328, label %bb.bx, label %bb.by
 
 bb.bx:                                            ; preds = %bb.bw
-  %.sroa.0184.0.extract.trunc188 = trunc i64 %.sroa.0184.0327 to i40
+  %.sroa.0176.0.insert.ext = and i64 %.sroa.0184.0327, 1099511627775
   store ptr %i.u, ptr %5, align 8, !tbaa !12
   store i32 6, ptr %i.w, align 4, !tbaa !15
-  store i40 %.sroa.0184.0.extract.trunc188, ptr %i.u, align 8
+  store i64 %.sroa.0176.0.insert.ext, ptr %i.u, align 8
   br label %bb.ca
 
 bb.by:                                            ; preds = %bb.bw

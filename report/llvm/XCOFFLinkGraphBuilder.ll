@@ -202,7 +202,7 @@ _ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEEN
   %i.fb = icmp eq i32 %i.fa, 0
   %i.fc = zext i32 %i.ey to i64                   ; 4 uses
   %.idx230.i = mul nuw nsw i64 %i.fc, 24          ; 4 uses
-  %i.fd = getelementptr inbounds nuw i8, ptr %i.eu, i64 %.idx230.i ; 9 uses
+  %i.fd = getelementptr inbounds nuw i8, ptr %i.eu, i64 %.idx230.i ; 8 uses
   %.not.i.not.i.i.i.i = icmp eq i32 %i.ey, 0
   %or.cond.i.i = select i1 %i.fb, i1 true, i1 %.not.i.not.i.i.i.i
   %.pre223 = add nuw nsw i64 %i.fc, 31
@@ -241,7 +241,7 @@ _ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i:     ; preds = %._crit_edge.i.loope
   %narrow293.i = mul nuw nsw i32 %i.fo, 24
   %.idx292.i = zext nneg i32 %narrow293.i to i64
   %i.fp = add i64 %.012.lcssa.i.i.i.i.i, %.idx292.i ; 3 uses
-  %i.fq = getelementptr i8, ptr %i.eu, i64 %i.fp  ; 2 uses
+  %i.fq = getelementptr i8, ptr %i.eu, i64 %i.fp  ; 3 uses
   %.not.i.i.i = icmp eq i64 %i.fp, %.idx230.i
   br i1 %.not.i.i.i, label %_ZN4llvm7jitlink9LinkGraph6blocksEv.exit, label %bb.k
 
@@ -249,7 +249,7 @@ bb.k:                                             ; preds = %_ZN4llvm7jitlink9Li
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fq, i64 16
   %i.fs = load ptr, ptr %i.fr, align 8, !tbaa !91, !noalias !351 ; 4 uses
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 32
-  %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !354, !noalias !355 ; 3 uses
+  %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !354, !noalias !355 ; 4 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fs, i64 40
   %i.fw = load ptr, ptr %i.fv, align 8, !tbaa !364, !noalias !355 ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fs, i64 52
@@ -258,8 +258,7 @@ bb.k:                                             ; preds = %_ZN4llvm7jitlink9Li
   %i.ga = load i32, ptr %i.fz, align 8, !tbaa !366, !noalias !355
   %i.gb = icmp eq i32 %i.ga, 0
   %i.gc = zext i32 %i.fy to i64                   ; 2 uses
-  %.idx295.i = shl nuw nsw i64 %i.gc, 3           ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.fu, i64 %.idx295.i
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.fu, i64 %i.gc ; 2 uses
   %.not.i.not.i.i.i.i.i.i.i.i = icmp eq i32 %i.fy, 0
   %or.cond.i.i.i.i.i.i = select i1 %i.gb, i1 true, i1 %.not.i.not.i.i.i.i.i.i.i.i
   br i1 %or.cond.i.i.i.i.i.i, label %.lr.ph.i.preheader, label %bb.l
@@ -269,11 +268,17 @@ bb.l:                                             ; preds = %bb.k
   %i.ge = lshr i64 %i.gd, 5                       ; 2 uses
   %i.gf = load i32, ptr %i.fw, align 4, !tbaa !160, !noalias !367 ; 2 uses
   %i.gg = icmp eq i32 %i.gf, 0
-  br i1 %i.gg, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %.lr.ph.i.i.a
+  br i1 %i.gg, label %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, label %._crit_edge.i.i.i.i.i.i.i.i.thread.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i.preheader:               ; preds = %bb.l
   %i.gh = icmp eq i64 %i.ge, 1
   br i1 %i.gh, label %.lr.ph.i.preheader, label %.lr.ph325.a
+
+._crit_edge.i.i.i.i.i.i.i.i.thread.i:             ; preds = %bb.l
+  %10 = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.gf, i1 true)
+  %11 = zext nneg i32 %10 to i64
+  %12 = getelementptr [8 x i8], ptr %i.fu, i64 %11
+  br label %.lr.ph.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i.i:                         ; preds = %.lr.ph325.a
   %i.gi = add nuw nsw i64 %i.gk, 1                ; 2 uses
@@ -285,24 +290,22 @@ bb.l:                                             ; preds = %bb.k
   %i.gl = getelementptr inbounds nuw [4 x i8], ptr %i.fw, i64 %i.gk
   %i.gm = load i32, ptr %i.gl, align 4, !tbaa !160, !noalias !367 ; 2 uses
   %i.gn = icmp eq i32 %i.gm, 0
-  br i1 %i.gn, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.loopexit.i.i.i.i.i.i.i.i, !llvm.loop !370
+  br i1 %i.gn, label %.lr.ph.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.a, !llvm.loop !370
 
-._crit_edge.i.loopexit.i.i.i.i.i.i.i.i:           ; preds = %.lr.ph325.a
-  %10 = shl i64 %i.gk, 8
-  br label %.lr.ph.i.i.a
+.lr.ph.i.i.a:                                     ; preds = %.lr.ph325.a
+  %13 = shl i64 %i.gk, 8
+  %i.go = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.gm, i1 true)
+  %.idx294.i = zext nneg i32 %i.go to i64
+  %i.gp = getelementptr i8, ptr %i.fu, i64 %13
+  %14 = getelementptr [8 x i8], ptr %i.gp, i64 %.idx294.i
+  br label %.lr.ph.i.i
 
-.lr.ph.i.i.a:                                     ; preds = %._crit_edge.i.loopexit.i.i.i.i.i.i.i.i, %bb.l
-  %.012.lcssa.i.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.l ], [ %10, %._crit_edge.i.loopexit.i.i.i.i.i.i.i.i ]
-  %.0.lcssa.i.i.i.i.i.i.i.i.i = phi i32 [ %i.gf, %bb.l ], [ %i.gm, %._crit_edge.i.loopexit.i.i.i.i.i.i.i.i ]
-  %i.go = call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %.0.lcssa.i.i.i.i.i.i.i.i.i, i1 true)
-  %11 = shl nuw nsw i32 %i.go, 3
-  %.idx294.i = zext nneg i32 %11 to i64
-  %12 = or disjoint i64 %.012.lcssa.i.i.i.i.i.i.i.i.i, %.idx294.i ; 2 uses
-  %i.gp = getelementptr i8, ptr %i.fu, i64 %12
-  %13 = icmp eq i64 %12, %.idx295.i
-  br i1 %13, label %.lr.ph.i.preheader, label %_ZN4llvm7jitlink9LinkGraph6blocksEv.exit
+.lr.ph.i.i:                                       ; preds = %.lr.ph.i.i.a, %._crit_edge.i.i.i.i.i.i.i.i.thread.i
+  %.sroa.991.0228.i = phi ptr [ %14, %.lr.ph.i.i.a ], [ %12, %._crit_edge.i.i.i.i.i.i.i.i.thread.i ] ; 2 uses
+  %15 = icmp eq ptr %.sroa.991.0228.i, %9
+  br i1 %15, label %.lr.ph.i.preheader, label %_ZN4llvm7jitlink9LinkGraph6blocksEv.exit
 
-.lr.ph.i.preheader:                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, %bb.k, %.lr.ph.i.i.a
+.lr.ph.i.preheader:                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.preheader, %.lr.ph.i.i, %bb.k
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i
@@ -411,12 +414,12 @@ _ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_1
   %i.ip = icmp eq ptr %.sroa.0.0.i.i, %i.hy
   br i1 %i.ip, label %.lr.ph.i, label %_ZN4llvm7jitlink9LinkGraph6blocksEv.exit
 
-_ZN4llvm7jitlink9LinkGraph6blocksEv.exit:         ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i, %.lr.ph.i.i.i.i30.i.preheader, %.lr.ph.i.i.i.i30.i, %.lr.ph.i.i.i.i.i.preheader, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i, %.lr.ph.i.i.a
-  %.sroa.989.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %i.gp, %.lr.ph.i.i.a ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %.sroa.0.0.i.i, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %.sroa.1490.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %9, %.lr.ph.i.i.a ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hy, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ]
-  %.sroa.1691.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %i.fu, %.lr.ph.i.i.a ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hp, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ]
-  %.sroa.1892.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %i.fw, %.lr.ph.i.i.a ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hr, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ]
-  %.sroa.074.1.i = phi ptr [ %i.fd, %.lr.ph.i.i.i.i30.i ], [ %i.fd, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ %i.fd, %.lr.ph.i ], [ %i.fq, %.lr.ph.i.i.a ], [ %i.fd, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ %i.fd, %.lr.ph.i.i.i.i.i.preheader ], [ %i.hl, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hl, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ %i.fd, %.lr.ph.i.i.i.i30.i.preheader ], [ %i.fd, %.lr.ph.i.i.i.i.i ]
+_ZN4llvm7jitlink9LinkGraph6blocksEv.exit:         ; preds = %.lr.ph.i.i.i.i.i, %.lr.ph.i, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i, %.lr.ph.i.i.i.i30.i.preheader, %.lr.ph.i.i.i.i30.i, %.lr.ph.i.i.i.i.i.preheader, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i, %.lr.ph.i.i
+  %.sroa.989.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %.sroa.991.0228.i, %.lr.ph.i.i ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %.sroa.0.0.i.i, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ] ; 2 uses
+  %.sroa.1490.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %9, %.lr.ph.i.i ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hy, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ]
+  %.sroa.1691.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %i.fu, %.lr.ph.i.i ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hp, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ]
+  %.sroa.1892.2.i = phi ptr [ null, %.lr.ph.i.i.i.i30.i ], [ null, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ null, %.lr.ph.i ], [ %i.fw, %.lr.ph.i.i ], [ null, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ null, %.lr.ph.i.i.i.i.i.preheader ], [ null, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hr, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ null, %.lr.ph.i.i.i.i30.i.preheader ], [ null, %.lr.ph.i.i.i.i.i ]
+  %.sroa.074.1.i = phi ptr [ %i.fd, %.lr.ph.i.i.i.i30.i ], [ %i.fd, %_ZN4llvm12DenseMapBaseINS_8DenseMapIjPNS_7jitlink6SymbolENS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjS4_EEEEjS4_S6_S9_E24lookupOrInsertIntoBucketIRKjJEEESt4pairIPS9_bEOT_DpOT0_.exit ], [ %i.fd, %.lr.ph.i ], [ %i.fq, %.lr.ph.i.i ], [ %i.fq, %_ZN4llvm7jitlink9LinkGraph8sectionsEv.exit.i ], [ %i.fd, %.lr.ph.i.i.i.i.i.preheader ], [ %i.hl, %_ZN4llvm21iterator_adaptor_baseINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS_7jitlink7SectionESt14default_deleteIS6_EENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S9_EELb0EEENS5_9LinkGraph23GetSectionMapEntryValueERS6_EESF_St20forward_iterator_tagS6_lPS6_SI_EppEv.exit.i.i ], [ %i.hl, %_ZN4llvm7jitlink9LinkGraph26nested_collection_iteratorINS_15mapped_iteratorINS_16DenseMapIteratorINS_9StringRefESt10unique_ptrINS0_7SectionESt14default_deleteIS7_EENS_12DenseMapInfoIS5_vEENS_6detail12DenseMapPairIS5_SA_EELb0EEENS1_23GetSectionMapEntryValueERS7_EENSD_12DenseSetImplIPNS0_5BlockENS_8DenseMapISM_NSD_13DenseSetEmptyENSB_ISM_vEENSD_12DenseSetPairISM_EEEEE16DenseSetIteratorILb0EEESM_XadL_ZNS1_16getSectionBlocksESI_EEE13getInnerBeginESJ_SJ_.exit.i.i ], [ %i.fd, %.lr.ph.i.i.i.i30.i.preheader ], [ %i.fd, %.lr.ph.i.i.i.i.i ]
   %i.iq = load ptr, ptr %i.ai, align 8, !tbaa !8
   %i.ir = getelementptr inbounds nuw i8, ptr %i.iq, i64 152
   %i.is = load ptr, ptr %i.ir, align 8

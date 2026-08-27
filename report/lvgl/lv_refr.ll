@@ -202,7 +202,7 @@ bb.z:                                             ; preds = %._crit_edge111, %bb
   store i32 %i.i, ptr %i.h, align 4
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %.thread, %bb.d, %bb.c
+bb.aa:                                            ; preds = %.thread, %bb.d, %bb.z, %bb.c
   ret void
 }
 

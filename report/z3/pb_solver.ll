@@ -204,10 +204,10 @@ bb.av:                                            ; preds = %_ZNK2pb6solver9get_
   br i1 %.not94, label %.critedge, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
+  %2 = trunc nuw i64 %indvars.iv204 to i32
   %i.ld = getelementptr inbounds nuw i8, ptr %i.jv, i64 3280
   %i.le = load ptr, ptr %i.ld, align 8, !tbaa !256
   %i.lf = getelementptr inbounds nuw [24 x i8], ptr %i.le, i64 %i.kl ; 2 uses
-  %2 = trunc nuw i64 %indvars.iv204 to i32
   %.sroa.8.0..sroa_idx124 = getelementptr inbounds nuw i8, ptr %i.lf, i64 16
   %.sroa.8.0.copyload125 = load i32, ptr %.sroa.8.0..sroa_idx124, align 8, !tbaa !80
   %.sroa.5.0..sroa_idx118 = getelementptr inbounds nuw i8, ptr %i.lf, i64 8

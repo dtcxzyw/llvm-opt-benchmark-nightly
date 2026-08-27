@@ -204,11 +204,11 @@ bb.x:                                             ; preds = %bb.w
   %spec.select105 = select i1 %.not57.a, i32 %.sroa.090.0.insert.ext96, i32 %.sroa.071.0.insert.ext
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.t, %bb.x, %bb.u, %bb.v, %bb.w
-  %i.fp = phi i1 [ %i.fc, %bb.v ], [ false, %bb.w ], [ false, %bb.x ], [ true, %bb.u ], [ true, %bb.t ]
-  %.1.i97 = phi i32 [ %.1.i98100, %bb.v ], [ %.1.i.ph, %bb.w ], [ %.1.i.ph, %bb.x ], [ 1, %bb.u ], [ 1, %bb.t ]
-  %.sroa.069.0 = phi i32 [ %.sroa.087.0.insert.ext, %bb.v ], [ %.sroa.090.0.insert.ext96, %bb.w ], [ %spec.select105, %bb.x ], [ %.sroa.070.0.insert.ext, %bb.u ], [ %.sroa.071.0.insert.ext, %bb.t ]
-  %.044 = phi i16 [ %i.fd, %bb.v ], [ %.0.i, %bb.w ], [ %.0.i, %bb.x ], [ %.0.i, %bb.u ], [ %.0.i, %bb.t ] ; 2 uses
+bb.y:                                             ; preds = %bb.t, %bb.u, %bb.x, %bb.v, %bb.w
+  %i.fp = phi i1 [ true, %bb.u ], [ %i.fc, %bb.v ], [ false, %bb.w ], [ false, %bb.x ], [ true, %bb.t ]
+  %.1.i97 = phi i32 [ 1, %bb.u ], [ %.1.i98100, %bb.v ], [ %.1.i.ph, %bb.w ], [ %.1.i.ph, %bb.x ], [ 1, %bb.t ]
+  %.sroa.069.0 = phi i32 [ %.sroa.070.0.insert.ext, %bb.u ], [ %.sroa.087.0.insert.ext, %bb.v ], [ %.sroa.090.0.insert.ext96, %bb.w ], [ %spec.select105, %bb.x ], [ %.sroa.071.0.insert.ext, %bb.t ]
+  %.044 = phi i16 [ %.0.i, %bb.u ], [ %i.fd, %bb.v ], [ %.0.i, %bb.w ], [ %.0.i, %bb.x ], [ %.0.i, %bb.t ] ; 2 uses
   %i.fq = icmp eq i32 %.1.i97, 3
   %or.cond = or i1 %i.fp, %i.fq
   %i.fr = icmp sgt i16 %i.cl, 20
@@ -611,7 +611,7 @@ _ZNK14NodeDefManager3getERK7MapNode.exit85.3:     ; preds = %bb.as, %bb.ar
   %i.ku = trunc nuw i8 %i.kt to i1
   br i1 %i.ku, label %_ZN8MapgenV67moveMudEjjjN4core8vector2dIsEENS0_8vector3dIiEE.exit, label %bb.q
 
-_ZN8MapgenV67moveMudEjjjN4core8vector2dIsEENS0_8vector3dIiEE.exit: ; preds = %bb.r, %bb.s, %bb.ad, %bb.ac, %bb.ab, %_ZNK9VoxelArea8containsEi.exit19.i, %bb.i, %_ZNK14NodeDefManager3getERK7MapNode.exit84.3, %_ZNK14NodeDefManager3getERK7MapNode.exit85.3, %.critedge.i, %bb.w, %_ZNK14NodeDefManager3getERK7MapNode.exit
+_ZN8MapgenV67moveMudEjjjN4core8vector2dIsEENS0_8vector3dIiEE.exit: ; preds = %bb.r, %bb.s, %bb.ad, %bb.ac, %bb.ab, %_ZNK9VoxelArea8containsEi.exit19.i, %bb.i, %_ZNK14NodeDefManager3getERK7MapNode.exit84.3, %_ZNK14NodeDefManager3getERK7MapNode.exit85.3, %_ZNK14NodeDefManager3getERK7MapNode.exit, %.critedge.i, %bb.w
   %i.kv = add i16 %.267139, -1                    ; 2 uses
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !160 ; 2 uses
   %.pre170 = load i16, ptr %i.i, align 2, !tbaa !208 ; 2 uses

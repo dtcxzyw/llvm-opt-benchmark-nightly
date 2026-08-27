@@ -204,12 +204,12 @@ bb.r:                                             ; preds = %bb.n
 
 "_ZSt25__unguarded_linear_insertIPN4llvm6AMDGPU8IncomingEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_17PhiLoweringHelper9lowerPhisEvE3$_0EEEvT_T0_.exit.i.i.i.i.i.i": ; preds = %.lr.ph.i.i.i.i.i.i.i, %bb.r
   %.09.lcssa.i.i.i.i.i.i.i = phi ptr [ %.021.i.ptr.i.i.i.i.i, %bb.r ], [ %.0.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i ] ; 3 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i.i.i.i.i.i = trunc i64 %i.fv to i32
   store i64 %i.fu, ptr %.09.lcssa.i.i.i.i.i.i.i, align 8
   %.sroa.4.0..09.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i.i.i.i.i.i, i64 8
   store ptr %.sroa.12.0.copyload.i.i.i.i.i.i.i, ptr %.sroa.4.0..09.sroa_idx.i.i.i.i.i.i.i, align 8, !tbaa !208
   %.sroa.5.0..09.sroa_idx.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i.i.i.i.i.i, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i.i.i.i.i.i, ptr %.sroa.5.0..09.sroa_idx.i.i.i.i.i.i.i, align 8, !tbaa !253
+  %.sroa.5.0.extract.trunc.i.i.i.i.i.i.i = trunc i64 %i.fv to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i.i.i.i.i.i, ptr %.sroa.5.0..09.sroa_idx.i.i.i.i.i.i.i, align 8, !tbaa !253
   br label %bb.s
 
 bb.s:                                             ; preds = %"_ZSt25__unguarded_linear_insertIPN4llvm6AMDGPU8IncomingEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_17PhiLoweringHelper9lowerPhisEvE3$_0EEEvT_T0_.exit.i.i.i.i.i.i", %_ZSt13move_backwardIPN4llvm6AMDGPU8IncomingES3_ET0_T_S5_S4_.exit.i.i.i.i.i.i
@@ -293,12 +293,12 @@ bb.s:                                             ; preds = %"_ZSt25__unguarded_
 
 "_ZSt25__unguarded_linear_insertIPN4llvm6AMDGPU8IncomingEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_17PhiLoweringHelper9lowerPhisEvE3$_0EEEvT_T0_.exit.i14.i.i.i.i.i": ; preds = %.lr.ph.i.i20.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i
   %.09.lcssa.i.i15.i.i.i.i.i = phi ptr [ %.08.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], [ %.0.i.i22.i.i.i.i.i, %.lr.ph.i.i20.i.i.i.i.i ] ; 3 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i16.i.i.i.i.i = trunc i64 %i.hb to i32
   store i64 %i.ha, ptr %.09.lcssa.i.i15.i.i.i.i.i, align 8
   %.sroa.4.0..09.sroa_idx.i.i17.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i15.i.i.i.i.i, i64 8
   store ptr %.sroa.4.0.copyload.i.i.i.i.i.i.i, ptr %.sroa.4.0..09.sroa_idx.i.i17.i.i.i.i.i, align 8, !tbaa !208
   %.sroa.5.0..09.sroa_idx.i.i18.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i15.i.i.i.i.i, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i16.i.i.i.i.i, ptr %.sroa.5.0..09.sroa_idx.i.i18.i.i.i.i.i, align 8, !tbaa !253
+  %.sroa.5.0.extract.trunc.i.i20.i.i.i.i.i = trunc i64 %i.hb to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i20.i.i.i.i.i, ptr %.sroa.5.0..09.sroa_idx.i.i18.i.i.i.i.i, align 8, !tbaa !253
   %i.ip = getelementptr inbounds nuw i8, ptr %.08.i.i.i.i.i.i, i64 24 ; 2 uses
   %.not.i19.i.i.i.i.i = icmp eq ptr %i.ip, %i.es
   br i1 %.not.i19.i.i.i.i.i, label %"_ZN4llvm4sortIRNS_11SmallVectorINS_6AMDGPU8IncomingELj4EEEZNS2_17PhiLoweringHelper9lowerPhisEvE3$_0EEvOT_T0_.exit", label %.lr.ph.i.i.i.i.i.i, !llvm.loop !258
@@ -430,12 +430,12 @@ bb.y:                                             ; preds = %bb.t
 
 "_ZSt25__unguarded_linear_insertIPN4llvm6AMDGPU8IncomingEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_17PhiLoweringHelper9lowerPhisEvE3$_0EEEvT_T0_.exit.i44.i.i.i.i.i": ; preds = %.lr.ph.i.i51.i.i.i.i.i, %bb.y
   %.09.lcssa.i.i45.i.i.i.i.i = phi ptr [ %.021.i32.i.i.i.i.i, %bb.y ], [ %.0.i.i53.i.i.i.i.i, %.lr.ph.i.i51.i.i.i.i.i ] ; 3 uses
-  %.sroa.5.sroa.0.0.extract.trunc.i.i46.i.i.i.i.i = trunc i64 %i.js to i32
   store i64 %i.jr, ptr %.09.lcssa.i.i45.i.i.i.i.i, align 8
   %.sroa.4.0..09.sroa_idx.i.i47.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i45.i.i.i.i.i, i64 8
   store ptr %.sroa.12.0.copyload.i.i38.i.i.i.i.i, ptr %.sroa.4.0..09.sroa_idx.i.i47.i.i.i.i.i, align 8, !tbaa !208
   %.sroa.5.0..09.sroa_idx.i.i48.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.09.lcssa.i.i45.i.i.i.i.i, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc.i.i46.i.i.i.i.i, ptr %.sroa.5.0..09.sroa_idx.i.i48.i.i.i.i.i, align 8, !tbaa !253
+  %.sroa.5.0.extract.trunc.i.i52.i.i.i.i.i = trunc i64 %i.js to i32
+  store i32 %.sroa.5.0.extract.trunc.i.i52.i.i.i.i.i, ptr %.sroa.5.0..09.sroa_idx.i.i48.i.i.i.i.i, align 8, !tbaa !253
   br label %bb.z
 
 bb.z:                                             ; preds = %"_ZSt25__unguarded_linear_insertIPN4llvm6AMDGPU8IncomingEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_17PhiLoweringHelper9lowerPhisEvE3$_0EEEvT_T0_.exit.i44.i.i.i.i.i", %_ZSt13move_backwardIPN4llvm6AMDGPU8IncomingES3_ET0_T_S5_S4_.exit.i60.i.i.i.i.i
@@ -838,13 +838,13 @@ bb.g:                                             ; preds = %bb.f
 
 "_ZSt11__push_heapIPN4llvm6AMDGPU8IncomingElS2_N9__gnu_cxx5__ops14_Iter_comp_valIZNS1_17PhiLoweringHelper9lowerPhisEvE3$_0EEEvT_T0_SB_T1_RT2_.exit": ; preds = %bb.f, %bb.g, %bb.e
   %.013.lcssa.i = phi i64 [ %.127, %bb.e ], [ %.0133.i, %bb.f ], [ %.048.i, %bb.g ]
-  %.sroa.5.sroa.0.0.extract.trunc = trunc i64 %i.aq to i32
   %i.bq = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.013.lcssa.i ; 3 uses
   store i64 %i.ap, ptr %i.bq, align 8
   %.sroa.4.0..sroa_idx33 = getelementptr inbounds nuw i8, ptr %i.bq, i64 8
   store ptr %.sroa.2.0.copyload, ptr %.sroa.4.0..sroa_idx33, align 8, !tbaa !208
   %.sroa.5.0..sroa_idx35 = getelementptr inbounds nuw i8, ptr %i.bq, i64 16
-  store i32 %.sroa.5.sroa.0.0.extract.trunc, ptr %.sroa.5.0..sroa_idx35, align 8, !tbaa !253
+  %.sroa.5.0.extract.trunc = trunc i64 %i.aq to i32
+  store i32 %.sroa.5.0.extract.trunc, ptr %.sroa.5.0..sroa_idx35, align 8, !tbaa !253
   ret void
 }
 

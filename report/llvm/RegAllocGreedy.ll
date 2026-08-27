@@ -205,8 +205,8 @@ _ZN4llvm9SetVectorIPKNS_12LiveIntervalENS_11SmallVectorIS3_Lj4EEENS_8DenseSetIS3
   %.not.i.i74 = icmp eq i16 %i.nd, 0
   br i1 %.not.i.i74, label %.critedge.thread132, label %bb.b
 
-.critedge.thread132:                              ; preds = %.critedge.thread, %_ZL28assignedRegPartiallyOverlapsRKN4llvm18TargetRegisterInfoERKNS_10VirtRegMapENS_10MCRegisterERKNS_12LiveIntervalE.exit.thread, %bb.k, %bb.j, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5countERKS1_.exit, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5vfindERKS1_.exit.i.i, %bb.l, %bb.m, %.lr.ph.i59, %bb.a, %.critedge39
-  %.not134146 = phi i1 [ false, %_ZL28assignedRegPartiallyOverlapsRKN4llvm18TargetRegisterInfoERKNS_10VirtRegMapENS_10MCRegisterERKNS_12LiveIntervalE.exit.thread ], [ true, %bb.a ], [ false, %bb.l ], [ false, %.critedge39 ], [ false, %.lr.ph.i59 ], [ false, %bb.m ], [ false, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5vfindERKS1_.exit.i.i ], [ false, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5countERKS1_.exit ], [ false, %bb.j ], [ false, %bb.k ], [ true, %.critedge.thread ]
+.critedge.thread132:                              ; preds = %.critedge.thread, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5countERKS1_.exit, %bb.j, %bb.k, %_ZL28assignedRegPartiallyOverlapsRKN4llvm18TargetRegisterInfoERKNS_10VirtRegMapENS_10MCRegisterERKNS_12LiveIntervalE.exit.thread, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5vfindERKS1_.exit.i.i, %bb.m, %bb.l, %.lr.ph.i59, %bb.a, %.critedge39
+  %.not134146 = phi i1 [ false, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5countERKS1_.exit ], [ true, %bb.a ], [ false, %bb.m ], [ false, %.critedge39 ], [ false, %.lr.ph.i59 ], [ false, %bb.l ], [ false, %_ZNK4llvm8SmallSetINS_8RegisterELj16ESt4lessIS1_EE5vfindERKS1_.exit.i.i ], [ false, %_ZL28assignedRegPartiallyOverlapsRKN4llvm18TargetRegisterInfoERKNS_10VirtRegMapENS_10MCRegisterERKNS_12LiveIntervalE.exit.thread ], [ false, %bb.k ], [ false, %bb.j ], [ true, %.critedge.thread ]
   ret i1 %.not134146
 }
 

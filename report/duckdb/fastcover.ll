@@ -70,7 +70,7 @@ bb.a:
   %.sroa.249.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 4
   %.sroa.249.0.copyload = load i32, ptr %.sroa.249.0..sroa_idx, align 4, !tbaa !3 ; 5 uses
   %.sroa.450.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %9 = load <2 x i32>, ptr %.sroa.450.0..sroa_idx, align 4, !tbaa !3
+  %.sroa.458.0.copyload = load i64, ptr %.sroa.450.0..sroa_idx, align 4
   %.sroa.955.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 36
   %.sroa.955.0.copyload = load i32, ptr %.sroa.955.0..sroa_idx, align 4, !tbaa !3
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 44 ; 2 uses
@@ -185,7 +185,7 @@ bb.o:                                             ; preds = %bb.n, %.critedge
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 4
   store i32 %.sroa.249.0.copyload, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !3
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store <2 x i32> %9, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !3
+  store i64 %.sroa.458.0.copyload, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 16
   store double 1.000000e+00, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !24
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %7, i64 24

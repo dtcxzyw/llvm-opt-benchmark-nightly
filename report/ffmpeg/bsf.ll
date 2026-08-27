@@ -202,8 +202,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
-  %.029 = load ptr, ptr %i.c, align 8, !tbaa !73  ; 2 uses
-  %.sroa.0.030 = load i64, ptr %i.d, align 8      ; 2 uses
+  %.sroa.0.031 = load i64, ptr %i.d, align 8      ; 2 uses
+  %.032 = load ptr, ptr %i.c, align 8, !tbaa !73  ; 2 uses
   %i.f = load i32, ptr %i.e, align 8, !tbaa !66
   %i.g = icmp sgt i32 %i.f, 0
   br i1 %i.g, label %.lr.ph, label %._crit_edge
@@ -216,13 +216,13 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.i = phi ptr [ %.pre, %.lr.ph ], [ %i.y, %bb.d ]
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 5 uses
-  %.sroa.0.033 = phi i64 [ %.sroa.0.030, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
-  %.032 = phi ptr [ %.029, %.lr.ph ], [ %.0, %bb.d ]
+  %.035 = phi ptr [ %.032, %.lr.ph ], [ %.0, %bb.d ]
+  %.sroa.0.034 = phi i64 [ %.sroa.0.031, %.lr.ph ], [ %.sroa.0.0, %bb.d ]
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !9
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !25
-  %i.n = tail call i32 @avcodec_parameters_copy(ptr noundef %i.m, ptr noundef %.032) #6 ; 2 uses
+  %i.n = tail call i32 @avcodec_parameters_copy(ptr noundef %i.m, ptr noundef %.035) #6 ; 2 uses
   %i.o = icmp slt i32 %i.n, 0
   br i1 %i.o, label %.loopexit, label %bb.c
 
@@ -231,7 +231,7 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !9
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 40
-  store i64 %.sroa.0.033, ptr %i.s, align 8
+  store i64 %.sroa.0.034, ptr %i.s, align 8
   %i.t = load ptr, ptr %i.h, align 8, !tbaa !64
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.t, i64 %indvars.iv
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !9
@@ -246,16 +246,16 @@ bb.d:                                             ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
   %i.ac = getelementptr inbounds nuw i8, ptr %i.aa, i64 48
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %.0 = load ptr, ptr %i.ab, align 8, !tbaa !73   ; 2 uses
   %.sroa.0.0 = load i64, ptr %i.ac, align 8       ; 2 uses
+  %.0 = load ptr, ptr %i.ab, align 8, !tbaa !73   ; 2 uses
   %i.ad = load i32, ptr %i.e, align 8, !tbaa !66
   %i.ae = sext i32 %i.ad to i64
   %i.af = icmp slt i64 %indvars.iv.next, %i.ae
   br i1 %i.af, label %bb.b, label %._crit_edge, !llvm.loop !74
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
-  %.0.lcssa = phi ptr [ %.029, %bb.a ], [ %.0, %bb.d ]
-  %.sroa.0.0.lcssa = phi i64 [ %.sroa.0.030, %bb.a ], [ %.sroa.0.0, %bb.d ]
+  %.sroa.0.0.lcssa = phi i64 [ %.sroa.0.031, %bb.a ], [ %.sroa.0.0, %bb.d ]
+  %.0.lcssa = phi ptr [ %.032, %bb.a ], [ %.0, %bb.d ]
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i64 %.sroa.0.0.lcssa, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 32

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %.sroa.0.0.copyload4 = load ptr, ptr %i.e, align 8, !tbaa !498 ; 7 uses
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 48
-  %.sroa.11.sroa.0.0.copyload = load i32, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !50 ; 2 uses
+  %.sroa.11.0.copyload = load i64, ptr %.sroa.11.0..sroa_idx, align 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !194
@@ -237,7 +237,8 @@ bb.c:                                             ; preds = %.split, %_ZNK4llvm3
   store i32 1, ptr %i.m, align 8, !tbaa !544
   store i64 0, ptr %4, align 8, !tbaa !167
   %i.n = call noundef zeroext i1 @_ZN4llvm3ISD21isConstantSplatVectorEPKNS_6SDNodeERNS_5APIntE(ptr noundef %.sroa.0.0.copyload4, ptr noundef nonnull align 8 dereferenceable(12) %4) #23 ; 3 uses
-  %.sroa.9.0 = select i1 %i.n, i32 %.sroa.9.0.copyload, i32 %.sroa.11.sroa.0.0.copyload
+  %.sroa.11.0.extract.trunc = trunc i64 %.sroa.11.0.copyload to i32
+  %.sroa.9.0 = select i1 %i.n, i32 %.sroa.9.0.copyload, i32 %.sroa.11.0.extract.trunc
   %.sroa.013.0 = select i1 %i.n, ptr %.sroa.013.0.copyload, ptr %.sroa.0.0.copyload4
   %.sroa.0.045 = select i1 %i.n, ptr %.sroa.0.0.copyload4, ptr %.sroa.013.0.copyload
   %i.o = call noundef zeroext i1 @_ZN4llvm3ISD21isConstantSplatVectorEPKNS_6SDNodeERNS_5APIntE(ptr noundef %.sroa.0.045, ptr noundef nonnull align 8 dereferenceable(12) %4) #23
@@ -295,13 +296,14 @@ bb.f:                                             ; preds = %.split, %_ZNK4llvm3
   ]
 
 bb.g:                                             ; preds = %bb.f
+  %.sroa.11.0.extract.trunc14 = trunc i64 %.sroa.11.0.copyload to i32
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.sroa.013.0.copyload, i64 24
   %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !180
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.f, %bb.g
   %i.aa = phi i32 [ %i.z, %bb.f ], [ %.pre, %bb.g ], [ %i.z, %bb.f ]
-  %.sroa.9.1 = phi i32 [ %.sroa.9.0.copyload, %bb.f ], [ %.sroa.11.sroa.0.0.copyload, %bb.g ], [ %.sroa.9.0.copyload, %bb.f ]
+  %.sroa.9.1 = phi i32 [ %.sroa.9.0.copyload, %bb.f ], [ %.sroa.11.0.extract.trunc14, %bb.g ], [ %.sroa.9.0.copyload, %bb.f ]
   %.sroa.013.1 = phi ptr [ %.sroa.013.0.copyload, %bb.f ], [ %.sroa.0.0.copyload4, %bb.g ], [ %.sroa.013.0.copyload, %bb.f ]
   %.sroa.0.1 = phi ptr [ %.sroa.0.0.copyload4, %bb.f ], [ %.sroa.013.0.copyload, %bb.g ], [ %.sroa.0.0.copyload4, %bb.f ]
   switch i32 %i.aa, label %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_6SDNodeEEEDcPT0_.exit.thread [

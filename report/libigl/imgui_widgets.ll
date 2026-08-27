@@ -205,12 +205,12 @@ bb.kj:                                            ; preds = %.lr.ph1441, %.loope
   %.pre14751477 = phi float [ %.val1079, %.lr.ph1441 ], [ %.pre14751478, %.loopexit ] ; 3 uses
   %i.atx = phi float [ %.pre1474, %.lr.ph1441 ], [ %i.awx, %.loopexit ] ; 4 uses
   %i.aty = phi float [ %.val1079, %.lr.ph1441 ], [ %i.awy, %.loopexit ] ; 2 uses
-  %.012971440 = phi ptr [ %i.ato, %.lr.ph1441 ], [ %.21299, %.loopexit ] ; 2 uses
-  %.sroa.01254.01439 = phi <2 x float> [ %.sroa.0.4.vec.insert.i1196, %.lr.ph1441 ], [ %.sroa.01254.4.vec.insert, %.loopexit ] ; 3 uses
-  %i.atz = shufflevector <2 x float> %.sroa.01254.01439, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
+  %.sroa.01256.01441 = phi <2 x float> [ %.sroa.0.4.vec.insert.i1196, %.lr.ph1441 ], [ %.sroa.01254.4.vec.insert, %.loopexit ] ; 3 uses
+  %.012981440 = phi ptr [ %i.ato, %.lr.ph1441 ], [ %.21299, %.loopexit ] ; 2 uses
+  %i.atz = shufflevector <2 x float> %.sroa.01256.01441, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
   %i.aua = load float, ptr %i.anb, align 4, !tbaa !193 ; 2 uses
   %i.aub = fadd float %i.aua, %i.atx
-  %i.auc = extractelement <2 x float> %.sroa.01254.01439, i64 1 ; 3 uses
+  %i.auc = extractelement <2 x float> %.sroa.01256.01441, i64 1 ; 3 uses
   %i.aud = fcmp ogt float %i.auc, %i.aub
   br i1 %i.aud, label %.loopexit1425, label %bb.kk
 
@@ -220,7 +220,7 @@ bb.kk:                                            ; preds = %bb.kj
   br i1 %i.auf, label %.preheader, label %.lr.ph.i1208
 
 .preheader:                                       ; preds = %bb.kk, %bb.kl
-  %.11298 = phi ptr [ %i.auh, %bb.kl ], [ %.012971440, %bb.kk ] ; 4 uses
+  %.11298 = phi ptr [ %i.auh, %bb.kl ], [ %.012981440, %bb.kk ] ; 4 uses
   %i.aug = icmp ult ptr %.11298, %i.ath
   br i1 %i.aug, label %bb.kl, label %.loopexit
 
@@ -244,7 +244,7 @@ bb.kl:                                            ; preds = %.preheader
   br label %.lr.ph.split.us.i
 
 .lr.ph.split.us.i:                                ; preds = %bb.kn, %.lr.ph.i1208
-  %.03121.us.i = phi ptr [ %i.auu, %bb.kn ], [ %.012971440, %.lr.ph.i1208 ] ; 2 uses
+  %.03121.us.i = phi ptr [ %i.auu, %bb.kn ], [ %.012981440, %.lr.ph.i1208 ] ; 2 uses
   %.03220.us.i = phi float [ %.133.us.i, %bb.kn ], [ 0.000000e+00, %.lr.ph.i1208 ] ; 4 uses
   %i.auu = getelementptr inbounds nuw i8, ptr %.03121.us.i, i64 2 ; 3 uses
   %i.auv = load i16, ptr %.03121.us.i, align 2, !tbaa !258 ; 3 uses
@@ -310,7 +310,7 @@ bb.kp:                                            ; preds = %bb.ko, %_ZL22InputT
   %i.avx = fsub float %i.atk, %i.atx
   %i.avy = load float, ptr %15, align 16, !tbaa !389
   %i.avz = load float, ptr %i.ana, align 8, !tbaa !390
-  %.sroa.01254.0.vec.extract1257 = extractelement <2 x float> %.sroa.01254.01439, i64 0
+  %.sroa.01254.0.vec.extract1257 = extractelement <2 x float> %.sroa.01256.01441, i64 0
   %i.awa = insertelement <4 x float> %i.atw, float %.sroa.0144.0.vec.extract147.pre-phi, i64 1
   %i.awb = insertelement <4 x float> %i.awa, float %i.avx, i64 2
   %i.awc = fadd <4 x float> %i.atz, %i.awb        ; 3 uses

@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %._crit_edge661
   br label %.lr.ph665
 
 .lr.ph665:                                        ; preds = %.lr.ph665.preheader, %_ZN4llvm16MCSubRegIteratorppEv.exit164
-  %.sroa.5542.0663.pn = phi ptr [ %.sroa.5542.0663, %_ZN4llvm16MCSubRegIteratorppEv.exit164 ], [ %i.bs, %.lr.ph665.preheader ]
-  %.sroa.0540.0662 = phi i32 [ %i.ch, %_ZN4llvm16MCSubRegIteratorppEv.exit164 ], [ %i.bv, %.lr.ph665.preheader ] ; 3 uses
-  %i.bw = lshr i32 %.sroa.0540.0662, 6
+  %.sroa.0540.0663 = phi i32 [ %i.ch, %_ZN4llvm16MCSubRegIteratorppEv.exit164 ], [ %i.bv, %.lr.ph665.preheader ] ; 3 uses
+  %.sroa.5542.0662.pn = phi ptr [ %.sroa.5542.0663, %_ZN4llvm16MCSubRegIteratorppEv.exit164 ], [ %i.bs, %.lr.ph665.preheader ]
+  %i.bw = lshr i32 %.sroa.0540.0663, 6
   %i.bx = and i32 %i.bw, 1023
   %i.by = zext nneg i32 %i.bx to i64
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.ar, i64 %i.by
-  %i.ca = and i32 %.sroa.0540.0662, 63
+  %i.ca = and i32 %.sroa.0540.0663, 63
   %i.cb = load i64, ptr %i.bz, align 8, !tbaa !28
   %i.cc = zext nneg i32 %i.ca to i64
   %i.cd = shl nuw i64 1, %i.cc
@@ -220,10 +220,10 @@ bb.b:                                             ; preds = %._crit_edge661
   br i1 %.not627, label %_ZN4llvm16MCSubRegIteratorppEv.exit164, label %_ZN4llvm18MCSuperRegIteratorppEv.exit
 
 _ZN4llvm16MCSubRegIteratorppEv.exit164:           ; preds = %.lr.ph665
-  %.sroa.5542.0663 = getelementptr inbounds nuw i8, ptr %.sroa.5542.0663.pn, i64 2 ; 2 uses
+  %.sroa.5542.0663 = getelementptr inbounds nuw i8, ptr %.sroa.5542.0662.pn, i64 2 ; 2 uses
   %i.cf = load i16, ptr %.sroa.5542.0663, align 2, !tbaa !302 ; 2 uses
   %i.cg = zext i16 %i.cf to i32
-  %i.ch = add i32 %.sroa.0540.0662, %i.cg
+  %i.ch = add i32 %.sroa.0540.0663, %i.cg
   %.not.i.i163 = icmp eq i16 %i.cf, 0
   br i1 %.not.i.i163, label %.critedge630.loopexit, label %.lr.ph665
 

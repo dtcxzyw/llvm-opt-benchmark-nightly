@@ -205,7 +205,6 @@ bb.j:                                             ; preds = %_ZN4llvm5APIntD2Ev.
   %.sroa.01.0.copyload.i = load ptr, ptr %i.au, align 8, !tbaa !197 ; 3 uses
   %.sroa.63.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.at, i64 88
   %i.av = load i64, ptr %.sroa.63.0..sroa_idx.i, align 8
-  %.sroa.63.sroa.0.0.extract.trunc.i = trunc i64 %i.av to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #24
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.01.0.copyload.i, i64 88
   %.sroa.0.0.copyload.i.i = load i16, ptr %i.aw, align 8, !tbaa !188 ; 3 uses
@@ -260,7 +259,8 @@ _ZNK4llvm8TypeSizecvmEv.exit.i:                   ; preds = %_ZNK4llvm3EVT13getS
   %i.bh = getelementptr inbounds nuw i8, ptr %54, i64 32
   store ptr %.sroa.01.0.copyload.i, ptr %i.bh, align 16, !tbaa !197
   %.sroa.63.0..sroa_idx4.i = getelementptr inbounds nuw i8, ptr %54, i64 40
-  store i32 %.sroa.63.sroa.0.0.extract.trunc.i, ptr %.sroa.63.0..sroa_idx4.i, align 8, !tbaa !163
+  %.sroa.63.0.extract.trunc.i = trunc i64 %i.av to i32
+  store i32 %.sroa.63.0.extract.trunc.i, ptr %.sroa.63.0..sroa_idx4.i, align 8, !tbaa !163
   call void @llvm.lifetime.start.p0(ptr nonnull %55) #24
   %i.bi = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i, i64 72
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !192
@@ -663,8 +663,8 @@ _ZN4llvm5APIntD2Ev.exit259.i:                     ; preds = %bb.cb, %bb.ca, %_ZN
   br label %_ZNK4llvm3EVT14is128BitVectorEv.exit.thread.i
 
 _ZNK4llvm3EVT14is128BitVectorEv.exit.thread.i:    ; preds = %_ZN4llvm5APIntD2Ev.exit259.i, %bb.s, %bb.r, %_ZNK4llvm3EVT14is128BitVectorEv.exit.i, %.split.i, %bb.q
-  %.sroa.023.2.i = phi ptr [ null, %bb.q ], [ null, %.split.i ], [ null, %_ZNK4llvm3EVT14is128BitVectorEv.exit.i ], [ %.sroa.023.0.i, %_ZN4llvm5APIntD2Ev.exit259.i ], [ null, %bb.s ], [ null, %bb.r ]
-  %.sroa.12.2.i = phi i32 [ 0, %bb.q ], [ 0, %.split.i ], [ 0, %_ZNK4llvm3EVT14is128BitVectorEv.exit.i ], [ %.sroa.12.0.i, %_ZN4llvm5APIntD2Ev.exit259.i ], [ 0, %bb.s ], [ 0, %bb.r ]
+  %.sroa.023.2.i = phi ptr [ null, %_ZNK4llvm3EVT14is128BitVectorEv.exit.i ], [ null, %.split.i ], [ null, %bb.r ], [ %.sroa.023.0.i, %_ZN4llvm5APIntD2Ev.exit259.i ], [ null, %bb.s ], [ null, %bb.q ]
+  %.sroa.12.2.i = phi i32 [ 0, %_ZNK4llvm3EVT14is128BitVectorEv.exit.i ], [ 0, %.split.i ], [ 0, %bb.r ], [ %.sroa.12.0.i, %_ZN4llvm5APIntD2Ev.exit259.i ], [ 0, %bb.s ], [ 0, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %36) #24
   br label %_ZL16performORCombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
 
@@ -1067,8 +1067,8 @@ bb.fz:                                            ; preds = %bb.fy, %.critedge36
   br label %_ZL17performSRACombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit
 
 _ZL17performSRACombinePN4llvm6SDNodeERNS_12SelectionDAGERNS_14TargetLowering15DAGCombinerInfoERKNS_13MipsSubtargetE.exit: ; preds = %bb.fr, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i140, %.critedge38.i, %bb.fx, %bb.fy, %bb.fz
-  %.sroa.9.2.i = phi i32 [ 0, %bb.fx ], [ %.fca.1.extract.i135, %bb.fz ], [ 0, %bb.fy ], [ %.fca.1.extract7.i, %.critedge38.i ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i140 ], [ 0, %bb.fr ]
-  %.sroa.026.2.i = phi ptr [ null, %bb.fx ], [ %.fca.0.extract.i134, %bb.fz ], [ null, %bb.fy ], [ %.fca.0.extract6.i, %.critedge38.i ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i140 ], [ null, %bb.fr ]
+  %.sroa.9.2.i = phi i32 [ %.fca.1.extract.i135, %bb.fz ], [ 0, %bb.fr ], [ %.fca.1.extract7.i, %.critedge38.i ], [ 0, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i140 ], [ 0, %bb.fy ], [ 0, %bb.fx ]
+  %.sroa.026.2.i = phi ptr [ %.fca.0.extract.i134, %bb.fz ], [ null, %bb.fr ], [ %.fca.0.extract6.i, %.critedge38.i ], [ null, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.i140 ], [ null, %bb.fy ], [ null, %bb.fx ]
   %.fca.0.insert.i137 = insertvalue { ptr, i32 } poison, ptr %.sroa.026.2.i, 0
   %.fca.1.insert.i138 = insertvalue { ptr, i32 } %.fca.0.insert.i137, i32 %.sroa.9.2.i, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %14)
@@ -1155,8 +1155,8 @@ bb.gg:                                            ; preds = %bb.gf
   br label %_ZL21performVSELECTCombinePN4llvm6SDNodeERNS_12SelectionDAGE.exit
 
 _ZL21performVSELECTCombinePN4llvm6SDNodeERNS_12SelectionDAGE.exit: ; preds = %bb.ge, %bb.gf, %bb.gg
-  %.sroa.623.1.i = phi i32 [ 0, %bb.ge ], [ %.fca.1.extract.i172, %bb.gg ], [ 0, %bb.gf ]
-  %.sroa.022.1.i = phi ptr [ null, %bb.ge ], [ %.fca.0.extract.i171, %bb.gg ], [ null, %bb.gf ]
+  %.sroa.623.1.i = phi i32 [ 0, %bb.gf ], [ %.fca.1.extract.i172, %bb.gg ], [ 0, %bb.ge ]
+  %.sroa.022.1.i = phi ptr [ null, %bb.gf ], [ %.fca.0.extract.i171, %bb.gg ], [ null, %bb.ge ]
   %.fca.0.insert.i168 = insertvalue { ptr, i32 } poison, ptr %.sroa.022.1.i, 0
   %.fca.1.insert.i169 = insertvalue { ptr, i32 } %.fca.0.insert.i168, i32 %.sroa.623.1.i, 1
   br label %bb.gy

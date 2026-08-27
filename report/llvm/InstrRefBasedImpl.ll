@@ -205,11 +205,11 @@ bb.o:                                             ; preds = %_ZN15LiveDebugValue
   br label %"_ZZN15LiveDebugValues16InstrRefBasedLDV26transferSpillOrRestoreInstERN4llvm12MachineInstrEENK3$_0clENS1_8RegisterEj.exit"
 
 bb.p:                                             ; preds = %.lr.ph194, %"_ZZN15LiveDebugValues16InstrRefBasedLDV26transferSpillOrRestoreInstERN4llvm12MachineInstrEENK3$_0clENS1_8RegisterEj.exit80"
+  %.sroa.0145.0193 = phi i32 [ %i.ex, %.lr.ph194 ], [ %i.iu, %"_ZZN15LiveDebugValues16InstrRefBasedLDV26transferSpillOrRestoreInstERN4llvm12MachineInstrEENK3$_0clENS1_8RegisterEj.exit80" ] ; 2 uses
   %.pn = phi ptr [ %i.eu, %.lr.ph194 ], [ %.sroa.5147.0193, %"_ZZN15LiveDebugValues16InstrRefBasedLDV26transferSpillOrRestoreInstERN4llvm12MachineInstrEENK3$_0clENS1_8RegisterEj.exit80" ]
-  %.sroa.0145.0192 = phi i32 [ %i.ex, %.lr.ph194 ], [ %i.iu, %"_ZZN15LiveDebugValues16InstrRefBasedLDV26transferSpillOrRestoreInstERN4llvm12MachineInstrEENK3$_0clENS1_8RegisterEj.exit80" ] ; 2 uses
   %.sroa.5147.0193 = getelementptr inbounds nuw i8, ptr %.pn, i64 2 ; 2 uses
   %i.gs = load ptr, ptr %i.ee, align 8, !tbaa !546 ; 2 uses
-  %i.gt = and i32 %.sroa.0145.0192, 65535         ; 4 uses
+  %i.gt = and i32 %.sroa.0145.0193, 65535         ; 4 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gs, i64 64
   %i.gv = zext nneg i32 %i.gt to i64              ; 3 uses
   %i.gw = load ptr, ptr %i.gu, align 8, !tbaa !114
@@ -299,7 +299,7 @@ bb.s:                                             ; preds = %_ZN15LiveDebugValue
 "_ZZN15LiveDebugValues16InstrRefBasedLDV26transferSpillOrRestoreInstERN4llvm12MachineInstrEENK3$_0clENS1_8RegisterEj.exit80": ; preds = %_ZN15LiveDebugValues11MLocTracker7readRegEN4llvm8RegisterE.exit.i71, %bb.s
   %i.is = load i16, ptr %.sroa.5147.0193, align 2, !tbaa !117 ; 2 uses
   %i.it = zext i16 %i.is to i32
-  %i.iu = add i32 %.sroa.0145.0192, %i.it
+  %i.iu = add i32 %.sroa.0145.0193, %i.it
   %.not.i.i = icmp eq i16 %i.is, 0
   br i1 %.not.i.i, label %select.unfold._crit_edge.loopexit, label %bb.p
 

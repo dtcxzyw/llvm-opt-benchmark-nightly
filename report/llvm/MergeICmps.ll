@@ -204,16 +204,16 @@ bb.aj:                                            ; preds = %bb.ai
 _ZN12_GLOBAL__N_17BCEAtomD2Ev.exit22.i.i.i.i.i:   ; preds = %bb.aj, %bb.ai, %.thread.i.i.i.i.i, %bb.ad
   %.sroa.050.0.i.i.i.i = phi ptr [ %.sroa.050.0.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ] ; 3 uses
   %.sroa.653.0.i.i.i.i = phi ptr [ %.sroa.653.0.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ] ; 2 uses
+  %.sroa.755.0.i.i.i.i = phi i32 [ %.sroa.755.sroa.0.0.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
   %.sroa.756.0.i.i.i.i = phi i64 [ %i.mv, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
   %.sroa.10.1.i.i.i.i = phi i32 [ %i.mw, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
   %.sroa.1459.0.i.i.i.i = phi ptr [ %.sroa.1459.40.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ] ; 3 uses
   %.sroa.1862.0.i.i.i.i = phi ptr [ %.sroa.1862.40.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ] ; 2 uses
+  %.sroa.19.0.i.i.i.i = phi i32 [ %.sroa.19.sroa.0.0.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
   %.sroa.1964.0.i.i.i.i = phi i64 [ %i.mt, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
   %.sroa.22.1.i.i.i.i = phi i32 [ %i.mu, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
   %.sroa.29.0.i.i.i.i = phi i1 [ true, %.thread.i.i.i.i.i ], [ false, %bb.ai ], [ false, %bb.aj ], [ false, %bb.ad ]
   %.sroa.26.sroa.2.0.i.i.i.i = phi i64 [ %.sroa.26.sroa.2.4.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
-  %.sroa.19.sroa.0.0.i.i.i.i = phi i32 [ %.sroa.19.sroa.0.0.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
-  %.sroa.755.sroa.0.0.i.i.i.i = phi i32 [ %.sroa.755.sroa.0.0.copyload.i.i.i.i, %.thread.i.i.i.i.i ], [ undef, %bb.ai ], [ undef, %bb.aj ], [ undef, %bb.ad ]
   %.val.i.i.i.i.i = load ptr, ptr %i.db, align 8, !noalias !129 ; 2 uses
   %.val12.i.i.i.i.i = load i32, ptr %i.dc, align 8, !noalias !129
   %i.mz = icmp ult i32 %.val12.i.i.i.i.i, 65
@@ -283,12 +283,12 @@ _ZN12_GLOBAL__N_16BCECmpD2Ev.exit.i.i.i.i.i:      ; preds = %bb.an, %bb.am
   store i32 0, ptr %i.dx, align 4, !tbaa !175, !noalias !124
   store ptr %.sroa.050.0.i.i.i.i, ptr %i.dy, align 8, !noalias !124
   store ptr %.sroa.653.0.i.i.i.i, ptr %.sroa.0.sroa.2.0..sroa_idx.i.i.i.i, align 8, !noalias !124
-  store i32 %.sroa.755.sroa.0.0.i.i.i.i, ptr %.sroa.0.sroa.3.0..sroa_idx.i.i.i.i, align 8, !noalias !124
+  store i32 %.sroa.755.0.i.i.i.i, ptr %.sroa.0.sroa.3.0..sroa_idx.i.i.i.i, align 8, !noalias !124
   store i32 %.sroa.10.1.i.i.i.i, ptr %i.ea, align 8, !tbaa !135, !noalias !124
   store i64 %.sroa.756.0.i.i.i.i, ptr %i.dz, align 8, !noalias !124
   store ptr %.sroa.1459.0.i.i.i.i, ptr %i.eb, align 8, !noalias !124
   store ptr %.sroa.1862.0.i.i.i.i, ptr %.sroa.9.sroa.2.0..sroa_idx.i.i.i.i, align 8, !noalias !124
-  store i32 %.sroa.19.sroa.0.0.i.i.i.i, ptr %.sroa.9.sroa.3.0..sroa_idx.i.i.i.i, align 8, !noalias !124
+  store i32 %.sroa.19.0.i.i.i.i, ptr %.sroa.9.sroa.3.0..sroa_idx.i.i.i.i, align 8, !noalias !124
   store i32 %.sroa.22.1.i.i.i.i, ptr %i.ed, align 8, !tbaa !135, !noalias !124
   store i64 %.sroa.1964.0.i.i.i.i, ptr %i.ec, align 8, !noalias !124
   store i64 %.sroa.26.sroa.2.0.i.i.i.i, ptr %i.ee, align 8, !noalias !124

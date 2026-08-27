@@ -204,11 +204,11 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p
-  %.sroa.0.sroa.0.0.i = phi i32 [ 0, %bb.p ], [ %i.dk, %bb.q ], [ %i.dk, %bb.r ]
-  %.sroa.5.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.5.0.copyload.i, %bb.q ], [ %.sroa.5.0.copyload.i, %bb.r ] ; 2 uses
-  %.sroa.13.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.13.0.copyload.i, %bb.q ], [ %.sroa.13.0.copyload.i, %bb.r ]
-  %.sroa.1339.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.1339.0.copyload.i, %bb.q ], [ %.sroa.1339.0.copyload.i, %bb.r ]
-  %.sroa.25.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.25.0.copyload.i, %bb.q ], [ %.sroa.25.0.copyload.i, %bb.r ]
+  %.sroa.0.sroa.0.0.i = phi i32 [ 0, %bb.p ], [ %i.dk, %bb.r ], [ %i.dk, %bb.q ]
+  %.sroa.5.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.5.0.copyload.i, %bb.r ], [ %.sroa.5.0.copyload.i, %bb.q ] ; 2 uses
+  %.sroa.13.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.13.0.copyload.i, %bb.r ], [ %.sroa.13.0.copyload.i, %bb.q ]
+  %.sroa.1339.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.1339.0.copyload.i, %bb.r ], [ %.sroa.1339.0.copyload.i, %bb.q ]
+  %.sroa.25.0.i = phi i16 [ 0, %bb.p ], [ %.sroa.25.0.copyload.i, %bb.r ], [ %.sroa.25.0.copyload.i, %bb.q ]
   %i.dp = load i32, ptr %i.cy, align 8            ; 2 uses
   %i.dq = and i32 %i.dp, 134217728
   %.not347.i = icmp eq i32 %i.dq, 0
@@ -237,8 +237,8 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %i.ea = phi i32 [ %i.du, %bb.u ], [ %.pre481.i, %bb.v ]
-  %.sroa.0444.0.i = phi i32 [ 0, %bb.u ], [ %i.dy, %bb.v ]
+  %i.ea = phi i32 [ %.pre481.i, %bb.v ], [ %i.du, %bb.u ]
+  %.sroa.0444.0.i = phi i32 [ %i.dy, %bb.v ], [ 0, %bb.u ]
   %i.eb = and i32 %i.ea, 1048576
   %.not349.i = icmp eq i32 %i.eb, 0
   br i1 %.not349.i, label %_ieee80211_hw_check.exit.i44, label %bb.x
