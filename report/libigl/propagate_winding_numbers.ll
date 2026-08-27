@@ -205,8 +205,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exi
   %i.jd = getelementptr [4 x i8], ptr %i.hg, i64 %i.jc
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !14
   %i.jf = getelementptr [4 x i8], ptr %i.hp, i64 %i.jc
-  %14 = trunc i64 %.060268.us to i32
-  %i.jg = icmp eq i32 %i.nf, %14
+  %i.jg = icmp eq i64 %.060268.us, %sext
   %i.jh = select i1 %i.jg, i32 %i.nh, i32 0
   %i.ji = add nsw i32 %i.jh, %i.je
   store i32 %i.ji, ptr %i.jf, align 4, !tbaa !14
@@ -215,8 +214,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exi
   %i.jl = getelementptr [4 x i8], ptr %i.hg, i64 %i.jk
   %i.jm = load i32, ptr %i.jl, align 4, !tbaa !14
   %i.jn = getelementptr [4 x i8], ptr %i.hp, i64 %i.jk
-  %15 = trunc i64 %i.jj to i32
-  %i.jo = icmp eq i32 %i.nf, %15
+  %i.jo = icmp eq i64 %i.jj, %sext
   %i.jp = select i1 %i.jo, i32 %i.nh, i32 0
   %i.jq = add nsw i32 %i.jp, %i.jm
   store i32 %i.jq, ptr %i.jn, align 4, !tbaa !14
@@ -422,9 +420,10 @@ _ZNSt5queueImSt5dequeImSaImEEE4pushERKm.exit113.us: ; preds = %.critedge.i.us, %
 
 _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.preheader.us: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us, %middle.block437
   %i.ne = getelementptr inbounds [4 x i8], ptr %.sroa.0190.0244, i64 %i.ho
-  %i.nf = load i32, ptr %i.ne, align 4, !tbaa !14 ; 4 uses
+  %i.nf = load i32, ptr %i.ne, align 4, !tbaa !14
   %i.ng = trunc nuw i8 %i.hn to i1
   %i.nh = select i1 %i.ng, i32 -1, i32 1          ; 4 uses
+  %sext = sext i32 %i.nf to i64                   ; 4 uses
   br i1 %or.cond442, label %vector.memcheck, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.preheader
 
 vector.memcheck:                                  ; preds = %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.preheader.us
@@ -434,32 +433,32 @@ vector.memcheck:                                  ; preds = %_ZN5Eigen5BlockINS_
   br i1 %diff.check, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.preheader, label %vector.ph410
 
 vector.ph410:                                     ; preds = %vector.memcheck
-  %broadcast.splatinsert412 = insertelement <4 x i32> poison, i32 %i.nf, i64 0
+  %broadcast.splatinsert412 = insertelement <4 x i32> poison, i32 %i.nh, i64 0
   %broadcast.splat413 = shufflevector <4 x i32> %broadcast.splatinsert412, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert414 = insertelement <4 x i32> poison, i32 %i.nh, i64 0
-  %broadcast.splat415 = shufflevector <4 x i32> %broadcast.splatinsert414, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert414 = insertelement <4 x i64> poison, i64 %sext, i64 0
+  %broadcast.splat415 = shufflevector <4 x i64> %broadcast.splatinsert414, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body416
 
 vector.body416:                                   ; preds = %vector.body416, %vector.ph410
   %index417 = phi i64 [ 0, %vector.ph410 ], [ %index.next420, %vector.body416 ] ; 3 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph410 ], [ %vec.ind.next, %vector.body416 ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph410 ], [ %vec.ind.next, %vector.body416 ] ; 3 uses
+  %step.add = add nuw <4 x i64> %vec.ind, splat (i64 4)
   %i.nj = getelementptr [4 x i8], ptr %i.hg, i64 %index417 ; 2 uses
   %i.nk = getelementptr i8, ptr %i.nj, i64 16
   %wide.load418 = load <4 x i32>, ptr %i.nj, align 4, !tbaa !14
   %wide.load419 = load <4 x i32>, ptr %i.nk, align 4, !tbaa !14
   %i.nl = getelementptr [4 x i8], ptr %i.hp, i64 %index417 ; 2 uses
-  %i.nm = icmp eq <4 x i32> %broadcast.splat413, %vec.ind
-  %i.nn = icmp eq <4 x i32> %broadcast.splat413, %step.add
-  %i.no = select <4 x i1> %i.nm, <4 x i32> %broadcast.splat415, <4 x i32> zeroinitializer
-  %i.np = select <4 x i1> %i.nn, <4 x i32> %broadcast.splat415, <4 x i32> zeroinitializer
+  %i.nm = icmp eq <4 x i64> %vec.ind, %broadcast.splat415
+  %i.nn = icmp eq <4 x i64> %step.add, %broadcast.splat415
+  %i.no = select <4 x i1> %i.nm, <4 x i32> %broadcast.splat413, <4 x i32> zeroinitializer
+  %i.np = select <4 x i1> %i.nn, <4 x i32> %broadcast.splat413, <4 x i32> zeroinitializer
   %i.nq = add nsw <4 x i32> %i.no, %wide.load418
   %i.nr = add nsw <4 x i32> %i.np, %wide.load419
   %i.ns = getelementptr i8, ptr %i.nl, i64 16
   store <4 x i32> %i.nq, ptr %i.nl, align 4, !tbaa !14
   store <4 x i32> %i.nr, ptr %i.ns, align 4, !tbaa !14
   %index.next420 = add nuw i64 %index417, 8       ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
+  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
   %i.nt = icmp eq i64 %index.next420, %n.vec411
   br i1 %i.nt, label %middle.block421, label %vector.body416, !llvm.loop !78
 
@@ -475,8 +474,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exi
   %i.nv = getelementptr [4 x i8], ptr %i.hg, i64 %i.nu
   %i.nw = load i32, ptr %i.nv, align 4, !tbaa !14
   %i.nx = getelementptr [4 x i8], ptr %i.hp, i64 %i.nu
-  %16 = trunc nuw nsw i64 %.060268.us.ph to i32
-  %i.ny = icmp eq i32 %i.nf, %16
+  %i.ny = icmp eq i64 %.060268.us.ph, %sext
   %i.nz = select i1 %i.ny, i32 %i.nh, i32 0
   %i.oa = add nsw i32 %i.nz, %i.nw
   store i32 %i.oa, ptr %i.nx, align 4, !tbaa !14
@@ -879,8 +877,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exi
   %i.jd = getelementptr [4 x i8], ptr %i.hg, i64 %i.jc
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !14
   %i.jf = getelementptr [4 x i8], ptr %i.hp, i64 %i.jc
-  %14 = trunc i64 %.060268.us to i32
-  %i.jg = icmp eq i32 %i.nf, %14
+  %i.jg = icmp eq i64 %.060268.us, %sext
   %i.jh = select i1 %i.jg, i32 %i.nh, i32 0
   %i.ji = add nsw i32 %i.jh, %i.je
   store i32 %i.ji, ptr %i.jf, align 4, !tbaa !14
@@ -889,8 +886,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exi
   %i.jl = getelementptr [4 x i8], ptr %i.hg, i64 %i.jk
   %i.jm = load i32, ptr %i.jl, align 4, !tbaa !14
   %i.jn = getelementptr [4 x i8], ptr %i.hp, i64 %i.jk
-  %15 = trunc i64 %i.jj to i32
-  %i.jo = icmp eq i32 %i.nf, %15
+  %i.jo = icmp eq i64 %i.jj, %sext
   %i.jp = select i1 %i.jo, i32 %i.nh, i32 0
   %i.jq = add nsw i32 %i.jp, %i.jm
   store i32 %i.jq, ptr %i.jn, align 4, !tbaa !14
@@ -1096,9 +1092,10 @@ _ZNSt5queueImSt5dequeImSaImEEE4pushERKm.exit113.us: ; preds = %.critedge.i.us, %
 
 _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.preheader.us: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.us, %middle.block437
   %i.ne = getelementptr inbounds [4 x i8], ptr %.sroa.0190.0244, i64 %i.ho
-  %i.nf = load i32, ptr %i.ne, align 4, !tbaa !14 ; 4 uses
+  %i.nf = load i32, ptr %i.ne, align 4, !tbaa !14
   %i.ng = trunc nuw i8 %i.hn to i1
   %i.nh = select i1 %i.ng, i32 -1, i32 1          ; 4 uses
+  %sext = sext i32 %i.nf to i64                   ; 4 uses
   br i1 %or.cond442, label %vector.memcheck, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.preheader
 
 vector.memcheck:                                  ; preds = %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.preheader.us
@@ -1108,32 +1105,32 @@ vector.memcheck:                                  ; preds = %_ZN5Eigen5BlockINS_
   br i1 %diff.check, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us.preheader, label %vector.ph410
 
 vector.ph410:                                     ; preds = %vector.memcheck
-  %broadcast.splatinsert412 = insertelement <4 x i32> poison, i32 %i.nf, i64 0
+  %broadcast.splatinsert412 = insertelement <4 x i32> poison, i32 %i.nh, i64 0
   %broadcast.splat413 = shufflevector <4 x i32> %broadcast.splatinsert412, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %broadcast.splatinsert414 = insertelement <4 x i32> poison, i32 %i.nh, i64 0
-  %broadcast.splat415 = shufflevector <4 x i32> %broadcast.splatinsert414, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert414 = insertelement <4 x i64> poison, i64 %sext, i64 0
+  %broadcast.splat415 = shufflevector <4 x i64> %broadcast.splatinsert414, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   br label %vector.body416
 
 vector.body416:                                   ; preds = %vector.body416, %vector.ph410
   %index417 = phi i64 [ 0, %vector.ph410 ], [ %index.next420, %vector.body416 ] ; 3 uses
-  %vec.ind = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %vector.ph410 ], [ %vec.ind.next, %vector.body416 ] ; 3 uses
-  %step.add = add <4 x i32> %vec.ind, splat (i32 4)
+  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %vector.ph410 ], [ %vec.ind.next, %vector.body416 ] ; 3 uses
+  %step.add = add nuw <4 x i64> %vec.ind, splat (i64 4)
   %i.nj = getelementptr [4 x i8], ptr %i.hg, i64 %index417 ; 2 uses
   %i.nk = getelementptr i8, ptr %i.nj, i64 16
   %wide.load418 = load <4 x i32>, ptr %i.nj, align 4, !tbaa !14
   %wide.load419 = load <4 x i32>, ptr %i.nk, align 4, !tbaa !14
   %i.nl = getelementptr [4 x i8], ptr %i.hp, i64 %index417 ; 2 uses
-  %i.nm = icmp eq <4 x i32> %broadcast.splat413, %vec.ind
-  %i.nn = icmp eq <4 x i32> %broadcast.splat413, %step.add
-  %i.no = select <4 x i1> %i.nm, <4 x i32> %broadcast.splat415, <4 x i32> zeroinitializer
-  %i.np = select <4 x i1> %i.nn, <4 x i32> %broadcast.splat415, <4 x i32> zeroinitializer
+  %i.nm = icmp eq <4 x i64> %vec.ind, %broadcast.splat415
+  %i.nn = icmp eq <4 x i64> %step.add, %broadcast.splat415
+  %i.no = select <4 x i1> %i.nm, <4 x i32> %broadcast.splat413, <4 x i32> zeroinitializer
+  %i.np = select <4 x i1> %i.nn, <4 x i32> %broadcast.splat413, <4 x i32> zeroinitializer
   %i.nq = add nsw <4 x i32> %i.no, %wide.load418
   %i.nr = add nsw <4 x i32> %i.np, %wide.load419
   %i.ns = getelementptr i8, ptr %i.nl, i64 16
   store <4 x i32> %i.nq, ptr %i.nl, align 4, !tbaa !14
   store <4 x i32> %i.nr, ptr %i.ns, align 4, !tbaa !14
   %index.next420 = add nuw i64 %index417, 8       ; 2 uses
-  %vec.ind.next = add <4 x i32> %vec.ind, splat (i32 8)
+  %vec.ind.next = add nuw <4 x i64> %vec.ind, splat (i64 8)
   %i.nt = icmp eq i64 %index.next420, %n.vec411
   br i1 %i.nt, label %middle.block421, label %vector.body416, !llvm.loop !112
 
@@ -1149,8 +1146,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exi
   %i.nv = getelementptr [4 x i8], ptr %i.hg, i64 %i.nu
   %i.nw = load i32, ptr %i.nv, align 4, !tbaa !14
   %i.nx = getelementptr [4 x i8], ptr %i.hp, i64 %i.nu
-  %16 = trunc nuw nsw i64 %.060268.us.ph to i32
-  %i.ny = icmp eq i32 %i.nf, %16
+  %i.ny = icmp eq i64 %.060268.us.ph, %sext
   %i.nz = select i1 %i.ny, i32 %i.nh, i32 0
   %i.oa = add nsw i32 %i.nz, %i.nw
   store i32 %i.oa, ptr %i.nx, align 4, !tbaa !14

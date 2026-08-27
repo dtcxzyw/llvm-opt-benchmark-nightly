@@ -202,11 +202,12 @@ ssl_has_cert.exit.thread.peel98.i:                ; preds = %.ssl_has_cert.exit.
   br i1 %i.cz, label %.peel.next79.i, label %ssl_version_cmp.exit44
 
 .peel.next79.i:                                   ; preds = %ssl_has_cert.exit.thread.peel98.i
-  %3 = trunc i64 %i.cy to i32
+  %sext83 = shl i64 %i.cy, 32
+  %sext = ashr exact i64 %sext83, 32
   br label %bb.z
 
 bb.z:                                             ; preds = %ssl_has_cert.exit.thread.i, %.peel.next79.i
-  %.033.i = phi i64 [ 4, %.peel.next79.i ], [ %i.dn, %ssl_has_cert.exit.thread.i ] ; 5 uses
+  %.033.i = phi i64 [ 4, %.peel.next79.i ], [ %i.dn, %ssl_has_cert.exit.thread.i ] ; 6 uses
   switch i64 %.033.i, label %bb.aa [
     i64 2, label %ssl_has_cert.exit.thread.i
     i64 4, label %ssl_has_cert.exit.thread.i
@@ -215,9 +216,8 @@ bb.z:                                             ; preds = %ssl_has_cert.exit.t
   ]
 
 bb.aa:                                            ; preds = %bb.z
-  %4 = trunc i64 %.033.i to i32                   ; 2 uses
-  %i.da = icmp sgt i32 %4, -1
-  %.not.i.i = icmp slt i32 %4, %3
+  %i.da = icmp sgt i64 %.033.i, -1
+  %.not.i.i = icmp slt i64 %.033.i, %sext
   %or.cond.i = and i1 %i.da, %.not.i.i
   br i1 %or.cond.i, label %bb.ab, label %ssl_has_cert.exit.thread.i
 
@@ -246,23 +246,21 @@ ssl_has_cert_type.exit.i.i:                       ; preds = %bb.ab
 bb.ac:                                            ; preds = %ssl_has_cert_type.exit.i.i
   %i.de = getelementptr inbounds nuw i8, ptr %.pre104.i, i64 32
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !230
-  %5 = and i64 %.033.i, 2147483647
-  %6 = getelementptr inbounds nuw [40 x i8], ptr %i.df, i64 %5
   br label %ssl_has_cert.exit.i
 
 ssl_has_cert_type.exit.thread.i.i:                ; preds = %ssl_has_cert_type.exit.i.i, %.ssl_has_cert_type.exit.thread.i_crit_edge.i
   %i.dg = phi ptr [ %.pre103.i, %.ssl_has_cert_type.exit.thread.i_crit_edge.i ], [ %.pre104.i, %ssl_has_cert_type.exit.i.i ]
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 32
-  %i.di = load ptr, ptr %i.dh, align 8, !tbaa !230
-  %7 = and i64 %.033.i, 2147483647
-  %i.dj = getelementptr inbounds nuw [40 x i8], ptr %i.di, i64 %7 ; 2 uses
+  %i.di = load ptr, ptr %i.dh, align 8, !tbaa !230 ; 2 uses
+  %i.dj = getelementptr inbounds nuw [40 x i8], ptr %i.di, i64 %.033.i
   %i.dk = load ptr, ptr %i.dj, align 8, !tbaa !191
   %.not12.i.i = icmp eq ptr %i.dk, null
   br i1 %.not12.i.i, label %ssl_has_cert.exit.thread.i, label %ssl_has_cert.exit.i
 
 ssl_has_cert.exit.i:                              ; preds = %ssl_has_cert_type.exit.thread.i.i, %bb.ac
-  %.sink.i.i = phi ptr [ %6, %bb.ac ], [ %i.dj, %ssl_has_cert_type.exit.thread.i.i ]
-  %i.dl = getelementptr inbounds nuw i8, ptr %.sink.i.i, i64 8
+  %.sink.i.i = phi ptr [ %i.df, %bb.ac ], [ %i.di, %ssl_has_cert_type.exit.thread.i.i ]
+  %3 = getelementptr inbounds nuw [40 x i8], ptr %.sink.i.i, i64 %.033.i
+  %i.dl = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.dm = load ptr, ptr %i.dl, align 8, !tbaa !123
   %.not32.i = icmp eq ptr %i.dm, null
   br i1 %.not32.i, label %ssl_has_cert.exit.thread.i, label %is_tls13_capable.exit.thread

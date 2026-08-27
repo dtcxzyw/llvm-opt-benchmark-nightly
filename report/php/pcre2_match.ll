@@ -200,10 +200,9 @@ bb.hp:                                            ; preds = %bb.ho, %bb.hn
 
 .lr.ph12381:                                      ; preds = %.preheader10361
   %i.apd = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.ape = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12384 = load ptr, ptr %i.apd, align 8, !tbaa !122 ; 3 uses
-  %.not931518042 = icmp ult ptr %.promoted12384, %i.ape
-  br i1 %.not931518042, label %.lr.ph18044, label %._crit_edge18045
+  %i.ape = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12384 = load ptr, ptr %i.apd, align 8, !tbaa !122
+  br label %bb.it
 
 bb.hq:                                            ; preds = %bb.hp
   %i.apf = icmp samesign ugt i32 %.sink16511, 127
@@ -243,24 +242,24 @@ bb.ht:                                            ; preds = %bb.hs, %bb.hr
 
 .lr.ph12393:                                      ; preds = %bb.ht
   %i.apz = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.aqa = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12396 = load ptr, ptr %i.apz, align 8, !tbaa !122 ; 3 uses
-  %.not932618047 = icmp ult ptr %.promoted12396, %i.aqa
-  br i1 %.not932618047, label %.lr.ph18049, label %._crit_edge18050
+  %i.aqa = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12396 = load ptr, ptr %i.apz, align 8, !tbaa !122
+  br label %bb.hu
 
-bb.hu:                                            ; preds = %bb.hy
-  %.not9326 = icmp ult ptr %i.aqh, %i.aqa
-  br i1 %.not9326, label %.lr.ph18049, label %._crit_edge18050, !llvm.loop !143
+bb.hu:                                            ; preds = %.lr.ph12393, %bb.hy
+  %6 = phi ptr [ %.promoted12396, %.lr.ph12393 ], [ %i.aqh, %bb.hy ] ; 4 uses
+  %.3811412391 = phi i32 [ 1, %.lr.ph12393 ], [ %i.aqi, %bb.hy ] ; 2 uses
+  %.not9326 = icmp ult ptr %6, %i.aqa
+  br i1 %.not9326, label %.lr.ph18049, label %._crit_edge18050
 
-._crit_edge18050:                                 ; preds = %bb.hu, %.lr.ph12393
-  %.lcssa16935 = phi ptr [ %.promoted12396, %.lr.ph12393 ], [ %i.aqh, %bb.hu ]
+._crit_edge18050:                                 ; preds = %bb.hu
   %i.aqb = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not9329 = icmp eq i16 %i.aqb, 0
   br i1 %.not9329, label %.preheader10324.preheader, label %bb.hv
 
 bb.hv:                                            ; preds = %._crit_edge18050
   %i.aqc = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.aqd = icmp ugt ptr %.lcssa16935, %i.aqc
+  %i.aqd = icmp ugt ptr %6, %i.aqc
   br i1 %i.aqd, label %bb.hx, label %bb.hw
 
 bb.hw:                                            ; preds = %bb.hv
@@ -273,9 +272,7 @@ bb.hx:                                            ; preds = %bb.hw, %bb.hv
   %.not10261 = icmp eq i16 %i.aqb, 1
   br i1 %.not10261, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph18049:                                      ; preds = %.lr.ph12393, %bb.hu
-  %.381141239118048 = phi i32 [ %i.aqi, %bb.hu ], [ 1, %.lr.ph12393 ]
-  %6 = phi ptr [ %i.aqh, %bb.hu ], [ %.promoted12396, %.lr.ph12393 ] ; 2 uses
+.lr.ph18049:                                      ; preds = %bb.hu
   %i.aqf = load i8, ptr %6, align 1, !tbaa !35
   %i.aqg = zext i8 %i.aqf to i32                  ; 2 uses
   %.not9327 = icmp eq i32 %.sink16511, %i.aqg
@@ -284,11 +281,11 @@ bb.hx:                                            ; preds = %bb.hw, %bb.hv
   br i1 %or.cond16516, label %bb.hy, label %.preheader10324.preheader
 
 bb.hy:                                            ; preds = %.lr.ph18049
-  %i.aqh = getelementptr inbounds nuw i8, ptr %6, i64 1 ; 4 uses
+  %i.aqh = getelementptr inbounds nuw i8, ptr %6, i64 1 ; 2 uses
   store ptr %i.aqh, ptr %i.apz, align 8, !tbaa !122
-  %i.aqi = add i32 %.381141239118048, 1           ; 2 uses
-  %.not9319 = icmp ugt i32 %i.aqi, %i.ahw
-  br i1 %.not9319, label %._crit_edge12394, label %bb.hu, !llvm.loop !143
+  %i.aqi = add nuw nsw i32 %.3811412391, 1
+  %.not9319.not = icmp ult i32 %.3811412391, %i.ahw
+  br i1 %.not9319.not, label %bb.hu, label %._crit_edge12394, !llvm.loop !143
 
 ._crit_edge12394:                                 ; preds = %bb.hy, %bb.ht
   %i.aqj = icmp eq i32 %i.ahw, %i.ahv
@@ -436,23 +433,24 @@ bb.ir:                                            ; preds = %.loopexit10348
   br label %.loopexit10589
 
 bb.is:                                            ; preds = %.lr.ph18044
-  %i.arz = add i32 %.581161238018043, 1           ; 2 uses
-  %.not9309 = icmp ugt i32 %i.arz, %i.ahw
-  br i1 %.not9309, label %._crit_edge12382, label %bb.it, !llvm.loop !145
+  %i.arz = add nuw nsw i32 %.5811612380, 1
+  %.not9309.not = icmp ult i32 %.5811612380, %i.ahw
+  br i1 %.not9309.not, label %bb.it, label %._crit_edge12382, !llvm.loop !145
 
-bb.it:                                            ; preds = %bb.is
-  %.not9315 = icmp ult ptr %i.ase, %i.ape
-  br i1 %.not9315, label %.lr.ph18044, label %._crit_edge18045, !llvm.loop !145
+bb.it:                                            ; preds = %.lr.ph12381, %bb.is
+  %7 = phi ptr [ %.promoted12384, %.lr.ph12381 ], [ %i.ase, %bb.is ] ; 4 uses
+  %.5811612380 = phi i32 [ 1, %.lr.ph12381 ], [ %i.arz, %bb.is ] ; 2 uses
+  %.not9315 = icmp ult ptr %7, %i.ape
+  br i1 %.not9315, label %.lr.ph18044, label %._crit_edge18045
 
-._crit_edge18045:                                 ; preds = %bb.it, %.lr.ph12381
-  %.lcssa16930 = phi ptr [ %.promoted12384, %.lr.ph12381 ], [ %i.ase, %bb.it ]
+._crit_edge18045:                                 ; preds = %bb.it
   %i.asa = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not9317 = icmp eq i16 %i.asa, 0
   br i1 %.not9317, label %.preheader10324.preheader, label %bb.iu
 
 bb.iu:                                            ; preds = %._crit_edge18045
   %i.asb = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.asc = icmp ugt ptr %.lcssa16930, %i.asb
+  %i.asc = icmp ugt ptr %7, %i.asb
   br i1 %i.asc, label %bb.iw, label %bb.iv
 
 bb.iv:                                            ; preds = %bb.iu
@@ -465,10 +463,8 @@ bb.iw:                                            ; preds = %bb.iv, %bb.iu
   %.not10259 = icmp eq i16 %i.asa, 1
   br i1 %.not10259, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph18044:                                      ; preds = %.lr.ph12381, %bb.it
-  %.581161238018043 = phi i32 [ %i.arz, %bb.it ], [ 1, %.lr.ph12381 ]
-  %7 = phi ptr [ %i.ase, %bb.it ], [ %.promoted12384, %.lr.ph12381 ] ; 2 uses
-  %i.ase = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 4 uses
+.lr.ph18044:                                      ; preds = %bb.it
+  %i.ase = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
   store ptr %i.ase, ptr %i.apd, align 8, !tbaa !122
   %i.asf = load i8, ptr %7, align 1, !tbaa !35
   %i.asg = zext i8 %i.asf to i32
@@ -871,10 +867,9 @@ bb.kk:                                            ; preds = %bb.kj, %bb.ki
 
 .lr.ph12363:                                      ; preds = %.preheader10368
   %i.bat = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.bau = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12364 = load ptr, ptr %i.bat, align 8, !tbaa !122 ; 3 uses
-  %.not929318037 = icmp ult ptr %.promoted12364, %i.bau
-  br i1 %.not929318037, label %.lr.ph18039, label %._crit_edge18040
+  %i.bau = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12364 = load ptr, ptr %i.bat, align 8, !tbaa !122
+  br label %bb.lc
 
 .preheader10366:                                  ; preds = %bb.kk
   br i1 %.not929612365, label %.thread9708, label %.lr.ph12367
@@ -1046,19 +1041,20 @@ bb.lb:                                            ; preds = %bb.kt, %bb.kx, %bb.
   %or.cond16521 = select i1 %i.bem, i1 true, i1 %i.ben
   br i1 %or.cond16521, label %.preheader10324.preheader, label %bb.kl
 
-bb.lc:                                            ; preds = %bb.lg
-  %.not9293 = icmp ult ptr %i.bew, %i.bau
-  br i1 %.not9293, label %.lr.ph18039, label %._crit_edge18040, !llvm.loop !148
+bb.lc:                                            ; preds = %.lr.ph12363, %bb.lg
+  %8 = phi ptr [ %.promoted12364, %.lr.ph12363 ], [ %i.bew, %bb.lg ] ; 4 uses
+  %.8811912362 = phi i32 [ 1, %.lr.ph12363 ], [ %i.bex, %bb.lg ] ; 2 uses
+  %.not9293 = icmp ult ptr %8, %i.bau
+  br i1 %.not9293, label %.lr.ph18039, label %._crit_edge18040
 
-._crit_edge18040:                                 ; preds = %bb.lc, %.lr.ph12363
-  %.lcssa16920 = phi ptr [ %.promoted12364, %.lr.ph12363 ], [ %i.bew, %bb.lc ]
+._crit_edge18040:                                 ; preds = %bb.lc
   %i.beo = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not9294 = icmp eq i16 %i.beo, 0
   br i1 %.not9294, label %.preheader10324.preheader, label %bb.ld
 
 bb.ld:                                            ; preds = %._crit_edge18040
   %i.bep = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.beq = icmp ugt ptr %.lcssa16920, %i.bep
+  %i.beq = icmp ugt ptr %8, %i.bep
   br i1 %i.beq, label %bb.lf, label %bb.le
 
 bb.le:                                            ; preds = %bb.ld
@@ -1071,9 +1067,7 @@ bb.lf:                                            ; preds = %bb.le, %bb.ld
   %.not10255 = icmp eq i16 %i.beo, 1
   br i1 %.not10255, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph18039:                                      ; preds = %.lr.ph12363, %bb.lc
-  %.881191236218038 = phi i32 [ %i.bex, %bb.lc ], [ 1, %.lr.ph12363 ]
-  %8 = phi ptr [ %i.bew, %bb.lc ], [ %.promoted12364, %.lr.ph12363 ] ; 2 uses
+.lr.ph18039:                                      ; preds = %bb.lc
   %i.bes = load i8, ptr %8, align 1, !tbaa !35
   %i.bet = zext i8 %i.bes to i32                  ; 2 uses
   %i.beu = icmp eq i32 %i.azu, %i.bet
@@ -1082,11 +1076,11 @@ bb.lf:                                            ; preds = %bb.le, %bb.ld
   br i1 %or.cond16522, label %.preheader10324.preheader, label %bb.lg
 
 bb.lg:                                            ; preds = %.lr.ph18039
-  %i.bew = getelementptr inbounds nuw i8, ptr %8, i64 1 ; 4 uses
+  %i.bew = getelementptr inbounds nuw i8, ptr %8, i64 1 ; 2 uses
   store ptr %i.bew, ptr %i.bat, align 8, !tbaa !122
-  %i.bex = add i32 %.881191236218038, 1           ; 2 uses
-  %.not9292 = icmp ugt i32 %i.bex, %i.awj
-  br i1 %.not9292, label %.thread9708, label %bb.lc, !llvm.loop !148
+  %i.bex = add nuw nsw i32 %.8811912362, 1
+  %.not9292.not = icmp ult i32 %.8811912362, %i.awj
+  br i1 %.not9292.not, label %bb.lc, label %.thread9708, !llvm.loop !148
 
 .thread9708:                                      ; preds = %bb.lg, %bb.kl, %.preheader10368, %.preheader10366
   %i.bey = icmp eq i32 %i.awj, %i.awi
@@ -1489,10 +1483,9 @@ bb.no:                                            ; preds = %bb.kg
 
 .lr.ph12347:                                      ; preds = %.preheader10375
   %i.bom = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.bon = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12348 = load ptr, ptr %i.bom, align 8, !tbaa !122 ; 3 uses
-  %.not927618032 = icmp ult ptr %.promoted12348, %i.bon
-  br i1 %.not927618032, label %.lr.ph18034, label %._crit_edge18035
+  %i.bon = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12348 = load ptr, ptr %i.bom, align 8, !tbaa !122
+  br label %bb.oh
 
 .preheader10373:                                  ; preds = %bb.no
   br i1 %.not927912349, label %.thread9723, label %.lr.ph12351
@@ -1663,23 +1656,24 @@ bb.of:                                            ; preds = %bb.nx, %bb.ob, %bb.
   br i1 %i.bsf, label %.preheader10324.preheader, label %bb.np
 
 bb.og:                                            ; preds = %.lr.ph18034
-  %i.bsg = add i32 %.1281231234618033, 1          ; 2 uses
-  %.not9275 = icmp ugt i32 %i.bsg, %i.awj
-  br i1 %.not9275, label %.thread9723, label %bb.oh, !llvm.loop !153
+  %i.bsg = add nuw nsw i32 %.12812312346, 1
+  %.not9275.not = icmp ult i32 %.12812312346, %i.awj
+  br i1 %.not9275.not, label %bb.oh, label %.thread9723, !llvm.loop !153
 
-bb.oh:                                            ; preds = %bb.og
-  %.not9276 = icmp ult ptr %i.bsl, %i.bon
-  br i1 %.not9276, label %.lr.ph18034, label %._crit_edge18035, !llvm.loop !153
+bb.oh:                                            ; preds = %.lr.ph12347, %bb.og
+  %9 = phi ptr [ %.promoted12348, %.lr.ph12347 ], [ %i.bsl, %bb.og ] ; 4 uses
+  %.12812312346 = phi i32 [ 1, %.lr.ph12347 ], [ %i.bsg, %bb.og ] ; 2 uses
+  %.not9276 = icmp ult ptr %9, %i.bon
+  br i1 %.not9276, label %.lr.ph18034, label %._crit_edge18035
 
-._crit_edge18035:                                 ; preds = %bb.oh, %.lr.ph12347
-  %.lcssa16910 = phi ptr [ %.promoted12348, %.lr.ph12347 ], [ %i.bsl, %bb.oh ]
+._crit_edge18035:                                 ; preds = %bb.oh
   %i.bsh = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not9277 = icmp eq i16 %i.bsh, 0
   br i1 %.not9277, label %.preheader10324.preheader, label %bb.oi
 
 bb.oi:                                            ; preds = %._crit_edge18035
   %i.bsi = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.bsj = icmp ugt ptr %.lcssa16910, %i.bsi
+  %i.bsj = icmp ugt ptr %9, %i.bsi
   br i1 %i.bsj, label %bb.ok, label %bb.oj
 
 bb.oj:                                            ; preds = %bb.oi
@@ -1692,10 +1686,8 @@ bb.ok:                                            ; preds = %bb.oj, %bb.oi
   %.not10251 = icmp eq i16 %i.bsh, 1
   br i1 %.not10251, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph18034:                                      ; preds = %.lr.ph12347, %bb.oh
-  %.1281231234618033 = phi i32 [ %i.bsg, %bb.oh ], [ 1, %.lr.ph12347 ]
-  %9 = phi ptr [ %i.bsl, %bb.oh ], [ %.promoted12348, %.lr.ph12347 ] ; 2 uses
-  %i.bsl = getelementptr inbounds nuw i8, ptr %9, i64 1 ; 4 uses
+.lr.ph18034:                                      ; preds = %bb.oh
+  %i.bsl = getelementptr inbounds nuw i8, ptr %9, i64 1 ; 2 uses
   store ptr %i.bsl, ptr %i.bom, align 8, !tbaa !122
   %i.bsm = load i8, ptr %9, align 1, !tbaa !35
   %i.bsn = zext i8 %i.bsm to i32
@@ -2098,10 +2090,9 @@ bb.qs:                                            ; preds = %bb.qr, %bb.qq
   %i.cds = phi i32 [ %i.cdn, %.preheader10384 ], [ 1, %.thread15038 ] ; 2 uses
   %.1979821504115045 = phi i32 [ %.197982, %.preheader10384 ], [ %.27965, %.thread15038 ] ; 5 uses
   %i.cdt = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.cdu = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12332 = load ptr, ptr %i.cdt, align 8, !tbaa !122 ; 3 uses
-  %.not926118027 = icmp ult ptr %.promoted12332, %i.cdu
-  br i1 %.not926118027, label %.lr.ph18029, label %._crit_edge18030
+  %i.cdu = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12332 = load ptr, ptr %i.cdt, align 8, !tbaa !122
+  br label %bb.rm
 
 .preheader10381:                                  ; preds = %bb.qs
   br i1 %.not926412333, label %.loopexit10382, label %.lr.ph12335
@@ -2295,23 +2286,24 @@ bb.rk:                                            ; preds = %bb.rj, %.thread9734
   br i1 %.not9264, label %.loopexit10382, label %bb.qt, !llvm.loop !157
 
 bb.rl:                                            ; preds = %.lr.ph18029
-  %i.cic = add i32 %.1681271233018028, 1          ; 2 uses
-  %.not9260 = icmp ugt i32 %i.cic, %i.cds
-  br i1 %.not9260, label %.loopexit10382, label %bb.rm, !llvm.loop !158
+  %i.cic = add nuw nsw i32 %.16812712330, 1
+  %.not9260.not = icmp ult i32 %.16812712330, %i.cds
+  br i1 %.not9260.not, label %bb.rm, label %.loopexit10382, !llvm.loop !158
 
-bb.rm:                                            ; preds = %bb.rl
-  %.not9261 = icmp ult ptr %i.cih, %i.cdu
-  br i1 %.not9261, label %.lr.ph18029, label %._crit_edge18030, !llvm.loop !158
+bb.rm:                                            ; preds = %.lr.ph12331, %bb.rl
+  %10 = phi ptr [ %.promoted12332, %.lr.ph12331 ], [ %i.cih, %bb.rl ] ; 4 uses
+  %.16812712330 = phi i32 [ 1, %.lr.ph12331 ], [ %i.cic, %bb.rl ] ; 2 uses
+  %.not9261 = icmp ult ptr %10, %i.cdu
+  br i1 %.not9261, label %.lr.ph18029, label %._crit_edge18030
 
-._crit_edge18030:                                 ; preds = %bb.rm, %.lr.ph12331
-  %.lcssa16900 = phi ptr [ %.promoted12332, %.lr.ph12331 ], [ %i.cih, %bb.rm ]
+._crit_edge18030:                                 ; preds = %bb.rm
   %i.cid = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not9262 = icmp eq i16 %i.cid, 0
   br i1 %.not9262, label %.preheader10324.preheader, label %bb.rn
 
 bb.rn:                                            ; preds = %._crit_edge18030
   %i.cie = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.cif = icmp ugt ptr %.lcssa16900, %i.cie
+  %i.cif = icmp ugt ptr %10, %i.cie
   br i1 %i.cif, label %bb.rp, label %bb.ro
 
 bb.ro:                                            ; preds = %bb.rn
@@ -2324,10 +2316,8 @@ bb.rp:                                            ; preds = %bb.ro, %bb.rn
   %.not10247 = icmp eq i16 %i.cid, 1
   br i1 %.not10247, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph18029:                                      ; preds = %.lr.ph12331, %bb.rm
-  %.1681271233018028 = phi i32 [ %i.cic, %bb.rm ], [ 1, %.lr.ph12331 ]
-  %10 = phi ptr [ %i.cih, %bb.rm ], [ %.promoted12332, %.lr.ph12331 ] ; 2 uses
-  %i.cih = getelementptr inbounds nuw i8, ptr %10, i64 1 ; 4 uses
+.lr.ph18029:                                      ; preds = %bb.rm
+  %i.cih = getelementptr inbounds nuw i8, ptr %10, i64 1 ; 2 uses
   store ptr %i.cih, ptr %i.cdt, align 8, !tbaa !122
   %i.cii = load i8, ptr %10, align 1, !tbaa !35
   %i.cij = zext i8 %i.cii to i32                  ; 2 uses
@@ -2730,31 +2720,27 @@ bb.awj:                                           ; preds = %bb.apv
 
 .lr.ph12033:                                      ; preds = %bb.awj
   %i.iuy = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.iuz = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12034 = load ptr, ptr %i.iuy, align 8, !tbaa !122 ; 3 uses
-  %.not889917952 = icmp ult ptr %.promoted12034, %i.iuz
-  br i1 %.not889917952, label %.lr.ph17954, label %._crit_edge17955
+  %i.iuz = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12034 = load ptr, ptr %i.iuy, align 8, !tbaa !122
+  br label %bb.ayi
 
 .lr.ph12037:                                      ; preds = %bb.awj
   %i.iva = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.ivb = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12038 = load ptr, ptr %i.iva, align 8, !tbaa !122 ; 3 uses
-  %.not890317957 = icmp ult ptr %.promoted12038, %i.ivb
-  br i1 %.not890317957, label %.lr.ph17959, label %._crit_edge17960
+  %i.ivb = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12038 = load ptr, ptr %i.iva, align 8, !tbaa !122
+  br label %bb.ayd
 
 .lr.ph12041:                                      ; preds = %bb.awj
   %i.ivc = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.ivd = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12042 = load ptr, ptr %i.ivc, align 8, !tbaa !122 ; 3 uses
-  %.not890717962 = icmp ult ptr %.promoted12042, %i.ivd
-  br i1 %.not890717962, label %.lr.ph17964, label %._crit_edge17965
+  %i.ivd = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12042 = load ptr, ptr %i.ivc, align 8, !tbaa !122
+  br label %bb.axy
 
 .lr.ph12045:                                      ; preds = %bb.awj
   %i.ive = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 2 uses
-  %i.ivf = load ptr, ptr %i.ag, align 8, !tbaa !59 ; 2 uses
-  %.promoted12046 = load ptr, ptr %i.ive, align 8, !tbaa !122 ; 3 uses
-  %.not891117967 = icmp ult ptr %.promoted12046, %i.ivf
-  br i1 %.not891117967, label %.lr.ph17969, label %._crit_edge17970
+  %i.ivf = load ptr, ptr %i.ag, align 8, !tbaa !59
+  %.promoted12046 = load ptr, ptr %i.ive, align 8, !tbaa !122
+  br label %bb.axt
 
 .lr.ph12049:                                      ; preds = %bb.awj
   %i.ivg = getelementptr inbounds nuw i8, ptr %.47548, i64 80 ; 3 uses
@@ -2972,19 +2958,20 @@ bb.axs:                                           ; preds = %bb.axn, %bb.axq, %b
   %.not8914 = icmp ugt i32 %i.ixq, %i.hod
   br i1 %.not8914, label %.thread9838, label %bb.axi, !llvm.loop !202
 
-bb.axt:                                           ; preds = %bb.axx
-  %.not8911 = icmp ult ptr %i.ixv, %i.ivf
-  br i1 %.not8911, label %.lr.ph17969, label %._crit_edge17970, !llvm.loop !203
+bb.axt:                                           ; preds = %.lr.ph12045, %bb.axx
+  %11 = phi ptr [ %.promoted12046, %.lr.ph12045 ], [ %i.ixv, %bb.axx ] ; 4 uses
+  %.50816112044 = phi i32 [ 1, %.lr.ph12045 ], [ %i.ixx, %bb.axx ] ; 2 uses
+  %.not8911 = icmp ult ptr %11, %i.ivf
+  br i1 %.not8911, label %.lr.ph17969, label %._crit_edge17970
 
-._crit_edge17970:                                 ; preds = %bb.axt, %.lr.ph12045
-  %.lcssa16726 = phi ptr [ %.promoted12046, %.lr.ph12045 ], [ %i.ixv, %bb.axt ]
+._crit_edge17970:                                 ; preds = %bb.axt
   %i.ixr = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not8912 = icmp eq i16 %i.ixr, 0
   br i1 %.not8912, label %.preheader10324.preheader, label %bb.axu
 
 bb.axu:                                           ; preds = %._crit_edge17970
   %i.ixs = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.ixt = icmp ugt ptr %.lcssa16726, %i.ixs
+  %i.ixt = icmp ugt ptr %11, %i.ixs
   br i1 %i.ixt, label %bb.axw, label %bb.axv
 
 bb.axv:                                           ; preds = %bb.axu
@@ -2997,10 +2984,8 @@ bb.axw:                                           ; preds = %bb.axv, %bb.axu
   %.not14997 = icmp eq i16 %i.ixr, 1
   br i1 %.not14997, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph17969:                                      ; preds = %.lr.ph12045, %bb.axt
-  %.5081611204417968 = phi i32 [ %i.ixx, %bb.axt ], [ 1, %.lr.ph12045 ]
-  %11 = phi ptr [ %i.ixv, %bb.axt ], [ %.promoted12046, %.lr.ph12045 ] ; 2 uses
-  %i.ixv = getelementptr inbounds nuw i8, ptr %11, i64 1 ; 4 uses
+.lr.ph17969:                                      ; preds = %bb.axt
+  %i.ixv = getelementptr inbounds nuw i8, ptr %11, i64 1 ; 2 uses
   store ptr %i.ixv, ptr %i.ive, align 8, !tbaa !122
   %i.ixw = load i8, ptr %11, align 1, !tbaa !35
   switch i8 %i.ixw, label %bb.axx [
@@ -3010,23 +2995,24 @@ bb.axw:                                           ; preds = %bb.axv, %bb.axu
   ]
 
 bb.axx:                                           ; preds = %.lr.ph17969
-  %i.ixx = add i32 %.5081611204417968, 1          ; 2 uses
-  %.not8910 = icmp ugt i32 %i.ixx, %i.hod
-  br i1 %.not8910, label %.thread9838, label %bb.axt, !llvm.loop !203
+  %i.ixx = add nuw nsw i32 %.50816112044, 1
+  %.not8910.not = icmp ult i32 %.50816112044, %i.hod
+  br i1 %.not8910.not, label %bb.axt, label %.thread9838, !llvm.loop !203
 
-bb.axy:                                           ; preds = %bb.ayc
-  %.not8907 = icmp ult ptr %i.iyc, %i.ivd
-  br i1 %.not8907, label %.lr.ph17964, label %._crit_edge17965, !llvm.loop !204
+bb.axy:                                           ; preds = %.lr.ph12041, %bb.ayc
+  %12 = phi ptr [ %.promoted12042, %.lr.ph12041 ], [ %i.iyc, %bb.ayc ] ; 4 uses
+  %.51816212040 = phi i32 [ 1, %.lr.ph12041 ], [ %i.iye, %bb.ayc ] ; 2 uses
+  %.not8907 = icmp ult ptr %12, %i.ivd
+  br i1 %.not8907, label %.lr.ph17964, label %._crit_edge17965
 
-._crit_edge17965:                                 ; preds = %bb.axy, %.lr.ph12041
-  %.lcssa16723 = phi ptr [ %.promoted12042, %.lr.ph12041 ], [ %i.iyc, %bb.axy ]
+._crit_edge17965:                                 ; preds = %bb.axy
   %i.ixy = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not8908 = icmp eq i16 %i.ixy, 0
   br i1 %.not8908, label %.preheader10324.preheader, label %bb.axz
 
 bb.axz:                                           ; preds = %._crit_edge17965
   %i.ixz = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.iya = icmp ugt ptr %.lcssa16723, %i.ixz
+  %i.iya = icmp ugt ptr %12, %i.ixz
   br i1 %i.iya, label %bb.ayb, label %bb.aya
 
 bb.aya:                                           ; preds = %bb.axz
@@ -3039,10 +3025,8 @@ bb.ayb:                                           ; preds = %bb.aya, %bb.axz
   %.not14996 = icmp eq i16 %i.ixy, 1
   br i1 %.not14996, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph17964:                                      ; preds = %.lr.ph12041, %bb.axy
-  %.5181621204017963 = phi i32 [ %i.iye, %bb.axy ], [ 1, %.lr.ph12041 ]
-  %12 = phi ptr [ %i.iyc, %bb.axy ], [ %.promoted12042, %.lr.ph12041 ] ; 2 uses
-  %i.iyc = getelementptr inbounds nuw i8, ptr %12, i64 1 ; 4 uses
+.lr.ph17964:                                      ; preds = %bb.axy
+  %i.iyc = getelementptr inbounds nuw i8, ptr %12, i64 1 ; 2 uses
   store ptr %i.iyc, ptr %i.ivc, align 8, !tbaa !122
   %i.iyd = load i8, ptr %12, align 1, !tbaa !35
   switch i8 %i.iyd, label %.preheader10324.preheader [
@@ -3052,23 +3036,24 @@ bb.ayb:                                           ; preds = %bb.aya, %bb.axz
   ]
 
 bb.ayc:                                           ; preds = %.lr.ph17964, %.lr.ph17964, %.lr.ph17964
-  %i.iye = add i32 %.5181621204017963, 1          ; 2 uses
-  %.not8906 = icmp ugt i32 %i.iye, %i.hod
-  br i1 %.not8906, label %.thread9838, label %bb.axy, !llvm.loop !204
+  %i.iye = add nuw nsw i32 %.51816212040, 1
+  %.not8906.not = icmp ult i32 %.51816212040, %i.hod
+  br i1 %.not8906.not, label %bb.axy, label %.thread9838, !llvm.loop !204
 
-bb.ayd:                                           ; preds = %bb.ayh
-  %.not8903 = icmp ult ptr %i.iyj, %i.ivb
-  br i1 %.not8903, label %.lr.ph17959, label %._crit_edge17960, !llvm.loop !205
+bb.ayd:                                           ; preds = %.lr.ph12037, %bb.ayh
+  %13 = phi ptr [ %.promoted12038, %.lr.ph12037 ], [ %i.iyj, %bb.ayh ] ; 4 uses
+  %.52816312036 = phi i32 [ 1, %.lr.ph12037 ], [ %i.iyl, %bb.ayh ] ; 2 uses
+  %.not8903 = icmp ult ptr %13, %i.ivb
+  br i1 %.not8903, label %.lr.ph17959, label %._crit_edge17960
 
-._crit_edge17960:                                 ; preds = %bb.ayd, %.lr.ph12037
-  %.lcssa16720 = phi ptr [ %.promoted12038, %.lr.ph12037 ], [ %i.iyj, %bb.ayd ]
+._crit_edge17960:                                 ; preds = %bb.ayd
   %i.iyf = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not8904 = icmp eq i16 %i.iyf, 0
   br i1 %.not8904, label %.preheader10324.preheader, label %bb.aye
 
 bb.aye:                                           ; preds = %._crit_edge17960
   %i.iyg = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.iyh = icmp ugt ptr %.lcssa16720, %i.iyg
+  %i.iyh = icmp ugt ptr %13, %i.iyg
   br i1 %i.iyh, label %bb.ayg, label %bb.ayf
 
 bb.ayf:                                           ; preds = %bb.aye
@@ -3081,10 +3066,8 @@ bb.ayg:                                           ; preds = %bb.ayf, %bb.aye
   %.not14995 = icmp eq i16 %i.iyf, 1
   br i1 %.not14995, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph17959:                                      ; preds = %.lr.ph12037, %bb.ayd
-  %.5281631203617958 = phi i32 [ %i.iyl, %bb.ayd ], [ 1, %.lr.ph12037 ]
-  %13 = phi ptr [ %i.iyj, %bb.ayd ], [ %.promoted12038, %.lr.ph12037 ] ; 2 uses
-  %i.iyj = getelementptr inbounds nuw i8, ptr %13, i64 1 ; 4 uses
+.lr.ph17959:                                      ; preds = %bb.ayd
+  %i.iyj = getelementptr inbounds nuw i8, ptr %13, i64 1 ; 2 uses
   store ptr %i.iyj, ptr %i.iva, align 8, !tbaa !122
   %i.iyk = load i8, ptr %13, align 1, !tbaa !35
   switch i8 %i.iyk, label %bb.ayh [
@@ -3096,23 +3079,24 @@ bb.ayg:                                           ; preds = %bb.ayf, %bb.aye
   ]
 
 bb.ayh:                                           ; preds = %.lr.ph17959
-  %i.iyl = add i32 %.5281631203617958, 1          ; 2 uses
-  %.not8902 = icmp ugt i32 %i.iyl, %i.hod
-  br i1 %.not8902, label %.thread9838, label %bb.ayd, !llvm.loop !205
+  %i.iyl = add nuw nsw i32 %.52816312036, 1
+  %.not8902.not = icmp ult i32 %.52816312036, %i.hod
+  br i1 %.not8902.not, label %bb.ayd, label %.thread9838, !llvm.loop !205
 
-bb.ayi:                                           ; preds = %bb.aym
-  %.not8899 = icmp ult ptr %i.iyq, %i.iuz
-  br i1 %.not8899, label %.lr.ph17954, label %._crit_edge17955, !llvm.loop !206
+bb.ayi:                                           ; preds = %.lr.ph12033, %bb.aym
+  %14 = phi ptr [ %.promoted12034, %.lr.ph12033 ], [ %i.iyq, %bb.aym ] ; 4 uses
+  %.53816412032 = phi i32 [ 1, %.lr.ph12033 ], [ %i.iys, %bb.aym ] ; 2 uses
+  %.not8899 = icmp ult ptr %14, %i.iuz
+  br i1 %.not8899, label %.lr.ph17954, label %._crit_edge17955
 
-._crit_edge17955:                                 ; preds = %bb.ayi, %.lr.ph12033
-  %.lcssa16717 = phi ptr [ %.promoted12034, %.lr.ph12033 ], [ %i.iyq, %bb.ayi ]
+._crit_edge17955:                                 ; preds = %bb.ayi
   %i.iym = load i16, ptr %i.ah, align 8, !tbaa !22 ; 2 uses
   %.not8900 = icmp eq i16 %i.iym, 0
   br i1 %.not8900, label %.preheader10324.preheader, label %bb.ayj
 
 bb.ayj:                                           ; preds = %._crit_edge17955
   %i.iyn = load ptr, ptr %i.ae, align 8, !tbaa !99
-  %i.iyo = icmp ugt ptr %.lcssa16717, %i.iyn
+  %i.iyo = icmp ugt ptr %14, %i.iyn
   br i1 %i.iyo, label %bb.ayl, label %bb.ayk
 
 bb.ayk:                                           ; preds = %bb.ayj
@@ -3125,10 +3109,8 @@ bb.ayl:                                           ; preds = %bb.ayk, %bb.ayj
   %.not14994 = icmp eq i16 %i.iym, 1
   br i1 %.not14994, label %.preheader10324.preheader, label %.thread9657
 
-.lr.ph17954:                                      ; preds = %.lr.ph12033, %bb.ayi
-  %.5381641203217953 = phi i32 [ %i.iys, %bb.ayi ], [ 1, %.lr.ph12033 ]
-  %14 = phi ptr [ %i.iyq, %bb.ayi ], [ %.promoted12034, %.lr.ph12033 ] ; 2 uses
-  %i.iyq = getelementptr inbounds nuw i8, ptr %14, i64 1 ; 4 uses
+.lr.ph17954:                                      ; preds = %bb.ayi
+  %i.iyq = getelementptr inbounds nuw i8, ptr %14, i64 1 ; 2 uses
   store ptr %i.iyq, ptr %i.iuy, align 8, !tbaa !122
   %i.iyr = load i8, ptr %14, align 1, !tbaa !35
   switch i8 %i.iyr, label %.preheader10324.preheader [
@@ -3140,9 +3122,9 @@ bb.ayl:                                           ; preds = %bb.ayk, %bb.ayj
   ]
 
 bb.aym:                                           ; preds = %.lr.ph17954, %.lr.ph17954, %.lr.ph17954, %.lr.ph17954, %.lr.ph17954
-  %i.iys = add i32 %.5381641203217953, 1          ; 2 uses
-  %.not8898 = icmp ugt i32 %i.iys, %i.hod
-  br i1 %.not8898, label %.thread9838, label %bb.ayi, !llvm.loop !206
+  %i.iys = add nuw nsw i32 %.53816412032, 1
+  %.not8898.not = icmp ult i32 %.53816412032, %i.hod
+  br i1 %.not8898.not, label %bb.ayi, label %.thread9838, !llvm.loop !206
 
 bb.ayn:                                           ; preds = %bb.ayr
   %.not8894 = icmp ult ptr %i.izd, %i.iuw

@@ -204,9 +204,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !46   ; 3 uses
-  %i.f = load ptr, ptr %i.c, align 8, !tbaa !32   ; 9 uses
-  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
-  %i.h = ptrtoint ptr %i.f to i64                 ; 4 uses
+  %i.f = load ptr, ptr %i.c, align 8, !tbaa !32   ; 8 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.h = ptrtoint ptr %i.f to i64                 ; 3 uses
   %i.i = sub i64 %i.g, %i.h
   %i.j = lshr exact i64 %i.i, 2
   %i.k = trunc i64 %i.j to i16
@@ -221,22 +221,9 @@ iter.check:                                       ; preds = %bb.a
   %i.p = lshr i64 %i.o, 2
   %i.q = add nuw nsw i64 %i.p, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.o, 28
-  br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.scevcheck
+  br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
-vector.scevcheck:                                 ; preds = %iter.check
-  %3 = add i64 %i.g, -4
-  %4 = sub i64 %3, %i.h                           ; 2 uses
-  %5 = lshr i64 %4, 2
-  %6 = trunc i64 %5 to i32                        ; 2 uses
-  %mul.result = shl i32 %6, 2
-  %mul.overflow = icmp ugt i32 %6, 1073741823
-  %7 = icmp ugt i32 %mul.result, 2147483643
-  %8 = or i1 %7, %mul.overflow
-  %9 = icmp ugt i64 %4, 17179869183
-  %10 = or i1 %8, %9
-  br i1 %10, label %.lr.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %iter.check
   %i.r = sub i64 %i.a, %i.h
   %i.s = add i64 %i.r, 3
   %diff.check = icmp ult i64 %i.s, 127
@@ -248,20 +235,16 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.t = and i64 %i.q, 24
-  %n.vec = and i64 %i.q, 9223372036854775776      ; 5 uses
-  %i.u = shl i64 %n.vec, 2
-  %11 = getelementptr i8, ptr %i.f, i64 %i.u
-  %12 = trunc i64 %n.vec to i32
-  %13 = shl i32 %12, 2
-  %14 = or disjoint i32 %13, 4
+  %n.vec = and i64 %i.q, 9223372036854775776      ; 4 uses
+  %i.u = shl i64 %n.vec, 2                        ; 2 uses
+  %3 = or disjoint i64 %i.u, 4
+  %4 = getelementptr i8, ptr %i.f, i64 %i.u
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.v = shl i64 %index, 2
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.v = shl i64 %index, 2                        ; 2 uses
   %next.gep = getelementptr i8, ptr %i.f, i64 %i.v ; 4 uses
-  %15 = trunc i64 %index to i32
-  %16 = shl i32 %15, 2
   %i.w = getelementptr i8, ptr %next.gep, i64 32
   %i.x = getelementptr i8, ptr %next.gep, i64 64
   %i.y = getelementptr i8, ptr %next.gep, i64 96
@@ -269,12 +252,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load22 = load <8 x i32>, ptr %i.w, align 4, !tbaa !33
   %wide.load23 = load <8 x i32>, ptr %i.x, align 4, !tbaa !33
   %wide.load24 = load <8 x i32>, ptr %i.y, align 4, !tbaa !33
-  %17 = sext i32 %16 to i64
-  %i.z = getelementptr i8, ptr %2, i64 %17        ; 4 uses
-  %i.aa = getelementptr i8, ptr %i.z, i64 4
-  %i.ab = getelementptr i8, ptr %i.z, i64 36
-  %i.ac = getelementptr i8, ptr %i.z, i64 68
-  %i.ad = getelementptr i8, ptr %i.z, i64 100
+  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %i.v ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 36
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 68
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 100
   store <8 x i32> %wide.load, ptr %i.aa, align 4, !tbaa !33
   store <8 x i32> %wide.load22, ptr %i.ab, align 4, !tbaa !33
   store <8 x i32> %wide.load23, ptr %i.ac, align 4, !tbaa !33
@@ -293,24 +275,19 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec26 = and i64 %i.q, 9223372036854775800    ; 4 uses
-  %i.af = shl i64 %n.vec26, 2
-  %18 = getelementptr i8, ptr %i.f, i64 %i.af
-  %19 = trunc i64 %n.vec26 to i32
-  %20 = shl i32 %19, 2
-  %21 = or disjoint i32 %20, 4
+  %n.vec26 = and i64 %i.q, 9223372036854775800    ; 3 uses
+  %i.af = shl i64 %n.vec26, 2                     ; 2 uses
+  %5 = or disjoint i64 %i.af, 4
+  %6 = getelementptr i8, ptr %i.f, i64 %i.af
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index27 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next30, %vec.epilog.vector.body ] ; 3 uses
-  %i.ag = shl i64 %index27, 2
+  %index27 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next30, %vec.epilog.vector.body ] ; 2 uses
+  %i.ag = shl i64 %index27, 2                     ; 2 uses
   %next.gep28 = getelementptr i8, ptr %i.f, i64 %i.ag
-  %22 = trunc i64 %index27 to i32
-  %23 = shl i32 %22, 2
   %wide.load29 = load <8 x i32>, ptr %next.gep28, align 4, !tbaa !33
-  %24 = sext i32 %23 to i64
-  %i.ah = getelementptr i8, ptr %2, i64 %24
-  %i.ai = getelementptr i8, ptr %i.ah, i64 4
+  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %i.ag
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
   store <8 x i32> %wide.load29, ptr %i.ai, align 4, !tbaa !33
   %index.next30 = add nuw i64 %index27, 8         ; 2 uses
   %i.aj = icmp eq i64 %index.next30, %n.vec26
@@ -320,22 +297,21 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n31 = icmp eq i64 %i.q, %n.vec26
   br i1 %cmp.n31, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.sroa.05.019.ph = phi ptr [ %i.f, %iter.check ], [ %i.f, %vector.scevcheck ], [ %i.f, %vector.memcheck ], [ %11, %vec.epilog.iter.check ], [ %18, %vec.epilog.middle.block ]
-  %.sroa.7.018.ph = phi i32 [ 4, %iter.check ], [ 4, %vector.scevcheck ], [ 4, %vector.memcheck ], [ %14, %vec.epilog.iter.check ], [ %21, %vec.epilog.middle.block ]
+.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ 4, %iter.check ], [ 4, %vector.memcheck ], [ %3, %vec.epilog.iter.check ], [ %5, %vec.epilog.middle.block ]
+  %.sroa.05.019.ph = phi ptr [ %i.f, %iter.check ], [ %i.f, %vector.memcheck ], [ %4, %vec.epilog.iter.check ], [ %6, %vec.epilog.middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.a
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader ] ; 2 uses
   %.sroa.05.019 = phi ptr [ %i.am, %.lr.ph ], [ %.sroa.05.019.ph, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.7.018 = phi i32 [ %26, %.lr.ph ], [ %.sroa.7.018.ph, %.lr.ph.preheader ] ; 2 uses
   %i.ak = load i32, ptr %.sroa.05.019, align 4, !tbaa !33
-  %25 = sext i32 %.sroa.7.018 to i64
-  %i.al = getelementptr inbounds i8, ptr %2, i64 %25
+  %i.al = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !33
-  %26 = add i32 %.sroa.7.018, 4
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.05.019, i64 4 ; 2 uses
   %i.an = icmp eq ptr %i.am, %i.e
   br i1 %i.an, label %._crit_edge, label %.lr.ph, !llvm.loop !50
@@ -738,9 +714,9 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !109  ; 3 uses
-  %i.f = load ptr, ptr %i.c, align 8, !tbaa !103  ; 9 uses
-  %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
-  %i.h = ptrtoint ptr %i.f to i64                 ; 4 uses
+  %i.f = load ptr, ptr %i.c, align 8, !tbaa !103  ; 8 uses
+  %i.g = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.h = ptrtoint ptr %i.f to i64                 ; 3 uses
   %i.i = sub i64 %i.g, %i.h
   %i.j = lshr exact i64 %i.i, 2
   %i.k = trunc i64 %i.j to i16
@@ -755,22 +731,9 @@ iter.check:                                       ; preds = %bb.a
   %i.p = lshr i64 %i.o, 2
   %i.q = add nuw nsw i64 %i.p, 1                  ; 5 uses
   %min.iters.check = icmp ult i64 %i.o, 28
-  br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.scevcheck
+  br i1 %min.iters.check, label %.lr.ph.preheader, label %vector.memcheck
 
-vector.scevcheck:                                 ; preds = %iter.check
-  %3 = add i64 %i.g, -4
-  %4 = sub i64 %3, %i.h                           ; 2 uses
-  %5 = lshr i64 %4, 2
-  %6 = trunc i64 %5 to i32                        ; 2 uses
-  %mul.result = shl i32 %6, 2
-  %mul.overflow = icmp ugt i32 %6, 1073741823
-  %7 = icmp ugt i32 %mul.result, 2147483643
-  %8 = or i1 %7, %mul.overflow
-  %9 = icmp ugt i64 %4, 17179869183
-  %10 = or i1 %8, %9
-  br i1 %10, label %.lr.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
+vector.memcheck:                                  ; preds = %iter.check
   %i.r = sub i64 %i.a, %i.h
   %i.s = add i64 %i.r, 3
   %diff.check = icmp ult i64 %i.s, 127
@@ -782,20 +745,16 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.t = and i64 %i.q, 24
-  %n.vec = and i64 %i.q, 9223372036854775776      ; 5 uses
-  %i.u = shl i64 %n.vec, 2
-  %11 = getelementptr i8, ptr %i.f, i64 %i.u
-  %12 = trunc i64 %n.vec to i32
-  %13 = shl i32 %12, 2
-  %14 = or disjoint i32 %13, 4
+  %n.vec = and i64 %i.q, 9223372036854775776      ; 4 uses
+  %i.u = shl i64 %n.vec, 2                        ; 2 uses
+  %3 = or disjoint i64 %i.u, 4
+  %4 = getelementptr i8, ptr %i.f, i64 %i.u
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.v = shl i64 %index, 2
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %i.v = shl i64 %index, 2                        ; 2 uses
   %next.gep = getelementptr i8, ptr %i.f, i64 %i.v ; 4 uses
-  %15 = trunc i64 %index to i32
-  %16 = shl i32 %15, 2
   %i.w = getelementptr i8, ptr %next.gep, i64 32
   %i.x = getelementptr i8, ptr %next.gep, i64 64
   %i.y = getelementptr i8, ptr %next.gep, i64 96
@@ -803,12 +762,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %wide.load22 = load <8 x i32>, ptr %i.w, align 4, !tbaa !33
   %wide.load23 = load <8 x i32>, ptr %i.x, align 4, !tbaa !33
   %wide.load24 = load <8 x i32>, ptr %i.y, align 4, !tbaa !33
-  %17 = sext i32 %16 to i64
-  %i.z = getelementptr i8, ptr %2, i64 %17        ; 4 uses
-  %i.aa = getelementptr i8, ptr %i.z, i64 4
-  %i.ab = getelementptr i8, ptr %i.z, i64 36
-  %i.ac = getelementptr i8, ptr %i.z, i64 68
-  %i.ad = getelementptr i8, ptr %i.z, i64 100
+  %i.z = getelementptr inbounds nuw i8, ptr %2, i64 %i.v ; 4 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 4
+  %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 36
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 68
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 100
   store <8 x i32> %wide.load, ptr %i.aa, align 4, !tbaa !33
   store <8 x i32> %wide.load22, ptr %i.ab, align 4, !tbaa !33
   store <8 x i32> %wide.load23, ptr %i.ac, align 4, !tbaa !33
@@ -827,24 +785,19 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %n.vec26 = and i64 %i.q, 9223372036854775800    ; 4 uses
-  %i.af = shl i64 %n.vec26, 2
-  %18 = getelementptr i8, ptr %i.f, i64 %i.af
-  %19 = trunc i64 %n.vec26 to i32
-  %20 = shl i32 %19, 2
-  %21 = or disjoint i32 %20, 4
+  %n.vec26 = and i64 %i.q, 9223372036854775800    ; 3 uses
+  %i.af = shl i64 %n.vec26, 2                     ; 2 uses
+  %5 = or disjoint i64 %i.af, 4
+  %6 = getelementptr i8, ptr %i.f, i64 %i.af
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
-  %index27 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next30, %vec.epilog.vector.body ] ; 3 uses
-  %i.ag = shl i64 %index27, 2
+  %index27 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next30, %vec.epilog.vector.body ] ; 2 uses
+  %i.ag = shl i64 %index27, 2                     ; 2 uses
   %next.gep28 = getelementptr i8, ptr %i.f, i64 %i.ag
-  %22 = trunc i64 %index27 to i32
-  %23 = shl i32 %22, 2
   %wide.load29 = load <8 x i32>, ptr %next.gep28, align 4, !tbaa !33
-  %24 = sext i32 %23 to i64
-  %i.ah = getelementptr i8, ptr %2, i64 %24
-  %i.ai = getelementptr i8, ptr %i.ah, i64 4
+  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 %i.ag
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
   store <8 x i32> %wide.load29, ptr %i.ai, align 4, !tbaa !33
   %index.next30 = add nuw i64 %index27, 8         ; 2 uses
   %i.aj = icmp eq i64 %index.next30, %n.vec26
@@ -854,22 +807,21 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %cmp.n31 = icmp eq i64 %i.q, %n.vec26
   br i1 %cmp.n31, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %vector.memcheck, %vector.scevcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %.sroa.05.019.ph = phi ptr [ %i.f, %iter.check ], [ %i.f, %vector.scevcheck ], [ %i.f, %vector.memcheck ], [ %11, %vec.epilog.iter.check ], [ %18, %vec.epilog.middle.block ]
-  %.sroa.7.018.ph = phi i32 [ 4, %iter.check ], [ 4, %vector.scevcheck ], [ 4, %vector.memcheck ], [ %14, %vec.epilog.iter.check ], [ %21, %vec.epilog.middle.block ]
+.lr.ph.preheader:                                 ; preds = %vector.memcheck, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
+  %indvars.iv.ph = phi i64 [ 4, %iter.check ], [ 4, %vector.memcheck ], [ %3, %vec.epilog.iter.check ], [ %5, %vec.epilog.middle.block ]
+  %.sroa.05.019.ph = phi ptr [ %i.f, %iter.check ], [ %i.f, %vector.memcheck ], [ %4, %vec.epilog.iter.check ], [ %6, %vec.epilog.middle.block ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.a
   ret void
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader ] ; 2 uses
   %.sroa.05.019 = phi ptr [ %i.am, %.lr.ph ], [ %.sroa.05.019.ph, %.lr.ph.preheader ] ; 2 uses
-  %.sroa.7.018 = phi i32 [ %26, %.lr.ph ], [ %.sroa.7.018.ph, %.lr.ph.preheader ] ; 2 uses
   %i.ak = load i32, ptr %.sroa.05.019, align 4, !tbaa !33
-  %25 = sext i32 %.sroa.7.018 to i64
-  %i.al = getelementptr inbounds i8, ptr %2, i64 %25
+  %i.al = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv
   store i32 %i.ak, ptr %i.al, align 4, !tbaa !33
-  %26 = add i32 %.sroa.7.018, 4
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.05.019, i64 4 ; 2 uses
   %i.an = icmp eq ptr %i.am, %i.e
   br i1 %i.an, label %._crit_edge, label %.lr.ph, !llvm.loop !114

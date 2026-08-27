@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef i32 @usb_desc_msos(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(4096) ptr @g_malloc0(i64 noundef 4096) #7 ; 22 uses
+  %i.a = tail call noalias dereferenceable_or_null(4096) ptr @g_malloc0(i64 noundef 4096) #7 ; 21 uses
   switch i32 %2, label %bb.h [
     i32 4, label %bb.b
     i32 5, label %bb.d
@@ -73,29 +73,19 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.z, label %.lr.ph.i.i, label %usb_desc_msos_prop_str.exit.i
 
 .lr.ph.i.i:                                       ; preds = %bb.e
-  %i.aa = getelementptr i8, ptr %i.a, i64 36      ; 5 uses
-  %wide.trip.count.i.i = zext i32 %i.w to i64     ; 8 uses
-  %min.iters.check = icmp ult i32 %i.w, 32
-  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.scevcheck
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 36 ; 5 uses
+  %wide.trip.count.i.i = zext i32 %i.w to i64     ; 7 uses
+  %min.iters.check = icmp ult i32 %i.w, 8
+  br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
-vector.scevcheck:                                 ; preds = %.lr.ph.i.i
-  %5 = add nsw i64 %wide.trip.count.i.i, -1       ; 2 uses
-  %6 = icmp ugt i64 %5, 1073741823
-  %scevgep = getelementptr nuw i8, ptr %i.a, i64 37 ; 2 uses
-  %mul.result19 = shl nsw i64 %5, 1
-  %7 = getelementptr i8, ptr %scevgep, i64 %mul.result19
-  %8 = icmp ult ptr %7, %scevgep
-  %9 = or i1 %6, %8
-  br i1 %9, label %scalar.ph.preheader, label %vector.memcheck
-
-vector.memcheck:                                  ; preds = %vector.scevcheck
-  %i.ab = shl nuw nsw i64 %wide.trip.count.i.i, 2
-  %scevgep21 = getelementptr i8, ptr %i.n, i64 %i.ab
-  %10 = shl nuw nsw i64 %wide.trip.count.i.i, 1
-  %11 = getelementptr i8, ptr %i.a, i64 %10
-  %scevgep22 = getelementptr i8, ptr %11, i64 36
-  %bound0 = icmp ult ptr %i.n, %scevgep22
-  %bound1 = icmp ult ptr %i.aa, %scevgep21
+vector.memcheck:                                  ; preds = %.lr.ph.i.i
+  %i.ab = shl nuw nsw i64 %wide.trip.count.i.i, 1
+  %scevgep21 = getelementptr i8, ptr %i.a, i64 %i.ab
+  %scevgep = getelementptr i8, ptr %scevgep21, i64 36
+  %5 = shl nuw nsw i64 %wide.trip.count.i.i, 2
+  %scevgep22 = getelementptr i8, ptr %i.n, i64 %5
+  %bound0 = icmp ult ptr %i.aa, %scevgep22
+  %bound1 = icmp ult ptr %i.n, %scevgep
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
@@ -107,14 +97,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %i.ac = trunc i64 %index to i32
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %index
-  %wide.load = load <4 x i32>, ptr %i.ad, align 4, !alias.scope !7, !noalias !10 ; 2 uses
+  %wide.load = load <4 x i32>, ptr %i.ad, align 4, !alias.scope !7 ; 2 uses
   %i.ae = shl i32 %i.ac, 1
   %i.af = sext i32 %i.ae to i64
   %i.ag = getelementptr inbounds i8, ptr %i.aa, i64 %i.af
   %i.ah = lshr <4 x i32> %wide.load, splat (i32 8)
   %i.ai = shufflevector <4 x i32> %wide.load, <4 x i32> %i.ah, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
   %interleaved.vec = trunc <8 x i32> %i.ai to <8 x i8>
-  store <8 x i8> %interleaved.vec, ptr %i.ag, align 1, !alias.scope !10
+  store <8 x i8> %interleaved.vec, ptr %i.ag, align 1, !alias.scope !10, !noalias !7
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.aj = icmp eq i64 %index.next, %n.vec
   br i1 %i.aj, label %middle.block, label %vector.body, !llvm.loop !12
@@ -123,8 +113,8 @@ middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i.i
   br i1 %cmp.n, label %usb_desc_msos_prop_str.exit.i, label %scalar.ph.preheader
 
-scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %.lr.ph.i.i, %middle.block
-  %indvars.iv.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 5 uses
+scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph.i.i, %middle.block
+  %indvars.iv.i.i.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %.lr.ph.i.i ], [ %n.vec, %middle.block ] ; 5 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol

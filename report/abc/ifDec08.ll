@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/abc/original/ifDec08?download=true
 inline.NumInlined: 23
 inline.NumDeleted: 13
-loop-unroll.NumCompletelyUnrolled: 11
+loop-unroll.NumCompletelyUnrolled: 10
 loop-unroll.NumRuntimeUnrolled: 15
-loop-unroll.NumUnrolled: 26
+loop-unroll.NumUnrolled: 25
 begin_hunk_0_@If_Dec08Cofactors:bb.a
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv.next71
   store i64 %i.ay, ptr %i.az, align 8, !tbaa !14
@@ -205,7 +205,7 @@ scalar.ph113.epil.preheader:                      ; preds = %.loopexit.loopexit.
 define range(i32 0, 2) i32 @If_Dec08Perform(ptr nofree noundef %0, i32 noundef %1, i32 %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = ptrtoaddr ptr %0 to i64                  ; 3 uses
-  %i.b = alloca [16 x i64], align 16              ; 22 uses
+  %i.b = alloca [16 x i64], align 16              ; 16 uses
   %i.c = alloca [16 x i64], align 16              ; 3 uses
   %i.d = alloca [16 x i64], align 16              ; 3 uses
   %i.e = alloca [16 x i64], align 16              ; 3 uses
@@ -392,13 +392,7 @@ middle.block:                                     ; preds = %vector.body
   %unroll_iter737 = and i64 %i.x, 2147483644
   %lcmp.mod735.not = icmp eq i64 %xtraiter733, 0
   %lcmp.mod736 = icmp ne i64 %xtraiter733, 0
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.cz = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   %min.iters.check448 = icmp ult i32 %i.v, 4
   %n.vec450 = and i64 %i.x, 2147483644
   %exitcond74.not.i = icmp eq i32 %i.v, 1
@@ -801,7 +795,7 @@ bb.v:                                             ; preds = %If_Dec08MoveTo.exit
 
 bb.w:                                             ; preds = %.lr.ph.preheader.1.i
   %.not.i173.not = xor i1 %.not.i173, true
-  %i.yq = load i64, ptr %3, align 8
+  %i.yq = load i64, ptr %i.cz, align 8
   %i.yr = icmp eq i64 %i.yn, %i.yq
   %or.cond744 = select i1 %.not.i173.not, i1 %i.yr, i1 false
   br i1 %or.cond744, label %._crit_edge.1.i, label %._crit_edge.1.thread.i
@@ -819,73 +813,31 @@ bb.w:                                             ; preds = %.lr.ph.preheader.1.
   br label %.lr.ph.preheader.2.i
 
 .lr.ph.preheader.2.i:                             ; preds = %._crit_edge.1.thread.i, %._crit_edge.1.i
-  %wide.trip.count.2.i.pre-phi = phi i64 [ %.pre, %._crit_edge.1.thread.i ], [ %wide.trip.count.1.i, %._crit_edge.1.i ] ; 8 uses
+  %wide.trip.count.2.i.pre-phi = phi i64 [ %.pre, %._crit_edge.1.thread.i ], [ %wide.trip.count.1.i, %._crit_edge.1.i ] ; 3 uses
   %.1.1.i = phi i32 [ %i.yt, %._crit_edge.1.thread.i ], [ %.1.i, %._crit_edge.1.i ] ; 3 uses
   %i.yv = load i64, ptr %i.as, align 8, !tbaa !14
   %i.yw = lshr i64 %i.yv, %i.au
-  %i.yx = and i64 %i.yw, %i.ac                    ; 8 uses
-  %9 = load i64, ptr %i.b, align 16, !tbaa !14
-  %10 = icmp eq i64 %i.yx, %9
-  br i1 %10, label %._crit_edge.2.i, label %11
+  %i.yx = and i64 %i.yw, %i.ac                    ; 2 uses
+  br label %.lr.ph.2.i.5
 
-11:                                               ; preds = %.lr.ph.preheader.2.i
-  %exitcond.2.not.i = icmp eq i64 %wide.trip.count.2.i.pre-phi, 1
-  br i1 %exitcond.2.not.i, label %._crit_edge.2.thread.i, label %.lr.ph.2.i.1
-
-.lr.ph.2.i.1:                                     ; preds = %11
-  %12 = load i64, ptr %i.cz, align 8, !tbaa !14
-  %13 = icmp eq i64 %i.yx, %12
-  br i1 %13, label %._crit_edge.2.i, label %14
-
-14:                                               ; preds = %.lr.ph.2.i.1
-  %exitcond.2.not.i.1 = icmp eq i64 %wide.trip.count.2.i.pre-phi, 2
-  br i1 %exitcond.2.not.i.1, label %._crit_edge.2.thread.i, label %.lr.ph.2.i.2
-
-.lr.ph.2.i.2:                                     ; preds = %14
-  %15 = load i64, ptr %4, align 16, !tbaa !14
-  %16 = icmp eq i64 %i.yx, %15
-  br i1 %16, label %._crit_edge.2.i, label %17
-
-17:                                               ; preds = %.lr.ph.2.i.2
-  %exitcond.2.not.i.2 = icmp eq i64 %wide.trip.count.2.i.pre-phi, 3
-  br i1 %exitcond.2.not.i.2, label %._crit_edge.2.thread.i, label %.lr.ph.2.i.3
-
-.lr.ph.2.i.3:                                     ; preds = %17
-  %18 = load i64, ptr %5, align 8, !tbaa !14
-  %19 = icmp eq i64 %i.yx, %18
-  br i1 %19, label %._crit_edge.2.i, label %20
-
-20:                                               ; preds = %.lr.ph.2.i.3
-  %exitcond.2.not.i.3 = icmp eq i64 %wide.trip.count.2.i.pre-phi, 4
-  br i1 %exitcond.2.not.i.3, label %._crit_edge.2.thread.i, label %.lr.ph.2.i.4
-
-.lr.ph.2.i.4:                                     ; preds = %20
-  %21 = load i64, ptr %6, align 16, !tbaa !14
-  %22 = icmp eq i64 %i.yx, %21
-  br i1 %22, label %._crit_edge.2.i, label %23
-
-23:                                               ; preds = %.lr.ph.2.i.4
-  %exitcond.2.not.i.4 = icmp eq i64 %wide.trip.count.2.i.pre-phi, 5
-  br i1 %exitcond.2.not.i.4, label %._crit_edge.2.thread.i, label %.lr.ph.2.i.5
-
-.lr.ph.2.i.5:                                     ; preds = %23
-  %i.yy = load i64, ptr %7, align 8, !tbaa !14
+.lr.ph.2.i.5:                                     ; preds = %bb.x, %.lr.ph.preheader.2.i
+  %indvars.iv.2.i = phi i64 [ 0, %.lr.ph.preheader.2.i ], [ %indvars.iv.next.2.i, %bb.x ] ; 3 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.2.i
+  %i.yy = load i64, ptr %3, align 8, !tbaa !14
   %i.yz = icmp eq i64 %i.yx, %i.yy
   br i1 %i.yz, label %._crit_edge.2.i, label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph.2.i.5
-  %exitcond.2.not.i.5 = icmp ne i64 %wide.trip.count.2.i.pre-phi, 6
-  %24 = load i64, ptr %8, align 16
-  %i.za = icmp eq i64 %i.yx, %24
-  %or.cond746 = select i1 %exitcond.2.not.i.5, i1 %i.za, i1 false
-  br i1 %or.cond746, label %._crit_edge.2.i, label %._crit_edge.2.thread.i
+  %indvars.iv.next.2.i = add nuw nsw i64 %indvars.iv.2.i, 1 ; 2 uses
+  %i.za = icmp eq i64 %indvars.iv.next.2.i, %wide.trip.count.2.i.pre-phi
+  br i1 %i.za, label %._crit_edge.2.thread.i, label %.lr.ph.2.i.5, !llvm.loop !87
 
-._crit_edge.2.i:                                  ; preds = %bb.x, %.lr.ph.2.i.5, %.lr.ph.2.i.4, %.lr.ph.2.i.3, %.lr.ph.2.i.2, %.lr.ph.2.i.1, %.lr.ph.preheader.2.i
-  %indvars.iv.2.i.lcssa = phi i32 [ 0, %.lr.ph.preheader.2.i ], [ 1, %.lr.ph.2.i.1 ], [ 2, %.lr.ph.2.i.2 ], [ 3, %.lr.ph.2.i.3 ], [ 4, %.lr.ph.2.i.4 ], [ 5, %.lr.ph.2.i.5 ], [ 6, %bb.x ]
-  %i.zb = icmp eq i32 %.1.1.i, %indvars.iv.2.i.lcssa
+._crit_edge.2.i:                                  ; preds = %.lr.ph.2.i.5
+  %4 = trunc nuw nsw i64 %indvars.iv.2.i to i32
+  %i.zb = icmp eq i32 %.1.1.i, %4
   br i1 %i.zb, label %._crit_edge.2.thread.i, label %.lr.ph.preheader.3.i
 
-._crit_edge.2.thread.i:                           ; preds = %11, %14, %17, %20, %23, %bb.x, %._crit_edge.2.i
+._crit_edge.2.thread.i:                           ; preds = %bb.x, %._crit_edge.2.i
   %i.zc = add nuw nsw i32 %.1.1.i, 1              ; 2 uses
   %i.zd = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %wide.trip.count.2.i.pre-phi
   store i64 %i.yx, ptr %i.zd, align 8, !tbaa !14

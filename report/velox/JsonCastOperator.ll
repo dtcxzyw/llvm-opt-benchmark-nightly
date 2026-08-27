@@ -205,26 +205,25 @@ bb.n:                                             ; preds = %.critedge.i
 
 bb.o:                                             ; preds = %.lr.ph58, %._crit_edge
   %indvar = phi i32 [ 0, %.lr.ph58 ], [ %indvar.next, %._crit_edge ] ; 2 uses
-  %indvars.iv88.a = phi i64 [ %i.bi, %.lr.ph58 ], [ %indvars.iv.next89, %._crit_edge ] ; 3 uses
-  %indvars.iv78 = phi i32 [ 1, %.lr.ph58 ], [ %indvars.iv.next79, %._crit_edge ] ; 2 uses
+  %indvars.iv88.a = phi i64 [ 1, %.lr.ph58 ], [ %indvars.iv.next120, %._crit_edge ] ; 4 uses
+  %indvars.iv88 = phi i64 [ %i.bi, %.lr.ph58 ], [ %indvars.iv.next89, %._crit_edge ] ; 3 uses
   %.256 = phi i128 [ %.037.lcssa, %.lr.ph58 ], [ %i.do, %._crit_edge ] ; 3 uses
   %i.co = sub i32 %i.bk, %indvar                  ; 2 uses
   %i.cp = zext i32 %i.co to i64
   %i.cq = add nuw nsw i64 %i.cp, 1                ; 2 uses
-  %i.cr = icmp slt i64 %indvars.iv88.a, %invariant.op
+  %i.cr = icmp slt i64 %indvars.iv88, %invariant.op
   br i1 %i.cr, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.o
-  %2 = sext i32 %indvars.iv78 to i64              ; 3 uses
   %min.iters.check153 = icmp ult i32 %i.co, 3
   br i1 %min.iters.check153, label %.lr.ph.preheader174, label %vector.ph154
 
 vector.ph154:                                     ; preds = %.lr.ph.preheader
   %n.vec155 = and i64 %i.cq, 8589934588           ; 4 uses
   %i.cs = sub nsw i64 %i.bi, %n.vec155
-  %i.ct = add nsw i64 %n.vec155, %2
+  %i.ct = add nuw i64 %indvars.iv88.a, %n.vec155
   %i.cu = insertelement <2 x i128> <i128 poison, i128 0>, i128 %.256, i64 0
-  %invariant.gep = getelementptr [4 x i8], ptr %i.bh, i64 %2
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %indvars.iv88.a
   br label %vector.body156
 
 vector.body156:                                   ; preds = %vector.body156, %vector.ph154
@@ -232,7 +231,7 @@ vector.body156:                                   ; preds = %vector.body156, %ve
   %vec.phi158 = phi <2 x i128> [ %i.cu, %vector.ph154 ], [ %i.di, %vector.body156 ]
   %vec.phi159 = phi <2 x i128> [ zeroinitializer, %vector.ph154 ], [ %i.dj, %vector.body156 ]
   %i.cv = xor i64 %index157, -1
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %index157 ; 2 uses
+  %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %index157 ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %gep, i64 8
   %wide.load160 = load <2 x i32>, ptr %gep, align 4, !tbaa !39
   %wide.load161 = load <2 x i32>, ptr %i.cw, align 4, !tbaa !39
@@ -265,18 +264,18 @@ middle.block167:                                  ; preds = %vector.body156
 
 .lr.ph.preheader174:                              ; preds = %.lr.ph.preheader, %middle.block167
   %indvars.iv82.in.ph = phi i64 [ %i.bi, %.lr.ph.preheader ], [ %i.cs, %middle.block167 ]
-  %indvars.iv80.ph = phi i64 [ %2, %.lr.ph.preheader ], [ %i.ct, %middle.block167 ]
+  %indvars.iv80.ph = phi i64 [ %indvars.iv88.a, %.lr.ph.preheader ], [ %i.ct, %middle.block167 ]
   %.352.ph = phi i128 [ %.256, %.lr.ph.preheader ], [ %i.dl, %middle.block167 ]
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %.lr.ph, %middle.block167, %bb.o
   %.3.lcssa = phi i128 [ %.256, %bb.o ], [ %i.dl, %middle.block167 ], [ %i.dx, %.lr.ph ] ; 2 uses
   %i.dm = trunc i128 %.3.lcssa to i32
-  %i.dn = getelementptr inbounds [4 x i8], ptr %.pre93, i64 %indvars.iv88.a
+  %i.dn = getelementptr inbounds [4 x i8], ptr %.pre93, i64 %indvars.iv88
   store i32 %i.dm, ptr %i.dn, align 4, !tbaa !39
   %i.do = lshr i128 %.3.lcssa, 32
-  %indvars.iv.next89 = add nsw i64 %indvars.iv88.a, 1 ; 2 uses
-  %indvars.iv.next79 = add i32 %indvars.iv78, 1
+  %indvars.iv.next89 = add nsw i64 %indvars.iv88, 1 ; 2 uses
+  %indvars.iv.next120 = add nuw nsw i64 %indvars.iv88.a, 1
   %exitcond91.not = icmp eq i64 %indvars.iv.next89, %wide.trip.count
   %indvar.next = add i32 %indvar, 1
   br i1 %exitcond91.not, label %._crit_edge59.loopexit, label %bb.o, !llvm.loop !1491
@@ -286,8 +285,8 @@ middle.block167:                                  ; preds = %vector.body156
   %indvars.iv80 = phi i64 [ %indvars.iv.next81, %.lr.ph ], [ %indvars.iv80.ph, %.lr.ph.preheader174 ] ; 2 uses
   %.352 = phi i128 [ %i.dx, %.lr.ph ], [ %.352.ph, %.lr.ph.preheader174 ]
   %indvars.iv82 = add nsw i64 %indvars.iv82.in, -1 ; 2 uses
-  %indvars.iv.next81 = add nsw i64 %indvars.iv80, 1 ; 2 uses
-  %i.dp = getelementptr inbounds [4 x i8], ptr %i.bh, i64 %indvars.iv80
+  %indvars.iv.next81 = add nuw nsw i64 %indvars.iv80, 1 ; 2 uses
+  %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.bh, i64 %indvars.iv80
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !39
   %i.dr = zext i32 %i.dq to i64
   %i.ds = getelementptr inbounds [4 x i8], ptr %i.bh, i64 %indvars.iv82

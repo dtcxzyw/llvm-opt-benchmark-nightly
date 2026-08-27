@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %.01426.i.i = phi i32 [ %spec.select19.i.i, %.lr.ph.i.i ], [ 0, %.thread.i ]
   %.01525.i.i = phi i32 [ %i.l, %.lr.ph.i.i ], [ 0, %.thread.i ]
   %.01624.i.i = phi i32 [ %spec.select.i.i, %.lr.ph.i.i ], [ %.04.i, %.thread.i ]
-  %i.l = add i32 %.01525.i.i, 1                   ; 2 uses
+  %i.l = add nuw nsw i32 %.01525.i.i, 1           ; 2 uses
   %i.m = load i8, ptr %.01327.i.i, align 1, !tbaa !30
   %i.n = tail call noundef zeroext i1 @_ZN4llvm3sys4path12is_separatorEcNS1_5StyleE(i8 noundef signext %i.m, i32 noundef 0) #32 ; 2 uses
   %i.o = sext i1 %i.n to i32
@@ -378,7 +378,7 @@ bb.c:                                             ; preds = %bb.b
   %.01426.i.i = phi i32 [ %spec.select19.i.i, %.lr.ph.i.i ], [ 0, %.thread.i ]
   %.01525.i.i = phi i32 [ %i.m, %.lr.ph.i.i ], [ 0, %.thread.i ]
   %.01624.i.i = phi i32 [ %spec.select.i.i, %.lr.ph.i.i ], [ %.04.i, %.thread.i ]
-  %i.m = add i32 %.01525.i.i, 1                   ; 2 uses
+  %i.m = add nuw nsw i32 %.01525.i.i, 1           ; 2 uses
   %i.n = load i8, ptr %.01327.i.i, align 1, !tbaa !30
   %i.o = tail call noundef zeroext i1 @_ZN4llvm3sys4path12is_separatorEcNS1_5StyleE(i8 noundef signext %i.n, i32 noundef 0) #32 ; 2 uses
   %i.p = sext i1 %i.o to i32
@@ -781,33 +781,32 @@ bb.b:                                             ; preds = %.lr.ph103, %_ZN4llv
   br i1 %i.n, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, label %.lr.ph121, !prof !313
 
 bb.c:                                             ; preds = %bb.e
-  %14 = add i32 %.028.i120, 7
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv122, 7
   br label %.lr.ph121, !llvm.loop !314
 
 .lr.ph121:                                        ; preds = %bb.b, %bb.c
-  %.028.i120 = phi i32 [ %14, %bb.c ], [ 0, %bb.b ] ; 5 uses
-  %.029.i119 = phi i64 [ %.130.i, %bb.c ], [ 0, %bb.b ]
-  %.031.i118 = phi ptr [ %i.w, %bb.c ], [ %.0102, %bb.b ] ; 3 uses
-  %i.o = load i8, ptr %.031.i118, align 1, !tbaa !30 ; 2 uses
+  %.029.i124 = phi i64 [ %.130.i, %bb.c ], [ 0, %bb.b ]
+  %.031.i123 = phi ptr [ %i.w, %bb.c ], [ %.0102, %bb.b ] ; 3 uses
+  %indvars.iv122 = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %bb.b ] ; 5 uses
+  %i.o = load i8, ptr %.031.i123, align 1, !tbaa !30 ; 2 uses
   %i.p = and i8 %i.o, 127                         ; 3 uses
   %i.q = zext nneg i8 %i.p to i64
-  %i.r = icmp ugt i32 %.028.i120, 62
+  %i.r = icmp samesign ugt i64 %indvars.iv122, 62
   br i1 %i.r, label %bb.d, label %bb.e, !prof !315
 
 bb.d:                                             ; preds = %.lr.ph121
-  %.not44.i = icmp eq i32 %.028.i120, 63
+  %.not44.i = icmp eq i64 %indvars.iv122, 63
   %.not.i = icmp samesign ugt i8 %i.p, 1
   %i.s = icmp ne i8 %i.p, 0
   %or.cond43.i = select i1 %.not44.i, i1 %.not.i, i1 %i.s
   br i1 %or.cond43.i, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph121
-  %i.t = icmp ult i32 %.028.i120, 64
-  %15 = zext nneg i32 %.028.i120 to i64
-  %i.u = shl i64 %i.q, %15
+  %i.t = icmp samesign ult i64 %indvars.iv122, 64
+  %i.u = shl i64 %i.q, %indvars.iv122
   %i.v = select i1 %i.t, i64 %i.u, i64 0, !prof !316
-  %.130.i = add i64 %i.v, %.029.i119              ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %.031.i118, i64 1 ; 2 uses
+  %.130.i = add i64 %i.v, %.029.i124              ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.031.i123, i64 1 ; 2 uses
   %i.x = icmp slt i8 %i.o, 0
   br i1 %i.x, label %bb.c, label %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge126, !llvm.loop !314
 
@@ -815,7 +814,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph121
   br label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, !llvm.loop !314
 
 _ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit:        ; preds = %bb.d, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge126, %bb.b
-  %.132.i = phi ptr [ %i.w, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge126 ], [ %scevgep.i, %bb.b ], [ %.031.i118, %bb.d ]
+  %.132.i = phi ptr [ %i.w, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge126 ], [ %scevgep.i, %bb.b ], [ %.031.i123, %bb.d ]
   %.3.i = phi i64 [ %.130.i, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge126 ], [ 0, %bb.b ], [ 0, %bb.d ] ; 3 uses
   %i.y = ptrtoint ptr %.132.i to i64
   %i.z = ptrtoint ptr %.0102 to i64
@@ -829,33 +828,32 @@ _ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit:        ; preds = %bb.d, %._ZN4llvm13d
   br i1 %i.af, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68, label %.lr.ph132, !prof !313
 
 bb.f:                                             ; preds = %bb.h
-  %16 = add i32 %.028.i61131, 7
+  %indvars.iv.next107 = add nuw nsw i64 %indvars.iv106133, 7
   br label %.lr.ph132, !llvm.loop !314
 
 .lr.ph132:                                        ; preds = %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, %bb.f
-  %.028.i61131 = phi i32 [ %16, %bb.f ], [ 0, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ] ; 5 uses
-  %.029.i60130 = phi i64 [ %.130.i62, %bb.f ], [ 0, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ]
-  %.031.i59129 = phi ptr [ %i.ao, %bb.f ], [ %i.ac, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ] ; 3 uses
-  %i.ag = load i8, ptr %.031.i59129, align 1, !tbaa !30 ; 2 uses
+  %.029.i60135 = phi i64 [ %.130.i62, %bb.f ], [ 0, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ]
+  %.031.i59134 = phi ptr [ %i.ao, %bb.f ], [ %i.ac, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ] ; 3 uses
+  %indvars.iv106133 = phi i64 [ %indvars.iv.next107, %bb.f ], [ 0, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ] ; 5 uses
+  %i.ag = load i8, ptr %.031.i59134, align 1, !tbaa !30 ; 2 uses
   %i.ah = and i8 %i.ag, 127                       ; 3 uses
   %i.ai = zext nneg i8 %i.ah to i64
-  %i.aj = icmp ugt i32 %.028.i61131, 62
+  %i.aj = icmp samesign ugt i64 %indvars.iv106133, 62
   br i1 %i.aj, label %bb.g, label %bb.h, !prof !315
 
 bb.g:                                             ; preds = %.lr.ph132
-  %.not44.i65 = icmp eq i32 %.028.i61131, 63
+  %.not44.i65 = icmp eq i64 %indvars.iv106133, 63
   %.not.i66 = icmp samesign ugt i8 %i.ah, 1
   %i.ak = icmp ne i8 %i.ah, 0
   %or.cond43.i67 = select i1 %.not44.i65, i1 %.not.i66, i1 %i.ak
   br i1 %or.cond43.i67, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %.lr.ph132
-  %i.al = icmp ult i32 %.028.i61131, 64
-  %17 = zext nneg i32 %.028.i61131 to i64
-  %i.am = shl i64 %i.ai, %17
+  %i.al = icmp samesign ult i64 %indvars.iv106133, 64
+  %i.am = shl i64 %i.ai, %indvars.iv106133
   %i.an = select i1 %i.al, i64 %i.am, i64 0, !prof !316
-  %.130.i62 = add i64 %i.an, %.029.i60130         ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %.031.i59129, i64 1 ; 2 uses
+  %.130.i62 = add i64 %i.an, %.029.i60135         ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %.031.i59134, i64 1 ; 2 uses
   %i.ap = icmp slt i8 %i.ag, 0
   br i1 %i.ap, label %bb.f, label %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68_crit_edge138, !llvm.loop !314
 
@@ -863,7 +861,7 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph132
   br label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68, !llvm.loop !314
 
 _ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68:      ; preds = %bb.g, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68_crit_edge138, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit
-  %.132.i63 = phi ptr [ %i.ao, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68_crit_edge138 ], [ %scevgep.i58, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ], [ %.031.i59129, %bb.g ]
+  %.132.i63 = phi ptr [ %i.ao, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68_crit_edge138 ], [ %scevgep.i58, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ], [ %.031.i59134, %bb.g ]
   %.3.i64 = phi i64 [ %.130.i62, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit68_crit_edge138 ], [ 0, %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit ], [ 0, %bb.g ] ; 3 uses
   %i.aq = ptrtoint ptr %.132.i63 to i64
   %i.ar = ptrtoint ptr %i.ac to i64
@@ -1266,7 +1264,7 @@ bb.c:                                             ; preds = %_ZN4llvm10getPGONam
   %.01426.i.i.i = phi i32 [ %spec.select19.i.i.i, %.lr.ph.i.i.i9 ], [ 0, %.thread.i.i ]
   %.01525.i.i.i = phi i32 [ %i.an, %.lr.ph.i.i.i9 ], [ 0, %.thread.i.i ]
   %.01624.i.i.i = phi i32 [ %spec.select.i.i.i, %.lr.ph.i.i.i9 ], [ %.04.i.i, %.thread.i.i ]
-  %i.an = add i32 %.01525.i.i.i, 1                ; 2 uses
+  %i.an = add nuw nsw i32 %.01525.i.i.i, 1        ; 2 uses
   %i.ao = load i8, ptr %.01327.i.i.i, align 1, !tbaa !30, !noalias !397
   %i.ap = call noundef zeroext i1 @_ZN4llvm3sys4path12is_separatorEcNS1_5StyleE(i8 noundef signext %i.ao, i32 noundef 0) #32, !noalias !397 ; 2 uses
   %i.aq = sext i1 %i.ap to i32

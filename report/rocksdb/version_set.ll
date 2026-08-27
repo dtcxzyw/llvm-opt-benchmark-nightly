@@ -205,7 +205,7 @@ bb.a:
   %i.x = phi ptr [ %i.e, %.preheader.lr.ph ], [ %i.aj, %._crit_edge ]
   %i.y = phi i64 [ %i.d, %.preheader.lr.ph ], [ %i.ak, %._crit_edge ]
   %i.z = phi ptr [ %.pre, %.preheader.lr.ph ], [ %i.al, %._crit_edge ] ; 2 uses
-  %.01630 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.am, %._crit_edge ] ; 8 uses
+  %.01630 = phi i64 [ 0, %.preheader.lr.ph ], [ %i.am, %._crit_edge ] ; 7 uses
   %i.aa = icmp ult i64 %.01630, 8                 ; 2 uses
   %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.z, i64 %.01630
   %i.ac = getelementptr [16 x i8], ptr %i.w, i64 %.01630
@@ -220,7 +220,6 @@ bb.a:
   %i.ag = icmp eq i32 %i.af, 0
   %.0121732.i = add nsw i32 %i.af, 1              ; 2 uses
   %i.ah = sext i32 %.0121732.i to i64
-  %3 = icmp eq i64 %.01630, 0
   br label %bb.b
 
 ._crit_edge31:                                    ; preds = %._crit_edge, %bb.a
@@ -271,7 +270,6 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN7rocksd
 
 bb.c:                                             ; preds = %bb.b
   %i.bg = trunc i64 %.01527 to i32
-  %.0 = select i1 %3, i32 %i.bg, i32 -1
   %i.bh = load ptr, ptr %i.p, align 8, !tbaa !29  ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !222
@@ -282,7 +280,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bo = lshr exact i64 %i.bn, 3
   %i.bp = trunc i64 %i.bo to i32
   %i.bq = add i32 %i.bp, -1
-  %.not.i = icmp eq i32 %.0, %i.bq
+  %.not.i = icmp eq i32 %i.bq, %i.bg
   br i1 %.not.i, label %bb.d, label %_ZN7rocksdb18VersionStorageInfo29RangeMightExistAfterSortedRunERKNS_5SliceES3_ii.exit
 
 bb.d:                                             ; preds = %bb.c

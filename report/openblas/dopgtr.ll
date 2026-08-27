@@ -202,9 +202,9 @@ bb.i:                                             ; preds = %bb.g
   %i.dg = add i64 %i.df, %i.b
   %i.dh = shl nsw i64 %i.i, 3
   %i.di = add i64 %i.dg, %i.dh
-  %i.dj = add i64 %i.di, 8
-  %8 = sub i64 %i.dj, %i.a
-  %9 = shl nsw i64 %i.dd, 3
+  %i.dj = add i64 %i.di, 32
+  %8 = shl nsw i64 %i.dd, 3
+  %9 = add nsw i64 %8, 8
   %i.dk = add nsw i32 %i.m, -3
   %i.dl = add nuw i32 %i.m, 1
   br label %.lr.ph145
@@ -212,16 +212,13 @@ bb.i:                                             ; preds = %bb.g
 .lr.ph145:                                        ; preds = %.lr.ph145.preheader, %._crit_edge137
   %indvar207 = phi i64 [ 0, %.lr.ph145.preheader ], [ %indvar.next208, %._crit_edge137 ] ; 3 uses
   %indvars.iv184 = phi i64 [ 2, %.lr.ph145.preheader ], [ %indvars.iv.next185, %._crit_edge137 ] ; 3 uses
-  %indvars.iv176 = phi i32 [ 3, %.lr.ph145.preheader ], [ %indvars.iv.next177, %._crit_edge137 ] ; 3 uses
+  %indvars.iv176 = phi i32 [ 3, %.lr.ph145.preheader ], [ %indvars.iv.next177, %._crit_edge137 ] ; 2 uses
   %.2143 = phi i32 [ 3, %.lr.ph145.preheader ], [ %i.fv, %._crit_edge137 ] ; 2 uses
   %i.dm = trunc i64 %indvar207 to i32
   %i.dn = sub i32 %i.dk, %i.dm                    ; 3 uses
   %i.do = zext i32 %i.dn to i64
   %i.dp = add nuw nsw i64 %i.do, 1                ; 5 uses
   %i.dq = mul i64 %9, %indvar207
-  %10 = add i64 %8, %i.dq
-  %11 = sext i32 %indvars.iv176 to i64
-  %12 = shl nsw i64 %11, 3
   %i.dr = mul nsw i64 %indvars.iv184, %i.dd       ; 2 uses
   %i.ds = getelementptr [8 x i8], ptr %i.j, i64 %i.dr
   %i.dt = getelementptr i8, ptr %i.ds, i64 8
@@ -238,9 +235,10 @@ iter.check226:                                    ; preds = %.lr.ph145
   br i1 %min.iters.check210, label %.lr.ph136.preheader, label %vector.memcheck206
 
 vector.memcheck206:                               ; preds = %iter.check226
-  %i.dw = add i64 %10, %12
-  %13 = shl nsw i64 %i.dv, 3
-  %i.dx = sub i64 %13, %i.dw
+  %10 = shl nsw i64 %i.dv, 3
+  %i.dw = add i64 %i.dj, %i.dq
+  %11 = add i64 %10, %i.a
+  %i.dx = sub i64 %11, %i.dw
   %diff.check209 = icmp ugt i64 %i.dx, -128
   br i1 %diff.check209, label %.lr.ph136.preheader, label %vector.main.loop.iter.check211
 
@@ -403,7 +401,7 @@ vec.epilog.middle.block236:                       ; preds = %vec.epilog.vector.b
 ._crit_edge137:                                   ; preds = %._crit_edge137.loopexit, %.lr.ph145
   %.3.lcssa = phi i32 [ %.2143, %.lr.ph145 ], [ %i.fu, %._crit_edge137.loopexit ]
   %i.fv = add nsw i32 %.3.lcssa, 2
-  %indvars.iv.next177 = add i32 %indvars.iv176, 1
+  %indvars.iv.next177 = add nuw i32 %indvars.iv176, 1
   %exitcond187.not = icmp eq i64 %indvars.iv.next185, %wide.trip.count
   %indvar.next208 = add i64 %indvar207, 1
   br i1 %exitcond187.not, label %._crit_edge146, label %.lr.ph145, !llvm.loop !25

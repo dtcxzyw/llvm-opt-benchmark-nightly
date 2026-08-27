@@ -205,34 +205,33 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, label %.lr.ph, !prof !116
 
 bb.c:                                             ; preds = %bb.e
-  %2 = add i32 %.028.i10, 7
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv9, 7
   %i.m = icmp eq ptr %i.v, %i.h
   br i1 %i.m, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, label %.lr.ph, !prof !117, !llvm.loop !118
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.028.i10 = phi i32 [ %2, %bb.c ], [ 0, %bb.b ] ; 5 uses
-  %.029.i9 = phi i64 [ %.130.i, %bb.c ], [ 0, %bb.b ]
-  %.031.i8 = phi ptr [ %i.v, %bb.c ], [ %i.e, %bb.b ] ; 3 uses
-  %i.n = load i8, ptr %.031.i8, align 1, !tbaa !26 ; 2 uses
+  %.029.i11 = phi i64 [ %.130.i, %bb.c ], [ 0, %bb.b ]
+  %.031.i10 = phi ptr [ %i.v, %bb.c ], [ %i.e, %bb.b ] ; 3 uses
+  %indvars.iv9 = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %bb.b ] ; 5 uses
+  %i.n = load i8, ptr %.031.i10, align 1, !tbaa !26 ; 2 uses
   %i.o = and i8 %i.n, 127                         ; 3 uses
   %i.p = zext nneg i8 %i.o to i64
-  %i.q = icmp ugt i32 %.028.i10, 62
+  %i.q = icmp samesign ugt i64 %indvars.iv9, 62
   br i1 %i.q, label %bb.d, label %bb.e, !prof !35
 
 bb.d:                                             ; preds = %.lr.ph
-  %.not44.i = icmp eq i32 %.028.i10, 63
+  %.not44.i = icmp eq i64 %indvars.iv9, 63
   %.not.i = icmp samesign ugt i8 %i.o, 1
   %i.r = icmp ne i8 %i.o, 0
   %or.cond43.i = select i1 %.not44.i, i1 %.not.i, i1 %i.r
   br i1 %or.cond43.i, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph
-  %i.s = icmp ult i32 %.028.i10, 64
-  %3 = zext nneg i32 %.028.i10 to i64
-  %i.t = shl i64 %i.p, %3
+  %i.s = icmp samesign ult i64 %indvars.iv9, 64
+  %i.t = shl i64 %i.p, %indvars.iv9
   %i.u = select i1 %i.s, i64 %i.t, i64 0, !prof !119
-  %.130.i = add i64 %i.u, %.029.i9                ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %.031.i8, i64 1 ; 3 uses
+  %.130.i = add i64 %i.u, %.029.i11               ; 2 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %.031.i10, i64 1 ; 3 uses
   %i.w = icmp slt i8 %i.n, 0
   br i1 %i.w, label %bb.c, label %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge15, !llvm.loop !118
 
@@ -240,7 +239,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   br label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit, !llvm.loop !118
 
 _ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit:        ; preds = %bb.c, %bb.d, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge15, %bb.b
-  %.132.i = phi ptr [ %i.v, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge15 ], [ %scevgep.i, %bb.b ], [ %scevgep.i, %bb.c ], [ %.031.i8, %bb.d ]
+  %.132.i = phi ptr [ %i.v, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge15 ], [ %scevgep.i, %bb.b ], [ %scevgep.i, %bb.c ], [ %.031.i10, %bb.d ]
   %.3.i = phi i64 [ %.130.i, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit_crit_edge15 ], [ 0, %bb.b ], [ 0, %bb.d ], [ 0, %bb.c ]
   %i.x = ptrtoint ptr %.132.i to i64
   %i.y = ptrtoint ptr %i.e to i64
@@ -275,21 +274,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit, label %.lr.ph, !prof !116
 
 bb.c:                                             ; preds = %bb.f
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv36, 7
   %i.k = icmp eq ptr %i.w, %i.h
   br i1 %i.k, label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit, label %.lr.ph, !prof !117, !llvm.loop !120
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %.044.i31 = phi i32 [ %3, %bb.c ], [ 0, %bb.b ] ; 5 uses
-  %.045.i30 = phi i64 [ %.146.i, %bb.c ], [ 0, %bb.b ] ; 2 uses
-  %.050.i29 = phi ptr [ %i.w, %bb.c ], [ %i.e, %bb.b ] ; 3 uses
-  %i.l = load i8, ptr %.050.i29, align 1, !tbaa !26 ; 4 uses
+  %.045.i38 = phi i64 [ %.146.i, %bb.c ], [ 0, %bb.b ] ; 2 uses
+  %.050.i37 = phi ptr [ %i.w, %bb.c ], [ %i.e, %bb.b ] ; 3 uses
+  %indvars.iv36 = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %bb.b ] ; 7 uses
+  %i.l = load i8, ptr %.050.i37, align 1, !tbaa !26 ; 4 uses
   %i.m = and i8 %i.l, 127
   %i.n = zext nneg i8 %i.m to i64                 ; 2 uses
-  %i.o = icmp ugt i32 %.044.i31, 62
+  %i.o = icmp samesign ugt i64 %indvars.iv36, 62
   br i1 %i.o, label %bb.d, label %bb.f, !prof !35
 
 bb.d:                                             ; preds = %.lr.ph
-  %i.p = icmp eq i32 %.044.i31, 63
+  %i.p = icmp eq i64 %indvars.iv36, 63
   br i1 %i.p, label %switch.early.test.i, label %.critedge66.i
 
 switch.early.test.i:                              ; preds = %bb.d
@@ -301,32 +301,29 @@ switch.early.test.i:                              ; preds = %bb.d
   ]
 
 .critedge66.i:                                    ; preds = %bb.d
-  %i.q = icmp slt i64 %.045.i30, 0
+  %i.q = icmp slt i64 %.045.i38, 0
   %i.r = select i1 %i.q, i64 127, i64 0
   %.not58.i = icmp eq i64 %i.r, %i.n
   br i1 %.not58.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %.critedge66.i, %switch.early.test.i
-  %i.s = ptrtoint ptr %.050.i29 to i64
+  %i.s = ptrtoint ptr %.050.i37 to i64
   br label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit
 
 bb.f:                                             ; preds = %.critedge66.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %.lr.ph
-  %i.t = icmp ult i32 %.044.i31, 64
-  %2 = zext nneg i32 %.044.i31 to i64
-  %i.u = shl i64 %i.n, %2
+  %i.t = icmp samesign ult i64 %indvars.iv36, 64
+  %i.u = shl i64 %i.n, %indvars.iv36
   %i.v = select i1 %i.t, i64 %i.u, i64 0, !prof !119
-  %.146.i = or i64 %i.v, %.045.i30                ; 2 uses
-  %3 = add i32 %.044.i31, 7                       ; 3 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %.050.i29, i64 1 ; 3 uses
+  %.146.i = or i64 %i.v, %.045.i38                ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %.050.i37, i64 1 ; 3 uses
   %i.x = icmp slt i8 %i.l, 0
   br i1 %i.x, label %bb.c, label %bb.g, !llvm.loop !120
 
 bb.g:                                             ; preds = %bb.f
-  %i.y = icmp ugt i32 %3, 63
+  %i.y = icmp samesign ugt i64 %indvars.iv36, 56
   %.not61.i = icmp samesign ult i8 %i.l, 64
   %or.cond.i = select i1 %i.y, i1 true, i1 %.not61.i
-  %4 = zext nneg i32 %3 to i64
-  %i.z = shl nsw i64 -1, %4
+  %i.z = shl nsw i64 -128, %indvars.iv36
   %i.aa = select i1 %or.cond.i, i64 0, i64 %i.z
   %.3.i = or i64 %.146.i, %i.aa
   %i.ab = ptrtoint ptr %i.w to i64
@@ -384,7 +381,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %.preheader
-  %i.r = add i32 %.01419, 1
+  %i.r = add nuw nsw i32 %.01419, 1
   %exitcond.not = icmp eq ptr %i.p, %i.i
   br i1 %exitcond.not, label %.critedge, label %.preheader, !llvm.loop !121
 
@@ -605,34 +602,33 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.by, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i, label %.lr.ph81, !prof !116
 
 bb.v:                                             ; preds = %bb.x
-  %8 = add i32 %.028.i.i79, 7
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i83, 7
   %i.bz = icmp eq ptr %i.ci, %i.bu
   br i1 %i.bz, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i, label %.lr.ph81, !prof !117, !llvm.loop !118
 
 .lr.ph81:                                         ; preds = %bb.u, %bb.v
-  %.028.i.i79 = phi i32 [ %8, %bb.v ], [ 0, %bb.u ] ; 5 uses
-  %.029.i.i78 = phi i64 [ %.130.i.i, %bb.v ], [ 0, %bb.u ]
-  %.031.i.i77 = phi ptr [ %i.ci, %bb.v ], [ %i.bs, %bb.u ] ; 3 uses
-  %i.ca = load i8, ptr %.031.i.i77, align 1, !tbaa !26 ; 2 uses
+  %.029.i.i85 = phi i64 [ %.130.i.i, %bb.v ], [ 0, %bb.u ]
+  %.031.i.i84 = phi ptr [ %i.ci, %bb.v ], [ %i.bs, %bb.u ] ; 3 uses
+  %indvars.iv.i83 = phi i64 [ %indvars.iv.next.i, %bb.v ], [ 0, %bb.u ] ; 5 uses
+  %i.ca = load i8, ptr %.031.i.i84, align 1, !tbaa !26 ; 2 uses
   %i.cb = and i8 %i.ca, 127                       ; 3 uses
   %i.cc = zext nneg i8 %i.cb to i64
-  %i.cd = icmp ugt i32 %.028.i.i79, 62
+  %i.cd = icmp samesign ugt i64 %indvars.iv.i83, 62
   br i1 %i.cd, label %bb.w, label %bb.x, !prof !35
 
 bb.w:                                             ; preds = %.lr.ph81
-  %.not44.i.i = icmp eq i32 %.028.i.i79, 63
+  %.not44.i.i = icmp eq i64 %indvars.iv.i83, 63
   %.not.i.i = icmp samesign ugt i8 %i.cb, 1
   %i.ce = icmp ne i8 %i.cb, 0
   %or.cond43.i.i = select i1 %.not44.i.i, i1 %.not.i.i, i1 %i.ce
   br i1 %or.cond43.i.i, label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %.lr.ph81
-  %i.cf = icmp ult i32 %.028.i.i79, 64
-  %9 = zext nneg i32 %.028.i.i79 to i64
-  %i.cg = shl i64 %i.cc, %9
+  %i.cf = icmp samesign ult i64 %indvars.iv.i83, 64
+  %i.cg = shl i64 %i.cc, %indvars.iv.i83
   %i.ch = select i1 %i.cf, i64 %i.cg, i64 0, !prof !119
-  %.130.i.i = add i64 %i.ch, %.029.i.i78          ; 2 uses
-  %i.ci = getelementptr inbounds nuw i8, ptr %.031.i.i77, i64 1 ; 3 uses
+  %.130.i.i = add i64 %i.ch, %.029.i.i85          ; 2 uses
+  %i.ci = getelementptr inbounds nuw i8, ptr %.031.i.i84, i64 1 ; 3 uses
   %i.cj = icmp slt i8 %i.ca, 0
   br i1 %i.cj, label %bb.v, label %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i_crit_edge, !llvm.loop !118
 
@@ -640,7 +636,7 @@ bb.x:                                             ; preds = %bb.w, %.lr.ph81
   br label %_ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i, !llvm.loop !118
 
 _ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i:      ; preds = %bb.v, %bb.w, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i_crit_edge, %bb.u
-  %.132.i.i = phi ptr [ %i.ci, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i_crit_edge ], [ %scevgep.i.i, %bb.u ], [ %scevgep.i.i, %bb.v ], [ %.031.i.i77, %bb.w ]
+  %.132.i.i = phi ptr [ %i.ci, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i_crit_edge ], [ %scevgep.i.i, %bb.u ], [ %scevgep.i.i, %bb.v ], [ %.031.i.i84, %bb.w ]
   %.3.i.i = phi i64 [ %.130.i.i, %._ZN4llvm13decodeULEB128EPKhPjS1_PPKc.exit.i_crit_edge ], [ 0, %bb.u ], [ 0, %bb.w ], [ 0, %bb.v ]
   %i.ck = ptrtoint ptr %.132.i.i to i64
   %i.cl = ptrtoint ptr %i.bs to i64
@@ -672,21 +668,22 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.cz, label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit.i, label %.lr.ph76, !prof !116
 
 bb.aa:                                            ; preds = %bb.ad
+  %indvars.iv.next.i39 = add nuw nsw i64 %indvars.iv.i3878, 7
   %i.da = icmp eq ptr %i.dm, %i.cx
   br i1 %i.da, label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit.i, label %.lr.ph76, !prof !117, !llvm.loop !120
 
 .lr.ph76:                                         ; preds = %bb.z, %bb.aa
-  %.044.i.i74 = phi i32 [ %11, %bb.aa ], [ 0, %bb.z ] ; 5 uses
-  %.045.i.i73 = phi i64 [ %.146.i.i, %bb.aa ], [ 0, %bb.z ] ; 2 uses
-  %.050.i.i72 = phi ptr [ %i.dm, %bb.aa ], [ %i.cv, %bb.z ] ; 3 uses
-  %i.db = load i8, ptr %.050.i.i72, align 1, !tbaa !26 ; 4 uses
+  %.045.i.i80 = phi i64 [ %.146.i.i, %bb.aa ], [ 0, %bb.z ] ; 2 uses
+  %.050.i.i79 = phi ptr [ %i.dm, %bb.aa ], [ %i.cv, %bb.z ] ; 3 uses
+  %indvars.iv.i3878 = phi i64 [ %indvars.iv.next.i39, %bb.aa ], [ 0, %bb.z ] ; 7 uses
+  %i.db = load i8, ptr %.050.i.i79, align 1, !tbaa !26 ; 4 uses
   %i.dc = and i8 %i.db, 127
   %i.dd = zext nneg i8 %i.dc to i64               ; 2 uses
-  %i.de = icmp ugt i32 %.044.i.i74, 62
+  %i.de = icmp samesign ugt i64 %indvars.iv.i3878, 62
   br i1 %i.de, label %bb.ab, label %bb.ad, !prof !35
 
 bb.ab:                                            ; preds = %.lr.ph76
-  %i.df = icmp eq i32 %.044.i.i74, 63
+  %i.df = icmp eq i64 %indvars.iv.i3878, 63
   br i1 %i.df, label %switch.early.test.i.i, label %.critedge66.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.ab
@@ -698,32 +695,29 @@ switch.early.test.i.i:                            ; preds = %bb.ab
   ]
 
 .critedge66.i.i:                                  ; preds = %bb.ab
-  %i.dg = icmp slt i64 %.045.i.i73, 0
+  %i.dg = icmp slt i64 %.045.i.i80, 0
   %i.dh = select i1 %i.dg, i64 127, i64 0
   %.not58.i.i = icmp eq i64 %i.dh, %i.dd
   br i1 %.not58.i.i, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %.critedge66.i.i, %switch.early.test.i.i
-  %i.di = ptrtoint ptr %.050.i.i72 to i64
+  %i.di = ptrtoint ptr %.050.i.i79 to i64
   br label %_ZN4llvm13decodeSLEB128EPKhPjS1_PPKc.exit.i
 
 bb.ad:                                            ; preds = %.critedge66.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %.lr.ph76
-  %i.dj = icmp ult i32 %.044.i.i74, 64
-  %10 = zext nneg i32 %.044.i.i74 to i64
-  %i.dk = shl i64 %i.dd, %10
+  %i.dj = icmp samesign ult i64 %indvars.iv.i3878, 64
+  %i.dk = shl i64 %i.dd, %indvars.iv.i3878
   %i.dl = select i1 %i.dj, i64 %i.dk, i64 0, !prof !119
-  %.146.i.i = or i64 %i.dl, %.045.i.i73           ; 2 uses
-  %11 = add i32 %.044.i.i74, 7                    ; 3 uses
-  %i.dm = getelementptr inbounds nuw i8, ptr %.050.i.i72, i64 1 ; 3 uses
+  %.146.i.i = or i64 %i.dl, %.045.i.i80           ; 2 uses
+  %i.dm = getelementptr inbounds nuw i8, ptr %.050.i.i79, i64 1 ; 3 uses
   %i.dn = icmp slt i8 %i.db, 0
   br i1 %i.dn, label %bb.aa, label %bb.ae, !llvm.loop !120
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.do = icmp ugt i32 %11, 63
+  %i.do = icmp samesign ugt i64 %indvars.iv.i3878, 56
   %.not61.i.i = icmp samesign ult i8 %i.db, 64
   %or.cond.i.i = select i1 %i.do, i1 true, i1 %.not61.i.i
-  %12 = zext nneg i32 %11 to i64
-  %i.dp = shl nsw i64 -1, %12
+  %i.dp = shl nsw i64 -128, %indvars.iv.i3878
   %i.dq = select i1 %or.cond.i.i, i64 0, i64 %i.dp
   %.3.i.i38 = or i64 %.146.i.i, %i.dq
   %i.dr = ptrtoint ptr %i.dm to i64
