@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/sundials/original/ida?download=true
 inline.NumInlined: 26
 inline.NumDeleted: 18
-loop-unroll.NumRuntimeUnrolled: 12
-loop-unroll.NumUnrolled: 12
+loop-unroll.NumRuntimeUnrolled: 13
+loop-unroll.NumUnrolled: 13
 begin_hunk_0_@IDAStopTest1:bb.a
   %i.w = fcmp ult double %i.v, 0.000000e+00
   %i.x = tail call double @llvm.fabs.f64(double %i.u)
@@ -204,8 +204,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k,
 ; Function Attrs: nounwind uwtable
 define range(i32 -28, 1) i32 @IDAGetDky(ptr noundef %0, double noundef %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [6 x double], align 16            ; 10 uses
-  %i.b = alloca [6 x double], align 16            ; 5 uses
+  %i.a = alloca [6 x double], align 16            ; 12 uses
+  %i.b = alloca [6 x double], align 16            ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.c = icmp eq ptr %0, null
@@ -268,14 +268,13 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph95:                                         ; preds = %bb.h
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.a, i8 0, i64 48, i1 false), !tbaa !21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(48) %i.b, i8 0, i64 48, i1 false), !tbaa !21
-  %i.ac = fsub double %1, %i.m
-  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
-  %i.ae = sub nsw i32 %i.g, %2                    ; 4 uses
-  %i.af = zext nneg i32 %i.ae to i64
+  %i.ac = fsub double %1, %i.m                    ; 3 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 4 uses
+  %i.ae = sub i32 %i.g, %2                        ; 4 uses
+  %i.af = zext i32 %i.ae to i64                   ; 2 uses
   %i.ag = add nuw i32 %2, 1
   %wide.trip.count = zext i32 %i.ag to i64
   %.not8387 = icmp slt i32 %i.ae, 1
-  %scevgep112 = getelementptr i8, ptr %i.a, i64 -8
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.m, %.lr.ph92.preheader
@@ -285,10 +284,13 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %.lr.ph95, %.loopexit
   %indvars.iv101 = phi i64 [ 1, %.lr.ph95 ], [ %indvars.iv.next102, %.loopexit ] ; 4 uses
-  %indvar = phi i64 [ 0, %.lr.ph95 ], [ %indvar.next, %.loopexit ] ; 10 uses
-  %sext114 = shl i64 %indvars.iv101, 32
-  %4 = ashr exact i64 %sext114, 29
-  %scevgep113 = getelementptr i8, ptr %scevgep112, i64 %4
+  %indvar = phi i64 [ 0, %.lr.ph95 ], [ %indvar.next, %.loopexit ] ; 14 uses
+  %4 = add nuw i64 %indvar, %i.af
+  %smax113 = tail call i64 @llvm.smax.i64(i64 %4, i64 %indvars.iv101) ; 2 uses
+  %5 = sub i64 %smax113, %indvar
+  %.neg = add nuw i64 %indvar, 1
+  %6 = shl i64 %indvar, 3
+  %scevgep113 = getelementptr i8, ptr %i.a, i64 %6
   %indvars106 = trunc i64 %indvars.iv101 to i32
   %i.ah = shl nuw nsw i64 %indvar, 3
   %i.ai = add nuw nsw i64 %i.ah, 8                ; 2 uses
@@ -304,7 +306,7 @@ bb.j:                                             ; preds = %.lr.ph95, %.loopexi
   %i.ap = shl nuw nsw i64 %i.ao, 3
   %i.aq = add nuw nsw i64 %i.ap, 8
   %sext = shl i64 %indvars.iv101, 32
-  %i.ar = ashr exact i64 %sext, 32
+  %i.ar = ashr exact i64 %sext, 32                ; 4 uses
   %i.as = icmp eq i64 %indvar, 0
   br i1 %i.as, label %bb.k, label %bb.l
 
@@ -327,38 +329,73 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %.075 = phi double [ 0.000000e+00, %bb.k ], [ %i.ba, %bb.l ]
+  %.075 = phi double [ 0.000000e+00, %bb.k ], [ %i.ba, %bb.l ] ; 2 uses
   %indvar.next = add nuw nsw i64 %indvar, 1       ; 2 uses
   %i.bd = add nuw nsw i64 %indvar, %i.af
   br i1 %.not8387, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m
   %i.be = trunc nuw nsw i64 %indvar to i32
-  %i.bf = uitofp nneg i32 %i.be to double
-  %load_initial = load double, ptr %scevgep113, align 8
-  br label %bb.n
+  %i.bf = uitofp nneg i32 %i.be to double         ; 3 uses
+  %load_initial = load double, ptr %scevgep113, align 8 ; 2 uses
+  %xtraiter = and i64 %5, 1
+  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-.lr.ph92.preheader:                               ; preds = %bb.n
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
+  %7 = add nsw i64 %i.ar, -1                      ; 2 uses
+  %8 = getelementptr inbounds [8 x i8], ptr %i.b, i64 %7
+  %9 = load double, ptr %8, align 8, !tbaa !21
+  %10 = fadd double %i.ac, %.075
+  %11 = fmul double %10, %load_initial
+  %12 = tail call double @llvm.fmuladd.f64(double %i.bf, double %9, double %11)
+  %13 = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %7
+  %14 = load double, ptr %13, align 8, !tbaa !21  ; 2 uses
+  %15 = fdiv double %12, %14                      ; 2 uses
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ar
+  store double %15, ptr %16, align 8, !tbaa !21
+  %indvars.iv.next98.prol = add nuw nsw i64 %i.ar, 1
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
+  %store_forwarded.unr = phi double [ %load_initial, %.lr.ph ], [ %15, %.prol.loopexit.unr-lcssa ]
+  %indvars.iv97.unr = phi i64 [ %i.ar, %.lr.ph ], [ %indvars.iv.next98.prol, %.prol.loopexit.unr-lcssa ]
+  %.17688.unr = phi double [ %.075, %.lr.ph ], [ %14, %.prol.loopexit.unr-lcssa ]
+  %17 = icmp eq i64 %smax113, %.neg
+  br i1 %17, label %.lr.ph92.preheader, label %bb.n
+
+.lr.ph92.preheader:                               ; preds = %bb.n, %.prol.loopexit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep, ptr noundef nonnull align 8 dereferenceable(1) %scevgep100, i64 %i.aq, i1 false), !tbaa !21
   br label %.loopexit
 
-bb.n:                                             ; preds = %.lr.ph, %bb.n
-  %store_forwarded = phi double [ %load_initial, %.lr.ph ], [ %i.bo, %bb.n ]
-  %indvars.iv97 = phi i64 [ %i.ar, %.lr.ph ], [ %indvars.iv.next98, %bb.n ] ; 4 uses
-  %.17688 = phi double [ %.075, %.lr.ph ], [ %i.bn, %bb.n ]
-  %i.bg = add nsw i64 %indvars.iv97, -1           ; 2 uses
-  %i.bh = getelementptr inbounds [8 x i8], ptr %i.b, i64 %i.bg
+bb.n:                                             ; preds = %.prol.loopexit, %bb.n
+  %store_forwarded = phi double [ %i.bo, %bb.n ], [ %store_forwarded.unr, %.prol.loopexit ]
+  %indvars.iv97 = phi i64 [ %indvars.iv.next98, %bb.n ], [ %indvars.iv97.unr, %.prol.loopexit ] ; 6 uses
+  %.17688 = phi double [ %i.bn, %bb.n ], [ %.17688.unr, %.prol.loopexit ]
+  %18 = add nsw i64 %indvars.iv97, -1             ; 2 uses
+  %19 = getelementptr inbounds [8 x i8], ptr %i.b, i64 %18
+  %20 = load double, ptr %19, align 8, !tbaa !21
+  %21 = fadd double %i.ac, %.17688
+  %22 = fmul double %21, %store_forwarded
+  %23 = tail call double @llvm.fmuladd.f64(double %i.bf, double %20, double %22)
+  %24 = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %18
+  %25 = load double, ptr %24, align 8, !tbaa !21  ; 2 uses
+  %26 = fdiv double %23, %25                      ; 2 uses
+  %27 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv97
+  store double %26, ptr %27, align 8, !tbaa !21
+  %i.bg = add nuw nsw i64 %indvars.iv97, 1        ; 2 uses
+  %i.bh = getelementptr inbounds [8 x i8], ptr %i.b, i64 %indvars.iv97
   %i.bi = load double, ptr %i.bh, align 8, !tbaa !21
-  %i.bj = fadd double %i.ac, %.17688
-  %i.bk = fmul double %i.bj, %store_forwarded
+  %i.bj = fadd double %i.ac, %25
+  %i.bk = fmul double %i.bj, %26
   %i.bl = tail call double @llvm.fmuladd.f64(double %i.bf, double %i.bi, double %i.bk)
-  %i.bm = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %i.bg
+  %i.bm = getelementptr inbounds [8 x i8], ptr %i.ad, i64 %indvars.iv97
   %i.bn = load double, ptr %i.bm, align 8, !tbaa !21 ; 2 uses
   %i.bo = fdiv double %i.bl, %i.bn                ; 2 uses
-  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv97
+  %i.bp = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.bg
   store double %i.bo, ptr %i.bp, align 8, !tbaa !21
-  %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, 1
-  %.not83.not = icmp slt i64 %indvars.iv97, %i.bd
+  %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, 2
+  %.not83.not = icmp slt i64 %i.bg, %i.bd
   br i1 %.not83.not, label %bb.n, label %.lr.ph92.preheader
 
 ._crit_edge:                                      ; preds = %.loopexit
@@ -578,6 +615,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

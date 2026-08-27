@@ -205,7 +205,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.go = sext i32 %i.gh to i64
   %i.gp = shl nsw i64 %i.go, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.gn, i8 0, i64 %i.gp, i1 false)
-  %i.gq = xor i32 %i.dg, -1                       ; 7 uses
+  %i.gq = xor i32 %i.dg, -1                       ; 6 uses
   %invariant.gep.i = getelementptr i8, ptr %i.fy, i64 %i.ge ; 3 uses
   %i.gr = icmp sgt i32 %i.df, -2                  ; 2 uses
   br i1 %i.gr, label %.lr.ph.i, label %.preheader43.i
@@ -268,6 +268,8 @@ bb.ac:                                            ; preds = %bb.ab
   %i.hw = sub nsw i64 %i.el, %i.gw
   %scevgep620 = getelementptr i8, ptr %.val, i64 %i.hw
   %i.hx = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin621 = sext i32 %i.hx to i64
+  %33 = sext i32 %i.dz to i64
   %i.hy = mul i64 %i.hn, %i.ha
   %i.hz = add i64 %i.hy, %wide.trip.count139.i
   %i.ia = add i64 %i.hz, %i.el
@@ -283,16 +285,14 @@ bb.ac:                                            ; preds = %bb.ab
   br label %.lr.ph51.us.i
 
 .lr.ph51.us.i:                                    ; preds = %._crit_edge52.split.us.us.i, %.lr.ph51.us.preheader.i
-  %indvar614 = phi i32 [ %indvar.next615, %._crit_edge52.split.us.us.i ], [ 0, %.lr.ph51.us.preheader.i ] ; 3 uses
-  %indvars.iv146.i = phi i64 [ %indvars.iv.next147.i, %._crit_edge52.split.us.us.i ], [ %i.hh, %.lr.ph51.us.preheader.i ] ; 2 uses
+  %indvar614 = phi i32 [ %indvar.next615, %._crit_edge52.split.us.us.i ], [ 0, %.lr.ph51.us.preheader.i ] ; 2 uses
+  %indvars.iv146.i = phi i64 [ %indvars.iv.next147.i, %._crit_edge52.split.us.us.i ], [ %i.hh, %.lr.ph51.us.preheader.i ] ; 3 uses
   %i.id = mul i32 %i.hl, %indvar614
   %i.ie = sext i32 %i.id to i64                   ; 2 uses
   %scevgep616 = getelementptr i8, ptr %scevgep613, i64 %i.ie ; 2 uses
   %scevgep618 = getelementptr i8, ptr %scevgep617, i64 %i.ie ; 2 uses
-  %33 = add i32 %indvar614, %i.gq
-  %34 = call i32 @llvm.smax.i32(i32 %i.hx, i32 %33)
-  %35 = call i32 @llvm.smin.i32(i32 %34, i32 %i.dz)
-  %smin623 = sext i32 %35 to i64                  ; 2 uses
+  %smax622 = call i64 @llvm.smax.i64(i64 %smin621, i64 %indvars.iv146.i)
+  %smin623 = call i64 @llvm.smin.i64(i64 %smax622, i64 %33) ; 2 uses
   %scevgep624 = getelementptr i8, ptr %scevgep620, i64 %smin623 ; 2 uses
   %scevgep626 = getelementptr i8, ptr %scevgep625, i64 %smin623 ; 2 uses
   %i.if = trunc nsw i64 %indvars.iv146.i to i32   ; 3 uses
@@ -695,6 +695,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %i.pt = sub nsw i64 %i.el, %i.nn
   %scevgep841 = getelementptr i8, ptr %.val, i64 %i.pt
   %i.pu = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin842 = sext i32 %i.pu to i64
+  %34 = sext i32 %i.dg to i64
   %i.pv = zext nneg i32 %i.dz to i64
   %i.pw = mul i64 %i.pk, %i.ns
   %i.px = add i64 %i.pw, %wide.trip.count189.i
@@ -764,10 +766,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 bb.ad:                                            ; preds = %._crit_edge112.i, %.lr.ph121.i
   %indvars.iv237.i = phi i64 [ 0, %.lr.ph121.i ], [ %indvars.iv.next238.i, %._crit_edge112.i ] ; 4 uses
   %.0418119.i = phi ptr [ %i.nh, %.lr.ph121.i ], [ %i.aaj, %._crit_edge112.i ] ; 4 uses
-  %36 = trunc i64 %indvars.iv237.i to i32
-  %37 = add i32 %i.dg, %36
-  %38 = call i32 @llvm.smax.i32(i32 %i.pu, i32 %37)
-  %smax843 = sext i32 %38 to i64
+  %35 = add i64 %indvars.iv237.i, %34
+  %smax843 = call i64 @llvm.smax.i64(i64 %smin842, i64 %35)
   %smin844 = call i64 @llvm.smin.i64(i64 %smax843, i64 %i.pv) ; 2 uses
   %scevgep845 = getelementptr i8, ptr %scevgep841, i64 %smin844 ; 2 uses
   %scevgep847 = getelementptr i8, ptr %scevgep846, i64 %smin844 ; 2 uses
@@ -1170,7 +1170,7 @@ bb.aq:                                            ; preds = %bb.ab
   %i.acy = sext i32 %i.acr to i64
   %i.acz = shl nsw i64 %i.acy, 2
   call void @llvm.memset.p0.i64(ptr align 4 %i.acx, i8 0, i64 %i.acz, i1 false)
-  %i.ada = xor i32 %i.dg, -1                      ; 7 uses
+  %i.ada = xor i32 %i.dg, -1                      ; 6 uses
   %invariant.gep.i101 = getelementptr i8, ptr %i.aci, i64 %i.aco ; 3 uses
   %i.adb = icmp sgt i32 %i.df, -2                 ; 2 uses
   br i1 %i.adb, label %.lr.ph.i267, label %.preheader43.i102
@@ -1233,6 +1233,8 @@ bb.aq:                                            ; preds = %bb.ab
   %i.aeg = sub nsw i64 %i.aav, %i.adg
   %scevgep417 = getelementptr i8, ptr %.val, i64 %i.aeg
   %i.aeh = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin = sext i32 %i.aeh to i64
+  %36 = sext i32 %i.dz to i64
   %i.aei = mul i64 %i.adx, %i.adk
   %i.aej = add i64 %i.aei, %wide.trip.count139.i291
   %i.aek = add i64 %i.aej, %i.aav
@@ -1248,16 +1250,14 @@ bb.aq:                                            ; preds = %bb.ab
   br label %.lr.ph51.us.i292
 
 .lr.ph51.us.i292:                                 ; preds = %._crit_edge52.split.us.us.i313, %.lr.ph51.us.preheader.i286
-  %indvar = phi i32 [ %indvar.next, %._crit_edge52.split.us.us.i313 ], [ 0, %.lr.ph51.us.preheader.i286 ] ; 3 uses
-  %indvars.iv146.i293 = phi i64 [ %indvars.iv.next147.i314, %._crit_edge52.split.us.us.i313 ], [ %i.adr, %.lr.ph51.us.preheader.i286 ] ; 2 uses
+  %indvar = phi i32 [ %indvar.next, %._crit_edge52.split.us.us.i313 ], [ 0, %.lr.ph51.us.preheader.i286 ] ; 2 uses
+  %indvars.iv146.i293 = phi i64 [ %indvars.iv.next147.i314, %._crit_edge52.split.us.us.i313 ], [ %i.adr, %.lr.ph51.us.preheader.i286 ] ; 3 uses
   %i.aen = mul i32 %i.adv, %indvar
   %i.aeo = sext i32 %i.aen to i64                 ; 2 uses
   %scevgep413 = getelementptr i8, ptr %scevgep, i64 %i.aeo ; 2 uses
   %scevgep415 = getelementptr i8, ptr %scevgep414, i64 %i.aeo ; 2 uses
-  %39 = add i32 %indvar, %i.ada
-  %40 = call i32 @llvm.smax.i32(i32 %i.aeh, i32 %39)
-  %41 = call i32 @llvm.smin.i32(i32 %40, i32 %i.dz)
-  %smin418 = sext i32 %41 to i64                  ; 2 uses
+  %smax = call i64 @llvm.smax.i64(i64 %smin, i64 %indvars.iv146.i293)
+  %smin418 = call i64 @llvm.smin.i64(i64 %smax, i64 %36) ; 2 uses
   %scevgep419 = getelementptr i8, ptr %scevgep417, i64 %smin418 ; 2 uses
   %scevgep421 = getelementptr i8, ptr %scevgep420, i64 %smin418 ; 2 uses
   %i.aep = trunc nsw i64 %indvars.iv146.i293 to i32 ; 3 uses
@@ -1660,6 +1660,8 @@ scalar.ph431:                                     ; preds = %scalar.ph431.prehea
   %i.alr = sub nsw i64 %i.aav, %i.ajl
   %scevgep557 = getelementptr i8, ptr %.val, i64 %i.alr
   %i.als = call i32 @llvm.smin.i32(i32 %i.dq, i32 0)
+  %smin558 = sext i32 %i.als to i64
+  %37 = sext i32 %i.dg to i64
   %i.alt = zext nneg i32 %i.dz to i64
   %i.alu = mul i64 %i.ali, %i.ajq
   %i.alv = add i64 %i.alu, %wide.trip.count189.i115
@@ -1729,10 +1731,8 @@ scalar.ph431:                                     ; preds = %scalar.ph431.prehea
 bb.ar:                                            ; preds = %._crit_edge112.i141, %.lr.ph121.i105
   %indvars.iv237.i124 = phi i64 [ 0, %.lr.ph121.i105 ], [ %indvars.iv.next238.i142, %._crit_edge112.i141 ] ; 4 uses
   %.0418119.i125 = phi ptr [ %i.ajf, %.lr.ph121.i105 ], [ %i.awb, %._crit_edge112.i141 ] ; 4 uses
-  %42 = trunc i64 %indvars.iv237.i124 to i32
-  %43 = add i32 %i.dg, %42
-  %44 = call i32 @llvm.smax.i32(i32 %i.als, i32 %43)
-  %smax559 = sext i32 %44 to i64
+  %38 = add i64 %indvars.iv237.i124, %37
+  %smax559 = call i64 @llvm.smax.i64(i64 %smin558, i64 %38)
   %smin560 = call i64 @llvm.smin.i64(i64 %smax559, i64 %i.alt) ; 2 uses
   %scevgep561 = getelementptr i8, ptr %scevgep557, i64 %smin560 ; 2 uses
   %scevgep563 = getelementptr i8, ptr %scevgep562, i64 %smin560 ; 2 uses
@@ -2134,6 +2134,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #15
