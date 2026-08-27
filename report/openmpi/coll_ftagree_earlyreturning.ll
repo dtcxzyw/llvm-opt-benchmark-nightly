@@ -204,7 +204,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   store i32 %i.s, ptr %i.u, align 4, !tbaa !85
   %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.v = shl i32 %indvars.iv.tr.1, 1
+  %i.v = shl nuw i32 %indvars.iv.tr.1, 1
   %i.w = or disjoint i32 %i.v, 1
   %i.x = tail call i32 @llvm.smin.i32(i32 %i.w, i32 %1)
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 12

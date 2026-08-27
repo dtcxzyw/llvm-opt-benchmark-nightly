@@ -204,7 +204,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i228:     ; preds = %bb.cj
   %i.nj = mul nsw i64 %.0375, %i.ni
   %i.nk = load ptr, ptr %i.ed, align 8, !tbaa !32 ; 2 uses
   %i.nl = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %i.nj
-  %i.nm = mul i64 %.0375, %i.aa
+  %i.nm = mul nuw nsw i64 %.0375, %i.aa
   %i.nn = getelementptr inbounds nuw [4 x i8], ptr %i.nk, i64 %i.nm
   %i.no = shl nsw i64 %i.ni, 2
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.nl, ptr nonnull align 4 %i.nn, i64 %i.no, i1 false)

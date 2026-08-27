@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.c, %.preheader.n
   store i32 %.reass.2, ptr %i.ak, align 4, !tbaa !27
   %i.al = trunc i64 %indvars.iv to i32
   %i.am = add i32 %i.al, 3                        ; 2 uses
-  %i.an = shl i32 %i.am, 16
+  %i.an = shl nuw i32 %i.am, 16
   %.reass.3 = or i32 %i.an, %invariant.op
-  %i.ao = add i32 %i.k, %i.am
+  %i.ao = add nuw i32 %i.k, %i.am
   %i.ap = zext i32 %i.ao to i64
   %i.aq = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.ap
   store i32 %.reass.3, ptr %i.aq, align 4, !tbaa !27
