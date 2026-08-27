@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.d, %bb.
   %indvars.iv40 = phi i64 [ 0, %._crit_edge.new ], [ %indvars.iv.next41.3, %.lr.ph37 ] ; 6 uses
   %niter = phi i64 [ 0, %._crit_edge.new ], [ %niter.next.3, %.lr.ph37 ]
   %indvars.iv40.tr = trunc i64 %indvars.iv40 to i32
-  %i.aa = shl i32 %indvars.iv40.tr, 1
+  %i.aa = shl nsw i32 %indvars.iv40.tr, 1
   %i.ab = sext i32 %i.aa to i64
   %i.ac = getelementptr [4 x i8], ptr %i.c, i64 %i.ab
   %i.ad = getelementptr i8, ptr %i.ac, i64 4
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.d, %bb.
   store i32 %i.ai, ptr %i.ah, align 8
   %indvars.iv.next41 = or disjoint i64 %indvars.iv40, 1 ; 2 uses
   %indvars.iv40.tr.1 = trunc i64 %indvars.iv.next41 to i32
-  %i.aj = shl i32 %indvars.iv40.tr.1, 1
+  %i.aj = shl nsw i32 %indvars.iv40.tr.1, 1
   %i.ak = sext i32 %i.aj to i64
   %i.al = getelementptr [4 x i8], ptr %i.c, i64 %i.ak
   %i.am = getelementptr i8, ptr %i.al, i64 4
@@ -228,7 +228,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.d, %bb.
   store i32 %i.ar, ptr %i.aq, align 8
   %indvars.iv.next41.1 = or disjoint i64 %indvars.iv40, 2 ; 2 uses
   %indvars.iv40.tr.2 = trunc i64 %indvars.iv.next41.1 to i32
-  %i.as = shl i32 %indvars.iv40.tr.2, 1
+  %i.as = shl nsw i32 %indvars.iv40.tr.2, 1
   %i.at = sext i32 %i.as to i64
   %i.au = getelementptr [4 x i8], ptr %i.c, i64 %i.at
   %i.av = getelementptr i8, ptr %i.au, i64 4
@@ -240,7 +240,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.d, %bb.
   store i32 %i.ba, ptr %i.az, align 8
   %indvars.iv.next41.2 = or disjoint i64 %indvars.iv40, 3 ; 2 uses
   %indvars.iv40.tr.3 = trunc i64 %indvars.iv.next41.2 to i32
-  %i.bb = shl i32 %indvars.iv40.tr.3, 1
+  %i.bb = shl nsw i32 %indvars.iv40.tr.3, 1
   %i.bc = sext i32 %i.bb to i64
   %i.bd = getelementptr [4 x i8], ptr %i.c, i64 %i.bc
   %i.be = getelementptr i8, ptr %i.bd, i64 4

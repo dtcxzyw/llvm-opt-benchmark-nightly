@@ -205,6 +205,8 @@ bb.e:                                             ; preds = %.epil.preheader
   %xtraiter113 = and i64 %i.ak, 1
   %i.am = icmp eq i32 %2, 1
   %unroll_iter116 = and i64 %i.ak, 2147483646
+  %sext = zext nneg i32 %2 to i64
+  %sext118 = zext nneg i32 %2 to i64
   %lcmp.mod114.not = icmp eq i64 %xtraiter113, 0
   %lcmp.mod115 = trunc i32 %2 to i1
   br label %.lr.ph71
@@ -374,9 +376,8 @@ Vec_IntFill.exit64:                               ; preds = %Vec_IntGrow.exit.i6
 
 bb.x:                                             ; preds = %.lr.ph67.new
   %i.cg = add nuw nsw i64 %indvars.iv81, %indvars.iv88 ; 2 uses
-  %3 = trunc nuw i64 %i.cg to i32
-  %4 = icmp sgt i32 %2, %3
-  br i1 %4, label %bb.y, label %bb.z
+  %3 = icmp samesign ult i64 %i.cg, %sext118
+  br i1 %3, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   %.val48 = load ptr, ptr %i.cd, align 8, !tbaa !45
@@ -393,9 +394,8 @@ bb.z:                                             ; preds = %.lr.ph67.new, %bb.x
 bb.aa:                                            ; preds = %bb.z
   %indvars.iv.next82 = or disjoint i64 %indvars.iv81, 1
   %i.ck = add nuw nsw i64 %indvars.iv.next82, %indvars.iv88 ; 2 uses
-  %5 = trunc nuw i64 %i.ck to i32
-  %6 = icmp sgt i32 %2, %5
-  br i1 %6, label %bb.ab, label %bb.ac
+  %4 = icmp samesign ult i64 %i.ck, %sext
+  br i1 %4, label %bb.ab, label %bb.ac
 
 bb.ab:                                            ; preds = %bb.aa
   %.val48.1 = load ptr, ptr %i.cd, align 8, !tbaa !45
@@ -798,7 +798,7 @@ bb.a:
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !213
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.u, i64 %indvars.iv.next.2
   %i.w = trunc i64 %indvars.iv.next.2 to i32
-  %i.x = add i32 %i.w, -1
+  %i.x = add nsw i32 %i.w, -1
   store i32 %i.x, ptr %i.v, align 4, !tbaa !21
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add nuw i64 %niter, 4           ; 2 uses
@@ -1201,7 +1201,7 @@ bb.u:                                             ; preds = %bb.o
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !213
   %i.ge = getelementptr inbounds nuw [4 x i8], ptr %i.gd, i64 %indvars.iv.next.i224.2
   %i.gf = trunc i64 %indvars.iv.next.i224.2 to i32
-  %i.gg = add i32 %i.gf, -1
+  %i.gg = add nsw i32 %i.gf, -1
   store i32 %i.gg, ptr %i.ge, align 4, !tbaa !21
   %indvars.iv.next.i224.3 = add nuw nsw i64 %indvars.iv.i223, 4 ; 2 uses
   %niter373.next.3 = add nuw i64 %niter373, 4     ; 2 uses

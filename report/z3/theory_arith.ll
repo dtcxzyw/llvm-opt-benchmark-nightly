@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph.1
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.1
   %i.w = getelementptr inbounds nuw i8, ptr %.0810, i64 80 ; 2 uses
-  %i.x = add i32 %.011, 2                         ; 2 uses
+  %i.x = add nuw nsw i32 %.011, 2                 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !132
@@ -608,7 +608,7 @@ bb.j:                                             ; preds = %.lr.ph.i.1
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i.1
   %i.cl = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.cm = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.cm = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_6mi_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !132
@@ -1011,7 +1011,7 @@ bb.r:                                             ; preds = %.lr.ph.i.1
 
 bb.s:                                             ; preds = %bb.r, %.lr.ph.i.1
   %i.ee = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.ef = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.ef = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_6mi_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !132
@@ -1414,7 +1414,7 @@ bb.c:                                             ; preds = %.lr.ph.i.1
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i.1
   %i.aa = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.ab = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.ab = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_6mi_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !132
@@ -1817,7 +1817,7 @@ bb.c:                                             ; preds = %.lr.ph.1
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.1
   %i.w = getelementptr inbounds nuw i8, ptr %.0810, i64 80 ; 2 uses
-  %i.x = add i32 %.011, 2                         ; 2 uses
+  %i.x = add nuw nsw i32 %.011, 2                 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !2001
@@ -2220,7 +2220,7 @@ bb.j:                                             ; preds = %.lr.ph.i.1
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i.1
   %i.cl = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.cm = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.cm = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_5i_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2001
@@ -2623,7 +2623,7 @@ bb.r:                                             ; preds = %.lr.ph.i.1
 
 bb.s:                                             ; preds = %bb.r, %.lr.ph.i.1
   %i.ee = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.ef = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.ef = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_5i_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2001
@@ -3026,7 +3026,7 @@ bb.c:                                             ; preds = %.lr.ph.i.1
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i.1
   %i.aa = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.ab = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.ab = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_5i_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2001
@@ -3429,7 +3429,7 @@ bb.c:                                             ; preds = %.lr.ph.1
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.1
   %i.w = getelementptr inbounds nuw i8, ptr %.0810, i64 80 ; 2 uses
-  %i.x = add i32 %.011, 2                         ; 2 uses
+  %i.x = add nuw nsw i32 %.011, 2                 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !2830
@@ -3832,7 +3832,7 @@ bb.j:                                             ; preds = %.lr.ph.i.1
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i.1
   %i.cl = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.cm = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.cm = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_7inf_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2830
@@ -4235,7 +4235,7 @@ bb.r:                                             ; preds = %.lr.ph.i.1
 
 bb.s:                                             ; preds = %bb.r, %.lr.ph.i.1
   %i.ee = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.ef = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.ef = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_7inf_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2830
@@ -4638,7 +4638,7 @@ bb.c:                                             ; preds = %.lr.ph.i.1
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i.1
   %i.aa = getelementptr inbounds nuw i8, ptr %.0810.i, i64 80 ; 2 uses
-  %i.ab = add nuw i32 %.011.i, 2                  ; 2 uses
+  %i.ab = add nuw nsw i32 %.011.i, 2              ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %_ZNK3smt12theory_arithINS_7inf_extEE3row12save_var_posER7svectorIijE.exit.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !2830

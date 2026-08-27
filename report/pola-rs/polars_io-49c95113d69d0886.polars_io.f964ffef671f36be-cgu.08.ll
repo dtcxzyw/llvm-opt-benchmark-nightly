@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.sink.split, %bb.a
   %.sroa.02.015.us = phi i32 [ %i.ad, %bb.h ], [ 0, %.lr.ph ]
   %.sroa.05.014.us = phi ptr [ %i.ae, %bb.h ], [ %i.d, %.lr.ph ] ; 2 uses
   %i.ac = load i8, ptr %.sroa.05.014.us, align 1, !dbg !26378, !noundef !11
-  %i.ad = add i32 %.sroa.02.015.us, 1, !dbg !26381 ; 2 uses
+  %i.ad = add nuw nsw i32 %.sroa.02.015.us, 1, !dbg !26381 ; 2 uses
   %.not = icmp eq i8 %i.ac, %i.ab, !dbg !26383
   br i1 %.not, label %.split.us, label %bb.h, !dbg !26383
 
@@ -243,7 +243,7 @@ bb.j:                                             ; preds = %_RNvNtNtNtCslpwjCj2
   %.sroa.06.013 = phi i1 [ %.sroa.06.1, %bb.m ], [ false, %.lr.ph ] ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.sroa.05.014, i64 1, !dbg !26384 ; 2 uses
   %i.at = load i8, ptr %.sroa.05.014, align 1, !dbg !26378, !noundef !11 ; 2 uses
-  %i.au = add i32 %.sroa.02.015, 1, !dbg !26381   ; 2 uses
+  %i.au = add nuw nsw i32 %.sroa.02.015, 1, !dbg !26381 ; 2 uses
   %i.av = icmp eq i8 %i.at, %i.z
   br i1 %i.av, label %bb.l, label %bb.k, !dbg !26448
 
@@ -646,7 +646,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %or.cond.i, label %bb.p, label %bb.o, !dbg !40984
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %i.cl = add i32 %.sroa.09.052.i, 1, !dbg !40987
+  %i.cl = add nuw nsw i32 %.sroa.09.052.i, 1, !dbg !40987
   %i.cm = icmp eq ptr %i.cf, %i.bx, !dbg !40988
   br i1 %i.cm, label %.loopexit, label %bb.m, !dbg !40940
 
@@ -654,7 +654,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.ck, label %bb.q, label %bb.r, !dbg !40991
 
 bb.q:                                             ; preds = %bb.p
-  %i.cn = zext i32 %.sroa.09.052.i to i64, !dbg !40992
+  %i.cn = zext nneg i32 %.sroa.09.052.i to i64, !dbg !40992
   br label %.loopexit, !dbg !40993
 
 bb.r:                                             ; preds = %bb.p
@@ -662,7 +662,7 @@ bb.r:                                             ; preds = %bb.p
   br i1 %i.co, label %.loopexit, label %bb.s, !dbg !40995
 
 bb.s:                                             ; preds = %bb.r
-  %i.cp = zext i32 %.sroa.09.052.i to i64, !dbg !40996
+  %i.cp = zext nneg i32 %.sroa.09.052.i to i64, !dbg !40996
   br label %bb.l, !dbg !40997
 
 .loopexit:                                        ; preds = %bb.i, %bb.o, %bb.q, %bb.k, %bb.l, %bb.r
@@ -986,12 +986,12 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %.lr.ph.i.i123
   %spec.select.i.i = xor i8 %.sroa.01.012.i.i, %i.fh, !dbg !41293
   %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.05.010.i.i, i64 1, !dbg !41296 ; 2 uses
-  %i.fl = add i32 %.sroa.03.011.i.i, 1, !dbg !41299
+  %i.fl = add nuw nsw i32 %.sroa.03.011.i.i, 1, !dbg !41299
   %i.fm = icmp eq ptr %i.fk, %i.fd, !dbg !41300
   br i1 %i.fm, label %_RNvNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser14skip_this_line.exit, label %.lr.ph.i.i123, !dbg !41276
 
 bb.bb:                                            ; preds = %.lr.ph.i.i123
-  %i.fn = zext i32 %.sroa.03.011.i.i to i64, !dbg !41303
+  %i.fn = zext nneg i32 %.sroa.03.011.i.i to i64, !dbg !41303
   br label %_RNvNtNtNtCslpwjCj2YNBy_9polars_io3csv4read6parser11find_quoted.exit.i, !dbg !41304
 
 bb.bc:                                            ; preds = %bb.ay
@@ -1394,7 +1394,7 @@ bb.e:                                             ; preds = %.lr.ph.i.us
   br i1 %or.cond.i.us, label %bb.g, label %bb.f, !dbg !42001
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph.i.us
-  %i.t = add i32 %.sroa.09.052.i.us, 1, !dbg !42003
+  %i.t = add nuw nsw i32 %.sroa.09.052.i.us, 1, !dbg !42003
   %i.u = icmp eq ptr %i.n, %i.d, !dbg !42004
   br i1 %i.u, label %.loopexit.us, label %.lr.ph.i.us, !dbg !42006
 
@@ -1406,7 +1406,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.v, label %.loopexit.us, label %bb.i, !dbg !42008
 
 bb.i:                                             ; preds = %bb.h
-  %i.w = zext i32 %.sroa.09.052.i.us to i64, !dbg !42009
+  %i.w = zext nneg i32 %.sroa.09.052.i.us to i64, !dbg !42009
   br label %bb.j, !dbg !42010
 
 bb.j:                                             ; preds = %bb.i, %bb.d
@@ -1417,7 +1417,7 @@ bb.j:                                             ; preds = %bb.i, %bb.d
   br label %.loopexit.us, !dbg !42018
 
 bb.k:                                             ; preds = %bb.g
-  %i.aa = zext i32 %.sroa.09.052.i.us to i64, !dbg !42019
+  %i.aa = zext nneg i32 %.sroa.09.052.i.us to i64, !dbg !42019
   br label %.loopexit.us, !dbg !42020
 
 bb.l:                                             ; preds = %.split.us

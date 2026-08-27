@@ -204,17 +204,17 @@ bb.h:                                             ; preds = %bb.g
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.g
-  %4 = or disjoint i32 %.16486, 1
-  %5 = zext i32 %4 to i64
-  %i.bq = getelementptr i8, ptr %i.ai, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.16486 to i64
+  %5 = getelementptr i8, ptr %i.ai, i64 %4
+  %i.bq = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not77 = icmp ult ptr %i.bq, %i.x
   br i1 %.not77, label %bb.j, label %._crit_edge90
 
 bb.j:                                             ; preds = %bb.i
   %i.br = load i8, ptr %i.bq, align 1
   %.not78 = icmp eq i8 %i.br, 0
-  %i.bs = add i32 %.16486, 2                      ; 2 uses
-  %i.bt = zext i32 %i.bs to i64
+  %i.bs = add nuw nsw i32 %.16486, 2              ; 2 uses
+  %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = getelementptr i8, ptr %i.ai, i64 %i.bt  ; 2 uses
   %i.bv = icmp ult ptr %i.bu, %i.x
   %or.cond = select i1 %.not78, i1 %i.bv, i1 false
@@ -389,17 +389,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.loopexit
 
 bb.m:                                             ; preds = %bb.k
-  %4 = or disjoint i32 %.16896, 1
-  %5 = zext i32 %4 to i64
-  %i.br = getelementptr i8, ptr %i.al, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.16896 to i64
+  %5 = getelementptr i8, ptr %i.al, i64 %4
+  %i.br = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not85 = icmp ult ptr %i.br, %i.y
   br i1 %.not85, label %bb.n, label %._crit_edge100
 
 bb.n:                                             ; preds = %bb.m
   %i.bs = load i8, ptr %i.br, align 1
   %.not86 = icmp eq i8 %i.bs, 0
-  %i.bt = add i32 %.16896, 2                      ; 2 uses
-  %i.bu = zext i32 %i.bt to i64
+  %i.bt = add nuw nsw i32 %.16896, 2              ; 2 uses
+  %i.bu = zext nneg i32 %i.bt to i64
   %i.bv = getelementptr i8, ptr %i.al, i64 %i.bu  ; 2 uses
   %i.bw = icmp ult ptr %i.bv, %i.y
   %or.cond = select i1 %.not86, i1 %i.bw, i1 false
@@ -774,17 +774,17 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.d
-  %4 = or disjoint i32 %.04761, 1
-  %5 = zext i32 %4 to i64
-  %i.az = getelementptr i8, ptr %i.ai, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.04761 to i64
+  %5 = getelementptr i8, ptr %i.ai, i64 %4
+  %i.az = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not57 = icmp ult ptr %i.az, %i.x
   br i1 %.not57, label %bb.g, label %._crit_edge
 
 bb.g:                                             ; preds = %bb.f
   %i.ba = load i8, ptr %i.az, align 1
   %.not58 = icmp eq i8 %i.ba, 0
-  %i.bb = add i32 %.04761, 2                      ; 2 uses
-  %i.bc = zext i32 %i.bb to i64
+  %i.bb = add nuw nsw i32 %.04761, 2              ; 2 uses
+  %i.bc = zext nneg i32 %i.bb to i64
   %i.bd = getelementptr i8, ptr %i.ai, i64 %i.bc  ; 2 uses
   %i.be = icmp ult ptr %i.bd, %i.x
   %or.cond = select i1 %.not58, i1 %i.be, i1 false
@@ -923,17 +923,17 @@ bb.i:                                             ; preds = %bb.h
   br label %.loopexit
 
 bb.j:                                             ; preds = %bb.h
-  %4 = or disjoint i32 %.05170, 1
-  %5 = zext i32 %4 to i64
-  %i.bb = getelementptr i8, ptr %i.al, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.05170 to i64
+  %5 = getelementptr i8, ptr %i.al, i64 %4
+  %i.bb = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not65 = icmp ult ptr %i.bb, %i.y
   br i1 %.not65, label %bb.k, label %._crit_edge
 
 bb.k:                                             ; preds = %bb.j
   %i.bc = load i8, ptr %i.bb, align 1
   %.not66 = icmp eq i8 %i.bc, 0
-  %i.bd = add i32 %.05170, 2                      ; 2 uses
-  %i.be = zext i32 %i.bd to i64
+  %i.bd = add nuw nsw i32 %.05170, 2              ; 2 uses
+  %i.be = zext nneg i32 %i.bd to i64
   %i.bf = getelementptr i8, ptr %i.al, i64 %i.be  ; 2 uses
   %i.bg = icmp ult ptr %i.bf, %i.y
   %or.cond = select i1 %.not66, i1 %i.bg, i1 false
@@ -1083,17 +1083,17 @@ bb.h:                                             ; preds = %bb.g
   br label %.loopexit
 
 bb.i:                                             ; preds = %bb.g
-  %4 = or disjoint i32 %.16587, 1
-  %5 = zext i32 %4 to i64
-  %i.bo = getelementptr i8, ptr %i.aj, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.16587 to i64
+  %5 = getelementptr i8, ptr %i.aj, i64 %4
+  %i.bo = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not78 = icmp ult ptr %i.bo, %i.u
   br i1 %.not78, label %bb.j, label %._crit_edge91
 
 bb.j:                                             ; preds = %bb.i
   %i.bp = load i8, ptr %i.bo, align 1
   %.not79 = icmp eq i8 %i.bp, 0
-  %i.bq = add i32 %.16587, 2                      ; 2 uses
-  %i.br = zext i32 %i.bq to i64
+  %i.bq = add nuw nsw i32 %.16587, 2              ; 2 uses
+  %i.br = zext nneg i32 %i.bq to i64
   %i.bs = getelementptr i8, ptr %i.aj, i64 %i.br  ; 2 uses
   %i.bt = icmp ult ptr %i.bs, %i.u
   %or.cond = select i1 %.not79, i1 %i.bt, i1 false
@@ -1261,17 +1261,17 @@ bb.l:                                             ; preds = %bb.k
   br label %.loopexit
 
 bb.m:                                             ; preds = %bb.k
-  %4 = or disjoint i32 %.16995, 1
-  %5 = zext i32 %4 to i64
-  %i.bq = getelementptr i8, ptr %i.an, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.16995 to i64
+  %5 = getelementptr i8, ptr %i.an, i64 %4
+  %i.bq = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not84 = icmp ult ptr %i.bq, %i.v
   br i1 %.not84, label %bb.n, label %._crit_edge99
 
 bb.n:                                             ; preds = %bb.m
   %i.br = load i8, ptr %i.bq, align 1
   %.not85 = icmp eq i8 %i.br, 0
-  %i.bs = add i32 %.16995, 2                      ; 2 uses
-  %i.bt = zext i32 %i.bs to i64
+  %i.bs = add nuw nsw i32 %.16995, 2              ; 2 uses
+  %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = getelementptr i8, ptr %i.an, i64 %i.bt  ; 2 uses
   %i.bv = icmp ult ptr %i.bu, %i.v
   %or.cond = select i1 %.not85, i1 %i.bv, i1 false
@@ -1576,17 +1576,17 @@ bb.e:                                             ; preds = %bb.d
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.d
-  %4 = or disjoint i32 %.04761, 1
-  %5 = zext i32 %4 to i64
-  %i.az = getelementptr i8, ptr %i.aj, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.04761 to i64
+  %5 = getelementptr i8, ptr %i.aj, i64 %4
+  %i.az = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not57 = icmp ult ptr %i.az, %i.u
   br i1 %.not57, label %bb.g, label %._crit_edge
 
 bb.g:                                             ; preds = %bb.f
   %i.ba = load i8, ptr %i.az, align 1
   %.not58 = icmp eq i8 %i.ba, 0
-  %i.bb = add i32 %.04761, 2                      ; 2 uses
-  %i.bc = zext i32 %i.bb to i64
+  %i.bb = add nuw nsw i32 %.04761, 2              ; 2 uses
+  %i.bc = zext nneg i32 %i.bb to i64
   %i.bd = getelementptr i8, ptr %i.aj, i64 %i.bc  ; 2 uses
   %i.be = icmp ult ptr %i.bd, %i.u
   %or.cond = select i1 %.not58, i1 %i.be, i1 false
@@ -1722,17 +1722,17 @@ bb.i:                                             ; preds = %bb.h
   br label %.loopexit
 
 bb.j:                                             ; preds = %bb.h
-  %4 = or disjoint i32 %.05168, 1
-  %5 = zext i32 %4 to i64
-  %i.bc = getelementptr i8, ptr %i.an, i64 %5     ; 2 uses
+  %4 = zext nneg i32 %.05168 to i64
+  %5 = getelementptr i8, ptr %i.an, i64 %4
+  %i.bc = getelementptr i8, ptr %5, i64 1         ; 2 uses
   %.not63 = icmp ult ptr %i.bc, %i.v
   br i1 %.not63, label %bb.k, label %._crit_edge
 
 bb.k:                                             ; preds = %bb.j
   %i.bd = load i8, ptr %i.bc, align 1
   %.not64 = icmp eq i8 %i.bd, 0
-  %i.be = add i32 %.05168, 2                      ; 2 uses
-  %i.bf = zext i32 %i.be to i64
+  %i.be = add nuw nsw i32 %.05168, 2              ; 2 uses
+  %i.bf = zext nneg i32 %i.be to i64
   %i.bg = getelementptr i8, ptr %i.an, i64 %i.bf  ; 2 uses
   %i.bh = icmp ult ptr %i.bg, %i.v
   %or.cond = select i1 %.not64, i1 %i.bh, i1 false

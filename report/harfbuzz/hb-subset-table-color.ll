@@ -205,10 +205,10 @@ _ZN11hb_vector_tIN22hb_serialize_context_t8object_t6link_tELb0EE5qsortEv.exit.i:
   %i.hi = add nuw nsw i32 %.01821.i, 12
   %i.hj = getelementptr inbounds nuw i8, ptr %.022.i, i64 76
   store i32 %i.hi, ptr %i.hj, align 4, !tbaa !312
-  %i.hk = add i32 %.01821.i, 14
+  %i.hk = add nuw nsw i32 %.01821.i, 14
   %i.hl = getelementptr inbounds nuw i8, ptr %.022.i, i64 88
   store i32 %i.hk, ptr %i.hl, align 4, !tbaa !312
-  %i.hm = add i32 %.01821.i, 16                   ; 2 uses
+  %i.hm = add nuw nsw i32 %.01821.i, 16           ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %.022.i, i64 96 ; 2 uses
   %niter447.next.7 = add i64 %niter447, 8         ; 2 uses
   %niter447.ncmp.7 = icmp eq i64 %niter447.next.7, %unroll_iter446

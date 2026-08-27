@@ -205,7 +205,7 @@ bb.a:
   %i.z = add nsw i64 %i.y, %wide.trip.count       ; 3 uses
   %min.iters.check = icmp ult i64 %i.z, 4
   %i.aa = trunc i64 %i.x to i32
-  %i.ab = icmp ugt i64 %i.x, 2147483647
+  %i.ab = icmp ugt i64 %i.x, 4294967295
   %n.vec = and i64 %i.z, -4                       ; 3 uses
   %i.ac = add nsw i64 %i.u, %n.vec
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %i.l, i64 0

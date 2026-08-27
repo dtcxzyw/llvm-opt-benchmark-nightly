@@ -204,7 +204,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 4
   store i32 %i.h, ptr %i.j, align 4, !tbaa !85
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.k = shl i32 %indvars.iv.tr, 1
+  %i.k = shl nsw i32 %indvars.iv.tr, 1
   %i.l = or disjoint i32 %i.k, 1
   %i.m = tail call i32 @llvm.smin.i32(i32 %i.l, i32 %1)
   %i.n = getelementptr inbounds nuw i8, ptr %i.i, i64 12
@@ -214,13 +214,13 @@ bb.a:
   %i.p = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i32 %i.o, ptr %i.p, align 4, !tbaa !88
   %i.q = trunc i64 %indvars.iv.next to i32
-  %i.r = add i32 %i.q, -1
+  %i.r = add nsw i32 %i.q, -1
   %i.s = lshr i32 %i.r, 1
   %i.t = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %indvars.iv.next ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   store i32 %i.s, ptr %i.u, align 4, !tbaa !85
   %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.v = shl i32 %indvars.iv.tr.1, 1
+  %i.v = shl nsw i32 %indvars.iv.tr.1, 1
   %i.w = or disjoint i32 %i.v, 1
   %i.x = tail call i32 @llvm.smin.i32(i32 %i.w, i32 %1)
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 12

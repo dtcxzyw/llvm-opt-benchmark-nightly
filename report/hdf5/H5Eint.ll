@@ -202,8 +202,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.m
   %.02946 = phi i32 [ 0, %.lr.ph ], [ %i.i, %bb.m ]
   %.03045 = phi i64 [ %1, %.lr.ph ], [ %i.bc, %bb.m ]
   %i.h = load i64, ptr %0, align 8, !tbaa !16
-  %i.i = add i32 %.02946, 1                       ; 3 uses
-  %i.j = zext i32 %i.i to i64
+  %i.i = add nuw nsw i32 %.02946, 1               ; 3 uses
+  %i.j = zext nneg i32 %i.i to i64
   %i.k = sub i64 %i.h, %i.j
   %i.l = getelementptr inbounds nuw [64 x i8], ptr %i.g, i64 %i.k ; 8 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -291,7 +291,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   br i1 %.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !87
 
 ._crit_edge.loopexit:                             ; preds = %bb.m
-  %i.bd = zext i32 %i.i to i64
+  %i.bd = zext nneg i32 %i.i to i64
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.preheader, %._crit_edge.loopexit

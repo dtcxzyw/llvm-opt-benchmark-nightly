@@ -204,7 +204,7 @@ bb.a:
   %i.o = getelementptr inbounds [12 x i8], ptr %.val64.fr, i64 %i.n
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.q = shl i32 %indvars.iv.tr, 1
+  %i.q = shl nsw i32 %indvars.iv.tr, 1
   %i.r = or disjoint i32 %i.q, 2
   store i32 %i.r, ptr %i.p, align 4, !tbaa !59
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
@@ -214,7 +214,7 @@ bb.a:
   %i.v = getelementptr inbounds [12 x i8], ptr %.val64.fr, i64 %i.u
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.x = shl i32 %indvars.iv.tr.1, 1
+  %i.x = shl nsw i32 %indvars.iv.tr.1, 1
   %i.y = add nuw nsw i32 %i.x, 2
   store i32 %i.y, ptr %i.w, align 4, !tbaa !59
   %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 2 uses
@@ -224,7 +224,7 @@ bb.a:
   %i.ac = getelementptr inbounds [12 x i8], ptr %.val64.fr, i64 %i.ab
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %indvars.iv.tr.2 = trunc i64 %indvars.iv.next.1 to i32
-  %i.ae = shl i32 %indvars.iv.tr.2, 1
+  %i.ae = shl nsw i32 %indvars.iv.tr.2, 1
   %i.af = or disjoint i32 %i.ae, 2
   store i32 %i.af, ptr %i.ad, align 4, !tbaa !59
   %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 2 uses
@@ -234,8 +234,8 @@ bb.a:
   %i.aj = getelementptr inbounds [12 x i8], ptr %.val64.fr, i64 %i.ai
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %indvars.iv.tr.3 = trunc i64 %indvars.iv.next.2 to i32
-  %i.al = shl i32 %indvars.iv.tr.3, 1
-  %i.am = add i32 %i.al, 2
+  %i.al = shl nsw i32 %indvars.iv.tr.3, 1
+  %i.am = add nsw i32 %i.al, 2
   store i32 %i.am, ptr %i.ak, align 4, !tbaa !59
   %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses

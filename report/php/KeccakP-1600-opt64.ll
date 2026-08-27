@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph.1, label %switch.early.test
 
 switch.early.test:                                ; preds = %.lr.ph
-  %switch.tableidx = add i32 %i.c, -1             ; 2 uses
+  %switch.tableidx = add nsw i32 %i.c, -1         ; 2 uses
   %i.f = icmp ult i32 %switch.tableidx, 20
   br i1 %i.f, label %switch.lookup, label %.lr.ph.1
 
@@ -607,7 +607,7 @@ bb.l:                                             ; preds = %.lr.ph, %.lr.ph, %.
   %i.ez = getelementptr inbounds nuw i8, ptr %.03564, i64 %indvars.iv.i54
   %i.fa = load i8, ptr %i.ez, align 1, !tbaa !14
   %i.fb = trunc nuw i64 %indvars.iv.i54 to i32
-  %i.fc = add i32 %.03663, %i.fb
+  %i.fc = add nsw i32 %.03663, %i.fb
   %i.fd = zext i32 %i.fc to i64
   %i.fe = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.fd
   %i.ff = load i8, ptr %i.fe, align 1, !tbaa !14
@@ -618,7 +618,7 @@ bb.l:                                             ; preds = %.lr.ph, %.lr.ph, %.
   %i.fi = getelementptr inbounds nuw i8, ptr %.03564, i64 %indvars.iv.next.i55
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !14
   %i.fk = trunc nuw i64 %indvars.iv.next.i55 to i32
-  %i.fl = add i32 %.03663, %i.fk
+  %i.fl = add nsw i32 %.03663, %i.fk
   %i.fm = zext i32 %i.fl to i64
   %i.fn = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.fm
   %i.fo = load i8, ptr %i.fn, align 1, !tbaa !14
@@ -641,7 +641,7 @@ KeccakP1600_ExtractAndAddBytesInLane.exit58.unr-lcssa: ; preds = %.lr.ph.i53
   %i.fr = getelementptr inbounds nuw i8, ptr %.03564, i64 %indvars.iv.i54.epil.init
   %i.fs = load i8, ptr %i.fr, align 1, !tbaa !14
   %i.ft = trunc nuw i64 %indvars.iv.i54.epil.init to i32
-  %i.fu = add i32 %.03663, %i.ft
+  %i.fu = add nsw i32 %.03663, %i.ft
   %i.fv = zext i32 %i.fu to i64
   %i.fw = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.fv
   %i.fx = load i8, ptr %i.fw, align 1, !tbaa !14

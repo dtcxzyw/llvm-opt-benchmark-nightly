@@ -204,17 +204,17 @@ bb.q:                                             ; preds = %get_field_data_cach
   %i.bp = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1
   %i.br = trunc nuw i64 %indvars.iv64 to i32
-  %i.bs = shl nuw i32 %i.br, 1                    ; 2 uses
-  %i.bt = zext i32 %i.bs to i64
+  %i.bs = shl nuw nsw i32 %i.br, 1                ; 2 uses
+  %i.bt = zext nneg i32 %i.bs to i64
   %i.bu = getelementptr i8, ptr %i.a, i64 %i.bt
   store i8 %i.bq, ptr %i.bu, align 4
   %i.bv = and i32 %i.bm, 15
   %i.bw = zext nneg i32 %i.bv to i64
   %i.bx = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.bw
   %i.by = load i8, ptr %i.bx, align 1
-  %2 = or disjoint i32 %i.bs, 1
-  %3 = zext i32 %2 to i64
-  %i.bz = getelementptr i8, ptr %i.a, i64 %3
+  %2 = zext nneg i32 %i.bs to i64
+  %3 = getelementptr i8, ptr %i.a, i64 %2
+  %i.bz = getelementptr i8, ptr %3, i64 1
   store i8 %i.by, ptr %i.bz, align 1
   %indvars.iv.next65 = or disjoint i64 %indvars.iv64, 1 ; 2 uses
   %i.ca = getelementptr i8, ptr %i.bg, i64 %indvars.iv.next65
@@ -225,17 +225,17 @@ bb.q:                                             ; preds = %get_field_data_cach
   %i.cf = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.ce
   %i.cg = load i8, ptr %i.cf, align 1
   %i.ch = trunc nuw i64 %indvars.iv.next65 to i32
-  %i.ci = shl nuw i32 %i.ch, 1                    ; 2 uses
-  %i.cj = zext i32 %i.ci to i64
+  %i.ci = shl nuw nsw i32 %i.ch, 1                ; 2 uses
+  %i.cj = zext nneg i32 %i.ci to i64
   %i.ck = getelementptr i8, ptr %i.a, i64 %i.cj
   store i8 %i.cg, ptr %i.ck, align 2
   %i.cl = and i32 %i.cc, 15
   %i.cm = zext nneg i32 %i.cl to i64
   %i.cn = getelementptr i8, ptr @json_write_field_hex_value.hex, i64 %i.cm
   %i.co = load i8, ptr %i.cn, align 1
-  %4 = or disjoint i32 %i.ci, 1
-  %5 = zext i32 %4 to i64
-  %i.cp = getelementptr i8, ptr %i.a, i64 %5
+  %4 = zext nneg i32 %i.ci to i64
+  %5 = getelementptr i8, ptr %i.a, i64 %4
+  %i.cp = getelementptr i8, ptr %5, i64 1
   store i8 %i.co, ptr %i.cp, align 1
   %indvars.iv.next65.1 = add nuw nsw i64 %indvars.iv64, 2 ; 2 uses
   %niter87.next.1 = add nuw i64 %niter87, 2       ; 2 uses

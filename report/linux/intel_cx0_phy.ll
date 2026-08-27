@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.peel.next70, %inte
   %.069 = phi i8 [ %spec.select.peel78, %.peel.next70 ], [ %spec.select, %intel_cx0_read.exit ]
   %.05468 = phi i32 [ 2, %.peel.next70 ], [ %i.cg, %intel_cx0_read.exit ] ; 2 uses
   %.054.tr = trunc i32 %.05468 to i16
-  %i.bu = shl i16 %.054.tr, 9
+  %i.bu = shl nsw i16 %.054.tr, 9
   %i.bv = and i16 %i.bu, 512
   %i.bw = or disjoint i16 %i.bv, 1026
   br i1 %.not89, label %bb.n, label %.critedge21.i.i

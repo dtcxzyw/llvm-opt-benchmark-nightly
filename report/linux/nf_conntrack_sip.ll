@@ -189,12 +189,12 @@ bb.a:
   br i1 %.not.i, label %.lr.ph.i.string_len.exit_crit_edge, label %bb.b
 
 .lr.ph.i.string_len.exit_crit_edge:               ; preds = %.lr.ph.i
-  %.pre71 = zext i32 %.02.i to i64
+  %.pre71 = zext nneg i32 %.02.i to i64
   br label %string_len.exit
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.j = getelementptr i8, ptr %.051.i, i64 1     ; 2 uses
-  %i.k = add i32 %.02.i, 1
+  %i.k = add nuw nsw i32 %.02.i, 1
   %exitcond.not.i = icmp eq ptr %i.j, %i.c
   br i1 %exitcond.not.i, label %string_len.exit, label %.lr.ph.i, !llvm.loop !10
 
@@ -251,14 +251,14 @@ bb.e:                                             ; preds = %bb.c
   ]
 
 bb.f:                                             ; preds = %.lr.ph.i44
-  %i.x = add i32 %i.v, 1
+  %i.x = add nuw nsw i32 %i.v, 1
   %i.y = getelementptr i8, ptr %.025.i, i64 1     ; 2 uses
   %exitcond.not.i45 = icmp eq ptr %i.y, %i.c
   br i1 %exitcond.not.i45, label %skp_epaddr_len.exit, label %.lr.ph.i44, !llvm.loop !13
 
 bb.g:                                             ; preds = %.lr.ph.i44
   %i.z = getelementptr i8, ptr %.025.i, i64 1
-  %i.aa = add i32 %i.v, 1
+  %i.aa = add nuw i32 %i.v, 1
   %i.ab = sext i32 %i.aa to i64
   br label %skp_epaddr_len.exit
 
@@ -661,7 +661,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph
   %i.j = getelementptr i8, ptr %.056, i64 1       ; 2 uses
-  %i.k = add i32 %.07, 1
+  %i.k = add nuw nsw i32 %.07, 1
   %exitcond.not = icmp eq ptr %i.j, %2
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !28
 
@@ -762,7 +762,7 @@ switch.early.test69.i:                            ; preds = %bb.b
 
 bb.c:                                             ; preds = %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %switch.early.test69.i, %bb.b, %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %.lr.ph
   %i.m = getelementptr i8, ptr %.058, i64 1       ; 2 uses
-  %i.n = add i32 %.09, 1
+  %i.n = add nuw nsw i32 %.09, 1
   %exitcond.not = icmp eq ptr %i.m, %1
   br i1 %exitcond.not, label %.critedge, label %.lr.ph, !llvm.loop !31
 
@@ -859,7 +859,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.i
   %i.l = getelementptr i8, ptr %.051.i, i64 1     ; 2 uses
-  %i.m = add i32 %.02.i, 1
+  %i.m = add nuw nsw i32 %.02.i, 1
   %exitcond.not.i = icmp eq ptr %i.l, %2
   br i1 %exitcond.not.i, label %string_len.exit, label %.lr.ph.i, !llvm.loop !10
 
@@ -899,7 +899,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph.i21
   %i.ab = getelementptr i8, ptr %.056.i, i64 1    ; 2 uses
-  %i.ac = add i32 %.07.i, 1
+  %i.ac = add nuw nsw i32 %.07.i, 1
   %exitcond.not.i22 = icmp eq ptr %i.ab, %2
   br i1 %exitcond.not.i22, label %digits_len.exit, label %.lr.ph.i21, !llvm.loop !28
 
