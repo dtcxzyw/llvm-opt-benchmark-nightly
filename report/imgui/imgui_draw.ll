@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.ae = shl nsw i32 %2, 2
+  %i.ae = shl nuw nsw i32 %2, 2
   %i.af = mul nuw nsw i32 %2, 3
   %i.ag = select i1 %i.k, i32 %i.ae, i32 %i.af
   %i.ah = select i1 %i.k, i32 5, i32 3
@@ -246,7 +246,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 80
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !244 ; 11 uses
   %i.av = zext nneg i32 %2 to i64                 ; 7 uses
-  %i.aw = getelementptr [8 x i8], ptr %i.au, i64 %i.av ; 15 uses
+  %i.aw = getelementptr [8 x i8], ptr %i.au, i64 %i.av ; 14 uses
   %wide.trip.count = zext nneg i32 %i.h to i64
   br label %.lr.ph
 
@@ -292,7 +292,7 @@ bb.m:                                             ; preds = %bb.l, %.lr.ph
 bb.n:                                             ; preds = %._crit_edge
   %i.bs = getelementptr i8, ptr %i.aw, i64 -16
   %i.bt = zext nneg i32 %i.g to i64               ; 3 uses
-  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.bt ; 7 uses
+  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %i.bt ; 5 uses
   %i.bv = load i64, ptr %i.bs, align 4
   store i64 %i.bv, ptr %i.bu, align 4
   %or.cond5 = select i1 %.not451, i1 %i.k, i1 false
@@ -554,7 +554,7 @@ bb.u:                                             ; preds = %bb.n
   store <2 x float> %i.ho, ptr %i.aw, align 4
   %i.hp = load <2 x float>, ptr %i.au, align 4, !tbaa !8 ; 2 uses
   %i.hq = insertelement <2 x float> poison, float %i.hh, i64 0
-  %i.hr = shufflevector <2 x float> %i.hq, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
+  %i.hr = shufflevector <2 x float> %i.hq, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.hs = fmul <2 x float> %i.hr, %i.hp           ; 2 uses
   %i.ht = load <2 x float>, ptr %1, align 4, !tbaa !8
   %i.hu = fadd <2 x float> %i.hs, %i.ht
@@ -574,29 +574,24 @@ bb.u:                                             ; preds = %bb.n
   %i.if = fmul <2 x float> %i.hl, %i.ie
   %i.ig = load <2 x float>, ptr %i.id, align 4, !tbaa !8
   %i.ih = fadd <2 x float> %i.if, %i.ig
-  %i.ii = shl nsw i32 %i.g, 2                     ; 2 uses
+  %i.ii = shl nuw nsw i32 %i.g, 2
   %i.ij = zext nneg i32 %i.ii to i64
-  %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ij
+  %i.ik = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ij ; 4 uses
   store <2 x float> %i.ih, ptr %i.ik, align 4
-  %i.il = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
-  %i.im = fmul <2 x float> %i.hr, %i.il
+  %i.il = load <2 x float>, ptr %i.bu, align 4, !tbaa !8 ; 2 uses
+  %i.im = fmul <2 x float> %i.hr, %i.il           ; 2 uses
   %i.in = load <2 x float>, ptr %i.id, align 4, !tbaa !8
   %i.io = fadd <2 x float> %i.im, %i.in
-  %6 = zext nneg i32 %i.ii to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %6 ; 3 uses
-  %i.ip = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.ip = getelementptr inbounds nuw i8, ptr %i.ik, i64 8
   store <2 x float> %i.io, ptr %i.ip, align 4
-  %8 = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
-  %9 = fmul <2 x float> %i.hr, %8
   %i.iq = load <2 x float>, ptr %i.id, align 4, !tbaa !8
-  %i.ir = fsub <2 x float> %i.iq, %9
-  %i.is = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.ir = fsub <2 x float> %i.iq, %i.im
+  %i.is = getelementptr inbounds nuw i8, ptr %i.ik, i64 16
   store <2 x float> %i.ir, ptr %i.is, align 4
-  %10 = load <2 x float>, ptr %i.bu, align 4, !tbaa !8
-  %i.it = fmul <2 x float> %i.hl, %10
+  %i.it = fmul <2 x float> %i.hl, %i.il
   %i.iu = load <2 x float>, ptr %i.id, align 4, !tbaa !8
   %i.iv = fsub <2 x float> %i.iu, %i.it
-  %i.iw = getelementptr inbounds nuw i8, ptr %7, i64 24
+  %i.iw = getelementptr inbounds nuw i8, ptr %i.ik, i64 24
   store <2 x float> %i.iv, ptr %i.iw, align 4
   br label %.lr.ph556
 
@@ -999,7 +994,7 @@ bb.h:                                             ; preds = %bb.g
   %i.be = sext i32 %i.av to i64
   %i.bf = xor i64 %i.ax, -1
   %i.bg = add nsw i64 %i.be, %i.bf
-  %i.bh = mul nsw i64 %i.bg, 160
+  %i.bh = mul nuw nsw i64 %i.bg, 160
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ay, ptr nonnull align 8 %i.bd, i64 %i.bh, i1 false)
   %i.bi = load i32, ptr %i.g, align 8, !tbaa !414
   %i.bj = add nsw i32 %i.bi, -1                   ; 2 uses

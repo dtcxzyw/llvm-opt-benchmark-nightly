@@ -206,7 +206,7 @@ bb.v:                                             ; preds = %bb.l
 
 bb.w:                                             ; preds = %bb.v
   %i.go = sext i16 %i.ev to i64
-  %i.gp = mul nsw i64 %i.go, 56                   ; 3 uses
+  %i.gp = mul nuw nsw i64 %i.go, 56               ; 3 uses
   %.not.i.i = icmp eq ptr %0, null
   br i1 %.not.i.i, label %bb.y, label %bb.x
 
@@ -609,7 +609,7 @@ sqlite3LogEst.exit.i:                             ; preds = %.loopexit.i.i, %bb.
 
 bb.bi:                                            ; preds = %sqlite3LogEst.exit.i
   %i.iz = sub nuw nsw i32 %.0298, %i.hs
-  %i.ja = mul nsw i32 %i.iz, 100
+  %i.ja = mul nuw nsw i32 %i.iz, 100
   %i.jb = sdiv i32 %i.ja, %.0298                  ; 4 uses
   %i.jc = sext i32 %i.jb to i64                   ; 3 uses
   %i.jd = icmp ult i32 %i.jb, 8
@@ -1012,12 +1012,12 @@ bb.a:
   br i1 %.not, label %sqlite3_free.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !8099 ; 6 uses
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !8099 ; 5 uses
   %i.d = icmp sgt i32 %i.c, 1
+  %3 = add i32 %i.c, -1                           ; 4 uses
   br i1 %i.d, label %.lr.ph.i, label %geopolyArea.exit
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %3 = add nsw i32 %i.c, -1                       ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 5 uses
   %wide.trip.count.i = zext nneg i32 %3 to i64    ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
@@ -1098,8 +1098,8 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i.new
   br label %geopolyArea.exit
 
 geopolyArea.exit:                                 ; preds = %bb.b, %._crit_edge.loopexit.i
-  %.019.lcssa.i = phi double [ 0.000000e+00, %bb.b ], [ %.lcssa, %._crit_edge.loopexit.i ]
-  %.0.lcssa.i = phi i64 [ 0, %bb.b ], [ %i.at, %._crit_edge.loopexit.i ]
+  %.019.lcssa.i = phi double [ %.lcssa, %._crit_edge.loopexit.i ], [ 0.000000e+00, %bb.b ]
+  %.0.lcssa.i = phi i64 [ %i.at, %._crit_edge.loopexit.i ], [ 0, %bb.b ]
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %.0.lcssa.i ; 2 uses
   %i.aw = load float, ptr %i.av, align 4, !tbaa !8101
@@ -1119,17 +1119,16 @@ geopolyArea.exit:                                 ; preds = %bb.b, %._crit_edge.
   br i1 %or.cond, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %geopolyArea.exit
-  %i.bj = zext nneg i32 %i.c to i64
-  %4 = add nsw i64 %i.bj, -1
+  %i.bj = zext i32 %3 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv35 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next36, %.lr.ph ] ; 2 uses
-  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
+  %indvars.iv = phi i64 [ %i.bj, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %.idx = shl nuw nsw i64 %indvars.iv35, 3
   %i.bk = getelementptr inbounds nuw i8, ptr %i.au, i64 %.idx ; 2 uses
-  %.idx43 = shl nsw i64 %indvars.iv, 3
-  %i.bl = getelementptr inbounds i8, ptr %i.au, i64 %.idx43 ; 2 uses
+  %.idx43 = shl nuw nsw i64 %indvars.iv, 3
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.au, i64 %.idx43 ; 2 uses
   %i.bm = load <2 x float>, ptr %i.bk, align 4, !tbaa !8101
   %i.bn = load <2 x float>, ptr %i.bl, align 4, !tbaa !8101
   store <2 x float> %i.bn, ptr %i.bk, align 4, !tbaa !8101
@@ -1532,8 +1531,8 @@ sqlite3_malloc64.exit:                            ; preds = %bb.u
   %i.bv = shl nuw nsw i32 %i.bp, 1
   %i.bw = add nsw i32 %i.bv, -2
   %i.bx = sext i32 %i.bw to i64
-  %i.by = shl nsw i64 %i.bx, 2
-  %i.bz = add nsw i64 %i.by, 40
+  %i.by = shl nuw nsw i64 %i.bx, 2
+  %i.bz = add nuw nsw i64 %i.by, 40
   %i.ca = tail call fastcc ptr @sqlite3Malloc(i64 noundef %i.bz), !inline_history !398 ; 6 uses
   %i.cb = icmp eq ptr %i.ca, null
   br i1 %i.cb, label %sqlite3_malloc64.exit.thread, label %bb.y

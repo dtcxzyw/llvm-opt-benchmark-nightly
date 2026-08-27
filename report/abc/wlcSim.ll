@@ -204,9 +204,11 @@ Vec_PtrPush.exit149:                              ; preds = %bb.t, %bb.s, %bb.x,
   %i.cr = getelementptr i8, ptr %0, i64 760
   %i.cs = getelementptr i8, ptr %0, i64 776
   %i.ct = icmp sgt i32 %2, 0
-  %i.cu = zext i32 %2 to i64                      ; 11 uses
+  %i.cu = zext i32 %2 to i64                      ; 14 uses
   %i.cv = shl nuw nsw i64 %i.cu, 3
   %wide.trip.count310 = zext nneg i32 %3 to i64
+  %4 = shl nuw nsw i64 %i.cu, 3
+  %5 = shl nuw nsw i64 %i.cu, 3
   %min.iters.check355 = icmp ult i32 %2, 6
   %n.vec357 = and i64 %i.cu, 2147483644           ; 3 uses
   %cmp.n364 = icmp eq i64 %n.vec357, %i.cu
@@ -222,14 +224,8 @@ Vec_PtrPush.exit149:                              ; preds = %bb.t, %bb.s, %bb.x,
 .preheader:                                       ; preds = %.preheader.lr.ph, %bb.ag
   %indvars.iv307 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next308, %bb.ag ] ; 6 uses
   %.0239 = phi i32 [ 0, %.preheader.lr.ph ], [ %.1.lcssa, %bb.ag ] ; 3 uses
-  %4 = trunc i64 %indvars.iv307 to i32
-  %5 = mul i32 %2, %4
-  %6 = zext i32 %5 to i64
-  %7 = shl nuw nsw i64 %6, 3
-  %8 = trunc i64 %indvars.iv307 to i32
-  %9 = mul i32 %2, %8
-  %10 = zext i32 %9 to i64
-  %11 = shl nuw nsw i64 %10, 3
+  %6 = mul i64 %5, %indvars.iv307
+  %7 = mul i64 %4, %indvars.iv307
   %i.cw = trunc nuw nsw i64 %indvars.iv307 to i32
   %i.cx = mul i32 %2, %i.cw
   %i.cy = zext i32 %i.cx to i64
@@ -239,7 +235,7 @@ Vec_PtrPush.exit149:                              ; preds = %bb.t, %bb.s, %bb.x,
   br i1 %i.db, label %.lr.ph204, label %.critedge2.preheader
 
 .critedge2.preheader:                             ; preds = %Wlc_ObjSimAnd.exit, %.preheader
-  %.val116 = load i32, ptr %i.w, align 4, !tbaa !50 ; 3 uses
+  %.val116 = load i32, ptr %i.w, align 4, !tbaa !50 ; 2 uses
   %i.dc = icmp sgt i32 %.val116, 0
   br i1 %i.dc, label %.lr.ph229, label %.critedge4
 
@@ -248,22 +244,13 @@ Vec_PtrPush.exit149:                              ; preds = %bb.t, %bb.s, %bb.x,
   %.val123 = load ptr, ptr %i.cq, align 8, !tbaa !54 ; 2 uses
   %.val120 = load ptr, ptr %i.cr, align 8, !tbaa !52 ; 2 uses
   %.val119 = load ptr, ptr %i.cs, align 8, !tbaa !52 ; 2 uses
-  br i1 %i.ct, label %.split.us.us.preheader, label %.split.preheader
+  %8 = mul nuw nsw i64 %indvars.iv307, %i.cu
+  %wide.trip.count305 = zext nneg i32 %.val116 to i64 ; 2 uses
+  br i1 %i.ct, label %.split.us.us.split.us.preheader, label %.split
 
-.split.preheader:                                 ; preds = %.lr.ph229
-  %wide.trip.count267 = zext nneg i32 %.val116 to i64
-  br label %.split
-
-.split.us.us.preheader:                           ; preds = %.lr.ph229
-  %12 = trunc i64 %indvars.iv307 to i32
-  %13 = mul i32 %2, %12
-  %14 = zext i32 %13 to i64
-  %wide.trip.count305 = zext nneg i32 %.val116 to i64
-  br label %.split.us.us.split.us.preheader
-
-.split.us.us.split.us.preheader:                  ; preds = %.split215.us.us, %.split.us.us.preheader
-  %indvars.iv302 = phi i64 [ 0, %.split.us.us.preheader ], [ %indvars.iv.next303, %.split215.us.us ] ; 3 uses
-  %.1228.us = phi i32 [ %.0239, %.split.us.us.preheader ], [ %.3.us.us.us, %.split215.us.us ]
+.split.us.us.split.us.preheader:                  ; preds = %.lr.ph229, %.split215.us.us
+  %indvars.iv302 = phi i64 [ %indvars.iv.next303, %.split215.us.us ], [ 0, %.lr.ph229 ] ; 3 uses
+  %.1228.us = phi i32 [ %.3.us.us.us, %.split215.us.us ], [ %.0239, %.lr.ph229 ]
   %i.dd = getelementptr inbounds nuw [8 x i8], ptr %.val137, i64 %indvars.iv302
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !13
   %i.df = getelementptr i8, ptr %i.de, i64 8
@@ -309,14 +296,14 @@ Vec_PtrPush.exit149:                              ; preds = %bb.t, %bb.s, %bb.x,
   %i.eb = getelementptr inbounds [8 x i8], ptr %.val132.val.us.us.us, i64 %i.ea ; 12 uses
   %i.ec = and i32 %i.ds, 1
   %.not111.us.us.us = icmp eq i32 %i.ec, 0
-  %invariant.gep338 = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %14 ; 12 uses
+  %invariant.gep338 = getelementptr inbounds nuw [8 x i8], ptr %i.du, i64 %8 ; 12 uses
   br i1 %.not111.us.us.us, label %.lr.ph206.split.us.us.us.us.preheader, label %.lr.ph206.split.us213.us.us.preheader
 
 .lr.ph206.split.us213.us.us.preheader:            ; preds = %.lr.ph206.us.us.us
   br i1 %min.iters.check355, label %.lr.ph206.split.us213.us.us.preheader493, label %vector.memcheck352
 
 vector.memcheck352:                               ; preds = %.lr.ph206.split.us213.us.us.preheader
-  %i.ed = add i64 %7, %i.dv
+  %i.ed = add i64 %6, %i.dv
   %i.ee = shl nsw i64 %i.ea, 3
   %i.ef = add i64 %i.ee, %.val132.val.us.us.us350
   %i.eg = sub i64 %i.ef, %i.ed
@@ -369,7 +356,7 @@ middle.block363:                                  ; preds = %vector.body358
   br i1 %min.iters.check, label %.lr.ph206.split.us.us.us.us.preheader492, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph206.split.us.us.us.us.preheader
-  %i.et = add i64 %11, %i.dv
+  %i.et = add i64 %7, %i.dv
   %i.eu = shl nsw i64 %i.ea, 3
   %i.ev = add i64 %i.eu, %.val132.val.us.us.us350
   %i.ew = sub i64 %i.ev, %i.et
@@ -772,9 +759,9 @@ Wlc_ObjSimAnd.exit:                               ; preds = %.lr.ph.i173.prol.lo
   %i.se = icmp slt i64 %indvars.iv.next258, %i.sd
   br i1 %i.se, label %.lr.ph204, label %.critedge2.preheader, !llvm.loop !99
 
-.split:                                           ; preds = %.split.preheader, %.split215.split
-  %indvars.iv264 = phi i64 [ 0, %.split.preheader ], [ %indvars.iv.next265, %.split215.split ] ; 2 uses
-  %.1228 = phi i32 [ %.0239, %.split.preheader ], [ %.3.lcssa, %.split215.split ] ; 2 uses
+.split:                                           ; preds = %.lr.ph229, %.split215.split
+  %indvars.iv264 = phi i64 [ %indvars.iv.next265, %.split215.split ], [ 0, %.lr.ph229 ] ; 2 uses
+  %.1228 = phi i32 [ %.3.lcssa, %.split215.split ], [ %.0239, %.lr.ph229 ] ; 2 uses
   %i.sf = getelementptr inbounds nuw [4 x i8], ptr %.val121, i64 %indvars.iv264
   %i.sg = load i32, ptr %i.sf, align 4, !tbaa !53
   %i.sh = sext i32 %i.sg to i64                   ; 2 uses
@@ -843,7 +830,7 @@ middle.block376:                                  ; preds = %vector.body370
 .split215.split:                                  ; preds = %.loopexit186, %middle.block376
   %.3.lcssa = phi i32 [ %i.tb, %middle.block376 ], [ %.3, %.loopexit186 ] ; 2 uses
   %indvars.iv.next265 = add nuw nsw i64 %indvars.iv264, 1 ; 2 uses
-  %exitcond268.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count267
+  %exitcond268.not = icmp eq i64 %indvars.iv.next265, %wide.trip.count305
   br i1 %exitcond268.not, label %.critedge4, label %.split, !llvm.loop !75
 
 .critedge4:                                       ; preds = %.split215.split, %.split215.us.us, %.critedge2.preheader
