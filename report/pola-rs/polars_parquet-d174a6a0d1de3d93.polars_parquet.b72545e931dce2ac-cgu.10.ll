@@ -205,35 +205,34 @@ _RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee
   br i1 %.not.i117, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9metablock17MapStaticContextsNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocECsfISxE4fmY1Y_14polars_parquet.exit, label %.lr.ph.i, !dbg !33447
 
 .loopexit.i:                                      ; preds = %bb.df
-  %exitcond9.not.i = icmp eq i64 %18, %i.kg, !dbg !33438
+  %exitcond9.not.i = icmp eq i64 %15, %i.kg, !dbg !33438
   br i1 %exitcond9.not.i, label %_RINvNtNtCsk4ZPsEfLtLH_6brotli3enc9metablock17MapStaticContextsNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocECsfISxE4fmY1Y_14polars_parquet.exit, label %.lr.ph.i, !dbg !33447
 
 .lr.ph.i:                                         ; preds = %_RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee3ib_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCsfISxE4fmY1Y_14polars_parquet.exit.i116, %.loopexit.i
-  %.sroa.03.04.i = phi i64 [ %18, %.loopexit.i ], [ 0, %_RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee3ib_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCsfISxE4fmY1Y_14polars_parquet.exit.i116 ] ; 5 uses
-  %15 = shl i64 %.sroa.03.04.i, 6, !dbg !33448
-  %umax = call i64 @llvm.umax.i64(i64 %i.ku, i64 %15), !dbg !33448
-  %16 = shl i64 %.sroa.03.04.i, 6, !dbg !33448
-  %17 = sub i64 %umax, %16, !dbg !33448
-  %.fr = freeze i64 %17, !dbg !33448
-  %umin = call i64 @llvm.umin.i64(i64 %.fr, i64 %10), !dbg !33448 ; 2 uses
-  %18 = add nuw i64 %.sroa.03.04.i, 1, !dbg !33448 ; 2 uses
-  %19 = mul i64 %.sroa.03.04.i, %8, !dbg !33454
-  %20 = trunc i64 %19 to i32, !dbg !33458         ; 2 uses
-  %21 = shl i64 %.sroa.03.04.i, 6                 ; 2 uses
-  %min.iters.check = icmp samesign ult i64 %umin, 8, !dbg !33459
+  %.sroa.03.04.i = phi i64 [ %15, %.loopexit.i ], [ 0, %_RNvXNtCsbA1n9drshSs_12alloc_stdlib9std_allocNtB2_13StandardAllocINtNtCs2FBUFPee3ib_15alloc_no_stdlib15stack_allocator9AllocatormE9free_cellCsfISxE4fmY1Y_14polars_parquet.exit.i116 ] ; 4 uses
+  %15 = add nuw i64 %.sroa.03.04.i, 1, !dbg !33448 ; 2 uses
+  %16 = mul i64 %.sroa.03.04.i, %8, !dbg !33454
+  %17 = trunc i64 %16 to i32, !dbg !33458         ; 2 uses
+  %18 = shl i64 %.sroa.03.04.i, 6                 ; 3 uses
+  %umin = call i64 @llvm.umax.i64(i64 %i.ku, i64 %18), !dbg !33459
+  %19 = shl i64 %.sroa.03.04.i, 6, !dbg !33459
+  %20 = sub i64 %umin, %19, !dbg !33459
+  %.fr = freeze i64 %20, !dbg !33459
+  %21 = call i64 @llvm.umin.i64(i64 %.fr, i64 %10), !dbg !33459 ; 2 uses
+  %min.iters.check = icmp samesign ult i64 %21, 8, !dbg !33459
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph, !dbg !33459
 
 vector.ph:                                        ; preds = %.lr.ph.i
-  %umin542 = call i64 @llvm.umin.i64(i64 %umin, i64 63), !dbg !33448
-  %i.lb = add nuw nsw i64 %umin542, 1, !dbg !33448 ; 2 uses
+  %umin542 = call i64 @llvm.umin.i64(i64 %21, i64 63), !dbg !33459
+  %i.lb = add nuw nsw i64 %umin542, 1, !dbg !33459 ; 2 uses
   %i.lc = and i64 %i.lb, 7                        ; 2 uses
   %i.ld = icmp eq i64 %i.lc, 0
   %i.le = select i1 %i.ld, i64 8, i64 %i.lc
   %n.vec = sub nsw i64 %i.lb, %i.le               ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kt) ]
-  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %20, i64 0
+  %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %17, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
-  %invariant.gep = getelementptr [4 x i8], ptr %i.kt, i64 %21, !dbg !33459
+  %invariant.gep = getelementptr [4 x i8], ptr %i.kt, i64 %18, !dbg !33459
   br label %vector.body, !dbg !33459
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -264,7 +263,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 bb.dd:                                            ; preds = %scalar.ph
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.kt) ]
-  %i.lm = add nuw nsw i64 %.sroa.05.03.i, %21, !dbg !33479 ; 3 uses
+  %i.lm = add nuw nsw i64 %.sroa.05.03.i, %18, !dbg !33479 ; 3 uses
   %i.ln = icmp ult i64 %i.lm, %i.ku, !dbg !33477
   br i1 %i.ln, label %bb.df, label %bb.dg, !dbg !33477
 
@@ -275,7 +274,7 @@ bb.de:                                            ; preds = %scalar.ph
 bb.df:                                            ; preds = %bb.dd
   %i.lo = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %.sroa.05.03.i, !dbg !33472
   %i.lp = load i32, ptr %i.lo, align 4, !dbg !33472, !alias.scope !33381, !noalias !33385, !noundef !14
-  %i.lq = add i32 %i.lp, %20, !dbg !33474
+  %i.lq = add i32 %i.lp, %17, !dbg !33474
   %i.lr = getelementptr inbounds nuw [4 x i8], ptr %i.kt, i64 %i.lm, !dbg !33477
   store i32 %i.lq, ptr %i.lr, align 4, !dbg !33477, !noalias !33395
   %exitcond8.not.i = icmp eq i64 %i.ll, 64, !dbg !33482

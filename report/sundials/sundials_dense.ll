@@ -203,11 +203,11 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.1
 
 .lr.ph58.i:                                       ; preds = %.lr.ph58.i.preheader, %.loopexit.i
   %.159.i = phi i64 [ %i.af, %.loopexit.i ], [ 0, %.lr.ph58.i.preheader ] ; 5 uses
-  %3 = sub i64 %i.m, %.159.i                      ; 3 uses
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.159.i
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !17 ; 6 uses
   %i.af = add nuw nsw i64 %.159.i, 1              ; 6 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.159.i ; 4 uses
+  %3 = sub i64 %i.m, %.159.i                      ; 3 uses
   %min.iters.check = icmp ult i64 %3, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -512,11 +512,11 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.1
 
 .lr.ph58:                                         ; preds = %.lr.ph58.preheader, %.loopexit
   %.159 = phi i64 [ %i.ab, %.loopexit ], [ 0, %.lr.ph58.preheader ] ; 5 uses
-  %4 = sub i64 %i.i, %.159                        ; 3 uses
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.159
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !17  ; 6 uses
   %i.ab = add nuw nsw i64 %.159, 1                ; 6 uses
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %.159 ; 4 uses
+  %4 = sub i64 %i.i, %.159                        ; 3 uses
   %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -919,7 +919,6 @@ bb.a:
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.preheader.i.preheader, %.loopexit.i
   %.053.i = phi i64 [ %i.o, %.loopexit.i ], [ 0, %.lr.ph.preheader.i.preheader ] ; 6 uses
-  %2 = sub i64 %i.e, %.053.i                      ; 3 uses
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.053.i
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !17   ; 7 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.053.i
@@ -929,6 +928,7 @@ bb.a:
   %i.n = fdiv double %i.m, %i.k
   store double %i.n, ptr %i.l, align 8, !tbaa !18
   %i.o = add nuw nsw i64 %.053.i, 1               ; 6 uses
+  %2 = sub i64 %i.e, %.053.i                      ; 3 uses
   %min.iters.check = icmp ult i64 %2, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.memcheck
 
@@ -1126,7 +1126,6 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.preheader, %.loopexit
   %.053 = phi i64 [ %i.k, %.loopexit ], [ 0, %.lr.ph.preheader.preheader ] ; 6 uses
-  %3 = sub i64 %i.a, %.053                        ; 3 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.053
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !17   ; 7 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %.053
@@ -1136,6 +1135,7 @@ bb.a:
   %i.j = fdiv double %i.i, %i.g
   store double %i.j, ptr %i.h, align 8, !tbaa !18
   %i.k = add nuw nsw i64 %.053, 1                 ; 6 uses
+  %3 = sub i64 %i.a, %.053                        ; 3 uses
   %min.iters.check = icmp ult i64 %3, 4
   br i1 %min.iters.check, label %.lr.ph.preheader74, label %vector.memcheck
 

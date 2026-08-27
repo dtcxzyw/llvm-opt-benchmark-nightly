@@ -1,0 +1,241 @@
+diff --git a/llvm/lib/Transforms/Vectorize/VPlan.h b/llvm/lib/Transforms/Vectorize/VPlan.h
+index 7d2c2fa1bdd23..630f6036ea535 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlan.h
++++ b/llvm/lib/Transforms/Vectorize/VPlan.h
+@@ -1806,7 +1806,7 @@ struct LLVM_ABI_FOR_TEST VPIRPhi : public VPIRInstruction,
+     return R && classof(R);
+   }
+ 
+-  PHINode &getIRPhi() { return cast<PHINode>(getInstruction()); }
++  PHINode &getIRPhi() const { return cast<PHINode>(getInstruction()); }
+ 
+   void execute(VPTransformState &State) override;
+ 
+diff --git a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+index 37b33414304ba..2725ed424fa6f 100644
+--- a/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
++++ b/llvm/lib/Transforms/Vectorize/VPlanUtils.cpp
+@@ -1064,6 +1064,53 @@ VPValue *VPSCEVExpander::tryToExpand(const SCEV *S) {
+                                              ResultTy, DL);
+     return Result;
+   }
++  case scAddRecExpr: {
++    // AddRecs never appear in the vector loop; the AR's loop would correspond
++    // to an outer loop outside the vector loop, and its header would be modeled
++    // as a VPIRBasicBlock.
++    auto *AR = cast<SCEVAddRecExpr>(S);
++    VPlan &Plan = Builder.getPlan();
++
++    // If a canonical IV to re-use is present, it would be in the Plan's entry.
++    // We cannot create a phi in the Plan's entry, which would be required in
++    // the absence of a canonical IV to re-use or if AR is non-affine, because
++    // its predecessors are not modeled. This code seems to be unreachable for
++    // AddRecs of pointer type.
++    if (!AR->isAffine() || AR->getType()->isPointerTy())
++      return nullptr;
++    auto FoundCanIV =
++        find_if(Plan.getEntry()->phis(), [&](const VPRecipeBase &R) {
++          if (!SE.isSCEVable(cast<VPIRPhi>(R).getIRPhi().getType()))
++            return false;
++          const SCEV *Candidate = SE.getSCEV(&cast<VPIRPhi>(R).getIRPhi());
++          return match(Candidate,
++                       m_scev_AffineAddRec(m_scev_Zero(), m_scev_One(),
++                                           m_SpecificLoop(AR->getLoop()))) &&
++                 Candidate->getType() == AR->getType();
++        });
++    if (FoundCanIV == Plan.getEntry()->phis().end())
++      return nullptr;
++
++    // Expand Start.
++    VPValue *Start = tryToExpand(AR->getStart());
++    if (!Start)
++      return nullptr;
++
++    // {Start, +, Step} --> Start + IV * Step, since the AddRec is affine.
++    // Compute Offset = IV * Step.
++    Value *CanonicalIV = &cast<VPIRPhi>(FoundCanIV)->getIRPhi();
++    VPValue *Offset = tryToExpand(SE.getTruncateOrNoop(
++        SE.getMulExpr(SE.getUnknown(CanonicalIV),
++                      SE.getNoopOrAnyExtend(AR->getStepRecurrence(SE),
++                                            CanonicalIV->getType())),
++        AR->getType()));
++    if (!Offset)
++      return nullptr;
++
++    // Compute Start + Offset.
++    return Builder.createAdd(Start, Offset, DL, "",
++                             {AR->hasNoUnsignedWrap(), false});
++  }
+   default:
+     return nullptr;
+   }
+diff --git a/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll b/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll
+index 714953ce460ed..63d16fd4420d4 100644
+--- a/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll
++++ b/llvm/test/Transforms/LoopVectorize/RISCV/strided-accesses.ll
+@@ -2074,20 +2074,20 @@ exit:
+ define void @iv_start_is_addrec(ptr %p, ptr noalias %q) {
+ ; CHECK-LABEL: define void @iv_start_is_addrec(
+ ; CHECK-SAME: ptr [[P:%.*]], ptr noalias [[Q:%.*]]) #[[ATTR0]] {
+-; CHECK-NEXT:  [[ENTRY:.*]]:
+-; CHECK-NEXT:    br label %[[PH:.*]]
+-; CHECK:       [[PH]]:
+-; CHECK-NEXT:    [[IND_INCOMING:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[IND_INCOMING_NEXT:%.*]], %[[EXIT:.*]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[IND_INCOMING]], 2
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP0]]
++; CHECK-NEXT:  [[PH:.*]]:
+ ; CHECK-NEXT:    br label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
++; CHECK-NEXT:    [[IND_INCOMING:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[IND_INCOMING_NEXT:%.*]], %[[EXIT:.*]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = shl i64 [[IND_INCOMING]], 2
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[P]], i64 [[TMP0]]
++; CHECK-NEXT:    br label %[[VECTOR_PH1:.*]]
++; CHECK:       [[VECTOR_PH1]]:
+ ; CHECK-NEXT:    [[BROADCAST_SPLATINSERT:%.*]] = insertelement <vscale x 8 x ptr> poison, ptr [[Q]], i64 0
+ ; CHECK-NEXT:    [[BROADCAST_SPLAT:%.*]] = shufflevector <vscale x 8 x ptr> [[BROADCAST_SPLATINSERT]], <vscale x 8 x ptr> poison, <vscale x 8 x i32> zeroinitializer
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+-; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
+-; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 129, %[[VECTOR_PH]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH1]] ], [ [[CURRENT_ITERATION_NEXT:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[AVL:%.*]] = phi i64 [ 129, %[[VECTOR_PH1]] ], [ [[AVL_NEXT:%.*]], %[[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.experimental.get.vector.length.i64(i64 [[AVL]], i32 8, i1 true)
+ ; CHECK-NEXT:    [[TMP4:%.*]] = mul i64 [[INDEX]], -8
+ ; CHECK-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 [[TMP4]]
+@@ -2102,7 +2102,7 @@ define void @iv_start_is_addrec(ptr %p, ptr noalias %q) {
+ ; CHECK-NEXT:    br label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+ ; CHECK-NEXT:    [[IND_INCOMING_NEXT]] = add i64 [[IND_INCOMING]], 1
+-; CHECK-NEXT:    br label %[[PH]]
++; CHECK-NEXT:    br label %[[VECTOR_PH]]
+ ;
+ ; CHECK-UF2-LABEL: define void @iv_start_is_addrec(
+ ; CHECK-UF2-SAME: ptr [[P:%.*]], ptr noalias [[Q:%.*]]) #[[ATTR0]] {
+diff --git a/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll b/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll
+index 79c3f709f0342..f5af8ca46c7b7 100644
+--- a/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll
++++ b/llvm/test/Transforms/LoopVectorize/VPlan/expand-scev.ll
+@@ -320,14 +320,13 @@ exit:
+ define void @scev_addrec_expanded(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'scev_addrec_expanded'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%2> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
+-; CHECK-NEXT:    IR   %0 = add i64 %outer.iv, 4
+-; CHECK-NEXT:    IR   %1 = udiv i64 %0, 3
+-; CHECK-NEXT:    IR   %2 = add nuw nsw i64 %1, 1
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%2>, ir<4>
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = add nuw ir<4>, ir<%outer.iv>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = udiv vp<[[VP2]]>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP4:%[0-9]+]]> = add nuw nsw vp<[[VP3]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP4]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -524,17 +523,16 @@ exit:
+ define void @addrec_nuw_flags(ptr %dst) {
+ ; CHECK-LABEL: VPlan for loop in 'addrec_nuw_flags'
+ ; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
+-; CHECK-NEXT:  Live-in ir<%3> = original trip-count
+ ; CHECK-EMPTY:
+ ; CHECK-NEXT:  ir-bb<outer>:
+ ; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
+-; CHECK-NEXT:    IR   %0 = shl nuw nsw i64 %outer.iv, 2
+-; CHECK-NEXT:    IR   %1 = add i64 %0, 4
+-; CHECK-NEXT:    IR   %2 = udiv i64 %1, 3
+-; CHECK-NEXT:    IR   %3 = add nuw nsw i64 %2, 1
+ ; CHECK-NEXT:    IR   %m = mul nuw i64 %outer.iv, 4
+ ; CHECK-NEXT:    IR   %bound = add nuw i64 %m, 5
+-; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult ir<%3>, ir<4>
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = shl nuw nsw ir<%outer.iv>, ir<2>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = add nuw ir<4>, vp<[[VP2]]>
++; CHECK-NEXT:    EMIT vp<[[VP4:%[0-9]+]]> = udiv vp<[[VP3]]>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP5:%[0-9]+]]> = add nuw nsw vp<[[VP4]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP5]]>, ir<4>
+ ; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
+ ; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
+ ;
+@@ -688,6 +686,47 @@ exit:
+   ret void
+ }
+ 
++define void @addrec_nonscevable(ptr %dst) {
++; CHECK-LABEL: VPlan for loop in 'addrec_nonscevable'
++; CHECK:  VPlan 'Final VPlan for VF={4},UF={1}' {
++; CHECK-EMPTY:
++; CHECK-NEXT:  ir-bb<outer>:
++; CHECK-NEXT:    IR   %fp.phi = phi float [ 0.000000e+00, %entry ], [ %fp.next, %outer.latch ]
++; CHECK-NEXT:    IR   %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++; CHECK-NEXT:    EMIT vp<[[VP2:%[0-9]+]]> = add nuw ir<4>, ir<%outer.iv>
++; CHECK-NEXT:    EMIT vp<[[VP3:%[0-9]+]]> = udiv vp<[[VP2]]>, ir<3>
++; CHECK-NEXT:    EMIT vp<[[VP4:%[0-9]+]]> = add nuw nsw vp<[[VP3]]>, ir<1>
++; CHECK-NEXT:    EMIT vp<%min.iters.check> = icmp ult vp<[[VP4]]>, ir<4>
++; CHECK-NEXT:    EMIT branch-on-cond vp<%min.iters.check>
++; CHECK-NEXT:  Successor(s): ir-bb<scalar.ph>, vector.ph
++;
++entry:
++  br label %outer
++
++outer:
++  %fp.phi = phi float [ 0.0, %entry ], [ %fp.next, %outer.latch ]
++  %outer.iv = phi i64 [ 0, %entry ], [ %outer.iv.next, %outer.latch ]
++  br label %inner
++
++inner:
++  %iv = phi i64 [ 0, %outer ], [ %iv.next, %inner ]
++  %gep = getelementptr i8, ptr %dst, i64 %iv
++  store float %fp.phi, ptr %gep
++  %iv.next = add nuw i64 %iv, 3
++  %bound = add i64 %outer.iv, 5
++  %ec.inner = icmp ult i64 %iv.next, %bound
++  br i1 %ec.inner, label %inner, label %outer.latch
++
++outer.latch:
++  %fp.next = fadd float %fp.phi, 1.0
++  %outer.iv.next = add nuw i64 %outer.iv, 1
++  %ec.outer = icmp ult i64 %outer.iv.next, 100
++  br i1 %ec.outer, label %outer, label %exit
++
++exit:
++  ret void
++}
++
+ !0 = distinct !{!0, !1, !2}
+ !1 = !{!"llvm.loop.vectorize.scalable.enable"}
+ !2 = !{!"llvm.loop.vectorize.width", i32 4}
+diff --git a/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll b/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
+index abc2f3b8f274a..977ed8e7e73ab 100644
+--- a/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopVectorize/nested-loops-scev-expansion.ll
+@@ -323,9 +323,8 @@ define void @test_expand_secv_in_entry_before_gep(ptr %dst) {
+ ; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
+ ; CHECK:       [[OUTER_HEADER]]:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[OUTER_IV_NEXT:%.*]], %[[OUTER_LATCH:.*]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = mul i64 [[OUTER_IV]], -1
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], 112
+ ; CHECK-NEXT:    [[GEP_M:%.*]] = getelementptr [36 x [36 x double]], ptr [[DST]], i64 0, i64 [[OUTER_IV]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 112, [[OUTER_IV]]
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP1]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[SCALAR_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+diff --git a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+index 8bda68f620e21..e816b559bffe6 100644
+--- a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
++++ b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+@@ -526,13 +526,12 @@ define void @nested_loop_bound_needs_constant_correction(ptr %a, ptr %b, i64 %n)
+ ; CHECK-NEXT:    br label %[[OUTER_HEADER:.*]]
+ ; CHECK:       [[OUTER_HEADER]]:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i64 [ 0, %[[ENTRY]] ], [ [[OUTER_IV_NEXT:%.*]], [[OUTER_LATCH:%.*]] ]
+-; CHECK-NEXT:    [[TMP2:%.*]] = mul nsw i64 [[OUTER_IV]], -1
+-; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[N]], [[TMP2]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = shl i64 [[OUTER_IV]], 2
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[B]], i64 [[TMP4]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = shl i64 [[OUTER_IV]], 3
+ ; CHECK-NEXT:    [[TMP6:%.*]] = add i64 [[TMP5]], 4
+ ; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP6]]
++; CHECK-NEXT:    [[TMP3:%.*]] = sub i64 [[N]], [[OUTER_IV]]
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP3]], 4
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], [[SCALAR_PH:label %.*]], label %[[VECTOR_MEMCHECK:.*]]
+ ; CHECK:       [[VECTOR_MEMCHECK]]:

@@ -203,10 +203,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %bb.c
-  %indvar = phi i64 [ 0, %.preheader ], [ %indvar.next, %bb.c ] ; 2 uses
   %.141 = phi ptr [ %.045, %.preheader ], [ %i.bb, %bb.c ] ; 2 uses
   %.02140 = phi i32 [ 0, %.preheader ], [ %i.bc, %bb.c ] ; 4 uses
-  %1 = sub i64 %i.g, %indvar                      ; 3 uses
   %i.p = tail call noalias ptr @malloc(i64 noundef %i.f) #16 ; 10 uses
   %.not11.i = icmp eq i32 %.02140, 0              ; 2 uses
   br i1 %.not11.i, label %.lr.ph15.preheader.i, label %.lr.ph.i
@@ -239,13 +237,14 @@ scalar.ph100.preheader:                           ; preds = %.lr.ph.i, %middle.b
   br label %scalar.ph100
 
 .lr.ph15.preheader.i:                             ; preds = %scalar.ph100, %middle.block109, %bb.b
-  %.pre-phi = phi i64 [ 0, %bb.b ], [ %i.q, %middle.block109 ], [ %i.q, %scalar.ph100 ] ; 3 uses
+  %.pre-phi = phi i64 [ 0, %bb.b ], [ %i.q, %middle.block109 ], [ %i.q, %scalar.ph100 ] ; 4 uses
+  %1 = sub nsw i64 %i.g, %.pre-phi                ; 3 uses
   %min.iters.check91 = icmp ult i64 %1, 8
   br i1 %min.iters.check91, label %.lr.ph15.i.preheader, label %vector.ph92
 
 vector.ph92:                                      ; preds = %.lr.ph15.preheader.i
   %n.vec93 = and i64 %1, -8                       ; 3 uses
-  %i.u = add i64 %.pre-phi, %n.vec93
+  %i.u = add nsw i64 %.pre-phi, %n.vec93
   %i.v = getelementptr inbounds nuw [4 x i8], ptr %i.p, i64 %.pre-phi
   br label %vector.body94
 
@@ -368,7 +367,6 @@ bb.c:                                             ; preds = %equal_data.exit
   %i.bc = add nuw nsw i32 %.02140, 1              ; 2 uses
   tail call void @free(ptr noundef nonnull %i.p) #17
   %.not26 = icmp eq i32 %i.bc, %i.d
-  %indvar.next = add i64 %indvar, 1
   br i1 %.not26, label %._crit_edge, label %bb.b, !llvm.loop !65
 
 ._crit_edge:                                      ; preds = %bb.c, %.thread

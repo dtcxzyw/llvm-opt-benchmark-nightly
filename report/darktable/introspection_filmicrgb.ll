@@ -205,8 +205,6 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 .lr.ph.preheader.i9:                              ; preds = %.lr.ph.preheader.i9.preheader, %.loopexit.i15
   %indvars.iv63.i = phi i64 [ %indvars.iv.next64.i, %.loopexit.i15 ], [ 0, %.lr.ph.preheader.i9.preheader ] ; 7 uses
   %indvars.iv.i10 = phi i64 [ %indvars.iv.next.i16, %.loopexit.i15 ], [ 1, %.lr.ph.preheader.i9.preheader ] ; 6 uses
-  %3 = xor i64 %indvars.iv63.i, -1
-  %4 = add nsw i64 %3, %i.g                       ; 3 uses
   %i.ho = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv63.i
   %i.hp = load i32, ptr %i.ho, align 4, !tbaa !24
   %i.hq = sext i32 %i.hp to i64
@@ -217,6 +215,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   store double %i.hu, ptr %i.hr, align 8, !tbaa !383
   store double %i.hs, ptr %i.ht, align 8, !tbaa !383
   %invariant.gep.i11 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv63.i ; 6 uses
+  %3 = xor i64 %indvars.iv63.i, -1
+  %4 = add nsw i64 %3, %i.g                       ; 3 uses
   %min.iters.check58 = icmp ult i64 %4, 4
   br i1 %min.iters.check58, label %.lr.ph.i12.preheader, label %vector.memcheck48
 

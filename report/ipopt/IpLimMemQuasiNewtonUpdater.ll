@@ -204,12 +204,12 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50:        ; preds = %bb.h
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit159
   %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %.loopexit159 ] ; 12 uses
-  %3 = sub nsw i64 %i.y, %indvars.iv              ; 3 uses
-  %i.ai = mul nuw nsw i64 %indvars.iv, %i.y
-  %4 = mul nuw nsw i64 %indvars.iv, %i.z
-  %invariant.gep.a = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.ai ; 6 uses
-  %invariant.gep142 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %4 ; 6 uses
-  %min.iters.check = icmp ult i64 %3, 4
+  %3 = mul nuw nsw i64 %indvars.iv, %i.y
+  %i.ai = mul nuw nsw i64 %indvars.iv, %i.z
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %3 ; 6 uses
+  %invariant.gep.a = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.ai ; 6 uses
+  %4 = sub nsw i64 %i.y, %indvars.iv              ; 3 uses
+  %min.iters.check = icmp ult i64 %4, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader
@@ -227,18 +227,18 @@ vector.memcheck:                                  ; preds = %.preheader
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %3, -4                         ; 3 uses
+  %n.vec = and i64 %4, -4                         ; 3 uses
   %i.an = add i64 %indvars.iv, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ao = add nuw i64 %indvars.iv, %index         ; 2 uses
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %i.ao ; 2 uses
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.ao ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %wide.load = load <2 x double>, ptr %i.ap, align 8, !tbaa !284, !alias.scope !442
   %wide.load158 = load <2 x double>, ptr %i.aq, align 8, !tbaa !284, !alias.scope !442
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %i.ao ; 2 uses
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %i.ao ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   store <2 x double> %wide.load, ptr %i.ar, align 8, !tbaa !284, !alias.scope !445, !noalias !442
   store <2 x double> %wide.load158, ptr %i.as, align 8, !tbaa !284, !alias.scope !445, !noalias !442
@@ -247,7 +247,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !447
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %4, %n.vec
   br i1 %cmp.n, label %.loopexit159, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader, %middle.block
@@ -260,9 +260,9 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv118.prol = phi i64 [ %indvars.iv.next119.prol, %scalar.ph.prol ], [ %indvars.iv118.ph, %scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %gep.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118.prol
+  %gep.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv118.prol
   %i.av = load double, ptr %gep.prol, align 8, !tbaa !284
-  %gep143.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv118.prol
+  %gep143.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118.prol
   store double %i.av, ptr %gep143.prol, align 8, !tbaa !284
   %indvars.iv.next119.prol = add nuw nsw i64 %indvars.iv118.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -303,24 +303,24 @@ bb.l:                                             ; preds = %bb.h
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv118 = phi i64 [ %indvars.iv.next119.3, %scalar.ph ], [ %indvars.iv118.unr, %scalar.ph.prol.loopexit ] ; 6 uses
-  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv118
   %i.bc = load double, ptr %gep, align 8, !tbaa !284
-  %gep143 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv118
+  %gep143 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118
   store double %i.bc, ptr %gep143, align 8, !tbaa !284
   %indvars.iv.next119 = add nuw nsw i64 %indvars.iv118, 1 ; 2 uses
-  %gep.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119
+  %gep.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next119
   %i.bd = load double, ptr %gep.1, align 8, !tbaa !284
-  %gep143.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv.next119
+  %gep143.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119
   store double %i.bd, ptr %gep143.1, align 8, !tbaa !284
   %indvars.iv.next119.1 = add nuw nsw i64 %indvars.iv118, 2 ; 2 uses
-  %gep.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.1
+  %gep.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next119.1
   %i.be = load double, ptr %gep.2, align 8, !tbaa !284
-  %gep143.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv.next119.1
+  %gep143.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.1
   store double %i.be, ptr %gep143.2, align 8, !tbaa !284
   %indvars.iv.next119.2 = add nuw nsw i64 %indvars.iv118, 3 ; 2 uses
-  %gep.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.2
+  %gep.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next119.2
   %i.bf = load double, ptr %gep.3, align 8, !tbaa !284
-  %gep143.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv.next119.2
+  %gep143.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.2
   store double %i.bf, ptr %gep143.3, align 8, !tbaa !284
   %indvars.iv.next119.3 = add nuw nsw i64 %indvars.iv118, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next119.3, %i.y
@@ -723,21 +723,20 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit45:        ; preds = %bb.c
   br label %.preheader87
 
 .preheader87:                                     ; preds = %.preheader87.preheader, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.preheader87.preheader ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
-  %i.ae = add nuw i64 %indvars.iv, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %wide.trip.count)
-  %3 = sub i64 %umax, %indvars.iv                 ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %4 = mul nuw nsw i64 %indvars.iv.next, %i.z
-  %5 = mul nuw nsw i64 %indvars.iv, %i.z
-  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %4 ; 2 uses
-  %invariant.gep124 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %5 ; 2 uses
-  %min.iters.check = icmp ult i64 %3, 4
+  %indvars.iv = phi i64 [ 0, %.preheader87.preheader ], [ %i.ae, %.loopexit ] ; 6 uses
+  %i.ae = add nuw nsw i64 %indvars.iv, 1          ; 4 uses
+  %3 = mul nuw nsw i64 %i.ae, %i.z
+  %4 = mul nuw nsw i64 %indvars.iv, %i.z
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %3 ; 2 uses
+  %invariant.gep124 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %4 ; 2 uses
+  %5 = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %wide.trip.count)
+  %6 = sub nsw i64 %5, %indvars.iv                ; 3 uses
+  %min.iters.check = icmp ult i64 %6, 4
   %brmerge = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader87
-  %n.vec = and i64 %3, -4                         ; 3 uses
+  %n.vec = and i64 %6, -4                         ; 3 uses
   %i.af = add i64 %indvars.iv, %n.vec
   br label %vector.body
 
@@ -758,7 +757,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.am, label %middle.block, label %vector.body, !llvm.loop !481
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %3, %n.vec
+  %cmp.n = icmp eq i64 %6, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader87, %middle.block
@@ -789,7 +788,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit64
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %i.ae, %wide.trip.count
   br i1 %exitcond.not, label %.preheader, label %.preheader87, !llvm.loop !482
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
@@ -1131,12 +1130,12 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit50:        ; preds = %bb.h
 
 .preheader:                                       ; preds = %.preheader.preheader, %.loopexit159
   %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next, %.loopexit159 ] ; 12 uses
-  %4 = sub nsw i64 %i.y, %indvars.iv              ; 3 uses
-  %i.ai = mul nuw nsw i64 %indvars.iv, %i.y
-  %5 = mul nuw nsw i64 %indvars.iv, %i.z
-  %invariant.gep.a = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.ai ; 6 uses
-  %invariant.gep142 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %5 ; 6 uses
-  %min.iters.check = icmp ult i64 %4, 4
+  %4 = mul nuw nsw i64 %indvars.iv, %i.y
+  %i.ai = mul nuw nsw i64 %indvars.iv, %i.z
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %4 ; 6 uses
+  %invariant.gep.a = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %i.ai ; 6 uses
+  %5 = sub nsw i64 %i.y, %indvars.iv              ; 3 uses
+  %min.iters.check = icmp ult i64 %5, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.preheader
@@ -1154,18 +1153,18 @@ vector.memcheck:                                  ; preds = %.preheader
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %4, -4                         ; 3 uses
+  %n.vec = and i64 %5, -4                         ; 3 uses
   %i.an = add i64 %indvars.iv, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %i.ao = add nuw i64 %indvars.iv, %index         ; 2 uses
-  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %i.ao ; 2 uses
+  %i.ap = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.ao ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
   %wide.load = load <2 x double>, ptr %i.ap, align 8, !tbaa !284, !alias.scope !491
   %wide.load158 = load <2 x double>, ptr %i.aq, align 8, !tbaa !284, !alias.scope !491
-  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %i.ao ; 2 uses
+  %i.ar = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %i.ao ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   store <2 x double> %wide.load, ptr %i.ar, align 8, !tbaa !284, !alias.scope !494, !noalias !491
   store <2 x double> %wide.load158, ptr %i.as, align 8, !tbaa !284, !alias.scope !494, !noalias !491
@@ -1174,7 +1173,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !496
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %.loopexit159, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.preheader, %middle.block
@@ -1187,9 +1186,9 @@ scalar.ph.preheader:                              ; preds = %vector.memcheck, %.
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader, %scalar.ph.prol
   %indvars.iv118.prol = phi i64 [ %indvars.iv.next119.prol, %scalar.ph.prol ], [ %indvars.iv118.ph, %scalar.ph.preheader ] ; 3 uses
   %prol.iter = phi i64 [ %prol.iter.next, %scalar.ph.prol ], [ 0, %scalar.ph.preheader ]
-  %gep.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118.prol
+  %gep.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv118.prol
   %i.av = load double, ptr %gep.prol, align 8, !tbaa !284
-  %gep143.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv118.prol
+  %gep143.prol = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118.prol
   store double %i.av, ptr %gep143.prol, align 8, !tbaa !284
   %indvars.iv.next119.prol = add nuw nsw i64 %indvars.iv118.prol, 1 ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
@@ -1230,24 +1229,24 @@ bb.l:                                             ; preds = %bb.h
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %indvars.iv118 = phi i64 [ %indvars.iv.next119.3, %scalar.ph ], [ %indvars.iv118.unr, %scalar.ph.prol.loopexit ] ; 6 uses
-  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv118
   %i.bc = load double, ptr %gep, align 8, !tbaa !284
-  %gep143 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv118
+  %gep143 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv118
   store double %i.bc, ptr %gep143, align 8, !tbaa !284
   %indvars.iv.next119 = add nuw nsw i64 %indvars.iv118, 1 ; 2 uses
-  %gep.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119
+  %gep.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next119
   %i.bd = load double, ptr %gep.1, align 8, !tbaa !284
-  %gep143.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv.next119
+  %gep143.1 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119
   store double %i.bd, ptr %gep143.1, align 8, !tbaa !284
   %indvars.iv.next119.1 = add nuw nsw i64 %indvars.iv118, 2 ; 2 uses
-  %gep.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.1
+  %gep.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next119.1
   %i.be = load double, ptr %gep.2, align 8, !tbaa !284
-  %gep143.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv.next119.1
+  %gep143.2 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.1
   store double %i.be, ptr %gep143.2, align 8, !tbaa !284
   %indvars.iv.next119.2 = add nuw nsw i64 %indvars.iv118, 3 ; 2 uses
-  %gep.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.2
+  %gep.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %indvars.iv.next119.2
   %i.bf = load double, ptr %gep.3, align 8, !tbaa !284
-  %gep143.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep142, i64 %indvars.iv.next119.2
+  %gep143.3 = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep.a, i64 %indvars.iv.next119.2
   store double %i.bf, ptr %gep143.3, align 8, !tbaa !284
   %indvars.iv.next119.3 = add nuw nsw i64 %indvars.iv118, 4 ; 2 uses
   %exitcond.not.3 = icmp eq i64 %indvars.iv.next119.3, %i.y
@@ -1611,21 +1610,20 @@ _ZN5Ipopt14DenseSymMatrix6ValuesEv.exit45:        ; preds = %bb.c
   br label %.preheader87
 
 .preheader87:                                     ; preds = %.preheader87.preheader, %.loopexit
-  %indvars.iv = phi i64 [ 0, %.preheader87.preheader ], [ %indvars.iv.next, %.loopexit ] ; 7 uses
-  %i.ae = add nuw i64 %indvars.iv, 1
-  %umax = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %wide.trip.count)
-  %4 = sub i64 %umax, %indvars.iv                 ; 3 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
-  %5 = mul nuw nsw i64 %indvars.iv.next, %i.z
-  %6 = mul nuw nsw i64 %indvars.iv, %i.z
-  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %5 ; 2 uses
-  %invariant.gep124 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %6 ; 2 uses
-  %min.iters.check = icmp ult i64 %4, 4
+  %indvars.iv = phi i64 [ 0, %.preheader87.preheader ], [ %i.ae, %.loopexit ] ; 6 uses
+  %i.ae = add nuw nsw i64 %indvars.iv, 1          ; 4 uses
+  %4 = mul nuw nsw i64 %i.ae, %i.z
+  %5 = mul nuw nsw i64 %indvars.iv, %i.z
+  %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %4 ; 2 uses
+  %invariant.gep124 = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %5 ; 2 uses
+  %6 = tail call i64 @llvm.umax.i64(i64 %i.ae, i64 %wide.trip.count)
+  %7 = sub nsw i64 %6, %indvars.iv                ; 3 uses
+  %min.iters.check = icmp ult i64 %7, 4
   %brmerge = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.preheader87
-  %n.vec = and i64 %4, -4                         ; 3 uses
+  %n.vec = and i64 %7, -4                         ; 3 uses
   %i.af = add i64 %indvars.iv, %n.vec
   br label %vector.body
 
@@ -1646,7 +1644,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.am, label %middle.block, label %vector.body, !llvm.loop !510
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i64 %7, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.preheader87, %middle.block
@@ -1679,7 +1677,7 @@ bb.e:                                             ; preds = %bb.c
   br label %_ZN5Ipopt8SmartPtrIKNS_6VectorEED2Ev.exit64
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %exitcond.not = icmp eq i64 %i.ae, %wide.trip.count
   br i1 %exitcond.not, label %.preheader, label %.preheader87, !llvm.loop !511
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %scalar.ph
