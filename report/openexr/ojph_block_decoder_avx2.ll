@@ -205,10 +205,10 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define internal fastcc void @_ZN4ojph5localL8mel_initEPNS0_10dec_mel_stEPhii(ptr nofree noundef nonnull writeonly captures(none) initializes((0, 25), (28, 36), (40, 48)) %0, ptr noundef %1, i32 noundef range(i32 2, -2147483648) %2, i32 noundef range(i32 2, 4080) %3) unnamed_addr #4 {
 bb.a:
   %i.a = zext nneg i32 %2 to i64
-  %i.b = getelementptr i8, ptr %1, i64 %i.a
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %i.a
   %i.c = zext nneg i32 %3 to i64
   %i.d = sub nsw i64 0, %i.c
-  %i.e = getelementptr i8, ptr %i.b, i64 %i.d     ; 4 uses
+  %i.e = getelementptr inbounds i8, ptr %i.b, i64 %i.d ; 4 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !60
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   store i32 0, ptr %i.f, align 8, !tbaa !61
@@ -362,7 +362,7 @@ bb.a:
   %i.d = add nsw i32 %3, -2                       ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 6 uses
   store i32 %i.d, ptr %i.e, align 4, !tbaa !28
-  %i.f = getelementptr i8, ptr %i.b, i64 -3       ; 4 uses
+  %i.f = getelementptr inbounds i8, ptr %i.b, i64 -3 ; 4 uses
   store ptr %i.f, ptr %0, align 8, !tbaa !65
   %i.g = load i8, ptr %i.c, align 1, !tbaa !10    ; 2 uses
   %i.h = lshr i8 %i.g, 4
@@ -530,7 +530,7 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit: ; preds = %._crit_edge, %.loop
   ret void
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.cj = getelementptr i8, ptr %i.b, i64 -4      ; 4 uses
+  %i.cj = getelementptr inbounds i8, ptr %i.b, i64 -4 ; 4 uses
   store ptr %i.cj, ptr %0, align 8, !tbaa !65
   %i.ck = load i8, ptr %i.f, align 1, !tbaa !10   ; 2 uses
   %i.cl = zext i8 %i.ck to i64                    ; 2 uses
@@ -551,7 +551,7 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit: ; preds = %._crit_edge, %.loop
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %.lr.ph
-  %i.cw = getelementptr i8, ptr %i.b, i64 -5      ; 4 uses
+  %i.cw = getelementptr inbounds i8, ptr %i.b, i64 -5 ; 4 uses
   store ptr %i.cw, ptr %0, align 8, !tbaa !65
   %i.cx = load i8, ptr %i.cj, align 1, !tbaa !10  ; 2 uses
   %i.cy = zext i8 %i.cx to i64                    ; 2 uses
@@ -572,7 +572,7 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit: ; preds = %._crit_edge, %.loop
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.2
 
 .lr.ph.2:                                         ; preds = %.lr.ph.1
-  %i.dj = getelementptr i8, ptr %i.b, i64 -6      ; 4 uses
+  %i.dj = getelementptr inbounds i8, ptr %i.b, i64 -6 ; 4 uses
   store ptr %i.dj, ptr %0, align 8, !tbaa !65
   %i.dk = load i8, ptr %i.cw, align 1, !tbaa !10  ; 2 uses
   %i.dl = zext i8 %i.dk to i64                    ; 2 uses
@@ -593,7 +593,7 @@ _ZN4ojph5localL8rev_readEPNS0_10rev_structE.exit: ; preds = %._crit_edge, %.loop
   br i1 %exitcond.not.2, label %._crit_edge, label %.lr.ph.3
 
 .lr.ph.3:                                         ; preds = %.lr.ph.2
-  %i.dw = getelementptr i8, ptr %i.b, i64 -7      ; 2 uses
+  %i.dw = getelementptr inbounds i8, ptr %i.b, i64 -7 ; 2 uses
   store ptr %i.dw, ptr %0, align 8, !tbaa !65
   %i.dx = load i8, ptr %i.dj, align 1, !tbaa !10  ; 2 uses
   %i.dy = zext i8 %i.dx to i64                    ; 2 uses
@@ -996,10 +996,10 @@ _ZN4ojph5localL9frwd_readILi0EEEvPNS0_16frwd_struct_avx2E.exit: ; preds = %bb.a,
 define internal fastcc void @_ZN4ojph5localL12rev_init_mrpEPNS0_10rev_structEPhii(ptr nofree noundef nonnull writeonly captures(none) initializes((0, 25)) %0, ptr noundef %1, i32 noundef range(i32 2, -2147483648) %2, i32 noundef %3) unnamed_addr #4 {
 bb.a:
   %i.a = zext nneg i32 %2 to i64
-  %i.b = getelementptr i8, ptr %1, i64 %i.a
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %i.a
   %i.c = sext i32 %3 to i64
-  %i.d = getelementptr i8, ptr %i.b, i64 %i.c     ; 2 uses
-  %i.e = getelementptr i8, ptr %i.d, i64 -1       ; 4 uses
+  %i.d = getelementptr inbounds i8, ptr %i.b, i64 %i.c ; 2 uses
+  %i.e = getelementptr inbounds i8, ptr %i.d, i64 -1 ; 4 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !65
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 8 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
@@ -1272,7 +1272,7 @@ _ZN4ojph5localL12rev_read_mrpEPNS0_10rev_structE.exit: ; preds = %bb.b, %.loopex
   ret void
 
 bb.f:                                             ; preds = %bb.a
-  %i.eg = getelementptr i8, ptr %i.d, i64 -2      ; 2 uses
+  %i.eg = getelementptr inbounds i8, ptr %i.d, i64 -2 ; 2 uses
   store ptr %i.eg, ptr %0, align 8, !tbaa !65
   %i.eh = load i8, ptr %i.e, align 1, !tbaa !10
   %i.ei = zext i8 %i.eh to i64

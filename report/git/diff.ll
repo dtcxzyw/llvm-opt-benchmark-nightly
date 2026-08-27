@@ -205,8 +205,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   ]
 
 .lr.ph.preheader.i:                               ; preds = %.preheader.i77
-  %4 = add i64 %.pre-phi, %i.cp                   ; 2 uses
-  %5 = sub i64 %4, %i.br                          ; 3 uses
+  %4 = sub i64 %i.cp, %i.br
+  %5 = add i64 %4, %.pre-phi                      ; 3 uses
   %scevgep.i = getelementptr i8, ptr %i.bq, i64 %5
   br label %.lr.ph.i
 
@@ -252,14 +252,14 @@ bb.y:                                             ; preds = %bb.x, %bb.x
 bb.z:                                             ; preds = %.lr.ph.i, %.lr.ph.i
   %.058.add.i = add nuw i64 %.058.idx80.i, 1      ; 3 uses
   %.058.ptr.i = getelementptr inbounds nuw i8, ptr %i.bq, i64 %.058.add.i ; 2 uses
-  %i.cv = ptrtoint ptr %.058.ptr.i to i64
+  %i.cv = ptrtoint ptr %.058.ptr.i to i64         ; 2 uses
   %exitcond.not.i = icmp eq i64 %.058.add.i, %5
   br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !519
 
 ._crit_edge.i:                                    ; preds = %bb.z, %.lr.ph.i
   %.058.idx.lcssa.i = phi i64 [ %.058.idx80.i, %.lr.ph.i ], [ %5, %bb.z ] ; 2 uses
   %.058.ptr.lcssa.i = phi ptr [ %.058.ptr81.i, %.lr.ph.i ], [ %scevgep.i, %bb.z ] ; 2 uses
-  %.lcssa76.i = phi i64 [ %i.ct, %.lr.ph.i ], [ %4, %bb.z ] ; 2 uses
+  %.lcssa76.i = phi i64 [ %i.ct, %.lr.ph.i ], [ %i.cv, %bb.z ] ; 2 uses
   %.not71.i = icmp eq i64 %.058.idx.lcssa.i, 2
   br i1 %.not71.i, label %._crit_edge.thread.i, label %bb.aa
 

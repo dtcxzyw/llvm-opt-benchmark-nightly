@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.e
   %i.m = ptrtoint ptr %i.z to i64
   %i.n = sub i64 %i.m, %i.l
-  %i.o = icmp samesign ugt i64 %i.n, 62
+  %i.o = icmp ugt i64 %i.n, 62
   br i1 %i.o, label %.loopexit121, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -273,7 +273,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
 bb.f:                                             ; preds = %bb.i
   %i.ar = ptrtoint ptr %i.be to i64
   %i.as = sub i64 %i.ar, %i.aq
-  %i.at = icmp samesign ugt i64 %i.as, 62
+  %i.at = icmp ugt i64 %i.as, 62
   br i1 %i.at, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f

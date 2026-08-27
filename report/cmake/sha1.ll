@@ -18,7 +18,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local void @rhash_sha1_update(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #1 {
+define dso_local void @rhash_sha1_update(ptr nofree noundef captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 3 uses
@@ -47,22 +47,22 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.a
-  %.137 = phi ptr [ %i.l, %bb.c ], [ %1, %bb.a ]  ; 3 uses
+  %.137 = phi ptr [ %i.l, %bb.c ], [ %1, %bb.a ]  ; 2 uses
   %.1 = phi i64 [ %i.m, %bb.c ], [ %2, %bb.a ]    ; 3 uses
   %i.n = icmp ugt i64 %.1, 63
   br i1 %i.n, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.d
-  %.13749 = ptrtoaddr ptr %.137 to i64
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %3 = and i64 %.13749, 3
-  %4 = icmp eq i64 %3, 0
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph, %bb.g
   %.246 = phi i64 [ %.1, %.lr.ph ], [ %i.q, %bb.g ]
-  %.23845 = phi ptr [ %.137, %.lr.ph ], [ %i.p, %bb.g ] ; 3 uses
-  br i1 %4, label %bb.g, label %bb.f
+  %.23845 = phi ptr [ %.137, %.lr.ph ], [ %i.p, %bb.g ] ; 4 uses
+  %3 = ptrtoint ptr %.23845 to i64
+  %4 = and i64 %3, 3
+  %5 = icmp eq i64 %4, 0
+  br i1 %5, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 1 dereferenceable(64) %.23845, i64 64, i1 false)

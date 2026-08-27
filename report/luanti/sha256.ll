@@ -29,7 +29,7 @@ bb.a:
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local noundef i32 @SHA256_Update(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef %2) local_unnamed_addr #2 {
+define dso_local noundef i32 @SHA256_Update(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = icmp eq i64 %2, 0
   br i1 %i.a, label %bb.i, label %._crit_edge
@@ -120,9 +120,8 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #3
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @sha256_block_data_order(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(address) %1, i64 noundef range(i64 1, 288230376151711744) %2) unnamed_addr #2 {
+define internal fastcc void @sha256_block_data_order(ptr nofree noundef captures(none) %0, ptr noundef %1, i64 noundef range(i64 1, 288230376151711744) %2) unnamed_addr #2 {
 bb.a:
-  %3 = ptrtoaddr ptr %1 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
@@ -138,13 +137,11 @@ bb.a:
   %.promoted626 = load i32, ptr %i.e, align 4, !tbaa !9
   %.promoted627 = load i32, ptr %i.f, align 4, !tbaa !9
   %.promoted628 = load i32, ptr %i.g, align 4, !tbaa !9
-  %4 = and i64 %3, 3
-  %5 = icmp eq i64 %4, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.g
   %.in = phi i64 [ %2, %bb.a ], [ %i.p, %bb.g ]
-  %.070629 = phi ptr [ %1, %bb.a ], [ %i.apz, %bb.g ] ; 21 uses
+  %.070629 = phi ptr [ %1, %bb.a ], [ %i.apz, %bb.g ] ; 22 uses
   %i.h = phi i32 [ %.promoted, %bb.a ], [ %i.aqa, %bb.g ] ; 13 uses
   %i.i = phi i32 [ %.promoted622, %bb.a ], [ %i.aqb, %bb.g ] ; 6 uses
   %i.j = phi i32 [ %.promoted623, %bb.a ], [ %i.aqc, %bb.g ] ; 4 uses
@@ -154,6 +151,9 @@ bb.b:                                             ; preds = %bb.a, %bb.g
   %i.n = phi i32 [ %.promoted627, %bb.a ], [ %i.aqg, %bb.g ] ; 3 uses
   %i.o = phi i32 [ %.promoted628, %bb.a ], [ %i.aqh, %bb.g ] ; 2 uses
   %i.p = add nsw i64 %.in, -1                     ; 2 uses
+  %3 = ptrtoint ptr %.070629 to i64
+  %4 = and i64 %3, 3
+  %5 = icmp eq i64 %4, 0
   %i.q = getelementptr inbounds nuw i8, ptr %.070629, i64 4 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %.070629, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.070629, i64 12 ; 2 uses
@@ -556,14 +556,14 @@ bb.h:                                             ; preds = %bb.g
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @SHA256_Transform(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #2 {
+define dso_local void @SHA256_Transform(ptr nofree noundef captures(none) %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
   tail call fastcc void @sha256_block_data_order(ptr noundef %0, ptr noundef %1, i64 noundef 1)
   ret void
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local range(i32 0, 2) i32 @SHA256_Final(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(address) %1) local_unnamed_addr #2 {
+define dso_local range(i32 0, 2) i32 @SHA256_Final(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -674,7 +674,7 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef nonnull ptr @SHA256(ptr nofree noundef readonly captures(address) %0, i64 noundef %1, ptr nofree noundef writeonly captures(address_is_null, ret: address, provenance) %2) local_unnamed_addr #4 {
+define dso_local noundef nonnull ptr @SHA256(ptr noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(address_is_null, ret: address, provenance) %2) local_unnamed_addr #4 {
 bb.a:
   %3 = alloca %struct.SHA256state_st, align 16    ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
