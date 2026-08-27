@@ -205,15 +205,15 @@ bb.j:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %0, align 8, !tbaa !47
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 384
   %i.z = load ptr, ptr %i.y, align 8
-  %i.aa = tail call noundef zeroext i1 %i.z(ptr noundef nonnull align 8 dereferenceable(108) %0, i32 noundef %2)
-  %i.ab = zext i1 %i.aa to i8                     ; 2 uses
+  %i.aa = tail call noundef zeroext i1 %i.z(ptr noundef nonnull align 8 dereferenceable(108) %0, i32 noundef %2) ; 2 uses
+  %i.ab = zext i1 %i.aa to i8
   store i8 %i.ab, ptr %i.b, align 1, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #41
   %i.ac = load ptr, ptr %i.k, align 8, !tbaa !47
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 384
   %i.ae = load ptr, ptr %i.ad, align 8
-  %i.af = tail call noundef zeroext i1 %i.ae(ptr noundef nonnull align 8 dereferenceable(108) %i.k, i32 noundef %3)
-  %i.ag = zext i1 %i.af to i8                     ; 2 uses
+  %i.af = tail call noundef zeroext i1 %i.ae(ptr noundef nonnull align 8 dereferenceable(108) %i.k, i32 noundef %3) ; 2 uses
+  %i.ag = zext i1 %i.af to i8
   store i8 %i.ag, ptr %i.c, align 1, !tbaa !56
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 25
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !1203, !range !162, !noundef !163
@@ -237,7 +237,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.j
-  %i.ap = tail call i32 @llvm.ucmp.i32.i8(i8 %i.ab, i8 %i.ag)
+  %i.ap = tail call i32 @llvm.ucmp.i32.i1(i1 %i.aa, i1 %i.af)
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -639,6 +639,9 @@ declare i64 @llvm.smax.i64(i64, i64) #22
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i1(i1, i1) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.cttz.i16(i16, i1 immarg) #25

@@ -205,23 +205,32 @@ bb.b:                                             ; preds = %bb.a
   %narrow1.i.i.i.i = select i1 %i.h, i8 %i.g, i8 2 ; 2 uses
   %i.i = icmp eq i8 %narrow.i.i.i.i, 2
   %i.j = icmp eq i8 %narrow1.i.i.i.i, 2
-  %or.cond.i.i.i.i = and i1 %i.i, %i.j            ; 2 uses
-  %.0.val.narrow.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val.i.i, i8 %narrow.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val1.i.i, i8 %narrow1.i.i.i.i
-  %3 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i, %.0.val1.narrow1.i.i.i.i ; 2 uses
-  %.not36 = icmp eq i64 %1, 2                     ; 2 uses
-  br i1 %3, label %.preheader.a, label %.preheader26
+  %or.cond.i.i.i.i = and i1 %i.i, %i.j
+  br i1 %or.cond.i.i.i.i, label %.split, label %.preheader26
+
+.split:                                           ; preds = %bb.b
+  %3 = icmp samesign ult i8 %.val.i.i, %.val1.i.i
+  br i1 %3, label %.preheader, label %.preheader.a
+
+.preheader:                                       ; preds = %.preheader26, %.split
+  %.not40 = icmp eq i64 %1, 2
+  br i1 %.not40, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph32
 
 .preheader26:                                     ; preds = %bb.b
-  br i1 %.not36, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph
+  %4 = icmp samesign ult i8 %narrow.i.i.i.i, %narrow1.i.i.i.i
+  br i1 %4, label %.preheader, label %.preheader.a
 
-.preheader.a:                                     ; preds = %bb.b
-  br i1 %.not36, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph32
+.preheader.a:                                     ; preds = %.preheader26, %.split
+  %.not = icmp eq i64 %1, 2
+  br i1 %.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph
 
-.lr.ph:                                           ; preds = %.preheader26, %bb.c
-  %.val1.i.i9 = phi i8 [ %.val.i.i8, %bb.c ], [ %.val.i.i, %.preheader26 ] ; 3 uses
-  %.sroa.01.0.i28 = phi i64 [ %i.s, %bb.c ], [ 2, %.preheader26 ] ; 3 uses
+.lr.ph:                                           ; preds = %.preheader.a, %bb.c
+  %.val1.i.i9 = phi i8 [ %.val.i.i8, %bb.c ], [ %.val.i.i, %.preheader.a ] ; 3 uses
+  %.sroa.01.0.i28 = phi i64 [ %i.s, %bb.c ], [ 2, %.preheader.a ] ; 5 uses
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.0.i28
+  %5 = add nsw i64 %.sroa.01.0.i28, -1
+  %6 = icmp samesign ult i64 %5, %1
+  tail call void @llvm.assume(i1 %6)
   %.val4 = load ptr, ptr %i.k, align 8, !nonnull !17, !noundef !17
   %.val.i.i8 = load i8, ptr %.val4, align 1, !range !1400, !noundef !17 ; 5 uses
   %i.l = icmp ne i8 %.val.i.i8, 6
@@ -234,21 +243,29 @@ bb.b:                                             ; preds = %bb.a
   %narrow1.i.i.i.i11 = select i1 %i.p, i8 %i.o, i8 2 ; 2 uses
   %i.q = icmp eq i8 %narrow.i.i.i.i10, 2
   %i.r = icmp eq i8 %narrow1.i.i.i.i11, 2
-  %or.cond.i.i.i.i12 = and i1 %i.q, %i.r          ; 2 uses
-  %.0.val.narrow.i.i.i.i13 = select i1 %or.cond.i.i.i.i12, i8 %.val.i.i8, i8 %narrow.i.i.i.i10
-  %.0.val1.narrow1.i.i.i.i14 = select i1 %or.cond.i.i.i.i12, i8 %.val1.i.i9, i8 %narrow1.i.i.i.i11
-  %4 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i13, %.0.val1.narrow1.i.i.i.i14
-  br i1 %4, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %bb.c
+  %or.cond.i.i.i.i12 = and i1 %i.q, %i.r
+  br i1 %or.cond.i.i.i.i12, label %.split24, label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14
 
-bb.c:                                             ; preds = %.lr.ph
+.split24:                                         ; preds = %.lr.ph
+  %7 = icmp samesign ult i8 %.val.i.i8, %.val1.i.i9
+  br i1 %7, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %bb.c
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14: ; preds = %.lr.ph
+  %8 = icmp samesign ult i8 %narrow.i.i.i.i10, %narrow1.i.i.i.i11
+  br i1 %8, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %bb.c
+
+bb.c:                                             ; preds = %.split24, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14
   %i.s = add nuw nsw i64 %.sroa.01.0.i28, 1       ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, %1
-  br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit.thread, label %.lr.ph
+  br i1 %exitcond.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph
 
-.lr.ph32:                                         ; preds = %.preheader.a, %bb.d
-  %.val1.i.i16 = phi i8 [ %.val.i.i15, %bb.d ], [ %.val.i.i, %.preheader.a ] ; 3 uses
-  %.sroa.01.1.i31 = phi i64 [ %i.ab, %bb.d ], [ 2, %.preheader.a ] ; 3 uses
+.lr.ph32:                                         ; preds = %.preheader, %bb.d
+  %.val1.i.i16 = phi i8 [ %.val.i.i15, %bb.d ], [ %.val.i.i, %.preheader ] ; 3 uses
+  %.sroa.01.1.i31 = phi i64 [ %i.ab, %bb.d ], [ 2, %.preheader ] ; 5 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.01.1.i31
+  %9 = add nsw i64 %.sroa.01.1.i31, -1
+  %10 = icmp samesign ult i64 %9, %1
+  tail call void @llvm.assume(i1 %10)
   %.val = load ptr, ptr %i.t, align 8, !nonnull !17, !noundef !17
   %.val.i.i15 = load i8, ptr %.val, align 1, !range !1400, !noundef !17 ; 5 uses
   %i.u = icmp ne i8 %.val.i.i15, 6
@@ -261,26 +278,32 @@ bb.c:                                             ; preds = %.lr.ph
   %narrow1.i.i.i.i18 = select i1 %i.y, i8 %i.x, i8 2 ; 2 uses
   %i.z = icmp eq i8 %narrow.i.i.i.i17, 2
   %i.aa = icmp eq i8 %narrow1.i.i.i.i18, 2
-  %or.cond.i.i.i.i19 = and i1 %i.z, %i.aa         ; 2 uses
-  %.0.val.narrow.i.i.i.i20 = select i1 %or.cond.i.i.i.i19, i8 %.val.i.i15, i8 %narrow.i.i.i.i17
-  %.0.val1.narrow1.i.i.i.i21 = select i1 %or.cond.i.i.i.i19, i8 %.val1.i.i16, i8 %narrow1.i.i.i.i18
-  %5 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i20, %.0.val1.narrow1.i.i.i.i21
-  br i1 %5, label %bb.d, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
+  %or.cond.i.i.i.i19 = and i1 %i.z, %i.aa
+  br i1 %or.cond.i.i.i.i19, label %.split25, label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21
 
-bb.d:                                             ; preds = %.lr.ph32
+.split25:                                         ; preds = %.lr.ph32
+  %11 = icmp samesign ult i8 %.val.i.i15, %.val1.i.i16
+  br i1 %11, label %bb.d, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21: ; preds = %.lr.ph32
+  %12 = icmp samesign ult i8 %narrow.i.i.i.i17, %narrow1.i.i.i.i18
+  br i1 %12, label %bb.d, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
+
+bb.d:                                             ; preds = %.split25, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21
   %i.ab = add nuw nsw i64 %.sroa.01.1.i31, 1      ; 2 uses
   %exitcond39.not = icmp eq i64 %i.ab, %1
-  br i1 %exitcond39.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit.thread, label %.lr.ph32
+  br i1 %exitcond39.not, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %.lr.ph32
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %.lr.ph, %.lr.ph32, %.preheader26, %.preheader.a
-  %.sroa.0.0.i = phi i64 [ 2, %.preheader26 ], [ 2, %.preheader.a ], [ %.sroa.01.1.i31, %.lr.ph32 ], [ %.sroa.01.0.i28, %.lr.ph ] ; 2 uses
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14, %bb.c, %.split24, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21, %bb.d, %.split25, %.preheader.a, %.preheader
+  %.sroa.3.0.i = phi i1 [ true, %.preheader ], [ false, %.preheader.a ], [ true, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21 ], [ true, %.split25 ], [ true, %bb.d ], [ false, %.split24 ], [ false, %bb.c ], [ false, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14 ]
+  %.sroa.0.0.i = phi i64 [ 2, %.preheader ], [ 2, %.preheader.a ], [ %.sroa.01.1.i31, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21 ], [ %1, %bb.d ], [ %.sroa.01.1.i31, %.split25 ], [ %.sroa.01.0.i28, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14 ], [ %1, %bb.c ], [ %.sroa.01.0.i28, %.split24 ] ; 2 uses
   %i.ac = icmp samesign ule i64 %.sroa.0.0.i, %1
   tail call void @llvm.assume(i1 %i.ac)
   %i.ad = icmp eq i64 %.sroa.0.0.i, %1
   br i1 %i.ad, label %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit.thread, label %bb.e
 
-_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit.thread: ; preds = %bb.c, %bb.d, %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
-  br i1 %3, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType12split_at_mutCsEhZmuQNqkz_11ruff_linter.exit11.preheader.i.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType7reverseCsEhZmuQNqkz_11ruff_linter.exit
+_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit.thread: ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
+  br i1 %.sroa.3.0.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType12split_at_mutCsEhZmuQNqkz_11ruff_linter.exit11.preheader.i.i, label %_RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonType7reverseCsEhZmuQNqkz_11ruff_linter.exit
 
 bb.e:                                             ; preds = %_RINvNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared17find_existing_runRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB12_NtNtB8_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
   %i.ae = or i64 %1, 1
@@ -683,38 +706,65 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.r = add nsw i8 %.val1.i.i, -4
   %i.s = icmp samesign ugt i8 %.val1.i.i, 3
   %narrow1.i.i.i.i = select i1 %i.s, i8 %i.r, i8 2 ; 3 uses
-  %4 = icmp eq i8 %narrow.i.i.i.i, 2              ; 2 uses
-  %i.t = icmp eq i8 %narrow1.i.i.i.i, 2           ; 2 uses
-  %or.cond.i.i.i.i = and i1 %4, %i.t              ; 2 uses
-  %.0.val.narrow.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val.i.i, i8 %narrow.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val1.i.i, i8 %narrow1.i.i.i.i
-  %5 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i, %.0.val1.narrow1.i.i.i.i ; 2 uses
+  %i.t = icmp eq i8 %narrow.i.i.i.i, 2            ; 2 uses
+  %i.u = icmp eq i8 %narrow1.i.i.i.i, 2           ; 2 uses
+  %or.cond.i.i.i.i19.a = and i1 %i.t, %i.u
+  br i1 %or.cond.i.i.i.i19.a, label %6, label %4
+
+4:                                                ; preds = %bb.c
+  %5 = icmp samesign ult i8 %narrow.i.i.i.i, %narrow1.i.i.i.i
+  br label %bb.d
+
+6:                                                ; preds = %bb.c
+  %7 = icmp samesign ult i8 %.val.i.i, %.val1.i.i
+  br label %bb.d
+
+bb.d:                                             ; preds = %4, %6
+  %.sroa.0.0.i.i.i.i = phi i1 [ %7, %6 ], [ %5, %4 ] ; 2 uses
   %.sroa.08.0.val12 = load ptr, ptr %.sroa.08.0, align 8, !nonnull !17, !noundef !17
   %.val1.i.i16 = load i8, ptr %.sroa.08.0.val12, align 1, !range !1400, !noundef !17 ; 5 uses
-  %6 = icmp ne i8 %.val1.i.i16, 6
-  tail call void @llvm.assume(i1 %6)
-  %7 = add nsw i8 %.val1.i.i16, -4
-  %8 = icmp samesign ugt i8 %.val1.i.i16, 3
-  %narrow1.i.i.i.i18 = select i1 %8, i8 %7, i8 2  ; 3 uses
-  %i.u = icmp eq i8 %narrow1.i.i.i.i18, 2         ; 2 uses
-  %or.cond.i.i.i.i19.a = and i1 %4, %i.u          ; 2 uses
-  %.0.val.narrow.i.i.i.i20 = select i1 %or.cond.i.i.i.i19.a, i8 %.val.i.i, i8 %narrow.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i21 = select i1 %or.cond.i.i.i.i19.a, i8 %.val1.i.i16, i8 %narrow1.i.i.i.i18
-  %9 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i20, %.0.val1.narrow1.i.i.i.i21
-  %10 = xor i1 %5, %9
-  br i1 %10, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot7median3RNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYBZ_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %bb.d
+  %8 = icmp ne i8 %.val1.i.i16, 6
+  tail call void @llvm.assume(i1 %8)
+  %9 = add nsw i8 %.val1.i.i16, -4
+  %10 = icmp samesign ugt i8 %.val1.i.i16, 3
+  %narrow1.i.i.i.i18 = select i1 %10, i8 %9, i8 2 ; 3 uses
+  %11 = icmp eq i8 %narrow1.i.i.i.i18, 2          ; 2 uses
+  %or.cond.i.i.i.i19 = and i1 %i.t, %11
+  br i1 %or.cond.i.i.i.i19, label %14, label %12
 
-bb.d:                                             ; preds = %bb.c
-  %or.cond.i.i.i.i26 = and i1 %i.t, %i.u          ; 2 uses
-  %.0.val.narrow.i.i.i.i27 = select i1 %or.cond.i.i.i.i26, i8 %.val1.i.i, i8 %narrow1.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i28 = select i1 %or.cond.i.i.i.i26, i8 %.val1.i.i16, i8 %narrow1.i.i.i.i18
-  %11 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i27, %.0.val1.narrow1.i.i.i.i28
-  %12 = xor i1 %5, %11
-  %..i = select i1 %12, ptr %.sroa.08.0, ptr %.sroa.04.0
+12:                                               ; preds = %bb.d
+  %13 = icmp samesign ult i8 %narrow.i.i.i.i, %narrow1.i.i.i.i18
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21
+
+14:                                               ; preds = %bb.d
+  %15 = icmp samesign ult i8 %.val.i.i, %.val1.i.i16
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21: ; preds = %12, %14
+  %.sroa.0.0.i.i.i.i20 = phi i1 [ %15, %14 ], [ %13, %12 ]
+  %16 = xor i1 %.sroa.0.0.i.i.i.i, %.sroa.0.0.i.i.i.i20
+  br i1 %16, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot7median3RNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYBZ_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %17
+
+17:                                               ; preds = %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21
+  %or.cond.i.i.i.i26 = and i1 %i.u, %11
+  br i1 %or.cond.i.i.i.i26, label %20, label %18
+
+18:                                               ; preds = %17
+  %19 = icmp samesign ult i8 %narrow1.i.i.i.i, %narrow1.i.i.i.i18
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit28
+
+20:                                               ; preds = %17
+  %21 = icmp samesign ult i8 %.val1.i.i, %.val1.i.i16
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit28
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit28: ; preds = %18, %20
+  %.sroa.0.0.i.i.i.i27 = phi i1 [ %21, %20 ], [ %19, %18 ]
+  %22 = xor i1 %.sroa.0.0.i.i.i.i, %.sroa.0.0.i.i.i.i27
+  %..i = select i1 %22, ptr %.sroa.08.0, ptr %.sroa.04.0
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot7median3RNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYBZ_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
 
-_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot7median3RNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYBZ_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.c, %bb.d
-  %.sroa.0.0.i = phi ptr [ %.sroa.0.0, %bb.c ], [ %..i, %bb.d ]
+_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot7median3RNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYBZ_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit28
+  %.sroa.0.0.i = phi ptr [ %.sroa.0.0, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21 ], [ %..i, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit28 ]
   ret ptr %.sroa.0.0.i
 }
 
@@ -784,11 +834,9 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.r)
   %i.ah = load i8, ptr %i.u, align 8, !range !1799, !alias.scope !1793, !noalias !1796, !noundef !17
-  %5 = zext nneg i8 %i.ah to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 8
   %i.aj = load i8, ptr %i.ai, align 8, !range !1799, !alias.scope !1796, !noalias !1793, !noundef !17
-  %6 = zext nneg i8 %i.aj to i64
-  %i.ak = tail call i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.ak = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ah, i8 %i.aj)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit: ; preds = %bb.c, %bb.e, %bb.f
@@ -830,11 +878,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.an)
   %i.bd = load i8, ptr %i.aq, align 8, !range !1799, !alias.scope !1800, !noalias !1803, !noundef !17
-  %7 = zext nneg i8 %i.bd to i64
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 8
   %i.bf = load i8, ptr %i.be, align 8, !range !1799, !alias.scope !1803, !noalias !1800, !noundef !17
-  %8 = zext nneg i8 %i.bf to i64
-  %i.bg = tail call i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.bg = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bd, i8 %i.bf)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit20
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit20: ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit, %bb.h, %bb.i
@@ -877,11 +923,9 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   tail call void @llvm.assume(i1 %i.an)
   %i.ca = load i8, ptr %i.bn, align 8, !range !1799, !alias.scope !1806, !noalias !1809, !noundef !17
-  %9 = zext nneg i8 %i.ca to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 8
   %i.cc = load i8, ptr %i.cb, align 8, !range !1799, !alias.scope !1809, !noalias !1806, !noundef !17
-  %10 = zext nneg i8 %i.cc to i64
-  %i.cd = tail call i8 @llvm.scmp.i8.i64(i64 %9, i64 %10)
+  %i.cd = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ca, i8 %i.cc)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit26
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit26: ; preds = %bb.j, %bb.l, %bb.m
@@ -1284,11 +1328,9 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.r)
   %i.ah = load i8, ptr %i.u, align 8, !range !1799, !alias.scope !2079, !noalias !2082, !noundef !17
-  %5 = zext nneg i8 %i.ah to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 8
   %i.aj = load i8, ptr %i.ai, align 8, !range !1799, !alias.scope !2082, !noalias !2079, !noundef !17
-  %6 = zext nneg i8 %i.aj to i64
-  %i.ak = tail call i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.ak = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ah, i8 %i.aj)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit: ; preds = %bb.c, %bb.e, %bb.f
@@ -1330,11 +1372,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.an)
   %i.bd = load i8, ptr %i.aq, align 8, !range !1799, !alias.scope !2085, !noalias !2088, !noundef !17
-  %7 = zext nneg i8 %i.bd to i64
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 8
   %i.bf = load i8, ptr %i.be, align 8, !range !1799, !alias.scope !2088, !noalias !2085, !noundef !17
-  %8 = zext nneg i8 %i.bf to i64
-  %i.bg = tail call i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.bg = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bd, i8 %i.bf)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit20
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit20: ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit, %bb.h, %bb.i
@@ -1377,11 +1417,9 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   tail call void @llvm.assume(i1 %i.an)
   %i.ca = load i8, ptr %i.bn, align 8, !range !1799, !alias.scope !2091, !noalias !2094, !noundef !17
-  %9 = zext nneg i8 %i.ca to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 8
   %i.cc = load i8, ptr %i.cb, align 8, !range !1799, !alias.scope !2094, !noalias !2091, !noundef !17
-  %10 = zext nneg i8 %i.cc to i64
-  %i.cd = tail call i8 @llvm.scmp.i8.i64(i64 %9, i64 %10)
+  %i.cd = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ca, i8 %i.cc)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit26
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit26: ; preds = %bb.j, %bb.l, %bb.m
@@ -1462,11 +1500,9 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   tail call void @llvm.assume(i1 %i.r)
   %i.ah = load i8, ptr %i.u, align 8, !range !1799, !alias.scope !2097, !noalias !2100, !noundef !17
-  %5 = zext nneg i8 %i.ah to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.04.0.val14, i64 8
   %i.aj = load i8, ptr %i.ai, align 8, !range !1799, !alias.scope !2100, !noalias !2097, !noundef !17
-  %6 = zext nneg i8 %i.aj to i64
-  %i.ak = tail call i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.ak = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ah, i8 %i.aj)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit: ; preds = %bb.c, %bb.e, %bb.f
@@ -1508,11 +1544,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   tail call void @llvm.assume(i1 %i.an)
   %i.bd = load i8, ptr %i.aq, align 8, !range !1799, !alias.scope !2103, !noalias !2106, !noundef !17
-  %7 = zext nneg i8 %i.bd to i64
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 8
   %i.bf = load i8, ptr %i.be, align 8, !range !1799, !alias.scope !2106, !noalias !2103, !noundef !17
-  %8 = zext nneg i8 %i.bf to i64
-  %i.bg = tail call i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.bg = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bd, i8 %i.bf)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit20
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit20: ; preds = %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit, %bb.h, %bb.i
@@ -1555,11 +1589,9 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   tail call void @llvm.assume(i1 %i.an)
   %i.ca = load i8, ptr %i.bn, align 8, !range !1799, !alias.scope !2109, !noalias !2112, !noundef !17
-  %9 = zext nneg i8 %i.ca to i64
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.08.0.val12, i64 8
   %i.cc = load i8, ptr %i.cb, align 8, !range !1799, !alias.scope !2112, !noalias !2109, !noundef !17
-  %10 = zext nneg i8 %i.cc to i64
-  %i.cd = tail call i8 @llvm.scmp.i8.i64(i64 %9, i64 %10)
+  %i.cd = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ca, i8 %i.cc)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit26
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit26: ; preds = %bb.j, %bb.l, %bb.m
@@ -1962,11 +1994,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.r)
   %i.ah = load i8, ptr %i.u, align 8, !range !1799, !alias.scope !2824, !noalias !2829, !noundef !17
-  %6 = zext nneg i8 %i.ah to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %.val10.i, i64 8
   %i.aj = load i8, ptr %i.ai, align 8, !range !1799, !alias.scope !2827, !noalias !2830, !noundef !17
-  %7 = zext nneg i8 %i.aj to i64
-  %i.ak = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.ak = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ah, i8 %i.aj)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit.i: ; preds = %bb.e, %bb.d, %.preheader
@@ -2029,11 +2059,9 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   tail call void @llvm.assume(i1 %i.ba)
   %i.bq = load i8, ptr %i.bd, align 8, !range !1799, !alias.scope !2835, !noalias !2840, !noundef !17
-  %8 = zext nneg i8 %i.bq to i64
   %i.br = getelementptr inbounds nuw i8, ptr %.val.i19, i64 8
   %i.bs = load i8, ptr %i.br, align 8, !range !1799, !alias.scope !2838, !noalias !2841, !noundef !17
-  %9 = zext nneg i8 %i.bs to i64
-  %i.bt = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.bt = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bq, i8 %i.bs)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit.i22
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSection7sort_byNCNvXs1_NtBC_8settingsNtB1Z_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts4_0E0BG_.exit.i22: ; preds = %bb.h, %bb.g, %.lr.ph.i
@@ -2436,11 +2464,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.r)
   %i.ah = load i8, ptr %i.u, align 8, !range !1799, !alias.scope !3092, !noalias !3097, !noundef !17
-  %6 = zext nneg i8 %i.ah to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %.val10.i, i64 8
   %i.aj = load i8, ptr %i.ai, align 8, !range !1799, !alias.scope !3095, !noalias !3098, !noundef !17
-  %7 = zext nneg i8 %i.aj to i64
-  %i.ak = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.ak = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ah, i8 %i.aj)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit.i: ; preds = %bb.e, %bb.d, %.preheader
@@ -2502,11 +2528,9 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   tail call void @llvm.assume(i1 %i.az)
   %i.bp = load i8, ptr %i.bc, align 8, !range !1799, !alias.scope !3103, !noalias !3108, !noundef !17
-  %8 = zext nneg i8 %i.bp to i64
   %i.bq = getelementptr inbounds nuw i8, ptr %.val.i19, i64 8
   %i.br = load i8, ptr %i.bq, align 8, !range !1799, !alias.scope !3106, !noalias !3109, !noundef !17
-  %9 = zext nneg i8 %i.br to i64
-  %i.bs = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.bs = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bp, i8 %i.br)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit.i22
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXs1_NtBD_8settingsNtB2n_8SettingsNtNtCs4NRVxsYgnAr_4core3fmt7Display3fmts5_0E0BH_.exit.i22: ; preds = %bb.h, %bb.g, %.lr.ph.i
@@ -2610,11 +2634,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   tail call void @llvm.assume(i1 %i.r)
   %i.ah = load i8, ptr %i.u, align 8, !range !1799, !alias.scope !3119, !noalias !3124, !noundef !17
-  %6 = zext nneg i8 %i.ah to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %.val10.i, i64 8
   %i.aj = load i8, ptr %i.ai, align 8, !range !1799, !alias.scope !3122, !noalias !3125, !noundef !17
-  %7 = zext nneg i8 %i.aj to i64
-  %i.ak = tail call i8 @llvm.scmp.i8.i64(i64 %6, i64 %7)
+  %i.ak = tail call i8 @llvm.ucmp.i8.i8(i8 %i.ah, i8 %i.aj)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit.i
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit.i: ; preds = %bb.e, %bb.d, %.preheader
@@ -2676,11 +2698,9 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   tail call void @llvm.assume(i1 %i.az)
   %i.bp = load i8, ptr %i.bc, align 8, !range !1799, !alias.scope !3130, !noalias !3135, !noundef !17
-  %8 = zext nneg i8 %i.bp to i64
   %i.bq = getelementptr inbounds nuw i8, ptr %.val.i19, i64 8
   %i.br = load i8, ptr %i.bq, align 8, !range !1799, !alias.scope !3133, !noalias !3136, !noundef !17
-  %9 = zext nneg i8 %i.br to i64
-  %i.bs = tail call i8 @llvm.scmp.i8.i64(i64 %8, i64 %9)
+  %i.bs = tail call i8 @llvm.ucmp.i8.i8(i8 %i.bp, i8 %i.br)
   br label %_RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit.i22
 
 _RNCINvMNtCscdodAO9FK5_5alloc5sliceSTRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionRNtNtB7_6string6StringE7sort_byNCNvXsk_NtCskRasR9DNdfH_10ruff_cache9cache_keyINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapBz_B1L_NtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherENtB2n_8CacheKey9cache_key0E0BH_.exit.i22: ; preds = %bb.h, %bb.g, %.lr.ph.i
@@ -3083,16 +3103,25 @@ bb.e:                                             ; preds = %.lr.ph
   %narrow1.i.i.i.i = select i1 %i.u, i8 %i.t, i8 2 ; 2 uses
   %i.v = icmp eq i8 %narrow.i.i.i.i, 2
   %i.w = icmp eq i8 %narrow1.i.i.i.i, 2
-  %or.cond.i.i.i.i = and i1 %i.v, %i.w            ; 2 uses
-  %.0.val.narrow.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val.i.i, i8 %narrow.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val1.i.i, i8 %narrow1.i.i.i.i
-  %3 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i, %.0.val1.narrow1.i.i.i.i
-  %4 = zext i1 %3 to i64
-  %5 = add nuw nsw i64 %i.j, %4
+  %or.cond.i.i.i.i = and i1 %i.v, %i.w
+  br i1 %or.cond.i.i.i.i, label %5, label %3
+
+3:                                                ; preds = %bb.e
+  %4 = icmp samesign ult i8 %narrow.i.i.i.i, %narrow1.i.i.i.i
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit
+
+5:                                                ; preds = %bb.e
+  %6 = icmp samesign ult i8 %.val.i.i, %.val1.i.i
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit: ; preds = %3, %5
+  %.sroa.0.0.i.i.i.i = phi i1 [ %6, %5 ], [ %4, %3 ]
+  %7 = zext i1 %.sroa.0.0.i.i.i.i to i64
+  %8 = add nuw nsw i64 %i.j, %7
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %.lr.ph
-  %.sroa.04.0.i = phi i64 [ %5, %bb.e ], [ %i.j, %.lr.ph ] ; 3 uses
+bb.f:                                             ; preds = %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit, %.lr.ph
+  %.sroa.04.0.i = phi i64 [ %8, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit ], [ %i.j, %.lr.ph ] ; 3 uses
   %i.x = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.0.0.i23 ; 2 uses
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.sroa.04.0.i ; 2 uses
   %.val12 = load ptr, ptr %i.x, align 8, !nonnull !17, !noundef !17
@@ -3111,20 +3140,25 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph
   %narrow1.i.i.i.i18 = select i1 %i.ae, i8 %i.ad, i8 2 ; 2 uses
   %i.af = icmp eq i8 %narrow.i.i.i.i17, 2
   %i.ag = icmp eq i8 %narrow1.i.i.i.i18, 2
-  %or.cond.i.i.i.i19 = and i1 %i.af, %i.ag        ; 2 uses
-  %.0.val.narrow.i.i.i.i20 = select i1 %or.cond.i.i.i.i19, i8 %.val.i.i15, i8 %narrow.i.i.i.i17
-  %.0.val1.narrow1.i.i.i.i21 = select i1 %or.cond.i.i.i.i19, i8 %.val1.i.i16, i8 %narrow1.i.i.i.i18
-  %6 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i20, %.0.val1.narrow1.i.i.i.i21
-  br i1 %6, label %bb.g, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
+  %or.cond.i.i.i.i19 = and i1 %i.af, %i.ag
+  br i1 %or.cond.i.i.i.i19, label %.split, label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21
 
-bb.g:                                             ; preds = %bb.f
+.split:                                           ; preds = %bb.f
+  %9 = icmp samesign ult i8 %.val.i.i15, %.val1.i.i16
+  br i1 %9, label %bb.g, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21: ; preds = %bb.f
+  %10 = icmp samesign ult i8 %narrow.i.i.i.i17, %narrow1.i.i.i.i18
+  br i1 %10, label %bb.g, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
+
+bb.g:                                             ; preds = %.split, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21
   tail call void @_RINvNvNtCs4NRVxsYgnAr_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECsEhZmuQNqkz_11ruff_linter(ptr noundef nonnull %i.x, ptr noundef nonnull %i.y, i64 noundef 1)
   %i.ah = shl nuw nsw i64 %.sroa.04.0.i, 1        ; 2 uses
   %i.ai = or disjoint i64 %i.ah, 1                ; 2 uses
   %.not.i = icmp samesign ult i64 %i.ai, %.sroa.0.0.i14
   br i1 %.not.i, label %.lr.ph, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
 
-_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.f, %bb.g, %bb.d
+_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable8heapsort9sift_downRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB16_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21, %bb.g, %.split, %bb.d
   %.not = icmp eq i64 %i.c, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph27
 }
@@ -3527,7 +3561,7 @@ bb.a:
   %.sroa.026.0126217 = phi i32 [ %i.d, %.lr.ph ], [ %3, %.lr.ph.preheader ]
   %.sroa.023.0127216 = phi ptr [ %.sroa.023.0.be, %.lr.ph ], [ %2, %.lr.ph.preheader ] ; 3 uses
   %.sroa.15.0128215 = phi i64 [ %.sroa.15.0.be, %.lr.ph ], [ %1, %.lr.ph.preheader ] ; 9 uses
-  %.sroa.0.0129214 = phi ptr [ %.sroa.0.0.be, %.lr.ph ], [ %0, %.lr.ph.preheader ] ; 29 uses
+  %.sroa.0.0129214 = phi ptr [ %.sroa.0.0.be, %.lr.ph ], [ %0, %.lr.ph.preheader ] ; 28 uses
   %i.d = add nsw i32 %.sroa.026.0126217, -1       ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3772)
   %i.e = lshr i64 %.sroa.15.0128215, 3            ; 3 uses
@@ -3557,62 +3591,88 @@ bb.c:                                             ; preds = %.lr.ph218
   %i.n = add nsw i8 %.val1.i.i.i, -4
   %i.o = icmp samesign ugt i8 %.val1.i.i.i, 3
   %narrow1.i.i.i.i.i = select i1 %i.o, i8 %i.n, i8 2 ; 3 uses
-  %5 = icmp eq i8 %narrow.i.i.i.i.i, 2            ; 2 uses
-  %i.p = icmp eq i8 %narrow1.i.i.i.i.i, 2         ; 2 uses
-  %or.cond.i.i.i.i.i = and i1 %5, %i.p            ; 2 uses
-  %.0.val.narrow.i.i.i.i.i = select i1 %or.cond.i.i.i.i.i, i8 %.val.i.i.i, i8 %narrow.i.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i.i = select i1 %or.cond.i.i.i.i.i, i8 %.val1.i.i.i, i8 %narrow1.i.i.i.i.i
-  %6 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i.i, %.0.val1.narrow1.i.i.i.i.i ; 2 uses
+  %i.p = icmp eq i8 %narrow.i.i.i.i.i, 2          ; 2 uses
+  %i.q = icmp eq i8 %narrow1.i.i.i.i.i, 2         ; 2 uses
+  %or.cond.i.i.i.i12.i.a = and i1 %i.p, %i.q
+  br i1 %or.cond.i.i.i.i12.i.a, label %7, label %5
+
+5:                                                ; preds = %bb.c
+  %6 = icmp samesign ult i8 %narrow.i.i.i.i.i, %narrow1.i.i.i.i.i
+  br label %bb.d
+
+7:                                                ; preds = %bb.c
+  %8 = icmp samesign ult i8 %.val.i.i.i, %.val1.i.i.i
+  br label %bb.d
+
+bb.d:                                             ; preds = %7, %5
+  %.sroa.0.0.i.i.i.i.i = phi i1 [ %8, %7 ], [ %6, %5 ] ; 2 uses
   %.val5.i = load ptr, ptr %i.g, align 8, !alias.scope !3772, !nonnull !17, !noundef !17
   %.val1.i.i9.i = load i8, ptr %.val5.i, align 1, !range !1400, !noalias !3772, !noundef !17 ; 5 uses
-  %7 = icmp ne i8 %.val1.i.i9.i, 6
-  tail call void @llvm.assume(i1 %7)
-  %8 = add nsw i8 %.val1.i.i9.i, -4
-  %9 = icmp samesign ugt i8 %.val1.i.i9.i, 3
-  %narrow1.i.i.i.i11.i = select i1 %9, i8 %8, i8 2 ; 3 uses
-  %i.q = icmp eq i8 %narrow1.i.i.i.i11.i, 2       ; 2 uses
-  %or.cond.i.i.i.i12.i.a = and i1 %5, %i.q        ; 2 uses
-  %.0.val.narrow.i.i.i.i13.i = select i1 %or.cond.i.i.i.i12.i.a, i8 %.val.i.i.i, i8 %narrow.i.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i14.i = select i1 %or.cond.i.i.i.i12.i.a, i8 %.val1.i.i9.i, i8 %narrow1.i.i.i.i11.i
-  %10 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i13.i, %.0.val1.narrow1.i.i.i.i14.i
-  %11 = xor i1 %6, %10
-  br i1 %11, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %bb.d
+  %9 = icmp ne i8 %.val1.i.i9.i, 6
+  tail call void @llvm.assume(i1 %9)
+  %10 = add nsw i8 %.val1.i.i9.i, -4
+  %11 = icmp samesign ugt i8 %.val1.i.i9.i, 3
+  %narrow1.i.i.i.i11.i = select i1 %11, i8 %10, i8 2 ; 3 uses
+  %12 = icmp eq i8 %narrow1.i.i.i.i11.i, 2        ; 2 uses
+  %or.cond.i.i.i.i12.i = and i1 %i.p, %12
+  br i1 %or.cond.i.i.i.i12.i, label %15, label %13
 
-bb.d:                                             ; preds = %bb.c
-  %or.cond.i.i.i.i19.i = and i1 %i.p, %i.q        ; 2 uses
-  %.0.val.narrow.i.i.i.i20.i = select i1 %or.cond.i.i.i.i19.i, i8 %.val1.i.i.i, i8 %narrow1.i.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i21.i = select i1 %or.cond.i.i.i.i19.i, i8 %.val1.i.i9.i, i8 %narrow1.i.i.i.i11.i
-  %12 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i20.i, %.0.val1.narrow1.i.i.i.i21.i
-  %13 = xor i1 %6, %12
-  %..i.i = select i1 %13, ptr %i.g, ptr %i.f
+13:                                               ; preds = %bb.d
+  %14 = icmp samesign ult i8 %narrow.i.i.i.i.i, %narrow1.i.i.i.i11.i
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14.i
+
+15:                                               ; preds = %bb.d
+  %16 = icmp samesign ult i8 %.val.i.i.i, %.val1.i.i9.i
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14.i
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14.i: ; preds = %15, %13
+  %.sroa.0.0.i.i.i.i13.i = phi i1 [ %16, %15 ], [ %14, %13 ]
+  %17 = xor i1 %.sroa.0.0.i.i.i.i.i, %.sroa.0.0.i.i.i.i13.i
+  br i1 %17, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit, label %18
+
+18:                                               ; preds = %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14.i
+  %or.cond.i.i.i.i19.i = and i1 %i.q, %12
+  br i1 %or.cond.i.i.i.i19.i, label %21, label %19
+
+19:                                               ; preds = %18
+  %20 = icmp samesign ult i8 %narrow1.i.i.i.i.i, %narrow1.i.i.i.i11.i
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21.i
+
+21:                                               ; preds = %18
+  %22 = icmp samesign ult i8 %.val1.i.i.i, %.val1.i.i9.i
+  br label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21.i
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21.i: ; preds = %21, %19
+  %.sroa.0.0.i.i.i.i20.i = phi i1 [ %22, %21 ], [ %20, %19 ]
+  %23 = xor i1 %.sroa.0.0.i.i.i.i.i, %.sroa.0.0.i.i.i.i20.i
+  %..i.i = select i1 %23, ptr %i.g, ptr %i.f
   br label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
 
-_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.b, %bb.c, %bb.d
-  %.sroa.0.0.i.sink.i = phi ptr [ %i.i, %bb.b ], [ %.sroa.0.0129214, %bb.c ], [ %..i.i, %bb.d ]
+_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.b, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14.i, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21.i
+  %.sroa.0.0.i.sink.i = phi ptr [ %i.i, %bb.b ], [ %.sroa.0.0129214, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit14.i ], [ %..i.i, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit21.i ]
   %i.r = ptrtoint ptr %.sroa.0.0.i.sink.i to i64
   %i.s = ptrtoint ptr %.sroa.0.0129214 to i64
-  %i.t = sub nuw i64 %i.r, %i.s                   ; 4 uses
+  %i.t = sub nuw i64 %i.r, %i.s                   ; 3 uses
   %.sroa.0.0.i = lshr exact i64 %i.t, 3
   %i.u = icmp samesign ult i64 %.sroa.0.0.i, %.sroa.15.0128215
   tail call void @llvm.assume(i1 %i.u)
   %.not = icmp eq ptr %.sroa.023.0127216, null
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.sroa.0.0129214, i64 %i.t ; 3 uses
   br i1 %.not, label %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit._crit_edge, label %bb.h
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit._crit_edge: ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
-  %.sroa.0.0.copyload.i.i.i.pre = load i64, ptr %.sroa.0.0129214, align 8, !alias.scope !3775
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.sroa.0.0129214, i64 %i.t
   %.pre = load i64, ptr %.phi.trans.insert, align 8, !alias.scope !3775
   br label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph._crit_edge, %._crit_edge
   ret void
 
-bb.f:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit._crit_edge, %bb.h
-  %14 = phi i64 [ %.pre, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit._crit_edge ], [ %i.de, %bb.h ]
-  %.sroa.0.0.copyload.i.i.i = phi i64 [ %.sroa.0.0.copyload.i.i.i.pre, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit._crit_edge ], [ %.sroa.0.0.copyload.i.i.i.pre156, %bb.h ]
+bb.f:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit._crit_edge, %.split, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit
+  %24 = phi i64 [ %.pre, %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit._crit_edge ], [ %i.de, %.split ], [ %i.de, %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3780)
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0129214, i64 %i.t
-  store i64 %14, ptr %.sroa.0.0129214, align 8, !alias.scope !3775
+  %.sroa.0.0.copyload.i.i.i = load i64, ptr %.sroa.0.0129214, align 8, !alias.scope !3775
+  store i64 %24, ptr %.sroa.0.0129214, align 8, !alias.scope !3775
   store i64 %.sroa.0.0.copyload.i.i.i, ptr %i.v, align 8, !alias.scope !3775
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0.0129214, i64 8 ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3781)
@@ -3745,10 +3805,10 @@ bb.f:                                             ; preds = %_RINvNtNtNtNtCs4NRV
   %i.bo = add nsw i8 %.val.i.i.i.i.i, -4
   %i.bp = icmp samesign ugt i8 %.val.i.i.i.i.i, 3
   %narrow.i.i.i.i.i.i.i = select i1 %i.bp, i8 %i.bo, i8 2 ; 2 uses
-  %i.bq = icmp eq i8 %narrow.i.i.i.i.i.i.i, 2     ; 2 uses
-  %spec.select.i = select i1 %i.bq, i8 %.val.i.i.i.i.i, i8 %narrow.i.i.i.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i.i.i.i = select i1 %i.bq, i8 %.val1.i.i.i.i.pre.i, i8 2
-  %15 = icmp samesign ult i8 %spec.select.i, %.0.val1.narrow1.i.i.i.i.i.i.i ; 2 uses
+  %i.bq = icmp eq i8 %narrow.i.i.i.i.i.i.i, 2
+  %25 = icmp samesign ult i8 %.val.i.i.i.i.i, %.val1.i.i.i.i.pre.i
+  %26 = icmp samesign ult i8 %narrow.i.i.i.i.i.i.i, 2
+  %.sroa.0.0.i.i.i.i.i.i.i = select i1 %i.bq, i1 %25, i1 %26 ; 2 uses
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %.sroa.23.1.i.i ; 3 uses
   %i.bs = load i64, ptr %i.br, align 8, !alias.scope !3786, !noalias !3797
   store i64 %i.bs, ptr %.sroa.029.1.i.i, align 8, !alias.scope !3786, !noalias !3797
@@ -3757,7 +3817,7 @@ bb.f:                                             ; preds = %_RINvNtNtNtNtCs4NRV
 .cont.i.i:                                        ; preds = %.cont58.i.i
   %.else.val.i.i = load i64, ptr %.sroa.13.1.i.i, align 8, !alias.scope !3786, !noalias !3797
   store i64 %.else.val.i.i, ptr %i.br, align 8, !alias.scope !3786, !noalias !3797
-  %i.bt = zext i1 %15 to i64
+  %i.bt = zext i1 %.sroa.0.0.i.i.i.i.i.i.i to i64
   %i.bu = add i64 %.sroa.23.1.i.i, %i.bt
   %.sroa.13.1.sroa.gep.i.i = getelementptr inbounds nuw i8, ptr %.sroa.13.1.i.i, i64 8
   br label %.preheader.i.split.i
@@ -3773,16 +3833,16 @@ bb.f:                                             ; preds = %_RINvNtNtNtNtCs4NRV
   %i.bw = add nsw i8 %.val.i.i.i13.i.i, -4
   %i.bx = icmp samesign ugt i8 %.val.i.i.i13.i.i, 3
   %narrow.i.i.i.i.i15.i.i = select i1 %i.bx, i8 %i.bw, i8 2 ; 2 uses
-  %i.by = icmp eq i8 %narrow.i.i.i.i.i15.i.i, 2   ; 2 uses
-  %spec.select.i.i = select i1 %i.by, i8 %.val.i.i.i13.i.i, i8 %narrow.i.i.i.i.i15.i.i
-  %.0.val1.narrow1.i.i.i.i.i19.i.i = select i1 %i.by, i8 %.val1.i.i.i.i.pre.i, i8 2
-  %16 = icmp samesign ult i8 %spec.select.i.i, %.0.val1.narrow1.i.i.i.i.i19.i.i
+  %i.by = icmp eq i8 %narrow.i.i.i.i.i15.i.i, 2
+  %27 = icmp samesign ult i8 %.val.i.i.i13.i.i, %.val1.i.i.i.i.pre.i
+  %28 = icmp samesign ult i8 %narrow.i.i.i.i.i15.i.i, 2
+  %.sroa.0.0.i.i.i.i.i18.i.i = select i1 %i.by, i1 %27, i1 %28
   %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %.sroa.23.045.i.i ; 2 uses
   %i.ca = load i64, ptr %i.bz, align 8, !alias.scope !3786, !noalias !3789
   store i64 %i.ca, ptr %.sroa.029.046.i.i, align 8, !alias.scope !3786, !noalias !3789
   %i.cb = ptrtoint ptr %.val.i11.i.i to i64
   store i64 %i.cb, ptr %i.bz, align 8, !alias.scope !3786, !noalias !3789
-  %i.cc = zext i1 %16 to i64
+  %i.cc = zext i1 %.sroa.0.0.i.i.i.i.i18.i.i to i64
   %i.cd = add i64 %.sroa.23.045.i.i, %i.cc        ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %.sroa.029.046.i.i, i64 16 ; 4 uses
   %.val.i20.i.i = load ptr, ptr %i.ce, align 8, !alias.scope !3786, !noalias !3793, !nonnull !17, !noundef !17
@@ -3792,23 +3852,23 @@ bb.f:                                             ; preds = %_RINvNtNtNtNtCs4NRV
   %i.cg = add nsw i8 %.val.i.i.i22.i.i, -4
   %i.ch = icmp samesign ugt i8 %.val.i.i.i22.i.i, 3
   %narrow.i.i.i.i.i24.i.i = select i1 %i.ch, i8 %i.cg, i8 2 ; 2 uses
-  %i.ci = icmp eq i8 %narrow.i.i.i.i.i24.i.i, 2   ; 2 uses
-  %.0.val.narrow.i.i.i.i.i27.i.i = select i1 %i.ci, i8 %.val.i.i.i22.i.i, i8 %narrow.i.i.i.i.i24.i.i
-  %.0.val1.narrow1.i.i.i.i.i28.i.i = select i1 %i.ci, i8 %.val1.i.i.i.i.pre.i, i8 2
-  %17 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i.i27.i.i, %.0.val1.narrow1.i.i.i.i.i28.i.i
+  %i.ci = icmp eq i8 %narrow.i.i.i.i.i24.i.i, 2
+  %29 = icmp samesign ult i8 %.val.i.i.i22.i.i, %.val1.i.i.i.i.pre.i
+  %30 = icmp samesign ult i8 %narrow.i.i.i.i.i24.i.i, 2
+  %.sroa.0.0.i.i.i.i.i27.i.i = select i1 %i.ci, i1 %29, i1 %30
   %i.cj = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %i.cd ; 2 uses
   %i.ck = load i64, ptr %i.cj, align 8, !alias.scope !3786, !noalias !3793
   store i64 %i.ck, ptr %.sroa.13.047.i.i, align 8, !alias.scope !3786, !noalias !3793
   %i.cl = load i64, ptr %i.ce, align 8, !alias.scope !3786, !noalias !3793
   store i64 %i.cl, ptr %i.cj, align 8, !alias.scope !3786, !noalias !3793
-  %i.cm = zext i1 %17 to i64
+  %i.cm = zext i1 %.sroa.0.0.i.i.i.i.i27.i.i to i64
   %i.cn = add i64 %i.cd, %i.cm                    ; 2 uses
   %.sroa.13.0.i.i = getelementptr inbounds nuw i8, ptr %.sroa.029.046.i.i, i64 24 ; 3 uses
   %i.co = icmp ult ptr %.sroa.13.0.i.i, %i.aa
   br i1 %i.co, label %.lr.ph.split.i.i, label %.preheader.i.i
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB1x_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %.cont58.i.us.i, %.cont58.i.i
-  %.us-phi.i = phi i1 [ %15, %.cont58.i.i ], [ %i.bh, %.cont58.i.us.i ]
+  %.us-phi.i = phi i1 [ %.sroa.0.0.i.i.i.i.i.i.i, %.cont58.i.i ], [ %i.bh, %.cont58.i.us.i ]
   %.us-phi10.i.a = phi ptr [ %i.br, %.cont58.i.i ], [ %i.bi, %.cont58.i.us.i ]
   %.us-phi11.i.a = phi i64 [ %.sroa.23.1.i.i, %.cont58.i.i ], [ %.sroa.23.1.i.us.i, %.cont58.i.us.i ]
   store i64 %i.y, ptr %.us-phi10.i.a, align 8, !alias.scope !3786, !noalias !3797
@@ -3834,9 +3894,8 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7ana
   br label %.backedge
 
 bb.h:                                             ; preds = %_RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort6shared5pivot12choose_pivotRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNvYB15_NtNtBa_3cmp10PartialOrd2ltECsEhZmuQNqkz_11ruff_linter.exit
-  %18 = getelementptr inbounds nuw i8, ptr %.sroa.0.0129214, i64 %i.t ; 2 uses
   %.sroa.023.0.val = load ptr, ptr %.sroa.023.0127216, align 8, !nonnull !17, !noundef !17
-  %.val = load ptr, ptr %18, align 8, !nonnull !17, !noundef !17 ; 2 uses
+  %.val = load ptr, ptr %.phi.trans.insert, align 8, !nonnull !17, !noundef !17 ; 2 uses
   %.val.i.i = load i8, ptr %.sroa.023.0.val, align 1, !range !1400, !noundef !17 ; 4 uses
   %.val1.i.i = load i8, ptr %.val, align 1, !range !1400, !noundef !17 ; 4 uses
   %i.cw = icmp ne i8 %.val.i.i, 6
@@ -3851,18 +3910,23 @@ bb.h:                                             ; preds = %_RINvNtNtNtNtCs4NRV
   %narrow1.i.i.i.i = select i1 %i.db, i8 %i.da, i8 2 ; 2 uses
   %i.dc = icmp eq i8 %narrow.i.i.i.i, 2
   %i.dd = icmp eq i8 %narrow1.i.i.i.i, 2
-  %or.cond.i.i.i.i = and i1 %i.dc, %i.dd          ; 2 uses
-  %.0.val.narrow.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val.i.i, i8 %narrow.i.i.i.i
-  %.0.val1.narrow1.i.i.i.i = select i1 %or.cond.i.i.i.i, i8 %.val1.i.i, i8 %narrow1.i.i.i.i
-  %19 = icmp samesign ult i8 %.0.val.narrow.i.i.i.i, %.0.val1.narrow1.i.i.i.i
-  %i.de = ptrtoint ptr %.val to i64               ; 2 uses
-  %.sroa.0.0.copyload.i.i.i.pre156 = load i64, ptr %.sroa.0.0129214, align 8 ; 2 uses
-  br i1 %19, label %bb.f, label %bb.i
+  %or.cond.i.i.i.i = and i1 %i.dc, %i.dd
+  %i.de = ptrtoint ptr %.val to i64               ; 3 uses
+  br i1 %or.cond.i.i.i.i, label %.split, label %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit
 
-bb.i:                                             ; preds = %bb.h
+.split:                                           ; preds = %bb.h
+  %31 = icmp samesign ult i8 %.val.i.i, %.val1.i.i
+  br i1 %31, label %bb.f, label %bb.i
+
+_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit: ; preds = %bb.h
+  %32 = icmp samesign ult i8 %narrow.i.i.i.i, %narrow1.i.i.i.i
+  br i1 %32, label %bb.f, label %bb.i
+
+bb.i:                                             ; preds = %_RNvYNvYRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNtNtCs4NRVxsYgnAr_4core3cmp10PartialOrd2ltINtNtNtB1q_3ops8function5FnMutTRB5_B2x_EE8call_mutCsEhZmuQNqkz_11ruff_linter.exit, %.split
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3804)
+  %.sroa.0.0.copyload.i.i.i42 = load i64, ptr %.sroa.0.0129214, align 8, !alias.scope !3807
   store i64 %i.de, ptr %.sroa.0.0129214, align 8, !alias.scope !3807
-  store i64 %.sroa.0.0.copyload.i.i.i.pre156, ptr %18, align 8, !alias.scope !3807
+  store i64 %.sroa.0.0.copyload.i.i.i42, ptr %.phi.trans.insert, align 8, !alias.scope !3807
   %i.df = getelementptr inbounds nuw i8, ptr %.sroa.0.0129214, i64 8 ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3810)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3813)
@@ -3994,10 +4058,10 @@ bb.i:                                             ; preds = %bb.h
   %i.ex = add nsw i8 %.val1.i.i.i.i.i.i, -4
   %i.ey = icmp samesign ugt i8 %.val1.i.i.i.i.i.i, 3
   %narrow1.i.i.i.i.i.i.i.i = select i1 %i.ey, i8 %i.ex, i8 2 ; 2 uses
-  %i.ez = icmp eq i8 %narrow1.i.i.i.i.i.i.i.i, 2  ; 2 uses
-  %spec.select.i76 = select i1 %i.ez, i8 %.val.i.i.i.i.i.pre.i, i8 2
-  %.0.val1.narrow1.i.i.i.i.i.i.i.i = select i1 %i.ez, i8 %.val1.i.i.i.i.i.i, i8 %narrow1.i.i.i.i.i.i.i.i
-  %20 = icmp samesign uge i8 %spec.select.i76, %.0.val1.narrow1.i.i.i.i.i.i.i.i ; 2 uses
+  %i.ez = icmp eq i8 %narrow1.i.i.i.i.i.i.i.i, 2
+  %33 = icmp samesign uge i8 %.val.i.i.i.i.i.pre.i, %.val1.i.i.i.i.i.i
+  %34 = icmp samesign ult i8 %narrow1.i.i.i.i.i.i.i.i, 3
+  %.sroa.0.0.i.i.i.i.i.i.i.i = select i1 %i.ez, i1 %33, i1 %34 ; 2 uses
   %i.fa = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %.sroa.23.1.i.i69 ; 3 uses
   %i.fb = load i64, ptr %i.fa, align 8, !alias.scope !3815, !noalias !3826
   store i64 %i.fb, ptr %.sroa.029.1.i.i71, align 8, !alias.scope !3815, !noalias !3826
@@ -4006,7 +4070,7 @@ bb.i:                                             ; preds = %bb.h
 .cont.i.i77:                                      ; preds = %.cont58.i.i74
   %.else.val.i.i78 = load i64, ptr %.sroa.13.1.i.i70, align 8, !alias.scope !3815, !noalias !3826
   store i64 %.else.val.i.i78, ptr %i.fa, align 8, !alias.scope !3815, !noalias !3826
-  %i.fc = zext i1 %20 to i64
+  %i.fc = zext i1 %.sroa.0.0.i.i.i.i.i.i.i.i to i64
   %i.fd = add i64 %.sroa.23.1.i.i69, %i.fc
   %.sroa.13.1.sroa.gep.i.i79 = getelementptr inbounds nuw i8, ptr %.sroa.13.1.i.i70, i64 8
   br label %.preheader.i.split.i68
@@ -4022,16 +4086,16 @@ bb.i:                                             ; preds = %bb.h
   %i.ff = add nsw i8 %.val1.i.i.i.i14.i.i, -4
   %i.fg = icmp samesign ugt i8 %.val1.i.i.i.i14.i.i, 3
   %narrow1.i.i.i.i.i.i16.i.i = select i1 %i.fg, i8 %i.ff, i8 2 ; 2 uses
-  %i.fh = icmp eq i8 %narrow1.i.i.i.i.i.i16.i.i, 2 ; 2 uses
-  %spec.select.i.i93 = select i1 %i.fh, i8 %.val.i.i.i.i.i.pre.i, i8 2
-  %.0.val1.narrow1.i.i.i.i.i.i19.i.i = select i1 %i.fh, i8 %.val1.i.i.i.i14.i.i, i8 %narrow1.i.i.i.i.i.i16.i.i
-  %21 = icmp samesign uge i8 %spec.select.i.i93, %.0.val1.narrow1.i.i.i.i.i.i19.i.i
+  %i.fh = icmp eq i8 %narrow1.i.i.i.i.i.i16.i.i, 2
+  %35 = icmp samesign uge i8 %.val.i.i.i.i.i.pre.i, %.val1.i.i.i.i14.i.i
+  %36 = icmp samesign ult i8 %narrow1.i.i.i.i.i.i16.i.i, 3
+  %.sroa.0.0.i.i.i.i.i.i18.i.i = select i1 %i.fh, i1 %35, i1 %36
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %.sroa.23.045.i.i91 ; 2 uses
   %i.fj = load i64, ptr %i.fi, align 8, !alias.scope !3815, !noalias !3818
   store i64 %i.fj, ptr %.sroa.029.046.i.i90, align 8, !alias.scope !3815, !noalias !3818
   %i.fk = ptrtoint ptr %.val.i11.i.i92 to i64
   store i64 %i.fk, ptr %i.fi, align 8, !alias.scope !3815, !noalias !3818
-  %i.fl = zext i1 %21 to i64
+  %i.fl = zext i1 %.sroa.0.0.i.i.i.i.i.i18.i.i to i64
   %i.fm = add i64 %.sroa.23.045.i.i91, %i.fl      ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %.sroa.029.046.i.i90, i64 16 ; 4 uses
   %.val.i20.i.i94 = load ptr, ptr %i.fn, align 8, !alias.scope !3815, !noalias !3822, !nonnull !17, !noundef !17
@@ -4041,23 +4105,23 @@ bb.i:                                             ; preds = %bb.h
   %i.fp = add nsw i8 %.val1.i.i.i.i23.i.i, -4
   %i.fq = icmp samesign ugt i8 %.val1.i.i.i.i23.i.i, 3
   %narrow1.i.i.i.i.i.i25.i.i = select i1 %i.fq, i8 %i.fp, i8 2 ; 2 uses
-  %i.fr = icmp eq i8 %narrow1.i.i.i.i.i.i25.i.i, 2 ; 2 uses
-  %.0.val.narrow.i.i.i.i.i.i27.i.i = select i1 %i.fr, i8 %.val.i.i.i.i.i.pre.i, i8 2
-  %.0.val1.narrow1.i.i.i.i.i.i28.i.i = select i1 %i.fr, i8 %.val1.i.i.i.i23.i.i, i8 %narrow1.i.i.i.i.i.i25.i.i
-  %22 = icmp samesign uge i8 %.0.val.narrow.i.i.i.i.i.i27.i.i, %.0.val1.narrow1.i.i.i.i.i.i28.i.i
+  %i.fr = icmp eq i8 %narrow1.i.i.i.i.i.i25.i.i, 2
+  %37 = icmp samesign uge i8 %.val.i.i.i.i.i.pre.i, %.val1.i.i.i.i23.i.i
+  %38 = icmp samesign ult i8 %narrow1.i.i.i.i.i.i25.i.i, 3
+  %.sroa.0.0.i.i.i.i.i.i27.i.i = select i1 %i.fr, i1 %37, i1 %38
   %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.df, i64 %i.fm ; 2 uses
   %i.ft = load i64, ptr %i.fs, align 8, !alias.scope !3815, !noalias !3822
   store i64 %i.ft, ptr %.sroa.13.047.i.i89, align 8, !alias.scope !3815, !noalias !3822
   %i.fu = load i64, ptr %i.fn, align 8, !alias.scope !3815, !noalias !3822
   store i64 %i.fu, ptr %i.fs, align 8, !alias.scope !3815, !noalias !3822
-  %i.fv = zext i1 %22 to i64
+  %i.fv = zext i1 %.sroa.0.0.i.i.i.i.i.i27.i.i to i64
   %i.fw = add i64 %i.fm, %i.fv                    ; 2 uses
   %.sroa.13.0.i.i95 = getelementptr inbounds nuw i8, ptr %.sroa.029.046.i.i90, i64 24 ; 3 uses
   %i.fx = icmp ult ptr %.sroa.13.0.i.i95, %i.dj
   br i1 %i.fx, label %.lr.ph.split.i.i88, label %.preheader.i.i47
 
 _RINvNtNtNtNtCs4NRVxsYgnAr_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicRNtNtNtCs7bpTdHNYxeX_20ruff_python_semantic7analyze14type_inference10PythonTypeNCINvB2_9quicksortB1x_NvYB1x_NtNtBa_3cmp10PartialOrd2ltE0ECsEhZmuQNqkz_11ruff_linter.exit.i: ; preds = %.cont58.i.us.i58, %.cont58.i.i74
-  %.us-phi.i63 = phi i1 [ %20, %.cont58.i.i74 ], [ %i.eq, %.cont58.i.us.i58 ]
+  %.us-phi.i63 = phi i1 [ %.sroa.0.0.i.i.i.i.i.i.i.i, %.cont58.i.i74 ], [ %i.eq, %.cont58.i.us.i58 ]
   %.us-phi10.i64 = phi ptr [ %i.fa, %.cont58.i.i74 ], [ %i.er, %.cont58.i.us.i58 ]
   %.us-phi11.i65 = phi i64 [ %.sroa.23.1.i.i69, %.cont58.i.i74 ], [ %.sroa.23.1.i.us.i53, %.cont58.i.us.i58 ]
   store i64 %i.dh, ptr %.us-phi10.i64, align 8, !alias.scope !3815, !noalias !3826
@@ -4460,9 +4524,7 @@ _RNvYINtNtNtCs4NRVxsYgnAr_4core3str7pattern18MultiCharEqPatternNvMNtNtB9_4char7m
 
 _RNvXs3_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules16sequence_sortingNtB5_12IsortSortKeyINtNtCs4NRVxsYgnAr_4core7convert4FromReE4from.exit10: ; preds = %bb.h, %bb.k, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core3str7patternNvMNtNtB9_4char7methodsc12is_uppercaseNtB5_11MultiCharEq7matchesCsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i5, %_RNvYINtNtNtCs4NRVxsYgnAr_4core3str7pattern18MultiCharEqPatternNvMNtNtB9_4char7methodsc12is_uppercaseENtB5_7Pattern12is_prefix_ofCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i6
   %.sroa.0.0.i.i7 = phi i8 [ 0, %bb.h ], [ 2, %_RNvYINtNtNtCs4NRVxsYgnAr_4core3str7pattern18MultiCharEqPatternNvMNtNtB9_4char7methodsc12is_uppercaseENtB5_7Pattern12is_prefix_ofCsEhZmuQNqkz_11ruff_linter.exit.thread.i.i6 ], [ 1, %_RNvXs3_NtNtCs4NRVxsYgnAr_4core3str7patternNvMNtNtB9_4char7methodsc12is_uppercaseNtB5_11MultiCharEq7matchesCsEhZmuQNqkz_11ruff_linter.exit.i.i.i.i5 ], [ 1, %bb.k ] ; 2 uses
-  %5 = zext nneg i8 %.sroa.0.0.i.i to i64
-  %6 = zext nneg i8 %.sroa.0.0.i.i7 to i64
-  %i.cc = tail call i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.cc = tail call i8 @llvm.ucmp.i8.i8(i8 %.sroa.0.0.i.i, i8 %.sroa.0.0.i.i7)
   %i.cd = icmp eq i8 %.sroa.0.0.i.i, %.sroa.0.0.i.i7
   br i1 %i.cd, label %_RNvXs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules16sequence_sortingNtB4_12IsortSortKeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.sink.split, label %_RNvXs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules16sequence_sortingNtB4_12IsortSortKeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit
 
@@ -4865,11 +4927,9 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8291)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i8, ptr %i.a, align 8, !range !417, !alias.scope !8288, !noalias !8291, !noundef !17 ; 2 uses
-  %2 = zext nneg i8 %i.b to i64
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = load i8, ptr %i.c, align 8, !range !417, !alias.scope !8291, !noalias !8288, !noundef !17 ; 2 uses
-  %3 = zext nneg i8 %i.d to i64
-  %i.e = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.e = tail call i8 @llvm.ucmp.i8.i8(i8 %i.b, i8 %i.d)
   %i.f = icmp eq i8 %i.b, %i.d
   br i1 %i.f, label %bb.b, label %_RNvXs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules4ruff5rules16sequence_sortingNtB4_12IsortSortKeyNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit
 
@@ -5272,11 +5332,9 @@ define noundef range(i8 -1, 2) i8 @_RNvXs_NtNtNtNtCsEhZmuQNqkz_11ruff_linter5rul
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i8, ptr %i.a, align 8, !range !417, !noundef !17 ; 2 uses
-  %2 = zext nneg i8 %i.b to i64
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = load i8, ptr %i.c, align 8, !range !417, !noundef !17 ; 2 uses
-  %3 = zext nneg i8 %i.d to i64
-  %i.e = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 %3)
+  %i.e = tail call i8 @llvm.ucmp.i8.i8(i8 %i.b, i8 %i.d)
   %i.f = icmp eq i8 %i.b, %i.d
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -5678,6 +5736,9 @@ declare { ptr, i64 } @_RNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4_13
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvMs8_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_11LintContext17report_diagnosticNtNtNtNtNtBa_5rules6refurb5rules21fstring_number_format19FStringNumberFormatEBa_(ptr dead_on_unwind noalias noundef writable sret([48 x i8]) align 8 captures(none) dereferenceable(48), ptr noundef nonnull align 8, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(32), i32 noundef, i32 noundef) unnamed_addr #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8, i8) #45
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RINvMs8_NtNtCsEhZmuQNqkz_11ruff_linter8checkers3astNtB6_11LintContext17report_diagnosticNtNtNtNtNtBa_5rules7airflow5rules21dag_schedule_argument28AirflowDagNoScheduleArgumentEBa_(ptr dead_on_unwind noalias noundef writable sret([48 x i8]) align 8 captures(none) dereferenceable(48), ptr noundef nonnull align 8, i32 noundef, i32 noundef) unnamed_addr #2
