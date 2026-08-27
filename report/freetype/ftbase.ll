@@ -205,14 +205,14 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !87
-  %i.l = mul nsw i64 %3, %1
+  %i.l = mul nuw nsw i64 %3, %1
   %i.m = tail call ptr %i.k(ptr noundef %0, i64 noundef %i.l) #30, !inline_history !129 ; 2 uses
   %i.n = icmp eq ptr %i.m, null
   br label %ft_mem_qrealloc.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = mul nsw i64 %2, %1
-  %i.p = mul nsw i64 %3, %1
+  %i.o = mul nuw nsw i64 %2, %1
+  %i.p = mul nuw nsw i64 %3, %1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !130
   %i.s = tail call ptr %i.r(ptr noundef %0, i64 noundef %i.o, i64 noundef %i.p, ptr noundef %4) #30, !inline_history !129 ; 2 uses
@@ -232,10 +232,10 @@ ft_mem_qrealloc.exit:                             ; preds = %bb.g, %bb.h
   br i1 %or.cond18, label %bb.i, label %ft_mem_qrealloc.exit.thread
 
 bb.i:                                             ; preds = %ft_mem_qrealloc.exit
-  %i.v = mul nsw i64 %2, %1
+  %i.v = mul nuw nsw i64 %2, %1
   %i.w = getelementptr inbounds i8, ptr %.134.i, i64 %i.v
   %i.x = sub nuw nsw i64 %3, %2
-  %i.y = mul nsw i64 %i.x, %1
+  %i.y = mul nuw nsw i64 %i.x, %1
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.w, i8 0, i64 %i.y, i1 false)
   br label %ft_mem_qrealloc.exit.thread
 
@@ -523,7 +523,7 @@ bb.aa:                                            ; preds = %ft_mem_realloc.exit
   br i1 %.not79, label %bb.ad, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dh = shl i32 %i.bb, 1
+  %i.dh = shl nuw i32 %i.bb, 1
   %i.di = zext i32 %i.dh to i64
   %i.dj = shl nuw nsw i32 %spec.store.select, 1
   %i.dk = zext nneg i32 %i.dj to i64
@@ -926,15 +926,15 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !87
-  %i.l = mul nsw i64 %3, %1
+  %i.l = mul nuw nsw i64 %3, %1
   %i.m = tail call ptr %i.k(ptr noundef %0, i64 noundef %i.l) #30 ; 2 uses
   %i.n = icmp eq ptr %i.m, null
   %spec.select41 = select i1 %i.n, i32 64, i32 0
   br label %ft_mem_free.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.o = mul nsw i64 %2, %1
-  %i.p = mul nsw i64 %3, %1
+  %i.o = mul nuw nsw i64 %2, %1
+  %i.p = mul nuw nsw i64 %3, %1
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !130
   %i.s = tail call ptr %i.r(ptr noundef %0, i64 noundef %i.o, i64 noundef %i.p, ptr noundef %4) #30 ; 2 uses
@@ -1035,8 +1035,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ad, label %ft_mem_qrealloc.exit, label %bb.l
 
 bb.k:                                             ; preds = %bb.i
-  %i.ae = shl nsw i64 %i.q, 3
-  %i.af = shl nsw i64 %i.s, 3
+  %i.ae = shl nuw nsw i64 %i.q, 3
+  %i.af = shl nuw nsw i64 %i.s, 3
   %i.ag = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !130
   %i.ai = tail call ptr %i.ah(ptr noundef nonnull %i.e, i64 noundef %i.ae, i64 noundef %i.af, ptr noundef %i.u) #30, !inline_history !129 ; 2 uses

@@ -205,8 +205,8 @@ vector.ph151:                                     ; preds = %.preheader.preheade
 
 vector.body153:                                   ; preds = %vector.body153, %vector.ph151
   %index154 = phi i64 [ 0, %vector.ph151 ], [ %index.next156, %vector.body153 ] ; 6 uses
-  %i.ae = shl i64 %index154, 3
-  %i.af = shl i64 %index154, 4
+  %i.ae = shl nuw nsw i64 %index154, 3
+  %i.af = shl nuw i64 %index154, 4
   %i.ag = shl i64 %index154, 4
   %i.ah = shl i64 %index154, 4
   %i.ai = shl i64 %index154, 4
@@ -314,8 +314,8 @@ middle.block157:                                  ; preds = %vector.body153
 
 .preheader:                                       ; preds = %.preheader.preheader160, %.preheader
   %.094143 = phi i64 [ %i.eh, %.preheader ], [ %.094143.ph, %.preheader.preheader160 ] ; 3 uses
-  %i.du = shl i64 %.094143, 3
-  %.idx = shl i64 %.094143, 4
+  %i.du = shl nuw nsw i64 %.094143, 3
+  %.idx = shl nuw i64 %.094143, 4
   %i.dv = getelementptr inbounds nuw i8, ptr %i.aa, i64 %.idx
   %i.dw = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.du
   %i.dx = load <4 x float>, ptr %i.dv, align 4, !tbaa !82 ; 3 uses
@@ -353,7 +353,7 @@ vector.ph:                                        ; preds = %.preheader139.prehe
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 5 uses
-  %i.ej = shl i64 %index, 2                       ; 5 uses
+  %i.ej = shl nuw nsw i64 %index, 2               ; 5 uses
   %i.ek = shl i64 %index, 2                       ; 4 uses
   %i.el = shl i64 %index, 2                       ; 4 uses
   %i.em = shl i64 %index, 2                       ; 4 uses
@@ -467,7 +467,7 @@ middle.block:                                     ; preds = %vector.body
 
 .preheader139:                                    ; preds = %.preheader139.preheader161, %.preheader139
   %.195141 = phi i64 [ %i.ip, %.preheader139 ], [ %.195141.ph, %.preheader139.preheader161 ] ; 2 uses
-  %i.ie = shl i64 %.195141, 2                     ; 2 uses
+  %i.ie = shl nuw nsw i64 %.195141, 2             ; 2 uses
   %i.if = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.ie
   %i.ig = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.ie
   %i.ih = load <4 x float>, ptr %i.if, align 4, !tbaa !82 ; 3 uses

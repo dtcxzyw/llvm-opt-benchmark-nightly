@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.k
   %i.ab = sext i32 %1 to i64
   %i.ac = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.ab
   %i.ad = sext i32 %i.y to i64
-  %i.ae = shl nsw i64 %i.ad, 2
+  %i.ae = shl nuw nsw i64 %i.ad, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.aa, ptr align 4 %i.ac, i64 %i.ae, i1 false)
   br label %.loopexit
 

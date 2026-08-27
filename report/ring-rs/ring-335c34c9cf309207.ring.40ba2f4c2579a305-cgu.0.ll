@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.bx = load i64, ptr %i.au, align 8, !alias.scope !116, !noalias !117, !noundef !18
   %i.by = or i64 %i.bx, 1
   store i64 %i.by, ptr %i.au, align 8, !alias.scope !116, !noalias !117
-  %i.bz = shl nuw i64 %i.d, 6                     ; 3 uses
+  %i.bz = shl nuw nsw i64 %i.d, 6                 ; 3 uses
   %i.ca = sub i64 %i.bz, %.val34.i.i              ; 3 uses
   %i.cb = icmp ult i64 %i.bz, %.val34.i.i
   br i1 %i.cb, label %bb.t, label %bb.s
@@ -608,17 +608,17 @@ bb.h:                                             ; preds = %_RNCNvMNtCs5yxAJGbR
   %.sroa.5.sroa.0.0.extract.trunc = trunc i64 %.sroa.5.0.copyload to i32
   %.sroa.5.sroa.5.0.extract.shift = lshr i64 %.sroa.5.0.copyload, 32
   %.sroa.5.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.sroa.5.0.extract.shift to i32
-  %i.ap = call noundef i32 @llvm.bswap.i32(i32 %.sroa.14.sroa.0.0.extract.trunc)
-  %i.aq = call noundef i32 @llvm.bswap.i32(i32 %.sroa.11.sroa.5.0.extract.trunc)
-  %i.ar = call noundef i32 @llvm.bswap.i32(i32 %.sroa.11.sroa.0.0.extract.trunc)
+  %i.ap = call noundef i32 @llvm.bswap.i32(i32 %.sroa.5.sroa.0.0.extract.trunc)
+  %i.aq = call noundef i32 @llvm.bswap.i32(i32 %.sroa.5.sroa.5.0.extract.trunc)
+  %i.ar = call noundef i32 @llvm.bswap.i32(i32 %.sroa.8.sroa.0.0.extract.trunc)
   %i.as = call noundef i32 @llvm.bswap.i32(i32 %.sroa.8.sroa.5.0.extract.trunc)
-  %i.at = call noundef i32 @llvm.bswap.i32(i32 %.sroa.8.sroa.0.0.extract.trunc)
-  %i.au = call noundef i32 @llvm.bswap.i32(i32 %.sroa.5.sroa.5.0.extract.trunc)
-  %i.av = call noundef i32 @llvm.bswap.i32(i32 %.sroa.5.sroa.0.0.extract.trunc)
+  %i.at = call noundef i32 @llvm.bswap.i32(i32 %.sroa.11.sroa.0.0.extract.trunc)
+  %i.au = call noundef i32 @llvm.bswap.i32(i32 %.sroa.11.sroa.5.0.extract.trunc)
+  %i.av = call noundef i32 @llvm.bswap.i32(i32 %.sroa.14.sroa.0.0.extract.trunc)
   %i.aw = call noundef i32 @llvm.bswap.i32(i32 %.sroa.14.sroa.5.0.extract.trunc)
-  %i.ax = zext i32 %i.au to i64
+  %i.ax = zext i32 %i.aq to i64
   %i.ay = zext i32 %i.as to i64
-  %i.az = zext i32 %i.aq to i64
+  %i.az = zext i32 %i.au to i64
   %i.ba = zext i32 %i.aw to i64
   br label %_RNvMs_NtNtCs5yxAJGbRKSL_4ring6digest8dynstateNtB4_8DynState13format_output.exit
 
@@ -630,36 +630,36 @@ bb.i:                                             ; preds = %_RNCNvMNtCs5yxAJGbR
   %.sroa.1722.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
   %.sroa.1722.0.copyload = load i64, ptr %.sroa.1722.0..sroa_idx, align 8
   %.sroa.421.0.copyload = load i64, ptr %i.n, align 8
-  %i.bb = call noundef i64 @llvm.bswap.i64(i64 %.sroa.1823.0.copyload)
-  %i.bc = call noundef i64 @llvm.bswap.i64(i64 %.sroa.1722.0.copyload)
-  %i.bd = call noundef i64 @llvm.bswap.i64(i64 %.sroa.14.0.copyload)
+  %i.bb = call noundef i64 @llvm.bswap.i64(i64 %.sroa.421.0.copyload) ; 2 uses
+  %i.bc = call noundef i64 @llvm.bswap.i64(i64 %.sroa.5.0.copyload) ; 2 uses
+  %i.bd = call noundef i64 @llvm.bswap.i64(i64 %.sroa.8.0.copyload) ; 2 uses
   %i.be = call noundef i64 @llvm.bswap.i64(i64 %.sroa.11.0.copyload) ; 2 uses
-  %i.bf = call noundef i64 @llvm.bswap.i64(i64 %.sroa.8.0.copyload) ; 2 uses
-  %i.bg = call noundef i64 @llvm.bswap.i64(i64 %.sroa.5.0.copyload) ; 2 uses
-  %i.bh = call noundef i64 @llvm.bswap.i64(i64 %.sroa.421.0.copyload) ; 2 uses
+  %i.bf = call noundef i64 @llvm.bswap.i64(i64 %.sroa.14.0.copyload)
+  %i.bg = call noundef i64 @llvm.bswap.i64(i64 %.sroa.1722.0.copyload)
+  %i.bh = call noundef i64 @llvm.bswap.i64(i64 %.sroa.1823.0.copyload)
   %i.bi = call noundef i64 @llvm.bswap.i64(i64 %.sroa.1924.0.copyload)
-  %.sroa.016.sroa.0.0.extract.trunc = trunc i64 %i.bh to i32
-  %.sroa.016.sroa.5.0.extract.shift = lshr i64 %i.bh, 32
-  %.sroa.617.sroa.0.0.extract.trunc = trunc i64 %i.bg to i32
-  %.sroa.617.sroa.5.0.extract.shift = lshr i64 %i.bg, 32
-  %.sroa.918.sroa.0.0.extract.trunc = trunc i64 %i.bf to i32
-  %.sroa.918.sroa.5.0.extract.shift = lshr i64 %i.bf, 32
+  %.sroa.016.sroa.0.0.extract.trunc = trunc i64 %i.bb to i32
+  %.sroa.016.sroa.5.0.extract.shift = lshr i64 %i.bb, 32
+  %.sroa.617.sroa.0.0.extract.trunc = trunc i64 %i.bc to i32
+  %.sroa.617.sroa.5.0.extract.shift = lshr i64 %i.bc, 32
+  %.sroa.918.sroa.0.0.extract.trunc = trunc i64 %i.bd to i32
+  %.sroa.918.sroa.5.0.extract.shift = lshr i64 %i.bd, 32
   %.sroa.1219.sroa.0.0.extract.trunc = trunc i64 %i.be to i32
   %.sroa.1219.sroa.5.0.extract.shift = lshr i64 %i.be, 32
   br label %_RNvMs_NtNtCs5yxAJGbRKSL_4ring6digest8dynstateNtB4_8DynState13format_output.exit
 
 _RNvMs_NtNtCs5yxAJGbRKSL_4ring6digest8dynstateNtB4_8DynState13format_output.exit: ; preds = %bb.h, %bb.i
   %.sroa.016.sroa.5.0 = phi i64 [ %i.ax, %bb.h ], [ %.sroa.016.sroa.5.0.extract.shift, %bb.i ]
-  %.sroa.016.sroa.0.0 = phi i32 [ %i.av, %bb.h ], [ %.sroa.016.sroa.0.0.extract.trunc, %bb.i ]
+  %.sroa.016.sroa.0.0 = phi i32 [ %i.ap, %bb.h ], [ %.sroa.016.sroa.0.0.extract.trunc, %bb.i ]
   %.sroa.617.sroa.5.0 = phi i64 [ %i.ay, %bb.h ], [ %.sroa.617.sroa.5.0.extract.shift, %bb.i ]
-  %.sroa.617.sroa.0.0 = phi i32 [ %i.at, %bb.h ], [ %.sroa.617.sroa.0.0.extract.trunc, %bb.i ]
+  %.sroa.617.sroa.0.0 = phi i32 [ %i.ar, %bb.h ], [ %.sroa.617.sroa.0.0.extract.trunc, %bb.i ]
   %.sroa.918.sroa.5.0 = phi i64 [ %i.az, %bb.h ], [ %.sroa.918.sroa.5.0.extract.shift, %bb.i ]
-  %.sroa.918.sroa.0.0 = phi i32 [ %i.ar, %bb.h ], [ %.sroa.918.sroa.0.0.extract.trunc, %bb.i ]
+  %.sroa.918.sroa.0.0 = phi i32 [ %i.at, %bb.h ], [ %.sroa.918.sroa.0.0.extract.trunc, %bb.i ]
   %.sroa.1219.sroa.5.0 = phi i64 [ %i.ba, %bb.h ], [ %.sroa.1219.sroa.5.0.extract.shift, %bb.i ]
-  %.sroa.1219.sroa.0.0 = phi i32 [ %i.ap, %bb.h ], [ %.sroa.1219.sroa.0.0.extract.trunc, %bb.i ]
-  %.sroa.15.0 = phi i64 [ 0, %bb.h ], [ %i.bd, %bb.i ]
-  %.sroa.17.0 = phi i64 [ 0, %bb.h ], [ %i.bc, %bb.i ]
-  %.sroa.18.0 = phi i64 [ 0, %bb.h ], [ %i.bb, %bb.i ]
+  %.sroa.1219.sroa.0.0 = phi i32 [ %i.av, %bb.h ], [ %.sroa.1219.sroa.0.0.extract.trunc, %bb.i ]
+  %.sroa.15.0 = phi i64 [ 0, %bb.h ], [ %i.bf, %bb.i ]
+  %.sroa.17.0 = phi i64 [ 0, %bb.h ], [ %i.bg, %bb.i ]
+  %.sroa.18.0 = phi i64 [ 0, %bb.h ], [ %i.bh, %bb.i ]
   %.sroa.19.0 = phi i64 [ 0, %bb.h ], [ %i.bi, %bb.i ]
   %.sroa.016.sroa.5.0.insert.shift = shl nuw i64 %.sroa.016.sroa.5.0, 32
   %.sroa.016.sroa.0.0.insert.ext = zext i32 %.sroa.016.sroa.0.0 to i64
@@ -1062,7 +1062,7 @@ bb.bw:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.hq = load i64, ptr %i.gn, align 8, !alias.scope !1316, !noalias !1317, !noundef !18
   %i.hr = or i64 %i.hq, 1
   store i64 %i.hr, ptr %i.gn, align 8, !alias.scope !1316, !noalias !1317
-  %i.hs = shl nuw i64 %.sroa.514.0.copyload.i, 6  ; 3 uses
+  %i.hs = shl nuw nsw i64 %.sroa.514.0.copyload.i, 6 ; 3 uses
   %i.ht = sub i64 %i.hs, %.sroa.615.0.copyload.i  ; 2 uses
   %i.hu = icmp ult i64 %i.hs, %.sroa.615.0.copyload.i
   br i1 %i.hu, label %bb.by, label %bb.bx
@@ -1440,8 +1440,8 @@ bb.cy:                                            ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.li = load i64, ptr %i.kf, align 8, !alias.scope !1405, !noalias !1406, !noundef !18
   %i.lj = or i64 %i.li, 1
   store i64 %i.lj, ptr %i.kf, align 8, !alias.scope !1405, !noalias !1406
-  %i.lk = shl nuw i64 %.sroa.514.0.copyload.i256, 6 ; 3 uses
-  %i.ll = sub i64 %i.lk, %.sroa.615.0.copyload.i  ; 2 uses
+  %i.lk = shl nuw nsw i64 %.sroa.514.0.copyload.i256, 6 ; 3 uses
+  %i.ll = sub nsw i64 %i.lk, %.sroa.615.0.copyload.i ; 2 uses
   %i.lm = icmp ult i64 %i.lk, %.sroa.615.0.copyload.i
   br i1 %i.lm, label %bb.da, label %bb.cz
 

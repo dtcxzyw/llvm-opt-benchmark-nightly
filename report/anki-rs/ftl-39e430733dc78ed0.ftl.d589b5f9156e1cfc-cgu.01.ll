@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.k = xor i64 %1, -1
   %i.l = add nsw i64 %i.b, %i.k
-  %i.m = shl nsw i64 %i.l, 4
+  %i.m = shl nuw nsw i64 %i.l, 4
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.j, i64 %i.m, i1 false), !noalias !762
   %i.n = add nsw i64 %i.b, -1
   store i64 %i.n, ptr %i.a, align 8, !alias.scope !762
@@ -238,7 +238,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 104
   %i.h = xor i64 %2, -1
   %i.i = add nsw i64 %i.b, %i.h
-  %i.j = mul nsw i64 %i.i, 104
+  %i.j = mul nuw nsw i64 %i.i, 104
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !noalias !770
   %i.k = add nsw i64 %i.b, -1                     ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !alias.scope !765, !noalias !768

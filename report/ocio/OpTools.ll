@@ -28,12 +28,12 @@ _ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i: ; preds = %bb.a
   br i1 %.not.i.i.i.i, label %._crit_edge, label %_ZNSt6vectorIfSaIfEEC2EmRKS0_.exit
 
 _ZNSt6vectorIfSaIfEEC2EmRKS0_.exit:               ; preds = %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i
-  %i.c = shl i64 %2, 4                            ; 2 uses
+  %i.c = shl nuw nsw i64 %2, 4                    ; 2 uses
   %i.d = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #8 ; 9 uses
   %i.e = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.a
   store float 0.000000e+00, ptr %i.d, align 4, !tbaa !8
   %i.f = getelementptr i8, ptr %i.d, i64 4
-  %.idx.i.i.i.i.i.i.i = add i64 %i.c, -4
+  %.idx.i.i.i.i.i.i.i = add nsw i64 %i.c, -4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.f, i8 0, i64 %.idx.i.i.i.i.i.i.i, i1 false), !tbaa !8
   %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
   %i.h = icmp sgt i64 %2, 0

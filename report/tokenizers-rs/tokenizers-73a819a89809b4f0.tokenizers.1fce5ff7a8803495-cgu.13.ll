@@ -204,13 +204,13 @@ bb.k:                                             ; preds = %bb.l, %_RINvCsaeZrf
   br label %_RINvCsaeZrfuWH35j_8smallvec10infallibleuECs2JiOgHzbbc7_10tokenizers.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.y = shl i64 %i.q, 4
+  %i.y = shl nuw i64 %i.q, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %.sink11.i.i, i64 %i.y, i1 false)
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
   store i64 0, ptr %0, align 8, !alias.scope !1973
-  %i.z = shl i64 %i.q, 4
+  %i.z = shl nuw i64 %i.q, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink11.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !1973
   %or.cond.i.i = icmp ult i64 %.sink.i.i, 576460752303423488
@@ -336,13 +336,13 @@ bb.k:                                             ; preds = %bb.l, %_RINvCsaeZrf
   br label %_RINvCsaeZrfuWH35j_8smallvec10infallibleuECs2JiOgHzbbc7_10tokenizers.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.y = shl i64 %i.q, 4
+  %i.y = shl nuw i64 %i.q, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.t, ptr nonnull align 8 %.sink11.i.i, i64 %i.y, i1 false)
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
   store i64 0, ptr %0, align 8, !alias.scope !1990
-  %i.z = shl i64 %i.q, 4
+  %i.z = shl nuw i64 %i.q, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.n, ptr nonnull align 8 %.sink11.i.i, i64 %i.z, i1 false)
   store i64 %i.q, ptr %i.b, align 8, !alias.scope !1990
   %or.cond.i.i = icmp ult i64 %.sink.i.i, 576460752303423488

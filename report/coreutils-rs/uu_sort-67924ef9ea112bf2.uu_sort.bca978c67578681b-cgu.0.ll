@@ -205,10 +205,6 @@ bb.ow:                                            ; preds = %bb.or
   %i.beu = icmp eq ptr %i.bet, null
   br i1 %i.beu, label %4, label %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit211.i.i
 
-4:                                                ; preds = %bb.ow
-  call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.aro) #37, !noalias !6928
-  unreachable
-
 _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit211.i.i: ; preds = %bb.ow
   store i64 %i.ark, ptr %i.aw, align 8, !noalias !6757
   store ptr %i.bet, ptr %i.azs, align 8, !noalias !6757
@@ -220,6 +216,10 @@ _RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5B
   %i.bev = load i64, ptr %i.azx, align 8, !range !4, !noalias !6757, !noundef !5 ; 2 uses
   %i.bew = icmp eq i64 %i.bev, -1
   br i1 %i.bew, label %bb.ox, label %bb.oy
+
+4:                                                ; preds = %bb.ow
+  call void @_RNvNtCs7tKScEop1B6_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.aro) #37, !noalias !6928
+  unreachable
 
 bb.ox:                                            ; preds = %_RNvMs5_NtCs7tKScEop1B6_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsgcf5BHVXlUt_7uu_sort.exit211.i.i
   %i.bex = load ptr, ptr %.sroa.5142.0..sroa_idx.i.i, align 8, !noalias !6757, !nonnull !5, !noundef !5

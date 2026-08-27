@@ -204,11 +204,11 @@ bb.o:                                             ; preds = %.lr.ph58, %bb.o
   %i.ax = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv
   %i.ay = load ptr, ptr %i.ax, align 8
   %i.az = load i32, ptr %i.ac, align 4
-  %4 = trunc nuw nsw i64 %indvars.iv to i32
-  %5 = shl i32 %4, 3
-  %i.ba = shl i32 %i.az, 8
-  %i.bb = add i32 %5, 3888
-  %i.bc = add i32 %i.bb, %i.ba
+  %4 = shl i32 %i.az, 8
+  %indvars.iv.tr = trunc i64 %indvars.iv to i32
+  %i.ba = shl i32 %indvars.iv.tr, 3
+  %i.bb = add i32 %i.ba, 3888
+  %i.bc = add i32 %i.bb, %4
   %i.bd = load ptr, ptr @tcg_env, align 8
   %i.be = sext i32 %i.bc to i64
   tail call void @tcg_gen_st_i64(ptr noundef %i.ay, ptr noundef %i.bd, i64 noundef %i.be) #14
