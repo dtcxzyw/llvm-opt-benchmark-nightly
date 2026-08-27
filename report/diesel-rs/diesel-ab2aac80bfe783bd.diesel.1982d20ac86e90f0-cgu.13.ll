@@ -205,13 +205,13 @@ bb.h:                                             ; preds = %_RINvCslibzpPmnZjn_
   br label %bb.l
 
 bb.i:                                             ; preds = %bb.g
-  %i.q = mul i64 %i.i, 40
+  %i.q = mul nuw i64 %i.i, 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.m, ptr nonnull align 8 %.sink11.i, i64 %i.q, i1 false)
   br label %bb.h
 
 bb.j:                                             ; preds = %bb.d
   store i64 0, ptr %0, align 8
-  %i.r = mul i64 %i.i, 40
+  %i.r = mul nuw i64 %i.i, 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %.sink11.i, i64 %i.r, i1 false)
   store i64 %i.i, ptr %i.b, align 8
   %i.s = mul i64 %.sink.i, 40                     ; 2 uses

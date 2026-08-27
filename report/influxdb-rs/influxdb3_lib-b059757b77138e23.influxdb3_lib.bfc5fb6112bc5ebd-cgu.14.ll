@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.h
   br label %bb.i
 
 bb.k:                                             ; preds = %bb.e
-  %i.q = mul i64 %.val, 40
+  %i.q = mul nuw i64 %.val, 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.q, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.r = mul i64 %.sink.i, 40                     ; 2 uses
@@ -314,7 +314,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
-  %i.w = mul i64 %i.g, 56
+  %i.w = mul nuw i64 %i.g, 56
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(456) %0, ptr nonnull align 8 %i.e, i64 %i.w, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !16568
   %i.x = mul i64 %.sink.i.i, 56                   ; 2 uses
@@ -431,7 +431,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
-  %i.w = mul i64 %i.g, 80
+  %i.w = mul nuw i64 %i.g, 80
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(648) %0, ptr nonnull align 8 %i.e, i64 %i.w, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !16579
   %i.x = mul i64 %.sink.i.i, 80                   ; 2 uses

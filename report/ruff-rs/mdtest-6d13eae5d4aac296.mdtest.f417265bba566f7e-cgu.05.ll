@@ -202,7 +202,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
-  %i.x = shl i64 %i.g, 3
+  %i.x = shl nuw i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(24) %0, ptr nonnull align 8 %i.e, i64 %i.x, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !249
   %or.cond.i.i = icmp ult i64 %i.c, 1152921504606846976
@@ -314,12 +314,12 @@ bb.k:                                             ; preds = %bb.l, %_RINvCsheqz6
   br label %_RINvCsheqz6YZvxwl_8smallvec10infallibleuECskXhPDodhyTq_6mdtest.exit
 
 bb.l:                                             ; preds = %bb.j
-  %i.v = mul i64 %i.o, 24
+  %i.v = mul nuw i64 %i.o, 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.q, ptr nonnull align 8 %i.d, i64 %i.v, i1 false)
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
-  %i.w = mul i64 %i.o, 24
+  %i.w = mul nuw i64 %i.o, 24
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.d, ptr nonnull align 8 %i.e, i64 %i.w, i1 false)
   store i64 %i.o, ptr %0, align 8, !alias.scope !261
   %i.x = mul i64 %.sink.i.i, 24                   ; 2 uses

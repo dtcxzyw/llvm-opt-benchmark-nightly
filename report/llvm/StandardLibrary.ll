@@ -204,7 +204,7 @@ _ZNSt6vectorIN5clang7tooling6stdlib6HeaderESaIS3_EE7reserveEm.exit: ; preds = %_
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN5clang7tooling6stdlib6HeaderESaIS3_EE7reserveEm.exit
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.sroa.5.0.insert.shift = shl nuw i64 %i.d, 32  ; 2 uses
+  %.sroa.5.0.insert.shift = shl nuw nsw i64 %i.d, 32 ; 2 uses
   %wide.trip.count = zext i32 %.pre32 to i64
   br label %bb.d
 
@@ -464,7 +464,7 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6
 bb.e:                                             ; preds = %_ZNK4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E6doFindIS2_EEPKS7_RKT_.exit
   %i.be = getelementptr inbounds nuw i8, ptr %..i.i, i64 16
   %i.bf = load i32, ptr %i.be, align 8, !tbaa !64
-  %.sroa.4.0.insert.shift = shl nuw i64 %i.d, 32
+  %.sroa.4.0.insert.shift = shl nuw nsw i64 %i.d, 32
   %.sroa.0.0.insert.ext = zext i32 %i.bf to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
   br label %bb.f
@@ -543,7 +543,7 @@ _ZNSt6vectorIN5clang7tooling6stdlib6SymbolESaIS3_EE7reserveEm.exit: ; preds = %_
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorIN5clang7tooling6stdlib6SymbolESaIS3_EE7reserveEm.exit
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.sroa.5.0.insert.shift = shl nuw i64 %i.d, 32  ; 2 uses
+  %.sroa.5.0.insert.shift = shl nuw nsw i64 %i.d, 32 ; 2 uses
   %wide.trip.count = zext i32 %.pre to i64
   br label %bb.d
 
@@ -946,7 +946,7 @@ _ZNK4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6
 .critedge:                                        ; preds = %_ZNK4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEjNS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES2_jS4_S7_E6doFindIS2_EEPKS7_RKT_.exit
   %i.cm = getelementptr inbounds nuw i8, ptr %.3.i11, i64 16
   %i.cn = load i32, ptr %i.cm, align 8, !tbaa !64
-  %.sroa.4.0.insert.shift = shl nuw i64 %i.d, 32
+  %.sroa.4.0.insert.shift = shl nuw nsw i64 %i.d, 32
   %.sroa.0.0.insert.ext = zext i32 %i.cn to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
   br label %_ZNK4llvm12DenseMapBaseINS_8DenseMapINS_9StringRefEPNS1_IS2_jNS_12DenseMapInfoIS2_vEENS_6detail12DenseMapPairIS2_jEEEES4_NS6_IS2_S9_EEEES2_S9_S4_SA_E6lookupERKS2_.exit.thread
@@ -980,7 +980,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.j, align 8, !tbaa !119
   %i.n = load i32, ptr %i.m, align 4, !tbaa !52
-  %.sroa.4.0.insert.shift = shl nuw i64 %i.c, 32
+  %.sroa.4.0.insert.shift = shl nuw nsw i64 %i.c, 32
   %.sroa.0.0.insert.ext = zext i32 %i.n to i64
   %.sroa.0.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.shift, %.sroa.0.0.insert.ext
   br label %bb.c

@@ -69,7 +69,7 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
   %indvars.iv33.i = phi i64 [ 0, %.preheader25.i ], [ %indvars.iv.next34.i, %.preheader.i ] ; 2 uses
   %i.o = add nuw nsw i64 %indvars.iv33.i, %i.n
   %i.p = trunc nuw i64 %i.o to i32
-  %i.q = shl i32 %i.p, 7
+  %i.q = shl nuw i32 %i.p, 7
   %i.r = sext i32 %i.q to i64
   %invariant.gep.i = getelementptr [4 x i8], ptr %i.c, i64 %i.r ; 32 uses
   %i.s = getelementptr i8, ptr %invariant.gep.i, i64 16
@@ -152,9 +152,9 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
 .preheader.i39:                                   ; preds = %.preheader.i39, %.preheader23.i
   %indvars.iv31.i = phi i64 [ 0, %.preheader23.i ], [ %indvars.iv.next32.i, %.preheader.i39 ] ; 2 uses
   %i.ay = trunc nuw nsw i64 %indvars.iv31.i to i32
-  %i.az = shl i32 %i.ay, 7
+  %i.az = shl nuw nsw i32 %i.ay, 7
   %i.ba = add nuw nsw i32 %i.az, %i.ax
-  %2 = sext i32 %i.ba to i64
+  %2 = zext nneg i32 %i.ba to i64
   %invariant.gep.i40 = getelementptr [4 x i8], ptr %i.d, i64 %2 ; 32 uses
   %i.bb = getelementptr i8, ptr %invariant.gep.i40, i64 16
   store <4 x float> splat (float 1.000000e+00), ptr %invariant.gep.i40, align 4, !tbaa !12
@@ -241,9 +241,9 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
 .preheader.i93:                                   ; preds = %.preheader.i93, %.preheader23.i91
   %indvars.iv31.i94 = phi i64 [ 0, %.preheader23.i91 ], [ %indvars.iv.next32.i101, %.preheader.i93 ] ; 2 uses
   %i.ci = trunc nuw nsw i64 %indvars.iv31.i94 to i32
-  %i.cj = shl i32 %i.ci, 7
+  %i.cj = shl nuw nsw i32 %i.ci, 7
   %i.ck = add nuw nsw i32 %i.cj, %i.ch
-  %3 = sext i32 %i.ck to i64
+  %3 = zext nneg i32 %i.ck to i64
   %invariant.gep.i95 = getelementptr [4 x i8], ptr %i.g, i64 %3 ; 32 uses
   %i.cl = getelementptr i8, ptr %invariant.gep.i95, i64 16
   store <4 x float> splat (float 1.000000e+00), ptr %invariant.gep.i95, align 4, !tbaa !12
@@ -584,9 +584,9 @@ define dso_local noundef i32 @main(i32 noundef %0, ptr nofree noundef readnone c
 .preheader.i233:                                  ; preds = %.preheader.i233, %.preheader23.i231
   %indvars.iv31.i234 = phi i64 [ 0, %.preheader23.i231 ], [ %indvars.iv.next32.i241, %.preheader.i233 ] ; 2 uses
   %i.ic = trunc nuw nsw i64 %indvars.iv31.i234 to i32
-  %i.id = shl i32 %i.ic, 7
+  %i.id = shl nuw nsw i32 %i.ic, 7
   %i.ie = add nuw nsw i32 %i.id, %i.ib
-  %4 = sext i32 %i.ie to i64
+  %4 = zext nneg i32 %i.ie to i64
   %invariant.gep.i235 = getelementptr [4 x i8], ptr %i.i, i64 %4 ; 32 uses
   %i.if = getelementptr i8, ptr %invariant.gep.i235, i64 16
   store <4 x float> splat (float 1.000000e+00), ptr %invariant.gep.i235, align 4, !tbaa !12

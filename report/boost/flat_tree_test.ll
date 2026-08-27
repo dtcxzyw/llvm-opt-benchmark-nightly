@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EENS4_16simple_allocatorIS6_EEvE16priv_destroy_allEv.exit: ; preds = %bb.e, %.lr.ph.preheader.i.i
   store i64 0, ptr %i.k, align 8, !tbaa !9
-  %i.p = shl i64 %i.f, 3
+  %i.p = shl nuw i64 %i.f, 3
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.p) #21
   br label %bb.f
 
@@ -607,7 +607,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EESaIS6_EvE16priv_destroy_allEv.exit: ; preds = %bb.e, %.lr.ph.preheader.i.i
   store i64 0, ptr %i.k, align 8, !tbaa !653
-  %i.p = shl i64 %i.f, 3
+  %i.p = shl nuw i64 %i.f, 3
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.p) #24
   br label %bb.f
 
@@ -1010,7 +1010,7 @@ _ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_
   br i1 %i.s, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES6_EENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS7_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EENS0_22small_vector_allocatorIS6_NS0_13new_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.t = shl i64 %i.h, 3
+  %i.t = shl nuw i64 %i.h, 3
   tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.t) #21
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES6_EENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS7_m.exit
 
@@ -1413,7 +1413,7 @@ _ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_
   br i1 %i.q, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES6_EENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS7_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EENS0_22small_vector_allocatorIS6_NS0_13new_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.r = shl i64 %i.f, 3
+  %i.r = shl nuw i64 %i.f, 3
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.r) #21
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES6_EENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS7_m.exit
 
@@ -1816,7 +1816,7 @@ _ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_
   br i1 %i.q, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES6_EENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS7_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES5_EENS0_22small_vector_allocatorIS6_NS0_13new_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.r = shl i64 %i.f, 3
+  %i.r = shl nuw i64 %i.f, 3
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.r) #21
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_3dtl4pairINS0_4test24movable_and_copyable_intES6_EENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS7_m.exit
 
@@ -2219,7 +2219,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS2_16simple_allocatorIS3_EEvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.e
   store i64 0, ptr %i.k, align 8, !tbaa !2615
-  %i.ab = shl i64 %i.f, 2
+  %i.ab = shl nuw i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.ab) #21
   br label %bb.f
 
@@ -2622,7 +2622,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intESaIS3_EvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i.prol.loopexit, %.lr.ph.i.i, %bb.e
   store i64 0, ptr %i.k, align 8, !tbaa !3280
-  %i.ab = shl i64 %i.f, 2
+  %i.ab = shl nuw i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.ab) #24
   br label %bb.f
 
@@ -3025,7 +3025,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vecto
   br i1 %i.ae, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS0_13new_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.af = shl i64 %i.h, 2
+  %i.af = shl nuw i64 %i.h, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.af) #21
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
 
@@ -3428,7 +3428,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vecto
   br i1 %i.ac, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS0_13new_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.ad = shl i64 %i.f, 2
+  %i.ad = shl nuw i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.ad) #21
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
 
@@ -3831,7 +3831,7 @@ _ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vecto
   br i1 %i.ac, label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN5boost9container6vectorINS0_4test24movable_and_copyable_intENS0_22small_vector_allocatorIS3_NS0_13new_allocatorIvEEvEEvE16priv_destroy_allEv.exit
-  %i.ad = shl i64 %i.f, 2
+  %i.ad = shl nuw i64 %i.f, 2
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.ad) #21
   br label %_ZN5boost9container19vector_alloc_holderINS0_22small_vector_allocatorINS0_4test24movable_and_copyable_intENS0_13new_allocatorIvEEvEEmNS_11move_detail17integral_constantIjLj1EEEE10deallocateERKPS4_m.exit
 

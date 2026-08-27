@@ -203,9 +203,9 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   store i64 -1, ptr %i.bc, align 16, !tbaa !9
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store ptr null, ptr %i.bd, align 8, !tbaa !13
-  %i.be = shl nsw i64 %.036.lcssa, 4
-  %i.bf = add nsw i64 %i.be, 16
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %1, ptr nonnull align 16 %3, i64 %i.bf, i1 false)
+  %i.be = shl nuw nsw i64 %.036.lcssa, 4
+  %i.bf = add nuw nsw i64 %i.be, 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %1, ptr noundef nonnull align 16 dereferenceable(1) %3, i64 %i.bf, i1 false)
   br label %.loopexit
 
 .thread:                                          ; preds = %._crit_edge.3, %.preheader.3, %._crit_edge.2, %.preheader.2, %._crit_edge.1, %.preheader.1, %.preheader, %._crit_edge

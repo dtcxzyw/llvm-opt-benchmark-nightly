@@ -205,7 +205,7 @@ bb.bc:                                            ; preds = %bb.bb
 bb.bd:                                            ; preds = %bb.bd, %bb.bc
   %.sroa.0101.1.i.i = phi i64 [ %spec.select.i168.i, %bb.bc ], [ %i.lt, %bb.bd ] ; 9 uses
   %i.ls = icmp ult i64 %.sroa.0101.1.i.i, %.sroa.0.0.i.i
-  %i.lt = shl i64 %.sroa.0101.1.i.i, 1
+  %i.lt = shl nsw i64 %.sroa.0101.1.i.i, 1
   br i1 %i.ls, label %bb.bd, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
@@ -251,7 +251,7 @@ bb.bh:                                            ; preds = %bb.bg
 bb.bi:                                            ; preds = %bb.bi, %bb.bh
   %.sroa.0104.1.i.i = phi i64 [ %spec.select250.i.i, %bb.bh ], [ %i.mc, %bb.bi ] ; 8 uses
   %i.mb = icmp ult i64 %.sroa.0104.1.i.i, %.sroa.0.0.i.i
-  %i.mc = shl i64 %.sroa.0104.1.i.i, 1
+  %i.mc = shl nsw i64 %.sroa.0104.1.i.i, 1
   br i1 %i.mb, label %bb.bi, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
@@ -654,7 +654,7 @@ bb.is:                                            ; preds = %bb.ir
 bb.it:                                            ; preds = %bb.it, %bb.is
   %.sroa.0101.1.i.i371 = phi i64 [ %spec.select.i170.i, %bb.is ], [ %i.ben, %bb.it ] ; 9 uses
   %i.bem = icmp ult i64 %.sroa.0101.1.i.i371, %.sroa.0.0.i.i204
-  %i.ben = shl i64 %.sroa.0101.1.i.i371, 1
+  %i.ben = shl nsw i64 %.sroa.0101.1.i.i371, 1
   br i1 %i.bem, label %bb.it, label %bb.iu
 
 bb.iu:                                            ; preds = %bb.it
@@ -700,7 +700,7 @@ bb.ix:                                            ; preds = %bb.iw
 bb.iy:                                            ; preds = %bb.iy, %bb.ix
   %.sroa.0104.1.i.i366 = phi i64 [ %spec.select250.i.i365, %bb.ix ], [ %i.bew, %bb.iy ] ; 8 uses
   %i.bev = icmp ult i64 %.sroa.0104.1.i.i366, %.sroa.0.0.i.i204
-  %i.bew = shl i64 %.sroa.0104.1.i.i366, 1
+  %i.bew = shl nsw i64 %.sroa.0104.1.i.i366, 1
   br i1 %i.bev, label %bb.iy, label %bb.iz
 
 bb.iz:                                            ; preds = %bb.iy
@@ -1103,7 +1103,7 @@ bb.qp:                                            ; preds = %bb.qo
 bb.qq:                                            ; preds = %bb.qq, %bb.qp
   %.sroa.0101.1.i.i917 = phi i64 [ %spec.select.i170.i916, %bb.qp ], [ %i.cvw, %bb.qq ] ; 9 uses
   %i.cvv = icmp ult i64 %.sroa.0101.1.i.i917, %.sroa.0.0.i.i637
-  %i.cvw = shl i64 %.sroa.0101.1.i.i917, 1
+  %i.cvw = shl nsw i64 %.sroa.0101.1.i.i917, 1
   br i1 %i.cvv, label %bb.qq, label %bb.qr
 
 bb.qr:                                            ; preds = %bb.qq
@@ -1149,7 +1149,7 @@ bb.qu:                                            ; preds = %bb.qt
 bb.qv:                                            ; preds = %bb.qv, %bb.qu
   %.sroa.0104.1.i.i909 = phi i64 [ %spec.select250.i.i908, %bb.qu ], [ %i.cwf, %bb.qv ] ; 8 uses
   %i.cwe = icmp ult i64 %.sroa.0104.1.i.i909, %.sroa.0.0.i.i637
-  %i.cwf = shl i64 %.sroa.0104.1.i.i909, 1
+  %i.cwf = shl nsw i64 %.sroa.0104.1.i.i909, 1
   br i1 %i.cwe, label %bb.qv, label %bb.qw
 
 bb.qw:                                            ; preds = %bb.qv
@@ -1552,7 +1552,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.e
-  %i.u = mul i64 %.val, 40
+  %i.u = mul nuw i64 %.val, 40
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 8 %i.f, i64 %i.u, i1 false)
   store i64 %.val, ptr %i.b, align 8
   %i.v = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sink.i, i64 40) ; 2 uses

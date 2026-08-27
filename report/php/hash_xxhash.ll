@@ -205,11 +205,11 @@ bb.f:                                             ; preds = %bb.e
   %i.al = phi <2 x i64> [ %i.bp, %.lr.ph.i ], [ %.pre.i, %bb.f ]
   %i.am = phi <2 x i64> [ %i.bc, %.lr.ph.i ], [ %.pre114.i, %bb.f ]
   %.0.i1746.i = phi i64 [ %i.cq, %.lr.ph.i ], [ 0, %bb.f ] ; 3 uses
-  %i.an = shl i64 %.0.i1746.i, 6
+  %i.an = shl nuw nsw i64 %.0.i1746.i, 6
   %i.ao = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.an ; 5 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ap, i32 0, i32 3, i32 1), !noalias !81
-  %i.aq = shl i64 %.0.i1746.i, 3
+  %i.aq = shl nuw nsw i64 %.0.i1746.i, 3
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aq ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !82), !noalias !73
   %i.as = load <2 x i64>, ptr %i.ao, align 1, !tbaa !12, !noalias !85 ; 2 uses
@@ -347,11 +347,11 @@ XXH3_accumulate.exit20.i:                         ; preds = %XXH3_accumulate.exi
   %i.ev = phi <2 x i64> [ %i.fz, %.lr.ph50.i ], [ %i.ds, %XXH3_accumulate.exit20.i ]
   %i.ew = phi <2 x i64> [ %i.fm, %.lr.ph50.i ], [ %i.dg, %XXH3_accumulate.exit20.i ]
   %.0.i1349.i = phi i64 [ %i.ha, %.lr.ph50.i ], [ 0, %XXH3_accumulate.exit20.i ] ; 3 uses
-  %i.ex = shl i64 %.0.i1349.i, 6
+  %i.ex = shl nuw nsw i64 %.0.i1349.i, 6
   %i.ey = getelementptr inbounds nuw i8, ptr %i.es, i64 %i.ex ; 5 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ez, i32 0, i32 3, i32 1), !noalias !103
-  %i.fa = shl i64 %.0.i1349.i, 3
+  %i.fa = shl nuw nsw i64 %.0.i1349.i, 3
   %i.fb = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.fa ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !104), !noalias !73
   %i.fc = load <2 x i64>, ptr %i.ey, align 1, !tbaa !12, !noalias !107 ; 2 uses
@@ -754,11 +754,11 @@ bb.m:                                             ; preds = %bb.l
   %i.wc = phi <2 x i64> [ %i.xg, %.lr.ph55.i ], [ %.pre140.i, %bb.m ]
   %i.wd = phi <2 x i64> [ %i.wt, %.lr.ph55.i ], [ %.pre138.i, %bb.m ]
   %.0.i2954.i = phi i64 [ %i.yh, %.lr.ph55.i ], [ 0, %bb.m ] ; 3 uses
-  %i.we = shl i64 %.0.i2954.i, 6
+  %i.we = shl nuw nsw i64 %.0.i2954.i, 6
   %i.wf = getelementptr inbounds nuw i8, ptr %.2.i.i, i64 %i.we ; 5 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %i.wf, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.wg, i32 0, i32 3, i32 1), !noalias !188
-  %i.wh = shl i64 %.0.i2954.i, 3
+  %i.wh = shl nuw nsw i64 %.0.i2954.i, 3
   %i.wi = getelementptr inbounds nuw i8, ptr %i.vz, i64 %i.wh ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !189), !noalias !177
   %i.wj = load <2 x i64>, ptr %i.wf, align 1, !tbaa !12, !noalias !192 ; 2 uses
@@ -892,11 +892,11 @@ XXH3_accumulate.exit32.i:                         ; preds = %bb.m, %XXH3_accumul
   %i.aai = phi <2 x i64> [ %i.abm, %.lr.ph59.i ], [ %i.zh, %XXH3_accumulate.exit32.i ]
   %i.aaj = phi <2 x i64> [ %i.aaz, %.lr.ph59.i ], [ %i.yw, %XXH3_accumulate.exit32.i ]
   %.0.i2558.i = phi i64 [ %i.acn, %.lr.ph59.i ], [ 0, %XXH3_accumulate.exit32.i ] ; 3 uses
-  %i.aak = shl i64 %.0.i2558.i, 6
+  %i.aak = shl nuw nsw i64 %.0.i2558.i, 6
   %i.aal = getelementptr inbounds nuw i8, ptr %i.aaf, i64 %i.aak ; 5 uses
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aal, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.aam, i32 0, i32 3, i32 1), !noalias !209
-  %i.aan = shl i64 %.0.i2558.i, 3
+  %i.aan = shl nuw nsw i64 %.0.i2558.i, 3
   %i.aao = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.aan ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !210), !noalias !177
   %i.aap = load <2 x i64>, ptr %i.aal, align 1, !tbaa !12, !noalias !213 ; 2 uses
@@ -1299,11 +1299,11 @@ bb.f:                                             ; preds = %bb.e
   %i.al = phi <2 x i64> [ %i.bp, %.lr.ph.i ], [ %.pre.i, %bb.f ]
   %i.am = phi <2 x i64> [ %i.bc, %.lr.ph.i ], [ %.pre114.i, %bb.f ]
   %.0.i1746.i = phi i64 [ %i.cq, %.lr.ph.i ], [ 0, %bb.f ] ; 3 uses
-  %i.an = shl i64 %.0.i1746.i, 6
+  %i.an = shl nuw nsw i64 %.0.i1746.i, 6
   %i.ao = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.an ; 5 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ap, i32 0, i32 3, i32 1), !noalias !336
-  %i.aq = shl i64 %.0.i1746.i, 3
+  %i.aq = shl nuw nsw i64 %.0.i1746.i, 3
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.aq ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !337), !noalias !328
   %i.as = load <2 x i64>, ptr %i.ao, align 1, !tbaa !12, !noalias !340 ; 2 uses
@@ -1441,11 +1441,11 @@ XXH3_accumulate.exit20.i:                         ; preds = %XXH3_accumulate.exi
   %i.ev = phi <2 x i64> [ %i.fz, %.lr.ph50.i ], [ %i.ds, %XXH3_accumulate.exit20.i ]
   %i.ew = phi <2 x i64> [ %i.fm, %.lr.ph50.i ], [ %i.dg, %XXH3_accumulate.exit20.i ]
   %.0.i1349.i = phi i64 [ %i.ha, %.lr.ph50.i ], [ 0, %XXH3_accumulate.exit20.i ] ; 3 uses
-  %i.ex = shl i64 %.0.i1349.i, 6
+  %i.ex = shl nuw nsw i64 %.0.i1349.i, 6
   %i.ey = getelementptr inbounds nuw i8, ptr %i.es, i64 %i.ex ; 5 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.ez, i32 0, i32 3, i32 1), !noalias !357
-  %i.fa = shl i64 %.0.i1349.i, 3
+  %i.fa = shl nuw nsw i64 %.0.i1349.i, 3
   %i.fb = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.fa ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !358), !noalias !328
   %i.fc = load <2 x i64>, ptr %i.ey, align 1, !tbaa !12, !noalias !361 ; 2 uses
@@ -1848,11 +1848,11 @@ bb.m:                                             ; preds = %bb.l
   %i.wc = phi <2 x i64> [ %i.xg, %.lr.ph55.i ], [ %.pre140.i, %bb.m ]
   %i.wd = phi <2 x i64> [ %i.wt, %.lr.ph55.i ], [ %.pre138.i, %bb.m ]
   %.0.i2954.i = phi i64 [ %i.yh, %.lr.ph55.i ], [ 0, %bb.m ] ; 3 uses
-  %i.we = shl i64 %.0.i2954.i, 6
+  %i.we = shl nuw nsw i64 %.0.i2954.i, 6
   %i.wf = getelementptr inbounds nuw i8, ptr %.2.i.i, i64 %i.we ; 5 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %i.wf, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.wg, i32 0, i32 3, i32 1), !noalias !439
-  %i.wh = shl i64 %.0.i2954.i, 3
+  %i.wh = shl nuw nsw i64 %.0.i2954.i, 3
   %i.wi = getelementptr inbounds nuw i8, ptr %i.vz, i64 %i.wh ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !440), !noalias !428
   %i.wj = load <2 x i64>, ptr %i.wf, align 1, !tbaa !12, !noalias !443 ; 2 uses
@@ -1986,11 +1986,11 @@ XXH3_accumulate.exit32.i:                         ; preds = %bb.m, %XXH3_accumul
   %i.aai = phi <2 x i64> [ %i.abm, %.lr.ph59.i ], [ %i.zh, %XXH3_accumulate.exit32.i ]
   %i.aaj = phi <2 x i64> [ %i.aaz, %.lr.ph59.i ], [ %i.yw, %XXH3_accumulate.exit32.i ]
   %.0.i2558.i = phi i64 [ %i.acn, %.lr.ph59.i ], [ 0, %XXH3_accumulate.exit32.i ] ; 3 uses
-  %i.aak = shl i64 %.0.i2558.i, 6
+  %i.aak = shl nuw nsw i64 %.0.i2558.i, 6
   %i.aal = getelementptr inbounds nuw i8, ptr %i.aaf, i64 %i.aak ; 5 uses
   %i.aam = getelementptr inbounds nuw i8, ptr %i.aal, i64 320
   tail call void @llvm.prefetch.p0(ptr nonnull %i.aam, i32 0, i32 3, i32 1), !noalias !460
-  %i.aan = shl i64 %.0.i2558.i, 3
+  %i.aan = shl nuw nsw i64 %.0.i2558.i, 3
   %i.aao = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.aan ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !461), !noalias !428
   %i.aap = load <2 x i64>, ptr %i.aal, align 1, !tbaa !12, !noalias !464 ; 2 uses

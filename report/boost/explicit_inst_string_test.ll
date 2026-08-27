@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvEENS6_IS8_EEvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i, %bb.e
   store i64 0, ptr %i.k, align 8, !tbaa !604
-  %i.o = mul i64 %i.f, 24
+  %i.o = mul nuw i64 %i.f, 24
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.o) #26
   br label %bb.f
 
@@ -408,7 +408,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN5boost9container6vectorINS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvEENS6_IS8_EEvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i, %bb.g
   store i64 0, ptr %i.j, align 8, !tbaa !604
-  %i.n = mul i64 %i.c, 24
+  %i.n = mul nuw i64 %i.c, 24
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.n) #26
   br label %bb.h
 
@@ -811,7 +811,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvEENS6_IS8_EEvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i, %bb.e
   store i64 0, ptr %i.k, align 8, !tbaa !694
-  %i.o = mul i64 %i.f, 24
+  %i.o = mul nuw i64 %i.f, 24
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.o) #26
   br label %bb.f
 
@@ -1015,7 +1015,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN5boost9container6vectorINS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvEENS6_IS8_EEvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i, %bb.g
   store i64 0, ptr %i.j, align 8, !tbaa !694
-  %i.n = mul i64 %i.c, 24
+  %i.n = mul nuw i64 %i.c, 24
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.n) #26
   br label %bb.h
 
@@ -1418,7 +1418,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_12basic_stringIcSt11char_traitsIcENS0_4test16simple_allocatorIcEEvEENS6_IS8_EEvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i, %bb.e
   store i64 0, ptr %i.k, align 8, !tbaa !604
-  %i.o = mul i64 %i.f, 24
+  %i.o = mul nuw i64 %i.f, 24
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.o) #26
   br label %bb.f
 
@@ -1821,7 +1821,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5boost9container6vectorINS0_12basic_stringIwSt11char_traitsIwENS0_4test16simple_allocatorIwEEvEENS6_IS8_EEvE16priv_destroy_allEv.exit: ; preds = %.lr.ph.i.i, %bb.e
   store i64 0, ptr %i.k, align 8, !tbaa !694
-  %i.o = mul i64 %i.f, 24
+  %i.o = mul nuw i64 %i.f, 24
   tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.o) #26
   br label %bb.f
 

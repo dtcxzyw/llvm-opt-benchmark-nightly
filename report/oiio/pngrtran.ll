@@ -205,10 +205,10 @@ bb.i:                                             ; preds = %bb.h, %switch.looku
 bb.j:                                             ; preds = %bb.i
   %i.v = insertelement <2 x i32> poison, i32 %2, i64 0
   %i.w = insertelement <2 x i32> %i.v, i32 %3, i64 1
-  %i.x = shl <2 x i32> %i.w, splat (i32 15)
+  %i.x = shl nuw <2 x i32> %i.w, splat (i32 10)
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 1034
-  %i.z = udiv <2 x i32> %i.x, splat (i32 100000)
-  %i.aa = trunc nuw <2 x i32> %i.z to <2 x i16>
+  %i.z = udiv <2 x i32> %i.x, splat (i32 3125)
+  %i.aa = trunc <2 x i32> %i.z to <2 x i16>
   store <2 x i16> %i.aa, ptr %i.y, align 2, !tbaa !30
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 1033
   store i8 1, ptr %i.ab, align 1, !tbaa !132

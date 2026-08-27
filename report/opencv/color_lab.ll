@@ -204,19 +204,19 @@ bb.ln:                                            ; preds = %.split.split
   %i.ub = mul nuw nsw i64 %i.ty, %i.tv            ; 2 uses
   %gep10 = getelementptr inbounds i8, ptr %gep, i64 %.idx180 ; 8 uses
   %i.uc = mul nuw nsw i64 %i.tw, %i.ub
-  %i.ud = trunc nuw i64 %i.uc to i16
+  %i.ud = trunc nuw nsw i64 %i.uc to i16
   store i16 %i.ud, ptr %gep10, align 16, !tbaa !291
   %i.ue = mul nuw nsw i64 %indvars.iv153, %i.ub
   %i.uf = getelementptr inbounds nuw i8, ptr %gep10, i64 2
-  %i.ug = trunc i64 %i.ue to i16
+  %i.ug = trunc nuw i64 %i.ue to i16
   store i16 %i.ug, ptr %i.uf, align 2, !tbaa !291
   %i.uh = mul nuw nsw i64 %i.tw, %i.ua
   %i.ui = getelementptr inbounds nuw i8, ptr %gep10, i64 4
-  %i.uj = trunc i64 %i.uh to i16
+  %i.uj = trunc nuw i64 %i.uh to i16
   store i16 %i.uj, ptr %i.ui, align 4, !tbaa !291
   %i.uk = mul nuw nsw i64 %indvars.iv153, %i.ua
   %i.ul = getelementptr inbounds nuw i8, ptr %gep10, i64 6
-  %i.um = trunc i64 %i.uk to i16
+  %i.um = trunc nuw nsw i64 %i.uk to i16
   store i16 %i.um, ptr %i.ul, align 2, !tbaa !291
   %i.un = mul i64 %i.tw, %i.tz
   %i.uo = getelementptr inbounds nuw i8, ptr %gep10, i64 8
@@ -228,11 +228,11 @@ bb.ln:                                            ; preds = %.split.split
   store i16 %i.us, ptr %i.ur, align 2, !tbaa !291
   %i.ut = mul nuw nsw i64 %i.tw, %i.tx
   %i.uu = getelementptr inbounds nuw i8, ptr %gep10, i64 12
-  %i.uv = trunc i64 %i.ut to i16
+  %i.uv = trunc nuw i64 %i.ut to i16
   store i16 %i.uv, ptr %i.uu, align 4, !tbaa !291
   %i.uw = mul nuw nsw i64 %indvars.iv153, %i.tx
   %i.ux = getelementptr inbounds nuw i8, ptr %gep10, i64 14
-  %i.uy = trunc i64 %i.uw to i16
+  %i.uy = trunc nuw nsw i64 %i.uw to i16
   store i16 %i.uy, ptr %i.ux, align 2, !tbaa !291
   %indvars.iv.next158 = add nuw nsw i64 %indvars.iv157, 1 ; 2 uses
   %exitcond162.not.a = icmp eq i64 %indvars.iv.next158, 16

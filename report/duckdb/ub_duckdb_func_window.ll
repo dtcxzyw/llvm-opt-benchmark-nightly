@@ -205,8 +205,8 @@ _ZNSt6vectorImSaImEED2Ev.exit32:                  ; preds = %bb.b
   br label %_ZNSt6vectorISt5tupleIJmmEESaIS1_EED2Ev.exit48
 
 _ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %_ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit.i.lr.ph, %_ZNSt6vectorISt5tupleIJmmEESaIS1_EED2Ev.exit
-  %.067 = phi i64 [ 1, %_ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit.i.lr.ph ], [ %i.ag, %_ZNSt6vectorISt5tupleIJmmEESaIS1_EED2Ev.exit ] ; 2 uses
-  %i.ag = shl i64 %.067, 5                        ; 5 uses
+  %.067 = phi i64 [ 1, %_ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit.i.lr.ph ], [ %i.ag, %_ZNSt6vectorISt5tupleIJmmEESaIS1_EED2Ev.exit ] ; 3 uses
+  %i.ag = shl nuw i64 %.067, 5                    ; 4 uses
   %i.ah = add i64 %i.r, %i.ag
   %i.ai = call range(i64 5, 65) i64 @llvm.cttz.i64(i64 %i.ag, i1 true)
   %i.aj = lshr i64 %i.ah, %i.ai
@@ -223,7 +223,7 @@ _ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %_ZNKS
   store ptr %i.al, ptr %i.t, align 16, !tbaa !859
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
-  %i.am = icmp ugt i64 %i.ag, 32
+  %i.am = icmp ugt i64 %.067, 1
   br i1 %i.am, label %bb.e, label %_ZNSt6vectorImSaImEE6resizeEm.exit
 
 bb.e:                                             ; preds = %.noexc52

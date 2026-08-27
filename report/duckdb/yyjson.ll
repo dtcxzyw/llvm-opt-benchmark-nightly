@@ -204,7 +204,7 @@ bb.fo:                                            ; preds = %bb.fn
   %i.atj = load i16, ptr %i.ati, align 2
   store i16 %i.atj, ptr %i.atf, align 1
   %i.atk = getelementptr inbounds nuw i8, ptr %i.arr, i64 14
-  %i.atl = shl i32 %i.ate, 1
+  %i.atl = shl nuw i32 %i.ate, 1
   %i.atm = zext i32 %i.atl to i64
   %i.atn = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.atm
   %i.ato = load i16, ptr %i.atn, align 2
@@ -245,7 +245,7 @@ bb.fr:                                            ; preds = %bb.fq
   %i.auh = load i16, ptr %i.aug, align 2
   store i16 %i.auh, ptr %i.aud, align 1
   %i.aui = getelementptr inbounds nuw i8, ptr %i.arr, i64 6
-  %i.auj = shl i32 %i.auc, 1
+  %i.auj = shl nuw i32 %i.auc, 1
   %i.auk = zext i32 %i.auj to i64
   %i.aul = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.auk
   %i.aum = load i16, ptr %i.aul, align 2
@@ -378,7 +378,7 @@ bb.fv:                                            ; preds = %bb.fu
   %i.axs = load i16, ptr %i.axr, align 2
   store i16 %i.axs, ptr %i.axo, align 1
   %i.axt = getelementptr inbounds nuw i8, ptr %i.awa, i64 14
-  %i.axu = shl i32 %i.axn, 1
+  %i.axu = shl nuw i32 %i.axn, 1
   %i.axv = zext i32 %i.axu to i64
   %i.axw = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.axv
   %i.axx = load i16, ptr %i.axw, align 2
@@ -419,7 +419,7 @@ bb.fy:                                            ; preds = %bb.fx
   %i.ayq = load i16, ptr %i.ayp, align 2
   store i16 %i.ayq, ptr %i.aym, align 1
   %i.ayr = getelementptr inbounds nuw i8, ptr %i.awa, i64 6
-  %i.ays = shl i32 %i.ayl, 1
+  %i.ays = shl nuw i32 %i.ayl, 1
   %i.ayt = zext i32 %i.ays to i64
   %i.ayu = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ayt
   %i.ayv = load i16, ptr %i.ayu, align 2
@@ -550,7 +550,7 @@ bb.gc:                                            ; preds = %bb.gb
   %i.bbx = load i16, ptr %i.bbw, align 2
   store i16 %i.bbx, ptr %i.bbt, align 1
   %i.bby = getelementptr inbounds nuw i8, ptr %.ptr1825, i64 14
-  %i.bbz = shl i32 %i.bbs, 1
+  %i.bbz = shl nuw i32 %i.bbs, 1
   %i.bca = zext i32 %i.bbz to i64
   %i.bcb = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.bca
   %i.bcc = load i16, ptr %i.bcb, align 2
@@ -600,7 +600,7 @@ bb.gf:                                            ; preds = %bb.ge
   %i.bdg = load i16, ptr %i.bdf, align 2
   store i16 %i.bdg, ptr %i.bdc, align 1
   %i.bdh = getelementptr inbounds nuw i8, ptr %.ptr1825, i64 6
-  %i.bdi = shl i32 %i.bdb, 1
+  %i.bdi = shl nuw i32 %i.bdb, 1
   %i.bdj = zext i32 %i.bdi to i64
   %i.bdk = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.bdj
   %i.bdl = load i16, ptr %i.bdk, align 2
@@ -1003,7 +1003,7 @@ bb.ow:                                            ; preds = %bb.ov
   %i.eek = load i16, ptr %i.eej, align 2
   store i16 %i.eek, ptr %i.eeg, align 1
   %i.eel = getelementptr inbounds nuw i8, ptr %i.ecs, i64 14
-  %i.eem = shl i32 %i.eef, 1
+  %i.eem = shl nuw i32 %i.eef, 1
   %i.een = zext i32 %i.eem to i64
   %i.eeo = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.een
   %i.eep = load i16, ptr %i.eeo, align 2
@@ -1044,7 +1044,7 @@ bb.oz:                                            ; preds = %bb.oy
   %i.efi = load i16, ptr %i.efh, align 2
   store i16 %i.efi, ptr %i.efe, align 1
   %i.efj = getelementptr inbounds nuw i8, ptr %i.ecs, i64 6
-  %i.efk = shl i32 %i.efd, 1
+  %i.efk = shl nuw i32 %i.efd, 1
   %i.efl = zext i32 %i.efk to i64
   %i.efm = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.efl
   %i.efn = load i16, ptr %i.efm, align 2
@@ -1197,7 +1197,7 @@ bb.pd:                                            ; preds = %bb.pc
   %i.ejj = load i16, ptr %i.eji, align 2
   store i16 %i.ejj, ptr %i.ejf, align 1
   %i.ejk = getelementptr inbounds nuw i8, ptr %i.ehr, i64 14
-  %i.ejl = shl i32 %i.eje, 1
+  %i.ejl = shl nuw i32 %i.eje, 1
   %i.ejm = zext i32 %i.ejl to i64
   %i.ejn = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ejm
   %i.ejo = load i16, ptr %i.ejn, align 2
@@ -1238,7 +1238,7 @@ bb.pg:                                            ; preds = %bb.pf
   %i.ekh = load i16, ptr %i.ekg, align 2
   store i16 %i.ekh, ptr %i.ekd, align 1
   %i.eki = getelementptr inbounds nuw i8, ptr %i.ehr, i64 6
-  %i.ekj = shl i32 %i.ekc, 1
+  %i.ekj = shl nuw i32 %i.ekc, 1
   %i.ekk = zext i32 %i.ekj to i64
   %i.ekl = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ekk
   %i.ekm = load i16, ptr %i.ekl, align 2
@@ -1389,7 +1389,7 @@ bb.pk:                                            ; preds = %bb.pj
   %i.eod = load i16, ptr %i.eoc, align 2
   store i16 %i.eod, ptr %i.enz, align 1
   %i.eoe = getelementptr inbounds nuw i8, ptr %.ptr1781, i64 14
-  %i.eof = shl i32 %i.eny, 1
+  %i.eof = shl nuw i32 %i.eny, 1
   %i.eog = zext i32 %i.eof to i64
   %i.eoh = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.eog
   %i.eoi = load i16, ptr %i.eoh, align 2
@@ -1439,7 +1439,7 @@ bb.pn:                                            ; preds = %bb.pm
   %i.epm = load i16, ptr %i.epl, align 2
   store i16 %i.epm, ptr %i.epi, align 1
   %i.epn = getelementptr inbounds nuw i8, ptr %.ptr1781, i64 6
-  %i.epo = shl i32 %i.eph, 1
+  %i.epo = shl nuw i32 %i.eph, 1
   %i.epp = zext i32 %i.epo to i64
   %i.epq = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.epp
   %i.epr = load i16, ptr %i.epq, align 2
@@ -1842,7 +1842,7 @@ bb.yy:                                            ; preds = %bb.yx
   %i.hyl = load i16, ptr %i.hyk, align 2
   store i16 %i.hyl, ptr %i.hyh, align 1
   %i.hym = getelementptr inbounds nuw i8, ptr %i.hwt, i64 14
-  %i.hyn = shl i32 %i.hyg, 1
+  %i.hyn = shl nuw i32 %i.hyg, 1
   %i.hyo = zext i32 %i.hyn to i64
   %i.hyp = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.hyo
   %i.hyq = load i16, ptr %i.hyp, align 2
@@ -1883,7 +1883,7 @@ bb.zb:                                            ; preds = %bb.za
   %i.hzj = load i16, ptr %i.hzi, align 2
   store i16 %i.hzj, ptr %i.hzf, align 1
   %i.hzk = getelementptr inbounds nuw i8, ptr %i.hwt, i64 6
-  %i.hzl = shl i32 %i.hze, 1
+  %i.hzl = shl nuw i32 %i.hze, 1
   %i.hzm = zext i32 %i.hzl to i64
   %i.hzn = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.hzm
   %i.hzo = load i16, ptr %i.hzn, align 2
@@ -2036,7 +2036,7 @@ bb.zf:                                            ; preds = %bb.ze
   %i.idk = load i16, ptr %i.idj, align 2
   store i16 %i.idk, ptr %i.idg, align 1
   %i.idl = getelementptr inbounds nuw i8, ptr %i.ibs, i64 14
-  %i.idm = shl i32 %i.idf, 1
+  %i.idm = shl nuw i32 %i.idf, 1
   %i.idn = zext i32 %i.idm to i64
   %i.ido = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.idn
   %i.idp = load i16, ptr %i.ido, align 2
@@ -2077,7 +2077,7 @@ bb.zi:                                            ; preds = %bb.zh
   %i.iei = load i16, ptr %i.ieh, align 2
   store i16 %i.iei, ptr %i.iee, align 1
   %i.iej = getelementptr inbounds nuw i8, ptr %i.ibs, i64 6
-  %i.iek = shl i32 %i.ied, 1
+  %i.iek = shl nuw i32 %i.ied, 1
   %i.iel = zext i32 %i.iek to i64
   %i.iem = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.iel
   %i.ien = load i16, ptr %i.iem, align 2
@@ -2228,7 +2228,7 @@ bb.zm:                                            ; preds = %bb.zl
   %i.iie = load i16, ptr %i.iid, align 2
   store i16 %i.iie, ptr %i.iia, align 1
   %i.iif = getelementptr inbounds nuw i8, ptr %.ptr1802, i64 14
-  %i.iig = shl i32 %i.ihz, 1
+  %i.iig = shl nuw i32 %i.ihz, 1
   %i.iih = zext i32 %i.iig to i64
   %i.iii = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.iih
   %i.iij = load i16, ptr %i.iii, align 2
@@ -2278,7 +2278,7 @@ bb.zp:                                            ; preds = %bb.zo
   %i.ijn = load i16, ptr %i.ijm, align 2
   store i16 %i.ijn, ptr %i.ijj, align 1
   %i.ijo = getelementptr inbounds nuw i8, ptr %.ptr1802, i64 6
-  %i.ijp = shl i32 %i.iji, 1
+  %i.ijp = shl nuw i32 %i.iji, 1
   %i.ijq = zext i32 %i.ijp to i64
   %i.ijr = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ijq
   %i.ijs = load i16, ptr %i.ijr, align 2
@@ -2681,7 +2681,7 @@ bb.fo:                                            ; preds = %bb.fn
   %i.atj = load i16, ptr %i.ati, align 2
   store i16 %i.atj, ptr %i.atf, align 1
   %i.atk = getelementptr inbounds nuw i8, ptr %i.arr, i64 14
-  %i.atl = shl i32 %i.ate, 1
+  %i.atl = shl nuw i32 %i.ate, 1
   %i.atm = zext i32 %i.atl to i64
   %i.atn = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.atm
   %i.ato = load i16, ptr %i.atn, align 2
@@ -2722,7 +2722,7 @@ bb.fr:                                            ; preds = %bb.fq
   %i.auh = load i16, ptr %i.aug, align 2
   store i16 %i.auh, ptr %i.aud, align 1
   %i.aui = getelementptr inbounds nuw i8, ptr %i.arr, i64 6
-  %i.auj = shl i32 %i.auc, 1
+  %i.auj = shl nuw i32 %i.auc, 1
   %i.auk = zext i32 %i.auj to i64
   %i.aul = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.auk
   %i.aum = load i16, ptr %i.aul, align 2
@@ -2855,7 +2855,7 @@ bb.fv:                                            ; preds = %bb.fu
   %i.axu = load i16, ptr %i.axt, align 2
   store i16 %i.axu, ptr %i.axq, align 1
   %i.axv = getelementptr inbounds nuw i8, ptr %i.awc, i64 14
-  %i.axw = shl i32 %i.axp, 1
+  %i.axw = shl nuw i32 %i.axp, 1
   %i.axx = zext i32 %i.axw to i64
   %i.axy = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.axx
   %i.axz = load i16, ptr %i.axy, align 2
@@ -2896,7 +2896,7 @@ bb.fy:                                            ; preds = %bb.fx
   %i.ays = load i16, ptr %i.ayr, align 2
   store i16 %i.ays, ptr %i.ayo, align 1
   %i.ayt = getelementptr inbounds nuw i8, ptr %i.awc, i64 6
-  %i.ayu = shl i32 %i.ayn, 1
+  %i.ayu = shl nuw i32 %i.ayn, 1
   %i.ayv = zext i32 %i.ayu to i64
   %i.ayw = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ayv
   %i.ayx = load i16, ptr %i.ayw, align 2
@@ -3027,7 +3027,7 @@ bb.gc:                                            ; preds = %bb.gb
   %i.bcb = load i16, ptr %i.bca, align 2
   store i16 %i.bcb, ptr %i.bbx, align 1
   %i.bcc = getelementptr inbounds nuw i8, ptr %.ptr1004, i64 14
-  %i.bcd = shl i32 %i.bbw, 1
+  %i.bcd = shl nuw i32 %i.bbw, 1
   %i.bce = zext i32 %i.bcd to i64
   %i.bcf = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.bce
   %i.bcg = load i16, ptr %i.bcf, align 2
@@ -3077,7 +3077,7 @@ bb.gf:                                            ; preds = %bb.ge
   %i.bdk = load i16, ptr %i.bdj, align 2
   store i16 %i.bdk, ptr %i.bdg, align 1
   %i.bdl = getelementptr inbounds nuw i8, ptr %.ptr1004, i64 6
-  %i.bdm = shl i32 %i.bdf, 1
+  %i.bdm = shl nuw i32 %i.bdf, 1
   %i.bdn = zext i32 %i.bdm to i64
   %i.bdo = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.bdn
   %i.bdp = load i16, ptr %i.bdo, align 2
@@ -3480,7 +3480,7 @@ bb.pa:                                            ; preds = %bb.oz
   %i.eep = load i16, ptr %i.eeo, align 2
   store i16 %i.eep, ptr %i.eel, align 1
   %i.eeq = getelementptr inbounds nuw i8, ptr %i.ecx, i64 14
-  %i.eer = shl i32 %i.eek, 1
+  %i.eer = shl nuw i32 %i.eek, 1
   %i.ees = zext i32 %i.eer to i64
   %i.eet = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ees
   %i.eeu = load i16, ptr %i.eet, align 2
@@ -3521,7 +3521,7 @@ bb.pd:                                            ; preds = %bb.pc
   %i.efn = load i16, ptr %i.efm, align 2
   store i16 %i.efn, ptr %i.efj, align 1
   %i.efo = getelementptr inbounds nuw i8, ptr %i.ecx, i64 6
-  %i.efp = shl i32 %i.efi, 1
+  %i.efp = shl nuw i32 %i.efi, 1
   %i.efq = zext i32 %i.efp to i64
   %i.efr = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.efq
   %i.efs = load i16, ptr %i.efr, align 2
@@ -3674,7 +3674,7 @@ bb.ph:                                            ; preds = %bb.pg
   %i.ejq = load i16, ptr %i.ejp, align 2
   store i16 %i.ejq, ptr %i.ejm, align 1
   %i.ejr = getelementptr inbounds nuw i8, ptr %i.ehy, i64 14
-  %i.ejs = shl i32 %i.ejl, 1
+  %i.ejs = shl nuw i32 %i.ejl, 1
   %i.ejt = zext i32 %i.ejs to i64
   %i.eju = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ejt
   %i.ejv = load i16, ptr %i.eju, align 2
@@ -3715,7 +3715,7 @@ bb.pk:                                            ; preds = %bb.pj
   %i.eko = load i16, ptr %i.ekn, align 2
   store i16 %i.eko, ptr %i.ekk, align 1
   %i.ekp = getelementptr inbounds nuw i8, ptr %i.ehy, i64 6
-  %i.ekq = shl i32 %i.ekj, 1
+  %i.ekq = shl nuw i32 %i.ekj, 1
   %i.ekr = zext i32 %i.ekq to i64
   %i.eks = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ekr
   %i.ekt = load i16, ptr %i.eks, align 2
@@ -3866,7 +3866,7 @@ bb.po:                                            ; preds = %bb.pn
   %i.eom = load i16, ptr %i.eol, align 2
   store i16 %i.eom, ptr %i.eoi, align 1
   %i.eon = getelementptr inbounds nuw i8, ptr %.ptr960, i64 14
-  %i.eoo = shl i32 %i.eoh, 1
+  %i.eoo = shl nuw i32 %i.eoh, 1
   %i.eop = zext i32 %i.eoo to i64
   %i.eoq = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.eop
   %i.eor = load i16, ptr %i.eoq, align 2
@@ -3916,7 +3916,7 @@ bb.pr:                                            ; preds = %bb.pq
   %i.epv = load i16, ptr %i.epu, align 2
   store i16 %i.epv, ptr %i.epr, align 1
   %i.epw = getelementptr inbounds nuw i8, ptr %.ptr960, i64 6
-  %i.epx = shl i32 %i.epq, 1
+  %i.epx = shl nuw i32 %i.epq, 1
   %i.epy = zext i32 %i.epx to i64
   %i.epz = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.epy
   %i.eqa = load i16, ptr %i.epz, align 2
@@ -4319,7 +4319,7 @@ bb.zq:                                            ; preds = %bb.zp
   %i.hze = load i16, ptr %i.hzd, align 2
   store i16 %i.hze, ptr %i.hza, align 1
   %i.hzf = getelementptr inbounds nuw i8, ptr %i.hxm, i64 14
-  %i.hzg = shl i32 %i.hyz, 1
+  %i.hzg = shl nuw i32 %i.hyz, 1
   %i.hzh = zext i32 %i.hzg to i64
   %i.hzi = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.hzh
   %i.hzj = load i16, ptr %i.hzi, align 2
@@ -4360,7 +4360,7 @@ bb.zt:                                            ; preds = %bb.zs
   %i.iac = load i16, ptr %i.iab, align 2
   store i16 %i.iac, ptr %i.hzy, align 1
   %i.iad = getelementptr inbounds nuw i8, ptr %i.hxm, i64 6
-  %i.iae = shl i32 %i.hzx, 1
+  %i.iae = shl nuw i32 %i.hzx, 1
   %i.iaf = zext i32 %i.iae to i64
   %i.iag = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.iaf
   %i.iah = load i16, ptr %i.iag, align 2
@@ -4513,7 +4513,7 @@ bb.zx:                                            ; preds = %bb.zw
   %i.ief = load i16, ptr %i.iee, align 2
   store i16 %i.ief, ptr %i.ieb, align 1
   %i.ieg = getelementptr inbounds nuw i8, ptr %i.icn, i64 14
-  %i.ieh = shl i32 %i.iea, 1
+  %i.ieh = shl nuw i32 %i.iea, 1
   %i.iei = zext i32 %i.ieh to i64
   %i.iej = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.iei
   %i.iek = load i16, ptr %i.iej, align 2
@@ -4554,7 +4554,7 @@ bb.aaa:                                           ; preds = %bb.zz
   %i.ifd = load i16, ptr %i.ifc, align 2
   store i16 %i.ifd, ptr %i.iez, align 1
   %i.ife = getelementptr inbounds nuw i8, ptr %i.icn, i64 6
-  %i.iff = shl i32 %i.iey, 1
+  %i.iff = shl nuw i32 %i.iey, 1
   %i.ifg = zext i32 %i.iff to i64
   %i.ifh = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ifg
   %i.ifi = load i16, ptr %i.ifh, align 2
@@ -4705,7 +4705,7 @@ bb.aae:                                           ; preds = %bb.aad
   %i.ijb = load i16, ptr %i.ija, align 2
   store i16 %i.ijb, ptr %i.iix, align 1
   %i.ijc = getelementptr inbounds nuw i8, ptr %.ptr981, i64 14
-  %i.ijd = shl i32 %i.iiw, 1
+  %i.ijd = shl nuw i32 %i.iiw, 1
   %i.ije = zext i32 %i.ijd to i64
   %i.ijf = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ije
   %i.ijg = load i16, ptr %i.ijf, align 2
@@ -4755,7 +4755,7 @@ bb.aah:                                           ; preds = %bb.aag
   %i.ikk = load i16, ptr %i.ikj, align 2
   store i16 %i.ikk, ptr %i.ikg, align 1
   %i.ikl = getelementptr inbounds nuw i8, ptr %.ptr981, i64 6
-  %i.ikm = shl i32 %i.ikf, 1
+  %i.ikm = shl nuw i32 %i.ikf, 1
   %i.ikn = zext i32 %i.ikm to i64
   %i.iko = getelementptr inbounds nuw i8, ptr @_ZN13duckdb_yyjsonL11digit_tableE, i64 %i.ikn
   %i.ikp = load i16, ptr %i.iko, align 2
