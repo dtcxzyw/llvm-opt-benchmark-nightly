@@ -135,7 +135,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a, %.critedge
   %.0.idx45 = phi i64 [ 0, %bb.a ], [ %.0.add, %.critedge ] ; 2 uses
   %.0.ptr46 = getelementptr inbounds nuw i8, ptr @_ZN12_GLOBAL__N_19kPatternsE, i64 %.0.idx45 ; 4 uses
-  %.sroa.01.0.copyload = load i64, ptr %.0.ptr46, align 16, !tbaa !9 ; 18 uses
+  %.sroa.01.0.copyload = load i64, ptr %.0.ptr46, align 16, !tbaa !9 ; 19 uses
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0.ptr46, i64 8
   %.sroa.22.0.copyload = load ptr, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !11 ; 8 uses
   %i.a = ptrtoint ptr %.sroa.22.0.copyload to i64
@@ -143,7 +143,7 @@ bb.b:                                             ; preds = %bb.a, %.critedge
   br i1 %.not47, label %_ZN12_GLOBAL__N_18TryMatchESt17basic_string_viewIcSt11char_traitsIcEES3_.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b, %.backedge.i
-  %.086.i44 = phi i64 [ %.086.be.i, %.backedge.i ], [ 0, %bb.b ] ; 6 uses
+  %.086.i44 = phi i64 [ %.086.be.i, %.backedge.i ], [ 0, %bb.b ] ; 5 uses
   %.094.i38 = phi i64 [ %.094.be.i, %.backedge.i ], [ 0, %bb.b ] ; 15 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.sroa.22.0.copyload, i64 %.086.i44 ; 20 uses
   %i.c = load i8, ptr %i.b, align 1, !tbaa !14
@@ -164,11 +164,10 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i: ; preds = %bb.c, %.lr.ph.i
   %.0104.lcssa.ph.i = phi i64 [ %.0104271.i, %.lr.ph.i ], [ %.sroa.01.0.copyload, %bb.c ] ; 2 uses
-  %2 = sub i64 %.0104.lcssa.ph.i, %.086.i44
-  %i.g = sub nuw i64 %.sroa.01.0.copyload, %.086.i44
-  %.sroa.speculated.i.i = tail call i64 @llvm.umin.i64(i64 %i.g, i64 %2) ; 3 uses
+  %2 = tail call i64 @llvm.umin.i64(i64 %.sroa.01.0.copyload, i64 %.0104.lcssa.ph.i)
+  %i.g = sub nuw i64 %2, %.086.i44                ; 3 uses
   %i.h = sub i64 %0, %.094.i38                    ; 2 uses
-  %.not.i.i = icmp ult i64 %i.h, %.sroa.speculated.i.i
+  %.not.i.i = icmp ult i64 %i.h, %i.g
   br i1 %.not.i.i, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i
@@ -180,7 +179,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i.i.i: ; preds = %bb.d
-  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %.sroa.speculated.i.i) ; 2 uses
+  %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.g) ; 2 uses
   %i.j = icmp eq i64 %.sroa.speculated.i.i.i.i, 0
   br i1 %i.j, label %bb.f, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i
 
@@ -191,7 +190,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i: ; preds = %_ZNKSt17basic_str
   br i1 %i.l, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit.i.i.i
-  %i.m = add i64 %.sroa.speculated.i.i, %.094.i38
+  %i.m = add i64 %i.g, %.094.i38
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %_ZN12_GLOBAL__N_115ClassAllowsContENS_16PlaceholderClassEc.exit.thread.i, %_ZN12_GLOBAL__N_114LiteralMatchesESt17basic_string_viewIcSt11char_traitsIcEEmS3_.exit153.i, %.preheader.i, %bb.s, %_ZN12_GLOBAL__N_114LiteralMatchesESt17basic_string_viewIcSt11char_traitsIcEEmS3_.exit144.i, %bb.f
@@ -347,7 +346,7 @@ bb.i:                                             ; preds = %_ZNSt11char_traitsI
   %i.db = phi i64 [ 1, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i54.i.i ], [ 4, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i50.i.i ] ; 2 uses
   %cond.jt3.i = phi i1 [ true, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i54.i.i ], [ false, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i50.i.i ]
   %.0.i.ph.jt3.i = phi i32 [ 3, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i54.i.i ], [ 2, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i50.i.i ]
-  %i.dc = add nuw i64 %i.r, 1                     ; 5 uses
+  %i.dc = add nuw i64 %i.r, 1                     ; 6 uses
   %i.dd = icmp ult i64 %i.dc, %.sroa.01.0.copyload
   br i1 %i.dd, label %.lr.ph275.preheader.i, label %.critedge3.jt3.i
 
@@ -394,11 +393,10 @@ bb.k:                                             ; preds = %.critedge3.jt3.i, %
   unreachable
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.i: ; preds = %.critedge3.i
-  %3 = sub i64 %.0116.lcssa.ph.i, %i.de
-  %i.dk = sub nuw i64 %.sroa.01.0.copyload, %i.de
-  %.sroa.speculated.i134.i = tail call i64 @llvm.umin.i64(i64 %i.dk, i64 %3) ; 4 uses
+  %3 = tail call i64 @llvm.umin.i64(i64 %.sroa.01.0.copyload, i64 %.0116.lcssa.ph.i) ; 2 uses
+  %i.dk = sub nuw i64 %3, %i.de                   ; 3 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %.sroa.22.0.copyload, i64 %i.de ; 3 uses
-  %i.dm = icmp ne i64 %.sroa.speculated.i134.i, 0 ; 4 uses
+  %i.dm = icmp ne i64 %3, %i.de                   ; 4 uses
   %i.dn = icmp eq i64 %.0116.lcssa.ph.i, %.sroa.01.0.copyload
   %or.cond.i = or i1 %i.dn, %i.dm
   br i1 %or.cond.i, label %.thread197.i, label %.critedge
@@ -412,6 +410,8 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt0.i: ; preds 
   br i1 %.not123.jt0.i, label %bb.w, label %.critedge
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i: ; preds = %.critedge3.jt3.i
+  %4 = tail call i64 @llvm.usub.sat.i64(i64 %i.dc, i64 %.sroa.01.0.copyload)
+  %.sroa.speculated.i134.jt3.i = sub i64 0, %4
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.22.0.copyload, i64 %i.dc
   br label %.thread197.jt3.i
 
@@ -421,7 +421,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i: ; preds 
 .thread197.jt3.i:                                 ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i, %.thread197.i
   %i.dp = phi i1 [ %i.dm, %.thread197.i ], [ false, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ]
   %i.dq = phi ptr [ %i.dl, %.thread197.i ], [ %i.do, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ]
-  %.sroa.speculated.i134341.i = phi i64 [ %.sroa.speculated.i134.i, %.thread197.i ], [ 0, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 3 uses
+  %.sroa.speculated.i134341.i = phi i64 [ %i.dk, %.thread197.i ], [ %.sroa.speculated.i134.jt3.i, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 3 uses
   %.0116.lcssa337.i = phi i64 [ %.0116.lcssa.ph.i, %.thread197.i ], [ %i.dc, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 2 uses
   %i.dr = phi i64 [ %i.df, %.thread197.i ], [ %i.db, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit137.jt3.i ] ; 3 uses
   %i.ds = sub i64 %0, %.094.i38
@@ -512,7 +512,7 @@ bb.w:                                             ; preds = %_ZNKSt17basic_strin
   %i.ep = phi i8 [ %i.el, %bb.v ], [ %i.ei, %bb.u ]
   %i.eq = phi i1 [ false, %bb.v ], [ %i.dm, %bb.u ]
   %i.er = phi ptr [ %i.ej, %bb.v ], [ %i.dl, %bb.u ]
-  %.sroa.speculated.i134343.i = phi i64 [ 0, %bb.v ], [ %.sroa.speculated.i134.i, %bb.u ]
+  %.sroa.speculated.i134343.i = phi i64 [ 0, %bb.v ], [ %i.dk, %bb.u ]
   %.0116.lcssa339.i = phi i64 [ %i.cx, %bb.v ], [ %.0116.lcssa.ph.i, %bb.u ]
   %cond330.i = phi i1 [ false, %bb.v ], [ %cond329.i, %bb.u ]
   %i.es = and i8 %i.ep, -33
@@ -524,7 +524,7 @@ _ZN12_GLOBAL__N_116ClassAllowsStartENS_16PlaceholderClassEc.exit.i: ; preds = %b
   %i.ev = phi i8 [ %i.eo, %bb.w ], [ %i.ei, %bb.u ]
   %i.ew = phi i1 [ false, %bb.w ], [ %i.dm, %bb.u ]
   %i.ex = phi ptr [ %i.em, %bb.w ], [ %i.dl, %bb.u ]
-  %.sroa.speculated.i134342.i = phi i64 [ 0, %bb.w ], [ %.sroa.speculated.i134.i, %bb.u ]
+  %.sroa.speculated.i134342.i = phi i64 [ 0, %bb.w ], [ %i.dk, %bb.u ]
   %.0116.lcssa338.i = phi i64 [ %i.cz, %bb.w ], [ %.0116.lcssa.ph.i, %bb.u ]
   %cond331.i = phi i1 [ false, %bb.w ], [ %cond329.i, %bb.u ]
   %i.ey = and i8 %i.ev, -33
@@ -703,6 +703,9 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

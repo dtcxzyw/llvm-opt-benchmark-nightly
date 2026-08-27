@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.y, %_RNCINvNtCs2
   br i1 %or.cond52, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge111, %bb.g
-  %i.ag = phi i64 [ %.pre112, %._crit_edge111 ], [ %i.ad, %bb.g ] ; 5 uses
+  %i.ag = phi i64 [ %.pre112, %._crit_edge111 ], [ %i.ad, %bb.g ] ; 6 uses
   %i.ah = phi i64 [ %.pre110, %._crit_edge111 ], [ %i.ab, %bb.g ] ; 3 uses
   %i.ai = icmp sgt i64 %i.ah, -1
   call void @llvm.assume(i1 %i.ai)
@@ -243,7 +243,7 @@ bb.m:                                             ; preds = %bb.h
   call void @llvm.experimental.noalias.scope.decl(metadata !33)
   %i.as = add nuw i64 %i.ag, 32
   %i.at = shl nuw i64 %i.ag, 1
-  %.sroa.0.0.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.as, i64 %i.at) ; 4 uses
+  %.sroa.0.0.i.i.i = call noundef i64 @llvm.umax.i64(i64 %i.as, i64 %i.at) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !36
   call fastcc void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner11finish_growCsfxgMthLVlAZ_21influxdb3_clap_blocks(ptr noalias noundef align 8 captures(none) dereferenceable(24) %i.a, i64 %i.ag, ptr %.pre113, i64 noundef %.sroa.0.0.i.i.i, i64 noundef 1, i64 noundef 1), !noalias !36
   %i.au = load i64, ptr %i.a, align 8, !range !37, !noalias !36, !noundef !4
@@ -257,6 +257,9 @@ _RNvMs2_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner11try_reserveCsfxgMthLVlA
   %i.ax = icmp sgt i64 %.sroa.0.0.i.i.i, -1
   call void @llvm.assume(i1 %i.ax)
   store i64 %.sroa.0.0.i.i.i, ptr %1, align 8, !alias.scope !36
+  %.pre.i = sub nuw nsw i64 %.sroa.0.0.i.i.i, %i.ag
+  %4 = icmp samesign ugt i64 %.pre.i, 31
+  call void @llvm.assume(i1 %4)
   %.pre114 = load i64, ptr %i.c, align 8
   br label %bb.n
 
@@ -659,12 +662,12 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 10 uses
   %i.b = alloca [4096 x i8], align 8              ; 3 uses
   %i.c = lshr i64 %1, 1
-  %i.d = sub nsw i64 %1, %i.c
+  %i.d = sub nuw nsw i64 %1, %i.c
   %.sroa.0.0.i = tail call noundef i64 @llvm.umin.i64(i64 %1, i64 333333)
   %.sroa.0.0.i8 = tail call noundef i64 @llvm.umax.i64(i64 %.sroa.0.0.i, i64 %i.d) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.e = icmp ugt i64 %.sroa.0.0.i8, 170          ; 3 uses
+  %i.e = icmp samesign ugt i64 %.sroa.0.0.i8, 170 ; 3 uses
   br i1 %i.e, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
@@ -837,7 +840,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.i = lshr i64 %1, 1
-  %i.j = sub nsw i64 %1, %i.i
+  %i.j = sub nuw nsw i64 %1, %i.i
   %.sroa.0.0.i32 = tail call noundef i64 @llvm.umin.i64(i64 %i.j, i64 64)
   br label %bb.e
 

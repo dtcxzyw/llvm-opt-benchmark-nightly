@@ -168,7 +168,7 @@ bb.i:                                             ; preds = %bytestream2_get_byt
 bytestream2_get_le16.exit267:                     ; preds = %bytestream2_get_byte.exit258, %bb.i
   %.pre-phi345 = phi i64 [ %.pre344, %bb.i ], [ %i.r, %bytestream2_get_byte.exit258 ]
   %i.bf = phi ptr [ %i.bc, %bb.i ], [ %i.k, %bytestream2_get_byte.exit258 ] ; 2 uses
-  %.0.i266 = phi i32 [ %i.be, %bb.i ], [ 0, %bytestream2_get_byte.exit258 ] ; 5 uses
+  %.0.i266 = phi i32 [ %i.be, %bb.i ], [ 0, %bytestream2_get_byte.exit258 ] ; 6 uses
   %i.bg = sub i64 %i.r, %.pre-phi345
   %i.bh = icmp slt i64 %i.bg, 2
   br i1 %i.bh, label %bytestream2_get_le16.exit, label %bb.j
@@ -571,7 +571,8 @@ advance_line.exit.thread:                         ; preds = %advance_line.exit, 
   br i1 %.not, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph304
-  %i.kp = zext nneg i32 %.0.i266 to i64           ; 4 uses
+  %4 = zext nneg i32 %.0.i266 to i64              ; 3 uses
+  %i.kp = zext nneg i32 %.0.i266 to i64
   %wide.trip.count = zext nneg i32 %i.ko to i64   ; 7 uses
   %wide.trip.count326 = zext nneg i32 %i.ko to i64
   %i.kq = add nsw i64 %wide.trip.count, -1        ; 3 uses
@@ -607,15 +608,15 @@ advance_line.exit.thread:                         ; preds = %advance_line.exit, 
   ]
 
 .lr.ph.split.us301.preheader:                     ; preds = %.lr.ph
-  %i.kz = getelementptr i8, ptr %i.ky, i64 %i.kp  ; 3 uses
+  %i.kz = getelementptr i8, ptr %i.ky, i64 %4     ; 3 uses
   br i1 %i.kr, label %.lr.ph.split.us301.epil.preheader, label %.lr.ph.split.us301
 
 .lr.ph.split.us299.preheader:                     ; preds = %.lr.ph
-  %i.la = getelementptr [2 x i8], ptr %i.ky, i64 %i.kp ; 3 uses
+  %i.la = getelementptr [2 x i8], ptr %i.ky, i64 %4 ; 3 uses
   br i1 %i.ks, label %.lr.ph.split.us299.epil.preheader, label %.lr.ph.split.us299
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %i.lb = getelementptr [4 x i8], ptr %i.ky, i64 %i.kp ; 3 uses
+  %i.lb = getelementptr [4 x i8], ptr %i.ky, i64 %4 ; 3 uses
   br i1 %i.kt, label %.lr.ph.split.us.epil.preheader, label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
@@ -644,8 +645,8 @@ advance_line.exit.thread:                         ; preds = %advance_line.exit, 
 .lr.ph.split.us297:                               ; preds = %.lr.ph, %.lr.ph.split.us297
   %indvars.iv323 = phi i64 [ %indvars.iv.next324, %.lr.ph.split.us297 ], [ 0, %.lr.ph ] ; 3 uses
   %i.ln = mul nuw nsw i64 %indvars.iv323, 3
-  %i.lo = sub nsw i64 %i.kp, %indvars.iv323
-  %i.lp = mul nsw i64 %i.lo, 3
+  %i.lo = sub nuw nsw i64 %i.kp, %indvars.iv323
+  %i.lp = mul nuw nsw i64 %i.lo, 3
   %i.lq = getelementptr i8, ptr %i.ky, i64 %i.lp  ; 3 uses
   %i.lr = getelementptr i8, ptr %i.lq, i64 -3     ; 2 uses
   %i.ls = load i8, ptr %i.lr, align 1, !tbaa !36

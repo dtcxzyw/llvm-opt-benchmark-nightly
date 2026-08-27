@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.h
   %narrow = add nuw i32 %.sroa.speculated, %.sroa.speculated51
   %i.aj = zext i32 %narrow to i64
   %i.ak = sub nsw i64 %i.d, %i.aj
-  %i.al = sub nsw i64 %i.d, %i.ah
+  %i.al = sub nuw nsw i64 %i.d, %i.ah
   %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.ak, i64 %i.al) ; 4 uses
   %i.am = icmp slt i32 %i.ac, 1
   %i.an = icmp eq i64 %spec.select.i, %i.d
@@ -212,8 +212,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %or.cond62, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %4 = icmp sgt i64 %spec.select.i, 0
-  br i1 %4, label %_ZN9QtPrivate20QContainerImplHelper3midExPxS1_.exit.i, label %_ZNK5QListIdE3midExx.exit
+  %.not = icmp eq i64 %spec.select.i, 0
+  br i1 %.not, label %_ZNK5QListIdE3midExx.exit, label %_ZN9QtPrivate20QContainerImplHelper3midExPxS1_.exit.i
 
 bb.k:                                             ; preds = %bb.i
   %i.ao = load ptr, ptr %2, align 8               ; 3 uses
@@ -616,16 +616,17 @@ bb.x:                                             ; preds = %bb.v
   br label %bb.ah
 
 bb.y:                                             ; preds = %.lr.ph114, %._crit_edge111
-  %indvars.iv128 = phi i64 [ 0, %.lr.ph114 ], [ %indvars.iv.next129, %._crit_edge111 ] ; 2 uses
-  %i.cj = trunc nuw nsw i64 %indvars.iv128 to i32 ; 2 uses
+  %indvars.iv128 = phi i64 [ 0, %.lr.ph114 ], [ %indvars.iv.next129, %._crit_edge111 ] ; 3 uses
+  %i.cj = trunc nuw nsw i64 %indvars.iv128 to i32
   %i.ck = invoke noundef ptr @_ZN6QImage8scanLineEi(ptr noundef align 8 dereferenceable_or_null(24) %i.bz, i32 noundef %i.cj)
           to label %bb.z unwind label %bb.ad      ; 2 uses
 
 bb.z:                                             ; preds = %bb.y
   %i.cl = load ptr, ptr %i.f, align 8
   %i.cm = getelementptr i8, ptr %i.cl, i64 200
-  %i.cn = sub i32 %i.cf, %i.cj
-  %9 = sext i32 %i.cn to i64
+  %9 = trunc i64 %indvars.iv128 to i32
+  %i.cn = sub i32 %i.cf, %9
+  %10 = zext nneg i32 %i.cn to i64
   %i.co = load ptr, ptr %3, align 8               ; 3 uses
   %.not.i.i.i.i80 = icmp eq ptr %i.co, null
   br i1 %.not.i.i.i.i80, label %_ZN5QListIdE6detachEv.exit.i84, label %_ZNK17QArrayDataPointerIdE11needsDetachEv.exit.i.i.i81
@@ -656,7 +657,7 @@ _ZNK17QArrayDataPointerIdE11needsDetachEv.exit.thread.i.i.i.i83: ; preds = %_ZNK
 
 bb.aa:                                            ; preds = %_ZNK17QArrayDataPointerIdE11needsDetachEv.exit.i.i.i.i82, %_ZNK17QArrayDataPointerIdE11needsDetachEv.exit.thread.i.i.i.i83
   %i.cu = load ptr, ptr %i.m, align 8
-  %i.cv = getelementptr [8 x i8], ptr %i.cu, i64 %9
+  %i.cv = getelementptr [8 x i8], ptr %i.cu, i64 %10
   %i.cw = load double, ptr %i.cv, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #51
   invoke void @_ZN8QCPRangeC1Edd(ptr noundef nonnull align 8 dereferenceable_or_null(16) %8, double noundef 0.000000e+00, double noundef %i.cg)

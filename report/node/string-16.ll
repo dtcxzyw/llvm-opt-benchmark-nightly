@@ -204,7 +204,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = ptrtoint ptr %3 to i64                   ; 5 uses
-  %i.b = ptrtoint ptr %2 to i64                   ; 3 uses
+  %i.b = ptrtoint ptr %2 to i64                   ; 4 uses
   %i.c = sub i64 %i.a, %i.b                       ; 25 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -220,7 +220,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.m = sub i64 %i.i, %i.l                       ; 6 uses
-  %i.n = ashr exact i64 %i.m, 1                   ; 14 uses
+  %i.n = ashr exact i64 %i.m, 1                   ; 15 uses
   %i.o = icmp ugt i64 %i.n, %i.c
   br i1 %i.o, label %bb.d, label %_ZSt9__advanceIPKclEvRT_T0_St26random_access_iterator_tag.exit
 
@@ -372,7 +372,7 @@ vec.epilog.middle.block176:                       ; preds = %vec.epilog.vector.b
 _ZSt9__advanceIPKclEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.c
   %i.bg = icmp eq i64 %i.m, 2
   %i.bh = getelementptr inbounds i8, ptr %2, i64 %i.n ; 9 uses
-  %i.bi = ptrtoint ptr %i.bh to i64               ; 2 uses
+  %i.bi = ptrtoint ptr %i.bh to i64
   %i.bj = sub i64 %i.a, %i.bi                     ; 12 uses
   %i.bk = icmp sgt i64 %i.bj, 0
   br i1 %i.bk, label %iter.check, label %_ZSt22__uninitialized_copy_aIPKcPDsDsET0_T_S4_S3_RSaIT1_E.exit
@@ -382,7 +382,8 @@ iter.check:                                       ; preds = %_ZSt9__advanceIPKcl
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bl = sub i64 %i.a, %i.bi
+  %4 = add i64 %i.n, %i.b
+  %i.bl = sub i64 %i.a, %4
   %i.bm = shl i64 %i.bl, 1
   %scevgep = getelementptr i8, ptr %i.g, i64 %i.bm
   %bound0 = icmp ult ptr %i.g, %3
@@ -780,7 +781,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = ptrtoint ptr %3 to i64                   ; 5 uses
-  %i.b = ptrtoint ptr %2 to i64                   ; 3 uses
+  %i.b = ptrtoint ptr %2 to i64                   ; 4 uses
   %i.c = sub i64 %i.a, %i.b                       ; 25 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8
@@ -796,7 +797,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.l = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.m = sub i64 %i.i, %i.l                       ; 6 uses
-  %i.n = ashr exact i64 %i.m, 1                   ; 14 uses
+  %i.n = ashr exact i64 %i.m, 1                   ; 15 uses
   %i.o = icmp ugt i64 %i.n, %i.c
   br i1 %i.o, label %bb.d, label %_ZSt9__advanceIPclEvRT_T0_St26random_access_iterator_tag.exit
 
@@ -948,7 +949,7 @@ vec.epilog.middle.block176:                       ; preds = %vec.epilog.vector.b
 _ZSt9__advanceIPclEvRT_T0_St26random_access_iterator_tag.exit: ; preds = %bb.c
   %i.bg = icmp eq i64 %i.m, 2
   %i.bh = getelementptr inbounds i8, ptr %2, i64 %i.n ; 9 uses
-  %i.bi = ptrtoint ptr %i.bh to i64               ; 2 uses
+  %i.bi = ptrtoint ptr %i.bh to i64
   %i.bj = sub i64 %i.a, %i.bi                     ; 12 uses
   %i.bk = icmp sgt i64 %i.bj, 0
   br i1 %i.bk, label %iter.check, label %_ZSt22__uninitialized_copy_aIPcPDsDsET0_T_S3_S2_RSaIT1_E.exit
@@ -958,7 +959,8 @@ iter.check:                                       ; preds = %_ZSt9__advanceIPclE
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.bl = sub i64 %i.a, %i.bi
+  %4 = add i64 %i.n, %i.b
+  %i.bl = sub i64 %i.a, %4
   %i.bm = shl i64 %i.bl, 1
   %scevgep = getelementptr i8, ptr %i.g, i64 %i.bm
   %bound0 = icmp ult ptr %i.g, %3
