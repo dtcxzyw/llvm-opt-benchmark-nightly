@@ -205,7 +205,7 @@ _ZN4absl12lts_2025051213InlinedVectorIcLm196ESaIcEE12emplace_backIJcEEERcDpOT_.e
   %i.mh = trunc i64 %i.mg to i1
   %i.mi = load ptr, ptr %i.kg, align 8, !noalias !182
   %i.mj = select i1 %i.mh, ptr %i.mi, ptr %i.kg   ; 2 uses
-  %i.mk = lshr i64 %i.mg, 1                       ; 5 uses
+  %i.mk = lshr i64 %i.mg, 1                       ; 4 uses
   %i.ml = getelementptr i8, ptr %i.mj, i64 %i.mk  ; 3 uses
   %i.mm = getelementptr inbounds nuw i8, ptr %i.lu, i64 40
   %i.mn = load double, ptr %i.mm, align 8, !tbaa !188, !noalias !182
@@ -214,13 +214,13 @@ _ZN4absl12lts_2025051213InlinedVectorIcLm196ESaIcEE12emplace_backIJcEEERcDpOT_.e
   br i1 %i.mp, label %.lr.ph309.i.i, label %._crit_edge310.i.i
 
 .lr.ph309.i.i:                                    ; preds = %_ZN4absl12lts_2025051213InlinedVectorIcLm196ESaIcEE12emplace_backIJcEEERcDpOT_.exit.i.i
-  %i.mq = ptrtoaddr ptr %i.mj to i64              ; 4 uses
-  %i.mr = ptrtoint ptr %i.ml to i64               ; 2 uses
+  %i.mq = ptrtoaddr ptr %i.mj to i64              ; 3 uses
+  %i.mr = ptrtoint ptr %i.ml to i64               ; 5 uses
   %i.ms = add i64 %i.mk, %i.mq
   %i.mt = add i64 %i.mk, %i.mq
   %i.mu = add i64 %i.mk, %i.mq
-  %i.mv = add i64 %i.mq, -1
-  %40 = add i64 %i.mv, %i.mk
+  %i.mv = add i64 %i.mr, -1
+  %invariant.op = sub i64 %i.mr, %i.mu
   br label %bb.cw
 
 bb.cw:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148.i.i, %.lr.ph309.i.i
@@ -410,7 +410,7 @@ iter.check:                                       ; preds = %_ZN4absl12lts_20250
   br i1 %min.iters.check, label %.lr.ph.i.i161.i.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %i.om = add i64 %i.ms, %i.nj
+  %i.om = add i64 %i.nj, %i.mr
   %i.on = add i64 %i.om, %i.nu
   %i.oo = add i64 %i.nm, %.sroa.094.1.i.i.i595
   %i.op = sub i64 %i.oo, %i.on
@@ -509,7 +509,7 @@ bb.de:                                            ; preds = %bb.db
   %i.pk = sub i64 %i.np, %.sroa.speculated.i.i.i  ; 19 uses
   %i.pl = getelementptr inbounds nuw i8, ptr %.sink2.i.i.i.i, i64 %i.nn ; 5 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %.sink2.i.i.i.i, i64 %i.no
-  %i.pn = sub i64 %.sroa.speculated.i.i.i, %i.no
+  %i.pn = sub nuw i64 %.sroa.speculated.i.i.i, %i.no
   %i.po = getelementptr inbounds nuw i8, ptr %i.pl, i64 %i.pk ; 7 uses
   %i.pp = sub i64 %i.nj, %i.pk                    ; 8 uses
   %.not.i.i61.i.i.i = icmp eq i64 %i.np, %.sroa.speculated.i.i.i ; 2 uses
@@ -600,15 +600,16 @@ iter.check718:                                    ; preds = %_ZN4absl12lts_20250
   %i.qg = getelementptr inbounds nuw i8, ptr %i.pl, i64 %i.pn ; 5 uses
   %i.qh = add i64 %i.nm, -1
   %i.qi = add i64 %i.qh, %.sroa.speculated.i.i.i
-  %i.qj = add i64 %40, %i.nj
+  %i.qj = add i64 %i.mv, %i.nj
   %i.qk = add i64 %i.nm, -2
   %i.ql = add i64 %i.qk, %.sroa.speculated.i.i.i
   %umin = call i64 @llvm.umin.i64(i64 %i.qj, i64 %i.ql)
   %i.qm = sub i64 %i.qi, %umin                    ; 7 uses
   %min.iters.check702 = icmp ult i64 %i.qm, 8
-  %diff.check701 = icmp ugt i64 %i.nj, -32
-  %or.cond766 = or i1 %min.iters.check702, %diff.check701
-  br i1 %or.cond766, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check703
+  %.reass = add i64 %i.nj, %invariant.op
+  %diff.check701 = icmp ugt i64 %.reass, -32
+  %or.cond896 = select i1 %min.iters.check702, i1 true, i1 %diff.check701
+  br i1 %or.cond896, label %.lr.ph.i.i.i.preheader, label %vector.main.loop.iter.check703
 
 vector.main.loop.iter.check703:                   ; preds = %iter.check718
   %min.iters.check704 = icmp ult i64 %i.qm, 32
@@ -673,8 +674,8 @@ vec.epilog.middle.block730:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n731, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.preheader
 
 .lr.ph.i.i.i.preheader:                           ; preds = %iter.check718, %vec.epilog.iter.check720, %vec.epilog.middle.block730
-  %.ph = phi ptr [ %i.qf, %iter.check718 ], [ %i.qp, %vec.epilog.iter.check720 ], [ %i.qy, %vec.epilog.middle.block730 ]
-  %.0126.i.i.i.ph = phi ptr [ %i.qg, %iter.check718 ], [ %i.qq, %vec.epilog.iter.check720 ], [ %i.qz, %vec.epilog.middle.block730 ]
+  %.ph = phi ptr [ %i.qf, %iter.check718 ], [ %i.qy, %vec.epilog.middle.block730 ], [ %i.qp, %vec.epilog.iter.check720 ]
+  %.0126.i.i.i.ph = phi ptr [ %i.qg, %iter.check718 ], [ %i.qz, %vec.epilog.middle.block730 ], [ %i.qq, %vec.epilog.iter.check720 ]
   br label %.lr.ph.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph.i.i.i, %middle.block714, %vec.epilog.middle.block730, %_ZN4absl12lts_2025051223inlined_vector_internal23ConstructionTransactionISaIcEE9ConstructINS1_20IteratorValueAdapterIS3_St13move_iteratorIPcEEEEEvS8_RT_m.exit67.i.i.i
@@ -682,7 +683,7 @@ vec.epilog.middle.block730:                       ; preds = %vec.epilog.vector.b
 
 iter.check685:                                    ; preds = %._crit_edge.i.i.i
   %min.iters.check671 = icmp ult i64 %i.pk, 4
-  %i.re = sub i64 %i.ni, %i.mu
+  %i.re = sub i64 %i.ni, %i.mt
   %diff.check670 = icmp ugt i64 %i.re, -32
   %or.cond767 = select i1 %min.iters.check671, i1 true, i1 %diff.check670
   br i1 %or.cond767, label %.lr.ph.i71.i.i.i.preheader, label %vector.main.loop.iter.check672
@@ -776,7 +777,7 @@ iter.check654:                                    ; preds = %_ZN4absl12lts_20250
   br i1 %min.iters.check640, label %.lr.ph.i76.i.i.i.preheader, label %vector.memcheck637
 
 vector.memcheck637:                               ; preds = %iter.check654
-  %i.rx = add i64 %i.mt, %i.nj
+  %i.rx = add i64 %i.ms, %i.nj
   %i.ry = add i64 %i.rx, %.sink1.i.i.i.i
   %i.rz = add i64 %.sroa.speculated.i.i.i, %.sroa.0122.2.i.i.i638
   %i.sa = sub i64 %i.rz, %i.ry

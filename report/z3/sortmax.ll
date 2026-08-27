@@ -205,7 +205,7 @@ _ZN8psort_nwIN3opt7sortmaxEE12use_dsortingEj.exit: ; preds = %bb.g, %.thread.i.i
   %i.u = tail call i64 @_ZN8psort_nwIN3opt7sortmaxEE10vc_sortingEj(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.t), !inline_history !129 ; 2 uses
   %.sroa.415.0.extract.shift.i = lshr i64 %i.u, 32
   %.sroa.415.0.extract.trunc.i = trunc nuw i64 %.sroa.415.0.extract.shift.i to i32
-  %i.v = sub nsw i32 %1, %i.t                     ; 2 uses
+  %i.v = sub nuw nsw i32 %1, %i.t                 ; 2 uses
   %i.w = tail call i64 @_ZN8psort_nwIN3opt7sortmaxEE10vc_sortingEj(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.v), !inline_history !129 ; 2 uses
   %.sroa.413.0.extract.shift.i = lshr i64 %i.w, 32
   %.sroa.413.0.extract.trunc.i = trunc nuw i64 %.sroa.413.0.extract.shift.i to i32
@@ -238,7 +238,7 @@ _ZN8psort_nwIN3opt7sortmaxEE12use_dsortingEj.exit.thread: ; preds = %._ZN8psort_
           to label %bb.i unwind label %bb.r
 
 bb.i:                                             ; preds = %_ZN8psort_nwIN3opt7sortmaxEE12use_dsortingEj.exit.thread
-  %i.ah = sub i32 %1, %.pre-phi
+  %i.ah = sub nuw i32 %1, %.pre-phi
   %i.ai = zext nneg i32 %.pre-phi to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ai
   invoke void @_ZN8psort_nwIN3opt7sortmaxEE7sortingEjPKP4exprR10ptr_vectorIS3_E(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.ah, ptr noundef %i.aj, ptr noundef nonnull align 8 dereferenceable(8) %5)
@@ -641,9 +641,9 @@ bb.c:                                             ; preds = %bb.b
 _ZN8psort_nwIN3opt7sortmaxEE10vc_dsmergeEjjj.exit: ; preds = %bb.c, %.thread.i
   %.sroa.6.1.i = phi i32 [ %i.f, %bb.c ], [ %i.g, %.thread.i ]
   %i.h = lshr i32 %1, 1                           ; 3 uses
-  %i.i = sub nsw i32 %1, %i.h                     ; 2 uses
+  %i.i = sub nuw nsw i32 %1, %i.h                 ; 2 uses
   %i.j = lshr i32 %2, 1                           ; 3 uses
-  %i.k = sub nsw i32 %2, %i.j                     ; 2 uses
+  %i.k = sub nuw nsw i32 %2, %i.j                 ; 2 uses
   %i.l = trunc i32 %3 to i1
   %i.m = lshr i32 %3, 1                           ; 2 uses
   %i.n = add nuw i32 %i.m, 1
@@ -1046,8 +1046,8 @@ _ZN8psort_nwIN3opt7sortmaxEE10add_clauseEjPKP4expr.exit: ; preds = %_ZN8psort_nw
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.hd = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %i.he = zext i32 %2 to i64
-  %i.hf = zext i32 %4 to i64
+  %i.he = zext i32 %4 to i64                      ; 2 uses
+  %i.hf = zext i32 %2 to i64                      ; 2 uses
   %wide.trip.count247 = zext i32 %1 to i64
   %.not227 = icmp eq i32 %2, 0
   br label %bb.an
@@ -1130,7 +1130,7 @@ bb.as:                                            ; preds = %.noexc, %bb.aq
   store ptr %i.ho, ptr %i.ia, align 8, !tbaa !45
   %i.ib = add i32 %i.hw, 1
   store i32 %i.ib, ptr %i.hy, align 4, !tbaa !44
-  %.not76 = icmp samesign ult i64 %indvars.iv244, %i.he
+  %.not76 = icmp samesign ult i64 %indvars.iv244, %i.hf
   br i1 %.not76, label %bb.ax, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
@@ -1141,10 +1141,8 @@ bb.at:                                            ; preds = %bb.as
           to label %bb.au unwind label %bb.av
 
 bb.au:                                            ; preds = %bb.at
-  %18 = trunc nuw i64 %indvars.iv244 to i32
-  %19 = sub i32 %18, %2
-  %20 = zext i32 %19 to i64
-  %i.ig = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %20
+  %18 = sub nuw nsw i64 %indvars.iv244, %i.hf
+  %i.ig = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %18
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
   store ptr %i.if, ptr %i.b, align 16, !tbaa !45
@@ -1167,7 +1165,7 @@ bb.aw:                                            ; preds = %bb.ar, %_ZN6vectorI
   br label %.body
 
 bb.ax:                                            ; preds = %_ZN8psort_nwIN3opt7sortmaxEE10add_clauseEP4exprS4_.exit, %bb.as
-  %.not77 = icmp samesign ult i64 %indvars.iv244, %i.hf
+  %.not77 = icmp samesign ult i64 %indvars.iv244, %i.he
   br i1 %.not77, label %bb.ba, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
@@ -1178,10 +1176,8 @@ bb.ay:                                            ; preds = %bb.ax
           to label %bb.az unwind label %bb.av
 
 bb.az:                                            ; preds = %bb.ay
-  %21 = trunc nuw i64 %indvars.iv244 to i32
-  %22 = sub i32 %21, %4
-  %23 = zext i32 %22 to i64
-  %i.io = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %23
+  %19 = sub nuw nsw i64 %indvars.iv244, %i.he
+  %i.io = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %19
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !45
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   store ptr %i.in, ptr %i.a, align 16, !tbaa !45
@@ -1584,9 +1580,9 @@ declare noundef ptr @_ZN11ast_manager6mk_appEiiP4expr(ptr noundef nonnull align 
 define linkonce_odr hidden i64 @_ZN8psort_nwIN3opt7sortmaxEE13vc_smerge_recEjjj(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 comdat align 2 {
 .thread:
   %i.a = lshr i32 %1, 1                           ; 3 uses
-  %i.b = sub i32 %1, %i.a                         ; 2 uses
+  %i.b = sub nuw i32 %1, %i.a                     ; 2 uses
   %i.c = lshr i32 %2, 1                           ; 3 uses
-  %i.d = sub i32 %2, %i.c                         ; 2 uses
+  %i.d = sub nuw i32 %2, %i.c                     ; 2 uses
   %i.e = trunc i32 %3 to i1
   %i.f = lshr i32 %3, 1                           ; 2 uses
   %i.g = add nuw i32 %i.f, 1
@@ -1746,9 +1742,9 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN8psort_nwIN3opt7sortmaxEE11use_dsmergeEjjj.exit.thread: ; preds = %bb.j, %_ZN8psort_nwIN3opt7sortmaxEE11use_dsmergeEjjj.exit
   %i.ac = lshr i32 %1, 1                          ; 3 uses
-  %i.ad = sub i32 %1, %i.ac                       ; 2 uses
+  %i.ad = sub nuw i32 %1, %i.ac                   ; 2 uses
   %i.ae = lshr i32 %2, 1                          ; 3 uses
-  %i.af = sub i32 %2, %i.ae                       ; 2 uses
+  %i.af = sub nuw i32 %2, %i.ae                   ; 2 uses
   %i.ag = trunc i32 %3 to i1
   %i.ah = lshr i32 %3, 1                          ; 2 uses
   %i.ai = add nuw i32 %i.ah, 1
@@ -1825,9 +1821,9 @@ bb.d:                                             ; preds = %bb.c
 
 ._ZN8psort_nwIN3opt7sortmaxEE11use_dsmergeEjjj.exit.thread_crit_edge: ; preds = %bb.d
   %.pre = lshr i32 %1, 1                          ; 3 uses
-  %.pre34 = sub i32 %1, %.pre                     ; 2 uses
+  %.pre34 = sub nuw i32 %1, %.pre                 ; 2 uses
   %.pre36 = lshr i32 %2, 1                        ; 3 uses
-  %.pre38 = sub i32 %2, %.pre36                   ; 2 uses
+  %.pre38 = sub nuw i32 %2, %.pre36               ; 2 uses
   %.pre40 = add nuw i32 %.pre36, %.pre
   %.pre42 = add i32 %.pre34, -1
   %.pre44 = add i32 %.pre42, %.pre38
@@ -1856,9 +1852,9 @@ bb.f:                                             ; preds = %bb.e
 _ZN8psort_nwIN3opt7sortmaxEE11use_dsmergeEjjj.exit: ; preds = %bb.f, %.thread.i.i
   %.sroa.6.1.i.i = phi i32 [ %i.m, %bb.f ], [ %i.n, %.thread.i.i ]
   %i.o = lshr i32 %1, 1                           ; 4 uses
-  %i.p = sub nsw i32 %1, %i.o                     ; 3 uses
+  %i.p = sub nuw nsw i32 %1, %i.o                 ; 3 uses
   %i.q = lshr i32 %2, 1                           ; 4 uses
-  %i.r = sub nsw i32 %2, %i.q                     ; 3 uses
+  %i.r = sub nuw nsw i32 %2, %i.q                 ; 3 uses
   %i.s = trunc i32 %i.h to i1
   %i.t = lshr i32 %i.h, 1                         ; 2 uses
   %i.u = add nuw nsw i32 %i.t, 1
@@ -2261,7 +2257,7 @@ bb.c:                                             ; preds = %bb.a
 
 ._ZN8psort_nwIN3opt7sortmaxEE12use_dsortingEj.exit.thread_crit_edge: ; preds = %bb.c
   %.pre = lshr i32 %1, 1                          ; 2 uses
-  %.pre18 = sub i32 %1, %.pre
+  %.pre18 = sub nuw i32 %1, %.pre
   br label %_ZN8psort_nwIN3opt7sortmaxEE12use_dsortingEj.exit.thread
 
 bb.d:                                             ; preds = %bb.c
@@ -2288,7 +2284,7 @@ _ZN8psort_nwIN3opt7sortmaxEE12use_dsortingEj.exit: ; preds = %bb.d, %.thread.i.i
   %i.i = tail call i64 @_ZN8psort_nwIN3opt7sortmaxEE10vc_sortingEj(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.h), !inline_history !129 ; 2 uses
   %.sroa.415.0.extract.shift.i = lshr i64 %i.i, 32
   %.sroa.415.0.extract.trunc.i = trunc nuw i64 %.sroa.415.0.extract.shift.i to i32
-  %i.j = sub nsw i32 %1, %i.h                     ; 3 uses
+  %i.j = sub nuw nsw i32 %1, %i.h                 ; 3 uses
   %i.k = tail call i64 @_ZN8psort_nwIN3opt7sortmaxEE10vc_sortingEj(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.j), !inline_history !129 ; 2 uses
   %.sroa.413.0.extract.shift.i = lshr i64 %i.k, 32
   %.sroa.413.0.extract.trunc.i = trunc nuw i64 %.sroa.413.0.extract.shift.i to i32

@@ -202,7 +202,8 @@ bb.a:
   br i1 %.not23.i, label %.lr.ph29.preheader.i, label %iter.check
 
 iter.check:                                       ; preds = %._crit_edge.i, %._crit_edge.thread.i
-  %.018.lcssa40.i = phi i32 [ 0, %._crit_edge.thread.i ], [ %i.o, %._crit_edge.i ] ; 4 uses
+  %.018.lcssa40.i = phi i32 [ 0, %._crit_edge.thread.i ], [ %i.o, %._crit_edge.i ] ; 2 uses
+  %3 = zext nneg i32 %.018.lcssa40.i to i64       ; 3 uses
   %i.v = add nuw i32 %.018.lcssa40.i, 1           ; 4 uses
   %smax.i = tail call i32 @llvm.smax.i32(i32 %i.v, i32 1) ; 2 uses
   %wide.trip.count.i = zext nneg i32 %smax.i to i64 ; 6 uses
@@ -220,10 +221,8 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %3 = trunc nuw nsw i64 %index to i32
-  %4 = sub i32 %.018.lcssa40.i, %3
-  %5 = sext i32 %4 to i64
-  %i.x = getelementptr i8, ptr %i.a, i64 %5       ; 2 uses
+  %4 = sub nuw nsw i64 %3, %index
+  %i.x = getelementptr i8, ptr %i.a, i64 %4       ; 2 uses
   %i.y = getelementptr i8, ptr %i.x, i64 -15
   %i.z = getelementptr i8, ptr %i.x, i64 -31
   %wide.load = load <16 x i8>, ptr %i.y, align 1
@@ -253,10 +252,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index71 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next74, %vec.epilog.vector.body ] ; 3 uses
-  %6 = trunc nuw nsw i64 %index71 to i32
-  %7 = sub i32 %.018.lcssa40.i, %6
-  %8 = sext i32 %7 to i64
-  %i.ad = getelementptr i8, ptr %i.a, i64 %8
+  %5 = sub nuw nsw i64 %3, %index71
+  %i.ad = getelementptr i8, ptr %i.a, i64 %5
   %i.ae = getelementptr i8, ptr %i.ad, i64 -7
   %wide.load72 = load <8 x i8>, ptr %i.ae, align 1
   %reverse73 = shufflevector <8 x i8> %wide.load72, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
@@ -289,10 +286,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 .lr.ph26.i:                                       ; preds = %.lr.ph26.i.preheader, %.lr.ph26.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph26.i ], [ %indvars.iv.i.ph, %.lr.ph26.i.preheader ] ; 3 uses
-  %9 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %10 = sub i32 %.018.lcssa40.i, %9
-  %11 = sext i32 %10 to i64
-  %i.ak = getelementptr i8, ptr %i.a, i64 %11
+  %6 = sub nuw nsw i64 %3, %indvars.iv.i
+  %i.ak = getelementptr i8, ptr %i.a, i64 %6
   %i.al = load i8, ptr %i.ak, align 1
   %i.am = getelementptr i8, ptr %i.b, i64 %indvars.iv.i
   store i8 %i.al, ptr %i.am, align 1

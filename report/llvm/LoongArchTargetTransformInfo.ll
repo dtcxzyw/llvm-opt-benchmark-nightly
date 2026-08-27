@@ -205,7 +205,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.d = load i32, ptr %i.c, align 8, !tbaa !253  ; 20 uses
-  %.idx3.i = shl i64 %.fr128, 2                   ; 3 uses
+  %.idx3.i = shl nuw nsw i64 %.fr128, 2           ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 %.idx3.i ; 4 uses
   %i.f = lshr i64 %.fr128, 2                      ; 2 uses
   %.not.i = icmp eq i64 %i.f, 0
@@ -271,8 +271,7 @@ bb.f:                                             ; preds = %.split.us
   br i1 %i.r, label %.loopexit, label %.lr.ph.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.f
-  %i.s = ptrtoint ptr %2 to i64                   ; 2 uses
-  %7 = add i64 %.idx3.i, %i.s
+  %i.s = ptrtoint ptr %2 to i64
   %i.t = shl i32 %i.d, 1
   %i.u = add i64 %.fr128, -1                      ; 2 uses
   br label %bb.g
@@ -316,12 +315,12 @@ _ZN9__gnu_cxx5__ops12_Iter_negateIZN4llvm16BasicTTIImplBaseINS2_16LoongArchTTIIm
   %i.ab = add nuw nsw i64 %.sroa.35.0.i.i.i.i.i, 1
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 4 ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ac, %i.e
-  %i.ad = ptrtoint ptr %i.ac to i64
+  %i.ad = ptrtoint ptr %i.ac to i64               ; 2 uses
   br i1 %.not.i.i.i.i.i.i, label %_ZN4llvm6all_ofINS_6detail5zippyINS1_14zip_enumeratorEJNS1_12index_streamERNS_8ArrayRefIiEEEEEZNS_16BasicTTIImplBaseINS_16LoongArchTTIImplEE11isSplatMaskES6_jRiEUlRKT_E_EEbOSD_T0_.exit.i, label %bb.g, !llvm.loop !728
 
 _ZN4llvm6all_ofINS_6detail5zippyINS1_14zip_enumeratorEJNS1_12index_streamERNS_8ArrayRefIiEEEEEZNS_16BasicTTIImplBaseINS_16LoongArchTTIImplEE11isSplatMaskES6_jRiEUlRKT_E_EEbOSD_T0_.exit.i: ; preds = %_ZN9__gnu_cxx5__ops12_Iter_negateIZN4llvm16BasicTTIImplBaseINS2_16LoongArchTTIImplEE11isSplatMaskENS2_8ArrayRefIiEEjRiEUlRKT_E_EclINS2_6detail14zip_enumeratorIJNSF_14index_iteratorEPKiEEEEEbS9_.exit.thread2.i.i.i.i.i.i, %.split.i.i.i.i.i.i, %.split10.i.i.i.i.i.i, %bb.i, %bb.h
   %.1.i = phi i32 [ %.2.i, %_ZN9__gnu_cxx5__ops12_Iter_negateIZN4llvm16BasicTTIImplBaseINS2_16LoongArchTTIImplEE11isSplatMaskENS2_8ArrayRefIiEEjRiEUlRKT_E_EclINS2_6detail14zip_enumeratorIJNSF_14index_iteratorEPKiEEEEEbS9_.exit.thread2.i.i.i.i.i.i ], [ %.0.i, %bb.h ], [ %i.x, %.split10.i.i.i.i.i.i ], [ %.0.i, %.split.i.i.i.i.i.i ], [ %.0.i, %bb.i ]
-  %.ph.i.i.i = phi i64 [ %7, %_ZN9__gnu_cxx5__ops12_Iter_negateIZN4llvm16BasicTTIImplBaseINS2_16LoongArchTTIImplEE11isSplatMaskENS2_8ArrayRefIiEEjRiEUlRKT_E_EclINS2_6detail14zip_enumeratorIJNSF_14index_iteratorEPKiEEEEEbS9_.exit.thread2.i.i.i.i.i.i ], [ %i.v, %bb.h ], [ %i.v, %.split10.i.i.i.i.i.i ], [ %i.v, %.split.i.i.i.i.i.i ], [ %i.v, %bb.i ]
+  %.ph.i.i.i = phi i64 [ %i.ad, %_ZN9__gnu_cxx5__ops12_Iter_negateIZN4llvm16BasicTTIImplBaseINS2_16LoongArchTTIImplEE11isSplatMaskENS2_8ArrayRefIiEEjRiEUlRKT_E_EclINS2_6detail14zip_enumeratorIJNSF_14index_iteratorEPKiEEEEEbS9_.exit.thread2.i.i.i.i.i.i ], [ %i.v, %bb.h ], [ %i.v, %.split10.i.i.i.i.i.i ], [ %i.v, %.split.i.i.i.i.i.i ], [ %i.v, %bb.i ]
   %i.ae = inttoptr i64 %.ph.i.i.i to ptr
   %i.af = icmp eq ptr %i.e, %i.ae
   br i1 %i.af, label %_ZN4llvm16BasicTTIImplBaseINS_16LoongArchTTIImplEE11isSplatMaskENS_8ArrayRefIiEEjRi.exit.thread, label %_ZN4llvm16BasicTTIImplBaseINS_16LoongArchTTIImplEE11isSplatMaskENS_8ArrayRefIiEEjRi.exit

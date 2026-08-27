@@ -205,15 +205,15 @@ bb.e:                                             ; preds = %.lr.ph
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @zend_string_tolower_ex(ptr noundef %0, i1 noundef zeroext %1) local_unnamed_addr #14 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 9 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 10 uses
   %i.d = getelementptr i8, ptr %0, i64 24         ; 5 uses
   %i.e = getelementptr i8, ptr %i.d, i64 %i.c     ; 8 uses
   %i.f = and i64 %i.c, -8
   %i.g = add i64 %i.f, 32                         ; 4 uses
   %i.h = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.i = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.e to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
@@ -294,7 +294,9 @@ zend_string_alloc.exit69:                         ; preds = %bb.e, %bb.f
 
 .lr.ph.preheader:                                 ; preds = %.loopexit
   %.1.i86 = ptrtoaddr ptr %.1.i to i64            ; 3 uses
-  %scevgep = getelementptr i8, ptr %.1.i, i64 %i.i
+  %2 = getelementptr i8, ptr %.1.i, i64 %i.c
+  %3 = getelementptr i8, ptr %2, i64 %i.a
+  %scevgep = getelementptr i8, ptr %3, i64 24
   %i.ap = sub i64 0, %.1.i86
   %scevgep87 = getelementptr i8, ptr %scevgep, i64 %i.ap
   %i.aq = add i64 %i.c, %i.a                      ; 2 uses
@@ -556,15 +558,15 @@ zend_string_copy.exit:                            ; preds = %zend_string_copy.ex
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @zend_string_toupper_ex(ptr noundef %0, i1 noundef zeroext %1) local_unnamed_addr #14 {
 bb.a:
-  %i.a = ptrtoaddr ptr %0 to i64
+  %i.a = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 9 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 10 uses
   %i.d = getelementptr i8, ptr %0, i64 24         ; 5 uses
   %i.e = getelementptr i8, ptr %i.d, i64 %i.c     ; 8 uses
   %i.f = and i64 %i.c, -8
   %i.g = add i64 %i.f, 32                         ; 4 uses
   %i.h = ptrtoint ptr %i.d to i64                 ; 2 uses
-  %i.i = ptrtoint ptr %i.e to i64                 ; 2 uses
+  %i.i = ptrtoint ptr %i.e to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
@@ -645,7 +647,9 @@ zend_string_alloc.exit69:                         ; preds = %bb.e, %bb.f
 
 .lr.ph.preheader:                                 ; preds = %.loopexit
   %.1.i86 = ptrtoaddr ptr %.1.i to i64            ; 3 uses
-  %scevgep = getelementptr i8, ptr %.1.i, i64 %i.i
+  %2 = getelementptr i8, ptr %.1.i, i64 %i.c
+  %3 = getelementptr i8, ptr %2, i64 %i.a
+  %scevgep = getelementptr i8, ptr %3, i64 24
   %i.ap = sub i64 0, %.1.i86
   %scevgep87 = getelementptr i8, ptr %scevgep, i64 %i.ap
   %i.aq = add i64 %i.c, %i.a                      ; 2 uses

@@ -204,11 +204,11 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   tail call fastcc void @_ZN2v86bigint12_GLOBAL__N_110ShiftModFnEPmPKmijj(ptr noundef %i.bb, ptr noundef %i.bd, i32 noundef %i.ax, i32 noundef %i.be, i32 noundef %.sroa.speculated)
   %i.bf = zext i32 %.sroa.speculated to i64
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %.03154, i64 %i.bf
-  %i.bh = sub i32 %.05053, %.sroa.speculated      ; 2 uses
+  %i.bh = sub nuw i32 %.05053, %.sroa.speculated  ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.bi = icmp samesign ult i64 %indvars.iv.next, %i.r
   %i.bj = icmp ne i32 %i.bh, 0
-  %5 = and i1 %i.bi, %i.bj
+  %5 = select i1 %i.bi, i1 %i.bj, i1 false
   br i1 %5, label %bb.d, label %.preheader.loopexit, !llvm.loop !13
 
 .lr.ph57:                                         ; preds = %.lr.ph57.prol.loopexit, %.lr.ph57
@@ -611,19 +611,20 @@ _ZN2v86bigint12_GLOBAL__N_17SumDiffEPmS2_PKmS4_j.exit: ; preds = %.lr.ph.i, %bb.
   ret void
 
 bb.d:                                             ; preds = %.lr.ph, %_ZN2v86bigint12_GLOBAL__N_17SumDiffEPmS2_PKmS4_j.exit46
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN2v86bigint12_GLOBAL__N_17SumDiffEPmS2_PKmS4_j.exit46 ] ; 2 uses
-  %i.aj = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %_ZN2v86bigint12_GLOBAL__N_17SumDiffEPmS2_PKmS4_j.exit46 ] ; 3 uses
+  %i.aj = trunc i64 %indvars.iv to i32
   %i.ak = sub i32 %2, %i.aj
   %i.al = mul i32 %i.ak, %3
   %i.am = load ptr, ptr %i.e, align 8
-  %i.an = add i32 %.pre-phi, %i.aj
+  %5 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
+  %i.an = add i32 %.pre-phi, %5
   %i.ao = zext i32 %i.an to i64                   ; 2 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.ao
   %i.aq = load ptr, ptr %i.ap, align 8
   %i.ar = load i32, ptr %i.ai, align 4
   tail call fastcc void @_ZN2v86bigint12_GLOBAL__N_110ShiftModFnEPmPKmijj(ptr noundef %4, ptr noundef %i.aq, i32 noundef %i.al, i32 noundef %i.ar, i32 noundef 2147483647)
   %i.as = load ptr, ptr %i.e, align 8             ; 2 uses
-  %i.at = add i32 %1, %i.aj
+  %i.at = add i32 %1, %5
   %i.au = zext i32 %i.at to i64
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.au
   %i.aw = load ptr, ptr %i.av, align 8            ; 2 uses

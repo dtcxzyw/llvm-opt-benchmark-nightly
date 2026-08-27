@@ -204,8 +204,7 @@ bb.fq:                                            ; preds = %._crit_edge2442.spl
   br i1 %or.cond2448, label %.lr.ph2445, label %.critedge
 
 .lr.ph2445:                                       ; preds = %bb.fq
-  %i.ars = load ptr, ptr %8, align 8, !tbaa !21, !noalias !120 ; 2 uses
-  %12 = ptrtoaddr ptr %i.ars to i64
+  %i.ars = load ptr, ptr %8, align 8, !tbaa !21, !noalias !120
   %i.art = sdiv i64 %i.aoj, 4
   %i.aru = shl nsw i64 %i.art, 2                  ; 3 uses
   %i.arv = sdiv i64 %i.aoj, 2
@@ -217,8 +216,6 @@ bb.fq:                                            ; preds = %._crit_edge2442.spl
   %i.arz = icmp sgt i64 %i.arw, %i.aru
   %i.asa = icmp slt i64 %i.arw, %i.aoj
   %i.asb = icmp sgt i64 %i.aoj, 1
-  %13 = and i64 %12, 7
-  %.not.i.i.i.i.i.i.i.i = icmp eq i64 %13, 0
   %i.asc = add i64 %i.aoj, -1                     ; 3 uses
   %i.asd = add i64 %i.aoj, -2
   %xtraiter5000 = and i64 %i.aoj, 1
@@ -332,11 +329,13 @@ bb.fw:                                            ; preds = %bb.fr
 .loopexit:                                        ; preds = %.lr.ph85.i.i.i.i517.prol.loopexit, %.lr.ph85.i.i.i.i517, %bb.fv, %bb.fw
   %i.atz = phi double [ %i.asl, %bb.fv ], [ %i.atx, %bb.fw ], [ %i.asl, %.lr.ph85.i.i.i.i517 ], [ %i.asl, %.lr.ph85.i.i.i.i517.prol.loopexit ] ; 3 uses
   %.3.i.i.i.i = phi double [ %i.atf, %bb.fv ], [ %i.aty, %bb.fw ], [ %.lcssa4465.unr, %.lr.ph85.i.i.i.i517.prol.loopexit ], [ %i.atv, %.lr.ph85.i.i.i.i517 ]
+  %12 = ptrtoint ptr %i.asi to i64                ; 2 uses
+  %13 = and i64 %12, 7
+  %.not.i.i.i.i.i.i.i.i = icmp eq i64 %13, 0
   br i1 %.not.i.i.i.i.i.i.i.i, label %bb.fx, label %_ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEEElRKNS_9DenseBaseIT_EE.exit.i.i.i.i
 
 bb.fx:                                            ; preds = %.loopexit
-  %14 = ptrtoint ptr %i.asi to i64
-  %i.aua = lshr exact i64 %14, 3
+  %i.aua = lshr exact i64 %12, 3
   %i.aub = and i64 %i.aua, 1
   %i.auc = call i64 @llvm.smin.i64(i64 %i.aub, i64 %i.aoj)
   br label %_ZN5Eigen8internalL21first_default_alignedINS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEEEElRKNS_9DenseBaseIT_EE.exit.i.i.i.i

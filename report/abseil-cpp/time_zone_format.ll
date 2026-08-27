@@ -202,9 +202,8 @@ bb.e:                                             ; preds = %bb.e, %_ZN4absl12lt
   br i1 %i.al, label %_ZN4absl12lts_2026052613time_internal4cctz6detail12prev_weekdayENS3_10civil_timeINS3_7day_tagEEENS3_7weekdayE.exit, label %.preheader.i, !llvm.loop !59
 
 _ZN4absl12lts_2026052613time_internal4cctz6detail12prev_weekdayENS3_10civil_timeINS3_7day_tagEEENS3_7weekdayE.exit: ; preds = %.preheader.i
-  %i.am = sub nsw i64 %indvars.iv.next18.i, %indvars.iv.i
-  %sext20.i = shl i64 %i.am, 32
-  %2 = ashr exact i64 %sext20.i, 32
+  %i.am = sub nuw nsw i64 %indvars.iv.next18.i, %indvars.iv.i
+  %2 = and i64 %i.am, 4294967295
   %i.an = tail call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detailmiENS3_10civil_timeINS3_7day_tagEEEl(i64 %.sroa.0.0.i, i64 257, i64 noundef %2) #18 ; 2 uses
   %i.ao = extractvalue { i64, i64 } %i.an, 0
   %i.ap = extractvalue { i64, i64 } %i.an, 1      ; 2 uses
@@ -607,9 +606,8 @@ bb.fy:                                            ; preds = %bb.fy, %bb.fx
   br i1 %i.yw, label %_ZN4absl12lts_2026052613time_internal4cctz6detail12prev_weekdayENS3_10civil_timeINS3_7day_tagEEENS3_7weekdayE.exit.i, label %.preheader.i.i, !llvm.loop !59
 
 _ZN4absl12lts_2026052613time_internal4cctz6detail12prev_weekdayENS3_10civil_timeINS3_7day_tagEEENS3_7weekdayE.exit.i: ; preds = %.preheader.i.i
-  %i.yx = sub nsw i64 %indvars.iv.next18.i.i, %indvars.iv.i.i
-  %sext20.i.i = shl i64 %i.yx, 32
-  %21 = ashr exact i64 %sext20.i.i, 32
+  %i.yx = sub nuw nsw i64 %indvars.iv.next18.i.i, %indvars.iv.i.i
+  %21 = and i64 %i.yx, 4294967295
   %i.yy = sub nsw i64 0, %21
   %i.yz = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %i.yf, i8 noundef signext 1, i64 noundef 1, i64 noundef %i.yy, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #18 ; 2 uses
   %.sroa.3.0.in.in.i = extractvalue { i64, i64 } %i.yz, 1 ; 2 uses
@@ -674,9 +672,8 @@ bb.fz:                                            ; preds = %bb.fz, %_ZN4absl12l
   br i1 %i.aaf, label %_ZN4absl12lts_2026052613time_internal4cctz6detail12next_weekdayENS3_10civil_timeINS3_7day_tagEEENS3_7weekdayE.exit.i, label %.preheader.i33.i, !llvm.loop !72
 
 _ZN4absl12lts_2026052613time_internal4cctz6detail12next_weekdayENS3_10civil_timeINS3_7day_tagEEENS3_7weekdayE.exit.i: ; preds = %.preheader.i33.i
-  %i.aag = sub nsw i64 %indvars.iv.next18.i35.i, %indvars.iv.i31.i
-  %sext20.i36.i = shl i64 %i.aag, 32
-  %22 = ashr exact i64 %sext20.i36.i, 32
+  %i.aag = sub nuw nsw i64 %indvars.iv.next18.i35.i, %indvars.iv.i31.i
+  %22 = and i64 %i.aag, 4294967295
   %.sroa.3.0.in.i.i = shl i64 %.sroa.3.0.in.in.i.i, 48
   %i.aah = ashr i64 %.sroa.3.0.in.i.i, 56
   %i.aai = call { i64, i64 } @_ZN4absl12lts_2026052613time_internal4cctz6detail4impl5n_dayElallaaa(i64 noundef %i.zd, i8 noundef signext %.sroa.4.8.extract.trunc.i23.i, i64 noundef %i.aah, i64 noundef %22, i8 noundef signext 0, i8 noundef signext 0, i8 noundef signext 0) #18 ; 2 uses

@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v
   %i.aw = phi i8 [ %.pre, %bb.x ], [ %i.as, %bb.w ], [ %i.as, %bb.v ]
   %i.ax = or i8 %i.aw, 1
   store i8 %i.ax, ptr %i.ar, align 4
-  %i.ay = sub i32 %1, %i.i
+  %i.ay = sub nuw i32 %1, %i.i
   %i.az = getelementptr inbounds nuw i8, ptr %i.g, i64 88
   store i32 %i.ay, ptr %i.az, align 8, !tbaa !31
   %i.ba = getelementptr inbounds nuw i8, ptr %i.g, i64 64
@@ -424,7 +424,7 @@ bb.bf:                                            ; preds = %bb.be
   br label %exec_anim.exit128
 
 .critedge117:                                     ; preds = %bb.u
-  %i.dl = sub i32 %1, %i.i
+  %i.dl = sub nuw i32 %1, %i.i
   %i.dm = getelementptr inbounds nuw i8, ptr %i.g, i64 88
   store i32 %i.dl, ptr %i.dm, align 8, !tbaa !31
   %i.dn = getelementptr inbounds nuw i8, ptr %i.g, i64 64

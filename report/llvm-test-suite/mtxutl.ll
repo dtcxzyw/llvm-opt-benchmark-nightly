@@ -203,15 +203,10 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.e = icmp sgt i32 %0, 0
-  br i1 %i.e, label %.lr.ph.preheader, label %.preheader.._crit_edge_crit_edge
-
-.preheader.._crit_edge_crit_edge:                 ; preds = %.preheader
-  %.pre = sext i32 %0 to i64
-  br label %._crit_edge
+  br i1 %i.e, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %1 = zext nneg i32 %0 to i64                    ; 2 uses
-  %wide.trip.count = zext nneg i32 %0 to i64
+  %wide.trip.count = zext nneg i32 %0 to i64      ; 2 uses
   br label %.lr.ph
 
 bb.b:                                             ; preds = %bb.a
@@ -227,7 +222,7 @@ bb.c:                                             ; preds = %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 3 uses
-  %i.h = sub nsw i64 %1, %indvars.iv
+  %i.h = sub nuw nsw i64 %wide.trip.count, %indvars.iv
   %i.i = tail call noalias ptr @calloc(i64 noundef %i.h, i64 noundef 4) #16 ; 2 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   store ptr %i.i, ptr %i.j, align 8, !tbaa !31
@@ -240,9 +235,9 @@ bb.d:                                             ; preds = %.lr.ph
   tail call void @exit(i32 noundef 1) #19
   unreachable
 
-._crit_edge:                                      ; preds = %bb.c, %.preheader.._crit_edge_crit_edge
-  %.pre-phi = phi i64 [ %.pre, %.preheader.._crit_edge_crit_edge ], [ %1, %bb.c ]
-  %i.m = getelementptr inbounds [8 x i8], ptr %i.c, i64 %.pre-phi
+._crit_edge:                                      ; preds = %bb.c, %.preheader
+  %1 = sext i32 %0 to i64
+  %i.m = getelementptr inbounds [8 x i8], ptr %i.c, i64 %1
   store ptr null, ptr %i.m, align 8, !tbaa !31
   ret ptr %i.c
 }

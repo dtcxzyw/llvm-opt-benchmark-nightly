@@ -202,10 +202,10 @@ bb.bd:                                            ; preds = %bb.bc
   %i.na = add nuw nsw i32 %i.mr, 5
   %i.nb = call i32 @llvm.umin.i32(i32 %i.lt, i32 %i.na) ; 2 uses
   %i.nc = add nuw nsw i32 %i.mz, 1
-  %i.nd = sub nsw i32 %i.lt, %i.nb
-  %..i.i.i = call i32 @llvm.smin.i32(i32 range(i32 1, 65537) %i.nc, i32 %i.nd)
+  %i.nd = sub nuw nsw i32 %i.lt, %i.nb
+  %..i.i.i = call i32 @llvm.umin.i32(i32 %i.nc, i32 %i.nd)
   %i.ne = add nuw nsw i32 %i.nb, 4
-  %i.nf = add nsw i32 %i.ne, %..i.i.i
+  %i.nf = add nuw nsw i32 %i.ne, %..i.i.i
   %i.ng = call i32 @llvm.umin.i32(i32 %i.lt, i32 %i.nf) ; 3 uses
   %i.nh = lshr i32 %i.ng, 3
   %i.ni = zext nneg i32 %i.nh to i64
@@ -303,7 +303,7 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %.not64.i, label %bb.bn, label %bb.bq
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.pi = sub nsw i32 %i.ja, %i.pc
+  %i.pi = sub nuw nsw i32 %i.ja, %i.pc
   %i.pj = call i32 @ff_dca_exss_parse(ptr noundef nonnull %i.jd, ptr noundef nonnull %i.pg, i32 noundef %i.pi) #8
   %i.pk = icmp slt i32 %i.pj, 0
   br i1 %i.pk, label %bb.bq, label %bb.bo
@@ -402,9 +402,6 @@ declare i32 @llvm.bswap.i32(i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #7
 
 attributes #0 = { cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -204,7 +204,7 @@ bb.jn:                                            ; preds = %bb.jm, %bb.jl
   br label %.thread3170
 
 bb.jo:                                            ; preds = %bb.jm
-  %i.wh = sub i32 %i.vy, %i.wc                    ; 3 uses
+  %i.wh = sub nuw i32 %i.vy, %i.wc                ; 3 uses
   %i.wi = call fastcc i64 @cli_seeksect(i32 noundef %0, ptr noundef %i.wb)
   %.not2740 = icmp eq i64 %i.wi, 0
   br i1 %.not2740, label %bb.jp, label %bb.jq
@@ -607,13 +607,11 @@ bb.nr:                                            ; preds = %bb.np, %bb.nq
 
 bb.ns:                                            ; preds = %bb.nq
   %i.agz = zext i32 %i.agt to i64
-  %i.aha = sub nsw i64 %i.agz, %i.ago             ; 3 uses
+  %i.aha = sub nuw nsw i64 %i.agz, %i.ago         ; 2 uses
   %i.ahb = icmp ult i32 %i.afh, 32
-  %.not2780 = icmp slt i64 %i.aha, 0
-  %or.cond3037 = select i1 %i.ahb, i1 true, i1 %.not2780
   %i.ahc = add nuw nsw i64 %i.aha, 32
-  %.not2781 = icmp sgt i64 %i.ahc, %i.agh
-  %or.cond3038 = select i1 %or.cond3037, i1 true, i1 %.not2781
+  %.not2781 = icmp samesign ugt i64 %i.ahc, %i.agh
+  %or.cond3038 = select i1 %i.ahb, i1 true, i1 %.not2781
   br i1 %or.cond3038, label %bb.nt, label %bb.nu
 
 bb.nt:                                            ; preds = %bb.ns

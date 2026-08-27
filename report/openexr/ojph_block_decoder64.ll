@@ -77,7 +77,7 @@ bb.f:                                             ; preds = %bb.d
   %i.u = zext i8 %i.t to i32
   %i.v = shl nuw nsw i32 %i.u, 4                  ; 2 uses
   %i.w = getelementptr i8, ptr %i.r, i64 -2
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !10
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !10    ; 3 uses
   %i.y = and i8 %i.x, 15
   %i.z = zext nneg i8 %i.y to i32                 ; 2 uses
   %i.aa = or disjoint i32 %i.v, %i.z              ; 12 uses
@@ -97,11 +97,11 @@ bb.h:                                             ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %10, i64 28
   %i.af = getelementptr inbounds nuw i8, ptr %10, i64 32
   %i.ag = getelementptr inbounds nuw i8, ptr %10, i64 40
-  %i.ah = zext i32 %4 to i64
-  %i.ai = getelementptr i8, ptr %0, i64 %i.ah     ; 7 uses
+  %i.ah = zext nneg i32 %4 to i64
+  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 %i.ah ; 6 uses
   %i.aj = zext nneg i32 %i.aa to i64
   %i.ak = sub nsw i64 0, %i.aj
-  %i.al = getelementptr i8, ptr %i.ai, i64 %i.ak  ; 3 uses
+  %i.al = getelementptr inbounds i8, ptr %i.ai, i64 %i.ak ; 3 uses
   %i.am = getelementptr inbounds nuw i8, ptr %10, i64 16
   %i.an = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.ao = getelementptr inbounds nuw i8, ptr %10, i64 24
@@ -206,8 +206,8 @@ _ZN4ojph5localL8mel_initEPNS0_10dec_mel_stEPhii.exit: ; preds = %bb.q, %bb.n, %b
   %i.cj = add i32 %6, 9
   %i.ck = and i32 %i.cj, -8                       ; 13 uses
   %i.cl = add i32 %2, 2                           ; 2 uses
-  %i.cm = or disjoint i32 %i.v, %i.as
-  %i.cn = add nuw nsw i32 %i.cm, %i.z
+  %i.cm = or disjoint i32 %i.v, %i.z
+  %i.cn = add nuw nsw i32 %i.cm, %i.as
   %i.co = add nsw i32 %i.cn, -5
   store i32 %i.co, ptr %i.ap, align 4, !tbaa !19
   store ptr %.lcssa1927, ptr %10, align 8, !tbaa !20
@@ -217,12 +217,10 @@ _ZN4ojph5localL8mel_initEPNS0_10dec_mel_stEPhii.exit: ; preds = %bb.q, %bb.n, %b
   %i.cq = zext nneg i32 %i.cp to i64
   %i.cr = shl i64 %.lcssa1926, %i.cq
   store i64 %i.cr, ptr %i.an, align 8, !tbaa !23
-  %12 = getelementptr inbounds i8, ptr %i.ai, i64 -2
   %i.cs = add nsw i32 %i.aa, -2                   ; 2 uses
   %i.ct = getelementptr inbounds i8, ptr %i.ai, i64 -3 ; 2 uses
-  %13 = load i8, ptr %12, align 1, !tbaa !10      ; 2 uses
-  %i.cu = lshr i8 %13, 4
-  %i.cv = and i8 %13, 112
+  %i.cu = lshr i8 %i.x, 4
+  %i.cv = and i8 %i.x, 112
   %i.cw = icmp eq i8 %i.cv, 112                   ; 2 uses
   %i.cx = zext i1 %i.cw to i8
   %i.cy = lshr i8 15, %i.cx
@@ -625,7 +623,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(4128) %i.b, i8 0, i64 4128, i1 false)
-  %i.pw = sub nsw i32 %4, %i.aa                   ; 3 uses
+  %i.pw = sub nuw nsw i32 %4, %i.aa               ; 2 uses
   %i.px = icmp sgt i32 %i.pw, 0
   br i1 %i.px, label %bb.al, label %_ZN4ojph5localL10frwd_init8ILh255EEEvPNS0_13frwd_struct64EPKhi.exit
 
@@ -637,7 +635,7 @@ bb.al:                                            ; preds = %._crit_edge1369
   br label %_ZN4ojph5localL10frwd_init8ILh255EEEvPNS0_13frwd_struct64EPKhi.exit
 
 _ZN4ojph5localL10frwd_init8ILh255EEEvPNS0_13frwd_struct64EPKhi.exit: ; preds = %._crit_edge1369, %bb.al
-  %.sroa.112.15 = phi i32 [ %i.qa, %bb.al ], [ %i.pw, %._crit_edge1369 ] ; 2 uses
+  %.sroa.112.15 = phi i32 [ %i.qa, %bb.al ], [ 0, %._crit_edge1369 ] ; 2 uses
   %.sroa.01023.15 = phi ptr [ %i.pz, %bb.al ], [ %0, %._crit_edge1369 ] ; 2 uses
   %.0.i.i899 = phi i32 [ %i.qb, %bb.al ], [ 255, %._crit_edge1369 ] ; 2 uses
   %i.qc = zext nneg i32 %.0.i.i899 to i64         ; 2 uses
@@ -731,7 +729,7 @@ bb.ap:                                            ; preds = %_ZN4ojph5localL10fr
   %.sroa.01023.16 = phi ptr [ %.sroa.01023.01378, %.lr.ph.i915 ], [ %.sroa.01023.17, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i ] ; 3 uses
   %i.rp = phi i64 [ %.sroa.20.01374, %.lr.ph.i915 ], [ %i.sf, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i ]
   %.not.i.i = phi i1 [ %i.ro, %.lr.ph.i915 ], [ %i.sc, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i ] ; 2 uses
-  %i.rq = phi i32 [ %.sroa.112.01376, %.lr.ph.i915 ], [ %i.rx, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i ] ; 3 uses
+  %i.rq = phi i32 [ %.sroa.112.01376, %.lr.ph.i915 ], [ %i.rx, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i ] ; 2 uses
   %i.rr = phi i32 [ %.sroa.62.01375, %.lr.ph.i915 ], [ %i.sh, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i ] ; 2 uses
   %i.rs = icmp sgt i32 %i.rq, 0
   br i1 %i.rs, label %bb.aq, label %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i
@@ -746,7 +744,7 @@ bb.aq:                                            ; preds = %bb.ap
 _ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i: ; preds = %bb.aq, %bb.ap
   %.sroa.112.17 = phi i32 [ %i.rv, %bb.aq ], [ %.sroa.112.16, %bb.ap ] ; 2 uses
   %.sroa.01023.17 = phi ptr [ %i.ru, %bb.aq ], [ %.sroa.01023.16, %bb.ap ] ; 2 uses
-  %i.rx = phi i32 [ %i.rv, %bb.aq ], [ %i.rq, %bb.ap ]
+  %i.rx = phi i32 [ %i.rv, %bb.aq ], [ 0, %bb.ap ]
   %.0.i.i919 = phi i32 [ %i.rw, %bb.aq ], [ 255, %bb.ap ]
   %i.ry = zext i1 %.not.i.i to i32
   %i.rz = lshr i32 255, %i.ry
@@ -817,7 +815,7 @@ bb.at:                                            ; preds = %_ZN4ojph5localL10fr
   %.sroa.01023.19 = phi ptr [ %.sroa.01023.1, %.lr.ph.i924 ], [ %.sroa.01023.20, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929 ] ; 3 uses
   %i.tf = phi i64 [ %.sroa.20.1, %.lr.ph.i924 ], [ %i.tv, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929 ]
   %.not.i.i928 = phi i1 [ %i.te, %.lr.ph.i924 ], [ %i.ts, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929 ] ; 2 uses
-  %i.tg = phi i32 [ %.sroa.112.1, %.lr.ph.i924 ], [ %i.tn, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929 ] ; 3 uses
+  %i.tg = phi i32 [ %.sroa.112.1, %.lr.ph.i924 ], [ %i.tn, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929 ] ; 2 uses
   %i.th = phi i32 [ %.sroa.62.1, %.lr.ph.i924 ], [ %i.tx, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929 ] ; 2 uses
   %i.ti = icmp sgt i32 %i.tg, 0
   br i1 %i.ti, label %bb.au, label %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929
@@ -832,7 +830,7 @@ bb.au:                                            ; preds = %bb.at
 _ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i929: ; preds = %bb.au, %bb.at
   %.sroa.112.20 = phi i32 [ %i.tl, %bb.au ], [ %.sroa.112.19, %bb.at ] ; 2 uses
   %.sroa.01023.20 = phi ptr [ %i.tk, %bb.au ], [ %.sroa.01023.19, %bb.at ] ; 2 uses
-  %i.tn = phi i32 [ %i.tl, %bb.au ], [ %i.tg, %bb.at ]
+  %i.tn = phi i32 [ %i.tl, %bb.au ], [ 0, %bb.at ]
   %.0.i.i930 = phi i32 [ %i.tm, %bb.au ], [ 255, %bb.at ]
   %i.to = zext i1 %.not.i.i928 to i32
   %i.tp = lshr i32 255, %i.to
@@ -917,7 +915,7 @@ bb.ay:                                            ; preds = %_ZN4ojph5localL10fr
   %.sroa.01023.22 = phi ptr [ %.sroa.01023.2, %.lr.ph.i936 ], [ %.sroa.01023.23, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941 ] ; 3 uses
   %i.va = phi i64 [ %.sroa.20.2, %.lr.ph.i936 ], [ %i.vq, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941 ]
   %.not.i.i940 = phi i1 [ %i.uz, %.lr.ph.i936 ], [ %i.vn, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941 ] ; 2 uses
-  %i.vb = phi i32 [ %.sroa.112.2, %.lr.ph.i936 ], [ %i.vi, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941 ] ; 3 uses
+  %i.vb = phi i32 [ %.sroa.112.2, %.lr.ph.i936 ], [ %i.vi, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941 ] ; 2 uses
   %i.vc = phi i32 [ %.sroa.62.2, %.lr.ph.i936 ], [ %i.vs, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941 ] ; 2 uses
   %i.vd = icmp sgt i32 %i.vb, 0
   br i1 %i.vd, label %bb.az, label %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941
@@ -932,7 +930,7 @@ bb.az:                                            ; preds = %bb.ay
 _ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i941: ; preds = %bb.az, %bb.ay
   %.sroa.112.23 = phi i32 [ %i.vg, %bb.az ], [ %.sroa.112.22, %bb.ay ] ; 2 uses
   %.sroa.01023.23 = phi ptr [ %i.vf, %bb.az ], [ %.sroa.01023.22, %bb.ay ] ; 2 uses
-  %i.vi = phi i32 [ %i.vg, %bb.az ], [ %i.vb, %bb.ay ]
+  %i.vi = phi i32 [ %i.vg, %bb.az ], [ 0, %bb.ay ]
   %.0.i.i942 = phi i32 [ %i.vh, %bb.az ], [ 255, %bb.ay ]
   %i.vj = zext i1 %.not.i.i940 to i32
   %i.vk = lshr i32 255, %i.vj
@@ -1003,7 +1001,7 @@ bb.bc:                                            ; preds = %_ZN4ojph5localL10fr
   %.sroa.01023.25 = phi ptr [ %.sroa.01023.3, %.lr.ph.i948 ], [ %.sroa.01023.26, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953 ] ; 3 uses
   %i.wq = phi i64 [ %.sroa.20.3, %.lr.ph.i948 ], [ %i.xg, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953 ]
   %.not.i.i952 = phi i1 [ %i.wp, %.lr.ph.i948 ], [ %i.xd, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953 ] ; 2 uses
-  %i.wr = phi i32 [ %.sroa.112.3, %.lr.ph.i948 ], [ %i.wy, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953 ] ; 3 uses
+  %i.wr = phi i32 [ %.sroa.112.3, %.lr.ph.i948 ], [ %i.wy, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953 ] ; 2 uses
   %i.ws = phi i32 [ %.sroa.62.3, %.lr.ph.i948 ], [ %i.xi, %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953 ] ; 2 uses
   %i.wt = icmp sgt i32 %i.wr, 0
   br i1 %i.wt, label %bb.bd, label %_ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953
@@ -1018,7 +1016,7 @@ bb.bd:                                            ; preds = %bb.bc
 _ZN4ojph5localL10frwd_read8ILh255EEEvPNS0_13frwd_struct64E.exit.i953: ; preds = %bb.bd, %bb.bc
   %.sroa.112.26 = phi i32 [ %i.ww, %bb.bd ], [ %.sroa.112.25, %bb.bc ] ; 2 uses
   %.sroa.01023.26 = phi ptr [ %i.wv, %bb.bd ], [ %.sroa.01023.25, %bb.bc ] ; 2 uses
-  %i.wy = phi i32 [ %i.ww, %bb.bd ], [ %i.wr, %bb.bc ]
+  %i.wy = phi i32 [ %i.ww, %bb.bd ], [ 0, %bb.bc ]
   %.0.i.i954 = phi i32 [ %i.wx, %bb.bd ], [ 255, %bb.bc ]
   %i.wz = zext i1 %.not.i.i952 to i32
   %i.xa = lshr i32 255, %i.wz
@@ -1421,10 +1419,10 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 define internal fastcc void @_ZN4ojph5localL12rev_init_mrpEPNS0_10rev_structEPhii(ptr nofree noundef nonnull writeonly captures(none) initializes((0, 25)) %0, ptr noundef %1, i32 noundef range(i32 2, -2147483648) %2, i32 noundef %3) unnamed_addr #5 {
 bb.a:
   %i.a = zext nneg i32 %2 to i64
-  %i.b = getelementptr i8, ptr %1, i64 %i.a
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %i.a
   %i.c = sext i32 %3 to i64
-  %i.d = getelementptr i8, ptr %i.b, i64 %i.c     ; 2 uses
-  %i.e = getelementptr i8, ptr %i.d, i64 -1       ; 4 uses
+  %i.d = getelementptr inbounds i8, ptr %i.b, i64 %i.c ; 2 uses
+  %i.e = getelementptr inbounds i8, ptr %i.d, i64 -1 ; 4 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !58
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
@@ -1537,7 +1535,7 @@ _ZN4ojph5localL12rev_read_mrpEPNS0_10rev_structE.exit: ; preds = %bb.b, %.loopex
   ret void
 
 bb.f:                                             ; preds = %bb.a
-  %i.bu = getelementptr i8, ptr %i.d, i64 -2      ; 2 uses
+  %i.bu = getelementptr inbounds i8, ptr %i.d, i64 -2 ; 2 uses
   store ptr %i.bu, ptr %0, align 8, !tbaa !58
   %i.bv = load i8, ptr %i.e, align 1, !tbaa !10
   %i.bw = zext i8 %i.bv to i64

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.c
   br i1 %.not, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.v = sub nsw i64 %0, %i.u                     ; 3 uses
+  %i.v = sub nuw nsw i64 %0, %i.u                 ; 3 uses
   %i.w = load i32, ptr @GC_all_interior_pointers, align 4
   %.not26 = icmp eq i32 %i.w, 0
   br i1 %.not26, label %bb.o, label %bb.p
@@ -518,7 +518,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.l = sub i64 %i.f, %i.c
+  %i.l = sub nuw i64 %i.f, %i.c
   %i.m = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.d, ptr %i.m, align 8
   %i.n = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -566,7 +566,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %i.l = sub i64 %i.f, %i.c
+  %i.l = sub nuw i64 %i.f, %i.c
   %i.m = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.d, ptr %i.m, align 8
   %i.n = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -671,7 +671,7 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 bb.m:                                             ; preds = %bb.k
-  %i.am = sub i64 %i.h, %i.c
+  %i.am = sub nuw i64 %i.h, %i.c
   %i.an = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.ab, ptr %i.an, align 8
   %i.ao = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -686,7 +686,7 @@ GC_push_all.exit46:                               ; preds = %bb.m, %bb.j, %bb.f
   br i1 %.not3658, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %GC_push_all.exit46, %GC_push_all.exit52
-  %i.as = phi i64 [ %i.bz, %GC_push_all.exit52 ], [ %i.ar, %GC_push_all.exit46 ] ; 2 uses
+  %i.as = phi i64 [ %i.bz, %GC_push_all.exit52 ], [ %i.ar, %GC_push_all.exit46 ]
   %i.at = phi ptr [ %i.by, %GC_push_all.exit52 ], [ %i.aq, %GC_push_all.exit46 ] ; 3 uses
   %.059 = phi ptr [ %i.at, %GC_push_all.exit52 ], [ %i.i, %GC_push_all.exit46 ] ; 2 uses
   %i.au = tail call i32 %2(ptr noundef nonnull %.059) #45, !callees !118
@@ -731,7 +731,8 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.n
   %i.bo = inttoptr i64 %i.bh to ptr
-  %.not.i50 = icmp ult i64 %i.bh, %i.as
+  %3 = and i64 %i.as, -8                          ; 2 uses
+  %.not.i50 = icmp ult i64 %i.bh, %3
   br i1 %.not.i50, label %bb.s, label %GC_push_all.exit52
 
 bb.s:                                             ; preds = %bb.r
@@ -750,7 +751,7 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 bb.u:                                             ; preds = %bb.s
-  %i.bu = sub i64 %i.as, %i.bh
+  %i.bu = sub nuw i64 %3, %i.bh
   %i.bv = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.bo, ptr %i.bv, align 8
   %i.bw = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -800,7 +801,7 @@ bb.y:                                             ; preds = %bb.x
 GC_push_all.exit.sink.split:                      ; preds = %bb.x, %bb.p, %bb.h, %bb.d
   %.sink81 = phi i64 [ %i.bh, %bb.p ], [ %i.c, %bb.h ], [ %i.c, %bb.d ], [ %i.cd, %bb.x ]
   %.sink79 = phi ptr [ %i.bi, %bb.p ], [ %i.ab, %bb.h ], [ %i.l, %bb.d ], [ %i.ce, %bb.x ]
-  %i.ck = sub i64 %i.e, %.sink81
+  %i.ck = sub nuw i64 %i.e, %.sink81
   %i.cl = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %.sink79, ptr %i.cl, align 8
   %i.cm = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -1203,7 +1204,7 @@ bb.t:                                             ; preds = %bb.s
   unreachable
 
 bb.u:                                             ; preds = %bb.s
-  %i.bg = sub i64 %i.bb, %i.ay
+  %i.bg = sub nuw i64 %i.bb, %i.ay
   %i.bh = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.az, ptr %i.bh, align 8
   %i.bi = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -1269,7 +1270,7 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 bb.ab:                                            ; preds = %bb.z
-  %i.cf = sub i64 %i.ca, %i.bx
+  %i.cf = sub nuw i64 %i.ca, %i.bx
   %i.cg = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.by, ptr %i.cg, align 8
   %i.ch = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -1672,7 +1673,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.h = sub i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @GC_threads, i64 2048) to i64), %i.a
+  %i.h = sub nuw i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @GC_threads, i64 2048) to i64), %i.a
   %i.i = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.b, ptr %i.i, align 8
   %i.j = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -2075,7 +2076,7 @@ bb.aa:                                            ; preds = %GC_roots_present.ex
   br i1 %.not.i7.i, label %bb.ab, label %GC_roots_present.exit.thread.i.i.i
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dy = sub i64 %i.dd, %i.du
+  %i.dy = sub nuw i64 %i.dd, %i.du
   %i.dz = add i64 %i.dy, %i.cm                    ; 3 uses
   store i64 %i.dz, ptr @GC_root_size, align 8
   store ptr %i.de, ptr %i.ds, align 8
@@ -2478,7 +2479,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not8.i.i23.us.i.us, label %bb.h, label %.split33.us.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ah = sub i64 %i.ac, %i.z
+  %i.ah = sub nuw i64 %i.ac, %i.z
   %i.ai = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.aa, ptr %i.ai, align 8
   %i.aj = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -2515,7 +2516,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not8.i.i.i.us, label %bb.l, label %.split.us
 
 bb.l:                                             ; preds = %bb.k
-  %i.ax = sub i64 %i.as, %i.ap
+  %i.ax = sub nuw i64 %i.as, %i.ap
   %i.ay = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.aq, ptr %i.ay, align 8
   %i.az = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -2625,7 +2626,7 @@ bb.n:                                             ; preds = %.split.us.i.loopexi
   unreachable
 
 bb.o:                                             ; preds = %bb.n
-  %i.ck = sub i64 %i.ce, %i.cb
+  %i.ck = sub nuw i64 %i.ce, %i.cb
   %i.cl = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.cc, ptr %i.cl, align 8
   %i.cm = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -2663,7 +2664,7 @@ bb.r:                                             ; preds = %bb.q
   unreachable
 
 bb.s:                                             ; preds = %bb.r
-  %i.da = sub i64 %i.cu, %i.cr
+  %i.da = sub nuw i64 %i.cu, %i.cr
   %i.db = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.cs, ptr %i.db, align 8
   %i.dc = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -2865,7 +2866,7 @@ bb.ac:                                            ; preds = %bb.ab
   unreachable
 
 bb.ad:                                            ; preds = %bb.ab
-  %i.gx = sub i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @GC_threads, i64 2048) to i64), %i.gq
+  %i.gx = sub nuw i64 ptrtoint (ptr getelementptr inbounds nuw (i8, ptr @GC_threads, i64 2048) to i64), %i.gq
   %i.gy = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
   store ptr %i.gr, ptr %i.gy, align 8
   %i.gz = load volatile ptr, ptr getelementptr inbounds nuw (i8, ptr @GC_arrays, i64 160), align 8
@@ -3268,7 +3269,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.q = sub i64 %i.k, %i.l
+  %i.q = sub nuw i64 %i.k, %i.l
   %i.r = load i64, ptr @GC_allocd_bytes_per_finalizer, align 8
   %i.s = mul i64 %i.r, %i.q
   %i.t = icmp ugt i64 %i.s, %i.i

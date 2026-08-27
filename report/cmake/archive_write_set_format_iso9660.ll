@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.bo, label %.backedge.i.i, label %zisofs_finish_entry.exit.thread
 
 .backedge.i.i:                                    ; preds = %.split.i.i, %bb.h
-  %.137.be.i.i = sub i64 %.137.i24.i, %spec.select.i.i ; 2 uses
+  %.137.be.i.i = sub nuw nsw i64 %.137.i24.i, %spec.select.i.i ; 2 uses
   %.240.be.i.i = getelementptr inbounds nuw i8, ptr %.240.i23.i, i64 %spec.select.i.i
   %.not47.i.i = icmp eq i64 %.137.be.i.i, 0
   br i1 %.not47.i.i, label %wb_write_to_temp.exit.i, label %bb.g, !llvm.loop !119
@@ -431,7 +431,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not122.i, label %.thread.thread178.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 5 uses
+  %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -574,31 +574,23 @@ bb.aa:                                            ; preds = %bb.z
   %i.ei = load i64, ptr %i.cf, align 8, !tbaa !136
   %i.ej = add i64 %i.ei, %spec.select.i.i.i       ; 2 uses
   store i64 %i.ej, ptr %i.cf, align 8, !tbaa !136
-  %i.ek = sub nsw i64 %.157.i.i.i, %spec.select.i.i.i ; 3 uses
+  %i.ek = sub nuw nsw i64 %.157.i.i.i, %spec.select.i.i.i ; 2 uses
   %i.el = load i64, ptr %i.bz, align 8, !tbaa !134
   %i.em = icmp eq i64 %i.ej, %i.el
-  br i1 %i.em, label %bb.ab, label %zisofs_extract_init.exit.i.i
+  %.pre156.i.i = load i8, ptr %i.bx, align 8      ; 2 uses
+  br i1 %i.em, label %bb.ab, label %zisofs_extract_init.exit.thread126.i.i
 
 bb.ab:                                            ; preds = %bb.aa
   store i64 0, ptr %i.cg, align 8, !tbaa !137
   store i32 0, ptr %i.ch, align 8, !tbaa !138
-  %2 = load i8, ptr %i.bx, align 8
-  %i.en = or i8 %2, 1
+  %i.en = or i8 %.pre156.i.i, 1                   ; 2 uses
   store i8 %i.en, ptr %i.bx, align 8
-  br label %zisofs_extract_init.exit.i.i
-
-zisofs_extract_init.exit.i.i:                     ; preds = %bb.ab, %bb.aa
-  %3 = icmp slt i64 %i.ek, 0
-  br i1 %3, label %.thread.i, label %zisofs_extract_init.exit.zisofs_extract_init.exit.thread126_crit_edge.i.i
-
-zisofs_extract_init.exit.zisofs_extract_init.exit.thread126_crit_edge.i.i: ; preds = %zisofs_extract_init.exit.i.i
-  %.pre159.i.i = load i8, ptr %i.bx, align 8
   br label %zisofs_extract_init.exit.thread126.i.i
 
-zisofs_extract_init.exit.thread126.i.i:           ; preds = %zisofs_extract_init.exit.zisofs_extract_init.exit.thread126_crit_edge.i.i, %bb.z
-  %4 = phi i8 [ %.pre159.i.i, %zisofs_extract_init.exit.zisofs_extract_init.exit.thread126_crit_edge.i.i ], [ %i.ed, %bb.z ]
-  %.3.i128.i.i = phi i64 [ %i.ek, %zisofs_extract_init.exit.zisofs_extract_init.exit.thread126_crit_edge.i.i ], [ %.157.i.i.i, %bb.z ] ; 2 uses
-  %i.eo = and i8 %4, 1
+zisofs_extract_init.exit.thread126.i.i:           ; preds = %bb.ab, %bb.aa, %bb.z
+  %2 = phi i8 [ %.pre156.i.i, %bb.aa ], [ %i.ed, %bb.z ], [ %i.en, %bb.ab ]
+  %.3.i.i.i = phi i64 [ %i.ek, %bb.aa ], [ %.157.i.i.i, %bb.z ], [ %i.ek, %bb.ab ] ; 2 uses
+  %i.eo = and i8 %2, 1
   %.not114.i.i = icmp eq i8 %i.eo, 0
   br i1 %.not114.i.i, label %zisofs_extract.exit.thread84.i, label %bb.ac
 
@@ -610,13 +602,13 @@ zisofs_extract.exit.thread84.i:                   ; preds = %zisofs_extract_init
   br label %bb.av
 
 bb.ac:                                            ; preds = %zisofs_extract_init.exit.thread126.i.i
-  %i.es = sub nsw i64 %i.ct, %.3.i128.i.i
+  %i.es = sub nsw i64 %i.ct, %.3.i.i.i
   %i.et = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.es
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.o
   %.1106.i.i = phi ptr [ %i.et, %bb.ac ], [ %i.bv, %bb.o ] ; 2 uses
-  %.1100.i.i = phi i64 [ %.3.i128.i.i, %bb.ac ], [ %i.ct, %bb.o ] ; 5 uses
+  %.1100.i.i = phi i64 [ %.3.i.i.i, %bb.ac ], [ %i.ct, %bb.o ] ; 5 uses
   %i.eu = load i32, ptr %i.ch, align 8, !tbaa !138 ; 2 uses
   %i.ev = icmp eq i32 %i.eu, 0
   br i1 %i.ev, label %bb.ae, label %.thread137.i.i
@@ -730,7 +722,7 @@ wb_consume.exit.i.i:                              ; preds = %bb.ar
   br i1 %i.gd, label %wb_write_padding_to_temp.exit.thread.i, label %wb_consume.exit.thread141.i.i
 
 wb_consume.exit.thread141.i.i:                    ; preds = %wb_consume.exit.i.i, %bb.ar
-  %i.ge = sub i64 %.096153.i.i, %..096.i.i        ; 2 uses
+  %i.ge = sub nuw i64 %.096153.i.i, %..096.i.i    ; 2 uses
   %.not119.i.i = icmp eq i64 %i.ge, 0
   br i1 %.not119.i.i, label %zisofs_extract.exit.i, label %.lr.ph.i.i, !llvm.loop !143
 
@@ -807,9 +799,8 @@ bb.av:                                            ; preds = %zisofs_extract.exit
   %.not.i = icmp eq i64 %i.cx, 0
   br i1 %.not.i, label %.thread.thread178.i, label %bb.n
 
-.thread.i:                                        ; preds = %zisofs_extract.exit.i, %zisofs_extract_init.exit.i.i
-  %.lcssa194.sink.i.ph = phi i64 [ %i.ek, %zisofs_extract_init.exit.i.i ], [ %i.hk, %zisofs_extract.exit.i ]
-  %i.hm = trunc i64 %.lcssa194.sink.i.ph to i32   ; 2 uses
+.thread.i:                                        ; preds = %zisofs_extract.exit.i
+  %i.hm = trunc i64 %i.hk to i32                  ; 2 uses
   %i.hn = icmp eq i32 %i.hm, 0
   br i1 %i.hn, label %.thread.thread178.i, label %wb_write_padding_to_temp.exit.thread.i
 
@@ -837,8 +828,8 @@ wb_write_padding_to_temp.exit.i:                  ; preds = %.thread.thread178.i
   %spec.select89.i = select i1 %i.hw, i32 -30, i32 0
   br label %wb_write_padding_to_temp.exit.thread.i
 
-wb_write_padding_to_temp.exit.thread.i:           ; preds = %wb_consume.exit123.i.i, %wb_consume.exit.i.i, %wb_consume.exit123.thread.i.i, %bb.as, %bb.y, %bb.ao, %bb.r, %bb.t, %bb.af, %bb.ah, %bb.aj, %wb_consume.exit.thread.i.i, %wb_write_padding_to_temp.exit.i, %.thread.thread178.i, %.thread.i, %.thread.thread.i.a
-  %.3.i = phi i32 [ %i.hm, %.thread.i ], [ 0, %.thread.thread178.i ], [ %spec.select89.i, %wb_write_padding_to_temp.exit.i ], [ -30, %.thread.thread.i.a ], [ -30, %wb_consume.exit.thread.i.i ], [ -30, %bb.aj ], [ -30, %bb.ah ], [ -30, %bb.af ], [ -30, %bb.t ], [ -30, %bb.r ], [ -30, %bb.ao ], [ -30, %bb.y ], [ -30, %bb.as ], [ -30, %wb_consume.exit123.thread.i.i ], [ %i.gc, %wb_consume.exit.i.i ], [ %i.hf, %wb_consume.exit123.i.i ] ; 2 uses
+wb_write_padding_to_temp.exit.thread.i:           ; preds = %wb_consume.exit123.i.i, %wb_consume.exit.i.i, %wb_write_padding_to_temp.exit.i, %.thread.thread178.i, %.thread.i, %wb_consume.exit123.thread.i.i, %bb.as, %wb_consume.exit.thread.i.i, %bb.ao, %bb.aj, %bb.ah, %bb.af, %bb.y, %bb.t, %bb.r, %.thread.thread.i.a
+  %.3.i = phi i32 [ %i.hm, %.thread.i ], [ -30, %.thread.thread.i.a ], [ %spec.select89.i, %wb_write_padding_to_temp.exit.i ], [ 0, %.thread.thread178.i ], [ -30, %bb.ao ], [ -30, %wb_consume.exit.thread.i.i ], [ -30, %bb.aj ], [ -30, %bb.ah ], [ -30, %bb.af ], [ -30, %bb.t ], [ -30, %bb.r ], [ -30, %bb.y ], [ %i.gc, %wb_consume.exit.i.i ], [ -30, %bb.as ], [ -30, %wb_consume.exit123.thread.i.i ], [ %i.hf, %wb_consume.exit123.i.i ] ; 2 uses
   call void @free(ptr noundef %i.bv) #23
   %i.hx = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !133
@@ -1241,7 +1232,7 @@ wb_consume.exit50.wb_consume.exit50.thread_crit_edge: ; preds = %wb_consume.exit
 wb_consume.exit50.thread:                         ; preds = %wb_consume.exit50.wb_consume.exit50.thread_crit_edge, %bb.g
   %i.x = phi i64 [ %.pre, %wb_consume.exit50.wb_consume.exit50.thread_crit_edge ], [ %i.u, %bb.g ]
   %.val = phi ptr [ %.val.pre, %wb_consume.exit50.wb_consume.exit50.thread_crit_edge ], [ %i.p, %bb.g ]
-  %i.y = sub i64 %1, %i.d
+  %i.y = sub nuw i64 %1, %i.d
   %i.z = getelementptr inbounds nuw i8, ptr %.val, i64 732
   %i.aa = sub i64 65536, %i.x
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.aa ; 2 uses
@@ -1286,7 +1277,7 @@ bb.k:                                             ; preds = %bb.j
 wb_consume.exit53:                                ; preds = %bb.j, %bb.k
   %.0.i52 = phi i32 [ 0, %bb.j ], [ %i.ap, %bb.k ] ; 2 uses
   %.not46 = icmp eq i32 %.0.i52, 0
-  %i.aq = sub i64 %.035, %spec.select
+  %i.aq = sub nuw i64 %.035, %spec.select
   br i1 %.not46, label %bb.h, label %wb_consume.exit, !llvm.loop !259
 
 wb_consume.exit:                                  ; preds = %bb.h, %wb_consume.exit53, %wb_consume.exit53.thread, %wb_consume.exit50.thread56, %bb.e, %bb.d, %bb.c, %wb_consume.exit50
@@ -1689,7 +1680,7 @@ bb.g:                                             ; preds = %.lr.ph
   br i1 %i.aj, label %.backedge, label %.thread
 
 .backedge:                                        ; preds = %bb.g, %.split
-  %.137.be = sub i64 %.13765, %spec.select        ; 2 uses
+  %.137.be = sub nuw i64 %.13765, %spec.select    ; 2 uses
   %.240.be = getelementptr inbounds nuw i8, ptr %.24064, i64 %spec.select
   %.not47 = icmp eq i64 %.137.be, 0
   br i1 %.not47, label %.thread, label %.lr.ph, !llvm.loop !119

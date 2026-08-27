@@ -205,11 +205,11 @@ middle.block:                                     ; preds = %vector.body
   %scevgep = getelementptr i8, ptr %i.f, i64 %i.aq
   %i.ar = shl nuw nsw i64 %indvar199, 2
   %i.as = add nuw nsw i64 %i.ar, 8
-  %i.at = sub nsw i64 %i.ad, %indvars.iv208       ; 4 uses
+  %i.at = sub nuw nsw i64 %i.ad, %indvars.iv208   ; 3 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv208 ; 2 uses
-  %3 = icmp slt i64 %i.at, 6                      ; 2 uses
-  %4 = trunc i64 %i.at to i32
-  %i.av = add i32 %4, -6                          ; 3 uses
+  %3 = trunc nuw nsw i64 %i.at to i32             ; 4 uses
+  %4 = icmp samesign ult i64 %i.at, 6             ; 2 uses
+  %i.av = add nsw i32 %3, -6                      ; 3 uses
   %i.aw = shl nuw i32 1, %i.av
   %i.ax = trunc nuw nsw i64 %indvars.iv208 to i32 ; 2 uses
   %i.ay = shl nuw nsw i32 1, %i.ax
@@ -217,15 +217,14 @@ middle.block:                                     ; preds = %vector.body
   %i.az = sext i32 %i.aw to i64
   %i.ba = shl nsw i64 %i.az, 3                    ; 4 uses
   %wide.trip.count144.i = zext nneg i32 %i.ay to i64 ; 4 uses
-  %5 = trunc nsw i64 %i.at to i32                 ; 3 uses
-  %i.bb = shl nuw nsw i32 1, %5
+  %i.bb = shl nuw nsw i32 1, %3
   %i.bc = zext nneg i32 %i.bb to i64
   %notmask.i = shl nsw i64 -1, %i.bc
   %i.bd = xor i64 %notmask.i, -1                  ; 2 uses
-  %i.be = sub nsw i64 6, %i.at                    ; 2 uses
+  %i.be = sub nuw nsw i64 6, %i.at                ; 2 uses
   %.not68190 = icmp samesign ult i64 %indvars.iv208, 3
-  %i.bf = trunc nsw i64 %i.be to i32
-  %i.bg = trunc nsw i64 %i.be to i32
+  %i.bf = trunc nuw nsw i64 %i.be to i32
+  %i.bg = trunc nuw nsw i64 %i.be to i32
   %xtraiter = and i64 %indvars.iv208, 1
   %unroll_iter = and i64 %indvars.iv208, 9223372036854775806
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -281,7 +280,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
 Dau_DecMoveFreeToLSB.exit.loopexit.preheader:     ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.g, ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i64 %i.as, i1 false), !tbaa !8
   %i.bv = load ptr, ptr %i.au, align 8, !tbaa !62 ; 2 uses
-  br i1 %3, label %.preheader134.i, label %.preheader118.i
+  br i1 %4, label %.preheader134.i, label %.preheader118.i
 
 .preheader134.i:                                  ; preds = %Dau_DecMoveFreeToLSB.exit.loopexit.preheader
   br i1 %.not134.i, label %.lr.ph.i71.preheader, label %.lr.ph144.i
@@ -295,7 +294,7 @@ Dau_DecMoveFreeToLSB.exit.loopexit.preheader:     ; preds = %bb.c
   %i.bz = sext i32 %i.by to i64
   %i.ca = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.bz
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !9
-  %i.cc = shl i32 %.0105141.i, %5
+  %i.cc = shl i32 %.0105141.i, %3
   %i.cd = and i32 %i.cc, 63
   %i.ce = zext nneg i32 %i.cd to i64
   %i.cf = lshr i64 %i.cb, %i.ce
@@ -596,7 +595,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   %i.gn = phi ptr [ %i.eq, %Dau_DecCreateSet.exit83 ], [ %i.ep, %bb.u ]
   %i.go = phi ptr [ %i.er, %Dau_DecCreateSet.exit83 ], [ %i.ep, %bb.u ]
   %i.gp = load ptr, ptr %i.au, align 8, !tbaa !62 ; 2 uses
-  br i1 %3, label %.new337, label %.new
+  br i1 %4, label %.new337, label %.new
 
 .new337:                                          ; preds = %.loopexit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
@@ -658,7 +657,7 @@ bb.v:                                             ; preds = %bb.ab, %.lr.ph139.i
   %i.hf = sext i32 %i.he to i64
   %i.hg = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.hf
   %i.hh = load i64, ptr %i.hg, align 8, !tbaa !9
-  %i.hi = shl i32 %.0105141.i154, %5
+  %i.hi = shl i32 %.0105141.i154, %3
   %i.hj = and i32 %i.hi, 63
   %i.hk = zext nneg i32 %i.hj to i64
   %i.hl = lshr i64 %i.hh, %i.hk

@@ -202,7 +202,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.ig = sub i64 %i.hz, %i.if
   %i.ih = trunc i64 %i.ig to i32
   %i.ii = call i32 @llvm.umin.i32(i32 %.038119.i.i, i32 %i.ih)
-  %i.ij = zext i32 %i.ii to i64                   ; 3 uses
+  %i.ij = zext i32 %i.ii to i64                   ; 2 uses
   %i.ik = getelementptr inbounds nuw i8, ptr %.sroa.077.1.i.i, i64 %i.ij ; 11 uses
   %i.il = getelementptr inbounds i8, ptr %i.ik, i64 -1
   %i.im = load i8, ptr %i.il, align 1, !tbaa !17
@@ -217,14 +217,12 @@ bb.ay:                                            ; preds = %.critedge.i.i
   br i1 %.not52.i.i, label %.critedge2.i.i, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.ip = ptrtoint ptr %i.ik to i64               ; 4 uses
+  %i.ip = ptrtoint ptr %i.ik to i64               ; 3 uses
   %i.iq = lshr i64 %i.ij, 2                       ; 3 uses
   %.not93.i.i = icmp eq i64 %i.iq, 0
   br i1 %.not93.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.preheader.i.i.i.i
 
 .lr.ph.i.preheader.i.i.i.i:                       ; preds = %bb.az
-  %18 = and i64 %i.ij, 4294967292
-  %19 = sub i64 %i.ip, %18
   %i.ir = mul nsw i64 %i.iq, -4
   %scevgep.i.i.i.i = getelementptr i8, ptr %i.ik, i64 %i.ir
   br label %.lr.ph.i.i.i.i.i
@@ -275,11 +273,11 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.be
   %i.jk = add nsw i64 %.031.i.i.i.i.i, -1
   %i.jl = icmp sgt i64 %.031.i.i.i.i.i, 1
-  %i.jm = ptrtoint ptr %i.jg to i64
+  %i.jm = ptrtoint ptr %i.jg to i64               ; 2 uses
   br i1 %i.jl, label %.lr.ph.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, !llvm.loop !233
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %bb.bg, %bb.az
-  %i.jn = phi i64 [ %i.ip, %bb.az ], [ %19, %bb.bg ] ; 5 uses
+  %i.jn = phi i64 [ %i.ip, %bb.az ], [ %i.jm, %bb.bg ] ; 5 uses
   %i.jo = phi ptr [ %i.ik, %bb.az ], [ %scevgep.i.i.i.i, %bb.bg ] ; 2 uses
   %i.jp = sub i64 %i.jn, %i.if
   switch i64 %i.jp, label %_ZSt4findISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEcET_SD_SD_RKT0_.exit.i.i [

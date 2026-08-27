@@ -205,9 +205,9 @@ bb.bv:                                            ; preds = %bb.bu
   br label %_ZL9hb_memcpyPvPKvm.exit.i
 
 _ZL9hb_memcpyPvPKvm.exit.i:                       ; preds = %bb.bu, %bb.bv
-  %i.ls = sub nsw i32 %.sroa.speculated.i.i, %i.lk
-  %i.lt = mul nsw i32 %i.ls, 12
-  %i.lu = zext i32 %i.lt to i64
+  %i.ls = sub nuw nsw i32 %.sroa.speculated.i.i, %i.lk
+  %i.lt = mul nuw nsw i32 %i.ls, 12
+  %i.lu = zext nneg i32 %i.lt to i64
   %i.lv = load ptr, ptr %i.en, align 8, !tbaa !30
   %i.lw = getelementptr inbounds nuw [12 x i8], ptr %i.lv, i64 %i.ll
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.lw, ptr nonnull readonly align 4 %i.fa, i64 range(i64 0, 51539607541) %i.lu, i1 false), !alias.scope !61
@@ -610,7 +610,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZL9hb_memcpyPvPKvm.exit
 
 _ZL9hb_memcpyPvPKvm.exit:                         ; preds = %bb.d, %bb.e
-  %i.n = sub nsw i32 %.8.val, %i.d
+  %i.n = sub nuw nsw i32 %.8.val, %i.d
   %i.o = shl i32 %i.n, 2                          ; 2 uses
   %.not.i25 = icmp eq i32 %i.o, 0
   br i1 %.not.i25, label %_ZL9hb_memcpyPvPKvm.exit26, label %bb.f, !prof !12
@@ -1013,14 +1013,13 @@ _ZL9hb_memcpyPvPKvm.exit.thread:                  ; preds = %bb.h
 _ZL9hb_memcpyPvPKvm.exit:                         ; preds = %bb.h
   %i.y = sub nsw i32 0, %1
   %i.z = urem i32 %i.y, %i.b                      ; 2 uses
-  %i.aa = sub nsw i32 %i.b, %i.z                  ; 3 uses
+  %i.aa = sub nuw nsw i32 %i.b, %i.z              ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %3 = sext i32 %i.aa to i64                      ; 2 uses
-  %i.ac = zext i32 %i.aa to i64
+  %i.ac = zext nneg i32 %i.aa to i64              ; 3 uses
   %i.ad = load ptr, ptr %0, align 8, !tbaa !66
   %i.ae = zext nneg i32 %i.b to i64
   %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 %i.ae
-  %i.ag = sub nsw i64 0, %3
+  %i.ag = sub nsw i64 0, %i.ac
   %i.ah = getelementptr inbounds i8, ptr %i.af, i64 %i.ag
   %i.ai = load ptr, ptr %i.ab, align 8, !tbaa !18
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ai, ptr nonnull readonly align 1 %i.ah, i64 range(i64 0, 51539607541) %i.ac, i1 false), !alias.scope !160
@@ -1030,12 +1029,12 @@ _ZL9hb_memcpyPvPKvm.exit:                         ; preds = %bb.h
 bb.i:                                             ; preds = %_ZL9hb_memcpyPvPKvm.exit.thread, %_ZL9hb_memcpyPvPKvm.exit
   %.0223041 = phi i32 [ 0, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %i.aa, %_ZL9hb_memcpyPvPKvm.exit ]
   %i.aj = phi ptr [ %i.x, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %i.ab, %_ZL9hb_memcpyPvPKvm.exit ]
-  %i.ak = phi i64 [ 0, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %3, %_ZL9hb_memcpyPvPKvm.exit ]
-  %i.al = sub i32 %i.b, %.0223041
+  %i.ak = phi i64 [ 0, %_ZL9hb_memcpyPvPKvm.exit.thread ], [ %i.ac, %_ZL9hb_memcpyPvPKvm.exit ]
+  %i.al = sub nsw i32 %i.b, %.0223041
   %i.am = zext i32 %i.al to i64
   %i.an = load ptr, ptr %0, align 8, !tbaa !66
   %i.ao = load ptr, ptr %i.aj, align 8, !tbaa !18
-  %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 %i.ak
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ak
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ap, ptr readonly align 1 %i.an, i64 range(i64 0, 51539607541) %i.am, i1 false), !alias.scope !165
   br label %_ZL9hb_memcpyPvPKvm.exit26
 

@@ -202,13 +202,17 @@ bb.v:                                             ; preds = %.tail256.i
 
 bb.w:                                             ; preds = %bb.v
   %i.co = trunc nuw nsw i64 %i.cl to i32
-  %i.cp = sub nsw i32 %spec.store.select.i, %i.co ; 5 uses
+  %i.cp = sub nuw nsw i32 %spec.store.select.i, %i.co ; 5 uses
   %.not.i.i.i = icmp slt i32 %i.q, %i.cp
-  br i1 %.not.i.i.i, label %bb.x, label %Vec_StrGrow.exit.i.i
+  br i1 %.not.i.i.i, label %bb.x, label %.Vec_StrGrow.exit.i_crit_edge.i
+
+.Vec_StrGrow.exit.i_crit_edge.i:                  ; preds = %bb.w
+  %.pre342.i = zext nneg i32 %i.cp to i64
+  br label %Vec_StrGrow.exit.i.i
 
 bb.x:                                             ; preds = %bb.w
   %.not9.i.i.i = icmp eq ptr %i.r, null
-  %2 = sext i32 %i.cp to i64                      ; 2 uses
+  %2 = zext nneg i32 %i.cp to i64                 ; 3 uses
   br i1 %.not9.i.i.i, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
@@ -225,10 +229,11 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   store i32 %i.cp, ptr %i.h, align 8, !tbaa !28
   br label %Vec_StrGrow.exit.i.i
 
-Vec_StrGrow.exit.i.i:                             ; preds = %bb.aa, %bb.w
-  %i.ct = phi ptr [ %i.cs, %bb.aa ], [ %i.r, %bb.w ]
+Vec_StrGrow.exit.i.i:                             ; preds = %bb.aa, %.Vec_StrGrow.exit.i_crit_edge.i
+  %.pre-phi.i = phi i64 [ %.pre342.i, %.Vec_StrGrow.exit.i_crit_edge.i ], [ %2, %bb.aa ]
+  %i.ct = phi ptr [ %i.r, %.Vec_StrGrow.exit.i_crit_edge.i ], [ %i.cs, %bb.aa ]
   store i32 %i.cp, ptr %i.i, align 4, !tbaa !26
-  %umax.i = zext i32 %i.cp to i64
+  %umax.i = call i64 @llvm.umax.i64(i64 %.pre-phi.i, i64 1)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.ct, i8 48, i64 %umax.i, i1 false), !tbaa !40
   %i.cu = call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.ci) #15 ; 2 uses
   %i.cv = trunc i64 %i.cu to i32
@@ -630,6 +635,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12

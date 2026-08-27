@@ -202,14 +202,14 @@ bb.av:                                            ; preds = %_ZN7QStringD2Ev.exi
           to label %_ZN13DataSourceTab2trEPKcS1_i.exit183 unwind label %bb.bj
 
 _ZN13DataSourceTab2trEPKcS1_i.exit183:            ; preds = %bb.av
-  %i.el = sub nsw i32 %i.h, %.150
-  %22 = sext i32 %i.el to i64
+  %i.el = sub nuw nsw i32 %i.h, %.150
+  %22 = zext nneg i32 %i.el to i64
   invoke void @_ZNK7QString3argExii5QChar(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %18, ptr noundef nonnull align 8 dereferenceable_or_null(24) %19, i64 noundef %22, i32 noundef 0, i32 noundef 10, i16 32)
           to label %_ZNK7QString3argEiii5QChar.exit184 unwind label %bb.bk
 
 _ZNK7QString3argEiii5QChar.exit184:               ; preds = %_ZN13DataSourceTab2trEPKcS1_i.exit183
-  %i.em = sub nsw i32 %1, %.150
-  %23 = sext i32 %i.em to i64
+  %i.em = sub nuw nsw i32 %1, %.150
+  %23 = zext nneg i32 %i.em to i64
   invoke void @_ZNK7QString3argExii5QChar(ptr dead_on_unwind nonnull writable sret(%class.QString) align 8 %17, ptr noundef nonnull align 8 dereferenceable_or_null(24) %18, i64 noundef %23, i32 noundef 0, i32 noundef 10, i16 32)
           to label %_ZNK7QString3argEiii5QChar.exit185 unwind label %bb.bl
 
@@ -612,8 +612,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %or.cond45, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %bb.r
-  %i.ck = sub nsw i32 %i.bk, %i.cf
-  %.sroa.speculated = call i32 @llvm.smin.i32(i32 %i.ci, i32 %i.ck)
+  %i.ck = sub nuw nsw i32 %i.bk, %i.cf
+  %.sroa.speculated = call i32 @llvm.umin.i32(i32 %i.ci, i32 %i.ck)
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   store i32 0, ptr %i.ah, align 8
   store i16 -1, ptr %i.ai, align 4
@@ -1015,6 +1015,9 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #22
 
 attributes #0 = { mustprogress null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

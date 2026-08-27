@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.o, label %bb.by, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = ptrtoint ptr %3 to i64
+  %i.p = ptrtoint ptr %3 to i64                   ; 2 uses
   %i.q = ptrtoint ptr %i.n to i64                 ; 4 uses
   %i.r = sub i64 %i.p, %i.q                       ; 3 uses
   %i.s = add i64 %2, -2                           ; 6 uses
@@ -302,9 +302,9 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.an, label %.lr.ph, label %.thread
 
 .thread:                                          ; preds = %.thread451, %bb.q, %.preheader338
-  %.0232.lcssa.idx = phi i64 [ 0, %.preheader338 ], [ %.0232352.idx, %bb.q ], [ %.0232352.add, %.thread451 ] ; 2 uses
+  %.0232.lcssa.idx = phi i64 [ 0, %.preheader338 ], [ %.0232352.idx, %bb.q ], [ %.0232352.add, %.thread451 ] ; 3 uses
   %.0232.lcssa.ptr = getelementptr inbounds nuw i8, ptr %3, i64 %.0232.lcssa.idx ; 15 uses
-  %i.ao = ptrtoint ptr %.0232.lcssa.ptr to i64    ; 3 uses
+  %i.ao = ptrtoint ptr %.0232.lcssa.ptr to i64
   %i.ap = sub i64 %i.ao, %i.q                     ; 5 uses
   %.not274 = icmp ult i64 %i.ap, %i.s
   br i1 %.not274, label %bb.r, label %bb.by
@@ -334,6 +334,7 @@ bb.u:                                             ; preds = %bb.t
   %i.aw = tail call ptr @__ctype_b_loc() #14      ; 2 uses
   %i.ax = getelementptr inbounds i8, ptr %.0232.lcssa.ptr, i64 -3
   %i.ay = getelementptr inbounds nuw i8, ptr %i.at, i64 8 ; 3 uses
+  %5 = add nuw i64 %.0232.lcssa.idx, %i.p         ; 2 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %.lr.ph394, %bb.bw
@@ -370,7 +371,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.bi, label %.lr.ph361, label %.critedge7
 
 .lr.ph361:                                        ; preds = %.preheader336
-  %scevgep = getelementptr i8, ptr %.1242.lcssa, i64 %i.ao
+  %scevgep = getelementptr i8, ptr %.1242.lcssa, i64 %5
   %i.bj = sub i64 0, %.1242.lcssa418
   %scevgep419 = getelementptr i8, ptr %scevgep, i64 %i.bj
   br label %bb.y
@@ -496,7 +497,7 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai
 .lr.ph385:                                        ; preds = %.loopexit
   %i.ct = ptrtoaddr ptr %i.cr to i64
   %i.cu = load ptr, ptr %i.aw, align 8, !tbaa !15
-  %scevgep420 = getelementptr i8, ptr %i.cr, i64 %i.ao
+  %scevgep420 = getelementptr i8, ptr %i.cr, i64 %5
   %i.cv = sub i64 0, %i.ct
   %scevgep421 = getelementptr i8, ptr %scevgep420, i64 %i.cv ; 2 uses
   br label %bb.ak

@@ -205,10 +205,10 @@ bb.k:                                             ; preds = %.lr.ph.i
   br i1 %i.cc, label %.lr.ph.i.i, label %fasthuf_read_bits.exit.i, !llvm.loop !67
 
 fasthuf_read_bits.exit.i:                         ; preds = %.lr.ph.i.i, %bb.k
-  %.6204.i = phi ptr [ %.0198231.i, %bb.k ], [ %i.bx, %.lr.ph.i.i ] ; 6 uses
+  %.6204.i = phi ptr [ %.0198231.i, %bb.k ], [ %i.bx, %.lr.ph.i.i ] ; 7 uses
   %.5.i = phi i64 [ %.0193232.i, %bb.k ], [ %i.ca, %.lr.ph.i.i ] ; 6 uses
-  %.lcssa.i.i = phi i32 [ %.0190233.i, %bb.k ], [ %i.cb, %.lr.ph.i.i ] ; 2 uses
-  %i.cd = add nsw i32 %.lcssa.i.i, -6             ; 6 uses
+  %.lcssa.i.i = phi i32 [ %.0190233.i, %bb.k ], [ %i.cb, %.lr.ph.i.i ] ; 3 uses
+  %i.cd = add nsw i32 %.lcssa.i.i, -6             ; 5 uses
   %i.ce = zext nneg i32 %i.cd to i64
   %i.cf = lshr i64 %.5.i, %i.ce
   %i.cg = and i64 %i.cf, 63                       ; 9 uses
@@ -264,23 +264,19 @@ bb.u:                                             ; preds = %bb.s
   %i.cv = icmp samesign ult i32 %.lcssa.i.i, 14
   br i1 %i.cv, label %.lr.ph.i167.i, label %fasthuf_read_bits.exit169.i
 
-.lr.ph.i167.i:                                    ; preds = %bb.u, %.lr.ph.i167.i
-  %7 = phi ptr [ %i.cx, %.lr.ph.i167.i ], [ %.6204.i, %bb.u ] ; 2 uses
-  %8 = phi i64 [ %i.da, %.lr.ph.i167.i ], [ %.5.i, %bb.u ]
-  %9 = phi i32 [ %i.db, %.lr.ph.i167.i ], [ %i.cd, %bb.u ] ; 2 uses
-  %i.cw = shl i64 %8, 8
-  %i.cx = getelementptr inbounds nuw i8, ptr %7, i64 1 ; 2 uses
-  %i.cy = load i8, ptr %7, align 1, !tbaa !28
+.lr.ph.i167.i:                                    ; preds = %bb.u
+  %i.cw = shl i64 %.5.i, 8
+  %i.cx = getelementptr inbounds nuw i8, ptr %.6204.i, i64 1
+  %i.cy = load i8, ptr %.6204.i, align 1, !tbaa !28
   %i.cz = zext i8 %i.cy to i64
-  %i.da = or disjoint i64 %i.cw, %i.cz            ; 2 uses
-  %i.db = add nsw i32 %9, 8                       ; 2 uses
-  %10 = icmp slt i32 %9, 0
-  br i1 %10, label %.lr.ph.i167.i, label %fasthuf_read_bits.exit169.i, !llvm.loop !67
+  %i.da = or disjoint i64 %i.cw, %i.cz
+  %i.db = add nuw nsw i32 %.lcssa.i.i, 2
+  br label %fasthuf_read_bits.exit169.i, !llvm.loop !67
 
 fasthuf_read_bits.exit169.i:                      ; preds = %.lr.ph.i167.i, %bb.u
-  %.7205.i = phi ptr [ %.6204.i, %bb.u ], [ %i.cx, %.lr.ph.i167.i ]
-  %.6.i = phi i64 [ %.5.i, %bb.u ], [ %i.da, %.lr.ph.i167.i ] ; 2 uses
-  %.lcssa.i166.i = phi i32 [ %i.cd, %bb.u ], [ %i.db, %.lr.ph.i167.i ]
+  %.7205.i = phi ptr [ %i.cx, %.lr.ph.i167.i ], [ %.6204.i, %bb.u ]
+  %.6.i = phi i64 [ %i.da, %.lr.ph.i167.i ], [ %.5.i, %bb.u ] ; 2 uses
+  %.lcssa.i166.i = phi i32 [ %i.db, %.lr.ph.i167.i ], [ %i.cd, %bb.u ]
   %i.dc = add nsw i32 %.lcssa.i166.i, -8          ; 2 uses
   %i.dd = zext nneg i32 %i.dc to i64
   %i.de = lshr i64 %.6.i, %i.dd
@@ -446,7 +442,7 @@ middle.block266:                                  ; preds = %vector.body263
 
 ._crit_edge.i:                                    ; preds = %.lr.ph245.i.prol.loopexit, %.lr.ph245.i, %.lr.ph249.i
   %.0125.lcssa.i = phi double [ 0.000000e+00, %.lr.ph249.i ], [ %.lcssa298.unr, %.lr.ph245.i.prol.loopexit ], [ %i.gk, %.lr.ph245.i ]
-  %i.fa = sub nsw i64 %.pre181, %indvars.iv293.i
+  %i.fa = sub nuw nsw i64 %.pre181, %indvars.iv293.i
   %i.fb = shl i64 2, %i.fa
   %i.fc = sitofp i64 %i.fb to double
   %i.fd = fdiv double %.0125.lcssa.i, %i.fc
@@ -599,10 +595,10 @@ bb.ab:                                            ; preds = %bb.aj, %.lr.ph266.i
   br i1 %i.hy, label %.lr.ph.i172.i, label %fasthuf_read_bits.exit174.i, !llvm.loop !67
 
 fasthuf_read_bits.exit174.i:                      ; preds = %.lr.ph.i172.i, %bb.ab
-  %.8206.i = phi ptr [ %.3201261.i, %bb.ab ], [ %i.ht, %.lr.ph.i172.i ] ; 5 uses
+  %.8206.i = phi ptr [ %.3201261.i, %bb.ab ], [ %i.ht, %.lr.ph.i172.i ] ; 6 uses
   %.7.i = phi i64 [ %.3196262.i, %bb.ab ], [ %i.hw, %.lr.ph.i172.i ] ; 6 uses
-  %.lcssa.i171.i = phi i32 [ %.3263.i, %bb.ab ], [ %i.hx, %.lr.ph.i172.i ] ; 2 uses
-  %i.hz = add nsw i32 %.lcssa.i171.i, -6          ; 6 uses
+  %.lcssa.i171.i = phi i32 [ %.3263.i, %bb.ab ], [ %i.hx, %.lr.ph.i172.i ] ; 3 uses
+  %i.hz = add nsw i32 %.lcssa.i171.i, -6          ; 5 uses
   %i.ia = zext nneg i32 %i.hz to i64
   %i.ib = lshr i64 %.7.i, %i.ia
   %i.ic = and i64 %i.ib, 63                       ; 5 uses
@@ -639,23 +635,19 @@ bb.ah:                                            ; preds = %bb.ag
   %i.il = icmp samesign ult i32 %.lcssa.i171.i, 14
   br i1 %i.il, label %.lr.ph.i177.i, label %fasthuf_read_bits.exit179.i
 
-.lr.ph.i177.i:                                    ; preds = %bb.ah, %.lr.ph.i177.i
-  %11 = phi ptr [ %i.in, %.lr.ph.i177.i ], [ %.8206.i, %bb.ah ] ; 2 uses
-  %12 = phi i64 [ %i.iq, %.lr.ph.i177.i ], [ %.7.i, %bb.ah ]
-  %13 = phi i32 [ %i.ir, %.lr.ph.i177.i ], [ %i.hz, %bb.ah ] ; 2 uses
-  %i.im = shl i64 %12, 8
-  %i.in = getelementptr inbounds nuw i8, ptr %11, i64 1 ; 2 uses
-  %i.io = load i8, ptr %11, align 1, !tbaa !28
+.lr.ph.i177.i:                                    ; preds = %bb.ah
+  %i.im = shl i64 %.7.i, 8
+  %i.in = getelementptr inbounds nuw i8, ptr %.8206.i, i64 1
+  %i.io = load i8, ptr %.8206.i, align 1, !tbaa !28
   %i.ip = zext i8 %i.io to i64
-  %i.iq = or disjoint i64 %i.im, %i.ip            ; 2 uses
-  %i.ir = add nsw i32 %13, 8                      ; 2 uses
-  %14 = icmp slt i32 %13, 0
-  br i1 %14, label %.lr.ph.i177.i, label %fasthuf_read_bits.exit179.i, !llvm.loop !67
+  %i.iq = or disjoint i64 %i.im, %i.ip
+  %i.ir = add nuw nsw i32 %.lcssa.i171.i, 2
+  br label %fasthuf_read_bits.exit179.i, !llvm.loop !67
 
 fasthuf_read_bits.exit179.i:                      ; preds = %.lr.ph.i177.i, %bb.ah
-  %.9.i = phi ptr [ %.8206.i, %bb.ah ], [ %i.in, %.lr.ph.i177.i ]
-  %.8.i = phi i64 [ %.7.i, %bb.ah ], [ %i.iq, %.lr.ph.i177.i ] ; 2 uses
-  %.lcssa.i176.i = phi i32 [ %i.hz, %bb.ah ], [ %i.ir, %.lr.ph.i177.i ]
+  %.9.i = phi ptr [ %i.in, %.lr.ph.i177.i ], [ %.8206.i, %bb.ah ]
+  %.8.i = phi i64 [ %i.iq, %.lr.ph.i177.i ], [ %.7.i, %bb.ah ] ; 2 uses
+  %.lcssa.i176.i = phi i32 [ %i.ir, %.lr.ph.i177.i ], [ %i.hz, %bb.ah ]
   %i.is = add nsw i32 %.lcssa.i176.i, -8          ; 2 uses
   %i.it = zext nneg i32 %i.is to i64
   %i.iu = lshr i64 %.8.i, %i.it
@@ -1058,7 +1050,7 @@ bb.e:                                             ; preds = %.preheader262
 bb.f:                                             ; preds = %bb.e
   %i.aa = zext nneg i32 %i.w to i64
   %i.ab = shl i64 %.6212, %i.aa
-  %i.ac = sub nsw i32 %.6194, %i.w
+  %i.ac = sub nuw nsw i32 %.6194, %i.w
   br label %FastHufDecoder_refill.exit
 
 bb.g:                                             ; preds = %bb.e
@@ -1292,7 +1284,7 @@ bb.w:                                             ; preds = %.preheader261
 bb.x:                                             ; preds = %bb.w
   %i.do = zext nneg i32 %i.dk to i64
   %i.dp = shl i64 %.11217, %i.do
-  %i.dq = sub nsw i32 %.10198, %i.dk
+  %i.dq = sub nuw nsw i32 %.10198, %i.dk
   br label %FastHufDecoder_refill.exit139
 
 bb.y:                                             ; preds = %bb.w
@@ -1587,7 +1579,7 @@ bb.ao:                                            ; preds = %.preheader
 bb.ap:                                            ; preds = %bb.ao
   %i.hd = zext nneg i32 %i.gz to i64
   %i.he = shl i64 %.16222, %i.hd
-  %i.hf = sub nsw i32 %.14202, %i.gz
+  %i.hf = sub nuw nsw i32 %.14202, %i.gz
   br label %FastHufDecoder_refill.exit155
 
 bb.aq:                                            ; preds = %bb.ao
@@ -1990,7 +1982,7 @@ bb.l:                                             ; preds = %.lr.ph387
 
 bb.m:                                             ; preds = %._crit_edge
   %i.ce = lshr i64 %i.bp, 6
-  %i.cf = sub nsw i32 %.5160.lcssa, %i.br         ; 5 uses
+  %i.cf = sub nuw nsw i32 %.5160.lcssa, %i.br     ; 5 uses
   %i.cg = zext nneg i32 %i.cf to i64
   %i.ch = lshr i64 %.5167.lcssa, %i.cg
   %i.ci = and i64 %i.bp, 63

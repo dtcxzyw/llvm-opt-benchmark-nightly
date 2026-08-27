@@ -202,7 +202,7 @@ bb.f:                                             ; preds = %._crit_edge
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 56
   %i.av = load ptr, ptr %i.au, align 8
   tail call void %i.av(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef %i.ap, i64 noundef %i.as) #26, !inline_history !41
-  %i.aw = sub i64 %.tr34.ph61, %.lcssa124
+  %i.aw = sub nuw i64 %.tr34.ph61, %.lcssa124
   %.pre = load ptr, ptr %i.a, align 8, !tbaa !17
   %.pre84 = load ptr, ptr %i.b, align 8, !tbaa !9 ; 2 uses
   %.pre88 = ptrtoint ptr %.pre to i64
@@ -528,7 +528,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit
 
 bb.g:                                             ; preds = %bb.b
-  %i.t = sub nsw i64 %i.e, %i.b                   ; 6 uses
+  %i.t = sub nuw nsw i64 %i.e, %i.b               ; 9 uses
   switch i32 %i.g, label %bb.x [
     i32 1, label %bb.h
     i32 2, label %bb.m
@@ -563,40 +563,44 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit24
 
 _ZN4llvh11raw_ostreamlsENS_9StringRefE.exit24:    ; preds = %bb.i, %bb.j, %bb.k
-  %2 = trunc i64 %i.t to i32                      ; 2 uses
-  %i.af = icmp ult i32 %2, 80
-  br i1 %i.af, label %bb.l, label %.preheader.i.i
+  %i.af = icmp samesign ult i64 %i.t, 80
+  br i1 %i.af, label %bb.l, label %.preheader.i.i.preheader
+
+.preheader.i.i.preheader:                         ; preds = %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit24
+  %2 = trunc nuw i64 %i.t to i32
+  br label %.preheader.i.i
 
 bb.l:                                             ; preds = %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit24
-  %3 = and i64 %i.t, 127
-  %i.ag = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %3) ; 0 uses
+  %i.ag = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.t) ; 0 uses
   br label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit
 
-.preheader.i.i:                                   ; preds = %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit24, %.preheader.i.i
-  %.01112.i.i = phi i32 [ %i.aj, %.preheader.i.i ], [ %2, %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit24 ] ; 2 uses
+.preheader.i.i:                                   ; preds = %.preheader.i.i.preheader, %.preheader.i.i
+  %.01112.i.i = phi i32 [ %i.aj, %.preheader.i.i ], [ %2, %.preheader.i.i.preheader ] ; 2 uses
   %.sroa.speculated.i.i = tail call i32 @llvm.umin.i32(i32 %.01112.i.i, i32 79) ; 2 uses
   %i.ah = zext nneg i32 %.sroa.speculated.i.i to i64
   %i.ai = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.ah) ; 0 uses
-  %i.aj = sub i32 %.01112.i.i, %.sroa.speculated.i.i ; 2 uses
+  %i.aj = sub nuw i32 %.01112.i.i, %.sroa.speculated.i.i ; 2 uses
   %.not.i.i = icmp eq i32 %i.aj, 0
   br i1 %.not.i.i, label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit, label %.preheader.i.i, !llvm.loop !74
 
 bb.m:                                             ; preds = %bb.g
-  %4 = trunc i64 %i.t to i32                      ; 2 uses
-  %i.ak = icmp ult i32 %4, 80
-  br i1 %i.ak, label %bb.n, label %.preheader.i.i25
+  %i.ak = icmp samesign ult i64 %i.t, 80
+  br i1 %i.ak, label %bb.n, label %.preheader.i.i25.preheader
+
+.preheader.i.i25.preheader:                       ; preds = %bb.m
+  %3 = trunc nuw i64 %i.t to i32
+  br label %.preheader.i.i25
 
 bb.n:                                             ; preds = %bb.m
-  %5 = and i64 %i.t, 127
-  %i.al = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %5) ; 0 uses
+  %i.al = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.t) ; 0 uses
   br label %_ZN4llvh11raw_ostream6indentEj.exit29
 
-.preheader.i.i25:                                 ; preds = %bb.m, %.preheader.i.i25
-  %.01112.i.i26 = phi i32 [ %i.ao, %.preheader.i.i25 ], [ %4, %bb.m ] ; 2 uses
+.preheader.i.i25:                                 ; preds = %.preheader.i.i25.preheader, %.preheader.i.i25
+  %.01112.i.i26 = phi i32 [ %i.ao, %.preheader.i.i25 ], [ %3, %.preheader.i.i25.preheader ] ; 2 uses
   %.sroa.speculated.i.i27 = tail call i32 @llvm.umin.i32(i32 %.01112.i.i26, i32 79) ; 2 uses
   %i.am = zext nneg i32 %.sroa.speculated.i.i27 to i64
   %i.an = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.am) ; 0 uses
-  %i.ao = sub i32 %.01112.i.i26, %.sroa.speculated.i.i27 ; 2 uses
+  %i.ao = sub nuw i32 %.01112.i.i26, %.sroa.speculated.i.i27 ; 2 uses
   %.not.i.i28 = icmp eq i32 %i.ao, 0
   br i1 %.not.i.i28, label %_ZN4llvh11raw_ostream6indentEj.exit29, label %.preheader.i.i25, !llvm.loop !74
 
@@ -630,21 +634,23 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.g
   %i.ba = lshr i64 %i.t, 1                        ; 3 uses
-  %6 = trunc i64 %i.ba to i32                     ; 2 uses
-  %i.bb = icmp ult i32 %6, 80
-  br i1 %i.bb, label %bb.s, label %.preheader.i.i32
+  %i.bb = icmp samesign ult i64 %i.t, 160
+  br i1 %i.bb, label %bb.s, label %.preheader.i.i32.preheader
+
+.preheader.i.i32.preheader:                       ; preds = %bb.r
+  %4 = trunc nuw nsw i64 %i.ba to i32
+  br label %.preheader.i.i32
 
 bb.s:                                             ; preds = %bb.r
-  %7 = and i64 %i.ba, 127
-  %i.bc = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %7) ; 0 uses
+  %i.bc = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.ba) ; 0 uses
   br label %_ZN4llvh11raw_ostream6indentEj.exit36
 
-.preheader.i.i32:                                 ; preds = %bb.r, %.preheader.i.i32
-  %.01112.i.i33 = phi i32 [ %i.bf, %.preheader.i.i32 ], [ %6, %bb.r ] ; 2 uses
+.preheader.i.i32:                                 ; preds = %.preheader.i.i32.preheader, %.preheader.i.i32
+  %.01112.i.i33 = phi i32 [ %i.bf, %.preheader.i.i32 ], [ %4, %.preheader.i.i32.preheader ] ; 2 uses
   %.sroa.speculated.i.i34 = tail call i32 @llvm.umin.i32(i32 %.01112.i.i33, i32 79) ; 2 uses
   %i.bd = zext nneg i32 %.sroa.speculated.i.i34 to i64
   %i.be = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.bd) ; 0 uses
-  %i.bf = sub i32 %.01112.i.i33, %.sroa.speculated.i.i34 ; 2 uses
+  %i.bf = sub nuw nsw i32 %.01112.i.i33, %.sroa.speculated.i.i34 ; 2 uses
   %.not.i.i35 = icmp eq i32 %i.bf, 0
   br i1 %.not.i.i35, label %_ZN4llvh11raw_ostream6indentEj.exit36, label %.preheader.i.i32, !llvm.loop !74
 
@@ -677,22 +683,24 @@ bb.v:                                             ; preds = %bb.u
   br label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit38
 
 _ZN4llvh11raw_ostreamlsENS_9StringRefE.exit38:    ; preds = %bb.t, %bb.u, %bb.v
-  %i.br = sub i64 %i.t, %i.ba                     ; 2 uses
-  %8 = trunc i64 %i.br to i32                     ; 2 uses
-  %i.bs = icmp ult i32 %8, 80
-  br i1 %i.bs, label %bb.w, label %.preheader.i.i39
+  %i.br = sub nuw nsw i64 %i.t, %i.ba             ; 3 uses
+  %i.bs = icmp samesign ult i64 %i.br, 80
+  br i1 %i.bs, label %bb.w, label %.preheader.i.i39.preheader
+
+.preheader.i.i39.preheader:                       ; preds = %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit38
+  %5 = trunc nuw i64 %i.br to i32
+  br label %.preheader.i.i39
 
 bb.w:                                             ; preds = %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit38
-  %9 = and i64 %i.br, 127
-  %i.bt = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %9) ; 0 uses
+  %i.bt = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.br) ; 0 uses
   br label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit
 
-.preheader.i.i39:                                 ; preds = %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit38, %.preheader.i.i39
-  %.01112.i.i40 = phi i32 [ %i.bw, %.preheader.i.i39 ], [ %8, %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit38 ] ; 2 uses
+.preheader.i.i39:                                 ; preds = %.preheader.i.i39.preheader, %.preheader.i.i39
+  %.01112.i.i40 = phi i32 [ %i.bw, %.preheader.i.i39 ], [ %5, %.preheader.i.i39.preheader ] ; 2 uses
   %.sroa.speculated.i.i41 = tail call i32 @llvm.umin.i32(i32 %.01112.i.i40, i32 79) ; 2 uses
   %i.bu = zext nneg i32 %.sroa.speculated.i.i41 to i64
   %i.bv = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.bu) ; 0 uses
-  %i.bw = sub i32 %.01112.i.i40, %.sroa.speculated.i.i41 ; 2 uses
+  %i.bw = sub nuw i32 %.01112.i.i40, %.sroa.speculated.i.i41 ; 2 uses
   %.not.i.i42 = icmp eq i32 %i.bw, 0
   br i1 %.not.i.i42, label %_ZN4llvh11raw_ostreamlsENS_9StringRefE.exit, label %.preheader.i.i39, !llvm.loop !74
 
@@ -719,7 +727,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %.01112.i, i32 79) ; 2 uses
   %i.d = zext nneg i32 %.sroa.speculated.i to i64
   %i.e = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.d) ; 0 uses
-  %i.f = sub i32 %.01112.i, %.sroa.speculated.i   ; 2 uses
+  %i.f = sub nuw i32 %.01112.i, %.sroa.speculated.i ; 2 uses
   %.not.i = icmp eq i32 %i.f, 0
   br i1 %.not.i, label %_ZL13write_paddingILc32EERN4llvh11raw_ostreamES2_j.exit, label %.preheader.i, !llvm.loop !74
 
@@ -804,7 +812,7 @@ bb.h:                                             ; preds = %bb.g
   %.sroa.speculated.i.i = call i32 @llvm.umin.i32(i32 %.01112.i.i, i32 79) ; 2 uses
   %i.ac = zext nneg i32 %.sroa.speculated.i.i to i64
   %i.ad = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc32EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.ac) ; 0 uses
-  %i.ae = sub i32 %.01112.i.i, %.sroa.speculated.i.i ; 2 uses
+  %i.ae = sub nuw i32 %.01112.i.i, %.sroa.speculated.i.i ; 2 uses
   %.not.i.i = icmp eq i32 %i.ae, 0
   br i1 %.not.i.i, label %_ZN4llvh11raw_ostream6indentEj.exit, label %.preheader.i.i, !llvm.loop !74
 
@@ -981,7 +989,7 @@ tailrecurse.i:                                    ; preds = %.lr.ph
 
 bb.i:                                             ; preds = %._crit_edge
   %i.bt = urem i64 %.tr34.ph61.i, %.lcssa162      ; 4 uses
-  %i.bu = sub nuw i64 %.tr34.ph61.i, %i.bt        ; 3 uses
+  %i.bu = sub nuw nsw i64 %.tr34.ph61.i, %i.bt    ; 3 uses
   %i.bv = load ptr, ptr %0, align 8, !tbaa !7
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 56
   %i.bx = load ptr, ptr %i.bw, align 8
@@ -1065,7 +1073,7 @@ _ZN4llvh11raw_ostream14copy_to_bufferEPKcm.exit:  ; preds = %bb.k, %bb.o, %bb.p
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 56
   %i.dc = load ptr, ptr %i.db, align 8
   call void %i.dc(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef %i.cw, i64 noundef %i.cz) #26, !inline_history !100
-  %i.dd = sub i64 %.tr34.ph61.i, %.lcssa162
+  %i.dd = sub nuw nsw i64 %.tr34.ph61.i, %.lcssa162
   %.pre.i = load ptr, ptr %i.ak, align 8, !tbaa !17
   %.pre84.i = load ptr, ptr %i.al, align 8, !tbaa !9 ; 2 uses
   %.pre88.i = ptrtoint ptr %.pre.i to i64
@@ -1128,7 +1136,7 @@ _ZN4llvh11raw_ostream14copy_to_bufferEPKcm.exit.i: ; preds = %bb.u, %bb.t, %tail
   br label %_ZN4llvh11raw_ostream5writeEPKcm.exit
 
 _ZN4llvh11raw_ostream5writeEPKcm.exit:            ; preds = %bb.h, %bb.j, %_ZN4llvh11raw_ostream14copy_to_bufferEPKcm.exit.i
-  %i.dt = sub i32 %.01112.i.i, %.sroa.speculated.i.i ; 2 uses
+  %i.dt = sub nuw i32 %.01112.i.i, %.sroa.speculated.i.i ; 2 uses
   %.not.i.i = icmp eq i32 %i.dt, 0
   br i1 %.not.i.i, label %_ZN4llvh11raw_ostream6indentEj.exit, label %.preheader.i.i, !llvm.loop !74
 
@@ -1285,7 +1293,7 @@ tailrecurse.i134:                                 ; preds = %.lr.ph215
 
 bb.af:                                            ; preds = %._crit_edge216
   %i.gf = urem i64 %.tr34.ph61.i121, %.lcssa181   ; 4 uses
-  %i.gg = sub nuw i64 %.tr34.ph61.i121, %i.gf     ; 3 uses
+  %i.gg = sub nuw nsw i64 %.tr34.ph61.i121, %i.gf ; 3 uses
   %i.gh = load ptr, ptr %0, align 8, !tbaa !7
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 56
   %i.gj = load ptr, ptr %i.gi, align 8
@@ -1369,7 +1377,7 @@ _ZN4llvh11raw_ostream14copy_to_bufferEPKcm.exit136: ; preds = %bb.ah, %bb.al, %b
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 56
   %i.ho = load ptr, ptr %i.hn, align 8
   call void %i.ho(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef %i.hi, i64 noundef %i.hl) #26, !inline_history !100
-  %i.hp = sub i64 %.tr34.ph61.i121, %.lcssa181
+  %i.hp = sub nuw nsw i64 %.tr34.ph61.i121, %.lcssa181
   %.pre.i124 = load ptr, ptr %i.ak, align 8, !tbaa !17
   %.pre84.i125 = load ptr, ptr %i.al, align 8, !tbaa !9 ; 2 uses
   %.pre88.i126 = ptrtoint ptr %.pre.i124 to i64
@@ -1432,7 +1440,7 @@ _ZN4llvh11raw_ostream14copy_to_bufferEPKcm.exit.i115: ; preds = %bb.ar, %bb.aq, 
   br label %_ZN4llvh11raw_ostream5writeEPKcm.exit135
 
 _ZN4llvh11raw_ostream5writeEPKcm.exit135:         ; preds = %bb.ae, %bb.ag, %_ZN4llvh11raw_ostream14copy_to_bufferEPKcm.exit.i115
-  %i.if = sub i32 %.01112.i.i59, %.sroa.speculated.i.i60 ; 2 uses
+  %i.if = sub nuw i32 %.01112.i.i59, %.sroa.speculated.i.i60 ; 2 uses
   %.not.i.i61 = icmp eq i32 %i.if, 0
   br i1 %.not.i.i61, label %_ZN4llvh11raw_ostream6indentEj.exit62, label %.preheader.i.i58, !llvm.loop !74
 
@@ -1671,7 +1679,7 @@ _ZN4llvh11raw_ostreamlsEc.exit79:                 ; preds = %bb.be, %_ZN4llvh11r
   br i1 %.not53, label %._crit_edge223, label %.lr.ph222
 
 _ZN4llvh11raw_ostreamlsEc.exit:                   ; preds = %bb.aw, %_ZN4llvh11raw_ostream5writeEh.exit.i, %._crit_edge212
-  %i.kx = sub i64 %.sroa.6151.0226, %..i55        ; 2 uses
+  %i.kx = sub nuw i64 %.sroa.6151.0226, %..i55    ; 2 uses
   %i.ky = getelementptr inbounds nuw i8, ptr %.sroa.0150.0224, i64 %..i55
   %i.kz = add i64 %..i55, %.048227                ; 2 uses
   %i.la = icmp ult i64 %i.kz, %.fr
@@ -1769,7 +1777,7 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.speculated.i = tail call i32 @llvm.umin.i32(i32 %.01112.i, i32 79) ; 2 uses
   %i.d = zext nneg i32 %.sroa.speculated.i to i64
   %i.e = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %0, ptr noundef nonnull @_ZZL13write_paddingILc0EERN4llvh11raw_ostreamES2_jE5Chars, i64 noundef %i.d) ; 0 uses
-  %i.f = sub i32 %.01112.i, %.sroa.speculated.i   ; 2 uses
+  %i.f = sub nuw i32 %.01112.i, %.sroa.speculated.i ; 2 uses
   %.not.i = icmp eq i32 %i.f, 0
   br i1 %.not.i, label %_ZL13write_paddingILc0EERN4llvh11raw_ostreamES2_j.exit, label %.preheader.i, !llvm.loop !105
 
@@ -2172,7 +2180,7 @@ _ZN4llvh8FmtAlign4fillERNS_11raw_ostreamEj.exit37: ; preds = %_ZN4llvh8FmtAlign4
   %.pre-phi103 = phi i64 [ %.pre102, %_ZN4llvh8FmtAlign4fillERNS_11raw_ostreamEj.exit37.loopexit ], [ %i.w, %bb.j ]
   %i.ch = load ptr, ptr %4, align 8, !tbaa !28
   %i.ci = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %1, ptr noundef %i.ch, i64 noundef %.pre-phi103) ; 0 uses
-  %i.cj = sub i64 %i.x, %i.be
+  %i.cj = sub nuw i64 %i.x, %i.be
   %i.ck = trunc i64 %i.cj to i32                  ; 2 uses
   %.not.i38 = icmp eq i32 %i.ck, 0
   br i1 %.not.i38, label %_ZN4llvh8FmtAlign4fillERNS_11raw_ostreamEj.exit, label %.lr.ph.i39

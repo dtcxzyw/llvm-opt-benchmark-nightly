@@ -204,10 +204,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.bv, label %.lr.ph441.preheader, label %bb.l
 
 .lr.ph441.preheader:                              ; preds = %bb.d
-  %i.bw = sub nsw i64 %i.bq, %i.bt                ; 3 uses
-  %i.bx = sub i32 %i.bk, %i.bi
+  %i.bw = sub nuw nsw i64 %i.bq, %i.bt            ; 3 uses
+  %i.bx = sub nuw i32 %i.bk, %i.bi
   %i.by = zext i32 %i.bx to i64
-  %. = call i64 @llvm.smin.i64(i64 %i.bw, i64 %i.by) ; 3 uses
+  %. = call i64 @llvm.umin.i64(i64 %i.bw, i64 %i.by) ; 3 uses
   %i.bz = sub nuw i32 %i.bs, %i.bn
   %i.ca = zext i32 %i.bz to i64
   br label %.lr.ph441
@@ -255,7 +255,7 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph441
   br i1 %.not373, label %._crit_edge442, label %.lr.ph441, !llvm.loop !83
 
 ._crit_edge442:                                   ; preds = %bb.f
-  %i.cv = trunc i64 %. to i32
+  %i.cv = trunc nuw i64 %. to i32
   %i.cw = add i32 %i.bs, %i.cv
   store i32 %i.cw, ptr %i.bm, align 4, !tbaa !8
   %.not374447 = icmp eq i64 %., 0
@@ -372,7 +372,7 @@ bb.k:                                             ; preds = %bb.j, %.lr.ph467
   br i1 %.not375, label %.loopexit, label %.lr.ph467, !llvm.loop !86
 
 bb.l:                                             ; preds = %bb.d
-  %i.ev = sub i32 %i.bk, %i.bi
+  %i.ev = sub nuw i32 %i.bk, %i.bi
   %i.ew = zext i32 %i.ev to i64
   %.379 = call i64 @llvm.smin.i64(i64 %i.bp, i64 %i.ew) ; 3 uses
   %i.ex = trunc i64 %.379 to i32
@@ -773,6 +773,9 @@ declare i32 @PMPI_Waitall(i32 noundef, ptr noundef, ptr noundef) local_unnamed_a
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #3

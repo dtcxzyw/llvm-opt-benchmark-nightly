@@ -200,8 +200,7 @@ bb.r:                                             ; preds = %bb.q
   %.190 = phi i32 [ %.089155, %.preheader ], [ %i.ar, %bb.q ] ; 2 uses
   %.2 = phi i32 [ %i.aj, %.preheader ], [ %i.ay, %bb.q ]
   %i.bi = sub nsw i64 %indvars.iv163, %indvars.iv
-  %sext = shl i64 %i.bi, 32
-  %3 = ashr exact i64 %sext, 32
+  %3 = and i64 %i.bi, 4294967295
   %i.bj = tail call ptr @xstrndup(ptr noundef nonnull %i.j, i64 noundef %3) #5
   store ptr %i.bj, ptr %1, align 8
   %i.bk = sext i32 %.190 to i64

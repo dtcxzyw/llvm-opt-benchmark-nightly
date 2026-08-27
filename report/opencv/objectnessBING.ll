@@ -205,17 +205,15 @@ bb.l:                                             ; preds = %bb.h
   call void @llvm.experimental.noalias.scope.decl(metadata !103)
   %i.ai = load ptr, ptr %0, align 8, !tbaa !46, !noalias !106 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !14, !noalias !106 ; 3 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !14, !noalias !106 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ak ; 4 uses
-  %i.am = ptrtoint ptr %i.al to i64               ; 4 uses
+  %i.am = ptrtoint ptr %i.al to i64               ; 3 uses
   %i.an = ptrtoint ptr %i.ai to i64               ; 3 uses
   %i.ao = ashr i64 %i.ak, 2                       ; 3 uses
   %i.ap = icmp sgt i64 %i.ao, 0
   br i1 %i.ap, label %.lr.ph.i.preheader.i.i.i, label %._crit_edge.i.i.i.i
 
 .lr.ph.i.preheader.i.i.i:                         ; preds = %bb.l
-  %12 = and i64 %i.ak, -4
-  %13 = sub i64 %i.am, %12
   %i.aq = mul nsw i64 %i.ao, -4
   %scevgep.i.i.i = getelementptr i8, ptr %i.al, i64 %i.aq
   br label %.lr.ph.i.i.i.i
@@ -266,11 +264,11 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   %i.bj = add nsw i64 %.024.i.i.i.i, -1
   %i.bk = icmp sgt i64 %.024.i.i.i.i, 1
-  %i.bl = ptrtoint ptr %i.bf to i64
+  %i.bl = ptrtoint ptr %i.bf to i64               ; 2 uses
   br i1 %i.bk, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !116
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.s, %bb.l
-  %i.bm = phi i64 [ %i.am, %bb.l ], [ %13, %bb.s ] ; 5 uses
+  %i.bm = phi i64 [ %i.am, %bb.l ], [ %i.bl, %bb.s ] ; 5 uses
   %i.bn = phi ptr [ %i.al, %bb.l ], [ %scevgep.i.i.i, %bb.s ] ; 2 uses
   %i.bo = sub i64 %i.bm, %i.an
   switch i64 %i.bo, label %_ZSt7find_ifISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEN2cv8saliency18MatchPathSeparatorEET_SG_SG_T0_.exit.i [
@@ -673,17 +671,15 @@ bb.a:
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = load ptr, ptr %1, align 8, !tbaa !46, !noalias !373 ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !14, !noalias !373 ; 7 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !14, !noalias !373 ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.e ; 4 uses
-  %i.g = ptrtoint ptr %i.f to i64                 ; 3 uses
+  %i.g = ptrtoint ptr %i.f to i64                 ; 2 uses
   %i.h = ptrtoint ptr %i.c to i64                 ; 4 uses
   %i.i = ashr i64 %i.e, 2                         ; 3 uses
   %i.j = icmp sgt i64 %i.i, 0
   br i1 %i.j, label %.lr.ph.i.preheader.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.preheader.i.i:                           ; preds = %bb.a
-  %2 = and i64 %i.e, -4
-  %3 = sub i64 %i.g, %2
   %i.k = mul nsw i64 %i.i, -4
   %scevgep.i.i = getelementptr i8, ptr %i.f, i64 %i.k
   br label %.lr.ph.i.i.i
@@ -734,11 +730,11 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.ad = add nsw i64 %.031.i.i.i, -1
   %i.ae = icmp sgt i64 %.031.i.i.i, 1
-  %i.af = ptrtoint ptr %i.z to i64
+  %i.af = ptrtoint ptr %i.z to i64                ; 2 uses
   br i1 %i.ae, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !383
 
 ._crit_edge.i.i.i:                                ; preds = %bb.h, %bb.a
-  %i.ag = phi i64 [ %i.g, %bb.a ], [ %3, %bb.h ]  ; 5 uses
+  %i.ag = phi i64 [ %i.g, %bb.a ], [ %i.af, %bb.h ] ; 5 uses
   %i.ah = phi ptr [ %i.f, %bb.a ], [ %scevgep.i.i, %bb.h ] ; 2 uses
   %i.ai = sub i64 %i.ag, %i.h
   switch i64 %i.ai, label %_ZSt4findISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEcET_SD_SD_RKT0_.exit [

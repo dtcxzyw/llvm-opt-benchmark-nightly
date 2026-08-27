@@ -202,7 +202,7 @@ bb.r:                                             ; preds = %.critedge
   br i1 %i.fq, label %bb.ae, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.fr = add nuw i64 %.196241, 1                 ; 5 uses
+  %i.fr = add nuw i64 %.196241, 1                 ; 4 uses
   %.not109 = icmp ult i64 %i.fr, %i.bk
   br i1 %.not109, label %.preheader, label %bb.t
 
@@ -262,11 +262,10 @@ bb.u:                                             ; preds = %.preheader
   %.297.lcssa = phi i64 [ %i.bk, %bb.u ], [ %.297242, %.preheader ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #15
   call void @llvm.experimental.noalias.scope.decl(metadata !158)
-  %37 = sub i64 %.297.lcssa, %i.fr
   store ptr %i.z, ptr %25, align 8, !tbaa !22, !alias.scope !158
   %i.gr = getelementptr inbounds nuw i8, ptr %i.ck, i64 %i.fr ; 2 uses
-  %38 = sub nuw i64 %i.bk, %i.fr
-  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %37, i64 %38) ; 4 uses
+  %37 = call i64 @llvm.umin.i64(i64 %.297.lcssa, i64 %i.bk)
+  %spec.select.i.i.i = sub nuw i64 %37, %i.fr     ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15, !noalias !158
   store i64 %spec.select.i.i.i, ptr %i.b, align 8, !tbaa !39, !noalias !158
   %i.gs = icmp ugt i64 %spec.select.i.i.i, 15

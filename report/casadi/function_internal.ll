@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %.noexc65
   br i1 %.not51.1, label %bb.j, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit.thread.1
 
 bb.j:                                             ; preds = %.lr.ph.1
-  %i.bf = load i64, ptr %i.av, align 8, !tbaa !17 ; 9 uses
+  %i.bf = load i64, ptr %i.av, align 8, !tbaa !17 ; 8 uses
   %i.bg = icmp ult i64 %i.bc, %i.bf
   br i1 %i.bg, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit.thread.1, label %bb.k
 
@@ -232,12 +232,11 @@ bb.l:                                             ; preds = %_ZNKSt7__cxx1112bas
   br i1 %i.bm, label %.loopexit159, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.1
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i.1: ; preds = %bb.l
-  %7 = sub i64 %i.bc, %i.bf
   store ptr %i.aw, ptr %4, align 8, !tbaa !8, !alias.scope !1142
   %i.bn = load ptr, ptr %.sroa.098.0139.1, align 8, !tbaa !14, !noalias !1142
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bf ; 2 uses
-  %8 = sub nuw i64 %i.bl, %i.bf
-  %spec.select.i.i.i.1 = call noundef i64 @llvm.umin.i64(i64 %7, i64 %8) ; 4 uses
+  %7 = call i64 @llvm.umin.i64(i64 %i.bc, i64 %i.bl)
+  %spec.select.i.i.i.1 = sub nuw i64 %7, %i.bf    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #38, !noalias !1142
   store i64 %spec.select.i.i.i.1, ptr %i.b, align 8, !tbaa !12, !noalias !1142
   %i.bp = icmp ugt i64 %spec.select.i.i.i.1, 15
@@ -354,7 +353,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit.thre
   br i1 %.not51, label %bb.u, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit.thread
 
 bb.u:                                             ; preds = %.lr.ph
-  %i.ct = load i64, ptr %i.av, align 8, !tbaa !17 ; 9 uses
+  %i.ct = load i64, ptr %i.av, align 8, !tbaa !17 ; 8 uses
   %i.cu = icmp ult i64 %i.cq, %i.ct
   br i1 %i.cu, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_.exit.thread, label %bb.v
 
@@ -390,12 +389,11 @@ bb.w:                                             ; preds = %_ZNKSt7__cxx1112bas
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i: ; preds = %bb.w
-  %9 = sub i64 %i.cq, %i.ct
   store ptr %i.aw, ptr %4, align 8, !tbaa !8, !alias.scope !1146
   %i.db = load ptr, ptr %.sroa.098.0139, align 8, !tbaa !14, !noalias !1146
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 %i.ct ; 2 uses
-  %10 = sub nuw i64 %i.cz, %i.ct
-  %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %9, i64 %10) ; 4 uses
+  %8 = call i64 @llvm.umin.i64(i64 %i.cq, i64 %i.cz)
+  %spec.select.i.i.i = sub nuw i64 %8, %i.ct      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #38, !noalias !1146
   store i64 %spec.select.i.i.i, ptr %i.b, align 8, !tbaa !12, !noalias !1146
   %i.dd = icmp ugt i64 %spec.select.i.i.i, 15

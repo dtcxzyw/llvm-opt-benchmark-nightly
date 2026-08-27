@@ -202,7 +202,7 @@ bb.av:                                            ; preds = %bb.ar
   tail call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 noundef %.sroa.speculated, i8 noundef signext 0)
   %i.gb = load ptr, ptr %i.h, align 8, !tbaa !14
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 %i.dn
-  %i.gd = sub nsw i64 %.sroa.speculated, %i.dn    ; 2 uses
+  %i.gd = sub nuw nsw i64 %.sroa.speculated, %i.dn ; 2 uses
   %i.ge = load ptr, ptr %1, align 8, !tbaa !8
   %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 16
   %i.gg = load ptr, ptr %i.gf, align 8
@@ -605,7 +605,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #29
-  %i.dy = add nuw i64 %i.de, 1                    ; 4 uses
+  %i.dy = add nuw i64 %i.de, 1                    ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !127)
   %i.dz = load i64, ptr %i.aw, align 8, !tbaa !17, !noalias !127 ; 3 uses
   %.not205 = icmp ult i64 %i.de, %i.dz
@@ -619,12 +619,11 @@ bb.av:                                            ; preds = %_ZNSt7__cxx1112basi
   unreachable
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_checkEmPKc.exit.i.i118: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %6 = sub i64 %i.dc, %i.dy
   store ptr %i.ck, ptr %5, align 8, !tbaa !10, !alias.scope !127
   %i.ea = load ptr, ptr %1, align 8, !tbaa !14, !noalias !127
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 %i.dy ; 2 uses
-  %7 = sub nuw i64 %i.dz, %i.dy
-  %spec.select.i.i.i119 = call noundef i64 @llvm.umin.i64(i64 %6, i64 %7) ; 4 uses
+  %6 = call i64 @llvm.umin.i64(i64 %i.dc, i64 %i.dz)
+  %spec.select.i.i.i119 = sub nuw i64 %6, %i.dy   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29, !noalias !127
   store i64 %spec.select.i.i.i119, ptr %i.a, align 8, !tbaa !18, !noalias !127
   %i.ec = icmp ugt i64 %spec.select.i.i.i119, 15
