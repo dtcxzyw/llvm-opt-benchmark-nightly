@@ -205,20 +205,25 @@ bb.r:                                             ; preds = %.lr.ph569.split.spl
   %.0.i505.us = tail call i32 @llvm.smin.i32(i32 %i.ff, i32 6)
   %i.fg = add nsw i32 %i.fd, %i.es                ; 2 uses
   %i.fh = tail call i32 @llvm.smax.i32(i32 %i.fg, i32 -6)
-  %.0.i503.us = tail call i32 @llvm.smin.i32(i32 %i.fh, i32 7)
+  %.0.i503.us = tail call i32 @llvm.smin.i32(i32 %i.fh, i32 7) ; 2 uses
   %i.fi = icmp slt i32 %i.fe, 1
   %i.fj = sext i1 %i.fi to i32
   %spec.select494.us = add nsw i32 %.0.i505.us, %i.fj ; 2 uses
-  %.lobit.us = ashr i32 %i.fg, 31
-  %.0413.us = add nsw i32 %.0.i503.us, %.lobit.us ; 2 uses
+  %.lobit.us = ashr i32 %i.fg, 31                 ; 2 uses
+  %.0413.us = add nsw i32 %.0.i503.us, %.lobit.us
   %.not488533.us = icmp sgt i32 %spec.select494.us, %.0413.us
-  br i1 %.not488533.us, label %.loopexit529.us, label %.lr.ph538.us
+  br i1 %.not488533.us, label %.loopexit529.us, label %.lr.ph538.us.preheader
 
-.lr.ph538.us:                                     ; preds = %bb.r, %.thread518.us
-  %.1423537.us = phi i32 [ %i.hx, %.thread518.us ], [ %spec.select494.us, %bb.r ] ; 5 uses
-  %.4536.us = phi i32 [ %.6.us, %.thread518.us ], [ %.0425568.us574, %bb.r ] ; 8 uses
-  %.4432535.us = phi ptr [ %.6434.us, %.thread518.us ], [ %.0428567.us575, %bb.r ] ; 8 uses
-  %.5453534.us = phi i32 [ %.7455.us, %.thread518.us ], [ %.1449565.us577, %bb.r ] ; 7 uses
+.lr.ph538.us.preheader:                           ; preds = %bb.r
+  %6 = add nsw i32 %.lobit.us, 1
+  %7 = add nsw i32 %6, %.0.i503.us
+  br label %.lr.ph538.us
+
+.lr.ph538.us:                                     ; preds = %.lr.ph538.us.preheader, %.thread518.us
+  %.1423537.us = phi i32 [ %i.hx, %.thread518.us ], [ %spec.select494.us, %.lr.ph538.us.preheader ] ; 4 uses
+  %.4536.us = phi i32 [ %.6.us, %.thread518.us ], [ %.0425568.us574, %.lr.ph538.us.preheader ] ; 8 uses
+  %.4432535.us = phi ptr [ %.6434.us, %.thread518.us ], [ %.0428567.us575, %.lr.ph538.us.preheader ] ; 8 uses
+  %.5453534.us = phi i32 [ %.7455.us, %.thread518.us ], [ %.1449565.us577, %.lr.ph538.us.preheader ] ; 7 uses
   %i.fk = icmp slt i32 %.1423537.us, 0
   %i.fl = sub nsw i32 7, %.1423537.us
   %i.fm = select i1 %i.fk, i32 %i.fl, i32 %.1423537.us ; 2 uses
@@ -344,8 +349,8 @@ bb.y:                                             ; preds = %.lr.ph.us
   %.7455.us = phi i32 [ %.5453534.us, %.lr.ph538.us ], [ %.5453534.us, %bb.s ], [ %.5453534.us, %bb.u ], [ %.6454.us, %bb.x ], [ %.6454.us, %bb.y ], [ %.6454.us, %.lr.ph.us ] ; 2 uses
   %.6434.us = phi ptr [ %.4432535.us, %.lr.ph538.us ], [ %.4432535.us, %bb.s ], [ %.4432535.us, %bb.u ], [ %.5433.us, %bb.x ], [ %.5433.us, %bb.y ], [ %.5433.us, %.lr.ph.us ] ; 2 uses
   %.6.us = phi i32 [ %.4536.us, %.lr.ph538.us ], [ %.4536.us, %bb.s ], [ %.4536.us, %bb.u ], [ %.5.us, %bb.x ], [ %.5.us, %bb.y ], [ %.5.us, %.lr.ph.us ] ; 2 uses
-  %i.hx = add nsw i32 %.1423537.us, 1
-  %exitcond.not = icmp eq i32 %.1423537.us, %.0413.us
+  %i.hx = add nsw i32 %.1423537.us, 1             ; 2 uses
+  %exitcond.not = icmp eq i32 %i.hx, %7
   br i1 %exitcond.not, label %.loopexit529.us, label %.lr.ph538.us, !llvm.loop !172
 
 .loopexit529.us:                                  ; preds = %.thread518.us, %bb.r
@@ -381,20 +386,25 @@ bb.z:                                             ; preds = %.lr.ph569.split.spl
   %.0.i499 = tail call i32 @llvm.smin.i32(i32 %i.ik, i32 6)
   %i.il = add nsw i32 %i.ii, %i.ib                ; 2 uses
   %i.im = tail call i32 @llvm.smax.i32(i32 %i.il, i32 -6)
-  %.0.i497 = tail call i32 @llvm.smin.i32(i32 %i.im, i32 7)
+  %.0.i497 = tail call i32 @llvm.smin.i32(i32 %i.im, i32 7) ; 2 uses
   %i.in = icmp slt i32 %i.ij, 1
   %i.io = sext i1 %i.in to i32
   %spec.select495 = add nsw i32 %.0.i499, %i.io   ; 2 uses
-  %.lobit525 = ashr i32 %i.il, 31
-  %.0407 = add nsw i32 %.0.i497, %.lobit525       ; 2 uses
+  %.lobit525 = ashr i32 %i.il, 31                 ; 2 uses
+  %.0407 = add nsw i32 %.0.i497, %.lobit525
   %.not485544 = icmp sgt i32 %spec.select495, %.0407
-  br i1 %.not485544, label %.loopexit528, label %.lr.ph549
+  br i1 %.not485544, label %.loopexit528, label %.lr.ph549.preheader
 
-.lr.ph549:                                        ; preds = %bb.z, %.thread521
-  %.2424548 = phi i32 [ %i.ld, %.thread521 ], [ %spec.select495, %bb.z ] ; 5 uses
-  %.7547 = phi i32 [ %.9, %.thread521 ], [ %.0425568, %bb.z ] ; 8 uses
-  %.7435546 = phi ptr [ %.9437, %.thread521 ], [ %.0428567, %bb.z ] ; 8 uses
-  %.8456545 = phi i32 [ %.10458, %.thread521 ], [ %.1449565, %bb.z ] ; 7 uses
+.lr.ph549.preheader:                              ; preds = %bb.z
+  %8 = add nsw i32 %.lobit525, 1
+  %9 = add nsw i32 %8, %.0.i497
+  br label %.lr.ph549
+
+.lr.ph549:                                        ; preds = %.lr.ph549.preheader, %.thread521
+  %.2424548 = phi i32 [ %i.ld, %.thread521 ], [ %spec.select495, %.lr.ph549.preheader ] ; 4 uses
+  %.7547 = phi i32 [ %.9, %.thread521 ], [ %.0425568, %.lr.ph549.preheader ] ; 8 uses
+  %.7435546 = phi ptr [ %.9437, %.thread521 ], [ %.0428567, %.lr.ph549.preheader ] ; 8 uses
+  %.8456545 = phi i32 [ %.10458, %.thread521 ], [ %.1449565, %.lr.ph549.preheader ] ; 7 uses
   %i.ip = icmp slt i32 %.2424548, 0
   %i.iq = sub nsw i32 7, %.2424548
   %i.ir = select i1 %i.ip, i32 %i.iq, i32 %.2424548 ; 2 uses
@@ -521,8 +531,8 @@ bb.ag:                                            ; preds = %.lr.ph542
   %.10458 = phi i32 [ %.8456545, %.lr.ph549 ], [ %.8456545, %bb.aa ], [ %.8456545, %bb.ac ], [ %.9457, %bb.af ], [ %.9457, %.lr.ph542 ], [ %.9457, %bb.ag ] ; 2 uses
   %.9437 = phi ptr [ %.7435546, %.lr.ph549 ], [ %.7435546, %bb.aa ], [ %.7435546, %bb.ac ], [ %.8436, %bb.af ], [ %.8436, %.lr.ph542 ], [ %.8436, %bb.ag ] ; 2 uses
   %.9 = phi i32 [ %.7547, %.lr.ph549 ], [ %.7547, %bb.aa ], [ %.7547, %bb.ac ], [ %.8, %bb.af ], [ %.8, %.lr.ph542 ], [ %.8, %bb.ag ] ; 2 uses
-  %i.ld = add nsw i32 %.2424548, 1
-  %exitcond622.not = icmp eq i32 %.2424548, %.0407
+  %i.ld = add nsw i32 %.2424548, 1                ; 2 uses
+  %exitcond622.not = icmp eq i32 %i.ld, %9
   br i1 %exitcond622.not, label %.loopexit528, label %.lr.ph549, !llvm.loop !173
 
 .loopexit528:                                     ; preds = %.thread521, %bb.z

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 165
 inline.NumDeleted: 43
 loop-unroll.NumCompletelyUnrolled: 3
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 4
+loop-unroll.NumRuntimeUnrolled: 2
+loop-unroll.NumUnrolled: 5
 begin_hunk_0_@vga_mem_writeb:bb.a
   %.not105 = icmp eq i8 %i.ah, 0
   br i1 %.not105, label %bb.k, label %bb.j
@@ -205,29 +205,59 @@ bb.a:
   br i1 %i.a, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %2, i32 2048)
+  %spec.store.select = tail call i32 @llvm.smin.i32(i32 %2, i32 2048) ; 3 uses
   %i.b = icmp sgt i32 %2, %1
   br i1 %i.b, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.b
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2760
-  br label %bb.c
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2760 ; 3 uses
+  %3 = sub i32 %spec.store.select, %1
+  %.neg = add i32 %1, 1
+  %xtraiter = and i32 %3, 1
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
-bb.c:                                             ; preds = %.lr.ph, %bb.c
-  %.09 = phi i32 [ %1, %.lr.ph ], [ %i.k, %bb.c ] ; 3 uses
-  %i.d = and i32 %.09, 31
+.prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
+  %4 = and i32 %1, 31
+  %5 = shl nuw i32 1, %4
+  %6 = ashr i32 %1, 5
+  %7 = sext i32 %6 to i64
+  %8 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %7 ; 2 uses
+  %9 = load i32, ptr %8, align 4
+  %10 = or i32 %9, %5
+  store i32 %10, ptr %8, align 4
+  %11 = add nsw i32 %1, 1
+  br label %.prol.loopexit
+
+.prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
+  %.09.unr = phi i32 [ %1, %.lr.ph ], [ %11, %.prol.loopexit.unr-lcssa ]
+  %12 = icmp eq i32 %spec.store.select, %.neg
+  br i1 %12, label %.loopexit, label %bb.c
+
+bb.c:                                             ; preds = %.prol.loopexit, %bb.c
+  %.09 = phi i32 [ %i.k, %bb.c ], [ %.09.unr, %.prol.loopexit ] ; 4 uses
+  %13 = and i32 %.09, 31
+  %14 = shl nuw i32 1, %13
+  %15 = ashr i32 %.09, 5
+  %16 = sext i32 %15 to i64
+  %17 = getelementptr inbounds [4 x i8], ptr %i.c, i64 %16 ; 2 uses
+  %18 = load i32, ptr %17, align 4
+  %19 = or i32 %18, %14
+  store i32 %19, ptr %17, align 4
+  %20 = add nsw i32 %.09, 1                       ; 2 uses
+  %i.d = and i32 %20, 31
   %i.e = shl nuw i32 1, %i.d
-  %i.f = ashr i32 %.09, 5
+  %i.f = ashr i32 %20, 5
   %i.g = sext i32 %i.f to i64
   %i.h = getelementptr inbounds [4 x i8], ptr %i.c, i64 %i.g ; 2 uses
   %i.i = load i32, ptr %i.h, align 4
   %i.j = or i32 %i.i, %i.e
   store i32 %i.j, ptr %i.h, align 4
-  %i.k = add nsw i32 %.09, 1                      ; 2 uses
-  %3 = icmp slt i32 %i.k, %spec.store.select
-  br i1 %3, label %bb.c, label %.loopexit, !llvm.loop !10
+  %i.k = add nsw i32 %.09, 2                      ; 2 uses
+  %exitcond.not.1 = icmp eq i32 %i.k, %spec.store.select
+  br i1 %exitcond.not.1, label %.loopexit, label %bb.c, !llvm.loop !10
 
-.loopexit:                                        ; preds = %bb.c, %bb.b, %bb.a
+.loopexit:                                        ; preds = %.prol.loopexit, %bb.c, %bb.b, %bb.a
   ret void
 }
 
