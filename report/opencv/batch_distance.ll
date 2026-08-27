@@ -204,30 +204,32 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.cl, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %.lr.ph48
-  %i.cm = add nsw i32 %i.cg, -2                   ; 2 uses
+  %i.cm = add i32 %i.cg, -2                       ; 2 uses
   %i.cn = icmp sgt i32 %i.cg, 1
-  br i1 %i.cn, label %.lr.ph, label %.critedge
+  br i1 %i.cn, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.k, %bb.l
-  %.044 = phi i32 [ %6, %bb.l ], [ %i.cm, %bb.k ] ; 5 uses
-  %3 = zext nneg i32 %.044 to i64                 ; 2 uses
-  %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %3 ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.k
+  %3 = zext nneg i32 %i.cm to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.l ] ; 6 uses
+  %i.co = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %indvars.iv ; 2 uses
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !42
   %i.cq = icmp sgt i32 %i.cp, %i.cf
-  br i1 %i.cq, label %bb.l, label %.critedge
+  br i1 %i.cq, label %bb.l, label %.critedge.loopexit.split.loop.exit65
 
 bb.l:                                             ; preds = %.lr.ph
-  %i.cr = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %3
+  %i.cr = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %indvars.iv
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !42
-  %4 = add nuw nsw i32 %.044, 1
-  %5 = zext nneg i32 %4 to i64                    ; 2 uses
-  %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %5
+  %4 = add nuw nsw i64 %indvars.iv, 1             ; 2 uses
+  %i.ct = getelementptr inbounds nuw [4 x i8], ptr %i.br, i64 %4
   store i32 %i.cs, ptr %i.ct, align 4, !tbaa !42
   %i.cu = load i32, ptr %i.co, align 4, !tbaa !42
-  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %5
+  %i.cv = getelementptr inbounds nuw [4 x i8], ptr %i.by, i64 %4
   store i32 %i.cu, ptr %i.cv, align 4, !tbaa !42
-  %6 = add nsw i32 %.044, -1
-  %i.cw = icmp sgt i32 %.044, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.cw = icmp sgt i64 %indvars.iv, 0
   br i1 %i.cw, label %.lr.ph, label %.critedge, !llvm.loop !167
 
 bb.m:                                             ; preds = %bb.h
@@ -247,8 +249,12 @@ _ZN2cv10AutoBufferIiLm264EED2Ev.exit43:           ; preds = %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   resume { ptr, i32 } %i.cx
 
-.critedge:                                        ; preds = %.lr.ph, %bb.l, %bb.k
-  %.0.lcssa = phi i32 [ %i.cm, %bb.k ], [ -1, %bb.l ], [ %.044, %.lr.ph ]
+.critedge.loopexit.split.loop.exit65:             ; preds = %.lr.ph
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.l, %.critedge.loopexit.split.loop.exit65, %bb.k
+  %.0.lcssa = phi i32 [ %i.cm, %bb.k ], [ %5, %.critedge.loopexit.split.loop.exit65 ], [ -1, %bb.l ]
   %i.da = load i32, ptr %i.w, align 4, !tbaa !80
   %i.db = trunc nuw nsw i64 %indvars.iv.a to i32
   %i.dc = add nsw i32 %i.da, %i.db

@@ -202,7 +202,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %.lr.ph157, %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread
   %indvars.iv170 = phi i64 [ 0, %.lr.ph157 ], [ %indvars.iv.next171, %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread ] ; 3 uses
-  %i.gj = phi i32 [ %i.gh, %.lr.ph157 ], [ %i.jd, %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread ]
+  %i.gj = phi i32 [ %i.gh, %.lr.ph157 ], [ %i.jd, %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread ] ; 2 uses
   %.01317.i.i.i = add i32 %i.gj, -1               ; 2 uses
   %i.gk = icmp sgt i32 %.01317.i.i.i, -1
   br i1 %i.gk, label %.lr.ph.i.i.i, label %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread
@@ -213,7 +213,7 @@ bb.ai:                                            ; preds = %.lr.ph157, %_ZNK4ll
   br label %bb.aj
 
 bb.aj:                                            ; preds = %.backedge.i.i.i, %.lr.ph.i.i.i
-  %indvars.iv = phi i64 [ %indvars.iv.next.a, %.backedge.i.i.i ], [ %i.gm, %.lr.ph.i.i.i ] ; 4 uses
+  %indvars.iv = phi i64 [ %i.gm, %.lr.ph.i.i.i ], [ %indvars.iv.next.a, %.backedge.i.i.i ] ; 5 uses
   %i.gn = getelementptr inbounds nuw [16 x i8], ptr %i.gl, i64 %indvars.iv ; 2 uses
   %i.go = load i8, ptr %i.gn, align 8, !tbaa !424 ; 2 uses
   %i.gp = icmp eq i8 %i.go, 6
@@ -235,8 +235,13 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.gu, label %bb.aj, label %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread
 
 _ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i: ; preds = %bb.aj
-  %.not167 = icmp samesign ult i64 %indvars.iv, %indvars.iv170
-  br i1 %.not167, label %bb.al, label %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread
+  %6 = trunc i64 %indvars.iv to i32
+  %.not.i.not.i = icmp eq i32 %i.gj, %6
+  %.sroa.0.0.extract.trunc.i = add nuw nsw i64 %indvars.iv, 1
+  %7 = and i64 %.sroa.0.0.extract.trunc.i, 4294967295
+  %8 = icmp samesign ugt i64 %7, %indvars.iv170
+  %or.cond.i = or i1 %.not.i.not.i, %8
+  br i1 %or.cond.i, label %_ZNK4llvm4bolt13MCPlusBuilder22getAnnotationAtOpIndexERKNS_6MCInstEj.exit.thread, label %bb.al
 
 bb.al:                                            ; preds = %_ZNK4llvm4bolt13MCPlusBuilder25getFirstAnnotationOpIndexERKNS_6MCInstE.exit.i
   %i.gv = getelementptr inbounds nuw [16 x i8], ptr %i.gl, i64 %indvars.iv170

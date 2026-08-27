@@ -204,23 +204,24 @@ bb.e:                                             ; preds = %.lr.ph.i.epil.prehe
   br label %countline.exit
 
 countline.exit:                                   ; preds = %countline.exit.loopexit.unr-lcssa, %bb.e, %.lr.ph.i.epil.preheader, %.lr.ph
-  %i.ad = add nuw nsw i32 %i.g, 1023              ; 3 uses
+  %i.ad = add nuw i32 %i.g, 1023                  ; 2 uses
+  %1 = zext i32 %i.ad to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %countline.exit
-  %.1 = phi i32 [ %i.ad, %countline.exit ], [ %2, %bb.f ] ; 9 uses
-  %1 = zext nneg i32 %.1 to i64                   ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 %1
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.f ], [ %1, %countline.exit ] ; 4 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !8
   %i.ag = icmp ne i8 %i.af, 10
-  %i.ah = icmp sgt i32 %.1, 1024
+  %2 = trunc nuw i64 %indvars.iv to i32           ; 6 uses
+  %i.ah = icmp sgt i32 %2, 1024
   %i.ai = and i1 %i.ah, %i.ag
-  %2 = add nsw i32 %.1, -1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   br i1 %i.ai, label %bb.f, label %bb.g, !llvm.loop !58
 
 bb.g:                                             ; preds = %bb.f
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 %1
-  %i.ak = sub nuw nsw i32 %i.ad, %.1              ; 3 uses
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
+  %i.ak = sub nuw nsw i32 %i.ad, %2               ; 4 uses
   %i.al = add nuw nsw i32 %i.ak, 1
   %i.am = sext i32 %.03039 to i64
   %i.an = getelementptr i8, ptr %i.a, i64 %i.am
@@ -231,11 +232,11 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not32, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  call void @m_short(ptr noundef nonnull %i.a, i32 noundef %.03039, i32 noundef %.1)
+  call void @m_short(ptr noundef nonnull %i.a, i32 noundef %.03039, i32 noundef %2)
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  call void @monkey1(ptr noundef nonnull %i.a, i32 noundef %.03039, i32 noundef %.1)
+  call void @monkey1(ptr noundef nonnull %i.a, i32 noundef %.03039, i32 noundef %2)
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -264,13 +265,13 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.bc, label %.lr.ph, label %._crit_edge, !llvm.loop !59
 
 ._crit_edge:                                      ; preds = %bb.l
-  %.not54 = icmp eq i32 %i.ad, %.1
+  %3 = icmp sgt i32 %i.ak, 0
   store i8 10, ptr %i.c, align 16, !tbaa !8
   %i.bd = sext i32 %spec.store.select to i64
   %i.be = getelementptr i8, ptr %i.a, i64 %i.bd
   %i.bf = getelementptr i8, ptr %i.be, i64 -1
   store i8 10, ptr %i.bf, align 1, !tbaa !8
-  br i1 %.not54, label %._crit_edge.thread, label %bb.m
+  br i1 %3, label %bb.m, label %._crit_edge.thread
 
 bb.m:                                             ; preds = %._crit_edge
   %i.bg = load i32, ptr @SHORT, align 4, !tbaa !4
@@ -278,11 +279,11 @@ bb.m:                                             ; preds = %._crit_edge
   br i1 %.not, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  call void @m_short(ptr noundef nonnull %i.a, i32 noundef %spec.store.select, i32 noundef %.1)
+  call void @m_short(ptr noundef nonnull %i.a, i32 noundef %spec.store.select, i32 noundef %2)
   br label %._crit_edge.thread
 
 bb.o:                                             ; preds = %bb.m
-  call void @monkey1(ptr noundef nonnull %i.a, i32 noundef %spec.store.select, i32 noundef %.1)
+  call void @monkey1(ptr noundef nonnull %i.a, i32 noundef %spec.store.select, i32 noundef %2)
   br label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge, %bb.o, %bb.n, %bb.k

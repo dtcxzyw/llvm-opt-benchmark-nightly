@@ -205,20 +205,20 @@ bb.x:                                             ; preds = %bb.w
 
 .preheader228:                                    ; preds = %bb.x
   %i.dr = load ptr, ptr %0, align 8, !tbaa !3950
+  %2 = zext nneg i32 %i.b to i64
   br label %bb.y
 
 bb.y:                                             ; preds = %.preheader228, %bb.z
-  %.0 = phi i32 [ %3, %bb.z ], [ %i.b, %.preheader228 ] ; 4 uses
-  %2 = zext nneg i32 %.0 to i64
-  %i.ds = getelementptr i8, ptr %i.dr, i64 %2
+  %indvars.iv = phi i64 [ %2, %.preheader228 ], [ %indvars.iv.next, %bb.z ] ; 4 uses
+  %i.ds = getelementptr i8, ptr %i.dr, i64 %indvars.iv
   %i.dt = getelementptr i8, ptr %i.ds, i64 -1
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !153
   %i.dv = icmp eq i8 %i.du, 48
-  br i1 %i.dv, label %bb.z, label %.critedge7.thread
+  br i1 %i.dv, label %bb.z, label %.critedge7.thread.loopexit
 
 bb.z:                                             ; preds = %bb.y
-  %3 = add nsw i32 %.0, -1
-  %.old10 = icmp sgt i32 %.0, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.old10 = icmp sgt i64 %indvars.iv, 1
   br i1 %.old10, label %bb.y, label %.critedge7
 
 .critedge7:                                       ; preds = %bb.z, %.thread210
@@ -226,9 +226,13 @@ bb.z:                                             ; preds = %bb.y
   %.not225 = icmp eq i32 %.0100214, 0
   br i1 %.not225, label %.thread, label %.critedge7.thread
 
-.critedge7.thread:                                ; preds = %bb.y, %bb.x, %.critedge7
-  %.1219 = phi i32 [ 0, %.critedge7 ], [ %i.b, %bb.x ], [ %.0, %bb.y ]
-  %.0100214218 = phi i32 [ %.0100214, %.critedge7 ], [ %i.dk, %bb.x ], [ %i.dk, %bb.y ] ; 2 uses
+.critedge7.thread.loopexit:                       ; preds = %bb.y
+  %3 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.critedge7.thread
+
+.critedge7.thread:                                ; preds = %.critedge7.thread.loopexit, %bb.x, %.critedge7
+  %.1219 = phi i32 [ 0, %.critedge7 ], [ %i.b, %bb.x ], [ %3, %.critedge7.thread.loopexit ]
+  %.0100214218 = phi i32 [ %.0100214, %.critedge7 ], [ %i.dk, %bb.x ], [ %i.dk, %.critedge7.thread.loopexit ] ; 2 uses
   %i.dw = add i64 %1, 2
   %i.dx = icmp sgt i32 %.0100214218, 0
   %i.dy = add nsw i32 %.0100214218, -1

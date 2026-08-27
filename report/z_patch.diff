@@ -1,0 +1,629 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 6b0951491a88a..d0f2718628800 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -1606,117 +1606,20 @@ const SCEV *ScalarEvolution::getZeroExtendExprImpl(SCEVUse Op, Type *Ty,
+   // operands (often constants).  This allows analysis of something like
+   // this:  for (unsigned char X = 0; X < 100; ++X) { int Y = X; }
+   if (match(Op, m_scev_AffineAddRec(m_SCEV(Start), m_SCEV(Step), m_Loop(L)))) {
++    // Redo the AddRec check, computing nuw this time.
+     const auto *AR = cast<SCEVAddRecExpr>(Op);
+-    unsigned BitWidth = getTypeSizeInBits(AR->getType());
+-
+-    // The no-unsigned-wrap case is handled before the uniquing lookup above.
+-
+-    // Check whether the backedge-taken count is SCEVCouldNotCompute.
+-    // Note that this serves two purposes: It filters out loops that are
+-    // simply not analyzable, and it covers the case where this code is
+-    // being called from within backedge-taken count analysis, such that
+-    // attempting to ask for the backedge-taken count would likely result
+-    // in infinite recursion. In the later case, the analysis code will
+-    // cope with a conservative value, and it will take care to purge
+-    // that value once it has finished.
+-    const SCEV *MaxBECount = getConstantMaxBackedgeTakenCount(L);
+-    if (!isa<SCEVCouldNotCompute>(MaxBECount)) {
+-      // Manually compute the final value for AR, checking for overflow.
+-
+-      // Check whether the backedge-taken count can be losslessly casted to
+-      // the addrec's type. The count is always unsigned.
+-      const SCEV *CastedMaxBECount =
+-          getTruncateOrZeroExtend(MaxBECount, Start->getType(), Depth);
+-      const SCEV *RecastedMaxBECount = getTruncateOrZeroExtend(
+-          CastedMaxBECount, MaxBECount->getType(), Depth);
+-      if (MaxBECount == RecastedMaxBECount) {
+-        Type *WideTy = IntegerType::get(getContext(), BitWidth * 2);
+-        // Check whether Start+Step*MaxBECount has no unsigned overflow.
+-        const SCEV *ZMul =
+-            getMulExpr(CastedMaxBECount, Step, SCEV::FlagAnyWrap, Depth + 1);
+-        const SCEV *ZAdd = getZeroExtendExpr(
+-            getAddExpr(Start, ZMul, SCEV::FlagAnyWrap, Depth + 1), WideTy,
+-            Depth + 1);
+-        const SCEV *WideStart = getZeroExtendExpr(Start, WideTy, Depth + 1);
+-        const SCEV *WideMaxBECount =
+-            getZeroExtendExpr(CastedMaxBECount, WideTy, Depth + 1);
+-        const SCEV *OperandExtendedAdd =
+-            getAddExpr(WideStart,
+-                       getMulExpr(WideMaxBECount,
+-                                  getZeroExtendExpr(Step, WideTy, Depth + 1),
+-                                  SCEV::FlagAnyWrap, Depth + 1),
+-                       SCEV::FlagAnyWrap, Depth + 1);
+-        if (ZAdd == OperandExtendedAdd) {
+-          // Cache knowledge of AR NUW, which is propagated to this AddRec.
+-          setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNUW);
+-          // Return the expression with the addrec on the outside.
+-          Start =
+-              getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
+-          Step = getZeroExtendExpr(Step, Ty, Depth + 1);
+-          return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+-        }
+-        // Similar to above, only this time treat the step value as signed.
+-        // This covers loops that count down.
+-        OperandExtendedAdd =
+-            getAddExpr(WideStart,
+-                       getMulExpr(WideMaxBECount,
+-                                  getSignExtendExpr(Step, WideTy, Depth + 1),
+-                                  SCEV::FlagAnyWrap, Depth + 1),
+-                       SCEV::FlagAnyWrap, Depth + 1);
+-        if (ZAdd == OperandExtendedAdd) {
+-          // Cache knowledge of AR NW, which is propagated to this AddRec.
+-          // Negative step causes unsigned wrap, but it still can't self-wrap.
+-          setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNW);
+-          // Return the expression with the addrec on the outside.
+-          Start =
+-              getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
+-          Step = getSignExtendExpr(Step, Ty, Depth + 1);
+-          return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+-        }
+-      }
+-    }
+-
+-    // Normally, in the cases we can prove no-overflow via a
+-    // backedge guarding condition, we can also compute a backedge
+-    // taken count for the loop.  The exceptions are assumptions and
+-    // guards present in the loop -- SCEV is not great at exploiting
+-    // these to compute max backedge taken counts, but can still use
+-    // these to prove lack of overflow.  Use this fact to avoid
+-    // doing extra work that may not pay off.
+-    if (!isa<SCEVCouldNotCompute>(MaxBECount) || HasGuards ||
+-        !AC.assumptions().empty()) {
+-
+-      auto NewFlags = proveNoUnsignedWrapViaInduction(AR);
+-      setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), NewFlags);
+-      if (AR->hasNoUnsignedWrap()) {
+-        // Same as nuw case above - duplicated here to avoid a compile time
+-        // issue.  It's not clear that the order of checks does matter, but
+-        // it's one of two issue possible causes for a change which was
+-        // reverted.  Be conservative for the moment.
+-        Start =
+-            getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
+-        Step = getZeroExtendExpr(Step, Ty, Depth + 1);
+-        return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+-      }
++    inferNoWrapViaConstantRanges(AR);
++    auto NewFlags = proveNoUnsignedWrapViaInduction(AR);
++    if (!hasFlags(NewFlags, SCEV::FlagNUW) &&
++        proveNoWrapByVaryingStart<SCEVZeroExtendExpr>(Start, Step, L))
++      NewFlags |= SCEV::FlagNUW;
++    setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), NewFlags);
+ 
+-      // For a negative step, we can extend the operands iff doing so only
+-      // traverses values in the range zext([0,UINT_MAX]).
+-      if (isKnownNegative(Step)) {
+-        const SCEV *N =
+-            getConstant(APInt::getMaxValue(BitWidth) - getSignedRangeMin(Step));
+-        if (isLoopBackedgeGuardedByCond(L, ICmpInst::ICMP_UGT, AR, N) ||
+-            isKnownOnEveryIteration(ICmpInst::ICMP_UGT, AR, N)) {
+-          // Cache knowledge of AR NW, which is propagated to this
+-          // AddRec.  Negative step causes unsigned wrap, but it
+-          // still can't self-wrap.
+-          setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNW);
+-          // Return the expression with the addrec on the outside.
+-          Start =
+-              getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
+-          Step = getSignExtendExpr(Step, Ty, Depth + 1);
+-          return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+-        }
+-      }
++    // If we have nuw, the zero-extend distributes over the recurrence.
++    if (AR->hasNoUnsignedWrap()) {
++      Start = getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
++      Step = getZeroExtendExpr(Step, Ty, Depth + 1);
++      return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+     }
+ 
+     // zext({C,+,Step}) --> (zext(D) + zext({C-D,+,Step}))<nuw><nsw>
+@@ -1735,10 +1638,51 @@ const SCEV *ScalarEvolution::getZeroExtendExprImpl(SCEVUse Op, Type *Ty,
+       }
+     }
+ 
+-    if (proveNoWrapByVaryingStart<SCEVZeroExtendExpr>(Start, Step, L)) {
+-      setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNUW);
++    // We can prove nusw directly: for a negative step, we can sign-extend the
++    // step iff doing so only traverses values in the range zext([0,UMAX]).
++    unsigned BitWidth = getTypeSizeInBits(AR->getType());
++    const SCEV *N =
++        getConstant(APInt::getMaxValue(BitWidth) - getSignedRangeMin(Step));
++    bool IsNUSW = isKnownNegative(Step) &&
++                  (isLoopBackedgeGuardedByCond(L, ICmpInst::ICMP_UGT, AR, N) ||
++                   isKnownOnEveryIteration(ICmpInst::ICMP_UGT, AR, N));
++
++    // We know that when
++    //
++    //   zext(Start + Step * MaxBTC) = zext(Start) + zext(Step) * MaxBTC
++    //
++    // it does not unsigned-wrap, but we haven't been able to prove nuw.
++    //
++    // Instead, prove that it's equal to zext(Start) + sext(Step) * MaxBTC, i.e.
++    // sign-extending the Step instead of zero-extending it, to prove nusw.
++    // TODO: Is there a cheaper way to prove this?
++    const APInt *MaxBECount = nullptr;
++    unsigned BW = getTypeSizeInBits(AR->getType());
++    unsigned WideBW = 2 * BW;
++    if (!IsNUSW &&
++        match(getConstantMaxBackedgeTakenCount(L), m_scev_APInt(MaxBECount)) &&
++        MaxBECount->getActiveBits() <= WideBW) {
++      const APInt WideBTC(MaxBECount->zextOrTrunc(WideBW));
++      Type *WideTy = IntegerType::get(getContext(), WideBW);
++      const SCEV *ZExtStart = getZeroExtendExpr(Start, WideTy);
++      const SCEV *SExtStep = getSignExtendExpr(Step, WideTy);
++      IsNUSW =
++          getZeroExtendExpr(
++              getAddExpr(Start,
++                         getMulExpr(getConstant(MaxBECount->zextOrTrunc(BW)),
++                                    Step, SCEV::FlagAnyWrap, Depth + 1),
++                         SCEV::FlagAnyWrap, Depth + 1),
++              WideTy, Depth + 1) ==
++          getAddExpr(ZExtStart,
++                     getMulExpr(getConstant(WideBTC), SExtStep,
++                                SCEV::FlagAnyWrap, Depth + 1),
++                     SCEV::FlagAnyWrap, Depth + 1);
++    }
++    if (IsNUSW) {
++      // We have proved nusw, of which nw is a weaker version.
++      setNoWrapFlags(const_cast<SCEVAddRecExpr *>(AR), SCEV::FlagNW);
+       Start = getExtendAddRecStart<SCEVZeroExtendExpr>(AR, Ty, this, Depth + 1);
+-      Step = getZeroExtendExpr(Step, Ty, Depth + 1);
++      Step = getSignExtendExpr(Step, Ty, Depth + 1);
+       return getAddRecExpr(Start, Step, L, AR->getNoWrapFlags());
+     }
+   }
+diff --git a/llvm/test/Analysis/DependenceAnalysis/bounds-check.ll b/llvm/test/Analysis/DependenceAnalysis/bounds-check.ll
+index 86086f77d2a47..0531524dd3e79 100644
+--- a/llvm/test/Analysis/DependenceAnalysis/bounds-check.ll
++++ b/llvm/test/Analysis/DependenceAnalysis/bounds-check.ll
+@@ -8,7 +8,7 @@
+ define void @bounds_check_test(ptr %a) {
+ ; CHECK-LABEL: 'bounds_check_test'
+ ; CHECK-NEXT:  Src: store i8 0, ptr %idx, align 1 --> Dst: store i8 0, ptr %idx, align 1
+-; CHECK-NEXT:    da analyze - output [*]!
++; CHECK-NEXT:    da analyze - none!
+ ;
+ entry:
+   br label %loop
+diff --git a/llvm/test/Analysis/ScalarEvolution/ext-addrec-wrap-flags.ll b/llvm/test/Analysis/ScalarEvolution/ext-addrec-wrap-flags.ll
+new file mode 100644
+index 0000000000000..b2915baa17f13
+--- /dev/null
++++ b/llvm/test/Analysis/ScalarEvolution/ext-addrec-wrap-flags.ll
+@@ -0,0 +1,389 @@
++; NOTE: Assertions have been autogenerated by utils/update_analyze_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -disable-output "-passes=print<scalar-evolution>" %s 2>&1 | FileCheck %s
++
++; The sext expression should be {-1,+,-128}<nw>.
++; nw should be inferred correctly.
++define void @sext.nw.pre.inc() {
++; CHECK-LABEL: 'sext.nw.pre.inc'
++; CHECK-NEXT:  Classifying expressions for: @sext.nw.pre.inc
++; CHECK-NEXT:    %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
++; CHECK-NEXT:    --> {-1,+,-128}<%loop> U: [-1,-128) S: [-1,-128) Exits: 127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter = phi i8 [ 0, %entry ], [ %counter.inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2) S: [0,2) Exits: 1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.inc = add i8 %i, -128
++; CHECK-NEXT:    --> {127,+,-128}<%loop> U: [127,0) S: [127,0) Exits: -1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.sext = sext i8 %i to i16
++; CHECK-NEXT:    --> {-1,+,128}<nw><%loop> U: [-1,128) S: [-1,128) Exits: 127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter.inc = add i8 %counter, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,3) S: [1,3) Exits: 2 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @sext.nw.pre.inc
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: Trip multiple is 2
++;
++ entry:
++  br label %loop
++
++ loop:
++  %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
++  %counter = phi i8 [ 0, %entry ], [ %counter.inc, %loop ]
++  %i.inc = add i8 %i, -128
++  %i.sext = sext i8 %i to i16
++  %counter.inc = add i8 %counter, 1
++  %continue = icmp eq i8 %counter, 1
++  br i1 %continue, label %exit, label %loop
++
++ exit:
++  ret void
++}
++
++; The zext expression should be {255,+,-128}<nw>.
++; nw should be inferred correctly.
++define void @zext.nw.pre.inc() {
++; CHECK-LABEL: 'zext.nw.pre.inc'
++; CHECK-NEXT:  Classifying expressions for: @zext.nw.pre.inc
++; CHECK-NEXT:    %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
++; CHECK-NEXT:    --> {-1,+,-128}<%loop> U: [-1,-128) S: [-1,-128) Exits: 127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter = phi i8 [ 0, %entry ], [ %counter.inc, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2) S: [0,2) Exits: 1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.inc = add i8 %i, -128
++; CHECK-NEXT:    --> {127,+,-128}<%loop> U: [127,0) S: [127,0) Exits: -1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.sext = zext i8 %i to i16
++; CHECK-NEXT:    --> {255,+,-128}<nw><%loop> U: [127,256) S: [127,256) Exits: 127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter.inc = add i8 %counter, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,3) S: [1,3) Exits: 2 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @zext.nw.pre.inc
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: Trip multiple is 2
++;
++ entry:
++  br label %loop
++
++ loop:
++  %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
++  %counter = phi i8 [ 0, %entry ], [ %counter.inc, %loop ]
++  %i.inc = add i8 %i, -128
++  %i.sext = zext i8 %i to i16
++  %counter.inc = add i8 %counter, 1
++  %continue = icmp eq i8 %counter, 1
++  br i1 %continue, label %exit, label %loop
++
++ exit:
++  ret void
++}
++
++; nw on the pre-inc does not imply nsuw on the sext.
++; The sext-addrec should not fold.
++define void @sext.nsuw.nw.pre.inc(ptr %buf, i32 %n) mustprogress {
++; CHECK-LABEL: 'sext.nsuw.nw.pre.inc'
++; CHECK-NEXT:  Classifying expressions for: @sext.nsuw.nw.pre.inc
++; CHECK-NEXT:    %i = phi i32 [ -1, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {-1,+,-2}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i32 %i, -2
++; CHECK-NEXT:    --> {-3,+,-2}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = add i32 %i, 2
++; CHECK-NEXT:    --> {1,+,-2}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %idx = sext i32 %j to i64
++; CHECK-NEXT:    --> (1 + (sext i32 {0,+,-2}<nw><%loop> to i64))<nuw><nsw> U: [1,0) S: [-2147483647,2147483648) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %gep = getelementptr inbounds i64, ptr %buf, i64 %idx
++; CHECK-NEXT:    --> (8 + (8 * (sext i32 {0,+,-2}<nw><%loop> to i64))<nsw> + %buf) U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @sext.nsuw.nw.pre.inc
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++ entry:
++  br label %loop
++
++ loop:
++  %i = phi i32 [ -1, %entry ], [ %i.next, %loop ]
++  %i.next = add i32 %i, -2
++  %j = add i32 %i, 2
++  %idx = sext i32 %j to i64
++  %gep = getelementptr inbounds i64, ptr %buf, i64 %idx
++  store i64 7, ptr %gep
++  %cmp = icmp sgt i32 %i, %n
++  br i1 %cmp, label %loop, label %exit
++
++ exit:
++  ret void
++}
++
++; nw on the pre-inc does not imply nusw on the zext.
++; The zext-addrec should not fold.
++define void @zext.nusw.nw.pre.inc(i8 %n) mustprogress willreturn {
++; CHECK-LABEL: 'zext.nusw.nw.pre.inc'
++; CHECK-NEXT:  Classifying expressions for: @zext.nusw.nw.pre.inc
++; CHECK-NEXT:    %vs = call i8 @llvm.vscale.i8()
++; CHECK-NEXT:    --> vscale U: [1,0) S: [1,0)
++; CHECK-NEXT:    %step = sub i8 0, %vs
++; CHECK-NEXT:    --> (-1 * vscale) U: [1,0) S: [1,0)
++; CHECK-NEXT:    %i = phi i8 [ 98, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {98,+,(-1 * vscale)}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i8 %i, %step
++; CHECK-NEXT:    --> {(98 + (-1 * vscale)),+,(-1 * vscale)}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = add i8 %i, 1
++; CHECK-NEXT:    --> {99,+,(-1 * vscale)}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %idx = zext i8 %j to i16
++; CHECK-NEXT:    --> (zext i8 {99,+,(-1 * vscale)}<nw><%loop> to i16) U: [0,256) S: [0,256) Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @zext.nusw.nw.pre.inc
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  %vs = call i8 @llvm.vscale.i8()
++  %step = sub i8 0, %vs
++  br label %loop
++
++loop:
++  %i = phi i8 [ 98, %entry ], [ %i.next, %loop ]
++  %i.next = add i8 %i, %step
++  %j = add i8 %i, 1
++  %idx = zext i8 %j to i16
++  %in.bounds = icmp ult i8 %i.next, -2
++  call void @llvm.assume(i1 %in.bounds)
++  %exitcond = icmp eq i8 %i, %n
++  br i1 %exitcond, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; nuw on the pre-inc does not imply nsuw on the sext.
++; The sext-addrec should not fold.
++define void @sext.nuw.pre.inc.start127.crossing.smax() {
++; CHECK-LABEL: 'sext.nuw.pre.inc.start127.crossing.smax'
++; CHECK-NEXT:  Classifying expressions for: @sext.nuw.pre.inc.start127.crossing.smax
++; CHECK-NEXT:    %i = phi i8 [ 127, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {127,+,2}<nuw><%loop> U: [127,-126) S: [127,-126) Exits: -127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter = phi i8 [ 0, %entry ], [ %counter.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2) S: [0,2) Exits: 1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i8 %i, 2
++; CHECK-NEXT:    --> {-127,+,2}<nuw><%loop> U: [-127,-124) S: [-127,-124) Exits: -125 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %ext = sext i8 %i to i32
++; CHECK-NEXT:    --> (1 + (sext i8 {126,+,2}<nuw><%loop> to i32))<nuw><nsw> U: [1,0) S: [-127,128) Exits: -127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter.next = add i8 %counter, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,3) S: [1,3) Exits: 2 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @sext.nuw.pre.inc.start127.crossing.smax
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: Trip multiple is 2
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i8 [ 127, %entry ], [ %i.next, %loop ]
++  %counter = phi i8 [ 0, %entry ], [ %counter.next, %loop ]
++  %i.next = add i8 %i, 2
++  %ext = sext i8 %i to i32
++  %counter.next = add i8 %counter, 1
++  %cmp = icmp eq i8 %counter, 1
++  br i1 %cmp, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; nuw on the pre-inc does not imply nsuw on the sext.
++; The sext-addrec should not fold.
++define void @sext.nuw.pre.inc.step127.crossing.smax() {
++; CHECK-LABEL: 'sext.nuw.pre.inc.step127.crossing.smax'
++; CHECK-NEXT:  Classifying expressions for: @sext.nuw.pre.inc.step127.crossing.smax
++; CHECK-NEXT:    %i = phi i8 [ 1, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {1,+,127}<nuw><%loop> U: [1,-127) S: [1,-127) Exits: -128 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter = phi i8 [ 0, %entry ], [ %counter.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,2) S: [0,2) Exits: 1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i8 %i, 127
++; CHECK-NEXT:    --> {-128,+,127}<nuw><%loop> U: [-128,0) S: [-128,0) Exits: -1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = add i8 %i, 1
++; CHECK-NEXT:    --> {2,+,127}<nuw><%loop> U: [2,-126) S: [2,-126) Exits: -127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %ext = sext i8 %j to i32
++; CHECK-NEXT:    --> (sext i8 {2,+,127}<nuw><%loop> to i32) U: [-128,128) S: [-128,128) Exits: -127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter.next = add i8 %counter, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,3) S: [1,3) Exits: 2 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @sext.nuw.pre.inc.step127.crossing.smax
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i8 1
++; CHECK-NEXT:  Loop %loop: Trip multiple is 2
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i8 [ 1, %entry ], [ %i.next, %loop ]
++  %counter = phi i8 [ 0, %entry ], [ %counter.next, %loop ]
++  %i.next = add i8 %i, 127
++  %j = add i8 %i, 1
++  %ext = sext i8 %j to i32
++  %counter.next = add i8 %counter, 1
++  %cmp = icmp eq i8 %counter, 1
++  br i1 %cmp, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++; nsw on the pre-inc does not imply nusw on the zext.
++; The zext-addrec should not fold.
++define void @zext.nsw.pre.inc() {
++; CHECK-LABEL: 'zext.nsw.pre.inc'
++; CHECK-NEXT:  Classifying expressions for: @zext.nsw.pre.inc
++; CHECK-NEXT:    %i = phi i8 [ 0, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {0,+,-3}<nsw><%loop> U: [-21,1) S: [-21,1) Exits: -21 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter = phi i8 [ 0, %entry ], [ %counter.next, %loop ]
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%loop> U: [0,8) S: [0,8) Exits: 7 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i8 %i, -3
++; CHECK-NEXT:    --> {-3,+,-3}<nsw><%loop> U: [-24,-2) S: [-24,-2) Exits: -24 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = add i8 %i, 1
++; CHECK-NEXT:    --> {1,+,-3}<nsw><%loop> U: [-20,2) S: [-20,2) Exits: -20 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %ext = zext i8 %j to i32
++; CHECK-NEXT:    --> (zext i8 {1,+,-3}<nsw><%loop> to i32) U: [0,256) S: [0,256) Exits: 236 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %counter.next = add i8 %counter, 1
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%loop> U: [1,9) S: [1,9) Exits: 8 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @zext.nsw.pre.inc
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i8 7
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 7
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i8 7
++; CHECK-NEXT:  Loop %loop: Trip multiple is 8
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i8 [ 0, %entry ], [ %i.next, %loop ]
++  %counter = phi i8 [ 0, %entry ], [ %counter.next, %loop ]
++  %i.next = add i8 %i, -3
++  %j = add i8 %i, 1
++  %ext = zext i8 %j to i32
++  %counter.next = add i8 %counter, 1
++  %cmp = icmp ult i8 %counter, 7
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @zext.nusw.backedge.guard(i8 %start) {
++; CHECK-LABEL: 'zext.nusw.backedge.guard'
++; CHECK-NEXT:  Classifying expressions for: @zext.nusw.backedge.guard
++; CHECK-NEXT:    %i = phi i8 [ %start, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {%start,+,-1}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i8 %i, -1
++; CHECK-NEXT:    --> {(-1 + %start),+,-1}<%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %ext = zext i8 %i to i32
++; CHECK-NEXT:    --> {(zext i8 %start to i32),+,-1}<nw><%loop> U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @zext.nusw.backedge.guard
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i8 [ %start, %entry ], [ %i.next, %loop ]
++  %i.next = add i8 %i, -1
++  %ext = zext i8 %i to i32
++  %cmp = icmp ult i8 %i.next, 100
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
++
++define void @zext.count.down(i8 %n) mustprogress {
++; CHECK-LABEL: 'zext.count.down'
++; CHECK-NEXT:  Classifying expressions for: @zext.count.down
++; CHECK-NEXT:    %i = phi i8 [ -1, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {-1,+,-1}<nw><%loop> U: full-set S: full-set Exits: %n LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i8 %i, -1
++; CHECK-NEXT:    --> {-2,+,-1}<nw><%loop> U: full-set S: full-set Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %ext = zext i8 %i to i32
++; CHECK-NEXT:    --> {255,+,-1}<nw><%loop> U: [0,256) S: [0,256) Exits: (255 + (-1 * (zext i8 (-1 + (-1 * %n)) to i32))<nsw>)<nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @zext.count.down
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (-1 + (-1 * %n))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 -1
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (-1 + (-1 * %n))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i8 [ -1, %entry ], [ %i.next, %loop ]
++  %i.next = add i8 %i, -1
++  %ext = zext i8 %i to i32
++  %cmp = icmp eq i8 %i, %n
++  br i1 %cmp, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @zext.nuw.increment(i8 %n) mustprogress {
++; CHECK-LABEL: 'zext.nuw.increment'
++; CHECK-NEXT:  Classifying expressions for: @zext.nuw.increment
++; CHECK-NEXT:    %i = phi i8 [ 100, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {100,+,-1}<nuw><%loop> U: [100,0) S: [100,0) Exits: %n LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add nuw i8 %i, -1
++; CHECK-NEXT:    --> {99,+,-1}<nw><%loop> U: full-set S: full-set Exits: (-1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %j = add i8 %i, 1
++; CHECK-NEXT:    --> {101,+,-1}<nw><%loop> U: full-set S: full-set Exits: (1 + %n) LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %ext = zext i8 %j to i32
++; CHECK-NEXT:    --> {101,+,255}<nuw><%loop> U: [101,65127) S: [101,65127) Exits: (101 + (255 * (zext i8 (100 + (-1 * %n)) to i32))<nuw><nsw>)<nuw><nsw> LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @zext.nuw.increment
++; CHECK-NEXT:  Loop %loop: backedge-taken count is (100 + (-1 * %n))
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i8 -1
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (100 + (-1 * %n))
++; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i8 [ 100, %entry ], [ %i.next, %loop ]
++  %i.next = add nuw i8 %i, -1
++  %j = add i8 %i, 1
++  %ext = zext i8 %j to i32
++  %cmp = icmp eq i8 %i, %n
++  br i1 %cmp, label %exit, label %loop
++
++exit:
++  ret void
++}
++
++define void @zext.no.nuw.pre.inc() {
++; CHECK-LABEL: 'zext.no.nuw.pre.inc'
++; CHECK-NEXT:  Classifying expressions for: @zext.no.nuw.pre.inc
++; CHECK-NEXT:    %i = phi i8 [ -1, %entry ], [ %i.next, %loop ]
++; CHECK-NEXT:    --> {-1,+,-128}<%loop> U: [-1,-128) S: [-1,-128) Exits: 127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %i.next = add i8 %i, -128
++; CHECK-NEXT:    --> {127,+,-128}<%loop> U: [127,0) S: [127,0) Exits: -1 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:    %ext = zext i8 %i to i32
++; CHECK-NEXT:    --> {255,+,-128}<nw><%loop> U: [127,256) S: [127,256) Exits: 127 LoopDispositions: { %loop: Computable }
++; CHECK-NEXT:  Determining loop execution counts for: @zext.no.nuw.pre.inc
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i32 1
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 1
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i32 1
++; CHECK-NEXT:  Loop %loop: Trip multiple is 2
++;
++entry:
++  br label %loop
++
++loop:
++  %i = phi i8 [ -1, %entry ], [ %i.next, %loop ]
++  %i.next = add i8 %i, -128
++  %ext = zext i8 %i to i32
++  %cmp = icmp sgt i8 %i.next, 3
++  br i1 %cmp, label %loop, label %exit
++
++exit:
++  ret void
++}
+diff --git a/llvm/test/Analysis/ScalarEvolution/incorrect-nsw.ll b/llvm/test/Analysis/ScalarEvolution/incorrect-nsw.ll
+deleted file mode 100644
+index f7edf493c64c4..0000000000000
+--- a/llvm/test/Analysis/ScalarEvolution/incorrect-nsw.ll
++++ /dev/null
+@@ -1,26 +0,0 @@
+-; RUN: opt -disable-output "-passes=print<scalar-evolution>,print<scalar-evolution>" < %s 2>&1 | FileCheck %s
+-
+-define void @bad.nsw() {
+-; CHECK-LABEL: Classifying expressions for: @bad.nsw
+-; CHECK-LABEL: Classifying expressions for: @bad.nsw
+- entry: 
+-  br label %loop
+-
+- loop:
+-  %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
+-; CHECK:  %i = phi i8 [ -1, %entry ], [ %i.inc, %loop ]
+-; CHECK-NEXT: -->  {-1,+,-128}<nw><%loop>
+-; CHECK-NOT: -->  {-1,+,-128}<nsw><%loop>
+-
+-  %counter = phi i8 [ 0, %entry ], [ %counter.inc, %loop ]
+-
+-  %i.inc = add i8 %i, -128
+-  %i.sext = sext i8 %i to i16
+-
+-  %counter.inc = add i8 %counter, 1
+-  %continue = icmp eq i8 %counter, 1
+-  br i1 %continue, label %exit, label %loop
+-
+- exit:
+-  ret void  
+-}

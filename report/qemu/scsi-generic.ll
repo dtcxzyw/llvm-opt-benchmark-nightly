@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.g
 
 bb.l:                                             ; preds = %bb.k
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 4 uses
-  %i.br = load i32, ptr %i.bq, align 8            ; 3 uses
+  %i.br = load i32, ptr %i.bq, align 8            ; 4 uses
   %i.bs = icmp sgt i32 %i.br, 3
   br i1 %i.bs, label %bb.m, label %.thread
 
@@ -213,29 +213,37 @@ bb.m:                                             ; preds = %bb.l
   %i.bu = load ptr, ptr %i.bt, align 8            ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 2
   %.val76 = load i16, ptr %i.bv, align 1
-  %i.bw = lshr i16 %.val76, 8
+  %i.bw = lshr i16 %.val76, 8                     ; 2 uses
   %narrow = add nuw nsw i16 %i.bw, 4
   %i.bx = and i16 %narrow, 255
   %i.by = zext nneg i16 %i.bx to i32
   %i.bz = tail call i32 @llvm.umin.i32(i32 %i.by, i32 %i.br) ; 4 uses
-  %3 = trunc nuw i32 %i.bz to i8                  ; 2 uses
+  %3 = zext nneg i32 %i.bz to i64
   %i.ca = icmp samesign ugt i32 %i.bz, 4
-  br i1 %i.ca, label %.lr.ph, label %.critedge
+  br i1 %i.ca, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.m, %bb.p
-  %4 = phi i32 [ %i.ci, %bb.p ], [ %i.bz, %bb.m ] ; 2 uses
-  %.06680 = phi i8 [ %i.ch, %bb.p ], [ %3, %bb.m ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %bb.m
+  %4 = zext nneg i32 %i.br to i64
+  %narrow97 = add nuw nsw i16 %i.bw, 4
+  %5 = and i16 %narrow97, 255
+  %6 = zext nneg i16 %5 to i64
+  %umin = tail call i64 @llvm.umin.i64(i64 %4, i64 %6)
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.p
+  %indvars.iv = phi i64 [ %umin, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.p ] ; 4 uses
+  %7 = phi i32 [ %i.bz, %.lr.ph.preheader ], [ %i.ci, %bb.p ] ; 2 uses
   %i.cb = load ptr, ptr %i.bt, align 8            ; 2 uses
-  %5 = zext i8 %.06680 to i64
-  %i.cc = getelementptr i8, ptr %i.cb, i64 %5     ; 2 uses
+  %i.cc = getelementptr i8, ptr %i.cb, i64 %indvars.iv ; 2 uses
   %i.cd = getelementptr i8, ptr %i.cc, i64 -1
   %i.ce = load i8, ptr %i.cd, align 1             ; 2 uses
   %i.cf = icmp ugt i8 %i.ce, -81
+  %8 = trunc nuw i64 %indvars.iv to i8
   %.pre.pre87 = load i32, ptr %i.bq, align 8      ; 2 uses
   br i1 %i.cf, label %bb.n, label %.critedge
 
 bb.n:                                             ; preds = %.lr.ph
-  %i.cg = icmp sgt i32 %.pre.pre87, %4
+  %i.cg = icmp sgt i32 %.pre.pre87, %7
   br i1 %i.cg, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
@@ -243,9 +251,10 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  %i.ch = add i8 %.06680, -1                      ; 3 uses
+  %i.ch = add i8 %8, -1                           ; 2 uses
   %i.ci = zext i8 %i.ch to i32                    ; 2 uses
   %i.cj = icmp ugt i8 %i.ch, 4
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   br i1 %i.cj, label %.lr.ph, label %..critedge.loopexit_crit_edge, !llvm.loop !24
 
 ..critedge.loopexit_crit_edge:                    ; preds = %bb.p
@@ -256,14 +265,14 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 .critedge:                                        ; preds = %.lr.ph, %..critedge.loopexit_crit_edge, %bb.m
   %.pre86 = phi ptr [ %i.bu, %bb.m ], [ %.pre86.pre.pre, %..critedge.loopexit_crit_edge ], [ %i.cb, %.lr.ph ] ; 2 uses
   %i.ck = phi i32 [ %i.br, %bb.m ], [ %.pre.pre, %..critedge.loopexit_crit_edge ], [ %.pre.pre87, %.lr.ph ]
-  %.066.lcssa = phi i8 [ %3, %bb.m ], [ 4, %..critedge.loopexit_crit_edge ], [ %.06680, %.lr.ph ]
-  %.lcssa = phi i32 [ %i.bz, %bb.m ], [ %i.ci, %..critedge.loopexit_crit_edge ], [ %4, %.lr.ph ]
+  %.066.lcssa = phi i64 [ %3, %bb.m ], [ 4, %..critedge.loopexit_crit_edge ], [ %indvars.iv, %.lr.ph ]
+  %.lcssa = phi i32 [ %i.bz, %bb.m ], [ %i.ci, %..critedge.loopexit_crit_edge ], [ %7, %.lr.ph ]
   %i.cl = icmp sgt i32 %i.ck, %.lcssa
   br i1 %i.cl, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %.critedge
-  %6 = zext i8 %.066.lcssa to i64
-  %i.cm = getelementptr inbounds nuw i8, ptr %.pre86, i64 %6
+  %9 = and i64 %.066.lcssa, 255
+  %i.cm = getelementptr inbounds nuw i8, ptr %.pre86, i64 %9
   store i8 -80, ptr %i.cm, align 1
   %.pre85 = load ptr, ptr %i.bt, align 8
   br label %bb.r
@@ -664,6 +673,9 @@ declare ptr @object_dynamic_cast_assert(ptr noundef, ptr noundef, ptr noundef, i
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umax.i8(i8, i8) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #6

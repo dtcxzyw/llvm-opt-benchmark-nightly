@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.v = and i32 %i.u, 192
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %indvars.iv.next.tr.1 = trunc i64 %indvars.iv.next.1 to i32
-  %i.w = shl i32 %indvars.iv.next.tr.1, 1
+  %i.w = shl nuw i32 %indvars.iv.next.tr.1, 1
   %i.x = shl nuw i32 %i.v, %i.w
   %i.y = or i32 %i.x, %i.q                        ; 3 uses
   store i32 %i.y, ptr %0, align 8, !tbaa !57
@@ -608,7 +608,7 @@ bb.gq:                                            ; preds = %bb.gq, %.lr.ph.i217
   %i.ahj = and i32 %i.ahi, 192
   %indvars.iv.next.i219.1 = add nuw nsw i64 %indvars.iv.i218, 2 ; 3 uses
   %indvars.iv.next.tr.i.1 = trunc i64 %indvars.iv.next.i219.1 to i32
-  %i.ahk = shl i32 %indvars.iv.next.tr.i.1, 1
+  %i.ahk = shl nuw i32 %indvars.iv.next.tr.i.1, 1
   %i.ahl = shl nuw i32 %i.ahj, %i.ahk
   %i.ahm = or i32 %i.ahl, %i.ahe                  ; 3 uses
   store i32 %i.ahm, ptr %i.uc, align 8, !tbaa !57

@@ -205,8 +205,7 @@ bb.aj:                                            ; preds = %_ZN4llvm15SmallPtrS
 bb.ak:                                            ; preds = %bb.aj
   %i.pu = load i8, ptr %.sroa.0.0.copyload.i111.i.i, align 8, !tbaa !56
   %i.pv = icmp eq i8 %i.pu, 89
-  %32 = and i64 %.sroa.068.0114.i.i.i, 4294967295
-  %i.pw = icmp eq i64 %32, 1
+  %i.pw = icmp eq i64 %.sroa.068.0114.i.i.i, 1
   %or.cond.i.i.i.i = and i1 %i.pw, %i.pv
   br i1 %or.cond.i.i.i.i, label %bb.al, label %bb.ao
 
@@ -251,8 +250,7 @@ bb.aq:                                            ; preds = %bb.ao
 
 _ZNK4llvm4User10getOperandEj.exit4.i.i.i.i:       ; preds = %bb.aq, %bb.ap
   %i.qn = phi ptr [ %i.qi, %bb.ap ], [ %i.qm, %bb.aq ]
-  %33 = and i64 %.sroa.068.0114.i.i.i, 4294967295
-  %i.qo = getelementptr inbounds nuw [32 x i8], ptr %i.qn, i64 %33
+  %i.qo = getelementptr inbounds nuw [32 x i8], ptr %i.qn, i64 %.sroa.068.0114.i.i.i
   br label %_ZN12_GLOBAL__N_119HorizontalReduction13getRdxOperandEPN4llvm11InstructionEj.exit.i.i.i
 
 _ZN12_GLOBAL__N_119HorizontalReduction13getRdxOperandEPN4llvm11InstructionEj.exit.i.i.i: ; preds = %_ZNK4llvm4User10getOperandEj.exit4.i.i.i.i, %_ZNK4llvm4User10getOperandEj.exit.i.i.i.i

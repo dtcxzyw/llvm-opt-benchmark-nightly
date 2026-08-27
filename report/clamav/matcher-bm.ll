@@ -201,41 +201,53 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.pr = phi i32 [ %i.k, %bb.f ], [ %i.i, %bb.e ] ; 2 uses
+  %.pr = phi i32 [ %i.k, %bb.f ], [ %i.i, %bb.e ] ; 4 uses
   %.not248327 = icmp eq i32 %.pr, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !56 ; 3 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !56 ; 4 uses
   br i1 %.not248327, label %.critedge, label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.g, %bb.h
-  %9 = phi i32 [ %10, %bb.h ], [ %.pr, %bb.g ]    ; 3 uses
-  %i.l = zext i32 %9 to i64
+.lr.ph:                                           ; preds = %bb.g
+  %i.l = zext i32 %.pr to i64                     ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !35
   %i.o = icmp ugt i32 %i.n, %5
   br i1 %i.o, label %bb.h, label %.critedge
 
-bb.h:                                             ; preds = %.lr.ph
-  %10 = add i32 %9, -1                            ; 3 uses
-  store i32 %10, ptr %i.h, align 4, !tbaa !53
-  %.not248 = icmp eq i32 %10, 0
-  br i1 %.not248, label %.critedge, label %.lr.ph
+9:                                                ; preds = %bb.h
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %indvars.iv.next
+  %11 = load i32, ptr %10, align 4, !tbaa !35
+  %12 = icmp ugt i32 %11, %5
+  br i1 %12, label %bb.h, label %..critedge.loopexit.split.loop.exit501_crit_edge
 
-.critedge:                                        ; preds = %.lr.ph, %bb.h, %bb.g
-  %11 = phi i32 [ 0, %bb.g ], [ 0, %bb.h ], [ %9, %.lr.ph ] ; 3 uses
-  %i.p = zext i32 %11 to i64
+bb.h:                                             ; preds = %.lr.ph, %9
+  %indvars.iv557 = phi i64 [ %indvars.iv.next, %9 ], [ %i.l, %.lr.ph ]
+  %indvars.iv.next = add nsw i64 %indvars.iv557, -1 ; 4 uses
+  %indvars = trunc i64 %indvars.iv.next to i32    ; 3 uses
+  store i32 %indvars, ptr %i.h, align 4, !tbaa !53
+  %.not248 = icmp eq i32 %indvars, 0
+  br i1 %.not248, label %.critedge, label %9
+
+..critedge.loopexit.split.loop.exit501_crit_edge: ; preds = %9
+  %13 = trunc nuw i64 %indvars.iv.next to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %bb.h, %.lr.ph, %..critedge.loopexit.split.loop.exit501_crit_edge, %bb.g
+  %14 = phi i32 [ 0, %bb.g ], [ %.pr, %.lr.ph ], [ %indvars, %..critedge.loopexit.split.loop.exit501_crit_edge ], [ 0, %bb.h ]
+  %.lcssa326 = phi i32 [ 0, %bb.g ], [ %.pr, %.lr.ph ], [ %13, %..critedge.loopexit.split.loop.exit501_crit_edge ], [ 0, %bb.h ] ; 2 uses
+  %i.p = zext i32 %.lcssa326 to i64
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %.pre, i64 %i.p
   %i.r = load i32, ptr %i.q, align 4, !tbaa !35
   %i.s = icmp ult i32 %i.r, %5
   br i1 %i.s, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.critedge
-  %i.t = add i32 %11, 1                           ; 2 uses
+  %i.t = add i32 %.lcssa326, 1                    ; 2 uses
   store i32 %i.t, ptr %i.h, align 4, !tbaa !53
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %.critedge
-  %i.u = phi i32 [ %i.t, %bb.i ], [ %11, %.critedge ] ; 2 uses
+  %i.u = phi i32 [ %i.t, %bb.i ], [ %14, %.critedge ] ; 2 uses
   %.not249 = icmp ult i32 %i.u, %i.g
   br i1 %.not249, label %bb.k, label %.loopexit293
 

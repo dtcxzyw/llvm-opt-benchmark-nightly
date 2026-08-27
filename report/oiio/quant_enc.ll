@@ -205,8 +205,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw [264 x i8], ptr %i.a, i64 %i.b ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 21960
   %i.e = getelementptr inbounds nuw [384 x i8], ptr %i.d, i64 %i.b ; 2 uses
-  %i.f = icmp eq i32 %4, 0                        ; 4 uses
-  %i.g = zext i1 %i.f to i32                      ; 4 uses
+  %i.f = icmp eq i32 %4, 0                        ; 5 uses
+  %i.g = zext i1 %i.f to i32                      ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #11
   %i.h = getelementptr inbounds nuw i8, ptr %8, i64 32
@@ -215,7 +215,7 @@ bb.a:
   %i.k = zext i16 %i.j to i32                     ; 2 uses
   %i.l = mul nuw nsw i32 %i.k, %i.k
   %i.m = lshr i32 %i.l, 2
-  %i.n = zext i1 %i.f to i64                      ; 3 uses
+  %i.n = zext i1 %i.f to i64                      ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr @VP8EncBands, i64 %i.n
   %i.p = load i8, ptr %i.o, align 1, !tbaa !58
   %i.q = zext i8 %i.p to i64
@@ -225,12 +225,12 @@ bb.a:
   %i.u = load i8, ptr %i.t, align 1, !tbaa !58    ; 2 uses
   %not. = xor i1 %i.f, true
   %i.v = sext i1 %not. to i32
+  %9 = zext i1 %i.f to i64                        ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.c
-  %.0184213 = phi i32 [ 15, %bb.a ], [ %10, %bb.c ] ; 4 uses
-  %9 = zext nneg i32 %.0184213 to i64
-  %i.w = getelementptr inbounds nuw i8, ptr @kZigzag, i64 %9
+  %indvars.iv = phi i64 [ 15, %bb.a ], [ %indvars.iv.next, %bb.c ] ; 4 uses
+  %i.w = getelementptr inbounds nuw i8, ptr @kZigzag, i64 %indvars.iv
   %i.x = load i8, ptr %i.w, align 1, !tbaa !58
   %i.y = zext i8 %i.x to i64
   %i.z = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %i.y
@@ -238,15 +238,19 @@ bb.b:                                             ; preds = %bb.a, %bb.c
   %i.ab = sext i16 %i.aa to i32                   ; 2 uses
   %i.ac = mul nsw i32 %i.ab, %i.ab
   %i.ad = icmp samesign ugt i32 %i.ac, %i.m
-  br i1 %i.ad, label %bb.d, label %bb.c
+  br i1 %i.ad, label %.split.loop.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %10 = add nsw i32 %.0184213, -1
-  %.not.not = icmp samesign ugt i32 %.0184213, %i.g
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.not.not = icmp samesign ugt i64 %indvars.iv, %9
   br i1 %.not.not, label %bb.b, label %bb.d, !llvm.loop !235
 
-bb.d:                                             ; preds = %bb.b, %bb.c
-  %.2 = phi i32 [ %.0184213, %bb.b ], [ %i.v, %bb.c ] ; 2 uses
+.split.loop.exit:                                 ; preds = %bb.b
+  %10 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %.split.loop.exit
+  %.2 = phi i32 [ %10, %.split.loop.exit ], [ %i.v, %bb.c ] ; 2 uses
   %i.ae = icmp slt i32 %.2, 15
   %i.af = zext i1 %i.ae to i32
   %spec.select = add i32 %.2, %i.af               ; 2 uses
@@ -292,7 +296,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
 
 bb.e:                                             ; preds = %.lr.ph, %bb.s
   %i.av = phi i64 [ %.sink258, %.lr.ph ], [ %i.ef, %bb.s ]
-  %indvars.iv.a = phi i64 [ %i.n, %.lr.ph ], [ %indvars.iv.next.a, %bb.s ] ; 6 uses
+  %indvars.iv.a = phi i64 [ %9, %.lr.ph ], [ %indvars.iv.next.a, %bb.s ] ; 6 uses
   %.0187228 = phi i64 [ %i.ai, %.lr.ph ], [ %.4.1, %bb.s ] ; 5 uses
   %.sroa.0.0227 = phi i32 [ -1, %.lr.ph ], [ %.sroa.0.4.1, %bb.s ] ; 3 uses
   %.sroa.6.0226 = phi i32 [ -1, %.lr.ph ], [ %.sroa.6.4.1, %bb.s ] ; 3 uses

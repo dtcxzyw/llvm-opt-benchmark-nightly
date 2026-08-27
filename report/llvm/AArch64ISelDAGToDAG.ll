@@ -205,24 +205,22 @@ _ZNK4llvm5APInt11countl_zeroEv.exit.i:            ; preds = %bb.g, %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.cn, %_ZNK4llvm5APInt11countl_zeroEv.exit.i
-  %.0145375.i = phi i32 [ 0, %_ZNK4llvm5APInt11countl_zeroEv.exit.i ], [ %53, %bb.cn ] ; 3 uses
+  %indvars.iv.i = phi i64 [ 0, %_ZNK4llvm5APInt11countl_zeroEv.exit.i ], [ %indvars.iv.next.i, %bb.cn ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #22
   store ptr null, ptr %30, align 8, !tbaa !338
   store i32 0, ptr %i.an, align 8, !tbaa !341
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
-  %i.bz = icmp samesign ugt i32 %.0145375.i, 1    ; 3 uses
-  %51 = and i32 %.0145375.i, 1
+  %i.bz = icmp samesign ugt i64 %indvars.iv.i, 1  ; 3 uses
+  %51 = and i64 %indvars.iv.i, 1
   %i.ca = load ptr, ptr %i.ao, align 8, !tbaa !337 ; 2 uses
-  %52 = zext nneg i32 %51 to i64
-  %i.cb = getelementptr inbounds nuw [40 x i8], ptr %i.ca, i64 %52 ; 2 uses
+  %i.cb = getelementptr inbounds nuw [40 x i8], ptr %i.ca, i64 %51 ; 2 uses
   %.sroa.0296.0.copyload.i = load ptr, ptr %i.cb, align 8, !tbaa !421 ; 8 uses
   %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   %.sroa.7.0.copyload.i = load i32, ptr %.sroa.7.0..sroa_idx.i, align 8, !tbaa !201 ; 3 uses
-  %53 = add nuw nsw i32 %.0145375.i, 1            ; 3 uses
-  %54 = and i32 %53, 1
-  %55 = zext nneg i32 %54 to i64
-  %i.cc = getelementptr inbounds nuw [40 x i8], ptr %i.ca, i64 %55 ; 2 uses
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 3 uses
+  %52 = and i64 %indvars.iv.next.i, 1
+  %i.cc = getelementptr inbounds nuw [40 x i8], ptr %i.ca, i64 %52 ; 2 uses
   %.sroa.0290.0.copyload.i = load ptr, ptr %i.cc, align 8, !tbaa !421 ; 14 uses
   %.sroa.9293.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %.sroa.9293.0.copyload.i = load i32, ptr %.sroa.9293.0..sroa_idx.i, align 8, !tbaa !201 ; 14 uses
@@ -625,7 +623,7 @@ _ZN4llvm9KnownBitsD2Ev.exit.i:                    ; preds = %bb.cm, %bb.cl, %_ZN
   br label %bb.cn
 
 bb.cn:                                            ; preds = %.critedge.i, %_ZN4llvm9KnownBitsD2Ev.exit.i
-  %exitcond.i = icmp eq i32 %53, 4
+  %exitcond.i = icmp eq i64 %indvars.iv.next.i, 4
   br i1 %exitcond.i, label %.critedge153.i, label %bb.h, !llvm.loop !808
 
 .critedge153.i:                                   ; preds = %bb.cn

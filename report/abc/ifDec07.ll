@@ -205,12 +205,13 @@ bb.d:                                             ; preds = %._crit_edge.thread.
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.loopexit.i, %bb.d
-  %indvars.iv258.i = phi i64 [ 0, %bb.d ], [ %indvars.iv.next259.i, %.loopexit.i ] ; 8 uses
-  %i.jl = trunc nsw i64 %indvars.iv258.i to i32   ; 5 uses
+  %indvars.iv258.i = phi i64 [ 0, %bb.d ], [ %indvars.iv.next259.i, %.loopexit.i ] ; 9 uses
+  %i.jl = trunc nsw i64 %indvars.iv258.i to i32   ; 4 uses
   %i.jm = lshr i32 %i.jl, 1                       ; 6 uses
-  %2 = and i32 %i.jl, 1
-  %3 = or i32 %2, %i.jm
-  %or.cond325.i.a = icmp eq i32 %3, 0
+  %2 = and i64 %indvars.iv258.i, 1
+  %3 = icmp eq i64 %2, 0
+  %or.cond325.i.a = icmp eq i32 %i.jm, 0
+  %or.cond325.i = select i1 %3, i1 %or.cond325.i.a, i1 false
   %.tr.i = trunc i64 %indvars.iv258.i to i1       ; 2 uses
   %.narrow.i = xor i1 %i.cv, %.tr.i
   %i.jn = icmp ne i32 %i.jm, 0
@@ -238,7 +239,7 @@ bb.d:                                             ; preds = %._crit_edge.thread.
   %i.kh = icmp eq <8 x i32> %i.kg, %i.im
   %i.ki = select <8 x i1> %i.ke, <8 x i1> %i.kh, <8 x i1> zeroinitializer
   %or.cond340.i = select i1 %.tr.i, i1 %i.kf, i1 false
-  %i.kj = insertelement <16 x i1> poison, i1 %or.cond325.i.a, i64 0
+  %i.kj = insertelement <16 x i1> poison, i1 %or.cond325.i, i64 0
   %i.kk = insertelement <16 x i1> %i.kj, i1 %or.cond326.not.i, i64 1
   %i.kl = insertelement <16 x i1> %i.kk, i1 %or.cond340.i, i64 2
   %i.km = insertelement <16 x i1> %i.kl, i1 %or.cond327.i, i64 3

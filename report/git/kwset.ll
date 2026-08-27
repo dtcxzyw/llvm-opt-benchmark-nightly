@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph174.ne
 
 ._crit_edge175.thread:                            ; preds = %.preheader150, %bb.j
   %.ph = phi i32 [ %.pre198, %.preheader150 ], [ %i.av, %bb.j ] ; 2 uses
-  %i.df = add nsw i32 %.ph, -2
+  %i.df = add i32 %.ph, -2
   br label %._crit_edge179
 
 ._crit_edge175.unr-lcssa:                         ; preds = %bb.k
@@ -243,24 +243,28 @@ bb.l:                                             ; preds = %bb.l, %.epil.prehea
 
 .lr.ph178.preheader:                              ; preds = %._crit_edge175
   %i.dr = add nsw i32 %.pre198, -2
+  %1 = zext nneg i32 %i.dr to i64
   br label %.lr.ph178
 
 .lr.ph178:                                        ; preds = %.lr.ph178.preheader, %bb.m
-  %.2132176 = phi i32 [ %2, %bb.m ], [ %i.dr, %.lr.ph178.preheader ] ; 4 uses
-  %1 = zext nneg i32 %.2132176 to i64
-  %i.ds = getelementptr inbounds nuw i8, ptr %.pre199.pre, i64 %1
+  %indvars.iv193 = phi i64 [ %1, %.lr.ph178.preheader ], [ %indvars.iv.next194, %bb.m ] ; 4 uses
+  %i.ds = getelementptr inbounds nuw i8, ptr %.pre199.pre, i64 %indvars.iv193
   %i.dt = load i8, ptr %i.ds, align 1, !tbaa !35
   %i.du = icmp eq i8 %i.dt, %i.dq
-  br i1 %i.du, label %._crit_edge179, label %bb.m
+  br i1 %i.du, label %._crit_edge179.loopexit.split.loop.exit, label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph178
-  %2 = add nsw i32 %.2132176, -1
-  %i.dv = icmp sgt i32 %.2132176, 0
+  %indvars.iv.next194 = add nsw i64 %indvars.iv193, -1
+  %i.dv = icmp sgt i64 %indvars.iv193, 0
   br i1 %i.dv, label %.lr.ph178, label %._crit_edge179, !llvm.loop !55
 
-._crit_edge179:                                   ; preds = %bb.m, %.lr.ph178, %._crit_edge175.thread, %._crit_edge175
-  %i.dw = phi i32 [ 1, %._crit_edge175 ], [ %.ph, %._crit_edge175.thread ], [ %.pre198, %.lr.ph178 ], [ %.pre198, %bb.m ]
-  %.2132.lcssa = phi i32 [ -1, %._crit_edge175 ], [ %i.df, %._crit_edge175.thread ], [ -1, %bb.m ], [ %.2132176, %.lr.ph178 ]
+._crit_edge179.loopexit.split.loop.exit:          ; preds = %.lr.ph178
+  %2 = trunc nuw nsw i64 %indvars.iv193 to i32
+  br label %._crit_edge179
+
+._crit_edge179:                                   ; preds = %bb.m, %._crit_edge179.loopexit.split.loop.exit, %._crit_edge175.thread, %._crit_edge175
+  %i.dw = phi i32 [ 1, %._crit_edge175 ], [ %.ph, %._crit_edge175.thread ], [ %.pre198, %._crit_edge179.loopexit.split.loop.exit ], [ %.pre198, %bb.m ]
+  %.2132.lcssa = phi i32 [ -1, %._crit_edge175 ], [ %i.df, %._crit_edge175.thread ], [ %2, %._crit_edge179.loopexit.split.loop.exit ], [ -1, %bb.m ]
   %.neg = xor i32 %.2132.lcssa, -1
   %i.dx = add i32 %i.dw, %.neg
   %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 2424
