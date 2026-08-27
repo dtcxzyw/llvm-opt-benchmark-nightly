@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %._crit_edge
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc i64 @find_subframe_rice_params(ptr nofree noundef readonly captures(none) %0, ptr noundef %1, i32 noundef %2) unnamed_addr #7 {
 bb.a:
-  %i.a = ptrtoaddr ptr %1 to i64
+  %i.a = ptrtoaddr ptr %1 to i64                  ; 2 uses
   %i.b = alloca [9 x i64], align 16               ; 6 uses
   %3 = alloca %struct.RiceContext, align 4        ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 7349976
@@ -365,7 +365,7 @@ middle.block:                                     ; preds = %vector.body
   %i.bz = sext i32 %2 to i64
   %i.ca = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.bz ; 2 uses
   %i.cb = ashr i32 %i.f, %.0.i30
-  %i.cc = sext i32 %i.cb to i64                   ; 5 uses
+  %i.cc = sext i32 %i.cb to i64                   ; 7 uses
   %.03651.i.i = getelementptr inbounds [4 x i8], ptr %i.au, i64 %i.cc ; 2 uses
   %.not66.i.i = icmp eq i32 %.0.i30, 31
   br i1 %.not66.i.i, label %calc_sum_top.exit.i, label %.lr.ph62.split.i.i
@@ -378,6 +378,10 @@ middle.block:                                     ; preds = %vector.body
   %i.cd = add nuw nsw i32 %i.bx, 1
   %wide.trip.count75.i.i = zext nneg i32 %i.cd to i64
   %wide.trip.count.i.i = zext nneg i32 %i.by to i64
+  %4 = shl nsw i64 %i.cc, 2
+  %5 = add i64 %4, %i.a
+  %6 = add i64 %5, 1184
+  %7 = shl nsw i64 %i.cc, 2
   br label %.lr.ph56.i.i
 
 .lr.ph56.us.i.i:                                  ; preds = %.lr.ph62.split.i.i
@@ -472,10 +476,10 @@ middle.block103:                                  ; preds = %vector.body95
   br label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge.i.i, %.lr.ph56.i.i
-  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph56.i.i ], [ %indvars.iv.next.i.i, %._crit_edge.i.i ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ 0, %.lr.ph56.i.i ], [ %indvars.iv.next.i.i, %._crit_edge.i.i ] ; 3 uses
   %.03654.i.i = phi ptr [ %.03651.i.i, %.lr.ph56.i.i ], [ %.036.i.i, %._crit_edge.i.i ] ; 4 uses
   %.03753.i.i = phi ptr [ %i.ca, %.lr.ph56.i.i ], [ %.1.lcssa.i.i, %._crit_edge.i.i ] ; 6 uses
-  %i.dj = ptrtoint ptr %.03654.i.i to i64         ; 2 uses
+  %i.dj = ptrtoint ptr %.03654.i.i to i64
   %i.dk = ptrtoint ptr %.03753.i.i to i64         ; 3 uses
   %i.dl = sub i64 %i.dj, %i.dk
   %i.dm = ashr exact i64 %i.dl, 2
@@ -484,8 +488,10 @@ bb.e:                                             ; preds = %._crit_edge.i.i, %.
   br i1 %i.do, label %.lr.ph.i.i.preheader, label %._crit_edge.i.i
 
 .lr.ph.i.i.preheader:                             ; preds = %bb.e
+  %8 = mul i64 %7, %indvars.iv.i.i
+  %9 = add i64 %6, %8
   %i.dp = add i64 %i.dk, 4
-  %i.dq = tail call i64 @llvm.umax.i64(i64 %i.dj, i64 %i.dp)
+  %i.dq = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.dp)
   %i.dr = xor i64 %i.dk, -1
   %i.ds = add i64 %i.dq, %i.dr                    ; 2 uses
   %i.dt = lshr i64 %i.ds, 2

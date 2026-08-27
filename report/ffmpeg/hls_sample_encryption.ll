@@ -202,16 +202,17 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !43   ; 5 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !43   ; 6 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.g = load i32, ptr %i.f, align 8, !tbaa !44   ; 2 uses
-  %i.h = sext i32 %i.g to i64
+  %i.h = sext i32 %i.g to i64                     ; 2 uses
   %i.i = getelementptr inbounds i8, ptr %i.e, i64 %i.h ; 4 uses
   %i.j = icmp sgt i32 %i.g, 0
   br i1 %i.j, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.b
-  %i.k = ptrtoint ptr %i.i to i64                 ; 3 uses
+  %3 = ptrtoaddr ptr %i.e to i64
+  %i.k = ptrtoint ptr %i.i to i64                 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 24
   br label %bb.c
@@ -269,7 +270,8 @@ bb.f:                                             ; preds = %.thread.i.i, %bb.d
   br i1 %i.al, label %.lr.ph.i.preheader.i, label %.loopexit.i
 
 .lr.ph.i.preheader.i:                             ; preds = %bb.f
-  %scevgep.i = getelementptr i8, ptr %.sroa.045.060.i, i64 %i.k
+  %4 = getelementptr i8, ptr %.sroa.045.060.i, i64 %3
+  %scevgep.i = getelementptr i8, ptr %4, i64 %i.h
   %i.am = sub i64 0, %i.n
   %scevgep65.i = getelementptr i8, ptr %scevgep.i, i64 %i.am
   br label %.lr.ph.i.i

@@ -205,8 +205,9 @@ _ZN6duckdb7Hugeint14DivModPositiveENS_9hugeint_tEmRm.exit: ; preds = %bb.b
   br i1 %i.y, label %.lr.ph.i16, label %._crit_edge.i14, !llvm.loop !291
 
 ._crit_edge.i14:                                  ; preds = %.lr.ph.i16, %_ZN6duckdb7Hugeint14DivModPositiveENS_9hugeint_tEmRm.exit
-  %.018.lcssa.i = phi ptr [ %.01333, %_ZN6duckdb7Hugeint14DivModPositiveENS_9hugeint_tEmRm.exit ], [ %i.x, %.lr.ph.i16 ] ; 3 uses
+  %.018.lcssa.i = phi ptr [ %.01333, %_ZN6duckdb7Hugeint14DivModPositiveENS_9hugeint_tEmRm.exit ], [ %i.x, %.lr.ph.i16 ] ; 4 uses
   %.017.lcssa.i = phi i64 [ %spec.select34.i, %_ZN6duckdb7Hugeint14DivModPositiveENS_9hugeint_tEmRm.exit ], [ %i.r, %.lr.ph.i16 ] ; 3 uses
+  %.018.lcssa.i43 = ptrtoaddr ptr %.018.lcssa.i to i64
   %i.z = icmp samesign ult i64 %.017.lcssa.i, 10
   br i1 %i.z, label %bb.c, label %bb.d
 
@@ -230,12 +231,12 @@ bb.d:                                             ; preds = %._crit_edge.i14
   br label %_ZN6duckdb13NumericHelper14FormatUnsignedImEEPcT_S2_.exit
 
 _ZN6duckdb13NumericHelper14FormatUnsignedImEEPcT_S2_.exit: ; preds = %bb.c, %bb.d
-  %.sink26.i = phi i64 [ -2, %bb.d ], [ -1, %bb.c ] ; 2 uses
+  %.sink26.i = phi i64 [ -2, %bb.d ], [ -1, %bb.c ] ; 3 uses
   %.sink.i15 = phi i8 [ %i.al, %bb.d ], [ %i.ab, %bb.c ]
   %i.am = getelementptr inbounds i8, ptr %.018.lcssa.i, i64 %.sink26.i ; 3 uses
   store i8 %.sink.i15, ptr %i.am, align 1, !tbaa !153
   %i.an = ptrtoint ptr %.01333 to i64             ; 2 uses
-  %i.ao = ptrtoint ptr %i.am to i64               ; 2 uses
+  %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = trunc i64 %i.ap to i32
   %i.ar = icmp slt i32 %i.aq, 17
@@ -243,7 +244,8 @@ _ZN6duckdb13NumericHelper14FormatUnsignedImEEPcT_S2_.exit: ; preds = %bb.c, %bb.
 
 .lr.ph.preheader:                                 ; preds = %_ZN6duckdb13NumericHelper14FormatUnsignedImEEPcT_S2_.exit
   %scevgep = getelementptr i8, ptr %.018.lcssa.i, i64 -1
-  %i.as = add i64 %i.ao, 16
+  %3 = add i64 %.sink26.i, %.018.lcssa.i43
+  %i.as = add i64 %3, 16
   %i.at = sub i64 %i.as, %i.an
   %i.au = and i64 %i.at, 4294967295               ; 2 uses
   %i.av = sub nuw nsw i64 %.sink26.i, %i.au

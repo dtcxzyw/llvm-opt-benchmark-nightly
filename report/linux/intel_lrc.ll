@@ -205,22 +205,22 @@ bb.d:                                             ; preds = %bb.c
   %i.al = shl nuw nsw i64 %i.ak, 12
   %i.am = getelementptr i8, ptr %i.aj, i64 %i.al  ; 13 uses
   %i.an = tail call ptr %spec.store.select(ptr noundef %0, ptr noundef %i.am) #13, !callees !25, !inline_history !26 ; 2 uses
-  %i.ao = ptrtoint ptr %i.an to i64               ; 4 uses
+  %i.ao = ptrtoint ptr %i.an to i64               ; 2 uses
   %i.ap = and i64 %i.ao, 63
   %.not15.i = icmp eq i64 %i.ap, 0
   br i1 %.not15.i, label %._crit_edge.i, label %.lr.ph.preheader.i
 
-.lr.ph.preheader.i:                               ; preds = %bb.d
-  %3 = sub i64 60, %i.ao
-  %4 = and i64 %3, 60                             ; 2 uses
-  %5 = add nuw nsw i64 %4, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef align 4 %i.an, i8 0, i64 %5, i1 false)
-  %6 = add i64 %i.ao, 4
-  %7 = add i64 %6, %4
-  br label %._crit_edge.i
+.lr.ph.preheader.i:                               ; preds = %bb.d, %.lr.ph.preheader.i
+  %.016.i = phi ptr [ %3, %.lr.ph.preheader.i ], [ %i.an, %bb.d ] ; 2 uses
+  %3 = getelementptr i8, ptr %.016.i, i64 4       ; 2 uses
+  store i32 0, ptr %.016.i, align 4
+  %4 = ptrtoint ptr %3 to i64                     ; 2 uses
+  %5 = and i64 %4, 63
+  %.not.i = icmp eq i64 %5, 0
+  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.preheader.i, !llvm.loop !27
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.preheader.i, %bb.d
-  %.lcssa.i = phi i64 [ %i.ao, %bb.d ], [ %7, %.lr.ph.preheader.i ]
+  %.lcssa.i = phi i64 [ %i.ao, %bb.d ], [ %4, %.lr.ph.preheader.i ]
   %i.aq = getelementptr i8, ptr %i.am, i64 2048
   %i.ar = getelementptr i8, ptr %i.am, i64 2052
   store i32 272629762, ptr %i.aq, align 4
@@ -512,7 +512,7 @@ bb.a:
   %i.b = getelementptr i8, ptr %0, i64 152
   store ptr %i.a, ptr %i.b, align 8
   %i.c = getelementptr i8, ptr %0, i64 136        ; 2 uses
-  %i.d = tail call i8 asm " btsq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.c, i64 2) #14, !srcloc !27 ; 2 uses
+  %i.d = tail call i8 asm " btsq  $2,$1", "={@ccc},*m,Ir,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) %i.c, i64 2) #14, !srcloc !28 ; 2 uses
   %i.e = icmp ult i8 %i.d, 2
   tail call void @llvm.assume(i1 %i.e)
   %i.f = trunc nuw i8 %i.d to i1
@@ -570,7 +570,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b, !prof !24
 
 bb.b:                                             ; preds = %bb.a
-  tail call fastcc void @i915_request_put(ptr noundef %i.b) #12, !srcloc !28
+  tail call fastcc void @i915_request_put(ptr noundef %i.b) #12, !srcloc !29
   store ptr null, ptr %i.a, align 8
   br label %bb.c
 
@@ -611,7 +611,7 @@ bb.a:
   %i.c = getelementptr i8, ptr %i.b, i64 184
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = getelementptr i8, ptr %i.d, i64 688      ; 2 uses
-  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.e, ptr elementtype(i32) %i.e) #14, !srcloc !29
+  tail call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.e, ptr elementtype(i32) %i.e) #14, !srcloc !30
   ret void
 }
 
@@ -1014,7 +1014,7 @@ bb.n:                                             ; preds = %bb.m
 __drm_to_dev.exit:                                ; preds = %bb.m, %bb.n
   %i.dv = phi ptr [ %i.du, %bb.n ], [ null, %bb.m ]
   %i.dw = tail call ptr @dev_driver_string(ptr noundef %i.dv) #13 ; 0 uses
-  %i.dx = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.6, ptr nonnull @.str.4, i32 1369, i32 2321, i64 16) #14, !srcloc !30
+  %i.dx = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.6, ptr nonnull @.str.4, i32 1369, i32 2321, i64 16) #14, !srcloc !31
   %i.dy = load ptr, ptr %i.v, align 8
   %i.dz = getelementptr i8, ptr %i.dy, i64 8
   %i.ea = load ptr, ptr %i.dz, align 8
@@ -1056,7 +1056,7 @@ bb.q:                                             ; preds = %__drm_to_dev.exit83
 dev_name.exit87:                                  ; preds = %__drm_to_dev.exit83, %bb.q
   %.0.i85 = phi ptr [ %.val.i86, %bb.q ], [ %i.eo, %__drm_to_dev.exit83 ]
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.dx, ptr noundef %i.ef, ptr noundef %.0.i85, ptr noundef nonnull @.str.7) #13
-  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !31
+  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !32
   %.pre109 = load ptr, ptr %i.v, align 8          ; 2 uses
   %.phi.trans.insert110 = getelementptr i8, ptr %.pre109, i64 8
   %.pre111 = load ptr, ptr %.phi.trans.insert110, align 8 ; 2 uses
@@ -1112,7 +1112,7 @@ bb.t:                                             ; preds = %bb.s
 __drm_to_dev.exit89:                              ; preds = %bb.s, %bb.t
   %i.fl = phi ptr [ %i.fk, %bb.t ], [ null, %bb.s ]
   %i.fm = tail call ptr @dev_driver_string(ptr noundef %i.fl) #13 ; 0 uses
-  %i.fn = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.6, ptr nonnull @.str.4, i32 1370, i32 2321, i64 16) #14, !srcloc !32
+  %i.fn = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.6, ptr nonnull @.str.4, i32 1370, i32 2321, i64 16) #14, !srcloc !33
   %i.fo = load ptr, ptr %i.v, align 8
   %i.fp = getelementptr i8, ptr %i.fo, i64 8
   %i.fq = load ptr, ptr %i.fp, align 8
@@ -1154,7 +1154,7 @@ bb.w:                                             ; preds = %__drm_to_dev.exit99
 dev_name.exit103:                                 ; preds = %__drm_to_dev.exit99, %bb.w
   %.0.i101 = phi ptr [ %.val.i102, %bb.w ], [ %i.ge, %__drm_to_dev.exit99 ]
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.fn, ptr noundef %i.fv, ptr noundef %.0.i101, ptr noundef nonnull @.str.7) #13
-  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !33
+  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !34
   %.pre117 = load ptr, ptr %i.v, align 8          ; 2 uses
   %.phi.trans.insert118 = getelementptr i8, ptr %.pre117, i64 8
   %.pre119 = load ptr, ptr %.phi.trans.insert118, align 8
@@ -1492,9 +1492,9 @@ lrc_ring_mi_mode.exit:                            ; preds = %bb.h, %select.unfol
   br i1 %.1, label %bb.j, label %bb.i, !prof !24
 
 bb.i:                                             ; preds = %.critedge, %lrc_ring_mi_mode.exit
-  %i.bi = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.3, ptr nonnull @.str.4, i32 1619, i32 2323, i64 16) #14, !srcloc !34
+  %i.bi = tail call ptr asm sideeffect "lea (2f)(%rip), $0\0A1:\0A.pushsection __bug_table,\22aw\22\0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A\092:\0A\09\09.long 1b - .\09# bug_entry::bug_addr\0A\09.long ${1:c} - .\09# bug_entry::format\0A\09.long ${2:c} - .\09# bug_entry::file\0A\09.word ${3:c}\09# bug_entry::line\0A\09.word ${4:c}\09# bug_entry::flags\0A\09.org 2b + ${5:c}\0A.popsection\0A", "=r,i,i,i,i,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @.str.3, ptr nonnull @.str.4, i32 1619, i32 2323, i64 16) #14, !srcloc !35
   tail call void (ptr, ...) @__SCT__WARN_trap(ptr noundef %i.bi, ptr noundef %2) #13
-  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !35
+  tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !srcloc !36
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %lrc_ring_mi_mode.exit
@@ -1525,7 +1525,7 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 608        ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 616
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #14
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %1, i8 0, i64 56, i1 false), !annotation !36
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %1, i8 0, i64 56, i1 false), !annotation !37
   %i.c = load ptr, ptr %0, align 8                ; 2 uses
   %i.d = getelementptr i8, ptr %i.c, i64 1656
   %i.e = load i8, ptr %i.d, align 8               ; 2 uses
@@ -1771,7 +1771,7 @@ bb.ab:                                            ; preds = %bb.z
 bb.ac:                                            ; preds = %bb.ab
   %i.cd = load ptr, ptr %i.aa, align 8
   %i.ce = getelementptr i8, ptr %i.cd, i64 268    ; 2 uses
-  call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ce, ptr elementtype(i32) %i.ce) #14, !srcloc !29
+  call void asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock decl $0", "=*m,*m,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.ce, ptr elementtype(i32) %i.ce) #14, !srcloc !30
   br label %.thread
 
 .thread:                                          ; preds = %bb.v, %bb.ac, %bb.y
@@ -1819,8 +1819,8 @@ bb.ai:                                            ; preds = %.loopexit, %i915_vm
   ret void
 }
 
-; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none)
-define internal ptr @gen9_init_indirectctx_bb(ptr nofree noundef readonly captures(none) %0, ptr noundef initializes((0, 128)) %1) unnamed_addr #9 align 16 prefalign(16) {
+; Function Attrs: fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none)
+define internal noundef ptr @gen9_init_indirectctx_bb(ptr nofree noundef readonly captures(none) %0, ptr noundef initializes((0, 128)) %1) unnamed_addr #9 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 4
   store i32 67108864, ptr %1, align 4
@@ -1921,7 +1921,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi ptr [ %i.ba, %bb.b ], [ %i.aq, %bb.a ] ; 4 uses
+  %.0 = phi ptr [ %i.ba, %bb.b ], [ %i.aq, %bb.a ] ; 2 uses
   store i32 67108865, ptr %.0, align 4
   %.116 = getelementptr i8, ptr %.0, i64 4        ; 3 uses
   %i.bb = ptrtoint ptr %.116 to i64
@@ -1929,23 +1929,22 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not17 = icmp eq i64 %i.bc, 0
   br i1 %.not17, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %.020 = ptrtoaddr ptr %.0 to i64
-  %2 = sub i64 56, %.020
-  %3 = and i64 %2, 60                             ; 2 uses
-  %4 = add nuw nsw i64 %3, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef align 4 %.116, i8 0, i64 %4, i1 false)
-  %5 = getelementptr i8, ptr %.0, i64 %3
-  %scevgep = getelementptr i8, ptr %5, i64 8
-  br label %._crit_edge
+.lr.ph.preheader:                                 ; preds = %bb.c, %.lr.ph.preheader
+  %.118 = phi ptr [ %.1, %.lr.ph.preheader ], [ %.116, %bb.c ] ; 2 uses
+  store i32 0, ptr %.118, align 4
+  %.1 = getelementptr i8, ptr %.118, i64 4        ; 3 uses
+  %2 = ptrtoint ptr %.1 to i64
+  %3 = and i64 %2, 63
+  %.not = icmp eq i64 %3, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader, !llvm.loop !38
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.c
-  %.1.lcssa = phi ptr [ %.116, %bb.c ], [ %scevgep, %.lr.ph.preheader ]
+  %.1.lcssa = phi ptr [ %.116, %bb.c ], [ %.1, %.lr.ph.preheader ]
   ret ptr %.1.lcssa
 }
 
-; Function Attrs: fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none)
-define internal ptr @gen8_init_indirectctx_bb(ptr nofree noundef readonly captures(none) %0, ptr noundef initializes((0, 4)) %1) unnamed_addr #9 align 16 prefalign(16) {
+; Function Attrs: fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none)
+define internal noundef ptr @gen8_init_indirectctx_bb(ptr nofree noundef readonly captures(none) %0, ptr noundef initializes((0, 4)) %1) unnamed_addr #9 align 16 prefalign(16) {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 4          ; 2 uses
   store i32 67108864, ptr %1, align 4
@@ -2011,7 +2010,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi ptr [ %i.ai, %bb.b ], [ %i.a, %bb.a ] ; 8 uses
+  %.0 = phi ptr [ %i.ai, %bb.b ], [ %i.a, %bb.a ] ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.0, i64 12
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.aj, i8 0, i64 12, i1 false)
   store i32 2046820356, ptr %.0, align 4
@@ -2027,18 +2026,17 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %.not11 = icmp eq i64 %i.ao, 0
   br i1 %.not11, label %._crit_edge, label %.lr.ph.preheader
 
-.lr.ph.preheader:                                 ; preds = %bb.c
-  %.014 = ptrtoaddr ptr %.0 to i64
-  %2 = sub i64 32, %.014
-  %3 = and i64 %2, 60                             ; 2 uses
-  %4 = add nuw nsw i64 %3, 4
-  tail call void @llvm.memset.p0.i64(ptr noundef align 4 %.110, i8 0, i64 %4, i1 false)
-  %5 = getelementptr i8, ptr %.0, i64 %3
-  %scevgep = getelementptr i8, ptr %5, i64 32
-  br label %._crit_edge
+.lr.ph.preheader:                                 ; preds = %bb.c, %.lr.ph.preheader
+  %.112 = phi ptr [ %.1, %.lr.ph.preheader ], [ %.110, %bb.c ] ; 2 uses
+  store i32 0, ptr %.112, align 4
+  %.1 = getelementptr i8, ptr %.112, i64 4        ; 3 uses
+  %2 = ptrtoint ptr %.1 to i64
+  %3 = and i64 %2, 63
+  %.not = icmp eq i64 %3, 0
+  br i1 %.not, label %._crit_edge, label %.lr.ph.preheader, !llvm.loop !39
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %bb.c
-  %.1.lcssa = phi ptr [ %.110, %bb.c ], [ %scevgep, %.lr.ph.preheader ]
+  %.1.lcssa = phi ptr [ %.110, %bb.c ], [ %.1, %.lr.ph.preheader ]
   ret ptr %.1.lcssa
 }
 
@@ -2078,7 +2076,7 @@ bb.a:
   %.not = icmp eq i32 %i.g, %i.c
   %i.i = icmp slt i32 %i.h, 0
   %or.cond = or i1 %.not, %i.i
-  br i1 %or.cond, label %bb.e, label %bb.b, !prof !37
+  br i1 %or.cond, label %bb.e, label %bb.b, !prof !40
 
 bb.b:                                             ; preds = %bb.a
   %i.j = zext nneg i32 %i.h to i64                ; 3 uses
@@ -2179,7 +2177,7 @@ attributes #5 = { fn_ret_thunk_extern mustprogress nofree norecurse noredzone no
 attributes #6 = { fn_ret_thunk_extern inlinehint noredzone nounwind null_pointer_is_valid sspstrong "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #7 = { fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, inaccessiblemem: none, target_mem: none) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #8 = { cold noredzone null_pointer_is_valid "no-builtin-wcslen" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" }
-attributes #9 = { fn_ret_thunk_extern mustprogress nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
+attributes #9 = { fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #10 = { fn_ret_thunk_extern nofree norecurse noredzone nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, target_mem: none) "min-legal-vector-width"="0" "no-builtin-wcslen" "no-jump-tables"="true" "no-trapping-math"="true" "patchable-function-entry"="0" "patchable-function-prefix"="16" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+retpoline-external-thunk,+retpoline-indirect-branches,+retpoline-indirect-calls,-aes,-amx-avx512,-avx,-avx10.1,-avx10.2,-avx2,-avx512bf16,-avx512bitalg,-avx512bmm,-avx512bw,-avx512cd,-avx512dq,-avx512f,-avx512fp16,-avx512ifma,-avx512vbmi,-avx512vbmi2,-avx512vl,-avx512vnni,-avx512vp2intersect,-avx512vpopcntdq,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-f16c,-fma,-fma4,-gfni,-kl,-mmx,-pclmul,-sha,-sha512,-sm3,-sm4,-sse,-sse2,-sse3,-sse4.1,-sse4.2,-sse4a,-ssse3,-vaes,-vpclmulqdq,-widekl,-x87,-xop" "tune-cpu"="generic" "warn-stack-size"="2048" }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #12 = { noredzone "no-builtin-wcslen" }
@@ -2217,15 +2215,18 @@ attributes #15 = { cold noredzone nounwind "no-builtin-wcslen" }
 !24 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !25 = !{ptr @gen12_emit_indirect_ctx_rcs, ptr @gen12_emit_indirect_ctx_xcs}
 !26 = distinct !{null}
-!27 = !{i64 2148526958}
-!28 = !{i64 24858}
-!29 = !{i64 2148919491, i64 2148919530, i64 2148919551, i64 2148919588, i64 2148919611, i64 2148919482}
-!30 = !{i64 2162233700, i64 2162233727, i64 2162234108, i64 2162234141, i64 2162234176, i64 2162234192, i64 2162235033, i64 2162235091, i64 2162235140, i64 2162234950, i64 2162234251, i64 2162234283}
-!31 = !{i64 2162231639}
-!32 = !{i64 2162242303, i64 2162242330, i64 2162242711, i64 2162242744, i64 2162242779, i64 2162242795, i64 2162243636, i64 2162243694, i64 2162243743, i64 2162243553, i64 2162242854, i64 2162242886}
-!33 = !{i64 2162240242}
-!34 = !{i64 2162363703, i64 2162363730, i64 2162364132, i64 2162364165, i64 2162364200, i64 2162364216, i64 2162369118, i64 2162369176, i64 2162369225, i64 2162369035, i64 2162364275, i64 2162364307}
-!35 = !{i64 2162362052}
-!36 = !{!"auto-init"}
-!37 = !{!"branch_weights", i32 2002, i32 2000}
+!27 = distinct !{!27, !12}
+!28 = !{i64 2148526958}
+!29 = !{i64 24858}
+!30 = !{i64 2148919491, i64 2148919530, i64 2148919551, i64 2148919588, i64 2148919611, i64 2148919482}
+!31 = !{i64 2162233700, i64 2162233727, i64 2162234108, i64 2162234141, i64 2162234176, i64 2162234192, i64 2162235033, i64 2162235091, i64 2162235140, i64 2162234950, i64 2162234251, i64 2162234283}
+!32 = !{i64 2162231639}
+!33 = !{i64 2162242303, i64 2162242330, i64 2162242711, i64 2162242744, i64 2162242779, i64 2162242795, i64 2162243636, i64 2162243694, i64 2162243743, i64 2162243553, i64 2162242854, i64 2162242886}
+!34 = !{i64 2162240242}
+!35 = !{i64 2162363703, i64 2162363730, i64 2162364132, i64 2162364165, i64 2162364200, i64 2162364216, i64 2162369118, i64 2162369176, i64 2162369225, i64 2162369035, i64 2162364275, i64 2162364307}
+!36 = !{i64 2162362052}
+!37 = !{!"auto-init"}
+!38 = distinct !{!38, !12}
+!39 = distinct !{!39, !12}
+!40 = !{!"branch_weights", i32 2002, i32 2000}
 end_hunk_1

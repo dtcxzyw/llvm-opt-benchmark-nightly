@@ -143,6 +143,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i64 @ZSTD_decompressBlock(ptr nofree noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4) unnamed_addr #1 {
 bb.a:
+  %5 = ptrtoaddr ptr %1 to i64
   %i.a = alloca [256 x i16], align 16             ; 6 uses
   %i.b = alloca [2 x i64], align 16               ; 5 uses
   %i.c = alloca i32, align 4                      ; 7 uses
@@ -152,8 +153,8 @@ bb.a:
   %i.g = alloca i32, align 4                      ; 6 uses
   %i.h = alloca i32, align 4                      ; 6 uses
   %i.i = alloca i32, align 4                      ; 6 uses
-  %5 = alloca %struct.FSE_DStream_t, align 8      ; 17 uses
-  %6 = alloca %struct.FSE_DStream_t, align 8      ; 10 uses
+  %6 = alloca %struct.FSE_DStream_t, align 8      ; 17 uses
+  %7 = alloca %struct.FSE_DStream_t, align 8      ; 10 uses
   %i.j = alloca [256 x i16], align 16             ; 7 uses
   %i.k = alloca [256 x i16], align 16             ; 8 uses
   %i.l = alloca [4097 x i32], align 16            ; 6 uses
@@ -162,7 +163,7 @@ bb.a:
   %i.o = alloca [256 x i8], align 16              ; 21 uses
   %i.p = alloca [17 x i32], align 16              ; 12 uses
   %i.q = alloca [4097 x i16], align 16            ; 7 uses
-  %i.r = getelementptr i8, ptr %1, i64 %2         ; 12 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 %2 ; 12 uses
   %i.s = icmp ult i64 %4, 3
   br i1 %i.s, label %ZSTD_decompressSequences.exit, label %bb.b
 
@@ -565,8 +566,8 @@ bb.cx:                                            ; preds = %bb.cw
   %i.aas = getelementptr i8, ptr %i.aar, i64 %i.aai ; 13 uses
   %i.aat = getelementptr i8, ptr %i.aas, i64 %i.aak ; 16 uses
   %i.aau = getelementptr i8, ptr %i.aat, i64 %i.aam ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
   %i.aav = add nuw nsw i64 %i.aap, 6
   %.not.i18.i.i.i = icmp uge i64 %i.aav, %i.aac
   %i.aaw = icmp eq i16 %.val123.i.i.i.i, 0
@@ -682,16 +683,16 @@ bb.di:                                            ; preds = %.thread48.i.i.i.i.i
 
 bb.dj:                                            ; preds = %bb.di
   %i.ada = icmp ugt i16 %.val122.i.i.i.i, 7
-  %i.adb = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %i.adb = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   store ptr %i.aas, ptr %i.adb, align 8, !tbaa !37
   br i1 %i.ada, label %bb.dk, label %bb.dl
 
 bb.dk:                                            ; preds = %bb.dj
   %i.adc = getelementptr inbounds i8, ptr %i.aat, i64 -8 ; 2 uses
-  %i.add = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.add = getelementptr inbounds nuw i8, ptr %6, i64 16
   store ptr %i.adc, ptr %i.add, align 8, !tbaa !42
   %.val.i126.i.i.i.i = load i64, ptr %i.adc, align 1 ; 2 uses
-  store i64 %.val.i126.i.i.i.i, ptr %5, align 8, !tbaa !43
+  store i64 %.val.i126.i.i.i.i, ptr %6, align 8, !tbaa !43
   %i.ade = lshr i64 %.val.i126.i.i.i.i, 56        ; 2 uses
   %i.adf = icmp eq i64 %i.ade, 0
   br i1 %i.adf, label %HUF_decompress.exit.thread257.i.i, label %.thread.i127.i.i.i.i
@@ -701,16 +702,16 @@ bb.dk:                                            ; preds = %bb.dj
   %i.adh = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.adg, i1 true)
   %i.adi = xor i32 %i.adh, 31
   %i.adj = sub nuw nsw i32 8, %i.adi
-  %i.adk = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.adk = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i32 %i.adj, ptr %i.adk, align 8, !tbaa !44
   br label %bb.dt
 
 bb.dl:                                            ; preds = %bb.dj
-  %i.adl = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.adl = getelementptr inbounds nuw i8, ptr %6, i64 16
   store ptr %i.aas, ptr %i.adl, align 8, !tbaa !42
   %i.adm = load i8, ptr %i.aas, align 1, !tbaa !8
   %i.adn = zext i8 %i.adm to i64                  ; 7 uses
-  store i64 %i.adn, ptr %5, align 8, !tbaa !43
+  store i64 %i.adn, ptr %6, align 8, !tbaa !43
   switch i16 %.val122.i.i.i.i, label %bb.ds [
     i16 7, label %bb.dm
     i16 6, label %bb.dn
@@ -771,7 +772,7 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dl
   %i.aeu = zext i8 %i.aet to i64
   %i.aev = shl nuw nsw i64 %i.aeu, 8
   %i.aew = add nuw nsw i64 %i.aev, %i.aer
-  store i64 %i.aew, ptr %5, align 8, !tbaa !43
+  store i64 %i.aew, ptr %6, align 8, !tbaa !43
   br label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dr, %bb.dl
@@ -783,7 +784,7 @@ bb.ds:                                            ; preds = %bb.dr, %bb.dl
 .thread48.i124.i.i.i.i:                           ; preds = %bb.ds
   %i.afa = zext i8 %i.aey to i32
   %i.afb = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.afa, i1 true)
-  %i.afc = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.afc = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.afd = shl nuw nsw i16 %.val122.i.i.i.i, 3
   %i.afe = zext nneg i16 %i.afd to i32
   %reass.sub135 = sub nsw i32 %i.afb, %i.afe
@@ -899,30 +900,30 @@ bb.ee:                                            ; preds = %.thread48.i129.i.i.
   %.sroa.29217.1.i.i.i.i = phi ptr [ %i.afl, %.thread.i132.i.i.i.i ], [ %i.aat, %.thread48.i129.i.i.i.i ]
   %.sroa.16.1.i.i.i.i = phi i32 [ %i.afp, %.thread.i132.i.i.i.i ], [ %i.ahi, %.thread48.i129.i.i.i.i ]
   %.sroa.0209.2.i.i.i.i = phi i64 [ %.val.i131.i.i.i.i, %.thread.i132.i.i.i.i ], [ %.sroa.0209.1.i.i.i.i, %.thread48.i129.i.i.i.i ]
-  %i.ahj = call fastcc i64 @FSE_initDStream(ptr noundef %6, ptr noundef nonnull %i.aau, i64 noundef %i.aaq)
+  %i.ahj = call fastcc i64 @FSE_initDStream(ptr noundef %7, ptr noundef nonnull %i.aau, i64 noundef %i.aaq)
   %i.ahk = icmp ult i64 %i.ahj, -7
   br i1 %i.ahk, label %bb.ef, label %HUF_decompress.exit.thread257.i.i
 
 bb.ef:                                            ; preds = %bb.ee
-  %i.ahl = call fastcc i32 @FSE_reloadDStream(ptr noundef %5) ; 2 uses
+  %i.ahl = call fastcc i32 @FSE_reloadDStream(ptr noundef %6) ; 2 uses
   %i.ahm = icmp samesign ult i32 %i.ahl, 2
   %i.ahn = icmp ult ptr %i.bi, %i.aag
   %i.aho = select i1 %i.ahm, i1 %i.ahn, i1 false
   br i1 %i.aho, label %.lr.ph.i23.i.i.i, label %._crit_edge.i21.i.i.i
 
 .lr.ph.i23.i.i.i:                                 ; preds = %bb.ef
-  %.promoted261.i.i.i.i = load i64, ptr %6, align 8
-  %.promoted.i.i.i.i = load i64, ptr %5, align 8
+  %.promoted261.i.i.i.i = load i64, ptr %7, align 8
+  %.promoted.i.i.i.i = load i64, ptr %6, align 8
   %i.ahp = sub nsw i32 0, %i.aah
   %i.ahq = and i32 %i.ahp, 63
   %i.ahr = zext nneg i32 %i.ahq to i64            ; 16 uses
-  %i.ahs = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
-  %i.aht = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %i.ahu = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  %i.ahs = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
+  %i.aht = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 4 uses
+  %i.ahu = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
   %i.ahv = getelementptr inbounds nuw i8, ptr %i.aat, i64 8
   %i.ahw = ptrtoint ptr %i.aat to i64
-  %i.ahx = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
-  %i.ahy = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %i.ahx = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
+  %i.ahy = getelementptr inbounds nuw i8, ptr %7, i64 24
   %i.ahz = load ptr, ptr %i.ahy, align 8          ; 4 uses
   %i.aia = getelementptr inbounds nuw i8, ptr %i.ahz, i64 8
   %i.aib = ptrtoint ptr %i.ahz to i64
@@ -1161,7 +1162,7 @@ bb.ei:                                            ; preds = %bb.eh
   %i.api = and i32 %i.aoe, 7                      ; 2 uses
   store i32 %i.api, ptr %i.ahs, align 8, !tbaa !44
   %.val30.i.i.i.i.i = load i64, ptr %i.aph, align 1 ; 2 uses
-  store i64 %.val30.i.i.i.i.i, ptr %5, align 8, !tbaa !43
+  store i64 %.val30.i.i.i.i.i, ptr %6, align 8, !tbaa !43
   br label %FSE_reloadDStream.exit.i.i.i.i
 
 bb.ej:                                            ; preds = %bb.eh
@@ -1192,7 +1193,7 @@ bb.el:                                            ; preds = %bb.ej
   %i.apw = sub i32 %i.aoe, %i.apv                 ; 2 uses
   store i32 %i.apw, ptr %i.ahs, align 8, !tbaa !44
   %.val.i165.i.i.i.i = load i64, ptr %i.apu, align 1 ; 2 uses
-  store i64 %.val.i165.i.i.i.i, ptr %5, align 8, !tbaa !43
+  store i64 %.val.i165.i.i.i.i, ptr %6, align 8, !tbaa !43
   br label %FSE_reloadDStream.exit.i.i.i.i
 
 FSE_reloadDStream.exit.i.i.i.i:                   ; preds = %bb.el, %bb.ek, %bb.ei, %bb.eg
@@ -1266,7 +1267,7 @@ bb.es:                                            ; preds = %bb.er
   %i.aqy = and i32 %i.apa, 7                      ; 2 uses
   store i32 %i.aqy, ptr %i.aht, align 8, !tbaa !44
   %.val30.i176.i.i.i.i = load i64, ptr %i.aqx, align 1 ; 2 uses
-  store i64 %.val30.i176.i.i.i.i, ptr %6, align 8, !tbaa !43
+  store i64 %.val30.i176.i.i.i.i, ptr %7, align 8, !tbaa !43
   br label %FSE_reloadDStream.exit183.i.i.i.i
 
 bb.et:                                            ; preds = %bb.er
@@ -1297,7 +1298,7 @@ bb.ev:                                            ; preds = %bb.et
   %i.arm = sub i32 %i.apa, %i.arl                 ; 2 uses
   store i32 %i.arm, ptr %i.aht, align 8, !tbaa !44
   %.val.i180.i.i.i.i = load i64, ptr %i.ark, align 1 ; 2 uses
-  store i64 %.val.i180.i.i.i.i, ptr %6, align 8, !tbaa !43
+  store i64 %.val.i180.i.i.i.i, ptr %7, align 8, !tbaa !43
   br label %FSE_reloadDStream.exit183.i.i.i.i
 
 FSE_reloadDStream.exit183.i.i.i.i:                ; preds = %bb.ev, %bb.eu, %bb.es, %FSE_reloadDStream.exit174.i.i.i.i
@@ -1447,8 +1448,8 @@ FSE_reloadDStream.exit201.thread.i.i.i.i:         ; preds = %FSE_reloadDStream.e
   br i1 %or.cond255.i.i.i.i, label %ZSTD_decompressLiterals.exit.i, label %HUF_decompress.exit.thread257.i.i
 
 HUF_decompress.exit.thread257.i.i:                ; preds = %bb.ff, %FSE_reloadDStream.exit201.thread.i.i.i.i, %._crit_edge.i21.i.i.i, %bb.ee, %bb.ed, %bb.dv, %bb.dt, %bb.ds, %bb.dk, %bb.di, %bb.dh, %bb.cz, %bb.cx
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %HUF_decompress.exit.thread257.i.i, %bb.cw, %HUF_readDTable.exit.i.i.i, %HUF_readDTable.exit.thread.i.i.i
@@ -1459,8 +1460,8 @@ ZSTD_decompressLiterals.exit.i:                   ; preds = %FSE_reloadDStream.e
   %i.aub = ptrtoint ptr %.1288.i.i.i.i to i64
   %i.auc = ptrtoint ptr %i.bi to i64
   %i.aud = sub i64 %i.aub, %i.auc
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #16
   %.fr.i.i = freeze i64 %i.aud
   %i.aue = icmp ult i64 %.fr.i.i, -7
@@ -1863,8 +1864,10 @@ FSE_initDState.exit92.i:                          ; preds = %bb.hr
   %i.blm = ptrtoint ptr %i.aup to i64             ; 2 uses
   %i.bln = ptrtoint ptr %i.aut to i64             ; 2 uses
   %i.blo = getelementptr inbounds i8, ptr %i.r, i64 -12
-  %i.blp = getelementptr i8, ptr %i.r, i64 -8     ; 4 uses
-  %i.blq = ptrtoint ptr %i.blp to i64             ; 4 uses
+  %i.blp = getelementptr inbounds i8, ptr %i.r, i64 -8 ; 4 uses
+  %i.blq = ptrtoint ptr %i.blp to i64
+  %8 = add i64 %2, %5
+  %9 = add i64 %8, -8                             ; 3 uses
   br label %bb.hs
 
 bb.hs:                                            ; preds = %ZSTD_execSequence.exit.i, %.lr.ph.i
@@ -2204,7 +2207,7 @@ bb.iu:                                            ; preds = %bb.it
 .lr.ph.i.i.i.preheader:                           ; preds = %bb.iu
   %i.brw = add i64 %.156.i.i, %i.bpt
   %i.brx = add i64 %i.brw, 16
-  %i.bry = tail call i64 @llvm.umax.i64(i64 %i.blq, i64 %i.brx)
+  %i.bry = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.brx)
   %i.brz = add i64 %i.bry, -9
   %i.bsa = add i64 %.156.i.i, %i.bpt
   %i.bsb = sub i64 %i.brz, %i.bsa                 ; 2 uses
@@ -2277,7 +2280,7 @@ iter.check580:                                    ; preds = %bb.iv
   %i.bsu = add i64 %i.bst, %i.bpt
   %i.bsv = add nsw i64 %.156.i.i, 8
   %i.bsw = add i64 %i.bsv, %i.bpt
-  %umax564 = tail call i64 @llvm.umax.i64(i64 %i.blq, i64 %i.bsw)
+  %umax564 = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.bsw)
   %i.bsx = sub i64 %i.bsu, %umax564               ; 7 uses
   %min.iters.check565 = icmp ult i64 %i.bsx, 4
   br i1 %min.iters.check565, label %.lr.ph.i.i.preheader, label %vector.memcheck
@@ -2285,7 +2288,7 @@ iter.check580:                                    ; preds = %bb.iv
 vector.memcheck:                                  ; preds = %iter.check580
   %i.bsy = add nsw i64 %.156.i.i, 8
   %i.bsz = add i64 %i.bsy, %i.bpt
-  %umax562 = tail call i64 @llvm.umax.i64(i64 %i.blq, i64 %i.bsz)
+  %umax562 = tail call i64 @llvm.umax.i64(i64 %9, i64 %i.bsz)
   %i.bta = sub i64 %.185.i.i563, %umax562
   %diff.check = icmp ugt i64 %i.bta, -32
   br i1 %diff.check, label %.lr.ph.i.i.preheader, label %vector.main.loop.iter.check566

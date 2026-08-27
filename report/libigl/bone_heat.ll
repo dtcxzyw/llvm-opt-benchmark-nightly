@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %_ZN5Eigen6MatrixIiL
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #23
   %sext = shl i64 %i.b, 32
-  %i.bp = ashr exact i64 %sext, 32                ; 27 uses
+  %i.bp = ashr exact i64 %sext, 32                ; 29 uses
   %i.bq = sext i32 %i.j to i64                    ; 5 uses
   %i.br = icmp eq i32 %i.c, 0
   %i.bs = icmp eq i32 %i.j, 0
@@ -243,7 +243,7 @@ bb.n:                                             ; preds = %.invoke.i
 
 _ZN5Eigen6MatrixIbLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit: ; preds = %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.i.i, %bb.m
   %.sroa.0.0 = phi ptr [ null, %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit.i.i.i ], [ %i.bx, %bb.m ] ; 6 uses
-  %.sroa.0.0399 = ptrtoaddr ptr %.sroa.0.0 to i64 ; 5 uses
+  %.sroa.0.0399 = ptrtoaddr ptr %.sroa.0.0 to i64 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %22, i8 0, i64 24, i1 false)
   br i1 %or.cond.i.i.i.i, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i, label %bb.o
@@ -316,8 +316,10 @@ _ZN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEC2IiiEERKT_RKT0_.exit: ; preds = %.si
   %i.ct = getelementptr inbounds nuw i8, ptr %26, i64 8
   %i.cu = getelementptr inbounds nuw i8, ptr %26, i64 16
   %sext396 = shl i64 %i.e, 32                     ; 2 uses
-  %i.cv = ashr exact i64 %sext396, 32
+  %i.cv = ashr exact i64 %sext396, 32             ; 2 uses
   %wide.trip.count356 = and i64 %i.h, 2147483647
+  %41 = mul nsw i64 %i.cv, %i.bp
+  %42 = add i64 %41, %.sroa.0.0399
   %i.cw = mul i64 %i.e, %i.b
   %i.cx = add i64 %i.cw, %.sroa.0.0399
   %i.cy = ashr exact i64 %sext396, 29             ; 2 uses
@@ -715,7 +717,7 @@ bb.ad:                                            ; preds = %.loopexit335
   br label %.body153
 
 bb.ae:                                            ; preds = %.lr.ph338, %_ZN5Eigen5BlockINS_6MatrixIbLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEaSINS1_IbLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit176
-  %indvars.iv353 = phi i64 [ 0, %.lr.ph338 ], [ %indvars.iv.next354, %_ZN5Eigen5BlockINS_6MatrixIbLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEaSINS1_IbLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit176 ] ; 7 uses
+  %indvars.iv353 = phi i64 [ 0, %.lr.ph338 ], [ %indvars.iv.next354, %_ZN5Eigen5BlockINS_6MatrixIbLin1ELin1ELi0ELin1ELin1EEELin1ELi1ELb1EEaSINS1_IbLin1ELi1ELi0ELin1ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit176 ] ; 8 uses
   %i.iy = mul i64 %i.b, %indvars.iv353
   %i.iz = add i64 %i.da, %i.iy
   %i.ja = sub i64 0, %i.iz
@@ -733,6 +735,8 @@ bb.ae:                                            ; preds = %.lr.ph338, %_ZN5Eig
   %smin443 = call i64 @llvm.smin.i64(i64 %i.bp, i64 %i.jk)
   %i.jl = sub i64 %i.b, %smin443                  ; 2 uses
   %i.jm = and i64 %i.jl, 15                       ; 2 uses
+  %43 = mul i64 %i.bp, %indvars.iv353
+  %44 = add i64 %42, %43
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #23
   %i.jn = load ptr, ptr %4, align 8, !tbaa !22
   %i.jo = getelementptr [4 x i8], ptr %i.jn, i64 %indvars.iv353 ; 2 uses
@@ -1004,7 +1008,7 @@ bb.ah:                                            ; preds = %.loopexit333
   %i.nw = getelementptr inbounds i8, ptr %.sroa.0.0, i64 %i.nv ; 13 uses
   %i.nx = load ptr, ptr %29, align 8, !tbaa !96   ; 14 uses
   %i.ny = ptrtoaddr ptr %i.nx to i64
-  %i.nz = ptrtoint ptr %i.nw to i64               ; 2 uses
+  %i.nz = ptrtoint ptr %i.nw to i64
   %i.oa = sub i64 0, %i.nz
   %i.ob = and i64 %i.oa, 15
   %i.oc = call noundef i64 @llvm.smin.i64(i64 %i.ob, i64 %i.bp) ; 6 uses
@@ -1082,7 +1086,7 @@ _ZN5Eigen8internal31unaligned_dense_assignment_loopILb0EE3runINS0_31generic_dens
 
 iter.check459:                                    ; preds = %._crit_edge.i.i.i.i.i.i.i.i.i.i169
   %min.iters.check445 = icmp samesign ult i64 %i.jm, 8
-  %i.pd = sub i64 %i.ny, %i.nz
+  %i.pd = sub i64 %i.ny, %44
   %diff.check442 = icmp ugt i64 %i.pd, -32
   %or.cond498 = select i1 %min.iters.check445, i1 true, i1 %diff.check442
   br i1 %or.cond498, label %.lr.ph.i17.i.i.i.i.i.i.i.i.i.i170.preheader, label %vec.epilog.ph463

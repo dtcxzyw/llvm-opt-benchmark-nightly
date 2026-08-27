@@ -205,10 +205,10 @@ bb.j:                                             ; preds = %bb.i
   br label %write_str.exit605
 
 bb.k:                                             ; preds = %get_enc_table_with_flag.exit66
-  %i.r = lshr i64 %i.a, 8                         ; 7 uses
+  %i.r = lshr i64 %i.a, 8                         ; 9 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !81   ; 7 uses
-  %i.u = ptrtoaddr ptr %i.t to i64                ; 2 uses
+  %i.u = ptrtoaddr ptr %i.t to i64                ; 4 uses
   %i.v = mul nuw nsw i64 %i.r, 6
   %i.w = add nuw nsw i64 %i.v, 4
   %i.x = tail call ptr %.sroa.0849.0(ptr noundef %.sroa.9.0, i64 noundef %i.w) #33, !inline_history !330 ; 12 uses
@@ -221,7 +221,7 @@ bb.l:                                             ; preds = %bb.k
 .split.i:                                         ; preds = %bb.l
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
   store i8 34, ptr %i.x, align 1, !tbaa !81
-  %i.z = ptrtoint ptr %i.y to i64                 ; 5 uses
+  %i.z = ptrtoint ptr %i.y to i64                 ; 4 uses
   %i.aa = add i64 %i.r, %i.u
   br label %bb.m
 
@@ -403,7 +403,8 @@ bb.ac:                                            ; preds = %bb.ab
 
 .lr.ph2583.preheader:                             ; preds = %.preheader1325
   %.2240.i513.lcssa3132 = ptrtoaddr ptr %.2240.i513.lcssa to i64 ; 2 uses
-  %scevgep3131 = getelementptr i8, ptr %.2240.i513.lcssa, i64 %i.z
+  %6 = getelementptr i8, ptr %.2240.i513.lcssa, i64 %i.r
+  %scevgep3131 = getelementptr i8, ptr %6, i64 %i.u
   %i.dm = sub i64 0, %.2240.i513.lcssa3132
   %scevgep3133 = getelementptr i8, ptr %scevgep3131, i64 %i.dm
   %i.dn = sub i64 %i.aa, %.2240.i513.lcssa3132
@@ -806,7 +807,7 @@ bb.bu:                                            ; preds = %bb.l
 
 .split83.i:                                       ; preds = %bb.bu
   %i.ni = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
-  %i.nj = ptrtoint ptr %i.ni to i64               ; 5 uses
+  %i.nj = ptrtoint ptr %i.ni to i64               ; 4 uses
   %i.nk = add i64 %i.r, %i.u
   br label %bb.bv
 
@@ -988,7 +989,8 @@ bb.cl:                                            ; preds = %bb.ck
 
 .lr.ph2634.preheader:                             ; preds = %.preheader1309
   %.2240.i414.lcssa3136 = ptrtoaddr ptr %.2240.i414.lcssa to i64 ; 2 uses
-  %scevgep3135 = getelementptr i8, ptr %.2240.i414.lcssa, i64 %i.nj
+  %7 = getelementptr i8, ptr %.2240.i414.lcssa, i64 %i.r
+  %scevgep3135 = getelementptr i8, ptr %7, i64 %i.u
   %i.qw = sub i64 0, %.2240.i414.lcssa3136
   %scevgep3137 = getelementptr i8, ptr %scevgep3135, i64 %i.qw
   %i.qx = sub i64 %i.nk, %.2240.i414.lcssa3136
@@ -1391,10 +1393,10 @@ bb.fy:                                            ; preds = %bb.fx
   %.not593.i = icmp eq i32 %i.asq, 0              ; 2 uses
   %i.asr = and i32 %i.asa, %i.aso
   %.not594.i = icmp ne i32 %i.asr, 0              ; 2 uses
-  %i.ass = lshr i64 %i.asl, 8                     ; 7 uses
+  %i.ass = lshr i64 %i.asl, 8                     ; 9 uses
   %i.ast = getelementptr inbounds nuw i8, ptr %.0565.i, i64 8
   %i.asu = load ptr, ptr %i.ast, align 8, !tbaa !81 ; 7 uses
-  %i.asv = ptrtoaddr ptr %i.asu to i64            ; 2 uses
+  %i.asv = ptrtoaddr ptr %i.asu to i64            ; 4 uses
   %i.asw = mul nuw nsw i64 %i.ass, 6
   %i.asx = select i1 %.not594.i, i64 16, i64 %i.asd
   %i.asy = add i64 %i.asx, %i.asw                 ; 2 uses
@@ -1487,7 +1489,7 @@ write_indent.exit742:                             ; preds = %select.unfold.prol.
 .split.i33:                                       ; preds = %write_indent.exit742
   %i.aud = getelementptr inbounds nuw i8, ptr %i.asu, i64 %i.ass ; 4 uses
   store i8 34, ptr %.0.i740.lcssa, align 1, !tbaa !81
-  %i.aue = ptrtoint ptr %i.aud to i64             ; 5 uses
+  %i.aue = ptrtoint ptr %i.aud to i64             ; 4 uses
   %i.auf = add i64 %i.ass, %i.asv
   br label %bb.ga
 
@@ -1669,7 +1671,8 @@ bb.gq:                                            ; preds = %bb.gp
 
 .lr.ph2384.preheader:                             ; preds = %.preheader1386
   %.2240.i315.lcssa3117 = ptrtoaddr ptr %.2240.i315.lcssa to i64 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.2240.i315.lcssa, i64 %i.aue
+  %8 = getelementptr i8, ptr %.2240.i315.lcssa, i64 %i.ass
+  %scevgep = getelementptr i8, ptr %8, i64 %i.asv
   %i.axr = sub i64 0, %.2240.i315.lcssa3117
   %scevgep3118 = getelementptr i8, ptr %scevgep, i64 %i.axr
   %i.axs = sub i64 %i.auf, %.2240.i315.lcssa3117
@@ -2072,7 +2075,7 @@ bb.ih:                                            ; preds = %write_indent.exit74
 
 .split567.i:                                      ; preds = %bb.ih
   %i.bhl = getelementptr inbounds nuw i8, ptr %i.asu, i64 %i.ass ; 4 uses
-  %i.bhm = ptrtoint ptr %i.bhl to i64             ; 5 uses
+  %i.bhm = ptrtoint ptr %i.bhl to i64             ; 4 uses
   %i.bhn = add i64 %i.ass, %i.asv
   br label %bb.ii
 
@@ -2254,7 +2257,8 @@ bb.iy:                                            ; preds = %bb.ix
 
 .lr.ph2434.preheader:                             ; preds = %.preheader1372
   %.2240.i216.lcssa3120 = ptrtoaddr ptr %.2240.i216.lcssa to i64 ; 2 uses
-  %scevgep3119 = getelementptr i8, ptr %.2240.i216.lcssa, i64 %i.bhm
+  %9 = getelementptr i8, ptr %.2240.i216.lcssa, i64 %i.ass
+  %scevgep3119 = getelementptr i8, ptr %9, i64 %i.asv
   %i.bkz = sub i64 0, %.2240.i216.lcssa3120
   %scevgep3121 = getelementptr i8, ptr %scevgep3119, i64 %i.bkz
   %i.bla = sub i64 %i.bhn, %.2240.i216.lcssa3120
@@ -2657,10 +2661,10 @@ bb.mx:                                            ; preds = %bb.mw
   %i.cxm = xor i32 %i.cxl, -1
   %i.cxn = and i32 %i.cxh, %i.cxm
   %.not439.i = icmp eq i32 %i.cxn, 0
-  %i.cxo = lshr i64 %i.cxi, 8                     ; 7 uses
+  %i.cxo = lshr i64 %i.cxi, 8                     ; 9 uses
   %i.cxp = getelementptr inbounds nuw i8, ptr %.0418.i, i64 8
   %i.cxq = load ptr, ptr %i.cxp, align 8, !tbaa !81 ; 7 uses
-  %i.cxr = ptrtoaddr ptr %i.cxq to i64            ; 2 uses
+  %i.cxr = ptrtoaddr ptr %i.cxq to i64            ; 4 uses
   %i.cxs = mul nuw nsw i64 %i.cxo, 6
   %i.cxt = add nuw nsw i64 %i.cxs, 16             ; 2 uses
   %i.cxu = getelementptr inbounds nuw i8, ptr %.0385.i, i64 %i.cxt
@@ -2704,7 +2708,7 @@ bb.my:                                            ; preds = %.thread1191, %bb.mx
 .split.i47:                                       ; preds = %bb.my
   %i.cyn = getelementptr inbounds nuw i8, ptr %i.cxq, i64 %i.cxo ; 4 uses
   store i8 34, ptr %.2387.i, align 1, !tbaa !81
-  %i.cyo = ptrtoint ptr %i.cyn to i64             ; 5 uses
+  %i.cyo = ptrtoint ptr %i.cyn to i64             ; 4 uses
   %i.cyp = add i64 %i.cxo, %i.cxr
   br label %bb.mz
 
@@ -2886,7 +2890,8 @@ bb.np:                                            ; preds = %bb.no
 
 .lr.ph2501.preheader:                             ; preds = %.preheader1353
   %.2240.i117.lcssa3124 = ptrtoaddr ptr %.2240.i117.lcssa to i64 ; 2 uses
-  %scevgep3123 = getelementptr i8, ptr %.2240.i117.lcssa, i64 %i.cyo
+  %10 = getelementptr i8, ptr %.2240.i117.lcssa, i64 %i.cxo
+  %scevgep3123 = getelementptr i8, ptr %10, i64 %i.cxr
   %i.dcb = sub i64 0, %.2240.i117.lcssa3124
   %scevgep3125 = getelementptr i8, ptr %scevgep3123, i64 %i.dcb
   %i.dcc = sub i64 %i.cyp, %.2240.i117.lcssa3124
@@ -3289,7 +3294,7 @@ bb.pg:                                            ; preds = %bb.my
 
 .split420.i:                                      ; preds = %bb.pg
   %i.dlv = getelementptr inbounds nuw i8, ptr %i.cxq, i64 %i.cxo ; 4 uses
-  %i.dlw = ptrtoint ptr %i.dlv to i64             ; 5 uses
+  %i.dlw = ptrtoint ptr %i.dlv to i64             ; 4 uses
   %i.dlx = add i64 %i.cxo, %i.cxr
   br label %bb.ph
 
@@ -3471,7 +3476,8 @@ bb.px:                                            ; preds = %bb.pw
 
 .lr.ph2552.preheader:                             ; preds = %.preheader1339
   %.2240.i.lcssa3128 = ptrtoaddr ptr %.2240.i.lcssa to i64 ; 2 uses
-  %scevgep3127 = getelementptr i8, ptr %.2240.i.lcssa, i64 %i.dlw
+  %11 = getelementptr i8, ptr %.2240.i.lcssa, i64 %i.cxo
+  %scevgep3127 = getelementptr i8, ptr %11, i64 %i.cxr
   %i.dpj = sub i64 0, %.2240.i.lcssa3128
   %scevgep3129 = getelementptr i8, ptr %scevgep3127, i64 %i.dpj
   %i.dpk = sub i64 %i.dlx, %.2240.i.lcssa3128
@@ -3874,10 +3880,10 @@ bb.j:                                             ; preds = %bb.i
   br label %write_str.exit109.i
 
 bb.k:                                             ; preds = %get_enc_table_with_flag.exit.i
-  %i.r = lshr i64 %i.a, 8                         ; 7 uses
+  %i.r = lshr i64 %i.a, 8                         ; 9 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !81   ; 7 uses
-  %i.u = ptrtoaddr ptr %i.t to i64                ; 2 uses
+  %i.u = ptrtoaddr ptr %i.t to i64                ; 4 uses
   %i.v = mul nuw nsw i64 %i.r, 6
   %i.w = add nuw nsw i64 %i.v, 4
   %i.x = tail call ptr %.sroa.0486.0(ptr noundef %.sroa.9.0, i64 noundef %i.w) #33, !inline_history !376 ; 12 uses
@@ -3890,7 +3896,7 @@ bb.l:                                             ; preds = %bb.k
 .split.i.i:                                       ; preds = %bb.l
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
   store i8 34, ptr %i.x, align 1, !tbaa !81
-  %i.z = ptrtoint ptr %i.y to i64                 ; 5 uses
+  %i.z = ptrtoint ptr %i.y to i64                 ; 4 uses
   %i.aa = add i64 %i.r, %i.u
   br label %bb.m
 
@@ -4072,7 +4078,8 @@ bb.ac:                                            ; preds = %bb.ab
 
 .lr.ph2236.preheader:                             ; preds = %.preheader976
   %.2240.i17.i.lcssa2787 = ptrtoaddr ptr %.2240.i17.i.lcssa to i64 ; 2 uses
-  %scevgep2786 = getelementptr i8, ptr %.2240.i17.i.lcssa, i64 %i.z
+  %7 = getelementptr i8, ptr %.2240.i17.i.lcssa, i64 %i.r
+  %scevgep2786 = getelementptr i8, ptr %7, i64 %i.u
   %i.dm = sub i64 0, %.2240.i17.i.lcssa2787
   %scevgep2788 = getelementptr i8, ptr %scevgep2786, i64 %i.dm
   %i.dn = sub i64 %i.aa, %.2240.i17.i.lcssa2787
@@ -4475,7 +4482,7 @@ bb.bu:                                            ; preds = %bb.l
 
 .split83.i.i:                                     ; preds = %bb.bu
   %i.ni = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r ; 4 uses
-  %i.nj = ptrtoint ptr %i.ni to i64               ; 5 uses
+  %i.nj = ptrtoint ptr %i.ni to i64               ; 4 uses
   %i.nk = add i64 %i.r, %i.u
   br label %bb.bv
 
@@ -4657,7 +4664,8 @@ bb.cl:                                            ; preds = %bb.ck
 
 .lr.ph2287.preheader:                             ; preds = %.preheader960
   %.2240.i.i.lcssa2791 = ptrtoaddr ptr %.2240.i.i.lcssa to i64 ; 2 uses
-  %scevgep2790 = getelementptr i8, ptr %.2240.i.i.lcssa, i64 %i.nj
+  %8 = getelementptr i8, ptr %.2240.i.i.lcssa, i64 %i.r
+  %scevgep2790 = getelementptr i8, ptr %8, i64 %i.u
   %i.qw = sub i64 0, %.2240.i.i.lcssa2791
   %scevgep2792 = getelementptr i8, ptr %scevgep2790, i64 %i.qw
   %i.qx = sub i64 %i.nk, %.2240.i.i.lcssa2791
@@ -5060,10 +5068,10 @@ bb.ga:                                            ; preds = %bb.fz
   %.not600.i = icmp eq i32 %i.asr, 0              ; 2 uses
   %i.ass = and i32 %i.asb, %i.asp
   %.not601.i = icmp ne i32 %i.ass, 0              ; 2 uses
-  %i.ast = lshr i64 %i.asm, 8                     ; 7 uses
+  %i.ast = lshr i64 %i.asm, 8                     ; 9 uses
   %i.asu = getelementptr inbounds nuw i8, ptr %.0570.i, i64 8
   %i.asv = load ptr, ptr %i.asu, align 8, !tbaa !81 ; 7 uses
-  %i.asw = ptrtoaddr ptr %i.asv to i64            ; 2 uses
+  %i.asw = ptrtoaddr ptr %i.asv to i64            ; 4 uses
   %i.asx = mul nuw nsw i64 %i.ast, 6
   %i.asy = select i1 %.not601.i, i64 16, i64 %i.ase
   %i.asz = add i64 %i.asy, %i.asx                 ; 2 uses
@@ -5156,7 +5164,7 @@ write_indent.exit776.i:                           ; preds = %select.unfold.prol.
 .split.i:                                         ; preds = %write_indent.exit776.i
   %i.aue = getelementptr inbounds nuw i8, ptr %i.asv, i64 %i.ast ; 4 uses
   store i8 34, ptr %.0.i774.i.lcssa, align 1, !tbaa !81
-  %i.auf = ptrtoint ptr %i.aue to i64             ; 5 uses
+  %i.auf = ptrtoint ptr %i.aue to i64             ; 4 uses
   %i.aug = add i64 %i.ast, %i.asw
   br label %bb.gd
 
@@ -5338,7 +5346,8 @@ bb.gt:                                            ; preds = %bb.gs
 
 .lr.ph2037.preheader:                             ; preds = %.preheader1037
   %.2240.i652.i.lcssa2772 = ptrtoaddr ptr %.2240.i652.i.lcssa to i64 ; 2 uses
-  %scevgep = getelementptr i8, ptr %.2240.i652.i.lcssa, i64 %i.auf
+  %9 = getelementptr i8, ptr %.2240.i652.i.lcssa, i64 %i.ast
+  %scevgep = getelementptr i8, ptr %9, i64 %i.asw
   %i.axs = sub i64 0, %.2240.i652.i.lcssa2772
   %scevgep2773 = getelementptr i8, ptr %scevgep, i64 %i.axs
   %i.axt = sub i64 %i.aug, %.2240.i652.i.lcssa2772
@@ -5741,7 +5750,7 @@ bb.ik:                                            ; preds = %write_indent.exit77
 
 .split572.i:                                      ; preds = %bb.ik
   %i.bhm = getelementptr inbounds nuw i8, ptr %i.asv, i64 %i.ast ; 4 uses
-  %i.bhn = ptrtoint ptr %i.bhm to i64             ; 5 uses
+  %i.bhn = ptrtoint ptr %i.bhm to i64             ; 4 uses
   %i.bho = add i64 %i.ast, %i.asw
   br label %bb.il
 
@@ -5923,7 +5932,8 @@ bb.jb:                                            ; preds = %bb.ja
 
 .lr.ph2087.preheader:                             ; preds = %.preheader1023
   %.2240.i.i103.lcssa2775 = ptrtoaddr ptr %.2240.i.i103.lcssa to i64 ; 2 uses
-  %scevgep2774 = getelementptr i8, ptr %.2240.i.i103.lcssa, i64 %i.bhn
+  %10 = getelementptr i8, ptr %.2240.i.i103.lcssa, i64 %i.ast
+  %scevgep2774 = getelementptr i8, ptr %10, i64 %i.asw
   %i.bla = sub i64 0, %.2240.i.i103.lcssa2775
   %scevgep2776 = getelementptr i8, ptr %scevgep2774, i64 %i.bla
   %i.blb = sub i64 %i.bho, %.2240.i.i103.lcssa2775
@@ -6326,10 +6336,10 @@ bb.nn:                                            ; preds = %bb.nm
   %i.cxx = xor i32 %i.cxw, -1
   %i.cxy = and i32 %i.cxs, %i.cxx
   %.not446.i = icmp eq i32 %i.cxy, 0
-  %i.cxz = lshr i64 %i.cxt, 8                     ; 7 uses
+  %i.cxz = lshr i64 %i.cxt, 8                     ; 9 uses
   %i.cya = getelementptr inbounds nuw i8, ptr %.0423.i, i64 8
   %i.cyb = load ptr, ptr %i.cya, align 8, !tbaa !81 ; 7 uses
-  %i.cyc = ptrtoaddr ptr %i.cyb to i64            ; 2 uses
+  %i.cyc = ptrtoaddr ptr %i.cyb to i64            ; 4 uses
   %i.cyd = mul nuw nsw i64 %i.cxz, 6
   %i.cye = add nuw nsw i64 %i.cyd, 16             ; 2 uses
   %i.cyf = getelementptr inbounds nuw i8, ptr %.0390.i, i64 %i.cye
@@ -6373,7 +6383,7 @@ bb.np:                                            ; preds = %.thread842, %bb.nn
 .split.i262:                                      ; preds = %bb.np
   %i.cyy = getelementptr inbounds nuw i8, ptr %i.cyb, i64 %i.cxz ; 4 uses
   store i8 34, ptr %.2392.i, align 1, !tbaa !81
-  %i.cyz = ptrtoint ptr %i.cyy to i64             ; 5 uses
+  %i.cyz = ptrtoint ptr %i.cyy to i64             ; 4 uses
   %i.cza = add i64 %i.cxz, %i.cyc
   br label %bb.nq
 
@@ -6555,7 +6565,8 @@ bb.og:                                            ; preds = %bb.of
 
 .lr.ph2154.preheader:                             ; preds = %.preheader1004
   %.2240.i489.i.lcssa2779 = ptrtoaddr ptr %.2240.i489.i.lcssa to i64 ; 2 uses
-  %scevgep2778 = getelementptr i8, ptr %.2240.i489.i.lcssa, i64 %i.cyz
+  %11 = getelementptr i8, ptr %.2240.i489.i.lcssa, i64 %i.cxz
+  %scevgep2778 = getelementptr i8, ptr %11, i64 %i.cyc
   %i.dcm = sub i64 0, %.2240.i489.i.lcssa2779
   %scevgep2780 = getelementptr i8, ptr %scevgep2778, i64 %i.dcm
   %i.dcn = sub i64 %i.cza, %.2240.i489.i.lcssa2779
@@ -6958,7 +6969,7 @@ bb.px:                                            ; preds = %bb.np
 
 .split425.i:                                      ; preds = %bb.px
   %i.dmg = getelementptr inbounds nuw i8, ptr %i.cyb, i64 %i.cxz ; 4 uses
-  %i.dmh = ptrtoint ptr %i.dmg to i64             ; 5 uses
+  %i.dmh = ptrtoint ptr %i.dmg to i64             ; 4 uses
   %i.dmi = add i64 %i.cxz, %i.cyc
   br label %bb.py
 
@@ -7140,7 +7151,8 @@ bb.qo:                                            ; preds = %bb.qn
 
 .lr.ph2205.preheader:                             ; preds = %.preheader990
   %.2240.i.i280.lcssa2783 = ptrtoaddr ptr %.2240.i.i280.lcssa to i64 ; 2 uses
-  %scevgep2782 = getelementptr i8, ptr %.2240.i.i280.lcssa, i64 %i.dmh
+  %12 = getelementptr i8, ptr %.2240.i.i280.lcssa, i64 %i.cxz
+  %scevgep2782 = getelementptr i8, ptr %12, i64 %i.cyc
   %i.dpu = sub i64 0, %.2240.i.i280.lcssa2783
   %scevgep2784 = getelementptr i8, ptr %scevgep2782, i64 %i.dpu
   %i.dpv = sub i64 %i.dmi, %.2240.i.i280.lcssa2783
