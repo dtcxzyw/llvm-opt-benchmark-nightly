@@ -205,25 +205,29 @@ bb.c:                                             ; preds = %.lr.ph24, %._crit_e
   %i.ad = phi i32 [ %i.m, %.lr.ph24 ], [ %i.gp, %._crit_edge ] ; 8 uses
   %i.ae = phi ptr [ %.pre27, %.lr.ph24 ], [ %i.gq, %._crit_edge ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph24 ], [ %indvars.iv.next, %._crit_edge ] ; 6 uses
-  %2 = shl nuw nsw i64 %indvars.iv, 6             ; 2 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %indvars.iv
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !4
   %i.ah = icmp sgt i32 %i.ag, 0
-  br i1 %i.ah, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.ah, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %bb.c, %moveAtom.exit
-  %i.ai = phi i32 [ %i.ge, %moveAtom.exit ], [ %i.ad, %bb.c ]
-  %i.aj = phi i32 [ %i.gf, %moveAtom.exit ], [ %i.ad, %bb.c ] ; 7 uses
-  %i.ak = phi i32 [ %i.gg, %moveAtom.exit ], [ %i.ad, %bb.c ] ; 11 uses
-  %i.al = phi i32 [ %i.gh, %moveAtom.exit ], [ %i.ad, %bb.c ] ; 9 uses
-  %i.am = phi i32 [ %i.gi, %moveAtom.exit ], [ %i.ad, %bb.c ] ; 7 uses
-  %i.an = phi i32 [ %i.gj, %moveAtom.exit ], [ %i.ad, %bb.c ] ; 5 uses
-  %i.ao = phi i32 [ %i.gk, %moveAtom.exit ], [ %i.ad, %bb.c ] ; 3 uses
-  %i.ap = phi ptr [ %i.gl, %moveAtom.exit ], [ %i.ae, %bb.c ]
-  %.022 = phi i32 [ %.1, %moveAtom.exit ], [ 0, %bb.c ] ; 4 uses
+.lr.ph:                                           ; preds = %bb.c
+  %indvars.iv.tr = trunc i64 %indvars.iv to i32
+  %2 = shl i32 %indvars.iv.tr, 6                  ; 2 uses
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %moveAtom.exit
+  %i.ai = phi i32 [ %i.ad, %.lr.ph ], [ %i.ge, %moveAtom.exit ]
+  %i.aj = phi i32 [ %i.ad, %.lr.ph ], [ %i.gf, %moveAtom.exit ] ; 7 uses
+  %i.ak = phi i32 [ %i.ad, %.lr.ph ], [ %i.gg, %moveAtom.exit ] ; 11 uses
+  %i.al = phi i32 [ %i.ad, %.lr.ph ], [ %i.gh, %moveAtom.exit ] ; 9 uses
+  %i.am = phi i32 [ %i.ad, %.lr.ph ], [ %i.gi, %moveAtom.exit ] ; 7 uses
+  %i.an = phi i32 [ %i.ad, %.lr.ph ], [ %i.gj, %moveAtom.exit ] ; 5 uses
+  %i.ao = phi i32 [ %i.ad, %.lr.ph ], [ %i.gk, %moveAtom.exit ] ; 3 uses
+  %i.ap = phi ptr [ %i.ae, %.lr.ph ], [ %i.gl, %moveAtom.exit ]
+  %.022 = phi i32 [ 0, %.lr.ph ], [ %.1, %moveAtom.exit ] ; 4 uses
   %i.aq = load ptr, ptr %i.p, align 8, !tbaa !24  ; 2 uses
-  %3 = sext i32 %.022 to i64
-  %4 = add nsw i64 %2, %3                         ; 12 uses
+  %3 = add nsw i32 %.022, %2
+  %4 = sext i32 %3 to i64                         ; 12 uses
   %i.ar = getelementptr inbounds [24 x i8], ptr %i.aq, i64 %4 ; 3 uses
   %i.as = load double, ptr %i.ar, align 8, !tbaa !8 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
@@ -422,33 +426,33 @@ bb.r:                                             ; preds = %getBoxFromTuple.exi
   br i1 %.not.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %5 = sext i32 %i.fe to i64
-  %6 = add nsw i64 %2, %5                         ; 6 uses
-  %7 = load ptr, ptr %i.y, align 8, !tbaa !22     ; 2 uses
-  %i.ff = getelementptr inbounds [4 x i8], ptr %7, i64 %6
+  %5 = add nsw i32 %i.fe, %2
+  %6 = load ptr, ptr %i.y, align 8, !tbaa !22     ; 2 uses
+  %7 = sext i32 %5 to i64                         ; 6 uses
+  %i.ff = getelementptr inbounds [4 x i8], ptr %6, i64 %7
   %i.fg = load i32, ptr %i.ff, align 4, !tbaa !4
-  %i.fh = getelementptr inbounds [4 x i8], ptr %7, i64 %4
+  %i.fh = getelementptr inbounds [4 x i8], ptr %6, i64 %4
   store i32 %i.fg, ptr %i.fh, align 4, !tbaa !4
   %i.fi = load ptr, ptr %i.z, align 8, !tbaa !23  ; 2 uses
-  %i.fj = getelementptr inbounds [4 x i8], ptr %i.fi, i64 %6
+  %i.fj = getelementptr inbounds [4 x i8], ptr %i.fi, i64 %7
   %i.fk = load i32, ptr %i.fj, align 4, !tbaa !4
   %i.fl = getelementptr inbounds [4 x i8], ptr %i.fi, i64 %4
   store i32 %i.fk, ptr %i.fl, align 4, !tbaa !4
   %i.fm = load ptr, ptr %i.p, align 8, !tbaa !24  ; 2 uses
   %i.fn = getelementptr inbounds [24 x i8], ptr %i.fm, i64 %4
-  %i.fo = getelementptr inbounds [24 x i8], ptr %i.fm, i64 %6
+  %i.fo = getelementptr inbounds [24 x i8], ptr %i.fm, i64 %7
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fn, ptr noundef nonnull align 8 dereferenceable(24) %i.fo, i64 24, i1 false)
   %i.fp = load ptr, ptr %i.aa, align 8, !tbaa !25 ; 2 uses
   %i.fq = getelementptr inbounds [24 x i8], ptr %i.fp, i64 %4
-  %i.fr = getelementptr inbounds [24 x i8], ptr %i.fp, i64 %6
+  %i.fr = getelementptr inbounds [24 x i8], ptr %i.fp, i64 %7
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fq, ptr noundef nonnull align 8 dereferenceable(24) %i.fr, i64 24, i1 false)
   %i.fs = load ptr, ptr %i.ab, align 8, !tbaa !26 ; 2 uses
   %i.ft = getelementptr inbounds [24 x i8], ptr %i.fs, i64 %4
-  %i.fu = getelementptr inbounds [24 x i8], ptr %i.fs, i64 %6
+  %i.fu = getelementptr inbounds [24 x i8], ptr %i.fs, i64 %7
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ft, ptr noundef nonnull align 8 dereferenceable(24) %i.fu, i64 24, i1 false)
   %i.fv = load ptr, ptr %i.ac, align 8, !tbaa !27 ; 2 uses
   %i.fw = getelementptr inbounds [8 x i8], ptr %i.fv, i64 %4
-  %i.fx = getelementptr inbounds [8 x i8], ptr %i.fv, i64 %6
+  %i.fx = getelementptr inbounds [8 x i8], ptr %i.fv, i64 %7
   %i.fy = load i64, ptr %i.fx, align 8
   store i64 %i.fy, ptr %i.fw, align 8
   br label %bb.t

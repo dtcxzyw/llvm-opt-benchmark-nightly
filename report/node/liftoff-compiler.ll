@@ -205,7 +205,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit46:
   %i.b = add i32 %1, 1
   %i.c = sext i32 %i.b to i64
   %i.d = sext i32 %2 to i64
-  br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31
+  br label %3
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit46
   %.neg = mul i32 %2, -8                          ; 3 uses
@@ -226,22 +226,31 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit46:
   tail call void @_ZN2v88internal9Assembler4popqENS0_8RegisterE(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 5) #24
   ret void
 
-_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31: ; preds = %.lr.ph, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31
-  %indvars.iv = phi i64 [ %i.c, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31 ] ; 5 uses
-  %3 = icmp eq i64 %indvars.iv, 0                 ; 3 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %4 = shl i32 %indvars.iv.tr, 3                  ; 2 uses
-  %5 = icmp ult i32 %4, 128                       ; 2 uses
-  %. = select i1 %5, i64 4456448, i64 8650752
-  %.183 = select i1 %5, ptr inttoptr (i64 3 to ptr), ptr inttoptr (i64 6 to ptr)
-  %.sroa.7.sroa.4.sroa.0.0 = select i1 %3, i32 0, i32 %4
-  %.sroa.3.0 = select i1 %3, i64 262144, i64 %.
-  %6 = select i1 %3, ptr inttoptr (i64 2 to ptr), ptr %.183
-  %.sroa.7.0.insert.ext = zext i32 %.sroa.7.sroa.4.sroa.0.0 to i64
-  %.sroa.7.0.insert.shift = shl nuw i64 %.sroa.7.0.insert.ext, 32
+3:                                                ; preds = %.lr.ph, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31
+  %indvars.iv = phi i64 [ %i.c, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31 ] ; 6 uses
+  %4 = shl nuw nsw i64 %indvars.iv, 3             ; 3 uses
+  %5 = icmp eq i64 %indvars.iv, 0
+  br i1 %5, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31, label %6
+
+6:                                                ; preds = %3
+  %7 = icmp ult i64 %indvars.iv, 16
+  br i1 %7, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31, label %8
+
+8:                                                ; preds = %6
+  %.sroa.7.sroa.4.0.extract.shift = and i64 %4, 4294967040
+  br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31
+
+_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31: ; preds = %6, %3, %8
+  %.sroa.7.sroa.4.sroa.0.0 = phi i64 [ %.sroa.7.sroa.4.0.extract.shift, %8 ], [ 0, %3 ], [ 0, %6 ]
+  %.sroa.7.sroa.0.0 = phi i64 [ %4, %8 ], [ 0, %3 ], [ %4, %6 ]
+  %.sroa.3.0 = phi i64 [ 8650752, %8 ], [ 262144, %3 ], [ 4456448, %6 ]
+  %9 = phi ptr [ inttoptr (i64 6 to ptr), %8 ], [ inttoptr (i64 2 to ptr), %3 ], [ inttoptr (i64 3 to ptr), %6 ]
+  %.sroa.7.sroa.0.0.insert.ext = and i64 %.sroa.7.sroa.0.0, 248
+  %.sroa.7.sroa.0.0.insert.insert = or disjoint i64 %.sroa.7.sroa.4.sroa.0.0, %.sroa.7.sroa.0.0.insert.ext
+  %.sroa.7.0.insert.shift = shl nuw i64 %.sroa.7.sroa.0.0.insert.insert, 32
   %.sroa.6182.0.insert.insert = or disjoint i64 %.sroa.7.0.insert.shift, %.sroa.3.0
   %.sroa.3.0.insert.insert = or disjoint i64 %.sroa.6182.0.insert.insert, 603979776
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.sroa.3.0.insert.insert, ptr nonnull %6, i32 noundef 8) #24
+  tail call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.sroa.3.0.insert.insert, ptr nonnull %9, i32 noundef 8) #24
   %i.h = sub nsw i64 %indvars.iv, %i.d
   %i.i = shl nsw i64 %i.h, 3                      ; 3 uses
   %i.j = add nsw i64 %i.i, 128
@@ -258,7 +267,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31: ; preds = %.lr.ph, %_ZN2v88int
   tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sroa.2163.0.insert.insert, ptr nonnull %.cast141, i8 10, i32 noundef 8) #24
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.l = icmp sgt i64 %indvars.iv, 0
-  br i1 %i.l, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit31, label %._crit_edge, !llvm.loop !522
+  br i1 %i.l, label %3, label %._crit_edge, !llvm.loop !522
 }
 
 declare noundef i32 @_ZNK2v88internal8compiler14CallDescriptor22GetStackParameterDeltaEPKS2_(ptr noundef nonnull align 8 dereferenceable(128), ptr noundef) local_unnamed_addr #2
