@@ -205,11 +205,9 @@ bb.m:                                             ; preds = %bb.l
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !535 ; 2 uses
   %i.bz = call noundef zeroext i1 @_ZNK4llvm6Record13getValueAsBitENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(192) %i.bw, ptr nonnull @.str.59, i64 8) #24 ; 2 uses
   %i.ca = xor i1 %i.bz, true
-  %10 = zext i1 %i.ca to i8
   %i.cb = call noundef zeroext i1 @_ZNK4llvm6Record13getValueAsBitENS_9StringRefE(ptr noundef nonnull align 8 dereferenceable(192) %i.by, ptr nonnull @.str.59, i64 8) #24 ; 2 uses
   %i.cc = xor i1 %i.cb, true
-  %11 = zext i1 %i.cc to i8
-  %.0.i73.i = call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8 %10, i8 %11)
+  %.0.i73.i = call i32 @llvm.ucmp.i32.i1(i1 %i.ca, i1 %i.cc)
   %i.cd = xor i1 %i.bz, %i.cb
   br i1 %i.cd, label %"_ZZN12_GLOBAL__N_122SearchableTableEmitter9compareByEPKN4llvm6RecordES4_RKNS_11SearchIndexEENK3$_2clEPKNS1_4InitESB_RKNS_12GenericFieldE.exit", label %bb.n
 
@@ -612,7 +610,7 @@ declare i64 @llvm.smax.i64(i64, i64) #23
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #23
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i1(i1, i1) #23
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

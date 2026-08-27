@@ -205,9 +205,7 @@ bb.au:                                            ; preds = %bb.am
   %i.ho = extractvalue { i8, i64 } %i.hn, 0
   %i.hp = call fastcc { i8, i64 } @_RNvCsgcf5BHVXlUt_7uu_sort11month_parse(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.054.0, i64 noundef range(i64 0, -9223372036854775808) %.sroa.1062.0) #34, !noalias !9485
   %i.hq = extractvalue { i8, i64 } %i.hp, 0
-  %5 = zext i8 %i.ho to i64
-  %6 = zext i8 %i.hq to i64
-  %i.hr = call noundef range(i8 -1, 2) i8 @llvm.scmp.i8.i64(i64 %5, i64 %6)
+  %i.hr = call noundef range(i8 -1, 2) i8 @llvm.ucmp.i8.i8(i8 %i.ho, i8 %i.hq)
   br label %_RNvNtCsgcf5BHVXlUt_7uu_sort15numeric_str_cmp15numeric_str_cmp.exit
 
 bb.av:                                            ; preds = %bb.am
@@ -610,9 +608,7 @@ bb.ct:                                            ; preds = %bb.cr
   %i.mp = load i8, ptr %i.mo, align 8, !range !187, !alias.scope !9526, !noalias !9523, !noundef !5 ; 2 uses
   %i.mq = getelementptr inbounds nuw i8, ptr %i.lv, i64 32
   %i.mr = load i64, ptr %i.mq, align 8, !alias.scope !9526, !noalias !9523, !noundef !5 ; 3 uses
-  %7 = zext nneg i8 %i.ml to i64
-  %8 = zext nneg i8 %i.mp to i64
-  %i.ms = call i8 @llvm.scmp.i8.i64(i64 %7, i64 %8)
+  %i.ms = call i8 @llvm.ucmp.i8.i8(i8 %i.ml, i8 %i.mp)
   %.not.i.i = icmp eq i8 %i.ml, %i.mp
   br i1 %.not.i.i, label %bb.cu, label %_RNvNtCsgcf5BHVXlUt_7uu_sort15numeric_str_cmp15numeric_str_cmp.exit
 

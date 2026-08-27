@@ -202,11 +202,9 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %.val.val, i64 802
   %i.f = load i16, ptr %i.e, align 2
-  %2 = zext i16 %i.f to i32
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 802
   %i.h = load i16, ptr %i.g, align 2
-  %3 = zext i16 %i.h to i32
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %2, i32 %3) ; 2 uses
+  %.0.i = tail call i32 @llvm.ucmp.i32.i16(i16 %i.f, i16 %i.h) ; 2 uses
   %.b = load i1, ptr @reverse_order, align 1
   %i.i = sub nsw i32 0, %.0.i
   %spec.select = select i1 %.b, i32 %i.i, i32 %.0.i
@@ -292,11 +290,9 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %.val.val, i64 196
   %i.f = load i16, ptr %i.e, align 4
-  %2 = zext i16 %i.f to i32
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 196
   %i.h = load i16, ptr %i.g, align 4
-  %3 = zext i16 %i.h to i32
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %2, i32 %3) ; 2 uses
+  %.0.i = tail call i32 @llvm.ucmp.i32.i16(i16 %i.f, i16 %i.h) ; 2 uses
   %.b = load i1, ptr @reverse_order, align 1
   %i.i = sub nsw i32 0, %.0.i
   %spec.select = select i1 %.b, i32 %i.i, i32 %.0.i
@@ -338,11 +334,9 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %.val.val, i64 912
   %i.f = load i16, ptr %i.e, align 8
-  %2 = zext i16 %i.f to i32
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 912
   %i.h = load i16, ptr %i.g, align 8
-  %3 = zext i16 %i.h to i32
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %2, i32 %3) ; 2 uses
+  %.0.i = tail call i32 @llvm.ucmp.i32.i16(i16 %i.f, i16 %i.h) ; 2 uses
   %.b = load i1, ptr @reverse_order, align 1
   %i.i = sub nsw i32 0, %.0.i
   %spec.select = select i1 %.b, i32 %i.i, i32 %.0.i
@@ -715,25 +709,19 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8              ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.val.val, i64 802
   %i.f = load i16, ptr %i.e, align 2
-  %2 = zext i16 %i.f to i32
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 802
   %i.h = load i16, ptr %i.g, align 2
-  %3 = zext i16 %i.h to i32
-  %.0.i = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %2, i32 %3) ; 2 uses
+  %.0.i = tail call i32 @llvm.ucmp.i32.i16(i16 %i.f, i16 %i.h) ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.val.val, i64 196
   %i.j = load i16, ptr %i.i, align 4
-  %4 = zext i16 %i.j to i32
   %i.k = getelementptr inbounds nuw i8, ptr %i.d, i64 196
   %i.l = load i16, ptr %i.k, align 4
-  %5 = zext i16 %i.l to i32
-  %.0.i14 = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %4, i32 %5) ; 2 uses
+  %.0.i14 = tail call i32 @llvm.ucmp.i32.i16(i16 %i.j, i16 %i.l) ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.val.val, i64 912
   %i.n = load i16, ptr %i.m, align 8
-  %6 = zext i16 %i.n to i32
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 912
   %i.p = load i16, ptr %i.o, align 8
-  %7 = zext i16 %i.p to i32
-  %.0.i15 = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 %6, i32 %7) ; 2 uses
+  %.0.i15 = tail call i32 @llvm.ucmp.i32.i16(i16 %i.n, i16 %i.p) ; 2 uses
   %.b = load i1, ptr @reverse_order, align 1      ; 3 uses
   %i.q = sub nsw i32 0, %.0.i
   %i.r = sub nsw i32 0, %.0.i14
@@ -1119,6 +1107,9 @@ declare double @difftime(i64 noundef, i64 noundef) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i16(i16, i16) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.scmp.i32.i64(i64, i64) #10

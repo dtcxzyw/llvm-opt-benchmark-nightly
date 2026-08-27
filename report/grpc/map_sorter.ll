@@ -204,12 +204,11 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.e = inttoptr i64 %.val6.val to ptr           ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4
-  %i.g = load i32, ptr %i.e, align 4, !tbaa !34
-  %2 = zext i32 %i.g to i64                       ; 2 uses
-  %i.h = load i32, ptr %i.c, align 4, !tbaa !34
-  %3 = zext i32 %i.h to i64                       ; 2 uses
-  %4 = tail call i64 @llvm.umin.i64(i64 %3, i64 %2)
-  %i.i = tail call i32 @memcmp(ptr noundef nonnull %i.d, ptr noundef nonnull %i.f, i64 noundef %4) #8 ; 2 uses
+  %i.g = load i32, ptr %i.e, align 4, !tbaa !34   ; 2 uses
+  %i.h = load i32, ptr %i.c, align 4, !tbaa !34   ; 2 uses
+  %2 = tail call i32 @llvm.umin.i32(i32 %i.h, i32 %i.g)
+  %3 = zext i32 %2 to i64
+  %i.i = tail call i32 @memcmp(ptr noundef nonnull %i.d, ptr noundef nonnull %i.f, i64 noundef %3) #8 ; 2 uses
   %.not = icmp eq i32 %i.i, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -218,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.k = tail call i32 @llvm.ucmp.i32.i64(i64 %3, i64 %2)
+  %i.k = tail call i32 @llvm.ucmp.i32.i32(i32 %i.h, i32 %i.g)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -242,7 +241,7 @@ declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #5
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #5
+declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #5

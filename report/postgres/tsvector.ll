@@ -24,15 +24,13 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.10 = private unnamed_addr constant [35 x i8] c"position information is misordered\00", align 1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local noundef range(i32 -1, 2) i32 @compareWordEntryPos(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #0 {
+define dso_local range(i32 -1, 2) i32 @compareWordEntryPos(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) #0 {
 bb.a:
   %i.a = load i16, ptr %0, align 2
   %i.b = and i16 %i.a, 16383
-  %2 = zext nneg i16 %i.b to i32
   %i.c = load i16, ptr %1, align 2
   %i.d = and i16 %i.c, 16383
-  %3 = zext nneg i16 %i.d to i32
-  %i.e = tail call noundef range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32 range(i32 0, 16384) %2, i32 range(i32 0, 16384) %3)
+  %i.e = tail call i32 @llvm.ucmp.i32.i16(i16 %i.b, i16 %i.d)
   ret i32 %i.e
 }
 
@@ -435,7 +433,7 @@ declare i16 @llvm.bswap.i16(i16) #6
 declare i32 @tsCompareString(ptr noundef, i32 noundef, ptr noundef, i32 noundef, i1 noundef zeroext) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #6
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i16(i16, i16) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #7

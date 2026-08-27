@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   %i.l = zext i1 %i.k to i8                       ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.n = load i8, ptr %i.m, align 8, !range !1289, !alias.scope !1284, !noalias !1287
-  %3 = zext nneg i8 %i.n to i64
   %i.o = load ptr, ptr %i.m, align 8, !alias.scope !1284, !noalias !1287, !nonnull !4
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.q = load i64, ptr %i.p, align 8, !alias.scope !1284, !noalias !1287 ; 2 uses
@@ -308,8 +307,7 @@ bb.d:                                             ; preds = %.loopexit.us.i.i
 bb.e:                                             ; preds = %.lr.ph
   %i.bc = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 8
   %i.bd = load i8, ptr %i.bc, align 8, !range !1289, !alias.scope !1292, !noalias !1295, !noundef !4
-  %4 = zext nneg i8 %i.bd to i64
-  %i.be = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.be = tail call i8 @llvm.ucmp.i8.i8(i8 %i.n, i8 %i.bd)
   br label %_RNvXsn_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorizeNtB5_13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.i.i.i
 
 _RNvXsn_NtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorizeNtB5_13ImportSectionNtNtCs4NRVxsYgnAr_4core3cmp3Ord3cmp.exit.i.i.i: ; preds = %bb.e, %.lr.ph
@@ -712,7 +710,6 @@ bb.b:                                             ; preds = %bb.a
   %i.g = icmp ne i64 %.fr52, -1                   ; 2 uses
   %i.h = zext i1 %i.g to i8                       ; 2 uses
   %i.i = load i8, ptr %i.d, align 8, !range !1289
-  %3 = zext nneg i8 %i.i to i64
   %i.j = load ptr, ptr %i.d, align 8, !nonnull !4
   %i.k = load i64, ptr %i.e, align 8              ; 2 uses
   br i1 %i.g, label %.split.us.us, label %.split
@@ -812,8 +809,7 @@ bb.f:                                             ; preds = %_RNvXs9_NtNtCs4NRVx
 bb.g:                                             ; preds = %.lr.ph
   %i.aw = getelementptr inbounds nuw i8, ptr %.val6.i.i, i64 8
   %i.ax = load i8, ptr %i.aw, align 8, !range !1289, !alias.scope !5118, !noalias !5121, !noundef !4
-  %4 = zext nneg i8 %i.ax to i64
-  %i.ay = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 %4)
+  %i.ay = tail call i8 @llvm.ucmp.i8.i8(i8 %i.i, i8 %i.ax)
   br label %_RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtB7_3Ord3cmpBL_.exit.i.i
 
 _RNvXs9_NtNtCs4NRVxsYgnAr_4core3cmp5implsRNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules5isort10categorize13ImportSectionNtB7_3Ord3cmpBL_.exit.i.i: ; preds = %bb.g, %.lr.ph

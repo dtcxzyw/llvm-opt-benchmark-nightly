@@ -206,8 +206,7 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
 bb.i:                                             ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detail8LenOrderEENtNtNtB8_6traits8iterator8Iterator4nextCsdaEETE4DqmE_13typst_library.exit.i.i.i.i
   %i.ct = getelementptr inbounds nuw i8, ptr %.val7.i.i.i.i, i64 16
   %i.cu = tail call i32 @memcmp(ptr nonnull readonly %i.y, ptr nonnull readonly %i.ct, i64 %2), !alias.scope !30172, !noalias !30162
-  %3 = sext i32 %i.cu to i64
-  %i.cv = tail call i8 @llvm.scmp.i8.i64(i64 %3, i64 0)
+  %i.cv = tail call i8 @llvm.scmp.i8.i32(i32 %i.cu, i32 0)
   br label %_RNvXs0_NtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detailNtB5_8LenOrderNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.i.i.i.i
 
 _RNvXs0_NtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detailNtB5_8LenOrderNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.i.i.i.i: ; preds = %bb.i, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detail8LenOrderEENtNtNtB8_6traits8iterator8Iterator4nextCsdaEETE4DqmE_13typst_library.exit.i.i.i.i
@@ -610,8 +609,7 @@ _RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtB
 bb.e:                                             ; preds = %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detail8LenOrderEENtNtNtB8_6traits8iterator8Iterator4nextCsdaEETE4DqmE_13typst_library.exit.i.i
   %i.bm = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 16
   %i.bn = tail call i32 @memcmp(ptr nonnull readonly %0, ptr nonnull readonly %i.bm, i64 %1), !alias.scope !30606, !noalias !30607
-  %2 = sext i32 %i.bn to i64
-  %i.bo = tail call i8 @llvm.scmp.i8.i64(i64 %2, i64 0)
+  %i.bo = tail call i8 @llvm.scmp.i8.i32(i32 %i.bn, i32 0)
   br label %_RNvXs6_NtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.i.i
 
 _RNvXs6_NtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.i.i: ; preds = %bb.e, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detail8LenOrderEENtNtNtB8_6traits8iterator8Iterator4nextCsdaEETE4DqmE_13typst_library.exit.i.i
@@ -1014,8 +1012,7 @@ loadbb464:                                        ; preds = %loadbb
 
 endblock:                                         ; preds = %res_block, %loadbb464
   %phi.res = phi i32 [ %i.lp, %loadbb464 ], [ %i.ll, %res_block ]
-  %3 = sext i32 %phi.res to i64
-  %i.lq = call i8 @llvm.scmp.i8.i64(i64 %3, i64 0)
+  %i.lq = call i8 @llvm.scmp.i8.i32(i32 %phi.res, i32 0)
   br label %_RNvXs6_NtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.i.i.i.i.i158.i.i.i.i
 
 _RNvXs6_NtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detailNtB5_11LenOrderStrNtNtCs3oUPovFnLWP_4core3cmp3Ord3cmp.exit.i.i.i.i.i158.i.i.i.i: ; preds = %endblock, %_RNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB4_9EnumerateINtNtNtBa_5slice4iter4IterNtNtNtCsesggpGz7Dc2_17wasmi_collections15string_interner6detail8LenOrderEENtNtNtB8_6traits8iterator8Iterator4nextCsdaEETE4DqmE_13typst_library.exit.i.i.i.i.i156.i.i.i.i
