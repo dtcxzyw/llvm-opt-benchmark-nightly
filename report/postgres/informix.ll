@@ -202,13 +202,16 @@ bb.k:                                             ; preds = %bb.j, %.loopexit177
   %i.aj = trunc i64 %i.ai to i32                  ; 3 uses
   %.0912.i = add i32 %i.aj, -1                    ; 2 uses
   %i.ak = icmp sgt i32 %.0912.i, -1
-  br i1 %i.ak, label %.lr.ph.i148, label %getRightMostDot.exit
+  br i1 %i.ak, label %.lr.ph.preheader.i148, label %getRightMostDot.exit
 
-.lr.ph.i148:                                      ; preds = %bb.k, %bb.m
-  %.0914.i = phi i32 [ %.09.i, %bb.m ], [ %.0912.i, %bb.k ] ; 2 uses
-  %.013.i = phi i32 [ %i.ar, %bb.m ], [ 0, %bb.k ] ; 2 uses
-  %3 = zext nneg i32 %.0914.i to i64
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 %3
+.lr.ph.preheader.i148:                            ; preds = %bb.k
+  %3 = zext nneg i32 %.0912.i to i64
+  br label %.lr.ph.i148
+
+.lr.ph.i148:                                      ; preds = %bb.m, %.lr.ph.preheader.i148
+  %indvars.iv.i150 = phi i64 [ %3, %.lr.ph.preheader.i148 ], [ %indvars.iv.next.i151, %bb.m ] ; 2 uses
+  %.013.i = phi i32 [ 0, %.lr.ph.preheader.i148 ], [ %i.ar, %bb.m ] ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.i150
   %i.am = load i8, ptr %i.al, align 1
   %i.an = icmp eq i8 %i.am, 46
   br i1 %i.an, label %bb.l, label %bb.m
@@ -221,7 +224,7 @@ bb.l:                                             ; preds = %.lr.ph.i148
 
 bb.m:                                             ; preds = %.lr.ph.i148
   %i.ar = add nuw i32 %.013.i, 1                  ; 2 uses
-  %.09.i = add nsw i32 %.0914.i, -1
+  %indvars.iv.next.i151 = add nsw i64 %indvars.iv.i150, -1
   %exitcond.not.i149 = icmp eq i32 %i.ar, %i.aj
   br i1 %exitcond.not.i149, label %getRightMostDot.exit, label %.lr.ph.i148, !llvm.loop !7
 

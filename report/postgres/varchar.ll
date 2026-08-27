@@ -202,25 +202,29 @@ bb.f:                                             ; preds = %VARSIZE_ANY_EXHDR.e
 .lr.ph.preheader:                                 ; preds = %VARSIZE_ANY_EXHDR.exit.thread, %bb.f
   %.023 = phi i32 [ %.0, %bb.f ], [ 8, %VARSIZE_ANY_EXHDR.exit.thread ]
   %i.y = phi ptr [ %i.w, %bb.f ], [ %i.l, %VARSIZE_ANY_EXHDR.exit.thread ] ; 3 uses
+  %1 = zext nneg i32 %.023 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.g
-  %.116 = phi i32 [ %2, %bb.g ], [ %.023, %.lr.ph.preheader ] ; 4 uses
-  %1 = zext nneg i32 %.116 to i64
-  %i.z = getelementptr i8, ptr %i.y, i64 %1
+  %indvars.iv = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.g ] ; 4 uses
+  %i.z = getelementptr i8, ptr %i.y, i64 %indvars.iv
   %i.aa = getelementptr i8, ptr %i.z, i64 -1
   %i.ab = load i8, ptr %i.aa, align 1
   %.not = icmp eq i8 %i.ab, 32
-  br i1 %.not, label %bb.g, label %._crit_edge
+  br i1 %.not, label %bb.g, label %._crit_edge.loopexit.split.loop.exit
 
 bb.g:                                             ; preds = %.lr.ph
-  %2 = add nsw i32 %.116, -1
-  %i.ac = icmp sgt i32 %.116, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ac = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ac, label %.lr.ph, label %._crit_edge, !llvm.loop !7
 
-._crit_edge:                                      ; preds = %bb.g, %.lr.ph, %bb.f
-  %i.ad = phi ptr [ %i.w, %bb.f ], [ %i.y, %.lr.ph ], [ %i.y, %bb.g ]
-  %.1.lcssa = phi i32 [ %.0, %bb.f ], [ 0, %bb.g ], [ %.116, %.lr.ph ]
+._crit_edge.loopexit.split.loop.exit:             ; preds = %.lr.ph
+  %2 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.g, %._crit_edge.loopexit.split.loop.exit, %bb.f
+  %i.ad = phi ptr [ %i.w, %bb.f ], [ %i.y, %._crit_edge.loopexit.split.loop.exit ], [ %i.y, %bb.g ]
+  %.1.lcssa = phi i32 [ %.0, %bb.f ], [ %2, %._crit_edge.loopexit.split.loop.exit ], [ 0, %bb.g ]
   %i.ae = tail call ptr @palloc0(i64 noundef 64) #10 ; 2 uses
   %i.af = sext i32 %.1.lcssa to i64
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ae, ptr nonnull align 1 %i.ad, i64 %i.af, i1 false)

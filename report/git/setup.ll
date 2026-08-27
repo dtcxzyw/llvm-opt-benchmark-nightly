@@ -204,31 +204,34 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not54, label %bb.c, label %bb.av
 
 bb.c:                                             ; preds = %bb.b
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19
-  %i.c = trunc i64 %i.b to i32                    ; 3 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #19 ; 3 uses
+  %i.c = trunc i64 %i.b to i32
   %i.d = icmp sgt i32 %i.c, 1
-  br i1 %i.d, label %.lr.ph, label %.critedge.thread
+  br i1 %i.d, label %.lr.ph.preheader, label %.critedge.thread
 
-.lr.ph:                                           ; preds = %bb.c, %bb.d
-  %.04186 = phi i32 [ %8, %bb.d ], [ %i.c, %bb.c ] ; 5 uses
-  %7 = zext nneg i32 %.04186 to i64
-  %i.e = getelementptr i8, ptr %1, i64 %7
+.lr.ph.preheader:                                 ; preds = %bb.c
+  %7 = and i64 %i.b, 2147483647
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %indvars.iv = phi i64 [ %7, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 5 uses
+  %i.e = getelementptr i8, ptr %1, i64 %indvars.iv
   %i.f = getelementptr i8, ptr %i.e, i64 -1
   %i.g = load i8, ptr %i.f, align 1, !tbaa !12
   %i.h = icmp eq i8 %i.g, 47
   br i1 %i.h, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %.lr.ph
-  %8 = add nsw i32 %.04186, -1
-  %i.i = icmp sgt i32 %.04186, 2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.i = icmp sgt i64 %indvars.iv, 2
   br i1 %i.i, label %.lr.ph, label %.critedge.thread, !llvm.loop !95
 
 .critedge:                                        ; preds = %.lr.ph
-  %i.j = icmp samesign ugt i32 %.04186, 4095
+  %i.j = icmp samesign ugt i64 %indvars.iv, 4095
   br i1 %i.j, label %.critedge68.thread, label %.critedge.thread
 
 .critedge.thread:                                 ; preds = %bb.d, %bb.c, %.critedge
-  %.04185 = phi i32 [ %.04186, %.critedge ], [ %i.c, %bb.c ], [ 1, %bb.d ]
+  %.04185 = phi i64 [ %indvars.iv, %.critedge ], [ %i.b, %bb.c ], [ 1, %bb.d ]
   store i64 0, ptr getelementptr inbounds nuw (i8, ptr @enter_repo.used_path, i64 8), align 8, !tbaa !22
   %i.k = load ptr, ptr getelementptr inbounds nuw (i8, ptr @enter_repo.used_path, i64 16), align 8, !tbaa !16 ; 2 uses
   %.not9.i = icmp eq ptr %i.k, @strbuf_slopbuf
@@ -267,9 +270,10 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 
 strbuf_setlen.exit74:                             ; preds = %bb.h, %bb.i
-  %9 = sext i32 %.04185 to i64                    ; 2 uses
-  tail call void @strbuf_add(ptr noundef nonnull @enter_repo.used_path, ptr noundef nonnull %1, i64 noundef %9) #20
-  tail call void @strbuf_add(ptr noundef nonnull @enter_repo.validated_path, ptr noundef nonnull %1, i64 noundef %9) #20
+  %sext = shl i64 %.04185, 32
+  %8 = ashr exact i64 %sext, 32                   ; 2 uses
+  tail call void @strbuf_add(ptr noundef nonnull @enter_repo.used_path, ptr noundef nonnull %1, i64 noundef %8) #20
+  tail call void @strbuf_add(ptr noundef nonnull @enter_repo.validated_path, ptr noundef nonnull %1, i64 noundef %8) #20
   %i.o = load ptr, ptr getelementptr inbounds nuw (i8, ptr @enter_repo.used_path, i64 16), align 8, !tbaa !16 ; 2 uses
   %i.p = load i8, ptr %i.o, align 1, !tbaa !12
   %i.q = icmp eq i8 %i.p, 126

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/protobuf/original/low_level_alloc?download=true
 inline.NumInlined: 86
 inline.NumDeleted: 39
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0_@_ZN4absl12lts_2025051213base_internalL16DoAllocWithArenaEmPNS1_13LowLevelAlloc5ArenaE:bb.a
   %.not18.i = icmp eq i64 %i.az, -1283669654
   br i1 %.not18.i, label %bb.k, label %.invoke207, !prof !7
@@ -204,7 +204,7 @@ _ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19A
   %i.df = getelementptr inbounds nuw i8, ptr %i.av, i64 32 ; 2 uses
   %i.dg = load i32, ptr %i.df, align 8, !tbaa !46 ; 2 uses
   %.not2425.i = icmp eq i32 %i.dg, 0
-  br i1 %.not2425.i, label %.lr.ph28.i.preheader, label %.lr.ph.i
+  br i1 %.not2425.i, label %.lr.ph28.preheader.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.dh = getelementptr inbounds nuw i8, ptr %i.av, i64 40
@@ -219,7 +219,11 @@ bb.af:                                            ; preds = %bb.ag, %.lr.ph.i
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr %i.dl, i64 %indvars.iv.i ; 2 uses
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !36
   %i.do = icmp eq ptr %i.dn, %i.av
-  br i1 %i.do, label %bb.ag, label %.lr.ph28.i.preheader
+  br i1 %i.do, label %bb.ag, label %.lr.ph28.preheader.i
+
+.lr.ph28.preheader.i:                             ; preds = %bb.af, %bb.ag, %.preheader.i
+  %4 = zext nneg i32 %i.ap to i64
+  br label %.lr.ph28.i
 
 bb.ag:                                            ; preds = %bb.af
   %i.dp = getelementptr inbounds nuw [8 x i8], ptr %i.dh, i64 %indvars.iv.i
@@ -227,24 +231,21 @@ bb.ag:                                            ; preds = %bb.af
   store ptr %i.dq, ptr %i.dm, align 8, !tbaa !36
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %.not24.i = icmp eq i64 %indvars.iv.next.i, %i.di
-  br i1 %.not24.i, label %.lr.ph28.i.preheader, label %bb.af, !llvm.loop !52
+  br i1 %.not24.i, label %.lr.ph28.preheader.i, label %bb.af, !llvm.loop !52
 
-.lr.ph28.i.preheader:                             ; preds = %bb.af, %bb.ag, %.preheader.i
-  br label %.lr.ph28.i
-
-.lr.ph28.i:                                       ; preds = %.lr.ph28.i.preheader, %bb.ah
-  %4 = phi i32 [ %6, %bb.ah ], [ %i.ap, %.lr.ph28.i.preheader ] ; 3 uses
-  %5 = zext nneg i32 %4 to i64
-  %i.dr = getelementptr [8 x i8], ptr %i.ac, i64 %5
+.lr.ph28.i:                                       ; preds = %bb.ah, %.lr.ph28.preheader.i
+  %indvars.iv31.i = phi i64 [ %4, %.lr.ph28.preheader.i ], [ %indvars.iv.next32.i, %bb.ah ] ; 3 uses
+  %i.dr = getelementptr [8 x i8], ptr %i.ac, i64 %indvars.iv31.i
   %i.ds = getelementptr i8, ptr %i.dr, i64 32
   %i.dt = load ptr, ptr %i.ds, align 8, !tbaa !36
   %i.du = icmp eq ptr %i.dt, null
   br i1 %i.du, label %bb.ah, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit
 
 bb.ah:                                            ; preds = %.lr.ph28.i
-  %6 = add nsw i32 %4, -1                         ; 2 uses
-  store i32 %6, ptr %i.ad, align 8, !tbaa !46
-  %i.dv = icmp sgt i32 %4, 1
+  %indvars.iv.next32.i = add nsw i64 %indvars.iv31.i, -1 ; 2 uses
+  %5 = trunc nuw nsw i64 %indvars.iv.next32.i to i32
+  store i32 %5, ptr %i.ad, align 8, !tbaa !46
+  %i.dv = icmp sgt i64 %indvars.iv31.i, 1
   br i1 %i.dv, label %.lr.ph28.i, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit, !llvm.loop !53
 
 _ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit: ; preds = %bb.ah, %.lr.ph28.i
@@ -405,7 +406,7 @@ declare i64 @syscall(i64 noundef, ...) local_unnamed_addr #5
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4absl12lts_2025051213base_internalL8CoalesceEPNS1_12_GLOBAL__N_19AllocListE(ptr noundef %0) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [30 x ptr], align 16              ; 17 uses
+  %i.a = alloca [30 x ptr], align 16              ; 19 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !36   ; 11 uses
   %.not = icmp eq ptr %i.c, null
@@ -419,7 +420,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !40   ; 5 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !40   ; 6 uses
   %i.i = load atomic i32, ptr %i.h monotonic, align 4
   %i.j = trunc i32 %i.i to i1
   br i1 %i.j, label %_ZNK4absl12lts_2025051213base_internal8SpinLock10AssertHeldEv.exit, label %bb.d
@@ -435,10 +436,10 @@ _ZNK4absl12lts_2025051213base_internal8SpinLock10AssertHeldEv.exit: ; preds = %b
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 8 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 5 uses
-  %i.p = load i32, ptr %i.o, align 8, !tbaa !46   ; 6 uses
-  %i.q = icmp sgt i32 %i.p, 0                     ; 3 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 9 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 6 uses
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !46   ; 7 uses
+  %i.q = icmp sgt i32 %i.p, 0                     ; 2 uses
   br i1 %i.q, label %.preheader.preheader.i.i, label %._crit_edge.i.i
 
 .preheader.preheader.i.i:                         ; preds = %_ZNK4absl12lts_2025051213base_internal8SpinLock10AssertHeldEv.exit
@@ -525,7 +526,7 @@ _ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19A
   %i.at = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.au = load i32, ptr %i.at, align 8, !tbaa !46 ; 2 uses
   %.not2425.i = icmp eq i32 %i.au, 0
-  br i1 %.not2425.i, label %.critedge.i.a, label %.lr.ph.i
+  br i1 %.not2425.i, label %.critedge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.av = getelementptr inbounds nuw i8, ptr %i.c, i64 40
@@ -544,10 +545,18 @@ bb.i:                                             ; preds = %bb.j, %.lr.ph.i
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %indvars.iv.i ; 2 uses
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !36
   %i.bc = icmp eq ptr %i.bb, %i.c
-  br i1 %i.bc, label %bb.j, label %.critedge.i.a
+  br i1 %i.bc, label %bb.j, label %.critedge.i
 
-.critedge.i.a:                                    ; preds = %bb.j, %bb.i, %.preheader.i
-  br i1 %i.q, label %.lr.ph28.i, label %._crit_edge.i.i21
+.critedge.i:                                      ; preds = %bb.j, %bb.i, %.preheader.i
+  br i1 %i.q, label %.critedge.i.a, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22
+
+.critedge.i.a:                                    ; preds = %.critedge.i
+  %1 = zext nneg i32 %i.p to i64                  ; 2 uses
+  %2 = getelementptr [8 x i8], ptr %i.n, i64 %1
+  %3 = getelementptr i8, ptr %2, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !36
+  %5 = icmp eq ptr %4, null
+  br i1 %5, label %bb.k, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.i
@@ -555,42 +564,88 @@ bb.j:                                             ; preds = %bb.i
   store ptr %i.be, ptr %i.ba, align 8, !tbaa !36
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %.not24.i = icmp eq i64 %indvars.iv.next.i, %i.aw
-  br i1 %.not24.i, label %.critedge.i.a, label %bb.i, !llvm.loop !52
+  br i1 %.not24.i, label %.critedge.i, label %bb.i, !llvm.loop !52
 
-.lr.ph28.i:                                       ; preds = %.critedge.i.a, %bb.k
-  %1 = phi i32 [ %3, %bb.k ], [ %i.p, %.critedge.i.a ] ; 5 uses
-  %2 = zext nneg i32 %1 to i64
-  %i.bf = getelementptr [8 x i8], ptr %i.n, i64 %2
+.lr.ph28.i:                                       ; preds = %bb.k
+  %i.bf = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv31.i85
   %i.bg = getelementptr i8, ptr %i.bf, i64 32
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !36
   %i.bi = icmp eq ptr %i.bh, null
-  br i1 %i.bi, label %bb.k, label %.preheader.preheader.i.i32
+  br i1 %i.bi, label %bb.k, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.loopexit, !llvm.loop !53
 
-bb.k:                                             ; preds = %.lr.ph28.i
-  %3 = add nsw i32 %1, -1                         ; 2 uses
-  store i32 %3, ptr %i.o, align 8, !tbaa !46
-  %i.bj = icmp sgt i32 %1, 1
-  br i1 %i.bj, label %.lr.ph28.i, label %.critedge55, !llvm.loop !53
+bb.k:                                             ; preds = %.critedge.i.a, %.lr.ph28.i
+  %indvars.iv31.i85 = phi i64 [ %indvars.iv.next32.i, %.lr.ph28.i ], [ %1, %.critedge.i.a ] ; 3 uses
+  %indvars.iv.next32.i = add nsw i64 %indvars.iv31.i85, -1 ; 2 uses
+  %6 = trunc nuw nsw i64 %indvars.iv.next32.i to i32 ; 3 uses
+  %i.bj = icmp sgt i64 %indvars.iv31.i85, 1
+  br i1 %i.bj, label %.lr.ph28.i, label %.critedge58.loopexit, !llvm.loop !53
 
-.preheader.preheader.i.i32:                       ; preds = %.lr.ph28.i
-  %4 = zext nneg i32 %1 to i64
-  br label %.preheader.i.i33
+_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.loopexit: ; preds = %.lr.ph28.i
+  store i32 %6, ptr %i.o, align 8, !tbaa !46
+  br label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit
 
-.preheader.i.i33:                                 ; preds = %bb.m, %.preheader.preheader.i.i32
-  %indvars.iv.i.i34 = phi i64 [ %4, %.preheader.preheader.i.i32 ], [ %indvars.iv.next.i.i36, %bb.m ] ; 2 uses
-  %.01316.i.i35 = phi ptr [ %i.n, %.preheader.preheader.i.i32 ], [ %.1.i.i37, %bb.m ]
-  %indvars.iv.next.i.i36 = add nsw i64 %indvars.iv.i.i34, -1 ; 3 uses
+_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit: ; preds = %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.loopexit, %.critedge.i.a
+  %.pr64.lcssa = phi i32 [ %i.p, %.critedge.i.a ], [ %6, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.loopexit ] ; 6 uses
+  %7 = icmp sgt i32 %.pr64.lcssa, 0
+  br i1 %7, label %.preheader.preheader.i.i35, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22
+
+.preheader.preheader.i.i35:                       ; preds = %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit
+  %8 = zext nneg i32 %.pr64.lcssa to i64          ; 3 uses
+  %xtraiter90 = and i64 %8, 1
+  %lcmp.mod91.not = icmp eq i64 %xtraiter90, 0
+  br i1 %lcmp.mod91.not, label %.preheader.i.i36.prol.loopexit, label %.preheader.i.i36.prol
+
+.preheader.i.i36.prol:                            ; preds = %.preheader.preheader.i.i35
+  %indvars.iv.next.i.i39.prol = add nsw i64 %8, -1 ; 3 uses
+  br label %9
+
+9:                                                ; preds = %9, %.preheader.i.i36.prol
+  %.1.i.i40.prol = phi ptr [ %12, %9 ], [ %i.n, %.preheader.i.i36.prol ] ; 3 uses
+  %10 = getelementptr inbounds nuw i8, ptr %.1.i.i40.prol, i64 40
+  %11 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %indvars.iv.next.i.i39.prol
+  %12 = load ptr, ptr %11, align 8, !tbaa !36     ; 3 uses
+  %13 = icmp ne ptr %12, null
+  %14 = icmp ult ptr %12, %0
+  %15 = and i1 %13, %14
+  br i1 %15, label %9, label %.preheader.preheader.i.i32, !llvm.loop !47
+
+.preheader.preheader.i.i32:                       ; preds = %9
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next.i.i39.prol
+  store ptr %.1.i.i40.prol, ptr %16, align 8, !tbaa !36
+  br label %.preheader.i.i36.prol.loopexit
+
+.preheader.i.i36.prol.loopexit:                   ; preds = %.preheader.preheader.i.i32, %.preheader.preheader.i.i35
+  %indvars.iv.i.i37.unr = phi i64 [ %8, %.preheader.preheader.i.i35 ], [ %indvars.iv.next.i.i39.prol, %.preheader.preheader.i.i32 ]
+  %.01316.i.i38.unr = phi ptr [ %i.n, %.preheader.preheader.i.i35 ], [ %.1.i.i40.prol, %.preheader.preheader.i.i32 ]
+  %17 = icmp eq i32 %.pr64.lcssa, 1
+  br i1 %17, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22, label %.preheader.i.i33
+
+.preheader.i.i33:                                 ; preds = %.preheader.i.i36.prol.loopexit, %bb.m
+  %indvars.iv.i.i34 = phi i64 [ %indvars.iv.next.i.i39.1, %bb.m ], [ %indvars.iv.i.i37.unr, %.preheader.i.i36.prol.loopexit ] ; 3 uses
+  %.01316.i.i35 = phi ptr [ %.1.i.i37, %bb.m ], [ %.01316.i.i38.unr, %.preheader.i.i36.prol.loopexit ]
+  %indvars.iv.next.i.i36 = add nsw i64 %indvars.iv.i.i34, -1 ; 2 uses
+  br label %._crit_edge.i.i21
+
+._crit_edge.i.i21:                                ; preds = %._crit_edge.i.i21, %.preheader.i.i33
+  %.1.i.i40 = phi ptr [ %20, %._crit_edge.i.i21 ], [ %.01316.i.i35, %.preheader.i.i33 ] ; 3 uses
+  %18 = getelementptr inbounds nuw i8, ptr %.1.i.i40, i64 40
+  %19 = getelementptr inbounds nuw [8 x i8], ptr %18, i64 %indvars.iv.next.i.i36
+  %20 = load ptr, ptr %19, align 8, !tbaa !36     ; 3 uses
+  %21 = icmp ne ptr %20, null
+  %22 = icmp ult ptr %20, %0
+  %23 = and i1 %21, %22
+  br i1 %23, label %._crit_edge.i.i21, label %.preheader.i.i36.1, !llvm.loop !47
+
+.preheader.i.i36.1:                               ; preds = %._crit_edge.i.i21
+  %24 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next.i.i36
+  store ptr %.1.i.i40, ptr %24, align 8, !tbaa !36
+  %indvars.iv.next.i.i39.1 = add nsw i64 %indvars.iv.i.i34, -2 ; 3 uses
   br label %bb.l
 
-._crit_edge.i.i21:                                ; preds = %bb.m, %.critedge.i.a
-  %5 = phi i32 [ %i.p, %.critedge.i.a ], [ %1, %bb.m ] ; 2 uses
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %.critedge55, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22
-
-bb.l:                                             ; preds = %bb.l, %.preheader.i.i33
-  %.1.i.i37 = phi ptr [ %i.bm, %bb.l ], [ %.01316.i.i35, %.preheader.i.i33 ] ; 3 uses
+bb.l:                                             ; preds = %bb.l, %.preheader.i.i36.1
+  %.1.i.i37 = phi ptr [ %i.bm, %bb.l ], [ %.1.i.i40, %.preheader.i.i36.1 ] ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %.1.i.i37, i64 40
-  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %indvars.iv.next.i.i36
+  %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %indvars.iv.next.i.i39.1
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !36 ; 3 uses
   %i.bn = icmp ne ptr %i.bm, null
   %i.bo = icmp ult ptr %i.bm, %0
@@ -598,16 +653,19 @@ bb.l:                                             ; preds = %bb.l, %.preheader.i
   br i1 %i.bp, label %bb.l, label %bb.m, !llvm.loop !47
 
 bb.m:                                             ; preds = %bb.l
-  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next.i.i36
+  %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv.next.i.i39.1
   store ptr %.1.i.i37, ptr %i.bq, align 8, !tbaa !36
-  %7 = icmp samesign ugt i64 %indvars.iv.i.i34, 1
-  br i1 %7, label %.preheader.i.i33, label %._crit_edge.i.i21, !llvm.loop !48
+  %25 = icmp sgt i64 %indvars.iv.i.i34, 2
+  br i1 %25, label %.preheader.i.i33, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22, !llvm.loop !48
 
-_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22: ; preds = %._crit_edge.i.i21
+_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22: ; preds = %.preheader.i.i36.prol.loopexit, %bb.m, %.critedge.i, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit
+  %.pr7678 = phi i32 [ %.pr64.lcssa, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit ], [ %i.p, %.critedge.i ], [ %.pr64.lcssa, %bb.m ], [ %.pr64.lcssa, %.preheader.i.i36.prol.loopexit ]
+  %26 = phi i1 [ false, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit ], [ false, %.critedge.i ], [ true, %bb.m ], [ true, %.preheader.i.i36.prol.loopexit ]
   %i.br = load ptr, ptr %i.a, align 16, !tbaa !36
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 40
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !36
   %i.bu = icmp eq ptr %0, %i.bt
+  %27 = zext nneg i32 %.pr7678 to i64
   br i1 %i.bu, label %.preheader.i24, label %.critedge55, !prof !7
 
 .preheader.i24:                                   ; preds = %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22
@@ -620,7 +678,11 @@ _ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19A
   %i.bx = zext i32 %i.bw to i64
   br label %bb.n
 
-.critedge55:                                      ; preds = %bb.k, %._crit_edge.i.i21, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22
+.critedge58.loopexit:                             ; preds = %bb.k
+  store i32 %6, ptr %i.o, align 8, !tbaa !46
+  br label %.critedge55
+
+.critedge55:                                      ; preds = %.critedge58.loopexit, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistSearchEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit.i22
   tail call void (i32, ptr, i32, ptr, ...) @_ZN4absl12lts_2025051216raw_log_internal6RawLogENS0_11LogSeverityEPKciS4_z(i32 noundef 3, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @.str, i64 74), i32 noundef 188, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.29, ptr noundef nonnull @.str.30)
   unreachable
 
@@ -635,7 +697,7 @@ bb.n:                                             ; preds = %bb.o, %.lr.ph.i26
   br i1 %i.cd, label %bb.o, label %.critedge.i28
 
 .critedge.i28:                                    ; preds = %bb.o, %bb.n, %.preheader.i24
-  br i1 %i.q, label %.lr.ph28.i29, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit38
+  br i1 %26, label %.lr.ph28.i29, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit38
 
 bb.o:                                             ; preds = %bb.n
   %i.ce = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv.i27
@@ -646,18 +708,18 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not24.i31, label %.critedge.i28, label %bb.n, !llvm.loop !52
 
 .lr.ph28.i29:                                     ; preds = %.critedge.i28, %bb.p
-  %8 = phi i32 [ %10, %bb.p ], [ %5, %.critedge.i28 ] ; 3 uses
-  %9 = zext nneg i32 %8 to i64
-  %i.cg = getelementptr [8 x i8], ptr %i.n, i64 %9
+  %indvars.iv31.i31 = phi i64 [ %indvars.iv.next32.i32, %bb.p ], [ %27, %.critedge.i28 ] ; 3 uses
+  %i.cg = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv31.i31
   %i.ch = getelementptr i8, ptr %i.cg, i64 32
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !36
   %i.cj = icmp eq ptr %i.ci, null
   br i1 %i.cj, label %bb.p, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit38
 
 bb.p:                                             ; preds = %.lr.ph28.i29
-  %10 = add nsw i32 %8, -1                        ; 2 uses
-  store i32 %10, ptr %i.o, align 8, !tbaa !46
-  %i.ck = icmp sgt i32 %8, 1
+  %indvars.iv.next32.i32 = add nsw i64 %indvars.iv31.i31, -1 ; 2 uses
+  %28 = trunc nuw nsw i64 %indvars.iv.next32.i32 to i32
+  store i32 %28, ptr %i.o, align 8, !tbaa !46
+  %i.ck = icmp sgt i64 %indvars.iv31.i31, 1
   br i1 %i.ck, label %.lr.ph28.i29, label %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit38, !llvm.loop !53
 
 _ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit38: ; preds = %.lr.ph28.i29, %bb.p, %.critedge.i28

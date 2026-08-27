@@ -204,7 +204,7 @@ bb.bq:                                            ; preds = %bb.bp
 .backedge92:                                      ; preds = %bb.bv, %bb.bq
   %.0103.i.be = phi ptr [ %i.hm, %bb.bq ], [ %i.ih, %bb.bv ]
   %.097.i.be = phi i32 [ %spec.select126.i, %bb.bq ], [ %.3.i209, %bb.bv ]
-  %.096.i.be = phi i32 [ %i.hr, %bb.bq ], [ %.2.i108, %bb.bv ] ; 2 uses
+  %.096.i.be = phi i32 [ %i.hr, %bb.bq ], [ %5, %bb.bv ] ; 2 uses
   %i.hs = icmp sgt i32 %.096.i.be, 0
   br i1 %i.hs, label %.preheader91, label %.backedge92.thread, !llvm.loop !32
 
@@ -251,23 +251,24 @@ bb.bu:                                            ; preds = %.preheader89
 .lr.ph.preheader:                                 ; preds = %bb.br, %.loopexit90
   %.1.i210 = phi i32 [ %.1.i, %.loopexit90 ], [ %.096.i111, %bb.br ]
   %.3.i209 = phi i32 [ %.3.i, %.loopexit90 ], [ %spec.select126.i, %bb.br ]
+  %4 = zext nneg i32 %.1.i210 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bw
-  %.2.i108 = phi i32 [ %5, %bb.bw ], [ %.1.i210, %.lr.ph.preheader ] ; 4 uses
-  %4 = zext nneg i32 %.2.i108 to i64
-  %i.ie = getelementptr inbounds nuw [8 x i8], ptr %i.gs, i64 %4
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.bw ] ; 4 uses
+  %i.ie = getelementptr inbounds nuw [8 x i8], ptr %i.gs, i64 %indvars.iv
   %i.if = load ptr, ptr %i.ie, align 8            ; 2 uses
   %i.ig = icmp ult ptr %i.if, %3
   br i1 %i.ig, label %bb.bv, label %bb.bw
 
 bb.bv:                                            ; preds = %.lr.ph
+  %5 = trunc nuw nsw i64 %indvars.iv to i32
   %i.ih = getelementptr inbounds nuw i8, ptr %i.if, i64 4
   br label %.backedge92
 
 bb.bw:                                            ; preds = %.lr.ph
-  %5 = add nsw i32 %.2.i108, -1
-  %i.ii = icmp sgt i32 %.2.i108, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ii = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ii, label %.lr.ph, label %.backedge92.thread, !llvm.loop !33
 
 .backedge92.thread:                               ; preds = %.loopexit90, %.backedge92, %bb.bw
