@@ -205,7 +205,8 @@ bb.a:
   %.sroa.0438.a = alloca [3 x double], align 16   ; 8 uses
   %11 = alloca %"class.Eigen::Matrix.54", align 16 ; 11 uses
   %12 = alloca %"class.Eigen::JacobiSVD", align 16 ; 23 uses
-  %.sroa.6550 = alloca [3 x double], align 16     ; 7 uses
+  %.sroa.0438 = alloca [3 x double], align 16     ; 5 uses
+  %.sroa.6550 = alloca [3 x double], align 16     ; 5 uses
   %.sroa.0 = alloca [4 x double], align 16        ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 3 uses
@@ -446,14 +447,14 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   %.sroa.0438.16..sroa_idx.a = getelementptr inbounds nuw i8, ptr %.sroa.0438.a, i64 16
   %.sroa.5.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5, i64 16
   %.sroa.0438.8..sroa_idx.a = getelementptr inbounds nuw i8, ptr %.sroa.0438.a, i64 8
-  %.sroa.6550.8..sroa_idx556 = getelementptr inbounds nuw i8, ptr %.sroa.6550, i64 8
-  %.sroa.6550.16.scevgep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.6550, i64 16
+  %.sroa.0438.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0438, i64 16
+  %.sroa.6550.8..sroa_idx556 = getelementptr inbounds nuw i8, ptr %.sroa.0438, i64 8
+  %.sroa.6550.16.scevgep.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.6550, i64 8
   %.sroa.0.8..sroa_idx547 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
   %.sroa.0.16..sroa_idx548 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
   %.sroa.0.24..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 24
   %.sroa.0.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
   %.sroa.0.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
-  %.sroa.6550.8..sroa_idx555 = getelementptr inbounds nuw i8, ptr %.sroa.6550, i64 8
   br label %bb.f
 
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit._crit_edge: ; preds = %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.preheader
@@ -762,6 +763,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.kv = fmul double %i.ji, %i.ko
   %i.kw = fadd double %i.ku, %i.kv
   %i.kx = fadd double %i.kt, %i.kw                ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0438)
   %.sroa.0438.0..sroa.0438.0..sroa.0438.0. = load <2 x double>, ptr %.sroa.0438.a, align 16 ; 2 uses
   %i.ky = shufflevector <2 x double> %.sroa.0438.0..sroa.0438.0..sroa.0438.0., <2 x double> poison, <2 x i32> zeroinitializer
   %i.kz = fmul <2 x double> %i.jd, %i.ky
@@ -773,6 +775,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.le = fmul <2 x double> %i.ks, %i.ld
   %i.lf = fadd <2 x double> %i.le, %i.lc
   %i.lg = fsub <2 x double> %i.hr, %i.lf          ; 2 uses
+  store <2 x double> %i.lg, ptr %.sroa.0438, align 16, !tbaa !65
   %i.lh = extractelement <2 x double> %.sroa.0438.0..sroa.0438.0..sroa.0438.0., i64 0
   %i.li = fmul double %i.jl, %i.lh
   %i.lj = extractelement <2 x double> %.sroa.0438.8..sroa.0438.8..sroa.0438.8..a, i64 0
@@ -782,12 +785,12 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.ln = fadd double %i.lk, %i.lm
   %i.lo = fadd double %i.li, %i.ln
   %i.lp = fsub double %.sroa.51.112.vec.extract, %i.lo
+  store double %i.lp, ptr %.sroa.0438.16..sroa_idx, align 16, !tbaa !56
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6550)
   %i.lq = extractelement <2 x double> %i.lg, i64 0
-  store double %i.kx, ptr %.sroa.6550, align 16, !tbaa !56
-  store double %i.lq, ptr %.sroa.6550.8..sroa_idx556, align 8, !tbaa !56
-  %.sroa.0553.8.vec.extract = extractelement <2 x double> %i.lg, i64 1
-  store double %.sroa.0553.8.vec.extract, ptr %.sroa.6550.16.scevgep.sroa_idx, align 16, !tbaa !65
+  store double %i.lq, ptr %.sroa.6550, align 16, !tbaa !56
+  %.sroa.0438.8..sroa.0438.8..sroa.0438.8. = load <2 x double>, ptr %.sroa.6550.8..sroa_idx556, align 8, !tbaa !65 ; 2 uses
+  store <2 x double> %.sroa.0438.8..sroa.0438.8..sroa.0438.8., ptr %.sroa.6550.16.scevgep.sroa_idx, align 8, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.lr = load ptr, ptr %10, align 8, !tbaa !18, !noalias !84
   %i.ls = getelementptr inbounds nuw [8 x i8], ptr %i.lr, i64 %indvars.iv424 ; 4 uses
@@ -820,7 +823,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.mj = shufflevector <2 x double> %.sroa.0.16..sroa.0.16..sroa.0.16., <2 x double> poison, <2 x i32> zeroinitializer
   %i.mk = fmul <2 x double> %i.ks, %i.mj
   %i.ml = fadd <2 x double> %i.mi, %i.mk
-  %.sroa.6550.8..sroa.6550.8..sroa.6550.72. = load <2 x double>, ptr %.sroa.6550.8..sroa_idx555, align 8, !tbaa !65
+  %.sroa.6550.8..sroa.6550.8..sroa.6550.72. = load <2 x double>, ptr %.sroa.6550, align 16, !tbaa !65
   %i.mm = shufflevector <2 x double> %.sroa.0.16..sroa.0.16..sroa.0.16., <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %i.mn = fmul <2 x double> %.sroa.6550.8..sroa.6550.8..sroa.6550.72., %i.mm
   %i.mo = fadd <2 x double> %i.mn, %i.ml
@@ -830,8 +833,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.g
   %i.mr = extractelement <2 x double> %.sroa.0.8..sroa.0.8..sroa.0.8., i64 0
   %i.ms = fmul double %i.mr, %i.ke
   %i.mt = fadd double %i.mq, %i.ms
-  %.sroa.6550.0..sroa.6550.0..sroa.6550.64. = load <2 x double>, ptr %.sroa.6550, align 16
-  %i.mu = insertelement <2 x double> %.sroa.6550.0..sroa.6550.0..sroa.6550.64., double %i.lp, i64 1
+  %i.mu = insertelement <2 x double> %.sroa.0438.8..sroa.0438.8..sroa.0438.8., double %i.kx, i64 0
   %i.mv = fmul <2 x double> %.sroa.0.16..sroa.0.16..sroa.0.16., %i.mu ; 2 uses
   %shift = shufflevector <2 x double> %i.mv, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fadd <2 x double> %i.mv, %shift
@@ -928,6 +930,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6550)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0438)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0438.a)
@@ -1330,7 +1333,7 @@ bb.a:
   %39 = alloca %"class.Eigen::SimplicialLDLT", align 8 ; 18 uses
   %40 = alloca %"class.Eigen::Matrix.262", align 8 ; 11 uses
   %41 = alloca %"class.Eigen::Matrix.75", align 16 ; 10 uses
-  %42 = alloca %"class.Eigen::Matrix.15", align 16 ; 16 uses
+  %42 = alloca %"class.Eigen::Matrix.15", align 16 ; 15 uses
   %43 = alloca %"class.Eigen::Product.97", align 8 ; 6 uses
   %44 = alloca %"class.Eigen::Block.64", align 8  ; 10 uses
   %45 = alloca %"class.Eigen::Matrix.29", align 16 ; 13 uses
@@ -1733,11 +1736,10 @@ _ZN5Eigen6MatrixIdLin1ELi10ELi0ELin1ELi10EEC2IiiEERKT_RKT0_.exit257.preheader: ;
   %i.yr = getelementptr inbounds nuw i8, ptr %42, i64 32
   %i.ys = getelementptr inbounds nuw i8, ptr %42, i64 64
   %i.yt = getelementptr inbounds nuw i8, ptr %42, i64 80
-  %i.yu = getelementptr inbounds nuw i8, ptr %42, i64 112
+  %i.yu = getelementptr inbounds nuw i8, ptr %42, i64 112 ; 2 uses
   %i.yv = getelementptr inbounds nuw i8, ptr %40, i64 8
   %wide.trip.count730 = and i64 %i.b, 2147483647
   %wide.trip.count717 = and i64 %i.e, 2147483647
-  %47 = getelementptr inbounds nuw i8, ptr %42, i64 112
   %i.yw = getelementptr inbounds nuw i8, ptr %42, i64 56
   %i.yx = getelementptr inbounds nuw i8, ptr %42, i64 88
   br label %bb.bl
@@ -1990,7 +1992,7 @@ bb.bm:                                            ; preds = %.lr.ph673, %bb.bm
   %i.acc = load <2 x double>, ptr %41, align 16   ; 3 uses
   store <2 x double> %i.acc, ptr %i.yo, align 16, !tbaa !65
   %i.acd = load double, ptr %.07.i.i.i.i.ptr.2.i.i.i.i.i.i, align 16, !tbaa !56 ; 2 uses
-  store double %i.acd, ptr %47, align 16, !tbaa !56
+  store double %i.acd, ptr %i.yu, align 16, !tbaa !56
   %bc827 = bitcast <2 x double> %i.acc to <2 x i64>
   %i.ace = extractelement <2 x i64> %bc827, i64 0 ; 2 uses
   store i64 %i.ace, ptr %i.yp, align 8, !tbaa !56
