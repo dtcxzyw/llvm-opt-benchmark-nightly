@@ -205,7 +205,7 @@ _ZN11duckdb_zstdL16ZDICT_analyzePosEPhPKijPKvjj.exit.thread.i.i: ; preds = %.lr.
   br label %bb.au, !llvm.loop !66
 
 _ZN11duckdb_zstdL16ZDICT_analyzePosEPhPKijPKvjj.exit.i.i: ; preds = %._crit_edge351.i.i.i, %bb.am
-  %i.se = shl nuw i64 %i.pu, 32
+  %i.se = shl nuw nsw i64 %i.pu, 32
   %i.sf = zext i32 %i.li to i64
   %i.sg = or disjoint i64 %i.se, %i.sf            ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #16

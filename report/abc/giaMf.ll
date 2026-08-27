@@ -205,8 +205,8 @@ Abc_TtNot.exit.i.us.us.us:                        ; preds = %vector.body1517, %.
 
 .lr.ph.split.i523.us.us.us:                       ; preds = %Abc_TtNot.exit.i.us.us.us
   %i.azp = sext i32 %i.acm to i64
-  %.idx.i.i.us.us.us = shl nsw i64 %i.azp, 3
-  %i.azq = getelementptr inbounds i8, ptr %i.l, i64 %.idx.i.i.us.us.us ; 3 uses
+  %.idx.i.i.us.us.us = shl nuw nsw i64 %i.azp, 3
+  %i.azq = getelementptr inbounds nuw i8, ptr %i.l, i64 %.idx.i.i.us.us.us ; 3 uses
   %wide.trip.count.i525.us.us.us = zext nneg i32 %i.ack to i64
   %min.iters.check1463 = icmp ult i32 %i.acl, 2
   %n.vec1465 = and i64 %wide.trip.count.i124.i.us.us.us, 2147483644

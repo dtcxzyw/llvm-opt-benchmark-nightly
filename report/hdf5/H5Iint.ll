@@ -204,12 +204,11 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.ao
 
 bb.i:                                             ; preds = %bb.g
-  %i.aa = shl i64 %i.l, 56
-  %5 = and i64 %i.aa, 9151314442816847872         ; 2 uses
+  %i.aa = shl nuw nsw i64 %i.l, 56
   %i.ab = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !36 ; 8 uses
   %i.ad = and i64 %i.ac, 72057594037927935
-  %i.ae = or disjoint i64 %i.ad, %5               ; 2 uses
+  %i.ae = or disjoint i64 %i.ad, %i.aa            ; 2 uses
   store i64 %i.ae, ptr %i.v, align 8, !tbaa !68
   %i.af = getelementptr inbounds nuw i8, ptr %i.v, i64 8
   store i32 1, ptr %i.af, align 8, !tbaa !49
@@ -228,21 +227,20 @@ bb.i:                                             ; preds = %bb.g
   store ptr %4, ptr %i.an, align 8, !tbaa !47
   %i.ao = getelementptr inbounds nuw i8, ptr %i.v, i64 48
   store i8 0, ptr %i.ao, align 8, !tbaa !43
-  %sh.diff = lshr exact i64 %5, 32
-  %tr.sh.diff = trunc nuw nsw i64 %sh.diff to i32
-  %i.ap = add nsw i32 %tr.sh.diff, -1640531527
+  %5 = shl i32 %0, 24
+  %i.ap = add i32 %5, -1640531527
   %sh.diff455.a = lshr i64 %i.ac, 32
   %tr.sh.diff456.a = trunc nuw i64 %sh.diff455.a to i32
   %i.aq = and i32 %tr.sh.diff456.a, 16711680
-  %i.ar = add nsw i32 %i.ap, %i.aq
+  %i.ar = add i32 %i.ap, %i.aq
   %sh.diff457 = lshr i64 %i.ac, 32
   %tr.sh.diff458 = trunc nuw i64 %sh.diff457 to i32
   %i.as = and i32 %tr.sh.diff458, 65280
-  %i.at = add nsw i32 %i.ar, %i.as
+  %i.at = add i32 %i.ar, %i.as
   %i.au = lshr i64 %i.ac, 32
   %i.av = trunc nuw i64 %i.au to i32
   %i.aw = and i32 %i.av, 255
-  %i.ax = add nsw i32 %i.at, %i.aw                ; 2 uses
+  %i.ax = add i32 %i.at, %i.aw                    ; 2 uses
   %i.ay = trunc i64 %i.ac to i32
   %i.az = and i32 %i.ay, -16777216
   %i.ba = trunc i64 %i.ac to i32
@@ -257,7 +255,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bj = add i32 %i.bi, %i.bd
   %i.bk = add i32 %i.bj, %i.bf
   %i.bl = xor i32 %i.bk, 522093                   ; 4 uses
-  %i.bm = add nsw i32 %i.ax, 17973513
+  %i.bm = add i32 %i.ax, 17973513
   %i.bn = sub i32 %i.bm, %i.bl
   %i.bo = shl i32 %i.bl, 8
   %i.bp = xor i32 %i.bn, %i.bo                    ; 4 uses

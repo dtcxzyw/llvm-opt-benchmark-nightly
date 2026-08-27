@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
-  %i.w = mul i64 %i.g, 12
+  %i.w = mul nuw i64 %i.g, 12
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(56) %0, ptr nonnull align 4 %i.e, i64 %i.w, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !7333
   %i.x = mul i64 %.sink.i.i, 12                   ; 2 uses
@@ -352,12 +352,12 @@ bb.i:                                             ; preds = %_RINvCsheqz6YZvxwl_
   br label %bb.m
 
 bb.j:                                             ; preds = %bb.h
-  %i.p = shl i64 %i.g, 3
+  %i.p = shl nuw i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.k, ptr nonnull align 8 %i.e, i64 %i.p, i1 false)
   br label %bb.i
 
 bb.k:                                             ; preds = %bb.e
-  %i.q = shl i64 %i.g, 3
+  %i.q = shl nuw i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.e, ptr nonnull align 8 %i.f, i64 %i.q, i1 false)
   store i64 %i.g, ptr %0, align 8
   %or.cond.i = icmp ult i64 %i.b, 1152921504606846976
@@ -464,7 +464,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
-  %i.x = shl i64 %i.g, 3
+  %i.x = shl nuw i64 %i.g, 3
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(40) %0, ptr nonnull align 8 %i.e, i64 %i.x, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !7358
   %or.cond.i.i = icmp ult i64 %i.c, 1152921504606846976
@@ -579,7 +579,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.k
 
 bb.m:                                             ; preds = %bb.g
-  %i.x = shl i64 %i.g, 4
+  %i.x = shl nuw i64 %i.g, 4
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 dereferenceable(72) %0, ptr nonnull align 4 %i.e, i64 %i.x, i1 false)
   store i64 %i.g, ptr %i.b, align 8, !alias.scope !7369
   %or.cond.i.i = icmp ult i64 %i.c, 576460752303423488

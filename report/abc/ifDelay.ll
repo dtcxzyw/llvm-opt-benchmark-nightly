@@ -204,13 +204,11 @@ vector.ph:                                        ; preds = %.lr.ph.preheader
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <2 x i64> [ <i64 0, i64 1>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
-  %i.d = shl <2 x i64> %vec.ind, splat (i64 2)
+  %i.d = shl nuw nsw <2 x i64> %vec.ind, splat (i64 2)
   %step.add = shl <2 x i64> %vec.ind, splat (i64 2)
   %i.e = add <2 x i64> %step.add, splat (i64 8)
-  %4 = and <2 x i64> %i.d, splat (i64 4294967292)
-  %5 = and <2 x i64> %i.e, splat (i64 4294967292)
-  %i.f = shl nuw <2 x i64> splat (i64 1), %4
-  %i.g = shl nuw <2 x i64> splat (i64 1), %5
+  %i.f = shl nuw <2 x i64> splat (i64 1), %i.d
+  %i.g = shl nuw <2 x i64> splat (i64 1), %i.e
   %i.h = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %index ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store <2 x i64> %i.f, ptr %i.h, align 16, !tbaa !61
@@ -230,9 +228,8 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader36, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ %indvars.iv.ph, %.lr.ph.preheader36 ] ; 3 uses
-  %i.k = shl i64 %indvars.iv, 2
-  %6 = and i64 %i.k, 4294967292
-  %i.l = shl nuw i64 1, %6
+  %i.k = shl nuw nsw i64 %indvars.iv, 2
+  %i.l = shl nuw i64 1, %i.k
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %indvars.iv
   store i64 %i.l, ptr %i.m, align 8, !tbaa !61
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

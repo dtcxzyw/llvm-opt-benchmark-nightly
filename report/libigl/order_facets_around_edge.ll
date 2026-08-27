@@ -205,7 +205,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %.noexc157
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %31, i8 0, i64 24, i1 false)
   %i.ix = getelementptr inbounds nuw i8, ptr %31, i64 8 ; 2 uses
-  %i.iy = mul i64 %i.cb, 12
+  %i.iy = mul nuw i64 %i.cb, 12
   %i.iz = call noalias ptr @malloc(i64 noundef %i.iy) #37 ; 6 uses
   %i.ja = icmp eq ptr %i.iz, null
   br i1 %i.ja, label %bb.bn, label %bb.bp
@@ -608,7 +608,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %.noexc159
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %31, i8 0, i64 24, i1 false)
   %i.it = getelementptr inbounds nuw i8, ptr %31, i64 8 ; 2 uses
-  %i.iu = mul i64 %i.bz, 12
+  %i.iu = mul nuw i64 %i.bz, 12
   %i.iv = call noalias ptr @malloc(i64 noundef %i.iu) #37 ; 6 uses
   %i.iw = icmp eq ptr %i.iv, null
   br i1 %i.iw, label %bb.bn, label %bb.bp
@@ -1011,7 +1011,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %.noexc159
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %31, i8 0, i64 24, i1 false)
   %i.ir = getelementptr inbounds nuw i8, ptr %31, i64 8 ; 2 uses
-  %i.is = mul i64 %i.by, 12
+  %i.is = mul nuw i64 %i.by, 12
   %i.it = call noalias ptr @malloc(i64 noundef %i.is) #37 ; 6 uses
   %i.iu = icmp eq ptr %i.it, null
   br i1 %i.iu, label %bb.bn, label %bb.bp
@@ -1414,7 +1414,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %36, i8 0, i64 24, i1 false)
   %i.hm = getelementptr inbounds nuw i8, ptr %36, i64 8 ; 2 uses
-  %i.hn = mul i64 %i.cb, 12
+  %i.hn = mul nuw i64 %i.cb, 12
   %i.ho = call noalias ptr @malloc(i64 noundef %i.hn) #37 ; 6 uses
   %i.hp = icmp eq ptr %i.ho, null
   br i1 %i.hp, label %bb.bd, label %bb.bf
@@ -1817,7 +1817,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %36, i8 0, i64 24, i1 false)
   %i.hm = getelementptr inbounds nuw i8, ptr %36, i64 8 ; 2 uses
-  %i.hn = mul i64 %i.cb, 12
+  %i.hn = mul nuw i64 %i.cb, 12
   %i.ho = call noalias ptr @malloc(i64 noundef %i.hn) #37 ; 6 uses
   %i.hp = icmp eq ptr %i.ho, null
   br i1 %i.hp, label %bb.bd, label %bb.bf
@@ -2220,7 +2220,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %bb.bc
   call void @llvm.lifetime.start.p0(ptr nonnull %36) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %36, i8 0, i64 24, i1 false)
   %i.hk = getelementptr inbounds nuw i8, ptr %36, i64 8 ; 2 uses
-  %i.hl = mul i64 %i.ca, 12
+  %i.hl = mul nuw i64 %i.ca, 12
   %i.hm = call noalias ptr @malloc(i64 noundef %i.hl) #37 ; 6 uses
   %i.hn = icmp eq ptr %i.hm, null
   br i1 %i.hn, label %bb.bd, label %bb.bf
@@ -2623,7 +2623,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %.lr.ph.i.
   %i.fw = load double, ptr %i.fv, align 8, !tbaa !562
   store double %i.fw, ptr %i.fu, align 8, !tbaa !562
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #22
-  %i.fx = mul i64 %i.cb, 12
+  %i.fx = mul nuw i64 %i.cb, 12
   %i.fy = call noalias ptr @malloc(i64 noundef %i.fx) #37 ; 9 uses
   %i.fz = icmp eq ptr %i.fy, null
   br i1 %i.fz, label %bb.aw, label %bb.ay
@@ -3026,7 +3026,7 @@ _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %.lr.ph.i.
   %i.ft = load double, ptr %i.fs, align 8, !tbaa !562
   store double %i.ft, ptr %i.fr, align 8, !tbaa !562
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #22
-  %i.fu = mul i64 %i.bz, 12
+  %i.fu = mul nuw i64 %i.bz, 12
   %i.fv = call noalias ptr @malloc(i64 noundef %i.fu) #37 ; 9 uses
   %i.fw = icmp eq ptr %i.fv, null
   br i1 %i.fw, label %bb.aw, label %bb.ay

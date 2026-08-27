@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %bb.a
 
 walEncodeFrame.exit:                              ; preds = %walChecksumBytes.exit.i, %bb.c
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.by = load i64, ptr %i.bx, align 8, !tbaa !2316 ; 3 uses
+  %i.by = load i64, ptr %i.bx, align 8, !tbaa !2316 ; 4 uses
   %i.bz = icmp sge i64 %2, %i.by
   %i.ca = add i64 %2, 24                          ; 7 uses
   %.not.i = icmp slt i64 %i.ca, %i.by
@@ -226,11 +226,8 @@ bb.d:                                             ; preds = %walEncodeFrame.exit
   br i1 %.not43.i, label %bb.e, label %walWriteToLog.exit24
 
 bb.e:                                             ; preds = %bb.d
-  %sext.i = shl i64 %i.cb, 32
-  %3 = ashr exact i64 %sext.i, 32                 ; 2 uses
-  %4 = add nsw i64 %3, %2
   %i.cj = sub nsw i32 24, %i.cc
-  %i.ck = getelementptr inbounds i8, ptr %i.a, i64 %3
+  %i.ck = getelementptr inbounds i8, ptr %i.a, i64 %i.cb
   %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.cm = load i32, ptr %i.cl, align 8, !tbaa !2317
   %i.cn = and i32 %i.cm, 3                        ; 2 uses
@@ -255,7 +252,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %bb.g, %walEncodeFrame.exit
   %.135.i = phi ptr [ %i.ck, %bb.g ], [ %i.a, %walEncodeFrame.exit ]
   %.133.i = phi i32 [ %i.cj, %bb.g ], [ 24, %walEncodeFrame.exit ]
-  %.1.i = phi i64 [ %4, %bb.g ], [ %2, %walEncodeFrame.exit ]
+  %.1.i = phi i64 [ %i.by, %bb.g ], [ %2, %walEncodeFrame.exit ]
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !2315 ; 2 uses
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !475
@@ -658,7 +655,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 
 fts5AllocateSegid.exit.i:                         ; preds = %.preheader.i.i
   %i.bb = trunc nuw nsw i64 %indvars.iv41.i.i to i32
-  %i.bc = shl nsw i32 %i.bb, 5
+  %i.bc = shl nuw nsw i32 %i.bb, 5
   %i.bd = or disjoint i32 %i.bc, 1
   %i.be = add nuw nsw i32 %i.bd, %.028.i.i        ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #59
@@ -1061,7 +1058,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %.preheader.i
   %i.bf = trunc nuw nsw i64 %indvars.iv41.i to i32
-  %i.bg = shl nsw i32 %i.bf, 5
+  %i.bg = shl nuw nsw i32 %i.bf, 5
   %i.bh = or disjoint i32 %i.bg, 1
   %i.bi = add nuw nsw i32 %i.bh, %.028.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #59

@@ -202,10 +202,8 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   %i.id = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.ic, ptr %i.id, align 8
   %i.ie = zext nneg i32 %5 to i64
-  %sext = shl i64 %i.ie, 48
-  %34 = ashr exact i64 %sext, 48
   %i.if = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  store i64 %34, ptr %i.if, align 16
+  store i64 %i.ie, ptr %i.if, align 16
   %i.ig = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   store i64 %i.bs, ptr %i.ig, align 8
   %i.ih = zext i32 %.0283 to i64

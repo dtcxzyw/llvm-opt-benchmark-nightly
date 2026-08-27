@@ -204,12 +204,12 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not226, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.at = shl nuw i32 %.0219256, 1
+  %i.at = shl nuw nsw i32 %.0219256, 1
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g, %bb.f
-  %i.au = shl nuw i32 %.0219256, 1
-  %i.av = and i32 %i.au, -4
+  %i.au = shl nuw nsw i32 %.0219256, 1
+  %i.av = and i32 %i.au, 2147483644
   %i.aw = and i32 %.0219256, 1
   %i.ax = or disjoint i32 %i.av, %i.aw
   br label %bb.j

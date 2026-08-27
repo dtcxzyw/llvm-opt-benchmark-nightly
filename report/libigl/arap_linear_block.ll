@@ -136,7 +136,7 @@ bb.d:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not447, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.d
-  %i.o = mul i64 %i.l, 112
+  %i.o = mul nsw i64 %i.l, 112
   %i.p = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i unwind label %bb.h ; 2 uses
 
@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit118, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i107
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i107: ; preds = %bb.j
-  %i.ae = mul i64 %i.ab, 272
+  %i.ae = mul nsw i64 %i.ab, 272
   %i.af = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ae) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i115 unwind label %bb.h ; 2 uses
 
@@ -608,7 +608,7 @@ bb.c:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not529, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.c
-  %i.o = mul i64 %i.l, 112
+  %i.o = mul nsw i64 %i.l, 112
   %i.p = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i unwind label %bb.f ; 2 uses
 
@@ -672,7 +672,7 @@ bb.h:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit133, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i122
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i122: ; preds = %bb.h
-  %i.ad = mul i64 %i.aa, 272
+  %i.ad = mul nsw i64 %i.aa, 272
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i130 unwind label %bb.f ; 2 uses
 
@@ -1075,7 +1075,7 @@ bb.c:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not369, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.c
-  %i.o = mul i64 %i.l, 112
+  %i.o = mul nsw i64 %i.l, 112
   %i.p = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i unwind label %bb.f ; 2 uses
 
@@ -1139,7 +1139,7 @@ bb.h:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit112, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i101
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i101: ; preds = %bb.h
-  %i.ad = mul i64 %i.aa, 272
+  %i.ad = mul nsw i64 %i.aa, 272
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i109 unwind label %bb.f ; 2 uses
 
@@ -1542,7 +1542,7 @@ bb.d:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not447, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.d
-  %i.o = mul i64 %i.l, 112
+  %i.o = mul nsw i64 %i.l, 112
   %i.p = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i unwind label %bb.h ; 2 uses
 
@@ -1611,7 +1611,7 @@ bb.j:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit118, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i107
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i107: ; preds = %bb.j
-  %i.ae = mul i64 %i.ab, 272
+  %i.ae = mul nsw i64 %i.ab, 272
   %i.af = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ae) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i115 unwind label %bb.h ; 2 uses
 
@@ -2014,7 +2014,7 @@ bb.c:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not529, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.c
-  %i.o = mul i64 %i.l, 112
+  %i.o = mul nsw i64 %i.l, 112
   %i.p = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i unwind label %bb.f ; 2 uses
 
@@ -2078,7 +2078,7 @@ bb.h:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit133, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i122
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i122: ; preds = %bb.h
-  %i.ad = mul i64 %i.aa, 272
+  %i.ad = mul nsw i64 %i.aa, 272
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i130 unwind label %bb.f ; 2 uses
 
@@ -2481,7 +2481,7 @@ bb.c:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not369, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i: ; preds = %bb.c
-  %i.o = mul i64 %i.l, 112
+  %i.o = mul nsw i64 %i.l, 112
   %i.p = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i unwind label %bb.f ; 2 uses
 
@@ -2545,7 +2545,7 @@ bb.h:                                             ; preds = %_ZN5Eigen12SparseMa
   br i1 %.not, label %_ZNSt6vectorIN5Eigen7TripletIdiEESaIS2_EE7reserveEm.exit112, label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i101
 
 _ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE11_M_allocateEm.exit.i101: ; preds = %bb.h
-  %i.ad = mul i64 %i.aa, 272
+  %i.ad = mul nsw i64 %i.aa, 272
   %i.ae = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ad) #18
           to label %_ZNSt12_Vector_baseIN5Eigen7TripletIdiEESaIS2_EE13_M_deallocateEPS2_m.exit.i109 unwind label %bb.f ; 2 uses
 

@@ -27,7 +27,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %indvars.iv.i = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.1, %bb.c ] ; 5 uses
-  %.01419.i = phi i32 [ 1, %bb.a ], [ %spec.select.i.1, %bb.c ] ; 4 uses
+  %.01419.i = phi i32 [ 1, %bb.a ], [ %spec.select.i.1, %bb.c ] ; 5 uses
   %i.g = zext i32 %.01419.i to i64
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.g
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
@@ -41,10 +41,10 @@ bb.b:                                             ; preds = %bb.c, %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
-  %1 = shl i32 %.01419.i, 1                       ; 3 uses
-  %2 = icmp ugt i32 %1, 65535
-  %i.l = xor i32 %1, 69643
-  %spec.select.i = select i1 %2, i32 %i.l, i32 %1 ; 4 uses
+  %1 = icmp ugt i32 %.01419.i, 32767
+  %2 = shl nuw i32 %.01419.i, 1                   ; 2 uses
+  %i.l = xor i32 %2, 69643
+  %spec.select.i = select i1 %1, i32 %i.l, i32 %2 ; 5 uses
   %i.m = zext i32 %spec.select.i to i64
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.m
   %i.o = trunc nuw nsw i64 %indvars.iv.next.i to i32
@@ -53,8 +53,8 @@ bb.c:                                             ; preds = %bb.b
   store i32 %spec.select.i, ptr %i.p, align 4, !tbaa !17
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 262140
   store i32 %spec.select.i, ptr %i.q, align 4, !tbaa !17
-  %i.r = shl i32 %spec.select.i, 1                ; 3 uses
-  %i.s = icmp ugt i32 %i.r, 65535
+  %i.r = shl nuw i32 %spec.select.i, 1            ; 2 uses
+  %i.s = icmp ugt i32 %spec.select.i, 32767
   %i.t = xor i32 %i.r, 69643
   %spec.select.i.1 = select i1 %i.s, i32 %i.t, i32 %i.r
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2
@@ -86,7 +86,7 @@ bb.b:                                             ; preds = %bb.c
 
 bb.c:                                             ; preds = %bb.d, %bb.a
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.1, %bb.d ] ; 5 uses
-  %.01419 = phi i32 [ 1, %bb.a ], [ %spec.select.1, %bb.d ] ; 4 uses
+  %.01419 = phi i32 [ 1, %bb.a ], [ %spec.select.1, %bb.d ] ; 5 uses
   %i.e = zext i32 %.01419 to i64
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.e
   %i.g = trunc nuw nsw i64 %indvars.iv to i32
@@ -100,10 +100,10 @@ bb.c:                                             ; preds = %bb.d, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %1 = shl i32 %.01419, 1                         ; 3 uses
-  %2 = icmp ugt i32 %1, 65535
-  %i.j = xor i32 %1, 69643
-  %spec.select = select i1 %2, i32 %i.j, i32 %1   ; 4 uses
+  %1 = icmp ugt i32 %.01419, 32767
+  %2 = shl nuw i32 %.01419, 1                     ; 2 uses
+  %i.j = xor i32 %2, 69643
+  %spec.select = select i1 %1, i32 %i.j, i32 %2   ; 5 uses
   %i.k = zext i32 %spec.select to i64
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.k
   %i.m = trunc nuw nsw i64 %indvars.iv.next to i32
@@ -112,8 +112,8 @@ bb.d:                                             ; preds = %bb.c
   store i32 %spec.select, ptr %i.n, align 4, !tbaa !17
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 262140
   store i32 %spec.select, ptr %i.o, align 4, !tbaa !17
-  %i.p = shl i32 %spec.select, 1                  ; 3 uses
-  %i.q = icmp ugt i32 %i.p, 65535
+  %i.p = shl nuw i32 %spec.select, 1              ; 2 uses
+  %i.q = icmp ugt i32 %spec.select, 32767
   %i.r = xor i32 %i.p, 69643
   %spec.select.1 = select i1 %i.q, i32 %i.r, i32 %i.p
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2

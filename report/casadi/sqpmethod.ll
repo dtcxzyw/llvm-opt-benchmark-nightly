@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %.lr.ph164, %_ZN6cas
   br i1 %.not.i.i.not, label %.lr.ph47.i, label %_ZN6casadi12casadi_clearIdEEvPT_x.exit.thread.i
 
 _ZN6casadi12casadi_clearIdEEvPT_x.exit.thread.i:  ; preds = %bb.m
-  %i.kh = shl i64 %.0123162, 3
-  %i.ki = add i64 %i.kh, 8
+  %i.kh = shl nuw nsw i64 %.0123162, 3
+  %i.ki = add nuw i64 %i.kh, 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %6, i8 0, i64 %i.ki, i1 false), !tbaa !144
   br label %.lr.ph47.i
 

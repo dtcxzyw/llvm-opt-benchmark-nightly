@@ -204,11 +204,11 @@ bb.bi:                                            ; preds = %_ZN4Luau8Compiler11
   br i1 %or.cond, label %bb.bj, label %.lr.ph
 
 bb.bj:                                            ; preds = %bb.bi
-  %i.hd = shl i32 %i.gy, 5
-  %i.he = add i32 %i.hd, -32
+  %i.hd = shl nuw nsw i32 %i.gy, 5
+  %i.he = add nsw i32 %i.hd, -32
   %i.hf = or i32 %i.he, %.sroa.0266.0
   %i.hg = load ptr, ptr %0, align 8, !tbaa !272, !nonnull !74, !align !273
-  %6 = sitofp i32 %i.hf to double
+  %6 = uitofp nneg i32 %i.hf to double
   %i.hh = invoke noundef i32 @_ZN4Luau15BytecodeBuilder17addConstantNumberEd(ptr noundef nonnull align 8 dereferenceable(1048) %i.hg, double noundef %6)
           to label %bb.bk unwind label %bb.bn     ; 2 uses
 

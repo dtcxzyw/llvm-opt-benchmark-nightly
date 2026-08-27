@@ -205,8 +205,8 @@ bb.oq:                                            ; preds = %bb.oq, %.preheader4
   %i.kqq = shl nsw i32 %i.kqp, 4
   %i.kqr = and i32 %i.kqk, 15
   %i.kqs = or disjoint i32 %i.kqq, %i.kqr
-  %38 = sext i32 %i.kqs to i64
-  %i.kqt = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %38 ; 2 uses
+  %38 = zext nneg i32 %i.kqs to i64
+  %i.kqt = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %38 ; 2 uses
   %i.kqu = load i16, ptr %i.kqt, align 2, !tbaa !46
   %i.kqv = add i16 %i.kqu, %i.knp
   store i16 %i.kqv, ptr %i.kqt, align 2, !tbaa !46
@@ -247,8 +247,8 @@ bb.or:                                            ; preds = %bb.or, %.lr.ph460.i
   %i.krr = shl nsw i32 %i.krq, 4
   %i.krs = and i32 %i.krm, 15
   %i.krt = or disjoint i32 %i.krr, %i.krs
-  %39 = sext i32 %i.krt to i64
-  %i.kru = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %39 ; 2 uses
+  %39 = zext nneg i32 %i.krt to i64
+  %i.kru = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %39 ; 2 uses
   %i.krv = load i16, ptr %i.kru, align 2, !tbaa !46
   %i.krw = add i16 %i.krv, 1
   store i16 %i.krw, ptr %i.kru, align 2, !tbaa !46
@@ -354,8 +354,8 @@ bb.ou:                                            ; preds = %bb.ou, %.lr.ph468.i
   %i.kti = shl nsw i32 %i.kth, 4
   %i.ktj = and i32 %i.ktd, 15
   %i.ktk = or disjoint i32 %i.kti, %i.ktj
-  %40 = sext i32 %i.ktk to i64
-  %i.ktl = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %40 ; 2 uses
+  %40 = zext nneg i32 %i.ktk to i64
+  %i.ktl = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %40 ; 2 uses
   %i.ktm = load i16, ptr %i.ktl, align 2, !tbaa !46
   %i.ktn = add i16 %i.ktm, -1
   store i16 %i.ktn, ptr %i.ktl, align 2, !tbaa !46
@@ -378,8 +378,8 @@ bb.ou:                                            ; preds = %bb.ou, %.lr.ph468.i
   %i.kud = shl nsw i32 %i.kuc, 4
   %i.kue = and i32 %i.kty, 15
   %i.kuf = or disjoint i32 %i.kud, %i.kue
-  %41 = sext i32 %i.kuf to i64
-  %i.kug = getelementptr inbounds [2 x i8], ptr %i.kni, i64 %41 ; 2 uses
+  %41 = zext nneg i32 %i.kuf to i64
+  %i.kug = getelementptr inbounds nuw [2 x i8], ptr %i.kni, i64 %41 ; 2 uses
   %i.kuh = load i16, ptr %i.kug, align 2, !tbaa !46
   %i.kui = add i16 %i.kuh, 1
   store i16 %i.kui, ptr %i.kug, align 2, !tbaa !46

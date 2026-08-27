@@ -204,9 +204,8 @@ bb.t:                                             ; preds = %._crit_edge
 
 .lr.ph58:                                         ; preds = %.lr.ph58.preheader, %.lr.ph58
   %indvars.iv63 = phi i64 [ 0, %.lr.ph58.preheader ], [ %indvars.iv.next64, %.lr.ph58 ] ; 3 uses
-  %i.am = shl nuw i64 %indvars.iv63, 1
-  %9 = and i64 %i.am, 4294967294
-  %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 %9
+  %i.am = shl nuw nsw i64 %indvars.iv63, 1
+  %i.an = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.am
   %i.ao = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv63
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !25
   %i.aq = zext i8 %i.ap to i32

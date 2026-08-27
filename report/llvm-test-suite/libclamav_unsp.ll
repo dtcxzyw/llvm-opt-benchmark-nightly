@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.ck, label %bb.n, label %getbit_from_table.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.cl = shl i32 %i.ce, 8
+  %i.cl = shl nuw i32 %i.ce, 8
   %i.cm = load ptr, ptr %9, align 8, !tbaa !36    ; 3 uses
   %i.cn = load ptr, ptr %i.z, align 8, !tbaa !38
   %.not.i.i = icmp ult ptr %i.cm, %i.cn
@@ -361,7 +361,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.eu, label %bb.ae, label %getbit_from_table.exit.i
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ev = shl i32 %i.ef, 8
+  %i.ev = shl nuw i32 %i.ef, 8
   %.not.i.i.i = icmp ult ptr %i.ee, %i.ed
   br i1 %.not.i.i.i, label %bb.ag, label %bb.af
 
@@ -484,7 +484,7 @@ bb.aq:                                            ; preds = %bb.ap
   br i1 %i.gl, label %bb.ar, label %getbit_from_table.exit355
 
 bb.ar:                                            ; preds = %bb.aq
-  %i.gm = shl i32 %i.gf, 8
+  %i.gm = shl nuw i32 %i.gf, 8
   %i.gn = load ptr, ptr %9, align 8, !tbaa !36    ; 3 uses
   %i.go = load ptr, ptr %i.z, align 8, !tbaa !38
   %.not.i.i352 = icmp ult ptr %i.gn, %i.go
@@ -581,7 +581,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %i.hu, label %bb.bb, label %bb.bi
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.hv = shl i32 %i.ho, 8
+  %i.hv = shl nuw i32 %i.ho, 8
   %i.hw = load ptr, ptr %9, align 8, !tbaa !36    ; 3 uses
   %i.hx = load ptr, ptr %i.z, align 8, !tbaa !38
   %.not.i.i364 = icmp ult ptr %i.hw, %i.hx
@@ -679,7 +679,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.jg, label %bb.bm, label %getbit_from_table.exit379
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.jh = shl i32 %i.iq, 8
+  %i.jh = shl nuw i32 %i.iq, 8
   %i.ji = load ptr, ptr %9, align 8, !tbaa !36    ; 3 uses
   %i.jj = load ptr, ptr %i.z, align 8, !tbaa !38
   %.not.i.i376 = icmp ult ptr %i.ji, %i.jj
@@ -808,7 +808,7 @@ bb.bz:                                            ; preds = %bb.by
   br i1 %i.lc, label %bb.ca, label %getbit_from_table.exit391
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.ld = shl i32 %i.kw, 8
+  %i.ld = shl nuw i32 %i.kw, 8
   %i.le = load ptr, ptr %9, align 8, !tbaa !36    ; 3 uses
   %i.lf = load ptr, ptr %i.z, align 8, !tbaa !38
   %.not.i.i388 = icmp ult ptr %i.le, %i.lf
@@ -909,7 +909,7 @@ bb.cj:                                            ; preds = %bb.ci
   br i1 %i.ml, label %bb.ck, label %getbit_from_table.exit391
 
 bb.ck:                                            ; preds = %bb.cj
-  %i.mm = shl i32 %i.mf, 8
+  %i.mm = shl nuw i32 %i.mf, 8
   %i.mn = load ptr, ptr %9, align 8, !tbaa !36    ; 3 uses
   %i.mo = load ptr, ptr %i.z, align 8, !tbaa !38
   %.not.i.i400 = icmp ult ptr %i.mn, %i.mo
@@ -1046,7 +1046,7 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %i.oo, label %bb.cv, label %getbit_from_table.exit.i408
 
 bb.cv:                                            ; preds = %bb.cu
-  %i.op = shl i32 %i.ny, 8
+  %i.op = shl nuw i32 %i.ny, 8
   %.not.i.i.i414 = icmp ult ptr %i.nx, %i.nw
   br i1 %.not.i.i.i414, label %bb.cx, label %bb.cw
 
@@ -1209,7 +1209,7 @@ bb.dg:                                            ; preds = %bb.df
   br i1 %i.qx, label %bb.dh, label %getbit_from_table.exit.i421
 
 bb.dh:                                            ; preds = %bb.dg
-  %i.qy = shl i32 %i.qj, 8
+  %i.qy = shl nuw i32 %i.qj, 8
   %.not.i.i.i427 = icmp ult ptr %i.qi, %i.qh
   br i1 %.not.i.i.i427, label %bb.dj, label %bb.di
 
@@ -1415,7 +1415,7 @@ bb.dx:                                            ; preds = %bb.dw
   br i1 %i.tk, label %bb.dy, label %getbit_from_table.exit.i445
 
 bb.dy:                                            ; preds = %bb.dx
-  %i.tl = shl i32 %.promoted532, 8
+  %i.tl = shl nuw i32 %.promoted532, 8
   %.not.i.i.i452 = icmp ult ptr %.promoted533, %i.se
   br i1 %.not.i.i.i452, label %bb.ea, label %bb.dz
 
@@ -1548,7 +1548,7 @@ bb.el:                                            ; preds = %bb.eg
   br i1 %i.vg, label %bb.em, label %getbit_from_table.exit.i445.1
 
 bb.em:                                            ; preds = %bb.el
-  %i.vh = shl i32 %i.uf, 8
+  %i.vh = shl nuw i32 %i.uf, 8
   %.not.i.i.i452.1 = icmp ult ptr %i.ue, %i.se
   br i1 %.not.i.i.i452.1, label %bb.eo, label %bb.en
 
@@ -1647,7 +1647,7 @@ bb.ev:                                            ; preds = %bb.eq
   br i1 %i.ws, label %bb.ew, label %getbit_from_table.exit.i445.2
 
 bb.ew:                                            ; preds = %bb.ev
-  %i.wt = shl i32 %i.vp, 8
+  %i.wt = shl nuw i32 %i.vp, 8
   %.not.i.i.i452.2 = icmp ult ptr %i.vo, %i.se
   br i1 %.not.i.i.i452.2, label %bb.ey, label %bb.ex
 
@@ -1746,7 +1746,7 @@ bb.ff:                                            ; preds = %bb.fa
   br i1 %i.ye, label %bb.fg, label %getbit_from_table.exit.i445.3
 
 bb.fg:                                            ; preds = %bb.ff
-  %i.yf = shl i32 %i.xb, 8
+  %i.yf = shl nuw i32 %i.xb, 8
   %.not.i.i.i452.3 = icmp ult ptr %i.xa, %i.se
   br i1 %.not.i.i.i452.3, label %bb.fi, label %bb.fh
 
@@ -2050,7 +2050,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.v, label %bb.f, label %bb.m
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = shl i32 %i.p, 8
+  %i.w = shl nuw i32 %i.p, 8
   %i.x = load ptr, ptr %1, align 8, !tbaa !36     ; 3 uses
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !38
@@ -2183,7 +2183,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.af, label %bb.g, label %getbit_from_table.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.ag = shl i32 %i.z, 8
+  %i.ag = shl nuw i32 %i.z, 8
   %i.ah = load ptr, ptr %1, align 8, !tbaa !36    ; 3 uses
   %i.ai = load ptr, ptr %i.g, align 8, !tbaa !38
   %.not.i.i = icmp ult ptr %i.ah, %i.ai
@@ -2309,7 +2309,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.by, label %bb.r, label %getbit_from_table.exit37
 
 bb.r:                                             ; preds = %bb.q
-  %i.bz = shl i32 %i.bs, 8
+  %i.bz = shl nuw i32 %i.bs, 8
   %i.ca = load ptr, ptr %1, align 8, !tbaa !36    ; 3 uses
   %i.cb = load ptr, ptr %i.g, align 8, !tbaa !38
   %.not.i.i34 = icmp ult ptr %i.ca, %i.cb
@@ -2446,7 +2446,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.z, label %bb.f, label %getbit_from_table.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.aa = shl i32 %i.t, 8
+  %i.aa = shl nuw i32 %i.t, 8
   %i.ab = load ptr, ptr %1, align 8, !tbaa !36    ; 3 uses
   %i.ac = load ptr, ptr %i.e, align 8, !tbaa !38
   %.not.i.i = icmp ult ptr %i.ab, %i.ac
@@ -2565,7 +2565,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.u, label %bb.e, label %getbit_from_table.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.v = shl i32 %i.o, 8
+  %i.v = shl nuw i32 %i.o, 8
   %i.w = load ptr, ptr %1, align 8, !tbaa !36     ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !38
@@ -2679,7 +2679,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bp, label %bb.o, label %getbit_from_table.exit24
 
 bb.o:                                             ; preds = %bb.n
-  %i.bq = shl i32 %i.bj, 8
+  %i.bq = shl nuw i32 %i.bj, 8
   %i.br = load ptr, ptr %1, align 8, !tbaa !36    ; 3 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !38
@@ -2845,7 +2845,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ad, label %bb.f, label %getbit_from_table.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.ae = shl i32 %i.x, 8
+  %i.ae = shl nuw i32 %i.x, 8
   %i.af = load ptr, ptr %2, align 8, !tbaa !36    ; 3 uses
   %i.ag = load ptr, ptr %i.e, align 8, !tbaa !38
   %.not.i.i = icmp ult ptr %i.af, %i.ag
@@ -3021,7 +3021,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.ad, label %bb.f, label %getbit_from_table.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.ae = shl i32 %i.x, 8
+  %i.ae = shl nuw i32 %i.x, 8
   %i.af = load ptr, ptr %2, align 8, !tbaa !36    ; 3 uses
   %i.ag = load ptr, ptr %i.f, align 8, !tbaa !38
   %.not.i.i = icmp ult ptr %i.af, %i.ag
