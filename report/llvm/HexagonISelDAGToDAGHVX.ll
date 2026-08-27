@@ -205,13 +205,11 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !59   ; 4 uses
   %.sroa.034.0.copyload = load ptr, ptr %i.i, align 8, !tbaa !34 ; 4 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  %i.j = load i64, ptr %.sroa.7.0..sroa_idx, align 8
-  %.sroa.7.sroa.0.0.extract.trunc = trunc i64 %i.j to i32 ; 3 uses
+  %i.j = load i64, ptr %.sroa.7.0..sroa_idx, align 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 40
   %.sroa.031.0.copyload = load ptr, ptr %i.k, align 8, !tbaa !34 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.i, i64 48
   %i.l = load i64, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.5.sroa.0.0.extract.trunc = trunc i64 %i.l to i32
   %i.m = getelementptr inbounds nuw i8, ptr %.sroa.031.0.copyload, i64 24
   %i.n = load i32, ptr %i.m, align 8, !tbaa !43
   switch i32 %i.n, label %.thread [
@@ -253,11 +251,12 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   store ptr %.sroa.034.0.copyload, ptr %4, align 8, !tbaa !34
   %.sroa.7.0..sroa_idx38 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %.sroa.7.sroa.0.0.extract.trunc, ptr %.sroa.7.0..sroa_idx38, align 8, !tbaa !13
+  %.sroa.7.0.extract.trunc = trunc i64 %i.j to i32 ; 2 uses
+  store i32 %.sroa.7.0.extract.trunc, ptr %.sroa.7.0..sroa_idx38, align 8, !tbaa !13
   %i.ak = getelementptr inbounds nuw i8, ptr %4, i64 16
   store ptr %.sroa.034.0.copyload, ptr %i.ak, align 8, !tbaa !34
   %.sroa.7.0..sroa_idx39 = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i32 %.sroa.7.sroa.0.0.extract.trunc, ptr %.sroa.7.0..sroa_idx39, align 8, !tbaa !13
+  store i32 %.sroa.7.0.extract.trunc, ptr %.sroa.7.0..sroa_idx39, align 8, !tbaa !13
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.am = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.aj, i64 noundef %i.af, ptr noundef nonnull align 8 dereferenceable(12) %2, i16 7, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #23 ; 2 uses
   %.fca.0.extract = extractvalue { ptr, i32 } %i.am, 0
@@ -283,11 +282,13 @@ bb.d:                                             ; preds = %_ZN4llvm8dyn_castIN
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
   store ptr %.sroa.034.0.copyload, ptr %6, align 8, !tbaa !34
   %.sroa.7.0..sroa_idx40 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store i32 %.sroa.7.sroa.0.0.extract.trunc, ptr %.sroa.7.0..sroa_idx40, align 8, !tbaa !13
+  %.sroa.7.0.extract.trunc44 = trunc i64 %i.j to i32
+  store i32 %.sroa.7.0.extract.trunc44, ptr %.sroa.7.0..sroa_idx40, align 8, !tbaa !13
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 16
   store ptr %.sroa.031.0.copyload, ptr %i.ar, align 8, !tbaa !34
   %.sroa.5.0..sroa_idx33 = getelementptr inbounds nuw i8, ptr %6, i64 24
-  store i32 %.sroa.5.sroa.0.0.extract.trunc, ptr %.sroa.5.0..sroa_idx33, align 8, !tbaa !13
+  %.sroa.5.0.extract.trunc = trunc i64 %i.l to i32
+  store i32 %.sroa.5.0.extract.trunc, ptr %.sroa.5.0..sroa_idx33, align 8, !tbaa !13
   store ptr %6, ptr %5, align 8, !tbaa !347
   %i.as = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 2, ptr %i.as, align 8, !tbaa !350

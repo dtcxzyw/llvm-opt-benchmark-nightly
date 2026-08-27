@@ -205,24 +205,27 @@ _ZN11duckdb_zstdL21ZSTD_shouldAttachDictEPKNS_12ZSTD_CDict_sEPKNS_18ZSTD_CCtx_pa
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(216) %10, ptr noundef nonnull readonly align 8 dereferenceable(216) %6, i64 216, i1 false)
   %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 104 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %5, i64 360
-  %.sroa.0.sroa.0.0.copyload.i.i = load i32, ptr %i.af, align 8, !tbaa !3 ; 2 uses
-  %.sroa.0.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 364
-  %.sroa.0.sroa.4.0.copyload.i.i = load i32, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i, align 4, !tbaa !3 ; 3 uses
-  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 368
-  %.sroa.4.0.copyload.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !3 ; 2 uses
-  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 372
-  %.sroa.6.sroa.0.0.copyload.i.i = load i32, ptr %.sroa.6.0..sroa_idx.i.i, align 4, !tbaa !3 ; 2 uses
-  %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 376
-  %11 = load i64, ptr %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx.i.i, align 8
+  %.sroa.0.0.copyload.i.i = load i64, ptr %i.af, align 8 ; 2 uses
+  %.sroa.0.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 368
+  %.sroa.0.sroa.4.0.copyload.i.i = load i32, ptr %.sroa.0.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !3 ; 2 uses
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 372
+  %.sroa.4.0.copyload.i.i = load i32, ptr %.sroa.4.0..sroa_idx.i.i, align 4, !tbaa !3 ; 2 uses
+  %.sroa.6.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %5, i64 376
+  %.sroa.6.sroa.4.0.copyload.i.i = load i64, ptr %.sroa.6.0..sroa_idx.i.i, align 8
+  %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 3 uses
+  %11 = load i32, ptr %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx.i.i, align 4, !tbaa !105
   %.not.i13.i = icmp ne i32 %i.s, 0
   %.off.i.i.i = add i32 %i.u, -3
   %switch.i.i.i = icmp ult i32 %.off.i.i.i, 3
   %or.cond.i14.i = select i1 %.not.i13.i, i1 %switch.i.i.i, i1 false
-  %i.ag = add i32 %.sroa.4.0.copyload.i.i, -2
+  %i.ag = add i32 %.sroa.0.sroa.4.0.copyload.i.i, -2
   %spec.store.select.i.i.i = tail call i32 @llvm.umax.i32(i32 %i.ag, i32 6)
-  %.sroa.4.0.i.i = select i1 %or.cond.i14.i, i32 %spec.store.select.i.i.i, i32 %.sroa.4.0.copyload.i.i ; 2 uses
+  %.sroa.4.0.i.i = select i1 %or.cond.i14.i, i32 %spec.store.select.i.i.i, i32 %.sroa.0.sroa.4.0.copyload.i.i ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %10, i64 144 ; 2 uses
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !91
+  %.sroa.046.sroa.0.0.extract.trunc.i.i = trunc i64 %.sroa.0.0.copyload.i.i to i32 ; 3 uses
+  %.sroa.046.sroa.7.0.extract.shift.i.i = lshr i64 %.sroa.0.0.copyload.i.i, 32 ; 2 uses
+  %.sroa.046.sroa.7.0.extract.trunc.i.i = trunc nuw i64 %.sroa.046.sroa.7.0.extract.shift.i.i to i32 ; 2 uses
   %i.aj = icmp ult i64 %7, 1073741825
   br i1 %i.aj, label %bb.o, label %bb.p
 
@@ -233,7 +236,7 @@ bb.o:                                             ; preds = %_ZN11duckdb_zstdL21
   %i.an = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.am, i1 true)
   %i.ao = sub nuw nsw i32 32, %i.an
   %i.ap = select i1 %i.ak, i32 6, i32 %i.ao
-  %spec.store.select40.i.i.i = tail call i32 @llvm.umin.i32(i32 %.sroa.0.sroa.0.0.copyload.i.i, i32 %i.ap)
+  %spec.store.select40.i.i.i = tail call i32 @llvm.umin.i32(i32 %.sroa.046.sroa.0.0.extract.trunc.i.i, i32 %i.ap)
   br label %.thread.i.i.i
 
 bb.p:                                             ; preds = %_ZN11duckdb_zstdL21ZSTD_shouldAttachDictEPKNS_12ZSTD_CDict_sEPKNS_18ZSTD_CCtx_params_sEm.exit.thread17.i
@@ -241,20 +244,23 @@ bb.p:                                             ; preds = %_ZN11duckdb_zstdL21
   br i1 %.not.i.i.i, label %bb.q, label %.thread.i.i.i
 
 .thread.i.i.i:                                    ; preds = %bb.p, %bb.o
-  %i.aq = phi i32 [ %spec.store.select40.i.i.i, %bb.o ], [ %.sroa.0.sroa.0.0.copyload.i.i, %bb.p ] ; 3 uses
+  %i.aq = phi i32 [ %spec.store.select40.i.i.i, %bb.o ], [ %.sroa.046.sroa.0.0.extract.trunc.i.i, %bb.p ] ; 4 uses
   %i.ar = icmp ugt i32 %i.u, 5
   %.neg.i.i.i.i = sext i1 %i.ar to i32            ; 2 uses
-  %i.as = add i32 %.sroa.0.sroa.4.0.copyload.i.i, %.neg.i.i.i.i
+  %i.as = add i32 %.sroa.046.sroa.7.0.extract.trunc.i.i, %.neg.i.i.i.i
   %i.at = add i32 %i.aq, 1
   %spec.store.select41.i.i.i = tail call i32 @llvm.umin.i32(i32 %.sroa.4.0.i.i, i32 %i.at)
   %i.au = icmp ugt i32 %i.as, %i.aq
   %i.av = sub i32 %i.aq, %.neg.i.i.i.i
-  %spec.select.i.i = select i1 %i.au, i32 %i.av, i32 %.sroa.0.sroa.4.0.copyload.i.i
+  %spec.select.i.i = select i1 %i.au, i32 %i.av, i32 %.sroa.046.sroa.7.0.extract.trunc.i.i
+  %12 = zext i32 %spec.select.i.i to i64
   br label %bb.q
 
 bb.q:                                             ; preds = %.thread.i.i.i, %bb.p
+  %.sroa.046.sroa.7.0.i.i = phi i64 [ %.sroa.046.sroa.7.0.extract.shift.i.i, %bb.p ], [ %12, %.thread.i.i.i ]
   %.sroa.9.0.i.i = phi i32 [ %.sroa.4.0.i.i, %bb.p ], [ %spec.store.select41.i.i.i, %.thread.i.i.i ] ; 2 uses
-  %.sroa.7.0.i.i = phi i32 [ %.sroa.0.sroa.4.0.copyload.i.i, %bb.p ], [ %spec.select.i.i, %.thread.i.i.i ]
+  %.sroa.7.0.i.i = phi i32 [ %.sroa.046.sroa.0.0.extract.trunc.i.i, %bb.p ], [ %i.aq, %.thread.i.i.i ]
+  %spec.store.select42.i.i.i = tail call i32 @llvm.umax.i32(i32 %.sroa.7.0.i.i, i32 10)
   %i.aw = add i32 %i.u, -6
   %i.ax = icmp ult i32 %i.aw, -3
   %i.ay = icmp ugt i32 %i.ai, 1
@@ -262,7 +268,7 @@ bb.q:                                             ; preds = %.thread.i.i.i, %bb.
   br i1 %.not48.i.i.i, label %_ZN11duckdb_zstdL27ZSTD_adjustCParams_internalENS_26ZSTD_compressionParametersEymNS_17ZSTD_cParamMode_eENS_18ZSTD_paramSwitch_eE.exit.i.i, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.az = tail call i32 @llvm.umax.i32(i32 %.sroa.6.sroa.0.0.copyload.i.i, i32 4)
+  %i.az = tail call i32 @llvm.umax.i32(i32 %.sroa.4.0.copyload.i.i, i32 4)
   %i.ba = tail call i32 @llvm.umin.i32(i32 %i.az, i32 6)
   %i.bb = or disjoint i32 %i.ba, 24
   %spec.store.select44.i.i.i = tail call i32 @llvm.umin.i32(i32 %.sroa.9.0.i.i, i32 %i.bb)
@@ -270,16 +276,19 @@ bb.r:                                             ; preds = %bb.q
 
 _ZN11duckdb_zstdL27ZSTD_adjustCParams_internalENS_26ZSTD_compressionParametersEymNS_17ZSTD_cParamMode_eENS_18ZSTD_paramSwitch_eE.exit.i.i: ; preds = %bb.r, %bb.q
   %.sroa.9.1.i.i = phi i32 [ %.sroa.9.0.i.i, %bb.q ], [ %spec.store.select44.i.i.i, %bb.r ]
-  %.sroa.451.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %10, i64 8
-  store i32 %.sroa.7.0.i.i, ptr %.sroa.451.0..sroa_idx.i.i, align 8, !tbaa !3
+  %.sroa.046.sroa.7.0.insert.shift.i.i = shl nuw i64 %.sroa.046.sroa.7.0.i.i, 32
+  %.sroa.046.sroa.0.0.insert.ext.i.i = zext i32 %spec.store.select42.i.i.i to i64
+  %.sroa.046.sroa.0.0.insert.insert.i.i = or disjoint i64 %.sroa.046.sroa.7.0.insert.shift.i.i, %.sroa.046.sroa.0.0.insert.ext.i.i
+  store i64 %.sroa.046.sroa.0.0.insert.insert.i.i, ptr %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx.i.i, align 4
   %.sroa.5.0..sroa_idx.i.i.a = getelementptr inbounds nuw i8, ptr %10, i64 12
   store i32 %.sroa.9.1.i.i, ptr %.sroa.5.0..sroa_idx.i.i.a, align 4, !tbaa !3
   %.sroa.6.0..sroa_idx52.i.i = getelementptr inbounds nuw i8, ptr %10, i64 16
-  store i32 %.sroa.6.sroa.0.0.copyload.i.i, ptr %.sroa.6.0..sroa_idx52.i.i, align 8, !tbaa !3
+  store i32 %.sroa.4.0.copyload.i.i, ptr %.sroa.6.0..sroa_idx52.i.i, align 8, !tbaa !3
   %.sroa.753.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %10, i64 20
-  store i64 %11, ptr %.sroa.753.0..sroa_idx.i.i, align 4
+  store i64 %.sroa.6.sroa.4.0.copyload.i.i, ptr %.sroa.753.0..sroa_idx.i.i, align 4
   %.sroa.8.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %10, i64 28
   store i32 %i.u, ptr %.sroa.8.0..sroa_idx.i.i, align 4, !tbaa !88
+  store i32 %11, ptr %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx.i.i, align 4, !tbaa !105
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 6072
   %i.bd = load i32, ptr %i.bc, align 8, !tbaa !293
   store i32 %i.bd, ptr %i.ah, align 8, !tbaa !91

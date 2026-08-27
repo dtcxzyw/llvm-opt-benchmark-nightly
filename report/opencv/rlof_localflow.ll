@@ -205,7 +205,11 @@ bb.ae:                                            ; preds = %bb.y
   call fastcc void @_ZN2cv7optflowL14copyWinBuffersEiiiiNS_5Size_IiEERKNS_3MatES5_S5_RS3_S6_NS_6Point_IiEE(i32 noundef %i.fh, i32 noundef %i.fm, i32 noundef %i.fq, i32 noundef %i.ft, i64 %.sroa.085.0.copyload, ptr noundef nonnull align 8 dereferenceable(208) %i.f, ptr noundef nonnull align 8 dereferenceable(208) %i.j, ptr noundef nonnull align 8 dereferenceable(208) %10, ptr noundef nonnull align 8 dereferenceable(208) %7, ptr noundef nonnull align 8 dereferenceable(208) %8, i64 %.sroa.084.0.copyload)
   %i.fu = load ptr, ptr %i.bg, align 8, !tbaa !202
   %i.fv = getelementptr inbounds [8 x i8], ptr %i.fu, i64 %indvars.iv1043
-  %i.fw = load <2 x float>, ptr %i.fv, align 4, !tbaa !48 ; 6 uses
+  %i.fw = load <2 x float>, ptr %i.fv, align 4, !tbaa !48 ; 3 uses
+  %13 = extractelement <2 x float> %i.fw, i64 0   ; 3 uses
+  %14 = bitcast float %13 to i32
+  %15 = extractelement <2 x float> %i.fw, i64 1   ; 3 uses
+  %16 = bitcast float %15 to i32
   %i.fx = load i32, ptr %i.bh, align 4, !tbaa !205
   %i.fy = icmp sgt i32 %i.fx, 0
   %i.fz = trunc i64 %.sroa.085.0.copyload to i32  ; 2 uses
@@ -224,10 +228,6 @@ bb.ae:                                            ; preds = %bb.y
   %wide.trip.count1041 = zext nneg i32 %i.eq to i64
   %wide.trip.count = zext nneg i32 %i.gc to i64
   %wide.trip.count1036 = zext nneg i32 %i.gc to i64
-  %13 = extractelement <2 x float> %i.fw, i64 0
-  %14 = extractelement <2 x float> %i.fw, i64 1
-  %15 = extractelement <2 x float> %i.fw, i64 0
-  %16 = extractelement <2 x float> %i.fw, i64 1
   br label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph, %bb.bl
@@ -433,7 +433,7 @@ bb.aq:                                            ; preds = %.lr.ph.split.us871
   %i.la = sitofp i32 %i.kz to float
   %i.lb = sitofp i16 %i.kx to float               ; 2 uses
   %i.lc = call float @llvm.fmuladd.f32(float %i.lb, float %13, float %i.la)
-  %i.ld = fadd float %14, %i.lc
+  %i.ld = fadd float %15, %i.lc
   %i.le = fptosi float %i.ld to i32               ; 3 uses
   %i.lf = getelementptr inbounds nuw i8, ptr %.0443801.us857, i64 2
   %i.lg = load i16, ptr %i.lf, align 2, !tbaa !128
@@ -514,8 +514,8 @@ bb.as:                                            ; preds = %.lr.ph.split.us.us
   %i.nj = sub nsw i32 %i.nf, %i.ni
   %i.nk = sitofp i32 %i.nj to float
   %i.nl = sitofp i16 %i.nh to float               ; 4 uses
-  %i.nm = call float @llvm.fmuladd.f32(float %i.nl, float %15, float %i.nk)
-  %i.nn = fadd float %16, %i.nm
+  %i.nm = call float @llvm.fmuladd.f32(float %i.nl, float %13, float %i.nk)
+  %i.nn = fadd float %15, %i.nm
   %i.no = fptosi float %i.nn to i32               ; 3 uses
   %i.np = mul nsw i32 %i.ni, %i.ni
   %i.nq = uitofp nneg i32 %i.np to float
@@ -719,7 +719,11 @@ bb.bb:                                            ; preds = %bb.ba
   store <2 x float> %.sroa.0678.0, ptr %i.th, align 4
   %i.ti = load ptr, ptr %i.bg, align 8, !tbaa !202
   %i.tj = getelementptr inbounds [8 x i8], ptr %i.ti, i64 %indvars.iv1043
-  store <2 x float> %i.fw, ptr %i.tj, align 4, !tbaa !48
+  %.sroa.076.sroa.5.0.insert.ext = zext i32 %16 to i64
+  %.sroa.076.sroa.5.0.insert.shift = shl nuw i64 %.sroa.076.sroa.5.0.insert.ext, 32
+  %.sroa.076.sroa.0.0.insert.ext = zext i32 %14 to i64
+  %.sroa.076.sroa.0.0.insert.insert = or disjoint i64 %.sroa.076.sroa.5.0.insert.shift, %.sroa.076.sroa.0.0.insert.ext
+  store i64 %.sroa.076.sroa.0.0.insert.insert, ptr %i.tj, align 4
   br label %.thread
 
 bb.bc:                                            ; preds = %bb.av

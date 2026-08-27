@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %_ZNK4llvm3EVT13getS
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
   br label %bb.s
 
-.critedge.thread:                                 ; preds = %bb.n, %bb.m, %bb.f, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit75, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit77, %bb.i, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit70, %bb.e, %bb.k, %bb.b, %bb.a
+.critedge.thread:                                 ; preds = %bb.f, %bb.n, %bb.m, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit75, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit77, %bb.i, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit70, %bb.e, %bb.k, %bb.b, %bb.a
   tail call void @_ZN4llvm16SelectionDAGISel16SelectCodeCommonEPNS_6SDNodeEPKhjS4_(ptr noundef nonnull align 8 dereferenceable(965) %0, ptr noundef nonnull %1, ptr noundef nonnull @_ZZN4llvm18AMDGPUDAGToDAGISel10SelectCodeEPNS_6SDNodeEE12MatcherTable, i32 noundef 781906, ptr noundef nonnull @_ZZN4llvm18AMDGPUDAGToDAGISel10SelectCodeEPNS_6SDNodeEE12OperandLists) #24
   br label %bb.s
 
@@ -608,8 +608,8 @@ bb.m:                                             ; preds = %bb.l
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %4, ptr noundef nonnull align 8 dereferenceable(12) %i.bv, i64 12, i1 false), !tbaa.struct !397
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.l, %bb.j, %bb.h, %bb.g, %bb.f, %bb.i, %bb.k, %bb.d, %bb.e, %bb.c, %bb.a, %bb.b, %bb.m
-  %.3 = phi i1 [ true, %bb.m ], [ false, %bb.b ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.k ], [ false, %bb.i ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.j ], [ false, %bb.l ]
+.critedge:                                        ; preds = %bb.k, %bb.i, %bb.l, %bb.j, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.a, %bb.b, %bb.m
+  %.3 = phi i1 [ true, %bb.m ], [ false, %bb.b ], [ false, %bb.a ], [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.i ], [ false, %bb.j ], [ false, %bb.k ], [ false, %bb.l ]
   ret i1 %.3
 }
 
@@ -1012,7 +1012,7 @@ bb.r:                                             ; preds = %_ZN4llvm8dyn_castIN
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
   br label %.critedge121
 
-.critedge121:                                     ; preds = %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, %bb.h, %bb.i, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit132, %.critedge125, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit137
+.critedge121:                                     ; preds = %bb.h, %bb.i, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit132, %.critedge125, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit137
   store ptr %1, ptr %3, align 8, !tbaa !385
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %2, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !387
@@ -1170,7 +1170,7 @@ _ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.thread: ; preds 
   %i.aj = tail call noundef zeroext i1 @_ZNK4llvm12SelectionDAG13SignBitIsZeroENS_7SDValueEj(ptr noundef nonnull align 8 dereferenceable(920) %i.ai, ptr %.sroa.02.0.copyload, i32 %.sroa.4.0.copyload, i32 noundef 0) #24
   br label %_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit.thread
 
-_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit.thread: ; preds = %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.thread, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit12, %bb.b, %_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit.thread18, %_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit
+_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit.thread: ; preds = %bb.b, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.thread, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit12, %_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit.thread18, %_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit
   %.1 = phi i1 [ true, %bb.b ], [ true, %_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit ], [ true, %_ZL16isNoUnsignedWrapN4llvm7SDValueE.exit.thread18 ], [ %i.aj, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit.thread ], [ true, %_ZNK4llvm14ConstantSDNode12getSExtValueEv.exit12 ]
   ret i1 %.1
 }
@@ -1573,7 +1573,7 @@ _ZNK4llvm18AMDGPUDAGToDAGISel16isDSOffset2LegalENS_7SDValueEjjj.exit206: ; preds
   store i32 %.fca.1.extract15, ptr %.sroa.419.0..sroa_idx, align 8, !tbaa !387
   br label %.critedge179
 
-.critedge177:                                     ; preds = %_ZNK4llvm18AMDGPUDAGToDAGISel16isDSOffset2LegalENS_7SDValueEjjj.exit, %bb.b, %bb.c, %bb.g, %bb.p, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit, %bb.i, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %bb.h, %.critedge175
+.critedge177:                                     ; preds = %bb.g, %bb.p, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRT0_.exit, %bb.i, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit, %bb.h, %bb.c, %bb.b, %_ZNK4llvm18AMDGPUDAGToDAGISel16isDSOffset2LegalENS_7SDValueEjjj.exit, %.critedge175
   store ptr %1, ptr %3, align 8, !tbaa !385
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i32 %2, ptr %.sroa.11.0..sroa_idx, align 8, !tbaa !387
@@ -1713,13 +1713,11 @@ bb.i:                                             ; preds = %bb.h, %bb.h
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !384 ; 4 uses
   %.sroa.0152.0.copyload = load ptr, ptr %i.ap, align 8, !tbaa !385 ; 3 uses
   %.sroa.6155.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  %i.aq = load i64, ptr %.sroa.6155.0..sroa_idx, align 8
-  %.sroa.6155.sroa.0.0.extract.trunc = trunc i64 %i.aq to i32 ; 2 uses
+  %i.aq = load i64, ptr %.sroa.6155.0..sroa_idx, align 8 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 40
   %.sroa.0147.0.copyload = load ptr, ptr %i.ar, align 8, !tbaa !385 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ap, i64 48
-  %i.as = load i64, ptr %.sroa.6.0..sroa_idx, align 8
-  %.sroa.6.sroa.0.0.extract.trunc = trunc i64 %i.as to i32 ; 2 uses
+  %i.as = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 2 uses
   %i.at = load ptr, ptr %i.k, align 8, !tbaa !392
   %i.au = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.at, i64 noundef 1, ptr noundef nonnull align 8 dereferenceable(12) %10, i16 2, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #24 ; 2 uses
   %.fca.0.extract41 = extractvalue { ptr, i32 } %i.au, 0
@@ -1730,30 +1728,47 @@ bb.i:                                             ; preds = %bb.h, %bb.h
   %i.aw = load i8, ptr %i.av, align 8
   %i.ax = and i8 %i.aw, 4
   %.not187 = icmp eq i8 %i.ax, 0
-  br i1 %.not187, label %bb.l, label %bb.j
+  br i1 %.not187, label %13, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.0147.0.copyload, i64 32
   %i.az = load i8, ptr %i.ay, align 8
   %i.ba = and i8 %i.az, 4
   %.not188 = icmp eq i8 %i.ba, 0
-  br i1 %.not188, label %bb.l, label %bb.k
+  %.sroa.6157.0..sroa_idx158 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  br i1 %.not188, label %12, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.bb = call noundef ptr @_ZNK4llvm18AMDGPUDAGToDAGISel14buildSMovImm64ERNS_5SDLocEmNS_3EVTE(ptr noundef nonnull align 8 dereferenceable(965) %0, ptr noundef nonnull align 8 dereferenceable(12) %10, i64 noundef 0, i16 71, ptr null)
+  store ptr %i.bb, ptr %3, align 8, !tbaa !385
+  %.sroa.4143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i32 0, ptr %.sroa.4143.0..sroa_idx, align 8, !tbaa !387
+  store ptr %.sroa.0158.0, ptr %4, align 8, !tbaa !385
+  store i32 %.sroa.11.sroa.0.0, ptr %.sroa.6157.0..sroa_idx158, align 8, !tbaa !387
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.i, %bb.j, %bb.k
-  %.sink192 = phi ptr [ %i.bb, %bb.k ], [ %.sroa.0147.0.copyload, %bb.j ], [ %.sroa.0152.0.copyload, %bb.i ]
-  %.sink = phi i32 [ 0, %bb.k ], [ %.sroa.6.sroa.0.0.extract.trunc, %bb.j ], [ %.sroa.6155.sroa.0.0.extract.trunc, %bb.i ]
-  %.sroa.0158.0.sink = phi ptr [ %.sroa.0158.0, %bb.k ], [ %.sroa.0152.0.copyload, %bb.j ], [ %.sroa.0147.0.copyload, %bb.i ]
-  %.sroa.11.sroa.0.0.sink = phi i32 [ %.sroa.11.sroa.0.0, %bb.k ], [ %.sroa.6155.sroa.0.0.extract.trunc, %bb.j ], [ %.sroa.6.sroa.0.0.extract.trunc, %bb.i ]
-  store ptr %.sink192, ptr %3, align 8, !tbaa !385
-  %.sroa.4143.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %.sink, ptr %.sroa.4143.0..sroa_idx, align 8, !tbaa !387
-  store ptr %.sroa.0158.0.sink, ptr %4, align 8, !tbaa !385
-  %.sroa.11.0..sroa_idx167 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 %.sroa.11.sroa.0.0.sink, ptr %.sroa.11.0..sroa_idx167, align 8, !tbaa !387
+12:                                               ; preds = %bb.j
+  store ptr %.sroa.0147.0.copyload, ptr %3, align 8, !tbaa !385
+  %.sroa.6.0..sroa_idx150 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.6.0.extract.trunc = trunc i64 %i.as to i32
+  store i32 %.sroa.6.0.extract.trunc, ptr %.sroa.6.0..sroa_idx150, align 8, !tbaa !387
+  store ptr %.sroa.0152.0.copyload, ptr %4, align 8, !tbaa !385
+  %.sroa.6157.0.extract.trunc = trunc i64 %i.aq to i32
+  store i32 %.sroa.6157.0.extract.trunc, ptr %.sroa.6157.0..sroa_idx158, align 8, !tbaa !387
+  br label %bb.l
+
+13:                                               ; preds = %bb.i
+  store ptr %.sroa.0152.0.copyload, ptr %3, align 8, !tbaa !385
+  %.sroa.6157.0..sroa_idx159 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.6157.0.extract.trunc161 = trunc i64 %i.aq to i32
+  store i32 %.sroa.6157.0.extract.trunc161, ptr %.sroa.6157.0..sroa_idx159, align 8, !tbaa !387
+  store ptr %.sroa.0147.0.copyload, ptr %4, align 8, !tbaa !385
+  %.sroa.6.0..sroa_idx151 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %.sroa.6.0.extract.trunc153 = trunc i64 %i.as to i32
+  store i32 %.sroa.6.0.extract.trunc153, ptr %.sroa.6.0..sroa_idx151, align 8, !tbaa !387
+  br label %bb.l
+
+bb.l:                                             ; preds = %bb.k, %12, %13
   %i.bc = load ptr, ptr %i.k, align 8, !tbaa !392
   %i.bd = call { ptr, i32 } @_ZN4llvm12SelectionDAG11getConstantEmRKNS_5SDLocENS_3EVTEbb(ptr noundef nonnull align 8 dereferenceable(920) %i.bc, i64 noundef 0, ptr noundef nonnull align 8 dereferenceable(12) %10, i16 7, ptr null, i1 noundef zeroext true, i1 noundef zeroext false) #24 ; 2 uses
   %.fca.0.extract34 = extractvalue { ptr, i32 } %i.bd, 0
@@ -2156,8 +2171,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   store i32 %.sroa.2.0.copyload.i31, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !387
   br label %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit
 
-_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit: ; preds = %_ZN12_GLOBAL__N_112stripBitcastEN4llvm7SDValueE.exit, %bb.c, %bb.j, %bb.f, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit29, %bb.g, %bb.e, %_ZNK4llvm14ConstantSDNode5isOneEv.exit, %.split
-  %.4 = phi i1 [ false, %_ZN12_GLOBAL__N_112stripBitcastEN4llvm7SDValueE.exit ], [ false, %.split ], [ true, %bb.e ], [ false, %_ZNK4llvm14ConstantSDNode5isOneEv.exit ], [ true, %bb.j ], [ false, %bb.f ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit29 ], [ false, %bb.g ], [ false, %bb.c ]
+_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit: ; preds = %_ZN12_GLOBAL__N_112stripBitcastEN4llvm7SDValueE.exit, %bb.c, %bb.e, %_ZNK4llvm14ConstantSDNode5isOneEv.exit, %.split, %bb.g, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit29, %bb.j, %bb.f
+  %.4 = phi i1 [ false, %bb.g ], [ false, %_ZN12_GLOBAL__N_112stripBitcastEN4llvm7SDValueE.exit ], [ true, %bb.j ], [ false, %bb.f ], [ false, %_ZN4llvm8dyn_castINS_14ConstantSDNodeENS_7SDValueEEEDcRKT0_.exit29 ], [ true, %bb.e ], [ false, %_ZNK4llvm14ConstantSDNode5isOneEv.exit ], [ false, %.split ], [ false, %bb.c ]
   ret i1 %.4
 }
 
@@ -2273,7 +2288,7 @@ _ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit.thread: ; pred
   br i1 %.not, label %.thread, label %bb.f
 
 .thread:                                          ; preds = %bb.b, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit, %bb.a, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit.thread
-  %.173 = phi ptr [ %1, %bb.a ], [ %i.ar, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit.thread ], [ %1, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit ], [ %1, %bb.b ] ; 4 uses
+  %.173 = phi ptr [ %i.ar, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit.thread ], [ %1, %bb.a ], [ %1, %_ZNK4llvm18AMDGPUDAGToDAGISel15isDSOffsetLegalENS_7SDValueEj.exit ], [ %1, %bb.b ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 816
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !500
@@ -2676,7 +2691,6 @@ bb.bd:                                            ; preds = %bb.bc
   %.sroa.0371.0.copyload = load ptr, ptr %i.jq, align 8, !tbaa !385 ; 3 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.jq, i64 8
   %i.jr = load i64, ptr %.sroa.7.0..sroa_idx, align 8
-  %.sroa.7.sroa.0.0.extract.trunc = trunc i64 %i.jr to i32
   %i.js = getelementptr inbounds nuw i8, ptr %.sroa.0371.0.copyload, i64 24
   %i.jt = load i32, ptr %i.js, align 8, !tbaa !388
   %i.ju = icmp eq i32 %i.jt, 260
@@ -2688,11 +2702,12 @@ bb.be:                                            ; preds = %bb.bd
   %.sroa.0371.0.copyload373 = load ptr, ptr %i.jw, align 8, !tbaa !385
   %.sroa.7.0..sroa_idx375 = getelementptr inbounds nuw i8, ptr %i.jw, i64 8
   %i.jx = load i32, ptr %.sroa.7.0..sroa_idx375, align 8, !tbaa !387
+  %.sroa.7.0.insert.ext = zext i32 %i.jx to i64
   %i.jy = xor i32 %.0266, 3
   br label %bb.bf
 
 bb.bf:                                            ; preds = %bb.bd, %bb.be
-  %.sroa.7.sroa.0.0 = phi i32 [ %i.jx, %bb.be ], [ %.sroa.7.sroa.0.0.extract.trunc, %bb.bd ]
+  %.sroa.7.0 = phi i64 [ %.sroa.7.0.insert.ext, %bb.be ], [ %i.jr, %bb.bd ]
   %.sroa.0371.0 = phi ptr [ %.sroa.0371.0.copyload373, %bb.be ], [ %.sroa.0371.0.copyload, %bb.bd ]
   %.6 = phi i32 [ %i.jy, %bb.be ], [ %.0266, %bb.bd ] ; 2 uses
   %i.jz = icmp eq i32 %i.jk, 1
@@ -2702,7 +2717,8 @@ bb.bf:                                            ; preds = %bb.bd, %bb.be
   %i.kc = or i32 %spec.select277, 8
   %.8 = select i1 %i.kb, i32 %i.kc, i32 %spec.select277
   store ptr %.sroa.0371.0, ptr %3, align 8, !tbaa !385
-  store i32 %.sroa.7.sroa.0.0, ptr %.sroa.10.0..0.229.sroa_idx, align 8, !tbaa !387
+  %.sroa.7.0.extract.trunc = trunc i64 %.sroa.7.0 to i32
+  store i32 %.sroa.7.0.extract.trunc, ptr %.sroa.10.0..0.229.sroa_idx, align 8, !tbaa !387
   %i.kd = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.ke = load ptr, ptr %i.kd, align 8, !tbaa !392
   %i.kf = zext nneg i32 %.8 to i64

@@ -205,7 +205,8 @@ bb.a:
   %2 = alloca %"class.clang::DiagnosticBuilder", align 8 ; 10 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !986    ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 5 uses
-  %.sroa.029.0.copyload = load i32, ptr %i.b, align 8, !tbaa !768 ; 2 uses
+  %.sroa.029.0.copyload = load i64, ptr %i.b, align 8
+  %.sroa.029.sroa.0.0.extract.trunc = trunc i64 %.sroa.029.0.copyload to i32 ; 2 uses
   %.sroa.633.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.633.0.copyload = load ptr, ptr %.sroa.633.0..sroa_idx, align 8, !tbaa !770 ; 3 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -284,7 +285,7 @@ bb.g:                                             ; preds = %bb.a
 
 "_ZZN5clang6Parser20tryParseModifierListENS_17OpenACCClauseKindEENK3$_0clENS_5TokenE.exit": ; preds = %bb.b, %bb.d, %bb.e, %bb.f, %bb.a, %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #17
-  call void @_ZN5clang6Parser4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::DiagnosticBuilder") align 8 %1, ptr noundef nonnull align 8 dereferenceable(2960) %i.a, i32 %.sroa.029.0.copyload, i32 noundef 1532) #17
+  call void @_ZN5clang6Parser4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::DiagnosticBuilder") align 8 %1, ptr noundef nonnull align 8 dereferenceable(2960) %i.a, i32 %.sroa.029.sroa.0.0.extract.trunc, i32 noundef 1532) #17
   %i.ap = load ptr, ptr %1, align 8, !tbaa !995   ; 2 uses
   %.not.i.i.i9 = icmp eq ptr %i.ap, null
   br i1 %.not.i.i.i9, label %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i, label %_ZNK5clang17DiagnosticBuilderlsIPNS_14IdentifierInfoEvEERKS0_OT_.exit
@@ -363,7 +364,7 @@ select.unfold:                                    ; preds = %bb.g, %bb.e, %bb.d,
 
 bb.h:                                             ; preds = %select.unfold
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
-  call void @_ZN5clang6Parser4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::DiagnosticBuilder") align 8 %2, ptr noundef nonnull align 8 dereferenceable(2960) %i.a, i32 %.sroa.029.0.copyload, i32 noundef 1532) #17
+  call void @_ZN5clang6Parser4DiagENS_14SourceLocationEj(ptr dead_on_unwind nonnull writable sret(%"class.clang::DiagnosticBuilder") align 8 %2, ptr noundef nonnull align 8 dereferenceable(2960) %i.a, i32 %.sroa.029.sroa.0.0.extract.trunc, i32 noundef 1532) #17
   %i.ck = load ptr, ptr %2, align 8, !tbaa !995   ; 2 uses
   %.not.i.i.i12 = icmp eq ptr %i.ck, null
   br i1 %.not.i.i.i12, label %_ZNK5clang19StreamingDiagnostic10getStorageEv.exit.i.i.i13, label %_ZNK5clang17DiagnosticBuilderlsIPNS_14IdentifierInfoEvEERKS0_OT_.exit19

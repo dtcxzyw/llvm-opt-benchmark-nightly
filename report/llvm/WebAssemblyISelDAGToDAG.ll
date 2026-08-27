@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.li = load ptr, ptr %i.lh, align 8, !tbaa !443 ; 2 uses
   %.sroa.0220.0.copyload.peel = load ptr, ptr %i.li, align 8, !tbaa !455 ; 4 uses
   %.sroa.7.0..sroa_idx.peel = getelementptr inbounds nuw i8, ptr %i.li, i64 8
-  %.sroa.7.sroa.0.0.copyload.peel = load i32, ptr %.sroa.7.0..sroa_idx.peel, align 8, !tbaa !456 ; 2 uses
+  %.sroa.7.0.copyload.peel = load i64, ptr %.sroa.7.0..sroa_idx.peel, align 8 ; 2 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %.sroa.0220.0.copyload.peel, i64 24
   %i.lk = load i32, ptr %i.lj, align 8, !tbaa !235
   switch i32 %i.lk, label %.thread [
@@ -217,6 +217,7 @@ bb.aq:                                            ; preds = %bb.ap
   ]
 
 bb.ar:                                            ; preds = %bb.aq, %bb.aq
+  %.sroa.7.0.extract.trunc227.peel = trunc i64 %.sroa.7.0.copyload.peel to i32
   br label %.thread
 
 bb.as:                                            ; preds = %bb.aq, %bb.aq, %bb.aq, %bb.aq
@@ -225,7 +226,8 @@ bb.as:                                            ; preds = %bb.aq, %bb.aq, %bb.
   %i.ln = call noundef ptr @_ZNK4llvm5Value27stripPointerCastsAndAliasesEv(ptr noundef nonnull align 8 dereferenceable(24) %i.lm) #17
   %i.lo = load i8, ptr %i.ln, align 8, !tbaa !494
   %i.lp = icmp eq i8 %i.lo, 14                    ; 2 uses
-  %spec.select.peel = select i1 %i.lp, i32 %.sroa.7.sroa.0.0.copyload.peel, i32 %.sroa.8.0.copyload.peel ; 2 uses
+  %.sroa.7.0.extract.trunc.peel = trunc i64 %.sroa.7.0.copyload.peel to i32
+  %spec.select.peel = select i1 %i.lp, i32 %.sroa.7.0.extract.trunc.peel, i32 %.sroa.8.0.copyload.peel ; 2 uses
   %spec.select321.peel = select i1 %i.lp, ptr %.sroa.0220.0.copyload.peel, ptr %.sroa.0226.0.copyload.peel ; 2 uses
   %.pre = load i32, ptr %i.kw, align 8, !tbaa !489 ; 2 uses
   %.pre328 = load i32, ptr %i.kx, align 4, !tbaa !490
@@ -239,7 +241,7 @@ bb.at:                                            ; preds = %bb.as
 
 .thread:                                          ; preds = %bb.aq, %bb.ar, %bb.ap, %bb.as
   %.sroa.0226.1.peel350 = phi ptr [ %spec.select321.peel, %bb.as ], [ %.sroa.0226.0.copyload.peel, %bb.aq ], [ %.sroa.0220.0.copyload.peel, %bb.ar ], [ %.sroa.0226.0.copyload.peel, %bb.ap ]
-  %.sroa.8.1.peel349 = phi i32 [ %spec.select.peel, %bb.as ], [ %.sroa.8.0.copyload.peel, %bb.aq ], [ %.sroa.7.sroa.0.0.copyload.peel, %bb.ar ], [ %.sroa.8.0.copyload.peel, %bb.ap ]
+  %.sroa.8.1.peel349 = phi i32 [ %spec.select.peel, %bb.as ], [ %.sroa.8.0.copyload.peel, %bb.aq ], [ %.sroa.7.0.extract.trunc227.peel, %bb.ar ], [ %.sroa.8.0.copyload.peel, %bb.ap ]
   %i.ls = phi i64 [ %i.lr, %bb.as ], [ 0, %bb.aq ], [ 0, %bb.ar ], [ 0, %bb.ap ]
   %i.lt = load ptr, ptr %24, align 8, !tbaa !488
   %i.lu = getelementptr inbounds nuw [16 x i8], ptr %i.lt, i64 %i.ls ; 2 uses
@@ -642,7 +644,6 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.030.0.copyload = load ptr, ptr %i.h, align 8, !tbaa !455 ; 5 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.i = load i64, ptr %.sroa.10.0..sroa_idx, align 8
-  %.sroa.10.sroa.0.0.extract.trunc = trunc i64 %i.i to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !487
@@ -700,24 +701,26 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.030.0.copyload34 = load ptr, ptr %i.ag, align 8, !tbaa !455 ; 2 uses
   %.sroa.10.0..sroa_idx36 = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ah = load i32, ptr %.sroa.10.0..sroa_idx36, align 8, !tbaa !456
+  %.sroa.10.0.insert.ext = zext i32 %i.ah to i64
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.sroa.030.0.copyload34, i64 24
   %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !235
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ai = phi i32 [ %.pre, %bb.d ], [ %i.ad, %bb.c ]
-  %.sroa.10.sroa.0.0 = phi i32 [ %i.ah, %bb.d ], [ %.sroa.10.sroa.0.0.extract.trunc, %bb.c ]
   %.sroa.030.0 = phi ptr [ %.sroa.030.0.copyload34, %bb.d ], [ %.sroa.030.0.copyload, %bb.c ]
+  %.sroa.10.0 = phi i64 [ %.sroa.10.0.insert.ext, %bb.d ], [ %i.i, %bb.c ]
   %i.aj = icmp eq i32 %i.ai, 39
   br i1 %i.aj, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.j, %bb.e
-  %.sroa.10.sroa.0.1 = phi i32 [ %.sroa.10.sroa.0.2, %bb.j ], [ %.sroa.10.sroa.0.0, %bb.e ]
-  %.sroa.030.0.lcssa = phi ptr [ %.sroa.030.0.1, %bb.j ], [ %.sroa.030.0, %bb.e ]
+  %.sroa.030.0.lcssa = phi ptr [ %.sroa.030.0, %bb.e ], [ %.sroa.030.0.1, %bb.j ]
+  %.sroa.10.0.lcssa = phi i64 [ %.sroa.10.0, %bb.e ], [ %.sroa.10.0.1, %bb.j ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %4, ptr noundef nonnull align 8 dereferenceable(12) %5, i64 12, i1 false), !tbaa.struct !487
   store ptr %.sroa.030.0.lcssa, ptr %3, align 8, !tbaa !455
   %.sroa.10.0..sroa_idx37 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %.sroa.10.sroa.0.1, ptr %.sroa.10.0..sroa_idx37, align 8, !tbaa !456
+  %.sroa.10.0.extract.trunc = trunc i64 %.sroa.10.0.lcssa to i32
+  store i32 %.sroa.10.0.extract.trunc, ptr %.sroa.10.0..sroa_idx37, align 8, !tbaa !456
   br label %.loopexit.sink.split
 
 bb.g:                                             ; preds = %.critedge26, %bb.e
@@ -727,7 +730,6 @@ bb.g:                                             ; preds = %.critedge26, %bb.e
   %.sroa.030.0.copyload.1 = load ptr, ptr %i.al, align 8, !tbaa !455 ; 5 uses
   %.sroa.10.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.ak, i64 48
   %i.am = load i64, ptr %.sroa.10.0..sroa_idx.1, align 8
-  %.sroa.10.sroa.0.0.extract.trunc50 = trunc i64 %i.am to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i64 16, i1 false), !tbaa.struct !487
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.030.0.copyload.1, i64 24 ; 2 uses
@@ -753,14 +755,15 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.030.0.copyload34.1 = load ptr, ptr %i.au, align 8, !tbaa !455 ; 2 uses
   %.sroa.10.0..sroa_idx36.1 = getelementptr inbounds nuw i8, ptr %i.au, i64 8
   %i.av = load i32, ptr %.sroa.10.0..sroa_idx36.1, align 8, !tbaa !456
+  %.sroa.10.0.insert.ext.1 = zext i32 %i.av to i64
   %.phi.trans.insert53 = getelementptr inbounds nuw i8, ptr %.sroa.030.0.copyload34.1, i64 24
   %.pre54 = load i32, ptr %.phi.trans.insert53, align 8, !tbaa !235
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.aw = phi i32 [ %.pre54, %bb.i ], [ %i.ar, %bb.h ]
-  %.sroa.10.sroa.0.2 = phi i32 [ %i.av, %bb.i ], [ %.sroa.10.sroa.0.0.extract.trunc50, %bb.h ]
   %.sroa.030.0.1 = phi ptr [ %.sroa.030.0.copyload34.1, %bb.i ], [ %.sroa.030.0.copyload.1, %bb.h ]
+  %.sroa.10.0.1 = phi i64 [ %.sroa.10.0.insert.ext.1, %bb.i ], [ %i.am, %bb.h ]
   %i.ax = icmp eq i32 %i.aw, 39
   br i1 %i.ax, label %bb.f, label %.loopexit.sink.split
 
