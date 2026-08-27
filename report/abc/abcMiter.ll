@@ -204,8 +204,8 @@ bb.c:                                             ; preds = %.lr.ph62, %bb.e
   %indvars.iv65 = phi i64 [ 0, %.lr.ph62 ], [ %indvars.iv.next66, %bb.e ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   %indvars.iv.next66 = add nuw nsw i64 %indvars.iv65, 1 ; 3 uses
-  %indvars.iv.next66.tr = trunc i64 %indvars.iv.next66 to i32
-  %i.ar = shl i32 %indvars.iv.next66.tr, 1
+  %indvars.iv.next66.tr = trunc nuw i64 %indvars.iv.next66 to i32
+  %i.ar = shl nuw i32 %indvars.iv.next66.tr, 1
   store i32 %i.ar, ptr %i.a, align 4, !tbaa !39
   %i.as = call i32 @sat_solver_solve(ptr noundef %i.an, ptr noundef nonnull %i.a, ptr noundef nonnull %i.aq, i64 noundef 100000, i64 noundef 0, i64 noundef 0, i64 noundef 0) #17
   %i.at = icmp eq i32 %i.as, -1
@@ -577,7 +577,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.e
   %i.au = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.av = shl i32 %indvars.iv.tr, 1
+  %i.av = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.au, i32 %i.av, i32 2147483647 ; 4 uses
   %i.aw = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.aw

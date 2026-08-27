@@ -206,8 +206,8 @@ sqlite3_value_int.exit:                           ; preds = %bb.b, %bb.e, %bb.h
   br i1 %or.cond, label %sqlite3_value_int.exit.thread, label %bb.i
 
 bb.i:                                             ; preds = %sqlite3_value_int.exit
-  %i.r = trunc i64 %.0.i.i to i8                  ; 2 uses
-  %i.s = shl i8 %i.r, 1                           ; 3 uses
+  %i.r = trunc i64 %.0.i.i to i8                  ; 3 uses
+  %i.s = shl i8 %i.r, 1                           ; 2 uses
   %i.t = shl i8 %i.r, 3
   %i.u = add i8 %i.t, 8                           ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -317,13 +317,14 @@ sqlite3_str_new.exit:                             ; preds = %bb.r, %sqlite3_mall
 
 .lr.ph60:                                         ; preds = %sqlite3_str_new.exit
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
-  %i.bn = zext i8 %i.s to i64
+  %i.bn = zext nneg i8 %i.s to i64
   %i.bo = getelementptr inbounds nuw i8, ptr %.0.i, i64 24 ; 4 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.0.i, i64 16 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 2 uses
-  %.not63 = icmp eq i8 %i.s, 0
+  %.not63 = icmp eq i8 %i.r, 0
+  %4 = tail call i8 @llvm.umax.i8(i8 %i.s, i8 1)
   %i.br = zext i8 %i.u to i64
-  %wide.trip.count = zext i8 %i.s to i64
+  %wide.trip.count = zext i8 %4 to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph60, %sqlite3_str_append.exit35

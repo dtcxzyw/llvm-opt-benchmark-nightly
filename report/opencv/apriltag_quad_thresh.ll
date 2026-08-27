@@ -205,8 +205,8 @@ bb.ai:                                            ; preds = %.preheader339, %.lo
   br i1 %i.bhc, label %.preheader336, label %.loopexit337.loopexit393
 
 .preheader336:                                    ; preds = %bb.ai
-  %indvars.iv451.tr533 = trunc i64 %indvars.iv451 to i32
-  %i.bhd = shl i32 %indvars.iv451.tr533, 2        ; 4 uses
+  %indvars.iv451.tr533 = trunc nuw i64 %indvars.iv451 to i32
+  %i.bhd = shl nuw nsw i32 %indvars.iv451.tr533, 2 ; 4 uses
   %i.bhe = add i32 %i.bhd, %i.bga                 ; 4 uses
   %i.bhf = load ptr, ptr %i.bdc, align 8, !tbaa !87
   %i.bhg = sext i32 %i.bhe to i64
@@ -293,8 +293,8 @@ bb.ai:                                            ; preds = %.preheader339, %.lo
   %i.bjq = add nuw nsw i32 %i.bgz, %i.bgw
   %i.bjr = lshr i32 %i.bjq, 1
   %i.bjs = trunc nuw i32 %i.bjr to i8             ; 16 uses
-  %indvars.iv451.tr = trunc i64 %indvars.iv451 to i32
-  %i.bjt = shl i32 %indvars.iv451.tr, 2           ; 4 uses
+  %indvars.iv451.tr = trunc nuw i64 %indvars.iv451 to i32
+  %i.bjt = shl nuw nsw i32 %indvars.iv451.tr, 2   ; 4 uses
   %i.bju = add i32 %i.bjt, %i.bfp                 ; 4 uses
   %i.bjv = load ptr, ptr %i.bdb, align 8, !tbaa !87
   %i.bjw = sext i32 %i.bju to i64                 ; 2 uses
@@ -697,7 +697,7 @@ bb.t:                                             ; preds = %.lr.ph504
   %.1271 = phi ptr [ %i.ft, %.critedge338 ], [ %.0270503, %.lr.ph504 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   %indvars.iv.tr666 = trunc i64 %indvars.iv to i32
-  %i.fx = shl i32 %indvars.iv.tr666, 1
+  %i.fx = shl nsw i32 %indvars.iv.tr666, 1
   %i.fy = call i32 @llvm.umin.i32(i32 %i.fx, i32 65535)
   %i.fz = trunc nuw i32 %i.fy to i16
   store i16 %i.fz, ptr %9, align 4, !tbaa !63

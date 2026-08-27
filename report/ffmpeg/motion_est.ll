@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %.preheader, %.loope
 bb.i:                                             ; preds = %bb.h
   %i.eq = mul nsw i64 %indvars.iv368, %indvars.iv368 ; 3 uses
   %indvars.iv368.tr = trunc i64 %indvars.iv368 to i32
-  %i.er = shl i32 %indvars.iv368.tr, 2            ; 3 uses
+  %i.er = shl nsw i32 %indvars.iv368.tr, 2        ; 3 uses
   %i.es = mul nsw i32 %i.er, %i.du
   %i.et = add i32 %i.es, %i.dv
   %i.eu = trunc i64 %i.eq to i32
@@ -608,13 +608,13 @@ bb.e:                                             ; preds = %bb.d, %bb.v
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %indvars.iv.tr274 = trunc i64 %indvars.iv to i32
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %indvars.iv.tr274 = trunc nuw i64 %indvars.iv to i32
   %i.cb = load <2 x i32>, ptr %i.av, align 4, !tbaa !59
   %i.cc = load <2 x i32>, ptr %i.aw, align 16, !tbaa !59
   %i.cd = mul <2 x i32> %i.cb, splat (i32 -16)
-  %i.ce = shl i32 %indvars.iv.tr274, 2
-  %i.cf = shl i32 %indvars.iv.tr, 3
+  %i.ce = shl nuw nsw i32 %indvars.iv.tr274, 2
+  %i.cf = shl nuw nsw i32 %indvars.iv.tr, 3
   %i.cg = insertelement <2 x i32> poison, i32 %i.cf, i64 0
   %i.ch = insertelement <2 x i32> %i.cg, i32 %i.ce, i64 1
   %i.ci = and <2 x i32> %i.ch, splat (i32 8)

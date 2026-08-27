@@ -205,8 +205,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ] ; 2 uses
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.n = shl i32 %indvars.iv.tr.i, 4
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.n = shl nuw nsw i32 %indvars.iv.tr.i, 4
   %i.o = add i32 %i.m, %i.n
   %i.p = zext i32 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.p ; 5 uses
@@ -466,8 +466,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.g, %.lr.ph.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.g ] ; 2 uses
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.q = shl i32 %indvars.iv.tr.i.i, 4
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.q = shl nuw nsw i32 %indvars.iv.tr.i.i, 4
   %i.r = add i32 %i.p, %i.q
   %i.s = zext i32 %i.r to i64
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.s ; 5 uses
@@ -870,8 +870,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.g, %.lr.ph.i.i
   %indvars.iv.i.i = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.g ] ; 2 uses
-  %indvars.iv.tr.i.i = trunc i64 %indvars.iv.i.i to i32
-  %i.q = shl i32 %indvars.iv.tr.i.i, 4
+  %indvars.iv.tr.i.i = trunc nuw i64 %indvars.iv.i.i to i32
+  %i.q = shl nuw nsw i32 %indvars.iv.tr.i.i, 4
   %i.r = add i32 %i.q, %i.p
   %i.s = zext i32 %i.r to i64
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %i.s ; 5 uses
@@ -914,8 +914,8 @@ bb.g:                                             ; preds = %bb.e, %bb.d, %bb.c,
 
 bb.h:                                             ; preds = %bb.m, %.lr.ph.i134.i
   %indvars.iv.i136.i = phi i64 [ 0, %.lr.ph.i134.i ], [ %indvars.iv.next.i138.i, %bb.m ] ; 2 uses
-  %indvars.iv.tr.i137.i = trunc i64 %indvars.iv.i136.i to i32
-  %i.ai = shl i32 %indvars.iv.tr.i137.i, 4
+  %indvars.iv.tr.i137.i = trunc nuw i64 %indvars.iv.i136.i to i32
+  %i.ai = shl nuw nsw i32 %indvars.iv.tr.i137.i, 4
   %i.aj = add i32 %i.ai, %i.p
   %i.ak = zext i32 %i.aj to i64
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 %i.ak ; 5 uses
@@ -972,8 +972,8 @@ stbtt__find_table.exit141.i:                      ; preds = %bb.m, %bb.l, %bb.a
 
 bb.n:                                             ; preds = %bb.s, %.lr.ph.i145.i
   %indvars.iv.i147.i = phi i64 [ 0, %.lr.ph.i145.i ], [ %indvars.iv.next.i149.i, %bb.s ] ; 2 uses
-  %indvars.iv.tr.i148.i = trunc i64 %indvars.iv.i147.i to i32
-  %i.bf = shl i32 %indvars.iv.tr.i148.i, 4
+  %indvars.iv.tr.i148.i = trunc nuw i64 %indvars.iv.i147.i to i32
+  %i.bf = shl nuw nsw i32 %indvars.iv.tr.i148.i, 4
   %i.bg = add i32 %i.bf, %i.p
   %i.bh = zext i32 %i.bg to i64
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 %i.bh ; 5 uses
@@ -1029,8 +1029,8 @@ stbtt__find_table.exit152.i:                      ; preds = %bb.s, %bb.r, %stbtt
 
 bb.t:                                             ; preds = %bb.y, %.lr.ph.i156.i
   %indvars.iv.i158.i = phi i64 [ 0, %.lr.ph.i156.i ], [ %indvars.iv.next.i160.i, %bb.y ] ; 2 uses
-  %indvars.iv.tr.i159.i = trunc i64 %indvars.iv.i158.i to i32
-  %i.cd = shl i32 %indvars.iv.tr.i159.i, 4
+  %indvars.iv.tr.i159.i = trunc nuw i64 %indvars.iv.i158.i to i32
+  %i.cd = shl nuw nsw i32 %indvars.iv.tr.i159.i, 4
   %i.ce = add i32 %i.cd, %i.p
   %i.cf = zext i32 %i.ce to i64
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 %i.cf ; 5 uses
@@ -1086,8 +1086,8 @@ stbtt__find_table.exit163.i:                      ; preds = %bb.y, %bb.x, %stbtt
 
 bb.z:                                             ; preds = %bb.ae, %.lr.ph.i167.i
   %indvars.iv.i169.i = phi i64 [ 0, %.lr.ph.i167.i ], [ %indvars.iv.next.i171.i, %bb.ae ] ; 2 uses
-  %indvars.iv.tr.i170.i = trunc i64 %indvars.iv.i169.i to i32
-  %i.da = shl i32 %indvars.iv.tr.i170.i, 4
+  %indvars.iv.tr.i170.i = trunc nuw i64 %indvars.iv.i169.i to i32
+  %i.da = shl nuw nsw i32 %indvars.iv.tr.i170.i, 4
   %i.db = add i32 %i.da, %i.p
   %i.dc = zext i32 %i.db to i64
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 %i.dc ; 5 uses
@@ -1143,8 +1143,8 @@ stbtt__find_table.exit174.i:                      ; preds = %bb.ae, %bb.ad, %stb
 
 bb.af:                                            ; preds = %bb.ak, %.lr.ph.i178.i
   %indvars.iv.i180.i = phi i64 [ 0, %.lr.ph.i178.i ], [ %indvars.iv.next.i182.i, %bb.ak ] ; 2 uses
-  %indvars.iv.tr.i181.i = trunc i64 %indvars.iv.i180.i to i32
-  %i.dx = shl i32 %indvars.iv.tr.i181.i, 4
+  %indvars.iv.tr.i181.i = trunc nuw i64 %indvars.iv.i180.i to i32
+  %i.dx = shl nuw nsw i32 %indvars.iv.tr.i181.i, 4
   %i.dy = add i32 %i.dx, %i.p
   %i.dz = zext i32 %i.dy to i64
   %i.ea = getelementptr inbounds nuw i8, ptr %1, i64 %i.dz ; 5 uses
@@ -1200,8 +1200,8 @@ stbtt__find_table.exit185.i:                      ; preds = %bb.ak, %bb.aj, %stb
 
 bb.al:                                            ; preds = %bb.aq, %.lr.ph.i189.i
   %indvars.iv.i191.i = phi i64 [ 0, %.lr.ph.i189.i ], [ %indvars.iv.next.i193.i, %bb.aq ] ; 2 uses
-  %indvars.iv.tr.i192.i = trunc i64 %indvars.iv.i191.i to i32
-  %i.eu = shl i32 %indvars.iv.tr.i192.i, 4
+  %indvars.iv.tr.i192.i = trunc nuw i64 %indvars.iv.i191.i to i32
+  %i.eu = shl nuw nsw i32 %indvars.iv.tr.i192.i, 4
   %i.ev = add i32 %i.eu, %i.p
   %i.ew = zext i32 %i.ev to i64
   %i.ex = getelementptr inbounds nuw i8, ptr %1, i64 %i.ew ; 5 uses
@@ -1257,8 +1257,8 @@ stbtt__find_table.exit196.i:                      ; preds = %bb.aq, %bb.ap, %stb
 
 bb.ar:                                            ; preds = %bb.aw, %.lr.ph.i200.i
   %indvars.iv.i202.i = phi i64 [ 0, %.lr.ph.i200.i ], [ %indvars.iv.next.i204.i, %bb.aw ] ; 2 uses
-  %indvars.iv.tr.i203.i = trunc i64 %indvars.iv.i202.i to i32
-  %i.fr = shl i32 %indvars.iv.tr.i203.i, 4
+  %indvars.iv.tr.i203.i = trunc nuw i64 %indvars.iv.i202.i to i32
+  %i.fr = shl nuw nsw i32 %indvars.iv.tr.i203.i, 4
   %i.fs = add i32 %i.fr, %i.p
   %i.ft = zext i32 %i.fs to i64
   %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 %i.ft ; 5 uses
@@ -1342,8 +1342,8 @@ bb.az:                                            ; preds = %bb.ax
 
 bb.ba:                                            ; preds = %bb.be, %.lr.ph.i211.i
   %indvars.iv.i213.i = phi i64 [ 0, %.lr.ph.i211.i ], [ %indvars.iv.next.i215.i, %bb.be ] ; 2 uses
-  %indvars.iv.tr.i214.i = trunc i64 %indvars.iv.i213.i to i32
-  %i.go = shl i32 %indvars.iv.tr.i214.i, 4
+  %indvars.iv.tr.i214.i = trunc nuw i64 %indvars.iv.i213.i to i32
+  %i.go = shl nuw nsw i32 %indvars.iv.tr.i214.i, 4
   %i.gp = add i32 %i.go, %i.p
   %i.gq = zext i32 %i.gp to i64
   %i.gr = getelementptr inbounds nuw i8, ptr %1, i64 %i.gq ; 5 uses
@@ -1746,8 +1746,8 @@ bb.cv:                                            ; preds = %bb.cu, %bb.ay
 
 bb.cw:                                            ; preds = %bb.da, %.lr.ph.i333.i
   %indvars.iv.i335.i = phi i64 [ 0, %.lr.ph.i333.i ], [ %indvars.iv.next.i337.i, %bb.da ] ; 2 uses
-  %indvars.iv.tr.i336.i = trunc i64 %indvars.iv.i335.i to i32
-  %i.vs = shl i32 %indvars.iv.tr.i336.i, 4
+  %indvars.iv.tr.i336.i = trunc nuw i64 %indvars.iv.i335.i to i32
+  %i.vs = shl nuw nsw i32 %indvars.iv.tr.i336.i, 4
   %i.vt = add i32 %i.vs, %i.p
   %i.vu = zext i32 %i.vt to i64
   %i.vv = getelementptr inbounds nuw i8, ptr %1, i64 %i.vu ; 5 uses
@@ -1827,8 +1827,8 @@ stbtt__find_table.exit340.thread.i:               ; preds = %bb.da, %bb.db, %stb
 bb.dc:                                            ; preds = %bb.de, %.lr.ph.i
   %i.xe = phi i32 [ 0, %.lr.ph.i ], [ %i.xy, %bb.de ] ; 2 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.de ] ; 2 uses
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.xf = shl i32 %indvars.iv.tr.i, 3
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.xf = shl nuw nsw i32 %indvars.iv.tr.i, 3
   %i.xg = add i32 %i.xd, %i.xf
   %i.xh = zext i32 %i.xg to i64
   %i.xi = getelementptr inbounds nuw i8, ptr %1, i64 %i.xh ; 5 uses
@@ -2231,8 +2231,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.f, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.f ] ; 2 uses
-  %indvars.iv.tr.i = trunc i64 %indvars.iv.i to i32
-  %i.n = shl i32 %indvars.iv.tr.i, 4
+  %indvars.iv.tr.i = trunc nuw i64 %indvars.iv.i to i32
+  %i.n = shl nuw nsw i32 %indvars.iv.tr.i, 4
   %i.o = add i32 %i.m, %i.n
   %i.p = zext i32 %i.o to i64
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.p ; 5 uses
@@ -2635,8 +2635,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.j, %.lr.ph.i.i.i
   %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.j ] ; 2 uses
-  %indvars.iv.tr.i.i.i = trunc i64 %indvars.iv.i.i.i to i32
-  %i.j = shl i32 %indvars.iv.tr.i.i.i, 4
+  %indvars.iv.tr.i.i.i = trunc nuw i64 %indvars.iv.i.i.i to i32
+  %i.j = shl nuw nsw i32 %indvars.iv.tr.i.i.i, 4
   %i.k = add i32 %i.j, %.pre77.i.i
   %i.l = zext i32 %i.k to i64
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 %i.l ; 5 uses
@@ -2697,8 +2697,8 @@ stbtt__find_table.exit.i.i:                       ; preds = %bb.j, %bb.i
 
 bb.k:                                             ; preds = %bb.o, %.lr.ph.i52.i.i
   %indvars.iv.i54.i.i = phi i64 [ 0, %.lr.ph.i52.i.i ], [ %indvars.iv.next.i56.i.i, %bb.o ] ; 2 uses
-  %indvars.iv.tr.i55.i.i = trunc i64 %indvars.iv.i54.i.i to i32
-  %i.ag = shl i32 %indvars.iv.tr.i55.i.i, 4
+  %indvars.iv.tr.i55.i.i = trunc nuw i64 %indvars.iv.i54.i.i to i32
+  %i.ag = shl nuw nsw i32 %indvars.iv.tr.i55.i.i, 4
   %i.ah = add i32 %i.ag, %.pre77.i.i
   %i.ai = zext i32 %i.ah to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 %i.ai ; 5 uses

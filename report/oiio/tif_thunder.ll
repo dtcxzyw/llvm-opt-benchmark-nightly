@@ -178,8 +178,8 @@ bb.k:                                             ; preds = %bb.j
   %i.ax = zext nneg i32 %i.aw to i64
   %i.ay = getelementptr inbounds nuw [4 x i8], ptr @twobitdeltas, i64 %i.ax
   %i.az = load i32, ptr %i.ay, align 4, !tbaa !3
-  %i.ba = add nsw i32 %i.az, %.0113156.i          ; 2 uses
-  %i.bb = and i32 %i.ba, 15                       ; 2 uses
+  %i.ba = add nsw i32 %i.az, %.0113156.i
+  %i.bb = and i32 %i.ba, 15                       ; 3 uses
   %i.bc = add nsw i64 %.0107157.i, 1
   %i.bd = and i64 %.0107157.i, 1
   %.not137.i = icmp eq i64 %i.bd, 0
@@ -193,8 +193,8 @@ bb.l:                                             ; preds = %bb.k
   br label %.sink.split.i
 
 bb.m:                                             ; preds = %bb.k
-  %.tr138.i = trunc i32 %i.ba to i8
-  %i.bi = shl i8 %.tr138.i, 4
+  %.tr138.i = trunc nuw nsw i32 %i.bb to i8
+  %i.bi = shl nuw i8 %.tr138.i, 4
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.m, %bb.l
@@ -216,8 +216,8 @@ bb.o:                                             ; preds = %bb.n
   %i.bl = zext nneg i32 %i.bk to i64
   %i.bm = getelementptr inbounds nuw [4 x i8], ptr @twobitdeltas, i64 %i.bl
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !3
-  %i.bo = add nsw i32 %i.bn, %.2115.i             ; 2 uses
-  %i.bp = and i32 %i.bo, 15                       ; 3 uses
+  %i.bo = add nsw i32 %i.bn, %.2115.i
+  %i.bp = and i32 %i.bo, 15                       ; 4 uses
   %i.bq = icmp slt i64 %.2109.i, %i.k
   br i1 %i.bq, label %bb.p, label %bb.s
 
@@ -235,8 +235,8 @@ bb.q:                                             ; preds = %bb.p
   br label %.sink.split192.i
 
 bb.r:                                             ; preds = %bb.p
-  %.tr141.i = trunc i32 %i.bo to i8
-  %i.bx = shl i8 %.tr141.i, 4
+  %.tr141.i = trunc nuw nsw i32 %i.bp to i8
+  %i.bx = shl nuw i8 %.tr141.i, 4
   br label %.sink.split192.i
 
 .sink.split192.i:                                 ; preds = %bb.r, %bb.q
@@ -257,8 +257,8 @@ bb.t:                                             ; preds = %bb.s
   %i.bz = zext nneg i32 %i.by to i64
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr @twobitdeltas, i64 %i.bz
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !3
-  %i.cc = add nsw i32 %i.cb, %.3116.i             ; 2 uses
-  %i.cd = and i32 %i.cc, 15                       ; 4 uses
+  %i.cc = add nsw i32 %i.cb, %.3116.i
+  %i.cd = and i32 %i.cc, 15                       ; 5 uses
   %i.ce = icmp slt i64 %.3110.i, %i.k
   br i1 %i.ce, label %bb.u, label %bb.aj
 
@@ -277,8 +277,8 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.aj
 
 bb.w:                                             ; preds = %bb.u
-  %.tr144.i = trunc i32 %i.cc to i8
-  %i.cl = shl i8 %.tr144.i, 4
+  %.tr144.i = trunc nuw nsw i32 %i.cd to i8
+  %i.cl = shl nuw i8 %.tr144.i, 4
   store i8 %i.cl, ptr %.5.i, align 1, !tbaa !34
   br label %bb.aj
 
@@ -292,8 +292,8 @@ bb.y:                                             ; preds = %bb.x
   %i.co = zext nneg i32 %i.cn to i64
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr @threebitdeltas, i64 %i.co
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !3
-  %i.cr = add nsw i32 %i.cq, %.0113156.i          ; 2 uses
-  %i.cs = and i32 %i.cr, 15                       ; 2 uses
+  %i.cr = add nsw i32 %i.cq, %.0113156.i
+  %i.cs = and i32 %i.cr, 15                       ; 3 uses
   %i.ct = add nsw i64 %.0107157.i, 1
   %i.cu = and i64 %.0107157.i, 1
   %.not132.i = icmp eq i64 %i.cu, 0
@@ -307,8 +307,8 @@ bb.z:                                             ; preds = %bb.y
   br label %.sink.split194.i
 
 bb.aa:                                            ; preds = %bb.y
-  %.tr.i = trunc i32 %i.cr to i8
-  %i.cz = shl i8 %.tr.i, 4
+  %.tr.i = trunc nuw nsw i32 %i.cs to i8
+  %i.cz = shl nuw i8 %.tr.i, 4
   br label %.sink.split194.i
 
 .sink.split194.i:                                 ; preds = %bb.aa, %bb.z
@@ -329,8 +329,8 @@ bb.ac:                                            ; preds = %bb.ab
   %i.db = zext nneg i32 %i.da to i64
   %i.dc = getelementptr inbounds nuw [4 x i8], ptr @threebitdeltas, i64 %i.db
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !3
-  %i.de = add nsw i32 %i.dd, %.4117.i             ; 2 uses
-  %i.df = and i32 %i.de, 15                       ; 4 uses
+  %i.de = add nsw i32 %i.dd, %.4117.i
+  %i.df = and i32 %i.de, 15                       ; 5 uses
   %i.dg = icmp slt i64 %.4111.i, %i.k
   br i1 %i.dg, label %bb.ad, label %bb.aj
 
@@ -349,8 +349,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.aj
 
 bb.af:                                            ; preds = %bb.ad
-  %.tr135.i = trunc i32 %i.de to i8
-  %i.dn = shl i8 %.tr135.i, 4
+  %.tr135.i = trunc nuw nsw i32 %i.df to i8
+  %i.dn = shl nuw i8 %.tr135.i, 4
   store i8 %i.dn, ptr %.6.i, align 1, !tbaa !34
   br label %bb.aj
 

@@ -202,13 +202,13 @@ bb.a:
   ret ptr %i.a
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 4 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.g = load i32, ptr %i.f, align 4, !tbaa !19
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.h = shl i32 %indvars.iv.tr, 1                ; 2 uses
-  %3 = lshr i32 %i.h, 5
-  %4 = zext nneg i32 %3 to i64
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.h = shl nuw i32 %indvars.iv.tr, 1
+  %3 = lshr i64 %indvars.iv, 4
+  %4 = and i64 %3, 268435455
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %4
   %i.j = load i32, ptr %i.i, align 4, !tbaa !19   ; 2 uses
   %i.k = and i32 %i.h, 30                         ; 2 uses

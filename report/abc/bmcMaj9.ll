@@ -205,7 +205,7 @@ bb.bs:                                            ; preds = %Vec_IntPush.exit183
 
 bb.bt:                                            ; preds = %bb.bs
   %i.pk = icmp samesign ult i32 %.promoted.i, 1073741822
-  %i.pl = shl i32 %spec.select.sink.i257.i, 1
+  %i.pl = shl nsw i32 %spec.select.sink.i257.i, 1
   %spec.select.i.1.i = select i1 %i.pk, i32 %i.pl, i32 2147483647 ; 3 uses
   %i.pm = sext i32 %spec.select.i.1.i to i64
   %.not.i9.i.1.i = icmp samesign ult i64 %indvars.iv.next330.i, %i.pm
@@ -243,7 +243,7 @@ bb.bv:                                            ; preds = %Vec_IntPush.exit.1.
 
 bb.bw:                                            ; preds = %bb.bv
   %i.px = icmp samesign ult i32 %.promoted262.i, 1073741822
-  %i.py = shl i32 %spec.select.sink.i180265.i, 1
+  %i.py = shl nsw i32 %spec.select.sink.i180265.i, 1
   %spec.select.i176.1.i = select i1 %i.px, i32 %i.py, i32 2147483647 ; 3 uses
   %i.pz = sext i32 %spec.select.i176.1.i to i64
   %.not.i9.i177.1.i = icmp samesign ult i64 %indvars.iv.next.i210, %i.pz
@@ -646,15 +646,14 @@ bb.dj:                                            ; preds = %Vec_IntPush.exit207
 
 bb.dk:                                            ; preds = %bb.dj
   %i.uu = icmp samesign ult i32 %.promoted290.i, 1073741822
-  %i.uv = shl nuw i32 %spec.select.sink.i194285.i, 1
-  %spec.select.i190.1.i = select i1 %i.uu, i32 %i.uv, i32 2147483647 ; 3 uses
-  %4 = sext i32 %spec.select.i190.1.i to i64
+  %i.uv = shl nuw nsw i32 %spec.select.sink.i194285.i, 1
+  %spec.select.i190.1.i = select i1 %i.uu, i32 %i.uv, i32 2147483647 ; 2 uses
+  %4 = zext nneg i32 %spec.select.i190.1.i to i64 ; 2 uses
   %.not.i9.i191.1.i = icmp samesign ult i64 %indvars.iv.next351.i, %4
   br i1 %.not.i9.i191.1.i, label %bb.dl, label %Vec_IntPush.exit197.1.i
 
 bb.dl:                                            ; preds = %bb.dk
-  %5 = zext nneg i32 %spec.select.i190.1.i to i64
-  %i.uw = shl nuw nsw i64 %5, 2
+  %i.uw = shl nuw nsw i64 %4, 2
   br label %Vec_IntPush.exit197.1.sink.split.i
 
 Vec_IntPush.exit197.1.sink.split.i:               ; preds = %bb.dl, %bb.dj
@@ -686,15 +685,14 @@ bb.dm:                                            ; preds = %Vec_IntPush.exit197
 
 bb.dn:                                            ; preds = %bb.dm
   %i.vh = icmp samesign ult i32 %.promoted290.i, 1073741822
-  %i.vi = shl nuw i32 %spec.select.sink.i204293.i, 1
-  %spec.select.i200.1.i = select i1 %i.vh, i32 %i.vi, i32 2147483647 ; 3 uses
-  %6 = sext i32 %spec.select.i200.1.i to i64
-  %.not.i9.i201.1.i = icmp samesign ult i64 %indvars.iv.next351.i, %6
+  %i.vi = shl nuw nsw i32 %spec.select.sink.i204293.i, 1
+  %spec.select.i200.1.i = select i1 %i.vh, i32 %i.vi, i32 2147483647 ; 2 uses
+  %5 = zext nneg i32 %spec.select.i200.1.i to i64 ; 2 uses
+  %.not.i9.i201.1.i = icmp samesign ult i64 %indvars.iv.next351.i, %5
   br i1 %.not.i9.i201.1.i, label %bb.do, label %Vec_IntPush.exit207.1.i
 
 bb.do:                                            ; preds = %bb.dn
-  %7 = zext nneg i32 %spec.select.i200.1.i to i64
-  %i.vj = shl nuw nsw i64 %7, 2
+  %i.vj = shl nuw nsw i64 %5, 2
   br label %Vec_IntPush.exit207.1.sink.split.i
 
 Vec_IntPush.exit207.1.sink.split.i:               ; preds = %bb.do, %bb.dm
@@ -890,7 +888,7 @@ bb.ea:                                            ; preds = %Vec_IntPush.exit215
 
 bb.eb:                                            ; preds = %bb.ea
   %i.xj = icmp samesign ult i32 %.promoted309.i, 1073741822
-  %i.xk = shl i32 %i.xf, 1
+  %i.xk = shl nsw i32 %i.xf, 1
   %spec.select.i208.1.i = select i1 %i.xj, i32 %i.xk, i32 2147483647 ; 3 uses
   %i.xl = sext i32 %spec.select.i208.1.i to i64
   %.not.i9.i209.1.i = icmp samesign ult i64 %indvars.iv.next358.i, %i.xl
@@ -930,7 +928,7 @@ bb.ed:                                            ; preds = %Vec_IntPush.exit215
 
 bb.ee:                                            ; preds = %bb.ed
   %i.xz = icmp samesign ult i32 %.promoted309.i, 1073741821
-  %i.ya = shl i32 %i.xr, 1
+  %i.ya = shl nsw i32 %i.xr, 1
   %spec.select.i208.1361.i = select i1 %i.xz, i32 %i.ya, i32 2147483647 ; 3 uses
   %i.yb = sext i32 %spec.select.i208.1361.i to i64
   %.not.i9.i209.1362.i = icmp samesign ult i64 %indvars.iv.next358.1.i, %i.yb
@@ -970,7 +968,7 @@ bb.eg:                                            ; preds = %Vec_IntPush.exit215
 
 bb.eh:                                            ; preds = %bb.eg
   %i.yp = icmp samesign ult i32 %.promoted309.i, 1073741820
-  %i.yq = shl i32 %i.yl, 1
+  %i.yq = shl nsw i32 %i.yl, 1
   %spec.select.i208.1.1.i = select i1 %i.yp, i32 %i.yq, i32 2147483647 ; 3 uses
   %i.yr = sext i32 %spec.select.i208.1.1.i to i64
   %.not.i9.i209.1.1.i = icmp samesign ult i64 %indvars.iv.next358.1368.i, %i.yr
@@ -1074,7 +1072,7 @@ bb.es:                                            ; preds = %Vec_IntPush.exit225
 
 bb.et:                                            ; preds = %bb.es
   %i.zt = icmp samesign ult i32 %.promoted316.i, 1073741822
-  %i.zu = shl i32 %i.zp, 1
+  %i.zu = shl nsw i32 %i.zp, 1
   %spec.select.i218.1.i = select i1 %i.zt, i32 %i.zu, i32 2147483647 ; 3 uses
   %i.zv = sext i32 %spec.select.i218.1.i to i64
   %.not.i9.i219.1.i = icmp samesign ult i64 %indvars.iv.next371.i, %i.zv
@@ -1335,7 +1333,7 @@ bb.fq:                                            ; preds = %bb.fo
 bb.fr:                                            ; preds = %bb.fn
   %i.ada = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.adb = shl i32 %indvars.iv.tr, 1
+  %i.adb = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i218 = select i1 %i.ada, i32 %i.adb, i32 2147483647 ; 4 uses
   %i.adc = sext i32 %spec.select.i218 to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.adc
@@ -1738,9 +1736,9 @@ bb.bf:                                            ; preds = %bb.bd
 
 bb.bg:                                            ; preds = %bb.bc
   %i.kf = icmp samesign ult i64 %indvars.iv227.i, 1073741823
-  %i.kg = shl i32 %spec.select.sink.i183.i, 1
+  %i.kg = shl nuw nsw i32 %spec.select.sink.i183.i, 1
   %spec.select.i.i = select i1 %i.kf, i32 %i.kg, i32 2147483647 ; 4 uses
-  %3 = sext i32 %spec.select.i.i to i64
+  %3 = zext nneg i32 %spec.select.i.i to i64
   %.not.i9.i.i = icmp samesign ult i64 %indvars.iv227.i, %3
   br i1 %.not.i9.i.i, label %bb.bh, label %Vec_IntPush.exit.i
 

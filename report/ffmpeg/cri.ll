@@ -205,8 +205,8 @@ bb.bk:                                            ; preds = %bb.bj
   br i1 %i.ke, label %.lr.ph324, label %.critedge
 
 .lr.ph324:                                        ; preds = %.preheader297
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.kf = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.kf = shl nuw nsw i32 %indvars.iv.tr, 1
   br label %bb.bn
 
 .critedge252:                                     ; preds = %bb.bh
@@ -484,9 +484,10 @@ bb.n:                                             ; preds = %bb.m, %bb.k
   %i.ay = lshr i32 %.0.i159, 26
   %i.az = and i32 %i.ay, 7
   %i.ba = shl i32 %.0.i157, 3
-  %i.bb = or disjoint i32 %i.ba, %i.az
-  %.tr142 = trunc i32 %i.bb to i16
-  %i.bc = shl i16 %.tr142, 4
+  %5 = and i32 %i.ba, 4088
+  %i.bb = or disjoint i32 %5, %i.az
+  %.tr142 = trunc nuw nsw i32 %i.bb to i16
+  %i.bc = shl nuw i16 %.tr142, 4
   %i.bd = sext i32 %.2 to i64
   %i.be = getelementptr inbounds [2 x i8], ptr %.2113, i64 %i.bd
   store i16 %i.bc, ptr %i.be, align 2, !tbaa !61
@@ -533,9 +534,10 @@ bb.t:                                             ; preds = %bb.s, %bb.q
   %i.bt = lshr i32 %.0.i157, 23
   %i.bu = and i32 %i.bt, 63
   %i.bv = shl i32 %.0.i155, 6
-  %i.bw = or disjoint i32 %i.bv, %i.bu
-  %.tr146 = trunc i32 %i.bw to i16
-  %i.bx = shl i16 %.tr146, 4
+  %6 = and i32 %i.bv, 4032
+  %i.bw = or disjoint i32 %6, %i.bu
+  %.tr146 = trunc nuw nsw i32 %i.bw to i16
+  %i.bx = shl nuw i16 %.tr146, 4
   %i.by = sext i32 %.4 to i64
   %i.bz = getelementptr inbounds [2 x i8], ptr %.4115, i64 %i.by
   store i16 %i.bx, ptr %i.bz, align 2, !tbaa !61
@@ -580,11 +582,12 @@ bb.z:                                             ; preds = %bb.y, %bb.w
   %.6117 = phi ptr [ %i.cn, %bb.y ], [ %.5116, %bb.w ] ; 3 uses
   %.6 = phi i32 [ 0, %bb.y ], [ %i.cl, %bb.w ]    ; 2 uses
   %i.co = shl i32 %.0.i, 9
+  %7 = and i32 %i.co, 3584
   %i.cp = lshr i32 %.0.i155, 20
   %i.cq = and i32 %i.cp, 511
-  %i.cr = or disjoint i32 %i.co, %i.cq
-  %.tr150 = trunc i32 %i.cr to i16
-  %i.cs = shl i16 %.tr150, 4
+  %i.cr = or disjoint i32 %7, %i.cq
+  %.tr150 = trunc nuw nsw i32 %i.cr to i16
+  %i.cs = shl nuw i16 %.tr150, 4
   %i.ct = sext i32 %.6 to i64
   %i.cu = getelementptr inbounds [2 x i8], ptr %.6117, i64 %i.ct
   store i16 %i.cs, ptr %i.cu, align 2, !tbaa !61

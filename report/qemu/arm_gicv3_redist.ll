@@ -204,8 +204,8 @@ glib_autoptr_cleanup_RCUReadAuto.exit:            ; preds = %bb.f, %bb.g, %bb.h
   br i1 %.not30, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %glib_autoptr_cleanup_RCUReadAuto.exit
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.aw = shl i32 %indvars.iv.tr, 3
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.aw = shl nuw i32 %indvars.iv.tr, 3
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %bb.i

@@ -205,13 +205,13 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not140, label %._crit_edge, label %bb.m
 
 ._crit_edge:                                      ; preds = %bb.l
-  %indvars.iv424.tr556 = trunc i64 %indvars.iv424 to i32
-  %.pre516 = shl i32 %indvars.iv424.tr556, 1
+  %indvars.iv424.tr556 = trunc nuw i64 %indvars.iv424 to i32
+  %.pre516 = shl nuw i32 %indvars.iv424.tr556, 1
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %indvars.iv424.tr = trunc i64 %indvars.iv424 to i32
-  %i.bf = shl i32 %indvars.iv424.tr, 1            ; 2 uses
+  %indvars.iv424.tr = trunc nuw i64 %indvars.iv424 to i32
+  %i.bf = shl nuw i32 %indvars.iv424.tr, 1        ; 2 uses
   %i.bg = add nsw i32 %i.av, %i.bf
   %i.bh = sext i32 %i.bg to i64
   %i.bi = getelementptr inbounds [4 x i8], ptr %.val167, i64 %i.bh
@@ -614,7 +614,7 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.g
   %i.ah = icmp samesign ult i64 %indvars.iv62, 1073741823
   %indvars.iv62.tr = trunc i64 %indvars.iv62 to i32
-  %i.ai = shl i32 %indvars.iv62.tr, 1
+  %i.ai = shl nsw i32 %indvars.iv62.tr, 1
   %spec.select.i.i = select i1 %i.ah, i32 %i.ai, i32 2147483647 ; 4 uses
   %i.aj = sext i32 %spec.select.i.i to i64
   %.not.i9.i.i = icmp samesign ult i64 %indvars.iv62, %i.aj
@@ -651,7 +651,7 @@ bb.o:                                             ; preds = %Vec_IntPush.exit.i
 bb.p:                                             ; preds = %bb.o
   %i.au = icmp samesign ult i64 %indvars.iv62, 1073741822
   %.tr = trunc i64 %i.ap to i32
-  %i.av = shl i32 %.tr, 1
+  %i.av = shl nsw i32 %.tr, 1
   %spec.select.i3.i = select i1 %i.au, i32 %i.av, i32 2147483647 ; 3 uses
   %i.aw = sext i32 %spec.select.i3.i to i64
   %.not.i9.i4.i = icmp samesign ult i64 %i.ap, %i.aw
@@ -1054,8 +1054,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.bz = phi i1 [ false, %bb.l ], [ %narrow.i273, %bb.m ] ; 2 uses
   %i.ca = and i32 %i.au, 1
   %.not170 = icmp eq i32 %i.ca, 0
-  %indvars.iv541.tr715 = trunc i64 %indvars.iv541 to i32
-  %.pre655 = shl i32 %indvars.iv541.tr715, 1
+  %indvars.iv541.tr715 = trunc nuw i64 %indvars.iv541 to i32
+  %.pre655 = shl nuw i32 %indvars.iv541.tr715, 1
   %.pre657 = or disjoint i32 %.lobit, %.pre655    ; 2 uses
   br i1 %.not170, label %._crit_edge, label %bb.o
 

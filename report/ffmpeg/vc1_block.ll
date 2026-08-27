@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.qo = getelementptr inbounds [768 x i8], ptr %i.ql, i64 %i.qn
   %i.qp = getelementptr inbounds [128 x i8], ptr %i.qo, i64 %i.qf
   call void %i.qk(ptr noundef %i.qp) #10, !inline_history !168
-  %i.qq = shl i32 %i.pc, 2
+  %i.qq = shl nuw nsw i32 %i.pc, 2
   %i.qr = shl nuw nsw i32 15, %i.qq
   %i.qs = or i32 %i.qr, %.0265464.i               ; 2 uses
   %indvars.iv.next511.i = add nuw nsw i64 %indvars.iv510.i, 1 ; 2 uses
@@ -607,7 +607,7 @@ bb.fr:                                            ; preds = %bb.fq
   %i.bfp = getelementptr inbounds [768 x i8], ptr %i.bfm, i64 %i.bfo
   %i.bfq = getelementptr inbounds [128 x i8], ptr %i.bfp, i64 %i.bfg
   call void %i.bfl(ptr noundef %i.bfq) #10, !inline_history !188
-  %i.bfr = shl i32 %i.bed, 2
+  %i.bfr = shl nuw nsw i32 %i.bed, 2
   %i.bfs = shl nuw nsw i32 15, %i.bfr
   %i.bft = or i32 %i.bfs, %.0376627.i             ; 2 uses
   %indvars.iv.next656.i = add nuw nsw i64 %indvars.iv655.i, 1 ; 2 uses
@@ -1010,7 +1010,7 @@ vector.body:                                      ; preds = %bb.mw
   br label %.loopexit.i173
 
 .loopexit.i173:                                   ; preds = %vector.body, %bb.mw
-  %i.drx = shl i32 %i.dow, 2
+  %i.drx = shl nuw nsw i32 %i.dow, 2
   %i.dry = shl nuw i32 15, %i.drx
   %i.drz = or i32 %i.dry, %.0582912.i
   %i.dsa = shl nuw nsw i32 1, %i.dow
@@ -1043,7 +1043,7 @@ bb.my:                                            ; preds = %bb.mx
   br i1 %i.dsr, label %vc1_decode_p_mb.exit, label %bb.mz
 
 bb.mz:                                            ; preds = %bb.my
-  %i.dss = shl i32 %i.dow, 2
+  %i.dss = shl nuw nsw i32 %i.dow, 2
   %i.dst = shl nuw nsw i32 %i.dsq, %i.dss
   %i.dsu = or i32 %i.dst, %.0582912.i
   %i.dsv = load i8, ptr %i.co, align 4, !tbaa !180
@@ -1446,7 +1446,7 @@ bb.pv:                                            ; preds = %.preheader423, %bb.
   %.1591903.i = phi i32 [ %i.emi, %bb.qj ], [ 0, %.preheader423 ]
   %.2594902.i = phi i32 [ %.3595.i, %bb.qj ], [ 1, %.preheader423 ] ; 3 uses
   %.4613901.i = phi i32 [ %.5614.i, %bb.qj ], [ %.4613901.i.ph, %.preheader423 ] ; 5 uses
-  %i.emg = trunc i64 %indvars.iv924.i to i32      ; 10 uses
+  %i.emg = trunc nuw i64 %indvars.iv924.i to i32  ; 10 uses
   %i.emh = lshr i32 %i.emg, 2
   %i.emi = add nuw nsw i32 %.1591903.i, %i.emh    ; 2 uses
   %.not710.i = icmp samesign ult i64 %indvars.iv924.i, 4 ; 3 uses
@@ -1590,7 +1590,7 @@ vector.body408:                                   ; preds = %bb.qf
   br label %.loopexit885.i
 
 .loopexit885.i:                                   ; preds = %vector.body408, %bb.qf
-  %i.epf = shl i32 %i.emg, 2
+  %i.epf = shl nuw nsw i32 %i.emg, 2
   %i.epg = shl nuw i32 15, %i.epf
   %i.eph = or i32 %i.epg, %.2584904.i
   %i.epi = shl nuw nsw i32 1, %i.emg
@@ -1625,7 +1625,7 @@ bb.qh:                                            ; preds = %bb.qg
   br i1 %i.eqb, label %.thread877.i, label %bb.qi
 
 bb.qi:                                            ; preds = %bb.qh
-  %i.eqc = shl i32 %i.emg, 2
+  %i.eqc = shl nuw nsw i32 %i.emg, 2
   %i.eqd = shl nuw nsw i32 %i.eqa, %i.eqc
   %i.eqe = or i32 %i.eqd, %.2584904.i
   %i.eqf = load i8, ptr %i.co, align 4, !tbaa !180

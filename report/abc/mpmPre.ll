@@ -205,8 +205,8 @@ Ifd_ObjPrint.exit:                                ; preds = %Ifd_ObjPrint.exit.p
   %i.ar = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.11) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   store i32 0, ptr %i.a, align 4, !tbaa !38
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.as = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.as = shl nuw i32 %indvars.iv.tr, 1
   call void @Ifd_ObjPrint_rec(ptr noundef nonnull %0, i32 noundef %i.as, ptr noundef nonnull %i.a, i32 noundef 1)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %i.at = trunc nuw nsw i64 %indvars.iv to i32
@@ -609,7 +609,7 @@ bb.t:                                             ; preds = %bb.s
   %i.gc = icmp slt i64 %indvars.iv276, %indvars.iv273
   %.fr = freeze i1 %i.gc
   %indvars.iv273.tr = trunc i64 %indvars.iv273 to i32
-  %i.gd = shl i32 %indvars.iv273.tr, 1            ; 4 uses
+  %i.gd = shl nsw i32 %indvars.iv273.tr, 1        ; 4 uses
   %.val149353 = load ptr, ptr %i.a, align 8, !tbaa !18 ; 2 uses
   %.not130354 = icmp eq ptr %.val149353, null     ; 2 uses
   br i1 %.fr, label %.lr.ph235.split.preheader, label %.lr.ph235.split.us.preheader
@@ -672,7 +672,7 @@ bb.x:                                             ; preds = %.lr.ph357, %.lr.ph2
 
 bb.y:                                             ; preds = %bb.x
   %indvars.iv270.tr = trunc i64 %indvars.iv270355 to i32
-  %i.gt = shl i32 %indvars.iv270.tr, 1            ; 2 uses
+  %i.gt = shl nsw i32 %indvars.iv270.tr, 1        ; 2 uses
   %i.gu = tail call i32 @Ifd_ManHashFindOrAdd(ptr noundef nonnull %i.a, i32 noundef %i.fs, i32 noundef %i.gd, i32 noundef %i.gt, i32 noundef 3) ; 0 uses
   %i.gv = load i32, ptr %i.fh, align 4
   %.not132 = icmp sgt i32 %i.gv, -1
@@ -979,7 +979,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.c
   %i.ah = icmp samesign ult i64 %indvars.iv124, 1073741823
   %indvars.iv124.tr = trunc i64 %indvars.iv124 to i32
-  %i.ai = shl i32 %indvars.iv124.tr, 1
+  %i.ai = shl nsw i32 %indvars.iv124.tr, 1
   %spec.select.i = select i1 %i.ah, i32 %i.ai, i32 2147483647 ; 4 uses
   %i.aj = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv124, %i.aj
@@ -1382,7 +1382,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.d
   %i.ak = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.al = shl i32 %indvars.iv.tr, 1
+  %i.al = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.ak, i32 %i.al, i32 2147483647 ; 4 uses
   %i.am = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.am

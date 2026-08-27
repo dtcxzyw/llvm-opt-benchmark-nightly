@@ -39,11 +39,11 @@ bb.c:                                             ; preds = %bb.a, %dwa_convertT
   br i1 %or.cond.i, label %dwa_convertToLinear.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.f = shl i32 %indvars.iv.tr, 13
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.f = shl nuw nsw i32 %indvars.iv.tr, 13
   %i.g = and i32 %i.f, 268427264                  ; 11 uses
-  %indvars.iv.tr26 = trunc i64 %indvars.iv to i32
-  %i.h = shl i32 %indvars.iv.tr26, 16
+  %indvars.iv.tr26 = trunc nuw i64 %indvars.iv to i32
+  %i.h = shl nuw i32 %indvars.iv.tr26, 16
   %i.i = and i32 %i.h, -2147483648                ; 6 uses
   %i.j = icmp samesign ugt i32 %i.g, 8388607      ; 2 uses
   br i1 %i.j, label %bb.e, label %bb.h, !prof !11

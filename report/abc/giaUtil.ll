@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.e
   %i.ag = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.ah = shl i32 %indvars.iv.tr, 1
+  %i.ah = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.ag, i32 %i.ah, i32 2147483647 ; 4 uses
   %i.ai = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.ai
@@ -608,7 +608,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.c
   %i.u = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.v = shl i32 %indvars.iv.tr, 1
+  %i.v = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.u, i32 %i.v, i32 2147483647 ; 4 uses
   %i.w = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.w
@@ -1011,7 +1011,7 @@ bb.af:                                            ; preds = %bb.ad
 bb.ag:                                            ; preds = %bb.ac
   %i.ej = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.ek = shl i32 %indvars.iv.tr, 1
+  %i.ek = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i93 = select i1 %i.ej, i32 %i.ek, i32 2147483647 ; 4 uses
   %i.el = sext i32 %spec.select.i93 to i64
   %.not.i9.i94 = icmp samesign ult i64 %indvars.iv, %i.el
@@ -1414,8 +1414,8 @@ Gia_ManFillValue.exit:                            ; preds = %Gia_ManFillValue.ex
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 52
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.bm, i8 -86, i64 %i.ac, i1 false)
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
-  %indvars.iv155.tr.epil = trunc i64 %indvars.iv155.epil.init to i32
-  %i.bo = shl i32 %indvars.iv155.tr.epil, 1       ; 2 uses
+  %indvars.iv155.tr.epil = trunc nuw i64 %indvars.iv155.epil.init to i32
+  %i.bo = shl nuw i32 %indvars.iv155.tr.epil, 1   ; 2 uses
   store i32 %i.bo, ptr %i.bn, align 4, !tbaa !191
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store i32 %i.bo, ptr %i.bp, align 4, !tbaa !52
@@ -1448,8 +1448,8 @@ Gia_ManFillValue.exit:                            ; preds = %Gia_ManFillValue.ex
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 52
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.bx, i8 -86, i64 %i.ac, i1 false)
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 4
-  %indvars.iv155.tr = trunc i64 %indvars.iv155 to i32
-  %i.bz = shl i32 %indvars.iv155.tr, 1            ; 2 uses
+  %indvars.iv155.tr = trunc nuw i64 %indvars.iv155 to i32
+  %i.bz = shl nuw i32 %indvars.iv155.tr, 1        ; 2 uses
   store i32 %i.bz, ptr %i.by, align 4, !tbaa !191
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   store i32 %i.bz, ptr %i.ca, align 4, !tbaa !52
@@ -1464,8 +1464,8 @@ Gia_ManFillValue.exit:                            ; preds = %Gia_ManFillValue.ex
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 52
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %i.ch, i8 -86, i64 %i.ac, i1 false)
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cg, i64 4
-  %indvars.iv155.tr.1 = trunc i64 %indvars.iv.next156 to i32
-  %i.cj = shl i32 %indvars.iv155.tr.1, 1          ; 2 uses
+  %indvars.iv155.tr.1 = trunc nuw i64 %indvars.iv.next156 to i32
+  %i.cj = shl nuw i32 %indvars.iv155.tr.1, 1      ; 2 uses
   store i32 %i.cj, ptr %i.ci, align 4, !tbaa !191
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cf, i64 8
   store i32 %i.cj, ptr %i.ck, align 4, !tbaa !52
@@ -1672,7 +1672,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   store i32 1, ptr %i.fo, align 4, !tbaa !195
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fc, i64 4
   %indvars.iv170.tr = trunc i64 %indvars.iv170 to i32
-  %i.fq = shl i32 %indvars.iv170.tr, 1            ; 2 uses
+  %i.fq = shl nsw i32 %indvars.iv170.tr, 1        ; 2 uses
   store i32 %i.fq, ptr %i.fp, align 4, !tbaa !191
   %i.fr = getelementptr inbounds nuw i8, ptr %i.fb, i64 8
   store i32 %i.fq, ptr %i.fr, align 4, !tbaa !52
@@ -2075,7 +2075,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %bb.h
   %i.bj = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.bk = shl i32 %indvars.iv.tr, 1
+  %i.bk = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.bj, i32 %i.bk, i32 2147483647 ; 4 uses
   %i.bl = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.bl
@@ -2478,7 +2478,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.d
   %i.ac = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.ad = shl i32 %indvars.iv.tr, 1
+  %i.ad = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.ac, i32 %i.ad, i32 2147483647 ; 4 uses
   %i.ae = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.ae
@@ -2528,7 +2528,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.aq = icmp samesign ult i64 %indvars.iv62, 1073741823
   %indvars.iv62.tr = trunc i64 %indvars.iv62 to i32
-  %i.ar = shl i32 %indvars.iv62.tr, 1
+  %i.ar = shl nsw i32 %indvars.iv62.tr, 1
   %spec.select.i27 = select i1 %i.aq, i32 %i.ar, i32 2147483647 ; 3 uses
   %i.as = sext i32 %spec.select.i27 to i64
   %.not.i9.i28 = icmp samesign ult i64 %indvars.iv62, %i.as

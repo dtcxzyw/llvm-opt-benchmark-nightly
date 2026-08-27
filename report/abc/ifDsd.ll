@@ -205,8 +205,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond25.not.i.i.3, label %If_DsdManComputeTruthPtr.exit, label %.lr.ph18.i.i, !llvm.loop !137
 
 bb.h:                                             ; preds = %bb.g
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.bf = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.bf = shl nuw i32 %indvars.iv.tr, 1
   call void @If_DsdManComputeTruth_rec(ptr noundef nonnull %0, i32 noundef %i.bf, ptr noundef %i.s, ptr noundef null, ptr noundef nonnull %i.a)
   br label %If_DsdManComputeTruthPtr.exit
 
@@ -609,8 +609,8 @@ bb.f:                                             ; preds = %.lr.ph.us.us, %bb.k
   %indvars.iv134 = phi i64 [ 0, %.lr.ph.us.us ], [ %indvars.iv.next135, %bb.k ] ; 6 uses
   %.072101.us.us = phi i32 [ 0, %.lr.ph.us.us ], [ %.173.us.us, %bb.k ] ; 4 uses
   %.074100.us.us = phi i32 [ 0, %.lr.ph.us.us ], [ %.175.us.us, %bb.k ] ; 4 uses
-  %indvars.iv134.tr = trunc i64 %indvars.iv134 to i32
-  %i.ay = shl i32 %indvars.iv134.tr, 1
+  %indvars.iv134.tr = trunc nuw i64 %indvars.iv134 to i32
+  %i.ay = shl nuw nsw i32 %indvars.iv134.tr, 1
   %i.az = ashr i32 %i.ax, %i.ay
   %i.ba = and i32 %i.az, 3
   switch i32 %i.ba, label %.unreachabledefault [
@@ -680,8 +680,8 @@ default.unreachable:                              ; preds = %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.q ], [ 0, %.lr.ph112.split ] ; 6 uses
   %.072101 = phi i32 [ %.173, %bb.q ], [ 0, %.lr.ph112.split ] ; 4 uses
   %.074100 = phi i32 [ %.175, %bb.q ], [ 0, %.lr.ph112.split ] ; 4 uses
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.bs = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.bs = shl nuw nsw i32 %indvars.iv.tr, 1
   %i.bt = ashr i32 %i.br, %i.bs
   %i.bu = and i32 %i.bt, 3
   switch i32 %i.bu, label %default.unreachable [
@@ -800,8 +800,8 @@ If_DsdManComputeFirst.exit:                       ; preds = %.epil.preheader, %I
 .lr.ph106:                                        ; preds = %If_DsdManComputeFirst.exit, %bb.u
   %indvars.iv126 = phi i64 [ %indvars.iv.next127, %bb.u ], [ 0, %If_DsdManComputeFirst.exit ] ; 6 uses
   %.0105 = phi i32 [ %.1, %bb.u ], [ 0, %If_DsdManComputeFirst.exit ] ; 3 uses
-  %indvars.iv126.tr = trunc i64 %indvars.iv126 to i32
-  %i.dl = shl i32 %indvars.iv126.tr, 1
+  %indvars.iv126.tr = trunc nuw i64 %indvars.iv126 to i32
+  %i.dl = shl nuw nsw i32 %indvars.iv126.tr, 1
   %i.dm = ashr i32 %i.br, %i.dl
   %i.dn = and i32 %i.dm, 3
   switch i32 %i.dn, label %bb.u [
@@ -1204,8 +1204,8 @@ bb.e:                                             ; preds = %Extra_ProgressBarUp
 bb.f:                                             ; preds = %bb.e
   %i.ak = and i32 %.val59.us, -257
   store i32 %i.ak, ptr %i.ag, align 4
-  %indvars.iv89.tr = trunc i64 %indvars.iv89 to i32
-  %i.al = shl i32 %indvars.iv89.tr, 1             ; 2 uses
+  %indvars.iv89.tr = trunc nuw i64 %indvars.iv89 to i32
+  %i.al = shl nuw i32 %indvars.iv89.tr, 1         ; 2 uses
   %i.am = call i32 @If_DsdManCheckXY_int(ptr noundef nonnull %0, i32 noundef %i.al, i32 noundef %1, i32 noundef 0, i32 noundef 0, i32 noundef 0)
   %.not50.us = icmp eq i32 %i.am, 0
   br i1 %.not50.us, label %bb.g, label %bb.k
@@ -1380,8 +1380,8 @@ bb.l:                                             ; preds = %Extra_ProgressBarUp
 bb.m:                                             ; preds = %bb.l
   %i.cs = and i32 %.val59.us72, -257
   store i32 %i.cs, ptr %i.co, align 4
-  %indvars.iv86.tr = trunc i64 %indvars.iv86 to i32
-  %i.ct = shl i32 %indvars.iv86.tr, 1
+  %indvars.iv86.tr = trunc nuw i64 %indvars.iv86 to i32
+  %i.ct = shl nuw i32 %indvars.iv86.tr, 1
   %i.cu = tail call i32 @If_DsdManCheckXY_int(ptr noundef nonnull %0, i32 noundef %i.ct, i32 noundef %1, i32 noundef 0, i32 noundef 0, i32 noundef 0)
   %.not50.us76 = icmp eq i32 %i.cu, 0
   br i1 %.not50.us76, label %.critedge54.us77, label %bb.n
@@ -1435,8 +1435,8 @@ bb.p:                                             ; preds = %Extra_ProgressBarUp
 bb.q:                                             ; preds = %bb.p
   %i.dm = and i32 %.val59, -257
   store i32 %i.dm, ptr %i.di, align 4
-  %indvars.iv83.tr = trunc i64 %indvars.iv83 to i32
-  %i.dn = shl i32 %indvars.iv83.tr, 1
+  %indvars.iv83.tr = trunc nuw i64 %indvars.iv83 to i32
+  %i.dn = shl nuw i32 %indvars.iv83.tr, 1
   %i.do = tail call i32 @If_DsdManCheckXY_int(ptr noundef nonnull %0, i32 noundef %i.dn, i32 noundef %1, i32 noundef 0, i32 noundef 0, i32 noundef 0)
   %.not50 = icmp eq i32 %i.do, 0
   br i1 %.not50, label %.critedge54, label %bb.r
@@ -1839,7 +1839,7 @@ middle.block:                                     ; preds = %vector.body
 
 bb.am:                                            ; preds = %bb.al
   %indvars.iv120.tr = trunc i64 %indvars.iv120 to i32
-  %i.fi = shl i32 %indvars.iv120.tr, 1
+  %i.fi = shl nsw i32 %indvars.iv120.tr, 1
   call void @If_DsdManComputeTruth_rec(ptr noundef nonnull %0, i32 noundef %i.fi, ptr noundef %i.du, ptr noundef null, ptr noundef nonnull %i.a)
   br label %If_DsdManComputeTruthPtr.exit
 
@@ -2242,7 +2242,7 @@ middle.block:                                     ; preds = %vector.body
 
 bb.ad:                                            ; preds = %bb.ac
   %indvars.iv121.tr = trunc i64 %indvars.iv121 to i32
-  %i.ea = shl i32 %indvars.iv121.tr, 1
+  %i.ea = shl nsw i32 %indvars.iv121.tr, 1
   call void @If_DsdManComputeTruth_rec(ptr noundef nonnull %0, i32 noundef %i.ea, ptr noundef %i.cm, ptr noundef null, ptr noundef nonnull %i.a)
   br label %If_DsdManComputeTruthPtr.exit
 

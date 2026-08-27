@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.d
   %i.z = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.aa = shl i32 %indvars.iv.tr, 1
+  %i.aa = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.z, i32 %i.aa, i32 2147483647 ; 4 uses
   %i.ab = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.ab
@@ -607,7 +607,7 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.c
   %i.q = icmp samesign ult i64 %indvars.iv, 1073741823
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.r = shl i32 %indvars.iv.tr, 1
+  %i.r = shl nsw i32 %indvars.iv.tr, 1
   %spec.select.i = select i1 %i.q, i32 %i.r, i32 2147483647 ; 4 uses
   %i.s = sext i32 %spec.select.i to i64
   %.not.i9.i = icmp samesign ult i64 %indvars.iv, %i.s
@@ -1010,8 +1010,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.p = sext i32 %i.o to i64
   %i.q = getelementptr inbounds [12 x i8], ptr %.val55, i64 %i.p
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.s = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.s = shl nuw i32 %indvars.iv.tr, 1
   store i32 %i.s, ptr %i.r, align 4, !tbaa !42
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.t = getelementptr inbounds nuw [12 x i8], ptr %.val56, i64 %indvars.iv.next
@@ -1021,8 +1021,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.x = sext i32 %i.w to i64
   %i.y = getelementptr inbounds [12 x i8], ptr %.val55, i64 %i.x
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 8
-  %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.aa = shl i32 %indvars.iv.tr.1, 1
+  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
+  %i.aa = shl nuw i32 %indvars.iv.tr.1, 1
   store i32 %i.aa, ptr %i.z, align 4, !tbaa !42
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
@@ -1044,8 +1044,8 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.split
   %i.af = sext i32 %i.ae to i64
   %i.ag = getelementptr inbounds [12 x i8], ptr %.val55, i64 %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %indvars.iv.tr.epil = trunc i64 %indvars.iv.epil.init to i32
-  %i.ai = shl i32 %indvars.iv.tr.epil, 1
+  %indvars.iv.tr.epil = trunc nuw i64 %indvars.iv.epil.init to i32
+  %i.ai = shl nuw i32 %indvars.iv.tr.epil, 1
   store i32 %i.ai, ptr %i.ah, align 4, !tbaa !42
   br label %.critedge
 
@@ -1177,8 +1177,8 @@ bb.b:                                             ; preds = %.lr.ph.split
   %i.o = sext i32 %i.n to i64
   %i.p = getelementptr inbounds [12 x i8], ptr %.val71, i64 %i.o
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %indvars.iv.tr = trunc i64 %indvars.iv to i32
-  %i.r = shl i32 %indvars.iv.tr, 1
+  %indvars.iv.tr = trunc nuw i64 %indvars.iv to i32
+  %i.r = shl nuw i32 %indvars.iv.tr, 1
   store i32 %i.r, ptr %i.q, align 4, !tbaa !42
   br label %.lr.ph.split.1
 
@@ -1196,8 +1196,8 @@ bb.c:                                             ; preds = %.lr.ph.split.1
   %i.w = sext i32 %i.v to i64
   %i.x = getelementptr inbounds [12 x i8], ptr %.val71.1, i64 %i.w
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %indvars.iv.tr.1 = trunc i64 %indvars.iv.next to i32
-  %i.z = shl i32 %indvars.iv.tr.1, 1
+  %indvars.iv.tr.1 = trunc nuw i64 %indvars.iv.next to i32
+  %i.z = shl nuw i32 %indvars.iv.tr.1, 1
   store i32 %i.z, ptr %i.y, align 4, !tbaa !42
   br label %bb.d
 
@@ -1227,8 +1227,8 @@ bb.e:                                             ; preds = %.lr.ph.split.epil.p
   %i.ae = sext i32 %i.ad to i64
   %i.af = getelementptr inbounds [12 x i8], ptr %.val71.epil, i64 %i.ae
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %indvars.iv.tr.epil = trunc i64 %indvars.iv.epil.init to i32
-  %i.ah = shl i32 %indvars.iv.tr.epil, 1
+  %indvars.iv.tr.epil = trunc nuw i64 %indvars.iv.epil.init to i32
+  %i.ah = shl nuw i32 %indvars.iv.tr.epil, 1
   store i32 %i.ah, ptr %i.ag, align 4, !tbaa !42
   br label %.critedge
 
