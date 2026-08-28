@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge.thread
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %4 to i64      ; 4 uses
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 5 uses
   %min.iters.check = icmp ult i32 %4, 8
   br i1 %min.iters.check, label %.lr.ph.preheader58, label %vector.ph
 
@@ -262,7 +262,7 @@ middle.block:                                     ; preds = %vector.body
 bb.b:                                             ; preds = %._crit_edge
   %i.p = load ptr, ptr %1, align 8                ; 7 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %i.r = load i32, ptr %i.q, align 8              ; 7 uses
+  %i.r = load i32, ptr %i.q, align 8              ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 20
   %i.t = load i32, ptr %i.s, align 4              ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.p, i64 8
@@ -489,18 +489,20 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.us96.
   br label %.preheader69.us.i
 
 .preheader69.us.us105.i.preheader:                ; preds = %.preheader69.lr.ph.split.us.split.i
-  %5 = icmp eq i32 %i.r, 1
-  %unroll_iter83.a = and i64 %i.bs, 2147483646
-  %6 = and i32 %i.r, 1
-  %lcmp.mod79.not = icmp eq i32 %6, 0
-  %lcmp.mod82 = trunc i32 %i.r to i1
+  %5 = add nuw nsw i64 %i.bs, 1
+  %6 = sub nuw nsw i64 %5, %wide.trip.count       ; 3 uses
+  %unroll_iter83.a = and i64 %6, 1
+  %7 = icmp eq i32 %i.r, %4
+  %unroll_iter83 = and i64 %6, 4294967294
+  %lcmp.mod79.not = icmp eq i64 %unroll_iter83.a, 0
+  %lcmp.mod82 = trunc i64 %6 to i1
   br label %.preheader69.us.us105.i
 
 .preheader69.us.us105.i:                          ; preds = %.preheader69.us.us105.i.preheader, %._crit_edge.us97.us111.i
   %.05886.us.us106.i = phi i64 [ %.lcssa, %._crit_edge.us97.us111.i ], [ %i.bp, %.preheader69.us.us105.i.preheader ] ; 2 uses
   %.06385.us.us107.i = phi i64 [ %i.en, %._crit_edge.us97.us111.i ], [ 0, %.preheader69.us.us105.i.preheader ] ; 2 uses
   %i.do = load ptr, ptr %2, align 8               ; 3 uses
-  br i1 %5, label %.epil.preheader76, label %.preheader69.us.us105.i.new
+  br i1 %7, label %.epil.preheader76, label %.preheader69.us.us105.i.new
 
 .preheader69.us.us105.i.new:                      ; preds = %.preheader69.us.us105.i, %.preheader69.us.us105.i.new
   %.05674.us88.us.i = phi float [ %.157.us91.us.i.1, %.preheader69.us.us105.i.new ], [ 0.000000e+00, %.preheader69.us.us105.i ] ; 2 uses
@@ -519,7 +521,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.us96.
   %.157.us91.us.i.1 = select i1 %i.dx, float %i.dw, float %.157.us91.us.i ; 3 uses
   %i.dy = add nsw i64 %.15973.us89.us.i, 2        ; 3 uses
   %niter84.next.1 = add i64 %niter84, 2           ; 2 uses
-  %niter84.ncmp.1.not = icmp eq i64 %niter84.next.1, %unroll_iter83.a
+  %niter84.ncmp.1.not = icmp eq i64 %niter84.next.1, %unroll_iter83
   br i1 %niter84.ncmp.1.not, label %..preheader_crit_edge.split.us92.us.i.preheader.unr-lcssa, label %.preheader69.us.us105.i.new, !llvm.loop !820
 
 ..preheader_crit_edge.split.us92.us.i.preheader.unr-lcssa: ; preds = %.preheader69.us.us105.i.new
