@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.i, %bb.i, %bb.i,
 .loopexit:                                        ; preds = %bb.i, %.split43.us, %.split48.us, %.split.us
   %.054 = phi i8 [ %i.v, %.split.us ], [ %i.w, %.split43.us ], [ %i.x, %.split48.us ], [ 0, %bb.i ] ; 2 uses
   %.not77 = phi i1 [ true, %.split.us ], [ true, %.split43.us ], [ true, %.split48.us ], [ false, %bb.i ]
-  %.not76 = icmp eq i8 %.053.ph71, 0
-  br i1 %.not76, label %bb.l, label %bb.k
+  %.not76 = trunc nuw i8 %.053.ph71 to i1
+  br i1 %.not76, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %.loopexit
   %i.y = shl nuw i8 %.054, 4
@@ -608,7 +608,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.j = load i64, ptr %i.i, align 8, !tbaa !71
   %i.k = udiv i64 %i.j, 100
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.k) ; 7 uses
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.h, i64 %i.k) ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !102
   %.not = icmp eq ptr %i.m, null
@@ -625,15 +625,12 @@ bb.d:                                             ; preds = %bb.c
   %i.p = trunc nuw nsw i64 %spec.select to i32
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 568
   store i32 %i.p, ptr %i.q, align 8, !tbaa !101
-  %.not36 = icmp eq i64 %spec.select, 0
-  br i1 %.not36, label %.loopexit, label %.lr.ph.preheader
+  switch i64 %spec.select, label %.lr.ph.preheader.new [
+    i64 0, label %.loopexit
+    i64 1, label %.lr.ph.epil.preheader
+  ]
 
-.lr.ph.preheader:                                 ; preds = %bb.d
-  %xtraiter = and i64 %spec.select, 1
-  %2 = icmp eq i64 %spec.select, 1
-  br i1 %2, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
-
-.lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
+.lr.ph.preheader.new:                             ; preds = %bb.d
   %unroll_iter = and i64 %spec.select, 2147483646
   br label %.lr.ph
 
@@ -668,11 +665,11 @@ bb.d:                                             ; preds = %bb.c
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !279
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i64 %spec.select to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %.loopexit
 
-.lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
-  %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ]
+.lr.ph.epil.preheader:                            ; preds = %bb.d, %.loopexit.loopexit.unr-lcssa
+  %indvars.iv.epil.init = phi i64 [ 0, %bb.d ], [ %indvars.iv.next.1, %.loopexit.loopexit.unr-lcssa ]
   %lcmp.mod38 = trunc i64 %spec.select to i1
   call void @llvm.assume(i1 %lcmp.mod38)
   %i.ad = getelementptr inbounds nuw [336 x i8], ptr %i.n, i64 %indvars.iv.epil.init ; 5 uses

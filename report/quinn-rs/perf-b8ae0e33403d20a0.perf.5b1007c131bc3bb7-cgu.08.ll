@@ -204,7 +204,7 @@ bb.k:                                             ; preds = %._crit_edge
     #dbg_value(ptr %.sroa.619.0..sroa_idx.i.i, !2401, !DIExpression(), !2415)
     #dbg_value(i64 32, !2402, !DIExpression(), !2415)
     #dbg_value(i64 32, !2403, !DIExpression(), !2417)
-    #dbg_value(i64 0, !2407, !DIExpression(), !2418)
+    #dbg_value(i64 32, !2407, !DIExpression(DW_OP_constu, 7, DW_OP_and, DW_OP_stack_value), !2418)
     #dbg_value(i64 4, !2405, !DIExpression(), !2419)
     #dbg_value(i64 4, !2409, !DIExpression(), !2420)
   invoke void @_RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs7OITKvp9Irj_4perf(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %.sroa.619.0..sroa_idx.i.i, i64 noundef 4)
@@ -607,7 +607,6 @@ _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
     #dbg_value(i64 %.sroa.05.0.i.i.i.i, !3262, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !3370)
     #dbg_value(i64 %.sroa.05.0.i.i.i.i, !3389, !DIExpression(), !3403)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val52.i) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1, !dbg !3404
   %i.dt = icmp eq i64 %.sroa.05.0.i.i.i.i, 1, !dbg !3404
   br i1 %i.dt, label %.epil.preheader, label %.lr.ph.i.i.new, !dbg !3404
 
@@ -616,8 +615,8 @@ _RNvMsa_NtCsjqcU1oJFKXj_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   br label %bb.p, !dbg !3404
 
 ._crit_edge.i.i.unr-lcssa:                        ; preds = %bb.p
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !3404
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i, label %.epil.preheader, !dbg !3404
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i.i to i1, !dbg !3404
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i.i, !dbg !3404
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i
   %.sroa.0.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ed, %._crit_edge.i.i.unr-lcssa ]
@@ -1020,7 +1019,7 @@ bb.w:                                             ; preds = %bb.t
     #dbg_value(ptr %i.ft, !2401, !DIExpression(), !3780)
     #dbg_value(i64 16, !2402, !DIExpression(), !3780)
     #dbg_value(i64 16, !2403, !DIExpression(), !3782)
-    #dbg_value(i64 0, !2407, !DIExpression(), !3783)
+    #dbg_value(i64 16, !2407, !DIExpression(DW_OP_constu, 7, DW_OP_and, DW_OP_stack_value), !3783)
     #dbg_value(i64 2, !2405, !DIExpression(), !3784)
     #dbg_value(i64 2, !2409, !DIExpression(), !3785)
   invoke void @_RINvNvNtCskKLDkoKarTP_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs7OITKvp9Irj_4perf(ptr noundef nonnull %i.em, ptr noundef nonnull %i.ft, i64 noundef 2)
@@ -1197,8 +1196,8 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6op
 bb.a:
     #dbg_value(ptr %0, !4125, !DIExpression(), !4128)
   %i.a = load i64, ptr %0, align 8, !dbg !4129, !range !1026, !noundef !26
-  %1 = icmp eq i64 %i.a, 0, !dbg !4129
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiveruEECs7OITKvp9Irj_4perf.exit, label %bb.b, !dbg !4129
+  %1 = trunc nuw i64 %i.a to i1, !dbg !4129
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiveruEECs7OITKvp9Irj_4perf.exit, !dbg !4129
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiveruEECs7OITKvp9Irj_4perf.exit: ; preds = %bb.h, %bb.g, %bb.f, %bb.a
   ret void, !dbg !4129
@@ -1601,8 +1600,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9sched
   %.pn.i.i.i.i = phi { ptr, i32 } [ %i.ac, %bb.p ], [ %i.n, %bb.k ], [ %i.n, %bb.j ] ; 3 uses
     #dbg_value(ptr %i.m, !11050, !DIExpression(), !11058)
   %i.w = load i64, ptr %i.m, align 8, !dbg !11060, !range !1026, !noundef !26
-  %1 = icmp eq i64 %i.w, 0, !dbg !11060
-  br i1 %1, label %.body6.i, label %bb.n, !dbg !11060
+  %1 = trunc nuw i64 %i.w to i1, !dbg !11060
+  br i1 %1, label %bb.n, label %.body6.i, !dbg !11060
 
 bb.n:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9scheduler6HandleECs7OITKvp9Irj_4perf.exit.i.i.i.i
   %i.x = getelementptr i8, ptr %0, i64 80, !dbg !11060
@@ -1634,8 +1633,8 @@ bb.p:                                             ; preds = %bb.m
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9scheduler6HandleECs7OITKvp9Irj_4perf.exit4.i.i.i.i: ; preds = %bb.m, %bb.l
     #dbg_value(ptr %i.m, !11050, !DIExpression(), !11133)
   %i.ad = load i64, ptr %i.m, align 8, !dbg !11135, !range !1026, !noundef !26
-  %2 = icmp eq i64 %i.ad, 0, !dbg !11135
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio4time5sleep5SleepECs7OITKvp9Irj_4perf.exit.i, label %bb.q, !dbg !11135
+  %2 = trunc nuw i64 %i.ad to i1, !dbg !11135
+  br i1 %2, label %bb.q, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio4time5sleep5SleepECs7OITKvp9Irj_4perf.exit.i, !dbg !11135
 
 bb.q:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsar2VadbF9t7_5tokio7runtime9scheduler6HandleECs7OITKvp9Irj_4perf.exit4.i.i.i.i
   %i.ae = getelementptr i8, ptr %0, i64 80, !dbg !11135
@@ -2038,8 +2037,8 @@ bb.aa:                                            ; preds = %bb.y
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiverbEECs7OITKvp9Irj_4perf.exit.i.i.i.i: ; preds = %bb.y, %bb.x, %bb.w
     #dbg_value(ptr %i.m, !4125, !DIExpression(), !16351)
   %i.am = load i64, ptr %i.m, align 8, !dbg !16353, !range !1026, !alias.scope !16354, !noundef !26
-  %1 = icmp eq i64 %i.am, 0, !dbg !16353
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsB8MOEg02Qk_5quinn8incoming14IncomingFutureECs7OITKvp9Irj_4perf.exit.i, label %bb.ab, !dbg !16353
+  %1 = trunc nuw i64 %i.am to i1, !dbg !16353
+  br i1 %1, label %bb.ab, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsB8MOEg02Qk_5quinn8incoming14IncomingFutureECs7OITKvp9Irj_4perf.exit.i, !dbg !16353
 
 bb.ab:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsar2VadbF9t7_5tokio4sync7oneshot8ReceiverbEECs7OITKvp9Irj_4perf.exit.i.i.i.i
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 824, !dbg !16353 ; 5 uses

@@ -205,8 +205,8 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecjEECsa5
 define internal fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCs53gkmrwjETj_4tiff7decoder5image5ImageECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull align 8 dereferenceable(200) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !155, !alias.scope !283, !noundef !5
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs53gkmrwjETj_4tiff9directory9DirectoryEECsa5QsYiPB8Gl_5image.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs53gkmrwjETj_4tiff9directory9DirectoryEECsa5QsYiPB8Gl_5image.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -609,13 +609,13 @@ bb.ai:                                            ; preds = %.noexc.i1
 
 bb.aj:                                            ; preds = %.noexc.i1
   %i.eg = invoke noundef i32 @_RNvYNtCsbQ1pTce3Gzu_14byteorder_lite12LittleEndianNtB4_9ByteOrder8read_u24Csa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.y, i64 noundef 3)
-          to label %.noexc75.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i, !noalias !681 ; 2 uses
+          to label %.noexc75.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i, !noalias !681 ; 3 uses
 
 .noexc75.i:                                       ; preds = %bb.aj
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !689
   %i.eh = getelementptr inbounds nuw i8, ptr %i.bm, i64 100 ; 6 uses
   %i.ei = trunc i32 %i.eg to i8                   ; 3 uses
-  %i.ej = and i8 %i.ei, 1                         ; 2 uses
+  %i.ej = and i8 %i.ei, 1
   %i.ek = xor i8 %i.ej, 1
   store i8 %i.ek, ptr %i.eh, align 4, !alias.scope !694, !noalias !695
   %i.el = getelementptr inbounds nuw i8, ptr %i.bm, i64 103
@@ -627,8 +627,8 @@ bb.aj:                                            ; preds = %.noexc.i1
   %i.eq = and i8 %i.ep, 1
   store i8 %i.eq, ptr %i.eo, align 1, !alias.scope !694, !noalias !695
   %i.er = lshr i32 %i.eg, 5
-  %.not160.not.i.i = icmp eq i8 %i.ej, 0
-  br i1 %.not160.not.i.i, label %bb.am, label %bb.ak
+  %.not160.i.i = trunc i32 %i.eg to i1
+  br i1 %.not160.i.i, label %bb.ak, label %bb.am
 
 bb.ak:                                            ; preds = %bb.bq, %.noexc75.i
   %i.es = zext nneg i32 %i.er to i64              ; 5 uses
@@ -1031,9 +1031,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5
   %.sroa.96.033.i.i.ph = phi i64 [ %.sroa.96.0.copyload.i.i, %iter.check ], [ %.sroa.96.0.copyload.i.i, %vector.memcheck ], [ %i.aml, %vec.epilog.iter.check ], [ %i.amu, %vec.epilog.middle.block ] ; 6 uses
   %i.and = sub i64 %.sroa.11.0.copyload.i.i, %.sroa.96.033.i.i.ph
   %.neg = add i64 %.sroa.96.033.i.i.ph, 1
-  %xtraiter790 = and i64 %i.and, 1
-  %lcmp.mod791.not = icmp eq i64 %xtraiter790, 0
-  br i1 %lcmp.mod791.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter7IterMuthEB14_EINtB17_4IterhEEB1E_EINtB5_7ZipImplBW_B1E_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol.loopexit, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter7IterMuthEB14_EINtB17_4IterhEEB1E_EINtB5_7ZipImplBW_B1E_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol
+  %lcmp.mod791.not = trunc i64 %i.and to i1
+  br i1 %lcmp.mod791.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter7IterMuthEB14_EINtB17_4IterhEEB1E_EINtB5_7ZipImplBW_B1E_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter7IterMuthEB14_EINtB17_4IterhEEB1E_EINtB5_7ZipImplBW_B1E_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter7IterMuthEB14_EINtB17_4IterhEEB1E_EINtB5_7ZipImplBW_B1E_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.prol: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipIBN_IBN_INtNtNtBb_5slice4iter7IterMuthEB14_EINtB17_4IterhEEB1E_EINtB5_7ZipImplBW_B1E_E4nextCsa5QsYiPB8Gl_5image.exit.i.i.preheader
   %i.ane = add i64 %.sroa.96.033.i.i.ph, %.sroa.74.0.copyload.i.i ; 2 uses

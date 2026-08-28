@@ -204,8 +204,8 @@ bb.a:
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db12concatenated5inner5NamesEEB17_(ptr noalias nofree noundef nonnull align 8 dereferenceable(112) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !16, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.c
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db12concatenated5inner5NamesEBL_.exit, %bb.a
   ret void
@@ -278,8 +278,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db12con
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5inner13ZoneInfoNamesEEB17_(ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !16, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.c
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtNtCsa9sSWSfjDbm_4jiff2tz2db8zoneinfo5inner13ZoneInfoNamesEBL_.exit, %bb.a
   ret void
@@ -682,9 +682,8 @@ bb.q:                                             ; preds = %bb.n
   br label %bb.p
 
 bb.r:                                             ; preds = %bb.s, %bb.p
-  %2 = and i16 %i.b, 1
-  %.not9 = icmp eq i16 %2, 0
-  br i1 %.not9, label %bb.t, label %bb.u
+  %.not9 = trunc i16 %i.b to i1
+  br i1 %.not9, label %bb.u, label %bb.t
 
 bb.s:                                             ; preds = %bb.p
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1087,8 +1086,8 @@ bb.aq:                                            ; preds = %bb.l, %_RINvNtCs3oU
 .body6:                                           ; preds = %bb.d, %bb.aq
   %eh.lpad-body7 = phi { ptr, i32 } [ %i.cl, %bb.aq ], [ %i.u, %bb.d ] ; 4 uses
   %i.cm = load i64, ptr %i.k, align 8, !range !16, !alias.scope !626, !noundef !4
-  %1 = icmp eq i64 %i.cm, 0
-  br i1 %1, label %.body, label %bb.ar
+  %1 = trunc nuw i64 %i.cm to i1
+  br i1 %1, label %bb.ar, label %.body
 
 bb.ar:                                            ; preds = %.body6
   %i.cn = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 2 uses
@@ -1108,8 +1107,8 @@ bb.at:                                            ; preds = %bb.as
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff5error9ErrorKindEBF_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i6.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i7.i.i, %bb.ak, %bb.ak, %bb.ak, %bb.ak, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i3.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i4.i.i, %bb.ae, %bb.ae, %bb.ae, %bb.ae, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i.i18.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i.i19.i, %bb.y, %bb.y, %bb.y, %bb.y, %bb.x, %bb.w, %bb.v, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxeEECsa9sSWSfjDbm_4jiff.exit.sink.split.i.i, %bb.u, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i.i.i, %bb.o, %bb.o, %bb.o, %bb.o, %bb.n, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i13.i, %bb.m, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff5error7IOErrorEBF_.exit.i, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i11.i, %bb.i, %bb.h, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i7.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc5boxed3BoxeEECsa9sSWSfjDbm_4jiff.exit.i.i, %bb.f, %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator10deallocate.exit.i.i.i.i, %bb.b, %bb.a, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff5error13FilePathErrorEBF_.exit.i
   %i.cs = load i64, ptr %i.k, align 8, !range !16, !alias.scope !641, !noundef !4
-  %2 = icmp eq i64 %i.cs, 0
-  br i1 %2, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff5error10ErrorInnerEBF_.exit, label %bb.au
+  %2 = trunc nuw i64 %i.cs to i1
+  br i1 %2, label %bb.au, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff5error10ErrorInnerEBF_.exit
 
 bb.au:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsa9sSWSfjDbm_4jiff5error9ErrorKindEBF_.exit
   %i.ct = getelementptr inbounds nuw i8, ptr %i.j, i64 24 ; 2 uses
@@ -1404,8 +1403,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18
   tail call void @llvm.experimental.noalias.scope.decl(metadata !688)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !691)
   %i.i = load i64, ptr %i.b, align 8, !range !16, !alias.scope !694, !noundef !4
-  %1 = icmp eq i64 %i.i, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceINtBE_8SmallStrKj6_EEECsa9sSWSfjDbm_4jiff.exit.i, label %bb.d
+  %1 = trunc nuw i64 %i.i to i1
+  br i1 %1, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceINtBE_8SmallStrKj6_EEECsa9sSWSfjDbm_4jiff.exit.i
 
 bb.d:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneECsa9sSWSfjDbm_4jiff.exit
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 24
@@ -1504,8 +1503,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsb09rMIQFAX
   tail call void @llvm.experimental.noalias.scope.decl(metadata !734)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !737)
   %i.ah = load i64, ptr %i.ag, align 8, !range !16, !alias.scope !740, !noundef !4
-  %2 = icmp eq i64 %i.ah, 0
-  br i1 %2, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif8TimeZoneECsa9sSWSfjDbm_4jiff.exit, label %bb.j
+  %2 = trunc nuw i64 %i.ah to i1
+  br i1 %2, label %bb.j, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif8TimeZoneECsa9sSWSfjDbm_4jiff.exit
 
 bb.j:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneEECsa9sSWSfjDbm_4jiff.exit.i
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 56
@@ -1526,8 +1525,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif8T
   tail call void @llvm.experimental.noalias.scope.decl(metadata !744)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !747)
   %i.an = load i64, ptr %i.am, align 8, !range !16, !alias.scope !750, !noundef !4
-  %3 = icmp eq i64 %i.an, 0
-  br i1 %3, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif9TimestampEECsa9sSWSfjDbm_4jiff.exit.i, label %bb.k
+  %3 = trunc nuw i64 %i.an to i1
+  br i1 %3, label %bb.k, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif9TimestampEECsa9sSWSfjDbm_4jiff.exit.i
 
 bb.k:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif8TimeZoneECsa9sSWSfjDbm_4jiff.exit
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 80
@@ -1547,8 +1546,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16Mayb
   tail call void @llvm.experimental.noalias.scope.decl(metadata !751)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !754)
   %i.at = load i64, ptr %i.as, align 8, !range !16, !alias.scope !757, !noundef !4
-  %4 = icmp eq i64 %i.at, 0
-  br i1 %4, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif8DateTimeEECsa9sSWSfjDbm_4jiff.exit.i, label %bb.l
+  %4 = trunc nuw i64 %i.at to i1
+  br i1 %4, label %bb.l, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif8DateTimeEECsa9sSWSfjDbm_4jiff.exit.i
 
 bb.l:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif9TimestampEECsa9sSWSfjDbm_4jiff.exit.i
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 104
@@ -1568,8 +1567,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16Mayb
   tail call void @llvm.experimental.noalias.scope.decl(metadata !758)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !761)
   %i.az = load i64, ptr %i.ay, align 8, !range !16, !alias.scope !764, !noundef !4
-  %5 = icmp eq i64 %i.az, 0
-  br i1 %5, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif8DateTimeEECsa9sSWSfjDbm_4jiff.exit10.i, label %bb.m
+  %5 = trunc nuw i64 %i.az to i1
+  br i1 %5, label %bb.m, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif8DateTimeEECsa9sSWSfjDbm_4jiff.exit10.i
 
 bb.m:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif8DateTimeEECsa9sSWSfjDbm_4jiff.exit.i
   %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 128
@@ -1589,8 +1588,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16Mayb
   tail call void @llvm.experimental.noalias.scope.decl(metadata !765)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !768)
   %i.bf = load i64, ptr %i.be, align 8, !range !16, !alias.scope !771, !noundef !4
-  %6 = icmp eq i64 %i.bf, 0
-  br i1 %6, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif11TransitionsECsa9sSWSfjDbm_4jiff.exit, label %bb.n
+  %6 = trunc nuw i64 %i.bf to i1
+  br i1 %6, label %bb.n, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif11TransitionsECsa9sSWSfjDbm_4jiff.exit
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCsb09rMIQFAXO_9jiff_core4util16MaybeStaticSliceNtNtNtBG_2tz4tzif8DateTimeEECsa9sSWSfjDbm_4jiff.exit10.i
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 152

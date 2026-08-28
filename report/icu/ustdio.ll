@@ -13,8 +13,8 @@ target triple = "x86_64-pc-linux-gnu"
 define ptr @u_fsettransliterator_78(ptr nofree noundef captures(address_is_null) %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i32, ptr %3, align 4, !tbaa !8
-  %4 = icmp slt i32 %i.a, 1
-  br i1 %4, label %bb.b, label %bb.n
+  %4 = icmp sgt i32 %i.a, 0
+  br i1 %4, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %.not35 = icmp eq ptr %0, null
@@ -25,9 +25,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.n
 
 bb.d:                                             ; preds = %bb.b
-  %5 = and i32 %1, 1
-  %.not36 = icmp eq i32 %5, 0
-  br i1 %.not36, label %bb.f, label %bb.e
+  %.not36 = trunc i32 %1 to i1
+  br i1 %.not36, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   store i32 16, ptr %3, align 4, !tbaa !8

@@ -204,8 +204,8 @@ define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslgh
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !72, !noundef !5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %bb.b, label %bb.d
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
@@ -253,8 +253,8 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !87)
   %i.b = load i64, ptr %0, align 8, !range !72, !alias.scope !87, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %1 = icmp eq i64 %i.b, 0
-  br i1 %1, label %bb.d, label %bb.f
+  %1 = trunc nuw i64 %i.b to i1
+  br i1 %1, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !90)
@@ -657,8 +657,8 @@ bb.a:
   %i.d = call { i64, ptr } @_RNvXs2_NtNtNtCsbPfeiB6icZG_3mio3net3uds6streamRNtB5_10UnixStreamNtNtNtCs3oUPovFnLWP_4core2io5write5Write5write(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @41, i64 noundef 1) ; 2 uses
   %i.e = extractvalue { i64, ptr } %i.d, 0
   %i.f = extractvalue { i64, ptr } %i.d, 1        ; 4 uses
-  %2 = icmp eq i64 %i.e, 0
-  br i1 %2, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit, label %bb.b
+  %2 = trunc nuw i64 %i.e to i1
+  br i1 %2, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.f) ]
@@ -751,8 +751,8 @@ bb.e:                                             ; preds = %bb.d
   store ptr null, ptr %0, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !388)
   %i.o = load i64, ptr %i.b, align 8, !range !72, !alias.scope !388, !noundef !5
-  %3 = icmp eq i64 %i.o, 0
-  br i1 %3, label %bb.f, label %bb.h
+  %3 = trunc nuw i64 %i.o to i1
+  br i1 %3, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !391)
@@ -794,8 +794,8 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.y, ptr %i.z, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !405)
   %i.aa = load i64, ptr %i.b, align 8, !range !72, !alias.scope !405, !noundef !5
-  %4 = icmp eq i64 %i.aa, 0
-  br i1 %4, label %bb.l, label %bb.n
+  %4 = trunc nuw i64 %i.aa to i1
+  br i1 %4, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   tail call void @llvm.experimental.noalias.scope.decl(metadata !408)
@@ -1198,8 +1198,8 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCslghKHtsL3a4_5tokio2io12poll_eve
           to label %bb.i unwind label %.body.thread22
 
 bb.i:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtCslghKHtsL3a4_5tokio2io12poll_evented11PollEventedNtNtNtNtBI_7process3imp12pidfd_reaper5PidfdEEBI_.exit
-  %i.o = load i32, ptr %i.c, align 8, !range !235, !noundef !5 ; 2 uses
-  %i.p = trunc nuw i32 %i.o to i1
+  %i.o = load i32, ptr %i.c, align 8, !range !235, !noundef !5
+  %i.p = trunc nuw i32 %i.o to i1                 ; 2 uses
   %.not7 = xor i1 %i.p, true
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.r = load i32, ptr %i.q, align 4, !range !235
@@ -1210,8 +1210,7 @@ bb.i:                                             ; preds = %_RINvNtCs3oUPovFnLW
 bb.j:                                             ; preds = %bb.i
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %.val12 = load ptr, ptr %i.t, align 8           ; 4 uses
-  %1 = icmp eq i32 %i.o, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtCsaL1QbXo9JQH_3std7process10ExitStatusENtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit, label %bb.k
+  br i1 %i.p, label %bb.k, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtCsaL1QbXo9JQH_3std7process10ExitStatusENtNtNtB4_2io5error5ErrorEECslghKHtsL3a4_5tokio.exit
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12) ]

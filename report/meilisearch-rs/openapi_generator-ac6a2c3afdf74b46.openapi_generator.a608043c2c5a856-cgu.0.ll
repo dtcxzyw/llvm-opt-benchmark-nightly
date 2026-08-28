@@ -205,8 +205,8 @@ bb.nh:                                            ; preds = %.._crit_edge.i_crit
 
 bb.ni:                                            ; preds = %bb.nh, %.thread150.i.i.i
   %i.ars = load i64, ptr %i.kh, align 8, !range !3481, !alias.scope !6622, !noalias !6623, !noundef !27
-  %.not53.i.i.i = icmp eq i64 %i.ars, 0
-  br i1 %.not53.i.i.i, label %bb.nk, label %bb.nj
+  %0 = trunc nuw i64 %i.ars to i1
+  br i1 %0, label %bb.nj, label %bb.nk
 
 bb.nj:                                            ; preds = %bb.ni
   %i.art = invoke fastcc noundef align 8 ptr @_ZN10serde_core3ser12SerializeMap15serialize_entry17hd1227dd36a755c4dE(ptr noalias noundef align 8 dereferenceable(96) %i.hp, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(824) %i.kh)
@@ -609,8 +609,8 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 9 uses
   %i.b = alloca [72 x i8], align 8                ; 14 uses
   %i.c = load i64, ptr %0, align 8, !range !3481, !noundef !27
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %bb.b, label %bb.c
+  %1 = trunc nuw i64 %i.c to i1
+  br i1 %1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %"_ZN4core3ptr132drop_in_place$LT$alloc..collections..btree..map..BTreeMap$LT$alloc..string..String$C$utoipa..openapi..server..ServerVariable$GT$$GT$17hfeb1bf63ca86c753E.exit", %bb.a
   ret void
@@ -1013,11 +1013,11 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
 
 bb.f:                                             ; preds = %"_ZN4core3ptr74drop_in_place$LT$core..option..Option$LT$alloc..vec..Vec$LT$u8$GT$$GT$$GT$17h63f44f7693b4e6eaE.exit.i.i.i.i.i.i.i.i.i.i.i"
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9166)
-  %1 = icmp eq i64 %i.x, 0
+  %1 = trunc nuw i64 %i.x to i1
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %.val.i.i.i.i.i.i.i.i.i.i.i.i.i = load i64, ptr %i.z, align 8, !alias.scope !9169, !noalias !9160 ; 3 uses
   %i.aa = icmp eq i64 %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
-  br i1 %1, label %bb.g, label %bb.i
+  br i1 %1, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   br i1 %i.aa, label %"_ZN4core3ptr52drop_in_place$LT$std..backtrace..BacktraceSymbol$GT$17ha9b6e43f386a9d78E.exit.i.i.i.i.i.i.i.i.i.i", label %bb.h
@@ -1420,8 +1420,8 @@ bb.a:
   %i.a = alloca [24 x i8], align 8                ; 9 uses
   %i.b = alloca [72 x i8], align 8                ; 14 uses
   %i.c = load i64, ptr %0, align 8, !range !3481, !noundef !27
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %bb.b, label %bb.c
+  %1 = trunc nuw i64 %i.c to i1
+  br i1 %1, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %"_ZN4core3ptr56drop_in_place$LT$utoipa..openapi..schema..Components$GT$17h6ad4cbdc2ac38f5cE.exit", %bb.a
   ret void
@@ -1824,12 +1824,12 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load i64, ptr %i.e, align 8, !noundef !27
-  %7 = load i64, ptr %1, align 8                  ; 5 uses
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
+  %8 = load i64, ptr %1, align 8                  ; 5 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load i64, ptr %i.g, align 8              ; 2 uses
   %i.i = sub i64 %5, %i.h
-  %.promoted36 = load i64, ptr %8, align 8
+  %.promoted36 = load i64, ptr %7, align 8
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
@@ -1844,10 +1844,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.n = load i8, ptr %i.m, align 1, !noundef !27
   %i.o = and i8 %i.n, 63
   %i.p = zext nneg i8 %i.o to i64
-  %9 = shl nuw i64 1, %i.p
-  %10 = and i64 %9, %i.f
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %bb.d, label %bb.e
+  %9 = lshr i64 %i.f, %i.p
+  %10 = trunc i64 %9 to i1
+  br i1 %10, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.j, %._crit_edge
   %storemerge = phi i64 [ 0, %._crit_edge ], [ 1, %bb.j ]
@@ -1860,8 +1859,8 @@ bb.d:                                             ; preds = %bb.b
   br i1 %6, label %bb.f, label %.sink.split
 
 bb.e:                                             ; preds = %bb.b
-  %.sroa.0.0.i = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %7)
-  %.sroa.01.0 = select i1 %6, i64 %7, i64 %.sroa.0.0.i ; 4 uses
+  %.sroa.0.0.i = tail call i64 @llvm.umax.i64(i64 %i.j, i64 %8)
+  %.sroa.01.0 = select i1 %6, i64 %8, i64 %.sroa.0.0.i ; 4 uses
   %umax50 = tail call i64 @llvm.umax.i64(i64 %.sroa.01.0, i64 %5)
   %exitcond.not87.not = icmp ult i64 %.sroa.01.0, %5
   br i1 %exitcond.not87.not, label %.lr.ph90, label %._crit_edge91
@@ -1869,7 +1868,7 @@ bb.e:                                             ; preds = %bb.b
 .sink.split:                                      ; preds = %bb.d, %bb.r, %bb.o
   %.sink = phi i64 [ %i.i, %bb.o ], [ 0, %bb.r ], [ 0, %bb.d ] ; 2 uses
   %.ph72 = phi i64 [ %i.al, %bb.o ], [ %i.at, %bb.r ], [ %i.q, %bb.d ]
-  store i64 %.sink, ptr %8, align 8
+  store i64 %.sink, ptr %7, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %bb.r, %bb.o, %bb.d
@@ -1886,7 +1885,7 @@ bb.g:                                             ; preds = %bb.p
 
 ._crit_edge91:                                    ; preds = %bb.g, %bb.e
   %.sroa.05.0 = select i1 %6, i64 0, i64 %i.j     ; 2 uses
-  %i.w = icmp ult i64 %.sroa.05.0, %7
+  %i.w = icmp ult i64 %.sroa.05.0, %8
   br i1 %i.w, label %.lr.ph94, label %._crit_edge95
 
 .lr.ph90:                                         ; preds = %bb.e, %bb.g
@@ -1905,13 +1904,13 @@ bb.h:                                             ; preds = %bb.m
   br i1 %6, label %bb.j, label %bb.i
 
 .lr.ph94:                                         ; preds = %._crit_edge91, %bb.h
-  %.sroa.57.092 = phi i64 [ %i.ab, %bb.h ], [ %7, %._crit_edge91 ]
+  %.sroa.57.092 = phi i64 [ %i.ab, %bb.h ], [ %8, %._crit_edge91 ]
   %i.ab = add i64 %.sroa.57.092, -1               ; 6 uses
   %i.ac = icmp ult i64 %i.ab, %5
   br i1 %i.ac, label %bb.k, label %bb.l
 
 bb.i:                                             ; preds = %._crit_edge95
-  store i64 0, ptr %8, align 8
+  store i64 0, ptr %7, align 8
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %._crit_edge95
@@ -1964,7 +1963,7 @@ bb.q:                                             ; preds = %.lr.ph90
 bb.r:                                             ; preds = %bb.p
   %i.ar = add i64 %i.l, 1
   %i.as = add i64 %i.ar, %.sroa.02.088
-  %i.at = sub i64 %i.as, %7                       ; 3 uses
+  %i.at = sub i64 %i.as, %8                       ; 3 uses
   store i64 %i.at, ptr %i.a, align 8
   br i1 %6, label %bb.f, label %.sink.split
 }
@@ -2367,8 +2366,8 @@ bb.bp:                                            ; preds = %bb.bn
 
 bb.bq:                                            ; preds = %bb.br, %bb.bn
   %i.ed = load i64, ptr %1, align 8, !range !3481, !noundef !27
-  %.not98 = icmp eq i64 %i.ed, 0
-  br i1 %.not98, label %bb.bt, label %bb.bs
+  %2 = trunc nuw i64 %i.ed to i1
+  br i1 %2, label %bb.bs, label %bb.bt
 
 bb.br:                                            ; preds = %bb.bp
   %.not96 = icmp eq ptr %i.ec, null
@@ -2383,8 +2382,8 @@ bb.bs:                                            ; preds = %bb.bq
 bb.bt:                                            ; preds = %bb.bu, %bb.bq
   %i.eg = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.eh = load i64, ptr %i.eg, align 8, !range !3481, !noundef !27
-  %.not101 = icmp eq i64 %i.eh, 0
-  br i1 %.not101, label %bb.bw, label %bb.bv
+  %3 = trunc nuw i64 %i.eh to i1
+  br i1 %3, label %bb.bv, label %bb.bw
 
 bb.bu:                                            ; preds = %bb.bs
   %.not99 = icmp eq ptr %i.ef, null
@@ -2787,8 +2786,8 @@ bb.ek:                                            ; preds = %bb.ei
 
 bb.el:                                            ; preds = %bb.em, %bb.ei
   %i.in = load i64, ptr %1, align 8, !range !3481, !noundef !27
-  %.not186 = icmp eq i64 %i.in, 0
-  br i1 %.not186, label %bb.eo, label %bb.en
+  %2 = trunc nuw i64 %i.in to i1
+  br i1 %2, label %bb.en, label %bb.eo
 
 bb.em:                                            ; preds = %bb.ek
   %.not184 = icmp eq ptr %i.im, null
@@ -2803,8 +2802,8 @@ bb.en:                                            ; preds = %bb.el
 bb.eo:                                            ; preds = %bb.ep, %bb.el
   %i.iq = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ir = load i64, ptr %i.iq, align 8, !range !3481, !noundef !27
-  %.not189 = icmp eq i64 %i.ir, 0
-  br i1 %.not189, label %bb.er, label %bb.eq
+  %3 = trunc nuw i64 %i.ir to i1
+  br i1 %3, label %bb.eq, label %bb.er
 
 bb.ep:                                            ; preds = %bb.en
   %.not187 = icmp eq ptr %i.ip, null
@@ -2833,8 +2832,8 @@ bb.et:                                            ; preds = %bb.er
 bb.eu:                                            ; preds = %bb.ev, %bb.er
   %i.ix = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.iy = load i64, ptr %i.ix, align 8, !range !3481, !noundef !27
-  %.not195 = icmp eq i64 %i.iy, 0
-  br i1 %.not195, label %bb.ex, label %bb.ew
+  %4 = trunc nuw i64 %i.iy to i1
+  br i1 %4, label %bb.ew, label %bb.ex
 
 bb.ev:                                            ; preds = %bb.et
   %.not193.a = icmp eq ptr %i.iw, null
@@ -2849,8 +2848,8 @@ bb.ew:                                            ; preds = %bb.eu
 bb.ex:                                            ; preds = %bb.ey, %bb.eu
   %i.jb = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.jc = load i64, ptr %i.jb, align 8, !range !3481, !noundef !27
-  %.not198 = icmp eq i64 %i.jc, 0
-  br i1 %.not198, label %bb.fa, label %bb.ez
+  %5 = trunc nuw i64 %i.jc to i1
+  br i1 %5, label %bb.ez, label %bb.fa
 
 bb.ey:                                            ; preds = %bb.ew
   %.not196 = icmp eq ptr %i.ja, null
@@ -3253,8 +3252,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.h, %bb.e
   %i.aa = load i64, ptr %1, align 8, !range !3481, !noundef !27
-  %.not27 = icmp eq i64 %i.aa, 0
-  br i1 %.not27, label %bb.bz, label %bb.o
+  %2 = trunc nuw i64 %i.aa to i1
+  br i1 %2, label %bb.o, label %bb.bz
 
 bb.h:                                             ; preds = %bb.f
   %.not26 = icmp eq ptr %i.z, null

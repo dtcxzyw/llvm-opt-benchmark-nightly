@@ -10,9 +10,8 @@ define noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStrin
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8    ; 4 uses
-  %1 = and i16 %i.b, 1
-  %.not = icmp eq i16 %1, 0
-  br i1 %.not, label %bb.b, label %.thread55._crit_edge.thread
+  %.not = trunc i16 %i.b to i1
+  br i1 %.not, label %.thread55._crit_edge.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = and i16 %i.b, 2
@@ -21,12 +20,12 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = select i1 %.not.i, ptr %i.f, ptr %i.d    ; 4 uses
-  %2 = icmp slt i16 %i.b, 0
   %i.h = ashr i16 %i.b, 5
   %i.i = sext i16 %i.h to i32
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.k = load i32, ptr %i.j, align 4
-  %i.l = select i1 %2, i32 %i.k, i32 %i.i         ; 3 uses
+  %1 = icmp slt i16 %i.b, 0
+  %i.l = select i1 %1, i32 %i.k, i32 %i.i         ; 3 uses
   %i.m = icmp slt i32 %i.l, 1
   br i1 %i.m, label %.thread55._crit_edge.thread, label %.lr.ph
 

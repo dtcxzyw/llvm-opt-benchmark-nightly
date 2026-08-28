@@ -205,14 +205,13 @@ bb.am:                                            ; preds = %bb.z
   br i1 %i.be, label %bb.bw, label %.thread
 
 bb.an:                                            ; preds = %bb.ap
-  %1 = icmp eq i32 %.2, 0
-  %spec.select = select i1 %1, i32 7, i32 0
+  %spec.select = select i1 %.2, i32 0, i32 7
   br label %.thread
 
 bb.ao:                                            ; preds = %bb.ap, %bb.z
   %.8 = phi ptr [ %i.t, %bb.z ], [ %.9, %bb.ap ]
   %.1146 = phi ptr [ %i.t, %bb.z ], [ %.2147, %bb.ap ]
-  %.1 = phi i32 [ 0, %bb.z ], [ %.2, %bb.ap ]
+  %.1 = phi i1 [ false, %bb.z ], [ %.2, %bb.ap ]
   %i.bf = getelementptr inbounds nuw i8, ptr %.8, i64 1 ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !19
   br label %bb.ap
@@ -221,7 +220,7 @@ bb.ap:                                            ; preds = %bb.aa, %bb.ao
   %.9 = phi ptr [ %i.bf, %bb.ao ], [ %i.x, %bb.aa ] ; 2 uses
   %.2147 = phi ptr [ %.1146, %bb.ao ], [ %i.x, %bb.aa ] ; 2 uses
   %.1142 = phi i8 [ %i.bg, %bb.ao ], [ %i.y, %bb.aa ]
-  %.2 = phi i32 [ %.1, %bb.ao ], [ 1, %bb.aa ]    ; 2 uses
+  %.2 = phi i1 [ %.1, %bb.ao ], [ true, %bb.aa ]  ; 2 uses
   switch i8 %.1142, label %bb.ao [
     i8 0, label %bb.an
     i8 10, label %bb.bv

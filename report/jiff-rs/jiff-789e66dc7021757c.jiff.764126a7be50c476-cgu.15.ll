@@ -202,8 +202,8 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = load i64, ptr %0, align 8, !range !38, !noundef !32
-  %1 = icmp eq i64 %i.c, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsa9sSWSfjDbm_4jiff2tz8timezone8TimeZoneEBH_.exit, label %bb.b
+  %1 = trunc nuw i64 %i.c to i1
+  br i1 %1, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsa9sSWSfjDbm_4jiff2tz8timezone8TimeZoneEBH_.exit
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsa9sSWSfjDbm_4jiff2tz8timezone8TimeZoneEBH_.exit: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz5posix8TimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc4sync3ArcNtNtNtCsb09rMIQFAXO_9jiff_core2tz4tzif18MaybeNamedTimeZoneEECsa9sSWSfjDbm_4jiff.exit.i.i.i, %bb.b, %bb.b, %bb.b, %bb.b, %bb.a
   ret void
@@ -361,8 +361,8 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.d = load i64, ptr %i.c, align 8, !range !38, !alias.scope !60, !noundef !32
-  %1 = icmp eq i64 %i.d, 0
-  br i1 %1, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsa9sSWSfjDbm_4jiff2tz8timezone8TimeZoneEEB13_.exit, label %bb.b
+  %1 = trunc nuw i64 %i.d to i1
+  br i1 %1, label %bb.b, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsa9sSWSfjDbm_4jiff2tz8timezone8TimeZoneEEB13_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -765,9 +765,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.ct = or i64 %1, 1

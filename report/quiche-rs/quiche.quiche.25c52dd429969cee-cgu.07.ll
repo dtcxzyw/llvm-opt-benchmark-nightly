@@ -204,9 +204,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs3f36owOmepS_6quiche6ranges8RangeSe
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !1694, !DIExpression(), !1702)
-  %1 = icmp eq i64 %i.a, 0, !dbg !1704
+  %1 = trunc nuw i64 %i.a to i1, !dbg !1704
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !1704 ; 2 uses
-  br i1 %1, label %bb.c, label %bb.d, !dbg !1704
+  br i1 %1, label %bb.d, label %bb.c, !dbg !1704
 
 bb.c:                                             ; preds = %bb.b
     #dbg_value(ptr %i.e, !1705, !DIExpression(), !1713)
@@ -609,7 +609,6 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.m, !dbg !2760
 
 bb.i:                                             ; preds = %bb.g
-    #dbg_value(i32 %i.ag, !2674, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_lit0, DW_OP_eq, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !2753)
   %i.am = trunc i128 %i.af to i1, !dbg !2761
     #dbg_value(i1 %i.am, !2674, !DIExpression(DW_OP_not, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !2753)
   %i.an = and i128 %i.ae, 4503599627369984, !dbg !2762
@@ -634,7 +633,6 @@ bb.j:                                             ; preds = %bb.i, %bb.g
   br label %bb.m, !dbg !2769
 
 bb.k:                                             ; preds = %bb.e
-    #dbg_value(i32 %i.t, !2648, !DIExpression(DW_OP_constu, 1, DW_OP_and, DW_OP_lit0, DW_OP_eq, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !2734)
   %i.at = trunc i128 %i.s to i1, !dbg !2770
     #dbg_value(i1 %i.at, !2648, !DIExpression(DW_OP_not, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !2734)
   %i.au = and i128 %i.r, 79228162514264337593543949824, !dbg !2771

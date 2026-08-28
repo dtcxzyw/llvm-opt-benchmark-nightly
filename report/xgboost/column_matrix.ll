@@ -204,12 +204,12 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 168 ; 7 uses
   %i.h = tail call noundef i64 @_ZNK7xgboost16HostDeviceVectorIjE4SizeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.g) ; 3 uses
   %i.i = trunc i64 %i.h to i32                    ; 2 uses
-  %i.j = add i32 %i.i, -1                         ; 4 uses
+  %i.j = add i32 %i.i, -1                         ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !8
   %spec.select.i = tail call noundef i64 @llvm.usub.sat.i64(i64 %i.l, i64 1) ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
-  %i.m = zext i32 %i.j to i64                     ; 7 uses
+  %i.m = zext i32 %i.j to i64                     ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i8 0, ptr %i.a, align 1, !tbaa !18
   call void @_ZN7xgboost6common22MakeFixedVecWithMallocINS0_10ColumnTypeEEENS0_15RefResourceViewIT_EEmRKS4_(ptr dead_on_unwind nonnull writable sret(%"class.xgboost::common::RefResourceView.9") align 8 %3, i64 noundef %i.m, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
@@ -606,7 +606,6 @@ _ZNK7xgboost16GHistIndexMatrix16GetFeatureCountsEPm.exit: ; preds = %.loopexit.i
 .lr.ph123:                                        ; preds = %_ZNK7xgboost16GHistIndexMatrix16GetFeatureCountsEPm.exit
   %i.em = uitofp i64 %spec.select.i to double
   %i.en = fmul double %2, %i.em                   ; 3 uses
-  %xtraiter164 = and i64 %i.m, 1
   %i.eo = icmp eq i32 %i.j, 1
   br i1 %i.eo, label %.epil.preheader, label %.lr.ph123.new
 
@@ -616,8 +615,8 @@ _ZNK7xgboost16GHistIndexMatrix16GetFeatureCountsEPm.exit: ; preds = %.loopexit.i
   br label %bb.u
 
 ._crit_edge124.loopexit.unr-lcssa:                ; preds = %bb.u
-  %lcmp.mod165.not = icmp eq i64 %xtraiter164, 0
-  br i1 %lcmp.mod165.not, label %._crit_edge124, label %.epil.preheader
+  %lcmp.mod165.not = trunc i32 %i.j to i1
+  br i1 %lcmp.mod165.not, label %.epil.preheader, label %._crit_edge124
 
 .epil.preheader:                                  ; preds = %._crit_edge124.loopexit.unr-lcssa, %.lr.ph123
   %indvars.iv132.epil.init = phi i64 [ 0, %.lr.ph123 ], [ %indvars.iv.next133.1, %._crit_edge124.loopexit.unr-lcssa ] ; 2 uses
@@ -801,7 +800,6 @@ _ZN7xgboost6common15RefResourceViewImED2Ev.exit:  ; preds = %_ZN7xgboost6common1
   %i.gx = load ptr, ptr %i.n, align 8, !tbaa !62  ; 3 uses
   %wide.trip.count139 = and i64 %i.h, 4294967295  ; 2 uses
   %i.gy = add nsw i64 %wide.trip.count139, -1     ; 3 uses
-  %xtraiter169 = and i64 %i.gy, 1
   %i.gz = icmp eq i64 %wide.trip.count139, 2
   br i1 %i.gz, label %.epil.preheader168, label %.lr.ph127.new
 
@@ -858,8 +856,8 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %niter173.ncmp.1, label %._crit_edge128.loopexit.unr-lcssa, label %bb.aj, !llvm.loop !67
 
 ._crit_edge128.loopexit.unr-lcssa:                ; preds = %bb.an
-  %lcmp.mod170.not = icmp eq i64 %xtraiter169, 0
-  br i1 %lcmp.mod170.not, label %._crit_edge128, label %.epil.preheader168
+  %lcmp.mod170.not = trunc i64 %i.gy to i1
+  br i1 %lcmp.mod170.not, label %.epil.preheader168, label %._crit_edge128
 
 .epil.preheader168:                               ; preds = %._crit_edge128.loopexit.unr-lcssa, %.lr.ph127
   %indvars.iv136.epil.init = phi i64 [ 1, %.lr.ph127 ], [ %indvars.iv.next137.1, %._crit_edge128.loopexit.unr-lcssa ] ; 2 uses

@@ -205,9 +205,8 @@ bb.b:                                             ; preds = %bb.g, %.preheader23
 .lr.ph.i.preheader:                               ; preds = %.preheader.i
   %i.k = sub nuw i64 %i.b, %.sroa.7.026.i.lcssa
   %.neg = add i64 %.sroa.7.026.i.lcssa, 1
-  %xtraiter12 = and i64 %i.k, 1
-  %lcmp.mod13.not = icmp eq i64 %xtraiter12, 0
-  br i1 %lcmp.mod13.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %lcmp.mod13.not = trunc i64 %i.k to i1
+  br i1 %lcmp.mod13.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
   %i.l = getelementptr inbounds nuw [32 x i8], ptr %i.f, i64 %.sroa.7.026.i.lcssa ; 2 uses
@@ -610,9 +609,8 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTciEE7reserveCs2JiOgHzbbc7_10tokenizer
 
 .lr.ph.i.i.i.preheader:                           ; preds = %_RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTciEE7reserveCs2JiOgHzbbc7_10tokenizers.exit
   %.neg = add i64 %.val, 1
-  %xtraiter = and i64 %i.b, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.prol.loopexit, label %.lr.ph.i.i.i.prol
+  %lcmp.mod.not = trunc i64 %i.b to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.prol, label %.lr.ph.i.i.i.prol.loopexit
 
 .lr.ph.i.i.i.prol:                                ; preds = %.lr.ph.i.i.i.preheader
   %i.m = add nuw nsw i64 %.val, 1
@@ -1015,7 +1013,7 @@ bb.m:                                             ; preds = %_RNvXs9_NtNtNtCs4NR
   br label %_RINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten17and_then_or_clearINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTTTmmElEjEEB1T_NvYB16_NtNtNtB6_6traits8iterator8Iterator4nextECs2JiOgHzbbc7_10tokenizers.exit8.i
 
 bb.n:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTTTmmElEjEEEECs2JiOgHzbbc7_10tokenizers.exit.i7.i, %_RNvYNvYINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTTTmmElEjEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextINtNtNtB1b_3ops8function6FnOnceTQB5_EE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i4.i
-  %.sink.i.i9.i5.i = phi i64 [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTTTmmElEjEEEECs2JiOgHzbbc7_10tokenizers.exit.i7.i ], [ 1, %_RNvYNvYINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTTTmmElEjEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextINtNtNtB1b_3ops8function6FnOnceTQB5_EE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i4.i ]
+  %.sink.i.i9.i5.i = phi i64 [ 1, %_RNvYNvYINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTTTmmElEjEENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextINtNtNtB1b_3ops8function6FnOnceTQB5_EE9call_onceCs2JiOgHzbbc7_10tokenizers.exit.i4.i ], [ 0, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterTTTmmElEjEEEECs2JiOgHzbbc7_10tokenizers.exit.i7.i ]
   store i64 %.sink.i.i9.i5.i, ptr %0, align 8, !alias.scope !3010, !noalias !3009
   %.sroa.6.0..sroa_idx.i6.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.0..sroa_idx.i6.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.6.i2.i, i64 24, i1 false), !noalias !3009
@@ -1254,9 +1252,9 @@ bb.l:                                             ; preds = %_RNvXs9_NtNtNtCs4NR
   br label %_RNvXsi_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapNtNtNtBb_3str4iter11CharIndicesNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB24_16NormalizedStringINtNtBb_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from0EIB1c_INtNtNtBb_3ops5range5RangejENCNCB1Y_00EENtNtNtB9_6traits8iterator8Iterator4nextB28_.exit
 
 bb.m:                                             ; preds = %bb.n, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtBe_3ops5range5RangejENCNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB1v_16NormalizedStringINtNtBe_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from00ENtNtNtBc_6traits8iterator8Iterator4nextINtNtBY_8function6FnOnceTQB5_EE9call_onceB1z_.exit.i6.i
-  %storemerge.i.i11.i1.i = phi i64 [ 0, %bb.n ], [ 1, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtBe_3ops5range5RangejENCNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB1v_16NormalizedStringINtNtBe_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from00ENtNtNtBc_6traits8iterator8Iterator4nextINtNtBY_8function6FnOnceTQB5_EE9call_onceB1z_.exit.i6.i ]
-  %.sroa.6.09.i2.i = phi i64 [ undef, %bb.n ], [ %.val.i.i.i7.i, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtBe_3ops5range5RangejENCNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB1v_16NormalizedStringINtNtBe_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from00ENtNtNtBc_6traits8iterator8Iterator4nextINtNtBY_8function6FnOnceTQB5_EE9call_onceB1z_.exit.i6.i ]
-  %.sroa.7.07.i3.i = phi i64 [ undef, %bb.n ], [ %i.bn, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtBe_3ops5range5RangejENCNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB1v_16NormalizedStringINtNtBe_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from00ENtNtNtBc_6traits8iterator8Iterator4nextINtNtBY_8function6FnOnceTQB5_EE9call_onceB1z_.exit.i6.i ]
+  %storemerge.i.i11.i1.i = phi i64 [ 1, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtBe_3ops5range5RangejENCNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB1v_16NormalizedStringINtNtBe_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from00ENtNtNtBc_6traits8iterator8Iterator4nextINtNtBY_8function6FnOnceTQB5_EE9call_onceB1z_.exit.i6.i ], [ 0, %bb.n ]
+  %.sroa.6.09.i2.i = phi i64 [ %.val.i.i.i7.i, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtBe_3ops5range5RangejENCNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB1v_16NormalizedStringINtNtBe_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from00ENtNtNtBc_6traits8iterator8Iterator4nextINtNtBY_8function6FnOnceTQB5_EE9call_onceB1z_.exit.i6.i ], [ undef, %bb.n ]
+  %.sroa.7.07.i3.i = phi i64 [ %i.bn, %_RNvYNvYINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtNtBe_3ops5range5RangejENCNCNvXs1_NtNtCs2JiOgHzbbc7_10tokenizers9tokenizer10normalizerNtB1v_16NormalizedStringINtNtBe_7convert4FromNtNtCscdodAO9FK5_5alloc6string6StringE4from00ENtNtNtBc_6traits8iterator8Iterator4nextINtNtBY_8function6FnOnceTQB5_EE9call_onceB1z_.exit.i6.i ], [ undef, %bb.n ]
   store i64 %storemerge.i.i11.i1.i, ptr %0, align 8, !alias.scope !3081, !noalias !3080
   %.sroa.6.0..sroa_idx.i4.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.6.09.i2.i, ptr %.sroa.6.0..sroa_idx.i4.i, align 8, !alias.scope !3081, !noalias !3080
@@ -1659,8 +1657,8 @@ bb.a:
   %.val3 = load ptr, ptr %i.b, align 8, !nonnull !3, !noundef !3 ; 2 uses
   %i.c = ptrtoint ptr %.val3 to i64
   %i.d = ptrtoint ptr %.val to i64
-  %i.e = sub nuw i64 %i.c, %i.d                   ; 3 uses
-  %i.f = lshr exact i64 %i.e, 5                   ; 5 uses
+  %i.e = sub nuw i64 %i.c, %i.d                   ; 2 uses
+  %i.f = lshr exact i64 %i.e, 5                   ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs2JiOgHzbbc7_10tokenizers(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef %i.f, i1 noundef zeroext false, i64 noundef 8, i64 noundef 16)
   %i.g = load i64, ptr %i.a, align 8, !range !65, !noundef !3
@@ -1716,9 +1714,8 @@ _RNvMs_NtCscdodAO9FK5_5alloc3vecINtB4_3VecTjRTNtNtB6_6string6StringmEEE7reserveC
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %.preheader.i.i
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %.preheader.i.i
-  %2 = and i64 %i.e, 32
-  %lcmp.mod.not = icmp eq i64 %2, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.preheader.i.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.f to i1
+  br i1 %lcmp.mod.not, label %.preheader.i.i.epil.preheader, label %.loopexit
 
 .preheader.i.i.epil.preheader:                    ; preds = %.loopexit.loopexit.unr-lcssa, %.preheader.i.i.preheader
   %.epil.init = phi i64 [ 0, %.preheader.i.i.preheader ], [ %i.aa, %.loopexit.loopexit.unr-lcssa ] ; 2 uses

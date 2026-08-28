@@ -66,10 +66,10 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define ptr @ZDICT_getErrorName(i64 noundef %0) local_unnamed_addr #1 {
 bb.a:
-  %1 = icmp ult i64 %0, -119
+  %1 = icmp ugt i64 %0, -120
   %i.a = trunc nsw i64 %0 to i32
   %i.b = sub i32 0, %i.a
-  %.0.i.i = select i1 %1, i32 0, i32 %i.b
+  %.0.i.i = select i1 %1, i32 %i.b, i32 0
   %i.c = tail call ptr @ERR_getErrorString(i32 noundef %.0.i.i) #16
   ret ptr %i.c
 }
@@ -190,9 +190,9 @@ bb.c:                                             ; preds = %bb.b
 .critedge:                                        ; preds = %bb.b, %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.aa = call fastcc i64 @ZDICT_analyzeEntropy(ptr noundef nonnull %i.z, i64 noundef 248, i32 noundef %i.d, ptr noundef %4, ptr noundef %5, i32 noundef %6, ptr noundef %2, i64 noundef %3, i32 noundef %i.f) ; 4 uses
-  %8 = icmp ult i64 %i.aa, -119
-  %i.ab = add i64 %i.aa, 8                        ; 5 uses
-  br i1 %8, label %bb.d, label %bb.h
+  %8 = icmp ugt i64 %i.aa, -120
+  %i.ab = add nuw i64 %i.aa, 8                    ; 5 uses
+  br i1 %8, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
   %i.ac = add i64 %i.ab, %3
@@ -217,9 +217,9 @@ bb.g:                                             ; preds = %bb.d, %bb.f
   %i.ak = add i64 %i.aj, %.054
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 %i.ab ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %.054
-  call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.am, ptr align 1 %2, i64 %spec.select, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %0, ptr nonnull align 16 %i.a, i64 %i.ab, i1 false)
-  call void @llvm.memset.p0.i64(ptr align 1 %i.al, i8 0, i64 %.054, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.am, ptr align 1 %2, i64 %spec.select, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 16 dereferenceable(1) %i.a, i64 %i.ab, i1 false)
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.al, i8 0, i64 %.054, i1 false)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.a, %.critedge, %bb.g
@@ -557,8 +557,8 @@ middle.block361:                                  ; preds = %vector.body358
   %i.dw = shl nuw i32 1, %.val
   %narrow.i = call i32 @llvm.smin.i32(i32 %i.dw, i32 131072)
   %spec.select.i = sext i32 %narrow.i to i64
-  %.not63.i = icmp eq i32 %8, 0
   %10 = icmp ugt i32 %8, 2
+  %.not63.i = icmp eq i32 %8, 0
   %wide.trip.count299 = zext i32 %5 to i64
   br label %bb.d
 
@@ -580,8 +580,8 @@ bb.d:                                             ; preds = %.lr.ph, %ZDICT_coun
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !16
   %.0.i = call i64 @llvm.umin.i64(i64 %i.ec, i64 %spec.select.i) ; 2 uses
   %i.ed = call i64 @ZSTD_compressBegin_usingCDict_deprecated(ptr noundef %i.dr, ptr noundef %i.dq) #16
-  %11 = icmp ult i64 %i.ed, -119
-  br i1 %11, label %.critedge.i, label %bb.e
+  %11 = icmp ugt i64 %i.ed, -120
+  br i1 %11, label %bb.e, label %.critedge.i
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.not63.i, label %ZDICT_countEStats.exit, label %bb.f
@@ -596,8 +596,8 @@ bb.f:                                             ; preds = %bb.e
 .critedge.i:                                      ; preds = %bb.d
   %i.ei = getelementptr inbounds nuw i8, ptr %3, i64 %.0167268
   %i.ej = call i64 @ZSTD_compressBlock_deprecated(ptr noundef %i.dr, ptr noundef %i.ds, i64 noundef 131072, ptr noundef %i.ei, i64 noundef %.0.i) #16 ; 2 uses
-  %12 = icmp ult i64 %i.ej, -119
-  br i1 %12, label %bb.i, label %bb.g
+  %12 = icmp ugt i64 %i.ej, -120
+  br i1 %12, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %.critedge.i
   br i1 %10, label %bb.h, label %ZDICT_countEStats.exit
@@ -984,8 +984,8 @@ bb.m:                                             ; preds = %bb.l, %bb.m
 
 .loopexit:                                        ; preds = %bb.m, %._crit_edge
   %i.lw = call i64 @HUF_buildCTable_wksp(ptr noundef nonnull %i.b, ptr noundef nonnull %i.a, i32 noundef 255, i32 noundef 11, ptr noundef nonnull %i.j, i64 noundef 4864) #16 ; 5 uses
-  %13 = icmp ult i64 %i.lw, -119
-  br i1 %13, label %bb.p, label %bb.n
+  %13 = icmp ugt i64 %i.lw, -120
+  br i1 %13, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %.loopexit
   %.not188 = icmp eq i32 %8, 0
@@ -1209,8 +1209,8 @@ middle.block381:                                  ; preds = %vector.body374
   %i.pk = trunc i64 %.0157 to i32
   %i.pl = zext i32 %.lcssa to i64
   %i.pm = call i64 @FSE_normalizeCount(ptr noundef nonnull %i.d, i32 noundef 8, ptr noundef nonnull %i.c, i64 noundef %i.pl, i32 noundef %i.n, i32 noundef 1) #16 ; 4 uses
-  %14 = icmp ult i64 %i.pm, -119
-  br i1 %14, label %bb.u, label %bb.s
+  %14 = icmp ugt i64 %i.pm, -120
+  br i1 %14, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %.loopexit386
   %.not204 = icmp eq i32 %8, 0
@@ -1235,8 +1235,8 @@ bb.u:                                             ; preds = %.loopexit386
   %i.py = trunc i64 %i.pm to i32
   %i.pz = zext i32 %op.rdx to i64
   %i.qa = call i64 @FSE_normalizeCount(ptr noundef nonnull %i.f, i32 noundef 9, ptr noundef nonnull %i.e, i64 noundef %i.pz, i32 noundef 52, i32 noundef 1) #16 ; 4 uses
-  %15 = icmp ult i64 %i.qa, -119
-  br i1 %15, label %bb.x, label %bb.v
+  %15 = icmp ugt i64 %i.qa, -120
+  br i1 %15, label %bb.v, label %bb.x
 
 bb.v:                                             ; preds = %bb.u
   %.not203 = icmp eq i32 %8, 0
@@ -1260,8 +1260,8 @@ bb.x:                                             ; preds = %bb.u
   %i.ql = trunc i64 %i.qa to i32
   %i.qm = zext i32 %i.qk to i64
   %i.qn = call i64 @FSE_normalizeCount(ptr noundef nonnull %i.h, i32 noundef 9, ptr noundef nonnull %i.g, i64 noundef %i.qm, i32 noundef 35, i32 noundef 1) #16 ; 4 uses
-  %16 = icmp ult i64 %i.qn, -119
-  br i1 %16, label %bb.aa, label %bb.y
+  %16 = icmp ugt i64 %i.qn, -120
+  br i1 %16, label %bb.y, label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
   %.not202 = icmp eq i32 %8, 0
@@ -1277,8 +1277,8 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.x
   %i.qs = trunc i64 %i.qn to i32
   %i.qt = call i64 @HUF_writeCTable_wksp(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %i.b, i32 noundef 255, i32 noundef %i.pk, ptr noundef nonnull %i.j, i64 noundef 4864) #16 ; 6 uses
-  %17 = icmp ult i64 %i.qt, -119
-  br i1 %17, label %bb.ad, label %bb.ab
+  %17 = icmp ugt i64 %i.qt, -120
+  br i1 %17, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa
   %.not194 = icmp eq i32 %8, 0
@@ -1295,8 +1295,8 @@ bb.ad:                                            ; preds = %bb.aa
   %i.qy = getelementptr inbounds nuw i8, ptr %0, i64 %i.qt ; 2 uses
   %i.qz = sub i64 %1, %i.qt                       ; 2 uses
   %i.ra = call i64 @FSE_writeNCount(ptr noundef %i.qy, i64 noundef %i.qz, ptr noundef nonnull %i.d, i32 noundef 30, i32 noundef %i.py) #16 ; 6 uses
-  %18 = icmp ult i64 %i.ra, -119
-  br i1 %18, label %bb.ag, label %bb.ae
+  %18 = icmp ugt i64 %i.ra, -120
+  br i1 %18, label %bb.ae, label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ad
   %.not196 = icmp eq i32 %8, 0
@@ -1313,8 +1313,8 @@ bb.ag:                                            ; preds = %bb.ad
   %i.rf = getelementptr inbounds nuw i8, ptr %i.qy, i64 %i.ra ; 2 uses
   %i.rg = sub i64 %i.qz, %i.ra                    ; 2 uses
   %i.rh = call i64 @FSE_writeNCount(ptr noundef %i.rf, i64 noundef %i.rg, ptr noundef nonnull %i.f, i32 noundef 52, i32 noundef %i.ql) #16 ; 6 uses
-  %19 = icmp ult i64 %i.rh, -119
-  br i1 %19, label %bb.aj, label %bb.ah
+  %19 = icmp ugt i64 %i.rh, -120
+  br i1 %19, label %bb.ah, label %bb.aj
 
 bb.ah:                                            ; preds = %bb.ag
   %.not198 = icmp eq i32 %8, 0
@@ -1331,8 +1331,8 @@ bb.aj:                                            ; preds = %bb.ag
   %i.rm = getelementptr inbounds nuw i8, ptr %i.rf, i64 %i.rh ; 2 uses
   %i.rn = sub i64 %i.rg, %i.rh                    ; 2 uses
   %i.ro = call i64 @FSE_writeNCount(ptr noundef %i.rm, i64 noundef %i.rn, ptr noundef nonnull %i.h, i32 noundef 35, i32 noundef %i.qs) #16 ; 6 uses
-  %20 = icmp ult i64 %i.ro, -119
-  br i1 %20, label %bb.am, label %bb.ak
+  %20 = icmp ugt i64 %i.ro, -120
+  br i1 %20, label %bb.ak, label %bb.am
 
 bb.ak:                                            ; preds = %bb.aj
   %.not200 = icmp eq i32 %8, 0
@@ -1375,10 +1375,10 @@ bb.ap:                                            ; preds = %bb.am
   br label %.thread
 
 .thread:                                          ; preds = %bb.ak, %bb.al, %bb.ah, %bb.ai, %bb.ae, %bb.af, %bb.ab, %bb.ac, %bb.n, %bb.o, %ZDICT_totalSampleSize.exit, %bb.an, %bb.ao, %bb.y, %bb.z, %bb.v, %bb.w, %bb.s, %bb.t, %bb.b, %bb.c, %bb.ap
-  %.sroa.0.0 = phi ptr [ null, %ZDICT_totalSampleSize.exit ], [ %i.dq, %bb.an ], [ %i.dq, %bb.ao ], [ %i.dq, %bb.ap ], [ %i.dq, %bb.ah ], [ %i.dq, %bb.ae ], [ %i.dq, %bb.ab ], [ %i.dq, %bb.n ], [ %i.dq, %bb.y ], [ %i.dq, %bb.z ], [ %i.dq, %bb.v ], [ %i.dq, %bb.w ], [ %i.dq, %bb.s ], [ %i.dq, %bb.t ], [ %i.dq, %bb.c ], [ %i.dq, %bb.b ], [ %i.dq, %bb.o ], [ %i.dq, %bb.ac ], [ %i.dq, %bb.af ], [ %i.dq, %bb.ai ], [ %i.dq, %bb.al ], [ %i.dq, %bb.ak ]
-  %.sroa.7.0 = phi ptr [ null, %ZDICT_totalSampleSize.exit ], [ %i.dr, %bb.an ], [ %i.dr, %bb.ao ], [ %i.dr, %bb.ap ], [ %i.dr, %bb.ah ], [ %i.dr, %bb.ae ], [ %i.dr, %bb.ab ], [ %i.dr, %bb.n ], [ %i.dr, %bb.y ], [ %i.dr, %bb.z ], [ %i.dr, %bb.v ], [ %i.dr, %bb.w ], [ %i.dr, %bb.s ], [ %i.dr, %bb.t ], [ %i.dr, %bb.c ], [ %i.dr, %bb.b ], [ %i.dr, %bb.o ], [ %i.dr, %bb.ac ], [ %i.dr, %bb.af ], [ %i.dr, %bb.ai ], [ %i.dr, %bb.al ], [ %i.dr, %bb.ak ]
-  %.sroa.9.0 = phi ptr [ null, %ZDICT_totalSampleSize.exit ], [ %i.ds, %bb.an ], [ %i.ds, %bb.ao ], [ %i.ds, %bb.ap ], [ %i.ds, %bb.ah ], [ %i.ds, %bb.ae ], [ %i.ds, %bb.ab ], [ %i.ds, %bb.n ], [ %i.ds, %bb.y ], [ %i.ds, %bb.z ], [ %i.ds, %bb.v ], [ %i.ds, %bb.w ], [ %i.ds, %bb.s ], [ %i.ds, %bb.t ], [ %i.ds, %bb.c ], [ %i.ds, %bb.b ], [ %i.ds, %bb.o ], [ %i.ds, %bb.ac ], [ %i.ds, %bb.af ], [ %i.ds, %bb.ai ], [ %i.ds, %bb.al ], [ %i.ds, %bb.ak ]
-  %.5 = phi i64 [ -34, %ZDICT_totalSampleSize.exit ], [ -70, %bb.an ], [ -70, %bb.ao ], [ %i.sf, %bb.ap ], [ %i.rh, %bb.ah ], [ %i.ra, %bb.ae ], [ %i.qt, %bb.ab ], [ %i.lw, %bb.n ], [ %i.qn, %bb.y ], [ %i.qn, %bb.z ], [ %i.qa, %bb.v ], [ %i.qa, %bb.w ], [ %i.pm, %bb.s ], [ %i.pm, %bb.t ], [ -64, %bb.c ], [ -64, %bb.b ], [ %i.lw, %bb.o ], [ %i.qt, %bb.ac ], [ %i.ra, %bb.af ], [ %i.rh, %bb.ai ], [ %i.ro, %bb.al ], [ %i.ro, %bb.ak ]
+  %.sroa.0.0 = phi ptr [ null, %ZDICT_totalSampleSize.exit ], [ %i.dq, %bb.s ], [ %i.dq, %bb.t ], [ %i.dq, %bb.v ], [ %i.dq, %bb.w ], [ %i.dq, %bb.y ], [ %i.dq, %bb.z ], [ %i.dq, %bb.an ], [ %i.dq, %bb.ao ], [ %i.dq, %bb.ap ], [ %i.dq, %bb.ah ], [ %i.dq, %bb.ae ], [ %i.dq, %bb.ab ], [ %i.dq, %bb.n ], [ %i.dq, %bb.c ], [ %i.dq, %bb.b ], [ %i.dq, %bb.o ], [ %i.dq, %bb.ac ], [ %i.dq, %bb.af ], [ %i.dq, %bb.ai ], [ %i.dq, %bb.al ], [ %i.dq, %bb.ak ]
+  %.sroa.7.0 = phi ptr [ null, %ZDICT_totalSampleSize.exit ], [ %i.dr, %bb.s ], [ %i.dr, %bb.t ], [ %i.dr, %bb.v ], [ %i.dr, %bb.w ], [ %i.dr, %bb.y ], [ %i.dr, %bb.z ], [ %i.dr, %bb.an ], [ %i.dr, %bb.ao ], [ %i.dr, %bb.ap ], [ %i.dr, %bb.ah ], [ %i.dr, %bb.ae ], [ %i.dr, %bb.ab ], [ %i.dr, %bb.n ], [ %i.dr, %bb.c ], [ %i.dr, %bb.b ], [ %i.dr, %bb.o ], [ %i.dr, %bb.ac ], [ %i.dr, %bb.af ], [ %i.dr, %bb.ai ], [ %i.dr, %bb.al ], [ %i.dr, %bb.ak ]
+  %.sroa.9.0 = phi ptr [ null, %ZDICT_totalSampleSize.exit ], [ %i.ds, %bb.s ], [ %i.ds, %bb.t ], [ %i.ds, %bb.v ], [ %i.ds, %bb.w ], [ %i.ds, %bb.y ], [ %i.ds, %bb.z ], [ %i.ds, %bb.an ], [ %i.ds, %bb.ao ], [ %i.ds, %bb.ap ], [ %i.ds, %bb.ah ], [ %i.ds, %bb.ae ], [ %i.ds, %bb.ab ], [ %i.ds, %bb.n ], [ %i.ds, %bb.c ], [ %i.ds, %bb.b ], [ %i.ds, %bb.o ], [ %i.ds, %bb.ac ], [ %i.ds, %bb.af ], [ %i.ds, %bb.ai ], [ %i.ds, %bb.al ], [ %i.ds, %bb.ak ]
+  %.5 = phi i64 [ -34, %ZDICT_totalSampleSize.exit ], [ %i.pm, %bb.s ], [ %i.pm, %bb.t ], [ %i.qa, %bb.v ], [ %i.qa, %bb.w ], [ %i.qn, %bb.y ], [ %i.qn, %bb.z ], [ -70, %bb.an ], [ -70, %bb.ao ], [ %i.sf, %bb.ap ], [ %i.rh, %bb.ah ], [ %i.ra, %bb.ae ], [ %i.qt, %bb.ab ], [ %i.lw, %bb.n ], [ -64, %bb.c ], [ -64, %bb.b ], [ %i.lw, %bb.o ], [ %i.qt, %bb.ac ], [ %i.ra, %bb.af ], [ %i.rh, %bb.ai ], [ %i.ro, %bb.al ], [ %i.ro, %bb.ak ]
   %i.sg = call i64 @ZSTD_freeCDict(ptr noundef %.sroa.0.0) #16 ; 0 uses
   %i.sh = call i64 @ZSTD_freeCCtx(ptr noundef %.sroa.7.0) #16 ; 0 uses
   call void @free(ptr noundef %.sroa.9.0) #16
@@ -1781,7 +1781,6 @@ bb.y:                                             ; preds = %bb.x
   %i.jx = zext i32 %.0219.i.i.i to i64            ; 4 uses
   %wide.trip.count.i.i.i = zext i32 %.0217.i.i.i to i64 ; 2 uses
   %i.jy = sub nsw i64 %wide.trip.count.i.i.i, %i.jx ; 3 uses
-  %xtraiter171 = and i64 %i.jy, 1
   %i.jz = add nsw i64 %wide.trip.count.i.i.i, -1
   %i.ka = icmp eq i64 %i.jz, %i.jx
   br i1 %i.ka, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.preheader.i.i.i.new
@@ -1851,8 +1850,8 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i.i.
   br i1 %niter180.ncmp.1, label %._crit_edge.i.i.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !69
 
 ._crit_edge.i.i.i.loopexit.unr-lcssa:             ; preds = %bb.ab
-  %lcmp.mod173.not = icmp eq i64 %xtraiter171, 0
-  br i1 %lcmp.mod173.not, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i.epil.preheader
+  %lcmp.mod173.not = trunc i64 %i.jy to i1
+  br i1 %lcmp.mod173.not, label %.lr.ph.i.i.i.epil.preheader, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i.epil.preheader:                      ; preds = %._crit_edge.i.i.i.loopexit.unr-lcssa, %.lr.ph.preheader.i.i.i
   %indvars.iv.i.i.i.epil.init = phi i64 [ %i.jx, %.lr.ph.preheader.i.i.i ], [ %indvars.iv.next.i.i.i.1, %._crit_edge.i.i.i.loopexit.unr-lcssa ] ; 2 uses
@@ -2255,8 +2254,8 @@ bb.ah:                                            ; preds = %.preheader312.56.i.
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ai, %bb.ah
-  %.0202.i.i.i = phi i32 [ %.0203.lcssa.i.i.i, %bb.ah ], [ %i.py, %bb.ai ] ; 10 uses
-  %i.pt = zext i32 %.0202.i.i.i to i64            ; 6 uses
+  %.0202.i.i.i = phi i32 [ %.0203.lcssa.i.i.i, %bb.ah ], [ %i.py, %bb.ai ] ; 11 uses
+  %i.pt = zext i32 %.0202.i.i.i to i64            ; 5 uses
   %i.pu = getelementptr i8, ptr %i.lk, i64 %i.pt
   %i.pv = getelementptr i8, ptr %i.pu, i64 -2
   %i.pw = load i8, ptr %i.pv, align 1, !tbaa !33
@@ -2270,7 +2269,6 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   store i32 0, ptr %i.fu, align 4, !tbaa !8
-  %xtraiter181 = and i64 %i.pt, 1
   %i.qa = icmp eq i32 %.0202.i.i.i, 7
   br i1 %i.qa, label %.epil.preheader, label %.new
 
@@ -2306,8 +2304,8 @@ bb.al:                                            ; preds = %bb.al, %.new
   br i1 %niter186.ncmp.1, label %.unr-lcssa, label %bb.al, !llvm.loop !74
 
 .unr-lcssa:                                       ; preds = %bb.al
-  %lcmp.mod183.not = icmp eq i64 %xtraiter181, 0
-  br i1 %lcmp.mod183.not, label %bb.am, label %.epil.preheader
+  %lcmp.mod183.not = trunc i32 %.0202.i.i.i to i1
+  br i1 %lcmp.mod183.not, label %.epil.preheader, label %bb.am
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %bb.ak
   %.epil.init = phi i32 [ 0, %bb.ak ], [ %i.qq, %.unr-lcssa ]
@@ -2710,9 +2708,9 @@ bb.b:                                             ; preds = %bb.a
   %i.r = sub i64 0, %1
   %i.s = getelementptr inbounds i8, ptr %i.q, i64 %i.r ; 3 uses
   %i.t = tail call fastcc i64 @ZDICT_analyzeEntropy(ptr noundef nonnull %i.o, i64 noundef %i.p, i32 noundef %i.c, ptr noundef %3, ptr noundef %4, i32 noundef %5, ptr noundef %i.s, i64 noundef %1, i32 noundef %i.e) ; 3 uses
-  %7 = icmp ult i64 %i.t, -119
+  %7 = icmp ugt i64 %i.t, -120
   %i.u = add nuw i64 %i.t, 8                      ; 2 uses
-  br i1 %7, label %bb.c, label %bb.f
+  br i1 %7, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %.critedge
   store i32 -332356553, ptr %0, align 1, !tbaa !8

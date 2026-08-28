@@ -204,8 +204,7 @@ bb.a:
   %i.a = alloca [40 x i8], align 8                ; 8 uses
   %i.b = alloca [40 x i8], align 8                ; 8 uses
   %i.c = alloca [96 x i8], align 8                ; 7 uses
-  %4 = and i8 %3, 1, !dbg !2216
-  %.not = icmp eq i8 %4, 0, !dbg !2216            ; 2 uses
+  %4 = trunc i8 %3 to i1, !dbg !2216              ; 2 uses
   %.not21 = icmp eq ptr %1, null, !dbg !2229
   br i1 %.not21, label %bb.c, label %bb.b, !dbg !2231
 
@@ -228,7 +227,7 @@ bb.c:                                             ; preds = %bb.a
   ret i64 %.sroa.03.0, !dbg !2238
 
 bb.d:                                             ; preds = %bb.b
-  %.26 = select i1 %.not, i8 1, i8 -2, !dbg !2239
+  %.26 = select i1 %4, i8 -2, i8 1, !dbg !2239
   br label %.loopexit.sink.split, !dbg !2240
 
 bb.e:                                             ; preds = %bb.b
@@ -321,7 +320,7 @@ bb.g:                                             ; preds = %_RNvXs3_NtNtNtCscgR
 bb.h:                                             ; preds = %_RNvXs3_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExactINtNtNtBb_3mem12maybe_uninit11MaybeUninithEEINtBZ_14ChunksExactMutB1u_EEINtB5_7ZipImplBW_B2c_E4nextCs4PheDXcg4wa_10polars_row.exit.thread, %bb.g
   %.sink = phi i8 [ %i.ao, %bb.g ], [ 32, %_RNvXs3_NtNtNtCscgRAwXFJnXP_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExactINtNtNtBb_3mem12maybe_uninit11MaybeUninithEEINtBZ_14ChunksExactMutB1u_EEINtB5_7ZipImplBW_B2c_E4nextCs4PheDXcg4wa_10polars_row.exit.thread ]
   store i8 %.sink, ptr %i.ak, align 1, !dbg !2361
-  br i1 %.not, label %.loopexit, label %bb.i, !dbg !2392
+  br i1 %4, label %bb.i, label %.loopexit, !dbg !2392
 
 bb.i:                                             ; preds = %bb.h
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %i.l, !dbg !2393

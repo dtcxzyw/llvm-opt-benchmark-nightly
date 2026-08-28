@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %bb.d, %bb.i
 bb.f:                                             ; preds = %bb.e
   %gep168 = getelementptr [128 x i8], ptr %invariant.gep167, i64 %i.ad
   %i.af = load i8, ptr %gep168, align 1, !tbaa !10
-  %3 = and i8 %i.af, 1
-  %.not124 = icmp eq i8 %3, 0
-  br i1 %.not124, label %bb.i, label %bb.g
+  %.not124 = trunc i8 %i.af to i1
+  br i1 %.not124, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %gep170 = getelementptr [2048 x i8], ptr %invariant.gep169, i64 %i.ad
@@ -283,9 +282,8 @@ bb.m:                                             ; preds = %bb.q, %bb.l
   %i.bl = add nuw nsw i64 %indvars.iv.1, %i.o     ; 4 uses
   %gep174 = getelementptr [128 x i8], ptr %invariant.gep173, i64 %i.bl
   %i.bm = load i8, ptr %gep174, align 1, !tbaa !10
-  %4 = and i8 %i.bm, 1
-  %.not123.1 = icmp eq i8 %4, 0
-  br i1 %.not123.1, label %bb.q, label %bb.n
+  %.not123.1 = trunc i8 %i.bm to i1
+  br i1 %.not123.1, label %bb.n, label %bb.q
 
 bb.n:                                             ; preds = %bb.m
   %gep176 = getelementptr [128 x i8], ptr %invariant.gep175, i64 %i.bl
@@ -524,7 +522,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac, %bb.
 .loopexit.3:                                      ; preds = %bb.ae, %bb.a, %.loopexit.1, %bb.y, %.loopexit.2.thread, %.loopexit.2
   %.4.3 = phi i32 [ %.3.2, %.loopexit.2 ], [ %.4.2163, %.loopexit.2.thread ], [ %.4.1, %.loopexit.1 ], [ %.4.2163, %bb.y ], [ 0, %bb.a ], [ %.3.3, %bb.ae ] ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %i.g, i64 2
-  %i.gm = load i8, ptr %i.gl, align 2, !tbaa !11  ; 5 uses
+  %i.gm = load i8, ptr %i.gl, align 2, !tbaa !11  ; 6 uses
   %i.gn = zext i8 %i.gm to i32                    ; 3 uses
   %i.go = shl nuw nsw i32 %i.gn, 2
   %i.gp = add nsw i32 %i.go, %.4.3
@@ -550,13 +548,12 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %.lo
 
 .lr.ph:                                           ; preds = %bb.ah
   %i.gw = getelementptr inbounds nuw i8, ptr %i.g, i64 4 ; 3 uses
-  %wide.trip.count = zext i8 %i.gm to i64         ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.gx = icmp eq i8 %i.gm, 1
   br i1 %i.gx, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 254
+  %3 = and i8 %i.gm, -2
+  %unroll_iter = zext i8 %3 to i64
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ai, %.lr.ph.new
@@ -600,8 +597,8 @@ bb.ai:                                            ; preds = %bb.ai, %.lr.ph.new
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.ai, !llvm.loop !35
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.ai
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i8 %i.gm to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv141.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next142.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -1004,9 +1001,8 @@ bb.l:                                             ; preds = %.preheader354, %bb.
   %.0308365 = phi i32 [ 0, %.preheader354 ], [ %.4312, %bb.t ] ; 4 uses
   %gep437 = getelementptr [128 x i8], ptr %invariant.gep436, i64 %indvars.iv396 ; 2 uses
   %i.gz = load i8, ptr %gep437, align 1, !tbaa !10
-  %4 = and i8 %i.gz, 1
-  %.not323 = icmp eq i8 %4, 0
-  br i1 %.not323, label %bb.p, label %bb.m
+  %.not323 = trunc i8 %i.gz to i1
+  br i1 %.not323, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
   %i.ha = trunc nuw nsw i64 %indvars.iv396 to i32

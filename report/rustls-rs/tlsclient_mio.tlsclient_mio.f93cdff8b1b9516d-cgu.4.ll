@@ -204,8 +204,8 @@ bb.x:                                             ; preds = %bb.v
 bb.y:                                             ; preds = %bb.n
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ah = load i8, ptr %i.ag, align 8, !range !23, !alias.scope !175, !noundef !6
-  %1 = icmp eq i8 %i.ah, 0
-  br i1 %1, label %bb.z, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECsloGAwzL3aMH_13tlsclient_mio.exit.i
+  %1 = trunc nuw i8 %i.ah to i1
+  br i1 %1, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCseO5Jl7W60Eg_16rustls_pki_types11server_name10ServerNameECsloGAwzL3aMH_13tlsclient_mio.exit.i, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
@@ -608,8 +608,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
-  %i.e = lshr exact i64 %i.d, 4                   ; 2 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 2 uses
+  %i.e = lshr exact i64 %i.d, 4                   ; 3 uses
   %i.f = icmp eq i64 %i.d, 16
   br i1 %i.f, label %.epil.preheader, label %.new
 
@@ -646,9 +646,8 @@ bb.c:                                             ; preds = %bb.c, %.new
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtBb_2io8io_slice7IoSliceENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1q_8adapters3map8map_foldRBQ_RShuNCNvXs6_NtNtCs7ZUl82OSlxp_6rustls4conn10connectionINtB2W_16ConnectionCommonNtNtNtB2Y_6client11client_conn20ClientConnectionDataENtB2U_13PlaintextSink14write_vectored0NCINvNvB1k_8for_each4callB2I_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB64_3VecB2I_E14extend_trustedINtB2a_3MapBF_B2M_EE0E0E0ECsloGAwzL3aMH_13tlsclient_mio.exit.loopexit.unr-lcssa, label %bb.c
 
 _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtBb_2io8io_slice7IoSliceENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1q_8adapters3map8map_foldRBQ_RShuNCNvXs6_NtNtCs7ZUl82OSlxp_6rustls4conn10connectionINtB2W_16ConnectionCommonNtNtNtB2Y_6client11client_conn20ClientConnectionDataENtB2U_13PlaintextSink14write_vectored0NCINvNvB1k_8for_each4callB2I_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB64_3VecB2I_E14extend_trustedINtB2a_3MapBF_B2M_EE0E0E0ECsloGAwzL3aMH_13tlsclient_mio.exit.loopexit.unr-lcssa: ; preds = %bb.c
-  %3 = and i64 %i.d, 16
-  %lcmp.mod.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtBb_2io8io_slice7IoSliceENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1q_8adapters3map8map_foldRBQ_RShuNCNvXs6_NtNtCs7ZUl82OSlxp_6rustls4conn10connectionINtB2W_16ConnectionCommonNtNtNtB2Y_6client11client_conn20ClientConnectionDataENtB2U_13PlaintextSink14write_vectored0NCINvNvB1k_8for_each4callB2I_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB64_3VecB2I_E14extend_trustedINtB2a_3MapBF_B2M_EE0E0E0ECsloGAwzL3aMH_13tlsclient_mio.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.e to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtBb_2io8io_slice7IoSliceENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1q_8adapters3map8map_foldRBQ_RShuNCNvXs6_NtNtCs7ZUl82OSlxp_6rustls4conn10connectionINtB2W_16ConnectionCommonNtNtNtB2Y_6client11client_conn20ClientConnectionDataENtB2U_13PlaintextSink14write_vectored0NCINvNvB1k_8for_each4callB2I_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB64_3VecB2I_E14extend_trustedINtB2a_3MapBF_B2M_EE0E0E0ECsloGAwzL3aMH_13tlsclient_mio.exit
 
 .epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtBb_2io8io_slice7IoSliceENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1q_8adapters3map8map_foldRBQ_RShuNCNvXs6_NtNtCs7ZUl82OSlxp_6rustls4conn10connectionINtB2W_16ConnectionCommonNtNtNtB2Y_6client11client_conn20ClientConnectionDataENtB2U_13PlaintextSink14write_vectored0NCINvNvB1k_8for_each4callB2I_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB64_3VecB2I_E14extend_trustedINtB2a_3MapBF_B2M_EE0E0E0ECsloGAwzL3aMH_13tlsclient_mio.exit.loopexit.unr-lcssa, %bb.b
   %.epil.init = phi i64 [ %.sroa.5.0.copyload, %bb.b ], [ %i.r, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtBb_2io8io_slice7IoSliceENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtB1q_8adapters3map8map_foldRBQ_RShuNCNvXs6_NtNtCs7ZUl82OSlxp_6rustls4conn10connectionINtB2W_16ConnectionCommonNtNtNtB2Y_6client11client_conn20ClientConnectionDataENtB2U_13PlaintextSink14write_vectored0NCINvNvB1k_8for_each4callB2I_NCINvMsk_NtCs4wP2HXfJTCR_5alloc3vecINtB64_3VecB2I_E14extend_trustedINtB2a_3MapBF_B2M_EE0E0E0ECsloGAwzL3aMH_13tlsclient_mio.exit.loopexit.unr-lcssa ] ; 2 uses

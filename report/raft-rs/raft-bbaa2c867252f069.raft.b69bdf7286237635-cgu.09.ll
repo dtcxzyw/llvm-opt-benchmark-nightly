@@ -204,9 +204,8 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailyNvYyNt
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i
   %i.cl = getelementptr i8, ptr %i.cu, i64 8      ; 2 uses
   %i.cm = getelementptr i8, ptr %i.ct, i64 8
-  %3 = and i64 %1, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.k, label %bb.j
+  %3 = trunc i64 %1 to i1
+  br i1 %3, label %bb.j, label %bb.k
 
 .lr.ph.i.i:                                       ; preds = %.lr.ph.i.i, %.loopexit.1.i
   %.sroa.0.014.i.i = phi ptr [ %i.cp, %.lr.ph.i.i ], [ %0, %.loopexit.1.i ] ; 2 uses
@@ -609,9 +608,8 @@ bb.m:                                             ; preds = %bb.l
 ._crit_edge.i:                                    ; preds = %.lr.ph.i23
   %i.gb = getelementptr i8, ptr %i.gq, i64 8      ; 2 uses
   %i.gc = getelementptr i8, ptr %i.gp, i64 8
-  %3 = and i64 %1, 1
-  %4 = icmp eq i64 %3, 0
-  br i1 %4, label %bb.o, label %bb.n
+  %3 = trunc i64 %1 to i1
+  br i1 %3, label %bb.n, label %bb.o
 
 .lr.ph.i23:                                       ; preds = %.lr.ph.i23, %bb.m
   %.sroa.0.014.i = phi ptr [ %i.gl, %.lr.ph.i23 ], [ %i.a, %bb.m ] ; 2 uses
@@ -1014,9 +1012,8 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared9smallsort11insert_tailNtNtCsf
 ._crit_edge.i:                                    ; preds = %.lr.ph.i
   %i.cm = getelementptr i8, ptr %i.cz, i64 16     ; 2 uses
   %i.cn = getelementptr i8, ptr %i.cy, i64 16
-  %5 = and i64 %1, 1
-  %6 = icmp eq i64 %5, 0
-  br i1 %6, label %bb.m, label %bb.l
+  %5 = trunc i64 %1 to i1
+  br i1 %5, label %bb.l, label %bb.m
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i, %.loopexit.1
   %.sroa.0.010.i = phi ptr [ %i.cv, %.lr.ph.i ], [ %0, %.loopexit.1 ] ; 2 uses

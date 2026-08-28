@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %._crit_edge
     #dbg_value(ptr %.sroa.619.0..sroa_idx.i.i, !2574, !DIExpression(), !2588)
     #dbg_value(i64 32, !2575, !DIExpression(), !2588)
     #dbg_value(i64 32, !2576, !DIExpression(), !2590)
-    #dbg_value(i64 0, !2580, !DIExpression(), !2591)
+    #dbg_value(i64 32, !2580, !DIExpression(DW_OP_constu, 7, DW_OP_and, DW_OP_stack_value), !2591)
     #dbg_value(i64 4, !2578, !DIExpression(), !2592)
     #dbg_value(i64 4, !2582, !DIExpression(), !2593)
   invoke void @_RINvNvNtCsj6eKBz9Db1c_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs9GYDdpCSJ4S_14regex_automata(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %.sroa.619.0..sroa_idx.i.i, i64 noundef 4)
@@ -608,7 +608,7 @@ bb.m:                                             ; preds = %._crit_edge
     #dbg_value(ptr %.sroa.619.0..sroa_idx.i.i, !2574, !DIExpression(), !3450)
     #dbg_value(i64 32, !2575, !DIExpression(), !3450)
     #dbg_value(i64 32, !2576, !DIExpression(), !3452)
-    #dbg_value(i64 0, !2580, !DIExpression(), !3453)
+    #dbg_value(i64 32, !2580, !DIExpression(DW_OP_constu, 7, DW_OP_and, DW_OP_stack_value), !3453)
     #dbg_value(i64 4, !2578, !DIExpression(), !3454)
     #dbg_value(i64 4, !2582, !DIExpression(), !3455)
   invoke void @_RINvNvNtCsj6eKBz9Db1c_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs9GYDdpCSJ4S_14regex_automata(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull %.sroa.619.0..sroa_idx.i.i, i64 noundef 4)
@@ -1011,7 +1011,6 @@ _RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
     #dbg_value(i64 %.sroa.05.0.i.i.i, !12804, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !12914)
     #dbg_value(i64 %.sroa.05.0.i.i.i, !12786, !DIExpression(), !12922)
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val52) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i, 1, !dbg !12923
   %i.h = icmp eq i64 %.sroa.05.0.i.i.i, 1, !dbg !12923
   br i1 %i.h, label %.epil.preheader, label %.lr.ph.i.new, !dbg !12923
 
@@ -1020,8 +1019,8 @@ _RNvMsa_NtCs37Y8JGf013z_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_pl
   br label %bb.b, !dbg !12923
 
 ._crit_edge.i.unr-lcssa:                          ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !12923
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader, !dbg !12923
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i to i1, !dbg !12923
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i, !dbg !12923
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i
   %.sroa.0.08.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.r, %._crit_edge.i.unr-lcssa ]
@@ -1424,7 +1423,7 @@ bb.j:                                             ; preds = %bb.g
     #dbg_value(ptr %i.bk, !2574, !DIExpression(), !13273)
     #dbg_value(i64 24, !2575, !DIExpression(), !13273)
     #dbg_value(i64 24, !2576, !DIExpression(), !13275)
-    #dbg_value(i64 0, !2580, !DIExpression(), !13276)
+    #dbg_value(i64 24, !2580, !DIExpression(DW_OP_constu, 7, DW_OP_and, DW_OP_stack_value), !13276)
     #dbg_value(i64 3, !2578, !DIExpression(), !13277)
     #dbg_value(i64 3, !2582, !DIExpression(), !13278)
   invoke void @_RINvNvNtCsj6eKBz9Db1c_4core3ptr25swap_nonoverlapping_bytes26swap_nonoverlapping_chunksKj8_ECs9GYDdpCSJ4S_14regex_automata(ptr noundef nonnull %i.ai, ptr noundef nonnull %i.bk, i64 noundef 3)

@@ -204,9 +204,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1
@@ -332,9 +331,8 @@ middle.block:                                     ; preds = %vector.body
   %.sroa.0.010.i.ph = phi i64 [ %i.b, %vector.memcheck ], [ %i.b, %.lr.ph.i.preheader ], [ %i.o, %middle.block ] ; 5 uses
   %i.y = sub i64 %i.d, %.sroa.0.010.i.ph
   %.neg = add i64 %.sroa.0.010.i.ph, 1
-  %xtraiter = and i64 %i.y, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
+  %lcmp.mod.not = trunc i64 %i.y to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader13
   %i.z = add nuw i64 %.sroa.0.010.i.ph, 1
@@ -501,8 +499,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = ptrtoint ptr %1 to i64
   %i.c = ptrtoint ptr %0 to i64
-  %i.d = sub nuw i64 %i.b, %i.c                   ; 3 uses
-  %i.e = lshr exact i64 %i.d, 3                   ; 2 uses
+  %i.d = sub nuw i64 %i.b, %i.c                   ; 2 uses
+  %i.e = lshr exact i64 %i.d, 3                   ; 3 uses
   %i.f = load double, ptr %3, align 8, !alias.scope !57, !noundef !22 ; 6 uses
   %i.g = icmp eq i64 %i.d, 8
   br i1 %i.g, label %.epil.preheader, label %.new
@@ -536,9 +534,8 @@ bb.c:                                             ; preds = %bb.c, %.new
   br i1 %niter.ncmp.1, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters3map8map_foldRjddNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests9chisquare9chisquare0NCIB1G_dddNCB2h_s_0NCINvXs26_NtBW_5accumdNtB3J_3Sum3sumINtB1I_3MapIB4a_BF_B2f_EB3q_EE0E0E0EB2n_.exit.loopexit.unr-lcssa, label %bb.c
 
 _RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters3map8map_foldRjddNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests9chisquare9chisquare0NCIB1G_dddNCB2h_s_0NCINvXs26_NtBW_5accumdNtB3J_3Sum3sumINtB1I_3MapIB4a_BF_B2f_EB3q_EE0E0E0EB2n_.exit.loopexit.unr-lcssa: ; preds = %bb.c
-  %4 = and i64 %i.d, 8
-  %lcmp.mod.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters3map8map_foldRjddNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests9chisquare9chisquare0NCIB1G_dddNCB2h_s_0NCINvXs26_NtBW_5accumdNtB3J_3Sum3sumINtB1I_3MapIB4a_BF_B2f_EB3q_EE0E0E0EB2n_.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.e to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters3map8map_foldRjddNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests9chisquare9chisquare0NCIB1G_dddNCB2h_s_0NCINvXs26_NtBW_5accumdNtB3J_3Sum3sumINtB1I_3MapIB4a_BF_B2f_EB3q_EE0E0E0EB2n_.exit
 
 .epil.preheader:                                  ; preds = %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters3map8map_foldRjddNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests9chisquare9chisquare0NCIB1G_dddNCB2h_s_0NCINvXs26_NtBW_5accumdNtB3J_3Sum3sumINtB1I_3MapIB4a_BF_B2f_EB3q_EE0E0E0EB2n_.exit.loopexit.unr-lcssa, %bb.b
   %.sroa.04.0.i.epil.init = phi i64 [ 0, %bb.b ], [ %i.u, %_RINvXs2J_NtNtCs3oUPovFnLWP_4core5slice4iterINtB7_4IterjENtNtNtNtBb_4iter6traits8iterator8Iterator4folddNCINvNtNtBY_8adapters3map8map_foldRjddNCNvNtNtCs8lmMd0ZksV9_6statrs11stats_tests9chisquare9chisquare0NCIB1G_dddNCB2h_s_0NCINvXs26_NtBW_5accumdNtB3J_3Sum3sumINtB1I_3MapIB4a_BF_B2f_EB3q_EE0E0E0EB2n_.exit.loopexit.unr-lcssa ]

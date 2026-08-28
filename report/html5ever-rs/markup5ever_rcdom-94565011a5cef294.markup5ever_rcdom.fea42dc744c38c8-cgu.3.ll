@@ -202,10 +202,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
-  %2 = and i64 %i.g, 1
-  %.not.i = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.g to i1
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  br i1 %.not.i, label %bb.e, label %bb.d
+  br i1 %2, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.a
   store ptr @4, ptr %i.c, align 8, !noalias !146, !captures !149
@@ -554,25 +553,28 @@ _RNvXsl_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4
   br i1 %i.bl, label %bb.u, label %bb.z
 
 bb.u:                                             ; preds = %_RNvXsl_NtCsa2F6HLACPlS_11markup5ever9interfaceNtB5_8QualNameNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i.i
-  %i.bm = ptrtoint ptr %i.bk to i64
-  %2 = and i64 %i.bm, 1
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %bb.v, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i
+  %i.bm = ptrtoint ptr %i.bk to i64               ; 2 uses
+  %2 = trunc i64 %i.bm to i1
+  br i1 %2, label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.bn = getelementptr inbounds nuw i8, ptr %.sroa.014.030.i, i64 36 ; 2 uses
   %i.bo = load i32, ptr %i.bn, align 4, !noalias !187, !noundef !5
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   store i32 %i.bo, ptr %i.bp, align 8, !noalias !187
-  %i.bq = getelementptr i8, ptr %i.bk, i64 1      ; 3 uses
+  %i.bq = getelementptr i8, ptr %i.bk, i64 1      ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.bq) ]
   store ptr %i.bq, ptr %i.bj, align 8, !noalias !187
   store i32 0, ptr %i.bn, align 4, !noalias !187
+  %.pre.i1.i.i = ptrtoint ptr %i.bq to i64
   br label %_RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i
 
 _RNvMss_NtCsldpiDtalS19_7tendril7tendrilINtB5_7TendrilNtNtB7_3fmt4UTF8E15make_buf_sharedCs1mImOlsSUsK_17markup5ever_rcdom.exit.i.i.i: ; preds = %bb.v, %bb.u
+  %.pre-phi.i.i.i = phi i64 [ %i.bm, %bb.u ], [ %.pre.i1.i.i, %bb.v ]
   %i.br = phi ptr [ %i.bk, %bb.u ], [ %i.bq, %bb.v ]
-  %i.bs = getelementptr i8, ptr %i.br, i64 -1     ; 2 uses
+  %3 = and i64 %.pre-phi.i.i.i, 1
+  %4 = sub nsw i64 0, %3
+  %i.bs = getelementptr i8, ptr %i.br, i64 %4     ; 2 uses
   %i.bt = load i64, ptr %i.bs, align 8, !noalias !187, !noundef !5 ; 2 uses
   %i.bu = icmp eq i64 %i.bt, -1
   br i1 %i.bu, label %bb.w, label %_RNvXNtCsldpiDtalS19_7tendril7tendrilNtB2_9NonAtomicNtB2_9Atomicity9increment.exit.i.i.i, !prof !20

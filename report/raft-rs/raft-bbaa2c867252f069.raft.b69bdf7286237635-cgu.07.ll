@@ -183,8 +183,8 @@ bb.p:                                             ; preds = %bb.i
   br label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable5drift10create_runNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB13_7sort_byNCINvMs_NtB15_8majorityNtB2w_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB17_7tracker8progress8ProgressINtNtBa_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0EB17_.exit
 
 _RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index7reverseBy_.exit.loopexit.unr-lcssa: ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index7reverseBy_.exit, label %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.i.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.ai to i1
+  br i1 %lcmp.mod.not, label %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.i.i.epil.preheader, label %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index7reverseBy_.exit
 
 _RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.i.i.epil.preheader: ; preds = %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index7reverseBy_.exit.loopexit.unr-lcssa, %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.preheader.i.i
   %.sroa.0.016.i.i.epil.init = phi i64 [ 0, %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.preheader.i.i ], [ %i.au, %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index7reverseBy_.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -215,7 +215,6 @@ _RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_
   %i.ai = phi i64 [ %i.ah, %bb.q ], [ 1, %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvMs_NtB14_8majorityNtB2v_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB16_7tracker8progress8ProgressINtNtB8_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0EB16_.exit.i.thread80 ] ; 4 uses
   %.sroa.0.0.i.i788589 = phi i64 [ %.sroa.0.0.i.i, %bb.q ], [ 2, %_RINvNtNtNtCskKLDkoKarTP_4core5slice4sort6shared17find_existing_runNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvMNtCsexYYUdYSQU6_5alloc5sliceSB12_7sort_byNCINvMs_NtB14_8majorityNtB2v_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB16_7tracker8progress8ProgressINtNtB8_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0EB16_.exit.i.thread80 ] ; 3 uses
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %.sroa.0.0.i.i788589 ; 3 uses
-  %xtraiter = and i64 %i.ai, 1
   %i.ak = icmp eq i64 %i.ai, 1
   br i1 %i.ak, label %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.i.i.epil.preheader, label %_RNvMNtCskKLDkoKarTP_4core5sliceSNtNtCsfG1pxJcRFT5_4raft6quorum5Index12split_at_mutBy_.exit11.preheader.i.i.new
 
@@ -339,9 +338,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1
-  %.not30 = icmp eq i64 %6, 0
-  br i1 %.not30, label %bb.aa, label %bb.ab
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1
+  br i1 %6, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.cn = or i64 %1, 1
@@ -563,7 +561,6 @@ bb.m:                                             ; preds = %._crit_edge39.i
 .lr.ph45.i:                                       ; preds = %bb.m
   %i.bp = getelementptr [16 x i8], ptr %.sroa.0.0.ph119, i64 %.sroa.27.2.lcssa.i ; 3 uses
   %.neg = add i64 %.sroa.27.2.lcssa.i, 1
-  %xtraiter = and i64 %i.bo, 1
   %i.bq = icmp eq i64 %.sroa.16.0112262, %.neg
   br i1 %i.bq, label %.epil.preheader, label %.lr.ph45.i.new
 
@@ -589,8 +586,8 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph45.i.n
   br i1 %niter.ncmp.1, label %.loopexit.loopexit.unr-lcssa, label %bb.n
 
 .loopexit.loopexit.unr-lcssa:                     ; preds = %bb.n
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.bo to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.loopexit
 
 .epil.preheader:                                  ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph45.i
   %.sroa.07.043.i.epil.init = phi i64 [ 0, %.lr.ph45.i ], [ %i.bu, %.loopexit.loopexit.unr-lcssa ] ; 2 uses
@@ -742,7 +739,6 @@ bb.v:                                             ; preds = %._crit_edge39.i49
 
 .lr.ph45.i54.preheader:                           ; preds = %bb.v
   %.neg343 = add i64 %.sroa.27.2.lcssa.i51, 1
-  %xtraiter338 = and i64 %i.dx, 1
   %i.dz = icmp eq i64 %.sroa.16.0112262, %.neg343
   br i1 %i.dz, label %.lr.ph45.i54.epil.preheader, label %.lr.ph45.i54.preheader.new
 
@@ -768,8 +764,8 @@ bb.v:                                             ; preds = %._crit_edge39.i49
   br i1 %niter342.ncmp.1, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCINvMs_NtB1f_8majorityNtB32_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB1h_7tracker8progress8ProgressINtNtBa_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0E0EB1h_.exit.unr-lcssa, label %.lr.ph45.i54
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCINvMs_NtB1f_8majorityNtB32_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB1h_7tracker8progress8ProgressINtNtBa_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0E0EB1h_.exit.unr-lcssa: ; preds = %.lr.ph45.i54
-  %lcmp.mod339.not = icmp eq i64 %xtraiter338, 0
-  br i1 %lcmp.mod339.not, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCINvMs_NtB1f_8majorityNtB32_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB1h_7tracker8progress8ProgressINtNtBa_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0E0EB1h_.exit, label %.lr.ph45.i54.epil.preheader
+  %lcmp.mod339.not = trunc i64 %i.dx to i1
+  br i1 %lcmp.mod339.not, label %.lr.ph45.i54.epil.preheader, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCINvMs_NtB1f_8majorityNtB32_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB1h_7tracker8progress8ProgressINtNtBa_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0E0EB1h_.exit
 
 .lr.ph45.i54.epil.preheader:                      ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCINvMs_NtB1f_8majorityNtB32_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB1h_7tracker8progress8ProgressINtNtBa_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0E0EB1h_.exit.unr-lcssa, %.lr.ph45.i54.preheader
   %.sroa.07.043.i55.epil.init = phi i64 [ 0, %.lr.ph45.i54.preheader ], [ %i.ed, %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionNtNtCsfG1pxJcRFT5_4raft6quorum5IndexNCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCINvMs_NtB1f_8majorityNtB32_13Configuration15committed_indexINtNtNtNtCsG258MDvU3F_3std11collections4hash3map7HashMapyNtNtNtB1h_7tracker8progress8ProgressINtNtBa_4hash18BuildHasherDefaultNtCs7k0fNi3XRdX_6fxhash8FxHasherEEE0E0E0EB1h_.exit.unr-lcssa ] ; 2 uses

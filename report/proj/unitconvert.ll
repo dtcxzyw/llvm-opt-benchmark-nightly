@@ -205,7 +205,7 @@ _ZL12days_in_yearl.exit:                          ; preds = %bb.b, %_ZL12is_leap
 .lr.ph:                                           ; preds = %_ZL12days_in_yearl.exit, %bb.d
   %.01624.in = phi i64 [ %.01624, %bb.d ], [ %.fr, %_ZL12days_in_yearl.exit ] ; 2 uses
   %.023 = phi double [ %i.v, %bb.d ], [ %i.o, %_ZL12days_in_yearl.exit ] ; 3 uses
-  %.01624 = add nsw i64 %.01624.in, -1            ; 4 uses
+  %.01624 = add i64 %.01624.in, -1                ; 4 uses
   %i.q = and i64 %.01624, 3
   %i.r = icmp ne i64 %i.q, 0
   %i.s = urem i64 %.01624, 100
@@ -220,14 +220,14 @@ _ZL12is_leap_yearl.exit.thread:                   ; preds = %.lr.ph
 _ZL12is_leap_yearl.exit:                          ; preds = %.lr.ph
   %i.u = urem i64 %.01624, 400
   %.not = icmp eq i64 %i.u, 0
-  %1 = fadd double %.023, 1.000000e+00
-  br i1 %.not, label %bb.d, label %bb.c
+  br i1 %.not, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZL12is_leap_yearl.exit
+  %1 = fadd double %.023, 1.000000e+00
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZL12is_leap_yearl.exit.thread, %_ZL12is_leap_yearl.exit, %bb.c
-  %i.v = phi double [ %.023, %bb.c ], [ %1, %_ZL12is_leap_yearl.exit ], [ %i.t, %_ZL12is_leap_yearl.exit.thread ] ; 2 uses
+  %i.v = phi double [ %.023, %_ZL12is_leap_yearl.exit ], [ %i.t, %_ZL12is_leap_yearl.exit.thread ], [ %1, %bb.c ] ; 2 uses
   %i.w = icmp samesign ugt i64 %.01624.in, 1860
   br i1 %i.w, label %.lr.ph, label %.loopexit, !llvm.loop !77
 
@@ -359,7 +359,6 @@ _ZL13days_in_monthmm.exit.i:                      ; preds = %bb.a
 
 _ZL13days_in_monthmm.exit32.us.i.preheader:       ; preds = %_ZL13days_in_monthmm.exit.i
   %i.ab = add nsw i64 %spec.store.select1.i, -1   ; 3 uses
-  %xtraiter34 = and i64 %i.ab, 1
   %i.ac = icmp eq i64 %spec.store.select1.i, 2
   br i1 %i.ac, label %_ZL13days_in_monthmm.exit32.us.i.epil.preheader, label %_ZL13days_in_monthmm.exit32.us.i.preheader.new
 
@@ -378,7 +377,6 @@ _ZL13days_in_monthmm.exit.thread.i:               ; preds = %bb.a
 
 _ZL13days_in_monthmm.exit32.i.preheader:          ; preds = %_ZL13days_in_monthmm.exit.thread.i
   %i.ah = add nsw i64 %spec.store.select1.i, -1   ; 3 uses
-  %xtraiter = and i64 %i.ah, 1
   %i.ai = icmp eq i64 %spec.store.select1.i, 2
   br i1 %i.ai, label %_ZL13days_in_monthmm.exit32.i.epil.preheader, label %_ZL13days_in_monthmm.exit32.i.preheader.new
 
@@ -434,8 +432,8 @@ _ZL13days_in_monthmm.exit32.i:                    ; preds = %_ZL13days_in_monthm
   br i1 %niter.ncmp.1, label %_ZL17daynumber_in_yearmmm.exit.loopexit30.unr-lcssa, label %_ZL13days_in_monthmm.exit32.i, !llvm.loop !80
 
 _ZL17daynumber_in_yearmmm.exit.loopexit.unr-lcssa: ; preds = %_ZL13days_in_monthmm.exit32.us.i
-  %lcmp.mod35.not = icmp eq i64 %xtraiter34, 0
-  br i1 %lcmp.mod35.not, label %_ZL17daynumber_in_yearmmm.exit, label %_ZL13days_in_monthmm.exit32.us.i.epil.preheader
+  %lcmp.mod35.not = trunc i64 %i.ab to i1
+  br i1 %lcmp.mod35.not, label %_ZL13days_in_monthmm.exit32.us.i.epil.preheader, label %_ZL17daynumber_in_yearmmm.exit
 
 _ZL13days_in_monthmm.exit32.us.i.epil.preheader:  ; preds = %_ZL17daynumber_in_yearmmm.exit.loopexit.unr-lcssa, %_ZL13days_in_monthmm.exit32.us.i.preheader
   %indvars.iv40.i.epil.init = phi i64 [ 1, %_ZL13days_in_monthmm.exit32.us.i.preheader ], [ %indvars.iv.next41.i.1, %_ZL17daynumber_in_yearmmm.exit.loopexit.unr-lcssa ]
@@ -450,8 +448,8 @@ _ZL13days_in_monthmm.exit32.us.i.epil.preheader:  ; preds = %_ZL17daynumber_in_y
   br label %_ZL17daynumber_in_yearmmm.exit
 
 _ZL17daynumber_in_yearmmm.exit.loopexit30.unr-lcssa: ; preds = %_ZL13days_in_monthmm.exit32.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZL17daynumber_in_yearmmm.exit, label %_ZL13days_in_monthmm.exit32.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.ah to i1
+  br i1 %lcmp.mod.not, label %_ZL13days_in_monthmm.exit32.i.epil.preheader, label %_ZL17daynumber_in_yearmmm.exit
 
 _ZL13days_in_monthmm.exit32.i.epil.preheader:     ; preds = %_ZL17daynumber_in_yearmmm.exit.loopexit30.unr-lcssa, %_ZL13days_in_monthmm.exit32.i.preheader
   %indvars.iv.i.epil.init = phi i64 [ 1, %_ZL13days_in_monthmm.exit32.i.preheader ], [ %indvars.iv.next.i.1, %_ZL17daynumber_in_yearmmm.exit.loopexit30.unr-lcssa ]

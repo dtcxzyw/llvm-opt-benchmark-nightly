@@ -202,15 +202,13 @@ bb.ck:                                            ; preds = %_ZNSt12__shared_ptr
   br i1 %exitcond.not.i, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_123RemoveDynamicPropertiesERNS_10OpRcPtrVecE.exit, label %bb.bq, !llvm.loop !97
 
 _ZN16OpenColorIO_v2_512_GLOBAL__N_123RemoveDynamicPropertiesERNS_10OpRcPtrVecE.exit: ; preds = %bb.ck, %bb.bp, %bb.bo
-  %45 = and i64 %1, 1
-  %.not456 = icmp eq i64 %45, 0
+  %45 = trunc i64 %1 to i1                        ; 2 uses
   %i.mr = and i64 %1, 134217728
   %.not457.a = icmp eq i64 %i.mr, 0
   %i.ms = and i64 %1, 33554432
   %.not458 = icmp eq i64 %i.ms, 0
   %i.mt = getelementptr inbounds nuw i8, ptr %29, i64 8 ; 4 uses
   %i.mu = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 2 uses
-  %46 = trunc i64 %1 to i1
   %i.mv = and i64 %1, 2
   %i.mw = icmp ne i64 %i.mv, 0
   %i.mx = and i64 %1, 3
@@ -278,7 +276,7 @@ bb.cl:                                            ; preds = %_ZN16OpenColorIO_v2
   %.0591502 = phi i32 [ 0, %_ZN16OpenColorIO_v2_512_GLOBAL__N_123RemoveDynamicPropertiesERNS_10OpRcPtrVecE.exit ], [ %i.bak, %bb.rs ] ; 3 uses
   %.0621501 = phi i32 [ 0, %_ZN16OpenColorIO_v2_512_GLOBAL__N_123RemoveDynamicPropertiesERNS_10OpRcPtrVecE.exit ], [ %i.baj, %bb.rs ] ; 3 uses
   %.0651500 = phi i32 [ 0, %_ZN16OpenColorIO_v2_512_GLOBAL__N_123RemoveDynamicPropertiesERNS_10OpRcPtrVecE.exit ], [ %i.bai, %bb.rs ] ; 3 uses
-  br i1 %.not456, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_111RemoveNoOpsERNS_10OpRcPtrVecE.exit, label %bb.cm
+  br i1 %45, label %bb.cm, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_111RemoveNoOpsERNS_10OpRcPtrVecE.exit
 
 bb.cm:                                            ; preds = %bb.cl
   %i.ol = load ptr, ptr %0, align 8, !tbaa !8     ; 2 uses
@@ -681,7 +679,7 @@ bb.ef:                                            ; preds = %_ZNSt12__shared_ptr
   %i.tr = icmp eq i32 %i.ta, 4
   %or.cond3.i = and i1 %i.mw, %i.tr
   %i.ts = icmp ne i32 %i.ta, 4
-  %or.cond5.i = and i1 %i.ts, %46
+  %or.cond5.i = and i1 %i.ts, %45
   %or.cond33.i = or i1 %or.cond3.i, %or.cond5.i
   br i1 %or.cond33.i, label %bb.eg, label %bb.fg
 

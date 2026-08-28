@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %glad_gl_load_GL_VER
 
 glad_gl_load_GL_VERSION_4_3.exit:                 ; preds = %glad_gl_load_GL_VERSION_4_2.exit, %bb.s
   %i.wy = call fastcc i32 @glad_gl_find_extensions_gl(i32 noundef %.044.i)
-  %.not = icmp eq i32 %i.wy, 0
-  br i1 %.not, label %glad_gl_load_GL_OES_fixed_point.exit, label %bb.t
+  %.not = trunc nuw i32 %i.wy to i1
+  br i1 %.not, label %bb.t, label %glad_gl_load_GL_OES_fixed_point.exit
 
 bb.t:                                             ; preds = %glad_gl_load_GL_VERSION_4_3.exit
   %i.wz = load i32, ptr @GLAD_GL_ARB_ES2_compatibility, align 4
@@ -609,8 +609,8 @@ glad_gl_has_extension.exit1847:                   ; preds = %bb.vo, %bb.vm, %bb.
   call void @free(ptr noundef nonnull %.02205222222312257227623032322234923682395241424412460248725062533255225792598262526442671269027172736276327822809282828552874290129202947296629933012303930583085310431313150317731963223324232693288331533343361338034073426345334723499351835453564359136103637365636833702372937483775379438213840386738863913393239593978400540244051407040974116414341624189420842354254428143004327434643734392441944384465448445114530455745764603462246494668469547144741476047874806483348525693) #56
   br label %glad_gl_free_extensions.exit
 
-glad_gl_free_extensions.exit:                     ; preds = %bb.b, %.thread30.i, %._crit_edge.i1856, %glad_gl_has_extension.exit1847
-  %.0 = phi i32 [ 1, %._crit_edge.i1856 ], [ 1, %glad_gl_has_extension.exit1847 ], [ 0, %.thread30.i ], [ 0, %bb.b ]
+glad_gl_free_extensions.exit:                     ; preds = %._crit_edge.i1856, %glad_gl_has_extension.exit1847, %.thread30.i, %bb.b
+  %.0 = phi i32 [ 0, %.thread30.i ], [ 0, %bb.b ], [ 1, %glad_gl_has_extension.exit1847 ], [ 1, %._crit_edge.i1856 ]
   ret i32 %.0
 }
 
@@ -1013,8 +1013,8 @@ bb.s:                                             ; preds = %glad_gl_load_GL_VER
 
 glad_gl_load_GL_VERSION_4_3.exit.i:               ; preds = %bb.s, %glad_gl_load_GL_VERSION_4_2.exit.i
   %i.wy = call fastcc i32 @glad_gl_find_extensions_gl(i32 noundef %.044.i.i)
-  %.not.i = icmp eq i32 %i.wy, 0
-  br i1 %.not.i, label %gladLoadGLUserPtr.exit, label %bb.t
+  %.not.i = trunc nuw i32 %i.wy to i1
+  br i1 %.not.i, label %bb.t, label %gladLoadGLUserPtr.exit
 
 bb.t:                                             ; preds = %glad_gl_load_GL_VERSION_4_3.exit.i
   %i.wz = load i32, ptr @GLAD_GL_ARB_ES2_compatibility, align 4
@@ -1417,9 +1417,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.au = getelementptr i8, ptr %i.ar, i64 -12
   %i.av = load i32, ptr %i.au, align 4
-  %3 = and i32 %i.av, 1
-  %4 = icmp eq i32 %3, 0
-  br i1 %4, label %rlCheckRenderBatchLimit.exit.sink.split, label %rlCheckRenderBatchLimit.exit
+  %3 = trunc i32 %i.av to i1
+  br i1 %3, label %rlCheckRenderBatchLimit.exit, label %rlCheckRenderBatchLimit.exit.sink.split
 
 bb.f:                                             ; preds = %bb.d
   %i.aw = getelementptr i8, ptr %i.ar, i64 -12
@@ -1822,31 +1821,27 @@ bb.c:                                             ; preds = %bb.a
   %i.k = mul nsw i32 %2, 6                        ; 2 uses
   %i.l = sext i32 %i.k to i64
   %i.m = icmp sgt i32 %2, 0
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.e, i32 1) ; 3 uses
-  %smax126 = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1) ; 2 uses
-  %smax138 = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1) ; 2 uses
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.e, i32 1) ; 5 uses
+  %smax126 = tail call i32 @llvm.smax.i32(i32 %i.g, i32 1) ; 3 uses
+  %smax138 = tail call i32 @llvm.smax.i32(i32 %i.i, i32 1) ; 3 uses
   %smax144 = tail call i32 @llvm.smax.i32(i32 %i.k, i32 6)
   %i.n = add nsw i32 %smax144, -2
   %i.o = udiv i32 %i.n, 6
   %wide.trip.count149 = zext nneg i32 %1 to i64
-  %wide.trip.count = zext nneg i32 %smax to i64   ; 4 uses
-  %wide.trip.count127 = zext nneg i32 %smax126 to i64 ; 2 uses
-  %wide.trip.count139 = zext nneg i32 %smax138 to i64 ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
-  %unroll_iter = and i64 %wide.trip.count, 2147483644
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %wide.trip.count139 = zext nneg i32 %smax to i64 ; 2 uses
+  %unroll_iter = and i64 %wide.trip.count139, 2147483644
   %lcmp.mod160.a = trunc i32 %smax to i1
-  %xtraiter161 = and i64 %wide.trip.count127, 1
-  %unroll_iter165 = and i64 %wide.trip.count127, 2147483640
-  %lcmp.mod163.not = icmp eq i64 %xtraiter161, 0
+  %lcmp.mod160 = trunc i32 %smax to i1
+  %3 = and i32 %smax126, 2147483640
+  %unroll_iter165 = zext nneg i32 %3 to i64
   %lcmp.mod164.a = trunc i32 %smax126 to i1
-  %xtraiter167 = and i64 %wide.trip.count, 1
-  %unroll_iter171 = and i64 %wide.trip.count, 2147483644
-  %lcmp.mod169.not = icmp eq i64 %xtraiter167, 0
+  %lcmp.mod164 = trunc i32 %smax126 to i1
+  %unroll_iter171 = and i64 %wide.trip.count139, 2147483644
+  %lcmp.mod169.not = trunc i32 %smax to i1
   %lcmp.mod170 = trunc i32 %smax to i1
-  %xtraiter173 = and i64 %wide.trip.count139, 1
-  %unroll_iter177 = and i64 %wide.trip.count139, 2147483632
-  %lcmp.mod175.not = icmp eq i64 %xtraiter173, 0
+  %4 = and i32 %smax138, 2147483632
+  %unroll_iter177 = zext nneg i32 %4 to i64
+  %lcmp.mod175.not = trunc i32 %smax138 to i1
   %lcmp.mod176 = trunc i32 %smax138 to i1
   br label %bb.d
 
@@ -1911,10 +1906,10 @@ bb.d:                                             ; preds = %.lr.ph115, %._crit_
   br i1 %niter.ncmp.3, label %.lr.ph105.preheader.unr-lcssa, label %.lr.ph
 
 .lr.ph105.preheader.unr-lcssa:                    ; preds = %.lr.ph
-  br i1 %lcmp.mod.not, label %.lr.ph105.preheader.new, label %.lr.ph.epil.preheader
+  br i1 %lcmp.mod160.a, label %.lr.ph.epil.preheader, label %.lr.ph105.preheader.new
 
 .lr.ph.epil.preheader:                            ; preds = %.lr.ph105.preheader.unr-lcssa
-  tail call void @llvm.assume(i1 %lcmp.mod160.a)
+  tail call void @llvm.assume(i1 %lcmp.mod160)
   br label %.lr.ph.epil
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
@@ -1955,10 +1950,10 @@ bb.d:                                             ; preds = %.lr.ph115, %._crit_
   br i1 %niter166.ncmp.3, label %.lr.ph107.preheader.unr-lcssa, label %.lr.ph105
 
 .lr.ph107.preheader.unr-lcssa:                    ; preds = %.lr.ph105
-  br i1 %lcmp.mod163.not, label %.lr.ph107.preheader.new, label %.lr.ph105.epil.preheader
+  br i1 %lcmp.mod164.a, label %.lr.ph105.epil.preheader, label %.lr.ph107.preheader.new
 
 .lr.ph105.epil.preheader:                         ; preds = %.lr.ph107.preheader.unr-lcssa
-  tail call void @llvm.assume(i1 %lcmp.mod164.a)
+  tail call void @llvm.assume(i1 %lcmp.mod164)
   br label %.lr.ph105.epil
 
 .lr.ph105.epil:                                   ; preds = %.lr.ph105.epil, %.lr.ph105.epil.preheader
@@ -1999,7 +1994,7 @@ bb.d:                                             ; preds = %.lr.ph115, %._crit_
   br i1 %niter172.ncmp.3, label %.lr.ph109.preheader.unr-lcssa, label %.lr.ph107
 
 .lr.ph109.preheader.unr-lcssa:                    ; preds = %.lr.ph107
-  br i1 %lcmp.mod169.not, label %.lr.ph109.preheader.new, label %.lr.ph107.epil.preheader
+  br i1 %lcmp.mod169.not, label %.lr.ph107.epil.preheader, label %.lr.ph109.preheader.new
 
 .lr.ph107.epil.preheader:                         ; preds = %.lr.ph109.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod170)
@@ -2043,7 +2038,7 @@ bb.d:                                             ; preds = %.lr.ph115, %._crit_
   br i1 %niter178.ncmp.3, label %.lr.ph112.preheader.unr-lcssa, label %.lr.ph109
 
 .lr.ph112.preheader.unr-lcssa:                    ; preds = %.lr.ph109
-  br i1 %lcmp.mod175.not, label %.lr.ph112.preheader, label %.lr.ph109.epil.preheader
+  br i1 %lcmp.mod175.not, label %.lr.ph109.epil.preheader, label %.lr.ph112.preheader
 
 .lr.ph109.epil.preheader:                         ; preds = %.lr.ph112.preheader.unr-lcssa
   tail call void @llvm.assume(i1 %lcmp.mod176)
@@ -2446,9 +2441,7 @@ bb.d:                                             ; preds = %bb.b
 
 sinfl_refill.exit:                                ; preds = %bb.c, %bb.d
   %i.be = phi i32 [ %i.ap, %bb.c ], [ %i.bd, %bb.d ]
-  %.val.i174 = phi i64 [ %i.ak, %bb.c ], [ %i.ba, %bb.d ] ; 3 uses
-  %5 = trunc i64 %.val.i174 to i32
-  %6 = and i32 %5, 1                              ; 2 uses
+  %.val.i174 = phi i64 [ %i.ak, %bb.c ], [ %i.ba, %bb.d ] ; 4 uses
   %i.bf = trunc i64 %.val.i174 to i32
   %i.bg = lshr i32 %i.bf, 1
   %i.bh = and i32 %i.bg, 3
@@ -2515,8 +2508,8 @@ bb.j:                                             ; preds = %bb.h
   %i.cj = getelementptr inbounds nuw i8, ptr %i.bv, i64 %i.cb
   store ptr %i.cj, ptr %4, align 8
   %i.ck = getelementptr inbounds nuw i8, ptr %.0153426, i64 %i.cb ; 2 uses
-  %.not173 = icmp eq i32 %6, 0
-  br i1 %.not173, label %.backedge, label %bb.k
+  %.not173 = trunc i64 %.val.i174 to i1
+  br i1 %.not173, label %bb.k, label %.backedge
 
 .backedge:                                        ; preds = %bb.j, %bb.at
   %.0153426.be = phi ptr [ %.3156, %bb.at ], [ %i.ck, %bb.j ]
@@ -2919,8 +2912,8 @@ bb.as:                                            ; preds = %sinfl_decode.exit22
   br i1 %i.oq, label %bb.at, label %bb.av, !prof !214
 
 bb.at:                                            ; preds = %bb.as
-  %.not168 = icmp eq i32 %6, 0
-  br i1 %.not168, label %.backedge, label %bb.au
+  %.not168 = trunc i64 %.val.i174 to i1
+  br i1 %.not168, label %bb.au, label %.backedge
 
 bb.au:                                            ; preds = %bb.at
   %i.or = ptrtoint ptr %.3156 to i64
@@ -3323,18 +3316,17 @@ bb.a:
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.b = icmp eq i32 %1, 1
   br i1 %i.b, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
 .lr.ph.preheader.new:                             ; preds = %.lr.ph.preheader
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %2 = and i32 %1, 2147483646
+  %unroll_iter = zext nneg i32 %2 to i64
   br label %.lr.ph
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i32 %1 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %._crit_edge.loopexit
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ]
@@ -3737,7 +3729,6 @@ bb.a:
   store i32 %i.am, ptr %i.an, align 4
   %wide.trip.count119 = zext nneg i32 %3 to i64   ; 2 uses
   %i.ao = add nsw i64 %wide.trip.count119, -1     ; 3 uses
-  %xtraiter196 = and i64 %i.ao, 1
   %unroll_iter201 = and i64 %i.ao, -2
   br label %bb.b
 
@@ -3767,8 +3758,8 @@ bb.b:                                             ; preds = %bb.b, %._crit_edge
   br i1 %niter202.ncmp.1, label %.unr-lcssa, label %bb.b
 
 .unr-lcssa:                                       ; preds = %bb.b
-  %lcmp.mod198.not = icmp eq i64 %xtraiter196, 0
-  br i1 %lcmp.mod198.not, label %bb.c, label %.epil.preheader
+  %lcmp.mod198.not = trunc i64 %i.ao to i1
+  br i1 %lcmp.mod198.not, label %.epil.preheader, label %bb.c
 
 .epil.preheader:                                  ; preds = %.unr-lcssa
   %lcmp.mod200 = trunc i64 %i.ao to i1
@@ -3792,13 +3783,12 @@ bb.c:                                             ; preds = %.unr-lcssa, %.epil.
   br i1 %i.d, label %.lr.ph98.preheader, label %._crit_edge99
 
 .lr.ph98.preheader:                               ; preds = %bb.c
-  %wide.trip.count124 = zext nneg i32 %4 to i64   ; 2 uses
-  %xtraiter203 = and i64 %wide.trip.count124, 1
   %i.bn = icmp eq i32 %4, 1
   br i1 %i.bn, label %.lr.ph98.epil.preheader, label %.lr.ph98.preheader.new
 
 .lr.ph98.preheader.new:                           ; preds = %.lr.ph98.preheader
-  %unroll_iter207 = and i64 %wide.trip.count124, 2147483646
+  %5 = and i32 %4, 2147483646
+  %unroll_iter207 = zext nneg i32 %5 to i64
   br label %.lr.ph98
 
 .lr.ph98:                                         ; preds = %.lr.ph98, %.lr.ph98.preheader.new
@@ -3833,8 +3823,8 @@ bb.c:                                             ; preds = %.unr-lcssa, %.epil.
   br i1 %niter208.ncmp.1, label %._crit_edge99.loopexit.unr-lcssa, label %.lr.ph98
 
 ._crit_edge99.loopexit.unr-lcssa:                 ; preds = %.lr.ph98
-  %lcmp.mod205.not = icmp eq i64 %xtraiter203, 0
-  br i1 %lcmp.mod205.not, label %._crit_edge99.loopexit, label %.lr.ph98.epil.preheader
+  %lcmp.mod205.not = trunc i32 %4 to i1
+  br i1 %lcmp.mod205.not, label %.lr.ph98.epil.preheader, label %._crit_edge99.loopexit
 
 .lr.ph98.epil.preheader:                          ; preds = %._crit_edge99.loopexit.unr-lcssa, %.lr.ph98.preheader
   %indvars.iv121.epil.init = phi i64 [ 0, %.lr.ph98.preheader ], [ %indvars.iv.next122.1, %._crit_edge99.loopexit.unr-lcssa ] ; 2 uses
@@ -3937,9 +3927,8 @@ bb.e:                                             ; preds = %.thread.i, %.prehea
 .lr.ph63.i.preheader:                             ; preds = %.preheader.i
   %i.dp = sub i32 %2, %.sroa.0.1
   %.neg = add i32 %.sroa.0.1, 1
-  %xtraiter211 = and i32 %i.dp, 1
-  %lcmp.mod212.not = icmp eq i32 %xtraiter211, 0
-  br i1 %lcmp.mod212.not, label %.lr.ph63.i.prol.loopexit, label %.lr.ph63.i.prol
+  %lcmp.mod212.not = trunc i32 %i.dp to i1
+  br i1 %lcmp.mod212.not, label %.lr.ph63.i.prol, label %.lr.ph63.i.prol.loopexit
 
 .lr.ph63.i.prol:                                  ; preds = %.lr.ph63.i.preheader
   %i.dq = sext i32 %.03961.i to i64               ; 2 uses
@@ -4162,9 +4151,8 @@ bb.a:
   %i.d = add nuw nsw i32 %3, 3
   %i.e = and i32 %i.d, 1020                       ; 3 uses
   %i.f = add nsw i32 %i.e, -1                     ; 4 uses
-  %wide.trip.count.i = zext nneg i32 %3 to i64    ; 11 uses
+  %wide.trip.count.i = zext nneg i32 %3 to i64    ; 9 uses
   %i.g = add nsw i64 %wide.trip.count.i, -1       ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %.epil.preheader, label %.new
 
@@ -4173,8 +4161,8 @@ bb.a:
   br label %bb.b
 
 .lr.ph.preheader.i.unr-lcssa:                     ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.preheader.i, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %3 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.lr.ph.preheader.i
 
 .epil.preheader:                                  ; preds = %.lr.ph.preheader.i.unr-lcssa, %bb.a
   %indvars.iv.i.epil.init = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.i.1, %.lr.ph.preheader.i.unr-lcssa ]
@@ -4577,7 +4565,6 @@ bb.ab:                                            ; preds = %bb.ab, %.epil.prehe
   br i1 %epil.iter117.cmp.not, label %.preheader.i52.preheader, label %bb.ab, !llvm.loop !301
 
 .preheader.i52.preheader:                         ; preds = %bb.ab, %.preheader.i52.preheader.unr-lcssa
-  %xtraiter122 = and i64 %wide.trip.count.i, 1
   %i.jp = icmp eq i64 %i.g, 0
   br i1 %i.jp, label %.preheader.i52.epil.preheader, label %.preheader.i52.preheader.new
 
@@ -4613,8 +4600,8 @@ bb.ab:                                            ; preds = %bb.ab, %.epil.prehe
   br i1 %niter127.ncmp.1, label %sdefl_gen_codes.exit.unr-lcssa, label %.preheader.i52
 
 sdefl_gen_codes.exit.unr-lcssa:                   ; preds = %.preheader.i52
-  %lcmp.mod124.not = icmp eq i64 %xtraiter122, 0
-  br i1 %lcmp.mod124.not, label %sdefl_gen_codes.exit, label %.preheader.i52.epil.preheader
+  %lcmp.mod124.not = trunc i32 %3 to i1
+  br i1 %lcmp.mod124.not, label %.preheader.i52.epil.preheader, label %sdefl_gen_codes.exit
 
 .preheader.i52.epil.preheader:                    ; preds = %sdefl_gen_codes.exit.unr-lcssa, %.preheader.i52.preheader
   %indvars.iv41.i.epil.init = phi i64 [ 0, %.preheader.i52.preheader ], [ %indvars.iv.next42.i.1, %sdefl_gen_codes.exit.unr-lcssa ] ; 2 uses

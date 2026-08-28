@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.m
 run_one_task.exit:                                ; preds = %bb.m, %bb.n
   %i.as = load ptr, ptr %i.v, align 8, !tbaa !34  ; 2 uses
   %.not25.i = icmp eq ptr %i.as, null
-  br i1 %.not25.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !46
+  br i1 %.not25.i, label %.loopexit, label %.lr.ph.i
 
 .loopexit:                                        ; preds = %run_one_task.exit, %.critedge.i, %bb.j, %bb.h
   store i8 0, ptr %i.r, align 4, !tbaa !43
@@ -296,5 +296,4 @@ attributes #5 = { nounwind }
 !43 = !{!19, !20, i64 44}
 !44 = !{i8 0, i8 2}
 !45 = !{}
-!46 = distinct !{!46, !32}
 end_hunk_0

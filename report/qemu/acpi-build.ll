@@ -204,18 +204,17 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.x = tail call zeroext i1 @x86_machine_is_smm_enabled(ptr noundef %i.v) #11
-  %12 = xor i1 %i.x, true
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.not.i.i = phi i1 [ %12, %bb.d ], [ false, %bb.c ]
+  %.not.i.i = phi i1 [ %i.x, %bb.d ], [ true, %bb.c ]
   %i.y = tail call i64 @object_property_get_uint(ptr noundef nonnull %i.n, ptr noundef nonnull @.str.23, ptr noundef null) #11 ; 3 uses
   %i.z = tail call i64 @object_property_get_uint(ptr noundef nonnull %i.n, ptr noundef nonnull @.str.32, ptr noundef null) #11
   %i.aa = tail call i64 @object_property_get_uint(ptr noundef nonnull %i.n, ptr noundef nonnull @.str.33, ptr noundef null) #11
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 340
   %i.ac = load i32, ptr %i.ab, align 4
   %i.ad = tail call i64 @object_property_get_uint(ptr noundef nonnull %i.n, ptr noundef nonnull @.str.34, ptr noundef null) #11
-  br i1 %.not.i.i, label %init_common_fadt_data.exit.i, label %bb.f
+  br i1 %.not.i.i, label %bb.f, label %init_common_fadt_data.exit.i
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = tail call i64 @object_property_get_uint(ptr noundef nonnull %i.n, ptr noundef nonnull @.str.35, ptr noundef null) #11

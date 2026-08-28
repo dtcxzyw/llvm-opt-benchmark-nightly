@@ -205,8 +205,7 @@ bb.f:                                             ; preds = %bb.e
   %i.n = load i32, ptr %i.m, align 1
   %i.o = icmp ne i32 2432341, %i.n
   %i.p = zext i1 %i.o to i32
-  %bcmp19.fr = freeze i32 %i.p
-  %.not20 = icmp eq i32 %bcmp19.fr, 0
+  %.not20 = icmp eq i32 %i.p, 0
   br i1 %.not20, label %.critedge, label %.thread
 
 .thread:                                          ; preds = %bb.e, %bb.f
@@ -215,8 +214,8 @@ bb.f:                                             ; preds = %bb.e
   %.not = icmp eq ptr %i.r, null
   br i1 %.not, label %.critedge, label %bb.c, !llvm.loop !81
 
-.critedge:                                        ; preds = %bb.f, %bb.d, %.thread, %bb.a
-  %.2 = phi i32 [ 0, %bb.a ], [ 0, %bb.f ], [ 0, %bb.d ], [ -10240, %.thread ]
+.critedge:                                        ; preds = %bb.d, %.thread, %bb.f, %bb.a
+  %.2 = phi i32 [ 0, %bb.a ], [ 0, %bb.d ], [ 0, %bb.f ], [ -10240, %.thread ]
   ret i32 %.2
 }
 
@@ -357,12 +356,12 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.outer.i.i.outer:                           ; preds = %.lr.ph.outer.i.i.outer.backedge, %bb.d
   %.01635.ph.i.i.ph = phi ptr [ %i.af, %bb.d ], [ %.01635.ph.i.i.ph.be, %.lr.ph.outer.i.i.outer.backedge ]
   %.01734.ph.i.i.ph = phi i32 [ 0, %bb.d ], [ %.01734.ph.i.i.ph.be, %.lr.ph.outer.i.i.outer.backedge ] ; 4 uses
-  %.01833.ph.i.i.ph = phi i32 [ 0, %bb.d ], [ %.01833.ph.i.i.ph.be, %.lr.ph.outer.i.i.outer.backedge ]
+  %.01833.ph.i.i.ph = phi i1 [ false, %bb.d ], [ %.01833.ph.i.i.ph.be, %.lr.ph.outer.i.i.outer.backedge ]
   br label %.lr.ph.outer.i.i
 
 .lr.ph.outer.i.i:                                 ; preds = %.lr.ph.outer.i.i.outer, %.loopexit.i.i.thread
   %.01635.ph.i.i = phi ptr [ %i.ar, %.loopexit.i.i.thread ], [ %.01635.ph.i.i.ph, %.lr.ph.outer.i.i.outer ] ; 5 uses
-  %.01833.ph.i.i = phi i32 [ 1, %.loopexit.i.i.thread ], [ %.01833.ph.i.i.ph, %.lr.ph.outer.i.i.outer ] ; 3 uses
+  %.01833.ph.i.i = phi i1 [ true, %.loopexit.i.i.thread ], [ %.01833.ph.i.i.ph, %.lr.ph.outer.i.i.outer ] ; 3 uses
   %i.ag = load i32, ptr %.01635.ph.i.i, align 8, !tbaa !93
   %i.ah = and i32 %i.ag, 31
   switch i32 %i.ah, label %.loopexit.i.i [
@@ -389,7 +388,7 @@ bb.d:                                             ; preds = %bb.c
 
 .loopexit47.i:                                    ; preds = %.lr.ph.outer.i.i, %.lr.ph.i.i
   %.01635.i.lcssa40.i = phi ptr [ %.01635.i.i, %.lr.ph.i.i ], [ %.01635.ph.i.i, %.lr.ph.outer.i.i ] ; 2 uses
-  %.01833.i.lcssa36.i = phi i32 [ 1, %.lr.ph.i.i ], [ %.01833.ph.i.i, %.lr.ph.outer.i.i ]
+  %.01833.i.lcssa36.i = phi i1 [ true, %.lr.ph.i.i ], [ %.01833.ph.i.i, %.lr.ph.outer.i.i ]
   %i.am = tail call fastcc i32 @x509_crt_check_cn(ptr noundef %.01635.i.lcssa40.i, ptr noundef nonnull %4, i64 noundef %i.ab)
   %i.an = icmp eq i32 %i.am, 0
   br i1 %i.an, label %x509_crt_verify_name.exit, label %.loopexit.i.i
@@ -399,7 +398,7 @@ bb.d:                                             ; preds = %bb.c
 
 .loopexit.i.i:                                    ; preds = %.lr.ph.outer.i.i, %.loopexit.i.i.loopexit, %.loopexit47.i
   %.01635.i43.i = phi ptr [ %.01635.ph.i.i, %.loopexit.i.i.loopexit ], [ %.01635.i.lcssa40.i, %.loopexit47.i ], [ %.01635.ph.i.i, %.lr.ph.outer.i.i ]
-  %.01833.i39.i = phi i32 [ %.01833.ph.i.i, %.loopexit.i.i.loopexit ], [ %.01833.i.lcssa36.i, %.loopexit47.i ], [ %.01833.ph.i.i, %.lr.ph.outer.i.i ] ; 2 uses
+  %.01833.i39.i = phi i1 [ %.01833.ph.i.i, %.loopexit.i.i.loopexit ], [ %.01833.i.lcssa36.i, %.loopexit47.i ], [ %.01833.ph.i.i, %.lr.ph.outer.i.i ] ; 2 uses
   %.1.i.i = phi i32 [ 1, %.loopexit.i.i.loopexit ], [ %.01734.ph.i.i.ph, %.loopexit47.i ], [ %.01734.ph.i.i.ph, %.lr.ph.outer.i.i ] ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %.01635.i43.i, i64 24
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !73 ; 2 uses
@@ -409,7 +408,7 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph.outer.i.i.outer.backedge:                  ; preds = %.loopexit.i.i, %.loopexit.i.thread.i
   %.01635.ph.i.i.ph.be = phi ptr [ %i.au, %.loopexit.i.thread.i ], [ %i.ap, %.loopexit.i.i ]
   %.01734.ph.i.i.ph.be = phi i32 [ 1, %.loopexit.i.thread.i ], [ %.1.i.i, %.loopexit.i.i ]
-  %.01833.ph.i.i.ph.be = phi i32 [ 1, %.loopexit.i.thread.i ], [ %.01833.i39.i, %.loopexit.i.i ]
+  %.01833.ph.i.i.ph.be = phi i1 [ true, %.loopexit.i.thread.i ], [ %.01833.i39.i, %.loopexit.i.i ]
   br label %.lr.ph.outer.i.i.outer, !llvm.loop !94
 
 .loopexit.i.i.thread:                             ; preds = %.lr.ph.i.i
@@ -439,9 +438,8 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge.i.thread.i
 
 .critedge.i.i:                                    ; preds = %.loopexit.i.i
-  %10 = icmp eq i32 %.01833.i39.i, 0
   %i.ay = icmp eq i32 %.1.i.i, 0                  ; 2 uses
-  br i1 %10, label %bb.g, label %.critedge.i.thread.i
+  br i1 %.01833.i39.i, label %.critedge.i.thread.i, label %bb.g
 
 .critedge.i.thread.i:                             ; preds = %.loopexit.i.thread.i, %.critedge.i.i.thread, %.critedge.i.i, %.critedge.thread52.i.i
   %i.az = phi i1 [ %i.ax, %.critedge.thread52.i.i ], [ %i.ay, %.critedge.i.i ], [ %i.as, %.critedge.i.i.thread ], [ false, %.loopexit.i.thread.i ]
@@ -560,7 +558,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not15.i, label %x509_crt_verify_name.exit, label %bb.k, !llvm.loop !103
 
 x509_crt_verify_name.exit:                        ; preds = %.loopexit47.i, %bb.i, %.critedge.i25.i.i, %bb.m, %.critedge.i, %x509_crt_check_san_ip.exit.i.i, %bb.g, %x509_crt_check_san_ip.exit.thread.i.i, %bb.b
-  %.1 = phi i32 [ 0, %bb.b ], [ 4, %bb.g ], [ 0, %bb.m ], [ 0, %bb.i ], [ 0, %x509_crt_check_san_ip.exit.i.i ], [ 4, %x509_crt_check_san_ip.exit.thread.i.i ], [ 4, %.critedge.i ], [ 4, %.critedge.i25.i.i ], [ 0, %.loopexit47.i ] ; 2 uses
+  %.1 = phi i32 [ 0, %bb.b ], [ 4, %bb.g ], [ 0, %bb.m ], [ 0, %x509_crt_check_san_ip.exit.i.i ], [ 0, %bb.i ], [ 4, %x509_crt_check_san_ip.exit.thread.i.i ], [ 4, %.critedge.i ], [ 4, %.critedge.i25.i.i ], [ 0, %.loopexit47.i ] ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 360 ; 2 uses
   %i.cu = call i32 @mbedtls_pk_get_type(ptr noundef nonnull %i.ct) #18 ; 2 uses
   %i.cv = icmp eq i32 %i.cu, 0

@@ -202,9 +202,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f, !dbg !554
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !870
-  %.not30 = icmp eq i64 %6, 0, !dbg !870
-  br i1 %.not30, label %bb.aa, label %bb.ab, !dbg !873
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !870
+  br i1 %6, label %bb.ab, label %bb.aa, !dbg !873
 
 bb.aa:                                            ; preds = %bb.z
   %i.cr = or i64 %1, 1, !dbg !874
@@ -515,9 +514,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f, !dbg !916
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !1240
-  %.not30 = icmp eq i64 %6, 0, !dbg !1240
-  br i1 %.not30, label %bb.aa, label %bb.ab, !dbg !1243
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !1240
+  br i1 %6, label %bb.ab, label %bb.aa, !dbg !1243
 
 bb.aa:                                            ; preds = %bb.z
   %i.dg = or i64 %1, 1, !dbg !1244
@@ -828,9 +826,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f, !dbg !1286
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !1577
-  %.not30 = icmp eq i64 %6, 0, !dbg !1577
-  br i1 %.not30, label %bb.aa, label %bb.ab, !dbg !1580
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !1577
+  br i1 %6, label %bb.ab, label %bb.aa, !dbg !1580
 
 bb.aa:                                            ; preds = %bb.z
   %i.dg = or i64 %1, 1, !dbg !1581
@@ -1122,9 +1119,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f, !dbg !1623
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !1892
-  %.not30 = icmp eq i64 %6, 0, !dbg !1892
-  br i1 %.not30, label %bb.aa, label %bb.ab, !dbg !1895
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !1892
+  br i1 %6, label %bb.ab, label %bb.aa, !dbg !1895
 
 bb.aa:                                            ; preds = %bb.z
   %i.cs = or i64 %1, 1, !dbg !1896
@@ -1416,9 +1412,8 @@ bb.y:                                             ; preds = %._crit_edge
   br label %bb.f, !dbg !1938
 
 bb.z:                                             ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !2180
-  %.not30 = icmp eq i64 %6, 0, !dbg !2180
-  br i1 %.not30, label %bb.aa, label %bb.ab, !dbg !2183
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !2180
+  br i1 %6, label %bb.ab, label %bb.aa, !dbg !2183
 
 bb.aa:                                            ; preds = %bb.z
   %i.cs = or i64 %1, 1, !dbg !2184
@@ -1814,9 +1809,8 @@ bb.aj:                                            ; preds = %._crit_edge
   br label %bb.f, !dbg !2226
 
 bb.ak:                                            ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !2540
-  %.not30 = icmp eq i64 %6, 0, !dbg !2540
-  br i1 %.not30, label %bb.al, label %bb.am, !dbg !2543
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !2540
+  br i1 %6, label %bb.am, label %bb.al, !dbg !2543
 
 bb.al:                                            ; preds = %bb.ak
   %i.dr = or i64 %1, 1, !dbg !2544
@@ -2212,9 +2206,8 @@ bb.aj:                                            ; preds = %._crit_edge
   br label %bb.f, !dbg !2586
 
 bb.ak:                                            ; preds = %._crit_edge
-  %6 = and i64 %.sroa.023.1.lcssa, 1, !dbg !2866
-  %.not30 = icmp eq i64 %6, 0, !dbg !2866
-  br i1 %.not30, label %bb.al, label %bb.am, !dbg !2869
+  %6 = trunc i64 %.sroa.023.1.lcssa to i1, !dbg !2866
+  br i1 %6, label %bb.am, label %bb.al, !dbg !2869
 
 bb.al:                                            ; preds = %bb.ak
   %i.dr = or i64 %1, 1, !dbg !2870

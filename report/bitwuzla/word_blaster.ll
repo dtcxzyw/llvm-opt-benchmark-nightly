@@ -204,13 +204,14 @@ bb.d:                                             ; preds = %bb.a
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.v = load i8, ptr %i.u, align 2, !tbaa !171, !range !138, !noundef !116 ; 2 uses
   %i.w = and i8 %i.p, %i.v
-  %.not = icmp eq i8 %i.w, 0
+  %7 = trunc nuw i8 %i.w to i1
+  %. = xor i1 %7, true
   %i.x = or i8 %i.p, %i.v
   %.not37 = icmp eq i8 %i.x, 0
   br label %.thread30
 
 .thread30:                                        ; preds = %bb.c, %bb.d, %bb.b
-  %i.y = phi i1 [ %.not, %bb.d ], [ false, %bb.b ], [ %not.38, %bb.c ]
+  %i.y = phi i1 [ %., %bb.d ], [ false, %bb.b ], [ %not.38, %bb.c ]
   %not. = phi i1 [ %.not37, %bb.d ], [ false, %bb.b ], [ false, %bb.c ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   %i.z = call noundef i32 @_ZNK4bzla2fp8SymFpuBVILb1EE8getWidthEv(ptr noundef nonnull align 8 dereferenceable(24) %i.e)

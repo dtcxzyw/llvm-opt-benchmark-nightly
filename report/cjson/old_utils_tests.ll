@@ -204,11 +204,11 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.s, %.lr.ph.i
-  %.058.i = phi i32 [ 0, %.lr.ph.i ], [ %.1.i, %bb.s ] ; 15 uses
+  %.058.i = phi i1 [ false, %.lr.ph.i ], [ %.1.i, %bb.s ] ; 15 uses
   %.04757.i = phi i64 [ 0, %.lr.ph.i ], [ %.148.i, %bb.s ] ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.am, i64 %.04757.i
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !40
-  switch i8 %i.ap, label %.critedge.loopexit.i [
+  switch i8 %i.ap, label %.critedge.i [
     i8 48, label %bb.s
     i8 49, label %bb.s
     i8 50, label %bb.s
@@ -230,20 +230,14 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q, %bb.q
-  %.1.i = phi i32 [ 1, %bb.r ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ] ; 2 uses
+  %.1.i = phi i1 [ true, %bb.r ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ], [ %.058.i, %bb.q ] ; 2 uses
   %.148.i = add nuw i64 %.04757.i, 1              ; 2 uses
   %exitcond.not.i = icmp eq i64 %.148.i, %i.an
-  br i1 %exitcond.not.i, label %.critedge.loopexit.i, label %bb.q
+  br i1 %exitcond.not.i, label %.critedge.i, label %bb.q
 
-.critedge.loopexit.i:                             ; preds = %bb.s, %bb.q
-  %.047.lcssa.ph.i = phi i64 [ %.04757.i, %bb.q ], [ %i.an, %bb.s ]
-  %.0.lcssa.ph.i = phi i32 [ %.058.i, %bb.q ], [ %.1.i, %bb.s ]
-  %2 = icmp ne i32 %.0.lcssa.ph.i, 0
-  br label %.critedge.i
-
-.critedge.i:                                      ; preds = %.critedge.loopexit.i, %.preheader55.i
-  %.047.lcssa.i = phi i64 [ 0, %.preheader55.i ], [ %.047.lcssa.ph.i, %.critedge.loopexit.i ] ; 12 uses
-  %.0.lcssa.i = phi i1 [ false, %.preheader55.i ], [ %2, %.critedge.loopexit.i ]
+.critedge.i:                                      ; preds = %bb.s, %bb.q, %.preheader55.i
+  %.047.lcssa.i = phi i64 [ 0, %.preheader55.i ], [ %.04757.i, %bb.q ], [ %i.an, %bb.s ] ; 12 uses
+  %.0.lcssa.i = phi i1 [ false, %.preheader55.i ], [ %.058.i, %bb.q ], [ %.1.i, %bb.s ]
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !45
   %i.as = add i64 %.047.lcssa.i, 1
@@ -646,8 +640,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = call fastcc i32 @print_value(ptr noundef %0, ptr noundef %2)
-  %.not = icmp eq i32 %i.h, 0
-  br i1 %.not, label %bb.h, label %bb.c
+  %.not = trunc nuw i32 %i.h to i1
+  br i1 %.not, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %2, align 16, !tbaa !58    ; 3 uses
@@ -753,8 +747,8 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.j, ptr noundef nonnull align 8 dereferenceable(24) @global_hooks, i64 24, i1 false), !tbaa.struct !36
   %i.k = call fastcc i32 @print_value(ptr noundef %0, ptr noundef %3)
-  %.not6 = icmp eq i32 %i.k, 0
-  br i1 %.not6, label %bb.d, label %bb.e
+  %.not6 = trunc nuw i32 %i.k to i1
+  br i1 %.not6, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr getelementptr inbounds nuw (i8, ptr @global_hooks, i64 8), align 8, !tbaa !25
@@ -1157,8 +1151,8 @@ bb.bj:                                            ; preds = %bb.bi
 bb.bk:                                            ; preds = %.lr.ph86, %bb.bq
   %.0.i6184 = phi ptr [ %i.fq, %.lr.ph86 ], [ %.pre, %bb.bq ] ; 3 uses
   %i.ga = tail call fastcc i32 @print_value(ptr noundef nonnull %.0.i6184, ptr noundef nonnull %1), !inline_history !72
-  %.not35.i = icmp eq i32 %i.ga, 0
-  br i1 %.not35.i, label %print_array.exit, label %bb.bl
+  %.not35.i = trunc nuw i32 %i.ga to i1
+  br i1 %.not35.i, label %bb.bl, label %print_array.exit
 
 bb.bl:                                            ; preds = %bb.bk
   %i.gb = load ptr, ptr %1, align 8, !tbaa !58    ; 2 uses
@@ -1301,8 +1295,8 @@ bb.by:                                            ; preds = %._crit_edge, %.lr.p
   %i.hz = getelementptr inbounds nuw i8, ptr %.067.i75, i64 56
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !29
   %i.ib = tail call fastcc i32 @print_string_ptr(ptr noundef %i.ia, ptr noundef nonnull %1), !inline_history !73
-  %.not86.i = icmp eq i32 %i.ib, 0
-  br i1 %.not86.i, label %print_array.exit, label %bb.bz
+  %.not86.i = trunc nuw i32 %i.ib to i1
+  br i1 %.not86.i, label %bb.bz, label %print_array.exit
 
 bb.bz:                                            ; preds = %bb.by
   %i.ic = load ptr, ptr %1, align 8, !tbaa !58    ; 2 uses
@@ -1341,8 +1335,8 @@ bb.cd:                                            ; preds = %bb.cc, %bb.cb
   %i.ip = add i64 %i.io, %i.ij
   store i64 %i.ip, ptr %i.hm, align 8, !tbaa !62
   %i.iq = tail call fastcc i32 @print_value(ptr noundef nonnull %.067.i75, ptr noundef nonnull %1), !inline_history !73
-  %.not89.i = icmp eq i32 %i.iq, 0
-  br i1 %.not89.i, label %print_array.exit, label %bb.ce
+  %.not89.i = trunc nuw i32 %i.iq to i1
+  br i1 %.not89.i, label %bb.ce, label %print_array.exit
 
 bb.ce:                                            ; preds = %bb.cd
   %i.ir = load ptr, ptr %1, align 8, !tbaa !58    ; 2 uses
@@ -1745,12 +1739,12 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.a, ptr %i.v, align 8, !tbaa !56
   br label %add_item_to_object.exit
 
-cJSON_CreateNull.exit.thread:                     ; preds = %bb.a, %cJSON_CreateNull.exit, %bb.b
+cJSON_CreateNull.exit.thread:                     ; preds = %bb.a, %bb.b, %cJSON_CreateNull.exit
   tail call void @cJSON_Delete(ptr noundef %i.a)
   br label %add_item_to_object.exit
 
-add_item_to_object.exit:                          ; preds = %bb.i, %bb.h, %bb.g, %cJSON_CreateNull.exit.thread
-  %.0 = phi ptr [ null, %cJSON_CreateNull.exit.thread ], [ %i.a, %bb.g ], [ %i.a, %bb.h ], [ %i.a, %bb.i ]
+add_item_to_object.exit:                          ; preds = %bb.h, %bb.g, %bb.i, %cJSON_CreateNull.exit.thread
+  %.0 = phi ptr [ null, %cJSON_CreateNull.exit.thread ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.h ]
   ret ptr %.0
 }
 
@@ -1847,12 +1841,12 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.a, ptr %i.v, align 8, !tbaa !56
   br label %add_item_to_object.exit
 
-cJSON_CreateTrue.exit.thread:                     ; preds = %bb.a, %cJSON_CreateTrue.exit, %bb.b
+cJSON_CreateTrue.exit.thread:                     ; preds = %bb.a, %bb.b, %cJSON_CreateTrue.exit
   tail call void @cJSON_Delete(ptr noundef %i.a)
   br label %add_item_to_object.exit
 
-add_item_to_object.exit:                          ; preds = %bb.i, %bb.h, %bb.g, %cJSON_CreateTrue.exit.thread
-  %.0 = phi ptr [ null, %cJSON_CreateTrue.exit.thread ], [ %i.a, %bb.g ], [ %i.a, %bb.h ], [ %i.a, %bb.i ]
+add_item_to_object.exit:                          ; preds = %bb.h, %bb.g, %bb.i, %cJSON_CreateTrue.exit.thread
+  %.0 = phi ptr [ null, %cJSON_CreateTrue.exit.thread ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.h ]
   ret ptr %.0
 }
 
@@ -1949,12 +1943,12 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.a, ptr %i.v, align 8, !tbaa !56
   br label %add_item_to_object.exit
 
-cJSON_CreateFalse.exit.thread:                    ; preds = %bb.a, %cJSON_CreateFalse.exit, %bb.b
+cJSON_CreateFalse.exit.thread:                    ; preds = %bb.a, %bb.b, %cJSON_CreateFalse.exit
   tail call void @cJSON_Delete(ptr noundef %i.a)
   br label %add_item_to_object.exit
 
-add_item_to_object.exit:                          ; preds = %bb.i, %bb.h, %bb.g, %cJSON_CreateFalse.exit.thread
-  %.0 = phi ptr [ null, %cJSON_CreateFalse.exit.thread ], [ %i.a, %bb.g ], [ %i.a, %bb.h ], [ %i.a, %bb.i ]
+add_item_to_object.exit:                          ; preds = %bb.h, %bb.g, %bb.i, %cJSON_CreateFalse.exit.thread
+  %.0 = phi ptr [ null, %cJSON_CreateFalse.exit.thread ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.h ]
   ret ptr %.0
 }
 
@@ -2053,12 +2047,12 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.a, ptr %i.w, align 8, !tbaa !56
   br label %add_item_to_object.exit
 
-cJSON_CreateBool.exit.thread:                     ; preds = %bb.a, %cJSON_CreateBool.exit, %bb.b
+cJSON_CreateBool.exit.thread:                     ; preds = %bb.a, %bb.b, %cJSON_CreateBool.exit
   tail call void @cJSON_Delete(ptr noundef %i.a)
   br label %add_item_to_object.exit
 
-add_item_to_object.exit:                          ; preds = %bb.i, %bb.h, %bb.g, %cJSON_CreateBool.exit.thread
-  %.0 = phi ptr [ null, %cJSON_CreateBool.exit.thread ], [ %i.a, %bb.g ], [ %i.a, %bb.h ], [ %i.a, %bb.i ]
+add_item_to_object.exit:                          ; preds = %bb.h, %bb.g, %bb.i, %cJSON_CreateBool.exit.thread
+  %.0 = phi ptr [ null, %cJSON_CreateBool.exit.thread ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.h ]
   ret ptr %.0
 }
 
@@ -2166,12 +2160,12 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.a, ptr %i.y, align 8, !tbaa !56
   br label %add_item_to_object.exit
 
-cJSON_CreateNumber.exit.thread:                   ; preds = %bb.a, %cJSON_CreateNumber.exit, %bb.b
+cJSON_CreateNumber.exit.thread:                   ; preds = %bb.a, %bb.b, %cJSON_CreateNumber.exit
   tail call void @cJSON_Delete(ptr noundef %i.a)
   br label %add_item_to_object.exit
 
-add_item_to_object.exit:                          ; preds = %bb.i, %bb.h, %bb.g, %cJSON_CreateNumber.exit.thread
-  %.0 = phi ptr [ null, %cJSON_CreateNumber.exit.thread ], [ %i.a, %bb.g ], [ %i.a, %bb.h ], [ %i.a, %bb.i ]
+add_item_to_object.exit:                          ; preds = %bb.h, %bb.g, %bb.i, %cJSON_CreateNumber.exit.thread
+  %.0 = phi ptr [ null, %cJSON_CreateNumber.exit.thread ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.h ]
   ret ptr %.0
 }
 
@@ -2574,12 +2568,12 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.a, ptr %i.v, align 8, !tbaa !56
   br label %add_item_to_object.exit
 
-cJSON_CreateObject.exit.thread:                   ; preds = %bb.a, %cJSON_CreateObject.exit, %bb.b
+cJSON_CreateObject.exit.thread:                   ; preds = %bb.a, %bb.b, %cJSON_CreateObject.exit
   tail call void @cJSON_Delete(ptr noundef %i.a)
   br label %add_item_to_object.exit
 
-add_item_to_object.exit:                          ; preds = %bb.i, %bb.h, %bb.g, %cJSON_CreateObject.exit.thread
-  %.0 = phi ptr [ null, %cJSON_CreateObject.exit.thread ], [ %i.a, %bb.g ], [ %i.a, %bb.h ], [ %i.a, %bb.i ]
+add_item_to_object.exit:                          ; preds = %bb.h, %bb.g, %bb.i, %cJSON_CreateObject.exit.thread
+  %.0 = phi ptr [ null, %cJSON_CreateObject.exit.thread ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.h ]
   ret ptr %.0
 }
 
@@ -2676,12 +2670,12 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.a, ptr %i.v, align 8, !tbaa !56
   br label %add_item_to_object.exit
 
-cJSON_CreateArray.exit.thread:                    ; preds = %bb.a, %cJSON_CreateArray.exit, %bb.b
+cJSON_CreateArray.exit.thread:                    ; preds = %bb.a, %bb.b, %cJSON_CreateArray.exit
   tail call void @cJSON_Delete(ptr noundef %i.a)
   br label %add_item_to_object.exit
 
-add_item_to_object.exit:                          ; preds = %bb.i, %bb.h, %bb.g, %cJSON_CreateArray.exit.thread
-  %.0 = phi ptr [ null, %cJSON_CreateArray.exit.thread ], [ %i.a, %bb.g ], [ %i.a, %bb.h ], [ %i.a, %bb.i ]
+add_item_to_object.exit:                          ; preds = %bb.h, %bb.g, %bb.i, %cJSON_CreateArray.exit.thread
+  %.0 = phi ptr [ null, %cJSON_CreateArray.exit.thread ], [ %i.a, %bb.i ], [ %i.a, %bb.g ], [ %i.a, %bb.h ]
   ret ptr %.0
 }
 
@@ -3084,9 +3078,9 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !28   ; 7 uses
-  %.not.i = icmp eq i32 %3, 0
+  %.not.i = trunc nuw i32 %3 to i1
   %.not2349.i = icmp eq ptr %i.t, null            ; 3 uses
-  br i1 %.not.i, label %.preheader.i, label %.preheader41.i
+  br i1 %.not.i, label %.preheader41.i, label %.preheader.i
 
 .preheader41.i:                                   ; preds = %bb.g
   br i1 %.not2349.i, label %cJSON_ReplaceItemViaPointer.exit, label %.lr.ph.i
@@ -3162,8 +3156,8 @@ case_insensitive_strcmp.exit.thread30.i:          ; preds = %bb.k, %.preheader.i
   %.not23.i = icmp eq ptr %i.ba, null
   br i1 %.not23.i, label %cJSON_ReplaceItemViaPointer.exit, label %.lr.ph51.i
 
-get_object_item.exit:                             ; preds = %bb.h, %bb.j, %.lr.ph.i.i
-  %.019.i = phi ptr [ %.150.i, %.lr.ph.i.i ], [ %.150.i, %bb.j ], [ %.048.i, %bb.h ] ; 6 uses
+get_object_item.exit:                             ; preds = %bb.j, %.lr.ph.i.i, %bb.h
+  %.019.i = phi ptr [ %.048.i, %bb.h ], [ %.150.i, %.lr.ph.i.i ], [ %.150.i, %bb.j ] ; 6 uses
   br i1 %.not2349.i, label %cJSON_ReplaceItemViaPointer.exit, label %bb.l
 
 bb.l:                                             ; preds = %get_object_item.exit
@@ -3226,8 +3220,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.r
   tail call void @cJSON_Delete(ptr noundef nonnull %.019.i)
   br label %cJSON_ReplaceItemViaPointer.exit
 
-cJSON_ReplaceItemViaPointer.exit:                 ; preds = %bb.i, %.lr.ph.i, %case_insensitive_strcmp.exit.thread30.i, %.preheader41.i, %.preheader.i, %bb.f, %bb.w, %bb.l, %get_object_item.exit, %cJSON_strdup.exit.thread, %bb.a
-  %.0 = phi i32 [ 0, %cJSON_strdup.exit.thread ], [ 0, %bb.a ], [ 1, %bb.w ], [ 0, %.preheader41.i ], [ 0, %get_object_item.exit ], [ 1, %bb.l ], [ 0, %bb.f ], [ 0, %.preheader.i ], [ 0, %case_insensitive_strcmp.exit.thread30.i ], [ 0, %.lr.ph.i ], [ 0, %bb.i ]
+cJSON_ReplaceItemViaPointer.exit:                 ; preds = %case_insensitive_strcmp.exit.thread30.i, %.lr.ph.i, %bb.i, %.preheader41.i, %.preheader.i, %bb.f, %bb.w, %bb.l, %get_object_item.exit, %cJSON_strdup.exit.thread, %bb.a
+  %.0 = phi i32 [ 0, %cJSON_strdup.exit.thread ], [ 0, %bb.a ], [ 1, %bb.w ], [ 0, %.preheader41.i ], [ 0, %get_object_item.exit ], [ 1, %bb.l ], [ 0, %bb.f ], [ 0, %.preheader.i ], [ 0, %.lr.ph.i ], [ 0, %bb.i ], [ 0, %case_insensitive_strcmp.exit.thread30.i ]
   ret i32 %.0
 }
 
@@ -3630,8 +3624,8 @@ bb.h:                                             ; preds = %bb.i, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = tail call i32 @cJSON_Compare(ptr noundef nonnull %.051, ptr noundef nonnull %.050, i32 noundef %2)
-  %.not65 = icmp eq i32 %i.ak, 0
-  br i1 %.not65, label %get_object_item.exit.thread, label %bb.h
+  %.not65 = trunc nuw i32 %i.ak to i1
+  br i1 %.not65, label %bb.h, label %get_object_item.exit.thread
 
 bb.j:                                             ; preds = %bb.h
   %.not64 = icmp eq ptr %.051, %.050
@@ -3713,8 +3707,8 @@ case_insensitive_strcmp.exit.thread30.i.us:       ; preds = %bb.n, %.preheader.i
 
 get_object_item.exit.us:                          ; preds = %bb.m, %.lr.ph.i.i.us
   %i.bu = tail call i32 @cJSON_Compare(ptr noundef nonnull %.049.us, ptr noundef nonnull %.150.i.us, i32 noundef 0)
-  %.not63.us = icmp eq i32 %i.bu, 0
-  br i1 %.not63.us, label %get_object_item.exit.thread, label %.split121.us
+  %.not63.us = trunc nuw i32 %i.bu to i1
+  br i1 %.not63.us, label %.split121.us, label %get_object_item.exit.thread
 
 .split121:                                        ; preds = %bb.k, %get_object_item.exit.loopexit111
   %.049.in = phi ptr [ %.049, %get_object_item.exit.loopexit111 ], [ %i.al, %bb.k ]
@@ -3752,8 +3746,8 @@ bb.q:                                             ; preds = %bb.p
 
 get_object_item.exit.loopexit111:                 ; preds = %bb.p
   %i.cd = tail call i32 @cJSON_Compare(ptr noundef nonnull %.049, ptr noundef nonnull %.048.i, i32 noundef %2)
-  %.not63 = icmp eq i32 %i.cd, 0
-  br i1 %.not63, label %get_object_item.exit.thread, label %.split121
+  %.not63 = trunc nuw i32 %i.cd to i1
+  br i1 %.not63, label %.split121, label %get_object_item.exit.thread
 
 .split123.us:                                     ; preds = %.split121, %.split121.us
   br i1 %.not.i, label %.split124.us, label %.split124
@@ -3828,8 +3822,8 @@ case_insensitive_strcmp.exit.thread30.i88.us:     ; preds = %bb.t, %.preheader.i
 
 get_object_item.exit93.us:                        ; preds = %bb.s, %.lr.ph.i.i90.us
   %i.dl = tail call i32 @cJSON_Compare(ptr noundef nonnull %.0.us, ptr noundef nonnull %.150.i86.us, i32 noundef 0)
-  %.not62.us = icmp eq i32 %i.dl, 0
-  br i1 %.not62.us, label %get_object_item.exit.thread, label %.split124.us
+  %.not62.us = trunc nuw i32 %i.dl to i1
+  br i1 %.not62.us, label %.split124.us, label %get_object_item.exit.thread
 
 .split124:                                        ; preds = %.split123.us, %get_object_item.exit93.loopexit106
   %.0.in = phi ptr [ %.0, %get_object_item.exit93.loopexit106 ], [ %i.am, %.split123.us ]
@@ -3867,8 +3861,8 @@ bb.w:                                             ; preds = %bb.v
 
 get_object_item.exit93.loopexit106:               ; preds = %bb.v
   %i.du = tail call i32 @cJSON_Compare(ptr noundef nonnull %.0, ptr noundef nonnull %.048.i76, i32 noundef %2)
-  %.not62 = icmp eq i32 %i.du, 0
-  br i1 %.not62, label %get_object_item.exit.thread, label %.split124
+  %.not62 = trunc nuw i32 %i.du to i1
+  br i1 %.not62, label %.split124, label %get_object_item.exit.thread
 
 default.unreachable169:                           ; preds = %.split2
   unreachable
@@ -4271,8 +4265,8 @@ bb.n:                                             ; preds = %.lr.ph.i93
 
 buffer_skip_whitespace.exit97:                    ; preds = %bb.m, %.critedge.i94, %.critedge.thread.i95
   %i.at = tail call fastcc i32 @parse_string(ptr noundef %i.ad, ptr noundef %1)
-  %.not86 = icmp eq i32 %i.at, 0
-  br i1 %.not86, label %.critedge.thread123, label %bb.o
+  %.not86 = trunc nuw i32 %i.at to i1
+  br i1 %.not86, label %bb.o, label %.critedge.thread123
 
 bb.o:                                             ; preds = %buffer_skip_whitespace.exit97
   %i.au = load ptr, ptr %1, align 8, !tbaa !33    ; 4 uses

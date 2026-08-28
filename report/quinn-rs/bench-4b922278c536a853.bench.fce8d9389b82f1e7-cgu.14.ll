@@ -204,7 +204,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6r
 bb.ak:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtB16_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core8callsite10IdentifierINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3A_5field13CallsiteMatchEEEINtB12_11PoisonErrorBX_EEECslIemzedAtQF_5bench.exit74, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtBK_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core8callsite10IdentifierINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3d_5field13CallsiteMatchEEEECslIemzedAtQF_5bench.exit71, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtBK_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core8callsite10IdentifierINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3d_5field13CallsiteMatchEEEECslIemzedAtQF_5bench.exit45
   ret void, !dbg !2641
 
-bb.al:                                            ; preds = %bb.aa, %bb.z
+bb.al:                                            ; preds = %bb.z, %bb.aa
   %lpad.thr_comm.split-lp90 = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock16RwLockWriteGuardINtNtNtNtB16_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3o_5field9SpanMatchEEEINtB12_11PoisonErrorBX_EEECslIemzedAtQF_5bench(ptr noalias nofree noundef align 8 dereferenceable(24) %i.b) #22
@@ -607,8 +607,8 @@ _RNvMNtNtNtNtCsG258MDvU3F_3std3sys4sync6rwlock5futexNtB2_6RwLock4read.exit: ; pr
   %i.h = load atomic i8, ptr %i.g monotonic, align 8, !dbg !4317, !noalias !4318
   %.not.i = icmp ne i8 %i.h, 0, !dbg !4321
   call void @_RINvNtNtCsG258MDvU3F_3std4sync6poison10map_resultuINtNtB2_6rwlock15RwLockReadGuardINtNtNtNtB6_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB2H_5field9SpanMatchEEENCNvMsd_BP_BM_3new0ECslIemzedAtQF_5bench(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i1 noundef zeroext %.not.i, ptr noundef nonnull align 8 %i.b), !dbg !4322
-  %i.i = load i64, ptr %i.a, align 8, !dbg !4235, !range !1955, !noundef !79 ; 2 uses
-  %i.j = trunc nuw i64 %i.i to i1, !dbg !4323
+  %i.i = load i64, ptr %i.a, align 8, !dbg !4235, !range !1955, !noundef !79
+  %i.j = trunc nuw i64 %i.i to i1, !dbg !4323     ; 2 uses
   br i1 %i.j, label %bb.v, label %bb.d, !dbg !4323
 
 bb.d:                                             ; preds = %_RNvMNtNtNtNtCsG258MDvU3F_3std3sys4sync6rwlock5futexNtB2_6RwLock4read.exit
@@ -923,8 +923,7 @@ bb.t:                                             ; preds = %bb.x, %bb.n
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtBK_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB30_5field9SpanMatchEEEECslIemzedAtQF_5bench.exit: ; preds = %bb.i, %bb.j, %bb.u
   %.pn25 = phi { ptr, i32 } [ %i.bt, %bb.u ], [ %.pn, %bb.j ], [ %.pn, %bb.i ]
-  %4 = icmp eq i64 %i.i, 0, !dbg !4806
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtB16_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3n_5field9SpanMatchEEEINtB12_11PoisonErrorBX_EEECslIemzedAtQF_5bench.exit49, label %bb.aa, !dbg !4806
+  br i1 %i.j, label %bb.aa, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtB16_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3n_5field9SpanMatchEEEINtB12_11PoisonErrorBX_EEECslIemzedAtQF_5bench.exit49, !dbg !4806
 
 bb.u:                                             ; preds = %bb.k, %bb.x, %bb.w
   %i.bt = landingpad { ptr, i32 }
@@ -1045,8 +1044,8 @@ _RNvMNtNtNtNtCsG258MDvU3F_3std3sys4sync6rwlock5futexNtB2_6RwLock4read.exit: ; pr
   %i.h = load atomic i8, ptr %i.g monotonic, align 8, !dbg !4907, !noalias !4908
   %.not.i = icmp ne i8 %i.h, 0, !dbg !4911
   call void @_RINvNtNtCsG258MDvU3F_3std4sync6poison10map_resultuINtNtB2_6rwlock15RwLockReadGuardINtNtNtNtB6_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB2H_5field9SpanMatchEEENCNvMsd_BP_BM_3new0ECslIemzedAtQF_5bench(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i1 noundef zeroext %.not.i, ptr noundef nonnull align 8 %i.b), !dbg !4912
-  %i.i = load i64, ptr %i.a, align 8, !dbg !4865, !range !1955, !noundef !79 ; 2 uses
-  %i.j = trunc nuw i64 %i.i to i1, !dbg !4913
+  %i.i = load i64, ptr %i.a, align 8, !dbg !4865, !range !1955, !noundef !79
+  %i.j = trunc nuw i64 %i.i to i1, !dbg !4913     ; 2 uses
   br i1 %i.j, label %bb.n, label %bb.d, !dbg !4913
 
 bb.d:                                             ; preds = %_RNvMNtNtNtNtCsG258MDvU3F_3std3sys4sync6rwlock5futexNtB2_6RwLock4read.exit
@@ -1276,8 +1275,7 @@ bb.k:                                             ; preds = %_RINvMs1_NtCsjqcU1o
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtBK_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB30_5field9SpanMatchEEEECslIemzedAtQF_5bench.exit: ; preds = %bb.i, %bb.j, %bb.l
   %.pn = phi { ptr, i32 } [ %i.az, %bb.l ], [ %lpad.phi, %bb.j ], [ %lpad.phi, %bb.i ]
-  %5 = icmp eq i64 %i.i, 0, !dbg !5095
-  br i1 %5, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtB16_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3n_5field9SpanMatchEEEINtB12_11PoisonErrorBX_EEECslIemzedAtQF_5bench.exit34, label %bb.t, !dbg !5095
+  br i1 %i.j, label %bb.t, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtNtNtCsG258MDvU3F_3std4sync6poison6rwlock15RwLockReadGuardINtNtNtNtB16_11collections4hash3map7HashMapNtNtCsgb4gPAseikh_12tracing_core4span2IdINtNtNtNtCs7n8GKOt6esj_18tracing_subscriber6filter3env9directive8MatchSetNtNtB3n_5field9SpanMatchEEEINtB12_11PoisonErrorBX_EEECslIemzedAtQF_5bench.exit34, !dbg !5095
 
 bb.l:                                             ; preds = %bb.k, %bb.p, %bb.o
   %i.az = landingpad { ptr, i32 }
@@ -1680,14 +1678,14 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6re
 bb.a:
     #dbg_value(ptr %0, !2962, !DIExpression(), !5883)
   %i.a = load i64, ptr %0, align 8, !dbg !5884, !range !1955, !noundef !79
-  %1 = icmp eq i64 %i.a, 0, !dbg !5884
+  %1 = trunc nuw i64 %i.a to i1, !dbg !5884
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !5884
   %.val = load ptr, ptr %i.b, align 8, !dbg !5884, !nonnull !79, !align !1989, !noundef !79 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !5884
   %.val1 = load i8, ptr %i.c, align 8, !dbg !5884, !range !2781, !noundef !79
   %i.d = getelementptr inbounds nuw i8, ptr %.val, i64 8, !dbg !5884 ; 2 uses
   %i.e = trunc nuw i8 %.val1 to i1, !dbg !5884    ; 2 uses
-  br i1 %1, label %bb.b, label %bb.f, !dbg !5884
+  br i1 %1, label %bb.f, label %bb.b, !dbg !5884
 
 bb.b:                                             ; preds = %bb.a
     #dbg_value(ptr poison, !2855, !DIExpression(), !5885)

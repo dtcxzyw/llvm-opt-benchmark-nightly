@@ -204,9 +204,8 @@ bb.e:                                             ; preds = %.loopexit826, %.loo
   %.idx804.a = shl nuw nsw i64 %indvars.iv581, 10
   %invariant.gep = getelementptr inbounds nuw i8, ptr %3, i64 %.idx804.a ; 3 uses
   %invariant.gep916.a = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv581 ; 3 uses
-  %6 = and i64 %indvars.iv581, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph431.prol, label %.lr.ph431.prol.loopexit
+  %6 = trunc i64 %indvars.iv581 to i1
+  br i1 %6, label %.lr.ph431.prol.loopexit, label %.lr.ph431.prol
 
 .lr.ph431.prol:                                   ; preds = %.lr.ph431.preheader
   %gep.prol = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv576.a ; 2 uses
@@ -255,7 +254,7 @@ bb.e:                                             ; preds = %.loopexit826, %.loo
   br i1 %exitcond.not.1, label %.loopexit337, label %.lr.ph431, !llvm.loop !18
 
 bb.f:                                             ; preds = %.loopexit337
-  %i.bt = sub nsw i32 %4, %.1247.ph               ; 20 uses
+  %i.bt = sub nsw i32 %4, %.1247.ph               ; 21 uses
   %i.bu = icmp sgt i32 %i.bt, 0
   br i1 %i.bu, label %bb.g, label %.loopexit
 
@@ -271,10 +270,9 @@ bb.g:                                             ; preds = %bb.f
 
 .lr.ph437.preheader:                              ; preds = %bb.g
   %i.cb = add nsw i32 %i.bt, -2                   ; 3 uses
-  %i.cc = zext i32 %i.cb to i64                   ; 4 uses
-  %7 = and i64 %i.cc, 1
-  %lcmp.mod357.not.not = icmp eq i64 %7, 0
-  br i1 %lcmp.mod357.not.not, label %.lr.ph437.prol, label %.lr.ph437.prol.loopexit
+  %i.cc = zext i32 %i.cb to i64                   ; 3 uses
+  %7 = trunc i32 %i.bt to i1
+  br i1 %7, label %.lr.ph437.prol.loopexit, label %.lr.ph437.prol
 
 .lr.ph437.prol:                                   ; preds = %.lr.ph437.preheader
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.bz, i64 %i.cc
@@ -577,13 +575,12 @@ bb.ab:                                            ; preds = %._crit_edge.i, %.lr
   %.not120.i = icmp slt i32 %.0111.i, %i.ij
   %spec.select122.i = select i1 %.not120.i, ptr %i.if, ptr %.0110.i
   %spec.select123.i = tail call i32 @llvm.smax.i32(i32 %.0111.i, i32 %i.ij)
-  %8 = and i32 %.0159.i, 1
-  %.not121154.i = icmp eq i32 %8, 0
-  br i1 %.not121154.i, label %._crit_edge.i, label %.lr.ph.i
+  %.not121154.i = trunc i32 %.0159.i to i1
+  br i1 %.not121154.i, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %bb.ab, %.lr.ph.i
   %.0101157.i = phi i32 [ %i.io, %.lr.ph.i ], [ 1024, %bb.ab ] ; 2 uses
-  %.0103156.i = phi i32 [ %i.ip, %.lr.ph.i ], [ %.0159.i, %bb.ab ] ; 2 uses
+  %.0103156.i = phi i32 [ %i.ip, %.lr.ph.i ], [ %.0159.i, %bb.ab ]
   %.0106155.i = phi ptr [ %i.im, %.lr.ph.i ], [ %.0107158.i, %bb.ab ] ; 3 uses
   %i.ik = sext i32 %.0101157.i to i64             ; 2 uses
   %i.il = sub nsw i64 0, %i.ik
@@ -591,10 +588,9 @@ bb.ab:                                            ; preds = %._crit_edge.i, %.lr
   %i.in = getelementptr inbounds [4 x i8], ptr %.0106155.i, i64 %i.ik
   tail call fastcc void @ss_swapmerge(ptr noundef nonnull %0, ptr noundef nonnull %i.bz, ptr noundef %i.im, ptr noundef %.0106155.i, ptr noundef %i.in, ptr noundef %spec.select122.i, i32 noundef %spec.select123.i)
   %i.io = shl i32 %.0101157.i, 1
-  %i.ip = lshr i32 %.0103156.i, 1
-  %9 = and i32 %.0103156.i, 2
-  %.not121.i = icmp eq i32 %9, 0
-  br i1 %.not121.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !20
+  %i.ip = lshr i32 %.0103156.i, 1                 ; 2 uses
+  %.not121.i = trunc i32 %i.ip to i1
+  br i1 %.not121.i, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !20
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.ab
   %i.iq = add nuw nsw i32 %.0159.i, 1             ; 2 uses
@@ -610,9 +606,8 @@ bb.ab:                                            ; preds = %._crit_edge.i, %.lr
   %.1167.i = phi i32 [ %i.ix, %bb.ad ], [ %i.iq, %.lr.ph169.preheader.i ] ; 2 uses
   %.1102166.i = phi i32 [ %i.iw, %bb.ad ], [ 1024, %.lr.ph169.preheader.i ] ; 2 uses
   %.1108165.i = phi ptr [ %.2.i, %bb.ad ], [ %i.if, %.lr.ph169.preheader.i ] ; 3 uses
-  %10 = and i32 %.1167.i, 1
-  %.not119.i = icmp eq i32 %10, 0
-  br i1 %.not119.i, label %bb.ad, label %bb.ac
+  %.not119.i = trunc i32 %.1167.i to i1
+  br i1 %.not119.i, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph169.i
   %i.it = sext i32 %.1102166.i to i64
@@ -1015,11 +1010,10 @@ bb.bt:                                            ; preds = %bb.br
   %i.sx = ptrtoint ptr %.0459.ph.i.i to i64       ; 2 uses
   %i.sy = ptrtoint ptr %.0462.ph.i.i to i64       ; 2 uses
   %i.sz = sub i64 %i.sx, %i.sy                    ; 3 uses
-  %i.ta = ashr exact i64 %i.sz, 2                 ; 7 uses
+  %i.ta = ashr exact i64 %i.sz, 2                 ; 8 uses
   %i.tb = icmp slt i64 %i.ta, 9
-  %i.tc = trunc i64 %i.ta to i32                  ; 9 uses
-  %11 = and i32 %i.tc, 1
-  %12 = icmp eq i32 %11, 0                        ; 2 uses
+  %i.tc = trunc i64 %i.ta to i32                  ; 8 uses
+  %8 = trunc i64 %i.ta to i1                      ; 2 uses
   %i.td = add nsw i32 %i.tc, -1                   ; 4 uses
   %i.te = sdiv i32 %i.td, 2
   %i.tf = sext i32 %i.te to i64
@@ -1422,7 +1416,7 @@ bb.gh:                                            ; preds = %bb.gg
   br i1 %i.arm, label %bb.gi, label %bb.gr
 
 bb.gi:                                            ; preds = %.lr.ph640.split.i.i
-  br i1 %12, label %bb.gj, label %._crit_edge72.i.i.i
+  br i1 %8, label %._crit_edge72.i.i.i, label %bb.gj
 
 bb.gj:                                            ; preds = %bb.gi
   %i.arn = load i32, ptr %i.tg, align 4, !tbaa !8 ; 2 uses
@@ -1515,7 +1509,7 @@ tr_fixdown.exit.i.i.i:                            ; preds = %bb.gl, %.lr.ph.i.i.
   br i1 %i.atl, label %.lr.ph.i569.i.i, label %._crit_edge.i567.i.i, !llvm.loop !84
 
 ._crit_edge.i567.i.i:                             ; preds = %tr_fixdown.exit.i.i.i, %._crit_edge72.i.i.i
-  br i1 %12, label %bb.gm, label %bb.go
+  br i1 %8, label %bb.go, label %bb.gm
 
 bb.gm:                                            ; preds = %._crit_edge.i567.i.i
   %i.atm = load i32, ptr %.0462.ph.i.i, align 4, !tbaa !8
@@ -1918,7 +1912,7 @@ ss_ilg.exit:                                      ; preds = %ss_ilg.exit.backedg
   %i.n = ptrtoint ptr %.0429 to i64               ; 4 uses
   %i.o = ptrtoint ptr %.0432 to i64               ; 2 uses
   %i.p = sub i64 %i.n, %i.o                       ; 3 uses
-  %i.q = ashr exact i64 %i.p, 2                   ; 3 uses
+  %i.q = ashr exact i64 %i.p, 2                   ; 4 uses
   %i.r = icmp slt i64 %i.q, 9
   br i1 %i.r, label %bb.d, label %bb.m
 
@@ -2084,10 +2078,9 @@ bb.m:                                             ; preds = %ss_ilg.exit
   br i1 %i.cg, label %bb.n, label %ss_heapsort.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.ch = trunc i64 %i.q to i32                   ; 3 uses
-  %5 = and i32 %i.ch, 1
-  %6 = icmp eq i32 %5, 0                          ; 2 uses
-  br i1 %6, label %bb.o, label %._crit_edge77.i
+  %i.ch = trunc i64 %i.q to i32                   ; 2 uses
+  %5 = trunc i64 %i.q to i1                       ; 2 uses
+  br i1 %5, label %._crit_edge77.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.ci = add nsw i32 %i.ch, -1                   ; 4 uses
@@ -2201,7 +2194,7 @@ ss_fixdown.exit.i:                                ; preds = %bb.q, %.lr.ph.i.i50
   br i1 %i.fb, label %.lr.ph.i503, label %._crit_edge.i, !llvm.loop !142
 
 ._crit_edge.i:                                    ; preds = %ss_fixdown.exit.i, %._crit_edge77.i
-  br i1 %6, label %bb.r, label %bb.t
+  br i1 %5, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge.i
   %i.fc = load i32, ptr %.0432, align 4, !tbaa !8
@@ -2604,10 +2597,9 @@ ss_compare.exit.i:                                ; preds = %.lr.ph.i184.i, %.ss
   br i1 %i.bn, label %ss_compare.exit.thread.i, label %bb.k
 
 ss_compare.exit.thread.i:                         ; preds = %ss_compare.exit.i, %bb.f
-  %8 = and i32 %.2.i, 1
-  %.not180.i = icmp eq i32 %8, 0
+  %.not180.i = trunc i32 %.2.i to i1
   %.pre255.i = load i32, ptr %.0133.i.ph, align 4, !tbaa !8 ; 2 uses
-  br i1 %.not180.i, label %ss_compare.exit.thread._crit_edge.i, label %.preheader190.i
+  br i1 %.not180.i, label %.preheader190.i, label %ss_compare.exit.thread._crit_edge.i
 
 .preheader190.i:                                  ; preds = %ss_compare.exit.thread.i, %.preheader190.i
   %i.bo = phi i32 [ %i.bs, %.preheader190.i ], [ %.pre255.i, %ss_compare.exit.thread.i ]
@@ -2734,10 +2726,9 @@ bb.m:                                             ; preds = %.preheader191.i
   br label %bb.d
 
 bb.n:                                             ; preds = %bb.k
-  %9 = and i32 %.2.i, 1
-  %.not.i = icmp eq i32 %9, 0
+  %.not.i = trunc i32 %.2.i to i1
   %.pre247.i = load i32, ptr %.0133.i.ph, align 4, !tbaa !8 ; 2 uses
-  br i1 %.not.i, label %._crit_edge246.i, label %.preheader193.i
+  br i1 %.not.i, label %.preheader193.i, label %._crit_edge246.i
 
 .preheader193.i:                                  ; preds = %bb.n, %.preheader193.i
   %i.dg = phi i32 [ %i.dk, %.preheader193.i ], [ %.pre247.i, %bb.n ]
@@ -2855,9 +2846,8 @@ ss_mergebackward.exit:                            ; preds = %ss_compare.exit.thr
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.b, %ss_mergebackward.exit
-  %10 = and i32 %.0215, 1
-  %.not267 = icmp eq i32 %10, 0
-  br i1 %.not267, label %bb.u, label %._crit_edge659
+  %.not267 = trunc i32 %.0215 to i1
+  br i1 %.not267, label %._crit_edge659, label %bb.u
 
 ._crit_edge659:                                   ; preds = %bb.t
   %.pre660 = load i32, ptr %.0229, align 4, !tbaa !8
@@ -3260,9 +3250,8 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.me, label %bb.at, label %.loopexit.i.outer.backedge, !llvm.loop !197
 
 ss_mergeforward.exit:                             ; preds = %._crit_edge127.i, %bb.ar, %._crit_edge.i, %bb.am, %bb.ah
-  %11 = and i32 %.0215, 1
-  %.not264 = icmp eq i32 %11, 0
-  br i1 %.not264, label %bb.av, label %ss_mergeforward.exit._crit_edge
+  %.not264 = trunc i32 %.0215 to i1
+  br i1 %.not264, label %ss_mergeforward.exit._crit_edge, label %bb.av
 
 ss_mergeforward.exit._crit_edge:                  ; preds = %ss_mergeforward.exit
   %.pre664 = load i32, ptr %.0229, align 4, !tbaa !8
@@ -3665,9 +3654,8 @@ bb.bu:                                            ; preds = %ss_compare.exit400
   br label %ss_compare.exit400.thread
 
 ss_compare.exit400.thread:                        ; preds = %bb.bs, %ss_compare.exit400, %bb.bu
-  %12 = and i32 %.0215, 1
-  %.not259 = icmp eq i32 %12, 0
-  br i1 %.not259, label %bb.bv, label %ss_compare.exit400.thread._crit_edge
+  %.not259 = trunc i32 %.0215 to i1
+  br i1 %.not259, label %ss_compare.exit400.thread._crit_edge, label %bb.bv
 
 ss_compare.exit400.thread._crit_edge:             ; preds = %ss_compare.exit400.thread
   %.pre669 = load i32, ptr %.0229, align 4, !tbaa !8

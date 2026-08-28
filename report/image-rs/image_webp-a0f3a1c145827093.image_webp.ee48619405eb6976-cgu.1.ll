@@ -202,8 +202,8 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh8split_atCsksn9slvsHfS_10image_webp.exit80: ; 
 
 bb.t:                                             ; preds = %._crit_edge
   %i.ao = lshr i64 %9, 1
-  %11 = and i64 %9, 1
-  %sext = add nsw i64 %11, -1
+  %11 = or i64 %9, -2
+  %sext = add nsw i64 %11, 1
   %.sroa.029.0 = add nsw i64 %sext, %i.ao
   %i.ap = mul i64 %.sroa.029.0, %i.a              ; 8 uses
   %i.aq = icmp ugt i64 %i.ap, %5
@@ -500,8 +500,8 @@ _RNvMNtCsj6eKBz9Db1c_4core5sliceSh8split_atCsksn9slvsHfS_10image_webp.exit80: ; 
 
 bb.t:                                             ; preds = %._crit_edge
   %i.ao = lshr i64 %9, 1
-  %11 = and i64 %9, 1
-  %sext = add nsw i64 %11, -1
+  %11 = or i64 %9, -2
+  %sext = add nsw i64 %11, 1
   %.sroa.029.0 = add nsw i64 %sext, %i.ao
   %i.ap = mul i64 %.sroa.029.0, %i.a              ; 8 uses
   %i.aq = icmp ugt i64 %i.ap, %5
@@ -904,7 +904,6 @@ bb.h:                                             ; preds = %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.al ; 3 uses
   %i.an = add nsw i64 %3, -1                      ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 19 uses
-  %8 = and i64 %i.an, 1
   %i.ap = and i64 %i.an, -2                       ; 3 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.ap
   %.not.i.i.i.i.i.i.i90 = icmp samesign ult i64 %1, 9
@@ -1193,8 +1192,8 @@ bb.j:                                             ; preds = %.lr.ph
   br i1 %or.cond, label %._crit_edge, label %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit37
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.j, %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit37, %bb.h
-  %.not78 = icmp eq i64 %8, 0
-  br i1 %.not78, label %bb.k, label %bb.l
+  %8 = trunc i64 %i.an to i1
+  br i1 %8, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit, %._crit_edge
   ret void
@@ -1465,7 +1464,6 @@ bb.j:                                             ; preds = %bb.h
   %i.an = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.am ; 3 uses
   %i.ao = add nsw i64 %3, -1                      ; 3 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 1 ; 19 uses
-  %8 = and i64 %i.ao, 1
   %i.aq = and i64 %i.ao, -2                       ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.aq
   %.not.i.i.i.i.i.i.i90 = icmp eq i64 %i.am, 0
@@ -1868,8 +1866,8 @@ bb.l:                                             ; preds = %.lr.ph
   br i1 %or.cond, label %._crit_edge, label %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit37
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.l, %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit37, %bb.j
-  %.not78 = icmp eq i64 %8, 0
-  br i1 %.not78, label %bb.m, label %bb.n
+  %8 = trunc i64 %i.ao to i1
+  br i1 %8, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit, %._crit_edge
   ret void
@@ -2166,7 +2164,6 @@ bb.l:                                             ; preds = %bb.j
   %i.be = urem i64 %i.bb, 6                       ; 3 uses
   %i.bf = sub nuw i64 %i.bb, %i.be                ; 5 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.bf ; 3 uses
-  %12 = and i64 %i.bc, 1
   %i.bh = and i64 %i.bc, -2                       ; 3 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.bh
   %.not.i.i.i.i.i.i.i.i.i.i.i141 = icmp samesign ult i64 %1, 9
@@ -2497,8 +2494,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %or.cond, label %._crit_edge, label %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.n, %bb.o, %bb.p, %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit, %bb.l
-  %.not123 = icmp eq i64 %12, 0
-  br i1 %.not123, label %bb.q, label %bb.r
+  %12 = trunc i64 %i.bc to i1
+  br i1 %12, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.t, %._crit_edge
   ret void
@@ -2813,7 +2810,6 @@ bb.o:                                             ; preds = %bb.l
   %i.bf = and i64 %i.bc, 7                        ; 2 uses
   %i.bg = and i64 %i.bc, -8                       ; 4 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bg ; 3 uses
-  %12 = and i64 %i.bd, 1
   %i.bi = and i64 %i.bd, -2                       ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.be, i64 %i.bi
   %.not.i.i.i.i.i.i.i.i.i.i.i141 = icmp eq i64 %i.bg, 0
@@ -3216,8 +3212,8 @@ bb.r:                                             ; preds = %bb.q
   br i1 %or.cond, label %._crit_edge, label %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.p, %bb.q, %bb.r, %_RNvNtCsksn9slvsHfS_10image_webp3yuv9set_pixel.exit, %bb.o
-  %.not123 = icmp eq i64 %12, 0
-  br i1 %.not123, label %bb.s, label %bb.t
+  %12 = trunc i64 %i.bd to i1
+  br i1 %12, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.v, %._crit_edge
   ret void

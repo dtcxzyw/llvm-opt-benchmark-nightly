@@ -204,8 +204,8 @@ bb.at:                                            ; preds = %_RINvNtCskKLDkoKarT
   tail call void @llvm.experimental.noalias.scope.decl(metadata !209), !noalias !145
   tail call void @llvm.experimental.noalias.scope.decl(metadata !212), !noalias !145
   %i.cx = load i8, ptr %i.cw, align 8, !range !215, !alias.scope !216, !noalias !145, !noundef !5
-  %1 = icmp eq i8 %i.cx, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit, label %bb.au
+  %1 = trunc nuw i8 %i.cx to i1
+  br i1 %1, label %bb.au, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit
 
 bb.au:                                            ; preds = %bb.at
   %i.cy = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
@@ -233,8 +233,8 @@ bb.aw:                                            ; preds = %_RINvNtCskKLDkoKarT
   tail call void @llvm.experimental.noalias.scope.decl(metadata !231), !noalias !145
   tail call void @llvm.experimental.noalias.scope.decl(metadata !234), !noalias !145
   %i.df = load i8, ptr %i.de, align 8, !range !215, !alias.scope !237, !noalias !145, !noundef !5
-  %2 = icmp eq i8 %i.df, 0
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi8instance7exports10ExternTypeECs3WYoaQ2jqaU_5wasmi.exit19.i.i, label %bb.ax
+  %2 = trunc nuw i8 %i.df to i1
+  br i1 %2, label %bb.ax, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi8instance7exports10ExternTypeECs3WYoaQ2jqaU_5wasmi.exit19.i.i
 
 bb.ax:                                            ; preds = %bb.aw
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
@@ -270,8 +270,8 @@ bb.ba:                                            ; preds = %_RINvNtCskKLDkoKarT
   tail call void @llvm.experimental.noalias.scope.decl(metadata !253), !noalias !145
   tail call void @llvm.experimental.noalias.scope.decl(metadata !256), !noalias !145
   %i.dq = load i8, ptr %i.dp, align 8, !range !215, !alias.scope !259, !noalias !145, !noundef !5
-  %3 = icmp eq i8 %i.dq, 0
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit, label %bb.bb
+  %3 = trunc nuw i8 %i.dq to i1
+  br i1 %3, label %bb.bb, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit
 
 bb.bb:                                            ; preds = %bb.ba
   %i.dr = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
@@ -432,8 +432,8 @@ bb.bi:                                            ; preds = %_RINvNtCskKLDkoKarT
   tail call void @llvm.experimental.noalias.scope.decl(metadata !305), !noalias !145
   tail call void @llvm.experimental.noalias.scope.decl(metadata !308), !noalias !145
   %i.ff = load i8, ptr %i.fe, align 8, !range !215, !alias.scope !311, !noalias !145, !noundef !5
-  %4 = icmp eq i8 %i.ff, 0
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit, label %bb.bj
+  %4 = trunc nuw i8 %i.ff to i1
+  br i1 %4, label %bb.bj, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit
 
 bb.bj:                                            ; preds = %bb.bi
   %i.fg = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
@@ -456,8 +456,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi6module6import
   tail call void @llvm.experimental.noalias.scope.decl(metadata !323), !noalias !145
   tail call void @llvm.experimental.noalias.scope.decl(metadata !326), !noalias !145
   %i.fm = load i8, ptr %i.fl, align 8, !range !215, !alias.scope !329, !noalias !145, !noundef !5
-  %5 = icmp eq i8 %i.fm, 0
-  br i1 %5, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECs3WYoaQ2jqaU_5wasmi.exit37.i.i, label %bb.bl
+  %5 = trunc nuw i8 %i.fm to i1
+  br i1 %5, label %bb.bl, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECs3WYoaQ2jqaU_5wasmi.exit37.i.i
 
 bb.bl:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi6module6import10ImportNameECs3WYoaQ2jqaU_5wasmi.exit19.i.i
   %i.fn = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 2 uses
@@ -495,8 +495,8 @@ bb.bp:                                            ; preds = %bb.bm
   tail call void @llvm.experimental.noalias.scope.decl(metadata !353), !noalias !145
   tail call void @llvm.experimental.noalias.scope.decl(metadata !354), !noalias !145
   %i.fx = load i8, ptr %i.fw, align 8, !range !215, !alias.scope !355, !noalias !145, !noundef !5
-  %6 = icmp eq i8 %i.fx, 0
-  br i1 %6, label %bb.bx, label %bb.bn
+  %6 = trunc nuw i8 %i.fx to i1
+  br i1 %6, label %bb.bn, label %bb.bx
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECs3WYoaQ2jqaU_5wasmi.exit37.i.i: ; preds = %bb.bm, %bb.bl, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi6module6import10ImportNameECs3WYoaQ2jqaU_5wasmi.exit19.i.i
   %i.fy = getelementptr inbounds nuw i8, ptr %i.b, i64 72
@@ -504,8 +504,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncT
   tail call void @llvm.experimental.noalias.scope.decl(metadata !359), !noalias !145
   tail call void @llvm.experimental.noalias.scope.decl(metadata !362), !noalias !145
   %i.fz = load i8, ptr %i.fy, align 8, !range !215, !alias.scope !365, !noalias !145, !noundef !5
-  %7 = icmp eq i8 %i.fz, 0
-  br i1 %7, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit, label %bb.bq
+  %7 = trunc nuw i8 %i.fz to i1
+  br i1 %7, label %bb.bq, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxNtNtCsefoF4u9kbII_5wasmi5error9ErrorKindEECs3WYoaQ2jqaU_5wasmi.exit
 
 bb.bq:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECs3WYoaQ2jqaU_5wasmi.exit37.i.i
   %i.ga = getelementptr inbounds nuw i8, ptr %i.b, i64 80 ; 2 uses
@@ -653,8 +653,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !380)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !383)
   %i.d = load i8, ptr %i.c, align 8, !range !215, !alias.scope !386, !noundef !5
-  %1 = icmp eq i8 %i.d, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECs3WYoaQ2jqaU_5wasmi.exit, label %bb.c
+  %1 = trunc nuw i8 %i.d to i1
+  br i1 %1, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECs3WYoaQ2jqaU_5wasmi.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -727,9 +727,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1

@@ -41,26 +41,23 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr i8, ptr %i.g, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !19   ; 3 uses
   %i.k = getelementptr i8, ptr %i.g, i64 32
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !23   ; 5 uses
-  %.not23.i = icmp eq i64 %i.l, 0
-  br i1 %.not23.i, label %._crit_edge.i, label %.lr.ph.i.preheader
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !23   ; 4 uses
+  switch i64 %i.l, label %.lr.ph.i.preheader.new [
+    i64 0, label %._crit_edge.i
+    i64 1, label %.lr.ph.i.epil.preheader
+  ]
 
-.lr.ph.i.preheader:                               ; preds = %bb.b
-  %xtraiter = and i64 %i.l, 1
-  %2 = icmp eq i64 %i.l, 1
-  br i1 %2, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
-
-.lr.ph.i.preheader.new:                           ; preds = %.lr.ph.i.preheader
+.lr.ph.i.preheader.new:                           ; preds = %bb.b
   %unroll_iter = and i64 %i.l, -2
   br label %.lr.ph.i
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.l to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
 
-.lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i.preheader
-  %.025.i.epil.init = phi i64 [ 0, %.lr.ph.i.preheader ], [ %i.ad, %._crit_edge.i.loopexit.unr-lcssa ]
-  %.01724.i.epil.init = phi i64 [ %i.h, %.lr.ph.i.preheader ], [ %.1.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
+.lr.ph.i.epil.preheader:                          ; preds = %bb.b, %._crit_edge.i.loopexit.unr-lcssa
+  %.025.i.epil.init = phi i64 [ 0, %bb.b ], [ %i.ad, %._crit_edge.i.loopexit.unr-lcssa ]
+  %.01724.i.epil.init = phi i64 [ %i.h, %bb.b ], [ %.1.i.1, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod7 = trunc i64 %i.l to i1
   tail call void @llvm.assume(i1 %lcmp.mod7)
   %i.m = getelementptr [64 x i8], ptr %i.j, i64 %.025.i.epil.init
@@ -415,7 +412,6 @@ bb.a:
   %i.h = getelementptr i8, ptr %i.d, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !19   ; 3 uses
   %i.j = getelementptr i8, ptr %i.d, i64 48       ; 6 uses
-  %xtraiter = and i64 %i.g, 1
   %i.k = icmp eq i64 %i.g, 1
   br i1 %i.k, label %.epil.preheader, label %.lr.ph.new
 
@@ -424,8 +420,8 @@ bb.a:
   br label %bb.d
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.j
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.g to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %.019.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.ah, %._crit_edge.loopexit.unr-lcssa ]

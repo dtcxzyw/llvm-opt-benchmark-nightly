@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %thread-pre-split.i
 _ZL8zreceiveP4zbufi.exit27.i:                     ; preds = %bb.b, %thread-pre-split.i
   %i.ag = phi i32 [ %i.ae, %thread-pre-split.i ], [ %.pre81.i, %bb.b ] ; 2 uses
   %i.ah = phi i32 [ %i.ad, %thread-pre-split.i ], [ %.pre.i, %bb.b ] ; 2 uses
-  %2 = and i32 %i.ah, 1
   %i.ai = lshr i32 %i.ah, 1                       ; 2 uses
   store i32 %i.ai, ptr %i.k, align 4, !tbaa !25
   %i.aj = add nsw i32 %i.ag, -1                   ; 2 uses
@@ -454,8 +453,8 @@ _ZL8zreceiveP4zbufi.exit72.i.i:                   ; preds = %_ZL5zget8P4zbuf.exi
 bb.p:                                             ; preds = %_ZL8zreceiveP4zbufi.exit72.i.i
   %i.ej = add nuw nsw i32 %i.bd, %i.aw            ; 3 uses
   %i.ek = call fastcc noundef i32 @_ZL14zbuild_huffmanP8zhuffmanPKhi(ptr noundef %0, ptr noundef %i.b, i32 noundef 19)
-  %.not.i.i = icmp eq i32 %i.ek, 0
-  br i1 %.not.i.i, label %_ZL21compute_huffman_codesP4zbuf.exit.thread.i, label %.preheader79.i.i
+  %.not.i.i = trunc nuw i32 %i.ek to i1
+  br i1 %.not.i.i, label %.preheader79.i.i, label %_ZL21compute_huffman_codesP4zbuf.exit.thread.i
 
 .preheader79.i.i:                                 ; preds = %bb.p, %bb.al
   %i.el = phi i32 [ %i.hp, %bb.al ], [ %i.eb, %bb.p ]
@@ -672,8 +671,8 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %i.hs = call fastcc noundef i32 @_ZL14zbuild_huffmanP8zhuffmanPKhi(ptr noundef %i.r, ptr noundef %i.a, i32 noundef %i.aw)
-  %.not67.i.i = icmp eq i32 %i.hs, 0
-  br i1 %.not67.i.i, label %_ZL21compute_huffman_codesP4zbuf.exit.thread.i, label %_ZL21compute_huffman_codesP4zbuf.exit.i
+  %.not67.i.i = trunc nuw i32 %i.hs to i1
+  br i1 %.not67.i.i, label %_ZL21compute_huffman_codesP4zbuf.exit.i, label %_ZL21compute_huffman_codesP4zbuf.exit.thread.i
 
 _ZL21compute_huffman_codesP4zbuf.exit.thread.i:   ; preds = %bb.an, %bb.am, %bb.p, %bb.ak, %_ZL8zreceiveP4zbufi.exit71.i.i, %_ZL15zhuffman_decodeP4zbufP8zhuffman.exit.i.i, %bb.y, %bb.x, %bb.w, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
@@ -688,8 +687,8 @@ _ZL21compute_huffman_codesP4zbuf.exit.i:          ; preds = %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %0) #12
-  %.not23.i = icmp eq i32 %i.hv, 0
-  br i1 %.not23.i, label %_ZL10decompressPci.exit, label %bb.ao
+  %.not23.i = trunc nuw i32 %i.hv to i1
+  br i1 %.not23.i, label %bb.ao, label %_ZL10decompressPci.exit
 
 bb.ao:                                            ; preds = %_ZL21compute_huffman_codesP4zbuf.exit.i
   %i.hw = load ptr, ptr %i.g, align 8, !tbaa !21
@@ -1092,8 +1091,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 bb.bx:                                            ; preds = %bb.bc
   store ptr %.051.i.i, ptr %i.g, align 8, !tbaa !21
-  %.not25.i = icmp eq i32 %2, 0
-  br i1 %.not25.i, label %thread-pre-split.i, label %.preheader.i, !llvm.loop !44
+  %.not25.i = trunc i32 %i.ah to i1
+  br i1 %.not25.i, label %.preheader.i, label %thread-pre-split.i, !llvm.loop !44
 
 .preheader.i:                                     ; preds = %bb.bx, %.split.us.i
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.split.us.i ], [ 0, %bb.bx ] ; 3 uses

@@ -204,9 +204,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !8017, !DIExpression(), !8025)
-  %1 = icmp eq i64 %i.a, 0, !dbg !8027
+  %1 = trunc nuw i64 %i.a to i1, !dbg !8027
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !8027 ; 2 uses
-  br i1 %1, label %bb.h, label %bb.i, !dbg !8027
+  br i1 %1, label %bb.i, label %bb.h, !dbg !8027
 
 bb.h:                                             ; preds = %bb.g
     #dbg_value(ptr %i.o, !8028, !DIExpression(), !8036)
@@ -609,7 +609,6 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir1
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeE7reserveCs9GYDdpCSJ4S_14regex_automata.exit.i.i.i
   %.neg = add i64 %.val.i, 1, !dbg !12287
-  %xtraiter = and i64 %i.c, 1, !dbg !12287
   %i.n = icmp eq i64 %.val5.i, %.neg, !dbg !12287
   br i1 %i.n, label %.lr.ph.i.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.i.preheader.new, !dbg !12287
 
@@ -701,8 +700,8 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir1
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj2_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i, !dbg !12287
 
 _RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj2_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !12287
-  br i1 %lcmp.mod.not, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj2_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit, label %.lr.ph.i.i.i.i.i.i.epil.preheader, !dbg !12287
+  %lcmp.mod.not = trunc i64 %i.c to i1, !dbg !12287
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.epil.preheader, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj2_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit, !dbg !12287
 
 .lr.ph.i.i.i.i.i.i.epil.preheader:                ; preds = %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj2_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.i.i.preheader
   %.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.preheader ], [ %i.af, %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj2_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -882,7 +881,6 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir1
 
 .lr.ph.i.i.i.i.i.i.preheader:                     ; preds = %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeE7reserveCs9GYDdpCSJ4S_14regex_automata.exit.i.i.i
   %.neg = add i64 %.val.i, 1, !dbg !12686
-  %xtraiter = and i64 %i.c, 1, !dbg !12686
   %i.n = icmp eq i64 %.val5.i, %.neg, !dbg !12686
   br i1 %i.n, label %.lr.ph.i.i.i.i.i.i.epil.preheader, label %.lr.ph.i.i.i.i.i.i.preheader.new, !dbg !12686
 
@@ -975,8 +973,8 @@ _RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir1
   br i1 %niter.ncmp.1, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj3_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa, label %.lr.ph.i.i.i.i.i.i, !dbg !12686
 
 _RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj3_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i.i.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0, !dbg !12686
-  br i1 %lcmp.mod.not, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj3_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit, label %.lr.ph.i.i.i.i.i.i.epil.preheader, !dbg !12686
+  %lcmp.mod.not = trunc i64 %i.c to i1, !dbg !12686
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.i.i.i.epil.preheader, label %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj3_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit, !dbg !12686
 
 .lr.ph.i.i.i.i.i.i.epil.preheader:                ; preds = %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj3_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa, %.lr.ph.i.i.i.i.i.i.preheader
   %.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.preheader ], [ %i.ag, %_RNvXs_NtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB6_3VecNtNtCs3roNzt6HBWW_12regex_syntax3hir15ClassBytesRangeEINtB4_18SpecFromIterNestedB13_INtNtNtCsj6eKBz9Db1c_4core5array4iter8IntoIterB13_Kj3_EE9from_iterCs9GYDdpCSJ4S_14regex_automata.exit.loopexit.unr-lcssa ] ; 2 uses

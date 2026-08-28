@@ -204,19 +204,18 @@ bb.m:                                             ; preds = %bb.k
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 107
   %i.av = load i8, ptr %i.au, align 1, !alias.scope !2429, !noalias !2430 ; 4 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.ax = load i32, ptr %i.aw, align 8, !range !521, !alias.scope !2429, !noalias !2430, !noundef !5 ; 2 uses
+  %i.ax = load i32, ptr %i.aw, align 8, !range !521, !alias.scope !2429, !noalias !2430, !noundef !5
+  %2 = trunc nuw i32 %i.ax to i1                  ; 2 uses
   br i1 %i.at, label %bb.o, label %bb.p
 
 bb.n:                                             ; preds = %bb.k
   br i1 %i.at, label %bb.ah, label %bb.ag
 
 bb.o:                                             ; preds = %bb.m
-  %2 = trunc nuw i32 %i.ax to i1
   br i1 %2, label %bb.q, label %bb.u
 
 bb.p:                                             ; preds = %bb.m
-  %.not70.i.i = icmp eq i32 %i.ax, 0
-  br i1 %.not70.i.i, label %bb.ab, label %bb.ad
+  br i1 %2, label %bb.ad, label %bb.ab
 
 bb.q:                                             ; preds = %bb.o
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 68
@@ -308,8 +307,8 @@ bb.af:                                            ; preds = %bb.ac
 bb.ag:                                            ; preds = %bb.n
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.bf = load i32, ptr %i.be, align 8, !range !521, !alias.scope !2429, !noalias !2430, !noundef !5
-  %.not69.i.i = icmp eq i32 %i.bf, 0
-  br i1 %.not69.i.i, label %bb.ai, label %bb.aj
+  %3 = trunc nuw i32 %i.bf to i1
+  br i1 %3, label %bb.aj, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !2433
@@ -353,8 +352,8 @@ bb.an:                                            ; preds = %bb.l
 bb.ao:                                            ; preds = %bb.am
   %i.bn = getelementptr inbounds nuw i8, ptr %1, i64 64
   %i.bo = load i32, ptr %i.bn, align 8, !range !521, !alias.scope !2429, !noalias !2430, !noundef !5
-  %.not.i.i = icmp eq i32 %i.bo, 0
-  br i1 %.not.i.i, label %bb.be, label %bb.aq
+  %4 = trunc nuw i32 %i.bo to i1
+  br i1 %4, label %bb.aq, label %bb.be
 
 bb.ap:                                            ; preds = %bb.am
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !2433
@@ -611,7 +610,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 92
   %i.o = load i8, ptr %i.n, align 4, !range !151
   %i.p = and i8 %i.o, %i.j
-  %2 = icmp ne i8 %i.p, 0
+  %2 = trunc nuw i8 %i.p to i1
   %.not57 = select i1 %i.m, i1 %2, i1 false
   br i1 %.not57, label %bb.c, label %bb.b, !prof !2474
 

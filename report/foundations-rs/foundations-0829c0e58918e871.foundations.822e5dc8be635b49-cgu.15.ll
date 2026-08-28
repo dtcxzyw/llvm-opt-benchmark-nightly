@@ -204,7 +204,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs26L2cHvO7VQ_13cf_rustracing4span1
 define internal fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtNtB4_4task4poll4PollINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEEECsbaWXNhtWAp9_11foundations(i64 %.0.val, ptr %.8.val) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !1090 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
-  %0 = icmp ne i64 %.0.val, 0, !dbg !1091
+  %0 = trunc nuw i64 %.0.val to i1, !dbg !1091
   %i.b = icmp eq ptr %.8.val, null
   %or.cond = select i1 %0, i1 true, i1 %i.b, !dbg !1091
   br i1 %or.cond, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtNtB4_2io5error5ErrorEECsbaWXNhtWAp9_11foundations.exit, label %bb.b, !dbg !1091
@@ -607,8 +607,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2390), !dbg !2386
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2393), !dbg !2396
-  %1 = icmp eq i64 %i.c, 0, !dbg !2399
-  br i1 %1, label %_RINvNtNtCsaL1QbXo9JQH_3std3sys12thread_local20abort_on_dtor_unwindNCINvNtNtB2_6native5eager7destroyNtNtCshtG1HG2JiYb_12tracing_core10dispatcher5StateE0ECsbaWXNhtWAp9_11foundations.exit, label %bb.c, !dbg !2399
+  %1 = trunc nuw i64 %i.c to i1, !dbg !2399
+  br i1 %1, label %bb.c, label %_RINvNtNtCsaL1QbXo9JQH_3std3sys12thread_local20abort_on_dtor_unwindNCINvNtNtB2_6native5eager7destroyNtNtCshtG1HG2JiYb_12tracing_core10dispatcher5StateE0ECsbaWXNhtWAp9_11foundations.exit, !dbg !2399
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !2399 ; 2 uses
@@ -1011,9 +1011,8 @@ bb.b:                                             ; preds = %_RNvYNCNKNvCs9PF4sI
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8, !dbg !10158
   %i.p = load ptr, ptr %i.o, align 8, !dbg !10158, !noalias !10144, !nonnull !14, !noundef !14 ; 2 uses
   %i.q = ptrtoint ptr %i.p to i64, !dbg !10160    ; 2 uses
-  %4 = and i64 %i.q, 1, !dbg !10174
-  %.not.i.i.i = icmp eq i64 %4, 0, !dbg !10174
-  br i1 %.not.i.i.i, label %bb.i, label %bb.d, !dbg !10174
+  %4 = trunc i64 %i.q to i1, !dbg !10174
+  br i1 %4, label %bb.d, label %bb.i, !dbg !10174
 
 bb.c:                                             ; preds = %_RNvYNCNKNvCs9PF4sIox9so_9slog_json6TL_BUF00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtBM_6option6OptionQIB1r_INtNtBM_4cell7RefCellNtNtCs1xwejQucwHj_5alloc6string6StringEEEEE9call_onceCsbaWXNhtWAp9_11foundations.exit.thread.i.i
   tail call void @_RNvNtCs3oUPovFnLWP_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #31, !dbg !10176, !noalias !10144
@@ -1416,9 +1415,8 @@ bb.b:                                             ; preds = %_RNvYNCNKNvCs9PF4sI
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8, !dbg !10921
   %i.p = load ptr, ptr %i.o, align 8, !dbg !10921, !noalias !10907, !nonnull !14, !noundef !14 ; 2 uses
   %i.q = ptrtoint ptr %i.p to i64, !dbg !10923    ; 2 uses
-  %4 = and i64 %i.q, 1, !dbg !10933
-  %.not.i.i.i = icmp eq i64 %4, 0, !dbg !10933
-  br i1 %.not.i.i.i, label %bb.i, label %bb.d, !dbg !10933
+  %4 = trunc i64 %i.q to i1, !dbg !10933
+  br i1 %4, label %bb.d, label %bb.i, !dbg !10933
 
 bb.c:                                             ; preds = %_RNvYNCNKNvCs9PF4sIox9so_9slog_json6TL_BUF00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtBM_6option6OptionQIB1r_INtNtBM_4cell7RefCellNtNtCs1xwejQucwHj_5alloc6string6StringEEEEE9call_onceCsbaWXNhtWAp9_11foundations.exit.thread.i.i
   tail call void @_RNvNtCs3oUPovFnLWP_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #31, !dbg !10935, !noalias !10907
@@ -1821,9 +1819,8 @@ bb.b:                                             ; preds = %_RNvYNCNKNvCs9PF4sI
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8, !dbg !11657
   %i.p = load ptr, ptr %i.o, align 8, !dbg !11657, !noalias !11643, !nonnull !14, !noundef !14 ; 2 uses
   %i.q = ptrtoint ptr %i.p to i64, !dbg !11659    ; 2 uses
-  %4 = and i64 %i.q, 1, !dbg !11669
-  %.not.i.i.i = icmp eq i64 %4, 0, !dbg !11669
-  br i1 %.not.i.i.i, label %bb.i, label %bb.d, !dbg !11669
+  %4 = trunc i64 %i.q to i1, !dbg !11669
+  br i1 %4, label %bb.d, label %bb.i, !dbg !11669
 
 bb.c:                                             ; preds = %_RNvYNCNKNvCs9PF4sIox9so_9slog_json6TL_BUF00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtBM_6option6OptionQIB1r_INtNtBM_4cell7RefCellNtNtCs1xwejQucwHj_5alloc6string6StringEEEEE9call_onceCsbaWXNhtWAp9_11foundations.exit.thread.i.i
   tail call void @_RNvNtCs3oUPovFnLWP_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #31, !dbg !11671, !noalias !11643
@@ -2226,9 +2223,8 @@ bb.b:                                             ; preds = %_RNvYNCNKNvCs9PF4sI
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8, !dbg !12393
   %i.p = load ptr, ptr %i.o, align 8, !dbg !12393, !noalias !12379, !nonnull !14, !noundef !14 ; 2 uses
   %i.q = ptrtoint ptr %i.p to i64, !dbg !12395    ; 2 uses
-  %4 = and i64 %i.q, 1, !dbg !12405
-  %.not.i.i.i = icmp eq i64 %4, 0, !dbg !12405
-  br i1 %.not.i.i.i, label %bb.i, label %bb.d, !dbg !12405
+  %4 = trunc i64 %i.q to i1, !dbg !12405
+  br i1 %4, label %bb.d, label %bb.i, !dbg !12405
 
 bb.c:                                             ; preds = %_RNvYNCNKNvCs9PF4sIox9so_9slog_json6TL_BUF00INtNtNtCs3oUPovFnLWP_4core3ops8function6FnOnceTINtNtBM_6option6OptionQIB1r_INtNtBM_4cell7RefCellNtNtCs1xwejQucwHj_5alloc6string6StringEEEEE9call_onceCsbaWXNhtWAp9_11foundations.exit.thread.i.i
   tail call void @_RNvNtCs3oUPovFnLWP_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @29) #31, !dbg !12407, !noalias !12379

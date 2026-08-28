@@ -205,9 +205,8 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit182:            ; preds = %bb.g, %.noexc181, %
   %i.ax = sitofp i32 %5 to double
   %i.ay = sext i32 %2 to i64                      ; 2 uses
   %i.az = sext i32 %3 to i64                      ; 2 uses
-  %i.ba = zext i32 %4 to i64                      ; 4 uses
+  %i.ba = zext i32 %4 to i64                      ; 3 uses
   %brmerge228 = or i1 %i.ar, %i.au
-  %wide.trip.count247 = zext i32 %3 to i64        ; 2 uses
   %wide.trip.count257 = zext nneg i32 %3 to i64
   %brmerge231 = or i1 %i.av, %i.ar
   %wide.trip.count281 = zext nneg i32 %5 to i64
@@ -215,19 +214,18 @@ _ZNSt6vectorIhSaIhEEC2EmRKS0_.exit182:            ; preds = %bb.g, %.noexc181, %
   %i.bc = shufflevector <2 x double> %i.bb, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bd = insertelement <2 x double> poison, double %i.at, i64 0
   %i.be = shufflevector <2 x double> %i.bd, <2 x double> poison, <2 x i32> zeroinitializer
-  %xtraiter = and i64 %wide.trip.count247, 1
   %7 = icmp eq i32 %3, 1
-  %unroll_iter = and i64 %wide.trip.count247, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %8 = and i32 %3, 2147483646
+  %unroll_iter = zext nneg i32 %8 to i64
+  %lcmp.mod.not = trunc i32 %3 to i1
   %lcmp.mod325 = trunc i32 %3 to i1
   %i.bf = insertelement <2 x double> poison, double %i.aw, i64 0
   %i.bg = shufflevector <2 x double> %i.bf, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bh = insertelement <2 x double> poison, double %i.ax, i64 0
   %i.bi = shufflevector <2 x double> %i.bh, <2 x double> poison, <2 x i32> zeroinitializer
-  %xtraiter326 = and i64 %i.ba, 1
   %i.bj = icmp eq i32 %4, 1
   %unroll_iter329 = and i64 %i.ba, 2147483646
-  %lcmp.mod327.not = icmp eq i64 %xtraiter326, 0
+  %lcmp.mod327.not = trunc i32 %4 to i1
   %lcmp.mod328 = trunc i32 %4 to i1
   br label %.preheader190
 
@@ -260,7 +258,7 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNSt6vectorIhSaIhEED2Ev.exit184
 
 ..loopexit189_crit_edge.loopexit322.unr-lcssa:    ; preds = %.lr.ph207.split
-  br i1 %lcmp.mod.not, label %..loopexit189_crit_edge, label %.lr.ph207.split.epil.preheader
+  br i1 %lcmp.mod.not, label %.lr.ph207.split.epil.preheader, label %..loopexit189_crit_edge
 
 .lr.ph207.split.epil.preheader:                   ; preds = %..loopexit189_crit_edge.loopexit322.unr-lcssa, %.lr.ph207.split.preheader
   %indvars.iv244.epil.init = phi i64 [ 0, %.lr.ph207.split.preheader ], [ %indvars.iv.next245.1, %..loopexit189_crit_edge.loopexit322.unr-lcssa ]
@@ -406,7 +404,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %niter.ncmp.1, label %..loopexit189_crit_edge.loopexit322.unr-lcssa, label %.lr.ph207.split, !llvm.loop !132
 
 ..loopexit_crit_edge.loopexit321.unr-lcssa:       ; preds = %.lr.ph217.split
-  br i1 %lcmp.mod327.not, label %..loopexit_crit_edge, label %.lr.ph217.split.epil.preheader
+  br i1 %lcmp.mod327.not, label %.lr.ph217.split.epil.preheader, label %..loopexit_crit_edge
 
 .lr.ph217.split.epil.preheader:                   ; preds = %..loopexit_crit_edge.loopexit321.unr-lcssa, %.lr.ph217.split.preheader
   %indvars.iv260.epil.init = phi i64 [ 0, %.lr.ph217.split.preheader ], [ %indvars.iv.next261.1, %..loopexit_crit_edge.loopexit321.unr-lcssa ]
@@ -809,10 +807,9 @@ bb.am:                                            ; preds = %.loopexit146, %.loo
 .invoke173:                                       ; preds = %._crit_edge
   %i.fc = getelementptr inbounds nuw i8, ptr %i.ew, i64 2
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !34  ; 2 uses
-  %5 = and i8 %i.fd, 1
-  %.not47 = icmp eq i8 %5, 0                      ; 2 uses
-  %i.fe = select i1 %.not47, ptr @.str.44, ptr @.str.43
-  %i.ff = select i1 %.not47, i64 58, i64 43
+  %.not47 = trunc i8 %i.fd to i1                  ; 2 uses
+  %i.fe = select i1 %.not47, ptr @.str.43, ptr @.str.44
+  %i.ff = select i1 %.not47, i64 43, i64 58
   %i.fg = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull %i.fe, i64 noundef %i.ff)
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit81.invoke unwind label %bb.an ; 0 uses
 

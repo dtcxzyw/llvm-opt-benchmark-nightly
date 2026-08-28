@@ -202,8 +202,9 @@ bb.jt:                                            ; preds = %bb.js
 bb.ju:                                            ; preds = %bb.jt, %bb.js
   %i.mv = phi i1 [ %i.mu, %bb.jt ], [ false, %bb.js ]
   %i.mw = load i8, ptr getelementptr inbounds nuw (i8, ptr @slurmctld_config, i64 320), align 8, !range !12, !noundef !13
-  %11 = icmp eq i8 %i.mw, 0
-  %or.cond = select i1 %11, i1 true, i1 %i.mv
+  %11 = trunc nuw i8 %i.mw to i1
+  %.not209 = xor i1 %11, true
+  %or.cond = select i1 %.not209, i1 true, i1 %i.mv
   br i1 %or.cond, label %bb.jw, label %bb.jv
 
 bb.jv:                                            ; preds = %bb.ju

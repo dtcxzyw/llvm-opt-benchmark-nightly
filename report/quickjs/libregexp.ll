@@ -205,9 +205,9 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.ea = load i8, ptr %i.b, align 1, !tbaa !12
-  %i.eb = add i8 %i.ea, -58
-  %i.ec = icmp ult i8 %i.eb, -10
-  br i1 %i.ec, label %.thread147, label %.critedge
+  %i.eb = add i8 %i.ea, -48
+  %i.ec = icmp ult i8 %i.eb, 10
+  br i1 %i.ec, label %.critedge, label %.thread147
 
 bb.az:                                            ; preds = %bb.aw
   %i.ed = load i8, ptr %i.b, align 1, !tbaa !12
@@ -610,7 +610,7 @@ re_count_captures.exit:                           ; preds = %re_parse_captures.e
 define internal fastcc noundef range(i32 -1, 1) i32 @re_parse_term(ptr noundef nonnull %0, i1 noundef zeroext %1) unnamed_addr #2 {
 bb.a:
   %2 = alloca %struct.REStringList, align 8       ; 11 uses
-  %i.a = alloca ptr, align 8                      ; 32 uses
+  %i.a = alloca ptr, align 8                      ; 31 uses
   %3 = alloca %struct.REStringList, align 8       ; 11 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
   %i.c = alloca i32, align 4                      ; 6 uses
@@ -773,32 +773,28 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r
   %i.bk = getelementptr inbounds nuw i8, ptr %i.g, i64 1 ; 2 uses
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !12
-  %i.bm = add i8 %i.bl, -58
-  %i.bn = icmp ult i8 %i.bm, -10
-  br i1 %i.bn, label %bb.dm, label %.lr.ph.split.us.i
+  %i.bm = add i8 %i.bl, -48
+  %i.bn = icmp ult i8 %i.bm, 10
+  br i1 %i.bn, label %.lr.ph.split.us.i, label %bb.dm
 
 .lr.ph.split.us.i:                                ; preds = %bb.t, %.lr.ph.split.us.i
   %.01320.us.i = phi ptr [ %i.bo, %.lr.ph.split.us.i ], [ %i.bk, %bb.t ] ; 2 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %.01320.us.i, i64 1 ; 3 uses
-  %i.bp = load i8, ptr %i.bo, align 1, !tbaa !12  ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %.01320.us.i, i64 1 ; 2 uses
+  %i.bp = load i8, ptr %i.bo, align 1, !tbaa !12  ; 3 uses
   %i.bq = add i8 %i.bp, -58
   %or.cond.us.i = icmp ult i8 %i.bq, -10
   br i1 %or.cond.us.i, label %parse_digits.exit, label %.lr.ph.split.us.i
 
 parse_digits.exit:                                ; preds = %.lr.ph.split.us.i
   %i.br = icmp eq i8 %i.bp, 44
-  br i1 %i.br, label %bb.u, label %parse_digits.exit.parse_digits.exit471thread-pre-split_crit_edge
-
-parse_digits.exit.parse_digits.exit471thread-pre-split_crit_edge: ; preds = %parse_digits.exit
-  %.pr565.pre = load i8, ptr %i.bo, align 1, !tbaa !12
-  br label %parse_digits.exit471
+  br i1 %i.br, label %bb.u, label %parse_digits.exit471
 
 bb.u:                                             ; preds = %parse_digits.exit
   %i.bs = getelementptr inbounds nuw i8, ptr %.01320.us.i, i64 2 ; 2 uses
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !12  ; 2 uses
-  %i.bu = add i8 %i.bt, -58
-  %or.cond660 = icmp ult i8 %i.bu, -10
-  br i1 %or.cond660, label %parse_digits.exit471, label %.lr.ph.split.us.i464
+  %i.bu = add i8 %i.bt, -48
+  %or.cond660 = icmp ult i8 %i.bu, 10
+  br i1 %or.cond660, label %.lr.ph.split.us.i464, label %parse_digits.exit471
 
 .lr.ph.split.us.i464:                             ; preds = %bb.u, %.lr.ph.split.us.i464
   %.01320.us.i466 = phi ptr [ %i.bv, %.lr.ph.split.us.i464 ], [ %i.bs, %bb.u ]
@@ -808,8 +804,8 @@ bb.u:                                             ; preds = %parse_digits.exit
   %or.cond.us.i468 = icmp ult i8 %i.bx, -10
   br i1 %or.cond.us.i468, label %parse_digits.exit471, label %.lr.ph.split.us.i464
 
-parse_digits.exit471:                             ; preds = %.lr.ph.split.us.i464, %bb.u, %parse_digits.exit.parse_digits.exit471thread-pre-split_crit_edge
-  %i.by = phi i8 [ %.pr565.pre, %parse_digits.exit.parse_digits.exit471thread-pre-split_crit_edge ], [ %i.bt, %bb.u ], [ %i.bw, %.lr.ph.split.us.i464 ]
+parse_digits.exit471:                             ; preds = %.lr.ph.split.us.i464, %parse_digits.exit, %bb.u
+  %i.by = phi i8 [ %i.bp, %parse_digits.exit ], [ %i.bt, %bb.u ], [ %i.bw, %.lr.ph.split.us.i464 ]
   %.not432 = icmp eq i8 %i.by, 125
   br i1 %.not432, label %bb.v, label %bb.dm
 
@@ -1212,9 +1208,9 @@ bb.ci:                                            ; preds = %bb.bj
   br i1 %i.jy, label %bb.cj, label %bb.cl
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.ka = add i8 %i.jz, -58
-  %i.kb = icmp ult i8 %i.ka, -10
-  br i1 %i.kb, label %dbuf_putc.exit507.thread, label %bb.ck
+  %i.ka = add i8 %i.jz, -48
+  %i.kb = icmp ult i8 %i.ka, 10
+  br i1 %i.kb, label %bb.ck, label %dbuf_putc.exit507.thread
 
 bb.ck:                                            ; preds = %bb.cj
   tail call void (ptr, ptr, ...) @re_parse_error(ptr noundef %0, ptr noundef nonnull @.str.13)
@@ -1617,9 +1613,9 @@ bb.et:                                            ; preds = %bb.er
 bb.eu:                                            ; preds = %bb.er
   %i.sj = getelementptr inbounds nuw i8, ptr %.pre687, i64 1 ; 2 uses
   %i.sk = load i8, ptr %i.sj, align 1, !tbaa !12  ; 2 uses
-  %i.sl = add i8 %i.sk, -58
-  %i.sm = icmp ult i8 %i.sl, -10
-  br i1 %i.sm, label %bb.ev, label %.lr.ph.split.us.i522
+  %i.sl = add i8 %i.sk, -48
+  %i.sm = icmp ult i8 %i.sl, 10
+  br i1 %i.sm, label %.lr.ph.split.us.i522, label %bb.ev
 
 bb.ev:                                            ; preds = %bb.eu
   %i.sn = getelementptr inbounds nuw i8, ptr %0, i64 76
@@ -1637,7 +1633,7 @@ bb.ev:                                            ; preds = %bb.eu
   %i.su = add nuw nsw i64 %i.st, %i.sr
   %.mux.us.i525 = call i64 @llvm.umin.i64(i64 %i.su, i64 2147483647) ; 3 uses
   %i.sv = getelementptr inbounds nuw i8, ptr %.01320.us.i524, i64 1 ; 3 uses
-  %i.sw = load i8, ptr %i.sv, align 1, !tbaa !12  ; 3 uses
+  %i.sw = load i8, ptr %i.sv, align 1, !tbaa !12  ; 4 uses
   %i.sx = add i8 %i.sw, -58
   %or.cond.us.i526 = icmp ult i8 %i.sx, -10
   br i1 %or.cond.us.i526, label %parse_digits.exit531, label %.lr.ph.split.us.i522
@@ -1645,14 +1641,14 @@ bb.ev:                                            ; preds = %bb.eu
 parse_digits.exit531:                             ; preds = %.lr.ph.split.us.i522
   %i.sy = trunc nuw nsw i64 %.mux.us.i525 to i32  ; 2 uses
   %i.sz = icmp eq i8 %i.sw, 44
-  br i1 %i.sz, label %bb.ew, label %thread-pre-split
+  br i1 %i.sz, label %bb.ew, label %bb.ey
 
 bb.ew:                                            ; preds = %parse_digits.exit531
   %i.ta = getelementptr inbounds nuw i8, ptr %.01320.us.i524, i64 2 ; 3 uses
   %i.tb = load i8, ptr %i.ta, align 1, !tbaa !12  ; 3 uses
-  %i.tc = add i8 %i.tb, -58
-  %i.td = icmp ult i8 %i.tc, -10
-  br i1 %i.td, label %bb.ey, label %.lr.ph.split.us.i534
+  %i.tc = add i8 %i.tb, -48
+  %i.td = icmp ult i8 %i.tc, 10
+  br i1 %i.td, label %.lr.ph.split.us.i534, label %bb.ey
 
 .lr.ph.split.us.i534:                             ; preds = %bb.ew, %.lr.ph.split.us.i534
   %i.te = phi i8 [ %i.tk, %.lr.ph.split.us.i534 ], [ %i.tb, %bb.ew ]
@@ -1664,30 +1660,24 @@ bb.ew:                                            ; preds = %parse_digits.exit53
   %i.ti = add nuw nsw i64 %i.th, %i.tf            ; 2 uses
   %.mux.us.i537 = call i64 @llvm.umin.i64(i64 %i.ti, i64 2147483647) ; 2 uses
   %i.tj = getelementptr inbounds nuw i8, ptr %.01320.us.i536, i64 1 ; 3 uses
-  %i.tk = load i8, ptr %i.tj, align 1, !tbaa !12  ; 2 uses
+  %i.tk = load i8, ptr %i.tj, align 1, !tbaa !12  ; 3 uses
   %i.tl = add i8 %i.tk, -58
   %or.cond.us.i538 = icmp ult i8 %i.tl, -10
   br i1 %or.cond.us.i538, label %parse_digits.exit543, label %.lr.ph.split.us.i534
 
 parse_digits.exit543:                             ; preds = %.lr.ph.split.us.i534
   %i.tm = trunc nuw nsw i64 %.mux.us.i537 to i32
-  %i.tn = icmp samesign ult i64 %i.ti, %.mux.us.i525
-  br i1 %i.tn, label %bb.ex, label %thread-pre-split
+  %i.tn = icmp ult i64 %i.ti, %.mux.us.i525
+  br i1 %i.tn, label %bb.ex, label %bb.ey
 
 bb.ex:                                            ; preds = %parse_digits.exit543, %bb.ev
   call void (ptr, ptr, ...) @re_parse_error(ptr noundef %0, ptr noundef nonnull @.str.15)
   br label %.thread
 
-thread-pre-split:                                 ; preds = %parse_digits.exit531, %parse_digits.exit543
-  %.ph = phi ptr [ %i.sv, %parse_digits.exit531 ], [ %i.tj, %parse_digits.exit543 ] ; 2 uses
-  %.1390.ph = phi i32 [ %i.sy, %parse_digits.exit531 ], [ %i.tm, %parse_digits.exit543 ]
-  %.pr = load i8, ptr %.ph, align 1, !tbaa !12
-  br label %bb.ey
-
-bb.ey:                                            ; preds = %thread-pre-split, %bb.ew
-  %4 = phi i8 [ %.pr, %thread-pre-split ], [ %i.tb, %bb.ew ]
-  %5 = phi ptr [ %.ph, %thread-pre-split ], [ %i.ta, %bb.ew ]
-  %.1390 = phi i32 [ %.1390.ph, %thread-pre-split ], [ 2147483647, %bb.ew ]
+bb.ey:                                            ; preds = %bb.ew, %parse_digits.exit543, %parse_digits.exit531
+  %4 = phi i8 [ %i.tk, %parse_digits.exit543 ], [ %i.sw, %parse_digits.exit531 ], [ %i.tb, %bb.ew ]
+  %5 = phi ptr [ %i.tj, %parse_digits.exit543 ], [ %i.sv, %parse_digits.exit531 ], [ %i.ta, %bb.ew ]
+  %.1390 = phi i32 [ %i.tm, %parse_digits.exit543 ], [ %i.sy, %parse_digits.exit531 ], [ 2147483647, %bb.ew ]
   %cond = icmp eq i8 %4, 125
   br i1 %cond, label %bb.fa, label %bb.ez
 
@@ -1705,8 +1695,7 @@ bb.fa:                                            ; preds = %bb.ey, %bb.er, %bb.
   %.sink770 = phi ptr [ %.pre687, %bb.er ], [ %.pre687, %bb.et ], [ %.pre687, %bb.es ], [ %5, %bb.ey ] ; 2 uses
   %.2395 = phi i32 [ 0, %bb.er ], [ 0, %bb.et ], [ 1, %bb.es ], [ %i.sy, %bb.ey ] ; 6 uses
   %.3392 = phi i32 [ 2147483647, %bb.er ], [ 1, %bb.et ], [ 2147483647, %bb.es ], [ %.1390, %bb.ey ] ; 9 uses
-  %i.tr = getelementptr inbounds nuw i8, ptr %.sink770, i64 1 ; 3 uses
-  store ptr %i.tr, ptr %i.a, align 8, !tbaa !9
+  %i.tr = getelementptr inbounds nuw i8, ptr %.sink770, i64 1 ; 2 uses
   %i.ts = load i8, ptr %i.tr, align 1, !tbaa !12
   %i.tt = icmp ne i8 %i.ts, 63                    ; 6 uses
   %i.tu = getelementptr inbounds nuw i8, ptr %.sink770, i64 2
@@ -2109,10 +2098,9 @@ bb.k:                                             ; preds = %.thread
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr @lre_id_start_table_ascii, i64 %i.ab
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !38
   %i.ae = and i32 %.02736, 31
-  %2 = shl nuw i32 1, %i.ae
-  %3 = and i32 %i.ad, %2
-  %4 = icmp eq i32 %3, 0
-  br i1 %4, label %.loopexit, label %bb.m
+  %2 = lshr i32 %i.ad, %i.ae
+  %3 = trunc i32 %2 to i1
+  br i1 %3, label %bb.m, label %.loopexit
 
 lre_js_is_ident_first.exit:                       ; preds = %bb.k
   %i.af = tail call zeroext i1 @lre_is_id_start(i32 noundef range(i32 0, 1114112) %.02736) #20
@@ -2127,10 +2115,9 @@ bb.l:                                             ; preds = %.thread
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr @lre_id_continue_table_ascii, i64 %i.ah
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !38
   %i.ak = and i32 %.02736, 31
-  %5 = shl nuw i32 1, %i.ak
-  %6 = and i32 %i.aj, %5
-  %7 = icmp eq i32 %6, 0
-  br i1 %7, label %.loopexit, label %bb.m
+  %4 = lshr i32 %i.aj, %i.ak
+  %5 = trunc i32 %4 to i1
+  br i1 %5, label %bb.m, label %.loopexit
 
 lre_js_is_ident_next.exit:                        ; preds = %bb.l
   %i.al = tail call zeroext i1 @lre_is_id_continue(i32 noundef range(i32 0, 1114112) %.02736) #20
@@ -2533,8 +2520,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.ao = load i8, ptr %i.q, align 1, !tbaa !26, !range !40, !noundef !41
   %i.ap = and i8 %i.ao, %.079
-  %or.cond.not = icmp eq i8 %i.ap, 0
-  br i1 %or.cond.not, label %bb.m, label %.thread167
+  %or.cond = trunc nuw i8 %i.ap to i1
+  br i1 %or.cond, label %.thread167, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.aq = icmp samesign ugt i32 %i.ag, 1073741823
@@ -2831,8 +2818,8 @@ bb.aj:                                            ; preds = %bb.z, %bb.ai, %re_s
   %.4 = phi i8 [ %.079, %re_string_list_free.exit128 ], [ 0, %bb.z ], [ %.079, %bb.ai ]
   %i.ed = load i8, ptr %i.q, align 1, !tbaa !26, !range !40, !noundef !41
   %i.ee = and i8 %i.ed, %.4
-  %or.cond3.not = icmp eq i8 %i.ee, 0
-  br i1 %or.cond3.not, label %.thread179.backedge, label %bb.ak
+  %or.cond3 = trunc nuw i8 %i.ee to i1
+  br i1 %or.cond3, label %bb.ak, label %.thread179.backedge
 
 bb.ak:                                            ; preds = %bb.aj
   %i.ef = load i8, ptr %i.ec, align 1, !tbaa !12
@@ -3235,11 +3222,10 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %.lr.p
   br i1 %.not79.i, label %re_string_find2.exit, label %.lr.ph.split.i, !llvm.loop !127
 
 re_string_find2.exit:                             ; preds = %bb.o, %bb.n, %bb.l, %bb.k, %.lr.ph, %bb.j
-  %.not43 = phi i32 [ 1, %.lr.ph ], [ 1, %bb.j ], [ 0, %bb.k ], [ 1, %bb.l ], [ 1, %bb.o ], [ 0, %bb.n ]
-  %.175.i = phi i32 [ 0, %.lr.ph ], [ 0, %bb.j ], [ 1, %bb.k ], [ 0, %bb.l ], [ 0, %bb.o ], [ 1, %bb.n ]
-  %.038 = select i1 %i.ab, i32 %.not43, i32 %.175.i
-  %.not44 = icmp eq i32 %.038, 0
-  br i1 %.not44, label %bb.p, label %bb.q
+  %.not43 = phi i1 [ true, %.lr.ph ], [ true, %bb.j ], [ false, %bb.k ], [ true, %bb.l ], [ true, %bb.o ], [ false, %bb.n ]
+  %.175.i = phi i1 [ false, %.lr.ph ], [ false, %bb.j ], [ true, %bb.k ], [ false, %bb.l ], [ false, %bb.o ], [ true, %bb.n ]
+  %.038 = select i1 %i.ab, i1 %.not43, i1 %.175.i
+  br i1 %.038, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %re_string_find2.exit
   %i.bm = load ptr, ptr %i.aj, align 8, !tbaa !88
@@ -3584,8 +3570,7 @@ declare void @abort() local_unnamed_addr #11
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @cr_init_char_range(ptr %.96.val, ptr noundef nonnull %0, i32 noundef range(i32 0, 6) %1) unnamed_addr #2 {
 bb.a:
-  %2 = and i32 %1, 1
-  %.not = icmp eq i32 %2, 0
+  %.not = trunc i32 %1 to i1
   %i.a = lshr i32 %1, 1
   %i.b = zext nneg i32 %i.a to i64
   %i.c = getelementptr inbounds nuw [8 x i8], ptr @char_range_table, i64 %i.b
@@ -3644,7 +3629,7 @@ bb.d:                                             ; preds = %bb.b, %._crit_edge.
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !133
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
-  br i1 %.not, label %bb.g, label %bb.e
+  br i1 %.not, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %._crit_edge
   %i.z = tail call i32 @cr_invert(ptr noundef nonnull %0) #20

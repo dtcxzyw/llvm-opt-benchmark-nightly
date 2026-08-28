@@ -205,7 +205,6 @@ _RNvMs9_NtNtCsfjHlcakrArn_9hashbrown3raw5innerINtB5_13RawTableInnerNtNtNtB5_5all
   %i.dh = zext i1 %.not10.i.i.i.i to i64
   %.sroa.05.0.i.i.i.i = add nuw nsw i64 %i.df, %i.dh ; 4 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val12.i) ]
-  %xtraiter = and i64 %.sroa.05.0.i.i.i.i, 1
   %i.di = icmp eq i64 %.sroa.05.0.i.i.i.i, 1
   br i1 %i.di, label %.epil.preheader, label %.lr.ph.i.i5.new
 
@@ -214,8 +213,8 @@ _RNvMs9_NtNtCsfjHlcakrArn_9hashbrown3raw5innerINtB5_13RawTableInnerNtNtNtB5_5all
   br label %bb.t
 
 ._crit_edge.i.i6.unr-lcssa:                       ; preds = %bb.t
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i.i6, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %.sroa.05.0.i.i.i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i.i6
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.i6.unr-lcssa, %.lr.ph.i.i5
   %.sroa.01.08.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i5 ], [ %i.ds, %._crit_edge.i.i6.unr-lcssa ]
@@ -618,9 +617,8 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %2 = and i64 %i.b, 1
-  %.not1 = icmp eq i64 %2, 0
-  %. = select i1 %.not1, i8 2, i8 1
+  %2 = trunc i64 %i.b to i1
+  %. = select i1 %2, i8 1, i8 2
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a

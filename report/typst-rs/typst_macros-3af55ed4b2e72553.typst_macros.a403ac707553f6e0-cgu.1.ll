@@ -202,8 +202,8 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 9 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 9 uses
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 26 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 25 ; 2 uses
@@ -228,7 +228,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.q, label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_backCse52LceO7DeS_12typst_macros.exit.thread, label %bb.g
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = load i64, ptr %i.i, align 8, !noalias !57 ; 3 uses
+  %i.r = load i64, ptr %i.j, align 8, !noalias !57 ; 3 uses
   %i.s = icmp eq i64 %i.r, 0
   br i1 %i.s, label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_backCse52LceO7DeS_12typst_macros.exit.thread, label %bb.q
 
@@ -243,7 +243,7 @@ bb.g:                                             ; preds = %bb.d
   %i.x = and i8 %i.v, 1
   %i.y = xor i8 %i.x, 1
   store i8 %i.y, ptr %i.m, align 1, !noalias !57
-  %i.z = load i64, ptr %i.i, align 8, !noalias !57 ; 3 uses
+  %i.z = load i64, ptr %i.j, align 8, !noalias !57 ; 3 uses
   %i.aa = load ptr, ptr %i.d, align 8, !noalias !57 ; 2 uses
   %i.ab = load i64, ptr %i.e, align 8, !noalias !57 ; 2 uses
   %i.ac = call { ptr, i64 } @_RNvXs8_NtNtCs3oUPovFnLWP_4core3str6traitsINtNtNtB9_3ops5range7RangeTojEINtNtNtB9_5slice5index10SliceIndexeE3getCse52LceO7DeS_12typst_macros(i64 %i.z, ptr %i.aa, i64 %i.ab) #20, !noalias !57 ; 2 uses
@@ -291,9 +291,9 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
   %.sroa.01.0.neg.i = phi i64 [ -2, %bb.n ], [ %..i, %bb.o ], [ -1, %bb.m ]
-  %i.an = load i64, ptr %i.i, align 8, !noalias !57
+  %i.an = load i64, ptr %i.j, align 8, !noalias !57
   %i.ao = add i64 %i.an, %.sroa.01.0.neg.i        ; 2 uses
-  store i64 %i.ao, ptr %i.i, align 8, !noalias !57
+  store i64 %i.ao, ptr %i.j, align 8, !noalias !57
   br label %bb.ak
 
 bb.q:                                             ; preds = %bb.e
@@ -316,11 +316,11 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.r
   %i.ax = call i64 @_RNvMNtCs3oUPovFnLWP_4core3stre19floor_char_boundaryCse52LceO7DeS_12typst_macros(ptr nonnull %i.as, i64 %i.ap, i64 %i.aq) #20, !noalias !57 ; 2 uses
-  store i64 %i.ax, ptr %i.i, align 8, !noalias !57
+  store i64 %i.ax, ptr %i.j, align 8, !noalias !57
   br label %bb.ak
 
 bb.u:                                             ; preds = %bb.r
-  store i64 %i.aq, ptr %i.i, align 8, !noalias !57
+  store i64 %i.aq, ptr %i.j, align 8, !noalias !57
   br label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_backCse52LceO7DeS_12typst_macros.exit
 
 bb.v:                                             ; preds = %bb.f
@@ -350,23 +350,22 @@ bb.w:                                             ; preds = %.lr.ph.i.i
   %i.bk = load i64, ptr %i.h, align 8, !noalias !60
   %i.bl = and i8 %i.bj, 63
   %i.bm = zext nneg i8 %i.bl to i64
-  %2 = shl nuw i64 1, %i.bm
-  %3 = and i64 %2, %i.bk
-  %.not16.i.i = icmp eq i64 %3, 0
-  br i1 %.not16.i.i, label %bb.x, label %bb.y
+  %2 = lshr i64 %i.bk, %i.bm
+  %.not16.i.i = trunc i64 %2 to i1
+  br i1 %.not16.i.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   store i64 %i.bg, ptr %i.b, align 8, !noalias !60
   br i1 %i.az, label %bb.z, label %.sink.split.i.i
 
 bb.y:                                             ; preds = %bb.w
-  %i.bn = load i64, ptr %i.i, align 8, !noalias !60 ; 2 uses
+  %i.bn = load i64, ptr %i.j, align 8, !noalias !60 ; 2 uses
   br i1 %i.az, label %bb.ab, label %bb.aa
 
 .sink.split.i.i:                                  ; preds = %bb.aj, %.split28.us.i, %bb.x
   %.sink61.i.i = phi i64 [ %i.cq, %bb.aj ], [ %i.bd, %.split28.us.i ], [ %i.bd, %bb.x ]
   %.ph.i.i = phi i64 [ %i.cr, %bb.aj ], [ %i.cd, %.split28.us.i ], [ %i.bg, %bb.x ]
-  store i64 %.sink61.i.i, ptr %i.j, align 8, !noalias !60
+  store i64 %.sink61.i.i, ptr %i.i, align 8, !noalias !60
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.aj, %.split28.us.i, %.sink.split.i.i, %bb.x
@@ -376,7 +375,7 @@ bb.z:                                             ; preds = %bb.aj, %.split28.us
   br i1 %i.bq, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 bb.aa:                                            ; preds = %bb.y
-  %i.br = load i64, ptr %i.j, align 8, !noalias !60
+  %i.br = load i64, ptr %i.i, align 8, !noalias !60
   %i.bs = call i64 @_RNvYjNtNtCs3oUPovFnLWP_4core3cmp3Ord3minCscVvfRCjUNk2_11proc_macro2(i64 %i.bn, i64 %i.br) #20, !noalias !60
   br label %bb.ab
 
@@ -412,7 +411,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.y
   br i1 %.not19.i.us.i, label %.split.us.i, label %.split28.us.i
 
 .split28.us.i:                                    ; preds = %.lr.ph
-  %i.cc = load i64, ptr %i.i, align 8, !noalias !60
+  %i.cc = load i64, ptr %i.j, align 8, !noalias !60
   %.neg.i.i = add i64 %i.bu, %i.bx
   %i.cd = sub i64 %.neg.i.i, %i.cc                ; 3 uses
   store i64 %i.cd, ptr %i.b, align 8, !noalias !60
@@ -429,12 +428,12 @@ bb.ac:                                            ; preds = %.split.i
   unreachable
 
 bb.ad:                                            ; preds = %.split26.us.i
-  %i.ce = load i64, ptr %i.j, align 8, !noalias !60
+  %i.ce = load i64, ptr %i.i, align 8, !noalias !60
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %.split26.us.i
   %.sroa.06.0.i.i = phi i64 [ %i.ce, %bb.ad ], [ %i.bd, %.split26.us.i ] ; 2 uses
-  %i.cf = load i64, ptr %i.i, align 8, !noalias !60 ; 4 uses
+  %i.cf = load i64, ptr %i.j, align 8, !noalias !60 ; 4 uses
   %umax.i.i = call i64 @llvm.umax.i64(i64 %i.cf, i64 %i.bd) ; 2 uses
   %umax41.i.i = call i64 @llvm.umax.i64(i64 %.sroa.06.0.i.i, i64 %i.cf)
   %exitcond.not.i.i207.not = icmp ult i64 %i.cf, %.sroa.06.0.i.i
@@ -457,7 +456,7 @@ bb.af:                                            ; preds = %bb.ah
   br i1 %exitcond42.not.i.i, label %bb.ai, label %bb.ah
 
 bb.ag:                                            ; preds = %._crit_edge
-  store i64 %i.bd, ptr %i.j, align 8, !noalias !60
+  store i64 %i.bd, ptr %i.i, align 8, !noalias !60
   br label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_backCse52LceO7DeS_12typst_macros.exit
 
 bb.ah:                                            ; preds = %.lr.ph209

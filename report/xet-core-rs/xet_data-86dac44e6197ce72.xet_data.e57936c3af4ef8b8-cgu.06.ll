@@ -204,8 +204,8 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.w = load i64, ptr %2, align 8, !range !1004, !noundef !4
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.not = icmp eq i64 %i.w, 0
-  br i1 %.not, label %bb.m, label %bb.l
+  %5 = trunc nuw i64 %i.w to i1
+  br i1 %5, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.y = load ptr, ptr %i.f, align 8, !noundef !4 ; 2 uses
@@ -608,12 +608,11 @@ bb.a:
   %i.a = alloca [96 x i8], align 8                ; 13 uses
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %1, ptr %i.b, align 8
-  %i.c = trunc nuw i64 %2 to i1
+  %i.c = trunc nuw i64 %2 to i1                   ; 2 uses
   %i.d = trunc nuw nsw i64 %2 to i8
   %.14 = select i1 %i.c, i64 %3, i64 0            ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %4 = icmp ne i64 %2, 0
-  invoke void @_RNvMs7_NtNtCsjHtSR7YjKD4_8xet_data17progress_tracking14progress_typesNtB5_19ItemProgressUpdater16update_item_size(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.e, i64 noundef %.14, i1 noundef zeroext %4)
+  invoke void @_RNvMs7_NtNtCsjHtSR7YjKD4_8xet_data17progress_tracking14progress_typesNtB5_19ItemProgressUpdater16update_item_size(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.e, i64 noundef %.14, i1 noundef zeroext %i.c)
           to label %bb.b unwind label %bb.i
 
 bb.b:                                             ; preds = %bb.a

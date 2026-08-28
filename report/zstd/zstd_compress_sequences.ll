@@ -94,14 +94,13 @@ define range(i64 0, 72057594037927936) i64 @ZSTD_crossEntropyCost(ptr nofree nou
 bb.a:
   %i.a = sub i32 8, %1                            ; 3 uses
   %i.b = add i32 %3, 1                            ; 2 uses
-  %umax = tail call i32 @llvm.umax.i32(i32 %i.b, i32 1) ; 2 uses
-  %wide.trip.count = zext i32 %umax to i64        ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
+  %umax = tail call i32 @llvm.umax.i32(i32 %i.b, i32 1) ; 3 uses
   %i.c = icmp ult i32 %i.b, 2
   br i1 %i.c, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.a
-  %unroll_iter = and i64 %wide.trip.count, 4294967294
+  %4 = and i32 %umax, -2
+  %unroll_iter = zext i32 %4 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.new
@@ -143,8 +142,8 @@ bb.b:                                             ; preds = %bb.b, %.new
   br i1 %niter.ncmp.1, label %.unr-lcssa, label %bb.b, !llvm.loop !15
 
 .unr-lcssa:                                       ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %bb.c, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %umax to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %bb.c
 
 .epil.preheader:                                  ; preds = %.unr-lcssa, %bb.a
   %indvars.iv.epil.init = phi i64 [ 0, %bb.a ], [ %indvars.iv.next.1, %.unr-lcssa ] ; 2 uses
@@ -229,14 +228,13 @@ bb.i:                                             ; preds = %bb.c
 bb.j:                                             ; preds = %bb.i
   %i.t = sub i32 8, %8                            ; 3 uses
   %i.u = add i32 %2, 1                            ; 2 uses
-  %umax.i = tail call i32 @llvm.umax.i32(i32 %i.u, i32 1) ; 2 uses
-  %wide.trip.count.i = zext i32 %umax.i to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
+  %umax.i = tail call i32 @llvm.umax.i32(i32 %i.u, i32 1) ; 3 uses
   %i.v = icmp ult i32 %i.u, 2
   br i1 %i.v, label %.epil.preheader, label %.new
 
 .new:                                             ; preds = %bb.j
-  %unroll_iter = and i64 %wide.trip.count.i, 4294967294
+  %11 = and i32 %umax.i, -2
+  %unroll_iter = zext i32 %11 to i64
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %.new
@@ -278,8 +276,8 @@ bb.k:                                             ; preds = %bb.k, %.new
   br i1 %niter.ncmp.1, label %ZSTD_crossEntropyCost.exit.unr-lcssa, label %bb.k, !llvm.loop !15
 
 ZSTD_crossEntropyCost.exit.unr-lcssa:             ; preds = %bb.k
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %ZSTD_crossEntropyCost.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %umax.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %ZSTD_crossEntropyCost.exit
 
 .epil.preheader:                                  ; preds = %ZSTD_crossEntropyCost.exit.unr-lcssa, %bb.j
   %indvars.iv.i.epil.init = phi i64 [ 0, %bb.j ], [ %indvars.iv.next.i.1, %ZSTD_crossEntropyCost.exit.unr-lcssa ] ; 2 uses
@@ -385,8 +383,8 @@ ZSTD_fseBitCost.exit:                             ; preds = %bb.o, %bb.r, %bb.m,
   %i.cp = icmp ugt i64 %4, 2047
   %i.cq = zext i1 %i.cp to i32
   %i.cr = call i64 @FSE_normalizeCount(ptr noundef nonnull %i.b, i32 noundef %i.co, ptr noundef %1, i64 noundef %4, i32 noundef %2, i32 noundef %i.cq) #8 ; 2 uses
-  %11 = icmp ult i64 %i.cr, -119
-  br i1 %11, label %bb.s, label %ZSTD_NCountCost.exit
+  %12 = icmp ugt i64 %i.cr, -120
+  br i1 %12, label %ZSTD_NCountCost.exit, label %bb.s
 
 bb.s:                                             ; preds = %ZSTD_fseBitCost.exit
   %i.cs = call i64 @FSE_writeNCount(ptr noundef nonnull %i.a, i64 noundef 512, ptr noundef nonnull %i.b, i32 noundef %2, i32 noundef %i.co) #8
@@ -461,8 +459,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = trunc i32 %6 to i8
   %i.b = tail call i64 @FSE_buildCTable_rle(ptr noundef %2, i8 noundef zeroext %i.a) #8 ; 2 uses
-  %16 = icmp ult i64 %i.b, -119
-  br i1 %16, label %bb.c, label %bb.l
+  %16 = icmp ugt i64 %i.b, -120
+  br i1 %16, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = icmp eq i64 %1, 0
@@ -479,8 +477,8 @@ bb.e:                                             ; preds = %bb.a
 
 bb.f:                                             ; preds = %bb.a
   %i.e = tail call i64 @FSE_buildCTable_wksp(ptr noundef %2, ptr noundef %9, i32 noundef %11, i32 noundef %10, ptr noundef %14, i64 noundef %15) #8 ; 2 uses
-  %17 = icmp ult i64 %i.e, -119
-  %spec.select = select i1 %17, i64 0, i64 %i.e
+  %17 = icmp ugt i64 %i.e, -120
+  %spec.select = select i1 %17, i64 %i.e, i64 0
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.a
@@ -505,19 +503,19 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   %i.p = icmp ugt i64 %.0, 2047
   %i.q = zext i1 %i.p to i32
   %i.r = tail call i64 @FSE_normalizeCount(ptr noundef %14, i32 noundef %i.f, ptr noundef nonnull %5, i64 noundef %.0, i32 noundef %6, i32 noundef %i.q) #8 ; 2 uses
-  %18 = icmp ult i64 %i.r, -119
-  br i1 %18, label %bb.j, label %bb.l
+  %18 = icmp ugt i64 %i.r, -120
+  br i1 %18, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.s = tail call i64 @FSE_writeNCount(ptr noundef %0, i64 noundef %1, ptr noundef %14, i32 noundef %6, i32 noundef %i.f) #8 ; 3 uses
-  %19 = icmp ult i64 %i.s, -119
-  br i1 %19, label %bb.k, label %bb.l
+  %19 = icmp ugt i64 %i.s, -120
+  br i1 %19, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.t = getelementptr inbounds nuw i8, ptr %14, i64 108
   %i.u = tail call i64 @FSE_buildCTable_wksp(ptr noundef %2, ptr noundef %14, i32 noundef %6, i32 noundef %i.f, ptr noundef nonnull %i.t, i64 noundef 1140) #8 ; 2 uses
-  %20 = icmp ult i64 %i.u, -119
-  %spec.select79 = select i1 %20, i64 %i.s, i64 %i.u
+  %20 = icmp ugt i64 %i.u, -120
+  %spec.select79 = select i1 %20, i64 %i.u, i64 %i.s
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.f, %bb.a, %bb.i, %bb.j, %bb.c, %bb.b, %bb.e, %bb.d
@@ -551,8 +549,8 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.c = getelementptr inbounds i8, ptr %i.b, i64 -8 ; 21 uses
-  %12 = icmp ugt i64 %1, 8
-  br i1 %12, label %bb.d, label %ZSTD_encodeSequences_default.exit
+  %12 = icmp ult i64 %1, 9
+  br i1 %12, label %ZSTD_encodeSequences_default.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.d = add i64 %9, -1                           ; 4 uses
@@ -955,8 +953,8 @@ define internal fastcc range(i64 1, 0) i64 @ZSTD_encodeSequences_bmi2(ptr nounde
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 %1
   %i.b = getelementptr inbounds i8, ptr %i.a, i64 -8 ; 21 uses
-  %11 = icmp ugt i64 %1, 8
-  br i1 %11, label %bb.b, label %ZSTD_encodeSequences_body.exit
+  %11 = icmp ult i64 %1, 9
+  br i1 %11, label %ZSTD_encodeSequences_body.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = add i64 %9, -1                           ; 4 uses

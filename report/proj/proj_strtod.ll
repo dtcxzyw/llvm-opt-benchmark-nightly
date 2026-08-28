@@ -204,8 +204,8 @@ bb.aj:                                            ; preds = %bb.ai
   %isdigittmp214.lcssa256 = phi i32 [ %isdigittmp214294345551, %.critedge6.lr.ph.split ], [ %isdigittmp214, %.critedge6 ]
   %i.bl = sitofp i32 %isdigittmp214.lcssa256 to double
   %i.bm = tail call double @llvm.fmuladd.f64(double %.1177.ph340556, double 1.000000e+01, double %i.bl) ; 3 uses
-  %.not226 = icmp eq i8 %.lcssa258, 48
-  %spec.select240 = select i1 %.not226, i32 %.0172.ph341555, i32 1 ; 3 uses
+  %.not226 = icmp ne i8 %.lcssa258, 48
+  %spec.select240 = select i1 %.not226, i1 true, i1 %.0172.ph341554 ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %.6.lcssa259, i64 1 ; 4 uses
   %i.bo = add i32 %.1163.ph343553, 1              ; 2 uses
   %i.bp = add nuw i32 %.0161.ph344552, 1          ; 3 uses
@@ -223,7 +223,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 .critedge6.lr.ph.split.us:                        ; preds = %.critedge6.lr.ph, %.critedge6.lr.ph.preheader
   %.6.ph342.lcssa = phi ptr [ %.5, %.critedge6.lr.ph.preheader ], [ %i.bn, %.critedge6.lr.ph ]
-  %.0172.ph341.lcssa = phi i32 [ 0, %.critedge6.lr.ph.preheader ], [ %spec.select240, %.critedge6.lr.ph ]
+  %.0172.ph341.lcssa = phi i1 [ false, %.critedge6.lr.ph.preheader ], [ %spec.select240, %.critedge6.lr.ph ]
   %.1177.ph340.lcssa = phi double [ %.0176.ph.lcssa, %.critedge6.lr.ph.preheader ], [ %i.bm, %.critedge6.lr.ph ]
   br label %.critedge6.us
 
@@ -240,7 +240,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 .critedge6.lr.ph.split:                           ; preds = %.critedge6.lr.ph.preheader, %.critedge6.lr.ph
   %.1177.ph340556 = phi double [ %i.bm, %.critedge6.lr.ph ], [ %.0176.ph.lcssa, %.critedge6.lr.ph.preheader ] ; 2 uses
-  %.0172.ph341555 = phi i32 [ %spec.select240, %.critedge6.lr.ph ], [ 0, %.critedge6.lr.ph.preheader ] ; 2 uses
+  %.0172.ph341554 = phi i1 [ %spec.select240, %.critedge6.lr.ph ], [ false, %.critedge6.lr.ph.preheader ] ; 2 uses
   %.6.ph342554 = phi ptr [ %i.bn, %.critedge6.lr.ph ], [ %.5, %.critedge6.lr.ph.preheader ] ; 2 uses
   %.1163.ph343553 = phi i32 [ %i.bo, %.critedge6.lr.ph ], [ %.0162.ph.lcssa.fr, %.critedge6.lr.ph.preheader ] ; 2 uses
   %.0161.ph344552 = phi i32 [ %i.bp, %.critedge6.lr.ph ], [ 0, %.critedge6.lr.ph.preheader ] ; 2 uses
@@ -252,12 +252,11 @@ bb.aj:                                            ; preds = %bb.ai
 .outer247._crit_edge:                             ; preds = %.outer247, %.lr.ph, %.critedge6.us
   %i.bz = phi i8 [ %i.bi, %.lr.ph ], [ %i.bu, %.critedge6.us ], [ %i.bq, %.outer247 ] ; 2 uses
   %.1177.ph.lcssa = phi double [ %.1177.ph340556, %.lr.ph ], [ %.1177.ph340.lcssa, %.critedge6.us ], [ %i.bm, %.outer247 ]
-  %.0172.ph.lcssa = phi i32 [ %.0172.ph341555, %.lr.ph ], [ %.0172.ph341.lcssa, %.critedge6.us ], [ %spec.select240, %.outer247 ]
+  %.0172.ph.lcssa = phi i1 [ %.0172.ph341554, %.lr.ph ], [ %.0172.ph341.lcssa, %.critedge6.us ], [ %spec.select240, %.outer247 ]
   %.1163.ph.lcssa = phi i32 [ %.1163.ph343553, %.lr.ph ], [ %smax, %.critedge6.us ], [ %i.bo, %.outer247 ] ; 2 uses
   %.0161.ph.lcssa = phi i32 [ %.0161.ph344552, %.lr.ph ], [ %i.bf, %.critedge6.us ], [ %i.bp, %.outer247 ]
   %.6.lcssa = phi ptr [ %i.bh, %.lr.ph ], [ %i.bt, %.critedge6.us ], [ %i.bn, %.outer247 ] ; 2 uses
-  %.not216 = icmp eq i32 %.0172.ph.lcssa, 0
-  br i1 %.not216, label %.outer247._crit_edge.thread, label %bb.ak
+  br i1 %.0172.ph.lcssa, label %bb.ak, label %.outer247._crit_edge.thread
 
 bb.ak:                                            ; preds = %.outer247._crit_edge
   %i.ca = add nsw i32 %.2, %.0161.ph.lcssa

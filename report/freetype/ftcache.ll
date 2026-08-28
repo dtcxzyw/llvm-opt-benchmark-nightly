@@ -204,8 +204,8 @@ bb.i:                                             ; preds = %.thread, %.loopexit
 
 bb.j:                                             ; preds = %.lr.ph
   %i.cd = call zeroext i8 @ftc_snode_compare(ptr noundef nonnull %i.bz, ptr noundef nonnull %5, ptr noundef nonnull %0, ptr noundef nonnull %i.c)
-  %.not110 = icmp eq i8 %i.cd, 0
-  br i1 %.not110, label %bb.k, label %bb.l
+  %.not110 = trunc nuw i8 %i.cd to i1
+  br i1 %.not110, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bz, i64 16 ; 2 uses
@@ -608,8 +608,8 @@ bb.o:                                             ; preds = %.thread, %.loopexit
 
 bb.p:                                             ; preds = %.lr.ph
   %i.cw = call zeroext i8 @ftc_snode_compare(ptr noundef nonnull %i.cs, ptr noundef nonnull %6, ptr noundef nonnull %0, ptr noundef nonnull %i.c)
-  %.not111 = icmp eq i8 %i.cw, 0
-  br i1 %.not111, label %bb.q, label %bb.r
+  %.not111 = trunc nuw i8 %i.cw to i1
+  br i1 %.not111, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.lr.ph
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cs, i64 16 ; 2 uses
@@ -1012,8 +1012,8 @@ ftc_cmap_node_compare.exit:                       ; preds = %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %i.ad, i64 52
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !138
   %i.ap = sub i32 %3, %i.ao                       ; 2 uses
-  %5 = icmp ugt i32 %i.ap, 127
-  br i1 %5, label %ftc_cmap_node_compare.exit.thread, label %bb.e
+  %5 = icmp ult i32 %i.ap, 128
+  br i1 %5, label %bb.e, label %ftc_cmap_node_compare.exit.thread
 
 ftc_cmap_node_compare.exit.thread:                ; preds = %bb.c, %bb.d, %ftc_cmap_node_compare.exit, %.lr.ph
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
@@ -1416,7 +1416,6 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %xtraiter = and i32 %i.b, 1
   %i.d = icmp eq i32 %i.b, 1
   br i1 %i.d, label %.lr.ph.epil.preheader, label %.lr.ph.preheader.new
 
@@ -1472,8 +1471,8 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.1
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph, !llvm.loop !238
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.d
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.b to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.epil.preheader, label %._crit_edge
 
 .lr.ph.epil.preheader:                            ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph.preheader
   %.023.epil.init = phi i64 [ 448, %.lr.ph.preheader ], [ %.1.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -1717,9 +1716,8 @@ bb.k:                                             ; preds = %bb.j
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !256
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 8 ; 2 uses
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !257 ; 2 uses
-  %4 = and i32 %i.bz, 1
-  %.not89 = icmp eq i32 %4, 0
-  br i1 %.not89, label %bb.m, label %bb.l
+  %.not89 = trunc i32 %i.bz to i1
+  br i1 %.not89, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ca = getelementptr inbounds nuw i8, ptr %i.s, i64 168

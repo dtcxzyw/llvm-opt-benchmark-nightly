@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir7LiteralECsdq8xsXUia3c_10grep_regex.exit, !dbg !225
 
 bb.g:                                             ; preds = %bb.a
-  %1 = icmp eq i64 %i.a, 0, !dbg !226
+  %1 = trunc nuw i64 %i.a to i1, !dbg !226
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !226 ; 6 uses
-  br i1 %1, label %bb.h, label %bb.k, !dbg !226
+  br i1 %1, label %bb.k, label %bb.h, !dbg !226
 
 bb.h:                                             ; preds = %bb.g
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VecNtNtCs2G6gJ0Mq9lu_12regex_syntax3hir17ClassUnicodeRangeENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsdq8xsXUia3c_10grep_regex(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.k)
@@ -610,9 +610,8 @@ bb.c:                                             ; preds = %tailrecurse
   br i1 %i.p, label %.loopexit, label %.lr.ph57.preheader, !dbg !905
 
 .lr.ph57.preheader:                               ; preds = %bb.c
-  %xtraiter143 = and i64 %i.n, 1, !dbg !905
-  %lcmp.mod144.not = icmp eq i64 %xtraiter143, 0, !dbg !905
-  br i1 %lcmp.mod144.not, label %.lr.ph57.prol.loopexit, label %.lr.ph57.prol, !dbg !905
+  %lcmp.mod144.not = trunc i64 %i.n to i1, !dbg !905
+  br i1 %lcmp.mod144.not, label %.lr.ph57.prol, label %.lr.ph57.prol.loopexit, !dbg !905
 
 .lr.ph57.prol:                                    ; preds = %.lr.ph57.preheader
   %i.q = load i8, ptr %i.l, align 1, !dbg !912, !noundef !13 ; 2 uses
@@ -811,10 +810,10 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs2G6gJ0Mq9lu_12regex_syntax4utf813U
   br i1 %i.cq, label %.loopexit, label %bb.k, !dbg !1061
 
 .lr.ph.i.preheader:                               ; preds = %switch.lookup
-  %2 = add i8 %i.cn, %i.cm, !dbg !1104
-  %3 = and i8 %2, 1, !dbg !1104
-  %lcmp.mod.not.not = icmp eq i8 %3, 0, !dbg !1104
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit, !dbg !1104
+  %2 = xor i8 %i.cn, -1, !dbg !1104
+  %3 = sub i8 %2, %i.cm, !dbg !1104
+  %lcmp.mod.not = trunc i8 %3 to i1, !dbg !1104
+  br i1 %lcmp.mod.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit, !dbg !1104
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
   %i.cr = add i8 %i.cm, 1, !dbg !1129
@@ -878,10 +877,10 @@ _RNvMs5_Cs7LWxN68iDgu_12grep_matcherNtB5_7ByteSet10remove_all.exit: ; preds = %.
   br i1 %.not.i7.i.1, label %_RNvMs5_Cs7LWxN68iDgu_12grep_matcherNtB5_7ByteSet10remove_all.exit.1, label %.lr.ph.i.preheader.1, !dbg !1104
 
 .lr.ph.i.preheader.1:                             ; preds = %.lr.ph48.1
-  %4 = add i8 %i.dy, %i.dx, !dbg !1104
-  %5 = and i8 %4, 1, !dbg !1104
-  %lcmp.mod.1.not.not = icmp eq i8 %5, 0, !dbg !1104
-  br i1 %lcmp.mod.1.not.not, label %.lr.ph.i.prol.1, label %.lr.ph.i.prol.loopexit.1, !dbg !1104
+  %4 = xor i8 %i.dy, -1, !dbg !1104
+  %5 = sub i8 %4, %i.dx, !dbg !1104
+  %lcmp.mod.1.not = trunc i8 %5 to i1, !dbg !1104
+  br i1 %lcmp.mod.1.not, label %.lr.ph.i.prol.1, label %.lr.ph.i.prol.loopexit.1, !dbg !1104
 
 .lr.ph.i.prol.1:                                  ; preds = %.lr.ph.i.preheader.1
   %i.dz = add i8 %i.dx, 1, !dbg !1129
@@ -940,10 +939,10 @@ _RNvMs5_Cs7LWxN68iDgu_12grep_matcherNtB5_7ByteSet10remove_all.exit.1: ; preds = 
   br i1 %.not.i7.i.2, label %_RNvMs5_Cs7LWxN68iDgu_12grep_matcherNtB5_7ByteSet10remove_all.exit.2, label %.lr.ph.i.preheader.2, !dbg !1104
 
 .lr.ph.i.preheader.2:                             ; preds = %.lr.ph48.2
-  %6 = add i8 %i.fg, %i.ff, !dbg !1104
-  %7 = and i8 %6, 1, !dbg !1104
-  %lcmp.mod.2.not.not = icmp eq i8 %7, 0, !dbg !1104
-  br i1 %lcmp.mod.2.not.not, label %.lr.ph.i.prol.2, label %.lr.ph.i.prol.loopexit.2, !dbg !1104
+  %6 = xor i8 %i.fg, -1, !dbg !1104
+  %7 = sub i8 %6, %i.ff, !dbg !1104
+  %lcmp.mod.2.not = trunc i8 %7 to i1, !dbg !1104
+  br i1 %lcmp.mod.2.not, label %.lr.ph.i.prol.2, label %.lr.ph.i.prol.loopexit.2, !dbg !1104
 
 .lr.ph.i.prol.2:                                  ; preds = %.lr.ph.i.preheader.2
   %i.fh = add i8 %i.ff, 1, !dbg !1129
@@ -1002,10 +1001,10 @@ _RNvMs5_Cs7LWxN68iDgu_12grep_matcherNtB5_7ByteSet10remove_all.exit.2: ; preds = 
   br i1 %.not.i7.i.3, label %._crit_edge, label %.lr.ph.i.preheader.3, !dbg !1104
 
 .lr.ph.i.preheader.3:                             ; preds = %.lr.ph48.3
-  %8 = add i8 %i.go, %i.gn, !dbg !1104
-  %9 = and i8 %8, 1, !dbg !1104
-  %lcmp.mod.3.not.not = icmp eq i8 %9, 0, !dbg !1104
-  br i1 %lcmp.mod.3.not.not, label %.lr.ph.i.prol.3, label %.lr.ph.i.prol.loopexit.3, !dbg !1104
+  %8 = xor i8 %i.go, -1, !dbg !1104
+  %9 = sub i8 %8, %i.gn, !dbg !1104
+  %lcmp.mod.3.not = trunc i8 %9 to i1, !dbg !1104
+  br i1 %lcmp.mod.3.not, label %.lr.ph.i.prol.3, label %.lr.ph.i.prol.loopexit.3, !dbg !1104
 
 .lr.ph.i.prol.3:                                  ; preds = %.lr.ph.i.preheader.3
   %i.gp = add i8 %i.gn, 1, !dbg !1129
@@ -1069,10 +1068,10 @@ bb.r:                                             ; preds = %bb.m
   br i1 %.not.i7.i21, label %_RNvMs5_Cs7LWxN68iDgu_12grep_matcherNtB5_7ByteSet10remove_all.exit25, label %.lr.ph.i22.preheader, !dbg !1176
 
 .lr.ph.i22.preheader:                             ; preds = %.lr.ph54
-  %10 = add i8 %i.hy, %i.hw, !dbg !1176
-  %11 = and i8 %10, 1, !dbg !1176
-  %lcmp.mod142.not.not = icmp eq i8 %11, 0, !dbg !1176
-  br i1 %lcmp.mod142.not.not, label %.lr.ph.i22.prol, label %.lr.ph.i22.prol.loopexit, !dbg !1176
+  %10 = xor i8 %i.hy, -1, !dbg !1176
+  %11 = sub i8 %10, %i.hw, !dbg !1176
+  %lcmp.mod142.not = trunc i8 %11 to i1, !dbg !1176
+  br i1 %lcmp.mod142.not, label %.lr.ph.i22.prol, label %.lr.ph.i22.prol.loopexit, !dbg !1176
 
 .lr.ph.i22.prol:                                  ; preds = %.lr.ph.i22.preheader
   %i.hz = add i8 %i.hw, 1, !dbg !1180

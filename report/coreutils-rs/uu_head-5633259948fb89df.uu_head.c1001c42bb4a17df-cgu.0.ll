@@ -204,10 +204,11 @@ bb.as:                                            ; preds = %bb.aq
 _RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultyNtNtNtB4_2io5error5ErrorE6unwrapCsgzkSwV7OBv7_7uu_head.exit.i.i: ; preds = %bb.ap
   %i.fi = ptrtoint ptr %i.eo to i64
   %i.fj = tail call { i64, ptr } @_RNvXsc_NtCs2vKOLqTMYjT_3std2fsNtB5_4FileNtNtNtCs6JMX4GRUq9U_4core2io4seek4Seek4seek(ptr noalias nofree noundef nonnull align 4 dereferenceable(4) %0, i64 noundef 0, i64 noundef %i.fi) #22, !noalias !794 ; 2 uses
-  %i.fk = extractvalue { i64, ptr } %i.fj, 0
+  %i.fk = extractvalue { i64, ptr } %i.fj, 0      ; 2 uses
   %i.fl = extractvalue { i64, ptr } %i.fj, 1      ; 4 uses
   %i.fm = icmp eq i64 %i.fk, 0
-  br i1 %i.fm, label %_RNvCsgzkSwV7OBv7_7uu_head11is_seekable.exit.i, label %bb.at
+  %2 = trunc nuw i64 %i.fk to i1
+  br i1 %2, label %bb.at, label %_RNvCsgzkSwV7OBv7_7uu_head11is_seekable.exit.i
 
 bb.at:                                            ; preds = %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultyNtNtNtB4_2io5error5ErrorE6unwrapCsgzkSwV7OBv7_7uu_head.exit.i.i
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fl) ]
@@ -243,12 +244,13 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgzkSwV7OBv7_7
   br label %_RNvCsgzkSwV7OBv7_7uu_head11is_seekable.exit.i
 
 _RNvCsgzkSwV7OBv7_7uu_head11is_seekable.exit.i:   ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgzkSwV7OBv7_7uu_head.exit.i14.i.i, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultyNtNtNtB4_2io5error5ErrorE6unwrapCsgzkSwV7OBv7_7uu_head.exit.i.i, %.thread.i.i, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgzkSwV7OBv7_7uu_head.exit.i.i.i
-  %.not.i3.a = phi i1 [ true, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgzkSwV7OBv7_7uu_head.exit.i.i.i ], [ true, %.thread.i.i ], [ false, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultyNtNtNtB4_2io5error5ErrorE6unwrapCsgzkSwV7OBv7_7uu_head.exit.i.i ], [ true, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgzkSwV7OBv7_7uu_head.exit.i14.i.i ]
+  %.not.i3.a = phi i1 [ false, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgzkSwV7OBv7_7uu_head.exit.i.i.i ], [ false, %.thread.i.i ], [ %i.fm, %_RNvMNtCs6JMX4GRUq9U_4core6resultINtB2_6ResultyNtNtNtB4_2io5error5ErrorE6unwrapCsgzkSwV7OBv7_7uu_head.exit.i.i ], [ false, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsgzkSwV7OBv7_7uu_head.exit.i14.i.i ]
   %i.fu = add i64 %.sroa.1527.0.copyload.i, -536870913
   %i.fv = icmp ult i64 %i.fu, -536870912
   %.sroa.013.0.i = select i1 %i.fv, i64 512, i64 %.sroa.1527.0.copyload.i
+  %.not.i3 = xor i1 %.not.i3.a, true
   %i.fw = icmp ule i64 %.sroa.1426.0.copyload.i, %.sroa.013.0.i
-  %or.cond3.i = select i1 %.not.i3.a, i1 true, i1 %i.fw
+  %or.cond3.i = select i1 %.not.i3, i1 true, i1 %i.fw
   %i.fx = getelementptr inbounds nuw i8, ptr %1, i64 42
   %i.fy = load i8, ptr %i.fx, align 2, !range !70, !alias.scope !794, !noalias !822
   %i.fz = trunc nuw i8 %i.fy to i1
@@ -651,9 +653,8 @@ _RNCNvMs0_CsgzkSwV7OBv7_7uu_headNtB7_4Mode4from0B7_.exit.i: ; preds = %_RINvNtCs
 
 bb.y:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !1117
-  %2 = and i8 %i.be, 1
-  %.not155.i = icmp eq i8 %2, 0
-  %spec.select.i = select i1 %.not155.i, i64 2, i64 3
+  %.not155.i = trunc i8 %i.be to i1
+  %spec.select.i = select i1 %.not155.i, i64 3, i64 2
   br label %_RNvMs0_CsgzkSwV7OBv7_7uu_headNtB5_4Mode4from.exit.thread
 
 bb.z:                                             ; preds = %_RINvMNtNtCsgNwXemyrBWj_12clap_builder6parser5errorNtB3_12MatchesError6unwrapINtNtCs6JMX4GRUq9U_4core6option6OptionRNtNtCs7tKScEop1B6_5alloc6string6StringEECsgzkSwV7OBv7_7uu_head.exit78.i

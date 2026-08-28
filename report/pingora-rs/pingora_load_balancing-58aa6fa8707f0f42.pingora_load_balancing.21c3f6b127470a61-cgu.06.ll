@@ -205,7 +205,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecINtNtNtCs84JG9zk80ZV_4http6header3map
   tail call void @llvm.experimental.noalias.scope.decl(metadata !28)
   %i.by = icmp ult i64 %i.bl, 144115188075855872
   tail call void @llvm.assume(i1 %i.by)
-  %.sroa.8.0.copyload78.i.i = load i64, ptr %i.bq, align 8, !noalias !31 ; 2 uses
+  %.sroa.8.0.copyload78.i.i = load i64, ptr %i.bq, align 8, !noalias !31
   %.sroa.10.0.copyload80.i.i = load i64, ptr %i.bs, align 8, !noalias !31 ; 2 uses
   %.sroa.12.0..sroa_idx81.i.i = getelementptr inbounds nuw i8, ptr %i.bm, i64 32
   %.sroa.12.0.copyload82.i.i = load ptr, ptr %.sroa.12.0..sroa_idx81.i.i, align 8, !noalias !31 ; 6 uses
@@ -420,14 +420,11 @@ common.resume:                                    ; preds = %bb.bb, %bb.aj
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtNtCs84JG9zk80ZV_4http6header3map18remove_extra_valueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameECs2TJrahNLnPN_22pingora_load_balancing.exit.i: ; preds = %bb.au, %bb.at, %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameEE11swap_removeCs2TJrahNLnPN_22pingora_load_balancing.exit.i.i
-  %.not.i.i2 = icmp ne i64 %.sroa.8.0.copyload78.i.i, 0
-  %3 = icmp eq i64 %.sroa.10.0.copyload80.i.i, %i.bz ; 2 uses
-  %or.cond73.i.i = select i1 %.not.i.i2, i1 %3, i1 false
   %i.ed = trunc nuw i64 %.sroa.8.0.copyload78.i.i to i1
-  %4 = select i1 %or.cond73.i.i, i1 true, i1 %i.ed
-  br i1 %4, label %bb.aw, label %_RNvMs0_NtNtCs84JG9zk80ZV_4http6header3mapINtB5_9HeaderMapNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameE23remove_all_extra_valuesCs2TJrahNLnPN_22pingora_load_balancing.exit
+  br i1 %i.ed, label %bb.aw, label %_RNvMs0_NtNtCs84JG9zk80ZV_4http6header3mapINtB5_9HeaderMapNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameE23remove_all_extra_valuesCs2TJrahNLnPN_22pingora_load_balancing.exit
 
 bb.aw:                                            ; preds = %_RINvNtNtCs84JG9zk80ZV_4http6header3map18remove_extra_valueNtNtCskspKcFIsYcD_12pingora_http16case_header_name14CaseHeaderNameECs2TJrahNLnPN_22pingora_load_balancing.exit.i
+  %3 = icmp eq i64 %.sroa.10.0.copyload80.i.i, %i.bz
   %.sroa.10.0.i.i = select i1 %3, i64 %.sroa.0.078.i, i64 %.sroa.10.0.copyload80.i.i ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0.copyload82.i.i) ]
   %i.ee = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload82.i.i, i64 32
@@ -830,7 +827,7 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecINtNtNtCs84JG9zk80ZV_4http6header3map
   tail call void @llvm.experimental.noalias.scope.decl(metadata !383)
   %i.v = icmp ult i64 %i.i, 128102389400760776
   tail call void @llvm.assume(i1 %i.v)
-  %.sroa.8.0.copyload78.i = load i64, ptr %i.n, align 8, !noalias !386 ; 2 uses
+  %.sroa.8.0.copyload78.i = load i64, ptr %i.n, align 8, !noalias !386
   %.sroa.10.0.copyload80.i = load i64, ptr %i.p, align 8, !noalias !386 ; 2 uses
   %.sroa.12.0..sroa_idx81.i = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %.sroa.12.0.copyload82.i = load ptr, ptr %.sroa.12.0..sroa_idx81.i, align 8, !noalias !386 ; 6 uses
@@ -1044,14 +1041,11 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs84JG9zk80ZV_4http6header3map10E
   resume { ptr, i32 } %i.ba
 
 _RINvNtNtCs84JG9zk80ZV_4http6header3map18remove_extra_valueNtNtB4_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit: ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecINtNtNtCs84JG9zk80ZV_4http6header3map10ExtraValueNtNtBJ_5value11HeaderValueEE11swap_removeCs2TJrahNLnPN_22pingora_load_balancing.exit.i, %bb.ak, %bb.al
-  %.not.i = icmp ne i64 %.sroa.8.0.copyload78.i, 0
-  %2 = icmp eq i64 %.sroa.10.0.copyload80.i, %i.w ; 2 uses
-  %or.cond73.i = select i1 %.not.i, i1 %2, i1 false
   %i.ca = trunc nuw i64 %.sroa.8.0.copyload78.i to i1
-  %3 = select i1 %or.cond73.i, i1 true, i1 %i.ca
-  br i1 %3, label %bb.an, label %bb.ao
+  br i1 %i.ca, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %_RINvNtNtCs84JG9zk80ZV_4http6header3map18remove_extra_valueNtNtB4_5value11HeaderValueECs2TJrahNLnPN_22pingora_load_balancing.exit
+  %2 = icmp eq i64 %.sroa.10.0.copyload80.i, %i.w
   %.sroa.10.0.i = select i1 %2, i64 %.sroa.0.078, i64 %.sroa.10.0.copyload80.i ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12.0.copyload82.i) ]
   %i.cb = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload82.i, i64 32

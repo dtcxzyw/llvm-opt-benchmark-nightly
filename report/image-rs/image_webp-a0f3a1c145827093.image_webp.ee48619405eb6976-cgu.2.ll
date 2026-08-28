@@ -205,9 +205,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %.sroa.518.031.ph = phi i64 [ %.sroa.518.0.copyload, %vector.memcheck ], [ %.sroa.518.0.copyload, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.lr.ph ], [ %i.n, %middle.block ] ; 6 uses
   %i.ae = sub i64 %.sroa.7.0.copyload, %.sroa.518.031.ph
   %.neg = add i64 %.sroa.518.031.ph, 1
-  %xtraiter = and i64 %i.ae, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.prol.loopexit, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.prol
+  %lcmp.mod.not = trunc i64 %i.ae to i1
+  br i1 %lcmp.mod.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.prol, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.prol.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.prol: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.preheader
   %i.af = getelementptr inbounds nuw i8, ptr %.sroa.015.0.copyload, i64 %.sroa.518.031.ph ; 2 uses
@@ -336,9 +335,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %.sroa.518.031.1.ph = phi i64 [ %.sroa.518.0.copyload.1, %vector.memcheck55 ], [ %.sroa.518.0.copyload.1, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.lr.ph.1 ], [ %i.bs, %middle.block74 ] ; 6 uses
   %i.cj = sub i64 %.sroa.7.0.copyload.1, %.sroa.518.031.1.ph
   %.neg130 = add i64 %.sroa.518.031.1.ph, 1
-  %xtraiter124 = and i64 %i.cj, 1
-  %lcmp.mod125.not = icmp eq i64 %xtraiter124, 0
-  br i1 %lcmp.mod125.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.1.prol.loopexit, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.1.prol
+  %lcmp.mod125.not = trunc i64 %i.cj to i1
+  br i1 %lcmp.mod125.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.1.prol, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.1.prol.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.1.prol: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.1.preheader
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.015.0.copyload.1, i64 %.sroa.518.031.1.ph ; 2 uses
@@ -467,9 +465,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %.sroa.518.031.2.ph = phi i64 [ %.sroa.518.0.copyload.2, %vector.memcheck77 ], [ %.sroa.518.0.copyload.2, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.lr.ph.2 ], [ %i.dx, %middle.block96 ] ; 6 uses
   %i.eo = sub i64 %.sroa.7.0.copyload.2, %.sroa.518.031.2.ph
   %.neg131 = add i64 %.sroa.518.031.2.ph, 1
-  %xtraiter126 = and i64 %i.eo, 1
-  %lcmp.mod127.not = icmp eq i64 %xtraiter126, 0
-  br i1 %lcmp.mod127.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.2.prol.loopexit, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.2.prol
+  %lcmp.mod127.not = trunc i64 %i.eo to i1
+  br i1 %lcmp.mod127.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.2.prol, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.2.prol.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.2.prol: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.2.preheader
   %i.ep = getelementptr inbounds nuw i8, ptr %.sroa.015.0.copyload.2, i64 %.sroa.518.031.2.ph ; 2 uses
@@ -598,9 +595,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %.sroa.518.031.3.ph = phi i64 [ %.sroa.518.0.copyload.3, %vector.memcheck99 ], [ %.sroa.518.0.copyload.3, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.lr.ph.3 ], [ %i.gc, %middle.block118 ] ; 6 uses
   %i.gt = sub i64 %.sroa.7.0.copyload.3, %.sroa.518.031.3.ph
   %.neg132 = add i64 %.sroa.518.031.3.ph, 1
-  %xtraiter128 = and i64 %i.gt, 1
-  %lcmp.mod129.not = icmp eq i64 %xtraiter128, 0
-  br i1 %lcmp.mod129.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.3.prol.loopexit, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.3.prol
+  %lcmp.mod129.not = trunc i64 %i.gt to i1
+  br i1 %lcmp.mod129.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.3.prol, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.3.prol.loopexit
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.3.prol: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterlEEINtB5_7ZipImplBW_B1r_E4nextCsksn9slvsHfS_10image_webp.exit.3.preheader
   %i.gu = getelementptr inbounds nuw i8, ptr %.sroa.015.0.copyload.3, i64 %.sroa.518.031.3.ph ; 2 uses
@@ -1003,9 +999,8 @@ vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vec.ep
   %i.az = sub i64 %.val6.i, %.val.i
   %i.ba = xor i64 %.sroa.0.010.i.ph, -1
   %i.bb = add i64 %.val6.i, %i.ba
-  %xtraiter = and i64 %i.az, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol.loopexit, label %vec.epilog.scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %i.az to i1
+  br i1 %lcmp.mod.not, label %vec.epilog.scalar.ph.prol, label %vec.epilog.scalar.ph.prol.loopexit
 
 vec.epilog.scalar.ph.prol:                        ; preds = %vec.epilog.scalar.ph.preheader
   %i.bc = or disjoint i64 %.sroa.0.010.i.ph, 1

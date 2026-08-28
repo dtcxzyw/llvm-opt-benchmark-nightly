@@ -101,15 +101,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.b
   %i.t = zext i32 %.sroa.0.0.copyload41 to i64
-  %8 = icmp ult i64 %1, %i.t
-  %9 = icmp ugt i32 %.sroa.4.0.copyload, %.sroa.0.0.copyload41
-  %or.cond20.i = or i1 %9, %8
-  %10 = add i32 %i.f, -32
-  %or.cond7.i = icmp ult i32 %10, -31
-  %or.cond21.i = or i1 %or.cond7.i, %or.cond20.i
-  %or.cond12.i = icmp ugt i32 %i.h, 10
-  %or.cond47 = select i1 %or.cond21.i, i1 true, i1 %or.cond12.i
-  br i1 %or.cond47, label %FASTCOVER_checkParameters.exit.thread, label %bb.e
+  %8 = icmp uge i64 %1, %i.t
+  %9 = icmp ule i32 %.sroa.4.0.copyload, %.sroa.0.0.copyload41
+  %or.cond20.i.not50 = and i1 %9, %8
+  %or.cond7.i = icmp ult i32 %i.f, 32
+  %or.cond21.i.not48 = and i1 %or.cond7.i, %or.cond20.i.not50
+  %or.cond12.i = icmp ult i32 %i.h, 11
+  %or.cond47 = select i1 %or.cond21.i.not48, i1 %or.cond12.i, i1 false
+  br i1 %or.cond47, label %bb.e, label %FASTCOVER_checkParameters.exit.thread
 
 FASTCOVER_checkParameters.exit.thread:            ; preds = %bb.c, %bb.b, %bb.a
   %i.u = icmp sgt i32 %i.b, 0
@@ -157,8 +156,8 @@ bb.k:                                             ; preds = %bb.h
   %i.am = getelementptr inbounds nuw [8 x i8], ptr @FASTCOVER_defaultAccelParameters, i64 %i.al
   %.sroa.0.0.copyload = load i64, ptr %i.am, align 8
   %i.an = call fastcc i64 @FASTCOVER_ctx_init(ptr noundef %6, ptr noundef %2, ptr noundef %3, i32 noundef %4, i32 noundef %.sroa.4.0.copyload, double noundef 1.000000e+00, i32 noundef %i.f, i64 %.sroa.0.0.copyload, i32 noundef %i.b) ; 3 uses
-  %11 = icmp ult i64 %i.an, -119
-  br i1 %11, label %.critedge, label %bb.l
+  %10 = icmp ugt i64 %i.an, -120
+  br i1 %10, label %bb.l, label %.critedge
 
 bb.l:                                             ; preds = %bb.k
   %i.ao = icmp sgt i32 %i.b, 0
@@ -561,9 +560,8 @@ bb.d:                                             ; preds = %.lr.ph, %bb.q
   %i.ai = zext i32 %.sroa.011.0.lcssa.i to i64    ; 5 uses
   %wide.trip.count21.i = zext i32 %i.w to i64     ; 3 uses
   %i.aj = sub nsw i64 %wide.trip.count21.i, %i.ai
-  %xtraiter = and i64 %i.aj, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
+  %lcmp.mod.not = trunc i64 %i.aj to i1
+  br i1 %lcmp.mod.not, label %.prol.loopexit.unr-lcssa, label %.prol.loopexit
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph12.i
   %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.ai
@@ -966,8 +964,8 @@ bb.u:                                             ; preds = %.lr.ph238.split
 
 bb.v:                                             ; preds = %bb.u, %.lr.ph238.split
   %i.cm = call fastcc i64 @FASTCOVER_ctx_init(ptr noundef %7, ptr noundef %2, ptr noundef %3, i32 noundef %4, i32 noundef %.0147234, double noundef %i.f, i32 noundef %i.ad, i64 %.sroa.0.0.copyload, i32 noundef %i.ca) ; 2 uses
-  %8 = icmp ult i64 %i.cm, -119
-  br i1 %8, label %bb.y, label %.split.us
+  %8 = icmp ugt i64 %i.cm, -120
+  br i1 %8, label %.split.us, label %bb.y
 
 .split.us:                                        ; preds = %bb.v
   br i1 %i.cf, label %bb.w, label %bb.x
@@ -1170,8 +1168,8 @@ bb.as:                                            ; preds = %._crit_edge239
 bb.at:                                            ; preds = %bb.as, %._crit_edge239
   %i.em = getelementptr inbounds nuw i8, ptr %6, i64 160
   %i.en = load i64, ptr %i.em, align 8, !tbaa !75 ; 2 uses
-  %9 = icmp ult i64 %i.en, -119
-  br i1 %9, label %bb.av, label %bb.au
+  %9 = icmp ugt i64 %i.en, -120
+  br i1 %9, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
   call void @COVER_best_destroy(ptr noundef nonnull %6) #12

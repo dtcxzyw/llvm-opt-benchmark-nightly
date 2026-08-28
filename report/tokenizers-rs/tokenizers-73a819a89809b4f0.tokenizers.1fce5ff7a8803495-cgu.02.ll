@@ -202,9 +202,6 @@ bb.a:
   %i.o = getelementptr i8, ptr %.val, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 7 uses
@@ -218,6 +215,9 @@ bb.a:
   %.sroa.13107.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   %.sroa.14.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 88
   %.sroa.15.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 96
+  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %.pre = load i64, ptr %.val6, align 8, !noalias !296
   br label %bb.b
 
@@ -236,18 +236,17 @@ bb.b:                                             ; preds = %.lr.ph, %_RNCINvNvX
   %.val.i.i = load ptr, ptr %.val, align 8, !noalias !305, !nonnull !4, !align !18, !noundef !4
   %.val2.i.i = load ptr, ptr %i.o, align 8, !noalias !305, !nonnull !4, !align !18, !noundef !4
   %i.w = load i64, ptr %.val.i.i, align 8, !noalias !299, !noundef !4
-  %7 = icmp eq i64 %i.t, %i.w                     ; 5 uses
-  %not..i.i.i = xor i1 %7, true
-  %..i.i.i = zext i1 %not..i.i.i to i64           ; 6 uses
+  %7 = icmp ne i64 %i.t, %i.w                     ; 5 uses
+  %..i.i.i = zext i1 %7 to i64                    ; 6 uses
   %i.x = load ptr, ptr %i.p, align 8, !noalias !299, !nonnull !4, !noundef !4 ; 7 uses
   %i.y = load i64, ptr %i.q, align 8, !noalias !299, !noundef !4 ; 5 uses
   %i.z = load ptr, ptr %.val2.i.i, align 8, !noalias !299, !nonnull !4, !align !18, !noundef !4 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !306)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ab = load i64, ptr %i.aa, align 8, !alias.scope !306, !noalias !309, !noundef !4 ; 2 uses
-  %8 = icmp ne i64 %i.ab, 1
-  %or.cond.i.i.i.i = or i1 %7, %8
-  br i1 %or.cond.i.i.i.i, label %bb.d, label %bb.c
+  %8 = icmp eq i64 %i.ab, 1
+  %or.cond.i.i.i.i = and i1 %7, %8
+  br i1 %or.cond.i.i.i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -369,10 +368,13 @@ bb.i:                                             ; preds = %bb.h
   %i.ay = load i8, ptr %i.ax, align 1, !alias.scope !318, !noalias !323, !noundef !4
   %i.az = and i8 %i.ay, 63
   %i.ba = zext nneg i8 %i.az to i64
-  %9 = shl nuw i64 1, %i.ba
-  %10 = and i64 %9, %.sroa.7101.0.copyload.i.i.i.i
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %bb.p, label %bb.j
+  %9 = lshr i64 %.sroa.7101.0.copyload.i.i.i.i, %i.ba
+  %10 = trunc i64 %9 to i1
+  br i1 %10, label %bb.j, label %11
+
+11:                                               ; preds = %.lr.ph.i37.us.i.i.i.i
+  %12 = add i64 %i.aw, %.sroa.15.0.copyload.i.i.i.i
+  br label %.sink.split.i.us.i.i.i.i
 
 bb.j:                                             ; preds = %.lr.ph.i37.us.i.i.i.i
   %.sroa.0.0.i.i.us.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.au, i64 %.sroa.498.0.copyload.i.i.i.i) ; 4 uses
@@ -429,19 +431,15 @@ bb.o:                                             ; preds = %bb.n
   %i.br = getelementptr inbounds nuw i8, ptr %.sroa.12106.0.copyload.i.i.i.i, i64 %i.bn
   %i.bs = load i8, ptr %i.br, align 1, !alias.scope !318, !noalias !323, !noundef !4
   %.not.i38.us.i.i.i.i = icmp eq i8 %i.bq, %i.bs
-  br i1 %.not.i38.us.i.i.i.i, label %.preheader131.us.i.i.i.i, label %12
+  br i1 %.not.i38.us.i.i.i.i, label %.preheader131.us.i.i.i.i, label %bb.p
 
-12:                                               ; preds = %bb.o
-  %13 = add i64 %i.aw, %.sroa.6100.0.copyload.i.i.i.i
+bb.p:                                             ; preds = %bb.o
+  %i.bt = add i64 %i.aw, %.sroa.6100.0.copyload.i.i.i.i
   br label %.sink.split.i.us.i.i.i.i
 
-bb.p:                                             ; preds = %.lr.ph.i37.us.i.i.i.i
-  %i.bt = add i64 %i.aw, %.sroa.15.0.copyload.i.i.i.i
-  br label %.sink.split.i.us.i.i.i.i
-
-.sink.split.i.us.i.i.i.i:                         ; preds = %bb.p, %12, %bb.m
-  %.sink.i.us.i.i.i.i = phi i64 [ %i.ap, %12 ], [ 0, %bb.m ], [ 0, %bb.p ]
-  %.ph71.i.us.i.i.i.i = phi i64 [ %13, %12 ], [ %i.bj, %bb.m ], [ %i.bt, %bb.p ] ; 2 uses
+.sink.split.i.us.i.i.i.i:                         ; preds = %bb.p, %bb.m, %11
+  %.sink.i.us.i.i.i.i = phi i64 [ %i.ap, %bb.p ], [ 0, %bb.m ], [ 0, %11 ]
+  %.ph71.i.us.i.i.i.i = phi i64 [ %i.bt, %bb.p ], [ %i.bj, %bb.m ], [ %12, %11 ] ; 2 uses
   %i.bu = add i64 %.ph71.i.us.i.i.i.i, %i.ao      ; 2 uses
   %i.bv = icmp ult i64 %i.bu, %.sroa.13107.0.copyload.i.i.i.i
   br i1 %i.bv, label %.lr.ph.i37.us.i.i.i.i, label %.loopexit.i.i.i.i
@@ -458,13 +456,16 @@ bb.q:                                             ; preds = %bb.h
   %i.bz = load i8, ptr %i.by, align 1, !alias.scope !327, !noalias !332, !noundef !4
   %i.ca = and i8 %i.bz, 63
   %i.cb = zext nneg i8 %i.ca to i64
-  %14 = shl nuw i64 1, %i.cb
-  %15 = and i64 %14, %.sroa.7101.0.copyload.i.i.i.i
-  %16 = icmp eq i64 %15, 0
-  br i1 %16, label %17, label %.preheader.i.i.i.i.preheader
+  %13 = lshr i64 %.sroa.7101.0.copyload.i.i.i.i, %i.cb
+  %14 = trunc i64 %13 to i1
+  br i1 %14, label %.preheader.i.i.i.i.preheader, label %15
 
 .preheader.i.i.i.i.preheader:                     ; preds = %.lr.ph.i45.us.i.i.i.i
   br i1 %exitcond.not.i50.us.i.i.i.i438.not, label %.lr.ph440, label %.preheader.us.i.preheader.i.i.i
+
+15:                                               ; preds = %.lr.ph.i45.us.i.i.i.i
+  %16 = add i64 %i.bx, %.sroa.15.0.copyload.i.i.i.i
+  br label %bb.u
 
 .preheader.i.i.i.i:                               ; preds = %bb.s
   %i.cc = add i64 %.sroa.02.0.i49.us.i.i.i.i439, 1 ; 2 uses
@@ -522,12 +523,8 @@ bb.t:                                             ; preds = %bb.s
   %i.cr = add i64 %.reass328.i.reass.i.reass.i.reass.i.reass.reass, %.sroa.02.0.i49.us.i.i.i.i439
   br label %bb.u
 
-17:                                               ; preds = %.lr.ph.i45.us.i.i.i.i
-  %18 = add i64 %i.bx, %.sroa.15.0.copyload.i.i.i.i
-  br label %bb.u
-
-bb.u:                                             ; preds = %17, %bb.t, %.split.us.i.i.i
-  %i.cs = phi i64 [ %i.cr, %bb.t ], [ %18, %17 ], [ %i.ck, %.split.us.i.i.i ] ; 2 uses
+bb.u:                                             ; preds = %bb.t, %.split.us.i.i.i, %15
+  %i.cs = phi i64 [ %i.cr, %bb.t ], [ %16, %15 ], [ %i.ck, %.split.us.i.i.i ] ; 2 uses
   %i.ct = add i64 %i.cs, %i.ao                    ; 2 uses
   %i.cu = icmp ult i64 %i.ct, %.sroa.13107.0.copyload.i.i.i.i
   br i1 %i.cu, label %.lr.ph.i45.us.i.i.i.i, label %.loopexit.i.i.i.i
@@ -566,7 +563,7 @@ bb.w:                                             ; preds = %bb.v, %.noexc29.us.
   %i.dc = load i64, ptr %.sroa.512.0..sroa_idx.i.i.i.i, align 8, !alias.scope !339, !noalias !316, !noundef !4 ; 3 uses
   %i.dd = icmp sgt i64 %i.dc, -1
   call void @llvm.assume(i1 %i.dd)
-  br i1 %7, label %bb.y, label %bb.x
+  br i1 %7, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %.noexc33.us.i.i.i.i
   %i.de = load ptr, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !alias.scope !339, !noalias !316, !nonnull !4, !noundef !4
@@ -772,7 +769,7 @@ bb.ao:                                            ; preds = %bb.an, %.noexc29.i.
   %i.gd = load i64, ptr %.sroa.512.0..sroa_idx.i.i.i.i, align 8, !alias.scope !339, !noalias !316, !noundef !4 ; 3 uses
   %i.ge = icmp sgt i64 %i.gd, -1
   call void @llvm.assume(i1 %i.ge)
-  br i1 %7, label %.lr.ph.i.i.i.i.i.preheader, label %.lr.ph.i.i.i.i.i.sink.split
+  br i1 %7, label %.lr.ph.i.i.i.i.i.sink.split, label %.lr.ph.i.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.i.sink.split:                      ; preds = %.noexc33.i.peel.i.i.i, %bb.bd
   %.sink447 = phi i64 [ %i.jl, %bb.bd ], [ %i.gd, %.noexc33.i.peel.i.i.i ]
@@ -1027,7 +1024,7 @@ bb.bc:                                            ; preds = %.loopexit.i.i.i.i.i
   %i.jl = load i64, ptr %.sroa.512.0..sroa_idx.i.i.i.i, align 8, !alias.scope !339, !noalias !316, !noundef !4 ; 3 uses
   %i.jm = icmp sgt i64 %i.jl, -1
   call void @llvm.assume(i1 %i.jm)
-  br i1 %7, label %.lr.ph.i.i.i.i.i, label %bb.bd, !llvm.loop !359
+  br i1 %7, label %bb.bd, label %.lr.ph.i.i.i.i.i, !llvm.loop !359
 
 bb.bd:                                            ; preds = %.noexc33.i.i.i.i
   br label %.lr.ph.i.i.i.i.i.sink.split, !llvm.loop !359

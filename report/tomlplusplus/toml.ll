@@ -205,12 +205,11 @@ define void @_ZN4toml2v34impl9formatter5printERKNS0_5valueINS0_4dateEEE(ptr nofr
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !141  ; 2 uses
-  %2 = and i64 %i.b, 1
-  %.not.i3 = icmp eq i64 %2, 0
+  %.not.i3 = trunc i64 %i.b to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !146  ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  br i1 %.not.i3, label %bb.c, label %bb.b
+  br i1 %.not.i3, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.f = and i64 %i.b, 4
@@ -236,12 +235,11 @@ define void @_ZN4toml2v34impl9formatter5printERKNS0_5valueINS0_4timeEEE(ptr nofr
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !141  ; 2 uses
-  %2 = and i64 %i.b, 1
-  %.not.i3 = icmp eq i64 %2, 0
+  %.not.i3 = trunc i64 %i.b to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !146  ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  br i1 %.not.i3, label %bb.c, label %bb.b
+  br i1 %.not.i3, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.f = and i64 %i.b, 4
@@ -267,12 +265,11 @@ define void @_ZN4toml2v34impl9formatter5printERKNS0_5valueINS0_6stdopt9date_time
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !141  ; 2 uses
-  %2 = and i64 %i.b, 1
-  %.not.i3 = icmp eq i64 %2, 0
+  %.not.i3 = trunc i64 %i.b to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !146  ; 10 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  br i1 %.not.i3, label %bb.d, label %bb.b
+  br i1 %.not.i3, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.f = and i64 %i.b, 4
@@ -370,12 +367,11 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = load i64, ptr %i.p, align 8, !tbaa !141  ; 2 uses
-  %3 = and i64 %i.q, 1
-  %.not.i3.i = icmp eq i64 %3, 0
+  %.not.i3.i = trunc i64 %i.q to i1
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !146  ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  br i1 %.not.i3.i, label %bb.h, label %bb.g
+  br i1 %.not.i3.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.u = and i64 %i.q, 4
@@ -398,12 +394,11 @@ _ZN4toml2v34impl9formatter5printERKNS0_5valueINS0_4dateEEE.exit: ; preds = %bb.g
 bb.i:                                             ; preds = %bb.a
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !141 ; 2 uses
-  %4 = and i64 %i.aa, 1
-  %.not.i3.i9 = icmp eq i64 %4, 0
+  %.not.i3.i9 = trunc i64 %i.aa to i1
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !146 ; 4 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  br i1 %.not.i3.i9, label %bb.k, label %bb.j
+  br i1 %.not.i3.i9, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.ae = and i64 %i.aa, 4
@@ -806,10 +801,8 @@ bb.v:                                             ; preds = %bb.c
 
 .lr.ph.preheader.i41:                             ; preds = %.preheader.i
   %.015.i = xor i64 %i.da, 63                     ; 3 uses
-  %4 = trunc nuw nsw i64 %.015.i to i32
-  %xtraiter = and i32 %4, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol.loopexit, label %.lr.ph.i42.prol
+  %lcmp.mod.not = trunc i64 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol, label %.lr.ph.i42.prol.loopexit
 
 .lr.ph.i42.prol:                                  ; preds = %.lr.ph.preheader.i41
   %i.dg = trunc i64 %2 to i8
@@ -1212,10 +1205,8 @@ bb.y:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i46:                             ; preds = %.preheader.i
   %.015.i = sub nuw nsw i64 63, %i.dh             ; 2 uses
-  %4 = trunc nuw nsw i64 %i.dh to i32
-  %5 = and i32 %4, 1
-  %lcmp.mod.not.not = icmp eq i32 %5, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i47.prol, label %.lr.ph.i47.prol.loopexit
+  %4 = trunc i64 %i.dh to i1
+  br i1 %4, label %.lr.ph.i47.prol.loopexit, label %.lr.ph.i47.prol
 
 .lr.ph.i47.prol:                                  ; preds = %.lr.ph.preheader.i46
   %i.dn = trunc i64 %.0 to i8
@@ -1618,9 +1609,8 @@ bb.x:                                             ; preds = %bb.f
 .lr.ph.preheader.i46:                             ; preds = %.preheader.i
   %.015.i = sub nsw i32 31, %i.ct                 ; 2 uses
   %i.da = zext i32 %.015.i to i64                 ; 3 uses
-  %xtraiter = and i32 %.015.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i47.prol.loopexit, label %.lr.ph.i47.prol
+  %lcmp.mod.not = trunc i32 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i47.prol, label %.lr.ph.i47.prol.loopexit
 
 .lr.ph.i47.prol:                                  ; preds = %.lr.ph.preheader.i46
   %i.db = trunc i32 %.0 to i8
@@ -2023,9 +2013,8 @@ bb.y:                                             ; preds = %bb.f
 .lr.ph.preheader.i46:                             ; preds = %.preheader.i
   %.015.i = sub nsw i32 31, %i.dm                 ; 2 uses
   %i.dt = zext i32 %.015.i to i64                 ; 3 uses
-  %xtraiter = and i32 %.015.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i47.prol.loopexit, label %.lr.ph.i47.prol
+  %lcmp.mod.not = trunc i32 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i47.prol, label %.lr.ph.i47.prol.loopexit
 
 .lr.ph.i47.prol:                                  ; preds = %.lr.ph.preheader.i46
   %i.du = trunc i32 %.0 to i8
@@ -2428,9 +2417,8 @@ bb.y:                                             ; preds = %bb.f
 .lr.ph.preheader.i46:                             ; preds = %.preheader.i
   %.015.i = sub nsw i32 31, %i.dl                 ; 2 uses
   %i.ds = zext nneg i32 %.015.i to i64            ; 3 uses
-  %xtraiter = and i32 %.015.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i47.prol.loopexit, label %.lr.ph.i47.prol
+  %lcmp.mod.not = trunc i32 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i47.prol, label %.lr.ph.i47.prol.loopexit
 
 .lr.ph.i47.prol:                                  ; preds = %.lr.ph.preheader.i46
   %i.dt = trunc i32 %.0 to i8
@@ -2833,10 +2821,8 @@ bb.y:                                             ; preds = %bb.f
 
 .lr.ph.preheader.i46:                             ; preds = %.preheader.i
   %.015.i = sub nuw nsw i64 63, %i.dh             ; 2 uses
-  %4 = trunc nuw nsw i64 %i.dh to i32
-  %5 = and i32 %4, 1
-  %lcmp.mod.not.not = icmp eq i32 %5, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i47.prol, label %.lr.ph.i47.prol.loopexit
+  %4 = trunc i64 %i.dh to i1
+  br i1 %4, label %.lr.ph.i47.prol.loopexit, label %.lr.ph.i47.prol
 
 .lr.ph.i47.prol:                                  ; preds = %.lr.ph.preheader.i46
   %i.dn = trunc i64 %.0 to i8
@@ -3152,9 +3138,8 @@ bb.o:                                             ; preds = %bb.c
 .lr.ph.preheader.i35:                             ; preds = %.preheader.i
   %.015.i = xor i32 %i.bs, 31                     ; 2 uses
   %i.bz = zext nneg i32 %.015.i to i64            ; 3 uses
-  %xtraiter = and i32 %.015.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i36.prol.loopexit, label %.lr.ph.i36.prol
+  %lcmp.mod.not = trunc i32 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i36.prol, label %.lr.ph.i36.prol.loopexit
 
 .lr.ph.i36.prol:                                  ; preds = %.lr.ph.preheader.i35
   %i.ca = and i8 %2, 1
@@ -3528,9 +3513,8 @@ bb.r:                                             ; preds = %bb.c
 .lr.ph.preheader.i41:                             ; preds = %.preheader.i
   %.015.i = xor i32 %i.dj, 31                     ; 2 uses
   %i.dq = zext nneg i32 %.015.i to i64            ; 3 uses
-  %xtraiter = and i32 %.015.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol.loopexit, label %.lr.ph.i42.prol
+  %lcmp.mod.not = trunc i32 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol, label %.lr.ph.i42.prol.loopexit
 
 .lr.ph.i42.prol:                                  ; preds = %.lr.ph.preheader.i41
   %i.dr = trunc i16 %2 to i8
@@ -3920,9 +3904,8 @@ bb.v:                                             ; preds = %bb.c
 .lr.ph.preheader.i41:                             ; preds = %.preheader.i
   %.015.i = xor i32 %i.de, 31                     ; 2 uses
   %i.dl = zext nneg i32 %.015.i to i64            ; 3 uses
-  %xtraiter = and i32 %.015.i, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol.loopexit, label %.lr.ph.i42.prol
+  %lcmp.mod.not = trunc i32 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol, label %.lr.ph.i42.prol.loopexit
 
 .lr.ph.i42.prol:                                  ; preds = %.lr.ph.preheader.i41
   %i.dm = trunc i32 %2 to i8
@@ -4305,10 +4288,8 @@ bb.v:                                             ; preds = %bb.c
 
 .lr.ph.preheader.i41:                             ; preds = %.preheader.i
   %.015.i = xor i64 %i.da, 63                     ; 3 uses
-  %4 = trunc nuw nsw i64 %.015.i to i32
-  %xtraiter = and i32 %4, 1
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol.loopexit, label %.lr.ph.i42.prol
+  %lcmp.mod.not = trunc i64 %.015.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i42.prol, label %.lr.ph.i42.prol.loopexit
 
 .lr.ph.i42.prol:                                  ; preds = %.lr.ph.preheader.i41
   %i.dg = trunc i64 %2 to i8
@@ -4711,7 +4692,6 @@ bb.e:                                             ; preds = %.lr.ph38.i.i
   store i64 0, ptr %i.aj, align 8, !tbaa !603
   store i64 %i.m, ptr %i.e, align 8, !tbaa !905
   %umax.i = call i64 @llvm.umax.i64(i64 %i.m, i64 1) ; 3 uses
-  %xtraiter = and i64 %umax.i, 1
   %i.ak = icmp ult i64 %i.m, 2
   br i1 %i.ak, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
@@ -4888,8 +4868,8 @@ bb.p:                                             ; preds = %bb.f
   unreachable
 
 .lr.ph.i40.i.loopexit.unr-lcssa:                  ; preds = %.lr.ph.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i40.i, label %.lr.ph.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %umax.i to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %.lr.ph.i40.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %.lr.ph.i40.i.loopexit.unr-lcssa, %.lr.ph.preheader.i
   %.02352.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %i.ay, %.lr.ph.i40.i.loopexit.unr-lcssa ] ; 2 uses
@@ -5292,7 +5272,6 @@ bb.p:                                             ; preds = %.lr.ph38.i.i
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i64 0, ptr %i.bt, align 8, !tbaa !623
   store i64 %i.t, ptr %i.e, align 8, !tbaa !915
-  %xtraiter = and i64 %i.t, 1
   %i.bu = icmp eq i64 %i.t, 1
   br i1 %i.bu, label %.epil.preheader, label %.loopexit.i.new
 
@@ -5479,8 +5458,8 @@ bb.aa:                                            ; preds = %bb.z
   unreachable
 
 .lr.ph.i48.i.loopexit.unr-lcssa:                  ; preds = %bb.q
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %.lr.ph.i48.i, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.t to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %.lr.ph.i48.i
 
 .epil.preheader:                                  ; preds = %.lr.ph.i48.i.loopexit.unr-lcssa, %.loopexit.i
   %.02962.i.epil.init = phi i64 [ 0, %.loopexit.i ], [ %i.ci, %.lr.ph.i48.i.loopexit.unr-lcssa ] ; 2 uses
@@ -5541,9 +5520,8 @@ _ZZN12_GLOBAL__N_111utf8_readerISiE15read_next_blockEvENKUlvE_clEv.exit.i: ; pre
   %i.fz = getelementptr inbounds i8, ptr %i.r, i64 %i.fy
   %i.ga = getelementptr inbounds nuw i8, ptr %i.fz, i64 32
   %i.gb = load i32, ptr %i.ga, align 8, !tbaa !643
-  %1 = and i32 %i.gb, 1
-  %.not60.i = icmp eq i32 %1, 0
-  br i1 %.not60.i, label %_ZN12_GLOBAL__N_111utf8_readerISiE15read_next_blockEv.exit, label %bb.af, !prof !200
+  %.not60.i = trunc i32 %i.gb to i1
+  br i1 %.not60.i, label %bb.af, label %_ZN12_GLOBAL__N_111utf8_readerISiE15read_next_blockEv.exit, !prof !173
 
 bb.af:                                            ; preds = %_ZZN12_GLOBAL__N_111utf8_readerISiE15read_next_blockEvENKUlvE_clEv.exit.i
   %i.gc = call ptr @__cxa_allocate_exception(i64 48) #50 ; 2 uses

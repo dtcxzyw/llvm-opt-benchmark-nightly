@@ -204,22 +204,21 @@ bb.q:                                             ; preds = %bb.p
   br label %_ZN12_GLOBAL__N_111LargestGaps8truncateEi.exit
 
 _ZN12_GLOBAL__N_111LargestGaps8truncateEi.exit:   ; preds = %bb.p, %bb.q
-  %i.cb = phi i32 [ %.val, %bb.p ], [ %i.ca, %bb.q ] ; 5 uses
+  %i.cb = phi i32 [ %.val, %bb.p ], [ %i.ca, %bb.q ] ; 6 uses
   store i32 %i.b, ptr %3, align 4, !tbaa !8
   %.not7286 = icmp samesign ult i32 %.05885, 2
   br i1 %.not7286, label %._crit_edge, label %.lr.ph89
 
 .lr.ph89:                                         ; preds = %_ZN12_GLOBAL__N_111LargestGaps8truncateEi.exit
   %i.cc = icmp sgt i32 %i.cb, 0
-  %wide.trip.count.i = zext i32 %i.cb to i64      ; 2 uses
   br i1 %i.cc, label %.lr.ph.i74.us.preheader, label %.lr.ph89.split
 
 .lr.ph.i74.us.preheader:                          ; preds = %.lr.ph89
   %wide.trip.count113 = zext nneg i32 %indvars.iv103 to i64
-  %xtraiter = and i64 %wide.trip.count.i, 1
   %6 = icmp eq i32 %i.cb, 1
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %7 = and i32 %i.cb, 2147483646
+  %unroll_iter = zext nneg i32 %7 to i64
+  %lcmp.mod.not = trunc i32 %i.cb to i1
   %lcmp.mod153 = trunc i32 %i.cb to i1
   br label %.lr.ph.i74.us
 
@@ -274,7 +273,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %niter.ncmp.1, label %_ZNK12_GLOBAL__N_111LargestGaps10firstAfterEi.exit.loopexit.us.unr-lcssa, label %.lr.ph.i74.us.new, !llvm.loop !22
 
 _ZNK12_GLOBAL__N_111LargestGaps10firstAfterEi.exit.loopexit.us.unr-lcssa: ; preds = %bb.u
-  br i1 %lcmp.mod.not, label %_ZNK12_GLOBAL__N_111LargestGaps10firstAfterEi.exit.loopexit.us, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_ZNK12_GLOBAL__N_111LargestGaps10firstAfterEi.exit.loopexit.us
 
 .epil.preheader:                                  ; preds = %_ZNK12_GLOBAL__N_111LargestGaps10firstAfterEi.exit.loopexit.us.unr-lcssa, %.lr.ph.i74.us
   %indvars.iv.i75.us.epil.init = phi i64 [ 0, %.lr.ph.i74.us ], [ %indvars.iv.next.i76.us.1, %_ZNK12_GLOBAL__N_111LargestGaps10firstAfterEi.exit.loopexit.us.unr-lcssa ] ; 2 uses

@@ -204,8 +204,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs3iPtYnXk70z_14event_listener4TaskECs
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEEECsbDLrNlwBX3H_4smol(ptr noundef nonnull align 8 %0) unnamed_addr #1 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !range !30, !noundef !4
-  %1 = icmp eq i64 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEECsbDLrNlwBX3H_4smol.exit, label %bb.b
+  %1 = trunc nuw i64 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEECsbDLrNlwBX3H_4smol.exit
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs3iPtYnXk70z_14event_listener3sys8ListeneruEECsbDLrNlwBX3H_4smol.exit: ; preds = %bb.f, %bb.e, %bb.d, %bb.b, %bb.a
   ret void
@@ -307,8 +307,8 @@ bb.h:                                             ; preds = %bb.g
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtCs3iPtYnXk70z_14event_listener5InneruEEECsbDLrNlwBX3H_4smol.exit3.i.i.i.i: ; preds = %bb.g, %bb.f
   %i.l = load i64, ptr %.0.val, align 8, !range !30, !noundef !4
-  %0 = icmp eq i64 %i.l, 0
-  br i1 %0, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit, label %bb.i
+  %0 = trunc nuw i64 %i.l to i1
+  br i1 %0, label %bb.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtCs3iPtYnXk70z_14event_listener13EventListenerECsbDLrNlwBX3H_4smol.exit
 
 bb.i:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcINtCs3iPtYnXk70z_14event_listener5InneruEEECsbDLrNlwBX3H_4smol.exit3.i.i.i.i
   %i.m = getelementptr inbounds nuw i8, ptr %.0.val, i64 8
@@ -711,9 +711,8 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.n = add i64 %.sroa.04.0.i, 2                 ; 2 uses
-  %2 = and i64 %.sroa.04.0.i, 1
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %bb.h, label %bb.k
+  %2 = trunc i64 %.sroa.04.0.i to i1
+  br i1 %2, label %bb.k, label %bb.h
 
 .backedge.i:                                      ; preds = %bb.p, %bb.o, %bb.f
   %.sroa.04.0.be.i = phi i64 [ %.sroa.01.0.i.i, %bb.p ], [ %i.m, %bb.f ], [ %i.w, %bb.o ]
@@ -738,10 +737,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
-  %4 = and i64 %i.p, 1
-  %5 = icmp eq i64 %4, 0
+  %3 = trunc i64 %i.p to i1
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
-  br i1 %5, label %bb.l, label %bb.m
+  br i1 %3, label %bb.m, label %bb.l
 
 bb.k:                                             ; preds = %bb.i, %bb.g
   %.sroa.0.0.i = phi i64 [ %i.n, %bb.g ], [ %spec.select.i, %bb.i ] ; 2 uses
@@ -801,16 +799,14 @@ _RNvMs_NtCseSXqeRWftQm_16concurrent_queue9unboundedINtB4_5BlockNtNtCsfO0Hesl1pIe
   %i.ak = getelementptr inbounds nuw [16 x i8], ptr %.sroa.020.0.i, i64 %i.k ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
   %i.am = load atomic i64, ptr %i.al acquire, align 8, !noalias !254
-  %6 = and i64 %i.am, 1
-  %7 = icmp eq i64 %6, 0
-  br i1 %7, label %.lr.ph.i45.i, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit.i
+  %4 = trunc i64 %i.am to i1
+  br i1 %4, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit.i, label %.lr.ph.i45.i
 
 .lr.ph.i45.i:                                     ; preds = %_RNvMs_NtCseSXqeRWftQm_16concurrent_queue9unboundedINtB4_5BlockNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE9wait_nextCsbDLrNlwBX3H_4smol.exit.i, %.lr.ph.i45.i
   call void @_RNvNtNtCsG258MDvU3F_3std6thread9functions9yield_now(), !noalias !254
   %i.an = load atomic i64, ptr %i.al acquire, align 8, !noalias !254
-  %8 = and i64 %i.an, 1
-  %9 = icmp eq i64 %8, 0
-  br i1 %9, label %.lr.ph.i45.i, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit.i
+  %5 = trunc i64 %i.an to i1
+  br i1 %5, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit.i, label %.lr.ph.i45.i
 
 _RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit.i: ; preds = %.lr.ph.i45.i, %_RNvMs_NtCseSXqeRWftQm_16concurrent_queue9unboundedINtB4_5BlockNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE9wait_nextCsbDLrNlwBX3H_4smol.exit.i
   %i.ao = load ptr, ptr %i.ak, align 8, !noalias !254 ; 3 uses
@@ -854,16 +850,14 @@ bb.v:                                             ; preds = %bb.q
   %i.bg = getelementptr inbounds nuw [16 x i8], ptr %.sroa.020.0.i, i64 %i.k ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8 ; 3 uses
   %i.bi = load atomic i64, ptr %i.bh acquire, align 8, !noalias !254
-  %10 = and i64 %i.bi, 1
-  %11 = icmp eq i64 %10, 0
-  br i1 %11, label %.lr.ph.i48.i, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit49.i
+  %6 = trunc i64 %i.bi to i1
+  br i1 %6, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit49.i, label %.lr.ph.i48.i
 
 .lr.ph.i48.i:                                     ; preds = %bb.v, %.lr.ph.i48.i
   call void @_RNvNtNtCsG258MDvU3F_3std6thread9functions9yield_now(), !noalias !254
   %i.bj = load atomic i64, ptr %i.bh acquire, align 8, !noalias !254
-  %12 = and i64 %i.bj, 1
-  %13 = icmp eq i64 %12, 0
-  br i1 %13, label %.lr.ph.i48.i, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit49.i
+  %7 = trunc i64 %i.bj to i1
+  br i1 %7, label %_RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit49.i, label %.lr.ph.i48.i
 
 _RNvMNtCseSXqeRWftQm_16concurrent_queue9unboundedINtB2_4SlotNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE10wait_writeCsbDLrNlwBX3H_4smol.exit49.i: ; preds = %.lr.ph.i48.i, %bb.v
   %i.bk = load ptr, ptr %i.bg, align 8, !noalias !254 ; 4 uses
@@ -947,9 +941,8 @@ bb.d:                                             ; preds = %bb.a
   %i.h = load atomic i64, ptr %i.g acquire, align 128 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 4 uses
   %i.j = load atomic ptr, ptr %i.i acquire, align 8
-  %2 = and i64 %i.h, 1
-  %3 = icmp eq i64 %2, 0
-  br i1 %3, label %.lr.ph.i, label %_RNvMs0_NtCseSXqeRWftQm_16concurrent_queue9unboundedINtB5_9UnboundedNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE4pushCsbDLrNlwBX3H_4smol.exit
+  %2 = trunc i64 %i.h to i1
+  br i1 %2, label %_RNvMs0_NtCseSXqeRWftQm_16concurrent_queue9unboundedINtB5_9UnboundedNtNtCsfO0Hesl1pIe_10async_task8runnable8RunnableE4pushCsbDLrNlwBX3H_4smol.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -987,9 +980,8 @@ bb.i:                                             ; preds = %bb.f
   %.sroa.0.041.be.i = phi ptr [ %.sroa.0.3.i, %bb.u ], [ %.sroa.0.04182.i, %bb.i ], [ %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed.i, %bb.s ] ; 2 uses
   %.sroa.01.0.be.i = phi i64 [ %.sroa.01.0.i.i, %bb.u ], [ %i.o, %bb.i ], [ %i.w, %bb.s ] ; 2 uses
   %i.p = load atomic ptr, ptr %i.i acquire, align 8
-  %4 = and i64 %.sroa.01.0.be.i, 1
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %bb.e, label %.thread57.i
+  %3 = trunc i64 %.sroa.01.0.be.i to i1
+  br i1 %3, label %.thread57.i, label %bb.e
 
 bb.j:                                             ; preds = %bb.k, %bb.g
   %.sroa.0.3.i = phi ptr [ %.sroa.0.04182.i, %bb.g ], [ %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed100.i, %bb.k ] ; 8 uses

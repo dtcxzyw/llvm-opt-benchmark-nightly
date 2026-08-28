@@ -202,17 +202,15 @@ _RNvXsw_NtNtCs9GYDdpCSJ4S_14regex_automata4meta5regexNtB5_6ConfigNtNtCsj6eKBz9Db
   %i.cd = load i64, ptr %i.cc, align 8, !dbg !3391, !range !3392, !alias.scope !3230, !noalias !3231, !noundef !46 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 40, !dbg !3393
   %.val50.i.i = load i64, ptr %i.ce, align 8, !dbg !3393, !alias.scope !3230, !noalias !3231
-  %4 = and i64 %i.cd, 1, !dbg !3393
-  %5 = icmp eq i64 %4, 0, !dbg !3393
-  %.sroa.5.0.i.i = select i1 %5, i64 undef, i64 %.val50.i.i, !dbg !3393
+  %4 = trunc i64 %i.cd to i1, !dbg !3393
+  %.sroa.5.0.i.i = select i1 %4, i64 %.val50.i.i, i64 undef, !dbg !3393
     #dbg_value(ptr %1, !3374, !DIExpression(DW_OP_plus_uconst, 48, DW_OP_stack_value), !3394)
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 48, !dbg !3396
   %i.cg = load i64, ptr %i.cf, align 8, !dbg !3396, !range !3392, !alias.scope !3230, !noalias !3231, !noundef !46 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %1, i64 56, !dbg !3397
   %.val48.i.i = load i64, ptr %i.ch, align 8, !dbg !3397, !alias.scope !3230, !noalias !3231
-  %6 = and i64 %i.cg, 1, !dbg !3397
-  %7 = icmp eq i64 %6, 0, !dbg !3397
-  %.sroa.56.0.i.i = select i1 %7, i64 undef, i64 %.val48.i.i, !dbg !3397
+  %5 = trunc i64 %i.cg to i1, !dbg !3397
+  %.sroa.56.0.i.i = select i1 %5, i64 %.val48.i.i, i64 undef, !dbg !3397
     #dbg_value(ptr %1, !3398, !DIExpression(), !3408)
   %i.ci = load i64, ptr %1, align 8, !dbg !3410, !range !3411, !alias.scope !3230, !noalias !3231, !noundef !46 ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 8, !dbg !3412
@@ -225,17 +223,15 @@ _RNvXsw_NtNtCs9GYDdpCSJ4S_14regex_automata4meta5regexNtB5_6ConfigNtNtCsj6eKBz9Db
   %i.cn = load i64, ptr %i.cm, align 8, !dbg !3420, !range !3392, !alias.scope !3230, !noalias !3231, !noundef !46 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 72, !dbg !3421
   %.val46.i.i = load i64, ptr %i.co, align 8, !dbg !3421, !alias.scope !3230, !noalias !3231
-  %8 = and i64 %i.cn, 1, !dbg !3421
-  %9 = icmp eq i64 %8, 0, !dbg !3421
-  %.sroa.512.0.i.i = select i1 %9, i64 undef, i64 %.val46.i.i, !dbg !3421
+  %6 = trunc i64 %i.cn to i1, !dbg !3421
+  %.sroa.512.0.i.i = select i1 %6, i64 %.val46.i.i, i64 undef, !dbg !3421
     #dbg_value(ptr %1, !3374, !DIExpression(DW_OP_plus_uconst, 80, DW_OP_stack_value), !3422)
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 80, !dbg !3424
   %i.cq = load i64, ptr %i.cp, align 8, !dbg !3424, !range !3392, !alias.scope !3230, !noalias !3231, !noundef !46 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 88, !dbg !3425
   %.val44.i.i = load i64, ptr %i.cr, align 8, !dbg !3425, !alias.scope !3230, !noalias !3231
-  %10 = and i64 %i.cq, 1, !dbg !3425
-  %11 = icmp eq i64 %10, 0, !dbg !3425
-  %.sroa.514.0.i.i = select i1 %11, i64 undef, i64 %.val44.i.i, !dbg !3425
+  %7 = trunc i64 %i.cq to i1, !dbg !3425
+  %.sroa.514.0.i.i = select i1 %7, i64 %.val44.i.i, i64 undef, !dbg !3425
   %i.cs = trunc nuw i64 %i.ci to i1, !dbg !3412
   %.sroa.58.0.i.i = select i1 %i.cs, i64 %i.ck, i64 undef, !dbg !3412
     #dbg_value(ptr %1, !3232, !DIExpression(DW_OP_plus_uconst, 135, DW_OP_stack_value), !3426)
@@ -638,9 +634,9 @@ _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Al
 
 bb.h:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !9365, !DIExpression(), !9373)
-  %1 = icmp eq i64 %i.a, 0, !dbg !9375
+  %1 = trunc nuw i64 %i.a to i1, !dbg !9375
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !9375 ; 6 uses
-  br i1 %1, label %bb.i, label %bb.n, !dbg !9375
+  br i1 %1, label %bb.n, label %bb.i, !dbg !9375
 
 bb.i:                                             ; preds = %bb.h
     #dbg_value(ptr %i.p, !9376, !DIExpression(), !9384)

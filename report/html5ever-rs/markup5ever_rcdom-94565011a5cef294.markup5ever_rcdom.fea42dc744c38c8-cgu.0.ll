@@ -204,9 +204,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %bb.a, %middle.block
   %.sroa.0.04.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %bb.a ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.sroa.0.04.ph, 1
-  %xtraiter = and i64 %2, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.g = or disjoint i64 %.sroa.0.04.ph, 1
@@ -609,8 +608,8 @@ bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %2) ]
   %i.a = ptrtoint ptr %2 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %1 to i64
-  %i.c = sub i64 %i.a, %i.b                       ; 2 uses
-  %i.d = lshr i64 %i.c, 3                         ; 9 uses
+  %i.c = sub i64 %i.a, %i.b
+  %i.d = lshr i64 %i.c, 3                         ; 10 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !277)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.f = load i64, ptr %i.e, align 8, !alias.scope !277, !noundef !4 ; 5 uses
@@ -745,8 +744,8 @@ _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned14clone_try_foldINtNtCsexYY
 
 bb.o:                                             ; preds = %.loopexit.i
   %i.ba = ptrtoint ptr %.sroa.0.1.i to i64
-  %i.bb = sub i64 %i.a, %i.ba                     ; 2 uses
-  %i.bc = lshr i64 %i.bb, 3                       ; 4 uses
+  %i.bb = sub i64 %i.a, %i.ba
+  %i.bc = lshr i64 %i.bb, 3                       ; 5 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.be = load ptr, ptr %i.bd, align 8, !alias.scope !284, !nonnull !4 ; 3 uses
   %i.bf = add i64 %i.bc, %.sroa.8.2.i             ; 2 uses
@@ -851,9 +850,8 @@ _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldRINtNtCsexYYUdYSQU6_5
   br i1 %niter.ncmp.1, label %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit.loopexit24.unr-lcssa, label %bb.s
 
 _RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit.loopexit.unr-lcssa: ; preds = %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldRINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEBV_uNvYBV_NtNtBa_5clone5Clone5cloneNCINvNvXs_NtB6_9enumerateINtB2O_9EnumeratepENtNtNtB8_6traits8iterator8Iterator4fold9enumerateBV_uNCINvNvB3m_8for_each4callTjBV_ENCINvMs2_NtNtB10_11collections9vec_dequeINtB4R_8VecDequeBV_E10write_iterINtNtB6_6cloned6ClonedINtNtNtBa_5slice4iter4IterBV_EEE0E0E0E0B1s_.exit.i.i.i.1
-  %3 = and i64 %i.bb, 8
-  %lcmp.mod29.not = icmp eq i64 %3, 0
-  br i1 %lcmp.mod29.not, label %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit, label %.epil.preheader27
+  %lcmp.mod29.not = trunc i64 %i.bc to i1
+  br i1 %lcmp.mod29.not, label %.epil.preheader27, label %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit
 
 .epil.preheader27:                                ; preds = %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit.loopexit.unr-lcssa, %bb.o
   %.epil.init = phi i64 [ 0, %bb.o ], [ %i.bt, %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit.loopexit.unr-lcssa ] ; 2 uses
@@ -875,9 +873,8 @@ _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldRINtNtCsexYYUdYSQU6_5
   br label %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit
 
 _RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit.loopexit24.unr-lcssa: ; preds = %_RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldRINtNtCsexYYUdYSQU6_5alloc2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEBV_uNvYBV_NtNtBa_5clone5Clone5cloneNCINvNvXs_NtB6_9enumerateINtB2O_9EnumeratepENtNtNtB8_6traits8iterator8Iterator4fold9enumerateBV_uNCINvNvB3m_8for_each4callTjBV_ENCINvMs2_NtNtB10_11collections9vec_dequeINtB4R_8VecDequeBV_E10write_iterINtNtB6_6cloned6ClonedINtNtNtBa_5slice4iter4IterBV_EEE0E0E0E0B1s_.exit.i.i33.i.1
-  %4 = and i64 %i.c, 8
-  %lcmp.mod.not = icmp eq i64 %4, 0
-  br i1 %lcmp.mod.not, label %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.d to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit
 
 .epil.preheader:                                  ; preds = %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit.loopexit24.unr-lcssa, %bb.r
   %.sroa.8.5.i.epil.init = phi i64 [ 0, %bb.r ], [ %i.ck, %_RINvMs2_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB6_8VecDequeINtNtBa_2rc2RcNtCs1mImOlsSUsK_17markup5ever_rcdom4NodeEE19write_iter_wrappingINtNtNtNtCskKLDkoKarTP_4core4iter8adapters6cloned6ClonedINtNtNtB2u_5slice4iter4IterB16_EEEB1m_.exit.loopexit24.unr-lcssa ] ; 2 uses
@@ -1280,10 +1277,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
-  %2 = and i64 %i.g, 1
-  %.not.i = icmp eq i64 %2, 0
+  %2 = trunc i64 %i.g to i1
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 2 uses
-  br i1 %.not.i, label %bb.e, label %bb.d
+  br i1 %2, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.a
   store ptr @6, ptr %i.c, align 8, !noalias !393, !captures !276

@@ -202,11 +202,10 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !109)
   %i.c = ptrtoint ptr %2 to i64                   ; 2 uses
-  %3 = and i64 %i.c, 1
-  %.not.i.i.i = icmp eq i64 %3, 0
+  %3 = trunc i64 %i.c to i1
   %i.d = lshr i64 %i.c, 1                         ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !112)
-  br i1 %.not.i.i.i, label %bb.e, label %bb.b
+  br i1 %3, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !115)
@@ -609,8 +608,8 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %.not.i.i77.i.a, label %bb.dd, label %bb.dc
 
 bb.cw:                                            ; preds = %bb.cu
-  %.not73.i = icmp eq i32 %.sroa.08.0136.i, 0
-  br i1 %.not73.i, label %bb.cx, label %bb.cy, !prof !299
+  %2 = trunc nuw i32 %.sroa.08.0136.i to i1
+  br i1 %2, label %bb.cy, label %bb.cx, !prof !101
 
 bb.cx:                                            ; preds = %bb.cw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !2071
@@ -1013,8 +1012,8 @@ bb.cv:                                            ; preds = %bb.cu
   br i1 %.not.i.i77.i.a, label %bb.dd, label %bb.dc
 
 bb.cw:                                            ; preds = %bb.cu
-  %.not73.i = icmp eq i32 %.sroa.08.0136.i, 0
-  br i1 %.not73.i, label %bb.cx, label %bb.cy, !prof !299
+  %2 = trunc nuw i32 %.sroa.08.0136.i to i1
+  br i1 %2, label %bb.cy, label %bb.cx, !prof !101
 
 bb.cx:                                            ; preds = %bb.cw
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !5439

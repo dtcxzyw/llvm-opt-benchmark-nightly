@@ -204,9 +204,9 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_4ce
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !1811
   %i.b = load i64, ptr %i.a, align 8, !dbg !1812, !range !915, !alias.scope !1821, !noundef !15
-  %1 = icmp eq i64 %i.b, 0, !dbg !1812
+  %1 = trunc nuw i64 %i.b to i1, !dbg !1812
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !1812 ; 5 uses
-  br i1 %1, label %bb.b, label %bb.e, !dbg !1812
+  br i1 %1, label %bb.e, label %bb.b, !dbg !1812
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
@@ -609,9 +609,9 @@ bb.d:                                             ; preds = %bb.c
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshhHc5tDBDRu_12grep_printer4json6ConfigECs2NzvFoTxuAy_2rg.exit.i: ; preds = %bb.c, %bb.b
   %i.i = load i64, ptr %i.c, align 8, !dbg !2061, !range !915, !alias.scope !2065, !noundef !15
-  %1 = icmp eq i64 %i.i, 0, !dbg !2061
+  %1 = trunc nuw i64 %i.i to i1, !dbg !2061
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !2061 ; 5 uses
-  br i1 %1, label %bb.e, label %bb.h, !dbg !2061
+  br i1 %1, label %bb.h, label %bb.e, !dbg !2061
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshhHc5tDBDRu_12grep_printer4json6ConfigECs2NzvFoTxuAy_2rg.exit.i
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.j)
@@ -705,9 +705,9 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.o
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 192, !dbg !2091
   %i.x = load i64, ptr %i.w, align 8, !dbg !2093, !range !915, !alias.scope !2098, !noundef !15
-  %2 = icmp eq i64 %i.x, 0, !dbg !2093
+  %2 = trunc nuw i64 %i.x to i1, !dbg !2093
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 200, !dbg !2093 ; 5 uses
-  br i1 %2, label %bb.r, label %bb.u, !dbg !2093
+  br i1 %2, label %bb.u, label %bb.r, !dbg !2093
 
 bb.r:                                             ; preds = %bb.q
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.y)
@@ -850,9 +850,9 @@ bb.ah:                                            ; preds = %bb.af
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshhHc5tDBDRu_12grep_printer7summary6ConfigECs2NzvFoTxuAy_2rg.exit.i: ; preds = %bb.af, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshhHc5tDBDRu_12grep_printer9hyperlink15HyperlinkConfigECs2NzvFoTxuAy_2rg.exit.i.i
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !2219
   %i.ba = load i64, ptr %i.az, align 8, !dbg !2221, !range !915, !alias.scope !2226, !noundef !15
-  %3 = icmp eq i64 %i.ba, 0, !dbg !2221
+  %3 = trunc nuw i64 %i.ba to i1, !dbg !2221
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !2221 ; 5 uses
-  br i1 %3, label %bb.ai, label %bb.al, !dbg !2221
+  br i1 %3, label %bb.al, label %bb.ai, !dbg !2221
 
 bb.ai:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCshhHc5tDBDRu_12grep_printer7summary6ConfigECs2NzvFoTxuAy_2rg.exit.i
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bb)
@@ -1255,9 +1255,9 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs2N
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCshhHc5tDBDRu_12grep_printer7counter13CounterWriterNtCs6Ur84ob3I15_9termcolor6BufferEECs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !1817 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !dbg !2506, !range !915, !alias.scope !2509, !noundef !15
-  %1 = icmp eq i64 %i.a, 0, !dbg !2506
+  %1 = trunc nuw i64 %i.a to i1, !dbg !2506
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !2506 ; 5 uses
-  br i1 %1, label %bb.b, label %bb.e, !dbg !2506
+  br i1 %1, label %bb.e, label %bb.b, !dbg !2506
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.b)
@@ -1660,8 +1660,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgwyS1EwTFAS_8grep_cli7process16Com
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsgwyS1EwTFAS_8grep_cli7process12StderrReaderECs2NzvFoTxuAy_2rg(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #0 personality ptr @rust_eh_personality !dbg !3651 {
 bb.a:
   %i.a = load i32, ptr %0, align 8, !dbg !3652, !range !105, !noundef !15
-  %1 = icmp eq i32 %i.a, 0, !dbg !3652
-  br i1 %1, label %bb.b, label %bb.k, !dbg !3652
+  %1 = trunc nuw i32 %i.a to i1, !dbg !3652
+  br i1 %1, label %bb.k, label %bb.b, !dbg !3652
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !3652 ; 5 uses
@@ -2064,9 +2064,8 @@ bb.n:                                             ; preds = %_RINvMNtNtCsgPiXjGf
 bb.o:                                             ; preds = %bb.n
   %i.be = getelementptr inbounds nuw i8, ptr %.pre.i.i.i.i.i.i.i, i64 60, !dbg !12466
   %i.bf = load i32, ptr %i.be, align 4, !dbg !12466, !noalias !12462, !noundef !15
-  %9 = and i32 %i.bf, 1, !dbg !12475
-  %.not6.i.i.i.i.i.i.i.i.i = icmp eq i32 %9, 0, !dbg !12475
-  br i1 %.not6.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, label %_RNvXs1_NtCsdq8xsXUia3c_10grep_regex7matcherNtB5_12RegexMatcherNtCs7LWxN68iDgu_12grep_matcher7Matcher11captures_at.exit.thread.i.i.i.i.i.i, !dbg !12479
+  %.not6.i.i.i.i.i.i.i.i.i = trunc i32 %i.bf to i1, !dbg !12475
+  br i1 %.not6.i.i.i.i.i.i.i.i.i, label %_RNvXs1_NtCsdq8xsXUia3c_10grep_regex7matcherNtB5_12RegexMatcherNtCs7LWxN68iDgu_12grep_matcher7Matcher11captures_at.exit.thread.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i, !dbg !12479
 
 ._crit_edge.i.i.i.i.i.i.i.i:                      ; preds = %bb.o, %bb.n
   %i.bg = load i64, ptr %.pre.i.i.i.i.i.i.i, align 8, !dbg !12480, !range !915, !noalias !12462, !noundef !15
@@ -2083,9 +2082,8 @@ bb.p:                                             ; preds = %._crit_edge.i.i.i.i
 bb.q:                                             ; preds = %bb.p
   %i.bm = getelementptr inbounds nuw i8, ptr %.pre.i.i.i.i.i.i.i, i64 60, !dbg !12492
   %i.bn = load i32, ptr %i.bm, align 4, !dbg !12492, !noalias !12462, !noundef !15
-  %10 = and i32 %i.bn, 1, !dbg !12498
-  %.not8.i.i.i.i.i.i.i.i.i = icmp eq i32 %10, 0, !dbg !12498
-  br i1 %.not8.i.i.i.i.i.i.i.i.i, label %_RNvMs4_NtNtCsgPiXjGfBJkm_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i.i.i.i.i.i.i.i, label %bb.r, !dbg !12500
+  %.not8.i.i.i.i.i.i.i.i.i = trunc i32 %i.bn to i1, !dbg !12498
+  br i1 %.not8.i.i.i.i.i.i.i.i.i, label %bb.r, label %_RNvMs4_NtNtCsgPiXjGfBJkm_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i.i.i.i.i.i.i.i, !dbg !12500
 
 bb.r:                                             ; preds = %bb.q
   %i.bo = getelementptr inbounds nuw i8, ptr %.pre.i.i.i.i.i.i.i, i64 64, !dbg !12501
@@ -2488,9 +2486,8 @@ bb.c:                                             ; preds = %_RINvMNtNtCsgPiXjGf
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %.pre, i64 60, !dbg !13741
   %i.p = load i32, ptr %i.o, align 4, !dbg !13741, !noalias !13737, !noundef !15
-  %4 = and i32 %i.p, 1, !dbg !13744
-  %.not6.i.i = icmp eq i32 %4, 0, !dbg !13744
-  br i1 %.not6.i.i, label %._crit_edge.i, label %_RNvMs4_NtNtCsgPiXjGfBJkm_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread13.i, !dbg !13746
+  %.not6.i.i = trunc i32 %i.p to i1, !dbg !13744
+  br i1 %.not6.i.i, label %_RNvMs4_NtNtCsgPiXjGfBJkm_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread13.i, label %._crit_edge.i, !dbg !13746
 
 ._crit_edge.i:                                    ; preds = %bb.c, %bb.d
   %i.q = load i64, ptr %.pre, align 8, !dbg !13747, !range !915, !noalias !13737, !noundef !15
@@ -2507,9 +2504,8 @@ bb.e:                                             ; preds = %._crit_edge.i
 bb.f:                                             ; preds = %bb.e
   %i.w = getelementptr inbounds nuw i8, ptr %.pre, i64 60, !dbg !13754
   %i.x = load i32, ptr %i.w, align 4, !dbg !13754, !noalias !13737, !noundef !15
-  %5 = and i32 %i.x, 1, !dbg !13758
-  %.not8.i.i = icmp eq i32 %5, 0, !dbg !13758
-  br i1 %.not8.i.i, label %_RNvMs4_NtNtCsgPiXjGfBJkm_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i, label %bb.g, !dbg !13760
+  %.not8.i.i = trunc i32 %i.x to i1, !dbg !13758
+  br i1 %.not8.i.i, label %bb.g, label %_RNvMs4_NtNtCsgPiXjGfBJkm_14regex_automata4meta5regexNtB5_9RegexInfo13is_impossible.exit.thread.i, !dbg !13760
 
 bb.g:                                             ; preds = %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %.pre, i64 64, !dbg !13761

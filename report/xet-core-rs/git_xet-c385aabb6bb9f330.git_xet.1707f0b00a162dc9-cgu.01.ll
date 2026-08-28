@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a, %bb.k, %bb.j,
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i64, ptr %i.b, align 8, !range !77, !alias.scope !78, !noundef !5
-  %1 = icmp eq i64 %i.c, 0
+  %1 = trunc nuw i64 %i.c to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  br i1 %1, label %bb.d, label %bb.g
+  br i1 %1, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCs1YANDSn9Kib_7git_xet(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.d)
@@ -609,8 +609,7 @@ bb.as:                                            ; preds = %bb.f
 
 .outer:                                           ; preds = %bb.cl, %bb.as
   %.sroa.4.0.i.ph = phi i32 [ %i.ir, %bb.cl ], [ undef, %bb.as ]
-  %.not559 = phi i1 [ false, %bb.cl ], [ true, %bb.as ]
-  %.sroa.046.0.i.ph = phi i1 [ true, %bb.cl ], [ false, %bb.as ]
+  %.sroa.046.0.i.ph = phi i1 [ true, %bb.cl ], [ false, %bb.as ] ; 2 uses
   br label %bb.at
 
 bb.at:                                            ; preds = %.backedge, %.outer
@@ -803,7 +802,7 @@ bb.bj:                                            ; preds = %bb.be, %bb.ba
 
 bb.bk:                                            ; preds = %bb.bf, %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !586
-  br i1 %.not559, label %bb.cg, label %.invoke, !prof !110
+  br i1 %.sroa.046.0.i.ph, label %.invoke, label %bb.cg, !prof !269
 
 bb.bl:                                            ; preds = %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %bb.ba, %bb.az, %bb.ay
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !586

@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not164, label %._crit_edge163, label %.lr.ph162
 
 .lr.ph162:                                        ; preds = %bb.a
-  %.not = icmp eq i32 %1, 0
+  %.not = trunc nuw i32 %1 to i1
   %i.k = uitofp i32 %i.b to float
   %i.l = fpext float %i.k to double               ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 84877
@@ -225,10 +225,9 @@ bb.a:
   %unroll_iter = and i64 %i.u, -4
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %lcmp.mod179 = icmp ne i64 %xtraiter, 0
-  %xtraiter180 = and i64 %i.u, 1
   %i.x = icmp eq i64 %i.v, 0
   %unroll_iter184 = and i64 %i.u, -2
-  %lcmp.mod182.not = icmp eq i64 %xtraiter180, 0
+  %lcmp.mod182.not = trunc i64 %i.u to i1
   %lcmp.mod183 = trunc i64 %i.u to i1
   br label %bb.b
 
@@ -241,7 +240,7 @@ bb.b:                                             ; preds = %.lr.ph162, %._crit_
   %i.aa = fmul double %i.j, %.1152
   %i.ab = fsub double %i.aa, %.0151160
   %i.ac = fdiv double %i.ab, %.1152               ; 2 uses
-  br i1 %.not, label %bb.c, label %.loopexit
+  br i1 %.not, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.ad = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %indvars.iv171 ; 7 uses
@@ -421,7 +420,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %niter185.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph158, !llvm.loop !31
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph158
-  br i1 %lcmp.mod182.not, label %._crit_edge, label %.lr.ph158.epil.preheader
+  br i1 %lcmp.mod182.not, label %.lr.ph158.epil.preheader, label %._crit_edge
 
 .lr.ph158.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph158.preheader
   %indvars.iv166.epil.init = phi i64 [ 1, %.lr.ph158.preheader ], [ %indvars.iv.next167.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
