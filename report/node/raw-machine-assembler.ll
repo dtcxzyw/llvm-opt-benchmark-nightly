@@ -204,7 +204,7 @@ define hidden void @_ZN2v88internal8compiler19RawMachineAssembler13MakePhiBinary
 bb.a:
   %i.a = load ptr, ptr %1, align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %i.c = load i32, ptr %i.b, align 4              ; 4 uses
+  %i.c = load i32, ptr %i.b, align 4              ; 5 uses
   %i.d = icmp eq i32 %i.c, 2
   br i1 %i.d, label %bb.bb, label %bb.b
 
@@ -333,7 +333,7 @@ _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit: ; preds
   %i.ay = sub i64 %i.aw, %i.ax
   %i.az = lshr exact i64 %i.ay, 3
   %i.ba = trunc i64 %i.az to i32
-  %i.bb = tail call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.at, ptr noundef %i.av, i32 noundef %i.ba, ptr noundef %.sroa.0109.2, i1 noundef zeroext false) #18 ; 2 uses
+  %i.bb = tail call noundef ptr @_ZN2v88internal8compiler7TFGraph7NewNodeEPKNS1_8OperatorEiPKPNS1_4NodeEb(ptr noundef nonnull align 8 dereferenceable(104) %i.at, ptr noundef %i.av, i32 noundef %i.ba, ptr noundef %.sroa.0109.2, i1 noundef zeroext false) #18 ; 3 uses
   %.not.i.i.i44 = icmp eq ptr %.sroa.0109.2, null
   br i1 %.not.i.i.i44, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit, label %bb.n
 
@@ -437,7 +437,7 @@ _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit: ; preds 
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit: ; preds = %bb.n, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit
   %i.cf = icmp eq i32 %i.f, 1
-  br i1 %i.cf, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit..thread_crit_edge, label %bb.aa
+  br i1 %i.cf, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit..thread_crit_edge, label %5
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit..thread_crit_edge: ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit
   %.pre = load ptr, ptr %1, align 8
@@ -447,7 +447,7 @@ _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit..thread_crit_edge: ;
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit.thread: ; preds = %bb.f, %bb.e
   %.sink.i.i.i = phi ptr [ %i.u, %bb.f ], [ %i.q, %bb.e ]
-  %i.cg = load ptr, ptr %.sink.i.i.i, align 8     ; 2 uses
+  %i.cg = load ptr, ptr %.sink.i.i.i, align 8     ; 3 uses
   %i.ch = icmp eq i32 %i.f, 1
   br i1 %i.ch, label %.thread, label %bb.aa
 
@@ -485,19 +485,22 @@ _ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit50: ; p
   %i.cw = load ptr, ptr %i.cv, align 8
   br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit60
 
-bb.aa:                                            ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit.thread, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit
-  %.039134 = phi ptr [ %i.cg, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit.thread ], [ %i.bb, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit ] ; 2 uses
+5:                                                ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit
+  %6 = icmp slt i32 %2, %i.c
+  br i1 %6, label %.lr.ph167, label %._crit_edge168.thread
+
+bb.aa:                                            ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit.thread
   %i.cx = icmp slt i32 %2, %i.c
   br i1 %i.cx, label %.lr.ph167, label %._crit_edge168.thread
 
-.lr.ph167:                                        ; preds = %bb.aa
+.lr.ph167:                                        ; preds = %5, %bb.aa
+  %.039134205207 = phi ptr [ %i.cg, %bb.aa ], [ %i.bb, %5 ] ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.cz = ptrtoint ptr %1 to i64
   %i.da = add i64 %i.cz, 32
   %i.db = inttoptr i64 %i.da to ptr               ; 2 uses
-  %i.dc = zext i32 %2 to i64
-  %5 = icmp sgt i32 %2, -1
-  br label %6
+  %i.dc = zext nneg i32 %2 to i64
+  br label %bb.ag
 
 ._crit_edge168:                                   ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71
   %.not.i51 = icmp eq ptr %.sroa.10.2, %.sroa.19.2
@@ -507,11 +510,12 @@ bb.ab:                                            ; preds = %._crit_edge168
   store ptr %4, ptr %.sroa.10.2, align 8
   br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit58
 
-._crit_edge168.thread:                            ; preds = %bb.aa, %._crit_edge168
-  %.sroa.10.0.lcssa207 = phi ptr [ %.sroa.10.2, %._crit_edge168 ], [ null, %bb.aa ]
-  %.sroa.0.0.lcssa206 = phi ptr [ %.sroa.0.2, %._crit_edge168 ], [ null, %bb.aa ] ; 4 uses
-  %i.dd = ptrtoint ptr %.sroa.10.0.lcssa207 to i64
-  %i.de = ptrtoint ptr %.sroa.0.0.lcssa206 to i64
+._crit_edge168.thread:                            ; preds = %bb.aa, %5, %._crit_edge168
+  %.sroa.10.0.lcssa216 = phi ptr [ %.sroa.10.2, %._crit_edge168 ], [ null, %5 ], [ null, %bb.aa ]
+  %.sroa.0.0.lcssa215 = phi ptr [ %.sroa.0.2, %._crit_edge168 ], [ null, %5 ], [ null, %bb.aa ] ; 4 uses
+  %.039134204214 = phi ptr [ %.039134205207, %._crit_edge168 ], [ %i.bb, %5 ], [ %i.cg, %bb.aa ]
+  %i.dd = ptrtoint ptr %.sroa.10.0.lcssa216 to i64
+  %i.de = ptrtoint ptr %.sroa.0.0.lcssa215 to i64
   %i.df = sub i64 %i.dd, %i.de                    ; 6 uses
   %i.dg = icmp eq i64 %i.df, 9223372036854775800
   br i1 %i.dg, label %bb.ac, label %_ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i52
@@ -537,15 +541,15 @@ _ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i5
   br i1 %i.dp, label %bb.ad, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i55
 
 bb.ad:                                            ; preds = %_ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i52
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dn, ptr align 8 %.sroa.0.0.lcssa206, i64 %i.df, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.dn, ptr align 8 %.sroa.0.0.lcssa215, i64 %i.df, i1 false)
   br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i55
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i55: ; preds = %bb.ad, %_ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i52
-  %.not.i17.i.i56 = icmp eq ptr %.sroa.0.0.lcssa206, null
+  %.not.i17.i.i56 = icmp eq ptr %.sroa.0.0.lcssa215, null
   br i1 %.not.i17.i.i56, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57, label %bb.ae
 
 bb.ae:                                            ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i55
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0.lcssa206, i64 noundef %i.df) #21
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.0.lcssa215, i64 noundef %i.df) #21
   br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57: ; preds = %bb.ae, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i55
@@ -553,6 +557,7 @@ _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEv
   br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit58
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit58: ; preds = %bb.ab, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57
+  %.039134204213 = phi ptr [ %.039134204214, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57 ], [ %.039134205207, %bb.ab ] ; 2 uses
   %.sroa.0.1 = phi ptr [ %i.dn, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57 ], [ %.sroa.0.2, %bb.ab ] ; 4 uses
   %.pn139 = phi ptr [ %i.do, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57 ], [ %.sroa.10.2, %bb.ab ]
   %.sroa.19.1 = phi ptr [ %i.dq, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i57 ], [ %.sroa.19.2, %bb.ab ]
@@ -576,18 +581,11 @@ bb.af:                                            ; preds = %_ZNSt6vectorIPN2v88
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0.1, i64 noundef %i.ec) #21
   br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit60
 
-6:                                                ; preds = %.lr.ph167, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71
+bb.ag:                                            ; preds = %.lr.ph167, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71
   %indvars.iv174 = phi i64 [ %i.dc, %.lr.ph167 ], [ %indvars.iv.next175, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71 ] ; 3 uses
   %.sroa.19.0164 = phi ptr [ null, %.lr.ph167 ], [ %.sroa.19.2, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71 ] ; 3 uses
   %.sroa.10.0163 = phi ptr [ null, %.lr.ph167 ], [ %.sroa.10.2, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71 ] ; 3 uses
   %.sroa.0.0162 = phi ptr [ null, %.lr.ph167 ], [ %.sroa.0.2, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71 ] ; 5 uses
-  br i1 %5, label %bb.ag, label %7, !prof !6
-
-7:                                                ; preds = %6
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.6) #19
-  unreachable
-
-bb.ag:                                            ; preds = %6
   %i.ed = load ptr, ptr %1, align 8
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 20
   %i.ef = load i32, ptr %i.ee, align 4
@@ -674,10 +672,10 @@ _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backEOS4_.exit71: ; pred
   %indvars.iv.next175 = add nuw nsw i64 %indvars.iv174, 1 ; 2 uses
   %i.fe = trunc nuw i64 %indvars.iv.next175 to i32
   %i.ff = icmp sgt i32 %i.c, %i.fe
-  br i1 %i.ff, label %6, label %._crit_edge168, !llvm.loop !22
+  br i1 %i.ff, label %bb.ag, label %._crit_edge168, !llvm.loop !22
 
 _ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit60: ; preds = %bb.af, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit58, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit50
-  %.039133 = phi ptr [ %.039135137, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit50 ], [ %.039134, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit58 ], [ %.039134, %bb.af ] ; 5 uses
+  %.039133 = phi ptr [ %.039135137, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit50 ], [ %.039134204213, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit58 ], [ %.039134204213, %bb.af ] ; 5 uses
   %.037 = phi ptr [ %i.cw, %_ZN2v88internal8compiler14NodeProperties13GetValueInputEPNS1_4NodeEi.exit50 ], [ %i.ea, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE9push_backERKS4_.exit58 ], [ %i.ea, %bb.af ] ; 5 uses
   %i.fg = load ptr, ptr %1, align 8               ; 3 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.fg, i64 28
