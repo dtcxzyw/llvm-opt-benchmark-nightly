@@ -50,6 +50,11 @@ if __name__ == "__main__":
         crate_name = crate.split()[0]
         keywords.append(crate_name)
 
+    for keyword in set(keywords):
+        if '-' in keyword:
+            keywords.append(keyword.replace('-', '_'))
+    keywords = list(set(keywords))
+
     print(f"Collecting IR for crates: {', '.join(keywords)}")
     tasks = []
     for root, _, files in os.walk("target"):
