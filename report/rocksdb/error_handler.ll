@@ -205,7 +205,7 @@ _ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit179: ; preds = 
   br label %.body
 
 .body:                                            ; preds = %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit146, %_ZNSt12_Vector_baseISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit.i118, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit179, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit105, %_ZNSt6vectorIN7rocksdb7TickersESaIS1_EED2Ev.exit102, %bb.v, %bb.o
-  %.pn47 = phi { ptr, i32 } [ %i.bp, %bb.o ], [ %i.ck, %_ZNSt12_Vector_baseISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit.i118 ], [ %lpad.phi, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit146 ], [ %i.dj, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit179 ], [ %i.ch, %bb.v ], [ %i.bo, %_ZNSt6vectorIN7rocksdb7TickersESaIS1_EED2Ev.exit102 ], [ %i.bq, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit105 ] ; 2 uses
+  %.pn47 = phi { ptr, i32 } [ %i.bp, %bb.o ], [ %i.bq, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit105 ], [ %i.ck, %_ZNSt12_Vector_baseISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit.i118 ], [ %lpad.phi, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit146 ], [ %i.ch, %bb.v ], [ %i.bo, %_ZNSt6vectorIN7rocksdb7TickersESaIS1_EED2Ev.exit102 ], [ %i.dj, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit179 ] ; 2 uses
   %i.dk = load ptr, ptr %i.ah, align 8, !tbaa !144 ; 2 uses
   %.not.i.i183 = icmp eq ptr %i.dk, null
   br i1 %.not.i.i183, label %_ZN7rocksdb6StatusD2Ev.exit185, label %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i184
@@ -329,8 +329,8 @@ _ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit225: ; preds = 
           cleanup
   br label %_ZNSt6vectorIN7rocksdb7TickersESaIS1_EED2Ev.exit228
 
-_ZNSt6vectorIN7rocksdb7TickersESaIS1_EED2Ev.exit228: ; preds = %_ZN7rocksdb6StatusD2Ev.exit64, %_ZN7rocksdb6StatusD2Ev.exit185, %_ZN7rocksdb6StatusD2Ev.exit222, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit225, %_ZN7rocksdb6StatusD2Ev.exit58
-  %.pn53.pn = phi { ptr, i32 } [ %i.p, %_ZN7rocksdb6StatusD2Ev.exit58 ], [ %i.au, %_ZN7rocksdb6StatusD2Ev.exit64 ], [ %.pn47.pn, %_ZN7rocksdb6StatusD2Ev.exit185 ], [ %i.eh, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit225 ], [ %.pn, %_ZN7rocksdb6StatusD2Ev.exit222 ]
+_ZNSt6vectorIN7rocksdb7TickersESaIS1_EED2Ev.exit228: ; preds = %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit225, %_ZN7rocksdb6StatusD2Ev.exit64, %_ZN7rocksdb6StatusD2Ev.exit185, %_ZN7rocksdb6StatusD2Ev.exit222, %_ZN7rocksdb6StatusD2Ev.exit58
+  %.pn53.pn = phi { ptr, i32 } [ %i.p, %_ZN7rocksdb6StatusD2Ev.exit58 ], [ %i.au, %_ZN7rocksdb6StatusD2Ev.exit64 ], [ %.pn47.pn, %_ZN7rocksdb6StatusD2Ev.exit185 ], [ %.pn, %_ZN7rocksdb6StatusD2Ev.exit222 ], [ %i.eh, %_ZNSt6vectorISt5tupleIJN7rocksdb10HistogramsEmEESaIS3_EED2Ev.exit225 ]
   invoke void @_ZN7rocksdb4port5Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(60) %i.b)
           to label %_ZN7rocksdb21InstrumentedMutexLockD2Ev.exit229 unwind label %bb.ad
 

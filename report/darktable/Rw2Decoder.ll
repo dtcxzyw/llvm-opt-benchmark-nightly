@@ -204,7 +204,7 @@ _ZN8rawspeed6TiffIDD2Ev.exit:                     ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #27
   ret void
 
-bb.aw:                                            ; preds = %bb.m, %bb.aq, %bb.av, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit109, %bb.r, %bb.o, %bb.p, %bb.n, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53, %bb.e
+bb.aw:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit109, %bb.r, %bb.m, %bb.aq, %bb.av, %bb.o, %bb.p, %bb.n, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53, %bb.e
   %.pn37.pn.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit53 ], [ %i.g, %bb.e ], [ %i.cw, %bb.m ], [ %i.ex, %bb.aq ], [ %i.fq, %bb.av ], [ %i.cx, %bb.n ], [ %i.cy, %bb.o ], [ %i.cz, %bb.p ], [ %i.da, %bb.r ], [ %.pn37, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit109 ] ; 2 uses
   %i.gk = load ptr, ptr %3, align 8, !tbaa !17    ; 2 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses

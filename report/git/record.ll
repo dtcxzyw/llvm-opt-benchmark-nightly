@@ -202,7 +202,7 @@ bb.a:
 define internal range(i32 -13, 1) i32 @reftable_ref_record_copy_from(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #5 {
 bb.a:
   %.0.copyload69 = load ptr, ptr %0, align 1      ; 6 uses
-  store i64 0, ptr %0, align 1
+  store ptr null, ptr %0, align 1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %.0.copyload71 = load i64, ptr %i.a, align 1    ; 4 uses
   store i64 0, ptr %i.a, align 1
@@ -557,7 +557,7 @@ bb.e:                                             ; preds = %get_var_int.exit
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 %i.p ; 7 uses
   %i.r = sub i64 %4, %i.p                         ; 9 uses
   %.0.copyload67 = load ptr, ptr %0, align 1      ; 6 uses
-  store i64 0, ptr %0, align 1
+  store ptr null, ptr %0, align 1
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %.0.copyload69 = load i64, ptr %i.s, align 1    ; 4 uses
   store i64 0, ptr %i.s, align 1
