@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [16 x i8], align 8                ; 5 uses
-  %i.d = alloca [88 x i8], align 8                ; 13 uses
+  %i.d = alloca [88 x i8], align 8                ; 14 uses
   %i.e = alloca [56 x i8], align 8                ; 5 uses
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [8 x i8], align 8                 ; 7 uses
@@ -393,7 +393,9 @@ _RINvMs3_NtCs7tGzs63DEEy_9hashbrown3mapINtB6_7HashMapNtNtCs80wj1cxFixi_12polars_
   %i.bb = getelementptr inbounds nuw i8, ptr %i.d, i64 8, !dbg !5527
   store i64 1, ptr %i.bb, align 8, !dbg !5527
   %i.bc = getelementptr inbounds nuw i8, ptr %i.d, i64 16, !dbg !5527
-  store i64 0, ptr %i.bc, align 8, !dbg !5527
+  store i32 0, ptr %i.bc, align 8, !dbg !5527
+  %.sroa.06.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 20, !dbg !5527
+  store i8 0, ptr %.sroa.06.sroa.4.0..sroa_idx.i, align 4, !dbg !5527
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24, !dbg !5527
   store ptr inttoptr (i64 -1 to ptr), ptr %.sroa.4.0..sroa_idx.i, align 8, !dbg !5527
   %.sroa.58.sroa.4.0..sroa.58.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.d, i64 55, !dbg !5527

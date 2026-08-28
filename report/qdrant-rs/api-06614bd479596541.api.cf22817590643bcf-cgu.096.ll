@@ -202,8 +202,8 @@ bb.r:                                             ; preds = %bb.i
   unreachable
 
 bb.s:                                             ; preds = %bb.a, %_RNCNvXs1L_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by7OrderByINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant7OrderByE8try_froms0_0Bc_.exit.thread
-  %.sroa.721.0 = phi ptr [ %i.ap, %_RNCNvXs1L_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by7OrderByINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant7OrderByE8try_froms0_0Bc_.exit.thread ], [ undef, %bb.a ]
-  %.sroa.7.0 = phi i32 [ %.sroa.9.0.ph, %_RNCNvXs1L_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by7OrderByINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant7OrderByE8try_froms0_0Bc_.exit.thread ], [ undef, %bb.a ]
+  %.sroa.7.sroa.0.0 = phi i32 [ %.sroa.9.0.ph, %_RNCNvXs1L_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by7OrderByINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant7OrderByE8try_froms0_0Bc_.exit.thread ], [ undef, %bb.a ]
+  %.sroa.718.0 = phi ptr [ %i.ap, %_RNCNvXs1L_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by7OrderByINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant7OrderByE8try_froms0_0Bc_.exit.thread ], [ undef, %bb.a ]
   %.sroa.014.0 = phi i32 [ %.sroa.0.0.ph, %_RNCNvXs1L_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by7OrderByINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtBa_6qdrant7OrderByE8try_froms0_0Bc_.exit.thread ], [ -1, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.ak = getelementptr inbounds nuw i8, ptr %i.h, i64 8
@@ -252,9 +252,9 @@ bb.w:                                             ; preds = %bb.u
   %.sroa.536.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i32 %.sroa.014.0, ptr %.sroa.536.0..sroa_idx, align 8
   %.sroa.637.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 52
-  store i32 %.sroa.7.0, ptr %.sroa.637.0..sroa_idx, align 4
+  store i32 %.sroa.7.sroa.0.0, ptr %.sroa.637.0..sroa_idx, align 4
   %.sroa.738.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store ptr %.sroa.721.0, ptr %.sroa.738.0..sroa_idx, align 8
+  store ptr %.sroa.718.0, ptr %.sroa.738.0..sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i8 %.sroa.05.0, ptr %.sroa.8.0..sroa_idx, align 8
   invoke void @_RNvXsp_NtCsexYYUdYSQU6_5alloc3vecINtB5_3VechENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h)
@@ -313,13 +313,18 @@ define void @_RNvXsL_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.0.0.copyload = load i64, ptr %1, align 8
+  %.sroa.0.0.copyload = load i64, ptr %1, align 8 ; 2 uses
+  %.not = icmp eq i64 %.sroa.0.0.copyload, 2
+  br i1 %.not, label %bb.b, label %2
+
+2:                                                ; preds = %bb.a
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8
-  switch i64 %.sroa.0.0.copyload, label %3 [
-    i64 2, label %bb.b
-    i64 0, label %2
-  ]
+  %.sroa.6.sroa.0.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8
+  %3 = ptrtoint ptr %.sroa.6.sroa.0.0.copyload to i64
+  store i64 %.sroa.0.0.copyload, ptr %0, align 8
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %3, ptr %.sroa.3.0..sroa_idx, align 8
+  br label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -355,18 +360,8 @@ _RNCNvXsL_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10
   store i64 2, ptr %0, align 8
   br label %bb.d
 
-bb.d:                                             ; preds = %3, %_RNCNvXsL_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by10OrderValueINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtB9_6qdrant10OrderValueE8try_from0Bb_.exit
+bb.d:                                             ; preds = %2, %_RNCNvXsL_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types8order_by10OrderValueINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtB9_6qdrant10OrderValueE8try_from0Bb_.exit
   ret void
-
-2:                                                ; preds = %bb.a
-  br label %3
-
-3:                                                ; preds = %bb.a, %2
-  %.sroa.015.0 = phi i64 [ 0, %2 ], [ 1, %bb.a ]
-  store i64 %.sroa.015.0, ptr %0, align 8
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.6.0.copyload, ptr %.sroa.3.0..sroa_idx, align 8
-  br label %bb.d
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable

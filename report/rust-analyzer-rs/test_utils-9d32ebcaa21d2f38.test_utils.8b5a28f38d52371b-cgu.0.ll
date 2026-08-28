@@ -204,15 +204,14 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsbXLDOPgjE5X_
 
 bb.cz:                                            ; preds = %bb.cc
   %i.ll = add nsw i32 %.sroa.0.4, -1
-  %.sroa.022.0.insert.ext = zext i32 %i.ll to i64
+  %.sroa.016.sroa.0.0 = select i1 %i.jg, i32 undef, i32 %i.ll
   %.sroa.2.0 = select i1 %i.jg, ptr null, ptr @32
-  %.sroa.016.0 = select i1 %i.jg, i64 undef, i64 %.sroa.022.0.insert.ext
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bk)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.3.0..sroa_idx, i8 0, i64 16, i1 false)
   store i64 1, ptr %i.bk, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 8 ; 2 uses
-  store i64 %.sroa.016.0, ptr %.sroa.2.0..sroa_idx, align 8
+  store i32 %.sroa.016.sroa.0.0, ptr %.sroa.2.0..sroa_idx, align 8
   %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 3 uses
   store ptr %.sroa.2.0, ptr %.sroa.2.sroa.2.0..sroa.2.0..sroa_idx.sroa_idx, align 8
   %.sroa.2.sroa.3.0..sroa.2.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bk, i64 24 ; 2 uses

@@ -202,19 +202,19 @@ bb.a:
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
   %i.d = alloca [24 x i8], align 8                ; 4 uses
-  %i.e = alloca [14 x i8], align 2                ; 7 uses
+  %i.e = alloca [14 x i8], align 2                ; 8 uses
   %i.f = alloca [16 x i8], align 8                ; 8 uses
   %i.g = alloca [24 x i8], align 8                ; 5 uses
   %i.h = alloca [24 x i8], align 8                ; 4 uses
   %i.i = alloca [8 x i8], align 8                 ; 4 uses
   %i.j = alloca [24 x i8], align 8                ; 4 uses
-  %i.k = alloca [14 x i8], align 2                ; 7 uses
+  %i.k = alloca [14 x i8], align 2                ; 8 uses
   %i.l = alloca [16 x i8], align 8                ; 8 uses
   %i.m = alloca [24 x i8], align 8                ; 5 uses
   %i.n = alloca [24 x i8], align 8                ; 4 uses
   %i.o = alloca [8 x i8], align 8                 ; 4 uses
   %i.p = alloca [8 x i8], align 8                 ; 5 uses
-  %i.q = alloca [14 x i8], align 2                ; 7 uses
+  %i.q = alloca [14 x i8], align 2                ; 8 uses
   %i.r = alloca [16 x i8], align 8                ; 8 uses
   %i.s = alloca [24 x i8], align 8                ; 4 uses
   %i.t = alloca [24 x i8], align 8                ; 6 uses
@@ -403,16 +403,15 @@ _RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultNtNtNtCsa9sSWSfjDbm_4jiff5civil4da
   %.sroa.016.0.insert.ext.i.i56 = zext i16 %i.ac to i32
   %.sroa.016.0.insert.insert.i.i57 = or disjoint i32 %.sroa.016.0.insert.ext.i.i56, 16842752
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !249
-  %.sroa.429.0.insert.ext.i = zext i16 %.val53 to i32
-  %.sroa.429.0.insert.shift.i = shl nuw i32 %.sroa.429.0.insert.ext.i, 16
-  %.sroa.027.0.insert.insert.i = or disjoint i32 %.sroa.429.0.insert.shift.i, 1
   %i.bw = getelementptr inbounds nuw i8, ptr %i.q, i64 10
   store i32 %.sroa.016.0.insert.insert.i.i57, ptr %i.bw, align 2, !noalias !249
   %i.bx = getelementptr inbounds nuw i8, ptr %i.q, i64 2
   store i8 2, ptr %i.bx, align 2, !noalias !249
   store i8 0, ptr %i.q, align 2, !noalias !249
   %i.by = getelementptr inbounds nuw i8, ptr %i.q, i64 6
-  store i32 %.sroa.027.0.insert.insert.i, ptr %i.by, align 2, !noalias !249
+  store i8 1, ptr %i.by, align 2, !noalias !249
+  %.sroa.517.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  store i16 %.val53, ptr %.sroa.517.0..sroa_idx.i, align 2, !noalias !249
   call fastcc void @_RNvMsE_NtNtCsa9sSWSfjDbm_4jiff5civil4dateNtB5_8DateWith5build(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %i.r, ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(14) %i.q) #23, !noalias !249
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !249
   %i.bz = load i16, ptr %i.r, align 8, !range !217, !noalias !249, !noundef !32
@@ -554,16 +553,15 @@ bb.ai:                                            ; preds = %bb.ag
 bb.aj:                                            ; preds = %bb.ag, %bb.ah
   %.sroa.068.0.i = phi i16 [ %i.dp, %bb.ag ], [ %i.dt, %bb.ah ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !285
-  %.sroa.4112.0.insert.ext.i = zext i16 %.sroa.068.0.i to i32
-  %.sroa.4112.0.insert.shift.i = shl nuw i32 %.sroa.4112.0.insert.ext.i, 16
-  %.sroa.0110.0.insert.insert.i = or disjoint i32 %.sroa.4112.0.insert.shift.i, 1
   %i.dw = getelementptr inbounds nuw i8, ptr %i.k, i64 10
   store i32 %.sroa.016.0.insert.insert.i.i62, ptr %i.dw, align 2, !noalias !285
   %i.dx = getelementptr inbounds nuw i8, ptr %i.k, i64 2
   store i8 2, ptr %i.dx, align 2, !noalias !285
   store i8 0, ptr %i.k, align 2, !noalias !285
   %i.dy = getelementptr inbounds nuw i8, ptr %i.k, i64 6
-  store i32 %.sroa.0110.0.insert.insert.i, ptr %i.dy, align 2, !noalias !285
+  store i8 1, ptr %i.dy, align 2, !noalias !285
+  %.sroa.595.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.k, i64 8
+  store i16 %.sroa.068.0.i, ptr %.sroa.595.0..sroa_idx.i, align 2, !noalias !285
   call fastcc void @_RNvMsE_NtNtCsa9sSWSfjDbm_4jiff5civil4dateNtB5_8DateWith5build(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %i.l, ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(14) %i.k) #23, !noalias !285
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !285
   %i.dz = load i16, ptr %i.l, align 8, !range !217, !noalias !285, !noundef !32
@@ -745,16 +743,15 @@ bb.az:                                            ; preds = %_RINvNtCs3oUPovFnLW
 bb.ba:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7strtime5ErrorEBJ_.exit.i, %bb.ax
   %.sroa.066.0.i = phi i16 [ %i.ge, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7strtime5ErrorEBJ_.exit.i ], [ %i.gd, %bb.ax ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !306
-  %.sroa.4110.0.insert.ext.i = zext i16 %.sroa.066.0.i to i32
-  %.sroa.4110.0.insert.shift.i = shl nuw i32 %.sroa.4110.0.insert.ext.i, 16
-  %.sroa.0108.0.insert.insert.i = or disjoint i32 %.sroa.4110.0.insert.shift.i, 1
   %i.gj = getelementptr inbounds nuw i8, ptr %i.e, i64 10
   store i32 %.sroa.016.0.insert.insert.i.i71, ptr %i.gj, align 2, !noalias !306
   %i.gk = getelementptr inbounds nuw i8, ptr %i.e, i64 2
   store i8 2, ptr %i.gk, align 2, !noalias !306
   store i8 0, ptr %i.e, align 2, !noalias !306
   %i.gl = getelementptr inbounds nuw i8, ptr %i.e, i64 6
-  store i32 %.sroa.0108.0.insert.insert.i, ptr %i.gl, align 2, !noalias !306
+  store i8 1, ptr %i.gl, align 2, !noalias !306
+  %.sroa.593.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  store i16 %.sroa.066.0.i, ptr %.sroa.593.0..sroa_idx.i, align 2, !noalias !306
   call fastcc void @_RNvMsE_NtNtCsa9sSWSfjDbm_4jiff5civil4dateNtB5_8DateWith5build(ptr noalias nofree noundef align 8 captures(none) dereferenceable(16) %i.f, ptr noalias nofree noundef readonly align 2 captures(none) dereferenceable(14) %i.e) #23, !noalias !306
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !306
   %i.gm = load i16, ptr %i.f, align 8, !range !217, !noalias !306, !noundef !32
@@ -1157,7 +1154,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %.thread67.i, %bb.g, %bb.f
   %.sroa.06.05665.i = phi i32 [ %i.c, %bb.f ], [ %i.c, %bb.g ], [ %.sroa.06.0566471.i, %.thread67.i ]
   %.sroa.0.05763.i = phi i32 [ %.sroa.0.0.i, %bb.f ], [ %.sroa.0.0.i, %bb.g ], [ %.sroa.0.0576272.i, %.thread67.i ] ; 2 uses
-  %.sroa.041.0.i = phi i8 [ 0, %bb.f ], [ %i.n, %bb.g ], [ %i.r, %.thread67.i ]
+  %.sroa.041.0.i = phi i8 [ 0, %bb.f ], [ %i.n, %bb.g ], [ %i.r, %.thread67.i ] ; 2 uses
   %.sroa.043.0.i = phi i64 [ 0, %bb.f ], [ 0, %bb.g ], [ %i.y, %.thread67.i ] ; 3 uses
   %or.cond2.i = icmp ult i32 %.sroa.0.05763.i, 1000000000
   br i1 %or.cond2.i, label %_RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit, label %bb.i, !prof !392
@@ -1172,9 +1169,10 @@ bb.h:                                             ; preds = %.thread67.i, %bb.g,
   %i.t = zext nneg i16 %i.s to i64
   %i.u = urem i16 %.lhs.trunc.i, 60
   %i.v = zext nneg i16 %i.u to i64
-  %i.w = shl nuw nsw i64 %i.v, 48
-  %i.x = shl nuw nsw i64 %i.t, 40
-  %i.y = or disjoint i64 %i.w, %i.x
+  %i.w = shl nuw nsw i64 %i.t, 40
+  %i.x = shl nuw nsw i64 %i.v, 48
+  %3 = and i64 %i.w, 280375465082880
+  %i.y = or disjoint i64 %3, %i.x
   br label %bb.h
 
 bb.i:                                             ; preds = %bb.h
@@ -1206,24 +1204,18 @@ _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; pre
   %i.as = add nuw nsw i32 %i.ap, %i.ar
   %i.at = zext i1 %i.ak to i32
   %i.au = add nuw nsw i32 %i.as, %i.at
-  %.sroa.440.0.insert.ext.i = zext nneg i8 %.sroa.041.0.i to i64
-  %.sroa.440.0.insert.shift.i = shl nuw nsw i64 %.sroa.440.0.insert.ext.i, 32
-  %.sroa.039.0.insert.ext.i = zext nneg i32 %.sroa.0.05763.i to i64
-  %3 = or disjoint i64 %.sroa.440.0.insert.shift.i, %.sroa.039.0.insert.ext.i
-  %.sroa.039.0.insert.insert.i = or i64 %3, %.sroa.043.0.i ; 2 uses
   %.sroa.7.8.extract.trunc = trunc i32 %i.au to i16
   %.sroa.7.10.extract.shift = lshr i32 %.sroa.2.0.insert.ext.i.i, 16
   %.sroa.7.10.extract.trunc = trunc i32 %.sroa.7.10.extract.shift to i8
   %i.av = trunc nuw nsw i16 %i.aj to i8
   %.sroa.7.11.extract.trunc = add nuw nsw i8 %i.av, 1
-  %.sroa.0.4.extract.shift = lshr i64 %.sroa.039.0.insert.insert.i, 32
-  %.sroa.0.4.extract.trunc = trunc i64 %.sroa.0.4.extract.shift to i8 ; 2 uses
   %.sroa.0.5.extract.shift = lshr i64 %.sroa.043.0.i, 40
   %.sroa.0.5.extract.trunc = trunc i64 %.sroa.0.5.extract.shift to i8
   %.sroa.0.6.extract.shift = lshr i64 %.sroa.043.0.i, 48
   %.sroa.0.6.extract.trunc = trunc nuw nsw i64 %.sroa.0.6.extract.shift to i8
-  %.sroa.0.0.extract.trunc.a = trunc i64 %.sroa.039.0.insert.insert.i to i32
-  %4 = icmp sgt i8 %.sroa.0.4.extract.trunc, 11
+  %.sroa.0.0.extract.trunc.a = trunc i64 %.sroa.043.0.i to i32
+  %.sroa.0.0.extract.trunc = or i32 %.sroa.0.05763.i, %.sroa.0.0.extract.trunc.a
+  %4 = icmp samesign ugt i8 %.sroa.041.0.i, 11
   %..i = zext i1 %4 to i8
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i16 1, ptr %i.aw, align 8
@@ -1250,7 +1242,7 @@ _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; pre
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 102
   store i8 1, ptr %i.bh, align 2
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 103
-  store i8 %.sroa.0.4.extract.trunc, ptr %i.bi, align 1
+  store i8 %.sroa.041.0.i, ptr %i.bi, align 1
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i8 1, ptr %i.bj, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 105
@@ -1262,7 +1254,7 @@ _RNvMNtNtCsb09rMIQFAXO_9jiff_core2tz6offsetNtB2_6Offset11to_datetime.exit: ; pre
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i32 1, ptr %i.bn, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 68
-  store i32 %.sroa.0.0.extract.trunc.a, ptr %i.bo, align 4
+  store i32 %.sroa.0.0.extract.trunc, ptr %i.bo, align 4
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 72
   store i32 1, ptr %i.bp, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 76

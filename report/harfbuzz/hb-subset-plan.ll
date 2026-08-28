@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %_ZNK2OT7ArrayOfINS_
 
 "_ZNK4$_17clIRKN2OT6Layout6Common8CoverageERK10hb_array_tIKNS1_8OffsetToINS1_21MathGlyphConstructionENS1_7NumTypeILb1EtLj2EEEvLb1EEEETnPN12hb_enable_ifIXaasr14hb_is_iterableIT_EE5valuesr14hb_is_iterableIT0_EE5valueEvE4typeELPv0EEE13hb_zip_iter_tIDTcldtclL_ZL8hb_derefEcl10hb_declvalISI_EEE4iterEEDTcldtclL_ZL8hb_derefEcl10hb_declvalISJ_EEE4iterEEEOSI_OSJ_.exit": ; preds = %bb.b, %bb.c, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i, %bb.g
   %.sroa.11.2.i = phi i32 [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.g ], [ %.sroa.11.1.i, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i ]
-  %.sroa.52.0.i = phi ptr [ null, %bb.b ], [ %i.p, %bb.c ], [ %i.p, %bb.g ], [ %i.p, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i ]
   %.sroa.7.0.i = phi i32 [ 0, %bb.b ], [ 0, %bb.c ], [ %i.al, %bb.g ], [ 0, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i ]
+  %.sroa.52.0.i = phi ptr [ null, %bb.b ], [ %i.p, %bb.c ], [ %i.p, %bb.g ], [ %i.p, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i ]
   %i.am = zext i16 %i.r to i32
   store i32 %i.am, ptr %6, align 8
   %.sroa.4100.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 4
@@ -403,16 +403,16 @@ bb.u:                                             ; preds = %_ZNK2OT7ArrayOfINS_
 
 "_ZNK4$_17clIRKN2OT6Layout6Common8CoverageERK10hb_array_tIKNS1_8OffsetToINS1_21MathGlyphConstructionENS1_7NumTypeILb1EtLj2EEEvLb1EEEETnPN12hb_enable_ifIXaasr14hb_is_iterableIT_EE5valuesr14hb_is_iterableIT0_EE5valueEvE4typeELPv0EEE13hb_zip_iter_tIDTcldtclL_ZL8hb_derefEcl10hb_declvalISI_EEE4iterEEDTcldtclL_ZL8hb_derefEcl10hb_declvalISJ_EEE4iterEEEOSI_OSJ_.exit56": ; preds = %bb.p, %bb.q, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i41, %bb.u
   %.sroa.11.2.i44 = phi i32 [ 0, %bb.p ], [ 0, %bb.q ], [ 0, %bb.u ], [ %.sroa.11.1.i42, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i41 ]
-  %.sroa.52.0.i45 = phi ptr [ null, %bb.p ], [ %i.cb, %bb.q ], [ %i.cb, %bb.u ], [ %i.cb, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i41 ]
-  %.sroa.7.0.i46 = phi i32 [ 0, %bb.p ], [ 0, %bb.q ], [ %i.cx, %bb.u ], [ 0, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i41 ]
+  %.sroa.7.0.i45 = phi i32 [ 0, %bb.p ], [ 0, %bb.q ], [ %i.cx, %bb.u ], [ 0, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i41 ]
+  %.sroa.52.0.i46 = phi ptr [ null, %bb.p ], [ %i.cb, %bb.q ], [ %i.cb, %bb.u ], [ %i.cb, %_ZNK2OT7ArrayOfINS_6Layout6Common11RangeRecordINS1_10SmallTypesEEENS_7NumTypeILb1EtLj2EEEEixEi.exit7.i.i.i.i.i41 ]
   %i.cy = zext i16 %i.cd to i32
   store i32 %i.cy, ptr %8, align 8
   %.sroa.480.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 4
   store i32 0, ptr %.sroa.480.0..sroa_idx, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store ptr %.sroa.52.0.i45, ptr %.sroa.5.0..sroa_idx, align 8
+  store ptr %.sroa.52.0.i46, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 16
-  store i32 %.sroa.7.0.i46, ptr %.sroa.6.0..sroa_idx, align 8
+  store i32 %.sroa.7.0.i45, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 20
   store i32 0, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 24

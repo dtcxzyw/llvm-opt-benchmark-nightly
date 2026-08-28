@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %._crit_edge
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.k, %.lr.ph.i.i
-  %.sroa.8.0.i = phi i32 [ %i.au, %.lr.ph.i.i ], [ %.sroa.8.1.i, %bb.k ] ; 2 uses
   %.sroa.04.0.i = phi i64 [ %i.as, %.lr.ph.i.i ], [ %.sroa.04.1.i, %bb.k ] ; 2 uses
+  %.sroa.8.0.i = phi i32 [ %i.au, %.lr.ph.i.i ], [ %.sroa.8.1.i, %bb.k ] ; 2 uses
   %i.be = phi i64 [ %i.ax, %.lr.ph.i.i ], [ %i.bp, %bb.k ]
   %i.bf = phi i16 [ %i.bb, %.lr.ph.i.i ], [ %i.bu, %bb.k ] ; 2 uses
   %i.bg = phi ptr [ %i.ba, %.lr.ph.i.i ], [ %i.bt, %bb.k ]
@@ -239,8 +239,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.g
-  %.sroa.8.1.i = phi i32 [ %i.bn, %bb.j ], [ %.sroa.8.0.i, %bb.g ] ; 2 uses
   %.sroa.04.1.i = phi i64 [ %i.bl, %bb.j ], [ %.sroa.04.0.i, %bb.g ] ; 2 uses
+  %.sroa.8.1.i = phi i32 [ %i.bn, %bb.j ], [ %.sroa.8.0.i, %bb.g ] ; 2 uses
   %i.bp = phi i64 [ %.pre.i.i, %bb.j ], [ %i.be, %bb.g ] ; 2 uses
   %.121.i.i = phi i16 [ %i.bf, %bb.j ], [ %storemerge26.i.i, %bb.g ]
   %.1.i.i = phi i32 [ %i.bo, %bb.j ], [ %.01924.i.i, %bb.g ] ; 2 uses
@@ -254,8 +254,8 @@ bb.k:                                             ; preds = %bb.j, %bb.g
   br i1 %i.bv, label %_ZN3tsl17detail_robin_hash10robin_hashISt4pairINSt6thread2idEiENS_9robin_mapIS4_iSt4hashIS4_ESt8equal_toIS4_ESaIS5_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSF_11ValueSelectES8_SA_SB_Lb0ESE_E12insert_valueIJRKSt21piecewise_construct_tSt5tupleIJRKS4_EESN_IJEEEEEvmsjDpOT_.exit, label %bb.g, !llvm.loop !423
 
 _ZN3tsl17detail_robin_hash10robin_hashISt4pairINSt6thread2idEiENS_9robin_mapIS4_iSt4hashIS4_ESt8equal_toIS4_ESaIS5_ELb0ENS_2rh26power_of_two_growth_policyILm2EEEE9KeySelectENSF_11ValueSelectES8_SA_SB_Lb0ESE_E12insert_valueIJRKSt21piecewise_construct_tSt5tupleIJRKS4_EESN_IJEEEEEvmsjDpOT_.exit: ; preds = %bb.k, %bb.f
-  %.sroa.8.2.i = phi i32 [ %i.au, %bb.f ], [ %.sroa.8.1.i, %bb.k ]
   %.sroa.04.2.i = phi i64 [ %i.as, %bb.f ], [ %.sroa.04.1.i, %bb.k ]
+  %.sroa.8.2.i = phi i32 [ %i.au, %bb.f ], [ %.sroa.8.1.i, %bb.k ]
   %.019.lcssa.i.i = phi i32 [ %i.av, %bb.f ], [ %.1.i.i, %bb.k ]
   %storemerge.lcssa.i.i = phi i16 [ %storemerge23.i.i, %bb.f ], [ %storemerge.i.i, %bb.k ]
   %.lcssa22.i.i = phi ptr [ %i.az, %bb.f ], [ %i.bs, %bb.k ] ; 3 uses

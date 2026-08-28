@@ -204,11 +204,9 @@ bb.a:                                             ; preds = %switch.lookup
   call void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E3newB1w_(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.a, ptr noundef nonnull %1, ptr noundef nonnull %i.d, ptr noundef nonnull readonly %.sroa.0.0.i.i, ptr noundef nonnull readonly %i.g), !dbg !1480
   %.sroa.0.0.copyload = load ptr, ptr %i.a, align 8, !dbg !1481 ; 2 uses
     #dbg_value(ptr %.sroa.0.0.copyload, !1280, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !1482)
-    #dbg_value(i64 poison, !1280, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !1482)
   %.sroa.523.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !1481
   %.sroa.523.0.copyload = load ptr, ptr %.sroa.523.0..sroa_idx, align 8, !dbg !1481 ; 2 uses
     #dbg_value(ptr %.sroa.523.0.copyload, !1280, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !1482)
-    #dbg_value(i64 poison, !1280, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !1482)
   %.sroa.624.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32, !dbg !1481
   %.sroa.624.0.copyload = load i64, ptr %.sroa.624.0..sroa_idx, align 8, !dbg !1481 ; 3 uses
     #dbg_value(i64 %.sroa.624.0.copyload, !1280, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !1482)
@@ -256,8 +254,8 @@ _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %.not21 = icmp ugt i8 %i.l, %i.k, !dbg !1485
   br i1 %.not21, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit.thread, label %bb.c, !dbg !1485
 
-_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit.thread: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit, %bb.c, %bb.b, %bb.a, %switch.lookup
-  %.sroa.0.0 = phi i1 [ false, %switch.lookup ], [ true, %bb.a ], [ true, %bb.b ], [ false, %bb.c ], [ false, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit ], !dbg !1346
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit.thread: ; preds = %bb.b, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit, %bb.c, %bb.a, %switch.lookup
+  %.sroa.0.0 = phi i1 [ false, %switch.lookup ], [ true, %bb.a ], [ false, %bb.c ], [ false, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit ], [ true, %bb.b ], !dbg !1346
   ret i1 %.sroa.0.0, !dbg !1522
 
 bb.c:                                             ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter4IterhEIBX_NtNtCs3roNzt6HBWW_12regex_syntax4utf89Utf8RangeEEINtB5_7ZipImplBW_B1o_E4nextB1w_.exit

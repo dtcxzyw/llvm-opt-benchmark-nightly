@@ -202,12 +202,10 @@ bb.b:                                             ; preds = %.lr.ph
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXNvXs1_NtCskuiImRAV2ip_9elfshaker9entrypoolINtB9_9EntryPoolpENtNtCs6LlcditsbhK_5serde2de11Deserialize11deserializeINtB3_14VisitEntryPoolAhj14_ENtB13_7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB2M_10ReadReaderINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufreader9BufReaderNtNtCsaL1QbXo9JQH_3std2fs4FileEENtNtB2O_6config13DefaultConfigEEBb_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias nofree noundef align 8 dereferenceable(88) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 13 uses
+  %i.a = alloca [32 x i8], align 8                ; 9 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %i.d = alloca [20 x i8], align 8                ; 8 uses
-  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0 = alloca [9 x i8], align 8 ; 11 uses
-  %.sroa.7.sroa.8.sroa.18 = alloca [9 x i8], align 1 ; 9 uses
+  %i.d = alloca [20 x i8], align 16               ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [72 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -258,23 +256,13 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
   %.not.i.i158 = icmp eq i64 %2, 0
   br i1 %.not.i.i158, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  %.sroa.2.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.sroa.2.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 9
-  %.sroa.2.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 10
-  %.sroa.2.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 11
-  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262 = getelementptr inbounds nuw i8, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 1
+  %.sroa.2.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 17
+  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.i, %bb.d
@@ -297,12 +285,8 @@ bb.h:                                             ; preds = %.lr.ph, %bb.s
 .noexc:                                           ; preds = %bb.h
   %i.y = load i8, ptr %i.a, align 8, !range !289, !noalias !282, !noundef !9 ; 2 uses
   %.not18.i.i = icmp eq i8 %i.y, -1
-  %3 = load <8 x i8>, ptr %i.v, align 1, !noalias !282 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !noalias !282 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 2, !noalias !282 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !noalias !282 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 4, !noalias !282 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0.copyload = load i64, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !noalias !282 ; 2 uses
+  %3 = load <16 x i8>, ptr %i.v, align 1, !noalias !282 ; 2 uses
+  %4 = load <4 x i8>, ptr %.sroa.2.sroa.12.0..sroa_idx, align 1, !noalias !282 ; 2 uses
   br i1 %.not18.i.i, label %bb.q, label %bb.k
 
 bb.i:                                             ; preds = %bb.r, %bb.j
@@ -318,31 +302,19 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %.noexc
   %.sroa.514.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 21
   %i.aa = load i8, ptr %.sroa.514.0..sroa_idx.i.i, align 1, !noalias !290
-  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 8
-  store i8 %i.aa, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.8..sroa_idx, align 8, !noalias !290
   %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.9.8..sroa.514.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 22
   %.sroa.624.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 30
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.624.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.9.8..sroa.514.0..sroa_idx.i.i.sroa_idx, i64 10, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !282
-  store i64 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0.copyload, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, align 8, !noalias !290
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 9, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
-  %.sroa.523.sroa.14.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 21
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.523.sroa.14.0..sroa.523.0..sroa_idx.sroa_idx, ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, i64 9, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %i.y, ptr %i.ab, align 8
   %.sroa.422.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store <8 x i8> %3, ptr %.sroa.422.0..sroa_idx, align 1
-  %.sroa.523.sroa.10.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.10.0..sroa.523.0..sroa_idx.sroa_idx, align 1
-  %.sroa.523.sroa.11.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.11.0..sroa.523.0..sroa_idx.sroa_idx, align 2
-  %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 19
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx, align 1
-  %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx, align 4
+  store <16 x i8> %3, ptr %.sroa.422.0..sroa_idx, align 1
+  %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
+  store <4 x i8> %4, ptr %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx, align 1
+  %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 29
+  store i8 %i.aa, ptr %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx, align 1
   store i64 -1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecAhj14_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f)
           to label %bb.m unwind label %bb.l
 
@@ -384,22 +356,13 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskuiImRAV2ip_9elfshaker9entrypool9
 
 bb.q:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !282
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, align 8, !noalias !290
-  store i64 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0.copyload, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262, align 1, !noalias !290
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 9, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store <8 x i8> %3, ptr %i.d, align 8
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.2.sroa.9.0..sroa_idx, align 8
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.2.sroa.10.0..sroa_idx, align 1
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.2.sroa.11.0..sroa_idx, align 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.2.sroa.12.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, i64 9, i1 false)
+  store <16 x i8> %3, ptr %i.d, align 16
+  store <4 x i8> %4, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262, align 16
   %i.ag = invoke noundef i32 @_RINvMNtCskuiImRAV2ip_9elfshaker9entrypoolINtB3_9EntryPoolAhj14_E13get_or_insertBT_EB5_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(20) %i.d)
           to label %bb.s unwind label %bb.r       ; 0 uses
 
 ._crit_edge:                                      ; preds = %bb.s, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %i.f, i64 72, i1 false)
   br label %bb.t
 
@@ -410,9 +373,6 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
   %.not.i.i = icmp eq i64 %i.x, 0
   br i1 %.not.i.i, label %._crit_edge, label %bb.h
 
@@ -424,12 +384,10 @@ bb.t:                                             ; preds = %_RINvNtCs3oUPovFnLW
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXNvXs1_NtCskuiImRAV2ip_9elfshaker9entrypoolINtB9_9EntryPoolpENtNtCs6LlcditsbhK_5serde2de11Deserialize11deserializeINtB3_14VisitEntryPoolAhj14_ENtB13_7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB2M_10ReadReaderINtNtNtNtCs1xwejQucwHj_5alloc2io8buffered9bufreader9BufReaderRShEENtNtB2O_6config13DefaultConfigEEBb_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([72 x i8]) align 8 captures(none) dereferenceable(72) %0, ptr noalias nofree noundef align 8 dereferenceable(96) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 13 uses
+  %i.a = alloca [32 x i8], align 8                ; 9 uses
   %i.b = alloca [48 x i8], align 8                ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
-  %i.d = alloca [20 x i8], align 8                ; 8 uses
-  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0 = alloca [9 x i8], align 8 ; 11 uses
-  %.sroa.7.sroa.8.sroa.18 = alloca [9 x i8], align 1 ; 9 uses
+  %i.d = alloca [20 x i8], align 16               ; 5 uses
   %i.e = alloca [24 x i8], align 8                ; 7 uses
   %i.f = alloca [72 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
@@ -480,23 +438,13 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
   %.not.i.i158 = icmp eq i64 %2, 0
   br i1 %.not.i.i158, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  %.sroa.2.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %.sroa.2.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 9
-  %.sroa.2.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 10
-  %.sroa.2.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 11
-  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262 = getelementptr inbounds nuw i8, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 1
+  %.sroa.2.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 17
+  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.i, %bb.d
@@ -519,12 +467,8 @@ bb.h:                                             ; preds = %.lr.ph, %bb.s
 .noexc:                                           ; preds = %bb.h
   %i.y = load i8, ptr %i.a, align 8, !range !289, !noalias !291, !noundef !9 ; 2 uses
   %.not18.i.i = icmp eq i8 %i.y, -1
-  %3 = load <8 x i8>, ptr %i.v, align 1, !noalias !291 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !noalias !291 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 2, !noalias !291 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !noalias !291 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload = load i8, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 4, !noalias !291 ; 2 uses
-  %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0.copyload = load i64, ptr %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.sroa.6.0..sroa.6.i.i.sroa.6.0..sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx.sroa_idx, align 1, !noalias !291 ; 2 uses
+  %3 = load <16 x i8>, ptr %i.v, align 1, !noalias !291 ; 2 uses
+  %4 = load <4 x i8>, ptr %.sroa.2.sroa.12.0..sroa_idx, align 1, !noalias !291 ; 2 uses
   br i1 %.not18.i.i, label %bb.q, label %bb.k
 
 bb.i:                                             ; preds = %bb.r, %bb.j
@@ -540,31 +484,19 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %.noexc
   %.sroa.514.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 21
   %i.aa = load i8, ptr %.sroa.514.0..sroa_idx.i.i, align 1, !noalias !298
-  %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 8
-  store i8 %i.aa, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.8..sroa_idx, align 8, !noalias !298
   %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.9.8..sroa.514.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 22
   %.sroa.624.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 30
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(10) %.sroa.624.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(10) %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.9.8..sroa.514.0..sroa_idx.i.i.sroa_idx, i64 10, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !291
-  store i64 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0.copyload, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, align 8, !noalias !298
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 9, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
-  %.sroa.523.sroa.14.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 21
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.523.sroa.14.0..sroa.523.0..sroa_idx.sroa_idx, ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, i64 9, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %i.y, ptr %i.ab, align 8
   %.sroa.422.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store <8 x i8> %3, ptr %.sroa.422.0..sroa_idx, align 1
-  %.sroa.523.sroa.10.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.10.0..sroa.523.0..sroa_idx.sroa_idx, align 1
-  %.sroa.523.sroa.11.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 18
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.11.0..sroa.523.0..sroa_idx.sroa_idx, align 2
-  %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 19
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx, align 1
-  %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx, align 4
+  store <16 x i8> %3, ptr %.sroa.422.0..sroa_idx, align 1
+  %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
+  store <4 x i8> %4, ptr %.sroa.523.sroa.12.0..sroa.523.0..sroa_idx.sroa_idx, align 1
+  %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 29
+  store i8 %i.aa, ptr %.sroa.523.sroa.13.0..sroa.523.0..sroa_idx.sroa_idx, align 1
   store i64 -1, ptr %0, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecAhj14_ENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCskuiImRAV2ip_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f)
           to label %bb.m unwind label %bb.l
 
@@ -606,22 +538,13 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCskuiImRAV2ip_9elfshaker9entrypool9
 
 bb.q:                                             ; preds = %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !291
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, align 8, !noalias !298
-  store i64 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.0.copyload, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262, align 1, !noalias !298
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, ptr noundef nonnull align 8 dereferenceable(9) %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0, i64 9, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  store <8 x i8> %3, ptr %i.d, align 8
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.2.sroa.9.0..sroa_idx, align 8
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.2.sroa.10.0..sroa_idx, align 1
-  store i8 %.sroa.6.i.i.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.6.sroa.0.0.copyload, ptr %.sroa.2.sroa.11.0..sroa_idx, align 2
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %.sroa.2.sroa.12.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(9) %.sroa.7.sroa.8.sroa.18, i64 9, i1 false)
+  store <16 x i8> %3, ptr %i.d, align 16
+  store <4 x i8> %4, ptr %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0.1.sroa_idx.sroa_idx262, align 16
   %i.ag = invoke noundef i32 @_RINvMNtCskuiImRAV2ip_9elfshaker9entrypoolINtB3_9EntryPoolAhj14_E13get_or_insertBT_EB5_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.f, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(20) %i.d)
           to label %bb.s unwind label %bb.r       ; 0 uses
 
 ._crit_edge:                                      ; preds = %bb.s, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(72) %i.f, i64 72, i1 false)
   br label %bb.t
 
@@ -632,9 +555,6 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.sroa.8.sroa.18)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.13.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.7.sroa.0)
   %.not.i.i = icmp eq i64 %i.x, 0
   br i1 %.not.i.i, label %._crit_edge, label %bb.h
 
@@ -1037,8 +957,9 @@ bb.p:                                             ; preds = %.body
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXNvXsh_NtNtCs6LlcditsbhK_5serde2de5implsINtNtCs1xwejQucwHj_5alloc3vec3VecpENtBb_11Deserialize11deserializeINtB3_10VecVisitorNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleENtBb_7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB3f_10ReadReaderINtNtNtNtBL_2io8buffered9bufreader9BufReaderNtNtCsaL1QbXo9JQH_3std2fs4FileEENtNtB3h_6config13DefaultConfigEEB26_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef align 8 dereferenceable(88) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 13 uses
+  %i.a = alloca [32 x i8], align 8                ; 12 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
+  %.sroa.11.sroa.10 = alloca [16 x i8], align 8   ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 12 uses
   %..i = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 87381) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -1066,6 +987,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.j, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   store i64 0, ptr %i.m, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !373
   %.not.i.i24 = icmp eq i64 %2, 0
   br i1 %.not.i.i24, label %._crit_edge, label %.lr.ph
@@ -1095,23 +1017,21 @@ bb.e:                                             ; preds = %bb.j, %bb.d
 bb.f:                                             ; preds = %.noexc
   %.sroa.414.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %.sroa.515.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.11.sroa.10.sroa.0.0.copyload32 = load i32, ptr %.sroa.515.0..sroa_idx.i.i, align 8, !noalias !381
-  %.sroa.11.sroa.10.sroa.10.0..sroa.515.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.11.sroa.10.sroa.10.0..sroa.515.0..sroa_idx.i.i.sroa_idx, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.sroa.10, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.515.0..sroa_idx.i.i, i64 16, i1 false), !noalias !381
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.414.0..sroa_idx.i.i, i64 3, i1 false)
   %.sroa.8.1.copyload = load i32, ptr %i.n, align 4, !noalias !381
   %.sroa.11.1..sroa.414.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.r = load i64, ptr %.sroa.11.1..sroa.414.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !381
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !373
+  %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.sroa.10, i64 16, i1 false)
   store i8 %i.p, ptr %0, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.sroa.8.1.copyload, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
-  %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.11.sroa.10.sroa.0.0.copyload32, ptr %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.sroa.10)
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleEEB1c_.exit unwind label %bb.g
 
@@ -1150,6 +1070,7 @@ bb.j:                                             ; preds = %bb.i
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !373
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.sroa.10)
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   store i8 -1, ptr %0, align 8
@@ -1163,6 +1084,8 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   store i32 %.sroa.11.sroa.10.sroa.0.0.copyload33, ptr %.sroa.434.0..sroa_idx, align 4
   %i.aa = add i64 %i.u, 1
   store i64 %i.aa, ptr %i.m, align 8, !alias.scope !382, !noalias !385
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.sroa.10)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !373
   %.not.i.i = icmp eq i64 %i.o, 0
   br i1 %.not.i.i, label %._crit_edge, label %bb.d
@@ -1181,8 +1104,9 @@ bb.m:                                             ; preds = %bb.e
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvXNvXsh_NtNtCs6LlcditsbhK_5serde2de5implsINtNtCs1xwejQucwHj_5alloc3vec3VecpENtBb_11Deserialize11deserializeINtB3_10VecVisitorNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleENtBb_7Visitor9visit_seqINtNtCs974quTetXso_9rmp_serde6decode9SeqAccessINtB3f_10ReadReaderINtNtNtNtBL_2io8buffered9bufreader9BufReaderRShEENtNtB3h_6config13DefaultConfigEEB26_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef align 8 dereferenceable(96) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [32 x i8], align 8                ; 13 uses
+  %i.a = alloca [32 x i8], align 8                ; 12 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
+  %.sroa.11.sroa.10 = alloca [16 x i8], align 8   ; 7 uses
   %i.c = alloca [24 x i8], align 8                ; 12 uses
   %..i = tail call noundef i64 @llvm.umin.i64(i64 %2, i64 87381) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
@@ -1210,6 +1134,7 @@ bb.c:                                             ; preds = %bb.a
   store ptr %i.j, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   store i64 0, ptr %i.m, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !387
   %.not.i.i24 = icmp eq i64 %2, 0
   br i1 %.not.i.i24, label %._crit_edge, label %.lr.ph
@@ -1239,23 +1164,21 @@ bb.e:                                             ; preds = %bb.j, %bb.d
 bb.f:                                             ; preds = %.noexc
   %.sroa.414.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %.sroa.515.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.sroa.11.sroa.10.sroa.0.0.copyload32 = load i32, ptr %.sroa.515.0..sroa_idx.i.i, align 8, !noalias !395
-  %.sroa.11.sroa.10.sroa.10.0..sroa.515.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 20
-  %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.11.sroa.10.sroa.10.0..sroa.515.0..sroa_idx.i.i.sroa_idx, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.sroa.10, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.515.0..sroa_idx.i.i, i64 16, i1 false), !noalias !395
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.414.0..sroa_idx.i.i, i64 3, i1 false)
   %.sroa.8.1.copyload = load i32, ptr %i.n, align 4, !noalias !395
   %.sroa.11.1..sroa.414.0..sroa_idx.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.r = load i64, ptr %.sroa.11.1..sroa.414.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !395
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !387
+  %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.11.sroa.10, i64 16, i1 false)
   store i8 %i.p, ptr %0, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   store i32 %.sroa.8.1.copyload, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.r, ptr %.sroa.6.0..sroa_idx, align 8
-  %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.11.sroa.10.sroa.0.0.copyload32, ptr %.sroa.6.sroa.4.0..sroa.6.0..sroa_idx.sroa_idx, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.sroa.10)
   invoke void @_RNvXsp_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.c)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecNtNtCskuiImRAV2ip_9elfshaker7packidx10FileHandleEEB1c_.exit unwind label %bb.g
 
@@ -1294,6 +1217,7 @@ bb.j:                                             ; preds = %bb.i
 
 ._crit_edge:                                      ; preds = %bb.k, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !387
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.sroa.10)
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   store i8 -1, ptr %0, align 8
@@ -1307,6 +1231,8 @@ bb.k:                                             ; preds = %bb.i, %bb.j
   store i32 %.sroa.11.sroa.10.sroa.0.0.copyload33, ptr %.sroa.434.0..sroa_idx, align 4
   %i.aa = add i64 %i.u, 1
   store i64 %i.aa, ptr %i.m, align 8, !alias.scope !396, !noalias !399
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.11.sroa.10)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.11.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !387
   %.not.i.i = icmp eq i64 %i.o, 0
   br i1 %.not.i.i, label %._crit_edge, label %bb.d

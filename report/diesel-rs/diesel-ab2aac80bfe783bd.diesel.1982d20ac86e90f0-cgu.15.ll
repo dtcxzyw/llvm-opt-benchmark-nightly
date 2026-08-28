@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.e
   %.sroa.580.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %.sroa.580.0.copyload = load ptr, ptr %.sroa.580.0..sroa_idx, align 8 ; 3 uses
   %.sroa.681.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %.sroa.681.0.copyload = load i64, ptr %.sroa.681.0..sroa_idx, align 8
+  %.sroa.677.sroa.0.0.copyload = load ptr, ptr %.sroa.681.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %.not92 = icmp eq i64 %i.m, -1
   br i1 %.not92, label %bb.t, label %bb.s
@@ -216,7 +216,6 @@ bb.r:                                             ; preds = %bb.e
 
 bb.s:                                             ; preds = %bb.q
   %i.r = ptrtoint ptr %.sroa.479.0.copyload to i64
-  %2 = inttoptr i64 %.sroa.681.0.copyload to ptr
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.q
@@ -227,7 +226,7 @@ bb.t:                                             ; preds = %bb.q
 bb.u:                                             ; preds = %bb.t, %bb.s
   %.sroa.635.sroa.0.0 = phi i64 [ %i.r, %bb.s ], [ 2, %bb.t ]
   %.sroa.635.sroa.6.0 = phi ptr [ %.sroa.580.0.copyload, %bb.s ], [ %.sroa.479.0.copyload, %bb.t ]
-  %.sroa.635.sroa.7.0 = phi ptr [ %2, %bb.s ], [ %.sroa.580.0.copyload, %bb.t ]
+  %.sroa.635.sroa.7.0 = phi ptr [ %.sroa.677.sroa.0.0.copyload, %bb.s ], [ %.sroa.580.0.copyload, %bb.t ]
   store i64 %i.m, ptr %0, align 8
   %.sroa.635.0..sroa_idx36 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.635.sroa.0.0, ptr %.sroa.635.0..sroa_idx36, align 8

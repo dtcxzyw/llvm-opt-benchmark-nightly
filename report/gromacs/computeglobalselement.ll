@@ -202,7 +202,7 @@ _ZNSt8functionIFvvEEC2IZN3gmx21ComputeGlobalsElementILNS3_23ComputeGlobalsAlgori
   %.not.i.i44 = icmp eq ptr %i.bk, null
   br i1 %.not.i.i44, label %bb.m, label %bb.n
 
-common.resume:                                    ; preds = %.body, %bb.q, %bb.r, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN3gmx19SimulationSignallerESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit14.i.i.i.i
+common.resume:                                    ; preds = %bb.r, %bb.q, %.body, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN3gmx19SimulationSignallerESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit14.i.i.i.i
   %common.resume.op = phi { ptr, i32 } [ %i.br, %bb.q ], [ %i.ce, %_ZNSt15__allocated_ptrISaISt23_Sp_counted_ptr_inplaceIN3gmx19SimulationSignallerESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit14.i.i.i.i ], [ %i.br, %bb.r ], [ %.pn, %.body ]
   resume { ptr, i32 } %common.resume.op
 
@@ -393,7 +393,7 @@ bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %common.resume
 
-_ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.j, %bb.o, %_ZNKSt8functionIFvS_IFvvEEEEclES1_.exit, %_ZNSt12__shared_ptrIN3gmx19SimulationSignallerELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.t, %_Z11do_per_stepll.exit43
+_ZNSt14_Function_baseD2Ev.exit:                   ; preds = %bb.o, %_ZNKSt8functionIFvS_IFvvEEEEclES1_.exit, %bb.j, %_ZNSt12__shared_ptrIN3gmx19SimulationSignallerELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.t, %_Z11do_per_stepll.exit43
   ret void
 }
 

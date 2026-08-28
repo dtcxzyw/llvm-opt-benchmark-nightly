@@ -205,7 +205,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   tail call void (ptr, ptr, ptr, ...) @scmd_printk(ptr noundef nonnull @.str.10, ptr noundef %0, ptr noundef nonnull @.str.11) #12
   %i.c = load ptr, ptr @virtscsi_cmd_pool, align 8
-  %i.d = tail call noalias ptr @mempool_alloc_noprof(ptr noundef %i.c, i32 noundef 3072) #12 ; 8 uses
+  %i.d = tail call noalias ptr @mempool_alloc_noprof(ptr noundef %i.c, i32 noundef 3072) #12 ; 10 uses
   %.not = icmp eq ptr %i.d, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -223,6 +223,8 @@ bb.b:                                             ; preds = %bb.a
   %i.n = or i8 %i.m, 64
   %i.o = trunc i64 %i.k to i8
   %i.p = ptrtoint ptr %0 to i64
+  %.sroa.2.0..sroa_idx = getelementptr i8, ptr %i.d, i64 20
+  store i32 0, ptr %.sroa.2.0..sroa_idx, align 4
   %.sroa.3.0..sroa_idx = getelementptr i8, ptr %i.d, i64 24
   store i8 1, ptr %.sroa.3.0..sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr i8, ptr %i.d, i64 25
@@ -231,6 +233,8 @@ bb.b:                                             ; preds = %bb.a
   store i8 %i.n, ptr %.sroa.5.0..sroa_idx, align 2
   %.sroa.6.0..sroa_idx = getelementptr i8, ptr %i.d, i64 27
   store i8 %i.o, ptr %.sroa.6.0..sroa_idx, align 1
+  %.sroa.7.0..sroa_idx = getelementptr i8, ptr %i.d, i64 28
+  store i32 0, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.8.0..sroa_idx = getelementptr i8, ptr %i.d, i64 32
   store i64 %i.p, ptr %.sroa.8.0..sroa_idx, align 32
   %i.q = tail call fastcc i32 @virtscsi_tmf(ptr noundef %i.e, ptr noundef %i.d) #15, !srcloc !37
@@ -275,8 +279,8 @@ bb.b:                                             ; preds = %bb.a
   store i8 %i.n, ptr %.sroa.5.0..sroa_idx, align 2
   %.sroa.6.0..sroa_idx = getelementptr i8, ptr %i.d, i64 27
   store i8 %i.o, ptr %.sroa.6.0..sroa_idx, align 1
-  %.sroa.8.0..sroa_idx = getelementptr i8, ptr %i.d, i64 32
-  store i64 0, ptr %.sroa.8.0..sroa_idx, align 32
+  %.sroa.8.0..sroa_idx = getelementptr i8, ptr %i.d, i64 28
+  store i32 0, ptr %.sroa.8.0..sroa_idx, align 4
   %i.p = tail call fastcc i32 @virtscsi_tmf(ptr noundef %i.e, ptr noundef %i.d) #15, !srcloc !38
   br label %bb.c
 

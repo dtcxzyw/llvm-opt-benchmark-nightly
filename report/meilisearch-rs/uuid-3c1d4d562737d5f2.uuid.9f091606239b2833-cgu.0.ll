@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.a
   br label %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit
 
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit: ; preds = %bb.e, %bb.d, %bb.c, %bb.b
-  %.sroa.0.0.in = phi i1 [ %i.g, %bb.d ], [ %i.f, %bb.c ], [ %i.h, %bb.e ], [ %i.e, %bb.b ]
+  %.sroa.0.0.in = phi i1 [ %i.e, %bb.b ], [ %i.f, %bb.c ], [ %i.g, %bb.d ], [ %i.h, %bb.e ]
   ret i1 %.sroa.0.0.in
 }
 
@@ -607,7 +607,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN4uuid7builder7Builder10from_slice17h5b0ad9414cb3902cE(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 4), (8, 16)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
+define void @_ZN4uuid7builder7Builder10from_slice17h5b0ad9414cb3902cE(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 20)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq i64 %2, 16
   br i1 %i.a, label %bb.b, label %bb.c
@@ -618,17 +618,19 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.815.4.copyload18 = load i64, ptr %.sroa.815.4..sroa_idx17, align 1, !alias.scope !166
   %.sroa.9.4..sroa_idx19 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.9.sroa.0.0.copyload23 = load i32, ptr %.sroa.9.4..sroa_idx19, align 1, !alias.scope !166
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.512.4.copyload14, ptr %3, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.9.sroa.0.0.copyload23, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink34 = phi i32 [ %.sroa.512.4.copyload14, %bb.b ], [ undef, %bb.a ]
   %.sink42 = phi i64 [ %.sroa.815.4.copyload18, %bb.b ], [ %2, %bb.a ]
+  %.sink32 = phi i32 [ %.sroa.9.sroa.0.0.copyload23, %bb.b ], [ undef, %bb.a ]
   %.sink = phi i32 [ 9, %bb.b ], [ 1, %bb.a ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %.sink34, ptr %3, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sink42, ptr %i.b, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %.sink32, ptr %4, align 8
   store i32 %.sink, ptr %0, align 8
   ret void
 }
@@ -1031,8 +1033,8 @@ _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit87: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   br label %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit67
 
-_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit67: ; preds = %bb.e, %bb.d, %bb.c, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit92, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit87, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit72, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit62, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit57, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit
-  %.sroa.0.0.in = phi i1 [ %i.ad, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit ], [ %i.ah, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit57 ], [ %i.al, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit62 ], [ %i.bq, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit92 ], [ %i.bk, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit87 ], [ %i.az, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit72 ], [ %i.bd, %bb.d ], [ %i.bh, %bb.e ], [ %i.av, %bb.c ]
+_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit67: ; preds = %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit92, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit87, %bb.e, %bb.d, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit72, %bb.c, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit62, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit57, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit
+  %.sroa.0.0.in = phi i1 [ %i.ad, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit ], [ %i.ah, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit57 ], [ %i.al, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit62 ], [ %i.bq, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit92 ], [ %i.av, %bb.c ], [ %i.az, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit72 ], [ %i.bd, %bb.d ], [ %i.bh, %bb.e ], [ %i.bk, %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit87 ]
   ret i1 %.sroa.0.0.in
 
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit92: ; preds = %bb.b
@@ -1435,7 +1437,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define void @"_ZN81_$LT$uuid..fmt..Urn$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17heab54ad1ce833946E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 4), (8, 16)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
+define void @"_ZN81_$LT$uuid..fmt..Urn$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17heab54ad1ce833946E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 20)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq i64 %2, 16
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1446,17 +1448,19 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.815.4.copyload18 = load i64, ptr %.sroa.815.4..sroa_idx17, align 1, !alias.scope !377
   %.sroa.9.4..sroa_idx19 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.9.sroa.0.0.copyload23 = load i32, ptr %.sroa.9.4..sroa_idx19, align 1, !alias.scope !377
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.512.4.copyload14, ptr %3, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.9.sroa.0.0.copyload23, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink34 = phi i32 [ %.sroa.512.4.copyload14, %bb.b ], [ undef, %bb.a ]
   %.sink42 = phi i64 [ %.sroa.815.4.copyload18, %bb.b ], [ %2, %bb.a ]
+  %.sink32 = phi i32 [ %.sroa.9.sroa.0.0.copyload23, %bb.b ], [ undef, %bb.a ]
   %.sink = phi i32 [ 9, %bb.b ], [ 1, %bb.a ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %.sink34, ptr %3, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sink42, ptr %i.b, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %.sink32, ptr %4, align 8
   store i32 %.sink, ptr %0, align 8
   ret void
 }
@@ -1469,7 +1473,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define void @"_ZN84_$LT$uuid..fmt..Braced$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17h4458b316861f495dE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 4), (8, 16)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
+define void @"_ZN84_$LT$uuid..fmt..Braced$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17h4458b316861f495dE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 20)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq i64 %2, 16
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1480,17 +1484,19 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.815.4.copyload18 = load i64, ptr %.sroa.815.4..sroa_idx17, align 1, !alias.scope !381
   %.sroa.9.4..sroa_idx19 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.9.sroa.0.0.copyload23 = load i32, ptr %.sroa.9.4..sroa_idx19, align 1, !alias.scope !381
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.512.4.copyload14, ptr %3, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.9.sroa.0.0.copyload23, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink34 = phi i32 [ %.sroa.512.4.copyload14, %bb.b ], [ undef, %bb.a ]
   %.sink42 = phi i64 [ %.sroa.815.4.copyload18, %bb.b ], [ %2, %bb.a ]
+  %.sink32 = phi i32 [ %.sroa.9.sroa.0.0.copyload23, %bb.b ], [ undef, %bb.a ]
   %.sink = phi i32 [ 9, %bb.b ], [ 1, %bb.a ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %.sink34, ptr %3, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sink42, ptr %i.b, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %.sink32, ptr %4, align 8
   store i32 %.sink, ptr %0, align 8
   ret void
 }
@@ -1562,7 +1568,7 @@ bb.g:                                             ; preds = %bb.e
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define void @"_ZN84_$LT$uuid..fmt..Simple$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17h64372733fe0b0f47E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 4), (8, 16)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
+define void @"_ZN84_$LT$uuid..fmt..Simple$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17h64372733fe0b0f47E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 20)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq i64 %2, 16
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1573,17 +1579,19 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.815.4.copyload18 = load i64, ptr %.sroa.815.4..sroa_idx17, align 1, !alias.scope !391
   %.sroa.9.4..sroa_idx19 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.9.sroa.0.0.copyload23 = load i32, ptr %.sroa.9.4..sroa_idx19, align 1, !alias.scope !391
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.512.4.copyload14, ptr %3, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.9.sroa.0.0.copyload23, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink34 = phi i32 [ %.sroa.512.4.copyload14, %bb.b ], [ undef, %bb.a ]
   %.sink42 = phi i64 [ %.sroa.815.4.copyload18, %bb.b ], [ %2, %bb.a ]
+  %.sink32 = phi i32 [ %.sroa.9.sroa.0.0.copyload23, %bb.b ], [ undef, %bb.a ]
   %.sink = phi i32 [ 9, %bb.b ], [ 1, %bb.a ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %.sink34, ptr %3, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sink42, ptr %i.b, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %.sink32, ptr %4, align 8
   store i32 %.sink, ptr %0, align 8
   ret void
 }
@@ -1666,7 +1674,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define void @"_ZN88_$LT$uuid..fmt..Hyphenated$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17hfa5f0d35067a27beE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 4), (8, 16)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
+define void @"_ZN88_$LT$uuid..fmt..Hyphenated$u20$as$u20$uuid..external..serde_support..UuidDeserialize$GT$10from_slice17hfa5f0d35067a27beE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 20)) %0, ptr noalias noundef nonnull readonly align 1 captures(none) %1, i64 noundef %2) unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq i64 %2, 16
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1677,17 +1685,19 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.815.4.copyload18 = load i64, ptr %.sroa.815.4..sroa_idx17, align 1, !alias.scope !407
   %.sroa.9.4..sroa_idx19 = getelementptr inbounds nuw i8, ptr %1, i64 12
   %.sroa.9.sroa.0.0.copyload23 = load i32, ptr %.sroa.9.4..sroa_idx19, align 1, !alias.scope !407
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.512.4.copyload14, ptr %3, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.9.sroa.0.0.copyload23, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink34 = phi i32 [ %.sroa.512.4.copyload14, %bb.b ], [ undef, %bb.a ]
   %.sink42 = phi i64 [ %.sroa.815.4.copyload18, %bb.b ], [ %2, %bb.a ]
+  %.sink32 = phi i32 [ %.sroa.9.sroa.0.0.copyload23, %bb.b ], [ undef, %bb.a ]
   %.sink = phi i32 [ 9, %bb.b ], [ 1, %bb.a ]
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %.sink34, ptr %3, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sink42, ptr %i.b, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i32 %.sink32, ptr %4, align 8
   store i32 %.sink, ptr %0, align 8
   ret void
 }
@@ -1928,8 +1938,8 @@ _ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.s
   %.sink = phi i32 [ %.sroa.08.0, %bb.f ], [ %i.bh, %bb.m ] ; 2 uses
   %.sink65 = phi i64 [ %i.ae, %bb.f ], [ %i.bp, %bb.m ]
   %.sink63 = phi i64 [ %i.aa, %bb.f ], [ %i.bn, %bb.m ]
-  %.sroa.5.0.ph.a = phi i64 [ %.sroa.07.0, %bb.f ], [ %i.bc, %bb.m ]
-  %.sroa.0.044.ph = phi i64 [ %i.t, %bb.f ], [ %i.bl, %bb.m ]
+  %.sroa.5.0.ph.a = phi i64 [ %i.t, %bb.f ], [ %i.bl, %bb.m ]
+  %.sroa.0.044.ph = phi i64 [ %.sroa.07.0, %bb.f ], [ %i.bc, %bb.m ]
   %i.br = urem i32 %.sink, 1000000
   %i.bs = zext nneg i32 %i.br to i64
   %i.bt = udiv i64 %i.bs, %.sink65
@@ -1944,20 +1954,20 @@ _ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.s
   br label %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit
 
 _ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit: ; preds = %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split, %bb.l, %bb.e, %bb.i
+  %.sroa.0.sroa.0.0 = phi i64 [ %.sroa.035.0.copyload, %bb.i ], [ %i.bl, %bb.l ], [ %i.t, %bb.e ], [ %.sroa.5.0.ph.a, %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split ]
   %.sroa.12.0 = phi i32 [ %.sroa.737.0.copyload, %bb.i ], [ undef, %bb.l ], [ undef, %bb.e ], [ undef, %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split ]
   %.sroa.7.0 = phi i32 [ %.sroa.0.0.i.i, %bb.i ], [ %i.bh, %bb.l ], [ %.sroa.08.0, %bb.e ], [ %.sink, %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split ] ; 2 uses
-  %.sroa.5.0 = phi i64 [ %.sroa.536.0.copyload, %bb.i ], [ %i.bc, %bb.l ], [ %.sroa.07.0, %bb.e ], [ %.sroa.5.0.ph.a, %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split ] ; 2 uses
-  %.sroa.0.044 = phi i64 [ %.sroa.035.0.copyload, %bb.i ], [ %i.bl, %bb.l ], [ %i.t, %bb.e ], [ %.sroa.0.044.ph, %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split ]
+  %.sroa.0.044 = phi i64 [ %.sroa.536.0.copyload, %bb.i ], [ %i.bc, %bb.l ], [ %.sroa.07.0, %bb.e ], [ %.sroa.0.044.ph, %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split ] ; 2 uses
   %.sroa.0.0 = phi i64 [ %i.aj, %bb.i ], [ %i.bn, %bb.l ], [ %i.aa, %bb.e ], [ %i.cb, %_ZN4uuid9timestamp7context10v7_support7Counter6reseed17h453455b850523202E.exit.sink.split ] ; 2 uses
-  store i64 %.sroa.0.044, ptr %i.m, align 16
-  store i64 %.sroa.5.0, ptr %.sroa.536.0..sroa_idx, align 8
+  store i64 %.sroa.0.sroa.0.0, ptr %i.m, align 16
+  store i64 %.sroa.0.044, ptr %.sroa.536.0..sroa_idx, align 8
   store i32 %.sroa.7.0, ptr %.sroa.6.0..sroa_idx, align 16
   store i32 %.sroa.12.0, ptr %.sroa.737.0..sroa_idx, align 4
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 72
   store i64 %.sroa.0.0, ptr %i.cc, align 8
   store i64 %.sroa.0.0, ptr %0, align 8
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.5.0, ptr %i.cd, align 8
+  store i64 %.sroa.0.044, ptr %i.cd, align 8
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 %.sroa.7.0, ptr %i.ce, align 8
   ret void

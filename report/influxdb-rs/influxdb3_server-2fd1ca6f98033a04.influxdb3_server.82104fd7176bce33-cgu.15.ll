@@ -202,12 +202,12 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 6 uses
   %i.c = alloca [32 x i8], align 8                ; 4 uses
   %i.d = alloca [16 x i8], align 8                ; 4 uses
-  %i.e = alloca [192 x i8], align 8               ; 6 uses
+  %i.e = alloca [192 x i8], align 8               ; 7 uses
   %i.f = alloca [32 x i8], align 8                ; 4 uses
   %i.g = alloca [192 x i8], align 8               ; 4 uses
   %i.h = alloca [16 x i8], align 8                ; 5 uses
-  %i.i = alloca [192 x i8], align 8               ; 6 uses
-  %i.j = alloca [192 x i8], align 8               ; 6 uses
+  %i.i = alloca [192 x i8], align 8               ; 7 uses
+  %i.j = alloca [192 x i8], align 8               ; 7 uses
   %i.k = alloca [192 x i8], align 8               ; 7 uses
   %i.l = alloca [32 x i8], align 8                ; 6 uses
   %i.m = alloca [32 x i8], align 8                ; 4 uses
@@ -215,9 +215,9 @@ bb.a:
   %i.o = alloca [192 x i8], align 8               ; 7 uses
   %i.p = alloca [192 x i8], align 8               ; 12 uses
   %i.q = alloca [40 x i8], align 8                ; 8 uses
-  %i.r = alloca [192 x i8], align 8               ; 6 uses
-  %i.s = alloca [192 x i8], align 8               ; 6 uses
-  %i.t = alloca [192 x i8], align 8               ; 6 uses
+  %i.r = alloca [192 x i8], align 8               ; 7 uses
+  %i.s = alloca [192 x i8], align 8               ; 7 uses
+  %i.t = alloca [192 x i8], align 8               ; 7 uses
   %i.u = alloca [32 x i8], align 8                ; 4 uses
   %i.v = alloca [32 x i8], align 8                ; 4 uses
   %i.w = alloca [32 x i8], align 8                ; 4 uses
@@ -353,6 +353,7 @@ bb.h:                                             ; preds = %bb.f
   %i.bz = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 3 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.j, i64 184
   %.sroa.4.0..sroa_idx.i.i58.i = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i57.i = getelementptr inbounds nuw i8, ptr %i.j, i64 10
   %i.cb = getelementptr inbounds nuw i8, ptr %.8.val, i64 65 ; 6 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %.8.val, i64 817 ; 6 uses
   %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 1
@@ -362,10 +363,12 @@ bb.h:                                             ; preds = %bb.f
   %i.cg = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.ch = getelementptr inbounds nuw i8, ptr %i.e, i64 184
   %.sroa.4.0..sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 10
   %i.ci = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.i, i64 184
   %.sroa.4.0..sroa_idx.i16.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i17.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 10
   br label %bb.i
 
 .loopexit.i:                                      ; preds = %bb.i
@@ -470,7 +473,9 @@ bb.t:                                             ; preds = %bb.j
   store i16 4, ptr %i.db, align 8, !noalias !10363
   store i64 -9223372036854775808, ptr %i.t, align 8, !noalias !10363
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  store i32 262145, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !10363
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !noalias !10363
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.t, i64 10
+  store i8 4, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i, align 2, !noalias !10363
   %i.dc = load i8, ptr %i.cb, align 1, !range !222, !alias.scope !10366, !noalias !10367, !noundef !4
   %i.dd = icmp eq i8 %i.dc, 2
   invoke void @_RNvMNtCs62AB4KIMLyv_6rustls12common_stateNtB2_11CommonState8send_msg(ptr noalias noundef nonnull align 8 dereferenceable(1064) %.8.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(192) %i.t, i1 noundef zeroext %i.dd)
@@ -514,7 +519,9 @@ bb.x:                                             ; preds = %bb.r
   store i16 4, ptr %i.dh, align 8, !noalias !10373
   store i64 -9223372036854775808, ptr %i.s, align 8, !noalias !10373
   %.sroa.4.0..sroa_idx.i7.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store i32 1048577, ptr %.sroa.4.0..sroa_idx.i7.i.i, align 8, !noalias !10373
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i7.i.i, align 8, !noalias !10373
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i8.i.i = getelementptr inbounds nuw i8, ptr %i.s, i64 10
+  store i8 16, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i8.i.i, align 2, !noalias !10373
   %i.di = load i8, ptr %i.cb, align 1, !range !222, !alias.scope !10376, !noalias !10377, !noundef !4
   %i.dj = icmp eq i8 %i.di, 2
   invoke void @_RNvMNtCs62AB4KIMLyv_6rustls12common_stateNtB2_11CommonState8send_msg(ptr noalias noundef nonnull align 8 dereferenceable(1064) %.8.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(192) %i.s, i1 noundef zeroext %i.dj)
@@ -556,7 +563,9 @@ bb.ab:                                            ; preds = %bb.s
   store i16 4, ptr %i.dm, align 8, !noalias !10383
   store i64 -9223372036854775808, ptr %i.r, align 8, !noalias !10383
   %.sroa.4.0..sroa_idx.i9.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  store i32 131073, ptr %.sroa.4.0..sroa_idx.i9.i.i, align 8, !noalias !10383
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i9.i.i, align 8, !noalias !10383
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i11.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 10
+  store i8 2, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i11.i.i, align 2, !noalias !10383
   %i.dn = load i8, ptr %i.cb, align 1, !range !222, !alias.scope !10386, !noalias !10387, !noundef !4
   %i.do = icmp eq i8 %i.dn, 2
   invoke void @_RNvMNtCs62AB4KIMLyv_6rustls12common_stateNtB2_11CommonState8send_msg(ptr noalias noundef nonnull align 8 dereferenceable(1064) %.8.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(192) %i.r, i1 noundef zeroext %i.do)
@@ -698,7 +707,8 @@ _RNvNtCs62AB4KIMLyv_6rustls4conn12is_valid_ccs.exit.thread.i.i: ; preds = %bb.ap
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !10413
   store i16 4, ptr %i.ca, align 8, !noalias !10413
   store i64 -9223372036854775808, ptr %i.j, align 8, !noalias !10413
-  store i32 65537, ptr %.sroa.4.0..sroa_idx.i.i58.i, align 8, !noalias !10413
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i.i58.i, align 8, !noalias !10413
+  store i8 1, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i57.i, align 2, !noalias !10413
   %i.eo = load i8, ptr %i.cb, align 1, !range !222, !alias.scope !10415, !noalias !10416, !noundef !4
   %i.ep = icmp eq i8 %i.eo, 2
   invoke void @_RNvMNtCs62AB4KIMLyv_6rustls12common_stateNtB2_11CommonState8send_msg(ptr noalias noundef nonnull align 8 dereferenceable(1064) %.8.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(192) %i.j, i1 noundef zeroext %i.ep)
@@ -808,7 +818,8 @@ bb.be:                                            ; preds = %bb.bd
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !10424
   store i16 4, ptr %i.ck, align 8, !noalias !10424
   store i64 -9223372036854775808, ptr %i.i, align 8, !noalias !10424
-  store i32 1048577, ptr %.sroa.4.0..sroa_idx.i16.i.i, align 8, !noalias !10424
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i16.i.i, align 8, !noalias !10424
+  store i8 16, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i17.i.i, align 2, !noalias !10424
   %i.fk = load i8, ptr %i.cb, align 1, !range !222, !alias.scope !10427, !noalias !10428, !noundef !4
   %i.fl = icmp eq i8 %i.fk, 2
   invoke void @_RNvMNtCs62AB4KIMLyv_6rustls12common_stateNtB2_11CommonState8send_msg(ptr noalias noundef nonnull align 8 dereferenceable(1064) %.8.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(192) %i.i, i1 noundef zeroext %i.fl)
@@ -904,7 +915,8 @@ bb.bp:                                            ; preds = %.noexc.i.i, %.noexc
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !10454
   store i16 4, ptr %i.ch, align 8, !noalias !10454
   store i64 -9223372036854775808, ptr %i.e, align 8, !noalias !10454
-  store i32 65537, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !noalias !10454
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i.i.i.i, align 8, !noalias !10454
+  store i8 1, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i.i.i.i, align 2, !noalias !10454
   %i.ga = load i8, ptr %i.cb, align 1, !range !222, !alias.scope !10457, !noalias !10458, !noundef !4
   %i.gb = icmp eq i8 %i.ga, 2
   invoke void @_RNvMNtCs62AB4KIMLyv_6rustls12common_stateNtB2_11CommonState8send_msg(ptr noalias noundef nonnull align 8 dereferenceable(1064) %.8.val, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(192) %i.e, i1 noundef zeroext %i.gb)

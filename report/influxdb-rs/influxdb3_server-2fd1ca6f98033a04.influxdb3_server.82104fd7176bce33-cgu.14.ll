@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %_RNvMNtCscdodAO9FK5
   br label %common.resume
 
 bb.e:                                             ; preds = %_RNvMNtCscdodAO9FK5_5alloc5boxedINtB2_3BoxINtNtNtCs7akArC4fqbf_15futures_channel4mpsc5queue4NodeINtNtNtCs4NRVxsYgnAr_4core2io6cursor6CursorIBu_ShEEEE3newCsbakdBCgU4AF_16influxdb3_server.exit
-  %2 = ptrtoint ptr %_RNvCs9wFQrvczXsK_7___rustc19___rust_alloc_zeroed to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i64 1, ptr %i.a, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -214,7 +213,7 @@ bb.e:                                             ; preds = %_RNvMNtCscdodAO9FK5
   %.sroa.0.sroa.0.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store ptr %i.e, ptr %.sroa.0.sroa.0.sroa.4.0..sroa_idx.a, align 8
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 %2, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8
+  store ptr %_RNvCs9wFQrvczXsK_7___rustc19___rust_alloc_zeroed, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr %_RNvCs9wFQrvczXsK_7___rustc19___rust_alloc_zeroed, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
@@ -617,8 +616,8 @@ bb.hg:                                            ; preds = %bb.gy, %.thread120.
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCINvMs3_NtNtCs6EdGyLKtjWH_18iox_query_influxql8frontend7plannerNtBK_20InfluxQLQueryPlanner12logical_planNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsE0ECsbakdBCgU4AF_16influxdb3_server.exit.i: ; preds = %bb.hc, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i
   %i.xc = phi ptr [ %i.ws, %bb.hc ], [ %i.bo, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i ]
+  %.sroa.5103.sroa.0.0.i.i = phi i64 [ %i.wv, %bb.hc ], [ %i.em, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i ]
   %.sroa.7104.0.i.i = phi ptr [ %.sroa.18308.4.i137.i.i, %bb.hc ], [ %i.eo, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i ]
-  %.sroa.5103.0.i.i = phi i64 [ %i.wv, %bb.hc ], [ %i.em, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i ]
   %.sroa.3.0.i.i = phi i64 [ %.sroa.8299.4.i139.i.i, %bb.hc ], [ %i.ek, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i ]
   %.sroa.0102.0.i.i = phi i64 [ %.sroa.0297.4.i140.i.i, %bb.hc ], [ -1, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i ]
   %i.xd = phi <2 x i64> [ %i.wu, %bb.hc ], [ %i.ev, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs1hWu9vWSLgD_16iox_query_params6params15StatementParamsECsbakdBCgU4AF_16influxdb3_server.exit.i.i ]
@@ -627,7 +626,7 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNCINvMs3_NtNtCs6EdGyLKtjWH_18iox_query_i
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.3.0.i.i, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !alias.scope !8719, !noalias !8941
   %.sroa.5103.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.5103.0.i.i, ptr %.sroa.5103.0..sroa_idx.i.i, align 16, !alias.scope !8719, !noalias !8941
+  store i64 %.sroa.5103.sroa.0.0.i.i, ptr %.sroa.5103.0..sroa_idx.i.i, align 16, !alias.scope !8719, !noalias !8941
   %.sroa.7104.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %.sroa.7104.0.i.i, ptr %.sroa.7104.0..sroa_idx.i.i, align 8, !alias.scope !8719, !noalias !8941
   %.sroa.9105.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32

@@ -205,15 +205,13 @@ define void @_RNvMNtCskAlUH1kY1DR_10polars_ooc14memory_managerNtB2_13MemoryManag
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 2 uses
   %i.b = alloca [40 x i8], align 8                ; 4 uses
-  %i.c = alloca [40 x i8], align 8                ; 9 uses
+  %i.c = alloca [40 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !dbg !9391
-  store i64 0, ptr %i.c, align 8, !dbg !9392
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8, !dbg !9392
-  store i8 0, ptr %i.d, align 8, !dbg !9392
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !9392
-  store i64 0, ptr %i.e, align 8, !dbg !9392
-  %.sroa.47.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !9392
-  store ptr inttoptr (i64 8 to ptr), ptr %.sroa.47.0..sroa_idx, align 8, !dbg !9392
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16, !dbg !9392
+  store i64 0, ptr %i.d, align 8, !dbg !9392
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 24, !dbg !9392
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.c, i8 0, i64 9, i1 false), !dbg !9392
+  store ptr inttoptr (i64 8 to ptr), ptr %i.e, align 8, !dbg !9392
   %.sroa.58.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32, !dbg !9392
   store i64 0, ptr %.sroa.58.0..sroa_idx, align 8, !dbg !9392
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !dbg !9394

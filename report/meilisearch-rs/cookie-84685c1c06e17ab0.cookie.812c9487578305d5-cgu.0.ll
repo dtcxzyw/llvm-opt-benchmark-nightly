@@ -205,7 +205,12 @@ bb.c:                                             ; preds = %bb.a
   %i.ah = ashr i32 %i.ag, 10
   %i.ai = trunc i32 %i.ag to i16
   %i.aj = and i16 %i.ai, 511
+  store i32 %i.ah, ptr %0, align 4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i16 %i.aj, ptr %3, align 4
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.sroa.046.0.copyload = load i64, ptr %1, align 4
+  store i64 %.sroa.046.0.copyload, ptr %4, align 4
   br label %bb.aj
 
 bb.d:                                             ; preds = %bb.b
@@ -225,8 +230,8 @@ bb.g:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.e, %bb.j, %bb.k, %bb.f, %bb.g
-  %.sroa.040.0.a = phi i16 [ %i.am, %bb.f ], [ %i.az, %bb.k ], [ %i.ay, %bb.j ], [ %i.an, %bb.g ], [ %i.ad, %bb.e ]
-  %.sroa.041.0.a = phi i16 [ -2, %bb.f ], [ 1, %bb.k ], [ 2, %bb.j ], [ -1, %bb.g ], [ 0, %bb.e ]
+  %.sroa.040.0.a = phi i16 [ -2, %bb.f ], [ 1, %bb.k ], [ 2, %bb.j ], [ -1, %bb.g ], [ 0, %bb.e ]
+  %.sroa.041.0.a = phi i16 [ %i.am, %bb.f ], [ %i.az, %bb.k ], [ %i.ay, %bb.j ], [ %i.an, %bb.g ], [ %i.ad, %bb.e ]
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.ap = load i8, ptr %i.ao, align 1, !noundef !3 ; 2 uses
   %i.aq = icmp ult i8 %i.ap, 60
@@ -236,7 +241,7 @@ bb.h:                                             ; preds = %bb.e, %bb.j, %bb.k,
   %.neg = ashr exact i16 %.neg70, 8
   %i.as = sext i8 %.sroa.01.1.extract.trunc to i16
   %i.at = add nsw i16 %.neg, %i.as
-  %i.au = add nsw i16 %i.at, %.sroa.041.0.a
+  %i.au = add nsw i16 %i.at, %.sroa.040.0.a
   %i.av = add nsw i16 %i.au, %i.ar                ; 9 uses
   %i.aw = icmp sgt i16 %i.av, -1
   br i1 %i.aw, label %bb.m, label %bb.l, !prof !1634
@@ -380,7 +385,7 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ah, %bb.
   %.sroa.07.0 = phi i16 [ %i.cj, %bb.af ], [ %i.cs, %bb.ah ], [ %i.bz, %bb.ag ]
   %.sroa.02.0 = phi i32 [ %i.ck, %bb.af ], [ %i.cm, %bb.ah ], [ %i.bw, %bb.ag ]
   %.sroa.3.0.insert.ext.i = zext nneg i16 %.sroa.042.0.a to i64
-  %.sroa.2.0.insert.ext.i = zext nneg i16 %.sroa.040.0.a to i64
+  %.sroa.2.0.insert.ext.i = zext nneg i16 %.sroa.041.0.a to i64
   %i.ct = load i32, ptr %1, align 4, !noundef !3  ; 2 uses
   %i.cu = icmp ult i32 %i.ct, 1000000000
   tail call void @llvm.assume(i1 %i.cu)
@@ -392,17 +397,14 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ah, %bb.
   %.sroa.2.0.insert.insert.i = or disjoint i64 %.sroa.3.0.insert.insert.i, %.sroa.2.0.insert.shift.i
   %.sroa.0.0.insert.ext.i = zext nneg i32 %i.ct to i64
   %.sroa.0.0.insert.insert.i = or disjoint i64 %.sroa.2.0.insert.insert.i, %.sroa.0.0.insert.ext.i
+  store i32 %.sroa.02.0, ptr %0, align 4
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i16 %.sroa.07.0, ptr %5, align 4
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sroa.0.0.insert.insert.i, ptr %6, align 4
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.c
-  %.sroa.02.0.sink = phi i32 [ %.sroa.02.0, %bb.ai ], [ %i.ah, %bb.c ]
-  %.sroa.07.0.sink = phi i16 [ %.sroa.07.0, %bb.ai ], [ %i.aj, %bb.c ]
-  %.sroa.0.0.insert.insert.i.sink = phi i64 [ %.sroa.0.0.insert.insert.i, %bb.ai ], [ %.sroa.046.0.copyload, %bb.c ]
-  store i32 %.sroa.02.0.sink, ptr %0, align 4
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i16 %.sroa.07.0.sink, ptr %3, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.0.0.insert.insert.i.sink, ptr %4, align 4
   ret void
 }
 
@@ -805,7 +807,7 @@ bb.d:                                             ; preds = %bb.a
   br label %_ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit
 
 _ZN4core3fmt9Formatter9write_fmt17h45449738a32a15a2E.exit: ; preds = %bb.d, %bb.c, %bb.b
-  %.sroa.0.0.in = phi i1 [ %i.g, %bb.d ], [ %i.f, %bb.c ], [ %i.e, %bb.b ]
+  %.sroa.0.0.in = phi i1 [ %i.e, %bb.b ], [ %i.f, %bb.c ], [ %i.g, %bb.d ]
   ret i1 %.sroa.0.0.in
 }
 
@@ -1208,12 +1210,12 @@ bb.eb:                                            ; preds = %bb.ea
   br label %.thread592
 
 .thread592:                                       ; preds = %bb.eb, %bb.ea
-  %.sroa.4130.0 = phi i8 [ 0, %bb.eb ], [ 1, %bb.ea ]
-  %.sroa.5133.0 = phi i64 [ %.sroa.3481.0.copyload, %bb.eb ], [ undef, %bb.ea ]
+  %.sroa.5133.sroa.0.0 = phi i64 [ undef, %bb.ea ], [ %.sroa.3481.0.copyload, %bb.eb ]
+  %.sroa.4130.0 = phi i8 [ 1, %bb.ea ], [ 0, %bb.eb ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %i.fl, ptr noundef nonnull align 4 dereferenceable(7) %.sroa.0129, i64 7, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0129)
   store i8 %.sroa.4130.0, ptr %.sroa.331.0..sroa_idx, align 1
-  store i64 %.sroa.5133.0, ptr %.sroa.432.0..sroa_idx, align 8
+  store i64 %.sroa.5133.sroa.0.0, ptr %.sroa.432.0..sroa_idx, align 8
   br label %.backedge.sink.split
 }
 

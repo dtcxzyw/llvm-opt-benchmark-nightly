@@ -204,7 +204,7 @@ bb.a:
           to label %bb.b unwind label %bb.n, !noalias !548
 
 bb.b:                                             ; preds = %bb.a
-  %.sroa.08.0.copyload.i = load i64, ptr %i.d, align 8, !noalias !546
+  %.sroa.08.0.copyload.i = load i32, ptr %i.d, align 8, !noalias !546 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !549)
   call void @llvm.experimental.noalias.scope.decl(metadata !552)
   %.not23.i.i.i = icmp eq i64 %.val.i, -1
@@ -214,7 +214,6 @@ bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   %.sroa.8.8..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %.sroa.011.0.extract.trunc.i.i.i = trunc i64 %.sroa.08.0.copyload.i to i32 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !555
   store i64 %.val.i, ptr %i.c, align 8, !noalias !562
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -222,7 +221,7 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !555
   call void @llvm.experimental.noalias.scope.decl(metadata !563)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !555
-  store i32 %.sroa.011.0.extract.trunc.i.i.i, ptr %i.a, align 4, !noalias !566
+  store i32 %.sroa.08.0.copyload.i, ptr %i.a, align 4, !noalias !566
   %i.k = invoke noundef i64 @_RINvYINtNtCshzWfHUSfYae_4core4hash18BuildHasherDefaultINtCsdHhuG8sbGmp_13nohash_hasher12NoHashHasherNtCs4sl5YdnrCxp_3vfs6FileIdEENtB6_11BuildHasher8hash_oneRB1A_ECscA5P7HRgTCP_15ide_diagnostics(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.a)
           to label %bb.d unwind label %bb.k, !noalias !569 ; 2 uses
 
@@ -262,7 +261,7 @@ bb.e:                                             ; preds = %bb.h, %.noexc.i.i.i
   %i.y = getelementptr inbounds [64 x i8], ptr %.val.i.i.i.i.i.i.i, i64 %i.x ; 3 uses
   %i.z = getelementptr inbounds i8, ptr %i.y, i64 -64
   %.val2.i.i.i.i.i.i.i.i = load i32, ptr %i.z, align 4, !noalias !579, !noundef !4
-  %i.aa = icmp eq i32 %.val2.i.i.i.i.i.i.i.i, %.sroa.011.0.extract.trunc.i.i.i
+  %i.aa = icmp eq i32 %.sroa.08.0.copyload.i, %.val2.i.i.i.i.i.i.i.i
   br i1 %i.aa, label %_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtCs4sl5YdnrCxp_3vfs6FileIdTNtNtCs6oosyzwIepl_6ide_db9text_edit8TextEditINtNtCshzWfHUSfYae_4core6option6OptionNtNtB1j_13source_change11SnippetEditEEINtNtB22_4hash18BuildHasherDefaultINtCsdHhuG8sbGmp_13nohash_hasher12NoHashHasherBN_EEE6insertCscA5P7HRgTCP_15ide_diagnostics.exit.i.i.i.i.i, label %bb.f, !prof !85
 
 ._crit_edge.i.i.i.i.i.i.i.i:                      ; preds = %bb.f, %bb.e
@@ -340,7 +339,7 @@ _RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtCs4sl5YdnrCxp_3vfs6FileIdT
   %i.bg = sub nsw i64 0, %.sroa.3.0.i.ph.i.i.i.i.i.i.i
   %i.bh = getelementptr inbounds [64 x i8], ptr %.val.i.i.i.i.i.i.i, i64 %i.bg ; 3 uses
   %i.bi = getelementptr inbounds i8, ptr %i.bh, i64 -64
-  store i32 %.sroa.011.0.extract.trunc.i.i.i, ptr %i.bi, align 8, !noalias !590
+  store i32 %.sroa.08.0.copyload.i, ptr %i.bi, align 8, !noalias !590
   %.sroa.4.i.i.i.sroa.3.0..sroa.4.0..sroa_idx.i.i.i.sroa_idx.i.i.i = getelementptr inbounds i8, ptr %i.bh, i64 -56
   store i64 %.val.i, ptr %.sroa.4.i.i.i.sroa.3.0..sroa.4.0..sroa_idx.i.i.i.sroa_idx.i.i.i, align 8, !noalias !590
   %.sroa.4.i.i.i.sroa.4.0..sroa.4.0..sroa_idx.i.i.i.sroa_idx.i.i.i = getelementptr inbounds i8, ptr %i.bh, i64 -48

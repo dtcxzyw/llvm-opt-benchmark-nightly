@@ -205,9 +205,8 @@ bb.y:                                             ; preds = %bb.g
 
 bb.z:                                             ; preds = %bb.cu, %bb.cm, %bb.ce, %bb.bx, %bb.bt, %bb.bm, %bb.bi, %bb.az, %bb.aw, %bb.as, %bb.aj, %bb.af, %bb.ad, %bb.p, %bb.o, %bb.j
   %.sroa.38.sroa.0.0 = phi ptr [ undef, %bb.j ], [ %i.es, %bb.ad ], [ undef, %bb.af ], [ undef, %bb.aj ], [ undef, %bb.as ], [ undef, %bb.o ], [ undef, %bb.p ], [ undef, %bb.aw ], [ undef, %bb.az ], [ undef, %bb.bi ], [ undef, %bb.bm ], [ undef, %bb.bt ], [ undef, %bb.bx ], [ undef, %bb.ce ], [ undef, %bb.cm ], [ undef, %bb.cu ]
-  %.sroa.31.sroa.11.0 = phi i64 [ 0, %bb.j ], [ %.sroa.31.sroa.11.0.extract.shift67, %bb.ad ], [ 0, %bb.af ], [ 0, %bb.aj ], [ 0, %bb.as ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.aw ], [ 0, %bb.az ], [ 0, %bb.bi ], [ 0, %bb.bm ], [ %.sroa.31.sroa.11.0.extract.shift, %bb.bt ], [ 0, %bb.bx ], [ %.sroa.31.sroa.11.0.extract.shift61, %bb.ce ], [ %.sroa.31.sroa.11.0.extract.shift63, %bb.cm ], [ %.sroa.31.sroa.11.0.extract.shift65, %bb.cu ]
-  %.sroa.31.sroa.0.0.a = phi i32 [ undef, %bb.j ], [ %.sroa.31.sroa.0.0.extract.trunc60, %bb.ad ], [ undef, %bb.af ], [ undef, %bb.aj ], [ %.sroa.03.0.i655, %bb.as ], [ undef, %bb.o ], [ undef, %bb.p ], [ undef, %bb.aw ], [ undef, %bb.az ], [ %.sroa.03.0.i640, %bb.bi ], [ undef, %bb.bm ], [ %.sroa.31.sroa.0.0.extract.trunc, %bb.bt ], [ undef, %bb.bx ], [ %.sroa.31.sroa.0.0.extract.trunc57, %bb.ce ], [ %.sroa.31.sroa.0.0.extract.trunc58, %bb.cm ], [ %.sroa.31.sroa.0.0.extract.trunc59, %bb.cu ]
-  %.sroa.25.0 = phi i32 [ undef, %bb.j ], [ undef, %bb.ad ], [ undef, %bb.af ], [ %.sroa.03.0.i615, %bb.aj ], [ %.sroa.03.0.i659, %bb.as ], [ undef, %bb.o ], [ undef, %bb.p ], [ undef, %bb.aw ], [ %.sroa.03.0.i530, %bb.az ], [ %.sroa.03.0.i644, %bb.bi ], [ %.sroa.03.0.i491.a, %bb.bm ], [ undef, %bb.bt ], [ %.sroa.03.0.i591, %bb.bx ], [ undef, %bb.ce ], [ undef, %bb.cm ], [ undef, %bb.cu ]
+  %.sroa.31.sroa.0.0.a = phi i32 [ undef, %bb.j ], [ undef, %bb.ad ], [ undef, %bb.af ], [ %.sroa.03.0.i615, %bb.aj ], [ %.sroa.03.0.i659, %bb.as ], [ undef, %bb.o ], [ undef, %bb.p ], [ undef, %bb.aw ], [ %.sroa.03.0.i530, %bb.az ], [ %.sroa.03.0.i644, %bb.bi ], [ %.sroa.03.0.i491.a, %bb.bm ], [ undef, %bb.bt ], [ %.sroa.03.0.i591, %bb.bx ], [ undef, %bb.ce ], [ undef, %bb.cm ], [ undef, %bb.cu ]
+  %.sroa.31.sroa.0.0 = phi i64 [ undef, %bb.j ], [ %i.eo, %bb.ad ], [ undef, %bb.af ], [ undef, %bb.aj ], [ %.sroa.31.sroa.0.0.insert.ext, %bb.as ], [ undef, %bb.o ], [ undef, %bb.p ], [ undef, %bb.aw ], [ undef, %bb.az ], [ %.sroa.31.sroa.0.0.insert.ext53, %bb.bi ], [ undef, %bb.bm ], [ %.sroa.03.0.i636, %bb.bt ], [ undef, %bb.bx ], [ %.sroa.04.0.i672, %bb.ce ], [ %.sroa.04.0.i651, %bb.cm ], [ %.sroa.04.0.i666, %bb.cu ]
   %.sroa.23.0 = phi i16 [ undef, %bb.j ], [ undef, %bb.ad ], [ %.sroa.03.0.i544.a, %bb.af ], [ undef, %bb.aj ], [ undef, %bb.as ], [ undef, %bb.o ], [ undef, %bb.p ], [ %.sroa.03.0.i507.a, %bb.aw ], [ undef, %bb.az ], [ undef, %bb.bi ], [ undef, %bb.bm ], [ undef, %bb.bt ], [ undef, %bb.bx ], [ undef, %bb.ce ], [ undef, %bb.cm ], [ undef, %bb.cu ]
   %.sroa.20.0 = phi i8 [ %i.dq, %bb.j ], [ undef, %bb.ad ], [ undef, %bb.af ], [ undef, %bb.aj ], [ undef, %bb.as ], [ %i.dy, %bb.o ], [ %i.ea, %bb.p ], [ undef, %bb.aw ], [ undef, %bb.az ], [ undef, %bb.bi ], [ undef, %bb.bm ], [ undef, %bb.bt ], [ undef, %bb.bx ], [ undef, %bb.ce ], [ undef, %bb.cm ], [ undef, %bb.cu ]
   %.sroa.056.0 = phi i8 [ 0, %bb.j ], [ 15, %bb.ad ], [ 1, %bb.af ], [ 6, %bb.aj ], [ 11, %bb.as ], [ 2, %bb.o ], [ 0, %bb.p ], [ 3, %bb.aw ], [ 4, %bb.az ], [ 13, %bb.bi ], [ 8, %bb.bm ], [ 9, %bb.bt ], [ 16, %bb.bx ], [ 7, %bb.ce ], [ 5, %bb.cm ], [ 17, %bb.cu ]
@@ -218,11 +217,9 @@ bb.z:                                             ; preds = %bb.cu, %bb.cm, %bb.
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
   store i16 %.sroa.23.0, ptr %.sroa.23.0..sroa_idx, align 2
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %.sroa.25.0, ptr %.sroa.25.0..sroa_idx, align 4
+  store i32 %.sroa.31.sroa.0.0.a, ptr %.sroa.25.0..sroa_idx, align 4
   %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.31.sroa.0.0.insert.ext = zext i32 %.sroa.31.sroa.0.0.a to i64
-  %.sroa.31.sroa.0.0.insert.insert = or disjoint i64 %.sroa.31.sroa.11.0, %.sroa.31.sroa.0.0.insert.ext
-  store i64 %.sroa.31.sroa.0.0.insert.insert, ptr %.sroa.31.0..sroa_idx, align 8
+  store i64 %.sroa.31.sroa.0.0, ptr %.sroa.31.0..sroa_idx, align 8
   %.sroa.38.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %.sroa.38.sroa.0.0, ptr %.sroa.38.0..sroa_idx, align 8
   %.sroa.38.sroa.5.0..sroa.38.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -236,7 +233,7 @@ bb.aa:                                            ; preds = %bb.k
   %i.el = load i64, ptr %i.al, align 8, !range !117, !noundef !4
   %i.em = trunc nuw i64 %i.el to i1
   %i.en = getelementptr inbounds nuw i8, ptr %i.al, i64 8
-  %i.eo = load i64, ptr %i.en, align 8, !range !118, !noundef !4 ; 3 uses
+  %i.eo = load i64, ptr %i.en, align 8, !range !118, !noundef !4 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %i.al, i64 16 ; 2 uses
   br i1 %i.em, label %bb.ac, label %bb.ad, !prof !6
 
@@ -256,8 +253,6 @@ bb.ac:                                            ; preds = %bb.aa
 bb.ad:                                            ; preds = %bb.aa
   %i.es = load ptr, ptr %i.ep, align 8, !nonnull !4, !noundef !4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al)
-  %.sroa.31.sroa.0.0.extract.trunc60 = trunc i64 %i.eo to i32
-  %.sroa.31.sroa.11.0.extract.shift67 = and i64 %i.eo, 9223372032559808512
   br label %bb.z
 
 bb.ae:                                            ; preds = %bb.l
@@ -403,6 +398,7 @@ bb.as:                                            ; preds = %bb.aq
   %i.fz = call i32 @llvm.bswap.i32(i32 %.sroa.05.0.copyload.i653)
   %.sroa.03.0.i655 = select i1 %i.fy, i32 %i.fz, i32 %.sroa.05.0.copyload.i653
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !131
+  %.sroa.31.sroa.0.0.insert.ext = zext i32 %.sroa.03.0.i655 to i64
   br label %bb.z
 
 bb.at:                                            ; preds = %bb.an, %bb.au
@@ -553,6 +549,7 @@ bb.bi:                                            ; preds = %bb.bg
   %i.hg = call i32 @llvm.bswap.i32(i32 %.sroa.05.0.copyload.i638)
   %.sroa.03.0.i640 = select i1 %i.hf, i32 %i.hg, i32 %.sroa.05.0.copyload.i638
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !146
+  %.sroa.31.sroa.0.0.insert.ext53 = zext i32 %.sroa.03.0.i640 to i64
   br label %bb.z
 
 bb.bj:                                            ; preds = %bb.bd, %bb.bk
@@ -649,10 +646,8 @@ bb.bt:                                            ; preds = %bb.br
   %i.ib = trunc nuw i8 %i.ia to i1
   %.sroa.05.0.copyload.i634 = load i64, ptr %i.h, align 8, !noalias !154 ; 2 uses
   %i.ic = call i64 @llvm.bswap.i64(i64 %.sroa.05.0.copyload.i634)
-  %.sroa.03.0.i636 = select i1 %i.ib, i64 %i.ic, i64 %.sroa.05.0.copyload.i634 ; 2 uses
+  %.sroa.03.0.i636 = select i1 %i.ib, i64 %i.ic, i64 %.sroa.05.0.copyload.i634
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !154
-  %.sroa.31.sroa.0.0.extract.trunc = trunc i64 %.sroa.03.0.i636 to i32
-  %.sroa.31.sroa.11.0.extract.shift = and i64 %.sroa.03.0.i636, -4294967296
   br label %bb.z
 
 bb.bu:                                            ; preds = %bb.bq, %bb.bv
@@ -749,10 +744,8 @@ bb.ce:                                            ; preds = %bb.cc
   %i.ix = trunc nuw i8 %i.iw to i1
   %.sroa.06.0.copyload.i670 = load i64, ptr %i.a, align 8, !noalias !159 ; 2 uses
   %i.iy = call i64 @llvm.bswap.i64(i64 %.sroa.06.0.copyload.i670)
-  %.sroa.04.0.i672 = select i1 %i.ix, i64 %i.iy, i64 %.sroa.06.0.copyload.i670 ; 2 uses
+  %.sroa.04.0.i672 = select i1 %i.ix, i64 %i.iy, i64 %.sroa.06.0.copyload.i670
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !159
-  %.sroa.31.sroa.0.0.extract.trunc57 = trunc i64 %.sroa.04.0.i672 to i32
-  %.sroa.31.sroa.11.0.extract.shift61 = and i64 %.sroa.04.0.i672, -4294967296
   br label %bb.z
 
 bb.cf:                                            ; preds = %bb.cb, %bb.cg
@@ -820,10 +813,8 @@ bb.cm:                                            ; preds = %bb.ck
   %i.jn = trunc nuw i8 %i.jm to i1
   %.sroa.06.0.copyload.i649 = load i64, ptr %i.e, align 8, !noalias !163 ; 2 uses
   %i.jo = call i64 @llvm.bswap.i64(i64 %.sroa.06.0.copyload.i649)
-  %.sroa.04.0.i651 = select i1 %i.jn, i64 %i.jo, i64 %.sroa.06.0.copyload.i649 ; 2 uses
+  %.sroa.04.0.i651 = select i1 %i.jn, i64 %i.jo, i64 %.sroa.06.0.copyload.i649
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !163
-  %.sroa.31.sroa.0.0.extract.trunc58 = trunc i64 %.sroa.04.0.i651 to i32
-  %.sroa.31.sroa.11.0.extract.shift63 = and i64 %.sroa.04.0.i651, -4294967296
   br label %bb.z
 
 bb.cn:                                            ; preds = %bb.cj, %bb.co
@@ -891,10 +882,8 @@ bb.cu:                                            ; preds = %bb.cs
   %i.kd = trunc nuw i8 %i.kc to i1
   %.sroa.06.0.copyload.i664 = load i64, ptr %i.b, align 8, !noalias !167 ; 2 uses
   %i.ke = call i64 @llvm.bswap.i64(i64 %.sroa.06.0.copyload.i664)
-  %.sroa.04.0.i666 = select i1 %i.kd, i64 %i.ke, i64 %.sroa.06.0.copyload.i664 ; 2 uses
+  %.sroa.04.0.i666 = select i1 %i.kd, i64 %i.ke, i64 %.sroa.06.0.copyload.i664
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !167
-  %.sroa.31.sroa.0.0.extract.trunc59 = trunc i64 %.sroa.04.0.i666 to i32
-  %.sroa.31.sroa.11.0.extract.shift65 = and i64 %.sroa.04.0.i666, -4294967296
   br label %bb.z
 
 bb.cv:                                            ; preds = %bb.cr, %bb.cw
@@ -1031,13 +1020,13 @@ bb.dh:                                            ; preds = %.noexc562
   %i.kv = call i32 @llvm.bswap.i32(i32 %.sroa.05.0.copyload.i559)
   %.sroa.03.0.i561 = select i1 %i.ku, i32 %i.kv, i32 %.sroa.05.0.copyload.i559
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !198
+  %.sroa.12.sroa.0.0.insert.ext = zext i32 %.sroa.03.0.i561 to i64
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs53gkmrwjETj_4tiff7decoder6stream12EndianReaderINtNtNtB4_2io6cursor6CursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(40) %i.ct)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ct)
   br label %bb.di
 
 bb.di:                                            ; preds = %bb.eb, %bb.dy, %bb.dv, %bb.ds, %bb.do, %bb.dh
-  %.sroa.12.sroa.10.0 = phi i64 [ 0, %bb.dh ], [ 0, %bb.do ], [ %.sroa.12.sroa.10.0.extract.shift, %bb.ds ], [ %.sroa.12.sroa.10.0.extract.shift21, %bb.dv ], [ %.sroa.12.sroa.10.0.extract.shift23, %bb.dy ], [ %.sroa.12.sroa.10.0.extract.shift25, %bb.eb ]
-  %.sroa.12.sroa.0.0 = phi i32 [ %.sroa.03.0.i561, %bb.dh ], [ %.sroa.03.0.i518, %bb.do ], [ %.sroa.12.sroa.0.0.extract.trunc, %bb.ds ], [ %.sroa.12.sroa.0.0.extract.trunc18, %bb.dv ], [ %.sroa.12.sroa.0.0.extract.trunc19, %bb.dy ], [ %.sroa.12.sroa.0.0.extract.trunc20, %bb.eb ]
+  %.sroa.12.sroa.10.0 = phi i64 [ %.sroa.12.sroa.0.0.insert.ext, %bb.dh ], [ %.sroa.12.sroa.0.0.insert.ext19, %bb.do ], [ %.sroa.03.0.i497, %bb.ds ], [ %.sroa.04.0.i630, %bb.dv ], [ %.sroa.04.0.i, %bb.dy ], [ %.sroa.04.0.i623, %bb.eb ]
   %.sroa.1017.0 = phi i32 [ %.sroa.03.0.i567, %bb.dh ], [ %.sroa.03.0.i524, %bb.do ], [ undef, %bb.ds ], [ undef, %bb.dv ], [ undef, %bb.dy ], [ undef, %bb.eb ]
   %.sroa.016.0 = phi i8 [ 11, %bb.dh ], [ 13, %bb.do ], [ 9, %bb.ds ], [ 7, %bb.dv ], [ 5, %bb.dy ], [ 17, %bb.eb ]
   %i.kw = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1045,9 +1034,7 @@ bb.di:                                            ; preds = %bb.eb, %bb.dy, %bb.
   %.sroa.1017.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %.sroa.1017.0, ptr %.sroa.1017.0..sroa_idx, align 4
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %.sroa.12.sroa.0.0.insert.ext = zext i32 %.sroa.12.sroa.0.0 to i64
-  %.sroa.12.sroa.0.0.insert.insert = or disjoint i64 %.sroa.12.sroa.10.0, %.sroa.12.sroa.0.0.insert.ext
-  store i64 %.sroa.12.sroa.0.0.insert.insert, ptr %.sroa.12.0..sroa_idx, align 8
+  store i64 %.sroa.12.sroa.10.0, ptr %.sroa.12.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8
   br label %bb.c
 
@@ -1110,6 +1097,7 @@ bb.do:                                            ; preds = %.noexc519
   %i.li = call i32 @llvm.bswap.i32(i32 %.sroa.05.0.copyload.i516)
   %.sroa.03.0.i518 = select i1 %i.lh, i32 %i.li, i32 %.sroa.05.0.copyload.i516
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !205
+  %.sroa.12.sroa.0.0.insert.ext19 = zext i32 %.sroa.03.0.i518 to i64
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs53gkmrwjETj_4tiff7decoder6stream12EndianReaderINtNtNtB4_2io6cursor6CursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(40) %i.cs)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cs)
   br label %bb.di
@@ -1148,10 +1136,8 @@ bb.ds:                                            ; preds = %.noexc498
   %i.lo = trunc nuw i8 %i.ln to i1
   %.sroa.05.0.copyload.i495 = load i64, ptr %i.af, align 8, !noalias !183 ; 2 uses
   %i.lp = call i64 @llvm.bswap.i64(i64 %.sroa.05.0.copyload.i495)
-  %.sroa.03.0.i497 = select i1 %i.lo, i64 %i.lp, i64 %.sroa.05.0.copyload.i495 ; 2 uses
+  %.sroa.03.0.i497 = select i1 %i.lo, i64 %i.lp, i64 %.sroa.05.0.copyload.i495
   call void @llvm.lifetime.end.p0(ptr nonnull %i.af), !noalias !183
-  %.sroa.12.sroa.0.0.extract.trunc = trunc i64 %.sroa.03.0.i497 to i32
-  %.sroa.12.sroa.10.0.extract.shift = and i64 %.sroa.03.0.i497, -4294967296
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs53gkmrwjETj_4tiff7decoder6stream12EndianReaderINtNtNtB4_2io6cursor6CursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(40) %i.cu)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cu)
   br label %bb.di
@@ -1179,10 +1165,8 @@ bb.dv:                                            ; preds = %.noexc631
   %i.lu = trunc nuw i8 %i.lt to i1
   %.sroa.06.0.copyload.i628 = load i64, ptr %i.i, align 8, !noalias !185 ; 2 uses
   %i.lv = call i64 @llvm.bswap.i64(i64 %.sroa.06.0.copyload.i628)
-  %.sroa.04.0.i630 = select i1 %i.lu, i64 %i.lv, i64 %.sroa.06.0.copyload.i628 ; 2 uses
+  %.sroa.04.0.i630 = select i1 %i.lu, i64 %i.lv, i64 %.sroa.06.0.copyload.i628
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !185
-  %.sroa.12.sroa.0.0.extract.trunc18 = trunc i64 %.sroa.04.0.i630 to i32
-  %.sroa.12.sroa.10.0.extract.shift21 = and i64 %.sroa.04.0.i630, -4294967296
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs53gkmrwjETj_4tiff7decoder6stream12EndianReaderINtNtNtB4_2io6cursor6CursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(40) %i.cw)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cw)
   br label %bb.di
@@ -1210,10 +1194,8 @@ bb.dy:                                            ; preds = %.noexc535
   %i.ma = trunc nuw i8 %i.lz to i1
   %.sroa.06.0.copyload.i = load i64, ptr %i.y, align 8, !noalias !188 ; 2 uses
   %i.mb = call i64 @llvm.bswap.i64(i64 %.sroa.06.0.copyload.i)
-  %.sroa.04.0.i = select i1 %i.ma, i64 %i.mb, i64 %.sroa.06.0.copyload.i ; 2 uses
+  %.sroa.04.0.i = select i1 %i.ma, i64 %i.mb, i64 %.sroa.06.0.copyload.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !188
-  %.sroa.12.sroa.0.0.extract.trunc19 = trunc i64 %.sroa.04.0.i to i32
-  %.sroa.12.sroa.10.0.extract.shift23 = and i64 %.sroa.04.0.i, -4294967296
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs53gkmrwjETj_4tiff7decoder6stream12EndianReaderINtNtNtB4_2io6cursor6CursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(40) %i.cv)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cv)
   br label %bb.di
@@ -1241,10 +1223,8 @@ bb.eb:                                            ; preds = %.noexc624
   %i.mg = trunc nuw i8 %i.mf to i1
   %.sroa.06.0.copyload.i621 = load i64, ptr %i.j, align 8, !noalias !191 ; 2 uses
   %i.mh = call i64 @llvm.bswap.i64(i64 %.sroa.06.0.copyload.i621)
-  %.sroa.04.0.i623 = select i1 %i.mg, i64 %i.mh, i64 %.sroa.06.0.copyload.i621 ; 2 uses
+  %.sroa.04.0.i623 = select i1 %i.mg, i64 %i.mh, i64 %.sroa.06.0.copyload.i621
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !191
-  %.sroa.12.sroa.0.0.extract.trunc20 = trunc i64 %.sroa.04.0.i623 to i32
-  %.sroa.12.sroa.10.0.extract.shift25 = and i64 %.sroa.04.0.i623, -4294967296
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs53gkmrwjETj_4tiff7decoder6stream12EndianReaderINtNtNtB4_2io6cursor6CursorINtNtCs4wP2HXfJTCR_5alloc3vec3VechEEEECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef align 8 dereferenceable(40) %i.cr)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cr)
   br label %bb.di
@@ -1647,10 +1627,10 @@ bb.dx:                                            ; preds = %.noexc40
           to label %.noexc50 unwind label %.loopexit.split-lp
 
 .noexc50:                                         ; preds = %bb.dx, %bb.cz, %bb.dw, %.noexc49
+  %.sroa.50.sroa.0.0 = phi i16 [ %.sroa.50.0.copyload56, %bb.dw ], [ undef, %bb.cz ], [ undef, %.noexc49 ], [ undef, %bb.dx ]
+  %.sroa.78.1.a = phi i64 [ %.sroa.5061.0.copyload63, %bb.dw ], [ undef, %bb.cz ], [ %i.hu, %.noexc49 ], [ undef, %bb.dx ]
   %.sroa.70.1 = phi ptr [ %.sroa.70.0.copyload67, %bb.dw ], [ undef, %bb.cz ], [ undef, %.noexc49 ], [ undef, %bb.dx ]
-  %.sroa.78.1.a = phi i64 [ %.sroa.78.0.copyload74, %bb.dw ], [ undef, %bb.cz ], [ undef, %.noexc49 ], [ undef, %bb.dx ]
-  %.sroa.5061.1 = phi i64 [ %.sroa.5061.0.copyload63, %bb.dw ], [ undef, %bb.cz ], [ %i.hu, %.noexc49 ], [ undef, %bb.dx ]
-  %.sroa.50.1 = phi i16 [ %.sroa.50.0.copyload56, %bb.dw ], [ undef, %bb.cz ], [ undef, %.noexc49 ], [ undef, %bb.dx ]
+  %.sroa.78.1 = phi i64 [ %.sroa.78.0.copyload74, %bb.dw ], [ undef, %bb.cz ], [ undef, %.noexc49 ], [ undef, %bb.dx ]
   %.sroa.0.1 = phi i8 [ %i.gi, %bb.dw ], [ 3, %bb.cz ], [ 0, %.noexc49 ], [ 27, %bb.dx ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !1546
   br label %.thread143
@@ -1686,20 +1666,20 @@ bb.ea:                                            ; preds = %bb.dy
   br label %bb.eh
 
 .thread143:                                       ; preds = %bb.bf, %.noexc50, %bb.dl, %bb.dm, %bb.bd, %.noexc38, %.noexc36, %.noexc35, %.noexc34, %.noexc33
-  %.sroa.70.0.ph = phi ptr [ undef, %.noexc33 ], [ undef, %.noexc34 ], [ undef, %.noexc35 ], [ undef, %.noexc36 ], [ undef, %.noexc38 ], [ %.sroa.70.1.copyload, %bb.bd ], [ %i.hi, %bb.dm ], [ undef, %bb.dl ], [ %.sroa.70.1, %.noexc50 ], [ undef, %bb.bf ]
-  %.sroa.78.0.ph.a = phi i64 [ undef, %.noexc33 ], [ undef, %.noexc34 ], [ undef, %.noexc35 ], [ undef, %.noexc36 ], [ undef, %.noexc38 ], [ %.sroa.78.1.copyload, %bb.bd ], [ %.sroa.8413.0.copyload.i, %bb.dm ], [ undef, %bb.dl ], [ %.sroa.78.1.a, %.noexc50 ], [ undef, %bb.bf ]
-  %.sroa.5061.0.ph = phi i64 [ undef, %.noexc33 ], [ undef, %.noexc34 ], [ undef, %.noexc35 ], [ undef, %.noexc36 ], [ undef, %.noexc38 ], [ %.sroa.5061.1.copyload, %bb.bd ], [ %.sroa.5410.0.copyload.i, %bb.dm ], [ %i.hh, %bb.dl ], [ %.sroa.5061.1, %.noexc50 ], [ %i.dx, %bb.bf ]
-  %.sroa.50.0.ph = phi i16 [ undef, %.noexc33 ], [ undef, %.noexc34 ], [ undef, %.noexc35 ], [ undef, %.noexc36 ], [ undef, %.noexc38 ], [ %.sroa.50.1.copyload, %bb.bd ], [ %.sroa.50.1.copyload59, %bb.dm ], [ undef, %bb.dl ], [ %.sroa.50.1, %.noexc50 ], [ undef, %bb.bf ]
-  %.sroa.0.0.ph = phi i8 [ 3, %.noexc33 ], [ 3, %.noexc34 ], [ 3, %.noexc35 ], [ 3, %.noexc36 ], [ 3, %.noexc38 ], [ %i.bm, %bb.bd ], [ %.lcssa.i, %bb.dm ], [ 0, %bb.dl ], [ %.sroa.0.1, %.noexc50 ], [ 0, %bb.bf ]
+  %.sroa.50.sroa.0.1 = phi i16 [ undef, %bb.bf ], [ %.sroa.50.sroa.0.0, %.noexc50 ], [ undef, %bb.dl ], [ %.sroa.50.1.copyload59, %bb.dm ], [ undef, %.noexc38 ], [ undef, %.noexc36 ], [ undef, %.noexc35 ], [ undef, %.noexc34 ], [ undef, %.noexc33 ], [ %.sroa.50.1.copyload, %bb.bd ]
+  %.sroa.78.0.ph.a = phi i64 [ %i.dx, %bb.bf ], [ %.sroa.78.1.a, %.noexc50 ], [ %i.hh, %bb.dl ], [ %.sroa.5410.0.copyload.i, %bb.dm ], [ undef, %.noexc38 ], [ undef, %.noexc36 ], [ undef, %.noexc35 ], [ undef, %.noexc34 ], [ undef, %.noexc33 ], [ %.sroa.5061.1.copyload, %bb.bd ]
+  %.sroa.70.0.ph = phi ptr [ undef, %bb.bf ], [ %.sroa.70.1, %.noexc50 ], [ undef, %bb.dl ], [ %i.hi, %bb.dm ], [ undef, %.noexc38 ], [ undef, %.noexc36 ], [ undef, %.noexc35 ], [ undef, %.noexc34 ], [ undef, %.noexc33 ], [ %.sroa.70.1.copyload, %bb.bd ]
+  %.sroa.78.0.ph = phi i64 [ undef, %bb.bf ], [ %.sroa.78.1, %.noexc50 ], [ undef, %bb.dl ], [ %.sroa.8413.0.copyload.i, %bb.dm ], [ undef, %.noexc38 ], [ undef, %.noexc36 ], [ undef, %.noexc35 ], [ undef, %.noexc34 ], [ undef, %.noexc33 ], [ %.sroa.78.1.copyload, %bb.bd ]
+  %.sroa.0.0.ph = phi i8 [ 0, %bb.bf ], [ %.sroa.0.1, %.noexc50 ], [ 0, %bb.dl ], [ %.lcssa.i, %bb.dm ], [ 3, %.noexc38 ], [ 3, %.noexc36 ], [ 3, %.noexc35 ], [ 3, %.noexc34 ], [ 3, %.noexc33 ], [ %i.bm, %bb.bd ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !1546
   br label %.sink.split
 
 .thread151:                                       ; preds = %bb.bo, %bb.ch, %bb.br, %bb.cf, %bb.cd, %bb.by, %bb.bt
-  %.sroa.70.2.ph = phi ptr [ undef, %bb.ch ], [ undef, %bb.bt ], [ %i.fb, %bb.by ], [ undef, %bb.cd ], [ undef, %bb.cf ], [ undef, %bb.br ], [ undef, %bb.bo ]
-  %.sroa.78.2.ph.a = phi i64 [ undef, %bb.ch ], [ undef, %bb.bt ], [ %.sroa.8365.0.copyload.i, %bb.by ], [ undef, %bb.cd ], [ undef, %bb.cf ], [ undef, %bb.br ], [ undef, %bb.bo ]
-  %.sroa.5061.2.ph = phi i64 [ %i.fh, %bb.ch ], [ %i.er, %bb.bt ], [ %.sroa.5362.0.copyload.i, %bb.by ], [ %i.fe, %bb.cd ], [ %i.fg, %bb.cf ], [ %i.ep, %bb.br ], [ undef, %bb.bo ]
-  %.sroa.50.2.ph = phi i16 [ undef, %bb.ch ], [ undef, %bb.bt ], [ %.sroa.50.1.copyload60, %bb.by ], [ undef, %bb.cd ], [ undef, %bb.cf ], [ undef, %bb.br ], [ undef, %bb.bo ]
-  %.sroa.0.2.ph = phi i8 [ 0, %bb.ch ], [ 0, %bb.bt ], [ %i.fa, %bb.by ], [ 0, %bb.cd ], [ 0, %bb.cf ], [ 0, %bb.br ], [ 27, %bb.bo ]
+  %.sroa.50.sroa.0.2 = phi i16 [ undef, %bb.ch ], [ undef, %bb.br ], [ undef, %bb.cf ], [ undef, %bb.cd ], [ %.sroa.50.1.copyload60, %bb.by ], [ undef, %bb.bt ], [ undef, %bb.bo ]
+  %.sroa.78.2.ph.a = phi i64 [ %i.fh, %bb.ch ], [ %i.ep, %bb.br ], [ %i.fg, %bb.cf ], [ %i.fe, %bb.cd ], [ %.sroa.5362.0.copyload.i, %bb.by ], [ %i.er, %bb.bt ], [ undef, %bb.bo ]
+  %.sroa.70.2.ph = phi ptr [ undef, %bb.ch ], [ undef, %bb.br ], [ undef, %bb.cf ], [ undef, %bb.cd ], [ %i.fb, %bb.by ], [ undef, %bb.bt ], [ undef, %bb.bo ]
+  %.sroa.78.2.ph = phi i64 [ undef, %bb.ch ], [ undef, %bb.br ], [ undef, %bb.cf ], [ undef, %bb.cd ], [ %.sroa.8365.0.copyload.i, %bb.by ], [ undef, %bb.bt ], [ undef, %bb.bo ]
+  %.sroa.0.2.ph = phi i8 [ 0, %bb.ch ], [ 0, %bb.br ], [ 0, %bb.cf ], [ 0, %bb.cd ], [ %i.fa, %bb.by ], [ 0, %bb.bt ], [ 27, %bb.bo ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !1546
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !1546
   br label %.sink.split
@@ -1724,33 +1704,33 @@ thread-pre-split:                                 ; preds = %bb.cj
   br i1 %.not, label %bb.eh, label %bb.eb
 
 .sink.split:                                      ; preds = %bb.h, %bb.i, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i, %bb.z, %bb.av, %bb.ay, %bb.az, %bb.bc, %bb.ak, %bb.e, %bb.au, %bb.af, %bb.ab, %.thread143, %.thread151
-  %.sroa.0.4133.ph = phi i8 [ %.sroa.0.2.ph, %.thread151 ], [ %.sroa.0.0.ph, %.thread143 ], [ 4, %bb.h ], [ 0, %bb.i ], [ 2, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ 0, %bb.z ], [ 0, %bb.av ], [ 11, %bb.ay ], [ 0, %bb.az ], [ 12, %bb.bc ], [ 24, %bb.ak ], [ 0, %bb.e ], [ %.sroa.0.3, %bb.au ], [ 0, %bb.af ], [ 4, %bb.ab ]
-  %.sroa.50.3132.ph = phi i16 [ %.sroa.50.2.ph, %.thread151 ], [ %.sroa.50.0.ph, %.thread143 ], [ undef, %bb.h ], [ undef, %bb.i ], [ undef, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ undef, %bb.z ], [ undef, %bb.av ], [ undef, %bb.ay ], [ undef, %bb.az ], [ undef, %bb.bc ], [ undef, %bb.ak ], [ undef, %bb.e ], [ undef, %bb.au ], [ undef, %bb.af ], [ undef, %bb.ab ]
-  %.sroa.5061.4131.ph = phi i64 [ %.sroa.5061.2.ph, %.thread151 ], [ %.sroa.5061.0.ph, %.thread143 ], [ undef, %bb.h ], [ %i.ay, %bb.i ], [ undef, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ %.sroa.9538.0.ph.i, %bb.z ], [ %i.cq, %bb.av ], [ undef, %bb.ay ], [ %i.cu, %bb.az ], [ undef, %bb.bc ], [ %i.bx, %bb.ak ], [ %.sroa.9.0.ph.i, %bb.e ], [ %.sroa.5061.3, %bb.au ], [ %i.bp, %bb.af ], [ undef, %bb.ab ]
-  %.sroa.78.3130.ph = phi i64 [ %.sroa.78.2.ph.a, %.thread151 ], [ %.sroa.78.0.ph.a, %.thread143 ], [ 19, %bb.h ], [ 19, %bb.i ], [ 19, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ 19, %bb.z ], [ 19, %bb.av ], [ 19, %bb.ay ], [ 19, %bb.az ], [ 19, %bb.bc ], [ 19, %bb.ak ], [ 19, %bb.e ], [ 19, %bb.au ], [ 19, %bb.af ], [ 19, %bb.ab ]
-  %.sroa.70.3129.ph = phi ptr [ %.sroa.70.2.ph, %.thread151 ], [ %.sroa.70.0.ph, %.thread143 ], [ undef, %bb.h ], [ undef, %bb.i ], [ undef, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ null, %bb.z ], [ undef, %bb.av ], [ undef, %bb.ay ], [ undef, %bb.az ], [ undef, %bb.bc ], [ %i.cb, %bb.ak ], [ null, %bb.e ], [ undef, %bb.au ], [ undef, %bb.af ], [ undef, %bb.ab ]
+  %.sroa.50.sroa.0.3.ph = phi i16 [ %.sroa.50.sroa.0.2, %.thread151 ], [ %.sroa.50.sroa.0.1, %.thread143 ], [ undef, %bb.ab ], [ undef, %bb.af ], [ undef, %bb.au ], [ undef, %bb.e ], [ undef, %bb.ak ], [ undef, %bb.bc ], [ undef, %bb.az ], [ undef, %bb.ay ], [ undef, %bb.av ], [ undef, %bb.z ], [ undef, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ undef, %bb.i ], [ undef, %bb.h ]
+  %.sroa.0.4128.ph = phi i8 [ %.sroa.0.2.ph, %.thread151 ], [ %.sroa.0.0.ph, %.thread143 ], [ 4, %bb.ab ], [ 0, %bb.af ], [ %.sroa.0.3, %bb.au ], [ 0, %bb.e ], [ 24, %bb.ak ], [ 12, %bb.bc ], [ 0, %bb.az ], [ 11, %bb.ay ], [ 0, %bb.av ], [ 0, %bb.z ], [ 2, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ 0, %bb.i ], [ 4, %bb.h ]
+  %.sroa.5061.4131.ph = phi i64 [ %.sroa.78.2.ph, %.thread151 ], [ %.sroa.78.0.ph, %.thread143 ], [ 19, %bb.ab ], [ 19, %bb.af ], [ 19, %bb.au ], [ 19, %bb.e ], [ 19, %bb.ak ], [ 19, %bb.bc ], [ 19, %bb.az ], [ 19, %bb.ay ], [ 19, %bb.av ], [ 19, %bb.z ], [ 19, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ 19, %bb.i ], [ 19, %bb.h ]
+  %.sroa.70.3126.ph = phi ptr [ %.sroa.70.2.ph, %.thread151 ], [ %.sroa.70.0.ph, %.thread143 ], [ undef, %bb.ab ], [ undef, %bb.af ], [ undef, %bb.au ], [ null, %bb.e ], [ %i.cb, %bb.ak ], [ undef, %bb.bc ], [ undef, %bb.az ], [ undef, %bb.ay ], [ undef, %bb.av ], [ null, %bb.z ], [ undef, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ undef, %bb.i ], [ undef, %bb.h ]
+  %.sroa.5057.sroa.0.4125.ph = phi i64 [ %.sroa.78.2.ph.a, %.thread151 ], [ %.sroa.78.0.ph.a, %.thread143 ], [ undef, %bb.ab ], [ %i.bp, %bb.af ], [ %.sroa.5061.3, %bb.au ], [ %.sroa.9.0.ph.i, %bb.e ], [ %i.bx, %bb.ak ], [ undef, %bb.bc ], [ %i.cu, %bb.az ], [ undef, %bb.ay ], [ %i.cq, %bb.av ], [ %.sroa.9538.0.ph.i, %bb.z ], [ undef, %_RNvMNtCsksn9slvsHfS_10image_webp7decoderNtB2_13WebPRiffChunk9to_fourcc.exit.i ], [ %i.ay, %bb.i ], [ undef, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
   br label %bb.eb
 
 bb.eb:                                            ; preds = %.sink.split, %.loopexit158
-  %.sroa.0.4133 = phi i8 [ %.sroa.0.0.copyload52, %.loopexit158 ], [ %.sroa.0.4133.ph, %.sink.split ]
-  %.sroa.50.3132 = phi i16 [ %.sroa.50.0.copyload58, %.loopexit158 ], [ %.sroa.50.3132.ph, %.sink.split ]
-  %.sroa.5061.4131 = phi i64 [ %.sroa.5061.0.copyload65, %.loopexit158 ], [ %.sroa.5061.4131.ph, %.sink.split ]
-  %.sroa.78.3130 = phi i64 [ %.sroa.78.0.copyload76, %.loopexit158 ], [ %.sroa.78.3130.ph, %.sink.split ]
-  %.sroa.70.3129 = phi ptr [ %.sroa.70.0.copyload69, %.loopexit158 ], [ %.sroa.70.3129.ph, %.sink.split ]
+  %.sroa.50.sroa.0.3 = phi i16 [ %.sroa.50.0.copyload58, %.loopexit158 ], [ %.sroa.50.sroa.0.3.ph, %.sink.split ]
+  %.sroa.0.4128 = phi i8 [ %.sroa.0.0.copyload52, %.loopexit158 ], [ %.sroa.0.4128.ph, %.sink.split ]
+  %.sroa.5061.4131 = phi i64 [ %.sroa.78.0.copyload76, %.loopexit158 ], [ %.sroa.5061.4131.ph, %.sink.split ]
+  %.sroa.70.3126 = phi ptr [ %.sroa.70.0.copyload69, %.loopexit158 ], [ %.sroa.70.3126.ph, %.sink.split ]
+  %.sroa.5057.sroa.0.4125 = phi i64 [ %.sroa.5061.0.copyload65, %.loopexit158 ], [ %.sroa.5057.sroa.0.4125.ph, %.sink.split ]
   %.sroa.4118.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %.sroa.4118.0..sroa_idx, ptr noundef nonnull align 4 dereferenceable(5) %.sroa.40, i64 5, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.40)
   %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.sroa.0.4133, ptr %i.hw, align 8
+  store i8 %.sroa.0.4128, ptr %i.hw, align 8
   %.sroa.5119.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 14
-  store i16 %.sroa.50.3132, ptr %.sroa.5119.0..sroa_idx, align 2
+  store i16 %.sroa.50.sroa.0.3, ptr %.sroa.5119.0..sroa_idx, align 2
   %.sroa.6120.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %.sroa.5061.4131, ptr %.sroa.6120.0..sroa_idx, align 8
+  store i64 %.sroa.5057.sroa.0.4125, ptr %.sroa.6120.0..sroa_idx, align 8
   %.sroa.7121.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %.sroa.70.3129, ptr %.sroa.7121.0..sroa_idx, align 8
+  store ptr %.sroa.70.3126, ptr %.sroa.7121.0..sroa_idx, align 8
   %.sroa.8122.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store i64 %.sroa.78.3130, ptr %.sroa.8122.0..sroa_idx, align 8
+  store i64 %.sroa.5061.4131, ptr %.sroa.8122.0..sroa_idx, align 8
   store i64 -2, ptr %0, align 8
   %i.hx = load i64, ptr %i.ac, align 8, !range !213, !alias.scope !1585, !noundef !4
   %i.hy = icmp eq i64 %i.hx, -1

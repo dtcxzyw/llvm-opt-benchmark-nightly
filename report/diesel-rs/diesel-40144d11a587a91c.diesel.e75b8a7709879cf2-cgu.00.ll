@@ -204,7 +204,7 @@ _RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define void @_RNvMs0_NtNtCsjRvGck33osM_6diesel10connection19transaction_managerNtB5_29ValidTransactionManagerStatus24change_transaction_depth(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) initializes((0, 8)) %0, ptr noalias nofree noundef align 4 captures(none) dereferenceable(8) %1, i1 noundef zeroext %2) unnamed_addr #4 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 5 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 5 ; 3 uses
   %i.b = load i8, ptr %i.a, align 1, !range !121, !noundef !8
   %.not = icmp eq i8 %i.b, 2
   br i1 %.not, label %bb.c, label %bb.b
@@ -217,7 +217,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %2, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i64 1, ptr %1, align 4
+  store i32 1, ptr %1, align 4
+  %.sroa.48.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 4
+  store i8 0, ptr %.sroa.48.0..sroa_idx, align 4
+  store i8 0, ptr %i.a, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.h, %bb.i, %bb.g, %bb.d

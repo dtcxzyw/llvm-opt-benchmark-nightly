@@ -203,9 +203,8 @@ bb.g:                                             ; preds = %bb.f
           to label %_RINvNtCslNEiUQgeYIG_3syn5token10UnderscoreNtCsghEUimwObfx_11proc_macro24SpanEB4_.exit unwind label %bb.c
 
 _RINvNtCslNEiUQgeYIG_3syn5token10UnderscoreNtCsghEUimwObfx_11proc_macro24SpanEB4_.exit: ; preds = %bb.g
-  %.sroa.0.0.insert.ext = zext i32 %i.r to i64
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.0.0.insert.ext, ptr %i.s, align 8
+  store i32 %i.r, ptr %i.s, align 8
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x ptr> %i.n, ptr %.sroa.2.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8
@@ -253,9 +252,8 @@ bb.m:                                             ; preds = %bb.l, %bb.k
 bb.n:                                             ; preds = %bb.l
   %i.ae = call i32 @_RNvMsu_CsghEUimwObfx_11proc_macro2NtB5_5Punct4span(ptr nonnull align 4 %i.c)
   %i.af = call i32 @_RNvXs_NtCslNEiUQgeYIG_3syn4spanNtCsghEUimwObfx_11proc_macro24SpanINtB4_9IntoSpansABt_j1_E10into_spans(i32 %i.ae)
-  %.sroa.03.0.insert.ext = zext i32 %i.af to i64
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.03.0.insert.ext, ptr %i.ag, align 8
+  store i32 %i.af, ptr %i.ag, align 8
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store <2 x ptr> %i.aa, ptr %.sroa.24.0..sroa_idx, align 8
   store i64 0, ptr %0, align 8

@@ -204,6 +204,8 @@ bb.x:                                             ; preds = %bb.u
   store ptr %i.ay, ptr %.sroa.19, align 8, !alias.scope !178, !noalias !181
   %.sroa.19.8..sroa_idx699 = getelementptr inbounds nuw i8, ptr %.sroa.19, i64 8
   store i32 %i.ba, ptr %.sroa.19.8..sroa_idx699, align 8
+  %4 = zext i32 %i.bb to i64
+  %5 = shl nuw i64 %4, 32
   br label %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit
 
 bb.y:                                             ; preds = %bb.d, %bb.c
@@ -267,7 +269,7 @@ _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotat
   %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload = phi ptr [ %i.ay, %bb.x ], [ %.sroa.19.0..sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload.pre, %bb.ae ], [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser29parse_tz_annotation_iana_name.exit.i ] ; 2 uses
   %.sroa.39.0 = phi i64 [ %i.bg, %bb.x ], [ %i.bq, %bb.ae ], [ %3, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser29parse_tz_annotation_iana_name.exit.i ] ; 2 uses
   %.sroa.33.0 = phi ptr [ %i.bh, %bb.x ], [ %i.br, %bb.ae ], [ %2, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser29parse_tz_annotation_iana_name.exit.i ] ; 2 uses
-  %.sroa.31.0 = phi i32 [ %i.bb, %bb.x ], [ undef, %bb.ae ], [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser29parse_tz_annotation_iana_name.exit.i ] ; 2 uses
+  %.sroa.31.0 = phi i64 [ %5, %bb.x ], [ 0, %bb.ae ], [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser29parse_tz_annotation_iana_name.exit.i ] ; 2 uses
   %.sroa.1859.0 = phi i32 [ undef, %bb.x ], [ %i.bi, %bb.ae ], [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser29parse_tz_annotation_iana_name.exit.i ] ; 2 uses
   %.sroa.0.0 = phi i8 [ 0, %bb.x ], [ 1, %bb.ae ], [ 2, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser29parse_tz_annotation_iana_name.exit.i ] ; 2 uses
   %.sroa.19.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.19, i64 8
@@ -281,7 +283,7 @@ _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotat
   %.sroa.0.0377 = phi i8 [ 2, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.0.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ] ; 2 uses
   %.sroa.15.0376 = phi i8 [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.029.0.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ] ; 2 uses
   %.sroa.1859.0375 = phi i32 [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.1859.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ] ; 2 uses
-  %.sroa.31.0374 = phi i32 [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.31.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ] ; 2 uses
+  %.sroa.31.0371 = phi i64 [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.31.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ] ; 2 uses
   %.sroa.33.0373 = phi ptr [ %2, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.33.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ]
   %.sroa.39.0372 = phi i64 [ %3, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.39.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ]
   %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload371 = phi ptr [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread360 ], [ %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ] ; 2 uses
@@ -582,21 +584,21 @@ _RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit: 
   %.sroa.0.0358 = phi i8 [ %.sroa.0.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ 2, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.0.0377, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ], [ %.sroa.0.0377, %.lr.ph ]
   %.sroa.15.0357 = phi i8 [ %.sroa.029.0.i, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.15.0376, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ], [ %.sroa.15.0376, %.lr.ph ]
   %.sroa.1859.0356 = phi i32 [ %.sroa.1859.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.1859.0375, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ], [ %.sroa.1859.0375, %.lr.ph ]
-  %.sroa.31.0355 = phi i32 [ %.sroa.31.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.31.0374, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ], [ %.sroa.31.0374, %.lr.ph ]
+  %.sroa.31.0352 = phi i64 [ %.sroa.31.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.31.0371, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ], [ %.sroa.31.0371, %.lr.ph ]
   %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload354 = phi ptr [ %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ undef, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload371, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ], [ %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload371, %.lr.ph ]
   %.sroa.029.0.lcssa = phi ptr [ %.sroa.33.0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ %2, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.029.0214, %.lr.ph ], [ %i.eh, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ]
   %.sroa.431.0.lcssa = phi i64 [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit ], [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser26parse_time_zone_annotation.exit.thread ], [ %.sroa.431.0215, %.lr.ph ], [ 0, %_RNvMs2_NtNtCsa9sSWSfjDbm_4jiff3fmt7rfc9557NtB5_6Parser16parse_annotation.exit ]
+  %.sroa.423.sroa.0.0.insert.ext = zext i32 %.sroa.19.8..sroa.19.8..sroa.19.16..sroa.616.0.copyload56359 to i64
+  %.sroa.423.sroa.0.0.insert.insert = or disjoint i64 %.sroa.31.0352, %.sroa.423.sroa.0.0.insert.ext
   store i8 %.sroa.0.0358, ptr %0, align 8
-  %.sroa.012.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.sroa.15.0357, ptr %.sroa.012.sroa.4.0..sroa_idx, align 1
-  %.sroa.012.sroa.4.sroa.5.0..sroa.012.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %.sroa.1859.0356, ptr %.sroa.012.sroa.4.sroa.5.0..sroa.012.sroa.4.0..sroa_idx.sroa_idx, align 4
-  %.sroa.012.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload354, ptr %.sroa.012.sroa.5.0..sroa_idx, align 8
-  %.sroa.012.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i32 %.sroa.19.8..sroa.19.8..sroa.19.16..sroa.616.0.copyload56359, ptr %.sroa.012.sroa.6.0..sroa_idx, align 8
-  %.sroa.012.sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
-  store i32 %.sroa.31.0355, ptr %.sroa.012.sroa.6.0..sroa_idx.sroa_idx, align 4
+  %.sroa.012.sroa.4.sroa.5.0..sroa.012.sroa.4.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
+  store i8 %.sroa.15.0357, ptr %.sroa.012.sroa.4.sroa.5.0..sroa.012.sroa.4.0..sroa_idx.sroa_idx, align 1
+  %.sroa.012.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %.sroa.1859.0356, ptr %.sroa.012.sroa.5.0..sroa_idx, align 4
+  %.sroa.012.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %.sroa.19.0..sroa.19.0..sroa.19.8..sroa.515.0.copyload354, ptr %.sroa.012.sroa.6.0..sroa_idx, align 8
+  %.sroa.012.sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %.sroa.423.sroa.0.0.insert.insert, ptr %.sroa.012.sroa.6.0..sroa_idx.sroa_idx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %.sroa.029.0.lcssa, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32

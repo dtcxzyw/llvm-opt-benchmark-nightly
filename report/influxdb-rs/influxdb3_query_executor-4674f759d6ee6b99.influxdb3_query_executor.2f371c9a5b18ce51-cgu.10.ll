@@ -202,11 +202,10 @@ bb.ad:                                            ; preds = %_RINvNtCs4NRVxsYgnA
 
 bb.ae:                                            ; preds = %bb.ad
   %.sroa.1248.0..sroa_idx49 = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %.sroa.1248.0.copyload50 = load i64, ptr %.sroa.1248.0..sroa_idx49, align 8, !alias.scope !11101
+  %.sroa.1248.sroa.0.0.copyload = load ptr, ptr %.sroa.1248.0..sroa_idx49, align 8, !alias.scope !11101 ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.bt = ptrtoint ptr %i.bs to i64               ; 4 uses
   %i.bu = inttoptr i64 %i.bq to ptr               ; 4 uses
-  %3 = inttoptr i64 %.sroa.1248.0.copyload50 to ptr ; 4 uses
   %i.bv = icmp eq ptr %i.bs, null
   br i1 %i.bv, label %bb.af, label %bb.ag
 
@@ -223,7 +222,7 @@ bb.ag:                                            ; preds = %bb.ae
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store i64 %i.bt, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.655.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  store ptr %3, ptr %.sroa.655.0..sroa_idx, align 8
+  store ptr %.sroa.1248.sroa.0.0.copyload, ptr %.sroa.655.0..sroa_idx, align 8
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsuxFxh2mtOX_5bytes5bytes5BytesECs43kcu4yvms7_24influxdb3_query_executor.exit25
 
 bb.ah:                                            ; preds = %bb.af
@@ -231,7 +230,7 @@ bb.ah:                                            ; preds = %bb.af
   store i8 %i.bz, ptr %i.bw, align 8
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bn, i64 32
   %i.cb = load ptr, ptr %i.ca, align 8, !noalias !11102, !nonnull !4, !noundef !4
-  invoke void %i.cb(ptr noundef %3, ptr noundef %i.bu, i64 noundef %i.bt)
+  invoke void %i.cb(ptr noundef %.sroa.1248.sroa.0.0.copyload, ptr noundef %i.bu, i64 noundef %i.bt)
           to label %._RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsuxFxh2mtOX_5bytes5bytes5BytesECs43kcu4yvms7_24influxdb3_query_executor.exit_crit_edge unwind label %bb.aj, !inline_history !11107
 
 ._RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsuxFxh2mtOX_5bytes5bytes5BytesECs43kcu4yvms7_24influxdb3_query_executor.exit_crit_edge: ; preds = %bb.ah
@@ -266,7 +265,7 @@ bb.am:                                            ; preds = %bb.ai
           cleanup
   %i.ck = getelementptr inbounds nuw i8, ptr %i.bn, i64 32
   %i.cl = load ptr, ptr %i.ck, align 8, !noalias !11108, !nonnull !4, !noundef !4
-  invoke void %i.cl(ptr noundef %3, ptr noundef %i.bu, i64 noundef %i.bt)
+  invoke void %i.cl(ptr noundef %.sroa.1248.sroa.0.0.copyload, ptr noundef %i.bu, i64 noundef %i.bt)
           to label %.body unwind label %bb.s, !inline_history !11107
 
 bb.an:                                            ; preds = %bb.ai
@@ -279,7 +278,7 @@ bb.an:                                            ; preds = %bb.ai
   store ptr null, ptr %i.a, align 8
   %i.cq = getelementptr inbounds nuw i8, ptr %i.bn, i64 32
   %i.cr = load ptr, ptr %i.cq, align 8, !noalias !11113, !nonnull !4, !noundef !4
-  invoke void %i.cr(ptr noundef %3, ptr noundef %i.bu, i64 noundef %i.bt)
+  invoke void %i.cr(ptr noundef %.sroa.1248.sroa.0.0.copyload, ptr noundef %i.bu, i64 noundef %i.bt)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsuxFxh2mtOX_5bytes5bytes5BytesECs43kcu4yvms7_24influxdb3_query_executor.exit25 unwind label %bb.aj, !inline_history !11107
 
 bb.ao:                                            ; preds = %bb.ad
@@ -399,7 +398,7 @@ bb.m:                                             ; preds = %bb.k
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8
+  %.sroa.7.sroa.0.0.copyload = load ptr, ptr %.sroa.7.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %.val = load ptr, ptr %i.r, align 8             ; 5 uses
   %i.v = getelementptr i8, ptr %1, i64 24
@@ -447,10 +446,9 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc
 
 bb.s:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCscdodAO9FK5_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtNtCsuxFxh2mtOX_5bytes5bytes5BytesNtNtCscFUs5937I7W_16wasmtime_wasi_io7streams11StreamErrorENtNtB4_6marker4SendEL_EEECs43kcu4yvms7_24influxdb3_query_executor.exit
   %i.ak = inttoptr i64 %.sroa.325.0.copyload to ptr
-  %3 = inttoptr i64 %.sroa.7.0.copyload to ptr
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.024.0.copyload, i64 32
   %i.am = load ptr, ptr %i.al, align 8, !noalias !11127, !nonnull !4, !noundef !4
-  invoke void %i.am(ptr noundef %3, ptr noundef %i.ak, i64 noundef %i.aj)
+  invoke void %i.am(ptr noundef %.sroa.7.sroa.0.0.copyload, ptr noundef %i.ak, i64 noundef %i.aj)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsuxFxh2mtOX_5bytes5bytes5BytesECs43kcu4yvms7_24influxdb3_query_executor.exit9 unwind label %bb.t, !inline_history !11107
 
 .body:                                            ; preds = %bb.r, %bb.q, %bb.i, %bb.d, %bb.t

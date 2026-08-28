@@ -205,7 +205,7 @@ bb.bg:                                            ; preds = %_RINvNtCsj6eKBz9Db1
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMNtNtCsa5QsYiPB8Gl_5image6codecs4tiffINtB2_11TiffDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE3newB6_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([512 x i8]) align 8 captures(none) dereferenceable(512) %0, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [64 x i8], align 8                ; 7 uses
+  %i.a = alloca [64 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 4 uses
   %i.d = alloca [64 x i8], align 8                ; 4 uses
@@ -287,11 +287,12 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.087.0.copyload = load i32, ptr %i.u, align 8 ; 4 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
+  %2 = trunc i32 %.sroa.087.0.copyload to i8
   %.sroa.492.0.extract.shift = lshr i32 %.sroa.087.0.copyload, 8
   %.sroa.492.0.extract.trunc = trunc i32 %.sroa.492.0.extract.shift to i8 ; 14 uses
   %.sroa.593.0.extract.shift = lshr i32 %.sroa.087.0.copyload, 16
   %.sroa.593.0.extract.trunc = trunc nuw i32 %.sroa.593.0.extract.shift to i16
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RINvMs6_NtCs53gkmrwjETj_4tiff7decoderINtB6_7DecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21find_tag_unsigned_vectECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(464) %i.k, i16 noundef 339, i16 undef)
           to label %bb.h unwind label %bb.d
@@ -336,8 +337,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtCs4wP2HXfJTCR_5alloc3vec9into_iter8IntoItertEECsa5QsYiPB8Gl_5image.exit229, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  %trunc = trunc i32 %.sroa.087.0.copyload to i8
-  switch i8 %trunc, label %bb.n [
+  switch i8 %2, label %bb.n [
     i8 0, label %bb.o
     i8 1, label %bb.p
     i8 2, label %bb.u
@@ -646,23 +646,19 @@ bb.at:                                            ; preds = %bb.i
   br label %bb.ar
 
 bb.au:                                            ; preds = %bb.f
-  %.sroa.026.0.copyload = load i8, ptr %i.a, align 8
-  %.sroa.628.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %.sroa.628.sroa.0.0.copyload = load i8, ptr %.sroa.628.0..sroa_idx, align 1
-  %.sroa.628.sroa.5.0..sroa.628.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %.sroa.628.sroa.5.0.copyload = load i32, ptr %.sroa.628.sroa.5.0..sroa.628.0..sroa_idx.sroa_idx, align 2
-  %.sroa.831.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  %.sroa.8107.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 14
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(58) %.sroa.8107.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(58) %.sroa.831.0..sroa_idx, i64 58, i1 false)
+  %.sroa.628.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %.sroa.628.sroa.8.0.copyload = load i16, ptr %.sroa.628.0..sroa_idx, align 4
+  %.sroa.628.sroa.5.0..sroa.628.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 6
+  %.sroa.8113.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 14
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(58) %.sroa.8113.0..sroa_idx, ptr noundef nonnull align 2 dereferenceable(58) %.sroa.628.sroa.5.0..sroa.628.0..sroa_idx.sroa_idx, i64 58, i1 false)
+  %.sroa.8107.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load <4 x i8>, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %.sroa.026.0.copyload, ptr %2, align 8
-  %.sroa.4103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %.sroa.628.sroa.0.0.copyload, ptr %.sroa.4103.0..sroa_idx, align 1
-  %.sroa.5104.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i32 %.sroa.628.sroa.5.0.copyload, ptr %.sroa.5104.0..sroa_idx, align 2
+  store <4 x i8> %3, ptr %.sroa.8107.0..sroa_idx, align 8
+  %.sroa.5104.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i16 %.sroa.628.sroa.8.0.copyload, ptr %.sroa.5104.0..sroa_idx, align 4
   store i64 -1, ptr %0, align 8
   br label %bb.an
 
@@ -1065,14 +1061,16 @@ bb.a:
   %.sroa.55 = alloca [43 x i8], align 1           ; 22 uses
   %.sroa.9.sroa.20 = alloca [27 x i8], align 1    ; 9 uses
   %i.t = alloca [96 x i8], align 8                ; 26 uses
-  %i.u = alloca [40 x i8], align 8                ; 5 uses
-  %i.v = alloca [64 x i8], align 8                ; 7 uses
+  %i.u = alloca [40 x i8], align 8                ; 6 uses
+  %i.v = alloca [64 x i8], align 8                ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @_RNvYINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShENtNtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoder12HeaderReader19read_magic_constantBV_(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.v, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
   %i.w = load i8, ptr %i.v, align 8, !range !12, !noundef !4 ; 2 uses
   %.not = icmp eq i8 %i.w, -1
-  %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 1
-  %.sroa.029.0.copyload = load i16, ptr %i.x, align 1 ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.v, i64 1
+  %.sroa.033.0.copyload = load i8, ptr %2, align 1 ; 3 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 2
+  %.sroa.434.0.copyload = load i8, ptr %i.x, align 2 ; 3 uses
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1083,20 +1081,19 @@ bb.b:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %i.w, ptr %i.y, align 8
   %.sroa.437.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i16 %.sroa.029.0.copyload, ptr %.sroa.437.0..sroa_idx, align 1
+  store i8 %.sroa.033.0.copyload, ptr %.sroa.437.0..sroa_idx, align 1
+  %.sroa.545.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
+  store i8 %.sroa.434.0.copyload, ptr %.sroa.545.0..sroa_idx, align 2
   store i64 -2, ptr %0, align 8
   br label %bb.ak
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v)
-  %2 = and i16 %.sroa.029.0.copyload, 255
-  %i.z = icmp eq i16 %2, 80
+  %i.z = icmp eq i8 %.sroa.033.0.copyload, 80
   br i1 %i.z, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %.sroa.3.0.extract.shift = lshr i16 %.sroa.029.0.copyload, 8
-  %.sroa.3.0.extract.trunc = trunc nuw i16 %.sroa.3.0.extract.shift to i8
-  switch i8 %.sroa.3.0.extract.trunc, label %bb.e [
+  switch i8 %.sroa.434.0.copyload, label %bb.e [
     i8 49, label %bb.t
     i8 50, label %bb.w
     i8 51, label %bb.ab
@@ -1109,7 +1106,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
   %i.aa = getelementptr inbounds nuw i8, ptr %i.u, i64 1
-  store i16 %.sroa.029.0.copyload, ptr %i.aa, align 1
+  store i8 %.sroa.033.0.copyload, ptr %i.aa, align 1
+  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 2
+  store i8 %.sroa.434.0.copyload, ptr %.sroa.3.0..sroa_idx, align 2
   store i8 0, ptr %i.u, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @_RNvXs_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderNtNtBa_5error10ImageErrorINtNtCsj6eKBz9Db1c_4core7convert4FromNtB4_12DecoderErrorE4from(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %i.ab, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.u)
@@ -1260,12 +1259,12 @@ bb.s:                                             ; preds = %bb.l
   unreachable
 
 _RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit: ; preds = %bb.j, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %bb.n, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i, %bb.r
+  %.sroa.34.sroa.0.0 = phi i16 [ undef, %bb.r ], [ %.sroa.34.10.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.9.copyload, %bb.j ]
   %.sroa.40.sroa.19.sroa.0.1.in.in = phi i64 [ %.sroa.40.24.copyload99, %bb.r ], [ %.sroa.40.10.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %.sroa.40.10.copyload, %bb.n ], [ %.sroa.40.10.copyload, %bb.n ], [ %.sroa.40.10.copyload, %bb.n ], [ %.sroa.40.10.copyload, %bb.n ], [ %.sroa.40.10.copyload, %bb.n ], [ %.sroa.40.10.copyload, %bb.n ], [ %.sroa.40.10.copyload, %bb.n ], [ %.sroa.40.9.copyload, %bb.j ] ; 3 uses
   %.sroa.61.1 = phi i8 [ %i.aj, %bb.r ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ undef, %bb.n ], [ undef, %bb.n ], [ undef, %bb.n ], [ undef, %bb.n ], [ undef, %bb.n ], [ undef, %bb.n ], [ undef, %bb.n ], [ undef, %bb.j ]
   %.sroa.54.1 = phi i8 [ %.sroa.54.24.copyload124, %bb.r ], [ %.sroa.54.10.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %.sroa.54.10.copyload, %bb.n ], [ %.sroa.54.10.copyload, %bb.n ], [ %.sroa.54.10.copyload, %bb.n ], [ %.sroa.54.10.copyload, %bb.n ], [ %.sroa.54.10.copyload, %bb.n ], [ %.sroa.54.10.copyload, %bb.n ], [ %.sroa.54.10.copyload, %bb.n ], [ %.sroa.54.9.copyload, %bb.j ]
   %.sroa.49.1 = phi i32 [ %.sroa.49.24.copyload104, %bb.r ], [ %.sroa.49.10.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %.sroa.49.10.copyload, %bb.n ], [ %.sroa.49.10.copyload, %bb.n ], [ %.sroa.49.10.copyload, %bb.n ], [ %.sroa.49.10.copyload, %bb.n ], [ %.sroa.49.10.copyload, %bb.n ], [ %.sroa.49.10.copyload, %bb.n ], [ %.sroa.49.10.copyload, %bb.n ], [ %.sroa.49.9.copyload, %bb.j ]
   %.sroa.39.1 = phi i32 [ undef, %bb.r ], [ %.sroa.39.10.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %.sroa.39.10.copyload, %bb.n ], [ %.sroa.39.10.copyload, %bb.n ], [ %.sroa.39.10.copyload, %bb.n ], [ %.sroa.39.10.copyload, %bb.n ], [ %.sroa.39.10.copyload, %bb.n ], [ %.sroa.39.10.copyload, %bb.n ], [ %.sroa.39.10.copyload, %bb.n ], [ %.sroa.39.9.copyload, %bb.j ]
-  %.sroa.34.1 = phi i16 [ undef, %bb.r ], [ %.sroa.34.10.copyload, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.10.copyload, %bb.n ], [ %.sroa.34.9.copyload, %bb.j ]
   %.sroa.27.1 = phi i8 [ undef, %bb.r ], [ %i.aj, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %i.aj, %bb.n ], [ %i.aj, %bb.n ], [ %i.aj, %bb.n ], [ %i.aj, %bb.n ], [ %i.aj, %bb.n ], [ %i.aj, %bb.n ], [ %i.aj, %bb.n ], [ %.sroa.27.9.copyload, %bb.j ]
   %.sroa.18.1 = phi i8 [ undef, %bb.r ], [ %i.ah, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ %i.ah, %bb.n ], [ %i.ah, %bb.n ], [ %i.ah, %bb.n ], [ %i.ah, %bb.n ], [ %i.ah, %bb.n ], [ %i.ah, %bb.n ], [ %i.ah, %bb.n ], [ %i.ac, %bb.j ]
   %.sroa.0.1 = phi i64 [ -1, %bb.r ], [ -2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCs4wP2HXfJTCR_5alloc6string6StringECsa5QsYiPB8Gl_5image.exit.i.i.i.i ], [ -2, %bb.n ], [ -2, %bb.n ], [ -2, %bb.n ], [ -2, %bb.n ], [ -2, %bb.n ], [ -2, %bb.n ], [ -2, %bb.n ], [ -2, %bb.j ]
@@ -1332,13 +1331,13 @@ bb.v:                                             ; preds = %bb.t
   br label %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit
 
 _RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit: ; preds = %bb.u, %bb.v
+  %.sroa.34.sroa.0.1 = phi i16 [ undef, %bb.v ], [ %.sroa.34.9.copyload77, %bb.u ]
   %.sroa.40.sroa.19.sroa.0.2 = phi i24 [ 0, %bb.v ], [ %.sroa.40.sroa.19.0.extract.trunc148.a, %bb.u ]
   %.sroa.40.sroa.20.2 = phi i32 [ -2147483648, %bb.v ], [ %.sroa.40.sroa.20.0.extract.trunc162.a, %bb.u ]
   %.sroa.40.sroa.0.2 = phi i8 [ 6, %bb.v ], [ %.sroa.40.sroa.0.0.extract.trunc135.a, %bb.u ]
   %.sroa.54.2 = phi i8 [ undef, %bb.v ], [ %.sroa.54.24.copyload, %bb.u ]
   %.sroa.49.2 = phi i32 [ %.sroa.49.32.copyload106, %bb.v ], [ %.sroa.49.24.copyload, %bb.u ]
   %.sroa.39.2 = phi i32 [ undef, %bb.v ], [ %.sroa.39.9.copyload93, %bb.u ]
-  %.sroa.34.2 = phi i16 [ undef, %bb.v ], [ %.sroa.34.9.copyload77, %bb.u ]
   %.sroa.27.2 = phi i8 [ undef, %bb.v ], [ %.sroa.27.9.copyload73, %bb.u ]
   %.sink.i = phi i64 [ -1, %bb.v ], [ -2, %bb.u ]
   %i.ay = phi <2 x i32> [ undef, %bb.v ], [ %i.av, %bb.u ]
@@ -1442,6 +1441,7 @@ bb.aa:                                            ; preds = %bb.y
   br label %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit
 
 _RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit: ; preds = %bb.x, %bb.z, %bb.aa
+  %.sroa.34.sroa.0.2 = phi i16 [ undef, %bb.aa ], [ %.sroa.34.10.copyload79, %bb.z ], [ %.sroa.34.9.copyload78, %bb.x ]
   %.sroa.40.sroa.19.sroa.0.3 = phi i24 [ 0, %bb.aa ], [ %.sroa.40.sroa.19.0.extract.trunc144, %bb.z ], [ %.sroa.40.sroa.19.sroa.0.0.copyload167, %bb.x ]
   %.sroa.40.sroa.20.3 = phi i32 [ -2147483648, %bb.aa ], [ %.sroa.40.sroa.20.0.extract.trunc158, %bb.z ], [ %.sroa.40.sroa.20.4.copyload, %bb.x ]
   %.sroa.40.sroa.0.3 = phi i8 [ 7, %bb.aa ], [ %.sroa.40.sroa.0.0.extract.trunc133, %bb.z ], [ %.sroa.848.0.copyload.i, %bb.x ]
@@ -1449,7 +1449,6 @@ _RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCs
   %.sroa.54.3 = phi i8 [ %i.bf, %bb.aa ], [ %.sroa.54.10.copyload122, %bb.z ], [ %.sroa.54.28.copyload, %bb.x ]
   %.sroa.49.3 = phi i32 [ %i.bg, %bb.aa ], [ %.sroa.49.10.copyload102, %bb.z ], [ %.sroa.49.28.copyload, %bb.x ]
   %.sroa.39.3 = phi i32 [ undef, %bb.aa ], [ %.sroa.39.10.copyload94, %bb.z ], [ %.sroa.747.0.copyload.i, %bb.x ]
-  %.sroa.34.3 = phi i16 [ undef, %bb.aa ], [ %.sroa.34.10.copyload79, %bb.z ], [ %.sroa.34.9.copyload78, %bb.x ]
   %.sroa.27.3 = phi i8 [ undef, %bb.aa ], [ %i.bl, %bb.z ], [ %.sroa.27.9.copyload74, %bb.x ]
   %.sroa.18.3 = phi i8 [ undef, %bb.aa ], [ %i.bj, %bb.z ], [ %i.ba, %bb.x ]
   %.sroa.0.2 = phi i64 [ -1, %bb.aa ], [ -2, %bb.z ], [ -2, %bb.x ]
@@ -1550,6 +1549,7 @@ bb.af:                                            ; preds = %bb.ad
   br label %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit
 
 _RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit: ; preds = %bb.ac, %bb.ae, %bb.af
+  %.sroa.34.sroa.0.3 = phi i16 [ undef, %bb.af ], [ %.sroa.34.10.copyload80, %bb.ae ], [ %.sroa.34.9.copyload76, %bb.ac ]
   %.sroa.40.sroa.19.sroa.0.4 = phi i24 [ 0, %bb.af ], [ %.sroa.40.sroa.19.0.extract.trunc146, %bb.ae ], [ %.sroa.40.sroa.19.sroa.0.0.copyload, %bb.ac ]
   %.sroa.40.sroa.20.4 = phi i32 [ -2147483648, %bb.af ], [ %.sroa.40.sroa.20.0.extract.trunc160, %bb.ae ], [ %.sroa.40.sroa.20.4.copyload165, %bb.ac ]
   %.sroa.40.sroa.0.4 = phi i8 [ 8, %bb.af ], [ %.sroa.40.sroa.0.0.extract.trunc134, %bb.ae ], [ %.sroa.40.sroa.0.0.copyload, %bb.ac ]
@@ -1557,7 +1557,6 @@ _RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCs
   %.sroa.54.4 = phi i8 [ %.sroa.54.32.copyload, %bb.af ], [ %.sroa.54.10.copyload123, %bb.ae ], [ %.sroa.54.28.copyload125, %bb.ac ]
   %.sroa.49.4 = phi i32 [ %.sroa.49.32.copyload, %bb.af ], [ %.sroa.49.10.copyload103, %bb.ae ], [ %.sroa.49.28.copyload105, %bb.ac ]
   %.sroa.39.4 = phi i32 [ undef, %bb.af ], [ %.sroa.39.10.copyload95, %bb.ae ], [ %.sroa.39.9.copyload92, %bb.ac ]
-  %.sroa.34.4 = phi i16 [ undef, %bb.af ], [ %.sroa.34.10.copyload80, %bb.ae ], [ %.sroa.34.9.copyload76, %bb.ac ]
   %.sroa.27.4 = phi i8 [ undef, %bb.af ], [ %i.bw, %bb.ae ], [ %.sroa.27.9.copyload72, %bb.ac ]
   %.sroa.18.4 = phi i8 [ undef, %bb.af ], [ %i.bu, %bb.ae ], [ %i.bq, %bb.ac ]
   %.sroa.0.3 = phi i64 [ -1, %bb.af ], [ -2, %bb.ae ], [ -2, %bb.ac ]
@@ -1569,6 +1568,7 @@ _RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCs
   br label %bb.ag
 
 bb.ag:                                            ; preds = %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit
+  %.sroa.34.sroa.0.4 = phi i16 [ %.sroa.34.sroa.0.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.34.sroa.0.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.34.sroa.0.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.34.sroa.0.0, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ] ; 2 uses
   %.sroa.40.sroa.19.sroa.0.0 = phi i24 [ %.sroa.40.sroa.19.sroa.0.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.40.sroa.19.sroa.0.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.40.sroa.19.sroa.0.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.40.sroa.19.sroa.0.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ]
   %.sroa.40.sroa.20.0 = phi i32 [ %.sroa.40.sroa.20.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.40.sroa.20.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.40.sroa.20.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.40.sroa.20.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ]
   %.sroa.40.sroa.0.0 = phi i8 [ %.sroa.40.sroa.0.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.40.sroa.0.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.40.sroa.0.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.40.sroa.0.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ]
@@ -1576,7 +1576,6 @@ bb.ag:                                            ; preds = %_RNvMs3_NtNtNtCsa5Q
   %.sroa.54.0 = phi i8 [ %.sroa.54.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.54.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.54.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.54.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ] ; 2 uses
   %i.cd = phi i32 [ %.sroa.49.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.49.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.49.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.49.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ] ; 4 uses
   %.sroa.39.0 = phi i32 [ %.sroa.39.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.39.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.39.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.39.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ] ; 2 uses
-  %.sroa.34.0 = phi i16 [ %.sroa.34.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.34.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.34.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.34.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ] ; 2 uses
   %.sroa.27.0 = phi i8 [ %.sroa.27.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.27.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.27.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.27.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ] ; 2 uses
   %.sroa.18.0 = phi i8 [ %i.at, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.18.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.18.4, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.18.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ] ; 2 uses
   %.sroa.0.0 = phi i64 [ %.sink.i, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_bitmap_headerBb_.exit ], [ %.sroa.0.2, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE19read_graymap_headerBb_.exit ], [ %.sroa.0.3, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE18read_pixmap_headerBb_.exit ], [ %.sroa.0.1, %_RNvMs3_NtNtNtCsa5QsYiPB8Gl_5image6codecs3pnm7decoderINtB5_10PnmDecoderINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEE21read_arbitrary_headerBb_.exit ]
@@ -1602,7 +1601,7 @@ bb.ah:                                            ; preds = %bb.ag
   %.sroa.4226.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
   store i8 %.sroa.27.0, ptr %.sroa.4226.0..sroa_idx, align 1
   %.sroa.5227.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i16 %.sroa.34.0, ptr %.sroa.5227.0..sroa_idx, align 2
+  store i16 %.sroa.34.sroa.0.4, ptr %.sroa.5227.0..sroa_idx, align 2
   %.sroa.6228.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store <2 x i32> %i.ce, ptr %.sroa.6228.0..sroa_idx, align 4
   %.sroa.8230.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -1632,7 +1631,7 @@ bb.ah:                                            ; preds = %bb.ag
   %.sroa.417.sroa.4.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 9
   store i8 %.sroa.27.0, ptr %.sroa.417.sroa.4.0..sroa.417.0..sroa_idx.sroa_idx, align 1
   %.sroa.417.sroa.5.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 10
-  store i16 %.sroa.34.0, ptr %.sroa.417.sroa.5.0..sroa.417.0..sroa_idx.sroa_idx, align 2
+  store i16 %.sroa.34.sroa.0.4, ptr %.sroa.417.sroa.5.0..sroa.417.0..sroa_idx.sroa_idx, align 2
   %.sroa.417.sroa.6.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 12
   store <2 x i32> %i.ce, ptr %.sroa.417.sroa.6.0..sroa.417.0..sroa_idx.sroa_idx, align 4
   %.sroa.417.sroa.8.0..sroa.417.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 20
@@ -2035,7 +2034,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 %.sroa.5.0.copyload, ptr %.sroa.8.8..sroa_idx, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.b, %bb.bg, %bb.aw, %bb.am, %bb.ac, %bb.s, %bb.i
+bb.c:                                             ; preds = %bb.bg, %bb.aw, %bb.am, %bb.ac, %bb.s, %bb.i, %bb.h, %bb.g, %bb.f, %bb.b
   ret void
 
 bb.d:                                             ; preds = %bb.bk, %bb.ba, %bb.aq, %bb.ag, %bb.w, %bb.m
@@ -2438,15 +2437,15 @@ default.unreachable:                              ; preds = %_RINvNtCsj6eKBz9Db1
   br label %bb.d
 
 .body.i:                                          ; preds = %bb.ej, %bb.ef, %bb.eb, %bb.dx, %bb.dt, %bb.dp, %bb.dl, %bb.dh, %bb.da, %bb.cw, %bb.co, %.body122.i, %bb.bx, %bb.br, %bb.bk, %bb.bb, %bb.aj, %bb.b
-  %.sroa.052.0.i = phi i1 [ false, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.052.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.049.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ false, %bb.ef ], [ %.sroa.049.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.046.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ false, %bb.eb ], [ true, %bb.ef ], [ %.sroa.046.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.043.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ false, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.043.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.040.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ false, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.040.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.037.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ false, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.037.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.034.0.i = phi i1 [ true, %bb.ej ], [ false, %bb.co ], [ false, %.body122.i ], [ false, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.034.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.031.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ false, %bb.da ], [ false, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.031.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
-  %.sroa.055.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ false, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.055.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.052.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ false, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.053.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.049.0.i = phi i1 [ false, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.052.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.046.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ false, %bb.ef ], [ %.sroa.049.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.043.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ false, %bb.eb ], [ true, %bb.ef ], [ %.sroa.046.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.040.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ false, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.043.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.037.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ false, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.040.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.034.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ false, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.037.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.031.0.i = phi i1 [ true, %bb.ej ], [ false, %bb.co ], [ false, %.body122.i ], [ false, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.034.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
+  %.sroa.055.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ false, %bb.da ], [ false, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ true, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.031.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
   %.sroa.058.0.i = phi i1 [ true, %bb.ej ], [ true, %bb.co ], [ true, %.body122.i ], [ true, %bb.bx ], [ true, %bb.da ], [ true, %bb.cw ], [ true, %bb.dh ], [ true, %bb.dl ], [ true, %bb.dp ], [ false, %bb.dt ], [ true, %bb.dx ], [ true, %bb.eb ], [ true, %bb.ef ], [ %.sroa.058.1.i, %bb.b ], [ true, %bb.br ], [ true, %bb.bk ], [ true, %bb.bb ], [ true, %bb.aj ]
   %.pn80.i = phi { ptr, i32 } [ %i.ld, %bb.ej ], [ %i.gg, %bb.co ], [ %.pn.i, %.body122.i ], [ %i.ep, %bb.bx ], [ %i.hx, %bb.da ], [ %i.hr, %bb.cw ], [ %i.jh, %bb.dh ], [ %i.jo, %bb.dl ], [ %i.jv, %bb.dp ], [ %i.kc, %bb.dt ], [ %i.kj, %bb.dx ], [ %i.kp, %bb.eb ], [ %i.kw, %bb.ef ], [ %i.az, %bb.b ], [ %i.ed, %bb.br ], [ %i.ds, %bb.bk ], [ %i.dh, %bb.bb ], [ %.pn.i.i, %bb.aj ] ; 21 uses
   %i.ax = load i64, ptr %i.al, align 8, !range !777, !alias.scope !1479, !noalias !1478, !noundef !4
@@ -2458,6 +2457,7 @@ bb.a:                                             ; preds = %.body.i
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i unwind label %bb.cc, !noalias !1468
 
 bb.b:                                             ; preds = %bb.el, %bb.eh, %bb.ed, %bb.dz, %bb.dv, %bb.dr, %bb.dn, %bb.dj, %bb.de, %._crit_edge.i, %bb.cy, %bb.cs, %._crit_edge244.i, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i, %bb.by, %bb.bu, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i, %bb.ai, %bb.y, %bb.k, %bb.j, %bb.h, %bb.g, %bb.d
+  %.sroa.053.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ false, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ true, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
   %.sroa.052.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ true, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ true, %bb.eh ], [ false, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
   %.sroa.049.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ true, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ false, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
   %.sroa.046.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ true, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ false, %bb.ed ], [ true, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
@@ -2466,7 +2466,6 @@ bb.b:                                             ; preds = %bb.el, %bb.eh, %bb.
   %.sroa.037.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ false, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ true, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ true, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
   %.sroa.034.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ false, %._crit_edge244.i ], [ false, %bb.cs ], [ false, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ false, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ true, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ true, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
   %.sroa.031.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ false, %._crit_edge.i ], [ false, %bb.de ], [ false, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ true, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ true, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
-  %.sroa.055.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ false, %bb.dr ], [ true, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ true, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
   %.sroa.058.1.i = phi i1 [ true, %bb.j ], [ true, %bb.h ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit41.i.i ], [ true, %._crit_edge244.i ], [ true, %bb.cs ], [ true, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_14ChunksExactMuthEEINtB5_7ZipImplBW_B1w_E4nextCsa5QsYiPB8Gl_5image.exit.thread.i ], [ true, %bb.by ], [ true, %bb.ai ], [ true, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRShEECsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %._crit_edge.i ], [ true, %bb.de ], [ true, %bb.cy ], [ true, %_RNvMNtCsj6eKBz9Db1c_4core5sliceSh12chunks_exactCsa5QsYiPB8Gl_5image.exit.i.i ], [ true, %bb.dj ], [ true, %bb.dn ], [ true, %bb.bu ], [ true, %bb.dr ], [ false, %bb.dv ], [ true, %bb.dz ], [ true, %bb.ed ], [ true, %bb.eh ], [ true, %bb.el ], [ true, %bb.d ], [ true, %bb.k ], [ true, %bb.g ], [ true, %bb.y ]
   %i.az = landingpad { ptr, i32 }
           cleanup
@@ -2869,34 +2868,34 @@ bb.gl:                                            ; preds = %_RINvNtCsj6eKBz9Db1
           to label %bb.hi unwind label %bb.cc, !noalias !1468
 
 bb.gm:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.034.0.i, label %bb.gw, label %bb.hi
+  br i1 %.sroa.031.0.i, label %bb.gw, label %bb.hi
 
 bb.gn:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.031.0.i, label %bb.gx, label %bb.hi
+  br i1 %.sroa.055.0.i, label %bb.gx, label %bb.hi
 
 bb.go:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.037.0.i, label %bb.gy, label %bb.hi
+  br i1 %.sroa.034.0.i, label %bb.gy, label %bb.hi
 
 bb.gp:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.040.0.i, label %bb.gz, label %bb.hi
+  br i1 %.sroa.037.0.i, label %bb.gz, label %bb.hi
 
 bb.gq:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.055.0.i, label %bb.ha, label %bb.hi
+  br i1 %.sroa.052.0.i, label %bb.ha, label %bb.hi
 
 bb.gr:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
   br i1 %.sroa.058.0.i, label %bb.hb, label %bb.hi
 
 bb.gs:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.043.0.i, label %bb.hc, label %bb.hi
+  br i1 %.sroa.040.0.i, label %bb.hc, label %bb.hi
 
 bb.gt:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.046.0.i, label %bb.hd, label %bb.hi
+  br i1 %.sroa.043.0.i, label %bb.hd, label %bb.hi
 
 bb.gu:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.049.0.i, label %bb.he, label %bb.hi
+  br i1 %.sroa.046.0.i, label %bb.he, label %bb.hi
 
 bb.gv:                                            ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs53gkmrwjETj_4tiff7decoder7DecoderINtNtNtB4_2io6cursor6CursorRShEEEECsa5QsYiPB8Gl_5image.exit.i
-  br i1 %.sroa.052.0.i, label %bb.hf, label %bb.hi
+  br i1 %.sroa.049.0.i, label %bb.hf, label %bb.hi
 
 bb.gw:                                            ; preds = %bb.gm
   %i.nk = getelementptr inbounds nuw i8, ptr %i.al, i64 472

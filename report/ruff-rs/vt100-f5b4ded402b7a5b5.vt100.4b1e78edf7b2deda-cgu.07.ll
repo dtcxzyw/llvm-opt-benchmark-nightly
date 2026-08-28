@@ -114,7 +114,9 @@ bb.a:
   tail call void @_RNvXsF_NtCs4NRVxsYgnAr_4core5arrayAhj16_NtNtB7_7default7Default7defaultCs6rR7J0NOYM8_5vt100(ptr noalias noundef nonnull sret([22 x i8]) align 1 captures(none) dereferenceable(22) %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 31
   store i8 0, ptr %i.b, align 1
-  store i64 0, ptr %0, align 1
+  store i8 0, ptr %0, align 1
+  %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i8 0, ptr %.sroa.0.sroa.5.0..sroa_idx, align 1
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %.sroa.5.0..sroa_idx, align 1
   ret void

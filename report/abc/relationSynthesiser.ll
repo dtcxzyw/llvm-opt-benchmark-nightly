@@ -204,7 +204,7 @@ _ZSt9iter_swapISt13_Bit_iteratorS0_EvT_T0_.exit.i50: ; preds = %bb.g, %bb.f
   %spec.select21.i54 = getelementptr inbounds nuw i8, ptr %.sroa.012.0.i41, i64 %spec.select21.idx.i53
   br label %_ZNSt13_Bit_iteratormmEv.exit.i37, !llvm.loop !254
 
-_ZSt9__reverseISt13_Bit_iteratorEvT_S1_St26random_access_iterator_tag.exit.thread: ; preds = %bb.b, %bb.e, %_ZSt9iter_swapISt13_Bit_iteratorS0_EvT_T0_.exit, %_ZNSt13_Bit_iteratorppEv.exit, %bb.a
+_ZSt9__reverseISt13_Bit_iteratorEvT_S1_St26random_access_iterator_tag.exit.thread: ; preds = %bb.b, %bb.e, %_ZNSt13_Bit_iteratorppEv.exit, %_ZSt9iter_swapISt13_Bit_iteratorS0_EvT_T0_.exit, %bb.a
   %.3 = phi i1 [ false, %bb.a ], [ false, %_ZNSt13_Bit_iteratorppEv.exit ], [ false, %bb.e ], [ true, %_ZSt9iter_swapISt13_Bit_iteratorS0_EvT_T0_.exit ], [ true, %bb.b ]
   ret i1 %.3
 }

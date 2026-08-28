@@ -205,11 +205,9 @@ bb.a:
   %.sroa.5.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5, i64 7
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %.sroa.5.16..sroa_idx, ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 64, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  store i64 0, ptr %0, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %.sroa.4.0..sroa_idx, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(71) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(71) %.sroa.5, i64 71, i1 false)
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %0, i8 0, i64 9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(71) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(71) %.sroa.5, i64 71, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i64 %1, ptr %i.l, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
@@ -612,8 +610,8 @@ bb.ae:                                            ; preds = %bb.e
   unreachable
 
 .backedge:                                        ; preds = %bb.bb, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4word5MergeE8push_mutBM_.exit, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit.thread, %bb.ad, %bb.af
-  %i.fm = phi i64 [ %i.hm, %bb.bb ], [ %i.at, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4word5MergeE8push_mutBM_.exit ], [ %i.at, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit.thread ], [ %i.at, %bb.ad ], [ %i.at, %bb.af ]
-  %i.fn = phi ptr [ %i.ho, %bb.bb ], [ %i.au, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4word5MergeE8push_mutBM_.exit ], [ %i.au, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit.thread ], [ %i.au, %bb.ad ], [ %i.au, %bb.af ]
+  %i.fm = phi i64 [ %i.at, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit.thread ], [ %i.at, %bb.af ], [ %i.at, %bb.ad ], [ %i.at, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4word5MergeE8push_mutBM_.exit ], [ %i.hm, %bb.bb ]
+  %i.fn = phi ptr [ %i.au, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapTmmEBO_NtNtCsiTTz6JxaXqu_5ahash12random_state11RandomStateE3getBO_ECs2JiOgHzbbc7_10tokenizers.exit.thread ], [ %i.au, %bb.af ], [ %i.au, %bb.ad ], [ %i.au, %_RNvMsF_NtCscdodAO9FK5_5alloc3vecINtB5_3VecNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4word5MergeE8push_mutBM_.exit ], [ %i.ho, %bb.bb ]
   %i.fo = load i64, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !1428, !noalias !1379, !noundef !3 ; 2 uses
   %i.fp = icmp eq i64 %i.fo, 0
   br i1 %i.fp, label %_RNvMs8_CskEsHVYarYHE_9dary_heapINtB5_8DaryHeapNtNtNtNtCs2JiOgHzbbc7_10tokenizers6models3bpe4word5MergeKj4_E3popBQ_.exit, label %bb.i
@@ -1016,8 +1014,8 @@ bb.i:                                             ; preds = %bb.c
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %.sroa.8.0.a = phi i64 [ %i.r, %bb.h ], [ %i.v, %bb.i ] ; 2 uses
-  %.sroa.6.0 = phi i64 [ %i.q, %bb.h ], [ %i.u, %bb.i ] ; 2 uses
+  %.sroa.8.0.a = phi i64 [ %i.q, %bb.h ], [ %i.u, %bb.i ] ; 2 uses
+  %.sroa.6.0 = phi i64 [ %i.r, %bb.h ], [ %i.v, %bb.i ] ; 2 uses
   %.sroa.04.0 = phi i64 [ 1, %bb.h ], [ 2, %bb.i ] ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2681)
@@ -1068,16 +1066,16 @@ bb.p:                                             ; preds = %bb.o
 
 .body:                                            ; preds = %bb.o, %bb.p
   store i64 %.sroa.04.0, ptr %i.w, align 8
-  store i64 %.sroa.6.0, ptr %i.y, align 8
-  store i64 %.sroa.8.0.a, ptr %i.z, align 8
+  store i64 %.sroa.8.0.a, ptr %i.y, align 8
+  store i64 %.sroa.6.0, ptr %i.z, align 8
   br label %.body31
 
 _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCs5NXVUOdy9du_10rayon_core3job9JobResultINtNtB4_6option6OptionjEEECs2JiOgHzbbc7_10tokenizers.exit: ; preds = %bb.n, %bb.m, %bb.j
   store i64 %.sroa.04.0, ptr %i.w, align 8
   %.sroa.6.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i64 %.sroa.6.0, ptr %.sroa.6.0..sroa_idx6, align 8
+  store i64 %.sroa.8.0.a, ptr %.sroa.6.0..sroa_idx6, align 8
   %.sroa.8.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store i64 %.sroa.8.0.a, ptr %.sroa.8.0..sroa_idx8, align 8
+  store i64 %.sroa.6.0, ptr %.sroa.8.0..sroa_idx8, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.ao = load i8, ptr %i.an, align 8, !range !32, !noundef !3
@@ -1480,11 +1478,11 @@ declare i64 @llvm.umax.i64(i64, i64) #21
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #21
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #21
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #21
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

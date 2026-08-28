@@ -205,7 +205,8 @@ bb.a:
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40
   %.sroa.11.0.copyload = load ptr, ptr %.sroa.11.0..sroa_idx, align 8 ; 3 uses
   %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.sroa.13.0.copyload = load i64, ptr %.sroa.13.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.13.sroa.0.0.copyload = load i8, ptr %.sroa.13.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.13.sroa.5.0..sroa.13.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 49
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   invoke void @_RNvMs_NtNtCsliWsDkOzYJy_4http6header4nameNtB4_10HeaderName10from_bytes(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %i.d)
           to label %bb.b unwind label %bb.i
@@ -236,12 +237,13 @@ bb.d:                                             ; preds = %bb.b
   %.sroa.691.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %.sroa.691.0.copyload = load ptr, ptr %.sroa.691.0..sroa_idx, align 8 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %2 = and i64 %.sroa.13.0.copyload, 255
-  %i.l = icmp eq i64 %2, 2
+  %i.l = icmp eq i8 %.sroa.13.sroa.0.0.copyload, 2
   br i1 %i.l, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.m = ptrtoint ptr %.sroa.0.0.copyload to i64
+  %.sroa.727.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 65
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.727.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.13.sroa.5.0..sroa.13.0..sroa_idx.sroa_idx, i64 7, i1 false)
   store ptr %.sroa.088.0.copyload, ptr %0, align 8
   %.sroa.024.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %.sroa.489.0.copyload, ptr %.sroa.024.sroa.4.0..sroa_idx, align 8
@@ -258,10 +260,10 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.526.sroa.6.0..sroa.526.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   store ptr %.sroa.11.0.copyload, ptr %.sroa.526.sroa.6.0..sroa.526.0..sroa_idx.sroa_idx, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
-  store i64 %.sroa.13.0.copyload, ptr %.sroa.6.0..sroa_idx, align 8
+  store i8 %.sroa.13.sroa.0.0.copyload, ptr %.sroa.6.0..sroa_idx, align 8
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsliWsDkOzYJy_4http6header4name10HeaderNameECsl8OoimOLbh_6qdrant.exit41
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsliWsDkOzYJy_4http6header4name10HeaderNameECsl8OoimOLbh_6qdrant.exit41: ; preds = %bb.g, %bb.c, %bb.f, %bb.e
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsliWsDkOzYJy_4http6header4name10HeaderNameECsl8OoimOLbh_6qdrant.exit41: ; preds = %bb.c, %bb.f, %bb.g, %bb.e
   ret void
 
 bb.f:                                             ; preds = %bb.d

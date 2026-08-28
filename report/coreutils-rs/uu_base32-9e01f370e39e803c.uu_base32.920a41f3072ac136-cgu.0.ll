@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %._crit_edge.i.i
   %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 2 uses
   %i.x = icmp ule i64 %i.w, %i.d
   tail call void @llvm.assume(i1 %i.x)
-  %4 = icmp ult i64 %i.d, 64051194700380388
-  tail call void @llvm.assume(i1 %4)
   br label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
   %.sroa.4.0.i.i.ph60 = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
+  %4 = icmp ult i64 %i.d, 64051194700380388
+  tail call void @llvm.assume(i1 %4)
   %i.y = load i64, ptr %0, align 8, !range !40, !alias.scope !81, !noalias !84, !noundef !4
   %i.z = icmp eq i64 %i.d, %i.y
   br i1 %i.z, label %bb.c, label %bb.d
@@ -357,13 +357,13 @@ bb.b:                                             ; preds = %._crit_edge.i.i
   %i.w = add nuw nsw i64 %spec.select.i.i.i.i.lobit.i.i, %.sroa.05.0.lcssa.i.i ; 2 uses
   %i.x = icmp ule i64 %i.w, %i.d
   tail call void @llvm.assume(i1 %i.x)
-  %4 = icmp ult i64 %i.d, 64051194700380388
-  tail call void @llvm.assume(i1 %4)
   br label %.thread
 
 .thread:                                          ; preds = %bb.a, %bb.b
   %.sroa.4.0.i.i.ph60 = phi i64 [ %i.w, %bb.b ], [ %i.d, %bb.a ] ; 3 uses
   %i.y = sitofp i64 %3 to double
+  %4 = icmp ult i64 %i.d, 64051194700380388
+  tail call void @llvm.assume(i1 %4)
   %i.z = load i64, ptr %0, align 8, !range !40, !alias.scope !121, !noalias !124, !noundef !4
   %i.aa = icmp eq i64 %i.d, %i.z
   br i1 %i.aa, label %bb.c, label %bb.d
@@ -766,9 +766,9 @@ select.unfold.i.i:                                ; preds = %.lr.ph
   br i1 %i.br, label %select.unfold.i.i, label %bb.n
 
 .loopexit164:                                     ; preds = %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i, %bb.ak, %bb.aj
-  %.sroa.9.0 = phi i64 [ undef, %bb.aj ], [ %.sroa.9.0.copyload, %bb.ak ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 5 uses
-  %.sroa.8.0 = phi ptr [ undef, %bb.aj ], [ %.sroa.8.0.copyload, %bb.ak ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 7 uses
-  %.sroa.0.0 = phi i64 [ -1, %bb.aj ], [ %.sroa.0.0.copyload, %bb.ak ], [ -1, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 7 uses
+  %.sroa.9.0 = phi i64 [ %.sroa.9.0.copyload, %bb.ak ], [ undef, %bb.aj ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 5 uses
+  %.sroa.8.0 = phi ptr [ %.sroa.8.0.copyload, %bb.ak ], [ undef, %bb.aj ], [ undef, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 7 uses
+  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload, %bb.ak ], [ -1, %bb.aj ], [ -1, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !389)
   call void @llvm.experimental.noalias.scope.decl(metadata !392)
   call void @llvm.experimental.noalias.scope.decl(metadata !395)
@@ -1171,7 +1171,7 @@ bb.bk:                                            ; preds = %bb.bj
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.8.0, i64 noundef %.sroa.0.0, i64 noundef range(i64 1, -9223372036854775807) 1) #23
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2vKOLqTMYjT_3std4path7PathBufEECscxmO3cvmuC8_9uu_base32.exit
 
-_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2vKOLqTMYjT_3std4path7PathBufEECscxmO3cvmuC8_9uu_base32.exit: ; preds = %bb.bk, %bb.bj, %_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit, %_RNCNvMNtCscxmO3cvmuC8_9uu_base3211base_commonNtB4_6Config4from0B6_.exit.thread
+_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs2vKOLqTMYjT_3std4path7PathBufEECscxmO3cvmuC8_9uu_base32.exit: ; preds = %_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit.exit, %bb.bj, %bb.bk, %_RNCNvMNtCscxmO3cvmuC8_9uu_base3211base_commonNtB4_6Config4from0B6_.exit.thread
   ret void
 }
 
@@ -1574,7 +1574,7 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg19visible_short_alias
   %i.l = alloca [640 x i8], align 8               ; 54 uses
   %i.m = alloca [640 x i8], align 8               ; 4 uses
   %i.n = alloca [24 x i8], align 8                ; 6 uses
-  %i.o = alloca [640 x i8], align 8               ; 55 uses
+  %i.o = alloca [640 x i8], align 8               ; 56 uses
   %.sroa.0 = alloca [488 x i8], align 8           ; 4 uses
   %.sroa.7171.sroa.0.sroa.5 = alloca [80 x i8], align 8 ; 4 uses
   %.sroa.7171.sroa.7 = alloca [32 x i8], align 8  ; 4 uses
@@ -1592,8 +1592,8 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg19visible_short_alias
   %.sroa.5.i.sroa.0.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx.i, align 8
   %.sroa.5.i.sroa.4.0..sroa.55.0..sroa_idx.i.sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.5.i.sroa.4.0.copyload = load i64, ptr %.sroa.5.i.sroa.4.0..sroa.55.0..sroa_idx.i.sroa_idx, align 8
+  %.sroa.5.i.sroa.4.sroa.0.0 = select i1 %i.x, i64 undef, i64 %.sroa.5.i.sroa.4.0.copyload
   %.sroa.5.i.sroa.0.0 = select i1 %i.x, ptr undef, ptr %.sroa.5.i.sroa.0.0.copyload
-  %.sroa.5.i.sroa.4.0 = select i1 %i.x, i64 undef, i64 %.sroa.5.i.sroa.4.0.copyload
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !4, !noundef !4 ; 2 uses
@@ -1609,8 +1609,8 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg19visible_short_alias
   %.sroa.5.i10.sroa.0.0.copyload = load ptr, ptr %.sroa.55.0..sroa_idx.i12, align 8
   %.sroa.5.i10.sroa.4.0..sroa.55.0..sroa_idx.i12.sroa_idx = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %.sroa.5.i10.sroa.4.0.copyload = load i64, ptr %.sroa.5.i10.sroa.4.0..sroa.55.0..sroa_idx.i12.sroa_idx, align 8
+  %.sroa.5.i10.sroa.4.sroa.0.0 = select i1 %i.ac, i64 undef, i64 %.sroa.5.i10.sroa.4.0.copyload
   %.sroa.5.i10.sroa.0.0 = select i1 %i.ac, ptr undef, ptr %.sroa.5.i10.sroa.0.0.copyload
-  %.sroa.5.i10.sroa.4.0 = select i1 %i.ac, i64 undef, i64 %.sroa.5.i10.sroa.4.0.copyload
   store i64 0, ptr %i.w, align 8, !alias.scope !534, !noalias !528
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   store i64 1, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8, !alias.scope !534, !noalias !528
@@ -1665,7 +1665,7 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg19visible_short_alias
   %.sroa.0.sroa.35.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 328
   store ptr %.sroa.5.i.sroa.0.0, ptr %.sroa.0.sroa.35.0..sroa_idx, align 8, !alias.scope !534, !noalias !528
   %.sroa.0.sroa.36.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 336
-  store i64 %.sroa.5.i.sroa.4.0, ptr %.sroa.0.sroa.36.0..sroa_idx, align 8, !alias.scope !534, !noalias !528
+  store i64 %.sroa.5.i.sroa.4.sroa.0.0, ptr %.sroa.0.sroa.36.0..sroa_idx, align 8, !alias.scope !534, !noalias !528
   %.sroa.0.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 344
   store i64 -1, ptr %.sroa.0.sroa.37.0..sroa_idx, align 8, !alias.scope !534, !noalias !528
   %.sroa.0.sroa.39.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 368
@@ -1681,7 +1681,7 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg19visible_short_alias
   %.sroa.6.0..sroa_idx138 = getelementptr inbounds nuw i8, ptr %i.w, i64 472
   store ptr %.sroa.5.i10.sroa.0.0, ptr %.sroa.6.0..sroa_idx138, align 8, !alias.scope !534, !noalias !528
   %.sroa.8.0..sroa_idx140 = getelementptr inbounds nuw i8, ptr %i.w, i64 480
-  store i64 %.sroa.5.i10.sroa.4.0, ptr %.sroa.8.0..sroa_idx140, align 8, !alias.scope !534, !noalias !528
+  store i64 %.sroa.5.i10.sroa.4.sroa.0.0, ptr %.sroa.8.0..sroa_idx140, align 8, !alias.scope !534, !noalias !528
   %.sroa.8.sroa.5.0..sroa.8.0..sroa_idx140.sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 488
   store i64 -1, ptr %.sroa.8.sroa.5.0..sroa.8.0..sroa_idx140.sroa_idx, align 8, !alias.scope !534, !noalias !528
   %.sroa.8.sroa.7.0..sroa.8.0..sroa_idx140.sroa_idx = getelementptr inbounds nuw i8, ptr %i.w, i64 512
@@ -1730,7 +1730,7 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg19visible_short_alias
   %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 584
   %i.ag = getelementptr inbounds nuw i8, ptr %i.o, i64 488 ; 2 uses
   store i64 -1, ptr %i.ag, align 8, !alias.scope !535
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.o, i64 512 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.o, i64 512
   store i64 -1, ptr %i.ah, align 8, !alias.scope !535
   %i.ai = getelementptr inbounds nuw i8, ptr %i.o, i64 636
   store i8 -1, ptr %i.ai, align 4, !alias.scope !535
@@ -1843,7 +1843,8 @@ _RINvMNtNtCsgNwXemyrBWj_12clap_builder7builder3argNtB3_3Arg19visible_short_alias
   %.sroa.4174.0.copyload = load i64, ptr %i.ag, align 8, !alias.scope !548 ; 2 uses
   %.sroa.5175.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 496
   %.sroa.5175.0.copyload = load ptr, ptr %.sroa.5175.0..sroa_idx, align 8, !alias.scope !548 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.7171.sroa.0.sroa.5, ptr noundef nonnull align 8 dereferenceable(80) %i.ah, i64 80, i1 false)
+  %.sroa.6175.sroa.4.0..sroa.6175.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 512
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %.sroa.7171.sroa.0.sroa.5, ptr noundef nonnull align 8 dereferenceable(80) %.sroa.6175.sroa.4.0..sroa.6175.0..sroa_idx.sroa_idx, i64 80, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.7171.sroa.7, ptr noundef nonnull align 8 dereferenceable(32) %i.as, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @_RNvNtNtCsh036I4OHgIr_6uucore4mods6locale11get_message(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.n, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @82, i64 noundef 23) #23
