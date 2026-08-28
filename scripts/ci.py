@@ -106,23 +106,6 @@ def sync_dataset_to_remote():
     )
 
 
-def maybe_gc_llvm_repo():
-    marker = os.path.join(LLVM_REPO, ".git", "gc-marker")
-    try:
-        if (
-            os.path.exists(marker)
-            and time.time() - os.path.getmtime(marker) < 7 * 24 * 60 * 60
-        ):
-            return
-        subprocess.check_call(
-            ["git", "gc", "--prune=now"], cwd=LLVM_REPO, timeout=3600
-        )
-        with open(marker, "w") as f:
-            f.write("")
-    except Exception:
-        pass
-
-
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
 def setup_llvm(revision: str):
     if not os.path.exists(LLVM_REPO):
@@ -132,7 +115,6 @@ def setup_llvm(revision: str):
     subprocess.check_call(["git", "clean", "-fdx"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "fetch"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "checkout", revision], cwd=LLVM_REPO)
-    maybe_gc_llvm_repo()
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
