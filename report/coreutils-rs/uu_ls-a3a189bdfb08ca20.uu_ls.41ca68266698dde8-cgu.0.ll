@@ -205,19 +205,18 @@ define internal fastcc void @_RINvNtNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared9
 
 bb.a:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i)
+  %.sroa.023.0.copyload.i = load i64, ptr %.sroa.0.04, align 8
   %.sroa.424.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 312
-  %.sroa.424.0.copyload.i = load i64, ptr %.sroa.424.0..sroa_idx.i, align 8
-  %2 = load <2 x i64>, ptr %.sroa.0.04, align 8
+  %.sroa.424.0.copyload.i = load ptr, ptr %.sroa.424.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.525.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 320
   %.sroa.525.0.copyload.i = load i64, ptr %.sroa.525.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.727.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 336
-  %.sroa.727.0.copyload.i = load i64, ptr %.sroa.727.0..sroa_idx.i, align 8 ; 2 uses
+  %.sroa.727.0.copyload.i = load ptr, ptr %.sroa.727.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.828.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 344
   %.sroa.828.0.copyload.i = load i64, ptr %.sroa.828.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.929.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 352
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %.sroa.9.i, ptr noundef nonnull align 8 dereferenceable(256) %.sroa.929.0..sroa_idx.i, i64 256, i1 false)
-  %.sroa.0.0.i.i.i10.sroa.speculated.v.i = select i1 %cond.i.i.i.i, i64 %.sroa.424.0.copyload.i, i64 %.sroa.727.0.copyload.i
-  %.sroa.0.0.i.i.i10.sroa.speculated.i = inttoptr i64 %.sroa.0.0.i.i.i10.sroa.speculated.v.i to ptr
+  %.sroa.0.0.i.i.i10.sroa.speculated.i = select i1 %cond.i.i.i.i, ptr %.sroa.424.0.copyload.i, ptr %.sroa.727.0.copyload.i
   %.sroa.4.0.i.i.i11.sroa.speculated.i = select i1 %cond.i.i.i.i, i64 %.sroa.525.0.copyload.i, i64 %.sroa.828.0.copyload.i ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(304) %.sroa.0.04, ptr noundef nonnull align 8 dereferenceable(304) %.pn3, i64 304, i1 false)
   %i.o = icmp eq ptr %.pn3, %0
@@ -250,14 +249,16 @@ bb.b:                                             ; preds = %.lr.ph3
   br i1 %i.z, label %bb.b, label %._crit_edge4
 
 ._crit_edge4:                                     ; preds = %bb.b, %.lr.ph3, %bb.a
-  %.sroa.0.0.i.lcssa = phi ptr [ %0, %bb.a ], [ %0, %bb.b ], [ %.sroa.0.0.i1, %.lr.ph3 ] ; 6 uses
-  store <2 x i64> %2, ptr %.sroa.0.0.i.lcssa, align 8, !noalias !1031
+  %.sroa.0.0.i.lcssa = phi ptr [ %0, %bb.a ], [ %0, %bb.b ], [ %.sroa.0.0.i1, %.lr.ph3 ] ; 7 uses
+  store i64 %.sroa.023.0.copyload.i, ptr %.sroa.0.0.i.lcssa, align 8, !noalias !1031
+  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 8
+  store ptr %.sroa.424.0.copyload.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1031
   %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 16
   store i64 %.sroa.525.0.copyload.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1031
   %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 24
   store i64 %i.c, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1031
   %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 32
-  store i64 %.sroa.727.0.copyload.i, ptr %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1031
+  store ptr %.sroa.727.0.copyload.i, ptr %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1031
   %.sroa.8.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 40
   store i64 %.sroa.828.0.copyload.i, ptr %.sroa.8.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1031
   %.sroa.9.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 48
@@ -604,19 +605,18 @@ define internal fastcc void @_RINvNtNtNtNtCs6JMX4GRUq9U_4core5slice4sort6shared9
 
 bb.a:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9.i)
+  %.sroa.023.0.copyload.i = load i64, ptr %.sroa.0.04, align 8
   %.sroa.424.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 312
-  %.sroa.424.0.copyload.i = load i64, ptr %.sroa.424.0..sroa_idx.i, align 8
-  %2 = load <2 x i64>, ptr %.sroa.0.04, align 8
+  %.sroa.424.0.copyload.i = load ptr, ptr %.sroa.424.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.525.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 320
   %.sroa.525.0.copyload.i = load i64, ptr %.sroa.525.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.727.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 336
-  %.sroa.727.0.copyload.i = load i64, ptr %.sroa.727.0..sroa_idx.i, align 8 ; 2 uses
+  %.sroa.727.0.copyload.i = load ptr, ptr %.sroa.727.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.828.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 344
   %.sroa.828.0.copyload.i = load i64, ptr %.sroa.828.0..sroa_idx.i, align 8 ; 2 uses
   %.sroa.929.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.pn3, i64 352
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(256) %.sroa.9.i, ptr noundef nonnull align 8 dereferenceable(256) %.sroa.929.0..sroa_idx.i, i64 256, i1 false)
-  %.sroa.0.0.i.i.i10.sroa.speculated.v.i = select i1 %cond.i.i.i.i, i64 %.sroa.424.0.copyload.i, i64 %.sroa.727.0.copyload.i
-  %.sroa.0.0.i.i.i10.sroa.speculated.i = inttoptr i64 %.sroa.0.0.i.i.i10.sroa.speculated.v.i to ptr
+  %.sroa.0.0.i.i.i10.sroa.speculated.i = select i1 %cond.i.i.i.i, ptr %.sroa.424.0.copyload.i, ptr %.sroa.727.0.copyload.i
   %.sroa.4.0.i.i.i11.sroa.speculated.i = select i1 %cond.i.i.i.i, i64 %.sroa.525.0.copyload.i, i64 %.sroa.828.0.copyload.i ; 4 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(304) %.sroa.0.04, ptr noundef nonnull align 8 dereferenceable(304) %.pn3, i64 304, i1 false)
   %i.r = icmp eq ptr %.pn3, %0
@@ -652,14 +652,16 @@ bb.b:                                             ; preds = %.lr.ph3
   br i1 %i.af, label %bb.b, label %._crit_edge4
 
 ._crit_edge4:                                     ; preds = %bb.b, %.lr.ph3, %bb.a
-  %.sroa.0.0.i.lcssa = phi ptr [ %0, %bb.a ], [ %0, %bb.b ], [ %.sroa.0.0.i1, %.lr.ph3 ] ; 6 uses
-  store <2 x i64> %2, ptr %.sroa.0.0.i.lcssa, align 8, !noalias !1046
+  %.sroa.0.0.i.lcssa = phi ptr [ %0, %bb.a ], [ %0, %bb.b ], [ %.sroa.0.0.i1, %.lr.ph3 ] ; 7 uses
+  store i64 %.sroa.023.0.copyload.i, ptr %.sroa.0.0.i.lcssa, align 8, !noalias !1046
+  %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 8
+  store ptr %.sroa.424.0.copyload.i, ptr %.sroa.4.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1046
   %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 16
   store i64 %.sroa.525.0.copyload.i, ptr %.sroa.5.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1046
   %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 24
   store i64 %i.c, ptr %.sroa.6.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1046
   %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 32
-  store i64 %.sroa.727.0.copyload.i, ptr %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1046
+  store ptr %.sroa.727.0.copyload.i, ptr %.sroa.7.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1046
   %.sroa.8.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 40
   store i64 %.sroa.828.0.copyload.i, ptr %.sroa.8.0..sroa.0.0.lcssa.sroa_idx.i, align 8, !noalias !1046
   %.sroa.9.0..sroa.0.0.lcssa.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.lcssa, i64 48
