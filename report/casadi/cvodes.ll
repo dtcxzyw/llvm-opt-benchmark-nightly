@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %._crit_edge.i.i
   br label %.lr.ph146.preheader.i.i
 
 .loopexit140.i.i:                                 ; preds = %.lr.ph146.i.i, %middle.block108
-  %i.gb = fadd double %.0122151.i.i, %6           ; 2 uses
+  %i.gb = fadd double %.0122151.i.i, %3           ; 2 uses
   %i.gc = fdiv double %i.gb, %i.fz                ; 3 uses
   %i.gd = fmul double %.0124149.i.i, %i.gc        ; 2 uses
   %i.ge = trunc nuw nsw i64 %indvars.iv.next183.i.i to i32
@@ -230,18 +230,18 @@ bb.o:                                             ; preds = %._crit_edge.i.i
   %.0124149.i.i = phi double [ %i.gd, %.loopexit140.i.i ], [ 1.000000e+00, %bb.o ]
   %i.gm = phi <2 x double> [ %i.gl, %.loopexit140.i.i ], [ <double 1.000000e+00, double -1.000000e+00>, %bb.o ] ; 2 uses
   %i.gn = add i32 %indvar87, 3                    ; 2 uses
-  %smin = tail call i32 @llvm.smin.i32(i32 %i.gn, i32 2)
-  %2 = sub i32 %i.gn, %smin                       ; 2 uses
-  %3 = zext i32 %2 to i64
-  %4 = add nuw nsw i64 %3, 1                      ; 2 uses
   %indvars.iv.next183.i.i = add nuw nsw i64 %indvars.iv182.i.i, 1 ; 4 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.ga, i64 %indvars.iv.next183.i.i
-  %6 = load double, ptr %5, align 8, !tbaa !49
-  %min.iters.check90 = icmp ult i32 %2, 3
+  %2 = getelementptr inbounds nuw [8 x i8], ptr %i.ga, i64 %indvars.iv.next183.i.i
+  %3 = load double, ptr %2, align 8, !tbaa !49
+  %4 = tail call i32 @llvm.smin.i32(i32 %i.gn, i32 2)
+  %5 = sub i32 %i.gn, %4                          ; 2 uses
+  %6 = zext i32 %5 to i64
+  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
+  %min.iters.check90 = icmp ult i32 %5, 3
   br i1 %min.iters.check90, label %.lr.ph146.i.i.preheader, label %vector.ph91
 
 vector.ph91:                                      ; preds = %.lr.ph146.preheader.i.i
-  %n.vec92 = and i64 %4, 8589934588               ; 3 uses
+  %n.vec92 = and i64 %7, 8589934588               ; 3 uses
   %i.go = sub nsw i64 %indvars.iv.i.i, %n.vec92
   %broadcast.splatinsert93 = insertelement <2 x double> poison, double %.0123150.i.i, i64 0 ; 2 uses
   %i.gp = shufflevector <2 x double> %broadcast.splatinsert93, <2 x double> poison, <2 x i32> zeroinitializer
@@ -269,7 +269,7 @@ vector.body95:                                    ; preds = %vector.body95, %vec
   br i1 %i.gx, label %middle.block108, label %vector.body95, !llvm.loop !426
 
 middle.block108:                                  ; preds = %vector.body95
-  %cmp.n109 = icmp eq i64 %4, %n.vec92
+  %cmp.n109 = icmp eq i64 %7, %n.vec92
   br i1 %cmp.n109, label %.loopexit140.i.i, label %.lr.ph146.i.i.preheader
 
 .lr.ph146.i.i.preheader:                          ; preds = %.lr.ph146.preheader.i.i, %middle.block108

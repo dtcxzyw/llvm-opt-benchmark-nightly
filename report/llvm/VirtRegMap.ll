@@ -204,8 +204,6 @@ bb.a:
 
 bb.b:                                             ; preds = %_ZNK4llvm19MachineRegisterInfo15reg_nodbg_emptyENS_8RegisterE.exit.thread.i, %.lr.ph71.i
   %.070.i = phi i32 [ 0, %.lr.ph71.i ], [ %i.no, %_ZNK4llvm19MachineRegisterInfo15reg_nodbg_emptyENS_8RegisterE.exit.thread.i ] ; 4 uses
-  %10 = and i32 %.070.i, 2147483647
-  %11 = zext nneg i32 %10 to i64
   %i.ah = or i32 %.070.i, -2147483648
   %i.ai = load ptr, ptr %i.s, align 8, !tbaa !300
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 48
@@ -275,6 +273,8 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_12LiveIntervalELb1EE28reserveForParamAndGe
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %.pre-phi.i.i.i.i.i.i.i ; 4 uses
   %.idx.i.i.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %i.bg, 3
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 %.idx.i.i.i.i.i.i.i.i.i.i.i.i
+  %10 = and i32 %.070.i, 2147483647
+  %11 = zext nneg i32 %10 to i64
   %i.bn = sub nsw i64 %11, %i.bd
   %i.bo = and i64 %i.bn, 2305843009213693951      ; 2 uses
   %i.bp = add nuw nsw i64 %i.bo, 1                ; 2 uses

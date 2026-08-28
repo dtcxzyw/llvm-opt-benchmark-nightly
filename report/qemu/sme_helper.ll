@@ -205,8 +205,6 @@ decode_counter.exit.thread:                       ; preds = %decode_counter.exit
   %i.aw = mul i64 %i.at, %indvars.iv271
   %i.ax = trunc i64 %i.aw to i32
   %i.ay = add i32 %i.as, %i.ax                    ; 2 uses
-  %5 = zext i32 %i.ay to i64
-  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
   %i.az = zext i32 %indvars.iv261 to i64          ; 8 uses
   %i.ba = shl nuw nsw i64 %indvars.iv271, 8       ; 3 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 %i.ba ; 9 uses
@@ -299,6 +297,8 @@ middle.block401:                                  ; preds = %vector.body396
   br i1 %exitcond264.not.3, label %.lr.ph212.preheader, label %.lr.ph210, !llvm.loop !1011
 
 .lr.ph212.preheader:                              ; preds = %.lr.ph210.prol.loopexit, %.lr.ph210, %middle.block401
+  %5 = zext i32 %i.ay to i64
+  %6 = add nuw nsw i64 %5, 1                      ; 2 uses
   %min.iters.check379 = icmp ult i32 %i.ay, 7
   %or.cond433 = or i1 %min.iters.check379, %diff.check377
   br i1 %or.cond433, label %.lr.ph212.preheader440, label %vector.ph380
@@ -359,8 +359,6 @@ middle.block387:                                  ; preds = %vector.body382
   %i.cq = mul i64 %i.an, %indvars.iv253
   %i.cr = trunc i64 %i.cq to i32
   %i.cs = add i32 %i.am, %i.cr                    ; 2 uses
-  %7 = zext i32 %i.cs to i64
-  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
   %i.ct = zext i32 %indvars.iv243 to i64          ; 8 uses
   %i.cu = shl nuw nsw i64 %indvars.iv253, 8       ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 %i.cu ; 9 uses
@@ -453,6 +451,8 @@ middle.block429:                                  ; preds = %vector.body424
   br i1 %exitcond246.not.3, label %.lr.ph206.preheader, label %.lr.ph204, !llvm.loop !1017
 
 .lr.ph206.preheader:                              ; preds = %.lr.ph204.prol.loopexit, %.lr.ph204, %middle.block429
+  %7 = zext i32 %i.cs to i64
+  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
   %min.iters.check407 = icmp ult i32 %i.cs, 7
   %or.cond435 = or i1 %min.iters.check407, %diff.check405
   br i1 %or.cond435, label %.lr.ph206.preheader438, label %vector.ph408

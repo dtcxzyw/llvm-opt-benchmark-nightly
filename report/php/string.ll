@@ -205,11 +205,11 @@ bb.i:                                             ; preds = %bb.g, %bb.h
   br i1 %.not256349, label %.loopexit, label %.lr.ph353.preheader
 
 .lr.ph353.preheader:                              ; preds = %.critedge
-  %2 = xor i64 %.0204, -1
   %i.aw = add i64 %.0228, 2
   %i.ax = add i64 %i.aw, %indvar
   %i.ay = add i64 %.0204, 2
   %umax488 = call i64 @llvm.umax.i64(i64 %i.ax, i64 %i.ay)
+  %2 = xor i64 %.0204, -1
   %i.az = add i64 %umax488, %2                    ; 3 uses
   %min.iters.check = icmp ult i64 %i.az, 16
   br i1 %min.iters.check, label %.lr.ph353.preheader617, label %vector.memcheck

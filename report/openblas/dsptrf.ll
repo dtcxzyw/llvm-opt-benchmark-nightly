@@ -202,10 +202,6 @@ bb.s:                                             ; preds = %.split, %bb.r
   %indvar = phi i64 [ 0, %.lr.ph662.preheader ], [ %indvar.next, %.loopexit842 ] ; 3 uses
   %indvars.iv707 = phi i64 [ %i.gl, %.lr.ph662.preheader ], [ %indvars.iv.next708, %.loopexit842 ] ; 12 uses
   %i.hg = trunc i64 %indvars.iv707 to i32         ; 2 uses
-  %smin787 = call i32 @llvm.smin.i32(i32 %i.hg, i32 1)
-  %5 = sub i32 %i.hg, %smin787                    ; 2 uses
-  %6 = zext i32 %5 to i64
-  %7 = add nuw nsw i64 %6, 1                      ; 2 uses
   %i.hh = sub i64 %indvar, %i.gl
   %reass.sub843 = shl i64 %i.hh, 1
   %i.hi = add i64 %reass.sub843, -4294967294
@@ -225,7 +221,11 @@ bb.s:                                             ; preds = %.split, %bb.r
   %i.ht = lshr i64 %i.hs, 1
   %i.hu = and i64 %i.ht, 2147483647
   %invariant.gep = getelementptr [8 x i8], ptr %i.e, i64 %i.hu ; 2 uses
-  %min.iters.check = icmp ult i32 %5, 7
+  %5 = call i32 @llvm.smin.i32(i32 %i.hg, i32 1)
+  %6 = sub i32 %i.hg, %5                          ; 2 uses
+  %7 = zext i32 %6 to i64
+  %8 = add nuw nsw i64 %7, 1                      ; 2 uses
+  %min.iters.check = icmp ult i32 %6, 7
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph662
@@ -259,7 +259,7 @@ vector.memcheck:                                  ; preds = %.lr.ph662
   br i1 %conflict.rdx, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %7, 8589934584                 ; 3 uses
+  %n.vec = and i64 %8, 8589934584                 ; 3 uses
   %i.ie = sub i64 %indvars.iv707, %n.vec
   %broadcast.splatinsert = insertelement <4 x double> poison, double %i.hn, i64 0 ; 2 uses
   %broadcast.splatinsert788 = insertelement <4 x double> poison, double %i.hq, i64 0 ; 2 uses
@@ -302,7 +302,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.iz, label %middle.block, label %vector.body, !llvm.loop !24
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %7, %n.vec
+  %cmp.n = icmp eq i64 %8, %n.vec
   br i1 %cmp.n, label %.loopexit842, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph662, %middle.block
@@ -705,9 +705,7 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %.lr.ph689, %.loopexit841
   %indvar803 = phi i64 [ 0, %.lr.ph689 ], [ %indvar.next804, %.loopexit841 ] ; 4 uses
   %indvars.iv721 = phi i64 [ %i.tk, %.lr.ph689 ], [ %indvars.iv.next722, %.loopexit841 ] ; 12 uses
-  %smax820 = call i64 @llvm.smax.i64(i64 %indvars.iv721, i64 %i.tn)
   %i.ug = sub i64 %i.tv, %indvar803
-  %8 = add i64 %smax820, %i.ug                    ; 3 uses
   %indvars726 = trunc i64 %indvars.iv721 to i32
   %gep768 = getelementptr [8 x i8], ptr %invariant.gep767, i64 %indvars.iv721 ; 3 uses
   %i.uh = load double, ptr %gep768, align 8, !tbaa !9 ; 2 uses
@@ -726,7 +724,9 @@ bb.an:                                            ; preds = %.lr.ph689, %.loopex
   %i.ut = sdiv i32 %i.us, 2
   %i.uu = sext i32 %i.ut to i64                   ; 2 uses
   %invariant.gep761 = getelementptr [8 x i8], ptr %i.e, i64 %i.uu ; 2 uses
-  %min.iters.check822 = icmp ult i64 %8, 8
+  %9 = call i64 @llvm.smax.i64(i64 %indvars.iv721, i64 %i.tn)
+  %10 = add i64 %9, %i.ug                         ; 3 uses
+  %min.iters.check822 = icmp ult i64 %10, 8
   br i1 %min.iters.check822, label %scalar.ph821.preheader, label %vector.memcheck802
 
 vector.memcheck802:                               ; preds = %bb.an
@@ -756,7 +756,7 @@ vector.memcheck802:                               ; preds = %bb.an
   br i1 %conflict.rdx819, label %scalar.ph821.preheader, label %vector.ph823
 
 vector.ph823:                                     ; preds = %vector.memcheck802
-  %n.vec824 = and i64 %8, -8                      ; 3 uses
+  %n.vec824 = and i64 %10, -8                     ; 3 uses
   %i.vb = add i64 %indvars.iv721, %n.vec824
   %broadcast.splatinsert825.a = insertelement <4 x double> poison, double %i.ul, i64 0
   %broadcast.splat826.a = shufflevector <4 x double> %broadcast.splatinsert825.a, <4 x double> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -794,7 +794,7 @@ vector.body829:                                   ; preds = %vector.body829, %ve
   br i1 %i.vr, label %middle.block838, label %vector.body829, !llvm.loop !41
 
 middle.block838:                                  ; preds = %vector.body829
-  %cmp.n839 = icmp eq i64 %8, %n.vec824
+  %cmp.n839 = icmp eq i64 %10, %n.vec824
   br i1 %cmp.n839, label %.loopexit841, label %scalar.ph821.preheader
 
 scalar.ph821.preheader:                           ; preds = %vector.memcheck802, %bb.an, %middle.block838

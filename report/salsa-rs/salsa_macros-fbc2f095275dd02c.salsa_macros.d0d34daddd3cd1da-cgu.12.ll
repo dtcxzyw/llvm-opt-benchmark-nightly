@@ -1,4 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/salsa-rs/original/salsa_macros-fbc2f095275dd02c.salsa_macros.d0d34daddd3cd1da-cgu.12?download=true
+inline.NumInlined: 93
+inline.NumDeleted: 55
 begin_hunk_0_@_RNvXsg_NtCs3Eghgi3KVFH_3syn10punctuatedINtB5_8PairsMutNtNtB7_8generics14TypeParamBoundNtNtB7_5token4PlusENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextCshVzvyy7iigg_12salsa_macros:bb.a
 
 ; Function Attrs: nonlazybind uwtable
@@ -200,7 +202,6 @@ define hidden void @_RNvXsz_NtCsRujiHMkeh3_11proc_macro23impNtB5_11TokenStreamNt
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
-  %.sroa.0 = alloca [24 x i8], align 8            ; 2 uses
   %i.c = load i64, ptr %1, align 8
   %i.d = icmp eq i64 %i.c, -1
   br i1 %i.d, label %bb.b, label %bb.c
@@ -238,10 +239,9 @@ bb.f:                                             ; preds = %bb.d
   resume { ptr, i32 } %i.j
 
 _RNvXsA_NtCsRujiHMkeh3_11proc_macro23impNtB5_19DeferredTokenStreamNtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCshVzvyy7iigg_12salsa_macros.exit: ; preds = %bb.c
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0, i64 24, i1 false)
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i32 %i.i, ptr %.sroa.2.0..sroa_idx, align 8
   br label %bb.g
@@ -291,7 +291,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 
@@ -460,7 +460,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 
@@ -629,7 +629,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i64 %.sroa.0.0
 
 bb.c:                                             ; preds = %.lr.ph
-  %i.e = sub i64 %1, %.sroa.01.012
+  %i.e = sub nuw i64 %1, %.sroa.01.012
   br label %.loopexit
 }
 
