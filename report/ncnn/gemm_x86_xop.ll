@@ -204,97 +204,16 @@ bb.ac:                                            ; preds = %bb.ab, %.lr.ph1410.
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %bb.ac
-  %.7733.lcssa.i = phi ptr [ %.67321407.i, %bb.ac ], [ %scevgep1627.i, %.preheader.loopexit.i ] ; 2 uses
-  %.1671.lcssa.i = phi i32 [ %.0670.i, %bb.ac ], [ %23, %.preheader.loopexit.i ]
-  %.1668.lcssa.i = phi i32 [ %.0667.i, %bb.ac ], [ %33, %.preheader.loopexit.i ]
-  %.0664.lcssa.i = phi ptr [ %.26751448.i, %bb.ac ], [ %indvars.iv1625.i, %.preheader.loopexit.i ] ; 2 uses
-  %.0662.lcssa.i = phi i32 [ 0, %bb.ac ], [ %i.qv, %.preheader.loopexit.i ] ; 3 uses
-  %9 = add nuw nsw i32 %.0662.lcssa.i, 3
-  %i.bcw = icmp slt i32 %9, %8
-  br i1 %i.bcw, label %.lr.ph1383.i, label %._crit_edge1384.i
+  %.7733.lcssa.i = phi ptr [ %.67321407.i, %bb.ac ], [ %scevgep1627.i, %.preheader.loopexit.i ] ; 24 uses
+  %.1671.lcssa.i = phi i32 [ %.0670.i, %bb.ac ], [ %22, %.preheader.loopexit.i ] ; 4 uses
+  %.1668.lcssa.i = phi i32 [ %.0667.i, %bb.ac ], [ %32, %.preheader.loopexit.i ] ; 4 uses
+  %.0664.lcssa.i = phi ptr [ %.26751448.i, %bb.ac ], [ %indvars.iv1625.i, %.preheader.loopexit.i ] ; 5 uses
+  %.0662.lcssa.i = phi i32 [ 0, %bb.ac ], [ %i.qv, %.preheader.loopexit.i ] ; 5 uses
+  %i.bcw = icmp slt i32 %.0662.lcssa.i, %8
+  br i1 %i.bcw, label %iter.check736, label %._crit_edge1403.i
 
-.lr.ph1366.i:                                     ; preds = %bb.ac, %.lr.ph1366.i
-  %.06621364.i = phi i32 [ %36, %.lr.ph1366.i ], [ 0, %bb.ac ]
-  %.06641363.i = phi ptr [ %34, %.lr.ph1366.i ], [ %.26751448.i, %bb.ac ] ; 3 uses
-  %.16681362.i = phi i32 [ %33, %.lr.ph1366.i ], [ %.0667.i, %bb.ac ]
-  %.16711361.i = phi i32 [ %23, %.lr.ph1366.i ], [ %.0670.i, %bb.ac ]
-  %.77331360.i = phi ptr [ %35, %.lr.ph1366.i ], [ %.67321407.i, %bb.ac ] ; 5 uses
-  %10 = load i8, ptr %.06641363.i, align 1, !tbaa !15
-  %11 = sext i8 %10 to i32                        ; 2 uses
-  %12 = load i8, ptr %.77331360.i, align 1, !tbaa !15
-  %13 = sext i8 %12 to i32
-  %14 = mul nsw i32 %13, %11
-  %15 = add nsw i32 %14, %.16711361.i
-  %16 = getelementptr inbounds nuw i8, ptr %.06641363.i, i64 1
-  %17 = load i8, ptr %16, align 1, !tbaa !15
-  %18 = sext i8 %17 to i32                        ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 1
-  %20 = load i8, ptr %19, align 1, !tbaa !15
-  %21 = sext i8 %20 to i32
-  %22 = mul nsw i32 %21, %18
-  %23 = add nsw i32 %15, %22                      ; 2 uses
-  %24 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 2
-  %25 = load i8, ptr %24, align 1, !tbaa !15
-  %26 = sext i8 %25 to i32
-  %27 = mul nsw i32 %26, %11
-  %28 = add nsw i32 %27, %.16681362.i
-  %29 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 3
-  %30 = load i8, ptr %29, align 1, !tbaa !15
-  %31 = sext i8 %30 to i32
-  %32 = mul nsw i32 %31, %18
-  %33 = add nsw i32 %28, %32                      ; 2 uses
-  %34 = getelementptr inbounds nuw i8, ptr %.06641363.i, i64 2
-  %35 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 4
-  %36 = add nuw nsw i32 %.06621364.i, 2           ; 2 uses
-  %37 = or disjoint i32 %36, 1
-  %38 = icmp slt i32 %37, %8
-  br i1 %38, label %.lr.ph1366.i, label %.preheader.loopexit.i, !llvm.loop !59
-
-.lr.ph1383.i:                                     ; preds = %.preheader.i, %.lr.ph1383.i
-  %.16631374.i = phi i32 [ %49, %.lr.ph1383.i ], [ %.0662.lcssa.i, %.preheader.i ] ; 2 uses
-  %.16651373.i = phi ptr [ %47, %.lr.ph1383.i ], [ %.0664.lcssa.i, %.preheader.i ] ; 2 uses
-  %.87341372.i = phi ptr [ %48, %.lr.ph1383.i ], [ %.7733.lcssa.i, %.preheader.i ] ; 2 uses
-  %39 = phi <8 x i32> [ %46, %.lr.ph1383.i ], [ zeroinitializer, %.preheader.i ]
-  %40 = load <4 x i8>, ptr %.16651373.i, align 1, !tbaa !15
-  %41 = shufflevector <4 x i8> %40, <4 x i8> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  %42 = sext <8 x i8> %41 to <8 x i32>
-  %43 = load <8 x i8>, ptr %.87341372.i, align 1, !tbaa !15
-  %44 = sext <8 x i8> %43 to <8 x i32>
-  %45 = mul nsw <8 x i32> %44, %42
-  %46 = add nsw <8 x i32> %45, %39                ; 2 uses
-  %47 = getelementptr inbounds nuw i8, ptr %.16651373.i, i64 4 ; 2 uses
-  %48 = getelementptr inbounds nuw i8, ptr %.87341372.i, i64 8 ; 2 uses
-  %49 = add nuw nsw i32 %.16631374.i, 4           ; 2 uses
-  %50 = add nuw nsw i32 %.16631374.i, 7
-  %51 = icmp slt i32 %50, %8
-  br i1 %51, label %.lr.ph1383.i, label %._crit_edge1384.i, !llvm.loop !60
-
-._crit_edge1384.i:                                ; preds = %.lr.ph1383.i, %.preheader.i
-  %.8734.lcssa.i = phi ptr [ %.7733.lcssa.i, %.preheader.i ], [ %48, %.lr.ph1383.i ] ; 24 uses
-  %.1665.lcssa.i = phi ptr [ %.0664.lcssa.i, %.preheader.i ], [ %47, %.lr.ph1383.i ] ; 5 uses
-  %.1663.lcssa.i = phi i32 [ %.0662.lcssa.i, %.preheader.i ], [ %49, %.lr.ph1383.i ] ; 5 uses
-  %52 = phi <8 x i32> [ zeroinitializer, %.preheader.i ], [ %46, %.lr.ph1383.i ] ; 8 uses
-  %53 = extractelement <8 x i32> %52, i64 0
-  %54 = add i32 %53, %.1671.lcssa.i
-  %55 = extractelement <8 x i32> %52, i64 2
-  %56 = add i32 %54, %55
-  %57 = extractelement <8 x i32> %52, i64 4
-  %58 = add i32 %56, %57
-  %59 = extractelement <8 x i32> %52, i64 6
-  %60 = add i32 %58, %59                          ; 4 uses
-  %61 = extractelement <8 x i32> %52, i64 1
-  %62 = add i32 %61, %.1668.lcssa.i
-  %63 = extractelement <8 x i32> %52, i64 3
-  %64 = add i32 %62, %63
-  %65 = extractelement <8 x i32> %52, i64 5
-  %66 = add i32 %64, %65
-  %67 = extractelement <8 x i32> %52, i64 7
-  %68 = add i32 %66, %67                          ; 4 uses
-  %69 = icmp slt i32 %.1663.lcssa.i, %8
-  br i1 %69, label %iter.check736, label %._crit_edge1403.i
-
-iter.check736:                                    ; preds = %._crit_edge1384.i
-  %i.bcx = xor i32 %.1663.lcssa.i, -1
+iter.check736:                                    ; preds = %.preheader.i
+  %i.bcx = xor i32 %.0662.lcssa.i, -1
   %i.bcy = add i32 %8, %i.bcx                     ; 3 uses
   %i.bcz = zext i32 %i.bcy to i64
   %i.bda = add nuw nsw i64 %i.bcz, 1              ; 5 uses
@@ -309,12 +228,12 @@ vector.ph688:                                     ; preds = %vector.main.loop.it
   %i.bdb = and i64 %i.bda, 12
   %n.vec689 = and i64 %i.bda, 8589934576          ; 6 uses
   %i.bdc = trunc i64 %n.vec689 to i32
-  %i.bdd = add i32 %.1663.lcssa.i, %i.bdc
-  %i.bde = getelementptr i8, ptr %.1665.lcssa.i, i64 %n.vec689
+  %i.bdd = add i32 %.0662.lcssa.i, %i.bdc
+  %i.bde = getelementptr i8, ptr %.0664.lcssa.i, i64 %n.vec689
   %i.bdf = shl nuw nsw i64 %n.vec689, 1
-  %i.bdg = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdf ; 2 uses
-  %i.bdh = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %68, i64 0
-  %i.bdi = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %60, i64 0
+  %i.bdg = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdf ; 2 uses
+  %i.bdh = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1668.lcssa.i, i64 0
+  %i.bdi = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.1671.lcssa.i, i64 0
   br label %vector.body690
 
 vector.body690:                                   ; preds = %vector.body690, %vector.ph688
@@ -327,38 +246,38 @@ vector.body690:                                   ; preds = %vector.body690, %ve
   %vec.phi697 = phi <4 x i32> [ zeroinitializer, %vector.ph688 ], [ %i.bfv, %vector.body690 ]
   %vec.phi698 = phi <4 x i32> [ zeroinitializer, %vector.ph688 ], [ %i.bfw, %vector.body690 ]
   %vec.phi699 = phi <4 x i32> [ zeroinitializer, %vector.ph688 ], [ %i.bfx, %vector.body690 ]
-  %next.gep700 = getelementptr i8, ptr %.1665.lcssa.i, i64 %index691 ; 4 uses
+  %next.gep700 = getelementptr i8, ptr %.0664.lcssa.i, i64 %index691 ; 4 uses
   %i.bdj = shl i64 %index691, 1                   ; 16 uses
-  %next.gep701 = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
-  %i.bdk = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %next.gep701 = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdk = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep702.a = getelementptr i8, ptr %i.bdk, i64 2
-  %i.bdl = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdl = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep703.a = getelementptr i8, ptr %i.bdl, i64 4
-  %i.bdm = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdm = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep704.a = getelementptr i8, ptr %i.bdm, i64 6
-  %i.bdn = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdn = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep705.a = getelementptr i8, ptr %i.bdn, i64 8
-  %i.bdo = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdo = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep706.a = getelementptr i8, ptr %i.bdo, i64 10
-  %i.bdp = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdp = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep707 = getelementptr i8, ptr %i.bdp, i64 12
-  %i.bdq = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdq = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep708 = getelementptr i8, ptr %i.bdq, i64 14
-  %i.bdr = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdr = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep709 = getelementptr i8, ptr %i.bdr, i64 16
-  %i.bds = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bds = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep710 = getelementptr i8, ptr %i.bds, i64 18
-  %i.bdt = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdt = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep711 = getelementptr i8, ptr %i.bdt, i64 20
-  %i.bdu = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdu = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep712 = getelementptr i8, ptr %i.bdu, i64 22
-  %i.bdv = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdv = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep713 = getelementptr i8, ptr %i.bdv, i64 24
-  %i.bdw = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdw = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep714 = getelementptr i8, ptr %i.bdw, i64 26
-  %i.bdx = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdx = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep715 = getelementptr i8, ptr %i.bdx, i64 28
-  %i.bdy = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bdj ; 2 uses
+  %i.bdy = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bdj ; 2 uses
   %next.gep716 = getelementptr i8, ptr %i.bdy, i64 30
   %i.bdz = getelementptr i8, ptr %next.gep700, i64 4
   %i.bea = getelementptr i8, ptr %next.gep700, i64 8
@@ -477,7 +396,7 @@ vector.body690:                                   ; preds = %vector.body690, %ve
   %i.bif = add <4 x i32> %i.bib, %vec.phi695      ; 2 uses
   %index.next721 = add nuw i64 %index691, 16      ; 2 uses
   %i.big = icmp eq i64 %index.next721, %n.vec689
-  br i1 %i.big, label %middle.block722, label %vector.body690, !llvm.loop !61
+  br i1 %i.big, label %middle.block722, label %vector.body690, !llvm.loop !59
 
 middle.block722:                                  ; preds = %vector.body690
   %bin.rdx723 = add <4 x i32> %i.bid, %i.bic
@@ -497,14 +416,14 @@ vec.epilog.iter.check738:                         ; preds = %middle.block722
 
 vec.epilog.ph740:                                 ; preds = %vector.main.loop.iter.check686, %vec.epilog.iter.check738
   %vec.epilog.resume.val730 = phi i64 [ %n.vec689, %vec.epilog.iter.check738 ], [ 0, %vector.main.loop.iter.check686 ]
-  %bc.merge.rdx733 = phi i32 [ %i.bih, %vec.epilog.iter.check738 ], [ %68, %vector.main.loop.iter.check686 ]
-  %bc.merge.rdx734 = phi i32 [ %i.bii, %vec.epilog.iter.check738 ], [ %60, %vector.main.loop.iter.check686 ]
+  %bc.merge.rdx733 = phi i32 [ %i.bih, %vec.epilog.iter.check738 ], [ %.1668.lcssa.i, %vector.main.loop.iter.check686 ]
+  %bc.merge.rdx734 = phi i32 [ %i.bii, %vec.epilog.iter.check738 ], [ %.1671.lcssa.i, %vector.main.loop.iter.check686 ]
   %n.vec741 = and i64 %i.bda, 8589934588          ; 5 uses
   %i.bij = trunc i64 %n.vec741 to i32
-  %i.bik = add i32 %.1663.lcssa.i, %i.bij
-  %i.bil = getelementptr i8, ptr %.1665.lcssa.i, i64 %n.vec741
+  %i.bik = add i32 %.0662.lcssa.i, %i.bij
+  %i.bil = getelementptr i8, ptr %.0664.lcssa.i, i64 %n.vec741
   %i.bim = shl nuw nsw i64 %n.vec741, 1
-  %i.bin = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.bim ; 2 uses
+  %i.bin = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.bim ; 2 uses
   %i.bio = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx733, i64 0
   %i.bip = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx734, i64 0
   br label %vec.epilog.vector.body742
@@ -513,14 +432,14 @@ vec.epilog.vector.body742:                        ; preds = %vec.epilog.vector.b
   %index743 = phi i64 [ %vec.epilog.resume.val730, %vec.epilog.ph740 ], [ %index.next752, %vec.epilog.vector.body742 ] ; 3 uses
   %vec.phi744 = phi <4 x i32> [ %i.bio, %vec.epilog.ph740 ], [ %i.bju, %vec.epilog.vector.body742 ]
   %vec.phi745 = phi <4 x i32> [ %i.bip, %vec.epilog.ph740 ], [ %i.bjf, %vec.epilog.vector.body742 ]
-  %next.gep746 = getelementptr i8, ptr %.1665.lcssa.i, i64 %index743
+  %next.gep746 = getelementptr i8, ptr %.0664.lcssa.i, i64 %index743
   %i.biq = shl i64 %index743, 1                   ; 4 uses
-  %next.gep747 = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.biq ; 2 uses
-  %i.bir = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.biq ; 2 uses
+  %next.gep747 = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.biq ; 2 uses
+  %i.bir = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.biq ; 2 uses
   %next.gep748 = getelementptr i8, ptr %i.bir, i64 2
-  %i.bis = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.biq ; 2 uses
+  %i.bis = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.biq ; 2 uses
   %next.gep749 = getelementptr i8, ptr %i.bis, i64 4
-  %i.bit = getelementptr i8, ptr %.8734.lcssa.i, i64 %i.biq ; 2 uses
+  %i.bit = getelementptr i8, ptr %.7733.lcssa.i, i64 %i.biq ; 2 uses
   %next.gep750 = getelementptr i8, ptr %i.bit, i64 6
   %wide.load751 = load <4 x i8>, ptr %next.gep746, align 1, !tbaa !15
   %i.biu = sext <4 x i8> %wide.load751 to <4 x i32> ; 2 uses
@@ -552,7 +471,7 @@ vec.epilog.vector.body742:                        ; preds = %vec.epilog.vector.b
   %i.bju = add <4 x i32> %i.bjt, %vec.phi744      ; 2 uses
   %index.next752 = add nuw i64 %index743, 4       ; 2 uses
   %i.bjv = icmp eq i64 %index.next752, %n.vec741
-  br i1 %i.bjv, label %vec.epilog.middle.block753, label %vec.epilog.vector.body742, !llvm.loop !62
+  br i1 %i.bjv, label %vec.epilog.middle.block753, label %vec.epilog.vector.body742, !llvm.loop !60
 
 vec.epilog.middle.block753:                       ; preds = %vec.epilog.vector.body742
   %i.bjw = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.bju) ; 2 uses
@@ -561,12 +480,49 @@ vec.epilog.middle.block753:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n754, label %._crit_edge1403.i, label %.lr.ph1402.i.preheader
 
 .lr.ph1402.i.preheader:                           ; preds = %iter.check736, %vec.epilog.iter.check738, %vec.epilog.middle.block753
-  %.21400.i.ph = phi i32 [ %.1663.lcssa.i, %iter.check736 ], [ %i.bdd, %vec.epilog.iter.check738 ], [ %i.bik, %vec.epilog.middle.block753 ]
-  %.26661399.i.ph = phi ptr [ %.1665.lcssa.i, %iter.check736 ], [ %i.bde, %vec.epilog.iter.check738 ], [ %i.bil, %vec.epilog.middle.block753 ]
-  %.26691398.i.ph = phi i32 [ %68, %iter.check736 ], [ %i.bih, %vec.epilog.iter.check738 ], [ %i.bjw, %vec.epilog.middle.block753 ]
-  %.26721397.i.ph = phi i32 [ %60, %iter.check736 ], [ %i.bii, %vec.epilog.iter.check738 ], [ %i.bjx, %vec.epilog.middle.block753 ]
-  %.97351396.i.ph = phi ptr [ %.8734.lcssa.i, %iter.check736 ], [ %i.bdg, %vec.epilog.iter.check738 ], [ %i.bin, %vec.epilog.middle.block753 ]
+  %.21400.i.ph = phi i32 [ %.0662.lcssa.i, %iter.check736 ], [ %i.bdd, %vec.epilog.iter.check738 ], [ %i.bik, %vec.epilog.middle.block753 ]
+  %.26661399.i.ph = phi ptr [ %.0664.lcssa.i, %iter.check736 ], [ %i.bde, %vec.epilog.iter.check738 ], [ %i.bil, %vec.epilog.middle.block753 ]
+  %.26691398.i.ph = phi i32 [ %.1668.lcssa.i, %iter.check736 ], [ %i.bih, %vec.epilog.iter.check738 ], [ %i.bjw, %vec.epilog.middle.block753 ]
+  %.26721397.i.ph = phi i32 [ %.1671.lcssa.i, %iter.check736 ], [ %i.bii, %vec.epilog.iter.check738 ], [ %i.bjx, %vec.epilog.middle.block753 ]
+  %.97351396.i.ph = phi ptr [ %.7733.lcssa.i, %iter.check736 ], [ %i.bdg, %vec.epilog.iter.check738 ], [ %i.bin, %vec.epilog.middle.block753 ]
   br label %.lr.ph1402.i
+
+.lr.ph1366.i:                                     ; preds = %bb.ac, %.lr.ph1366.i
+  %.06621364.i = phi i32 [ %35, %.lr.ph1366.i ], [ 0, %bb.ac ]
+  %.06641363.i = phi ptr [ %33, %.lr.ph1366.i ], [ %.26751448.i, %bb.ac ] ; 3 uses
+  %.16681362.i = phi i32 [ %32, %.lr.ph1366.i ], [ %.0667.i, %bb.ac ]
+  %.16711361.i = phi i32 [ %22, %.lr.ph1366.i ], [ %.0670.i, %bb.ac ]
+  %.77331360.i = phi ptr [ %34, %.lr.ph1366.i ], [ %.67321407.i, %bb.ac ] ; 5 uses
+  %9 = load i8, ptr %.06641363.i, align 1, !tbaa !15
+  %10 = sext i8 %9 to i32                         ; 2 uses
+  %11 = load i8, ptr %.77331360.i, align 1, !tbaa !15
+  %12 = sext i8 %11 to i32
+  %13 = mul nsw i32 %12, %10
+  %14 = add nsw i32 %13, %.16711361.i
+  %15 = getelementptr inbounds nuw i8, ptr %.06641363.i, i64 1
+  %16 = load i8, ptr %15, align 1, !tbaa !15
+  %17 = sext i8 %16 to i32                        ; 2 uses
+  %18 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 1
+  %19 = load i8, ptr %18, align 1, !tbaa !15
+  %20 = sext i8 %19 to i32
+  %21 = mul nsw i32 %20, %17
+  %22 = add nsw i32 %14, %21                      ; 2 uses
+  %23 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 2
+  %24 = load i8, ptr %23, align 1, !tbaa !15
+  %25 = sext i8 %24 to i32
+  %26 = mul nsw i32 %25, %10
+  %27 = add nsw i32 %26, %.16681362.i
+  %28 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 3
+  %29 = load i8, ptr %28, align 1, !tbaa !15
+  %30 = sext i8 %29 to i32
+  %31 = mul nsw i32 %30, %17
+  %32 = add nsw i32 %27, %31                      ; 2 uses
+  %33 = getelementptr inbounds nuw i8, ptr %.06641363.i, i64 2
+  %34 = getelementptr inbounds nuw i8, ptr %.77331360.i, i64 4
+  %35 = add nuw nsw i32 %.06621364.i, 2           ; 2 uses
+  %36 = or disjoint i32 %35, 1
+  %37 = icmp slt i32 %36, %8
+  br i1 %37, label %.lr.ph1366.i, label %.preheader.loopexit.i, !llvm.loop !61
 
 .lr.ph1402.i:                                     ; preds = %.lr.ph1402.i.preheader, %.lr.ph1402.i
   %.21400.i = phi i32 [ %i.bkl, %.lr.ph1402.i ], [ %.21400.i.ph, %.lr.ph1402.i.preheader ]
@@ -589,12 +545,12 @@ vec.epilog.middle.block753:                       ; preds = %vec.epilog.vector.b
   %i.bkk = getelementptr inbounds nuw i8, ptr %.97351396.i, i64 2 ; 2 uses
   %i.bkl = add nuw nsw i32 %.21400.i, 1           ; 2 uses
   %exitcond1628.not.i = icmp eq i32 %i.bkl, %8
-  br i1 %exitcond1628.not.i, label %._crit_edge1403.i, label %.lr.ph1402.i, !llvm.loop !63
+  br i1 %exitcond1628.not.i, label %._crit_edge1403.i, label %.lr.ph1402.i, !llvm.loop !62
 
-._crit_edge1403.i:                                ; preds = %.lr.ph1402.i, %middle.block722, %vec.epilog.middle.block753, %._crit_edge1384.i
-  %.9735.lcssa.i = phi ptr [ %.8734.lcssa.i, %._crit_edge1384.i ], [ %i.bin, %vec.epilog.middle.block753 ], [ %i.bdg, %middle.block722 ], [ %i.bkk, %.lr.ph1402.i ] ; 2 uses
-  %.2672.lcssa.i = phi i32 [ %60, %._crit_edge1384.i ], [ %i.bjx, %vec.epilog.middle.block753 ], [ %i.bii, %middle.block722 ], [ %i.bkd, %.lr.ph1402.i ]
-  %.2669.lcssa.i = phi i32 [ %68, %._crit_edge1384.i ], [ %i.bjw, %vec.epilog.middle.block753 ], [ %i.bih, %middle.block722 ], [ %i.bki, %.lr.ph1402.i ]
+._crit_edge1403.i:                                ; preds = %.lr.ph1402.i, %middle.block722, %vec.epilog.middle.block753, %.preheader.i
+  %.9735.lcssa.i = phi ptr [ %.7733.lcssa.i, %.preheader.i ], [ %i.bin, %vec.epilog.middle.block753 ], [ %i.bdg, %middle.block722 ], [ %i.bkk, %.lr.ph1402.i ] ; 2 uses
+  %.2672.lcssa.i = phi i32 [ %.1671.lcssa.i, %.preheader.i ], [ %i.bjx, %vec.epilog.middle.block753 ], [ %i.bii, %middle.block722 ], [ %i.bkd, %.lr.ph1402.i ]
+  %.2669.lcssa.i = phi i32 [ %.1668.lcssa.i, %.preheader.i ], [ %i.bjw, %vec.epilog.middle.block753 ], [ %i.bih, %middle.block722 ], [ %i.bki, %.lr.ph1402.i ]
   store i32 %.2672.lcssa.i, ptr %.131409.i, align 4, !tbaa !38
   %i.bkm = getelementptr inbounds nuw i8, ptr %.131409.i, i64 4
   store i32 %.2669.lcssa.i, ptr %i.bkm, align 4, !tbaa !38
@@ -602,7 +558,7 @@ vec.epilog.middle.block753:                       ; preds = %vec.epilog.vector.b
   %i.bko = add nuw nsw i32 %.27241408.i, 2        ; 3 uses
   %i.bkp = or disjoint i32 %i.bko, 1
   %i.bkq = icmp slt i32 %i.bkp, %6
-  br i1 %i.bkq, label %.lr.ph1410.i, label %.preheader1003.i, !llvm.loop !64
+  br i1 %i.bkq, label %.lr.ph1410.i, label %.preheader1003.i, !llvm.loop !63
 
 .lr.ph1443.i:                                     ; preds = %.preheader1003.i, %._crit_edge1437.i
   %.141442.i = phi ptr [ %i.bnw, %._crit_edge1437.i ], [ %.13.lcssa.i, %.preheader1003.i ] ; 3 uses
@@ -644,7 +600,7 @@ bb.ae:                                            ; preds = %bb.ad, %.lr.ph1443.
   %i.bli = getelementptr inbounds nuw i8, ptr %.117371414.i, i64 8 ; 3 uses
   %niter1000.next.1 = add i32 %niter1000, 2       ; 2 uses
   %niter1000.ncmp.1.not = icmp eq i32 %niter1000.next.1, %unroll_iter999
-  br i1 %niter1000.ncmp.1.not, label %._crit_edge1423.i.loopexit.unr-lcssa, label %.lr.ph1422.i, !llvm.loop !65
+  br i1 %niter1000.ncmp.1.not, label %._crit_edge1423.i.loopexit.unr-lcssa, label %.lr.ph1422.i, !llvm.loop !64
 
 ._crit_edge1423.i.loopexit.unr-lcssa:             ; preds = %.lr.ph1422.i
   br i1 %lcmp.mod994.not.not, label %.lr.ph1422.i.epil.preheader, label %._crit_edge1423.i.loopexit
@@ -742,7 +698,7 @@ vector.body637:                                   ; preds = %vector.body637, %ve
   %i.bmz = add <4 x i32> %i.bmv, %vec.phi642      ; 2 uses
   %index.next653 = add nuw i64 %index638, 16      ; 2 uses
   %i.bna = icmp eq i64 %index.next653, %n.vec636
-  br i1 %i.bna, label %middle.block654, label %vector.body637, !llvm.loop !66
+  br i1 %i.bna, label %middle.block654, label %vector.body637, !llvm.loop !65
 
 middle.block654:                                  ; preds = %vector.body637
   %bin.rdx655 = add <4 x i32> %i.bmx, %i.bmw
@@ -780,7 +736,7 @@ vec.epilog.vector.body670:                        ; preds = %vec.epilog.vector.b
   %i.bnk = add <4 x i32> %i.bnj, %vec.phi672      ; 2 uses
   %index.next677 = add nuw i64 %index671, 4       ; 2 uses
   %i.bnl = icmp eq i64 %index.next677, %n.vec669
-  br i1 %i.bnl, label %vec.epilog.middle.block678, label %vec.epilog.vector.body670, !llvm.loop !67
+  br i1 %i.bnl, label %vec.epilog.middle.block678, label %vec.epilog.vector.body670, !llvm.loop !66
 
 vec.epilog.middle.block678:                       ; preds = %vec.epilog.vector.body670
   %i.bnm = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.bnk) ; 2 uses
@@ -809,7 +765,7 @@ vec.epilog.middle.block678:                       ; preds = %vec.epilog.vector.b
   %i.bnu = getelementptr inbounds nuw i8, ptr %.127381431.i, i64 1 ; 2 uses
   %i.bnv = add nuw nsw i32 %.11434.i, 1           ; 2 uses
   %exitcond1629.not.i = icmp eq i32 %i.bnv, %8
-  br i1 %exitcond1629.not.i, label %._crit_edge1437.i, label %.lr.ph1436.i, !llvm.loop !68
+  br i1 %exitcond1629.not.i, label %._crit_edge1437.i, label %.lr.ph1436.i, !llvm.loop !67
 
 ._crit_edge1437.i:                                ; preds = %.lr.ph1436.i, %middle.block654, %vec.epilog.middle.block678, %._crit_edge1423.i
   %.12738.lcssa.i = phi ptr [ %.11737.lcssa.i, %._crit_edge1423.i ], [ %i.bnf, %vec.epilog.middle.block678 ], [ %i.bmc, %middle.block654 ], [ %i.bnu, %.lr.ph1436.i ]
@@ -818,7 +774,7 @@ vec.epilog.middle.block678:                       ; preds = %vec.epilog.vector.b
   %i.bnw = getelementptr inbounds nuw i8, ptr %.141442.i, i64 4 ; 2 uses
   %i.bnx = add nuw nsw i32 %.37251441.i, 1        ; 2 uses
   %exitcond1630.not.i = icmp eq i32 %i.bnx, %6
-  br i1 %exitcond1630.not.i, label %._crit_edge1444.i, label %.lr.ph1443.i, !llvm.loop !69
+  br i1 %exitcond1630.not.i, label %._crit_edge1444.i, label %.lr.ph1443.i, !llvm.loop !68
 
 ._crit_edge1444.i:                                ; preds = %._crit_edge1437.i, %.preheader1003.i
   %.14.lcssa.i = phi ptr [ %.13.lcssa.i, %.preheader1003.i ], [ %i.bnw, %._crit_edge1437.i ]
@@ -826,7 +782,7 @@ vec.epilog.middle.block678:                       ; preds = %vec.epilog.vector.b
   %i.bnz = add nuw nsw i32 %.26811446.i, 1        ; 2 uses
   %scevgep1626.i = getelementptr i8, ptr %indvars.iv1625.i, i64 %i.qs
   %exitcond1631.not.i = icmp eq i32 %i.bnz, %4
-  br i1 %exitcond1631.not.i, label %_ZN4ncnnL28gemm_transB_packed_tile_int8ERKNS_3MatES2_RS0_iiiiii.exit, label %.preheader1006.i, !llvm.loop !70
+  br i1 %exitcond1631.not.i, label %_ZN4ncnnL28gemm_transB_packed_tile_int8ERKNS_3MatES2_RS0_iiiiii.exit, label %.preheader1006.i, !llvm.loop !69
 
 _ZN4ncnnL28gemm_transB_packed_tile_int8ERKNS_3MatES2_RS0_iiiiii.exit: ; preds = %._crit_edge1444.i, %bb.b, %bb.d, %bb.f, %.preheader1007.i
   ret void
@@ -928,16 +884,15 @@ attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !56 = distinct !{!56, !17}
 !57 = distinct !{!57, !17}
 !58 = distinct !{!58, !17}
-!59 = distinct !{!59, !17}
-!60 = distinct !{!60, !17}
-!61 = distinct !{!61, !17, !40, !41}
-!62 = distinct !{!62, !17, !40, !41}
-!63 = distinct !{!63, !17, !41, !40}
+!59 = distinct !{!59, !17, !40, !41}
+!60 = distinct !{!60, !17, !40, !41}
+!61 = distinct !{!61, !17}
+!62 = distinct !{!62, !17, !41, !40}
+!63 = distinct !{!63, !17}
 !64 = distinct !{!64, !17}
-!65 = distinct !{!65, !17}
+!65 = distinct !{!65, !17, !40, !41}
 !66 = distinct !{!66, !17, !40, !41}
-!67 = distinct !{!67, !17, !40, !41}
-!68 = distinct !{!68, !17, !41, !40}
+!67 = distinct !{!67, !17, !41, !40}
+!68 = distinct !{!68, !17}
 !69 = distinct !{!69, !17}
-!70 = distinct !{!70, !17}
 end_hunk_0

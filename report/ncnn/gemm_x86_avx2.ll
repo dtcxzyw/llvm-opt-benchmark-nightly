@@ -204,543 +204,191 @@ vec.epilog.middle.block1044:                      ; preds = %vec.epilog.vector.b
   %.17711705.i.ph = phi i32 [ %.0770.i, %iter.check1023 ], [ %i.bgq, %vec.epilog.iter.check1025 ], [ %i.bhm, %vec.epilog.middle.block1044 ]
   %.17741704.i.ph = phi i32 [ %.0773.i, %iter.check1023 ], [ %i.bgr, %vec.epilog.iter.check1025 ], [ %i.bhn, %vec.epilog.middle.block1044 ]
   %.78321703.i.ph = phi ptr [ %.68311750.i, %iter.check1023 ], [ %i.bfg, %vec.epilog.iter.check1025 ], [ %i.bgs, %vec.epilog.middle.block1044 ]
-  br label %.lr.ph1709.i.a
+  br label %vector.body886
 
-.preheader.loopexit.i:                            ; preds = %.lr.ph1709.i.a, %vec.epilog.middle.block1044, %middle.block1013
-  %.lcssa500 = phi i32 [ %i.bhn, %vec.epilog.middle.block1044 ], [ %i.bgr, %middle.block1013 ], [ %251, %.lr.ph1709.i.a ]
-  %.lcssa499 = phi i32 [ %i.bhm, %vec.epilog.middle.block1044 ], [ %i.bgq, %middle.block1013 ], [ %259, %.lr.ph1709.i.a ]
+.preheader.loopexit.i:                            ; preds = %vector.body886, %vec.epilog.middle.block1044, %middle.block1013
+  %.lcssa500 = phi i32 [ %i.bhn, %vec.epilog.middle.block1044 ], [ %i.bgr, %middle.block1013 ], [ %46, %vector.body886 ]
+  %.lcssa499 = phi i32 [ %i.bhm, %vec.epilog.middle.block1044 ], [ %i.bgq, %middle.block1013 ], [ %56, %vector.body886 ]
   %i.bho = getelementptr i8, ptr %.68311750.i, i64 %i.aee
   %scevgep2022.i = getelementptr i8, ptr %i.bho, i64 4
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.loopexit.i, %bb.ai
-  %.7832.lcssa.i = phi ptr [ %.68311750.i, %bb.ai ], [ %scevgep2022.i, %.preheader.loopexit.i ] ; 11 uses
-  %.1774.lcssa.i = phi i32 [ %.0773.i, %bb.ai ], [ %.lcssa500, %.preheader.loopexit.i ]
-  %.1771.lcssa.i = phi i32 [ %.0770.i, %bb.ai ], [ %.lcssa499, %.preheader.loopexit.i ]
-  %.0767.lcssa.i = phi ptr [ %.31791.i, %bb.ai ], [ %indvars.iv2020.i, %.preheader.loopexit.i ] ; 4 uses
-  %.0765.lcssa.i = phi i32 [ 0, %bb.ai ], [ %i.adx, %.preheader.loopexit.i ] ; 6 uses
-  %9 = add nuw nsw i32 %.0765.lcssa.i, 3
-  %i.bhp = icmp slt i32 %9, %8
-  br i1 %i.bhp, label %.lr.ph1726.i.preheader, label %._crit_edge1727.i
+  %.7832.lcssa.i = phi ptr [ %.68311750.i, %bb.ai ], [ %scevgep2022.i, %.preheader.loopexit.i ] ; 7 uses
+  %.1774.lcssa.i = phi i32 [ %.0773.i, %bb.ai ], [ %.lcssa500, %.preheader.loopexit.i ] ; 4 uses
+  %.1771.lcssa.i = phi i32 [ %.0770.i, %bb.ai ], [ %.lcssa499, %.preheader.loopexit.i ] ; 4 uses
+  %.0767.lcssa.i = phi ptr [ %.31791.i, %bb.ai ], [ %indvars.iv2020.i, %.preheader.loopexit.i ] ; 5 uses
+  %.0765.lcssa.i = phi i32 [ 0, %bb.ai ], [ %i.adx, %.preheader.loopexit.i ] ; 5 uses
+  %i.bhp = icmp slt i32 %.0765.lcssa.i, %8
+  br i1 %i.bhp, label %.lr.ph1726.i.preheader, label %._crit_edge1746.i
 
 .lr.ph1726.i.preheader:                           ; preds = %.preheader.i
-  %10 = add i32 %.0765.lcssa.i, 7
-  %11 = tail call i32 @llvm.smax.i32(i32 %8, i32 %10)
-  %i.bhq = add i32 %11, -4
-  %12 = sub i32 %i.bhq, %.0765.lcssa.i            ; 2 uses
-  %13 = lshr i32 %12, 2
-  %narrow = add nuw nsw i32 %13, 1
-  %14 = zext nneg i32 %narrow to i64              ; 2 uses
-  %min.iters.check939 = icmp ult i32 %12, 28
-  br i1 %min.iters.check939, label %.lr.ph1726.i.preheader1053, label %vector.ph940
+  %9 = xor i32 %.0765.lcssa.i, -1
+  %i.bhq = add i32 %8, %9                         ; 3 uses
+  %10 = zext i32 %i.bhq to i64
+  %11 = add nuw nsw i64 %10, 1                    ; 5 uses
+  %min.iters.check939 = icmp ult i32 %i.bhq, 3
+  br i1 %min.iters.check939, label %vector.ph884, label %vector.main.loop.iter.check838
 
-vector.ph940:                                     ; preds = %.lr.ph1726.i.preheader
-  %n.vec941 = and i64 %14, 2147483640             ; 5 uses
-  %i.bhr = trunc nuw nsw i64 %n.vec941 to i32
-  %15 = shl i32 %i.bhr, 2
-  %16 = add i32 %.0765.lcssa.i, %15               ; 2 uses
-  %i.bhs = shl nuw nsw i64 %n.vec941, 2
-  %i.bht = getelementptr i8, ptr %.0767.lcssa.i, i64 %i.bhs ; 2 uses
-  %17 = shl nuw nsw i64 %n.vec941, 3
-  %18 = getelementptr i8, ptr %.7832.lcssa.i, i64 %17 ; 2 uses
+vector.main.loop.iter.check838:                   ; preds = %.lr.ph1726.i.preheader
+  %min.iters.check839 = icmp ult i32 %i.bhq, 15
+  br i1 %min.iters.check839, label %.lr.ph1709.i.a, label %vector.ph940
+
+vector.ph940:                                     ; preds = %vector.main.loop.iter.check838
+  %12 = and i64 %11, 12
+  %n.vec941 = and i64 %11, 8589934576             ; 6 uses
+  %i.bhr = trunc i64 %n.vec941 to i32
+  %13 = add i32 %.0765.lcssa.i, %i.bhr
+  %14 = getelementptr i8, ptr %.0767.lcssa.i, i64 %n.vec941
+  %i.bhs = shl nuw nsw i64 %n.vec941, 1
+  %i.bht = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhs ; 2 uses
+  %15 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.1771.lcssa.i, i64 0
+  %16 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %.1774.lcssa.i, i64 0
   br label %vector.body942
 
 vector.body942:                                   ; preds = %vector.body942, %vector.ph940
   %index943 = phi i64 [ 0, %vector.ph940 ], [ %index.next966, %vector.body942 ] ; 3 uses
-  %vec.phi944 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %i.bij, %vector.body942 ]
-  %vec.phi945 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %172, %vector.body942 ]
-  %vec.phi946 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %i.bid, %vector.body942 ]
-  %vec.phi947 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %69, %vector.body942 ]
-  %vec.phi948 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %i.bii, %vector.body942 ]
-  %vec.phi949 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %i.bie, %vector.body942 ]
-  %vec.phi950 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %94, %vector.body942 ]
-  %vec.phi951 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %42, %vector.body942 ]
-  %19 = shl i64 %index943, 2
-  %next.gep952 = getelementptr i8, ptr %.0767.lcssa.i, i64 %19
-  %i.bhu = shl i64 %index943, 3                   ; 8 uses
-  %next.gep953 = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %20 = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %next.gep954 = getelementptr i8, ptr %20, i64 8
-  %21 = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %next.gep955 = getelementptr i8, ptr %21, i64 16
-  %22 = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %next.gep956 = getelementptr i8, ptr %22, i64 24
-  %23 = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %next.gep957 = getelementptr i8, ptr %23, i64 32
-  %24 = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %next.gep958 = getelementptr i8, ptr %24, i64 40
-  %i.bhv = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %next.gep959 = getelementptr i8, ptr %i.bhv, i64 48
-  %i.bhw = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu ; 8 uses
-  %next.gep960 = getelementptr i8, ptr %i.bhw, i64 56
-  %wide.vec961 = load <32 x i8>, ptr %next.gep952, align 1, !tbaa !17 ; 4 uses
-  %strided.vec962 = shufflevector <32 x i8> %wide.vec961, <32 x i8> poison, <8 x i32> <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %strided.vec963 = shufflevector <32 x i8> %wide.vec961, <32 x i8> poison, <8 x i32> <i32 1, i32 5, i32 9, i32 13, i32 17, i32 21, i32 25, i32 29>
-  %strided.vec964 = shufflevector <32 x i8> %wide.vec961, <32 x i8> poison, <8 x i32> <i32 2, i32 6, i32 10, i32 14, i32 18, i32 22, i32 26, i32 30>
-  %strided.vec965 = shufflevector <32 x i8> %wide.vec961, <32 x i8> poison, <8 x i32> <i32 3, i32 7, i32 11, i32 15, i32 19, i32 23, i32 27, i32 31>
-  %i.bhx = sext <8 x i8> %strided.vec962 to <8 x i32> ; 2 uses
-  %25 = load i8, ptr %next.gep953, align 1, !tbaa !17
-  %26 = load i8, ptr %next.gep954, align 1, !tbaa !17
-  %27 = load i8, ptr %next.gep955, align 1, !tbaa !17
-  %28 = load i8, ptr %next.gep956, align 1, !tbaa !17
-  %29 = load i8, ptr %next.gep957, align 1, !tbaa !17
-  %30 = load i8, ptr %next.gep958, align 1, !tbaa !17
-  %31 = load i8, ptr %next.gep959, align 1, !tbaa !17
-  %32 = load i8, ptr %next.gep960, align 1, !tbaa !17
-  %33 = insertelement <8 x i8> poison, i8 %25, i64 0
-  %34 = insertelement <8 x i8> %33, i8 %26, i64 1
-  %35 = insertelement <8 x i8> %34, i8 %27, i64 2
-  %36 = insertelement <8 x i8> %35, i8 %28, i64 3
-  %37 = insertelement <8 x i8> %36, i8 %29, i64 4
-  %38 = insertelement <8 x i8> %37, i8 %30, i64 5
-  %39 = insertelement <8 x i8> %38, i8 %31, i64 6
-  %40 = insertelement <8 x i8> %39, i8 %32, i64 7
-  %i.bhy = sext <8 x i8> %40 to <8 x i32>
-  %41 = mul nsw <8 x i32> %i.bhy, %i.bhx
-  %42 = add <8 x i32> %41, %vec.phi951            ; 2 uses
-  %43 = getelementptr inbounds nuw i8, ptr %next.gep953, i64 1
-  %44 = getelementptr i8, ptr %20, i64 9
-  %45 = getelementptr i8, ptr %21, i64 17
-  %46 = getelementptr i8, ptr %22, i64 25
-  %47 = getelementptr i8, ptr %23, i64 33
-  %48 = getelementptr i8, ptr %24, i64 41
-  %49 = getelementptr i8, ptr %i.bhv, i64 49
-  %50 = getelementptr i8, ptr %i.bhw, i64 57
-  %51 = load i8, ptr %43, align 1, !tbaa !17
-  %52 = load i8, ptr %44, align 1, !tbaa !17
-  %53 = load i8, ptr %45, align 1, !tbaa !17
-  %54 = load i8, ptr %46, align 1, !tbaa !17
-  %55 = load i8, ptr %47, align 1, !tbaa !17
-  %56 = load i8, ptr %48, align 1, !tbaa !17
-  %57 = load i8, ptr %49, align 1, !tbaa !17
-  %58 = load i8, ptr %50, align 1, !tbaa !17
-  %59 = insertelement <8 x i8> poison, i8 %51, i64 0
-  %60 = insertelement <8 x i8> %59, i8 %52, i64 1
-  %61 = insertelement <8 x i8> %60, i8 %53, i64 2
-  %62 = insertelement <8 x i8> %61, i8 %54, i64 3
-  %63 = insertelement <8 x i8> %62, i8 %55, i64 4
-  %64 = insertelement <8 x i8> %63, i8 %56, i64 5
-  %65 = insertelement <8 x i8> %64, i8 %57, i64 6
-  %66 = insertelement <8 x i8> %65, i8 %58, i64 7
-  %67 = sext <8 x i8> %66 to <8 x i32>
-  %68 = mul nsw <8 x i32> %67, %i.bhx
-  %69 = add <8 x i32> %68, %vec.phi947            ; 2 uses
-  %i.bhz = sext <8 x i8> %strided.vec963 to <8 x i32> ; 2 uses
-  %70 = getelementptr inbounds nuw i8, ptr %next.gep953, i64 2
-  %71 = getelementptr i8, ptr %20, i64 10
-  %72 = getelementptr i8, ptr %21, i64 18
-  %73 = getelementptr i8, ptr %22, i64 26
-  %74 = getelementptr i8, ptr %23, i64 34
-  %75 = getelementptr i8, ptr %24, i64 42
-  %76 = getelementptr i8, ptr %i.bhv, i64 50
-  %77 = getelementptr i8, ptr %i.bhw, i64 58
-  %78 = load i8, ptr %70, align 1, !tbaa !17
-  %79 = load i8, ptr %71, align 1, !tbaa !17
-  %80 = load i8, ptr %72, align 1, !tbaa !17
-  %81 = load i8, ptr %73, align 1, !tbaa !17
-  %82 = load i8, ptr %74, align 1, !tbaa !17
-  %83 = load i8, ptr %75, align 1, !tbaa !17
-  %84 = load i8, ptr %76, align 1, !tbaa !17
-  %85 = load i8, ptr %77, align 1, !tbaa !17
-  %86 = insertelement <8 x i8> poison, i8 %78, i64 0
-  %87 = insertelement <8 x i8> %86, i8 %79, i64 1
-  %88 = insertelement <8 x i8> %87, i8 %80, i64 2
-  %89 = insertelement <8 x i8> %88, i8 %81, i64 3
-  %90 = insertelement <8 x i8> %89, i8 %82, i64 4
-  %91 = insertelement <8 x i8> %90, i8 %83, i64 5
-  %92 = insertelement <8 x i8> %91, i8 %84, i64 6
-  %93 = insertelement <8 x i8> %92, i8 %85, i64 7
-  %i.bia = sext <8 x i8> %93 to <8 x i32>
-  %i.bib = mul nsw <8 x i32> %i.bia, %i.bhz
-  %94 = add <8 x i32> %i.bib, %vec.phi950         ; 2 uses
-  %95 = getelementptr inbounds nuw i8, ptr %next.gep953, i64 3
-  %96 = getelementptr i8, ptr %20, i64 11
-  %97 = getelementptr i8, ptr %21, i64 19
-  %98 = getelementptr i8, ptr %22, i64 27
-  %99 = getelementptr i8, ptr %23, i64 35
-  %100 = getelementptr i8, ptr %24, i64 43
-  %101 = getelementptr i8, ptr %i.bhv, i64 51
-  %102 = getelementptr i8, ptr %i.bhw, i64 59
-  %103 = load i8, ptr %95, align 1, !tbaa !17
-  %104 = load i8, ptr %96, align 1, !tbaa !17
-  %105 = load i8, ptr %97, align 1, !tbaa !17
-  %106 = load i8, ptr %98, align 1, !tbaa !17
-  %107 = load i8, ptr %99, align 1, !tbaa !17
-  %108 = load i8, ptr %100, align 1, !tbaa !17
-  %109 = load i8, ptr %101, align 1, !tbaa !17
-  %110 = load i8, ptr %102, align 1, !tbaa !17
-  %111 = insertelement <8 x i8> poison, i8 %103, i64 0
-  %112 = insertelement <8 x i8> %111, i8 %104, i64 1
-  %113 = insertelement <8 x i8> %112, i8 %105, i64 2
-  %114 = insertelement <8 x i8> %113, i8 %106, i64 3
-  %115 = insertelement <8 x i8> %114, i8 %107, i64 4
-  %116 = insertelement <8 x i8> %115, i8 %108, i64 5
-  %117 = insertelement <8 x i8> %116, i8 %109, i64 6
-  %118 = insertelement <8 x i8> %117, i8 %110, i64 7
-  %119 = sext <8 x i8> %118 to <8 x i32>
-  %i.bic = mul nsw <8 x i32> %119, %i.bhz
-  %i.bid = add <8 x i32> %i.bic, %vec.phi946      ; 2 uses
-  %120 = sext <8 x i8> %strided.vec964 to <8 x i32> ; 2 uses
-  %121 = getelementptr inbounds nuw i8, ptr %next.gep953, i64 4
-  %122 = getelementptr i8, ptr %20, i64 12
-  %123 = getelementptr i8, ptr %21, i64 20
-  %124 = getelementptr i8, ptr %22, i64 28
-  %125 = getelementptr i8, ptr %23, i64 36
-  %126 = getelementptr i8, ptr %24, i64 44
-  %127 = getelementptr i8, ptr %i.bhv, i64 52
-  %128 = getelementptr i8, ptr %i.bhw, i64 60
-  %129 = load i8, ptr %121, align 1, !tbaa !17
-  %130 = load i8, ptr %122, align 1, !tbaa !17
-  %131 = load i8, ptr %123, align 1, !tbaa !17
-  %132 = load i8, ptr %124, align 1, !tbaa !17
-  %133 = load i8, ptr %125, align 1, !tbaa !17
-  %134 = load i8, ptr %126, align 1, !tbaa !17
-  %135 = load i8, ptr %127, align 1, !tbaa !17
-  %136 = load i8, ptr %128, align 1, !tbaa !17
-  %137 = insertelement <8 x i8> poison, i8 %129, i64 0
-  %138 = insertelement <8 x i8> %137, i8 %130, i64 1
-  %139 = insertelement <8 x i8> %138, i8 %131, i64 2
-  %140 = insertelement <8 x i8> %139, i8 %132, i64 3
-  %141 = insertelement <8 x i8> %140, i8 %133, i64 4
-  %142 = insertelement <8 x i8> %141, i8 %134, i64 5
-  %143 = insertelement <8 x i8> %142, i8 %135, i64 6
-  %144 = insertelement <8 x i8> %143, i8 %136, i64 7
-  %145 = sext <8 x i8> %144 to <8 x i32>
-  %146 = mul nsw <8 x i32> %145, %120
-  %i.bie = add <8 x i32> %146, %vec.phi949        ; 2 uses
-  %147 = getelementptr inbounds nuw i8, ptr %next.gep953, i64 5
-  %148 = getelementptr i8, ptr %20, i64 13
-  %149 = getelementptr i8, ptr %21, i64 21
-  %150 = getelementptr i8, ptr %22, i64 29
-  %151 = getelementptr i8, ptr %23, i64 37
-  %152 = getelementptr i8, ptr %24, i64 45
-  %153 = getelementptr i8, ptr %i.bhv, i64 53
-  %154 = getelementptr i8, ptr %i.bhw, i64 61
-  %155 = load i8, ptr %147, align 1, !tbaa !17
-  %156 = load i8, ptr %148, align 1, !tbaa !17
-  %157 = load i8, ptr %149, align 1, !tbaa !17
-  %158 = load i8, ptr %150, align 1, !tbaa !17
-  %159 = load i8, ptr %151, align 1, !tbaa !17
-  %160 = load i8, ptr %152, align 1, !tbaa !17
-  %161 = load i8, ptr %153, align 1, !tbaa !17
-  %162 = load i8, ptr %154, align 1, !tbaa !17
-  %163 = insertelement <8 x i8> poison, i8 %155, i64 0
-  %164 = insertelement <8 x i8> %163, i8 %156, i64 1
-  %165 = insertelement <8 x i8> %164, i8 %157, i64 2
-  %166 = insertelement <8 x i8> %165, i8 %158, i64 3
-  %167 = insertelement <8 x i8> %166, i8 %159, i64 4
-  %168 = insertelement <8 x i8> %167, i8 %160, i64 5
-  %169 = insertelement <8 x i8> %168, i8 %161, i64 6
-  %170 = insertelement <8 x i8> %169, i8 %162, i64 7
-  %i.bif = sext <8 x i8> %170 to <8 x i32>
-  %171 = mul nsw <8 x i32> %i.bif, %120
-  %172 = add <8 x i32> %171, %vec.phi945          ; 2 uses
-  %i.big = sext <8 x i8> %strided.vec965 to <8 x i32> ; 2 uses
-  %173 = getelementptr inbounds nuw i8, ptr %next.gep953, i64 6
-  %174 = getelementptr i8, ptr %20, i64 14
-  %175 = getelementptr i8, ptr %21, i64 22
-  %176 = getelementptr i8, ptr %22, i64 30
-  %177 = getelementptr i8, ptr %23, i64 38
-  %178 = getelementptr i8, ptr %24, i64 46
-  %179 = getelementptr i8, ptr %i.bhv, i64 54
-  %180 = getelementptr i8, ptr %i.bhw, i64 62
-  %181 = load i8, ptr %173, align 1, !tbaa !17
-  %182 = load i8, ptr %174, align 1, !tbaa !17
-  %183 = load i8, ptr %175, align 1, !tbaa !17
-  %184 = load i8, ptr %176, align 1, !tbaa !17
-  %185 = load i8, ptr %177, align 1, !tbaa !17
-  %186 = load i8, ptr %178, align 1, !tbaa !17
-  %187 = load i8, ptr %179, align 1, !tbaa !17
-  %188 = load i8, ptr %180, align 1, !tbaa !17
-  %189 = insertelement <8 x i8> poison, i8 %181, i64 0
-  %190 = insertelement <8 x i8> %189, i8 %182, i64 1
-  %191 = insertelement <8 x i8> %190, i8 %183, i64 2
-  %192 = insertelement <8 x i8> %191, i8 %184, i64 3
-  %193 = insertelement <8 x i8> %192, i8 %185, i64 4
-  %194 = insertelement <8 x i8> %193, i8 %186, i64 5
-  %195 = insertelement <8 x i8> %194, i8 %187, i64 6
-  %196 = insertelement <8 x i8> %195, i8 %188, i64 7
-  %197 = sext <8 x i8> %196 to <8 x i32>
-  %i.bih = mul nsw <8 x i32> %197, %i.big
-  %i.bii = add <8 x i32> %i.bih, %vec.phi948      ; 2 uses
-  %198 = getelementptr inbounds nuw i8, ptr %next.gep953, i64 7
-  %199 = getelementptr i8, ptr %20, i64 15
-  %200 = getelementptr i8, ptr %21, i64 23
-  %201 = getelementptr i8, ptr %22, i64 31
-  %202 = getelementptr i8, ptr %23, i64 39
-  %203 = getelementptr i8, ptr %24, i64 47
-  %204 = getelementptr i8, ptr %i.bhv, i64 55
-  %205 = getelementptr i8, ptr %i.bhw, i64 63
-  %206 = load i8, ptr %198, align 1, !tbaa !17
-  %207 = load i8, ptr %199, align 1, !tbaa !17
-  %208 = load i8, ptr %200, align 1, !tbaa !17
-  %209 = load i8, ptr %201, align 1, !tbaa !17
-  %210 = load i8, ptr %202, align 1, !tbaa !17
-  %211 = load i8, ptr %203, align 1, !tbaa !17
-  %212 = load i8, ptr %204, align 1, !tbaa !17
-  %213 = load i8, ptr %205, align 1, !tbaa !17
-  %214 = insertelement <8 x i8> poison, i8 %206, i64 0
-  %215 = insertelement <8 x i8> %214, i8 %207, i64 1
-  %216 = insertelement <8 x i8> %215, i8 %208, i64 2
-  %217 = insertelement <8 x i8> %216, i8 %209, i64 3
-  %218 = insertelement <8 x i8> %217, i8 %210, i64 4
-  %219 = insertelement <8 x i8> %218, i8 %211, i64 5
-  %220 = insertelement <8 x i8> %219, i8 %212, i64 6
-  %221 = insertelement <8 x i8> %220, i8 %213, i64 7
-  %222 = sext <8 x i8> %221 to <8 x i32>
-  %223 = mul nsw <8 x i32> %222, %i.big
-  %i.bij = add <8 x i32> %223, %vec.phi944        ; 2 uses
-  %index.next966 = add nuw i64 %index943, 8       ; 2 uses
+  %vec.phi948 = phi <8 x i32> [ %15, %vector.ph940 ], [ %i.bii, %vector.body942 ]
+  %vec.phi949 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %i.bij, %vector.body942 ]
+  %vec.phi950 = phi <8 x i32> [ %16, %vector.ph940 ], [ %i.bid, %vector.body942 ]
+  %vec.phi951 = phi <8 x i32> [ zeroinitializer, %vector.ph940 ], [ %i.bie, %vector.body942 ]
+  %next.gep952 = getelementptr i8, ptr %.0767.lcssa.i, i64 %index943 ; 2 uses
+  %i.bhu = shl i64 %index943, 1                   ; 2 uses
+  %i.bhv = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu
+  %next.gep959 = getelementptr i8, ptr %.7832.lcssa.i, i64 %i.bhu
+  %i.bhw = getelementptr i8, ptr %next.gep959, i64 16
+  %next.gep960 = getelementptr i8, ptr %next.gep952, i64 8
+  %wide.load851 = load <8 x i8>, ptr %next.gep952, align 1, !tbaa !17
+  %wide.load852 = load <8 x i8>, ptr %next.gep960, align 1, !tbaa !17
+  %i.bhx = sext <8 x i8> %wide.load851 to <8 x i32> ; 2 uses
+  %i.bhy = sext <8 x i8> %wide.load852 to <8 x i32> ; 2 uses
+  %wide.vec853 = load <16 x i8>, ptr %i.bhv, align 1, !tbaa !17 ; 2 uses
+  %strided.vec854 = shufflevector <16 x i8> %wide.vec853, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %strided.vec855 = shufflevector <16 x i8> %wide.vec853, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %wide.vec856 = load <16 x i8>, ptr %i.bhw, align 1, !tbaa !17 ; 2 uses
+  %strided.vec857 = shufflevector <16 x i8> %wide.vec856, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %strided.vec858 = shufflevector <16 x i8> %wide.vec856, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.bhz = sext <8 x i8> %strided.vec854 to <8 x i32>
+  %i.bia = sext <8 x i8> %strided.vec857 to <8 x i32>
+  %i.bib = mul nsw <8 x i32> %i.bhz, %i.bhx
+  %i.bic = mul nsw <8 x i32> %i.bia, %i.bhy
+  %i.bid = add <8 x i32> %i.bib, %vec.phi950      ; 2 uses
+  %i.bie = add <8 x i32> %i.bic, %vec.phi951      ; 2 uses
+  %i.bif = sext <8 x i8> %strided.vec855 to <8 x i32>
+  %i.big = sext <8 x i8> %strided.vec858 to <8 x i32>
+  %17 = mul nsw <8 x i32> %i.bif, %i.bhx
+  %i.bih = mul nsw <8 x i32> %i.big, %i.bhy
+  %i.bii = add <8 x i32> %17, %vec.phi948         ; 2 uses
+  %i.bij = add <8 x i32> %i.bih, %vec.phi949      ; 2 uses
+  %index.next966 = add nuw i64 %index943, 16      ; 2 uses
   %i.bik = icmp eq i64 %index.next966, %n.vec941
   br i1 %i.bik, label %middle.block967, label %vector.body942, !llvm.loop !326
 
 middle.block967:                                  ; preds = %vector.body942
-  %224 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.bij) ; 2 uses
-  %225 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %172) ; 2 uses
-  %226 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.bid) ; 2 uses
-  %227 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %69) ; 2 uses
-  %228 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.bii) ; 2 uses
-  %i.bil = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.bie) ; 2 uses
-  %229 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %94) ; 2 uses
-  %i.bim = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %42) ; 2 uses
-  %cmp.n968 = icmp eq i64 %n.vec941, %14
-  %230 = insertelement <8 x i32> poison, i32 %i.bim, i64 0
-  %231 = insertelement <8 x i32> %230, i32 %227, i64 1
-  %232 = insertelement <8 x i32> %231, i32 %229, i64 2
-  %233 = insertelement <8 x i32> %232, i32 %226, i64 3
-  %234 = insertelement <8 x i32> %233, i32 %i.bil, i64 4
-  %235 = insertelement <8 x i32> %234, i32 %225, i64 5
-  %236 = insertelement <8 x i32> %235, i32 %228, i64 6
-  %237 = insertelement <8 x i32> %236, i32 %224, i64 7
-  br i1 %cmp.n968, label %._crit_edge1727.i, label %.lr.ph1726.i.preheader1053
+  %bin.rdx861 = add <8 x i32> %i.bij, %i.bii
+  %i.bil = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %bin.rdx861) ; 3 uses
+  %bin.rdx862 = add <8 x i32> %i.bie, %i.bid
+  %i.bim = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %bin.rdx862) ; 3 uses
+  %cmp.n968 = icmp eq i64 %11, %n.vec941
+  br i1 %cmp.n968, label %._crit_edge1746.i, label %.lr.ph1726.i.preheader1053
 
-.lr.ph1726.i.preheader1053:                       ; preds = %.lr.ph1726.i.preheader, %middle.block967
-  %.17661717.i.ph = phi i32 [ %.0765.lcssa.i, %.lr.ph1726.i.preheader ], [ %16, %middle.block967 ]
-  %.17681716.i.ph = phi ptr [ %.0767.lcssa.i, %.lr.ph1726.i.preheader ], [ %i.bht, %middle.block967 ]
-  %.88331715.i.ph = phi ptr [ %.7832.lcssa.i, %.lr.ph1726.i.preheader ], [ %18, %middle.block967 ]
-  %.ph1054 = phi <8 x i32> [ zeroinitializer, %.lr.ph1726.i.preheader ], [ %237, %middle.block967 ]
-  br label %.lr.ph1726.i
+.lr.ph1726.i.preheader1053:                       ; preds = %middle.block967
+  %min.epilog.iters.check873 = icmp eq i64 %12, 0
+  br i1 %min.epilog.iters.check873, label %vector.ph884, label %.lr.ph1709.i.a, !prof !310
 
-.lr.ph1709.i.a:                                   ; preds = %.lr.ph1709.i.preheader, %.lr.ph1709.i.a
-  %.07651707.i = phi i32 [ %261, %.lr.ph1709.i.a ], [ %.07651707.i.ph, %.lr.ph1709.i.preheader ]
-  %.07671706.i = phi ptr [ %260, %.lr.ph1709.i.a ], [ %.07671706.i.ph, %.lr.ph1709.i.preheader ] ; 3 uses
-  %.17711705.i.a = phi i32 [ %259, %.lr.ph1709.i.a ], [ %.17711705.i.ph, %.lr.ph1709.i.preheader ]
-  %.17741704.i.a = phi i32 [ %251, %.lr.ph1709.i.a ], [ %.17741704.i.ph, %.lr.ph1709.i.preheader ]
-  %.78321703.i = phi ptr [ %i.bip, %.lr.ph1709.i.a ], [ %.78321703.i.ph, %.lr.ph1709.i.preheader ] ; 5 uses
-  %238 = load i8, ptr %.07671706.i, align 1, !tbaa !17
-  %239 = sext i8 %238 to i32                      ; 2 uses
-  %240 = load i8, ptr %.78321703.i, align 1, !tbaa !17
-  %241 = sext i8 %240 to i32
-  %242 = mul nsw i32 %241, %239
-  %243 = add nsw i32 %242, %.17741704.i.a
-  %244 = getelementptr inbounds nuw i8, ptr %.07671706.i, i64 1
-  %245 = load i8, ptr %244, align 1, !tbaa !17
-  %246 = sext i8 %245 to i32                      ; 2 uses
-  %247 = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 1
-  %248 = load i8, ptr %247, align 1, !tbaa !17
-  %249 = sext i8 %248 to i32
-  %250 = mul nsw i32 %249, %246
-  %251 = add nsw i32 %243, %250                   ; 2 uses
-  %252 = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 2
-  %253 = load i8, ptr %252, align 1, !tbaa !17
-  %254 = sext i8 %253 to i32
-  %255 = mul nsw i32 %254, %239
-  %i.bin = add nsw i32 %255, %.17711705.i.a
-  %i.bio = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 3
-  %256 = load i8, ptr %i.bio, align 1, !tbaa !17
-  %257 = sext i8 %256 to i32
-  %258 = mul nsw i32 %257, %246
-  %259 = add nsw i32 %i.bin, %258                 ; 2 uses
-  %260 = getelementptr inbounds nuw i8, ptr %.07671706.i, i64 2
-  %i.bip = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 4
-  %261 = add nuw nsw i32 %.07651707.i, 2          ; 2 uses
-  %262 = or disjoint i32 %261, 1
-  %263 = icmp slt i32 %262, %8
-  br i1 %263, label %.lr.ph1709.i.a, label %.preheader.loopexit.i, !llvm.loop !327
-
-.lr.ph1726.i:                                     ; preds = %.lr.ph1726.i.preheader1053, %.lr.ph1726.i
-  %.17661717.i = phi i32 [ %274, %.lr.ph1726.i ], [ %.17661717.i.ph, %.lr.ph1726.i.preheader1053 ] ; 2 uses
-  %.17681716.i = phi ptr [ %272, %.lr.ph1726.i ], [ %.17681716.i.ph, %.lr.ph1726.i.preheader1053 ] ; 2 uses
-  %.88331715.i = phi ptr [ %273, %.lr.ph1726.i ], [ %.88331715.i.ph, %.lr.ph1726.i.preheader1053 ] ; 2 uses
-  %264 = phi <8 x i32> [ %271, %.lr.ph1726.i ], [ %.ph1054, %.lr.ph1726.i.preheader1053 ]
-  %265 = load <4 x i8>, ptr %.17681716.i, align 1, !tbaa !17
-  %266 = sext <4 x i8> %265 to <4 x i32>
-  %267 = shufflevector <4 x i32> %266, <4 x i32> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  %268 = load <8 x i8>, ptr %.88331715.i, align 1, !tbaa !17
-  %269 = sext <8 x i8> %268 to <8 x i32>
-  %270 = mul nsw <8 x i32> %267, %269
-  %271 = add nsw <8 x i32> %270, %264             ; 9 uses
-  %272 = getelementptr inbounds nuw i8, ptr %.17681716.i, i64 4 ; 2 uses
-  %273 = getelementptr inbounds nuw i8, ptr %.88331715.i, i64 8 ; 2 uses
-  %274 = add nuw nsw i32 %.17661717.i, 4          ; 2 uses
-  %275 = add nuw nsw i32 %.17661717.i, 7
-  %276 = icmp slt i32 %275, %8
-  br i1 %276, label %.lr.ph1726.i, label %._crit_edge1727.i.loopexit, !llvm.loop !328
-
-._crit_edge1727.i.loopexit:                       ; preds = %.lr.ph1726.i
-  %277 = extractelement <8 x i32> %271, i64 7
-  %278 = extractelement <8 x i32> %271, i64 6
-  %279 = extractelement <8 x i32> %271, i64 5
-  %280 = extractelement <8 x i32> %271, i64 4
-  %281 = extractelement <8 x i32> %271, i64 3
-  %282 = extractelement <8 x i32> %271, i64 2
-  %283 = extractelement <8 x i32> %271, i64 1
-  %284 = extractelement <8 x i32> %271, i64 0
+.lr.ph1709.i.a:                                   ; preds = %vector.main.loop.iter.check838, %.lr.ph1726.i.preheader1053
+  %vec.epilog.resume.val864 = phi i64 [ %n.vec941, %.lr.ph1726.i.preheader1053 ], [ 0, %vector.main.loop.iter.check838 ]
+  %.17711705.i.a = phi i32 [ %i.bil, %.lr.ph1726.i.preheader1053 ], [ %.1771.lcssa.i, %vector.main.loop.iter.check838 ]
+  %.17741704.i.a = phi i32 [ %i.bim, %.lr.ph1726.i.preheader1053 ], [ %.1774.lcssa.i, %vector.main.loop.iter.check838 ]
+  %n.vec875 = and i64 %11, 8589934588             ; 5 uses
+  %18 = trunc i64 %n.vec875 to i32
+  %i.bin = add i32 %.0765.lcssa.i, %18
+  %i.bio = getelementptr i8, ptr %.0767.lcssa.i, i64 %n.vec875
+  %19 = shl nuw nsw i64 %n.vec875, 1
+  %i.bip = getelementptr i8, ptr %.7832.lcssa.i, i64 %19 ; 2 uses
+  %20 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.17711705.i.a, i64 0
+  %21 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.17741704.i.a, i64 0
   br label %._crit_edge1727.i
 
-._crit_edge1727.i:                                ; preds = %._crit_edge1727.i.loopexit, %middle.block967, %.preheader.i
-  %.8833.lcssa.i = phi ptr [ %.7832.lcssa.i, %.preheader.i ], [ %18, %middle.block967 ], [ %273, %._crit_edge1727.i.loopexit ] ; 7 uses
-  %.1768.lcssa.i = phi ptr [ %.0767.lcssa.i, %.preheader.i ], [ %i.bht, %middle.block967 ], [ %272, %._crit_edge1727.i.loopexit ] ; 5 uses
-  %.1766.lcssa.i = phi i32 [ %.0765.lcssa.i, %.preheader.i ], [ %16, %middle.block967 ], [ %274, %._crit_edge1727.i.loopexit ] ; 5 uses
-  %.0764.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %i.bim, %middle.block967 ], [ %284, %._crit_edge1727.i.loopexit ]
-  %.0763.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %229, %middle.block967 ], [ %282, %._crit_edge1727.i.loopexit ]
-  %.0762.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %i.bil, %middle.block967 ], [ %280, %._crit_edge1727.i.loopexit ]
-  %.0761.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %228, %middle.block967 ], [ %278, %._crit_edge1727.i.loopexit ]
-  %.0760.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %227, %middle.block967 ], [ %283, %._crit_edge1727.i.loopexit ]
-  %.0759.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %226, %middle.block967 ], [ %281, %._crit_edge1727.i.loopexit ]
-  %.0758.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %225, %middle.block967 ], [ %279, %._crit_edge1727.i.loopexit ]
-  %.0757.lcssa.i = phi i32 [ 0, %.preheader.i ], [ %224, %middle.block967 ], [ %277, %._crit_edge1727.i.loopexit ]
-  %285 = add i32 %.0764.lcssa.i, %.1774.lcssa.i
-  %286 = add i32 %285, %.0763.lcssa.i
-  %287 = add i32 %286, %.0762.lcssa.i
-  %288 = add i32 %287, %.0761.lcssa.i             ; 4 uses
-  %289 = add i32 %.0760.lcssa.i, %.1771.lcssa.i
-  %290 = add i32 %289, %.0759.lcssa.i
-  %291 = add i32 %290, %.0758.lcssa.i
-  %292 = add i32 %291, %.0757.lcssa.i             ; 4 uses
-  %293 = icmp slt i32 %.1766.lcssa.i, %8
-  br i1 %293, label %iter.check914, label %._crit_edge1746.i
+._crit_edge1727.i:                                ; preds = %._crit_edge1727.i, %.lr.ph1709.i.a
+  %index877 = phi i64 [ %vec.epilog.resume.val864, %.lr.ph1709.i.a ], [ %index.next886, %._crit_edge1727.i ] ; 3 uses
+  %vec.phi878 = phi <4 x i32> [ %20, %.lr.ph1709.i.a ], [ %29, %._crit_edge1727.i ]
+  %vec.phi879 = phi <4 x i32> [ %21, %.lr.ph1709.i.a ], [ %26, %._crit_edge1727.i ]
+  %next.gep880 = getelementptr i8, ptr %.0767.lcssa.i, i64 %index877
+  %22 = shl i64 %index877, 1
+  %next.gep881 = getelementptr i8, ptr %.7832.lcssa.i, i64 %22
+  %wide.load882 = load <4 x i8>, ptr %next.gep880, align 1, !tbaa !17
+  %23 = sext <4 x i8> %wide.load882 to <4 x i32>  ; 2 uses
+  %wide.vec883 = load <8 x i8>, ptr %next.gep881, align 1, !tbaa !17 ; 2 uses
+  %strided.vec884 = shufflevector <8 x i8> %wide.vec883, <8 x i8> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %strided.vec885 = shufflevector <8 x i8> %wide.vec883, <8 x i8> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %24 = sext <4 x i8> %strided.vec884 to <4 x i32>
+  %25 = mul nsw <4 x i32> %24, %23
+  %26 = add <4 x i32> %25, %vec.phi879            ; 2 uses
+  %27 = sext <4 x i8> %strided.vec885 to <4 x i32>
+  %28 = mul nsw <4 x i32> %27, %23
+  %29 = add <4 x i32> %28, %vec.phi878            ; 2 uses
+  %index.next886 = add nuw i64 %index877, 4       ; 2 uses
+  %30 = icmp eq i64 %index.next886, %n.vec875
+  br i1 %30, label %iter.check914, label %._crit_edge1727.i, !llvm.loop !327
 
 iter.check914:                                    ; preds = %._crit_edge1727.i
-  %294 = xor i32 %.1766.lcssa.i, -1
-  %295 = add i32 %8, %294                         ; 3 uses
-  %296 = zext i32 %295 to i64
-  %297 = add nuw nsw i64 %296, 1                  ; 5 uses
-  %min.iters.check881 = icmp ult i32 %295, 3
-  br i1 %min.iters.check881, label %.lr.ph1745.i.preheader, label %vector.main.loop.iter.check882
+  %31 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %29) ; 2 uses
+  %32 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %26) ; 2 uses
+  %cmp.n888 = icmp eq i64 %11, %n.vec875
+  br i1 %cmp.n888, label %._crit_edge1746.i, label %vector.ph884
 
-vector.main.loop.iter.check882:                   ; preds = %iter.check914
-  %min.iters.check883 = icmp ult i32 %295, 15
-  br i1 %min.iters.check883, label %vec.epilog.ph918, label %vector.ph884
-
-vector.ph884:                                     ; preds = %vector.main.loop.iter.check882
-  %298 = and i64 %297, 12
-  %n.vec885 = and i64 %297, 8589934576            ; 6 uses
-  %299 = trunc i64 %n.vec885 to i32
-  %300 = add i32 %.1766.lcssa.i, %299
-  %301 = getelementptr i8, ptr %.1768.lcssa.i, i64 %n.vec885
-  %302 = shl nuw nsw i64 %n.vec885, 1
-  %303 = getelementptr i8, ptr %.8833.lcssa.i, i64 %302 ; 2 uses
-  %304 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %292, i64 0
-  %305 = insertelement <8 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %288, i64 0
-  br label %vector.body886
-
-vector.body886:                                   ; preds = %vector.body886, %vector.ph884
-  %index887 = phi i64 [ 0, %vector.ph884 ], [ %index.next903, %vector.body886 ] ; 3 uses
-  %vec.phi888 = phi <8 x i32> [ %304, %vector.ph884 ], [ %321, %vector.body886 ]
-  %vec.phi889 = phi <8 x i32> [ zeroinitializer, %vector.ph884 ], [ %322, %vector.body886 ]
-  %vec.phi890 = phi <8 x i32> [ %305, %vector.ph884 ], [ %315, %vector.body886 ]
-  %vec.phi891 = phi <8 x i32> [ zeroinitializer, %vector.ph884 ], [ %316, %vector.body886 ]
-  %next.gep892 = getelementptr i8, ptr %.1768.lcssa.i, i64 %index887 ; 2 uses
-  %306 = shl i64 %index887, 1                     ; 2 uses
-  %next.gep893 = getelementptr i8, ptr %.8833.lcssa.i, i64 %306
-  %307 = getelementptr i8, ptr %.8833.lcssa.i, i64 %306
-  %next.gep894 = getelementptr i8, ptr %307, i64 16
-  %308 = getelementptr i8, ptr %next.gep892, i64 8
-  %wide.load895 = load <8 x i8>, ptr %next.gep892, align 1, !tbaa !17
-  %wide.load896 = load <8 x i8>, ptr %308, align 1, !tbaa !17
-  %309 = sext <8 x i8> %wide.load895 to <8 x i32> ; 2 uses
-  %310 = sext <8 x i8> %wide.load896 to <8 x i32> ; 2 uses
-  %wide.vec897 = load <16 x i8>, ptr %next.gep893, align 1, !tbaa !17 ; 2 uses
-  %strided.vec898 = shufflevector <16 x i8> %wide.vec897, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
-  %strided.vec899 = shufflevector <16 x i8> %wide.vec897, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %wide.vec900 = load <16 x i8>, ptr %next.gep894, align 1, !tbaa !17 ; 2 uses
-  %strided.vec901 = shufflevector <16 x i8> %wide.vec900, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
-  %strided.vec902 = shufflevector <16 x i8> %wide.vec900, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %311 = sext <8 x i8> %strided.vec898 to <8 x i32>
-  %312 = sext <8 x i8> %strided.vec901 to <8 x i32>
-  %313 = mul nsw <8 x i32> %311, %309
-  %314 = mul nsw <8 x i32> %312, %310
-  %315 = add <8 x i32> %313, %vec.phi890          ; 2 uses
-  %316 = add <8 x i32> %314, %vec.phi891          ; 2 uses
-  %317 = sext <8 x i8> %strided.vec899 to <8 x i32>
-  %318 = sext <8 x i8> %strided.vec902 to <8 x i32>
-  %319 = mul nsw <8 x i32> %317, %309
-  %320 = mul nsw <8 x i32> %318, %310
-  %321 = add <8 x i32> %319, %vec.phi888          ; 2 uses
-  %322 = add <8 x i32> %320, %vec.phi889          ; 2 uses
-  %index.next903 = add nuw i64 %index887, 16      ; 2 uses
-  %323 = icmp eq i64 %index.next903, %n.vec885
-  br i1 %323, label %middle.block904, label %vector.body886, !llvm.loop !329
-
-middle.block904:                                  ; preds = %vector.body886
-  %bin.rdx905 = add <8 x i32> %322, %321
-  %324 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %bin.rdx905) ; 3 uses
-  %bin.rdx906 = add <8 x i32> %316, %315
-  %325 = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %bin.rdx906) ; 3 uses
-  %cmp.n907 = icmp eq i64 %297, %n.vec885
-  br i1 %cmp.n907, label %._crit_edge1746.i, label %vec.epilog.iter.check916
-
-vec.epilog.iter.check916:                         ; preds = %middle.block904
-  %min.epilog.iters.check917 = icmp eq i64 %298, 0
-  br i1 %min.epilog.iters.check917, label %.lr.ph1745.i.preheader, label %vec.epilog.ph918, !prof !310
-
-vec.epilog.ph918:                                 ; preds = %vector.main.loop.iter.check882, %vec.epilog.iter.check916
-  %vec.epilog.resume.val908 = phi i64 [ %n.vec885, %vec.epilog.iter.check916 ], [ 0, %vector.main.loop.iter.check882 ]
-  %bc.merge.rdx911 = phi i32 [ %324, %vec.epilog.iter.check916 ], [ %292, %vector.main.loop.iter.check882 ]
-  %bc.merge.rdx912 = phi i32 [ %325, %vec.epilog.iter.check916 ], [ %288, %vector.main.loop.iter.check882 ]
-  %n.vec919 = and i64 %297, 8589934588            ; 5 uses
-  %326 = trunc i64 %n.vec919 to i32
-  %327 = add i32 %.1766.lcssa.i, %326
-  %328 = getelementptr i8, ptr %.1768.lcssa.i, i64 %n.vec919
-  %329 = shl nuw nsw i64 %n.vec919, 1
-  %330 = getelementptr i8, ptr %.8833.lcssa.i, i64 %329 ; 2 uses
-  %331 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx911, i64 0
-  %332 = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx912, i64 0
-  br label %vec.epilog.vector.body920
-
-vec.epilog.vector.body920:                        ; preds = %vec.epilog.vector.body920, %vec.epilog.ph918
-  %index921 = phi i64 [ %vec.epilog.resume.val908, %vec.epilog.ph918 ], [ %index.next930, %vec.epilog.vector.body920 ] ; 3 uses
-  %vec.phi922 = phi <4 x i32> [ %331, %vec.epilog.ph918 ], [ %340, %vec.epilog.vector.body920 ]
-  %vec.phi923 = phi <4 x i32> [ %332, %vec.epilog.ph918 ], [ %337, %vec.epilog.vector.body920 ]
-  %next.gep924 = getelementptr i8, ptr %.1768.lcssa.i, i64 %index921
-  %333 = shl i64 %index921, 1
-  %next.gep925 = getelementptr i8, ptr %.8833.lcssa.i, i64 %333
-  %wide.load926 = load <4 x i8>, ptr %next.gep924, align 1, !tbaa !17
-  %334 = sext <4 x i8> %wide.load926 to <4 x i32> ; 2 uses
-  %wide.vec927 = load <8 x i8>, ptr %next.gep925, align 1, !tbaa !17 ; 2 uses
-  %strided.vec928 = shufflevector <8 x i8> %wide.vec927, <8 x i8> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %strided.vec929 = shufflevector <8 x i8> %wide.vec927, <8 x i8> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %335 = sext <4 x i8> %strided.vec928 to <4 x i32>
-  %336 = mul nsw <4 x i32> %335, %334
-  %337 = add <4 x i32> %336, %vec.phi923          ; 2 uses
-  %338 = sext <4 x i8> %strided.vec929 to <4 x i32>
-  %339 = mul nsw <4 x i32> %338, %334
-  %340 = add <4 x i32> %339, %vec.phi922          ; 2 uses
-  %index.next930 = add nuw i64 %index921, 4       ; 2 uses
-  %341 = icmp eq i64 %index.next930, %n.vec919
-  br i1 %341, label %vec.epilog.middle.block931, label %vec.epilog.vector.body920, !llvm.loop !330
-
-vec.epilog.middle.block931:                       ; preds = %vec.epilog.vector.body920
-  %342 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %340) ; 2 uses
-  %343 = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %337) ; 2 uses
-  %cmp.n932 = icmp eq i64 %297, %n.vec919
-  br i1 %cmp.n932, label %._crit_edge1746.i, label %.lr.ph1745.i.preheader
-
-.lr.ph1745.i.preheader:                           ; preds = %iter.check914, %vec.epilog.iter.check916, %vec.epilog.middle.block931
-  %.21743.i.ph = phi i32 [ %.1766.lcssa.i, %iter.check914 ], [ %300, %vec.epilog.iter.check916 ], [ %327, %vec.epilog.middle.block931 ]
-  %.27691742.i.ph = phi ptr [ %.1768.lcssa.i, %iter.check914 ], [ %301, %vec.epilog.iter.check916 ], [ %328, %vec.epilog.middle.block931 ]
-  %.27721741.i.ph = phi i32 [ %292, %iter.check914 ], [ %324, %vec.epilog.iter.check916 ], [ %342, %vec.epilog.middle.block931 ]
-  %.27751740.i.ph = phi i32 [ %288, %iter.check914 ], [ %325, %vec.epilog.iter.check916 ], [ %343, %vec.epilog.middle.block931 ]
-  %.98341739.i.ph = phi ptr [ %.8833.lcssa.i, %iter.check914 ], [ %303, %vec.epilog.iter.check916 ], [ %330, %vec.epilog.middle.block931 ]
+vector.ph884:                                     ; preds = %.lr.ph1726.i.preheader, %.lr.ph1726.i.preheader1053, %iter.check914
+  %.21743.i.ph = phi i32 [ %.0765.lcssa.i, %.lr.ph1726.i.preheader ], [ %13, %.lr.ph1726.i.preheader1053 ], [ %i.bin, %iter.check914 ]
+  %.27691742.i.ph = phi ptr [ %.0767.lcssa.i, %.lr.ph1726.i.preheader ], [ %14, %.lr.ph1726.i.preheader1053 ], [ %i.bio, %iter.check914 ]
+  %.27721741.i.ph = phi i32 [ %.1771.lcssa.i, %.lr.ph1726.i.preheader ], [ %i.bil, %.lr.ph1726.i.preheader1053 ], [ %31, %iter.check914 ]
+  %.27751740.i.ph = phi i32 [ %.1774.lcssa.i, %.lr.ph1726.i.preheader ], [ %i.bim, %.lr.ph1726.i.preheader1053 ], [ %32, %iter.check914 ]
+  %.98341739.i.ph = phi ptr [ %.7832.lcssa.i, %.lr.ph1726.i.preheader ], [ %i.bht, %.lr.ph1726.i.preheader1053 ], [ %i.bip, %iter.check914 ]
   br label %.lr.ph1745.i
 
-.lr.ph1745.i:                                     ; preds = %.lr.ph1745.i.preheader, %.lr.ph1745.i
-  %.21743.i = phi i32 [ %i.bjd, %.lr.ph1745.i ], [ %.21743.i.ph, %.lr.ph1745.i.preheader ]
-  %.27691742.i = phi ptr [ %i.bjb, %.lr.ph1745.i ], [ %.27691742.i.ph, %.lr.ph1745.i.preheader ] ; 2 uses
-  %.27721741.i = phi i32 [ %i.bja, %.lr.ph1745.i ], [ %.27721741.i.ph, %.lr.ph1745.i.preheader ]
-  %.27751740.i = phi i32 [ %i.biv, %.lr.ph1745.i ], [ %.27751740.i.ph, %.lr.ph1745.i.preheader ]
-  %.98341739.i = phi ptr [ %i.bjc, %.lr.ph1745.i ], [ %.98341739.i.ph, %.lr.ph1745.i.preheader ] ; 3 uses
+vector.body886:                                   ; preds = %.lr.ph1709.i.preheader, %vector.body886
+  %.07651707.i = phi i32 [ %59, %vector.body886 ], [ %.07651707.i.ph, %.lr.ph1709.i.preheader ]
+  %.07671706.i = phi ptr [ %57, %vector.body886 ], [ %.07671706.i.ph, %.lr.ph1709.i.preheader ] ; 3 uses
+  %.17711705.i = phi i32 [ %56, %vector.body886 ], [ %.17711705.i.ph, %.lr.ph1709.i.preheader ]
+  %.17741704.i = phi i32 [ %46, %vector.body886 ], [ %.17741704.i.ph, %.lr.ph1709.i.preheader ]
+  %.78321703.i = phi ptr [ %58, %vector.body886 ], [ %.78321703.i.ph, %.lr.ph1709.i.preheader ] ; 5 uses
+  %33 = load i8, ptr %.07671706.i, align 1, !tbaa !17
+  %34 = sext i8 %33 to i32                        ; 2 uses
+  %35 = load i8, ptr %.78321703.i, align 1, !tbaa !17
+  %36 = sext i8 %35 to i32
+  %37 = mul nsw i32 %36, %34
+  %38 = add nsw i32 %37, %.17741704.i
+  %39 = getelementptr inbounds nuw i8, ptr %.07671706.i, i64 1
+  %40 = load i8, ptr %39, align 1, !tbaa !17
+  %41 = sext i8 %40 to i32                        ; 2 uses
+  %42 = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 1
+  %43 = load i8, ptr %42, align 1, !tbaa !17
+  %44 = sext i8 %43 to i32
+  %45 = mul nsw i32 %44, %41
+  %46 = add nsw i32 %38, %45                      ; 2 uses
+  %47 = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 2
+  %48 = load i8, ptr %47, align 1, !tbaa !17
+  %49 = sext i8 %48 to i32
+  %50 = mul nsw i32 %49, %34
+  %51 = add nsw i32 %50, %.17711705.i
+  %52 = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 3
+  %53 = load i8, ptr %52, align 1, !tbaa !17
+  %54 = sext i8 %53 to i32
+  %55 = mul nsw i32 %54, %41
+  %56 = add nsw i32 %51, %55                      ; 2 uses
+  %57 = getelementptr inbounds nuw i8, ptr %.07671706.i, i64 2
+  %58 = getelementptr inbounds nuw i8, ptr %.78321703.i, i64 4
+  %59 = add nuw nsw i32 %.07651707.i, 2           ; 2 uses
+  %60 = or disjoint i32 %59, 1
+  %61 = icmp slt i32 %60, %8
+  br i1 %61, label %vector.body886, label %.preheader.loopexit.i, !llvm.loop !328
+
+.lr.ph1745.i:                                     ; preds = %vector.ph884, %.lr.ph1745.i
+  %.21743.i = phi i32 [ %i.bjd, %.lr.ph1745.i ], [ %.21743.i.ph, %vector.ph884 ]
+  %.27691742.i = phi ptr [ %i.bjb, %.lr.ph1745.i ], [ %.27691742.i.ph, %vector.ph884 ] ; 2 uses
+  %.27721741.i = phi i32 [ %i.bja, %.lr.ph1745.i ], [ %.27721741.i.ph, %vector.ph884 ]
+  %.27751740.i = phi i32 [ %i.biv, %.lr.ph1745.i ], [ %.27751740.i.ph, %vector.ph884 ]
+  %.98341739.i = phi ptr [ %i.bjc, %.lr.ph1745.i ], [ %.98341739.i.ph, %vector.ph884 ] ; 3 uses
   %i.biq = load i8, ptr %.27691742.i, align 1, !tbaa !17
   %i.bir = sext i8 %i.biq to i32                  ; 2 uses
   %i.bis = load i8, ptr %.98341739.i, align 1, !tbaa !17
@@ -756,12 +404,12 @@ vec.epilog.middle.block931:                       ; preds = %vec.epilog.vector.b
   %i.bjc = getelementptr inbounds nuw i8, ptr %.98341739.i, i64 2 ; 2 uses
   %i.bjd = add nuw nsw i32 %.21743.i, 1           ; 2 uses
   %exitcond2023.not.i = icmp eq i32 %i.bjd, %8
-  br i1 %exitcond2023.not.i, label %._crit_edge1746.i, label %.lr.ph1745.i, !llvm.loop !331
+  br i1 %exitcond2023.not.i, label %._crit_edge1746.i, label %.lr.ph1745.i, !llvm.loop !329
 
-._crit_edge1746.i:                                ; preds = %.lr.ph1745.i, %middle.block904, %vec.epilog.middle.block931, %._crit_edge1727.i
-  %.9834.lcssa.i = phi ptr [ %.8833.lcssa.i, %._crit_edge1727.i ], [ %330, %vec.epilog.middle.block931 ], [ %303, %middle.block904 ], [ %i.bjc, %.lr.ph1745.i ] ; 2 uses
-  %.2775.lcssa.i = phi i32 [ %288, %._crit_edge1727.i ], [ %343, %vec.epilog.middle.block931 ], [ %325, %middle.block904 ], [ %i.biv, %.lr.ph1745.i ]
-  %.2772.lcssa.i = phi i32 [ %292, %._crit_edge1727.i ], [ %342, %vec.epilog.middle.block931 ], [ %324, %middle.block904 ], [ %i.bja, %.lr.ph1745.i ]
+._crit_edge1746.i:                                ; preds = %.lr.ph1745.i, %middle.block967, %iter.check914, %.preheader.i
+  %.9834.lcssa.i = phi ptr [ %.7832.lcssa.i, %.preheader.i ], [ %i.bip, %iter.check914 ], [ %i.bht, %middle.block967 ], [ %i.bjc, %.lr.ph1745.i ] ; 2 uses
+  %.2775.lcssa.i = phi i32 [ %.1774.lcssa.i, %.preheader.i ], [ %32, %iter.check914 ], [ %i.bim, %middle.block967 ], [ %i.biv, %.lr.ph1745.i ]
+  %.2772.lcssa.i = phi i32 [ %.1771.lcssa.i, %.preheader.i ], [ %31, %iter.check914 ], [ %i.bil, %middle.block967 ], [ %i.bja, %.lr.ph1745.i ]
   store i32 %.2775.lcssa.i, ptr %.181752.i, align 4, !tbaa !135
   %i.bje = getelementptr inbounds nuw i8, ptr %.181752.i, i64 4
   store i32 %.2772.lcssa.i, ptr %i.bje, align 4, !tbaa !135
@@ -769,7 +417,7 @@ vec.epilog.middle.block931:                       ; preds = %vec.epilog.vector.b
   %i.bjg = add nuw nsw i32 %.28231751.i, 2        ; 3 uses
   %i.bjh = or disjoint i32 %i.bjg, 1
   %i.bji = icmp slt i32 %i.bjh, %6
-  br i1 %i.bji, label %.lr.ph1753.i, label %.preheader1216.i, !llvm.loop !332
+  br i1 %i.bji, label %.lr.ph1753.i, label %.preheader1216.i, !llvm.loop !330
 
 .lr.ph1786.i:                                     ; preds = %.lr.ph1786.i.preheader, %._crit_edge1780.i
   %.191785.i = phi ptr [ %i.bnc, %._crit_edge1780.i ], [ %.18.lcssa.i, %.lr.ph1786.i.preheader ] ; 3 uses
@@ -829,7 +477,7 @@ vector.body852:                                   ; preds = %vector.body852, %ve
   %i.bkb = add <8 x i32> %i.bka, %vec.phi854      ; 2 uses
   %index.next870 = add nuw i64 %index853, 8       ; 2 uses
   %i.bkc = icmp eq i64 %index.next870, %n.vec851
-  br i1 %i.bkc, label %middle.block871, label %vector.body852, !llvm.loop !333
+  br i1 %i.bkc, label %middle.block871, label %vector.body852, !llvm.loop !331
 
 middle.block871:                                  ; preds = %vector.body852
   %i.bkd = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.bkb)
@@ -865,7 +513,7 @@ middle.block871:                                  ; preds = %vector.body852
   %i.bku = add nuw nsw i32 %.07521759.i, 4        ; 2 uses
   %i.bkv = or disjoint i32 %i.bku, 3
   %i.bkw = icmp slt i32 %i.bkv, %8
-  br i1 %i.bkw, label %.lr.ph1765.i, label %._crit_edge1766.i, !llvm.loop !334
+  br i1 %i.bkw, label %.lr.ph1765.i, label %._crit_edge1766.i, !llvm.loop !332
 
 ._crit_edge1766.i:                                ; preds = %.lr.ph1765.i, %middle.block871, %bb.ak
   %.11836.lcssa.i = phi ptr [ %.108351783.i, %bb.ak ], [ %i.bjk, %middle.block871 ], [ %i.bkt, %.lr.ph1765.i ] ; 6 uses
@@ -939,7 +587,7 @@ vector.body801:                                   ; preds = %vector.body801, %ve
   %i.bmf = add <8 x i32> %i.bmb, %vec.phi806      ; 2 uses
   %index.next817 = add nuw i64 %index802, 32      ; 2 uses
   %i.bmg = icmp eq i64 %index.next817, %n.vec800
-  br i1 %i.bmg, label %middle.block818, label %vector.body801, !llvm.loop !335
+  br i1 %i.bmg, label %middle.block818, label %vector.body801, !llvm.loop !333
 
 middle.block818:                                  ; preds = %vector.body801
   %bin.rdx819 = add <8 x i32> %i.bmd, %i.bmc
@@ -977,7 +625,7 @@ vec.epilog.vector.body834:                        ; preds = %vec.epilog.vector.b
   %i.bmq = add <4 x i32> %i.bmp, %vec.phi836      ; 2 uses
   %index.next841 = add nuw i64 %index835, 4       ; 2 uses
   %i.bmr = icmp eq i64 %index.next841, %n.vec833
-  br i1 %i.bmr, label %vec.epilog.middle.block842, label %vec.epilog.vector.body834, !llvm.loop !336
+  br i1 %i.bmr, label %vec.epilog.middle.block842, label %vec.epilog.vector.body834, !llvm.loop !334
 
 vec.epilog.middle.block842:                       ; preds = %vec.epilog.vector.body834
   %i.bms = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.bmq) ; 2 uses
@@ -1006,7 +654,7 @@ vec.epilog.middle.block842:                       ; preds = %vec.epilog.vector.b
   %i.bna = getelementptr inbounds nuw i8, ptr %.128371774.i, i64 1 ; 2 uses
   %i.bnb = add nuw nsw i32 %.11777.i, 1           ; 2 uses
   %exitcond2024.not.i = icmp eq i32 %i.bnb, %8
-  br i1 %exitcond2024.not.i, label %._crit_edge1780.i, label %.lr.ph1779.i, !llvm.loop !337
+  br i1 %exitcond2024.not.i, label %._crit_edge1780.i, label %.lr.ph1779.i, !llvm.loop !335
 
 ._crit_edge1780.i:                                ; preds = %.lr.ph1779.i, %middle.block818, %vec.epilog.middle.block842, %._crit_edge1766.i
   %.12837.lcssa.i = phi ptr [ %.11836.lcssa.i, %._crit_edge1766.i ], [ %i.bml, %vec.epilog.middle.block842 ], [ %i.bli, %middle.block818 ], [ %i.bna, %.lr.ph1779.i ]
@@ -1015,7 +663,7 @@ vec.epilog.middle.block842:                       ; preds = %vec.epilog.vector.b
   %i.bnc = getelementptr inbounds nuw i8, ptr %.191785.i, i64 4 ; 2 uses
   %i.bnd = add nuw nsw i32 %.38241784.i, 1        ; 2 uses
   %exitcond2025.not.i = icmp eq i32 %i.bnd, %6
-  br i1 %exitcond2025.not.i, label %._crit_edge1787.i, label %.lr.ph1786.i, !llvm.loop !338
+  br i1 %exitcond2025.not.i, label %._crit_edge1787.i, label %.lr.ph1786.i, !llvm.loop !336
 
 ._crit_edge1787.i:                                ; preds = %._crit_edge1780.i, %.preheader1216.i
   %.19.lcssa.i = phi ptr [ %.18.lcssa.i, %.preheader1216.i ], [ %i.bnc, %._crit_edge1780.i ]
@@ -1023,7 +671,7 @@ vec.epilog.middle.block842:                       ; preds = %vec.epilog.vector.b
   %i.bnf = add nuw nsw i32 %.37861789.i, 1        ; 2 uses
   %scevgep2021.i = getelementptr i8, ptr %indvars.iv2020.i, i64 %i.adu
   %exitcond2026.not.i = icmp eq i32 %i.bnf, %4
-  br i1 %exitcond2026.not.i, label %_ZN4ncnnL28gemm_transB_packed_tile_int8ERKNS_3MatES2_RS0_iiiiii.exit, label %.preheader1219.i, !llvm.loop !339
+  br i1 %exitcond2026.not.i, label %_ZN4ncnnL28gemm_transB_packed_tile_int8ERKNS_3MatES2_RS0_iiiiii.exit, label %.preheader1219.i, !llvm.loop !337
 
 _ZN4ncnnL28gemm_transB_packed_tile_int8ERKNS_3MatES2_RS0_iiiiii.exit: ; preds = %._crit_edge1787.i, %bb.b, %bb.d, %.preheader1220.i
   ret void
@@ -1426,17 +1074,15 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !324 = distinct !{!324, !22, !39, !40}
 !325 = distinct !{!325, !22, !39, !40}
 !326 = distinct !{!326, !22, !39, !40}
-!327 = distinct !{!327, !22, !40, !39}
+!327 = distinct !{!327, !22, !39, !40}
 !328 = distinct !{!328, !22, !40, !39}
-!329 = distinct !{!329, !22, !39, !40}
-!330 = distinct !{!330, !22, !39, !40}
-!331 = distinct !{!331, !22, !40, !39}
-!332 = distinct !{!332, !22}
+!329 = distinct !{!329, !22, !40, !39}
+!330 = distinct !{!330, !22}
+!331 = distinct !{!331, !22, !39, !40}
+!332 = distinct !{!332, !22, !40, !39}
 !333 = distinct !{!333, !22, !39, !40}
-!334 = distinct !{!334, !22, !40, !39}
-!335 = distinct !{!335, !22, !39, !40}
-!336 = distinct !{!336, !22, !39, !40}
-!337 = distinct !{!337, !22, !40, !39}
-!338 = distinct !{!338, !22}
-!339 = distinct !{!339, !22}
+!334 = distinct !{!334, !22, !39, !40}
+!335 = distinct !{!335, !22, !40, !39}
+!336 = distinct !{!336, !22}
+!337 = distinct !{!337, !22}
 end_hunk_1

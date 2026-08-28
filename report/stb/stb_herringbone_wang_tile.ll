@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph32.i16
 stbhw__draw_vline.exit:                           ; preds = %bb.e
   %i.ji = load ptr, ptr %i.e, align 8, !tbaa !101 ; 2 uses
   %i.jj = load i32, ptr %i.g, align 8, !tbaa !102 ; 2 uses
-  %i.jk = shl nsw i32 %i.d, 1                     ; 7 uses
+  %i.jk = shl nsw i32 %i.d, 1                     ; 6 uses
   %i.jl = add i32 %i.i, %i.jk                     ; 2 uses
   %i.jm = getelementptr inbounds [16 x i8], ptr @stbhw__corner_colors_to_edge_color, i64 %i.dt
   %i.jn = sext i32 %8 to i64                      ; 4 uses
@@ -607,67 +607,38 @@ stbhw__draw_clipped_corner.exit240:               ; preds = %bb.l, %.preheader.s
 bb.o:                                             ; preds = %stbhw__draw_clipped_corner.exit240
   %i.us = load ptr, ptr %i.e, align 8, !tbaa !101 ; 2 uses
   %i.ut = load i32, ptr %i.g, align 8, !tbaa !102
-  %i.uu = or disjoint i32 %i.jk, 1                ; 5 uses
+  %i.uu = or disjoint i32 %i.jk, 1
   %i.uv = add nsw i32 %i.uu, %1
-  %9 = sext i32 %i.uu to i64                      ; 3 uses
-  %10 = sext i32 %i.jk to i64                     ; 3 uses
   %i.uw = sext i32 %i.uv to i64                   ; 3 uses
   %i.ux = sext i32 %i.ut to i64                   ; 2 uses
   %i.uy = icmp slt i32 %i.d, 1
-  %11 = mul nsw i64 %i.ux, %i.ip
-  %12 = getelementptr inbounds i8, ptr %i.us, i64 %11 ; 2 uses
-  br i1 %i.uy, label %stbhw__draw_clipped_corner.exit253, label %.preheader.split.split.preheader.2.i241
+  br i1 %i.uy, label %stbhw__draw_clipped_corner.exit253, label %bb.p
 
-.preheader.split.split.preheader.2.i241:          ; preds = %bb.o
-  %13 = add nsw i64 %9, -2
-  %14 = icmp slt i32 %i.uu, 3
-  %15 = icmp sgt i64 %13, %10
-  %or.cond.247.i242 = or i1 %14, %15
-  br i1 %or.cond.247.i242, label %.preheader.split.split.1.2.i243, label %16
-
-16:                                               ; preds = %.preheader.split.split.preheader.2.i241
-  %17 = mul nsw i64 %i.uw, 3
-  %18 = getelementptr i8, ptr %12, i64 %17
-  %19 = getelementptr i8, ptr %18, i64 -6
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %19, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
-  br label %.preheader.split.split.1.2.i243
-
-.preheader.split.split.1.2.i243:                  ; preds = %16, %.preheader.split.split.preheader.2.i241
-  %20 = add nsw i64 %9, -1
-  %21 = icmp slt i32 %i.uu, 2
-  %22 = icmp sgt i64 %20, %10
-  %or.cond.1.2.i244 = or i1 %21, %22
-  br i1 %or.cond.1.2.i244, label %.split.us.2.i249, label %bb.p
-
-bb.p:                                             ; preds = %.preheader.split.split.1.2.i243
+bb.p:                                             ; preds = %bb.o
+  %9 = mul nsw i64 %i.ux, %i.ip
+  %10 = getelementptr inbounds i8, ptr %i.us, i64 %9 ; 2 uses
+  %11 = mul nsw i64 %i.uw, 3
+  %12 = getelementptr i8, ptr %10, i64 %11
+  %13 = getelementptr i8, ptr %12, i64 -6
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %13, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
   %i.uz = mul nsw i64 %i.uw, 3
-  %i.va = getelementptr i8, ptr %12, i64 %i.uz
+  %i.va = getelementptr i8, ptr %10, i64 %i.uz
   %i.vb = getelementptr i8, ptr %i.va, i64 -3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.vb, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
-  br label %.split.us.2.i249
+  %14 = icmp eq i32 %i.d, 1
+  br i1 %14, label %stbhw__draw_clipped_corner.exit253, label %bb.q
 
-.split.us.2.i249:                                 ; preds = %.preheader.split.split.1.2.i243, %bb.p
-  %23 = icmp eq i32 %i.d, 1
-  %24 = add nsw i64 %i.ip, 1
-  %25 = mul nsw i64 %24, %i.ux
-  %26 = getelementptr inbounds i8, ptr %i.us, i64 %25
-  br i1 %23, label %stbhw__draw_clipped_corner.exit253, label %.preheader.split.split.us.3.i250
-
-.preheader.split.split.us.3.i250:                 ; preds = %.split.us.2.i249
-  %27 = add nsw i64 %9, -1
-  %28 = icmp slt i32 %i.uu, 2
-  %29 = icmp sgt i64 %27, %10
-  %or.cond.us34.1.3.i251 = or i1 %28, %29
-  br i1 %or.cond.us34.1.3.i251, label %stbhw__draw_clipped_corner.exit253, label %bb.q
-
-bb.q:                                             ; preds = %.preheader.split.split.us.3.i250
+bb.q:                                             ; preds = %bb.p
+  %15 = add nsw i64 %i.ip, 1
+  %16 = mul nsw i64 %15, %i.ux
+  %17 = getelementptr inbounds i8, ptr %i.us, i64 %16
   %i.vc = mul nsw i64 %i.uw, 3
-  %i.vd = getelementptr i8, ptr %26, i64 %i.vc
+  %i.vd = getelementptr i8, ptr %17, i64 %i.vc
   %i.ve = getelementptr i8, ptr %i.vd, i64 -3
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ve, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
   br label %stbhw__draw_clipped_corner.exit253
 
-stbhw__draw_clipped_corner.exit253:               ; preds = %bb.o, %.preheader.split.split.us.3.i250, %bb.q, %.split.us.2.i249, %stbhw__draw_clipped_corner.exit240
+stbhw__draw_clipped_corner.exit253:               ; preds = %bb.o, %bb.q, %bb.p, %stbhw__draw_clipped_corner.exit240
   %i.vf = load ptr, ptr %i.a, align 8, !tbaa !14
   %i.vg = getelementptr inbounds nuw i8, ptr %i.vf, i64 40
   %i.vh = getelementptr inbounds [4 x i8], ptr %i.vg, i64 %i.hs
@@ -1070,7 +1041,7 @@ bb.j:                                             ; preds = %bb.j, %.lr.ph32.i20
 stbhw__draw_vline.exit224:                        ; preds = %bb.j
   %i.ke = load ptr, ptr %i.e, align 8, !tbaa !101 ; 4 uses
   %i.kf = load i32, ptr %i.g, align 8, !tbaa !102 ; 2 uses
-  %i.kg = shl nsw i32 %i.d, 1                     ; 8 uses
+  %i.kg = shl nsw i32 %i.d, 1                     ; 7 uses
   %i.kh = add i32 %i.dq, %i.kg                    ; 4 uses
   %i.ki = getelementptr inbounds [16 x i8], ptr @stbhw__corner_colors_to_edge_color, i64 %i.hf
   %i.kj = getelementptr inbounds [4 x i8], ptr %i.ki, i64 %i.iu
@@ -1429,40 +1400,25 @@ stbhw__draw_clipped_corner.exit248:               ; preds = %.preheader.split.sp
   br i1 %.not140, label %stbhw__draw_clipped_corner.exit262, label %bb.r
 
 bb.r:                                             ; preds = %stbhw__draw_clipped_corner.exit248
-  %9 = load ptr, ptr %i.e, align 8, !tbaa !101    ; 2 uses
-  %10 = load i32, ptr %i.g, align 8, !tbaa !102
-  %i.qk = or disjoint i32 %i.kg, 1                ; 4 uses
-  %11 = add nsw i32 %i.qk, %2
-  %12 = sext i32 %i.qk to i64                     ; 2 uses
-  %13 = sext i32 %i.kg to i64                     ; 2 uses
-  %14 = sext i32 %11 to i64                       ; 2 uses
-  %15 = sext i32 %10 to i64                       ; 2 uses
-  %16 = add nsw i64 %12, -2
+  %i.qk = or disjoint i32 %i.kg, 1                ; 2 uses
   %i.ql = icmp slt i32 %i.qk, 3
-  %17 = icmp sgt i64 %16, %13
-  %or.cond31.i249 = or i1 %i.ql, %17
-  br i1 %or.cond31.i249, label %.split.us.i251, label %18
+  br i1 %i.ql, label %stbhw__draw_clipped_corner.exit262, label %.preheader.split.split.preheader.1.i253
 
-18:                                               ; preds = %bb.r
-  %19 = add nsw i64 %14, -2
-  %20 = mul nsw i64 %19, %15
-  %21 = getelementptr inbounds i8, ptr %9, i64 %20
-  %22 = mul nsw i64 %i.au, 3
-  %23 = getelementptr inbounds i8, ptr %21, i64 %22
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %23, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
-  br label %.split.us.i251
-
-.split.us.i251:                                   ; preds = %18, %bb.r
-  %24 = add nsw i64 %12, -1
-  %25 = icmp slt i32 %i.qk, 2
-  %26 = icmp sgt i64 %24, %13
-  %or.cond31.1.i252 = or i1 %25, %26
-  br i1 %or.cond31.1.i252, label %stbhw__draw_clipped_corner.exit262, label %.preheader.split.split.preheader.1.i253
-
-.preheader.split.split.preheader.1.i253:          ; preds = %.split.us.i251
-  %i.qm = add nsw i64 %14, -1
-  %i.qn = mul nsw i64 %i.qm, %15
-  %i.qo = getelementptr inbounds i8, ptr %9, i64 %i.qn
+.preheader.split.split.preheader.1.i253:          ; preds = %bb.r
+  %9 = load i32, ptr %i.g, align 8, !tbaa !102
+  %10 = sext i32 %9 to i64                        ; 2 uses
+  %11 = add nsw i32 %i.qk, %2
+  %12 = sext i32 %11 to i64                       ; 2 uses
+  %13 = load ptr, ptr %i.e, align 8, !tbaa !101   ; 2 uses
+  %14 = add nsw i64 %12, -2
+  %15 = mul nsw i64 %14, %10
+  %16 = getelementptr inbounds i8, ptr %13, i64 %15
+  %17 = mul nsw i64 %i.au, 3
+  %18 = getelementptr inbounds i8, ptr %16, i64 %17
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %18, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
+  %i.qm = add nsw i64 %12, -1
+  %i.qn = mul nsw i64 %i.qm, %10
+  %i.qo = getelementptr inbounds i8, ptr %13, i64 %i.qn
   %i.qp = mul nsw i64 %i.au, 3
   %i.qq = getelementptr i8, ptr %i.qo, i64 %i.qp  ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.qq, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
@@ -1474,7 +1430,7 @@ bb.s:                                             ; preds = %.preheader.split.sp
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.qs, ptr noundef nonnull readonly align 1 dereferenceable(3) @__const.stbhw__draw_clipped_corner.template_color, i64 3, i1 false)
   br label %stbhw__draw_clipped_corner.exit262
 
-stbhw__draw_clipped_corner.exit262:               ; preds = %bb.s, %.preheader.split.split.preheader.1.i253, %.split.us.i251, %stbhw__draw_clipped_corner.exit248
+stbhw__draw_clipped_corner.exit262:               ; preds = %bb.r, %bb.s, %.preheader.split.split.preheader.1.i253, %stbhw__draw_clipped_corner.exit248
   %i.qt = load ptr, ptr %i.a, align 8, !tbaa !14
   %i.qu = getelementptr inbounds nuw i8, ptr %i.qt, i64 56
   %i.qv = getelementptr inbounds [4 x i8], ptr %i.qu, i64 %i.l

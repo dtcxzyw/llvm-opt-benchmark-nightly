@@ -205,7 +205,7 @@ bb.es:                                            ; preds = %bb.er, %bb.eq
 
 bb.et:                                            ; preds = %bb.es
   %i.ank = load i32, ptr %i.alk, align 4, !tbaa !29
-  %i.anl = mul nsw i32 %i.amx, %i.alf
+  %i.anl = mul nuw nsw i32 %i.amx, %i.alf
   %i.anm = add i32 %i.anl, %i.anj
   %i.ann = add i32 %i.anm, %i.ank
   %i.ano = and i32 %.0101.us.i, 4

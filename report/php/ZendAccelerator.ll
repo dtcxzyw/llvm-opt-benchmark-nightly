@@ -205,12 +205,12 @@ bb.m:                                             ; preds = %bb.l
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ar, i64 192
   store ptr %i.ay, ptr %i.ba, align 8, !tbaa !61
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ar, i64 216 ; 2 uses
-  %i.bc = shl nsw i64 %i.ae, 20                   ; 2 uses
+  %i.bc = shl nuw nsw i64 %i.ae, 20               ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bc
   %i.be = getelementptr inbounds nuw i8, ptr %i.ar, i64 200
   store ptr %i.bd, ptr %i.be, align 8, !tbaa !69
   %gepdiff.i = or disjoint i64 %i.bc, 40
-  %i.bf = icmp ult i64 %gepdiff.i, 34359738360
+  %i.bf = icmp samesign ult i64 %gepdiff.i, 34359738360
   tail call void @llvm.assume(i1 %i.bf)
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ar, i64 208
   store ptr null, ptr %i.bg, align 8, !tbaa !270

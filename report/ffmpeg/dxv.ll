@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %bytestream2_get_le3
   %.1106.sink = phi i32 [ %.1106, %bytestream2_get_le32.exit ], [ %i.ce, %bb.o ]
   %.4111 = phi i32 [ %i.gt, %bytestream2_get_le32.exit ], [ %i.am, %bb.o ]
   %.4 = phi i32 [ %i.gu, %bytestream2_get_le32.exit ], [ %i.an, %bb.o ]
-  %i.gw = shl nsw i64 %.sink, 2
+  %i.gw = shl nuw nsw i64 %.sink, 2
   %i.gx = getelementptr inbounds nuw i8, ptr %.sink236, i64 %i.gw
   store i32 %.1106.sink, ptr %i.gx, align 1, !tbaa !43
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
