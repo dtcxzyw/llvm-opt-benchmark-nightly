@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
 ; Function Attrs: nonlazybind uwtable
 define { i64, i64 } @_RNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner16shrink_uncheckedCsiHivYpkJ4Hu_2cc(ptr align 8 %0, i64 %1, i64 %2, i64 %3) unnamed_addr #0 {
 bb.a:
-  %.sroa.2 = alloca i64, align 8                  ; 4 uses
-  %.sroa.6 = alloca i64, align 8                  ; 2 uses
+  %.sroa.2 = alloca [8 x i8], align 8             ; 4 uses
+  %.sroa.6 = alloca [8 x i8], align 8             ; 2 uses
   %i.a = icmp eq i64 %3, 0
   br i1 %i.a, label %_RNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner14current_memoryCsiHivYpkJ4Hu_2cc.exit, label %bb.b
 
@@ -265,8 +265,8 @@ bb.h:                                             ; preds = %bb.g, %_RNvMs2_NtCs
 ; Function Attrs: inlinehint nonlazybind uwtable
 define { i64, i64 } @_RNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner6shrinkCsiHivYpkJ4Hu_2cc(ptr align 8 %0, i64 %1, i64 %2, i64 %3) unnamed_addr #1 {
 bb.a:
-  %.sroa.2.i = alloca i64, align 8                ; 7 uses
-  %.sroa.6.i = alloca i64, align 8                ; 5 uses
+  %.sroa.2.i = alloca [8 x i8], align 8           ; 7 uses
+  %.sroa.6.i = alloca [8 x i8], align 8           ; 5 uses
   %i.a = icmp eq i64 %3, 0
   br i1 %i.a, label %.critedge.thread, label %bb.b
 

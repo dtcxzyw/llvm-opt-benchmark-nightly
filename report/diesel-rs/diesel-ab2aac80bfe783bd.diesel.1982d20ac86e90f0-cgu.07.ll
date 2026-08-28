@@ -205,8 +205,8 @@ bb.a:
   %i.x = alloca [32 x i8], align 8                ; 5 uses
   %.sroa.557 = alloca [24 x i8], align 8          ; 6 uses
   %i.y = alloca [24 x i8], align 8                ; 13 uses
-  %.sroa.9379 = alloca i64, align 8               ; 10 uses
-  %.sroa.18 = alloca i64, align 8                 ; 6 uses
+  %.sroa.9379 = alloca [8 x i8], align 8          ; 10 uses
+  %.sroa.18 = alloca [8 x i8], align 8            ; 6 uses
   %i.z = alloca [272 x i8], align 8               ; 35 uses
   %i.aa = alloca [88 x i8], align 8               ; 9 uses
   %.sroa.628 = alloca [32 x i8], align 8          ; 7 uses
@@ -609,7 +609,7 @@ bb.bi:                                            ; preds = %_RNvXs_NtNtNtCscI6d
   %.sink28.i.sroa.phi = phi ptr [ %.sroa.9379, %.noexc303 ], [ %.sroa.9379, %.noexc304 ], [ %.sroa.9379, %bb.bh ], [ %.sroa.9379, %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3map3MapINtNtB6_4skip4SkipINtNtB6_6copied6CopiedINtNtNtNtCs40k4W9msRzi_5alloc11collections5btree3map4KeysjRNtNtB22_6string6StringEEENcNtINtNtNtBa_3ops5range5BoundjE8Excluded0EINtNtNtB8_7sources4once4OnceB3j_EENtNtNtB8_6traits8iterator8Iterator4nextCs2bNgeUs5Jlc_6diesel.exit.i.i.i ], [ %.sroa.18, %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3zipINtB4_3ZipINtNtB6_3map3MapINtNtB6_6copied6CopiedINtNtNtNtCs40k4W9msRzi_5alloc11collections5btree3map4KeysjRNtNtB1G_6string6StringEENcNtINtNtNtBa_3ops5range5BoundjE8Included0EINtNtB6_5chain5ChainIBW_INtNtB6_4skip4SkipB1b_ENcNtB2W_8Excluded0EINtNtNtB8_7sources4once4OnceB2W_EEENtNtNtB8_6traits8iterator8Iterator4nextCs2bNgeUs5Jlc_6diesel.exit.i ]
   %.sink.i = phi i64 [ -1, %.noexc303 ], [ -1, %.noexc304 ], [ -1, %bb.bh ], [ -1, %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters5chainINtB4_5ChainINtNtB6_3map3MapINtNtB6_4skip4SkipINtNtB6_6copied6CopiedINtNtNtNtCs40k4W9msRzi_5alloc11collections5btree3map4KeysjRNtNtB22_6string6StringEEENcNtINtNtNtBa_3ops5range5BoundjE8Excluded0EINtNtNtB8_7sources4once4OnceB3j_EENtNtNtB8_6traits8iterator8Iterator4nextCs2bNgeUs5Jlc_6diesel.exit.i.i.i ], [ %.sroa.10.0.i, %_RNvXs_NtNtNtCscI6d9CVNmLh_4core4iter8adapters3zipINtB4_3ZipINtNtB6_3map3MapINtNtB6_6copied6CopiedINtNtNtNtCs40k4W9msRzi_5alloc11collections5btree3map4KeysjRNtNtB1G_6string6StringEENcNtINtNtNtBa_3ops5range5BoundjE8Included0EINtNtB6_5chain5ChainIBW_INtNtB6_4skip4SkipB1b_ENcNtB2W_8Excluded0EINtNtNtB8_7sources4once4OnceB2W_EEENtNtNtB8_6traits8iterator8Iterator4nextCs2bNgeUs5Jlc_6diesel.exit.i ]
   store i64 %.sink.i, ptr %.sink28.i.sroa.phi, align 8, !alias.scope !779, !noalias !782
-  %.sroa.9379.0..sroa.9379.0..sroa.9379.0..sroa.9379.16. = load i64, ptr %.sroa.9379, align 8, !range !677, !noundef !5 ; 2 uses
+  %.sroa.9379.0..sroa.9379.0..sroa.9379.0..sroa.9379.16. = load i64, ptr %.sroa.9379, align 8 ; 2 uses
   %.not250 = icmp eq i64 %.sroa.9379.0..sroa.9379.0..sroa.9379.0..sroa.9379.16., -1
   br i1 %.not250, label %bb.bk, label %bb.bj
 

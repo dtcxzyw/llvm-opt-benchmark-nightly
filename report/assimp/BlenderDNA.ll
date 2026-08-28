@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %.critedge, %_ZNKSt4
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp7Blender13SectionParser4NextEv(ptr nofree noundef nonnull align 8 captures(address) dereferenceable(81) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.059 = alloca i32, align 4                ; 8 uses
-  %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
+  %1 = alloca [4 x i8], align 1                   ; 8 uses
+  %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 10 uses
   %i.b = load ptr, ptr %i.a, align 8, !nonnull !3, !align !4 ; 3 uses
   %i.c = load i64, ptr %0, align 8
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.b
   br label %common.resume
 
 _ZN6Assimp12StreamReaderILb1ELb1EE13SetCurrentPosEm.exit: ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.059)
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.p = load ptr, ptr %i.a, align 8, !nonnull !3, !align !4 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8              ; 2 uses
@@ -271,7 +271,7 @@ bb.g:                                             ; preds = %bb.e
 _ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit:  ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE13SetCurrentPosEm.exit
   %i.y = load i8, ptr %i.r, align 1               ; 2 uses
   store ptr %i.s, ptr %i.q, align 8
-  store i8 %i.y, ptr %.sroa.059, align 4
+  store i8 %i.y, ptr %1, align 1
   %i.z = load ptr, ptr %i.a, align 8, !nonnull !3, !align !4 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 24 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8            ; 2 uses
@@ -299,7 +299,7 @@ bb.j:                                             ; preds = %bb.h
 _ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit6: ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit
   %i.ai = load i8, ptr %i.ab, align 1             ; 2 uses
   store ptr %i.ac, ptr %i.aa, align 8
-  %.sroa.059.1..sroa_idx78 = getelementptr inbounds nuw i8, ptr %.sroa.059, i64 1
+  %.sroa.059.1..sroa_idx78 = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %i.ai, ptr %.sroa.059.1..sroa_idx78, align 1
   %i.aj = load ptr, ptr %i.a, align 8, !nonnull !3, !align !4 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 24 ; 2 uses
@@ -328,8 +328,8 @@ bb.m:                                             ; preds = %bb.k
 _ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit7: ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit6
   %i.as = load i8, ptr %i.al, align 1             ; 2 uses
   store ptr %i.am, ptr %i.ak, align 8
-  %.sroa.059.2..sroa_idx79 = getelementptr inbounds nuw i8, ptr %.sroa.059, i64 2
-  store i8 %i.as, ptr %.sroa.059.2..sroa_idx79, align 2
+  %.sroa.059.2..sroa_idx79 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  store i8 %i.as, ptr %.sroa.059.2..sroa_idx79, align 1
   %i.at = load ptr, ptr %i.a, align 8, !nonnull !3, !align !4 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 24 ; 2 uses
   %i.av = load ptr, ptr %i.au, align 8            ; 2 uses
@@ -357,9 +357,9 @@ bb.p:                                             ; preds = %bb.n
 _ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit8: ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit7
   %i.bc = load i8, ptr %i.av, align 1             ; 2 uses
   store ptr %i.aw, ptr %i.au, align 8
-  %.sroa.059.3..sroa_idx80 = getelementptr inbounds nuw i8, ptr %.sroa.059, i64 3
+  %.sroa.059.3..sroa_idx80 = getelementptr inbounds nuw i8, ptr %1, i64 3
   store i8 %i.bc, ptr %.sroa.059.3..sroa_idx80, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %.not = icmp eq i8 %i.bc, 0
   br i1 %.not, label %bb.q, label %.thread
 
@@ -369,14 +369,14 @@ bb.q:                                             ; preds = %_ZN6Assimp12StreamR
 
 .thread:                                          ; preds = %bb.q, %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit8
   %.ph = phi i64 [ 4, %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit8 ], [ 3, %bb.q ]
-  %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  store ptr %i.bd, ptr %1, align 8
+  %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  store ptr %i.bd, ptr %2, align 8
   br label %bb.t
 
 bb.r:                                             ; preds = %bb.q
   %.not4 = icmp eq i8 %i.ai, 0
-  %i.be = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
-  store ptr %i.be, ptr %1, align 8
+  %i.be = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 4 uses
+  store ptr %i.be, ptr %2, align 8
   br i1 %.not4, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
@@ -386,13 +386,13 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.r, %.thread
   %i.bf = phi ptr [ %i.bd, %.thread ], [ %i.be, %bb.r ] ; 2 uses
   %i.bg = phi i64 [ %.ph, %.thread ], [ 2, %bb.r ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bf, ptr noundef nonnull align 4 dereferenceable(1) %.sroa.059, i64 %i.bg, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bf, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.bg, i1 false)
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i: ; preds = %bb.t, %bb.s
   %i.bh = phi ptr [ %i.bf, %bb.t ], [ %i.be, %bb.s ] ; 5 uses
   %i.bi = phi i64 [ %i.bg, %bb.t ], [ 1, %bb.s ]  ; 4 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i64 %i.bi, ptr %i.bj, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bi
   store i8 0, ptr %i.bk, align 1
@@ -417,10 +417,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit: ; preds = %bb
   %i.bq = load ptr, ptr %i.bl, align 8
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bo
   store i8 0, ptr %i.br, align 1
-  %.pre.i = load ptr, ptr %1, align 8
+  %.pre.i = load ptr, ptr %2, align 8
   store i64 0, ptr %i.bj, align 8
   store i8 0, ptr %.pre.i, align 1
-  %i.bs = load ptr, ptr %1, align 8               ; 2 uses
+  %i.bs = load ptr, ptr %2, align 8               ; 2 uses
   %i.bt = icmp eq ptr %i.bs, %i.bh
   br i1 %i.bt, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
@@ -431,7 +431,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   %i.bw = load ptr, ptr %i.a, align 8, !nonnull !3, !align !4 ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 24 ; 2 uses
   %i.by = load ptr, ptr %i.bx, align 8            ; 2 uses
@@ -703,11 +703,11 @@ bb.av:                                            ; preds = %bb.at
   %i.fe = landingpad { ptr, i32 }
           cleanup
   call void @__cxa_free_exception(ptr nonnull %i.fd) #20
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.059)
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   br label %common.resume
 
 bb.aw:                                            ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI4Ev.exit58
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.059)
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   ret void
 }
 

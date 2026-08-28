@@ -45,7 +45,7 @@ bb.a:
 define internal i32 @decode_frame(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) #1 {
 bb.a:
   %i.a = alloca [4 x i8], align 1                 ; 175 uses
-  %.sroa.0 = alloca i32, align 4                  ; 17 uses
+  %4 = alloca [4 x i8], align 1                   ; 17 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !32   ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 32
@@ -158,16 +158,16 @@ bb.f:                                             ; preds = %bytestream2_get_byt
   %.pre609.a = mul nsw i64 %i.y, 5
   %.pre615 = mul nsw i64 %i.y, 6
   %.pre621 = mul nsw i64 %i.y, 7
-  %.sroa.0.1..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  %.sroa.0.2..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  %.sroa.0.3..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
-  %.sroa.0.1..sroa_idx805 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  %.sroa.0.2..sroa_idx808 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  %.sroa.0.1..sroa_idx806 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  %.sroa.0.2..sroa_idx809 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
-  %.sroa.0.3..sroa_idx811 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
-  %.sroa.0.1..sroa_idx807 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  %.sroa.0.2..sroa_idx810 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 2
+  %.sroa.0.1..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %.sroa.0.2..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %.sroa.0.3..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 3
+  %.sroa.0.1..sroa_idx805 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %.sroa.0.2..sroa_idx808 = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %.sroa.0.1..sroa_idx806 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %.sroa.0.2..sroa_idx809 = getelementptr inbounds nuw i8, ptr %4, i64 2
+  %.sroa.0.3..sroa_idx811 = getelementptr inbounds nuw i8, ptr %4, i64 3
+  %.sroa.0.1..sroa_idx807 = getelementptr inbounds nuw i8, ptr %4, i64 1
+  %.sroa.0.2..sroa_idx810 = getelementptr inbounds nuw i8, ptr %4, i64 2
   %i.bo = shl nsw i64 %i.y, 1
   %i.bp = mul nsw i64 %i.y, 3
   %i.bq = shl nsw i64 %i.y, 2
@@ -193,7 +193,7 @@ bb.h:                                             ; preds = %bb.g, %copy_block.e
   %.sroa.0.1403 = phi ptr [ %.sroa.0.0407, %bb.g ], [ %.sroa.0.11, %copy_block.exit.thread ] ; 4 uses
   %i.bx = load ptr, ptr %i.p, align 8, !tbaa !45  ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %.not177 = icmp eq i32 %.1147406, 0
   %i.by = trunc nuw nsw i64 %indvars.iv472 to i32 ; 3 uses
   br i1 %.not177, label %bb.i, label %bytestream2_get_byte.exit179
@@ -596,7 +596,7 @@ bytestream2_get_byte.exit.7:                      ; preds = %bb.ag, %bytestream2
 .preheader342.split.preheader:                    ; preds = %.preheader342
   %i.xt = tail call i64 @llvm.smin.i64(i64 %i.xg, i64 4)
   %i.xu = and i64 %i.xt, 4294967295               ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0, ptr align 1 %.sroa.0.7395, i64 %i.xu, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %.sroa.0.7395, i64 %i.xu, i1 false)
   %i.xv = getelementptr inbounds nuw i8, ptr %.sroa.0.7395, i64 %i.xu ; 3 uses
   %i.xw = ptrtoint ptr %i.xv to i64
   %i.xx = sub i64 %i.ad, %i.xw
@@ -999,7 +999,7 @@ bytestream2_get_le16.exit:                        ; preds = %.preheader342.split
   %.pre-phi664 = phi i64 [ %i.ad, %.preheader342.split.preheader ], [ %.pre663, %bb.al ]
   %.sroa.0.17 = phi ptr [ %i.ac, %.preheader342.split.preheader ], [ %i.akr, %bb.al ] ; 2 uses
   %.0.i182 = phi i32 [ 0, %.preheader342.split.preheader ], [ %i.akt, %bb.al ] ; 16 uses
-  %.sroa.0.0..sroa.0.0..sroa.0.0. = load i8, ptr %.sroa.0, align 4, !tbaa !38 ; 2 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0. = load i8, ptr %4, align 1, !tbaa !38 ; 2 uses
   store i8 %.sroa.0.0..sroa.0.0..sroa.0.0., ptr %i.a, align 1, !tbaa !38
   %.sroa.0.1..sroa.0.1..sroa.0.1. = load i8, ptr %.sroa.0.1..sroa_idx, align 1, !tbaa !38 ; 6 uses
   store i8 %.sroa.0.1..sroa.0.1..sroa.0.1., ptr %i.ar, align 1, !tbaa !38
@@ -1017,7 +1017,7 @@ bytestream2_get_le16.exit:                        ; preds = %.preheader342.split
   %gep.i244.1 = getelementptr i8, ptr %invariant.gep, i64 1
   store i8 %i.alc, ptr %gep.i244.1, align 1, !tbaa !38
   %i.ald = lshr i32 %.0.i182, 2
-  %.sroa.0.2..sroa.0.2..sroa.0.2. = load i8, ptr %.sroa.0.2..sroa_idx, align 2, !tbaa !38 ; 6 uses
+  %.sroa.0.2..sroa.0.2..sroa.0.2. = load i8, ptr %.sroa.0.2..sroa_idx, align 1, !tbaa !38 ; 6 uses
   store i8 %.sroa.0.2..sroa.0.2..sroa.0.2., ptr %i.ar, align 1, !tbaa !38
   %i.ale = and i32 %i.ald, 1
   %i.alf = zext nneg i32 %i.ale to i64
@@ -1119,7 +1119,7 @@ bytestream2_get_le16.exit:                        ; preds = %.preheader342.split
   %gep.i244.1.3 = getelementptr i8, ptr %invariant.gep.i242.3, i64 1
   store i8 %i.ank, ptr %gep.i244.1.3, align 1, !tbaa !38
   %i.anl = lshr i32 %.0.i182, 14
-  %.sroa.0.2..sroa.0.2..sroa.0.2.526 = load i8, ptr %.sroa.0.2..sroa_idx808, align 2, !tbaa !38 ; 2 uses
+  %.sroa.0.2..sroa.0.2..sroa.0.2.526 = load i8, ptr %.sroa.0.2..sroa_idx808, align 1, !tbaa !38 ; 2 uses
   store i8 %.sroa.0.2..sroa.0.2..sroa.0.2.526, ptr %i.ar, align 1, !tbaa !38
   %i.anm = and i32 %i.anl, 1
   %i.ann = zext nneg i32 %i.anm to i64
@@ -1137,7 +1137,7 @@ bytestream2_get_le16.exit:                        ; preds = %.preheader342.split
   %i.anu = sub i64 %i.ad, %.pre-phi664
   %i.anv = tail call i64 @llvm.smin.i64(i64 %i.anu, i64 4)
   %i.anw = and i64 %i.anv, 4294967295             ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0, ptr align 1 %.sroa.0.17, i64 %i.anw, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %.sroa.0.17, i64 %i.anw, i1 false)
   %i.anx = getelementptr inbounds nuw i8, ptr %.sroa.0.17, i64 %i.anw ; 3 uses
   %gep387.1 = getelementptr i8, ptr %invariant.gep, i64 4 ; 4 uses
   %i.any = ptrtoint ptr %i.anx to i64
@@ -1154,7 +1154,7 @@ bb.am:                                            ; preds = %bytestream2_get_le1
 bytestream2_get_le16.exit.1:                      ; preds = %bb.am, %bytestream2_get_le16.exit
   %.sroa.0.17.1 = phi ptr [ %i.aob, %bb.am ], [ %i.ac, %bytestream2_get_le16.exit ]
   %.0.i182.1 = phi i32 [ %i.aod, %bb.am ], [ 0, %bytestream2_get_le16.exit ] ; 16 uses
-  %.sroa.0.0..sroa.0.0..sroa.0.0.483 = load i8, ptr %.sroa.0, align 4, !tbaa !38 ; 2 uses
+  %.sroa.0.0..sroa.0.0..sroa.0.0.483 = load i8, ptr %4, align 1, !tbaa !38 ; 2 uses
   store i8 %.sroa.0.0..sroa.0.0..sroa.0.0.483, ptr %i.a, align 1, !tbaa !38
   %.sroa.0.1..sroa.0.1..sroa.0.1.500 = load i8, ptr %.sroa.0.1..sroa_idx806, align 1, !tbaa !38 ; 6 uses
   store i8 %.sroa.0.1..sroa.0.1..sroa.0.1.500, ptr %i.ar, align 1, !tbaa !38
@@ -1172,7 +1172,7 @@ bytestream2_get_le16.exit.1:                      ; preds = %bb.am, %bytestream2
   %gep.i244.1.1455 = getelementptr i8, ptr %invariant.gep, i64 5
   store i8 %i.aom, ptr %gep.i244.1.1455, align 1, !tbaa !38
   %i.aon = lshr i32 %.0.i182.1, 2
-  %.sroa.0.2..sroa.0.2..sroa.0.2.530 = load i8, ptr %.sroa.0.2..sroa_idx809, align 2, !tbaa !38 ; 6 uses
+  %.sroa.0.2..sroa.0.2..sroa.0.2.530 = load i8, ptr %.sroa.0.2..sroa_idx809, align 1, !tbaa !38 ; 6 uses
   store i8 %.sroa.0.2..sroa.0.2..sroa.0.2.530, ptr %i.ar, align 1, !tbaa !38
   %i.aoo = and i32 %i.aon, 1
   %i.aop = zext nneg i32 %i.aoo to i64
@@ -1274,7 +1274,7 @@ bytestream2_get_le16.exit.1:                      ; preds = %bb.am, %bytestream2
   %gep.i244.1.3.1 = getelementptr i8, ptr %invariant.gep.i242.3.1, i64 1
   store i8 %i.aqu, ptr %gep.i244.1.3.1, align 1, !tbaa !38
   %i.aqv = lshr i32 %.0.i182.1, 14
-  %.sroa.0.2..sroa.0.2..sroa.0.2.542 = load i8, ptr %.sroa.0.2..sroa_idx810, align 2, !tbaa !38 ; 2 uses
+  %.sroa.0.2..sroa.0.2..sroa.0.2.542 = load i8, ptr %.sroa.0.2..sroa_idx810, align 1, !tbaa !38 ; 2 uses
   store i8 %.sroa.0.2..sroa.0.2..sroa.0.2.542, ptr %i.ar, align 1, !tbaa !38
   %i.aqw = and i32 %i.aqv, 1
   %i.aqx = zext nneg i32 %i.aqw to i64
@@ -1304,7 +1304,7 @@ bytestream2_get_byte.exit179.thread:              ; preds = %bb.i, %bytestream2_
   br label %.thread329
 
 .thread329:                                       ; preds = %.thread, %bb.t, %bytestream2_get_byte.exit179.thread, %copy_block.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br label %bb.av
 
@@ -1312,7 +1312,7 @@ copy_block.exit.thread:                           ; preds = %.split.us, %.loopex
   %.sroa.0.11 = phi ptr [ %i.ee, %bytestream2_get_le16.exit188 ], [ %.sroa.0.14.7, %bytestream2_get_byte.exit.7 ], [ %.sroa.0.19.1, %.loopexit339.1 ], [ %.sroa.0.20689694697, %.loopexit43.i ], [ %.sroa.0.2, %bytestream2_get_byte.exit179 ], [ %i.ac, %bytestream2_get_le16.exit188.thread ], [ %i.ea, %.preheader346.preheader ], [ %.us-phi, %.split.us ] ; 3 uses
   %i.arg = lshr i32 %.2148, 4                     ; 2 uses
   %i.arh = getelementptr inbounds nuw i8, ptr %.0156404, i64 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   %indvars.iv.next473 = add nuw nsw i64 %indvars.iv472, 8
   %i.ari = icmp samesign ult i64 %indvars.iv472, 312

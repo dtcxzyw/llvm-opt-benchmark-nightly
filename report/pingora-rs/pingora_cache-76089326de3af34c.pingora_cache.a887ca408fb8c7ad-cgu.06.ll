@@ -203,8 +203,8 @@ bb.a:
   %i.u = alloca [8 x i8], align 8                 ; 4 uses
   %i.v = alloca [24 x i8], align 8                ; 6 uses
   %i.w = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.464.i = alloca i64, align 8              ; 16 uses
-  %.sroa.17.i = alloca i64, align 8               ; 4 uses
+  %.sroa.464.i = alloca [8 x i8], align 8         ; 16 uses
+  %.sroa.17.i = alloca [8 x i8], align 8          ; 4 uses
   %i.x = alloca [32 x i8], align 8                ; 8 uses
   %i.y = alloca [24 x i8], align 8                ; 6 uses
   %i.z = alloca [24 x i8], align 8                ; 7 uses

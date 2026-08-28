@@ -204,16 +204,16 @@ bb.af:                                            ; preds = %bb.c, %bb.b
 define void @_RNvMsQ_NtNtCsa5QsYiPB8Gl_5image6images6bufferNtB5_19ConvertColorOptions12as_transform(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) %0, ptr noalias nofree noundef align 8 dereferenceable(792) %1, i32 noundef %2, i32 noundef %3) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [792 x i8], align 8               ; 5 uses
-  %.sroa.0.sroa.0.0.extract.trunc = trunc i32 %2 to i8 ; 2 uses
-  %.sroa.0.sroa.3.0.extract.shift = lshr i32 %2, 8
-  %.sroa.0.sroa.3.0.extract.trunc = trunc i32 %.sroa.0.sroa.3.0.extract.shift to i8 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 784 ; 2 uses
+  %5 = load i8, ptr %4, align 8, !range !2715, !noundef !4 ; 3 uses
+  %.not = icmp eq i8 %5, 2
+  %.sroa.0.sroa.3.0.extract.trunc = trunc i32 %2 to i8 ; 2 uses
   %.sroa.0.sroa.4.0.extract.shift = lshr i32 %2, 16
   %.sroa.0.sroa.4.0.extract.trunc = trunc i32 %.sroa.0.sroa.4.0.extract.shift to i8 ; 2 uses
   %.sroa.0.sroa.5.0.extract.shift = lshr i32 %2, 24
   %.sroa.0.sroa.5.0.extract.trunc = trunc nuw i32 %.sroa.0.sroa.5.0.extract.shift to i8 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 784 ; 2 uses
-  %5 = load i8, ptr %4, align 8, !range !2715, !noundef !4 ; 3 uses
-  %.not = icmp eq i8 %5, 2
+  %6 = lshr i32 %2, 8
+  %7 = trunc i32 %6 to i8                         ; 2 uses
   br i1 %.not, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -226,11 +226,11 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 783
   %.sroa.8.0.copyload.i = load i8, ptr %.sroa.8.0..sroa_idx.i, align 1, !alias.scope !4106, !noalias !4109 ; 2 uses
   %i.c = icmp eq i8 %.sroa.8.0.copyload.i, %.sroa.0.sroa.5.0.extract.trunc
-  %i.d = icmp eq i8 %.sroa.628.0.copyload.i, %.sroa.0.sroa.3.0.extract.trunc
+  %i.d = icmp eq i8 %.sroa.628.0.copyload.i, %7
   %or.cond.i = select i1 %i.c, i1 %i.d, i1 false
   %i.e = icmp eq i8 %.sroa.7.0.copyload.i, %.sroa.0.sroa.4.0.extract.trunc
   %or.cond302.i = select i1 %or.cond.i, i1 %i.e, i1 false
-  %i.f = icmp eq i8 %.sroa.026.0.copyload.i, %.sroa.0.sroa.0.0.extract.trunc
+  %i.f = icmp eq i8 %.sroa.026.0.copyload.i, %.sroa.0.sroa.3.0.extract.trunc
   %or.cond303.i = select i1 %or.cond302.i, i1 %i.f, i1 false
   br i1 %or.cond303.i, label %bb.c, label %bb.d
 
@@ -309,7 +309,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.e
 
 bb.i:                                             ; preds = %bb.f
-  %.not.i = icmp eq i8 %.sroa.0.sroa.0.0.extract.trunc, 0
+  %.not.i = icmp eq i8 %.sroa.0.sroa.3.0.extract.trunc, 0
   br i1 %.not.i, label %bb.m, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -328,7 +328,7 @@ bb.k:                                             ; preds = %bb.j, %bb.j
   ]
 
 bb.l:                                             ; preds = %bb.k, %bb.k, %bb.k, %bb.k, %bb.k
-  switch i8 %.sroa.0.sroa.3.0.extract.trunc, label %bb.m [
+  switch i8 %7, label %bb.m [
     i8 1, label %_RNCNvMsQ_NtNtCsa5QsYiPB8Gl_5image6images6bufferNtB7_19ConvertColorOptions12as_transform0Bb_.exit
     i8 6, label %_RNCNvMsQ_NtNtCsa5QsYiPB8Gl_5image6images6bufferNtB7_19ConvertColorOptions12as_transform0Bb_.exit
     i8 8, label %_RNCNvMsQ_NtNtCsa5QsYiPB8Gl_5image6images6bufferNtB7_19ConvertColorOptions12as_transform0Bb_.exit
