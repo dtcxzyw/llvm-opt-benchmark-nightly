@@ -204,7 +204,7 @@ _RNvMs3_NtNtNtCsjRvGck33osM_6diesel6sqlite10connection4stmtNtB5_12StatementUse12
   %wide.trip.count = zext nneg i32 %i.g to i64
   br label %_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntErrorE6expectCsjRvGck33osM_6diesel.exit.i.i.i.i
 
-_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntErrorE6expectCsjRvGck33osM_6diesel.exit.i.i.i.i: ; preds = %.lr.ph.i, %.backedge.i
+_RNvMNtCscI6d9CVNmLh_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntErrorE6expectCsjRvGck33osM_6diesel.exit.i.i.i.i: ; preds = %.backedge.i, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.backedge.i ] ; 5 uses
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.j = tail call noundef nonnull align 8 ptr @_RINvMNtNtCscI6d9CVNmLh_4core4cell4onceINtB3_8OnceCellINtNtCs40k4W9msRzi_5alloc3vec3VecPeEE15get_or_try_initNCINvB2_11get_or_initNCNvMs3_NtNtNtCsjRvGck33osM_6diesel6sqlite10connection4stmtNtB2a_12StatementUse10field_name0E0zEB2g_(ptr noundef nonnull align 8 %i.i, ptr noundef nonnull align 8 %0), !noalias !295 ; 2 uses

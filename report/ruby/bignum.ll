@@ -205,6 +205,7 @@ bb.r:                                             ; preds = %bb.n
   br i1 %.not43.i.i, label %bary_mul_normal.exit, label %.lr.ph21.split.i.preheader
 
 .lr.ph21.split.i.preheader:                       ; preds = %.preheader.i
+  %6 = icmp ule i64 %.0127, %.3116
   %i.cs = load i32, ptr %.2126, align 4, !tbaa !7 ; 2 uses
   %i.ct = icmp eq i32 %i.cs, 0
   br i1 %i.ct, label %bary_mul_normal.exit, label %.lr.ph.i.preheader.i
@@ -242,7 +243,6 @@ bb.s:                                             ; preds = %.lr.ph.i.i.epil.pre
 
 .preheader.i.i:                                   ; preds = %.lr.ph.i.i.epil.preheader, %bb.s, %.preheader.i.i.unr-lcssa
   %.131.i.i.lcssa = phi i64 [ %.131.i.i.1, %.preheader.i.i.unr-lcssa ], [ %i.df, %bb.s ], [ 0, %.lr.ph.i.i.epil.preheader ] ; 2 uses
-  %6 = icmp ule i64 %.0127, %.3116
   %i.dg = icmp eq i64 %.131.i.i.lcssa, 0
   %or.cond38.i.i = select i1 %6, i1 true, i1 %i.dg
   br i1 %or.cond38.i.i, label %bary_mul_normal.exit, label %.lr.ph41.i.i

@@ -206,7 +206,7 @@ bb.n:                                             ; preds = %bb.l
   store ptr %i.au, ptr %i.q, align 8, !noalias !6962
   %i.ax = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !6962, !noundef !13
   %.not.i.i = icmp eq ptr %i.ax, null
-  br i1 %.not.i.i, label %bb.p, label %.lr.ph.i.i.i, !prof !33
+  br i1 %.not.i.i, label %.loopexit.i.i, label %.lr.ph.i.i.i, !prof !33
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !6962
@@ -220,26 +220,25 @@ bb.n:                                             ; preds = %bb.l
   %i.ba = load ptr, ptr %i.az, align 8, !alias.scope !6965, !noalias !6968, !noundef !13
   %i.bb = call noundef i32 @sqlite3_bind_parameter_count(ptr noundef %i.ba) #30, !noalias !6971 ; 3 uses
   %i.bc = sext i32 %i.bb to i64
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !6972
-  store ptr %i.o, ptr %i.j, align 8, !noalias !6972
   %.not.i.not.i.i = icmp eq i32 %i.bb, 0
-  br i1 %.not.i.not.i.i, label %.sink.split.i.i, label %3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !6972
+  br i1 %.not.i.not.i.i, label %.sink.split.i.i, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a"
 
-"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a": ; preds = %.noexc.i.i.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !6972
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !6972
-  %.not13.i.i.i = icmp eq i32 %i.bb, 1
-  br i1 %.not13.i.i.i, label %_ZN8rusqlite9statement9Statement15bind_parameters17h1d4c92658edb0c43E.exit.i.i, label %bb.s
-
-3:                                                ; preds = %.lr.ph.i.i.i
+"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a": ; preds = %.lr.ph.i.i.i
+  store ptr %i.o, ptr %i.j, align 8, !noalias !6972
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !6972
   invoke void @_ZN8rusqlite9statement9Statement14bind_parameter17h7961f4d8e5b60af7E(ptr noalias noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.i, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.4.0..sroa_idx.i.i, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.j, i64 noundef 1)
-          to label %.noexc.i.i.a unwind label %.loopexit.i.i, !noalias !6973
+          to label %.noexc.i.i.a unwind label %.loopexit.split.us.i.i, !noalias !6973
 
-.noexc.i.i.a:                                     ; preds = %3
+.noexc.i.i.a:                                     ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a"
   %i.bd = load i64, ptr %i.i, align 8, !range !6728, !noalias !6972, !noundef !13 ; 2 uses
   %.not12.i.i.i = icmp eq i64 %i.bd, -9223372036854775783
-  br i1 %.not12.i.i.i, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a", label %bb.o
+  br i1 %.not12.i.i.i, label %bb.p, label %bb.o
+
+.loopexit.split.us.i.i:                           ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a"
+  %lpad.loopexit.us.i.i = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.q
 
 bb.o:                                             ; preds = %.noexc.i.i.a
   %.sroa.826.0..sroa_idx27.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
@@ -251,26 +250,27 @@ bb.o:                                             ; preds = %.noexc.i.i.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !6972
   br label %.sink.split.i.i
 
-bb.p:                                             ; preds = %bb.n
+bb.p:                                             ; preds = %.noexc.i.i.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !6972
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !6972
+  %.not13.i.i.i = icmp eq i32 %i.bb, 1
+  br i1 %.not13.i.i.i, label %_ZN8rusqlite9statement9Statement15bind_parameters17h1d4c92658edb0c43E.exit.i.i, label %bb.s
+
+.loopexit.i.i:                                    ; preds = %bb.n
   invoke void @_ZN4core6option13unwrap_failed17h02f41afc018838f2E(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @340) #38
           to label %bb.r unwind label %.loopexit.split-lp.i.i, !noalias !6963
 
-.loopexit.i.i:                                    ; preds = %3
-  %lpad.loopexit.i.i = landingpad { ptr, i32 }
-          cleanup
-  br label %bb.q
-
-.loopexit.split-lp.i.i:                           ; preds = %bb.u, %_ZN8rusqlite9statement9Statement15bind_parameters17h1d4c92658edb0c43E.exit.i.i, %bb.p
+.loopexit.split-lp.i.i:                           ; preds = %bb.u, %_ZN8rusqlite9statement9Statement15bind_parameters17h1d4c92658edb0c43E.exit.i.i, %.loopexit.i.i
   %lpad.loopexit.split-lp.i.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.q
 
-bb.q:                                             ; preds = %.loopexit.split-lp.i.i, %.loopexit.i.i
-  %lpad.phi.i.i = phi { ptr, i32 } [ %lpad.loopexit.i.i, %.loopexit.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ]
+bb.q:                                             ; preds = %.loopexit.split-lp.i.i, %.loopexit.split.us.i.i
+  %lpad.phi.i.i = phi { ptr, i32 } [ %lpad.loopexit.us.i.i, %.loopexit.split.us.i.i ], [ %lpad.loopexit.split-lp.i.i, %.loopexit.split-lp.i.i ]
   invoke fastcc void @"_ZN4core3ptr53drop_in_place$LT$rusqlite..cache..CachedStatement$GT$17h2276c7a4a6ff9881E"(ptr noalias noundef align 8 dereferenceable(72) %i.q) #39
           to label %common.resume.i unwind label %bb.w, !noalias !6973
 
-bb.r:                                             ; preds = %bb.p
+bb.r:                                             ; preds = %.loopexit.i.i
   unreachable
 
 .sink.split.i.i:                                  ; preds = %bb.o, %.lr.ph.i.i.i
@@ -280,17 +280,17 @@ bb.r:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !6972
   br label %bb.s
 
-bb.s:                                             ; preds = %.sink.split.i.i, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a"
-  %.sroa.9.0.ph.i.i = phi i64 [ %i.bc, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a" ], [ %.sroa.9.0.ph.ph.i.i, %.sink.split.i.i ]
-  %.sroa.826.0.ph.i.i = phi i64 [ 1, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a" ], [ %.sroa.826.0.ph.ph.i.i, %.sink.split.i.i ]
-  %.sroa.0.0.ph.i.i = phi i64 [ -9223372036854775786, %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a" ], [ %.sroa.0.0.ph.ph.i.i, %.sink.split.i.i ]
+bb.s:                                             ; preds = %.sink.split.i.i, %bb.p
+  %.sroa.9.0.ph.i.i = phi i64 [ %i.bc, %bb.p ], [ %.sroa.9.0.ph.ph.i.i, %.sink.split.i.i ]
+  %.sroa.826.0.ph.i.i = phi i64 [ 1, %bb.p ], [ %.sroa.826.0.ph.ph.i.i, %.sink.split.i.i ]
+  %.sroa.0.0.ph.i.i = phi i64 [ -9223372036854775786, %bb.p ], [ %.sroa.0.0.ph.ph.i.i, %.sink.split.i.i ]
   %.sroa.334.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 16
   store i64 %.sroa.9.0.ph.i.i, ptr %.sroa.334.0..sroa_idx.i.i, align 8, !noalias !6962
   %.sroa.435.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.435.0..sroa_idx.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.10.i.i, i64 40, i1 false), !noalias !6962
   br label %bb.u
 
-_ZN8rusqlite9statement9Statement15bind_parameters17h1d4c92658edb0c43E.exit.i.i: ; preds = %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h3c60cd93ece0249eE.exit.thread.i.i.i.a"
+_ZN8rusqlite9statement9Statement15bind_parameters17h1d4c92658edb0c43E.exit.i.i: ; preds = %bb.p
   %.sroa.4.0..sroa_idx.val.i.i = load ptr, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !noalias !6962
   %.sroa.4.0..sroa_idx.val24.i.i = load ptr, ptr %i.az, align 8, !noalias !6962, !noundef !13
   invoke fastcc void @_ZN8rusqlite9statement9Statement29execute_with_bound_parameters17h99b9f01282993d44E(ptr noalias noundef align 8 captures(address) dereferenceable(64) %i.r, ptr %.sroa.4.0..sroa_idx.val.i.i, ptr %.sroa.4.0..sroa_idx.val24.i.i)
