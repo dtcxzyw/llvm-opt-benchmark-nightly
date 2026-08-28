@@ -202,7 +202,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.nk = add nsw i32 %.5.i, 1
   %i.nl = call ptr @proto_tree_add_item(ptr noundef %i.ng, i32 noundef %i.nj, ptr noundef %0, i32 noundef %i.nk, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.nm = add nsw i32 %.5.i, %i.mx                ; 3 uses
-  %i.nn = add i32 %.041.us.us.i.i, 1
+  %i.nn = add nuw nsw i32 %.041.us.us.i.i, 1
   %i.no = icmp slt i32 %i.nm, %i.ms
   br i1 %i.no, label %.thread.us.us.i.i, label %dissect_shim6_opt_loc_pref.exit.i, !llvm.loop !10
 
@@ -220,7 +220,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.nx = add nsw i32 %.4.i, 2
   %i.ny = call ptr @proto_tree_add_item(ptr noundef %i.nq, i32 noundef %i.nw, ptr noundef %0, i32 noundef %i.nx, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.nz = add nsw i32 %.4.i, %i.mx                ; 3 uses
-  %i.oa = add i32 %.041.us.i.i, 1
+  %i.oa = add nuw nsw i32 %.041.us.i.i, 1
   %i.ob = icmp slt i32 %i.nz, %i.ms
   br i1 %i.ob, label %.thread.us.i.i, label %dissect_shim6_opt_loc_pref.exit.i, !llvm.loop !10
 
@@ -232,7 +232,7 @@ bb.ae:                                            ; preds = %bb.ac
   %i.oe = load i32, ptr @hf_shim6_loc_flag, align 4
   %i.of = call ptr @proto_tree_add_item(ptr noundef %i.od, i32 noundef %i.oe, ptr noundef %0, i32 noundef %.3.i, i32 noundef 1, i32 noundef 0) ; 0 uses
   %i.og = add nsw i32 %.3.i, %i.mx                ; 3 uses
-  %i.oh = add i32 %.041.i.i, 1
+  %i.oh = add nuw i32 %.041.i.i, 1
   %i.oi = icmp slt i32 %i.og, %i.ms
   br i1 %i.oi, label %.thread.i77.i, label %dissect_shim6_opt_loc_pref.exit.i, !llvm.loop !10
 

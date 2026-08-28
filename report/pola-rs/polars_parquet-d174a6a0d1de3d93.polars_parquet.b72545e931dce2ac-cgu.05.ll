@@ -205,7 +205,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.ef = phi i64 [ %i.fd, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ee, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit80 ] ; 7 uses
   %.sroa.027.0130 = phi i64 [ %i.eg, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit80 ] ; 3 uses
   %.sroa.016.0129 = phi i64 [ %i.ej, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit80 ] ; 2 uses
-  %i.eg = add nuw i64 %.sroa.027.0130, 1, !dbg !13296 ; 3 uses
+  %i.eg = add nuw nsw i64 %.sroa.027.0130, 1, !dbg !13296 ; 3 uses
   %i.eh = icmp eq i64 %.sroa.016.0129, 0, !dbg !13293
   br i1 %i.eh, label %._crit_edge, label %bb.u, !dbg !13293
 
@@ -608,7 +608,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.ij = phi i64 [ %i.jh, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ii, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit80 ] ; 7 uses
   %.sroa.027.0136 = phi i64 [ %i.ik, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit80 ] ; 3 uses
   %.sroa.016.0135 = phi i64 [ %i.in, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit80 ] ; 2 uses
-  %i.ik = add nuw i64 %.sroa.027.0136, 1, !dbg !14049 ; 3 uses
+  %i.ik = add nuw nsw i64 %.sroa.027.0136, 1, !dbg !14049 ; 3 uses
   %i.il = icmp eq i64 %.sroa.016.0135, 0, !dbg !14046
   br i1 %i.il, label %._crit_edge, label %bb.ah, !dbg !14046
 
@@ -1011,7 +1011,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.il = phi i64 [ %i.jj, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ik, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.im, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.ip, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.im = add nuw i64 %.sroa.027.0134, 1, !dbg !14748 ; 3 uses
+  %i.im = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !14748 ; 3 uses
   %i.in = icmp eq i64 %.sroa.016.0133, 0, !dbg !14745
   br i1 %i.in, label %._crit_edge, label %bb.ah, !dbg !14745
 
@@ -1414,7 +1414,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.il = phi i64 [ %i.jj, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ik, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.im, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.ip, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.im = add nuw i64 %.sroa.027.0134, 1, !dbg !15439 ; 3 uses
+  %i.im = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !15439 ; 3 uses
   %i.in = icmp eq i64 %.sroa.016.0133, 0, !dbg !15436
   br i1 %i.in, label %._crit_edge, label %bb.ah, !dbg !15436
 
@@ -1817,7 +1817,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.il = phi i64 [ %i.jj, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ik, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.im, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.ip, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.im = add nuw i64 %.sroa.027.0134, 1, !dbg !16130 ; 3 uses
+  %i.im = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !16130 ; 3 uses
   %i.in = icmp eq i64 %.sroa.016.0133, 0, !dbg !16127
   br i1 %i.in, label %._crit_edge, label %bb.ah, !dbg !16127
 
@@ -2220,7 +2220,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.il = phi i64 [ %i.jj, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ik, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.im, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.ip, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.im = add nuw i64 %.sroa.027.0134, 1, !dbg !16821 ; 3 uses
+  %i.im = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !16821 ; 3 uses
   %i.in = icmp eq i64 %.sroa.016.0133, 0, !dbg !16818
   br i1 %i.in, label %._crit_edge, label %bb.ah, !dbg !16818
 
@@ -2623,7 +2623,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.il = phi i64 [ %i.jj, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ik, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.im, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.ip, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.im = add nuw i64 %.sroa.027.0134, 1, !dbg !17512 ; 3 uses
+  %i.im = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !17512 ; 3 uses
   %i.in = icmp eq i64 %.sroa.016.0133, 0, !dbg !17509
   br i1 %i.in, label %._crit_edge, label %bb.ah, !dbg !17509
 
@@ -3026,7 +3026,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.il = phi i64 [ %i.jj, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ik, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.im, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.ip, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.im = add nuw i64 %.sroa.027.0134, 1, !dbg !18203 ; 3 uses
+  %i.im = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !18203 ; 3 uses
   %i.in = icmp eq i64 %.sroa.016.0133, 0, !dbg !18200
   br i1 %i.in, label %._crit_edge, label %bb.ah, !dbg !18200
 
@@ -3429,7 +3429,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.ij = phi i64 [ %i.jh, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ii, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.ik, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.in, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.ik = add nuw i64 %.sroa.027.0134, 1, !dbg !18879 ; 3 uses
+  %i.ik = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !18879 ; 3 uses
   %i.il = icmp eq i64 %.sroa.016.0133, 0, !dbg !18876
   br i1 %i.il, label %._crit_edge, label %bb.ah, !dbg !18876
 
@@ -3832,7 +3832,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.ij = phi i64 [ %i.jh, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.ii, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 7 uses
   %.sroa.027.0134 = phi i64 [ %i.ik, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 3 uses
   %.sroa.016.0133 = phi i64 [ %i.in, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit79 ] ; 2 uses
-  %i.ik = add nuw i64 %.sroa.027.0134, 1, !dbg !19555 ; 3 uses
+  %i.ik = add nuw nsw i64 %.sroa.027.0134, 1, !dbg !19555 ; 3 uses
   %i.il = icmp eq i64 %.sroa.016.0133, 0, !dbg !19552
   br i1 %i.il, label %._crit_edge, label %bb.ah, !dbg !19552
 
@@ -4235,7 +4235,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dq = phi i64 [ %i.eo, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.dp, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dr, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.du, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dr = add nuw i64 %.sroa.027.0132, 1, !dbg !20059 ; 3 uses
+  %i.dr = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !20059 ; 3 uses
   %i.ds = icmp eq i64 %.sroa.016.0131, 0, !dbg !20056
   br i1 %i.ds, label %._crit_edge, label %bb.t, !dbg !20056
 
@@ -4638,7 +4638,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dq = phi i64 [ %i.eo, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.dp, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dr, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.du, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dr = add nuw i64 %.sroa.027.0132, 1, !dbg !20571 ; 3 uses
+  %i.dr = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !20571 ; 3 uses
   %i.ds = icmp eq i64 %.sroa.016.0131, 0, !dbg !20568
   br i1 %i.ds, label %._crit_edge, label %bb.t, !dbg !20568
 
@@ -5041,7 +5041,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dq = phi i64 [ %i.eo, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.dp, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dr, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.du, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dr = add nuw i64 %.sroa.027.0132, 1, !dbg !21083 ; 3 uses
+  %i.dr = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !21083 ; 3 uses
   %i.ds = icmp eq i64 %.sroa.016.0131, 0, !dbg !21080
   br i1 %i.ds, label %._crit_edge, label %bb.t, !dbg !21080
 
@@ -5444,7 +5444,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dq = phi i64 [ %i.eo, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.dp, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dr, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.du, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dr = add nuw i64 %.sroa.027.0132, 1, !dbg !21595 ; 3 uses
+  %i.dr = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !21595 ; 3 uses
   %i.ds = icmp eq i64 %.sroa.016.0131, 0, !dbg !21592
   br i1 %i.ds, label %._crit_edge, label %bb.t, !dbg !21592
 
@@ -5847,7 +5847,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dq = phi i64 [ %i.eo, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.dp, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dr, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.du, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dr = add nuw i64 %.sroa.027.0132, 1, !dbg !22107 ; 3 uses
+  %i.dr = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !22107 ; 3 uses
   %i.ds = icmp eq i64 %.sroa.016.0131, 0, !dbg !22104
   br i1 %i.ds, label %._crit_edge, label %bb.t, !dbg !22104
 
@@ -6250,7 +6250,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dq = phi i64 [ %i.eo, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.dp, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dr, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.du, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dr = add nuw i64 %.sroa.027.0132, 1, !dbg !22619 ; 3 uses
+  %i.dr = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !22619 ; 3 uses
   %i.ds = icmp eq i64 %.sroa.016.0131, 0, !dbg !22616
   br i1 %i.ds, label %._crit_edge, label %bb.t, !dbg !22616
 
@@ -6653,7 +6653,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dp = phi i64 [ %i.en, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.do, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dq, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.dt, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dq = add nuw i64 %.sroa.027.0132, 1, !dbg !23126 ; 3 uses
+  %i.dq = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !23126 ; 3 uses
   %i.dr = icmp eq i64 %.sroa.016.0131, 0, !dbg !23123
   br i1 %i.dr, label %._crit_edge, label %bb.t, !dbg !23123
 
@@ -7056,7 +7056,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14po
   %i.dp = phi i64 [ %i.en, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %i.do, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 7 uses
   %.sroa.027.0132 = phi i64 [ %i.dq, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ 0, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 3 uses
   %.sroa.016.0131 = phi i64 [ %i.dt, %_RNvNtNtNtNtCsfISxE4fmY1Y_14polars_parquet7parquet8encoding15delta_bitpacked7encoder15write_miniblock.exit ], [ %.sroa.0.0.i72, %_RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VechE15append_elementsCsfISxE4fmY1Y_14polars_parquet.exit77 ] ; 2 uses
-  %i.dq = add nuw i64 %.sroa.027.0132, 1, !dbg !23630 ; 3 uses
+  %i.dq = add nuw nsw i64 %.sroa.027.0132, 1, !dbg !23630 ; 3 uses
   %i.dr = icmp eq i64 %.sroa.016.0131, 0, !dbg !23627
   br i1 %i.dr, label %._crit_edge, label %bb.t, !dbg !23627
 
