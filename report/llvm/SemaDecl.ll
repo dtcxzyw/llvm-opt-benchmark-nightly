@@ -205,7 +205,7 @@ bb.or:                                            ; preds = %bb.on, %bb.ok
   call void @llvm.lifetime.end.p0(ptr nonnull %91) #28
   br label %bb.vy
 
-_ZNK5clang8QualType34hasNonTrivialToPrimitiveCopyCUnionEv.exit.thread: ; preds = %bb.nx, %bb.oo, %bb.op, %bb.oq, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i992, %.thread1508, %_ZNK5clang8QualType34hasNonTrivialToPrimitiveCopyCUnionEv.exit, %_ZNK5clang12FunctionDecl13getReturnTypeEv.exit1012
+_ZNK5clang8QualType34hasNonTrivialToPrimitiveCopyCUnionEv.exit.thread: ; preds = %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i992, %bb.nx, %bb.oo, %bb.op, %bb.oq, %.thread1508, %_ZNK5clang8QualType34hasNonTrivialToPrimitiveCopyCUnionEv.exit, %_ZNK5clang12FunctionDecl13getReturnTypeEv.exit1012
   %i.ccf = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !747, !nonnull !697, !align !698
   %i.ccg = getelementptr inbounds nuw i8, ptr %i.ccf, i64 80
   %i.cch = load i64, ptr %i.ccg, align 8
@@ -608,13 +608,13 @@ bb.da:                                            ; preds = %_ZL22SetNestedNameS
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #28
   br label %.critedge
 
-.critedge:                                        ; preds = %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i, %.critedge536, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit, %bb.az, %bb.ba
-  %.2449 = phi ptr [ %.0447, %.critedge536 ], [ null, %bb.ba ], [ null, %bb.az ], [ null, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ], [ null, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ] ; 2 uses
-  %.3446 = phi ptr [ %.0443, %.critedge536 ], [ null, %bb.ba ], [ null, %bb.az ], [ null, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ], [ null, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ] ; 9 uses
-  %.2442 = phi i1 [ %i.pq, %.critedge536 ], [ false, %bb.ba ], [ false, %bb.az ], [ false, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ], [ false, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ]
-  %.2439 = phi i8 [ %.0437, %.critedge536 ], [ 0, %bb.ba ], [ 0, %bb.az ], [ 0, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ], [ 0, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ] ; 3 uses
-  %.2436 = phi i1 [ %.0434, %.critedge536 ], [ false, %bb.ba ], [ false, %bb.az ], [ false, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ], [ false, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ] ; 4 uses
-  %.4433 = phi i32 [ %.2431, %.critedge536 ], [ %.1430947, %bb.ba ], [ %.1430947, %bb.az ], [ %.1430947, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ], [ %.1430947, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ] ; 4 uses
+.critedge:                                        ; preds = %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i, %.critedge536, %bb.az, %bb.ba
+  %.2449 = phi ptr [ %.0447, %.critedge536 ], [ null, %bb.ba ], [ null, %bb.az ], [ null, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ], [ null, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ] ; 2 uses
+  %.3446 = phi ptr [ %.0443, %.critedge536 ], [ null, %bb.ba ], [ null, %bb.az ], [ null, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ], [ null, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ] ; 9 uses
+  %.2442 = phi i1 [ %i.pq, %.critedge536 ], [ false, %bb.ba ], [ false, %bb.az ], [ false, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ], [ false, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ]
+  %.2439 = phi i8 [ %.0437, %.critedge536 ], [ 0, %bb.ba ], [ 0, %bb.az ], [ 0, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ], [ 0, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ] ; 3 uses
+  %.2436 = phi i1 [ %.0434, %.critedge536 ], [ false, %bb.ba ], [ false, %bb.az ], [ false, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ], [ false, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ] ; 4 uses
+  %.4433 = phi i32 [ %.2431, %.critedge536 ], [ %.1430947, %bb.ba ], [ %.1430947, %bb.az ], [ %.1430947, %_ZNK5clang4Type24getBaseElementTypeUnsafeEv.exit.i ], [ %.1430947, %_ZNK5clang8QualType38hasNonTrivialToPrimitiveDestructCUnionEv.exit ] ; 4 uses
   %i.rn = load ptr, ptr %2, align 8, !tbaa !2481, !nonnull !697, !align !698 ; 6 uses
   %i.ro = load i64, ptr %i.rn, align 8            ; 2 uses
   %i.rp = and i64 %i.ro, 211106232532992
@@ -1017,7 +1017,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.e = phi i16 [ %i.a, %bb.a ], [ %.pre, %bb.b ] ; 2 uses
+  %i.e = phi i16 [ %i.a, %bb.a ], [ %.pre, %bb.b ]
   %.0129 = phi ptr [ %1, %bb.a ], [ %i.d, %bb.b ] ; 2 uses
   %i.f = and i16 %i.e, 511
   %.not132.a = icmp eq i16 %i.f, 63
@@ -1025,15 +1025,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %.0129, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !1525 ; 2 uses
-  %.pre165 = load i16, ptr %i.h, align 8
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !1525
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %3 = phi i16 [ %i.e, %bb.c ], [ %.pre165, %bb.d ]
-  %.1 = phi ptr [ %.0129, %bb.c ], [ %i.h, %bb.d ] ; 3 uses
+  %.1 = phi ptr [ %.0129, %bb.c ], [ %i.h, %bb.d ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.1, i64 8
   %.sroa.0.0.copyload.i = load i64, ptr %i.i, align 8, !tbaa !727 ; 4 uses
+  %3 = load i16, ptr %.1, align 8
   %i.j = and i16 %3, 511
   switch i16 %i.j, label %.preheader136 [
     i16 55, label %bb.f

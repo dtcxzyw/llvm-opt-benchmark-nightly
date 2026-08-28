@@ -202,8 +202,8 @@ bb.a:
   %i.f = alloca [80 x i8], align 8                ; 8 uses
   %.sroa.12.i.i.i.i = alloca [48 x i8], align 8   ; 6 uses
   %.sroa.6.i.i.i.i = alloca [48 x i8], align 8    ; 6 uses
-  %.sroa.4.i.i.i = alloca i64, align 8            ; 5 uses
-  %.sroa.73.i.i.i = alloca i64, align 8           ; 4 uses
+  %.sroa.4.i.i.i = alloca [8 x i8], align 8       ; 5 uses
+  %.sroa.73.i.i.i = alloca [8 x i8], align 8      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1991), !dbg !1994
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24, !dbg !1997
   %i.h = load ptr, ptr %i.g, align 8, !dbg !1997, !alias.scope !1991, !nonnull !14, !align !301, !noundef !14 ; 10 uses
@@ -459,8 +459,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.i.i.i.i, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.thread.i.i.i.i
   %.sroa.62.014.i.i.i.i = phi ptr [ %i.z, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.thread.i.i.i.i ], [ %.sroa.5.i.i.sroa.6.0.copyload.i.i.i.i, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.i.i.i.i ]
   %.sroa.9.013.i.i.i.i = phi ptr [ %i.ab, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.thread.i.i.i.i ], [ %.sroa.5.i.i.sroa.7.0.copyload.i.i.i.i, %_RNCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0B5_.exit.i.i.i.i ]
-  %1 = ptrtoint ptr %.sroa.62.014.i.i.i.i to i64, !dbg !2293
-  store i64 %1, ptr %.sroa.4.i.i.i, align 8, !dbg !2293, !alias.scope !2301, !noalias !2302
+  store ptr %.sroa.62.014.i.i.i.i, ptr %.sroa.4.i.i.i, align 8, !dbg !2293, !alias.scope !2301, !noalias !2302
   br label %_RINvXNtNtCscgRAwXFJnXP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterONtNtNtCs8774dFTUdNv_12polars_arrow3ffi9generated10ArrowArrayENCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB57_12try_for_each4callINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB1L_5array5ArrayEL_EINtNtNtB7_3ops12control_flow11ControlFlowB6j_ENcNtB7h_5Break0E0B7h_EB2K_.exit, !dbg !2303
 
 bb.ac:                                            ; preds = %bb.aa
@@ -491,15 +490,13 @@ _RINvXNtNtCscgRAwXFJnXP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapI
   store ptr %.sink.i.i.i.i.i, ptr %.sink23.i.i.sroa.phi.i.i.i, align 8, !dbg !2308, !alias.scope !2301, !noalias !2302
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.12.i.i.i.i), !dbg !2309
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i.i.i), !dbg !2309
-  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load i64, ptr %.sroa.4.i.i.i, align 8, !dbg !2310, !alias.scope !2314, !noalias !2317, !noundef !14 ; 2 uses
-  %2 = inttoptr i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i to ptr, !dbg !2310
-  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load i64, ptr %.sroa.73.i.i.i, align 8, !dbg !2310, !alias.scope !2314, !noalias !2317
-  %3 = inttoptr i64 %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i to ptr, !dbg !2310
+  %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i = load ptr, ptr %.sroa.4.i.i.i, align 8, !dbg !2310, !alias.scope !2314, !noalias !2317 ; 2 uses
+  %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i = load ptr, ptr %.sroa.73.i.i.i, align 8, !dbg !2310, !alias.scope !2314, !noalias !2317
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i), !dbg !2319
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.73.i.i.i), !dbg !2319
-  %i.bp = insertvalue { ptr, ptr } poison, ptr %2, 0, !dbg !2320
-  %.not = icmp eq i64 %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0, !dbg !2321
-  %. = select i1 %.not, ptr undef, ptr %3, !dbg !2324
+  %i.bp = insertvalue { ptr, ptr } poison, ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, 0, !dbg !2320
+  %.not = icmp eq ptr %.sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.i.0..sroa.4.i.i.0..sroa.4.i.i.0..sroa.4.i.0..sroa.4.i.0..sroa.4.0..sroa.4.0..sroa.4.8..i.i.i, null, !dbg !2321
+  %. = select i1 %.not, ptr undef, ptr %.sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.i.0..sroa.73.i.i.0..sroa.73.i.i.0..sroa.73.i.0..sroa.73.i.0..sroa.73.0..sroa.73.0..sroa.73.16..i.i.i, !dbg !2324
   br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11ControlFlowINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEECslIvKsLJE9Zc_10polars_ffi.exit, !dbg !2325
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtNtB4_3ops12control_flow11ControlFlowINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtCs8774dFTUdNv_12polars_arrow5array5ArrayEL_EEECslIvKsLJE9Zc_10polars_ffi.exit: ; preds = %_RINvXNtNtCscgRAwXFJnXP_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterONtNtNtCs8774dFTUdNv_12polars_arrow3ffi9generated10ArrowArrayENCNvNtCslIvKsLJE9Zc_10polars_ffi9version_013import_series0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB57_12try_for_each4callINtNtCsgZ49sUHp3tW_5alloc5boxed3BoxDNtNtB1L_5array5ArrayEL_EINtNtNtB7_3ops12control_flow11ControlFlowB6j_ENcNtB7h_5Break0E0B7h_EB2K_.exit, %bb.a

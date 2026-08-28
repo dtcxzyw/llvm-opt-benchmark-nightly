@@ -204,11 +204,11 @@ _RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !85
   %.sroa.640.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.8.0.i to i32
   %.sroa.12.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.12.24.copyload.i to i32
-  %3 = icmp ult i32 %.sroa.12.sroa.0.0.extract.trunc.i, %.sroa.640.sroa.0.0.extract.trunc.i ; 3 uses
-  %4 = inttoptr i64 %.sroa.11.24.copyload.i to ptr
-  %.sroa.4.0.copyload.sroa.speculated.i = select i1 %3, ptr %4, ptr %.sroa.627.0.i ; 2 uses
-  %.sroa.032.0.copyload.sroa.speculated.i = select i1 %3, i64 %.sroa.9.24.copyload.i, i64 %.sroa.025.0.i ; 2 uses
-  %.sroa.533.0.copyload.i = select i1 %3, i64 %.sroa.12.24.copyload.i, i64 %.sroa.8.0.i
+  %3 = inttoptr i64 %.sroa.11.24.copyload.i to ptr
+  %4 = icmp ult i32 %.sroa.12.sroa.0.0.extract.trunc.i, %.sroa.640.sroa.0.0.extract.trunc.i ; 3 uses
+  %.sroa.4.0.copyload.sroa.speculated.i = select i1 %4, ptr %3, ptr %.sroa.627.0.i ; 2 uses
+  %.sroa.032.0.copyload.sroa.speculated.i = select i1 %4, i64 %.sroa.9.24.copyload.i, i64 %.sroa.025.0.i ; 2 uses
+  %.sroa.533.0.copyload.i = select i1 %4, i64 %.sroa.12.24.copyload.i, i64 %.sroa.8.0.i
   %i.q = add nuw nsw i64 %i.o, 1                  ; 2 uses
   store i64 %i.q, ptr %i.l, align 8, !alias.scope !101, !noalias !102
   %i.r = add nuw nsw i64 %.sroa.01.0.i.i.i.i.i, 1 ; 2 uses

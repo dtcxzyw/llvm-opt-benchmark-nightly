@@ -202,9 +202,6 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.0.0.copyload.i = load i8, ptr %i.w, align 8, !noalias !1520
   %.sroa.84.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 4
   %.sroa.84.0.copyload.i = load i32, ptr %.sroa.84.0..sroa_idx.i, align 4, !noalias !1520 ; 4 uses
-  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %.sroa.11.0.copyload.i = load i64, ptr %.sroa.11.0..sroa_idx.i, align 8, !noalias !1520
-  %.sroa.11.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.11.0.copyload.i to i32
   switch i8 %.sroa.0.0.copyload.i, label %default.unreachable26.i.i [
     i8 0, label %_RNvMs1_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operandNtB5_7Operand10temp_slots.exit
     i8 2, label %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit
@@ -227,7 +224,9 @@ _RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB
 
 _RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread: ; preds = %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit
   %.sroa.13.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 16
-  %.sroa.13.0.copyload.i8.a = load i32, ptr %.sroa.13.0..sroa_idx.i, align 8
+  %.sroa.13.0.copyload.i8 = load i32, ptr %.sroa.13.0..sroa_idx.i, align 8
+  %.sroa.11.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.w, i64 8
+  %.sroa.13.0.copyload.i8.a = load i32, ptr %.sroa.11.0..sroa_idx.i, align 8
   switch i8 %.sroa.4.0.copyload.i.fr, label %bb.f [
     i8 7, label %_RNvMs1_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operandNtB5_7Operand10temp_slots.exit
     i8 8, label %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread.thread67
@@ -238,14 +237,14 @@ bb.f:                                             ; preds = %_RNvMs5_NtNtNtNtNtC
   unreachable
 
 _RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread.thread67: ; preds = %bb.d, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread
-  %.sroa.8.sroa.8.03575.in = phi i32 [ %.sroa.13.0.copyload.i8.a, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread ], [ %.sroa.84.0.copyload.i, %bb.d ]
+  %.sroa.8.sroa.8.03575.in = phi i32 [ %.sroa.13.0.copyload.i8, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread ], [ %.sroa.84.0.copyload.i, %bb.d ]
   br label %_RNvMs1_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operandNtB5_7Operand10temp_slots.exit
 
 .thread:                                          ; preds = %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread
   br label %_RNvMs1_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operandNtB5_7Operand10temp_slots.exit
 
 _RNvMs1_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack7operandNtB5_7Operand10temp_slots.exit: ; preds = %bb.d, %.thread, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread.thread67, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit, %bb.b
-  %.sroa.01.0 = phi i32 [ %i.l, %bb.b ], [ %.sroa.11.sroa.0.0.extract.trunc.i, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread ], [ %.sroa.8.sroa.8.03575.in, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread.thread67 ], [ %.sroa.84.0.copyload.i, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit ], [ %.sroa.84.0.copyload.i, %.thread ], [ %.sroa.84.0.copyload.i, %bb.d ]
+  %.sroa.01.0 = phi i32 [ %i.l, %bb.b ], [ %.sroa.84.0.copyload.i, %.thread ], [ %.sroa.8.sroa.8.03575.in, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread.thread67 ], [ %.sroa.13.0.copyload.i8.a, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit.thread ], [ %.sroa.84.0.copyload.i, %_RNvMs5_NtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func5stack8operandsNtB5_12OperandStack3get.exit ], [ %.sroa.84.0.copyload.i, %bb.d ]
   %i.y = icmp eq i8 %3, 1
   br i1 %i.y, label %bb.g, label %bb.h
 

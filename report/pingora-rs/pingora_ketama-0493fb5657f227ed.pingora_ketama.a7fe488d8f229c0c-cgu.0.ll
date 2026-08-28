@@ -205,8 +205,8 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort8unstable8heapsort9sift_downNtCseqdUs
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort8unstable9quicksort9quicksortNtCseqdUst8juhI_14pingora_ketama7PointV1NvYB17_NtNtBa_3cmp10PartialOrd2ltEB19_(ptr noalias nofree noundef nonnull align 4 %0, i64 noundef range(i64 0, 1152921504606846976) %1, ptr noalias nofree noundef readonly align 4 captures(address) dereferenceable_or_null(8) %2, i32 noundef range(i32 0, 127) %3, ptr noalias nofree noundef nonnull readnone captures(none) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.0.i.i44 = alloca i64, align 8            ; 5 uses
-  %.sroa.0.i.i = alloca i64, align 8              ; 5 uses
+  %5 = alloca [8 x i8], align 8                   ; 5 uses
+  %6 = alloca [8 x i8], align 8                   ; 5 uses
   %i.a = alloca [384 x i8], align 8               ; 20 uses
   %i.b = icmp samesign ult i64 %1, 33
   br i1 %i.b, label %._crit_edge, label %.lr.ph
@@ -609,9 +609,9 @@ bb.o:                                             ; preds = %_RINvNtNtNtNtCskKLD
   %i.ft = getelementptr inbounds nuw i8, ptr %.sroa.0.098165, i64 8 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !94)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !97)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  %5 = load i64, ptr %i.ft, align 4, !alias.scope !99, !noalias !97
-  store i64 %5, ptr %.sroa.0.i.i, align 8, !noalias !100
+  call void @llvm.lifetime.start.p0(ptr nonnull %6)
+  %7 = load <2 x i32>, ptr %i.ft, align 4, !alias.scope !99, !noalias !97
+  store <2 x i32> %7, ptr %6, align 8, !noalias !100
   %i.fu = getelementptr [8 x i8], ptr %.sroa.0.098165, i64 %.sroa.15.097166 ; 2 uses
   %i.fv = getelementptr i8, ptr %i.fu, i64 -8     ; 2 uses
   %.sroa.13.033.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.098165, i64 16 ; 3 uses
@@ -631,8 +631,8 @@ bb.o:                                             ; preds = %_RINvNtNtNtNtCskKLD
   %.sroa.13.1.i.i = phi ptr [ %.sroa.13.1.sroa.gep26.i.i, %.preheader.i.i ], [ %.sroa.13.1.i.i.ph, %.preheader.i.i.preheader ] ; 5 uses
   %.sroa.015.1.i.i = phi ptr [ %.sroa.13.1.i.i, %.preheader.i.i ], [ %.sroa.015.1.i.i.ph, %.preheader.i.i.preheader ]
   %i.fy = icmp eq ptr %.sroa.13.1.i.i, %i.fu      ; 3 uses
-  %.sroa.01.0.i.i = select i1 %i.fy, ptr %.sroa.0.i.i, ptr %.sroa.13.1.i.i
-  %.sroa.01.0.sroa.sel.i.i.v.sroa.sel.v = select i1 %i.fy, ptr %.sroa.0.i.i, ptr %.sroa.13.1.i.i
+  %.sroa.01.0.i.i = select i1 %i.fy, ptr %6, ptr %.sroa.13.1.i.i
+  %.sroa.01.0.sroa.sel.i.i.v.sroa.sel.v = select i1 %i.fy, ptr %6, ptr %.sroa.13.1.i.i
   %.sroa.01.0.sroa.sel.i.i.v.sroa.sel = getelementptr i8, ptr %.sroa.01.0.sroa.sel.i.i.v.sroa.sel.v, i64 4
   %.val.i.i.i36 = load i32, ptr %.sroa.01.0.sroa.sel.i.i.v.sroa.sel, align 4, !noalias !102, !noundef !4
   %i.fz = icmp ult i32 %.val.i.i.i36, %.val1.i12.i.i
@@ -676,7 +676,7 @@ bb.o:                                             ; preds = %_RINvNtNtNtNtCskKLD
   br i1 %i.gu, label %.lr.ph.i.i37, label %.preheader.i.i.preheader
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicNtCseqdUst8juhI_14pingora_ketama7PointV1NvYB1x_NtNtBa_3cmp10PartialOrd2ltEB1z_.exit.i: ; preds = %.preheader.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %.not7.i = icmp ult i64 %i.ge, %.sroa.15.097166
   br i1 %.not7.i, label %_RNvMNtCskKLDkoKarTP_4core5sliceSNtCseqdUst8juhI_14pingora_ketama7PointV112split_at_mutBw_.exit, label %bb.p
 
@@ -714,9 +714,9 @@ bb.r:                                             ; preds = %bb.q
   %i.hf = getelementptr inbounds nuw i8, ptr %.sroa.0.098165, i64 8 ; 6 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !120)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !123)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i44)
-  %6 = load i64, ptr %i.hf, align 4, !alias.scope !125, !noalias !123
-  store i64 %6, ptr %.sroa.0.i.i44, align 8, !noalias !126
+  call void @llvm.lifetime.start.p0(ptr nonnull %5)
+  %8 = load <2 x i32>, ptr %i.hf, align 4, !alias.scope !125, !noalias !123
+  store <2 x i32> %8, ptr %5, align 8, !noalias !126
   %i.hg = getelementptr [8 x i8], ptr %.sroa.0.098165, i64 %.sroa.15.097166 ; 2 uses
   %i.hh = getelementptr i8, ptr %i.hg, i64 -8     ; 2 uses
   %.sroa.13.033.i.i48 = getelementptr inbounds nuw i8, ptr %.sroa.0.098165, i64 16 ; 3 uses
@@ -736,8 +736,8 @@ bb.r:                                             ; preds = %bb.q
   %.sroa.13.1.i.i55 = phi ptr [ %.sroa.13.1.sroa.gep26.i.i61, %.preheader.i.i50 ], [ %.sroa.13.1.i.i55.ph, %.preheader.i.i50.preheader ] ; 5 uses
   %.sroa.015.1.i.i56 = phi ptr [ %.sroa.13.1.i.i55, %.preheader.i.i50 ], [ %.sroa.015.1.i.i56.ph, %.preheader.i.i50.preheader ]
   %i.hk = icmp eq ptr %.sroa.13.1.i.i55, %i.hg    ; 3 uses
-  %.sroa.01.0.i.i57 = select i1 %i.hk, ptr %.sroa.0.i.i44, ptr %.sroa.13.1.i.i55
-  %.sroa.01.0.sroa.sel.i.i59.v.sroa.sel.v = select i1 %i.hk, ptr %.sroa.0.i.i44, ptr %.sroa.13.1.i.i55
+  %.sroa.01.0.i.i57 = select i1 %i.hk, ptr %5, ptr %.sroa.13.1.i.i55
+  %.sroa.01.0.sroa.sel.i.i59.v.sroa.sel.v = select i1 %i.hk, ptr %5, ptr %.sroa.13.1.i.i55
   %.sroa.01.0.sroa.sel.i.i59.v.sroa.sel = getelementptr i8, ptr %.sroa.01.0.sroa.sel.i.i59.v.sroa.sel.v, i64 4
   %.val.i.i.i60 = load i32, ptr %.sroa.01.0.sroa.sel.i.i59.v.sroa.sel, align 4, !noalias !128, !noundef !4
   %i.hl = icmp uge i32 %.val1.i12.i.i49, %.val.i.i.i60
@@ -781,7 +781,7 @@ bb.r:                                             ; preds = %bb.q
   br i1 %i.ig, label %.lr.ph.i.i64, label %.preheader.i.i50.preheader
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort8unstable9quicksort34partition_lomuto_branchless_cyclicNtCseqdUst8juhI_14pingora_ketama7PointV1NCINvB2_9quicksortB1x_NvYB1x_NtNtBa_3cmp10PartialOrd2ltE0EB1z_.exit.i: ; preds = %.preheader.i.i50
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i44)
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %.not7.i62 = icmp ult i64 %i.hq, %.sroa.15.097166
   br i1 %.not7.i62, label %bb.t, label %bb.s
 

@@ -205,11 +205,13 @@ bb.a:
   br i1 %.not, label %_ZNK5clang4Type18getAsCXXRecordDeclEv.exit, label %_ZN12lldb_private15TypeSystemClang20GetCanonicalQualTypeEPv.exit
 
 _ZN12lldb_private15TypeSystemClang20GetCanonicalQualTypeEPv.exit: ; preds = %bb.a
-  %i.a = ptrtoint ptr %1 to i64
+  %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = and i64 %i.a, -16
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !30   ; 3 uses
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !30   ; 2 uses
+  %3 = and i64 %i.a, 7
+  %4 = or i64 %i.e, %3                            ; 2 uses
   %i.f = and i64 %i.e, -16
   %i.g = inttoptr i64 %i.f to ptr
   %i.h = load ptr, ptr %i.g, align 16, !tbaa !1040 ; 4 uses
@@ -276,7 +278,7 @@ _ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i: ; preds = %_ZNK5clang4Type6c
   br label %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
 
 _ZNK5clang8QualType19getNonReferenceTypeEv.exit:  ; preds = %bb.b, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i
-  %.sroa.0.0.in.i.sroa.speculated = phi i64 [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %i.e, %bb.b ], [ %i.e, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
+  %.sroa.0.0.in.i.sroa.speculated = phi i64 [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %4, %bb.b ], [ %4, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
   %i.ai = and i64 %.sroa.0.0.in.i.sroa.speculated, -16
   %i.aj = inttoptr i64 %i.ai to ptr               ; 2 uses
   %i.ak = load ptr, ptr %i.aj, align 16, !tbaa !1040 ; 4 uses

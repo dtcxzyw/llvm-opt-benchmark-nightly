@@ -204,7 +204,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1094995529, 1) i32 @targa_decode_rle(ptr noundef %0, ptr nofree noundef captures(none) %1, ptr nofree noundef writeonly captures(address) %2, i32 noundef range(i32 0, 65536) %3, i32 noundef range(i32 0, 65536) %4, i32 noundef %5, i32 noundef range(i32 0, 256) %6, i32 noundef range(i32 1, 5) %7) unnamed_addr #0 {
 bb.a:
-  %.sroa.0 = alloca i32, align 4                  ; 8 uses
+  %8 = alloca [4 x i8], align 1                   ; 8 uses
   %i.a = add nuw nsw i32 %6, 1
   %i.b = lshr i32 %i.a, 3                         ; 2 uses
   %.not116 = icmp eq ptr %2, null
@@ -304,12 +304,12 @@ advance_line.exit:                                ; preds = %bb.g, %bb.e, %.preh
   br i1 %i.av, label %.preheader, label %advance_line.exit.thread, !llvm.loop !76
 
 bb.h:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.start.p0(ptr nonnull %8)
   %i.aw = ptrtoint ptr %i.o to i64
   %i.ax = sub i64 %i.j, %i.aw
   %i.ay = tail call i64 @llvm.smin.i64(i64 %i.ax, i64 %i.d)
   %i.az = and i64 %i.ay, 4294967295               ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.sroa.0, ptr nonnull align 1 %i.o, i64 %i.az, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %8, ptr nonnull align 1 %i.o, i64 %i.az, i1 false)
   %i.ba = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.az
   store ptr %i.ba, ptr %1, align 8, !tbaa !37
   br label %bb.i
@@ -331,7 +331,7 @@ bb.i:                                             ; preds = %advance_line.exit92
   %.4.prol = phi ptr [ %i.be, %.prol.preheader ], [ %.3, %bb.i ] ; 2 uses
   %.0.prol = phi i32 [ %i.bf, %.prol.preheader ], [ %i.bc, %bb.i ]
   %prol.iter = phi i32 [ %prol.iter.next, %.prol.preheader ], [ 0, %bb.i ]
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.4.prol, ptr nonnull align 4 %.sroa.0, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.4.prol, ptr nonnull align 1 %8, i64 %i.d, i1 false)
   %i.be = getelementptr inbounds nuw i8, ptr %.4.prol, i64 %i.d ; 3 uses
   %i.bf = add nsw i32 %.0.prol, -1                ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
@@ -348,13 +348,13 @@ bb.i:                                             ; preds = %advance_line.exit92
 .new:                                             ; preds = %.prol.loopexit, %.new
   %.4 = phi ptr [ %i.bk, %.new ], [ %.4.unr, %.prol.loopexit ] ; 2 uses
   %.0 = phi i32 [ %i.bl, %.new ], [ %.0.unr, %.prol.loopexit ]
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.4, ptr nonnull align 4 %.sroa.0, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.4, ptr nonnull align 1 %8, i64 %i.d, i1 false)
   %i.bh = getelementptr inbounds nuw i8, ptr %.4, i64 %i.d ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bh, ptr nonnull align 4 %.sroa.0, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bh, ptr nonnull align 1 %8, i64 %i.d, i1 false)
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.d ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bi, ptr nonnull align 4 %.sroa.0, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bi, ptr nonnull align 1 %8, i64 %i.d, i1 false)
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.d ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bj, ptr nonnull align 4 %.sroa.0, i64 %i.d, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.bj, ptr nonnull align 1 %8, i64 %i.d, i1 false)
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.d ; 2 uses
   %i.bl = add nsw i32 %.0, -4                     ; 2 uses
   %.not88.3 = icmp eq i32 %i.bl, 0
@@ -405,7 +405,7 @@ advance_line.exit92.thread:                       ; preds = %bb.l, %advance_line
   %.469111 = phi ptr [ %.469, %advance_line.exit92 ], [ null, %bb.l ]
   %.479110 = phi i32 [ %.479, %advance_line.exit92 ], [ 0, %bb.l ]
   %.498109 = phi i32 [ %.498, %advance_line.exit92 ], [ %i.bt, %bb.l ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %8)
   br label %advance_line.exit.thread
 
 advance_line.exit.thread:                         ; preds = %advance_line.exit, %advance_line.exit92.thread

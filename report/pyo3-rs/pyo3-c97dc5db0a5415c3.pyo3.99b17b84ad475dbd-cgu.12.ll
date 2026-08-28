@@ -143,9 +143,13 @@ _RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCINvMs0_NtNtCsdc6yCHiM2ZJ_4pyo33err9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 3, ptr %i.h, align 8
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
-  store i64 1, ptr %i.i, align 8
+  store i32 0, ptr %0, align 8
+  %.sroa.03.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i8 0, ptr %.sroa.03.sroa.4.0..sroa_idx, align 4
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 0, ptr %i.i, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 1, ptr %3, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.c, ptr %.sroa.49.0..sroa_idx, align 8
   %.sroa.510.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -548,18 +552,22 @@ define void @_RNvMs0_NtNtCsdc6yCHiM2ZJ_4pyo33err9err_stateNtB5_10PyErrState10nor
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [1 x i8], align 1                 ; 4 uses
-  %i.c = alloca [48 x i8], align 8                ; 8 uses
+  %i.c = alloca [48 x i8], align 8                ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 3 uses
-  store i32 3, ptr %i.d, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
-  store i64 1, ptr %i.e, align 8
+  %2 = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 3 uses
+  store i32 3, ptr %2, align 8
+  store i32 0, ptr %i.c, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  store i8 0, ptr %i.d, align 4
+  %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  store i64 0, ptr %i.e, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 2 uses
+  store i64 1, ptr %3, align 8
   %.sroa.49.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
   store ptr null, ptr %.sroa.49.0..sroa_idx, align 8
   %.sroa.510.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   store ptr %1, ptr %.sroa.510.0..sroa_idx, align 8
-  %i.f = load atomic i32, ptr %i.d acquire, align 8
+  %i.f = load atomic i32, ptr %2 acquire, align 8
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %_RINvMs0_NtNtCsG258MDvU3F_3std4sync4onceNtB6_4Once9call_onceNCNvMs0_NtNtCsdc6yCHiM2ZJ_4pyo33err9err_stateNtB13_10PyErrState10normalized0EB17_.exit, label %bb.b, !prof !7
 
@@ -568,7 +576,7 @@ bb.b:                                             ; preds = %bb.a
   store i8 1, ptr %i.b, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
-  invoke void @_RNvMs0_NtNtNtNtCsG258MDvU3F_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 %i.d, i1 noundef zeroext false, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @7, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31)
+  invoke void @_RNvMs0_NtNtNtNtCsG258MDvU3F_3std3sys4sync4once5futexNtB5_4Once4call(ptr noundef nonnull align 4 %2, i1 noundef zeroext false, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) @7, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31)
           to label %.noexc unwind label %bb.c
 
 .noexc:                                           ; preds = %bb.b
@@ -579,7 +587,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
           cleanup
-  %i.i = load i64, ptr %i.e, align 8, !range !17, !alias.scope !167, !noundef !15
+  %i.i = load i64, ptr %3, align 8, !range !17, !alias.scope !167, !noundef !15
   %i.j = icmp eq i64 %i.i, 0
   br i1 %i.j, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsdc6yCHiM2ZJ_4pyo33err9err_state10PyErrStateEBH_.exit, label %bb.d
 

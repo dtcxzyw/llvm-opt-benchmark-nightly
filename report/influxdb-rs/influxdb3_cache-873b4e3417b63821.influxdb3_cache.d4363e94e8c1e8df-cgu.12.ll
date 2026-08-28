@@ -204,6 +204,8 @@ bb.a:
   %.sroa.5.i = alloca [16 x i8], align 8          ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 6 uses
   %i.d = alloca [24 x i8], align 8                ; 5 uses
+  %.sroa.4.i = alloca [8 x i8], align 8           ; 4 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 4 uses
   %.sroa.12124 = alloca [40 x i8], align 8        ; 5 uses
   %.sroa.0.sroa.0.sroa.10 = alloca [80 x i8], align 8 ; 5 uses
   %i.e = alloca [192 x i8], align 8               ; 15 uses
@@ -359,35 +361,44 @@ bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 320
-  %.sroa.091.0.copyload = load i64, ptr %i.ao, align 8
+  %.sroa.091.0.copyload = load i64, ptr %i.ao, align 8 ; 2 uses
   %.sroa.592.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 328
   %.sroa.592.0.copyload = load i64, ptr %.sroa.592.0..sroa_idx, align 8 ; 3 uses
-  switch i64 %.sroa.091.0.copyload, label %default.unreachable.i [
-    i64 -1, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionINtNtNtB5_3ops5range5RangeyEE3mapINtNtB5_6result6ResultBI_NtCs1LivM9IBWqb_12object_store5ErrorENCNCNvXss_NtCsidB8gjke19X_15influxdb3_cache13parquet_cacheNtB2p_20MemCachedObjectStoreNtB1G_11ObjectStore8get_opts0s_0EB2r_.exit.thread
-    i64 0, label %bb.t
-    i64 1, label %bb.u
-    i64 2, label %bb.v
-  ]
-
-default.unreachable.i:                            ; preds = %bb.s
-  unreachable
+  %.not.i39 = icmp eq i64 %.sroa.091.0.copyload, -1
+  br i1 %.not.i39, label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionINtNtNtB5_3ops5range5RangeyEE3mapINtNtB5_6result6ResultBI_NtCs1LivM9IBWqb_12object_store5ErrorENCNCNvXss_NtCsidB8gjke19X_15influxdb3_cache13parquet_cacheNtB2p_20MemCachedObjectStoreNtB1G_11ObjectStore8get_opts0s_0EB2r_.exit.thread, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %.sroa.693.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 336
   %.sroa.693.0.copyload = load i64, ptr %.sroa.693.0..sroa_idx, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.i)
+  store i64 %.sroa.592.0.copyload, ptr %.sroa.4.i, align 8, !noalias !982
+  store i64 %.sroa.693.0.copyload, ptr %.sroa.7.i, align 8, !noalias !982
+  switch i64 %.sroa.091.0.copyload, label %default.unreachable.i [
+    i64 0, label %3
+    i64 1, label %bb.u
+    i64 2, label %bb.v
+  ]
+
+default.unreachable.i:                            ; preds = %bb.t
+  unreachable
+
+3:                                                ; preds = %bb.t
   br label %bb.v
 
-bb.u:                                             ; preds = %bb.s
+bb.u:                                             ; preds = %bb.t
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload, i64 128
-  %.sroa.4.0.in.i.sroa.speculate.load.2.i = load i64, ptr %i.ap, align 8, !noalias !982
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.s, %bb.u, %bb.t
-  %.sroa.7.0.ph = phi i64 [ %.sroa.592.0.copyload, %bb.s ], [ %.sroa.4.0.in.i.sroa.speculate.load.2.i, %bb.u ], [ %.sroa.693.0.copyload, %bb.t ]
-  %.sroa.590.0.ph = phi i64 [ 0, %bb.s ], [ %.sroa.592.0.copyload, %bb.u ], [ %.sroa.592.0.copyload, %bb.t ]
+bb.v:                                             ; preds = %bb.t, %3, %bb.u
+  %.sroa.4.0.in.i.i = phi ptr [ %.sroa.7.i, %3 ], [ %i.ap, %bb.u ], [ %.sroa.4.i, %bb.t ]
+  %.sroa.7.0.ph = phi i64 [ %.sroa.592.0.copyload, %3 ], [ %.sroa.592.0.copyload, %bb.u ], [ 0, %bb.t ]
+  %.sroa.4.0.i.i = load i64, ptr %.sroa.4.0.in.i.i, align 8, !noalias !982, !noundef !16
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.3.0.copyload, i64 128
   %i.ar = load i64, ptr %i.aq, align 8, !noalias !986, !noundef !16
-  invoke void @_RNvNtCsidB8gjke19X_15influxdb3_cache13parquet_cache11check_range(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.j, i64 noundef %.sroa.590.0.ph, i64 noundef %.sroa.7.0.ph, i64 noundef %i.ar)
+  invoke void @_RNvNtCsidB8gjke19X_15influxdb3_cache13parquet_cache11check_range(ptr noalias noundef nonnull sret([72 x i8]) align 8 captures(none) dereferenceable(72) %i.j, i64 noundef %.sroa.7.0.ph, i64 noundef %.sroa.4.0.i.i, i64 noundef %i.ar)
           to label %_RINvMNtCs4NRVxsYgnAr_4core6optionINtB3_6OptionINtNtNtB5_3ops5range5RangeyEE3mapINtNtB5_6result6ResultBI_NtCs1LivM9IBWqb_12object_store5ErrorENCNCNvXss_NtCsidB8gjke19X_15influxdb3_cache13parquet_cacheNtB2p_20MemCachedObjectStoreNtB1G_11ObjectStore8get_opts0s_0EB2r_.exit unwind label %bb.w
 
 bb.w:                                             ; preds = %bb.v

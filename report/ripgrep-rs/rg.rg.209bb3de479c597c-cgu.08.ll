@@ -205,13 +205,13 @@ bb.a:
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [64 x i8], align 8                ; 9 uses
   %i.h = alloca [24 x i8], align 8                ; 9 uses
-  %.sroa.517.i.i = alloca i64, align 8            ; 8 uses
+  %.sroa.517.i.i = alloca [8 x i8], align 8       ; 8 uses
   %.sroa.719.i.i = alloca [16 x i8], align 8      ; 5 uses
-  %.sroa.13.i.i = alloca i64, align 8             ; 5 uses
+  %.sroa.13.i.i = alloca [8 x i8], align 8        ; 5 uses
   %i.i = alloca [24 x i8], align 8                ; 4 uses
-  %.sroa.6.i.i = alloca i64, align 8              ; 6 uses
+  %.sroa.6.i.i = alloca [8 x i8], align 8         ; 6 uses
   %.sroa.8.i.i = alloca [16 x i8], align 8        ; 5 uses
-  %.sroa.14.i.i = alloca i64, align 8             ; 5 uses
+  %.sroa.14.i.i = alloca [8 x i8], align 8        ; 5 uses
   %.sroa.10.i.i = alloca [16 x i8], align 8       ; 7 uses
   %i.j = alloca [24 x i8], align 8                ; 4 uses
   %i.k = alloca [24 x i8], align 8                ; 4 uses
@@ -486,14 +486,14 @@ bb.ae:                                            ; preds = %bb.ac, %bb.aa
   store i64 %.sink53.i.i.i, ptr %.sink54.i.sroa.phi.i.i, align 8, !dbg !4408, !alias.scope !4083, !noalias !4395
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.sroa.5.i.i), !dbg !4409
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !4410, !noalias !4078
-  %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i = load i64, ptr %.sroa.6.i.i, align 8, !dbg !4073, !range !1005, !noalias !4078, !noundef !14 ; 3 uses
+  %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i = load i64, ptr %.sroa.6.i.i, align 8, !dbg !4073, !noalias !4078 ; 3 uses
   %.not.i.i = icmp eq i64 %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i, -1, !dbg !4073
   br i1 %.not.i.i, label %bb.ag, label %bb.af, !dbg !4411
 
 bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i.i), !dbg !4412
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.i.i, i64 16, i1 false), !dbg !4413, !noalias !4078
-  %.sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.56..i.i = load i64, ptr %.sroa.14.i.i, align 8, !dbg !4413, !noalias !4078, !noundef !14 ; 2 uses
+  %.sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.56..i.i = load i64, ptr %.sroa.14.i.i, align 8, !dbg !4413, !noalias !4078 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i), !dbg !4414
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i), !dbg !4414
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.i.i), !dbg !4414
@@ -896,13 +896,13 @@ bb.ca:                                            ; preds = %bb.bu, %.loopexit.s
   store i64 %.sink.i28.i.i, ptr %.sink40.i.sroa.phi.i.i, align 8, !dbg !5077, !alias.scope !4579, !noalias !5073
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.5.i.i), !dbg !5078
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !5079, !noalias !4078
-  %.sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.0..sroa.517.i.0..sroa.517.0..sroa.517.0..sroa.517.8..i.i = load i64, ptr %.sroa.517.i.i, align 8, !dbg !4576, !range !1005, !noalias !4078, !noundef !14 ; 3 uses
+  %.sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.0..sroa.517.i.0..sroa.517.0..sroa.517.0..sroa.517.8..i.i = load i64, ptr %.sroa.517.i.i, align 8, !dbg !4576, !noalias !4078 ; 3 uses
   %.not16.i.i = icmp eq i64 %.sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.0..sroa.517.i.0..sroa.517.0..sroa.517.0..sroa.517.8..i.i, -1, !dbg !4576
   br i1 %.not16.i.i, label %bb.cc, label %bb.cb, !dbg !5080
 
 bb.cb:                                            ; preds = %.loopexit.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.10.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.719.i.i, i64 16, i1 false), !dbg !5081, !noalias !4078
-  %.sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.0..sroa.13.i.0..sroa.13.0..sroa.13.0..sroa.13.56..i.i = load i64, ptr %.sroa.13.i.i, align 8, !dbg !5081, !noalias !4078, !noundef !14 ; 2 uses
+  %.sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.0..sroa.13.i.0..sroa.13.0..sroa.13.0..sroa.13.56..i.i = load i64, ptr %.sroa.13.i.i, align 8, !dbg !5081, !noalias !4078 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.i.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.517.i.i), !dbg !5082
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.719.i.i), !dbg !5082
@@ -1012,13 +1012,13 @@ bb.a:
   %i.f = alloca [48 x i8], align 8                ; 6 uses
   %i.g = alloca [88 x i8], align 8                ; 9 uses
   %i.h = alloca [48 x i8], align 8                ; 9 uses
-  %.sroa.517.i.i = alloca i64, align 8            ; 8 uses
+  %.sroa.517.i.i = alloca [8 x i8], align 8       ; 8 uses
   %.sroa.719.i.i = alloca [40 x i8], align 8      ; 5 uses
-  %.sroa.13.i.i = alloca i64, align 8             ; 5 uses
+  %.sroa.13.i.i = alloca [8 x i8], align 8        ; 5 uses
   %i.i = alloca [48 x i8], align 8                ; 4 uses
-  %.sroa.6.i.i = alloca i64, align 8              ; 6 uses
+  %.sroa.6.i.i = alloca [8 x i8], align 8         ; 6 uses
   %.sroa.8.i.i = alloca [40 x i8], align 8        ; 5 uses
-  %.sroa.14.i.i = alloca i64, align 8             ; 5 uses
+  %.sroa.14.i.i = alloca [8 x i8], align 8        ; 5 uses
   %.sroa.10.i.i = alloca [40 x i8], align 8       ; 7 uses
   %i.j = alloca [48 x i8], align 8                ; 4 uses
   %i.k = alloca [48 x i8], align 8                ; 4 uses
@@ -1288,14 +1288,14 @@ bb.ae:                                            ; preds = %bb.ac, %bb.aa
   store i64 %.sink54.i.i.i, ptr %.sink55.i.sroa.phi.i.i, align 8, !dbg !5563, !alias.scope !5260, !noalias !5550
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.sroa.5.i.i), !dbg !5564
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !5565, !noalias !5255
-  %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i = load i64, ptr %.sroa.6.i.i, align 8, !dbg !5250, !range !1005, !noalias !5255, !noundef !14 ; 3 uses
+  %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i = load i64, ptr %.sroa.6.i.i, align 8, !dbg !5250, !noalias !5255 ; 3 uses
   %.not.i.i = icmp eq i64 %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i, -1, !dbg !5250
   br i1 %.not.i.i, label %bb.ag, label %bb.af, !dbg !5566
 
 bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10.i.i), !dbg !5567
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.10.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.8.i.i, i64 40, i1 false), !dbg !5568, !noalias !5255
-  %.sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.80..i.i = load i64, ptr %.sroa.14.i.i, align 8, !dbg !5568, !noalias !5255, !noundef !14 ; 2 uses
+  %.sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.i.0..sroa.14.i.0..sroa.14.i.0..sroa.14.0..sroa.14.0..sroa.14.80..i.i = load i64, ptr %.sroa.14.i.i, align 8, !dbg !5568, !noalias !5255 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i), !dbg !5569
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8.i.i), !dbg !5569
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.14.i.i), !dbg !5569
@@ -1698,13 +1698,13 @@ bb.ca:                                            ; preds = %bb.bu, %.loopexit.s
   store i64 %.sink.i28.i.i, ptr %.sink41.i.sroa.phi.i.i, align 8, !dbg !6207, !alias.scope !5731, !noalias !6203
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.sroa.5.i.i), !dbg !6208
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !dbg !6209, !noalias !5255
-  %.sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.0..sroa.517.i.0..sroa.517.0..sroa.517.0..sroa.517.8..i.i = load i64, ptr %.sroa.517.i.i, align 8, !dbg !5728, !range !1005, !noalias !5255, !noundef !14 ; 3 uses
+  %.sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.0..sroa.517.i.0..sroa.517.0..sroa.517.0..sroa.517.8..i.i = load i64, ptr %.sroa.517.i.i, align 8, !dbg !5728, !noalias !5255 ; 3 uses
   %.not16.i.i = icmp eq i64 %.sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.i.0..sroa.517.i.0..sroa.517.i.0..sroa.517.0..sroa.517.0..sroa.517.8..i.i, -1, !dbg !5728
   br i1 %.not16.i.i, label %bb.cc, label %bb.cb, !dbg !6210
 
 bb.cb:                                            ; preds = %.loopexit.i.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.10.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.719.i.i, i64 40, i1 false), !dbg !6211, !noalias !5255
-  %.sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.0..sroa.13.i.0..sroa.13.0..sroa.13.0..sroa.13.80..i.i = load i64, ptr %.sroa.13.i.i, align 8, !dbg !6211, !noalias !5255, !noundef !14 ; 2 uses
+  %.sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.i.0..sroa.13.i.0..sroa.13.i.0..sroa.13.0..sroa.13.0..sroa.13.80..i.i = load i64, ptr %.sroa.13.i.i, align 8, !dbg !6211, !noalias !5255 ; 2 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.11.0.i.i) ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.517.i.i), !dbg !6212
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.719.i.i), !dbg !6212
