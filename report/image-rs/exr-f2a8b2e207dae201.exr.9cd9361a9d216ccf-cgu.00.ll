@@ -204,11 +204,11 @@ _RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecIBS_tEEINtB2_1
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_iterINtB4_3VecNtNtCs51eXCul1Ifq_4half8binary163f16EINtB2_12SpecFromIterBU_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtB1X_7flatten7FlattenIB1T_INtNtB1X_4take4TakeINtNtB1X_4skip4SkipINtNtNtB21_5slice4iter11ChunksExactBU_EEENCINvNCNvXs5_NtNtCsdsTQD3x2eOp_3exr5image4cropINtB4G_5LayerINtB4E_15CroppedChannelsINtB4G_11AnyChannelsNtB4G_11FlatSamplesEEENtB4E_16ApplyCroppedView18reallocate_cropped012crop_samplesBU_E0EENCB4t_s_0EE9from_iterB4I_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.b = alloca [24 x i8], align 8                ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !206)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !209)
@@ -611,11 +611,11 @@ _RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtCs51eXCul1
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_iterINtB4_3VecfEINtB2_12SpecFromIterfINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtB1m_7flatten7FlattenIB1i_INtNtB1m_4take4TakeINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter11ChunksExactfEEENCINvNCNvXs5_NtNtCsdsTQD3x2eOp_3exr5image4cropINtB43_5LayerINtB41_15CroppedChannelsINtB43_11AnyChannelsNtB43_11FlatSamplesEEENtB41_16ApplyCroppedView18reallocate_cropped012crop_samplesfE0EENCB3Q_s_0EE9from_iterB45_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.b = alloca [24 x i8], align 8                ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !349)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !352)
@@ -1018,11 +1018,11 @@ _RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecfEINtB2_18Spec
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs4wP2HXfJTCR_5alloc3vec14spec_from_iterINtB4_3VecmEINtB2_12SpecFromItermINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters3map3MapINtNtB1m_7flatten7FlattenIB1i_INtNtB1m_4take4TakeINtNtB1m_4skip4SkipINtNtNtB1q_5slice4iter11ChunksExactmEEENCINvNCNvXs5_NtNtCsdsTQD3x2eOp_3exr5image4cropINtB43_5LayerINtB41_15CroppedChannelsINtB43_11AnyChannelsNtB43_11FlatSamplesEEENtB41_16ApplyCroppedView18reallocate_cropped012crop_samplesmE0EENCB3Q_s_0EE9from_iterB45_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(96) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i.i = alloca i64, align 8            ; 3 uses
-  %.sroa.7.i.i.i = alloca i64, align 8            ; 3 uses
+  %.sroa.5.i.i.i = alloca [8 x i8], align 8       ; 3 uses
+  %.sroa.7.i.i.i = alloca [8 x i8], align 8       ; 3 uses
   %i.a = alloca [24 x i8], align 8                ; 6 uses
-  %.sroa.5.i = alloca i64, align 8                ; 3 uses
-  %.sroa.7.i = alloca i64, align 8                ; 3 uses
+  %.sroa.5.i = alloca [8 x i8], align 8           ; 3 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 3 uses
   %i.b = alloca [24 x i8], align 8                ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !487)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !490)
@@ -1425,12 +1425,12 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCsd
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtCsdsTQD3x2eOp_3exr4meta11TileIndicesEINtB2_18SpecFromIterNestedB11_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtB2f_3map3MapINtNtNtB2j_3ops5range5RangejENCNvB13_14mip_map_levels0EIB2b_IB37_B3n_NCNvNvNvMs0_NtB13_6headerNtB4G_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB37_B4l_NCNCB4y_00ENCB4y_0ENCB4A_0EE9from_iterB15_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(528) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.689.i.i = alloca i64, align 8            ; 5 uses
-  %.sroa.10.i.i = alloca i64, align 8             ; 4 uses
-  %.sroa.6.i.i = alloca i64, align 8              ; 5 uses
-  %.sroa.9.i.i = alloca i64, align 8              ; 4 uses
-  %.sroa.5 = alloca i64, align 8                  ; 4 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.689.i.i = alloca [8 x i8], align 8       ; 5 uses
+  %.sroa.10.i.i = alloca [8 x i8], align 8        ; 4 uses
+  %.sroa.6.i.i = alloca [8 x i8], align 8         ; 5 uses
+  %.sroa.9.i.i = alloca [8 x i8], align 8         ; 4 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 4 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
   %i.a = alloca [56 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [528 x i8], align 8               ; 26 uses
@@ -1588,13 +1588,14 @@ _RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3M
   %.sink78.i.i.i.i.sroa.phi.i.i = phi ptr [ %.sroa.9.i.i, %bb.i ], [ %.sroa.6.i.i, %bb.h ]
   %.sink.i.i.i.i.i.i = phi i64 [ %i.bb, %bb.i ], [ 0, %bb.h ]
   store i64 %.sink.i.i.i.i.i.i, ptr %.sink78.i.i.i.i.sroa.phi.i.i, align 8, !alias.scope !713, !noalias !714
-  %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i.i = load i64, ptr %.sroa.6.i.i, align 8, !range !69, !noalias !715
+  %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i.i = load i64, ptr %.sroa.6.i.i, align 8, !noalias !715
   %.sroa.9.i.i.0..sroa.9.i.i.0..sroa.9.i.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.0..sroa.9.16..pre.i.i = load i64, ptr %.sroa.9.i.i, align 8, !noalias !715
+  %2 = trunc nuw i64 %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i.i to i1
   br label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i.i
 
 _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i.i: ; preds = %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i.i, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCsdsTQD3x2eOp_3exr4meta11TileIndicesE7reserveBI_.exit.i.i
   %.sroa.9.0..sroa.9.0..sroa.9.16..i.i = phi i64 [ %.sroa.9.i.i.0..sroa.9.i.i.0..sroa.9.i.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.0..sroa.9.16..pre.i.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i.i ], [ 0, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCsdsTQD3x2eOp_3exr4meta11TileIndicesE7reserveBI_.exit.i.i ]
-  %.sroa.6.0..sroa.6.0..sroa.6.8..i.i = phi i64 [ %.sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i.i ], [ 1, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCsdsTQD3x2eOp_3exr4meta11TileIndicesE7reserveBI_.exit.i.i ] ; 2 uses
+  %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i = phi i1 [ %2, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i.i ], [ true, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCsdsTQD3x2eOp_3exr4meta11TileIndicesE7reserveBI_.exit.i.i ] ; 2 uses
   %.sroa.0.1.i.i = phi i64 [ %i.az, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i.i ], [ 0, %_RNvMs_NtCs4wP2HXfJTCR_5alloc3vecINtB4_3VecNtNtCsdsTQD3x2eOp_3exr4meta11TileIndicesE7reserveBI_.exit.i.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i.i)
@@ -1659,14 +1660,15 @@ _RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3M
   %.sink.i.i.i.i69.i.i = phi i64 [ %i.bk, %bb.n ], [ 0, %bb.m ]
   store i64 %.sink.i.i.i.i69.i.i, ptr %.sink78.i.i.i.i68.sroa.phi.i.i, align 8, !alias.scope !768, !noalias !769
   %i.bm = call i64 @llvm.uadd.sat.i64(i64 %.sroa.0.1.i.i, i64 %i.bi)
-  %.sroa.689.i.i.0..sroa.689.i.i.0..sroa.689.i.i.0..sroa.689.i.0..sroa.689.i.0..sroa.689.0..sroa.689.0..sroa.689.8..pre.i.i = load i64, ptr %.sroa.689.i.i, align 8, !range !69, !noalias !715
+  %.sroa.689.i.i.0..sroa.689.i.i.0..sroa.689.i.i.0..sroa.689.i.0..sroa.689.i.0..sroa.689.0..sroa.689.0..sroa.689.8..pre.i.i = load i64, ptr %.sroa.689.i.i, align 8, !noalias !715
   %.sroa.10.i.i.0..sroa.10.i.i.0..sroa.10.i.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i.i = load i64, ptr %.sroa.10.i.i, align 8, !noalias !715
   %i.bn = freeze i64 %.sroa.689.i.i.0..sroa.689.i.i.0..sroa.689.i.i.0..sroa.689.i.0..sroa.689.i.0..sroa.689.0..sroa.689.0..sroa.689.8..pre.i.i
+  %3 = trunc i64 %i.bn to i1
   br label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit79.i.i
 
 _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit79.i.i: ; preds = %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i.i, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i.i
   %.sroa.10.0..sroa.10.0..sroa.10.16..i.i = phi i64 [ %.sroa.10.i.i.0..sroa.10.i.i.0..sroa.10.i.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i.i ], [ 0, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i.i ]
-  %.sroa.689.0..sroa.689.0..sroa.689.8..i.i = phi i64 [ %i.bn, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i.i ], [ 1, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i.i ] ; 2 uses
+  %.sroa.689.0..sroa.689.0..sroa.689.8..i.i = phi i1 [ %3, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i.i ], [ true, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i.i ] ; 2 uses
   %.sroa.088.1.i.i = phi i64 [ %i.bm, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i.i ], [ %.sroa.0.1.i.i, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.689.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i.i)
@@ -1678,16 +1680,13 @@ bb.o:                                             ; preds = %_RINvMNtCsj6eKBz9Db
   %.val.i.i = load i64, ptr %i.ao, align 8, !alias.scope !771, !noalias !774, !noundef !4
   %.val61.i.i = load i64, ptr %i.ap, align 8, !alias.scope !776, !noalias !777, !noundef !4
   %i.bp = icmp ule i64 %.val61.i.i, %.val.i.i
-  %2 = trunc nuw i64 %.sroa.6.0..sroa.6.0..sroa.6.8..i.i to i1
-  %3 = trunc i64 %.sroa.689.0..sroa.689.0..sroa.689.8..i.i to i1
-  %op.rdx = and i1 %i.bp, %3
-  %op.rdx12 = select i1 %op.rdx, i1 %2, i1 false
+  %op.rdx = and i1 %i.bp, %.sroa.689.0..sroa.689.0..sroa.689.8..i.i
+  %op.rdx12 = select i1 %op.rdx, i1 %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i, i1 false
   br i1 %op.rdx12, label %bb.q, label %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_3map3MapINtNtNtBb_3ops5range5RangejENCNvNtCsdsTQD3x2eOp_3exr4meta14mip_map_levels0EIBR_IB15_B1k_NCNvNvNvMs0_NtB1Q_6headerNtB2W_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB15_B2B_NCNCB2O_00ENCB2O_0ENCB2Q_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1S_.exit
 
 bb.p:                                             ; preds = %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit79.i.i
-  %4 = and i64 %.sroa.689.0..sroa.689.0..sroa.689.8..i.i, %.sroa.6.0..sroa.6.0..sroa.6.8..i.i
-  %or.cond55.not.i.i = icmp eq i64 %4, 0
-  br i1 %or.cond55.not.i.i, label %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_3map3MapINtNtNtBb_3ops5range5RangejENCNvNtCsdsTQD3x2eOp_3exr4meta14mip_map_levels0EIBR_IB15_B1k_NCNvNvNvMs0_NtB1Q_6headerNtB2W_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB15_B2B_NCNCB2O_00ENCB2O_0ENCB2Q_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1S_.exit, label %bb.q
+  %or.cond55.i.i = and i1 %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i.i, %.sroa.689.0..sroa.689.0..sroa.689.8..i.i
+  br i1 %or.cond55.i.i, label %bb.q, label %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_3map3MapINtNtNtBb_3ops5range5RangejENCNvNtCsdsTQD3x2eOp_3exr4meta14mip_map_levels0EIBR_IB15_B1k_NCNvNvNvMs0_NtB1Q_6headerNtB2W_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB15_B2B_NCNCB2O_00ENCB2O_0ENCB2Q_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1S_.exit
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %i.bq = add i64 %.sroa.10.0..sroa.10.0..sroa.10.16..i.i, %.sroa.9.0..sroa.9.0..sroa.9.16..i.i
@@ -1763,13 +1762,13 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCsd
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvXNtNtCs4wP2HXfJTCR_5alloc3vec21spec_from_iter_nestedINtB4_3VecNtNtCsdsTQD3x2eOp_3exr4meta11TileIndicesEINtB2_18SpecFromIterNestedB11_INtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtB2f_3map3MapINtNtNtB2j_3ops5range5RangejENCNvNvNvMs0_NtB13_6headerNtB42_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB37_B36_NCNCB3U_00ENCB3U_0EE9from_iterB15_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 captures(none) dead_on_return dereferenceable(232) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.5.i.i = alloca i64, align 8              ; 3 uses
-  %.sroa.7.i.i = alloca i64, align 8              ; 3 uses
+  %.sroa.5.i.i = alloca [8 x i8], align 8         ; 3 uses
+  %.sroa.7.i.i = alloca [8 x i8], align 8         ; 3 uses
   %i.a = alloca [56 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = alloca [232 x i8], align 8               ; 14 uses
-  %.sroa.5 = alloca i64, align 8                  ; 3 uses
-  %.sroa.7 = alloca i64, align 8                  ; 3 uses
+  %.sroa.5 = alloca [8 x i8], align 8             ; 3 uses
+  %.sroa.7 = alloca [8 x i8], align 8             ; 3 uses
   %i.d = alloca [56 x i8], align 8                ; 3 uses
   %i.e = alloca [24 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
@@ -2172,12 +2171,12 @@ _RNvXsi_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtB5_13FlattenCompatINtN
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define internal fastcc void @_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_3map3MapIBR_INtNtNtBb_3ops5range5RangejEIB15_B1o_NCNCNvNtCsdsTQD3x2eOp_3exr4meta15rip_map_indices00ENCB23_0ENCNvB25_14rip_map_levels0EIBR_IB15_B1o_NCNvNvNvMs0_NtB25_6headerNtB3L_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB15_B3q_NCNCB3D_00ENCB3D_0ENCB3F_s_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB27_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(608) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.6103.i = alloca i64, align 8             ; 6 uses
-  %.sroa.9104.i = alloca i64, align 8             ; 5 uses
-  %.sroa.6100.i = alloca i64, align 8             ; 5 uses
-  %.sroa.10.i = alloca i64, align 8               ; 4 uses
-  %.sroa.6.i = alloca i64, align 8                ; 5 uses
-  %.sroa.9.i = alloca i64, align 8                ; 4 uses
+  %.sroa.6103.i = alloca [8 x i8], align 8        ; 6 uses
+  %.sroa.9104.i = alloca [8 x i8], align 8        ; 5 uses
+  %.sroa.6100.i = alloca [8 x i8], align 8        ; 5 uses
+  %.sroa.10.i = alloca [8 x i8], align 8          ; 4 uses
+  %.sroa.6.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.9.i = alloca [8 x i8], align 8           ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1006)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1009)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
@@ -2249,13 +2248,14 @@ _RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3M
   %.sink78.i.i.i.i.sroa.phi.i = phi ptr [ %.sroa.9.i, %bb.f ], [ %.sroa.6.i, %bb.e ]
   %.sink.i.i.i.i.i = phi i64 [ %i.q, %bb.f ], [ 0, %bb.e ]
   store i64 %.sink.i.i.i.i.i, ptr %.sink78.i.i.i.i.sroa.phi.i, align 8, !alias.scope !1063, !noalias !1064
-  %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i = load i64, ptr %.sroa.6.i, align 8, !range !69, !noalias !1065
+  %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i = load i64, ptr %.sroa.6.i, align 8, !noalias !1065
   %.sroa.9.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.0..sroa.9.16..pre.i = load i64, ptr %.sroa.9.i, align 8, !noalias !1065
+  %2 = trunc nuw i64 %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i to i1
   br label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i
 
 _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i: ; preds = %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i, %bb.a
   %.sroa.9.0..sroa.9.0..sroa.9.16..i = phi i64 [ %.sroa.9.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.0..sroa.9.16..pre.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.6.0..sroa.6.0..sroa.6.8..i = phi i64 [ %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ 1, %bb.a ] ; 2 uses
+  %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i = phi i1 [ %2, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ true, %bb.a ] ; 2 uses
   %.sroa.0.1.i = phi i64 [ %i.m, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ 0, %bb.a ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i)
@@ -2329,13 +2329,14 @@ _RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3M
   %.sink.i.i.i.i68.i = phi i64 [ %i.ai, %bb.k ], [ 0, %bb.j ]
   store i64 %.sink.i.i.i.i68.i, ptr %.sink78.i.i.i.i67.sroa.phi.i, align 8, !alias.scope !1118, !noalias !1119
   %i.ak = tail call i64 @llvm.uadd.sat.i64(i64 %.sroa.0.1.i, i64 %i.ae)
-  %.sroa.6100.i.0..sroa.6100.i.0..sroa.6100.i.0..sroa.6100.0..sroa.6100.0..sroa.6100.8..pre.i = load i64, ptr %.sroa.6100.i, align 8, !range !69, !noalias !1065
+  %.sroa.6100.i.0..sroa.6100.i.0..sroa.6100.i.0..sroa.6100.0..sroa.6100.0..sroa.6100.8..pre.i = load i64, ptr %.sroa.6100.i, align 8, !noalias !1065
   %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i = load i64, ptr %.sroa.10.i, align 8, !noalias !1065
+  %3 = trunc nuw i64 %.sroa.6100.i.0..sroa.6100.i.0..sroa.6100.i.0..sroa.6100.0..sroa.6100.0..sroa.6100.8..pre.i to i1
   br label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit78.i
 
 _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit78.i: ; preds = %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i66.i, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i
   %.sroa.10.0..sroa.10.0..sroa.10.16..i = phi i64 [ %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i66.i ], [ 0, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ]
-  %.sroa.6100.0..sroa.6100.0..sroa.6100.8..i = phi i64 [ %.sroa.6100.i.0..sroa.6100.i.0..sroa.6100.i.0..sroa.6100.0..sroa.6100.0..sroa.6100.8..pre.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i66.i ], [ 1, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ] ; 2 uses
+  %.sroa.6100.0..sroa.6100.0..sroa.6100.8..i = phi i1 [ %3, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i66.i ], [ true, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ] ; 2 uses
   %.sroa.099.1.i = phi i64 [ %i.ak, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i66.i ], [ %.sroa.0.1.i, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6100.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
@@ -2406,27 +2407,25 @@ _RNvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB5_3MapIBN_INtNtB7_7flatte
   %.sink78.i.i.i.i82.sroa.phi.i = phi ptr [ %.sroa.9104.i, %bb.p ], [ %.sroa.6103.i, %bb.o ]
   %.sink.i.i.i.i83.i = phi i64 [ %i.az, %bb.p ], [ 0, %bb.o ]
   store i64 %.sink.i.i.i.i83.i, ptr %.sink78.i.i.i.i82.sroa.phi.i, align 8, !alias.scope !1171, !noalias !1172
-  %.sroa.6103.i.0..sroa.6103.i.0..sroa.6103.i.0..sroa.6103.0..sroa.6103.0..sroa.6103.8..i = load i64, ptr %.sroa.6103.i, align 8, !range !69, !noalias !1065, !noundef !4
+  %.sroa.6103.i.0..sroa.6103.i.0..sroa.6103.i.0..sroa.6103.0..sroa.6103.0..sroa.6103.8..i = load i64, ptr %.sroa.6103.i, align 8, !noalias !1065
   %.sroa.9104.i.0..sroa.9104.i.0..sroa.9104.i.0..sroa.9104.0..sroa.9104.0..sroa.9104.16..i = load i64, ptr %.sroa.9104.i, align 8, !noalias !1065
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6103.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9104.i)
   %i.bb = or i64 %.sroa.8.0.i.i.i.i80.i, %.sroa.7.0.i.i.i.i79.i
   %i.bc = icmp eq i64 %i.bb, 0
-  %2 = and i64 %.sroa.6103.i.0..sroa.6103.i.0..sroa.6103.i.0..sroa.6103.0..sroa.6103.0..sroa.6103.8..i, %.sroa.6.0..sroa.6.0..sroa.6.8..i
-  %3 = icmp ne i64 %2, 0
-  %or.cond58.i = and i1 %i.bc, %3
-  %4 = trunc nuw i64 %.sroa.6100.0..sroa.6100.0..sroa.6100.8..i to i1
+  %4 = trunc nuw i64 %.sroa.6103.i.0..sroa.6103.i.0..sroa.6103.i.0..sroa.6103.0..sroa.6103.0..sroa.6103.8..i to i1
+  %or.cond57.i = select i1 %i.bc, i1 %4, i1 false
+  %or.cond58.i = select i1 %or.cond57.i, i1 %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i, i1 false
   %i.bd = icmp eq i64 %.sroa.9104.i.0..sroa.9104.i.0..sroa.9104.i.0..sroa.9104.0..sroa.9104.0..sroa.9104.16..i, 0
-  %5 = and i1 %or.cond58.i, %4
+  %5 = select i1 %or.cond58.i, i1 %.sroa.6100.0..sroa.6100.0..sroa.6100.8..i, i1 false
   %or.cond60.i = select i1 %5, i1 %i.bd, i1 false
   br i1 %or.cond60.i, label %bb.s, label %bb.r
 
 bb.q:                                             ; preds = %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit78.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6103.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9104.i)
-  %6 = and i64 %.sroa.6100.0..sroa.6100.0..sroa.6100.8..i, %.sroa.6.0..sroa.6.0..sroa.6.8..i
-  %or.cond55.not.i = icmp eq i64 %6, 0
-  br i1 %or.cond55.not.i, label %bb.r, label %bb.s
+  %or.cond55.i = select i1 %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i, i1 %.sroa.6100.0..sroa.6100.0..sroa.6100.8..i, i1 false
+  br i1 %or.cond55.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %_RNvXs0_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3mapINtB5_3MapIBN_INtNtB7_7flatten7FlatMapINtNtNtBb_3ops5range5RangejEIBN_B1o_NCNCNvNtCsdsTQD3x2eOp_3exr4meta15rip_map_indices00ENCB22_0ENCNvB24_14rip_map_levels0ENCNvMs0_NtB24_6headerNtB3t_6Header25blocks_increasing_y_orders_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB26_.exit.i
   store i64 %.sroa.099.1.i, ptr %0, align 8, !alias.scope !1006, !noalias !1009
@@ -2571,10 +2570,10 @@ _RNvXsi_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtB5_13FlattenCompatINtN
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
 define internal fastcc void @_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flattenINtB5_7FlatMapINtNtB7_3map3MapINtNtNtBb_3ops5range5RangejENCNvNtCsdsTQD3x2eOp_3exr4meta14mip_map_levels0EIBR_IB15_B1k_NCNvNvNvMs0_NtB1Q_6headerNtB2W_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB15_B2B_NCNCB2O_00ENCB2O_0ENCB2Q_0ENtNtNtB9_6traits8iterator8Iterator9size_hintB1S_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(528) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.689.i = alloca i64, align 8              ; 5 uses
-  %.sroa.10.i = alloca i64, align 8               ; 4 uses
-  %.sroa.6.i = alloca i64, align 8                ; 5 uses
-  %.sroa.9.i = alloca i64, align 8                ; 4 uses
+  %.sroa.689.i = alloca [8 x i8], align 8         ; 5 uses
+  %.sroa.10.i = alloca [8 x i8], align 8          ; 4 uses
+  %.sroa.6.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.9.i = alloca [8 x i8], align 8           ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1233)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1236)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
@@ -2645,13 +2644,14 @@ _RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3M
   %.sink78.i.i.i.i.sroa.phi.i = phi ptr [ %.sroa.9.i, %bb.f ], [ %.sroa.6.i, %bb.e ]
   %.sink.i.i.i.i.i = phi i64 [ %i.p, %bb.f ], [ 0, %bb.e ]
   store i64 %.sink.i.i.i.i.i, ptr %.sink78.i.i.i.i.sroa.phi.i, align 8, !alias.scope !1290, !noalias !1291
-  %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i = load i64, ptr %.sroa.6.i, align 8, !range !69, !noalias !1292
+  %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i = load i64, ptr %.sroa.6.i, align 8, !noalias !1292
   %.sroa.9.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.0..sroa.9.16..pre.i = load i64, ptr %.sroa.9.i, align 8, !noalias !1292
+  %2 = trunc nuw i64 %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i to i1
   br label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i
 
 _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i: ; preds = %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i, %bb.a
   %.sroa.9.0..sroa.9.0..sroa.9.16..i = phi i64 [ %.sroa.9.i.0..sroa.9.i.0..sroa.9.i.0..sroa.9.0..sroa.9.0..sroa.9.16..pre.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.6.0..sroa.6.0..sroa.6.8..i = phi i64 [ %.sroa.6.i.0..sroa.6.i.0..sroa.6.i.0..sroa.6.0..sroa.6.0..sroa.6.8..pre.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ 1, %bb.a ] ; 2 uses
+  %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i = phi i1 [ %2, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ true, %bb.a ] ; 2 uses
   %.sroa.0.1.i = phi i64 [ %i.l, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i.i ], [ 0, %bb.a ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.9.i)
@@ -2725,14 +2725,15 @@ _RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3M
   %.sink.i.i.i.i69.i = phi i64 [ %i.ah, %bb.k ], [ 0, %bb.j ]
   store i64 %.sink.i.i.i.i69.i, ptr %.sink78.i.i.i.i68.sroa.phi.i, align 8, !alias.scope !1345, !noalias !1346
   %i.aj = tail call i64 @llvm.uadd.sat.i64(i64 %.sroa.0.1.i, i64 %i.ad)
-  %.sroa.689.i.0..sroa.689.i.0..sroa.689.i.0..sroa.689.0..sroa.689.0..sroa.689.8..pre.i = load i64, ptr %.sroa.689.i, align 8, !range !69, !noalias !1292
+  %.sroa.689.i.0..sroa.689.i.0..sroa.689.i.0..sroa.689.0..sroa.689.0..sroa.689.8..pre.i = load i64, ptr %.sroa.689.i, align 8, !noalias !1292
   %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i = load i64, ptr %.sroa.10.i, align 8, !noalias !1292
   %i.ak = freeze i64 %.sroa.689.i.0..sroa.689.i.0..sroa.689.i.0..sroa.689.0..sroa.689.0..sroa.689.8..pre.i
+  %3 = trunc i64 %i.ak to i1
   br label %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit79.i
 
 _RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit79.i: ; preds = %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i
   %.sroa.10.0..sroa.10.0..sroa.10.16..i = phi i64 [ %.sroa.10.i.0..sroa.10.i.0..sroa.10.i.0..sroa.10.0..sroa.10.0..sroa.10.16..pre.i, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i ], [ 0, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ]
-  %.sroa.689.0..sroa.689.0..sroa.689.8..i = phi i64 [ %i.ak, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i ], [ 1, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ] ; 2 uses
+  %.sroa.689.0..sroa.689.0..sroa.689.8..i = phi i1 [ %3, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i ], [ true, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ] ; 2 uses
   %.sroa.088.1.i = phi i64 [ %i.aj, %_RNvYNvYINtNtNtNtCsj6eKBz9Db1c_4core4iter8adapters7flatten7FlatMapINtNtBa_3map3MapINtNtNtBe_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB1V_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB12_B11_NCNCB1N_00ENCB1N_0ENtNtNtBc_6traits8iterator8Iterator9size_hintINtNtB1m_8function6FnOnceTRB5_EE9call_onceB1Z_.exit.i67.i ], [ %.sroa.0.1.i, %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.689.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.i)
@@ -2747,16 +2748,13 @@ bb.l:                                             ; preds = %_RINvMNtCsj6eKBz9Db
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 472
   %.val61.i = load i64, ptr %i.ao, align 8, !alias.scope !1352, !noalias !1353, !noundef !4
   %i.ap = icmp ule i64 %.val61.i, %.val.i
-  %2 = trunc nuw i64 %.sroa.6.0..sroa.6.0..sroa.6.8..i to i1
-  %3 = trunc i64 %.sroa.689.0..sroa.689.0..sroa.689.8..i to i1
-  %op.rdx = and i1 %i.ap, %3
-  %op.rdx2 = select i1 %op.rdx, i1 %2, i1 false
+  %op.rdx = and i1 %i.ap, %.sroa.689.0..sroa.689.0..sroa.689.8..i
+  %op.rdx2 = select i1 %op.rdx, i1 %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i, i1 false
   br i1 %op.rdx2, label %bb.o, label %bb.n
 
 bb.m:                                             ; preds = %_RINvMNtCsj6eKBz9Db1c_4core6optionINtB3_6OptionRINtNtNtNtB5_4iter8adapters7flatten7FlatMapINtNtBO_3map3MapINtNtNtB5_3ops5range5RangejENCNvNvNvMs0_NtNtCsdsTQD3x2eOp_3exr4meta6headerNtB2j_6Header25blocks_increasing_y_order8tiles_of15divide_and_rest0EIB1q_B1p_NCNCB2b_00ENCB2b_0EE6map_orTjIBw_jEENvYBJ_NtNtNtBQ_6traits8iterator8Iterator9size_hintEB2n_.exit79.i
-  %4 = and i64 %.sroa.689.0..sroa.689.0..sroa.689.8..i, %.sroa.6.0..sroa.6.0..sroa.6.8..i
-  %or.cond55.not.i = icmp eq i64 %4, 0
-  br i1 %or.cond55.not.i, label %bb.n, label %bb.o
+  %or.cond55.i = and i1 %.sroa.6.0..sroa.6.0..sroa.6.0..sroa.6.8..i, %.sroa.689.0..sroa.689.0..sroa.689.8..i
+  br i1 %or.cond55.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   store i64 %.sroa.088.1.i, ptr %0, align 8, !alias.scope !1233, !noalias !1236

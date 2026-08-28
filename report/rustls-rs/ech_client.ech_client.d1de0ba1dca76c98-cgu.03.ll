@@ -202,7 +202,7 @@ bb.gr:                                            ; preds = %bb.gp
   %.sroa.10612.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 410
   %.sroa.10612.0.copyload.i.i = load i32, ptr %.sroa.10612.0..sroa_idx.i.i, align 2, !alias.scope !1335, !noalias !1185 ; 5 uses
   %.sroa.14614.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 414
-  %.sroa.14614.0.copyload.i.i = load i16, ptr %.sroa.14614.0..sroa_idx.i.i, align 2, !alias.scope !1335, !noalias !1185 ; 8 uses
+  %.sroa.14614.0.copyload.i.i = load i16, ptr %.sroa.14614.0..sroa_idx.i.i, align 2, !alias.scope !1335, !noalias !1185 ; 7 uses
   %.sroa.16617.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 416
   %.sroa.16617.sroa.0.0.copyload.i.i = load i96, ptr %.sroa.16617.0..sroa_idx.i.i, align 8, !alias.scope !1335, !noalias !1185 ; 12 uses
   %.sroa.16619.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.01.0.i.i, i64 436
@@ -210,6 +210,7 @@ bb.gr:                                            ; preds = %bb.gp
   call void @llvm.experimental.noalias.scope.decl(metadata !1339)
   %i.te = load i16, ptr %i.bb, align 4, !range !193, !alias.scope !1342, !noalias !1344, !noundef !15
   %i.tf = trunc nuw i16 %i.te to i1               ; 2 uses
+  %3 = lshr i16 %.sroa.14614.0.copyload.i.i, 8    ; 2 uses
   br i1 %i.tf, label %bb.gs, label %bb.gt
 
 bb.gs:                                            ; preds = %bb.gr
@@ -287,9 +288,8 @@ _RNvMsi_NtNtCsj6eKBz9Db1c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i
   %.sroa.8650.6.extract.shift.i.i = lshr i128 %.sroa.8650.5.insert.ext.i.i, 8
   %.sroa.8650.6.extract.trunc.i.i = trunc i128 %.sroa.8650.6.extract.shift.i.i to i8
   %.sroa.8650.5.extract.trunc.i.i = trunc i96 %.sroa.16617.sroa.0.0.copyload.i.i to i8
-  %.sroa.8650.4.extract.shift.i.i = lshr i16 %.sroa.14614.0.copyload.i.i, 8
   %.sroa.14614.0.copyload.masked.i.i = and i16 %.sroa.14614.0.copyload.i.i, 255
-  %i.tv = or i16 %.sroa.14614.0.copyload.masked.i.i, %.sroa.8650.4.extract.shift.i.i
+  %i.tv = or i16 %.sroa.14614.0.copyload.masked.i.i, %3
   %or.cond5.i.i330.i.i = icmp eq i16 %i.tv, 0
   %i.tw = or i8 %.sroa.8650.6.extract.trunc.i.i, %.sroa.8650.5.extract.trunc.i.i
   %or.cond8.i.i331.i.i = icmp eq i8 %i.tw, 0
@@ -692,13 +692,14 @@ bb.lc:                                            ; preds = %.critedge.i412.i.i,
 bb.ld:                                            ; preds = %bb.lc
   %.sroa.10612.2.extract.shift627.i.i = lshr i32 %.sroa.10612.0.copyload.i.i, 16
   %sum.shift.i.i = lshr i32 %.sroa.10612.0.copyload.i.i, 24 ; 2 uses
+  %4 = zext i16 %.sroa.14614.0.copyload.i.i to i32
+  %5 = shl nuw i32 %4, 16
   %.sroa.10612.2.extract.shift627.masked.i.i = and i32 %.sroa.10612.2.extract.shift627.i.i, 255 ; 2 uses
   %i.acr = or i32 %.sroa.10612.2.extract.shift627.masked.i.i, %sum.shift.i.i
   %or.cond.i.i455.i.i = icmp eq i32 %i.acr, 0
   br i1 %or.cond.i.i455.i.i, label %_RNvMsi_NtNtCsj6eKBz9Db1c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i457.i.i, label %.critedge.i456.i.i
 
 _RNvMsi_NtNtCsj6eKBz9Db1c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i457.i.i: ; preds = %bb.ld
-  %.sroa.7720.sroa.9.sroa.8.0.extract.shift742.i.i = lshr i16 %.sroa.14614.0.copyload.i.i, 8
   %.sroa.14724.12.extract.shift.i.i = lshr i96 %.sroa.16617.sroa.0.0.copyload.i.i, 56
   %.sroa.14724.11.extract.shift.i.i = lshr i96 %.sroa.16617.sroa.0.0.copyload.i.i, 48
   %.sroa.14724.10.extract.shift.i.i = lshr i96 %.sroa.16617.sroa.0.0.copyload.i.i, 40
@@ -707,7 +708,7 @@ _RNvMsi_NtNtCsj6eKBz9Db1c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i
   %.sroa.14724.7.extract.shift.i.i = lshr i96 %.sroa.16617.sroa.0.0.copyload.i.i, 16
   %.sroa.14724.6.extract.shift.i.i = lshr i96 %.sroa.16617.sroa.0.0.copyload.i.i, 8
   %.sroa.14614.0.copyload.masked961.i.i = and i16 %.sroa.14614.0.copyload.i.i, 255
-  %i.acs = or i16 %.sroa.14614.0.copyload.masked961.i.i, %.sroa.7720.sroa.9.sroa.8.0.extract.shift742.i.i
+  %i.acs = or i16 %3, %.sroa.14614.0.copyload.masked961.i.i
   %or.cond5.i.i478.i.i = icmp eq i16 %i.acs, 0
   %i.act = or i96 %.sroa.14724.6.extract.shift.i.i, %.sroa.16617.sroa.0.0.copyload.i.i
   %i.acu = trunc i96 %i.act to i8
@@ -743,9 +744,7 @@ bb.lf:                                            ; preds = %_RNvMsi_NtNtCsj6eKB
 .critedge.i456.i.i:                               ; preds = %_RNvMsi_NtNtCsj6eKBz9Db1c_4core3net7ip_addrNtB5_8Ipv6Addr14to_ipv4_mapped.exit.i457.i.i, %bb.ld
   store i8 1, ptr %i.at, align 1, !alias.scope !1433, !noalias !1189
   %.sroa.7720.sroa.0.sroa.8.0.insert.shift749.i.i = shl nuw nsw i32 %sum.shift.i.i, 8
-  %.sroa.7720.sroa.9.0.insert.ext730.i.i = zext i16 %.sroa.14614.0.copyload.i.i to i32
-  %.sroa.7720.sroa.9.0.insert.shift731.i.i = shl nuw i32 %.sroa.7720.sroa.9.0.insert.ext730.i.i, 16
-  %i.adb = or disjoint i32 %.sroa.7720.sroa.9.0.insert.shift731.i.i, %.sroa.7720.sroa.0.sroa.8.0.insert.shift749.i.i
+  %i.adb = or disjoint i32 %5, %.sroa.7720.sroa.0.sroa.8.0.insert.shift749.i.i
   %.sroa.7720.sroa.0.0.insert.insert729.i.i = or disjoint i32 %i.adb, %.sroa.10612.2.extract.shift627.masked.i.i
   store i32 %.sroa.7720.sroa.0.0.insert.insert729.i.i, ptr %.sroa.7720.0..sroa_idx.i.i, align 1, !alias.scope !1433, !noalias !1189
   store i96 %.sroa.16617.sroa.0.0.copyload.i.i, ptr %.sroa.14724.0..sroa_idx725.i.i, align 1, !alias.scope !1433, !noalias !1189

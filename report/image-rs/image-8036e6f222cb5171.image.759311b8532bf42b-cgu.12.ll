@@ -205,6 +205,8 @@ define hidden void @_RINvNvNtCsa5QsYiPB8Gl_5image5utils17interleave_planes10tram
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [16 x i8], align 8                ; 5 uses
+  %.sroa.4 = alloca [2 x i8], align 2             ; 4 uses
+  %.sroa.6 = alloca [2 x i8], align 2             ; 4 uses
   %i.c = alloca [32 x i8], align 8                ; 5 uses
   %i.d = alloca [32 x i8], align 8                ; 5 uses
   %i.e = alloca [32 x i8], align 8                ; 4 uses
@@ -243,44 +245,38 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj2_NtNtB4_5array17TryFromSlice
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph, %.cont
-  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %7, %.cont ] ; 4 uses
+bb.c:                                             ; preds = %.lr.ph, %bb.c
+  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %7, %bb.c ] ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !768
   store ptr %i.c, ptr %i.b, align 8, !alias.scope !773, !noalias !776
   store ptr %i.j, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !773, !noalias !776
   %i.k = call i48 @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj2_EEB1F_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Z_B1W_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %i.b), !noalias !778 ; 4 uses
   %.sroa.4.0.extract.shift = lshr i48 %i.k, 8
   %.sroa.4.0.extract.trunc = trunc i48 %.sroa.4.0.extract.shift to i16
+  store i16 %.sroa.4.0.extract.trunc, ptr %.sroa.4, align 2, !noalias !768
   %.sroa.6.0.extract.shift = lshr i48 %i.k, 32
   %.sroa.6.0.extract.trunc = trunc nuw i48 %.sroa.6.0.extract.shift to i16
+  store i16 %.sroa.6.0.extract.trunc, ptr %.sroa.6, align 2, !noalias !768
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !768
   %i.l = trunc i48 %i.k to i1
-  br i1 %i.l, label %.cont14, label %.else15
-
-.else15:                                          ; preds = %bb.c
-  %.sroa.04.0.i.else.val = load i16, ptr %.sroa.07.0.i13, align 1, !noalias !778
-  br label %.cont14
-
-.cont14:                                          ; preds = %bb.c, %.else15
-  %.sroa.04.0.i = phi i16 [ %.sroa.4.0.extract.trunc, %bb.c ], [ %.sroa.04.0.i.else.val, %.else15 ]
+  %.sroa.04.0.in.i = select i1 %i.l, ptr %.sroa.4, ptr %.sroa.07.0.i13
+  %.sroa.04.0.i = load i16, ptr %.sroa.04.0.in.i, align 1, !noalias !778
   store i16 %.sroa.04.0.i, ptr %.sroa.07.0.i13, align 1, !noalias !778
   %5 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 2 ; 2 uses
   %6 = and i48 %i.k, 16777216
   %.not = icmp eq i48 %6, 0
-  br i1 %.not, label %.else, label %.cont
-
-.else:                                            ; preds = %.cont14
-  %.sroa.04.0.i.1.else.val = load i16, ptr %5, align 1, !noalias !778
-  br label %.cont
-
-.cont:                                            ; preds = %.cont14, %.else
-  %.sroa.04.0.i.1 = phi i16 [ %.sroa.6.0.extract.trunc, %.cont14 ], [ %.sroa.04.0.i.1.else.val, %.else ]
+  %.sroa.04.0.in.i.1 = select i1 %.not, ptr %5, ptr %.sroa.6
+  %.sroa.04.0.i.1 = load i16, ptr %.sroa.04.0.in.i.1, align 1, !noalias !778
   store i16 %.sroa.04.0.i.1, ptr %5, align 1, !noalias !778
   %7 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %8 = icmp eq ptr %7, %i.h
   br i1 %8, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj2_KBU_EB4_.exit, label %bb.c
 
-_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj2_KBU_EB4_.exit: ; preds = %.cont, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
+_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj2_KBU_EB4_.exit: ; preds = %bb.c, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj2_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !768
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   ret void
@@ -482,6 +478,9 @@ bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [9 x i8], align 1                 ; 9 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
+  %.sroa.4 = alloca [2 x i8], align 2             ; 4 uses
+  %.sroa.6 = alloca [2 x i8], align 2             ; 4 uses
+  %.sroa.8 = alloca [2 x i8], align 2             ; 4 uses
   %i.d = alloca [48 x i8], align 8                ; 6 uses
   %i.e = alloca [48 x i8], align 8                ; 5 uses
   %i.f = alloca [48 x i8], align 8                ; 4 uses
@@ -529,8 +528,11 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSlice
   %i.o = insertelement <2 x ptr> %i.n, ptr %i.m, i64 1
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph, %.cont
-  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %9, %.cont ] ; 5 uses
+bb.c:                                             ; preds = %.lr.ph, %bb.c
+  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %9, %bb.c ] ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !825
   store ptr %i.d, ptr %i.c, align 8, !alias.scope !830, !noalias !833
   store <2 x ptr> %i.o, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !830, !noalias !833
@@ -538,49 +540,37 @@ bb.c:                                             ; preds = %.lr.ph, %.cont
   call void @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj2_EEj3_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Y_B1V_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([9 x i8]) align 1 captures(address) dereferenceable(9) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c), !noalias !835
   %.sroa.0.0.copyload = load i8, ptr %i.b, align 1, !noalias !825
   %.sroa.4.0.copyload = load i16, ptr %.sroa.4.0..sroa_idx, align 1, !noalias !825
+  store i16 %.sroa.4.0.copyload, ptr %.sroa.4, align 2, !noalias !825
   %.sroa.5.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !noalias !825
   %.sroa.6.0.copyload = load i16, ptr %.sroa.6.0..sroa_idx, align 1, !noalias !825
+  store i16 %.sroa.6.0.copyload, ptr %.sroa.6, align 2, !noalias !825
   %.sroa.7.0.copyload = load i8, ptr %.sroa.7.0..sroa_idx, align 1, !noalias !825
   %.sroa.8.0.copyload = load i16, ptr %.sroa.8.0..sroa_idx, align 1, !noalias !825
+  store i16 %.sroa.8.0.copyload, ptr %.sroa.8, align 2, !noalias !825
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !825
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !825
-  %i.p = trunc nuw i8 %.sroa.0.0.copyload to i1
-  br i1 %i.p, label %.cont16, label %.else17
-
-.else17:                                          ; preds = %bb.c
-  %.sroa.04.0.i.else.val = load i16, ptr %.sroa.07.0.i13, align 1, !noalias !835
-  br label %.cont16
-
-.cont16:                                          ; preds = %bb.c, %.else17
-  %.sroa.04.0.i = phi i16 [ %.sroa.4.0.copyload, %bb.c ], [ %.sroa.04.0.i.else.val, %.else17 ]
+  %5 = trunc nuw i8 %.sroa.0.0.copyload to i1
+  %.sroa.04.0.in.i = select i1 %5, ptr %.sroa.4, ptr %.sroa.07.0.i13
+  %.sroa.04.0.i = load i16, ptr %.sroa.04.0.in.i, align 1, !noalias !835
   store i16 %.sroa.04.0.i, ptr %.sroa.07.0.i13, align 1, !noalias !835
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 2 ; 2 uses
-  %6 = trunc nuw i8 %.sroa.5.0.copyload to i1
-  br i1 %6, label %.cont14, label %.else15
-
-.else15:                                          ; preds = %.cont16
-  %.sroa.04.0.i.1.else.val = load i16, ptr %5, align 1, !noalias !835
-  br label %.cont14
-
-.cont14:                                          ; preds = %.cont16, %.else15
-  %.sroa.04.0.i.1 = phi i16 [ %.sroa.6.0.copyload, %.cont16 ], [ %.sroa.04.0.i.1.else.val, %.else15 ]
-  store i16 %.sroa.04.0.i.1, ptr %5, align 1, !noalias !835
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
-  %8 = trunc nuw i8 %.sroa.7.0.copyload to i1
-  br i1 %8, label %.cont, label %.else
-
-.else:                                            ; preds = %.cont14
-  %.sroa.04.0.i.2.else.val = load i16, ptr %7, align 1, !noalias !835
-  br label %.cont
-
-.cont:                                            ; preds = %.cont14, %.else
-  %.sroa.04.0.i.2 = phi i16 [ %.sroa.8.0.copyload, %.cont14 ], [ %.sroa.04.0.i.2.else.val, %.else ]
-  store i16 %.sroa.04.0.i.2, ptr %7, align 1, !noalias !835
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 2 ; 2 uses
+  %7 = trunc nuw i8 %.sroa.5.0.copyload to i1
+  %.sroa.04.0.in.i.1 = select i1 %7, ptr %.sroa.6, ptr %6
+  %.sroa.04.0.i.1 = load i16, ptr %.sroa.04.0.in.i.1, align 1, !noalias !835
+  store i16 %.sroa.04.0.i.1, ptr %6, align 1, !noalias !835
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
+  %i.p = trunc nuw i8 %.sroa.7.0.copyload to i1
+  %.sroa.04.0.in.i.2 = select i1 %i.p, ptr %.sroa.8, ptr %8
+  %.sroa.04.0.i.2 = load i16, ptr %.sroa.04.0.in.i.2, align 1, !noalias !835
+  store i16 %.sroa.04.0.i.2, ptr %8, align 1, !noalias !835
   %9 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 6 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   %10 = icmp eq ptr %9, %i.j
   br i1 %10, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj2_EB4_.exit, label %bb.c
 
-_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj2_EB4_.exit: ; preds = %.cont, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
+_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj2_EB4_.exit: ; preds = %bb.c, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !825
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   ret void
@@ -592,6 +582,9 @@ bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [15 x i8], align 1                ; 9 uses
   %i.c = alloca [24 x i8], align 8                ; 5 uses
+  %.sroa.4 = alloca [4 x i8], align 4             ; 4 uses
+  %.sroa.6 = alloca [4 x i8], align 4             ; 4 uses
+  %.sroa.8 = alloca [4 x i8], align 4             ; 4 uses
   %i.d = alloca [48 x i8], align 8                ; 6 uses
   %i.e = alloca [48 x i8], align 8                ; 5 uses
   %i.f = alloca [48 x i8], align 8                ; 4 uses
@@ -639,8 +632,11 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSlice
   %i.o = insertelement <2 x ptr> %i.n, ptr %i.m, i64 1
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph, %.cont
-  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %9, %.cont ] ; 5 uses
+bb.c:                                             ; preds = %.lr.ph, %bb.c
+  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %9, %bb.c ] ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !844
   store ptr %i.d, ptr %i.c, align 8, !alias.scope !849, !noalias !852
   store <2 x ptr> %i.o, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !849, !noalias !852
@@ -648,49 +644,37 @@ bb.c:                                             ; preds = %.lr.ph, %.cont
   call void @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj4_EEj3_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Y_B1V_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([15 x i8]) align 1 captures(address) dereferenceable(15) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.c), !noalias !854
   %.sroa.0.0.copyload = load i8, ptr %i.b, align 1, !noalias !844
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 1, !noalias !844
+  store i32 %.sroa.4.0.copyload, ptr %.sroa.4, align 4, !noalias !844
   %.sroa.5.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !noalias !844
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 1, !noalias !844
+  store i32 %.sroa.6.0.copyload, ptr %.sroa.6, align 4, !noalias !844
   %.sroa.7.0.copyload = load i8, ptr %.sroa.7.0..sroa_idx, align 1, !noalias !844
   %.sroa.8.0.copyload = load i32, ptr %.sroa.8.0..sroa_idx, align 1, !noalias !844
+  store i32 %.sroa.8.0.copyload, ptr %.sroa.8, align 4, !noalias !844
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !844
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !844
-  %i.p = trunc nuw i8 %.sroa.0.0.copyload to i1
-  br i1 %i.p, label %.cont16, label %.else17
-
-.else17:                                          ; preds = %bb.c
-  %.sroa.04.0.i.else.val = load i32, ptr %.sroa.07.0.i13, align 1, !noalias !854
-  br label %.cont16
-
-.cont16:                                          ; preds = %bb.c, %.else17
-  %.sroa.04.0.i = phi i32 [ %.sroa.4.0.copyload, %bb.c ], [ %.sroa.04.0.i.else.val, %.else17 ]
+  %5 = trunc nuw i8 %.sroa.0.0.copyload to i1
+  %.sroa.04.0.in.i = select i1 %5, ptr %.sroa.4, ptr %.sroa.07.0.i13
+  %.sroa.04.0.i = load i32, ptr %.sroa.04.0.in.i, align 1, !noalias !854
   store i32 %.sroa.04.0.i, ptr %.sroa.07.0.i13, align 1, !noalias !854
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
-  %6 = trunc nuw i8 %.sroa.5.0.copyload to i1
-  br i1 %6, label %.cont14, label %.else15
-
-.else15:                                          ; preds = %.cont16
-  %.sroa.04.0.i.1.else.val = load i32, ptr %5, align 1, !noalias !854
-  br label %.cont14
-
-.cont14:                                          ; preds = %.cont16, %.else15
-  %.sroa.04.0.i.1 = phi i32 [ %.sroa.6.0.copyload, %.cont16 ], [ %.sroa.04.0.i.1.else.val, %.else15 ]
-  store i32 %.sroa.04.0.i.1, ptr %5, align 1, !noalias !854
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 8 ; 2 uses
-  %8 = trunc nuw i8 %.sroa.7.0.copyload to i1
-  br i1 %8, label %.cont, label %.else
-
-.else:                                            ; preds = %.cont14
-  %.sroa.04.0.i.2.else.val = load i32, ptr %7, align 1, !noalias !854
-  br label %.cont
-
-.cont:                                            ; preds = %.cont14, %.else
-  %.sroa.04.0.i.2 = phi i32 [ %.sroa.8.0.copyload, %.cont14 ], [ %.sroa.04.0.i.2.else.val, %.else ]
-  store i32 %.sroa.04.0.i.2, ptr %7, align 1, !noalias !854
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
+  %7 = trunc nuw i8 %.sroa.5.0.copyload to i1
+  %.sroa.04.0.in.i.1 = select i1 %7, ptr %.sroa.6, ptr %6
+  %.sroa.04.0.i.1 = load i32, ptr %.sroa.04.0.in.i.1, align 1, !noalias !854
+  store i32 %.sroa.04.0.i.1, ptr %6, align 1, !noalias !854
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 8 ; 2 uses
+  %i.p = trunc nuw i8 %.sroa.7.0.copyload to i1
+  %.sroa.04.0.in.i.2 = select i1 %i.p, ptr %.sroa.8, ptr %8
+  %.sroa.04.0.i.2 = load i32, ptr %.sroa.04.0.in.i.2, align 1, !noalias !854
+  store i32 %.sroa.04.0.i.2, ptr %8, align 1, !noalias !854
   %9 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 12 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
   %10 = icmp eq ptr %9, %i.j
   br i1 %10, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj4_EB4_.exit, label %bb.c
 
-_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj4_EB4_.exit: ; preds = %.cont, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
+_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj3_Kj4_EB4_.exit: ; preds = %bb.c, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj3_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !844
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   ret void
@@ -702,6 +686,10 @@ bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [20 x i8], align 1                ; 11 uses
   %i.c = alloca [32 x i8], align 8                ; 6 uses
+  %.sroa.4 = alloca [4 x i8], align 4             ; 4 uses
+  %.sroa.6 = alloca [4 x i8], align 4             ; 4 uses
+  %.sroa.8 = alloca [4 x i8], align 4             ; 4 uses
+  %.sroa.10 = alloca [4 x i8], align 4            ; 4 uses
   %i.d = alloca [64 x i8], align 8                ; 7 uses
   %i.e = alloca [64 x i8], align 8                ; 5 uses
   %i.f = alloca [64 x i8], align 8                ; 4 uses
@@ -752,8 +740,12 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj4_NtNtB4_5array17TryFromSlice
   %i.o = insertelement <2 x ptr> %i.n, ptr %i.l, i64 1
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph, %.cont
-  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %11, %.cont ] ; 6 uses
+bb.c:                                             ; preds = %.lr.ph, %bb.c
+  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %11, %bb.c ] ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !863
   store ptr %i.d, ptr %i.c, align 8, !alias.scope !868, !noalias !871
   store <2 x ptr> %i.o, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !868, !noalias !871
@@ -762,62 +754,46 @@ bb.c:                                             ; preds = %.lr.ph, %.cont
   call void @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj4_EEB1F_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Z_B1W_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([20 x i8]) align 1 captures(address) dereferenceable(20) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.c), !noalias !873
   %.sroa.0.0.copyload = load i8, ptr %i.b, align 1, !noalias !863
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 1, !noalias !863
+  store i32 %.sroa.4.0.copyload, ptr %.sroa.4, align 4, !noalias !863
   %.sroa.5.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !noalias !863
   %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 1, !noalias !863
+  store i32 %.sroa.6.0.copyload, ptr %.sroa.6, align 4, !noalias !863
   %.sroa.7.0.copyload = load i8, ptr %.sroa.7.0..sroa_idx, align 1, !noalias !863
   %.sroa.8.0.copyload = load i32, ptr %.sroa.8.0..sroa_idx, align 1, !noalias !863
+  store i32 %.sroa.8.0.copyload, ptr %.sroa.8, align 4, !noalias !863
   %.sroa.9.0.copyload = load i8, ptr %.sroa.9.0..sroa_idx, align 1, !noalias !863
   %.sroa.10.0.copyload = load i32, ptr %.sroa.10.0..sroa_idx, align 1, !noalias !863
+  store i32 %.sroa.10.0.copyload, ptr %.sroa.10, align 4, !noalias !863
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !863
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !863
-  %i.p = trunc nuw i8 %.sroa.0.0.copyload to i1
-  br i1 %i.p, label %.cont18, label %.else19
-
-.else19:                                          ; preds = %bb.c
-  %.sroa.04.0.i.else.val = load i32, ptr %.sroa.07.0.i13, align 1, !noalias !873
-  br label %.cont18
-
-.cont18:                                          ; preds = %bb.c, %.else19
-  %.sroa.04.0.i = phi i32 [ %.sroa.4.0.copyload, %bb.c ], [ %.sroa.04.0.i.else.val, %.else19 ]
+  %5 = trunc nuw i8 %.sroa.0.0.copyload to i1
+  %.sroa.04.0.in.i = select i1 %5, ptr %.sroa.4, ptr %.sroa.07.0.i13
+  %.sroa.04.0.i = load i32, ptr %.sroa.04.0.in.i, align 1, !noalias !873
   store i32 %.sroa.04.0.i, ptr %.sroa.07.0.i13, align 1, !noalias !873
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
-  %6 = trunc nuw i8 %.sroa.5.0.copyload to i1
-  br i1 %6, label %.cont16, label %.else17
-
-.else17:                                          ; preds = %.cont18
-  %.sroa.04.0.i.1.else.val = load i32, ptr %5, align 1, !noalias !873
-  br label %.cont16
-
-.cont16:                                          ; preds = %.cont18, %.else17
-  %.sroa.04.0.i.1 = phi i32 [ %.sroa.6.0.copyload, %.cont18 ], [ %.sroa.04.0.i.1.else.val, %.else17 ]
-  store i32 %.sroa.04.0.i.1, ptr %5, align 1, !noalias !873
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 8 ; 2 uses
-  %8 = trunc nuw i8 %.sroa.7.0.copyload to i1
-  br i1 %8, label %.cont14, label %.else15
-
-.else15:                                          ; preds = %.cont16
-  %.sroa.04.0.i.2.else.val = load i32, ptr %7, align 1, !noalias !873
-  br label %.cont14
-
-.cont14:                                          ; preds = %.cont16, %.else15
-  %.sroa.04.0.i.2 = phi i32 [ %.sroa.8.0.copyload, %.cont16 ], [ %.sroa.04.0.i.2.else.val, %.else15 ]
-  store i32 %.sroa.04.0.i.2, ptr %7, align 1, !noalias !873
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 12 ; 2 uses
-  %10 = trunc nuw i8 %.sroa.9.0.copyload to i1
-  br i1 %10, label %.cont, label %.else
-
-.else:                                            ; preds = %.cont14
-  %.sroa.04.0.i.3.else.val = load i32, ptr %9, align 1, !noalias !873
-  br label %.cont
-
-.cont:                                            ; preds = %.cont14, %.else
-  %.sroa.04.0.i.3 = phi i32 [ %.sroa.10.0.copyload, %.cont14 ], [ %.sroa.04.0.i.3.else.val, %.else ]
-  store i32 %.sroa.04.0.i.3, ptr %9, align 1, !noalias !873
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
+  %7 = trunc nuw i8 %.sroa.5.0.copyload to i1
+  %.sroa.04.0.in.i.1 = select i1 %7, ptr %.sroa.6, ptr %6
+  %.sroa.04.0.i.1 = load i32, ptr %.sroa.04.0.in.i.1, align 1, !noalias !873
+  store i32 %.sroa.04.0.i.1, ptr %6, align 1, !noalias !873
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 8 ; 2 uses
+  %9 = trunc nuw i8 %.sroa.7.0.copyload to i1
+  %.sroa.04.0.in.i.2 = select i1 %9, ptr %.sroa.8, ptr %8
+  %.sroa.04.0.i.2 = load i32, ptr %.sroa.04.0.in.i.2, align 1, !noalias !873
+  store i32 %.sroa.04.0.i.2, ptr %8, align 1, !noalias !873
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 12 ; 2 uses
+  %i.p = trunc nuw i8 %.sroa.9.0.copyload to i1
+  %.sroa.04.0.in.i.3 = select i1 %i.p, ptr %.sroa.10, ptr %10
+  %.sroa.04.0.i.3 = load i32, ptr %.sroa.04.0.in.i.3, align 1, !noalias !873
+  store i32 %.sroa.04.0.i.3, ptr %10, align 1, !noalias !873
   %11 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 16 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
   %12 = icmp eq ptr %11, %i.i
   br i1 %12, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj4_KBU_EB4_.exit, label %bb.c
 
-_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj4_KBU_EB4_.exit: ; preds = %.cont, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
+_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj4_KBU_EB4_.exit: ; preds = %bb.c, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !863
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   ret void
@@ -949,6 +925,10 @@ bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [12 x i8], align 1                ; 11 uses
   %i.c = alloca [32 x i8], align 8                ; 6 uses
+  %.sroa.4 = alloca [2 x i8], align 2             ; 4 uses
+  %.sroa.6 = alloca [2 x i8], align 2             ; 4 uses
+  %.sroa.8 = alloca [2 x i8], align 2             ; 4 uses
+  %.sroa.10 = alloca [2 x i8], align 2            ; 4 uses
   %i.d = alloca [64 x i8], align 8                ; 7 uses
   %i.e = alloca [64 x i8], align 8                ; 5 uses
   %i.f = alloca [64 x i8], align 8                ; 4 uses
@@ -999,8 +979,12 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj4_NtNtB4_5array17TryFromSlice
   %i.o = insertelement <2 x ptr> %i.n, ptr %i.l, i64 1
   br label %bb.c
 
-bb.c:                                             ; preds = %.lr.ph, %.cont
-  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %11, %.cont ] ; 6 uses
+bb.c:                                             ; preds = %.lr.ph, %bb.c
+  %.sroa.07.0.i13 = phi ptr [ %0, %.lr.ph ], [ %11, %bb.c ] ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.8)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.10)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !901
   store ptr %i.d, ptr %i.c, align 8, !alias.scope !906, !noalias !909
   store <2 x ptr> %i.o, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !906, !noalias !909
@@ -1009,62 +993,46 @@ bb.c:                                             ; preds = %.lr.ph, %.cont
   call void @_RINvMsm_NtCsj6eKBz9Db1c_4core5arrayAQINtNtNtNtB8_4iter8adapters6copied6CopiedINtNtNtB8_5slice4iter4IterAhj2_EEj4_7try_mapINtNtNtB8_3ops9try_trait17NeverShortCircuitINtNtB8_6option6OptionB1D_EENCINvMB1Y_B1V_10wrap_mut_1By_NvYBz_NtNtNtBG_6traits8iterator8Iterator4nextE0ECsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([12 x i8]) align 1 captures(address) dereferenceable(12) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.c), !noalias !911
   %.sroa.0.0.copyload = load i8, ptr %i.b, align 1, !noalias !901
   %.sroa.4.0.copyload = load i16, ptr %.sroa.4.0..sroa_idx, align 1, !noalias !901
+  store i16 %.sroa.4.0.copyload, ptr %.sroa.4, align 2, !noalias !901
   %.sroa.5.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 1, !noalias !901
   %.sroa.6.0.copyload = load i16, ptr %.sroa.6.0..sroa_idx, align 1, !noalias !901
+  store i16 %.sroa.6.0.copyload, ptr %.sroa.6, align 2, !noalias !901
   %.sroa.7.0.copyload = load i8, ptr %.sroa.7.0..sroa_idx, align 1, !noalias !901
   %.sroa.8.0.copyload = load i16, ptr %.sroa.8.0..sroa_idx, align 1, !noalias !901
+  store i16 %.sroa.8.0.copyload, ptr %.sroa.8, align 2, !noalias !901
   %.sroa.9.0.copyload = load i8, ptr %.sroa.9.0..sroa_idx, align 1, !noalias !901
   %.sroa.10.0.copyload = load i16, ptr %.sroa.10.0..sroa_idx, align 1, !noalias !901
+  store i16 %.sroa.10.0.copyload, ptr %.sroa.10, align 2, !noalias !901
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !901
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !901
-  %i.p = trunc nuw i8 %.sroa.0.0.copyload to i1
-  br i1 %i.p, label %.cont18, label %.else19
-
-.else19:                                          ; preds = %bb.c
-  %.sroa.04.0.i.else.val = load i16, ptr %.sroa.07.0.i13, align 1, !noalias !911
-  br label %.cont18
-
-.cont18:                                          ; preds = %bb.c, %.else19
-  %.sroa.04.0.i = phi i16 [ %.sroa.4.0.copyload, %bb.c ], [ %.sroa.04.0.i.else.val, %.else19 ]
+  %5 = trunc nuw i8 %.sroa.0.0.copyload to i1
+  %.sroa.04.0.in.i = select i1 %5, ptr %.sroa.4, ptr %.sroa.07.0.i13
+  %.sroa.04.0.i = load i16, ptr %.sroa.04.0.in.i, align 1, !noalias !911
   store i16 %.sroa.04.0.i, ptr %.sroa.07.0.i13, align 1, !noalias !911
-  %5 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 2 ; 2 uses
-  %6 = trunc nuw i8 %.sroa.5.0.copyload to i1
-  br i1 %6, label %.cont16, label %.else17
-
-.else17:                                          ; preds = %.cont18
-  %.sroa.04.0.i.1.else.val = load i16, ptr %5, align 1, !noalias !911
-  br label %.cont16
-
-.cont16:                                          ; preds = %.cont18, %.else17
-  %.sroa.04.0.i.1 = phi i16 [ %.sroa.6.0.copyload, %.cont18 ], [ %.sroa.04.0.i.1.else.val, %.else17 ]
-  store i16 %.sroa.04.0.i.1, ptr %5, align 1, !noalias !911
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
-  %8 = trunc nuw i8 %.sroa.7.0.copyload to i1
-  br i1 %8, label %.cont14, label %.else15
-
-.else15:                                          ; preds = %.cont16
-  %.sroa.04.0.i.2.else.val = load i16, ptr %7, align 1, !noalias !911
-  br label %.cont14
-
-.cont14:                                          ; preds = %.cont16, %.else15
-  %.sroa.04.0.i.2 = phi i16 [ %.sroa.8.0.copyload, %.cont16 ], [ %.sroa.04.0.i.2.else.val, %.else15 ]
-  store i16 %.sroa.04.0.i.2, ptr %7, align 1, !noalias !911
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 6 ; 2 uses
-  %10 = trunc nuw i8 %.sroa.9.0.copyload to i1
-  br i1 %10, label %.cont, label %.else
-
-.else:                                            ; preds = %.cont14
-  %.sroa.04.0.i.3.else.val = load i16, ptr %9, align 1, !noalias !911
-  br label %.cont
-
-.cont:                                            ; preds = %.cont14, %.else
-  %.sroa.04.0.i.3 = phi i16 [ %.sroa.10.0.copyload, %.cont14 ], [ %.sroa.04.0.i.3.else.val, %.else ]
-  store i16 %.sroa.04.0.i.3, ptr %9, align 1, !noalias !911
+  %6 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 2 ; 2 uses
+  %7 = trunc nuw i8 %.sroa.5.0.copyload to i1
+  %.sroa.04.0.in.i.1 = select i1 %7, ptr %.sroa.6, ptr %6
+  %.sroa.04.0.i.1 = load i16, ptr %.sroa.04.0.in.i.1, align 1, !noalias !911
+  store i16 %.sroa.04.0.i.1, ptr %6, align 1, !noalias !911
+  %8 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 4 ; 2 uses
+  %9 = trunc nuw i8 %.sroa.7.0.copyload to i1
+  %.sroa.04.0.in.i.2 = select i1 %9, ptr %.sroa.8, ptr %8
+  %.sroa.04.0.i.2 = load i16, ptr %.sroa.04.0.in.i.2, align 1, !noalias !911
+  store i16 %.sroa.04.0.i.2, ptr %8, align 1, !noalias !911
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 6 ; 2 uses
+  %i.p = trunc nuw i8 %.sroa.9.0.copyload to i1
+  %.sroa.04.0.in.i.3 = select i1 %i.p, ptr %.sroa.10, ptr %10
+  %.sroa.04.0.i.3 = load i16, ptr %.sroa.04.0.in.i.3, align 1, !noalias !911
+  store i16 %.sroa.04.0.i.3, ptr %10, align 1, !noalias !911
   %11 = getelementptr inbounds nuw i8, ptr %.sroa.07.0.i13, i64 8 ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10)
   %12 = icmp eq ptr %11, %i.i
   br i1 %12, label %_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj4_Kj2_EB4_.exit, label %bb.c
 
-_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj4_Kj2_EB4_.exit: ; preds = %.cont, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
+_RINvNtCsa5QsYiPB8Gl_5image5utils23interleave_planes_innerKj4_Kj2_EB4_.exit: ; preds = %bb.c, %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultARShj4_NtNtB4_5array17TryFromSliceErrorE6unwrapCsa5QsYiPB8Gl_5image.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !901
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   ret void

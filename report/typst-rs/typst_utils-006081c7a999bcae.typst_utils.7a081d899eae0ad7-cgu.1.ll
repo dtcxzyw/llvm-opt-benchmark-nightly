@@ -204,11 +204,9 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_RNCNvNtCsatzsiS36G5T_11typst_utils4pico8INTERNER0B5_(ptr nofree writeonly sret([72 x i8]) align 8 captures(none) initializes((0, 9), (16, 72)) %0, ptr nofree readnone captures(none) %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
-  store i64 0, ptr %0, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.a, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 0, ptr %2, align 8
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %0, i8 0, i64 9, i1 false)
+  store i64 0, ptr %i.a, align 8
   %.sroa.45.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.45.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -611,11 +609,9 @@ define void @_RNvMs8_NtNtNtCsaL1QbXo9JQH_3std4sync6poison6rwlockINtB5_6RwLockNtN
 bb.a:
   %i.a = alloca [56 x i8], align 8                ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.a, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
-  store i64 0, ptr %0, align 8
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.b, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(56) %i.a, i64 56, i1 false)
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %0, i8 0, i64 9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.b, ptr noundef nonnull align 8 dereferenceable(56) %i.a, i64 56, i1 false)
   ret void
 }
 

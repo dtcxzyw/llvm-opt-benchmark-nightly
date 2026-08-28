@@ -204,8 +204,8 @@ bb.a:
   %i.f = alloca [8 x i8], align 8                 ; 4 uses
   %i.g = alloca [128 x i8], align 8               ; 7 uses
   %i.h = alloca [24 x i8], align 8                ; 4 uses
-  %i.i = alloca [48 x i8], align 8                ; 6 uses
-  %i.j = alloca [40 x i8], align 8                ; 7 uses
+  %i.i = alloca [48 x i8], align 8                ; 5 uses
+  %i.j = alloca [40 x i8], align 8                ; 6 uses
   %i.k = alloca [112 x i8], align 8               ; 6 uses
   %i.l = alloca [8 x i8], align 8                 ; 6 uses
   %i.m = alloca [24 x i8], align 8                ; 10 uses
@@ -249,19 +249,15 @@ bb.d:                                             ; preds = %_RINvMNtNtCs56aZGHL
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  store i64 0, ptr %i.j, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store i8 0, ptr %2, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 16 ; 2 uses
   store ptr null, ptr %i.w, align 8
   %.sroa.510.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   store i64 0, ptr %.sroa.510.0..sroa_idx, align 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.j, i8 0, i64 9, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
-  store i64 0, ptr %i.i, align 8
-  %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store i8 0, ptr %i.x, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) @8, i64 32, i1 false)
+  %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %i.i, i8 0, i64 9, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.x, ptr noundef nonnull align 8 dereferenceable(32) @8, i64 32, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   invoke void @_RNvXsa_NtCscdodAO9FK5_5alloc3vecINtB5_3VechENtNtCs4NRVxsYgnAr_4core5clone5Clone5cloneCsjNOSlFB5dgD_7ty_wasm(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.m)
           to label %bb.g unwind label %bb.f
@@ -272,7 +268,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.d
   %i.y = landingpad { ptr, i32 }
           cleanup
-  invoke void @_RNvXsg_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path20SystemVirtualPathBufNtNtBT_9memory_fs4FileEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNOSlFB5dgD_7ty_wasm(ptr noalias noundef nonnull align 8 dereferenceable(32) %3)
+  invoke void @_RNvXsg_NtCsgQfI1edjipl_9hashbrown3rawINtB5_8RawTableTNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path20SystemVirtualPathBufNtNtBT_9memory_fs4FileEENtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4dropCsjNOSlFB5dgD_7ty_wasm(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.x)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtNtCs2AWtUsOyxgP_3std4sync6poison6rwlock6RwLockINtNtNtNtBK_11collections4hash3map7HashMapNtNtNtCs56aZGHL6Dc6_7ruff_db6system4path20SystemVirtualPathBufNtNtB2c_9memory_fs4FileNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherEEECsjNOSlFB5dgD_7ty_wasm.exit unwind label %bb.al
 
 bb.g:                                             ; preds = %bb.d

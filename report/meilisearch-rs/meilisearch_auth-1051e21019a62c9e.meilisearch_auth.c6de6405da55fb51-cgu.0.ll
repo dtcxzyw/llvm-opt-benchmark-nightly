@@ -205,29 +205,25 @@ bb.d:                                             ; preds = %bb.c
   %i.o = icmp ugt i32 %i.k, 999999999
   br i1 %i.o, label %bb.e, label %_ZN4time4time4Time13from_hms_nano17h1d19fffb3214f07cE.exit, !prof !282
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %.sroa.0.sroa.13.0.ph.in.in = phi i64 [ ptrtoint (ptr @269 to i64), %bb.c ], [ ptrtoint (ptr @270 to i64), %bb.b ], [ ptrtoint (ptr @271 to i64), %bb.a ], [ ptrtoint (ptr @265 to i64), %bb.d ]
-  %.sroa.0.sroa.0.0.ph = phi i32 [ ptrtoint (ptr @269 to i32), %bb.c ], [ ptrtoint (ptr @270 to i32), %bb.b ], [ ptrtoint (ptr @271 to i32), %bb.a ], [ ptrtoint (ptr @265 to i32), %bb.d ]
-  %.sroa.14.0.ph = phi i64 [ 6, %bb.c ], [ 6, %bb.b ], [ 4, %bb.a ], [ 10, %bb.d ]
-  %.sroa.0.sroa.10.0.insert.insert15 = and i64 %.sroa.0.sroa.13.0.ph.in.in, -4294967296
-  %.sroa.0.sroa.0.0.insert.ext3 = zext i32 %.sroa.0.sroa.0.0.ph to i64
-  %.sroa.0.sroa.0.0.insert.insert5 = or disjoint i64 %.sroa.0.sroa.10.0.insert.insert15, %.sroa.0.sroa.0.0.insert.ext3
-  store i64 %.sroa.0.sroa.0.0.insert.insert5, ptr %0, align 8
+bb.e:                                             ; preds = %bb.b, %bb.c, %bb.a, %bb.d
+  %.sroa.0.sroa.13.0.ph.in.in = phi i64 [ ptrtoint (ptr @265 to i64), %bb.d ], [ ptrtoint (ptr @269 to i64), %bb.c ], [ ptrtoint (ptr @270 to i64), %bb.b ], [ ptrtoint (ptr @271 to i64), %bb.a ]
+  %.sroa.14.0.ph = phi i64 [ 10, %bb.d ], [ 6, %bb.c ], [ 6, %bb.b ], [ 4, %bb.a ]
+  store i64 %.sroa.0.sroa.13.0.ph.in.in, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.14.0.ph, ptr %.sroa.4.0..sroa_idx, align 8
   br label %bb.f
 
 _ZN4time4time4Time13from_hms_nano17h1d19fffb3214f07cE.exit: ; preds = %bb.d
-  %.sroa.0.sroa.12.0.insert.ext = zext nneg i8 %i.b to i64
-  %.sroa.0.sroa.12.0.insert.shift = shl nuw nsw i64 %.sroa.0.sroa.12.0.insert.ext, 48
+  %.sroa.0.sroa.0.0.insert.ext = zext nneg i32 %i.k to i64
+  %.sroa.0.sroa.12.0.insert.ext = zext nneg i8 %i.h to i64
+  %.sroa.0.sroa.12.0.insert.shift = shl nuw nsw i64 %.sroa.0.sroa.12.0.insert.ext, 32
   %.sroa.0.sroa.11.0.insert.ext = zext nneg i8 %i.e to i64
   %.sroa.0.sroa.11.0.insert.shift = shl nuw nsw i64 %.sroa.0.sroa.11.0.insert.ext, 40
-  %.sroa.0.sroa.11.0.insert.insert = or disjoint i64 %.sroa.0.sroa.11.0.insert.shift, %.sroa.0.sroa.12.0.insert.shift
-  %.sroa.0.sroa.10.0.insert.ext = zext nneg i8 %i.h to i64
-  %.sroa.0.sroa.10.0.insert.shift = shl nuw nsw i64 %.sroa.0.sroa.10.0.insert.ext, 32
-  %.sroa.0.sroa.10.0.insert.insert = or disjoint i64 %.sroa.0.sroa.11.0.insert.insert, %.sroa.0.sroa.10.0.insert.shift
-  %.sroa.0.sroa.0.0.insert.ext = zext nneg i32 %i.k to i64
-  %.sroa.0.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.sroa.10.0.insert.insert, %.sroa.0.sroa.0.0.insert.ext
+  %.sroa.0.sroa.10.0.insert.ext = zext nneg i8 %i.b to i64
+  %.sroa.0.sroa.10.0.insert.shift = shl nuw nsw i64 %.sroa.0.sroa.10.0.insert.ext, 48
+  %.sroa.0.sroa.10.0.insert.insert = or disjoint i64 %.sroa.0.sroa.11.0.insert.shift, %.sroa.0.sroa.10.0.insert.shift
+  %.sroa.0.sroa.0.5.insert.insert = or disjoint i64 %.sroa.0.sroa.10.0.insert.insert, %.sroa.0.sroa.12.0.insert.shift
+  %.sroa.0.sroa.0.0.insert.insert = or disjoint i64 %.sroa.0.sroa.0.5.insert.insert, %.sroa.0.sroa.0.0.insert.ext
   store i64 %.sroa.0.sroa.0.0.insert.insert, ptr %0, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %2, ptr %.sroa.5.0..sroa_idx, align 8
@@ -630,7 +626,9 @@ bb.aw:                                            ; preds = %bb.au
   br i1 %i.fq, label %bb.az, label %bb.bb
 
 bb.ax:                                            ; preds = %bb.av
-  %.sroa.01.sroa.12.0.extract.shift12.i.i.i.i.i.i.i = lshr i64 ptrtoint (ptr @260 to i64), 32
+  %.sroa.0.sroa.2.0.insert.insert.i.i.i.i.i.i.i.i.i = and i64 ptrtoint (ptr @260 to i64), -4294967296
+  %.sroa.0.sroa.0.0.insert.ext.i.i.i.i.i.i.i.i.i = zext i32 ptrtoint (ptr @260 to i32) to i64
+  %.sroa.0.sroa.0.0.insert.insert.i.i.i.i.i.i.i.i.i = or disjoint i64 %.sroa.0.sroa.2.0.insert.insert.i.i.i.i.i.i.i.i.i, %.sroa.0.sroa.0.0.insert.ext.i.i.i.i.i.i.i.i.i
   br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.ay:                                            ; preds = %bb.av
@@ -687,21 +685,26 @@ bb.ay:                                            ; preds = %bb.av
   %i.hj = urem i32 %.lhs.trunc.i.i.i.i.i.i.i.i.i.i, 60
   %i.hk = icmp ult i64 %spec.select.i.i.i.i.i.i.i.i.i.i.i, 86400
   call void @llvm.assume(i1 %i.hk), !noalias !8957
+  %.sroa.0.sroa.2.0.extract.trunc21.i.i.i.i.i.i.i.i.i = zext nneg i32 %i.hj to i64
+  %.sroa.0.sroa.3.0.extract.trunc23.i.i.i.i.i.i.i.i.i = zext nneg i16 %i.hi to i64
+  %.sroa.0.sroa.4.0.extract.trunc25.i.i.i.i.i.i.i.i.i = zext nneg i32 %i.hg to i64
   %i.hl = icmp slt i128 %.decomposed, 0
   %i.hm = add nsw i128 %.decomposed, 1000000000
-  %spec.select.i.i.i.i.i.i.i.i.i.i = select i1 %i.hl, i128 %i.hm, i128 %.decomposed
-  %i.hn = trunc nuw nsw i128 %spec.select.i.i.i.i.i.i.i.i.i.i to i32 ; 2 uses
+  %spec.select.i.i.i.i.i.i.i.i.i.i = select i1 %i.hl, i128 %i.hm, i128 %.decomposed ; 2 uses
+  %i.hn = trunc nuw nsw i128 %spec.select.i.i.i.i.i.i.i.i.i.i to i32
   %i.ho = icmp samesign ult i32 %i.hn, 1000000000
   call void @llvm.assume(i1 %i.ho), !noalias !8957
-  %3 = shl nuw nsw i32 %i.hg, 16
-  %4 = shl nuw nsw i16 %i.hi, 8
-  %5 = zext nneg i16 %4 to i32
-  %.sroa.3.0.insert.insert.i.i.i155.i.i.i.i.i.i.i = or disjoint i32 %3, %5
-  %.sroa.2.0.insert.insert.i.i.i156.i.i.i.i.i.i.i = or disjoint i32 %.sroa.3.0.insert.insert.i.i.i155.i.i.i.i.i.i.i, %i.hj
+  %.sroa.4.0.insert.shift.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.0.sroa.4.0.extract.trunc25.i.i.i.i.i.i.i.i.i, 48
+  %.sroa.3.0.insert.shift.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.0.sroa.3.0.extract.trunc23.i.i.i.i.i.i.i.i.i, 40
+  %.sroa.3.0.insert.insert.i.i.i.i.i.i.i.i.i.i = or disjoint i64 %.sroa.3.0.insert.shift.i.i.i.i.i.i.i.i.i.i, %.sroa.4.0.insert.shift.i.i.i.i.i.i.i.i.i.i
+  %.sroa.2.0.insert.shift.i.i.i.i.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.0.sroa.2.0.extract.trunc21.i.i.i.i.i.i.i.i.i, 32
+  %.sroa.2.0.insert.insert.i.i.i.i.i.i.i.i.i.i = or disjoint i64 %.sroa.3.0.insert.insert.i.i.i.i.i.i.i.i.i.i, %.sroa.2.0.insert.shift.i.i.i.i.i.i.i.i.i.i
+  %3 = trunc nuw nsw i128 %spec.select.i.i.i.i.i.i.i.i.i.i to i64
   %i.hp = icmp eq i32 %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i, -1
-  %.sroa.6255.0.i.i.i.i.i.i.i.i.a = zext i32 %i.hc to i64
-  %.sroa.01.sroa.0.0.extract.trunc.i.i.i.i.i.i.i = select i1 %i.hp, i32 %i.hn, i32 %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i
-  %i.hq = zext nneg i32 %.sroa.2.0.insert.insert.i.i.i156.i.i.i.i.i.i.i to i64
+  %.sroa.6255.0.i.i.i.i.i.i.i.i.a = zext nneg i32 %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i to i64
+  %spec.select371.i.i.i.i.i.i.i.i = select i1 %i.hp, i64 %3, i64 %.sroa.6255.0.i.i.i.i.i.i.i.i.a
+  %.sroa.0252.0.i.i.i.i.i.i.i.i = or disjoint i64 %.sroa.2.0.insert.insert.i.i.i.i.i.i.i.i.i.i, %spec.select371.i.i.i.i.i.i.i.i
+  %i.hq = zext i32 %i.hc to i64
   br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i
 
 bb.az:                                            ; preds = %bb.aw
@@ -712,12 +715,12 @@ bb.ba:                                            ; preds = %bb.az
   %i.hr = icmp ult i8 %.sroa.22.0.copyload66.i.i.i.i.i.i.i.i, 61
   call void @llvm.assume(i1 %i.hr), !noalias !8957
   %i.hs = icmp eq i8 %.sroa.22.0.copyload66.i.i.i.i.i.i.i.i, 60
-  br i1 %i.hs, label %bb.cn, label %bb.bb
+  br i1 %i.hs, label %4, label %bb.bb
 
-bb.bb:                                            ; preds = %bb.cn, %bb.ba, %bb.az, %bb.aw
-  %.sroa.1957.0.i.i.i.i.i.i.i = phi i8 [ -1, %bb.az ], [ 59, %bb.cn ], [ %.sroa.22.0.copyload66.i.i.i.i.i.i.i.i, %bb.ba ], [ %.sroa.22.0.copyload66.i.i.i.i.i.i.i.i, %bb.aw ] ; 6 uses
-  %.sroa.4.0.i.i.i.i.i.i.i = phi i32 [ %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i, %bb.az ], [ 999999999, %bb.cn ], [ %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i, %bb.ba ], [ %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i, %bb.aw ] ; 4 uses
-  %.sroa.023.0.i.i.i.i.i.i.i.i = phi i1 [ false, %bb.az ], [ true, %bb.cn ], [ false, %bb.ba ], [ false, %bb.aw ]
+bb.bb:                                            ; preds = %4, %bb.ba, %bb.az, %bb.aw
+  %.sroa.1957.0.i.i.i.i.i.i.i = phi i8 [ -1, %bb.az ], [ 59, %4 ], [ %.sroa.22.0.copyload66.i.i.i.i.i.i.i.i, %bb.ba ], [ %.sroa.22.0.copyload66.i.i.i.i.i.i.i.i, %bb.aw ] ; 6 uses
+  %.sroa.4.0.i.i.i.i.i.i.i = phi i32 [ %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i, %bb.az ], [ 999999999, %4 ], [ %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i, %bb.ba ], [ %.sroa.9.0.copyload14.i.i.i.i.i.i.i.i, %bb.aw ] ; 4 uses
+  %.sroa.023.0.i.i.i.i.i.i.i.i = phi i1 [ false, %bb.az ], [ true, %4 ], [ false, %bb.ba ], [ false, %bb.aw ]
   %.not294.i.i.i.i.i.i.i.i.i = icmp ne i32 %.sroa.7.0.copyload6.i.i.i.i.i.i.i.i, -2147483648 ; 2 uses
   br i1 %.not294.i.i.i.i.i.i.i.i.i, label %bb.bc, label %.thread.i.i.i.i.i.i.i.i.i
 
@@ -820,7 +823,7 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bj
   %.sroa.0191.sroa.15.0.extract.shift.i.i.i.i.i.i.i.i = lshr i64 ptrtoint (ptr @266 to i64), 32
-  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
+  br label %bb.cn
 
 bb.bl:                                            ; preds = %bb.bj, %bb.bi
   %i.iu = shl nsw i32 %i.ic, 10
@@ -875,7 +878,7 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bn
   %i.jj = ptrtoint ptr %.sroa.0370.0.ph.i.i.i.i.i.i.i.i.i to i64 ; 2 uses
   %.sroa.0191.sroa.0.0.extract.trunc.i.i.i.i.i.i.i.i = trunc i64 %i.jj to i32
   %.sroa.0191.sroa.15.0.extract.shift197.i.i.i.i.i.i.i.i = lshr i64 %i.jj, 32
-  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
+  br label %bb.cn
 
 bb.br:                                            ; preds = %bb.bp, %bb.bo
   %i.jk = zext nneg i8 %.sroa.26.0.copyload82.i.i.i.i.i.i.i.i to i64
@@ -946,7 +949,7 @@ bb.bx:                                            ; preds = %.noexc33.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !8967
   %i.kd = zext i32 %.sroa.0191.sroa.15.4.copyload203.i.i.i.i.i.i.i.i to i64
   %i.ke = zext i24 %.sroa.34.i.i.sroa.0.0.copyload.i.i.i.i.i.i to i32
-  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
+  br label %bb.cn
 
 bb.by:                                            ; preds = %.noexc33.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !8967
@@ -1023,7 +1026,7 @@ bb.ce:                                            ; preds = %bb.cd, %switch.look
   %i.lh = ptrtoint ptr %.sroa.0377.0.ph.i.i.i.i.i.i.i.i.i to i64 ; 2 uses
   %.sroa.0191.sroa.0.0.extract.trunc195.i.i.i.i.i.i.i.i = trunc i64 %i.lh to i32
   %.sroa.0191.sroa.15.0.extract.shift199.i.i.i.i.i.i.i.i = lshr i64 %i.lh, 32
-  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
+  br label %bb.cn
 
 bb.cf:                                            ; preds = %bb.cd, %bb.cc
   %i.li = select i1 %i.lf, i32 512, i32 0
@@ -1043,13 +1046,13 @@ bb.cg:                                            ; preds = %.thread456.i.i.i.i.
 
 bb.ch:                                            ; preds = %bb.cg, %.thread456.i.i.i.i.i.i.i.i.i
   %.not312.i.i.i.i.i.i.i.i.i = icmp eq i8 %.sroa.16.0.copyload42.i.i.i.i.i.i.i.i, -1
-  br i1 %.not312.i.i.i.i.i.i.i.i.i, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %bb.ci
+  br i1 %.not312.i.i.i.i.i.i.i.i.i, label %bb.cn, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
   %i.lp = icmp ult i8 %.sroa.16.0.copyload42.i.i.i.i.i.i.i.i, 54
   call void @llvm.assume(i1 %i.lp), !noalias !8957
   %or.cond338.i.i.i.i.i.i.i.i.i = or i1 %.not301.i.i.i.i.i.i.i.i.i, %.not308450.i.i.i.i.i.i.i.i.i
-  br i1 %or.cond338.i.i.i.i.i.i.i.i.i, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %switch.lookup206
+  br i1 %or.cond338.i.i.i.i.i.i.i.i.i, label %bb.cn, label %switch.lookup206
 
 switch.lookup206:                                 ; preds = %bb.ci
   %i.lq = zext nneg i8 %.sroa.16.0.copyload42.i.i.i.i.i.i.i.i to i16
@@ -1099,7 +1102,7 @@ bb.cl:                                            ; preds = %bb.ck, %switch.look
   %i.mp = ptrtoint ptr %.sroa.0384.0.ph.i.i.i.i.i.i.i.i.i to i64 ; 2 uses
   %.sroa.0191.sroa.0.0.extract.trunc196.i.i.i.i.i.i.i.i = trunc i64 %i.mp to i32
   %.sroa.0191.sroa.15.0.extract.shift201.i.i.i.i.i.i.i.i = lshr i64 %i.mp, 32
-  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
+  br label %bb.cn
 
 bb.cm:                                            ; preds = %bb.ck, %bb.cj
   %i.mq = select i1 %i.mn, i32 512, i32 0
@@ -1110,8 +1113,21 @@ bb.cm:                                            ; preds = %bb.ck, %bb.cj
   call void @llvm.assume(i1 %i.mu), !noalias !8957
   br label %bb.co
 
-bb.cn:                                            ; preds = %bb.ba
+4:                                                ; preds = %bb.ba
   br label %bb.bb
+
+bb.cn:                                            ; preds = %bb.cl, %bb.ci, %bb.ch, %bb.ce, %bb.bx, %bb.bq, %bb.bk
+  %.sroa.34.i.i.sroa.5.1.i.i.i.i.i.i = phi i16 [ undef, %bb.ch ], [ undef, %bb.ci ], [ undef, %bb.cl ], [ undef, %bb.ce ], [ %.sroa.34.i.i.sroa.5.0.copyload.i.i.i.i.i.i, %bb.bx ], [ undef, %bb.bq ], [ undef, %bb.bk ]
+  %.sroa.34.i.i.sroa.4.1.i.i.i.i.i.i = phi i16 [ undef, %bb.ch ], [ undef, %bb.ci ], [ undef, %bb.cl ], [ undef, %bb.ce ], [ %.sroa.34.i.i.sroa.4.0.copyload.i.i.i.i.i.i, %bb.bx ], [ undef, %bb.bq ], [ undef, %bb.bk ]
+  %.sroa.34.i.i.sroa.0.1.i.i.i.i.i.i = phi i32 [ 0, %bb.ch ], [ 0, %bb.ci ], [ 0, %bb.cl ], [ 0, %bb.ce ], [ %i.ke, %bb.bx ], [ 0, %bb.bq ], [ 0, %bb.bk ]
+  %.sroa.0191.sroa.15.0.ph.i.i.i.i.i.i.i.i = phi i64 [ 0, %bb.ch ], [ 0, %bb.ci ], [ %.sroa.0191.sroa.15.0.extract.shift201.i.i.i.i.i.i.i.i, %bb.cl ], [ %.sroa.0191.sroa.15.0.extract.shift199.i.i.i.i.i.i.i.i, %bb.ce ], [ %i.kd, %bb.bx ], [ %.sroa.0191.sroa.15.0.extract.shift197.i.i.i.i.i.i.i.i, %bb.bq ], [ %.sroa.0191.sroa.15.0.extract.shift.i.i.i.i.i.i.i.i, %bb.bk ]
+  %.sroa.0191.sroa.0.0.ph.i.i.i.i.i.i.i.i = phi i32 [ undef, %bb.ch ], [ undef, %bb.ci ], [ %.sroa.0191.sroa.0.0.extract.trunc196.i.i.i.i.i.i.i.i, %bb.cl ], [ %.sroa.0191.sroa.0.0.extract.trunc195.i.i.i.i.i.i.i.i, %bb.ce ], [ %i.kc, %bb.bx ], [ %.sroa.0191.sroa.0.0.extract.trunc.i.i.i.i.i.i.i.i, %bb.bq ], [ ptrtoint (ptr @266 to i32), %bb.bk ]
+  %.sroa.21.0.ph.i.i.i.i.i.i.i.i = phi i8 [ 2, %bb.ch ], [ 2, %bb.ci ], [ %.sink.i363.ph.i.i.i.i.i.i.i.i.i, %bb.cl ], [ %.sink.i349.ph.i.i.i.i.i.i.i.i.i, %bb.ce ], [ %i.kb, %bb.bx ], [ %.sink.i342.ph.i.i.i.i.i.i.i.i.i, %bb.bq ], [ 1, %bb.bk ]
+  %.sroa.17.0.ph.i.i.i.i.i.i.i.i = phi i64 [ undef, %bb.ch ], [ undef, %bb.ci ], [ %.sroa.8385.0.ph.i.i.i.i.i.i.i.i.i, %bb.cl ], [ %.sroa.8378.0.ph.i.i.i.i.i.i.i.i.i, %bb.ce ], [ %.sroa.17.4.copyload193.i.i.i.i.i.i.i.i, %bb.bx ], [ %.sroa.8371.0.ph.i.i.i.i.i.i.i.i.i, %bb.bq ], [ 7, %bb.bk ]
+  %.sroa.01.sroa.0.0.insert.ext.i.i.i.i.i.i.i = zext i32 %.sroa.0191.sroa.0.0.ph.i.i.i.i.i.i.i.i to i64
+  %.sroa.01.sroa.0.4.insert.shift.i.i.i.i.i.i.i = shl nuw i64 %.sroa.0191.sroa.15.0.ph.i.i.i.i.i.i.i.i, 32
+  %.sroa.01.sroa.0.4.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.01.sroa.0.4.insert.shift.i.i.i.i.i.i.i, %.sroa.01.sroa.0.0.insert.ext.i.i.i.i.i.i.i
+  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.co:                                            ; preds = %bb.cm, %bb.cf, %bb.by, %bb.br, %bb.bl
   %.sroa.0191.sroa.0.0.i.i.i.i.i.i.i.i = phi i32 [ %i.kc, %bb.by ], [ %i.ju, %bb.br ], [ %i.mt, %bb.cm ], [ %i.iy, %bb.bl ], [ %i.ll, %bb.cf ] ; 5 uses
@@ -1138,7 +1154,7 @@ bb.cs:                                            ; preds = %bb.cr, %bb.cq
 bb.ct:                                            ; preds = %bb.cs
   %.not233.i.i.i.i.i.i.i.i.i = icmp eq i8 %.sroa.28.0.copyload90.i.i.i.i.i.i.i.i, 2
   %or.cond.i170.i.i.i.i.i.i.i.i = or i1 %.not.i168.i.i.i.i.i.i.i.i, %.not233.i.i.i.i.i.i.i.i.i
-  br i1 %or.cond.i170.i.i.i.i.i.i.i.i, label %6, label %.critedge.i171.i.i.i.i.i.i.i.i
+  br i1 %or.cond.i170.i.i.i.i.i.i.i.i, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %.critedge.i171.i.i.i.i.i.i.i.i
 
 .critedge.i171.i.i.i.i.i.i.i.i:                   ; preds = %bb.ct
   %i.mx = trunc nuw i8 %.sroa.28.0.copyload90.i.i.i.i.i.i.i.i to i1
@@ -1209,7 +1225,7 @@ bb.da:                                            ; preds = %bb.cz
 
 bb.db:                                            ; preds = %bb.cz
   %brmerge.i.i.i.i.i.i.i.i.i = or i1 %.not239.i.i.i.i.i.i.i.i.i, %.not244.i.i.i.i.i.i.i.i.i
-  br i1 %brmerge.i.i.i.i.i.i.i.i.i, label %6, label %bb.dc
+  br i1 %brmerge.i.i.i.i.i.i.i.i.i, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
   %.sroa.0294.6.insert.ext.i.i.i.i.i.i.i.i.i = zext nneg i8 %.sroa.0.0312358.i.i.i.i.i.i.i.i.i to i64
@@ -1221,7 +1237,7 @@ bb.dd:                                            ; preds = %bb.da
   br i1 %.not244.i.i.i.i.i.i.i.i.i, label %bb.dg, label %bb.dh
 
 bb.de:                                            ; preds = %bb.da
-  br i1 %.not244.i.i.i.i.i.i.i.i.i, label %6, label %bb.df
+  br i1 %.not244.i.i.i.i.i.i.i.i.i, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %bb.df
 
 bb.df:                                            ; preds = %bb.de
   %.sroa.0299.6.insert.ext.i.i.i.i.i.i.i.i.i = zext nneg i8 %.sroa.0.0312358.i.i.i.i.i.i.i.i.i to i64
@@ -1230,10 +1246,10 @@ bb.df:                                            ; preds = %bb.de
   br label %bb.dk
 
 bb.dg:                                            ; preds = %bb.dd
-  br i1 %i.nh, label %6, label %bb.dj, !prof !282
+  br i1 %i.nh, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %bb.dj, !prof !282
 
 bb.dh:                                            ; preds = %bb.dd
-  br i1 %i.nh, label %6, label %bb.di, !prof !282
+  br i1 %i.nh, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %bb.di, !prof !282
 
 bb.di:                                            ; preds = %bb.dh
   %.sroa.0302.4.insert.ext.i.i.i.i.i.i.i.i.i = zext nneg i8 %.sroa.1957.0.i.i.i.i.i.i.i to i64
@@ -1254,11 +1270,6 @@ bb.dj:                                            ; preds = %bb.dg
   %i.nk = or disjoint i64 %.sroa.0306.6.insert.shift.i.i.i.i.i.i.i.i.i, %i.nj
   %.sroa.0306.6.insert.insert.i.i.i.i.i.i.i.i.i = or i64 %i.nk, %.sroa.0306.5.insert.ext.i.i.i.i.i.i.i.i.i
   br label %bb.dk
-
-6:                                                ; preds = %bb.dh, %bb.dg, %bb.de, %bb.db, %bb.ct
-  %.sink365.i.i.i.i.i.i.i.i.i = phi i8 [ 2, %bb.de ], [ 0, %bb.dh ], [ 2, %bb.ct ], [ 0, %bb.dg ], [ 2, %bb.db ]
-  %.sroa.01.sroa.12.0.extract.shift16.i.i.i.i.i.i.i = lshr i64 ptrtoint (ptr @269 to i64), 32
-  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.dk:                                            ; preds = %bb.dj, %bb.di, %bb.df, %bb.dc, %bb.cu
   %.sroa.0214.0.ph.i.i.i.i.i.i.i.i = phi i64 [ %.sroa.0302.6.insert.insert.i.i.i.i.i.i.i.i.i, %bb.di ], [ %.sroa.0299.6.insert.insert.i.i.i.i.i.i.i.i.i, %bb.df ], [ %.sroa.0306.6.insert.insert.i.i.i.i.i.i.i.i.i, %bb.dj ], [ %.sroa.0294.6.insert.shift.i.i.i.i.i.i.i.i.i, %bb.dc ], [ %.sroa.0.6.insert.shift.i.i.i.i.i.i.i.i.i, %bb.cu ] ; 7 uses
@@ -1343,12 +1354,9 @@ bb.dt:                                            ; preds = %.thread51.i.i.i.i.i
   %.sroa.3.0.insert.ext.i.i.i.i.i.i.i.i.i.i.i = zext i8 %.sroa.23.0.copyload70.i.i.i.i.i.i.i.i to i64
   %.sroa.2.0.insert.ext.i.i.i.i.i.i.i.i.i.i.i = zext i8 %.sroa.0.1.i.i58.i.i.i.i.i.i.i.i.i to i64
   %.sroa.012.0.insert.ext.i.i.i.i.i.i.i.i.i.i.i = zext i8 %.sroa.06.0.i.i.i.i.i.i.i.i.i.i.i to i64
-  %.sroa.0332.0.extract.trunc.i.i.i.i.i.i.i.i = trunc i64 %.sroa.0214.0.ph.i.i.i.i.i.i.i.i to i32 ; 3 uses
   br i1 %.sroa.023.0.i.i.i.i.i.i.i.i, label %bb.du, label %._crit_edge.i.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i.i:                        ; preds = %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i, %bb.dt
-  %.sroa.01.sroa.0.0.extract.trunc6.pre-phi.i.i.i.i.i.i.i = phi i32 [ 999999999, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i ], [ %.sroa.0332.0.extract.trunc.i.i.i.i.i.i.i.i, %bb.dt ]
-  %.sroa.01.sroa.12.0.extract.shift14.i.i.i.i.i.i.i = lshr i64 %.sroa.0214.0.ph.i.i.i.i.i.i.i.i, 32
   %.sroa.13.8.insert.ext.i.i.i.i.i.i.i = zext i32 %.sroa.0191.sroa.0.0.i.i.i.i.i.i.i.i to i64
   %i.oi = shl nuw nsw i64 %.sroa.2.0.insert.ext.i.i.i.i.i.i.i.i.i.i.i, 40
   %i.oj = shl nuw nsw i64 %.sroa.3.0.insert.ext.i.i.i.i.i.i.i.i.i.i.i, 48
@@ -1359,10 +1367,11 @@ bb.dt:                                            ; preds = %.thread51.i.i.i.i.i
   br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i
 
 bb.du:                                            ; preds = %bb.dt
+  %.sroa.0332.0.extract.trunc.i.i.i.i.i.i.i.i = trunc i64 %.sroa.0214.0.ph.i.i.i.i.i.i.i.i to i32 ; 2 uses
   %i.om = icmp ult i32 %.sroa.0332.0.extract.trunc.i.i.i.i.i.i.i.i, 1000000000
   call void @llvm.assume(i1 %i.om), !noalias !8957
   %i.on = icmp eq i32 %.sroa.0332.0.extract.trunc.i.i.i.i.i.i.i.i, 999999999
-  br i1 %i.on, label %bb.dv, label %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i
+  br i1 %i.on, label %bb.dv, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.dv:                                            ; preds = %bb.du
   %i.oo = or i8 %.sroa.0.1.i.i58.i.i.i.i.i.i.i.i.i, %.sroa.23.0.copyload70.i.i.i.i.i.i.i.i
@@ -1504,7 +1513,7 @@ _ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.
   %.sroa.611.13.extract.trunc.i.i.i.i.i.i.i.i.i = trunc i64 %.sroa.611.13.extract.shift.i.i.i.i.i.i.i.i.i to i8 ; 2 uses
   %i.qg = add nsw i32 %.sroa.06.0.sink.i.i.i.i.i.i.i.i.i.i, -10000
   %or.cond.i.i182.i.i.i.i.i.i.i.i = icmp ult i32 %i.qg, -19999
-  br i1 %or.cond.i.i182.i.i.i.i.i.i.i.i, label %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i, label %bb.eo, !prof !282
+  br i1 %or.cond.i.i182.i.i.i.i.i.i.i.i, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i, label %bb.eo, !prof !282
 
 bb.eo:                                            ; preds = %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i
   %.sroa.010.0.i.i183.i.i.i.i.i.i.i.i = call i32 @llvm.abs.i32(i32 %.sroa.06.0.sink.i.i.i.i.i.i.i.i.i.i, i1 true) ; 2 uses
@@ -1518,7 +1527,7 @@ bb.eo:                                            ; preds = %_ZN4time16offset_da
 bb.ep:                                            ; preds = %bb.eo
   %i.ql = icmp eq i16 %.sroa.011.0.sink.i.i.i.i.i.i.i.i.i.i, 366
   %brmerge.not.i.i.i.i.i.i.i.i.i.i = and i1 %i.ql, %i.qj
-  br i1 %brmerge.not.i.i.i.i.i.i.i.i.i.i, label %bb.eq, label %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i
+  br i1 %brmerge.not.i.i.i.i.i.i.i.i.i.i, label %bb.eq, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.eq:                                            ; preds = %bb.ep, %bb.eo
   %i.qm = shl nsw i32 %.sroa.06.0.sink.i.i.i.i.i.i.i.i.i.i, 10
@@ -1532,19 +1541,19 @@ bb.eq:                                            ; preds = %bb.ep, %bb.eo
   call void @llvm.assume(i1 %i.qs), !noalias !8957
   %.sroa.611.14.extract.shift.i.mask.i.i.i.i.i.i.i.i = and i64 %.sroa.0.0.insert.insert.i.sink.i.i.i.i.i.i.i.i.i.i, 8725724278030336
   %i.qt = icmp eq i64 %.sroa.611.14.extract.shift.i.mask.i.i.i.i.i.i.i.i, 6473924464345088
-  br i1 %i.qt, label %bb.er, label %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i
+  br i1 %i.qt, label %bb.er, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.er:                                            ; preds = %bb.eq
   %i.qu = icmp ult i8 %.sroa.611.13.extract.trunc.i.i.i.i.i.i.i.i.i, 60
   call void @llvm.assume(i1 %i.qu), !noalias !8957
   %i.qv = icmp eq i8 %.sroa.611.13.extract.trunc.i.i.i.i.i.i.i.i.i, 59
-  br i1 %i.qv, label %bb.es, label %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i
+  br i1 %i.qv, label %bb.es, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.es:                                            ; preds = %bb.er
   %i.qw = icmp ult i8 %.sroa.611.12.extract.trunc.i.i.i.i.i.i.i.i.i, 60
   call void @llvm.assume(i1 %i.qw), !noalias !8957
   %i.qx = icmp eq i8 %.sroa.611.12.extract.trunc.i.i.i.i.i.i.i.i.i, 59
-  br i1 %i.qx, label %bb.et, label %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i
+  br i1 %i.qx, label %bb.et, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
 bb.et:                                            ; preds = %bb.es
   %i.qy = lshr i32 %i.qq, 9
@@ -1586,35 +1595,23 @@ bb.ev:                                            ; preds = %bb.et
 _ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i: ; preds = %bb.ev, %bb.eu
   %.sroa.01.0.i.i.i.i.i.i.i.i.i = phi i8 [ %i.rs, %bb.ev ], [ %..i.i.i.i.i.i.i.i.i, %bb.eu ]
   %i.rt = icmp eq i8 %.sroa.01.0.i.i.i.i.i.i.i.i.i, %i.ri
-  br i1 %i.rt, label %._crit_edge.i.i.i.i.i.i.i, label %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i
+  br i1 %i.rt, label %._crit_edge.i.i.i.i.i.i.i, label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
 
-_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i: ; preds = %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i, %bb.es, %bb.er, %bb.eq, %bb.ep, %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i, %bb.du
-  %.sroa.01.sroa.12.0.extract.shift.i.i.i.i.i.i.i = lshr i64 ptrtoint (ptr @269 to i64), 32
-  br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i
-
-_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i: ; preds = %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i, %bb.dk, %6, %bb.cl, %bb.ci, %bb.ch, %bb.ce, %bb.bx, %bb.bq, %bb.bk, %bb.ax
-  %.sroa.34.i.i.sroa.5.0.i.i.i.i.i.i = phi i16 [ undef, %bb.ch ], [ undef, %bb.ci ], [ undef, %bb.cl ], [ undef, %6 ], [ undef, %bb.dk ], [ undef, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i ], [ undef, %bb.ce ], [ %.sroa.34.i.i.sroa.5.0.copyload.i.i.i.i.i.i, %bb.bx ], [ undef, %bb.bq ], [ undef, %bb.bk ], [ undef, %bb.ax ]
-  %.sroa.34.i.i.sroa.4.0.i.i.i.i.i.i = phi i16 [ undef, %bb.ch ], [ undef, %bb.ci ], [ undef, %bb.cl ], [ undef, %6 ], [ undef, %bb.dk ], [ undef, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i ], [ undef, %bb.ce ], [ %.sroa.34.i.i.sroa.4.0.copyload.i.i.i.i.i.i, %bb.bx ], [ undef, %bb.bq ], [ undef, %bb.bk ], [ undef, %bb.ax ]
-  %.sroa.34.i.i.sroa.0.0.i.i.i.i.i.i = phi i32 [ 0, %bb.ch ], [ 0, %bb.ci ], [ 0, %bb.cl ], [ 0, %6 ], [ 0, %bb.dk ], [ 0, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i ], [ 0, %bb.ce ], [ %i.ke, %bb.bx ], [ 0, %bb.bq ], [ 0, %bb.bk ], [ 0, %bb.ax ]
-  %.sroa.01.sroa.12.0.ph.i.i.i.i.i.i.i = phi i64 [ 0, %bb.ch ], [ 0, %bb.ci ], [ %.sroa.0191.sroa.15.0.extract.shift201.i.i.i.i.i.i.i.i, %bb.cl ], [ %.sroa.01.sroa.12.0.extract.shift16.i.i.i.i.i.i.i, %6 ], [ 0, %bb.dk ], [ %.sroa.01.sroa.12.0.extract.shift.i.i.i.i.i.i.i, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i ], [ %.sroa.0191.sroa.15.0.extract.shift199.i.i.i.i.i.i.i.i, %bb.ce ], [ %i.kd, %bb.bx ], [ %.sroa.0191.sroa.15.0.extract.shift197.i.i.i.i.i.i.i.i, %bb.bq ], [ %.sroa.0191.sroa.15.0.extract.shift.i.i.i.i.i.i.i.i, %bb.bk ], [ %.sroa.01.sroa.12.0.extract.shift12.i.i.i.i.i.i.i, %bb.ax ]
-  %.sroa.01.sroa.0.0.ph.i.i.i.i.i.i.i = phi i32 [ undef, %bb.ch ], [ undef, %bb.ci ], [ %.sroa.0191.sroa.0.0.extract.trunc196.i.i.i.i.i.i.i.i, %bb.cl ], [ ptrtoint (ptr @269 to i32), %6 ], [ undef, %bb.dk ], [ ptrtoint (ptr @269 to i32), %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i ], [ %.sroa.0191.sroa.0.0.extract.trunc195.i.i.i.i.i.i.i.i, %bb.ce ], [ %i.kc, %bb.bx ], [ %.sroa.0191.sroa.0.0.extract.trunc.i.i.i.i.i.i.i.i, %bb.bq ], [ ptrtoint (ptr @266 to i32), %bb.bk ], [ ptrtoint (ptr @260 to i32), %bb.ax ]
-  %.sroa.20.0.ph.i.i.i.i.i.i.i = phi i8 [ 2, %bb.ch ], [ 2, %bb.ci ], [ %.sink.i363.ph.i.i.i.i.i.i.i.i.i, %bb.cl ], [ %.sink365.i.i.i.i.i.i.i.i.i, %6 ], [ 2, %bb.dk ], [ 1, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i ], [ %.sink.i349.ph.i.i.i.i.i.i.i.i.i, %bb.ce ], [ %i.kb, %bb.bx ], [ %.sink.i342.ph.i.i.i.i.i.i.i.i.i, %bb.bq ], [ 1, %bb.bk ], [ 0, %bb.ax ]
-  %.sroa.13.0.ph.i.i.i.i.i.i.i = phi i64 [ undef, %bb.ch ], [ undef, %bb.ci ], [ %.sroa.8385.0.ph.i.i.i.i.i.i.i.i.i, %bb.cl ], [ 6, %6 ], [ undef, %bb.dk ], [ 6, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.thread.i.i.i.i.i.i.i.i ], [ %.sroa.8378.0.ph.i.i.i.i.i.i.i.i.i, %bb.ce ], [ %.sroa.17.4.copyload193.i.i.i.i.i.i.i.i, %bb.bx ], [ %.sroa.8371.0.ph.i.i.i.i.i.i.i.i.i, %bb.bq ], [ 7, %bb.bk ], [ 9, %bb.ax ] ; 2 uses
-  %.sroa.01.sroa.12.0.insert.shift19.i.i.i.i.i.i.i = shl nuw i64 %.sroa.01.sroa.12.0.ph.i.i.i.i.i.i.i, 32
-  %.sroa.01.sroa.0.0.insert.ext7.i.i.i.i.i.i.i = zext i32 %.sroa.01.sroa.0.0.ph.i.i.i.i.i.i.i to i64
-  %.sroa.01.sroa.0.0.insert.insert9.i.i.i.i.i.i.i = or disjoint i64 %.sroa.01.sroa.12.0.insert.shift19.i.i.i.i.i.i.i, %.sroa.01.sroa.0.0.insert.ext7.i.i.i.i.i.i.i
+_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i: ; preds = %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i, %bb.es, %bb.er, %bb.eq, %bb.ep, %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i, %bb.du, %bb.dk, %bb.dh, %bb.dg, %bb.de, %bb.db, %bb.ct, %bb.cn, %bb.ax
+  %.sroa.34.i.i.sroa.5.0.i.i.i.i.i.i = phi i16 [ %.sroa.34.i.i.sroa.5.1.i.i.i.i.i.i, %bb.cn ], [ undef, %bb.ct ], [ undef, %bb.dk ], [ undef, %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i ], [ undef, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i ], [ undef, %bb.es ], [ undef, %bb.er ], [ undef, %bb.eq ], [ undef, %bb.ep ], [ undef, %bb.du ], [ undef, %bb.db ], [ undef, %bb.dg ], [ undef, %bb.dh ], [ undef, %bb.de ], [ undef, %bb.ax ]
+  %.sroa.34.i.i.sroa.4.0.i.i.i.i.i.i = phi i16 [ %.sroa.34.i.i.sroa.4.1.i.i.i.i.i.i, %bb.cn ], [ undef, %bb.ct ], [ undef, %bb.dk ], [ undef, %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i ], [ undef, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i ], [ undef, %bb.es ], [ undef, %bb.er ], [ undef, %bb.eq ], [ undef, %bb.ep ], [ undef, %bb.du ], [ undef, %bb.db ], [ undef, %bb.dg ], [ undef, %bb.dh ], [ undef, %bb.de ], [ undef, %bb.ax ]
+  %.sroa.34.i.i.sroa.0.0.i.i.i.i.i.i = phi i32 [ %.sroa.34.i.i.sroa.0.1.i.i.i.i.i.i, %bb.cn ], [ 0, %bb.ct ], [ 0, %bb.dk ], [ 0, %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i ], [ 0, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i ], [ 0, %bb.es ], [ 0, %bb.er ], [ 0, %bb.eq ], [ 0, %bb.ep ], [ 0, %bb.du ], [ 0, %bb.db ], [ 0, %bb.dg ], [ 0, %bb.dh ], [ 0, %bb.de ], [ 0, %bb.ax ]
+  %.sroa.01.sroa.0.0.ph.i.i.i.i.i.i.i = phi i64 [ %.sroa.01.sroa.0.4.insert.insert.i.i.i.i.i.i.i, %bb.cn ], [ ptrtoint (ptr @269 to i64), %bb.ct ], [ undef, %bb.dk ], [ ptrtoint (ptr @269 to i64), %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i ], [ ptrtoint (ptr @269 to i64), %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i ], [ ptrtoint (ptr @269 to i64), %bb.es ], [ ptrtoint (ptr @269 to i64), %bb.er ], [ ptrtoint (ptr @269 to i64), %bb.eq ], [ ptrtoint (ptr @269 to i64), %bb.ep ], [ ptrtoint (ptr @269 to i64), %bb.du ], [ ptrtoint (ptr @269 to i64), %bb.db ], [ ptrtoint (ptr @269 to i64), %bb.dg ], [ ptrtoint (ptr @269 to i64), %bb.dh ], [ ptrtoint (ptr @269 to i64), %bb.de ], [ %.sroa.0.sroa.0.0.insert.insert.i.i.i.i.i.i.i.i.i, %bb.ax ]
+  %.sroa.20.0.ph.i.i.i.i.i.i.i = phi i8 [ %.sroa.21.0.ph.i.i.i.i.i.i.i.i, %bb.cn ], [ 2, %bb.ct ], [ 2, %bb.dk ], [ 1, %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i ], [ 1, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i ], [ 1, %bb.es ], [ 1, %bb.er ], [ 1, %bb.eq ], [ 1, %bb.ep ], [ 1, %bb.du ], [ 2, %bb.db ], [ 0, %bb.dg ], [ 0, %bb.dh ], [ 2, %bb.de ], [ 0, %bb.ax ]
+  %.sroa.13.0.ph.i.i.i.i.i.i.i = phi i64 [ %.sroa.17.0.ph.i.i.i.i.i.i.i.i, %bb.cn ], [ 6, %bb.ct ], [ undef, %bb.dk ], [ 6, %_ZN4time16offset_date_time14OffsetDateTime10to_utc_raw17h9673f3291919b32eE.exit.i.i.i.i.i.i.i.i.i ], [ 6, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i.i.i.i.i.i ], [ 6, %bb.es ], [ 6, %bb.er ], [ 6, %bb.eq ], [ 6, %bb.ep ], [ 6, %bb.du ], [ 6, %bb.db ], [ 6, %bb.dg ], [ 6, %bb.dh ], [ 6, %bb.de ], [ 9, %bb.ax ] ; 2 uses
   %.sroa.10.sroa.0.0.extract.trunc6.i.i.i.i.i.i = trunc i64 %.sroa.13.0.ph.i.i.i.i.i.i.i to i32
   %.sroa.10.sroa.7.0.extract.shift11.i.i.i.i.i.i = lshr i64 %.sroa.13.0.ph.i.i.i.i.i.i.i, 32
   %.sroa.10.sroa.7.0.extract.trunc12.i.i.i.i.i.i = trunc nuw i64 %.sroa.10.sroa.7.0.extract.shift11.i.i.i.i.i.i to i32
   br label %"_ZN119_$LT$time..serde..visitor..Visitor$LT$time..offset_date_time..OffsetDateTime$GT$$u20$as$u20$serde_core..de..Visitor$GT$9visit_str17h9c0d41a6289c9b69E.exit.thread.i.i.i.i.i"
 
 _ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i, %bb.ay
-  %.sroa.01.sroa.12.0.i.i.i.i.i.i.i = phi i64 [ %i.hq, %bb.ay ], [ %.sroa.01.sroa.12.0.extract.shift14.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i ]
-  %.sroa.01.sroa.0.0.i.i.i.i.i.i.i = phi i32 [ %.sroa.01.sroa.0.0.extract.trunc.i.i.i.i.i.i.i, %bb.ay ], [ %.sroa.01.sroa.0.0.extract.trunc6.pre-phi.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i ]
-  %.sroa.13.0.i.i.i.i.i.i.i = phi i64 [ %.sroa.6255.0.i.i.i.i.i.i.i.i.a, %bb.ay ], [ %.sroa.13.12.insert.insert.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i ] ; 2 uses
-  %.sroa.01.sroa.12.0.insert.shift.i.i.i.i.i.i.i = shl nuw nsw i64 %.sroa.01.sroa.12.0.i.i.i.i.i.i.i, 32
-  %.sroa.01.sroa.0.0.insert.ext.i.i.i.i.i.i.i = zext i32 %.sroa.01.sroa.0.0.i.i.i.i.i.i.i to i64
-  %.sroa.01.sroa.0.0.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.01.sroa.12.0.insert.shift.i.i.i.i.i.i.i, %.sroa.01.sroa.0.0.insert.ext.i.i.i.i.i.i.i
+  %.sroa.01.sroa.12.0.i.i.i.i.i.i.i = phi i64 [ %.sroa.0214.0.ph.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i ], [ %.sroa.0252.0.i.i.i.i.i.i.i.i, %bb.ay ]
+  %.sroa.13.0.i.i.i.i.i.i.i = phi i64 [ %.sroa.13.12.insert.insert.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i ], [ %i.hq, %bb.ay ] ; 2 uses
   %.sroa.10.sroa.0.0.extract.trunc.i.i.i.i.i.i = trunc i64 %.sroa.13.0.i.i.i.i.i.i.i to i32
   %.sroa.10.sroa.7.0.extract.shift.i.i.i.i.i.i = lshr i64 %.sroa.13.0.i.i.i.i.i.i.i, 32
   %.sroa.10.sroa.7.0.extract.trunc.i.i.i.i.i.i = trunc nuw nsw i64 %.sroa.10.sroa.7.0.extract.shift.i.i.i.i.i.i to i32
@@ -1640,7 +1637,7 @@ _ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab
 "_ZN119_$LT$time..serde..visitor..Visitor$LT$time..offset_date_time..OffsetDateTime$GT$$u20$as$u20$serde_core..de..Visitor$GT$9visit_str17h9c0d41a6289c9b69E.exit.i.i.i.i.i": ; preds = %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i
   %.sroa.10.sroa.0.024.i.i.i.i.i.i = phi i32 [ %.sroa.10.sroa.0.0.extract.trunc.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i ], [ %.sroa.7.0.copyload6.i.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ]
   %.sroa.10.sroa.7.023.i.i.i.i.i.i = phi i32 [ %.sroa.10.sroa.7.0.extract.trunc.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i ], [ %.sroa.8.0.copyload10.i.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ]
-  %.sroa.0.sroa.7.022.i.i.i.i.i.i = phi i64 [ %.sroa.01.sroa.0.0.insert.insert.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i ], [ %.sroa.0.0.copyload2.i23.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ] ; 2 uses
+  %.sroa.0.sroa.7.022.i.i.i.i.i.i = phi i64 [ %.sroa.01.sroa.12.0.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread.i.i.i.i.i.i ], [ %.sroa.0.0.copyload2.i23.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ] ; 2 uses
   %.sroa.10.sroa.7.0.insert.ext7.i.i.i.i.i.i = zext i32 %.sroa.10.sroa.7.023.i.i.i.i.i.i to i64
   %.sroa.10.sroa.7.0.insert.shift8.i.i.i.i.i.i = shl nuw i64 %.sroa.10.sroa.7.0.insert.ext7.i.i.i.i.i.i, 32
   %.sroa.10.sroa.0.0.insert.ext3.i.i.i.i.i.i = zext i32 %.sroa.10.sroa.0.024.i.i.i.i.i.i to i64
@@ -1659,7 +1656,7 @@ _ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab
   %.sroa.10.sroa.0.038.i.i.i.i.i.i = phi i32 [ %.sroa.10.sroa.0.0.extract.trunc6.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i ], [ %.sroa.7.0.copyload6.i.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ], [ %.sroa.11.sroa.0.0140.i.ph.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread62.i.i.i.i.i.i ]
   %.sroa.10.sroa.7.037.i.i.i.i.i.i = phi i32 [ %.sroa.10.sroa.7.0.extract.trunc12.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i ], [ %.sroa.8.0.copyload10.i.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ], [ %.sroa.11.sroa.7.0139.i.ph.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread62.i.i.i.i.i.i ]
   %.sroa.0.sroa.0.036.i.i.i.i.i.i = phi i64 [ 0, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i ], [ %.sroa.0.0.copyload2.i22.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ], [ 1, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread62.i.i.i.i.i.i ]
-  %.sroa.0.sroa.7.035.i.i.i.i.i.i = phi i64 [ %.sroa.01.sroa.0.0.insert.insert9.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i ], [ %.sroa.0.0.copyload2.i23.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ], [ %.sroa.827.0144.i.ph.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread62.i.i.i.i.i.i ]
+  %.sroa.0.sroa.7.035.i.i.i.i.i.i = phi i64 [ %.sroa.01.sroa.0.0.ph.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread25.i.i.i.i.i.i ], [ %.sroa.0.0.copyload2.i23.i.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.i.i.i.i.i.i ], [ %.sroa.827.0144.i.ph.i.i.i.i.i.i, %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17heae73a90e57bab8eE.exit.thread62.i.i.i.i.i.i ]
   %.sroa.0.sroa.7.0.insert.ext.i.i.i.i.i.i = zext i64 %.sroa.0.sroa.7.035.i.i.i.i.i.i to i128
   %.sroa.0.sroa.7.0.insert.shift.i.i.i.i.i.i = shl nuw i128 %.sroa.0.sroa.7.0.insert.ext.i.i.i.i.i.i, 64
   %.sroa.0.sroa.0.0.insert.ext.i.i.i.i.i.i = zext i64 %.sroa.0.sroa.0.036.i.i.i.i.i.i to i128

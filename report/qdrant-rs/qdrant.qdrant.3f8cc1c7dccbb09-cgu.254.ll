@@ -202,8 +202,8 @@ bb.a:
   %i.e = alloca [48 x i8], align 8                ; 4 uses
   %i.f = alloca [64 x i8], align 8                ; 4 uses
   %i.g = alloca [48 x i8], align 8                ; 5 uses
-  %.sroa.472.i.i = alloca i64, align 8            ; 5 uses
-  %.sroa.673.i.i = alloca i64, align 8            ; 4 uses
+  %.sroa.472.i.i = alloca [8 x i8], align 8       ; 5 uses
+  %.sroa.673.i.i = alloca [8 x i8], align 8       ; 4 uses
   %i.h = alloca [40 x i8], align 8                ; 4 uses
   %i.i = alloca [64 x i8], align 8                ; 4 uses
   %i.j = alloca [32 x i8], align 8                ; 4 uses
@@ -606,8 +606,7 @@ bb.cv:                                            ; preds = %bb.cu
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i: ; preds = %bb.cs, %bb.cu, %bb.ct
   %.sroa.06.0.i.i.i = phi ptr [ %.val.i.i.i, %bb.cu ], [ inttoptr (i64 16 to ptr), %bb.ct ], [ %.val.i.i.i, %bb.cs ]
-  %4 = ptrtoint ptr %.sroa.06.0.i.i.i to i64
-  store i64 %4, ptr %.sroa.472.i.i, align 8, !alias.scope !416, !noalias !423
+  store ptr %.sroa.06.0.i.i.i, ptr %.sroa.472.i.i, align 8, !alias.scope !416, !noalias !423
   br label %bb.cy
 
 bb.cw:                                            ; preds = %.split110.us.i.i

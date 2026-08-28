@@ -202,8 +202,8 @@ bb.bb:                                            ; preds = %bb.ba
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal void @_RNCNvYNtNtNtNtCsgGgPqgSfnMH_7storage15content_manager3toc10dispatcher13TocDispatcherNtNtNtCsPYQCUnoTxQ_10collection6shards8transfer22ShardTransferConsensus38commit_read_hashring_confirm_and_retry0Csl8OoimOLbh_6qdrant(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 %1, ptr noalias nofree noundef align 8 dereferenceable(32) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.4.i = alloca i64, align 8                ; 5 uses
-  %.sroa.7.i = alloca i64, align 8                ; 4 uses
+  %.sroa.4.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 4 uses
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 7 uses
@@ -606,8 +606,7 @@ bb.be:                                            ; preds = %bb.bd
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i: ; preds = %bb.bb, %bb.bd, %bb.bc
   %.sroa.06.0.i.i = phi ptr [ %.val.i.i, %bb.bd ], [ inttoptr (i64 16 to ptr), %bb.bc ], [ %.val.i.i, %bb.bb ]
-  %3 = ptrtoint ptr %.sroa.06.0.i.i to i64
-  store i64 %3, ptr %.sroa.4.i, align 8, !alias.scope !1594, !noalias !1602
+  store ptr %.sroa.06.0.i.i, ptr %.sroa.4.i, align 8, !alias.scope !1594, !noalias !1602
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i: ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i, %bb.ba
@@ -1010,8 +1009,8 @@ bb.bi:                                            ; preds = %bb.bh
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal void @_RNCNvYNtNtNtNtCsgGgPqgSfnMH_7storage15content_manager3toc10dispatcher13TocDispatcherNtNtNtCsPYQCUnoTxQ_10collection6shards8transfer22ShardTransferConsensus39commit_write_hashring_confirm_and_retry0Csl8OoimOLbh_6qdrant(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([48 x i8]) align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 %1, ptr noalias nofree noundef align 8 dereferenceable(32) %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.4.i = alloca i64, align 8                ; 5 uses
-  %.sroa.7.i = alloca i64, align 8                ; 4 uses
+  %.sroa.4.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 4 uses
   %i.a = alloca [32 x i8], align 8                ; 7 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [48 x i8], align 8                ; 7 uses
@@ -1414,8 +1413,7 @@ bb.be:                                            ; preds = %bb.bd
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i: ; preds = %bb.bb, %bb.bd, %bb.bc
   %.sroa.06.0.i.i = phi ptr [ %.val.i.i, %bb.bd ], [ inttoptr (i64 16 to ptr), %bb.bc ], [ %.val.i.i, %bb.bb ]
-  %3 = ptrtoint ptr %.sroa.06.0.i.i to i64
-  store i64 %3, ptr %.sroa.4.i, align 8, !alias.scope !1716, !noalias !1724
+  store ptr %.sroa.06.0.i.i, ptr %.sroa.4.i, align 8, !alias.scope !1716, !noalias !1724
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i: ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i, %bb.ba
