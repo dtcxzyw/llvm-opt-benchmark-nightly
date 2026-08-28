@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %.loopexit357, %.loo
   br label %_ZNSt6vectorISt4pairIN9__gnu_cxx17__normal_iteratorIPKN6Assimp3IFC22ProjectedWindowContourES_IS5_SaIS5_EEEENS2_IPK10aiVector2tIdES_ISC_SaISC_EEEEESaISI_EED2Ev.exit231
 
 _ZNSt6vectorISt4pairIN9__gnu_cxx17__normal_iteratorIPKN6Assimp3IFC22ProjectedWindowContourES_IS5_SaIS5_EEEENS2_IPK10aiVector2tIdES_ISC_SaISC_EEEEESaISI_EED2Ev.exit231: ; preds = %_ZNSt6vectorI10aiVector3tIdESaIS1_EED2Ev.exit139, %bb.bf
-  %.pn124.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn124, %bb.bf ], [ %.pn.pn, %_ZNSt6vectorI10aiVector3tIdESaIS1_EED2Ev.exit139 ]
+  %.pn124.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %_ZNSt6vectorI10aiVector3tIdESaIS1_EED2Ev.exit139 ], [ %.pn124, %bb.bf ]
   resume { ptr, i32 } %.pn124.pn.pn.pn.pn
 
 .lr.ph433:                                        ; preds = %bb.d, %.critedge

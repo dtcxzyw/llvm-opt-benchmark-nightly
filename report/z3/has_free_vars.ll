@@ -205,9 +205,9 @@ bb.n:                                             ; preds = %bb.m, %_ZN14core_ha
   %.pre2.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !26
   br label %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.lr.ph
 
-_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.lr.ph: ; preds = %bb.n, %bb.m
+_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.lr.ph: ; preds = %bb.m, %bb.n
   %i.bl = phi i32 [ %.pre2.i, %bb.n ], [ %i.bh, %bb.m ] ; 2 uses
-  %i.bm = phi ptr [ %.pre.i8, %bb.n ], [ %i.be, %bb.m ] ; 3 uses
+  %i.bm = phi ptr [ %.pre.i8, %bb.n ], [ %i.be, %bb.m ] ; 2 uses
   %i.bn = zext i32 %i.bl to i64
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.bm, i64 %i.bn ; 2 uses
   store ptr %1, ptr %i.bo, align 8, !tbaa !38
@@ -217,16 +217,15 @@ _ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.lr.ph: ; preds = %bb.n, %bb.m
   %i.bq = add i32 %i.bl, 1
   store i32 %i.bq, ptr %i.bp, align 4, !tbaa !26
   %.sroa.5.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  br label %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit
+  br label %thread-pre-split
 
-thread-pre-split:                                 ; preds = %bb.p
-  %.pr = load ptr, ptr %i.d, align 8, !tbaa !14   ; 2 uses
+thread-pre-split:                                 ; preds = %bb.p, %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.lr.ph
+  %.pr = load ptr, ptr %i.d, align 8, !tbaa !14   ; 3 uses
   %i.br = icmp eq ptr %.pr, null
   br i1 %i.br, label %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.thread, label %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit
 
-_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit: ; preds = %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.lr.ph, %thread-pre-split
-  %5 = phi ptr [ %i.bm, %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.lr.ph ], [ %.pr, %thread-pre-split ] ; 2 uses
-  %i.bs = getelementptr inbounds i8, ptr %5, i64 -4
+_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit: ; preds = %thread-pre-split
+  %i.bs = getelementptr inbounds i8, ptr %.pr, i64 -4
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !26 ; 2 uses
   %i.bu = icmp eq i32 %i.bt, 0
   br i1 %i.bu, label %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.thread, label %_ZN6vectorI15expr_delta_pairLb0EjE4backEv.exit
@@ -234,7 +233,7 @@ _ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit: ; preds = %_ZNK6vectorI15expr_
 _ZN6vectorI15expr_delta_pairLb0EjE4backEv.exit:   ; preds = %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit
   %i.bv = add i32 %i.bt, -1
   %i.bw = zext i32 %i.bv to i64
-  %i.bx = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.bw ; 2 uses
+  %i.bx = getelementptr inbounds nuw [16 x i8], ptr %.pr, i64 %i.bw ; 2 uses
   %.sroa.0.0.copyload = load ptr, ptr %i.bx, align 8, !tbaa !38 ; 2 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bx, i64 8
   %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !26 ; 2 uses
@@ -259,8 +258,8 @@ bb.p:                                             ; preds = %bb.o, %_ZN6vectorI1
   %i.ce = trunc nuw i8 %i.cd to i1
   br i1 %i.ce, label %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.thread, label %thread-pre-split
 
-_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.thread: ; preds = %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit, %bb.p, %thread-pre-split
-  %.2.ph = phi i1 [ false, %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit ], [ false, %thread-pre-split ], [ true, %bb.p ]
+_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit.thread: ; preds = %thread-pre-split, %bb.p, %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit
+  %.2.ph = phi i1 [ false, %_ZNK6vectorI15expr_delta_pairLb0EjE5emptyEv.exit ], [ true, %bb.p ], [ false, %thread-pre-split ]
   ret i1 %.2.ph
 }
 

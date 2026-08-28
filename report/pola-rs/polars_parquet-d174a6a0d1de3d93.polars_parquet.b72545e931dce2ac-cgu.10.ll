@@ -205,8 +205,10 @@ bb.aax:                                           ; preds = %bb.aaw
   br label %_RINvNtNtNtCsk4ZPsEfLtLH_6brotli3enc19backward_references2hq36BrotliCreateZopfliBackwardReferencesNtNtCsbA1n9drshSs_12alloc_stdlib9std_alloc13StandardAllocINtNtB4_19hash_to_binary_tree10H10BucketsB1x_ENtB2v_16H10DefaultParamsECsfISxE4fmY1Y_14polars_parquet.exit, !dbg !24680
 
 bb.aay:                                           ; preds = %bb.zk
-  %i.dyl = getelementptr inbounds nuw [20 x i8], ptr %i.dst, i64 %.sroa.02.046.i, !dbg !24305 ; 4 uses
-  store i64 9151254648282152960, ptr %i.dyl, align 4, !dbg !24305, !noalias !24348
+  %i.dyl = getelementptr inbounds nuw [20 x i8], ptr %i.dst, i64 %.sroa.02.046.i, !dbg !24305 ; 5 uses
+  store i32 0, ptr %i.dyl, align 4, !dbg !24305, !noalias !24348
+  %.sroa.0.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dyl, i64 4, !dbg !24305
+  store float 1.700000e+38, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 4, !dbg !24305, !noalias !24348
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dyl, i64 8, !dbg !24305
   store i32 1, ptr %.sroa.4.0..sroa_idx.i, align 4, !dbg !24305, !noalias !24348
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.dyl, i64 12, !dbg !24305
@@ -609,8 +611,10 @@ bb.acy:                                           ; preds = %_RINvNtNtNtCsk4ZPsE
           to label %bb.abg unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.i, !dbg !25363, !noalias !24693
 
 bb.acz:                                           ; preds = %bb.abr
-  %i.eki = getelementptr inbounds nuw [20 x i8], ptr %i.eau, i64 %.sroa.055.0493.i, !dbg !25005 ; 4 uses
-  store i64 9151254648282152960, ptr %i.eki, align 4, !dbg !25005, !noalias !24693
+  %i.eki = getelementptr inbounds nuw [20 x i8], ptr %i.eau, i64 %.sroa.055.0493.i, !dbg !25005 ; 5 uses
+  store i32 0, ptr %i.eki, align 4, !dbg !25005, !noalias !24693
+  %.sroa.051.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.eki, i64 4, !dbg !25005
+  store float 1.700000e+38, ptr %.sroa.051.sroa.4.0..sroa_idx.i, align 4, !dbg !25005, !noalias !24693
   %.sroa.453.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.eki, i64 8, !dbg !25005
   store i32 1, ptr %.sroa.453.0..sroa_idx.i, align 4, !dbg !25005, !noalias !24693
   %.sroa.5.0..sroa_idx.i586 = getelementptr inbounds nuw i8, ptr %i.eki, i64 12, !dbg !25005

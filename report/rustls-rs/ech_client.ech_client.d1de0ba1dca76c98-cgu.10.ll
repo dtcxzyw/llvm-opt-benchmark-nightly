@@ -202,9 +202,9 @@ bb.f:                                             ; preds = %bb.e
   call void @_RNvNtCsj6eKBz9Db1c_4core6result13unwrap_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @8, i64 noundef 18, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @58, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #23
   unreachable
 
-_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultuNtNtNtCs4okMlIQ9Z13_2h25codec5error9UserErrorE6expectCsi17nFaBu4HY_10ech_client.exit: ; preds = %bb.e, %bb.c, %bb.d, %bb.a
-  %.sroa.4.1 = phi ptr [ null, %bb.a ], [ %i.h, %bb.d ], [ undef, %bb.c ], [ null, %bb.e ]
-  %.sroa.0.1 = phi i64 [ 0, %bb.a ], [ 0, %bb.d ], [ 1, %bb.c ], [ 0, %bb.e ]
+_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultuNtNtNtCs4okMlIQ9Z13_2h25codec5error9UserErrorE6expectCsi17nFaBu4HY_10ech_client.exit: ; preds = %bb.c, %bb.d, %bb.e, %bb.a
+  %.sroa.4.1 = phi ptr [ null, %bb.e ], [ null, %bb.a ], [ undef, %bb.c ], [ %i.h, %bb.d ]
+  %.sroa.0.1 = phi i64 [ 0, %bb.e ], [ 0, %bb.a ], [ 1, %bb.c ], [ 0, %bb.d ]
   %i.l = insertvalue { i64, ptr } poison, i64 %.sroa.0.1, 0
   %i.m = insertvalue { i64, ptr } %i.l, ptr %.sroa.4.1, 1
   ret { i64, ptr } %i.m
@@ -607,15 +607,17 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.543.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 5
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.6.sroa.7.sroa.0, ptr noundef nonnull align 1 dereferenceable(12) %.sroa.543.0..sroa_idx, i64 12, i1 false)
   %.sroa.6.sroa.0.2.insert.ext = zext i16 %.sroa.041.0.copyload to i32
-  %.sroa.6.sroa.0.2.insert.shift = shl nuw i32 %.sroa.6.sroa.0.2.insert.ext, 16
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %.sroa.012.0.copyload = load i32, ptr %i.r, align 1
+  %.sroa.012.0.copyload = load i32, ptr %i.r, align 1 ; 2 uses
+  %.sroa.6.sroa.0.sroa.5.0.extract.shift = lshr i32 %.sroa.012.0.copyload, 16
+  %5 = and i32 %.sroa.012.0.copyload, 65535
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.6.sroa.0.0 = phi i32 [ %.sroa.6.sroa.0.2.insert.shift, %bb.b ], [ %.sroa.012.0.copyload, %bb.c ] ; 4 uses
+  %.sroa.6.sroa.0.sroa.0.sroa.0.0 = phi i32 [ 0, %bb.b ], [ %5, %bb.c ] ; 4 uses
+  %.sroa.6.sroa.0.0 = phi i32 [ %.sroa.6.sroa.0.2.insert.ext, %bb.b ], [ %.sroa.6.sroa.0.sroa.5.0.extract.shift, %bb.c ] ; 4 uses
   %.sroa.6.sroa.6.0 = phi i16 [ %.sroa.442.0.copyload, %bb.b ], [ %i.o, %bb.c ] ; 4 uses
   %.sroa.0.0 = phi i16 [ 1, %bb.b ], [ 0, %bb.c ] ; 4 uses
   %i.s = load i64, ptr %3, align 8, !range !1394, !noundef !6
@@ -664,7 +666,9 @@ _RNvXs3_NtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtimeNtB5_20TokioRuntim
   %i.am = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   store i16 %.sroa.0.0, ptr %i.am, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 34
-  store i32 %.sroa.6.sroa.0.0, ptr %.sroa.6.0..sroa_idx, align 2
+  %.sroa.6.sroa.0.sroa.5.0.insert.shift89 = shl nuw i32 %.sroa.6.sroa.0.0, 16
+  %.sroa.6.sroa.0.sroa.0.0.insert.insert77 = or disjoint i32 %.sroa.6.sroa.0.sroa.5.0.insert.shift89, %.sroa.6.sroa.0.sroa.0.sroa.0.0
+  store i32 %.sroa.6.sroa.0.sroa.0.0.insert.insert77, ptr %.sroa.6.0..sroa_idx, align 2
   %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 38
   store i16 %.sroa.6.sroa.6.0, ptr %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx.sroa_idx, align 2
   %.sroa.6.sroa.7.0..sroa.6.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.l, i64 40
@@ -805,7 +809,9 @@ _RNvXs3_NtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtimeNtB5_20TokioRuntim
   %i.bs = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   store i16 %.sroa.0.0, ptr %i.bs, align 8
   %.sroa.6.0..sroa_idx4 = getelementptr inbounds nuw i8, ptr %i.m, i64 18
-  store i32 %.sroa.6.sroa.0.0, ptr %.sroa.6.0..sroa_idx4, align 2
+  %.sroa.6.sroa.0.sroa.5.0.insert.shift94 = shl nuw i32 %.sroa.6.sroa.0.0, 16
+  %.sroa.6.sroa.0.sroa.0.0.insert.insert81 = or disjoint i32 %.sroa.6.sroa.0.sroa.5.0.insert.shift94, %.sroa.6.sroa.0.sroa.0.sroa.0.0
+  store i32 %.sroa.6.sroa.0.sroa.0.0.insert.insert81, ptr %.sroa.6.0..sroa_idx4, align 2
   %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 22
   store i16 %.sroa.6.sroa.6.0, ptr %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx4.sroa_idx, align 2
   %.sroa.6.sroa.7.0..sroa.6.0..sroa_idx4.sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 24
@@ -939,7 +945,9 @@ _RNvXs3_NtNtCs5MfxasYgTEl_11hickory_net7runtime13tokio_runtimeNtB5_20TokioRuntim
   %i.cq = getelementptr inbounds nuw i8, ptr %i.e, i64 376
   store i16 %.sroa.0.0, ptr %i.cq, align 8
   %.sroa.6.0..sroa_idx5 = getelementptr inbounds nuw i8, ptr %i.e, i64 378
-  store i32 %.sroa.6.sroa.0.0, ptr %.sroa.6.0..sroa_idx5, align 2
+  %.sroa.6.sroa.0.sroa.5.0.insert.shift84 = shl nuw i32 %.sroa.6.sroa.0.0, 16
+  %.sroa.6.sroa.0.sroa.0.0.insert.insert73 = or disjoint i32 %.sroa.6.sroa.0.sroa.5.0.insert.shift84, %.sroa.6.sroa.0.sroa.0.sroa.0.0
+  store i32 %.sroa.6.sroa.0.sroa.0.0.insert.insert73, ptr %.sroa.6.0..sroa_idx5, align 2
   %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx5.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 382
   store i16 %.sroa.6.sroa.6.0, ptr %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx5.sroa_idx, align 2
   %.sroa.6.sroa.7.0..sroa.6.0..sroa_idx5.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 384
@@ -1071,7 +1079,9 @@ bb.ao:                                            ; preds = %bb.am
   store ptr null, ptr %.sroa.611.0..sroa_idx, align 8
   store i16 %.sroa.0.0, ptr %i.b, align 8
   %.sroa.6.0..sroa_idx6 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i32 %.sroa.6.sroa.0.0, ptr %.sroa.6.0..sroa_idx6, align 2
+  %.sroa.6.sroa.0.sroa.5.0.insert.shift = shl nuw i32 %.sroa.6.sroa.0.0, 16
+  %.sroa.6.sroa.0.sroa.0.0.insert.insert = or disjoint i32 %.sroa.6.sroa.0.sroa.5.0.insert.shift, %.sroa.6.sroa.0.sroa.0.sroa.0.0
+  store i32 %.sroa.6.sroa.0.sroa.0.0.insert.insert, ptr %.sroa.6.0..sroa_idx6, align 2
   %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx6.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 6
   store i16 %.sroa.6.sroa.6.0, ptr %.sroa.6.sroa.6.0..sroa.6.0..sroa_idx6.sroa_idx, align 2
   %.sroa.6.sroa.7.0..sroa.6.0..sroa_idx6.sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -1474,6 +1484,9 @@ declare hidden noundef zeroext i1 @_RNvXs_NtNtCsaKJjC64KgbL_3std4sync6poisonINtB
 ; Function Attrs: nonlazybind uwtable
 declare noundef i64 @_RNvNtNtCs4okMlIQ9Z13_2h25codec11framed_read28calc_max_continuation_frames(i64 noundef, i64 noundef) unnamed_addr #0
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
+
 ; Function Attrs: cold noinline nonlazybind uwtable
 declare noundef zeroext i1 @_RNvNtNtCsaKJjC64KgbL_3std9panicking11panic_count17is_zero_slow_path() unnamed_addr #10
 
@@ -1484,13 +1497,13 @@ declare void @_RNvNtNtNtNtCsaKJjC64KgbL_3std3sys12thread_local11destructors10lin
 declare void @_RNvCshxk5dXoXnx9_7___rustc35___rust_no_alloc_shim_is_unstable_v2() unnamed_addr #3
 
 ; Function Attrs: nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable
-declare noalias noundef ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef, i64 allocalign noundef range(i64 1, -9223372036854775807)) unnamed_addr #16
+declare noalias noundef ptr @_RNvCshxk5dXoXnx9_7___rustc12___rust_alloc(i64 noundef, i64 allocalign noundef range(i64 1, -9223372036854775807)) unnamed_addr #17
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCsi17nFaBu4HY_10ech_client(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(none) dereferenceable(24), i64 noundef, i1 noundef zeroext, i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #0
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
-declare void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef range(i64 0, -9223372036854775807), i64) unnamed_addr #17
+declare void @_RNvNtCs4wP2HXfJTCR_5alloc7raw_vec12handle_error(i64 noundef range(i64 0, -9223372036854775807), i64) unnamed_addr #18
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden void @_RNvMs5_NtNtNtCsaKJjC64KgbL_3std4sync6poison5mutexINtB5_5MutexINtCseieIppCIYdI_4slab4SlabNtNtNtCsgO2xhGITpH9_12futures_util4lock5mutex6WaiterEE4lockCsi17nFaBu4HY_10ech_client(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24), ptr noundef nonnull align 8) unnamed_addr #0
@@ -1505,7 +1518,7 @@ declare hidden { i64, ptr } @_RNvXso_CseieIppCIYdI_4slabINtB5_7IterMutNtNtNtCsgO
 declare void @_RNvMs1_NtNtCsgO2xhGITpH9_12futures_util4lock5mutexNtB5_6Waiter4wake(ptr noalias nofree noundef align 8 dereferenceable(16)) unnamed_addr #0
 
 ; Function Attrs: cold minsize noreturn nonlazybind optsize uwtable
-declare void @_RNvNtCs4wP2HXfJTCR_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #17
+declare void @_RNvNtCs4wP2HXfJTCR_5alloc5alloc18handle_alloc_error(i64 noundef range(i64 1, -9223372036854775807), i64 noundef) unnamed_addr #18
 
 ; Function Attrs: nonlazybind uwtable
 declare void @_RNvMs_NtNtNtCskruEhpekJ3V_5tokio7runtime4task3rawNtB4_7RawTask7ref_inc(ptr noundef nonnull) unnamed_addr #0
@@ -1520,7 +1533,7 @@ declare hidden void @_RINvMs3_NtNtCskruEhpekJ3V_5tokio4util17idle_notified_setIN
 declare { i64, i64 } @_RNvNtNtNtCsaKJjC64KgbL_3std3sys6random5linux19hashmap_random_keys() unnamed_addr #0
 
 ; Function Attrs: cold noreturn nounwind memory(inaccessiblemem: write)
-declare void @llvm.trap() #18
+declare void @llvm.trap() #19
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef zeroext i1 @_RNvXs1i_NtCsj6eKBz9Db1c_4core3fmtRINtNtCs4wP2HXfJTCR_5alloc4sync3ArceENtB6_7Display3fmtCsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
@@ -1553,7 +1566,7 @@ declare noundef nonnull align 8 ptr @_RNvMs3_NtNtCsj6eKBz9Db1c_4core3fmt8builder
 declare noundef zeroext i1 @_RNvMs3_NtNtCsj6eKBz9Db1c_4core3fmt8buildersNtB5_10DebugTuple6finish(ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
 
 ; Function Attrs: nounwind nonlazybind allockind("free") uwtable
-declare void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #19
+declare void @_RNvCshxk5dXoXnx9_7___rustc14___rust_dealloc(ptr allocptr noundef nonnull captures(address), i64 noundef, i64 noundef range(i64 1, -9223372036854775807)) unnamed_addr #20
 
 ; Function Attrs: nonlazybind uwtable
 declare hidden noundef zeroext i1 @_RNvXs1g_NtCsj6eKBz9Db1c_4core3fmtRNtNtNtNtCsjXdHNeFfodD_13hickory_proto9serialize6binary7decoder11DecodeErrorNtB6_5Debug3fmtCsi17nFaBu4HY_10ech_client(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(8), ptr noalias nofree noundef align 8 dereferenceable(24)) unnamed_addr #0
@@ -1956,10 +1969,7 @@ declare i64 @llvm.bswap.i64(i64) #13
 declare i64 @llvm.usub.sat.i64(i64, i64) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #20
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #21
+declare void @llvm.experimental.noalias.scope.decl(metadata) #21
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
@@ -1977,12 +1987,12 @@ attributes #12 = { cold minsize noinline noreturn nounwind nonlazybind optsize u
 attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #14 = { cold noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #15 = { cold noinline noreturn nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #16 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCshxk5dXoXnx9_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #17 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #18 = { cold noreturn nounwind memory(inaccessiblemem: write) }
-attributes #19 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #20 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #21 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #17 = { nounwind nonlazybind allockind("alloc,uninitialized,aligned") allocsize(0) uwtable "alloc-family"="__rust_alloc" "alloc-variant-zeroed"="_RNvCshxk5dXoXnx9_7___rustc19___rust_alloc_zeroed" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #18 = { cold minsize noreturn nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #19 = { cold noreturn nounwind memory(inaccessiblemem: write) }
+attributes #20 = { nounwind nonlazybind allockind("free") uwtable "alloc-family"="__rust_alloc" "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #21 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #22 = { noinline }
 attributes #23 = { noinline noreturn }
 attributes #24 = { nounwind }

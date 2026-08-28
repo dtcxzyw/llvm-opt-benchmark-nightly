@@ -170,19 +170,17 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB3_11CommonState16send_fatal_alertNtNtB5_5error14InvalidMessageECsh8EDedVkTYb_13tlsserver_mio(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 1), (8, 32)) %0, ptr noalias nofree noundef align 8 dereferenceable(840) %1, i8 noundef range(i8 0, 36) %2, i8 %3, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(24) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [168 x i8], align 8               ; 6 uses
+  %i.a = alloca [168 x i8], align 8               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %.sroa.6.0.insert.ext = zext i8 %3 to i32
-  %.sroa.6.0.insert.shift = shl nuw i32 %.sroa.6.0.insert.ext, 24
-  %.sroa.54.0.insert.ext = zext nneg i8 %2 to i32
-  %.sroa.54.0.insert.shift = shl nuw nsw i32 %.sroa.54.0.insert.ext, 16
-  %.sroa.54.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.shift, %.sroa.54.0.insert.shift
-  %.sroa.02.0.insert.insert = or disjoint i32 %.sroa.54.0.insert.insert, 1
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 160
-  store i16 4, ptr %i.b, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  store i16 4, ptr %5, align 8
   store i64 -9223372036854775808, ptr %i.a, align 8
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 %.sroa.02.0.insert.insert, ptr %.sroa.4.0..sroa_idx.a, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i8 1, ptr %.sroa.4.0..sroa_idx, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 %2, ptr %i.b, align 2
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  store i8 %3, ptr %.sroa.4.0..sroa_idx.a, align 1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 73
   %i.d = load i8, ptr %i.c, align 1, !range !5, !noundef !6
   %i.e = icmp eq i8 %i.d, 2
@@ -201,19 +199,17 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB3_11CommonState16send_fatal_alertNtNtB5_5error14PeerMisbehavedECsh8EDedVkTYb_13tlsserver_mio(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 2)) %0, ptr noalias nofree noundef align 8 dereferenceable(840) %1, i8 noundef range(i8 0, 36) %2, i8 %3, i8 noundef range(i8 0, 75) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [168 x i8], align 8               ; 6 uses
+  %i.a = alloca [168 x i8], align 8               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %.sroa.6.0.insert.ext = zext i8 %3 to i32
-  %.sroa.6.0.insert.shift = shl nuw i32 %.sroa.6.0.insert.ext, 24
-  %.sroa.54.0.insert.ext = zext nneg i8 %2 to i32
-  %.sroa.54.0.insert.shift = shl nuw nsw i32 %.sroa.54.0.insert.ext, 16
-  %.sroa.54.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.shift, %.sroa.54.0.insert.shift
-  %.sroa.02.0.insert.insert = or disjoint i32 %.sroa.54.0.insert.insert, 1
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 160
-  store i16 4, ptr %i.b, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  store i16 4, ptr %5, align 8
   store i64 -9223372036854775808, ptr %i.a, align 8
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 %.sroa.02.0.insert.insert, ptr %.sroa.4.0..sroa_idx.a, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i8 1, ptr %.sroa.4.0..sroa_idx, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 %2, ptr %i.b, align 2
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  store i8 %3, ptr %.sroa.4.0..sroa_idx.a, align 1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 73
   %i.d = load i8, ptr %i.c, align 1, !range !5, !noundef !6
   %i.e = icmp eq i8 %i.d, 2
@@ -230,19 +226,17 @@ bb.a:
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB3_11CommonState16send_fatal_alertNtNtB5_5error5ErrorECsh8EDedVkTYb_13tlsserver_mio(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) %0, ptr noalias nofree noundef align 8 dereferenceable(840) %1, i8 noundef range(i8 0, 36) %2, i8 %3, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(64) %4) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [168 x i8], align 8               ; 6 uses
+  %i.a = alloca [168 x i8], align 8               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %.sroa.6.0.insert.ext = zext i8 %3 to i32
-  %.sroa.6.0.insert.shift = shl nuw i32 %.sroa.6.0.insert.ext, 24
-  %.sroa.54.0.insert.ext = zext nneg i8 %2 to i32
-  %.sroa.54.0.insert.shift = shl nuw nsw i32 %.sroa.54.0.insert.ext, 16
-  %.sroa.54.0.insert.insert = or disjoint i32 %.sroa.6.0.insert.shift, %.sroa.54.0.insert.shift
-  %.sroa.02.0.insert.insert = or disjoint i32 %.sroa.54.0.insert.insert, 1
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 160
-  store i16 4, ptr %i.b, align 8
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 160
+  store i16 4, ptr %5, align 8
   store i64 -9223372036854775808, ptr %i.a, align 8
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 %.sroa.02.0.insert.insert, ptr %.sroa.4.0..sroa_idx.a, align 8
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i8 1, ptr %.sroa.4.0..sroa_idx, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 %2, ptr %i.b, align 2
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  store i8 %3, ptr %.sroa.4.0..sroa_idx.a, align 1
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 73
   %i.d = load i8, ptr %i.c, align 1, !range !5, !noundef !6
   %i.e = icmp eq i8 %i.d, 2
@@ -275,7 +269,7 @@ bb.e:                                             ; preds = %bb.d
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB3_11CommonState21process_main_protocolNtNtNtB5_6server11server_conn20ServerConnectionDataECsh8EDedVkTYb_13tlsserver_mio(ptr dead_on_unwind noalias nofree noundef writable sret([64 x i8]) align 8 captures(address) dereferenceable(64) %0, ptr noalias nofree noundef align 8 dereferenceable(840) %1, ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(168) %2, ptr noundef nonnull %3, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) %4, ptr noalias nofree noundef align 8 dereferenceable(136) %5, ptr noalias nofree noundef align 8 dereferenceable_or_null(56) %6) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [168 x i8], align 8               ; 6 uses
+  %i.a = alloca [168 x i8], align 8               ; 7 uses
   %i.b = alloca [64 x i8], align 8                ; 3 uses
   %i.c = alloca [168 x i8], align 8               ; 4 uses
   %i.d = alloca [24 x i8], align 8                ; 6 uses
@@ -350,7 +344,9 @@ bb.h:                                             ; preds = %bb.b, %bb.b
   store i16 4, ptr %i.ad, align 8, !noalias !30
   store i64 -9223372036854775808, ptr %i.a, align 8, !noalias !30
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 65537, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !30
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !30
+  %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 1, ptr %.sroa.4.sroa.5.0..sroa.4.0..sroa_idx.sroa_idx.i, align 2, !noalias !30
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 73
   %i.af = load i8, ptr %i.ae, align 1, !range !5, !alias.scope !27, !noalias !33, !noundef !6
   %i.ag = icmp eq i8 %i.af, 2

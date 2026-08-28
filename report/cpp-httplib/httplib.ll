@@ -205,8 +205,8 @@ _ZNSt14_Function_baseD2Ev.exit57:                 ; preds = %.loopexit, %.loopex
   %.not.i61 = icmp eq ptr %i.ab, null
   br i1 %.not.i61, label %_ZNSt10unique_ptrIN7httplib9TaskQueueESt14default_deleteIS1_EED2Ev.exit63, label %_ZNKSt14default_deleteIN7httplib9TaskQueueEEclEPS1_.exit.i62
 
-_ZNKSt14default_deleteIN7httplib9TaskQueueEEclEPS1_.exit.i62: ; preds = %bb.bf, %.body52, %bb.av, %bb.aw, %_ZNSt14_Function_baseD2Ev.exit57
-  %.pn3076 = phi { ptr, i32 } [ %.pn30, %_ZNSt14_Function_baseD2Ev.exit57 ], [ %i.ds, %bb.aw ], [ %i.ds, %bb.av ], [ %eh.lpad-body53, %.body52 ], [ %i.er, %bb.bf ]
+_ZNKSt14default_deleteIN7httplib9TaskQueueEEclEPS1_.exit.i62: ; preds = %bb.aw, %bb.av, %bb.bf, %.body52, %_ZNSt14_Function_baseD2Ev.exit57
+  %.pn3076 = phi { ptr, i32 } [ %.pn30, %_ZNSt14_Function_baseD2Ev.exit57 ], [ %i.er, %bb.bf ], [ %eh.lpad-body53, %.body52 ], [ %i.ds, %bb.av ], [ %i.ds, %bb.aw ]
   %i.es = load ptr, ptr %i.ab, align 8, !tbaa !81
   %i.et = getelementptr inbounds nuw i8, ptr %i.es, i64 8
   %i.eu = load ptr, ptr %i.et, align 8

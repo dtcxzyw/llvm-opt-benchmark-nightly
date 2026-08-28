@@ -205,14 +205,8 @@ bb.bz:                                            ; preds = %_ZN5Eigen15PlainObj
   br i1 %i.yg, label %.lr.ph.i.preheader.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i
 
 .lr.ph.i.preheader.i.i.i.i.i:                     ; preds = %bb.bz
-  %bc808 = bitcast <2 x float> %i.xk to <2 x i32>
-  %45 = extractelement <2 x i32> %bc808, i64 1
-  %bc = bitcast <2 x float> %i.xk to <2 x i32>
-  %46 = extractelement <2 x i32> %bc, i64 0
-  %47 = bitcast i32 %46 to <1 x float>
-  %i.yh = shufflevector <1 x float> %47, <1 x float> poison, <4 x i32> zeroinitializer
-  %48 = bitcast i32 %45 to <1 x float>
-  %49 = shufflevector <1 x float> %48, <1 x float> poison, <4 x i32> zeroinitializer
+  %i.yh = shufflevector <2 x float> %i.xk, <2 x float> poison, <4 x i32> zeroinitializer
+  %45 = shufflevector <2 x float> %i.xk, <2 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   br label %.lr.ph.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %.lr.ph.i.i.i.i.i.i, %bb.bz
@@ -341,7 +335,7 @@ middle.block684:                                  ; preds = %vector.body677
   %i.aap = fmul <4 x float> %i.yh, %i.aao
   %i.aaq = getelementptr inbounds nuw [4 x i8], ptr %i.yc, i64 %.011.i.i.i.i.i.i
   %i.aar = load <4 x float>, ptr %i.aaq, align 16, !tbaa !54
-  %i.aas = fmul <4 x float> %49, %i.aar
+  %i.aas = fmul <4 x float> %45, %i.aar
   %i.aat = fadd <4 x float> %i.aap, %i.aas
   %i.aau = fneg <4 x float> %i.aat
   store <4 x float> %i.aau, ptr %i.aam, align 16, !tbaa !54

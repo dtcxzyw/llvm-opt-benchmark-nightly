@@ -205,15 +205,18 @@ bb.c:                                             ; preds = %bb.b, %_ZNK5clang10
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN5clang17CXXDefaultArgExprC2ENS_4Stmt9StmtClassENS_14SourceLocationEPNS_11ParmVarDeclEPNS_4ExprEPNS_11DeclContextE(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1, i32 %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) unnamed_addr #5 comdat align 2 {
 bb.a:
+  %.sroa.0 = alloca [8 x i8], align 8             ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 96
   %i.b = load i32, ptr %i.a, align 8
   %i.c = and i32 %i.b, 1536
   %i.d = icmp eq i32 %i.c, 512
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   br i1 %i.d, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 48
-  %.sroa.0.0.copyload.i = load i64, ptr %i.e, align 8, !tbaa !33 ; 3 uses
+  %.sroa.0.0.copyload.i = load i64, ptr %i.e, align 8, !tbaa !33 ; 2 uses
+  store i64 %.sroa.0.0.copyload.i, ptr %.sroa.0, align 8
   %i.f = and i64 %.sroa.0.0.copyload.i, -16
   %i.g = inttoptr i64 %i.f to ptr
   %i.h = load ptr, ptr %i.g, align 16, !tbaa !34  ; 4 uses
@@ -276,17 +279,16 @@ _ZNK5clang4Type6castAsINS_13ReferenceTypeEEEPKT_v.exit.i.i: ; preds = %bb.d, %.l
 _ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i: ; preds = %_ZNK5clang4Type6castAsINS_13ReferenceTypeEEEPKT_v.exit.i.i, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.thread5.i
   %.0.lcssa.i.i = phi ptr [ %.1.i8.i, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.thread5.i ], [ %.1.i.i.i, %_ZNK5clang4Type6castAsINS_13ReferenceTypeEEEPKT_v.exit.i.i ]
   %i.ah = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i, i64 32
-  %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i = load i64, ptr %i.ah, align 8, !tbaa !33
   br label %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
 
 bb.e:                                             ; preds = %bb.a
   %i.ai = tail call noundef ptr @_ZN5clang11ParmVarDecl13getDefaultArgEv(ptr noundef nonnull align 8 dereferenceable(104) %3) #17
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 8
-  %.sroa.0.0.copyload.i12 = load i64, ptr %i.aj, align 8, !tbaa !33
   br label %_ZNK5clang8QualType19getNonReferenceTypeEv.exit
 
 _ZNK5clang8QualType19getNonReferenceTypeEv.exit:  ; preds = %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i, %bb.c, %bb.e
-  %.sroa.0.0 = phi i64 [ %.sroa.0.0.copyload.i12, %bb.e ], [ %.sroa.0.0.in.i.sroa.speculate.load._ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %.sroa.0.0.copyload.i, %bb.c ], [ %.sroa.0.0.copyload.i, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
+  %.sroa.0.0.in = phi ptr [ %i.aj, %bb.e ], [ %i.ah, %_ZNK5clang13ReferenceType14getPointeeTypeEv.exit.i ], [ %.sroa.0, %bb.c ], [ %.sroa.0, %_ZNK5clang4Type5getAsINS_13ReferenceTypeEEEPKT_v.exit.i ]
+  %.sroa.0.0 = load i64, ptr %.sroa.0.0.in, align 8, !tbaa !33
   %i.ak = tail call noundef ptr @_ZN5clang11ParmVarDecl13getDefaultArgEv(ptr noundef nonnull align 8 dereferenceable(104) %3) #17
   %i.al = load i24, ptr %i.ak, align 8
   %i.am = and i24 %i.al, 1536
@@ -315,6 +317,7 @@ _ZN5clang4ExprC2ENS_4Stmt9StmtClassENS_8QualTypeENS_13ExprValueKindENS_14ExprObj
   %i.bb = or disjoint i24 %i.ba, %i.az
   store i24 %i.bb, ptr %0, align 8
   store i64 %.sroa.0.0, ptr %i.ax, align 8, !tbaa !33
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %3, ptr %i.bc, align 8, !tbaa !250
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 24

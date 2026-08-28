@@ -204,11 +204,10 @@ bb.z:                                             ; preds = %bb.w
 
 _RNvNtCs1GZEXNOm2AR_12icu_provider11marker_full9fxhash_32.exit: ; preds = %bb.k, %bb.q
   %.sroa.0.2.i = phi i32 [ %i.af, %bb.q ], [ %.sroa.0.1.i, %bb.k ]
-  %.sroa.10.0.insert.shift27 = zext i32 %.sroa.0.2.i to i64
-  %.sroa.7.0.insert.insert = shl nuw i64 %.sroa.10.0.insert.shift27, 32
-  %.sroa.016.0.insert.insert = or disjoint i64 %.sroa.7.0.insert.insert, 1751999604
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sroa.016.0.insert.insert, ptr %i.ba, align 8
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store <4 x i8> <i8 116, i8 100, i8 109, i8 104>, ptr %3, align 8
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i32 %.sroa.0.2.i, ptr %i.ba, align 4
   store ptr null, ptr %0, align 8
   br label %bb.e
 

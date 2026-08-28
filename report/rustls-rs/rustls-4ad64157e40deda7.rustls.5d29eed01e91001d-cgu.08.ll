@@ -202,11 +202,9 @@ bb.e:                                             ; preds = %bb.c
   %i.i = tail call i64 @llvm.uadd.sat.i64(i64 %i.f, i64 %i.h)
   store ptr %2, ptr %0, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %.sroa.5.0..sroa_idx, align 8
-  %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 0, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 8
-  %.sroa.5.sroa.6.sroa.5.0..sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.b, ptr %.sroa.5.sroa.6.sroa.5.0..sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx, align 8
+  %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(9) %.sroa.5.0..sroa_idx, i8 0, i64 9, i1 false)
+  store ptr %i.b, ptr %.sroa.5.sroa.5.0..sroa.5.0..sroa_idx.sroa_idx, align 8
   %.sroa.5.sroa.6.sroa.6.0..sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.e, ptr %.sroa.5.sroa.6.sroa.6.0..sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx, align 8
   %.sroa.5.sroa.6.sroa.7.0..sroa.5.sroa.6.0..sroa.5.0..sroa_idx.sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -609,9 +607,9 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %i.nd, label %bb.bl, label %bb.bk
 
 _RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i: ; preds = %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i, %bb.bl, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i, %bb.bg, %bb.cj
-  %.sroa.24.0 = phi ptr [ undef, %bb.bg ], [ %i.rz, %bb.cj ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i ], [ undef, %bb.bl ], [ undef, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i ]
-  %.sroa.20.0.a = phi ptr [ undef, %bb.bg ], [ %i.rx, %bb.cj ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i ], [ undef, %bb.bl ], [ undef, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i ]
-  %.sroa.11230.0 = phi i64 [ -9223372036854775800, %bb.bg ], [ %i.sa, %bb.cj ], [ -9223372036854775802, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i ], [ -9223372036854775802, %bb.bl ], [ -9223372036854775802, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i ]
+  %.sroa.11230.sroa.0.0 = phi i64 [ -9223372036854775800, %bb.bg ], [ %i.sa, %bb.cj ], [ -9223372036854775802, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i ], [ -9223372036854775802, %bb.bl ], [ -9223372036854775802, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i ]
+  %.sroa.20.0.a = phi ptr [ undef, %bb.bg ], [ %i.rz, %bb.cj ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i ], [ undef, %bb.bl ], [ undef, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i ]
+  %.sroa.20.0 = phi ptr [ undef, %bb.bg ], [ %i.rx, %bb.cj ], [ undef, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i ], [ undef, %bb.bl ], [ undef, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i ]
   %.sroa.0229.0 = phi i64 [ 2, %bb.bg ], [ %i.rw, %bb.cj ], [ 2, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteEEB1d_.exit93.i ], [ 2, %bb.bl ], [ 2, %_RNCINvNtNtNtCsj6eKBz9Db1c_4core4iter8adapters6filter15filter_try_foldRNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteuINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs_NtNtB1a_6server2hsNtB2Q_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_NCB2L_s1_0E0E0B1a_.exit.i.i ]
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecINtNtCsj6eKBz9Db1c_4core6option6OptionRRDNtNtCs7ZUl82OSlxp_6rustls6crypto16SupportedKxGroupEL_EENtNtNtBK_3ops4drop4Drop4dropB1o_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bk)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionRRDNtNtCs7ZUl82OSlxp_6rustls6crypto16SupportedKxGroupEL_EEEB1B_.exit108.i unwind label %bb.bi, !noalias !514
@@ -1000,9 +998,9 @@ bb.cl:                                            ; preds = %bb.ck
   unreachable
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionRRDNtNtCs7ZUl82OSlxp_6rustls6crypto16SupportedKxGroupEL_EEEB1B_.exit108.i: ; preds = %bb.cp, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i
-  %.sroa.24.1 = phi ptr [ %.sroa.24.0, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i ], [ %.sroa.24.2, %bb.cp ] ; 6 uses
-  %.sroa.20.1.a = phi ptr [ %.sroa.20.0.a, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i ], [ %.sroa.20.2, %bb.cp ] ; 6 uses
-  %.sroa.11230.1 = phi i64 [ %.sroa.11230.0, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i ], [ %.sroa.11230.2, %bb.cp ] ; 2 uses
+  %.sroa.11230.sroa.0.1 = phi i64 [ %.sroa.11230.sroa.0.0, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i ], [ %.sroa.11230.sroa.0.2, %bb.cp ] ; 2 uses
+  %.sroa.20.1.a = phi ptr [ %.sroa.20.0.a, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i ], [ %.sroa.24.2, %bb.cp ] ; 6 uses
+  %.sroa.20.1 = phi ptr [ %.sroa.20.0, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i ], [ %.sroa.20.2, %bb.cp ] ; 6 uses
   %.sroa.0229.1 = phi i64 [ %.sroa.0229.0, %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtCs7ZUl82OSlxp_6rustls6suites20SupportedCipherSuiteENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1I_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB3b_ENCNvMs_NtNtBN_6server2hsNtB47_17ExpectClientHello25choose_suite_and_kx_groups0_0NCINvNvB1C_4find5checkB3b_NCB42_s1_0E0E0B3g_EBN_.exit.thread.i ], [ %.sroa.0229.2, %bb.cp ] ; 4 uses
   invoke void @_RNvXs1_NtCs4wP2HXfJTCR_5alloc7raw_vecINtB5_6RawVecINtNtCsj6eKBz9Db1c_4core6option6OptionRRDNtNtCs7ZUl82OSlxp_6rustls6crypto16SupportedKxGroupEL_EENtNtNtBR_3ops4drop4Drop4dropB1v_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bk)
           to label %bb.cs unwind label %bb.as
@@ -1039,9 +1037,9 @@ bb.co:                                            ; preds = %bb.cm
   br label %bb.cp
 
 bb.cp:                                            ; preds = %.sink.split, %bb.co, %bb.cn
+  %.sroa.11230.sroa.0.2 = phi i64 [ -9223372036854775800, %bb.cn ], [ -9223372036854775800, %bb.co ], [ %i.sj, %.sink.split ]
   %.sroa.24.2 = phi ptr [ undef, %bb.cn ], [ undef, %bb.co ], [ %i.si, %.sink.split ]
   %.sroa.20.2 = phi ptr [ undef, %bb.cn ], [ undef, %bb.co ], [ %i.sg, %.sink.split ]
-  %.sroa.11230.2 = phi i64 [ -9223372036854775800, %bb.cn ], [ -9223372036854775800, %bb.co ], [ %i.sj, %.sink.split ]
   %.sroa.0229.2 = phi i64 [ 2, %bb.cn ], [ 2, %bb.co ], [ %i.rs, %.sink.split ]
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecINtNtCsj6eKBz9Db1c_4core6option6OptionRRDNtNtCs7ZUl82OSlxp_6rustls6crypto16SupportedKxGroupEL_EENtNtNtBK_3ops4drop4Drop4dropB1o_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bk)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecINtNtB4_6option6OptionRRDNtNtCs7ZUl82OSlxp_6rustls6crypto16SupportedKxGroupEL_EEEB1B_.exit108.i unwind label %bb.cq, !noalias !514
@@ -1072,18 +1070,18 @@ bb.ct:                                            ; preds = %bb.cs
   %i.sn = load ptr, ptr %5, align 8, !nonnull !5, !align !18, !noundef !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bv)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bu)
-  store i64 %.sroa.11230.1, ptr %i.bu, align 8
+  store i64 %.sroa.11230.sroa.0.1, ptr %i.bu, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
-  store ptr %.sroa.20.1.a, ptr %.sroa.4.0..sroa_idx, align 8
+  store ptr %.sroa.20.1, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.5235.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bu, i64 16
-  store ptr %.sroa.24.1, ptr %.sroa.5235.0..sroa_idx, align 8
+  store ptr %.sroa.20.1.a, ptr %.sroa.5235.0..sroa_idx, align 8
   invoke void @_RINvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB3_11CommonState16send_fatal_alertNtNtB5_5error16PeerIncompatibleEB5_(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.bv, ptr noalias nofree noundef nonnull align 8 dereferenceable(840) %i.sn, i8 noundef 6, i8 undef, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.bu)
           to label %_RNCNvMs_NtNtCs7ZUl82OSlxp_6rustls6server2hsNtB6_17ExpectClientHello18with_certified_keys1_0Ba_.exit unwind label %bb.as
 
 bb.cu:                                            ; preds = %bb.cs
-  %i.so = inttoptr i64 %.sroa.11230.1 to ptr      ; 6 uses
+  %i.so = inttoptr i64 %.sroa.11230.sroa.0.1 to ptr ; 6 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.20.1) ]
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.20.1.a) ]
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.24.1) ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ci)
   store i64 %.sroa.0229.1, ptr %i.ci, align 8
   %i.sp = getelementptr inbounds nuw i8, ptr %i.ci, i64 8 ; 2 uses
@@ -1129,9 +1127,9 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cu
   %i.tb = getelementptr inbounds nuw i8, ptr %i.ta, i64 704
   store i64 1, ptr %i.tb, align 8
   %.sroa.473.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ta, i64 712
-  store ptr %.sroa.20.1.a, ptr %.sroa.473.0..sroa_idx, align 8
+  store ptr %.sroa.20.1, ptr %.sroa.473.0..sroa_idx, align 8
   %.sroa.574.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ta, i64 720
-  store ptr %.sroa.24.1, ptr %.sroa.574.0..sroa_idx, align 8
+  store ptr %.sroa.20.1.a, ptr %.sroa.574.0..sroa_idx, align 8
   %.sroa.0.0.i194 = getelementptr inbounds nuw i8, ptr %.val176, i64 48
   %i.tc = load ptr, ptr %.sroa.0.0.i194, align 8, !nonnull !5, !noundef !5 ; 2 uses
   %i.td = getelementptr inbounds nuw i8, ptr %.val176, i64 56
@@ -1263,7 +1261,7 @@ bb.dj:                                            ; preds = %bb.di
   store ptr %.sroa.0.0.i, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.8226.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   store i64 %.sroa.5.0.i, ptr %.sroa.8226.0..sroa_idx, align 8
-  invoke void @_RNvMNtNtNtCs7ZUl82OSlxp_6rustls6server5tls1312client_helloNtB2_27CompleteClientHelloHandling19handle_client_hello(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(184) %i.ca, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %5, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.bs, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(168) %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(136) %3, ptr noundef nonnull %.sroa.20.1.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.24.1, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.bz)
+  invoke void @_RNvMNtNtNtCs7ZUl82OSlxp_6rustls6server5tls1312client_helloNtB2_27CompleteClientHelloHandling19handle_client_hello(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(none) dereferenceable(64) %0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(184) %i.ca, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %5, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.bs, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(168) %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(136) %3, ptr noundef nonnull %.sroa.20.1, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %.sroa.20.1.a, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.bz)
           to label %bb.nu unwind label %.body206.thread247
 
 bb.dk:                                            ; preds = %bb.di
@@ -1666,9 +1664,9 @@ bb.js:                                            ; preds = %bb.jp, %bb.jm, %bb.
   %i.aik = getelementptr inbounds nuw i8, ptr %i.aij, i64 704
   store i64 1, ptr %i.aik, align 8, !noalias !592
   %.sroa.48.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.aij, i64 712
-  store ptr %.sroa.20.1.a, ptr %.sroa.48.0..sroa_idx.i, align 8, !noalias !592
+  store ptr %.sroa.20.1, ptr %.sroa.48.0..sroa_idx.i, align 8, !noalias !592
   %.sroa.5.0..sroa_idx.i197 = getelementptr inbounds nuw i8, ptr %i.aij, i64 720
-  store ptr %.sroa.24.1, ptr %.sroa.5.0..sroa_idx.i197, align 8, !noalias !739
+  store ptr %.sroa.20.1.a, ptr %.sroa.5.0..sroa_idx.i197, align 8, !noalias !739
   %i.ail = load ptr, ptr %5, align 8, !alias.scope !581, !noalias !596, !nonnull !5, !align !18, !noundef !5
   %i.aim = getelementptr inbounds nuw i8, ptr %i.ail, i64 833
   store i8 0, ptr %i.aim, align 1, !noalias !592
@@ -1902,14 +1900,14 @@ bb.kk:                                            ; preds = %_RNvNtNtNtCs7ZUl82O
   %i.akm = and i64 %i.akl, -16
   %i.akn = getelementptr inbounds nuw i8, ptr %i.akh, i64 %i.akm
   %i.ako = getelementptr inbounds nuw i8, ptr %i.akn, i64 16
-  %i.akp = getelementptr inbounds nuw i8, ptr %.sroa.24.1, i64 32
+  %i.akp = getelementptr inbounds nuw i8, ptr %.sroa.20.1.a, i64 32
   %.val130.i = load ptr, ptr %i.akp, align 8, !alias.scope !585, !noalias !767
   %i.akq = getelementptr i8, ptr %i.aki, i64 32
   %.val131.i = load ptr, ptr %i.akq, align 8, !noalias !592
   call void @llvm.experimental.noalias.scope.decl(metadata !768)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !595
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !771
-  invoke void %.val130.i(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.i, ptr noundef nonnull %.sroa.20.1.a)
+  invoke void %.val130.i(ptr noalias nofree noundef nonnull sret([64 x i8]) align 8 captures(address) dereferenceable(64) %i.i, ptr noundef nonnull %.sroa.20.1)
           to label %bb.km unwind label %bb.kl, !noalias !775
 
 .body154.i.i:                                     ; preds = %bb.mi, %bb.mf, %bb.me, %bb.lt, %bb.kp, %bb.kl

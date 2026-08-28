@@ -204,7 +204,7 @@ bb.i:                                             ; preds = %bb.d
 
 bb.j:                                             ; preds = %bb.c
   %i.ag = getelementptr inbounds nuw i8, ptr %i.p, i64 2
-  %.sroa.016.0.copyload.i = load i32, ptr %i.ag, align 2, !noalias !2412 ; 4 uses
+  %.sroa.016.0.copyload.i = load i32, ptr %i.ag, align 2, !noalias !2412
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2426)
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 102
   %i.ai = load i8, ptr %i.ah, align 2, !range !151, !alias.scope !2429, !noalias !2430, !noundef !5
@@ -281,13 +281,16 @@ bb.x:                                             ; preds = %bb.t, %bb.s, %bb.r,
   br label %bb.ar
 
 bb.y:                                             ; preds = %bb.t
-  %.sroa.5115.i.sroa.5.6.insert.ext.i = zext nneg i8 %i.al to i64
-  %.sroa.5115.i.sroa.5.7.insert.ext.i = zext nneg i8 %i.aq to i64
-  %.sroa.5115.i.sroa.5.7.insert.shift.i = shl nuw nsw i64 %.sroa.5115.i.sroa.5.7.insert.ext.i, 8
-  %.sroa.5115.i.sroa.5.7.insert.insert.i = or disjoint i64 %.sroa.5115.i.sroa.5.7.insert.shift.i, %.sroa.5115.i.sroa.5.6.insert.ext.i
+  %.sroa.5115.i.sroa.5.6.insert.ext.i = zext nneg i32 %i.ba to i64
+  %.sroa.5115.i.sroa.5.7.insert.ext.i = zext nneg i8 %i.al to i64
+  %.sroa.5115.i.sroa.5.7.insert.shift.i = shl nuw nsw i64 %.sroa.5115.i.sroa.5.7.insert.ext.i, 32
+  %.sroa.4.i.sroa.0.5.insert.ext115 = zext nneg i8 %i.aq to i64
+  %.sroa.4.i.sroa.0.5.insert.shift116 = shl nuw nsw i64 %.sroa.4.i.sroa.0.5.insert.ext115, 40
   %.sroa.5115.i.sroa.5.8.insert.ext.i = zext nneg i8 %i.av to i64
-  %.sroa.5115.i.sroa.5.8.insert.shift.i = shl nuw nsw i64 %.sroa.5115.i.sroa.5.8.insert.ext.i, 16
-  %.sroa.5115.i.sroa.5.8.insert.insert.i = or disjoint i64 %.sroa.5115.i.sroa.5.7.insert.insert.i, %.sroa.5115.i.sroa.5.8.insert.shift.i
+  %.sroa.5115.i.sroa.5.8.insert.shift.i = shl nuw nsw i64 %.sroa.5115.i.sroa.5.8.insert.ext.i, 48
+  %.sroa.4.i.sroa.0.4.insert.insert105 = or disjoint i64 %.sroa.4.i.sroa.0.5.insert.shift116, %.sroa.5115.i.sroa.5.7.insert.shift.i
+  %.sroa.4.i.sroa.0.5.insert.insert118 = or disjoint i64 %.sroa.4.i.sroa.0.4.insert.insert105, %.sroa.5115.i.sroa.5.8.insert.shift.i
+  %.sroa.5115.i.sroa.5.8.insert.insert.i = or disjoint i64 %.sroa.4.i.sroa.0.5.insert.insert118, %.sroa.5115.i.sroa.5.6.insert.ext.i
   br label %bb.be
 
 bb.z:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -297,11 +300,12 @@ bb.z:                                             ; preds = %bb.w, %bb.v, %bb.u
 
 bb.aa:                                            ; preds = %bb.w
   %.sroa.5108.i.sroa.5.6.insert.ext.i = zext nneg i8 %i.al to i64
+  %.sroa.4.i.sroa.0.4.insert.shift98 = shl nuw nsw i64 %.sroa.5108.i.sroa.5.6.insert.ext.i, 32
   %.sroa.5108.i.sroa.5.7.insert.ext.i = zext nneg i8 %i.aq to i64
-  %.sroa.5108.i.sroa.5.7.insert.shift.i = shl nuw nsw i64 %.sroa.5108.i.sroa.5.7.insert.ext.i, 8
-  %.sroa.5108.i.sroa.5.7.insert.insert.i = or disjoint i64 %.sroa.5108.i.sroa.5.7.insert.shift.i, %.sroa.5108.i.sroa.5.6.insert.ext.i
+  %.sroa.5108.i.sroa.5.7.insert.shift.i = shl nuw nsw i64 %.sroa.5108.i.sroa.5.7.insert.ext.i, 40
+  %.sroa.5108.i.sroa.5.7.insert.insert.i = or disjoint i64 %.sroa.5108.i.sroa.5.7.insert.shift.i, %.sroa.4.i.sroa.0.4.insert.shift98
   %.sroa.5108.i.sroa.5.8.insert.ext.i = zext nneg i8 %i.av to i64
-  %.sroa.5108.i.sroa.5.8.insert.shift.i = shl nuw nsw i64 %.sroa.5108.i.sroa.5.8.insert.ext.i, 16
+  %.sroa.5108.i.sroa.5.8.insert.shift.i = shl nuw nsw i64 %.sroa.5108.i.sroa.5.8.insert.ext.i, 48
   %.sroa.5108.i.sroa.5.8.insert.insert.i = or disjoint i64 %.sroa.5108.i.sroa.5.7.insert.insert.i, %.sroa.5108.i.sroa.5.8.insert.shift.i
   br label %bb.be
 
@@ -327,9 +331,10 @@ bb.ae:                                            ; preds = %bb.ac, %bb.ab
 
 bb.af:                                            ; preds = %bb.ac
   %.sroa.5101.i.sroa.5.6.insert.ext.i = zext nneg i8 %i.al to i64
+  %.sroa.4.i.sroa.0.4.insert.shift93 = shl nuw nsw i64 %.sroa.5101.i.sroa.5.6.insert.ext.i, 32
   %.sroa.5101.i.sroa.5.7.insert.ext.i = zext nneg i8 %i.aq to i64
-  %.sroa.5101.i.sroa.5.7.insert.shift.i = shl nuw nsw i64 %.sroa.5101.i.sroa.5.7.insert.ext.i, 8
-  %.sroa.5101.i.sroa.5.7.insert.insert.i = or disjoint i64 %.sroa.5101.i.sroa.5.7.insert.shift.i, %.sroa.5101.i.sroa.5.6.insert.ext.i
+  %.sroa.5101.i.sroa.5.7.insert.shift.i = shl nuw nsw i64 %.sroa.5101.i.sroa.5.7.insert.ext.i, 40
+  %.sroa.5101.i.sroa.5.7.insert.insert.i = or disjoint i64 %.sroa.5101.i.sroa.5.7.insert.shift.i, %.sroa.4.i.sroa.0.4.insert.shift93
   br label %bb.be
 
 bb.ag:                                            ; preds = %bb.n
@@ -362,6 +367,7 @@ bb.ak:                                            ; preds = %bb.ai
 
 bb.al:                                            ; preds = %bb.ai
   %.sroa.5.i.sroa.5.6.insert.ext.i = zext nneg i8 %i.al to i64
+  %.sroa.4.i.sroa.0.4.insert.shift = shl nuw nsw i64 %.sroa.5.i.sroa.5.6.insert.ext.i, 32
   br label %bb.be
 
 bb.am:                                            ; preds = %bb.l
@@ -479,14 +485,13 @@ bb.bd:                                            ; preds = %bb.ay
   br label %bb.ax
 
 bb.be:                                            ; preds = %bb.ao, %bb.al, %bb.af, %bb.aa, %bb.y
-  %.sroa.4.4..sroa.4.4..sroa.4.8..sroa.418.0.copyload.i = phi i64 [ %.sroa.5115.i.sroa.5.8.insert.insert.i, %bb.y ], [ %.sroa.5.i.sroa.5.6.insert.ext.i, %bb.al ], [ %.sroa.5101.i.sroa.5.7.insert.insert.i, %bb.af ], [ %.sroa.5108.i.sroa.5.8.insert.insert.i, %bb.aa ], [ 0, %bb.ao ]
-  %.sroa.4.0..sroa.4.0..sroa.4.4..sroa.017.0.copyload.i = phi i32 [ %i.ba, %bb.y ], [ 0, %bb.al ], [ 0, %bb.af ], [ 0, %bb.aa ], [ 0, %bb.ao ]
+  %.sroa.4.4..sroa.4.4..sroa.4.8..sroa.418.0.copyload.i = phi i64 [ %.sroa.5115.i.sroa.5.8.insert.insert.i, %bb.y ], [ %.sroa.5108.i.sroa.5.8.insert.insert.i, %bb.aa ], [ %.sroa.5101.i.sroa.5.7.insert.insert.i, %bb.af ], [ %.sroa.4.i.sroa.0.4.insert.shift, %bb.al ], [ 0, %bb.ao ] ; 2 uses
+  %.sroa.4.i.sroa.0.0.extract.trunc = trunc i64 %.sroa.4.4..sroa.4.4..sroa.4.8..sroa.418.0.copyload.i to i32
   %.sroa.6.12.insert.ext = zext i32 %.sroa.016.0.copyload.i to i64
-  %.sroa.6.12.insert.shift = shl nuw i64 %.sroa.6.12.insert.ext, 32
-  %.sroa.6.12.insert.insert = or disjoint i64 %.sroa.4.4..sroa.4.4..sroa.4.8..sroa.418.0.copyload.i, %.sroa.6.12.insert.shift
+  %.sroa.6.12.insert.insert = tail call i64 @llvm.fshl.i64(i64 %.sroa.6.12.insert.ext, i64 %.sroa.4.4..sroa.4.4..sroa.4.8..sroa.418.0.copyload.i, i64 32) ; 2 uses
   %i.ch = inttoptr i64 %.sroa.6.12.insert.insert to ptr
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
-  store i32 %.sroa.4.0..sroa.4.0..sroa.4.4..sroa.017.0.copyload.i, ptr %i.r, align 8
+  store i32 %.sroa.4.i.sroa.0.0.extract.trunc, ptr %i.r, align 8
   %.4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   store ptr %i.ch, ptr %.4..4..4..sroa_idx, align 4
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 72
@@ -497,19 +502,21 @@ bb.be:                                            ; preds = %bb.ao, %bb.al, %bb.
   br i1 %i.cm, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7strtime5ErrorEBJ_.exit, label %bb.bf
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtNtCsa9sSWSfjDbm_4jiff5error3fmt7strtime5ErrorEBJ_.exit: ; preds = %bb.be
+  %2 = lshr i64 %.sroa.6.12.insert.insert, 32
+  %3 = trunc nuw i64 %2 to i32                    ; 3 uses
   %.0..0..0..val = load i64, ptr %i.r, align 8    ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2459)
-  %i.cn = shl i32 %.sroa.016.0.copyload.i, 8
+  %i.cn = shl i32 %3, 8
   %i.co = ashr i32 %i.cn, 24                      ; 3 uses
   %i.cp = icmp ult i32 %i.co, 3                   ; 2 uses
   %i.cq = or disjoint i32 %i.co, 12
   %.sroa.02.0.i.i.i = select i1 %i.cp, i32 %i.cq, i32 %i.co
-  %sext.i.i.i = shl i32 %.sroa.016.0.copyload.i, 16
+  %sext.i.i.i = shl i32 %3, 16
   %i.cr = ashr exact i32 %sext.i.i.i, 16
   %i.cs = add nsw i32 %i.cr, 32800
   %.neg.i.i.i = sext i1 %i.cp to i32
   %i.ct = add nsw i32 %i.cs, %.neg.i.i.i          ; 3 uses
-  %i.cu = ashr i32 %.sroa.016.0.copyload.i, 24
+  %i.cu = ashr i32 %3, 24
   %i.cv = udiv i32 %i.ct, 100
   %i.cw = mul nuw nsw i32 %i.ct, 1461
   %i.cx = lshr i32 %i.cw, 2
@@ -910,6 +917,9 @@ declare i8 @llvm.abs.i8(i8, i1 immarg) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.fshl.i64(i64, i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.umin.i8(i8, i8) #16

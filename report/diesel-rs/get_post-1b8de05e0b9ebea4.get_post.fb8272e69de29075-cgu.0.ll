@@ -202,7 +202,6 @@ bb.cq:                                            ; preds = %bb.cd, %bb.cc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !361
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !361
   %i.hq = ptrtoint ptr %i.fu to i64
-  %4 = ptrtoint ptr %i.fw to i64
   %i.hr = ptrtoint ptr %i.fn to i64
   %i.hs = inttoptr i64 %i.fr to ptr
   br label %bb.cr
@@ -210,12 +209,12 @@ bb.cq:                                            ; preds = %bb.cd, %bb.cc
 bb.cr:                                            ; preds = %bb.cq, %bb.cp
   %.sroa.29.06987.i.i = phi i8 [ undef, %bb.cp ], [ %i.hp, %bb.cq ]
   %.sroa.28.07185.i.i = phi i32 [ undef, %bb.cp ], [ %i.fj, %bb.cq ]
-  %.sroa.614.sroa.0.0.i.i = phi i64 [ undef, %bb.cp ], [ %4, %bb.cq ]
+  %.sroa.614.sroa.0.0.i.i = phi i64 [ undef, %bb.cp ], [ %i.hq, %bb.cq ]
+  %.sroa.613.sroa.0.sroa.0.0.i.i = phi ptr [ undef, %bb.cp ], [ %i.fw, %bb.cq ]
   %.sroa.512.sroa.0.0.i.i = phi i64 [ -9223372036854775805, %bb.cp ], [ %i.hr, %bb.cq ]
   %.sroa.512.sroa.5.0.i.i = phi ptr [ %.sroa.10.1.ph.i.i, %bb.cp ], [ %i.fp, %bb.cq ]
   %.sroa.010.0.i.i = phi i64 [ -1, %bb.cp ], [ %i.fk, %bb.cq ]
   %.sroa.512.sroa.6.0.i.i = phi ptr [ %.sroa.1756.1.ph.i.i, %bb.cp ], [ %i.hs, %bb.cq ]
-  %.sroa.512.sroa.7.0.i.i = phi i64 [ undef, %bb.cp ], [ %i.hq, %bb.cq ]
   call void @llvm.experimental.noalias.scope.decl(metadata !509)
   call void @llvm.experimental.noalias.scope.decl(metadata !512)
   call void @llvm.experimental.noalias.scope.decl(metadata !515)
@@ -289,8 +288,8 @@ bb.cy:                                            ; preds = %bb.cv, %bb.am
 bb.cz:                                            ; preds = %bb.ao, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i
   %.sroa.18.0.ph = phi i8 [ %.sroa.29.06987.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ undef, %bb.ao ]
   %.sroa.17.0.ph = phi i32 [ %.sroa.28.07185.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ undef, %bb.ao ]
-  %.sroa.16.0.ph = phi i64 [ %.sroa.614.sroa.0.0.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ undef, %bb.ao ]
-  %.sroa.14.0.ph = phi i64 [ %.sroa.512.sroa.7.0.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ %.sroa.628.0.copyload.i.i, %bb.ao ]
+  %.sroa.16.0.ph = phi ptr [ %.sroa.613.sroa.0.sroa.0.0.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ undef, %bb.ao ]
+  %.sroa.14.0.ph = phi i64 [ %.sroa.614.sroa.0.0.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ %.sroa.628.0.copyload.i.i, %bb.ao ]
   %.sroa.12.0.ph = phi ptr [ %.sroa.512.sroa.6.0.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ %.sroa.527.0.copyload.i.i, %bb.ao ]
   %.sroa.10.0.ph = phi ptr [ %.sroa.512.sroa.5.0.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ %.sroa.426.0.copyload.i.i, %bb.ao ]
   %.sroa.818.0.ph = phi i64 [ %.sroa.512.sroa.0.0.i.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtNtNtCsjRvGck33osM_6diesel5mysql10connection4stmt8iterator8MysqlRowECslAMksGb6ZpN_8get_post.exit.i.i ], [ %i.dy, %bb.ao ]
@@ -306,7 +305,7 @@ bb.cz:                                            ; preds = %bb.ao, %_RINvNtCscI
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %.sroa.14.0.ph, ptr %.sroa.14.0..sroa_idx, align 8
   %.sroa.16.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store i64 %.sroa.16.0.ph, ptr %.sroa.16.0..sroa_idx, align 8
+  store ptr %.sroa.16.0.ph, ptr %.sroa.16.0..sroa_idx, align 8
   %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i32 %.sroa.17.0.ph, ptr %.sroa.17.0..sroa_idx, align 8
   %.sroa.18.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 52

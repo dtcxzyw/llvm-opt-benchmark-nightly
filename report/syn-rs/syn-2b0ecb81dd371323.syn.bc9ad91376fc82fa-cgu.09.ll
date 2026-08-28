@@ -202,12 +202,11 @@ bb.ab:                                            ; preds = %bb.z
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %.sroa.593.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 56
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.593.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %i.l, i64 40, i1 false)
-  %.sroa.496.0.insert.ext = zext i32 %.sroa.0122.0.copyload to i64
-  %.sroa.496.0.insert.shift = shl nuw i64 %.sroa.496.0.insert.ext, 32
-  %.sroa.095.0.insert.insert = or disjoint i64 %.sroa.496.0.insert.shift, 1
   store i64 2, ptr %0, align 8
-  %.sroa.694.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store i64 %.sroa.095.0.insert.insert, ptr %.sroa.694.0..sroa_idx, align 8
+  %.sroa.684.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
+  store i32 1, ptr %.sroa.684.0..sroa_idx, align 8
+  %.sroa.694.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 100
+  store i32 %.sroa.0122.0.copyload, ptr %.sroa.694.0..sroa_idx, align 4
   br label %bb.af
 
 bb.ac:                                            ; preds = %bb.t
@@ -239,7 +238,7 @@ bb.ae:                                            ; preds = %bb.ac
   %.sroa.470.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %i.aq, ptr %.sroa.470.0..sroa_idx, align 8
   %.sroa.874.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store i64 0, ptr %.sroa.874.0..sroa_idx, align 8
+  store i32 0, ptr %.sroa.874.0..sroa_idx, align 8
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ab, %bb.ae, %.thread
@@ -540,12 +539,11 @@ bb.bl:                                            ; preds = %bb.bk
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.552.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %i.l, i64 40, i1 false)
   %.sroa.451.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.451.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %i.j, i64 48, i1 false)
-  %.sroa.455.0.insert.ext = zext i32 %.sroa.0109.0.copyload to i64
-  %.sroa.455.0.insert.shift = shl nuw i64 %.sroa.455.0.insert.ext, 32
-  %.sroa.054.0.insert.insert = or disjoint i64 %.sroa.455.0.insert.shift, 1
   store i64 1, ptr %0, align 8
-  %.sroa.653.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
-  store i64 %.sroa.054.0.insert.insert, ptr %.sroa.653.0..sroa_idx, align 8
+  %.sroa.646.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 96
+  store i32 1, ptr %.sroa.646.0..sroa_idx, align 8
+  %.sroa.653.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 100
+  store i32 %.sroa.0109.0.copyload, ptr %.sroa.653.0..sroa_idx, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %bb.af
 

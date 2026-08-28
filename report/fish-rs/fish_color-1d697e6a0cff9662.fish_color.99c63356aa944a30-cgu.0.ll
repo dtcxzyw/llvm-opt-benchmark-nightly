@@ -204,9 +204,9 @@ bb.a:                                             ; preds = %_RNvXs0_NtNtNtCs3oU
   br label %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i
 
 _RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i: ; preds = %bb.a, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i
-  %.sroa.8.0.i = phi i64 [ %.sroa.622.0.copyload.i, %bb.a ], [ %.sroa.533.0.copyload.i, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i ] ; 2 uses
+  %.sroa.8.0.i = phi i64 [ %.sroa.622.0.copyload.i, %bb.a ], [ %3, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i ] ; 2 uses
   %.sroa.627.0.i = phi ptr [ %.pre.i.i, %bb.a ], [ %.sroa.4.0.copyload.sroa.speculated.i, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i ]
-  %.sroa.025.0.i = phi i64 [ %.sroa.017.0.copyload.i, %bb.a ], [ %.sroa.032.0.copyload.sroa.speculated.i, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i ]
+  %.sroa.025.0.i = phi i64 [ %.sroa.017.0.copyload.i, %bb.a ], [ %.sroa.533.0.copyload.i, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i ]
   %i.o = phi i64 [ 1, %bb.a ], [ %i.r, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i ] ; 2 uses
   %.sroa.01.0.i.i.i.i.i = phi i64 [ 0, %bb.a ], [ %i.s, %_RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator4fold9enumerateRmINtNtBf_3cmp11KeyAndValuemTjB21_EENCINvNtBb_3map8map_foldB2t_B23_B23_NCINvNvB1e_10min_by_key3keyB2t_mNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0NvYB23_NtB26_3Ord3minE0E0B3K_.exit.i.i.i.i.i ] ; 2 uses
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %.sroa.01.0.i.i.i.i.i
@@ -214,16 +214,15 @@ _RNCINvNvXs_NtNtNtCs3oUPovFnLWP_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !85
   call fastcc void @_RNCINvNvNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator10min_by_key3keyTjRmEmNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0B1r_(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.n, ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(32) %i.b, i64 noundef %i.o, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(4) %i.p) #20, !noalias !96
   %.sroa.9.24.copyload.i = load i64, ptr %i.n, align 8, !noalias !97
-  %.sroa.11.24.copyload.i = load i64, ptr %.sroa.11.24..sroa_idx.i, align 8, !noalias !97
+  %.sroa.11.24.copyload.i = load ptr, ptr %.sroa.11.24..sroa_idx.i, align 8, !noalias !97
   %.sroa.12.24.copyload.i = load i64, ptr %.sroa.12.24..sroa_idx.i, align 8, !noalias !97 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !85
-  %.sroa.640.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.8.0.i to i32
-  %.sroa.12.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.12.24.copyload.i to i32
-  %i.q = icmp ult i32 %.sroa.12.sroa.0.0.extract.trunc.i, %.sroa.640.sroa.0.0.extract.trunc.i ; 3 uses
-  %3 = inttoptr i64 %.sroa.11.24.copyload.i to ptr
-  %.sroa.4.0.copyload.sroa.speculated.i = select i1 %i.q, ptr %3, ptr %.sroa.627.0.i ; 2 uses
-  %.sroa.032.0.copyload.sroa.speculated.i = select i1 %i.q, i64 %.sroa.9.24.copyload.i, i64 %.sroa.025.0.i ; 2 uses
-  %.sroa.533.0.copyload.i = select i1 %i.q, i64 %.sroa.12.24.copyload.i, i64 %.sroa.8.0.i
+  %.sroa.640.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.12.24.copyload.i to i32
+  %.sroa.12.sroa.0.0.extract.trunc.i = trunc i64 %.sroa.8.0.i to i32
+  %i.q = icmp ult i32 %.sroa.640.sroa.0.0.extract.trunc.i, %.sroa.12.sroa.0.0.extract.trunc.i ; 3 uses
+  %3 = select i1 %i.q, i64 %.sroa.12.24.copyload.i, i64 %.sroa.8.0.i
+  %.sroa.4.0.copyload.sroa.speculated.i = select i1 %i.q, ptr %.sroa.11.24.copyload.i, ptr %.sroa.627.0.i ; 2 uses
+  %.sroa.533.0.copyload.i = select i1 %i.q, i64 %.sroa.9.24.copyload.i, i64 %.sroa.025.0.i ; 2 uses
   %i.r = add nuw nsw i64 %i.o, 1                  ; 2 uses
   store i64 %i.r, ptr %i.l, align 8, !alias.scope !101, !noalias !102
   %i.s = add nuw nsw i64 %.sroa.01.0.i.i.i.i.i, 1 ; 2 uses
@@ -242,7 +241,7 @@ _RINvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB8_9enumerate9Enume
   br i1 %.not.i, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_RINvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4ItermEENCINvNvNtNtNtBa_6traits8iterator8Iterator10min_by_key3keyTjRmEmNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0EB1T_6reduceNvYINtNtBc_3cmp11KeyAndValuemB2H_ENtB3R_3Ord3minEB2R_.exit.i
-  ret i64 %.sroa.032.0.copyload.sroa.speculated.i
+  ret i64 %.sroa.533.0.copyload.i
 
 bb.c:                                             ; preds = %_RINvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4ItermEENCINvNvNtNtNtBa_6traits8iterator8Iterator10min_by_key3keyTjRmEmNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0EB1T_6reduceNvYINtNtBc_3cmp11KeyAndValuemB2H_ENtB3R_3Ord3minEB2R_.exit.i, %_RINvYINtNtNtNtCs3oUPovFnLWP_4core4iter8adapters3map3MapINtNtB8_9enumerate9EnumerateINtNtNtBc_5slice4iter4ItermEENCINvNvNtNtNtBa_6traits8iterator8Iterator10min_by_key3keyTjRmEmNCNvCsdcxgzuWc7wi_10fish_color13convert_color0E0EB1T_6reduceNvYINtNtBc_3cmp11KeyAndValuemB2H_ENtB3R_3Ord3minEB2R_.exit.thread.i
   call void @_RNvNtCs3oUPovFnLWP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #19

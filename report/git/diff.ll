@@ -205,13 +205,13 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.073 = phi i32 [ %9, %bb.e ], [ %10, %bb.d ]
-  %.072 = phi i32 [ %10, %bb.e ], [ %9, %bb.d ]
   %.071 = phi i32 [ %6, %bb.e ], [ %7, %bb.d ]
   %.070 = phi i32 [ %7, %bb.e ], [ %6, %bb.d ]
   %.069 = phi ptr [ %4, %bb.e ], [ %5, %bb.d ]    ; 2 uses
+  %.066 = phi i32 [ %10, %bb.e ], [ %9, %bb.d ]
   %.068 = phi ptr [ %5, %bb.e ], [ %4, %bb.d ]    ; 2 uses
   %.067 = phi i32 [ %2, %bb.e ], [ %3, %bb.d ]
+  %.063 = phi i32 [ %9, %bb.e ], [ %10, %bb.d ]
   %.066.a = phi i32 [ %3, %bb.e ], [ %2, %bb.d ]
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 328
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !184  ; 2 uses
@@ -369,14 +369,14 @@ canon_mode.exit.i88:                              ; preds = %bb.p, %bb.r, %bb.q,
   br label %fill_filespec.exit91
 
 fill_filespec.exit91:                             ; preds = %fill_filespec.exit, %canon_mode.exit.i88
-  %i.br = trunc i32 %.072 to i16
+  %i.br = trunc i32 %.066 to i16
   %i.bs = load i16, ptr %i.ac, align 2
   %i.bt = shl i16 %i.br, 3
   %i.bu = and i16 %i.bt, 24
   %i.bv = and i16 %i.bs, -25
   %i.bw = or disjoint i16 %i.bv, %i.bu
   store i16 %i.bw, ptr %i.ac, align 2
-  %i.bx = trunc i32 %.073 to i16
+  %i.bx = trunc i32 %.063 to i16
   %i.by = load i16, ptr %i.aq, align 2
   %i.bz = shl i16 %i.bx, 3
   %i.ca = and i16 %i.bz, 24

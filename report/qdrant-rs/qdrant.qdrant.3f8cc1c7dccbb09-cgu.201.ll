@@ -202,8 +202,8 @@ bb.r:                                             ; preds = %.thread, %bb.c
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMNtCslmvYCXbQjWR_6common12save_on_diskINtB3_10SaveOnDiskINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards10resharding12ReshardStateEE14write_optionalNCNCNvMNtNtB1C_12shard_holder10reshardingNtB31_11ShardHolder26start_resharding_unchecked00ECsl8OoimOLbh_6qdrant(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull align 8 %1, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %.sroa.4.i = alloca i64, align 8                ; 5 uses
-  %.sroa.7.i = alloca i64, align 8                ; 4 uses
+  %.sroa.4.i = alloca [8 x i8], align 8           ; 5 uses
+  %.sroa.7.i = alloca [8 x i8], align 8           ; 4 uses
   %i.a = alloca [16 x i8], align 1                ; 4 uses
   %i.b = alloca [56 x i8], align 8                ; 11 uses
   %i.c = alloca [56 x i8], align 8                ; 5 uses
@@ -294,8 +294,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i: ; preds = %bb.d, %bb.f, %bb.e
   %.sroa.06.0.i.i = phi ptr [ %.val.i.i, %bb.f ], [ inttoptr (i64 16 to ptr), %bb.e ], [ %.val.i.i, %bb.d ]
-  %3 = ptrtoint ptr %.sroa.06.0.i.i to i64
-  store i64 %3, ptr %.sroa.4.i, align 8, !alias.scope !50, !noalias !57
+  store ptr %.sroa.06.0.i.i, ptr %.sroa.4.i, align 8, !alias.scope !50, !noalias !57
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit.i: ; preds = %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i, %bb.c
@@ -698,9 +697,9 @@ bb.i:                                             ; preds = %bb.e
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.g, %bb.f
+  %.sroa.8.sroa.0.0 = phi i64 [ %.sroa.8.0.copyload, %bb.i ], [ undef, %bb.f ], [ undef, %bb.g ]
   %.sroa.6.sroa.6.sroa.0.0 = phi i64 [ %.sroa.6.sroa.6.0.extract.shift, %bb.i ], [ %.sroa.6.sroa.6.0.extract.shift9, %bb.f ], [ 0, %bb.g ]
   %.sroa.6.sroa.0.0 = phi i8 [ %.sroa.6.sroa.0.0.extract.trunc, %bb.i ], [ %.sroa.6.sroa.0.0.extract.trunc8, %bb.f ], [ %i.q, %bb.g ]
-  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload, %bb.i ], [ undef, %bb.f ], [ undef, %bb.g ]
   %.sroa.02.0 = phi i64 [ %.sroa.02.0.copyload, %bb.i ], [ -9223372036854775808, %bb.f ], [ -9223372036854775807, %bb.g ]
   %.sroa.6.sroa.0.0.insert.ext = zext i8 %.sroa.6.sroa.0.0 to i64
   %.sroa.6.sroa.0.0.insert.insert = or disjoint i64 %.sroa.6.sroa.6.sroa.0.0, %.sroa.6.sroa.0.0.insert.ext
@@ -721,7 +720,7 @@ bb.j:                                             ; preds = %bb.i, %bb.g, %bb.f
   %.sroa.0.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 216
   store i64 %.sroa.6.sroa.0.0.insert.insert, ptr %.sroa.0.sroa.9.0..sroa_idx, align 8
   %.sroa.0.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 224
-  store i64 %.sroa.8.0, ptr %.sroa.0.sroa.10.0..sroa_idx, align 8
+  store i64 %.sroa.8.sroa.0.0, ptr %.sroa.0.sroa.10.0..sroa_idx, align 8
   %.sroa.0.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 320
   store i64 -1, ptr %.sroa.0.sroa.13.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 368

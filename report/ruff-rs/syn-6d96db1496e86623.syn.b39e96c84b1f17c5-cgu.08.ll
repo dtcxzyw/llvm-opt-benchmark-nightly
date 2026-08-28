@@ -202,14 +202,15 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %.sroa.03.0.copyload = load i32, ptr %i.l, align 8
+  %2 = load i64, ptr %i.l, align 8
+  %.sroa.01.sroa.0.0.extract.trunc = trunc i64 %2 to i32
   %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %.sroa.25.0.copyload = load ptr, ptr %.sroa.25.0..sroa_idx, align 8
   %.sroa.36.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %.sroa.36.0.copyload = load ptr, ptr %.sroa.36.0..sroa_idx, align 8
   call void @_RNvMs7_NtCs4NRVxsYgnAr_4core4cellINtB5_4CellNtNtCsfq6Q4Do6HaX_3syn6buffer6CursorE3setBK_(ptr nonnull align 8 %1, ptr %.sroa.25.0.copyload, ptr %.sroa.36.0.copyload)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 %.sroa.03.0.copyload, ptr %i.m, align 8
+  store i32 %.sroa.01.sroa.0.0.extract.trunc, ptr %i.m, align 8
   store i64 -1, ptr %0, align 8
   br label %bb.d
 

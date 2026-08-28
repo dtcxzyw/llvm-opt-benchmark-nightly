@@ -205,8 +205,8 @@ _ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   br label %.thread
 
-.thread:                                          ; preds = %_ZN6hermes2vm11TwineChar16C2EPKc.exit.i, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEjb.exit.i, %bb.p, %bb.h, %bb.i, %_ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit, %bb.r, %bb.q, %bb.a
-  %.sroa.068.6 = phi ptr [ inttoptr (i64 -1 to ptr), %bb.a ], [ inttoptr (i64 -1 to ptr), %bb.p ], [ inttoptr (i64 -1 to ptr), %bb.i ], [ inttoptr (i64 -1 to ptr), %bb.h ], [ %.0.i.i.i.i.i.i31, %bb.q ], [ %.0.i.i.i.i.i.i27, %bb.r ], [ %i.dr, %_ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit ], [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEjb.exit.i ], [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm11TwineChar16C2EPKc.exit.i ]
+.thread:                                          ; preds = %_ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit, %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEjb.exit.i, %_ZN6hermes2vm11TwineChar16C2EPKc.exit.i, %bb.p, %bb.h, %bb.i, %bb.r, %bb.q, %bb.a
+  %.sroa.068.6 = phi ptr [ inttoptr (i64 -1 to ptr), %bb.a ], [ %.0.i.i.i.i.i.i27, %bb.r ], [ inttoptr (i64 -1 to ptr), %bb.i ], [ inttoptr (i64 -1 to ptr), %bb.h ], [ %.0.i.i.i.i.i.i31, %bb.q ], [ inttoptr (i64 -1 to ptr), %bb.p ], [ %i.dr, %_ZN6hermes2vm13StringBuilder14appendASCIIRefEN4llvh8ArrayRefIcEE.exit ], [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm15StringPrimitive6createERNS0_7RuntimeEjb.exit.i ], [ inttoptr (i64 -1 to ptr), %_ZN6hermes2vm11TwineChar16C2EPKc.exit.i ]
   ret ptr %.sroa.068.6
 }
 

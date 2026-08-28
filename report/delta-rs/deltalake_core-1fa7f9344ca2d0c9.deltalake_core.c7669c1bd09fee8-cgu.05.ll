@@ -205,12 +205,11 @@ bb.a:
   %i.d = alloca [24 x i8], align 8                ; 7 uses
   %i.e = alloca [24 x i8], align 8                ; 5 uses
   %i.f = alloca [136 x i8], align 8               ; 2 uses
-  %i.g = alloca [32 x i8], align 16               ; 6 uses
+  %i.g = alloca [32 x i8], align 8                ; 7 uses
   %i.h = alloca [24 x i8], align 8                ; 6 uses
   %i.i = alloca [40 x i8], align 16               ; 10 uses
   %.sroa.4.0..sroa_idx29 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.4.0.copyload30 = load i64, ptr %.sroa.4.0..sroa_idx29, align 8, !alias.scope !12806 ; 2 uses
-  %2 = load <2 x i64>, ptr %1, align 8, !alias.scope !12806
+  %.sroa.4.0.copyload30 = load i64, ptr %.sroa.4.0..sroa_idx29, align 8, !alias.scope !12806 ; 3 uses
   %.sroa.5.0..sroa_idx32 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.5.0.copyload33 = load i64, ptr %.sroa.5.0..sroa_idx32, align 8, !alias.scope !12806 ; 3 uses
   %spec.select.i.i = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.5.0.copyload33, i64 %.sroa.4.0.copyload30) ; 2 uses
@@ -261,10 +260,13 @@ bb.e:                                             ; preds = %.split.i.thread, %.
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx, i8 0, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
+  %2 = load i64, ptr %1, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !12813)
-  store <2 x i64> %2, ptr %i.g, align 16, !alias.scope !12816, !noalias !12818
+  store i64 %2, ptr %i.g, align 8, !alias.scope !12816, !noalias !12818
+  %.sroa.437.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  store i64 %.sroa.4.0.copyload30, ptr %.sroa.437.0..sroa_idx, align 8, !alias.scope !12816, !noalias !12818
   %.sroa.539.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  store i64 %.sroa.5.0.copyload33, ptr %.sroa.539.0..sroa_idx, align 16, !alias.scope !12816, !noalias !12818
+  store i64 %.sroa.5.0.copyload33, ptr %.sroa.539.0..sroa_idx, align 8, !alias.scope !12816, !noalias !12818
   %i.s = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   store ptr %i.i, ptr %i.s, align 8, !alias.scope !12820, !noalias !12821
   invoke void @_RINvXsh_NtNtCs7xHNgVo2C7m_12arrow_buffer6buffer9immutableNtB6_6BufferINtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12FromIteratormE9from_iterINtNtNtB1c_8adapters3map3MapIB2i_INtNtNtB1e_3ops5range5RangejENCNvNtNtCs14kWLkQVSKO_14deltalake_core6writer12record_batch26divide_by_partition_valuess0_0ENCINvXs9_NtNtCs1N9T06jgEdt_11arrow_array5array15primitive_arrayINtB4U_14PrimitiveArrayNtNtB4Y_5types10UInt32TypeEIB16_INtNtB1e_6option6OptionmEE9from_iterB2J_E0EEB3p_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.h, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.g)

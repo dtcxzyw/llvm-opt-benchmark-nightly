@@ -202,7 +202,6 @@ bb.d:                                             ; preds = %_RNvMNtCsexYYUdYSQU
           to label %common.resume unwind label %bb.n
 
 bb.e:                                             ; preds = %_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxINtNtNtCs2WNwEIJRUGR_15futures_channel4mpsc5queue4NodeINtNtNtCskKLDkoKarTP_4core2io6cursor6CursorIBv_ShEEEE3newCsl8OoimOLbh_6qdrant.exit
-  %2 = ptrtoint ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed to i64
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull align 8 dereferenceable(16) %i.c, i64 16, i1 false)
@@ -211,7 +210,7 @@ bb.e:                                             ; preds = %_RNvMNtCsexYYUdYSQU
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %i.l, align 8
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 %2, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8
+  store ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48
@@ -380,7 +379,6 @@ bb.e:                                             ; preds = %_RNvNtCsexYYUdYSQU6
           to label %common.resume unwind label %bb.o
 
 bb.f:                                             ; preds = %_RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit
-  %2 = ptrtoint ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed to i64
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, ptr noundef nonnull align 8 dereferenceable(16) %i.c, i64 16, i1 false)
@@ -389,7 +387,7 @@ bb.f:                                             ; preds = %_RNvNtCsexYYUdYSQU6
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %i.l, align 8
   %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  store i64 %2, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8
+  store ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8
   %.sroa.0.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr %_RNvCsbkii2mvYdKU_7___rustc19___rust_alloc_zeroed, ptr %.sroa.0.sroa.5.0..sroa_idx, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 48

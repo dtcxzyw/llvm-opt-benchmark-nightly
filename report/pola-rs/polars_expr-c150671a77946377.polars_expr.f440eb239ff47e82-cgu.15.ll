@@ -205,9 +205,9 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3Co
 
 bb.ch:                                            ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit, %bb.bn
   %i.ja = phi i64 [ %.pre, %bb.bn ], [ %i.hi, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit ], !dbg !109489
+  %.sroa.465.sroa.0.0 = phi i64 [ undef, %bb.bn ], [ %.sroa.570.0.copyload, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit ]
   %.sroa.072.0 = phi i8 [ %i.gx, %bb.bn ], [ 1, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit ], !dbg !109698
   %.sroa.071.0 = phi i8 [ %i.gw, %bb.bn ], [ 0, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit ], !dbg !109698
-  %.sroa.465.0 = phi i64 [ undef, %bb.bn ], [ %.sroa.570.0.copyload, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit ]
   %.sroa.362.0 = phi ptr [ %.sroa.0187.0.sroa.sel374, %bb.bn ], [ %.sroa.469.0.copyload, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit ], !dbg !109698 ; 4 uses
   %.sroa.060.0 = phi i64 [ -9223372036854775808, %bb.bn ], [ %.sroa.068.0.copyload, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc6borrow3CowSxEECskY9G75ZWc4U_11polars_expr.exit ], !dbg !109698 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !dbg !109699
@@ -215,7 +215,7 @@ bb.ch:                                            ; preds = %_RINvNtCscgRAwXFJnX
   %.sroa.362.0..sroa_idx63 = getelementptr inbounds nuw i8, ptr %i.aw, i64 8, !dbg !109699 ; 6 uses
   store ptr %.sroa.362.0, ptr %.sroa.362.0..sroa_idx63, align 8, !dbg !109699
   %.sroa.465.0..sroa_idx66 = getelementptr inbounds nuw i8, ptr %i.aw, i64 16, !dbg !109699 ; 4 uses
-  store i64 %.sroa.465.0, ptr %.sroa.465.0..sroa_idx66, align 8, !dbg !109699
+  store i64 %.sroa.465.sroa.0.0, ptr %.sroa.465.0..sroa_idx66, align 8, !dbg !109699
   %.not261 = icmp eq i64 %.sroa.060.0, -9223372036854775808, !dbg !109700 ; 3 uses
   %.sroa.gep389 = getelementptr inbounds nuw i8, ptr %.sroa.362.0, i64 16, !dbg !109703
   %.sroa.0194.0.sroa.sel = select i1 %.not261, ptr %.sroa.gep389, ptr %.sroa.465.0..sroa_idx66, !dbg !109703
@@ -618,10 +618,9 @@ bb.g:                                             ; preds = %.noexc.i.i
   br label %bb.n, !dbg !142746
 
 bb.h:                                             ; preds = %.noexc.i.i
-  %.sroa.636.0.copyload.i.i.i.i.i = load i64, ptr %.sroa.636.0..sroa_idx.i.i.i.i.i, align 8, !dbg !142748, !noalias !142733
+  %.sroa.636.0.copyload.i.i.i.i.i = load i32, ptr %.sroa.636.0..sroa_idx.i.i.i.i.i, align 8, !dbg !142748, !noalias !142733
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !dbg !142745, !noalias !142733
   %i.ap = ptrtoint ptr %i.ao to i64, !dbg !142736 ; 3 uses
-  %.sroa.4.16.extract.trunc.i.i.i.i.i = trunc i64 %.sroa.636.0.copyload.i.i.i.i.i to i32, !dbg !142736
   %i.aq = trunc nuw i64 %i.am to i1, !dbg !142749
   br i1 %i.aq, label %bb.i, label %bb.p, !dbg !142749
 
@@ -667,7 +666,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !142781, !noalias !142733
   %i.az = load ptr, ptr %i.g, align 8, !dbg !142782, !noalias !142733, !nonnull !11, !align !1707, !noundef !11
-  invoke void @_RINvMNtNtCsfHnWouPsIOz_14regex_automata4util4iterNtB3_8Searcher35handle_overlapping_empty_half_matchQNCNvXs6_NtNtB7_4meta5regexNtB1J_11FindMatchesNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator5count0ECskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.h, i64 noundef %i.ap, i32 noundef %.sroa.4.16.extract.trunc.i.i.i.i.i, ptr noalias noundef nonnull align 8 dereferenceable(16) %i.az)
+  invoke void @_RINvMNtNtCsfHnWouPsIOz_14regex_automata4util4iterNtB3_8Searcher35handle_overlapping_empty_half_matchQNCNvXs6_NtNtB7_4meta5regexNtB1J_11FindMatchesNtNtNtNtCscgRAwXFJnXP_4core4iter6traits8iterator8Iterator5count0ECskY9G75ZWc4U_11polars_expr(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias noundef nonnull align 8 dereferenceable(80) %i.h, i64 noundef %i.ap, i32 noundef %.sroa.636.0.copyload.i.i.i.i.i, ptr noalias noundef nonnull align 8 dereferenceable(16) %i.az)
           to label %.noexc5.i.i unwind label %.loopexit.i.i, !dbg !142783, !noalias !142739
 
 .noexc5.i.i:                                      ; preds = %bb.l

@@ -204,9 +204,9 @@ bb.o:                                             ; preds = %.lr.ph
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !8
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 164
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !189 ; 2 uses
-  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 %i.ch)
-  %spec.select18.i = tail call i32 @llvm.smin.i32(i32 %i.ca, i32 %i.ch)
-  %i.ci = tail call i32 @insertPM(ptr noundef %i.b, i32 noundef %spec.select18.i, i32 noundef %spec.select.i, i32 noundef %.0171311) #21 ; 3 uses
+  %spec.select.i = tail call i32 @llvm.smin.i32(i32 %i.ca, i32 %i.ch)
+  %spec.select18.i = tail call i32 @llvm.smax.i32(i32 %i.ca, i32 %i.ch)
+  %i.ci = tail call i32 @insertPM(ptr noundef %i.b, i32 noundef %spec.select.i, i32 noundef %spec.select18.i, i32 noundef %.0171311) #21 ; 3 uses
   %.not213 = icmp eq i32 %i.ci, %.0171311
   br i1 %.not213, label %bb.t, label %bb.p
 

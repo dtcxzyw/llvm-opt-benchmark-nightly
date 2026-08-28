@@ -205,8 +205,7 @@ bb.a:
   %i.ah = add nuw nsw <8 x i16> %i.ag, %i.ae
   %i.ai = add nuw nsw <8 x i16> %i.ah, %i.af
   %i.aj = lshr <8 x i16> %i.ai, splat (i16 2)
-  %i.ak = trunc <8 x i16> %i.aj to <8 x i8>       ; 5 uses
-  %4 = bitcast <8 x i8> %i.ak to i64              ; 4 uses
+  %i.ak = trunc <8 x i16> %i.aj to <8 x i8>       ; 8 uses
   %i.al = load <4 x i8>, ptr %3, align 1, !tbaa !11
   %i.am = load <4 x i8>, ptr %i.c, align 1, !tbaa !11
   %i.an = load i8, ptr %i.d, align 1, !tbaa !11
@@ -233,8 +232,7 @@ bb.a:
   %i.bi = add nuw nsw <4 x i16> %i.bh, %i.bd
   %i.bj = add nuw nsw <4 x i16> %i.bi, %i.ao
   %i.bk = lshr <4 x i16> %i.bj, splat (i16 2)
-  %i.bl = trunc <4 x i16> %i.bk to <4 x i8>       ; 5 uses
-  %5 = bitcast <4 x i8> %i.bl to i32              ; 3 uses
+  %i.bl = trunc <4 x i16> %i.bk to <4 x i8>       ; 7 uses
   %.sroa.0.7.extract.trunc = extractelement <8 x i8> %i.ak, i64 7
   store i8 %.sroa.0.7.extract.trunc, ptr %0, align 1
   %.sroa_idx80 = getelementptr inbounds nuw i8, ptr %0, i64 1
@@ -257,9 +255,8 @@ bb.a:
   store i8 %i.bc, ptr %.sroa_idx71, align 1
   %i.bn = shl nsw i64 %1, 1
   %i.bo = getelementptr inbounds i8, ptr %0, i64 %i.bn ; 3 uses
-  %.sroa.0.5.extract.shift = lshr i64 %4, 40
-  %.sroa.0.5.extract.trunc = trunc nuw i64 %.sroa.0.5.extract.shift to i24
-  store i24 %.sroa.0.5.extract.trunc, ptr %i.bo, align 1
+  %.sroa.0.5.vec.extract = shufflevector <8 x i8> %i.ak, <8 x i8> poison, <3 x i32> <i32 5, i32 6, i32 7>
+  store <3 x i8> %.sroa.0.5.vec.extract, ptr %i.bo, align 1
   %.sroa_idx61 = getelementptr inbounds nuw i8, ptr %i.bo, i64 3
   store <4 x i8> %i.bl, ptr %.sroa_idx61, align 1
   %.sroa_idx62 = getelementptr inbounds nuw i8, ptr %i.bo, i64 7
@@ -273,28 +270,26 @@ bb.a:
   store <4 x i8> %i.bl, ptr %.sroa_idx56, align 1
   %i.br = shl nsw i64 %1, 2
   %i.bs = getelementptr inbounds i8, ptr %0, i64 %i.br ; 2 uses
-  %.sroa.0.3.extract.shift = lshr i64 %4, 24
-  %.sroa.0.3.extract.trunc = trunc nuw i64 %.sroa.0.3.extract.shift to i40
-  %.sroa.11.8.extract.trunc = trunc i32 %5 to i24
-  store i40 %.sroa.0.3.extract.trunc, ptr %i.bs, align 1
+  %.sroa.0.3.vec.extract = shufflevector <8 x i8> %i.ak, <8 x i8> poison, <5 x i32> <i32 3, i32 4, i32 5, i32 6, i32 7>
+  %.sroa.11.8.vec.extract = shufflevector <4 x i8> %i.bl, <4 x i8> poison, <3 x i32> <i32 0, i32 1, i32 2>
+  store <5 x i8> %.sroa.0.3.vec.extract, ptr %i.bs, align 1
   %.sroa_idx53 = getelementptr inbounds nuw i8, ptr %i.bs, i64 5
-  store i24 %.sroa.11.8.extract.trunc, ptr %.sroa_idx53, align 1
+  store <3 x i8> %.sroa.11.8.vec.extract, ptr %.sroa_idx53, align 1
   %i.bt = mul nsw i64 %1, 5
   %i.bu = getelementptr inbounds i8, ptr %0, i64 %i.bt ; 2 uses
-  %.sroa.0.2.extract.shift = lshr i64 %4, 16
-  %.sroa.0.2.extract.trunc = trunc nuw i64 %.sroa.0.2.extract.shift to i48
-  %.sroa.11.8.extract.trunc89 = trunc i32 %5 to i16
-  store i48 %.sroa.0.2.extract.trunc, ptr %i.bu, align 1
+  %.sroa.0.2.vec.extract = shufflevector <8 x i8> %i.ak, <8 x i8> poison, <6 x i32> <i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %.sroa.11.8.vec.extract89.bc = bitcast <4 x i8> %i.bl to <2 x i16>
+  %.sroa.11.8.vec.extract89.extract = extractelement <2 x i16> %.sroa.11.8.vec.extract89.bc, i64 0
+  store <6 x i8> %.sroa.0.2.vec.extract, ptr %i.bu, align 1
   %.sroa_idx50 = getelementptr inbounds nuw i8, ptr %i.bu, i64 6
-  store i16 %.sroa.11.8.extract.trunc89, ptr %.sroa_idx50, align 1
+  store i16 %.sroa.11.8.vec.extract89.extract, ptr %.sroa_idx50, align 1
   %i.bv = mul nsw i64 %1, 6
   %i.bw = getelementptr inbounds i8, ptr %0, i64 %i.bv ; 2 uses
-  %.sroa.0.1.extract.shift = lshr i64 %4, 8
-  %.sroa.0.1.extract.trunc = trunc nuw i64 %.sroa.0.1.extract.shift to i56
-  %.sroa.11.8.extract.trunc91 = trunc i32 %5 to i8
-  store i56 %.sroa.0.1.extract.trunc, ptr %i.bw, align 1
+  %.sroa.0.1.vec.extract = shufflevector <8 x i8> %i.ak, <8 x i8> poison, <7 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %.sroa.11.8.vec.extract91 = extractelement <4 x i8> %i.bl, i64 0
+  store <7 x i8> %.sroa.0.1.vec.extract, ptr %i.bw, align 1
   %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.bw, i64 7
-  store i8 %.sroa.11.8.extract.trunc91, ptr %.sroa_idx, align 1
+  store i8 %.sroa.11.8.vec.extract91, ptr %.sroa_idx, align 1
   %i.bx = mul nsw i64 %1, 7
   %i.by = getelementptr inbounds i8, ptr %0, i64 %i.bx
   store <8 x i8> %i.ak, ptr %i.by, align 1
@@ -370,8 +365,7 @@ define internal void @vert_right_8x8_c(ptr nofree noundef writeonly captures(non
   %.sroa.0112.1.insert.mask = and i16 %i.z, 255
   %.sroa.0112.1.insert.insert = or disjoint i16 %.sroa.0112.1.insert.mask, %.sroa.0112.1.insert.shift
   %i.bi = lshr <8 x i16> %i.bf, splat (i16 2)
-  %i.bj = trunc <8 x i16> %i.bi to <8 x i8>       ; 2 uses
-  %4 = bitcast <8 x i8> %i.bj to i64              ; 3 uses
+  %i.bj = trunc <8 x i16> %i.bi to <8 x i8>       ; 4 uses
   %i.bk = shl nuw nsw i16 %i.ak, 1
   %i.bl = add nuw nsw i16 %i.bk, 2
   %i.bm = extractelement <8 x i16> %i.ai, i64 6   ; 3 uses
@@ -384,8 +378,7 @@ define internal void @vert_right_8x8_c(ptr nofree noundef writeonly captures(non
   %i.bt = add nuw nsw <8 x i16> %i.ah, %i.bs
   %i.bu = add nuw nsw <8 x i16> %i.bt, %i.ai
   %i.bv = lshr <8 x i16> %i.bu, <i16 2, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1, i16 1>
-  %i.bw = trunc <8 x i16> %i.bv to <8 x i8>       ; 2 uses
-  %5 = bitcast <8 x i8> %i.bw to i64              ; 3 uses
+  %i.bw = trunc <8 x i16> %i.bv to <8 x i8>       ; 4 uses
   %i.bx = shl nuw nsw i16 %i.bm, 1
   %i.by = add nuw nsw i16 %i.bx, 2
   %i.bz = extractelement <8 x i16> %i.ai, i64 7   ; 3 uses
@@ -406,15 +399,13 @@ define internal void @vert_right_8x8_c(ptr nofree noundef writeonly captures(non
   %i.co = add nuw nsw i16 %i.cn, %i.bm
   %i.cp = lshr i16 %i.co, 2
   %i.cq = trunc nuw i16 %i.cp to i8
-  %.sroa.6.3.extract.shift = lshr i64 %5, 8
-  %.sroa.6.3.extract.trunc = trunc nuw i64 %.sroa.6.3.extract.shift to i56
-  store i56 %.sroa.6.3.extract.trunc, ptr %0, align 1
+  %.sroa.6.3.vec.extract = shufflevector <8 x i8> %i.bw, <8 x i8> poison, <7 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <7 x i8> %.sroa.6.3.vec.extract, ptr %0, align 1
   %.sroa_idx111 = getelementptr inbounds nuw i8, ptr %0, i64 7
   store i8 %i.ck, ptr %.sroa_idx111, align 1
   %i.cr = getelementptr inbounds i8, ptr %0, i64 %1 ; 4 uses
-  %.sroa.0.3.extract.shift = lshr i64 %4, 24
-  %.sroa.0.3.extract.trunc = trunc nuw i64 %.sroa.0.3.extract.shift to i40
-  store i40 %.sroa.0.3.extract.trunc, ptr %i.cr, align 1
+  %.sroa.0.3.vec.extract = shufflevector <8 x i8> %i.bj, <8 x i8> poison, <5 x i32> <i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <5 x i8> %.sroa.0.3.vec.extract, ptr %i.cr, align 1
   %.sroa_idx96 = getelementptr inbounds nuw i8, ptr %i.cr, i64 5
   store i8 %i.bq, ptr %.sroa_idx96, align 1
   %.sroa_idx97 = getelementptr inbounds nuw i8, ptr %i.cr, i64 6
@@ -426,9 +417,8 @@ define internal void @vert_right_8x8_c(ptr nofree noundef writeonly captures(non
   store <8 x i8> %i.bw, ptr %i.ct, align 1
   %i.cu = mul nsw i64 %1, 3
   %i.cv = getelementptr inbounds i8, ptr %0, i64 %i.cu ; 3 uses
-  %.sroa.0.2.extract.shift = lshr i64 %4, 16
-  %.sroa.0.2.extract.trunc = trunc nuw i64 %.sroa.0.2.extract.shift to i48
-  store i48 %.sroa.0.2.extract.trunc, ptr %i.cv, align 1
+  %.sroa.0.2.vec.extract = shufflevector <8 x i8> %i.bj, <8 x i8> poison, <6 x i32> <i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <6 x i8> %.sroa.0.2.vec.extract, ptr %i.cv, align 1
   %.sroa_idx88 = getelementptr inbounds nuw i8, ptr %i.cv, i64 6
   store i8 %i.bq, ptr %.sroa_idx88, align 1
   %.sroa_idx89 = getelementptr inbounds nuw i8, ptr %i.cv, i64 7
@@ -437,23 +427,22 @@ define internal void @vert_right_8x8_c(ptr nofree noundef writeonly captures(non
   %i.cx = getelementptr inbounds i8, ptr %0, i64 %i.cw ; 2 uses
   %.sroa.0112.1.extract.shift = lshr i16 %i.bh, 8
   %.sroa.0112.1.extract.trunc = trunc nuw i16 %.sroa.0112.1.extract.shift to i8
-  %.sroa.6.2.extract.trunc = trunc i64 %5 to i56
+  %.sroa.6.2.vec.extract = shufflevector <8 x i8> %i.bw, <8 x i8> poison, <7 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
   store i8 %.sroa.0112.1.extract.trunc, ptr %i.cx, align 1
   %.sroa_idx108 = getelementptr inbounds nuw i8, ptr %i.cx, i64 1
-  store i56 %.sroa.6.2.extract.trunc, ptr %.sroa_idx108, align 1
+  store <7 x i8> %.sroa.6.2.vec.extract, ptr %.sroa_idx108, align 1
   %i.cy = mul nsw i64 %1, 5
   %i.cz = getelementptr inbounds i8, ptr %0, i64 %i.cy ; 2 uses
-  %.sroa.0.1.extract.shift = lshr i64 %4, 8
-  %.sroa.0.1.extract.trunc = trunc nuw i64 %.sroa.0.1.extract.shift to i56
-  store i56 %.sroa.0.1.extract.trunc, ptr %i.cz, align 1
+  %.sroa.0.1.vec.extract = shufflevector <8 x i8> %i.bj, <8 x i8> poison, <7 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <7 x i8> %.sroa.0.1.vec.extract, ptr %i.cz, align 1
   %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.cz, i64 7
   store i8 %i.bq, ptr %.sroa_idx, align 1
   %i.da = mul nsw i64 %1, 6
   %i.db = getelementptr inbounds i8, ptr %0, i64 %i.da ; 2 uses
-  %.sroa.6.2.extract.trunc115 = trunc i64 %5 to i48
+  %.sroa.6.2.vec.extract115 = shufflevector <8 x i8> %i.bw, <8 x i8> poison, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5>
   store i16 %.sroa.0112.1.insert.insert, ptr %i.db, align 1
   %.sroa_idx105 = getelementptr inbounds nuw i8, ptr %i.db, i64 2
-  store i48 %.sroa.6.2.extract.trunc115, ptr %.sroa_idx105, align 1
+  store <6 x i8> %.sroa.6.2.vec.extract115, ptr %.sroa_idx105, align 1
   %i.dc = mul nsw i64 %1, 7
   %i.dd = getelementptr inbounds i8, ptr %0, i64 %i.dc
   store <8 x i8> %i.bj, ptr %i.dd, align 1
@@ -636,8 +625,7 @@ bb.a:
   %i.el = add nuw nsw <4 x i16> %i.ek, %i.dv
   %i.em = add nuw nsw <4 x i16> %i.el, %i.cw
   %i.en = lshr <4 x i16> %i.em, splat (i16 2)
-  %i.eo = trunc <4 x i16> %i.en to <4 x i8>       ; 3 uses
-  %4 = bitcast <4 x i8> %i.eo to i32              ; 2 uses
+  %i.eo = trunc <4 x i16> %i.en to <4 x i8>       ; 4 uses
   %i.ep = shl nuw nsw i16 %i.dm, 1
   %i.eq = add nuw nsw i16 %i.dq, 2
   %i.er = add nuw nsw i16 %i.eq, %i.ep
@@ -669,18 +657,18 @@ bb.a:
   %i.ex = getelementptr inbounds i8, ptr %0, i64 %i.ew ; 2 uses
   %.sroa.0.10..10..sroa_idx100 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 10
   %.sroa.0.10..sroa.0.10..10.54 = load i40, ptr %.sroa.0.10..10..sroa_idx100, align 2
-  %.sroa.25.15.extract.trunc = trunc i32 %4 to i24
+  %.sroa.25.15.vec.extract = shufflevector <4 x i8> %i.eo, <4 x i8> poison, <3 x i32> <i32 0, i32 1, i32 2>
   store i40 %.sroa.0.10..sroa.0.10..10.54, ptr %i.ex, align 1
   %.sroa_idx56 = getelementptr inbounds nuw i8, ptr %i.ex, i64 5
-  store i24 %.sroa.25.15.extract.trunc, ptr %.sroa_idx56, align 1
+  store <3 x i8> %.sroa.25.15.vec.extract, ptr %.sroa_idx56, align 1
   %i.ey = mul nsw i64 %1, 3
   %i.ez = getelementptr inbounds i8, ptr %0, i64 %i.ey ; 2 uses
   %.sroa.0.8..8..sroa_idx97 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
   %.sroa.0.8..sroa.0.8..8.52 = load i56, ptr %.sroa.0.8..8..sroa_idx97, align 8
-  %.sroa.25.15.extract.trunc85 = trunc i32 %4 to i8
+  %.sroa.25.15.vec.extract85 = extractelement <4 x i8> %i.eo, i64 0
   store i56 %.sroa.0.8..sroa.0.8..8.52, ptr %i.ez, align 1
   %.sroa_idx = getelementptr inbounds nuw i8, ptr %i.ez, i64 7
-  store i8 %.sroa.25.15.extract.trunc85, ptr %.sroa_idx, align 1
+  store i8 %.sroa.25.15.vec.extract85, ptr %.sroa_idx, align 1
   %i.fa = shl nsw i64 %1, 2
   %i.fb = getelementptr inbounds i8, ptr %0, i64 %i.fa
   %.sroa.0.6..6..sroa_idx94 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 6

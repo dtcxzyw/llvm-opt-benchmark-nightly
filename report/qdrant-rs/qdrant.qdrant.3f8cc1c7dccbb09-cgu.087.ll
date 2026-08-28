@@ -202,8 +202,8 @@ bb.x:                                             ; preds = %bb.w, %_RNvXse8_NtC
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RNvMs1_NtCskKLDkoKarTP_4core6optionINtB5_6OptionRNtNtCs607s0NAIaWN_7segment5types8ShardKeyE6clonedCsl8OoimOLbh_6qdrant(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(address_is_null) dereferenceable_or_null(24) %1) unnamed_addr #1 {
 bb.a:
-  %.sroa.4 = alloca i64, align 8                  ; 5 uses
-  %.sroa.6 = alloca i64, align 8                  ; 4 uses
+  %.sroa.4 = alloca [8 x i8], align 8             ; 5 uses
+  %.sroa.6 = alloca [8 x i8], align 8             ; 4 uses
   %.not = icmp eq ptr %1, null
   br i1 %.not, label %bb.h, label %bb.b
 
@@ -246,8 +246,7 @@ bb.g:                                             ; preds = %bb.f
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i: ; preds = %bb.d, %bb.f, %bb.e
   %.sroa.06.0.i = phi ptr [ %.val.i, %bb.f ], [ inttoptr (i64 16 to ptr), %bb.e ], [ %.val.i, %bb.d ]
-  %2 = ptrtoint ptr %.sroa.06.0.i to i64
-  store i64 %2, ptr %.sroa.4, align 8, !alias.scope !2275, !noalias !2278
+  store ptr %.sroa.06.0.i, ptr %.sroa.4, align 8, !alias.scope !2275, !noalias !2278
   br label %_RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit
 
 _RNvXsen_NtCs607s0NAIaWN_7segment5typesNtB6_8ShardKeyNtNtCskKLDkoKarTP_4core5clone5Clone5clone.exit: ; preds = %bb.c, %_RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i

@@ -204,8 +204,7 @@ switch.lookup:                                    ; preds = %switch.hole_check
   %switch.gep160 = getelementptr inbounds nuw i8, ptr @switch.table._RNvMs5_NtNtCsjJXvCMGntp8_6syntax3ast8expr_extNtNtNtB7_9generated5nodes7BinExpr10op_details.510, i64 %i.ao
   %switch.load161 = load i8, ptr %switch.gep160, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !449
-  %2 = ptrtoint ptr %i.o to i64
-  store i64 %2, ptr %0, align 8
+  store ptr %i.o, ptr %0, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 %switch.load161, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.517.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 9

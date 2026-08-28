@@ -204,7 +204,11 @@ bb.i:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.411.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i64 721141097979576833, ptr %i.m, align 8
+  store i8 1, ptr %i.m, align 8
+  %.sroa.017.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 25
+  %.sroa.017.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 31
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %.sroa.017.sroa.4.0..sroa_idx, i8 2, i64 6, i1 false)
+  store i8 10, ptr %.sroa.017.sroa.5.0..sroa_idx, align 1
   %.sroa.419.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 250, ptr %.sroa.419.0..sroa_idx, align 8
   %.sroa.520.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 36

@@ -205,25 +205,26 @@ bb.bd:                                            ; preds = %_ZN2v88internal8com
   br label %bb.be
 
 bb.be:                                            ; preds = %.critedge183.2, %.critedge.2
-  %i.pq = phi ptr [ %.pre431.a, %.critedge183.2 ], [ %.pre432.a, %.critedge.2 ] ; 2 uses
+  %i.pq = phi ptr [ %.pre431.a, %.critedge183.2 ], [ %.pre432.a, %.critedge.2 ] ; 3 uses
   %i.pr = getelementptr inbounds nuw i8, ptr %i.pq, i64 672 ; 2 uses
   %i.ps = load ptr, ptr %i.pr, align 8
   %i.pt = icmp eq ptr %i.ps, null
   br i1 %i.pt, label %bb.bg, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i, !prof !5
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i: ; preds = %bb.be
-  %i.pu = getelementptr inbounds nuw i8, ptr %i.pq, i64 32 ; 2 uses
+  %i.pu = getelementptr inbounds nuw i8, ptr %i.pq, i64 32
   %i.pv = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSF_4KindEmEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.pu, i8 noundef zeroext 1, i64 noundef 0)
   %.pr381 = load ptr, ptr %i.pr, align 8
   %i.pw = icmp eq ptr %.pr381, null
   br i1 %i.pw, label %bb.bg, label %bb.bf, !prof !15
 
 bb.bf:                                            ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i
-  %i.px = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_12ComparisonOpEJNS2_14ShadowyOpIndexESG_NSF_4KindENS2_18WordRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.pu, i32 %i.pv, i32 %i.lm, i8 noundef zeroext 0, i8 1)
+  %17 = getelementptr inbounds nuw i8, ptr %i.pq, i64 32
+  %i.px = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_12ComparisonOpEJNS2_14ShadowyOpIndexESG_NSF_4KindENS2_18WordRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %17, i32 %i.pv, i32 %i.lm, i8 noundef zeroext 0, i8 1)
   %i.py = zext i32 %i.px to i64
   br label %bb.bg
 
-bb.bg:                                            ; preds = %bb.bf, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i, %bb.be
+bb.bg:                                            ; preds = %bb.be, %bb.bf, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i
   %.sroa.06.0.i.i = phi i64 [ %i.py, %bb.bf ], [ 4294967295, %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i ], [ 4294967295, %bb.be ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #19
   %i.pz = getelementptr inbounds nuw i8, ptr %13, i64 8
@@ -626,7 +627,7 @@ bb.ao:                                            ; preds = %_ZN2v88internal8com
   br label %.loopexit
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.nd = load ptr, ptr %i.a, align 8, !nonnull !9, !align !10 ; 3 uses
+  %i.nd = load ptr, ptr %i.a, align 8, !nonnull !9, !align !10 ; 4 uses
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nd, i64 536
   %i.nf = getelementptr inbounds nuw i8, ptr %i.nd, i64 672 ; 2 uses
   %i.ng = load ptr, ptr %i.nf, align 8
@@ -634,14 +635,15 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.nh, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE12WordPtrEqualENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEESI_.exit, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i, !prof !5
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i: ; preds = %bb.ap
-  %i.ni = getelementptr inbounds nuw i8, ptr %i.nd, i64 32 ; 2 uses
+  %i.ni = getelementptr inbounds nuw i8, ptr %i.nd, i64 32
   %i.nj = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSF_4KindEmEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.ni, i8 noundef zeroext 1, i64 noundef 0)
   %.pr.a = load ptr, ptr %i.nf, align 8
   %i.nk = icmp eq ptr %.pr.a, null
   br i1 %i.nk, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE12WordPtrEqualENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEESI_.exit, label %bb.aq, !prof !15
 
 bb.aq:                                            ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i
-  %i.nl = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_12ComparisonOpEJNS2_14ShadowyOpIndexESG_NSF_4KindENS2_18WordRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.ni, i32 %i.lz, i32 %i.nj, i8 noundef zeroext 0, i8 1)
+  %9 = getelementptr inbounds nuw i8, ptr %i.nd, i64 32
+  %i.nl = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_12ComparisonOpEJNS2_14ShadowyOpIndexESG_NSF_4KindENS2_18WordRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %9, i32 %i.lz, i32 %i.nj, i8 noundef zeroext 0, i8 1)
   %i.nm = zext i32 %i.nl to i64
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE12WordPtrEqualENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEESI_.exit
 
@@ -1044,7 +1046,7 @@ bb.b:                                             ; preds = %bb.a, %.critedge
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = load ptr, ptr %i.a, align 8, !nonnull !9, !align !10 ; 3 uses
+  %i.e = load ptr, ptr %i.a, align 8, !nonnull !9, !align !10 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 536
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 672 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8
@@ -1052,14 +1054,15 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE12WordPtrEqualENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEESI_.exit, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i, !prof !5
 
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i: ; preds = %bb.c
-  %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.k = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSF_4KindEmEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.j, i8 noundef zeroext 1, i64 noundef 0)
   %.pr.a = load ptr, ptr %i.g, align 8
   %i.l = icmp eq ptr %.pr.a, null
   br i1 %i.l, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE12WordPtrEqualENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEESI_.exit, label %bb.d, !prof !15
 
 bb.d:                                             ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE7resolveERKNS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEE.exit6.i
-  %i.m = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_12ComparisonOpEJNS2_14ShadowyOpIndexESG_NSF_4KindENS2_18WordRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.j, i32 %1, i32 %i.k, i8 noundef zeroext 0, i8 1)
+  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  %i.m = call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_12ComparisonOpEJNS2_14ShadowyOpIndexESG_NSF_4KindENS2_18WordRepresentationEEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %4, i32 %1, i32 %i.k, i8 noundef zeroext 0, i8 1)
   %i.n = zext i32 %i.m to i64
   %i.o = or disjoint i64 %i.n, 4294967296
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE12WordPtrEqualENS2_8ConstOrVINS2_12WordWithBitsILm64EEEmEESI_.exit

@@ -202,8 +202,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond, label %bb.e, label %bb.b
 
 bb.e:                                             ; preds = %bb.d
-  %.sroa.02.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i16 0, ptr %.sroa.02.sroa.4.0..sroa_idx, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 50
   store i8 2, ptr %.sroa.3.0..sroa_idx, align 2
   %i.m = icmp eq i64 %3, ptrtoint (ptr @_RNvCsa3bo7ChGFM8_8thin_vec12EMPTY_HEADER to i64)

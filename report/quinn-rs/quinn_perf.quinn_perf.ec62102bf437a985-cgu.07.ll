@@ -204,7 +204,6 @@ bb.a:
     #dbg_value(ptr %.sroa.0.0.copyload.i.i, !21641, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !21668)
     #dbg_value(i64 %.sroa.4.0.copyload.i.i, !21641, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !21668)
     #dbg_value(ptr %.sroa.5.0.copyload.i.i, !21641, !DIExpression(DW_OP_LLVM_fragment, 256, 64), !21668)
-    #dbg_value(i64 poison, !21641, !DIExpression(DW_OP_LLVM_fragment, 320, 64), !21668)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !21670), !dbg !21673
     #dbg_value(ptr %0, !21655, !DIExpression(), !21668)
     #dbg_value(ptr %0, !21674, !DIExpression(), !21681)
@@ -607,8 +606,6 @@ _RNCINvNtNtNtCskKLDkoKarTP_4core4iter8adapters3map8map_foldjINtNtCskXT5ShPYifM_1
   store i64 %i.j, ptr %i.e, align 8, !dbg !23481, !noalias !23475
     #dbg_value(ptr null, !23482, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23493)
     #dbg_value(ptr null, !23495, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23505)
-    #dbg_value(i64 undef, !23482, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23493)
-    #dbg_value(i64 undef, !23495, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23505)
     #dbg_value(i64 274877906944, !23482, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23493)
     #dbg_value(i64 274877906944, !23495, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !23505)
     #dbg_value(i64 %i.g, !23482, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !23493)

@@ -204,13 +204,12 @@ bb.ah:                                            ; preds = %bb.ad
   %.sroa.583.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.p, i64 16
   %.sroa.583.0.copyload = load i64, ptr %.sroa.583.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
-  %3 = ptrtoint ptr %i.cd to i64
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.bs, %bb.be, %bb.ah
   %.sroa.10.0 = phi i64 [ %.sroa.583.0.copyload, %bb.ah ], [ undef, %bb.be ], [ undef, %bb.bs ]
-  %.sroa.824.0 = phi i64 [ %3, %bb.ah ], [ %.sroa.559.0.copyload, %bb.be ], [ undef, %bb.bs ]
-  %.sroa.623.0 = phi i64 [ %i.ca, %bb.ah ], [ %i.ed, %bb.be ], [ undef, %bb.bs ]
+  %.sroa.824.0 = phi i64 [ %i.ca, %bb.ah ], [ %i.ed, %bb.be ], [ undef, %bb.bs ]
+  %.sroa.822.0 = phi ptr [ %i.cd, %bb.ah ], [ %.sroa.556.0.copyload, %bb.be ], [ undef, %bb.bs ]
   %.sroa.4.0 = phi i64 [ %i.ba, %bb.ah ], [ %i.dt, %bb.be ], [ undef, %bb.bs ]
   %.sroa.022.0 = phi i64 [ %.sroa.0.0.i57, %bb.ah ], [ 2, %bb.be ], [ 4, %bb.bs ]
   %.sroa.021.0 = phi ptr [ %i.bj, %bb.ah ], [ %i.dc, %bb.be ], [ %i.fg, %bb.bs ] ; 8 uses
@@ -221,9 +220,9 @@ bb.ai:                                            ; preds = %bb.bs, %bb.be, %bb.
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i64 %.sroa.4.0, ptr %.sroa.4.0..sroa_idx, align 8
   %.sroa.623.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 16
-  store i64 %.sroa.623.0, ptr %.sroa.623.0..sroa_idx, align 8
+  store i64 %.sroa.824.0, ptr %.sroa.623.0..sroa_idx, align 8
   %.sroa.824.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 24
-  store i64 %.sroa.824.0, ptr %.sroa.824.0..sroa_idx, align 8
+  store ptr %.sroa.822.0, ptr %.sroa.824.0..sroa_idx, align 8
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 32
   store i64 %.sroa.10.0, ptr %.sroa.10.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
@@ -398,7 +397,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.ba
   %.sroa.559.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %.sroa.559.0.copyload = load i64, ptr %.sroa.559.0..sroa_idx, align 8
+  %.sroa.556.0.copyload = load ptr, ptr %.sroa.559.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
   %i.ed = ptrtoint ptr %i.dw to i64
   br label %bb.ai

@@ -202,8 +202,8 @@ bb.a:
   %i.e = alloca [48 x i8], align 8                ; 4 uses
   %i.f = alloca [64 x i8], align 8                ; 4 uses
   %i.g = alloca [48 x i8], align 8                ; 5 uses
-  %.sroa.472.i.i = alloca i64, align 8            ; 5 uses
-  %.sroa.673.i.i = alloca i64, align 8            ; 4 uses
+  %.sroa.472.i.i = alloca [8 x i8], align 8       ; 5 uses
+  %.sroa.673.i.i = alloca [8 x i8], align 8       ; 4 uses
   %i.h = alloca [40 x i8], align 8                ; 4 uses
   %i.i = alloca [64 x i8], align 8                ; 4 uses
   %i.j = alloca [32 x i8], align 8                ; 4 uses
@@ -606,8 +606,7 @@ bb.cv:                                            ; preds = %bb.cu
 
 _RNvXs6_NtCs9zPlAsQS9gd_4ecow3vecINtB5_6EcoVechENtNtCskKLDkoKarTP_4core5clone5Clone5cloneCsl8OoimOLbh_6qdrant.exit.i.i.i: ; preds = %bb.cs, %bb.cu, %bb.ct
   %.sroa.06.0.i.i.i = phi ptr [ %.val.i.i.i, %bb.cu ], [ inttoptr (i64 16 to ptr), %bb.ct ], [ %.val.i.i.i, %bb.cs ]
-  %4 = ptrtoint ptr %.sroa.06.0.i.i.i to i64
-  store i64 %4, ptr %.sroa.472.i.i, align 8, !alias.scope !416, !noalias !423
+  store ptr %.sroa.06.0.i.i.i, ptr %.sroa.472.i.i, align 8, !alias.scope !416, !noalias !423
   br label %bb.cy
 
 bb.cw:                                            ; preds = %.split110.us.i.i
@@ -883,8 +882,8 @@ bb.dx:                                            ; preds = %_RINvMs1_NtCsjqcU1o
   br label %bb.dy
 
 bb.dy:                                            ; preds = %bb.dx, %.noexc58.i.i, %bb.dv, %bb.du, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapmNtNtCsPYQCUnoTxQ_10collection9telemetry25ShardCleanStatusTelemetryNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getmECsl8OoimOLbh_6qdrant.exit.i.i.i.i
-  %.sroa.02.0.i.i.i.i = phi i64 [ -9223372036854775804, %bb.dx ], [ -9223372036854775807, %bb.du ], [ -9223372036854775806, %bb.dv ], [ %.sroa.08.0.copyload.i.i.i.i, %.noexc58.i.i ], [ -9223372036854775808, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapmNtNtCsPYQCUnoTxQ_10collection9telemetry25ShardCleanStatusTelemetryNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getmECsl8OoimOLbh_6qdrant.exit.i.i.i.i ] ; 2 uses
-  %i.sh = phi <2 x i64> [ undef, %bb.dx ], [ %i.sf, %bb.du ], [ undef, %bb.dv ], [ %i.sg, %.noexc58.i.i ], [ undef, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapmNtNtCsPYQCUnoTxQ_10collection9telemetry25ShardCleanStatusTelemetryNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getmECsl8OoimOLbh_6qdrant.exit.i.i.i.i ]
+  %.sroa.02.0.i.i.i.i = phi i64 [ -9223372036854775808, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapmNtNtCsPYQCUnoTxQ_10collection9telemetry25ShardCleanStatusTelemetryNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getmECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ -9223372036854775807, %bb.du ], [ -9223372036854775806, %bb.dv ], [ %.sroa.08.0.copyload.i.i.i.i, %.noexc58.i.i ], [ -9223372036854775804, %bb.dx ] ; 2 uses
+  %i.sh = phi <2 x i64> [ undef, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapmNtNtCsPYQCUnoTxQ_10collection9telemetry25ShardCleanStatusTelemetryNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getmECsl8OoimOLbh_6qdrant.exit.i.i.i.i ], [ %i.sf, %bb.du ], [ undef, %bb.dv ], [ %i.sg, %.noexc58.i.i ], [ undef, %bb.dx ]
   store i64 %.sroa.02.0.i.i.i.i, ptr %i.c, align 8, !alias.scope !450, !noalias !476
   store <2 x i64> %i.sh, ptr %.sroa.8.0..sroa_idx4.i.i.i.i, align 8, !alias.scope !450, !noalias !476
   br label %_RNCNCNvNtNtNtCsl8OoimOLbh_6qdrant6common13telemetry_ops21distributed_telemetry16aggregate_shards00Bb_.exit.i.i.i
