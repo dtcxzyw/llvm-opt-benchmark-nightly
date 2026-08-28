@@ -204,35 +204,45 @@ trace_pflash_manufacturer_id.exit.i.i:            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.dp, label %bb.ak, label %pflash_devid_query.exit.i
 
 bb.ak:                                            ; preds = %trace_pflash_manufacturer_id.exit.i.i
-  %i.dq = zext i8 %.fr39.i.i to i32               ; 3 uses
-  %i.dr = zext i8 %i.do to i32
-  %i.ds = shl nuw nsw i32 %i.dq, 3
+  %i.dq = zext i8 %.fr39.i.i to i32               ; 6 uses
+  %i.dr = zext i8 %i.do to i32                    ; 2 uses
+  %i.ds = shl nuw nsw i32 %i.dq, 3                ; 4 uses
   %i.dt = icmp eq i8 %.fr39.i.i, 0
-  %invariant.op.i.i = sub nsw i32 32, %i.ds       ; 2 uses
+  %invariant.op.i.i = sub nuw nsw i32 32, %i.ds
   %i.du = lshr i32 -1, %invariant.op.i.i          ; 2 uses
   br i1 %i.dt, label %.split38.i.i, label %.split.i.i.a
 
-.split.i.i.a:                                     ; preds = %bb.ak, %deposit32.exit.i.i
-  %.137.i.i = phi i32 [ %i.eb, %deposit32.exit.i.i ], [ %.0.i.i, %bb.ak ] ; 2 uses
-  %.02536.i.i = phi i32 [ %i.ec, %deposit32.exit.i.i ], [ %i.dq, %bb.ak ] ; 2 uses
-  %i.dv = shl nuw nsw i32 %.02536.i.i, 3          ; 3 uses
-  %.not.i34.i.i = icmp sgt i32 %i.dv, %invariant.op.i.i
-  br i1 %.not.i34.i.i, label %.split38.i.i, label %deposit32.exit.i.i
+.split.i.i.a:                                     ; preds = %bb.ak
+  %5 = sub nsw i32 33, %i.ds
+  %smax.i.i = tail call i32 @llvm.smax.i32(i32 %i.ds, i32 %5)
+  %6 = add nsw i32 %smax.i.i, -1
+  %7 = udiv i32 %6, %i.ds
+  %i.dv = shl nuw nsw i32 %i.dq, 1                ; 2 uses
+  %umax40.i.i = tail call i32 @llvm.umax.i32(i32 %i.dv, i32 %i.dr)
+  %8 = xor i32 %i.dv, -1
+  %9 = add nsw i32 %8, %i.dq
+  %10 = add nsw i32 %9, %umax40.i.i
+  %11 = udiv i32 %10, %i.dq
+  %.not.i100.i = icmp ugt i32 %7, %11
+  br i1 %.not.i100.i, label %deposit32.exit.i.i, label %.split38.i.i
 
-.split38.i.i:                                     ; preds = %bb.ak, %.split.i.i.a
-  tail call void @__assert_fail(ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 649, ptr noundef nonnull @__PRETTY_FUNCTION__.deposit32) #15
-  unreachable
-
-deposit32.exit.i.i:                               ; preds = %.split.i.i.a
-  %i.dw = shl i32 %i.du, %i.dv
+deposit32.exit.i.i:                               ; preds = %.split.i.i.a, %deposit32.exit.i.i
+  %.137.i.i = phi i32 [ %i.eb, %deposit32.exit.i.i ], [ %.0.i.i, %.split.i.i.a ] ; 2 uses
+  %.02536.i.i = phi i32 [ %i.ec, %deposit32.exit.i.i ], [ %i.dq, %.split.i.i.a ] ; 2 uses
+  %12 = shl nuw nsw i32 %.02536.i.i, 3            ; 2 uses
+  %i.dw = shl i32 %i.du, %12
   %i.dx = xor i32 %i.dw, -1
   %i.dy = and i32 %.137.i.i, %i.dx
   %i.dz = and i32 %.137.i.i, %i.du
-  %i.ea = shl i32 %i.dz, %i.dv
+  %i.ea = shl i32 %i.dz, %12
   %i.eb = or i32 %i.dy, %i.ea                     ; 2 uses
   %i.ec = add nuw nsw i32 %.02536.i.i, %i.dq      ; 2 uses
   %i.ed = icmp samesign ult i32 %i.ec, %i.dr
-  br i1 %i.ed, label %.split.i.i.a, label %pflash_devid_query.exit.i, !llvm.loop !11
+  br i1 %i.ed, label %deposit32.exit.i.i, label %pflash_devid_query.exit.i, !llvm.loop !11
+
+.split38.i.i:                                     ; preds = %.split.i.i.a, %bb.ak
+  tail call void @__assert_fail(ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 649, ptr noundef nonnull @__PRETTY_FUNCTION__.deposit32) #15
+  unreachable
 
 pflash_devid_query.exit.i:                        ; preds = %deposit32.exit.i.i, %trace_pflash_manufacturer_id.exit.i.i, %bb.aj, %bb.ai, %bb.ah, %bb.ag
   %.026.i.i = phi i32 [ %.0.i.i, %trace_pflash_manufacturer_id.exit.i.i ], [ 0, %bb.aj ], [ 0, %bb.ag ], [ 0, %bb.ah ], [ 0, %bb.ai ], [ %i.eb, %deposit32.exit.i.i ]
@@ -316,7 +326,7 @@ bb.ar:                                            ; preds = %deposit32.exit109.i
   %.0136.i = phi i32 [ 0, %.lr.ph.i ], [ %i.hu, %deposit32.exit109.i ] ; 3 uses
   %.3135.i = phi i32 [ -1, %.lr.ph.i ], [ %i.hr, %deposit32.exit109.i ]
   %i.fl = shl i32 %.0136.i, 3                     ; 4 uses
-  %i.fm = zext i8 %i.fk to i32                    ; 4 uses
+  %i.fm = zext i8 %i.fk to i32                    ; 5 uses
   %i.fn = shl nuw nsw i32 %i.fm, 3                ; 2 uses
   %i.fo = mul i32 %.0136.i, %i.fm
   %i.fp = sext i32 %i.fo to i64
@@ -328,7 +338,7 @@ bb.ar:                                            ; preds = %deposit32.exit109.i
   %i.fv = add nuw nsw i32 %i.fu, %i.fr
   %i.fw = load i8, ptr %i.et, align 1
   %.fr51.i.i = freeze i8 %i.fw                    ; 5 uses
-  %i.fx = zext i8 %.fr51.i.i to i32               ; 5 uses
+  %i.fx = zext i8 %.fr51.i.i to i32               ; 8 uses
   %i.fy = tail call range(i32 0, 33) i32 @llvm.cttz.i32(i32 %i.fx, i1 false)
   %i.fz = sub nsw i32 %i.fv, %i.fy
   %i.ga = zext nneg i32 %i.fz to i64
@@ -405,33 +415,43 @@ bb.ay:                                            ; preds = %.lr.ph.preheader.i.
   br i1 %i.gu, label %.preheader.i.i, label %pflash_cfi_query.exit.i
 
 .preheader.i.i:                                   ; preds = %.loopexit.i.i
-  %i.gv = shl nuw nsw i32 %i.fx, 3
+  %i.gv = shl nuw nsw i32 %i.fx, 3                ; 4 uses
   %i.gw = icmp eq i8 %.fr51.i.i, 0
-  %invariant.op.i102.i = sub nsw i32 32, %i.gv    ; 2 uses
+  %invariant.op.i102.i = sub nuw nsw i32 32, %i.gv
   %i.gx = lshr i32 -1, %invariant.op.i102.i       ; 2 uses
-  br i1 %i.gw, label %.split.i103.i, label %.preheader.split.i.i.a
+  br i1 %i.gw, label %.split.i105.i, label %.preheader.split.i.i.a
 
-.preheader.split.i.i.a:                           ; preds = %.preheader.i.i, %deposit32.exit43.i.i
-  %.250.i.i = phi i32 [ %i.he, %deposit32.exit43.i.i ], [ %.1.i.i, %.preheader.i.i ] ; 2 uses
-  %.13449.i.i = phi i32 [ %i.hf, %deposit32.exit43.i.i ], [ %i.fx, %.preheader.i.i ] ; 2 uses
-  %i.gy = shl nuw nsw i32 %.13449.i.i, 3          ; 3 uses
-  %.not.i41.i.i = icmp sgt i32 %i.gy, %invariant.op.i102.i
-  br i1 %.not.i41.i.i, label %.split.i103.i, label %deposit32.exit43.i.i
+.preheader.split.i.i.a:                           ; preds = %.preheader.i.i
+  %13 = sub nsw i32 33, %i.gv
+  %smax.i103.i = tail call i32 @llvm.smax.i32(i32 %i.gv, i32 %13)
+  %14 = add nsw i32 %smax.i103.i, -1
+  %15 = udiv i32 %14, %i.gv
+  %i.gy = shl nuw nsw i32 %i.fx, 1                ; 2 uses
+  %umax54.i.i = tail call i32 @llvm.umax.i32(i32 %i.gy, i32 %i.fm)
+  %16 = xor i32 %i.gy, -1
+  %17 = add nsw i32 %16, %i.fx
+  %18 = add nsw i32 %17, %umax54.i.i
+  %19 = udiv i32 %18, %i.fx
+  %.not58.i.i = icmp ugt i32 %15, %19
+  br i1 %.not58.i.i, label %deposit32.exit43.i.i, label %.split.i105.i
 
-.split.i103.i:                                    ; preds = %.preheader.i.i, %.preheader.split.i.i.a
-  tail call void @__assert_fail(ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 649, ptr noundef nonnull @__PRETTY_FUNCTION__.deposit32) #15
-  unreachable
-
-deposit32.exit43.i.i:                             ; preds = %.preheader.split.i.i.a
-  %i.gz = shl i32 %i.gx, %i.gy
+deposit32.exit43.i.i:                             ; preds = %.preheader.split.i.i.a, %deposit32.exit43.i.i
+  %.250.i.i = phi i32 [ %i.he, %deposit32.exit43.i.i ], [ %.1.i.i, %.preheader.split.i.i.a ] ; 2 uses
+  %.13449.i.i = phi i32 [ %i.hf, %deposit32.exit43.i.i ], [ %i.fx, %.preheader.split.i.i.a ] ; 2 uses
+  %20 = shl nuw nsw i32 %.13449.i.i, 3            ; 2 uses
+  %i.gz = shl i32 %i.gx, %20
   %i.ha = xor i32 %i.gz, -1
   %i.hb = and i32 %.250.i.i, %i.ha
   %i.hc = and i32 %.250.i.i, %i.gx
-  %i.hd = shl i32 %i.hc, %i.gy
+  %i.hd = shl i32 %i.hc, %20
   %i.he = or i32 %i.hb, %i.hd                     ; 2 uses
   %i.hf = add nuw nsw i32 %.13449.i.i, %i.fx      ; 2 uses
   %i.hg = icmp samesign ult i32 %i.hf, %i.fm
-  br i1 %i.hg, label %.preheader.split.i.i.a, label %pflash_cfi_query.exit.i, !llvm.loop !13
+  br i1 %i.hg, label %deposit32.exit43.i.i, label %pflash_cfi_query.exit.i, !llvm.loop !13
+
+.split.i105.i:                                    ; preds = %.preheader.split.i.i.a, %.preheader.i.i
+  tail call void @__assert_fail(ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.31, i32 noundef 649, ptr noundef nonnull @__PRETTY_FUNCTION__.deposit32) #15
+  unreachable
 
 pflash_cfi_query.exit.i:                          ; preds = %deposit32.exit43.i.i, %.loopexit.i.i, %bb.ax, %bb.aw, %bb.av, %bb.au, %bb.ar
   %.035.i.i = phi i32 [ 0, %bb.ar ], [ %.1.i.i, %.loopexit.i.i ], [ 0, %bb.ax ], [ 0, %bb.au ], [ 0, %bb.av ], [ 0, %bb.aw ], [ %i.he, %deposit32.exit43.i.i ]
@@ -834,6 +854,9 @@ declare i8 @llvm.fshl.i8(i8, i8, i8) #10
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #10
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
 
@@ -874,7 +897,7 @@ attributes #17 = { nounwind allocsize(0) }
 !12 = distinct !{!12, !10}
 !13 = distinct !{!13, !10}
 !14 = distinct !{!14, !10}
-!15 = !{!"branch_weights", !"expected", i32 2145070326, i32 2413322}
+!15 = !{!"branch_weights", !"expected", i32 2145070426, i32 2413222}
 !16 = !{i8 0, i8 2}
 !17 = !{}
 !18 = !{!"branch_weights", !"expected", i32 1, i32 2000}

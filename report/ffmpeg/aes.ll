@@ -39,7 +39,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define range(i32 -22, 1) i32 @av_aes_init(ptr nofree noundef captures(none) initializes((272, 276), (280, 288)) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [8 x [4 x i8]], align 16          ; 31 uses
+  %i.a = alloca [8 x [4 x i8]], align 16          ; 34 uses
   %.sroa.0 = alloca [2 x i64], align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = ashr i32 %2, 5                           ; 7 uses
@@ -63,22 +63,22 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr align 1 %1, i64 %i.i, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %0, ptr align 1 %1, i64 %i.i, i1 false)
   %i.j = add nuw nsw i32 %i.b, 7                  ; 2 uses
-  %4 = shl nuw nsw i32 %i.j, 4
   %i.k = zext i32 %i.b to i64                     ; 2 uses
-  %i.l = getelementptr [4 x i8], ptr %i.a, i64 %i.k ; 4 uses
+  %i.l = getelementptr [4 x i8], ptr %i.a, i64 %i.k ; 7 uses
   %i.m = getelementptr i8, ptr %i.l, i64 -4       ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.not75 = icmp eq i32 %i.b, 8
-  %5 = zext nneg i32 %4 to i64                    ; 2 uses
-  %6 = getelementptr i8, ptr %i.l, i64 -3         ; 2 uses
-  %7 = getelementptr i8, ptr %i.l, i64 -2         ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 4 uses
-  %9 = getelementptr i8, ptr %i.l, i64 -1         ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 4 uses
   br i1 %.not75, label %.preheader84.us.us.preheader, label %.preheader84.us.preheader
 
 .preheader84.us.preheader:                        ; preds = %.preheader84.lr.ph.split.us
+  %4 = shl nuw nsw i32 %i.j, 4
+  %5 = zext nneg i32 %4 to i64
+  %6 = getelementptr i8, ptr %i.l, i64 -3
+  %7 = getelementptr i8, ptr %i.l, i64 -2
+  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
+  %9 = getelementptr i8, ptr %i.l, i64 -1
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 2 uses
   %i.o = add nsw i64 %i.k, -1                     ; 2 uses
   %xtraiter = and i64 %i.o, 3                     ; 3 uses
   %i.p = add nsw i32 %i.b, -2
@@ -89,6 +89,12 @@ bb.a:
   br label %.preheader84.us
 
 .preheader84.us.us.preheader:                     ; preds = %.preheader84.lr.ph.split.us
+  %12 = getelementptr i8, ptr %i.l, i64 -3
+  %13 = getelementptr i8, ptr %i.l, i64 -2
+  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
+  %15 = getelementptr i8, ptr %i.l, i64 -1
+  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 7 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 6
@@ -104,18 +110,18 @@ bb.a:
 .peel.next163:                                    ; preds = %.preheader84.us.us.preheader, %.peel.next163
   %indvars.iv175 = phi i64 [ %i.i, %.preheader84.us.us.preheader ], [ %indvars.iv.next176, %.peel.next163 ] ; 2 uses
   %indvars.iv173 = phi i64 [ 0, %.preheader84.us.us.preheader ], [ %indvars.iv.next174, %.peel.next163 ] ; 2 uses
-  %i.ab = load i8, ptr %6, align 1, !tbaa !13
+  %i.ab = load i8, ptr %12, align 1, !tbaa !13
   %i.ac = zext i8 %i.ab to i64
   %i.ad = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.ac
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !13
   %i.af = load i8, ptr %i.a, align 16, !tbaa !13
   %i.ag = xor i8 %i.af, %i.ae                     ; 2 uses
   store i8 %i.ag, ptr %i.a, align 16, !tbaa !13
-  %i.ah = load i8, ptr %7, align 2, !tbaa !13
+  %i.ah = load i8, ptr %13, align 2, !tbaa !13
   %i.ai = zext i8 %i.ah to i64
   %i.aj = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.ai
   %i.ak = load i8, ptr %i.aj, align 1, !tbaa !13
-  %i.al = load i8, ptr %9, align 1, !tbaa !13
+  %i.al = load i8, ptr %15, align 1, !tbaa !13
   %i.am = zext i8 %i.al to i64
   %i.an = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.am
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !13
@@ -125,23 +131,23 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr @rcon, i64 %indvars.iv173
   %i.at = load i8, ptr %i.as, align 1, !tbaa !13
   %i.au = load i8, ptr %i.ar, align 1, !tbaa !13
-  %i.av = load <2 x i8>, ptr %8, align 1, !tbaa !13
+  %i.av = load <2 x i8>, ptr %14, align 1, !tbaa !13
   %i.aw = insertelement <2 x i8> poison, i8 %i.ak, i64 0
   %i.ax = insertelement <2 x i8> %i.aw, i8 %i.ao, i64 1
   %i.ay = xor <2 x i8> %i.av, %i.ax               ; 3 uses
   %i.az = xor i8 %i.ag, %i.at                     ; 2 uses
   %i.ba = extractelement <2 x i8> %i.ay, i64 0
-  store i8 %i.ba, ptr %8, align 1, !tbaa !13
+  store i8 %i.ba, ptr %14, align 1, !tbaa !13
   %i.bb = extractelement <2 x i8> %i.ay, i64 1
-  store i8 %i.bb, ptr %10, align 2, !tbaa !13
+  store i8 %i.bb, ptr %16, align 2, !tbaa !13
   store i8 %i.az, ptr %i.a, align 16, !tbaa !13
-  %i.bc = load <4 x i8>, ptr %11, align 1, !tbaa !13
+  %i.bc = load <4 x i8>, ptr %17, align 1, !tbaa !13
   %i.bd = insertelement <4 x i8> poison, i8 %i.au, i64 0
   %i.be = insertelement <4 x i8> %i.bd, i8 %i.az, i64 1
   %i.bf = shufflevector <2 x i8> %i.ay, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.bg = shufflevector <4 x i8> %i.be, <4 x i8> %i.bf, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   %i.bh = xor <4 x i8> %i.bc, %i.bg               ; 2 uses
-  store <4 x i8> %i.bh, ptr %11, align 1, !tbaa !13
+  store <4 x i8> %i.bh, ptr %17, align 1, !tbaa !13
   %i.bi = load <16 x i8>, ptr %i.t, align 2
   %i.bj = load <2 x i8>, ptr %i.s, align 4, !tbaa !13
   %i.bk = load <4 x i8>, ptr %i.r, align 1, !tbaa !13
@@ -190,16 +196,16 @@ bb.a:
   %i.cv = load <4 x i8>, ptr %i.aa, align 4, !tbaa !13
   %i.cw = xor <4 x i8> %i.cv, %i.cu
   store <4 x i8> %i.cw, ptr %i.aa, align 4, !tbaa !13
-  %indvars.iv.next174 = add nuw nsw i64 %indvars.iv173, 1
+  %indvars.iv.next174 = add nuw nsw i64 %indvars.iv173, 1 ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv175
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.cx, ptr nonnull align 16 %i.a, i64 %i.i, i1 false)
-  %indvars.iv.next176 = add nuw nsw i64 %indvars.iv175, %i.i ; 2 uses
-  %12 = icmp samesign ult i64 %indvars.iv.next176, %5
-  br i1 %12, label %.peel.next163, label %._crit_edge91, !llvm.loop !14
+  %indvars.iv.next176 = add nuw nsw i64 %indvars.iv175, %i.i
+  %exitcond181.not = icmp eq i64 %indvars.iv.next174, 7
+  br i1 %exitcond181.not, label %._crit_edge91, label %.peel.next163, !llvm.loop !14
 
 .preheader84.us:                                  ; preds = %.preheader84.us.preheader, %._crit_edge.split.us.us
-  %indvars.iv123 = phi i64 [ %indvars.iv.next124, %._crit_edge.split.us.us ], [ %i.i, %.preheader84.us.preheader ] ; 2 uses
-  %indvars.iv121 = phi i64 [ %indvars.iv.next122, %._crit_edge.split.us.us ], [ 0, %.preheader84.us.preheader ] ; 2 uses
+  %indvars.iv123 = phi i64 [ %i.i, %.preheader84.us.preheader ], [ %indvars.iv.next124, %._crit_edge.split.us.us ] ; 2 uses
+  %indvars.iv121 = phi i64 [ 0, %.preheader84.us.preheader ], [ %indvars.iv.next122, %._crit_edge.split.us.us ] ; 2 uses
   %i.cy = load i8, ptr %6, align 1, !tbaa !13
   %i.cz = zext i8 %i.cy to i64
   %i.da = getelementptr inbounds nuw i8, ptr @sbox, i64 %i.cz
