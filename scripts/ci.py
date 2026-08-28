@@ -638,7 +638,7 @@ def review_patch_content(patch_content: str) -> Tuple[bool, str]:
     return True, "All patch chunks passed review."
 
 
-def apply_llvm_patch(patch_url: str) -> Tuple[bool, Optional[str]]:
+def apply_llvm_patch(patch_url: str) -> Tuple[bool, Optional[str], Optional[str]]:
     if os.path.exists(PATCH_FILE):
         os.remove(PATCH_FILE)
     patch_content = get_llvm_patch(patch_url)
@@ -646,13 +646,13 @@ def apply_llvm_patch(patch_url: str) -> Tuple[bool, Optional[str]]:
     try:
         approved, review_reason = review_patch_content(patch_content)
     except Exception as e:
-        return False, f"Patch review failed: {e}"
+        return False, f"Patch review failed: {e}", None
     if not approved:
-        return False, review_reason
+        return False, review_reason, None
 
     with open(PATCH_FILE, "w") as f:
         f.write(patch_content)
-    result = subprocess.call(
+    apply_result = subprocess.run(
         [
             "git",
             "apply",
@@ -662,16 +662,19 @@ def apply_llvm_patch(patch_url: str) -> Tuple[bool, Optional[str]]:
             "--include=llvm/include/*",
         ],
         cwd=LLVM_REPO,
+        capture_output=True,
+        text=True,
     )
-    if result != 0:
-        return False, None
+    if apply_result.returncode != 0:
+        git_error = (apply_result.stderr or apply_result.stdout).strip()
+        return False, None, git_error
     # If nothing is applied, it also returns 0, so we need to check if there are any changes after applying the patch.
     result = (
         subprocess.check_output(["git", "diff", "--name-only", "HEAD"], cwd=LLVM_REPO)
         .decode()
         .strip()
     )
-    return bool(result), None
+    return bool(result), None, None
 
 
 def _parse_unified_hunk_header(line: str) -> Tuple[int, int]:
@@ -1954,8 +1957,9 @@ def test(user: str, comment_body: str, issue_url: str):
             try:
                 patch_applied = True
                 patch_reject_reason = None
+                patch_apply_error = None
                 if stage_patch_url is not None:
-                    patch_applied, patch_reject_reason = apply_llvm_patch(stage_patch_url)
+                    patch_applied, patch_reject_reason, patch_apply_error = apply_llvm_patch(stage_patch_url)
             except Exception:
                 reply_issue_comment(
                     issue_url,
@@ -1975,10 +1979,13 @@ def test(user: str, comment_body: str, issue_url: str):
                 return
 
             if not patch_applied:
+                apply_error_text = ""
+                if patch_apply_error:
+                    apply_error_text = f"\n\nGit apply error:\n```\n{patch_apply_error}\n```"
                 reply_issue_comment(
                     issue_url,
                     comment_body,
-                    f"The {stage_name} patch cannot be applied cleanly. Please make sure the patch is based on the latest main branch (or https://github.com/llvm/llvm-project/commit/{old_revision}) and does not have conflicts.",
+                    f"The {stage_name} patch cannot be applied cleanly. Please make sure the patch is based on the latest main branch (or https://github.com/llvm/llvm-project/commit/{old_revision}) and does not have conflicts." + apply_error_text,
                     user,
                 )
                 return
