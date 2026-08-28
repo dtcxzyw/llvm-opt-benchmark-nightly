@@ -205,7 +205,7 @@ bb.cz:                                            ; preds = %_RNvMCscRggLTdVSaO_
   br i1 %or.cond529, label %.preheader533, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz, %.thread
-  %.sroa.0359.0 = phi ptr [ %12, %.thread ], [ null, %bb.cz ] ; 8 uses
+  %.sroa.0359.0 = phi ptr [ %.sroa.0386.0.copyload, %.thread ], [ null, %bb.cz ] ; 8 uses
   %.sroa.11360.0 = phi i64 [ %.sroa.4390.0.copyload, %.thread ], [ undef, %bb.cz ] ; 11 uses
   %.sroa.15361.0 = phi i1 [ %i.yd, %.thread ], [ undef, %bb.cz ]
   %.sroa.16.0 = phi i64 [ %.sroa.7393.0.copyload, %.thread ], [ undef, %bb.cz ]
@@ -608,7 +608,7 @@ bb.ei:                                            ; preds = %bb.ee
   br i1 %i.yc, label %bb.ip, label %bb.io
 
 .thread:                                          ; preds = %bb.iu, %.preheader533
-  %.sroa.0389.0.copyload = load i64, ptr %i.ak, align 8
+  %.sroa.0386.0.copyload = load ptr, ptr %i.ak, align 8
   %.sroa.4390.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %.sroa.4390.0.copyload = load i64, ptr %.sroa.4390.0..sroa_idx, align 8
   %.sroa.6392.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
@@ -618,7 +618,6 @@ bb.ei:                                            ; preds = %bb.ee
   %.sroa.8394.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ak, i64 40
   %.sroa.8394.0.copyload = load i64, ptr %.sroa.8394.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ak)
-  %12 = inttoptr i64 %.sroa.0389.0.copyload to ptr
   %i.yd = icmp eq i64 %.sroa.6392.0.copyload, 0
   br label %bb.da
 

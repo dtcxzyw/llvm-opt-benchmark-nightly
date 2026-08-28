@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   invoke fastcc void @_ZN5insta8snapshot8Snapshot18serialize_snapshot17h4fb6d9490e331864E(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.e, ptr %.232.val, i64 %.240.val, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(176) %i.f)
           to label %bb.r unwind label %bb.q
 
-.thread41:                                        ; preds = %bb.n, %.thread37
+.thread41:                                        ; preds = %.thread37, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.719)
   br label %.then
@@ -215,11 +215,10 @@ bb.p:                                             ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.719)
   %.not20 = icmp eq i64 %.sroa.05.0.copyload, -9223372036854775808
-  %6 = inttoptr i64 %.sroa.9.0.copyload to ptr    ; 3 uses
   br i1 %.not20, label %.then, label %.cont
 
 .then:                                            ; preds = %bb.p, %.thread41
-  %i.ab = phi ptr [ %i.h, %.thread41 ], [ %6, %bb.p ] ; 3 uses
+  %i.ab = phi ptr [ %i.h, %.thread41 ], [ %.sroa.9.0.copyload, %bb.p ] ; 3 uses
   %.sroa.gep253 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   %.then.val8 = load ptr, ptr %.sroa.gep253, align 8, !nonnull !15, !noundef !15
   %.sroa.gep57 = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
@@ -227,9 +226,9 @@ bb.p:                                             ; preds = %bb.r
   br label %.cont
 
 .cont:                                            ; preds = %bb.p, %.then
-  %i.ac = phi ptr [ %.then.val8, %.then ], [ %6, %bb.p ] ; 2 uses
-  %.sroa.05.04958 = phi i64 [ -9223372036854775808, %.then ], [ %.sroa.05.0.copyload, %bb.p ] ; 4 uses
-  %7 = phi ptr [ %i.ab, %.then ], [ %6, %bb.p ]   ; 4 uses
+  %i.ac = phi ptr [ %.then.val8, %.then ], [ %.sroa.9.0.copyload, %bb.p ] ; 2 uses
+  %.sroa.9.04460 = phi ptr [ %i.ab, %.then ], [ %.sroa.9.0.copyload, %bb.p ] ; 4 uses
+  %.sroa.05.04858 = phi i64 [ -9223372036854775808, %.then ], [ %.sroa.05.0.copyload, %bb.p ] ; 4 uses
   %i.ad = phi i64 [ %.then.val, %.then ], [ %.sroa.15.0.copyload, %bb.p ]
   %.not.i44 = icmp eq i64 %.sroa.11.0.copyload, %i.ad
   br i1 %.not.i44, label %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit", label %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.thread"
@@ -243,7 +242,7 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.o
   %.sroa.05.0.copyload = load i64, ptr %i.e, align 8 ; 2 uses
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %.sroa.9.0.copyload = load i64, ptr %.sroa.9.0..sroa_idx, align 8
+  %.sroa.9.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8 ; 3 uses
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.15.0.copyload = load i64, ptr %.sroa.15.0..sroa_idx, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -258,28 +257,28 @@ bb.r:                                             ; preds = %bb.o
   br i1 %i.af, label %bb.t, label %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.thread"
 
 "_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.thread": ; preds = %.cont, %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit"
-  switch i64 %.sroa.05.04958, label %bb.s [
+  switch i64 %.sroa.05.04858, label %bb.s [
     i64 -9223372036854775808, label %"_ZN4core3ptr68drop_in_place$LT$alloc..borrow..Cow$LT$alloc..string..String$GT$$GT$17h9e85097e2bf94435E.exit45"
     i64 0, label %"_ZN4core3ptr68drop_in_place$LT$alloc..borrow..Cow$LT$alloc..string..String$GT$$GT$17h9e85097e2bf94435E.exit45"
   ]
 
 bb.s:                                             ; preds = %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.thread"
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %7) ]
-  call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %7, i64 noundef %.sroa.05.04958, i64 noundef range(i64 1, -9223372036854775807) 1) #51, !noalias !18457
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.04460) ]
+  call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.9.04460, i64 noundef %.sroa.05.04858, i64 noundef range(i64 1, -9223372036854775807) 1) #51, !noalias !18457
   br label %"_ZN4core3ptr68drop_in_place$LT$alloc..borrow..Cow$LT$alloc..string..String$GT$$GT$17h9e85097e2bf94435E.exit45"
 
 bb.t:                                             ; preds = %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit"
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.ag, align 8
   store ptr null, ptr %0, align 8
-  switch i64 %.sroa.05.04958, label %bb.u [
+  switch i64 %.sroa.05.04858, label %bb.u [
     i64 -9223372036854775808, label %"_ZN4core3ptr68drop_in_place$LT$alloc..borrow..Cow$LT$alloc..string..String$GT$$GT$17h9e85097e2bf94435E.exit46"
     i64 0, label %"_ZN4core3ptr68drop_in_place$LT$alloc..borrow..Cow$LT$alloc..string..String$GT$$GT$17h9e85097e2bf94435E.exit46"
   ]
 
 bb.u:                                             ; preds = %bb.t
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %7) ]
-  call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %7, i64 noundef %.sroa.05.04958, i64 noundef range(i64 1, -9223372036854775807) 1) #51, !noalias !18460
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.9.04460) ]
+  call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.sroa.9.04460, i64 noundef %.sroa.05.04858, i64 noundef range(i64 1, -9223372036854775807) 1) #51, !noalias !18460
   br label %"_ZN4core3ptr68drop_in_place$LT$alloc..borrow..Cow$LT$alloc..string..String$GT$$GT$17h9e85097e2bf94435E.exit46"
 
 "_ZN4core3ptr68drop_in_place$LT$alloc..borrow..Cow$LT$alloc..string..String$GT$$GT$17h9e85097e2bf94435E.exit45": ; preds = %bb.s, %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.thread", %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2eq17h5e5f3ec0c5cf38a3E.exit.thread"
