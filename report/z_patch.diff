@@ -1,0 +1,515 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp b/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
+index 38b9a5b09d32b..f8286fb95566c 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
+@@ -242,6 +242,15 @@ bool SimplifyIndvar::makeIVComparisonInvariant(ICmpInst *ICmp,
+   ICmp->setPredicate(InvariantPredicate);
+   ICmp->setOperand(0, NewLHS);
+   ICmp->setOperand(1, NewRHS);
++  // Move the now loop-invariant comparison to the preheader. Both operands are
++  // expanded there, and an icmp is always safe to speculate, so this is just
++  // the hoist LICM would perform later. Doing it here is what makes the extra
++  // unswitching run requested below able to see the condition at all:
++  // SimpleLoopUnswitch only unswitches on conditions defined outside the loop.
++  if (L->contains(ICmp->getParent())) {
++    ICmp->moveBefore(PHTerm->getIterator());
++    SE->forgetBlockAndLoopDispositions(ICmp);
++  }
+   RunUnswitching = true;
+   return true;
+ }
+diff --git a/llvm/test/Transforms/IndVarSimplify/X86/loop-invariant-conditions.ll b/llvm/test/Transforms/IndVarSimplify/X86/loop-invariant-conditions.ll
+index 2e19311294fcb..ed0c40ea8bf41 100644
+--- a/llvm/test/Transforms/IndVarSimplify/X86/loop-invariant-conditions.ll
++++ b/llvm/test/Transforms/IndVarSimplify/X86/loop-invariant-conditions.ll
+@@ -6,9 +6,9 @@ target triple = "x86_64-unknown-linux-gnu"
+ define void @test1(i64 %start) {
+ ; CHECK-LABEL: @test1(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_END:%.*]], label [[LOOP]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -30,9 +30,9 @@ define void @test1.next(i64 %start) {
+ ; CHECK-LABEL: @test1.next(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i64 [[START:%.*]], 1
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[TMP0]], 0
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[TMP0]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_END:%.*]], label [[LOOP]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -53,9 +53,9 @@ for.end:                                          ; preds = %if.end, %entry
+ define void @test2(i64 %start) {
+ ; CHECK-LABEL: @test2(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp sle i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp sle i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_END:%.*]], label [[LOOP]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -77,9 +77,9 @@ define void @test2.next(i64 %start) {
+ ; CHECK-LABEL: @test2.next(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i64 [[START:%.*]], 1
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp sle i64 [[TMP0]], 0
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp sle i64 [[TMP0]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_END:%.*]], label [[LOOP]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -375,9 +375,9 @@ define void @test7(i64 %start, ptr %inc_ptr) {
+ ; CHECK-NEXT:    [[OK:%.*]] = icmp sge i64 [[INC]], 0
+ ; CHECK-NEXT:    br i1 [[OK]], label [[LOOP_PREHEADER:%.*]], label [[FOR_END:%.*]]
+ ; CHECK:       loop.preheader:
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_END_LOOPEXIT:%.*]], label [[LOOP]]
+ ; CHECK:       for.end.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_END]]
+@@ -407,9 +407,9 @@ define void @test7.next(i64 %start, ptr %inc_ptr) {
+ ; CHECK-NEXT:    br i1 [[OK]], label [[LOOP_PREHEADER:%.*]], label [[FOR_END:%.*]]
+ ; CHECK:       loop.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[INC]], [[START:%.*]]
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[TMP0]], 0
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[TMP0]], 0
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_END_LOOPEXIT:%.*]], label [[LOOP]]
+ ; CHECK:       for.end.loopexit:
+ ; CHECK-NEXT:    br label [[FOR_END]]
+@@ -650,9 +650,9 @@ define void @test9(i1 %cnd, i64 %start) {
+ ; CHECK:       entry2:
+ ; CHECK-NEXT:    br label [[LOOP_PREHEADER]]
+ ; CHECK:       loop.preheader:
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[CMP1:%.*]] = icmp slt i64 [[START:%.*]], -1
+ ; CHECK-NEXT:    br i1 [[CMP1]], label [[FOR_END:%.*]], label [[LOOP]]
+ ; CHECK:       for.end:
+ ; CHECK-NEXT:    ret void
+@@ -682,6 +682,7 @@ declare void @use(i1 %x)
+ define void @test10() {
+ ; CHECK-LABEL: @test10(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 -1, undef
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    br i1 false, label [[LEFT:%.*]], label [[RIGHT:%.*]]
+@@ -690,7 +691,6 @@ define void @test10() {
+ ; CHECK:       right:
+ ; CHECK-NEXT:    br label [[LATCH]]
+ ; CHECK:       latch:
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 -1, undef
+ ; CHECK-NEXT:    br i1 true, label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[CMP_LCSSA:%.*]] = phi i1 [ [[CMP]], [[LATCH]] ]
+diff --git a/llvm/test/Transforms/IndVarSimplify/X86/pr57187.ll b/llvm/test/Transforms/IndVarSimplify/X86/pr57187.ll
+index 620b0adaebfe5..7335afa4aa835 100644
+--- a/llvm/test/Transforms/IndVarSimplify/X86/pr57187.ll
++++ b/llvm/test/Transforms/IndVarSimplify/X86/pr57187.ll
+@@ -9,6 +9,7 @@ define void @test(i32 %start) {
+ ; CHECK-LABEL: @test(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[START:%.*]], -1
++; CHECK-NEXT:    [[LOOP_EXIT_COND:%.*]] = icmp slt i32 [[TMP0]], 11
+ ; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[START]] to i64
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       backedge:
+@@ -17,7 +18,6 @@ define void @test(i32 %start) {
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], [[BACKEDGE:%.*]] ], [ [[TMP1]], [[ENTRY:%.*]] ]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add nsw i64 [[INDVARS_IV]], -1
+ ; CHECK-NEXT:    [[INDVARS:%.*]] = trunc i64 [[INDVARS_IV_NEXT]] to i32
+-; CHECK-NEXT:    [[LOOP_EXIT_COND:%.*]] = icmp slt i32 [[TMP0]], 11
+ ; CHECK-NEXT:    br i1 [[LOOP_EXIT_COND]], label [[EXIT:%.*]], label [[STUCK_PREHEADER:%.*]]
+ ; CHECK:       stuck.preheader:
+ ; CHECK-NEXT:    br label [[STUCK:%.*]]
+diff --git a/llvm/test/Transforms/IndVarSimplify/cycled_phis.ll b/llvm/test/Transforms/IndVarSimplify/cycled_phis.ll
+index 42729fca78789..ff2d40359a765 100644
+--- a/llvm/test/Transforms/IndVarSimplify/cycled_phis.ll
++++ b/llvm/test/Transforms/IndVarSimplify/cycled_phis.ll
+@@ -345,13 +345,13 @@ define i32 @start.from.sibling.iv.wide.cycled.phis(ptr %len.ptr, ptr %sibling.le
+ ; CHECK-NEXT:    [[IV_START:%.*]] = phi i32 [ [[SIBLING_IV_NEXT_TRUNC]], [[OUTER_LOOP_PREHEADER]] ], [ [[IV_NEXT_LCSSA:%.*]], [[OUTER_LOOP_BACKEDGE:%.*]] ]
+ ; CHECK-NEXT:    br label [[PREHEADER:%.*]]
+ ; CHECK:       preheader:
++; CHECK-NEXT:    [[UNSIGNED_CMP:%.*]] = icmp ult i32 [[IV_START]], [[LEN]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_START]], [[PREHEADER]] ], [ [[IV_NEXT:%.*]], [[BACKEDGE:%.*]] ]
+ ; CHECK-NEXT:    [[SIGNED_CMP:%.*]] = icmp slt i32 [[IV]], [[LEN]]
+ ; CHECK-NEXT:    br i1 [[SIGNED_CMP]], label [[SIGNED_PASSED:%.*]], label [[FAILED_SIGNED:%.*]]
+ ; CHECK:       signed.passed:
+-; CHECK-NEXT:    [[UNSIGNED_CMP:%.*]] = icmp ult i32 [[IV_START]], [[LEN]]
+ ; CHECK-NEXT:    br i1 [[UNSIGNED_CMP]], label [[BACKEDGE]], label [[FAILED_UNSIGNED:%.*]]
+ ; CHECK:       backedge:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 1
+@@ -463,13 +463,13 @@ define i32 @start.from.sibling.iv.wide.cycled.phis.complex.phis(ptr %len.ptr, pt
+ ; CHECK-NEXT:    [[IV_START:%.*]] = phi i32 [ [[SIBLING_IV_NEXT_TRUNC]], [[OUTER_LOOP_PREHEADER]] ], [ [[IV_START_UPDATED:%.*]], [[OUTER_LOOP_BACKEDGE:%.*]] ]
+ ; CHECK-NEXT:    br label [[PREHEADER:%.*]]
+ ; CHECK:       preheader:
++; CHECK-NEXT:    [[UNSIGNED_CMP:%.*]] = icmp ult i32 [[IV_START]], [[LEN]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_START]], [[PREHEADER]] ], [ [[IV_NEXT:%.*]], [[BACKEDGE:%.*]] ]
+ ; CHECK-NEXT:    [[SIGNED_CMP:%.*]] = icmp slt i32 [[IV]], [[LEN]]
+ ; CHECK-NEXT:    br i1 [[SIGNED_CMP]], label [[SIGNED_PASSED:%.*]], label [[FAILED_SIGNED:%.*]]
+ ; CHECK:       signed.passed:
+-; CHECK-NEXT:    [[UNSIGNED_CMP:%.*]] = icmp ult i32 [[IV_START]], [[LEN]]
+ ; CHECK-NEXT:    br i1 [[UNSIGNED_CMP]], label [[BACKEDGE]], label [[FAILED_UNSIGNED:%.*]]
+ ; CHECK:       backedge:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nsw i32 [[IV]], 1
+diff --git a/llvm/test/Transforms/IndVarSimplify/eliminate-exit-no-dl.ll b/llvm/test/Transforms/IndVarSimplify/eliminate-exit-no-dl.ll
+index 5eebd75411056..a67341ece9c85 100644
+--- a/llvm/test/Transforms/IndVarSimplify/eliminate-exit-no-dl.ll
++++ b/llvm/test/Transforms/IndVarSimplify/eliminate-exit-no-dl.ll
+@@ -12,10 +12,10 @@
+ define void @foo() {
+ ; CHECK-LABEL: @foo(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[TMP5:%.*]] = icmp ugt ptr getelementptr (i8, ptr @global, i64 1), getelementptr (i8, ptr @global, i64 500)
+ ; CHECK-NEXT:    br label [[BB3:%.*]]
+ ; CHECK:       bb3:
+ ; CHECK-NEXT:    [[TMP6:%.*]] = load i8, ptr getelementptr inbounds nuw (i8, ptr @global, i64 1), align 1
+-; CHECK-NEXT:    [[TMP5:%.*]] = icmp ugt ptr getelementptr (i8, ptr @global, i64 1), getelementptr (i8, ptr @global, i64 500)
+ ; CHECK-NEXT:    br i1 [[TMP5]], label [[BB7:%.*]], label [[BB11:%.*]]
+ ; CHECK:       bb7:
+ ; CHECK-NEXT:    [[TMP8:%.*]] = zext i8 [[TMP6]] to i64
+diff --git a/llvm/test/Transforms/IndVarSimplify/invariant-cond-hoisted-for-unswitch.ll b/llvm/test/Transforms/IndVarSimplify/invariant-cond-hoisted-for-unswitch.ll
+new file mode 100644
+index 0000000000000..f5a7a852866fd
+--- /dev/null
++++ b/llvm/test/Transforms/IndVarSimplify/invariant-cond-hoisted-for-unswitch.ll
+@@ -0,0 +1,107 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -S -passes='loop-mssa(indvars)' < %s | FileCheck %s --check-prefixes=INDVARS
++; RUN: opt -S -passes='loop-mssa(indvars,simple-loop-unswitch<no-nontrivial;trivial>)' < %s | FileCheck %s --check-prefixes=UNSWITCH
++
++; makeIVComparisonInvariant rewrites %neg to a loop-invariant compare and asks
++; for an extra SimpleLoopUnswitch run. That run only unswitches conditions
++; defined outside the loop, so the compare has to be left in the preheader for
++; the request to have any effect.
++
++declare void @llvm.trap() cold noreturn nounwind
++
++define i64 @scan(ptr readonly %data, i64 %count, i64 %start) {
++; INDVARS-LABEL: @scan(
++; INDVARS-NEXT:  entry:
++; INDVARS-NEXT:    [[ENTRY_COND:%.*]] = icmp slt i64 [[START:%.*]], [[COUNT:%.*]]
++; INDVARS-NEXT:    br i1 [[ENTRY_COND]], label [[PH:%.*]], label [[EXIT:%.*]]
++; INDVARS:       ph:
++; INDVARS-NEXT:    [[NEG:%.*]] = icmp slt i64 [[START]], 0
++; INDVARS-NEXT:    br label [[LOOP:%.*]]
++; INDVARS:       loop:
++; INDVARS-NEXT:    [[IV:%.*]] = phi i64 [ [[START]], [[PH]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
++; INDVARS-NEXT:    br i1 [[NEG]], label [[TRAP:%.*]], label [[BODY:%.*]]
++; INDVARS:       trap:
++; INDVARS-NEXT:    call void @llvm.trap()
++; INDVARS-NEXT:    unreachable
++; INDVARS:       body:
++; INDVARS-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr [[DATA:%.*]], i64 [[IV]]
++; INDVARS-NEXT:    [[LD:%.*]] = load i8, ptr [[GEP]], align 1
++; INDVARS-NEXT:    [[FOUND:%.*]] = icmp eq i8 [[LD]], 60
++; INDVARS-NEXT:    br i1 [[FOUND]], label [[EXIT_LOOPEXIT:%.*]], label [[LATCH]]
++; INDVARS:       latch:
++; INDVARS-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
++; INDVARS-NEXT:    [[CONT:%.*]] = icmp ne i64 [[IV_NEXT]], [[COUNT]]
++; INDVARS-NEXT:    br i1 [[CONT]], label [[LOOP]], label [[EXIT_LOOPEXIT]]
++; INDVARS:       exit.loopexit:
++; INDVARS-NEXT:    [[LCSSA:%.*]] = phi i64 [ [[IV]], [[BODY]] ], [ [[COUNT]], [[LATCH]] ]
++; INDVARS-NEXT:    br label [[EXIT]]
++; INDVARS:       exit:
++; INDVARS-NEXT:    [[RES:%.*]] = phi i64 [ [[START]], [[ENTRY:%.*]] ], [ [[LCSSA]], [[EXIT_LOOPEXIT]] ]
++; INDVARS-NEXT:    ret i64 [[RES]]
++;
++; UNSWITCH-LABEL: @scan(
++; UNSWITCH-NEXT:  entry:
++; UNSWITCH-NEXT:    [[ENTRY_COND:%.*]] = icmp slt i64 [[START:%.*]], [[COUNT:%.*]]
++; UNSWITCH-NEXT:    br i1 [[ENTRY_COND]], label [[PH:%.*]], label [[EXIT:%.*]]
++; UNSWITCH:       ph:
++; UNSWITCH-NEXT:    [[NEG:%.*]] = icmp slt i64 [[START]], 0
++; UNSWITCH-NEXT:    br i1 [[NEG]], label [[TRAP:%.*]], label [[PH_SPLIT:%.*]]
++; UNSWITCH:       ph.split:
++; UNSWITCH-NEXT:    br label [[LOOP:%.*]]
++; UNSWITCH:       loop:
++; UNSWITCH-NEXT:    [[IV:%.*]] = phi i64 [ [[START]], [[PH_SPLIT]] ], [ [[IV_NEXT:%.*]], [[LATCH:%.*]] ]
++; UNSWITCH-NEXT:    br label [[BODY:%.*]]
++; UNSWITCH:       trap:
++; UNSWITCH-NEXT:    call void @llvm.trap()
++; UNSWITCH-NEXT:    unreachable
++; UNSWITCH:       body:
++; UNSWITCH-NEXT:    [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr [[DATA:%.*]], i64 [[IV]]
++; UNSWITCH-NEXT:    [[LD:%.*]] = load i8, ptr [[GEP]], align 1
++; UNSWITCH-NEXT:    [[FOUND:%.*]] = icmp eq i8 [[LD]], 60
++; UNSWITCH-NEXT:    br i1 [[FOUND]], label [[EXIT_LOOPEXIT:%.*]], label [[LATCH]]
++; UNSWITCH:       latch:
++; UNSWITCH-NEXT:    [[IV_NEXT]] = add nsw i64 [[IV]], 1
++; UNSWITCH-NEXT:    [[CONT:%.*]] = icmp ne i64 [[IV_NEXT]], [[COUNT]]
++; UNSWITCH-NEXT:    br i1 [[CONT]], label [[LOOP]], label [[EXIT_LOOPEXIT]]
++; UNSWITCH:       exit.loopexit:
++; UNSWITCH-NEXT:    [[LCSSA:%.*]] = phi i64 [ [[IV]], [[BODY]] ], [ [[COUNT]], [[LATCH]] ]
++; UNSWITCH-NEXT:    br label [[EXIT]]
++; UNSWITCH:       exit:
++; UNSWITCH-NEXT:    [[RES:%.*]] = phi i64 [ [[START]], [[ENTRY:%.*]] ], [ [[LCSSA]], [[EXIT_LOOPEXIT]] ]
++; UNSWITCH-NEXT:    ret i64 [[RES]]
++;
++entry:
++  %entry.cond = icmp slt i64 %start, %count
++  br i1 %entry.cond, label %ph, label %exit
++
++ph:
++  br label %loop
++
++loop:
++  %iv = phi i64 [ %start, %ph ], [ %iv.next, %latch ]
++  %neg = icmp slt i64 %iv, 0
++  br i1 %neg, label %trap, label %body
++
++trap:
++  call void @llvm.trap()
++  unreachable
++
++body:
++  %gep = getelementptr inbounds nuw i8, ptr %data, i64 %iv
++  %ld = load i8, ptr %gep, align 1
++  %found = icmp eq i8 %ld, 60
++  br i1 %found, label %exit.loopexit, label %latch
++
++latch:
++  %iv.next = add nsw i64 %iv, 1
++  %cont = icmp ne i64 %iv.next, %count
++  br i1 %cont, label %loop, label %exit.loopexit
++
++exit.loopexit:
++  %lcssa = phi i64 [ %iv, %body ], [ %count, %latch ]
++  br label %exit
++
++exit:
++  %res = phi i64 [ %start, %entry ], [ %lcssa, %exit.loopexit ]
++  ret i64 %res
++}
+diff --git a/llvm/test/Transforms/IndVarSimplify/iv-poison.ll b/llvm/test/Transforms/IndVarSimplify/iv-poison.ll
+index 383599f614357..ba703133bd7cb 100644
+--- a/llvm/test/Transforms/IndVarSimplify/iv-poison.ll
++++ b/llvm/test/Transforms/IndVarSimplify/iv-poison.ll
+@@ -5,11 +5,11 @@
+ define i2 @iv_hoist_nsw_poison(i2 %arg) {
+ ; CHECK-LABEL: @iv_hoist_nsw_poison(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[BB1:%.*]]
+ ; CHECK:       bb1:
+ ; CHECK-NEXT:    [[DOT07:%.*]] = phi i2 [ 1, [[BB:%.*]] ], [ [[I:%.*]], [[BB1]] ]
+ ; CHECK-NEXT:    [[I]] = add nuw i2 [[DOT07]], 1
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[COMMON_RET:%.*]], label [[BB1]]
+ ; CHECK:       common.ret:
+ ; CHECK-NEXT:    [[I2_LCSSA:%.*]] = phi i2 [ [[I]], [[BB1]] ]
+@@ -61,11 +61,11 @@ exit:
+ define i2 @iv_hoist_both_adds_nsw(i2 %arg) {
+ ; CHECK-LABEL: @iv_hoist_both_adds_nsw(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV_0:%.*]] = phi i2 [ 1, [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add nuw nsw i2 [[IV_0]], 1
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i2 [ [[IV_0_NEXT]], [[LOOP]] ]
+@@ -89,13 +89,13 @@ exit:
+ define i4 @iv_hoist_both_adds_nsw_extra_use(i4 %arg) {
+ ; CHECK-LABEL: @iv_hoist_both_adds_nsw_extra_use(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ 1, [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add nuw nsw i4 [[IV_0]], 1
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i4 [ [[IV_0_NEXT]], [[LOOP]] ]
+@@ -121,13 +121,13 @@ exit:
+ define i4 @iv_hoist_both_adds_nsw_extra_use_incs_reordered(i4 %arg) {
+ ; CHECK-LABEL: @iv_hoist_both_adds_nsw_extra_use_incs_reordered(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ 1, [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add nuw nsw i4 [[IV_0]], 1
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 1, [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i4 [ [[IV_0_NEXT]], [[LOOP]] ]
+@@ -185,11 +185,11 @@ declare void @use(i4)
+ define i2 @iv_hoist_nuw_poison(i2 %arg, i2 %start) {
+ ; CHECK-LABEL: @iv_hoist_nuw_poison(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 [[START:%.*]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[BB1:%.*]]
+ ; CHECK:       bb1:
+-; CHECK-NEXT:    [[DOT07:%.*]] = phi i2 [ [[START:%.*]], [[BB:%.*]] ], [ [[I:%.*]], [[BB1]] ]
++; CHECK-NEXT:    [[DOT07:%.*]] = phi i2 [ [[START]], [[BB:%.*]] ], [ [[I:%.*]], [[BB1]] ]
+ ; CHECK-NEXT:    [[I]] = add i2 [[DOT07]], 1
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 [[START]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[COMMON_RET:%.*]], label [[BB1]]
+ ; CHECK:       common.ret:
+ ; CHECK-NEXT:    [[I2_LCSSA:%.*]] = phi i2 [ [[I]], [[BB1]] ]
+@@ -213,11 +213,11 @@ common.ret:                                       ; preds = %bb1
+ define i4 @iv_hoist_nuw_poison2(i4 %0, i4 %end, i4 %start) {
+ ; CHECK-LABEL: @iv_hoist_nuw_poison2(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START:%.*]], [[END:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START:%.*]], [[ENTRY:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START]], [[ENTRY:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add i4 [[IV_0]], 1
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START]], [[END:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i4 [ [[IV_0_NEXT]], [[LOOP]] ]
+@@ -241,11 +241,11 @@ exit:
+ define i2 @iv_hoist_both_adds_nuw(i2 %arg, i2 %start) {
+ ; CHECK-LABEL: @iv_hoist_both_adds_nuw(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 [[START:%.*]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[IV_0:%.*]] = phi i2 [ [[START:%.*]], [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV_0:%.*]] = phi i2 [ [[START]], [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add nuw i2 [[IV_0]], 1
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i2 [[START]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i2 [ [[IV_0_NEXT]], [[LOOP]] ]
+@@ -269,13 +269,13 @@ exit:
+ define i4 @iv_hoist_both_adds_nuw_extra_use(i4 %arg, i4 %start) {
+ ; CHECK-LABEL: @iv_hoist_both_adds_nuw_extra_use(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START:%.*]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START:%.*]], [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START]], [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add nuw i4 [[IV_0]], 1
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i4 [ [[IV_0_NEXT]], [[LOOP]] ]
+@@ -301,13 +301,13 @@ exit:
+ define i4 @iv_hoist_both_adds_nuw_extra_use_incs_reordered(i4 %arg, i4 %start) {
+ ; CHECK-LABEL: @iv_hoist_both_adds_nuw_extra_use_incs_reordered(
+ ; CHECK-NEXT:  bb:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START:%.*]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START:%.*]], [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START]], [[BB:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add nuw i4 [[IV_0]], 1
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START]], [[ARG:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i4 [ [[IV_0_NEXT]], [[LOOP]] ]
+@@ -333,12 +333,12 @@ exit:
+ define i4 @iv_hoist_nuw_poison_extra_use(i4 %0, i4 %end, i4 %start) {
+ ; CHECK-LABEL: @iv_hoist_nuw_poison_extra_use(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START:%.*]], [[END:%.*]]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START:%.*]], [[ENTRY:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV_0:%.*]] = phi i4 [ [[START]], [[ENTRY:%.*]] ], [ [[IV_0_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[IV_0_NEXT]] = add i4 [[IV_0]], 1
+ ; CHECK-NEXT:    call void @use(i4 [[IV_0_NEXT]])
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ult i4 [[START]], [[END:%.*]]
+ ; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i4 [ [[IV_0_NEXT]], [[LOOP]] ]
+diff --git a/llvm/test/Transforms/IndVarSimplify/outer_phi.ll b/llvm/test/Transforms/IndVarSimplify/outer_phi.ll
+index 03303fb431326..706519ddf3fde 100644
+--- a/llvm/test/Transforms/IndVarSimplify/outer_phi.ll
++++ b/llvm/test/Transforms/IndVarSimplify/outer_phi.ll
+@@ -405,13 +405,13 @@ define i32 @test_05(i32 %a, ptr %bp) {
+ ; CHECK-NEXT:    br label [[OUTER:%.*]]
+ ; CHECK:       outer:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT_LCSSA:%.*]], [[OUTER_BACKEDGE:%.*]] ]
++; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br label [[INNER:%.*]]
+ ; CHECK:       inner:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[OUTER_IV]], [[OUTER]] ], [ [[IV_NEXT:%.*]], [[INNER_BACKEDGE:%.*]] ]
+ ; CHECK-NEXT:    [[SIGNED_COND:%.*]] = icmp slt i32 [[IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[SIGNED_COND]], label [[INNER_1:%.*]], label [[SIDE_EXIT:%.*]]
+ ; CHECK:       inner.1:
+-; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[UNSIGNED_COND]], label [[INNER_BACKEDGE]], label [[SIDE_EXIT]]
+ ; CHECK:       inner.backedge:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 1
+@@ -967,13 +967,13 @@ define i32 @test_06(i32 %a, ptr %bp) {
+ ; CHECK-NEXT:    br label [[OUTER:%.*]]
+ ; CHECK:       outer:
+ ; CHECK-NEXT:    [[OUTER_IV:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[OUTER_MERGE:%.*]], [[OUTER_BACKEDGE:%.*]] ]
++; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br label [[INNER:%.*]]
+ ; CHECK:       inner:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[OUTER_IV]], [[OUTER]] ], [ [[IV_NEXT:%.*]], [[INNER_BACKEDGE:%.*]] ]
+ ; CHECK-NEXT:    [[SIGNED_COND:%.*]] = icmp slt i32 [[IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[SIGNED_COND]], label [[INNER_1:%.*]], label [[SIDE_EXIT:%.*]]
+ ; CHECK:       inner.1:
+-; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[UNSIGNED_COND]], label [[INNER_BACKEDGE]], label [[SIDE_EXIT]]
+ ; CHECK:       inner.backedge:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 1
+@@ -1035,6 +1035,7 @@ define i32 @test_07(i32 %a, ptr %bp) {
+ ; CHECK-NEXT:    [[OUTER_COND_1:%.*]] = call i1 @cond()
+ ; CHECK-NEXT:    br i1 [[OUTER_COND_1]], label [[INNER_PREHEADER:%.*]], label [[NO_INNER:%.*]]
+ ; CHECK:       inner.preheader:
++; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br label [[INNER:%.*]]
+ ; CHECK:       no_inner:
+ ; CHECK-NEXT:    [[OUTER_COND_2:%.*]] = call i1 @cond()
+@@ -1044,7 +1045,6 @@ define i32 @test_07(i32 %a, ptr %bp) {
+ ; CHECK-NEXT:    [[SIGNED_COND:%.*]] = icmp slt i32 [[IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[SIGNED_COND]], label [[INNER_1:%.*]], label [[SIDE_EXIT:%.*]]
+ ; CHECK:       inner.1:
+-; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[UNSIGNED_COND]], label [[INNER_BACKEDGE]], label [[SIDE_EXIT]]
+ ; CHECK:       inner.backedge:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 1
+@@ -1113,6 +1113,7 @@ define i32 @test_08(i32 %a, ptr %bp) {
+ ; CHECK-NEXT:    [[OUTER_COND_1:%.*]] = call i1 @cond()
+ ; CHECK-NEXT:    br i1 [[OUTER_COND_1]], label [[INNER_PREHEADER:%.*]], label [[NO_INNER:%.*]]
+ ; CHECK:       inner.preheader:
++; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br label [[INNER:%.*]]
+ ; CHECK:       no_inner:
+ ; CHECK-NEXT:    [[OUTER_COND_2:%.*]] = call i1 @cond()
+@@ -1127,7 +1128,6 @@ define i32 @test_08(i32 %a, ptr %bp) {
+ ; CHECK-NEXT:    [[SIGNED_COND:%.*]] = icmp slt i32 [[IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[SIGNED_COND]], label [[INNER_1:%.*]], label [[SIDE_EXIT:%.*]]
+ ; CHECK:       inner.1:
+-; CHECK-NEXT:    [[UNSIGNED_COND:%.*]] = icmp ult i32 [[OUTER_IV]], [[B]]
+ ; CHECK-NEXT:    br i1 [[UNSIGNED_COND]], label [[INNER_BACKEDGE]], label [[SIDE_EXIT]]
+ ; CHECK:       inner.backedge:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 1
