@@ -205,7 +205,6 @@ bb.u:                                             ; preds = %._crit_edge160
 
 .lr.ph.i92:                                       ; preds = %.preheader77.i
   %i.sc = shl nuw nsw i64 %indvars.iv89.i, 3
-  %11 = and i64 %i.sc, 4294967288
   %i.sd = zext nneg i32 %i.sa to i64
   br label %.preheader.i
 
@@ -231,7 +230,7 @@ bb.u:                                             ; preds = %._crit_edge160
   %.sroa.23.2.i = phi double [ %.sroa.23.0.i, %.lr.ph.i92 ], [ %i.ty, %.preheader.i ]
   %indvars.iv.i93 = phi i64 [ 0, %.lr.ph.i92 ], [ %indvars.iv.next.i95, %.preheader.i ] ; 2 uses
   %i.sk = phi <2 x double> [ %i.ry, %.lr.ph.i92 ], [ %i.tm, %.preheader.i ]
-  %i.sl = add nuw nsw i64 %indvars.iv.i93, %11
+  %i.sl = add nuw nsw i64 %indvars.iv.i93, %i.sc
   %i.sm = lshr exact i64 %i.sl, 2
   %.idx.i94 = mul nuw nsw i64 %i.sm, 96
   %i.sn = getelementptr inbounds nuw i8, ptr %i.rx, i64 %.idx.i94 ; 4 uses
@@ -581,7 +580,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !265
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 2
+  %.idx.neg = shl nuw nsw i64 %2, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.d, ptr nonnull align 4 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !77
   br label %_ZSt22__uninitialized_move_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit

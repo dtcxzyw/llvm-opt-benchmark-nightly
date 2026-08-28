@@ -205,8 +205,7 @@ bb.c:                                             ; preds = %.lr.ph36, %bb.m
   %indvars.iv42 = phi i64 [ 0, %.lr.ph36 ], [ %indvars.iv.next43, %bb.m ]
   %i.bd = phi i64 [ 0, %.lr.ph36 ], [ %i.cg, %bb.m ]
   %.val28 = load ptr, ptr %i.w, align 8, !tbaa !31
-  %2 = and i64 %i.bd, 4294967292
-  %i.be = getelementptr inbounds nuw [4 x i8], ptr %.val28, i64 %2
+  %i.be = getelementptr inbounds nuw [4 x i8], ptr %.val28, i64 %i.bd
   %i.bf = load i32, ptr %i.be, align 4, !tbaa !33 ; 3 uses
   %i.bg = ashr i32 %i.bf, 5
   %i.bh = sext i32 %i.bg to i64
@@ -284,10 +283,10 @@ bb.m:                                             ; preds = %bb.c, %Vec_IntPush.
   %i.ce = phi i32 [ %i.bb, %bb.c ], [ %i.by, %Vec_IntPush.exit ]
   %i.cf = phi i32 [ %i.bc, %bb.c ], [ %i.bz, %Vec_IntPush.exit ]
   %indvars.iv.next43 = add nuw nsw i64 %indvars.iv42, 1 ; 2 uses
-  %i.cg = shl nsw i64 %indvars.iv.next43, 2       ; 2 uses
-  %3 = sext i32 %.val25 to i64
-  %4 = icmp slt i64 %i.cg, %3
-  br i1 %4, label %bb.c, label %._crit_edge.thread, !llvm.loop !41
+  %i.cg = shl nuw nsw i64 %indvars.iv.next43, 2   ; 2 uses
+  %2 = trunc nuw i64 %i.cg to i32
+  %3 = icmp sgt i32 %.val25, %2
+  br i1 %3, label %bb.c, label %._crit_edge.thread, !llvm.loop !41
 
 ._crit_edge:                                      ; preds = %Vec_BitStart.exit
   %.not.i = icmp eq ptr %calloc, null
@@ -690,7 +689,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %.not9.i23.i = icmp eq ptr %storemerge36, null
   %i.t = sext i32 %spec.select.i to i64
-  %i.u = shl nsw i64 %i.t, 2                      ; 2 uses
+  %i.u = shl nuw nsw i64 %i.t, 2                  ; 2 uses
   br i1 %.not9.i23.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

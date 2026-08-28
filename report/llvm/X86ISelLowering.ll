@@ -205,7 +205,7 @@ begin_hunk_0_@_ZNK4llvm17X86TargetLowering39SimplifyDemandedVectorEltsForTargetN
   %254 = alloca %"class.llvm::ArrayRef.945", align 8 ; 2 uses
   %255 = alloca %"class.llvm::SDLoc", align 8     ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 11 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !645  ; 37 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !645  ; 36 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.k = load i32, ptr %i.j, align 8, !tbaa !452  ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %61) #38
@@ -608,7 +608,7 @@ bb.rh:                                            ; preds = %bb.rg
 
 _ZL22getTargetShuffleInputsN4llvm7SDValueERKNS_5APIntERNS_15SmallVectorImplIS0_EERNS4_IiEERS1_S9_RKNS_12SelectionDAGEjb.exit: ; preds = %bb.rh, %bb.rf
   %i.byg = load i32, ptr %i.bxu, align 8, !tbaa !630
-  %i.byh = zext i32 %i.i to i64                   ; 8 uses
+  %i.byh = zext i32 %i.i to i64                   ; 9 uses
   %.not1912 = icmp eq i32 %i.byg, %i.i
   br i1 %.not1912, label %bb.ri, label %_ZL22getTargetShuffleInputsN4llvm7SDValueERKNS_5APIntERNS_15SmallVectorImplIS0_EERNS4_IiEERS1_S9_RKNS_12SelectionDAGEjb.exit.thread
 
@@ -1011,12 +1011,11 @@ bb.ta:                                            ; preds = %bb.sz
   %i.cgv = getelementptr inbounds nuw i8, ptr %250, i64 8 ; 2 uses
   %i.cgw = add nuw nsw i32 %7, 1
   %i.cgx = zext i32 %i.cez to i64
-  %256 = zext i32 %i.i to i64
   br label %bb.tc
 
 .lr.ph.i2347.preheader:                           ; preds = %.preheader, %_ZL26isSequentialOrUndefInRangeN4llvm8ArrayRefIiEEjjii.exit
   %.018822890 = phi i32 [ %i.chm, %_ZL26isSequentialOrUndefInRangeN4llvm8ArrayRefIiEEjjii.exit ], [ 0, %.preheader ] ; 3 uses
-  %i.cgy = mul nsw i32 %.018822890, %i.i
+  %i.cgy = mul nuw nsw i32 %.018822890, %i.i
   br label %.lr.ph.i2347
 
 .lr.ph.i2347:                                     ; preds = %.lr.ph.i2347.preheader, %bb.tb
@@ -1085,7 +1084,7 @@ bb.tc:                                            ; preds = %.lr.ph2899, %.crite
   br i1 %i.chx, label %.critedge2800, label %bb.td
 
 bb.td:                                            ; preds = %bb.tc
-  %i.chy = mul i64 %indvars.iv2941, %256          ; 2 uses
+  %i.chy = mul nuw nsw i64 %indvars.iv2941, %i.byh ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %248) #38
   store i32 %i.i, ptr %i.cgs, align 8, !tbaa !645, !alias.scope !2935
   br i1 %i.cgt, label %_ZN4llvm5APInt7getZeroEj.exit, label %_ZN4llvm5APInt7getZeroEj.exit.thread
@@ -1109,14 +1108,14 @@ _ZN4llvm5APInt7getZeroEj.exit:                    ; preds = %bb.td
   br i1 %i.cid, label %.lr.ph2894.split.us, label %.lr.ph2894.split.preheader
 
 .lr.ph2894.split.preheader:                       ; preds = %.lr.ph2894
-  %i.cie = trunc i64 %i.chy to i32
+  %i.cie = trunc nuw i64 %i.chy to i32
   br label %.lr.ph2894.split
 
 .lr.ph2894.split.us:                              ; preds = %.lr.ph2894
   %i.cif = load ptr, ptr %3, align 8              ; 2 uses
   %.promoted = load i64, ptr %248, align 8        ; 2 uses
   %i.cig = ptrtoint ptr %i.cif to i64
-  %i.cih = trunc i64 %i.chy to i32                ; 2 uses
+  %i.cih = trunc nuw i64 %i.chy to i32            ; 2 uses
   br i1 %i.cia, label %.lr.ph2894.split.us.split.us, label %.lr.ph2894.split.us.split
 
 .lr.ph2894.split.us.split.us:                     ; preds = %.lr.ph2894.split.us, %_ZN4llvm5APInt6setBitEj.exit.us.us
@@ -1519,7 +1518,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %.not42, label %.thread25, label %bb.b, !llvm.loop !4249
 
 .thread25:                                        ; preds = %"_ZZL19matchShuffleAsShiftRN4llvm3MVTERjjNS_8ArrayRefIiEEiRKNS_5APIntERKNS_12X86SubtargetEENK3$_0clEiib.exit.thread15.1"
-  %i.dl = shl nsw i32 %.03539, 1                  ; 2 uses
+  %i.dl = shl nuw nsw i32 %.03539, 1              ; 2 uses
   %i.dm = mul i32 %i.dl, %2                       ; 2 uses
   %.not = icmp ugt i32 %i.dm, %i.e
   br i1 %.not, label %.loopexit35, label %.preheader, !llvm.loop !4250
@@ -1922,7 +1921,7 @@ bb.ue:                                            ; preds = %.loopexit.i.i, %.lo
   br label %.loopexit132.i.i
 
 .thread.i.i:                                      ; preds = %_ZL19isShuffleEquivalentN4llvm8ArrayRefIiEES1_NS_7SDValueES2_.exit96.i.i
-  %i.cbo = shl nsw i32 %.052161.i.i, 1            ; 2 uses
+  %i.cbo = shl nuw nsw i32 %.052161.i.i, 1        ; 2 uses
   %i.cbp = mul i32 %i.cbo, %i.boj                 ; 2 uses
   %i.cbq = icmp ugt i32 %i.cbp, 64
   br i1 %i.cbq, label %.loopexit132.i.i, label %.preheader129.i.i, !llvm.loop !5008

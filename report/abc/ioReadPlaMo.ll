@@ -205,15 +205,14 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %exitcond.not.i, label %Mop_ManFindDiffVar.exit, label %.lr.ph.i, !llvm.loop !78
 
 bb.ai:                                            ; preds = %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %.lr.ph.i
-  %.01421.lcssa.wide.i = phi i32 [ 0, %.lr.ph.i ], [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.e ], [ 4, %bb.f ], [ 5, %bb.g ], [ 6, %bb.h ], [ 7, %bb.i ], [ 8, %bb.j ], [ 9, %bb.k ], [ 10, %bb.l ], [ 11, %bb.m ], [ 12, %bb.n ], [ 13, %bb.o ], [ 14, %bb.p ], [ 15, %bb.q ], [ 16, %bb.r ], [ 17, %bb.s ], [ 18, %bb.t ], [ 19, %bb.u ], [ 20, %bb.v ], [ 21, %bb.w ], [ 22, %bb.x ], [ 23, %bb.y ], [ 24, %bb.z ], [ 25, %bb.aa ], [ 26, %bb.ab ], [ 27, %bb.ac ], [ 28, %bb.ad ], [ 29, %bb.ae ], [ 30, %bb.af ], [ 31, %bb.ag ]
-  %5 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %6 = shl nsw i32 %5, 5
-  %7 = or disjoint i32 %.01421.lcssa.wide.i, %6
-  %8 = sext i32 %7 to i64
+  %.01421.lcssa.wide.i = phi i64 [ 0, %.lr.ph.i ], [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.e ], [ 4, %bb.f ], [ 5, %bb.g ], [ 6, %bb.h ], [ 7, %bb.i ], [ 8, %bb.j ], [ 9, %bb.k ], [ 10, %bb.l ], [ 11, %bb.m ], [ 12, %bb.n ], [ 13, %bb.o ], [ 14, %bb.p ], [ 15, %bb.q ], [ 16, %bb.r ], [ 17, %bb.s ], [ 18, %bb.t ], [ 19, %bb.u ], [ 20, %bb.v ], [ 21, %bb.w ], [ 22, %bb.x ], [ 23, %bb.y ], [ 24, %bb.z ], [ 25, %bb.aa ], [ 26, %bb.ab ], [ 27, %bb.ac ], [ 28, %bb.ad ], [ 29, %bb.ae ], [ 30, %bb.af ], [ 31, %bb.ag ]
+  %5 = shl i64 %indvars.iv.i, 5
+  %.masked = and i64 %5, 4294967264
+  %6 = or disjoint i64 %.01421.lcssa.wide.i, %.masked
   br label %Mop_ManFindDiffVar.exit
 
 Mop_ManFindDiffVar.exit:                          ; preds = %bb.ah, %.critedge, %bb.ai
-  %.2.i = phi i64 [ %8, %bb.ai ], [ -1, %.critedge ], [ -1, %bb.ah ]
+  %.2.i = phi i64 [ %6, %bb.ai ], [ -1, %.critedge ], [ -1, %bb.ah ]
   %.val108 = load ptr, ptr %i.s, align 8, !tbaa !27
   %i.ch = getelementptr inbounds [4 x i8], ptr %.val108, i64 %.2.i
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !30
@@ -616,7 +615,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.az = getelementptr inbounds [16 x i8], ptr %i.ax, i64 %i.ay
   %i.ba = sub nsw i32 %i.as, %i.af
   %i.bb = sext i32 %i.ba to i64
-  %i.bc = shl nsw i64 %i.bb, 4
+  %i.bc = shl nuw nsw i64 %i.bb, 4
   tail call void @llvm.memset.p0.i64(ptr align 8 %i.az, i8 0, i64 %i.bc, i1 false)
   store i32 %i.as, ptr %i.c, align 8, !tbaa !139
   br label %Vec_WecGrow.exit.i

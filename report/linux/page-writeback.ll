@@ -204,16 +204,16 @@ bb.y:                                             ; preds = %fls64.exit.i
   %i.fu = sext i32 %i.fq to i64
   %i.fv = sext i32 %i.fs to i64
   %i.fw = sub nsw i64 %i.fu, %i.fv
-  %i.fx = mul nsw i64 %i.fw, 625
-  %4 = sdiv i64 %i.fx, 64
-  %i.fy = add nsw i64 %4, 10
+  %i.fx = mul nuw nsw i64 %i.fw, 625
+  %4 = lshr i64 %i.fx, 6
+  %i.fy = add nuw nsw i64 %4, 10
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %fls64.exit.i
   %.048.i = phi i64 [ %i.fy, %bb.y ], [ 10, %fls64.exit.i ]
   %.zext = lshr i64 %i.fo, 1
   %i.fz = add nuw nsw i64 %.zext, 1
-  %i.ga = call i64 @llvm.smin.i64(i64 %.048.i, i64 %i.fz) ; 2 uses
+  %i.ga = call i64 @llvm.umin.i64(i64 %.048.i, i64 %i.fz) ; 2 uses
   %i.gb = mul i64 %i.ga, %i.fe
   %i.gc = lshr i64 %i.gb, 10
   %i.gd = trunc i64 %i.gc to i32                  ; 2 uses
@@ -242,22 +242,16 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.
   %i.gp = mul nuw nsw i64 %i.fo, %i.fh
   %i.gq = lshr i64 %i.gp, 10
   %i.gr = trunc i64 %i.gq to i32
-  %.2.i = select i1 %i.go, i64 %i.fo, i64 %.149.i ; 2 uses
   %.1.i = select i1 %i.go, i32 %i.gr, i32 %.0.i168 ; 2 uses
-  %5 = icmp sgt i32 %.1.i, 31
-  br i1 %5, label %6, label %wb_min_pause.exit
+  %5 = icmp eq i64 %i.fh, 0                       ; 2 uses
+  br i1 %5, label %bb.ap, label %bb.ad, !prof !23
 
-6:                                                ; preds = %bb.ac
-  %7 = sdiv i64 %.2.i, 2
-  %8 = add nsw i64 %7, 1
-  br label %wb_min_pause.exit
-
-wb_min_pause.exit:                                ; preds = %bb.ac, %6
-  %9 = phi i64 [ %8, %6 ], [ %.2.i, %bb.ac ]
-  %10 = icmp eq i64 %i.fh, 0                      ; 2 uses
-  br i1 %10, label %bb.ap, label %bb.ad, !prof !23
-
-bb.ad:                                            ; preds = %wb_min_pause.exit
+bb.ad:                                            ; preds = %bb.ac
+  %6 = icmp sgt i32 %.1.i, 31
+  %.2.i = select i1 %i.go, i64 %i.fo, i64 %.149.i ; 2 uses
+  %7 = lshr i64 %.2.i, 1
+  %8 = add nuw nsw i64 %7, 1
+  %9 = select i1 %6, i64 %8, i64 %.2.i
   %i.gs = udiv i64 %i.t, %i.fh                    ; 5 uses
   %i.gt = call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull @current_task) #13, !srcloc !12
   %i.gu = inttoptr i64 %i.gt to ptr               ; 5 uses
@@ -341,8 +335,8 @@ bb.am:                                            ; preds = %bb.al
   br label %.loopexit
 
 bb.an:                                            ; preds = %bb.ad
-  %11 = icmp sgt i64 %.0141, %i.fo
-  br i1 %11, label %bb.ao, label %bb.ap, !prof !23
+  %10 = icmp samesign ugt i64 %.0141, %i.fo
+  br i1 %10, label %bb.ao, label %bb.ap, !prof !23
 
 bb.ao:                                            ; preds = %bb.an
   %i.hw = sub nuw nsw i64 %.0141, %i.fo
@@ -350,10 +344,10 @@ bb.ao:                                            ; preds = %bb.an
   %i.hy = add i64 %i.hx, %i.w
   br label %bb.ap
 
-bb.ap:                                            ; preds = %wb_min_pause.exit, %bb.an, %bb.ao
-  %.0144 = phi i64 [ %i.w, %bb.an ], [ %i.hy, %bb.ao ], [ %i.w, %wb_min_pause.exit ]
-  %.1 = phi i64 [ %.0141, %bb.an ], [ %i.fo, %bb.ao ], [ %i.fo, %wb_min_pause.exit ] ; 3 uses
-  %.0140 = phi i64 [ %i.gs, %bb.an ], [ %i.gs, %bb.ao ], [ %i.fo, %wb_min_pause.exit ]
+bb.ap:                                            ; preds = %bb.ac, %bb.an, %bb.ao
+  %.0144 = phi i64 [ %i.w, %bb.an ], [ %i.hy, %bb.ao ], [ %i.w, %bb.ac ]
+  %.1 = phi i64 [ %.0141, %bb.an ], [ %i.fo, %bb.ao ], [ %i.fo, %bb.ac ] ; 3 uses
+  %.0140 = phi i64 [ %i.gs, %bb.an ], [ %i.gs, %bb.ao ], [ %i.fo, %bb.ac ]
   callbr void asm sideeffect "1: jmp ${2:l} # objtool NOPs this \0A\09.pushsection __jump_table,  \22aw\22 \0A\09 .balign 8 \0A\09912: .pushsection .discard.annotate_data, \22M\22, @progbits, 8; .long 912b - ., 1; .popsection\0A.long 1b - . \0A\09.long ${2:l} - . \0A\09 .quad  ${0:c} + ${1:c} + 2 - . \0A\09.popsection \0A\09", "i,i,!i,~{dirflag},~{fpsr},~{flags}"(ptr nonnull getelementptr inbounds nuw (i8, ptr @__tracepoint_balance_dirty_pages, i64 8), i1 false) #11
           to label %trace_balance_dirty_pages.exit174 [label %arch_test_bit.exit.i.i170], !srcloc !13
 
@@ -412,7 +406,7 @@ arch_static_branch.exit:                          ; preds = %bb.at, %bb.au
   store i32 0, ptr %i.ir, align 8
   %i.is = getelementptr i8, ptr %i.il, i64 2828
   store i32 %.1.i, ptr %i.is, align 4
-  br i1 %10, label %wb_stat_error.exit, label %.loopexit
+  br i1 %5, label %wb_stat_error.exit, label %.loopexit
 
 wb_stat_error.exit:                               ; preds = %arch_static_branch.exit
   %i.it = load i64, ptr %.sink14.i.i.sroa.gep, align 8

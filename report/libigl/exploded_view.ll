@@ -205,17 +205,20 @@ bb.v:                                             ; preds = %.loopexit180
 
 bb.w:                                             ; preds = %.lr.ph, %.loopexit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 15 uses
-  %i.dq = shl i64 %indvars.iv, 5
-  %13 = and i64 %i.dq, 34359738336                ; 3 uses
+  %i.dq = shl i64 %indvars.iv, 5                  ; 2 uses
+  %13 = mul i64 %indvars.iv, 24
   %i.dr = shl i64 %indvars.iv, 5
-  %14 = and i64 %i.dr, 34359738336                ; 3 uses
-  %i.ds = shl i64 %indvars.iv, 3
-  %15 = shl i64 %indvars.iv, 5
-  %16 = and i64 %15, 34359738336                  ; 3 uses
-  %i.dt = shl i64 %indvars.iv, 3
-  %17 = shl i64 %indvars.iv, 5
-  %18 = and i64 %17, 34359738336                  ; 3 uses
-  %19 = shl i64 %indvars.iv, 3
+  %14 = or disjoint i64 %i.dr, 8                  ; 2 uses
+  %15 = mul i64 %indvars.iv, 24
+  %16 = add i64 %15, 8
+  %i.ds = shl i64 %indvars.iv, 5
+  %17 = or disjoint i64 %i.ds, 16                 ; 2 uses
+  %18 = mul i64 %indvars.iv, 24
+  %19 = add i64 %18, 16
+  %i.dt = shl i64 %indvars.iv, 5
+  %20 = or disjoint i64 %i.dt, 24                 ; 2 uses
+  %21 = mul i64 %indvars.iv, 24
+  %22 = add i64 %21, 24
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #15
   %i.du = load ptr, ptr %8, align 8, !tbaa !41, !noalias !42 ; 2 uses
   %i.dv = ptrtoaddr ptr %i.du to i64
@@ -366,7 +369,7 @@ _ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS1_INS
   %i.gi = load ptr, ptr %8, align 8, !tbaa !41, !noalias !57 ; 2 uses
   %i.gj = ptrtoaddr ptr %i.gi to i64              ; 4 uses
   %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gi, i64 %indvars.iv ; 16 uses
-  %i.gl = shl nsw i64 %indvars.iv, 2              ; 8 uses
+  %i.gl = shl nuw nsw i64 %indvars.iv, 2          ; 13 uses
   %i.gm = load ptr, ptr %4, align 8, !tbaa !41, !noalias !60 ; 5 uses
   %i.gn = ptrtoaddr ptr %i.gm to i64              ; 12 uses
   %i.go = load i64, ptr %i.di, align 8, !tbaa !36, !noalias !60 ; 25 uses
@@ -376,12 +379,10 @@ _ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS1_INS
   %i.gs = icmp sgt i64 %i.go, 0                   ; 4 uses
   %i.gt = load ptr, ptr %6, align 8, !tbaa !21    ; 4 uses
   %i.gu = load ptr, ptr %7, align 8, !tbaa !21    ; 4 uses
-  %20 = trunc nsw i64 %i.gl to i32                ; 3 uses
-  %21 = and i64 %i.gl, 4294967292                 ; 7 uses
   %i.gv = load i32, ptr %i.gf, align 4, !tbaa !63 ; 2 uses
   %i.gw = sext i32 %i.gv to i64                   ; 2 uses
   %i.gx = getelementptr inbounds [8 x i8], ptr %i.gg, i64 %i.gw ; 4 uses
-  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %21 ; 4 uses
+  %i.gy = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %i.gl ; 4 uses
   br i1 %i.gs, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader, label %.loopexit210
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.preheader:             ; preds = %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS1_INS2_17scalar_product_opIddEEKNS1_INS2_20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEKNSA_IdLi1ELin1ELi1ELi1ELin1EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEESF_EEEESF_EEE4evalEv.exit
@@ -397,18 +398,16 @@ vector.scevcheck281:                              ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.ha, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.preheader338, label %vector.memcheck285
 
 vector.memcheck285:                               ; preds = %vector.scevcheck281
-  %i.hb = add i64 %13, %i.gn
+  %i.hb = add i64 %i.dq, %i.gn
   %i.hc = shl nsw i64 %i.gw, 3
   %i.hd = add i64 %i.hc, %i.gh
   %i.he = sub i64 %i.hd, %i.hb
   %diff.check286 = icmp ugt i64 %i.he, -32
-  %22 = shl i64 %indvars.iv, 3
-  %23 = add i64 %13, %i.gn
-  %i.hf = add i64 %22, %i.gj
-  %i.hg = sub i64 %i.hf, %23
+  %i.hf = add i64 %13, %i.gn
+  %i.hg = sub i64 %i.gj, %i.hf
   %diff.check287 = icmp ugt i64 %i.hg, -32
   %conflict.rdx288 = or i1 %diff.check286, %diff.check287
-  %i.hh = add i64 %13, %i.gn
+  %i.hh = add i64 %i.dq, %i.gn
   %i.hi = sub i64 %i.gc, %i.hh
   %diff.check289 = icmp ugt i64 %i.hi, -32
   %conflict.rdx290 = or i1 %conflict.rdx288, %diff.check289
@@ -516,19 +515,20 @@ middle.block306:                                  ; preds = %vector.body297
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.1349, label %.loopexit210, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, !llvm.loop !65
 
 .loopexit210:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i, %middle.block306, %_ZNK5Eigen9DenseBaseINS_13CwiseBinaryOpINS_8internal13scalar_sum_opIddEEKNS1_INS2_17scalar_product_opIddEEKNS1_INS2_20scalar_difference_opIddEEKNS_5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEEKNSA_IdLi1ELin1ELi1ELi1ELin1EEEEEKNS_14CwiseNullaryOpINS2_18scalar_constant_opIdEESF_EEEESF_EEE4evalEv.exit
-  %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %21
+  %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %i.gl
   store i32 %i.gv, ptr %i.jp, align 4, !tbaa !63
-  %i.jq = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %21
+  %i.jq = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.gl
   %i.jr = trunc nuw nsw i64 %indvars.iv to i32    ; 4 uses
   store i32 %i.jr, ptr %i.jq, align 4, !tbaa !63
   %i.js = load ptr, ptr %5, align 8, !tbaa !53    ; 4 uses
-  %i.jt = getelementptr [4 x i8], ptr %i.js, i64 %21 ; 3 uses
-  %i.ju = or disjoint i64 %21, 1                  ; 6 uses
+  %i.jt = getelementptr [4 x i8], ptr %i.js, i64 %i.gl ; 3 uses
+  %i.ju = or disjoint i64 %i.gl, 1                ; 7 uses
   %i.jv = trunc nuw i64 %i.ju to i32
   store i32 %i.jv, ptr %i.jt, align 4, !tbaa !63
   %i.jw = load i64, ptr %i.x, align 8, !tbaa !9   ; 8 uses
   %i.jx = getelementptr [4 x i8], ptr %i.jt, i64 %i.jw
-  %i.jy = or disjoint i32 %20, 2
+  %23 = trunc nuw i64 %i.gl to i32
+  %i.jy = or disjoint i32 %23, 2
   store i32 %i.jy, ptr %i.jx, align 4, !tbaa !63
   %.idx179 = shl i64 %i.jw, 3
   %i.jz = getelementptr i8, ptr %i.jt, i64 %.idx179
@@ -555,20 +555,16 @@ vector.scevcheck253:                              ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.kg, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.1.preheader337, label %vector.memcheck257
 
 vector.memcheck257:                               ; preds = %vector.scevcheck253
-  %24 = add i64 %i.gn, 8
-  %i.kh = add i64 %24, %14
+  %i.kh = add i64 %14, %i.gn
   %i.ki = shl nsw i64 %i.kc, 3
   %i.kj = add i64 %i.ki, %i.gh
   %i.kk = sub i64 %i.kj, %i.kh
   %diff.check258 = icmp ugt i64 %i.kk, -32
-  %reass.sub = sub i64 %i.gn, %i.ds
-  %25 = add i64 %reass.sub, 8
-  %i.kl = add i64 %25, %14
+  %i.kl = add i64 %16, %i.gn
   %i.km = sub i64 %i.gj, %i.kl
   %diff.check259 = icmp ugt i64 %i.km, -32
   %conflict.rdx260 = or i1 %diff.check258, %diff.check259
-  %26 = add i64 %i.gn, 8
-  %i.kn = add i64 %26, %14
+  %i.kn = add i64 %14, %i.gn
   %i.ko = sub i64 %i.gc, %i.kn
   %diff.check261 = icmp ugt i64 %i.ko, -32
   %conflict.rdx262 = or i1 %conflict.rdx260, %diff.check261
@@ -681,23 +677,23 @@ middle.block278:                                  ; preds = %vector.body269
   %i.mw = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.ju
   store i32 %i.jr, ptr %i.mw, align 4, !tbaa !63
   %i.mx = getelementptr [4 x i8], ptr %i.js, i64 %i.ju ; 3 uses
-  store i32 %20, ptr %i.mx, align 4, !tbaa !63
+  %24 = trunc nuw i64 %i.gl to i32
+  store i32 %24, ptr %i.mx, align 4, !tbaa !63
   %i.my = getelementptr [4 x i8], ptr %i.mx, i64 %i.jw
   %i.mz = trunc nuw i64 %i.ju to i32
   %i.na = or disjoint i32 %i.mz, 2
   store i32 %i.na, ptr %i.my, align 4, !tbaa !63
   %.idx.1 = shl i64 %i.jw, 3
   %i.nb = getelementptr i8, ptr %i.mx, i64 %.idx.1
-  %27 = trunc i64 %i.gl to i32
-  %28 = or disjoint i32 %27, 2
-  store i32 %28, ptr %i.nb, align 4, !tbaa !63
+  %25 = or disjoint i64 %i.gl, 2                  ; 6 uses
+  %26 = trunc nuw i64 %25 to i32
+  store i32 %26, ptr %i.nb, align 4, !tbaa !63
   %.idx = shl i64 %i.ge, 3
   %i.nc = getelementptr i8, ptr %i.gf, i64 %.idx
   %i.nd = load i32, ptr %i.nc, align 4, !tbaa !63 ; 2 uses
   %i.ne = sext i32 %i.nd to i64                   ; 2 uses
   %i.nf = getelementptr inbounds [8 x i8], ptr %i.gg, i64 %i.ne ; 4 uses
-  %29 = or disjoint i64 %21, 2                    ; 4 uses
-  %i.ng = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %29 ; 4 uses
+  %i.ng = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %25 ; 4 uses
   br i1 %i.gs, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.2.preheader, label %.loopexit208
 
 .lr.ph.i.i.i.i.i.i.i.i.i.i.2.preheader:           ; preds = %.loopexit209
@@ -713,20 +709,16 @@ vector.scevcheck225:                              ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.ni, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.2.preheader336, label %vector.memcheck229
 
 vector.memcheck229:                               ; preds = %vector.scevcheck225
-  %30 = add i64 %i.gn, 16
-  %i.nj = add i64 %30, %16
+  %i.nj = add i64 %17, %i.gn
   %i.nk = shl nsw i64 %i.ne, 3
   %i.nl = add i64 %i.nk, %i.gh
   %i.nm = sub i64 %i.nl, %i.nj
   %diff.check230 = icmp ugt i64 %i.nm, -32
-  %reass.sub332 = sub i64 %i.gn, %i.dt
-  %31 = add i64 %reass.sub332, 16
-  %i.nn = add i64 %31, %16
+  %i.nn = add i64 %19, %i.gn
   %i.no = sub i64 %i.gj, %i.nn
   %diff.check231 = icmp ugt i64 %i.no, -32
   %conflict.rdx232 = or i1 %diff.check230, %diff.check231
-  %32 = add i64 %i.gn, 16
-  %i.np = add i64 %32, %16
+  %i.np = add i64 %17, %i.gn
   %i.nq = sub i64 %i.gc, %i.np
   %diff.check233 = icmp ugt i64 %i.nq, -32
   %conflict.rdx234 = or i1 %conflict.rdx232, %diff.check233
@@ -834,11 +826,11 @@ middle.block250:                                  ; preds = %vector.body241
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.2.1, label %.loopexit208, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.2, !llvm.loop !69
 
 .loopexit208:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.2.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i.2, %middle.block250, %.loopexit209
-  %i.px = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %29
+  %i.px = getelementptr inbounds nuw [4 x i8], ptr %i.gt, i64 %25
   store i32 %i.nd, ptr %i.px, align 4, !tbaa !63
-  %i.py = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %29
+  %i.py = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %25
   store i32 %i.jr, ptr %i.py, align 4, !tbaa !63
-  %i.pz = getelementptr [4 x i8], ptr %i.js, i64 %29 ; 3 uses
+  %i.pz = getelementptr [4 x i8], ptr %i.js, i64 %25 ; 3 uses
   %i.qa = trunc i64 %i.gl to i32
   %i.qb = or disjoint i32 %i.qa, 3
   store i32 %i.qb, ptr %i.pz, align 4, !tbaa !63
@@ -847,15 +839,14 @@ middle.block250:                                  ; preds = %vector.body241
   store i32 %i.qd, ptr %i.qc, align 4, !tbaa !63
   %.idx179.2 = shl i64 %i.jw, 3
   %i.qe = getelementptr i8, ptr %i.pz, i64 %.idx179.2
-  %i.qf = trunc i64 %i.gl to i32
-  %33 = or disjoint i32 %i.qf, 1
-  store i32 %33, ptr %i.qe, align 4, !tbaa !63
+  %i.qf = trunc nuw i64 %i.ju to i32
+  store i32 %i.qf, ptr %i.qe, align 4, !tbaa !63
   %.idx207 = mul i64 %i.ge, 12
   %i.qg = getelementptr i8, ptr %i.gf, i64 %.idx207
   %i.qh = load i32, ptr %i.qg, align 4, !tbaa !63 ; 2 uses
   %i.qi = sext i32 %i.qh to i64                   ; 2 uses
   %i.qj = getelementptr inbounds [8 x i8], ptr %i.gg, i64 %i.qi ; 4 uses
-  %i.qk = or disjoint i64 %21, 3                  ; 5 uses
+  %i.qk = or disjoint i64 %i.gl, 3                ; 5 uses
   %i.ql = getelementptr inbounds nuw [8 x i8], ptr %i.gm, i64 %i.qk ; 4 uses
   br i1 %i.gs, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.3.preheader, label %.loopexit
 
@@ -872,20 +863,16 @@ vector.scevcheck:                                 ; preds = %.lr.ph.i.i.i.i.i.i.
   br i1 %i.qn, label %.lr.ph.i.i.i.i.i.i.i.i.i.i.3.preheader335, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
-  %34 = add i64 %i.gn, 24
-  %i.qo = add i64 %34, %18
+  %i.qo = add i64 %20, %i.gn
   %i.qp = shl nsw i64 %i.qi, 3
   %i.qq = add i64 %i.qp, %i.gh
   %i.qr = sub i64 %i.qq, %i.qo
   %diff.check = icmp ugt i64 %i.qr, -32
-  %reass.sub333 = sub i64 %i.gn, %19
-  %35 = add i64 %reass.sub333, 24
-  %i.qs = add i64 %35, %18
+  %i.qs = add i64 %22, %i.gn
   %i.qt = sub i64 %i.gj, %i.qs
   %diff.check217 = icmp ugt i64 %i.qt, -32
   %conflict.rdx = or i1 %diff.check, %diff.check217
-  %36 = add i64 %i.gn, 24
-  %i.qu = add i64 %36, %18
+  %i.qu = add i64 %20, %i.gn
   %i.qv = sub i64 %i.gc, %i.qu
   %diff.check218 = icmp ugt i64 %i.qv, -32
   %conflict.rdx219 = or i1 %conflict.rdx, %diff.check218
@@ -998,16 +985,16 @@ middle.block:                                     ; preds = %vector.body
   %i.td = getelementptr inbounds nuw [4 x i8], ptr %i.gu, i64 %i.qk
   store i32 %i.jr, ptr %i.td, align 4, !tbaa !63
   %i.te = getelementptr [4 x i8], ptr %i.js, i64 %i.qk ; 3 uses
-  %i.tf = trunc i64 %i.gl to i32
-  %37 = or disjoint i32 %i.tf, 2
-  store i32 %37, ptr %i.te, align 4, !tbaa !63
+  %i.tf = trunc nuw i64 %25 to i32
+  store i32 %i.tf, ptr %i.te, align 4, !tbaa !63
   %i.tg = getelementptr [4 x i8], ptr %i.te, i64 %i.jw
   %i.th = trunc nuw i64 %i.qk to i32
   %i.ti = and i32 %i.th, -3
   store i32 %i.ti, ptr %i.tg, align 4, !tbaa !63
   %.idx.3 = shl i64 %i.jw, 3
   %i.tj = getelementptr i8, ptr %i.te, i64 %.idx.3
-  store i32 %20, ptr %i.tj, align 4, !tbaa !63
+  %27 = trunc nuw i64 %i.gl to i32
+  store i32 %27, ptr %i.tj, align 4, !tbaa !63
   call void @free(ptr noundef %i.gb) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #15
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
