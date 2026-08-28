@@ -205,9 +205,9 @@ _ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50: ; preds = %_ZN2cvL8decToBin
   br i1 %.not75, label %.lr.ph, label %.critedge42
 
 .lr.ph:                                           ; preds = %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60
-  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60 ], [ 0, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50 ] ; 3 uses
-  %i.aw = load ptr, ptr %1, align 8, !tbaa !11    ; 2 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %indvars.iv
+  %indvars.iv = phi i64 [ %indvars.iv.next, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit60 ], [ 0, %_ZN2cvL14writeDecNumberEiiRSt6vectorIhSaIhEE.exit50 ] ; 2 uses
+  %i.aw = load ptr, ptr %1, align 8, !tbaa !11
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 %indvars.iv ; 2 uses
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !10  ; 4 uses
   %i.az = sext i8 %i.ay to i32                    ; 2 uses
   %i.ba = add i8 %i.ay, -48
@@ -240,8 +240,7 @@ switch.lookup:                                    ; preds = %bb.e
 
 _ZN2cvL9mapSymbolEc.exit:                         ; preds = %bb.e, %switch.lookup, %bb.b, %bb.d
   %.0.i = phi i32 [ %i.bb, %bb.b ], [ %i.bd, %bb.d ], [ %switch.load, %switch.lookup ], [ -1, %bb.e ] ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.aw, i64 %indvars.iv
-  %i.bg = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.ax, i64 1
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !10  ; 4 uses
   %i.bi = sext i8 %i.bh to i32                    ; 2 uses
   %i.bj = add i8 %i.bh, -48
