@@ -205,9 +205,9 @@ bb.e:                                             ; preds = %.lr.ph, %_ZN8rawspe
   br i1 %i.dm, label %iter.check, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit
 
 iter.check:                                       ; preds = %bb.e
-  %5 = zext nneg i32 %i.dl to i64                 ; 12 uses
-  %6 = icmp sgt i32 %i.dl, -1
-  call void @llvm.assume(i1 %6)
+  %5 = icmp sgt i32 %i.dl, -1
+  %6 = zext nneg i32 %i.dl to i64                 ; 12 uses
+  call void @llvm.assume(i1 %5)
   %i.dn = xor i32 %i.dl, -1
   %i.do = add nsw i32 %i.r, %i.dn                 ; 3 uses
   %i.dp = zext i32 %i.do to i64
@@ -216,11 +216,11 @@ iter.check:                                       ; preds = %bb.e
   br i1 %min.iters.check332, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck323
 
 vector.memcheck323:                               ; preds = %iter.check
-  %scevgep324 = getelementptr i8, ptr %i.dk, i64 %5
+  %scevgep324 = getelementptr i8, ptr %i.dk, i64 %6
   %i.dr = xor i32 %i.dl, -1
   %i.ds = add nsw i32 %i.r, %i.dr
   %i.dt = zext i32 %i.ds to i64                   ; 2 uses
-  %i.du = getelementptr i8, ptr %scevgep325, i64 %5
+  %i.du = getelementptr i8, ptr %scevgep325, i64 %6
   %scevgep326 = getelementptr i8, ptr %i.du, i64 %i.dt
   %scevgep327 = getelementptr i8, ptr %scevgep325, i64 %i.dt
   %bound0328 = icmp ult ptr %scevgep324, %scevgep327
@@ -235,11 +235,11 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck323
 vector.ph334:                                     ; preds = %vector.main.loop.iter.check
   %i.dv = and i64 %i.dq, 24
   %n.vec335 = and i64 %i.dq, 8589934560           ; 4 uses
-  %i.dw = add nuw nsw i64 %n.vec335, %5           ; 2 uses
-  %broadcast.splatinsert336 = insertelement <32 x i64> poison, i64 %5, i64 0
+  %i.dw = add nuw nsw i64 %n.vec335, %6           ; 2 uses
+  %broadcast.splatinsert336 = insertelement <32 x i64> poison, i64 %6, i64 0
   %broadcast.splat337 = shufflevector <32 x i64> %broadcast.splatinsert336, <32 x i64> poison, <32 x i32> zeroinitializer ; 2 uses
   %induction = add nuw nsw <32 x i64> %broadcast.splat337, <i64 0, i64 1, i64 2, i64 3, i64 4, i64 5, i64 6, i64 7, i64 8, i64 9, i64 10, i64 11, i64 12, i64 13, i64 14, i64 15, i64 16, i64 17, i64 18, i64 19, i64 20, i64 21, i64 22, i64 23, i64 24, i64 25, i64 26, i64 27, i64 28, i64 29, i64 30, i64 31>
-  %invariant.gep = getelementptr i8, ptr %i.dk, i64 %5
+  %invariant.gep = getelementptr i8, ptr %i.dk, i64 %6
   br label %vector.body345
 
 vector.body345:                                   ; preds = %vector.body345, %vector.ph334
@@ -268,10 +268,10 @@ vec.epilog.iter.check:                            ; preds = %middle.block354
 
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec335, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
-  %bc.resume.val356 = phi i64 [ %i.dw, %vec.epilog.iter.check ], [ %5, %vector.main.loop.iter.check ]
+  %bc.resume.val356 = phi i64 [ %i.dw, %vec.epilog.iter.check ], [ %6, %vector.main.loop.iter.check ]
   %n.vec357 = and i64 %i.dq, 8589934584           ; 3 uses
-  %i.ec = add nuw nsw i64 %n.vec357, %5
-  %invariant.gep385 = getelementptr i8, ptr %i.dk, i64 %5
+  %i.ec = add nuw nsw i64 %n.vec357, %6
+  %invariant.gep385 = getelementptr i8, ptr %i.dk, i64 %6
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -279,7 +279,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ed = phi i64 [ %bc.resume.val356, %vec.epilog.ph ], [ %i.eh, %vec.epilog.vector.body ] ; 2 uses
   %gep386 = getelementptr i8, ptr %invariant.gep385, i64 %index370 ; 2 uses
   %wide.load373 = load <8 x i8>, ptr %gep386, align 1, !tbaa !112, !alias.scope !124, !noalias !127
-  %i.ee = sub nuw nsw i64 %i.ed, %5
+  %i.ee = sub nuw nsw i64 %i.ed, %6
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.ee
   %wide.load374 = load <8 x i8>, ptr %i.ef, align 1, !tbaa !112, !alias.scope !127
   %i.eg = add <8 x i8> %wide.load374, %wide.load373
@@ -294,7 +294,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n378, label %_ZN8rawspeed12_GLOBAL__N_116decodeDeltaBytesENS_10Array1DRefIhEEiii.exit, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %vector.memcheck323, %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv.i.ph = phi i64 [ %5, %iter.check ], [ %5, %vector.memcheck323 ], [ %i.dw, %vec.epilog.iter.check ], [ %i.ec, %vec.epilog.middle.block ]
+  %indvars.iv.i.ph = phi i64 [ %6, %iter.check ], [ %6, %vector.memcheck323 ], [ %i.dw, %vec.epilog.iter.check ], [ %i.ec, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
@@ -304,7 +304,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   call void @llvm.assume(i1 %i.ek)
   %i.el = getelementptr inbounds nuw i8, ptr %i.dk, i64 %indvars.iv.i ; 2 uses
   %i.em = load i8, ptr %i.el, align 1, !tbaa !112
-  %i.en = sub nuw nsw i64 %indvars.iv.i, %5       ; 2 uses
+  %i.en = sub nuw nsw i64 %indvars.iv.i, %6       ; 2 uses
   %i.eo = icmp samesign ult i64 %i.en, %i.av
   call void @llvm.assume(i1 %i.eo)
   %i.ep = getelementptr inbounds nuw i8, ptr %i.dk, i64 %i.en

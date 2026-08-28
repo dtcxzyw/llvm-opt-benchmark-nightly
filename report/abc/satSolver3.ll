@@ -204,8 +204,8 @@ define i32 @sat_solver3_minimize_assumptions2(ptr noundef %0, ptr noundef %1, i3
 bb.a:
   %i.a = ptrtoaddr ptr %1 to i64
   %i.b = alloca i32, align 4                      ; 5 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
-  %i.d = alloca i32, align 4                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 9 uses
+  %i.d = alloca i32, align 4                      ; 9 uses
   %i.e = icmp eq i32 %2, 1
   br i1 %i.e, label %bb.b, label %bb.j
 
@@ -362,7 +362,7 @@ bb.j:                                             ; preds = %bb.a
   br i1 %.not110, label %.preheader, label %bb.ab
 
 .preheader:                                       ; preds = %.lr.ph
-  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
+  %i.bv = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.bw = trunc nuw nsw i64 %indvars.iv to i32    ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   %i.by = getelementptr i8, ptr %0, i64 316       ; 2 uses
@@ -602,9 +602,18 @@ bb.z:                                             ; preds = %sat_solver3_pop.exi
   br i1 %.not246, label %._crit_edge243, label %.lr.ph242
 
 .lr.ph242:                                        ; preds = %bb.z
-  %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %i.ga = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
   %.not247 = icmp slt i32 %indvars.iv279, %i.bl
-  br label %bb.aa
+  br i1 %.not247, label %.lr.ph242.split.us, label %bb.aa, !llvm.loop !225
+
+.lr.ph242.split.us:                               ; preds = %.lr.ph242
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
+  %4 = load i32, ptr %i.bv, align 4, !tbaa !32
+  %5 = xor i32 %4, 1
+  store i32 %5, ptr %i.c, align 4, !tbaa !32
+  %6 = call i32 @sat_solver3_addclause(ptr noundef nonnull %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.ga) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
+  br label %._crit_edge243
 
 bb.aa:                                            ; preds = %.lr.ph242, %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #30
@@ -613,16 +622,16 @@ bb.aa:                                            ; preds = %.lr.ph242, %bb.aa
   store i32 %i.gc, ptr %i.c, align 4, !tbaa !32
   %i.gd = call i32 @sat_solver3_addclause(ptr noundef nonnull %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.ga) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #30
-  br i1 %.not247, label %._crit_edge243, label %bb.aa, !llvm.loop !225
+  br label %bb.aa
 
-._crit_edge243:                                   ; preds = %bb.aa, %bb.z
+._crit_edge243:                                   ; preds = %.lr.ph242.split.us, %bb.z
   %i.ge = call i32 @sat_solver3_minimize_assumptions2(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %i.fz, i32 noundef %3)
   br label %bb.bn
 
 bb.ab:                                            ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next280 = add nuw nsw i32 %indvars.iv279, 1
+  %indvars.iv.next280 = add i32 %indvars.iv279, 1
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !226
 
 ._crit_edge:                                      ; preds = %bb.ab
@@ -1025,7 +1034,7 @@ scalar.ph354:                                     ; preds = %scalar.ph354.prol.l
   br i1 %.not, label %.preheader206, label %bb.bg
 
 .preheader206:                                    ; preds = %.lr.ph228
-  %i.nl = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv270
+  %i.nl = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv270 ; 2 uses
   %i.nm = trunc nuw nsw i64 %indvars.iv270 to i32 ; 3 uses
   %i.nn = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   %i.no = getelementptr i8, ptr %0, i64 316       ; 2 uses
@@ -1139,9 +1148,19 @@ bb.be:                                            ; preds = %sat_solver3_pop.exi
   br i1 %.not244, label %._crit_edge238, label %.lr.ph237
 
 .lr.ph237:                                        ; preds = %bb.be
-  %i.pi = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %i.pi = getelementptr inbounds nuw i8, ptr %i.d, i64 4 ; 2 uses
   %.not245 = icmp slt i32 %indvars.iv276, %i.kn
-  br label %bb.bf
+  %.not245.fr = freeze i1 %.not245
+  br i1 %.not245.fr, label %.lr.ph237.split.us, label %bb.bf, !llvm.loop !236
+
+.lr.ph237.split.us:                               ; preds = %.lr.ph237
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #30
+  %7 = load i32, ptr %i.nl, align 4, !tbaa !32
+  %8 = xor i32 %7, 1
+  store i32 %8, ptr %i.d, align 4, !tbaa !32
+  %9 = call i32 @sat_solver3_addclause(ptr noundef nonnull %0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.pi) ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #30
+  br label %._crit_edge238
 
 bb.bf:                                            ; preds = %.lr.ph237, %bb.bf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #30
@@ -1150,9 +1169,9 @@ bb.bf:                                            ; preds = %.lr.ph237, %bb.bf
   store i32 %i.pk, ptr %i.d, align 4, !tbaa !32
   %i.pl = call i32 @sat_solver3_addclause(ptr noundef nonnull %0, ptr noundef nonnull %i.d, ptr noundef nonnull %i.pi) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #30
-  br i1 %.not245, label %._crit_edge238, label %bb.bf, !llvm.loop !236
+  br label %bb.bf
 
-._crit_edge238:                                   ; preds = %bb.bf, %bb.be
+._crit_edge238:                                   ; preds = %.lr.ph237.split.us, %bb.be
   %i.pm = call i32 @sat_solver3_minimize_assumptions2(ptr noundef nonnull %0, ptr noundef %1, i32 noundef %i.ph, i32 noundef %3)
   br label %bb.bn
 

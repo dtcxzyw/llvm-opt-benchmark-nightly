@@ -123,7 +123,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 8 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !9    ; 4 uses
   %.not114 = icmp eq ptr %i.c, null
   br i1 %.not114, label %bb.e, label %bb.d
 
@@ -266,28 +266,33 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
-  %i.bo = phi i32 [ %i.bm, %bb.t ], [ %i.bl, %bb.s ] ; 6 uses
+  %i.bo = phi i32 [ %i.bm, %bb.t ], [ %i.bl, %bb.s ]
   %i.bp = phi i16 [ %i.bn, %bb.t ], [ %.pre, %bb.s ] ; 2 uses
+  %.fr164 = freeze i32 %i.bo                      ; 7 uses
   %i.bq = and i16 %i.bp, 2
   %.not120 = icmp eq i16 %i.bq, 0
-  br i1 %.not120, label %bb.w, label %bb.v
+  br i1 %.not120, label %1, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.br = add nsw i32 %i.bo, %i.t
+  %i.br = add nsw i32 %.fr164, %i.t
   %i.bs = and i16 %i.bp, -3
   store i16 %i.bs, ptr %i.e, align 8, !tbaa !37
   br label %.loopexit
 
-bb.w:                                             ; preds = %bb.u
-  %i.bt = icmp slt i32 %i.bo, %i.bg
-  br i1 %i.bt, label %.lr.ph.preheader, label %._crit_edge
+1:                                                ; preds = %bb.u
+  %2 = icmp slt i32 %.fr164, %i.bg
+  br i1 %2, label %bb.w, label %._crit_edge
+
+bb.w:                                             ; preds = %1
+  %i.bt = icmp slt i32 %.fr164, 0
+  br i1 %i.bt, label %.lr.ph.preheader, label %.lr.ph
 
 .lr.ph.preheader:                                 ; preds = %bb.w
-  %1 = icmp slt i32 %i.bo, 0
-  br label %.lr.ph
+  %3 = tail call i32 @getmaxy(ptr noundef nonnull %i.c) #14 ; 0 uses
+  br label %._crit_edge
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.z
-  %.098128 = phi i32 [ %i.bz, %bb.z ], [ %i.bo, %.lr.ph.preheader ] ; 6 uses
+.lr.ph:                                           ; preds = %bb.w, %bb.z
+  %.098128 = phi i32 [ %i.bz, %bb.z ], [ %.fr164, %bb.w ] ; 6 uses
   %i.bu = load ptr, ptr %i.b, align 8, !tbaa !9   ; 2 uses
   %.not121 = icmp eq ptr %i.bu, null
   br i1 %.not121, label %._crit_edge, label %bb.x
@@ -295,8 +300,7 @@ bb.w:                                             ; preds = %bb.u
 bb.x:                                             ; preds = %.lr.ph
   %i.bv = tail call i32 @getmaxy(ptr noundef nonnull %i.bu) #14
   %i.bw = icmp sgt i32 %.098128, %i.bv
-  %or.cond = or i1 %1, %i.bw
-  br i1 %or.cond, label %._crit_edge, label %bb.y
+  br i1 %i.bw, label %._crit_edge, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.bx = load ptr, ptr %i.b, align 8, !tbaa !9
@@ -308,8 +312,8 @@ bb.z:                                             ; preds = %bb.y
   %exitcond.not = icmp eq i32 %i.bz, %i.bg
   br i1 %exitcond.not, label %.sink.split, label %.lr.ph, !llvm.loop !38
 
-._crit_edge:                                      ; preds = %.lr.ph, %bb.x, %bb.y, %bb.w
-  %.098.lcssa = phi i32 [ %i.bo, %bb.w ], [ %.098128, %bb.y ], [ %.098128, %bb.x ], [ %.098128, %.lr.ph ] ; 5 uses
+._crit_edge:                                      ; preds = %bb.y, %bb.x, %.lr.ph, %.lr.ph.preheader, %1
+  %.098.lcssa = phi i32 [ %.fr164, %1 ], [ %.fr164, %.lr.ph.preheader ], [ %.098128, %.lr.ph ], [ %.098128, %bb.x ], [ %.098128, %bb.y ] ; 5 uses
   %i.ca = icmp slt i32 %.098.lcssa, %i.bg
   br i1 %i.ca, label %.lr.ph137, label %.sink.split
 
@@ -352,7 +356,7 @@ bb.ad:                                            ; preds = %.thread
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.ac, %bb.ab, %.lr.ph137, %bb.v, %bb.ad
-  %.199 = phi i32 [ %i.bo, %bb.v ], [ %i.cl, %bb.ad ], [ %.098.lcssa, %.lr.ph137 ], [ %.098.lcssa, %bb.ab ], [ %.098.lcssa, %bb.ac ] ; 3 uses
+  %.199 = phi i32 [ %.fr164, %bb.v ], [ %i.cl, %bb.ad ], [ %.098.lcssa, %.lr.ph137 ], [ %.098.lcssa, %bb.ab ], [ %.098.lcssa, %bb.ac ] ; 3 uses
   %.1 = phi i32 [ %i.br, %bb.v ], [ %i.cm, %bb.ad ], [ %i.bg, %.lr.ph137 ], [ %i.bg, %bb.ac ], [ %.0135, %bb.ab ] ; 2 uses
   %.not123 = icmp eq i32 %.1, %.199
   br i1 %.not123, label %.sink.split, label %bb.ae

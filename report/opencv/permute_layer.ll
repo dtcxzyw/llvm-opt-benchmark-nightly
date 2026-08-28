@@ -204,8 +204,12 @@ _ZNSt6vectorImSaImEE6resizeEm.exit13:             ; preds = %bb.e, %bb.f, %bb.g,
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.aq = add i32 %i.ak, -1
-  %7 = zext nneg i32 %i.al to i64
   %i.ar = icmp slt i32 %i.aq, %i.an
+  br i1 %i.ar, label %.lr.ph.split, label %bb.i
+
+.lr.ph.split:                                     ; preds = %.lr.ph
+  %7 = zext nneg i32 %i.al to i64
+  %.pre26 = load i32, ptr %2, align 4, !tbaa !126
   br label %bb.h
 
 ._crit_edge:                                      ; preds = %_ZNK2cv8MatShapeixEm.exit21, %_ZNSt6vectorImSaImEE6resizeEm.exit13
@@ -218,12 +222,22 @@ _ZNSt6vectorImSaImEE6resizeEm.exit13:             ; preds = %bb.e, %bb.f, %bb.g,
   store i64 %i.aw, ptr %i.ax, align 8, !tbaa !141
   ret void
 
-bb.h:                                             ; preds = %.lr.ph, %_ZNK2cv8MatShapeixEm.exit21
-  %indvars.iv = phi i64 [ %7, %.lr.ph ], [ %indvars.iv.next, %_ZNK2cv8MatShapeixEm.exit21 ] ; 5 uses
+bb.h:                                             ; preds = %.lr.ph.split, %_ZNK2cv8MatShapeixEm.exit21
+  %indvars.iv = phi i64 [ %7, %.lr.ph.split ], [ %indvars.iv.next, %_ZNK2cv8MatShapeixEm.exit21 ] ; 5 uses
   %i.ay = add nuw nsw i64 %indvars.iv, 1          ; 5 uses
-  br i1 %i.ar, label %_ZNK2cv8MatShapeixEm.exit, label %bb.i
+  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.ay
+  %9 = load i64, ptr %8, align 8, !tbaa !62
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.ay
+  %11 = load i32, ptr %10, align 4, !tbaa !127
+  %12 = sext i32 %11 to i64
+  %13 = mul i64 %9, %12
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv
+  store i64 %13, ptr %14, align 8, !tbaa !62
+  %15 = trunc nuw i64 %i.ay to i32
+  %16 = icmp sgt i32 %.pre26, %15
+  br i1 %16, label %_ZNK2cv8MatShapeixEm.exit21, label %bb.l
 
-bb.i:                                             ; preds = %bb.h
+bb.i:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull @.str.20, ptr noundef nonnull align 1 dereferenceable(1) %6)
@@ -256,21 +270,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20
   br label %common.resume
 
-_ZNK2cv8MatShapeixEm.exit:                        ; preds = %bb.h
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.ay
-  %9 = load i64, ptr %8, align 8, !tbaa !62
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.ao, i64 %i.ay
-  %11 = load i32, ptr %10, align 4, !tbaa !127
-  %12 = sext i32 %11 to i64
-  %13 = mul i64 %9, %12
-  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %indvars.iv
-  store i64 %13, ptr %14, align 8, !tbaa !62
-  %15 = load i32, ptr %2, align 4, !tbaa !126
-  %16 = trunc nuw i64 %i.ay to i32
-  %17 = icmp sgt i32 %15, %16
-  br i1 %17, label %_ZNK2cv8MatShapeixEm.exit21, label %bb.l
-
-bb.l:                                             ; preds = %_ZNK2cv8MatShapeixEm.exit
+bb.l:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str.20, ptr noundef nonnull align 1 dereferenceable(1) %4)
@@ -299,7 +299,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i19: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   br label %common.resume
 
-_ZNK2cv8MatShapeixEm.exit21:                      ; preds = %_ZNK2cv8MatShapeixEm.exit
+_ZNK2cv8MatShapeixEm.exit21:                      ; preds = %bb.h
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.ay
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !62
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %i.ay

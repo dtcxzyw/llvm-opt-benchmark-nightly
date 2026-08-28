@@ -204,9 +204,9 @@ bb.kn:                                            ; preds = %bb.km
   br i1 %.not276.i, label %.loopexit.loopexit.i, label %.thread
 
 .loopexit.loopexit.i:                             ; preds = %.preheader.preheader.i101
-  %.1211105.i.sroa.gep123 = getelementptr inbounds nuw i8, ptr %.1211105.i, i64 1
-  %spec.select.i97.sroa.sel125 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep123, ptr %i.alf
   store i8 93, ptr %spec.select.i97, align 1, !tbaa !25
+  %.1211105.i.sroa.gep123 = getelementptr i8, ptr %.1211105.i, i64 1
+  %spec.select.i97.sroa.sel125 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep123, ptr %i.alf
   br label %.loopexit.i
 
 bb.ko:                                            ; preds = %bb.kn
@@ -278,9 +278,9 @@ bb.ku:                                            ; preds = %bb.ko
   br i1 %.not274.i, label %.loopexit22.loopexit.i, label %.thread
 
 .loopexit22.loopexit.i:                           ; preds = %.preheader21.preheader.i
-  %.1211105.i.sroa.gep114 = getelementptr inbounds nuw i8, ptr %.1211105.i, i64 1
-  %spec.select.i97.sroa.sel116 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep114, ptr %i.alf
   store i8 92, ptr %spec.select.i97, align 1, !tbaa !25
+  %.1211105.i.sroa.gep114 = getelementptr i8, ptr %.1211105.i, i64 1
+  %spec.select.i97.sroa.sel116 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep114, ptr %i.alf
   br label %.loopexit22.i
 
 .loopexit22.i:                                    ; preds = %.loopexit22.loopexit.i, %.thread.thread.i, %bb.ku, %.thread.i, %bb.ks, %bb.kp
@@ -318,9 +318,9 @@ bb.kw:                                            ; preds = %bb.km
   br i1 %.not265.i, label %bb.kx, label %.thread
 
 bb.kx:                                            ; preds = %.preheader31.preheader.i
+  store i8 91, ptr %spec.select.i97, align 1, !tbaa !25
   %.1211105.i.sroa.gep108 = getelementptr i8, ptr %.1211105.i, i64 1
   %spec.select.i97.sroa.sel110 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep108, ptr %i.alf ; 3 uses
-  store i8 91, ptr %spec.select.i97, align 1, !tbaa !25
   %.not259.i = icmp eq i64 %i.aoq, 0
   br i1 %.not259.i, label %.thread, label %bb.ky
 
@@ -361,8 +361,8 @@ bb.lb:                                            ; preds = %.thread2.i
 .loopexit.loopexit119.i:                          ; preds = %bb.lb
   %i.aps = add i64 %.12357.i, -1
   %i.apt = getelementptr inbounds nuw i8, ptr %.12198.i, i64 1
-  %7 = getelementptr inbounds nuw i8, ptr %.99.i, i64 1
   store i8 93, ptr %.99.i, align 1, !tbaa !25
+  %scevgep155.i = getelementptr i8, ptr %.99.i, i64 1
   br label %.loopexit.i
 
 bb.lc:                                            ; preds = %bb.kw
@@ -398,9 +398,9 @@ bb.lg:                                            ; preds = %bb.lf
   br i1 %.not257.i, label %.loopexit34.loopexit.i, label %.thread
 
 .loopexit34.loopexit.i:                           ; preds = %.preheader33.preheader.i
-  %.1211105.i.sroa.gep105 = getelementptr inbounds nuw i8, ptr %.1211105.i, i64 1
-  %spec.select.i97.sroa.sel107 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep105, ptr %i.alf
   store i8 92, ptr %spec.select.i97, align 1, !tbaa !25
+  %.1211105.i.sroa.gep105 = getelementptr i8, ptr %.1211105.i, i64 1
+  %spec.select.i97.sroa.sel107 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep105, ptr %i.alf
   br label %.loopexit34.i
 
 .loopexit34.i:                                    ; preds = %.loopexit34.loopexit.i, %bb.lg
@@ -484,9 +484,9 @@ bb.lv:                                            ; preds = %bb.lu, %bb.lq, %bb.
   br i1 %.not269.i, label %.loopexit26.loopexit.i, label %.thread
 
 .loopexit26.loopexit.i:                           ; preds = %bb.lv
-  %.1211105.i.sroa.gep102 = getelementptr inbounds nuw i8, ptr %.1211105.i, i64 1
-  %spec.select.i97.sroa.sel104 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep102, ptr %i.alf
   store i8 92, ptr %spec.select.i97, align 1, !tbaa !25
+  %.1211105.i.sroa.gep102 = getelementptr i8, ptr %.1211105.i, i64 1
+  %spec.select.i97.sroa.sel104 = select i1 %.not130.i, ptr %.1211105.i.sroa.gep102, ptr %i.alf
   br label %.loopexit26.i
 
 .loopexit26.i:                                    ; preds = %.loopexit26.loopexit.i, %bb.lu, %bb.lt
@@ -503,7 +503,7 @@ bb.lw:                                            ; preds = %.loopexit26.i
 .loopexit.i:                                      ; preds = %bb.lw, %bb.lo, %bb.ln, %bb.lh, %bb.lf, %bb.le, %bb.ld, %.loopexit.loopexit119.i, %.thread2.i, %bb.kv, %bb.kt, %.loopexit.loopexit.i
   %.3237.i = phi i64 [ %i.aoq, %bb.lo ], [ %i.aoq, %bb.kv ], [ %i.aoq, %bb.lw ], [ %i.aoq, %.loopexit.loopexit.i ], [ %.12357.i, %.thread2.i ], [ %i.ape, %bb.kt ], [ %i.aoq, %bb.lf ], [ %i.aps, %.loopexit.loopexit119.i ], [ %i.aoq, %bb.le ], [ %i.aqj, %bb.lh ], [ %i.aoq, %bb.ld ], [ %i.aoq, %bb.ln ] ; 2 uses
   %.3221.i = phi ptr [ %i.aop, %bb.lo ], [ %i.aop, %bb.kv ], [ %i.aop, %bb.lw ], [ %i.aop, %.loopexit.loopexit.i ], [ %.12198.i, %.thread2.i ], [ %i.apf, %bb.kt ], [ %i.aop, %bb.lf ], [ %i.apt, %.loopexit.loopexit119.i ], [ %i.aop, %bb.le ], [ %i.aqg, %bb.lh ], [ %i.aop, %bb.ld ], [ %i.aop, %bb.ln ]
-  %.16.i = phi ptr [ %spec.select.i97, %bb.lo ], [ %i.apj, %bb.kv ], [ %i.aqu, %bb.lw ], [ %spec.select.i97.sroa.sel125, %.loopexit.loopexit.i ], [ %.99.i, %.thread2.i ], [ %spec.select.i97.sroa.sel122, %bb.kt ], [ %spec.select.i97, %bb.lf ], [ %7, %.loopexit.loopexit119.i ], [ %spec.select.i97, %bb.le ], [ %i.aqe, %bb.lh ], [ %spec.select.i97, %bb.ld ], [ %spec.select.i97.sroa.sel, %bb.ln ] ; 2 uses
+  %.16.i = phi ptr [ %spec.select.i97, %bb.lo ], [ %i.apj, %bb.kv ], [ %i.aqu, %bb.lw ], [ %spec.select.i97.sroa.sel125, %.loopexit.loopexit.i ], [ %.99.i, %.thread2.i ], [ %spec.select.i97.sroa.sel122, %bb.kt ], [ %spec.select.i97, %bb.lf ], [ %scevgep155.i, %.loopexit.loopexit119.i ], [ %spec.select.i97, %bb.le ], [ %i.aqe, %bb.lh ], [ %spec.select.i97, %bb.ld ], [ %spec.select.i97.sroa.sel, %bb.ln ] ; 2 uses
   %.7.i = phi i32 [ %.0202108.i, %bb.lo ], [ %.0202108.i, %bb.kv ], [ %.5207.i, %bb.lw ], [ %.0202108.i, %.loopexit.loopexit.i ], [ %.0202108.i, %.thread2.i ], [ %.0202108.i, %bb.kt ], [ %.0202108.i, %bb.lf ], [ %.0202108.i, %.loopexit.loopexit119.i ], [ %.0202108.i, %bb.le ], [ %.0202108.i, %bb.lh ], [ %.0202108.i, %bb.ld ], [ %.3205.i, %bb.ln ]
   %.5.i = phi i32 [ %.0199109.i, %bb.lo ], [ %.2201174.i, %bb.kv ], [ 2, %bb.lw ], [ 2, %.loopexit.loopexit.i ], [ 3, %.thread2.i ], [ 3, %bb.kt ], [ %.0199109.i, %bb.lf ], [ 3, %.loopexit.loopexit119.i ], [ %.0199109.i, %bb.le ], [ %.0199109.i, %bb.lh ], [ %.0199109.i, %bb.ld ], [ %.3.i, %bb.ln ] ; 2 uses
   %.2198.i = phi i32 [ 42, %bb.lo ], [ %.0196110.i, %bb.kv ], [ 255, %bb.lw ], [ %.0196110.i, %.loopexit.loopexit.i ], [ %.0196110.i, %.thread2.i ], [ %.0196110.i, %bb.kt ], [ %.0196110.i, %bb.lf ], [ %.0196110.i, %.loopexit.loopexit119.i ], [ %.0196110.i, %bb.le ], [ %i.aqi, %bb.lh ], [ %.0196110.i, %bb.ld ], [ %.0193.i, %bb.ln ]

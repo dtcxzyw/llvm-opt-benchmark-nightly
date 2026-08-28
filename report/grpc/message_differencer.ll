@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %bb.m, %bb.n, %bb.l
 
 bb.r:                                             ; preds = %.lr.ph855, %.thread741
   %indvars.iv887 = phi i64 [ 0, %.lr.ph855 ], [ %indvars.iv.next888, %.thread741 ] ; 14 uses
-  %.0147851 = phi i32 [ 0, %.lr.ph855 ], [ %.2, %.thread741 ] ; 7 uses
+  %.0147851 = phi i32 [ 0, %.lr.ph855 ], [ %.2, %.thread741 ] ; 8 uses
   %.0148850 = phi i1 [ false, %.lr.ph855 ], [ %.5, %.thread741 ] ; 3 uses
   %.sroa.33.0849 = phi i32 [ -1, %.lr.ph855 ], [ %.sroa.33.2, %.thread741 ] ; 4 uses
   %.sroa.44.0848 = phi ptr [ null, %.lr.ph855 ], [ %.sroa.44.4, %.thread741 ] ; 7 uses
@@ -409,28 +409,27 @@ bb.ac:                                            ; preds = %bb.s, %bb.r
   %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.ck, i64 %indvars.iv887
   %i.cm = load i32, ptr %i.cl, align 4, !tbaa !13
   %.not181839 = icmp slt i32 %.0147851, %i.cm
-  br i1 %.not181839, label %.lr.ph.preheader.a, label %.critedge
+  br i1 %.not181839, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph.preheader.a:                               ; preds = %.preheader752
-  %i.cn = zext i32 %.0147851 to i64
+.lr.ph.preheader:                                 ; preds = %.preheader752
   %.not.i.i = icmp slt i32 %.0147851, 0
+  br i1 %.not.i.i, label %bb.ad, label %.lr.ph.preheader.a, !prof !97
+
+.lr.ph.preheader.a:                               ; preds = %.lr.ph.preheader
+  %i.cn = zext nneg i32 %.0147851 to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader.a, %bb.ao
-  %indvars.iv = phi i64 [ %i.cn, %.lr.ph.preheader.a ], [ %indvars.iv.next, %bb.ao ] ; 6 uses
+  %indvars.iv = phi i64 [ %i.cn, %.lr.ph.preheader.a ], [ %indvars.iv.next, %bb.ao ] ; 5 uses
   %.sroa.44.1840 = phi ptr [ %.sroa.44.0848, %.lr.ph.preheader.a ], [ %.sroa.44.7, %bb.ao ]
-  br i1 %.not.i.i, label %bb.ad, label %10, !prof !97
+  %9 = load ptr, ptr %0, align 8, !tbaa !125
+  %10 = icmp eq ptr %9, null
+  br i1 %10, label %.critedge198, label %bb.ai
 
-bb.ad:                                            ; preds = %.lr.ph
-  %sext = shl i64 %indvars.iv, 32
-  %9 = ashr exact i64 %sext, 32
-  %i.co = invoke noundef nonnull ptr @_ZN4absl12lts_2025051212log_internal17MakeCheckOpStringIllEEPKcT_T0_S4_(i64 noundef 0, i64 noundef %9, ptr noundef nonnull @.str.22)
+bb.ad:                                            ; preds = %.lr.ph.preheader
+  %11 = sext i32 %.0147851 to i64
+  %i.co = invoke noundef nonnull ptr @_ZN4absl12lts_2025051212log_internal17MakeCheckOpStringIllEEPKcT_T0_S4_(i64 noundef 0, i64 noundef %11, ptr noundef nonnull @.str.22)
           to label %_ZN4absl12lts_2025051212log_internal12Check_LEImplEiiPKc.exit unwind label %bb.ae
-
-10:                                               ; preds = %.lr.ph
-  %11 = load ptr, ptr %0, align 8, !tbaa !125
-  %12 = icmp eq ptr %11, null
-  br i1 %12, label %.critedge198, label %bb.ai
 
 bb.ae:                                            ; preds = %bb.ad
   %i.cp = landingpad { ptr, i32 }
@@ -462,7 +461,7 @@ bb.ah:                                            ; preds = %bb.af
   call void @_ZN4absl12lts_2025051212log_internal15LogMessageFatalD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %8) #43
   unreachable
 
-bb.ai:                                            ; preds = %10
+bb.ai:                                            ; preds = %.lr.ph
   %i.cs = load i8, ptr %i.ae, align 1
   %i.ct = and i8 %i.cs, 16
   %.not.i217 = icmp eq i8 %i.ct, 0
@@ -865,8 +864,8 @@ bb.ck:                                            ; preds = %.critedge204, %bb.c
           cleanup
   br label %bb.cn
 
-.critedge198:                                     ; preds = %._crit_edge, %10, %bb.u, %bb.av, %bb.n
-  %.7175 = phi i1 [ false, %bb.n ], [ %i.kz, %._crit_edge ], [ false, %10 ], [ false, %bb.u ], [ false, %bb.av ]
+.critedge198:                                     ; preds = %._crit_edge, %.lr.ph, %bb.u, %bb.av, %bb.n
+  %.7175 = phi i1 [ false, %bb.n ], [ %i.kz, %._crit_edge ], [ false, %.lr.ph ], [ false, %bb.u ], [ false, %bb.av ]
   %i.mp = load ptr, ptr %7, align 8, !tbaa !12    ; 3 uses
   %.not.i.i.i336 = icmp eq ptr %i.mp, null
   br i1 %.not.i.i.i336, label %_ZNSt6vectorIiSaIiEED2Ev.exit, label %bb.cl

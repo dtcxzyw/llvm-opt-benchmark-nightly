@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.c
           to label %bb.e unwind label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #34 ; 6 uses
+  %i.i = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #34 ; 7 uses
   invoke void @_ZN3re216CharClassBuilderC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.i)
           to label %.lr.ph.i unwind label %bb.i
 
@@ -212,11 +212,11 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   store ptr %i.i, ptr %i.j, align 8, !tbaa !28
   %i.k = add i32 %1, -65
-  %2 = tail call noundef zeroext i1 @_ZN3re216CharClassBuilder8AddRangeEii(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i32 noundef %1, i32 noundef %1) ; 0 uses
   %or.cond.i = icmp ult i32 %i.k, 26
   br i1 %or.cond.i, label %.thread.i, label %bb.f
 
 .thread.i:                                        ; preds = %.lr.ph.i
+  %2 = tail call noundef zeroext i1 @_ZN3re216CharClassBuilder8AddRangeEii(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i32 noundef %1, i32 noundef %1) ; 0 uses
   %i.l = or disjoint i32 %1, 32                   ; 2 uses
   %i.m = tail call noundef zeroext i1 @_ZN3re216CharClassBuilder8AddRangeEii(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i32 noundef %i.l, i32 noundef %i.l) ; 0 uses
   br label %.sink.split
@@ -224,6 +224,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %.lr.ph.i
   %i.n = add i32 %1, -97
   %or.cond3.i = icmp ult i32 %i.n, 26
+  %3 = tail call noundef zeroext i1 @_ZN3re216CharClassBuilder8AddRangeEii(ptr noundef nonnull align 8 dereferenceable(64) %i.i, i32 noundef %1, i32 noundef %1) ; 0 uses
   br i1 %or.cond3.i, label %bb.g, label %.sink.split
 
 bb.g:                                             ; preds = %bb.f
@@ -336,8 +337,8 @@ bb.y:                                             ; preds = %bb.w
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ao, i64 noundef 40) #31
   br label %bb.aa
 
-.sink.split:                                      ; preds = %bb.r, %bb.t, %.thread.i, %bb.f, %bb.g, %bb.x
-  %.sink = phi ptr [ %i.ao, %bb.x ], [ %i.ak, %bb.t ], [ %i.f, %.thread.i ], [ %i.f, %bb.g ], [ %i.f, %bb.f ], [ %i.t, %bb.r ]
+.sink.split:                                      ; preds = %bb.r, %bb.t, %.thread.i, %bb.g, %bb.f, %bb.x
+  %.sink = phi ptr [ %i.ao, %bb.x ], [ %i.ak, %bb.t ], [ %i.f, %.thread.i ], [ %i.f, %bb.f ], [ %i.f, %bb.g ], [ %i.t, %bb.r ]
   %i.as = tail call noundef zeroext i1 @_ZN3re26Regexp10ParseState10PushRegexpEPS0_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull %.sink) ; 0 uses
   br label %bb.z
 

@@ -205,7 +205,7 @@ bb.cm:                                            ; preds = %bb.ck
   br label %._crit_edge.i.i, !llvm.loop !132
 
 ._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %.lr.ph.i.i.preheader, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit160.i.i.._crit_edge.i.i.loopexit_crit_edge", %.lr.ph.preheader.i.i.split.us
-  %.us-phi1745 = phi i64 [ %i.qa, %.lr.ph.preheader.i.i.split.us ], [ %i.qd, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit160.i.i.._crit_edge.i.i.loopexit_crit_edge" ], [ %umax2557, %.lr.ph.i.i.preheader ], [ %umax2557, %.lr.ph.i.i ] ; 6 uses
+  %.us-phi1745 = phi i64 [ %i.qa, %.lr.ph.preheader.i.i.split.us ], [ %umax2557, %.lr.ph.i.i.preheader ], [ %i.qd, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit160.i.i.._crit_edge.i.i.loopexit_crit_edge" ], [ %umax2557, %.lr.ph.i.i ] ; 6 uses
   %i.rb = sub i64 %.us-phi1745, %.0346444.i.i     ; 2 uses
   %.not.i161.i.i = icmp eq i64 %.us-phi1745, %.0346444.i.i
   br i1 %.not.i161.i.i, label %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit171.i.i", label %bb.cn
@@ -364,7 +364,7 @@ bb.cz:                                            ; preds = %bb.cx
   br label %._crit_edge433.i.i, !llvm.loop !133
 
 ._crit_edge433.i.i:                               ; preds = %.lr.ph432.i.i, %.lr.ph432.i.i.preheader, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit175.i.i.._crit_edge433.i.i.loopexit_crit_edge", %.lr.ph432.preheader.i.i.split.us
-  %.us-phi1746 = phi i64 [ %i.sa, %.lr.ph432.preheader.i.i.split.us ], [ %i.sd, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit175.i.i.._crit_edge433.i.i.loopexit_crit_edge" ], [ %umax2558, %.lr.ph432.i.i.preheader ], [ %umax2558, %.lr.ph432.i.i ] ; 6 uses
+  %.us-phi1746 = phi i64 [ %i.sa, %.lr.ph432.preheader.i.i.split.us ], [ %umax2558, %.lr.ph432.i.i.preheader ], [ %i.sd, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit175.i.i.._crit_edge433.i.i.loopexit_crit_edge" ], [ %umax2558, %.lr.ph432.i.i ] ; 6 uses
   %i.tb = sub i64 %.us-phi1746, %.0346444.i.i     ; 2 uses
   %.not.i176.i.i = icmp eq i64 %.us-phi1746, %.0346444.i.i
   br i1 %.not.i176.i.i, label %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit171.i.i", label %bb.da
@@ -520,7 +520,7 @@ bb.dm:                                            ; preds = %bb.dk
   br label %.critedge.i.i, !llvm.loop !134
 
 .critedge.i.i:                                    ; preds = %.lr.ph437.i.i, %.lr.ph437.i.i.preheader, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit190.i.i..critedge.i.i.loopexit_crit_edge", %.lr.ph437.preheader.i.i.split.us
-  %.us-phi1747 = phi i64 [ %i.ua, %.lr.ph437.preheader.i.i.split.us ], [ %i.ud, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit190.i.i..critedge.i.i.loopexit_crit_edge" ], [ %umax2559, %.lr.ph437.i.i.preheader ], [ %umax2559, %.lr.ph437.i.i ] ; 6 uses
+  %.us-phi1747 = phi i64 [ %i.ua, %.lr.ph437.preheader.i.i.split.us ], [ %umax2559, %.lr.ph437.i.i.preheader ], [ %i.ud, %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit190.i.i..critedge.i.i.loopexit_crit_edge" ], [ %umax2559, %.lr.ph437.i.i ] ; 6 uses
   %i.vb = sub i64 %.us-phi1747, %.0346444.i.i     ; 2 uses
   %.not.i191.i.i = icmp eq i64 %.us-phi1747, %.0346444.i.i
   br i1 %.not.i191.i.i, label %"_ZZN2cv3dnnL31unicode_regex_split_custom_gpt2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit171.i.i", label %bb.dn
@@ -923,7 +923,7 @@ bb.ez:                                            ; preds = %_ZNSt6vectorImSaImE
   %.sroa.0.4.i = phi ptr [ %.sroa.0.11.i, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit225.i.i" ], [ %.sroa.0.2.i, %.lr.ph588.i.i ] ; 66 uses
   %.sroa.30.4.i = phi ptr [ %.sroa.30.10.i, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit225.i.i" ], [ %.sroa.30.2.i, %.lr.ph588.i.i ] ; 52 uses
   %.sroa.63.4.i = phi ptr [ %.sroa.63.11.i, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit225.i.i" ], [ %.sroa.63.2.i, %.lr.ph588.i.i ] ; 32 uses
-  %.0107582.i.i = phi i64 [ %.11.i.i, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit225.i.i" ], [ %.0111586.i.i, %.lr.ph588.i.i ] ; 27 uses
+  %.0107582.i.i = phi i64 [ %.11.i.i, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit225.i.i" ], [ %.0111586.i.i, %.lr.ph588.i.i ] ; 28 uses
   %.0454581.i.i = phi i64 [ %.7460.i.i, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit225.i.i" ], [ %.0111586.i.i, %.lr.ph588.i.i ] ; 30 uses
   %.not.i.i24.i = icmp ugt i64 %.0111586.i.i, %.0107582.i.i
   br i1 %.not.i.i24.i, label %.thread496.i.i, label %bb.fa
@@ -1326,13 +1326,14 @@ bb.gk:                                            ; preds = %bb.gi
   br i1 %.not131.i.i, label %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit210.thread.i.i", label %.critedge.i48.i
 
 .critedge.i48.i:                                  ; preds = %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit210.i.i", %..critedge_crit_edge.i.i
-  %.pre-phi2578 = phi i64 [ %i.ady, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit210.i.i" ], [ %.pre597.i.i, %..critedge_crit_edge.i.i ] ; 3 uses
+  %.pre-phi2578 = phi i64 [ %.pre597.i.i, %..critedge_crit_edge.i.i ], [ %i.ady, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit210.i.i" ] ; 2 uses
   %.not.i211.i.i = icmp uge i64 %.pre-phi2578, %.0111586.i.i
   %.not.i211.i.fr.i = freeze i1 %.not.i211.i.i
   br i1 %.not.i211.i.fr.i, label %.critedge.i48.split.preheader.i, label %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.thread.i.i"
 
 .critedge.i48.split.preheader.i:                  ; preds = %.critedge.i48.i
-  %umax.i = call i64 @llvm.umax.i64(i64 %i.aab, i64 %.pre-phi2578) ; 2 uses
+  %28 = add nuw i64 %.0107582.i.i, 1
+  %umax.i = call i64 @llvm.umax.i64(i64 %i.aab, i64 %28) ; 2 uses
   %.5.i.i4445 = add i64 %.0107582.i.i, 1          ; 2 uses
   %i.aew = icmp ult i64 %.5.i.i4445, %i.aab
   br i1 %i.aew, label %.lr.ph4447, label %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.thread.i.i"
@@ -1407,7 +1408,7 @@ bb.gr:                                            ; preds = %bb.gp
   br label %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.thread.i.i", !llvm.loop !140
 
 "_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.thread.i.i": ; preds = %.critedge.i48.split.i, %.critedge.i48.split.preheader.i, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.i.i._ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.thread.i.i.loopexit_crit_edge", %.critedge.i48.i
-  %.us-phi.i = phi i64 [ %.pre-phi2578, %.critedge.i48.i ], [ %umax.i, %.critedge.i48.split.preheader.i ], [ %.5.i.i4446, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.i.i._ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.thread.i.i.loopexit_crit_edge" ], [ %umax.i, %.critedge.i48.split.i ] ; 6 uses
+  %.us-phi.i = phi i64 [ %.pre-phi2578, %.critedge.i48.i ], [ %.5.i.i4446, %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.i.i._ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_1clEm.exit214.thread.i.i.loopexit_crit_edge" ], [ %umax.i, %.critedge.i48.split.preheader.i ], [ %umax.i, %.critedge.i48.split.i ] ; 6 uses
   %i.afu = sub i64 %.us-phi.i, %.0454581.i.i      ; 2 uses
   %.not.i215.i.i = icmp eq i64 %.us-phi.i, %.0454581.i.i
   br i1 %.not.i215.i.i, label %"_ZZN2cv3dnnL33unicode_regex_split_custom_llama3ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorImSaImEEENK3$_2clEm.exit225.i.i", label %bb.gs

@@ -205,14 +205,15 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.s, %bb.t
-  %.pn.i227 = phi i64 [ %i.cg, %bb.t ], [ %i.cd, %bb.s ]
+  %.pn.i227 = phi i64 [ %i.cg, %bb.t ], [ %i.cd, %bb.s ] ; 2 uses
   %i.ci = phi i32 [ %i.ch, %bb.t ], [ %i.bs, %bb.s ]
-  %i.cj = getelementptr i8, ptr %i.bv, i64 %.pn.i227 ; 5 uses
+  %i.cj = getelementptr i8, ptr %i.bv, i64 %.pn.i227 ; 4 uses
   %i.ck = sub nsw i32 %i.br, %i.ci                ; 2 uses
   %i.cl = icmp eq i32 %i.ck, 1
   br i1 %i.cl, label %.lr.ph86.i.preheader, label %bb.v
 
 .lr.ph86.i.preheader:                             ; preds = %bb.u
+  %12 = getelementptr inbounds i8, ptr %i.cj, i64 -1
   store i8 1, ptr %i.cj, align 1
   br label %.loopexit76.i
 
@@ -242,20 +243,22 @@ bb.y:                                             ; preds = %bb.x
   store i8 0, ptr %i.cj, align 1
   br label %.loopexit76.loopexit92.i
 
-.loopexit76.loopexit92.i:                         ; preds = %bb.y, %bb.x
+.loopexit76.loopexit92.i:                         ; preds = %bb.x, %bb.y
+  %.pn = getelementptr i8, ptr %0, i64 %.pn.i227
+  %.us-phi301 = getelementptr i8, ptr %.pn, i64 8
   %i.cy = trunc i32 %i.cx to i8
   br label %.loopexit76.i
 
 .loopexit76.i:                                    ; preds = %.lr.ph86.i.preheader, %.loopexit76.loopexit92.i
+  %.264.i = phi ptr [ %.us-phi301, %.loopexit76.loopexit92.i ], [ %12, %.lr.ph86.i.preheader ] ; 5 uses
   %.1.i = phi i8 [ %i.cy, %.loopexit76.loopexit92.i ], [ 0, %.lr.ph86.i.preheader ]
-  %.264.i = getelementptr inbounds i8, ptr %i.cj, i64 -1 ; 4 uses
   %.264.i301 = ptrtoaddr ptr %.264.i to i64       ; 3 uses
   %.not7488.i = icmp ult ptr %.264.i, %i.bv
   br i1 %.not7488.i, label %_ZL14decShiftToMostPhii.exit, label %.lr.ph91.preheader.i
 
 .lr.ph91.preheader.i:                             ; preds = %.loopexit76.i
   store i8 %.1.i, ptr %.264.i, align 1
-  %i.cz = getelementptr inbounds i8, ptr %i.cj, i64 -2
+  %i.cz = getelementptr inbounds i8, ptr %.264.i, i64 -1
   %.not74.peel.i = icmp ult ptr %i.cz, %i.bv
   br i1 %.not74.peel.i, label %_ZL14decShiftToMostPhii.exit, label %.lr.ph91.i.preheader
 
@@ -658,14 +661,15 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.o, %bb.p
-  %.pn.i = phi i64 [ %i.av, %bb.p ], [ %i.as, %bb.o ]
+  %.pn.i = phi i64 [ %i.av, %bb.p ], [ %i.as, %bb.o ] ; 2 uses
   %i.ax = phi i32 [ %i.aw, %bb.p ], [ %i.ak, %bb.o ]
-  %i.ay = getelementptr i8, ptr %i.ad, i64 %.pn.i ; 5 uses
+  %i.ay = getelementptr i8, ptr %i.ad, i64 %.pn.i ; 4 uses
   %i.az = sub nsw i32 %i.aj, %i.ax                ; 2 uses
   %i.ba = icmp eq i32 %i.az, 1
   br i1 %i.ba, label %.lr.ph86.i.preheader, label %bb.r
 
 .lr.ph86.i.preheader:                             ; preds = %bb.q
+  %8 = getelementptr inbounds i8, ptr %i.ay, i64 -1
   store i8 1, ptr %i.ay, align 1
   br label %.loopexit76.i
 
@@ -695,20 +699,22 @@ bb.u:                                             ; preds = %bb.t
   store i8 0, ptr %i.ay, align 1
   br label %.loopexit76.loopexit92.i
 
-.loopexit76.loopexit92.i:                         ; preds = %bb.u, %bb.t
+.loopexit76.loopexit92.i:                         ; preds = %bb.t, %bb.u
+  %.pn = getelementptr i8, ptr %0, i64 %.pn.i
+  %.us-phi276 = getelementptr i8, ptr %.pn, i64 8
   %i.bn = trunc i32 %i.bm to i8
   br label %.loopexit76.i
 
 .loopexit76.i:                                    ; preds = %.lr.ph86.i.preheader, %.loopexit76.loopexit92.i
+  %.264.i = phi ptr [ %.us-phi276, %.loopexit76.loopexit92.i ], [ %8, %.lr.ph86.i.preheader ] ; 5 uses
   %.1.i = phi i8 [ %i.bn, %.loopexit76.loopexit92.i ], [ 0, %.lr.ph86.i.preheader ]
-  %.264.i = getelementptr inbounds i8, ptr %i.ay, i64 -1 ; 4 uses
   %.264.i276 = ptrtoaddr ptr %.264.i to i64       ; 3 uses
   %.not7488.i = icmp ult ptr %.264.i, %i.ad
   br i1 %.not7488.i, label %.thread248.thread.thread253, label %.lr.ph91.preheader.i
 
 .lr.ph91.preheader.i:                             ; preds = %.loopexit76.i
   store i8 %.1.i, ptr %.264.i, align 1
-  %i.bo = getelementptr inbounds i8, ptr %i.ay, i64 -2
+  %i.bo = getelementptr inbounds i8, ptr %.264.i, i64 -1
   %.not74.peel.i = icmp ult ptr %i.bo, %i.ad
   br i1 %.not74.peel.i, label %.thread248.thread.thread253, label %.lr.ph91.i.preheader
 

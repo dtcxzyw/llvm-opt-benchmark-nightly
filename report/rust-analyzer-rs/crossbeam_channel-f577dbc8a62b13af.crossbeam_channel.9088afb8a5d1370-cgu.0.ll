@@ -205,48 +205,44 @@ bb.c:                                             ; preds = %bb.b
 
 _RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit: ; preds = %bb.b, %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.n = load ptr, ptr %i.m, align 8, !nonnull !12, !align !112, !noundef !12 ; 9 uses
+  %i.n = load ptr, ptr %i.m, align 8, !nonnull !12, !align !112, !noundef !12 ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.p = load i64, ptr %i.o, align 8, !noundef !12 ; 10 uses
+  %i.p = load i64, ptr %i.o, align 8, !noundef !12 ; 11 uses
   %.idx = shl nuw nsw i64 %i.p, 5
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx ; 5 uses
   %i.r = load ptr, ptr %2, align 8, !nonnull !12
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 32
-  %i.t = icmp ugt ptr %i.n, inttoptr (i64 2 to ptr)
-  %i.u = icmp eq i64 %i.p, 0
-  br i1 %i.u, label %.thread63, label %.lr.ph215
+  %i.t = icmp ugt ptr %i.n, inttoptr (i64 2 to ptr) ; 3 uses
+  %i.u = icmp eq i64 %i.p, 0                      ; 2 uses
+  br i1 %i.t, label %bb.d, label %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit.split, !prof !13
 
-bb.d:                                             ; preds = %bb.f
+bb.d:                                             ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit
+  br i1 %i.u, label %.thread63, label %bb.e
+
+.lr.ph215:                                        ; preds = %bb.f
+  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.04.0.us215, i64 32 ; 2 uses
   %3 = icmp eq ptr %i.v, %i.q
-  br i1 %3, label %.thread63, label %.lr.ph215
+  br i1 %3, label %.thread63, label %bb.e
 
-.lr.ph215:                                        ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit, %bb.d
-  %.sroa.0.0214 = phi i64 [ %4, %bb.d ], [ 0, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit ]
-  %.sroa.04.0213 = phi ptr [ %i.v, %bb.d ], [ %i.n, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit ] ; 5 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %.sroa.04.0213, i64 32 ; 2 uses
-  %4 = add i64 %.sroa.0.0214, 1                   ; 5 uses
-  br i1 %i.t, label %bb.e, label %5, !prof !13
-
-5:                                                ; preds = %.lr.ph215
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
-  unreachable
-
-bb.e:                                             ; preds = %.lr.ph215
-  %i.w = ptrtoint ptr %.sroa.04.0213 to i64
-  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.04.0213, i64 8
+bb.e:                                             ; preds = %bb.d, %.lr.ph215
+  %.sroa.0.0.us216 = phi i64 [ %4, %.lr.ph215 ], [ 0, %bb.d ]
+  %.sroa.04.0.us215 = phi ptr [ %i.v, %.lr.ph215 ], [ %i.n, %bb.d ] ; 5 uses
+  %4 = add i64 %.sroa.0.0.us216, 1                ; 6 uses
+  %i.w = ptrtoint ptr %.sroa.04.0.us215 to i64
+  %i.x = getelementptr inbounds nuw i8, ptr %.sroa.04.0.us215, i64 8
   %i.y = load ptr, ptr %i.x, align 8, !nonnull !12, !align !112, !noundef !12
-  %i.z = load ptr, ptr %.sroa.04.0213, align 8, !nonnull !12, !noundef !12
+  %i.z = load ptr, ptr %.sroa.04.0.us215, align 8, !nonnull !12, !noundef !12
   %i.aa = getelementptr inbounds nuw i8, ptr %i.y, i64 40
   %i.ab = load ptr, ptr %i.aa, align 8, !invariant.load !12, !nonnull !12
   %i.ac = tail call noundef zeroext i1 %i.ab(ptr noundef nonnull %i.z, i64 noundef %i.w, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %2) #24
   br i1 %i.ac, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ad = load atomic i64, ptr %i.s acquire, align 8 ; 4 uses
-  switch i64 %i.ad, label %.thread68.a [
-    i64 0, label %bb.d
-    i64 1, label %.thread68.loopexit229
-    i64 2, label %.thread68.loopexit229
+  %i.ad = load atomic i64, ptr %i.s acquire, align 8 ; 6 uses
+  switch i64 %i.ad, label %.thread68.loopexit229 [
+    i64 0, label %.lr.ph215
+    i64 1, label %.thread68
+    i64 2, label %.thread68
   ]
 
 bb.g:                                             ; preds = %bb.e
@@ -256,33 +252,62 @@ bb.g:                                             ; preds = %bb.e
   %i.ag = extractvalue { i64, i1 } %i.af, 1
   br i1 %i.ag, label %bb.i, label %bb.h
 
+_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit.split: ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit
+  br i1 %i.u, label %.thread63, label %5
+
+5:                                                ; preds = %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit.split
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
+  unreachable
+
 bb.h:                                             ; preds = %bb.g
   %i.ah = extractvalue { i64, i1 } %i.af, 0       ; 2 uses
   %spec.select.i57 = tail call i64 @llvm.umin.i64(i64 %i.ah, i64 3)
-  br label %.thread68.a
+  br label %.thread68
 
 bb.i:                                             ; preds = %bb.g
-  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.04.0213, i64 16
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.04.0.us215, i64 16
   %i.aj = load i64, ptr %i.ai, align 8, !noundef !12
-  br label %.thread68.a
+  br label %.thread68
 
-.thread68.loopexit229:                            ; preds = %bb.f, %bb.f
-  br label %.thread68.a
+.thread68.loopexit229:                            ; preds = %bb.f
+  br label %.thread68
 
-.thread68.a:                                      ; preds = %.split.i, %.split.us.i, %bb.f, %.thread68.loopexit229, %bb.h, %.split9.us.loopexit23.i, %.split9.us.loopexit13.i, %bb.o, %bb.i
-  %.sroa.12.3 = phi i64 [ %i.ad, %.thread68.loopexit229 ], [ %i.ah, %bb.h ], [ undef, %bb.i ], [ %i.ad, %bb.f ], [ %i.ay, %.split.us.i ], [ undef, %.split9.us.loopexit13.i ], [ %.sroa.7.0.i, %bb.o ], [ undef, %.split9.us.loopexit23.i ], [ %i.az, %.split.i ]
-  %.sroa.013.3 = phi i64 [ %i.ad, %.thread68.loopexit229 ], [ %spec.select.i57, %bb.h ], [ 1, %bb.i ], [ 3, %bb.f ], [ 3, %.split.us.i ], [ 1, %.split9.us.loopexit13.i ], [ %.sroa.03.0.i, %bb.o ], [ 2, %.split9.us.loopexit23.i ], [ 3, %.split.i ]
-  %.sroa.311.0 = phi i64 [ undef, %.thread68.loopexit229 ], [ undef, %bb.h ], [ %i.aj, %bb.i ], [ undef, %bb.f ], [ undef, %.split.us.i ], [ undef, %.split9.us.loopexit13.i ], [ undef, %bb.o ], [ undef, %.split9.us.loopexit23.i ], [ undef, %.split.i ] ; 2 uses
-  %.sroa.010.0.not = phi i1 [ true, %.thread68.loopexit229 ], [ true, %bb.h ], [ false, %bb.i ], [ true, %bb.f ], [ true, %.split.us.i ], [ true, %.split9.us.loopexit13.i ], [ true, %bb.o ], [ true, %.split9.us.loopexit23.i ], [ true, %.split.i ]
-  %.sroa.0.2 = phi i64 [ %4, %.thread68.loopexit229 ], [ %4, %bb.h ], [ %4, %bb.i ], [ %4, %bb.f ], [ %i.p, %.split.us.i ], [ %i.p, %.split9.us.loopexit13.i ], [ %i.p, %bb.o ], [ %i.p, %.split9.us.loopexit23.i ], [ %i.p, %.split.i ] ; 2 uses
-  %i.ak = icmp eq i64 %.sroa.0.2, 0
-  br i1 %i.ak, label %._crit_edge113, label %.lr.ph112.preheader.a
+.thread68:                                        ; preds = %.split.i, %.split.us.i, %bb.f, %bb.f, %.thread68.loopexit229, %bb.h, %.split9.us.loopexit23.i, %.split9.us.loopexit13.i, %bb.o, %bb.i
+  %.sroa.12.3 = phi i64 [ %i.ad, %.thread68.loopexit229 ], [ %i.ah, %bb.h ], [ undef, %bb.i ], [ %i.ay, %.split.us.i ], [ %i.ad, %bb.f ], [ undef, %.split9.us.loopexit13.i ], [ %.sroa.7.0.i, %bb.o ], [ undef, %.split9.us.loopexit23.i ], [ %i.ad, %bb.f ], [ %i.az, %.split.i ]
+  %.sroa.013.3 = phi i64 [ 3, %.thread68.loopexit229 ], [ %spec.select.i57, %bb.h ], [ 1, %bb.i ], [ 3, %.split.us.i ], [ %i.ad, %bb.f ], [ 1, %.split9.us.loopexit13.i ], [ %.sroa.03.0.i, %bb.o ], [ 2, %.split9.us.loopexit23.i ], [ %i.ad, %bb.f ], [ 3, %.split.i ]
+  %.sroa.311.0 = phi i64 [ undef, %.thread68.loopexit229 ], [ undef, %bb.h ], [ %i.aj, %bb.i ], [ undef, %.split.us.i ], [ undef, %bb.f ], [ undef, %.split9.us.loopexit13.i ], [ undef, %bb.o ], [ undef, %.split9.us.loopexit23.i ], [ undef, %bb.f ], [ undef, %.split.i ] ; 2 uses
+  %.sroa.010.0.not = phi i1 [ true, %.thread68.loopexit229 ], [ true, %bb.h ], [ false, %bb.i ], [ true, %.split.us.i ], [ true, %bb.f ], [ true, %.split9.us.loopexit13.i ], [ true, %bb.o ], [ true, %.split9.us.loopexit23.i ], [ true, %bb.f ], [ true, %.split.i ]
+  %.sroa.0.2 = phi i64 [ %4, %.thread68.loopexit229 ], [ %4, %bb.h ], [ %4, %bb.i ], [ %i.p, %.split.us.i ], [ %4, %bb.f ], [ %i.p, %.split9.us.loopexit13.i ], [ %i.p, %bb.o ], [ %i.p, %.split9.us.loopexit23.i ], [ %4, %bb.f ], [ %i.p, %.split.i ] ; 2 uses
+  %6 = icmp eq i64 %.sroa.0.2, 0
+  br i1 %6, label %._crit_edge113, label %.lr.ph112.preheader
 
-.lr.ph112.preheader.a:                            ; preds = %.thread68.a
-  %6 = icmp ugt ptr %i.n, inttoptr (i64 2 to ptr)
-  br label %.lr.ph112
+.lr.ph112.preheader:                              ; preds = %.thread68
+  br i1 %i.t, label %.lr.ph112.us, label %.lr.ph112.preheader.a, !prof !13
 
-.thread63:                                        ; preds = %bb.d, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit
+.lr.ph112.us:                                     ; preds = %.lr.ph112.preheader, %.thread68.a
+  %.sroa.035.0111.us = phi ptr [ %13, %.thread68.a ], [ %i.n, %.lr.ph112.preheader ] ; 5 uses
+  %.sroa.537.0110.us = phi i64 [ %8, %.thread68.a ], [ %.sroa.0.2, %.lr.ph112.preheader ]
+  %7 = icmp eq ptr %.sroa.035.0111.us, %i.q
+  br i1 %7, label %._crit_edge113, label %.thread68.a
+
+.thread68.a:                                      ; preds = %.lr.ph112.us
+  %8 = add i64 %.sroa.537.0110.us, -1             ; 2 uses
+  %9 = ptrtoint ptr %.sroa.035.0111.us to i64
+  %10 = getelementptr inbounds nuw i8, ptr %.sroa.035.0111.us, i64 8
+  %11 = load ptr, ptr %10, align 8, !nonnull !12, !align !112, !noundef !12
+  %12 = load ptr, ptr %.sroa.035.0111.us, align 8, !nonnull !12, !noundef !12
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.035.0111.us, i64 32
+  %14 = getelementptr inbounds nuw i8, ptr %11, i64 48
+  %15 = load ptr, ptr %14, align 8, !invariant.load !12, !nonnull !12
+  tail call void %15(ptr noundef nonnull %12, i64 noundef %9) #24
+  %i.ak = icmp eq i64 %8, 0
+  br i1 %i.ak, label %._crit_edge113, label %.lr.ph112.us
+
+.lr.ph112.preheader.a:                            ; preds = %.lr.ph112.preheader
+  %16 = icmp eq i64 %i.p, 0
+  br i1 %16, label %._crit_edge113, label %bb.t
+
+.thread63:                                        ; preds = %.lr.ph215, %bb.d, %_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultuNtNtCsM5evIHPibA_17crossbeam_channel6select8SelectedE6unwrapBM_.exit.split
   switch i32 %narrow, label %bb.j [
     i32 0, label %.loopexit
     i32 1, label %bb.l
@@ -332,7 +357,7 @@ bb.l:                                             ; preds = %.thread63, %bb.k
 
 .split.us.i:                                      ; preds = %._crit_edge, %bb.m
   %i.ay = load atomic i64, ptr %i.ax acquire, align 8 ; 2 uses
-  switch i64 %i.ay, label %.thread68.a [
+  switch i64 %i.ay, label %.thread68 [
     i64 0, label %bb.m
     i64 1, label %.split9.us.loopexit13.i
     i64 2, label %.split9.us.loopexit23.i
@@ -344,7 +369,7 @@ bb.m:                                             ; preds = %.split.us.i
 
 .split.i:                                         ; preds = %._crit_edge, %bb.p
   %i.az = load atomic i64, ptr %i.ax acquire, align 8 ; 2 uses
-  switch i64 %i.az, label %.thread68.a [
+  switch i64 %i.az, label %.thread68 [
     i64 0, label %bb.n
     i64 1, label %.split9.us.loopexit13.i
     i64 2, label %.split9.us.loopexit23.i
@@ -367,7 +392,7 @@ bb.o:                                             ; preds = %bb.n
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.bi, i64 3)
   %.sroa.7.0.i = select i1 %i.bh, i64 undef, i64 %i.bi
   %.sroa.03.0.i = select i1 %i.bh, i64 1, i64 %spec.select.i.i
-  br label %.thread68.a
+  br label %.thread68
 
 bb.p:                                             ; preds = %bb.n
   %i.bj = tail call { i64, i32 } @_RNvXs3_NtCscAsMj0W7j8b_3std4timeNtB5_7InstantNtNtNtCshzWfHUSfYae_4core3ops5arith3Sub3sub(i64 noundef %.sroa.021.1.lcssa, i32 noundef range(i32 -1, 1000000000) %.sroa.624.1.lcssa, i64 noundef %i.bb, i32 noundef %i.bc) ; 2 uses
@@ -377,10 +402,10 @@ bb.p:                                             ; preds = %bb.n
   br label %.split.i
 
 .split9.us.loopexit13.i:                          ; preds = %.split.i, %.split.us.i
-  br label %.thread68.a
+  br label %.thread68
 
 .split9.us.loopexit23.i:                          ; preds = %.split.i, %.split.us.i
-  br label %.thread68.a
+  br label %.thread68
 
 bb.q:                                             ; preds = %.lr.ph
   %.not54 = icmp eq i32 %.sroa.624.1107, -1
@@ -401,14 +426,7 @@ bb.s:                                             ; preds = %bb.q
   %.2.i = select i1 %i.bq, i64 %.sroa.021.1108, i64 %i.av
   br label %bb.r
 
-.lr.ph112:                                        ; preds = %.lr.ph112.preheader.a, %11
-  %.sroa.035.0111 = phi ptr [ %16, %11 ], [ %i.n, %.lr.ph112.preheader.a ] ; 5 uses
-  %.sroa.537.0110 = phi i64 [ %7, %11 ], [ %.sroa.0.2, %.lr.ph112.preheader.a ]
-  %7 = add i64 %.sroa.537.0110, -1                ; 2 uses
-  %8 = icmp eq ptr %.sroa.035.0111, %i.q
-  br i1 %8, label %._crit_edge113, label %10
-
-._crit_edge113:                                   ; preds = %11, %.lr.ph112, %.thread68.a
+._crit_edge113:                                   ; preds = %.thread68.a, %.lr.ph112.us, %.lr.ph112.preheader.a, %.thread68
   switch i64 %.sroa.013.3, label %default.unreachable [
     i64 0, label %bb.u
     i64 1, label %bb.v
@@ -423,27 +441,11 @@ bb.s:                                             ; preds = %bb.q
 .lr.ph116:                                        ; preds = %.preheader72
   %i.bs = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.bt = load ptr, ptr %i.bs, align 8, !nonnull !12, !align !112
-  %9 = icmp ugt ptr %i.n, inttoptr (i64 2 to ptr)
-  br label %bb.z
+  br i1 %i.t, label %bb.z, label %bb.aa, !prof !13
 
-10:                                               ; preds = %.lr.ph112
-  br i1 %6, label %11, label %bb.t, !prof !13
-
-bb.t:                                             ; preds = %10
+bb.t:                                             ; preds = %.lr.ph112.preheader.a
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
   unreachable
-
-11:                                               ; preds = %10
-  %12 = ptrtoint ptr %.sroa.035.0111 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.035.0111, i64 8
-  %14 = load ptr, ptr %13, align 8, !nonnull !12, !align !112, !noundef !12
-  %15 = load ptr, ptr %.sroa.035.0111, align 8, !nonnull !12, !noundef !12
-  %16 = getelementptr inbounds nuw i8, ptr %.sroa.035.0111, i64 32
-  %17 = getelementptr inbounds nuw i8, ptr %14, i64 48
-  %18 = load ptr, ptr %17, align 8, !invariant.load !12, !nonnull !12
-  tail call void %18(ptr noundef nonnull %15, i64 noundef %12) #24
-  %19 = icmp eq i64 %7, 0
-  br i1 %19, label %._crit_edge113, label %.lr.ph112
 
 bb.u:                                             ; preds = %._crit_edge113
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #25
@@ -483,24 +485,21 @@ bb.y:                                             ; preds = %bb.w
   br i1 %i.cj, label %.loopexit.sink.split, label %bb.x
 
 bb.z:                                             ; preds = %.lr.ph116, %bb.ab
-  %.sroa.045.0115 = phi ptr [ %i.n, %.lr.ph116 ], [ %i.ck, %bb.ab ] ; 6 uses
+  %.sroa.045.0115 = phi ptr [ %i.ck, %bb.ab ], [ %i.n, %.lr.ph116 ] ; 6 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.045.0115, i64 32 ; 2 uses
-  br i1 %9, label %20, label %bb.aa, !prof !13
+  %17 = ptrtoint ptr %.sroa.045.0115 to i64
+  %18 = icmp eq i64 %.sroa.12.3, %17
+  br i1 %18, label %bb.ac, label %bb.ab
 
-bb.aa:                                            ; preds = %bb.z
+bb.aa:                                            ; preds = %.lr.ph116
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
   unreachable
 
-20:                                               ; preds = %bb.z
-  %21 = ptrtoint ptr %.sroa.045.0115 to i64
-  %22 = icmp eq i64 %.sroa.12.3, %21
-  br i1 %22, label %bb.ac, label %bb.ab
-
-bb.ab:                                            ; preds = %bb.ac, %20
+bb.ab:                                            ; preds = %bb.ac, %bb.z
   %i.cl = icmp eq ptr %i.ck, %i.q
   br i1 %i.cl, label %.loopexit, label %bb.z
 
-bb.ac:                                            ; preds = %20
+bb.ac:                                            ; preds = %bb.z
   %i.cm = load ptr, ptr %.sroa.045.0115, align 8, !nonnull !12, !noundef !12
   %i.cn = getelementptr inbounds nuw i8, ptr %.sroa.045.0115, i64 8
   %i.co = load ptr, ptr %i.cn, align 8, !nonnull !12, !align !112, !noundef !12
@@ -534,36 +533,32 @@ bb.ad:                                            ; preds = %bb.ac
 ; Function Attrs: inlinehint nonlazybind uwtable
 define internal fastcc { i64, i64 } @_RNCNvNtCsM5evIHPibA_17crossbeam_channel6select9run_ready0B5_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dead_on_return dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !nonnull !12, !align !112, !noundef !12 ; 8 uses
+  %i.a = load ptr, ptr %0, align 8, !nonnull !12, !align !112, !noundef !12 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !noundef !12 ; 9 uses
+  %i.c = load i64, ptr %i.b, align 8, !noundef !12 ; 10 uses
   %.idx = shl nuw nsw i64 %i.c, 5
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 %.idx ; 4 uses
   %i.e = load ptr, ptr %1, align 8, !nonnull !12
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 32
-  %i.g = icmp ugt ptr %i.a, inttoptr (i64 2 to ptr)
-  %i.h = icmp eq i64 %i.c, 0
-  br i1 %i.h, label %.thread51, label %.lr.ph181
+  %i.g = icmp ugt ptr %i.a, inttoptr (i64 2 to ptr) ; 3 uses
+  %i.h = icmp eq i64 %i.c, 0                      ; 2 uses
+  br i1 %i.g, label %bb.b, label %.split, !prof !13
 
-bb.b:                                             ; preds = %bb.d
+bb.b:                                             ; preds = %bb.a
+  br i1 %i.h, label %.thread51, label %bb.c
+
+.lr.ph181:                                        ; preds = %bb.d
+  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.05.0.us186, i64 32 ; 2 uses
   %2 = icmp eq ptr %i.i, %i.d
-  br i1 %2, label %.thread51, label %.lr.ph181
+  br i1 %2, label %.thread51, label %bb.c
 
-.lr.ph181:                                        ; preds = %bb.a, %bb.b
-  %.sroa.03.0179 = phi i64 [ %3, %bb.b ], [ 0, %bb.a ]
-  %.sroa.05.0178 = phi ptr [ %i.i, %bb.b ], [ %i.a, %bb.a ] ; 4 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %.sroa.05.0178, i64 32 ; 2 uses
-  %3 = add i64 %.sroa.03.0179, 1                  ; 5 uses
-  br i1 %i.g, label %bb.c, label %4, !prof !13
-
-4:                                                ; preds = %.lr.ph181
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
-  unreachable
-
-bb.c:                                             ; preds = %.lr.ph181
-  %i.j = ptrtoint ptr %.sroa.05.0178 to i64       ; 3 uses
-  %i.k = load ptr, ptr %.sroa.05.0178, align 8, !nonnull !12, !noundef !12
-  %i.l = getelementptr inbounds nuw i8, ptr %.sroa.05.0178, i64 8
+bb.c:                                             ; preds = %bb.b, %.lr.ph181
+  %.sroa.03.0.us187 = phi i64 [ %3, %.lr.ph181 ], [ 0, %bb.b ]
+  %.sroa.05.0.us186 = phi ptr [ %i.i, %.lr.ph181 ], [ %i.a, %bb.b ] ; 4 uses
+  %3 = add i64 %.sroa.03.0.us187, 1               ; 6 uses
+  %i.j = ptrtoint ptr %.sroa.05.0.us186 to i64    ; 3 uses
+  %i.k = load ptr, ptr %.sroa.05.0.us186, align 8, !nonnull !12, !noundef !12
+  %i.l = getelementptr inbounds nuw i8, ptr %.sroa.05.0.us186, i64 8
   %i.m = load ptr, ptr %i.l, align 8, !nonnull !12, !align !112, !noundef !12
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   %i.o = load ptr, ptr %i.n, align 8, !invariant.load !12, !nonnull !12
@@ -571,11 +566,11 @@ bb.c:                                             ; preds = %.lr.ph181
   br i1 %i.p, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = load atomic i64, ptr %i.f acquire, align 8 ; 4 uses
-  switch i64 %i.q, label %.thread56.a [
-    i64 0, label %bb.b
-    i64 1, label %.thread56.loopexit195
-    i64 2, label %.thread56.loopexit195
+  %i.q = load atomic i64, ptr %i.f acquire, align 8 ; 6 uses
+  switch i64 %i.q, label %.thread56.loopexit195 [
+    i64 0, label %.lr.ph181
+    i64 1, label %.thread56
+    i64 2, label %.thread56
   ]
 
 bb.e:                                             ; preds = %bb.c
@@ -583,28 +578,57 @@ bb.e:                                             ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %.val, i64 32
   %i.s = cmpxchg ptr %i.r, i64 0, i64 %i.j acq_rel acquire, align 8 ; 2 uses
   %i.t = extractvalue { i64, i1 } %i.s, 1
-  br i1 %i.t, label %.thread56.a, label %bb.f
+  br i1 %i.t, label %.thread56, label %bb.f
+
+.split:                                           ; preds = %bb.a
+  br i1 %i.h, label %.thread51, label %4
+
+4:                                                ; preds = %.split
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
+  unreachable
 
 bb.f:                                             ; preds = %bb.e
   %i.u = extractvalue { i64, i1 } %i.s, 0         ; 2 uses
   %spec.select.i = tail call i64 @llvm.umin.i64(i64 %i.u, i64 3)
-  br label %.thread56.a
+  br label %.thread56
 
-.thread56.loopexit195:                            ; preds = %bb.d, %bb.d
-  br label %.thread56.a
+.thread56.loopexit195:                            ; preds = %bb.d
+  br label %.thread56
 
-.thread56.a:                                      ; preds = %.split.i, %.split.us.i, %bb.d, %.thread56.loopexit195, %bb.f, %.split9.us.loopexit23.i, %.split9.us.loopexit13.i, %bb.m, %bb.e
-  %.sroa.13.3 = phi i64 [ %i.q, %.thread56.loopexit195 ], [ %i.u, %bb.f ], [ %i.j, %bb.e ], [ %i.q, %bb.d ], [ %i.ao, %.split.us.i ], [ undef, %.split9.us.loopexit13.i ], [ %.sroa.7.0.i, %bb.m ], [ undef, %.split9.us.loopexit23.i ], [ %i.ap, %.split.i ]
-  %.sroa.011.3 = phi i64 [ %i.q, %.thread56.loopexit195 ], [ %spec.select.i, %bb.f ], [ 3, %bb.e ], [ 3, %bb.d ], [ 3, %.split.us.i ], [ 1, %.split9.us.loopexit13.i ], [ %.sroa.03.0.i, %bb.m ], [ 2, %.split9.us.loopexit23.i ], [ 3, %.split.i ]
-  %.sroa.03.2 = phi i64 [ %3, %.thread56.loopexit195 ], [ %3, %bb.f ], [ %3, %bb.e ], [ %3, %bb.d ], [ %i.c, %.split.us.i ], [ %i.c, %.split9.us.loopexit13.i ], [ %i.c, %bb.m ], [ %i.c, %.split9.us.loopexit23.i ], [ %i.c, %.split.i ] ; 2 uses
-  %i.v = icmp eq i64 %.sroa.03.2, 0
-  br i1 %i.v, label %._crit_edge97, label %.lr.ph96.preheader.a
+.thread56:                                        ; preds = %.split.i, %.split.us.i, %bb.d, %bb.d, %.thread56.loopexit195, %bb.f, %.split9.us.loopexit23.i, %.split9.us.loopexit13.i, %bb.m, %bb.e
+  %.sroa.13.3 = phi i64 [ %i.q, %.thread56.loopexit195 ], [ %i.u, %bb.f ], [ %i.j, %bb.e ], [ %i.ao, %.split.us.i ], [ %i.q, %bb.d ], [ undef, %.split9.us.loopexit13.i ], [ %.sroa.7.0.i, %bb.m ], [ undef, %.split9.us.loopexit23.i ], [ %i.q, %bb.d ], [ %i.ap, %.split.i ]
+  %.sroa.011.3 = phi i64 [ 3, %.thread56.loopexit195 ], [ %spec.select.i, %bb.f ], [ 3, %bb.e ], [ 3, %.split.us.i ], [ %i.q, %bb.d ], [ 1, %.split9.us.loopexit13.i ], [ %.sroa.03.0.i, %bb.m ], [ 2, %.split9.us.loopexit23.i ], [ %i.q, %bb.d ], [ 3, %.split.i ]
+  %.sroa.03.2 = phi i64 [ %3, %.thread56.loopexit195 ], [ %3, %bb.f ], [ %3, %bb.e ], [ %i.c, %.split.us.i ], [ %3, %bb.d ], [ %i.c, %.split9.us.loopexit13.i ], [ %i.c, %bb.m ], [ %i.c, %.split9.us.loopexit23.i ], [ %3, %bb.d ], [ %i.c, %.split.i ] ; 2 uses
+  %5 = icmp eq i64 %.sroa.03.2, 0
+  br i1 %5, label %._crit_edge97, label %.lr.ph96.preheader
 
-.lr.ph96.preheader.a:                             ; preds = %.thread56.a
-  %5 = icmp ugt ptr %i.a, inttoptr (i64 2 to ptr)
-  br label %.lr.ph96
+.lr.ph96.preheader:                               ; preds = %.thread56
+  br i1 %i.g, label %.lr.ph96.us, label %.lr.ph96.preheader.a, !prof !13
 
-.thread51:                                        ; preds = %bb.b, %bb.a
+.lr.ph96.us:                                      ; preds = %.lr.ph96.preheader, %.thread56.a
+  %.sroa.035.095.us = phi ptr [ %12, %.thread56.a ], [ %i.a, %.lr.ph96.preheader ] ; 5 uses
+  %.sroa.537.094.us = phi i64 [ %7, %.thread56.a ], [ %.sroa.03.2, %.lr.ph96.preheader ]
+  %6 = icmp eq ptr %.sroa.035.095.us, %i.d
+  br i1 %6, label %._crit_edge97, label %.thread56.a
+
+.thread56.a:                                      ; preds = %.lr.ph96.us
+  %7 = add i64 %.sroa.537.094.us, -1              ; 2 uses
+  %8 = ptrtoint ptr %.sroa.035.095.us to i64
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.035.095.us, i64 8
+  %10 = load ptr, ptr %9, align 8, !nonnull !12, !align !112, !noundef !12
+  %11 = load ptr, ptr %.sroa.035.095.us, align 8, !nonnull !12, !noundef !12
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.035.095.us, i64 32
+  %13 = getelementptr inbounds nuw i8, ptr %10, i64 80
+  %14 = load ptr, ptr %13, align 8, !invariant.load !12, !nonnull !12
+  tail call void %14(ptr noundef nonnull %11, i64 noundef %8) #24
+  %i.v = icmp eq i64 %7, 0
+  br i1 %i.v, label %._crit_edge97, label %.lr.ph96.us
+
+.lr.ph96.preheader.a:                             ; preds = %.lr.ph96.preheader
+  %15 = icmp eq i64 %i.c, 0
+  br i1 %15, label %._crit_edge97, label %bb.u
+
+.thread51:                                        ; preds = %.lr.ph181, %bb.b, %.split
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !12, !align !112, !noundef !12 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 8
@@ -664,7 +688,7 @@ bb.j:                                             ; preds = %.thread51, %bb.i
 
 .split.us.i:                                      ; preds = %._crit_edge, %bb.k
   %i.ao = load atomic i64, ptr %i.an acquire, align 8 ; 2 uses
-  switch i64 %i.ao, label %.thread56.a [
+  switch i64 %i.ao, label %.thread56 [
     i64 0, label %bb.k
     i64 1, label %.split9.us.loopexit13.i
     i64 2, label %.split9.us.loopexit23.i
@@ -676,7 +700,7 @@ bb.k:                                             ; preds = %.split.us.i
 
 .split.i:                                         ; preds = %._crit_edge, %bb.n
   %i.ap = load atomic i64, ptr %i.an acquire, align 8 ; 2 uses
-  switch i64 %i.ap, label %.thread56.a [
+  switch i64 %i.ap, label %.thread56 [
     i64 0, label %bb.l
     i64 1, label %.split9.us.loopexit13.i
     i64 2, label %.split9.us.loopexit23.i
@@ -699,7 +723,7 @@ bb.m:                                             ; preds = %bb.l
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ay, i64 3)
   %.sroa.7.0.i = select i1 %i.ax, i64 undef, i64 %i.ay
   %.sroa.03.0.i = select i1 %i.ax, i64 1, i64 %spec.select.i.i
-  br label %.thread56.a
+  br label %.thread56
 
 bb.n:                                             ; preds = %bb.l
   %i.az = tail call { i64, i32 } @_RNvXs3_NtCscAsMj0W7j8b_3std4timeNtB5_7InstantNtNtNtCshzWfHUSfYae_4core3ops5arith3Sub3sub(i64 noundef %.sroa.021.1.lcssa, i32 noundef range(i32 -1, 1000000000) %.sroa.624.1.lcssa, i64 noundef %i.ar, i32 noundef %i.as) ; 2 uses
@@ -709,10 +733,10 @@ bb.n:                                             ; preds = %bb.l
   br label %.split.i
 
 .split9.us.loopexit13.i:                          ; preds = %.split.i, %.split.us.i
-  br label %.thread56.a
+  br label %.thread56
 
 .split9.us.loopexit23.i:                          ; preds = %.split.i, %.split.us.i
-  br label %.thread56.a
+  br label %.thread56
 
 bb.o:                                             ; preds = %.lr.ph
   %.not47 = icmp eq i32 %.sroa.624.191, -1
@@ -733,75 +757,55 @@ bb.q:                                             ; preds = %bb.o
   %.2.i = select i1 %i.bg, i64 %.sroa.021.192, i64 %i.al
   br label %bb.p
 
-.lr.ph96:                                         ; preds = %.lr.ph96.preheader.a, %bb.t
-  %.sroa.035.095 = phi ptr [ %13, %bb.t ], [ %i.a, %.lr.ph96.preheader.a ] ; 5 uses
-  %.sroa.537.094 = phi i64 [ %6, %bb.t ], [ %.sroa.03.2, %.lr.ph96.preheader.a ]
-  %6 = add i64 %.sroa.537.094, -1                 ; 2 uses
-  %7 = icmp eq ptr %.sroa.035.095, %i.d
-  br i1 %7, label %._crit_edge97, label %bb.r
-
-._crit_edge97:                                    ; preds = %bb.t, %.lr.ph96, %.thread56.a
+._crit_edge97:                                    ; preds = %.thread56.a, %.lr.ph96.us, %.lr.ph96.preheader.a, %.thread56
   switch i64 %.sroa.011.3, label %default.unreachable [
-    i64 0, label %16
+    i64 0, label %bb.v
     i64 1, label %.loopexit
     i64 2, label %.loopexit
     i64 3, label %.preheader.preheader
   ], !prof !115
 
 .preheader.preheader:                             ; preds = %._crit_edge97
-  %8 = icmp ugt ptr %i.a, inttoptr (i64 2 to ptr)
-  %i.bh = icmp eq i64 %i.c, 0
-  br i1 %i.bh, label %.loopexit, label %.lr.ph183
+  %i.bh = icmp eq i64 %i.c, 0                     ; 2 uses
+  br i1 %i.g, label %bb.r, label %.lr.ph183, !prof !13
 
-bb.r:                                             ; preds = %.lr.ph96
-  br i1 %5, label %bb.t, label %bb.s, !prof !13
+bb.r:                                             ; preds = %.preheader.preheader
+  br i1 %i.bh, label %.loopexit, label %bb.t
 
-bb.s:                                             ; preds = %bb.r
+bb.s:                                             ; preds = %bb.t
+  %16 = getelementptr inbounds nuw i8, ptr %.sroa.040.0.us189, i64 32 ; 2 uses
+  %17 = icmp eq ptr %16, %i.d
+  br i1 %17, label %.loopexit, label %bb.t
+
+bb.t:                                             ; preds = %bb.r, %bb.s
+  %.sroa.040.0.us189 = phi ptr [ %16, %bb.s ], [ %i.a, %bb.r ] ; 3 uses
+  %18 = ptrtoint ptr %.sroa.040.0.us189 to i64
+  %i.bi = icmp eq i64 %.sroa.13.3, %18
+  br i1 %i.bi, label %.preheader, label %bb.s
+
+.preheader:                                       ; preds = %bb.t
+  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.040.0.us189, i64 16
+  %19 = load i64, ptr %i.bj, align 8, !noundef !12
+  br label %.loopexit
+
+.lr.ph183:                                        ; preds = %.preheader.preheader
+  br i1 %i.bh, label %.loopexit, label %bb.w
+
+bb.u:                                             ; preds = %.lr.ph96.preheader.a
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
   unreachable
 
-bb.t:                                             ; preds = %bb.r
-  %9 = ptrtoint ptr %.sroa.035.095 to i64
-  %10 = getelementptr inbounds nuw i8, ptr %.sroa.035.095, i64 8
-  %11 = load ptr, ptr %10, align 8, !nonnull !12, !align !112, !noundef !12
-  %12 = load ptr, ptr %.sroa.035.095, align 8, !nonnull !12, !noundef !12
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.035.095, i64 32
-  %14 = getelementptr inbounds nuw i8, ptr %11, i64 80
-  %15 = load ptr, ptr %14, align 8, !invariant.load !12, !nonnull !12
-  tail call void %15(ptr noundef nonnull %12, i64 noundef %9) #24
-  %i.bi = icmp eq i64 %6, 0
-  br i1 %i.bi, label %._crit_edge97, label %.lr.ph96
-
-16:                                               ; preds = %._crit_edge97
+bb.v:                                             ; preds = %._crit_edge97
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #25
   unreachable
 
-.preheader:                                       ; preds = %bb.v
-  %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.040.0182, i64 32 ; 2 uses
-  %17 = icmp eq ptr %i.bj, %i.d
-  br i1 %17, label %.loopexit, label %.lr.ph183
-
-.lr.ph183:                                        ; preds = %.preheader.preheader, %.preheader
-  %.sroa.040.0182 = phi ptr [ %i.bj, %.preheader ], [ %i.a, %.preheader.preheader ] ; 3 uses
-  br i1 %8, label %bb.v, label %bb.u, !prof !13
-
-bb.u:                                             ; preds = %.lr.ph183
+bb.w:                                             ; preds = %.lr.ph183
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @10, i64 noundef 25, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #25
   unreachable
 
-bb.v:                                             ; preds = %.lr.ph183
-  %18 = ptrtoint ptr %.sroa.040.0182 to i64
-  %19 = icmp eq i64 %.sroa.13.3, %18
-  br i1 %19, label %bb.w, label %.preheader
-
-bb.w:                                             ; preds = %bb.v
-  %20 = getelementptr inbounds nuw i8, ptr %.sroa.040.0182, i64 16
-  %21 = load i64, ptr %20, align 8, !noundef !12
-  br label %.loopexit
-
-.loopexit:                                        ; preds = %.preheader, %.preheader.preheader, %._crit_edge97, %._crit_edge97, %bb.w
-  %.sroa.3.0 = phi i64 [ %21, %bb.w ], [ undef, %._crit_edge97 ], [ undef, %._crit_edge97 ], [ undef, %.preheader.preheader ], [ undef, %.preheader ]
-  %.sroa.0.0 = phi i64 [ 1, %bb.w ], [ 0, %._crit_edge97 ], [ 0, %._crit_edge97 ], [ 0, %.preheader.preheader ], [ 0, %.preheader ]
+.loopexit:                                        ; preds = %bb.s, %bb.r, %.lr.ph183, %._crit_edge97, %._crit_edge97, %.preheader
+  %.sroa.3.0 = phi i64 [ %19, %.preheader ], [ undef, %._crit_edge97 ], [ undef, %._crit_edge97 ], [ undef, %.lr.ph183 ], [ undef, %bb.r ], [ undef, %bb.s ]
+  %.sroa.0.0 = phi i64 [ 1, %.preheader ], [ 0, %._crit_edge97 ], [ 0, %._crit_edge97 ], [ 0, %.lr.ph183 ], [ 0, %bb.r ], [ 0, %bb.s ]
   %i.bk = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.bl = insertvalue { i64, i64 } %i.bk, i64 %.sroa.3.0, 1
   ret { i64, i64 } %i.bl

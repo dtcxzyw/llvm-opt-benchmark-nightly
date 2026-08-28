@@ -204,11 +204,9 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i.i:    ; preds = %bb.cc
 
 .lr.ph.i.i.a:                                     ; preds = %._crit_edge.i.i.a, %.preheader.lr.ph.i.i
   %indvars.iv114.in = phi i32 [ %indvars.iv114, %._crit_edge.i.i.a ], [ %i.iq, %.preheader.lr.ph.i.i ] ; 2 uses
-  %.01825.i.i = phi i64 [ %indvars.iv.next.i.i.lcssa, %._crit_edge.i.i.a ], [ 0, %.preheader.lr.ph.i.i ] ; 2 uses
+  %.01825.i.i = phi i64 [ %indvars.iv.next.i.i.lcssa, %._crit_edge.i.i.a ], [ 0, %.preheader.lr.ph.i.i ] ; 4 uses
   %.01924.i.i = phi i32 [ %i.je, %._crit_edge.i.i.a ], [ 0, %.preheader.lr.ph.i.i ] ; 6 uses
   %indvars.iv114 = add i32 %indvars.iv114.in, 1   ; 2 uses
-  %sext.i.i = shl i64 %.01825.i.i, 32
-  %116 = ashr exact i64 %sext.i.i, 32             ; 3 uses
   %i.iu = trunc i64 %.01825.i.i to i32
   %i.iv = add i32 %indvars.iv114, %i.iu
   %i.iw = sub nsw i32 %i.iq, %.01924.i.i
@@ -221,14 +219,14 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i.i:    ; preds = %bb.cc
   %i.iz = uitofp nneg i32 %i.iy to double
   %i.ja = call noundef double @pow(double noundef %i.is, double noundef %i.iz) #31
   %i.jb = fptrunc double %i.ja to float
-  %i.jc = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %116
+  %i.jc = getelementptr inbounds nuw [4 x i8], ptr %i.io, i64 %.01825.i.i
   store float %i.jb, ptr %i.jc, align 4, !tbaa !123
-  %indvars.iv.next.i.i.prol = add nsw i64 %116, 1 ; 2 uses
+  %indvars.iv.next.i.i.prol = add i64 %.01825.i.i, 1 ; 2 uses
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i.i.a
   %indvars.iv.next.i.i.lcssa.unr = phi i64 [ poison, %.lr.ph.i.i.a ], [ %indvars.iv.next.i.i.prol, %.prol.loopexit.unr-lcssa ]
-  %indvars.iv.i.i.unr = phi i64 [ %116, %.lr.ph.i.i.a ], [ %indvars.iv.next.i.i.prol, %.prol.loopexit.unr-lcssa ]
+  %indvars.iv.i.i.unr = phi i64 [ %.01825.i.i, %.lr.ph.i.i.a ], [ %indvars.iv.next.i.i.prol, %.prol.loopexit.unr-lcssa ]
   %.022.i.i.unr = phi i32 [ %i.iq, %.lr.ph.i.i.a ], [ %i.it, %.prol.loopexit.unr-lcssa ]
   %i.jd = icmp eq i32 %indvars.iv114.in, 0
   br i1 %i.jd, label %._crit_edge.i.i.a, label %.lr.ph.i.i.new
@@ -259,7 +257,7 @@ _ZSt8_DestroyIPffEvT_S1_RSaIT0_E.exit.i.i.i.i:    ; preds = %bb.cc
   %i.js = getelementptr i8, ptr %i.jr, i64 4
   store float %i.jq, ptr %i.js, align 4, !tbaa !123
   %i.jt = add nsw i32 %.022.i.i, -2
-  %indvars.iv.next.i.i.1 = add nsw i64 %indvars.iv.i.i, 2 ; 3 uses
+  %indvars.iv.next.i.i.1 = add i64 %indvars.iv.i.i, 2 ; 3 uses
   %lftr.wideiv.1 = trunc i64 %indvars.iv.next.i.i.1 to i32
   %exitcond116.1 = icmp eq i32 %i.iv, %lftr.wideiv.1
   br i1 %exitcond116.1, label %._crit_edge.i.i.a, label %.lr.ph.i.i.new, !llvm.loop !126

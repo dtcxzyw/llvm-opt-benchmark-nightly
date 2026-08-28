@@ -205,8 +205,8 @@ bb.a:
   %.sroa.7111.0.extract.shift = lshr i64 %3, 32
   %.sroa.7111.0.extract.trunc = trunc nuw i64 %.sroa.7111.0.extract.shift to i32 ; 4 uses
   %.sroa.13.8.extract.trunc = trunc i64 %4 to i32 ; 6 uses
-  %.sroa.28.8.extract.shift = lshr i64 %4, 32     ; 2 uses
-  %.sroa.28.8.extract.trunc = trunc nuw i64 %.sroa.28.8.extract.shift to i32 ; 5 uses
+  %.sroa.28.8.extract.shift = lshr i64 %4, 32
+  %.sroa.28.8.extract.trunc = trunc nuw i64 %.sroa.28.8.extract.shift to i32 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !47
@@ -609,9 +609,11 @@ bb.aw:                                            ; preds = %bb.aq, %bb.ao
 .preheader.lr.ph:                                 ; preds = %.preheader269
   %i.ko = icmp sgt i32 %.sroa.13.8.extract.trunc, 0
   %i.kp = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %26 = sub i32 %.sroa.7111.0.extract.trunc, %.sroa.7.0.copyload
   %i.kq = getelementptr inbounds nuw i8, ptr %14, i64 4 ; 2 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %14, i64 24 ; 2 uses
   %i.ks = getelementptr inbounds nuw i8, ptr %14, i64 128 ; 2 uses
+  %27 = sub i32 %.sroa.7111.0.extract.trunc, %.sroa.790.0.copyload
   %i.kt = getelementptr inbounds nuw i8, ptr %13, i64 4 ; 2 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %13, i64 24 ; 2 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %13, i64 128 ; 2 uses
@@ -619,29 +621,30 @@ bb.aw:                                            ; preds = %bb.aq, %bb.ao
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.kw = sub i32 %.sroa.0105.0.extract.trunc, %.sroa.087.0.copyload
-  %26 = sub i32 %.sroa.7111.0.extract.trunc, %.sroa.790.0.copyload
   %i.kx = sub i32 %.sroa.0105.0.extract.trunc, %.sroa.0.0.copyload
-  %27 = sub i32 %.sroa.7111.0.extract.trunc, %.sroa.7.0.copyload
   %i.ky = mul i32 %.sroa.13.8.extract.trunc, 10
   %i.kz = add i32 %i.ky, 200
-  %28 = sext i32 %i.kw to i64                     ; 2 uses
-  %29 = sext i32 %i.kx to i64                     ; 2 uses
-  %30 = zext nneg i32 %i.z to i64
-  %i.la = sext i32 %26 to i64
-  %i.lb = sext i32 %27 to i64
+  %i.la = sext i32 %i.kw to i64                   ; 2 uses
+  %i.lb = sext i32 %i.kx to i64                   ; 2 uses
   %wide.trip.count = and i64 %4, 2147483647
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %._crit_edge276
-  %indvars.iv292 = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next293, %._crit_edge276 ] ; 4 uses
   %indvars.iv286 = phi i32 [ %i.kz, %.preheader.preheader ], [ %indvars.iv.next287, %._crit_edge276 ] ; 2 uses
-  %31 = add nuw nsw i64 %indvars.iv292, 10
-  %32 = mul nuw nsw i64 %31, %30
-  %33 = add nsw i64 %indvars.iv292, %i.lb         ; 2 uses
-  %34 = add nsw i64 %indvars.iv292, %i.la         ; 2 uses
-  %invariant.op = add nuw nsw i64 %32, 10
+  %.0142277 = phi i32 [ 0, %.preheader.preheader ], [ %34, %._crit_edge276 ] ; 4 uses
+  %28 = add nsw i32 %26, %.0142277
+  %29 = sext i32 %28 to i64                       ; 2 uses
+  %30 = add nsw i32 %27, %.0142277
+  %31 = sext i32 %30 to i64                       ; 2 uses
   %i.lc = icmp sgt i32 %indvars.iv286, -11
-  br label %35
+  br i1 %i.lc, label %.preheader.split, label %bb.ba
+
+.preheader.split:                                 ; preds = %.preheader
+  %32 = add nuw nsw i32 %.0142277, 10
+  %33 = mul nuw nsw i32 %32, %i.z
+  %narrow = add nuw i32 %33, 10
+  %invariant.op = zext i32 %narrow to i64
+  br label %bb.az
 
 ._crit_edge278.split:                             ; preds = %._crit_edge276, %.preheader.lr.ph, %.preheader269
   %i.ld = getelementptr inbounds nuw i8, ptr %23, i64 24
@@ -709,17 +712,14 @@ _ZN2cv6detail7GCGraphIfED2Ev.exit:                ; preds = %_ZNSt6vectorIN2cv6d
   ret void
 
 ._crit_edge276:                                   ; preds = %bb.bj
-  %indvars.iv.next293 = add nuw nsw i64 %indvars.iv292, 1 ; 2 uses
+  %34 = add nuw nsw i32 %.0142277, 1              ; 2 uses
+  %35 = icmp slt i32 %34, %.sroa.28.8.extract.trunc
   %indvars.iv.next287 = add i32 %indvars.iv286, %i.z
-  %exitcond296.not = icmp eq i64 %indvars.iv.next293, %.sroa.28.8.extract.shift
-  br i1 %exitcond296.not, label %._crit_edge278.split, label %.preheader, !llvm.loop !459
+  br i1 %35, label %.preheader, label %._crit_edge278.split, !llvm.loop !459
 
-35:                                               ; preds = %.preheader, %bb.bj
-  %indvars.iv288 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next289, %bb.bj ] ; 5 uses
+bb.az:                                            ; preds = %.preheader.split, %bb.bj
+  %indvars.iv288 = phi i64 [ 0, %.preheader.split ], [ %indvars.iv.next289, %bb.bj ] ; 5 uses
   %.reass = add nuw nsw i64 %indvars.iv288, %invariant.op ; 2 uses
-  br i1 %i.lc, label %bb.az, label %bb.ba
-
-bb.az:                                            ; preds = %35
   %i.lq = load ptr, ptr %i.kp, align 8, !tbaa !413
   %i.lr = load ptr, ptr %23, align 8, !tbaa !418  ; 2 uses
   %i.ls = ptrtoint ptr %i.lq to i64
@@ -730,7 +730,7 @@ bb.az:                                            ; preds = %35
   %i.lw = icmp slt i64 %.reass, %i.lv
   br i1 %i.lw, label %bb.bd, label %bb.ba
 
-bb.ba:                                            ; preds = %bb.az, %35
+bb.ba:                                            ; preds = %.preheader, %bb.az
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull @.str.29, ptr noundef nonnull align 1 dereferenceable(1) %6)
@@ -774,11 +774,11 @@ bb.be:                                            ; preds = %bb.bd
   %i.mi = icmp slt i32 %i.mh, 2
   %i.mj = load ptr, ptr %i.ku, align 8, !tbaa !88
   %i.mk = load i64, ptr %i.kv, align 8
-  %i.ml = mul i64 %i.mk, %34
+  %i.ml = mul i64 %i.mk, %31
   %.sink.idx.i257 = select i1 %i.mi, i64 0, i64 %i.ml
   %.sink.i258 = getelementptr inbounds nuw i8, ptr %i.mj, i64 %.sink.idx.i257
   %i.mm = getelementptr i8, ptr %.sink.i258, i64 %indvars.iv288
-  %i.mn = getelementptr i8, ptr %i.mm, i64 %28
+  %i.mn = getelementptr i8, ptr %i.mm, i64 %i.la
   %i.mo = load i8, ptr %i.mn, align 1, !tbaa !34
   %.not171 = icmp eq i8 %i.mo, 0
   br i1 %.not171, label %bb.bj, label %bb.bf
@@ -788,7 +788,7 @@ bb.bf:                                            ; preds = %bb.be
   %i.mq = icmp slt i32 %i.mp, 2
   %i.mr = load ptr, ptr %i.kr, align 8, !tbaa !88
   %i.ms = load i64, ptr %i.ks, align 8
-  %i.mt = mul i64 %i.ms, %33
+  %i.mt = mul i64 %i.ms, %29
   %.sink.idx.i259 = select i1 %i.mq, i64 0, i64 %i.mt
   %.sink.i260 = getelementptr inbounds nuw i8, ptr %i.mr, i64 %.sink.idx.i259
   br label %.sink.split
@@ -803,11 +803,11 @@ bb.bh:                                            ; preds = %bb.bd
   %i.mw = icmp slt i32 %i.mv, 2
   %i.mx = load ptr, ptr %i.kr, align 8, !tbaa !88
   %i.my = load i64, ptr %i.ks, align 8
-  %i.mz = mul i64 %i.my, %33
+  %i.mz = mul i64 %i.my, %29
   %.sink.idx.i261 = select i1 %i.mw, i64 0, i64 %i.mz
   %.sink.i262 = getelementptr inbounds nuw i8, ptr %i.mx, i64 %.sink.idx.i261
   %i.na = getelementptr i8, ptr %.sink.i262, i64 %indvars.iv288
-  %i.nb = getelementptr i8, ptr %i.na, i64 %29
+  %i.nb = getelementptr i8, ptr %i.na, i64 %i.lb
   %i.nc = load i8, ptr %i.nb, align 1, !tbaa !34
   %.not = icmp eq i8 %i.nc, 0
   br i1 %.not, label %bb.bj, label %bb.bi
@@ -817,14 +817,14 @@ bb.bi:                                            ; preds = %bb.bh
   %i.ne = icmp slt i32 %i.nd, 2
   %i.nf = load ptr, ptr %i.ku, align 8, !tbaa !88
   %i.ng = load i64, ptr %i.kv, align 8
-  %i.nh = mul i64 %i.ng, %34
+  %i.nh = mul i64 %i.ng, %31
   %.sink.idx.i263 = select i1 %i.ne, i64 0, i64 %i.nh
   %.sink.i264 = getelementptr inbounds nuw i8, ptr %i.nf, i64 %.sink.idx.i263
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.bi, %bb.bf
   %.sink.i260.sink = phi ptr [ %.sink.i260, %bb.bf ], [ %.sink.i264, %bb.bi ]
-  %.sink324 = phi i64 [ %29, %bb.bf ], [ %28, %bb.bi ]
+  %.sink324 = phi i64 [ %i.lb, %bb.bf ], [ %i.la, %bb.bi ]
   %i.ni = getelementptr i8, ptr %.sink.i260.sink, i64 %indvars.iv288
   %i.nj = getelementptr i8, ptr %i.ni, i64 %.sink324
   store i8 0, ptr %i.nj, align 1, !tbaa !34
@@ -833,7 +833,7 @@ bb.bi:                                            ; preds = %bb.bh
 bb.bj:                                            ; preds = %.sink.split, %bb.be, %bb.bh
   %indvars.iv.next289 = add nuw nsw i64 %indvars.iv288, 1 ; 2 uses
   %exitcond291.not = icmp eq i64 %indvars.iv.next289, %wide.trip.count
-  br i1 %exitcond291.not, label %._crit_edge276, label %35, !llvm.loop !461
+  br i1 %exitcond291.not, label %._crit_edge276, label %bb.az, !llvm.loop !461
 
 .body255:                                         ; preds = %bb.bg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.ap
   %.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.ke, %bb.ap ], [ %i.mu, %bb.bg ], [ %i.lx, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ]

@@ -205,13 +205,13 @@ sqlite3VdbeGetOp.exit.lr.ph:                      ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 120
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %4 = zext nneg i32 %1 to i64
-  %5 = icmp sgt i32 %1, -1
-  tail call void @llvm.assume(i1 %5)
+  %4 = icmp sgt i32 %1, -1
+  %5 = zext nneg i32 %1 to i64
+  tail call void @llvm.assume(i1 %4)
   br label %sqlite3VdbeGetOp.exit
 
 sqlite3VdbeGetOp.exit:                            ; preds = %sqlite3VdbeGetOp.exit.lr.ph, %.critedge
-  %indvars.iv = phi i64 [ %4, %sqlite3VdbeGetOp.exit.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 2 uses
+  %indvars.iv = phi i64 [ %5, %sqlite3VdbeGetOp.exit.lr.ph ], [ %indvars.iv.next, %.critedge ] ; 2 uses
   %i.h = getelementptr inbounds nuw [24 x i8], ptr %i.d, i64 %indvars.iv ; 4 uses
   %i.i = load i8, ptr %i.h, align 8, !tbaa !137
   switch i8 %i.i, label %.critedge [
