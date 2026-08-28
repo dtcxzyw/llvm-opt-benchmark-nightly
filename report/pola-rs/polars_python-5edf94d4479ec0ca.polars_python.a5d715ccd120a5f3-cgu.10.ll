@@ -205,7 +205,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtNtNtCsh8eZTKRCwoO_3std4sync4mpmc5
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24, !dbg !90649
   %i.h = xor i64 %2, -1, !dbg !90651
   %i.i = add nsw i64 %i.b, %i.h, !dbg !90651
-  %i.j = mul nsw i64 %i.i, 24, !dbg !90652
+  %i.j = mul nuw nsw i64 %i.i, 24, !dbg !90652
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !dbg !90652, !noalias !90655
   %i.k = add nsw i64 %i.b, -1, !dbg !90656        ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !dbg !90657, !alias.scope !90616, !noalias !90625

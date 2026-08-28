@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.al, %.lr.ph139.i
   %i.cr = add nuw nsw i64 %.sroa.09.0138.i, 1     ; 2 uses
   %i.cs = xor i64 %.sroa.09.0138.i, -1
   %i.ct = add nsw i64 %i.cs, %i.cg                ; 2 uses
-  %i.cu = mul nsw i64 %i.ct, %i.bw                ; 4 uses
+  %i.cu = mul nuw nsw i64 %i.ct, %i.bw            ; 4 uses
   %i.cv = icmp ugt i64 %i.cu, %1
   br i1 %i.cv, label %.invoke.i, label %bb.x, !prof !4
 
@@ -328,7 +328,7 @@ bb.ad:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1w_E4nextCsksn9slvsHfS_10image_webp.exit.thread.i: ; preds = %bb.ao, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1w_E4nextCsksn9slvsHfS_10image_webp.exit.i, %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !373
-  %i.du = mul nsw i64 %i.ct, %i.bs                ; 4 uses
+  %i.du = mul nuw nsw i64 %i.ct, %i.bs            ; 4 uses
   %i.dv = icmp ugt i64 %i.du, %1
   br i1 %i.dv, label %.invoke.i, label %bb.ae, !prof !4
 
@@ -645,7 +645,7 @@ bb.be:                                            ; preds = %bb.bv, %.lr.ph140.i
   %i.gw = add nuw nsw i64 %.sroa.011.0139.i, 1    ; 2 uses
   %i.gx = xor i64 %.sroa.011.0139.i, -1
   %i.gy = add nsw i64 %i.gx, %i.gl                ; 2 uses
-  %i.gz = mul nsw i64 %i.gy, %i.gb                ; 4 uses
+  %i.gz = mul nuw nsw i64 %i.gy, %i.gb            ; 4 uses
   %i.ha = icmp ugt i64 %i.gz, %1
   br i1 %i.ha, label %.invoke.i29, label %bb.bh, !prof !4
 
@@ -768,7 +768,7 @@ bb.bn:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1w_E4nextCsksn9slvsHfS_10image_webp.exit.thread.i25: ; preds = %bb.by, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1w_E4nextCsksn9slvsHfS_10image_webp.exit.i41, %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !405
-  %i.hz = mul nsw i64 %i.gy, %i.fx                ; 4 uses
+  %i.hz = mul nuw nsw i64 %i.gy, %i.fx            ; 4 uses
   %i.ia = icmp ugt i64 %i.hz, %1
   br i1 %i.ia, label %.invoke.i29, label %bb.bo, !prof !4
 
@@ -1089,7 +1089,7 @@ bb.co:                                            ; preds = %bb.df, %.lr.ph139.i
   %i.ld = add nuw nsw i64 %.sroa.09.0138.i70, 1   ; 2 uses
   %i.le = xor i64 %.sroa.09.0138.i70, -1
   %i.lf = add nsw i64 %i.le, %i.ks                ; 2 uses
-  %i.lg = mul nsw i64 %i.lf, %i.ki                ; 4 uses
+  %i.lg = mul nuw nsw i64 %i.lf, %i.ki            ; 4 uses
   %i.lh = icmp ugt i64 %i.lg, %1
   br i1 %i.lh, label %.invoke.i83, label %bb.cr, !prof !4
 
@@ -1212,7 +1212,7 @@ bb.cx:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1w_E4nextCsksn9slvsHfS_10image_webp.exit.thread.i76: ; preds = %bb.di, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter11ChunksExacthEINtBZ_7IterMuthEEINtB5_7ZipImplBW_B1w_E4nextCsksn9slvsHfS_10image_webp.exit.i100, %bb.cw
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !434
-  %i.mg = mul nsw i64 %i.lf, %i.ke                ; 4 uses
+  %i.mg = mul nuw nsw i64 %i.lf, %i.ke            ; 4 uses
   %i.mh = icmp ugt i64 %i.mg, %1
   br i1 %i.mh, label %.invoke.i83, label %bb.cy, !prof !4
 

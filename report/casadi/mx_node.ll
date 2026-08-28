@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.a, label %bb.c, label %bb.d, !prof !304
 
 bb.c:                                             ; preds = %bb.b
-  %.idx = shl nsw i64 %2, 3
+  %.idx = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %1, ptr align 8 %0, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKyPyET0_T_S4_S3_.exit
 
@@ -608,7 +608,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -1011,7 +1011,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -1414,7 +1414,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -1817,7 +1817,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -2220,7 +2220,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -2623,7 +2623,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -3026,7 +3026,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -3429,7 +3429,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -3832,7 +3832,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -4235,7 +4235,7 @@ _ZNK6casadi6MXNode3depEx.exit:                    ; preds = %bb.b
   br i1 %i.j, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit
-  %.idx = shl nsw i64 %i.h, 3
+  %.idx = shl nuw nsw i64 %i.h, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.i, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -4638,7 +4638,7 @@ _ZNK6casadi6MXNode3depEx.exit.i:                  ; preds = %bb.b
   br i1 %i.k, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit.i
-  %.idx.i = shl nsw i64 %i.j, 3
+  %.idx.i = shl nuw nsw i64 %i.j, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx.i, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit.i
 
@@ -5041,7 +5041,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.d, !prof !304
 
 bb.c:                                             ; preds = %bb.b
-  %.idx = shl nsw i64 %i.i, 3
+  %.idx = shl nuw nsw i64 %i.i, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKyPyET0_T_S4_S3_.exit
 
@@ -5444,7 +5444,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %bb.e, label %bb.f, !prof !304
 
 bb.e:                                             ; preds = %bb.d
-  %.idx.neg = shl nsw i64 %2, 3
+  %.idx.neg = shl nuw nsw i64 %2, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr nonnull align 8 %i.o, i64 %.idx.neg, i1 false)
   %.pre97 = load ptr, ptr %i.c, align 8, !tbaa !300
   br label %_ZSt22__uninitialized_move_aIPxS0_SaIxEET0_T_S3_S2_RT1_.exit
@@ -5847,7 +5847,7 @@ _ZNK6casadi6MXNode3depEx.exit.i:                  ; preds = %bb.b
   br i1 %i.k, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit.i
-  %.idx.i = shl nsw i64 %i.j, 3
+  %.idx.i = shl nuw nsw i64 %i.j, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx.i, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit.i
 
@@ -6022,7 +6022,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.d, !prof !304
 
 bb.c:                                             ; preds = %bb.b
-  %.idx = shl nsw i64 %i.i, 3
+  %.idx = shl nuw nsw i64 %i.i, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKyPyET0_T_S4_S3_.exit
 
@@ -6425,7 +6425,7 @@ _ZNK6casadi6MXNode3depEx.exit.i:                  ; preds = %bb.b
   br i1 %i.k, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit.i
-  %.idx.i = shl nsw i64 %i.j, 3
+  %.idx.i = shl nuw nsw i64 %i.j, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx.i, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit.i
 
@@ -6559,7 +6559,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.d, !prof !304
 
 bb.c:                                             ; preds = %bb.b
-  %.idx = shl nsw i64 %i.i, 3
+  %.idx = shl nuw nsw i64 %i.i, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKyPyET0_T_S4_S3_.exit
 
@@ -6962,7 +6962,7 @@ _ZNK6casadi6MXNode3depEx.exit.i:                  ; preds = %bb.b
   br i1 %i.k, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit.i
-  %.idx.i = shl nsw i64 %i.j, 3
+  %.idx.i = shl nuw nsw i64 %i.j, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx.i, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit.i
 
@@ -7365,7 +7365,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.d, !prof !304
 
 bb.c:                                             ; preds = %bb.b
-  %.idx = shl nsw i64 %i.i, 3
+  %.idx = shl nuw nsw i64 %i.i, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKyPyET0_T_S4_S3_.exit
 
@@ -7768,7 +7768,7 @@ _ZNK6casadi6MXNode3depEx.exit.i:                  ; preds = %bb.b
   br i1 %i.k, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit.i
-  %.idx.i = shl nsw i64 %i.j, 3
+  %.idx.i = shl nuw nsw i64 %i.j, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx.i, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit.i
 
@@ -7945,7 +7945,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.d, !prof !304
 
 bb.c:                                             ; preds = %bb.b
-  %.idx = shl nsw i64 %i.i, 3
+  %.idx = shl nuw nsw i64 %i.i, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKyPyET0_T_S4_S3_.exit
 
@@ -8348,7 +8348,7 @@ _ZNK6casadi6MXNode3depEx.exit.i:                  ; preds = %bb.b
   br i1 %i.k, label %bb.d, label %bb.e, !prof !304
 
 bb.d:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit.i
-  %.idx.i = shl nsw i64 %i.j, 3
+  %.idx.i = shl nuw nsw i64 %i.j, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx.i, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit.i
 
@@ -8484,7 +8484,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.d, !prof !304
 
 bb.c:                                             ; preds = %bb.b
-  %.idx = shl nsw i64 %i.i, 3
+  %.idx = shl nuw nsw i64 %i.i, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.d, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKyPyET0_T_S4_S3_.exit
 
@@ -8887,7 +8887,7 @@ _ZNK6casadi6MXNode3depEx.exit28:                  ; preds = %bb.d
   br i1 %i.z, label %bb.f, label %bb.g, !prof !304
 
 bb.f:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit28
-  %.idx = shl nsw i64 %i.y, 3
+  %.idx = shl nuw nsw i64 %i.y, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.f, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -9290,7 +9290,7 @@ _ZNK6casadi6MXNode3depEx.exit46:                  ; preds = %bb.d
   br i1 %i.z, label %bb.f, label %bb.g, !prof !304
 
 bb.f:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit46
-  %.idx = shl nsw i64 %i.y, 3
+  %.idx = shl nuw nsw i64 %i.y, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.f, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -9693,7 +9693,7 @@ _ZNK6casadi6MXNode3depEx.exit33:                  ; preds = %bb.d
   br i1 %i.z, label %bb.f, label %bb.g, !prof !304
 
 bb.f:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit33
-  %.idx = shl nsw i64 %i.y, 3
+  %.idx = shl nuw nsw i64 %i.y, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.f, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -10096,7 +10096,7 @@ _ZNK6casadi6MXNode3depEx.exit52:                  ; preds = %bb.e
   br i1 %i.ak, label %bb.g, label %bb.h, !prof !304
 
 bb.g:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit52
-  %.idx = shl nsw i64 %i.aj, 3
+  %.idx = shl nuw nsw i64 %i.aj, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.h, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -10499,7 +10499,7 @@ _ZNK6casadi6MXNode3depEx.exit28:                  ; preds = %bb.d
   br i1 %i.z, label %bb.f, label %bb.g, !prof !304
 
 bb.f:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit28
-  %.idx = shl nsw i64 %i.y, 3
+  %.idx = shl nuw nsw i64 %i.y, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.f, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -10902,7 +10902,7 @@ _ZNK6casadi6MXNode3depEx.exit46:                  ; preds = %bb.d
   br i1 %i.z, label %bb.f, label %bb.g, !prof !304
 
 bb.f:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit46
-  %.idx = shl nsw i64 %i.y, 3
+  %.idx = shl nuw nsw i64 %i.y, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.f, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -11305,7 +11305,7 @@ _ZNK6casadi6MXNode3depEx.exit33:                  ; preds = %bb.d
   br i1 %i.z, label %bb.f, label %bb.g, !prof !304
 
 bb.f:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit33
-  %.idx = shl nsw i64 %i.y, 3
+  %.idx = shl nuw nsw i64 %i.y, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.f, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 
@@ -11708,7 +11708,7 @@ _ZNK6casadi6MXNode3depEx.exit52:                  ; preds = %bb.e
   br i1 %i.ak, label %bb.g, label %bb.h, !prof !304
 
 bb.g:                                             ; preds = %_ZNK6casadi6MXNode3depEx.exit52
-  %.idx = shl nsw i64 %i.aj, 3
+  %.idx = shl nuw nsw i64 %i.aj, 3
   tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %i.h, ptr align 8 %i.a, i64 %.idx, i1 false)
   br label %_ZSt4copyIPKdPdET0_T_S4_S3_.exit
 

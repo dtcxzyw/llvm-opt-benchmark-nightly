@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ab
   %i.o = phi i32 [ %i.j, %.lr.ph ], [ %i.hl, %bb.ab ]
   %i.p = phi i32 [ %i.k, %.lr.ph ], [ %i.hl, %bb.ab ] ; 13 uses
   %.03659 = phi i32 [ 0, %.lr.ph ], [ %i.hm, %bb.ab ] ; 6 uses
-  %i.q = mul nsw i32 %i.p, %.03763
+  %i.q = mul nuw nsw i32 %i.p, %.03763
   %i.r = add nsw i32 %i.q, %.03659
   %i.s = load ptr, ptr %0, align 8, !tbaa !85
   %i.t = sext i32 %i.r to i64                     ; 5 uses
@@ -607,7 +607,7 @@ first_pass.exit:                                  ; preds = %compare_neighbor.ex
 
 .preheader.us.i19:                                ; preds = %._crit_edge40.us.i25.loopexit, %.preheader.us.preheader.i17
   %indvars.iv54.i = phi i64 [ %i.dm, %.preheader.us.preheader.i17 ], [ %indvars.iv.next55.i, %._crit_edge40.us.i25.loopexit ] ; 3 uses
-  %i.dn = mul nsw i64 %indvars.iv54.i, %i.dh
+  %i.dn = mul nuw nsw i64 %indvars.iv54.i, %i.dh
   %invariant.gep78.i = getelementptr [32 x i8], ptr %i.dc, i64 %i.dn ; 2 uses
   br label %bb.w
 
@@ -835,7 +835,7 @@ compare_neighbor.exit35.us.i27:                   ; preds = %bb.al, %bb.ak, %bb.
 
 .preheader.i8:                                    ; preds = %compare_neighbor.exit35.i13, %.preheader.preheader.i7
   %indvars.iv45.i9 = phi i64 [ %i.gn, %.preheader.preheader.i7 ], [ %indvars.iv.next46.i16, %compare_neighbor.exit35.i13 ] ; 3 uses
-  %i.go = mul nsw i64 %indvars.iv45.i9, %i.dh
+  %i.go = mul nuw nsw i64 %indvars.iv45.i9, %i.dh
   %gep80 = getelementptr [32 x i8], ptr %invariant.gep79, i64 %i.go ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
   %i.gp = load i32, ptr %gep80, align 8, !tbaa !117 ; 2 uses
@@ -1238,7 +1238,7 @@ get_control_box.exit.i:                           ; preds = %bb.r, %.lr.ph.i12
   %i.et = icmp sgt i64 %indvars.iv262.i, -1
   %.not170.us.i = icmp slt i64 %indvars.iv262.i, %i.ce
   %or.cond174.us.i = select i1 %i.et, i1 %.not170.us.i, i1 false
-  %i.eu = shl nsw i64 %indvars.iv262.i, 6
+  %i.eu = shl nuw nsw i64 %indvars.iv262.i, 6
   %i.ev = or disjoint i64 %i.eu, 32               ; 5 uses
   %i.ew = shl nuw nsw i64 %i.ev, 10               ; 2 uses
   %or.cond174.fr.us.i = freeze i1 %or.cond174.us.i

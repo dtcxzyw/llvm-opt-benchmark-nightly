@@ -201,13 +201,13 @@ bb.b:                                             ; preds = %bb.o, %.lr.ph99.i
   %narrow = add nuw nsw i32 %i.h, 1
   %i.i = zext nneg i32 %narrow to i64
   %i.j = trunc nuw nsw i64 %indvars.iv110.i to i32
-  %i.k = shl nsw i32 %i.j, 4                      ; 4 uses
+  %i.k = shl nuw nsw i32 %i.j, 4                  ; 4 uses
   %i.l = call i32 (ptr, i64, ptr, ...) @BIO_snprintf(ptr noundef nonnull %i.a, i64 noundef 289, ptr noundef nonnull @.str, i32 noundef 0, ptr noundef nonnull @.str.1, i32 noundef %i.k) #6 ; 2 uses
   %i.m = icmp slt i32 %i.l, 0
   br i1 %i.m, label %BIO_dump_indent_cb.exit, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.b
-  %i.n = zext i32 %i.k to i64
+  %i.n = zext nneg i32 %i.k to i64
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 %i.n ; 2 uses
   br label %bb.c
 

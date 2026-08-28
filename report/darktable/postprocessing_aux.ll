@@ -205,7 +205,7 @@ vec.epilog.middle.block142:                       ; preds = %vec.epilog.vector.b
 
 iter.check196:                                    ; preds = %.preheader
   %i.eq = shl i32 %4, 1                           ; 3 uses
-  %.neg52 = add i32 %i.eq, -2                     ; 5 uses
+  %.neg52 = add nsw i32 %i.eq, -2                 ; 5 uses
   %i.er = sext i32 %.1.lcssa to i64               ; 11 uses
   %i.es = sext i32 %3 to i64                      ; 6 uses
   %i.et = sext i32 %5 to i64                      ; 6 uses

@@ -204,7 +204,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecINtCse4dvU5uQ85g_8indexmap6BucketNtNt
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 80, !dbg !39891
   %i.h = xor i64 %2, -1, !dbg !39893
   %i.i = add nsw i64 %i.b, %i.h, !dbg !39893
-  %i.j = mul nsw i64 %i.i, 80, !dbg !39894
+  %i.j = mul nuw nsw i64 %i.i, 80, !dbg !39894
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 16 %i.f, ptr nonnull align 16 %i.g, i64 %i.j, i1 false), !dbg !39894, !noalias !39897
   %i.k = add nsw i64 %i.b, -1, !dbg !39898        ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !dbg !39899, !alias.scope !39858, !noalias !39867
@@ -607,7 +607,7 @@ _RNvMs_NtCsgZ49sUHp3tW_5alloc3vecINtB4_3VecNtNtCslovz2ii29zg_17crossbeam_channel
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24, !dbg !40921
   %i.h = xor i64 %2, -1, !dbg !40923
   %i.i = add nsw i64 %i.b, %i.h, !dbg !40923
-  %i.j = mul nsw i64 %i.i, 24, !dbg !40924
+  %i.j = mul nuw nsw i64 %i.i, 24, !dbg !40924
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.g, i64 %i.j, i1 false), !dbg !40924, !noalias !40927
   %i.k = add nsw i64 %i.b, -1, !dbg !40928        ; 2 uses
   store i64 %i.k, ptr %i.a, align 8, !dbg !40929, !alias.scope !40888, !noalias !40897
@@ -822,7 +822,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 16, !dbg !41101
   %i.k = xor i64 %1, -1, !dbg !41103
   %i.l = add nsw i64 %i.b, %i.k, !dbg !41103
-  %i.m = shl nsw i64 %i.l, 4, !dbg !41104
+  %i.m = shl nuw nsw i64 %i.l, 4, !dbg !41104
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.f, ptr nonnull align 8 %i.j, i64 %i.m, i1 false), !dbg !41104, !noalias !41100
   %i.n = add nsw i64 %i.b, -1, !dbg !41107
   store i64 %i.n, ptr %i.a, align 8, !dbg !41108, !alias.scope !41067, !noalias !41076

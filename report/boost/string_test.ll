@@ -205,8 +205,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.ao, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %._crit_edge
-  %.idx17 = shl nsw i64 %.0.lcssa, 2              ; 2 uses
-  %i.ap = getelementptr inbounds i8, ptr %i.h, i64 %.idx17
+  %.idx17 = shl nuw nsw i64 %.0.lcssa, 2          ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx17
   %.idx = shl nuw nsw i64 %.fr, 2                 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 %.idx ; 2 uses
   %.not.i = icmp eq i64 %.0.lcssa, %.fr

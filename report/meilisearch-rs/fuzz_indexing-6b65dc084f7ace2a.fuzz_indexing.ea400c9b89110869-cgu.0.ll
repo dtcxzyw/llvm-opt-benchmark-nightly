@@ -205,7 +205,7 @@ bb.cu:                                            ; preds = %"_ZN4core3str6trait
   %i.pe = getelementptr inbounds nuw i8, ptr %i.pa, i64 16
   %i.pf = xor i64 %i.ok, -1                       ; 2 uses
   %i.pg = add nsw i64 %i.og, %i.pf
-  %i.ph = shl nsw i64 %i.pg, 4
+  %i.ph = shl nuw nsw i64 %i.pg, 4
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.pa, ptr nonnull align 8 %i.pe, i64 %i.ph, i1 false), !noalias !13228
   %i.pi = add nsw i64 %i.og, -1
   store i64 %i.pi, ptr %i.of, align 8, !alias.scope !13229, !noalias !13217
@@ -236,7 +236,7 @@ bb.cu:                                            ; preds = %"_ZN4core3str6trait
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11.i, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.11.16..sroa_idx47.i, i64 96, i1 false), !noalias !13236
   %i.ps = getelementptr inbounds nuw i8, ptr %i.pr, i64 104
   %i.pt = add nsw i64 %i.pk, %i.pf
-  %i.pu = mul nsw i64 %i.pt, 104
+  %i.pu = mul nuw nsw i64 %i.pt, 104
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.pr, ptr nonnull align 8 %i.ps, i64 %i.pu, i1 false), !noalias !13237
   %i.pv = add nsw i64 %i.pk, -1
   store i64 %i.pv, ptr %i.pj, align 8, !alias.scope !13233, !noalias !13234
@@ -591,7 +591,7 @@ bb.dw:                                            ; preds = %"_ZN4core3str6trait
   %i.sg = getelementptr inbounds nuw i8, ptr %i.sc, i64 16
   %i.sh = xor i64 %i.rs, -1                       ; 2 uses
   %i.si = add nsw i64 %i.ro, %i.sh
-  %i.sj = shl nsw i64 %i.si, 4
+  %i.sj = shl nuw nsw i64 %i.si, 4
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.sc, ptr nonnull align 8 %i.sg, i64 %i.sj, i1 false), !noalias !13305
   %i.sk = add nsw i64 %i.ro, -1
   store i64 %i.sk, ptr %i.of, align 8, !alias.scope !13306, !noalias !13294
@@ -612,7 +612,7 @@ bb.dw:                                            ; preds = %"_ZN4core3str6trait
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %.sroa.1152.i, ptr noundef nonnull align 8 dereferenceable(96) %.sroa.1152.16..sroa_idx53.i, i64 96, i1 false), !noalias !13313
   %i.sr = getelementptr inbounds nuw i8, ptr %i.sq, i64 104
   %i.ss = add nsw i64 %i.sm, %i.sh
-  %i.st = mul nsw i64 %i.ss, 104
+  %i.st = mul nuw nsw i64 %i.ss, 104
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.sq, ptr nonnull align 8 %i.sr, i64 %i.st, i1 false), !noalias !13314
   %i.su = add nsw i64 %i.sm, -1
   store i64 %i.su, ptr %i.sl, align 8, !alias.scope !13310, !noalias !13311
@@ -1015,7 +1015,7 @@ bb.gu:                                            ; preds = %bb.gt, %bb.gs
   %i.vb = getelementptr inbounds nuw i8, ptr %i.ue, i64 32
   %i.vc = xor i64 %.sroa.05.0.lcssa.i.i.i346, -1
   %i.vd = add nsw i64 %i.uc, %i.vc
-  %i.ve = shl nsw i64 %i.vd, 5
+  %i.ve = shl nuw nsw i64 %i.vd, 5
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ue, ptr nonnull align 8 %i.vb, i64 %i.ve, i1 false), !noalias !31975
   %i.vf = add nsw i64 %i.uc, -1
   store i64 %i.vf, ptr %i.eb, align 8, !alias.scope !31974, !noalias !31977
@@ -1418,7 +1418,7 @@ bb.x:                                             ; preds = %bb.s
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cj, i64 4
   %i.dn = xor i64 %i.ch, -1
   %i.do = add nsw i64 %i.bt, %i.dn
-  %i.dp = shl nsw i64 %i.do, 2
+  %i.dp = shl nuw nsw i64 %i.do, 2
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.cj, ptr nonnull align 2 %i.dm, i64 %i.dp, i1 false), !noalias !46402
   %i.dq = add nsw i64 %i.bt, -1
   store i64 %i.dq, ptr %i.bs, align 8, !alias.scope !46402

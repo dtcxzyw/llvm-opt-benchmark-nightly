@@ -205,9 +205,9 @@ bb.k:                                             ; preds = %bb.i
   %i.fs = zext i16 %i.ff to i64
   %i.ft = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.fs
   %i.fu = sub nsw i32 %1, %i.en
-  %i.fv = shl nsw i32 %i.fu, 1
-  %2 = sext i32 %i.fv to i64
-  %i.fw = getelementptr inbounds i8, ptr %i.ft, i64 %2
+  %i.fv = shl nuw nsw i32 %i.fu, 1
+  %2 = zext nneg i32 %i.fv to i64
+  %i.fw = getelementptr inbounds nuw i8, ptr %i.ft, i64 %2
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 %i.e
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 %i.ex
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
@@ -610,9 +610,9 @@ bb.i:                                             ; preds = %bb.h
   %i.bc = zext nneg i32 %i.bb to i64
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ba, i64 %i.bc
   %i.be = sub nsw i32 %1, %i.l
-  %i.bf = shl nsw i32 %i.be, 1
-  %4 = sext i32 %i.bf to i64
-  %i.bg = getelementptr inbounds i8, ptr %i.bd, i64 %4 ; 2 uses
+  %i.bf = shl nuw nsw i32 %i.be, 1
+  %4 = zext nneg i32 %i.bf to i64
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 %4 ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bg, i64 1
   br label %.sink.split
 
@@ -1015,9 +1015,9 @@ bb.i:                                             ; preds = %bb.h
   %i.bd = zext nneg i32 %i.bc to i64
   %i.be = getelementptr inbounds nuw i8, ptr %i.bb, i64 %i.bd
   %i.bf = sub nsw i32 %i.a, %i.m
-  %i.bg = shl nsw i32 %i.bf, 1
-  %4 = sext i32 %i.bg to i64
-  %i.bh = getelementptr inbounds i8, ptr %i.be, i64 %4 ; 2 uses
+  %i.bg = shl nuw nsw i32 %i.bf, 1
+  %4 = zext nneg i32 %i.bg to i64
+  %i.bh = getelementptr inbounds nuw i8, ptr %i.be, i64 %4 ; 2 uses
   %i.bi = getelementptr i8, ptr %i.bh, i64 1
   br label %.sink.split.i
 
@@ -1420,7 +1420,7 @@ bb.p:                                             ; preds = %bb.l, %bb.n, %bb.o,
   %i.dn = fadd float %i.dl, f0xBC23D70A
   %i.do = fadd float %i.dl, f0x3C23D70A
   %i.dp = sub nsw i32 %.0440534, %i.ah
-  %i.dq = mul nsw i32 %i.dp, %i.am
+  %i.dq = mul nuw nsw i32 %i.dp, %i.am
   %i.dr = sub i32 %i.dq, %i.af
   br label %bb.q
 
@@ -1823,9 +1823,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.u = sub nsw i32 %1, %i.k
-  %i.v = shl nsw i32 %i.u, 1
-  %2 = sext i32 %i.v to i64
-  %i.w = getelementptr inbounds i8, ptr %i.l, i64 %2 ; 2 uses
+  %i.v = shl nuw nsw i32 %i.u, 1
+  %2 = zext nneg i32 %i.v to i64
+  %i.w = getelementptr inbounds nuw i8, ptr %i.l, i64 %2 ; 2 uses
   %.val57 = load i8, ptr %i.w, align 1, !tbaa !11
   %i.x = getelementptr i8, ptr %i.w, i64 1
   %.val58 = load i8, ptr %i.x, align 1, !tbaa !11
